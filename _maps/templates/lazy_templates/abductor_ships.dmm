@@ -1,0 +1,594 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bX" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien11"
+	},
+/area/centcom/abductor_ship)
+"ea" = (
+/obj/effect/landmark/abductor/scientist{
+	team_number = 2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"eq" = (
+/obj/machinery/abductor/pad{
+	team_number = 3
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"es" = (
+/obj/machinery/abductor/experiment{
+	team_number = 3
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"gZ" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien15"
+	},
+/area/centcom/abductor_ship)
+"hw" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien12"
+	},
+/area/centcom/abductor_ship)
+"hN" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien6"
+	},
+/area/centcom/abductor_ship)
+"ie" = (
+/obj/structure/closet/abductor,
+/obj/item/storage/box/alienhandcuffs,
+/obj/item/reagent_containers/cup/beaker/synthflesh,
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"lV" = (
+/turf/closed/indestructible/abductor,
+/area/centcom/abductor_ship)
+"mr" = (
+/obj/machinery/limbgrower/fullupgrade,
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"nb" = (
+/obj/machinery/abductor/experiment{
+	team_number = 1
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"nt" = (
+/obj/structure/bed/abductor,
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"nL" = (
+/obj/machinery/computer/camera_advanced/abductor{
+	team_number = 3
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"oL" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien2"
+	},
+/area/centcom/abductor_ship)
+"pK" = (
+/obj/machinery/abductor/console{
+	team_number = 3
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"qV" = (
+/obj/machinery/abductor/pad{
+	team_number = 1
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"rh" = (
+/obj/item/scalpel/alien{
+	pixel_y = 7
+	},
+/obj/structure/table/abductor,
+/obj/item/cautery/alien{
+	pixel_y = 15
+	},
+/obj/item/circular_saw/alien{
+	pixel_y = -2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"st" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien8"
+	},
+/area/centcom/abductor_ship)
+"sS" = (
+/obj/structure/table/abductor,
+/obj/machinery/recharger{
+	pixel_x = 7
+	},
+/obj/item/paper/guides/antag/abductor{
+	pixel_x = -5
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"tu" = (
+/obj/structure/table/abductor,
+/obj/item/hemostat/alien{
+	pixel_y = 16
+	},
+/obj/item/surgicaldrill/alien{
+	pixel_y = -7
+	},
+/obj/item/retractor/alien{
+	pixel_y = 4
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"tL" = (
+/obj/effect/landmark/abductor/scientist{
+	team_number = 4
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"tT" = (
+/obj/machinery/abductor/pad{
+	team_number = 4
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"wM" = (
+/obj/effect/landmark/abductor/scientist{
+	team_number = 3
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"xf" = (
+/obj/machinery/abductor/pad{
+	team_number = 2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"xM" = (
+/obj/machinery/abductor/console{
+	team_number = 1
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"xR" = (
+/obj/machinery/abductor/console{
+	team_number = 4
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"ze" = (
+/obj/machinery/abductor/experiment{
+	team_number = 2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"zV" = (
+/obj/machinery/computer/camera_advanced/abductor{
+	team_number = 2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"AJ" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien3"
+	},
+/area/centcom/abductor_ship)
+"Bh" = (
+/obj/machinery/abductor/gland_dispenser,
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"BX" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien18"
+	},
+/area/centcom/abductor_ship)
+"CF" = (
+/obj/machinery/abductor/console{
+	team_number = 2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"CJ" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien7"
+	},
+/area/centcom/abductor_ship)
+"CT" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien10"
+	},
+/area/centcom/abductor_ship)
+"DL" = (
+/obj/effect/landmark/abductor/agent{
+	team_number = 4
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"Gb" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien19"
+	},
+/area/centcom/abductor_ship)
+"Gs" = (
+/obj/machinery/computer/camera_advanced/abductor{
+	team_number = 4
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"Gt" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien23"
+	},
+/area/centcom/abductor_ship)
+"HK" = (
+/obj/effect/landmark/abductor/agent{
+	team_number = 2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"Ig" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien24"
+	},
+/area/centcom/abductor_ship)
+"Il" = (
+/obj/structure/table/optable/abductor,
+/obj/item/surgical_drapes{
+	pixel_y = -5
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"Nw" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien17"
+	},
+/area/centcom/abductor_ship)
+"Po" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien22"
+	},
+/area/centcom/abductor_ship)
+"Pv" = (
+/obj/effect/landmark/abductor/agent{
+	team_number = 3
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"QM" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien13"
+	},
+/area/centcom/abductor_ship)
+"Sv" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien4"
+	},
+/area/centcom/abductor_ship)
+"SK" = (
+/obj/structure/table/abductor,
+/obj/item/toy/plush/abductor{
+	pixel_x = -7;
+	pixel_y = 14
+	},
+/obj/item/toy/plush/abductor/agent{
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"UE" = (
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"VZ" = (
+/obj/effect/landmark/abductor/agent,
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"Xy" = (
+/turf/cordon,
+/area/misc/cordon)
+"XD" = (
+/obj/machinery/computer/camera_advanced/abductor{
+	team_number = 1
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"Yu" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien14"
+	},
+/area/centcom/abductor_ship)
+"YQ" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien21"
+	},
+/area/centcom/abductor_ship)
+"YY" = (
+/obj/machinery/abductor/experiment{
+	team_number = 4
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"Zf" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien9"
+	},
+/area/centcom/abductor_ship)
+"Zn" = (
+/obj/effect/landmark/abductor/scientist,
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"Zr" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien5"
+	},
+/area/centcom/abductor_ship)
+"Zv" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien20"
+	},
+/area/centcom/abductor_ship)
+"ZB" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien16"
+	},
+/area/centcom/abductor_ship)
+
+(1,1,1) = {"
+Xy
+ZB
+Yu
+hw
+CT
+hN
+Xy
+Xy
+Xy
+ZB
+Yu
+hw
+CT
+hN
+Xy
+"}
+(2,1,1) = {"
+Zv
+Nw
+nL
+tu
+rh
+CJ
+lV
+Xy
+Zv
+Nw
+XD
+tu
+rh
+CJ
+lV
+"}
+(3,1,1) = {"
+YQ
+es
+UE
+wM
+UE
+Bh
+oL
+Xy
+YQ
+nb
+UE
+Zn
+UE
+Bh
+oL
+"}
+(4,1,1) = {"
+Po
+pK
+UE
+Il
+UE
+SK
+AJ
+Xy
+Po
+xM
+UE
+Il
+UE
+SK
+AJ
+"}
+(5,1,1) = {"
+Gt
+eq
+UE
+Pv
+UE
+nt
+Sv
+Xy
+Gt
+qV
+UE
+VZ
+UE
+nt
+Sv
+"}
+(6,1,1) = {"
+Ig
+BX
+ie
+sS
+mr
+st
+Zr
+Xy
+Ig
+BX
+ie
+sS
+mr
+st
+Zr
+"}
+(7,1,1) = {"
+Xy
+Gb
+gZ
+QM
+bX
+Zf
+Xy
+Xy
+Xy
+Gb
+gZ
+QM
+bX
+Zf
+Xy
+"}
+(8,1,1) = {"
+Xy
+Xy
+Xy
+Xy
+Xy
+Xy
+Xy
+Xy
+Xy
+Xy
+Xy
+Xy
+Xy
+Xy
+Xy
+"}
+(9,1,1) = {"
+Xy
+ZB
+Yu
+hw
+CT
+hN
+Xy
+Xy
+Xy
+ZB
+Yu
+hw
+CT
+hN
+Xy
+"}
+(10,1,1) = {"
+Zv
+Nw
+Gs
+tu
+rh
+CJ
+lV
+Xy
+Zv
+Nw
+zV
+tu
+rh
+CJ
+lV
+"}
+(11,1,1) = {"
+YQ
+YY
+UE
+tL
+UE
+Bh
+oL
+Xy
+YQ
+ze
+UE
+ea
+UE
+Bh
+oL
+"}
+(12,1,1) = {"
+Po
+xR
+UE
+Il
+UE
+SK
+AJ
+Xy
+Po
+CF
+UE
+Il
+UE
+SK
+AJ
+"}
+(13,1,1) = {"
+Gt
+tT
+UE
+DL
+UE
+nt
+Sv
+Xy
+Gt
+xf
+UE
+HK
+UE
+nt
+Sv
+"}
+(14,1,1) = {"
+Ig
+BX
+ie
+sS
+mr
+st
+Zr
+Xy
+Ig
+BX
+ie
+sS
+mr
+st
+Zr
+"}
+(15,1,1) = {"
+Xy
+Gb
+gZ
+QM
+bX
+Zf
+Xy
+Xy
+Xy
+Gb
+gZ
+QM
+bX
+Zf
+Xy
+"}

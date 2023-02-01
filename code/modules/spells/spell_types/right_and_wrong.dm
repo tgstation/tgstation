@@ -13,7 +13,8 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/energy/e_gun/advtaser,
 	/obj/item/gun/energy/laser,
 	/obj/item/gun/ballistic/revolver,
-	/obj/item/gun/ballistic/revolver/detective,
+	/obj/item/gun/ballistic/revolver/syndicate,
+	/obj/item/gun/ballistic/revolver/c38/detective,
 	/obj/item/gun/ballistic/automatic/pistol/deagle/camo,
 	/obj/item/gun/ballistic/automatic/gyropistol,
 	/obj/item/gun/energy/pulse,
@@ -66,6 +67,7 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/book/granter/action/spell/barnyard,
 	/obj/item/book/granter/action/spell/charge,
 	/obj/item/book/granter/action/spell/summonitem,
+	/obj/item/book/granter/action/spell/lightningbolt,
 	/obj/item/gun/magic/wand/nothing,
 	/obj/item/gun/magic/wand/death,
 	/obj/item/gun/magic/wand/resurrection,
@@ -75,6 +77,7 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/gun/magic/wand/fireball,
 	/obj/item/gun/magic/staff/healing,
 	/obj/item/gun/magic/staff/door,
+	/obj/item/gun/magic/staff/babel,
 	/obj/item/scrying,
 	/obj/item/warp_whistle,
 	/obj/item/immortality_talisman,
@@ -268,7 +271,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	src.survivor_probability = survivor_probability
 	src.give_proc_path = give_proc_path
 
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/gear_up_new_crew)
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(gear_up_new_crew))
 
 /datum/summon_things_controller/Destroy(force, ...)
 	. = ..()

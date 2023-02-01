@@ -5,7 +5,7 @@
 "c" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	desc = "A standard reliable bluespace engine used by many forms of shuttles. This one has the bluespace core removed.";
 	name = "inactive propulsion engine"
 	},
@@ -15,7 +15,7 @@
 "d" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	desc = "A standard reliable bluespace engine used by many forms of shuttles. This one has the bluespace core removed.";
 	name = "inactive propulsion engine"
 	},
@@ -30,7 +30,7 @@
 /area/station/maintenance/port/central)
 "q" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	desc = "A standard reliable bluespace engine used by many forms of shuttles. This one has the bluespace core removed.";
 	name = "inactive propulsion engine"
 	},
@@ -57,7 +57,7 @@
 /area/station/maintenance/port/central)
 "H" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	desc = "A standard reliable bluespace engine used by many forms of shuttles. This one has the bluespace core removed.";
 	name = "inactive propulsion engine"
 	},

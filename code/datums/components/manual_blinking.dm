@@ -29,11 +29,11 @@
 	return ..()
 
 /datum/component/manual_blinking/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
-	RegisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN, .proc/check_added_organ)
-	RegisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN, .proc/check_removed_organ)
-	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/restart)
-	RegisterSignal(parent, COMSIG_LIVING_DEATH, .proc/pause)
+	RegisterSignal(parent, COMSIG_MOB_EMOTE, PROC_REF(check_emote))
+	RegisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(check_added_organ))
+	RegisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(check_removed_organ))
+	RegisterSignal(parent, COMSIG_LIVING_REVIVE, PROC_REF(restart))
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(pause))
 
 /datum/component/manual_blinking/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_EMOTE)

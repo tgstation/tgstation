@@ -61,7 +61,7 @@
 		return
 	balloon_alert(user, "cutting off fingertips...")
 
-	if(!do_after(user, 3 SECONDS, target=src, extra_checks = CALLBACK(src, .proc/can_cut_with, tool)))
+	if(!do_after(user, 3 SECONDS, target=src, extra_checks = CALLBACK(src, PROC_REF(can_cut_with), tool)))
 		return
 	balloon_alert(user, "cut fingertips off")
 	qdel(src)

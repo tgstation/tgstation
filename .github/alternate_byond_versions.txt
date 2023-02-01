@@ -1,0 +1,9 @@
+# This file contains extra tests to run for specific BYOND versions.
+# This is useful for making sure we maintain compatibility with both older and newer versions,
+# while still having our main tests run on a guaranteed pinned version.
+
+# Format is version: map
+# Example:
+# 500.1337: runtimestation
+
+515.1596: runtimestation

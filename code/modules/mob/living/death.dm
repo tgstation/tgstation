@@ -20,6 +20,7 @@
 		spread_bodyparts(no_brain, no_organs)
 
 	spawn_gibs(no_bodyparts)
+	SEND_SIGNAL(src, COMSIG_LIVING_GIBBED, no_brain, no_organs, no_bodyparts)
 	qdel(src)
 
 /mob/living/proc/gib_animation()
@@ -91,7 +92,7 @@
 	SetSleeping(0, 0)
 	reset_perspective(null)
 	reload_fullscreen()
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 	update_damage_hud()
 	update_health_hud()
 	med_hud_set_health()
@@ -105,6 +106,6 @@
 		client.move_delay = initial(client.move_delay)
 
 	if(!gibbed && (death_sound || death_message))
-		INVOKE_ASYNC(src, /mob.proc/emote, "deathgasp")
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "deathgasp")
 
 	return TRUE

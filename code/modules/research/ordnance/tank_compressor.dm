@@ -19,7 +19,7 @@
 	var/record_number = 1
 	var/obj/item/tank/inserted_tank
 	/// Reference to a disk we are going to print to.
-	var/obj/item/computer_hardware/hard_drive/portable/inserted_disk
+	var/obj/item/computer_disk/inserted_disk
 
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
@@ -28,7 +28,7 @@
 	leaked_gas_buffer = new(200)
 	compressor_record = list()
 
-	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, .proc/explosion_handle)
+	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(explosion_handle))
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/examine()
 	. = ..()
@@ -51,23 +51,23 @@
 		var/obj/item/tank/tank_item = item
 		if(inserted_tank)
 			if(!eject_tank(user))
-				balloon_alert(user, span_warning("[inserted_tank] is stuck inside."))
+				balloon_alert(user, "it's stuck inside!")
 				return ..()
 		if(!user.transferItemToLoc(tank_item, src))
-			balloon_alert(user, span_warning("[tank_item] is stuck to your hand."))
+			balloon_alert(user, "it's stuck to your hand!")
 			return ..()
 		inserted_tank = tank_item
 		last_recorded_pressure = 0
-		RegisterSignal(inserted_tank, COMSIG_PARENT_QDELETING, .proc/tank_destruction)
+		RegisterSignal(inserted_tank, COMSIG_PARENT_QDELETING, PROC_REF(tank_destruction))
 		update_appearance()
 		return
-	if(istype(item, /obj/item/computer_hardware/hard_drive/portable))
-		var/obj/item/computer_hardware/hard_drive/portable/attacking_disk = item
+	if(istype(item, /obj/item/computer_disk))
+		var/obj/item/computer_disk/attacking_disk = item
 		eject_disk(user)
 		if(user.transferItemToLoc(attacking_disk, src))
 			inserted_disk = attacking_disk
 		else
-			balloon_alert(user, span_warning("[attacking_disk] is stuck to your hand."))
+			balloon_alert(user, "it's stuck to your hand!")
 		return
 	return ..()
 
@@ -201,7 +201,7 @@
 	record_data.gas_record = record
 	record_data.possible_experiments = apply_experiments(record)
 
-	if(inserted_disk.store_file(record_data))
+	if(inserted_disk.add_file(record_data))
 		playsound(src, 'sound/machines/ping.ogg', 25)
 	else
 		playsound(src, 'sound/machines/terminal_error.ogg', 25)
@@ -239,7 +239,7 @@
 		UnregisterSignal(inserted_tank, COMSIG_PARENT_QDELETING)
 		inserted_tank = null
 		update_appearance()
-	. = ..()
+	return ..()
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/on_deconstruction()
 	eject_tank()
@@ -297,7 +297,7 @@
 				return
 			compressor_record -= record
 			return TRUE
-		if("print_record")
+		if("save_record")
 			var/datum/data/compressor_record/record  = locate(params["ref"]) in compressor_record
 			if(!compressor_record || !(record in compressor_record))
 				return

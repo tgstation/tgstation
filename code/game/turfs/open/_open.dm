@@ -18,7 +18,7 @@
 	return FALSE
 
 //direction is direction of travel of A
-/turf/open/zPassOut(atom/movable/A, direction, turf/destination)
+/turf/open/zPassOut(atom/movable/A, direction, turf/destination, allow_anchored_movement)
 	if(direction == UP)
 		for(var/obj/O in contents)
 			if(O.obj_flags & BLOCK_Z_OUT_UP)
@@ -40,6 +40,7 @@
 
 /turf/open/indestructible
 	name = "floor"
+	desc = "The floor you walk on. It looks near-impervious to damage."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	footstep = FOOTSTEP_FLOOR
@@ -212,49 +213,58 @@
 		movable_content.wash(CLEAN_WASH)
 	return TRUE
 
-/turf/open/handle_slip(mob/living/carbon/slipper, knockdown_amount, obj/O, lube, paralyze_amount, force_drop)
+/turf/open/handle_slip(mob/living/carbon/slipper, knockdown_amount, obj/slippable, lube, paralyze_amount, force_drop)
 	if(slipper.movement_type & (FLYING | FLOATING))
 		return FALSE
-	if(has_gravity(src))
-		var/obj/buckled_obj
-		if(slipper.buckled)
-			buckled_obj = slipper.buckled
-			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
-				return FALSE
-		else
-			if(!(lube & SLIP_WHEN_CRAWLING) && (slipper.body_position == LYING_DOWN || !(slipper.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
-				return FALSE
-			if(slipper.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
-				return FALSE
-		if(!(lube&SLIDE_ICE))
-			to_chat(slipper, span_notice("You slipped[ O ? " on the [O.name]" : ""]!"))
-			playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
+	if(!has_gravity(src))
+		return FALSE
 
-		SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
-		slipper.add_mood_event("slipped", /datum/mood_event/slipped)
-		if(force_drop)
-			for(var/obj/item/I in slipper.held_items)
-				slipper.accident(I)
+	var/slide_distance = 4
+	if(HAS_TRAIT(slipper, TRAIT_CURSED))
+		if(!(lube & SLIDE_ICE)) // Ensures we are at least sliding
+			lube |= SLIDE
+		slide_distance = rand(5, 9)
 
-		var/olddir = slipper.dir
-		slipper.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
-		if(!(lube & SLIDE_ICE))
-			slipper.Knockdown(knockdown_amount)
-			slipper.Paralyze(paralyze_amount)
-			slipper.stop_pulling()
-		else
-			slipper.Knockdown(20)
+	var/obj/buckled_obj
+	if(slipper.buckled)
+		buckled_obj = slipper.buckled
+		if(!(lube & GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
+			return FALSE
+	else
+		if(!(lube & SLIP_WHEN_CRAWLING) && (slipper.body_position == LYING_DOWN || !(slipper.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
+			return FALSE
+		if(slipper.m_intent == MOVE_INTENT_WALK && (lube & NO_SLIP_WHEN_WALKING))
+			return FALSE
 
-		if(buckled_obj)
-			buckled_obj.unbuckle_mob(slipper)
-			lube |= SLIDE_ICE
+	if(!(lube & SLIDE_ICE))
+		to_chat(slipper, span_notice("You slipped[ slippable ? " on the [slippable.name]" : ""]!"))
+		playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
-		var/turf/target = get_ranged_target_turf(slipper, olddir, 4)
-		if(lube & SLIDE)
-			slipper.AddComponent(/datum/component/force_move, target, TRUE)
-		else if(lube&SLIDE_ICE)
-			slipper.AddComponent(/datum/component/force_move, target, FALSE)//spinning would be bad for ice, fucks up the next dir
-		return TRUE
+	SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
+	slipper.add_mood_event("slipped", /datum/mood_event/slipped)
+	if(force_drop)
+		for(var/obj/item/item in slipper.held_items)
+			slipper.accident(item)
+
+	var/olddir = slipper.dir
+	slipper.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
+	if(!(lube & SLIDE_ICE))
+		slipper.Knockdown(knockdown_amount)
+		slipper.Paralyze(paralyze_amount)
+		slipper.stop_pulling()
+	else
+		slipper.Knockdown(20)
+
+	if(buckled_obj)
+		buckled_obj.unbuckle_mob(slipper)
+		lube |= SLIDE_ICE
+
+	var/turf/target = get_ranged_target_turf(slipper, olddir, slide_distance)
+	if(lube & SLIDE)
+		slipper.AddComponent(/datum/component/force_move, target, TRUE)
+	else if(lube & SLIDE_ICE)
+		slipper.AddComponent(/datum/component/force_move, target, FALSE)//spinning would be bad for ice, fucks up the next dir
+	return TRUE
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent)
 	AddComponent(/datum/component/wet_floor, wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
@@ -298,15 +308,23 @@
 /// Very similar to build_with_rods, this exists to allow consistent behavior between different types in terms of how
 /// Building floors works
 /turf/open/proc/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles, user)
-	var/obj/structure/lattice/soon_to_be_floor = locate(/obj/structure/lattice, src)
-	if(!soon_to_be_floor)
-		to_chat(user, span_warning("The plating is going to need some support! Place metal rods first."))
+	var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
+	if(!has_valid_support() && !lattice)
+		balloon_alert(user, "needs support, place rods!")
 		return
 	if(!used_tiles.use(1))
-		to_chat(user, span_warning("You need one floor tile to build a floor!"))
+		balloon_alert(user, "need a floor tile to build!")
 		return
 
-	qdel(soon_to_be_floor)
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-	to_chat(user, span_notice("You build a floor."))
-	PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	var/turf/open/floor/plating/new_plating = PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	if(lattice)
+		qdel(lattice)
+	else
+		new_plating.lattice_underneath = FALSE
+
+/turf/open/proc/has_valid_support()
+	for (var/direction in GLOB.cardinals)
+		if(istype(get_step(src, direction), /turf/open/floor))
+			return TRUE
+	return FALSE

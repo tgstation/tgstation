@@ -5,7 +5,7 @@
 #define DEFAULT_CHARGE_DRAIN 5
 
 /// Default time for the suit to seal.
-#define MOD_ACTIVATION_TIME 10 SECONDS
+#define MOD_ACTIVATION_TIME (10 SECONDS)
 
 /// Passive module, just acts when put in naturally.
 #define MODULE_PASSIVE 0

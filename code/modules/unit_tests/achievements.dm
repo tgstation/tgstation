@@ -9,3 +9,5 @@
 		var/init_icon = initial(award.icon)
 		if(!init_icon || !(init_icon in award_icons))
 			TEST_FAIL("Award [initial(award.name)] has an unexistent icon: \"[init_icon || "null"]\"")
+		if(length(initial(award.database_id)) > 32) //sql schema limit
+			TEST_FAIL("Award [initial(award.name)] database id is is too long")

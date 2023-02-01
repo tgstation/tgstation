@@ -7,7 +7,7 @@
 	..()
 
 	new /obj/item/storage/bag/garment/engineering_chief (src)
-	new /obj/item/computer_hardware/hard_drive/portable/command/ce(src)
+	new /obj/item/computer_disk/command/ce(src)
 	new /obj/item/radio/headset/heads/ce(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/holosign_creator/atmos(src)
@@ -85,7 +85,8 @@
 	new /obj/item/holosign_creator/atmos(src)
 	new /obj/item/watertank/atmos(src)
 	new /obj/item/clothing/suit/utility/fire/atmos(src)
+	new /obj/item/clothing/gloves/atmos(src)
 	new /obj/item/clothing/mask/gas/atmos(src)
-	new /obj/item/clothing/head/utility/hardhat/atmos(src)
+	new /obj/item/clothing/head/utility/hardhat/welding/atmos(src)
 	new /obj/item/clothing/glasses/meson/engine/tray(src)
 	new /obj/item/extinguisher/advanced(src)

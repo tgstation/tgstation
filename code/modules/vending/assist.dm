@@ -8,7 +8,7 @@
 		/obj/item/assembly/igniter = 3,
 		/obj/item/assembly/prox_sensor = 5,
 		/obj/item/assembly/signaler = 4,
-		/obj/item/computer_hardware/hard_drive/portable/ordnance = 4,
+		/obj/item/computer_disk/ordnance = 4,
 		/obj/item/stock_parts/capacitor = 3,
 		/obj/item/stock_parts/manipulator = 3,
 		/obj/item/stock_parts/matter_bin = 3,
@@ -25,7 +25,7 @@
 	premium = list(
 		/obj/item/assembly/igniter/condenser = 2,
 		/obj/item/circuitboard/machine/vendor = 3,
-		/obj/item/price_tagger = 3,
+		/obj/item/universal_scanner = 3,
 		/obj/item/vending_refill/custom = 3,
 	)
 

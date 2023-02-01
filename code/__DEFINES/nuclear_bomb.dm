@@ -26,3 +26,6 @@
 #define DETONATION_HIT_SYNDIE_BASE NUKE_SYNDICATE_BASE
 #define DETONATION_NEAR_MISSED_STATION NUKE_NEAR_MISS
 #define DETONATION_MISSED_STATION NUKE_MISS_STATION
+
+/// Default code for nukes, intentionally impossible to enter on the UI
+#define NUKE_CODE_UNSET "ADMIN"

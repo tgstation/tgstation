@@ -2,7 +2,7 @@
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 
 /// The time it takes for the crying visual to be removed
-#define CRY_DURATION 12.8 SECONDS
+#define CRY_DURATION (12.8 SECONDS)
 
 /datum/emote/living/carbon/human/cry
 	key = "cry"
@@ -10,6 +10,7 @@
 	message = "cries."
 	message_mime = "sobs silently."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	stat_allowed = SOFT_CRIT
 
 /datum/emote/living/carbon/human/cry/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -22,7 +23,7 @@
 		var/list/key_emotes = GLOB.emote_list["cry"]
 		for(var/datum/emote/living/carbon/human/cry/human_emote in key_emotes)
 			// The existing timer restarts if it is already running
-			addtimer(CALLBACK(human_emote, .proc/end_visual, human_user), CRY_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
+			addtimer(CALLBACK(human_emote, PROC_REF(end_visual), human_user), CRY_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/emote/living/carbon/human/cry/proc/end_visual(mob/living/carbon/human/human_user)
 	if(!QDELETED(human_user))

@@ -18,7 +18,7 @@
 	)
 	required_atoms = list(
 		/obj/item/clothing/suit = 1,
-		/obj/item/clothing/gloves/color/latex = 1,
+		/obj/item/clothing/gloves/latex = 1,
 	)
 	limit = 1
 	cost = 1
@@ -76,8 +76,8 @@
 		/datum/status_effect/ghoul,
 		RISEN_MAX_HEALTH,
 		user.mind,
-		CALLBACK(src, .proc/apply_to_risen),
-		CALLBACK(src, .proc/remove_from_risen),
+		CALLBACK(src, PROC_REF(apply_to_risen)),
+		CALLBACK(src, PROC_REF(remove_from_risen)),
 	)
 
 /// Callback for the ghoul status effect - what effects are applied to the ghoul.

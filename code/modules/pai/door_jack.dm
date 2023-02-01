@@ -49,8 +49,8 @@
 
 /** Tracks the associated pai */
 /mob/living/silicon/pai/proc/track_pai()
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/handle_move)
-	RegisterSignal(card, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
+	RegisterSignal(card, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
 /** Untracks the associated pai */
 /mob/living/silicon/pai/proc/untrack_pai()
@@ -59,10 +59,10 @@
 
 /** Tracks the associated hacking_cable */
 /mob/living/silicon/pai/proc/track_thing(atom/movable/thing)
-	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
 	for(var/atom/movable/location in locations)
-		RegisterSignal(location, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+		RegisterSignal(location, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
 /** Untracks the associated hacking */
 /mob/living/silicon/pai/proc/untrack_thing(atom/movable/thing)
@@ -88,7 +88,6 @@
  * Handles deleting the hacking cable and notifying the user.
  */
 /mob/living/silicon/pai/proc/retract_cable()
-	hacking_cable.visible_message(span_notice("The cable quickly retracts."))
 	balloon_alert(src, "cable retracted")
 	QDEL_NULL(hacking_cable)
 	return TRUE
@@ -112,8 +111,6 @@
 	// Now begin hacking
 	if(!do_after(src, 15 SECONDS, hacking_cable.machine, timed_action_flags = NONE,	progress = TRUE))
 		balloon_alert(src, "failed! retracting...")
-		hacking_cable.visible_message(
-			span_warning("The cable rapidly retracts back into its spool."), span_hear("You hear a click and the sound of wire spooling rapidly."))
 		untrack_pai()
 		untrack_thing(hacking_cable)
 		QDEL_NULL(hacking_cable)

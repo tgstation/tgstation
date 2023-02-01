@@ -1,11 +1,15 @@
 /obj/machinery/computer/tram_controls
 	name = "tram controls"
 	desc = "An interface for the tram that lets you tell the tram where to go and hopefully it makes it there. I'm here to describe the controls to you, not to inspire confidence."
-	icon_screen = "tram"
-	icon_keyboard = "atmos_key"
+	icon_state = "tram_controls"
+	base_icon_state = "tram_"
+	icon_screen = "tram_Central Wing_idle"
+	icon_keyboard = null
+	layer = SIGN_LAYER
 	circuit = /obj/item/circuitboard/computer/tram_controls
 	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	layer = SIGN_LAYER
 
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement
 
@@ -22,6 +26,10 @@
 /obj/machinery/computer/tram_controls/LateInitialize()
 	. = ..()
 	find_tram()
+
+	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
+	if(tram_part)
+		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(update_tram_display))
 
 /**
  * Finds the tram from the console
@@ -110,7 +118,18 @@
 		return FALSE
 	tram_part.tram_travel(to_where)
 	say("The tram has been called to [to_where.name].")
+	update_appearance()
 	return TRUE
+
+/obj/machinery/computer/tram_controls/proc/update_tram_display(obj/effect/landmark/tram/from_where, travelling)
+	SIGNAL_HANDLER
+	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
+	if(travelling)
+		icon_screen = "[base_icon_state][tram_part.from_where.name]_active"
+	else
+		icon_screen = "[base_icon_state][tram_part.from_where.name]_idle"
+	update_appearance(UPDATE_ICON)
+	return PROCESS_KILL
 
 /obj/item/circuit_component/tram_controls
 	display_name = "Tram Controls"
@@ -142,8 +161,8 @@
 	if (istype(shell, /obj/machinery/computer/tram_controls))
 		computer = shell
 		var/datum/lift_master/tram/tram_part = computer.tram_ref?.resolve()
-		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, .proc/on_tram_set_travelling)
-		RegisterSignal(tram_part, COMSIG_TRAM_TRAVEL, .proc/on_tram_travel)
+		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(on_tram_set_travelling))
+		RegisterSignal(tram_part, COMSIG_TRAM_TRAVEL, PROC_REF(on_tram_travel))
 
 /obj/item/circuit_component/tram_controls/unregister_usb_parent(atom/movable/shell)
 	var/datum/lift_master/tram/tram_part = computer.tram_ref?.resolve()
@@ -179,3 +198,5 @@
 /obj/item/circuit_component/tram_controls/proc/on_tram_travel(datum/source, obj/effect/landmark/tram/from_where, obj/effect/landmark/tram/to_where)
 	SIGNAL_HANDLER
 	location.set_output(to_where.name)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 0)

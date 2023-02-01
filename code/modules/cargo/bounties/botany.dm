@@ -213,7 +213,7 @@
 
 /datum/bounty/item/botany/bonfire
 	name = "Lit Bonfire"
-	description = "Space heaters are malfunctioning and the cargo crew of Central Command is starting to feel cold. Grow some logs and Ship a lit bonfire to warm them up."
+	description = "Our space heaters are malfunctioning and the cargo crew of Central Command is starting to feel cold. Grow some logs and ship a lit bonfire to warm them up."
 	wanted_types = list(/obj/structure/bonfire = TRUE)
 
 /datum/bounty/item/botany/bonfire/applies_to(obj/O)

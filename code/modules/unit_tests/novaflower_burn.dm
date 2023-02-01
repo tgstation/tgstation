@@ -2,8 +2,8 @@
 /datum/unit_test/novaflower_burn
 
 /datum/unit_test/novaflower_burn/Run()
-	var/mob/living/carbon/human/botanist = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/botanist = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/grown/novaflower/weapon = allocate(/obj/item/grown/novaflower)
 
 	TEST_ASSERT(weapon.force > 0, "[weapon] spawned with zero force.")

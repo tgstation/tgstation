@@ -18,7 +18,7 @@
 	if(!iscarbon(owner))
 		return FALSE
 
-	RegisterSignal(owner, COMSIG_CARBON_UPDATING_HEALTH_HUD, .proc/on_health_hud_updated)
+	RegisterSignal(owner, COMSIG_CARBON_UPDATING_HEALTH_HUD, PROC_REF(on_health_hud_updated))
 	owner.update_health_hud()
 	return TRUE
 

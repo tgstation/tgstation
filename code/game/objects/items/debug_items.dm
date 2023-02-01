@@ -72,7 +72,7 @@
 		"Rolling Pin" = image(icon = 'icons/obj/kitchen.dmi', icon_state = "rolling_pin"),
 		"Wire Brush" = image(icon = 'icons/obj/tools.dmi', icon_state = "wirebrush"),
 		)
-	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(tool_result)
@@ -117,11 +117,6 @@
 		if("Wire Brush")
 			tool_behaviour = TOOL_RUSTSCRAPER
 
-	if(tool_behaviour == TOOL_SCREWDRIVER)
-		AddElement(/datum/element/eyestab)
-	else
-		RemoveElement(/datum/element/eyestab)
-
 /obj/item/debug/omnitool/item_spawner/attack_self(mob/user)
 	if(!user || !user.client)
 		return
@@ -145,6 +140,7 @@
 			to_chat(user, span_reallybig("You shouldn't have done that..."))
 			playsound(src, 'sound/voice/borg_deathsound.ogg')
 			sleep(3 SECONDS)
+			living_user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			living_user.gib()
 			return
 	var/turf/loc_turf = get_turf(src)

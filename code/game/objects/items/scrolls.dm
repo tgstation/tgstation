@@ -19,7 +19,7 @@
 	var/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll/teleport = locate() in actions
 	if(teleport)
 		teleport.name = name
-		teleport.icon_icon = icon
+		teleport.button_icon = icon
 		teleport.button_icon_state = icon_state
 
 /obj/item/teleportation_scroll/item_action_slot_check(slot, mob/user)
@@ -52,7 +52,8 @@
 		return
 	if(!teleport.Activate(user))
 		return
-	if(--uses <= 0)
+	uses--
+	if(uses <= 0)
 		to_chat(user, span_warning("[src] runs out of uses and crumbles to dust!"))
 		qdel(src)
 	return TRUE

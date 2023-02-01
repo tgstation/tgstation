@@ -225,7 +225,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		pipe_icon.color = pipe_cleaner_colors[color]
 		possible_colors += list("[color]" = pipe_icon)
 
-	var/selected_color = show_radial_menu(user, src, possible_colors, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 40, require_near = TRUE)
+	var/selected_color = show_radial_menu(user, src, possible_colors, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 40, require_near = TRUE)
 	if(!selected_color)
 		return
 	set_pipecleaner_color(selected_color)
@@ -250,12 +250,12 @@ By design, d1 is the smallest direction and d2 is the highest
 	pipecleaner_color = new_color
 	update_appearance()
 
-/obj/item/stack/pipe_cleaner_coil/suicide_act(mob/user)
+/obj/item/stack/pipe_cleaner_coil/suicide_act(mob/living/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
 		user.visible_message(span_suicide("[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	else
 		user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return(OXYLOSS)
+	return OXYLOSS
 
 /obj/item/stack/pipe_cleaner_coil/Initialize(mapload, new_amount = null, list/mat_override=null, mat_amt=1, param_color = null)
 	. = ..()
@@ -282,7 +282,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/pipe_cleaner_coil/update_icon_state()
 	. = ..()
-	icon_state = "[initial(inhand_icon_state)][amount < 3 ? amount : ""]"
+	icon_state = "[initial(icon_state)][amount < 3 ? amount : ""]"
 	inhand_icon_state = "coil_[pipecleaner_color]"
 
 /obj/item/stack/pipe_cleaner_coil/update_icon()
@@ -291,9 +291,9 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/pipe_cleaner_coil/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(!.)
 		return
-	var/obj/item/stack/pipe_cleaner_coil/new_pipe_cleaner = ..()
+	var/obj/item/stack/pipe_cleaner_coil/new_pipe_cleaner = .
 	if(istype(new_pipe_cleaner))
 		new_pipe_cleaner.set_pipecleaner_color(pipecleaner_color)
 
@@ -340,7 +340,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	for(var/obj/structure/pipe_cleaner/LC in T)
 		if(LC.d2 == dirn && LC.d1 == 0)
-			to_chat(user, span_warning("There's already a pipe leaner at that position!"))
+			to_chat(user, span_warning("There's already a pipe cleaner at that position!"))
 			return
 
 	var/obj/structure/pipe_cleaner/C = get_new_pipe_cleaner(T)

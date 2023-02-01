@@ -49,7 +49,7 @@
 
 /area/proc/remove_base_lighting()
 	var/list/z_offsets = SSmapping.z_level_to_plane_offset
-	for(var/turf/T in src)
+	for(var/turf/T as anything in get_contained_turfs())
 		if(z_offsets[T.z])
 			T.cut_overlay(lighting_effects[z_offsets[T.z] + 1])
 	cut_overlay(lighting_effects[1])
@@ -69,7 +69,7 @@
 		lighting_effects += lighting_effect
 	add_overlay(lighting_effects[1])
 	var/list/z_offsets = SSmapping.z_level_to_plane_offset
-	for(var/turf/T in src)
+	for(var/turf/T as anything in get_contained_turfs())
 		T.luminosity = 1
 		// This outside loop is EXTREMELY hot because it's run by space tiles. Don't want no part in that
 		// We will only add overlays to turfs not on the first z layer, because that's a significantly lesser portion

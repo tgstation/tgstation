@@ -75,10 +75,10 @@
 	/// Create fishing line visuals
 	fishing_line = used_rod.create_fishing_line(lure, target_py = 5)
 	// If fishing line breaks los / rod gets dropped / deleted
-	RegisterSignal(fishing_line, COMSIG_FISHING_LINE_SNAPPED, .proc/interrupt)
+	RegisterSignal(fishing_line, COMSIG_FISHING_LINE_SNAPPED, PROC_REF(interrupt))
 	ADD_TRAIT(user, TRAIT_GONE_FISHING, REF(src))
 	user.add_mood_event("fishing", /datum/mood_event/fishing)
-	RegisterSignal(user, COMSIG_MOB_CLICKON, .proc/handle_click)
+	RegisterSignal(user, COMSIG_MOB_CLICKON, PROC_REF(handle_click))
 	start_baiting_phase()
 	to_chat(user, span_notice("You start fishing..."))
 	playsound(lure, 'sound/effects/splash.ogg', 100)
@@ -128,7 +128,7 @@
 	animate(pixel_y = -1, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
 	//Setup next phase
 	var/wait_time = rand(1 SECONDS, 30 SECONDS)
-	next_phase_timer = addtimer(CALLBACK(src, .proc/start_biting_phase), wait_time, TIMER_STOPPABLE)
+	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_biting_phase)), wait_time, TIMER_STOPPABLE)
 
 /datum/fishing_challenge/proc/start_biting_phase()
 	phase = BITING_PHASE
@@ -139,7 +139,7 @@
 	animate(pixel_y = -3, time = 5, flags = ANIMATION_RELATIVE)
 	// Setup next phase
 	var/wait_time = rand(3 SECONDS, 6 SECONDS)
-	next_phase_timer = addtimer(CALLBACK(src, .proc/start_baiting_phase), wait_time, TIMER_STOPPABLE)
+	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_baiting_phase)), wait_time, TIMER_STOPPABLE)
 
 /datum/fishing_challenge/proc/start_minigame_phase()
 	phase = MINIGAME_PHASE

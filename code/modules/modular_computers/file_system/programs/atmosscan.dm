@@ -81,7 +81,7 @@
 				computer.say("Device incompatible for scanning objects!")
 				return FALSE
 			atmozphere_mode = ATMOZPHERE_SCAN_CLICK
-			RegisterSignal(computer, COMSIG_ITEM_ATTACK_SELF_SECONDARY, .proc/turf_analyze)
+			RegisterSignal(computer, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(turf_analyze))
 			var/turf/turf = get_turf(computer)
 			last_gasmix_data = list(gas_mixture_parser(turf?.return_air(), "Location Reading"))
 			return TRUE

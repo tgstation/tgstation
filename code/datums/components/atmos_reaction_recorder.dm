@@ -33,14 +33,14 @@
 		copied_reaction_results = list()
 
 	registered_signals = list()
-	RegisterSignal(parent_air, COMSIG_GASMIX_REACTED, .proc/update_data)
+	RegisterSignal(parent_air, COMSIG_GASMIX_REACTED, PROC_REF(update_data))
 	registered_signals += list(COMSIG_GASMIX_REACTED = parent_air)
 
 	for(var/signal in reset_criteria)
 		// We currently dont implement the same signal registered twice even from different sources. This allows this component to be simpler.
 		if(signal in registered_signals)
 			return COMPONENT_INCOMPATIBLE
-		RegisterSignal(reset_criteria[signal], signal, .proc/reset_data)
+		RegisterSignal(reset_criteria[signal], signal, PROC_REF(reset_data))
 		registered_signals[signal] = reset_criteria[signal]
 
 /// Fetches reaction_results and updates the list.

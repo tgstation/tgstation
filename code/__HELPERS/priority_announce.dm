@@ -46,7 +46,7 @@
 	for(var/mob/target in players)
 		if(!isnewplayer(target) && target.can_hear())
 			to_chat(target, announcement)
-			if(target.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
+			if(target.client.prefs.read_preference(/datum/preference/toggle/sound_announcements))
 				SEND_SOUND(target, sound_to_play)
 
 /**
@@ -69,7 +69,7 @@
 		to_chat(mob_to_teleport, announcement)
 		SEND_SOUND(mob_to_teleport, meeting_sound) //no preferences here, you must hear the funny sound
 		mob_to_teleport.overlay_fullscreen("emergency_meeting", /atom/movable/screen/fullscreen/emergency_meeting, 1)
-		addtimer(CALLBACK(mob_to_teleport, /mob/.proc/clear_fullscreen, "emergency_meeting"), 3 SECONDS)
+		addtimer(CALLBACK(mob_to_teleport, TYPE_PROC_REF(/mob/, clear_fullscreen), "emergency_meeting"), 3 SECONDS)
 
 		if (is_station_level(mob_to_teleport.z)) //teleport the mob to the crew meeting
 			var/turf/target
@@ -124,6 +124,6 @@
 			continue
 
 		to_chat(target, "[span_minorannounce("<font color = red>[title]</font color><BR>[message]")]<BR>")
-		if(target.client?.prefs.toggles & SOUND_ANNOUNCEMENTS)
+		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
 			var/sound_to_play = sound_override || (alert ? 'sound/misc/notice1.ogg' : 'sound/misc/notice2.ogg')
 			SEND_SOUND(target, sound(sound_to_play))

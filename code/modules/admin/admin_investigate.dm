@@ -2,7 +2,13 @@
 	if(!message || !subject)
 		return
 	var/F = file("[GLOB.log_directory]/[subject].html")
-	WRITE_FILE(F, "[time_stamp()] [REF(src)] ([x],[y],[z]) || [src] [message]<br>")
+	var/source = "[src]"
+
+	if(isliving(src))
+		var/mob/living/source_mob = src
+		source += " ([source_mob.ckey ? source_mob.ckey : "*no key*"])"
+
+	WRITE_FILE(F, "[time_stamp(format = "YYYY-MM-DD hh:mm:ss")] [REF(src)] ([x],[y],[z]) || [source] [message]<br>")
 
 /client/proc/investigate_show()
 	set name = "Investigate"
@@ -16,6 +22,7 @@
 		INVESTIGATE_BOTANY,
 		INVESTIGATE_CARGO,
 		INVESTIGATE_CRAFTING,
+		INVESTIGATE_DEATHS,
 		INVESTIGATE_ENGINE,
 		INVESTIGATE_EXPERIMENTOR,
 		INVESTIGATE_GRAVITY,

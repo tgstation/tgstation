@@ -41,7 +41,8 @@
 /mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
 	. = ..()
 	if(attack_reagent)
-		AddElement(/datum/element/venomous, attack_reagent, list(1, 5))
+		var/static/list/injection_range = list(1, 5)
+		AddElement(/datum/element/venomous, attack_reagent, injection_range)
 
 /mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	..()
@@ -110,8 +111,9 @@
 	desc = "Shake loose a few banana peels."
 	cooldown_time = 8 SECONDS
 	button_icon_state = "rustle"
-	icon_icon = 'icons/mob/actions/actions_clown.dmi'
+	button_icon = 'icons/mob/actions/actions_clown.dmi'
 	background_icon_state = "bg_nature"
+	overlay_icon_state = "bg_nature_border"
 	///which type of peel to spawn
 	var/banana_type = /obj/item/grown/bananapeel
 	///How many peels to spawn
@@ -138,10 +140,11 @@
 /datum/action/cooldown/exquisite_bunch
 	name = "Exquisite Bunch"
 	desc = "Pluck your finest bunch of bananas from your head. This bunch is especially nutrious to monkeykind. A gentle tap will trigger an explosive ripening process."
-	icon_icon = 'icons/obj/hydroponics/harvest.dmi'
+	button_icon = 'icons/obj/hydroponics/harvest.dmi'
 	cooldown_time = 60 SECONDS
 	button_icon_state = "banana_bunch"
 	background_icon_state = "bg_nature"
+	overlay_icon_state = "bg_nature_border"
 	///If we are currently activating our ability.
 	var/activating = FALSE
 
@@ -169,7 +172,7 @@
 	. = ..()
 	new /obj/item/food/grown/banana/bunch(get_step(owner.loc, owner.dir))
 	playsound(owner, 'sound/items/bikehorn.ogg', 60)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, owner, 'sound/creatures/clown/hohoho.ogg', 100, 1), 1 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), owner, 'sound/creatures/clown/hohoho.ogg', 100, 1), 1 SECONDS)
 	StartCooldown()
 
 /mob/living/simple_animal/hostile/retaliate/clown/honkling
@@ -400,7 +403,7 @@
 	spit.Grant(src)
 
 	add_cell_sample()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, .proc/tamed))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/attacked_by(obj/item/I, mob/living/user)
@@ -474,7 +477,8 @@
 	name = "Regurgitate"
 	desc = "Regurgitates a single item from the depths of your pouch."
 	background_icon_state = "bg_changeling"
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	overlay_icon_state = "bg_changeling_border"
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "regurgitate"
 	check_flags = AB_CHECK_CONSCIOUS
 	melee_cooldown_time = 0 SECONDS
@@ -499,7 +503,7 @@
 	on_who.icon_state = initial(on_who.icon_state)
 	on_who.update_appearance(UPDATE_ICON)
 
-/datum/action/cooldown/regurgitate/IsAvailable()
+/datum/action/cooldown/regurgitate/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE

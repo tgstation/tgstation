@@ -28,13 +28,10 @@
 	ph = 7
 	liver_damage = 0
 
-/datum/reagent/impurity/methanol/on_mob_life(mob/living/carbon/owner, delta_time)
-	var/obj/item/organ/internal/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
-	if(!eyes)
-		return ..()
-	eyes.applyOrganDamage(0.5 * REM * delta_time)
-	..()
-
+/datum/reagent/impurity/methanol/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	var/obj/item/organ/internal/eyes/eyes = affected_mob.getorganslot(ORGAN_SLOT_EYES)
+	eyes?.applyOrganDamage(0.5 * REM * delta_time, required_organtype = affected_organtype)
+	return ..()
 
 //Chloral Hydrate - Impure Version
 /datum/reagent/impurity/chloralax
@@ -46,7 +43,7 @@
 	liver_damage = 0
 
 /datum/reagent/impurity/chloralax/on_mob_life(mob/living/carbon/owner, delta_time)
-	owner.adjustToxLoss(1 * REM * delta_time, 0)
+	owner.adjustToxLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
 
 

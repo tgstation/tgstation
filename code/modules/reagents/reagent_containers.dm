@@ -4,18 +4,30 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = null
 	w_class = WEIGHT_CLASS_TINY
+	/// The maximum amount of reagents per transfer that will be moved out of this reagent container
 	var/amount_per_transfer_from_this = 5
+	/// The different possible amounts of reagent to transfer out of the container
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
 	/// Where we are in the possible transfer amount list.
 	var/amount_list_position = 1
+	/// The maximum amount of reagents this container can hold
 	var/volume = 30
+	/// Reagent flags, a few examples being if the container is open or not, if its transparent, if you can inject stuff in and out of the container, and so on
 	var/reagent_flags
+	/// A list of what initial reagents this container should spawn with
 	var/list/list_reagents = null
+	/// If this container should spawn with a disease type inside of it
 	var/spawned_disease = null
+	/// How much of a disease specified in spawned_disease should this container spawn with
 	var/disease_amount = 20
+	/// If the reagents inside of this container will splash out when the container tries to splash onto someone or something
 	var/spillable = FALSE
+	/// The different thresholds at which the reagent fill overlay will change
 	var/list/fill_icon_thresholds = null
-	var/fill_icon_state = null // Optional custom name for reagent fill icon_state prefix
+	/// The optional custom name for the reagent fill icon_state prefix
+	var/fill_icon_state = null
+	/// The icon file to take fill icon appearances from
+	var/fill_icon = 'icons/obj/reagentfillings.dmi'
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -38,8 +50,8 @@
 
 /obj/item/reagent_containers/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
 
 /obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, params)
 	if (!user.combat_mode)
@@ -80,7 +92,7 @@
 	mode_change_message(user)
 
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
-	if(HAS_TRAIT(target, DO_NOT_SPLASH))
+	if(HAS_TRAIT(target, TRAIT_DO_NOT_SPLASH))
 		return ..()
 	if(!user.combat_mode)
 		return ..()
@@ -114,6 +126,14 @@
 			span_userdanger("You feel drenched!"),
 		)
 
+	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
+
+	var/image/splash_animation = image('icons/effects/effects.dmi', target, "splash")
+	if(isturf(target))
+		splash_animation = image('icons/effects/effects.dmi', target, "splash_floor")
+	splash_animation.color = mix_color_from_reagents(reagents.reagent_list)
+	flick_overlay_global(splash_animation, GLOB.clients, 1.0 SECONDS)
+
 	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
 		reagent_text += "[reagent] ([num2text(reagent.volume)]),"
 
@@ -133,9 +153,9 @@
 		return FALSE
 	var/mob/living/carbon/C = eater
 	var/covered = ""
-	if(C.is_mouth_covered(head_only = 1))
+	if(C.is_mouth_covered(ITEM_SLOT_HEAD))
 		covered = "headgear"
-	else if(C.is_mouth_covered(mask_only = 1))
+	else if(C.is_mouth_covered(ITEM_SLOT_MASK))
 		covered = "mask"
 	if(covered)
 		var/who = (isnull(user) || eater == user) ? "your" : "[eater.p_their()]"
@@ -202,11 +222,19 @@
 		if(QDELETED(src))
 			return
 
+	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
+
+	var/image/splash_animation = image('icons/effects/effects.dmi', target, "splash")
+	if(isturf(target))
+		splash_animation = image('icons/effects/effects.dmi', target, "splash_floor")
+	splash_animation.color = mix_color_from_reagents(reagents.reagent_list)
+	flick_overlay_global(splash_animation, GLOB.clients, 1.0 SECONDS)
+
 	reagents.clear_reagents()
 
-/obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
+/obj/item/reagent_containers/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
 	reagents.expose_temperature(1000)
-	..()
+	return ..() | COMPONENT_MICROWAVE_SUCCESS
 
 /obj/item/reagent_containers/fire_act(temperature, volume)
 	reagents.expose_temperature(temperature)
@@ -225,7 +253,7 @@
 		return
 
 	var/fill_name = fill_icon_state? fill_icon_state : icon_state
-	var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[fill_name][fill_icon_thresholds[1]]")
+	var/mutable_appearance/filling = mutable_appearance(fill_icon, "[fill_name][fill_icon_thresholds[1]]")
 
 	var/percent = round((reagents.total_volume / volume) * 100)
 	for(var/i in 1 to fill_icon_thresholds.len)

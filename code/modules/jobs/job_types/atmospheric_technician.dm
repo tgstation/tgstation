@@ -6,10 +6,10 @@
 	total_positions = 3
 	spawn_positions = 2
 	supervisors = SUPERVISOR_CE
-	selection_color = "#fff5cc"
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "ATMOSPHERIC_TECHNICIAN"
 
 	outfit = /datum/outfit/job/atmos
 	plasmaman_outfit = /datum/outfit/plasmaman/atmospherics
@@ -46,7 +46,7 @@
 	uniform = /obj/item/clothing/under/rank/engineering/atmospheric_technician
 	belt = /obj/item/storage/belt/utility/atmostech
 	ears = /obj/item/radio/headset/headset_eng
-	l_pocket = /obj/item/modular_computer/tablet/pda/atmos
+	l_pocket = /obj/item/modular_computer/pda/atmos
 	r_pocket = /obj/item/analyzer
 
 	backpack = /obj/item/storage/backpack/industrial

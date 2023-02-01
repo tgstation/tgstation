@@ -58,7 +58,7 @@
 //after spawning
 	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE)
 	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
-	addtimer(CALLBACK(src, .proc/spawn_hunters), 10 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(spawn_hunters)), 10 MINUTES)
 	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
 
@@ -93,7 +93,7 @@
 	player_mind.active = TRUE
 	//if you want to add a fugitive with a special leader in the future, make this switch with the backstory
 	var/mob/living/carbon/human/S = gear_fugitive(leader, landing_turf, backstory)
-	var/obj/item/choice_beacon/augments/A = new(S)
+	var/obj/item/choice_beacon/augments/A = new(landing_turf)
 	S.put_in_hands(A)
 	new /obj/item/autosurgeon(landing_turf)
 

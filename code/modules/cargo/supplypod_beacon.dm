@@ -1,6 +1,7 @@
 /obj/item/supplypod_beacon
 	name = "Supply Pod Beacon"
-	desc = "A device that can be linked to an Express Supply Console for precision supply pod deliveries. Alt-click to remove link."
+	desc = "A device that can be linked to an Express Supply Console for precision supply pod deliveries."
+	desc_controls = "Alt-click to remove link."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "supplypod_beacon"
 	inhand_icon_state = "radio"
@@ -23,7 +24,7 @@
 			launched = TRUE
 			playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
 			playsound(src,'sound/machines/warning-buzzer.ogg',50,FALSE)
-			addtimer(CALLBACK(src, .proc/endLaunch), 33)//wait 3.3 seconds (time it takes for supplypod to land), then update icon
+			addtimer(CALLBACK(src, PROC_REF(endLaunch)), 33)//wait 3.3 seconds (time it takes for supplypod to land), then update icon
 		if (SP_UNLINK)
 			linked = FALSE
 			playsound(src,'sound/machines/synth_no.ogg',50,FALSE)

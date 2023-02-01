@@ -30,9 +30,9 @@
 	hitsound = 'sound/weapons/chainhit.ogg'
 	custom_materials = list(/datum/material/iron = 1000)
 
-/obj/item/melee/chainofcommand/suicide_act(mob/user)
+/obj/item/melee/chainofcommand/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/item/melee/synthetic_arm_blade
 	name = "synthetic arm blade"
@@ -132,8 +132,8 @@
 		var/speedbase = abs((4 SECONDS) / limbs_to_dismember.len)
 		for(bodypart in limbs_to_dismember)
 			i++
-			addtimer(CALLBACK(src, .proc/suicide_dismember, user, bodypart), speedbase * i)
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), (5 SECONDS) * i)
+			addtimer(CALLBACK(src, PROC_REF(suicide_dismember), user, bodypart), speedbase * i)
+	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), (5 SECONDS) * i)
 	return MANUAL_SUICIDE
 
 /obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, obj/item/bodypart/affecting)
@@ -162,6 +162,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
 	throwforce = 10
+	attack_speed = CLICK_CD_RAPID
 	block_chance = 20
 	armour_penetration = 65
 	attack_verb_continuous = list("slashes", "stings", "prickles", "pokes")
@@ -172,7 +173,6 @@
 	. = ..()
 	if(!proximity)
 		return
-	user.changeNext_move(CLICK_CD_RAPID)
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		carbon_target.reagents.add_reagent(/datum/reagent/toxin, 4)
@@ -195,6 +195,7 @@
 	force = 0.001
 	armour_penetration = 1000
 	force_string = "INFINITE"
+	item_flags = NEEDS_PERMIT|NO_BLOOD_ON_ITEM
 	var/obj/machinery/power/supermatter_crystal/shard
 	var/balanced = 1
 
@@ -224,6 +225,7 @@
 		user.dropItemToGround(src)
 	if(proximity_flag)
 		consume_everything(target)
+		return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/melee/supermatter_sword/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
@@ -256,7 +258,7 @@
 	consume_everything(projectile)
 	return BULLET_ACT_HIT
 
-/obj/item/melee/supermatter_sword/suicide_act(mob/user)
+/obj/item/melee/supermatter_sword/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!"))
 	user.dropItemToGround(src, TRUE)
 	shard.Bumped(user)
@@ -280,9 +282,6 @@
 		span_hear("You hear a loud crack as you are washed with a wave of heat."),
 	)
 	shard.Bump(turf)
-
-/obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
-	return FALSE
 
 /obj/item/melee/curator_whip
 	name = "curator's whip"
@@ -335,8 +334,8 @@
 	AddComponent(/datum/component/transforming, \
 		hitsound_on = hitsound, \
 		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_PRE_TRANSFORM, .proc/attempt_transform)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_PRE_TRANSFORM, PROC_REF(attempt_transform))
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_PRE_TRANSFORM].
@@ -450,3 +449,4 @@
 	armour_penetration = 50
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")
+

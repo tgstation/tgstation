@@ -78,8 +78,8 @@
 	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
 	hand = arm_owner.hand_bodyparts[side]
 	if(hand)
-		RegisterSignal(hand, COMSIG_ITEM_ATTACK_SELF, .proc/on_item_attack_self) //If the limb gets an attack-self, open the menu. Only happens when hand is empty
-		RegisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN, .proc/dropkey) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
+		RegisterSignal(hand, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_item_attack_self)) //If the limb gets an attack-self, open the menu. Only happens when hand is empty
+		RegisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(dropkey)) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
 
 /obj/item/organ/internal/cyberimp/arm/Remove(mob/living/carbon/arm_owner, special = 0)
 	Retract()
@@ -90,7 +90,7 @@
 
 /obj/item/organ/internal/cyberimp/arm/proc/on_item_attack_self()
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/ui_action_click)
+	INVOKE_ASYNC(src, PROC_REF(ui_action_click))
 
 /obj/item/organ/internal/cyberimp/arm/emp_act(severity)
 	. = ..()
@@ -227,8 +227,14 @@
 /obj/item/organ/internal/cyberimp/arm/toolset
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contain advanced versions of every tool."
-	items_to_create = list(/obj/item/screwdriver/cyborg, /obj/item/wrench/cyborg, /obj/item/weldingtool/largetank/cyborg,
-		/obj/item/crowbar/cyborg, /obj/item/wirecutters/cyborg, /obj/item/multitool/cyborg)
+	items_to_create = list(
+		/obj/item/screwdriver/cyborg,
+		/obj/item/wrench/cyborg,
+		/obj/item/weldingtool/largetank/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/wirecutters/cyborg,
+		/obj/item/multitool/cyborg,
+	)
 
 /obj/item/organ/internal/cyberimp/arm/toolset/l
 	zone = BODY_ZONE_L_ARM
@@ -274,7 +280,8 @@
 	active_item.set_light_on(TRUE)
 
 /obj/item/organ/internal/cyberimp/arm/flash/Retract()
-	active_item.set_light_on(FALSE)
+	if(active_item)
+		active_item.set_light_on(FALSE)
 	return ..()
 
 /obj/item/organ/internal/cyberimp/arm/baton
@@ -285,7 +292,12 @@
 /obj/item/organ/internal/cyberimp/arm/combat
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm."
-	items_to_create = list(/obj/item/melee/energy/blade/hardlight, /obj/item/gun/medbeam, /obj/item/borg/stun, /obj/item/assembly/flash/armimplant)
+	items_to_create = list(
+		/obj/item/melee/energy/blade/hardlight,
+		/obj/item/gun/medbeam,
+		/obj/item/borg/stun,
+		/obj/item/assembly/flash/armimplant,
+	)
 
 /obj/item/organ/internal/cyberimp/arm/combat/Initialize(mapload)
 	. = ..()
@@ -299,4 +311,26 @@
 /obj/item/organ/internal/cyberimp/arm/surgery
 	name = "surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
-	items_to_create = list(/obj/item/retractor/augment, /obj/item/hemostat/augment, /obj/item/cautery/augment, /obj/item/surgicaldrill/augment, /obj/item/scalpel/augment, /obj/item/circular_saw/augment, /obj/item/surgical_drapes)
+	items_to_create = list(
+		/obj/item/retractor/augment,
+		/obj/item/hemostat/augment,
+		/obj/item/cautery/augment,
+		/obj/item/surgicaldrill/augment,
+		/obj/item/scalpel/augment,
+		/obj/item/circular_saw/augment,
+		/obj/item/surgical_drapes,
+	)
+
+/obj/item/organ/internal/cyberimp/arm/surgery/emagged
+	name = "hacked surgical toolset implant"
+	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm. This one seems to have been tampered with."
+	items_to_create = list(
+		/obj/item/retractor/augment,
+		/obj/item/hemostat/augment,
+		/obj/item/cautery/augment,
+		/obj/item/surgicaldrill/augment,
+		/obj/item/scalpel/augment,
+		/obj/item/circular_saw/augment,
+		/obj/item/surgical_drapes,
+		/obj/item/knife/combat/cyborg,
+	)

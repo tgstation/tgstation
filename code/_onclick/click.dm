@@ -388,7 +388,7 @@
 			human_user.changeNext_move(CLICK_CD_MELEE)
 			return TRUE
 	else if(isalien(user))
-		var/mob/living/carbon/alien/humanoid/alien_boy = user
+		var/mob/living/carbon/alien/adult/alien_boy = user
 		if(alien_boy.grab(src))
 			alien_boy.changeNext_move(CLICK_CD_MELEE)
 			return TRUE
@@ -532,7 +532,7 @@
 
 /atom/movable/screen/click_catcher/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/offset_increased)
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(offset_increased))
 	offset_increased(SSmapping, 0, SSmapping.max_plane_offset)
 
 // Draw to the lowest plane level offered

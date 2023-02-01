@@ -132,4 +132,4 @@ SUBSYSTEM_DEF(lua)
 
 	// Update every lua editor TGUI open for each state that had a task awakened or resumed
 	for(var/datum/lua_state/state in affected_states)
-		INVOKE_ASYNC(state, /datum/lua_state.proc/update_editors)
+		INVOKE_ASYNC(state, TYPE_PROC_REF(/datum/lua_state, update_editors))

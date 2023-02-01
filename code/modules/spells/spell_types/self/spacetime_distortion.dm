@@ -59,7 +59,7 @@
 
 /datum/action/cooldown/spell/spacetime_dist/after_cast()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/clean_turfs), duration)
+	addtimer(CALLBACK(src, PROC_REF(clean_turfs)), duration)
 
 /// Callback which cleans up our effects list after the duration expires.
 /datum/action/cooldown/spell/spacetime_dist/proc/clean_turfs()
@@ -122,7 +122,7 @@
 	. = ..()
 	setDir(pick(GLOB.cardinals))
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	antimagic_flags = flags

@@ -33,9 +33,17 @@
 		/obj/item/bedsheet/patriot = 5,
 		/obj/item/food/burger/superbite = 3,
 	) //U S A
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
+	armor_type = /datum/armor/vending_liberationstation
 	resistance_flags = FIRE_PROOF
 	default_price = PAYCHECK_COMMAND * 2.5
 	extra_price = PAYCHECK_COMMAND * 2.5
 	payment_department = ACCOUNT_SEC
 	light_mask = "liberation-light-mask"
+
+/datum/armor/vending_liberationstation
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	fire = 100
+	acid = 50

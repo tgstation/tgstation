@@ -1,6 +1,6 @@
 /datum/bounty/item/chef/birthday_cake
 	name = "Birthday Cake"
-	description = "Nanotrasen's birthday is coming up! Ship them a birthday cake to celebrate!"
+	description = "Nanotrasen's birthday is coming up! Ship Central Command a birthday cake to celebrate!"
 	reward = CARGO_CRATE_VALUE * 8
 	wanted_types = list(
 		/obj/item/food/cake/birthday = TRUE,
@@ -127,7 +127,7 @@
 
 /datum/bounty/item/chef/soylentgreen
 	name = "Soylent Green"
-	description = "CentCom has heard wonderful things about the product 'Soylent Green', and would love to try some. If you endulge them, expect a pleasant bonus."
+	description = "CentCom has heard wonderful things about the product 'Soylent Green', and would love to try some. If you indulge them, expect a pleasant bonus."
 	reward = CARGO_CRATE_VALUE * 10
 	wanted_types = list(/obj/item/food/soylentgreen = TRUE)
 

@@ -3,7 +3,7 @@
 
 /datum/action/cooldown/mob_cooldown/lava_swoop
 	name = "Lava Swoop"
-	icon_icon = 'icons/effects/effects.dmi'
+	button_icon = 'icons/effects/effects.dmi'
 	button_icon_state = "lavastaff_warn"
 	desc = "Allows you to chase a target while raining lava down."
 	cooldown_time = 4 SECONDS
@@ -26,12 +26,13 @@
 	StartCooldown(360 SECONDS, 360 SECONDS)
 	attack_sequence(target_atom)
 	StartCooldown()
+	return TRUE
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/proc/attack_sequence(atom/target)
 	if(enraged)
 		swoop_attack(target, TRUE)
 		return
-	INVOKE_ASYNC(src, .proc/lava_pools, target)
+	INVOKE_ASYNC(src, PROC_REF(lava_pools), target)
 	swoop_attack(target)
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/proc/swoop_attack(atom/target, lava_arena = FALSE)
@@ -58,7 +59,7 @@
 	owner.alpha = 255
 	animate(owner, alpha = 204, transform = matrix()*0.9, time = 3, easing = BOUNCE_EASING)
 	for(var/i in 1 to 3)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		if(QDELETED(owner) || owner.stat == DEAD) //we got hit and died, rip us
 			qdel(F)
 			if(owner.stat == DEAD)
@@ -99,6 +100,7 @@
 	for(var/mob/living/L in orange(1, owner) - owner)
 		if(L.stat)
 			owner.visible_message(span_warning("[owner] slams down on [L], crushing [L.p_them()]!"))
+			L.investigate_log("has been gibbed by lava swoop.", INVESTIGATE_DEATHS)
 			L.gib()
 		else
 			L.adjustBruteLoss(75)
@@ -211,14 +213,14 @@
 
 /obj/effect/temp_visual/dragon_flight/Initialize(mapload, negative)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/flight, negative)
+	INVOKE_ASYNC(src, PROC_REF(flight), negative)
 
 /obj/effect/temp_visual/dragon_flight/proc/flight(negative)
 	if(negative)
 		animate(src, pixel_x = -SWOOP_HEIGHT*0.1, pixel_z = SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
 	else
 		animate(src, pixel_x = SWOOP_HEIGHT*0.1, pixel_z = SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
-	sleep(3)
+	sleep(0.3 SECONDS)
 	icon_state = "swoop"
 	if(negative)
 		animate(src, pixel_x = -SWOOP_HEIGHT, pixel_z = SWOOP_HEIGHT, time = 7)

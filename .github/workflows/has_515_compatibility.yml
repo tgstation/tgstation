@@ -1,0 +1,18 @@
+# This workflow was added in the 515 compatibility PR - https://github.com/tgstation/tgstation/pull/71161
+# By having this in your repository, we know that you have that PR merged as well.
+# This will be REMOVED when 515 is fully compatible and ready, but for now we need this
+# to prevent merge skew.
+# In the future, this will be a more proper system where commits can be added into a text file,
+# but that's a lot more difficult and I'm in a huge time crunch right now.
+name: "515 Compatibility Pass"
+on:
+  pull_request:
+    branches:
+    - master
+    - 'project/**'
+jobs:
+  has_515_compatibility:
+    name: Has 515 Compatibility
+    runs-on: ubuntu-20.04
+    steps:
+      - run: echo "You're ready to go!"

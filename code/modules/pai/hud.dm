@@ -97,7 +97,7 @@
 /atom/movable/screen/pai/crew_manifest
 	name = "Crew Manifest"
 	icon_state = "manifest"
-	required_software = "crew manifest"
+	required_software = "Crew Manifest"
 
 /atom/movable/screen/pai/crew_manifest/Click()
 	if(!..())

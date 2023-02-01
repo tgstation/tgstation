@@ -1,7 +1,12 @@
-///Called from /mob/living/carbon/help_shake_act, before any hugs have ocurred. (mob/living/helper)
-#define COMSIG_CARBON_PRE_HELP_ACT "carbon_pre_help"
-	/// Stops the rest of help act (hugging, etc) from occuring
+///Called from /datum/species/proc/help : (mob/living/carbon/human/helper, datum/martial_art/helper_style)
+#define COMSIG_CARBON_PRE_HELP "carbon_pre_help"
+	/// Stops the rest of the help
 	#define COMPONENT_BLOCK_HELP_ACT (1<<0)
+
+///Called from /mob/living/carbon/help_shake_act, before any hugs have ocurred. (mob/living/helper)
+#define COMSIG_CARBON_PRE_MISC_HELP "carbon_pre_misc_help"
+	/// Stops the rest of help act (hugging, etc) from occuring
+	#define COMPONENT_BLOCK_MISC_HELP (1<<0)
 
 ///Called from /mob/living/carbon/help_shake_act on the person being helped, after any hugs have ocurred. (mob/living/helper)
 #define COMSIG_CARBON_HELP_ACT "carbon_help"
@@ -76,18 +81,26 @@
 #define COMSIG_CARBON_GAIN_TRAUMA "carbon_gain_trauma"
 ///Called when a carbon loses a brain trauma (source = carbon, trauma = what trauma was removed)
 #define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
-///Called when a carbon updates their health (source = carbon)
-#define COMSIG_CARBON_HEALTH_UPDATE "carbon_health_update"
 ///Called when a carbon's health hud is updated. (source = carbon, shown_health_amount)
 #define COMSIG_CARBON_UPDATING_HEALTH_HUD "carbon_health_hud_update"
 	/// Return if you override the carbon's health hud with something else
 	#define COMPONENT_OVERRIDE_HEALTH_HUD (1<<0)
 ///Called when a carbon updates their sanity (source = carbon)
 #define COMSIG_CARBON_SANITY_UPDATE "carbon_sanity_update"
+///Called when a carbon attempts to breath, before the breath has actually occured
+#define COMSIG_CARBON_ATTEMPT_BREATHE "carbon_attempt_breathe"
+	// Prevents the breath
+	#define COMSIG_CARBON_BLOCK_BREATH (1 << 0)
 ///Called when a carbon breathes, before the breath has actually occured
 #define COMSIG_CARBON_PRE_BREATHE "carbon_pre_breathe"
 ///Called when a carbon updates their mood
 #define COMSIG_CARBON_MOOD_UPDATE "carbon_mood_update"
+///Called when a carbon attempts to eat (eating)
+#define COMSIG_CARBON_ATTEMPT_EAT "carbon_attempt_eat"
+	// Prevents the breath
+	#define COMSIG_CARBON_BLOCK_EAT (1 << 0)
+///Called when a carbon vomits : (distance, force)
+#define COMSIG_CARBON_VOMITED "carbon_vomited"
 
 // /mob/living/carbon/human signals
 
@@ -103,9 +116,11 @@
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity, modifiers)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
-//from /mob/living/carbon/human/proc/check_shields(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration)
+///from /mob/living/carbon/human/proc/check_shields(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration)
 #define COMSIG_HUMAN_CHECK_SHIELDS "human_check_shields"
 	#define SHIELD_BLOCK (1<<0)
+///from /mob/living/carbon/human/proc/force_say(): ()
+#define COMSIG_HUMAN_FORCESAY "human_forcesay"
 
 // Mob transformation signals
 ///Called when a human turns into a monkey, from /mob/living/carbon/proc/finish_monkeyize()
@@ -115,3 +130,10 @@
 
 ///From mob/living/carbon/human/suicide()
 #define COMSIG_HUMAN_SUICIDE_ACT "human_suicide_act"
+
+///from base of /mob/living/carbon/regenerate_limbs(): (excluded_limbs)
+#define COMSIG_CARBON_REGENERATE_LIMBS "living_regen_limbs"
+
+///from /atom/movable/screen/alert/give/proc/handle_transfer(): (taker, item)
+#define COMSIG_CARBON_ITEM_GIVEN "carbon_item_given"
+

@@ -15,7 +15,7 @@
 	forge_objectives()
 	. = ..()
 
-/datum/antagonist/fugitive_hunter/proc/forge_objectives() //this isn't an actual objective because it's about round end rosters
+/datum/antagonist/fugitive_hunter/forge_objectives() //this isn't an actual objective because it's about round end rosters
 	var/datum/objective/capture = new /datum/objective
 	capture.owner = owner
 	capture.explanation_text = "Capture the fugitives in the station and put them into the bluespace capture machine on your ship."
@@ -54,6 +54,9 @@
 
 /datum/antagonist/fugitive_hunter/get_team()
 	return hunter_team
+
+/datum/antagonist/fugitive_hunter/apply_innate_effects(mob/living/mob_override)
+	add_team_hud(mob_override || owner.current)
 
 /datum/team/fugitive_hunters
 	var/backstory = "error"

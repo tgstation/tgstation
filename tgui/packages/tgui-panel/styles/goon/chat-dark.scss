@@ -533,6 +533,12 @@ em {
   font-weight: bold;
 }
 
+.blob {
+  color: #556b2f;
+  font-weight: bold;
+  font-size: 185%;
+}
+
 .cult {
   color: #973e3b;
 }
@@ -796,6 +802,10 @@ em {
   font-size: 2.5em;
 }
 
+.hugeicon {
+  font-size: 5em;
+}
+
 .memo {
   color: #638500;
   text-align: center;
@@ -836,15 +846,6 @@ em {
 
 .resonate {
   color: #298f85;
-}
-
-.monkeyhive {
-  color: #a56408;
-}
-
-.monkeylead {
-  color: #af6805;
-  font-size: 80%;
 }
 
 .connectionClosed,

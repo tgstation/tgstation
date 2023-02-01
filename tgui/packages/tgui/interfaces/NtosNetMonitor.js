@@ -9,9 +9,7 @@ export const NtosNetMonitor = (props, context) => {
     ntnetrelays,
     ntnetstatus,
     config_softwaredownload,
-    config_peertopeer,
     config_communication,
-    config_systemcontrol,
     idsalarm,
     idsstatus,
     ntnetmaxlogs,
@@ -47,9 +45,7 @@ export const NtosNetMonitor = (props, context) => {
               ntnetrelays={ntnetrelays}
               ntnetstatus={ntnetstatus}
               config_softwaredownload={config_softwaredownload}
-              config_peertopeer={config_peertopeer}
               config_communication={config_communication}
-              config_systemcontrol={config_systemcontrol}
               idsalarm={idsalarm}
               idsstatus={idsstatus}
               ntnetmaxlogs={ntnetmaxlogs}
@@ -74,9 +70,7 @@ const MainPage = (props, context) => {
     ntnetrelays,
     ntnetstatus,
     config_softwaredownload,
-    config_peertopeer,
     config_communication,
-    config_systemcontrol,
     idsalarm,
     idsstatus,
     ntnetmaxlogs,
@@ -91,16 +85,7 @@ const MainPage = (props, context) => {
         WARNING: Disabling wireless transmitters when using a wireless device
         may prevent you from reenabling them!
       </NoticeBox>
-      <Section
-        title="Wireless Connectivity"
-        buttons={
-          <Button.Confirm
-            icon={ntnetstatus ? 'power-off' : 'times'}
-            content={ntnetstatus ? 'ENABLED' : 'DISABLED'}
-            selected={ntnetstatus}
-            onClick={() => act('toggleWireless')}
-          />
-        }>
+      <Section title="Wireless Connectivity">
         {ntnetrelays ? (
           <LabeledList>
             <LabeledList.Item label="Active NTNet Relays">
@@ -125,35 +110,13 @@ const MainPage = (props, context) => {
             }
           />
           <LabeledList.Item
-            label="Peer to Peer Traffic"
-            buttons={
-              <Button
-                icon={config_peertopeer ? 'power-off' : 'times'}
-                content={config_peertopeer ? 'ENABLED' : 'DISABLED'}
-                selected={config_peertopeer}
-                onClick={() => act('toggle_function', { id: '2' })}
-              />
-            }
-          />
-          <LabeledList.Item
             label="Communication Systems"
             buttons={
               <Button
                 icon={config_communication ? 'power-off' : 'times'}
                 content={config_communication ? 'ENABLED' : 'DISABLED'}
                 selected={config_communication}
-                onClick={() => act('toggle_function', { id: '3' })}
-              />
-            }
-          />
-          <LabeledList.Item
-            label="Remote System Control"
-            buttons={
-              <Button
-                icon={config_systemcontrol ? 'power-off' : 'times'}
-                content={config_systemcontrol ? 'ENABLED' : 'DISABLED'}
-                selected={config_systemcontrol}
-                onClick={() => act('toggle_function', { id: '4' })}
+                onClick={() => act('toggle_function', { id: '2' })}
               />
             }
           />

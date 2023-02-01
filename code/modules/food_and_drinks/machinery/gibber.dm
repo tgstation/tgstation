@@ -15,26 +15,32 @@
 
 /obj/machinery/gibber/Initialize(mapload)
 	. = ..()
+	if(prob(5))
+		name = "meat grinder"
+		desc = "Okay, if I... if I chop you up in a meat grinder, and the only thing that comes out, that's left of you, is your eyeball, \
+			you'r- you're PROBABLY DEAD! You're probably going to - not you, I'm just sayin', like, if you- if somebody were to, like, \
+			push you into a meat grinder, and, like, your- one of your finger bones is still intact, they're not gonna pick it up and go, \
+			Well see, yeah it wasn't deadly, it wasn't an instant kill move! You still got, like, this part of your finger left!"
 	add_overlay("grjam")
 
 /obj/machinery/gibber/RefreshParts()
 	. = ..()
 	gibtime = 40
 	meat_produced = initial(meat_produced)
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		meat_produced += B.rating
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		gibtime -= 5 * M.rating
-		if(M.rating >= 2)
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		meat_produced += matter_bin.tier
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		gibtime -= 5 * manipulator.tier
+		if(manipulator.tier >= 2)
 			ignore_clothing = TRUE
 
 /obj/machinery/gibber/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.")
-		for(var/obj/item/stock_parts/manipulator/M in component_parts)
-			if(M.rating >= 2)
-				. += span_notice("Gibber has been upgraded to process inorganic materials.")
+		for(var/datum/stock_part/manipulator/manipulator in component_parts)
+			if(manipulator.tier >= 2)
+				. += span_notice("[src] has been upgraded to process inorganic materials.")
 
 /obj/machinery/gibber/update_overlays()
 	. = ..()
@@ -76,10 +82,10 @@
 	if(user.pulling && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
-			to_chat(user, span_warning("This item is not suitable for the gibber!"))
+			to_chat(user, span_warning("This item is not suitable for [src]!"))
 			return
 		var/mob/living/carbon/C = L
-		if(C.buckled ||C.has_buckled_mobs())
+		if(C.buckled || C.has_buckled_mobs())
 			to_chat(user, span_warning("[C] is attached to something!"))
 			return
 
@@ -89,13 +95,13 @@
 					to_chat(user, span_warning("Subject may not have abiotic items on!"))
 					return
 
-		user.visible_message(span_danger("[user] starts to put [C] into the gibber!"))
+		user.visible_message(span_danger("[user] starts to put [C] into [src]!"))
 
 		add_fingerprint(user)
 
 		if(do_after(user, gibtime, target = src))
 			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
-				user.visible_message(span_danger("[user] stuffs [C] into the gibber!"))
+				user.visible_message(span_danger("[user] stuffs [C] into [src]!"))
 				C.forceMove(src)
 				set_occupant(C)
 				update_appearance()
@@ -198,11 +204,12 @@
 		skin = new typeofskin
 
 	log_combat(user, occupant, "gibbed")
-	mob_occupant.death(1)
+	mob_occupant.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
+	mob_occupant.death(TRUE)
 	mob_occupant.ghostize()
 	set_occupant(null)
 	qdel(mob_occupant)
-	addtimer(CALLBACK(src, .proc/make_meat, skin, allmeat, meat_produced, gibtype, diseases), gibtime)
+	addtimer(CALLBACK(src, PROC_REF(make_meat), skin, allmeat, meat_produced, gibtype, diseases), gibtime)
 
 /obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/food/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)

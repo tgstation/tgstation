@@ -7,7 +7,6 @@
 	program_icon_state = "command"
 	requires_ntnet = FALSE
 	available_on_ntnet = FALSE
-	unsendable = TRUE
 	undeletable = TRUE
 	usage_flags = PROGRAM_TABLET
 	size = 5
@@ -15,12 +14,12 @@
 	program_icon = "terminal"
 
 /datum/computer_file/program/robotact/on_start(mob/living/user)
-	if(!istype(computer, /obj/item/modular_computer/tablet/integrated))
+	if(!istype(computer, /obj/item/modular_computer/pda/silicon))
 		to_chat(user, span_warning("A warning flashes across \the [computer]: Device Incompatible."))
 		return FALSE
 	. = ..()
 	if(.)
-		var/obj/item/modular_computer/tablet/integrated/tablet = computer
+		var/obj/item/modular_computer/pda/silicon/tablet = computer
 		if(tablet.device_theme == "syndicate")
 			program_icon_state = "command-syndicate"
 		return TRUE
@@ -32,7 +31,7 @@
 		return data
 
 	//Implied, since we can't run on non tablets
-	var/obj/item/modular_computer/tablet/integrated/tablet = computer
+	var/obj/item/modular_computer/pda/silicon/tablet = computer
 
 	var/mob/living/silicon/robot/cyborg = tablet.silicon_owner
 
@@ -78,7 +77,7 @@
 		return data
 	var/mob/living/silicon/robot/cyborg = user
 	//Implied
-	var/obj/item/modular_computer/tablet/integrated/tablet = computer
+	var/obj/item/modular_computer/pda/silicon/tablet = computer
 
 	data["Laws"] = cyborg.laws.get_law_list(TRUE, TRUE, FALSE)
 	data["borgLog"] = tablet.borglog
@@ -90,7 +89,7 @@
 	if(.)
 		return
 	//Implied type, memes
-	var/obj/item/modular_computer/tablet/integrated/tablet = computer
+	var/obj/item/modular_computer/pda/silicon/tablet = computer
 	var/mob/living/silicon/robot/cyborg = tablet.silicon_owner
 
 	switch(action)
@@ -149,9 +148,9 @@
  * law changes and borg log additions.
  */
 /datum/computer_file/program/robotact/proc/force_full_update()
-	if(!istype(computer, /obj/item/modular_computer/tablet/integrated))
+	if(!istype(computer, /obj/item/modular_computer/pda/silicon))
 		return
-	var/obj/item/modular_computer/tablet/integrated/tablet = computer
+	var/obj/item/modular_computer/pda/silicon/tablet = computer
 	var/datum/tgui/active_ui = SStgui.get_open_ui(tablet.silicon_owner, src)
 	if(active_ui)
 		active_ui.send_full_update()

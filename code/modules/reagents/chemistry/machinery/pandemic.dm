@@ -208,7 +208,7 @@
 	update_appearance()
 	var/turf/source_turf = get_turf(src)
 	log_virus("A culture bottle was printed for the virus [adv_disease.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
-	addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 5 SECONDS)
 	return TRUE
 
 /**
@@ -227,7 +227,7 @@
 	bottle.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
 	wait = TRUE
 	update_appearance()
-	addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 20 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 20 SECONDS)
 	return TRUE
 
 /**

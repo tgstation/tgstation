@@ -18,14 +18,26 @@
 		y += view_size[2]
 	if(findtext(screen_loc, "SOUTH"))
 		y += world.icon_size
-	// Cut out everything we just parsed
-	screen_loc = cut_relative_direction(screen_loc)
 
 	var/list/x_and_y = splittext(screen_loc, ",")
+
 	var/list/x_pack = splittext(x_and_y[1], ":")
 	var/list/y_pack = splittext(x_and_y[2], ":")
-	x += text2num(x_pack[1]) * world.icon_size
-	y += text2num(y_pack[1]) * world.icon_size
+
+	var/x_coord = x_pack[1]
+	var/y_coord = y_pack[1]
+
+	if (findtext(x_coord, "CENTER"))
+		x += view_size[1] / 2
+
+	if (findtext(y_coord, "CENTER"))
+		y += view_size[2] / 2
+
+	x_coord = text2num(cut_relative_direction(x_coord))
+	y_coord = text2num(cut_relative_direction(y_coord))
+
+	x += x_coord * world.icon_size
+	y += y_coord * world.icon_size
 
 	if(length(x_pack) > 1)
 		x += text2num(x_pack[2])

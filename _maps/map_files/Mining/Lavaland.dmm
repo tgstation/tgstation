@@ -232,10 +232,6 @@
 	},
 /area/mine/lounge)
 "bL" = (
-/obj/machinery/door/airlock/external{
-	name = "Lavaland Shuttle Airlock";
-	space_dir = 8
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -244,6 +240,9 @@
 	},
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
 	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Lavaland Shuttle Airlock"
 	},
 /turf/open/floor/iron/textured_large,
 /area/mine/lounge)
@@ -687,7 +686,7 @@
 	},
 /area/mine/cafeteria)
 "eP" = (
-/obj/structure/chair/sofa/left,
+/obj/structure/chair/sofa/left/brown,
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
@@ -1666,7 +1665,7 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/living/north)
 "kx" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
@@ -1804,7 +1803,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "lg" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
@@ -1965,15 +1964,14 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/security)
 "lM" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "Mining Shuttle Airlock";
-	space_dir = 8
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining Shuttle Airlock"
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/production)
 "lN" = (
@@ -2232,8 +2230,8 @@
 /obj/docking_port/stationary{
 	dwidth = 2;
 	height = 5;
-	shuttle_id = "laborcamp_away";
 	name = "labor camp";
+	shuttle_id = "laborcamp_away";
 	width = 9
 	},
 /obj/effect/turf_decal/sand/plating/volcanic,
@@ -2560,7 +2558,7 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "oe" = (
-/obj/structure/chair/sofa/corner{
+/obj/structure/chair/sofa/corner/brown{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners{
@@ -2718,7 +2716,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "pe" = (
-/obj/structure/chair/sofa,
+/obj/structure/chair/sofa/middle/brown,
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
@@ -4064,12 +4062,11 @@
 /turf/open/floor/iron,
 /area/mine/cafeteria)
 "xN" = (
-/obj/machinery/door/airlock/external{
-	name = "Lavaland Shuttle Airlock";
-	space_dir = 8
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Lavaland Shuttle Airlock"
 	},
 /turf/open/floor/iron/textured_large,
 /area/mine/lounge)
@@ -4110,9 +4107,9 @@
 /obj/docking_port/stationary{
 	dir = 2;
 	dwidth = 11;
-	height = 22;
-	shuttle_id = "whiteship_lavaland";
+	height = 24;
 	name = "lavaland wastes";
+	shuttle_id = "whiteship_lavaland";
 	width = 35
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -4945,8 +4942,8 @@
 	dir = 2;
 	dwidth = 3;
 	height = 10;
-	shuttle_id = "mining_away";
 	name = "lavaland mine";
+	shuttle_id = "mining_away";
 	width = 7
 	},
 /obj/effect/turf_decal/sand/plating/volcanic,
@@ -5125,7 +5122,7 @@
 	},
 /area/mine/production)
 "Fd" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners{
@@ -5164,8 +5161,8 @@
 	dir = 4;
 	dwidth = 3;
 	height = 7;
-	shuttle_id = "lavaland_common_away";
 	name = "Mining base public dock";
+	shuttle_id = "lavaland_common_away";
 	width = 7
 	},
 /obj/effect/turf_decal/sand/plating/volcanic,
@@ -7097,10 +7094,6 @@
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/quarters)
 "RW" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "Mining Shuttle Airlock";
-	space_dir = 8
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
@@ -7109,6 +7102,9 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/mid_joiner{
 	dir = 1
+	},
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining Shuttle Airlock"
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/production)
@@ -54373,8 +54369,8 @@ pU
 pU
 pU
 pU
-ZY
-ZY
+pU
+pU
 pU
 pU
 pU
@@ -54625,14 +54621,14 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -54873,8 +54869,6 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
 ZY
 ZY
 ZY
@@ -54884,12 +54878,14 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -55130,10 +55126,6 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
@@ -55144,10 +55136,14 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -55387,12 +55383,6 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
@@ -55403,8 +55393,14 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -55644,14 +55640,6 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
@@ -55662,6 +55650,14 @@ ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -55902,14 +55898,6 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
@@ -55919,6 +55907,14 @@ ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -56159,14 +56155,6 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
@@ -56175,6 +56163,14 @@ ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -56417,20 +56413,20 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -56674,14 +56670,6 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
@@ -56692,6 +56680,14 @@ pU
 pU
 pU
 yc
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -56931,20 +56927,20 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -57189,19 +57185,19 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -57446,20 +57442,20 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -57703,20 +57699,20 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -57960,14 +57956,6 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
@@ -57975,6 +57963,14 @@ ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -58218,20 +58214,20 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -58475,20 +58471,20 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -58732,14 +58728,6 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
@@ -58747,6 +58735,14 @@ ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -58990,20 +58986,20 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -59247,14 +59243,6 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
@@ -59262,6 +59250,14 @@ ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -59504,14 +59500,6 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
@@ -59519,6 +59507,14 @@ ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -59761,14 +59757,6 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
@@ -59778,6 +59766,14 @@ ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -60019,14 +60015,6 @@ fQ
 fQ
 fQ
 fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
-fQ
 ZY
 ZY
 ZY
@@ -60037,6 +60025,14 @@ ZY
 ZY
 ZY
 ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -60288,16 +60284,16 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 pU
@@ -60548,14 +60544,14 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 aj
@@ -60805,15 +60801,15 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 aj
@@ -61064,13 +61060,13 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+pU
+pU
+pU
+pU
+pU
+pU
+pU
 pU
 pU
 aj
@@ -61324,11 +61320,11 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+pU
+pU
+pU
+pU
+pU
 pU
 aj
 aj
@@ -61582,10 +61578,10 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
+pU
+pU
+pU
+pU
 pU
 aj
 aj
@@ -61841,10 +61837,10 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
+pU
+pU
+pU
+pU
 aj
 aj
 aj
@@ -62100,9 +62096,9 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
+pU
+pU
+pU
 aj
 aj
 aj

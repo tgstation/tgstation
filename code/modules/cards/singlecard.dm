@@ -168,7 +168,9 @@
 			// only decks cause a balloon alert
 			user.balloon_alert_to_viewers("deals a card")
 
-		var/obj/item/toy/cards/cardhand/new_cardhand = new (drop_location(), list(src, card))
+		var/obj/item/toy/cards/cardhand/new_cardhand = new (drop_location())
+		new_cardhand.insert(src)
+		new_cardhand.insert(card)
 		new_cardhand.pixel_x = pixel_x
 		new_cardhand.pixel_y = pixel_y
 

@@ -24,6 +24,8 @@
 	var/icon_dead
 	/// Used to override harvest icon (default is `"[species]-harvest"`). If null, plant will use `[icon_grow][growthstages]`.
 	var/icon_harvest
+	/// Used to offset the plant sprite so that it appears at proper height in the tray
+	var/plant_icon_offset = 8
 	/// How long before the plant begins to take damage from age.
 	var/lifespan = 25
 	/// Amount of health the plant has.
@@ -275,11 +277,6 @@
 				data = list("blood_type" = "O-")
 			if(istype(grown_edible) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
 				data = grown_edible.tastes // apple tastes of apple.
-				//Handles the distillary trait, swaps nutriment and vitamins for that species brewable if it exists.
-				if(get_gene(/datum/plant_gene/trait/brewing) && grown_edible.distill_reagent)
-					T.reagents.add_reagent(grown_edible.distill_reagent, amount/2)
-					continue
-
 			T.reagents.add_reagent(rid, amount, data)
 
 		//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.

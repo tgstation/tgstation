@@ -39,8 +39,8 @@
 /obj/machinery/fat_sucker/RefreshParts()
 	. = ..()
 	var/rating = 0
-	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
-		rating += L.rating
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		rating += micro_laser.tier
 	bite_size = initial(bite_size) + rating * 2.5
 	nutrient_to_meat = initial(nutrient_to_meat) - rating * 5
 
@@ -62,7 +62,7 @@
 			set_occupant(null)
 			return
 		to_chat(occupant, span_notice("You enter [src]."))
-		addtimer(CALLBACK(src, .proc/start_extracting), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
+		addtimer(CALLBACK(src, PROC_REF(start_extracting)), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
 		update_appearance()
 
 /obj/machinery/fat_sucker/open_machine(mob/user)

@@ -1,0 +1,73 @@
+2023-02-01:
+  A.C.M.O.:
+  - bugfix: Fully fixed the DNA Infuser, which will now infuse organs as expected.
+  - bugfix: Fixed flyperson species transformation and organ set bonus, which was
+      throwing a runtime.
+  - bugfix: Fixed many typos in organ-related source code.
+  JohnFulpWillard:
+  - bugfix: the MODsuit control maint app now links up to MOdsuits.
+  LT3:
+  - imageadd: Hilbert Research Facility's tram controls have finally been picked up
+      off the floor and mounted to the wall
+  - bugfix: Hilbert Research Facility's tram doors are no longer linked to the main
+      station tram
+  - code_imp: Hilbert Research Facility now has proper tram atmos barriers installed
+  LemonInTheDark:
+  - bugfix: Fixes parallax showing up ABOVE the game if you moved z levels while disconnected
+  - rscadd: Space now makes things in it starlight faintly blue
+  - bugfix: Glass floors that display space now properly let space shine through them,
+      rather then hiding it in the dark
+  - rscadd: Glass floors above space now glow faintly depending on their glass type
+  NamelessFairy:
+  - bugfix: Removing a malf AIs brain and inserting it into a new core no-longer clears
+      its zeroth law
+  - bugfix: 17 year old crew member medical/security records will no longer show them
+      as 18
+  - code_imp: Medical and security records now use the minimum and maximum age defines
+      rather than hardcoded minimums and maximums
+  Rhials:
+  - qol: ghosts now get an orbit notification for wise cows!
+  SyncIt21:
+  - bugfix: apc not assigning itself a name based on its area
+  - bugfix: newly built apc's not getting assigned area names
+  - bugfix: merge skew helll
+  carshalash:
+  - balance: Gibs now provide a small amount of nutriment.
+  flowercuco:
+  - rscadd: Poster boy and Throwing arm positive quirks.
+  - imageadd: added posters for poster boy quirk
+  - bugfix: pizza crates' pizza list applies the assigned weight on its pizza list
+  itseasytosee:
+  - code_imp: Greater support for variability in weapon attack speed
+  - admin: Admins are now able to grief you by hitting you with a toolbox 10 times
+      in one second.
+  ophaq:
+  - rscadd: Axolotl lovers rejoice! I added axolotls to cytology and as such are now
+      swabbable.
+  - rscadd: Frog cells are now named "anura amphibian cells." This literally means
+      "frog amphibian cells."
+  - rscadd: Axolotl are "caudata amphibian cells." This literally means "salamander
+      amphibian cells."
+  san7890:
+  - spellcheck: Whenever you offer your hand to someone in need, or just wanting to
+      pull them around- the alert that shows up to them should be a bit more clear
+      now with a 100% decrease in non-necessary pronouns and articles.
+  - bugfix: You now should no longer be able to accidentally offer someone your "off-hand"
+      item, since it's an abstract thing that shouldn't be considered a physical entity.
+  vinylspiders:
+  - bugfix: plasmamen no longer can suffer liver failure from injecting themselves
+      with plasma (unless they have a human liver for some reason).
+  - bugfix: a person who is infected with a plasma fixation disease can no longer
+      can suffer liver failure from injecting themselves with plasma.
+  - bugfix: plasmamen no longer can suffer liver failure from consuming other organic
+      toxins, which they are not supposed to be affected by.
+  - bugfix: plasma fixation heal-through-inject-or-consumption now works for plasmamen
+      by letting the metabolism procs take care of removing it from their systems.
+  - bugfix: hot ice now has the same wound-healing and nontoxic properties as plasma
+      to plasmamen, since it is described as "frozen plasma". It is also nontoxic
+      to plasma fixation virus sufferers.
+  - bugfix: plasma breathed through internals now contributes to the healing amount
+      from plasma fixation.
+  - qol: prevents mob spawner plasmamen from spawning without their suit and internals.
+  - code_imp: the equip proc can now find internals in the hand slot and automatically
+      open them, allowing for less snowflakey code down the line.

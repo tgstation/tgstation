@@ -38,6 +38,7 @@
 	/// If you want to override what each floor is named as, you can do so with this list.
 	/// Make this an assoc list of "z level you want to rename" to "desired name".
 	/// So, if you want the z-level 2 destination to be named "Cargo", you would do list("2" = "Cargo").
+	/// (Reminder: Z1 gets loaded as Central Command, so your map's bottom Z will be Z2!)
 	var/list/preset_destination_names
 
 	/// What z-level did we move to last? Used for showing the user in the UI which direction we're moving.
@@ -298,7 +299,7 @@
 			if(!lift || lift.controls_locked == LIFT_PLATFORM_LOCKED)
 				return TRUE // We shouldn't be moving anything, update UI
 
-			INVOKE_ASYNC(lift, /datum/lift_master.proc/move_to_zlevel, desired_z, CALLBACK(src, .proc/check_panel), usr)
+			INVOKE_ASYNC(lift, TYPE_PROC_REF(/datum/lift_master, move_to_zlevel), desired_z, CALLBACK(src, PROC_REF(check_panel)), usr)
 			last_move_target = desired_z
 			return TRUE // Succcessfully initiated a move. Regardless of whether it actually works, update the UI
 
@@ -314,7 +315,7 @@
 
 			// Open all lift doors, it's an emergency dang it!
 			lift.update_lift_doors(action = OPEN_DOORS)
-			door_reset_timerid = addtimer(CALLBACK(src, .proc/reset_doors), 3 MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
+			door_reset_timerid = addtimer(CALLBACK(src, PROC_REF(reset_doors)), 3 MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
 			return TRUE // We opened up all the doors, update the UI so the emergency button is replaced correctly
 
 		if("reset_doors")

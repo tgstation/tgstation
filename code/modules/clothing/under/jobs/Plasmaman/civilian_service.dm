@@ -7,13 +7,18 @@
 	icon = 'icons/obj/clothing/under/plasmaman.dmi'
 	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
 	clothing_flags = PLASMAMAN_PREVENT_IGNITION
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 95, ACID = 95)
+	armor_type = /datum/armor/under_plasmaman
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = FALSE
 	strip_delay = 80
 	var/next_extinguish = 0
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
+
+/datum/armor/under_plasmaman
+	bio = 100
+	fire = 95
+	acid = 95
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	. = ..()
@@ -131,4 +136,8 @@
 			extinguishes_left--
 			H.visible_message(span_warning("[H]'s suit spews space lube everywhere!"),span_warning("Your suit spews space lube everywhere!"))
 			H.extinguish_mob()
-			new /obj/effect/particle_effect/fluid/foam(loc) //Truely terrifying.
+			var/datum/effect_system/fluid_spread/foam/foam = new
+			var/datum/reagents/foamreagent = new /datum/reagents(15)
+			foamreagent.add_reagent(/datum/reagent/lube, 15)
+			foam.set_up(4, holder = src, location = loc, carry = foamreagent)
+			foam.start() //Truly terrifying.

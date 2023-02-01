@@ -5,12 +5,12 @@
 	var/list/paths = typesof(/obj/item/mod/control/pre_equipped)
 
 	for(var/modpath in paths)
-		var/obj/item/mod/control/mod = new modpath()
+		var/obj/item/mod/control/pre_equipped/mod = new modpath()
 		TEST_ASSERT(mod.theme, "[modpath] spawned without a theme.")
 		var/list/modules = list()
 		var/complexity_max = mod.complexity_max
 		var/complexity = 0
-		for(var/obj/item/mod/module/module as anything in mod.initial_modules)
+		for(var/obj/item/mod/module/module as anything in mod.applied_modules + mod.theme.inbuilt_modules)
 			module = new module()
 			complexity += module.complexity
 			TEST_ASSERT(complexity <= complexity_max, "[modpath] starting modules reach above max complexity.")

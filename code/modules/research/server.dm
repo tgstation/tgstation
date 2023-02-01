@@ -9,7 +9,7 @@
 /// The ninja has blown the HDD up.
 #define HDD_OVERLOADED 4
 
-#define SERVER_NOMINAL_TEXT "<font color='lightgreen'>Nominal</font>"
+#define SERVER_NOMINAL_TEXT "Nominal"
 
 /obj/machinery/rnd/server
 	name = "\improper R&D Server"
@@ -17,6 +17,7 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "RD-server-on"
 	base_icon_state = "RD-server"
+	circuit = /obj/item/circuitboard/machine/rdserver
 	req_access = list(ACCESS_RD)
 
 	/// if TRUE, we are currently operational and giving out research points.
@@ -26,11 +27,16 @@
 
 /obj/machinery/rnd/server/Initialize(mapload)
 	. = ..()
+	if(CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
+		stored_research = new /datum/techweb
+	stored_research.techweb_servers |= src
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
-	SSresearch.servers |= src
 
 /obj/machinery/rnd/server/Destroy()
-	SSresearch.servers -= src
+	if(stored_research)
+		stored_research.techweb_servers -= src
+	if(CONFIG_GET(flag/no_default_techweb_link))
+		QDEL_NULL(stored_research)
 	return ..()
 
 /obj/machinery/rnd/server/update_icon_state()
@@ -59,12 +65,12 @@
 	update_current_power_usage()
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/machinery/rnd/server/emp_act()
+/obj/machinery/rnd/server/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	set_machine_stat(machine_stat | EMPED)
-	addtimer(CALLBACK(src, .proc/fix_emp), 60 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(fix_emp)), 60 SECONDS)
 	refresh_working()
 
 /// Callback to un-emp the server afetr some time.
@@ -81,100 +87,30 @@
 /// Gets status text based on this server's status for the computer.
 /obj/machinery/rnd/server/proc/get_status_text()
 	if(machine_stat & EMPED)
-		return "<font color=red>O&F@I*$ - R3*&O$T R@U!R%D</font>"
+		return "O&F@I*$ - R3*&O$T R@U!R%D"
 	else if(machine_stat & NOPOWER)
-		return "<font color=red>Offline - Server Unpowered</font>"
+		return "Offline - Server Unpowered"
 	else if(research_disabled)
-		return "<font color=red>Offline - Server Control Disabled</font>"
+		return "Offline - Server Control Disabled"
 	else if(!working)
 		// If, for some reason, working is FALSE even though we're not emp'd or powerless,
 		// We need something to update our working state - such as rebooting the server
-		return "<font color=red>Offline - Reboot Required</font>"
+		return "Offline - Reboot Required"
 
 	return SERVER_NOMINAL_TEXT
 
-/obj/machinery/computer/rdservercontrol
-	name = "R&D Server Controller"
-	desc = "Used to manage access to research and manufacturing databases."
-	icon_screen = "rdcomp"
-	icon_keyboard = "rd_key"
-	var/screen = 0
-	var/obj/machinery/rnd/server/temp_server
-	var/list/servers = list()
-	var/list/consoles = list()
-	req_access = list(ACCESS_RD)
-	var/badmin = 0
-	circuit = /obj/item/circuitboard/computer/rdservercontrol
-
-/obj/machinery/computer/rdservercontrol/Topic(href, href_list)
-	if(..())
+/obj/machinery/rnd/server/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!stored_research)
 		return
-
-	add_fingerprint(usr)
-	if (href_list["toggle"])
-		if(allowed(usr) || obj_flags & EMAGGED)
-			var/obj/machinery/rnd/server/S = locate(href_list["toggle"]) in SSresearch.servers
-			S.toggle_disable(usr)
-		else
-			to_chat(usr, span_danger("Access Denied."))
-
-	updateUsrDialog()
-	return
-
-/obj/machinery/computer/rdservercontrol/ui_interact(mob/user)
-	. = ..()
-	var/list/dat = list()
-
-	dat += "<b>Connected Servers:</b>"
-	dat += "<table><tr><td style='width:25%'><b>Server</b></td><td style='width:25%'><b>Status</b></td><td style='width:25%'><b>Control</b></td>"
-	for(var/obj/machinery/rnd/server/server in GLOB.machines)
-		var/server_info = ""
-
-		var/status_text = server.get_status_text()
-		var/disable_text = server.research_disabled ? "<font color=red>Disabled</font>" : "<font color=lightgreen>Online</font>"
-
-		server_info += "<tr><td style='width:25%'>[server.name]</td>"
-		server_info += "<td style='width:25%'>[status_text]</td>"
-		server_info += "<td style='width:25%'><a href='?src=[REF(src)];toggle=[REF(server)]'>([disable_text])</a></td><br>"
-
-		dat += server_info
-
-	dat += "</table></br>"
-
-	dat += "<b>Research Log</b></br>"
-	var/datum/techweb/stored_research = SSresearch.science_tech
-	if(length(stored_research.research_logs))
-		dat += "<table BORDER=\"1\">"
-		dat += "<tr><td><b>Entry</b></td><td><b>Research Name</b></td><td><b>Cost</b></td><td><b>Researcher Name</b></td><td><b>Console Location</b></td></tr>"
-		for(var/i=stored_research.research_logs.len, i>0, i--)
-			dat += "<tr><td>[i]</td>"
-			for(var/j in stored_research.research_logs[i])
-				dat += "<td>[j]</td>"
-			dat +="</tr>"
-		dat += "</table>"
-
-	else
-		dat += "</br>No history found."
-
-	var/datum/browser/popup = new(user, "server_com", src.name, 900, 620)
-	popup.set_content(dat.Join())
-	popup.open()
-
-/obj/machinery/computer/rdservercontrol/attackby(obj/item/D, mob/user, params)
-	. = ..()
-	src.updateUsrDialog()
-
-/obj/machinery/computer/rdservercontrol/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
-	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	obj_flags |= EMAGGED
-	to_chat(user, span_notice("You disable the security protocols."))
+	tool.buffer = stored_research
+	to_chat(user, span_notice("Stored [src]'s techweb information in [tool]."))
+	return TRUE
 
 /// Master R&D server. As long as this still exists and still holds the HDD for the theft objective, research points generate at normal speed. Destroy it or an antag steals the HDD? Half research speed.
 /obj/machinery/rnd/server/master
 	max_integrity = 1800 //takes roughly ~15s longer to break then full deconstruction.
-	var/obj/item/computer_hardware/hard_drive/cluster/hdd_theft/source_code_hdd
+	circuit = null
+	var/obj/item/computer_disk/hdd_theft/source_code_hdd
 	var/deconstruction_state = HDD_PANEL_CLOSED
 	var/front_panel_screws = 4
 	var/hdd_wires = 6
@@ -184,15 +120,12 @@
 	name = "\improper Master " + name
 	desc += "\nIt looks incredibly resistant to damage!"
 	source_code_hdd = new(src)
-	SSresearch.master_servers += src
 
 	add_overlay("RD-server-objective-stripes")
 
 /obj/machinery/rnd/server/master/Destroy()
 	if (source_code_hdd && (deconstruction_state == HDD_OVERLOADED))
 		QDEL_NULL(source_code_hdd)
-
-	SSresearch.master_servers -= src
 
 	return ..()
 
@@ -229,7 +162,7 @@
 	return TRUE
 
 /obj/machinery/rnd/server/master/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/computer_hardware/hard_drive/cluster/hdd_theft))
+	if(istype(attacking_item, /obj/item/computer_disk/hdd_theft))
 		switch(deconstruction_state)
 			if(HDD_PANEL_CLOSED)
 				balloon_alert(user, "you can't find a place to insert it!")
@@ -287,7 +220,7 @@
 			to_chat(user, span_notice("You cut the final wire and remove [source_code_hdd]."))
 			try_put_in_hand(source_code_hdd, user)
 			source_code_hdd = null
-			SSresearch.income_modifier *= 0.5
+			stored_research.income_modifier *= 0.5
 			return TRUE
 		to_chat(user, span_notice("You delicately cut the wire. [hdd_wires] wire\s left..."))
 	return TRUE

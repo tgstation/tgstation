@@ -55,6 +55,7 @@
 	name = "pack of bungo tree seeds"
 	desc = "These seeds grow into bungo trees. They appear to be heavy and almost perfectly spherical."
 	icon_state = "seed-bungotree"
+	plant_icon_offset = 4
 	species = "bungotree"
 	plantname = "Bungo Tree"
 	product = /obj/item/food/grown/bungofruit

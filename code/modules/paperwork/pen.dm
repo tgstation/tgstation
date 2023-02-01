@@ -32,9 +32,9 @@
 	embedding = list(embed_chance = 50)
 	sharpness = SHARP_POINTY
 
-/obj/item/pen/suicide_act(mob/user)
+/obj/item/pen/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku..."))
-	return(BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/pen/blue
 	desc = "It's a normal blue ink pen."
@@ -100,7 +100,7 @@
 	result = /obj/item/pen/charcoal
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 1, /datum/reagent/ash = 30)
 	time = 3 SECONDS
-	category = CAT_PRIMAL
+	category = CAT_TOOLS
 
 /obj/item/pen/fountain/captain
 	name = "captain's fountain pen"
@@ -160,8 +160,14 @@
 
 /obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
 	. = ..()
+
+	if (!proximity)
+		return .
+
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
-	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
+	if(isobj(O) && (O.obj_flags & UNIQUE_RENAME))
 		var/penchoice = tgui_input_list(user, "What would you like to edit?", "Pen Setting", list("Rename", "Description", "Reset"))
 		if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
 			return
@@ -247,6 +253,7 @@
 	sharpness = SHARP_POINTY
 	armour_penetration = 20
 	bare_wound_bonus = 10
+	item_flags = NO_BLOOD_ON_ITEM
 	light_system = MOVABLE_LIGHT
 	light_range = 1.5
 	light_power = 0.75
@@ -273,15 +280,16 @@
 		throw_speed_on = 4, \
 		sharpness_on = SHARP_EDGED, \
 		w_class_on = WEIGHT_CLASS_NORMAL)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	RegisterSignal(src, COMSIG_DETECTIVE_SCANNED, PROC_REF(on_scan))
 
-/obj/item/pen/edagger/suicide_act(mob/user)
-	. = BRUTELOSS
+/obj/item/pen/edagger/suicide_act(mob/living/user)
 	if(extended)
 		user.visible_message(span_suicide("[user] forcefully rams the pen into their mouth!"))
 	else
 		user.visible_message(span_suicide("[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
 		attack_self(user)
+	return BRUTELOSS
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -316,6 +324,10 @@
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
+/obj/item/pen/edagger/proc/on_scan(datum/source, mob/user, list/extra_data)
+	SIGNAL_HANDLER
+	LAZYADD(extra_data[DETSCAN_CATEGORY_ILLEGAL], "Hard-light generator detected.")
+
 /obj/item/pen/survival
 	name = "survival pen"
 	desc = "The latest in portable survival technology, this pen was designed as a miniature diamond pickaxe. Watchers find them very desirable for their diamond exterior."
@@ -339,3 +351,53 @@
 	force = 5
 	wound_bonus = 100
 	demolition_mod = 9000
+
+// screwdriver pen!
+
+/obj/item/pen/screwdriver
+	desc = "A pen with an extendable screwdriver tip. This one has a yellow cap."
+	icon_state = "pendriver"
+	toolspeed = 1.2  // gotta have some downside
+	/// whether the pen is extended
+	var/extended = FALSE
+
+/obj/item/pen/screwdriver/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		throwforce_on = 5, \
+		w_class_on = WEIGHT_CLASS_SMALL, \
+		sharpness_on = TRUE)
+
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(toggle_screwdriver))
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+
+/obj/item/pen/screwdriver/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, extended))
+		if(var_value != extended)
+			var/datum/component/transforming/transforming_comp = GetComponent(/datum/component/transforming)
+			transforming_comp.on_attack_self(src)
+			datum_flags |= DF_VAR_EDITED
+			return
+	return ..()
+
+/obj/item/pen/screwdriver/proc/toggle_screwdriver(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+	extended = active
+	if(user)
+		balloon_alert(user, "[extended ? "extended" : "retracted"]!")
+
+	if(!extended)
+		tool_behaviour = initial(tool_behaviour)
+		RemoveElement(/datum/element/eyestab)
+	else
+		tool_behaviour = TOOL_SCREWDRIVER
+		AddElement(/datum/element/eyestab)
+
+	update_appearance(UPDATE_ICON)
+	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/pen/screwdriver/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][extended ? "_out":null]"
+	inhand_icon_state = initial(inhand_icon_state) //since transforming component switches the icon.

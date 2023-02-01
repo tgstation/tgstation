@@ -150,12 +150,9 @@
 /obj/structure/fans/tiny,
 /obj/docking_port/mobile{
 	dir = 8;
-	dwidth = 2;
-	height = 11;
 	shuttle_id = "ferry";
 	name = "ferry shuttle";
-	preferred_direction = 4;
-	width = 5
+	preferred_direction = 4
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)

@@ -7,7 +7,9 @@
 	name = "Blood Crawl"
 	desc = "Allows you to phase in and out of existance via pools of blood."
 	background_icon_state = "bg_demon"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	overlay_icon_state = "bg_demon_border"
+
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "bloodcrawl"
 
 	spell_requirements = NONE
@@ -21,14 +23,36 @@
 	/// If TRUE, we equip "blood crawl" hands to the jaunter to prevent using items
 	var/equip_blood_hands = TRUE
 
+/datum/action/cooldown/spell/jaunt/bloodcrawl/Grant(mob/grant_to)
+	. = ..()
+	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
+
+/datum/action/cooldown/spell/jaunt/bloodcrawl/Remove(mob/remove_from)
+	. = ..()
+	UnregisterSignal(remove_from, COMSIG_MOVABLE_MOVED)
+
+/datum/action/cooldown/spell/jaunt/bloodcrawl/can_cast_spell(feedback = TRUE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(find_nearby_blood(get_turf(owner)))
+		return TRUE
+	if(feedback)
+		to_chat(owner, span_warning("There must be a nearby source of blood!"))
+	return FALSE
+
 /datum/action/cooldown/spell/jaunt/bloodcrawl/cast(mob/living/cast_on)
 	. = ..()
-	for(var/obj/effect/decal/cleanable/blood_nearby in range(blood_radius, get_turf(cast_on)))
-		if(blood_nearby.can_bloodcrawl_in())
-			return do_bloodcrawl(blood_nearby, cast_on)
+	// Should always return something because we checked that in can_cast_spell before arriving here
+	var/obj/effect/decal/cleanable/blood_nearby = find_nearby_blood(get_turf(cast_on))
+	do_bloodcrawl(blood_nearby, cast_on)
 
-	reset_spell_cooldown()
-	to_chat(cast_on, span_warning("There must be a nearby source of blood!"))
+/// Returns a nearby blood decal, or null if there aren't any
+/datum/action/cooldown/spell/jaunt/bloodcrawl/proc/find_nearby_blood(turf/origin)
+	for(var/obj/effect/decal/cleanable/blood_nearby in range(blood_radius, origin))
+		if(blood_nearby.can_bloodcrawl_in())
+			return blood_nearby
+	return null
 
 /**
  * Attempts to enter or exit the passed blood pool.
@@ -65,6 +89,7 @@
 		jaunter.notransform = FALSE
 		return FALSE
 
+	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
 	if(equip_blood_hands && iscarbon(jaunter))
 		jaunter.drop_all_held_items()
 		// Give them some bloody hands to prevent them from doing things
@@ -100,20 +125,17 @@
 	if(!exit_jaunt(jaunter, get_turf(blood)))
 		return FALSE
 
-	if(equip_blood_hands && iscarbon(jaunter))
-		for(var/obj/item/bloodcrawl/blood_hand in jaunter.held_items)
-			jaunter.temporarilyRemoveItemFromInventory(blood_hand, force = TRUE)
-			qdel(blood_hand)
-
 	blood.visible_message(span_boldwarning("[jaunter] rises out of [blood]!"))
 	return TRUE
 
-/datum/action/cooldown/spell/jaunt/bloodcrawl/exit_jaunt(mob/living/unjaunter, turf/loc_override)
-	. = ..()
-	if(!.)
-		return
-
+/datum/action/cooldown/spell/jaunt/bloodcrawl/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
+	UnregisterSignal(jaunt, COMSIG_MOVABLE_MOVED)
 	exit_blood_effect(unjaunter)
+	if(equip_blood_hands && iscarbon(unjaunter))
+		for(var/obj/item/bloodcrawl/blood_hand in unjaunter.held_items)
+			unjaunter.temporarilyRemoveItemFromInventory(blood_hand, force = TRUE)
+			qdel(blood_hand)
+	return ..()
 
 /// Adds an coloring effect to mobs which exit blood crawl.
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/exit_blood_effect(mob/living/exited)
@@ -128,7 +150,7 @@
 
 	exited.add_atom_colour(new_color, TEMPORARY_COLOUR_PRIORITY)
 	// ...but only for a few seconds
-	addtimer(CALLBACK(exited, /atom/.proc/remove_atom_colour, TEMPORARY_COLOUR_PRIORITY, new_color), 6 SECONDS)
+	addtimer(CALLBACK(exited, TYPE_PROC_REF(/atom/, remove_atom_colour), TEMPORARY_COLOUR_PRIORITY, new_color), 6 SECONDS)
 
 /**
  * Slaughter demon's blood crawl
@@ -182,7 +204,7 @@
 
 /**
  * Consumes the [victim] from the [jaunter], fully healing them
- * and calling [proc/on_victim_consumed] if successful.
+ * and calling [proc/on_victim_consumed] if successful.)
  */
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/proc/consume_victim(mob/living/victim, mob/living/jaunter)
 	on_victim_start_consume(victim, jaunter)
@@ -198,10 +220,12 @@
 	if(SEND_SIGNAL(victim, COMSIG_LIVING_BLOOD_CRAWL_CONSUMED, src, jaunter) & COMPONENT_STOP_CONSUMPTION)
 		return FALSE
 
-	jaunter.revive(full_heal = TRUE, admin_revive = FALSE)
+	jaunter.revive(HEAL_ALL)
 
 	// No defib possible after laughter
 	victim.apply_damage(1000, BRUTE, wound_bonus = CANT_WOUND)
+	if(victim.stat != DEAD)
+		victim.investigate_log("has been killed by being consumed by a slaugter demon.", INVESTIGATE_DEATHS)
 	victim.death()
 	on_victim_consumed(victim, jaunter)
 
@@ -238,7 +262,7 @@
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/Grant(mob/grant_to)
 	. = ..()
 	if(owner)
-		RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_death)
+		RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/Remove(mob/living/remove_from)
 	UnregisterSignal(remove_from, COMSIG_LIVING_DEATH)
@@ -250,8 +274,8 @@
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/on_victim_consumed(mob/living/victim, mob/living/jaunter)
 	to_chat(jaunter, span_clown("[victim] joins your party! Your health is fully restored."))
 	consumed_mobs += victim
-	RegisterSignal(victim, COMSIG_MOB_STATCHANGE, .proc/on_victim_statchange)
-	RegisterSignal(victim, COMSIG_PARENT_QDELETING, .proc/on_victim_deleted)
+	RegisterSignal(victim, COMSIG_MOB_STATCHANGE, PROC_REF(on_victim_statchange))
+	RegisterSignal(victim, COMSIG_PARENT_QDELETING, PROC_REF(on_victim_deleted))
 
 /**
  * Signal proc for COMSIG_LIVING_DEATH and COMSIG_PARENT_QDELETING
@@ -268,9 +292,9 @@
 		UnregisterSignal(friend, list(COMSIG_MOB_STATCHANGE, COMSIG_PARENT_QDELETING))
 
 		friend.forceMove(release_turf)
-		if(!friend.revive(full_heal = TRUE, admin_revive = TRUE))
+		// Heals them back to state one
+		if(!friend.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE))
 			continue
-		friend.grab_ghost(force = TRUE)
 		playsound(release_turf, consumed_mobs, 50, TRUE, -1)
 		to_chat(friend, span_clown("You leave [source]'s warm embrace, and feel ready to take on the world."))
 

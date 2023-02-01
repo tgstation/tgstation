@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { Stack } from '../components';
 import { Window } from '../layouts';
 import { ChemFilterPane } from './ChemFilter';
@@ -10,7 +10,6 @@ type Data = {
 export const BloodFilter = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { whitelist = [] } = data;
-  const [chemName, setChemName] = useLocalState(context, 'chemName', '');
 
   return (
     <Window width={500} height={300}>
@@ -20,8 +19,7 @@ export const BloodFilter = (props, context) => {
             <ChemFilterPane
               title="Whitelist"
               list={whitelist}
-              reagentName={chemName}
-              onReagentInput={(value) => setChemName(value)}
+              buttonColor="green"
             />
           </Stack.Item>
         </Stack>

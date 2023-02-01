@@ -8,6 +8,16 @@
  * Generic
  */
 
+/// Allows carbon to toggle internals via AltClick of the equipped tank.
+/obj/item/tank/internals/AltClick(mob/user)
+	..()
+	if((loc == user) && user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE, need_hands = TRUE))
+		toggle_internals(user)
+
+/obj/item/tank/internals/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt-click the tank to toggle the valve.")
+
 /*
  * Oxygen
  */
@@ -82,7 +92,7 @@
 /obj/item/tank/internals/plasma/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/flamethrower))
 		var/obj/item/flamethrower/F = W
-		if ((!F.status)||(F.ptank))
+		if ((!F.status) || (F.ptank))
 			return
 		if(!user.transferItemToLoc(src, F))
 			return

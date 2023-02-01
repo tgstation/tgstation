@@ -22,3 +22,15 @@
 // Defines for update_lift_doors
 #define OPEN_DOORS "open"
 #define CLOSE_DOORS "close"
+#define LOCK_DOORS "lock"
+#define UNLOCK_DOORS "unlock"
+
+// Defines for the state of tram destination signs
+#define DESTINATION_WEST_ACTIVE "west_active"
+#define DESTINATION_WEST_IDLE "west_idle"
+#define DESTINATION_CENTRAL_EASTBOUND_ACTIVE "central_eb_active"
+#define DESTINATION_CENTRAL_WESTBOUND_ACTIVE "central_wb_active"
+#define DESTINATION_CENTRAL_IDLE "central_idle"
+#define DESTINATION_EAST_ACTIVE "east_active"
+#define DESTINATION_EAST_IDLE "east_idle"
+#define DESTINATION_NOT_IN_SERVICE "NIS"

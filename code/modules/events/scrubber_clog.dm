@@ -34,7 +34,7 @@
 		kill()
 		CRASH("Unable to find suitable scrubber.")
 
-	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, .proc/scrubber_move)
+	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
 
 	spawned_mob = get_mob()
 	end_when = rand(300, 600)
@@ -44,6 +44,7 @@
 /datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production.
 	scrubber.clog()
 	scrubber.produce_mob(spawned_mob, living_mobs) //The first one's free!
+	announce_to_ghosts(scrubber)
 
 /datum/round_event/scrubber_clog/tick() //Checks if spawn_interval is met, then sends signal to scrubber to produce a mob.
 	if(activeFor % spawn_delay == 0 && scrubber.clogged)
@@ -64,7 +65,7 @@
 
 /datum/round_event/scrubber_clog/proc/get_mob()
 	var/static/list/mob_list = list(
-				/mob/living/simple_animal/mouse,
+				/mob/living/basic/mouse,
 				/mob/living/basic/cockroach,
 				/mob/living/simple_animal/butterfly,
 	)
@@ -123,11 +124,12 @@
 		kill()
 		CRASH("Unable to find suitable scrubber.")
 
-	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, .proc/scrubber_move)
+	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
 
 	scrubber.clog()
 	scrubber.produce_mob(spawned_mob, living_mobs)
 
+	announce_to_ghosts(scrubber)
 	priority_announce("Lifesign readings have moved to a new location in the ventilation network. New Location: [prob(50) ? "Unknown.":"[get_area_name(scrubber)]."]", "Lifesign Notification")
 
 /datum/round_event_control/scrubber_clog/major
@@ -145,7 +147,7 @@
 
 /datum/round_event/scrubber_clog/major/get_mob()
 	var/static/list/mob_list = list(
-		/mob/living/simple_animal/hostile/rat,
+		/mob/living/basic/mouse/rat,
 		/mob/living/simple_animal/hostile/bee,
 		/mob/living/simple_animal/hostile/giant_spider,
 	)
@@ -175,7 +177,7 @@
 
 /datum/round_event/scrubber_clog/critical/get_mob()
 	var/static/list/mob_list = list(
-		/mob/living/simple_animal/hostile/carp,
+		/mob/living/basic/carp,
 		/mob/living/simple_animal/hostile/bee/toxin,
 		/mob/living/basic/cockroach/glockroach,
 	)

@@ -5,6 +5,8 @@
 	proper_bomb = FALSE
 	/// The keg located within the beer nuke.
 	var/obj/structure/reagent_dispensers/beerkeg/keg
+	/// Reagent that is produced once the nuke detonates.
+	var/flood_reagent = /datum/reagent/consumable/ethanol/beer
 
 /obj/machinery/nuclearbomb/beer/Initialize(mapload)
 	. = ..()
@@ -37,10 +39,10 @@
 		disarm_nuke()
 		return
 	if(is_station_level(bomb_location.z))
-		addtimer(CALLBACK(src, .proc/really_actually_explode), 11 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(really_actually_explode)), 11 SECONDS)
 	else
 		visible_message(span_notice("[src] fizzes ominously."))
-		addtimer(CALLBACK(src, .proc/local_foam), 11 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(local_foam)), 11 SECONDS)
 
 /obj/machinery/nuclearbomb/beer/disarm_nuke(mob/disarmer)
 	exploding = FALSE
@@ -50,28 +52,15 @@
 /obj/machinery/nuclearbomb/beer/proc/local_foam()
 	var/datum/reagents/tmp_holder = new/datum/reagents(1000)
 	tmp_holder.my_atom = src
-	tmp_holder.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
+	tmp_holder.add_reagent(flood_reagent, 100)
 
 	var/datum/effect_system/fluid_spread/foam/foam = new
 	foam.set_up(200, holder = src, location = get_turf(src), carry = tmp_holder)
 	foam.start()
 	disarm_nuke()
 
-/obj/machinery/nuclearbomb/beer/proc/stationwide_foam()
-	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")
-
-	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/vent in GLOB.machines)
-		var/turf/vent_turf = get_turf(vent)
-		if (!vent_turf || !is_station_level(vent_turf.z) || vent.welded)
-			continue
-
-		var/datum/reagents/beer = new /datum/reagents(1000)
-		beer.my_atom = vent
-		beer.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
-		beer.create_foam(/datum/effect_system/fluid_spread/foam, DIAMOND_AREA(10))
-
-		CHECK_TICK
-
 /obj/machinery/nuclearbomb/beer/really_actually_explode(detonation_status)
 	disarm_nuke()
-	stationwide_foam()
+	var/datum/round_event_control/scrubber_overflow/custom/event = locate(/datum/round_event_control/scrubber_overflow/custom) in SSevents.control
+	event.custom_reagent = flood_reagent
+	event.runEvent()

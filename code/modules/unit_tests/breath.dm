@@ -4,7 +4,7 @@
 /datum/unit_test/breath_sanity
 
 /datum/unit_test/breath_sanity/Run()
-	var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/clothing/mask/breath/tube = allocate(/obj/item/clothing/mask/breath)
 	var/obj/item/tank/internals/emergency_oxygen/source = allocate(/obj/item/tank/internals/emergency_oxygen)
 

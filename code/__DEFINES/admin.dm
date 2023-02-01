@@ -68,6 +68,8 @@
 #define ADMIN_TAG(datum) "(<A href='?src=[REF(src)];[HrefToken(forceGlobal = TRUE)];tag_datum=[REF(datum)]'>TAG</a>)"
 #define ADMIN_LUAVIEW(state) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];lua_state=[REF(state)]'>VIEW STATE</a>)"
 #define ADMIN_LUAVIEW_CHUNK(state, log_index) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];lua_state=[REF(state)];log_index=[log_index]'>VIEW CODE</a>)"
+/// Displays "(SHOW)" in the chat, when clicked it tries to show atom(paper). First you need to set the request_state variable to TRUE for the paper.
+#define ADMIN_SHOW_PAPER(atom) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];show_paper=[REF(atom)]'>SHOW</a>)"
 
 /atom/proc/Admin_Coordinates_Readable(area_name, admin_jump_ref)
 	var/turf/T = Safe_COORD_Location()
@@ -108,7 +110,7 @@
 ///Length of held key buffer
 #define HELD_KEY_BUFFER_LENGTH 15
 
-#define STICKYBAN_DB_CACHE_TIME 10 SECONDS
+#define STICKYBAN_DB_CACHE_TIME (10 SECONDS)
 #define STICKYBAN_ROGUE_CHECK_TIME 5
 
 /// Reference index for policy.json to locate any policy text applicable to polymorphed/staff of changed mobs.

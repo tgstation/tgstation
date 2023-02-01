@@ -29,9 +29,13 @@ GLOBAL_LIST_INIT(_preloader_path, null)
 		#endif
 		what.vars[attribute] = value
 
+/// Template noop (no operation) is used to skip a turf or area when the template is loaded this allows for template transparency
+/// ex. if a ship has gaps in it's design, you would use template_noop to fill these in so that when the ship moves z-level, any
+/// tiles these gaps land on will not be deleted and replaced with the ships (empty) tiles
 /area/template_noop
 	name = "Area Passthrough"
 
+/// See above explanation
 /turf/template_noop
 	name = "Turf Passthrough"
 	icon_state = "noop"

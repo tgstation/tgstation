@@ -43,9 +43,9 @@
 
 #define WARNING_TIME_DELAY 60
 ///to prevent accent sounds from layering
-#define HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN 3 SECONDS
+#define HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN (3 SECONDS)
 
-#define HYPERTORUS_COUNTDOWN_TIME 30 SECONDS
+#define HYPERTORUS_COUNTDOWN_TIME (30 SECONDS)
 
 //
 // Damage source: Too much mass in the fusion mix at high fusion levels

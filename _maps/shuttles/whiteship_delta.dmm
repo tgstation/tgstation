@@ -20,15 +20,12 @@
 /obj/docking_port/mobile{
 	callTime = 250;
 	dir = 2;
-	dwidth = 11;
-	height = 17;
 	shuttle_id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "NT Frigate";
 	port_direction = 8;
-	preferred_direction = 4;
-	width = 27
+	preferred_direction = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
@@ -1481,7 +1478,7 @@
 /area/shuttle/abandoned/medbay)
 "di" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/suit/apron/surgical,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1965,7 +1962,7 @@
 	pixel_y = 12
 	},
 /obj/item/toy/cards/cardhand{
-	cards = list("2 of Diamonds","3 of Clubs");
+	initial_cards = list("2 of Diamonds","3 of Clubs");
 	pixel_x = -5
 	},
 /obj/item/reagent_containers/cup/glass/bottle/beer{

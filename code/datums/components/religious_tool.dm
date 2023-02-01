@@ -29,8 +29,8 @@
 		catalyst_type = override_catalyst_type
 
 /datum/component/religious_tool/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY,.proc/AttemptActions)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(AttemptActions))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/religious_tool/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
@@ -55,7 +55,7 @@
 	SIGNAL_HANDLER
 
 	if(istype(the_item, catalyst_type))
-		INVOKE_ASYNC(src, /datum.proc/ui_interact, user) //asynchronous to avoid sleeping in a signal
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user) //asynchronous to avoid sleeping in a signal
 
 	/**********Sacrificing**********/
 	else if(operation_flags & RELIGION_TOOL_SACRIFICE)
@@ -171,13 +171,7 @@
  */
 /datum/component/religious_tool/proc/generate_available_sects(mob/user)
 	var/list/sects_to_pick = list()
-	var/human_highpriest = ishuman(user)
-	var/mob/living/carbon/human/highpriest = user
 	for(var/path in subtypesof(/datum/religion_sect))
-		if(human_highpriest && initial(easy_access_sect.invalidating_qualities))
-			var/datum/species/highpriest_species = highpriest.dna.species
-			if(initial(easy_access_sect.invalidating_qualities) in highpriest_species.inherent_traits)
-				continue
 		var/list/sect = list()
 		var/datum/religion_sect/not_a_real_instance_rs = path
 		sect["name"] = initial(not_a_real_instance_rs.name)

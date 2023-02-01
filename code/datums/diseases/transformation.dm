@@ -88,10 +88,11 @@
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"))
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
-		affected_mob.ghostize(0)
+		affected_mob.ghostize(FALSE)
 		affected_mob.key = C.key
 	else
 		to_chat(new_mob, span_userdanger("Your mob has been claimed by death! Appeal your job ban if you want to avoid this in the future!"))
+		new_mob.investigate_log("has been killed because there was no one to replace them as a job-banned player.", INVESTIGATE_DEATHS)
 		new_mob.death()
 		if (!QDELETED(new_mob))
 			new_mob.ghostize(can_reenter_corpse = FALSE)
@@ -194,7 +195,7 @@
 	stage3 = list("<span class='danger'>Your throat feels very scratchy.</span>", "Your skin feels tight.", "<span class='danger'>You can feel something move...inside.</span>")
 	stage4 = list("<span class='danger'>Your skin feels very tight.</span>", "<span class='danger'>Your blood boils!</span>", "<span class='danger'>You can feel... something...inside you.</span>")
 	stage5 = list("<span class='danger'>Your skin feels as if it's about to burst off!</span>")
-	new_form = /mob/living/carbon/alien/humanoid/hunter
+	new_form = /mob/living/carbon/alien/adult/hunter
 	bantype = ROLE_ALIEN
 
 
@@ -267,7 +268,7 @@
 	stage3 = list("<span class='danger'>Must... eat... chocolate....</span>", "<span class='danger'>YAP</span>")
 	stage4 = list("<span class='danger'>Visions of washing machines assail your mind!</span>")
 	stage5 = list("<span class='danger'>AUUUUUU!!!</span>")
-	new_form = /mob/living/simple_animal/pet/dog/corgi
+	new_form = /mob/living/basic/pet/dog/corgi
 
 
 /datum/disease/transformation/corgi/stage_act(delta_time, times_fired)

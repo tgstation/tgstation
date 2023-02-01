@@ -13,13 +13,13 @@
 		/obj/effect/spawner/random/trash/botanical_waste = 5,
 		/obj/item/reagent_containers/cup/glass/drinkingglass = 5,
 		/obj/item/broken_bottle = 5,
-		/obj/item/reagent_containers/cup/bowl = 5,
 		/obj/item/light/tube/broken = 5,
 		/obj/item/light/bulb/broken = 5,
 		/obj/item/assembly/mousetrap/armed = 5,
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/food/deadmouse = 1,
 		/obj/item/trash/candle = 1,
+		/obj/item/trash/flare = 1,
 		/obj/item/popsicle_stick = 1,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/reagent_containers/cup/glass/sillycup = 1,
@@ -139,12 +139,12 @@
 	loot = list( // This spawner will scatter water related items around a moist site.
 		/obj/item/clothing/head/cone = 7,
 		/obj/item/clothing/suit/caution = 3,
-		/mob/living/simple_animal/hostile/retaliate/frog = 2,
+		/mob/living/basic/frog = 2,
 		/obj/item/reagent_containers/cup/rag = 2,
 		/obj/item/reagent_containers/cup/bucket = 2,
 		/obj/effect/decal/cleanable/blood/old = 2,
-		/obj/structure/mopbucket = 2,
-		/mob/living/simple_animal/axolotl = 1,
+		/obj/structure/mop_bucket = 2,
+		/mob/living/basic/axolotl = 1,
 	)
 
 /obj/effect/spawner/random/trash/graffiti
@@ -188,7 +188,7 @@
 	spawn_loot_count = 2
 	spawn_loot_double = FALSE
 	loot = list(
-		/obj/structure/mopbucket = 10,
+		/obj/structure/mop_bucket = 10,
 		/obj/item/mop = 5,
 		/obj/item/clothing/suit/caution = 3,
 		/obj/item/reagent_containers/cup/bucket = 1,

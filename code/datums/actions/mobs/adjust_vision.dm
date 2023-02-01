@@ -2,9 +2,10 @@
 /datum/action/adjust_vision
 	name = "Adjust Vision"
 	desc = "See better in the dark. Or don't. Your advanced vision allows either."
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "adjust_vision"
 	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
 
 /datum/action/adjust_vision/Grant(mob/living/grant_to)
 	. = ..()
@@ -34,5 +35,4 @@
 			living_owner.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 		else
 			living_owner.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
-			living_owner.sight &= ~SEE_BLACKNESS
 	living_owner.update_sight()

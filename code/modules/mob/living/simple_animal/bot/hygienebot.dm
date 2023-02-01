@@ -46,14 +46,16 @@
 	access_card.add_access(jani_trim.access + jani_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 	ADD_TRAIT(src, TRAIT_SPRAY_PAINTABLE, INNATE_TRAIT)
 
 /mob/living/simple_animal/bot/hygienebot/explode()
-	new /obj/effect/particle_effect/fluid/foam(loc)
+	var/datum/effect_system/fluid_spread/foam/foam = new
+	foam.set_up(2, holder = src, location = loc)
+	foam.start()
 
 	return ..()
 
@@ -125,8 +127,11 @@
 				if(target.loc == loc && isturf(target.loc)) //LADIES AND GENTLEMAN WE GOTEM PREPARE TO DUMP
 					start_washing()
 					if(mad)
-						speak("Well about fucking time you degenerate.", "Fucking finally.", "Thank god, you finally stopped.")
-						playsound(loc, 'sound/effects/hygienebot_angry.ogg', 60, 1)
+						var/list/messagevoice = list("Well about fucking time you degenerate." = 'sound/voice/hygienebot/degenerate.ogg', "Fucking finally." = 'sound/voice/hygienebot/finally.ogg', "Thank god, you finally stopped." = 'sound/voice/hygienebot/thankgod.ogg')
+						var/message = pick(messagevoice)
+						speak(message)
+						playsound(loc, messagevoice[message], 50)
+						playsound(loc, 'sound/effects/hygienebot_angry.ogg', 60, 1) //i think it should still make robot noises too
 						mad = FALSE
 					mode = BOT_SHOWERSTANCE
 				else
@@ -137,8 +142,11 @@
 						return
 					SSmove_manager.move_to(src, target, 0, currentspeed)
 					if(mad && prob(min(frustration * 2, 60)))
+						var/list/messagevoice = list("Get back here you foul smelling fucker." = 'sound/voice/hygienebot/foulsmelling.ogg', "STOP RUNNING OR I WILL CUT YOUR ARTERIES!" = 'sound/voice/hygienebot/cutarteries.ogg', "Just fucking let me clean you you arsehole!" = 'sound/voice/hygienebot/letmeclean.ogg', "STOP. RUNNING." = 'sound/voice/hygienebot/stoprunning.ogg', "Either you stop running or I will fucking drag you out of an airlock." = 'sound/voice/hygienebot/dragyouout.ogg', "I just want to fucking clean you you troglodyte." = 'sound/voice/hygienebot/troglodyte.ogg', "If you don't come back here I'll put a green cloud around you cunt." = 'sound/voice/hygienebot/greencloud.ogg')
+						var/message = pick(messagevoice)
+						speak(message)
+						playsound(loc, messagevoice[message], 50)
 						playsound(loc, 'sound/effects/hygienebot_angry.ogg', 60, 1)
-						speak(pick("Get back here you foul smelling fucker.", "STOP RUNNING OR I WILL CUT YOUR ARTERIES!", "Just fucking let me clean you you arsehole!", "STOP. RUNNING.", "Either you stop running or I will fucking drag you out of an airlock.", "I just want to fucking clean you you troglodyte.", "If you don't come back here I'll put a green cloud around you cunt."))
 					if((get_dist(src, target)) >= olddist)
 						frustration++
 					else
@@ -149,6 +157,7 @@
 		if(BOT_SHOWERSTANCE)
 			if(check_purity(target))
 				speak("Enjoy your clean and tidy day!")
+				playsound(loc, 'sound/voice/hygienebot/cleanandtidy.ogg', 50)
 				playsound(loc, 'sound/effects/hygienebot_happy.ogg', 60, 1)
 				back_to_idle()
 				return
@@ -172,13 +181,13 @@
 	frustration = 0
 	last_found = world.time
 	stop_washing()
-	INVOKE_ASYNC(src, .proc/handle_automated_action)
+	INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
 
 /mob/living/simple_animal/bot/hygienebot/proc/back_to_hunt()
 	frustration = 0
 	mode = BOT_HUNT
 	stop_washing()
-	INVOKE_ASYNC(src, .proc/handle_automated_action)
+	INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
 
 /mob/living/simple_animal/bot/hygienebot/proc/look_for_lowhygiene()
 	for (var/mob/living/carbon/human/H in view(7,src)) //Find the NEET
@@ -188,10 +197,11 @@
 			target = H
 			oldtarget_name = H.name
 			speak("Unhygienic client found. Please stand still so I can clean you.")
+			playsound(loc, 'sound/voice/hygienebot/unhygienicclient.ogg', 50)
 			playsound(loc, 'sound/effects/hygienebot_happy.ogg', 60, 1)
 			visible_message("<b>[src]</b> points at [H.name]!")
 			mode = BOT_HUNT
-			INVOKE_ASYNC(src, .proc/handle_automated_action)
+			INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
 			break
 		else
 			continue

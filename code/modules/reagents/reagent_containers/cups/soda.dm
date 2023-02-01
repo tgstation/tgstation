@@ -8,7 +8,8 @@
 
 /obj/item/reagent_containers/cup/soda_cans
 	name = "soda can"
-	icon = 'icons/obj/drinks.dmi'
+	icon = 'icons/obj/drinks/soda.dmi'
+	icon_state_preview = "cola"
 	reagent_flags = NONE
 	spillable = FALSE
 	custom_price = PAYCHECK_CREW * 0.9
@@ -31,11 +32,11 @@
 		return SHAME
 	if(!is_drainable())
 		open_soda()
-		sleep(10)
+		sleep(1 SECONDS)
 	H.visible_message(span_suicide("[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!"))
 	playsound(H,'sound/items/drink.ogg', 80, TRUE)
 	reagents.trans_to(H, src.reagents.total_volume, transfered_by = H) //a big sip
-	sleep(5)
+	sleep(0.5 SECONDS)
 	H.say(pick(
 		"Now, Outbomb Cuban Pete, THAT was a game.",
 		"All these new fangled arcade games are too slow. I prefer the classics.",
@@ -45,7 +46,7 @@
 	))
 	if(H.age >= 30)
 		H.Stun(50)
-		sleep(50)
+		sleep(5 SECONDS)
 		playsound(H,'sound/items/drink.ogg', 80, TRUE)
 		H.say(pick(
 			"Another day, another dollar.",
@@ -54,7 +55,7 @@
 			"Yeap, times were good back then.",
 		))
 		return MANUAL_SUICIDE_NONLETHAL
-	sleep(20) //dramatic pause
+	sleep(2 SECONDS) //dramatic pause
 	return TOXLOSS
 
 /obj/item/reagent_containers/cup/soda_cans/attack(mob/M, mob/living/user)
@@ -171,6 +172,7 @@
 	name = "T-Borg's tonic water"
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 	icon_state = "tonic"
+	volume = 50
 	list_reagents = list(/datum/reagent/consumable/tonic = 50)
 	drink_type = ALCOHOL
 
@@ -178,6 +180,7 @@
 	name = "soda water"
 	desc = "A can of soda water. Why not make a scotch and soda?"
 	icon_state = "sodawater"
+	volume = 50
 	list_reagents = list(/datum/reagent/consumable/sodawater = 50)
 
 /obj/item/reagent_containers/cup/soda_cans/lemon_lime
@@ -258,6 +261,7 @@
 	desc = "Unleash the ape!"
 	icon_state = "monkey_energy"
 	inhand_icon_state = "monkey_energy"
+	volume = 50
 	list_reagents = list(/datum/reagent/consumable/monkey_energy = 50)
 	drink_type = SUGAR | JUNKFOOD
 

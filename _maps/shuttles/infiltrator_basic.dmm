@@ -553,12 +553,6 @@
 /obj/machinery/recharge_station,
 /turf/open/floor/circuit/red,
 /area/shuttle/syndicate/engineering)
-"ct" = (
-/obj/machinery/telecomms/allinone{
-	intercept = 1
-	},
-/turf/open/floor/circuit/red,
-/area/shuttle/syndicate/engineering)
 "cu" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
@@ -876,11 +870,11 @@
 "zj" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/west,
-/obj/item/bodypart/l_arm/robot{
+/obj/item/bodypart/arm/left/robot{
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/bodypart/r_arm/robot{
+/obj/item/bodypart/arm/right/robot{
 	pixel_x = -10;
 	pixel_y = 9
 	},
@@ -1523,7 +1517,7 @@ bi
 bi
 ch
 Ed
-ct
+cs
 cy
 cF
 "}

@@ -17,7 +17,10 @@
 		return
 
 	to_chat(user, span_boldannounce("You start skimming through [src], and [flavour_text]."))
-	user.grant_language(language, TRUE, TRUE, LANGUAGE_MIND)
+
+	user.grant_language(language)
+	user.remove_blocked_language(language, source=LANGUAGE_ALL)
+	ADD_TRAIT(user, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT) // this makes you immune to babel effects
 
 	use_charge(user)
 

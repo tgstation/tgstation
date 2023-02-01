@@ -33,14 +33,14 @@
 
 	pipename = initial(pipe_type.name)
 
-	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, .proc/AfterRotation))
+	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, PROC_REF(AfterRotation)))
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 	if(flip)
 		var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 		rotcomp.Rotate(usr, ROTATION_FLIP) // this only gets used by pipes created by RPDs or pipe dispensers
 
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/disposalconstruct/Move()
 	var/old_dir = dir
@@ -149,6 +149,11 @@
 /obj/structure/disposalconstruct/welder_act(mob/living/user, obj/item/I)
 	..()
 	if(anchored)
+		var/turf/T = get_turf(src)
+		if(!is_pipe() && ((locate(/obj/machinery/disposal) in T) || ((locate(/obj/structure/disposaloutlet) in T))))
+			to_chat(user, span_warning("A disposals machine already exists here!"))
+			return TRUE
+
 		if(!I.tool_start_check(user, amount=0))
 			return TRUE
 

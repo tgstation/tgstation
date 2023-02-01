@@ -199,9 +199,9 @@
 	default = list( //DEFAULTS
 	/mob/living/simple_animal = 1,
 	/mob/living/silicon/pai = 1,
-	/mob/living/carbon/alien/humanoid/hunter = -1,
-	/mob/living/carbon/alien/humanoid/royal/praetorian = 1,
-	/mob/living/carbon/alien/humanoid/royal/queen = 3
+	/mob/living/carbon/alien/adult/hunter = -1,
+	/mob/living/carbon/alien/adult/royal/praetorian = 1,
+	/mob/living/carbon/alien/adult/royal/queen = 3
 	)
 
 /datum/config_entry/keyed_list/multiplicative_movespeed/ValidateAndSet()
@@ -339,6 +339,8 @@
 
 /datum/config_entry/flag/allow_random_events // Enables random events mid-round when set
 
+/datum/config_entry/flag/forbid_station_traits
+
 /datum/config_entry/number/events_min_time_mul // Multipliers for random events minimal starting time and minimal players amounts
 	default = 1
 	min_val = 0
@@ -412,3 +414,4 @@
 
 /datum/config_entry/flag/disallow_circuit_sounds
 
+/datum/config_entry/flag/give_tutorials_without_db

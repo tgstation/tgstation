@@ -532,11 +532,11 @@
 /turf/open/floor/plating,
 /area/ruin/planetengi)
 "cI" = (
-/obj/item/modular_computer/tablet/pda/clear,
+/obj/item/modular_computer/pda/clear,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "cJ" = (
-/obj/item/modular_computer/tablet/pda/engineering,
+/obj/item/modular_computer/pda/engineering,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "cL" = (

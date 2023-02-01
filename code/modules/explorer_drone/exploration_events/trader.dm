@@ -22,7 +22,7 @@
 		return "You encountered [name] but could not understand what they want without a translator."
 	var/obj/want = required_path
 	var/obj/gives = traded_path
-	return "Encountered [name] willing to trade [initial(want.name)] for [initial(gives.name)]"
+	return "Encountered [name] willing to trade [initial(gives.name)] for [initial(want.name)]"
 
 /datum/exploration_event/simple/trader/get_description(obj/item/exodrone/drone)
 	if(requires_translator && !drone.has_tool(EXODRONE_TOOL_TRANSLATOR))

@@ -58,6 +58,16 @@
 	name = "popcorn"
 	icon_state = "popcorn"
 
+/obj/item/trash/popcorn/caramel
+	name = "empty caramel popcorn"
+	desc = "Now it's not a sweet snack, but just a sticky bag..."
+	icon_state = "empty_caramel_popcorn"
+
+/obj/item/trash/popcorn/salty
+	name = "empty salty popcorn"
+	desc = "It looks like there are only a few grains of salt left at the bottom of the bag..."
+	icon_state = "empty_salty_popcorn"
+
 /obj/item/trash/sosjerky
 	name = "\improper Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
@@ -92,9 +102,14 @@
 	resistance_flags = NONE
 
 /obj/item/trash/candle
-	name = "candle"
+	name = "melted candle"
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle4"
+
+/obj/item/trash/flare
+	name = "burnt flare"
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "flare-empty"
 
 /obj/item/trash/can
 	name = "crushed can"
@@ -153,3 +168,4 @@
 	name = "empty Ready-donk"
 	desc = "It's been Donk-decimated."
 	icon_state = "ready_donk"
+

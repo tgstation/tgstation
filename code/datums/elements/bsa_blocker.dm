@@ -3,7 +3,7 @@
 /datum/element/bsa_blocker/Attach(datum/target)
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_ATOM_BSA_BEAM, .proc/block_bsa)
+	RegisterSignal(target, COMSIG_ATOM_BSA_BEAM, PROC_REF(block_bsa))
 	return ..()
 
 /datum/element/bsa_blocker/proc/block_bsa()

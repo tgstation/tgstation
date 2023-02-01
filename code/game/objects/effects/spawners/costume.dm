@@ -7,11 +7,10 @@
 	var/list/items
 
 /obj/effect/spawner/costume/Initialize(mapload)
-	..()
+	. = ..()
 	if(items?.len)
 		for(var/path in items)
 			new path(loc)
-	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/costume/chicken
 	name = "chicken costume spawner"
@@ -75,7 +74,7 @@
 	name = "referee costume spawner"
 	items = list(
 		/obj/item/clothing/mask/whistle,
-		/obj/item/clothing/gloves/color/latex,
+		/obj/item/clothing/gloves/latex,
 		/obj/item/clothing/shoes/laceup,
 		/obj/item/clothing/head/soft/black,
 		/obj/item/clothing/under/costume/referee,

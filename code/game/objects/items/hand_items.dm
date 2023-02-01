@@ -20,7 +20,7 @@
 	var/mob/living/owner = loc
 	if(!istype(owner))
 		return
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/ownerExamined)
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(ownerExamined))
 
 /obj/item/hand_item/circlegame/Destroy()
 	var/mob/owner = loc
@@ -39,7 +39,7 @@
 
 	if(!istype(sucker) || !in_range(owner, sucker))
 		return
-	addtimer(CALLBACK(src, .proc/waitASecond, owner, sucker), 4)
+	addtimer(CALLBACK(src, PROC_REF(waitASecond), owner, sucker), 4)
 
 /// Stage 2: Fear sets in
 /obj/item/hand_item/circlegame/proc/waitASecond(mob/living/owner, mob/living/sucker)
@@ -48,10 +48,10 @@
 
 	if(owner == sucker) // big mood
 		to_chat(owner, span_danger("Wait a second... you just looked at your own [src.name]!"))
-		addtimer(CALLBACK(src, .proc/selfGottem, owner), 10)
+		addtimer(CALLBACK(src, PROC_REF(selfGottem), owner), 10)
 	else
 		to_chat(sucker, span_danger("Wait a second... was that a-"))
-		addtimer(CALLBACK(src, .proc/GOTTEM, owner, sucker), 6)
+		addtimer(CALLBACK(src, PROC_REF(GOTTEM), owner, sucker), 6)
 
 /// Stage 3A: We face our own failures
 /obj/item/hand_item/circlegame/proc/selfGottem(mob/living/owner)
@@ -127,7 +127,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/head/the_head = target.get_bodypart(BODY_ZONE_HEAD)
-	if((target.get_biological_state() != BIO_FLESH_BONE && target.get_biological_state() != BIO_JUST_FLESH) || !IS_ORGANIC_LIMB(the_head))
+	if(!(the_head.biological_state & BIO_FLESH) || !IS_ORGANIC_LIMB(the_head))
 		to_chat(user, span_warning("You can't noogie [target], [target.p_they()] [target.p_have()] no skin on [target.p_their()] head!"))
 		return
 
@@ -212,6 +212,10 @@
 	/// How many smaller table smacks we can do before we're out
 	var/table_smacks_left = 3
 
+/obj/item/hand_item/slapper/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/high_fiver)
+
 /obj/item/hand_item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
 	SEND_SIGNAL(user, COMSIG_LIVING_SLAP_MOB, slapped)
 
@@ -271,81 +275,158 @@
 	playsound(slapped, 'sound/weapons/slap.ogg', slap_volume, TRUE, -1)
 	return
 
-/obj/item/hand_item/slapper/attack_atom(obj/O, mob/living/user, params)
-	if(!istype(O, /obj/structure/table))
+/obj/item/hand_item/slapper/pre_attack_secondary(atom/target, mob/living/user, params)
+	if(!loc.Adjacent(target) || !istype(target, /obj/structure/table))
 		return ..()
 
-	var/obj/structure/table/the_table = O
-	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
+	slam_table(target, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if(is_right_clicking && table_smacks_left == initial(table_smacks_left)) // so you can't do 2 weak slaps followed by a big slam
-		transform = transform.Scale(5) // BIG slap
-		if(HAS_TRAIT(user, TRAIT_HULK))
-			transform = transform.Scale(2)
-			color = COLOR_GREEN
-		user.do_attack_animation(the_table)
-		SEND_SIGNAL(user, COMSIG_LIVING_SLAM_TABLE, the_table)
-		SEND_SIGNAL(the_table, COMSIG_TABLE_SLAMMED, user)
-		playsound(get_turf(the_table), 'sound/effects/tableslam.ogg', 110, TRUE)
-		user.visible_message("<b>[span_danger("[user] slams [user.p_their()] fist down on [the_table]!")]</b>", "<b>[span_danger("You slam your fist down on [the_table]!")]</b>")
+/obj/item/hand_item/slapper/pre_attack(atom/target, mob/living/user, params)
+	if(!loc.Adjacent(target) || !istype(target, /obj/structure/table))
+		return ..()
+
+	slap_table(target, user)
+	return TRUE
+
+/// Slap the table, get some attention
+/obj/item/hand_item/slapper/proc/slap_table(obj/structure/table/table, mob/living/user)
+	user.do_attack_animation(table)
+	playsound(get_turf(table), 'sound/effects/tableslam.ogg', 40, TRUE)
+	user.visible_message(span_notice("[user] slaps [user.p_their()] hand on [table]."), span_notice("You slap your hand on [table]."), vision_distance=COMBAT_MESSAGE_RANGE)
+
+	table_smacks_left--
+	if(table_smacks_left <= 0)
 		qdel(src)
-	else
-		user.do_attack_animation(the_table)
-		playsound(get_turf(the_table), 'sound/effects/tableslam.ogg', 40, TRUE)
-		user.visible_message(span_notice("[user] slaps [user.p_their()] hand on [the_table]."), span_notice("You slap your hand on [the_table]."), vision_distance=COMBAT_MESSAGE_RANGE)
-		table_smacks_left--
-		if(table_smacks_left <= 0)
-			qdel(src)
 
-/obj/item/hand_item/slapper/on_offered(mob/living/carbon/offerer)
-	. = TRUE
+/// Slam the table, demand some attention
+/obj/item/hand_item/slapper/proc/slam_table(obj/structure/table/table, mob/living/user)
+	if(table_smacks_left < initial(table_smacks_left))
+		return slap_table(table, user)
+	user.do_attack_animation(table)
 
-	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
-		visible_message(span_danger("[offerer] raises [offerer.p_their()] arm, looking around for a high-five, but there's no one around!"), \
-			span_warning("You post up, looking for a high-five, but finding no one within range!"), null, 2)
-		return
+	transform = transform.Scale(5) // BIG slap
+	if(HAS_TRAIT(user, TRAIT_HULK))
+		transform = transform.Scale(2)
+		color = COLOR_GREEN
 
-	offerer.visible_message(span_notice("[offerer] raises [offerer.p_their()] arm, looking for a high-five!"), \
-		span_notice("You post up, looking for a high-five!"), null, 2)
-	offerer.apply_status_effect(/datum/status_effect/offering, src, /atom/movable/screen/alert/give/highfive)
+	SEND_SIGNAL(user, COMSIG_LIVING_SLAM_TABLE, table)
+	SEND_SIGNAL(table, COMSIG_TABLE_SLAMMED, user)
 
-/// Yeah broh! This is where we do the high-fiving (or high-tenning :o)
-/obj/item/hand_item/slapper/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
-	. = TRUE
-
-	var/open_hands_taker
-	var/slappers_giver
-	for(var/i in taker.held_items) // see how many hands the taker has open for high'ing
-		if(isnull(i))
-			open_hands_taker++
-
-	if(!open_hands_taker)
-		to_chat(taker, span_warning("You can't high-five [offerer] with no open hands!"))
-		taker.add_mood_event("high_five", /datum/mood_event/high_five_full_hand) // not so successful now!
-		return
-
-	for(var/i in offerer.held_items)
-		var/obj/item/hand_item/slapper/slap_check = i
-		if(istype(slap_check))
-			slappers_giver++
-
-	if(slappers_giver >= 2) // we only check this if it's already established the taker has 2+ hands free
-		offerer.visible_message(span_notice("[taker] enthusiastically high-tens [offerer]!"), span_nicegreen("Wow! You're high-tenned [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
-		to_chat(taker, span_nicegreen("You give high-tenning [offerer] your all!"))
-		playsound(offerer, 'sound/weapons/slap.ogg', 100, TRUE, 1)
-		offerer.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
-		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = offerer, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
-		offerer.add_mood_event("high_five", /datum/mood_event/high_ten)
-		taker.add_mood_event("high_five", /datum/mood_event/high_ten)
-	else
-		offerer.visible_message(span_notice("[taker] high-fives [offerer]!"), span_nicegreen("All right! You're high-fived by [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
-		to_chat(taker, span_nicegreen("You high-five [offerer]!"))
-		playsound(offerer, 'sound/weapons/slap.ogg', 50, TRUE, -1)
-		offerer.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
-		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = offerer, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
-		offerer.add_mood_event("high_five", /datum/mood_event/high_five)
-		taker.add_mood_event("high_five", /datum/mood_event/high_five)
+	playsound(get_turf(table), 'sound/effects/tableslam.ogg', 110, TRUE)
+	user.visible_message("<b>[span_danger("[user] slams [user.p_their()] fist down on [table]!")]</b>", "<b>[span_danger("You slam your fist down on [table]!")]</b>")
 	qdel(src)
+
+// Successful takes will qdel our hand after
+/obj/item/hand_item/slapper/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+	. = ..()
+	if(!.)
+		return
+
+	qdel(src)
+
+
+/obj/item/hand_item/hand
+	name = "hand"
+	desc = "Sometimes, you just want to act gentlemanly."
+	icon_state = "latexballon"
+	inhand_icon_state = "nothing"
+
+
+/obj/item/hand_item/hand/pre_attack(mob/living/carbon/help_target, mob/living/carbon/helper, params)
+	if(!loc.Adjacent(help_target) || !istype(helper) || !istype(help_target))
+		return ..()
+
+	if(helper.resting)
+		to_chat(helper, span_warning("You can't act gentlemanly when you're lying down!"))
+		return TRUE
+
+
+/obj/item/hand_item/hand/pre_attack_secondary(mob/living/carbon/help_target, mob/living/carbon/helper, params)
+	if(!loc.Adjacent(help_target) || !istype(helper) || !istype(help_target))
+		return ..()
+
+	if(helper.resting)
+		to_chat(helper, span_warning("You can't act gentlemanly when you're lying down!"))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	return SECONDARY_ATTACK_CALL_NORMAL
+
+
+/obj/item/hand_item/hand/attack(mob/living/carbon/target_mob, mob/living/carbon/user, params)
+	if(!loc.Adjacent(target_mob) || !istype(user) || !istype(target_mob))
+		return TRUE
+
+	user.give(target_mob)
+	return TRUE
+
+
+/obj/item/hand_item/hand/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
+	. = TRUE
+
+	if(!istype(offerer))
+		return
+
+	if(offerer.body_position == LYING_DOWN)
+		to_chat(offerer, span_warning("You can't act gentlemanly when you're lying down!"))
+		return
+
+	if(!offered)
+		offered = locate(/mob/living/carbon) in orange(1, offerer)
+
+	if(offered && istype(offered) && offered.body_position == LYING_DOWN)
+		offerer.visible_message(span_notice("[offerer] offers [offerer.p_their()] hand to [offered], looking to help them up!"),
+			span_notice("You offer [offered] your hand, to try to help them up!"), null, 2)
+
+		offerer.apply_status_effect(/datum/status_effect/offering/no_item_received/needs_resting, src, /atom/movable/screen/alert/give/hand/helping, offered)
+		return
+
+	offerer.visible_message(span_notice("[offerer] extends out [offerer.p_their()] hand."),
+		span_notice("You extend out your hand."), null, 2)
+
+	offerer.apply_status_effect(/datum/status_effect/offering/no_item_received, src, /atom/movable/screen/alert/give/hand)
+	return
+
+
+/obj/item/hand_item/hand/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+	. = TRUE
+
+	if(taker.body_position == LYING_DOWN)
+		taker.help_shake_act(offerer)
+
+		if(taker.body_position == LYING_DOWN)
+			return // That didn't help them. Awkwaaaaard.
+
+		offerer.visible_message(span_notice("[offerer] helps [taker] up!"), span_nicegreen("You help [taker] up!"), span_hear("You hear someone helping someone else up!"), ignored_mobs = taker)
+		to_chat(taker, span_nicegreen("You take [offerer]'s hand, letting [offerer.p_them()] help your up! How nice of them!"))
+
+		offerer.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker)
+		taker.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker)
+
+		offerer.add_mood_event("helping_up", /datum/mood_event/helped_up, taker, TRUE) // Different IDs because you could be helped up and then help someone else up.
+		taker.add_mood_event("helped_up", /datum/mood_event/helped_up, offerer, FALSE)
+
+		qdel(src)
+		return
+
+	if(taker.buckled?.buckle_prevents_pull)
+		return // Can't start pulling them if they're buckled and that prevents pulls.
+
+	// We do a little switcheroo to ensure that it displays the pulling message that mentions
+	// taking taker by their hands.
+	var/offerer_zone_selected = offerer.zone_selected
+	offerer.zone_selected = "r_arm"
+	var/did_we_pull = offerer.start_pulling(taker) // Will return either null or FALSE. We only want to silence FALSE.
+	offerer.zone_selected = offerer_zone_selected
+
+	if(did_we_pull == FALSE)
+		return // That didn't work for one reason or the other. No need to display anything.
+
+	to_chat(offerer, span_notice("[taker] takes your hand, allowing you to pull [taker.p_them()] along."))
+	to_chat(taker, span_notice("You take [offerer]'s hand, which allows [offerer.p_them()] to pull you along. How polite!"))
+
+	qdel(src)
+
 
 /obj/item/hand_item/stealer
 	name = "steal"
@@ -360,11 +441,14 @@
 	if (!ishuman(target_mob))
 		return
 	var/mob/living/carbon/human/target_human = target_mob
+	if(target_human == user)
+		to_chat(user, span_notice("Why would you try stealing your own shoes?"))
+		return
 	if (!target_human.shoes)
 		return
 	if (user.body_position != LYING_DOWN)
 		return
-	var/obj/item/item_to_strip = target_human.shoes
+	var/obj/item/clothing/shoes/item_to_strip = target_human.shoes
 	user.visible_message(span_warning("[user] starts stealing [target_human]'s [item_to_strip.name]!"), \
 		span_danger("You start stealing [target_human]'s [item_to_strip.name]..."))
 	to_chat(target_human, span_userdanger("[user] starts stealing your [item_to_strip.name]!"))
@@ -390,8 +474,13 @@
 
 /obj/item/hand_item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
 		kiss_type = /obj/projectile/kiss/french
+
+	if(HAS_TRAIT(user, TRAIT_CHEF_KISS))
+		kiss_type = /obj/projectile/kiss/chef
+
 	var/obj/projectile/blown_kiss = new kiss_type(get_turf(user))
 	user.visible_message("<b>[user]</b> blows \a [blown_kiss] at [target]!", span_notice("You blow \a [blown_kiss] at [target]!"))
 
@@ -404,14 +493,14 @@
 	blown_kiss.fire()
 	qdel(src)
 
-/obj/item/hand_item/kisser/on_offered(mob/living/carbon/offerer)
+/obj/item/hand_item/kisser/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
 	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
 		return TRUE
 
 	cheek_kiss = (offerer.zone_selected != BODY_ZONE_PRECISE_MOUTH)
 	offerer.visible_message(span_notice("[offerer] leans in slightly, offering a kiss[cheek_kiss ? " on the cheek" : ""]!"),
 		span_notice("You lean in slightly, indicating you'd like to offer a kiss[cheek_kiss ? " on the cheek" : ""]!"), null, 2)
-	offerer.apply_status_effect(/datum/status_effect/offering, src)
+	offerer.apply_status_effect(/datum/status_effect/offering/no_item_received, src)
 	return TRUE
 
 /obj/item/hand_item/kisser/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
@@ -474,11 +563,11 @@
 	if(!suppressed)  // direct
 		living_target.visible_message(span_danger("[living_target] is hit by \a [src]."), span_userdanger("You're hit by \a [src]!"), vision_distance=COMBAT_MESSAGE_RANGE)
 
-	living_target.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY)
+	living_target.add_mob_memory(/datum/memory/kissed, deuteragonist = firer)
 	living_target.add_mood_event("kiss", /datum/mood_event/kiss, firer, suppressed)
 	if(isliving(firer))
 		var/mob/living/kisser = firer
-		kisser.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS)
+		kisser.add_mob_memory(/datum/memory/kissed, protagonist = living_target, deuteragonist = firer)
 	try_fluster(living_target)
 
 /obj/projectile/kiss/proc/try_fluster(mob/living/living_target)
@@ -499,7 +588,7 @@
 		if(2)
 			other_msg = "stammers softly for a moment before choking on something!"
 			self_msg = "You feel your tongue disappear down your throat as you fight to remember how to make words!"
-			addtimer(CALLBACK(living_target, /atom/movable.proc/say, pick("Uhhh...", "O-oh, uhm...", "I- uhhhhh??", "You too!!", "What?")), rand(0.5 SECONDS, 1.5 SECONDS))
+			addtimer(CALLBACK(living_target, TYPE_PROC_REF(/atom/movable, say), pick("Uhhh...", "O-oh, uhm...", "I- uhhhhh??", "You too!!", "What?")), rand(0.5 SECONDS, 1.5 SECONDS))
 			living_target.adjust_stutter(rand(10 SECONDS, 30 SECONDS))
 		if(3)
 			other_msg = "locks up with a stunned look on [living_target.p_their()] face, staring at [firer ? firer : "the ceiling"]!"
@@ -545,3 +634,33 @@
 		//Phwoar
 		living_target.reagents.add_reagent(/datum/reagent/consumable/garlic, 1)
 	living_target.visible_message("[living_target] has a funny look on [living_target.p_their()] face.", "Wow, that is a strong after taste of garlic!", vision_distance=COMBAT_MESSAGE_RANGE)
+
+/obj/projectile/kiss/chef
+	name = "chef's kiss"
+
+// If our chef's kiss hits a food item, we will improve it with love.
+/obj/projectile/kiss/chef/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!IS_EDIBLE(target) || !target.reagents)
+		return
+	if(!firer || !target.Adjacent(firer))
+		return
+
+	// From here on, no message
+	suppressed = SUPPRESSED_VERY
+
+	if(!HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(firer)))
+		to_chat(firer, span_warning("Wait a second, you didn't make this [target.name]. How can you claim it as your own?"))
+		return
+	if(target.reagents.has_reagent(/datum/reagent/love))
+		to_chat(firer, span_warning("You've already blessed [target.name] with your heart and soul."))
+		return
+
+	var/amount_nutriment = target.reagents.get_multiple_reagent_amounts(typesof(/datum/reagent/consumable/nutriment))
+	if(amount_nutriment <= 0)
+		to_chat(firer, span_warning("There's not enough nutrition in [target.name] for it to be a proper meal."))
+		return
+
+	to_chat(firer, span_green("You deliver a chef's kiss over [target], declaring it perfect."))
+	target.visible_message(span_notice("[firer] delivers a chef's kiss over [target]."), ignored_mobs = firer)
+	target.reagents.add_reagent(/datum/reagent/love, clamp(amount_nutriment / 4, 1, 10)) // clamped to about half of the most dense food I think we have (super bite burger)

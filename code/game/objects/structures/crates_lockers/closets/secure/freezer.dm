@@ -8,22 +8,22 @@
 	var/jones = FALSE
 
 /obj/structure/closet/secure_closet/freezer/Destroy()
-	recursive_organ_check(src)
+	toggle_organ_decay(src)
 	return ..()
 
 /obj/structure/closet/secure_closet/freezer/Initialize(mapload)
 	. = ..()
-	recursive_organ_check(src)
+	toggle_organ_decay(src)
 
 /obj/structure/closet/secure_closet/freezer/open(mob/living/user, force = FALSE)
 	if(opened || !can_open(user, force)) //dupe check just so we don't let the organs decay when someone fails to open the locker
 		return FALSE
-	recursive_organ_check(src)
+	toggle_organ_decay(src)
 	return ..()
 
 /obj/structure/closet/secure_closet/freezer/close(mob/living/user)
 	if(..()) //if we actually closed the locker
-		recursive_organ_check(src)
+		toggle_organ_decay(src)
 
 /obj/structure/closet/secure_closet/freezer/ex_act()
 	if(jones)

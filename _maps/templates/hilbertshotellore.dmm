@@ -22,12 +22,8 @@
 /area/misc/hilbertshotel)
 "af" = (
 /obj/structure/table/wood,
-/obj/structure/showcase/machinery/tv,
 /obj/machinery/light/small/directional/north,
-/obj/effect/overlay{
-	icon_state = "television_broken";
-	icon = 'icons/obj/computer.dmi'
-	},
+/obj/structure/showcase/machinery/tv/broken,
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)
 "ag" = (

@@ -55,6 +55,7 @@
 	name = "Mindread"
 	desc = "Read the target's mind."
 	button_icon_state = "mindread"
+	school = SCHOOL_PSYCHIC
 	cooldown_time = 5 SECONDS
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	antimagic_flags = MAGIC_RESISTANCE_MIND

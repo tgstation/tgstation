@@ -84,7 +84,7 @@
 	animate(reticle, fire_time * 0.5, transform = turn(reticle.transform, 180))
 
 	currently_aiming = TRUE
-	. = do_after(user, fire_time, target, IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, .proc/check_fire_callback, target, user))
+	. = do_after(user, fire_time, target, IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(check_fire_callback), target, user))
 	currently_aiming = FALSE
 
 	animate(reticle, 0.5 SECONDS, alpha = 0)

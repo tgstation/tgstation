@@ -87,11 +87,11 @@
 
 /obj/machinery/chem_dispenser/Initialize(mapload)
 	. = ..()
-	dispensable_reagents = sort_list(dispensable_reagents, /proc/cmp_reagents_asc)
+	dispensable_reagents = sort_list(dispensable_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
 	if(emagged_reagents)
-		emagged_reagents = sort_list(emagged_reagents, /proc/cmp_reagents_asc)
+		emagged_reagents = sort_list(emagged_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
 	if(upgrade_reagents)
-		upgrade_reagents = sort_list(upgrade_reagents, /proc/cmp_reagents_asc)
+		upgrade_reagents = sort_list(upgrade_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
 	if(is_operational)
 		begin_processing()
 	update_appearance()
@@ -415,18 +415,20 @@
 	recharge_amount = initial(recharge_amount)
 	var/newpowereff = 0.0666666
 	var/parts_rating = 0
-	for(var/obj/item/stock_parts/cell/P in component_parts)
-		cell = P
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		newpowereff += 0.0166666666*M.rating
-		parts_rating += M.rating
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		recharge_amount *= C.rating
-		parts_rating += C.rating
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		if (M.rating > 3)
+	for(var/obj/item/stock_parts/cell/stock_cell in component_parts)
+		cell = stock_cell
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		newpowereff += 0.0166666666 * matter_bin.tier
+		parts_rating += matter_bin.tier
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		recharge_amount *= capacitor.tier
+		parts_rating += capacitor.tier
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		if (manipulator.tier > 3)
 			dispensable_reagents |= upgrade_reagents
-		parts_rating += M.rating
+		else
+			dispensable_reagents -= upgrade_reagents
+		parts_rating += manipulator.tier
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
@@ -586,7 +588,7 @@
 	emagged_reagents = list(
 		/datum/reagent/consumable/ethanol,
 		/datum/reagent/iron,
-		/datum/reagent/toxin/minttoxin,
+		/datum/reagent/consumable/mintextract,
 		/datum/reagent/consumable/ethanol/atomicbomb,
 		/datum/reagent/consumable/ethanol/fernet
 	)

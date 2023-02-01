@@ -52,6 +52,7 @@
 		ADD_TRAIT(cast_on, TRAIT_NO_SOUL, MAGIC_TRAIT)
 
 		cast_on.visible_message(span_danger("[cast_on] suddenly dies!"), ignored_mobs = cast_on)
+		cast_on.investigate_log("has been killed by soul tap.", INVESTIGATE_DEATHS)
 		cast_on.death()
 
 	// If the next tap will kill us, give us a heads-up

@@ -26,12 +26,16 @@
 	if(!proximity || !istype(target))
 		return
 
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	target.AddComponent(/datum/component/fantasy, upgrade_amount, null, null, can_backfire, TRUE)
 
 	uses -= 1
 	if(!uses)
 		visible_message(span_warning("[src] vanishes, its magic completely consumed from the fortification."))
 		qdel(src)
+
+	return .
 
 /obj/item/upgradescroll/unlimited
 	name = "unlimited foolproof item fortification scroll"
@@ -60,7 +64,7 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 /datum/rpgloot_controller/New()
 	. = ..()
 	//second operation takes MUCH longer, so lets set up signals first.
-	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM, .proc/on_new_item_in_existence)
+	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM, PROC_REF(on_new_item_in_existence))
 	handle_current_items()
 
 ///signal sent by a new item being created.

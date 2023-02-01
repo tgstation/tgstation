@@ -65,4 +65,4 @@
 	laser_location.pixel_y = clamp(target.pixel_y + image_pixel_y.value,-15,15)
 
 	target_location.add_overlay(laser_location)
-	addtimer(CALLBACK(target_location, /atom/proc/cut_overlay, laser_location), 1 SECONDS)
+	addtimer(CALLBACK(target_location, TYPE_PROC_REF(/atom, cut_overlay), laser_location), 1 SECONDS)

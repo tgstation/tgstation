@@ -14,7 +14,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/wendigo
 	name = "wendigo"
-	desc = "A mythological man-eating legendary creature, you probably aren't going to survive this."
+	desc = "A mythological man-eating legendary creature, the sockets of it's eyes track you with an unsatiated hunger."
 	health = 2500
 	maxHealth = 2500
 	icon_state = "wendigo"
@@ -50,7 +50,7 @@ Difficulty: Hard
 	achievement_type = /datum/award/achievement/boss/wendigo_kill
 	crusher_achievement_type = /datum/award/achievement/boss/wendigo_crusher
 	score_achievement_type = /datum/award/score/wendigo_score
-	death_message = "falls, shaking the ground around it"
+	death_message = "falls to the ground in a bloody heap, shaking the arena"
 	death_sound = 'sound/effects/gravhit.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list(/datum/action/innate/megafauna_attack/heavy_stomp,
@@ -75,21 +75,21 @@ Difficulty: Hard
 
 /datum/action/innate/megafauna_attack/heavy_stomp
 	name = "Heavy Stomp"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	chosen_message = "<span class='colossus'>You are now stomping the ground around you.</span>"
 	chosen_attack_num = 1
 
 /datum/action/innate/megafauna_attack/teleport
 	name = "Teleport"
-	icon_icon = 'icons/effects/bubblegum.dmi'
+	button_icon = 'icons/effects/bubblegum.dmi'
 	button_icon_state = "smack ya one"
 	chosen_message = "<span class='colossus'>You are now teleporting at the target you click on.</span>"
 	chosen_attack_num = 2
 
 /datum/action/innate/megafauna_attack/shockwave_scream
 	name = "Shockwave Scream"
-	icon_icon = 'icons/turf/walls/wall.dmi'
+	button_icon = 'icons/turf/walls/wall.dmi'
 	button_icon_state = "wall-0"
 	chosen_message = "<span class='colossus'>You are now screeching, disorienting targets around you.</span>"
 	chosen_attack_num = 3
@@ -141,35 +141,35 @@ Difficulty: Hard
 	. = ..()
 	stored_move_dirs &= ~movement_dir
 	if(!stored_move_dirs)
-		INVOKE_ASYNC(GLOBAL_PROC, .proc/wendigo_slam, src, stomp_range, 1, 8)
+		INVOKE_ASYNC(src, PROC_REF(wendigo_slam), stomp_range, 1, 8)
 
 /// Slams the ground around the source throwing back enemies caught nearby, delay is for the radius increase
-/proc/wendigo_slam(atom/source, range, delay, throw_range)
-	var/turf/orgin = get_turf(source)
-	if(!orgin)
+/mob/living/simple_animal/hostile/megafauna/wendigo/proc/wendigo_slam(range, delay, throw_range)
+	var/turf/origin = get_turf(src)
+	if(!origin)
 		return
-	var/list/all_turfs = RANGE_TURFS(range, orgin)
-	for(var/i = 0 to range)
-		playsound(orgin,'sound/effects/bamf.ogg', 600, TRUE, 10)
+	var/list/all_turfs = RANGE_TURFS(range, origin)
+	for(var/sound_range = 0 to range)
+		playsound(origin,'sound/effects/bamf.ogg', 600, TRUE, 10)
 		for(var/turf/stomp_turf in all_turfs)
-			if(get_dist(orgin, stomp_turf) > i)
+			if(get_dist(origin, stomp_turf) > sound_range)
 				continue
 			new /obj/effect/temp_visual/small_smoke/halfsecond(stomp_turf)
-			for(var/mob/living/L in stomp_turf)
-				if(L == source || L.throwing)
+			for(var/mob/living/target in stomp_turf)
+				if(target == src || target.throwing)
 					continue
-				to_chat(L, span_userdanger("[source]'s ground slam shockwave sends you flying!"))
-				var/turf/thrownat = get_ranged_target_turf_direct(source, L, throw_range, rand(-10, 10))
-				L.throw_at(thrownat, 8, 2, null, TRUE, force = MOVE_FORCE_OVERPOWERING, gentle = TRUE)
-				L.apply_damage(20, BRUTE, wound_bonus=CANT_WOUND)
-				shake_camera(L, 2, 1)
+				to_chat(target, span_userdanger("[src]'s ground slam shockwave sends you flying!"))
+				var/turf/thrownat = get_ranged_target_turf_direct(src, target, throw_range, rand(-10, 10))
+				target.throw_at(thrownat, 8, 2, null, TRUE, force = MOVE_FORCE_OVERPOWERING, gentle = TRUE)
+				target.apply_damage(20, BRUTE, wound_bonus=CANT_WOUND)
+				shake_camera(target, 2, 1)
 			all_turfs -= stomp_turf
 		sleep(delay)
 
 /// Larger but slower ground stomp
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/heavy_stomp()
 	can_move = FALSE
-	wendigo_slam(src, 5, 3 - WENDIGO_ENRAGED, 8)
+	wendigo_slam(5, 3 - WENDIGO_ENRAGED, 8)
 	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 0 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 0 SECONDS))
 	can_move = TRUE
 
@@ -292,7 +292,7 @@ Difficulty: Hard
 
 /obj/item/wendigo_blood
 	name = "bottle of wendigo blood"
-	desc = "You're not actually going to drink this, are you?"
+	desc = "A bottle of viscous red liquid... You're not actually going to drink this, are you?"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
 
@@ -310,7 +310,7 @@ Difficulty: Hard
 
 /obj/item/crusher_trophy/wendigo_horn
 	name = "wendigo horn"
-	desc = "A horn from the head of an unstoppable beast."
+	desc = "A gnarled horn ripped from the skull of a wendigo. Suitable as a trophy for a kinetic crusher."
 	icon_state = "wendigo_horn"
 	denied_type = /obj/item/crusher_trophy/wendigo_horn
 
@@ -329,7 +329,7 @@ Difficulty: Hard
 
 /obj/item/wendigo_skull
 	name = "wendigo skull"
-	desc = "A skull of a massive hulking beast."
+	desc = "A bloody skull torn from a murderous beast, the soulless eye sockets seem to constantly track your movement."
 	icon = 'icons/obj/ice_moon/artifacts.dmi'
 	icon_state = "wendigo_skull"
 	w_class = WEIGHT_CLASS_TINY

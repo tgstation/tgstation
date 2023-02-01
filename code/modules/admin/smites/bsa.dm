@@ -1,7 +1,7 @@
 #define BSA_CHANCE_TO_BREAK_TILE_TO_PLATING 80
 #define BSA_MAX_DAMAGE 99
-#define BSA_PARALYZE_TIME 40 SECONDS
-#define BSA_STUTTER_TIME 40 SECONDS
+#define BSA_PARALYZE_TIME (40 SECONDS)
+#define BSA_STUTTER_TIME (40 SECONDS)
 
 /// Fires the BSA at the target
 /datum/smite/bsa

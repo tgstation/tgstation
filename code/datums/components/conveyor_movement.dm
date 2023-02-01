@@ -16,8 +16,8 @@
 		start_delay = speed
 	var/atom/movable/moving_parent = parent
 	var/datum/move_loop/loop = SSmove_manager.move(moving_parent, direction, delay = start_delay, subsystem = SSconveyors, flags=MOVEMENT_LOOP_IGNORE_PRIORITY)
-	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/should_move)
-	RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/loop_ended)
+	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(should_move))
+	RegisterSignal(loop, COMSIG_PARENT_QDELETING, PROC_REF(loop_ended))
 
 /datum/component/convey/proc/should_move(datum/move_loop/source)
 	SIGNAL_HANDLER

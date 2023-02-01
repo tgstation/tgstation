@@ -634,17 +634,13 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cd" = (
-/obj/effect/turf_decal/sand,
 /obj/machinery/vending/cola/starkist,
+/obj/effect/turf_decal/sand,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cf" = (
-/obj/effect/turf_decal/sand,
-/obj/structure/sign/poster/contraband/smoke{
-	pixel_y = -32
-	},
-/obj/machinery/vending/cigarette/beach,
-/turf/open/misc/beach/sand,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "cg" = (
 /obj/effect/turf_decal/sand,
@@ -675,8 +671,8 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cl" = (
+/obj/machinery/processor,
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/shaker,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cn" = (
@@ -719,8 +715,9 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cs" = (
-/obj/machinery/processor,
-/turf/open/floor/wood,
+/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/turf_decal/sand,
+/turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "ct" = (
 /obj/effect/turf_decal/stripes/white/corner,
@@ -805,8 +802,8 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cH" = (
-/obj/structure/chair/stool/directional/south,
 /obj/effect/turf_decal/sand,
+/obj/structure/chair/stool/directional/north,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cI" = (
@@ -991,9 +988,10 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "lx" = (
-/obj/effect/turf_decal/sand,
-/obj/effect/spawner/random/vending/snackvend,
-/turf/open/misc/beach/sand,
+/obj/structure/table/wood,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/reagent_containers/cup/glass/shaker,
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "lA" = (
 /obj/structure/table/wood,
@@ -1023,11 +1021,12 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "sG" = (
-/obj/structure/table/wood,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/reagent_containers/cup/glass/bottle/beer,
-/obj/item/reagent_containers/cup/glass/bottle/beer,
-/turf/open/floor/wood,
+/obj/effect/turf_decal/sand,
+/obj/structure/sign/poster/contraband/smoke{
+	pixel_y = -32
+	},
+/obj/machinery/vending/cigarette/beach,
+/turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "wr" = (
 /obj/item/toy/seashell{
@@ -1096,11 +1095,24 @@
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
+"FG" = (
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/wood,
+/area/awaymission/beach)
 "He" = (
 /obj/structure/fluff/beach_umbrella/syndi,
 /turf/open/misc/beach/coastline_t/sandwater_inner{
 	dir = 1
 	},
+/area/awaymission/beach)
+"HN" = (
+/obj/machinery/griddle,
+/turf/open/floor/wood,
+/area/awaymission/beach)
+"Jr" = (
+/obj/machinery/oven,
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "Kg" = (
 /obj/item/flashlight/flare/torch{
@@ -1150,6 +1162,10 @@
 /obj/item/food/meat/slab/gorilla,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
+"Sg" = (
+/obj/structure/sink/kitchen/directional/south,
+/turf/open/floor/wood,
+/area/awaymission/beach)
 "SR" = (
 /obj/machinery/food_cart,
 /turf/open/misc/beach/sand,
@@ -1158,6 +1174,11 @@
 /obj/structure/table/wood,
 /obj/item/storage/photo_album,
 /turf/open/floor/wood,
+/area/awaymission/beach)
+"Vn" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/table/wood,
+/turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "Vx" = (
 /obj/item/reagent_containers/cup/glass/bottle/wine{
@@ -6590,10 +6611,10 @@ aX
 aX
 ak
 ba
+ba
 cd
 aX
-ci
-bd
+co
 bd
 bd
 hw
@@ -6697,11 +6718,11 @@ bQ
 aX
 ak
 ba
-lx
+ba
+cs
 aX
-cj
-bd
-bd
+cn
+ck
 bd
 hw
 cH
@@ -6805,9 +6826,9 @@ bX
 ba
 ba
 ba
+cg
 aX
-ck
-bd
+cp
 bd
 bd
 cC
@@ -6912,9 +6933,9 @@ aX
 ak
 ba
 ba
+Vn
 aX
-cl
-bd
+cj
 bd
 bd
 cD
@@ -7019,9 +7040,9 @@ ak
 ak
 ba
 ba
+Vn
 aX
-sG
-bd
+ci
 bd
 bd
 mF
@@ -7125,10 +7146,10 @@ ba
 ba
 ba
 ba
-cf
+ba
+sG
 aX
-cn
-bd
+lx
 bd
 bd
 cE
@@ -7234,8 +7255,8 @@ ak
 ba
 ba
 aX
-co
-bd
+aX
+aX
 bd
 bd
 cF
@@ -7341,7 +7362,7 @@ ak
 ba
 ba
 aX
-cp
+cq
 bd
 bd
 bd
@@ -7448,9 +7469,9 @@ ba
 ba
 ba
 aX
-cq
+Jr
 bd
-bd
+FG
 bd
 Tr
 cH
@@ -7553,11 +7574,11 @@ bQ
 aX
 ak
 ba
-lx
+ba
 aX
+HN
 bd
-bd
-bd
+cf
 bd
 xA
 cH
@@ -7660,14 +7681,14 @@ aX
 aX
 ak
 ba
-cg
+ba
 aX
-cr
-cs
-cw
+Sg
 bd
-aX
-cI
+bd
+bd
+cf
+cH
 ba
 ak
 ak
@@ -7769,12 +7790,12 @@ ak
 ba
 ba
 aX
+cf
+cr
+cl
+cw
 aX
-aX
-aX
-aX
-aX
-ba
+cI
 ba
 ak
 ak
@@ -7875,12 +7896,12 @@ ak
 ak
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
+aX
+aX
+aX
+aX
+aX
+aX
 ba
 ba
 ak
@@ -7980,16 +8001,16 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ba
 ak
 ak
 ak

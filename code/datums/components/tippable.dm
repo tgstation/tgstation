@@ -54,9 +54,9 @@
 	src.roleplay_callback = roleplay_callback
 
 /datum/component/tippable/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/interact_with_tippable)
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(interact_with_tippable))
 	if (roleplay_friendly)
-		RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/accept_roleplay)
+		RegisterSignal(parent, COMSIG_MOB_EMOTE, PROC_REF(accept_roleplay))
 
 
 /datum/component/tippable/UnregisterFromParent()
@@ -89,9 +89,9 @@
 		return
 
 	if(is_tipped)
-		INVOKE_ASYNC(src, .proc/try_untip, source, user)
+		INVOKE_ASYNC(src, PROC_REF(try_untip), source, user)
 	else
-		INVOKE_ASYNC(src, .proc/try_tip, source, user)
+		INVOKE_ASYNC(src, PROC_REF(try_tip), source, user)
 
 	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
@@ -155,7 +155,7 @@
 	else if(self_right_time <= 0)
 		right_self(tipped_mob)
 	else
-		self_untip_timer = addtimer(CALLBACK(src, .proc/right_self, tipped_mob), self_right_time, TIMER_UNIQUE | TIMER_STOPPABLE)
+		self_untip_timer = addtimer(CALLBACK(src, PROC_REF(right_self), tipped_mob), self_right_time, TIMER_UNIQUE | TIMER_STOPPABLE)
 
 /**
  * Try to untip a mob that has been tipped.
@@ -254,6 +254,6 @@
 		return
 	var/time_left = timeleft(self_untip_timer)
 	deltimer(self_untip_timer)
-	self_untip_timer = addtimer(CALLBACK(src, .proc/right_self, user), time_left * 0.75, TIMER_UNIQUE | TIMER_STOPPABLE)
+	self_untip_timer = addtimer(CALLBACK(src, PROC_REF(right_self), user), time_left * 0.75, TIMER_UNIQUE | TIMER_STOPPABLE)
 	roleplayed = TRUE
 	roleplay_callback?.Invoke(user)

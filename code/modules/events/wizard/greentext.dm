@@ -44,7 +44,7 @@
 /obj/item/greentext/Initialize(mapload)
 	. = ..()
 	SSpoints_of_interest.make_point_of_interest(src)
-	roundend_callback = CALLBACK(src, .proc/check_winner)
+	roundend_callback = CALLBACK(src, PROC_REF(check_winner))
 	SSticker.OnRoundend(roundend_callback)
 
 /obj/item/greentext/equipped(mob/user, slot, initial = FALSE)

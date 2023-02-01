@@ -60,22 +60,20 @@
 	StartCooldownSelf(INFINITY)
 	attack_sequence(owner, target_atom)
 	//resurface now off cooldown shortly
-	StartCooldownOthers(1.5 SECONDS)
+	StartCooldownOthers(2.5 SECONDS)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/attack_sequence(mob/living/firer, atom/target)
 	fire_in_directions(firer, target, GLOB.cardinals)
-	SLEEP_CHECK_DEATH(0.25 SECONDS, firer)
+	SLEEP_CHECK_DEATH(0.5 SECONDS, firer)
 	fire_in_directions(firer, target, GLOB.diagonals)
-	SLEEP_CHECK_DEATH(0.25 SECONDS, firer)
-	fire_in_directions(firer, target, GLOB.cardinals)
 
 /obj/projectile/bileworm_acid
 	name = "acidic bile"
 	icon_state = "neurotoxin"
 	hitsound = 'sound/weapons/sear.ogg'
 	damage = 20
-	armour_penetration = 100
 	speed = 2
+	range = 20
 	jitter = 3 SECONDS
 	stutter = 3 SECONDS
 	damage_type = BURN

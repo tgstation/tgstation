@@ -5,6 +5,7 @@
 	max_occurrences = 1
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "Replaces the emergency shuttle with a random one."
+	admin_setup = /datum/event_admin_setup/warn_admin/shuttle_catastrophe
 
 /datum/round_event_control/shuttle_catastrophe/can_spawn_event(players)
 	. = ..()
@@ -18,7 +19,6 @@
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return FALSE //don't remove all players when its already on station or going to centcom
 	return TRUE
-
 
 /datum/round_event/shuttle_catastrophe
 	var/datum/map_template/shuttle/new_shuttle
@@ -57,3 +57,10 @@
 	SSshuttle.existing_shuttle = SSshuttle.emergency
 	SSshuttle.action_load(new_shuttle, replace = TRUE)
 	log_shuttle("Shuttle Catastrophe set a new shuttle, [new_shuttle.name].")
+
+/datum/event_admin_setup/warn_admin/shuttle_catastrophe
+	warning_text = "This will unload the currently docked emergency shuttle, and ERASE ANYTHING within it. Proceed anyways?"
+	snitch_text = "has forced a shuttle catastrophe while a shuttle was already docked."
+
+/datum/event_admin_setup/warn_admin/shuttle_catastrophe/should_warn()
+	return EMERGENCY_AT_LEAST_DOCKED || istype(SSshuttle.emergency, /obj/docking_port/mobile/emergency/shuttle_build)
