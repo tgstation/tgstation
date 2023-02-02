@@ -8,6 +8,7 @@
 	smoothing_flags = SMOOTH_BITMASK|SMOOTH_OBJ
 	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FRAMES)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FRAMES)
+	pass_flags_self = PASSTABLE | LETPASSTHROW
 	opacity = FALSE
 	density = TRUE
 	rad_insulation = null
