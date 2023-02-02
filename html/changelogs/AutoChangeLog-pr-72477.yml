@@ -1,8 +1,0 @@
-author: "Kepteyn"
-delete-after: True
-changes:
-  - rscadd: "added greyscale json configs for witch hat and witch hat worn."
-  - imageadd: "Added new, greyscale states to head/wizard.dmi"
-  - imagedel: "Removed Marisa hat states from head/wizard.dmi"
-  - code_imp: "changed Marisa hat code in wiz_robes.dm to make them use greyscale."
-  - config: "changed greyscale configs to include the witch hat."
