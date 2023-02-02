@@ -139,8 +139,8 @@ SUBSYSTEM_DEF(spatial_grid)
 
 ///removes an initialized and probably deleted movable from our pre init queue before we're initialized
 /datum/controller/subsystem/spatial_grid/proc/remove_from_pre_init_queue(atom/movable/movable_to_remove, exclusive_type)
-	if(ismouse(waiting_movable))
-		log_world("Mouse [waiting_movable:canon_tag] inserted removed from pre init queue at [waiting_movable.x], [waiting_movable.y], [waiting_movable.z]")
+	if(ismouse(movable_to_remove))
+		log_world("Mouse [movable_to_remove:canon_tag] inserted removed from pre init queue at [movable_to_remove.x], [movable_to_remove.y], [movable_to_remove.z]")
 	if(exclusive_type)
 		waiting_to_add_by_type[exclusive_type] -= movable_to_remove
 
