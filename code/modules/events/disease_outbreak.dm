@@ -16,7 +16,7 @@
 	min_players = 10
 	weight = 5
 	category = EVENT_CATEGORY_HEALTH
-	description = "A 'classic' virus will infect some members of the crew." //These are the ones with PERSONALITY
+	description = "A 'classic' virus will infect some members of the crew."
 	admin_setup = /datum/event_admin_setup/disease_outbreak
 	///Disease recipient candidates
 	var/list/disease_candidates = list()
@@ -118,7 +118,7 @@
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
 	weight = 10
-	description = "An 'advanced' disease will infect some members of the crew." //These are the ones that get viro lynched!
+	description = "An 'advanced' disease will infect some members of the crew."
 	admin_setup = /datum/event_admin_setup/disease_outbreak/advanced
 
 /datum/event_admin_setup/disease_outbreak/advanced
@@ -134,9 +134,13 @@
 		return ADMIN_CANCEL_EVENT
 	tgui_alert(usr, "[candidate_count] candidates found!", "Disease Outbreak")
 
-	//Custom virus creation
+	/**
+	 * Admin virus customization
+	 *
+	 * If the admin wishes, give them the opportunity to select the severity and number of symptoms.
+	 */
 	if(tgui_alert(usr,"Customize your virus?", "Glorified Debug Tool", list("Yes", "No")) == "Yes")
-		chosen_severity = tgui_input_list(usr, "Pick a severity!","In the event of an airborne virus, try not to breathe.", list("Medium", "Harmful", "Dangerous", "Cancel"))
+		chosen_severity = tgui_alert(usr, "Pick a severity!", "In the event of an airborne virus, try not to breathe.", list("Medium", "Harmful", "Dangerous"))
 		switch(chosen_severity)
 			if("Medium")
 				chosen_severity = ADV_DISEASE_MEDIUM
@@ -166,16 +170,22 @@
 	//Maximum symptoms for our virus
 	var/max_symptoms
 
+/**
+ * Generate virus base values
+ *
+ * Generates a virus with either the admin selected parameters for severity and symptoms
+ * or if it was not selected, randomly pick between the MIX and MAX configured in the defines.
+ */
 /datum/round_event/disease_outbreak/advanced/start()
 	var/datum/round_event_control/disease_outbreak/advanced/disease_event = control
 	afflicted += disease_event.disease_candidates
-	disease_event.disease_candidates.Cut() //Clean the list after use
+	disease_event.disease_candidates.Cut()
 
 	if(!max_symptoms)
-		max_symptoms = rand(ADV_MIN_SYMPTOMS, ADV_MAX_SYMPTOMS) // Pick how many symptoms
+		max_symptoms = rand(ADV_MIN_SYMPTOMS, ADV_MAX_SYMPTOMS)
 
 	if(!max_severity)
-		var/rng_severity = rand(1, 100) // Pick the severity
+		var/rng_severity = rand(1, 100)
 		if(rng_severity < ADV_RNG_LOW)
 			max_severity = ADV_DISEASE_MEDIUM
 
@@ -187,14 +197,14 @@
 
 	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random/event(max_symptoms, max_severity)
 
-	var/list/name_symptoms = list() // For feedback
+	var/list/name_symptoms = list()
 	for(var/datum/symptom/new_symptom as anything in advanced_disease.symptoms)
 		name_symptoms += new_symptom.name
 
 	var/mob/living/carbon/human/victim = pick_n_take(afflicted)
 	if(victim.ForceContractDisease(advanced_disease, FALSE))
-		message_admins("An event has triggered a random advanced virus outbreak on [ADMIN_LOOKUPFLW(victim)]! It has these symptoms: [english_list(name_symptoms)]. Transmissibility is [advanced_disease.spread_text].")
-		log_game("An event has triggered a random advanced virus outbreak on [key_name(victim)]! It has these symptoms: [english_list(name_symptoms)]. Transmissibility is [advanced_disease.spread_text].")
+		message_admins("An event has triggered a random advanced virus outbreak on [ADMIN_LOOKUPFLW(victim)]! It has these symptoms: [english_list(name_symptoms)]. It is transmissable via [advanced_disease.spread_text].")
+		log_game("An event has triggered a random advanced virus outbreak on [key_name(victim)]! It has these symptoms: [english_list(name_symptoms)]. It is transmissable via [advanced_disease.spread_text].")
 		announce_to_ghosts(victim)
 	else
 		log_game("An event attempted to trigger a random advanced virus outbreak on [key_name(victim)], but failed.")
@@ -206,7 +216,13 @@
 /datum/round_event/disease_outbreak/advance/setup()
 	announce_when = ADV_ANNOUNCE_DELAY
 
-// Pick the symptoms of the generated virus.
+/**
+ * Generate advanced virus
+ *
+ * Uses the parameters to create a list of symptoms, picking from various severities
+ * Viral Evolution and Eternal Youth are special modifiers, so we roll separately.
+ */
+
 /datum/disease/advance/random/event/New(max_symptoms, max_severity)
 	var/list/datum/symptom/possible_symptoms = list(
 		/datum/symptom/beard,
@@ -221,11 +237,8 @@
 		/datum/symptom/itching,
 		/datum/symptom/shedding,
 		/datum/symptom/sneeze,
-		/datum/symptom/viraladaptation,
-		/datum/symptom/viralevolution,
 		/datum/symptom/vomit,
 		/datum/symptom/weight_loss,
-		/datum/symptom/youth,
 	)
 
 	if(max_severity == ADV_DISEASE_HARMFUL)
@@ -252,25 +265,39 @@
 		if(chosen_symptom)
 			var/datum/symptom/new_symptom = new chosen_symptom
 			symptoms += new_symptom
+
+	if(prob(50))
+		symptoms += new /datum/symptom/viralevolution
+
+	if(prob(50))
+		symptoms += new /datum/symptom/youth
+
 	Refresh()
 
 	name = "Sample #[rand(1, 9999)]"
 
-// Assign the properties for the virus
+/**
+ * Assign virus properties
+ *
+ * Now that we've picked our symptoms and severity, we determine the other stats
+ * (Stage Speed, Resistance, Transmissibility)
+ * The LOW/MID percentiles can be adjusted in the defines.area
+ * If the virus is severity DANGEROUS we do not hide it from health scanners at event start.
+ */
 /datum/disease/advance/random/event/AssignProperties()
-	visibility_flags |= HIDDEN_SCANNER
-
-	//Spread method this virus should have
 	var/transmissibility = rand(1, 100)
 
-	addtimer(CALLBACK(src, PROC_REF(MakeVisible)), ((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS) // Keep the virus hidden until the timer expires
+	addtimer(CALLBACK(src, PROC_REF(MakeVisible)), ((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS)
 
-	if(length(properties))
+ 	if(length(properties))
 		spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // Can be between 5 and 10
 		stage_prob = max(0.5 * properties["stage_rate"], 1)
 		SetSeverity(properties["severity"])
-		GenerateCure(properties)
+		if(severity != "Dangerous" || "BIOHAZARD")
+			visibility_flags |= HIDDEN_SCANNER
+
+ 		GenerateCure(properties)
 		if(transmissibility < ADV_SPREAD_LOW)
 			SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
 
@@ -281,13 +308,13 @@
 			SetSpread(DISEASE_SPREAD_AIRBORNE)
 
 	else
-		CRASH("Our virus properties were empty or null!")
+		CRASH("Advanced virus properties were empty or null!")
 
-// Reveal the virus when the level 7 announcement happens
-/datum/disease/advance/random/event/proc/MakeVisible()
-	visibility_flags &= ~HIDDEN_SCANNER
-
-// Assign the spread type and give it the correct description
+/**
+ * Set the transmission methods on the generated virus
+ *
+ * Apply the transmission methods we rolled in the AssignProperties proc
+ */
 /datum/disease/advance/random/event/SetSpread(spread_id)
 	switch(spread_id)
 		if(DISEASE_SPREAD_CONTACT_FLUIDS)
@@ -295,25 +322,36 @@
 			spread_text = "fluids"
 		if(DISEASE_SPREAD_CONTACT_SKIN)
 			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
-			spread_text = "contact"
+			spread_text = "skin contact"
 		if(DISEASE_SPREAD_AIRBORNE)
 			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_AIRBORNE
-			spread_text = "airborne"
+			spread_text = "respiration"
 
-// Select 1 of 6 groups of potential cures
+/**
+ * Determine the cure
+ *
+ * Rolls one of six possible cure groups, then selects a cure from it and applies it to the virus.
+ */
 /datum/disease/advance/random/event/GenerateCure()
 	if(!length(properties))
-		stack_trace("whatever message you want")
+		stack_trace("Advanced virus properties were empty or null!")
 		return
-		var/res = rand(1, 6)
-		if(res == oldres)
-			return
-		cures = list(pick(advance_cures[res]))
-		oldres = res
-		// Get the cure name from the cure_id
-		var/datum/reagent/cure = GLOB.chemical_reagents_list[cures[1]]
-		cure_text = cure.name
+	var/res = rand(1, 6)
+	if(res == oldres)
+		return
+	cures = list(pick(advance_cures[res]))
+	oldres = res
+	// Get the cure name from the cure_id
+	var/datum/reagent/cure = GLOB.chemical_reagents_list[cures[1]]
+	cure_text = cure.name
 
+/**
+ * Announce and reveal virus
+ *
+ * After the initial timer to give the virus some time to take hold, reveal it and send the Level 7 Biohazard station alert.
+ */
+/datum/disease/advance/random/event/proc/MakeVisible()
+	visibility_flags &= ~HIDDEN_SCANNER
 
 #undef ADV_MIN_SYMPTOMS
 #undef ADV_MAX_SYMPTOMS
