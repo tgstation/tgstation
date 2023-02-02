@@ -13,7 +13,7 @@
 	// makes this spell not take blood from splattercasting
 	school = SCHOOL_SANGUINE
 	cooldown_time = 60 SECONDS
-	cooldown_reduction_per_rank = 5 SECONDS
+	cooldown_reduction_per_rank = 10 SECONDS
 
 	invocation = "SHAPSDAY"
 	invocation_type = INVOCATION_WHISPER
@@ -44,20 +44,23 @@
 	if(!to_enchant)
 		//this shouldn't have passed can_cast_spell, but sanity is needed
 		return
-	to_chat(cast_on, span_notice("[to_enchant] glows red for a moment."))
+	to_chat(cast_on, span_notice("[to_enchant] begins to glow red..."))
 	apply_enchantment(to_enchant)
+	//true cooldown starts when you use the item or drop it
+	StartCooldown(INFINITY)
 
 /datum/action/cooldown/spell/sanguine_strike/proc/apply_enchantment(obj/item/enchanted)
 	original_force = enchanted.force
+	enchanted.add_filter("sanguine_strike", 2, list("type" = "outline", "color" = "#c41515", "size" = 2))
 	enchanted.force = min(enchanted.force * 2, enchanted.force + 20)
 	enchanted.AddElement(/datum/element/lifesteal, enchanted.force)
 	RegisterSignal(enchanted, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_enchanted_afterattack))
+	RegisterSignal(enchanted, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
 
+/// signal called from attacking with the enchanted item
 /datum/action/cooldown/spell/sanguine_strike/proc/on_enchanted_afterattack(obj/item/enchanted, atom/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
-	UnregisterSignal(enchanted, COMSIG_ITEM_AFTERATTACK)
-	enchanted.force = original_force
-	enchanted.RemoveElement(/datum/element/lifesteal, enchanted.force)
+	end_enchantment(enchanted)
 	if(!isliving(target))
 		return
 	var/mob/living/living_target = target
@@ -76,3 +79,17 @@
 	//if we blind-added blood volume to the caster, non-vampire wizards could easily kill themselves by using the spell enough
 	if(living_user.blood_volume < BLOOD_VOLUME_MAXIMUM)
 		living_user.blood_volume += 50
+
+/// signal called from dropping the enchanted item
+/datum/action/cooldown/spell/sanguine_strike/proc/on_dropped(obj/item/enchanted, mob/dropper)
+	SIGNAL_HANDLER
+	to_chat(dropper, span_notice("[to_enchant] seems to lose its red glow."))
+	end_enchantment(enchanted)
+
+/// ends the enchantment, starting the cooldown (which was frozen until you attacked)
+/datum/action/cooldown/spell/sanguine_strike/proc/end_enchantment(obj/item/enchanted)
+	UnregisterSignal(enchanted, list(COMSIG_ITEM_AFTERATTACK, COMSIG_ITEM_DROPPED))
+	StartCooldown()
+	enchanted.remove_filter("sanguine_strike")
+	enchanted.force = original_force
+	enchanted.RemoveElement(/datum/element/lifesteal, enchanted.force)
