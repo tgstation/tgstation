@@ -130,6 +130,7 @@
 #include "keybinding_init.dm"
 #include "knockoff_component.dm"
 #include "limbsanity.dm"
+#include "lungs.dm"
 #include "load_map_security.dm"
 #include "machine_disassembly.dm"
 #include "mapload_space_verification.dm"
