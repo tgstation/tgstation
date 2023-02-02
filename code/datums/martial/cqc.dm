@@ -221,7 +221,9 @@
 			to_chat(A, span_danger("You strike [D]'s jaw, leaving [D.p_them()] disoriented!"))
 			playsound(get_turf(D), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
 			if(I && D.temporarilyRemoveItemFromInventory(I))
-				A.put_in_hands(I)
+				D.dropItemToGround(I) //try dropping the item in active hand
+				if(I.loc == I.drop_location()) //if it didn't drop on the floor below the victim, it probably wasn't supposed to be handed to others (NODROP, backpack-mounted things)
+					A.put_in_hands(I)
 			D.set_jitter_if_lower(4 SECONDS)
 			D.apply_damage(5, A.get_attack_type())
 	else
