@@ -101,6 +101,7 @@
 
 	if (Master)
 		Master.OnConfigLoad()
+	process_config_errors()
 
 /datum/controller/configuration/proc/full_wipe()
 	if(IsAdminAdvancedProcCall())
@@ -119,7 +120,7 @@
 
 	return ..()
 
-/datum/controller/configuration/OnConfigLoad()
+/datum/controller/configuration/proc/process_config_errors()
 	var/do_stack_trace = CONFIG_GET(flag/config_errors_runtime)
 	for(var/error_message in configuration_errors)
 		if(do_stack_trace)
