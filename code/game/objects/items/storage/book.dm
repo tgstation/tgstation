@@ -186,12 +186,13 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		playsound(src.loc, SFX_PUNCH, 25, TRUE, -1)
 		log_combat(user, M, "attacked", src)
 
+/obj/item/storage/book/bible/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+	return !istype(storage_holder, /obj/item/storage/book/bible)
+
 /obj/item/storage/book/bible/afterattack(atom/bible_smacked, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
-	if(SEND_SIGNAL(bible_smacked, COMSIG_BIBLE_SMACKED, user, proximity) & COMSIG_END_BIBLE_CHAIN)
-		return . | AFTERATTACK_PROCESSED_ITEM
 	if(isfloorturf(bible_smacked))
 		if(user.mind && (user.mind.holy_role))
 			var/area/current_area = get_area(bible_smacked)
