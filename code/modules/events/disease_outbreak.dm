@@ -291,13 +291,13 @@
 	switch(spread_id)
 		if(DISEASE_SPREAD_CONTACT_FLUIDS)
 			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS
-			spread_text = "Fluids"
+			spread_text = "fluids"
 		if(DISEASE_SPREAD_CONTACT_SKIN)
 			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
-			spread_text = "On contact"
+			spread_text = "contact"
 		if(DISEASE_SPREAD_AIRBORNE)
 			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_AIRBORNE
-			spread_text = "Airborne"
+			spread_text = "airborne"
 
 // Select 1 of 6 groups of potential cures
 /datum/disease/advance/random/event/GenerateCure()
