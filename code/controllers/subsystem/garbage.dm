@@ -277,7 +277,7 @@ SUBSYSTEM_DEF(garbage)
 #endif
 	if (D.gc_destroyed <= 0)
 		D.gc_destroyed = queue_time
-	
+
 	var/list/queue = queues[level]
 
 	queue[++queue.len] = list(queue_time, refid, D.gc_destroyed) // not += for byond reasons
@@ -290,6 +290,8 @@ SUBSYSTEM_DEF(garbage)
 	var/refID = text_ref(D)
 
 	var/tick_usage = TICK_USAGE
+	if(ismouse(D))
+		log_world("Mouse [D:canon_tag] hard deleted")
 	del(D)
 	tick_usage = TICK_USAGE_TO_MS(tick_usage)
 

@@ -28,6 +28,7 @@
 	response_harm_simple = "splat"
 
 	ai_controller = /datum/ai_controller/basic_controller/mouse
+	var/canon_tag
 
 	/// Whether this rat is friendly to players
 	var/tame = FALSE
@@ -37,6 +38,10 @@
 	var/contributes_to_ratcap = TRUE
 	/// Probability that, if we successfully bite a shocked cable, that we will die to it.
 	var/cable_zap_prob = 85
+
+/mob/living/basic/mouse/New()
+	. = ..()
+	canon_tag = tag
 
 /mob/living/basic/mouse/Initialize(mapload, tame = FALSE)
 	. = ..()
