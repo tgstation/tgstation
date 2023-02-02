@@ -15938,7 +15938,7 @@
 	department = "AI";
 	assistance_requestable = 1;
 	supplies_requestable = 1;
-	anon_tips_receiver = 1
+	anon_tips_receiver = 1;
 	name = "AI Requests Console"
 	},
 /obj/structure/cable/multilayer/connected,
