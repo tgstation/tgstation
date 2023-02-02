@@ -85,9 +85,13 @@
 
 /obj/structure/window_frame/proc/on_entered(datum/source, AM as mob|obj)
 	SIGNAL_HANDLER
-	if(isliving(AM))
-		var/mob/living/potential_victim = AM
-		if(potential_victim.movement_type & (FLOATING|FLYING))
+	if(!isliving(AM))
+		return
+	var/mob/living/potential_victim = AM
+	if(potential_victim.movement_type & (FLOATING|FLYING))
+		return
+	shock(potential_victim, 100)
+
 
 /obj/structure/window_frame/attack_animal(mob/user, list/modifiers)
 	. = ..()
