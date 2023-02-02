@@ -139,7 +139,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/make_organ_noticable(organ_slot, obj/item/organ/noticable_organ)
 	var/examine_text = noticable_organ_examines[organ_slot]
 	var/body_zone = organ_slot != ORGAN_SLOT_BRAIN ? noticable_organ.zone : null
-	noticable_organ.AddElement(/datum/element/noticable_organ, examine_text, body_zone)
+	noticable_organ.AddElement(/datum/element/noticable_organ/ai_control, examine_text, body_zone)
 
 /// Mobs have more complicated factors about whether their AI should be on or not
 /datum/ai_controller/proc/get_setup_mob_ai_status(mob/mob_pawn)

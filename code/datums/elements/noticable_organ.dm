@@ -74,6 +74,4 @@
 	return FALSE
 
 /datum/element/noticable_organ/ai_control/on_removed(obj/item/organ/target, mob/living/carbon/loser)
-	SIGNAL_HANDLER
-
 	Detach(target)
