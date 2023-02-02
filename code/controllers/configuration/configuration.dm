@@ -119,7 +119,7 @@
 
 	return ..()
 
-/datum/controller/configuration/OnConfingLoad()
+/datum/controller/configuration/OnConfigLoad()
 	var/do_stack_trace = CONFIG_GET(flag/config_errors_runtime)
 	for(var/error_message in configuration_errors)
 		if(do_stack_trace)
