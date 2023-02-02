@@ -537,7 +537,13 @@
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
-	if(is_blind() && !blind_examine_check(examinify)) //blind people see things differently (through touch)
+	var/turf/examine_turf = get_turf(examinify)
+	if(is_blind()) //blind people see things differently (through touch)
+		if(!blind_examine_check(examinify))
+			return
+	else if(!examine_turf.luminosity && \
+		get_dist(src, examine_turf) > 1 && \
+		!has_nightvision()) // If you aren't blind, it's in darkness (that you can't see) and farther then next to you
 		return
 
 	face_atom(examinify)
@@ -1163,11 +1169,10 @@
  * Can this mob see in the dark
  *
  * This checks all traits, glasses, and robotic eyeball implants to see if the mob can see in the dark
- * this does NOT check if the mob is missing it's eyeballs. Also see_in_dark is a BYOND mob var (that defaults to 2)
+ * this does NOT check if the mob is missing it's eyeballs.
 **/
 /mob/proc/has_nightvision()
-	// Accounts for negatives, sorta conservative. Change this if/when you change negatives in those lists yeah?
-
+	// Somewhat conservative, basically is your lighting plane bright enough that you the user can see stuff
 	var/light_offset = (lighting_color_cutoffs[1] + lighting_color_cutoffs[2] + lighting_color_cutoffs[3]) / 3 + lighting_cutoff
 	return light_offset >= LIGHTING_NIGHTVISION_THRESHOLD
 
