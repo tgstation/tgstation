@@ -38,7 +38,7 @@
 	var/obj/item/stack/rods/used_rods = attacking_item
 	if(used_rods.get_amount() >= MEATSPIKE_IRONROD_REQUIREMENT)
 		used_rods.use(MEATSPIKE_IRONROD_REQUIREMENT)
-		to_chat(user, span_notice("You add spikes to the frame."))
+		balloon_alert(user, "you add spikes to the frame.")
 		var/obj/structure/new_meatspike = new /obj/structure/kitchenspike(loc)
 		transfer_fingerprints_to(new_meatspike)
 		qdel(src)
