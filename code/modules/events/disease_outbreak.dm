@@ -129,7 +129,7 @@
 
 /datum/event_admin_setup/disease_outbreak/advanced/prompt_admins()
 	var/candidate_count = candidate_check()
-	if(!candidate_check())
+	if(!candidate_count)
 		tgui_alert(usr, "There are no candidates eligible to recieve a disease!", "Error")
 		return ADMIN_CANCEL_EVENT
 	tgui_alert(usr, "[candidate_count] candidates found!", "Disease Outbreak")
