@@ -265,7 +265,7 @@
 			object_size = consumed_item.w_class
 			matter_increase += 70 * object_size
 		else if(!isliving(consumed_object))
-			matter_increase += min(0.5 * consumed_object.max_integrity, 4000)
+			matter_increase += min(0.5 * consumed_object.max_integrity, 1000)
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	radiation_pulse(atom_source, max_range = 6, threshold = 1.2 / max(object_size, 1), chance = 10 * object_size)
