@@ -20,6 +20,8 @@
 	resistance_flags = FIRE_PROOF
 	max_integrity = 200
 	obj_flags = CAN_BE_HIT
+	armor_type = /datum/armor/machinery_atmospherics
+
 	///Check if the object can be unwrenched
 	var/can_unwrench = FALSE
 	///Bitflag of the initialized directions (NORTH | SOUTH | EAST | WEST)
@@ -159,6 +161,47 @@
 	nodes[i] = null
 
 /**
+ * Setter for device direction
+ *
+ * Set the direction to either SOUTH or WEST if the pipe_flag is set to PIPING_CARDINAL_AUTONORMALIZE, called in New(), used mostly by layer manifolds
+ */
+/obj/machinery/atmospherics/proc/normalize_cardinal_directions()
+	switch(dir)
+		if(SOUTH)
+			setDir(NORTH)
+		if(WEST)
+			setDir(EAST)
+
+/**
+ * setter for pipe layers
+ *
+ * Set the layer of the pipe that the device has to a new_layer
+ * Arguments:
+ * * new_layer - the layer at which we want the piping_layer to be (1 to 5)
+ */
+/obj/machinery/atmospherics/proc/set_piping_layer(new_layer)
+	piping_layer = (pipe_flags & PIPING_DEFAULT_LAYER_ONLY) ? PIPING_LAYER_DEFAULT : new_layer
+	update_appearance()
+
+/obj/machinery/atmospherics/update_icon()
+	. = ..()
+	update_layer()
+
+/**
+ * Find a connecting /obj/machinery/atmospherics in specified direction, called by relaymove()
+ * used by ventcrawling mobs to check if they can move inside a pipe in a specific direction
+ * Arguments:
+ * * direction - the direction we are checking against
+ * * prompted_layer - the piping_layer we are inside
+ */
+/obj/machinery/atmospherics/proc/find_connecting(direction, prompted_layer)
+	for(var/obj/machinery/atmospherics/target in get_step_multiz(src, direction))
+		if(!(target.initialize_directions & get_dir(target,src)) && !istype(target, /obj/machinery/atmospherics/pipe/multiz))
+			continue
+		if(connection_check(target, prompted_layer))
+			return target
+
+/**
  * Getter for node_connects
  *
  * Return a list of the nodes that can connect to other machines, get called by atmos_init()
@@ -180,18 +223,6 @@
 	return node_connects
 
 /**
- * Setter for device direction
- *
- * Set the direction to either SOUTH or WEST if the pipe_flag is set to PIPING_CARDINAL_AUTONORMALIZE, called in New(), used mostly by layer manifolds
- */
-/obj/machinery/atmospherics/proc/normalize_cardinal_directions()
-	switch(dir)
-		if(SOUTH)
-			setDir(NORTH)
-		if(WEST)
-			setDir(EAST)
-
-/**
  * Initialize for atmos devices
  *
  * initialize the nodes for each pipe/device, this is called just after the air controller sets up turfs
@@ -204,49 +235,20 @@
 
 	for(var/i in 1 to device_type)
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[i]))
-			if(can_be_node(target, i))
+			if(can_be_node(target))
 				nodes[i] = target
 				break
-	update_appearance()
 
-/**
- * setter for pipe layers
- *
- * Set the layer of the pipe that the device has to a new_layer
- * Arguments:
- * * new_layer - the layer at which we want the piping_layer to be (1 to 5)
- */
-/obj/machinery/atmospherics/proc/set_piping_layer(new_layer)
-	piping_layer = (pipe_flags & PIPING_DEFAULT_LAYER_ONLY) ? PIPING_LAYER_DEFAULT : new_layer
 	update_appearance()
-
-/obj/machinery/atmospherics/update_icon()
-	. = ..()
-	update_layer()
 
 /**
  * Check if a node can actually exists by connecting to another machine
  * called on atmos_init()
  * Arguments:
  * * obj/machinery/atmospherics/target - the machine we are connecting to
- * * iteration - the current node we are checking (from 1 to 4)
  */
-/obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target, iteration)
+/obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
 	return connection_check(target, piping_layer)
-
-/**
- * Find a connecting /obj/machinery/atmospherics in specified direction, called by relaymove()
- * used by ventcrawling mobs to check if they can move inside a pipe in a specific direction
- * Arguments:
- * * direction - the direction we are checking against
- * * prompted_layer - the piping_layer we are inside
- */
-/obj/machinery/atmospherics/proc/find_connecting(direction, prompted_layer)
-	for(var/obj/machinery/atmospherics/target in get_step_multiz(src, direction))
-		if(!(target.initialize_directions & get_dir(target,src)) && !istype(target, /obj/machinery/atmospherics/pipe/multiz))
-			continue
-		if(connection_check(target, prompted_layer))
-			return target
 
 /**
  * Check the connection between two nodes
@@ -258,20 +260,15 @@
  * * given_layer - the piping_layer we are checking
  */
 /obj/machinery/atmospherics/proc/connection_check(obj/machinery/atmospherics/target, given_layer)
-	if(is_connectable(target, given_layer) && target.is_connectable(src, given_layer) && check_init_directions(target))
-		return TRUE
-	return FALSE
+	//if target is not multiz then we have to check if the target & src connect in the same direction
+	if(!istype(target, /obj/machinery/atmospherics/pipe/multiz) && !((initialize_directions & get_dir(src, target)) && (target.initialize_directions & get_dir(target, src))))
+		return FALSE
 
-/**
- * check if the initialized direction are the same on both sides (or if is a multiz adapter)
- * returns TRUE or FALSE if the connection is possible or not
- * Arguments:
- * * obj/machinery/atmospherics/target - the machinery we want to connect to
- */
-/obj/machinery/atmospherics/proc/check_init_directions(obj/machinery/atmospherics/target)
-	if((initialize_directions & get_dir(src, target) && target.initialize_directions & get_dir(target,src)) || istype(target, /obj/machinery/atmospherics/pipe/multiz))
-		return TRUE
-	return FALSE
+	//both target & src can't be connected either way
+	if(!is_connectable(target, given_layer) || !target.is_connectable(src, given_layer))
+		return FALSE
+
+	return TRUE
 
 /**
  * check if the piping layer and color are the same on both sides (grey can connect to all colors)
@@ -283,33 +280,20 @@
 /obj/machinery/atmospherics/proc/is_connectable(obj/machinery/atmospherics/target, given_layer)
 	if(isnull(given_layer))
 		given_layer = piping_layer
-	if(check_connectable_layer(target, given_layer) && target.loc != loc && check_connectable_color(target))
-		return TRUE
-	return FALSE
 
-/**
- * check if the piping layer are the same on both sides or one of them has the PIPING_ALL_LAYER flag
- * returns TRUE if one of the parameters is TRUE
- * called by is_connectable()
- * Arguments:
- * * obj/machinery/atmospherics/target - the machinery we want to connect to
- * * given_layer - the piping_layer we are connecting to
- */
-/obj/machinery/atmospherics/proc/check_connectable_layer(obj/machinery/atmospherics/target, given_layer)
-	if(target.piping_layer == given_layer || target.pipe_flags & PIPING_ALL_LAYER)
-		return TRUE
-	return FALSE
+	// you cant place the machine on the same location as the target cause it blocks
+	if(target.loc == loc)
+		return FALSE
 
-/**
- * check if the color are the same on both sides or if one of the pipes are grey or have the PIPING_ALL_COLORS flag
- * returns TRUE if one of the parameters is TRUE
- * Arguments:
- * * obj/machinery/atmospherics/target - the machinery we want to connect to
- */
-/obj/machinery/atmospherics/proc/check_connectable_color(obj/machinery/atmospherics/target)
-	if(target.pipe_color == pipe_color || ((target.pipe_flags | pipe_flags) & PIPING_ALL_COLORS) || target.pipe_color == COLOR_VERY_LIGHT_GRAY || pipe_color == COLOR_VERY_LIGHT_GRAY)
-		return TRUE
-	return FALSE
+	//if the target is not in the same piping layer & it does not have the all layer connection flag[which allows it to be connected regardless of layer] then we are out
+	if(target.piping_layer != given_layer && !(target.pipe_flags & PIPING_ALL_LAYER))
+		return FALSE
+
+	//if the target does not have the same color and it does not have all color connection flag[which allows it to be connected regardless of color] & one of the pipes is not gray[allowing for connection regardless] then we are out
+	if(target.pipe_color != pipe_color && !((target.pipe_flags | pipe_flags) & PIPING_ALL_COLORS) && target.pipe_color != COLOR_VERY_LIGHT_GRAY && pipe_color != COLOR_VERY_LIGHT_GRAY)
+		return FALSE
+
+	return TRUE
 
 /**
  * Called on construction and when expanding the datum_pipeline, returns the nodes of the device

@@ -553,6 +553,7 @@
 	return TRUE
 
 /datum/action/cooldown/unstable_teleport/proc/teleport(mob/living/carbon/human/H)
+	StartCooldown()
 	H.visible_message(span_warning("[H] disappears in a shower of sparks!"), span_danger("You teleport!"))
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(10, 0, src)
