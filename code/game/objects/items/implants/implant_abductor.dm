@@ -14,7 +14,8 @@
 		return
 
 	if(!home)
-		link_pad(imp_in)
+		if(!link_pad(imp_in))
+			imp_in.balloon_alert(imp_in, "no teleport pads detected!")
 
 	home.Retrieve(imp_in)
 	on_cooldown = addtimer(VARSET_CALLBACK(src, on_cooldown, null), cooldown , TIMER_STOPPABLE)
@@ -37,4 +38,7 @@
 		for(var/obj/machinery/abductor/console/C in GLOB.machines)
 			consoles += C
 		console = pick(consoles)
-		home = console.pad
+		if(console)
+			home = console.pad
+
+	return FALSE //We somehow couldn't find any pads (maybe they're not loaded in yet)
