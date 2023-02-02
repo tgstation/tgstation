@@ -208,10 +208,14 @@
 	var/mob/living/simple_animal/hostile/mining_drone/user = owner
 	if(user.sight & SEE_TURFS)
 		user.clear_sight(SEE_TURFS)
-		user.lighting_cutoff = initial(user.lighting_cutoff)
+		user.lighting_cutoff_red += 5
+		user.lighting_cutoff_green += 15
+		user.lighting_cutoff_blue += 5
 	else
 		user.add_sight(SEE_TURFS)
-		user.lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
+		user.lighting_cutoff_red -= 5
+		user.lighting_cutoff_green -= 15
+		user.lighting_cutoff_blue -= 5
 
 	user.sync_lighting_plane_cutoff()
 

@@ -18,7 +18,10 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	lighting_cutoff = LIGHTING_CUTOFF_HIGH
+	// Real blue, trying to go for the migo's look
+	lighting_cutoff_red = 15
+	lighting_cutoff_green = 15
+	lighting_cutoff_blue = 50
 	var/phaser = TRUE
 	var/is_phased = FALSE
 

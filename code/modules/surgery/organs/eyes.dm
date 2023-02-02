@@ -190,36 +190,69 @@
 
 	damaged = TRUE
 
+#define NIGHTVISION_LIGHT_OFF 0
+#define NIGHTVISION_LIGHT_LOW 1
+#define NIGHTVISION_LIGHT_MID 2
+#define NIGHTVISION_LIGHT_HIG 3
+
 /obj/item/organ/internal/eyes/night_vision
-	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
+	// These lists are used as the color cutoff for the eye
+	// They need to be filled out for subtypes
+	var/list/low_light_cutoff
+	var/list/medium_light_cutoff
+	var/list/high_light_cutoff
+	var/light_level = NIGHTVISION_LIGHT_OFF
 	actions_types = list(/datum/action/item_action/organ_action/use)
-	var/night_vision = TRUE
+
+/obj/item/organ/internal/eyes/night_vision/Initialize(mapload)
+	. = ..()
+	if (PERFORM_ALL_TESTS(focus_only/nightvision_color_cutoffs))
+		if(length(low_light_cutoff) != 3 || \
+			length(medium_light_cutoff) != 3 || \
+			length(high_light_cutoff) != 3)
+			stack_trace("[type] did not have fully filled out color cutoff lists")
+	color_cutoffs = low_light_cutoff.Copy()
+	light_level = NIGHTVISION_LIGHT_LOW
 
 /obj/item/organ/internal/eyes/night_vision/ui_action_click()
 	sight_flags = initial(sight_flags)
-	switch(lighting_cutoff)
-		if (LIGHTING_CUTOFF_VISIBLE)
-			lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
-		if (LIGHTING_CUTOFF_MEDIUM)
-			lighting_cutoff = LIGHTING_CUTOFF_HIGH
-		if (LIGHTING_CUTOFF_HIGH)
-			lighting_cutoff = LIGHTING_CUTOFF_FULLBRIGHT
+	switch(light_level)
+		if (NIGHTVISION_LIGHT_OFF)
+			color_cutoffs = low_light_cutoff.Copy()
+			light_level = NIGHTVISION_LIGHT_LOW
+		if (NIGHTVISION_LIGHT_LOW)
+			color_cutoffs = medium_light_cutoff.Copy()
+			light_level = NIGHTVISION_LIGHT_MID
+		if (NIGHTVISION_LIGHT_MID)
+			color_cutoffs = high_light_cutoff.Copy()
+			light_level = NIGHTVISION_LIGHT_HIG
 		else
-			lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
+			color_cutoffs = list()
+			light_level = NIGHTVISION_LIGHT_OFF
 	owner.update_sight()
 
-/obj/item/organ/internal/eyes/night_vision/alien
-	name = "alien eyes"
-	desc = "It turned out they had them after all!"
-	sight_flags = SEE_MOBS
-
-/obj/item/organ/internal/eyes/night_vision/zombie
-	name = "undead eyes"
-	desc = "Somewhat counterintuitively, these half-rotten eyes actually have superior vision to those of a living human."
+#undef NIGHTVISION_LIGHT_OFF
+#undef NIGHTVISION_LIGHT_LOW
+#undef NIGHTVISION_LIGHT_MID
+#undef NIGHTVISION_LIGHT_HIG
 
 /obj/item/organ/internal/eyes/night_vision/mushroom
 	name = "fung-eye"
 	desc = "While on the outside they look inert and dead, the eyes of mushroom people are actually very advanced."
+	low_light_cutoff = list(0, 15, 20)
+	medium_light_cutoff = list(0, 20, 35)
+	high_light_cutoff = list(0, 40, 50)
+
+/obj/item/organ/internal/eyes/zombie
+	name = "undead eyes"
+	desc = "Somewhat counterintuitively, these half-rotten eyes actually have superior vision to those of a living human."
+	color_cutoffs = list(25, 35, 5)
+
+/obj/item/organ/internal/eyes/alien
+	name = "alien eyes"
+	desc = "It turned out they had them after all!"
+	sight_flags = SEE_MOBS
+	color_cutoffs = list(25, 5, 42)
 
 ///Robotic
 
@@ -548,6 +581,9 @@
 	icon_state = "adapted_eyes"
 	eye_icon_state = "eyes_glow"
 	overlay_ignore_lighting = TRUE
+	low_light_cutoff = list(5, 12, 20)
+	medium_light_cutoff = list(15, 20, 30)
+	high_light_cutoff = list(30, 35, 50)
 	var/obj/item/flashlight/eyelight/adapted/adapt_light
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted/Insert(mob/living/carbon/adapted, special = FALSE, drop_if_replaced = TRUE)

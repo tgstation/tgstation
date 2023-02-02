@@ -1,5 +1,6 @@
 
 //Toggle Night Vision
+#warn unused, decide on what to do with this
 /datum/action/cooldown/spell/night_vision
 	name = "Toggle Nightvision"
 	desc = "Toggle your nightvision mode."

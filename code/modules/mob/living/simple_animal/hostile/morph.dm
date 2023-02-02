@@ -20,7 +20,10 @@
 	obj_damage = 50
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	lighting_cutoff = LIGHTING_CUTOFF_HIGH
+	// Oh you KNOW it's gonna be real green
+	lighting_cutoff_red = 10
+	lighting_cutoff_green = 35
+	lighting_cutoff_blue = 15
 	vision_range = 1 // Only attack when target is close
 	wander = FALSE
 	attack_verb_continuous = "glomps"

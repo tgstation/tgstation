@@ -794,7 +794,8 @@
 	icon_state = "godeye"
 	inhand_icon_state = null
 	vision_flags = SEE_TURFS
-	lighting_cutoff = LIGHTING_CUTOFF_HIGH
+	// Blue, light blue
+	color_cutoffs = list(15, 30, 40)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	custom_materials = null
 	var/datum/action/cooldown/scan/scan_ability

@@ -635,6 +635,7 @@
 	set_invis_see(initial(see_invisible))
 	var/new_sight = initial(sight)
 	lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
+	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
 
 	if(client.eye != src)
 		var/atom/A = client.eye
@@ -643,11 +644,11 @@
 
 	if(sight_mode & BORGMESON)
 		new_sight |= SEE_TURFS
-		lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
+		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(5, 15, 5))
 
 	if(sight_mode & BORGMATERIAL)
 		new_sight |= SEE_OBJS
-		lighting_cutoff = LIGHTING_CUTOFF_HIGH
+		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(20, 25, 40))
 
 	if(sight_mode & BORGXRAY)
 		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
@@ -655,7 +656,7 @@
 
 	if(sight_mode & BORGTHERM)
 		new_sight |= SEE_MOBS
-		lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
+		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(25, 8, 5))
 		set_invis_see(min(see_invisible, SEE_INVISIBLE_LIVING))
 
 	if(see_override)

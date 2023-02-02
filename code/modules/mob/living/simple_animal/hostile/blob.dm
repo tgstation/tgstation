@@ -10,7 +10,10 @@
 	maxbodytemp = INFINITY
 	unique_name = 1
 	combat_mode = TRUE
-	lighting_cutoff = LIGHTING_CUTOFF_HIGH
+	// ... Blob colored lighting
+	lighting_cutoff_red = 20
+	lighting_cutoff_green = 40
+	lighting_cutoff_blue = 30
 	initial_language_holder = /datum/language_holder/empty
 	retreat_distance = null //! retreat doesn't obey pass_flags, so won't work on blob mobs.
 	/// Blob camera that controls the blob

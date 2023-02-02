@@ -80,16 +80,24 @@
 	var/msg
 	switch(lighting_cutoff)
 		if (LIGHTING_CUTOFF_VISIBLE)
-			lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
+			lighting_cutoff_red = 10
+			lighting_cutoff_green = 10
+			lighting_cutoff_blue = 15
 			msg = "You activate your night vision."
 		if (LIGHTING_CUTOFF_MEDIUM)
-			lighting_cutoff = LIGHTING_CUTOFF_HIGH
+			lighting_cutoff_red = 25
+			lighting_cutoff_green = 25
+			lighting_cutoff_blue = 35
 			msg = "You increase your night vision."
 		if (LIGHTING_CUTOFF_HIGH)
-			lighting_cutoff = LIGHTING_CUTOFF_FULLBRIGHT
+			lighting_cutoff_red = 35
+			lighting_cutoff_green = 35
+			lighting_cutoff_blue = 50
 			msg = "You maximize your night vision."
 		else
-			lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
+			lighting_cutoff_red = 0
+			lighting_cutoff_green = 0
+			lighting_cutoff_blue = 0
 			msg = "You deactivate your night vision."
 	sync_lighting_plane_cutoff()
 	to_chat(src, span_notice(msg))

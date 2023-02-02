@@ -44,3 +44,7 @@
 	if(has_emotes)
 		return ..()
 	return FALSE
+
+/mob/camera/update_sight()
+	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
+	return ..()

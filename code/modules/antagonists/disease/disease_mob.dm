@@ -18,7 +18,10 @@ the new instance inside the host to be updated to the template's stats.
 	invisibility = INVISIBILITY_OBSERVER
 	see_invisible = SEE_INVISIBLE_LIVING
 	layer = BELOW_MOB_LAYER
-	lighting_cutoff = LIGHTING_CUTOFF_HIGH
+	// Pale green, bright enough to have good vision
+	lighting_cutoff_red = 5
+	lighting_cutoff_green = 35
+	lighting_cutoff_blue = 20
 	sight = SEE_SELF|SEE_THRU
 	initial_language_holder = /datum/language_holder/universal
 

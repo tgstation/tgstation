@@ -18,7 +18,10 @@
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
-	lighting_cutoff = LIGHTING_CUTOFF_HIGH
+	// Vivid red, cause cult theme
+	lighting_cutoff_red = 30
+	lighting_cutoff_green = 5
+	lighting_cutoff_blue = 20
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0

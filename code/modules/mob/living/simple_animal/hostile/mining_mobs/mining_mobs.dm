@@ -15,7 +15,10 @@
 	combat_mode = TRUE
 	var/throw_message = "bounces off of"
 	var/fromtendril = FALSE
-	lighting_cutoff = LIGHTING_CUTOFF_HIGH
+	// Pale purple, should be red enough to see stuff on lavaland
+	lighting_cutoff_red = 25
+	lighting_cutoff_green = 15
+	lighting_cutoff_blue = 35
 	mob_size = MOB_SIZE_LARGE
 	var/icon_aggro = null
 

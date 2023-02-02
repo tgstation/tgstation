@@ -274,7 +274,10 @@
 	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
-	lighting_cutoff = LIGHTING_CUTOFF_HIGH
+	// Purple, but bright cause we're gonna need to spot mobs on lavaland
+	lighting_cutoff_red = 35
+	lighting_cutoff_green = 20
+	lighting_cutoff_blue = 45
 
 
 /mob/living/simple_animal/hostile/big_legion/Initialize(mapload)

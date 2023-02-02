@@ -18,7 +18,10 @@
 	combat_mode = TRUE
 	stop_automated_movement = TRUE
 	AIStatus = AI_OFF
-	lighting_cutoff = LIGHTING_CUTOFF_HIGH
+	// Sort of greenish brown, to match the vibeTM
+	lighting_cutoff_red = 20
+	lighting_cutoff_green = 25
+	lighting_cutoff_blue = 5
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
