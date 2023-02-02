@@ -2306,7 +2306,7 @@
 	if(drinker.health > 0)
 		drinker.adjustBruteLoss(-1 * REM * delta_time, required_bodytype = affected_bodytype)
 		drinker.adjustFireLoss(-1 * REM * delta_time, required_bodytype = affected_bodytype)
-		drinker.adjustToxLoss(-0.5 * REM * delta_time, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		drinker.adjustToxLoss(-0.5 * REM * delta_time, required_biotype = affected_biotype)
 		drinker.adjustOxyLoss(-3 * REM * delta_time, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		drinker.adjustStaminaLoss(-5 * REM * delta_time, required_biotype = affected_biotype)
 		. = TRUE
