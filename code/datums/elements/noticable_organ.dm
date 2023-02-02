@@ -45,4 +45,4 @@
 
 	if(body_zone && (body_zone in examined.get_covered_body_zones()))
 		return
-	examine_list += span_notice("[body_zone ? examined.p_their(TRUE) : examined.p_they(TRUE)] [infused_desc]")
+	examine_list += span_notice(replacetext(replacetext("[body_zone ? examined.p_their(TRUE) : examined.p_they(TRUE)] [infused_desc]", "%PRONOUN_ES", examined.p_es()), "%PRONOUN_S", examined.p_s()))
