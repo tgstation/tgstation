@@ -589,7 +589,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
 			C.visible_message(span_danger("[user] begins restraining [C] with [src]!"), \
 									span_userdanger("[user] begins shaping an energy field around your hands!"))
-			if(do_mob(user, C, time_to_cuff) && C.canBeHandcuffed())
+			if(do_after(user, time_to_cuff, C) && C.canBeHandcuffed())
 				if(!C.handcuffed)
 					C.set_handcuffed(new /obj/item/restraints/handcuffs/energy/used(C))
 					C.update_handcuffed()
