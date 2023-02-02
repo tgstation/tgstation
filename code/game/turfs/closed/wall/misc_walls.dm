@@ -126,6 +126,26 @@
 	desc = "This rock is filled with pockets of breathable air. It has metal struts to protect it from mining."
 	decon_type = /turf/closed/mineral/asteroid/porous
 
+/turf/closed/wall/rock/ice
+	name = "reinforced ice"
+	desc = "A natural ice wall, reinforced with metal struts to protect it from damage."
+	icon = 'icons/turf/walls/reinforced_mountain.dmi'
+	icon_state = "rockwall-0"
+	base_icon_state = "rockwall"
+	turf_flags = NO_RUST
+	sheet_amount = 1
+	hardness = 50
+	girder_type = null
+	decon_type = /turf/closed/mineral/snowmountain
+
+/turf/closed/wall/rock/ice/icemoon
+	decon_type = /turf/closed/mineral/snowmountain/icemoon
+
+/turf/closed/wall/rock/ice/porous
+	name = "reinforced porous ice"
+	desc = "A natural ice wall, filled with pockets of breathable air. It is reinforced with metal struts to protect it from damage."
+	decon_type = /turf/closed/mineral/snowmountain/porous
+
 /turf/closed/wall/space
 	name = "illusionist wall"
 	icon = 'icons/turf/space.dmi'

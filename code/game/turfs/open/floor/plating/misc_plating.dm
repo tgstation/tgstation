@@ -73,6 +73,10 @@
 /turf/open/floor/plating/snowed/temperatre
 	temperature = 255.37
 
+/turf/open/floor/plating/snowed/standard
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	temperature = T20C
+
 // When you want real, genuine snowed plating in your kitchen's cold room.
 /turf/open/floor/plating/snowed/coldroom
 	planetary_atmos = FALSE

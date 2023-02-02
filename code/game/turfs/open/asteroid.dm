@@ -249,6 +249,10 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
 	return ..()
 
+/turf/open/misc/asteroid/snow/standard //safe for use in the station proper
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	temperature = T20C
+
 //Used in SnowCabin.dm
 /turf/open/misc/asteroid/snow/snow_cabin
 	temperature = 180
