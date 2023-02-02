@@ -120,6 +120,16 @@
 /obj/structure/girder,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
+"lu" = (
+/obj/machinery/duct,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Water Access Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/janitor,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
 "lx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
@@ -196,6 +206,11 @@
 /obj/effect/spawner/random/engineering/canister,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
+"rk" = (
+/obj/machinery/light/small/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
 "rA" = (
 /obj/modular_map_connector,
 /turf/template_noop,
@@ -238,6 +253,17 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
+"sX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
 "tb" = (
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -251,6 +277,13 @@
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/head/utility/hardhat,
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"tI" = (
+/obj/machinery/plumbing/synthesizer{
+	reagent_id = /datum/reagent/water
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "vC" = (
 /turf/closed/wall/r_wall,
@@ -274,6 +307,13 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
+"wM" = (
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/wall,
+/area/station/maintenance/department/crew_quarters/dorms)
 "wQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/wardrobe/mixed,
@@ -291,6 +331,7 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch"
 	},
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "xL" = (
@@ -370,6 +411,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
+"Dw" = (
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
 "DP" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -448,6 +494,14 @@
 /obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
+"IN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/crew_quarters/dorms)
 "IS" = (
 /turf/template_noop,
 /area/station/maintenance/central/lesser)
@@ -463,9 +517,44 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
+"Kx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/west,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
+"Lh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
 "Lq" = (
 /turf/open/space/basic,
 /area/space/nearstation)
+"LT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
 "LX" = (
 /obj/item/assembly/mousetrap/armed,
 /obj/effect/decal/cleanable/dirt,
@@ -489,6 +578,24 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/crew_quarters/dorms)
+"Qp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/crew_quarters/dorms)
+"Qz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Rg" = (
@@ -542,6 +649,20 @@
 /obj/item/grenade/chem_grenade/cleaner,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
+"TZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/grenade/chem_grenade/cleaner,
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_y = 6;
+	pixel_x = -7
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
 "Ul" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -562,6 +683,7 @@
 	initialized_button = "trammaintlmaobro";
 	name = "Glass Walkway Emergency Seal Toggle"
 	},
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "UJ" = (
@@ -593,6 +715,11 @@
 /obj/item/lipstick/random,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
+"Vt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/l3closet/janitor,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
 "Xm" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -606,6 +733,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "YG" = (
@@ -841,14 +969,14 @@ vM
 vM
 vM
 vM
-vM
-vM
-vM
-vM
-vM
-vM
+Kx
+Kx
+Kx
+Kx
+Kx
+Kx
 Ul
-Jw
+IN
 NT
 gs
 gs
@@ -877,14 +1005,14 @@ AN
 AN
 AN
 AN
-NT
+wM
 AN
 AN
 AN
 AN
 AN
 AN
-Jw
+IN
 NT
 gs
 gs
@@ -920,7 +1048,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 NT
 gs
 gs
@@ -956,7 +1084,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 NT
 gs
 gs
@@ -992,7 +1120,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 NT
 gs
 gs
@@ -1028,7 +1156,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 NT
 gs
 gs
@@ -1064,7 +1192,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 NT
 gs
 gs
@@ -1100,7 +1228,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 NT
 gs
 gs
@@ -1136,7 +1264,7 @@ AN
 AN
 wQ
 DP
-Jw
+IN
 NT
 gs
 gs
@@ -1172,7 +1300,7 @@ AN
 AN
 YG
 DP
-Jw
+IN
 OF
 gs
 gs
@@ -1208,7 +1336,7 @@ AN
 AN
 kY
 DP
-Jw
+IN
 NT
 gs
 gs
@@ -1244,7 +1372,7 @@ AN
 AN
 zr
 DP
-Jw
+IN
 NT
 NT
 NT
@@ -1280,9 +1408,9 @@ AN
 AN
 Hw
 DP
-Jw
-Jw
-Jw
+IN
+IN
+IN
 NT
 NT
 NT
@@ -1318,11 +1446,11 @@ AN
 AN
 AN
 AN
-Jw
-Jw
-Jw
-Jw
-Jw
+IN
+IN
+IN
+IN
+IN
 NT
 "}
 (20,1,1) = {"
@@ -1358,7 +1486,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 NT
 "}
 (21,1,1) = {"
@@ -1394,7 +1522,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 NT
 "}
 (22,1,1) = {"
@@ -1430,7 +1558,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 NT
 "}
 (23,1,1) = {"
@@ -1466,7 +1594,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 NT
 "}
 (24,1,1) = {"
@@ -1502,7 +1630,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 NT
 "}
 (25,1,1) = {"
@@ -1536,9 +1664,9 @@ AN
 AN
 AN
 ny
-Jw
-Jw
-Jw
+IN
+IN
+IN
 NT
 "}
 (26,1,1) = {"
@@ -1572,7 +1700,7 @@ AN
 AN
 AN
 oT
-Jw
+IN
 NT
 NT
 NT
@@ -1608,7 +1736,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 Eg
 NT
 IK
@@ -1644,7 +1772,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 DP
 NT
 IK
@@ -1680,7 +1808,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 DP
 NT
 gs
@@ -1716,7 +1844,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 DP
 NT
 gs
@@ -1752,7 +1880,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 DP
 NT
 gs
@@ -1788,7 +1916,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 nf
 NT
 gs
@@ -1824,7 +1952,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 DP
 NT
 gs
@@ -1860,7 +1988,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 DP
 NT
 gs
@@ -1896,7 +2024,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 DP
 NT
 gs
@@ -1932,7 +2060,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 DP
 NT
 gs
@@ -1968,7 +2096,7 @@ AN
 AN
 AN
 AN
-Jw
+IN
 IL
 NT
 gs
@@ -2004,7 +2132,7 @@ AN
 AN
 AN
 oT
-ny
+Qz
 NT
 NT
 NT
@@ -2040,8 +2168,8 @@ AN
 AN
 AN
 rK
-rK
-rK
+Qp
+Qp
 PL
 NT
 "}
@@ -2186,7 +2314,7 @@ AN
 AN
 AN
 AN
-oU
+sX
 cV
 "}
 (44,1,1) = {"
@@ -2222,7 +2350,7 @@ AN
 AN
 AN
 AN
-oU
+sX
 cV
 "}
 (45,1,1) = {"
@@ -2257,8 +2385,8 @@ AN
 xW
 lx
 lx
-lx
-gQ
+LT
+Lh
 cV
 "}
 (46,1,1) = {"
@@ -2293,7 +2421,7 @@ lx
 gQ
 cV
 cV
-cV
+lu
 cV
 cV
 "}
@@ -2328,10 +2456,10 @@ oU
 cV
 cV
 cV
-gs
-gs
-gs
-gs
+tI
+Dw
+Vt
+cV
 "}
 (48,1,1) = {"
 AN
@@ -2363,11 +2491,11 @@ AN
 oU
 cV
 gs
-gs
-gs
-gs
-gs
-gs
+cV
+TZ
+rk
+CB
+cV
 "}
 (49,1,1) = {"
 AN
@@ -2399,11 +2527,11 @@ AN
 oU
 cV
 gs
-gs
-gs
-gs
-IK
-IK
+cV
+cV
+cV
+cV
+cV
 "}
 (50,1,1) = {"
 AN

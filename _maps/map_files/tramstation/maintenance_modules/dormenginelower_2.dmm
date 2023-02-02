@@ -1,4 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/crew_quarters/dorms)
 "am" = (
 /obj/structure/girder,
 /turf/open/misc/asteroid/airless,
@@ -24,6 +32,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "ct" = (
@@ -47,6 +56,17 @@
 /obj/item/stock_parts/cell/infinite,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
+"dp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
 "eh" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/sand/plating,
@@ -189,6 +209,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "kt" = (
@@ -205,6 +226,17 @@
 /obj/item/mining_scanner,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
+"le" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
 "lx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
@@ -251,6 +283,7 @@
 	note_info = "Due to recent hull damage suffered to this section of the station, the maintenance hall has been deemed unsafe for crew travel and has been blocked off until further notice for station repairs."
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/duct,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "mV" = (
@@ -388,6 +421,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/item/stack/ore/gold,
+/obj/machinery/duct,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "sC" = (
@@ -402,6 +436,12 @@
 	dir = 1
 	},
 /obj/effect/spawner/random/engineering/tank,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"tr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/soap/deluxe,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "tN" = (
@@ -427,6 +467,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/item/stack/ore/iron,
+/obj/machinery/duct,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "vf" = (
@@ -452,6 +493,13 @@
 "vC" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/central/lesser)
+"wW" = (
+/obj/machinery/plumbing/synthesizer{
+	reagent_id = /datum/reagent/water
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
 "xc" = (
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/decal/cleanable/dirt,
@@ -464,6 +512,17 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch"
 	},
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
+"xe" = (
+/obj/machinery/duct,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Water Access Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/janitor,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "xW" = (
@@ -475,6 +534,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
+"yh" = (
+/obj/machinery/light/small/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "yW" = (
 /obj/effect/spawner/random/bureaucracy/folder,
@@ -509,6 +573,7 @@
 /obj/structure/cable,
 /obj/item/stack/ore/iron,
 /obj/item/stack/ore/glass,
+/obj/machinery/duct,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "BN" = (
@@ -659,6 +724,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "JW" = (
@@ -710,6 +776,14 @@
 /obj/item/chair,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
+"MR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/crew_quarters/dorms)
 "NT" = (
 /turf/closed/wall,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -758,8 +832,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
+"PW" = (
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
 "Qo" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
@@ -775,6 +855,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "RF" = (
@@ -797,6 +878,15 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
+"Sj" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/item/stack/ore/glass,
+/obj/machinery/duct,
+/turf/open/floor/plating/airless,
+/area/station/maintenance/department/crew_quarters/dorms)
 "SP" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -835,6 +925,24 @@
 /obj/item/clothing/mask/gas,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
+"Vr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/crew_quarters/dorms)
+"Vt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/holosign/barrier/engineering,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/crew_quarters/dorms)
 "Wp" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/closet/wardrobe/miner,
@@ -863,11 +971,26 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
+"XC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/mop_bucket,
+/obj/item/mop,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
 "XM" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/ore_box,
+/turf/open/floor/plating/airless,
+/area/station/maintenance/department/crew_quarters/dorms)
+"XX" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Yr" = (
@@ -884,8 +1007,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
+"Zc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
 "Zj" = (
 /obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/dirt,
@@ -1110,13 +1243,13 @@ na
 na
 hS
 ud
-SP
+Sj
 Rn
-na
-na
-na
+XX
+XX
+XX
 JJ
-na
+XX
 WC
 IK
 IK
@@ -1188,7 +1321,7 @@ AN
 AN
 AN
 AN
-na
+XX
 LQ
 IK
 IK
@@ -1224,7 +1357,7 @@ AN
 AN
 AN
 AN
-na
+XX
 NT
 IK
 IK
@@ -1368,7 +1501,7 @@ AN
 AN
 AN
 AN
-na
+XX
 NT
 KB
 NZ
@@ -1404,7 +1537,7 @@ AN
 AN
 kt
 Qo
-na
+XX
 Oj
 MA
 gx
@@ -1440,7 +1573,7 @@ AN
 AN
 XM
 OF
-na
+XX
 OF
 zR
 WC
@@ -1548,9 +1681,9 @@ AN
 AN
 BN
 Qo
-na
-na
-na
+XX
+XX
+XX
 OF
 ct
 NT
@@ -1586,9 +1719,9 @@ AN
 AN
 AN
 AN
-SP
+Sj
 sk
-SP
+Sj
 jX
 YW
 NT
@@ -1626,7 +1759,7 @@ AN
 AN
 AN
 AN
-Jw
+MR
 NT
 "}
 (21,1,1) = {"
@@ -1662,7 +1795,7 @@ AN
 AN
 AN
 AN
-gO
+Vt
 NT
 "}
 (22,1,1) = {"
@@ -1698,7 +1831,7 @@ AN
 AN
 AN
 AN
-Jw
+MR
 NT
 "}
 (23,1,1) = {"
@@ -1734,7 +1867,7 @@ AN
 AN
 AN
 AN
-Jw
+MR
 NT
 "}
 (24,1,1) = {"
@@ -1770,7 +1903,7 @@ AN
 AN
 AN
 AN
-Jw
+MR
 NT
 "}
 (25,1,1) = {"
@@ -1804,9 +1937,9 @@ AN
 AN
 AN
 ny
-Jw
-Jw
-Jw
+MR
+MR
+MR
 NT
 "}
 (26,1,1) = {"
@@ -1840,7 +1973,7 @@ AN
 AN
 AN
 Lp
-Jw
+MR
 NT
 NT
 NT
@@ -1876,7 +2009,7 @@ AN
 AN
 AN
 AN
-Jw
+MR
 NT
 WK
 NT
@@ -1912,7 +2045,7 @@ AN
 AN
 AN
 AN
-Jw
+MR
 Du
 rs
 NT
@@ -1948,7 +2081,7 @@ AN
 AN
 AN
 AN
-Jw
+MR
 NT
 DP
 NT
@@ -1984,7 +2117,7 @@ AN
 AN
 AN
 AN
-Jw
+MR
 NT
 id
 NT
@@ -2020,7 +2153,7 @@ AN
 AN
 AN
 AN
-Jw
+MR
 NT
 NT
 NT
@@ -2056,7 +2189,7 @@ AN
 AN
 AN
 AN
-Jw
+MR
 qW
 NT
 gs
@@ -2092,7 +2225,7 @@ AN
 AN
 AN
 AN
-Jw
+MR
 DP
 NT
 gs
@@ -2128,7 +2261,7 @@ AN
 AN
 AN
 AN
-Jw
+MR
 Go
 NT
 gs
@@ -2164,7 +2297,7 @@ AN
 AN
 AN
 AN
-Jw
+MR
 Dz
 NT
 gs
@@ -2200,7 +2333,7 @@ AN
 AN
 AN
 AN
-Jw
+MR
 rX
 NT
 gs
@@ -2236,7 +2369,7 @@ AN
 AN
 AN
 AN
-Jw
+MR
 rX
 NT
 gs
@@ -2272,7 +2405,7 @@ AN
 AN
 AN
 oT
-ny
+ab
 NT
 NT
 NT
@@ -2308,8 +2441,8 @@ AN
 AN
 AN
 rK
-rK
-rK
+Vr
+Vr
 PL
 NT
 "}
@@ -2454,7 +2587,7 @@ AN
 AN
 AN
 AN
-oU
+le
 cV
 "}
 (44,1,1) = {"
@@ -2490,7 +2623,7 @@ AN
 AN
 AN
 AN
-oU
+le
 cV
 "}
 (45,1,1) = {"
@@ -2525,8 +2658,8 @@ AN
 xW
 lx
 lx
-lx
-gQ
+Zc
+dp
 cV
 "}
 (46,1,1) = {"
@@ -2561,7 +2694,7 @@ lx
 gQ
 cV
 cV
-cV
+xe
 cV
 cV
 "}
@@ -2596,10 +2729,10 @@ oU
 cV
 cV
 cV
-gs
-gs
-gs
-gs
+wW
+PW
+CB
+cV
 "}
 (48,1,1) = {"
 AN
@@ -2631,11 +2764,11 @@ AN
 oU
 cV
 gs
-gs
-gs
-gs
-gs
-gs
+cV
+tr
+yh
+XC
+cV
 "}
 (49,1,1) = {"
 AN
@@ -2667,11 +2800,11 @@ AN
 oU
 cV
 gs
-gs
-gs
-gs
-IK
-IK
+cV
+cV
+cV
+cV
+cV
 "}
 (50,1,1) = {"
 AN

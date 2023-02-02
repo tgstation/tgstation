@@ -19,10 +19,6 @@
 "r" = (
 /turf/template_noop,
 /area/template_noop)
-"s" = (
-/obj/modular_map_connector,
-/turf/template_noop,
-/area/template_noop)
 "t" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/girder,
@@ -85,7 +81,7 @@ r
 h
 B
 z
-s
+r
 r
 r
 "}

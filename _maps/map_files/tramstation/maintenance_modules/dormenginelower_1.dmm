@@ -93,6 +93,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
+"fO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
 "gs" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
@@ -105,6 +116,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/warning/vacuum/external/directional/south,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
+"gD" = (
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "gQ" = (
@@ -127,6 +143,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
+"hE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
 "hX" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -134,6 +161,15 @@
 /obj/structure/cable,
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
+"hZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "iO" = (
@@ -212,6 +248,16 @@
 /obj/structure/girder,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
+"oz" = (
+/obj/machinery/duct,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Water Access Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/janitor,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
 "oP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing,
@@ -251,6 +297,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/spawner/random/trash/moisture,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "rA" = (
@@ -263,6 +310,11 @@
 /obj/effect/spawner/random/food_or_drink/cups,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
+"rO" = (
+/obj/machinery/light/small/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
 "sf" = (
 /obj/structure/cable/layer1,
 /obj/effect/turf_decal/sand/plating,
@@ -289,6 +341,13 @@
 	pixel_x = 10;
 	pixel_y = 14
 	},
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
+"sS" = (
+/obj/machinery/plumbing/synthesizer{
+	reagent_id = /datum/reagent/water
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "tb" = (
@@ -364,6 +423,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "yL" = (
@@ -404,6 +464,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/spawner/random/trash/food_packaging,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Ad" = (
@@ -503,6 +564,7 @@
 	name = "Maintenance Hatch"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Gs" = (
@@ -525,6 +587,16 @@
 	pixel_x = 5
 	},
 /obj/item/storage/bag/ore,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"IA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/restraints/legcuffs/beartrap{
+	pixel_x = 5;
+	pixel_y = 11
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "IK" = (
@@ -583,9 +655,22 @@
 /obj/item/wirecutters,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
+"Mr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/crew_quarters/dorms)
 "MN" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"MZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/water_vapor,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "NG" = (
 /obj/effect/decal/cleanable/dirt,
@@ -627,6 +712,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "PR" = (
@@ -981,13 +1067,13 @@ Jw
 Jw
 Jw
 zQ
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
 NT
 gs
 gs
@@ -1023,7 +1109,7 @@ AN
 AN
 AN
 AN
-Jw
+Mr
 NT
 gs
 gs
@@ -1059,7 +1145,7 @@ AN
 AN
 AN
 AN
-Jw
+Mr
 NT
 gs
 gs
@@ -1095,7 +1181,7 @@ AN
 AN
 AN
 AN
-Jw
+Mr
 NT
 gs
 gs
@@ -1131,7 +1217,7 @@ AN
 AN
 AN
 AN
-Jw
+Mr
 NT
 gs
 gs
@@ -1167,7 +1253,7 @@ AN
 AN
 AN
 AN
-Jw
+Mr
 NT
 gs
 gs
@@ -1203,7 +1289,7 @@ AN
 AN
 AN
 AN
-Jw
+Mr
 NT
 gs
 gs
@@ -1239,7 +1325,7 @@ AN
 AN
 AN
 AN
-Jw
+Mr
 NT
 gs
 gs
@@ -1275,7 +1361,7 @@ AN
 AN
 dj
 DP
-Jw
+Mr
 NT
 gs
 gs
@@ -1311,7 +1397,7 @@ AN
 AN
 Ej
 DP
-Jw
+Mr
 OF
 gs
 gs
@@ -1383,7 +1469,7 @@ AN
 AN
 iO
 DP
-Jw
+Mr
 NT
 NT
 NT
@@ -1419,9 +1505,9 @@ AN
 AN
 uc
 DP
-Jw
-Jw
-Jw
+Mr
+Mr
+Mr
 NT
 NT
 NT
@@ -1457,11 +1543,11 @@ AN
 AN
 AN
 AN
-Jw
-Jw
-Jw
-Jw
-Jw
+Mr
+Mr
+Mr
+Mr
+Mr
 NT
 "}
 (20,1,1) = {"
@@ -1497,7 +1583,7 @@ AN
 AN
 AN
 AN
-Jw
+Mr
 NT
 "}
 (21,1,1) = {"
@@ -1533,7 +1619,7 @@ AN
 AN
 AN
 AN
-Jw
+Mr
 NT
 "}
 (22,1,1) = {"
@@ -1569,7 +1655,7 @@ AN
 AN
 AN
 AN
-Jw
+Mr
 NT
 "}
 (23,1,1) = {"
@@ -1605,7 +1691,7 @@ AN
 AN
 AN
 AN
-Jw
+Mr
 NT
 "}
 (24,1,1) = {"
@@ -1641,7 +1727,7 @@ AN
 AN
 AN
 AN
-Jw
+Mr
 NT
 "}
 (25,1,1) = {"
@@ -1677,7 +1763,7 @@ AN
 ny
 Jw
 rg
-Jw
+Mr
 NT
 "}
 (26,1,1) = {"
@@ -1712,7 +1798,7 @@ AN
 AN
 oT
 DP
-Jw
+Mr
 DP
 NT
 "}
@@ -1784,7 +1870,7 @@ AN
 AN
 AN
 DP
-Jw
+Mr
 DP
 NT
 "}
@@ -1820,7 +1906,7 @@ AN
 AN
 AN
 DP
-Jw
+Mr
 RS
 NT
 "}
@@ -1856,7 +1942,7 @@ AN
 AN
 AN
 DP
-Jw
+Mr
 yN
 NT
 "}
@@ -1892,7 +1978,7 @@ AN
 AN
 AN
 DP
-Jw
+Mr
 rK
 NT
 "}
@@ -1928,7 +2014,7 @@ AN
 AN
 AN
 xp
-Jw
+Mr
 Ml
 NT
 "}
@@ -1964,7 +2050,7 @@ AN
 AN
 AN
 DP
-Jw
+Mr
 DP
 NT
 "}
@@ -2000,7 +2086,7 @@ AN
 AN
 AN
 DP
-Jw
+Mr
 DP
 NT
 "}
@@ -2036,7 +2122,7 @@ AN
 AN
 AN
 DP
-Jw
+Mr
 DP
 NT
 "}
@@ -2072,7 +2158,7 @@ AN
 AN
 AN
 PC
-Jw
+Mr
 vQ
 NT
 "}
@@ -2180,7 +2266,7 @@ AN
 Xn
 lx
 lx
-lx
+hZ
 PL
 cV
 "}
@@ -2217,7 +2303,7 @@ Xn
 Xn
 Xn
 Xn
-oU
+hE
 cV
 "}
 (41,1,1) = {"
@@ -2253,7 +2339,7 @@ AN
 AN
 AN
 Xn
-oU
+hE
 cV
 "}
 (42,1,1) = {"
@@ -2289,7 +2375,7 @@ AN
 AN
 AN
 AN
-oU
+hE
 cV
 "}
 (43,1,1) = {"
@@ -2325,7 +2411,7 @@ AN
 AN
 AN
 AN
-oU
+hE
 cV
 "}
 (44,1,1) = {"
@@ -2361,7 +2447,7 @@ AN
 AN
 AN
 AN
-oU
+hE
 cV
 "}
 (45,1,1) = {"
@@ -2396,8 +2482,8 @@ AN
 xW
 lx
 lx
-lx
-gQ
+hZ
+fO
 cV
 "}
 (46,1,1) = {"
@@ -2432,7 +2518,7 @@ lx
 gQ
 cV
 cV
-cV
+oz
 cV
 cV
 "}
@@ -2467,10 +2553,10 @@ oU
 cV
 cV
 cV
-gs
-gs
-gs
-gs
+sS
+gD
+MZ
+cV
 "}
 (48,1,1) = {"
 AN
@@ -2502,11 +2588,11 @@ AN
 oU
 cV
 gs
-gs
-gs
-gs
-gs
-gs
+cV
+IA
+rO
+CB
+cV
 "}
 (49,1,1) = {"
 AN
@@ -2538,11 +2624,11 @@ AN
 oU
 cV
 gs
-gs
-gs
-gs
-IK
-IK
+cV
+cV
+cV
+cV
+cV
 "}
 (50,1,1) = {"
 AN
@@ -2794,7 +2880,7 @@ pD
 pD
 IK
 IK
-gs
+IK
 "}
 (57,1,1) = {"
 AN
@@ -2829,8 +2915,8 @@ IK
 IK
 IK
 IK
-gs
-gs
+IK
+IK
 "}
 (58,1,1) = {"
 AN
@@ -2864,9 +2950,9 @@ mg
 IK
 IK
 IK
-gs
-gs
-gs
+IK
+IK
+IK
 "}
 (59,1,1) = {"
 AN
@@ -2899,10 +2985,10 @@ cV
 pD
 IK
 IK
-gs
-gs
-gs
-gs
+IK
+IK
+IK
+IK
 "}
 (60,1,1) = {"
 AN
