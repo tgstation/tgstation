@@ -61,9 +61,17 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	var/neutral_trait_count = pick(10;0, 10;1, 3;2)
 	var/negative_trait_count = pick(20;0, 5;1, 1;2)
 
-	pick_traits(STATION_TRAIT_POSITIVE, positive_trait_count)
-	pick_traits(STATION_TRAIT_NEUTRAL, neutral_trait_count)
-	pick_traits(STATION_TRAIT_NEGATIVE, negative_trait_count)
+	var/possible_types = list(STATION_TRAIT_POSITIVE, STATION_TRAIT_NEUTRAL, STATION_TRAIT_NEGATIVE, STATION_TRAIT_EXCLUSIVE)
+	while(length(possible_types))
+		var/picked = pick(possible_types) // this lets a type of station traits chosen more randomly.
+		switch(picked)
+			if(STATION_TRAIT_POSITIVE)
+				pick_traits(STATION_TRAIT_POSITIVE, positive_trait_count)
+			if(STATION_TRAIT_NEUTRAL)
+				pick_traits(STATION_TRAIT_NEUTRAL, neutral_trait_count)
+			if(STATION_TRAIT_NEGATIVE)
+				pick_traits(STATION_TRAIT_NEGATIVE, negative_trait_count)
+		possible_types -= picked
 
 ///Picks traits of a specific category (e.g. bad or good) and a specified amount, then initializes them and adds them to the list of traits.
 /datum/controller/subsystem/processing/station/proc/pick_traits(trait_sign, amount)
