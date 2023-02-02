@@ -210,7 +210,7 @@
 		"Breathless" = /datum/mutation/human/breathless,
 		"Dextrous" = /datum/mutation/human/dextrous,
 		"Quick" = /datum/mutation/human/quick,
-		"Fire Immunity" = /datum/mutation/human/fire_Immunity,
+		"Fire Immunity" = /datum/mutation/human/fire_immunity,
 		"Plasmocile" = /datum/mutation/human/plasmocile,
 		"Quick Recovery" = /datum/mutation/human/quick_Recovery,
 		"Tough" = /datum/mutation/human/tough,
