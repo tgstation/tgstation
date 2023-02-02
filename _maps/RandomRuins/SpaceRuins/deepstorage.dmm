@@ -809,9 +809,6 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/structure/sign/barsign{
-	pixel_y = 32
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -819,6 +816,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/machinery/barsign/all_access/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "cl" = (

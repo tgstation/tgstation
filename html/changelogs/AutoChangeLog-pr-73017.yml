@@ -1,5 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixed getting incurable tox damage when fully transformed into a plasmaman via plasma rivers"
-  - bugfix: "fixed rod of asclepius/medibeam etc not being able to heal tox damage despite not having biotype restrictions"
