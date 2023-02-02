@@ -29,6 +29,10 @@ have ways of interacting with a specific mob and control it.
 	)
 	idle_behavior = /datum/idle_behavior/idle_monkey
 
+	noticable_organ_examines = list(
+		ORGAN_SLOT_EYES = span_monkey("eyes have a primal look in them.")
+	)
+
 /datum/ai_controller/monkey/pun_pun
 	movement_delay = 0.7 SECONDS //pun pun moves slower so the bartender can keep track of them
 	planning_subtrees = list(
@@ -85,10 +89,6 @@ have ways of interacting with a specific mob and control it.
 	if(IS_DEAD_OR_INCAP(living_pawn))
 		return FALSE
 	return ..()
-
-/datum/ai_controller/monkey/get_human_examine_text()
-	var/text = "[span_monkey("[pawn.p_they(TRUE)] have a primal look in [pawn.p_their()] eyes.")]"
-	return text
 
 /datum/ai_controller/monkey/proc/set_trip_mode(mode = TRUE)
 	var/mob/living/carbon/regressed_monkey = pawn
