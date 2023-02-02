@@ -32,7 +32,7 @@
 	var/flash_protect = FLASH_PROTECTION_NONE
 	/// What level of invisibility these eyes can see
 	var/see_invisible = SEE_INVISIBLE_LIVING
-	///Are this eyes immune to pepperspray?
+	/// Are these eyes immune to pepperspray?
 	var/pepperspray_protect = FALSE
 	/// How much alpha lighting has (basically, night vision)
 	var/lighting_alpha
