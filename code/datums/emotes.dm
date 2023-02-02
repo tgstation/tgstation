@@ -153,7 +153,7 @@
 
 /**
  * Displays the emote_overlay (if the emote has one) on the user and removes it after the duration specified by the emote_overlay.
- * Creates an instance of the emote_overlay and adds it to the emote_overlay_instances with the user as key.
+ * Creates an instance of the emote_overlay and adds it to the emote_overlay_instances with a weakref to the user as key.
  *
  * * Arguments:
  * * user - Person that is trying to send the emote.
@@ -183,19 +183,20 @@
 		human_user.update_body_parts()
 	// Use a timer to remove the effect after the defined duration has passed
 	// The existing timer restarts if it is already running
-	addtimer(CALLBACK(src, PROC_REF(end_visual), user_weakref, attached_bodypart, overlay), overlay.emote_duration, TIMER_UNIQUE | TIMER_OVERRIDE)
+	// We can't have user_weakref instead of user as parameter or else having a second person emote would just reset the timer of the first person
+	addtimer(CALLBACK(src, PROC_REF(end_visual), user, attached_bodypart, overlay), overlay.emote_duration, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /**
  * Removes the emote_overlay from the bodypart. Called as callback by display_overlay().
  * Removes the emote_overlay instance from emote_overlay_instances and deletes it.
  *
  * * Arguments:
- * * user_weakref - Weakref to the person that sent the emote.
+ * * user - Person that sent the emote.
  * * attached_bodypart - Bodypart that the overlay is attached to.
  * * overlay - The emote_overlay instance that is being removed.
  */
-/datum/emote/proc/end_visual(datum/weakref/user_weakref, obj/item/bodypart/attached_bodypart, datum/bodypart_overlay/overlay)
-	emote_overlay_instances -= user_weakref
+/datum/emote/proc/end_visual(mob/user, obj/item/bodypart/attached_bodypart, datum/bodypart_overlay/overlay)
+	emote_overlay_instances -= WEAKREF(user)
 	if(!QDELETED(attached_bodypart))
 		attached_bodypart.remove_bodypart_overlay(overlay)
 		if(attached_bodypart.owner) // Keep in mind that the user might have lost the attached bodypart by now
