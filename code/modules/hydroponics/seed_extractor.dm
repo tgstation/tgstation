@@ -78,9 +78,9 @@
 	mob/living/user,
 )
 
-	context[SCREENTIP_CONTEXT_RMB] = "Make & Store seeds"
 	if(held_item?.get_plant_seed())
 		context[SCREENTIP_CONTEXT_LMB] = "Make seeds"
+		context[SCREENTIP_CONTEXT_RMB] = "Make & Store seeds"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/storage/bag/plants) && (locate(/obj/item/seeds) in held_item.contents))
