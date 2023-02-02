@@ -28,7 +28,7 @@
 		if(TOX)
 			adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
-			adjustOxyLoss(damage_amount, forced = TRUE)
+			adjustOxyLoss(damage_amount, forced = forced)
 		if(CLONE)
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
@@ -181,10 +181,10 @@
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = TRUE, required_biotype = MOB_ORGANIC)
+/mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = TRUE, required_biotype, required_respiration_type = ALL)
 	if(!forced && (status_flags & GODMODE))
 		return
-	if(!forced && !(mob_biotypes & required_biotype))
+	if(!forced && !(getorganslot(ORGAN_SLOT_LUNGS)?.respiration_type & required_respiration_type))
 		return
 	. = oxyloss
 	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -192,10 +192,10 @@
 		updatehealth()
 
 
-/mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = TRUE, required_biotype)
+/mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = TRUE, required_biotype, required_respiration_type = ALL)
 	if(!forced && (status_flags & GODMODE))
 		return
-	if(!forced && !(mob_biotypes & required_biotype))
+	if(!forced && !(getorganslot(ORGAN_SLOT_LUNGS)?.respiration_type & required_respiration_type))
 		return
 	. = oxyloss
 	oxyloss = amount
