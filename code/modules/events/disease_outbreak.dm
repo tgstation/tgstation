@@ -302,7 +302,9 @@
 
 // Select 1 of 6 groups of potential cures
 /datum/disease/advance/random/event/GenerateCure()
-	if(properties?.len)
+	if(!length(properties))
+		stack_trace("whatever message you want")
+		return
 		var/res = rand(1, 6)
 		if(res == oldres)
 			return
