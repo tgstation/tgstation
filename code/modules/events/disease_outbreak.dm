@@ -363,21 +363,6 @@
 	var/datum/reagent/cure = GLOB.chemical_reagents_list[cures[1]]
 	cure_text = cure.name
 
-/**
- * Announce and reveal virus
- *
- * After the initial timer to give the virus some time to take hold, reveal it and send the Level 7 Biohazard station alert.
- */
-/datum/disease/advance/random/event/proc/MakeVisible()
-	visibility_flags &= ~HIDDEN_SCANNER
-	for(var/datum/disease/advance/virus in SSdisease.active_diseases)
-		if(!virus.id)
-			stack_trace("Advanced virus ID is empty or null!")
-			return
-
-		if(virus.id == id)
-			virus.visibility_flags &= ~HIDDEN_SCANNER
-
 #undef ADV_MIN_SYMPTOMS
 #undef ADV_MAX_SYMPTOMS
 #undef ADV_ANNOUNCE_DELAY
