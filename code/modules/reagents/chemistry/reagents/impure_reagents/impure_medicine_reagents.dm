@@ -31,7 +31,7 @@
 	metabolization_rate = 1 * REM//This is fast
 	addiction_types = list(/datum/addiction/medicine = 7.5)
 	ph = 11
-	affected_biotype = ALL
+	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // no healing ghosts
 	affected_respiration_type = ALL
 
 //Random healing of the 4 main groups
