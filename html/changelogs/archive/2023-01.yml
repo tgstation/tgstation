@@ -1088,3 +1088,33 @@
   - bugfix: fixed air alarm breaking on gasless tiles.
   vinylspiders:
   - bugfix: adds some messing bitfield defines for turf_flags
+2023-01-31:
+  ATHATH:
+  - balance: Most energy sword-like weapons have had their demolition_mod increased
+      to 1.5x (from 1x). This affects damage vs. robots, objects, structures, etc.
+      Energy scalpels did not receive this buff.
+  Jacquerel:
+  - bugfix: You can now revive 'basic mobs' with a Lazarus Injector, such as dogs,
+      cows, axolotls, or carp.
+  - bugfix: The same category of mobs can also now be effected by the Runic Golem
+      Dominate spell.
+  - bugfix: Basic Mobs will switch target if they can no longer attack their current
+      target; meaning that if you become a Bileworm's friend it will stop attacking
+      you.
+  - balance: Mobs injected with the Lazarus Injector while it is EMPed will no longer
+      attack other mobs revived by EMPed Lazarus Injectors.
+  - balance: The carp migration event won't trigger if there are fewer than 12 players.
+  OrionTheFox:
+  - bugfix: fixed fire cabinet examine text falsely saying to alt-click to open/close;
+      it now has contextual screentips, and uses balloon alerts when relevant
+  SyncIt21:
+  - refactor: stack components no longer exist inside a machine's component_parts
+  - refactor: move component printer & module duplicator circuitboards into machine_circuitboards.dm
+  jlsnow301:
+  - rscadd: You can print universal scanners (export scanners, price taggers, sales
+      taggers) from the lathe again
+  tralezab:
+  - refactor: Refactored a bunch of admin-related event code, hopefully you won't
+      notice much
+  - admin: '... But you specifically may notice some minor differences. Raw inputs
+      changed into tgui ones, minor soul removal, etc.'

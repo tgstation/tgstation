@@ -363,6 +363,7 @@
 			return
 
 		if(C.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+			user.balloon_alert(user, "foiled!")
 			to_chat(user, span_warning("Your target seems to have some sort of mental blockage, preventing the message from being sent! It seems you've been foiled."))
 			return
 
@@ -381,6 +382,7 @@
 		if(QDELETED(L) || L.stat == DEAD)
 			return
 
+		L.balloon_alert(L, "you hear a voice")
 		to_chat(L, span_hear("You hear a voice in your head saying: </span><span class='abductor'>[message]"))
 		to_chat(user, span_notice("You send the message to your target."))
 		log_directed_talk(user, L, message, LOG_SAY, "abductor whisper")
