@@ -122,12 +122,6 @@
 
 /obj/machinery/power/apc/Initialize(mapload, ndir)
 	. = ..()
-	//Initialize name & access of the apc
-	if(!req_access)
-		req_access = list(ACCESS_ENGINE_EQUIP)
-	if(auto_name)
-		name = "\improper [get_area_name(area, TRUE)] APC"
-
 	//Pixel offset its appearance based on its direction
 	dir = ndir
 	switch(dir)
@@ -157,6 +151,12 @@
 		if(area.apc)
 			log_mapping("Duplicate APC created at [AREACOORD(src)] [area.type]. Original at [AREACOORD(area.apc)] [area.type].")
 		area.apc = src
+
+	//Initialize name & access of the apc. Name requires area to be assigned first
+	if(!req_access)
+		req_access = list(ACCESS_ENGINE_EQUIP)
+	if(auto_name)
+		name = "\improper [get_area_name(area, TRUE)] APC"
 
 	//Initialize its electronics
 	wires = new /datum/wires/apc(src)

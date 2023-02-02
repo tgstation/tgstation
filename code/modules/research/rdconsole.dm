@@ -113,23 +113,26 @@ Nothing else in the console has ID requirements.
 			say("Successfully researched [TN.display_name].")
 			var/logname = "Unknown"
 			if(isAI(user))
-				logname = "AI: [user.name]"
+				logname = "AI [user.name]"
 			if(iscyborg(user))
-				logname = "Cyborg: [user.name]"
+				logname = "CYBORG [user.name]"
 			if(iscarbon(user))
 				var/obj/item/card/id/idcard = user.get_active_held_item()
 				if(istype(idcard))
-					logname = "User: [idcard.registered_name]"
+					logname = "[idcard.registered_name]"
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				var/obj/item/I = H.wear_id
 				if(istype(I))
 					var/obj/item/card/id/ID = I.GetID()
 					if(istype(ID))
-						logname = "User: [ID.registered_name]"
-			var/i = stored_research.research_logs.len
-			stored_research.research_logs += null
-			stored_research.research_logs[++i] = list(TN.display_name, price["General Research"], logname, "[get_area(src)] ([src.x],[src.y],[src.z])")
+						logname = "[ID.registered_name]"
+			stored_research.research_logs += list(list(
+				"node_name" = TN.display_name,
+				"node_cost" = price["General Research"],
+				"node_researcher" = logname,
+				"node_research_location" = "[get_area(src)] ([src.x],[src.y],[src.z])",
+			))
 			return TRUE
 		else
 			say("Failed to research node: Internal database error!")

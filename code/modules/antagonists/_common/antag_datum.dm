@@ -126,13 +126,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 //button for antags to review their descriptions/info
 /datum/action/antag_info
-	name = "Open Antag Information:"
+	name = "Open Special Role Information:"
 	button_icon_state = "round_end"
 	show_to_observers = FALSE
 
 /datum/action/antag_info/New(Target)
 	. = ..()
-	name += " [target]"
+	name = "Open [target] Information:"
 
 /datum/action/antag_info/Trigger(trigger_flags)
 	. = ..()

@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Fixed the cops not being called when minors try to purchase cigarettes from vending machines."

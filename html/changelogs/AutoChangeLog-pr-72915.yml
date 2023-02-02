@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "The chemical scanner will now properly display that \"no\" reagents are present in a subject when only invisible reagents are present."
