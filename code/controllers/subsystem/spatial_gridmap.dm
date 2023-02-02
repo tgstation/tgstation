@@ -134,13 +134,13 @@ SUBSYSTEM_DEF(spatial_grid)
 	RegisterSignal(waiting_movable, COMSIG_PARENT_QDELETING, PROC_REF(queued_item_deleted), override = TRUE)
 	//override because something can enter the queue for two different types but that is done through unrelated procs that shouldnt know about eachother
 	if(ismouse(waiting_movable))
-		log_world("Mouse [old_target.canon_tag] inserted into pre init queue at [target_turf.x], [target_turf.y], [target_turf.z]")
+		log_world("Mouse [waiting_movable:canon_tag] inserted into pre init queue at [waiting_movable.x], [waiting_movable.y], [waiting_movable.z]")
 	waiting_to_add_by_type[type] += waiting_movable
 
 ///removes an initialized and probably deleted movable from our pre init queue before we're initialized
 /datum/controller/subsystem/spatial_grid/proc/remove_from_pre_init_queue(atom/movable/movable_to_remove, exclusive_type)
 	if(ismouse(waiting_movable))
-		log_world("Mouse [old_target.canon_tag] inserted removed from pre init queue at [target_turf.x], [target_turf.y], [target_turf.z]")
+		log_world("Mouse [waiting_movable:canon_tag] inserted removed from pre init queue at [waiting_movable.x], [waiting_movable.y], [waiting_movable.z]")
 	if(exclusive_type)
 		waiting_to_add_by_type[exclusive_type] -= movable_to_remove
 
@@ -430,11 +430,11 @@ SUBSYSTEM_DEF(spatial_grid)
  * * exclusive_type - either null or a valid contents channel. if you just want to remove a single type from the grid cell then use this
  */
 /datum/controller/subsystem/spatial_grid/proc/exit_cell(atom/movable/old_target, turf/target_turf, exclusive_type)
-	if(ismouse(new_target))
+	if(ismouse(old_target))
 		log_world("Mouse [old_target:canon_tag] tried to leave a at [target_turf.x], [target_turf.y], [target_turf.z]")
 
 	if(!initialized)
-		if(ismouse(new_target))
+		if(ismouse(old_target))
 			log_world("Mouse removal failed, no init")
 		return
 
@@ -463,20 +463,20 @@ SUBSYSTEM_DEF(spatial_grid)
 				GRID_CELL_REMOVE(intersecting_cell.atmos_contents, old_target)
 				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_ATMOS), old_target)
 
-	if(ismouse(new_target))
+	if(ismouse(old_target))
 		log_world("Mouse removal succeeded")
 	return TRUE
 
 ///acts like exit_cell() but only removes the target from the specified type of grid cell contents list
 /datum/controller/subsystem/spatial_grid/proc/remove_single_type(atom/movable/old_target, turf/target_turf, exclusive_type)
-	if(ismouse(new_target))
+	if(ismouse(old_target))
 		log_world("Mouse [old_target:canon_tag] tried to leave a at [target_turf.x], [target_turf.y], [target_turf.z]")
 	if(!target_turf || !exclusive_type || !old_target.spatial_grid_key)
 		stack_trace("/datum/controller/subsystem/spatial_grid/proc/remove_single_type() was given null arguments or an old_target that doesn't use the spatial grid!")
 		return FALSE
 
 	if(!(exclusive_type in spatial_grid_categories[old_target.spatial_grid_key]))
-		if(ismouse(new_target))
+		if(ismouse(old_target))
 			log_world("Mouse removal failed, bad key")
 		return FALSE
 
@@ -501,15 +501,15 @@ SUBSYSTEM_DEF(spatial_grid)
 			GRID_CELL_REMOVE(intersecting_cell.atmos_contents, old_target)
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target)
 
-	if(ismouse(new_target))
+	if(ismouse(old_target))
 		log_world("Mouse removal succeeded")
 
 	return TRUE
 
 ///find the cell this movable is associated with and removes it from all lists
 /datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
-	if(ismouse(new_target))
-		log_world("Mouse [to_remove:canon_tag] tried to leave by force at [target_turf.x], [target_turf.y], [target_turf.z]")
+	if(ismouse(to_remove))
+		log_world("Mouse [to_remove:canon_tag] tried to leave by force at [to_remove.x], [to_remove.y], [to_remove.z]")
 	if(!initialized)
 		remove_from_pre_init_queue(to_remove)//the spatial grid doesnt exist yet, so just take it out of the queue
 		return
