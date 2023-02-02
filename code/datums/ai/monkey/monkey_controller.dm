@@ -29,11 +29,11 @@ have ways of interacting with a specific mob and control it.
 	)
 	idle_behavior = /datum/idle_behavior/idle_monkey
 
-/datum/element/ai_control_examine/New()
-	. = ..()
+/datum/ai_controller/monkey/New(atom/new_pawn)
 	AddElement(/datum/element/ai_control_examine, list(
 		ORGAN_SLOT_EYES = span_monkey("eyes have a primal look in them.")
 	))
+	. = ..()
 
 /datum/ai_controller/monkey/pun_pun
 	movement_delay = 0.7 SECONDS //pun pun moves slower so the bartender can keep track of them
