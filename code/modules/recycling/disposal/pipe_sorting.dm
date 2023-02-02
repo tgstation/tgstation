@@ -5,15 +5,28 @@
 	desc = "An underfloor disposal pipe with a sorting mechanism."
 	icon_state = "pipe-j1s"
 	initialize_dirs = DISP_DIR_RIGHT | DISP_DIR_FLIP
+	var/inverted = FALSE // if true, filtered items go out the straight way and everything else is sent through the side
 
 /obj/structure/disposalpipe/sorting/nextdir(obj/structure/disposalholder/H)
 	var/sortdir = dpdir & ~(dir | turn(dir, 180))
 	if(H.dir != sortdir) // probably came from the negdir
 		if(check_sorting(H)) // if destination matches filtered type...
-			return sortdir // exit through sortdirection
+			if(!inverted) // check to see which way we should go
+				return sortdir
+			else
+				return dir
 
-	// go with the flow to positive direction
-	return dir
+	// go with the flow
+	if(inverted)
+		return sortdir
+	else
+		return dir
+
+/obj/structure/disposalpipe/sorting/screwdriver_act(mob/user, obj/item/tool)
+	tool.play_tool_sound(src, 50)
+	inverted = !inverted
+	to_chat(user, span_notice("You set the filter output to '[inverted ? "Inverted" : "Standard"]'."))
+	return TRUE
 
 /// Sorting check, to be overridden in subtypes
 /obj/structure/disposalpipe/sorting/proc/check_sorting(obj/structure/disposalholder/H)
@@ -48,6 +61,8 @@
 
 /obj/structure/disposalpipe/sorting/mail/examine(mob/user)
 	. = ..()
+	if(inverted)
+		. += "The filter output is inverted."
 	if(sortTypes.len)
 		. += "It is tagged with the following tags:"
 		for(var/t in sortTypes)
