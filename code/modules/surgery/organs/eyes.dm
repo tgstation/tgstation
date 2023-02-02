@@ -206,7 +206,7 @@
 
 /obj/item/organ/internal/eyes/night_vision/Initialize(mapload)
 	. = ..()
-	if (PERFORM_ALL_TESTS(focus_only/nightvision_color_cutoffs))
+	if (type != /obj/item/organ/internal/eyes/night_vision && PERFORM_ALL_TESTS(focus_only/nightvision_color_cutoffs))
 		if(length(low_light_cutoff) != 3 || \
 			length(medium_light_cutoff) != 3 || \
 			length(high_light_cutoff) != 3)
