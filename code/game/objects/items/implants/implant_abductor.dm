@@ -26,14 +26,21 @@
 		link_pad(target)
 		return TRUE
 
-/obj/item/implant/abductor/proc/link_pad(mob/living/mob_to_link)
+/**
+ * Manages the process of linking a recall implant to an abductor pad
+ *
+ * Attempts to link the abductor implant to an abductor console. First, it tries to do so through the abductor's antag datum
+ * If not, a random teleport pad will be defaulted to. Returns TRUE if a home is found, and FALSE is one somehow is not.
+ */
+
+/obj/item/implant/abductor/proc/link_pad()
 	var/obj/machinery/abductor/console/console
-	if(ishuman(mob_to_link))
-		var/datum/antagonist/abductor/A = mob_to_link.mind.has_antag_datum(/datum/antagonist/abductor)
+	if(ishuman(imp_in))
+		var/datum/antagonist/abductor/A = imp_in.mind.has_antag_datum(/datum/antagonist/abductor)
 		if(A)
 			console = get_abductor_console(A.team.team_number)
 			if(!console)
-				WARNING("Attempted to link [name] within [mob_to_link] to a pad using their abductor antagonist datum, however no associated machinery exists for their team.")
+				WARNING("Attempted to link [name] within [imp_in] to a pad using their abductor antagonist datum, however no associated machinery exists for their team.")
 				return FALSE
 			home = console.pad
 
