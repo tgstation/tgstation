@@ -128,7 +128,9 @@
 		var/esname = E.name
 		var/datum/config_entry/test = _entries[esname]
 		if(test)
-			log_config("Error: [test.type] has the same name as [E.type]: [esname]! Not initializing [E.type]!")
+			var/log_message = "Error: [test.type] has the same name as [E.type]: [esname]! Not initializing [E.type]!"
+			log_config(log_message)
+			stack_trace(log_message)
 			qdel(E)
 			continue
 		_entries[esname] = E
@@ -144,7 +146,9 @@
 
 	var/filename_to_test = world.system_type == MS_WINDOWS ? lowertext(filename) : filename
 	if(filename_to_test in stack)
-		log_config("Warning: Config recursion detected ([english_list(stack)]), breaking!")
+		var/log_message = "Warning: Config recursion detected ([english_list(stack)]), breaking!"
+		log_config(log_message)
+		stack_trace(log_message)
 		return
 	stack = stack + filename_to_test
 
@@ -179,7 +183,9 @@
 
 		if(entry == "$include")
 			if(!value)
-				log_config("Warning: Invalid $include directive: [value]")
+				var/log_message = "Warning: Invalid $include directive: [value]"
+				log_config(log_message)
+				stack_trace(log_message)
 			else
 				LoadEntries(value, stack)
 				++.
@@ -189,7 +195,9 @@
 		if (entry == "$reset")
 			var/datum/config_entry/resetee = _entries[lowertext(value)]
 			if (!value || !resetee)
-				log_config("Warning: invalid $reset directive: [value]")
+				var/log_message = "Warning: invalid $reset directive: [value]"
+				log_config(log_message)
+				stack_trace(log_message)
 				continue
 			resetee.set_default()
 			log_config("Reset configured value for [value] to original defaults")
@@ -219,10 +227,14 @@
 
 		var/validated = E.ValidateAndSet(value)
 		if(!validated)
-			log_config("Failed to validate setting \"[value]\" for [entry]")
+			var/log_message = "Failed to validate setting \"[value]\" for [entry]"
+			log_config(log_message)
+			stack_trace(log_message)
 		else
 			if(E.modified && !E.dupes_allowed)
-				log_config("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
+				var/log_message = "Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest."
+				log_config(log_message)
+				stack_trace(log_message)
 
 		E.resident_file = filename
 
