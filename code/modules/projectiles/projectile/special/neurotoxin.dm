@@ -15,5 +15,7 @@
 	return ..()
 
 /obj/projectile/neurotoxin/damaging //for ai controlled aliums
+	name = "acid spit"
 	damage = 30
+	damage_type = BURN
 	paralyze = 0 SECONDS
