@@ -1,13 +1,23 @@
-#define ADV_MIN_SYMPTOMS 3 //Advanced min symptoms
-#define ADV_MAX_SYMPTOMS 4 //Advanced max symptoms
-#define ADV_ANNOUNCE_DELAY 75 //How long the virus stays hidden
+/// Advanced virus lower limit for symptoms
+#define ADV_MIN_SYMPTOMS 3
+/// Advanced virus upper limit for symptoms
+#define ADV_MAX_SYMPTOMS 4
+/// How long the virus stays hidden before announcement
+#define ADV_ANNOUNCE_DELAY 75
+/// Numerical define for medium severity advanced virus
 #define ADV_DISEASE_MEDIUM 4
+/// Numerical define for harmful severity advanced virus
 #define ADV_DISEASE_HARMFUL 5
+/// Numerical define for dangerous severity advanced virus
 #define ADV_DISEASE_DANGEROUS 7
-#define ADV_RNG_LOW 30 //Percentile for low severity
-#define ADV_RNG_MID 85 //Percentile for mid severity
-#define ADV_SPREAD_LOW 30 //Percentile for low transmissibility
-#define ADV_SPREAD_MID 90 //Percentile for mid transmissibility
+/// Percentile for low severity advanced virus
+#define ADV_RNG_LOW 30
+/// Percentile for mid severity advanced virus
+#define ADV_RNG_MID 85
+/// Percentile for low transmissibility advanced virus
+#define ADV_SPREAD_LOW 30
+/// Percentile for mid transmissibility advanced virus
+#define ADV_SPREAD_MID 90
 
 /datum/round_event_control/disease_outbreak
 	name = "Disease Outbreak: Classic"
@@ -127,6 +137,11 @@
 	///Admin selected custom value for the maximum symptoms this virus should have
 	var/chosen_max_symptoms
 
+/**
+ * Admin virus customization
+ *
+ * If the admin wishes, give them the opportunity to select the severity and number of symptoms.
+ */
 /datum/event_admin_setup/disease_outbreak/advanced/prompt_admins()
 	var/candidate_count = candidate_check()
 	if(!candidate_count)
@@ -134,11 +149,6 @@
 		return ADMIN_CANCEL_EVENT
 	tgui_alert(usr, "[candidate_count] candidates found!", "Disease Outbreak")
 
-	/**
-	 * Admin virus customization
-	 *
-	 * If the admin wishes, give them the opportunity to select the severity and number of symptoms.
-	 */
 	if(tgui_alert(usr,"Customize your virus?", "Glorified Debug Tool", list("Yes", "No")) == "Yes")
 		chosen_severity = tgui_alert(usr, "Pick a severity!", "In the event of an airborne virus, try not to breathe.", list("Medium", "Harmful", "Dangerous"))
 		switch(chosen_severity)
