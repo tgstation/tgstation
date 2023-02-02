@@ -61,7 +61,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	var/neutral_trait_count = pick(10;0, 10;1, 3;2)
 	var/negative_trait_count = pick(20;0, 5;1, 1;2)
 
-	var/possible_types = list(STATION_TRAIT_POSITIVE, STATION_TRAIT_NEUTRAL, STATION_TRAIT_NEGATIVE, STATION_TRAIT_EXCLUSIVE)
+	var/possible_types = list(STATION_TRAIT_POSITIVE, STATION_TRAIT_NEUTRAL, STATION_TRAIT_NEGATIVE)
 	while(length(possible_types))
 		var/picked = pick(possible_types) // this lets a type of station traits chosen more randomly.
 		switch(picked)
