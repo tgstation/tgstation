@@ -93,7 +93,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler
 	equip_cooldown = 1.5 SECONDS
 	name = "\improper CH-DS \"Peacemaker\" disabler"
-	desc = "A weapon for combat exosuits. Shoots basic disablers."
+	desc = "A weapon for combat exosuits. Shoots a bunch of weak disabler beams."
 	icon_state = "mecha_disabler"
 	energy_drain = 100
 	projectile = /obj/projectile/beam/disabler/weak
