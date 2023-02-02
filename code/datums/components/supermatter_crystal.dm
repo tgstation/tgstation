@@ -264,7 +264,7 @@
 			var/obj/item/consumed_item = consumed_object
 			object_size = consumed_item.w_class
 			matter_increase += 70 * object_size
-		else
+		else if(!isliving(consumed_object))
 			matter_increase += min(0.5 * consumed_object.max_integrity, 4000)
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
