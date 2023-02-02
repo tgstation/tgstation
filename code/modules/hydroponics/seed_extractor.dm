@@ -139,9 +139,8 @@
 	if(seedify(attacking_item, -1, src, user))
 		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
 			//find all seeds lying on the turf and add them to the machine
-			var/obj/item/seeds/to_store
-			while((to_store = locate(/obj/item/seeds, loc)) != null)
-				add_seed(to_store, null)
+			for(var/obj/item/seeds/seed in loc)
+				add_seed(seed)
 		to_chat(user, span_notice("You extract some seeds."))
 		return TRUE
 
