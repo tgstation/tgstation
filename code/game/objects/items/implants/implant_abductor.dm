@@ -16,6 +16,7 @@
 	if(!home)
 		if(!link_pad(imp_in))
 			imp_in.balloon_alert(imp_in, "no teleport pads detected!")
+			return
 
 	home.Retrieve(imp_in)
 	on_cooldown = addtimer(VARSET_CALLBACK(src, on_cooldown, null), cooldown , TIMER_STOPPABLE)
@@ -31,6 +32,9 @@
 		var/datum/antagonist/abductor/A = mob_to_link.mind.has_antag_datum(/datum/antagonist/abductor)
 		if(A)
 			console = get_abductor_console(A.team.team_number)
+			if(!console)
+				WARNING("Attempted to link [name] within [mob_to_link] to a pad using their abductor antagonist datum, however no associated machinery exists for their team.")
+				return FALSE
 			home = console.pad
 
 	if(!home) //If we still cannot find a home associated with our team, we just pick a random pad and make it our own.
@@ -40,5 +44,8 @@
 		console = pick(consoles)
 		if(console)
 			home = console.pad
+
+	if(home)
+		return TRUE
 
 	return FALSE //We somehow couldn't find any pads (maybe they're not loaded in yet)
