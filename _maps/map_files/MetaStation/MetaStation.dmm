@@ -31405,7 +31405,7 @@
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "lkc" = (
-/obj/structure/sign/barsign,
+/obj/machinery/barsign,
 /turf/closed/wall,
 /area/station/commons/lounge)
 "lkL" = (

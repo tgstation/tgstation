@@ -27688,9 +27688,7 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/obj/structure/sign/barsign{
-	pixel_y = 32
-	},
+/obj/machinery/barsign/all_access/directional/north,
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "iyd" = (
@@ -37334,9 +37332,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/command/heads_quarters/captain)
 "lrL" = (
-/obj/structure/sign/barsign{
-	pixel_y = -32
-	},
+/obj/machinery/barsign/all_access/directional/south,
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "lrN" = (
@@ -38092,7 +38088,7 @@
 /area/station/hallway/primary/aft)
 "lEO" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/barsign,
+/obj/machinery/barsign,
 /turf/open/floor/plating,
 /area/station/service/bar/atrium)
 "lEP" = (
@@ -45450,7 +45446,7 @@
 /area/station/service/kitchen)
 "nTK" = (
 /obj/structure/table/glass,
-/obj/structure/sign/barsign{
+/obj/machinery/barsign{
 	chosen_sign = "thecavern";
 	icon_state = "thecavern";
 	pixel_y = 32
@@ -50169,7 +50165,7 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "ptO" = (
-/obj/structure/sign/barsign,
+/obj/machinery/barsign,
 /turf/closed/wall,
 /area/station/service/bar/atrium)
 "ptQ" = (

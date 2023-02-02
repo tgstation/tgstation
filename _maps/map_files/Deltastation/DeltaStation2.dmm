@@ -21519,13 +21519,11 @@
 /area/station/commons/lounge)
 "ffu" = (
 /obj/structure/table/wood,
-/obj/structure/sign/barsign{
-	pixel_y = 32
-	},
 /obj/item/wrench,
 /obj/item/clothing/under/suit/waiter,
 /obj/item/clothing/accessory/waistcoat,
 /obj/structure/sign/poster/contraband/random/directional/west,
+/obj/machinery/barsign/all_access/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/service/electronic_marketing_den)
 "ffH" = (
@@ -43547,10 +43545,8 @@
 "kzt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
-/obj/structure/sign/barsign{
-	pixel_y = 32
-	},
 /obj/machinery/light/small/directional/north,
+/obj/machinery/barsign/all_access/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den)
 "kzI" = (
@@ -69864,10 +69860,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/barsign{
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/barsign/all_access/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
 "rcW" = (
@@ -76322,9 +76316,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/structure/sign/barsign{
-	pixel_y = 32
-	},
+/obj/machinery/barsign/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "sHj" = (

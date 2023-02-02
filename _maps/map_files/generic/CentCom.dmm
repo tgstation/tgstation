@@ -1199,10 +1199,8 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/obj/structure/sign/barsign{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/barsign/all_access/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "hx" = (
@@ -7865,10 +7863,8 @@
 	pixel_y = 5
 	},
 /obj/structure/table/wood,
-/obj/structure/sign/barsign{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/barsign/all_access/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "Pq" = (
@@ -9261,10 +9257,8 @@
 "Wv" = (
 /obj/structure/chair,
 /obj/effect/landmark/thunderdome/observe,
-/obj/structure/sign/barsign{
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/barsign/all_access/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "Wy" = (

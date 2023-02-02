@@ -65327,9 +65327,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/structure/sign/barsign{
-	pixel_y = 32
-	},
+/obj/machinery/barsign/directional/north,
 /turf/open/floor/wood,
 /area/station/service/bar/atrium)
 "sHn" = (
