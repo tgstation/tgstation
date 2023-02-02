@@ -305,10 +305,16 @@
 		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // Can be between 5 and 10
 		stage_prob = max(0.5 * properties["stage_rate"], 1)
 		SetSeverity(properties["severity"])
-		if(severity != "Dangerous" || "BIOHAZARD")
-			visibility_flags |= HIDDEN_SCANNER
+		visibility_flags |= HIDDEN_SCANNER
+
+		if(severity == "Dangerous")
+			visibility_flags &= ~HIDDEN_SCANNER
+
+		if(severity == "BIOHAZARD")
+			visibility_flags &= ~HIDDEN_SCANNER
 
 		GenerateCure(properties)
+
 		if(transmissibility < ADV_SPREAD_LOW)
 			SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
 
@@ -317,7 +323,7 @@
 
 		else
 			SetSpread(DISEASE_SPREAD_AIRBORNE)
-			visibility_flags |= HIDDEN_SCANNER
+			visibility_flags &= ~HIDDEN_SCANNER
 
 	else
 		CRASH("Advanced virus properties were empty or null!")
@@ -364,6 +370,13 @@
  */
 /datum/disease/advance/random/event/proc/MakeVisible()
 	visibility_flags &= ~HIDDEN_SCANNER
+	for(var/datum/disease/advance/virus in SSdisease.active_diseases)
+		if(!virus.id)
+			stack_trace("Advanced virus ID is empty or null!")
+			return
+
+		if(virus.id == id)
+			virus.visibility_flags &= ~HIDDEN_SCANNER
 
 #undef ADV_MIN_SYMPTOMS
 #undef ADV_MAX_SYMPTOMS
