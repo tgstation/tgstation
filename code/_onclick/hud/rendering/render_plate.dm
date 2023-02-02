@@ -206,7 +206,6 @@
 	var/red = color_cutoffs[1] / 100
 	var/green = color_cutoffs[2] / 100
 	var/blue = color_cutoffs[3] / 100
-	#warn Extend this to overlay lighting. Maybe make it and turf lighting into subtypes?
 	add_filter("light_cutdown", 3, color_matrix_filter(list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, -(ratio + red),-(ratio+green),-(ratio+blue),0)))
 	add_filter("light_cutup", 4, color_matrix_filter(list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, ratio+red,ratio+green,ratio+blue,0)))
 
