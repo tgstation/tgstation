@@ -1,6 +1,6 @@
 // Admin Tab - Fun Verbs
 
-ADMIN_CONTEXT_ENTRY(context_atom_explosion, "Explosion", R_ADMIN, atom/target as obj|mob|turf in world)
+ADMIN_VERB(game, explosion, "Explosion", R_ADMIN, atom/target as obj|mob|turf in view())
 	var/devastation = input("Range of total devastation. -1 to none", text("Input"))  as num|null
 	if(devastation == null)
 		return
@@ -22,11 +22,11 @@ ADMIN_CONTEXT_ENTRY(context_atom_explosion, "Explosion", R_ADMIN, atom/target as
 			if (tgui_alert(usr, "Are you sure you want to do this? It will laaag.", "Confirmation", list("Yes", "No")) == "No")
 				return
 
-		explosion(target, devastation, heavy, light, flames, flash, explosion_cause = mob)
+		explosion(target, devastation, heavy, light, flames, flash, explosion_cause = usr)
 		log_admin("[key_name(usr)] created an explosion ([devastation],[heavy],[light],[flames]) at [AREACOORD(target)]")
 		message_admins("[key_name_admin(usr)] created an explosion ([devastation],[heavy],[light],[flames]) at [AREACOORD(target)]")
 
-ADMIN_CONTEXT_ENTRY(context_atom_emp, "EM Pulse", R_ADMIN, atom/target as obj|mob|turf in world)
+ADMIN_VERB(game, emp, "", R_ADMIN, atom/target as obj|mob|turf in view())
 	var/heavy = input("Range of heavy pulse.", text("Input"))  as num|null
 	if(heavy == null)
 		return

@@ -18,7 +18,7 @@ ADMIN_VERB(admin, show_tip, "Sends a tip, which you specify, to all players", R_
 	message_admins("[key_name_admin(usr)] sent a tip of the round.")
 	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
 
-ADMIN_CONTEXT_ENTRY(context_unprison, "Release from Prison", R_ADMIN, mob/freeing in world)
+ADMIN_VERB(admin, release_from_prison, "", R_ADMIN, mob/freeing in world)
 	if(is_centcom_level(freeing.z))
 		SSjob.SendToLateJoin(freeing)
 		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(freeing)]")
@@ -134,7 +134,7 @@ ADMIN_VERB(admin, player_panel, "", R_ADMIN)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-ADMIN_CONTEXT_ENTRY(context_drop_everything, "Drop Everything", R_ADMIN, mob/target in world)
+ADMIN_VERB(admin, drop_everything, "", R_ADMIN, mob/target in world)
 	var/confirm = tgui_alert(usr, "Make [target] drop everything?", "Message", list("Yes", "No"))
 	if(confirm != "Yes")
 		return

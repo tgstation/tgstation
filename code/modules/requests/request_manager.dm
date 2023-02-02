@@ -180,7 +180,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 					D.traitor_panel()
 					return TRUE
 			else
-				usr.client.admin_context_wrapper_context_traitor_panel(M)
+				SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/traitor_panel, M)
 				return TRUE
 
 		if ("logs")

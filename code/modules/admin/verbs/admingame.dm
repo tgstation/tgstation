@@ -134,14 +134,14 @@ ADMIN_CONTEXT_ENTRY(context_player_panel, "Show Player Panel", R_ADMIN, mob/play
 	usr << browse(body, "window=adminplayeropts-[REF(player)];size=550x515")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Player Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-ADMIN_CONTEXT_ENTRY(context_godmod, "Toggle Godmode", R_ADMIN, mob/god in world)
-	god.status_flags ^= GODMODE
-	to_chat(usr, span_adminnotice("Toggled [(god.status_flags & GODMODE) ? "ON" : "OFF"]"), confidential = TRUE)
+ADMIN_VERB(game, toggle_godmode, "", R_ADMIN, mob/demigod in view())
+	demigod.status_flags ^= GODMODE
+	to_chat(usr, span_adminnotice("Toggled [(demigod.status_flags & GODMODE) ? "ON" : "OFF"]"), confidential = TRUE)
 
-	log_admin("[key_name(usr)] has toggled [key_name(god)]'s nodamage to [(god.status_flags & GODMODE) ? "On" : "Off"]")
-	var/msg = "[key_name_admin(usr)] has toggled [ADMIN_LOOKUPFLW(god)]'s nodamage to [(god.status_flags & GODMODE) ? "On" : "Off"]"
+	log_admin("[key_name(usr)] has toggled [key_name(demigod)]'s nodamage to [(demigod.status_flags & GODMODE) ? "On" : "Off"]")
+	var/msg = "[key_name_admin(usr)] has toggled [ADMIN_LOOKUPFLW(demigod)]'s nodamage to [(demigod.status_flags & GODMODE) ? "On" : "Off"]"
 	message_admins(msg)
-	admin_ticket_log(god, msg)
+	admin_ticket_log(demigod, msg)
 
 /*
 If a guy was gibbed and you want to revive him, this is a good way to do so.
@@ -357,14 +357,14 @@ ADMIN_VERB(game, toggle_combo_hud, "Toggles the Admin Combo HUD (all huds)", R_A
 	mob.lighting_alpha = mob.default_lighting_alpha()
 	mob.update_sight()
 
-ADMIN_CONTEXT_ENTRY(context_traitor_panel, "Show Traitor Panel", R_ADMIN, mob/traitor in world)
+ADMIN_VERB(game, traitor_panel, "", R_ADMIN, mob/traitor in view())
 	var/datum/mind/target_mind = traitor.mind
 	if(!target_mind)
 		to_chat(usr, "This mob has no mind!", confidential = TRUE)
 		return
 	target_mind.traitor_panel()
 
-ADMIN_CONTEXT_ENTRY(context_skill_panel, "Show Skill Panel", R_ADMIN, mob/skilled in world)
+ADMIN_VERB(game, skill_panel, "", R_ADMIN, mob/skilled in view())
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(usr,"The game hasn't started yet!")
 		return

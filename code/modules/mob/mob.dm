@@ -1262,16 +1262,16 @@
 		usr.client.admin_context_wrapper_context_player_panel(src)
 
 	if(href_list[VV_HK_GODMODE])
-		usr.client.admin_context_wrapper_context_godmod(src)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/toggle_godmode, src)
 
 	if(href_list[VV_HK_GIVE_SPELL])
-		usr.client.admin_context_wrapper_context_give_spell(src)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/fun/give_mob_spell, src)
 
 	if(href_list[VV_HK_REMOVE_SPELL])
-		usr.client.admin_context_wrapper_context_remove_spell(src)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/fun/remove_spell, src)
 
 	if(href_list[VV_HK_GIVE_DISEASE])
-		usr.client.admin_context_wrapper_context_give_disease(src)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/fun/give_disease, src)
 
 	if(href_list[VV_HK_GIB])
 		usr.client.admin_context_wrapper_context_mob_gib(src)
@@ -1282,13 +1282,13 @@
 		togglebuildmode(src)
 
 	if(href_list[VV_HK_DROP_ALL])
-		usr.client.admin_context_wrapper_context_drop_everything(src)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/admin/drop_everything, src)
 
 	if(href_list[VV_HK_DIRECT_CONTROL])
-		usr.client.admin_context_wrapper_context_assume_control(src)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/assume_direct_control, src)
 
 	if(href_list[VV_HK_GIVE_DIRECT_CONTROL])
-		usr.client.admin_context_wrapper_context_give_direct_control(src)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/give_direct_control, src)
 
 	if(href_list[VV_HK_OFFER_GHOSTS])
 		if(!check_rights(NONE))

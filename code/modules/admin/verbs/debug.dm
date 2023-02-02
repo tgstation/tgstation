@@ -7,7 +7,7 @@ ADMIN_VERB(debug, toggle_global_debugging, "", R_DEBUG)
 ADMIN_VERB(debug, get_air_status, "", R_DEBUG)
 	atmos_scan(user=usr, target=get_turf(usr), silent=TRUE)
 
-ADMIN_CONTEXT_ENTRY(context_make_cyborg, "Make Cyborg", R_DEBUG, mob/target in GLOB.mob_list)
+ADMIN_VERB(debug, make_cyborg, "", R_DEBUG, mob/target in GLOB.mob_list)
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(usr, "Wait until the game starts")
 		return
@@ -104,7 +104,7 @@ ADMIN_VERB(debug, make_powernets, "", R_DEBUG)
 	log_admin("[key_name(usr)] has remade the powernet.")
 	message_admins("[key_name_admin(usr)] has remade the powernets.")
 
-ADMIN_CONTEXT_ENTRY(context_grant_full_access, "Grant Full Access", R_ADMIN, mob/living/carbon/human/target in view())
+ADMIN_VERB(game, grant_full_access, "", R_ADMIN, mob/living/carbon/human/target in view())
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(usr, "Wait until the game starts")
 		return
@@ -141,7 +141,7 @@ ADMIN_CONTEXT_ENTRY(context_grant_full_access, "Grant Full Access", R_ADMIN, mob
 	log_admin("[key_name(usr)] has granted [key_name(target)] full access.")
 	message_admins("[key_name_admin(usr)] has granted [key_name_admin(target)] full access.")
 
-ADMIN_CONTEXT_ENTRY(context_assume_control, "Assume Direct Control", R_ADMIN, mob/target in world)
+ADMIN_VERB(game, assume_direct_control, "", R_ADMIN, mob/target in view())
 	if(target.ckey)
 		var/force = tgui_alert(
 			usr,
@@ -168,7 +168,7 @@ ADMIN_CONTEXT_ENTRY(context_assume_control, "Assume Direct Control", R_ADMIN, mo
 	message_admins(span_adminnotice("[key_name_admin(usr)] assumed direct control of [target_name]."))
 	log_admin("[key_name(usr)] assumed direct control of [target_name].")
 
-ADMIN_CONTEXT_ENTRY(context_give_direct_control, "Give Direct Control", R_DEBUG, mob/pawn in world)
+ADMIN_VERB(game, give_direct_control, "", R_DEBUG, mob/pawn in view())
 	if(pawn.ckey)
 		if(tgui_alert(usr,"This mob is being controlled by [pawn.key]. Are you sure you wish to give someone else control of it? [pawn.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return

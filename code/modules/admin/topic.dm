@@ -707,8 +707,7 @@
 		if(iscyborg(our_mob))
 			to_chat(usr, "That's already a cyborg.", confidential = TRUE)
 			return
-
-		usr.client.admin_context_wrapper_context_make_cyborg(our_mob)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/debug/make_cyborg, our_mob)
 
 	else if(href_list["adminplayeropts"])
 		usr.client.admin_context_wrapper_context_player_panel(locate(href_list["adminplayeropts"]))
@@ -1060,10 +1059,10 @@
 			else
 				D.traitor_panel()
 		else
-			usr.client.admin_context_wrapper_context_traitor_panel(M)
+			SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/traitor_panel, M)
 
 	else if(href_list["skill"])
-		usr.client.admin_context_wrapper_context_skill_panel(locate(href_list["skill"]))
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/skill_panel, locate(href_list["skill"]))
 
 	else if(href_list["borgpanel"])
 		usr.client.admin_context_wrapper_context_borg_panel(locate(href_list["borgpanel"]))

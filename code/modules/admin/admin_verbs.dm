@@ -282,7 +282,7 @@ ADMIN_VERB(trading_card_game, print_cards, "", R_DEBUG)
 
 	SStrading_card_game.printAllCards()
 
-ADMIN_CONTEXT_ENTRY(context_give_spell, "Give Spell", R_FUN, mob/spell_recipient in GLOB.mob_list)
+ADMIN_VERB(fun, give_mob_spell, "", R_FUN, mob/spell_recipient in GLOB.mob_list)
 	var/which = tgui_alert(usr, "Chose by name or by type path?", "Chose option", list("Name", "Typepath"))
 	if(!which)
 		return
@@ -314,22 +314,18 @@ ADMIN_CONTEXT_ENTRY(context_give_spell, "Give Spell", R_FUN, mob/spell_recipient
 		to_chat(usr, span_warning("The intended spell recipient no longer exists."))
 		return
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(spell_recipient)] the spell [chosen_spell][robeless ? " (Forced robeless)" : ""].")
 	message_admins("[key_name_admin(usr)] gave [key_name_admin(spell_recipient)] the spell [chosen_spell][robeless ? " (Forced robeless)" : ""].")
-
 	var/datum/action/cooldown/spell/new_spell = new spell_path(spell_recipient.mind || spell_recipient)
-
 	if(robeless)
 		new_spell.spell_requirements &= ~SPELL_REQUIRES_WIZARD_GARB
 
 	new_spell.Grant(spell_recipient)
-
 	if(!spell_recipient.mind)
 		to_chat(usr, span_userdanger("Spells given to mindless mobs will belong to the mob and not their mind, \
 			and as such will not be transferred if their mind changes body (Such as from Mindswap)."))
 
-ADMIN_CONTEXT_ENTRY(context_remove_spell, "Remove Spell", R_FUN, mob/removal_target in GLOB.mob_list)
+ADMIN_VERB(fun, remove_spell, "", R_FUN, mob/removal_target in GLOB.mob_list)
 	var/list/target_spell_list = list()
 	for(var/datum/action/cooldown/spell/spell in removal_target.actions)
 		target_spell_list[spell.name] = spell
@@ -347,9 +343,8 @@ ADMIN_CONTEXT_ENTRY(context_remove_spell, "Remove Spell", R_FUN, mob/removal_tar
 	qdel(to_remove)
 	log_admin("[key_name(usr)] removed the spell [chosen_spell] from [key_name(removal_target)].")
 	message_admins("[key_name_admin(usr)] removed the spell [chosen_spell] from [key_name_admin(removal_target)].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-ADMIN_CONTEXT_ENTRY(context_give_disease, "Give Disease", R_FUN, mob/living/victim in GLOB.mob_living_list)
+ADMIN_VERB(fun, give_disease, "Give Disease", R_FUN, mob/living/victim in GLOB.mob_living_list)
 	var/datum/disease/disease_type = input(usr, "Choose the disease to give to that guy", "ACHOO") as null|anything in sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc))
 	if(!disease_type)
 		return

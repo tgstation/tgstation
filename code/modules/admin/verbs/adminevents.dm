@@ -62,7 +62,7 @@ ADMIN_CONTEXT_ENTRY(context_direct_narrate, "Direct Narrate", R_ADMIN, mob/heare
 	message_admins(msg)
 	admin_ticket_log(hearer, msg)
 
-ADMIN_CONTEXT_ENTRY(context_add_ai_law, "Add Custom AI Law", R_ADMIN)
+ADMIN_VERB(fun, add_ion_law, "Add an ion law to all silicons", R_FUN)
 	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null
 	if(!input)
 		return
