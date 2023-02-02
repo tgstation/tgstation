@@ -29094,7 +29094,7 @@
 	department = "Chief Medical Officer's Console";
 	name = "Chief Medical Officer's Request Console";
 	assistance_requestable = 1;
-	supplies_requestable = 1;
+	supplies_requestable = 1
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
@@ -66221,7 +66221,6 @@
 /obj/effect/turf_decal/tile/green/fourcorners,
 /obj/machinery/requests_console/directional/north{
 	department = "Hydroponics";
-
 	name = "Hydroponics Requests Console";
 	supplies_requestable = 1
 	},
