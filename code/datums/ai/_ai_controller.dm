@@ -50,11 +50,6 @@ multiple modular subtrees with behaviors
 	// The variables below are fucking stupid and should be put into the blackboard at some point.
 	///AI paused time
 	var/paused_until = 0
-	/// If this controller is applied to a human subtype, these organ slots, if filled, will get a special ai-specific examine
-	/// Apply the element to ORGAN_SLOT_BRAIN if you don't want it to be hideable behind clothing.
-	var/list/noticable_organ_examines = list(
-		ORGAN_SLOT_BRAIN = span_deadsay("doesn't appear to be themself.")
-	)
 
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
@@ -111,6 +106,8 @@ multiple modular subtrees with behaviors
 	pawn = new_pawn
 	pawn.ai_controller = src
 
+	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_POSSESSED_PAWN)
+
 	if (!ismob(new_pawn))
 		set_ai_status(AI_STATUS_ON)
 	else
@@ -118,28 +115,6 @@ multiple modular subtrees with behaviors
 		RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
-
-	if(ishuman(new_pawn))
-		setup_noticable_organs(new_pawn)
-
-/datum/ai_controller/proc/setup_noticable_organs(mob/living/carbon/human/human_pawn)
-	//make current organs noticable
-	for(var/organ_slot_key in noticable_organ_examines)
-		var/obj/item/organ/found = human_pawn.getorganslot(organ_slot_key)
-		if(!found)
-			continue
-		make_organ_noticable(organ_slot_key, found)
-	//listen for future insertions (the element removes itself on removal, so we can ignore organ removal)
-	RegisterSignal(human_pawn, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_organ_implanted))
-
-/datum/ai_controller/proc/on_organ_implanted(obj/item/organ/possibly_noticable, mob/living/carbon/receiver)
-	if(noticable_organ_examines[possibly_noticable.slot])
-		make_organ_noticable(possibly_noticable.slot, possibly_noticable)
-
-/datum/ai_controller/proc/make_organ_noticable(organ_slot, obj/item/organ/noticable_organ)
-	var/examine_text = noticable_organ_examines[organ_slot]
-	var/body_zone = organ_slot != ORGAN_SLOT_BRAIN ? noticable_organ.zone : null
-	noticable_organ.AddElement(/datum/element/noticable_organ/ai_control, examine_text, body_zone)
 
 /// Mobs have more complicated factors about whether their AI should be on or not
 /datum/ai_controller/proc/get_setup_mob_ai_status(mob/mob_pawn)
