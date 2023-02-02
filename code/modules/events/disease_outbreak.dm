@@ -281,7 +281,7 @@
  *
  * Now that we've picked our symptoms and severity, we determine the other stats
  * (Stage Speed, Resistance, Transmissibility)
- * The LOW/MID percentiles can be adjusted in the defines.area
+ * The LOW/MID percentiles can be adjusted in the defines.
  * If the virus is severity DANGEROUS we do not hide it from health scanners at event start.
  * If the virus is airborne, also don't hide it.
  */
