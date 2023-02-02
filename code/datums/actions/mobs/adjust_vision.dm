@@ -26,9 +26,9 @@
 	RegisterSignal(grant_to, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(on_update_sight))
 
 /datum/action/adjust_vision/Remove(mob/living/remove_from)
-	. = ..()
 	set_light_level(VISION_ACTION_LIGHT_OFF)
 	UnregisterSignal(remove_from, COMSIG_MOB_UPDATE_SIGHT)
+	. = ..()
 
 /datum/action/adjust_vision/Trigger(trigger_flags)
 	. = ..()
