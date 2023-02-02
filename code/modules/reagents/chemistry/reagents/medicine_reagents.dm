@@ -493,9 +493,9 @@
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjustOxyLoss(-3 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	if(
-	if(affected_mob.losebreath >= 4)
-		affected_mob.losebreath -= 2 * REM * delta_time
+	if(affected_mob.getorganslot(ORGAN_SLOT_LUNGS)?.respiration_type & affected_respiration_type)
+		if(affected_mob.losebreath >= 4)
+			affected_mob.losebreath -= 2 * REM * delta_time
 	..()
 	. = TRUE
 
@@ -748,7 +748,8 @@
 		affected_mob.adjustFireLoss(-2 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustOxyLoss(-5 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		. = TRUE
-	affected_mob.losebreath = 0
+	if(affected_mob.getorganslot(ORGAN_SLOT_LUNGS)?.respiration_type & affected_respiration_type)
+		affected_mob.losebreath = 0
 	if(DT_PROB(10, delta_time))
 		affected_mob.set_dizzy_if_lower(10 SECONDS)
 		affected_mob.set_jitter_if_lower(10 SECONDS)
@@ -793,10 +794,11 @@
 		affected_mob.adjustBruteLoss(-0.5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustFireLoss(-0.5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	if(affected_mob.losebreath >= 4)
-		affected_mob.losebreath -= 2 * REM * delta_time
-	if(affected_mob.losebreath < 0)
-		affected_mob.losebreath = 0
+	if(affected_mob.getorganslot(ORGAN_SLOT_LUNGS)?.respiration_type & affected_respiration_type)
+		if(affected_mob.losebreath >= 4)
+			affected_mob.losebreath -= 2 * REM * delta_time
+		if(affected_mob.losebreath < 0)
+			affected_mob.losebreath = 0
 	affected_mob.adjustStaminaLoss(-0.5 * REM * delta_time, 0)
 	if(DT_PROB(10, delta_time))
 		affected_mob.AdjustAllImmobility(-20)
@@ -806,7 +808,8 @@
 	if(DT_PROB(18, REM * delta_time))
 		affected_mob.adjustStaminaLoss(2.5, 0)
 		affected_mob.adjustToxLoss(1, FALSE, required_biotype = affected_biotype)
-		affected_mob.losebreath++
+		if(affected_mob.getorganslot(ORGAN_SLOT_LUNGS)?.respiration_type & affected_respiration_type)
+			affected_mob.losebreath++
 		. = TRUE
 	..()
 
