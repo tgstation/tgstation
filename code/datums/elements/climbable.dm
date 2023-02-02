@@ -73,9 +73,9 @@
 		adjusted_climb_time *= 0.8
 		adjusted_climb_stun *= 0.8
 	LAZYADDASSOCLIST(current_climbers, climbed_thing, user)
+	if(on_try_climb_procpath)
+		call(climbed_thing, on_try_climb_procpath)(user)
 	if(do_after(user, adjusted_climb_time, climbed_thing))
-		if(on_try_climb_procpath)
-			call(climbed_thing, on_try_climb_procpath)(user)
 		if(QDELETED(climbed_thing)) //Checking if structure has been destroyed
 			return
 		if(do_climb(climbed_thing, user, params))

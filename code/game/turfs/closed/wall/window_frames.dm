@@ -44,6 +44,11 @@
 	if(mapload && start_with_window)
 		create_structure_window(window_type, TRUE)
 
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 ///helper proc to check if we already have a window
 /obj/structure/window_frame/proc/has_window()
 	SHOULD_BE_PURE(TRUE)
@@ -77,6 +82,12 @@
 		else
 			return FALSE
 	return FALSE
+
+/obj/structure/window_frame/proc/on_entered(datum/source, AM as mob|obj)
+	SIGNAL_HANDLER
+	if(isliving(AM))
+		var/mob/living/potential_victim = AM
+		if(potential_victim.movement_type & (FLOATING|FLYING))
 
 /obj/structure/window_frame/attack_animal(mob/user, list/modifiers)
 	. = ..()
