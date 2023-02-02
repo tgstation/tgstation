@@ -181,18 +181,18 @@
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = TRUE, required_biotype, required_respiration_type = ALL)
+/mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype, required_respiration_type = ALL)
 	if(!forced && (status_flags & GODMODE))
 		return
 	if(!forced && !(getorganslot(ORGAN_SLOT_LUNGS)?.respiration_type & required_respiration_type))
-		return
+		return	
 	. = oxyloss
 	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 
 
-/mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = TRUE, required_biotype, required_respiration_type = ALL)
+/mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype, required_respiration_type = ALL)
 	if(!forced && (status_flags & GODMODE))
 		return
 	if(!forced && !(getorganslot(ORGAN_SLOT_LUNGS)?.respiration_type & required_respiration_type))
