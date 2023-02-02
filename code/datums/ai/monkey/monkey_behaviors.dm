@@ -143,7 +143,7 @@
 /datum/ai_behavior/monkey_attack_mob/setup(datum/ai_controller/controller, target_key)
 	. = ..()
 	var/datum/weakref/target_ref = controller.blackboard[target_key]
-	controller.set_movement_target(target_ref?.resolve())
+	set_movement_target(controller, target_ref?.resolve())
 
 /datum/ai_behavior/monkey_attack_mob/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
@@ -241,7 +241,7 @@
 /datum/ai_behavior/disposal_mob/setup(datum/ai_controller/controller, attack_target_key, disposal_target_key)
 	. = ..()
 	var/datum/weakref/target_ref = controller.blackboard[attack_target_key]
-	controller.set_movement_target(target_ref?.resolve())
+	set_movement_target(controller, target_ref?.resolve())
 
 /datum/ai_behavior/disposal_mob/finish_action(datum/ai_controller/controller, succeeded, attack_target_key, disposal_target_key)
 	. = ..()
@@ -259,7 +259,7 @@
 	var/mob/living/target = target_ref?.resolve()
 	var/mob/living/living_pawn = controller.pawn
 
-	controller.set_movement_target(target)
+	set_movement_target(controller, target)
 
 	if(!target)
 		finish_action(controller, FALSE)
@@ -272,7 +272,7 @@
 
 	var/datum/weakref/disposal_ref = controller.blackboard[disposal_target_key]
 	var/obj/machinery/disposal/disposal = disposal_ref.resolve()
-	controller.set_movement_target(disposal)
+	set_movement_target(controller, disposal)
 
 	if(!disposal)
 		finish_action(controller, FALSE)

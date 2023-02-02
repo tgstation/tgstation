@@ -15,5 +15,11 @@
 /// Checks that every icon sent to vending machines is valid
 /datum/unit_test/focus_only/invalid_vending_machine_icon_states
 
+/// Checks that space does not initialize multiple times
+/datum/unit_test/focus_only/multiple_space_initialization
+
 /// Checks that smoothing_groups and canSmoothWith are properly sorted in /atom/Initialize
 /datum/unit_test/focus_only/sorted_smoothing_groups
+
+/// Checks that floor tiles are properly mapped to broken/burnt
+/datum/unit_test/focus_only/valid_turf_states

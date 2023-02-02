@@ -8,7 +8,7 @@
 	del_on_death = TRUE
 	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "paperwizard"
-	ranged = 1
+	ranged = TRUE
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	minimum_distance = 3
 	retreat_distance = 3
@@ -21,9 +21,12 @@
 	projectiletype = /obj/projectile/temp
 	projectilesound = 'sound/weapons/emitter.ogg'
 	attack_sound = 'sound/hallucinations/growl1.ogg'
+	footstep_type = FOOTSTEP_MOB_SHOE
 	var/list/copies = list()
 
-	footstep_type = FOOTSTEP_MOB_SHOE
+/mob/living/simple_animal/hostile/boss/paper_wizard/Initialize(mapload)
+	. = ..()
+	apply_dynamic_human_icon(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/wizard/paper)
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/Destroy()
 	QDEL_LIST(copies)
@@ -171,7 +174,7 @@
 /obj/effect/temp_visual/paper_scatter
 	name = "scattering paper"
 	desc = "Pieces of paper scattering to the wind."
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = ABOVE_NORMAL_TURF_LAYER
 	plane = GAME_PLANE
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "paper_scatter"
@@ -182,7 +185,7 @@
 /obj/effect/temp_visual/paperwiz_dying
 	name = "craft portal"
 	desc = "A wormhole sucking the wizard into the void. Neat."
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = ABOVE_NORMAL_TURF_LAYER
 	plane = GAME_PLANE
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "paperwiz_poof"

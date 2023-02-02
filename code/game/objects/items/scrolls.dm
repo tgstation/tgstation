@@ -52,7 +52,8 @@
 		return
 	if(!teleport.Activate(user))
 		return
-	if(--uses <= 0)
+	uses--
+	if(uses <= 0)
 		to_chat(user, span_warning("[src] runs out of uses and crumbles to dust!"))
 		qdel(src)
 	return TRUE

@@ -90,8 +90,6 @@
 		to_chat(user, span_notice("You cannot place this tile here directly!"))
 		return
 	to_chat(user, span_notice("You begin replacing the floor with the tile..."))
-	if(!do_after(user, 3 SECONDS, target_plating))
-		return
 	if(!istype(target_plating))
 		return
 	if(!use(1))

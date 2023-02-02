@@ -33,7 +33,10 @@
 /obj/item/dna_probe/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!proximity_flag || !target)
-		return
+		return .
+
+	if (isitem(target))
+		. |= AFTERATTACK_PROCESSED_ITEM
 	if(istype(target, /obj/machinery/dna_vault) && !dna_vault_ref)
 		dna_vault_ref = WEAKREF(target)//linking the dna vault with the probe
 		balloon_alert(user, "vault linked")
@@ -47,38 +50,38 @@
 		var/obj/machinery/hydroponics/hydro_tray = target
 		if(!hydro_tray.myseed)
 			return
-		if((hydro_tray.myseed.type in our_vault.plants) || (hydro_tray.myseed.type in stored_dna_plants))
-			to_chat(user, span_notice("Plant data is either present in the vault or has already been scanned."))
+		if(stored_dna_plants[hydro_tray.myseed.type])
+			to_chat(user, span_notice("Plant data already present in local storage."))
 			return
 		if(hydro_tray.plant_status != HYDROTRAY_PLANT_HARVESTABLE) // So it's bit harder.
 			to_chat(user, span_alert("Plant needs to be ready to harvest to perform full data scan.")) //Because space dna is actually magic
-			return
+			return .
 		stored_dna_plants[hydro_tray.myseed.type] = TRUE
 		balloon_alert(user, "data added")
 
 	if(allowed_scans & DNA_PROBE_SCAN_ANIMALS)
 		var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
 		if(isanimal_or_basicmob(target) || is_type_in_typecache(target, non_simple_animals) || ismonkey(target))
-			if(istype(target, /mob/living/simple_animal/hostile/carp))
+			if(istype(target, /mob/living/basic/carp))
 				carp_dna_loaded = TRUE
 			var/mob/living/living_target = target
-			if((living_target.type in our_vault.animals) || (living_target.type in stored_dna_animal))
-				to_chat(user, span_alert("Animal data is either present in the vault or has already been scanned."))
+			if(stored_dna_animal[living_target.type])
+				to_chat(user, span_alert("Animal data already present in local storage."))
 				return
 			if(!(living_target.mob_biotypes & MOB_ORGANIC))
 				to_chat(user, span_alert("No compatible DNA detected."))
-				return
+				return .
 			stored_dna_animal[living_target.type] = TRUE
 			balloon_alert(user, "data added")
 
 	if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if((human_target.dna.unique_identity in our_vault.dna) || (human_target.dna.unique_identity in stored_dna_human))
-			to_chat(user, span_notice("Humanoid data is either present in the vault or has already been scanned."))
+		if(stored_dna_human[human_target.dna.unique_identity])
+			to_chat(user, span_notice("Humanoid data already present in local storage."))
 			return
 		if(!(human_target.mob_biotypes & MOB_ORGANIC))
 			to_chat(user, span_alert("No compatible DNA detected."))
-			return
+			return .
 		stored_dna_human[human_target.dna.unique_identity] = TRUE
 		balloon_alert(user, "data added")
 

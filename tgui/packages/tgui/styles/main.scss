@@ -31,6 +31,7 @@
 @include meta.load-css('./components/Input.scss');
 @include meta.load-css('./components/Knob.scss');
 @include meta.load-css('./components/LabeledList.scss');
+@include meta.load-css('./components/MenuBar.scss');
 @include meta.load-css('./components/Modal.scss');
 @include meta.load-css('./components/NoticeBox.scss');
 @include meta.load-css('./components/NumberInput.scss');
@@ -43,6 +44,7 @@
 @include meta.load-css('./components/Tabs.scss');
 @include meta.load-css('./components/TextArea.scss');
 @include meta.load-css('./components/Tooltip.scss');
+@include meta.load-css('./components/Dialog.scss');
 
 // Interfaces
 @include meta.load-css('./interfaces/ListInput.scss');
@@ -72,6 +74,7 @@
 @include meta.load-css('./interfaces/UtilityModulesPane.scss');
 @include meta.load-css('./interfaces/Fabricator.scss');
 @include meta.load-css('./interfaces/Emojipedia.scss');
+@include meta.load-css('./interfaces/NtosNotepad.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

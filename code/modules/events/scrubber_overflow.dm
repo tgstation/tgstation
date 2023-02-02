@@ -6,6 +6,7 @@
 	min_players = 10
 	category = EVENT_CATEGORY_JANITORIAL
 	description = "The scrubbers release a tide of mostly harmless froth."
+	admin_setup = /datum/event_admin_setup/listed_options/scrubber_overflow
 
 /datum/round_event/scrubber_overflow
 	announce_when = 1
@@ -93,8 +94,6 @@
 		return TRUE //there's at least one. we'll let the codergods handle the rest with prob() i guess.
 	return FALSE
 
-
-
 /datum/round_event/scrubber_overflow/start()
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/vent as anything in scrubbers)
 		if(!vent.loc)
@@ -111,7 +110,7 @@
 		else
 			dispensed_reagent.add_reagent(pick(safer_chems), reagents_amount)
 
-		dispensed_reagent.create_foam(/datum/effect_system/fluid_spread/foam, reagents_amount)
+		dispensed_reagent.create_foam(/datum/effect_system/fluid_spread/foam/short, reagents_amount)
 
 		CHECK_TICK
 
@@ -141,15 +140,33 @@
 	danger_chance = 30
 	reagents_amount = 150
 
-/datum/round_event_control/scrubber_overflow/beer // Used when the beer nuke "detonates"
-	name = "Scrubber Overflow: Beer"
-	typepath = /datum/round_event/scrubber_overflow/beer
+/datum/round_event_control/scrubber_overflow/custom //Used for the beer nuke as well as admin abuse
+	name = "Scrubber Overflow: Custom"
+	typepath = /datum/round_event/scrubber_overflow/custom
 	weight = 0
 	max_occurrences = 0
-	description = "The scrubbers release a tide of boozy froth."
+	description = "The scrubbers release a tide of custom froth."
+	///Reagent thats going to be flooded.
+	var/datum/reagent/custom_reagent
 
-/datum/round_event/scrubber_overflow/beer
+/datum/round_event_control/scrubber_overflow/custom/announce_deadchat(random)
+	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>Scrubber Overflow: [initial(custom_reagent.name)]</b>", message_type=DEADCHAT_ANNOUNCEMENT)
+
+/datum/round_event/scrubber_overflow/custom
 	overflow_probability = 100
 	forced_reagent = /datum/reagent/consumable/ethanol/beer
 	reagents_amount = 100
 
+/datum/round_event/scrubber_overflow/custom/start()
+	var/datum/round_event_control/scrubber_overflow/custom/event_controller = control
+	forced_reagent = event_controller.custom_reagent
+	return ..()
+
+/datum/event_admin_setup/listed_options/scrubber_overflow
+	normal_run_option = "Random Reagent"
+
+/datum/event_admin_setup/listed_options/scrubber_overflow/get_list()
+	return sort_list(subtypesof(/datum/reagent), /proc/cmp_typepaths_asc)
+
+/datum/event_admin_setup/listed_options/scrubber_overflow/apply_to_event(datum/round_event/scrubber_overflow/event)
+	event.forced_reagent = chosen

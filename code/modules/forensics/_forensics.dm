@@ -147,7 +147,8 @@
 /// Adds a single fiber
 /datum/forensics/proc/add_fibers(mob/living/carbon/human/suspect)
 	var/fibertext
-	var/item_multiplier = isitem(src) ? ITEM_FIBER_MULTIPLIER : NON_ITEM_FIBER_MULTIPLIER
+	var/atom/actual_parent = parent.resolve()
+	var/item_multiplier = isitem(actual_parent) ? ITEM_FIBER_MULTIPLIER : NON_ITEM_FIBER_MULTIPLIER
 	if(suspect.wear_suit)
 		fibertext = "Material from \a [suspect.wear_suit]."
 		if(prob(10 * item_multiplier) && !LAZYACCESS(fibers, fibertext))

@@ -76,9 +76,8 @@
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	if(directive)
-		to_chat(src, span_spider("Your mother left you a directive! Follow it at all costs."))
-		to_chat(src, span_spider("<b>[directive]</b>"))
+	var/datum/antagonist/spider/spider_antag = new(directive)
+	mind.add_antag_datum(spider_antag)
 	GLOB.spidermobs[src] = TRUE
 
 /mob/living/simple_animal/hostile/giant_spider/Destroy()

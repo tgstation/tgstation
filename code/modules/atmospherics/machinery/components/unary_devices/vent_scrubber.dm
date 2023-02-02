@@ -200,7 +200,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_scrubbing(scrubbing, mob/user)
 	src.scrubbing = scrubbing
-	investigate_log(" was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [isnull(user) ? "the game" : key_name(user)]", INVESTIGATE_ATMOS)
+	investigate_log("was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [isnull(user) ? "the game" : key_name(user)]", INVESTIGATE_ATMOS)
 	update_appearance(UPDATE_ICON)
 	try_update_atmos_process()
 	update_power_usage()

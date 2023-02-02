@@ -1,11 +1,11 @@
 // Remove these once we have Byond implementation.
 // ------------------------------------
-#define IS_NAN(a) (a!=a)
+#define IS_NAN(a) (a != a)
 
-#define IS_INF__UNSAFE(a) (a==a && a-a!=a-a)
+#define IS_INF__UNSAFE(a) (a == a && a-a != a-a)
 #define IS_INF(a) (isnum(a) && IS_INF__UNSAFE(a))
 
-#define IS_FINITE__UNSAFE(a) (a-a==a-a)
+#define IS_FINITE__UNSAFE(a) (a-a == a-a)
 #define IS_FINITE(a) (isnum(a) && IS_FINITE__UNSAFE(a))
 // ------------------------------------
 // Aight dont remove the rest
@@ -16,7 +16,6 @@
 
 #define NUM_E 2.71828183
 
-#define SQRT_2 1.414214 //CLOSE ENOUGH!
 
 #define PI 3.1416
 #define INFINITY 1e31 //closer then enough
@@ -169,7 +168,7 @@
 			R1 = rand(-ACCURACY,ACCURACY)/ACCURACY
 			R2 = rand(-ACCURACY,ACCURACY)/ACCURACY
 			working = R1*R1 + R2*R2
-		while(working >= 1 || working==0)
+		while(working >= 1 || working == 0)
 		working = sqrt(-2 * log(working) / working)
 		R1 *= working
 		gaussian_next = R2 * working
@@ -236,6 +235,10 @@
 // )
 
 #define GET_TRUE_DIST(a, b) (a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y), abs(a.z-b.z))
+
+//We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
+//And lo and behold, it is, and it's more accurate to boot.
+#define CHEAP_HYPOTENUSE(Ax, Ay, Bx, By) (sqrt(abs(Ax - Bx) ** 2 + abs(Ay - By) ** 2)) //A squared + B squared = C squared
 
 /// The number of cells in a taxicab circle (rasterized diamond) of radius X.
 #define DIAMOND_AREA(X) (1 + 2*(X)*((X)+1))

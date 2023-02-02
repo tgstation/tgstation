@@ -126,7 +126,7 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "gt" = (
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	anchored = 1;
 	pixel_y = 8
 	},
@@ -305,7 +305,7 @@
 /obj/item/hemostat{
 	pixel_x = -4
 	},
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/structure/table/reinforced,
 /obj/item/surgicaldrill,
@@ -721,7 +721,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "Fs" = (
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	anchored = 1;
 	pixel_y = 8
 	},

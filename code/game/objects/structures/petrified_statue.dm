@@ -60,18 +60,28 @@
 		petrified_mob.status_flags &= ~GODMODE
 		petrified_mob.forceMove(loc)
 		REMOVE_TRAIT(petrified_mob, TRAIT_MUTE, STATUE_MUTE)
-		REMOVE_TRAIT(petrified_mob, TRAIT_NOBLEED, MAGIC_TRAIT)
+		REMOVE_TRAIT(petrified_mob, TRAIT_NOBLOOD, MAGIC_TRAIT)
 		petrified_mob.take_overall_damage((petrified_mob.health - atom_integrity + 100)) //any new damage the statue incurred is transfered to the mob
 		petrified_mob.faction -= "mimic"
 		petrified_mob = null
 	return ..()
 
 /obj/structure/statue/petrified/deconstruct(disassembled = TRUE)
+	var/destruction_message = "[src] shatters!"
 	if(!disassembled)
 		if(petrified_mob)
 			petrified_mob.investigate_log("has been dusted by statue deconstruction.", INVESTIGATE_DEATHS)
+			if(iscarbon(petrified_mob))
+				var/mob/living/carbon/petrified_carbon = petrified_mob
+				var/obj/item/organ/internal/brain/carbon_brain = petrified_carbon.getorganslot(ORGAN_SLOT_BRAIN)
+				carbon_brain.Remove(petrified_carbon)
+				carbon_brain.forceMove(get_turf(src))
+				carbon_brain.name = "petrified [carbon_brain.name]"
+				carbon_brain.desc = "[carbon_brain.desc] This one seems a bit more... smooth than a normal brain. Probably'd still work."
+				carbon_brain.add_atom_colour(list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)), FIXED_COLOUR_PRIORITY)
+				destruction_message = "[src] shatters, a solid brain tumbling out!"
 			petrified_mob.dust()
-	visible_message(span_danger("[src] shatters!"))
+	visible_message(span_danger(destruction_message))
 	qdel(src)
 
 
@@ -82,7 +92,7 @@
 		return FALSE
 	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
 	S.name = "statue of [name]"
-	ADD_TRAIT(src, TRAIT_NOBLEED, MAGIC_TRAIT)
+	ADD_TRAIT(src, TRAIT_NOBLOOD, MAGIC_TRAIT)
 	S.copy_overlays(src)
 	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)

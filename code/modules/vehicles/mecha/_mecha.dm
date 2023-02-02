@@ -23,7 +23,7 @@
 	icon = 'icons/mecha/mecha.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_integrity = 300
-	armor = list(MELEE = 20, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/sealed_mecha
 	force = 5
 	movedelay = 1 SECONDS
 	move_force = MOVE_FORCE_VERY_STRONG
@@ -200,6 +200,13 @@
 	var/ui_y = 600
 	/// ref to screen object that displays in the middle of the UI
 	var/atom/movable/screen/map_view/ui_view
+
+/datum/armor/sealed_mecha
+	melee = 20
+	bullet = 10
+	bomb = 10
+	fire = 100
+	acid = 100
 
 /obj/item/radio/mech //this has to go somewhere
 	subspace_transmission = TRUE
@@ -423,25 +430,14 @@
 	else
 		normal_step_energy_drain = 500
 		step_energy_drain = normal_step_energy_drain
+
 	if(capacitor)
-		armor = armor.modifyRating(energy = (capacitor.rating * 5)) //Each level of capacitor protects the mech against emp by 5%
-	else //because we can still be hit without a cap, even if we can't move
-		armor = armor.setRating(energy = 0)
+		var/datum/armor/stock_armor = get_armor_by_type(armor_type)
+		var/initial_energy = stock_armor.get_rating(ENERGY)
+		set_armor_rating(initial_energy + (capacitor.rating * 5))
 
 /obj/vehicle/sealed/mecha/examine(mob/user)
 	. = ..()
-	var/integrity = atom_integrity*100/max_integrity
-	switch(integrity)
-		if(85 to 100)
-			. += "It's fully intact."
-		if(65 to 85)
-			. += "It's slightly damaged."
-		if(45 to 65)
-			. += "It's badly damaged."
-		if(25 to 45)
-			. += "It's heavily damaged."
-		else
-			. += "It's falling apart."
 	if(LAZYLEN(flat_equipment))
 		. += "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME as anything in flat_equipment)
@@ -460,6 +456,24 @@
 					continue
 				. += span_warning("It looks like you can hit the pilot directly if you target the center or above.")
 				break //in case user is holding two guns
+
+/obj/vehicle/sealed/mecha/generate_integrity_message()
+	var/examine_text = ""
+	var/integrity = atom_integrity*100/max_integrity
+
+	switch(integrity)
+		if(85 to 100)
+			examine_text = "It's fully intact."
+		if(65 to 85)
+			examine_text = "It's slightly damaged."
+		if(45 to 65)
+			examine_text = "It's badly damaged."
+		if(25 to 45)
+			examine_text = "It's heavily damaged."
+		else
+			examine_text = "It's falling apart."
+
+	return examine_text
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/vehicle/sealed/mecha/process(delta_time)

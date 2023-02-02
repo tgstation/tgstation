@@ -1,0 +1,105 @@
+@use '../base';
+
+$background-color: base.$color-bg !default;
+
+.Dialog {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Dialog__content {
+  background-color: $background-color;
+  font-family: Consolas, monospace;
+  font-size: base.em(14px);
+  display: flex;
+  flex-direction: column;
+}
+
+.Dialog__header {
+  display: flex;
+  height: 2em;
+  line-height: 1.928em;
+  background-color: rgba(0, 0, 0, 0.5);
+  user-select: none;
+  -ms-user-select: none;
+}
+
+.Dialog__title {
+  display: inline;
+  font-style: italic;
+  margin-left: 1rem;
+  margin-right: 2rem;
+  flex-grow: 1;
+  opacity: 0.33;
+}
+
+.Dialog__body {
+  margin: 2rem 1rem 2rem 1rem;
+  flex-grow: 1;
+}
+
+.Dialog__footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.Dialog__button {
+  margin: 0 1rem 0 1rem;
+  height: 2rem;
+  min-width: 6rem;
+  text-align: center;
+}
+
+.SaveAsDialog__inputs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 3rem;
+  justify-content: flex-end;
+  margin-right: 1rem;
+}
+
+.SaveAsDialog__input {
+  margin-left: 1rem;
+  width: 80%;
+}
+
+.SaveAsDialog__label {
+  vertical-align: center;
+}
+
+.Dialog__FileList {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  align-content: flex-start;
+  max-height: 20rem;
+  overflow: auto;
+  overflow-y: scroll;
+}
+
+.Dialog__FileEntry {
+  text-align: center;
+  margin: 1rem;
+}
+
+.Dialog__FileIcon {
+  display: inline-block;
+  margin: 0 0 1rem 0;
+  position: relative;
+  width: 6vh;
+  height: auto;
+  text-align: center;
+  cursor: default;
+}

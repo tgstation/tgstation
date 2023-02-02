@@ -20,11 +20,15 @@
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/item_knife
 	var/bayonet = FALSE //Can this be attached to a gun?
 	wound_bonus = 5
 	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE
+
+/datum/armor/item_knife
+	fire = 50
+	acid = 50
 
 /obj/item/knife/Initialize(mapload)
 	. = ..()
@@ -162,7 +166,7 @@
 	throwforce = 12
 	attack_verb_continuous = list("shanks", "shivs")
 	attack_verb_simple = list("shank", "shiv")
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 	custom_materials = list(/datum/material/glass=400)
 
 /obj/item/knife/shiv/plasma
@@ -172,8 +176,17 @@
 	desc = "A makeshift plasma glass shiv."
 	force = 9
 	throwforce = 13
-	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/shiv_plasma
 	custom_materials = list(/datum/material/glass=400, /datum/material/plasma=200)
+
+/datum/armor/shiv_plasma
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 25
+	fire = 50
+	acid = 50
 
 /obj/item/knife/shiv/titanium
 	name = "titanium shiv"
@@ -183,8 +196,17 @@
 	throwforce = 14
 	throw_range = 7
 	wound_bonus = 10
-	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/shiv_titanium
 	custom_materials = list(/datum/material/glass=400, /datum/material/titanium=200)
+
+/datum/armor/shiv_titanium
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 25
+	fire = 50
+	acid = 50
 
 /obj/item/knife/shiv/plastitanium
 	name = "plastitanium shiv"
@@ -197,8 +219,17 @@
 	throw_range = 8
 	wound_bonus = 10
 	bare_wound_bonus = 20
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 0, FIRE = 75, ACID = 75)
+	armor_type = /datum/armor/shiv_plastitanium
 	custom_materials = list(/datum/material/glass=400, /datum/material/alloy/plastitanium=200)
+
+/datum/armor/shiv_plastitanium
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 50
+	fire = 75
+	acid = 75
 
 /obj/item/knife/shiv/carrot
 	name = "carrot shiv"

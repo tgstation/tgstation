@@ -249,6 +249,12 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// because they have nothing else that supports an implant.
 #define UPLINK_IMPLANT_TELECRYSTAL_COST 4
 
+/// Items with this stock key do not share stock with other items
+#define UPLINK_SHARED_STOCK_UNIQUE "uplink_shared_stock_unique"
+/// Stock keys for items that share inventory stock
+#define UPLINK_SHARED_STOCK_KITS "uplink_shared_stock_kits"
+#define UPLINK_SHARED_STOCK_SURPLUS "uplink_shared_stock_surplus"
+
 // Used for traitor objectives
 /// If the objective hasn't been taken yet
 #define OBJECTIVE_STATE_INACTIVE 1
@@ -269,3 +275,20 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define OBJECTIVE_WEIGHT_HUGE 20
 
 #define REVENANT_NAME_FILE "revenant_names.json"
+
+/// Antag panel groups
+#define ANTAG_GROUP_ABDUCTORS "Abductors"
+#define ANTAG_GROUP_ABOMINATIONS "Extradimensional Abominations"
+#define ANTAG_GROUP_ARACHNIDS "Arachnid Infestation"
+#define ANTAG_GROUP_ASHWALKERS "Ash Walkers"
+#define ANTAG_GROUP_BIOHAZARDS "Biohazards"
+#define ANTAG_GROUP_CLOWNOPS "Clown Operatives"
+#define ANTAG_GROUP_ERT "Emergency Response Team"
+#define ANTAG_GROUP_HORRORS "Eldritch Horrors"
+#define ANTAG_GROUP_LEVIATHANS "Spaceborne Leviathans"
+#define ANTAG_GROUP_NINJAS "Ninja Clan"
+#define ANTAG_GROUP_OVERGROWTH "Invasive Overgrowth"
+#define ANTAG_GROUP_PIRATES "Pirate Crew"
+#define ANTAG_GROUP_SYNDICATE "Syndicate"
+#define ANTAG_GROUP_WIZARDS "Wizard Federation"
+#define ANTAG_GROUP_XENOS "Xenomorph Infestation"

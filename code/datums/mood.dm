@@ -114,6 +114,7 @@
 /// Handles mood given by nutrition
 /datum/mood/proc/handle_nutrition()
 	if (HAS_TRAIT(mob_parent, TRAIT_NOHUNGER))
+		clear_mood_event(MOOD_CATEGORY_NUTRITION)  // if you happen to switch species while hungry youre no longer hungy
 		return FALSE // no moods for nutrition
 	switch(mob_parent.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)

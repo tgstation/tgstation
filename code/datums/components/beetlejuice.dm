@@ -33,7 +33,7 @@
 	if (var_name == NAMEOF(src, keyword) || var_name == NAMEOF(src, case_sensitive))
 		update_regex()
 
-/datum/component/beetlejuice/proc/say_react(datum/source, mob/speaker,message)
+/datum/component/beetlejuice/proc/say_react(datum/source, mob/speaker, message)
 	SIGNAL_HANDLER
 
 	if(!speaker || speaker == parent || !message || !active)

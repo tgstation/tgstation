@@ -154,6 +154,17 @@ SUBSYSTEM_DEF(shuttle)
 		if(!pack.contains)
 			continue
 
+		//Adds access requirements to the end of each description.
+		if(pack.access && pack.access_view)
+			if(pack.access == pack.access_view)
+				pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open or purchase."
+			else
+				pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open, or [SSid_access.get_access_desc(pack.access_view)] access to purchase."
+		else if(pack.access)
+			pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open."
+		else if(pack.access_view)
+			pack.desc += " Requires [SSid_access.get_access_desc(pack.access_view)] access to purchase."
+
 		supply_packs[pack.id] = pack
 
 	setup_shuttles(stationary_docking_ports)
@@ -467,9 +478,9 @@ SUBSYSTEM_DEF(shuttle)
 		//Make all cargo consoles speak up
 
 /datum/controller/subsystem/shuttle/proc/checkHostileEnvironment()
-	for(var/datum/d in hostile_environments)
-		if(!istype(d) || QDELETED(d))
-			hostile_environments -= d
+	for(var/datum/hostile_environment_source in hostile_environments)
+		if(QDELETED(hostile_environment_source))
+			hostile_environments -= hostile_environment_source
 	emergency_no_escape = hostile_environments.len
 
 	if(emergency_no_escape && (emergency.mode == SHUTTLE_IGNITING))

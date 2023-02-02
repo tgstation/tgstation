@@ -198,6 +198,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 /datum/radial_menu/proc/HideElement(atom/movable/screen/radial/slice/E)
 	E.cut_overlays()
+	E.vis_contents.Cut()
 	E.alpha = 0
 	E.name = "None"
 	E.maptext = null

@@ -11,12 +11,6 @@
 		return null
 	return format_text ? format_text(checked_area.name) : checked_area.name
 
-//We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
-//And lo and behold, it is, and it's more accurate to boot.
-///Calculate the hypotenuse cheaply (this should be in maths.dm)
-/proc/cheap_hypotenuse(Ax, Ay, Bx, By)
-	return sqrt(abs(Ax - Bx) ** 2 + abs(Ay - By) ** 2) //A squared + B squared = C squared
-
 /** toggle_organ_decay
  * inputs: first_object (object to start with)
  * outputs:

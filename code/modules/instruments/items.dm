@@ -251,23 +251,23 @@
 	var/static/list/instruments
 	if(!instruments)
 		instruments = list()
-		var/list/templist = list(/obj/item/instrument/violin,
-							/obj/item/instrument/piano_synth,
-							/obj/item/instrument/banjo,
-							/obj/item/instrument/guitar,
-							/obj/item/instrument/eguitar,
-							/obj/item/instrument/glockenspiel,
-							/obj/item/instrument/accordion,
-							/obj/item/instrument/trumpet,
-							/obj/item/instrument/saxophone,
-							/obj/item/instrument/trombone,
-							/obj/item/instrument/recorder,
-							/obj/item/instrument/harmonica,
-							/obj/item/instrument/piano_synth/headphones
-							)
-		for(var/V in templist)
-			var/atom/A = V
-			instruments[initial(A.name)] = A
+		var/list/possible_instruments = list(
+			/obj/item/instrument/violin,
+			/obj/item/instrument/piano_synth,
+			/obj/item/instrument/banjo,
+			/obj/item/instrument/guitar,
+			/obj/item/instrument/eguitar,
+			/obj/item/instrument/glockenspiel,
+			/obj/item/instrument/accordion,
+			/obj/item/instrument/trumpet,
+			/obj/item/instrument/saxophone,
+			/obj/item/instrument/trombone,
+			/obj/item/instrument/recorder,
+			/obj/item/instrument/harmonica,
+			/obj/item/instrument/piano_synth/headphones,
+		)
+		for(var/obj/item/instrument/instrument as anything in possible_instruments)
+			instruments[initial(instrument.name)] = instrument
 	return instruments
 
 /obj/item/instrument/musicalmoth

@@ -53,23 +53,25 @@ LINEN BINS
 
 /obj/item/bedsheet/add_item_context(datum/source, list/context, mob/living/target)
 	if(isliving(target) && target.body_position == LYING_DOWN)
-		context[SCREENTIP_CONTEXT_LMB] = "Cover"
+		context[SCREENTIP_CONTEXT_RMB] = "Cover"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
 
-/obj/item/bedsheet/attack(mob/living/target, mob/living/user)
+/obj/item/bedsheet/attack_secondary(mob/living/target, mob/living/user, params)
 	if(!user.CanReach(target))
-		return
-	if(user.combat_mode || target.body_position != LYING_DOWN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(target.body_position != LYING_DOWN)
 		return ..()
 	if(!user.dropItemToGround(src))
-		return
+		return ..()
 
 	forceMove(get_turf(target))
 	balloon_alert(user, "covered")
 	coverup(target)
 	add_fingerprint(user)
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/bedsheet/attack_self(mob/living/user)
 	if(!user.CanReach(src)) //No telekenetic grabbing.
@@ -336,6 +338,7 @@ LINEN BINS
 	name = "random bedsheet"
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
 	bedsheet_type = BEDSHEET_ABSTRACT
+	item_flags = ABSTRACT
 	var/static/list/bedsheet_list
 	var/spawn_type = BEDSHEET_SINGLE
 
@@ -362,6 +365,7 @@ LINEN BINS
 	name = "random dorms bedsheet"
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
 	bedsheet_type = BEDSHEET_DOUBLE
+	item_flags = ABSTRACT
 	slot_flags = null
 
 /obj/item/bedsheet/dorms/Initialize(mapload)
@@ -543,6 +547,7 @@ LINEN BINS
 
 /obj/item/bedsheet/dorms_double
 	icon_state = "random_bedsheet"
+	item_flags = ABSTRACT
 	bedsheet_type = BEDSHEET_ABSTRACT
 
 /obj/item/bedsheet/dorms_double/Initialize(mapload)

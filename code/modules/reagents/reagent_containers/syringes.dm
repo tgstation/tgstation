@@ -42,6 +42,7 @@
 
 /obj/item/reagent_containers/syringe/afterattack(atom/target, mob/user, proximity)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 
 	if (!try_syringe(target, user, proximity))
 		return

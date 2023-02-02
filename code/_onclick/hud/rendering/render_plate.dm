@@ -45,8 +45,9 @@
 		return
 	// Non 0 offset render plates will relay up to the transparent plane above them, assuming they're not on the same z level as their target of course
 	var/datum/hud/hud = home.our_hud
+	// show_to can be called twice successfully with no hide_from call. Ensure no runtimes off the registers from this
 	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
 	offset_change(hud?.current_plane_offset || 0)
 
 /atom/movable/screen/plane_master/rendering_plate/master/hide_from(mob/oldmob)
@@ -79,6 +80,10 @@
 	. = ..()
 	add_filter("displacer", 1, displacement_map_filter(render_source = OFFSET_RENDER_TARGET(GRAVITY_PULSE_RENDER_TARGET, offset), size = 10))
 
+// Blackness renders weird when you view down openspace, because of transforms and borders and such
+// This is a consequence of not using lummy's grouped transparency, but I couldn't get that to work without totally fucking up
+// Sight flags, and shooting vis_contents usage to the moon. So we're doin it different.
+// If image vis contents worked (it should in 515), and we were ok with a maptick cost (wait for threaded maptick) this could be fixed
 /atom/movable/screen/plane_master/rendering_plate/transparent
 	name = "Transparent plate"
 	documentation = "The master rendering plate from the offset below ours will be mirrored onto this plane. That way we achive a \"stack\" effect.\
@@ -123,6 +128,21 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	critical = PLANE_CRITICAL_DISPLAY
 
+/*!
+ * This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.
+ *
+ * Emissive overlays are pasted with an atom color that converts them to be entirely some specific color.
+ * Emissive blockers are pasted with an atom color that converts them to be entirely some different color.
+ * Emissive overlays and emissive blockers are put onto the same plane.
+ * The layers for the emissive overlays and emissive blockers cause them to mask eachother similar to normal BYOND objects.
+ * A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.
+ * This is then used to alpha mask the lighting plane.
+ */
+/atom/movable/screen/plane_master/rendering_plate/lighting/Initialize(mapload)
+	. = ..()
+	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_RENDER_TARGET, offset), flags = MASK_INVERSE))
+	add_filter("object_lighting", 2, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(O_LIGHTING_VISUAL_RENDER_TARGET, offset), flags = MASK_INVERSE))
+
 /atom/movable/screen/plane_master/rendering_plate/lighting/show_to(mob/mymob)
 	. = ..()
 	if(!.)
@@ -132,15 +152,19 @@
 	// Basically, we need something to brighten
 	// unlit is perhaps less needed rn, it exists to provide a fullbright for things that can't see the lighting plane
 	// but we don't actually use invisibility to hide the lighting plane anymore, so it's pointless
-	mymob.overlay_fullscreen("lighting_backdrop_lit", /atom/movable/screen/fullscreen/lighting_backdrop/lit)
-	mymob.overlay_fullscreen("lighting_backdrop_unlit", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
+	var/atom/movable/screen/backdrop = mymob.overlay_fullscreen("lighting_backdrop_lit#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/lit)
+	// Need to make sure they're on our plane, ALL the time. We always need a backdrop
+	SET_PLANE_EXPLICIT(backdrop, PLANE_TO_TRUE(backdrop.plane), src)
+	backdrop = mymob.overlay_fullscreen("lighting_backdrop_unlit#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
+	SET_PLANE_EXPLICIT(backdrop, PLANE_TO_TRUE(backdrop.plane), src)
 
 	// Sorry, this is a bit annoying
 	// Basically, we only want the lighting plane we can actually see to attempt to render
 	// If we don't our lower plane gets totally overriden by the black void of the upper plane
 	var/datum/hud/hud = home.our_hud
+	// show_to can be called twice successfully with no hide_from call. Ensure no runtimes off the registers from this
 	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
 	offset_change(hud?.current_plane_offset || 0)
 	set_alpha(mymob.lighting_alpha)
 
@@ -164,20 +188,44 @@
 	else
 		enable_alpha()
 
-/*!
- * This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.
- *
- * Emissive overlays are pasted with an atom color that converts them to be entirely some specific color.
- * Emissive blockers are pasted with an atom color that converts them to be entirely some different color.
- * Emissive overlays and emissive blockers are put onto the same plane.
- * The layers for the emissive overlays and emissive blockers cause them to mask eachother similar to normal BYOND objects.
- * A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.
- * This is then used to alpha mask the lighting plane.
- */
-/atom/movable/screen/plane_master/rendering_plate/lighting/Initialize(mapload)
+/atom/movable/screen/plane_master/rendering_plate/emissive_slate
+	name = "Emissive Plate"
+	documentation = "This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.\
+		<br>Emissive overlays are pasted with an atom color that converts them to be entirely some specific color.\
+		<br>Emissive blockers are pasted with an atom color that converts them to be entirely some different color.\
+		<br>Emissive overlays and emissive blockers are put onto the same plane (This one).\
+		<br>The layers for the emissive overlays and emissive blockers cause them to mask eachother similar to normal BYOND objects.\
+		<br>A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.\
+		<br>This is then used to alpha mask the lighting plane."
+	plane = EMISSIVE_RENDER_PLATE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_target = EMISSIVE_RENDER_TARGET
+	render_relay_planes = list()
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/emissive_slate/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
-	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_RENDER_TARGET, offset), flags = MASK_INVERSE))
-	add_filter("object_lighting", 2, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(O_LIGHTING_VISUAL_RENDER_TARGET, offset), flags = MASK_INVERSE))
+	add_filter("emissive_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_MASK_RENDER_TARGET, offset)))
+	add_filter("em_block_masking", 2, color_matrix_filter(GLOB.em_mask_matrix))
+	if(offset != 0)
+		add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset - 1), relay_layer = EMISSIVE_Z_BELOW_LAYER)
+
+/atom/movable/screen/plane_master/rendering_plate/mask_emissive
+	name = "Emissive Mask"
+	documentation = "Any part of this plane that is transparent will be transparent in the emissive plane.\
+		<br>This is done to ensure emissives don't light things up \"through\" the darkness that normally sits at the bottom of the lighting plane.\
+		<br>We relay copies of the space, floor and wall planes to it, so we can use them as masks. Then we just boost any existing alpha to 100% and we're done."
+	plane = EMISSIVE_MASK_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_target = EMISSIVE_MASK_RENDER_TARGET
+	render_relay_planes = list()
+
+/atom/movable/screen/plane_master/rendering_plate/mask_emissive/Initialize(mapload, datum/plane_master_group/home, offset)
+	. = ..()
+	// Uses a filter cause the alpha slider will fuck up colors and we want to be editable
+	add_filter("pump_alpha", 1, color_matrix_filter(list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,255, 0,0,0,0)))
 
 ///render plate for OOC stuff like ghosts, hud-screen effects, etc
 /atom/movable/screen/plane_master/rendering_plate/non_game
@@ -216,19 +264,18 @@
 /// Creates a connection between this plane master and the passed in plane
 /// Helper for out of system code, shouldn't be used in this file
 /// Build system to differenchiate between generated and non generated render relays
-/atom/movable/screen/plane_master/proc/add_relay_to(target_plane, blend_override)
+/atom/movable/screen/plane_master/proc/add_relay_to(target_plane, blend_override, relay_layer, relay_color)
 	if(get_relay_to(target_plane))
 		return
 	render_relay_planes += target_plane
-	if(!relays_generated && isnull(blend_override))
-		return
 	var/client/display_lad = home?.our_hud?.mymob?.client
-	generate_relay_to(target_plane, show_to = display_lad, blend_override = blend_override)
+	var/atom/movable/render_plane_relay/relay = generate_relay_to(target_plane, show_to = display_lad, blend_override = blend_override, relay_layer = relay_layer)
+	relay.color = relay_color
 
 /proc/get_plane_master_render_base(name)
 	return "*[name]: AUTOGENERATED RENDER TGT"
 
-/atom/movable/screen/plane_master/proc/generate_relay_to(target_plane, relay_loc, client/show_to, blend_override)
+/atom/movable/screen/plane_master/proc/generate_relay_to(target_plane, relay_loc, client/show_to, blend_override, relay_layer)
 	if(!length(relays) && !initial(render_target))
 		render_target = OFFSET_RENDER_TARGET(get_plane_master_render_base(name), offset)
 	if(!relay_loc)
@@ -249,7 +296,8 @@
 	// 2: lower planes (including offset ones) need to be layered below higher ones (because otherwise they'll render fucky)
 	// By multiplying LOWEST_EVER_PLANE by 30, we give 30 offsets worth of room to planes before they start going negative
 	// Bet
-	relay.layer = (plane + abs(LOWEST_EVER_PLANE * 30)) //layer must be positive but can be a decimal
+	// We allow for manuel override if requested. careful with this
+	relay.layer = relay_layer || (plane + abs(LOWEST_EVER_PLANE * 30)) //layer must be positive but can be a decimal
 	relay.blend_mode = blend_to_use
 	relay.mouse_opacity = mouse_opacity
 	relay.name = render_target

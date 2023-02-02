@@ -89,7 +89,7 @@
 		H.visible_message(span_notice("A faint light leaves [H], moving to [src] and animating it!"),span_notice("You leave your old body behind, and transfer into [src]!"))
 		show_flavor = FALSE
 		var/mob/living/carbon/human/newgolem = create(newname = H.real_name)
-		H.transfer_trait_datums(newgolem)
+		H.transfer_quirk_datums(newgolem)
 		H.mind.transfer_to(newgolem)
 		H.death()
 		return

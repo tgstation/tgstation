@@ -141,12 +141,20 @@
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
+	var/static/list/fugu_blacklist
+
+/obj/item/fugu_gland/Initialize(mapload)
+	. = ..()
+	if(!fugu_blacklist)
+		fugu_blacklist = typecacheof(list(
+			/mob/living/simple_animal/hostile/guardian,
+		))
 
 /obj/item/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(!proximity_flag)
 		return
-	if(!isanimal(target))
+	if(!isanimal(target) || fugu_blacklist[target.type])
 		return
 	var/mob/living/simple_animal/animal = target
 

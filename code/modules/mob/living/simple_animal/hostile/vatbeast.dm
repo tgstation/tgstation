@@ -34,7 +34,7 @@
 /mob/living/simple_animal/hostile/vatbeast/proc/tamed(mob/living/tamer)
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/vatbeast)
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 
 /mob/living/simple_animal/hostile/vatbeast/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

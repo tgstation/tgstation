@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 /obj/item/storage/book/bible
 	name = "bible"
 	desc = "Apply to head repeatedly."
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage/book.dmi'
 	icon_state = "bible"
 	inhand_icon_state = "bible"
 	worn_icon_state = "bible"
@@ -61,7 +61,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 
 	var/list/skins = list()
 	for(var/i in 1 to GLOB.biblestates.len)
-		var/image/bible_image = image(icon = 'icons/obj/storage/storage.dmi', icon_state = GLOB.biblestates[i])
+		var/image/bible_image = image(icon = 'icons/obj/storage/book.dmi', icon_state = GLOB.biblestates[i])
 		skins += list("[GLOB.biblenames[i]]" = bible_image)
 
 	var/choice = show_radial_menu(user, src, skins, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 40, require_near = TRUE)
@@ -191,7 +191,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	if(!proximity)
 		return
 	if(SEND_SIGNAL(bible_smacked, COMSIG_BIBLE_SMACKED, user, proximity) & COMSIG_END_BIBLE_CHAIN)
-		return
+		return . | AFTERATTACK_PROCESSED_ITEM
 	if(isfloorturf(bible_smacked))
 		if(user.mind && (user.mind.holy_role))
 			var/area/current_area = get_area(bible_smacked)
@@ -204,16 +204,19 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 
 	if(user?.mind?.holy_role)
 		if(bible_smacked.reagents && bible_smacked.reagents.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
+			. |= AFTERATTACK_PROCESSED_ITEM
 			bible_smacked.balloon_alert(user, "blessed")
 			var/water2holy = bible_smacked.reagents.get_reagent_amount(/datum/reagent/water)
 			bible_smacked.reagents.del_reagent(/datum/reagent/water)
 			bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,water2holy)
 		if(bible_smacked.reagents && bible_smacked.reagents.has_reagent(/datum/reagent/fuel/unholywater)) // yeah yeah, copy pasted code - sue me
+			. |= AFTERATTACK_PROCESSED_ITEM
 			bible_smacked.balloon_alert(user, "purified")
 			var/unholy2clean = bible_smacked.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
 			bible_smacked.reagents.del_reagent(/datum/reagent/fuel/unholywater)
 			bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,unholy2clean)
 		if(istype(bible_smacked, /obj/item/storage/book/bible) && !istype(bible_smacked, /obj/item/storage/book/bible/syndicate))
+			. |= AFTERATTACK_PROCESSED_ITEM
 			bible_smacked.balloon_alert(user, "converted")
 			var/obj/item/storage/book/bible/B = bible_smacked
 			B.name = name
@@ -221,6 +224,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			B.inhand_icon_state = inhand_icon_state
 
 	if(istype(bible_smacked, /obj/item/cult_bastard) && !IS_CULTIST(user))
+		. |= AFTERATTACK_PROCESSED_ITEM
 		var/obj/item/cult_bastard/sword = bible_smacked
 		bible_smacked.balloon_alert(user, "exorcising...")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
@@ -260,7 +264,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	name = "Syndicate Tome"
 	attack_verb_continuous = list("attacks", "burns", "blesses", "damns", "scorches")
 	attack_verb_simple = list("attack", "burn", "bless", "damn", "scorch")
+	item_flags = NO_BLOOD_ON_ITEM
 	var/uses = 1
+	var/ownername
 
 /obj/item/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
 	if (uses)
@@ -270,14 +276,15 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		playsound(src.loc, 'sound/effects/snap.ogg', 50, TRUE)
 		H.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		to_chat(H, span_notice("Your name appears on the inside cover, in blood."))
-		var/ownername = H.real_name
-		desc += span_warning("The name [ownername] is written in blood inside the cover.")
+		ownername = H.real_name
+
+/obj/item/storage/book/bible/syndicate/examine(mob/user)
+	. = ..()
+	if(ownername)
+		. += span_warning("The name [ownername] is written in blood inside the cover.")
 
 /obj/item/storage/book/bible/syndicate/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
 	if (!user.combat_mode)
 		return ..()
 	else
 		return ..(M,user,heal_mode = FALSE)
-
-/obj/item/storage/book/bible/syndicate/add_blood_DNA(list/blood_dna)
-	return FALSE

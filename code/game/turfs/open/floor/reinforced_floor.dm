@@ -64,9 +64,8 @@
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			if(prob(80))
-				if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
-					ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-					ReplaceWithLattice()
+				if (!ispath(baseturf_at_depth(2), /turf/open/floor))
+					attempt_lattice_replacement()
 				else
 					ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 			else if(prob(50))
@@ -85,7 +84,7 @@
 				new floor_tile(src)
 				make_plating(TRUE)
 		else if(prob(30))
-			ReplaceWithLattice()
+			attempt_lattice_replacement()
 
 /turf/open/floor/engine/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -193,7 +192,7 @@
 	desc = "The air smells strange over this sinister flooring."
 	icon_state = "cult"
 	floor_tile = null
-	var/obj/effect/cult_turf/overlay/floor/bloodcult/realappearance
+	var/obj/effect/cult_turf/realappearance
 
 
 /turf/open/floor/engine/cult/Initialize(mapload)
@@ -203,7 +202,7 @@
 	if (!mapload)
 		new /obj/effect/temp_visual/cult/turf/floor(src)
 
-	realappearance = new /obj/effect/cult_turf/overlay/floor/bloodcult(src)
+	realappearance = new /obj/effect/cult_turf(src)
 	realappearance.linked = src
 
 /turf/open/floor/engine/cult/Destroy()

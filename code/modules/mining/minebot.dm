@@ -11,7 +11,7 @@
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH
 	mouse_opacity = MOUSE_OPACITY_ICON
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 	combat_mode = TRUE
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -64,6 +64,7 @@
 	SetCollectBehavior()
 
 /mob/living/simple_animal/hostile/mining_drone/Destroy()
+	QDEL_NULL(stored_gun)
 	for (var/datum/action/innate/minedrone/action in actions)
 		qdel(action)
 	return ..()

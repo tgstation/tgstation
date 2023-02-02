@@ -104,12 +104,12 @@ SUBSYSTEM_DEF(movement)
 		smash_bucket(bucket_time = loop.timer) // We can't pass an index in for context because we don't know our position
 
 /datum/controller/subsystem/movement/proc/add_loop(datum/move_loop/add)
-	add.start_loop()
+	add.loop_started()
 	if(QDELETED(add))
 		return
 	queue_loop(add)
 
 /datum/controller/subsystem/movement/proc/remove_loop(datum/move_loop/remove)
 	dequeue_loop(remove)
-	remove.stop_loop()
+	remove.loop_stopped()
 

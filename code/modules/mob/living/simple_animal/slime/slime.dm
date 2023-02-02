@@ -7,7 +7,7 @@
 	gender = NEUTER
 	var/is_adult = 0
 	var/docile = 0
-	faction = list("slime","neutral")
+	faction = list("slime", FACTION_NEUTRAL)
 
 	harm_intent_damage = 5
 	icon_living = "grey baby slime"
@@ -241,7 +241,7 @@
 			. += "Power Level: [powerlevel]"
 
 
-/mob/living/simple_animal/slime/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/slime/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!forced)
 		amount = -abs(amount)
 	return ..() //Heals them

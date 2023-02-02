@@ -5,7 +5,7 @@
 			continue
 
 		for(var/turf/T as anything in A.get_contained_turfs())
-			if(T.always_lit)
+			if(T.space_lit)
 				continue
 			new/datum/lighting_object(T)
 			CHECK_TICK

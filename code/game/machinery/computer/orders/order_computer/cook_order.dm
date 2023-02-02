@@ -8,7 +8,7 @@
 		CATEGORY_SAUCES_REAGENTS,
 	)
 
-/obj/machinery/computer/order_console/cook/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries, ltsrbt_delivered = FALSE)
+/obj/machinery/computer/order_console/cook/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
 	say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
 	radio.talk_into(src, "The kitchen has ordered groceries which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!", radio_channel)
 	for(var/datum/orderable_item/ordered_item in groceries)

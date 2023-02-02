@@ -84,16 +84,14 @@ There are several things that need to be remembered:
 		var/obj/item/clothing/under/uniform = w_uniform
 		update_hud_uniform(uniform)
 
-		if(wear_suit && (wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_ICLOTHING)
 			return
-
 
 		var/target_overlay = uniform.icon_state
 		if(uniform.adjusted == ALT_STYLE)
 			target_overlay = "[target_overlay]_d"
 
 		var/mutable_appearance/uniform_overlay
-
 		//This is how non-humanoid clothing works. You check if the mob has the right bodyflag, and the clothing has the corresponding clothing flag.
 		//handled_by_bodytype is used to track whether or not we successfully used an alternate sprite. It's set to TRUE to ease up on copy-paste.
 		//icon_file MUST be set to null by default, or it causes issues.
@@ -103,29 +101,28 @@ There are several things that need to be remembered:
 		var/handled_by_bodytype = TRUE
 		var/icon_file
 		var/woman
-		if(!uniform_overlay)
-			//BEGIN SPECIES HANDLING
-			if((dna?.species.bodytype & BODYTYPE_MONKEY) && (uniform.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
-				icon_file = MONKEY_UNIFORM_FILE
-			else if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
-				icon_file = DIGITIGRADE_UNIFORM_FILE
-			//Female sprites have lower priority than digitigrade sprites
-			else if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
-				woman = TRUE
+		//BEGIN SPECIES HANDLING
+		if((dna?.species.bodytype & BODYTYPE_MONKEY) && (uniform.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
+			icon_file = MONKEY_UNIFORM_FILE
+		else if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
+			icon_file = DIGITIGRADE_UNIFORM_FILE
+		//Female sprites have lower priority than digitigrade sprites
+		else if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
+			woman = TRUE
 
-			if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
-				icon_file = DEFAULT_UNIFORM_FILE
-				handled_by_bodytype = FALSE
+		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
+			icon_file = DEFAULT_UNIFORM_FILE
+			handled_by_bodytype = FALSE
 
-			//END SPECIES HANDLING
-			uniform_overlay = uniform.build_worn_icon(
-				default_layer = UNIFORM_LAYER,
-				default_icon_file = icon_file,
-				isinhands = FALSE,
-				female_uniform = woman ? uniform.female_sprite_flags : null,
-				override_state = target_overlay,
-				override_file = handled_by_bodytype ? icon_file : null,
-			)
+		//END SPECIES HANDLING
+		uniform_overlay = uniform.build_worn_icon(
+			default_layer = UNIFORM_LAYER,
+			default_icon_file = icon_file,
+			isinhands = FALSE,
+			female_uniform = woman ? uniform.female_sprite_flags : null,
+			override_state = target_overlay,
+			override_file = handled_by_bodytype ? icon_file : null,
+		)
 
 		if(OFFSET_UNIFORM in dna.species.offset_features)
 			uniform_overlay?.pixel_x += dna.species.offset_features[OFFSET_UNIFORM][1]
@@ -147,10 +144,7 @@ There are several things that need to be remembered:
 	if(wear_id)
 		var/obj/item/worn_item = wear_id
 		update_hud_id(worn_item)
-		var/icon_file
-
-		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
-			icon_file = 'icons/mob/simple/mob.dmi'
+		var/icon_file = 'icons/mob/clothing/id.dmi'
 
 		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file)
 
@@ -185,19 +179,16 @@ There are several things that need to be remembered:
 		add_overlay(bloody_overlay)
 	//Bloody hands end
 
-	var/mutable_appearance/gloves_overlay
 	if(gloves)
 		var/obj/item/worn_item = gloves
 		update_hud_gloves(worn_item)
-		var/icon_file
 
-		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
-			icon_file = 'icons/mob/clothing/hands.dmi'
-
-		gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file)
-
-		if(!gloves_overlay)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_GLOVES)
 			return
+
+		var/icon_file = 'icons/mob/clothing/hands.dmi'
+
+		var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file)
 		if(OFFSET_GLOVES in dna.species.offset_features)
 			gloves_overlay.pixel_x += dna.species.offset_features[OFFSET_GLOVES][1]
 			gloves_overlay.pixel_y += dna.species.offset_features[OFFSET_GLOVES][2]
@@ -217,19 +208,14 @@ There are several things that need to be remembered:
 
 	if(glasses)
 		var/obj/item/worn_item = glasses
-		var/mutable_appearance/glasses_overlay
 		update_hud_glasses(worn_item)
 
-		var/icon_file
-		if(!(head?.flags_inv & HIDEEYES) && !(wear_mask?.flags_inv & HIDEEYES))
-
-			if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
-				icon_file = 'icons/mob/clothing/eyes.dmi'
-
-			glasses_overlay = glasses.build_worn_icon(default_layer = GLASSES_LAYER, default_icon_file = icon_file)
-
-		if(!glasses_overlay)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_EYES)
 			return
+
+		var/icon_file = 'icons/mob/clothing/eyes.dmi'
+
+		var/mutable_appearance/glasses_overlay = glasses.build_worn_icon(default_layer = GLASSES_LAYER, default_icon_file = icon_file)
 		if(OFFSET_GLASSES in dna.species.offset_features)
 			glasses_overlay.pixel_x += dna.species.offset_features[OFFSET_GLASSES][1]
 			glasses_overlay.pixel_y += dna.species.offset_features[OFFSET_GLASSES][2]
@@ -249,18 +235,14 @@ There are several things that need to be remembered:
 
 	if(ears)
 		var/obj/item/worn_item = ears
-		var/mutable_appearance/ears_overlay
 		update_hud_ears(worn_item)
 
-		var/icon_file
-
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-			icon_file = 'icons/mob/clothing/ears.dmi'
-
-		ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = icon_file)
-
-		if(!ears_overlay)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_EARS)
 			return
+
+		var/icon_file = 'icons/mob/clothing/ears.dmi'
+
+		var/mutable_appearance/ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = icon_file)
 		if(OFFSET_EARS in dna.species.offset_features)
 			ears_overlay.pixel_x += dna.species.offset_features[OFFSET_EARS][1]
 			ears_overlay.pixel_y += dna.species.offset_features[OFFSET_EARS][2]
@@ -277,21 +259,17 @@ There are several things that need to be remembered:
 	if(wear_neck)
 		var/obj/item/worn_item = wear_neck
 		update_hud_neck(wear_neck)
-		if(!(ITEM_SLOT_NECK & check_obscured_slots()))
-			var/mutable_appearance/neck_overlay
-			var/icon_file
 
-			if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-				icon_file = 'icons/mob/clothing/neck.dmi'
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_NECK)
+			return
 
-			neck_overlay = worn_item.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = icon_file)
+		var/icon_file = 'icons/mob/clothing/neck.dmi'
 
-			if(!neck_overlay)
-				return
-			if(OFFSET_NECK in dna.species.offset_features)
-				neck_overlay.pixel_x += dna.species.offset_features[OFFSET_NECK][1]
-				neck_overlay.pixel_y += dna.species.offset_features[OFFSET_NECK][2]
-			overlays_standing[NECK_LAYER] = neck_overlay
+		var/mutable_appearance/neck_overlay = worn_item.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = icon_file)
+		if(OFFSET_NECK in dna.species.offset_features)
+			neck_overlay.pixel_x += dna.species.offset_features[OFFSET_NECK][1]
+			neck_overlay.pixel_y += dna.species.offset_features[OFFSET_NECK][2]
+		overlays_standing[NECK_LAYER] = neck_overlay
 
 	apply_overlay(NECK_LAYER)
 
@@ -307,21 +285,14 @@ There are several things that need to be remembered:
 
 	if(shoes)
 		var/obj/item/worn_item = shoes
-		var/mutable_appearance/shoes_overlay
-		var/icon_file
 		update_hud_shoes(worn_item)
 
-		//(Currently) unused digitigrade handling
-		/*if((dna.species.bodytype & BODYTYPE_DIGITIGRADE) && (worn_item.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
-			var/obj/item/bodypart/leg = src.get_bodypart(BODY_ZONE_L_LEG)
-			if(leg.limb_id == "digitigrade")//Snowflakey and bad. But it makes it look consistent.
-				icon_file = DIGITIGRADE_SHOES_FILE*/
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_FEET)
+			return
 
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-			icon_file = DEFAULT_SHOES_FILE
+		var/icon_file = DEFAULT_SHOES_FILE
 
-		shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file)
-
+		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file)
 		if(!shoes_overlay)
 			return
 		if(OFFSET_SHOES in dna.species.offset_features)
@@ -343,13 +314,12 @@ There are several things that need to be remembered:
 
 	if(s_store)
 		var/obj/item/worn_item = s_store
-		var/mutable_appearance/s_store_overlay
 		update_hud_s_store(worn_item)
 
-		s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
-
-		if(!s_store_overlay)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_SUITSTORE)
 			return
+
+		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
 		if(OFFSET_S_STORE in dna.species.offset_features)
 			s_store_overlay.pixel_x += dna.species.offset_features[OFFSET_S_STORE][1]
 			s_store_overlay.pixel_y += dna.species.offset_features[OFFSET_S_STORE][2]
@@ -364,17 +334,14 @@ There are several things that need to be remembered:
 
 	if(head)
 		var/obj/item/worn_item = head
-		var/mutable_appearance/head_overlay
 		update_hud_head(worn_item)
-		var/icon_file
 
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-			icon_file = 'icons/mob/clothing/head/default.dmi'
-
-		head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file)
-
-		if(!head_overlay)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_HEAD)
 			return
+
+		var/icon_file = 'icons/mob/clothing/head/default.dmi'
+
+		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file)
 		if(OFFSET_HEAD in dna.species.offset_features)
 			head_overlay.pixel_x += dna.species.offset_features[OFFSET_HEAD][1]
 			head_overlay.pixel_y += dna.species.offset_features[OFFSET_HEAD][2]
@@ -392,17 +359,14 @@ There are several things that need to be remembered:
 
 	if(belt)
 		var/obj/item/worn_item = belt
-		var/mutable_appearance/belt_overlay
 		update_hud_belt(worn_item)
-		var/icon_file
 
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-			icon_file = 'icons/mob/clothing/belt.dmi'
-
-		belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file)
-
-		if(!belt_overlay)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_BELT)
 			return
+
+		var/icon_file = 'icons/mob/clothing/belt.dmi'
+
+		var/mutable_appearance/belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file)
 		if(OFFSET_BELT in dna.species.offset_features)
 			belt_overlay.pixel_x += dna.species.offset_features[OFFSET_BELT][1]
 			belt_overlay.pixel_y += dna.species.offset_features[OFFSET_BELT][2]
@@ -419,22 +383,10 @@ There are several things that need to be remembered:
 
 	if(wear_suit)
 		var/obj/item/worn_item = wear_suit
-		var/mutable_appearance/suit_overlay
 		update_hud_wear_suit(worn_item)
-		var/icon_file
+		var/icon_file = DEFAULT_SUIT_FILE
 
-		//More currently unused digitigrade handling
-		/*if(dna.species.bodytype & BODYTYPE_DIGITIGRADE)
-			if(worn_item.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION)
-				icon_file = DIGITIGRADE_SUIT_FILE*/
-
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-			icon_file = DEFAULT_SUIT_FILE
-
-		suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file)
-
-		if(!suit_overlay)
-			return
+		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file)
 		if(OFFSET_SUIT in dna.species.offset_features)
 			suit_overlay.pixel_x += dna.species.offset_features[OFFSET_SUIT][1]
 			suit_overlay.pixel_y += dna.species.offset_features[OFFSET_SUIT][2]
@@ -479,22 +431,16 @@ There are several things that need to be remembered:
 	if(wear_mask)
 		var/obj/item/worn_item = wear_mask
 		update_hud_wear_mask(worn_item)
-		var/mutable_appearance/mask_overlay
+
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_MASK)
+			return
+
 		var/icon_file = 'icons/mob/clothing/mask.dmi'
 
-		if(!(ITEM_SLOT_MASK & check_obscured_slots()))
-
-			if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-				icon_file = 'icons/mob/clothing/mask.dmi'
-
-			mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file)
-
-		if(!mask_overlay)
-			return
+		var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file)
 		if(OFFSET_FACEMASK in dna.species.offset_features)
 			mask_overlay.pixel_x += dna.species.offset_features[OFFSET_FACEMASK][1]
 			mask_overlay.pixel_y += dna.species.offset_features[OFFSET_FACEMASK][2]
-
 		overlays_standing[FACEMASK_LAYER] = mask_overlay
 
 	apply_overlay(FACEMASK_LAYER)
@@ -512,9 +458,6 @@ There are several things that need to be remembered:
 		var/mutable_appearance/back_overlay
 		update_hud_back(worn_item)
 		var/icon_file = 'icons/mob/clothing/back.dmi'
-
-		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
-			icon_file = 'icons/mob/clothing/back.dmi'
 
 		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file)
 
@@ -697,7 +640,14 @@ generate/load female uniform sprites matching all previously decided variables
 
 
 */
-/obj/item/proc/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, female_uniform = NO_FEMALE_UNIFORM, override_state = null, override_file = null)
+/obj/item/proc/build_worn_icon(
+	default_layer = 0,
+	default_icon_file = null,
+	isinhands = FALSE,
+	female_uniform = NO_FEMALE_UNIFORM,
+	override_state = null,
+	override_file = null,
+)
 
 	//Find a valid icon_state from variables+arguments
 	var/t_state
@@ -725,6 +675,25 @@ generate/load female uniform sprites matching all previously decided variables
 	//eg: ammo counters, primed grenade flashes, etc.
 	var/list/worn_overlays = worn_overlays(standing, isinhands, file2use)
 	if(worn_overlays?.len)
+		if(!isinhands && default_layer && ishuman(loc))
+			var/mob/living/carbon/human/human_loc = loc
+			if(human_loc.get_mob_height() != HUMAN_HEIGHT_MEDIUM)
+				var/string_form_layer = num2text(default_layer)
+				var/offset_amount = GLOB.layers_to_offset[string_form_layer]
+				if(isnull(offset_amount))
+					// Worn overlays don't get batched in with standing overlays because they are overlay overlays
+					// ...So we need to apply human height here as well
+					for(var/mutable_appearance/applied_appearance as anything in worn_overlays)
+						if(isnull(applied_appearance))
+							continue
+						human_loc.apply_height_filters(applied_appearance)
+
+				else
+					for(var/mutable_appearance/applied_appearance in worn_overlays)
+						if(isnull(applied_appearance))
+							continue
+						human_loc.apply_height_offsets(applied_appearance, offset_amount)
+
 		standing.overlays.Add(worn_overlays)
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
@@ -816,5 +785,91 @@ generate/load female uniform sprites matching all previously decided variables
 				add_overlay(missing_eyes)
 	update_worn_head()
 	update_worn_mask()
+
+// Hooks into human apply overlay so that we can modify all overlays applied through standing overlays to our height system.
+// Some of our overlays will be passed through a displacement filter to make our mob look taller or shorter.
+// Some overlays can't be displaced as they're too close to the edge of the sprite or cross the middle point in a weird way.
+// So instead we have to pass them through an offset, which is close enough to look good.
+/mob/living/carbon/human/apply_overlay(cache_index)
+	if(get_mob_height() == HUMAN_HEIGHT_MEDIUM)
+		return ..()
+
+	var/raw_applied = overlays_standing[cache_index]
+	var/string_form_index = num2text(cache_index)
+	var/offset_amount = GLOB.layers_to_offset[string_form_index]
+	if(isnull(offset_amount))
+		if(islist(raw_applied))
+			for(var/mutable_appearance/applied_appearance as anything in raw_applied)
+				if(isnull(applied_appearance))
+					continue
+				apply_height_filters(applied_appearance)
+		else if(!isnull(raw_applied))
+			apply_height_filters(raw_applied)
+	else
+		if(islist(raw_applied))
+			for(var/mutable_appearance/applied_appearance as anything in raw_applied)
+				if(isnull(applied_appearance))
+					continue
+				apply_height_offsets(applied_appearance, offset_amount)
+		else if(!isnull(raw_applied))
+			apply_height_offsets(raw_applied, offset_amount)
+
+	return ..()
+
+/**
+ * Used in some circumstances where appearances can get cut off from the mob sprite from being too tall
+ *
+ * upper_torso is to specify whether the appearance is locate in the upper half of the mob rather than the lower half,
+ * higher up things (hats for example) need to be offset more due to the location of the filter displacement
+ */
+/mob/living/carbon/human/proc/apply_height_offsets(mutable_appearance/appearance, upper_torso)
+	var/height_to_use = num2text(get_mob_height())
+	var/final_offset = 0
+	switch(upper_torso)
+		if(UPPER_BODY)
+			final_offset = GLOB.human_heights_to_offsets[height_to_use][1]
+		if(LOWER_BODY)
+			final_offset = GLOB.human_heights_to_offsets[height_to_use][2]
+		else
+			return
+
+	appearance.pixel_y += final_offset
+	return appearance
+
+/**
+ * Applies a filter to an appearance according to mob height
+ */
+/mob/living/carbon/human/proc/apply_height_filters(mutable_appearance/appearance)
+	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi', "Cut1")
+	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi', "Cut2")
+	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi', "Cut3")
+	var/static/icon/lenghten_legs_mask = icon('icons/effects/cut.dmi', "Cut4")
+
+	appearance.remove_filter(list(
+		"Cut_Torso",
+		"Cut_Legs",
+		"Lenghten_Legs",
+		"Lenghten_Torso",
+		"Gnome_Cut_Torso",
+		"Gnome_Cut_Legs",
+	))
+
+	switch(get_mob_height())
+		// Don't set this one directly, use TRAIT_DWARF
+		if(HUMAN_HEIGHT_DWARF)
+			appearance.add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
+			appearance.add_filter("Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3))
+		if(HUMAN_HEIGHT_SHORTEST)
+			appearance.add_filter("Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1))
+			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
+		if(HUMAN_HEIGHT_SHORT)
+			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
+		if(HUMAN_HEIGHT_TALL)
+			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
+		if(HUMAN_HEIGHT_TALLEST)
+			appearance.add_filter("Lenghten_Torso", 1, displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1))
+			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
+
+	return appearance
 
 #undef RESOLVE_ICON_STATE
