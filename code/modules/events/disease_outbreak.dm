@@ -289,7 +289,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(MakeVisible)), ((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS)
 
- 	if(length(properties))
+	if(length(properties))
 		spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // Can be between 5 and 10
 		stage_prob = max(0.5 * properties["stage_rate"], 1)
@@ -297,7 +297,7 @@
 		if(severity != "Dangerous" || "BIOHAZARD")
 			visibility_flags |= HIDDEN_SCANNER
 
- 		GenerateCure(properties)
+		GenerateCure(properties)
 		if(transmissibility < ADV_SPREAD_LOW)
 			SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
 
