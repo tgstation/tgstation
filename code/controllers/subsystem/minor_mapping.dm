@@ -6,9 +6,6 @@ SUBSYSTEM_DEF(minor_mapping)
 	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/minor_mapping/Initialize()
-	#ifdef UNIT_TESTS // This whole subsystem just introduces a lot of odd confounding variables into unit test situations, so let's just not bother with doing an initialize here.
-	return SS_INIT_NO_NEED
-	#endif // the mice are easily the bigger problem, but let's just avoid anything that could cause some bullshit.
 	trigger_migration(CONFIG_GET(number/mice_roundstart))
 	place_satchels()
 	return SS_INIT_SUCCESS
