@@ -187,7 +187,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		log_combat(user, M, "attacked", src)
 
 /obj/item/storage/book/bible/pre_attack(atom/bible_smacked, mob/living/user, params)
-	. = ..()
 	if(SEND_SIGNAL(bible_smacked, COMSIG_BIBLE_SMACKED, user, params) & COMSIG_END_BIBLE_CHAIN)
 		return TRUE
 	if(isfloorturf(bible_smacked))
