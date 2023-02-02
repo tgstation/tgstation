@@ -188,7 +188,7 @@
 	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random/event(max_symptoms, max_severity)
 
 	var/list/name_symptoms = list() // For feedback
-	for(var/datum/symptom/new_symptom in advanced_disease.symptoms)
+	for(var/datum/symptom/new_symptom as anything in advanced_disease.symptoms)
 		name_symptoms += new_symptom.name
 
 	var/mob/living/carbon/human/victim = pick_n_take(afflicted)
