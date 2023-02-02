@@ -43,7 +43,7 @@
 		cast_on.balloon_alert(cast_on, "you hear a voice")
 		to_chat(cast_on, "<span class='[bold_telepathy_span]'>You hear a voice in your head...</span> [formatted_message]")
 	else
-		owner.balloon_alert(owner, "transmission blocked")
+		owner.balloon_alert(owner, "transmission blocked!")
 		to_chat(owner, "<span class='warning'>Something has blocked your transmission!</span>")
 		failure_message_for_ghosts = "<span class='[bold_telepathy_span]'> (blocked by antimagic)</span>"
 
