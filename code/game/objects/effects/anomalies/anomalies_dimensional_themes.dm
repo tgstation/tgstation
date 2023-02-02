@@ -188,6 +188,7 @@
 		if (!permit_replace_material(thing))
 			continue
 		thing.set_custom_materials(custom_materials)
+		thing.update_appearance(updates = UPDATE_ICON)
 
 #undef PERMITTED_MATERIAL_REPLACE_TYPES
 
