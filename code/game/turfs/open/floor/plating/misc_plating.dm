@@ -93,6 +93,9 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
+/turf/open/floor/plating/snowed/smoothed/standard_air
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+
 /turf/open/floor/plating/lavaland_atmos
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
