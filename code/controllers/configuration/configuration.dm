@@ -60,6 +60,9 @@
 	/// An assoc list of words that are soft blocked both IC and OOC to their reasons
 	var/static/list/soft_shared_filter_reasons
 
+	/// A list of configuration errors that occurred during load
+	var/static/list/configuration_errors
+
 /datum/controller/configuration/proc/admin_reload()
 	if(IsAdminAdvancedProcCall())
 		return
@@ -75,6 +78,7 @@
 		directory = _directory
 	if(entries)
 		CRASH("/datum/controller/configuration/Load() called more than once!")
+	configuration_errors ||= list()
 	InitEntries()
 	if(fexists("[directory]/config.txt") && LoadEntries("config.txt") <= 1)
 		var/list/legacy_configs = list("game_options.txt", "dbconfig.txt", "comms.txt")
@@ -107,12 +111,20 @@
 	QDEL_LIST_ASSOC_VAL(maplist)
 	maplist = null
 	QDEL_NULL(defaultmap)
+	configuration_errors?.Cut()
 
 /datum/controller/configuration/Destroy()
 	full_wipe()
 	config = null
 
 	return ..()
+
+/datum/controller/configuration/OnConfingLoad()
+	var/do_stack_trace = CONFIG_GET(flag/config_errors_runtime)
+	for(var/error_message in configuration_errors)
+		if(do_stack_trace)
+			stack_trace(error_message)
+		log_config(error_message)
 
 /datum/controller/configuration/proc/InitEntries()
 	var/list/_entries = list()
@@ -128,9 +140,7 @@
 		var/esname = E.name
 		var/datum/config_entry/test = _entries[esname]
 		if(test)
-			var/log_message = "Error: [test.type] has the same name as [E.type]: [esname]! Not initializing [E.type]!"
-			log_config(log_message)
-			stack_trace(log_message)
+			configuration_errors += "Error: [test.type] has the same name as [E.type]: [esname]! Not initializing [E.type]!"
 			qdel(E)
 			continue
 		_entries[esname] = E
@@ -146,9 +156,7 @@
 
 	var/filename_to_test = world.system_type == MS_WINDOWS ? lowertext(filename) : filename
 	if(filename_to_test in stack)
-		var/log_message = "Warning: Config recursion detected ([english_list(stack)]), breaking!"
-		log_config(log_message)
-		stack_trace(log_message)
+		configuration_errors += "Warning: Config recursion detected ([english_list(stack)]), breaking!"
 		return
 	stack = stack + filename_to_test
 
@@ -183,9 +191,7 @@
 
 		if(entry == "$include")
 			if(!value)
-				var/log_message = "Warning: Invalid $include directive: [value]"
-				log_config(log_message)
-				stack_trace(log_message)
+				configuration_errors += "Warning: Invalid $include directive: [value]"
 			else
 				LoadEntries(value, stack)
 				++.
@@ -195,9 +201,7 @@
 		if (entry == "$reset")
 			var/datum/config_entry/resetee = _entries[lowertext(value)]
 			if (!value || !resetee)
-				var/log_message = "Warning: invalid $reset directive: [value]"
-				log_config(log_message)
-				stack_trace(log_message)
+				configuration_errors += "Warning: invalid $reset directive: [value]"
 				continue
 			resetee.set_default()
 			log_config("Reset configured value for [value] to original defaults")
@@ -232,9 +236,7 @@
 			stack_trace(log_message)
 		else
 			if(E.modified && !E.dupes_allowed)
-				var/log_message = "Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest."
-				log_config(log_message)
-				stack_trace(log_message)
+				configuration_errors += "Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest."
 
 		E.resident_file = filename
 
