@@ -58,8 +58,8 @@
 
 /obj/structure/kitchenspike/examine(mob/user)
 	. = ..()
-	. += "Drag a mob onto it to hook it in place"
-	. += "Use a crowbar to pry out the spikes"
+	. += "<b>Drag a mob</b> onto it to hook it in place."
+	. += "A <b>crowbar</b> could remove those spikes."
 
 /obj/structure/kitchenspike/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
