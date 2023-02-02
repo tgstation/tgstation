@@ -13,22 +13,28 @@
 		to_chat(imp_in, span_warning("You must wait [timeleft(on_cooldown)*0.1] seconds to use [src] again!"))
 		return
 
-	home.Retrieve(imp_in,1)
+	if(!home)
+		link_pad(imp_in)
+
+	home.Retrieve(imp_in)
 	on_cooldown = addtimer(VARSET_CALLBACK(src, on_cooldown, null), cooldown , TIMER_STOPPABLE)
 
 /obj/item/implant/abductor/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	if(..())
-		var/obj/machinery/abductor/console/console
-		if(ishuman(target))
-			var/datum/antagonist/abductor/A = target.mind.has_antag_datum(/datum/antagonist/abductor)
-			if(A)
-				console = get_abductor_console(A.team.team_number)
-				home = console.pad
-
-		if(!home)
-			var/list/consoles = list()
-			for(var/obj/machinery/abductor/console/C in GLOB.machines)
-				consoles += C
-			console = pick(consoles)
-			home = console.pad
+		link_pad(target)
 		return TRUE
+
+/obj/item/implant/abductor/proc/link_pad(mob/living/mob_to_link)
+	var/obj/machinery/abductor/console/console
+	if(ishuman(mob_to_link))
+		var/datum/antagonist/abductor/A = mob_to_link.mind.has_antag_datum(/datum/antagonist/abductor)
+		if(A)
+			console = get_abductor_console(A.team.team_number)
+			home = console.pad
+
+	if(!home) //If we still cannot find a home associated with our team, we just pick a random pad and make it our own.
+		var/list/consoles = list()
+		for(var/obj/machinery/abductor/console/C in GLOB.machines)
+			consoles += C
+		console = pick(consoles)
+		home = console.pad
