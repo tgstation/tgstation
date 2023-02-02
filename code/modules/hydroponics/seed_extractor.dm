@@ -13,46 +13,39 @@
  * * user - checks if we can remove the object from the inventory
  * *
  */
-/proc/seedify(obj/item/O, t_max, obj/machinery/seed_extractor/extractor, mob/living/user)
-	var/t_amount = 0
+/proc/seedify(obj/item/object, t_max, obj/machinery/seed_extractor/extractor, mob/living/user)
+	//try to get the seed from this item
+	var/obj/item/seeds/seed
+	if(istype(object, /obj/item/food/grown/))
+		var/obj/item/food/grown/grown_food = object
+		seed = grown_food.seed
+	else if(istype(object, /obj/item/grown))
+		var/obj/item/grown/grown_weapon = object
+		seed = grown_weapon.seed
+	if(isnull(seed))
+		return null
+
+	//generate a random multiplier if value is not specified
 	var/list/seeds = list()
 	if(t_max == -1)
 		if(extractor)
 			t_max = rand(1,4) * extractor.seed_multiplier
 		else
 			t_max = rand(1,4)
-
-	var/seedloc = O.loc
+	//drop location for the newly generated seeds
+	var/seedloc = object.loc
 	if(extractor)
 		seedloc = extractor.loc
 
-	if(istype(O, /obj/item/food/grown/))
-		var/obj/item/food/grown/F = O
-		if(F.seed)
-			if(user && !user.temporarilyRemoveItemFromInventory(O)) //couldn't drop the item
-				return
-			while(t_amount < t_max)
-				var/obj/item/seeds/t_prod = F.seed.Copy()
-				seeds.Add(t_prod)
-				t_prod.forceMove(seedloc)
-				t_amount++
-			qdel(O)
-			return seeds
-
-	else if(istype(O, /obj/item/grown))
-		var/obj/item/grown/F = O
-		if(F.seed)
-			if(user && !user.temporarilyRemoveItemFromInventory(O))
-				return
-			while(t_amount < t_max)
-				var/obj/item/seeds/t_prod = F.seed.Copy()
-				t_prod.forceMove(seedloc)
-				t_amount++
-			qdel(O)
-		return 1
-
-	return 0
-
+	//multiply the seeds and delete the item
+	if(user && !user.temporarilyRemoveItemFromInventory(object)) //couldn't drop the item
+		return null
+	for(var/_ in 0 to t_max)
+		var/obj/item/seeds/t_prod = seed.Copy()
+		seeds.Add(t_prod)
+		t_prod.forceMove(seedloc)
+	qdel(object)
+	return seeds
 
 /obj/machinery/seed_extractor
 	name = "seed extractor"
@@ -136,10 +129,19 @@
 
 		return TRUE
 
-	if(seedify(attacking_item, -1, src, user))
+	var/list/generated_seeds = seedify(attacking_item, -1, src, user)
+	if(!isnull(generated_seeds))
 		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
 			//find all seeds lying on the turf and add them to the machine
 			for(var/obj/item/seeds/seed in loc)
+				//machine is full
+				if(contents.len >= max_seeds)
+					to_chat(user, span_warning("[src] is full."))
+					break
+				//pick only those seeds which we generated and not every seed on the turf
+				if(!(seed in generated_seeds))
+					continue
+				//add seed to machine. second argument is null which means just force move into the machine
 				add_seed(seed)
 		to_chat(user, span_notice("You extract some seeds."))
 		return TRUE
