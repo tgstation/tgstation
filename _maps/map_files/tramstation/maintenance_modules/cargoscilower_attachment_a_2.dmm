@@ -2,13 +2,82 @@
 "a" = (
 /turf/template_noop,
 /area/template_noop)
+"c" = (
+/obj/item/shovel,
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+"f" = (
+/obj/item/relic,
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+"g" = (
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
 "h" = (
 /obj/modular_map_connector,
-/turf/open/floor/plating,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"p" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"q" = (
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/head/utility/hardhat/orange,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"t" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/random/engineering/toolbox,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"u" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+"v" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/central)
+"C" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "F" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
+"J" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"Q" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/falsewall,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/canister,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/tank,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"Z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
 
 (1,1,1) = {"
 a
@@ -16,12 +85,12 @@ F
 F
 F
 F
+C
+p
+C
+q
 F
-F
-F
-F
-F
-F
+C
 F
 F
 a
@@ -32,12 +101,12 @@ F
 F
 F
 F
-F
-F
-F
-F
-F
-F
+c
+g
+g
+C
+C
+C
 F
 F
 a
@@ -46,48 +115,48 @@ a
 F
 F
 F
+C
+C
+u
+f
 F
-F
-F
-F
-F
-F
-F
-F
-F
+p
+C
+C
+C
 F
 a
 "}
 (4,1,1) = {"
 F
 F
+C
+C
+F
+C
 F
 F
 F
 F
-F
-F
-F
-F
-F
-F
+C
+C
 F
 a
 "}
 (5,1,1) = {"
 F
 F
+C
 F
 F
 F
-F
-F
-F
-F
-F
-F
-F
-F
+v
+v
+v
+v
+Q
+v
+v
 a
 "}
 (6,1,1) = {"
@@ -97,13 +166,13 @@ F
 F
 F
 F
-F
-F
-F
-F
-F
-F
-F
+v
+R
+J
+Z
+t
+W
+W
 a
 "}
 (7,1,1) = {"
@@ -114,18 +183,18 @@ F
 F
 F
 a
-a
-a
-a
-a
-a
+i
+i
+i
+i
+i
 h
 a
 "}
 (8,1,1) = {"
-F
-F
-F
+a
+a
+a
 a
 a
 a
@@ -139,9 +208,9 @@ a
 a
 "}
 (9,1,1) = {"
-F
-F
-F
+a
+a
+a
 a
 a
 a
@@ -155,9 +224,9 @@ a
 a
 "}
 (10,1,1) = {"
-F
-F
-F
+a
+a
+a
 a
 a
 a
@@ -171,9 +240,9 @@ a
 a
 "}
 (11,1,1) = {"
-F
-F
-F
+a
+a
+a
 a
 a
 a
@@ -187,9 +256,9 @@ a
 a
 "}
 (12,1,1) = {"
-F
-F
-F
+a
+a
+a
 a
 a
 a
@@ -203,9 +272,9 @@ a
 a
 "}
 (13,1,1) = {"
-F
-F
-F
+a
+a
+a
 a
 a
 a
@@ -219,9 +288,9 @@ a
 a
 "}
 (14,1,1) = {"
-F
-F
-F
+a
+a
+a
 a
 a
 a
@@ -235,9 +304,9 @@ a
 a
 "}
 (15,1,1) = {"
-F
-F
-F
+a
+a
+a
 a
 a
 a
@@ -251,9 +320,9 @@ a
 a
 "}
 (16,1,1) = {"
-F
-F
-F
+a
+a
+a
 a
 a
 a

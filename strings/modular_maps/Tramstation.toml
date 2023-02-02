@@ -96,3 +96,12 @@ modules = ["atmoscilower_attachment_a_1.dmm", "atmoscilower_attachment_a_2.dmm",
 
 [rooms.atmoscilower_attachment_b]
 modules = ["atmoscilower_attachment_b_1.dmm", "atmoscilower_attachment_b_2.dmm", "atmoscilower_attachment_b_3.dmm"]
+
+[rooms.dormenginelower]
+modules = ["dormenginelower_1.dmm", "dormenginelower_2.dmm", "dormenginelower_3.dmm"]
+
+[rooms.dormenginelower_attachment_a]
+modules = ["dormenginelower_attachment_a_1.dmm", "dormenginelower_attachment_a_2.dmm", "dormenginelower_attachment_a_3.dmm"]
+
+[rooms.dormenginelower_attachment_b]
+modules = ["dormenginelower_attachment_b_1.dmm", "dormenginelower_attachment_b_2.dmm", "dormenginelower_attachment_b_3.dmm"]

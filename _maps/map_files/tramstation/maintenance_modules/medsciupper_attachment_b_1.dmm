@@ -3,6 +3,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
 /obj/item/storage/box/bodybags,
+/obj/item/clothing/gloves/latex,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/medical)
 "b" = (
@@ -67,7 +68,6 @@
 "Y" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/latex,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/medical)
 
