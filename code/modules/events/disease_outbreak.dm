@@ -227,6 +227,7 @@
 		/datum/symptom/weight_loss,
 		/datum/symptom/youth,
 	)
+
 	if(max_severity == ADV_DISEASE_HARMFUL)
 		possible_symptoms += list(
 			/datum/symptom/disfiguration,
