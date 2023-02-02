@@ -781,7 +781,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	// Insert a data disk
 	if(istype(attacking_item, /obj/item/computer_disk))
 		if(inserted_disk)
-			return
+			user.put_in_hands(inserted_disk)
+			balloon_alert(user, "disks swapped")
 		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		inserted_disk = attacking_item
