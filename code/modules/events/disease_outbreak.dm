@@ -283,6 +283,7 @@
  * (Stage Speed, Resistance, Transmissibility)
  * The LOW/MID percentiles can be adjusted in the defines.area
  * If the virus is severity DANGEROUS we do not hide it from health scanners at event start.
+ * If the virus is airborne, also don't hide it.
  */
 /datum/disease/advance/random/event/AssignProperties()
 	var/transmissibility = rand(1, 100)
@@ -306,6 +307,7 @@
 
 		else
 			SetSpread(DISEASE_SPREAD_AIRBORNE)
+			visibility_flags |= HIDDEN_SCANNER
 
 	else
 		CRASH("Advanced virus properties were empty or null!")
