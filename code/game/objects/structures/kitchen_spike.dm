@@ -43,7 +43,7 @@
 		transfer_fingerprints_to(new_meatspike)
 		qdel(src)
 		return
-	balloon_alert(user, "need [MEATSPIKE_IRONROD_REQUIREMENT] iron rods to add spikes!.")
+	balloon_alert(user, "[MEATSPIKE_IRONROD_REQUIREMENT] rods needed!")
 
 /obj/structure/kitchenspike
 	name = "meat spike"
