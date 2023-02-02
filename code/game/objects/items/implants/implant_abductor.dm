@@ -14,7 +14,7 @@
 		return
 
 	if(!home)
-		if(!link_pad(imp_in))
+		if(!link_pad())
 			imp_in.balloon_alert(imp_in, "no teleport pads detected!")
 			return
 
@@ -23,7 +23,7 @@
 
 /obj/item/implant/abductor/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	if(..())
-		link_pad(target)
+		link_pad()
 		return TRUE
 
 /**
