@@ -120,12 +120,15 @@
 
 	return ..()
 
+/datum/controller/configuration/proc/log_config_error(error_message)
+	configuration_errors += error_message
+	log_config(error_message)
+
 /datum/controller/configuration/proc/process_config_errors()
-	var/do_stack_trace = CONFIG_GET(flag/config_errors_runtime)
+	if(!CONFIG_GET(flag/config_errors_runtime))
+		return
 	for(var/error_message in configuration_errors)
-		if(do_stack_trace)
-			stack_trace(error_message)
-		log_config(error_message)
+		stack_trace(error_message)
 
 /datum/controller/configuration/proc/InitEntries()
 	var/list/_entries = list()
@@ -141,7 +144,7 @@
 		var/esname = E.name
 		var/datum/config_entry/test = _entries[esname]
 		if(test)
-			configuration_errors += "Error: [test.type] has the same name as [E.type]: [esname]! Not initializing [E.type]!"
+			log_config_error("Error: [test.type] has the same name as [E.type]: [esname]! Not initializing [E.type]!")
 			qdel(E)
 			continue
 		_entries[esname] = E
@@ -157,7 +160,7 @@
 
 	var/filename_to_test = world.system_type == MS_WINDOWS ? lowertext(filename) : filename
 	if(filename_to_test in stack)
-		configuration_errors += "Warning: Config recursion detected ([english_list(stack)]), breaking!"
+		log_config_error("Warning: Config recursion detected ([english_list(stack)]), breaking!")
 		return
 	stack = stack + filename_to_test
 
@@ -192,7 +195,7 @@
 
 		if(entry == "$include")
 			if(!value)
-				configuration_errors += "Warning: Invalid $include directive: [value]"
+				log_config_error("Warning: Invalid $include directive: [value]")
 			else
 				LoadEntries(value, stack)
 				++.
@@ -202,7 +205,7 @@
 		if (entry == "$reset")
 			var/datum/config_entry/resetee = _entries[lowertext(value)]
 			if (!value || !resetee)
-				configuration_errors += "Warning: invalid $reset directive: [value]"
+				log_config_error("Warning: invalid $reset directive: [value]")
 				continue
 			resetee.set_default()
 			log_config("Reset configured value for [value] to original defaults")
@@ -237,7 +240,7 @@
 			stack_trace(log_message)
 		else
 			if(E.modified && !E.dupes_allowed)
-				configuration_errors += "Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest."
+				log_config_error("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
 
 		E.resident_file = filename
 
