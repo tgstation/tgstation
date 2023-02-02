@@ -30967,9 +30967,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/structure/sign/barsign{
-	pixel_y = -32
-	},
+/obj/machinery/barsign/directional/south,
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
 "jGL" = (
@@ -40754,9 +40752,6 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "nmh" = (
-/obj/structure/sign/barsign{
-	pixel_y = -32
-	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Service - Bar Lounge South East"
 	},
@@ -40764,6 +40759,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/barsign/directional/south,
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
 "nms" = (
