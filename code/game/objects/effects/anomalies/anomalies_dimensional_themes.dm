@@ -33,13 +33,6 @@
 		window_colour = using_mat.greyscale_colors
 
 /**
- * Returns a subtype of dimensional theme.
- */
-/datum/dimension_theme/proc/get_random_theme()
-	var/subtype = pick(subtypesof(/datum/dimension_theme))
-	return new subtype()
-
-/**
  * Applies themed transformation to the provided turf.
  *
  * Arguments
