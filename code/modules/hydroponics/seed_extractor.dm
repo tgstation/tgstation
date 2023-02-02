@@ -161,10 +161,6 @@
 
 	return ..()
 
-/obj/machinery/seed_extractor/attackby_secondary(obj/item/weapon, mob/user, params)
-	. = ..()
-
-
 /**
  * Generate seed string
  *
