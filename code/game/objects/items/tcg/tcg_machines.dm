@@ -44,7 +44,7 @@
 			current_card = null
 			return ..()
 	else
-		return..()
+		return ..()
 
 GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 
@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	else
 		to_chat(user, span_warning("[src] is empty!"))
 	add_fingerprint(user)
-	return..()
+	return ..()
 
 /obj/machinery/trading_card_holder/attack_hand_secondary(mob/user)
 	if(isnull(current_summon))
@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 		. += span_notice("There is currently a [card_template.name] card inserted.")
 	else
 		if(current_summon)
-			. += ("There is currently a blank card inserted.")
+			. += "There is currently a blank card inserted."
 		else
 			. += span_notice("There is no card currently inserted.")
 
