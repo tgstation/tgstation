@@ -10,8 +10,6 @@
 	cooldown_time = 0 SECONDS
 	/// How long it takes to lay a web
 	var/webbing_time = 4 SECONDS
-	/// If true we can place webs on top of other webs
-	var/web_sealing = FALSE
 
 /datum/action/cooldown/lay_web/Grant(mob/grant_to)
 	. = ..()
@@ -35,12 +33,16 @@
 		if (feedback)
 			owner.balloon_alert(owner, "invalid location!")
 		return FALSE
-	var/obj/structure/spider/stickyweb/web = locate() in get_turf(owner)
-	if(web && (!web_sealing || istype(web, /obj/structure/spider/stickyweb/sealed)))
+	if(obstructed_by_other_web())
 		if (feedback)
 			owner.balloon_alert(owner, "already webbed!")
 		return FALSE
 	return TRUE
+
+/// Returns true if there's a web we can't put stuff on in our turf
+/datum/action/cooldown/lay_web/proc/obstructed_by_other_web()
+	var/obj/structure/spider/stickyweb/web = locate() in get_turf(owner)
+	return web != null
 
 /datum/action/cooldown/lay_web/Activate()
 	. = ..()
@@ -79,7 +81,6 @@
 /// Variant which allows webs to be stacked into walls
 /datum/action/cooldown/lay_web/sealer
 	desc = "Spin a web to slow down potential prey. Webs can be stacked to make solid structures."
-	web_sealing = TRUE
 
 /datum/action/cooldown/lay_web/sealer/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
 	if (existing_web)
@@ -87,3 +88,7 @@
 		new /obj/structure/spider/stickyweb/sealed(target_turf)
 		return
 	new /obj/structure/spider/stickyweb(target_turf)
+
+/datum/action/cooldown/lay_web/sealer/obstructed_by_other_web()
+	var/obj/structure/spider/stickyweb/sealed/web = locate() in get_turf(owner)
+	return web != null

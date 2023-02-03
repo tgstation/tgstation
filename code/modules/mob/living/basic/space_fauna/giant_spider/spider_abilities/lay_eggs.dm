@@ -65,7 +65,7 @@
 	var/obj/effect/mob_spawn/ghost_role/spider/new_eggs = new egg_type(get_turf(owner))
 	new_eggs.faction = owner.faction
 	var/datum/action/set_spider_directive/spider_directive = locate() in owner.actions
-	if (spider_directive) // I should be able to do this truthily but it doesn't for some reason
+	if (spider_directive)
 		new_eggs.directive = spider_directive.current_directive
 
 /datum/action/lay_eggs/enriched
