@@ -47,7 +47,6 @@
 
 /datum/action/innate/creature/teleport/Activate()
 	var/mob/living/simple_animal/hostile/netherworld/N = owner
-	var/obj/effect/dummy/phased_mob/holder = null
 	if(N.stat == DEAD)
 		return
 	var/turf/T = get_turf(N)
