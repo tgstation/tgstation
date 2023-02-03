@@ -259,7 +259,7 @@
 /obj/machinery/telecomms/multitool_act_secondary(mob/living/user, obj/item/tool)
 	var/obj/item/multitool/multitool = tool
 	var/obj/machinery/telecomms/telecomms_machine = multitool.buffer
-	if(QDELETED(multitool.buffer)||!multitool.buffer || !istype(telecomms_machine) || telecomms_machine == src) //sanity + user sanity
+	if(QDELETED(multitool.buffer) || !multitool.buffer || !istype(telecomms_machine) || telecomms_machine == src) //sanity + user sanity
 		return FALSE
 	if(multitool.buffer in links)
 		to_chat(user, span_notice("Unlinked [telecomms_machine] ([telecomms_machine.id]) from the [src]."))
