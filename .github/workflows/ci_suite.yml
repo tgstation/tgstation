@@ -9,8 +9,7 @@ on:
     - master
     - 'project/**'
 env:
-  REPOSITORY_URL: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
-  PR_NUMBER: ${{ github.event.number }}
+  ASSOCIATED_FILES_URL: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/pull/${{ github.event.number }}/files
 jobs:
   run_linters:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -51,6 +50,7 @@ jobs:
           tools/bootstrap/python -c ''
       - name: Run Linters
         run: |
+          echo "Check ${{ env.ASSOCIATED_FILES_URL }} for potential annotations."
           bash tools/ci/check_filedirs.sh tgstation.dme
           bash tools/ci/check_changelogs.sh
           bash tools/ci/check_grep.sh
@@ -60,7 +60,7 @@ jobs:
           tools/build/build --ci lint tgui-test
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
-          echo "If you do not readily see any errors here, you may need to check your code for annotations: ${{ env.REPOSITORY_URL }}/pull/${{ env.PR_NUMBER }}/files"
+          echo "If you do not readily see any errors here, you may need to check your code for annotations: ${{ env.ASSOCIATED_FILES_URL }}"
           echo "You may also expand the Annotate Lints category below this one, but the link above will offer the greatest context when available."
           ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
       - name: Annotate Lints
