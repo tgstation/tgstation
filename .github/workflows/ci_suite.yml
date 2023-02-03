@@ -9,7 +9,7 @@ on:
     - master
     - 'project/**'
 env:
-  REPOSITORY_URL: ${{ GITHUB_SERVER_URL }}/tgstation/tgstation
+  REPOSITORY_URL: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
   PR_NUMBER: ${{ github.event.number }}
 jobs:
   run_linters:
@@ -61,7 +61,7 @@ jobs:
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
           echo
-          echo If you do not readily see any errors here, please check your code for annotations: ${{ REPOSITORY_URL }}/${{ PR_NUMBER }}/files
+          echo "If you do not readily see any errors here, please check your code for annotations: ${{ env.REPOSITORY_URL }}/${{ env.PR_NUMBER }}/files"
           echo
           ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
       - name: Annotate Lints
