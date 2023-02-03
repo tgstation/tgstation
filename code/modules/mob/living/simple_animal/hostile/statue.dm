@@ -55,17 +55,21 @@
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
 
+	var/datum/action/cooldown/spell/aoe/flicker_lights/flicker
+	var/datum/action/cooldown/spell/aoe/blindness/blind
+	var/datum/action/cooldown/spell/night_vision/night_vision
+
 // No movement while seen code.
 
 /mob/living/simple_animal/hostile/netherworld/statue/Initialize(mapload, mob/living/creator)
 	. = ..()
 	// Give spells
 
-	var/datum/action/cooldown/spell/aoe/flicker_lights/flicker = new(src)
+	flicker = new(src)
 	flicker.Grant(src)
-	var/datum/action/cooldown/spell/aoe/blindness/blind = new(src)
+	blind = new(src)
 	blind.Grant(src)
-	var/datum/action/cooldown/spell/night_vision/night_vision = new(src)
+	night_vision = new(src)
 	night_vision.Grant(src)
 
 	// Set creator
