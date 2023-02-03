@@ -27,7 +27,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(DOING_INTERACTION(owner, INTERACTION_SPIDER_KEY))
+	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
 		if (feedback)
 			owner.balloon_alert(owner, "busy!")
 		return FALSE
@@ -54,7 +54,7 @@
 	if(istype(animal_owner))
 		animal_owner.stop_automated_movement = TRUE
 
-	if(do_after(owner, webbing_time, target = spider_turf, interaction_key = INTERACTION_SPIDER_KEY) && owner.loc == spider_turf)
+	if(do_after(owner, webbing_time, target = spider_turf, interaction_key = DOAFTER_SOURCE_SPIDER) && owner.loc == spider_turf)
 		plant_web(spider_turf, web)
 	else
 		owner.balloon_alert("interrupted!")

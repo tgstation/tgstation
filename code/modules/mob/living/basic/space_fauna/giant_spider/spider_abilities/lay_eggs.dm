@@ -27,7 +27,7 @@
 		return FALSE
 	if(!isspider(owner))
 		return FALSE
-	if(DOING_INTERACTION(owner, INTERACTION_SPIDER_KEY))
+	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
 		return FALSE
 	var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
 	if(eggs)
@@ -47,7 +47,7 @@
 	if(istype(animal_owner))
 		animal_owner.stop_automated_movement = TRUE
 
-	if(do_after(owner, egg_lay_time, target = get_turf(owner), interaction_key = INTERACTION_SPIDER_KEY))
+	if(do_after(owner, egg_lay_time, target = get_turf(owner), interaction_key = DOAFTER_SOURCE_SPIDER))
 		var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
 		if(eggs)
 			owner.balloon_alert(owner, "already eggs here!")

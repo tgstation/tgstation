@@ -30,7 +30,7 @@
 		return FALSE
 	if(owner.incapacitated())
 		return FALSE
-	if(DOING_INTERACTION(owner, INTERACTION_SPIDER_KEY))
+	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
 		return FALSE
 	return TRUE
 
@@ -86,7 +86,7 @@
 	if(istype(animal_owner))
 		animal_owner.stop_automated_movement = TRUE
 
-	if(do_after(owner, wrap_time, target = to_wrap, interaction_key = INTERACTION_SPIDER_KEY))
+	if(do_after(owner, wrap_time, target = to_wrap, interaction_key = DOAFTER_SOURCE_SPIDER))
 		wrap_target(to_wrap)
 	if(istype(animal_owner))
 		animal_owner.stop_automated_movement = FALSE

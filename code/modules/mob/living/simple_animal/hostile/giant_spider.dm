@@ -146,7 +146,7 @@
 	datahud.show_to(src)
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/AttackingTarget()
-	if(DOING_INTERACTION(src, INTERACTION_SPIDER_KEY))
+	if(DOING_INTERACTION(src, DOAFTER_SOURCE_SPIDER))
 		return
 	if(!isspider(target))
 		return ..()
@@ -165,7 +165,7 @@
 		span_notice("You begin wrapping the wounds of [hurt_spider]."),
 	)
 
-	if(!do_after(src, 2 SECONDS, target = hurt_spider, interaction_key = INTERACTION_SPIDER_KEY))
+	if(!do_after(src, 2 SECONDS, target = hurt_spider, interaction_key = DOAFTER_SOURCE_SPIDER))
 		return
 
 	hurt_spider.heal_overall_damage(20, 20)
@@ -420,7 +420,7 @@
 		blood_spawn_chance = 5)
 
 /mob/living/simple_animal/hostile/giant_spider/hunter/flesh/AttackingTarget()
-	if(DOING_INTERACTION(src, INTERACTION_SPIDER_KEY))
+	if(DOING_INTERACTION(src, DOAFTER_SOURCE_SPIDER))
 		return
 	if(src == target)
 		if(on_fire)
@@ -430,7 +430,7 @@
 			to_chat(src, span_warning("You're not injured, there's no reason to heal."))
 			return
 		visible_message(span_notice("[src] begins mending themselves..."),span_notice("You begin mending your wounds..."))
-		if(do_after(src, 2 SECONDS, target = src, interaction_key = INTERACTION_SPIDER_KEY))
+		if(do_after(src, 2 SECONDS, target = src, interaction_key = DOAFTER_SOURCE_SPIDER))
 			heal_overall_damage(maxHealth * 0.5, maxHealth * 0.5)
 			new /obj/effect/temp_visual/heal(get_turf(src), "#80F5FF")
 			visible_message(span_notice("[src]'s wounds mend together."),span_notice("You mend your wounds together."))
