@@ -93,7 +93,7 @@
 	if (.)
 		return
 
-	// Check if the console is locked to block any actions occuring
+	// Check if the console is locked to block any actions occurring
 	if (locked && action != "toggleLock")
 		computer.say("Console is locked, cannot perform further actions.")
 		return TRUE

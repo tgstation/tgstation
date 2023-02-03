@@ -13,7 +13,7 @@
 
 	///units we pump per second
 	var/pump_power = 1
-	///set to true if the loop couldnt find a geyser in process, so it remembers and stops checking every loop until moved. more accurate name would be absolutely_no_geyser_under_me_so_dont_try
+	///set to true if the loop couldn't find a geyser in process, so it remembers and stops checking every loop until moved. more accurate name would be absolutely_no_geyser_under_me_so_dont_try
 	var/geyserless = FALSE
 	///The geyser object
 	var/obj/structure/geyser/geyser
@@ -30,7 +30,7 @@
 	if(. == SUCCESSFUL_UNFASTEN)
 		geyser = null
 		update_appearance()
-		geyserless = FALSE //we switched state, so lets just set this back aswell
+		geyserless = FALSE //we switched state, so lets just set this back as well
 
 /obj/machinery/plumbing/liquid_pump/process(delta_time)
 	if(!anchored || panel_open || geyserless)
@@ -40,7 +40,7 @@
 		for(var/obj/structure/geyser/G in loc.contents)
 			geyser = G
 			update_appearance()
-		if(!geyser) //we didnt find one, abort
+		if(!geyser) //we didn't find one, abort
 			geyserless = TRUE
 			visible_message(span_warning("The [name] makes a sad beep!"))
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)

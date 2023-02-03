@@ -7,10 +7,10 @@
  * Movement is handled through vehicle_move() which is called by relaymove
  * Clicking is done by way of signals registering to the entering mob
  * NOTE: MMIS are NOT mobs but instead contain a brain that is, so you need special checks
- * AI also has special checks becaus it gets in and out of the mech differently
+ * AI also has special checks because it gets in and out of the mech differently
  * Always call remove_occupant(mob) when leaving the mech so the mob is removed properly
  *
- * For multi-crew, you need to set how the occupants recieve ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
+ * For multi-crew, you need to set how the occupants receive ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
  * Abilities can then be set to only apply for certain bitflags and are assigned as such automatically
  *
  * Clicks are wither translated into mech_melee_attack (see mech_melee_attack.dm)
@@ -309,7 +309,7 @@
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
 			var/mob/living/silicon/ai/ai = occupant
-			if(!ai.linked_core) // we probably shouldnt gib AIs with a core
+			if(!ai.linked_core) // we probably shouldn't gib AIs with a core
 				unlucky_ai = occupant
 				ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
 				ai.gib() //No wreck, no AI to recover

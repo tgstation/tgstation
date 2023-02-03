@@ -1863,7 +1863,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  *
  * "Perk" format is as followed:
  * list(
- *   SPECIES_PERK_TYPE = type of perk (postiive, negative, neutral - use the defines)
+ *   SPECIES_PERK_TYPE = type of perk (positive, negative, neutral - use the defines)
  *   SPECIES_PERK_ICON = icon shown within the UI
  *   SPECIES_PERK_NAME = name of the perk on hover
  *   SPECIES_PERK_DESC = description of the perk on hover
@@ -1876,7 +1876,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/get_species_perks()
 	var/list/species_perks = list()
 
-	// Let us get every perk we can concieve of in one big list.
+	// Let us get every perk we can conceiver of in one big list.
 	// The order these are called (kind of) matters.
 	// Species unique perks first, as they're more important than genetic perks,
 	// and language perk last, as it comes at the end of the perks list
@@ -1900,7 +1900,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	for(var/list/perk as anything in species_perks)
 		var/perk_type = perk[SPECIES_PERK_TYPE]
-		// If we find a perk that isn't postiive, negative, or neutral,
+		// If we find a perk that isn't positive, negative, or neutral,
 		// it's a bad entry - don't add it to our list. Throw a stack trace and skip it instead.
 		if(isnull(perks_to_return[perk_type]))
 			stack_trace("Invalid species perk ([perk[SPECIES_PERK_NAME]]) found for species [name]. \
@@ -2048,7 +2048,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "tint",
 			SPECIES_PERK_NAME = initial(exotic_blood.name),
-			SPECIES_PERK_DESC = "[name] blood is [initial(exotic_blood.name)], which can make recieving medical treatment harder.",
+			SPECIES_PERK_DESC = "[name] blood is [initial(exotic_blood.name)], which can make receiving medical treatment harder.",
 		))
 
 	// Otherwise otherwise, see if they have an exotic bloodtype set
@@ -2057,7 +2057,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "tint",
 			SPECIES_PERK_NAME = "Exotic Blood",
-			SPECIES_PERK_DESC = "[plural_form] have \"[exotic_bloodtype]\" type blood, which can make recieving medical treatment harder.",
+			SPECIES_PERK_DESC = "[plural_form] have \"[exotic_bloodtype]\" type blood, which can make receiving medical treatment harder.",
 		))
 
 	return to_add

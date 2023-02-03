@@ -107,7 +107,7 @@
 		return
 	QDEL_NULL(vat.biological_sample)
 
-///Overriden to show more info like needs, supplementary and supressive reagents and also growth.
+///Overridden to show more info like needs, supplementary and suppressive reagents and also growth.
 /datum/micro_organism/cell_line/get_details(show_details)
 	. += "[span_notice("[desc] - growth progress: [growth]%")]\n"
 	if(show_details)

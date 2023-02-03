@@ -550,11 +550,11 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		return FALSE
 	/**
 	 *For anything that does not go an a wall we have to make sure that turf is clear for us to put the structure on it
-	 *If we are just trying to destory something then this check is not nessassary
+	 *If we are just trying to destroy something then this check is not necessary
 	 *RCD_WALLFRAME is also returned as the mode when upgrading apc, airalarm, firealarm using simple circuits upgrade
 	 */
 	if(rcd_results["mode"] != RCD_WALLFRAME && rcd_results["mode"] != RCD_DECONSTRUCT)
-		//if we are trying to build a window on top of a grill [only if there isnt already a window there] then we skip this check because thats normal behaviour
+		//if we are trying to build a window on top of a grill [only if there isn't already a window there] then we skip this check because that's normal behavior
 		if(rcd_results["mode"] == RCD_WINDOWGRILLE && locate(/obj/structure/grille, target_turf) && (!locate(/obj/structure/window, target_turf) && !locate(/obj/structure/window/reinforced, target_turf)))
 			//no checks proceed
 		else
@@ -1134,7 +1134,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	///type of the plumbing machine
 	var/obj/machinery/blueprint = null
-	///index, used in the attack self to get the type. stored here since it doesnt change
+	///index, used in the attack self to get the type. stored here since it doesn't change
 	var/list/choices = list()
 	///All info for construction
 	var/list/machinery_data = list("cost" = list())
@@ -1144,7 +1144,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	var/current_layer = "Default Layer"
 	///Current selected color, for ducts
 	var/current_color = "omni"
-	///maps layer name to layer number value. didnt make this global cause only this class needs it
+	///maps layer name to layer number value. didn't make this global cause only this class needs it
 	var/static/list/name_to_number = list(
 		"First Layer" = 1,
 		"Second Layer" = 2,

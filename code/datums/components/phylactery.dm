@@ -18,7 +18,7 @@
 	var/phylactery_color = COLOR_VERY_DARK_LIME_GREEN
 
 	// Internal vars.
-	/// The number of ressurections that have occured from this phylactery.
+	/// The number of resurrections that have occurred from this phylactery.
 	var/num_resurrections = 0
 	/// A timerid to the current revival timer.
 	var/revive_timer

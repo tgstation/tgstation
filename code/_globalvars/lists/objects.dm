@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(shuttle_caller_list)     //list of all communication consoles 
 GLOBAL_LIST_EMPTY(machines)         //NOTE: this is a list of ALL machines now. The processing machines list is SSmachine.processing !
 GLOBAL_LIST_EMPTY(navigation_computers) //list of all /obj/machinery/computer/camera_advanced/shuttle_docker
 GLOBAL_LIST_EMPTY(syndicate_shuttle_boards)         //important to keep track of for managing nukeops war declarations.
-GLOBAL_LIST_EMPTY(navbeacons)     //list of all bot nagivation beacons, used for patrolling.
+GLOBAL_LIST_EMPTY(navbeacons)     //list of all bot navigation beacons, used for patrolling.
 GLOBAL_LIST_EMPTY(teleportbeacons)         //list of all tracking beacons used by teleporters
 GLOBAL_LIST_EMPTY(deliverybeacons)         //list of all MULEbot delivery beacons.
 GLOBAL_LIST_EMPTY(deliverybeacontags)     //list of all tags associated with delivery beacons.
@@ -27,9 +27,9 @@ GLOBAL_LIST(fake_reagent_blacklist) //List of all reagents that are parent types
 GLOBAL_LIST_EMPTY(tech_list) //list of all /datum/tech datums indexed by id.
 GLOBAL_LIST_EMPTY(surgeries_list) //list of all surgeries by name, associated with their path.
 GLOBAL_LIST_EMPTY(crafting_recipes) //list of all crafting recipes
-GLOBAL_LIST_EMPTY(crafting_recipes_atoms) //list of all atoms occuring in crafting recipes
+GLOBAL_LIST_EMPTY(crafting_recipes_atoms) //list of all atoms occurring in crafting recipes
 GLOBAL_LIST_EMPTY(cooking_recipes) //list of all cooking recipes
-GLOBAL_LIST_EMPTY(cooking_recipes_atoms) //list of all atoms occuring in cooking recipes
+GLOBAL_LIST_EMPTY(cooking_recipes_atoms) //list of all atoms occurring in cooking recipes
 GLOBAL_LIST_EMPTY(rcd_list) //list of Rapid Construction Devices.
 GLOBAL_LIST_EMPTY(intercoms_list) //list of wallmounted intercom radios.
 GLOBAL_LIST_EMPTY(apcs_list) //list of all Area Power Controller machines, separate from machines for powernet speeeeeeed.

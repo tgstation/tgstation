@@ -297,7 +297,7 @@
 	var/randomize_fuel = TRUE
 	/// How much damage it does when turned on
 	var/on_damage = 7
-	/// Type of atom thats spawns after fuel is used up
+	/// Type of atom that spawns after fuel is used up
 	var/trash_type = /obj/item/trash/flare
 	/// If the light source can be extinguished
 	var/can_be_extinguished = FALSE

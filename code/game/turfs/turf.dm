@@ -13,7 +13,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/overfloor_placed = FALSE
 	/// How accessible underfloor pieces such as wires, pipes, etc are on this turf. Can be HIDDEN, VISIBLE, or INTERACTABLE.
 	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
-	/// If there is a lattice underneat this turf. Used for the attempt_lattice_replacement proc to determine if it should place lattice.
+	/// If there is a lattice underneath this turf. Used for the attempt_lattice_replacement proc to determine if it should place lattice.
 	var/lattice_underneath = TRUE
 
 	// baseturfs can be either a list or a single turf type.
@@ -377,7 +377,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 //There's a lot of QDELETED() calls here if someone can figure out how to optimize this but not runtime when something gets deleted by a Bump/CanPass/Cross call, lemme know or go ahead and fix this mess - kevinz000
 /turf/Enter(atom/movable/mover)
 	// Do not call ..()
-	// Byond's default turf/Enter() doesn't have the behaviour we want with Bump()
+	// Byond's default turf/Enter() doesn't have the behavior we want with Bump()
 	// By default byond will call Bump() on the first dense object in contents
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/first_bump
@@ -390,7 +390,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			if(thing == mover || thing == mover_loc) // Multi tile objects and moving out of other objects
 				continue
 			if(!thing.Cross(mover))
-				if(QDELETED(mover)) //deleted from Cross() (CanPass is pure so it cant delete, Cross shouldnt be doing this either though, but it can happen)
+				if(QDELETED(mover)) //deleted from Cross() (CanPass is pure so it cant delete, Cross shouldn't be doing this either though, but it can happen)
 					return FALSE
 				if(mover_is_phasing)
 					mover.Bump(thing)

@@ -393,7 +393,7 @@
 
 	if(!findtext(lowertext(message), lowertext(unlock_code)))
 		if(failsafe_code && findtext(lowertext(message), lowertext(failsafe_code)))
-			failsafe()  // no point returning cannot radio, youre probably ded
+			failsafe()  // no point returning cannot radio, you're probably ded
 		return
 	locked = FALSE
 	interact(null, user)

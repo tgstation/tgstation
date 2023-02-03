@@ -3,7 +3,7 @@
 	var/list/orderable_objects = list()
 	///The amount a robot pays for each food he likes in an assoc list type | payment
 	var/list/order_prices = list()
-	///Datum AI used for the robot. Should almost never be overwritten unless theyre subtypes of ai_controller/robot_customer
+	///Datum AI used for the robot. Should almost never be overwritten unless they're subtypes of ai_controller/robot_customer
 	var/datum/ai_controller/ai_controller_used = /datum/ai_controller/robot_customer
 	///Patience of the AI, how long they will wait for their meal.
 	var/total_patience = 600 SECONDS

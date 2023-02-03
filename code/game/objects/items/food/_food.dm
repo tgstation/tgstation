@@ -26,7 +26,7 @@
 	var/list/eatverbs
 	///How much reagents per bite
 	var/bite_consumption
-	///Type of atom thats spawned after eating this item
+	///Type of atom that spawned after eating this item
 	var/trash_type
 	///How much junkiness this food has? God I should remove junkiness soon
 	var/junkiness

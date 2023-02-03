@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(id_access)
 		var/datum/id_trim/job/job_trim = trim_singletons_by_path[trim]
 
 		if(QDELETED(job_trim))
-			stack_trace("Trim \[[trim]\] missing from trim singleton list. Reinitialising this trim.")
+			stack_trace("Trim \[[trim]\] missing from trim singleton list. Reinitializing this trim.")
 			trim_singletons_by_path[trim] = new trim()
 			continue
 

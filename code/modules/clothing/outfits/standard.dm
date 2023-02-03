@@ -436,7 +436,7 @@
 	W.update_label()
 	W.update_icon()
 
-/datum/outfit/admin //for admeem shenanigans and testing things that arent related to equipment, not a subtype of debug just in case debug changes things
+/datum/outfit/admin //for admeem shenanigans and testing things that aren't related to equipment, not a subtype of debug just in case debug changes things
 	name = "Admin outfit"
 
 	id = /obj/item/card/id/advanced/debug

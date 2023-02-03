@@ -9,9 +9,9 @@
  * so that the "highest priority" one is always displayed as opposed to the default of
  * "whichever was set last is displayed".
  *
- * Refactored to allow multiple overlapping client colours
+ * Refactored to allow multiple overlapping client colors
  * (e.g. wearing blue glasses under a yellow visor, even though the result is a little unsatured.)
- * As well as some support for animated colour transitions.
+ * As well as some support for animated color transitions.
  *
  * Define subtypes of this datum
  */
@@ -21,7 +21,7 @@
 	///The mob that owns this client_colour.
 	var/mob/owner
 	/**
-	  * We prioritize colours with higher priority (lower numbers), so they don't get overriden by less important ones:
+	  * We prioritize colors with higher priority (lower numbers), so they don't get overridden by less important ones:
 	  * eg: "Bloody screen" > "goggles colour" as the former is much more important
 	  */
 	var/priority = PRIORITY_NORMAL
@@ -45,7 +45,7 @@
 	owner = null
 	return ..()
 
-///Sets a new colour, then updates the owner's screen colour.
+///Sets a new color, then updates the owner's screen color.
 /datum/client_colour/proc/update_colour(new_colour, anim_time, easing = 0)
 	colour = new_colour
 	if(anim_time)

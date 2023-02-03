@@ -39,7 +39,7 @@ SUBSYSTEM_DEF(mapping)
 	// Both are in the form "input plane" -> output plane(s)
 	/// Assoc list of string plane values to their true, non offset representation
 	var/list/plane_offset_to_true
-	/// Assoc list of true string plane values to a list of all potential offset planess
+	/// Assoc list of true string plane values to a list of all potential offset planes
 	var/list/true_to_offset_planes
 	/// Assoc list of string plane to the plane's offset value
 	var/list/plane_to_offset
@@ -70,7 +70,7 @@ SUBSYSTEM_DEF(mapping)
 	var/space_levels_so_far = 0
 	///list of all z level datums in the order of their z (z level 1 is at index 1, etc.)
 	var/list/datum/space_level/z_list
-	///list of all z level indices that form multiz connections and whether theyre linked up or down.
+	///list of all z level indices that form multiz connections and whether they're linked up or down.
 	///list of lists, inner lists are of the form: list("up or down link direction" = TRUE)
 	var/list/multiz_levels = list()
 	var/datum/space_level/transit
@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(mapping)
 	///associative list of the form: list("[z level num]" = max generator gravity in that z level OR the gravity level trait)
 	var/list/gravity_by_z_level = list()
 
-	/// list of traits and their associated z leves
+	/// list of traits and their associated z levels
 	var/list/z_trait_levels = list()
 
 	/// list of lazy templates that have been loaded
@@ -740,7 +740,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 	// Then we build our lookup lists
 	var/z_value = new_z.z_value
-	// We are guarenteed that we'll always grow bottom up
+	// We are guaranteed that we'll always grow bottom up
 	// Suck it jannies
 	z_level_to_plane_offset.len += 1
 	z_level_to_lowest_plane_offset += 1

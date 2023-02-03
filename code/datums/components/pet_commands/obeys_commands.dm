@@ -16,7 +16,7 @@
 	if (!living_parent.ai_controller)
 		return COMPONENT_INCOMPATIBLE
 	if (!length(command_typepaths))
-		CRASH("Initialised obedience component with no commands.")
+		CRASH("Initialized obedience component with no commands.")
 
 	for (var/command_path in command_typepaths)
 		var/datum/pet_command/new_command = new command_path(parent)

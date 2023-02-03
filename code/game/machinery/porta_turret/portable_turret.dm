@@ -9,7 +9,7 @@
 #define TURRET_FLAG_SHOOT_CRIMINALS (1<<2) // Checks if it can shoot people that are wanted
 #define TURRET_FLAG_SHOOT_ALL (1<<3)  // The turret gets pissed off and shoots at people nearby (unless they have sec access!)
 #define TURRET_FLAG_SHOOT_ANOMALOUS (1<<4)  // Checks if it can shoot at unidentified lifeforms (ie xenos)
-#define TURRET_FLAG_SHOOT_UNSHIELDED (1<<5) // Checks if it can shoot people that aren't mindshielded and who arent heads
+#define TURRET_FLAG_SHOOT_UNSHIELDED (1<<5) // Checks if it can shoot people that aren't mindshielded and who aren't heads
 #define TURRET_FLAG_SHOOT_BORGS (1<<6) // checks if it can shoot cyborgs
 #define TURRET_FLAG_SHOOT_HEADS (1<<7) // checks if it can shoot at heads of staff
 
@@ -51,7 +51,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/raised = FALSE
 	/// If the turret is currently opening or closing its cover
 	var/raising = FALSE
-	/// If the turret's behaviour control access is locked
+	/// If the turret's behavior control access is locked
 	var/locked = TRUE
 	/// If the turret responds to control panels
 	var/controllock = FALSE

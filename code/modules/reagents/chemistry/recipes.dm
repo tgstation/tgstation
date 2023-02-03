@@ -199,13 +199,13 @@
 /**
  * Magical mob spawning when chemicals react
  *
- * Your go to proc when you want to create new mobs from chemicals. please dont use on_reaction.
+ * Your go to proc when you want to create new mobs from chemicals. please don't use on_reaction.
  * Arguments:
  * * holder - the datum that holds this reagent, be it a beaker or anything else
  * * amount_to_spawn - how much /mob to spawn
  * * reaction_name - what is the name of this reaction. be creative, the world is your oyster after all!
  * * mob_class - determines if the mob will be friendly, neutral or hostile
- * * mob_faction - used in determining targets, mobs from the same faction won't harm eachother.
+ * * mob_faction - used in determining targets, mobs from the same faction won't harm each other.
  * * random - creates random mobs. self explanatory.
  */
 /datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = "chemicalsummon", random = TRUE)
@@ -222,7 +222,7 @@
 			message += " - Last Fingerprint: [(A.fingerprintslast ? A.fingerprintslast : "N/A")]"
 
 		message_admins(message, 0, 1)
-		log_game("[reaction_name] chemical mob spawn reaction occuring at [AREACOORD(T)] carried by [key_name(M)] with last fingerprint [A.fingerprintslast? A.fingerprintslast : "N/A"]")
+		log_game("[reaction_name] chemical mob spawn reaction occurring at [AREACOORD(T)] carried by [key_name(M)] with last fingerprint [A.fingerprintslast? A.fingerprintslast : "N/A"]")
 
 		playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, TRUE)
 

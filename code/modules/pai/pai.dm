@@ -31,13 +31,13 @@
 
 	/// If someone has enabled/disabled the pAIs ability to holo
 	var/can_holo = TRUE
-	/// Whether this pAI can recieve radio messages
+	/// Whether this pAI can receive radio messages
 	var/can_receive = TRUE
 	/// Whether this pAI can transmit radio messages
 	var/can_transmit = TRUE
 	/// The card we inhabit
 	var/obj/item/pai_card/card
-	/// The current chasis that will appear when in holoform
+	/// The current chassis that will appear when in holoform
 	var/chassis = "repairbot"
 	/// Toggles whether the pAI can hold encryption keys or not
 	var/encrypt_mod = FALSE

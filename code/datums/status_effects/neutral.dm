@@ -343,7 +343,7 @@
 /*
  * A status effect used for preventing caltrop message spam
  *
- * While a mob has this status effect, they won't recieve any messages about
+ * While a mob has this status effect, they won't receive any messages about
  * stepping on caltrops. But they will be stunned and damaged regardless.
  *
  * The status effect itself has no effect, other than to disappear after
@@ -374,7 +374,7 @@
 	var/phase_3_cycle = -0 //start off delayed
 	///Your clone from another reality
 	var/mob/living/carbon/alt_clone = null
-	///If we display the stabilised message or not
+	///If we display the stabilized message or not
 	var/stable_message = FALSE
 
 /datum/status_effect/eigenstasium/Destroy()

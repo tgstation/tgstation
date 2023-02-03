@@ -11,7 +11,7 @@
 	icon_state = "card_holder_inactive"
 	use_power = NO_POWER_USE
 
-	///Card thats currently inside the holder
+	///Card that's currently inside the holder
 	var/obj/item/tcgcard/current_card
 	///Holds all the details such as stats for the card.
 	var/datum/card/card_template

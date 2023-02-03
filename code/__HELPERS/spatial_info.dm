@@ -17,7 +17,7 @@
  * TLDR: iterating through just mobs is much faster than all movables when iterating through view() on average, this system leverages that to boost speed
  * enough to offset the cost of allocating the mobs
  *
- * named because the idea was first made by oranges and i didnt know what else to call it (note that this system was originally made for get_hearers_in_view())
+ * named because the idea was first made by oranges and i didn't know what else to call it (note that this system was originally made for get_hearers_in_view())
  */
 /mob/oranges_ear
 	icon_state = null
@@ -72,13 +72,13 @@
 ///clean this oranges_ear up for future use
 /mob/oranges_ear/proc/unassign()
 	var/turf/turf_loc = loc
-	turf_loc.assigned_oranges_ear = null//trollface. our loc should ALWAYS be a turf, no exceptions. if it isnt then this doubles as an error message ;)
+	turf_loc.assigned_oranges_ear = null//trollface. our loc should ALWAYS be a turf, no exceptions. if it isn't then this doubles as an error message ;)
 	loc = null
 	references.Cut()
 
 /**
  * returns every hearaing movable in view to the turf of source not taking into account lighting
- * useful when you need to maintain always being able to hear something if a sound is emitted from it and you can see it (and youre in range).
+ * useful when you need to maintain always being able to hear something if a sound is emitted from it and you can see it (and you're in range).
  * otherwise this is just a more expensive version of get_hearers_in_LOS()
  *
  * * view_radius - what radius search circle we are using, worse performance as this increases
@@ -112,7 +112,7 @@
 	//internally, the contents list is secretly two linked lists, one for /obj's and one for /mob's (/atom/movable counts as /obj here)
 	//by default, for(var/atom/name in view()) iterates through both the /obj linked list then the /mob linked list of each turf
 	//but because what we want are only a tiny proportion of all movables, most of the things in the /obj contents list are not what we're looking for
-	//while every mob can hear. for this case view() has an optimization to only look through 1 of these lists if it can (eg youre only looking for mobs)
+	//while every mob can hear. for this case view() has an optimization to only look through 1 of these lists if it can (eg you're only looking for mobs)
 	//so by representing every hearing contents on a turf with a single /mob/oranges_ear containing references to all of them, we are:
 	//1. making view() only go through the smallest of the two linked lists per turf, which contains the type we're looking for at the end
 	//2. typechecking all mobs in the output to only actually return mobs of type /mob/oranges_ear
@@ -129,8 +129,8 @@
 /**
  * Returns a list of movable atoms that are hearing sensitive in view_radius and line of sight to source
  * the majority of the work is passed off to the spatial grid if view_radius > 0
- * because view() isnt a raycasting algorithm, this does not hold symmetry to it. something in view might not be hearable with this.
- * if you want that use get_hearers_in_view() - however thats significantly more expensive
+ * because view() isn't a raycasting algorithm, this does not hold symmetry to it. something in view might not be hearable with this.
+ * if you want that use get_hearers_in_view() - however that's significantly more expensive
  *
  * * view_radius - what radius search circle we are using, worse performance as this increases but not as much as it used to
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area

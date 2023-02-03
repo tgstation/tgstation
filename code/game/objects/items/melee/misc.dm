@@ -318,13 +318,13 @@
 	force = 0
 	attack_verb_continuous = list("hits", "pokes")
 	attack_verb_simple = list("hit", "poke")
-	/// The sausage attatched to our stick.
+	/// The sausage attached to our stick.
 	var/obj/item/food/sausage/held_sausage
 	/// Static list of things our roasting stick can interact with.
 	var/static/list/ovens
 	/// The beam that links to the oven we use
 	var/datum/beam/beam
-	/// Whether or stick is extended and can recieve sausage
+	/// Whether or stick is extended and can receive sausage
 	var/extended = FALSE
 
 /obj/item/melee/roastingstick/Initialize(mapload)

@@ -7,7 +7,7 @@
 	category = EVENT_CATEGORY_HEALTH
 	description = "A random crewmember's heart gives out."
 	admin_setup = /datum/event_admin_setup/heart_attack
-	///Candidates for recieving a healthy dose of heart disease
+	///Candidates for receiving a healthy dose of heart disease
 	var/list/heart_attack_candidates = list()
 
 /datum/round_event_control/heart_attack/can_spawn_event(players_amt)
@@ -22,7 +22,7 @@
  * Performs initial analysis of which living players are eligible to be selected for a heart attack.
  *
  * Traverses player_list and checks entries against a series of reviews to see if they should even be considered for a heart attack,
- * and at what weight should they be eligible to recieve it. The check for whether or not a heart attack should be "blocked" by something is done
+ * and at what weight should they be eligible to receive it. The check for whether or not a heart attack should be "blocked" by something is done
  * later, at the round_event level, so this proc mostly just checks users for whether or not a heart attack should be possible.
  */
 /datum/round_event_control/heart_attack/proc/generate_candidates()
@@ -56,7 +56,7 @@
  * Picks a victim from a list and attempts to give them a heart attack
  *
  * Performs a pick_weight on a list of potential victims. Once selected, the "winner"
- * will recieve heart disease. Returns TRUE if a heart attack is successfully given, and
+ * will receive heart disease. Returns TRUE if a heart attack is successfully given, and
  * FALSE if something blocks it.
  */
 /datum/round_event/heart_attack/proc/attack_heart()
@@ -87,7 +87,7 @@
 	heart_control.generate_candidates() //can_spawn_event() is bypassed by admin_setup, so this makes sure that the candidates are still generated
 
 	if(!length(heart_control.heart_attack_candidates))
-		tgui_alert(usr, "There are no candidates eligible to recieve a heart attack!", "Error")
+		tgui_alert(usr, "There are no candidates eligible to receive a heart attack!", "Error")
 		return ADMIN_CANCEL_EVENT
 	quantity = tgui_input_number(usr, "There are [length(heart_control.heart_attack_candidates)] crewmembers eligible for a heart attack. Please select how many people's days you wish to ruin.", "Shia Hato Atakku!", 1, length(heart_control.heart_attack_candidates))
 

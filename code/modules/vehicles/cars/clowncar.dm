@@ -278,7 +278,7 @@
 	log_combat(user, unlucky_sod, "fired", src, "towards [target]") //this doesn't catch if the mob hits something between the car and the target
 	return COMSIG_MOB_CANCEL_CLICKON
 
-///Increments the thanks counter every time someone thats been kidnapped thanks the driver
+///Increments the thanks counter every time someone that's been kidnapped thanks the driver
 /obj/vehicle/sealed/car/clowncar/proc/increment_thanks_counter()
 	thankscount++
 	if(thankscount < 100)

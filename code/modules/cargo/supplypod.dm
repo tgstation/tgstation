@@ -248,7 +248,7 @@
 				var/mob/living/carbon/carbon_target_mob = target_living
 				for (var/bp in carbon_target_mob.bodyparts) //Look at the bodyparts in our poor mob beneath our pod as it lands
 					var/obj/item/bodypart/bodypart = bp
-					if(bodypart.body_part != HEAD && bodypart.body_part != CHEST)//we dont want to kill him, just teach em a lesson!
+					if(bodypart.body_part != HEAD && bodypart.body_part != CHEST)//we don't want to kill him, just teach em a lesson!
 						if (bodypart.dismemberable)
 							bodypart.dismember() //Using the power of flextape i've sawed this man's limb in half!
 							break
@@ -258,18 +258,18 @@
 					var/destination = get_edge_target_turf(turf_underneath, pick(GLOB.alldirs)) //Pick a random direction to toss them in
 					organ_to_yeet.Remove(carbon_target_mob) //Note that this isn't the same proc as for lists
 					organ_to_yeet.forceMove(turf_underneath) //Move the organ outta the body
-					organ_to_yeet.throw_at(destination, 2, 3) //Thow the organ at a random tile 3 spots away
+					organ_to_yeet.throw_at(destination, 2, 3) //Throw the organ at a random tile 3 spots away
 					sleep(0.1 SECONDS)
 				for (var/bp in carbon_target_mob.bodyparts) //Look at the bodyparts in our poor mob beneath our pod as it lands
 					var/obj/item/bodypart/bodypart = bp
 					var/destination = get_edge_target_turf(turf_underneath, pick(GLOB.alldirs))
 					if (bodypart.dismemberable)
-						bodypart.dismember() //Using the power of flextape i've sawed this man's bodypart in half!
+						bodypart.dismember() //Using the power of flextape I've sawed this man's bodypart in half!
 						bodypart.throw_at(destination, 2, 3)
 						sleep(0.1 SECONDS)
 
 		if (effectGib) //effectGib is on, that means whatever's underneath us better be fucking oof'd on
-			target_living.adjustBruteLoss(5000) //THATS A LOT OF DAMAGE (called just in case gib() doesnt work on em)
+			target_living.adjustBruteLoss(5000) //THAT'S A LOT OF DAMAGE (called just in case gib() doesnt work on em)
 			if (!QDELETED(target_living))
 				target_living.gib() //After adjusting the fuck outta that brute loss we finish the job with some satisfying gibs
 		else
@@ -636,7 +636,7 @@
 	pod.addGlow()
 	pod.update_appearance()
 	pod.forceMove(drop_location())
-	for (var/mob/living/M in pod) //Remember earlier (initialization) when we moved mobs into the pod_landingzone so they wouldnt get lost in nullspace? Time to get them out
+	for (var/mob/living/M in pod) //Remember earlier (initialization) when we moved mobs into the pod_landingzone so they wouldn't get lost in nullspace? Time to get them out
 		M.reset_perspective(null)
 	var/angle = effectCircle ? rand(0,360) : rand(70,110) //The angle that we can come in from
 	pod.pixel_x = cos(angle)*32*length(smoke_effects) //Use some ADVANCED MATHEMATICS to set the animated pod's position to somewhere on the edge of a circle with the center being the pod_landingzone

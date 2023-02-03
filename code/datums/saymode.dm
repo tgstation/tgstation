@@ -30,7 +30,7 @@
 	user.log_talk(message, LOG_SAY, tag="changeling [ling_sender.changelingID]")
 	var/msg = span_changeling("<b>[ling_sender.changelingID]:</b> [message]")
 
-	//the recipients can recieve the message
+	//the recipients can receive the message
 	for(var/datum/antagonist/changeling/ling_reciever in GLOB.antagonists)
 		if(!ling_reciever.owner)
 			continue
@@ -38,7 +38,7 @@
 		//removes types that override the presence of being changeling (for example, borged lings still can't hivemind chat)
 		if(!isliving(ling_mob) || issilicon(ling_mob) || isbrain(ling_mob))
 			continue
-		// can't recieve messages on the hivemind right now
+		// can't receive messages on the hivemind right now
 		if(HAS_TRAIT(ling_mob, CHANGELING_HIVEMIND_MUTE))
 			continue
 		to_chat(ling_mob, msg)

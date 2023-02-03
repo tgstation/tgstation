@@ -23,7 +23,7 @@
 /datum/bodypart_overlay/mutant/proc/randomize_sprite()
 	sprite_datum = get_random_appearance()
 
-///Grab a random appearance datum (thats not locked)
+///Grab a random appearance datum (that's not locked)
 /datum/bodypart_overlay/mutant/proc/get_random_appearance()
 	var/list/valid_restyles = list()
 	var/list/feature_list = get_global_feature_list()
@@ -65,7 +65,7 @@
 /datum/bodypart_overlay/mutant/added_to_limb(obj/item/bodypart/limb)
 	inherit_color(limb)
 
-///Change our accessory sprite, using the accesssory type. If you need to change the sprite for something, use simple_change_sprite()
+///Change our accessory sprite, using the accessory type. If you need to change the sprite for something, use simple_change_sprite()
 /datum/bodypart_overlay/mutant/set_appearance(accessory_type)
 	sprite_datum = fetch_sprite_datum(accessory_type)
 	cache_key = jointext(generate_icon_cache(), "_")
@@ -75,7 +75,7 @@
 	sprite_datum = fetch_sprite_datum_from_name(accessory_name)
 	cache_key = jointext(generate_icon_cache(), "_")
 
-///Generate a unique key based on our sprites. So that if we've aleady drawn these sprites, they can be found in the cache and wont have to be drawn again (blessing and curse, but mostly curse)
+///Generate a unique key based on our sprites. So that if we've already drawn these sprites, they can be found in the cache and wont have to be drawn again (blessing and curse, but mostly curse)
 /datum/bodypart_overlay/mutant/generate_icon_cache()
 	. = list()
 	. += "[get_base_icon_state()]"

@@ -550,8 +550,8 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		min_x = min(min_x, lift_platform.x)
 		max_x = max(max_x, lift_platform.x)
 		//this assumes that all z levels have identical horizontal bounding boxes
-		//but if youre still using a non multitile tram platform at this point
-		//then its your own problem. it wont runtime it will jsut be slower than it needs to be if this assumption isnt
+		//but if you're still using a non multitile tram platform at this point
+		//then its your own problem. it wont runtime it will just be slower than it needs to be if this assumption isn't
 		//the case
 
 		min_y = min(min_y, lift_platform.y)
@@ -614,7 +614,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	return TRUE
 
 /**
- * Sets all lift parts's controls_locked variable. Used to prevent moving mid movement, or cooldowns.
+ * Sets all lift parts' controls_locked variable. Used to prevent moving mid movement, or cooldowns.
  */
 /datum/lift_master/proc/set_controls(state)
 	controls_locked = state
@@ -625,8 +625,8 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  *
  * Arguments:
  * * consider_anything_past - number. if > 0 our platforms will only handle foreign contents that exceed this number in each of their locs
- * * foreign_objects - bool. if true our platforms will consider /atom/movable's that arent mobs as part of foreign contents
- * * foreign_non_player_mobs - bool. if true our platforms consider mobs that dont have a mind to be foreign
+ * * foreign_objects - bool. if true our platforms will consider /atom/movable's that aren't mobs as part of foreign contents
+ * * foreign_non_player_mobs - bool. if true our platforms consider mobs that don't have a mind to be foreign
  * * consider_player_mobs - bool. if true our platforms consider player mobs to be foreign. only works if foreign_non_player_mobs is true as well
  */
 /datum/lift_master/proc/reset_lift_contents(consider_anything_past = 0, foreign_objects = TRUE, foreign_non_player_mobs = TRUE, consider_player_mobs = FALSE)

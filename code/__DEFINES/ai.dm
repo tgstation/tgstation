@@ -197,7 +197,7 @@
 
 ///bane ai
 #define BB_BANE_BATMAN "BB_bane_batman"
-//yep thats it
+//yep that's it
 
 ///Hunting BB keys
 #define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"
@@ -212,7 +212,7 @@
 ///the motherfucker who tipped us
 #define BB_BASIC_MOB_TIPPER "BB_basic_tip_tipper"
 
-///Targetting subtrees
+///Targeting subtrees
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
 #define BB_TARGETTING_DATUM "targetting_datum"
@@ -222,7 +222,7 @@
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
 
-/// Flag to set on or off if you want your mob to prioritise running away
+/// Flag to set on or off if you want your mob to prioritize running away
 #define BB_BASIC_MOB_FLEEING "BB_basic_fleeing"
 
 ///list of foods this mob likes

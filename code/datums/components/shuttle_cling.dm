@@ -41,7 +41,7 @@
 
 	hyperloop = SSmove_manager.move(moving = parent, direction = direction, delay = not_clinging_move_delay, subsystem = SShyperspace_drift, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST | MOVEMENT_LOOP_NO_DIR_UPDATE)
 
-	update_state(parent) //otherwise we'll get moved 1 tile before we can correct ourselves, which isnt super bad but just looks jank
+	update_state(parent) //otherwise we'll get moved 1 tile before we can correct ourselves, which isn't super bad but just looks jank
 
 ///Check if we're in hyperspace and our state in hyperspace
 /datum/component/shuttle_cling/proc/update_state()
@@ -112,7 +112,7 @@
 /datum/component/shuttle_cling/proc/launch_very_hard(atom/movable/byebye)
 	byebye.safe_throw_at(get_edge_target_turf(byebye, direction), 200, 1, spin = TRUE, force = MOVE_FORCE_EXTREMELY_STRONG)
 
-///Check if we arent just being blocked, and if we are give us some diagonal push so we cant just infinitely cling to the front
+///Check if we aren't just being blocked, and if we are give us some diagonal push so we cant just infinitely cling to the front
 /datum/component/shuttle_cling/proc/update_drift_direction(atom/movable/clinger)
 	var/turf/potential_blocker = get_step(clinger, direction)
 	//We are not being blocked, so just give us cardinal drift
@@ -134,7 +134,7 @@
 	//We check if one side is solid
 	if(!is_tile_solid(get_step(clinger, side_dirs[1])))
 		hyperloop.direction = direction + side_dirs[1]
-	else //if one side isnt solid, send it to the other side (it can also be solid but we dont care cause we're boxed in then and not like itll matter much then)
+	else //if one side isn't solid, send it to the other side (it can also be solid but we dont care cause we're boxed in then and not like itll matter much then)
 		hyperloop.direction = direction + side_dirs[2]
 
 ///Check if it's a closed turf or contains a dense object

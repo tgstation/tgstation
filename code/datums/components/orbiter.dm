@@ -127,7 +127,7 @@
 
 // This proc can receive signals by either the thing being directly orbited or anything holding it
 /datum/component/orbiter/proc/move_react(atom/movable/master, atom/mover, atom/oldloc, direction)
-	set waitfor = FALSE // Transfer calls this directly and it doesnt care if the ghosts arent done moving
+	set waitfor = FALSE // Transfer calls this directly and it doesn't care if the ghosts aren't done moving
 
 	if(master.loc == oldloc)
 		return

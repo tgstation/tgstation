@@ -41,7 +41,7 @@ GLOBAL_VAR(restart_counter)
 
 	log_world("World loaded at [time_stamp()]!")
 
-	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
+	make_datum_references_lists() //initializes global lists for referencing frequently used datums (so that we only ever do it once)
 
 	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = GLOB.world_econ_log = GLOB.world_shuttle_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 	#ifdef REFERENCE_DOING_IT_LIVE
@@ -381,7 +381,7 @@ GLOBAL_VAR(restart_counter)
 	maxy = new_maxy
 	if(!max_zs_to_load)
 		return
-	var/area/global_area = GLOB.areas_by_type[world.area] // We're guarenteed to be touching the global area, so we'll just do this
+	var/area/global_area = GLOB.areas_by_type[world.area] // We're guaranteed to be touching the global area, so we'll just do this
 	var/list/to_add = block(
 		locate(1, old_maxy + 1, 1),
 		locate(maxx, maxy, max_zs_to_load))

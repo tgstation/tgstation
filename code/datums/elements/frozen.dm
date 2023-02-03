@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	obj_target.visible_message(span_danger("[obj_target] shatters into a million pieces!"))
 	qdel(obj_target)
 
-/// signal handler for COMSIG_MOVABLE_MOVED that unfreezes our target if it moves onto an open turf thats hotter than
+/// signal handler for COMSIG_MOVABLE_MOVED that unfreezes our target if it moves onto an open turf that's hotter than
 /// our melting temperature.
 /datum/element/frozen/proc/on_moved(datum/target)
 	SIGNAL_HANDLER

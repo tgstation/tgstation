@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(networks)
 	/// network tress
 	var/list/root_networks = list()
 
-	// Why not list?  Because its a Copy() every time we add a packet, and thats stupid.
+	// Why not list?  Because its a Copy() every time we add a packet, and that's stupid.
 	var/datum/netdata/first = null // start of the queue.  Pulled off in fire.
 	var/datum/netdata/last = null // end of the queue.  pushed on by transmit
 	var/packet_count = 0
@@ -439,7 +439,7 @@ SUBSYSTEM_DEF(networks)
  *
  * Creates a 32 bit hardware id for network devices.  This is random so masking
  * the number won't make routing "easier" (Think Ethernet)  It does check if
- * an existing device has the number but will NOT assign it as thats
+ * an existing device has the number but will NOT assign it as that's
  * up to the collar
  *
  * Returns (string) The generated name

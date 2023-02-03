@@ -35,7 +35,7 @@
 /datum/element/food_trash/proc/generate_trash(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
 
-	///cringy signal_handler shouldnt be needed if you dont want to return but oh well
+	///cringy signal_handler shouldn't be needed if you don't want to return but oh well
 	INVOKE_ASYNC(src, PROC_REF(async_generate_trash), source)
 
 /datum/element/food_trash/proc/async_generate_trash(datum/source)

@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(floor_designs, list(
 			list("name" = "Glass", "type" = /obj/item/stack/tile/glass, "tile_cost" = 5),
 			list("name" = "Reinforced Glass", "type" = /obj/item/stack/tile/rglass, "tile_cost" = 10)
 		),
-		//Uses eletricity or atleast thats i think these do
+		//Uses electricity or at least that's I think these do
 		"Circuit" = list(
 			list("name" = "Recharge", "type" = /obj/item/stack/tile/iron/recharge_floor, "tile_cost" = 5),
 			list("name" = "Solar Panel", "type" = /obj/item/stack/tile/iron/solarpanel, "tile_cost" = 5),

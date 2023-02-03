@@ -196,7 +196,7 @@
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "consume"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
-	///The mob thats being consumed by this creature
+	///The mob that's being consumed by this creature
 	var/mob/living/vored_mob
 
 ///Register for owner death

@@ -146,7 +146,7 @@
 	weight = 0
 	max_occurrences = 0
 	description = "The scrubbers release a tide of custom froth."
-	///Reagent thats going to be flooded.
+	///Reagent that's going to be flooded.
 	var/datum/reagent/custom_reagent
 
 /datum/round_event_control/scrubber_overflow/custom/announce_deadchat(random)

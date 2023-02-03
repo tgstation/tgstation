@@ -67,7 +67,7 @@
  * Place our tile on a plating, or replace it.
  *
  * Arguments:
- * * target_plating - Instance of the plating we want to place on. Replaced during sucessful executions.
+ * * target_plating - Instance of the plating we want to place on. Replaced during successful executions.
  * * user - The mob doing the placing.
  */
 /obj/item/stack/tile/proc/place_tile(turf/open/floor/plating/target_plating, mob/user)

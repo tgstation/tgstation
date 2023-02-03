@@ -55,7 +55,7 @@
 	/// a very temporary list of overlays to add
 	var/list/add_overlays
 
-	///vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays.
+	///vis overlays managed by SSvis_overlays to automatically turn them like other overlays.
 	var/list/managed_vis_overlays
 	///overlays managed by [update_overlays][/atom/proc/update_overlays] to prevent removing overlays that weren't added by the same proc. Single items are stored on their own, not in a list.
 	var/list/managed_overlays
@@ -204,17 +204,17 @@
  * we don't use New as we have better control over when this is called and we can choose
  * to delay calls or hook other logic in and so forth
  *
- * During roundstart map parsing, atoms are queued for intialization in the base atom/New(),
- * After the map has loaded, then Initalize is called on all atoms one by one. NB: this
- * is also true for loading map templates as well, so they don't Initalize until all objects
+ * During roundstart map parsing, atoms are queued for initialization in the base atom/New(),
+ * After the map has loaded, then Initialize is called on all atoms one by one. NB: this
+ * is also true for loading map templates as well, so they don't Initialize until all objects
  * in the map file are parsed and present in the world
  *
  * If you're creating an object at any point after SSInit has run then this proc will be
  * immediately be called from New.
  *
- * mapload: This parameter is true if the atom being loaded is either being intialized during
- * the Atom subsystem intialization, or if the atom is being loaded from the map template.
- * If the item is being created at runtime any time after the Atom subsystem is intialized then
+ * mapload: This parameter is true if the atom being loaded is either being initialized during
+ * the Atom subsystem initialization, or if the atom is being loaded from the map template.
+ * If the item is being created at runtime any time after the Atom subsystem is initialized then
  * it's false.
  *
  * The mapload argument occupies the same position as loc when Initialize() is called by New().
@@ -222,7 +222,7 @@
  * with mapload at the end of atom/New() before this proc (atom/Initialize()) is called.
  *
  * You must always call the parent of this proc, otherwise failures will occur as the item
- * will not be seen as initalized (this can lead to all sorts of strange behaviour, like
+ * will not be seen as initialized (this can lead to all sorts of strange behavior, like
  * the item being completely unclickable)
  *
  * You must not sleep in this proc, or any subprocs
@@ -600,7 +600,7 @@
 /**
  * React to an EMP of the given severity
  *
- * Default behaviour is to send the [COMSIG_ATOM_EMP_ACT] signal
+ * Default behavior is to send the [COMSIG_ATOM_EMP_ACT] signal
  *
  * If the signal does not return protection, and there are attached wires then we call
  * [emp_pulse][/datum/wires/proc/emp_pulse] on the wires
@@ -616,7 +616,7 @@
 /**
  * React to a hit by a projectile object
  *
- * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile.
+ * Default behavior is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile.
  *
  * @params
  * hitting_projectile - projectile
@@ -675,7 +675,7 @@
 /**
  * Called when a mob examines (shift click or verb) this atom
  *
- * Default behaviour is to get the name and icon of the object and it's reagents where
+ * Default behavior is to get the name and icon of the object and it's reagents where
  * the [TRANSPARENT] flag is set on the reagents holder
  *
  * Produces a signal [COMSIG_PARENT_EXAMINE]
@@ -836,7 +836,7 @@
 /**
  * An atom we are buckled or is contained within us has tried to move
  *
- * Default behaviour is to send a warning that the user can't move while buckled as long
+ * Default behavior is to send a warning that the user can't move while buckled as long
  * as the [buckle_message_cooldown][/atom/var/buckle_message_cooldown] has expired (50 ticks)
  */
 /atom/proc/relaymove(mob/living/user, direction)
@@ -874,7 +874,7 @@
 /**
  * React to a hit by a blob objecd
  *
- * default behaviour is to send the [COMSIG_ATOM_BLOB_ACT] signal
+ * default behavior is to send the [COMSIG_ATOM_BLOB_ACT] signal
  */
 /atom/proc/blob_act(obj/structure/blob/attacking_blob)
 	var/blob_act_result = SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, attacking_blob)
@@ -889,7 +889,7 @@
 /**
  * React to being hit by a thrown object
  *
- * Default behaviour is to call [hitby_react][/atom/proc/hitby_react] on ourselves after 2 seconds if we are dense
+ * Default behavior is to call [hitby_react][/atom/proc/hitby_react] on ourselves after 2 seconds if we are dense
  * and under normal gravity.
  *
  * Im not sure why this the case, maybe to prevent lots of hitby's if the thrown object is
@@ -904,7 +904,7 @@
 /**
  * We have have actually hit the passed in atom
  *
- * Default behaviour is to move back from the item that hit us
+ * Default behavior is to move back from the item that hit us
  */
 /atom/proc/hitby_react(atom/movable/harmed_atom)
 	if(harmed_atom && isturf(harmed_atom.loc))
@@ -974,7 +974,7 @@
 /**
  * Respond to the singularity pulling on us
  *
- * Default behaviour is to send [COMSIG_ATOM_SING_PULL] and return
+ * Default behavior is to send [COMSIG_ATOM_SING_PULL] and return
  */
 /atom/proc/singularity_pull(obj/singularity/singularity, current_size)
 	SEND_SIGNAL(src, COMSIG_ATOM_SING_PULL, singularity, current_size)
@@ -983,7 +983,7 @@
 /**
  * Respond to acid being used on our atom
  *
- * Default behaviour is to send [COMSIG_ATOM_ACID_ACT] and return
+ * Default behavior is to send [COMSIG_ATOM_ACID_ACT] and return
  */
 /atom/proc/acid_act(acidpwr, acid_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
@@ -992,7 +992,7 @@
 /**
  * Respond to an emag being used on our atom
  *
- * Default behaviour is to send [COMSIG_ATOM_EMAG_ACT] and return
+ * Default behavior is to send [COMSIG_ATOM_EMAG_ACT] and return
  */
 /atom/proc/emag_act(mob/user, obj/item/card/emag/emag_card)
 	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user, emag_card)
@@ -1000,7 +1000,7 @@
 /**
  * Respond to narsie eating our atom
  *
- * Default behaviour is to send [COMSIG_ATOM_NARSIE_ACT] and return
+ * Default behavior is to send [COMSIG_ATOM_NARSIE_ACT] and return
  */
 /atom/proc/narsie_act()
 	SEND_SIGNAL(src, COMSIG_ATOM_NARSIE_ACT)
@@ -1014,7 +1014,7 @@
 /**
  * Respond to an RCD acting on our item
  *
- * Default behaviour is to send [COMSIG_ATOM_RCD_ACT] and return FALSE
+ * Default behavior is to send [COMSIG_ATOM_RCD_ACT] and return FALSE
  */
 /atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
@@ -1023,7 +1023,7 @@
 /**
  * Respond to an electric bolt action on our item
  *
- * Default behaviour is to return, we define here to allow for cleaner code later on
+ * Default behavior is to return, we define here to allow for cleaner code later on
  */
 /atom/proc/zap_act(power, zap_flags)
 	return
@@ -1039,7 +1039,7 @@
 /**
  * This proc is called when an atom in our contents has it's [Destroy][/atom/proc/Destroy] called
  *
- * Default behaviour is to simply send [COMSIG_ATOM_CONTENTS_DEL]
+ * Default behavior is to simply send [COMSIG_ATOM_CONTENTS_DEL]
  */
 /atom/proc/handle_atom_del(atom/deleting_atom)
 	SEND_SIGNAL(src, COMSIG_ATOM_CONTENTS_DEL, deleting_atom)
@@ -1047,7 +1047,7 @@
 /**
  * called when the turf the atom resides on is ChangeTurfed
  *
- * Default behaviour is to loop through atom contents and call their HandleTurfChange() proc
+ * Default behavior is to loop through atom contents and call their HandleTurfChange() proc
  */
 /atom/proc/HandleTurfChange(turf/changing_turf)
 	for(var/atom/current_atom as anything in src)
@@ -1083,7 +1083,7 @@
 /**
  * Called when the atom log's in or out
  *
- * Default behaviour is to call on_log on the location this atom is in
+ * Default behavior is to call on_log on the location this atom is in
  */
 /atom/proc/on_log(login)
 	if(loc)
@@ -1091,8 +1091,8 @@
 
 
 /*
-	Atom Colour Priority System
-	A System that gives finer control over which atom colour to colour the atom with.
+	Atom Color Priority System
+	A System that gives finer control over which atom color to color the atom with.
 	The "highest priority" one is always displayed as opposed to the default of
 	"whichever was set last is displayed"
 */
@@ -1383,7 +1383,7 @@
 /**
  * An atom has entered this atom's contents
  *
- * Default behaviour is to send the [COMSIG_ATOM_ENTERED]
+ * Default behavior is to send the [COMSIG_ATOM_ENTERED]
  */
 /atom/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, arrived, old_loc, old_locs)
@@ -1392,7 +1392,7 @@
 /**
  * An atom is attempting to exit this atom's contents
  *
- * Default behaviour is to send the [COMSIG_ATOM_EXIT]
+ * Default behavior is to send the [COMSIG_ATOM_EXIT]
  */
 /atom/Exit(atom/movable/leaving, direction)
 	// Don't call `..()` here, otherwise `Uncross()` gets called.
@@ -1406,7 +1406,7 @@
 /**
  * An atom has exited this atom's contents
  *
- * Default behaviour is to send the [COMSIG_ATOM_EXITED]
+ * Default behavior is to send the [COMSIG_ATOM_EXITED]
  */
 /atom/Exited(atom/movable/gone, direction)
 	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, gone, direction)
@@ -1787,7 +1787,7 @@
 		var/negative_grav = min(min(forced_gravity), 0) //negative grav needs to be below or equal to 0
 
 		//our gravity is sum of the most massive positive and negative numbers returned by the signal
-		//so that adding two forced_gravity elements with an effect size of 1 each doesnt add to 2 gravity
+		//so that adding two forced_gravity elements with an effect size of 1 each doesn't add to 2 gravity
 		//but negative force gravity effects can cancel out positive ones
 
 		return (positive_grav + negative_grav)
@@ -1799,7 +1799,7 @@
 /**
  * Causes effects when the atom gets hit by a rust effect from heretics
  *
- * Override this if you want custom behaviour in whatever gets hit by the rust
+ * Override this if you want custom behavior in whatever gets hit by the rust
  */
 /atom/proc/rust_heretic_act()
 

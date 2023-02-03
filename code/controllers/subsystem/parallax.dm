@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(parallax)
 				return
 			continue
 
-		//eye and the last recorded eye are different, and the last recorded eye isnt just the clients mob
+		//eye and the last recorded eye are different, and the last recorded eye isn't just the clients mob
 		if(!isnull(processing_client.movingmob))
 			LAZYREMOVE(processing_client.movingmob.client_mobs_in_contents, processing_client.mob)
 		LAZYADD(movable_eye.client_mobs_in_contents, processing_client.mob)

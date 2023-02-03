@@ -92,7 +92,7 @@
 #define SUPERMATTER_DELAMINATING 6
 
 // SUPERMATTER FACTORS DEFINES
-// This might feel obvious, but mentioning it doesnt hurt anyone:
+// This might feel obvious, but mentioning it doesn't hurt anyone:
 // While we separate these factors into neat little boxes, order still matters in the code.
 // There are a few factors that depends on other factors. So pay close attention on which values are interlinked.
 

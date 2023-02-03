@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	id = "syndicate_fish"
 	loot_list = list(/obj/item/storage/fish_case/syndicate)
 
-/// Pets and pet accesories in carriers
+/// Pets and pet accessories in carriers
 /datum/adventure_loot_generator/pet
 	id = "pets"
 	var/carrier_type = /obj/item/pet_carrier/biopod
@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 
 /obj/item/antique
 	name = "antique"
-	desc = "Valuable and completly incomprehensible."
+	desc = "Valuable and completely incomprehensible."
 	icon = 'icons/obj/exploration.dmi'
 	icon_state = "antique"
 

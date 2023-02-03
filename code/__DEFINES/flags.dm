@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_SCREENTIPS_1 (1<<4)
 /// Prevent clicking things below it on the same turf eg. doors/ fulltile windows
 #define PREVENT_CLICK_UNDER_1 (1<<5)
-///specifies that this atom is a hologram that isnt real
+///specifies that this atom is a hologram that isn't real
 #define HOLOGRAM_1 (1<<6)
 ///Whether /atom/Initialize() has already run for the object
 #define INITIALIZED_1 (1<<7)

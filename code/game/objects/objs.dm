@@ -19,7 +19,7 @@
 	/// If this attacks a human with no wound armor on the affected body part, add this to the wound mod. Some attacks may be significantly worse at wounding if there's even a slight layer of armor to absorb some of it vs bare flesh
 	var/bare_wound_bonus = 0
 
-	/// A multiplier to an objecet's force when used against a stucture, vechicle, machine, or robot.
+	/// A multiplier to an object's force when used against a structure, vehicle, machine, or robot.
 	var/demolition_mod = 1
 
 	var/current_skin //Has the item been reskinned?
@@ -40,12 +40,12 @@
 
 	var/renamedByPlayer = FALSE //set when a player uses a pen on a renamable object
 
-	var/drag_slowdown // Amont of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
+	var/drag_slowdown // Amount of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
 
 	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
-	/// Network id. If set it can be found by either its hardware id or by the id tag if thats set.  It can also be
+	/// Network id. If set it can be found by either its hardware id or by the id tag if that's set.  It can also be
 	/// broadcasted to as long as the other guys network is on the same branch or above.
 	var/network_id = null
 

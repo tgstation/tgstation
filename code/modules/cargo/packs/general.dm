@@ -205,7 +205,7 @@
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your \
-		cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
+		cargo bay. Contains two bottles of holy water, bibles, chaplain robes, and burial garments."
 	cost = CARGO_CRATE_VALUE * 6 // it costs so much because the Space Church needs funding to build a cathedral
 	access_view = ACCESS_CHAPEL_OFFICE
 	contains = list(/obj/item/reagent_containers/cup/glass/bottle/holywater = 2,
@@ -233,8 +233,8 @@
 
 /datum/supply_pack/misc/training_toolbox
 	name = "Training Toolbox Crate"
-	desc = "Hone your combat abiltities with two AURUMILL-Brand Training Toolboxes! \
-		Guarenteed to count hits made against living beings!"
+	desc = "Hone your combat abilities with two AURUMILL-Brand Training Toolboxes! \
+		Guaranteed to count hits made against living beings!"
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/training_toolbox = 2)
 	crate_name = "training toolbox crate"

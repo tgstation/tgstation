@@ -15,7 +15,7 @@
 	var/earliest_start = 20 MINUTES //The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
 	var/min_players = 0 //The minimum amount of alive, non-AFK human players on server required to start the event.
 
-	var/occurrences = 0 //How many times this event has occured
+	var/occurrences = 0 //How many times this event has occurred
 	var/max_occurrences = 20 //The maximum number of times this event can occur (naturally), it can still be forced.
 									//By setting this to 0 you can effectively disable an event.
 

@@ -58,15 +58,15 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	 *so for example if an T shaped pipe is connected only in its EAST & WEST directions then only those ends are drawn
 	 *but the SOUTH end is not drawn
 	 *this will allow mappers to use whatever pipes but the end result has no visual clutter.
-	 *This is actually just an bandage for lazy mappers using + pipes all over the place without carying about directions so hopefully when they map pipes correctly we can remove this
+	 *This is actually just an bandage for lazy mappers using + pipes all over the place without carrying about directions so hopefully when they map pipes correctly we can remove this
 	 */
 	if(map_loaded_pipe)
 		sprite_bits = connections
 		/**
-		 * if pipe is connected in only one direction[e.g. after disconnecting its neighbour] then to avoid a broken sprite append the reverse direction of its one connected end.
+		 * if pipe is connected in only one direction[e.g. after disconnecting its neighbor] then to avoid a broken sprite append the reverse direction of its one connected end.
 		 * this wont work for L pipes because if one of its ends is broken then the opposite direction of any of its last connected end is invalid
-		 * e.g. for an L pipe if the top[NORTH] end is broken the opposite of its one remaining connected end[i.e EAST END] is WEST but thats not an valid direction for this pipe
-		 * so we have to again check one last time after this to make sure the pipe isnt broken
+		 * e.g. for an L pipe if the top[NORTH] end is broken the opposite of its one remaining connected end[i.e EAST END] is WEST but that's not an valid direction for this pipe
+		 * so we have to again check one last time after this to make sure the pipe isn't broken
 		 */
 		if(ISSTUB(sprite_bits))
 			// & initialize_directions will yield 0 if the reversed direction is not valid

@@ -26,7 +26,7 @@
 /obj/item/mod/control/pre_equipped/set_wearer(mob/living/carbon/human/user)
 	. = ..()
 	for(var/obj/item/mod/module/module as anything in modules)
-		if(!default_pins[module.type]) //this module isnt meant to be pinned by default
+		if(!default_pins[module.type]) //this module isn't meant to be pinned by default
 			continue
 		if(REF(wearer) in default_pins[module.type]) //if we already had pinned once to this user, don care anymore
 			continue

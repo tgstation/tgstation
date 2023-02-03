@@ -134,7 +134,7 @@
  * Emissive overlays are pasted with an atom color that converts them to be entirely some specific color.
  * Emissive blockers are pasted with an atom color that converts them to be entirely some different color.
  * Emissive overlays and emissive blockers are put onto the same plane.
- * The layers for the emissive overlays and emissive blockers cause them to mask eachother similar to normal BYOND objects.
+ * The layers for the emissive overlays and emissive blockers cause them to mask each other similar to normal BYOND objects.
  * A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.
  * This is then used to alpha mask the lighting plane.
  */
@@ -160,7 +160,7 @@
 
 	// Sorry, this is a bit annoying
 	// Basically, we only want the lighting plane we can actually see to attempt to render
-	// If we don't our lower plane gets totally overriden by the black void of the upper plane
+	// If we don't our lower plane gets totally overridden by the black void of the upper plane
 	var/datum/hud/hud = home.our_hud
 	// show_to can be called twice successfully with no hide_from call. Ensure no runtimes off the registers from this
 	if(hud)
@@ -194,7 +194,7 @@
 		<br>Emissive overlays are pasted with an atom color that converts them to be entirely some specific color.\
 		<br>Emissive blockers are pasted with an atom color that converts them to be entirely some different color.\
 		<br>Emissive overlays and emissive blockers are put onto the same plane (This one).\
-		<br>The layers for the emissive overlays and emissive blockers cause them to mask eachother similar to normal BYOND objects.\
+		<br>The layers for the emissive overlays and emissive blockers cause them to mask each other similar to normal BYOND objects.\
 		<br>A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.\
 		<br>This is then used to alpha mask the lighting plane."
 	plane = EMISSIVE_RENDER_PLATE

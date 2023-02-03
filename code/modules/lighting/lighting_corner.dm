@@ -47,7 +47,7 @@
 		// Now, we go north!
 		process_next = get_step(process_next, NORTH)
 	else
-		// Yes this is slightly slower then having a guarenteeed turf, but there aren't many null turfs
+		// Yes this is slightly slower then having a guaranteed turf, but there aren't many null turfs
 		// So this is pretty damn fast
 		process_next = locate(x, y + 1, z)
 

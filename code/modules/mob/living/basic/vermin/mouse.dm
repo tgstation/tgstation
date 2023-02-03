@@ -111,7 +111,7 @@
 	if(mind)
 		return ..()
 
-	// Call parent with gibbed = TRUE, becuase we're getting rid of the body
+	// Call parent with gibbed = TRUE, because we're getting rid of the body
 	. = ..(TRUE)
 	// Now if we were't ACTUALLY gibbed, spawn the dead mouse
 	if(!gibbed)
@@ -391,7 +391,7 @@
 /datum/ai_behavior/run_away_from_target/mouse
 	run_distance = 3 // Mostly exists in small tunnels, don't get ahead of yourself
 
-/// AI controller for rats, slightly more complex than mice becuase they attack people
+/// AI controller for rats, slightly more complex than mice because they attack people
 /datum/ai_controller/basic_controller/mouse/rat
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),

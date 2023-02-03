@@ -41,7 +41,7 @@
 
 /datum/forensics/New(atom/parent, fingerprints, hiddenprints, blood_DNA, fibers)
 	if(!isatom(parent))
-		stack_trace("We tried adding a forensics datum to something that isnt an atom. What the hell are you doing?")
+		stack_trace("We tried adding a forensics datum to something that isn't an atom. What the hell are you doing?")
 		qdel(src)
 		return
 

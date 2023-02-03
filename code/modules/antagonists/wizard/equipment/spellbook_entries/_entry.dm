@@ -177,7 +177,7 @@
 
 /**
  * Set any of the spell info saved on our entry
- * after something has occured
+ * after something has occurred
  *
  * For example, updating the cooldown after upgrading it
  */

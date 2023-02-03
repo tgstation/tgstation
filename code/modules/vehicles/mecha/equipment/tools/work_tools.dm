@@ -256,7 +256,7 @@
 		if(MODE_AIRLOCK)
 			return "Build Airlock"
 		else
-			return "Someone didnt set this"
+			return "Someone didn't set this"
 
 /obj/item/mecha_parts/mecha_equipment/rcd/ui_act(action, list/params)
 	. = ..()

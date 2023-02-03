@@ -707,7 +707,7 @@
 				if (launchCounter > length(acceptableTurfs)) //Check if the launchCounter, which acts as an index, is too high. If it is, reset it to 1
 					launchCounter = 1 //Note that the launchCounter index is incremented in the launch() proc
 				var/turf/next_turf_in_line = acceptableTurfs[launchCounter]
-				launchList |= typecache_filter_list_reverse(next_turf_in_line.contents, ignored_atoms) //Filter the specicic turf chosen from acceptableTurfs, and add it to the launchList
+				launchList |= typecache_filter_list_reverse(next_turf_in_line.contents, ignored_atoms) //Filter the specific turf chosen from acceptableTurfs, and add it to the launchList
 				if (iswallturf(next_turf_in_line))
 					launchList += next_turf_in_line
 			if(LAUNCH_RANDOM) //If we are launching randomly
@@ -722,10 +722,10 @@
 	if (isnull(target_turf))
 		return
 	var/obj/structure/closet/supplypod/centcompod/toLaunch = duplicate_object(temp_pod) //Duplicate the temp_pod (which we have been varediting or configuring with the UI) and store the result
-	toLaunch.update_appearance()//we update_appearance() here so that the door doesnt "flicker on" right after it lands
+	toLaunch.update_appearance()//we update_appearance() here so that the door doesn't "flicker on" right after it lands
 	var/shippingLane = GLOB.areas_by_type[/area/centcom/central_command_areas/supplypod/supplypod_temp_holding]
 	toLaunch.forceMove(shippingLane)
-	if (launchClone) //We arent launching the actual items from the bay, rather we are creating clones and launching those
+	if (launchClone) //We aren't launching the actual items from the bay, rather we are creating clones and launching those
 		if(launchRandomItem)
 			var/launch_candidate = pick_n_take(launchList)
 			if(!isnull(launch_candidate))

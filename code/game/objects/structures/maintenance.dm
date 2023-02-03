@@ -1,15 +1,15 @@
 /** This structure acts as a source of moisture loving cell lines,
-as well as a location where a hidden item can somtimes be retrieved
+as well as a location where a hidden item can sometimes be retrieved
 at the cost of risking a vicious bite.**/
 /obj/structure/moisture_trap
 	name = "moisture trap"
-	desc = "A device installed in order to control moisture in poorly ventilated areas.\nThe stagnant water inside basin seems to produce serious biofouling issues when improperly maintained.\nThis unit in particular seems to be teeming with life!\nWho thought mother Gaia could assert herself so vigoriously in this sterile and desolate place?"
+	desc = "A device installed in order to control moisture in poorly ventilated areas.\nThe stagnant water inside basin seems to produce serious biofouling issues when improperly maintained.\nThis unit in particular seems to be teeming with life!\nWho thought mother Gaia could assert herself so vigorously in this sterile and desolate place?"
 	icon_state = "moisture_trap"
 	anchored = TRUE
 	density = FALSE
 	///This var stores the hidden item that might be able to be retrieved from the trap
 	var/obj/item/hidden_item
-	///This var determines if there is a chance to recieve a bite when sticking your hand into the water.
+	///This var determines if there is a chance to receive a bite when sticking your hand into the water.
 	var/critter_infested = TRUE
 	///weighted loot table for what loot you can find inside the moisture trap.
 	///the actual loot isn't that great and should probably be improved and expanded later.
@@ -59,7 +59,7 @@ at the cost of risking a vicious bite.**/
 	if(!isliving(user))
 		return FALSE
 	var/mob/living/living_user = user
-	if(living_user.body_position == STANDING_UP && ishuman(living_user)) //I dont think monkeys can crawl on command.
+	if(living_user.body_position == STANDING_UP && ishuman(living_user)) //I don't think monkeys can crawl on command.
 		return FALSE
 	return TRUE
 

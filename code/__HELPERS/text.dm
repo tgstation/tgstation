@@ -66,7 +66,7 @@
 		return t
 	t = matchMiddle.group[1]
 
-	// Replace any non-space whitespace characters with spaces, and also multiple occurences with just one space
+	// Replace any non-space whitespace characters with spaces, and also multiple occurrences with just one space
 	var/static/regex/matchSpacing = new(@"\s+", "g")
 	t = replacetext(t, matchSpacing, " ")
 

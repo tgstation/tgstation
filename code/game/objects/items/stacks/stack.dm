@@ -20,14 +20,14 @@
 	gender = PLURAL
 	material_modifier = 0.05 //5%, so that a 50 sheet stack has the effect of 5k materials instead of 100k.
 	max_integrity = 100
-	/// A list to all recipies this stack item can create.
+	/// A list to all recipes this stack item can create.
 	var/list/datum/stack_recipe/recipes
 	/// What's the name of just 1 of this stack. You have a stack of leather, but one piece of leather
 	var/singular_name
 	/// How much is in this stack?
 	var/amount = 1
 	/// How much is allowed in this stack?
-	// Also see stack recipes initialisation. "max_res_amount" must be equal to this max_amount
+	// Also see stack recipes initialization. "max_res_amount" must be equal to this max_amount
 	var/max_amount = 50
 	/// If TRUE, this stack is a module used by a cyborg (doesn't run out like normal / etc)
 	var/is_cyborg = FALSE

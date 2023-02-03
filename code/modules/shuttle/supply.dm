@@ -247,10 +247,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /*
 	Generates a box of mail depending on our exports and imports.
 	Applied in the cargo shuttle sending/arriving, by building the crate if the round is ready to introduce mail based on the economy subsystem.
-	Then, fills the mail crate with mail, by picking applicable crew who can recieve mail at the time to sending.
+	Then, fills the mail crate with mail, by picking applicable crew who can receive mail at the time to sending.
 */
 /obj/docking_port/mobile/supply/proc/create_mail()
-	//Early return if there's no mail waiting to prevent taking up a slot. We also don't send mails on sundays or holidays.
+	//Early return if there's no mail waiting to prevent taking up a slot. We also don't send mails on Sundays or holidays.
 	if(!SSeconomy.mail_waiting || SSeconomy.mail_blocked)
 		return
 

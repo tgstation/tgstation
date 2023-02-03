@@ -458,7 +458,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		if(GLOB.stealthminID[potentialKey] == stealth_key)
 			return potentialKey
 
-/// Hands back a stealth ckey to use, guarenteed to be unique
+/// Hands back a stealth ckey to use, guaranteed to be unique
 /proc/generateStealthCkey()
 	var/guess = rand(0, 1000)
 	var/text_guess

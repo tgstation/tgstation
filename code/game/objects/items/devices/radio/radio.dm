@@ -19,7 +19,7 @@
 	custom_materials = list(/datum/material/iron=75, /datum/material/glass=25)
 	obj_flags = USES_TGUI
 
-	///if FALSE, broadcasting and listening dont matter and this radio shouldnt do anything
+	///if FALSE, broadcasting and listening don't matter and this radio shouldn't do anything
 	VAR_PRIVATE/on = TRUE
 	///the "default" radio frequency this radio is set to, listens and transmits to this frequency by default. wont work if the channel is encrypted
 	VAR_PRIVATE/frequency = FREQ_COMMON
@@ -76,7 +76,7 @@
 
 	/// overlay when speaker is on
 	var/overlay_speaker_idle = "s_idle"
-	/// overlay when recieving a message
+	/// overlay when receiving a message
 	var/overlay_speaker_active = "s_active"
 
 	/// overlay when mic is on
@@ -231,7 +231,7 @@
 	if(actual_setting)
 		should_be_broadcasting = broadcasting
 
-	if(broadcasting && on) //we dont need hearing sensitivity if we arent broadcasting, because talk_into doesnt care about hearing
+	if(broadcasting && on) //we dont need hearing sensitivity if we aren't broadcasting, because talk_into doesn't care about hearing
 		become_hearing_sensitive(INNATE_TRAIT)
 	else if(!broadcasting)
 		lose_hearing_sensitivity(INNATE_TRAIT)
@@ -247,7 +247,7 @@
 	on = new_on
 
 	if(on)
-		set_broadcasting(should_be_broadcasting)//set them to whatever theyre supposed to be
+		set_broadcasting(should_be_broadcasting)//set them to whatever they're supposed to be
 		set_listening(should_be_listening)
 	else
 		set_broadcasting(FALSE, actual_setting = FALSE)//fake set them to off

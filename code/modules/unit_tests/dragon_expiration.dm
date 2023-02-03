@@ -5,7 +5,7 @@
 	var/mob/living/simple_animal/hostile/space_dragon/dragon_time = allocate(/mob/living/simple_animal/hostile/space_dragon)
 	var/mob/living/carbon/human/to_be_consumed = allocate(/mob/living/carbon/human/consistent)
 	TEST_ASSERT(dragon_time.eat(to_be_consumed), "The space dragon failed to consume the dummy!")
-	TEST_ASSERT_EQUAL(to_be_consumed.loc, dragon_time, "The dummy's location, after being successfuly consumed, was not within the space dragon's contents!")
+	TEST_ASSERT_EQUAL(to_be_consumed.loc, dragon_time, "The dummy's location, after being successfully consumed, was not within the space dragon's contents!")
 	dragon_time.death()
 	TEST_ASSERT(isturf(to_be_consumed.loc), "After dying, the space dragon did not eject the consumed dummy content barfer element.")
 

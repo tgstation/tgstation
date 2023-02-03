@@ -6,7 +6,7 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	var/starting_tc = 0
-	/// The uplink flags of the implant uplink inside, only checked during initialisation so modifying it after initialisation will do nothing
+	/// The uplink flags of the implant uplink inside, only checked during initialization so modifying it after initialization will do nothing
 	var/uplink_flag = UPLINK_TRAITORS
 	///Reference to the uplink handler, deciding which type of uplink this implant has.
 	var/uplink_handler

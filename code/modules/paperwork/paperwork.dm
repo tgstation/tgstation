@@ -186,9 +186,9 @@
 /obj/item/paperwork/research/Initialize(mapload)
 	. = ..()
 
-	detailed_desc += span_info(" The documents detail the results of a standard ordnance test that occured on a nearby station.")
+	detailed_desc += span_info(" The documents detail the results of a standard ordnance test that occurred on a nearby station.")
 	detailed_desc += span_info(" As you read further, you realize something strange with the results -- The epicenter doesn't seem to be correct.")
-	detailed_desc += span_info(" If your math is correct, this explosion didn't happen at the station's ordnance site, it occured in the station's engine room.")
+	detailed_desc += span_info(" If your math is correct, this explosion didn't happen at the station's ordnance site, it occurred in the station's engine room.")
 	detailed_desc += span_info(" Regardless, they're still perfectly usable test results. You should probably stamp this.")
 
 /obj/item/paperwork/captain

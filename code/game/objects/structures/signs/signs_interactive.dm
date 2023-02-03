@@ -88,7 +88,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 /obj/structure/sign/collision_counter
 	name = "incident counter"
 	sign_change_name = "Indicator board- Tram incidents"
-	desc = "A display that indicates how many tram related incidents have occured today."
+	desc = "A display that indicates how many tram related incidents have occurred today."
 	icon_state = "tram_hits"
 	is_editable = TRUE
 	var/hit_count = 0

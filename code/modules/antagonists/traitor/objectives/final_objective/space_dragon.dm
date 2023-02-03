@@ -1,10 +1,10 @@
 /datum/traitor_objective/ultimate/space_dragon
 	name = "Find a Space Carp and mutate their DNA with your own using a DNA harvester we will drop pod at %AREA%"
-	description = "Go to %AREA%, and recieve the Carp DNA scanner. Use it on any Space Carp to harvest its DNA. \
+	description = "Go to %AREA%, and receive the Carp DNA scanner. Use it on any Space Carp to harvest its DNA. \
 	From there, use it on yourself, to mutate your own DNA with it and become a Space Dragon. \
 	Don't worry about finding one, I'm sure there'll have a wave of carp right when you need it."
 
-	///Area type the objective owner must be in to recieve the DNA extractor.
+	///Area type the objective owner must be in to receive the DNA extractor.
 	var/area/dna_scanner_spawnarea_type
 	///Whether the DNA extraction kit was sent already.
 	var/recieved_dna_scanner = FALSE
@@ -40,7 +40,7 @@
 				return
 			var/area/delivery_area = get_area(user)
 			if(delivery_area.type != dna_scanner_spawnarea_type)
-				to_chat(user, span_warning("You must be in [initial(dna_scanner_spawnarea_type.name)] to recieve the DNA extraction kit."))
+				to_chat(user, span_warning("You must be in [initial(dna_scanner_spawnarea_type.name)] to receive the DNA extraction kit."))
 				return
 			recieved_dna_scanner = TRUE
 			podspawn(list(

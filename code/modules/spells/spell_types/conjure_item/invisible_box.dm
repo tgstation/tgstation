@@ -13,7 +13,7 @@
 
 	school = SCHOOL_MIME
 	cooldown_time = 30 SECONDS
-	invocation = "Someone does a weird gesture." // Overriden in before cast
+	invocation = "Someone does a weird gesture." // Overridden in before cast
 	invocation_self_message = span_notice("You conjure up an invisible box, large enough to store a few things.")
 	invocation_type = INVOCATION_EMOTE
 

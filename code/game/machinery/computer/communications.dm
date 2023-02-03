@@ -54,7 +54,7 @@
 
 	///how many uses the console has done of toggling the emergency access
 	var/toggle_uses = 0
-	///how many uses can you toggle emergency access with before cooldowns start occuring BOTH ENABLE/DISABLE
+	///how many uses can you toggle emergency access with before cooldowns start occurring BOTH ENABLE/DISABLE
 	var/toggle_max_uses = 3
 	///when was emergency access last toggled
 	var/last_toggled

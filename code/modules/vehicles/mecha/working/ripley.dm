@@ -56,7 +56,7 @@
 	. = ..()
 	update_pressure()
 
-/obj/vehicle/sealed/mecha/working/ripley/generate_actions() //isnt allowed to have internal air
+/obj/vehicle/sealed/mecha/working/ripley/generate_actions() //isn't allowed to have internal air
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats)

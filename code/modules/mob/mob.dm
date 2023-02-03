@@ -115,7 +115,7 @@
  * * hud_category - the index in our active_hud_list corresponding to an image now being shown.
  * * update_huds - if FALSE we will just put the hud_category into active_hud_list without actually updating the atom_hud datums subscribed to it
  * * exclusive_hud - if given a reference to an atom_hud, will just update that hud instead of all global ones attached to that category.
- * This is because some atom_hud subtypes arent supposed to work via global categories, updating normally would affect all of these which we dont want.
+ * This is because some atom_hud subtypes aren't supposed to work via global categories, updating normally would affect all of these which we don't want.
  */
 /atom/proc/set_hud_image_active(hud_category, update_huds = TRUE, datum/atom_hud/exclusive_hud)
 	if(!istext(hud_category) || !hud_list?[hud_category] || active_hud_list?[hud_category])
@@ -1148,7 +1148,7 @@
 /mob/proc/update_mouse_pointer()
 	if(!client)
 		return
-	if(client.mouse_pointer_icon != initial(client.mouse_pointer_icon))//only send changes to the client if theyre needed
+	if(client.mouse_pointer_icon != initial(client.mouse_pointer_icon))//only send changes to the client if they're needed
 		client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
 	if(examine_cursor_icon && client.keys_held["Shift"]) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
 		client.mouse_pointer_icon = examine_cursor_icon
@@ -1168,7 +1168,7 @@
 /mob/proc/has_nightvision()
 	return see_in_dark >= NIGHTVISION_FOV_RANGE
 
-/// This mob is abile to read books
+/// This mob is able to read books
 /mob/proc/is_literate()
 	return HAS_TRAIT(src, TRAIT_LITERATE) && !HAS_TRAIT(src, TRAIT_ILLITERATE)
 

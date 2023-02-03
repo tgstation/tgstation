@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY(lifts)
 
 
 ///make this tram platform multitile, expanding to cover all the tram platforms adjacent to us and deleting them. makes movement more efficient.
-///the platform becoming multitile should be in the bottom left corner since thats assumed to be the loc of multitile objects
+///the platform becoming multitile should be in the bottom left corner since that's assumed to be the loc of multitile objects
 /obj/structure/industrial_lift/proc/create_multitile_platform(min_x, min_y, max_x, max_y, z)
 
 	if(!(min_x && min_y && max_x && max_y && z))
@@ -196,8 +196,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	width = (max_x - min_x) + 1
 	height = (max_y - min_y) + 1
 
-	///list of turfs we dont go over. if for whatever reason we encounter an already multitile lift platform
-	///we add all of its locs to this list so we dont add that lift platform multiple times as we iterate through its locs
+	///list of turfs we don't go over. if for whatever reason we encounter an already multitile lift platform
+	///we add all of its locs to this list so we don't add that lift platform multiple times as we iterate through its locs
 	var/list/locs_to_skip = locs.Copy()
 
 	bound_width = bound_width * width
@@ -286,7 +286,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/y_offset = ROUND_UP(bound_height / 32) - 1 //how many tiles our vertically farthest edge is from us
 
 	//the x coordinate of the edge furthest from our future destination, which would be our right hand side
-	var/back_edge_x = destination.x + x_offset//if we arent multitile this should just be destination.x
+	var/back_edge_x = destination.x + x_offset//if we aren't multitile this should just be destination.x
 	var/top_edge_y = destination.y + y_offset
 
 	var/turf/top_right_corner = locate(min(world.maxx, back_edge_x), min(world.maxy, top_edge_y), destination.z)
@@ -429,7 +429,7 @@ GLOBAL_LIST_EMPTY(lifts)
 ///has destination.Entered() and origin.Exited() called on them, as only our movement can be perceived.
 ///none of the movers are able to react to the movement of any other mover, saving a lot of needless processing cost
 ///and is more sensible. without this, if you and a banana are on the same platform, when that platform moves you will slip
-///on the banana even if youre not moving relative to it.
+///on the banana even if you're not moving relative to it.
 /obj/structure/industrial_lift/proc/group_move(list/atom/movable/movers, movement_direction)
 	if(movement_direction == NONE)
 		stack_trace("an industrial lift was told to move to somewhere it already is!")
@@ -448,7 +448,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		set_glide_size(glide_size_override)
 
 	forceMove(our_dest)
-	if(loc != our_dest || QDELETED(src))//check if our movement succeeded, if it didnt then the movers cant be moved
+	if(loc != our_dest || QDELETED(src))//check if our movement succeeded, if it didn't then the movers cant be moved
 		return FALSE
 
 	for(var/atom/movable/mover as anything in changed_gliders)
@@ -494,8 +494,8 @@ GLOBAL_LIST_EMPTY(lifts)
  *
  * Arguments:
  * * consider_anything_past - number. if > 0 this platform will only handle foreign contents that exceed this number on each of our locs
- * * foreign_objects - bool. if true this platform will consider /atom/movable's that arent mobs as part of foreign contents
- * * foreign_non_player_mobs - bool. if true we consider mobs that dont have a mind to be foreign
+ * * foreign_objects - bool. if true this platform will consider /atom/movable's that aren't mobs as part of foreign contents
+ * * foreign_non_player_mobs - bool. if true we consider mobs that don't have a mind to be foreign
  * * consider_player_mobs - bool. if true we consider player mobs to be foreign. only works if foreign_non_player_mobs is true as well
  */
 /obj/structure/industrial_lift/proc/reset_contents(consider_anything_past = 0, foreign_objects = TRUE, foreign_non_player_mobs = TRUE, consider_player_mobs = FALSE)
@@ -860,7 +860,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	SEND_SIGNAL(src, COMSIG_TRAM_SET_TRAVELLING, travelling)
 
 /obj/structure/industrial_lift/tram/set_currently_z_moving()
-	return FALSE //trams can never z fall and shouldnt waste any processing time trying to do so
+	return FALSE //trams can never z fall and shouldn't waste any processing time trying to do so
 
 /**
  * Handles unlocking the tram controls for use after moving

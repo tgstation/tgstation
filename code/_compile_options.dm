@@ -11,7 +11,7 @@
 #ifdef TESTING
 #define DATUMVAR_DEBUGGING_MODE
 
-/// Enables update_appearance "relevence" tracking
+/// Enables update_appearance "relevance" tracking
 /// This allows us to check which update_appearance procs are actually doing anything. Good thing to look in on once a year or so
 /// You'll need to run a two regexes/search and replaces to make it work
 /// First, one to convert type refs (PROC_REF.*)(update_appearance\)) -> $1_$2
@@ -19,7 +19,7 @@
 /// We'll use another define to convert uses of the proc over. That'll be all
 // #define APPEARANCE_SUCCESS_TRACKING
 
-///Used to find the sources of harddels, quite laggy, don't be surpised if it freezes your client for a good while
+///Used to find the sources of harddels, quite laggy, don't be surprised if it freezes your client for a good while
 //#define REFERENCE_TRACKING
 #ifdef REFERENCE_TRACKING
 

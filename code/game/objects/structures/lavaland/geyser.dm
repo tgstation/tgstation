@@ -43,7 +43,7 @@
 		I.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(I)
 
-///start making those CHHHHHEEEEEEMS. Called whenever chems are removed, it's fine because START_PROCESSING checks if we arent already processing
+///start making those CHHHHHEEEEEEMS. Called whenever chems are removed, it's fine because START_PROCESSING checks if we aren't already processing
 /obj/structure/geyser/proc/start_chemming()
 	START_PROCESSING(SSplumbing, src) //It's main function is to be plumbed, so use SSplumbing
 

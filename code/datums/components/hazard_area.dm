@@ -88,7 +88,7 @@
  * If the created area already exists in the blacklist or whitelist it simply returns,
  * however if it isn't we check for an overwritten area and if non-hazardous setup the area to
  * allow the parent.
- * If there isnt an overwritten area it assumes it to be non-hazardous, abuse it and you will weep -ZephyrTFA
+ * If there isn't an overwritten area it assumes it to be non-hazardous, abuse it and you will weep -ZephyrTFA
  */
 /datum/component/hazard_area/proc/on_area_creation(datum/source, area/created, area/overwritten, mob/creator)
 	SIGNAL_HANDLER
@@ -97,7 +97,7 @@
 		return // in whitelist, probably expanded an already whitelisted area
 
 	if(created.type in area_blacklist)
-		return // in blacklist, expanding a blacklisted area doesnt magically give you permission to enter
+		return // in blacklist, expanding a blacklisted area doesn't magically give you permission to enter
 
 	if(overwritten)
 		if(check_area_hazardous(overwritten.type))
@@ -111,7 +111,7 @@
 	area_created += created
 
 /**
- * This proc handles the status effect applied to the parent, most noteably applying or removing it as required
+ * This proc handles the status effect applied to the parent, most notably applying or removing it as required
  */
 /datum/component/hazard_area/proc/update_parent_status_effect()
 	if(QDELETED(parent))
@@ -121,7 +121,7 @@
 	var/datum/status_effect/hazard_area/effect = parent_living.has_status_effect(/datum/status_effect/hazard_area)
 	var/should_have_status_effect = check_area_hazardous(last_parent_area)
 
-	if(should_have_status_effect && !effect) // Should have the status - and doesnt
+	if(should_have_status_effect && !effect) // Should have the status - and doesn't
 		parent_living.apply_status_effect(/datum/status_effect/hazard_area)
 		if(parent_living.buckled)
 			parent_living.buckled.balloon_alert(parent, "you fall off!")

@@ -144,8 +144,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/disable_gas = FALSE
 	/// Disables power changes.
 	var/disable_power_change = FALSE
-	/// Disables the SM's proccessing totally.
-	/// Make sure absorbed_gasmix and gas_percentage isnt null if this is on.
+	/// Disables the SM's processing totally.
+	/// Make sure absorbed_gasmix and gas_percentage isn't null if this is on.
 	var/disable_process = FALSE
 
 	///Stores the time of when the last zap occurred

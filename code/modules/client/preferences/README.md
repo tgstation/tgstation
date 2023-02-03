@@ -234,7 +234,7 @@ There are a handful of procs preferences can use to act on their own:
 /datum/preference/proc/apply_to_client_updated(client/client, value)
 
 /// Apply this preference onto the given human.
-/// Must be overriden by subtypes.
+/// Must be overridden by subtypes.
 /// Called when the savefile_identifier == PREFERENCE_CHARACTER.
 /datum/preference/proc/apply_to_human(mob/living/carbon/human/target, value)
 ```

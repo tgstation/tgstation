@@ -110,7 +110,7 @@ And one of those behaviors, `basic_melee_attack`. As I have been doing so far, I
 /datum/ai_behavior/basic_melee_attack/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
-	//targetting datum will kill the action if not real anymore
+	//targeting datum will kill the action if not real anymore
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
@@ -120,7 +120,7 @@ And one of those behaviors, `basic_melee_attack`. As I have been doing so far, I
 		finish_action(controller, FALSE, target_key)
 		return //don't forget to end the performance too
 
-	var/hiding_target = targetting_datum.find_hidden_mobs(basic_mob, target) //If this is valid, theyre hidden in something!
+	var/hiding_target = targetting_datum.find_hidden_mobs(basic_mob, target) //If this is valid, they're hidden in something!
 
 	controller.blackboard[hiding_location_key] = hiding_target
 

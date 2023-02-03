@@ -1,4 +1,4 @@
-//Initialisation procs
+//Initialization procs
 /mob/proc/mind_initialize()
 	if(mind)
 		mind.key = key

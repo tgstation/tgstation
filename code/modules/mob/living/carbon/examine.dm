@@ -155,7 +155,7 @@
 	. += span_notice("<i>You examine [src] closer, and note the following...</i>")
 
 	if(dna) //not all carbons have it. eg - xenos
-		//On closer inspection, this man isnt a man at all!
+		//On closer inspection, this man isn't a man at all!
 		var/list/covered_zones = get_covered_body_zones()
 		for(var/obj/item/bodypart/part as anything in bodyparts)
 			if(part.body_zone in covered_zones)

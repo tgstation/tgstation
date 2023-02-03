@@ -303,7 +303,7 @@
 /**
  * Returns whether the chip is active.
  *
- * Intended to be overriden.
+ * Intended to be overridden.
  * Returns TRUE if the chip is active.
  */
 /obj/item/skillchip/proc/is_active()
@@ -312,7 +312,7 @@
 /**
  * Returns the chip's complexity.
  *
- * Intended to be overriden.
+ * Intended to be overridden.
  */
 /obj/item/skillchip/proc/get_complexity()
 	return complexity

@@ -173,7 +173,7 @@
 	)
 
 /// Mimics the appearance and properties of the passed in bottle.
-/// Takes the broken bottle to mimic, and the thing the bottle was broken agaisnt as args
+/// Takes the broken bottle to mimic, and the thing the bottle was broken against as args
 /obj/item/broken_bottle/proc/mimic_broken(obj/item/reagent_containers/cup/glass/to_mimic, atom/target, break_top)
 	icon_state = to_mimic.icon_state
 	var/icon/drink_icon = new(to_mimic.icon, icon_state)

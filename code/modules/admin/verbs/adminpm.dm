@@ -98,7 +98,7 @@
 	var/datum/admin_help/recipient_ticket = recipient?.current_ticket
 	// Any past interactions with the recipient ticket
 	var/datum/admin_help/recipient_interactions = recipient_ticket?.ticket_interactions
-	// Any opening interactions with the recipient ticket, IE: interactions started before the ticket first recieves a response
+	// Any opening interactions with the recipient ticket, IE: interactions started before the ticket first receives a response
 	var/datum/admin_help/opening_interactions = recipient_ticket?.opening_responders
 	// Our recipient's admin holder, if one exists
 	var/datum/admins/recipient_holder = recipient?.holder
@@ -360,7 +360,7 @@
 	var/their_name_with_link = key_name(recipient, TRUE, TRUE)
 	// Stores a bit of html with our ckey highlighted as a reply link
 	var/link_to_us = key_name(src, TRUE, FALSE)
-	// Stores a bit of html with outhe ckey of the recipientr highlighted as a reply link
+	// Stores a bit of html without the ckey of the recipient highlighted as a reply link
 	var/link_to_their = key_name(recipient, TRUE, FALSE)
 	// Our ckey
 	var/our_ckey = ckey
@@ -377,7 +377,7 @@
 	var/recipient_ticket_id = recipient_ticket?.id
 
 	// If we should do a full on boink, so with the text and extra flair and everything
-	// We want to always do this so long as WE are an admin, and we're messaging the "loser" of the converstation
+	// We want to always do this so long as WE are an admin, and we're messaging the "loser" of the conversation
 	var/full_boink = FALSE
 	// Only admins can perform boinks
 	if(our_holder)
@@ -389,11 +389,11 @@
 
 	// If we're gonna boink em, do it now
 	// It is worth noting this will always generate the target a ticket if they don't already have one (tickets will generate if a player ahelps automatically, outside this logic)
-	// So past this point, because of our block above here, we can be reasonably guarenteed that the user will have a ticket
+	// So past this point, because of our block above here, we can be reasonably guaranteed that the user will have a ticket
 	if(full_boink)
 		// Do BIG RED TEXT
 		var/already_logged = FALSE
-		// Full boinks will always be done to players, so we are not guarenteed that they won't have a ticket
+		// Full boinks will always be done to players, so we are not guaranteed that they won't have a ticket
 		if(!recipient_ticket)
 			new /datum/admin_help(send_message, recipient, TRUE)
 			already_logged = TRUE

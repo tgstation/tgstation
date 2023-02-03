@@ -66,7 +66,7 @@
 		var/atom/movable/screen/plane_master/plane = plane_masters[thing]
 		show_plane(plane)
 
-/// This is mostly a proc so it can be overriden by popups, since they have unique behavior they want to do
+/// This is mostly a proc so it can be overridden by popups, since they have unique behavior they want to do
 /datum/plane_master_group/proc/show_plane(atom/movable/screen/plane_master/plane)
 	plane.show_to(our_hud.mymob)
 
@@ -154,7 +154,7 @@
 			continue
 
 		if(plane.force_hidden || plane.is_outside_bounds || visual_offset < 0)
-			// We don't animate here because it should be invisble, but we do mark because it'll look nice
+			// We don't animate here because it should be invisible, but we do mark because it'll look nice
 			plane.transform = offsets[visual_offset + offset_offset]
 			continue
 
@@ -190,6 +190,6 @@
 		var/atom/movable/screen/plane_master/plane = plane_masters[thing]
 		plane.hide_from(our_mob)
 
-/// This is mostly a proc so it can be overriden by popups, since they have unique behavior they want to do
+/// This is mostly a proc so it can be overridden by popups, since they have unique behavior they want to do
 /datum/plane_master_group/hudless/show_plane(atom/movable/screen/plane_master/plane)
 	plane.show_to(our_mob)

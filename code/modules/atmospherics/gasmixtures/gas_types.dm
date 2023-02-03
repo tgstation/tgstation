@@ -127,7 +127,7 @@
 	fusion_power = 10
 	rarity = 50
 	base_value = 2.5
-	desc = "The most noble gas of them all. High quantities of hyper-noblium actively prevents reactions from occuring."
+	desc = "The most noble gas of them all. High quantities of hyper-noblium actively prevents reactions from occurring."
 
 /datum/gas/nitrous_oxide
 	id = "n2o"

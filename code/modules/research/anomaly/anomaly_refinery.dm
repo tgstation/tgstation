@@ -35,7 +35,7 @@
 	// These vars are used for the explosion simulation and doesn't affect the core detonation.
 	/// Combined result of the first two tanks. Exists only in our machine.
 	var/datum/gas_mixture/combined_gasmix
-	/// Here for the UI, tracks the amounts of reaction that has occured. 1 means valve opened but not reacted.
+	/// Here for the UI, tracks the amounts of reaction that has occurred. 1 means valve opened but not reacted.
 	var/reaction_increment = 0
 
 /obj/machinery/research/anomaly_refinery/Initialize(mapload)
@@ -45,7 +45,7 @@
 /obj/machinery/research/anomaly_refinery/examine_more(mob/user)
 	. = ..()
 	if (obj_flags & EMAGGED)
-		. += span_notice("A small panel on [p_their()] side is dislaying a notice. Something about firmware?")
+		. += span_notice("A small panel on [p_their()] side is displaying a notice. Something about firmware?")
 
 
 /obj/machinery/research/anomaly_refinery/assume_air(datum/gas_mixture/giver)

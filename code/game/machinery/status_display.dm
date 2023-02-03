@@ -298,7 +298,7 @@
 		// Centered text
 		var/color = header_regex.Find(line) ? header_text_color : text_color
 		maptext = generate_text(line, center = TRUE, text_color = color)
-		maptext_x = xoffset //Defaults to 0, this would be centered unless overided
+		maptext_x = xoffset //Defaults to 0, this would be centered unless overridden
 
 /**
  * A hyper-streamlined version of MeasureText that doesn't support different fonts, rich formatting, or multiline.

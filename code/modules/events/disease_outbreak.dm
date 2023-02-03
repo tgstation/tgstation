@@ -19,10 +19,10 @@
 		return TRUE
 
 /**
- * Creates a list of people who are elligible to become disease carriers for the event
+ * Creates a list of people who are eligible to become disease carriers for the event
  *
- * Searches through the player list, adding anyone who is elligible to be a disease carrier for the event. This checks for
- * whether or not the candidate is alive, a crewmember, is able to recieve a disease, and whether or not a disease is already present in them.
+ * Searches through the player list, adding anyone who is eligible to be a disease carrier for the event. This checks for
+ * whether or not the candidate is alive, a crewmember, is able to receive a disease, and whether or not a disease is already present in them.
  * This proc needs to be run at some point to ensure the event has candidates to infect.
  */
 /datum/round_event_control/disease_outbreak/proc/generate_candidates()
@@ -131,7 +131,7 @@
 /datum/event_admin_setup/disease_outbreak/prompt_admins()
 	var/candidate_count = candidate_check()
 	if(!candidate_check())
-		tgui_alert(usr, "There are no candidates eligible to recieve a disease!", "Error")
+		tgui_alert(usr, "There are no candidates eligible to receive a disease!", "Error")
 		return ADMIN_CANCEL_EVENT
 	tgui_alert(usr, "[candidate_count] candidates found!", "Disease Outbreak")
 
@@ -150,7 +150,7 @@
 /datum/event_admin_setup/disease_outbreak/advanced/prompt_admins()
 	var/candidate_count = candidate_check()
 	if(!candidate_check())
-		tgui_alert(usr, "There are no candidates eligible to recieve a disease!", "Error")
+		tgui_alert(usr, "There are no candidates eligible to receive a disease!", "Error")
 		return ADMIN_CANCEL_EVENT
 	tgui_alert(usr, "[candidate_count] candidates found!", "Disease Outbreak")
 

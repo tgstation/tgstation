@@ -8,7 +8,7 @@
 	outfit_item.on_outfit_equip(H, FALSE, ##slot_name); \
 }
 
-/// See #66313 and #60901. outfit_sanity used to runtime whenever you had two mergable sheets in either hand. Previously, this only had a 3% chance of occuring. Now 100%.
+/// See #66313 and #60901. outfit_sanity used to runtime whenever you had two mergeable sheets in either hand. Previously, this only had a 3% chance of occurring. Now 100%.
 /datum/outfit/stacks_in_hands
 	name = "Mr. Runtime"
 

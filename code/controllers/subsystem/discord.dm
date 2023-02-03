@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(discord)
 
 	/// People to save to notify file
 	var/list/notify_members = list()
-	/// Copy of previous list, so the SS doesnt have to fire if no new members have been added
+	/// Copy of previous list, so the SS doesn't have to fire if no new members have been added
 	var/list/notify_members_cache = list()
 	/// People to notify on roundstart
 	var/list/people_to_notify = list()

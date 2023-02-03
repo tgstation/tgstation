@@ -308,7 +308,7 @@ Nothing else in the console has ID requirements.
 
 	add_fingerprint(usr)
 
-	// Check if the console is locked to block any actions occuring
+	// Check if the console is locked to block any actions occurring
 	if (locked && action != "toggleLock")
 		say("Console is locked, cannot perform further actions.")
 		return TRUE

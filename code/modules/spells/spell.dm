@@ -27,7 +27,7 @@
  *
  * ## Other procs called / may be called within the chain:
  * - [invocation][/datum/action/cooldown/spell/invocation] handles saying any vocal (or emotive) invocations the spell
- * may have, and can be overriden or extended. Called by spell_feedback.
+ * may have, and can be overridden or extended. Called by spell_feedback.
  * - [reset_spell_cooldown][/datum/action/cooldown/spell/reset_spell_cooldown] is a way to handle reverting a spell's
  * cooldown and making it ready again if it fails to go off at any point. Not called anywhere by default. If you
  * want to cancel a spell in before_cast and would like the cooldown restart, call this.

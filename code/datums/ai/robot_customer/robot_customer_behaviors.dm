@@ -71,11 +71,11 @@
 		return
 
 	controller.blackboard[BB_CUSTOMER_PATIENCE] -= delta_time * 10 // Convert delta_time to a SECONDS equivalent.
-	if(controller.blackboard[BB_CUSTOMER_PATIENCE] < 0 || controller.blackboard[BB_CUSTOMER_LEAVING]) // Check if we're leaving because sometthing mightve forced us to
+	if(controller.blackboard[BB_CUSTOMER_PATIENCE] < 0 || controller.blackboard[BB_CUSTOMER_LEAVING]) // Check if we're leaving because something might've forced us to
 		finish_action(controller, FALSE)
 		return
 
-	// DT_PROB 1.5 is about a 40% chance that the tourist will have vocalised at least once every minute.
+	// DT_PROB 1.5 is about a 40% chance that the tourist will have vocalized at least once every minute.
 	if(DT_PROB(0.85, delta_time))
 		var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
 		var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
@@ -88,7 +88,7 @@
 		if(my_seat)
 			controller.pawn.setDir(my_seat.dir) //Sit in your seat
 
-	///Now check if theres a meal infront of us.
+	///Now check if there's a meal infront of us.
 	var/datum/venue/attending_venue = controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 
 	var/turf/infront_turf = get_step(controller.pawn, controller.pawn.dir)
@@ -109,7 +109,7 @@
 	if(greytider || QDELETED(src))
 		return
 	controller.blackboard[BB_CUSTOMER_LEAVING] = TRUE
-	customer_pawn.update_icon() //They might have a special leaving accesoiry (french flag)
+	customer_pawn.update_icon() //They might have a special leaving accessory (French flag)
 	if(succeeded)
 		customer_pawn.say(pick(customer_data.leave_happy_lines))
 	else

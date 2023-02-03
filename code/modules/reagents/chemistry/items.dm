@@ -126,7 +126,7 @@
 	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Current temperature: [round(cont.reagents.chem_temp, 0.1)]K Total pH: [round(cont.reagents.ph, 0.01)]\n"
 	out_message += "Chemicals found in [target.name]:</b>\n"
 	if(cont.reagents.is_reacting)
-		out_message += "[span_warning("A reaction appears to be occuring currently.")]<span class='notice'>\n"
+		out_message += "[span_warning("A reaction appears to be occurring currently.")]<span class='notice'>\n"
 	for(var/datum/reagent/reagent in cont.reagents.reagent_list)
 		if(reagent.purity < reagent.inverse_chem_val && reagent.inverse_chem) //If the reagent is impure
 			var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]

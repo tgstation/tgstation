@@ -84,7 +84,7 @@
 				if(turfs[vis_turf])
 					updated_visible_turfs[vis_turf] = vis_turf
 
-	///new turfs that we couldnt see last update but can now
+	///new turfs that we couldn't see last update but can now
 	var/list/newly_visible_turfs = updated_visible_turfs - visibleTurfs
 	///turfs that we could see last update but cant see now
 	var/list/newly_obscured_turfs = visibleTurfs - updated_visible_turfs

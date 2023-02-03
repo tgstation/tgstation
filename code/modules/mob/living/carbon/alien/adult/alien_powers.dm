@@ -33,7 +33,7 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/alien/PreActivate(atom/target)
 	// Parent calls Activate(), so if parent returns TRUE,
-	// it means the activation happened successfuly by this point
+	// it means the activation happened successfully by this point
 	. = ..()
 	if(!.)
 		return FALSE

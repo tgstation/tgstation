@@ -300,7 +300,7 @@
 	if(!istype(floor) || !range_check(floor,user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if(is_valid_plating(floor)) //cant deconstruct normal plating thats the RCD's job
+	if(is_valid_plating(floor)) //cant deconstruct normal plating that's the RCD's job
 		balloon_alert(user, "nothing to deconstruct!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

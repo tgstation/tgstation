@@ -1,4 +1,4 @@
-///The most brain-dead type of movement, bee-line to the target with no concern of whats in front of us.
+///The most brain-dead type of movement, bee-line to the target with no concern of what's in front of us.
 /datum/ai_movement/dumb
 	max_pathing_attempts = 16
 

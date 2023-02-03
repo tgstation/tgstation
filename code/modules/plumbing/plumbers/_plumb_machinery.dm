@@ -10,9 +10,9 @@
 	density = TRUE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 7.5
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	///Plumbing machinery is always gonna need reagents, so we might aswell put it here
+	///Plumbing machinery is always gonna need reagents, so we might as well put it here
 	var/buffer = 50
-	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
+	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything that's in DEFINES/reagents.dm
 	var/reagent_flags = TRANSPARENT
 	///category for plumbing RCD
 	var/category = ""

@@ -50,7 +50,7 @@
 		/datum/gas/carbon_dioxide = "Carbon Dioxide is formed at 1 reaction rate.",
 		"Temperature" = "Can only occur between [FREON_LOWER_TEMPERATURE] - [FREON_MAXIMUM_BURN_TEMPERATURE] Kelvin",
 		"Energy" = "[FIRE_FREON_ENERGY_CONSUMED] joules of energy is absorbed per reaction rate",
-		"Hot Ice" = "This reaction has a small chance to produce hot ice when occuring between [HOT_ICE_FORMATION_MINIMUM_TEMPERATURE]-[HOT_ICE_FORMATION_MAXIMUM_TEMPERATURE] kelvins",
+		"Hot Ice" = "This reaction has a small chance to produce hot ice when occurring between [HOT_ICE_FORMATION_MINIMUM_TEMPERATURE]-[HOT_ICE_FORMATION_MAXIMUM_TEMPERATURE] kelvins",
 	)
 
 

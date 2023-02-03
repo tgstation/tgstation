@@ -51,7 +51,7 @@ All ShuttleMove procs go here
 	if(newT == src) // In case of in place shuttle rotation shenanigans.
 		return
 	// Destination turf changes.
-	// Baseturfs is definitely a list or this proc wouldnt be called.
+	// Baseturfs is definitely a list or this proc wouldn't be called.
 	var/shuttle_depth = depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)
 
 	if(!shuttle_depth)

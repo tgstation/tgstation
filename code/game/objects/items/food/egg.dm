@@ -170,7 +170,7 @@
 	desc = "Supposedly good for you, if you can stomach it. Better fried."
 	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "rawegg"
-	food_reagents = list() //Recieves all reagents from its whole egg counterpart
+	food_reagents = list() //Receives all reagents from its whole egg counterpart
 	bite_consumption = 1
 	tastes = list("raw egg" = 6, "sliminess" = 1)
 	eatverbs = list("gulp down")

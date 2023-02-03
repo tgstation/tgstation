@@ -10,7 +10,7 @@
 	// This is not "remove on fullheal" as in practice,
 	// fullheal should instead remove all the sources and in turn cure this
 
-	/// Static list of signals that, when recieved, we force an update to our nearsighted overlay
+	/// Static list of signals that, when received, we force an update to our nearsighted overlay
 	var/static/list/update_signals = list(SIGNAL_ADDTRAIT(TRAIT_NEARSIGHTED_CORRECTED), SIGNAL_REMOVETRAIT(TRAIT_NEARSIGHTED_CORRECTED))
 	/// How severe is our nearsightedness right now
 	var/overlay_severity = 1
@@ -35,7 +35,7 @@
 /datum/status_effect/grouped/nearsighted/proc/should_be_nearsighted()
 	return !HAS_TRAIT(owner, TRAIT_NEARSIGHTED_CORRECTED)
 
-/// Updates our nearsightd overlay, either removing it if we have the trait or adding it if we don't
+/// Updates our nearsighted overlay, either removing it if we have the trait or adding it if we don't
 /datum/status_effect/grouped/nearsighted/proc/update_nearsighted_overlay()
 	if(should_be_nearsighted())
 		owner.overlay_fullscreen(id, /atom/movable/screen/fullscreen/impaired, overlay_severity)

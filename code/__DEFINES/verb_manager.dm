@@ -1,7 +1,7 @@
 /**
  * verb queuing thresholds. remember that since verbs execute after SendMaps the player wont see the effects of the verbs on the game world
  * until SendMaps executes next tick, and then when that later update reaches them. thus most player input has a minimum latency of world.tick_lag + player ping.
- * however thats only for the visual effect of player input, when a verb processes the actual latency of game state changes or semantic latency is effectively 1/2 player ping,
+ * however that's only for the visual effect of player input, when a verb processes the actual latency of game state changes or semantic latency is effectively 1/2 player ping,
  * unless that verb is queued for the next tick in which case its some number probably smaller than world.tick_lag.
  * so some verbs that represent player input are important enough that we only introduce semantic latency if we absolutely need to.
  * its for this reason why player clicks are handled in SSinput before even movement - semantic latency could cause someone to move out of range
@@ -16,12 +16,12 @@
 ///default queuing tick_usage threshold for most verbs which can allow a small amount of latency to be processed in the next tick
 #define VERB_DEFAULT_QUEUE_THRESHOLD 85
 
-///attempt to queue this verb process if the server is overloaded. evaluates to FALSE if queuing isnt necessary or if it failed.
-///_verification_args... are only necessary if the verb_manager subsystem youre using checks them in can_queue_verb()
-///if you put anything in _verification_args that ISNT explicitely put in the can_queue_verb() override of the subsystem youre using,
+///attempt to queue this verb process if the server is overloaded. evaluates to FALSE if queuing isn't necessary or if it failed.
+///_verification_args... are only necessary if the verb_manager subsystem you're using checks them in can_queue_verb()
+///if you put anything in _verification_args that ISN'T explicitly put in the can_queue_verb() override of the subsystem you're using,
 ///it will runtime.
 #define TRY_QUEUE_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args...) (_queue_verb(_verb_callback, _tick_check, _subsystem_to_use, _verification_args))
-///queue wrapper for TRY_QUEUE_VERB() when you want to call the proc if the server isnt overloaded enough to queue
+///queue wrapper for TRY_QUEUE_VERB() when you want to call the proc if the server isn't overloaded enough to queue
 #define QUEUE_OR_CALL_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args...) \
 	if(!TRY_QUEUE_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args)) {\
 		_verb_callback:InvokeAsync() \

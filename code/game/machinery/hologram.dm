@@ -414,10 +414,10 @@ Possible to do for anyone motivated enough:
  */
 /obj/machinery/holopad/proc/set_can_hear_flags(flag, set_flag = TRUE)
 	if(!(flag & CAN_HEAR_ALL_FLAGS))
-		return FALSE //the given flag doesnt exist
+		return FALSE //the given flag doesn't exist
 
 	if(set_flag)
-		if(can_hear_flags == NONE)//we couldnt hear before, so become hearing sensitive
+		if(can_hear_flags == NONE)//we couldn't hear before, so become hearing sensitive
 			become_hearing_sensitive()
 
 		can_hear_flags |= flag

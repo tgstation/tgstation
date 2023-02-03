@@ -1,4 +1,4 @@
-/// A doctor successfuly completed a surgery on someone.
+/// A doctor successfully completed a surgery on someone.
 /datum/memory/surgery
 	story_value = STORY_VALUE_OKAY
 	// Protagonist - The surgeon, completing the surgery
@@ -39,7 +39,7 @@
 /datum/memory/bomb_planted
 	story_value = STORY_VALUE_MEH
 	// Protagonist - Whoever armed the bomb
-	// Antaognist - The bomb that was armed
+	// Antagonist - The bomb that was armed
 
 /datum/memory/bomb_planted/get_names()
 	return list("The arming of [antagonist_name] by [protagonist_name].")

@@ -193,7 +193,7 @@
 	for (var/mob/living/carbon/human/H in view(7,src)) //Find the NEET
 		if((H.name == oldtarget_name) && (world.time < last_found + 100))
 			continue
-		if(!check_purity(H)) //Theyre impure
+		if(!check_purity(H)) //They're impure
 			target = H
 			oldtarget_name = H.name
 			speak("Unhygienic client found. Please stand still so I can clean you.")

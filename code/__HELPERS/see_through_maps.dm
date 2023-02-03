@@ -10,7 +10,7 @@
 #define SEE_THROUGH_MAP_THREE_X_TWO "3x2"
 ///One row of three tiles above the atom, but offset one tile to the left because of how billboards work
 #define SEE_THROUGH_MAP_BILLBOARD "billboard"
-///Two rows of three wide, but offset one tile to the left because thats how shipping containers work
+///Two rows of three wide, but offset one tile to the left because that's how shipping containers work
 #define SEE_THROUGH_MAP_SHIPPING_CONTAINER "shipping_container"
 ///Seethrough component for the ratvar wreck, in shape of the ratvar wreck
 #define SEE_THROUGH_MAP_RATVAR_WRECK "ratvar"

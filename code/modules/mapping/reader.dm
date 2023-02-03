@@ -333,7 +333,7 @@
 	// Skip Y coords that are above the smallest of the three params
 	// So maxy and y_upper get to act as thresholds, and relative_y can play
 	var/y_skip_above = min(world.maxy - y_relative_to_absolute, y_upper, relative_y)
-	// How many lines to skip because they'd be above the y cuttoff line
+	// How many lines to skip because they'd be above the y cutoff line
 	var/y_starting_skip = relative_y - y_skip_above
 	highest_y += y_starting_skip
 
@@ -350,7 +350,7 @@
 		x_delta_with = min(x_delta_with, world.maxx)
 
 	// We're gonna skip all the entries above the upper x, or maxx if cropMap is set
-	// The last column is guarenteed to have the highest x value we;ll encounter
+	// The last column is guaranteed to have the highest x value we;ll encounter
 	// Even if z scales, this still works
 	var/datum/grid_set/last_column = gridSets[length(gridSets)]
 	var/final_x = last_column.xcrd + x_relative_to_absolute
@@ -391,7 +391,7 @@
 
 		// We're gonna track the first and last pairs of coords we find
 		// Since x is always incremented in steps of 1, we only need to deal in y
-		// The first x is guarenteed to be the lowest, the first y the highest, and vis versa
+		// The first x is guaranteed to be the lowest, the first y the highest, and vis versa
 		// This is faster then doing mins and maxes inside the hot loop below
 		var/first_found = FALSE
 		var/first_y = 0
@@ -518,7 +518,7 @@
 			expanded_x = TRUE
 
 		// We're gonna track the first and last pairs of coords we find
-		// The first x is guarenteed to be the lowest, the first y the highest, and vis versa
+		// The first x is guaranteed to be the lowest, the first y the highest, and vis versa
 		// This is faster then doing mins and maxes inside the hot loop below
 		var/first_found = FALSE
 		var/first_x = 0
@@ -593,7 +593,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	var/editing = FALSE
 	for(var/model_key in grid_models)
 		// We're going to split models by newline
-		// This guarentees that each entry will be of interest to us
+		// This guarantees that each entry will be of interest to us
 		// Then we'll process them step by step
 		// Hopefully this reduces the cost from read_list that we'd otherwise have
 		var/list/lines = splittext(grid_models[model_key], "\n")
@@ -902,7 +902,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 		var/left_constant = parse_constant(trim_left)
 		if(position)
 			old_position = position + length(text[position])
-		if(!left_constant) // damn newlines man. Exists to provide behavior consistency with the above loop. not a major cost becuase this path is cold
+		if(!left_constant) // damn newlines man. Exists to provide behavior consistency with the above loop. not a major cost because this path is cold
 			continue
 
 		if(equal_position && !isnum(left_constant))
@@ -924,7 +924,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	if(text[1] == "\"")
 		// insert implied locate \" and length("\"") here
 		// It's a minimal timesave but it is a timesave
-		// Safe becuase we're guarenteed trimmed constants
+		// Safe because we're guaranteed trimmed constants
 		return copytext(text, 2, -1)
 
 	// list

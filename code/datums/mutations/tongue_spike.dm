@@ -45,7 +45,7 @@
 	desc = "Hardened biomass, shaped into a spike. Very pointy!"
 	icon_state = "tonguespike"
 	force = 2
-	throwforce = 15 //15 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didnt do the math
+	throwforce = 15 //15 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didn't do the math
 	throw_speed = 4
 	embedding = list(
 		"embedded_pain_multiplier" = 4,
@@ -106,7 +106,7 @@
 	name = "chem spike"
 	desc = "Hardened biomass, shaped into... something."
 	icon_state = "tonguespikechem"
-	throwforce = 2 //2 + 2 (WEIGHT_CLASS_SMALL) * 0 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didnt do the math again but very low or smthin
+	throwforce = 2 //2 + 2 (WEIGHT_CLASS_SMALL) * 0 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didn't do the math again but very low or smthin
 	embedding = list(
 		"embedded_pain_multiplier" = 0,
 		"embed_chance" = 100,

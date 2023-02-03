@@ -79,7 +79,7 @@
  * Checks if the user is able to safely handle the plant.
  * If not, sends the backfire signal (meaning backfire will occur and be handled by one or multiple genes).
  *
- * Returns FALSE if the user was safe and no backfire occured.
+ * Returns FALSE if the user was safe and no backfire occurred.
  * Returns TRUE if the user was not safe and a backfire actually happened.
  */
 /datum/element/plant_backfire/proc/backfire(obj/item/plant, mob/user)
@@ -94,7 +94,7 @@
  *
  * Checks for TRAIT_PLANT_SAFE, and returns TRUE if we have it.
  * Then, any extra traits we need to check (Like TRAIT_PIERCEIMMUNE for nettles) and returns TRUE if we have one of them.
- * Then, any extra genes we need to check (Like liquid contents for bluespace tomatos) and returns TRUE if we don't have the gene.
+ * Then, any extra genes we need to check (Like liquid contents for bluespace tomatoes) and returns TRUE if we don't have the gene.
  *
  * source - our plant
  * user - the carbon handling our [source]

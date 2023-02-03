@@ -129,7 +129,7 @@
 #define MICROWAVE_INGREDIENT_OVERLAY_SIZE 24
 
 /obj/machinery/microwave/update_overlays()
-	// When this is the nth ingredient, whats its pixel_x?
+	// When this is the nth ingredient, what's its pixel_x?
 	var/static/list/ingredient_shifts = list(
 		0,
 		3,

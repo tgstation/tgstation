@@ -26,7 +26,7 @@
 		finish_action(controller, FALSE, target_key)
 		return
 
-	var/hiding_target = targetting_datum.find_hidden_mobs(basic_mob, target) //If this is valid, theyre hidden in something!
+	var/hiding_target = targetting_datum.find_hidden_mobs(basic_mob, target) //If this is valid, they're hidden in something!
 
 	controller.blackboard[hiding_location_key] = hiding_target
 
@@ -70,7 +70,7 @@
 		finish_action(controller, FALSE, target_key)
 		return
 
-	var/atom/hiding_target = targetting_datum.find_hidden_mobs(basic_mob, target) //If this is valid, theyre hidden in something!
+	var/atom/hiding_target = targetting_datum.find_hidden_mobs(basic_mob, target) //If this is valid, they're hidden in something!
 	var/atom/final_target = hiding_target ? hiding_target : target
 
 	if(!can_see(basic_mob, final_target, required_distance))

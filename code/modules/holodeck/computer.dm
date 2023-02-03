@@ -6,20 +6,20 @@ ui calls load_program() with the id of the selected program.
 load_program() -> map_template/load() on map_template/holodeck.
 
 holodeck map templates:
-1. have an update_blacklist that doesnt allow placing on non holofloors (except for engine floors so you can repair it)
-2. has should_place_on_top = FALSE, so that the baseturfs list doesnt pull a kilostation oom crash
+1. have an update_blacklist that doesn't allow placing on non holofloors (except for engine floors so you can repair it)
+2. has should_place_on_top = FALSE, so that the baseturfs list doesn't pull a kilostation oom crash
 3. has returns_created = TRUE, so that SSatoms gives the map template a list of spawned atoms
 all the fancy flags and shit are added to holodeck objects in finish_spawn()
 
 Easiest way to add new holodeck programs:
 1. Define new map template datums in code/modules/holodeck/holodeck_map_templates, make sure they have the access flags
 of the holodeck you want them to be able to load, for the onstation holodeck the flag is STATION_HOLODECK.
-2. Create the new map templates in _maps/templates (remember theyre 9x10, and make sure they have area/noop or else it will fuck with linked)
+2. Create the new map templates in _maps/templates (remember they're 9x10, and make sure they have area/noop or else it will fuck with linked)
 all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /turf/open/floor/engine, or they will block future programs!
 
-Note: if youre looking at holodeck code because you want to see how returns_created is handled so that templates return a list of atoms
+Note: if you're looking at holodeck code because you want to see how returns_created is handled so that templates return a list of atoms
 created from them: make sure you handle that list correctly! Either copy them by value and delete them or reference it and handle qdel'ing
-and clear when youre done! if you dont i will use :newspaper2: on you
+and clear when you're done! if you don't I will use :newspaper2: on you
 */
 
 #define HOLODECK_CD (2 SECONDS)
@@ -165,9 +165,9 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			var/list/checked = program_cache.Copy()
 			if (obj_flags & EMAGGED)
 				checked |= emag_programs
-			var/valid = FALSE //dont tell security about this
+			var/valid = FALSE //don't tell security about this
 
-			//checks if program_to_load is any one of the loadable programs, if it isnt then it rejects it
+			//checks if program_to_load is any one of the loadable programs, if it isn't then it rejects it
 			for(var/list/check_list as anything in checked)
 				if(check_list["id"] == program_to_load)
 					valid = TRUE
@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	if (program == map_id)
 		return
 
-	if (!is_operational)//load_program is called once with a timer (in toggle_power) we dont want this to load anything if its off
+	if (!is_operational)//load_program is called once with a timer (in toggle_power) we don't want this to load anything if its off
 		map_id = offline_program
 		force = TRUE
 

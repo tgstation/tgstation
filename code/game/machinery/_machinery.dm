@@ -995,8 +995,8 @@
 	 * sorting is very important especially because we are breaking out when required part is found in the inner for loop
 	 * if the rped first picked up a tier 3 part AND THEN a tier 4 part
 	 * tier 3 would be installed and the loop would break and check for the next required component thus
-	 * completly ignoring the tier 4 component inside
-	 * we also ignore stack components inside the RPED cause we dont exchange that
+	 * completely ignoring the tier 4 component inside
+	 * we also ignore stack components inside the RPED cause we don't exchange that
 	 */
 	var/list/part_list = replacer_tool.get_sorted_parts(ignore_stacks = TRUE)
 	if(!part_list.len)
@@ -1009,7 +1009,7 @@
 		var/current_rating
 		var/required_type
 
-		//we dont exchange circuitboards cause thats dumb
+		//we don't exchange circuitboards cause that's dumb
 		if(istype(primary_part_base, /obj/item/circuitboard))
 			continue
 		else if(istype(primary_part_base, /datum/stock_part))

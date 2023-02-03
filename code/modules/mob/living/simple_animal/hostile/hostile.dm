@@ -235,7 +235,7 @@
 			var/possible_target_distance = get_dist(target_from, A)
 			if(target_dist < possible_target_distance)
 				Targets -= A
-	if(!Targets.len)//We didnt find nothin!
+	if(!Targets.len)//We didn't find nothin!
 		return
 	var/chosen_target = pick(Targets)//Pick the remaining targets (if any) at random
 	return chosen_target

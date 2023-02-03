@@ -106,7 +106,7 @@
 			ingredients_listed += "\a [ingredient.name][ending]"
 	examine_list += "It [LAZYLEN(ingredients) ? "contains [ingredients_listed]making a [custom_adjective()]-sized [initial(atom_parent.name)]" : "does not contain any ingredients"]."
 
-//// Proc that checks if an ingredient is valid or not, returning false if it isnt and true if it is.
+//// Proc that checks if an ingredient is valid or not, returning false if it isn't and true if it is.
 /datum/component/customizable_reagent_holder/proc/valid_ingredient(obj/ingredient)
 	if (HAS_TRAIT(ingredient, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER))
 		return FALSE

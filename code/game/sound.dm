@@ -138,7 +138,7 @@
 		var/dy = (turf_source.z - turf_loc.z) * 5 * distance_multiplier // Hearing from  above / below, multiplied by 5 because we assume height is further along coords.
 		sound_to_use.y = dy
 
-		sound_to_use.falloff = max_distance || 1 //use max_distance, else just use 1 as we are a direct sound so falloff isnt relevant.
+		sound_to_use.falloff = max_distance || 1 //use max_distance, else just use 1 as we are a direct sound so falloff isn't relevant.
 
 		// Sounds can't have their own environment. A sound's environment will be:
 		// 1. the mob's

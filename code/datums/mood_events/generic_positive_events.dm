@@ -119,7 +119,7 @@
 
 /datum/mood_event/heretics
 	description = "THE HIGHER I RISE, THE MORE I SEE."
-	mood_change = 10 //maybe being a cultist isnt that bad after all
+	mood_change = 10 //maybe being a cultist isn't that bad after all
 	hidden = TRUE
 
 /datum/mood_event/family_heirloom

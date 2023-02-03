@@ -105,7 +105,7 @@
  * * user - the mob doing the ritual
  * * atoms - a list of all atoms being checked in the ritual.
  * * selected_atoms - an empty list(!) instance passed in by the ritual. You can add atoms to it in this proc.
- * * loc - the turf the ritual's occuring on
+ * * loc - the turf the ritual's occurring on
  *
  * Returns: TRUE, if the ritual will continue, or FALSE, if the ritual is skipped / cancelled
  */
@@ -122,7 +122,7 @@
  * Arguments
  * * user - the mob who did the  ritual
  * * selected_atoms - an list of atoms chosen as a part of this ritual.
- * * loc - the turf the ritual's occuring on
+ * * loc - the turf the ritual's occurring on
  *
  * Returns: TRUE, if the ritual should cleanup afterwards, or FALSE, to avoid calling cleanup after.
  */
@@ -300,7 +300,7 @@
  * This proc handles the instatiate and the application of the station effect,
  * and returns the /datum/status_effect instance that was made.
  *
- * Can be overriden to set or pass in additional vars of the status effect.
+ * Can be overridden to set or pass in additional vars of the status effect.
  */
 /datum/heretic_knowledge/mark/proc/create_mark(mob/living/source, mob/living/target)
 	if(target.stat == DEAD)

@@ -541,7 +541,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		if(!usable_races)
 			notice("morgue_cadaver_disable_nonhumans. There are no valid roundstart nonhuman races enabled. Defaulting to humans only!")
 		if(override_species)
-			warning("morgue_cadaver_override_species BEING OVERRIDEN since morgue_cadaver_disable_nonhumans is disabled.")
+			warning("morgue_cadaver_override_species BEING OVERRIDDEN since morgue_cadaver_disable_nonhumans is disabled.")
 	else if(override_species)
 		usable_races += override_species
 

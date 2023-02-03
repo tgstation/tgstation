@@ -134,7 +134,7 @@
 
 /datum/dynamic_ruleset/latejoin/provocateur/execute()
 	var/mob/M = pick(candidates) // This should contain a single player, but in case.
-	if(check_eligible(M.mind)) // Didnt die/run off z-level/get implanted since leaving shuttle.
+	if(check_eligible(M.mind)) // Didn't die/run off z-level/get implanted since leaving shuttle.
 		assigned += M.mind
 		M.mind.special_role = antag_flag
 		revolution = new()

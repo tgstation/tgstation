@@ -164,7 +164,7 @@
 			stack_trace("The json configuration [DebugName()] for icon state '[state]' is missing any layers.")
 			continue
 		if(icon_states[state])
-			stack_trace("The json configuration [DebugName()] has a duplicate icon state '[state]' and is being overriden.")
+			stack_trace("The json configuration [DebugName()] has a duplicate icon state '[state]' and is being overridden.")
 		icon_states[state] = ReadLayersFromJson(raw_layers)
 
 /// Takes the json layers configuration and puts it into a more processed format

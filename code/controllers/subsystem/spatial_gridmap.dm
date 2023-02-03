@@ -6,7 +6,7 @@
  *
  * used by [/datum/controller/subsystem/spatial_grid] to cover every z level so that the coordinates of every turf in the world corresponds to one of these in
  * the subsystems list of grid cells by z level. each one of these contains content lists holding all atoms meeting a certain criteria that is in our borders.
- * these datums shouldnt have significant behavior, they should just hold data. the lists are filled and emptied by the subsystem.
+ * these datums shouldn't have significant behavior, they should just hold data. the lists are filled and emptied by the subsystem.
  */
 /datum/spatial_grid_cell
 	///our x index in the list of cells. this is our index inside of our row list
@@ -19,7 +19,7 @@
 
 	//when empty, the contents lists of these grid cell datums are just references to a dummy list from SSspatial_grid
 	//this is meant to allow a great compromise between memory usage and speed.
-	//now orthogonal_range_search() doesnt need to check if the list is null and each empty list is taking 12 bytes instead of 24
+	//now orthogonal_range_search() doesn't need to check if the list is null and each empty list is taking 12 bytes instead of 24
 	//the only downside is that it needs to be switched over to a new list when it goes from 0 contents to > 0 contents and switched back on the opposite case
 
 	///every hearing sensitive movable inside this cell
@@ -46,7 +46,7 @@
 
 /datum/spatial_grid_cell/Destroy(force, ...)
 	if(force)//the response to someone trying to qdel this is a right proper fuck you
-		stack_trace("dont try to destroy spatial grid cells without a good reason. if you need to do it use force")
+		stack_trace("don't try to destroy spatial grid cells without a good reason. if you need to do it use force")
 		return
 
 	. = ..()
@@ -55,8 +55,8 @@
  * # Spatial Grid
  *
  * a gamewide grid of spatial_grid_cell datums, each "covering" [SPATIAL_GRID_CELLSIZE] ^ 2 turfs.
- * each spatial_grid_cell datum stores information about what is inside its covered area, so that searches through that area dont have to literally search
- * through all turfs themselves to know what is within it since view() calls are expensive, and so is iterating through stuff you dont want.
+ * each spatial_grid_cell datum stores information about what is inside its covered area, so that searches through that area don't have to literally search
+ * through all turfs themselves to know what is within it since view() calls are expensive, and so is iterating through stuff you don't want.
  * this allows you to only go through lists of what you want very cheaply.
  *
  * you can also register to objects entering and leaving a spatial cell, this allows you to do things like stay idle until a player enters, so you wont
@@ -64,7 +64,7 @@
  * k * n operations for k objects iterating through n players.
  *
  * currently this system is only designed for searching for relatively uncommon things, small subsets of /atom/movable.
- * dont add stupid shit to the cells please, keep the information that the cells store to things that need to be searched for often
+ * don't add stupid shit to the cells please, keep the information that the cells store to things that need to be searched for often
  *
  * The system currently implements two different "classes" of spatial type
  *
@@ -132,7 +132,7 @@ SUBSYSTEM_DEF(spatial_grid)
 ///add a movable to the pre init queue for whichever type is specified so that when the subsystem initializes they get added to the grid
 /datum/controller/subsystem/spatial_grid/proc/enter_pre_init_queue(atom/movable/waiting_movable, type)
 	RegisterSignal(waiting_movable, COMSIG_PARENT_QDELETING, PROC_REF(queued_item_deleted), override = TRUE)
-	//override because something can enter the queue for two different types but that is done through unrelated procs that shouldnt know about eachother
+	//override because something can enter the queue for two different types but that is done through unrelated procs that shouldn't know about each other
 	waiting_to_add_by_type[type] += waiting_movable
 
 ///removes an initialized and probably deleted movable from our pre init queue before we're initialized
@@ -326,7 +326,7 @@ SUBSYSTEM_DEF(spatial_grid)
 		return
 	if(initialized)
 		add_single_type(add_to, target_turf, type)
-	else //SSspatial_grid isnt init'd yet, add ourselves to the queue
+	else //SSspatial_grid isn't init'd yet, add ourselves to the queue
 		enter_pre_init_queue(add_to, type)
 
 /// Removes grid membership from the passed in atom, of the passed in type
@@ -335,7 +335,7 @@ SUBSYSTEM_DEF(spatial_grid)
 		return
 	if(initialized)
 		remove_single_type(remove_from, target_turf, type)
-	else //SSspatial_grid isnt init'd yet, remove ourselves from the queue
+	else //SSspatial_grid isn't init'd yet, remove ourselves from the queue
 		remove_from_pre_init_queue(remove_from, type)
 
 /// Updates the string that atoms hold that stores their grid awareness
@@ -485,7 +485,7 @@ SUBSYSTEM_DEF(spatial_grid)
 ///find the cell this movable is associated with and removes it from all lists
 /datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
 	if(!initialized)
-		remove_from_pre_init_queue(to_remove)//the spatial grid doesnt exist yet, so just take it out of the queue
+		remove_from_pre_init_queue(to_remove)//the spatial grid doesn't exist yet, so just take it out of the queue
 		return
 
 	if(!input_cell)
@@ -523,7 +523,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	return containing_cells
 
-///debug proc for checking if a movable is in multiple cells when it shouldnt be (ie always unless multitile entering is implemented)
+///debug proc for checking if a movable is in multiple cells when it shouldn't be (ie always unless multitile entering is implemented)
 /atom/proc/find_all_cells_containing(remove_from_cells = FALSE)
 	var/datum/spatial_grid_cell/real_cell = SSspatial_grid.get_cell_of(src)
 	var/list/containing_cells = SSspatial_grid.find_hanging_cell_refs_for_movable(src, FALSE, remove_from_cells)
@@ -551,7 +551,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/input_length = length(atoms_that_need_ears)
 
 	if(input_length > number_of_oranges_ears)
-		stack_trace("somehow, for some reason, more than the preset generated number of oranges ears was requested. thats fucking [number_of_oranges_ears]. this is not good that should literally never happen")
+		stack_trace("somehow, for some reason, more than the preset generated number of oranges ears was requested. that's fucking [number_of_oranges_ears]. this is not good that should literally never happen")
 		pregenerate_more_oranges_ears(input_length - number_of_oranges_ears)//im still gonna DO IT but ill complain about it
 
 	. = list()
@@ -560,7 +560,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/mob/oranges_ear/current_ear
 	///the next atom in atoms_that_need_ears an ear assigned to it
 	var/atom/assigned_atom
-	///the turf loc of the current assigned_atom. turfs are used to track oranges_ears already assigned to one location so we dont allocate more than one
+	///the turf loc of the current assigned_atom. turfs are used to track oranges_ears already assigned to one location so we don't allocate more than one
 	///because allocating more than one oranges_ear to a given loc wastes view iterations
 	var/turf/turf_loc
 
@@ -575,7 +575,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 		if(turf_loc.assigned_oranges_ear)
 			turf_loc.assigned_oranges_ear.references += assigned_atom
-			continue //if theres already an oranges_ear mob at assigned_movable's turf we give assigned_movable to it instead and dont allocate ourselves
+			continue //if there's already an oranges_ear mob at assigned_movable's turf we give assigned_movable to it instead and don't allocate ourselves
 
 		current_ear.references += assigned_atom
 

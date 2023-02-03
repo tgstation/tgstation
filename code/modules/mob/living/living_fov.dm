@@ -120,7 +120,7 @@
 		LAZYADD(clients_shown, mob_client)
 
 		mob_client.images += fov_image
-		//when added as an image mutable_appearances act identically. we just make it an MA becuase theyre faster to change appearance
+		//when added as an image mutable_appearances act identically. we just make it an MA because they're faster to change appearance
 
 	if(clients_shown)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_image_from_clients), fov_image, clients_shown), time)

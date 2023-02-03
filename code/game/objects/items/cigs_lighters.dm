@@ -128,7 +128,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "cigarette"
 	desc = "A roll of tobacco and nicotine."
 	icon_state = "cigoff"
-	inhand_icon_state = "cigon" //gets overriden during intialize(), just have it for unit test sanity.
+	inhand_icon_state = "cigon" //gets overridden during intialize(), just have it for unit test sanity.
 	throw_speed = 0.5
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
@@ -552,7 +552,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigaroff"
 	icon_on = "cigaron"
 	icon_off = "cigaroff" //make sure to add positional sprites in icons/obj/cigarettes.dmi if you add more.
-	inhand_icon_state = "cigaron" //gets overriden during intialize(), just have it for unit test sanity.
+	inhand_icon_state = "cigaron" //gets overridden during intialize(), just have it for unit test sanity.
 	inhand_icon_on = "cigaron"
 	inhand_icon_off = "cigaroff"
 	type_butt = /obj/item/cigbutt/cigarbutt

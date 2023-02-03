@@ -29,11 +29,11 @@
 	var/weather_duration_lower = 1200
 	/// See above - this is the highest possible duration
 	var/weather_duration_upper = 1500
-	/// Looping sound while weather is occuring
+	/// Looping sound while weather is occurring
 	var/weather_sound
-	/// Area overlay while the weather is occuring
+	/// Area overlay while the weather is occurring
 	var/weather_overlay
-	/// Color to apply to the area while weather is occuring
+	/// Color to apply to the area while weather is occurring
 	var/weather_color = null
 
 	/// Displayed once the weather is over
@@ -64,7 +64,7 @@
 	var/aesthetic = FALSE
 	/// Used by mobs (or movables containing mobs, such as enviro bags) to prevent them from being affected by the weather.
 	var/immunity_type
-	/// If this bit of weather should also draw an overlay that's uneffected by lighting onto the area
+	/// If this bit of weather should also draw an overlay that's unaffected by lighting onto the area
 	/// Taken from weather_glow.dmi
 	var/use_glow = TRUE
 	/// List of all overlays to apply to our turfs
@@ -177,7 +177,7 @@
 			if(alert_sfx)
 				SEND_SOUND(player, sound(alert_sfx))
 
-// the checks for if a mob should recieve alerts, returns TRUE if can
+// the checks for if a mob should receive alerts, returns TRUE if can
 /datum/weather/proc/can_get_alert(mob/player)
 	var/turf/mob_turf = get_turf(player)
 	return !isnull(mob_turf)

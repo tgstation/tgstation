@@ -302,7 +302,7 @@
 	if(cartridge)
 		options["Eject Cartridge"] = radial_eject_cartridge
 
-	options["Brew"] = radial_brew //brew is always available as an option, when the machine is unable to brew the player is told by balloon alerts whats exactly wrong
+	options["Brew"] = radial_brew //brew is always available as an option, when the machine is unable to brew the player is told by balloon alerts what's exactly wrong
 
 	if(coffee_cups > 0)
 		options["Take Cup"] = radial_take_cup

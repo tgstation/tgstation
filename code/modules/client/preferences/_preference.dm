@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /// Produce a default, potentially random value for when no value for this
 /// preference is found in the savefile.
-/// Either this or create_informed_default_value must be overriden by subtypes.
+/// Either this or create_informed_default_value must be overridden by subtypes.
 /datum/preference/proc/create_default_value()
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
@@ -140,7 +140,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// preference is found in the savefile.
 /// Unlike create_default_value(), will provide the preferences object if you
 /// need to use it.
-/// If not overriden, will call create_default_value() instead.
+/// If not overridden, will call create_default_value() instead.
 /datum/preference/proc/create_informed_default_value(datum/preferences/preferences)
 	return create_default_value()
 
@@ -197,7 +197,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	apply_to_client(client, value)
 
 /// Apply this preference onto the given human.
-/// Must be overriden by subtypes.
+/// Must be overridden by subtypes.
 /// Called when the savefile_identifier == PREFERENCE_CHARACTER.
 /datum/preference/proc/apply_to_human(mob/living/carbon/human/target, value)
 	SHOULD_NOT_SLEEP(TRUE)
@@ -288,7 +288,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	return TRUE
 
 /// Checks that a given value is valid.
-/// Must be overriden by subtypes.
+/// Must be overridden by subtypes.
 /// Any type can be passed through.
 /datum/preference/proc/is_valid(value)
 	SHOULD_NOT_SLEEP(TRUE)
@@ -384,7 +384,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	return serialized_choices
 
 /// Returns a list of every possible value.
-/// This must be overriden by `/datum/preference/choiced` subtypes.
+/// This must be overridden by `/datum/preference/choiced` subtypes.
 /// Return value can be in the form of:
 /// - A flat list of raw values, such as list(MALE, FEMALE, PLURAL).
 /// - An assoc list of raw values to atoms/icons, in which case

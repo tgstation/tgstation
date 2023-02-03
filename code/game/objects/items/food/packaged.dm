@@ -118,7 +118,7 @@
 		return
 	apply_buff(target, user)
 
-///This proc checks if the mob is able to recieve the buff.
+///This proc checks if the mob is able to receive the buff.
 /obj/item/food/canned/envirochow/proc/check_buffability(mob/living/simple_animal/hungry_pet)
 	if(!is_drainable()) //can is not open
 		return FALSE

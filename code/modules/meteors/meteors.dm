@@ -239,13 +239,13 @@ GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect
 			M.playsound_local(src.loc, null, 50, 1, random_frequency, 10, sound_to_use = meteor_sound)
 
 /**
- * Used to check if someone who has examined a meteor will recieve an award.
+ * Used to check if someone who has examined a meteor will receive an award.
  *
- * Checks the criteria to recieve the "examine a meteor" award.
+ * Checks the criteria to receive the "examine a meteor" award.
  * Admin spawned meteors will not grant the user an achievement.
  *
  * Arguments:
- * * user - the person who will be recieving the examine award.
+ * * user - the person who will be receiving the examine award.
  */
 
 /obj/effect/meteor/proc/check_examine_award(mob/user)

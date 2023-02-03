@@ -1,6 +1,6 @@
 /**
  * Tests that actions assigned to a mob's mind
- * are successfuly transferred when their mind is transferred to a new mob.
+ * are successfully transferred when their mind is transferred to a new mob.
  */
 /datum/unit_test/actions_moved_on_mind_transfer
 
@@ -22,7 +22,7 @@
 	TEST_ASSERT_EQUAL(wizard_dog.mind, wizard_mind, "Mind transfer failed to occur, which invalidates the test.")
 
 	for(var/datum/action/cooldown/spell/remaining_spell in wizard.actions)
-		Fail("Spell: [remaining_spell] failed to transfer minds when a mind transfer occured.")
+		Fail("Spell: [remaining_spell] failed to transfer minds when a mind transfer occurred.")
 
 	qdel(fireball)
 	qdel(missile)

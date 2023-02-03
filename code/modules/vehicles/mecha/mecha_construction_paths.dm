@@ -7,17 +7,17 @@
 
 	// Component typepaths.
 	// most must be defined unless
-	// get_steps is overriden.
+	// get_steps is overridden.
 
 	// Circuit board typepaths.
 	// circuit_control and circuit_periph must be defined
-	// unless get_circuit_steps is overriden.
+	// unless get_circuit_steps is overridden.
 	var/circuit_control
 	var/circuit_periph
 	var/circuit_weapon
 
 	// Armor plating typepaths. both must be defined
-	// unless relevant step procs are overriden. amounts
+	// unless relevant step procs are overridden. amounts
 	// must be defined if using /obj/item/stack/sheet types
 	var/obj/inner_plating
 	var/inner_plating_amount
