@@ -465,7 +465,7 @@
 // Beneficial, turns stuff into alien alloy which is useful to cargo and research. Also repairs atmos.
 /datum/crystal_warp_theme/ayylmao
 	name = "ayy lmao"
-	floor = /turf/open/floor/plating/abductor
+	floor = /turf/open/floor/mineral/abductor
 	wall = /turf/closed/wall/mineral/abductor
 	chair = /obj/structure/bed/abductor //ayys apparently don't have chairs. An entire species of people who only recline.
 	table = /obj/structure/table/abductor
