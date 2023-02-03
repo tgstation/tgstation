@@ -9,7 +9,7 @@ on:
     - master
     - 'project/**'
 env:
-  ASSOCIATED_FILES_URL: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/pull/${{ github.event.number }}/files
+  ASSOCIATED_FILES_URL: ${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.number }}/files
 jobs:
   run_linters:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
