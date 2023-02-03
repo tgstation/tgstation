@@ -44,7 +44,7 @@
  * Prepare a new area for transformation into a new theme.
  * Optionally pass in the typepath of an anomaly theme to use that one.
  */
-/obj/effect/anomaly/dimensional/proc/prepare_area(var/new_theme_path)
+/obj/effect/anomaly/dimensional/proc/prepare_area(new_theme_path)
 	if (!new_theme_path)
 		new_theme_path = pick(subtypesof(/datum/dimension_theme))
 	theme = new new_theme_path()
