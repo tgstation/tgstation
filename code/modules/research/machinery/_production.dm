@@ -218,7 +218,7 @@
 
 	return ..()
 
-/obj/machinery/rnd/production/proc/do_print(path, amount, list/matlist, )
+/obj/machinery/rnd/production/proc/do_print(path, amount, list/matlist)
 	usr.investigate_log("built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
 
 	for(var/i in 1 to amount)
