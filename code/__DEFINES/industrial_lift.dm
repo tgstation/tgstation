@@ -34,3 +34,4 @@
 #define DESTINATION_EAST_ACTIVE "east_active"
 #define DESTINATION_EAST_IDLE "east_idle"
 #define DESTINATION_NOT_IN_SERVICE "NIS"
+#define DESTINATION_OFF "off"
