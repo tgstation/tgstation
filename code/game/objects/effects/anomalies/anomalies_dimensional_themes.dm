@@ -98,11 +98,7 @@
 /datum/dimension_theme/proc/transform_floor(turf/open/floor/affected_floor)
 	if (replace_floors.len == 0)
 		return FALSE
-	var/turf/new_turf = pick_weight(replace_floors)
-	if (isplatingturf(affected_floor) && initial(new_turf.overfloor_placed))
-		affected_floor.PlaceOnTop(new_turf, flags = CHANGETURF_INHERIT_AIR)
-		return TRUE
-	affected_floor.ChangeTurf(new_turf, flags = CHANGETURF_INHERIT_AIR)
+	affected_floor.replace_floor(pick_weight(replace_floors), flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
 /**
