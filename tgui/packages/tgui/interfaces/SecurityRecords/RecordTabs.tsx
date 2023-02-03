@@ -10,7 +10,7 @@ import { SecurityRecordsData, SecurityRecord } from './types';
 /** Tabs on left, with search bar */
 export const SecurityRecordTabs = (props, context) => {
   const { act, data } = useBackend<SecurityRecordsData>(context);
-  const { records = [] } = data;
+  const { higher_access, records = [] } = data;
 
   const errorMessage = !records.length
     ? 'No records found.'
@@ -58,9 +58,10 @@ export const SecurityRecordTabs = (props, context) => {
           <Stack.Item>
             <Button.Confirm
               content="Purge"
+              disabled={!higher_access}
               icon="trash"
               onClick={() => act('purge_records')}
-              tooltip="Wipe all record data."
+              tooltip="Wipe criminal record data."
             />
           </Stack.Item>
         </Stack>

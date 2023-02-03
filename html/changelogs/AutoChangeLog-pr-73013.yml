@@ -1,0 +1,6 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - rscadd: "You can now mark TGC cards on the holodeck battle arena, useful for keeping track of effects such as hivemind."
+  - rscadd: "Right clicking a card holder on the TGC holodeck battle arena will allow you to generate a \"blank card\", useful for when using cards that summon other cards, such as the xenomorph hivelord."
+  - spellcheck: "Capitalized some descriptions for TGC machines"
