@@ -79,7 +79,7 @@
 	N.is_phased = TRUE
 
 
-/datum/action/innate/creature/Remove(mob/living/remove_from)
+/datum/action/innate/creature/teleport/Remove(mob/living/remove_from)
 	var/mob/living/simple_animal/hostile/netherworld/N = owner
 	if(N.is_phased)
 		exit_jaunt()
