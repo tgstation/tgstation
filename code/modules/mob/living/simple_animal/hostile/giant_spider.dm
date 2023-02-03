@@ -146,7 +146,7 @@
 	. = ..()
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.show_to(src)
-	AddElement(/datum/element/healing_touch,\
+	AddComponent(/datum/component/healing_touch,\
 		interaction_key = INTERACTION_SPIDER_KEY ,\
 		valid_targets_typecache = typecacheof(list(/mob/living/simple_animal/hostile/giant_spider)),\
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
@@ -737,7 +737,7 @@
 	AddComponent(/datum/component/blood_walk, \
 		blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
 		blood_spawn_chance = 5)
-	AddElement(/datum/element/healing_touch,\
+	AddComponent(/datum/component/healing_touch,\
 		heal_brute = maxHealth * 0.5,\
 		heal_burn = maxHealth * 0.5,\
 		allow_self = TRUE,\

@@ -7,9 +7,7 @@
  * A mob with this element will be able to heal certain targets by attacking them.
  * This intercepts the attack and starts a do_after if the target is in its allowed type list.
  */
-/datum/element/healing_touch
-	element_flags = ELEMENT_BESPOKE
-	argument_hash_start_idx = 2
+/datum/component/healing_touch
 	/// How much brute damage to heal
 	var/heal_brute
 	/// How much burn damage to heal
@@ -31,10 +29,9 @@
 	/// Text to print when action completes
 	var/complete_text
 
-/datum/element/healing_touch/Attach(datum/target, heal_brute = 20, heal_burn = 20, heal_stamina = 0, heal_time = 2 SECONDS, interaction_key = DOAFTER_SOURCE_HEAL_TOUCH, datum/callback/extra_checks = null, list/valid_targets_typecache = list(), allow_self = FALSE, action_text = "%SOURCE% begins healing %TARGET%", complete_text = "%SOURCE% finishes healing %TARGET%")
-	. = ..()
-	if (!isliving(target))
-		return ELEMENT_INCOMPATIBLE
+/datum/component/healing_touch/Initialize(heal_brute = 20, heal_burn = 20, heal_stamina = 0, heal_time = 2 SECONDS, interaction_key = DOAFTER_SOURCE_HEAL_TOUCH, datum/callback/extra_checks = null, list/valid_targets_typecache = list(), allow_self = FALSE, action_text = "%SOURCE% begins healing %TARGET%", complete_text = "%SOURCE% finishes healing %TARGET%")
+	if (!isliving(parent))
+		return COMPONENT_INCOMPATIBLE
 
 	src.heal_brute = heal_brute
 	src.heal_burn = heal_burn
@@ -47,15 +44,15 @@
 	src.action_text = action_text
 	src.complete_text = complete_text
 
-	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_healing)) // Players
-	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(try_healing)) // NPCs
+	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_healing)) // Players
+	RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(try_healing)) // NPCs
 
-/datum/element/healing_touch/Detach(datum/source)
-	UnregisterSignal(source, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
+/datum/component/healing_touch/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 	return ..()
 
 /// Validate our target, and interrupt the attack chain to start healing it if it is allowed
-/datum/element/healing_touch/proc/try_healing(mob/living/healer, atom/target)
+/datum/component/healing_touch/proc/try_healing(mob/living/healer, atom/target)
 	SIGNAL_HANDLER
 	if (!isliving(target))
 		return
@@ -88,7 +85,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Perform a do_after and then heal our target
-/datum/element/healing_touch/proc/heal_target(mob/living/healer, mob/living/target)
+/datum/component/healing_touch/proc/heal_target(mob/living/healer, mob/living/target)
 	if (action_text)
 		healer.visible_message(span_notice("[format_string(action_text, healer, target)]"))
 
@@ -103,7 +100,7 @@
 	new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
 
 /// Reformats the passed string with the replacetext keys
-/datum/element/healing_touch/proc/format_string(string, atom/source, atom/target)
+/datum/component/healing_touch/proc/format_string(string, atom/source, atom/target)
 	var/final_message = replacetext(string, MEND_REPLACE_KEY_SOURCE, "[source]")
 	final_message = replacetext(final_message, MEND_REPLACE_KEY_TARGET, "[target]")
 	return final_message
