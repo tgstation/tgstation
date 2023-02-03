@@ -153,36 +153,6 @@
 		complete_text = "%SOURCE% wraps the wounds of %TARGET%.",\
 	)
 
-/mob/living/simple_animal/hostile/giant_spider/nurse/AttackingTarget()
-	if(DOING_INTERACTION(src, INTERACTION_SPIDER_KEY ))
-		return
-	if(!isspider(target))
-		return ..()
-	var/mob/living/simple_animal/hostile/giant_spider/hurt_spider = target
-	if(hurt_spider == src)
-		balloon_alert(src, "can't heal yourself!")
-		return
-	if(hurt_spider.health >= hurt_spider.maxHealth)
-		balloon_alert(src, "not hurt!")
-		return
-	if(hurt_spider.stat == DEAD)
-		balloon_alert(src, "they're dead!")
-		return
-	visible_message(
-		span_notice("[src] begins wrapping the wounds of [hurt_spider]."),
-		span_notice("You begin wrapping the wounds of [hurt_spider]."),
-	)
-
-	if(!do_after(src, 2 SECONDS, target = hurt_spider, interaction_key = INTERACTION_SPIDER_KEY ))
-		return
-
-	hurt_spider.heal_overall_damage(20, 20)
-	new /obj/effect/temp_visual/heal(get_turf(hurt_spider), COLOR_HEALING_CYAN)
-	visible_message(
-		span_notice("[src] wraps the wounds of [hurt_spider]."),
-		span_notice("You wrap the wounds of [hurt_spider]."),
-	)
-
 /**
  * # Tarantula
  *
