@@ -21,13 +21,18 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/phaser = TRUE
 	var/is_phased = FALSE
+	var/datum/action/innate/creature/teleport/teleport
 
 /mob/living/simple_animal/hostile/netherworld/Initialize(mapload)
 	. = ..()
 	if(phaser)
-		var/datum/action/innate/creature/teleport/teleport = new(src)
+		teleport = new(src)
 		teleport.Grant(src)
 	add_cell_sample()
+
+/mob/living/simple_animal/hostile/netherworld/Destroy()
+	qdel(teleport)
+	. = ..()
 
 /mob/living/simple_animal/hostile/netherworld/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
@@ -53,15 +58,32 @@
 		to_chat(N, span_warning("Action cancelled, as you moved while reappearing or someone is now viewing your location."))
 		return
 	if(N.is_phased)
-		holder = N.loc
-		holder.eject_jaunter()
-		holder = null
-		N.is_phased = FALSE
-		playsound(get_turf(N), 'sound/effects/podwoosh.ogg', 50, TRUE, -1)
+		exit_jaunt()
 	else
-		playsound(get_turf(N), 'sound/effects/podwoosh.ogg', 50, TRUE, -1)
-		holder = new /obj/effect/dummy/phased_mob(T, N)
-		N.is_phased = TRUE
+		enter_jaunt()
+
+
+/datum/action/innate/creature/teleport/proc/exit_jaunt()
+	var/mob/living/simple_animal/hostile/netherworld/N = owner
+	var/obj/effect/dummy/phased_mob/holder = null
+	holder = owner.loc
+	holder.eject_jaunter()
+	holder = null
+	N.is_phased = FALSE
+	playsound(get_turf(N), 'sound/effects/podwoosh.ogg', 50, TRUE, -1)
+
+/datum/action/innate/creature/teleport/proc/enter_jaunt()
+	var/mob/living/simple_animal/hostile/netherworld/N = owner
+	playsound(get_turf(N), 'sound/effects/podwoosh.ogg', 50, TRUE, -1)
+	new /obj/effect/dummy/phased_mob(get_turf(N), N)
+	N.is_phased = TRUE
+
+
+/datum/action/innate/creature/Remove(mob/living/remove_from)
+	var/mob/living/simple_animal/hostile/netherworld/N = owner
+	if(N.is_phased)
+		exit_jaunt()
+	return ..()
 
 /mob/living/simple_animal/hostile/netherworld/proc/can_be_seen(turf/location)
 	// Check for darkness
