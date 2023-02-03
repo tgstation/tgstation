@@ -54,6 +54,7 @@
 		spawned_mobs += S
 	if(!isnull(leader))
 		gear_fugitive_leader(leader, landing_turf, backstory)
+	return SUCCESSFUL_SPAWN
 
 //after spawning
 	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE)
