@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 		. += span_notice("There is currently a [card_template.name] card inserted.")
 	else
 		if(current_summon)
-			. += "There is currently a blank card inserted."
+			. += span_notice("There is currently a blank card inserted.")
 		else
 			. += span_notice("There is no card currently inserted.")
 
