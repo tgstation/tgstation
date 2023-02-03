@@ -86,7 +86,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/station/asteroid)
+/area/station/solars/starboard/fore)
 "aan" = (
 /turf/open/floor/iron/stairs/medium{
 	dir = 8
@@ -115,12 +115,12 @@
 /obj/structure/cable,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating/airless,
-/area/station/asteroid)
+/area/station/solars/starboard/fore)
 "aas" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating/airless,
-/area/station/asteroid)
+/area/station/solars/starboard/fore)
 "aat" = (
 /obj/item/stack/cable_coil,
 /turf/open/misc/asteroid/airless,
@@ -129,7 +129,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating/airless,
-/area/station/asteroid)
+/area/station/solars/starboard/fore)
 "aav" = (
 /obj/structure/table,
 /obj/machinery/light/small/directional/west,
@@ -187,7 +187,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable/layer1,
 /turf/open/floor/plating/airless,
-/area/station/asteroid)
+/area/station/solars/starboard/fore)
 "aaD" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid/airless,
@@ -1705,19 +1705,19 @@
 	name = "Port Solar Array"
 	},
 /turf/open/floor/plating/airless,
-/area/station/asteroid)
+/area/station/solars/port)
 "ael" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable/layer1,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/station/asteroid)
+/area/station/solars/port)
 "aem" = (
 /obj/item/storage/toolbox/electrical,
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable/layer1,
 /turf/open/floor/plating/airless,
-/area/station/asteroid)
+/area/station/solars/port)
 "aen" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/stack/ore/glass,
@@ -1820,7 +1820,7 @@
 /obj/structure/cable,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating/airless,
-/area/station/asteroid)
+/area/station/solars/port)
 "aeF" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -1924,7 +1924,7 @@
 /obj/structure/cable,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating/airless,
-/area/station/asteroid)
+/area/station/solars/port)
 "aeV" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
@@ -20479,7 +20479,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/station/asteroid)
+/area/station/solars/starboard/fore)
 "fCO" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -24690,6 +24690,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"hlS" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/station/solars/starboard/fore)
 "hmA" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
@@ -25429,6 +25434,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
+"hDE" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/turf/open/floor/plating/airless,
+/area/station/solars/starboard/fore)
 "hDI" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
@@ -29379,6 +29390,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningdock/oresilo)
+"jcT" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/station/solars/port)
 "jdq" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -36870,6 +36885,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"lMS" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/cable/layer1,
+/turf/open/floor/plating/airless,
+/area/station/solars/port)
 "lMZ" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
@@ -40343,7 +40363,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/station/asteroid)
+/area/station/solars/port)
 "ncF" = (
 /turf/closed/wall,
 /area/station/maintenance/tram/left)
@@ -40794,6 +40814,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/science/research)
+"nkU" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/station/solars/starboard/fore)
 "nkV" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/structure/disposalpipe/segment,
@@ -41577,7 +41601,7 @@
 /obj/structure/cable,
 /obj/structure/cable/layer1,
 /turf/open/floor/plating/airless,
-/area/station/asteroid)
+/area/station/solars/port)
 "nzU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -86390,10 +86414,10 @@ aaa
 aac
 aac
 aek
-aak
-aak
-aak
-aak
+jcT
+jcT
+jcT
+jcT
 ncE
 aek
 pHM
@@ -86649,7 +86673,7 @@ aac
 aac
 aac
 aac
-aak
+jcT
 aac
 aac
 aac
@@ -86906,8 +86930,8 @@ aac
 aac
 aek
 ncE
-aak
-aak
+jcT
+jcT
 aek
 aac
 aac
@@ -87163,7 +87187,7 @@ aac
 aac
 aac
 aac
-aak
+jcT
 aac
 aac
 aac
@@ -87418,11 +87442,11 @@ aaa
 aac
 aac
 aek
-aak
-aak
-aak
-aak
-aak
+jcT
+jcT
+jcT
+jcT
+jcT
 aek
 aac
 aac
@@ -87677,7 +87701,7 @@ aac
 aac
 aac
 aac
-aak
+jcT
 aac
 aac
 aac
@@ -88193,8 +88217,8 @@ aek
 ncE
 ncE
 ncE
-aak
-aak
+jcT
+jcT
 aek
 pHM
 pHM
@@ -88963,7 +88987,7 @@ aac
 aac
 aac
 aac
-aak
+jcT
 aac
 aac
 aac
@@ -89218,10 +89242,10 @@ aaa
 aac
 aac
 aek
-aak
-aak
-aak
-aak
+jcT
+jcT
+jcT
+jcT
 ncE
 aek
 aac
@@ -89477,7 +89501,7 @@ aac
 aac
 aac
 aac
-aak
+jcT
 aez
 aac
 aac
@@ -89734,7 +89758,7 @@ aac
 aac
 aac
 aac
-aak
+jcT
 qEH
 aac
 aac
@@ -89990,10 +90014,10 @@ aac
 aac
 aac
 aek
-aak
-aak
-aak
-aak
+jcT
+jcT
+jcT
+jcT
 ncE
 aek
 aac
@@ -90249,7 +90273,7 @@ aac
 aac
 aac
 aac
-aak
+jcT
 aac
 aac
 aac
@@ -90505,9 +90529,9 @@ aac
 aac
 aac
 aek
-aak
-aak
-aak
+jcT
+jcT
+jcT
 aek
 aac
 aac
@@ -90763,7 +90787,7 @@ aac
 aac
 aac
 aac
-aak
+jcT
 aac
 aac
 aac
@@ -91018,10 +91042,10 @@ aac
 aac
 aac
 aek
-aak
-aak
-aak
-aak
+jcT
+jcT
+jcT
+jcT
 ncE
 aek
 pHM
@@ -91277,7 +91301,7 @@ aac
 aac
 aac
 aac
-aak
+jcT
 aac
 aac
 aac
@@ -91535,8 +91559,8 @@ aac
 ncE
 ncE
 aeE
-aak
-aak
+jcT
+jcT
 aac
 aac
 aac
@@ -91793,9 +91817,9 @@ ncE
 aST
 aST
 aST
-aak
-aak
-aak
+jcT
+jcT
+jcT
 aac
 aek
 pHM
@@ -92052,9 +92076,9 @@ edx
 aST
 aST
 aST
-aak
+jcT
 aac
-aak
+jcT
 vXM
 rWa
 vXM
@@ -92309,9 +92333,9 @@ lMD
 lMD
 fSH
 aST
-aak
+jcT
 aac
-aak
+jcT
 vXM
 oQf
 vXM
@@ -92825,7 +92849,7 @@ vAx
 aST
 ncE
 aac
-aak
+jcT
 vXM
 oQf
 vXM
@@ -93082,7 +93106,7 @@ aST
 aST
 ncE
 aac
-aak
+jcT
 vXM
 rWa
 vXM
@@ -93585,7 +93609,7 @@ aac
 aac
 aac
 aac
-aaC
+lMS
 aac
 aac
 ncE
@@ -93840,9 +93864,9 @@ aac
 aac
 aac
 aac
-aak
-aaC
-aaC
+jcT
+lMS
+lMS
 aac
 aac
 aac
@@ -105830,7 +105854,7 @@ aac
 aac
 aac
 aac
-aaS
+csA
 aac
 aac
 aac
@@ -106085,11 +106109,11 @@ pHM
 pHM
 aac
 aam
-ncE
-ncE
+hlS
+hlS
 fCB
-ncE
-ncE
+hlS
+hlS
 aam
 aac
 aac
@@ -106344,7 +106368,7 @@ aac
 aac
 aac
 aac
-ncE
+hlS
 aac
 aac
 aac
@@ -106600,9 +106624,9 @@ vXM
 aac
 aac
 aam
-ncE
-ncE
-ncE
+hlS
+hlS
+hlS
 aam
 aac
 aac
@@ -106858,7 +106882,7 @@ aac
 aac
 aac
 aac
-aak
+nkU
 aat
 aac
 aac
@@ -107113,12 +107137,12 @@ vXM
 vXM
 aac
 aam
-aak
-aak
-aak
-aak
-aak
-aak
+nkU
+nkU
+nkU
+nkU
+nkU
+nkU
 aam
 aac
 aac
@@ -107373,7 +107397,7 @@ aac
 aac
 aac
 aac
-ncE
+hlS
 aac
 aac
 aac
@@ -107629,9 +107653,9 @@ vXM
 aac
 aac
 aam
-ncE
-ncE
-aak
+hlS
+hlS
+nkU
 aam
 aac
 aac
@@ -107887,7 +107911,7 @@ aac
 aac
 aac
 aac
-aak
+nkU
 aac
 aac
 aac
@@ -108142,12 +108166,12 @@ pHM
 pHM
 aac
 aam
-ncE
-aak
-aak
-aak
-aak
-ncE
+hlS
+nkU
+nkU
+nkU
+nkU
+hlS
 aam
 aac
 aaa
@@ -108402,7 +108426,7 @@ aac
 aac
 aac
 aac
-aak
+nkU
 aac
 aac
 aac
@@ -108658,9 +108682,9 @@ vXM
 aac
 aac
 aam
-ncE
-ncE
-aak
+hlS
+hlS
+nkU
 aam
 aac
 aac
@@ -108916,7 +108940,7 @@ aac
 aac
 aac
 aac
-aak
+nkU
 aac
 aac
 aac
@@ -109171,12 +109195,12 @@ vXM
 aac
 aac
 aam
-aak
-aak
-aak
-aak
-aak
-ncE
+nkU
+nkU
+nkU
+nkU
+nkU
+hlS
 aam
 aac
 aaa
@@ -109430,8 +109454,8 @@ aac
 aac
 aac
 aac
-aaS
-aak
+csA
+nkU
 aac
 aac
 aac
@@ -109688,7 +109712,7 @@ aac
 aac
 aac
 aac
-aak
+nkU
 aac
 aac
 aac
@@ -109945,7 +109969,7 @@ aac
 aac
 aac
 aac
-aak
+nkU
 aac
 aac
 aac
@@ -110200,11 +110224,11 @@ aac
 aac
 aac
 aac
-aak
-aak
+nkU
+nkU
 aau
-aak
-aak
+nkU
+nkU
 aac
 aac
 aac
@@ -110455,14 +110479,14 @@ pHM
 aai
 aac
 aac
-aak
-aak
-aak
+nkU
+nkU
+nkU
 plk
 plk
 plk
-aak
-aak
+nkU
+nkU
 aac
 aac
 aaa
@@ -110712,16 +110736,16 @@ vXM
 aac
 aac
 aac
-aak
+nkU
 plk
 plk
 plk
 deQ
 plk
 plk
-ncE
-ncE
-ncE
+hlS
+hlS
+hlS
 aac
 aac
 aaa
@@ -110969,7 +110993,7 @@ pdy
 aac
 aac
 aac
-aak
+nkU
 plk
 lhT
 fvK
@@ -110978,7 +111002,7 @@ jge
 sEZ
 sEZ
 sEZ
-ncE
+hlS
 aac
 aac
 aac
@@ -111224,8 +111248,8 @@ pZH
 aev
 aev
 aev
-ncE
-ncE
+hlS
+hlS
 aar
 plk
 tdO
@@ -111235,7 +111259,7 @@ pKX
 xDy
 caP
 mWu
-nzN
+hDE
 aaC
 aaC
 aaC
@@ -111483,7 +111507,7 @@ pdy
 pdy
 aac
 aac
-ncE
+hlS
 plk
 koo
 koo
@@ -111492,7 +111516,7 @@ mJF
 sEZ
 sEZ
 sEZ
-ncE
+hlS
 aac
 aac
 aac
@@ -111740,16 +111764,16 @@ vXM
 vXM
 aac
 aac
-ncE
+hlS
 plk
 plk
 plk
 eBc
 plk
 plk
-ncE
-ncE
-ncE
+hlS
+hlS
+hlS
 aac
 aac
 aac
@@ -111997,14 +112021,14 @@ pHM
 pHM
 pHM
 aai
-ncE
-ncE
-aak
+hlS
+hlS
+nkU
 plk
 plk
 plk
-aak
-aak
+nkU
+nkU
 aac
 aac
 aac
@@ -112256,11 +112280,11 @@ vXM
 aac
 aac
 aac
-aak
-aak
+nkU
+nkU
 aas
-aak
-aak
+nkU
+nkU
 aac
 aac
 aac
@@ -112515,7 +112539,7 @@ aac
 aac
 aac
 aac
-ncE
+hlS
 aac
 aac
 aac
@@ -112772,7 +112796,7 @@ aac
 aac
 aac
 aac
-ncE
+hlS
 aac
 aac
 aac
@@ -113029,8 +113053,8 @@ aac
 aac
 aac
 aac
-ncE
-aaS
+hlS
+csA
 aac
 aac
 aac
@@ -113284,12 +113308,12 @@ vXM
 aac
 aac
 aam
-ncE
-ncE
-ncE
-aak
-aak
-ncE
+hlS
+hlS
+hlS
+nkU
+nkU
+hlS
 aam
 aac
 aac
@@ -113544,7 +113568,7 @@ aac
 aac
 aac
 aac
-aak
+nkU
 aac
 aac
 aac
@@ -113800,9 +113824,9 @@ aac
 aac
 aac
 aam
-aak
-aak
-aak
+nkU
+nkU
+nkU
 aam
 aac
 aac
@@ -114058,7 +114082,7 @@ aac
 aac
 aac
 aac
-aak
+nkU
 aac
 aac
 aac
@@ -114313,12 +114337,12 @@ pHM
 aac
 aac
 aam
-ncE
-ncE
-ncE
-aak
-aak
-aak
+hlS
+hlS
+hlS
+nkU
+nkU
+nkU
 aam
 aac
 aac
@@ -114573,7 +114597,7 @@ aac
 aac
 aac
 aaw
-aak
+nkU
 aac
 aac
 aac
@@ -114829,9 +114853,9 @@ aac
 aac
 aac
 aam
-aak
-ncE
-ncE
+nkU
+hlS
+hlS
 aam
 aac
 aac
@@ -115087,7 +115111,7 @@ aac
 aac
 aac
 aac
-ncE
+hlS
 aac
 aac
 aac
@@ -115342,12 +115366,12 @@ vXM
 aac
 aac
 aam
-aak
-aak
-ncE
-aak
-aak
-aak
+nkU
+nkU
+hlS
+nkU
+nkU
+nkU
 aam
 aac
 aac
@@ -115602,7 +115626,7 @@ aac
 aac
 aac
 aac
-aak
+nkU
 aac
 aac
 aac
@@ -115858,9 +115882,9 @@ aac
 aac
 aac
 aam
-ncE
-ncE
-aak
+hlS
+hlS
+nkU
 aam
 aac
 aac
@@ -116116,7 +116140,7 @@ aac
 aac
 aac
 aac
-ncE
+hlS
 aac
 aac
 aac
@@ -116371,11 +116395,11 @@ aac
 aac
 aac
 aam
-aak
-aak
+nkU
+nkU
 aau
-aak
-aak
+nkU
+nkU
 aam
 aac
 aac
@@ -116630,7 +116654,7 @@ aac
 aac
 aac
 aac
-aaS
+csA
 aac
 aac
 aac
