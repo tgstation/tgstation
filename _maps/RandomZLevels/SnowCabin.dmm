@@ -722,10 +722,6 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cD" = (
-/obj/structure/sign/barsign{
-	pixel_y = -32;
-	req_access = null
-	},
 /obj/machinery/door/window/left/directional/west{
 	name = "Bar"
 	},
@@ -4212,6 +4208,10 @@
 /obj/structure/light_construct/directional/south,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"GL" = (
+/obj/machinery/barsign/all_access,
+/turf/closed/wall/mineral/wood,
+/area/awaymission/cabin)
 "GN" = (
 /obj/effect/decal/remains/human,
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -29222,7 +29222,7 @@ ev
 eu
 cK
 cD
-an
+GL
 aq
 eg
 aq
