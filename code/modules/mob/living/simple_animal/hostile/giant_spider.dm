@@ -1,4 +1,4 @@
-#define INTERACTION_SPIDER_KEY "spider_key"
+#define DOAFTER_SOURCE_SPIDER "spider_key"
 
 /**
  * # Giant Spider
@@ -146,9 +146,15 @@
 	. = ..()
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.show_to(src)
+	AddElement(/datum/element/healing_touch,\
+		interaction_key = DOAFTER_SOURCE_SPIDER,\
+		valid_targets_typecache = typecacheof(list(/mob/living/simple_animal/hostile/giant_spider)),\
+		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
+		complete_text = "%SOURCE% wraps the wounds of %TARGET%.",\
+	)
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/AttackingTarget()
-	if(DOING_INTERACTION(src, INTERACTION_SPIDER_KEY))
+	if(DOING_INTERACTION(src, DOAFTER_SOURCE_SPIDER))
 		return
 	if(!isspider(target))
 		return ..()
@@ -167,11 +173,11 @@
 		span_notice("You begin wrapping the wounds of [hurt_spider]."),
 	)
 
-	if(!do_after(src, 2 SECONDS, target = hurt_spider, interaction_key = INTERACTION_SPIDER_KEY))
+	if(!do_after(src, 2 SECONDS, target = hurt_spider, interaction_key = DOAFTER_SOURCE_SPIDER))
 		return
 
 	hurt_spider.heal_overall_damage(20, 20)
-	new /obj/effect/temp_visual/heal(get_turf(hurt_spider), "#80F5FF")
+	new /obj/effect/temp_visual/heal(get_turf(hurt_spider), COLOR_HEALING_CYAN)
 	visible_message(
 		span_notice("[src] wraps the wounds of [hurt_spider]."),
 		span_notice("You wrap the wounds of [hurt_spider]."),
@@ -202,8 +208,6 @@
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
 	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup."
-	/// Whether or not the tarantula is currently walking on webbing.
-	var/silk_walking = TRUE
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/charge
 
@@ -211,6 +215,7 @@
 	. = ..()
 	charge = new /datum/action/cooldown/mob_cooldown/charge/basic_charge()
 	charge.Grant(src)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/tarantula_web)
 
 /mob/living/simple_animal/hostile/giant_spider/tarantula/Destroy()
 	QDEL_NULL(charge)
@@ -220,16 +225,6 @@
 	if(client)
 		return
 	charge.Trigger(target = target)
-
-/mob/living/simple_animal/hostile/giant_spider/tarantula/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	var/obj/structure/spider/stickyweb/web = locate() in loc
-	if(web && !silk_walking)
-		remove_movespeed_modifier(/datum/movespeed_modifier/tarantula_web)
-		silk_walking = TRUE
-	else if(!web && silk_walking)
-		add_movespeed_modifier(/datum/movespeed_modifier/tarantula_web)
-		silk_walking = FALSE
 
 /**
  * # Spider Viper
@@ -326,7 +321,7 @@
 		return FALSE
 	if(!isspider(owner))
 		return FALSE
-	if(DOING_INTERACTION(owner, INTERACTION_SPIDER_KEY))
+	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
 		return FALSE
 	if(!isturf(owner.loc))
 		return FALSE
@@ -355,7 +350,7 @@
 
 	spider.stop_automated_movement = TRUE
 
-	if(do_after(spider, 4 SECONDS * spider.web_speed, target = spider_turf, interaction_key = INTERACTION_SPIDER_KEY))
+	if(do_after(spider, 4 SECONDS * spider.web_speed, target = spider_turf, interaction_key = DOAFTER_SOURCE_SPIDER))
 		if(spider.loc == spider_turf)
 			if(web)
 				qdel(web)
@@ -396,7 +391,7 @@
 		return FALSE
 	if(owner.incapacitated())
 		return FALSE
-	if(DOING_INTERACTION(owner, INTERACTION_SPIDER_KEY))
+	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
 		return FALSE
 	return TRUE
 
@@ -452,7 +447,7 @@
 	if(istype(animal_owner))
 		animal_owner.stop_automated_movement = TRUE
 
-	if(do_after(owner, wrap_time, target = to_wrap, interaction_key = INTERACTION_SPIDER_KEY))
+	if(do_after(owner, wrap_time, target = to_wrap, interaction_key = DOAFTER_SOURCE_SPIDER))
 		wrap_target(to_wrap)
 	if(istype(animal_owner))
 		animal_owner.stop_automated_movement = FALSE
@@ -509,7 +504,7 @@
 		return FALSE
 	if(!isspider(owner))
 		return FALSE
-	if(DOING_INTERACTION(owner, INTERACTION_SPIDER_KEY))
+	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
 		return FALSE
 	var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
 	if(eggs)
@@ -527,7 +522,7 @@
 	var/mob/living/simple_animal/hostile/giant_spider/spider = owner
 	spider.stop_automated_movement = TRUE
 
-	if(do_after(owner, egg_lay_time, target = get_turf(owner), interaction_key = INTERACTION_SPIDER_KEY))
+	if(do_after(owner, egg_lay_time, target = get_turf(owner), interaction_key = DOAFTER_SOURCE_SPIDER))
 		var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
 		if(eggs)
 			owner.balloon_alert(owner, "already eggs here!")
@@ -742,24 +737,26 @@
 	AddComponent(/datum/component/blood_walk, \
 		blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
 		blood_spawn_chance = 5)
+	AddElement(/datum/element/healing_touch,\
+		heal_brute = maxHealth * 0.5,\
+		heal_burn = maxHealth * 0.5,\
+		allow_self = TRUE,\
+		interaction_key = DOAFTER_SOURCE_SPIDER,\
+		valid_targets_typecache = typecacheof(list(/mob/living/simple_animal/hostile/giant_spider/hunter/flesh)),\
+		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
+		action_text = "%SOURCE% begins mending themselves...",\
+		complete_text = "%SOURCE%'s wounds mend together.",\
+	)
 
-/mob/living/simple_animal/hostile/giant_spider/hunter/flesh/AttackingTarget()
-	if(DOING_INTERACTION(src, INTERACTION_SPIDER_KEY))
-		return
-	if(src == target)
-		if(on_fire)
-			to_chat(src, span_warning("Your self regeneration won't work when you're on fire!"))
-			return
-		if(health >= maxHealth)
-			to_chat(src, span_warning("You're not injured, there's no reason to heal."))
-			return
-		visible_message(span_notice("[src] begins mending themselves..."),span_notice("You begin mending your wounds..."))
-		if(do_after(src, 2 SECONDS, target = src, interaction_key = INTERACTION_SPIDER_KEY))
-			heal_overall_damage(maxHealth * 0.5, maxHealth * 0.5)
-			new /obj/effect/temp_visual/heal(get_turf(src), "#80F5FF")
-			visible_message(span_notice("[src]'s wounds mend together."),span_notice("You mend your wounds together."))
-		return
-	return ..()
+/// Prevent you from healing other flesh spiders, or healing when on fire
+/mob/living/simple_animal/hostile/giant_spider/hunter/flesh/proc/can_mend(mob/living/source, mob/living/target)
+	if (target != src)
+		balloon_alert(src, "can only heal yourself!")
+		return FALSE
+	if (on_fire)
+		balloon_alert(src, "on fire!")
+		return FALSE
+	return TRUE
 
 /**
  * # Viper Spider (Wizard)
@@ -777,4 +774,4 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-#undef INTERACTION_SPIDER_KEY
+#undef DOAFTER_SOURCE_SPIDER

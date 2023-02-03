@@ -69,5 +69,5 @@
 	var/mob/living/living_target = target
 	if(living_target.stat != DEAD)
 		living_target.heal_overall_damage(melee_damage_upper, melee_damage_upper)
-		new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
+		new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
 		visible_message(span_notice("[src] mends the wounds of [target]."),span_notice("You mend the wounds of [target]."))
