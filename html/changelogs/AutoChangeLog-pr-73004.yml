@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes:
-  - balance: "Most energy sword-like weapons have had their demolition_mod increased to 1.5x (from 1x). This affects damage vs. robots, objects, structures, etc. Energy scalpels did not receive this buff."

@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - admin: "Admins can direct where carp (or magicarp) are interested in going when manually triggering the event"

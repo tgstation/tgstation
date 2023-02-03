@@ -15,24 +15,7 @@
 	earliest_start = 35 MINUTES
 	category = EVENT_CATEGORY_SPACE
 	description = "A wave of space dust continually grinds down a side of the station."
-	///Where will the sandstorm be coming from -- Established in admin_setup, passed down to round_event
-	var/start_side
-
-/datum/round_event_control/sandstorm/admin_setup()
-	if(!check_rights(R_FUN))
-		return ADMIN_CANCEL_EVENT
-
-	if(tgui_alert(usr, "Choose a side to powersand?", "I hate sand.", list("Yes", "No")) == "Yes")
-		var/chosen_direction = tgui_input_list(usr, "Pick one!","Rough, gets everywhere, coarse, etc.", list("Up", "Down", "Right", "Left"))
-		switch(chosen_direction)
-			if("Up")
-				start_side = NORTH
-			if("Down")
-				start_side = SOUTH
-			if("Right")
-				start_side = EAST
-			if("Left")
-				start_side = WEST
+	admin_setup = /datum/event_admin_setup/listed_options/sandstorm
 
 /datum/round_event/sandstorm
 	start_when = 60
@@ -46,10 +29,7 @@
 	end_when = rand(110, 140)
 
 /datum/round_event/sandstorm/announce(fake)
-	var/datum/round_event_control/sandstorm/sandstorm_event = control
-	if(sandstorm_event.start_side)
-		start_side = sandstorm_event.start_side
-	else
+	if(!start_side)
 		start_side = pick(GLOB.cardinals)
 
 	var/start_side_text = "unknown"
@@ -98,3 +78,21 @@
 
 /datum/round_event/sandstorm_classic/tick()
 	spawn_meteors(10, GLOB.meteors_dust)
+
+/datum/event_admin_setup/listed_options/sandstorm
+	input_text = "Choose a side to powersand?"
+	normal_run_option = "Random Sandstorm Direction"
+
+/datum/event_admin_setup/listed_options/sandstorm/get_list()
+	return list("Up", "Down", "Right", "Left")
+
+/datum/event_admin_setup/listed_options/sandstorm/apply_to_event(datum/round_event/sandstorm/event)
+	switch(chosen)
+		if("Up")
+			event.start_side = NORTH
+		if("Down")
+			event.start_side = SOUTH
+		if("Right")
+			event.start_side = EAST
+		if("Left")
+			event.start_side = WEST

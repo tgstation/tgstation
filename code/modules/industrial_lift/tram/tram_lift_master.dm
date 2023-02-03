@@ -35,6 +35,8 @@
 	///how many times we moved while costing less than 0.5 * SStramprocess.max_time milliseconds per movement
 	var/times_below = 0
 
+	var/is_operational = TRUE
+
 /datum/lift_master/tram/New(obj/structure/industrial_lift/tram/lift_platform)
 	. = ..()
 	horizontal_speed = lift_platform.horizontal_speed
@@ -205,16 +207,16 @@
 /datum/lift_master/tram/proc/set_door_state(tram_door, action)
 	switch(action)
 		if(LOCK_DOORS)
-			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, lock))
+			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, lock))
 
 		if(UNLOCK_DOORS)
-			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, unlock))
+			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, unlock))
 
 		if(OPEN_DOORS)
-			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, open))
+			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, cycle_doors), action)
 
 		if(CLOSE_DOORS)
-			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, close))
+			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, cycle_doors), action)
 
 		else
 			stack_trace("Tram doors update_tram_doors called with an improper action ([action]).")

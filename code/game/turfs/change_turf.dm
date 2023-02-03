@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_directional_opacity = directional_opacity
 	var/old_dynamic_lumcount = dynamic_lumcount
 	var/old_rcd_memory = rcd_memory
-	var/old_always_lit = always_lit
+	var/old_space_lit = space_lit
 	var/old_explosion_throw_details = explosion_throw_details
 	// We get just the bits of explosive_resistance that aren't the turf
 	var/old_explosive_resistance = explosive_resistance - get_explosive_block()
@@ -132,11 +132,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	lattice_underneath = old_lattice_underneath
 
-	if(new_turf.always_lit)
+	var/area/our_area = new_turf.loc
+	if(new_turf.space_lit && !our_area.area_has_base_lighting)
 		// We are guarenteed to have these overlays because of how generation works
 		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
 		new_turf.add_overlay(overlay)
-	else if (old_always_lit)
+	else if (old_space_lit && !our_area.area_has_base_lighting)
 		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
 		new_turf.cut_overlay(overlay)
 
@@ -154,9 +155,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	// We will only run this logic if the tile is not on the prime z layer, since we use area overlays to cover that
 	if(SSmapping.z_level_to_plane_offset[z])
-		var/area/thisarea = get_area(new_turf)
-		if(thisarea.lighting_effects)
-			new_turf.add_overlay(thisarea.lighting_effects[SSmapping.z_level_to_plane_offset[z] + 1])
+		if(our_area.lighting_effects)
+			new_turf.add_overlay(our_area.lighting_effects[SSmapping.z_level_to_plane_offset[z] + 1])
 
 	if(flags_1 & INITIALIZED_1) // only queue for smoothing if SSatom initialized us
 		QUEUE_SMOOTH_NEIGHBORS(src)

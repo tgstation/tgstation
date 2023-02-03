@@ -600,7 +600,7 @@
 
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
-	if(!instant && !do_mob(src, src, 1 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
+	if(!instant && !do_after(src, 1 SECONDS, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -2406,6 +2406,21 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/played_game()
 	. = ..()
 	add_mood_event("gaming", /datum/mood_event/gaming)
+
+/**
+ * Helper proc for basic and simple animals to return true if the passed sentience type matches theirs
+ * Living doesn't have a sentience type though so it always returns false if not a basic or simple mob
+ */
+/mob/living/proc/compare_sentience_type(compare_type)
+	return FALSE
+
+/// Proc called when targetted by a lazarus injector
+/mob/living/proc/lazarus_revive(mob/living/reviver, malfunctioning)
+	revive(HEAL_ALL)
+	befriend(reviver)
+	faction = (malfunctioning) ? list("[REF(reviver)]") : list(FACTION_NEUTRAL)
+	if (malfunctioning)
+		reviver.log_message("has revived mob [key_name(src)] with a malfunctioning lazarus injector.", LOG_GAME)
 
 /// Proc for giving a mob a new 'friend', generally used for AI control and targetting. Returns false if already friends.
 /mob/living/proc/befriend(mob/living/new_friend)

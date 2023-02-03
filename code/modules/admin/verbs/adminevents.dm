@@ -8,6 +8,7 @@ ADMIN_CONTEXT_ENTRY(context_subtle_message, "Subtle Message", R_ADMIN, mob/heare
 		message_admins("[key_name_admin(src)] decided not to answer [ADMIN_LOOKUPFLW(hearer)]'s prayer")
 		return
 
+  hearer.balloon_alert(hearer, "you hear a voice")
 	to_chat(hearer, "<i>You hear a voice in your head... <b>[msg]</i></b>")
 	log_admin("SubtlePM: [key_name(usr)] -> [key_name(hearer)] : [msg]")
 	msg = span_adminnotice("<b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(hearer)] :</b> [msg]")
@@ -27,6 +28,7 @@ ADMIN_CONTEXT_ENTRY(contexxt_headset_message, "Headset Message", R_ADMIN, mob/li
 
 	log_directed_talk(mob, hearer, input, LOG_ADMIN, "reply")
 	message_admins("[key_name_admin(src)] replied to [key_name_admin(hearer)]'s [sender] message with: \"[input]\"")
+	hearer.balloon_alert(hearer, "you hear a voice")
 	to_chat(hearer, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \"Please stand by for a message from [sender == "Syndicate" ? "your benefactor" : "Central Command"]. Message as follows[sender == "Syndicate" ? ", agent." : ":"] <b>[input].</b> Message ends.\""), confidential = TRUE)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Headset Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

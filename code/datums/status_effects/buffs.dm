@@ -278,7 +278,7 @@
 			itemUser.adjustBruteLoss(-1.5)
 			itemUser.adjustFireLoss(-1.5)
 			itemUser.adjustToxLoss(-1.5, forced = TRUE) //Because Slime People are people too
-			itemUser.adjustOxyLoss(-1.5)
+			itemUser.adjustOxyLoss(-1.5, forced = TRUE)
 			itemUser.adjustStaminaLoss(-1.5)
 			itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5)
 			itemUser.adjustCloneLoss(-0.5) //Becasue apparently clone damage is the bastion of all health
