@@ -1,4 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes:
-  - bugfix: "On IceBox, the library air vents are now connected to the main network again."

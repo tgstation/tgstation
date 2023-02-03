@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "You can purchase weapons via the goodie system if you have a weapon permit."
-  - rscadd: "You can purchase lasers and disablers as goodies. The latter comes with a holster you can stick on your armor vest and store your extra disabler as security."
-  - qol: "You can store mini ebows in energy holsters. Oops."
