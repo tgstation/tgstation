@@ -1,0 +1,89 @@
+/**
+ * # Giant Spider
+ *
+ * A mob which can be created by dynamic event, botany, or xenobiology.
+ * The basic type is the guard, which is slow but sturdy and outputs good damage.
+ * All spiders can produce webbing.
+ */
+/mob/living/basic/giant_spider
+	name = "giant spider"
+	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
+	icon_state = "guard"
+	icon_living = "guard"
+	icon_dead = "guard_dead"
+	mob_biotypes = MOB_ORGANIC|MOB_BUG
+	speak_emote = list("chitters")
+	butcher_results = list(/obj/item/food/meat/slab/spider = 2, /obj/item/food/spiderleg = 8)
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	initial_language_holder = /datum/language_holder/spider
+	speed = 4
+	maxHealth = 80
+	health = 80
+	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	status_flags = NONE
+	unsuitable_cold_damage = 4
+	unsuitable_heat_damage = 4
+	obj_damage = 30
+	melee_damage_lower = 20
+	melee_damage_upper = 25
+	combat_mode = TRUE
+	faction = list("spiders")
+	pass_flags = PASSTABLE
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
+	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
+	unique_name = 1
+	gold_core_spawnable = HOSTILE_SPAWN
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	see_in_dark = NIGHTVISION_FOV_RANGE
+	flammable = TRUE
+	ai_controller = /datum/ai_controller/basic_controller/giant_spider
+	/// For some reason spiders move at different speeds depending on if they are AI controlled or not
+	var/player_speed = 0
+	/// What reagent the mob injects targets with
+	var/poison_type = /datum/reagent/toxin/hunterspider
+	/// How much of a reagent the mob injects on attack
+	var/poison_per_bite = 0
+	/// How quickly the spider can place down webbing.  One is base speed, larger numbers are slower.
+	var/web_speed = 1
+	/// Whether or not the spider can create sealed webs.
+	var/web_sealer = FALSE
+	/// The message that the mother spider left for this spider when the egg was layed.
+	var/directive = ""
+	/// Short description of what this mob is capable of, for radial menu uses
+	var/menu_description = "Versatile spider variant for frontline combat with high health and damage."
+
+/mob/living/basic/giant_spider/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+
+/mob/living/basic/giant_spider/Login()
+	. = ..()
+	if(!. || !client)
+		return FALSE
+	var/datum/antagonist/spider/spider_antag = new(directive)
+	mind.add_antag_datum(spider_antag)
+	GLOB.spidermobs[src] = TRUE
+	set_varspeed(player_speed)
+
+/mob/living/basic/giant_spider/Logout()
+	. = ..()
+	set_varspeed(initial(speed))
+
+/mob/living/basic/giant_spider/Destroy()
+	GLOB.spidermobs -= src
+	return ..()
+
+/mob/living/basic/giant_spider/mob_negates_gravity()
+	if(locate(/obj/structure/spider/stickyweb) in loc)
+		return TRUE
+	return ..()
+
+/mob/living/basic/giant_spider/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
+	. = ..()
+	for(var/datum/reagent/toxin/pestkiller/current_reagent in reagents)
+		apply_damage(50 * volume_modifier, STAMINA, BODY_ZONE_CHEST)
