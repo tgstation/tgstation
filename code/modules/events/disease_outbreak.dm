@@ -308,10 +308,7 @@
 		SetSeverity(properties["severity"])
 		visibility_flags |= HIDDEN_SCANNER
 		switch(severity)
-			if("Dangerous")
-				visibility_flags &= ~HIDDEN_SCANNER
-
-			if("BIOHAZARD")
+			if("Dangerous", "BIOHAZARD")
 				visibility_flags &= ~HIDDEN_SCANNER
 
 		GenerateCure(properties)
