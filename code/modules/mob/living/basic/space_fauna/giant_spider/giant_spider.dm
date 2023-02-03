@@ -48,10 +48,10 @@
 	var/poison_type = /datum/reagent/toxin/hunterspider
 	/// How much of a reagent the mob injects on attack
 	var/poison_per_bite = 0
-	/// How quickly the spider can place down webbing.  One is base speed, larger numbers are slower.
+	/// Multiplier to apply to web laying speed. Fractional numbers make it faster, because it's a multiplier.
 	var/web_speed = 1
-	/// Whether or not the spider can create sealed webs.
-	var/web_sealer = FALSE
+	/// Type of webbing ability to learn.
+	var/web_type = /datum/action/cooldown/lay_web
 	/// The message that the mother spider left for this spider when the egg was layed.
 	var/directive = ""
 	/// Short description of what this mob is capable of, for radial menu uses
@@ -60,6 +60,15 @@
 /mob/living/basic/giant_spider/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
+	AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
+
+	if(poison_per_bite)
+		AddElement(/datum/element/venomous, poison_type, poison_per_bite)
+
+	var/datum/action/cooldown/lay_web/webbing = new web_type(src)
+	webbing.webbing_time *= web_speed
+	webbing.Grant(src)
 
 /mob/living/basic/giant_spider/Login()
 	. = ..()
