@@ -1,0 +1,5 @@
+author: "cacogen"
+delete-after: True
+changes:
+  - qol: "Tape recorder actions (e.g. starting/stopping playback) now use balloon alerts instead of say() to reduce chat spam"
+  - bugfix: "You can no longer get a tape stuck in the tape recorder by unspooling it before inserting"

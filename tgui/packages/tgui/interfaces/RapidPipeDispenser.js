@@ -193,7 +193,7 @@ const LayerSection = (props, context) => {
 const PipeTypeSection = (props, context) => {
   const { act, data } = useBackend(context);
   const { categories = [] } = data;
-  const { selected_category } = data;
+  const { selected_category, selected_recipe } = data;
   const [categoryName, setCategoryName] = useLocalState(
     context,
     'categoryName',
@@ -221,7 +221,7 @@ const PipeTypeSection = (props, context) => {
           key={recipe.pipe_index}
           fluid
           ellipsis
-          checked={recipe.selected}
+          checked={recipe.pipe_name === selected_recipe}
           content={recipe.pipe_name}
           title={recipe.pipe_name}
           onClick={() =>

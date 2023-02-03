@@ -1,4 +1,0 @@
-author: "flowercuco"
-delete-after: True
-changes:
-  - bugfix: "pizza crates' pizza list applies the assigned weight on its pizza list"
