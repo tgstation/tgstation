@@ -72,6 +72,12 @@
 	if(creator)
 		src.creator = creator
 
+/mob/living/simple_animal/hostile/netherworld/statue/Destroy()
+	qdel(flicker)
+	qdel(blind)	
+	qdel(night_vision)
+	. = ..()
+
 /mob/living/simple_animal/hostile/netherworld/statue/add_cell_sample()
 	return
 
