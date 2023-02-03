@@ -69,7 +69,7 @@
 	tool?.play_tool_sound(owner)
 
 	// Now try to remove the effect with a doafter. If we have a tool, we'll even remove it 60% faster.
-	if(!do_mob(user, owner, time_to_remove * (tool ? STRANGLING_TOOL_MULTIPLIER : 1), interaction_key = REF(src)))
+	if(!do_after(user, time_to_remove * (tool ? STRANGLING_TOOL_MULTIPLIER : 1), owner, interaction_key = REF(src)))
 		to_chat(user, span_warning("You fail to [tool ? "cut":"remove"] the strand from around [owner == user ? "your":"[owner]'s"] neck!"))
 		return FALSE
 

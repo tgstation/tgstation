@@ -28,10 +28,9 @@
 
 	if(target != user)
 		target.visible_message(span_warning("[user] is attempting to implant [target]."))
+		if(!do_after(user, 5 SECONDS, target))
+			return
 
-	var/turf/target_on = get_turf(target)
-	if(!(target_on && (target == user || do_mob(user, target, 5 SECONDS))))
-		return
 	if(!(src && imp))
 		return
 

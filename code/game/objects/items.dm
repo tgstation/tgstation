@@ -549,7 +549,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(grav > STANDARD_GRAVITY)
 		var/grav_power = min(3,grav - STANDARD_GRAVITY)
 		to_chat(user,span_notice("You start picking up [src]..."))
-		if(!do_mob(user,src,30*grav_power))
+		if(!do_after(user, 30 * grav_power, src))
 			return
 
 
@@ -1051,13 +1051,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		// Create a callback with checks that would be called every tick by do_after.
 		var/datum/callback/tool_check = CALLBACK(src, PROC_REF(tool_check_callback), user, amount, extra_checks)
 
-		if(ismob(target))
-			if(!do_mob(user, target, delay, extra_checks=tool_check))
-				return
-
-		else
-			if(!do_after(user, delay, target=target, extra_checks=tool_check))
-				return
+		if(!do_after(user, delay, target=target, extra_checks=tool_check))
+			return
 	else
 		// Invoke the extra checks once, just in case.
 		if(extra_checks && !extra_checks.Invoke())

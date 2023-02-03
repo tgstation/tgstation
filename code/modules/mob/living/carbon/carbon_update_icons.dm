@@ -453,10 +453,9 @@
 	RETURN_TYPE(/list)
 
 	. = list()
-	if(!blocks_emissive)
-		return
-
-	. += emissive_blocker(standing.icon, standing.icon_state, src, alpha = standing.alpha)
+	if(blocks_emissive)
+		. += emissive_blocker(standing.icon, standing.icon_state, src, alpha = standing.alpha)
+	SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAYS, ., standing, isinhands, icon_file)
 
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
 /mob/living/carbon/proc/update_body_parts(update_limb_data)

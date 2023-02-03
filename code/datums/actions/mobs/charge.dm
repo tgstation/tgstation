@@ -227,7 +227,7 @@
 	var/spawn_blood = FALSE
 
 /datum/action/cooldown/mob_cooldown/charge/hallucination_charge/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
-	if(!enraged)
+	if(!enraged || prob(33))
 		hallucination_charge(target_atom, 6, 8, 0, 6, TRUE)
 		return
 	for(var/i in 0 to 2)

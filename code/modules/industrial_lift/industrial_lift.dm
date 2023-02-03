@@ -790,7 +790,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	name = "tram"
 	desc = "A tram for tramversing the station."
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "titanium"
+	icon_state = "textured_large"
 	layer = TRAM_FLOOR_LAYER
 	base_icon_state = null
 	smoothing_flags = NONE
@@ -814,30 +814,21 @@ GLOBAL_LIST_EMPTY(lifts)
 	create_multitile_platform = TRUE
 
 /obj/structure/industrial_lift/tram/white
-	icon_state = "titanium_white"
+	icon_state = "textured_white_large"
 
 /obj/structure/industrial_lift/tram/purple
 	icon_state = "titanium_purple"
 
 /obj/structure/industrial_lift/tram/subfloor
-	name = "tram"
-	desc = "A tram for tramversing the station."
 	icon_state = "tram_subfloor"
+
+/obj/structure/industrial_lift/tram/subfloor/window
+	icon_state = "tram_subfloor_window"
 
 /datum/armor/structure_industrial_lift
 	melee = 50
 	fire = 80
 	acid = 50
-
-/obj/structure/industrial_lift/tram/accessible
-	icon_state = "titanium_accessible_north"
-
-/obj/structure/industrial_lift/tram/accessible/north
-	icon_state = "titanium_accessible_north"
-
-/obj/structure/industrial_lift/tram/accessible/south
-	icon_state = "titanium_accessible_south"
-
 
 /obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
 	. = ..()
@@ -870,7 +861,6 @@ GLOBAL_LIST_EMPTY(lifts)
  * Tram finds its location at this point before fully unlocking controls to the user.
  */
 /obj/structure/industrial_lift/tram/proc/unlock_controls()
-	visible_message(span_notice("[src]'s controls are now unlocked."))
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.
 		tram_part.set_travelling(FALSE)
 		lift_master_datum.set_controls(LIFT_PLATFORM_UNLOCKED)
