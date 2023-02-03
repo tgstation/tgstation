@@ -9,10 +9,31 @@
 	anchored = FALSE
 	max_integrity = 200
 
+/obj/structure/kitchenspike_frame/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/structure/kitchenspike_frame/examine(mob/user)
 	. = ..()
 	. += "It can be <b>welded</b> apart."
 	. += "You could attach <b>[MEATSPIKE_IRONROD_REQUIREMENT]</b> iron rods to it to create a <b>Meat Spike</b>."
+
+/obj/structure/kitchenspike_frame/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+	var/message = null
+	if(held_item.tool_behaviour == TOOL_WELDER)
+		message = "Deconstruct"
+	else if(held_item.tool_behaviour == TOOL_WRENCH)
+		message = "Bolt Down Frame"
+
+	if(isnull(message))
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = message
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/kitchenspike_frame/welder_act(mob/living/user, obj/item/tool)
 	if(!tool.tool_start_check(user, amount = 0))
@@ -56,10 +77,26 @@
 	can_buckle = TRUE
 	max_integrity = 250
 
+/obj/structure/kitchenspike/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/structure/kitchenspike/examine(mob/user)
 	. = ..()
 	. += "<b>Drag a mob</b> onto it to hook it in place."
 	. += "A <b>crowbar</b> could remove those spikes."
+
+/obj/structure/kitchenspike/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user
+)
+	if(held_item.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Remove Spikes"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
 
 /obj/structure/kitchenspike/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
