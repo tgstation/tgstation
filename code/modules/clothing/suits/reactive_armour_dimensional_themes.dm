@@ -77,7 +77,7 @@
  */
 /datum/armour_dimensional_theme/proc/convert_turf(turf/to_convert)
 	if (isfloorturf(to_convert))
-		to_convert.ChangeTurf(replace_floor, flags = CHANGETURF_INHERIT_AIR)
+		to_convert.replace_floor(replace_floor, flags = CHANGETURF_INHERIT_AIR)
 	else if (iswallturf(to_convert))
 		to_convert.ChangeTurf(replace_wall)
 
