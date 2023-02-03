@@ -44,7 +44,7 @@
 	if(M == user)
 		M.visible_message(span_notice("[user] attempts to [apply_method] [src] on [user.p_them()]self."))
 		if(self_delay)
-			if(!do_mob(user, M, self_delay))
+			if(!do_after(user, self_delay, M))
 				return
 			if(!reagents || !reagents.total_volume)
 				return
@@ -54,7 +54,7 @@
 		log_combat(user, M, "attempted to apply", src, reagents.get_reagent_log_string())
 		M.visible_message(span_danger("[user] attempts to [apply_method] [src] on [M]."), \
 							span_userdanger("[user] attempts to [apply_method] [src] on you."))
-		if(!do_mob(user, M, CHEM_INTERACT_DELAY(3 SECONDS, user)))
+		if(!do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), M))
 			return
 		if(!reagents || !reagents.total_volume)
 			return

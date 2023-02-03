@@ -40,6 +40,8 @@
 	var/picture_size_y_max = 4
 	var/can_customise = TRUE
 	var/default_picture_name
+	///Whether the camera should print pictures immediately when a picture is taken.
+	var/print_picture_on_snap = TRUE
 
 /obj/item/camera/Initialize(mapload)
 	. = ..()
@@ -64,7 +66,7 @@
 	if(!desired_x || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
 		return FALSE
 	var/desired_y = tgui_input_number(user, "How high do you want the camera to shoot", "Zoom", picture_size_y, picture_size_y_max, picture_size_y_min)
-	if(!desired_y|| QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
+	if(!desired_y || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
 		return FALSE
 	picture_size_x = min(clamp(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	picture_size_y = min(clamp(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
@@ -186,25 +188,27 @@
 	var/list/mobs = list()
 	var/blueprints = FALSE
 	var/clone_area = SSmapping.RequestBlockReservation(size_x * 2 + 1, size_y * 2 + 1)
-	for(var/turf/placeholder in block(locate(target_turf.x - size_x, target_turf.y - size_y, target_turf.z), locate(target_turf.x + size_x, target_turf.y + size_y, target_turf.z)))
-		var/turf/T = placeholder
-		while(istype(T, /turf/open/openspace)) //Multi-z photography
-			T = SSmapping.get_turf_below(T)
-			if(!T)
+
+	var/width = size_x * 2
+	var/height = size_y * 2
+	for(var/turf/placeholder as anything in CORNER_BLOCK_OFFSET(target_turf, width, height, -size_x, -size_y))
+		while(istype(placeholder, /turf/open/openspace)) //Multi-z photography
+			placeholder = SSmapping.get_turf_below(placeholder)
+			if(!placeholder)
 				break
 
-		if(T && ((ai_user && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
-			turfs += T
-			for(var/mob/M in T)
+		if(placeholder && ((ai_user && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
+			turfs += placeholder
+			for(var/mob/M in placeholder)
 				mobs += M
-			if(locate(/obj/item/areaeditor/blueprints) in T)
+			if(locate(/obj/item/areaeditor/blueprints) in placeholder)
 				blueprints = TRUE
-	for(var/i in mobs)
-		var/mob/M = i
-		mobs_spotted += M
-		if(M.stat == DEAD)
-			dead_spotted += M
-		desc += M.get_photo_description(src)
+
+	for(var/mob/mob as anything in mobs)
+		mobs_spotted += mob
+		if(mob.stat == DEAD)
+			dead_spotted += mob
+		desc += mob.get_photo_description(src)
 
 	var/psize_x = (size_x * 2 + 1) * world.icon_size
 	var/psize_y = (size_y * 2 + 1) * world.icon_size
@@ -216,25 +220,26 @@
 	after_picture(user, picture)
 	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user)
 	blending = FALSE
-
+	return picture
 
 /obj/item/camera/proc/flash_end()
 	set_light_on(FALSE)
 
 
 /obj/item/camera/proc/after_picture(mob/user, datum/picture/picture)
-	printpicture(user, picture)
+	if(print_picture_on_snap)
+		printpicture(user, picture)
 
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
-	var/obj/item/photo/p = new(get_turf(src), picture)
-	if(user && in_range(src, user)) //needed because of TK
-		if(!ispAI(user))
-			user.put_in_hands(p)
-			pictures_left--
-			to_chat(user, span_notice("[pictures_left] photos left."))
-		var/customise = "No"
-		if(can_customise)
-			customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
+	if(!user)
+		return
+	pictures_left--
+	var/obj/item/photo/new_photo = new(get_turf(src), picture)
+	if(in_range(new_photo, user) && user.put_in_hands(new_photo)) //needed because of TK
+		to_chat(user, span_notice("[pictures_left] photos left."))
+
+	if(can_customise)
+		var/customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
 		if(customise == "Yes")
 			var/name1 = tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
 			var/desc1 = tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
@@ -245,11 +250,10 @@
 				picture.picture_desc = "[desc1] - [picture.picture_desc]"
 			if(caption)
 				picture.caption = caption
-		else
-			if(default_picture_name)
-				picture.picture_name = default_picture_name
+		else if(default_picture_name)
+			picture.picture_name = default_picture_name
 
-	p.set_picture(picture, TRUE, TRUE)
+	new_photo.set_picture(picture, TRUE, TRUE)
 	if(CONFIG_GET(flag/picture_logging_camera))
 		picture.log_to_file()
 

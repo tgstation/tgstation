@@ -3815,7 +3815,7 @@
 /area/space/nearstation)
 "Ds" = (
 /obj/structure/closet/crate/bin,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ks13/medical/morgue)
 "Du" = (

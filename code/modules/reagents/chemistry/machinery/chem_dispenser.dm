@@ -426,6 +426,8 @@
 	for(var/datum/stock_part/manipulator/manipulator in component_parts)
 		if (manipulator.tier > 3)
 			dispensable_reagents |= upgrade_reagents
+		else
+			dispensable_reagents -= upgrade_reagents
 		parts_rating += manipulator.tier
 	powerefficiency = round(newpowereff, 0.01)
 
@@ -586,7 +588,7 @@
 	emagged_reagents = list(
 		/datum/reagent/consumable/ethanol,
 		/datum/reagent/iron,
-		/datum/reagent/toxin/minttoxin,
+		/datum/reagent/consumable/mintextract,
 		/datum/reagent/consumable/ethanol/atomicbomb,
 		/datum/reagent/consumable/ethanol/fernet
 	)

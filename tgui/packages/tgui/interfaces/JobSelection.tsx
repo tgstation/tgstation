@@ -3,7 +3,7 @@ import { Box, Button, StyleableSection, Icon, Stack, NoticeBox } from '../compon
 import { Window } from '../layouts';
 import { Color } from 'common/color';
 import { SFC } from 'inferno';
-import { JobToIcon } from './common/JobToIcon';
+import { JOB2ICON } from './common/JobToIcon';
 import { deepMerge } from 'common/collections';
 import { BooleanLike } from 'common/react';
 
@@ -12,7 +12,6 @@ type Job = {
   command: BooleanLike;
   open_slots: number;
   used_slots: number;
-  icon: string;
   prioritized: BooleanLike;
   description: string;
 };
@@ -42,7 +41,7 @@ export const JobEntry: SFC<{
   const jobName = data.jobName;
   const job = data.job;
   const department = data.department;
-  const jobIcon = job.icon || JobToIcon[jobName] || null;
+  const jobIcon = JOB2ICON[jobName] || null;
   return (
     <Button
       fluid

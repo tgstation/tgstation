@@ -7,7 +7,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
 /obj/item/storage/box/bodybags,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/effect/spawner/random/medical/surgery_tool,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)

@@ -271,7 +271,7 @@
 	var/found_amount = 0
 	var/datum/gas_mixture/mix = T.return_air()
 	found_amount += mix.gases[/datum/gas/plasma] ? mix.gases[/datum/gas/plasma][MOLES] : 0
-	return found_amount>=target_amount
+	return found_amount >= target_amount
 
 
 /datum/objective_item/steal/functionalai
@@ -279,10 +279,26 @@
 	targetitem = /obj/item/aicard
 	difficulty = 20 //beyond the impossible
 
-/datum/objective_item/steal/functionalai/check_special_completion(obj/item/aicard/C)
-	for(var/mob/living/silicon/ai/A in C)
-		if(isAI(A) && A.stat != DEAD) //See if any AI's are alive inside that card.
-			return TRUE
+/datum/objective_item/steal/functionalai/New()
+	. = ..()
+	altitems += typesof(/obj/item/mod/control) // only here so we can account for AIs tucked away in a MODsuit.
+
+/datum/objective_item/steal/functionalai/check_special_completion(obj/item/potential_storage)
+	var/mob/living/silicon/ai/being
+
+	if(istype(potential_storage, /obj/item/aicard))
+		var/obj/item/aicard/card = potential_storage
+		being = card.AI // why is this one capitalized and the other one not? i wish i knew.
+	else if(istype(potential_storage, /obj/item/mod/control))
+		var/obj/item/mod/control/suit = potential_storage
+		being = suit.ai
+	else
+		stack_trace("check_special_completion() called on [src] with [potential_storage] ([potential_storage.type])! That's not supposed to happen!")
+		return FALSE
+
+	if(isAI(being) && being.stat != DEAD)
+		return TRUE
+
 	return FALSE
 
 /datum/objective_item/steal/blueprints
@@ -402,7 +418,7 @@
 
 	if(istype(S, targetitem))
 		found_amount = S.amount
-	return found_amount>=target_amount
+	return found_amount >= target_amount
 
 /datum/objective_item/stack/diamond
 	name = "10 diamonds"

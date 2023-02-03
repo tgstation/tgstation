@@ -259,6 +259,10 @@
 	name = "Buzzcut"
 	icon_state = "hair_buzzcut"
 
+/datum/sprite_accessory/hair/chinbob
+	name = "Chin-Length Bob Cut"
+	icon_state = "hair_chinbob"
+
 /datum/sprite_accessory/hair/comet
 	name = "Comet"
 	icon_state = "hair_comet"
@@ -1758,7 +1762,7 @@
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon = 'icons/mob/species/human/cat_features.dmi'
-	icon_state = "cat"
+	icon_state = "default"
 	color_src = HAIR
 
 /datum/sprite_accessory/tails/monkey

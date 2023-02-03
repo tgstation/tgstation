@@ -53,7 +53,7 @@
 	else
 		. += span_notice("It has nothing inside.")
 	if(user.canUseTopic(src))
-		. += span_notice("Activate it in your hand to [open ? "close" : "open"] its door.")
+		. += span_notice("Activate it in your hand to [open ? "close" : "open"] its door. Click-drag onto floor to release its occupants.")
 		if(!open)
 			. += span_notice("Alt-click to [locked ? "unlock" : "lock"] its door.")
 
@@ -170,7 +170,7 @@
 	user.visible_message(span_notice("[user] starts loading [target] into [src]."), \
 	span_notice("You start loading [target] into [src]..."), null, null, target)
 	to_chat(target, span_userdanger("[user] starts loading you into [user.p_their()] [name]!"))
-	if(!do_mob(user, target, 30))
+	if(!do_after(user, 3 SECONDS, target))
 		return
 	if(target in occupants)
 		return

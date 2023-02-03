@@ -445,8 +445,6 @@
 /mob/living/carbon/proc/update_hud_back(obj/item/I)
 	return
 
-
-
 //Overlays for the worn overlay so you can overlay while you overlay
 //eg: ammo counters, primed grenade flashing, etc.
 //"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
@@ -455,10 +453,9 @@
 	RETURN_TYPE(/list)
 
 	. = list()
-	if(!blocks_emissive)
-		return
-
-	. += emissive_blocker(standing.icon, standing.icon_state, src, alpha = standing.alpha)
+	if(blocks_emissive)
+		. += emissive_blocker(standing.icon, standing.icon_state, src, alpha = standing.alpha)
+	SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAYS, ., standing, isinhands, icon_file)
 
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
 /mob/living/carbon/proc/update_body_parts(update_limb_data)
@@ -526,10 +523,10 @@
 		. += "-[draw_color]"
 	if(is_invisible)
 		. += "-invisible"
-	for(var/obj/item/organ/external/external_organ as anything in external_organs)
-		if(!external_organ.can_draw_on_bodypart(owner))
+	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
+		if(!overlay.can_draw_on_bodypart(owner))
 			continue
-		. += "-[jointext(external_organ.generate_icon_cache(), "-")]"
+		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
 
 	return .
 

@@ -660,26 +660,24 @@
 	restore_eyesight(prev_affected_mob, eyes)
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.adjust_blindness(-2 * REM * delta_time * normalise_creation_purity())
-	affected_mob.adjust_eye_blur(-4 SECONDS * REM * delta_time * normalise_creation_purity())
+	var/normalized_purity = normalise_creation_purity()
+	affected_mob.adjust_temp_blindness(-4 SECONDS * REM * delta_time * normalized_purity)
+	affected_mob.adjust_eye_blur(-4 SECONDS * REM * delta_time * normalized_purity)
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.getorganslot(ORGAN_SLOT_EYES)
-	if (!eyes)
-		return ..()
-	var/fix_prob = 10
-	if(creation_purity >= 1)
-		fix_prob = 100
-	eyes.applyOrganDamage(-2 * REM * delta_time * normalise_creation_purity(), required_organtype = affected_organtype)
-	if(HAS_TRAIT_FROM(affected_mob, TRAIT_BLIND, EYE_DAMAGE))
-		if(DT_PROB(fix_prob, delta_time))
-			to_chat(affected_mob, span_warning("Your vision slowly returns..."))
-			affected_mob.cure_blind(EYE_DAMAGE)
-			affected_mob.cure_nearsighted(EYE_DAMAGE)
-			affected_mob.set_eye_blur_if_lower(70 SECONDS)
-	else if(HAS_TRAIT_FROM(affected_mob, TRAIT_NEARSIGHT, EYE_DAMAGE))
-		to_chat(affected_mob, span_warning("The blackness in your peripheral vision fades."))
-		affected_mob.cure_nearsighted(EYE_DAMAGE)
-		affected_mob.set_eye_blur_if_lower(20 SECONDS)
-	..()
+	if(eyes)
+		// Healing eye damage will cure nearsightedness and blindness from ... eye damage
+		eyes.applyOrganDamage(-2 * REM * delta_time * normalise_creation_purity(), required_organtype = affected_organtype)
+		// If our eyes are seriously damaged, we have a probability of causing eye blur while healing depending on purity
+		if(eyes.damaged && DT_PROB(16 - min(normalized_purity * 6, 12), delta_time))
+			// While healing, gives some eye blur
+			if(affected_mob.is_blind_from(EYE_DAMAGE))
+				to_chat(affected_mob, span_warning("Your vision slowly returns..."))
+				affected_mob.adjust_eye_blur(20 SECONDS)
+			else if(affected_mob.is_nearsighted_from(EYE_DAMAGE))
+				to_chat(affected_mob, span_warning("The blackness in your peripheral vision begins to fade."))
+				affected_mob.adjust_eye_blur(5 SECONDS)
+
+	return ..()
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/affected_mob)
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.getorganslot(ORGAN_SLOT_EYES)
@@ -1193,7 +1191,7 @@
 		affected_mob.adjust_jitter_up_to(6 SECONDS * REM * delta_time, 1 MINUTES)
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * delta_time, 150, affected_organtype)
 		if(DT_PROB(5, delta_time))
-			affected_mob.say(pick("Yeah, well, you know, that's just, like, uh, your opinion, man.", "Am I glad he's frozen in there and that we're out here, and that he's the sheriff and that we're frozen out here, and that we're in there, and I just remembered, we're out here. What I wanna know is: Where's the caveman?", "It ain't me, it ain't me...", "Make love, not war!", "Stop, hey, what's that sound? Everybody look what's going down...", "Do you believe in magic in a young girl's heart?"), forced = /datum/reagent/medicine/earthsblood)
+			affected_mob.say(return_hippie_line(), forced = /datum/reagent/medicine/earthsblood)
 	affected_mob.adjust_drugginess_up_to(20 SECONDS * REM * delta_time, 30 SECONDS * REM * delta_time)
 	..()
 	. = TRUE
@@ -1217,6 +1215,19 @@
 		hippie.gain_trauma(/datum/brain_trauma/severe/pacifism)
 	..()
 	. = TRUE
+
+/// Returns a hippie-esque string for the person affected by the reagent to say.
+/datum/reagent/medicine/earthsblood/proc/return_hippie_line()
+	var/static/list/earthsblood_lines = list(
+		"Am I glad he's frozen in there and that we're out here, and that he's the sheriff and that we're frozen out here, and that we're in there, and I just remembered, we're out here. What I wanna know is: Where's the caveman?",
+		"Do you believe in magic in a young girl's heart?",
+		"It ain't me, it ain't me...",
+		"Make love, not war!",
+		"Stop, hey, what's that sound? Everybody look what's going down...",
+		"Yeah, well, you know, that's just, like, uh, your opinion, man.",
+	)
+
+	return pick(earthsblood_lines)
 
 /datum/reagent/medicine/haloperidol
 	name = "Haloperidol"

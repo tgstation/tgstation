@@ -6,9 +6,10 @@
 /datum/element/noticable_organ
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	// "[they] [desc here]", shows on examining someone with an infused organ.
+	/// "[they]|[their] [desc here]", shows on examining someone with an infused organ.
+	/// Uses a possessive pronoun (His/Her/Their) if a body zone is given, or a singular pronoun (He/She/They) otherwise.
 	var/infused_desc
-	///Which body zone has to be exposed. If none is set, this is always noticable.
+	/// Which body zone has to be exposed. If none is set, this is always noticable, and the description pronoun becomes singular instead of possesive.
 	var/body_zone
 
 /datum/element/noticable_organ/Attach(datum/target, infused_desc, body_zone)
@@ -42,7 +43,6 @@
 /datum/element/noticable_organ/proc/on_receiver_examine(mob/living/carbon/examined, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	var/list/covered = examined.get_covered_body_zones()
-	if(!body_zone || (body_zone in covered))
+	if(body_zone && (body_zone in examined.get_covered_body_zones()))
 		return
-	examine_list += span_notice("[examined.p_they(TRUE)] [infused_desc]")
+	examine_list += span_notice(replacetext(replacetext("[body_zone ? examined.p_their(TRUE) : examined.p_they(TRUE)] [infused_desc]", "%PRONOUN_ES", examined.p_es()), "%PRONOUN_S", examined.p_s()))
