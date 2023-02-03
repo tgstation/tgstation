@@ -10211,7 +10211,7 @@
 /obj/effect/turf_decal/trimline/white/tram{
 	dir = 1
 	},
-/obj/machinery/crossing_signal/southwest,
+/obj/machinery/crossing_signal/tramstation/southwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "dEv" = (
@@ -16421,7 +16421,7 @@
 /obj/effect/turf_decal/trimline/white/tram{
 	dir = 1
 	},
-/obj/machinery/crossing_signal/southeast,
+/obj/machinery/crossing_signal/tramstation/southeast,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "fVC" = (
@@ -30897,7 +30897,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/crossing_signal/northeast,
+/obj/machinery/crossing_signal/tramstation/northeast,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "lia" = (
@@ -34682,7 +34682,7 @@
 /obj/effect/turf_decal/trimline/white/tram{
 	dir = 1
 	},
-/obj/machinery/crossing_signal/southeast,
+/obj/machinery/crossing_signal/tramstation/southeast,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "mAb" = (
@@ -47743,7 +47743,7 @@
 /area/station/engineering/main)
 "rhW" = (
 /obj/effect/turf_decal/trimline/white/tram,
-/obj/machinery/crossing_signal/northwest,
+/obj/machinery/crossing_signal/tramstation/northwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "rib" = (
@@ -54108,7 +54108,7 @@
 /obj/effect/turf_decal/trimline/white/tram{
 	dir = 1
 	},
-/obj/machinery/crossing_signal/southwest,
+/obj/machinery/crossing_signal/tramstation/southwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "tug" = (
@@ -62020,7 +62020,7 @@
 "wpk" = (
 /obj/effect/turf_decal/trimline/white/tram,
 /obj/structure/cable,
-/obj/machinery/crossing_signal/northeast,
+/obj/machinery/crossing_signal/tramstation/northeast,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "wpt" = (
@@ -62757,7 +62757,7 @@
 /area/station/engineering/main)
 "wCR" = (
 /obj/effect/turf_decal/trimline/white/tram,
-/obj/machinery/crossing_signal/northwest,
+/obj/machinery/crossing_signal/tramstation/northwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "wDa" = (
