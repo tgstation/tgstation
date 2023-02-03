@@ -251,24 +251,25 @@
 		/datum/symptom/weight_loss,
 	)
 
-	if(max_severity == ADV_DISEASE_HARMFUL)
-		possible_symptoms += list(
-			/datum/symptom/disfiguration,
-			/datum/symptom/hallucigen,
-			/datum/symptom/polyvitiligo,
-			/datum/symptom/visionloss,
-		)
+	switch(max_severity)
+		if(ADV_DISEASE_HARMFUL)
+			possible_symptoms += list(
+				/datum/symptom/disfiguration,
+				/datum/symptom/hallucigen,
+				/datum/symptom/polyvitiligo,
+				/datum/symptom/visionloss,
+			)
 
-	if(max_severity == ADV_DISEASE_DANGEROUS)
-		possible_symptoms += list(
-			/datum/symptom/alkali,
-			/datum/symptom/asphyxiation,
-			/datum/symptom/fire,
-			/datum/symptom/flesh_death,
-			/datum/symptom/flesh_eating,
-			/datum/symptom/narcolepsy,
-			/datum/symptom/voice_change,
-		)
+		if(ADV_DISEASE_DANGEROUS)
+			possible_symptoms += list(
+				/datum/symptom/alkali,
+				/datum/symptom/asphyxiation,
+				/datum/symptom/fire,
+				/datum/symptom/flesh_death,
+				/datum/symptom/flesh_eating,
+				/datum/symptom/narcolepsy,
+				/datum/symptom/voice_change,
+			)
 
 	for(var/i in 1 to max_symptoms)
 		var/datum/symptom/chosen_symptom = pick_n_take(possible_symptoms)
@@ -306,12 +307,12 @@
 		stage_prob = max(0.5 * properties["stage_rate"], 1)
 		SetSeverity(properties["severity"])
 		visibility_flags |= HIDDEN_SCANNER
+		switch(severity)
+			if("Dangerous")
+				visibility_flags &= ~HIDDEN_SCANNER
 
-		if(severity == "Dangerous")
-			visibility_flags &= ~HIDDEN_SCANNER
-
-		if(severity == "BIOHAZARD")
-			visibility_flags &= ~HIDDEN_SCANNER
+			if("BIOHAZARD")
+				visibility_flags &= ~HIDDEN_SCANNER
 
 		GenerateCure(properties)
 
