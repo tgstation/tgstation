@@ -51,6 +51,10 @@
 	UnregisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 	return ..()
 
+/datum/component/healing_touch/Destroy(force, silent)
+	. = ..()
+	QDEL_NULL(extra_checks)
+
 /// Validate our target, and interrupt the attack chain to start healing it if it is allowed
 /datum/component/healing_touch/proc/try_healing(mob/living/healer, atom/target)
 	SIGNAL_HANDLER
