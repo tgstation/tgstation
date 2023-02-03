@@ -385,7 +385,7 @@
 	if(ismob(master.loc))
 		interact(null, master.loc)
 
-/datum/component/uplink/proc/new_message(datum/source, user, message, channel)
+/datum/component/uplink/proc/new_message(datum/source, mob/living/user, message, channel)
 	SIGNAL_HANDLER
 
 	if(channel != RADIO_CHANNEL_UPLINK)
@@ -393,7 +393,7 @@
 
 	if(!findtext(lowertext(message), lowertext(unlock_code)))
 		if(failsafe_code && findtext(lowertext(message), lowertext(failsafe_code)))
-			failsafe()  // no point returning cannot radio, youre probably ded
+			failsafe(user)  // no point returning cannot radio, youre probably ded
 		return
 	locked = FALSE
 	interact(null, user)
@@ -463,8 +463,8 @@
 	var/turf/T = get_turf(parent)
 	if(!T)
 		return
-	message_admins("[ADMIN_LOOKUPFLW(usr)] has triggered an uplink failsafe explosion at [AREACOORD(T)] The owner of the uplink was [ADMIN_LOOKUPFLW(owner)].")
-	usr.log_message("triggered an uplink failsafe explosion. Uplink owner: [key_name(owner)].", LOG_ATTACK)
+	message_admins("[ADMIN_LOOKUPFLW(user)] has triggered an uplink failsafe explosion at [AREACOORD(T)] The owner of the uplink was [ADMIN_LOOKUPFLW(owner)].")
+	user.log_message("triggered an uplink failsafe explosion. Uplink owner: [key_name(owner)].", LOG_ATTACK)
 
 	explosion(parent, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 	qdel(parent) //Alternatively could brick the uplink.
