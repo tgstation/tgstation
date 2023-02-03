@@ -8,7 +8,7 @@ ADMIN_CONTEXT_ENTRY(context_subtle_message, "Subtle Message", R_ADMIN, mob/heare
 		message_admins("[key_name_admin(src)] decided not to answer [ADMIN_LOOKUPFLW(hearer)]'s prayer")
 		return
 
-  hearer.balloon_alert(hearer, "you hear a voice")
+	hearer.balloon_alert(hearer, "you hear a voice")
 	to_chat(hearer, "<i>You hear a voice in your head... <b>[msg]</i></b>")
 	log_admin("SubtlePM: [key_name(usr)] -> [key_name(hearer)] : [msg]")
 	msg = span_adminnotice("<b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(hearer)] :</b> [msg]")
