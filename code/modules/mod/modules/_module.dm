@@ -264,6 +264,12 @@
 		device = null
 		qdel(src)
 
+/// Adds the worn overlays to the suit.
+/obj/item/mod/module/proc/add_module_overlay(obj/item/source, list/overlays, mutable_appearance/standing, isinhands, icon_file)
+	SIGNAL_HANDLER
+
+	overlays += generate_worn_overlay(standing)
+
 /// Generates an icon to be used for the suit's worn overlays
 /obj/item/mod/module/proc/generate_worn_overlay(mutable_appearance/standing)
 	. = list()

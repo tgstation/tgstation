@@ -39,12 +39,16 @@ SUBSYSTEM_DEF(minor_mapping)
 
 /datum/controller/subsystem/minor_mapping/proc/place_satchels(amount=10)
 	var/list/turfs = find_satchel_suitable_turfs()
+	///List of areas where satchels should not be placed.
+	var/list/blacklisted_area_types = list(/area/station/holodeck)
 
 	while(turfs.len && amount > 0)
-		var/turf/T = pick_n_take(turfs)
-		var/obj/item/storage/backpack/satchel/flat/F = new(T)
+		var/turf/turf = pick_n_take(turfs)
+		if(is_type_in_list(get_area(turf), blacklisted_area_types))
+			continue
+		var/obj/item/storage/backpack/satchel/flat/flat_satchel = new(turf)
 
-		SEND_SIGNAL(F, COMSIG_OBJ_HIDE, T.underfloor_accessibility)
+		SEND_SIGNAL(flat_satchel, COMSIG_OBJ_HIDE, turf.underfloor_accessibility)
 		amount--
 
 /proc/find_exposed_wires()

@@ -1,0 +1,6 @@
+author: "Roryl-c"
+delete-after: True
+changes:
+  - bugfix: "burn wounds going septic now properly paralyze the limb"
+  - bugfix: "septic burn wounds no longer heal on stasis"
+  - bugfix: "gauze now properly stops you from re-wrapping limbs that already have fresh gauze"
