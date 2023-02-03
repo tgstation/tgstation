@@ -320,7 +320,7 @@ Behavior that's still missing from this component that original food items had t
 			time_to_eat *= (fullness / NUTRITION_LEVEL_FAT) * EAT_TIME_VORACIOUS_FULL_MULT // takes longer to eat the more well fed you are
 
 	if(eater == feeder)//If you're eating it yourself.
-		if(eat_time && !do_mob(feeder, eater, time_to_eat, timed_action_flags = food_flags & FOOD_FINGER_FOOD ? IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE : NONE)) //Gotta pass the minimal eat time
+		if(eat_time && !do_after(feeder, time_to_eat, eater, timed_action_flags = food_flags & FOOD_FINGER_FOOD ? IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE : NONE)) //Gotta pass the minimal eat time
 			return
 		if(IsFoodGone(owner, feeder))
 			return
@@ -386,7 +386,7 @@ Behavior that's still missing from this component that original food items had t
 			if(eater.is_blind())
 				to_chat(eater, span_userdanger("You're too full to eat what's being fed to you!"))
 			return
-		if(!do_mob(feeder, eater, time = time_to_eat)) //Wait 3-ish seconds before you can feed
+		if(!do_after(feeder, delay = time_to_eat, target = eater)) //Wait 3-ish seconds before you can feed
 			return
 		if(IsFoodGone(owner, feeder))
 			return

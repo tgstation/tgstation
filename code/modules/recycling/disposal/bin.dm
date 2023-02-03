@@ -136,7 +136,7 @@
 /// The regal rat spawns ratty treasures from the disposal
 /obj/machinery/disposal/proc/rat_rummage(mob/living/simple_animal/hostile/regalrat/king)
 	king.visible_message(span_warning("[king] starts rummaging through [src]."),span_notice("You rummage through [src]..."))
-	if (do_mob(king, src, 2 SECONDS, interaction_key = "regalrat"))
+	if (do_after(king, 2 SECONDS, src, interaction_key = "regalrat"))
 		var/loot = rand(1,100)
 		switch(loot)
 			if(1 to 5)
@@ -185,7 +185,7 @@
 		user.visible_message(span_warning("[user] starts climbing into [src]."), span_notice("You start climbing into [src]..."))
 	else
 		target.visible_message(span_danger("[user] starts putting [target] into [src]."), span_userdanger("[user] starts putting you into [src]!"))
-	if(do_mob(user, target, 20))
+	if(do_after(user, 2 SECONDS, target))
 		if (!loc)
 			return
 		target.forceMove(src)

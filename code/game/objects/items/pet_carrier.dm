@@ -170,7 +170,7 @@
 	user.visible_message(span_notice("[user] starts loading [target] into [src]."), \
 	span_notice("You start loading [target] into [src]..."), null, null, target)
 	to_chat(target, span_userdanger("[user] starts loading you into [user.p_their()] [name]!"))
-	if(!do_mob(user, target, 30))
+	if(!do_after(user, 3 SECONDS, target))
 		return
 	if(target in occupants)
 		return
