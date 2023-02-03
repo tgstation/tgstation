@@ -14,18 +14,24 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 /datum/controller/subsystem/processing/station/Initialize()
 
-	//If doing unit tests we don't do none of that trait shit ya know?
+	//If doing unit tests we don't do none of that trait shit ya know? 
+	// Actually we do! "Better to have tested and lost than never to have tested at all."	
 	// Autowiki also wants consistent outputs, for example making sure the vending machine page always reports the normal products
-	#if !defined(UNIT_TESTS) && !defined(AUTOWIKI)
-	SetupTraits()
+	#if !defined(AUTOWIKI)
+	var/spawn_all_traits = PERFORM_ALL_TESTS(log_mapping)
+	if(spawn_all_traits)
+		log_mapping("All traits being loaded for station")
+
+	SetupTraits(spawn_all_traits)
 	#endif
 
 	announcer = new announcer() //Initialize the station's announcer datum
 
 	return SS_INIT_SUCCESS
 
-///Rolls for the amount of traits and adds them to the traits list
-/datum/controller/subsystem/processing/station/proc/SetupTraits()
+/// Rolls for the amount of traits and adds them to the traits list
+/// spawn_all_traits arg loads all the station traits (except for blacklisted ones) for CI testing
+/datum/controller/subsystem/processing/station/proc/SetupTraits(spawn_all_traits = FALSE)
 	if (CONFIG_GET(flag/forbid_station_traits))
 		return
 
@@ -50,15 +56,21 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 	for(var/i in subtypesof(/datum/station_trait))
 		var/datum/station_trait/trait_typepath = i
+		var/is_abstract_trait = initial(trait_typepath.trait_flags) & STATION_TRAIT_ABSTRACT
+
+		// abstract traits are dud supertypes that aren't supposed to ever be initialized directly
+		if(is_abstract_trait)
+			continue
 
 		// If forced, (probably debugging), just set it up now, keep it out of the pool.
-		if(initial(trait_typepath.force))
+		if(initial(trait_typepath.force) || (spawn_all_traits))
 			setup_trait(trait_typepath)
 			continue
 
-		if(initial(trait_typepath.trait_flags) & STATION_TRAIT_ABSTRACT)
-			continue //Dont add abstract ones to it
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
+
+	if(spawn_all_traits)
+		return // all the traits have already been spawned
 
 	var/positive_trait_count = pick(20;0, 5;1, 1;2)
 	var/neutral_trait_count = pick(10;0, 10;1, 3;2)
