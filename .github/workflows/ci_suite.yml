@@ -60,9 +60,8 @@ jobs:
           tools/build/build --ci lint tgui-test
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
-          echo
-          echo "If you do not readily see any errors here, please check your code for annotations: ${{ env.REPOSITORY_URL }}/${{ env.PR_NUMBER }}/files"
-          echo
+          echo "If you do not readily see any errors here, you may need to check your code for annotations: ${{ env.REPOSITORY_URL }}/pull/${{ env.PR_NUMBER }}/files"
+          echo "You may also expand the Annotate Lints category below this one, but the link above will offer the greatest context."
           ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
       - name: Annotate Lints
         uses: yogstation13/DreamAnnotate@v2
