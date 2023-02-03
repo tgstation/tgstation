@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - bugfix: "Made the northwest arrow icon in build mode actually point northwest"
