@@ -79,8 +79,6 @@
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
 	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup."
-	/// Whether or not the tarantula is currently walking on webbing.
-	var/silk_walking = TRUE
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/charge
 
@@ -89,6 +87,8 @@
 	charge = new /datum/action/cooldown/mob_cooldown/charge/basic_charge()
 	charge.Grant(src)
 
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/tarantula_web)
+
 /mob/living/basic/giant_spider/tarantula/Destroy()
 	QDEL_NULL(charge)
 	return ..()
@@ -96,17 +96,6 @@
 /// Lunge if you click something at range
 /mob/living/basic/giant_spider/tarantula/ranged_secondary_attack(atom/atom_target, modifiers)
 	charge.Trigger(target = atom_target)
-
-/// TODO: Component this
-/mob/living/basic/giant_spider/tarantula/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	var/obj/structure/spider/stickyweb/web = locate() in loc
-	if(web && !silk_walking)
-		remove_movespeed_modifier(/datum/movespeed_modifier/tarantula_web)
-		silk_walking = TRUE
-	else if(!web && silk_walking)
-		add_movespeed_modifier(/datum/movespeed_modifier/tarantula_web)
-		silk_walking = FALSE
 
 /**
  * # Spider Viper

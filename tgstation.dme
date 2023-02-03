@@ -1195,6 +1195,7 @@
 #include "code\datums\elements\wall_smasher.dm"
 #include "code\datums\elements\weapon_description.dm"
 #include "code\datums\elements\weather_listener.dm"
+#include "code\datums\elements\web_walker.dm"
 #include "code\datums\elements\decals\_decal.dm"
 #include "code\datums\elements\decals\blood.dm"
 #include "code\datums\elements\food\dunkable.dm"
