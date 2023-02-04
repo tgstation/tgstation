@@ -10,7 +10,7 @@
 /turf/open/space/transit/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	RegisterSignal(world, COMSIG_TURF_RESERVATION_RELEASED, GLOBAL_PROC_REF(dump_in_space))
+	RegisterSignal(src, COMSIG_TURF_RESERVATION_RELEASED, PROC_REF(launch_contents))
 
 /turf/open/space/transit/clear_signal_refs()
 	//Signals are NOT removed from turfs upon replacement, and we get replaced ALOT, so unregister our signal
