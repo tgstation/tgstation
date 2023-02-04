@@ -43,10 +43,6 @@
 	if (!.)
 		return
 
-	var/mob/living/simple_animal/animal_owner = owner
-	if(istype(animal_owner))
-		animal_owner.stop_automated_movement = TRUE
-
 	owner.balloon_alert_to_viewers("laying eggs...")
 	if(do_after(owner, egg_lay_time, target = get_turf(owner), interaction_key = DOAFTER_SOURCE_SPIDER))
 		var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
@@ -57,9 +53,6 @@
 	else
 		owner.balloon_alert(owner, "interrupted!")
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
-
-	if(istype(animal_owner))
-		animal_owner.stop_automated_movement = FALSE
 
 /datum/action/lay_eggs/proc/lay_egg()
 	var/obj/effect/mob_spawn/ghost_role/spider/new_eggs = new egg_type(get_turf(owner))
