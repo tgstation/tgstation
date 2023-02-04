@@ -321,7 +321,6 @@
 	health = 250
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	pass_flags = PASSTABLE // He's surprisingly nimble
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider/retaliate
 
 /mob/living/basic/giant_spider/sgt_araneus/Initialize(mapload)
@@ -329,3 +328,6 @@
 	AddElement(/datum/element/pet_bonus, "chitters proudly!")
 	AddElement(/datum/element/ai_retaliate)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+/mob/living/basic/giant_spider/sgt_araneus/apply_antag_datum()
+	return // Araneus doesn't care about that

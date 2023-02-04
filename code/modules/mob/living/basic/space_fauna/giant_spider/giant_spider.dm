@@ -74,10 +74,13 @@
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	var/datum/antagonist/spider/spider_antag = new(directive)
-	mind.add_antag_datum(spider_antag)
 	GLOB.spidermobs[src] = TRUE
 	set_varspeed(player_speed)
+	apply_antag_datum()
+
+/mob/living/basic/giant_spider/proc/apply_antag_datum()
+	var/datum/antagonist/spider/spider_antag = new(directive)
+	mind.add_antag_datum(spider_antag)
 
 /mob/living/basic/giant_spider/Logout()
 	. = ..()
