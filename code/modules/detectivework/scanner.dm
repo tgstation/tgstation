@@ -17,7 +17,6 @@
 	slot_flags = ITEM_SLOT_BELT
 	// if the scanner is currently busy processing
 	var/is_scanner_busy = FALSE
-	// if the scanner is currently forking and displaying each result
 	var/list/log = list()
 	var/range = 8
 	var/view_check = TRUE
@@ -86,10 +85,8 @@
 	if(is_scanner_busy)
 		return
 	if(!scan(A,user)) // this should only return FALSE if a runtime occurs during the scan proc, so ideally never
-		balloon_alert(user, "scanner timed out!") // but in case it does, so we don't break the scanner
-		is_scanner_busy = FALSE
-	else
-		is_scanner_busy = FALSE  // if we have an early return we don't need to check for timeout (e.g. scanning an ineligable item))
+		balloon_alert(user, "scanner timed out!") // but in case it does, we 'time out' instead of just bricking the scanner
+	is_scanner_busy = FALSE
 
 // this should always return TRUE barring a runtime
 /obj/item/detective_scanner/proc/scan(atom/A, mob/user)
