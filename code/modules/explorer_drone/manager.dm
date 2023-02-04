@@ -141,6 +141,6 @@
 	. = ..()
 	QDEL_NULL(temp_adventure)
 
-ADMIN_VERB(debug, adventure_manager, "", R_DEBUG)
+ADMIN_VERB(debug, adventure_manager, "Adventure Manager", "", R_DEBUG)
 	var/datum/adventure_browser/browser = new()
 	browser.ui_interact(usr)

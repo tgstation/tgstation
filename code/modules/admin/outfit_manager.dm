@@ -1,4 +1,4 @@
-ADMIN_VERB(debug, outfit_manager, "", R_DEBUG)
+ADMIN_VERB(debug, outfit_manager, "Outfit Manager", "", R_DEBUG)
 	var/datum/outfit_manager/ui = new(usr)
 	ui.ui_interact(usr)
 

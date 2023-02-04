@@ -1,6 +1,6 @@
 // Admin Tab - Fun Verbs
 
-ADMIN_VERB(game, explosion, "Explosion", R_ADMIN, atom/target as obj|mob|turf in view())
+ADMIN_VERB(game, explosion, "Explosion", "", R_ADMIN, atom/target as obj|mob|turf in view())
 	var/devastation = input("Range of total devastation. -1 to none", text("Input"))  as num|null
 	if(devastation == null)
 		return
@@ -26,7 +26,7 @@ ADMIN_VERB(game, explosion, "Explosion", R_ADMIN, atom/target as obj|mob|turf in
 		log_admin("[key_name(usr)] created an explosion ([devastation],[heavy],[light],[flames]) at [AREACOORD(target)]")
 		message_admins("[key_name_admin(usr)] created an explosion ([devastation],[heavy],[light],[flames]) at [AREACOORD(target)]")
 
-ADMIN_VERB(game, emp, "", R_ADMIN, atom/target as obj|mob|turf in view())
+ADMIN_VERB(game, emp, "EMPulse", "", R_ADMIN, atom/target as obj|mob|turf in view())
 	var/heavy = input("Range of heavy pulse.", text("Input"))  as num|null
 	if(heavy == null)
 		return
@@ -63,7 +63,7 @@ ADMIN_CONTEXT_ENTRY(context_mob_gib, "Gib", R_ADMIN, mob/victim in GLOB.mob_list
 		else
 			living_victim.gib(TRUE)
 
-ADMIN_VERB(fun, gibself, "", R_ADMIN)
+ADMIN_VERB(fun, gibself, "Gibself", "", R_ADMIN)
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You must be alive to use this!"))
 		return
@@ -77,7 +77,7 @@ ADMIN_VERB(fun, gibself, "", R_ADMIN)
 	var/mob/living/ourself = usr
 	ourself.gib(TRUE, TRUE, TRUE)
 
-ADMIN_VERB(fun, make_everyone_random, "Make everyone have a random appearance. You can only use this before rounds!", R_FUN)
+ADMIN_VERB(fun, make_everyone_random, "Make Everyone Random", "Make everyone have a random appearance. You can only use this before rounds!", R_FUN)
 	if(SSticker.HasRoundStarted())
 		to_chat(usr, "Nope you can't do this, the game's already started. This only works before rounds!")
 		return
@@ -102,7 +102,7 @@ ADMIN_VERB(fun, make_everyone_random, "Make everyone have a random appearance. Y
 	to_chat(usr, "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>.", confidential = TRUE)
 	CONFIG_SET(flag/force_random_names, TRUE)
 
-ADMIN_VERB(fun, mass_zombie_infection, "Infects all humans with a latent organ that will zombify them upon death", R_FUN)
+ADMIN_VERB(fun, mass_zombie_infection, "Mass Zombie Infection", "Infects all humans with a latent organ that will zombify them upon death", R_FUN)
 	var/confirm = tgui_alert(usr, "Please confirm you want to add latent zombie organs in all humans?", "Confirm Zombies", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
@@ -114,7 +114,7 @@ ADMIN_VERB(fun, mass_zombie_infection, "Infects all humans with a latent organ t
 	log_admin("[key_name(usr)] added a latent zombie infection to all humans.")
 
 // Infecting everyone needs R_FUN, but curing only needs R_ADMIN
-ADMIN_VERB(fun, mass_zombie_cure, "Removes the admin zombie infection from all humans, returning them to normal", R_ADMIN)
+ADMIN_VERB(fun, mass_zombie_cure, "Mass Zombie Cure", "Removes the admin zombie infection from all humans, returning them to normal", R_ADMIN)
 	var/confirm = tgui_alert(usr, "Please confirm you want to cure all zombies?", "Confirm Zombie Cure", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
@@ -125,7 +125,7 @@ ADMIN_VERB(fun, mass_zombie_cure, "Removes the admin zombie infection from all h
 	message_admins("[key_name_admin(usr)] cured all zombies.")
 	log_admin("[key_name(usr)] cured all zombies.")
 
-ADMIN_VERB(fun, polymorph_all_mobs, "This will prove to be a terrible idea", R_FUN)
+ADMIN_VERB(fun, polymorph_all_mobs, "Polymorph All Mobs", "This will prove to be a terrible idea", R_FUN)
 	var/confirm = tgui_alert(usr, "Please confirm you want polymorph all mobs?", "Confirm Polymorph", list("Yes", "No"))
 	if(confirm != "Yes")
 		return

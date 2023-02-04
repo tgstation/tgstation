@@ -276,7 +276,7 @@
 
 /// Debug verb for validating that all puzzgrids can be created successfully.
 /// Locked behind a verb because it's fairly slow and memory intensive.
-ADMIN_VERB(debug, validate_puzzgrids, "", R_DEBUG)
+ADMIN_VERB(debug, validate_puzzgrids, "Validate Puzzgrids", "", R_DEBUG)
 	var/line_number = 0
 
 	for (var/line in world.file2list(PUZZGRID_CONFIG))

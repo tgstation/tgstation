@@ -1,6 +1,6 @@
 //very similar to centcom_podlauncher in terms of how this is coded, so i kept a lot of comments from it
 
-ADMIN_VERB(events, ghost_pool_protection, "Choose which ways people can get into the round, or just clear it out completely for admin events", R_FUN)
+ADMIN_VERB(events, ghost_pool_protection, "Ghost Pool Protection", "Choose which ways people can get into the round, or just clear it out completely for admin events", R_FUN)
 	var/datum/ghost_pool_menu/tgui = new(usr)//create the datum
 	tgui.ui_interact(usr)//datum has a tgui component, here we open the window
 

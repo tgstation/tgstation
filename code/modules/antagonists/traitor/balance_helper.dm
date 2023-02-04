@@ -1,4 +1,4 @@
-ADMIN_VERB(debug, debug_traitor_objectives, "", R_DEBUG)
+ADMIN_VERB(debug, debug_traitor_objectives, "Debug Traitor Objectives", "", R_DEBUG)
 	SStraitor.traitor_debug_panel?.ui_interact(usr)
 
 /datum/traitor_objective_debug

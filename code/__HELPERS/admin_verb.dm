@@ -1,10 +1,10 @@
 /**
  * Creates an admin verb with the specified module(category) name, desc, permissions, and parameters as needed.
  */
-#define ADMIN_VERB(module, verb_name, verb_desc, permissions, params...) \
-/mob/admin_module_holder/##module/##verb_name/verb/invoke(##params){ \
+#define ADMIN_VERB(module, verb_id, verb_name, verb_desc, permissions, params...) \
+/mob/admin_module_holder/##module/##verb_id/verb/invoke(##params){ \
 	set src in usr.group; \
-	set name = #verb_name; \
+	set name = verb_name; \
 	set desc = verb_desc; \
 	if(datum_flags & DF_VAR_EDITED) { \
 		message_admins("[key_name_admin(usr)] attempted to elevate permissions by executing from a var edited admin verb holder!"); \
@@ -16,16 +16,16 @@
 		return; \
 	} \
 	if(check_rights_for(usr.client, permissions)) { \
-		_##verb_name(arglist(args)); \
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "[#module]/[#verb_name]"); \
+		_##verb_id(arglist(args)); \
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "[#module]/[#verb_id]"); \
 	} else { \
 		to_chat(usr, span_warning("You lack the permissions ([rights2text(permissions, " ")]) for this verb!")); \
 	} \
 } \
-/mob/admin_module_holder/##module/##verb_name/dynamic_map_generate(){ \
-	return list(#module, #verb_name, verb_desc, permissions); \
+/mob/admin_module_holder/##module/##verb_id/dynamic_map_generate(){ \
+	return list(#module, verb_name, verb_desc, permissions); \
 } \
-/mob/admin_module_holder/##module/##verb_name/proc/_##verb_name(##params)
+/mob/admin_module_holder/##module/##verb_id/proc/_##verb_id(##params)
 
 /**
  * Creates a context menu entry for the client. The source of this proc will be the client!

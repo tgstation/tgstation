@@ -1,7 +1,7 @@
-ADMIN_VERB(admin, get_server_logs, "View/Retrieve logfiles", R_ADMIN)
+ADMIN_VERB(admin, get_server_logs, "Get Server Logs", "View/Retrieve logfiles", R_ADMIN)
 	usr.client.holder.browseserverlogs()
 
-ADMIN_VERB(admin, get_current_logs, "View/Retrieve current logfiles", R_ADMIN)
+ADMIN_VERB(admin, get_current_logs, "Get Current Logs", "View/Retrieve current logfiles", R_ADMIN)
 	usr.client.holder.browseserverlogs(current = TRUE)
 
 /datum/admins/proc/browseserverlogs(current = FALSE)
