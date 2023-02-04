@@ -255,10 +255,14 @@
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	speech_span = SPAN_ROBOT
+	///Cumulative amount of credits required to pass
 	var/threshold = 500
+	///Amount of credits paid so far, will let you pass once threshold is met
+	var/list/payees = list()
+	///Stores the amount of cash or credits paid towards the scanner
+	var/list/counted_money = list()
 	var/static/list/approved_passengers = list()
 	var/static/list/check_times = list()
-	var/list/payees = list()
 
 /obj/machinery/scanner_gate/luxury_shuttle/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -327,16 +331,15 @@
 				break
 
 	if(account)
-		if(account.account_balance < threshold - payees[AM])
-			account.adjust_money(-account.account_balance, "Scanner Gate: Entry Fee")
-			payees[AM] += account.account_balance
+		if(account.account_balance >= threshold)
+			account.adjust_money(-threshold, "Scanner Gate: Entry Fee")
+			payees[AM] += threshold
 		else
-			var/money_owed = threshold - payees[AM]
-			account.adjust_money(-money_owed, "Scanner Gate: Partial Entry Fee")
-			payees[AM] += money_owed
+			payees[AM] += account.account_balance
+			counted_money += account.account_balance
+			account.adjust_money(-account.account_balance, "Scanner Gate: Partial Entry Fee")
 
 	//Here is all the possible paygate payment methods.
-	var/list/counted_money = list()
 	for(var/obj/item/coin/C in AM.get_all_contents()) //Coins.
 		if(payees[AM] >= threshold)
 			break
