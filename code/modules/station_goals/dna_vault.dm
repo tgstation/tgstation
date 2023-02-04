@@ -119,7 +119,7 @@
 
 /obj/machinery/dna_vault/attackby(obj/item/Item, mob/user, params)
 	if(istype(Item, /obj/item/dna_probe))
-		var/obj/item/dna_probe/our_probe = I
+		var/obj/item/dna_probe/our_probe = Item
 		var/uploaded = 0
 		var/plant_dna_length = length(our_probe.stored_dna_plants)
 		var/human_dna_length = length(our_probe.stored_dna_human)
@@ -157,9 +157,9 @@
 		/datum/mutation/human/breathless,
 		/datum/mutation/human/dextrous,
 		/datum/mutation/human/quick,
-		/datum/mutation/human/fire_Immunity,
+		/datum/mutation/human/fire_immunity,
 		/datum/mutation/human/plasmocile,
-		/datum/mutation/human/quick_Recovery,
+		/datum/mutation/human/quick_recovery,
 		/datum/mutation/human/tough,
 	)
 	var/list/gained_mutation = list()
@@ -212,7 +212,7 @@
 		"Quick" = /datum/mutation/human/quick,
 		"Fire Immunity" = /datum/mutation/human/fire_immunity,
 		"Plasmocile" = /datum/mutation/human/plasmocile,
-		"Quick Recovery" = /datum/mutation/human/quick_Recovery,
+		"Quick Recovery" = /datum/mutation/human/quick_recovery,
 		"Tough" = /datum/mutation/human/tough,
 		)
 	if(!(associated_mutation[upgrade_type] in power_lottery[human_weakref])||(HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
