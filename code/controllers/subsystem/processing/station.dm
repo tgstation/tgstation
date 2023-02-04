@@ -75,7 +75,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		return
 	for(var/iterator in 1 to amount)
 		var/datum/station_trait/trait_type = pick_weight(selectable_traits_by_types[trait_sign]) //Rolls from the table for the specific trait type
-		selectable_traits_by_types[initial(trait_type.trait_type)] -= trait_type
+		selectable_traits_by_types[trait_sign] -= trait_type
 		setup_trait(trait_type)
 
 ///Creates a given trait of a specific type, while also removing any blacklisted ones from the future pool.
