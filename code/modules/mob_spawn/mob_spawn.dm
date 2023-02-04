@@ -108,8 +108,12 @@
 	var/prompt_name = ""
 	///if false, you won't prompt for this role. best used for replacing the prompt system with something else like a radial, or something.
 	var/prompt_ghost = TRUE
-	///how many times this spawner can be used (it won't delete unless it's out of uses)
+	///how many times this spawner can be used (it won't delete unless it's out of uses and the var to delete itself is set)
 	var/uses = 1
+	/// Does the spawner delete itself when it runs out of uses?
+	var/deletes_on_zero_uses_left = TRUE
+	/// How many people are currently interacting with the spawner, prevents strange issues regarding spawning by preventing more ghosts than should be possible from trying to spawn
+	var/list/currently_deciding_ghosts = list()
 
 	////descriptions
 
@@ -146,9 +150,15 @@
 /obj/effect/mob_spawn/ghost_role/attack_ghost(mob/user)
 	if(!SSticker.HasRoundStarted() || !loc)
 		return
+	// This part prevents a strange bug related to a lot of players trying to use a single spawner at once
+	if(length(currently_deciding_ghosts) >= uses)
+		to_chat(user, span_warning("Other ghosts have already claimed the uses of this spawner, you can try again later if they decide to not spawn."))
+		return
 	if(prompt_ghost)
-		var/ghost_role = tgui_alert(usr, "Become [prompt_name]? (Warning, You can no longer be revived!)",, list("Yes", "No"))
+		currently_deciding_ghosts += user.key
+		var/ghost_role = tgui_alert(usr, "Become [prompt_name]? (Warning, You can no longer be revived!)", buttons = list("Yes", "No"), timeout = 10 SECONDS)
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
+			currently_deciding_ghosts -= user.key
 			return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
@@ -164,6 +174,7 @@
 	if(QDELETED(src) || QDELETED(user))
 		return
 	user.log_message("became a [prompt_name].", LOG_GAME)
+	currently_deciding_ghosts -= user.key
 	create(user)
 
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
@@ -187,7 +198,7 @@
 	. = ..()
 	if(uses > 0)
 		uses--
-	if(!uses)
+	if(!uses && deletes_on_zero_uses_left)
 		qdel(src)
 
 ///override this to add special spawn conditions to a ghost role
