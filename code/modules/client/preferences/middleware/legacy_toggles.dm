@@ -21,7 +21,6 @@
 		"member_public" = MEMBER_PUBLIC,
 		"sound_adminhelp" = SOUND_ADMINHELP,
 		"sound_prayers" = SOUND_PRAYERS,
-		"split_admin_tabs" = SPLIT_ADMIN_TABS,
 	)
 
 	var/list/legacy_chat_toggles = list(
@@ -54,7 +53,6 @@
 		"deadmin_position_silicon",
 		"sound_adminhelp",
 		"sound_prayers",
-		"split_admin_tabs",
 	)
 
 	var/static/list/admin_only_chat_toggles = list(

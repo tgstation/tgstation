@@ -1,21 +1,12 @@
-/datum/admins/proc/open_borgopanel(borgo in GLOB.silicon_mobs)
-	set category = "Admin.Game"
-	set name = "Show Borg Panel"
-	set desc = "Show borg panel"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	if (!iscyborg(borgo))
-		borgo = input("Select a borg", "Select a borg", null, null) as null|anything in sort_names(GLOB.silicon_mobs)
-	if (!iscyborg(borgo))
-		to_chat(usr, span_warning("Borg is required for borgpanel"), confidential = TRUE)
+ADMIN_CONTEXT_ENTRY(context_borg_panel, "Show Borg Panel", R_ADMIN, mob/living/silicon/borgo in world)
+	if(!istype(borgo))
+		var/list/borgs = sort_names(GLOB.silicon_mobs)
+		borgo = tgui_input_list(usr, "Select Borg", "Borg Panel", borgs)
+		if(!borgo)
+			return
 
 	var/datum/borgpanel/borgpanel = new(usr, borgo)
-
 	borgpanel.ui_interact(usr)
-
-
 
 /datum/borgpanel
 	var/mob/living/silicon/robot/borg

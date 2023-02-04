@@ -150,21 +150,22 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 
 	switch(action)
 		if ("pp")
-			var/mob/M = request.owner?.mob
-			usr.client.holder.show_player_panel(M)
+			usr.client.admin_context_wrapper_context_player_panel(request.owner?.mob)
 			return TRUE
+
 		if ("vv")
-			var/mob/M = request.owner?.mob
-			usr.client.debug_variables(M)
+			SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/debug/view_variables, request.owner?.mob)
 			return TRUE
+
 		if ("sm")
-			var/mob/M = request.owner?.mob
-			usr.client.cmd_admin_subtle_message(M)
+			usr.client.admin_context_wrapper_context_subtle_message(request.owner?.mob)
 			return TRUE
+
 		if ("flw")
 			var/mob/M = request.owner?.mob
 			usr.client.admin_follow(M)
 			return TRUE
+
 		if ("tp")
 			if(!SSticker.HasRoundStarted())
 				tgui_alert(usr,"The game hasn't started yet!")
@@ -179,8 +180,9 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 					D.traitor_panel()
 					return TRUE
 			else
-				usr.client.holder.show_traitor_panel(M)
+				SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/traitor_panel, M)
 				return TRUE
+
 		if ("logs")
 			var/mob/M = request.owner?.mob
 			if(!ismob(M))
@@ -188,6 +190,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				return TRUE
 			show_individual_logging_panel(M, null, null)
 			return TRUE
+
 		if ("smite")
 			if(!check_rights(R_FUN))
 				to_chat(usr, "Insufficient permissions to smite, you require +FUN", confidential = TRUE)
@@ -196,15 +199,17 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			if (!H || !istype(H))
 				to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human", confidential = TRUE)
 				return TRUE
-			usr.client.smite(H)
+			usr.client.admin_context_wrapper_context_smite(H)
 			return TRUE
+
 		if ("rply")
 			if (request.req_type == REQUEST_PRAYER)
 				to_chat(usr, "Cannot reply to a prayer", confidential = TRUE)
 				return TRUE
 			var/mob/M = request.owner?.mob
-			usr.client.admin_headset_message(M, request.req_type == REQUEST_SYNDICATE ? RADIO_CHANNEL_SYNDICATE : RADIO_CHANNEL_CENTCOM)
+			usr.client.admin_context_wrapper_contexxt_headset_message(M, request.req_type == REQUEST_SYNDICATE ? RADIO_CHANNEL_SYNDICATE : RADIO_CHANNEL_CENTCOM)
 			return TRUE
+
 		if ("setcode")
 			if (request.req_type != REQUEST_NUKE)
 				to_chat(usr, "You cannot set the nuke code for a non-nuke-code-request request!", confidential = TRUE)
