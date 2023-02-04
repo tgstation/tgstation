@@ -47,8 +47,8 @@
 		chosen_effect = tgui_input_list(usr, "Provide effect override", "Criiiiinge.", power_values)
 		ghost_override = tgui_input_number(usr, "How many ghosts do you want simulate orbiting your anomaly? (determines the effect radius).", "Seriously, CRINGE.", 0, 20, 1)
 
-	if(!chosen_effect || !ghost_override)
-		return ADMIN_CANCEL_EVENT
+		if(!chosen_effect || !ghost_override)
+			return ADMIN_CANCEL_EVENT
 
 	switch(chosen_effect) //Converts the text choice into a number for the anomaly to use
 		if("Minor")
