@@ -44,6 +44,14 @@
 		if(OOC_CHANNEL)
 			client.ooc(entry)
 			return TRUE
+		if(ADMIN_CHANNEL)
+			if(!check_rights_for(client, R_ADMIN))
+				// there's probably something downstream that handles this, but
+				// if it breaks at some point it's nice to have insurance
+				return;
+
+			SSadmin_verbs.dynamic_invoke_admin_verb(client, /mob/admin_module_holder/admin/admin_say, entry)
+			return TRUE
 	return FALSE
 
 /**
