@@ -7,6 +7,10 @@
 	name = "garbage spawner"
 	loot = list(
 		/obj/effect/spawner/random/trash/food_packaging = 20,
+		/obj/item/food/breadslice/moldy/bacteria = 5,
+		/obj/item/food/pizzaslice/moldy/bacteria = 5,
+		/obj/item/food/badrecipe/moldy/bacteria = 3,
+		/obj/item/food/deadmouse/moldy = 1,
 		/obj/item/trash/can = 15,
 		/obj/item/shard = 10,
 		/obj/effect/spawner/random/trash/cigbutt = 10,
@@ -19,6 +23,7 @@
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/food/deadmouse = 1,
 		/obj/item/trash/candle = 1,
+		/obj/item/reagent_containers/cup/rag = 1,
 		/obj/item/trash/flare = 1,
 		/obj/item/popsicle_stick = 1,
 		/obj/item/reagent_containers/syringe = 1,
@@ -125,7 +130,12 @@
 	spawn_scatter_radius = 2
 	loot = list( // This spawner will scatter garbage around a dirty site.
 		/obj/effect/spawner/random/trash/garbage = 6,
+		/mob/living/basic/mouse = 5,
+		/mob/living/basic/mouse/rat = 2,
 		/mob/living/basic/cockroach = 5,
+		/mob/living/basic/cockroach/glockroach = 1,
+		/mob/living/basic/cockroach/hauberoach = 0.5,
+		/mob/living/basic/cockroach/glockroach/mobroach = 0.2,
 		/obj/effect/decal/cleanable/garbage = 4,
 		/obj/effect/decal/cleanable/vomit/old = 3,
 		/obj/effect/spawner/random/trash/cigbutt = 2,
