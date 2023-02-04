@@ -7,7 +7,7 @@
 #define WIZARD_PRESET "The Wizard Federation"
 #define CUSTOM_PRESET "Custom Command Name"
 
-ADMIN_VERB(events, change_command_name, "Change Command NAme", "", R_ADMIN)
+ADMIN_VERB(events, change_command_name, "Change Command Name", "", R_ADMIN)
 	var/input = input(usr, "Please input a new name for Central Command.", "What?", "") as text|null
 	if(!input)
 		return
