@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Moths can no longer eat indestructible items (like the CE's magboots)"
