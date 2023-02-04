@@ -46,33 +46,31 @@
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
+		if(1 to 2)
+			return
 		if(3)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, span_warning("[pick("You feel hot.", "You hear a crackling noise.", "You smell smoke.")]"))
-		if(4)
-			Firestacks_stage_4(M, A)
-			M.ignite_mob()
-			to_chat(M, span_userdanger("Your skin bursts into flames!"))
-			M.emote("scream")
-		if(5)
-			Firestacks_stage_5(M, A)
-			M.ignite_mob()
-			to_chat(M, span_userdanger("Your skin erupts into an inferno!"))
-			M.emote("scream")
+				if(prob(33.33))
+					M.audible_message(self_message = "You hear a crackling noise.")
+				else
+					to_chat(M, span_warning("[pick("You feel hot.", "You smell smoke.")]"))
+		else
+			var/advanced_stage = A.stage > 4
+			M.adjust_fire_stacks((advanced_stage ? 3 : 1) * power)
+			M.take_overall_damage(burn = ((advanced_stage ? 5 : 3) * power), required_bodytype = BODYTYPE_ORGANIC)
+			M.ignite_mob(silent = TRUE)
+			if(M.on_fire) //check to make sure they actually caught on fire, or if it was prevented cause they were wet.
+				M.visible_message(span_warning("[M] catches fire!"), ignored_mobs = M)
+				to_chat(M, span_userdanger(advanced_stage ? "Your skin erupts into an inferno!" : "Your skin bursts into flames!"))
+				M.emote("scream")
+			else if(!suppress_warning)
+				if(prob(33.33))
+					M.audible_message(self_message = "You hear a crackling noise.")
+				else
+					to_chat(M, span_warning("[pick("You feel hot.", "You smell smoke.")]"))
 
-/datum/symptom/fire/proc/Firestacks_stage_4(mob/living/M, datum/disease/advance/A)
-	M.adjust_fire_stacks(1 * power)
-	M.take_overall_damage(burn = 3 * power, required_bodytype = BODYTYPE_ORGANIC)
-	if(infective)
-		A.spread(2)
-	return 1
-
-/datum/symptom/fire/proc/Firestacks_stage_5(mob/living/M, datum/disease/advance/A)
-	M.adjust_fire_stacks(3 * power)
-	M.take_overall_damage(burn = 5 * power, required_bodytype = BODYTYPE_ORGANIC)
-	if(infective)
-		A.spread(4)
-	return 1
+			if(infective)
+				A.spread(advanced_stage ? 4 : 2)
 
 /*
 Alkali perspiration
