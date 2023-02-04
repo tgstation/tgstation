@@ -254,6 +254,8 @@
 					if(((hand % 2) == 0))
 						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_R_ARM, FALSE, FALSE)
 						if(L.try_attach_limb(itemUser))
+							L.update_limb(is_creating = TRUE)
+							itemUser.update_body_parts()
 							itemUser.put_in_hand(newRod, hand, forced = TRUE)
 						else
 							qdel(L)
@@ -262,6 +264,8 @@
 					else
 						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_L_ARM, FALSE, FALSE)
 						if(L.try_attach_limb(itemUser))
+							L.update_limb(is_creating = TRUE)
+							itemUser.update_body_parts()
 							itemUser.put_in_hand(newRod, hand, forced = TRUE)
 						else
 							qdel(L)
