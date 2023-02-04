@@ -20,7 +20,7 @@
 /obj/item/ammo_box/magazine/sniper_rounds/penetrator
 	name = "sniper rounds (penetrator)"
 	desc = "An extremely powerful round capable of passing straight through cover and anyone unfortunate enough to be behind it."
-	base_icon_state = "penetrate"
+	base_icon_state = "penetrator"
 	ammo_type = /obj/item/ammo_casing/p50/penetrator
 	max_ammo = 5
 
