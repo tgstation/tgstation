@@ -51,12 +51,7 @@
 		else
 			effect_power = 0
 
-		if(effect_power >= 50) //If we're at the threshold for the highest tier effect, we change sprites in preparation for the spooks.
-			icon_state = "ectoplasm_heavy"
-			update_appearance(UPDATE_ICON_STATE)
-		else
-			icon_state = "ectoplasm"
-			update_appearance(UPDATE_ICON_STATE)
+		intensity_update()
 
 /obj/effect/anomaly/ectoplasm/detonate()
 	. = ..()
@@ -111,6 +106,24 @@
 
 		priority_announce("Anomaly has reached critical mass. Ectoplasmic outburst detected.", "Anomaly Alert")
 
+/**
+ * Manages updating the sprite for the anomaly based on how many orbiters it has.
+ *
+ *
+ * A check that is run to determine which sprite the anoamly should currently be displaying.
+ * With 50% or more participation, the "heavy" sprite is used. Otherwise, it is reverted to the normal anomaly sprite.
+ */
+
+/obj/effect/anomaly/ectoplasm/proc/intensity_update()
+	if(effect_power >= 50) //If we're at the threshold for the highest tier effect, we change sprites in preparation for the spooks.
+		icon_state = "ectoplasm_heavy"
+		update_icon_state()
+	else
+		icon_state = "ectoplasm"
+		update_icon_state()
+
+
+
 // Ghost Portal. Used to bring anomaly orbiters into the playing field as ghosts. Destroys itself and all of its associated ghosts after two minutes.
 // Can be destroyed early to the same effect.
 
@@ -149,10 +162,10 @@
 	cleanup_ghosts()
 
 /**
- * Generates a poll for observers, spawning anyone who signs up in a large group of ghost simplemobs
+ * Generates a poll for observers, spawning anyone who signs up in a large group of ghost mobs
  *
- * Generates a poll that asks anyone observing for participation. Spawns a bunch of simplemob ghosts with the keys of candidates who have signed up.
- * Ghosts are deleted two minutes after being made, and exist to wreck anything in their immediate view.
+ * Generates a poll that asks anyone observing for participation. Spawns a bunch of basicmob ghosts with the keys of candidates who have signed up.
+ * Ghosts are deleted two minutes after being made, and exist to punch stuff until it breaks.
  */
 
 /obj/structure/ghost_portal/proc/make_ghost_swarm(list/candidate_list)
@@ -160,12 +173,12 @@
 		candidate_list += GLOB.current_observers_list
 		candidate_list += GLOB.dead_player_list
 
-	var/list/candidates = poll_candidates("Would you like to participate in a spooky ghost swarm?", ROLE_SENTIENCE, FALSE, 10 SECONDS, group = candidate_list)
+	var/list/candidates = poll_candidates("Would you like to participate in a spooky ghost swarm? (Warning: you will not be able to return to your body!)", ROLE_SENTIENCE, FALSE, 10 SECONDS, group = candidate_list)
 	for(var/candidate in candidates)
 		if(!isobserver(candidate))
 			continue
 		var/mob/dead/observer/candidate_ghost = candidate
-		var/mob/living/basic/ghost/swarm/new_ghost = new /mob/living/basic/ghost/swarm(get_turf(src))
+		var/mob/living/basic/ghost/swarm/new_ghost = new(get_turf(src))
 		new_ghost.ghostize(FALSE)
 		new_ghost.key = candidate_ghost.key
 		new_ghost.log_message("was returned to the living world as a ghost by an ectoplasmic anomaly.", LOG_GAME)
