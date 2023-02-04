@@ -1,4 +1,4 @@
-ADMIN_VERB(object, possess_object, "", R_POSSESS, obj/target in world)
+ADMIN_VERB(object, possess_object, "Possess Object", "", R_POSSESS, obj/target in world)
 	if((target.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
 		to_chat(usr, "[target] is too powerful for you to possess.", confidential = TRUE)
 		return
@@ -22,7 +22,7 @@ ADMIN_VERB(object, possess_object, "", R_POSSESS, obj/target in world)
 	usr.control_object = target
 	target.AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
 
-ADMIN_VERB(object, release_object, "", R_POSSESS)
+ADMIN_VERB(object, release_object, "Release Object", "", R_POSSESS)
 	if(!usr.control_object) //lest we are banished to the nullspace realm.
 		return
 

@@ -72,20 +72,11 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 			cached_formats[verb_module] = verb_module_formatted
 
 		var/original_name = verb_information[VERB_MAP_NAME]
-		if(!cached_formats[original_name])
-			var/formatted_name = ""
-			for(var/name_part in splittext(original_name, "_"))
-				if(name_part in abbreviations)
-					formatted_name += "[uppertext(name_part)] "
-				else
-					formatted_name += "[capitalize(name_part)] "
-			formatted_name = copytext(formatted_name, 1, -1)
-			cached_formats[original_name] = formatted_name
 
 		var/verb_desc = verb_information[VERB_MAP_DESCRIPTION]
 		if(!stat_data[cached_formats[verb_module]])
 			stat_data[cached_formats[verb_module]] = list()
-		stat_data[cached_formats[verb_module]] += list(list(cached_formats[original_name], verb_desc, original_name))
+		stat_data[cached_formats[verb_module]] += list(list(original_name, verb_desc, original_name))
 	var/sorted_stat_data = list()
 	for(var/verb_category in stat_data)
 		sorted_stat_data[verb_category] = sort_list(stat_data[verb_category], GLOBAL_PROC_REF(cmp_admin_verb_name))

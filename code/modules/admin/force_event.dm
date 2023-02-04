@@ -1,5 +1,5 @@
 ///Allows an admin to force an event
-ADMIN_VERB(events, trigger_event, "", R_FUN)
+ADMIN_VERB(events, trigger_event, "Trigger Event", "", R_FUN)
 	usr.client.holder.forceEvent()
 
 ///Opens up the Force Event Panel

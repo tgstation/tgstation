@@ -127,7 +127,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	else
 		GLOB.dooc_allowed = !GLOB.dooc_allowed
 
-ADMIN_VERB(server, set_player_ooc_color, "Set the default OOC color", (R_FUN|R_ADMIN))
+ADMIN_VERB(server, set_player_ooc_color, "Set Player OOC Color", "Set the default OOC color", (R_FUN|R_ADMIN))
 	var/newColor = input(src, "Please select the new player OOC color.", "OOC color") as color|null
 	if(isnull(newColor))
 		return
@@ -136,7 +136,7 @@ ADMIN_VERB(server, set_player_ooc_color, "Set the default OOC color", (R_FUN|R_A
 	log_admin("[key_name_admin(usr)] has set the player ooc color to [new_color].")
 	GLOB.OOC_COLOR = new_color
 
-ADMIN_VERB(server, reset_player_ooc_color, "Returns all player colors to default", (R_FUN|R_ADMIN))
+ADMIN_VERB(server, reset_player_ooc_color, "Reset Player OOC Color", "Returns all player colors to default", (R_FUN|R_ADMIN))
 	if(tgui_alert(usr, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", list("Yes", "No")) != "Yes")
 		return
 	message_admins("[key_name_admin(usr)] has reset the players' ooc color.")

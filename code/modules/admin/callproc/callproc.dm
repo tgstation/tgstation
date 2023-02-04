@@ -92,7 +92,7 @@ GLOBAL_PROTECT(AdminProcCallHandler)
 	usr = lastusr
 	handler.remove_caller(user)
 
-ADMIN_VERB(debug, advanced_proccall, "", R_DEBUG)
+ADMIN_VERB(debug, advanced_proccall, "Advanced ProcCall", "", R_DEBUG)
 	usr.client.callproc_blocking()
 
 /client/proc/callproc_blocking(list/get_retval)

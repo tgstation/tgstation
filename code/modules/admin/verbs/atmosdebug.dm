@@ -1,4 +1,4 @@
-ADMIN_VERB(mapping, check_plumbing, "", R_DEBUG)
+ADMIN_VERB(mapping, check_plumbing, "Check Plumbing", "", R_DEBUG)
 	//all plumbing - yes, some things might get stated twice, doesn't matter.
 	for(var/obj/machinery/atmospherics/components/pipe in GLOB.machines)
 		if(pipe.z && (!pipe.nodes || !pipe.nodes.len || (null in pipe.nodes)))
@@ -17,7 +17,7 @@ ADMIN_VERB(mapping, check_plumbing, "", R_DEBUG)
 			if(!(node1 in node2.nodes))
 				to_chat(usr, "One-way connection in [node1.name] located at [ADMIN_VERBOSEJMP(node1)]", confidential = TRUE)
 
-ADMIN_VERB(mapping, check_power, "", R_DEBUG)
+ADMIN_VERB(mapping, check_power, "Check Power", "", R_DEBUG)
 	var/list/results = list()
 
 	for (var/datum/powernet/PN in SSmachines.powernets)

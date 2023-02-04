@@ -1,4 +1,4 @@
-ADMIN_VERB(game, jump_to_area, "Jump to the specified area", NONE, area/destination in world)
+ADMIN_VERB(game, jump_to_area, "Jump to Area", "Jump to the specified area", NONE, area/destination in world)
 	var/turf/point
 
 	for(var/turf/turf as anything in destination.get_contained_turfs())
@@ -14,12 +14,12 @@ ADMIN_VERB(game, jump_to_area, "Jump to the specified area", NONE, area/destinat
 	log_admin("[key_name(usr)] jumped to [AREACOORD(point)]")
 	key_name_admin("[key_name(usr)] jumped to [AREACOORD(point)]")
 
-ADMIN_VERB(game, jump_to_turf, "", NONE, turf/destination in world)
+ADMIN_VERB(game, jump_to_turf, "Jump to Turf", "", NONE, turf/destination in world)
 	usr.forceMove(destination)
 	log_admin("[key_name(usr)] jumped to [AREACOORD(destination)]")
 	key_name_admin("[key_name(usr)] jumped to [AREACOORD(destination)]")
 
-ADMIN_VERB(game, jump_to_mob, "", NONE, mob/destination)
+ADMIN_VERB(game, jump_to_mob, "Jump to Mob", "", NONE, mob/destination)
 	destination ||= tgui_input_list(usr, "Select a mob to teleport to you", "Admin Jump", GLOB.mob_list - usr)
 	if(!destination)
 		return
@@ -28,7 +28,7 @@ ADMIN_VERB(game, jump_to_mob, "", NONE, mob/destination)
 	log_admin("[key_name(usr)] jumped to [key_name(destination)]")
 	message_admins("[key_name_admin(usr)] jumped to [ADMIN_LOOKUPFLW(destination)] at [AREACOORD(destination)]")
 
-ADMIN_VERB(game, jump_to_coordinate, "", NONE, x as num, y as num, z as num)
+ADMIN_VERB(game, jump_to_coordinate, "Jump to Coordinate", "", NONE, x as num, y as num, z as num)
 	if(x < 1 || y < 1 || z < 1 || x > world.maxx || y > world.maxy || z > world.maxz)
 		to_chat(usr, span_warning("Invaild coordinates"))
 		return
@@ -38,7 +38,7 @@ ADMIN_VERB(game, jump_to_coordinate, "", NONE, x as num, y as num, z as num)
 	log_admin("[key_name(usr)] jumped to [AREACOORD(destination)]")
 	message_admins("[key_name_admin(usr)] jumped to [AREACOORD(destination)]")
 
-ADMIN_VERB(game, jump_to_player, "", NONE)
+ADMIN_VERB(game, jump_to_player, "Jump to Player", "", NONE)
 	var/list/players = list()
 	for(var/client/player as anything in GLOB.clients)
 		players[key_name(player)] = WEAKREF(player.mob)
@@ -54,7 +54,7 @@ ADMIN_VERB(game, jump_to_player, "", NONE)
 	log_admin("[key_name(usr)] jumped to player [key_name(usr)]")
 	message_admins("[key_name_admin(usr)] jumped to player [key_name_admin(usr)]")
 
-ADMIN_VERB(game, get_mob, "", NONE, mob/teleportee)
+ADMIN_VERB(game, get_mob, "Get Mob", "", NONE, mob/teleportee)
 	teleportee ||= tgui_input_list(usr, "Select a mob to teleport to you", "Admin Jump", GLOB.mob_list - usr)
 	if(!teleportee)
 		return
@@ -79,7 +79,7 @@ ADMIN_VERB(game, get_mob, "", NONE, mob/teleportee)
 	admin_ticket_log(src, msg)
 	return ..()
 
-ADMIN_VERB(game, get_player, "", NONE)
+ADMIN_VERB(game, get_player, "Get Player", "", NONE)
 	var/list/players = list()
 	for(var/client/player as anything in GLOB.clients)
 		players[key_name(player)] = WEAKREF(player.mob)

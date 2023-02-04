@@ -1,4 +1,4 @@
-ADMIN_VERB(debug, toggle_field_of_view, "", (R_ADMIN|R_DEBUG))
+ADMIN_VERB(debug, toggle_field_of_view, "Toggle Field of View", "", (R_ADMIN|R_DEBUG))
 	var/on_off = CONFIG_GET(flag/native_fov)
 
 	message_admins("[key_name_admin(usr)] has [on_off ? "disabled" : "enabled"] the Native Field of View configuration..")

@@ -46,14 +46,9 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
-/datum/admins/proc/spawn_atom(object as text)
-	set category = "Debug"
-	set desc = "(atom path) Spawn an atom"
-	set name = "Spawn"
-
-	if(!check_rights(R_SPAWN) || !object)
+ADMIN_VERB(debug, spawn_atom, "Spawn Atom", "", R_SPAWN, object as text)
+	if(!object)
 		return
-
 	var/list/preparsed = splittext(object,":")
 	var/path = preparsed[1]
 	var/amount = 1
@@ -73,9 +68,8 @@
 			A.flags_1 |= ADMIN_SPAWNED_1
 
 	log_admin("[key_name(usr)] spawned [amount] x [chosen] at [AREACOORD(usr)]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-ADMIN_VERB(debug, podspawn_atom, "Spawn an atom typepath via supply drop", R_SPAWN, object as text)
+ADMIN_VERB(debug, podspawn_atom, "Podspawn Atom", "Spawn an atom typepath via supply drop", R_SPAWN, object as text)
 	var/chosen = pick_closest_path(object)
 	if(!chosen)
 		return
@@ -93,7 +87,7 @@ ADMIN_VERB(debug, podspawn_atom, "Spawn an atom typepath via supply drop", R_SPA
 		A.flags_1 |= ADMIN_SPAWNED_1
 	log_admin("[key_name(usr)] pod-spawned [chosen] at [AREACOORD(usr)]")
 
-ADMIN_VERB(debug, spawn_cargo_crate, "Spawn a cargo crate", R_SPAWN, object as text)
+ADMIN_VERB(debug, spawn_cargo_crate, "Spawn Cargo Crate", "Spawn a cargo crate", R_SPAWN, object as text)
 	var/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/datum/supply_pack)))
 	if(!chosen)
 		return
@@ -102,7 +96,7 @@ ADMIN_VERB(debug, spawn_cargo_crate, "Spawn a cargo crate", R_SPAWN, object as t
 	S.generate(get_turf(usr))
 	log_admin("[key_name(usr)] spawned cargo pack [chosen] at [AREACOORD(usr)]")
 
-ADMIN_VERB(debug, toggle_tinted_welding_helmets, "Reduces view range when wearing welding helmets", R_DEBUG)
+ADMIN_VERB(debug, toggle_tinted_welding_helmets, "Toggle Tinted Welding Helmets", "Reduces view range when wearing welding helmets", R_DEBUG)
 	GLOB.tinted_weldhelh = !GLOB.tinted_weldhelh
 	to_chat(world, span_bold("Welding Helmet tinting has been [(GLOB.tinted_weldhelh ? "enabled" : "disabled")]"))
 	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
@@ -131,7 +125,7 @@ ADMIN_VERB(debug, toggle_tinted_welding_helmets, "Reduces view range when wearin
 
 	user << browse(dat, "window=dyn_mode_options;size=900x650")
 
-ADMIN_VERB(debug, create_or_modify_area, "", R_DEBUG)
+ADMIN_VERB(debug, create_or_modify_area, "Create or Modify Area", "", R_DEBUG)
 	create_area(usr)
 
 //Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked

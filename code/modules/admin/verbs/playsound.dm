@@ -3,7 +3,7 @@
 #define SHELLEO_STDOUT 2
 #define SHELLEO_STDERR 3
 
-ADMIN_VERB(fun, play_global_sound, "", R_SOUND, sound/to_play as sound)
+ADMIN_VERB(fun, play_global_sound, "Play Global Sound", "", R_SOUND, sound/to_play as sound)
 	var/freq = 1
 	var/vol = input(usr, "What volume would you like the sound to play at?",, 100) as null|num
 	if(!vol)
@@ -36,12 +36,12 @@ ADMIN_VERB(fun, play_global_sound, "", R_SOUND, sound/to_play as sound)
 			SEND_SOUND(listener, admin_sound)
 			admin_sound.volume = vol
 
-ADMIN_VERB(fun, play_local_sound, "", R_SOUND, sound/playing as sound)
+ADMIN_VERB(fun, play_local_sound, "Play Local Sound", "", R_SOUND, sound/playing as sound)
 	log_admin("[key_name(usr)] played a local sound [playing]")
 	message_admins("[key_name_admin(usr)] played a local sound [playing]")
 	playsound(get_turf(usr), playing, 50, FALSE, FALSE)
 
-ADMIN_VERB(fun, play_direct_mob_sound, "", R_SOUND, sound/playing as sound, mob/target as mob in view())
+ADMIN_VERB(fun, play_direct_mob_sound, "Play Direct Mob Sound", "", R_SOUND, sound/playing as sound, mob/target as mob in view())
 	if(!target)
 		target = input(usr, "Choose a mob to play the sound to. Only they will hear it.", "Play Mob Sound") as null|anything in sort_names(GLOB.player_list)
 	if(!target || QDELETED(target))
@@ -50,7 +50,7 @@ ADMIN_VERB(fun, play_direct_mob_sound, "", R_SOUND, sound/playing as sound, mob/
 	message_admins("[key_name_admin(usr)] played a direct mob sound [playing] to [ADMIN_LOOKUPFLW(target)].")
 	SEND_SOUND(target, playing)
 
-ADMIN_VERB(fun, play_internet_sound, "", R_SOUND)
+ADMIN_VERB(fun, play_internet_sound, "Play Internet Sound", "", R_SOUND)
 	var/ytdl = CONFIG_GET(string/invoke_youtubedl)
 	if(!ytdl)
 		to_chat(usr, span_boldwarning("Youtube-dl was not configured, action unavailable")) //Check config.txt for the INVOKE_YOUTUBEDL value
@@ -147,7 +147,7 @@ ADMIN_VERB(fun, play_internet_sound, "", R_SOUND)
 					else
 						listner_client.tgui_panel?.stop_music()
 
-ADMIN_VERB(fun, set_round_end_sound, "", R_SOUND, sound/to_play as sound)
+ADMIN_VERB(fun, set_round_end_sound, "Set Round End Sound", "", R_SOUND, sound/to_play as sound)
 	SSticker.SetRoundEndSound(to_play)
 
 	log_admin("[key_name(usr)] set the round end sound to [to_play]")

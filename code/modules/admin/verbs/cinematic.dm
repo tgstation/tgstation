@@ -1,4 +1,4 @@
-ADMIN_VERB(fun, show_cinematic, "Shows a cinematic", R_FUN)
+ADMIN_VERB(fun, show_cinematic, "Show Cinematic", "Shows a cinematic", R_FUN)
 	if(!SSticker.initialized)
 		to_chat(usr, span_warning("Wait for the game to finish loading!"))
 		return

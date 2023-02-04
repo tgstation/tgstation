@@ -19,6 +19,7 @@ var status_tab_parts = ["Loading..."];
 var current_tab = null;
 var mc_tab_parts = [["Loading...", ""]];
 var admin_verb_cats = [];
+var admin_verb_groups = [["Server"], ["Debug"]];
 var href_token = null;
 var spells = [];
 var spell_tabs = [];
@@ -396,42 +397,66 @@ function draw_mc() {
 function draw_admin_verbs() {
 	try {
 		statcontentdiv.textContent = "";
-		var categories = Object.keys(admin_verb_cats);
-		for(var i = 0; i < categories.length; i++) {
-			var category = categories[i];
-			var categoryHeader = document.createElement("h3");
-			categoryHeader.textContent = category;
-
-			var verbList = admin_verb_cats[category];
-			var categoryTable = document.createElement("div");
-			categoryTable.className = "grid-container";
-			var verbIdx = 0;
-
-			for(var l = 0; l < verbList.length; l++) {
-				var verbInfo = verbList[l];
-
-				var verbName = verbInfo[0];
-				var verbDesc = verbInfo[1];
-				var verbRef = verbInfo[2];
-
-				var verbEntry = document.createElement("a");
-				verbEntry.onclick = make_verb_onclick(verbRef)
-				verbEntry.className = "grid-item";
-				verbEntry.title = verbDesc;
-
-				var verbTitle = document.createElement("span");
-				verbTitle.textContent = verbName;
-				verbTitle.className = "grid-item-text";
-
-				verbEntry.appendChild(verbTitle);
-				categoryTable.appendChild(verbEntry);
-			}
-			statcontentdiv.appendChild(categoryHeader);
-			statcontentdiv.appendChild(categoryTable);
+		var verb_groups = admin_verb_convert_into_groups(admin_verb_cats);
+		var group_names = Object.keys(verb_groups).sort();
+		for (var i = 0; i < group_names.length; i++) {
+			var group_name = group_names[i];
+			var group_header = document.createElement("h3");
+			group_header.textContent = group_name;
+			statcontentdiv.appendChild(group_header);
+			statcontentdiv.appendChild(get_admin_verb_group_div(verb_groups[group_name]));
 		}
 	} catch(except) {
 		statcontentdiv.textContent = "NTOS Exception: " + except + "\nReport this to your nearest Technical Resolution Specialist"
 	}
+}
+
+// converts a verb payload into a button used to render that payload
+function admin_verb_convert_verb_info_into_button(verb_info) {
+	var verb_name = verb_info[0];
+	var verb_desc = verb_info[1];
+	var verb_ref = verb_info[2];
+
+	var verb_button = document.createElement("a");
+	var verb_button_text = document.createElement("span");
+
+	verb_button.onclick = make_verb_onclick(verb_ref.replace(" ", "-"));
+	verb_button.className = "grid-item";
+	verb_button.title = verb_desc;
+
+	verb_button_text.textContent = verb_name;
+	verb_button_text.className = "grid-item-text";
+
+	verb_button.appendChild(verb_button_text);
+	return verb_button;
+}
+
+// converts the preloaded verb list payload into a list sorted by category
+function admin_verb_convert_into_groups(raw_payload) {
+	var category_groups = {};
+	var categories = Object.keys(raw_payload).sort();
+	for(var cat_idx = 0; cat_idx < categories.length; cat_idx++) {
+		var category_name = categories[cat_idx];
+		var category_contents = raw_payload[category_name];
+		var category_list = [];
+
+		for (var i = 0; i < category_contents.length; i++) {
+			var verb_button = admin_verb_convert_verb_info_into_button(category_contents[i]);
+			category_list.push(verb_button);
+		}
+		category_list.sort(function (lh, rh) { return lh.innerText.localeCompare(rh.innerText) });
+		category_groups[category_name] = category_list;
+	}
+	return category_groups;
+}
+
+function get_admin_verb_group_div(group) {
+	var group_div = document.createElement("div");
+	group_div.className = "grid-container";
+	for (var i = 0; i < group.length; i++) {
+		group_div.appendChild(group[i]);
+	}
+	return group_div;
 }
 
 function remove_tickets() {

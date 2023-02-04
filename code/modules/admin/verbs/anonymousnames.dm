@@ -7,7 +7,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 
 	this is the setup, it handles announcing crew and other settings for the mode and then creating the datum singleton
 */
-ADMIN_VERB(events, setup_anonymous_names, "", R_FUN)
+ADMIN_VERB(events, setup_anonymous_names, "Setup Anonymous Names", "", R_FUN)
 	if(GLOB.current_anonymous_theme)
 		var/response = tgui_alert(usr, "Anon mode is currently enabled. Disable?", "cold feet", list("Disable Anon Names", "Keep it Enabled"))
 		if(response != "Disable Anon Names")

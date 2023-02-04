@@ -141,7 +141,7 @@
 // HERE BE DEBUG DRAGONS //
 ///////////////////////////
 
-ADMIN_VERB(debug, test_nature_map_generator, "", R_DEBUG)
+ADMIN_VERB(debug, test_nature_map_generator, "Test Nature Map Generator", "", R_DEBUG)
 	var/datum/map_generator/nature/N = new()
 	var/startInput = input(usr,"Start turf of Map, (X;Y;Z)", "Map Gen Settings", "1;1;1") as text|null
 
