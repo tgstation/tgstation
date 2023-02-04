@@ -3526,6 +3526,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"amS" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "amT" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -14516,10 +14523,8 @@
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "doa" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "dob" = (
@@ -21636,6 +21641,13 @@
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/wood/large,
 /area/station/service/library)
+"gas" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 9
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "gaH" = (
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/right)
@@ -23729,9 +23741,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "gRl" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
 "gRG" = (
@@ -51901,8 +51911,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "rpd" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "rpJ" = (
@@ -64328,10 +64338,10 @@
 /turf/closed/wall/r_wall,
 /area/station/security/prison/shower)
 "vRQ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible{
 	dir = 4
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "vSh" = (
@@ -104150,7 +104160,7 @@ kdw
 aOV
 wXO
 doa
-uFX
+amS
 tLz
 xTM
 awE
@@ -104407,7 +104417,7 @@ oaX
 tsp
 vXS
 gRl
-pHM
+gas
 fjQ
 fjQ
 fjQ
@@ -104921,7 +104931,7 @@ oaX
 fhG
 hBH
 oNq
-pHM
+aeh
 ahD
 koq
 bEi
@@ -105178,7 +105188,7 @@ lXH
 riD
 wXQ
 doa
-uFX
+amS
 tLz
 ljZ
 nBA
@@ -105435,7 +105445,7 @@ oaX
 vwz
 idq
 gRl
-pHM
+gas
 fjQ
 fjQ
 fjQ
