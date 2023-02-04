@@ -51,6 +51,10 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
+"dN" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "ek" = (
 /obj/machinery/vending/wallmed/directional/north,
 /obj/machinery/iv_drip,
@@ -229,6 +233,12 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
+"kG" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass,
+/obj/item/shard,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "kJ" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/structure/window{
@@ -343,6 +353,15 @@
 /obj/structure/musician/piano,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
+"oX" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/north,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "qg" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -393,6 +412,11 @@
 /obj/effect/spawner/random/entertainment/plushie_delux,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
+"rJ" = (
+/obj/structure/girder,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "rP" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/carpet/blue,
@@ -747,6 +771,11 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"Fl" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/gun/ballistic/revolver/russian,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
 "FC" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/holofloor/beach/water,
@@ -759,11 +788,9 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "FO" = (
-/obj/machinery/light/small/directional/west,
+/obj/structure/girder,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/glass,
-/obj/item/stack/tile/iron/base,
-/turf/open/floor/plating,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "Gq" = (
 /turf/closed/indestructible/riveted/plastinum/nodiagonal,
@@ -976,7 +1003,6 @@
 "Pr" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -987,6 +1013,11 @@
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
+"PG" = (
+/obj/effect/decal/cleanable/generic,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "PR" = (
 /obj/structure/table,
 /obj/item/knife/kitchen,
@@ -1036,6 +1067,11 @@
 	name = "rouny plushie"
 	},
 /turf/open/floor/iron,
+/area/shuttle/escape)
+"Rb" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "Rk" = (
 /obj/machinery/scanner_gate/luxury_shuttle{
@@ -1102,6 +1138,8 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/medical,
+/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/pill/maintenance,
 /obj/item/reagent_containers/pill/maintenance,
 /obj/item/reagent_containers/pill/maintenance,
 /obj/item/reagent_containers/pill/maintenance,
@@ -1308,8 +1346,8 @@ XY
 fJ
 qg
 He
-TM
-JV
+PG
+FO
 eY
 xy
 He
@@ -1317,7 +1355,7 @@ XU
 eN
 fT
 iD
-iD
+Rb
 CQ
 "}
 (5,1,1) = {"
@@ -1331,7 +1369,7 @@ TM
 yk
 gM
 AB
-HG
+rJ
 iD
 Bo
 Ez
@@ -1359,9 +1397,9 @@ HG
 fJ
 DP
 JV
-JV
-JV
-JV
+kG
+dN
+dN
 CQ
 "}
 (7,1,1) = {"
@@ -1382,7 +1420,7 @@ iD
 iD
 aR
 Br
-FO
+gS
 bY
 CQ
 "}
@@ -1405,7 +1443,7 @@ Ez
 yk
 kJ
 qC
-xy
+oX
 CQ
 "}
 (9,1,1) = {"
@@ -1549,7 +1587,7 @@ Gq
 xV
 DK
 Ky
-DK
+Fl
 yB
 jJ
 We
