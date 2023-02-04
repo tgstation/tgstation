@@ -1,10 +1,6 @@
 GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
-/client/proc/secrets() //Creates a verb for admins to open up the ui
-	set name = "Secrets"
-	set desc = "Abuse harder than you ever have before with this handy dandy semi-misc stuff menu"
-	set category = "Admin.Game"
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Secrets Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/client/proc/secrets()
 	var/datum/secrets_menu/tgui = new(usr)//create the datum
 	tgui.ui_interact(usr)//datum has a tgui component, here we open the window
 
@@ -102,25 +98,25 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 					D.cure(0)
 
 		if("list_bombers")
-			holder.list_bombers()
+			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/list_bombers)
 
 		if("list_signalers")
-			holder.list_signalers()
+			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/list_signalers)
 
 		if("list_lawchanges")
-			holder.list_law_changes()
+			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/list_law_changes)
 
 		if("showailaws")
-			holder.check_ai_laws()
+			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/check_ai_laws)
 
 		if("manifest")
-			holder.show_manifest()
+			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/show_manifest)
 
 		if("dna")
-			holder.list_dna()
+			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/list_dna)
 
 		if("fingerprints")
-			holder.list_fingerprints()
+			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/list_fingerprints)
 
 		if("ctfbutton")
 			toggle_id_ctf(holder, "centcom")
@@ -247,16 +243,13 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			log_admin("[key_name(holder)] made all SMESs powered", 1)
 			message_admins(span_adminnotice("[key_name_admin(holder)] made all SMESs powered"))
 			power_restore_quick()
+
 		if("anon_name")
-			if(!is_funmin)
-				return
-			holder.anon_names()
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anonymous Names"))
+			SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/events/setup_anonymous_names)
+
 		if("tripleAI")
-			if(!is_funmin)
-				return
-			holder.triple_ai()
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Triple AI"))
+			SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/events/toggle_ai_triumvirate)
+
 		if("onlyone")
 			if(!is_funmin)
 				return

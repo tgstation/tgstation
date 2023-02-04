@@ -41,51 +41,5 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 		else
 			class = "unknown"
 
-	usr.client.debug_variables(target)
+	SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/debug/view_variables, target)
 	message_admins("Admin [key_name_admin(usr)] is debugging the [target] [class].")
-
-
-// Debug verbs.
-/client/proc/restart_controller(controller in list("Master", "Failsafe"))
-	set category = "Debug"
-	set name = "Restart Controller"
-	set desc = "Restart one of the various periodic loop controllers for the game (be careful!)"
-
-	if(!holder)
-		return
-	switch(controller)
-		if("Master")
-			Recreate_MC()
-			SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Master Controller")
-		if("Failsafe")
-			new /datum/controller/failsafe()
-			SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Failsafe Controller")
-
-	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
-
-/client/proc/debug_controller()
-	set category = "Debug"
-	set name = "Debug Controller"
-	set desc = "Debug the various periodic loop controllers for the game (be careful!)"
-
-	if(!holder)
-		return
-
-	var/list/controllers = list()
-	var/list/controller_choices = list()
-
-	for (var/datum/controller/controller in world)
-		if (istype(controller, /datum/controller/subsystem))
-			continue
-		controllers["[controller] (controller.type)"] = controller //we use an associated list to ensure clients can't hold references to controllers
-		controller_choices += "[controller] (controller.type)"
-
-	var/datum/controller/controller_string = input("Select controller to debug", "Debug Controller") as null|anything in controller_choices
-	var/datum/controller/controller = controllers[controller_string]
-
-	if (!istype(controller))
-		return
-	debug_variables(controller)
-
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Failsafe Controller")
-	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.")

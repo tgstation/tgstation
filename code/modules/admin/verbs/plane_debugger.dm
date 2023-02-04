@@ -348,7 +348,7 @@
 		if("toggle_mirroring")
 			set_mirroring(!mirror_target)
 		if("vv_mob")
-			owner.owner.debug_variables(reference_frame)
+			SSadmin_verbs.dynamic_invoke_admin_verb(owner.owner, /mob/admin_module_holder/debug/view_variables, reference_frame)
 		if("set_group")
 			current_group = params["target_group"]
 		if("connect_relay")
@@ -374,7 +374,7 @@
 			var/plane_edit = params["edit"]
 			var/atom/movable/screen/plane_master/edit = our_planes["[plane_edit]"]
 			var/mob/user = ui.user
-			user?.client?.debug_variables(edit)
+			SSadmin_verbs.dynamic_invoke_admin_verb(user.client, /mob/admin_module_holder/debug/view_variables, edit)
 			return TRUE
 		if("set_alpha")
 			var/plane_edit = params["edit"]
