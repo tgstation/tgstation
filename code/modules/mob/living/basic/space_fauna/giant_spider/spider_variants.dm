@@ -149,10 +149,10 @@
 	var/datum/action/cooldown/wrap/wrapping = new(src)
 	wrapping.Grant(src)
 
-	var/datum/action/innate/spider/lay_eggs/make_eggs = new(src)
+	var/datum/action/lay_eggs/make_eggs = new(src)
 	make_eggs.Grant(src)
 
-	var/datum/action/innate/spider/lay_eggs/enriched/make_better_eggs = new(src)
+	var/datum/action/lay_eggs/enriched/make_better_eggs = new(src)
 	make_better_eggs.Grant(src)
 
 	var/datum/action/set_spider_directive/give_orders = new(src)

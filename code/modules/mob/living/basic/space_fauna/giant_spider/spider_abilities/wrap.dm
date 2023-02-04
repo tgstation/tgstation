@@ -88,6 +88,8 @@
 
 	if(do_after(owner, wrap_time, target = to_wrap, interaction_key = DOAFTER_SOURCE_SPIDER))
 		wrap_target(to_wrap)
+	else
+		owner.balloon_alert(owner, "interrupted!")
 	if(istype(animal_owner))
 		animal_owner.stop_automated_movement = FALSE
 
@@ -98,7 +100,7 @@
 		// You get a point every time you consume a living player, even if they've been consumed before.
 		// You only get a point for any individual corpse once, so you can't keep breaking it out and eating it again.
 		if(ishuman(living_wrapped) && (living_wrapped.stat != DEAD || !HAS_TRAIT(living_wrapped, TRAIT_SPIDER_CONSUMED)))
-			var/datum/action/innate/spider/lay_eggs/enriched/egg_power = locate() in owner.actions
+			var/datum/action/lay_eggs/enriched/egg_power = locate() in owner.actions
 			if(egg_power)
 				egg_power.charges++
 				egg_power.build_all_button_icons()

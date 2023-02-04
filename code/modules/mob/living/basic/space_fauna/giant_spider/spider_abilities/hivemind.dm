@@ -13,7 +13,7 @@
 	/// Current directive to apply
 	var/current_directive
 
-/datum/action/set_spider_directive/Trigger()
+/datum/action/set_spider_directive/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return

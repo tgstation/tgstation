@@ -53,8 +53,8 @@
 	var/poison_type = /datum/reagent/toxin/hunterspider
 	///How quickly the spider can place down webbing.  One is base speed, larger numbers are slower.
 	var/web_speed = 1
-	///Whether or not the spider can create sealed webs.
-	var/web_sealer = FALSE
+	///What action is used to lay webs, some spiders have a version which can turn webs into walls.
+	var/web_type = /datum/action/cooldown/lay_web
 	///The message that the mother spider left for this spider when the egg was layed.
 	var/directive = ""
 	/// Short description of what this mob is capable of, for radial menu uses
@@ -62,7 +62,8 @@
 
 /mob/living/simple_animal/hostile/giant_spider/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/lay_web/webbing = new(src)
+	var/datum/action/cooldown/lay_web/webbing = new web_type(src)
+	webbing.webbing_time *= web_speed
 	webbing.Grant(src)
 
 	if(poison_per_bite)
@@ -135,7 +136,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	web_speed = 0.25
-	web_sealer = TRUE
+	web_type = /datum/action/cooldown/lay_web/sealer
 	menu_description = "Support spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage."
 	///The health HUD applied to the mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
@@ -145,7 +146,7 @@
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.show_to(src)
 	AddComponent(/datum/component/healing_touch,\
-		interaction_key = INTERACTION_SPIDER_KEY ,\
+		interaction_key = DOAFTER_SOURCE_SPIDER ,\
 		valid_targets_typecache = typecacheof(list(/mob/living/simple_animal/hostile/giant_spider)),\
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
 		complete_text = "%SOURCE% wraps the wounds of %TARGET%.",\
@@ -242,7 +243,7 @@
 	melee_damage_upper = 15
 	gold_core_spawnable = NO_SPAWN
 	web_speed = 0.5
-	web_sealer = TRUE
+	web_type = /datum/action/cooldown/lay_web/sealer
 	menu_description = "Royal spider variant specializing in reproduction and leadership, but has very low amount of health and deals low damage."
 
 /mob/living/simple_animal/hostile/giant_spider/midwife/Initialize(mapload)
@@ -250,10 +251,10 @@
 	var/datum/action/cooldown/wrap/wrapping = new(src)
 	wrapping.Grant(src)
 
-	var/datum/action/innate/spider/lay_eggs/make_eggs = new(src)
+	var/datum/action/lay_eggs/make_eggs = new(src)
 	make_eggs.Grant(src)
 
-	var/datum/action/innate/spider/lay_eggs/enriched/make_better_eggs = new(src)
+	var/datum/action/lay_eggs/enriched/make_better_eggs = new(src)
 	make_better_eggs.Grant(src)
 
 	var/datum/action/set_spider_directive/give_orders = new(src)
@@ -387,7 +388,7 @@
 		heal_brute = maxHealth * 0.5,\
 		heal_burn = maxHealth * 0.5,\
 		allow_self = TRUE,\
-		interaction_key = INTERACTION_SPIDER_KEY ,\
+		interaction_key = DOAFTER_SOURCE_SPIDER ,\
 		valid_targets_typecache = typecacheof(list(/mob/living/simple_animal/hostile/giant_spider/hunter/flesh)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
 		action_text = "%SOURCE% begins mending themselves...",\
