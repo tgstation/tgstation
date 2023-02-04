@@ -44,33 +44,33 @@
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/M = A.affected_mob
+	var/mob/living/living_mob = A.affected_mob
 	switch(A.stage)
 		if(1 to 2)
 			return
 		if(3)
 			if(prob(base_message_chance) && !suppress_warning)
-				if(prob(33.33))
-					M.audible_message(self_message = "You hear a crackling noise.")
-				else
-					to_chat(M, span_warning("[pick("You feel hot.", "You smell smoke.")]"))
+				warn_mob(living_mob)
 		else
 			var/advanced_stage = A.stage > 4
-			M.adjust_fire_stacks((advanced_stage ? 3 : 1) * power)
-			M.take_overall_damage(burn = ((advanced_stage ? 5 : 3) * power), required_bodytype = BODYTYPE_ORGANIC)
-			M.ignite_mob(silent = TRUE)
-			if(M.on_fire) //check to make sure they actually caught on fire, or if it was prevented cause they were wet.
-				M.visible_message(span_warning("[M] catches fire!"), ignored_mobs = M)
-				to_chat(M, span_userdanger(advanced_stage ? "Your skin erupts into an inferno!" : "Your skin bursts into flames!"))
-				M.emote("scream")
+			living_mob.adjust_fire_stacks((advanced_stage ? 3 : 1) * power)
+			living_mob.take_overall_damage(burn = ((advanced_stage ? 5 : 3) * power), required_bodytype = BODYTYPE_ORGANIC)
+			living_mob.ignite_mob(silent = TRUE)
+			if(living_mob.on_fire) //check to make sure they actually caught on fire, or if it was prevented cause they were wet.
+				living_mob.visible_message(span_warning("[living_mob] catches fire!"), ignored_mobs = living_mob)
+				to_chat(living_mob, span_userdanger(advanced_stage ? "Your skin erupts into an inferno!" : "Your skin bursts into flames!"))
+				living_mob.emote("scream")
 			else if(!suppress_warning)
-				if(prob(33.33))
-					M.audible_message(self_message = "You hear a crackling noise.")
-				else
-					to_chat(M, span_warning("[pick("You feel hot.", "You smell smoke.")]"))
+				warn_mob(living_mob)
 
 			if(infective)
 				A.spread(advanced_stage ? 4 : 2)
+
+/datum/symptom/fire/proc/warn_mob(mob/living/living_mob)
+	if(prob(33.33))
+		living_mob.audible_message(self_message = "You hear a crackling noise.")
+	else
+		to_chat(living_mob, span_warning("[pick("You feel hot.", "You smell smoke.")]"))
 
 /*
 Alkali perspiration
