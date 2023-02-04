@@ -1,4 +1,4 @@
-ADMIN_VERB(debug, map_template_load, "", R_DEBUG)
+ADMIN_VERB(debug, map_template_load, "Map Template Load", "", R_DEBUG)
 	var/datum/map_template/template
 
 	var/map = input(usr, "Choose a Map Template to place at your CURRENT LOCATION","Place Map Template") as null|anything in sort_list(SSmapping.map_templates)
@@ -39,7 +39,7 @@ ADMIN_VERB(debug, map_template_load, "", R_DEBUG)
 			to_chat(usr, "Failed to place map", confidential = TRUE)
 	usr.client.images -= preview
 
-ADMIN_VERB(debug, map_template_upload, "", R_DEBUG)
+ADMIN_VERB(debug, map_template_upload, "Map Template Upload", "", R_DEBUG)
 	var/map = input(usr, "Choose a Map Template to upload to template storage","Upload Map Template") as null|file
 	if(!map)
 		return

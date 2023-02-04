@@ -1,7 +1,7 @@
-ADMIN_VERB(debug, display_air_status, "", R_DEBUG, turf/target in view())
+ADMIN_VERB(debug, display_air_status, "Display Air Status", "", R_DEBUG, turf/target in view())
 	atmos_scan(user=usr, target=target, silent=TRUE)
 
-ADMIN_VERB(debug, unfreeze_everyone, "When movement gets fucked", R_ADMIN)
+ADMIN_VERB(debug, unfreeze_everyone, "Unfreeze Everyone", "When movement gets fucked", R_ADMIN)
 	var/largest_move_time = 0
 	var/largest_click_time = 0
 	var/mob/largest_move_mob = null
@@ -26,7 +26,7 @@ ADMIN_VERB(debug, unfreeze_everyone, "When movement gets fucked", R_ADMIN)
 	message_admins("[ADMIN_LOOKUPFLW(largest_click_mob)] had the largest click delay with [largest_click_time] frames / [DisplayTimeText(largest_click_time)]!")
 	message_admins("world.time = [world.time]")
 
-ADMIN_VERB(debug, radio_report, "", R_DEBUG)
+ADMIN_VERB(debug, radio_report, "Radio Report", "", R_DEBUG)
 	var/output = "<b>Radio Report</b><hr>"
 	for (var/fq in SSradio.frequencies)
 		output += "<b>Freq: [fq]</b><br>"
@@ -52,7 +52,7 @@ ADMIN_VERB(debug, radio_report, "", R_DEBUG)
 					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device]<br>"
 	usr << browse(output,"window=radioreport")
 
-ADMIN_VERB(server, toggle_cdn, "", R_SERVER|R_DEBUG)
+ADMIN_VERB(server, toggle_cdn, "Toggle CDN", "", R_SERVER|R_DEBUG)
 	var/static/admin_disabled_cdn_transport = null
 	if (alert(usr, "Are you sure you want to toggle the CDN asset transport?", "Confirm", "Yes", "No") != "Yes")
 		return

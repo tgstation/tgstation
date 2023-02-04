@@ -1,5 +1,5 @@
 //replaces the old Ticklag verb, fps is easier to understand
-ADMIN_VERB(debug, set_server_fps, "Sets game speed in frames-per-second. Will break the game, but that's why it's fun!", R_DEBUG)
+ADMIN_VERB(debug, set_server_fps, "Set Server FPS", "Sets game speed in frames-per-second. Will break the game, but that's why it's fun!", R_DEBUG)
 	var/cfg_fps = CONFIG_GET(number/fps)
 	var/new_fps = round(input("Sets game frames-per-second. Can potentially break the game (default: [cfg_fps])","FPS", world.fps) as num|null)
 

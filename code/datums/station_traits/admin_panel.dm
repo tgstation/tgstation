@@ -1,6 +1,6 @@
 /// Opens the station traits admin panel
 
-ADMIN_VERB(events, modify_station_traits, "", R_FUN)
+ADMIN_VERB(events, modify_station_traits, "Modify Station Traits", "", R_FUN)
 	var/static/datum/station_traits_panel/station_traits_panel
 	if(!station_traits_panel)
 		station_traits_panel = new

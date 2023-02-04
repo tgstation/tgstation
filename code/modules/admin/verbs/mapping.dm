@@ -19,7 +19,7 @@
 //- Identify how hard it is to break into the area and where the weak points are
 //- Check if the area has too much empty space. If so, make it smaller and replace the rest with maintenance tunnels.
 
-ADMIN_VERB(mapping, camera_range_display, "Iterate over all cameras in world and generate a camera map", R_DEBUG)
+ADMIN_VERB(mapping, camera_range_display, "Camera Range Display", "Iterate over all cameras in world and generate a camera map", R_DEBUG)
 	if(tgui_alert(usr, "This can take a very long time and lock up the game!", "Don't do this on live", list("Okay", "Nevermind")) != "Okay")
 		return
 
@@ -39,7 +39,7 @@ ADMIN_VERB(mapping, camera_range_display, "Iterate over all cameras in world and
 
 #ifdef TESTING
 GLOBAL_LIST_EMPTY(dirty_vars)
-ADMIN_VERB(mapping, dirty_varedits, "", R_DEBUG)
+ADMIN_VERB(mapping, dirty_varedits, "Dirty VarEdits", "", R_DEBUG)
 	var/list/dat = list()
 	dat += "<h3>Abandon all hope ye who enter here</h3><br><br>"
 	for(var/thing in GLOB.dirty_vars)
@@ -50,7 +50,7 @@ ADMIN_VERB(mapping, dirty_varedits, "", R_DEBUG)
 	popup.open()
 #endif
 
-ADMIN_VERB(mapping, camera_report, "", R_DEBUG)
+ADMIN_VERB(mapping, camera_report, "Camera Report", "", R_DEBUG)
 	var/list/obj/machinery/camera/CL = list()
 
 	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
@@ -82,7 +82,7 @@ ADMIN_VERB(mapping, camera_report, "", R_DEBUG)
 	output += "</ul>"
 	usr << browse(output,"window=airreport;size=1000x500")
 
-ADMIN_VERB(mapping, intercom_range_display, "", R_DEBUG)
+ADMIN_VERB(mapping, intercom_range_display, "Intercomm Range Display", "", R_DEBUG)
 	var/static/intercom_range_display_status = FALSE
 	//blame cyberboss if this breaks something //blamed
 	intercom_range_display_status = !intercom_range_display_status
@@ -96,7 +96,7 @@ ADMIN_VERB(mapping, intercom_range_display, "", R_DEBUG)
 				for(var/turf/turf in view(7,intercom.loc))
 					new /obj/effect/abstract/marker/intercom(turf)
 
-ADMIN_VERB(mapping, show_map_report_list, "Display a list of map reports", R_DEBUG)
+ADMIN_VERB(mapping, show_map_report_list, "Show Map Report List", "Display a list of map reports", R_DEBUG)
 	var/dat = {"<b>List of all map reports:</b><br>"}
 
 	for(var/datum/map_report/report as anything in GLOB.map_reports)
@@ -104,7 +104,7 @@ ADMIN_VERB(mapping, show_map_report_list, "Display a list of map reports", R_DEB
 
 	usr << browse(dat, "window=map_reports")
 
-ADMIN_VERB(mapping, show_roundstart_at_list, "Displays a list of active turfs at roundstart", R_DEBUG)
+ADMIN_VERB(mapping, show_roundstart_at_list, "Show Roundstart AT List", "Displays a list of active turfs at roundstart", R_DEBUG)
 	var/dat = {"<b>Coordinate list of Active Turfs at Roundstart</b>
 		<br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
 
@@ -114,7 +114,7 @@ ADMIN_VERB(mapping, show_roundstart_at_list, "Displays a list of active turfs at
 		dat += "<br>"
 	usr << browse(dat, "window=at_list")
 
-ADMIN_VERB(mapping, show_roundstart_at_markers, "Places a marker on all active-at-roundstart turfs", R_DEBUG)
+ADMIN_VERB(mapping, show_roundstart_at_markers, "Show Roundstart AT Markers", "Places a marker on all active-at-roundstart turfs", R_DEBUG)
 	var/count = 0
 	for(var/obj/effect/abstract/marker/at/AT in GLOB.all_abstract_markers)
 		qdel(AT)
@@ -128,7 +128,7 @@ ADMIN_VERB(mapping, show_roundstart_at_markers, "Places a marker on all active-a
 			count++
 		to_chat(usr, "[count] AT markers placed.", confidential = TRUE)
 
-ADMIN_VERB(mapping, count_objects_on_zlevel, "", R_DEBUG)
+ADMIN_VERB(mapping, count_objects_on_zlevel, "Count Objects on ZLevel", "", R_DEBUG)
 	var/level = input("Which z-level?","Level?") as text|null
 	if(!level)
 		return
@@ -164,7 +164,7 @@ ADMIN_VERB(mapping, count_objects_on_zlevel, "", R_DEBUG)
 
 	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]", confidential = TRUE)
 
-ADMIN_VERB(mapping, count_all_objects, "", R_DEBUG)
+ADMIN_VERB(mapping, count_all_objects, "Count All Objects", "", R_DEBUG)
 	var/type_text = input("Which type path?","") as text|null
 	if(!type_text)
 		return
@@ -183,13 +183,13 @@ ADMIN_VERB(mapping, count_all_objects, "", R_DEBUG)
 //This proc is intended to detect lag problems relating to communication procs
 GLOBAL_VAR_INIT(say_disabled, FALSE)
 // Why is this a mapping verb?
-ADMIN_VERB(mapping, disable_all_communication_verbs, "", R_DEBUG)
+ADMIN_VERB(mapping, disable_all_communication_verbs, "Disable All Communication Verbs", "", R_DEBUG)
 	GLOB.say_disabled = !GLOB.say_disabled
 	var/message = "has [(GLOB.say_disabled ? "disabled" : "enabled")] all forms of communication"
 	message_admins("[key_name_admin(usr)] [message]")
 	log_admin("[key_name(usr)] [message]")
 
-ADMIN_VERB(mapping,	generate_job_landmark_icons, "This generates the icon states for job starting location landmarks", R_DEBUG)
+ADMIN_VERB(mapping,	generate_job_landmark_icons, "Generate Job Landmark Icons", "This generates the icon states for job starting location landmarks", R_DEBUG)
 	var/icon/final = icon()
 	var/mob/living/carbon/human/dummy/D = new(locate(1,1,1)) //spawn on 1,1,1 so we don't have runtimes when items are deleted
 	D.setDir(SOUTH)
@@ -213,7 +213,7 @@ ADMIN_VERB(mapping,	generate_job_landmark_icons, "This generates the icon states
 		final.Insert(icon('icons/hud/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
 	fcopy(final, "icons/mob/landmarks.dmi")
 
-ADMIN_VERB(mapping, debug_zlevels, "", R_DEBUG)
+ADMIN_VERB(mapping, debug_zlevels, "Debug ZLevels", "", R_DEBUG)
 	var/list/z_list = SSmapping.z_list
 	var/list/messages = list()
 	messages += "<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]<br><br>"
@@ -269,7 +269,7 @@ ADMIN_VERB(mapping, debug_zlevels, "", R_DEBUG)
 	messages += "</table>"
 	to_chat(usr, examine_block(messages.Join("")), confidential = TRUE)
 
-ADMIN_VERB(mapping, count_station_food, "", R_DEBUG)
+ADMIN_VERB(mapping, count_station_food, "Count Station Food", "", R_DEBUG)
 	var/list/foodcount = list()
 	for(var/obj/item/food/fuck_me in world)
 		var/turf/location = get_turf(fuck_me)
@@ -290,7 +290,7 @@ ADMIN_VERB(mapping, count_station_food, "", R_DEBUG)
 	popup.set_content(page_contents)
 	popup.open()
 
-ADMIN_VERB(mapping, count_station_stacks, "", R_DEBUG)
+ADMIN_VERB(mapping, count_station_stacks, "Count Station Stacks", "", R_DEBUG)
 	var/list/stackcount = list()
 	for(var/obj/item/stack/fuck_me in world)
 		var/turf/location = get_turf(fuck_me)
@@ -311,7 +311,7 @@ ADMIN_VERB(mapping, count_station_stacks, "", R_DEBUG)
 	popup.set_content(page_contents)
 	popup.open()
 
-ADMIN_VERB(mapping, check_for_obstructed_atmopsherics, "Check all tiles with a vent or scrubber on it and ensure that nothing is covering it up", R_DEBUG)
+ADMIN_VERB(mapping, check_for_obstructed_atmopsherics, "Check For Obstructed Atmospherics", "Check all tiles with a vent or scrubber on it and ensure that nothing is covering it up", R_DEBUG)
 	message_admins(span_adminnotice("[key_name_admin(usr)] is checking for obstructed atmospherics through the debug command."))
 	var/list/results = list()
 	results += "<h2><b>Anything that is considered to aesthetically obstruct an atmospherics machine (vent, scrubber, port) is listed below.</b> Please re-arrange to accomodate for this.</h2><br>"

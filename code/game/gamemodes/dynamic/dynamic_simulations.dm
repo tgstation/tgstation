@@ -69,7 +69,7 @@
 	var/forced_threat_level
 
 #ifdef TESTING
-ADMIN_VERB(debug, run_dynamic_simulations, "", R_DEBUG)
+ADMIN_VERB(debug, run_dynamic_simulations, "Run Dynamic Simulations", "", R_DEBUG)
 	var/simulations = input(usr, "Enter number of simulations") as num
 	var/roundstart_players = input(usr, "Enter number of round start players") as num
 	var/forced_threat_level = input(usr, "Enter forced threat level, if you want one") as num | null

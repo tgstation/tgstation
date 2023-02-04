@@ -1,6 +1,6 @@
 // Admin Tab - Admin Verbs
 
-ADMIN_VERB(admin, show_tip, "Sends a tip, which you specify, to all players", R_ADMIN)
+ADMIN_VERB(admin, show_tip, "Show Tip", "Sends a tip, which you specify, to all players", R_ADMIN)
 	var/input = input(usr, "Please specify your tip that you want to send to the players.", "Tip", "") as message|null
 	if(!input)
 		return
@@ -18,7 +18,7 @@ ADMIN_VERB(admin, show_tip, "Sends a tip, which you specify, to all players", R_
 	message_admins("[key_name_admin(usr)] sent a tip of the round.")
 	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
 
-ADMIN_VERB(admin, release_from_prison, "", R_ADMIN, mob/freeing in world)
+ADMIN_VERB(admin, release_from_prison, "Release from Prison", "", R_ADMIN, mob/freeing in world)
 	if(is_centcom_level(freeing.z))
 		SSjob.SendToLateJoin(freeing)
 		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(freeing)]")
@@ -26,7 +26,7 @@ ADMIN_VERB(admin, release_from_prison, "", R_ADMIN, mob/freeing in world)
 	else
 		tgui_alert(usr,"[freeing.name] is not prisoned.")
 
-ADMIN_VERB(admin, player_playtime, "Check the playtime for connected players", R_ADMIN)
+ADMIN_VERB(admin, player_playtime, "Player Playtime", "Check the playtime for connected players", R_ADMIN)
 	if(!CONFIG_GET(flag/use_exp_tracking))
 		to_chat(usr, span_warning("Tracking is disabled in the server configuration file."), confidential = TRUE)
 		return
@@ -38,7 +38,7 @@ ADMIN_VERB(admin, player_playtime, "Check the playtime for connected players", R
 	msg += "</UL></BODY></HTML>"
 	usr << browse(msg.Join(), "window=Player_playtime_check")
 
-ADMIN_VERB(admin, trigger_centcom_recall, "", R_ADMIN)
+ADMIN_VERB(admin, trigger_centcom_recall, "Trigger Centcom Recall", "", R_ADMIN)
 	var/message = pick(GLOB.admiral_messages)
 	message = input("Enter message from the on-call admiral to be put in the recall report.", "Admiral Message", message) as message|null
 
@@ -49,7 +49,7 @@ ADMIN_VERB(admin, trigger_centcom_recall, "", R_ADMIN)
 	usr.log_message("triggered a CentCom recall, with the message of: [message]", LOG_GAME)
 	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
 
-ADMIN_VERB(admin, player_panel, "", R_ADMIN)
+ADMIN_VERB(admin, player_panel, "Player Panel", "", R_ADMIN)
 	usr.client.holder?.player_panel_new()
 
 /datum/admins/proc/cmd_show_exp_panel(client/client_to_check)
@@ -134,7 +134,7 @@ ADMIN_VERB(admin, player_panel, "", R_ADMIN)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-ADMIN_VERB(admin, drop_everything, "", R_ADMIN, mob/target in world)
+ADMIN_VERB(admin, drop_everything, "Drop Everything", "", R_ADMIN, mob/target in world)
 	var/confirm = tgui_alert(usr, "Make [target] drop everything?", "Message", list("Yes", "No"))
 	if(confirm != "Yes")
 		return

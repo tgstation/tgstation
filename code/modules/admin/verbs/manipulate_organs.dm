@@ -1,4 +1,4 @@
-ADMIN_VERB(debug, manipulate_organs, "", R_DEBUG, mob/living/carbon/target in view())
+ADMIN_VERB(debug, manipulate_organs, "Manipulate Organs", "", R_DEBUG, mob/living/carbon/target in view())
 	var/operation = tgui_input_list(usr, "Select organ operation", "Organ Manipulation", list("add organ", "add implant", "drop organ/implant", "remove organ/implant"))
 	if (isnull(operation))
 		return

@@ -603,7 +603,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		holodeck_templates[holo_template.template_id] = holo_template
 
-ADMIN_VERB(events, load_away_mission, "", R_FUN)
+ADMIN_VERB(events, load_away_mission, "Load Away Mission", "", R_FUN)
 	if(!GLOB.the_gateway)
 		if(tgui_alert(usr, "There's no home gateway on the station. You sure you want to continue ?", "Uh oh", list("Yes", "No")) != "Yes")
 			return

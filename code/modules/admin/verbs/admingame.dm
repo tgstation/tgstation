@@ -134,7 +134,7 @@ ADMIN_CONTEXT_ENTRY(context_player_panel, "Show Player Panel", R_ADMIN, mob/play
 	usr << browse(body, "window=adminplayeropts-[REF(player)];size=550x515")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Player Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-ADMIN_VERB(game, toggle_godmode, "", R_ADMIN, mob/demigod in view())
+ADMIN_VERB(game, toggle_godmode, "Toggle Godmode", "", R_ADMIN, mob/demigod in view())
 	demigod.status_flags ^= GODMODE
 	to_chat(usr, span_adminnotice("Toggled [(demigod.status_flags & GODMODE) ? "ON" : "OFF"]"), confidential = TRUE)
 
@@ -148,7 +148,7 @@ If a guy was gibbed and you want to revive him, this is a good way to do so.
 Works kind of like entering the game with a new character. Character receives a new mind if they didn't have one.
 Traitors and the like can also be revived with the previous role mostly intact.
 */
-ADMIN_VERB(game, respawn_character, "Respawn a player that has been gibbed/dusted/killed. They must be a ghost", R_SPAWN, input as text)
+ADMIN_VERB(game, respawn_character, "Respawn Character", "Respawn a player that has been gibbed/dusted/killed. They must be a ghost", R_SPAWN, input as text)
 	var/mob/dead/observer/G_found
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		if(G.ckey == input)
@@ -264,7 +264,7 @@ ADMIN_VERB(game, respawn_character, "Respawn a player that has been gibbed/duste
 
 	return new_character
 
-ADMIN_VERB(game, manage_job_slots, "", R_ADMIN)
+ADMIN_VERB(game, manage_job_slots, "Manage Job Slots", "", R_ADMIN)
 	usr.client.holder.manage_free_slots()
 
 /datum/admins/proc/manage_free_slots()
@@ -307,7 +307,7 @@ ADMIN_VERB(game, manage_job_slots, "", R_ADMIN)
 	browser.set_content(dat.Join())
 	browser.open()
 
-ADMIN_VERB(game, change_view_range, "Switch between default and larger views", R_ADMIN)
+ADMIN_VERB(game, change_view_range, "Change View Range", "Switch between default and larger views", R_ADMIN)
 	var/datum/view_data/view_size = usr.client.view_size
 	if(view_size.getView() == view_size.default)
 		view_size.setTo(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,37) - 7)
@@ -315,7 +315,7 @@ ADMIN_VERB(game, change_view_range, "Switch between default and larger views", R
 		view_size.resetToDefault(getScreenSize(usr.client.prefs.read_preference(/datum/preference/toggle/widescreen)))
 	log_admin("[key_name(usr)] changed their view range to [usr.client.view].")
 
-ADMIN_VERB(game, toggle_combo_hud, "Toggles the Admin Combo HUD (all huds)", R_ADMIN)
+ADMIN_VERB(game, toggle_combo_hud, "Toggle Combo HUD", "Toggles the Admin Combo HUD (all huds)", R_ADMIN)
 	if(usr.client.combo_hud_enabled)
 		usr.client.disable_combo_hud()
 	else
@@ -357,14 +357,14 @@ ADMIN_VERB(game, toggle_combo_hud, "Toggles the Admin Combo HUD (all huds)", R_A
 	mob.lighting_alpha = mob.default_lighting_alpha()
 	mob.update_sight()
 
-ADMIN_VERB(game, traitor_panel, "", R_ADMIN, mob/traitor in view())
+ADMIN_VERB(game, traitor_panel, "Traitor Panel", "", R_ADMIN, mob/traitor in view())
 	var/datum/mind/target_mind = traitor.mind
 	if(!target_mind)
 		to_chat(usr, "This mob has no mind!", confidential = TRUE)
 		return
 	target_mind.traitor_panel()
 
-ADMIN_VERB(game, skill_panel, "", R_ADMIN, mob/skilled in view())
+ADMIN_VERB(game, skill_panel, "Skill Panel", "", R_ADMIN, mob/skilled in view())
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(usr,"The game hasn't started yet!")
 		return
@@ -376,7 +376,7 @@ ADMIN_VERB(game, skill_panel, "", R_ADMIN, mob/skilled in view())
 	var/datum/skill_panel/SP = new(usr, target_mind)
 	SP.ui_interact(usr)
 
-ADMIN_VERB(game, show_lag_switches, "Display the controls for drastic lag mitigation measures", R_ADMIN)
+ADMIN_VERB(game, show_lag_switches, "Show Lag Switches", "Display the controls for drastic lag mitigation measures", R_ADMIN)
 	if(!SSlag_switch.initialized)
 		to_chat(usr, span_notice("The Lag Switch subsystem has not yet been initialized."))
 		return
