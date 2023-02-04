@@ -1,4 +1,4 @@
-#define INTERACTION_SPIDER_KEY  "spider_key"
+#define INTERACTION_SPIDER_KEY "spider_key"
 
 /**
  * # Giant Spider
@@ -146,8 +146,9 @@
 	. = ..()
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.show_to(src)
-	AddComponent(/datum/component/healing_touch,\
-		interaction_key = INTERACTION_SPIDER_KEY ,\
+	AddComponent(\
+		/datum/component/healing_touch,\
+		interaction_key = INTERACTION_SPIDER_KEY,\
 		valid_targets_typecache = typecacheof(list(/mob/living/simple_animal/hostile/giant_spider)),\
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
 		complete_text = "%SOURCE% wraps the wounds of %TARGET%.",\
@@ -291,7 +292,7 @@
 		return FALSE
 	if(!isspider(owner))
 		return FALSE
-	if(DOING_INTERACTION(owner, INTERACTION_SPIDER_KEY ))
+	if(DOING_INTERACTION(owner, INTERACTION_SPIDER_KEY))
 		return FALSE
 	if(!isturf(owner.loc))
 		return FALSE
@@ -320,7 +321,7 @@
 
 	spider.stop_automated_movement = TRUE
 
-	if(do_after(spider, 4 SECONDS * spider.web_speed, target = spider_turf, interaction_key = INTERACTION_SPIDER_KEY ))
+	if(do_after(spider, 4 SECONDS * spider.web_speed, target = spider_turf, interaction_key = INTERACTION_SPIDER_KEY))
 		if(spider.loc == spider_turf)
 			if(web)
 				qdel(web)
@@ -361,7 +362,7 @@
 		return FALSE
 	if(owner.incapacitated())
 		return FALSE
-	if(DOING_INTERACTION(owner, INTERACTION_SPIDER_KEY ))
+	if(DOING_INTERACTION(owner, INTERACTION_SPIDER_KEY))
 		return FALSE
 	return TRUE
 
@@ -417,7 +418,7 @@
 	if(istype(animal_owner))
 		animal_owner.stop_automated_movement = TRUE
 
-	if(do_after(owner, wrap_time, target = to_wrap, interaction_key = INTERACTION_SPIDER_KEY ))
+	if(do_after(owner, wrap_time, target = to_wrap, interaction_key = INTERACTION_SPIDER_KEY))
 		wrap_target(to_wrap)
 	if(istype(animal_owner))
 		animal_owner.stop_automated_movement = FALSE
@@ -474,7 +475,7 @@
 		return FALSE
 	if(!isspider(owner))
 		return FALSE
-	if(DOING_INTERACTION(owner, INTERACTION_SPIDER_KEY ))
+	if(DOING_INTERACTION(owner, INTERACTION_SPIDER_KEY))
 		return FALSE
 	var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
 	if(eggs)
@@ -492,7 +493,7 @@
 	var/mob/living/simple_animal/hostile/giant_spider/spider = owner
 	spider.stop_automated_movement = TRUE
 
-	if(do_after(owner, egg_lay_time, target = get_turf(owner), interaction_key = INTERACTION_SPIDER_KEY ))
+	if(do_after(owner, egg_lay_time, target = get_turf(owner), interaction_key = INTERACTION_SPIDER_KEY))
 		var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
 		if(eggs)
 			owner.balloon_alert(owner, "already eggs here!")
@@ -707,11 +708,12 @@
 	AddComponent(/datum/component/blood_walk, \
 		blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
 		blood_spawn_chance = 5)
-	AddComponent(/datum/component/healing_touch,\
+	AddComponent(\
+		/datum/component/healing_touch,\
 		heal_brute = maxHealth * 0.5,\
 		heal_burn = maxHealth * 0.5,\
 		allow_self = TRUE,\
-		interaction_key = INTERACTION_SPIDER_KEY ,\
+		interaction_key = INTERACTION_SPIDER_KEY,\
 		valid_targets_typecache = typecacheof(list(/mob/living/simple_animal/hostile/giant_spider/hunter/flesh)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
 		action_text = "%SOURCE% begins mending themselves...",\
