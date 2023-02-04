@@ -1,0 +1,4 @@
+author: "SuperSlayer0"
+delete-after: True
+changes:
+  - code_imp: "Replaces some decisecond things in martial art code with time defines"
