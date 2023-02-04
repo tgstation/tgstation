@@ -234,7 +234,7 @@
 	. = ..()
 	qdel(src)
 
-ADMIN_VERB(debug, open_lua_editor, "", R_DEBUG)
+ADMIN_VERB(debug, open_lua_editor, "Open Lua Editor", "", R_DEBUG)
 	if(SSlua.initialized != TRUE)
 		to_chat(usr, span_warning("SSlua is not initialized!"))
 		return

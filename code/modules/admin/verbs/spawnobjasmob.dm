@@ -1,4 +1,4 @@
-ADMIN_VERB(debug, spawn_object_as_mob, "Spawn an object-mob", R_SPAWN, object as text)
+ADMIN_VERB(debug, spawn_object_as_mob, "Spawn Object as Mob", "Spawn an object-mob", R_SPAWN, object as text)
 	var/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/obj)))
 	if (!chosen)
 		return

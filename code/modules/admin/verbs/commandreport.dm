@@ -7,7 +7,7 @@
 #define WIZARD_PRESET "The Wizard Federation"
 #define CUSTOM_PRESET "Custom Command Name"
 
-ADMIN_VERB(events, change_command_name, "", R_ADMIN)
+ADMIN_VERB(events, change_command_name, "Change Command NAme", "", R_ADMIN)
 	var/input = input(usr, "Please input a new name for Central Command.", "What?", "") as text|null
 	if(!input)
 		return
@@ -15,7 +15,7 @@ ADMIN_VERB(events, change_command_name, "", R_ADMIN)
 	message_admins("[key_name_admin(usr)] has changed Central Command's name to [input]")
 	log_admin("[key_name(usr)] has changed the Central Command name to: [input]")
 
-ADMIN_VERB(events, create_command_report, "", R_ADMIN)
+ADMIN_VERB(events, create_command_report, "Create Command Report", "", R_ADMIN)
 	var/datum/command_report_menu/tgui = new(usr)
 	tgui.ui_interact(usr)
 

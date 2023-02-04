@@ -198,7 +198,7 @@
 		state = SDQL2_STATE_ERROR;\
 		CRASH("SDQL2 fatal error");};
 
-ADMIN_VERB(debug, query_text, "", R_DEBUG, query_text as message)
+ADMIN_VERB(debug, query_text, "Query Text", "", R_DEBUG, query_text as message)
 	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[key_name(usr)]")
 	if(length(results) == 3)
 		for(var/I in 1 to 3)

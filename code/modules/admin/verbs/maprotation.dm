@@ -1,4 +1,4 @@
-ADMIN_VERB(server, trigger_random_map_rotation, "", R_SERVER)
+ADMIN_VERB(server, trigger_random_map_rotation, "Trigger Random Map Rotation", "", R_SERVER)
 	var/rotate = tgui_alert(usr,"Force a random map rotation to trigger?", "Rotate map?", list("Yes", "Cancel"))
 	if (rotate != "Yes")
 		return
@@ -6,7 +6,7 @@ ADMIN_VERB(server, trigger_random_map_rotation, "", R_SERVER)
 	log_admin("[key_name(usr)] is forcing a random map rotation.")
 	SSmapping.maprotate()
 
-ADMIN_VERB(server, change_map, "", R_SERVER)
+ADMIN_VERB(server, change_map, "Change Map", "", R_SERVER)
 	var/list/maprotatechoices = list()
 	for (var/map in config.maplist)
 		var/datum/map_config/virtual_map = config.maplist[map]

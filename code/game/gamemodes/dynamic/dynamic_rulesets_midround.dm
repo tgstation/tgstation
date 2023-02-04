@@ -845,6 +845,27 @@
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
 	return TRUE
 
+/// Space Changeling ruleset
+/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround
+	name = "Space Changeling"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_datum = /datum/antagonist/changeling/space
+	antag_flag = ROLE_CHANGELING_MIDROUND
+	antag_flag_override = ROLE_CHANGELING
+	required_type = /mob/dead/observer
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 3
+	cost = 7
+	minimum_players = 15
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround/generate_ruleset_body(mob/applicant)
+	var/body = generate_changeling_meteor(applicant)
+	message_admins("[ADMIN_LOOKUPFLW(body)] has been made into a space changeling by the midround ruleset.")
+	log_dynamic("[key_name(body)] was spawned as a space changeling by the midround ruleset.")
+	return body
+
 /// Paradox Clone ruleset
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone
 	name = "Paradox Clone"

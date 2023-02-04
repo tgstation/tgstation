@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Computers no longer delete disks if you try to add a second one."
+  - spellcheck: "Computer screentips says you're now removing the disk instead of the SSD."

@@ -1,7 +1,7 @@
 ADMIN_CONTEXT_ENTRY(contextcmd_vv, "View Variables", NONE, datum/target in world)
 	SSadmin_verbs.dynamic_invoke_admin_verb(src, /mob/admin_module_holder/debug/view_variables, target)
 
-ADMIN_VERB(debug, view_variables, "View a list of all vars on most datums aswell as provide additional functions via a dropdown", NONE, selected as anything)
+ADMIN_VERB(debug, view_variables, "View Variables", "View a list of all vars on most datums aswell as provide additional functions via a dropdown", NONE, selected as anything)
 	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
 
 	var/datum/target = selected

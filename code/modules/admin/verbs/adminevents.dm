@@ -33,7 +33,7 @@ ADMIN_CONTEXT_ENTRY(contexxt_headset_message, "Headset Message", R_ADMIN, mob/li
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Headset Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-ADMIN_VERB(events, global_narrate, "Send raw html to all conneted clients", R_ADMIN, raw_html as message)
+ADMIN_VERB(events, global_narrate, "Global Narrate", "Send raw html to all conneted clients", R_ADMIN, raw_html as message)
 	to_chat(world, "[raw_html]")
 	log_admin("GlobalNarrate: [key_name(usr)] : [raw_html]")
 	message_admins(span_adminnotice("[key_name_admin(usr)] Sent a global narrate"))
@@ -64,7 +64,7 @@ ADMIN_CONTEXT_ENTRY(context_direct_narrate, "Direct Narrate", R_ADMIN, mob/heare
 	message_admins(msg)
 	admin_ticket_log(hearer, msg)
 
-ADMIN_VERB(fun, add_ion_law, "Add an ion law to all silicons", R_FUN)
+ADMIN_VERB(fun, add_ion_law, "Add Ion Law", "Add an ion law to all silicons", R_FUN)
 	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null
 	if(!input)
 		return
@@ -81,7 +81,7 @@ ADMIN_VERB(fun, add_ion_law, "Add an ion law to all silicons", R_FUN)
 	ion.start()
 	qdel(ion)
 
-ADMIN_VERB(events, call_shuttle, "", R_ADMIN)
+ADMIN_VERB(events, call_shuttle, "Call Shuttle", "", R_ADMIN)
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return
 
@@ -97,7 +97,7 @@ ADMIN_VERB(events, call_shuttle, "", R_ADMIN)
 	log_admin("[key_name(usr)] admin-called the emergency shuttle.")
 	message_admins(span_adminnotice("[key_name_admin(usr)] admin-called the emergency shuttle[confirm == "Yes (No Recall)" ? " (non-recallable)" : ""]."))
 
-ADMIN_VERB(events, recall_shuttle, "", R_ADMIN)
+ADMIN_VERB(events, recall_shuttle, "Recall Shuttle", "", R_ADMIN)
 	if(tgui_alert(usr, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
 		return
 
@@ -109,7 +109,7 @@ ADMIN_VERB(events, recall_shuttle, "", R_ADMIN)
 	log_admin("[key_name(usr)] admin-recalled the emergency shuttle.")
 	message_admins(span_adminnotice("[key_name_admin(usr)] admin-recalled the emergency shuttle."))
 
-ADMIN_VERB(events, disable_shuttle, "", R_ADMIN)
+ADMIN_VERB(events, disable_shuttle, "Disable Shuttle", "", R_ADMIN)
 	if(SSshuttle.emergency.mode == SHUTTLE_DISABLED)
 		to_chat(usr, span_warning("Error, shuttle is already disabled."))
 		return
@@ -126,7 +126,7 @@ ADMIN_VERB(events, disable_shuttle, "", R_ADMIN)
 	SSshuttle.emergency.mode = SHUTTLE_DISABLED
 	priority_announce("Warning: Emergency Shuttle uplink failure, shuttle disabled until further notice.", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
 
-ADMIN_VERB(events, enable_shuttle, "", R_ADMIN)
+ADMIN_VERB(events, enable_shuttle, "Enable Shuttle", "", R_ADMIN)
 	if(SSshuttle.emergency.mode != SHUTTLE_DISABLED)
 		to_chat(usr, span_warning("Error, shuttle not disabled."))
 		return
@@ -151,7 +151,7 @@ ADMIN_VERB(events, enable_shuttle, "", R_ADMIN)
 #define HOSTILE_ENVIRONMENT_CLEAR "Clear All"
 #define HOSTILE_ENVIRONMENT_OPTIONS list(HOSTILE_ENVIRONMENT_ENABLE, HOSTILE_ENVIRONMENT_DISABLE, HOSTILE_ENVIRONMENT_CLEAR)
 
-ADMIN_VERB(events, hostile_environments, "", R_ADMIN)
+ADMIN_VERB(events, hostile_environments, "Hostile Environments", "", R_ADMIN)
 	switch(tgui_alert(usr, "Select an Option", "Hostile Environment Manager", HOSTILE_ENVIRONMENT_OPTIONS))
 		if(HOSTILE_ENVIRONMENT_ENABLE)
 			if(SSshuttle.hostile_environments["Admin"])
@@ -174,7 +174,7 @@ ADMIN_VERB(events, hostile_environments, "", R_ADMIN)
 			SSshuttle.hostile_environments.Cut()
 			SSshuttle.checkHostileEnvironment()
 
-ADMIN_VERB(events, toggle_nuke, "", (R_ADMIN|R_DEBUG), obj/machinery/nuclearbomb/nuke in GLOB.nuke_list)
+ADMIN_VERB(events, toggle_nuke, "Toggle Nuke", "", (R_ADMIN|R_DEBUG), obj/machinery/nuclearbomb/nuke in GLOB.nuke_list)
 	if(!nuke.timing)
 		var/newtime = input(usr, "Set activation timer.", "Activate Nuke", "[nuke.timer_set]") as num|null
 		if(!newtime)
@@ -186,7 +186,7 @@ ADMIN_VERB(events, toggle_nuke, "", (R_ADMIN|R_DEBUG), obj/machinery/nuclearbomb
 	log_admin("[key_name(usr)] [nuke.timing ? "activated" : "deactivated"] a nuke at [AREACOORD(nuke)].")
 	message_admins("[ADMIN_LOOKUPFLW(usr)] [nuke.timing ? "activated" : "deactivated"] a nuke at [ADMIN_VERBOSEJMP(nuke)].")
 
-ADMIN_VERB(events, set_security_level, "Changes the security level. Announcement only, i.e. setting to Delta won't activate nuke", R_ADMIN)
+ADMIN_VERB(events, set_security_level, "Set Security Level", "Changes the security level. Announcement only, i.e. setting to Delta won't activate nuke", R_ADMIN)
 	var/level = tgui_input_list(usr, "Select Security Level:", "Set Security Level", SSsecurity_level.available_levels)
 	if(!level)
 		return
@@ -195,7 +195,7 @@ ADMIN_VERB(events, set_security_level, "Changes the security level. Announcement
 	log_admin("[key_name(usr)] changed the security level to [level]")
 	message_admins("[key_name_admin(usr)] changed the security level to [level]")
 
-ADMIN_VERB(events, run_weather, "Triggers a weather on the specified z-level", R_FUN)
+ADMIN_VERB(events, run_weather, "Run Weather", "Triggers a weather on the specified z-level", R_FUN)
 	var/weather_type = input(usr, "Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/weather), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	if(!weather_type)
 		return
@@ -209,7 +209,7 @@ ADMIN_VERB(events, run_weather, "Triggers a weather on the specified z-level", R
 	message_admins("[key_name_admin(usr)] started weather of type [weather_type] on the z-level [z_level].")
 	log_admin("[key_name(usr)] started weather of type [weather_type] on the z-level [z_level].")
 
-ADMIN_VERB(events, add_mob_ability, "Adds an ability to a marked mob", R_FUN)
+ADMIN_VERB(events, add_mob_ability, "Add Mob Ability", "Adds an ability to a marked mob", R_FUN)
 	var/datum/admins/holder = usr.client.holder
 	if(!isliving(holder.marked_datum))
 		to_chat(usr, span_warning("Error: Please mark a mob to add actions to it."))
@@ -256,7 +256,7 @@ ADMIN_VERB(events, add_mob_ability, "Adds an ability to a marked mob", R_FUN)
 	message_admins("[key_name_admin(usr)] added mob ability [ability_type] to mob [marked_mob].")
 	log_admin("[key_name(usr)] added mob ability [ability_type] to mob [marked_mob].")
 
-ADMIN_VERB(events, remove_mob_ability, "Removes an ability from the marked mob", R_FUN)
+ADMIN_VERB(events, remove_mob_ability, "Remove Mob Ability", "Removes an ability from the marked mob", R_FUN)
 	var/datum/admins/holder = usr.client.holder
 	if(!isliving(holder.marked_datum))
 		to_chat(usr, span_warning("Error: Please mark a mob to remove actions from it."))
@@ -279,7 +279,7 @@ ADMIN_VERB(events, remove_mob_ability, "Removes an ability from the marked mob",
 	message_admins("[key_name_admin(usr)] removed ability [ability_name] from mob [marked_mob].")
 	log_admin("[key_name(usr)] removed mob ability [ability_name] from mob [marked_mob].")
 
-ADMIN_VERB(events, command_report_footnote, "Adds a footnote to the roundstart command report", R_ADMIN)
+ADMIN_VERB(events, command_report_footnote, "Command Report Footnote", "Adds a footnote to the roundstart command report", R_ADMIN)
 	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
 	SScommunications.block_command_report++ //Add a blocking condition to the counter until the inputs are done.
 
@@ -300,7 +300,7 @@ ADMIN_VERB(events, command_report_footnote, "Adds a footnote to the roundstart c
 	var/message
 	var/signature
 
-ADMIN_VERB(events, delay_command_report, "Prevents the roundstart command report from being sent until toggled", R_ADMIN)
+ADMIN_VERB(events, delay_command_report, "Delay Command Report", "Prevents the roundstart command report from being sent until toggled", R_ADMIN)
 	if(SScommunications.block_command_report) //If it's anything other than 0, decrease. If 0, increase.
 		SScommunications.block_command_report--
 		message_admins("[key_name_admin(usr)] has enabled the roundstart command report.")

@@ -261,7 +261,7 @@
 
 	return
 
-ADMIN_VERB(fun, summon_ert, "Summons an Emergency Response Team", R_FUN)
+ADMIN_VERB(fun, summon_ert, "Summon ERT", "Summons an Emergency Response Team", R_FUN)
 	message_admins("[key_name(usr)] is creating a CentCom response team...")
 	if(usr.client.holder?.makeEmergencyresponseteam())
 		message_admins("[key_name(usr)] created a CentCom response team.")

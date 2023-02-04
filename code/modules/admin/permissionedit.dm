@@ -1,4 +1,4 @@
-ADMIN_VERB(admin, permissions_panel, "Edit/Set admin permissions", R_PERMISSIONS)
+ADMIN_VERB(admin, permissions_panel, "Permissions Panel", "Edit/Set admin permissions", R_PERMISSIONS)
 	usr.client.holder.edit_admin_permissions()
 
 /datum/admins/proc/edit_admin_permissions(action, target, operation, page)
