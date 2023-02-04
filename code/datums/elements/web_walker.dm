@@ -1,7 +1,7 @@
 /**
  * # Web Walker element
  *
- * A mob with this element will be move more slowly when it's not stood on a webbed turf.
+ * A mob with this element will move more slowly when it's not stood on a webbed turf.
  */
 /datum/element/web_walker
 	element_flags = ELEMENT_BESPOKE
