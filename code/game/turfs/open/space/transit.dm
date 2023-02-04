@@ -68,8 +68,8 @@
 	var/_x = rand(min,max)
 	var/_y = rand(min,max)
 
-	var/turf/T = locate(_x, _y, _z)
-	dumpee.forceMove(T)
+	var/turf/turf = locate(_x, _y, _z)
+	dumpee.forceMove(turf)
 
 /turf/open/space/transit/CanBuildHere()
 	return SSshuttle.is_in_shuttle_bounds(src)
