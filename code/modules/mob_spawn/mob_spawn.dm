@@ -51,6 +51,7 @@
 		var/mob/living/carbon/human/spawned_human = spawned_mob
 		if(mob_species)
 			spawned_human.set_species(mob_species)
+		spawned_human.dna.species.give_important_for_life(spawned_human) // for preventing plasmamen from combusting immediately upon spawning
 		spawned_human.underwear = "Nude"
 		spawned_human.undershirt = "Nude"
 		spawned_human.socks = "Nude"

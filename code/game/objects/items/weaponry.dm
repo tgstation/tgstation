@@ -980,6 +980,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	bare_wound_bonus = 50
 	throwforce = 25
 	throw_speed = 4
+	attack_speed = CLICK_CD_HYPER_RAPID
 	embedding = list("embed_chance" = 100)
 	block_chance = 25
 	sharpness = SHARP_EDGED
@@ -1044,7 +1045,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	update_icon(UPDATE_ICON_STATE)
 
 /obj/item/highfrequencyblade/proc/slash(atom/target, mob/living/user, params)
-	user.changeNext_move(0.1 SECONDS)
 	user.do_attack_animation(target, "nothing")
 	var/list/modifiers = params2list(params)
 	var/damage_mod = 1

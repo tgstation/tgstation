@@ -255,7 +255,7 @@
 		return
 
 	to_chat(user,span_notice("You start manually releasing the low-pressure gauge..."))
-	if(!do_mob(user, affected_mob, 10 SECONDS, interaction_key = DOAFTER_SOURCE_SURVIVALPEN))
+	if(!do_after(user, 10 SECONDS, affected_mob, interaction_key = DOAFTER_SOURCE_SURVIVALPEN))
 		return
 
 	amount_per_transfer_from_this = initial(amount_per_transfer_from_this) * 0.5

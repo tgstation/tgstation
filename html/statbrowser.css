@@ -225,3 +225,31 @@ img {
 .interview_panel_stats {
 	margin-bottom: 10px;
 }
+
+.admin-verb-menu ul {
+	margin: 0;
+	padding: 5px;
+	list-style-type: none;
+	text-align: center;
+	background-color: #000;
+}
+
+.admin-verb-menu ul li {
+	display: inline;
+}
+
+.admin-verb-menu ul li a {
+	text-decoration: none;
+	padding: .2em 1em;
+	color: #fff;
+	background-color: #000;
+}
+
+.admin-verb-menu .selected {
+	color: #00f;
+}
+
+.admin-verb-menu ul li a:hover {
+	color: #000;
+	background-color: #fff;
+}

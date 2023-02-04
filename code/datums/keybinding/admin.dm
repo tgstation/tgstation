@@ -16,7 +16,7 @@
 	. = ..()
 	if(.)
 		return
-	user.get_admin_say()
+	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/admin/admin_say)
 	return TRUE
 
 /datum/keybinding/admin/admin_ghost
@@ -30,7 +30,7 @@
 	. = ..()
 	if(.)
 		return
-	user.admin_ghost()
+	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/game/aghost)
 	return TRUE
 
 /datum/keybinding/admin/player_panel_new
@@ -58,7 +58,7 @@
 	. = ..()
 	if(.)
 		return
-	user.togglebuildmodeself()
+	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/build_mode/toggle_build_mode_self)
 	return TRUE
 
 /datum/keybinding/admin/stealthmode
@@ -72,7 +72,7 @@
 	. = ..()
 	if(.)
 		return
-	user.stealth()
+	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/admin/stealth_mode)
 	return TRUE
 
 /datum/keybinding/admin/invisimin
@@ -86,7 +86,7 @@
 	. = ..()
 	if(.)
 		return
-	user.invisimin()
+	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/game/invisimin)
 	return TRUE
 
 /datum/keybinding/admin/deadsay
@@ -100,7 +100,7 @@
 	. = ..()
 	if(.)
 		return
-	user.get_dead_say()
+	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/game/dead_say)
 	return TRUE
 
 /datum/keybinding/admin/deadmin
@@ -114,7 +114,7 @@
 	. = ..()
 	if(.)
 		return
-	user.deadmin()
+	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/admin/deadmin)
 	return TRUE
 
 /datum/keybinding/admin/readmin
