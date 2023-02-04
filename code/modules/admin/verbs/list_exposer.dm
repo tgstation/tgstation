@@ -57,3 +57,32 @@
 		data += "<tr><td>[entry.name]</td><td>[entry.rank][entry.rank != entry.trim ? " ([entry.trim])" : ""]</td></tr>"
 	data += "</table>"
 	usr << browse(data, "window=manifest;size=440x410")
+
+/datum/admins/proc/output_ai_laws()
+	var/law_bound_entities = 0
+	for(var/mob/living/silicon/subject as anything in GLOB.silicon_mobs)
+		law_bound_entities++
+
+		var/message = ""
+
+		if(isAI(subject))
+			message += "<b>AI [key_name(subject, usr)]'s laws:</b>"
+		else if(iscyborg(subject))
+			var/mob/living/silicon/robot/borg = subject
+			message += "<b>CYBORG [key_name(subject, usr)] [borg.connected_ai?"(Slaved to: [key_name(borg.connected_ai)])":"(Independent)"]: laws:</b>"
+		else if (ispAI(subject))
+			message += "<b>pAI [key_name(subject, usr)]'s laws:</b>"
+		else
+			message += "<b>SOMETHING SILICON [key_name(subject, usr)]'s laws:</b>"
+
+		message += "<br>"
+
+		if (!subject.laws)
+			message += "[key_name(subject, usr)]'s laws are null?? Contact a coder."
+		else
+			message += jointext(subject.laws.get_law_list(include_zeroth = TRUE), "<br>")
+
+		to_chat(usr, message, confidential = TRUE)
+
+	if(!law_bound_entities)
+		to_chat(usr, "<b>No law bound entities located</b>", confidential = TRUE)

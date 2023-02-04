@@ -63,12 +63,12 @@
 		if ("save_circuit")
 			circuit.attempt_save_to(usr.client)
 		if ("vv_circuit")
-			SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/debug/view_variables, circuit)
+			usr.client?.debug_variables(circuit)
 		if ("open_circuit")
 			circuit.ui_interact(usr)
 		if ("open_player_panel")
 			var/datum/mind/inserter = circuit.inserter_mind?.resolve()
-			usr.client?.admin_context_wrapper_context_player_panel(inserter?.current)
+			usr.client?.holder?.show_player_panel(inserter?.current)
 
 	return TRUE
 
