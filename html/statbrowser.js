@@ -423,7 +423,7 @@ function admin_verb_convert_verb_info_into_button(verb_info) {
 	verb_button.onclick = make_verb_onclick(verb_ref.replace(" ", "-"));
 	verb_button.className = "grid-item";
 	verb_button.title = verb_desc;
-  verb_button.href = "javascript:void(0)";
+	verb_button.href = "javascript:void(0)";
 
 	verb_button_text.textContent = verb_name;
 	verb_button_text.className = "grid-item-text";
