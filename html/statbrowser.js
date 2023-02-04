@@ -418,6 +418,7 @@ function draw_admin_verbs() {
 				verbEntry.onclick = make_verb_onclick(verbRef)
 				verbEntry.className = "grid-item";
 				verbEntry.title = verbDesc;
+				verbEntry.href = "javascript:void(0)";
 
 				var verbTitle = document.createElement("span");
 				verbTitle.textContent = verbName;
