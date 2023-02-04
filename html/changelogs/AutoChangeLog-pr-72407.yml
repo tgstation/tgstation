@@ -1,0 +1,5 @@
+author: "ZephyrTFA"
+delete-after: True
+changes:
+  - refactor: "Admin verbs are now datums with a dedicated panel handler"
+  - admin: "Admin verbs now come with a handy description when you hover over them!"
