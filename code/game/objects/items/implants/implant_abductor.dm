@@ -13,7 +13,7 @@
 		to_chat(imp_in, span_warning("You must wait [timeleft(on_cooldown)*0.1] seconds to use [src] again!"))
 		return
 
-	if(!home)
+	if(isnull(home) && !link_pad())
 		if(!link_pad())
 			imp_in.balloon_alert(imp_in, "no teleport pads detected!")
 			return
@@ -36,23 +36,28 @@
 /obj/item/implant/abductor/proc/link_pad()
 	var/obj/machinery/abductor/console/console
 	if(ishuman(imp_in))
-		var/datum/antagonist/abductor/A = imp_in.mind.has_antag_datum(/datum/antagonist/abductor)
-		if(A)
-			console = get_abductor_console(A.team.team_number)
+		var/datum/antagonist/abductor/new_abductor = imp_in.mind.has_antag_datum(/datum/antagonist/abductor)
+		if(new_abductor)
+			console = get_abductor_console(new_abductor.team.team_number)
 			if(!console)
 				WARNING("Attempted to link [name] within [imp_in] to a pad using their abductor antagonist datum, however no associated machinery exists for their team.")
 				return FALSE
 			home = console.pad
 
-	if(!home) //If we still cannot find a home associated with our team, we just pick a random pad and make it our own.
+	if(home)
+		return TRUE
+
+	else //If we still cannot find a home associated with our team, we just pick a random pad and make it our own.
 		var/list/consoles = list()
-		for(var/obj/machinery/abductor/console/C in GLOB.machines)
-			consoles += C
+		for(var/obj/machinery/abductor/console/found_console in GLOB.machines)
+			consoles += found_console
 		console = pick(consoles)
 		if(console)
 			home = console.pad
 
 	if(home)
 		return TRUE
+
+	stack_trace("[name] within [imp_in] failed to find any abductor machinery to connect to.")
 
 	return FALSE //We somehow couldn't find any pads (maybe they're not loaded in yet)
