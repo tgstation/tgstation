@@ -220,7 +220,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
-	var/full_version = "[byond_version].[byond_build ? byond_build : "xxx"]"
 
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
@@ -233,21 +232,30 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	set_right_click_menu_mode(TRUE)
 
-	/// Used for assigning admin verb datums, and so it needs to be up here
-	var/reconnecting = FALSE
-	if(GLOB.player_details[ckey])
-		reconnecting = TRUE
-		player_details = GLOB.player_details[ckey]
-		player_details.byond_version = full_version
-	else
-		player_details = new(ckey)
-		player_details.byond_version = full_version
-		GLOB.player_details[ckey] = player_details
-
 	GLOB.ahelp_tickets.ClientLogin(src)
 	GLOB.interviews.client_login(src)
 	GLOB.requests.client_login(src)
-
+	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
+	//Admin Authorisation
+	var/datum/admins/admin_datum = GLOB.admin_datums[ckey]
+	if (!isnull(admin_datum))
+		admin_datum.associate(src)
+		connecting_admin = TRUE
+	else if(GLOB.deadmins[ckey])
+		add_verb(src, /client/proc/readmin)
+		connecting_admin = TRUE
+	if(CONFIG_GET(flag/autoadmin))
+		if(!GLOB.admin_datums[ckey])
+			var/list/autoadmin_ranks = ranks_from_rank_name(CONFIG_GET(string/autoadmin_rank))
+			if (autoadmin_ranks.len == 0)
+				to_chat(world, "Autoadmin rank not found")
+			else
+				new /datum/admins(autoadmin_ranks, ckey)
+	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin)
+		var/localhost_addresses = list("127.0.0.1", "::1")
+		if(isnull(address) || (address in localhost_addresses))
+			var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
+			new /datum/admins(list(localhost_rank), ckey, 1, 1)
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
 	if(prefs)
@@ -265,6 +273,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(fexists("data/server_last_roundend_report.html"))
 		add_verb(src, /client/proc/show_servers_last_roundend_report)
 
+	var/full_version = "[byond_version].[byond_build ? byond_build : "xxx"]"
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[full_version]")
 
 	var/alert_mob_dupe_login = FALSE
@@ -306,31 +315,18 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				else
 					message_admins(span_danger("<B>[message_type]: </B></span><span class='notice'>Connecting player [key_name_admin(src)] has the same [matches] as [joined_player_ckey](no longer logged in)<b>[in_round]</b>. "))
 					log_admin_private("[message_type]: Connecting player [key_name(src)] has the same [matches] as [joined_player_ckey](no longer logged in)[in_round].")
+	var/reconnecting = FALSE
+	if(GLOB.player_details[ckey])
+		reconnecting = TRUE
+		player_details = GLOB.player_details[ckey]
+		player_details.byond_version = full_version
+	else
+		player_details = new(ckey)
+		player_details.byond_version = full_version
+		GLOB.player_details[ckey] = player_details
+
 
 	. = ..() //calls mob.Login()
-
-	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
-	//Admin Authorisation
-	var/datum/admins/admin_datum = GLOB.admin_datums[ckey]
-	if (!isnull(admin_datum))
-		admin_datum.associate(src)
-		connecting_admin = TRUE
-	else if(GLOB.deadmins[ckey])
-		add_verb(src, /client/proc/readmin)
-		connecting_admin = TRUE
-	if(CONFIG_GET(flag/autoadmin))
-		if(!GLOB.admin_datums[ckey])
-			var/list/autoadmin_ranks = ranks_from_rank_name(CONFIG_GET(string/autoadmin_rank))
-			if (autoadmin_ranks.len == 0)
-				to_chat(world, "Autoadmin rank not found")
-			else
-				new /datum/admins(autoadmin_ranks, ckey)
-	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin)
-		var/localhost_addresses = list("127.0.0.1", "::1")
-		if(isnull(address) || (address in localhost_addresses))
-			var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
-			new /datum/admins(list(localhost_rank), ckey, 1, 1)
-
 	if (length(GLOB.stickybanadminexemptions))
 		GLOB.stickybanadminexemptions -= ckey
 		if (!length(GLOB.stickybanadminexemptions))
@@ -1250,10 +1246,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /// Attempts to make the client orbit the given object, for administrative purposes.
 /// If they are not an observer, will try to aghost them.
 /client/proc/admin_follow(atom/movable/target)
+	var/can_ghost = TRUE
+
 	if (!isobserver(mob))
-		SSadmin_verbs.dynamic_invoke_admin_verb(src, /mob/admin_module_holder/game/aghost)
-		if(!isobserver(mob))
-			return // lacked permissions required to aghost
+		can_ghost = admin_ghost()
+
+	if(!can_ghost)
+		return FALSE
 
 	var/mob/dead/observer/observer = mob
 	observer.ManualFollow(target)

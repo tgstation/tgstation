@@ -1,16 +1,13 @@
-ADMIN_CONTEXT_ENTRY(contexxt_machine_upgrade, "Tweak Component Ratings", R_DEBUG, obj/machinery/machine in world)
-	if(!length(machine.component_parts))
-		to_chat(usr, span_warning("[machine] has no components!"))
+/proc/machine_upgrade(obj/machinery/M in world)
+	set name = "Tweak Component Ratings"
+	set category = "Debug"
+	if (!istype(M))
 		return
 
-	var/new_rating = input(usr, "Enter new rating:","Num") as num|null
-	if(!new_rating)
-		return
-	for(var/obj/item/stock_parts/part in machine.component_parts)
-		part.rating = new_rating
-	for(var/datum/stock_part/datum_part in machine.component_parts)
-		machine.component_parts -= datum_part
-		var/obj/item/stock_parts/new_part = new datum_part.physical_object_type
-		new_part.rating = new_rating
-		machine.component_parts += new_part
-	machine.RefreshParts()
+	var/new_rating = input("Enter new rating:","Num") as num|null
+	if(new_rating && M.component_parts)
+		for(var/obj/item/stock_parts/P in M.component_parts)
+			P.rating = new_rating
+		M.RefreshParts()
+
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Machine Upgrade", "[new_rating]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

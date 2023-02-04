@@ -13,15 +13,13 @@
 
 /datum/admins/Topic(href, href_list)
 	..()
+
 	if(usr.client != src.owner || !check_rights(0))
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
 
 	if(!CheckAdminHref(href, href_list))
-		return
-
-	if(SSadmin_verbs.handle_admin_holder_topic(usr.client, href, href_list))
 		return
 
 	if(href_list["ahelp"])
@@ -113,7 +111,10 @@
 		minor_announce("The emergency shuttle will reach its destination in [DisplayTimeText(timer SECONDS)].")
 		message_admins(span_adminnotice("[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds."))
 	else if(href_list["trigger_centcom_recall"])
-		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/events/recall_shuttle)
+		if(!check_rights(R_ADMIN))
+			return
+
+		usr.client.trigger_centcom_recall()
 
 	else if(href_list["move_shuttle"])
 		if(!check_rights(R_ADMIN))
@@ -135,7 +136,8 @@
 		to_chat(usr, "[shuttle_console] was [shuttle_console.admin_controlled ? "locked" : "unlocked"].", confidential = TRUE)
 
 	else if(href_list["delay_round_end"])
-		SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/server/delay_round_end)
+		// Permissions are checked in delay_round_end
+		delay_round_end()
 
 	else if(href_list["undelay_round_end"])
 		if(!check_rights(R_SERVER))
@@ -707,10 +709,12 @@
 		if(iscyborg(our_mob))
 			to_chat(usr, "That's already a cyborg.", confidential = TRUE)
 			return
-		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/debug/make_cyborg, our_mob)
+
+		usr.client.cmd_admin_robotize(our_mob)
 
 	else if(href_list["adminplayeropts"])
-		usr.client.admin_context_wrapper_context_player_panel(locate(href_list["adminplayeropts"]))
+		var/mob/M = locate(href_list["adminplayeropts"])
+		show_player_panel(M)
 
 	else if(href_list["ppbyckey"])
 		var/target_ckey = href_list["ppbyckey"]
@@ -725,7 +729,7 @@
 			return
 
 		to_chat(usr, span_notice("Jumping to [target_ckey]'s new mob: [target_mob]!"))
-		usr.client.admin_context_wrapper_context_player_panel(target_mob)
+		show_player_panel(target_mob)
 
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
@@ -753,9 +757,14 @@
 
 		var/client/C = usr.client
 		if(!isobserver(usr))
-			SSadmin_verbs.dynamic_invoke_admin_verb(C, /mob/admin_module_holder/game/aghost)
+			C.admin_ghost()
 		sleep(0.2 SECONDS)
-		SSadmin_verbs.dynamic_invoke_admin_verb(C, /mob/admin_module_holder/game/jump_to_coordinate, x, y, z)
+		C.jumptocoord(x,y,z)
+
+	else if(href_list["adminchecklaws"])
+		if(!check_rights(R_ADMIN))
+			return
+		output_ai_laws()
 
 	else if(href_list["adminmoreinfo"])
 		var/mob/subject = locate(href_list["adminmoreinfo"]) in GLOB.mob_list
@@ -959,24 +968,28 @@
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human", confidential = TRUE)
 			return
 
-		usr.client.admin_context_wrapper_context_smite(H)
+		usr.client.smite(H)
 
 	else if(href_list["CentComReply"])
-		usr.client.admin_context_wrapper_contexxt_headset_message(
-			locate(href_list["CentComReply"]),
-			RADIO_CHANNEL_CENTCOM,
-			)
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["CentComReply"])
+		usr.client.admin_headset_message(M, RADIO_CHANNEL_CENTCOM)
 
 	else if(href_list["SyndicateReply"])
-		usr.client.admin_context_wrapper_contexxt_headset_message(
-			locate(href_list["SyndicateReply"]),
-			RADIO_CHANNEL_SYNDICATE,
-			)
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["SyndicateReply"])
+		usr.client.admin_headset_message(M, RADIO_CHANNEL_SYNDICATE)
 
 	else if(href_list["HeadsetMessage"])
-		usr.client.admin_context_wrapper_contexxt_headset_message(
-			locate(href_list["HeadsetMessage"]),
-			)
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["HeadsetMessage"])
+		usr.client.admin_headset_message(M)
 
 	else if(href_list["reject_custom_name"])
 		if(!check_rights(R_ADMIN))
@@ -984,12 +997,12 @@
 		var/obj/item/station_charter/charter = locate(href_list["reject_custom_name"])
 		if(istype(charter))
 			charter.reject_proposed(usr)
-
 	else if(href_list["jumpto"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
 			return
 
-		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/jump_to_mob, locate(href_list["jumpto"]))
+		var/mob/M = locate(href_list["jumpto"])
+		usr.client.jumptomob(M)
 
 	else if(href_list["getmob"])
 		if(!check_rights(R_ADMIN))
@@ -997,29 +1010,38 @@
 
 		if(tgui_alert(usr, "Confirm?", "Message", list("Yes", "No")) != "Yes")
 			return
-		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/get_mob, locate(href_list["getmob"]))
+		var/mob/M = locate(href_list["getmob"])
+		usr.client.Getmob(M)
 
 	else if(href_list["sendmob"])
-		usr.client.admin_context_wrapper_context_sendmob(locate(href_list["sendmob"]))
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["sendmob"])
+		usr.client.sendmob(M)
 
 	else if(href_list["narrateto"])
-		usr.client.admin_context_wrapper_context_direct_narrate(locate(href_list["narrateto"]))
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["narrateto"])
+		usr.client.cmd_admin_direct_narrate(M)
 
 	else if(href_list["subtlemessage"])
-		usr.client.admin_context_wrapper_context_subtle_message(locate(href_list["subtlemessage"]))
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["subtlemessage"])
+		usr.client.cmd_admin_subtle_message(M)
 
 	else if(href_list["playsoundto"])
 		if(!check_rights(R_SOUND))
 			return
 
 		var/mob/M = locate(href_list["playsoundto"])
-		if(QDELETED(M))
-			to_chat(usr, span_warning("target mob no longer exists!"))
-			return
-
 		var/S = input("", "Select a sound file",) as null|sound
 		if(S)
-			SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/fun/play_direct_mob_sound, S, M)
+			usr.client.play_direct_mob_sound(S, M)
 
 	else if(href_list["individuallog"])
 		if(!check_rights(R_ADMIN))
@@ -1059,13 +1081,37 @@
 			else
 				D.traitor_panel()
 		else
-			SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/traitor_panel, M)
+			show_traitor_panel(M)
 
 	else if(href_list["skill"])
-		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/skill_panel, locate(href_list["skill"]))
+		if(!check_rights(R_ADMIN))
+			return
+
+		if(!SSticker.HasRoundStarted())
+			tgui_alert(usr,"The game hasn't started yet!")
+			return
+
+		var/target = locate(href_list["skill"])
+		var/datum/mind/target_mind
+		if(ismob(target))
+			var/mob/target_mob = target
+			target_mind = target_mob.mind
+		else if (istype(target, /datum/mind))
+			target_mind = target
+		else
+			to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+			return
+		show_skill_panel(target_mind)
 
 	else if(href_list["borgpanel"])
-		usr.client.admin_context_wrapper_context_borg_panel(locate(href_list["borgpanel"]))
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["borgpanel"])
+		if(!iscyborg(M))
+			to_chat(usr, "This can only be used on cyborgs", confidential = TRUE)
+		else
+			open_borgopanel(M)
 
 	else if(href_list["initmind"])
 		if(!check_rights(R_ADMIN))
@@ -1228,7 +1274,9 @@
 		return
 
 	else if(href_list["check_antagonist"])
-		SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/game/check_antagonists)
+		if(!check_rights(R_ADMIN))
+			return
+		usr.client.check_antagonists()
 
 	else if(href_list["kick_all_from_lobby"])
 		if(!check_rights(R_ADMIN))
@@ -1276,7 +1324,7 @@
 			G.report_message = description
 		message_admins("[key_name(usr)] created \"[G.name]\" station goal.")
 		GLOB.station_goals += G
-		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/)
+		modify_goals()
 
 	else if(href_list["change_lag_switch"])
 		if(!check_rights(R_ADMIN))
@@ -1299,7 +1347,7 @@
 					log_admin("[key_name(usr)] turned a Lag Switch measure at index ([switch_index]) [LAZYACCESS(SSlag_switch.measures, switch_index) ? "ON" : "OFF"]")
 					message_admins("[key_name_admin(usr)] turned a Lag Switch measure [LAZYACCESS(SSlag_switch.measures, switch_index) ? "ON" : "OFF"]")
 
-		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/show_lag_switches)
+		src.show_lag_switch_panel()
 
 	else if(href_list["change_lag_switch_option"])
 		if(!check_rights(R_ADMIN))
@@ -1328,7 +1376,7 @@
 					log_admin("[key_name(usr)] set the Lag Switch slowmode cooldown to [new_num] seconds.")
 					message_admins("[key_name_admin(usr)] set the Lag Switch slowmode cooldown to [new_num] seconds.")
 
-		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/show_lag_switches)
+		src.show_lag_switch_panel()
 
 	else if(href_list["viewruntime"])
 		var/datum/error_viewer/error_viewer = locate(href_list["viewruntime"])
@@ -1448,7 +1496,7 @@
 		if(confirm == "No")
 			return
 		if(confirm == "Yes")
-			SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/server/reboot_world)
+			restart()
 
 	else if(href_list["check_teams"])
 		if(!check_rights(R_ADMIN))
@@ -1700,5 +1748,3 @@
 		if(!paper_to_show)
 			return
 		paper_to_show.ui_interact(usr)
-
-	stack_trace("Unknown admin topic [href]-'[list2params(href_list)]'")
