@@ -184,3 +184,34 @@
       in the dark). Barsigns are now considered machinery and will be affected by
       power.
   - refactor: Refactor barsign code to be more robust
+2023-02-04:
+  Jacquerel:
+  - admin: Admins can direct where carp (or magicarp) are interested in going when
+      manually triggering the event
+  NamelessFairy:
+  - spellcheck: The instructions for the maintenance camera app are more descriptive.
+  - rscadd: You can now mark TGC cards on the holodeck battle arena, useful for keeping
+      track of effects such as hivemind.
+  - rscadd: Right clicking a card holder on the TGC holodeck battle arena will allow
+      you to generate a "blank card", useful for when using cards that summon other
+      cards, such as the xenomorph hivelord.
+  - spellcheck: Capitalized some descriptions for TGC machines
+  - bugfix: Smugglers satchels will no longer spawn inside the holodeck.
+  Roryl-c:
+  - bugfix: burn wounds going septic now properly paralyze the limb
+  - bugfix: septic burn wounds no longer heal on stasis
+  - bugfix: gauze now properly stops you from re-wrapping limbs that already have
+      fresh gauze
+  Sealed101:
+  - bugfix: Nanotrasen Artificial Intelligence Department has repelled a Cybersun
+      attack on AI personalities and advanced camera frameworks that was based on
+      the last year's AI GRID OF DOOM ion law incident. Free-look camera consoles
+      and AIs should no longer have a grid of free vision that also prevents interacting
+      with stuff on the grid.
+  cacogen:
+  - qol: Tape recorder actions (e.g. starting/stopping playback) now use balloon alerts
+      instead of say() to reduce chat spam
+  - bugfix: You can no longer get a tape stuck in the tape recorder by unspooling
+      it before inserting
+  lizardqueenlexi:
+  - bugfix: Made the northwest arrow icon in build mode actually point northwest
