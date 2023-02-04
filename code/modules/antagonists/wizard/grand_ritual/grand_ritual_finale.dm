@@ -219,7 +219,7 @@
 		if (HAS_TRAIT(victim, TRAIT_CLOWN_ENJOYER))
 			victim.add_mood_event("clown_world", /datum/mood_event/clown_world)
 		if (job_title == JOB_CLOWN)
-			var/datum/action/cooldown/spell/clown_pockets/new_spell = new(victim)
+			var/datum/action/cooldown/spell/conjure_item/clown_pockets/new_spell = new(victim)
 			new_spell.Grant(victim)
 			continue
 		dress_as_magic_clown(victim)
@@ -261,7 +261,7 @@
 
 	var/obj/item/clothing/mask/gas/clown_hat/clown_mask = victim.get_item_by_slot(ITEM_SLOT_MASK)
 	if (clown_mask)
-		var/list/options = GLOB.clown_mask_options.Copy()
+		var/list/options = GLOB.clown_mask_options
 		clown_mask.icon_state = options[pick(clown_mask.clownmask_designs)]
 		victim.update_worn_mask()
 		clown_mask.update_item_action_buttons()
@@ -311,7 +311,8 @@
 		/datum/dimension_theme/gold,
 		/datum/dimension_theme/meat,
 		/datum/dimension_theme/pizza,
-		/datum/dimension_theme/natural)
+		/datum/dimension_theme/natural,
+	)
 	var/datum/dimension_theme/chosen_theme
 
 // I sure hope this doesn't have performance implications
@@ -370,7 +371,8 @@
 		"If the gods wanted you to live, they would not have created me!",
 		"God stays in heaven out of fear of what I have created!",
 		"Ruination is come!",
-		"All of creation, bend to my will!",)
+		"All of creation, bend to my will!",
+	)
 
 /datum/grand_finale/armageddon/trigger(mob/living/carbon/human/invoker)
 	priority_announce(pick(possible_last_words), null, 'sound/magic/voidblink.ogg', sender_override = "[invoker.real_name]")

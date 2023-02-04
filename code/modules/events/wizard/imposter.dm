@@ -14,7 +14,7 @@
 			continue
 		var/mob/living/carbon/human/W = M.current
 		var/list/candidates = poll_ghost_candidates("Would you like to be an imposter wizard?", ROLE_WIZARD)
-		if(!candidates)
+		if(!length(candidates))
 			return //Sad Trombone
 		var/mob/dead/observer/C = pick(candidates)
 

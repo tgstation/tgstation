@@ -78,7 +78,7 @@
 		return
 
 	// Cannot use while inside a vent.
-	if ((owner.movement_type & VENTCRAWLING))
+	if (owner.movement_type & VENTCRAWLING)
 		if (feedback)
 			owner.balloon_alert(owner, "exit the vent!")
 		return FALSE
@@ -99,9 +99,11 @@
 
 /datum/action/cooldown/grand_ritual/Grant(mob/grant_to)
 	. = ..()
+	if (!owner)
+		return
 	if (!target_area)
 		set_new_area()
-	RegisterSignal(owner, list(
+	RegisterSignals(owner, list(
 			COMSIG_MOB_ENTER_JAUNT,
 			COMSIG_MOB_AFTER_EXIT_JAUNT,
 		), PROC_REF(update_status_on_signal))
@@ -110,7 +112,8 @@
 	. = ..()
 	UnregisterSignal(remove_from, list(
 		COMSIG_MOB_AFTER_EXIT_JAUNT,
-		COMSIG_MOB_ENTER_JAUNT,))
+		COMSIG_MOB_ENTER_JAUNT,
+	))
 
 /// If the target area doesn't exist or has been invalidated somehow, pick another one
 /datum/action/cooldown/grand_ritual/proc/validate_area()

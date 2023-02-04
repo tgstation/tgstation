@@ -20,7 +20,7 @@
  * * invoker - Mob who cast the spell.
  */
 /datum/grand_side_effect/proc/trigger(potency, turf/ritual_location, mob/invoker)
-	// Do something cool.
+	return // Do something cool in the override
 
 /**
  * A side effect which just casts a spell at its position
@@ -177,7 +177,8 @@
 /// Grabs one person and pulls them to this location, after a delay
 /datum/grand_side_effect/summon_crewmate
 	abstract = FALSE
-	var/datum/weakref/victim = null
+	/// Weak reference to someone we're going to grab and pull to our location
+	var/datum/weakref/victim
 
 /// Don't run if there's nobody to summon
 /datum/grand_side_effect/summon_crewmate/can_trigger(turf/ritual_location)
@@ -230,10 +231,8 @@
 	var/turf/was_position = victim.loc
 	victim.RemoveElement(/datum/element/forced_gravity, 0)
 	victim.remove_filter("teleport_glow")
-	var/teleported = FALSE
-	teleported = do_teleport(victim, destination, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_MAGIC)
 
-	if (teleported)
+	if (do_teleport(victim, destination, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_MAGIC))
 		var/obj/effect/particle_effect/fluid/smoke/poof = new(was_position)
 		poof.lifetime = 2 SECONDS
 		was_position.visible_message(span_warning("[victim] disappears in a puff of smoke!"))
@@ -269,7 +268,8 @@
 		"#6b30bc",
 		"#72491e",
 		"#39e2dd",
-		"#50f038",)
+		"#50f038",
+	)
 
 /obj/effect/particle_effect/fluid/smoke/colourful/Initialize(mapload, datum/fluid_group/group, ...)
 	. = ..()
@@ -339,7 +339,9 @@
 			"spawn" = get_random_food(),
 			"delays" = list(POD_TRANSIT = 0, POD_FALLING = (3 SECONDS), POD_OPENING = 0, POD_LEAVING = 0),
 			"effectStealth" = TRUE,
-			"effectQuiet" = TRUE,))
+			"effectQuiet" = TRUE,
+		)
+	)
 
 /obj/effect/abstract/local_food_rain/proc/end_rain()
 	qdel(src)

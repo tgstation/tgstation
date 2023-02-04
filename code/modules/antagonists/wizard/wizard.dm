@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */
 	show_to_ghosts = TRUE
 	/// This mob's Grand Ritual ability
-	var/datum/action/cooldown/grand_ritual/ritual = new
+	var/datum/action/cooldown/grand_ritual/ritual
 
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"
@@ -185,7 +185,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/list/data = list()
 	data["ritual"] = list(\
 		"remaining" = GRAND_RITUAL_FINALE_COUNT - ritual.times_completed,
-		"next_area" = initial(ritual.target_area.name),)
+		"next_area" = initial(ritual.target_area.name),
+	)
 	return data
 
 /datum/antagonist/wizard/proc/rename_wizard()
@@ -206,6 +207,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/mob/living/wizard_mob = mob_override || owner.current
 	wizard_mob.faction |= ROLE_WIZARD
 	add_team_hud(wizard_mob)
+	ritual = new(wizard_mob)
 	ritual.Grant(wizard_mob)
 	RegisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE, PROC_REF(on_ritual_complete))
 

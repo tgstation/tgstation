@@ -227,12 +227,12 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	if(!istype(user) || user.incapacitated())
 		return
 
-	var/list/options = GLOB.clown_mask_options.Copy()
 	var/choice = show_radial_menu(user,src, clownmask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 	if(!choice)
 		return FALSE
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
+		var/list/options = GLOB.clown_mask_options
 		icon_state = options[choice]
 		user.update_worn_mask()
 		update_item_action_buttons()
