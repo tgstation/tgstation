@@ -471,7 +471,7 @@
 		/datum/reagent/liquidgibs = -2)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/mob/living/basic = 1)
+	resulting_atoms = list()
 
 /datum/micro_organism/cell_line/netherworld/succeed_growing(obj/machinery/plumbing/growing_vat/vat)
 	var/random_result = pick(/mob/living/basic/creature, /mob/living/basic/migo, /mob/living/basic/blankbody) //i looked myself, pretty much all of them are reasonably strong and somewhat on the same level. except migo is the jackpot and the blank body is whiff.
