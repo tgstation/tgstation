@@ -46,7 +46,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "iy" = (
-/mob/living/simple_animal/hostile/giant_spider,
+/mob/living/basic/giant_spider,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/mod/maint,
 /turf/open/floor/plating,

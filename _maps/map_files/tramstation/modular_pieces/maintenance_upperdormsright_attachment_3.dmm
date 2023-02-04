@@ -11,7 +11,7 @@
 "e" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/spider/stickyweb,
-/mob/living/simple_animal/hostile/giant_spider,
+/mob/living/basic/giant_spider,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "h" = (
@@ -49,7 +49,7 @@
 /area/template_noop)
 "v" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/giant_spider,
+/mob/living/basic/giant_spider,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)

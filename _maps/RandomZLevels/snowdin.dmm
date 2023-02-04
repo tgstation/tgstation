@@ -5517,7 +5517,7 @@
 /area/awaymission/snowdin/post/cavern2)
 "pc" = (
 /obj/structure/spider/stickyweb,
-/mob/living/simple_animal/hostile/giant_spider/hunter/ice,
+/mob/living/basic/giant_spider/hunter/ice,
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "pd" = (
@@ -11798,7 +11798,7 @@
 	dir = 5
 	},
 /obj/structure/spider/stickyweb,
-/mob/living/simple_animal/hostile/giant_spider/hunter/ice,
+/mob/living/basic/giant_spider/hunter/ice,
 /turf/open/floor/iron/freezer,
 /area/awaymission/snowdin/post/kitchen)
 "Ps" = (
@@ -12052,7 +12052,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/research)
 "QM" = (
-/mob/living/simple_animal/hostile/giant_spider/nurse/ice,
+/mob/living/basic/giant_spider/nurse/ice,
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "QN" = (
@@ -12296,7 +12296,7 @@
 /turf/open/floor/iron/dark/snowdin,
 /area/awaymission/snowdin/cave)
 "Si" = (
-/mob/living/simple_animal/hostile/giant_spider/hunter/ice,
+/mob/living/basic/giant_spider/hunter/ice,
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Sj" = (
@@ -12879,7 +12879,7 @@
 	},
 /area/awaymission/snowdin/outside)
 "Vo" = (
-/mob/living/simple_animal/hostile/giant_spider/ice,
+/mob/living/basic/giant_spider/ice,
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Vp" = (

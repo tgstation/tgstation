@@ -42,7 +42,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "n" = (
-/mob/living/simple_animal/hostile/giant_spider,
+/mob/living/basic/giant_spider,
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/cargo)
 "q" = (
@@ -88,7 +88,7 @@
 /area/station/maintenance/department/cargo)
 "A" = (
 /obj/effect/turf_decal/sand/plating,
-/mob/living/simple_animal/hostile/giant_spider,
+/mob/living/basic/giant_spider,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "B" = (
@@ -97,7 +97,7 @@
 /area/station/maintenance/department/cargo)
 "C" = (
 /obj/structure/spider/stickyweb,
-/mob/living/simple_animal/hostile/giant_spider,
+/mob/living/basic/giant_spider,
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/cargo)
 "F" = (
