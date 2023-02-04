@@ -27,6 +27,6 @@
 /obj/item/ammo_box/magazine/sniper_rounds/marksman
 	name = "sniper rounds (marksman)"
 	desc = "An extremely fast sniper round able to pretty much instantly shoot through something."
-	base_icon_state = "haemorrhage"
+	base_icon_state = "marksman"
 	ammo_type = /obj/item/ammo_casing/p50/marksman
 	max_ammo = 5
