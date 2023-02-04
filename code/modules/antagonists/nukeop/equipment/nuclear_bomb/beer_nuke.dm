@@ -15,7 +15,6 @@
 	keg = new(src)
 	QDEL_NULL(core)
 	overflow_control = locate(/datum/round_event_control/scrubber_overflow/every_vent) in SSevents.control
-	RegisterSignal(overflow_control, COMSIG_CREATED_ROUND_EVENT, PROC_REF(on_created_round_event))
 
 /obj/machinery/nuclearbomb/beer/Destroy()
 	UnregisterSignal(overflow_control, COMSIG_CREATED_ROUND_EVENT)
@@ -68,8 +67,13 @@
 	disarm_nuke()
 
 /obj/machinery/nuclearbomb/beer/really_actually_explode(detonation_status)
+	//if it's always hooked in it'll override admin choices
+	RegisterSignal(overflow_control, COMSIG_CREATED_ROUND_EVENT, PROC_REF(on_created_round_event))
 	disarm_nuke()
 	overflow_control.runEvent()
 
+/// signal sent from overflow control when it fires an event
 /obj/machinery/nuclearbomb/beer/proc/on_created_round_event(datum/round_event_control/source_event_control, datum/round_event/scrubber_overflow/every_vent/created_event)
+	SIGNAL_HANDLER
+	UnregisterSignal(overflow_control, COMSIG_CREATED_ROUND_EVENT)
 	created_event.forced_reagent_type = flood_reagent
