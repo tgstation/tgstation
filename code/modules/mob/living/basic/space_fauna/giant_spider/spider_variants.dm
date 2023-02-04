@@ -1,4 +1,3 @@
-
 /**
  * # Spider Hunter
  * A subtype of the giant spider which is faster, has toxin injection, but less health and damage.
@@ -306,4 +305,27 @@
 
 /mob/living/basic/giant_spider/viper/wizard/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+/**
+ * # Sergeant Araneus
+ *
+ * Once a bat, now finally a spider. This friendly arachnid hangs out in the HoS office on some space stations.
+ */
+/mob/living/basic/giant_spider/sgt_araneus
+	name = "Sergeant Araneus"
+	real_name = "Sergeant Araneus"
+	desc = "A fierce companion of the Head of Security, this spider has been carefully trained by Nanotrasen specialists. Its beady, staring eyes send shivers down your spine."
+	faction = list("spiders")
+	maxHealth = 250
+	health = 250
+	melee_damage_lower = 15
+	melee_damage_upper = 20
+	pass_flags = PASSTABLE // He's surprisingly nimble
+	ai_controller = /datum/ai_controller/basic_controller/giant_spider/retaliate
+
+/mob/living/basic/giant_spider/sgt_araneus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/pet_bonus, "chitters proudly!")
+	AddElement(/datum/element/ai_retaliate)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)

@@ -149,7 +149,7 @@
 	var/static/list/mob_list = list(
 		/mob/living/basic/mouse/rat,
 		/mob/living/simple_animal/hostile/bee,
-		/mob/living/simple_animal/hostile/giant_spider,
+		/mob/living/basic/giant_spider,
 	)
 	return pick(mob_list)
 
