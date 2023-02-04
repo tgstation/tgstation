@@ -1,5 +1,9 @@
+//
+// Default Verbs have no permissions and are available to any and all admins
+//
+#define ADMIN_VERB_DEFAULT(module, _name, _desc, params...) ADMIN_VERB(module, _name, _desc, NONE, ##params)
 
-ADMIN_VERB(server, reestablish_db_connection, "Reestablish DB Connection", "Attempts to establish a connection to the DB", NONE)
+ADMIN_VERB_DEFAULT(server, reestablish_db_connection, "Attempts to establish a connection to the DB")
 	if(!CONFIG_GET(flag/sql_enabled))
 		to_chat(usr, span_adminnotice("The Database is not enabled!"))
 		return
@@ -26,10 +30,10 @@ ADMIN_VERB(server, reestablish_db_connection, "Reestablish DB Connection", "Atte
 	else
 		message_admins("Database connection re-established")
 
-ADMIN_VERB(debug, debug_stat_panel, "Debug Stat Panel", "Enable advanced stat panel debugging", NONE)
+ADMIN_VERB_DEFAULT(debug, debug_stat_panel, "Enable advanced stat panel debugging")
 	usr.client.stat_panel.send_message("create_debug")
 
-ADMIN_VERB(game, dead_say, "Dead Say", "Speak a message to observers", NONE, message as text)
+ADMIN_VERB_DEFAULT(game, dead_say, "Speak a message to observers", message as text)
 	if(usr.client.prefs.muted & MUTE_DEADCHAT)
 		to_chat(src, span_danger("You cannot send DSAY messages (muted)."))
 		return
@@ -55,11 +59,11 @@ ADMIN_VERB(game, dead_say, "Dead Say", "Speak a message to observers", NONE, mes
 	var/name_and_rank = "[span_tooltip(rank_name, "STAFF")] ([admin_name])"
 	deadchat_broadcast("[span_prefix("DEAD:")] [name_and_rank] says, <span class='message'>\"[emoji_parse(message)]\"</span>")
 
-ADMIN_VERB(admin, deadmin, "Deadmin", "Become a normal player", NONE)
+ADMIN_VERB_DEFAULT(admin, deadmin, "Become a normal player")
 	usr.client.holder.deactivate()
 	log_admin("[key_name(usr)] deadmined")
 
-ADMIN_VERB(debug, reload_admins, "Reload Admins", "Reloads all admins from the data store", NONE)
+ADMIN_VERB_DEFAULT(debug, reload_admins, "Reloads all admins from the data store")
 	var/confirm = tgui_alert(usr, "Are you sure you want to reload all admins?", "Confirm", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
@@ -67,7 +71,7 @@ ADMIN_VERB(debug, reload_admins, "Reload Admins", "Reloads all admins from the d
 	message_admins("[key_name_admin(usr)] manually reloaded admins.")
 	load_admins()
 
-ADMIN_VERB(debug, stop_all_sounds, "Stop All Sounds", "Stop all sounds on all connected clients", NONE)
+ADMIN_VERB_DEFAULT(debug, stop_all_sounds, "Stop all sounds on all connected clients")
 	log_admin("[key_name(usr)] stopped all currently playing sounds.")
 	message_admins("[key_name_admin(usr)] stopped all currently playing sounds.")
 	for(var/mob/player as anything in GLOB.player_list)
@@ -76,13 +80,13 @@ ADMIN_VERB(debug, stop_all_sounds, "Stop All Sounds", "Stop all sounds on all co
 		// but clients can just poof in and out of existence
 		player.client?.tgui_panel.stop_music()
 
-ADMIN_VERB(game, secrets_panel, "Secrets Panel", "Abuse harder than you ever knew was possible", NONE)
+ADMIN_VERB_DEFAULT(game, secrets_panel, "Abuse harder than you ever knew was possible")
 	usr.client?.secrets()
 
-ADMIN_VERB(game, requests_manager, "Requests Manager", "Open the request manager panel to view all requests during this round", NONE)
+ADMIN_VERB_DEFAULT(game, requests_manager, "Open the request manager panel to view all requests during this round")
 	GLOB.requests.ui_interact(usr)
 
-ADMIN_VERB(admin, admin_say, "Admin Say", "Speak to your fellow jannies", NONE, message as text)
+ADMIN_VERB_DEFAULT(admin, admin_say, "Speak to your fellow jannies", message as text)
 	message ||= tgui_input_text(usr, "Message", "Admin Say")
 	message = emoji_parse(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message)
@@ -110,7 +114,7 @@ ADMIN_VERB(admin, admin_say, "Admin Say", "Speak to your fellow jannies", NONE, 
 		html = message,
 		confidential = TRUE)
 
-ADMIN_VERB(admin, admin_pm, "Admin PM", "Send a message directly to a client", NONE)
+ADMIN_VERB_DEFAULT(admin, admin_pm, "Send a message directly to a client")
 	var/list/targets = list()
 	for(var/client/client in GLOB.clients)
 		var/nametag = ""
@@ -140,7 +144,7 @@ ADMIN_VERB(admin, admin_pm, "Admin PM", "Send a message directly to a client", N
 ADMIN_CONTEXT_ENTRY(contextcmd_tag_atom, "Tag Atom", NONE, atom/target in view(view))
 	tag_datum(target)
 
-ADMIN_VERB(debug, tag_datum, "Tag Datum", "Tag an atom in view", NONE, atom/target)
+ADMIN_VERB(debug, tag_datum, "Tag an atom in view", NONE, atom/target)
 	usr.client.tag_datum(target)
 
 /client/proc/tag_datum(datum/target_datum)
@@ -160,7 +164,7 @@ ADMIN_VERB(debug, tag_datum, "Tag Datum", "Tag an atom in view", NONE, atom/targ
 ADMIN_CONTEXT_ENTRY(contextcmd_mark_atom, "Mark Atom", NONE, atom/target in view(view))
 	mark_datum(target)
 
-ADMIN_VERB(debug, mark_object, "Mark Object", "Mark an atom in view", NONE, atom/target)
+ADMIN_VERB(debug, mark_object, "Mark an atom in view", NONE, atom/target)
 	usr.client.mark_datum(target)
 
 /client/proc/mark_datum(datum/D)
@@ -190,7 +194,7 @@ ADMIN_VERB(debug, mark_object, "Mark Object", "Mark an atom in view", NONE, atom
 
 	WRITE_FILE(F, "[time_stamp(format = "YYYY-MM-DD hh:mm:ss")] [REF(src)] ([x],[y],[z]) || [source] [message]<br>")
 
-ADMIN_VERB(game, investigate, "Investigate", "Look at various detailed investigate sources", NONE)
+ADMIN_VERB(game, investigate, "Look at various detailed investigate sources", NONE)
 	var/list/investigates = list(
 		INVESTIGATE_ACCESSCHANGES,
 		INVESTIGATE_ATMOS,
