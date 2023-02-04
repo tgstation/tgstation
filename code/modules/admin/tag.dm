@@ -50,6 +50,9 @@
 					<font color='#00cccc'>[X.getOxyLoss()]</font>\
 					[X.getCloneLoss() ? " <font color='#1c3ac4'>[X.getCloneLoss()]</font>" : ""])"
 
+ADMIN_VERB(game, display_tags, "View Tags", "View a list of tagged datums.", R_ADMIN)
+	usr.client?.holder?.display_tags()
+
 /// Display all of the tagged datums
 /datum/admins/proc/display_tags()
 	set category = "Admin.Game"
