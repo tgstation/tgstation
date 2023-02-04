@@ -127,37 +127,17 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	else
 		GLOB.dooc_allowed = !GLOB.dooc_allowed
 
-
-/client/proc/set_ooc()
-	set name = "Set Player OOC Color"
-	set desc = "Modifies player OOC Color"
-	set category = "Server"
-	if(IsAdminAdvancedProcCall())
-		return
+ADMIN_VERB(server, set_player_ooc_color, "Set the default OOC color", (R_FUN|R_ADMIN))
 	var/newColor = input(src, "Please select the new player OOC color.", "OOC color") as color|null
 	if(isnull(newColor))
-		return
-	if(!check_rights(R_FUN))
-		message_admins("[usr.key] has attempted to use the Set Player OOC Color verb!")
-		log_admin("[key_name(usr)] tried to set player ooc color without authorization.")
 		return
 	var/new_color = sanitize_color(newColor)
 	message_admins("[key_name_admin(usr)] has set the players' ooc color to [new_color].")
 	log_admin("[key_name_admin(usr)] has set the player ooc color to [new_color].")
 	GLOB.OOC_COLOR = new_color
 
-
-/client/proc/reset_ooc()
-	set name = "Reset Player OOC Color"
-	set desc = "Returns player OOC Color to default"
-	set category = "Server"
-	if(IsAdminAdvancedProcCall())
-		return
+ADMIN_VERB(server, reset_player_ooc_color, "Returns all player colors to default", (R_FUN|R_ADMIN))
 	if(tgui_alert(usr, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", list("Yes", "No")) != "Yes")
-		return
-	if(!check_rights(R_FUN))
-		message_admins("[usr.key] has attempted to use the Reset Player OOC Color verb!")
-		log_admin("[key_name(usr)] tried to reset player ooc color without authorization.")
 		return
 	message_admins("[key_name_admin(usr)] has reset the players' ooc color.")
 	log_admin("[key_name_admin(usr)] has reset player ooc color.")

@@ -1,10 +1,4 @@
-// Helper tool to see fishing probabilities with different setups
-/datum/admins/proc/fishing_calculator()
-	set name = "Fishing Calculator"
-	set category = "Debug"
-
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(debug, fishing_calculator, "Helper tool to see fishing probabilities with different setups", R_DEBUG)
 	var/datum/fishing_calculator/ui = new(usr)
 	ui.ui_interact(usr)
 

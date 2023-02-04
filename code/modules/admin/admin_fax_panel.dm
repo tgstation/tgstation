@@ -98,7 +98,7 @@
 
 		if("follow")
 			if(!isobserver(usr))
-				usr.client?.admin_ghost()
+				SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/game/aghost)
 
 			usr.client?.admin_follow(action_fax)
 

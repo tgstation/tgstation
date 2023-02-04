@@ -7,30 +7,15 @@
 #define WIZARD_PRESET "The Wizard Federation"
 #define CUSTOM_PRESET "Custom Command Name"
 
-/// Verb to change the global command name.
-/client/proc/cmd_change_command_name()
-	set category = "Admin.Events"
-	set name = "Change Command Name"
-
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(events, change_command_name, "", R_ADMIN)
 	var/input = input(usr, "Please input a new name for Central Command.", "What?", "") as text|null
 	if(!input)
 		return
 	change_command_name(input)
-	message_admins("[key_name_admin(src)] has changed Central Command's name to [input]")
-	log_admin("[key_name(src)] has changed the Central Command name to: [input]")
+	message_admins("[key_name_admin(usr)] has changed Central Command's name to [input]")
+	log_admin("[key_name(usr)] has changed the Central Command name to: [input]")
 
-/// Verb to open the create command report window and send command reports.
-/client/proc/cmd_admin_create_centcom_report()
-	set category = "Admin.Events"
-	set name = "Create Command Report"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Create Command Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB(events, create_command_report, "", R_ADMIN)
 	var/datum/command_report_menu/tgui = new(usr)
 	tgui.ui_interact(usr)
 

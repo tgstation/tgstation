@@ -18,6 +18,7 @@ if (!String.prototype.trim) {
 var status_tab_parts = ["Loading..."];
 var current_tab = null;
 var mc_tab_parts = [["Loading...", ""]];
+var admin_verb_cats = [];
 var href_token = null;
 var spells = [];
 var spell_tabs = [];
@@ -35,7 +36,6 @@ var menu = document.getElementById('menu');
 var under_menu = document.getElementById('under_menu');
 var statcontentdiv = document.getElementById('statcontent');
 var storedimages = [];
-var split_admin_tabs = false;
 
 // Any BYOND commands that could result in the client's focus changing go through this
 // to ensure that when we relinquish our focus, we don't do it after the result of
@@ -47,10 +47,7 @@ function run_after_focus(callback) {
 function createStatusTab(name) {
 	if (name.indexOf(".") != -1) {
 		var splitName = name.split(".");
-		if (split_admin_tabs && splitName[0] === "Admin")
-			name = splitName[1];
-		else
-			name = splitName[0];
+		name = splitName[0];
 	}
 	if (document.getElementById(name) || name.trim() == "") {
 		return;
@@ -68,6 +65,17 @@ function createStatusTab(name) {
 	B.className = "button";
 	//ORDERING ALPHABETICALLY
 	B.style.order = name.charCodeAt(0);
+	switch (name) {
+		case "Status":
+			B.style.order = 1;
+			break;
+		case "MC":
+			B.style.order = 2;
+			break;
+		case "Admin Verbs":
+			B.style.order = 3;
+			break;
+	}
 	if (name == "Status" || name == "MC") {
 		B.style.order = name == "Status" ? 1 : 2;
 	}
@@ -152,10 +160,7 @@ function verbs_cat_check(cat) {
 	var tabCat = cat;
 	if (cat.indexOf(".") != -1) {
 		var splitName = cat.split(".");
-		if (split_admin_tabs && splitName[0] === "Admin")
-			tabCat = splitName[1];
-		else
-			tabCat = splitName[0];
+		tabCat = splitName[0];
 	}
 	var verbs_in_cat = 0;
 	var verbcat = "";
@@ -168,10 +173,7 @@ function verbs_cat_check(cat) {
 		verbcat = part[0];
 		if (verbcat.indexOf(".") != -1) {
 			var splitName = verbcat.split(".");
-			if (split_admin_tabs && splitName[0] === "Admin")
-				verbcat = splitName[1];
-			else
-				verbcat = splitName[0];
+			verbcat = splitName[0];
 		}
 		if (verbcat != tabCat || verbcat.trim() == "") {
 			continue;
@@ -252,6 +254,8 @@ function tab_change(tab) {
 		draw_status();
 	} else if (tab == "MC") {
 		draw_mc();
+	} else if (tab == "Admin Verbs") {
+		draw_admin_verbs();
 	} else if (spell_tabs_thingy) {
 		draw_spells(tab);
 	} else if (verb_tabs_thingy) {
@@ -297,13 +301,9 @@ function draw_debug() {
 	var table1 = document.createElement("table");
 	for (var i = 0; i < verb_tabs.length; i++) {
 		var part = verb_tabs[i];
-		// Hide subgroups except admin subgroups if they are split
+		// Hide subgroups
 		if (verb_tabs[i].lastIndexOf(".") != -1) {
-			var splitName = verb_tabs[i].split(".");
-			if (split_admin_tabs && splitName[0] === "Admin")
-				part = splitName[1];
-			else
-				continue;
+			continue;
 		}
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
@@ -391,6 +391,47 @@ function draw_mc() {
 		table.appendChild(tr);
 	}
 	document.getElementById("statcontent").appendChild(table);
+}
+
+function draw_admin_verbs() {
+	try {
+		statcontentdiv.textContent = "";
+		var categories = Object.keys(admin_verb_cats);
+		for(var i = 0; i < categories.length; i++) {
+			var category = categories[i];
+			var categoryHeader = document.createElement("h3");
+			categoryHeader.textContent = category;
+
+			var verbList = admin_verb_cats[category];
+			var categoryTable = document.createElement("div");
+			categoryTable.className = "grid-container";
+			var verbIdx = 0;
+
+			for(var l = 0; l < verbList.length; l++) {
+				var verbInfo = verbList[l];
+
+				var verbName = verbInfo[0];
+				var verbDesc = verbInfo[1];
+				var verbRef = verbInfo[2];
+
+				var verbEntry = document.createElement("a");
+				verbEntry.onclick = make_verb_onclick(verbRef)
+				verbEntry.className = "grid-item";
+				verbEntry.title = verbDesc;
+
+				var verbTitle = document.createElement("span");
+				verbTitle.textContent = verbName;
+				verbTitle.className = "grid-item-text";
+
+				verbEntry.appendChild(verbTitle);
+				categoryTable.appendChild(verbEntry);
+			}
+			statcontentdiv.appendChild(categoryHeader);
+			statcontentdiv.appendChild(categoryTable);
+		}
+	} catch(except) {
+		statcontentdiv.textContent = "NTOS Exception: " + except + "\nReport this to your nearest Technical Resolution Specialist"
+	}
 }
 
 function remove_tickets() {
@@ -509,6 +550,13 @@ function remove_mc() {
 		tab_change("Status");
 	}
 };
+
+function remove_admin_verbs() {
+	removePermanentTab("Admin Verbs");
+	if(current_tab == "Admin Verbs") {
+		tab_change("Status");
+	}
+}
 
 function draw_sdql2() {
 	statcontentdiv.textContent = "";
@@ -655,20 +703,10 @@ function draw_verbs(cat) {
 	var additions = {}; // additional sub-categories to be rendered
 	table.className = "grid-container";
 	sortVerbs();
-	if (split_admin_tabs && cat.lastIndexOf(".") != -1) {
-		var splitName = cat.split(".");
-		if (splitName[0] === "Admin")
-			cat = splitName[1];
-	}
 	verbs.reverse(); // sort verbs backwards before we draw
 	for (var i = 0; i < verbs.length; ++i) {
 		var part = verbs[i];
 		var name = part[0];
-		if (split_admin_tabs && name.lastIndexOf(".") != -1) {
-			var splitName = name.split(".");
-			if (splitName[0] === "Admin")
-				name = splitName[1];
-		}
 		var command = part[1];
 
 		if (command && name.lastIndexOf(cat, 0) != -1 && (name.length == cat.length || name.charAt(cat.length) == ".")) {
@@ -763,10 +801,7 @@ function add_verb_list(payload) {
 		var category = part[0];
 		if (category.indexOf(".") != -1) {
 			var splitName = category.split(".");
-			if (split_admin_tabs && splitName[0] === "Admin")
-				category = splitName[1];
-			else
-				category = splitName[0];
+			category = splitName[0];
 		}
 		if (findVerbindex(part[1], verbs))
 			continue;
@@ -892,6 +927,23 @@ Byond.subscribeTo('update_mc', function (payload) {
 	}
 });
 
+Byond.subscribeTo('update_admin_verbs', function(payload) {
+	admin_verb_cats = payload;
+
+	if(!verb_tabs.includes("Admin Verbs")) {
+		addPermanentTab("Admin Verbs")
+	}
+
+	createStatusTab("Admin Verbs");
+	if(current_tab == "Admin Verbs") {
+		draw_admin_verbs();
+	}
+})
+
+Byond.subscribeTo('remove_admin_verbs', function() {
+	remove_admin_verbs();
+})
+
 Byond.subscribeTo('remove_spells', function () {
 	for (var s = 0; s < spell_tabs.length; s++) {
 		removeStatusTab(spell_tabs[s]);
@@ -933,6 +985,7 @@ Byond.subscribeTo('create_listedturf', function (TN) {
 Byond.subscribeTo('remove_admin_tabs', function () {
 	href_token = null;
 	remove_mc();
+	remove_admin_verbs();
 	remove_tickets();
 	remove_sdql2();
 	remove_interviews();
@@ -950,20 +1003,6 @@ Byond.subscribeTo('update_interviews', function (I) {
 	if (current_tab == "Tickets") {
 		draw_interviews();
 	}
-});
-
-Byond.subscribeTo('update_split_admin_tabs', function (status) {
-	status = (status == true);
-
-	if (split_admin_tabs !== status) {
-		if (split_admin_tabs === true) {
-			removeStatusTab("Events");
-			removeStatusTab("Fun");
-			removeStatusTab("Game");
-		}
-		update_verbs();
-	}
-	split_admin_tabs = status;
 });
 
 Byond.subscribeTo('add_admin_tabs', function (ht) {
