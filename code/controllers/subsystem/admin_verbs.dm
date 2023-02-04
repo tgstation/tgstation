@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(admin_verbs)
 	var/list/waiting_to_assosciate = list()
 	var/list/assosciations_by_ckey
 
-// DO NOT MERGE BEFORE UNCOMMENTING -- GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
+GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 
 /datum/controller/subsystem/admin_verbs/Recover()
 	admin_verb_map = SSadmin_verbs.admin_verb_map
