@@ -9,9 +9,13 @@
 	var/bottom_left_coords[3]
 	var/top_right_coords[3]
 	var/turf_type = /turf/open/space
+	///Turf type we put around the area to 'cordon it off'
+	var/turf/cordon_type = /turf/cordon
 
 /datum/turf_reservation/transit
 	turf_type = /turf/open/space/transit
+	cordon_type = /turf/cordon/transit
+
 
 /datum/turf_reservation/proc/Release()
 	var/list/reserved_copy = reserved_turfs.Copy()
@@ -50,7 +54,7 @@
 		old_area.turfs_to_uncontain += cordon_turf
 		cordon_area.contained_turfs += cordon_turf
 		cordon_area.contents += cordon_turf
-		cordon_turf.ChangeTurf(/turf/cordon, /turf/cordon)
+		cordon_turf.ChangeTurf(cordon_type, /turf/cordon)
 
 		cordon_turf.flags_1 &= ~UNUSED_RESERVATION_TURF
 		SSmapping.unused_turfs["[cordon_turf.z]"] -= cordon_turf
