@@ -95,7 +95,7 @@
 /obj/item/clothing/attack(mob/living/target, mob/living/user, params)
 	if(user.combat_mode || !ismoth(target) || ispickedupmob(src))
 		return ..()
-	if(clothing_flags & INEDIBLE_CLOTHING)
+	if((clothing_flags & INEDIBLE_CLOTHING) || (resistance_flags & INDESTRUCTIBLE))
 		return ..()
 	if(isnull(moth_snack))
 		moth_snack = new
