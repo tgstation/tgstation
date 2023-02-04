@@ -155,7 +155,8 @@
 		to_chat(user, span_warning("Other ghosts have already claimed the uses of this spawner, you can try again later if they decide to not spawn."))
 		return
 	if(prompt_ghost)
-		currently_deciding_ghosts += user.key
+		if(!(user.key in currently_deciding_ghosts))
+			currently_deciding_ghosts += user.key
 		var/ghost_role = tgui_alert(usr, "Become [prompt_name]? (Warning, You can no longer be revived!)", buttons = list("Yes", "No"), timeout = 10 SECONDS)
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
 			currently_deciding_ghosts -= user.key
