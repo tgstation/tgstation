@@ -1,4 +1,4 @@
-ADMIN_VERB(admin, paintings_manager, "Manage paintings and remove things that shouldn't exist.", R_SERVER)
+ADMIN_VERB(admin, paintings_manager, "Paintings Manager", "Manage paintings and remove things that shouldn't exist.", R_SERVER)
 	var/datum/paintings_manager/ui = new(usr)
 	ui.ui_interact(usr)
 

@@ -1,4 +1,4 @@
-ADMIN_VERB(fun, make_pai, "Specify a location to spawn a pAI device, then specify a key to play that pAI.", R_ADMIN, turf/target in GLOB.mob_list)
+ADMIN_VERB(fun, make_pai, "Make pAI", "Specify a location to spawn a pAI device, then specify a key to play that pAI.", R_ADMIN, turf/target in GLOB.mob_list)
 	var/list/available = list()
 	for(var/mob/player as anything in GLOB.player_list)
 		if(player.client && player.key)

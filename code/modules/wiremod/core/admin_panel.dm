@@ -1,5 +1,5 @@
 /// An admin verb to view all circuits, plus useful information
-ADMIN_VERB(game, view_all_circuits, "View a list of every circuit on the server.", R_ADMIN)
+ADMIN_VERB(game, view_all_circuits, "View All Circuits", "View a list of every circuit on the server.", R_ADMIN)
 	var/static/datum/circuit_admin_panel/circuit_admin_panel = new
 	circuit_admin_panel.ui_interact(usr)
 

@@ -1,4 +1,4 @@
-ADMIN_VERB(admin, trophy_manager, "Manage trophies.", R_ADMIN)
+ADMIN_VERB(admin, trophy_manager, "Trophy Manager", "Manage trophies.", R_ADMIN)
 	var/datum/trophy_manager/ui = new(usr)
 	ui.ui_interact(usr)
 

@@ -1,5 +1,5 @@
 ///Allows an admin to send messages on PDA
-ADMIN_VERB(events, message_pda, "Send a PDA message.", R_ADMIN)
+ADMIN_VERB(events, message_pda, "Message PDA", "Send a PDA message.", R_ADMIN)
 	if(!length(GLOB.TabletMessengers))
 		to_chat(usr, span_warning("ERROR: There are no users you can send a message to"))
 		return

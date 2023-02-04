@@ -1,7 +1,7 @@
 /**
  * If client have R_ADMIN flag, opens an admin fax panel.
  */
-ADMIN_VERB(events, fax_panel, "Send and receive documents from the crew.", R_ADMIN)
+ADMIN_VERB(events, fax_panel, "Fax Panel", "Send and receive documents from the crew.", R_ADMIN)
 	var/datum/fax_panel_interface/ui = new(usr)
 	ui.ui_interact(usr)
 

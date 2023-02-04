@@ -1,4 +1,4 @@
-ADMIN_VERB(events, shuttle_manipulator, "Replace, modify, and send shuttles.", R_ADMIN)
+ADMIN_VERB(events, shuttle_manipulator, "Shuttle Manipulator", "Replace, modify, and send shuttles.", R_ADMIN)
 	SSshuttle.ui_interact(usr)
 
 /obj/docking_port/mobile/proc/admin_fly_shuttle(mob/user)

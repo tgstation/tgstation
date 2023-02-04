@@ -46,7 +46,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
-ADMIN_VERB(debug, spawn_atom, "Spawn an atom.", R_SPAWN, object as text)
+ADMIN_VERB(debug, spawn_atom, "Spawn Atom", "Spawn an atom.", R_SPAWN, object as text)
 	if(!object)
 		return
 	var/list/preparsed = splittext(object,":")
