@@ -1083,8 +1083,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					var/ooc = tgui_say_create_open_command(OOC_CHANNEL)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[ooc]")
 				if(ADMIN_CHANNEL)
-					var/asay = tgui_say_create_open_command(ADMIN_CHANNEL)
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[asay]")
+					if(holder)
+						var/asay = tgui_say_create_open_command(ADMIN_CHANNEL)
+						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[asay]")
+					else
+						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
