@@ -79,6 +79,7 @@ GLOBAL_DATUM(error_cache, /datum/error_viewer/error_cache)
 	var/list/errors_silenced = list()
 
 /datum/error_viewer/error_cache/show_to(user, datum/error_viewer/back_to, linear)
+	user = CLIENT_FROM_VAR(user)
 	var/html = build_header()
 	html += "<b>[GLOB.total_runtimes]</b> runtimes, <b>[GLOB.total_runtimes_skipped]</b> skipped<br><br>"
 	if (!linear)

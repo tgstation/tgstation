@@ -39,8 +39,8 @@
 /obj/machinery/computer/med_data/ui_data(mob/user)
 	var/list/data = list()
 
-	var/has_access = authenticated && isliving(user)
-	data["authenticated"] = authenticated
+	var/has_access = (authenticated && isliving(user))|| isAdminGhostAI(user)
+	data["authenticated"] = authenticated || isAdminGhostAI(user)
 	if(!has_access)
 		return data
 
@@ -74,6 +74,12 @@
 
 	data["records"] = records
 
+	return data
+
+/obj/machinery/computer/med_data/ui_static_data(mob/user)
+	var/list/data = list()
+	data["min_age"] = AGE_MIN
+	data["max_age"] = AGE_MAX
 	return data
 
 /obj/machinery/computer/med_data/ui_act(action, list/params, datum/tgui/ui)

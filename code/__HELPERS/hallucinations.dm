@@ -1,6 +1,14 @@
 /// A global list of all ongoing hallucinations, primarily for easy access to be able to stop (delete) hallucinations.
 GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 
+/// What typepath of the hallucination
+#define HALLUCINATION_ARG_TYPE 1
+/// Where the hallucination came from, for logging
+#define HALLUCINATION_ARG_SOURCE 2
+
+/// Onwards from this index, it's the arglist that gets passed into the hallucination created.
+#define HALLUCINATION_ARGLIST 3
+
 /// Biotypes which cannot hallucinate for balance and logic reasons (not code)
 #define NO_HALLUCINATION_BIOTYPES (MOB_ROBOTIC|MOB_SPIRIT|MOB_EPIC)
 
@@ -20,16 +28,16 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 	if(!length(raw_args))
 		CRASH("cause_hallucination called with no arguments.")
 
-	var/datum/hallucination/hallucination_type = raw_args[1] // first arg is the type always
+	var/datum/hallucination/hallucination_type = raw_args[HALLUCINATION_ARG_TYPE] // first arg is the type always
 	if(!ispath(hallucination_type))
 		CRASH("cause_hallucination was given a non-hallucination type.")
 
-	var/hallucination_source = raw_args[2] // and second arg, the source
+	var/hallucination_source = raw_args[HALLUCINATION_ARG_SOURCE] // and second arg, the source
 	var/datum/hallucination/new_hallucination
 
-	if(length(raw_args) > 2)
-		var/list/passed_args = raw_args.Copy(3)
-		passed_args.Insert(1, src)
+	if(length(raw_args) >= HALLUCINATION_ARGLIST)
+		var/list/passed_args = raw_args.Copy(HALLUCINATION_ARGLIST)
+		passed_args.Insert(HALLUCINATION_ARG_TYPE, src)
 
 		new_hallucination = new hallucination_type(arglist(passed_args))
 	else
@@ -104,50 +112,6 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 
 	to_chat(usr, span_boldnotice("The total weight of the hallucination weighted list is [total_weight]."))
 	return total_weight
-
-/// Debug verb for getting the weight of each distinct type within the random_hallucination_weighted_list
-/client/proc/debug_hallucination_weighted_list_per_type()
-	set name = "Show Hallucination Weights"
-	set category = "Debug"
-
-	var/header = "<tr><th>Type</th> <th>Weight</th> <th>Percent</th>"
-
-	var/total_weight = debug_hallucination_weighted_list()
-	var/list/all_weights = list()
-	var/datum/hallucination/last_type
-	var/last_type_weight = 0
-	for(var/datum/hallucination/hallucination_type as anything in GLOB.random_hallucination_weighted_list)
-		var/this_weight = GLOB.random_hallucination_weighted_list[hallucination_type]
-		// Last_type is the abstract parent of the last hallucination type we iterated over
-		if(last_type)
-			// If this hallucination is the same path as the last type (subtype), add it to the total of the last type weight
-			if(ispath(hallucination_type, last_type))
-				last_type_weight += this_weight
-				continue
-
-			// Otherwise we moved onto the next hallucination subtype so we can stop
-			else
-				all_weights["<tr><td>[last_type]</td> <td>[last_type_weight] / [total_weight]</td> <td>[round(100 * (last_type_weight / total_weight), 0.01)]% chance</td></tr>"] = last_type_weight
-
-		// Set last_type to the abstract parent of this hallucination
-		last_type = initial(hallucination_type.abstract_hallucination_parent)
-		// If last_type is the base hallucination it has no distinct subtypes so we can total it up immediately
-		if(last_type == /datum/hallucination)
-			all_weights["<tr><td>[hallucination_type]</td> <td>[this_weight] / [total_weight]</td> <td>[round(100 * (this_weight / total_weight), 0.01)]% chance</td></tr>"] = this_weight
-			last_type = null
-
-		// Otherwise we start the weight sum for the next entry here
-		else
-			last_type_weight = this_weight
-
-	// Sort by weight descending, where weight is the values (not the keys). We assoc_to_keys later to get JUST the text
-	all_weights = sortTim(all_weights, GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
-
-	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
-	var/page_contents = "[page_style]<table style=\"width:100%\">[header][jointext(assoc_to_keys(all_weights), "")]</table>"
-	var/datum/browser/popup = new(mob, "hallucinationdebug", "Hallucination Weights", 600, 400)
-	popup.set_content(page_contents)
-	popup.open()
 
 /// Gets a random subtype of the passed hallucination type that has a random_hallucination_weight > 0.
 /// If no subtype is passed, it will get any random hallucination subtype that is not abstract and has weight > 0.

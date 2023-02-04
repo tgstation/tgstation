@@ -24,7 +24,12 @@
  *
  * Parent call
  */
-/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
+/mob/Destroy()
+	if(client)
+		stack_trace("Mob with client has been deleted.")
+	else if(ckey)
+		stack_trace("Mob without client but with associated ckey has been deleted.")
+
 	remove_from_mob_list()
 	remove_from_dead_mob_list()
 	remove_from_alive_mob_list()
@@ -1252,54 +1257,47 @@
 		if(!check_rights(NONE))
 			return
 		regenerate_icons()
+
 	if(href_list[VV_HK_PLAYER_PANEL])
-		if(!check_rights(NONE))
-			return
-		usr.client.holder.show_player_panel(src)
+		usr.client.admin_context_wrapper_context_player_panel(src)
+
 	if(href_list[VV_HK_GODMODE])
-		if(!check_rights(R_ADMIN))
-			return
-		usr.client.cmd_admin_godmode(src)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/toggle_godmode, src)
+
 	if(href_list[VV_HK_GIVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_spell(src)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/fun/give_mob_spell, src)
+
 	if(href_list[VV_HK_REMOVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.remove_spell(src)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/fun/remove_spell, src)
+
 	if(href_list[VV_HK_GIVE_DISEASE])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_disease(src)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/fun/give_disease, src)
+
 	if(href_list[VV_HK_GIB])
-		if(!check_rights(R_FUN))
-			return
-		usr.client.cmd_admin_gib(src)
+		usr.client.admin_context_wrapper_context_mob_gib(src)
+
 	if(href_list[VV_HK_BUILDMODE])
 		if(!check_rights(R_BUILD))
 			return
 		togglebuildmode(src)
+
 	if(href_list[VV_HK_DROP_ALL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_admin_drop_everything(src)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/admin/drop_everything, src)
+
 	if(href_list[VV_HK_DIRECT_CONTROL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_assume_direct_control(src)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/assume_direct_control, src)
+
 	if(href_list[VV_HK_GIVE_DIRECT_CONTROL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_give_direct_control(src)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/give_direct_control, src)
+
 	if(href_list[VV_HK_OFFER_GHOSTS])
 		if(!check_rights(NONE))
 			return
 		offer_control(src)
+
 	if(href_list[VV_HK_VIEW_PLANES])
-		if(!check_rights(R_DEBUG))
-			return
-		usr.client.edit_plane_masters(src)
+		usr.client.holder.edit_plane_masters(src)
+
 /**
  * extra var handling for the logging var
  */
@@ -1401,10 +1399,7 @@
 	if(!canon_client)
 		return
 
-	for(var/foo in canon_client.player_details.post_logout_callbacks)
-		var/datum/callback/CB = foo
-		CB.Invoke()
-
+	canon_client.player_details.do_logout(src)
 	if(canon_client?.movingmob)
 		LAZYREMOVE(canon_client.movingmob.client_mobs_in_contents, src)
 		canon_client.movingmob = null

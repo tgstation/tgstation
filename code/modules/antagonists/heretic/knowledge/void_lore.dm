@@ -28,11 +28,11 @@
  */
 /datum/heretic_knowledge/limited_amount/starting/base_void
 	name = "Glimmer of Winter"
-	desc = "Opens up the path of void to you. \
+	desc = "Opens up the Path of Void to you. \
 		Allows you to transmute a knife in sub-zero temperatures into a Void Blade. \
 		You can only create two at a time."
 	gain_text = "I feel a shimmer in the air, the air around me gets colder. \
-		I start to realize the emptiness of existance. Something's watching me."
+		I start to realize the emptiness of existence. Something's watching me."
 	next_knowledge = list(/datum/heretic_knowledge/void_grasp)
 	required_atoms = list(/obj/item/knife = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
@@ -77,8 +77,8 @@
 
 /datum/heretic_knowledge/cold_snap
 	name = "Aristocrat's Way"
-	desc = "Grants you immunity to cold temperatures, and removing your need breathe. \
-		You can still take damage due to lack of pressure."
+	desc = "Grants you immunity to cold temperatures, and removes your need breathe. \
+		You can still take damage due to a lack of pressure."
 	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. \
 		Translucent and white, a depiction of a nobleman stood before me."
 	next_knowledge = list(
@@ -114,7 +114,7 @@
 
 /datum/heretic_knowledge/spell/void_cone
 	name = "Void Blast"
-	desc = "Grants you Void Blast, a spell that shoots out a freezing blast in a code ahead of you, \
+	desc = "Grants you Void Blast, a spell that shoots out a freezing blast in a cone in front of you, \
 		freezing the ground and any victims within."
 	gain_text = "Every door I open racks my body. I am afraid of what is behind them. Someone is expecting me, \
 		and my legs start to drag. Is that... snow?"
@@ -162,7 +162,7 @@
 	name = "Void Pull"
 	desc = "Grants you Void Pull, a spell that pulls all nearby heathens towards you, stunning them briefly."
 	gain_text = "All is fleeting, but what else stays? I'm close to ending what was started. \
-		The Aristocrat reveals themself to me again. They tell me I am late. Their pull is immense, I cannot turn back."
+		The Aristocrat reveals themselves to me again. They tell me I am late. Their pull is immense, I cannot turn back."
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/void_final,
 		/datum/heretic_knowledge/spell/cleave,
@@ -175,7 +175,7 @@
 /datum/heretic_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"
 	desc = "The ascension ritual of the Path of Void. \
-		Bring 3 corpses to a transumation rune in sub-zero temperatures to complete the ritual. \
+		Bring 3 corpses to a transmutation rune in sub-zero temperatures to complete the ritual. \
 		When completed, causes a violent storm of void snow \
 		to assault the station, freezing and damaging heathens. Those nearby will be silenced and frozen even quicker. \
 		Additionally, you will become immune to the effects of space."
