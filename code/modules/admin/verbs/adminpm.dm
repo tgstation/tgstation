@@ -13,13 +13,57 @@
 // We also make SURE to fail loud, IE: if something stops the message from reaching the recipient, the sender HAS to know
 // If you "refactor" this to make it "cleaner" I will send you to hell
 
-/// Allows the admin to send an AdminPM directly to the client of a mob
-ADMIN_CONTEXT_ENTRY(contextcmd_admin_pm, "Admin PM Mob", NONE, mob/target in GLOB.mob_list)
-	if(!istype(target))
-		to_chat(src, type = MESSAGE_TYPE_ADMINPM, html = span_danger("Error: Admin-PM-Context: Target mob is somehow not a mob!"))
+/// Allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
+/client/proc/cmd_admin_pm_context(mob/M in GLOB.mob_list)
+	set category = null
+	set name = "Admin PM Mob"
+	if(!holder)
+		to_chat(src,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = span_danger("Error: Admin-PM-Context: Only administrators may use this command."),
+			confidential = TRUE)
+		return
+	if(!ismob(M))
+		to_chat(src,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = span_danger("Error: Admin-PM-Context: Target mob is not a mob, somehow."),
+			confidential = TRUE)
+		return
+	cmd_admin_pm(M.client, null)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/// Shows a list of clients we could send PMs to, then forwards our choice to cmd_admin_pm
+/client/proc/cmd_admin_pm_panel()
+	set category = "Admin"
+	set name = "Admin PM"
+	if(!holder)
+		to_chat(src,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = span_danger("Error: Admin-PM-Panel: Only administrators may use this command."),
+			confidential = TRUE)
 		return
 
-	cmd_admin_pm(target.client, null)
+	var/list/targets = list()
+	for(var/client/client in GLOB.clients)
+		var/nametag = ""
+		var/mob/lad = client.mob
+		var/mob_name = lad?.name
+		var/real_mob_name = lad?.real_name
+		if(!lad)
+			nametag = "(No Mob)"
+		else if(isnewplayer(lad))
+			nametag = "(New Player)"
+		else if(isobserver(lad))
+			nametag = "[mob_name](Ghost)"
+		else
+			nametag = "[real_mob_name](as [mob_name])"
+		targets["[nametag] - [client]"] = client
+
+	var/target = input(src,"To whom shall we send a message?", "Admin PM", null) as null|anything in sort_list(targets)
+	if (isnull(target))
+		return
+	cmd_admin_pm(targets[target], null)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /// Replys to some existing ahelp, reply to whom, which can be a client or ckey
 /client/proc/cmd_ahelp_reply(whom)
@@ -113,7 +157,7 @@ ADMIN_CONTEXT_ENTRY(contextcmd_admin_pm, "Admin PM Mob", NONE, mob/target in GLO
 			return
 	cmd_admin_pm(whom, message)
 
-//takes input from cmd_admin_pm_context or /client/Topic and sends them a PM.
+//takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed.
 //whom here is a client, a ckey, or [EXTERNAL_PM_USER] if this is from tgs. message is the default message to send
 /client/proc/cmd_admin_pm(whom, message)

@@ -95,3 +95,10 @@ export const sound_prayers: FeatureToggle = {
   category: 'ADMIN',
   component: CheckboxInput,
 };
+
+export const split_admin_tabs: FeatureToggle = {
+  name: 'Split admin tabs',
+  category: 'ADMIN',
+  description: "When enabled, will split the 'Admin' panel into several tabs.",
+  component: CheckboxInput,
+};

@@ -1,4 +1,4 @@
-/datum/admins/proc/admin_delete(datum/D)
+/client/proc/admin_delete(datum/D)
 	var/atom/A = D
 	var/coords = ""
 	var/jmp_coords = ""
@@ -20,7 +20,7 @@
 			var/turf/T = D
 			T.ScrapeAway()
 		else
-			owner?.vv_update_display(D, "deleted", VV_MSG_DELETED)
+			vv_update_display(D, "deleted", VV_MSG_DELETED)
 			qdel(D)
 			if(!QDELETED(D))
-				owner?.vv_update_display(D, "deleted", "")
+				vv_update_display(D, "deleted", "")

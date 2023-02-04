@@ -261,9 +261,13 @@
 
 	return
 
-ADMIN_VERB(fun, summon_ert, "Summon ERT", "Summons an Emergency Response Team", R_FUN)
+/client/proc/summon_ert()
+	set category = "Admin.Fun"
+	set name = "Summon ERT"
+	set desc = "Summons an emergency response team"
+
 	message_admins("[key_name(usr)] is creating a CentCom response team...")
-	if(usr.client.holder?.makeEmergencyresponseteam())
+	if(holder?.makeEmergencyresponseteam())
 		message_admins("[key_name(usr)] created a CentCom response team.")
 		log_admin("[key_name(usr)] created a CentCom response team.")
 	else

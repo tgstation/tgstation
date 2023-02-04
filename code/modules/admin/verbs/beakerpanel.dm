@@ -60,7 +60,11 @@
 		reagents.add_reagent(reagenttype, amount)
 	return container
 
-ADMIN_VERB(events, spawn_reagent_container, "Spawn Reagent Container", "", R_SPAWN)
+/datum/admins/proc/beaker_panel()
+	set category = "Admin.Events"
+	set name = "Spawn reagent container"
+	if(!check_rights())
+		return
 	var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/namespaced/common)
 	asset_datum.send(usr)
 	//Could somebody tell me why this isn't using the browser datum, given that it copypastes all of browser datum's html

@@ -1,28 +1,35 @@
-ADMIN_VERB(object, possess_object, "Possess Object", "", R_POSSESS, obj/target in world)
-	if((target.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
-		to_chat(usr, "[target] is too powerful for you to possess.", confidential = TRUE)
+/proc/possess(obj/O in world)
+	set name = "Possess Obj"
+	set category = "Object"
+
+	if((O.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
+		to_chat(usr, "[O] is too powerful for you to possess.", confidential = TRUE)
 		return
 
-	var/turf/target_turf = get_turf(target)
+	var/turf/T = get_turf(O)
 
-	if(target_turf)
-		log_admin("[key_name(usr)] has possessed [target] ([target.type]) at [AREACOORD(target_turf)]")
-		message_admins("[key_name(usr)] has possessed [target] ([target.type]) at [AREACOORD(target_turf)]")
+	if(T)
+		log_admin("[key_name(usr)] has possessed [O] ([O.type]) at [AREACOORD(T)]")
+		message_admins("[key_name(usr)] has possessed [O] ([O.type]) at [AREACOORD(T)]")
 	else
-		log_admin("[key_name(usr)] has possessed [target] ([target.type]) at an unknown location")
-		message_admins("[key_name(usr)] has possessed [target] ([target.type]) at an unknown location")
+		log_admin("[key_name(usr)] has possessed [O] ([O.type]) at an unknown location")
+		message_admins("[key_name(usr)] has possessed [O] ([O.type]) at an unknown location")
 
 	if(!usr.control_object) //If you're not already possessing something...
 		usr.name_archive = usr.real_name
 
-	usr.forceMove(target)
-	usr.real_name = target.name
-	usr.name = target.name
-	usr.reset_perspective(target)
-	usr.control_object = target
-	target.AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
+	usr.forceMove(O)
+	usr.real_name = O.name
+	usr.name = O.name
+	usr.reset_perspective(O)
+	usr.control_object = O
+	O.AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Possess Object") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-ADMIN_VERB(object, release_object, "Release Object", "", R_POSSESS)
+/proc/release()
+	set name = "Release Obj"
+	set category = "Object"
+
 	if(!usr.control_object) //lest we are banished to the nullspace realm.
 		return
 
@@ -31,10 +38,19 @@ ADMIN_VERB(object, release_object, "Release Object", "", R_POSSESS)
 		usr.name_archive = ""
 		usr.name = usr.real_name
 		if(ishuman(usr))
-			var/mob/living/carbon/human/user = usr
-			user.name = user.get_visible_name()
+			var/mob/living/carbon/human/H = usr
+			H.name = H.get_visible_name()
 
 	usr.control_object.RemoveElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
 	usr.forceMove(get_turf(usr.control_object))
 	usr.reset_perspective()
 	usr.control_object = null
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Release Object") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/proc/givetestverbs(mob/M in GLOB.mob_list)
+	set desc = "Give this guy possess/release verbs"
+	set category = "Debug"
+	set name = "Give Possessing Verbs"
+	add_verb(M, GLOBAL_PROC_REF(possess))
+	add_verb(M, GLOBAL_PROC_REF(release))
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Possessing Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
