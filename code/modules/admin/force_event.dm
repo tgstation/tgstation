@@ -1,18 +1,9 @@
 ///Allows an admin to force an event
-/client/proc/forceEvent()
-	set name = "Trigger Event"
-	set category = "Admin.Events"
-
-	if(!holder || !check_rights(R_FUN))
-		return
-
-	holder.forceEvent()
+ADMIN_VERB(events, trigger_event, "Trigger Event", "", R_FUN)
+	usr.client.holder.forceEvent()
 
 ///Opens up the Force Event Panel
 /datum/admins/proc/forceEvent()
-	if(!check_rights(R_FUN))
-		return
-
 	var/datum/force_event/ui = new(usr)
 	ui.ui_interact(usr)
 
@@ -88,7 +79,7 @@
 			var/datum/round_event_control/event = locate(event_to_run_type) in SSevents.control
 			if(!event)
 				return
-			if(event.admin_setup(usr) == ADMIN_CANCEL_EVENT)
+			if(event.admin_setup && event.admin_setup.prompt_admins() == ADMIN_CANCEL_EVENT)
 				return
 			var/always_announce_chance = 100
 			var/no_announce_chance = 0

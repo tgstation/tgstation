@@ -81,30 +81,38 @@ const CrimeDisplay = ({ item }: { item: Crime }, context) => {
   if (!foundRecord) return <> </>;
 
   const { crew_ref } = foundRecord;
-  const { act } = useBackend<SecurityRecordsData>(context);
-  const { author, crime_ref, details, fine, name, paid, time } = item;
+  const { act, data } = useBackend<SecurityRecordsData>(context);
+  const { current_user, higher_access } = data;
+  const { author, crime_ref, details, fine, name, paid, time, valid } = item;
   const showFine = !!fine && fine > 0 ? `: ${fine} cr` : '';
+
+  let collapsibleColor = '';
+  if (!valid) {
+    collapsibleColor = 'grey';
+  } else if (fine && fine > 0) {
+    collapsibleColor = 'average';
+  }
+
+  let displayTitle = name;
+  if (fine && fine > 0) {
+    displayTitle = name.slice(0, 18) + showFine;
+  }
+
+  const [editing, setEditing] = useLocalState(
+    context,
+    `editing_${crime_ref}`,
+    false
+  );
 
   return (
     <Stack.Item>
-      <Collapsible
-        buttons={
-          <Button
-            color="bad"
-            icon="trash"
-            onClick={() =>
-              act('delete_crime', {
-                crew_ref: crew_ref,
-                crime_ref: crime_ref,
-              })
-            }
-          />
-        }
-        color={fine && fine > 0 ? 'average' : ''}
-        title={name.slice(0, 18) + showFine}>
+      <Collapsible color={collapsibleColor} open={editing} title={displayTitle}>
         <LabeledList>
           <LabeledList.Item label="Time">{time}</LabeledList.Item>
           <LabeledList.Item label="Author">{author}</LabeledList.Item>
+          <LabeledList.Item color={!valid ? 'bad' : 'good'} label="Status">
+            {!valid ? 'Void' : 'Active'}
+          </LabeledList.Item>
           {fine && (
             <>
               <LabeledList.Item color="bad" label="Fine">
@@ -120,6 +128,60 @@ const CrimeDisplay = ({ item }: { item: Crime }, context) => {
           Details:
         </Box>
         <BlockQuote>{details}</BlockQuote>
+
+        {!editing ? (
+          <Box mt={2}>
+            <Button
+              disabled={!valid || (!higher_access && author !== current_user)}
+              icon="pen"
+              onClick={() => setEditing(true)}>
+              Edit
+            </Button>
+            <Button.Confirm
+              content="Invalidate"
+              disabled={!higher_access || !valid}
+              icon="ban"
+              onClick={() =>
+                act('invalidate_crime', {
+                  crew_ref: crew_ref,
+                  crime_ref: crime_ref,
+                })
+              }
+            />
+          </Box>
+        ) : (
+          <>
+            <Input
+              fluid
+              maxLength={25}
+              onEscape={() => setEditing(false)}
+              onEnter={(event, value) => {
+                setEditing(false);
+                act('edit_crime', {
+                  crew_ref: crew_ref,
+                  crime_ref: crime_ref,
+                  name: value,
+                });
+              }}
+              placeholder="Enter a new name"
+            />
+            <Input
+              fluid
+              maxLength={1025}
+              mt={1}
+              onEscape={() => setEditing(false)}
+              onEnter={(event, value) => {
+                setEditing(false);
+                act('edit_crime', {
+                  crew_ref: crew_ref,
+                  crime_ref: crime_ref,
+                  description: value,
+                });
+              }}
+              placeholder="Enter a new description"
+            />
+          </>
+        )}
       </Collapsible>
     </Stack.Item>
   );
@@ -146,6 +208,8 @@ const CrimeAuthor = (props, context) => {
     SECURETAB.Crimes
   );
 
+  const nameMeetsReqs = crimeName?.length > 2;
+
   /** Sends form to backend */
   const createCrime = () => {
     if (!crimeName) return;
@@ -171,19 +235,20 @@ const CrimeAuthor = (props, context) => {
       <Stack.Item color="label">
         Name
         <Input
-          onChange={(_, value) => setCrimeName(value)}
           fluid
           maxLength={25}
+          onChange={(_, value) => setCrimeName(value)}
           placeholder="Brief overview"
         />
       </Stack.Item>
       <Stack.Item color="label">
         Details
         <TextArea
-          onChange={(_, value) => setCrimeDetails(value)}
-          multiline
-          height={4}
           fluid
+          height={4}
+          maxLength={1025}
+          multiline
+          onChange={(_, value) => setCrimeDetails(value)}
           placeholder="Type some details..."
         />
       </Stack.Item>
@@ -198,9 +263,10 @@ const CrimeAuthor = (props, context) => {
       <Stack.Item>
         <Button.Confirm
           content="Create"
-          disabled={!crimeName}
+          disabled={!nameMeetsReqs}
           icon="plus"
           onClick={createCrime}
+          tooltip={!nameMeetsReqs ? 'Name must be at least 3 characters.' : ''}
         />
       </Stack.Item>
     </Stack>

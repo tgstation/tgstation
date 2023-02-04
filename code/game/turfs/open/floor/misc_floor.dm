@@ -115,12 +115,14 @@
 	desc = "The linear induction plate that powers the tram."
 	icon_state = "tram_plate"
 	base_icon_state = "tram_plate"
+	slowdown = 0
 
 /turf/open/floor/noslip/tram_platform
 	name = "tram platform"
 	desc = "A sturdy looking tram platform."
 	icon_state = "tram_platform"
 	base_icon_state = "tram_platform"
+	slowdown = 0
 
 /turf/open/floor/noslip/broken_states()
 	return list("noslip-damaged1","noslip-damaged2","noslip-damaged3")

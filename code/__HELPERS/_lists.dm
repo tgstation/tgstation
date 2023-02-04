@@ -271,6 +271,20 @@
 		if(typecache_include[atom_checked.type] && !typecache_exclude[atom_checked.type])
 			. += atom_checked
 
+/// Returns a typecache for the direct descendants of the path
+/proc/typecache_next_level(path)
+	if(isnull(path))
+		return
+	var/list/paths = list()
+	if(ispath(path))
+		var/path_text = "[path]"
+		for(var/subtype in subtypesof(path))
+			var/subtype_text = replacetext("[subtype]", path_text, "")
+			if(findlasttext(subtype_text, "/") != 1)
+				continue
+			paths[subtype] = TRUE
+		return paths
+
 /**
  * Like typesof() or subtypesof(), but returns a typecache instead of a list.
  *

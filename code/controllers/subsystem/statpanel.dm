@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(statpanels)
 			cached ? "Next Map: [cached.map_name]" : null,
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
 			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]",
-			"Round Time: [ROUND_TIME]",
+			"Round Time: [ROUND_TIME()]",
 			"Station Time: [station_time_timestamp()]",
 			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)"
 		)
@@ -54,8 +54,6 @@ SUBSYSTEM_DEF(statpanels)
 		if(!target.holder)
 			target.stat_panel.send_message("remove_admin_tabs")
 		else
-			target.stat_panel.send_message("update_split_admin_tabs", !!(target.prefs.toggles & SPLIT_ADMIN_TABS))
-
 			if(!("MC" in target.panel_tabs) || !("Tickets" in target.panel_tabs))
 				target.stat_panel.send_message("add_admin_tabs", target.holder.href_token)
 
@@ -145,6 +143,13 @@ SUBSYSTEM_DEF(statpanels)
 
 	// Push update
 	target.stat_panel.send_message("update_interviews", data)
+
+/datum/controller/subsystem/statpanels/proc/set_admin_verb_tab(client/target)
+	var/list/admin_verb_stat_data = SSadmin_verbs.generate_stat_data(target)
+	if(length(admin_verb_stat_data))
+		target.stat_panel.send_message("update_admin_verbs", admin_verb_stat_data)
+	else
+		target.stat_panel.send_message("remove_admin_verbs")
 
 /datum/controller/subsystem/statpanels/proc/set_SDQL2_tab(client/target)
 	var/list/sdql2A = list()
@@ -292,6 +297,9 @@ SUBSYSTEM_DEF(statpanels)
 	if(target.stat_tab == "Tickets")
 		set_tickets_tab(target)
 		return TRUE
+
+	if(target.stat_tab == "Admin Verbs")
+		set_admin_verb_tab(target)
 
 	if(!length(GLOB.sdql2_queries) && ("SDQL2" in target.panel_tabs))
 		target.stat_panel.send_message("remove_sdql2")

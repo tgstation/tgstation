@@ -184,11 +184,22 @@
 /datum/supply_pack/critter/snake
 	name = "Snake Crate"
 	desc = "Tired of these MOTHER FUCKING snakes on this MOTHER FUCKING space station? \
-		Then this isn't the crate for you. Contains three poisonous snakes."
+		Then this isn't the crate for you. Contains three venomous snakes."
 	cost = CARGO_CRATE_VALUE * 6
 	access_view = ACCESS_SECURITY
 	contains = list(/mob/living/simple_animal/hostile/retaliate/snake = 3)
 	crate_name = "snake crate"
+
+/datum/supply_pack/critter/amphibians
+	name = "Amphibian Friends Crate"
+	desc = "Two disgustingly cute slimey friends. Cytologists love them! \
+		Contains one frog and one axolotl. Warning: Frog may have hallucinogenic properties."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(
+		/mob/living/basic/axolotl,
+		/mob/living/basic/frog,
+	)
+	crate_name = "amphibian crate"
 
 /datum/supply_pack/critter/lizard
 	name = "Lizard Crate"
