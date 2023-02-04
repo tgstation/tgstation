@@ -1,9 +1,4 @@
-/datum/admins/proc/trophy_manager()
-	set name = "Trophy Manager"
-	set category = "Admin"
-
-	if(!check_rights(R_ADMIN))
-		return
+ADMIN_VERB(admin, trophy_manager, "Manage trophies.", R_ADMIN)
 	var/datum/trophy_manager/ui = new(usr)
 	ui.ui_interact(usr)
 

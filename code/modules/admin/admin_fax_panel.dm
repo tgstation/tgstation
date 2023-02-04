@@ -1,13 +1,7 @@
 /**
  * If client have R_ADMIN flag, opens an admin fax panel.
  */
-/client/proc/fax_panel()
-	set category = "Admin.Events"
-	set name = "Fax Panel"
-
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(events, fax_panel, "Send and receive documents from the crew.", R_ADMIN)
 	var/datum/fax_panel_interface/ui = new(usr)
 	ui.ui_interact(usr)
 

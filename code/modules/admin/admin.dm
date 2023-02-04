@@ -46,12 +46,8 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
-/datum/admins/proc/spawn_atom(object as text)
-	set category = "Debug"
-	set desc = "(atom path) Spawn an atom"
-	set name = "Spawn"
-
-	if(!check_rights(R_SPAWN) || !object)
+ADMIN_VERB(debug, spawn_atom, "Spawn an atom.", R_SPAWN, object as text)
+	if(!object)
 		return
 
 	var/list/preparsed = splittext(object,":")

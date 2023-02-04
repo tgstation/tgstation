@@ -1,18 +1,5 @@
 ///Allows an admin to send messages on PDA
-/client/proc/message_pda()
-	set name = "PDA Message"
-	set category = "Admin.Events"
-
-	if(!holder || !check_rights(R_ADMIN))
-		return
-
-	holder.message_pda()
-
-///Opens up the PDA Message Panel
-/datum/admins/proc/message_pda()
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(events, message_pda, "Send a PDA message.", R_ADMIN)
 	if(!length(GLOB.TabletMessengers))
 		to_chat(usr, span_warning("ERROR: There are no users you can send a message to"))
 		return

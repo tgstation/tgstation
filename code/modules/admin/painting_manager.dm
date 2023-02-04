@@ -1,9 +1,4 @@
-/datum/admins/proc/paintings_manager()
-	set name = "Paintings Manager"
-	set category = "Admin"
-
-	if(!check_rights(R_ADMIN))
-		return
+ADMIN_VERB(admin, paintings_manager, "Manage paintings and remove things that shouldn't exist.", R_SERVER)
 	var/datum/paintings_manager/ui = new(usr)
 	ui.ui_interact(usr)
 
