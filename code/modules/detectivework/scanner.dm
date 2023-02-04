@@ -85,7 +85,7 @@
 	if(is_scanner_busy)
 		return
 	if(!scan(A,user)) // this should only return FALSE if a runtime occurs during the scan proc, so ideally never
-		balloon_alert(user, "scanner timed out!") // but in case it does, we 'time out' instead of just bricking the scanner
+		balloon_alert(user, "scanner error!") // but in case it does, we 'error' instead of just bricking the scanner
 	is_scanner_busy = FALSE
 
 // this should always return TRUE barring a runtime
