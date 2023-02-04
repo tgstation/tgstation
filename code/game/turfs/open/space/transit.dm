@@ -62,14 +62,9 @@
 		possible_transtitons = SSmapping.levels_by_trait(ZTRAIT_MINING)
 		if(!length(possible_transtitons)) //Just throw them back on station, if not just runtime.
 			possible_transtitons = SSmapping.levels_by_trait(ZTRAIT_STATION)
-	var/_z = pick(possible_transtitons)
 
-	//now select coordinates for a border turf
-	var/_x = rand(min,max)
-	var/_y = rand(min,max)
-
-	var/turf/turf = locate(_x, _y, _z)
-	dumpee.forceMove(turf)
+	//move the dumpee to a random coordinate turf
+	dumpee.forceMove(locate(rand(min,max), rand(min,max), pick(possible_transtitons)))
 
 /turf/open/space/transit/CanBuildHere()
 	return SSshuttle.is_in_shuttle_bounds(src)
