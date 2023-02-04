@@ -32,7 +32,7 @@
 
 	AddElement(/datum/element/bane, target_type = /mob/living/simple_animal/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
-	if(!GLOB.holy_weapon_type && istype(src, /obj/item/nullrod))
+	if(!GLOB.holy_weapon_type && type == /obj/item/nullrod)
 		var/list/rods = list()
 		for(var/obj/item/nullrod/nullrod_type as anything in typesof(/obj/item/nullrod))
 			if(!initial(nullrod_type.chaplain_spawnable))

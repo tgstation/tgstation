@@ -1283,11 +1283,11 @@
 					log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to [src]")
 					message_admins(span_notice("[key_name(usr)] has added [amount] units of [chosen_id] to [src]"))
 
-	if(href_list[VV_HK_TRIGGER_EXPLOSION] && check_rights(R_FUN))
-		usr.client.cmd_admin_explosion(src)
+	if(href_list[VV_HK_TRIGGER_EXPLOSION])
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/explosion, src)
 
-	if(href_list[VV_HK_TRIGGER_EMP] && check_rights(R_FUN))
-		usr.client.cmd_admin_emp(src)
+	if(href_list[VV_HK_TRIGGER_EMP])
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/emp, src)
 
 	if(href_list[VV_HK_SHOW_HIDDENPRINTS] && check_rights(R_ADMIN))
 		usr.client.cmd_show_hiddenprints(src)

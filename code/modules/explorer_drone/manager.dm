@@ -141,11 +141,6 @@
 	. = ..()
 	QDEL_NULL(temp_adventure)
 
-/client/proc/adventure_manager()
-	set category = "Debug"
-	set name = "Adventure Manager"
-
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(debug, adventure_manager, "", R_DEBUG)
 	var/datum/adventure_browser/browser = new()
 	browser.ui_interact(usr)

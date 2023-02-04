@@ -198,6 +198,7 @@
 	icon_state = "flash"
 	transform = matrix(200, 0, 0, 0, 200, 0)
 	plane = LIGHTING_PLANE
+	layer = LIGHTING_ABOVE_ALL
 	blend_mode = BLEND_OVERLAY
 	show_when_dead = TRUE
 	needs_offsetting = FALSE
@@ -215,5 +216,6 @@
 /atom/movable/screen/fullscreen/see_through_darkness
 	icon_state = "nightvision"
 	plane = LIGHTING_PLANE
+	layer = LIGHTING_ABOVE_ALL
 	blend_mode = BLEND_ADD
 	show_when_dead = TRUE

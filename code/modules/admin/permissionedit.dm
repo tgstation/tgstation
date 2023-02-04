@@ -1,9 +1,4 @@
-/client/proc/edit_admin_permissions()
-	set category = "Admin"
-	set name = "Permissions Panel"
-	set desc = "Edit admin permissions"
-	if(!check_rights(R_PERMISSIONS))
-		return
+ADMIN_VERB(admin, permissions_panel, "Edit/Set admin permissions", R_PERMISSIONS)
 	usr.client.holder.edit_admin_permissions()
 
 /datum/admins/proc/edit_admin_permissions(action, target, operation, page)
