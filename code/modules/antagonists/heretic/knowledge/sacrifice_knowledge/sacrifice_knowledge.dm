@@ -372,7 +372,7 @@
 		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/heresy, TRAUMA_RESILIENCE_MAGIC)
 	else
 		RegisterSignal(sac_target, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
-		to_chat(sac_target, span_hypnophrase("Your link to the Mansus feels weaker, as if someone stole all your powers."))
+		to_chat(sac_target, span_hypnophrase("Your link to the Mansus feels weaker, as if someone stole all your powers. You dont think you will be able to cast your spells anytime soon."))
 		gain_knowledge(mansus_restoration)
 
 	// Wherever we end up, we sure as hell won't be able to explain

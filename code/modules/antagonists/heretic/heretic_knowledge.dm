@@ -716,9 +716,9 @@
 	name = "Mansus returnal" // sounds awful
 	desc = "Sacrifice lungs, potted plant and a radio to restore your link to the Mansus."
 	gain_text = "A way to return my powers, at any cost..."
-	required_atoms = (
-		/obj/item/organ/internal/ears,
+	required_atoms = list(
 		/obj/item/kirbyplants,
+		/obj/item/organ/internal/ears,
 		/obj/item/radio,
 	)
 	priority = MAX_KNOWLEDGE_PRIORITY - 4 // below basic rituals so you can see it
