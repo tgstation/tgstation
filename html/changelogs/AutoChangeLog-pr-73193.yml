@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "Some misplaced pixel on TGC cards have been cleaned up."
