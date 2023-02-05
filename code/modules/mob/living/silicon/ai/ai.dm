@@ -250,7 +250,7 @@
 			if(istype(A, initial(AM.power_type)))
 				qdel(A)
 
-/mob/living/silicon/ai/ignite_mob()
+/mob/living/silicon/ai/ignite_mob(silent)
 	return FALSE
 
 /mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
