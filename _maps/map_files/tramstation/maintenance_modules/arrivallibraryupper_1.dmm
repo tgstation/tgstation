@@ -15,6 +15,11 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/aft)
 "g" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/cigbutt,
@@ -29,7 +34,8 @@
 "m" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/iron/smooth,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
@@ -45,7 +51,8 @@
 "p" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
-/turf/open/floor/iron/smooth,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
 "q" = (
 /obj/effect/decal/cleanable/dirt,
@@ -78,6 +85,12 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
+/area/station/maintenance/port/aft)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
 "w" = (
 /obj/effect/decal/cleanable/dirt,
@@ -158,6 +171,11 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
 "Q" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
@@ -188,6 +206,12 @@
 	dir = 4
 	},
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"X" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
 "Y" = (
 /obj/effect/decal/cleanable/dirt,
@@ -280,8 +304,8 @@ a
 "}
 (4,1,1) = {"
 p
-y
-y
+f
+f
 k
 B
 G
@@ -306,14 +330,14 @@ a
 (5,1,1) = {"
 a
 a
-y
+f
 k
 y
 y
 y
 y
 y
-y
+X
 k
 k
 k
@@ -332,13 +356,13 @@ h
 a
 a
 m
-y
-g
-y
-y
-y
-y
-y
+f
+v
+f
+f
+f
+f
+f
 k
 y
 y
@@ -369,7 +393,7 @@ y
 y
 y
 y
-y
+O
 y
 y
 s

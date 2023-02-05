@@ -15,6 +15,12 @@
 "d" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/food_packaging,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/eva)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
 "g" = (
@@ -97,10 +103,27 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
+"M" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/eva)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/eva)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/eva)
 "V" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/floor/iron/smooth,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/eva)
 
 (1,1,1) = {"
@@ -176,7 +199,7 @@ w
 w
 w
 s
-j
+M
 "}
 (6,1,1) = {"
 a
@@ -191,7 +214,7 @@ w
 w
 w
 s
-j
+M
 "}
 (7,1,1) = {"
 a
@@ -213,7 +236,7 @@ w
 w
 s
 z
-j
+Q
 C
 s
 m
@@ -221,7 +244,7 @@ L
 G
 c
 y
-j
+M
 "}
 (9,1,1) = {"
 w
@@ -231,12 +254,12 @@ g
 j
 j
 s
-j
-j
+R
+e
 j
 v
 o
-j
+M
 "}
 (10,1,1) = {"
 w
@@ -246,12 +269,12 @@ s
 s
 H
 s
-j
-j
+M
+M
 d
-j
-j
-j
+M
+M
+M
 "}
 (11,1,1) = {"
 w

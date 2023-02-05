@@ -25,6 +25,12 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
+"l" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/eva)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/food_packaging,
@@ -51,6 +57,12 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
+"F" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/eva)
 "I" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
@@ -73,13 +85,24 @@
 /obj/structure/chair,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/eva)
 "T" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
+"V" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/eva)
 "X" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/cigbutt,
-/turf/open/floor/iron/smooth,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/eva)
 
 (1,1,1) = {"
@@ -155,7 +178,7 @@ L
 L
 T
 t
-e
+R
 "}
 (6,1,1) = {"
 a
@@ -170,7 +193,7 @@ L
 L
 T
 t
-e
+R
 "}
 (7,1,1) = {"
 a
@@ -185,7 +208,7 @@ g
 t
 T
 t
-n
+l
 "}
 (8,1,1) = {"
 L
@@ -200,7 +223,7 @@ e
 t
 T
 t
-e
+R
 "}
 (9,1,1) = {"
 L
@@ -208,29 +231,29 @@ L
 T
 t
 e
-e
+V
 e
 e
 e
 t
 f
 t
-e
+R
 "}
 (10,1,1) = {"
 T
 T
 t
 t
-e
+F
 X
-e
-e
-e
-e
-e
-e
-e
+R
+R
+R
+R
+R
+R
+R
 "}
 (11,1,1) = {"
 T

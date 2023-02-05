@@ -23,6 +23,12 @@
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
+"l" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/aft)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
@@ -31,7 +37,8 @@
 "p" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
-/turf/open/floor/iron/smooth,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
@@ -50,6 +57,17 @@
 /area/station/maintenance/port/aft)
 "y" = (
 /turf/closed/wall,
+/area/station/maintenance/port/aft)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/aft)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
 "G" = (
 /obj/effect/decal/cleanable/dirt,
@@ -165,8 +183,8 @@ a
 "}
 (4,1,1) = {"
 p
-Z
-Z
+A
+A
 y
 Q
 Q
@@ -191,7 +209,7 @@ a
 (5,1,1) = {"
 a
 a
-Z
+A
 y
 y
 y
@@ -216,14 +234,14 @@ a
 (6,1,1) = {"
 a
 a
-Z
-Z
-Z
-Z
-Z
-Z
-Z
-Z
+A
+A
+A
+A
+A
+A
+A
+A
 k
 X
 h
@@ -248,7 +266,7 @@ a
 a
 a
 a
-Z
+E
 r
 X
 h
@@ -273,7 +291,7 @@ a
 a
 a
 a
-Z
+A
 b
 X
 h
@@ -298,7 +316,7 @@ a
 a
 a
 a
-Z
+A
 y
 y
 Q
@@ -323,8 +341,8 @@ a
 a
 a
 a
-Z
-Z
+A
+l
 y
 y
 y

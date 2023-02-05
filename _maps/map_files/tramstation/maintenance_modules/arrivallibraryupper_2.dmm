@@ -16,7 +16,8 @@
 "p" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
-/turf/open/floor/iron/smooth,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
@@ -35,6 +36,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
+"B" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/aft)
 "D" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/atmospherics_portable,
@@ -51,6 +57,12 @@
 /obj/structure/closet/cardboard,
 /obj/effect/spawner/random/maintenance/six,
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
 "P" = (
 /obj/effect/decal/cleanable/dirt,
@@ -161,8 +173,8 @@ a
 "}
 (4,1,1) = {"
 p
-y
-y
+B
+B
 n
 n
 n
@@ -187,11 +199,11 @@ a
 (5,1,1) = {"
 a
 a
-y
+B
 n
-y
-y
-y
+B
+B
+B
 Z
 D
 n
@@ -212,14 +224,14 @@ a
 (6,1,1) = {"
 a
 a
-y
-y
-y
+B
+B
+B
 Z
-y
-y
-y
-y
+B
+B
+B
+B
 n
 n
 n
@@ -244,7 +256,7 @@ a
 a
 a
 a
-y
+B
 n
 r
 y
@@ -269,7 +281,7 @@ a
 a
 a
 a
-y
+B
 n
 s
 P
@@ -294,7 +306,7 @@ a
 a
 a
 a
-y
+B
 n
 n
 y
@@ -319,8 +331,8 @@ a
 a
 a
 a
-y
-y
+B
+O
 n
 n
 n

@@ -64,6 +64,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "go" = (
@@ -213,11 +214,23 @@
 "xp" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/starboard/lesser)
+"xr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
 "xx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/spawner/random/trash/cigbutt,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "yr" = (
@@ -270,6 +283,14 @@
 "Ej" = (
 /turf/template_noop,
 /area/template_noop)
+"EV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
 "Gr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/cigbutt,
@@ -824,7 +845,7 @@ yV
 yV
 MC
 Vn
-fL
+xr
 YO
 HD
 uL
@@ -851,7 +872,7 @@ yV
 yV
 MC
 yW
-fL
+xr
 JI
 QO
 yJ
@@ -860,7 +881,7 @@ MC
 MC
 MC
 MC
-fZ
+EV
 Ej
 Ej
 Ej
@@ -878,7 +899,7 @@ yV
 yV
 MC
 Qv
-fL
+xr
 fZ
 fZ
 fZ

@@ -88,9 +88,26 @@
 /obj/structure/falsewall,
 /turf/open/floor/plating,
 /area/station/maintenance/department/eva)
+"N" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/eva)
 "T" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
+"U" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/eva)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/eva)
 "Y" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -181,7 +198,7 @@ T
 T
 t
 g
-e
+N
 "}
 (6,1,1) = {"
 a
@@ -196,7 +213,7 @@ T
 T
 t
 H
-e
+N
 "}
 (7,1,1) = {"
 a
@@ -211,7 +228,7 @@ T
 T
 t
 J
-e
+N
 "}
 (8,1,1) = {"
 T
@@ -226,7 +243,7 @@ T
 T
 t
 b
-e
+W
 "}
 (9,1,1) = {"
 T
@@ -241,7 +258,7 @@ t
 t
 f
 t
-e
+N
 "}
 (10,1,1) = {"
 T
@@ -251,12 +268,12 @@ t
 t
 t
 t
-e
-e
-e
-e
-e
-e
+U
+N
+N
+N
+N
+N
 "}
 (11,1,1) = {"
 t

@@ -104,6 +104,12 @@
 	},
 /turf/open/misc/asteroid,
 /area/station/asteroid)
+"kP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
 "le" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
@@ -1247,7 +1253,7 @@ KC
 KC
 KC
 KC
-vq
+kP
 Dx
 To
 JU
