@@ -133,7 +133,6 @@
 			new /obj/effect/gibspawner/generic(get_turf(living_mob), living_mob)
 			if(living_mob.stat == DEAD)
 				var/mob/living/basic/blankbody/newmob = new(loc)
-				newmob = new(loc)
 				newmob.name = "[living_mob]"
 				newmob.desc = "It's [living_mob], but [living_mob.p_their()] flesh has an ashy texture, and [living_mob.p_their()] face is featureless save an eerie smile."
 				src.visible_message(span_warning("[living_mob] reemerges from the link!"))
