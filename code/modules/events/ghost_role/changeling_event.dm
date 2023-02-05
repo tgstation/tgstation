@@ -47,9 +47,20 @@
 	var/datum/mind/player_mind = new(selected.key)
 	player_mind.active = TRUE
 
-	var/start_side = pick(GLOB.cardinals)
-	var/start_z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
-	var/turf/picked_start = spaceDebrisStartLoc(start_side, start_z)
+	var/turf/picked_start
+
+	if (SSmapping.is_planetary())
+		var/list/possible_start = list()
+		for(var/obj/effect/landmark/carpspawn/spawn_point in GLOB.landmarks_list)
+			possible_start += get_turf(spawn_point)
+		picked_start = pick(possible_start)
+	else
+		var/start_z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
+		var/start_side = pick(GLOB.cardinals)
+		picked_start = spaceDebrisStartLoc(start_side, start_z)
+
+	if (!picked_start)
+		stack_trace("No valid spawn location for changeling meteor")
 
 	var/obj/effect/meteor/meaty/changeling/changeling_meteor = new(picked_start, get_random_station_turf())
 	var/mob/living/carbon/human/new_changeling = new(picked_start)
