@@ -14,7 +14,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	circuit = /obj/item/circuitboard/computer/tram_controls
 	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
+	light_color = COLOR_BLUE_LIGHT
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement
 
 	///Weakref to the tram piece we control
@@ -245,7 +245,6 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	density = FALSE
 	// pointless if it only takes 2 seconds to cross but updates every 2 seconds
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
-
 	light_range = 1.5
 	light_power = 3
 	light_color = COLOR_VIBRANT_LIME
@@ -556,8 +555,8 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	icon = 'icons/obj/machines/tram_sign.dmi'
 	icon_state = "desto_off"
 	base_icon_state = "desto_"
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 1.2
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.47
 	anchored = TRUE
 	density = FALSE
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
