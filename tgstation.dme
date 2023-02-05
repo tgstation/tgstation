@@ -3422,6 +3422,7 @@
 #include "code\modules\industrial_lift\tram\tram_lift_master.dm"
 #include "code\modules\industrial_lift\tram\tram_machinery.dm"
 #include "code\modules\industrial_lift\tram\tram_override_objects.dm"
+#include "code\modules\industrial_lift\tram\tram_structures.dm"
 #include "code\modules\industrial_lift\tram\tram_walls.dm"
 #include "code\modules\industrial_lift\tram\tram_windows.dm"
 #include "code\modules\instruments\items.dm"
