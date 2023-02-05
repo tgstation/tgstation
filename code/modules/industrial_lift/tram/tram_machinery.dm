@@ -703,9 +703,11 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	obj_flags |= EMAGGED
 
 /obj/machinery/door/window/tram/proc/start_malfunction()
-		message_admins("Door malf status is [malfunctioning]. Changing to TRUE.")
-		malfunctioning = TRUE
-		process()
+	if(obj_flags & EMAGGED)
+		return
+
+	malfunctioning = TRUE
+	process()
 
 /obj/machinery/door/window/tram/proc/end_malfunction()
 	if(obj_flags & EMAGGED)

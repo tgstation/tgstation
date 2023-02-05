@@ -37,15 +37,9 @@
 
 /datum/round_event/tram_malfunction/start()
 	for(var/obj/machinery/crossing_signal/signal as anything in GLOB.tram_signals)
-		if(signal.obj_flags & EMAGGED)
-			return
-
 		signal.start_malfunction()
 
 	for(var/obj/machinery/door/window/tram/door as anything in GLOB.tram_doors)
-		if(door.obj_flags & EMAGGED)
-			return
-
 		door.start_malfunction()
 
 	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)
