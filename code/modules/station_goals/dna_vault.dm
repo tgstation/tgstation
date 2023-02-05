@@ -56,7 +56,7 @@
 	if(..())
 		return TRUE
 	for(var/obj/machinery/dna_vault/V in GLOB.machines)
-		if(V.animals.len >= animal_count && V.plants.len >= plant_count && V.dna.len >= human_count)
+		if(V.animal_dna.len >= animal_count && V.plant_dna.len >= plant_count && V.human_dna.len >= human_count)
 			return TRUE
 	return FALSE
 
@@ -79,9 +79,9 @@
 	var/animals_max = 100
 	var/plants_max = 100
 	var/dna_max = 100
-	var/list/animals = list()
-	var/list/plants = list()
-	var/list/dna = list()
+	var/list/animal_dna = list()
+	var/list/plant_dna = list()
+	var/list/human_dna = list()
 
 	var/completed = FALSE
 	var/list/power_lottery = list()
@@ -126,20 +126,21 @@
 		var/animal_dna_length = length(our_probe.stored_dna_animal)
 		if(plant_dna_length)
 			uploaded += plant_dna_length
-			plants += our_probe.stored_dna_plants
+			plant_dna += our_probe.stored_dna_plants
 			our_probe.stored_dna_plants.Cut()
 		if(human_dna_length)
 			uploaded += human_dna_length
-			dna += our_probe.stored_dna_human
+			human_dna += our_probe.stored_dna_human
 			our_probe.stored_dna_human.Cut()
 		if(animal_dna_length)
 			uploaded += animal_dna_length
-			animals += our_probe.stored_dna_animal
+			animal_dna += our_probe.stored_dna_animal
 			our_probe.stored_dna_animal.Cut()
 		check_goal()
+		playsound(src, 'sound/misc/compiler-stage1.ogg', 50)
 		to_chat(user, span_notice("[uploaded] new datapoints uploaded."))
-	else
-		return ..()
+
+	return ..()
 
 /obj/machinery/dna_vault/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -170,11 +171,11 @@
 
 /obj/machinery/dna_vault/ui_data(mob/user) //TODO Make it % bars maybe
 	var/list/data = list()
-	data["plants"] = plants.len
+	data["plants"] = plant_dna.len
 	data["plants_max"] = plants_max
-	data["animals"] = animals.len
+	data["animals"] = animal_dna.len
 	data["animals_max"] = animals_max
-	data["dna"] = dna.len
+	data["dna"] = human_dna.len
 	data["dna_max"] = dna_max
 	data["completed"] = completed
 	data["used"] = TRUE
@@ -201,7 +202,7 @@
 			. = TRUE
 
 /obj/machinery/dna_vault/proc/check_goal()
-	if(plants.len >= plants_max && animals.len >= animals_max && dna.len >= dna_max)
+	if(plant_dna.len >= plants_max && animal_dna.len >= animals_max && human_dna.len >= dna_max)
 		completed = TRUE
 
 /obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H, upgrade_type)

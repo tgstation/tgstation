@@ -29,6 +29,8 @@
 	var/list/stored_dna_human = list()
 	///weak ref to the dna vault
 	var/datum/weakref/dna_vault_ref
+	///holder for the vault
+	var/obj/machinery/dna_vault/our_vault
 
 /obj/item/dna_probe/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -39,9 +41,10 @@
 		. |= AFTERATTACK_PROCESSED_ITEM
 	if(istype(target, /obj/machinery/dna_vault) && !dna_vault_ref)
 		dna_vault_ref = WEAKREF(target)//linking the dna vault with the probe
+	 	our_vault = dna_vault_ref?.resolve()
 		balloon_alert(user, "vault linked")
-		var/obj/machinery/dna_vault/our_vault = dna_vault_ref?.resolve()
-	else if(!dna_vault_ref)//for when we try to upload with no linked vault
+		playsound(src, 'sound/machines/terminal_success.ogg', 50)
+	else if (!our_vault)//for when we try to upload with no linked vault
 		playsound(src, 'sound/machines/scanbuzz.ogg', 50)
 		balloon_alert(user, "need a database!")
 		return
@@ -50,6 +53,9 @@
 		var/obj/machinery/hydroponics/hydro_tray = target
 		if(!hydro_tray.myseed)
 			return
+		if(our_vault.plant_dna[hydro_tray.myseed.type])
+			to_chat(user, span_notice("Plant data is already present in vault storage."))
+			return
 		if(stored_dna_plants[hydro_tray.myseed.type])
 			to_chat(user, span_notice("Plant data already present in local storage."))
 			return
@@ -57,6 +63,7 @@
 			to_chat(user, span_alert("Plant needs to be ready to harvest to perform full data scan.")) //Because space dna is actually magic
 			return .
 		stored_dna_plants[hydro_tray.myseed.type] = TRUE
+		playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
 		balloon_alert(user, "data added")
 
 	if(allowed_scans & DNA_PROBE_SCAN_ANIMALS)
@@ -65,17 +72,24 @@
 			if(istype(target, /mob/living/basic/carp))
 				carp_dna_loaded = TRUE
 			var/mob/living/living_target = target
+			if(our_vault.animal_dna[living_target.type])
+				to_chat(user, span_notice("Animal data already present in vault storage."))
+				return
 			if(stored_dna_animal[living_target.type])
-				to_chat(user, span_alert("Animal data already present in local storage."))
+				to_chat(user, span_notice("Animal data already present in local storage."))
 				return
 			if(!(living_target.mob_biotypes & MOB_ORGANIC))
 				to_chat(user, span_alert("No compatible DNA detected."))
 				return .
 			stored_dna_animal[living_target.type] = TRUE
+			playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
 			balloon_alert(user, "data added")
 
 	if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && ishuman(target))
 		var/mob/living/carbon/human/human_target = target
+		if(our_vault.human_dna[human_target.dna.unique_identity])
+			to_chat(user, span_notice("Humanoid data already present in vault storage."))
+			return
 		if(stored_dna_human[human_target.dna.unique_identity])
 			to_chat(user, span_notice("Humanoid data already present in local storage."))
 			return
@@ -83,6 +97,7 @@
 			to_chat(user, span_alert("No compatible DNA detected."))
 			return .
 		stored_dna_human[human_target.dna.unique_identity] = TRUE
+		playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
 		balloon_alert(user, "data added")
 
 
