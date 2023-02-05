@@ -1450,7 +1450,7 @@
 /// Global list that containes cached fire overlays for mobs
 GLOBAL_LIST_EMPTY(fire_appearances)
 
-/mob/living/proc/ignite_mob()
+/mob/living/proc/ignite_mob(silent)
 	if(fire_stacks <= 0)
 		return FALSE
 
@@ -1458,7 +1458,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(!fire_status || fire_status.on_fire)
 		return FALSE
 
-	return fire_status.ignite()
+	return fire_status.ignite(silent)
 
 /mob/living/proc/update_fire()
 	var/datum/status_effect/fire_handler/fire_handler = has_status_effect(/datum/status_effect/fire_handler)
