@@ -132,14 +132,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	lattice_underneath = old_lattice_underneath
 
-	var/area/our_area = new_turf.loc
-	if(new_turf.space_lit && !our_area.area_has_base_lighting)
-		// We are guarenteed to have these overlays because of how generation works
-		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
-		new_turf.add_overlay(overlay)
-	else if (old_space_lit && !our_area.area_has_base_lighting)
-		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
-		new_turf.cut_overlay(overlay)
 
 	if(SSlighting.initialized)
 		new_turf.lighting_object = old_lighting_object
@@ -155,6 +147,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	// We will only run this logic if the tile is not on the prime z layer, since we use area overlays to cover that
 	if(SSmapping.z_level_to_plane_offset[z])
+		var/area/our_area = new_turf.loc
 		if(our_area.lighting_effects)
 			new_turf.add_overlay(our_area.lighting_effects[SSmapping.z_level_to_plane_offset[z] + 1])
 

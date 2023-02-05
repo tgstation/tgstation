@@ -109,3 +109,7 @@
 			cut_overlay(old_area.lighting_effects[index])
 		if(new_area.lighting_effects)
 			add_overlay(new_area.lighting_effects[index])
+
+	// If we're changing into an area with no lighting, and we're lit, light ourselves
+	if(!new_area.lighting_effects && old_area.lighting_effects && space_lit)
+		overlays += GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
