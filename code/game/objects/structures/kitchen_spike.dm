@@ -18,12 +18,7 @@
 	. += "It can be <b>welded</b> apart."
 	. += "You could attach <b>[MEATSPIKE_IRONROD_REQUIREMENT]</b> iron rods to it to create a <b>Meat Spike</b>."
 
-/obj/structure/kitchenspike_frame/add_context(
-	atom/source,
-	list/context,
-	obj/item/held_item,
-	mob/living/user,
-)
+/obj/structure/kitchenspike_frame/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	var/message = ""
 	if(held_item.tool_behaviour == TOOL_WELDER)
 		message = "Deconstruct"
@@ -86,12 +81,7 @@
 	. += "<b>Drag a mob</b> onto it to hook it in place."
 	. += "A <b>crowbar</b> could remove those spikes."
 
-/obj/structure/kitchenspike/add_context(
-	atom/source,
-	list/context,
-	obj/item/held_item,
-	mob/living/user
-)
+/obj/structure/kitchenspike/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item.tool_behaviour == TOOL_CROWBAR)
 		context[SCREENTIP_CONTEXT_LMB] = "Remove Spikes"
 		return CONTEXTUAL_SCREENTIP_SET
