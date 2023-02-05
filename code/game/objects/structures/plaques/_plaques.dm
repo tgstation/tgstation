@@ -24,7 +24,7 @@
 
 /obj/structure/plaque/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	switch (held_item.tool_behaviour)
+	switch (held_item?.tool_behaviour)
 		if (TOOL_WELDER)
 			context[SCREENTIP_CONTEXT_LMB] = "Repair"
 			return CONTEXTUAL_SCREENTIP_SET
