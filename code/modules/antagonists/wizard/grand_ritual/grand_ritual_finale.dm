@@ -1,3 +1,7 @@
+#define DOOM_SINGULARITY "singularity"
+#define DOOM_TESLA "tesla"
+#define DOOM_METEORS "meteors"
+
 /**
  * A big final event to run when you complete seven rituals
  */
@@ -378,16 +382,26 @@
 	priority_announce(pick(possible_last_words), null, 'sound/magic/voidblink.ogg', sender_override = "[invoker.real_name]")
 	var/turf/current_location = get_turf(invoker)
 	invoker.gib()
-	var/doom = rand(1, 3)
-	switch(doom)
-		if (1)
+
+	var/static/list/doom_options = list()
+	if (!length(doom_options))
+		doom_options = list(DOOM_SINGULARITY, DOOM_TESLA)
+		if (!SSmapping.config.planetary)
+			doom_options += DOOM_METEORS
+
+	switch(pick(doom_options))
+		if (DOOM_SINGULARITY)
 			var/obj/singularity/singulo = new(current_location)
 			singulo.energy = 300
-		if (2)
+		if (DOOM_TESLA)
 			var/obj/energy_ball/tesla = new (current_location)
 			tesla.energy = 200
-		if (3)
+		if (DOOM_METEORS)
 			var/datum/dynamic_ruleset/roundstart/meteor/meteors = new()
 			meteors.meteordelay = 0
 			var/datum/game_mode/dynamic/mode = SSticker.mode
 			mode.execute_roundstart_rule(meteors) // Meteors will continue until morale is crushed.
+
+#undef DOOM_SINGULARITY
+#undef DOOM_TESLA
+#undef DOOM_METEORS
