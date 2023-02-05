@@ -24,13 +24,13 @@
 	obj/item/held_item,
 	mob/living/user,
 )
-	var/message = null
+	var/message = ""
 	if(held_item.tool_behaviour == TOOL_WELDER)
 		message = "Deconstruct"
 	else if(held_item.tool_behaviour == TOOL_WRENCH)
 		message = "Bolt Down Frame"
 
-	if(isnull(message))
+	if(!message)
 		return NONE
 	context[SCREENTIP_CONTEXT_LMB] = message
 	return CONTEXTUAL_SCREENTIP_SET
