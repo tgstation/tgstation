@@ -240,7 +240,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	max_integrity = 250
 	integrity_failure = 0.25
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 2.4
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.074
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.74
 	anchored = TRUE
 	density = FALSE
 	// pointless if it only takes 2 seconds to cross but updates every 2 seconds
