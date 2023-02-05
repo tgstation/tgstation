@@ -26,7 +26,7 @@
 
 /obj/structure/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	switch (held_item.tool_behaviour)
+	switch (held_item?.tool_behaviour)
 		if (TOOL_WELDER)
 			context[SCREENTIP_CONTEXT_LMB] = "Repair"
 			return CONTEXTUAL_SCREENTIP_SET
@@ -35,6 +35,7 @@
 				return ///Cannot be unfastened regardless.
 			context[SCREENTIP_CONTEXT_LMB] = "Unfasten"
 			return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
 /obj/structure/sign/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -166,7 +167,7 @@
 
 /obj/item/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(is_editable && istype(I, /obj/item/pen))
+	if(is_editable && istype(held_item, /obj/item/pen))
 		context[SCREENTIP_CONTEXT_LMB] = "Change design"
 		return CONTEXTUAL_SCREENTIP_SET
 

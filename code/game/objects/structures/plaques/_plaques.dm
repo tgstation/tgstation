@@ -32,8 +32,8 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Unfasten"
 			return CONTEXTUAL_SCREENTIP_SET
 	if(istype(held_item, /obj/item/pen/fountain) && !engraved)
-			context[SCREENTIP_CONTEXT_LMB] = "Engrave"
-			return CONTEXTUAL_SCREENTIP_SET
+		context[SCREENTIP_CONTEXT_LMB] = "Engrave"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/plaque/attack_hand(mob/user, list/modifiers)
 	. = ..()
