@@ -363,21 +363,21 @@
 /// Transforms an area's turfs and objects into a different theme
 /datum/crystal_warp_theme
 	/// Friendly name of theme
-	var/name
+	var/name = ""
 	/// Typepath of floor to replace open turfs with
 	var/floor
-	/// Typepath fo wall to replace closed turfs with
+	/// Typepath of wall to replace closed turfs with
 	var/wall
 	/// Typepath of object to replace chairs with
 	var/chair
 	/// Typepath of object to replace tables with
 	var/table
-	/// Typepath of wildlife to potentially spawn on transformed open turfs
-	var/list/wildlife = list()
-	/// Chance per turf to create wildlife
-	var/wildlife_chance = 8
+	/// Typepath of things to potentially spawn on transformed open turfs
+	var/list/flora_and_fauna = list()
+	/// Chance per turf to create the things in the list above
+	var/flora_and_fauna_chance = 8
 
-/// Change appropriate objects in provided area to those matching our theme, and spawn some wildlife
+/// Change appropriate objects in provided area to those matching our theme, and spawn some plants or animals
 /datum/crystal_warp_theme/proc/transform_area(area/target_area)
 	if (target_area.outdoors)
 		return FALSE
@@ -406,9 +406,9 @@
 	if(!isopenturf(target_turf))
 		return
 
-	if(length(wildlife) && !target_turf.is_blocked_turf(exclude_mobs = TRUE) && prob(wildlife_chance))
-		var/atom/new_wildlife = pick(wildlife)
-		new new_wildlife(target_turf)
+	if(length(flora_and_fauna) && !target_turf.is_blocked_turf(exclude_mobs = TRUE) && prob(flora_and_fauna_chance))
+		var/atom/new_flora_and_fauna = pick(flora_and_fauna)
+		new new_flora_and_fauna(target_turf)
 
 	if(isopenspaceturf(target_turf))
 		return // We replace space but not open space for whatever reason
@@ -428,8 +428,8 @@
 	name = "lavaland"
 	floor = /turf/open/floor/fakebasalt
 	wall = /turf/closed/wall/mineral/cult
-	wildlife = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
-	wildlife_chance = 1
+	flora_and_fauna = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
+	flora_and_fauna_chance = 1
 
 // Snow terrain is slow to move in and cold! Get the assistants to shovel your driveway.
 /datum/crystal_warp_theme/winter
@@ -438,7 +438,7 @@
 	wall = /turf/closed/wall/mineral/wood
 	chair = /obj/structure/chair/wood
 	table = /obj/structure/table/glass
-	wildlife = list(
+	flora_and_fauna = list(
 		/obj/structure/flora/grass/both/style_random,
 		/obj/structure/flora/grass/brown/style_random,
 		/obj/structure/flora/grass/green/style_random,
@@ -451,7 +451,7 @@
 	wall = /turf/closed/wall/mineral/wood
 	chair = /obj/structure/chair/wood
 	table = /obj/structure/table/wood
-	wildlife = list(
+	flora_and_fauna = list(
 		/mob/living/carbon/human/species/monkey,
 		/obj/structure/flora/bush/ferny/style_random,
 		/obj/structure/flora/bush/grassy/style_random,
@@ -460,7 +460,7 @@
 		/obj/structure/flora/bush/sparsegrass/style_random,
 		/obj/structure/flora/bush/sunny/style_random,
 	)
-	wildlife_chance = 20
+	flora_and_fauna_chance = 20
 
 // Beneficial, turns stuff into alien alloy which is useful to cargo and research. Also repairs atmos.
 /datum/crystal_warp_theme/ayylmao
