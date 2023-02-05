@@ -41,7 +41,7 @@
 		. |= AFTERATTACK_PROCESSED_ITEM
 	if(istype(target, /obj/machinery/dna_vault) && !dna_vault_ref)
 		dna_vault_ref = WEAKREF(target)//linking the dna vault with the probe
-	 	our_vault = dna_vault_ref?.resolve()
+		our_vault = dna_vault_ref?.resolve()
 		balloon_alert(user, "vault linked")
 		playsound(src, 'sound/machines/terminal_success.ogg', 50)
 	else if (!our_vault)//for when we try to upload with no linked vault

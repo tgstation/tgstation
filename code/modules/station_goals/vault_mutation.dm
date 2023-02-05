@@ -115,9 +115,6 @@
 	if(improved_lungs)
 		improved_lungs.plas_breath_dam_min *= 0
 		improved_lungs.plas_breath_dam_max *= 0
-	else
-		to_chat(acquirer, span_alert("Our lungs are missing!"))
-		return
 	RegisterSignal(acquirer, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(remove_modification))
 	RegisterSignal(acquirer, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(reapply_modification))
 
