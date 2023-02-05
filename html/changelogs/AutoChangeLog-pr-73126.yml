@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - qol: "examining a meat spike frame & meat spike will tell you about itself"
