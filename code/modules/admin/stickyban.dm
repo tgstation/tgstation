@@ -481,5 +481,10 @@
 
 	. = list2params(.)
 
-ADMIN_VERB(admin, sticky_ban_panel, "Sticky Ban Panel", "", R_BAN)
-	usr.client.holder.stickyban_show()
+
+/client/proc/stickybanpanel()
+	set name = "Sticky Ban Panel"
+	set category = "Admin"
+	if (!holder)
+		return
+	holder.stickyban_show()

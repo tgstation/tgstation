@@ -1,154 +1,182 @@
 // Admin Tab - Game Verbs
 
-ADMIN_CONTEXT_ENTRY(context_player_panel, "Show Player Panel", R_ADMIN, mob/player in GLOB.mob_list)
-	log_admin("[key_name(usr)] checked the individual player panel for [key_name(player)][isobserver(usr)?"":" while in game"].")
-	var/body = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Options for [player.key]</title></head>"
-	body += "<body>Options panel for <b>[player]</b>"
-	if(player.client)
-		body += " played by <b>[player.client]</b> "
-		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=[(GLOB.admin_datums[player.client.ckey] || GLOB.deadmins[player.client.ckey]) ? "rank" : "add"];key=[player.key]'>[player.client.holder ? player.client.holder.rank_names() : "Player"]</A>\]"
-		if(CONFIG_GET(flag/use_exp_tracking))
-			body += "\[<A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(player)]'>" + player.client.get_exp_living(FALSE) + "</a>\]"
+/datum/admins/proc/show_player_panel(mob/M in GLOB.mob_list)
+	set category = "Admin.Game"
+	set name = "Show Player Panel"
+	set desc="Edit player (respawn, ban, heal, etc)"
 
-	if(isnewplayer(player))
+	if(!check_rights())
+		return
+
+	log_admin("[key_name(usr)] checked the individual player panel for [key_name(M)][isobserver(usr)?"":" while in game"].")
+
+	if(!M)
+		to_chat(usr, span_warning("You seem to be selecting a mob that doesn't exist anymore."), confidential = TRUE)
+		return
+
+	var/body = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Options for [M.key]</title></head>"
+	body += "<body>Options panel for <b>[M]</b>"
+	if(M.client)
+		body += " played by <b>[M.client]</b> "
+		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=[(GLOB.admin_datums[M.client.ckey] || GLOB.deadmins[M.client.ckey]) ? "rank" : "add"];key=[M.key]'>[M.client.holder ? M.client.holder.rank_names() : "Player"]</A>\]"
+		if(CONFIG_GET(flag/use_exp_tracking))
+			body += "\[<A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(M)]'>" + M.client.get_exp_living(FALSE) + "</a>\]"
+
+	if(isnewplayer(M))
 		body += " <B>Hasn't Entered Game</B> "
 	else
-		body += " \[<A href='?_src_=holder;[HrefToken()];revive=[REF(player)]'>Heal</A>\] "
+		body += " \[<A href='?_src_=holder;[HrefToken()];revive=[REF(M)]'>Heal</A>\] "
 
-	if(player.ckey)
-		body += "<br>\[<A href='?_src_=holder;[HrefToken()];ppbyckey=[player.ckey];ppbyckeyorigmob=[REF(player)]'>Find Updated Panel</A>\]"
+	if(M.ckey)
+		body += "<br>\[<A href='?_src_=holder;[HrefToken()];ppbyckey=[M.ckey];ppbyckeyorigmob=[REF(M)]'>Find Updated Panel</A>\]"
 
-	if(player.client)
-		body += "<br>\[<b>First Seen:</b> [player.client.player_join_date]\]\[<b>Byond account registered on:</b> [player.client.account_join_date]\]"
+	if(M.client)
+		body += "<br>\[<b>First Seen:</b> [M.client.player_join_date]\]\[<b>Byond account registered on:</b> [M.client.account_join_date]\]"
 		body += "<br><br><b>CentCom Galactic Ban DB: </b> "
 		if(CONFIG_GET(string/centcom_ban_db))
-			body += "<a href='?_src_=holder;[HrefToken()];centcomlookup=[player.client.ckey]'>Search</a>"
+			body += "<a href='?_src_=holder;[HrefToken()];centcomlookup=[M.client.ckey]'>Search</a>"
 		else
 			body += "<i>Disabled</i>"
 		body += "<br><br><b>Show related accounts by:</b> "
-		body += "\[ <a href='?_src_=holder;[HrefToken()];showrelatedacc=cid;client=[REF(player.client)]'>CID</a> | "
-		body += "<a href='?_src_=holder;[HrefToken()];showrelatedacc=ip;client=[REF(player.client)]'>IP</a> \]"
+		body += "\[ <a href='?_src_=holder;[HrefToken()];showrelatedacc=cid;client=[REF(M.client)]'>CID</a> | "
+		body += "<a href='?_src_=holder;[HrefToken()];showrelatedacc=ip;client=[REF(M.client)]'>IP</a> \]"
 		var/full_version = "Unknown"
-		if(player.client.byond_version)
-			full_version = "[player.client.byond_version].[player.client.byond_build ? player.client.byond_build : "xxx"]"
+		if(M.client.byond_version)
+			full_version = "[M.client.byond_version].[M.client.byond_build ? M.client.byond_build : "xxx"]"
 		body += "<br>\[<b>Byond version:</b> [full_version]\]<br>"
 
 
 	body += "<br><br>\[ "
-	body += "<a href='?_src_=vars;[HrefToken()];Vars=[REF(player)]'>VV</a> - "
-	if(player.mind)
-		body += "<a href='?_src_=holder;[HrefToken()];traitor=[REF(player)]'>TP</a> - "
-		body += "<a href='?_src_=holder;[HrefToken()];skill=[REF(player)]'>SKILLS</a> - "
+	body += "<a href='?_src_=vars;[HrefToken()];Vars=[REF(M)]'>VV</a> - "
+	if(M.mind)
+		body += "<a href='?_src_=holder;[HrefToken()];traitor=[REF(M)]'>TP</a> - "
+		body += "<a href='?_src_=holder;[HrefToken()];skill=[REF(M)]'>SKILLS</a> - "
 	else
-		body += "<a href='?_src_=holder;[HrefToken()];initmind=[REF(player)]'>Init Mind</a> - "
-	if (iscyborg(player))
-		body += "<a href='?_src_=holder;[HrefToken()];borgpanel=[REF(player)]'>BP</a> - "
-	body += "<a href='?priv_msg=[player.ckey]'>PM</a> - "
-	body += "<a href='?_src_=holder;[HrefToken()];subtlemessage=[REF(player)]'>SM</a> - "
-	if (ishuman(player) && player.mind)
-		body += "<a href='?_src_=holder;[HrefToken()];HeadsetMessage=[REF(player)]'>HM</a> - "
-	body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(player)]'>FLW</a> - "
+		body += "<a href='?_src_=holder;[HrefToken()];initmind=[REF(M)]'>Init Mind</a> - "
+	if (iscyborg(M))
+		body += "<a href='?_src_=holder;[HrefToken()];borgpanel=[REF(M)]'>BP</a> - "
+	body += "<a href='?priv_msg=[M.ckey]'>PM</a> - "
+	body += "<a href='?_src_=holder;[HrefToken()];subtlemessage=[REF(M)]'>SM</a> - "
+	if (ishuman(M) && M.mind)
+		body += "<a href='?_src_=holder;[HrefToken()];HeadsetMessage=[REF(M)]'>HM</a> - "
+	body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a> - "
 	//Default to client logs if available
 	var/source = LOGSRC_MOB
-	if(player.ckey)
+	if(M.ckey)
 		source = LOGSRC_CKEY
-	body += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(player)];log_src=[source]'>LOGS</a>\] <br>"
+	body += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_src=[source]'>LOGS</a>\] <br>"
 
-	body += "<b>Mob type</b> = [player.type]<br><br>"
+	body += "<b>Mob type</b> = [M.type]<br><br>"
 
-	body += "<A href='?_src_=holder;[HrefToken()];boot2=[REF(player)]'>Kick</A> | "
-	if(player.client)
-		body += "<A href='?_src_=holder;[HrefToken()];newbankey=[player.key];newbanip=[player.client.address];newbancid=[player.client.computer_id]'>Ban</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];boot2=[REF(M)]'>Kick</A> | "
+	if(M.client)
+		body += "<A href='?_src_=holder;[HrefToken()];newbankey=[M.key];newbanip=[M.client.address];newbancid=[M.client.computer_id]'>Ban</A> | "
 	else
-		body += "<A href='?_src_=holder;[HrefToken()];newbankey=[player.key]'>Ban</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];newbankey=[M.key]'>Ban</A> | "
 
-	body += "<A href='?_src_=holder;[HrefToken()];showmessageckey=[player.ckey]'>Notes | Messages | Watchlist</A> | "
-	if(player.client)
-		body += "| <A href='?_src_=holder;[HrefToken()];sendtoprison=[REF(player)]'>Prison</A> | "
-		body += "\ <A href='?_src_=holder;[HrefToken()];sendbacktolobby=[REF(player)]'>Send back to Lobby</A> | "
-		var/muted = player.client.prefs.muted
+	body += "<A href='?_src_=holder;[HrefToken()];showmessageckey=[M.ckey]'>Notes | Messages | Watchlist</A> | "
+	if(M.client)
+		body += "| <A href='?_src_=holder;[HrefToken()];sendtoprison=[REF(M)]'>Prison</A> | "
+		body += "\ <A href='?_src_=holder;[HrefToken()];sendbacktolobby=[REF(M)]'>Send back to Lobby</A> | "
+		var/muted = M.client.prefs.muted
 		body += "<br><b>Mute: </b> "
-		body += "\[<A href='?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
-		body += "<A href='?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
-		body += "<A href='?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_PRAY]'><font color='[(muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> | "
-		body += "<A href='?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
-		body += "<A href='?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
-		body += "(<A href='?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
+		body += "\[<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
+		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
+		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_PRAY]'><font color='[(muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> | "
+		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
+		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
+		body += "(<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
 
 	body += "<br><br>"
-	body += "<A href='?_src_=holder;[HrefToken()];jumpto=[REF(player)]'><b>Jump to</b></A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];getmob=[REF(player)]'>Get</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];sendmob=[REF(player)]'>Send To</A>"
+	body += "<A href='?_src_=holder;[HrefToken()];jumpto=[REF(M)]'><b>Jump to</b></A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];getmob=[REF(M)]'>Get</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];sendmob=[REF(M)]'>Send To</A>"
 
 	body += "<br><br>"
-	body += "<A href='?_src_=holder;[HrefToken()];traitor=[REF(player)]'>Traitor panel</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];narrateto=[REF(player)]'>Narrate to</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];subtlemessage=[REF(player)]'>Subtle message</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];playsoundto=[REF(player)]'>Play sound to</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];languagemenu=[REF(player)]'>Language Menu</A>"
+	body += "<A href='?_src_=holder;[HrefToken()];traitor=[REF(M)]'>Traitor panel</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];narrateto=[REF(M)]'>Narrate to</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];subtlemessage=[REF(M)]'>Subtle message</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];playsoundto=[REF(M)]'>Play sound to</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];languagemenu=[REF(M)]'>Language Menu</A>"
 
-	if(player.client)
-		if(!isnewplayer(player))
+	if(M.client)
+		if(!isnewplayer(M))
 			body += "<br><br>"
 			body += "<b>Transformation:</b><br>"
-			if(isobserver(player))
+			if(isobserver(M))
 				body += "<b>Ghost</b> | "
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=observer;mob=[REF(player)]'>Make Ghost</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];simplemake=observer;mob=[REF(M)]'>Make Ghost</A> | "
 
-			if(ishuman(player) && !ismonkey(player))
+			if(ishuman(M) && !ismonkey(M))
 				body += "<b>Human</b> | "
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=human;mob=[REF(player)]'>Make Human</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];simplemake=human;mob=[REF(M)]'>Make Human</A> | "
 
-			if(ismonkey(player))
+			if(ismonkey(M))
 				body += "<b>Monkey</b> | "
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=monkey;mob=[REF(player)]'>Make Monkey</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];simplemake=monkey;mob=[REF(M)]'>Make Monkey</A> | "
 
-			if(iscyborg(player))
+			if(iscyborg(M))
 				body += "<b>Cyborg</b> | "
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=robot;mob=[REF(player)]'>Make Cyborg</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];simplemake=robot;mob=[REF(M)]'>Make Cyborg</A> | "
 
-			if(isAI(player))
+			if(isAI(M))
 				body += "<b>AI</b>"
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];makeai=[REF(player)]'>Make AI</A>"
+				body += "<A href='?_src_=holder;[HrefToken()];makeai=[REF(M)]'>Make AI</A>"
 
 		body += "<br><br>"
 		body += "<b>Other actions:</b>"
 		body += "<br>"
-		if(!isnewplayer(player))
-			body += "<A href='?_src_=holder;[HrefToken()];forcespeech=[REF(player)]'>Forcesay</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];applyquirks=[REF(player)]'>Apply Client Quirks</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];tdome1=[REF(player)]'>Thunderdome 1</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];tdome2=[REF(player)]'>Thunderdome 2</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];tdomeadmin=[REF(player)]'>Thunderdome Admin</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];tdomeobserve=[REF(player)]'>Thunderdome Observer</A> | "
-		body += "<A href='?_src_=holder;[HrefToken()];admincommend=[REF(player)]'>Commend Behavior</A> | "
+		if(!isnewplayer(M))
+			body += "<A href='?_src_=holder;[HrefToken()];forcespeech=[REF(M)]'>Forcesay</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];applyquirks=[REF(M)]'>Apply Client Quirks</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];tdome1=[REF(M)]'>Thunderdome 1</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];tdome2=[REF(M)]'>Thunderdome 2</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];tdomeadmin=[REF(M)]'>Thunderdome Admin</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];tdomeobserve=[REF(M)]'>Thunderdome Observer</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];admincommend=[REF(M)]'>Commend Behavior</A> | "
 
 	body += "<br>"
 	body += "</body></html>"
 
-	usr << browse(body, "window=adminplayeropts-[REF(player)];size=550x515")
+	usr << browse(body, "window=adminplayeropts-[REF(M)];size=550x515")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Player Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-ADMIN_VERB(game, toggle_godmode, "Toggle Godmode", "", R_ADMIN, mob/demigod in view())
-	demigod.status_flags ^= GODMODE
-	to_chat(usr, span_adminnotice("Toggled [(demigod.status_flags & GODMODE) ? "ON" : "OFF"]"), confidential = TRUE)
+/client/proc/cmd_admin_godmode(mob/M in GLOB.mob_list)
+	set category = "Admin.Game"
+	set name = "Godmode"
+	if(!check_rights(R_ADMIN))
+		return
 
-	log_admin("[key_name(usr)] has toggled [key_name(demigod)]'s nodamage to [(demigod.status_flags & GODMODE) ? "On" : "Off"]")
-	var/msg = "[key_name_admin(usr)] has toggled [ADMIN_LOOKUPFLW(demigod)]'s nodamage to [(demigod.status_flags & GODMODE) ? "On" : "Off"]"
+	M.status_flags ^= GODMODE
+	to_chat(usr, span_adminnotice("Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]"), confidential = TRUE)
+
+	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
+	var/msg = "[key_name_admin(usr)] has toggled [ADMIN_LOOKUPFLW(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]"
 	message_admins(msg)
-	admin_ticket_log(demigod, msg)
+	admin_ticket_log(M, msg)
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Godmode", "[M.status_flags & GODMODE ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /*
 If a guy was gibbed and you want to revive him, this is a good way to do so.
 Works kind of like entering the game with a new character. Character receives a new mind if they didn't have one.
 Traitors and the like can also be revived with the previous role mostly intact.
-*/
-ADMIN_VERB(game, respawn_character, "Respawn Character", "Respawn a player that has been gibbed/dusted/killed. They must be a ghost", R_SPAWN, input as text)
+/N */
+/client/proc/respawn_character()
+	set category = "Admin.Game"
+	set name = "Respawn Character"
+	set desc = "Respawn a person that has been gibbed/dusted/killed. They must be a ghost for this to work and preferably should not have a body to go back into."
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/input = ckey(input(src, "Please specify which key will be respawned.", "Key", ""))
+	if(!input)
+		return
+
 	var/mob/dead/observer/G_found
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		if(G.ckey == input)
@@ -262,10 +290,17 @@ ADMIN_VERB(game, respawn_character, "Respawn Character", "Respawn a player that 
 
 	to_chat(new_character, "You have been fully respawned. Enjoy the game.", confidential = TRUE)
 
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Respawn Character") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return new_character
 
-ADMIN_VERB(game, manage_job_slots, "Manage Job Slots", "", R_ADMIN)
-	usr.client.holder.manage_free_slots()
+/client/proc/cmd_admin_list_open_jobs()
+	set category = "Admin.Game"
+	set name = "Manage Job Slots"
+
+	if(!check_rights(R_ADMIN))
+		return
+	holder.manage_free_slots()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Manage Job Slots") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())
@@ -307,23 +342,38 @@ ADMIN_VERB(game, manage_job_slots, "Manage Job Slots", "", R_ADMIN)
 	browser.set_content(dat.Join())
 	browser.open()
 
-ADMIN_VERB(game, change_view_range, "Change View Range", "Switch between default and larger views", R_ADMIN)
-	var/datum/view_data/view_size = usr.client.view_size
+/client/proc/toggle_view_range()
+	set category = "Admin.Game"
+	set name = "Change View Range"
+	set desc = "switches between 1x and custom views"
+
 	if(view_size.getView() == view_size.default)
 		view_size.setTo(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,37) - 7)
 	else
-		view_size.resetToDefault(getScreenSize(usr.client.prefs.read_preference(/datum/preference/toggle/widescreen)))
-	log_admin("[key_name(usr)] changed their view range to [usr.client.view].")
+		view_size.resetToDefault(getScreenSize(prefs.read_preference(/datum/preference/toggle/widescreen)))
 
-ADMIN_VERB(game, toggle_combo_hud, "Toggle Combo HUD", "Toggles the Admin Combo HUD (all huds)", R_ADMIN)
-	if(usr.client.combo_hud_enabled)
-		usr.client.disable_combo_hud()
+	log_admin("[key_name(usr)] changed their view range to [view].")
+	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].") //why? removed by order of XSI
+
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Change View Range", "[view]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/toggle_combo_hud()
+	set category = "Admin.Game"
+	set name = "Toggle Combo HUD"
+	set desc = "Toggles the Admin Combo HUD (antag, sci, med, eng)"
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	if (combo_hud_enabled)
+		disable_combo_hud()
 	else
-		usr.client.enable_combo_hud()
+		enable_combo_hud()
 
-	to_chat(usr, "You toggled your admin combo HUD [usr.client.combo_hud_enabled ? "ON" : "OFF"].", confidential = TRUE)
-	message_admins("[key_name_admin(usr)] toggled their admin combo HUD [usr.client.combo_hud_enabled ? "ON" : "OFF"].")
-	log_admin("[key_name(usr)] toggled their admin combo HUD [usr.client.combo_hud_enabled ? "ON" : "OFF"].")
+	to_chat(usr, "You toggled your admin combo HUD [combo_hud_enabled ? "ON" : "OFF"].", confidential = TRUE)
+	message_admins("[key_name_admin(usr)] toggled their admin combo HUD [combo_hud_enabled ? "ON" : "OFF"].")
+	log_admin("[key_name(usr)] toggled their admin combo HUD [combo_hud_enabled ? "ON" : "OFF"].")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Combo HUD", "[combo_hud_enabled ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/enable_combo_hud()
 	if (combo_hud_enabled)
@@ -357,28 +407,45 @@ ADMIN_VERB(game, toggle_combo_hud, "Toggle Combo HUD", "Toggles the Admin Combo 
 	mob.lighting_alpha = mob.default_lighting_alpha()
 	mob.update_sight()
 
-ADMIN_VERB(game, traitor_panel, "Traitor Panel", "", R_ADMIN, mob/traitor in view())
-	var/datum/mind/target_mind = traitor.mind
+/datum/admins/proc/show_traitor_panel(mob/target_mob in GLOB.mob_list)
+	set category = "Admin.Game"
+	set desc = "Edit mobs's memory and role"
+	set name = "Show Traitor Panel"
+	var/datum/mind/target_mind = target_mob.mind
 	if(!target_mind)
 		to_chat(usr, "This mob has no mind!", confidential = TRUE)
+		return
+	if(!istype(target_mob) && !istype(target_mind))
+		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
 		return
 	target_mind.traitor_panel()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Traitor Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-ADMIN_VERB(game, skill_panel, "Skill Panel", "", R_ADMIN, mob/skilled in view())
-	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr,"The game hasn't started yet!")
-		return
-
-	var/datum/mind/target_mind = skilled.mind
-	if(!target_mind)
-		to_chat(usr, "This mob has no mind!", confidential = TRUE)
+/datum/admins/proc/show_skill_panel(target)
+	set category = "Admin.Game"
+	set desc = "Edit mobs's experience and skill levels"
+	set name = "Show Skill Panel"
+	var/datum/mind/target_mind
+	if(ismob(target))
+		var/mob/target_mob = target
+		target_mind = target_mob.mind
+	else if (istype(target, /datum/mind))
+		target_mind = target
+	else
+		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
 		return
 	var/datum/skill_panel/SP = new(usr, target_mind)
 	SP.ui_interact(usr)
 
-ADMIN_VERB(game, show_lag_switches, "Show Lag Switches", "Display the controls for drastic lag mitigation measures", R_ADMIN)
+/datum/admins/proc/show_lag_switch_panel()
+	set category = "Admin.Game"
+	set name = "Show Lag Switches"
+	set desc="Display the controls for drastic lag mitigation measures."
+
 	if(!SSlag_switch.initialized)
 		to_chat(usr, span_notice("The Lag Switch subsystem has not yet been initialized."))
+		return
+	if(!check_rights())
 		return
 
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Lag Switches</title></head><body><h2><B>Lag (Reduction) Switches</B></h2>")

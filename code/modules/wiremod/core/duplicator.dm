@@ -217,7 +217,13 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	rel_x = component_data["rel_x"]
 	rel_y = component_data["rel_y"]
 
-ADMIN_VERB(fun, load_circuit, "Load Circuit", "", R_VAREDIT)
+/client/proc/load_circuit()
+	set name = "Load Circuit"
+	set category = "Admin.Fun"
+
+	if(!check_rights(R_VAREDIT))
+		return
+
 	var/list/errors = list()
 
 	var/option = alert(usr, "Load by file or direct input?", "Load by file or string", "File", "Direct Input")
@@ -231,10 +237,10 @@ ADMIN_VERB(fun, load_circuit, "Load Circuit", "", R_VAREDIT)
 	if(!txt)
 		return
 
-	var/obj/item/integrated_circuit/loaded/circuit = new(usr.drop_location())
+	var/obj/item/integrated_circuit/loaded/circuit = new(mob.drop_location())
 	circuit.load_circuit_data(txt, errors)
 
 	if(length(errors))
-		to_chat(usr, span_warning("The following errors were found whilst compiling the circuit data:"))
+		to_chat(src, span_warning("The following errors were found whilst compiling the circuit data:"))
 		for(var/error in errors)
-			to_chat(usr, span_warning(error))
+			to_chat(src, span_warning(error))

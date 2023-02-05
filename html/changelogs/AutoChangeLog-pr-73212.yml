@@ -1,0 +1,5 @@
+author: "scriptis"
+delete-after: True
+changes:
+  - bugfix: "asays are no longer double-escaped"
+  - admin: "asay now uses tgui say"
