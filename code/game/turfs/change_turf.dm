@@ -87,6 +87,9 @@ GLOBAL_LIST_EMPTY(change_count)
 	var/old_dynamic_lumcount = dynamic_lumcount
 	var/old_rcd_memory = rcd_memory
 	var/old_explosion_throw_details = explosion_throw_details
+	// I'm so sorry brother
+	// This is used for a starlight optimization
+	var/old_light_range = light_range
 	SET_COST("save old turf details (vars)")
 	// We get just the bits of explosive_resistance that aren't the turf
 	var/old_explosive_resistance = explosive_resistance - get_explosive_block()
@@ -171,16 +174,49 @@ GLOBAL_LIST_EMPTY(change_count)
 	else
 		SET_COST("check lighting init")
 
-	if(CONFIG_GET(flag/starlight))
-		SET_COST("check starlight config")
-		for(var/turf/open/space/space_tile in RANGE_TURFS(1, src))
-			SET_COST("walk update starlight")
-			space_tile.update_starlight()
-			SET_COST("update starlight")
-		SET_COST("finish update starlight")
-	else
-		SET_COST("check starlight config")
+	if(isspaceturf(src) && CONFIG_GET(flag/starlight))
+		SET_COST("check starlight home")
+		var/turf/open/space/lit_turf = src
+		SET_COST("cast src to space")
+		// This also counts as a removal, so we need to do a full rebuild
+		if(!ispath(old_type, /turf/open/space))
+			SET_COST("check old space")
+			lit_turf.update_starlight()
+			SET_COST("update our starlight")
+			for(var/turf/open/space/space_tile in RANGE_TURFS(1, src) - src)
+				SET_COST("walk update starlight")
+				space_tile.update_starlight()
+				SET_COST("update starlight")
+		else
+			SET_COST("check old space")
+			if(old_light_range)
+				SET_COST("check old range")
+				lit_turf.enable_starlight()
+				SET_COST("enable our starlight")
+			else
+				SET_COST("check old range")
+	else if (istype(src, /turf/cordon))
+		SET_COST("check starlight home")
+		// This counts as removing a source of starlight, so we need to update the space tile to inform it
+		if(!ispath(old_type, /turf/open/space))
+			SET_COST("check cordon type")
+			for(var/turf/open/space/space_tile in RANGE_TURFS(1, src))
+				SET_COST("walk cordon starlight")
+				space_tile.update_starlight()
+				SET_COST("cordon update starlight")
+		else
+			SET_COST("check cordon type")
 
+	else if(ispath(old_type, /turf/open/space) && CONFIG_GET(flag/starlight))
+		SET_COST("check starlight home")
+		for(var/turf/open/space/space_tile in RANGE_TURFS(1, src))
+			SET_COST("walk enable starlight")
+			space_tile.enable_starlight()
+			SET_COST("enable starlight")
+	else
+		SET_COST("check starlight home")
+
+#warn space should not have lighting objects
 	// We will only run this logic if the tile is not on the prime z layer, since we use area overlays to cover that
 	if(SSmapping.z_level_to_plane_offset[z])
 		SET_COST("check plane offset (success)")
