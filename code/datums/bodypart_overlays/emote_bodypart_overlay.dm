@@ -12,6 +12,8 @@
 	var/emote_duration = 5.2 SECONDS
 	///The body zone to attach the overlay to, overlay won't be added if no bodypart can be found with this
 	var/attached_body_zone = BODY_ZONE_CHEST
+	///The bodypart that the overlay is currently applied to
+	var/datum/weakref/attached_bodypart
 
 /datum/bodypart_overlay/simple/emote/get_image(layer, obj/item/bodypart/limb)
 	var/image/image = ..()
@@ -20,9 +22,25 @@
 	return image
 
 /datum/bodypart_overlay/simple/emote/added_to_limb(obj/item/bodypart/limb)
+	attached_bodypart = WEAKREF(limb)
 	if(offset in limb.owner?.dna?.species.offset_features)
 		offset_x = limb.owner.dna.species.offset_features[offset][1]
 		offset_y = limb.owner.dna.species.offset_features[offset][2]
+
+/datum/bodypart_overlay/simple/emote/removed_from_limb(obj/item/bodypart/limb)
+	attached_bodypart = null
+
+///Removes the overlay from the attached bodypart and updates the necessary sprites
+/datum/bodypart_overlay/simple/emote/Destroy()
+	var/obj/item/bodypart/referenced_bodypart = attached_bodypart.resolve()
+	if(!referenced_bodypart)
+		return ..()
+	referenced_bodypart.remove_bodypart_overlay(src)
+	if(referenced_bodypart.owner) //Keep in mind that the bodypart could have been severed from the owner by now
+		referenced_bodypart.owner.update_body_parts()
+	else
+		referenced_bodypart.update_icon_dropped()
+	. = ..()
 
 /datum/bodypart_overlay/simple/emote/blush
 	icon_state = "blush"

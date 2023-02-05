@@ -20,17 +20,7 @@
 	human_owner.update_body_parts()
 
 /datum/mood_event/drunk/remove_effects()
-	// Stop displaying blush overlay
-	var/obj/item/bodypart/referenced_bodypart = attached_bodypart.resolve()
-	if(!referenced_bodypart)
-		return
-	referenced_bodypart.remove_bodypart_overlay(blush_overlay)
 	QDEL_NULL(blush_overlay)
-	if(referenced_bodypart.owner) // Keep in mind that the user might have lost the attached bodypart by now
-		referenced_bodypart.owner.update_body_parts()
-	else
-		referenced_bodypart.update_icon_dropped()
-	attached_bodypart = null
 
 /datum/mood_event/quality_nice
 	description = "That drink wasn't bad at all."

@@ -197,12 +197,6 @@
  */
 /datum/emote/proc/end_visual(mob/user, obj/item/bodypart/attached_bodypart, datum/bodypart_overlay/overlay)
 	emote_overlay_instances -= WEAKREF(user)
-	if(!QDELETED(attached_bodypart))
-		attached_bodypart.remove_bodypart_overlay(overlay)
-		if(attached_bodypart.owner) // Keep in mind that the user might have lost the attached bodypart by now
-			attached_bodypart.owner.update_body_parts()
-		else
-			attached_bodypart.update_icon_dropped()
 	QDEL_NULL(overlay)
 
 /**
