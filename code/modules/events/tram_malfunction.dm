@@ -46,7 +46,7 @@
 		if(door.obj_flags & EMAGGED)
 			return
 
-		door.end_malfunction()
+		door.start_malfunction()
 
 	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)
 		original_lethality = tram.collision_lethality
@@ -57,7 +57,7 @@
 		signal.end_malfunction()
 
 	for(var/obj/machinery/door/window/tram/door as anything in GLOB.tram_doors)
-		door.start_malfunction()
+		door.end_malfunction()
 
 	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)
 		tram.collision_lethality = original_lethality
