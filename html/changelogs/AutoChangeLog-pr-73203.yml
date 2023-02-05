@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Biotypes will be more consistently applied when taking damage, pod and shadowperson prosthetic limbs won't be corroded due to light levels."
+  - bugfix: "Podperson and Wooden Golem prosthetic limbs won't be corroded by having a hungry tummy."

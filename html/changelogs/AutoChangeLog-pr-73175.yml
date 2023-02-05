@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Announcements of ghost roles don't play if no one accepts the poll to play as the role."

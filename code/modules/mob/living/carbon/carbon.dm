@@ -1157,7 +1157,7 @@
 		return FALSE
 	if(has_status_effect(/datum/status_effect/hallucination))
 		return TRUE
-	if(IsSleeping())
+	if(IsSleeping() || IsUnconscious())
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		return TRUE
