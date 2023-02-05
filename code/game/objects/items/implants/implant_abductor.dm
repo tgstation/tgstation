@@ -14,17 +14,18 @@
 		return
 
 	if(isnull(home) && !link_pad())
-		if(!link_pad())
-			imp_in.balloon_alert(imp_in, "no teleport pads detected!")
-			return
+		imp_in.balloon_alert(imp_in, "no teleport pads detected!")
+		return
 
 	home.Retrieve(imp_in)
 	on_cooldown = addtimer(VARSET_CALLBACK(src, on_cooldown, null), cooldown , TIMER_STOPPABLE)
 
 /obj/item/implant/abductor/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
-	if(..())
-		link_pad()
-		return TRUE
+	if(!..())
+		return FALSE
+
+	link_pad()
+	return TRUE
 
 /**
  * Manages the process of linking a recall implant to an abductor pad
@@ -34,6 +35,9 @@
  */
 
 /obj/item/implant/abductor/proc/link_pad()
+	if(home)
+		return TRUE
+
 	var/obj/machinery/abductor/console/console
 	if(ishuman(imp_in))
 		var/datum/antagonist/abductor/new_abductor = imp_in.mind.has_antag_datum(/datum/antagonist/abductor)
