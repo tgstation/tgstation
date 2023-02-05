@@ -239,7 +239,6 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	plane = GAME_PLANE_UPPER
 	max_integrity = 250
 	integrity_failure = 0.25
-//	power_channel = AREA_USAGE_LIGHT
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 2.4
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.074
 	anchored = TRUE
