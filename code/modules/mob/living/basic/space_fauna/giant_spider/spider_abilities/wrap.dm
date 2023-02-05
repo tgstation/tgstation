@@ -26,11 +26,11 @@
 
 /datum/action/cooldown/wrap/IsAvailable(feedback = FALSE)
 	. = ..()
-	if(!.)
-		return FALSE
-	if(owner.incapacitated())
+	if(!. || owner.incapacitated())
 		return FALSE
 	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
+		if (feedback)
+			owner.balloon_alert(owner, "busy!")
 		return FALSE
 	return TRUE
 

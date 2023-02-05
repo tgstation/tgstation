@@ -25,8 +25,6 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!isspider(owner))
-		return FALSE
 	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
 		if (feedback)
 			owner.balloon_alert(owner, "busy!")
