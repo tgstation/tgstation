@@ -1,4 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - bugfix: "Wendigo no longer has a chance to melee attack 8 times in a second."
