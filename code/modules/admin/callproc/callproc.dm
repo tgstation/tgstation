@@ -92,8 +92,11 @@ GLOBAL_PROTECT(AdminProcCallHandler)
 	usr = lastusr
 	handler.remove_caller(user)
 
-ADMIN_VERB(debug, advanced_proccall, "Advanced ProcCall", "", R_DEBUG)
-	usr.client.callproc_blocking()
+/client/proc/callproc()
+	set category = "Debug"
+	set name = "Advanced ProcCall"
+	set waitfor = FALSE
+	callproc_blocking()
 
 /client/proc/callproc_blocking(list/get_retval)
 	if(!check_rights(R_DEBUG))
@@ -227,29 +230,34 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	return (GLOB.AdminProcCaller && GLOB.AdminProcCaller == usr?.client?.ckey) || (GLOB.AdminProcCallHandler && usr == GLOB.AdminProcCallHandler)
 #endif
 
-ADMIN_CONTEXT_ENTRY(context_callproc, "Atom ProcCall", R_DEBUG, atom/target in world)
-	set waitfor = 0
+/client/proc/callproc_datum(datum/A as null|area|mob|obj|turf)
+	set category = "Debug"
+	set name = "Atom ProcCall"
+	set waitfor = FALSE
+
+	if(!check_rights(R_DEBUG))
+		return
 
 	var/procname = input("Proc name, eg: fake_blood","Proc:", null) as text|null
 	if(!procname)
 		return
-	if(!hascall(target, procname))
-		to_chat(usr, "<font color='red'>Error: callproc_datum(): type [target.type] has no proc named [procname].</font>", confidential = TRUE)
+	if(!hascall(A,procname))
+		to_chat(usr, "<font color='red'>Error: callproc_datum(): type [A.type] has no proc named [procname].</font>", confidential = TRUE)
 		return
 	var/list/lst = get_callproc_args()
 	if(!lst)
 		return
 
-	if(!target || !is_valid_src(target))
+	if(!A || !is_valid_src(A))
 		to_chat(usr, span_warning("Error: callproc_datum(): owner of proc no longer exists."), confidential = TRUE)
 		return
-
-	log_admin("[key_name(usr)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-	var/msg = "[key_name(usr)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"]."
+	log_admin("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
+	var/msg = "[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"]."
 	message_admins(msg)
-	admin_ticket_log(target, msg)
+	admin_ticket_log(A, msg)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Atom ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	var/returnval = WrapAdminProcCall(target, procname, lst) // Pass the lst as an argument list to the proc
+	var/returnval = WrapAdminProcCall(A, procname, lst) // Pass the lst as an argument list to the proc
 	. = get_callproc_returnval(returnval,procname)
 	if(.)
 		to_chat(usr, ., confidential = TRUE)

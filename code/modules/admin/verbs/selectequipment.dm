@@ -1,4 +1,8 @@
-ADMIN_CONTEXT_ENTRY(context_select_equipment, "Select Equipment", R_ADMIN, mob/target in world)
+/client/proc/cmd_select_equipment(mob/target in GLOB.mob_list)
+	set category = "Admin.Events"
+	set name = "Select equipment"
+
+
 	var/datum/select_equipment/ui = new(usr, target)
 	ui.ui_interact(usr)
 
@@ -177,7 +181,7 @@ ADMIN_CONTEXT_ENTRY(context_select_equipment, "Select Equipment", R_ADMIN, mob/t
 			user.admin_apply_outfit(target_mob, new_outfit)
 
 		if("customoutfit")
-			SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/debug/outfit_manager)
+			user.outfit_manager()
 
 		if("togglefavorite")
 			var/datum/outfit/outfit_path = resolve_outfit(params["path"])

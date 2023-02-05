@@ -1,4 +1,11 @@
-ADMIN_VERB(mapping, check_plumbing, "Check Plumbing", "", R_DEBUG)
+/client/proc/atmosscan()
+	set category = "Mapping"
+	set name = "Check Plumbing"
+	if(!src.holder)
+		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
+		return
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Plumbing") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 	//all plumbing - yes, some things might get stated twice, doesn't matter.
 	for(var/obj/machinery/atmospherics/components/pipe in GLOB.machines)
 		if(pipe.z && (!pipe.nodes || !pipe.nodes.len || (null in pipe.nodes)))
@@ -17,7 +24,13 @@ ADMIN_VERB(mapping, check_plumbing, "Check Plumbing", "", R_DEBUG)
 			if(!(node1 in node2.nodes))
 				to_chat(usr, "One-way connection in [node1.name] located at [ADMIN_VERBOSEJMP(node1)]", confidential = TRUE)
 
-ADMIN_VERB(mapping, check_power, "Check Power", "", R_DEBUG)
+/client/proc/powerdebug()
+	set category = "Mapping"
+	set name = "Check Power"
+	if(!src.holder)
+		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
+		return
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Power") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	var/list/results = list()
 
 	for (var/datum/powernet/PN in SSmachines.powernets)

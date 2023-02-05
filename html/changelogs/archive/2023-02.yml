@@ -215,3 +215,29 @@
       it before inserting
   lizardqueenlexi:
   - bugfix: Made the northwest arrow icon in build mode actually point northwest
+2023-02-05:
+  JohnFulpWillard:
+  - bugfix: Moths can no longer eat indestructible items (like the CE's magboots)
+  - bugfix: Arrivals is now part of the station's areas.
+  - bugfix: Computers no longer delete disks if you try to add a second one.
+  - spellcheck: Computer screentips says you're now removing the disk instead of the
+      SSD.
+  LT3:
+  - bugfix: Uplink failsafe explodes when its supposed to
+  - bugfix: Cats can nuzzle people
+  Pickle-Coding:
+  - bugfix: Reverts accidental change to pluoxium and freon gasmix power ratio values.
+  Rhials:
+  - rscadd: Midround changeling spawn event.
+  - rscadd: Changeling meteor. It has a present for you.
+  SuperSlayer0:
+  - code_imp: Replaces some decisecond things in martial art code with time defines
+  - spellcheck: Added a ":" to inducer error message
+  - bugfix: Blood magic no longer can wound the user's arm when casted
+  Xander3359:
+  - bugfix: Wendigo no longer has a chance to melee attack 8 times in a second.
+  ZephyrTFA:
+  - refactor: Admin verbs are now datums with a dedicated panel handler
+  - admin: Admin verbs now come with a handy description when you hover over them!
+  lizardqueenlexi:
+  - bugfix: Corrected the skintone on arms grown back by the Rod of Asclepius
