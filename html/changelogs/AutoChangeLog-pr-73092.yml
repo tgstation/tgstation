@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - refactor: "Rewrite of random event Disease Outbreak: Advanced. Listen to those level 7 biohazard warnings!"
+  - admin: "Fully customizable build-your-own virus is available in the admin Secrets panel, for those people you really hate"
