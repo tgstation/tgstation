@@ -147,11 +147,11 @@
 	. = ..()
 	if(!panel_open)
 		return
-	if(panel_open && device)
+	if(device)
 		. += span_notice("There is \a [device] inside, which could be removed with an <b>empty hand</b>.")
-	if(panel_open && board)
+	if(board)
 		. += span_notice("There is \a [board] inside, which could be removed with an <b>empty hand</b>.")
-	if(panel_open && !board && !device)
+	if(!board && !device)
 		. += span_notice("There is nothing currently installed in \the [src].")
 
 /obj/machinery/button/proc/setup_device()
