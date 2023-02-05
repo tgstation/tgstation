@@ -776,7 +776,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 
 /obj/machinery/door/window/tram/Destroy()
 	GLOB.tram_doors -= src
-	. = ..()
+	return ..()
 
 /obj/machinery/door/window/tram/examine(mob/user)
 	. = ..()
