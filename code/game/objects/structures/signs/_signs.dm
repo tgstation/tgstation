@@ -7,9 +7,9 @@
 	custom_materials = list(/datum/material/plastic = 2000)
 	max_integrity = 100
 	armor_type = /datum/armor/structure_sign
+	resistance_flags = FLAMMABLE
 	///Determines if a sign is unwrenchable.
 	var/buildable_sign = TRUE
-	resistance_flags = FLAMMABLE
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = FALSE
 	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on any sign item or structure which is_editable.
@@ -27,6 +27,8 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Repair"
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WRENCH)
+			if(!buildable_sign)
+				return ///Cannot be unfastened regardless.
 			context[SCREENTIP_CONTEXT_LMB] = "Unfasten"
 			return CONTEXTUAL_SCREENTIP_SET
 
