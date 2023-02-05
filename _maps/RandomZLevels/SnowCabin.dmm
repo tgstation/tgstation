@@ -4575,7 +4575,7 @@
 	desc = "It looks like fancy glitter to me.";
 	name = "icy wind"
 	},
-/mob/living/simple_animal/hostile/netherworld/statue{
+/mob/living/basic/statue{
 	desc = "Just a snowman. Just a snowman. Oh god, it's just a snowman.";
 	faction = list("statue","mining");
 	health = 5000;
