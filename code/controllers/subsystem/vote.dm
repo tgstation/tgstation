@@ -113,6 +113,27 @@ SUBSYSTEM_DEF(vote)
 	current_vote.choices[their_vote]++
 	return TRUE
 
+/datum/controller/subsystem/vote/proc/submit_vote_av(mob/voter, their_vote)
+	if(!current_vote)
+		return
+	if(!voter?.ckey)
+		return
+	if(CONFIG_GET(flag/no_dead_vote) && voter.stat == DEAD && !voter.client?.holder)
+		return
+
+	else
+		voted += voter.ckey
+
+	if(current_vote.choices_by_ckey[voter.ckey + their_vote] == 1)
+		current_vote.choices_by_ckey[voter.ckey + their_vote] = 0
+		current_vote.choices[their_vote]--
+
+	else
+		current_vote.choices_by_ckey[voter.ckey + their_vote] = 1
+		current_vote.choices[their_vote]++
+
+	return TRUE
+
 /**
  * Initiates a vote, allowing all players to vote on something.
  *
