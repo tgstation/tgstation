@@ -72,11 +72,12 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 			cached_formats[verb_module] = verb_module_formatted
 
 		var/original_name = verb_information[VERB_MAP_NAME]
-
+		var/verb_ref = replacetext(original_name, " ", "-")
 		var/verb_desc = verb_information[VERB_MAP_DESCRIPTION]
+
 		if(!stat_data[cached_formats[verb_module]])
 			stat_data[cached_formats[verb_module]] = list()
-		stat_data[cached_formats[verb_module]] += list(list(original_name, verb_desc, original_name))
+		stat_data[cached_formats[verb_module]] += list(list(original_name, verb_desc, verb_ref))
 	var/sorted_stat_data = list()
 	for(var/verb_category in stat_data)
 		sorted_stat_data[verb_category] = sort_list(stat_data[verb_category], GLOBAL_PROC_REF(cmp_admin_verb_name))
@@ -114,7 +115,10 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 	usr = target
 	var/holder_proc = text2path("[verb_type]/verb/invoke")
 	var/list/arguments = args.Copy(3)
-	call(holder, holder_proc)(arglist(arguments))
+	if(!length(arguments))
+		usr.client.invoke_verb(holder_proc) // no arguments? let byond handle it
+	else
+		call(holder, holder_proc)(arglist(arguments))
 
 /datum/controller/subsystem/admin_verbs/proc/link_admin(mob/admin)
 	assosciations_by_ckey[admin.ckey] = list()

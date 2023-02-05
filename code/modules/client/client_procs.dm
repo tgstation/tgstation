@@ -1180,6 +1180,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	// Place Help back at the end.
 	winset(src, "help-menu", "index=1000")
 
+/// Instructs the client's statpanel to invoke the given verb, there is no sanity checking here
+/client/proc/invoke_verb(procpath/verbpath)
+	var/verb_name = istext(verbpath.name) ? verbpath : verbpath.name
+	stat_panel.send_message("invoke_verb", replacetext(verb_name, " ", "-"))
+
 /client/proc/open_filter_editor(atom/in_atom)
 	if(holder)
 		holder.filteriffic = new /datum/filter_editor(in_atom)

@@ -420,7 +420,8 @@ function admin_verb_convert_verb_info_into_button(verb_info) {
 	var verb_button = document.createElement("a");
 	var verb_button_text = document.createElement("span");
 
-	verb_button.onclick = make_verb_onclick(verb_ref.replace(" ", "-"));
+	verb_button.onclick = make_verb_onclick(verb_ref);
+	verb_button.href = "#";
 	verb_button.className = "grid-item";
 	verb_button.title = verb_desc;
 
@@ -1065,3 +1066,7 @@ Byond.subscribeTo('remove_sdql2', remove_sdql2);
 Byond.subscribeTo('remove_mc', remove_mc);
 
 Byond.subscribeTo('add_verb_list', add_verb_list);
+
+Byond.subscribeTo('invoke_verb', function (payload) {
+	Byond.command(payload);
+});
