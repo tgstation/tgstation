@@ -42,12 +42,6 @@
 
 		signal.start_malfunction()
 
-	for(var/obj/machinery/crossing_signal/door as anything in GLOB.tram_doors)
-		if(door.obj_flags & EMAGGED)
-			return
-
-		door.start_malfunction()
-
 	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)
 		original_lethality = tram.collision_lethality
 		tram.collision_lethality = 2
