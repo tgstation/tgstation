@@ -651,7 +651,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /// Of note, reservations default to transit turfs, to make their most common use, shuttles, faster
 /datum/controller/subsystem/mapping/proc/add_reservation_zlevel(for_shuttles)
 	num_of_res_levels++
-	return dd_new_zlevel("Transit/Reserved #[num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
+	return add_new_zlevel("Transit/Reserved #[num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
 
 /datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override)
 	UNTIL((!z || reservation_ready["[z]"]) && !clearing_reserved_turfs)

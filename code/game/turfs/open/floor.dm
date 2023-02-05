@@ -160,14 +160,19 @@
 	break_tile()
 
 /turf/open/floor/ChangeTurf(path, new_baseturfs, flags)
+	INIT_COST(GLOB.change_cost, GLOB.change_count)
 	if(!isfloorturf(src))
 		return ..() //fucking turfs switch the fucking src of the fucking running procs
 	if(!ispath(path, /turf/open/floor))
 		return ..()
 	var/old_dir = dir
+	SET_COST("store old dir")
 	var/turf/open/floor/W = ..()
+	SET_COST("parent call consume")
 	W.setDir(old_dir)
+	SET_COST("set floor dir")
 	W.update_appearance()
+	SET_COST("update floor appearance")
 	return W
 
 /turf/open/floor/attackby(obj/item/object, mob/living/user, params)

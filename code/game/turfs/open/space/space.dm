@@ -102,14 +102,14 @@
 	return null
 
 /turf/open/space/proc/update_starlight()
-	if(CONFIG_GET(flag/starlight))
-		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-			if(isspaceturf(t))
-				//let's NOT update this that much pls
-				continue
-			set_light(2)
-			return
-		set_light(0)
+	for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+		// I've got a lot of cordons near spaceturfs, be good kids
+		if(isspaceturf(t) || istype(t, /turf/cordon))
+			//let's NOT update this that much pls
+			continue
+		set_light(2)
+		return
+	set_light(0)
 
 /turf/open/space/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -243,7 +243,8 @@
 /turf/open/space/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
 	icon_state = "invisible"
-	update_starlight()
+	if(CONFIG_GET(flag/starlight))
+		update_starlight()
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/space/openspace/LateInitialize()
@@ -285,8 +286,6 @@
 	return FALSE
 
 /turf/open/space/openspace/update_starlight()
-	if(!CONFIG_GET(flag/starlight))
-		return
 	var/turf/below = SSmapping.get_turf_below(src)
 	if(!isspaceturf(below))
 		return
