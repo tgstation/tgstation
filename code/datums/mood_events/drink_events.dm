@@ -11,13 +11,7 @@
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/human_owner = owner
-	attached_bodypart = WEAKREF(human_owner.get_bodypart(BODY_ZONE_HEAD)) // We can assume it goes on the head since we know it's the blush overlay
-	var/obj/item/bodypart/referenced_bodypart = attached_bodypart.resolve()
-	if(!referenced_bodypart)
-		return
-	blush_overlay = new /datum/bodypart_overlay/simple/emote/blush()
-	referenced_bodypart.add_bodypart_overlay(blush_overlay)
-	human_owner.update_body_parts()
+	blush_overlay = human_owner.give_emote_overlay(/datum/bodypart_overlay/simple/emote/blush)
 
 /datum/mood_event/drunk/remove_effects()
 	QDEL_NULL(blush_overlay)

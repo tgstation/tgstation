@@ -1,17 +1,14 @@
-///Variant of bodypart_overlay for displaying emote overlays. Emotes can use a path to one of these for their emote_overlay field to display it after emoting.
+///Variant of bodypart_overlay for displaying emote overlays. See [/datum/emote/living/blush/run_emote] for an example on how to use one of these.
 /datum/bodypart_overlay/simple/emote
 	icon = 'icons/mob/species/human/emote_visuals.dmi'
+	///The body zone to attach the overlay to, overlay won't be added if no bodypart can be found with this
+	var/attached_body_zone = BODY_ZONE_CHEST
 	///The offset define to use with the overlay (none by default), should correspond with a list(0,0) in a species' offset_features
 	var/offset
 	///X offset of the overlay image, stored here so we can access this even after the owner loses the bodypart we're on
 	var/offset_x = 0
 	///Y offset of the overlay image, stored here so we can access this even after the owner loses the bodypart we're on
 	var/offset_y = 0
-
-	///The time it should take for the overlay to be removed after emoting
-	var/emote_duration = 5.2 SECONDS
-	///The body zone to attach the overlay to, overlay won't be added if no bodypart can be found with this
-	var/attached_body_zone = BODY_ZONE_CHEST
 	///The bodypart that the overlay is currently applied to
 	var/datum/weakref/attached_bodypart
 
@@ -42,6 +39,23 @@
 		referenced_bodypart.update_icon_dropped()
 	. = ..()
 
+/**
+ * Creates a new emote bodypart overlay and applies it to the human. The overlay can be removed by simply deleting the returned overlay.
+ *
+ * * Arguments:
+ * * overlay_typepath - Typepath to the overlay that should be applied. Should be a subtype of datum/bodypart_overlay/simple/emote.
+ *
+ * Returns the given overlay, which can be deleted to stop displaying it. Will return null if no bodypart matching the overlay's attached_body_zone field can be found.
+ */
+/mob/living/carbon/human/proc/give_emote_overlay(overlay_typepath)
+	var/datum/bodypart_overlay/simple/emote/overlay = new overlay_typepath()
+	var/obj/item/bodypart/bodypart = src.get_bodypart(overlay.attached_body_zone)
+	if(!bodypart)
+		return null
+	bodypart.add_bodypart_overlay(overlay)
+	src.update_body_parts()
+	return overlay
+
 /datum/bodypart_overlay/simple/emote/blush
 	icon_state = "blush"
 	draw_color = COLOR_BLUSH_PINK
@@ -52,7 +66,6 @@
 /datum/bodypart_overlay/simple/emote/cry
 	icon_state = "tears"
 	draw_color = COLOR_DARK_CYAN
-	emote_duration = 12.8 SECONDS
 	layers = EXTERNAL_ADJACENT
 	offset = OFFSET_FACE
 	attached_body_zone = BODY_ZONE_HEAD

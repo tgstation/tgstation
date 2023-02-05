@@ -32,7 +32,6 @@
 			silenced = TRUE
 			continue
 		if(P.run_emote(src, param, m_type, intentional))
-			P.display_overlay(src)
 			SEND_SIGNAL(src, COMSIG_MOB_EMOTE, P, act, m_type, message, intentional)
 			SEND_SIGNAL(src, COMSIG_MOB_EMOTED(P.key))
 			return TRUE

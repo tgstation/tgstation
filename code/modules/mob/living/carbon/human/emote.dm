@@ -8,7 +8,13 @@
 	message_mime = "sobs silently."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	stat_allowed = SOFT_CRIT
-	emote_overlay = /datum/bodypart_overlay/simple/emote/cry
+
+/datum/emote/living/carbon/human/cry/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	QDEL_IN(human_user.give_emote_overlay(/datum/bodypart_overlay/simple/emote/cry), 12.8 SECONDS)
 
 /datum/emote/living/carbon/human/dap
 	key = "dap"
