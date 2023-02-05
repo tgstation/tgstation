@@ -1,0 +1,4 @@
+author: "Tattle"
+delete-after: True
+changes:
+  - admin: "Admins are no longer alerted when an inert BoH is printed"

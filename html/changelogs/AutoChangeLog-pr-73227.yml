@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "Fixed some duplicated and incorrect messages being presented when infected with a virus that has the spontaneous combustion symptom."
