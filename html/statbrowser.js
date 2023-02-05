@@ -19,6 +19,7 @@ var status_tab_parts = ["Loading..."];
 var current_tab = null;
 var mc_tab_parts = [["Loading...", ""]];
 var admin_verb_cats = [];
+var admin_verb_selected_cat = "";
 var admin_verb_groups = [["Server"], ["Debug"]];
 var href_token = null;
 var spells = [];
@@ -397,15 +398,23 @@ function draw_mc() {
 function draw_admin_verbs() {
 	try {
 		statcontentdiv.textContent = "";
+
 		var verb_groups = admin_verb_convert_into_groups(admin_verb_cats);
 		var group_names = Object.keys(verb_groups).sort();
-		for (var i = 0; i < group_names.length; i++) {
-			var group_name = group_names[i];
-			var group_header = document.createElement("h3");
-			group_header.textContent = group_name;
-			statcontentdiv.appendChild(group_header);
-			statcontentdiv.appendChild(get_admin_verb_group_div(verb_groups[group_name]));
+
+		if(!group_names.includes(admin_verb_selected_cat)) {
+			admin_verb_selected_cat = group_names[0];
 		}
+
+		var menu = get_admin_verb_header_menu_div(group_names, admin_verb_selected_cat, function (cat) {
+			admin_verb_selected_cat = cat;
+			draw_admin_verbs();
+		});
+		var selected_group = verb_groups[admin_verb_selected_cat];
+
+		statcontentdiv.appendChild(menu);
+		statcontentdiv.appendChild(document.createElement("br"));
+		statcontentdiv.appendChild(get_admin_verb_group_div(selected_group));
 	} catch(except) {
 		statcontentdiv.textContent = "NTOS Exception: " + except + "\nReport this to your nearest Technical Resolution Specialist"
 	}
@@ -458,6 +467,30 @@ function get_admin_verb_group_div(group) {
 		group_div.appendChild(group[i]);
 	}
 	return group_div;
+}
+
+// Creates the header menu for the admin verb tab
+function get_admin_verb_header_menu_div(groups, selected, set_selected) {
+	var header_div = document.createElement("div");
+	header_div.className = "admin-verb-menu";
+
+	var header_ul = document.createElement("ul");
+	var group_names = Object.keys(groups).sort();
+	for (var i = 0; i < group_names.length; i++) {
+		var group_name = group_names[i];
+		var group_li = document.createElement("li");
+		var group_a = document.createElement("a");
+		group_a.href = "#";
+		group_a.textContent = group_name;
+		group_a.onclick = set_selected(group_name);
+		group_li.appendChild(group_a);
+		if (group_name == selected) {
+			group_li.className = "selected";
+		}
+		header_ul.appendChild(group_li);
+	}
+	header_div.appendChild(header_ul);
+	return header_div;
 }
 
 function remove_tickets() {
