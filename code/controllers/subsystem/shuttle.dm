@@ -851,7 +851,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/load_template(datum/map_template/shuttle/loading_template)
 	. = FALSE
 	// Load shuttle template to a fresh block reservation.
-	preview_reservation = SSmapping.RequestBlockReservation(loading_template.width, loading_template.height, SSmapping.transit.z_value, /datum/turf_reservation/transit)
+	preview_reservation = SSmapping.RequestBlockReservation(loading_template.width, loading_template.height, type = /datum/turf_reservation/transit)
 	if(!preview_reservation)
 		CRASH("failed to reserve an area for shuttle template loading")
 	var/turf/bottom_left = TURF_FROM_COORDS_LIST(preview_reservation.bottom_left_coords)
