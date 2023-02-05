@@ -20,6 +20,10 @@
 	fire = 50
 	acid = 50
 
+/obj/structure/sign/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/structure/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	switch (held_item.tool_behaviour)
@@ -158,6 +162,13 @@
 	var/matrix/M = matrix()
 	M.Turn(90)
 	transform = M
+	register_context()
+
+/obj/item/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(is_editable && istype(I, /obj/item/pen))
+		context[SCREENTIP_CONTEXT_LMB] = "Change design"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/sign/attackby(obj/item/I, mob/user, params)
 	if(is_editable && istype(I, /obj/item/pen))
