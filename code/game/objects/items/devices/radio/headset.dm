@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "radio headset"
 	desc = "An updated, modular intercom that fits over the head. Takes encryption keys."
 	icon_state = "headset"
+	worn_icon = "headset"
 	inhand_icon_state = "headset"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
