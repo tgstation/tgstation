@@ -87,6 +87,7 @@ GLOBAL_LIST_EMPTY(change_count)
 	var/old_dynamic_lumcount = dynamic_lumcount
 	var/old_rcd_memory = rcd_memory
 	var/old_explosion_throw_details = explosion_throw_details
+	var/old_opacity = opacity
 	// I'm so sorry brother
 	// This is used for a starlight optimization
 	var/old_light_range = light_range
@@ -142,7 +143,7 @@ GLOBAL_LIST_EMPTY(change_count)
 
 	if(!(flags & CHANGETURF_DEFER_CHANGE))
 		new_turf.AfterChange(flags, old_type)
-		SET_COST("call afterchange")
+	SET_COST("consume afterchange")
 
 	new_turf.blueprint_data = old_bp
 	new_turf.rcd_memory = old_rcd_memory
@@ -195,7 +196,7 @@ GLOBAL_LIST_EMPTY(change_count)
 				SET_COST("enable our starlight")
 			else
 				SET_COST("check old range")
-	else if (istype(src, /turf/cordon))
+	else if (istype(src, /turf/cordon) && CONFIG_GET(flag/starlight))
 		SET_COST("check starlight home")
 		// This counts as removing a source of starlight, so we need to update the space tile to inform it
 		if(!ispath(old_type, /turf/open/space))
@@ -216,6 +217,10 @@ GLOBAL_LIST_EMPTY(change_count)
 	else
 		SET_COST("check starlight home")
 
+	if(old_opacity != opacity)
+		GLOB.cameranet.updateVisibility(src)
+	SET_COST("check visiblity")
+
 #warn space should not have lighting objects
 	// We will only run this logic if the tile is not on the prime z layer, since we use area overlays to cover that
 	if(SSmapping.z_level_to_plane_offset[z])
@@ -226,13 +231,11 @@ GLOBAL_LIST_EMPTY(change_count)
 	else
 		SET_COST("check plane offset")
 
-	if(flags_1 & INITIALIZED_1) // only queue for smoothing if SSatom initialized us
-		SET_COST("check init")
+	 // only queue for smoothing if SSatom initialized us, and we'd be changing smoothing state
+	if(flags_1 & INITIALIZED_1)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		QUEUE_SMOOTH(src)
-		SET_COST("queue for smoothing")
-	else
-		SET_COST("check init")
+	SET_COST("handle smoothing")
 
 	return new_turf
 
@@ -282,13 +285,6 @@ GLOBAL_LIST_EMPTY(change_count)
 			SSair.add_to_active(src)
 	else //In effect, I want closed turfs to make their tile active when sheered, but we need to queue it since they have no adjacent turfs
 		CALCULATE_ADJACENT_TURFS(src, (!(ispath(oldType, /turf/closed) && isopenturf(src)) ? NORMAL_TURF : MAKE_ACTIVE))
-	//update firedoor adjacency
-	var/list/turfs_to_check = get_adjacent_open_turfs(src) | src
-	for(var/turf/check_turf in turfs_to_check)
-		for(var/obj/machinery/door/firedoor/FD in check_turf)
-			FD.CalculateAffectingAreas()
-
-	HandleTurfChange(src)
 
 /turf/open/AfterChange(flags, oldType)
 	..()
