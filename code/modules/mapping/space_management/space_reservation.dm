@@ -11,7 +11,7 @@
 	var/bottom_left_coords[3]
 	var/top_right_coords[3]
 	var/turf_type = /turf/open/space
-	///Area next to the cordon, registers a bunch of signals to the tiles there so you can throw people away if they get too close to the actual cordon
+	///Distance away from the cordon where we can put a "sort-cordon" and run some extra code (see MakeRepel). 0 makes nothing happen
 	var/pre_cordon_distance = 0
 
 /datum/turf_reservation/transit
@@ -48,8 +48,9 @@
 
 	pre_cordon_turfs.Cut()
 
-	var/turf/offset_turf = locate(BL.x + pre_cordon_distance, BL.y + pre_cordon_distance, BL.z)
-	pre_cordon_turfs += CORNER_OUTLINE(offset_turf, width - pre_cordon_distance * 2, height - pre_cordon_distance * 2) //we step-by-stop move inwards from the outer cordon
+	if(pre_cordon_distance)
+		var/turf/offset_turf = locate(BL.x + pre_cordon_distance, BL.y + pre_cordon_distance, BL.z)
+		pre_cordon_turfs += CORNER_OUTLINE(offset_turf, width - pre_cordon_distance * 2, height - pre_cordon_distance * 2) //we step-by-stop move inwards from the outer cordon
 
 	return TRUE
 
