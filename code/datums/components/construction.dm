@@ -33,8 +33,9 @@
 
 /datum/component/construction/proc/action(datum/source, obj/item/I, mob/living/user)
 	SIGNAL_HANDLER
-
-	return INVOKE_ASYNC(src, PROC_REF(check_step), I, user)
+	spawn(-1) //Please stop trying to get the return value from procs that can sleep
+		. = check_step(I, user)
+	return .
 
 /datum/component/construction/proc/update_index(diff)
 	index += diff
