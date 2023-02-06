@@ -1,0 +1,4 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - bugfix: "swapping to a stored DNA no longer forces you to be human instead of the species stored in the DNA"
