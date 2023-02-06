@@ -14,7 +14,7 @@
 	if (lighting_object)
 		qdel(lighting_object, force=TRUE) //Shitty fix for lighting objects persisting after death
 
-	new/datum/lighting_object(src)
+	new /datum/lighting_object(src)
 
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(minlum = 0, maxlum = 1)
@@ -94,7 +94,7 @@
 
 ///Transfer the lighting of one area to another
 /turf/proc/transfer_area_lighting(area/old_area, area/new_area)
-	if(SSlighting.initialized)
+	if(SSlighting.initialized && !space_lit)
 		if (new_area.static_lighting != old_area.static_lighting)
 			if (new_area.static_lighting)
 				lighting_build_overlay()
