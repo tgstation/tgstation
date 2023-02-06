@@ -439,8 +439,9 @@ Used by the AI doomsday and the self-destruct nuke.
 /**
  * Global list of AREA TYPES that are associated with the station.
  *
- * This tracks the types all areas in existence that are a UNIQUE_AREA and are on the station Z.
- * This does not track the areas themselves.
+ * This tracks the types of all areas in existence that are a UNIQUE_AREA and are on the station Z.
+ *
+ * This does not track the area instances themselves - See [GLOB.areas] for that.
  */
 GLOBAL_LIST_EMPTY(the_station_areas)
 
