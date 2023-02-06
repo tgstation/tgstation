@@ -542,6 +542,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	if(!rcd_results)
 		return FALSE
 	var/turf/target_turf = get_turf(A)
+
 	//start animation & check resource for the action
 	var/delay = rcd_results["delay"] * delay_mod
 	var/obj/effect/constructing_effect/rcd_effect = new(target_turf, delay, src.mode)
@@ -554,27 +555,53 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	 *RCD_WALLFRAME is also returned as the mode when upgrading apc, airalarm, firealarm using simple circuits upgrade
 	 */
 	if(rcd_results["mode"] != RCD_WALLFRAME && rcd_results["mode"] != RCD_DECONSTRUCT)
-		//if we are trying to build a window on top of a grill [only if there isnt already a window there] then we skip this check because thats normal behaviour
-		if(rcd_results["mode"] == RCD_WINDOWGRILLE && locate(/obj/structure/grille, target_turf) && (!locate(/obj/structure/window, target_turf) && !locate(/obj/structure/window/reinforced, target_turf)))
+		//if we are trying to build a window on top of a grill then we skip this check because thats normal behaviour
+		if(rcd_results["mode"] == RCD_WINDOWGRILLE && istype(A, /obj/structure/grille))
 			//no checks proceed
+
+		/**
+		 * if we are trying to create plating on turf which is not a proper floor then dont check for objects on top of the turf just allow that turf to be converted into plating. e.g. create plating beneath a player or underneath a machine frame/any dense object
+		 * if we are trying to finish a wall girder then let it finish
+		 */
+		else if(rcd_results["mode"] == RCD_FLOORWALL && (!istype(target_turf, /turf/open/floor) || istype(A, /obj/structure/girder)))
+			//no checks proceed
+
+		//turf density check
 		else
 			//structures which are small enough to fit on turfs containing directional windows.
 			var/static/list/small_structures = list(
+				RCD_WINDOWGRILLE,
 				RCD_MACHINE,
 				RCD_COMPUTER,
 				RCD_REFLECTOR,
 				RCD_FLOODLIGHT,
-				RCD_FURNISHING
+				RCD_FURNISHING,
+				RCD_AIRLOCK
 			)
-			//find all directional windows on the turf
-			var/list/ignored_content = list()
+
+			var/ignore_mobs = FALSE
+			//ignore directional windows on the turf
+			var/list/ignored_atoms
 			if(rcd_results["mode"] in small_structures)
-				var/static/list/ignored_atoms = list(/obj/structure/window, /obj/structure/window/reinforced)
-				for(var/atom/movable/movable_content in target_turf)
-					if(is_type_in_list(movable_content, ignored_atoms))
-						ignored_content += movable_content
+				ignored_atoms = list(/obj/structure/window, /obj/structure/window/reinforced)
+				//if we are trying to create grills/windoors we can go ahead and further ignore other windoors on the turf
+				if(rcd_results["mode"] == RCD_WINDOWGRILLE || (rcd_results["mode"] == RCD_AIRLOCK && ispath(airlock_type, /obj/machinery/door/window)))
+					//only ignore mobs if we are trying to create windoors and not grills. We dont want to drop a grill on top of somebody
+					ignore_mobs = rcd_results["mode"] == RCD_AIRLOCK
+					ignored_atoms += /obj/machinery/door/window
+				//if we are trying to create full airlock doors then we do the regular checks and make sure we have the full space for them. i.e. dont ignore anyhting dense on the turf
+				else if(rcd_results["mode"] == RCD_AIRLOCK)
+					ignored_atoms = list()
+
+			//find the structures to ignore
+			var/list/ignored_content = list()
+			for(var/atom/movable/movable_content in target_turf)
+				if(is_type_in_list(movable_content, ignored_atoms))
+					ignored_content += movable_content
+
 			//check if the structure can fit on this turf
-			if(target_turf.is_blocked_turf(exclude_mobs = FALSE, source_atom = null, ignore_atoms = ignored_content))
+			if(target_turf.is_blocked_turf(exclude_mobs = ignore_mobs, source_atom = null, ignore_atoms = ignored_content))
+				balloon_alert(user, "something dense is blocking the turf!")
 				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 				qdel(rcd_effect)
 				return FALSE
