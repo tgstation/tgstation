@@ -383,7 +383,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	if(inserted_disk)
-		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove SSD"
+		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Disk"
 		. = CONTEXTUAL_SCREENTIP_SET
 	return . || NONE
 
@@ -780,6 +780,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	// Insert a data disk
 	if(istype(attacking_item, /obj/item/computer_disk))
+		if(inserted_disk)
+			user.put_in_hands(inserted_disk)
+			balloon_alert(user, "disks swapped")
 		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		inserted_disk = attacking_item
