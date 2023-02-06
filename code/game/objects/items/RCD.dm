@@ -563,7 +563,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		 * if we are trying to create plating on turf which is not a proper floor then dont check for objects on top of the turf just allow that turf to be converted into plating. e.g. create plating beneath a player or underneath a machine frame/any dense object
 		 * if we are trying to finish a wall girder then let it finish
 		 */
-		else if(rcd_results["mode"] == RCD_FLOORWALL && (!istype(target_turf, /turf/open/floor) || istype(A, /obj/structure/girder)))
+		else if(rcd_results["mode"] == RCD_FLOORWALL && (!istype(target_turf, /turf/open/floor) || istype(A, /obj/structure/girder))) {}
 			//no checks proceed
 
 		//turf density check
