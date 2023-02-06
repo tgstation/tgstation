@@ -1,9 +1,9 @@
 #define MAX_TRANSIT_REQUEST_RETRIES 10
 /// How many turfs to allow before we stop blocking transit requests
-#define MAX_TRANSIT_TILE_COUNT (255 ** 2)
+#define MAX_TRANSIT_TILE_COUNT (150 ** 2)
 /// How many turfs to allow before we start freeing up existing "soft reserved" transit docks
 /// If we're under load we want to allow for cycling, but if not we want to preserve already generated docks for use
-#define SOFT_TRANSIT_RESERVATION_THRESHOLD (200 ** 2)
+#define SOFT_TRANSIT_RESERVATION_THRESHOLD (100 ** 2)
 
 
 SUBSYSTEM_DEF(shuttle)
@@ -31,8 +31,8 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/transit_requesters = list()
 	/// An associative list of the mobile docking ports that have failed a transit request, with the amount of times they've actually failed that transit request, up to MAX_TRANSIT_REQUEST_RETRIES
 	var/list/transit_request_failures = list()
-	/// List of the width and height that our shuttles are currently utilizing in reservation space
-	var/transit_utilized = list(0, 0)
+	/// How many turfs our shuttles are currently utilizing in reservation space
+	var/transit_utilized = 0
 
 	/**
 	 * Emergency shuttle stuff
@@ -210,7 +210,7 @@ SUBSYSTEM_DEF(shuttle)
 
 		// If we're below the soft reservation threshold, don't clear the old space
 		// We're better off holding onto it for now
-		if(transit_utilized[1] * transit_utilized[2] < SOFT_TRANSIT_RESERVATION_THRESHOLD)
+		if(transit_utilized < SOFT_TRANSIT_RESERVATION_THRESHOLD)
 			continue
 		var/obj/docking_port/mobile/owner = T.owner
 		if(owner)
@@ -226,7 +226,7 @@ SUBSYSTEM_DEF(shuttle)
 			var/requester = popleft(transit_requesters)
 			var/success = null
 			// Do not try and generate any transit if we're using more then our max already
-			if(transit_utilized[1] * transit_utilized[2] < MAX_TRANSIT_TILE_COUNT)
+			if(transit_utilized < MAX_TRANSIT_TILE_COUNT)
 				success = generate_transit_dock(requester)
 			if(!success) // BACK OF THE QUEUE
 				transit_request_failures[requester]++
@@ -648,8 +648,7 @@ SUBSYSTEM_DEF(shuttle)
 	new_transit_dock.setDir(angle2dir(dock_angle))
 
 	// Proposals use 2 extra hidden tiles of space, from the cordons that surround them
-	transit_utilized[1] += proposal.width + 2
-	transit_utilized[2] += proposal.height + 2
+	transit_utilized += (proposal.width + 2) * (proposal.height + 2)
 	M.assigned_transit = new_transit_dock
 	RegisterSignal(proposal, COMSIG_PARENT_QDELETING, PROC_REF(transit_space_clearing))
 
@@ -658,8 +657,7 @@ SUBSYSTEM_DEF(shuttle)
 /// Gotta manage our space brother
 /datum/controller/subsystem/shuttle/proc/transit_space_clearing(datum/turf_reservation/source)
 	SIGNAL_HANDLER
-	transit_utilized[1] -= source.width + 2
-	transit_utilized[2] -= source.height + 2
+	transit_utilized -= (source.width + 2) * (source.height + 2)
 
 /datum/controller/subsystem/shuttle/Recover()
 	initialized = SSshuttle.initialized
