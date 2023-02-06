@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		return FALSE
 	if(!new_heart.useable)
 		return FALSE
-	if(new_heart.status != ORGAN_ORGANIC)
+	if(new_heart.status == ORGAN_ROBOTIC)
 		return FALSE
 	if(new_heart.organ_flags & (ORGAN_SYNTHETIC|ORGAN_FAILING))
 		return FALSE

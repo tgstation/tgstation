@@ -1,0 +1,14 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Fixed motion sensors on tram doors, they will now crush you much less often!"
+  - balance: "Reduced damage from being crushed by tram doors"
+  - code_imp: "Un-nested emag blacklist"
+  - code_imp: "emag works properly on tram doors"
+  - bugfix: "Backwards tram door sparks animation"
+  - bugfix: "Tram displays power consumption"
+  - bugfix: "Tram crossing signals power consumption"
+  - balance: "Increased brightness on tram crossing signals"
+  - bugfix: "West Wing NW/SW and East Wing NE/SE crossing signals now shut off when power is lost"
+  - bugfix: "Tram benches don't override standard benches"
+  - bugfix: "Reduced saturation and brightness of standard bench"
