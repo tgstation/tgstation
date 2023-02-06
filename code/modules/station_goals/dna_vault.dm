@@ -117,9 +117,9 @@
 		qdel(filler)
 	return ..()
 
-/obj/machinery/dna_vault/attackby(obj/item/Item, mob/user, params)
-	if(istype(Item, /obj/item/dna_probe))
-		var/obj/item/dna_probe/our_probe = Item
+/obj/machinery/dna_vault/attackby(obj/item/our_item, mob/user, params)
+	if(istype(our_item, /obj/item/dna_probe))
+		var/obj/item/dna_probe/our_probe = our_item
 		var/uploaded = 0
 		var/plant_dna_length = length(our_probe.stored_dna_plants)
 		var/human_dna_length = length(our_probe.stored_dna_human)
