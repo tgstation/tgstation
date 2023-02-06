@@ -58,10 +58,7 @@
 		owner.balloon_alert(owner, "must be closer!")
 		return FALSE
 
-	if(!ismob(to_wrap) && !isobj(to_wrap))
-		return FALSE
-
-	if(to_wrap == owner)
+	if(!ismovable(to_wrap) || to_wrap == owner)
 		return FALSE
 
 	if(isspider(to_wrap))
