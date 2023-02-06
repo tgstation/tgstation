@@ -556,7 +556,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	 */
 	if(rcd_results["mode"] != RCD_WALLFRAME && rcd_results["mode"] != RCD_DECONSTRUCT)
 		//if we are trying to build a window on top of a grill then we skip this check because thats normal behaviour
-		if(rcd_results["mode"] == RCD_WINDOWGRILLE && istype(A, /obj/structure/grille))
+		if(rcd_results["mode"] == RCD_WINDOWGRILLE && istype(A, /obj/structure/grille)) {}
 			//no checks proceed
 
 		/**
