@@ -269,10 +269,13 @@ GLOBAL_LIST_EMPTY(change_count)
 			if(stashed_group.should_display || SSair.display_all_groups)
 				stashed_group.display_turf(new_turf)
 	else
-		SSair.remove_from_active(src) //Clean up wall excitement, and refresh excited groups
+		if(excited || excited_group)
+			SSair.remove_from_active(src) //Clean up wall excitement, and refresh excited groups
 		SET_COST("remove from active")
 		if(ispath(path,/turf/closed) || ispath(path,/turf/cordon))
 			flags |= CHANGETURF_RECALC_ADJACENT
+			SET_COST("set recalc adjacent")
+		else
 			SET_COST("set recalc adjacent")
 		return ..()
 

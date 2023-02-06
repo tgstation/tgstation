@@ -81,12 +81,13 @@
 			reconsider_lights()
 		return
 	directional_opacity = NONE
-	for(var/atom/movable/opacity_source as anything in opacity_sources)
-		if(opacity_source.flags_1 & ON_BORDER_1)
-			directional_opacity |= opacity_source.dir
-		else //If fulltile and opaque, then the whole tile blocks view, no need to continue checking.
-			directional_opacity = ALL_CARDINALS
-			break
+	if(opacity_sources)
+		for(var/atom/movable/opacity_source as anything in opacity_sources)
+			if(opacity_source.flags_1 & ON_BORDER_1)
+				directional_opacity |= opacity_source.dir
+			else //If fulltile and opaque, then the whole tile blocks view, no need to continue checking.
+				directional_opacity = ALL_CARDINALS
+				break
 	if(. != directional_opacity && (. == ALL_CARDINALS || directional_opacity == ALL_CARDINALS))
 		reconsider_lights() //The lighting system only cares whether the tile is fully concealed from all directions or not.
 
