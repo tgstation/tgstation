@@ -324,13 +324,13 @@
 		return
 	var/duration = rand(5 SECONDS, 45 SECONDS)
 	veil = new(owner.drop_location())
-	to_chat(owner, "<span class='warning'>[pick("You stop thinking for a moment. Therefore you are not.",\
+	to_chat(owner, span_warning([pick("You stop thinking for a moment. Therefore you are not.",\
 												"To be or not to be...",\
 												"Why exist?",\
 												"You stop keeping it real.",\
 												"Your grip on existence slips.",\
 												"Do you even exist?",\
-												"You simply fade away.")]</span>")
+												"You simply fade away.")])
 	owner.forceMove(veil)
 	COOLDOWN_START(src, crisis_cooldown, 1 MINUTES)
 	addtimer(CALLBACK(src, PROC_REF(fade_in)), duration)
@@ -419,6 +419,6 @@
 	forceMove(get_step_towards(src, victim))
 	if(prob(5))
 		var/beepskys_cry = "Level 10 infraction alert!"
-		to_chat(victim, "<span class='name'>[name]</span> exclaims, \"<span class='robotic'>[beepskys_cry]</span>\"")
+		to_chat(victim, "[span_name("[name]")] exclaims, \"[span_robot("[beepskys_cry]")]")
 		if(victim.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 			victim.create_chat_message(src, raw_message = beepskys_cry, spans = list("robotic"))
