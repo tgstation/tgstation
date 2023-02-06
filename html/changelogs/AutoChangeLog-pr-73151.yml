@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes:
-  - admin: "There's a cog next to events you can trigger if it has an admin setup."

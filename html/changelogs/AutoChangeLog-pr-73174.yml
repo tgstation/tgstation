@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "There will no longer have 2 of the same station trait roll twice in the same round."
