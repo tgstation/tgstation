@@ -235,9 +235,9 @@
 		if(!can_breathe_vacuum && (o2_pp < safe_oxygen_min))
 			breather.throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 			// Inhale insufficient amount of O2, exhale CO2.
-			if(o2_pp)
-				gas_breathed = handle_suffocation(breather, o2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
-				breathe_gas_volume(breath_gases, /datum/gas/oxygen, /datum/gas/carbon_dioxide, volume = gas_breathed)
+			//if(o2_pp)
+			gas_breathed = handle_suffocation(breather, o2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
+			breathe_gas_volume(breath_gases, /datum/gas/oxygen, /datum/gas/carbon_dioxide, volume = gas_breathed)
 		else
 			// Enough oxygen to breathe.
 			breather.failed_last_breath = FALSE
