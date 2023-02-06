@@ -1,10 +1,10 @@
 /**
- * Causes a power failure across the station
+ * Causes a power failure across the station.
  *
- * All SMESs and APCs will be fully trained, and all areas will power down
+ * All SMESs and APCs will be fully drained, and all areas will power down.
  *
  * The drain is permanent (that is, it won't automatically come back after some time like the grid check event),
- * but the crew themselves can return power via the engine, solars, or other means of creating power
+ * but the crew themselves can return power via the engine, solars, or other means of creating power.
  */
 /proc/power_failure()
 	priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", ANNOUNCER_POWEROFF)
@@ -39,9 +39,9 @@
 			C.cell.charge = 0
 
 /**
- * Restores power to all rooms on the station
+ * Restores power to all rooms on the station.
  *
- * Magically fills ALL APCs and SMESs to capacity, and restores power to depowered areas
+ * Magically fills ALL APCs and SMESs to capacity, and restores power to depowered areas.
  */
 /proc/power_restore()
 	priority_announce("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", ANNOUNCER_POWERON)
@@ -70,15 +70,14 @@
 		station_area.power_change()
 
 /**
- * A quicker version of [/proc/power_restore] that only handles recharging SMESs
+ * A quicker version of [/proc/power_restore] that only handles recharging SMESs.
  *
  * This will also repower an entire station - it is not instantaneous like power restore,
- * but it is faster performance-wise as it only handles SMES units
+ * but it is faster performance-wise as it only handles SMES units.
  *
- * Great as a less magical / more IC way to return power to a sapped station
+ * Great as a less magical / more IC way to return power to a sapped station.
  */
 /proc/power_restore_quick()
-
 	priority_announce("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal", ANNOUNCER_POWERON)
 	for(var/obj/machinery/power/smes/S in GLOB.machines)
 		if(!is_station_level(S.z))
