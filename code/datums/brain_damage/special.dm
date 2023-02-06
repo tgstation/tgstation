@@ -324,13 +324,14 @@
 		return
 	var/duration = rand(5 SECONDS, 45 SECONDS)
 	veil = new(owner.drop_location())
-	to_chat(owner, span_warning("[pick("You stop thinking for a moment. Therefore you are not.",\
-												"To be or not to be...",\
-												"Why exist?",\
-												"You stop keeping it real.",\
-												"Your grip on existence slips.",\
-												"Do you even exist?",\
-												"You simply fade away.")]"))
+	to_chat(owner, span_warning("[pick(list(
+			"Do you even exist?",
+			"To be or not to be...",
+			"Why exist?",
+			"You simply fade away.",
+			"You stop keeping it real.",
+			"You stop thinking for a moment. Therefore you are not.",
+		))]"))
 	owner.forceMove(veil)
 	COOLDOWN_START(src, crisis_cooldown, 1 MINUTES)
 	addtimer(CALLBACK(src, PROC_REF(fade_in)), duration)
