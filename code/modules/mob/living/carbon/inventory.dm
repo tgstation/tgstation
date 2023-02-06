@@ -362,7 +362,8 @@
 		return
 
 	var/obj/item/offered_item = get_active_held_item()
-	if(!offered_item)
+	// if it's an abstract item, should consider it to be non-existent (unless it's a HAND_ITEM, which means it's an obj/item that is just a representation of our hand)
+	if(!offered_item || ((offered_item.item_flags & ABSTRACT) && !(offered_item.item_flags & HAND_ITEM)))
 		to_chat(src, span_warning("You're not holding anything to offer!"))
 		return
 

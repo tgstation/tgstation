@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Swiping the Crab-17 checkout machine too early will no longer instantly explode it and lock everyone out of their bank accounts."

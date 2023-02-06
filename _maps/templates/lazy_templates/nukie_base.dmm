@@ -2016,7 +2016,7 @@
 	},
 /obj/structure/table/glass/plasmaglass,
 /obj/structure/reagent_dispensers/wall/virusfood/directional/north,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/healthanalyzer{
 	pixel_y = 3
 	},

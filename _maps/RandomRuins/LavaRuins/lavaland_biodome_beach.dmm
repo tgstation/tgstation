@@ -1358,7 +1358,7 @@
 /turf/open/floor/sepia,
 /area/ruin/powered/beach)
 "Uk" = (
-/obj/structure/sign/barsign,
+/obj/machinery/barsign/all_access,
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "Up" = (

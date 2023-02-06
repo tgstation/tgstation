@@ -340,7 +340,7 @@
 /area/station/hallway/secondary/entry
 	name = "\improper Arrival Shuttle Hallway"
 	icon_state = "entry"
-	area_flags = EVENT_PROTECTED
+	area_flags = UNIQUE_AREA | EVENT_PROTECTED
 
 /area/station/hallway/secondary/service
 	name = "\improper Service Hallway"
@@ -1362,6 +1362,7 @@
 /area/station/science/ordnance/bomb
 	name = "\improper Ordnance Bomb Site"
 	icon_state = "ord_boom"
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 /area/station/science/genetics
 	name = "\improper Genetics Lab"
@@ -1454,3 +1455,19 @@
 
 /area/station/maintenance/external/port/bow
 	name = "\improper Port Bow External Hull Access"
+
+//Tramstation - External
+/area/misc/asteroid
+	name = "\improper Asteroid"
+	icon = 'icons/area/areas_station.dmi'
+	icon_state = "asteroid"
+	has_gravity = STANDARD_GRAVITY
+	sound_environment = SOUND_AREA_ASTEROID
+	ambient_buzz = 'sound/ambience/ambiatmos.ogg'
+	outdoors = TRUE
+	always_unpowered = TRUE
+	power_environ = FALSE
+	power_equip = FALSE
+	power_light = FALSE
+	requires_power = TRUE
+	ambience_index = AMBIENCE_MINING

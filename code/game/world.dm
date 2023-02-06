@@ -133,6 +133,7 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_logging_prefix = "O_[override_dir]_"
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
+	GLOB.logger.init_logging()
 	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
 	GLOB.dynamic_log = "[GLOB.log_directory]/dynamic.log"
 	GLOB.filter_log = "[GLOB.log_directory]/filters.log"
@@ -164,7 +165,6 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_tool_log = "[GLOB.log_directory]/tools.log"
 	GLOB.world_uplink_log = "[GLOB.log_directory]/uplink.log"
 	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
-
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = "[GLOB.log_directory]/tests.log"
@@ -369,7 +369,9 @@ GLOBAL_VAR(restart_counter)
 	if(!max_zs_to_load)
 		return
 	var/area/global_area = GLOB.areas_by_type[world.area] // We're guaranteed to be touching the global area, so we'll just do this
-	var/list/to_add = block(locate(old_max + 1, 1, 1), locate(maxx, maxy, max_zs_to_load))
+	var/list/to_add = block(
+		locate(old_max + 1, 1, 1),
+		locate(maxx, maxy, max_zs_to_load))
 	global_area.contained_turfs += to_add
 
 /world/proc/increaseMaxY(new_maxy, max_zs_to_load = maxz)
@@ -380,7 +382,9 @@ GLOBAL_VAR(restart_counter)
 	if(!max_zs_to_load)
 		return
 	var/area/global_area = GLOB.areas_by_type[world.area] // We're guarenteed to be touching the global area, so we'll just do this
-	var/list/to_add = block(locate(1, old_maxy + 1, 1), locate(maxx, maxy, max_zs_to_load))
+	var/list/to_add = block(
+		locate(1, old_maxy + 1, 1),
+		locate(maxx, maxy, max_zs_to_load))
 	global_area.contained_turfs += to_add
 
 /world/proc/incrementMaxZ()

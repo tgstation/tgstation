@@ -1,0 +1,1 @@
+/obj/machinery/barsign : /obj/structure/sign/barsign{@OLD}

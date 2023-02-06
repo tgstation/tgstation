@@ -191,7 +191,7 @@
 	icon_state = "brain_pate"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 8,
-		/datum/reagent/liquidgibs = 2,
+		/datum/reagent/consumable/liquidgibs = 2,
 	)
 	tastes = list("brains" = 2)
 	foodtypes = MEAT | VEGETABLES | GORE
@@ -641,7 +641,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 10,
 		/datum/reagent/blood = 8,
-		/datum/reagent/liquidgibs = 2,
+		/datum/reagent/consumable/liquidgibs = 2,
 	)
 	tastes = list("vinegar" = 1, "metal" = 1)
 	foodtypes = MEAT | VEGETABLES | GORE

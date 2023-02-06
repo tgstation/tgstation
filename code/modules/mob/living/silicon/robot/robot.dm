@@ -101,6 +101,13 @@
 		modularInterface.saved_job = "Cyborg"
 	return ..()
 
+/mob/living/silicon/robot/set_suicide(suicide_state)
+	. = ..()
+	if(mmi)
+		if(mmi.brain)
+			mmi.brain.suicided = suicide_state
+		if(mmi.brainmob)
+			mmi.brainmob.suiciding = suicide_state
 
 /**
  * Sets the tablet theme and icon
@@ -554,7 +561,7 @@
 		new /obj/item/bodypart/arm/right/robot(T)
 		new /obj/item/bodypart/head/robot(T)
 		var/b
-		for(b=0, b!=2, b++)
+		for(b=0, b != 2, b++)
 			var/obj/item/assembly/flash/handheld/F = new /obj/item/assembly/flash/handheld(T)
 			F.burn_out()
 	if (cell) //Sanity check.

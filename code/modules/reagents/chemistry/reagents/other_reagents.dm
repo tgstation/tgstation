@@ -110,17 +110,18 @@
 	if(data["blood_DNA"])
 		bloodsplatter.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
-/datum/reagent/liquidgibs
+/datum/reagent/consumable/liquidgibs
 	name = "Liquid Gibs"
 	color = "#CC4633"
 	description = "You don't even want to think about what's in here."
 	taste_description = "gross iron"
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	material = /datum/material/meat
 	ph = 7.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/glass_style/shot_glass/liquidgibs
-	required_drink_type = /datum/reagent/liquidgibs
+	required_drink_type = /datum/reagent/consumable/liquidgibs
 	icon_state = "shotglassred"
 
 /datum/reagent/bone_dust
@@ -230,19 +231,34 @@
 		new /obj/item/stack/sheet/wethide(get_turf(HH), HH.amount)
 		qdel(HH)
 
-/*
+
+/// How many wet stacks you get per units of water when it's applied by touch.
+#define WATER_TO_WET_STACKS_FACTOR_TOUCH 0.5
+/// How many wet stacks you get per unit of water when it's applied by vapor. Much less effective than by touch, of course.
+#define WATER_TO_WET_STACKS_FACTOR_VAPOR 0.1
+
+
+/**
  * Water reaction to a mob
  */
-
-/datum/reagent/water/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with water can help put them out!
+/datum/reagent/water/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)//Splashing people with water can help put them out!
 	. = ..()
 	if(methods & TOUCH)
 		exposed_mob.extinguish_mob() // extinguish removes all fire stacks
+		exposed_mob.adjust_wet_stacks(reac_volume * WATER_TO_WET_STACKS_FACTOR_TOUCH) // Water makes you wet, at a 50% water-to-wet-stacks ratio. Which, in turn, gives you some mild protection from being set on fire!
+
 	if(methods & VAPOR)
+		exposed_mob.adjust_wet_stacks(reac_volume * WATER_TO_WET_STACKS_FACTOR_VAPOR) // Spraying someone with water with the hope to put them out is just simply too funny to me not to add it.
+
 		if(!isfelinid(exposed_mob))
 			return
+
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
+
+
+#undef WATER_TO_WET_STACKS_FACTOR_TOUCH
+#undef WATER_TO_WET_STACKS_FACTOR_VAPOR
 
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
@@ -338,7 +354,7 @@
 	. = ..()
 	if(!istype(exposed_turf))
 		return
-	if(reac_volume>=10)
+	if(reac_volume >= 10)
 		for(var/obj/effect/rune/R in exposed_turf)
 			qdel(R)
 	exposed_turf.Bless()
@@ -508,7 +524,7 @@
 				var/len = length(string)
 				var/char = ""
 				var/ascii = 0
-				for(var/i=1, i<=len, i += length(char))
+				for(var/i=1, i <= len, i += length(char))
 					char = string[i]
 					ascii = text2ascii(char)
 					switch(ascii)

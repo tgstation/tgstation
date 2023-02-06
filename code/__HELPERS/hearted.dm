@@ -32,7 +32,7 @@
 		if(!hearted_mob?.client)
 			continue
 		hearted_mob.client.adjust_heart()
-		message += "[hearted_ckey][i==hearts.len ? "" : ", "]"
+		message += "[hearted_ckey][i == hearts.len ? "" : ", "]"
 	message_admins(message.Join())
 
 /// Ask someone if they'd like to award a commendation for the round, 3 tries to get the name they want before we give up

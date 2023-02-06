@@ -51,7 +51,7 @@
 	data["boots"] = boots?.name
 	return data
 
-/obj/item/mod/control/ui_act(action, params)
+/obj/item/mod/control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
