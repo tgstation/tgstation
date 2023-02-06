@@ -123,7 +123,7 @@
 			var/mob/living/carbon/human/paying_customer = user
 			var/successfully_put_in_hands
 			spawn(-1) //Put_in_hands can sleep, we don't want that.
-				successfully_put_in_hands= paying_customer.put_in_hands(holochange)
+				successfully_put_in_hands = paying_customer.put_in_hands(holochange)
 			if(!successfully_put_in_hands)
 				user.pulling = holochange
 		else
