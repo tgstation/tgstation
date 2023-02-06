@@ -241,3 +241,45 @@
   - admin: Admin verbs now come with a handy description when you hover over them!
   lizardqueenlexi:
   - bugfix: Corrected the skintone on arms grown back by the Rod of Asclepius
+2023-02-06:
+  Comxy:
+  - rscadd: Added new damage buffs for netherworld mobs
+  - refactor: Refactors netherworld mobs into basic mobs
+  Jacquerel:
+  - bugfix: Biotypes will be more consistently applied when taking damage, pod and
+      shadowperson prosthetic limbs won't be corroded due to light levels.
+  - bugfix: Podperson and Wooden Golem prosthetic limbs won't be corroded by having
+      a hungry tummy.
+  JohnFulpWillard:
+  - bugfix: There will no longer have 2 of the same station trait roll twice in the
+      same round.
+  - bugfix: Announcements of ghost roles don't play if no one accepts the poll to
+      play as the role.
+  LT3:
+  - refactor: 'Rewrite of random event Disease Outbreak: Advanced. Listen to those
+      level 7 biohazard warnings!'
+  - admin: Fully customizable build-your-own virus is available in the admin Secrets
+      panel, for those people you really hate
+  NamelessFairy:
+  - bugfix: Some misplaced pixel on TGC cards have been cleaned up.
+  Profakos:
+  - bugfix: United Surplus Crate Key is no longer visible in the nuke ops uplink
+  - bugfix: pod person hair can be once again styled by secateaurs
+  Rhials:
+  - bugfix: abductor scientist's retrieval implants will now properly recall the owner,
+      and inform them upon recall failure.
+  ShizCalev:
+  - bugfix: Fixed some duplicated and incorrect messages being presented when infected
+      with a virus that has the spontaneous combustion symptom.
+  SyncIt21:
+  - qol: examining a meat spike frame & meat spike will tell you about itself
+  Tattle:
+  - admin: Admins are no longer alerted when an inert BoH is printed
+  Unit2E:
+  - balance: The hypnotic flash now works on unconscious people (not crit), one of
+      us, one of us!
+  scriptis:
+  - bugfix: asays are no longer double-escaped
+  - admin: asay now uses tgui say
+  tralezab:
+  - admin: There's a cog next to events you can trigger if it has an admin setup.
