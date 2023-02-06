@@ -103,8 +103,7 @@
 		return FALSE
 
 /obj/effect/mob_spawn/ghost_role/spider/special(mob/living/simple_animal/hostile/giant_spider/spawned_mob, mob/mob_possessor)
-	if (spawned_mob)
-		spawned_mob.directive = directive
+	spawned_mob.directive = directive
 	. = ..()
 	egg.spawner = null
 	QDEL_NULL(egg)
