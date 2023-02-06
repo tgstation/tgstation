@@ -40,8 +40,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/netherworld/migo{
-	environment_smash = 0
+/mob/living/basic/migo{
+	obj_damage = 0
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -381,8 +381,8 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/netherworld/blankbody{
-	environment_smash = 0
+/mob/living/basic/blankbody{
+	obj_damage = 0
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/item/paper/crumpled/bloody{
@@ -433,8 +433,8 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/netherworld/migo{
-	environment_smash = 0
+/mob/living/basic/migo{
+	obj_damage = 0
 	},
 /turf/open/floor/bamboo,
 /area/shuttle/abandoned/bar)
@@ -753,8 +753,8 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/netherworld{
-	environment_smash = 0
+/mob/living/basic/creature{
+	obj_damage = 0
 	},
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plating,
@@ -1112,8 +1112,8 @@
 /area/shuttle/abandoned/engine)
 "Wj" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/netherworld{
-	environment_smash = 0
+/mob/living/basic/creature{
+	obj_damage = 0
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
