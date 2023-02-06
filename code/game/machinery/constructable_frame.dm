@@ -297,9 +297,8 @@
 					return
 
 				var/obj/item/storage/part_replacer/replacer = P
-				var/list/added_components = list()
+				var/play_sound = FALSE
 				var/list/part_list = replacer.get_sorted_parts() //parts sorted in order of tier
-
 				for(var/path in req_components)
 					var/target_path
 					if(ispath(path, /datum/stock_part))
@@ -314,34 +313,25 @@
 						if(istype(part,/obj/item/stack))
 							var/obj/item/stack/S = part
 							var/used_amt = min(round(S.get_amount()), req_components[path])
+							var/stack_name = S.singular_name
 							if(!used_amt || !S.use(used_amt))
 								continue
-							var/NS = new S.merge_type(src, used_amt)
-							added_components[NS] = path
 							req_components[path] -= used_amt
-						else
-							added_components[part] = path
-							if(replacer.atom_storage.attempt_remove(part, src))
-								req_components[path]--
+							to_chat(user, span_notice("You add [used_amt] [stack_name] to [src]."))
+							play_sound = TRUE
+						else if(replacer.atom_storage.attempt_remove(part, src))
+							var/stock_part_datum = GLOB.stock_part_datums_per_object[part.type]
+							if (!isnull(stock_part_datum))
+								components += stock_part_datum
+								qdel(part)
+							else
+								components += part
+								part.forceMove(src)
+							req_components[path]--
+							to_chat(user, span_notice("You add [part] to [src]."))
+							play_sound = TRUE
 
-				for(var/obj/item/part in added_components)
-					if(istype(part,/obj/item/stack))
-						var/obj/item/stack/incoming_stack = part
-						for(var/obj/item/stack/merge_stack in components)
-							if(incoming_stack.can_merge(merge_stack))
-								incoming_stack.merge(merge_stack)
-								if(QDELETED(incoming_stack))
-									break
-					if(!QDELETED(part)) //If we're a stack and we merged we might not exist anymore
-						var/stock_part_datum = GLOB.stock_part_datums_per_object[part.type]
-						if (!isnull(stock_part_datum))
-							components += stock_part_datum
-							qdel(part)
-						else
-							components += part
-							part.forceMove(src)
-					to_chat(user, span_notice("You add [part] to [src]."))
-				if(added_components.len)
+				if(play_sound)
 					replacer.play_rped_sound()
 				return
 
@@ -366,16 +356,7 @@
 				if(isstack(P))
 					var/obj/item/stack/S = P
 					var/used_amt = min(round(S.get_amount()), req_components[stock_part_path])
-
 					if(used_amt && S.use(used_amt))
-						var/obj/item/stack/NS = locate(S.merge_type) in components
-
-						if(!NS)
-							NS = new S.merge_type(src, used_amt)
-							components += NS
-						else
-							NS.add(used_amt)
-
 						req_components[stock_part_path] -= used_amt
 						to_chat(user, span_notice("You add [P] to [src]."))
 					return

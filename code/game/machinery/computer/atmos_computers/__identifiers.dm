@@ -31,6 +31,8 @@
 #define ATMOS_GAS_MONITOR_DISTRO "distro"
 #define ATMOS_GAS_MONITOR_WASTE "waste"
 
+///maps a chamber id to its air sensor
+#define CHAMBER_SENSOR_FROM_ID(chamber_id) ((chamber_id) + "_sensor")
 ///maps an air sensor's chamber id to its input valve[ i.e. outlet_injector] id
 #define CHAMBER_INPUT_FROM_ID(chamber_id) ((chamber_id) + "_in")
 ///maps an air sensor's chamber id to its output valve[i.e. vent pump] id

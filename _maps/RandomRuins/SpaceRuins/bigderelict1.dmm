@@ -617,7 +617,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "cC" = (
 /obj/structure/alien/weeds/creature,
-/mob/living/simple_animal/hostile/netherworld{
+/mob/living/basic/creature{
 	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
 	health = 25;
 	maxHealth = 25;
@@ -633,7 +633,7 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/mob/living/simple_animal/hostile/netherworld{
+/mob/living/basic/creature{
 	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
 	health = 25;
 	maxHealth = 25;
@@ -822,7 +822,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "dl" = (
 /obj/structure/alien/weeds/creature,
-/mob/living/simple_animal/hostile/netherworld{
+/mob/living/basic/creature{
 	name = "Miss Tiggles"
 	},
 /turf/open/floor/iron,
@@ -1476,7 +1476,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "RH" = (
 /obj/structure/alien/weeds/creature,
-/mob/living/simple_animal/hostile/netherworld{
+/mob/living/basic/creature{
 	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
 	health = 25;
 	maxHealth = 25;

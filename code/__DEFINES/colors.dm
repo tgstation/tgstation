@@ -63,7 +63,6 @@
 #define COLOR_PAI_GREEN "#00FF88"
 #define COLOR_PALE_GREEN "#20e28e"
 
-#define COLOR_BLUE_WHITE "#CCCEFF"
 #define COLOR_CYAN "#00FFFF"
 #define COLOR_DARK_CYAN "#00A2FF"
 #define COLOR_TEAL "#008080"
@@ -80,7 +79,7 @@
 #define COLOR_BLUE_GRAY "#75A2BB"
 
 #define COLOR_PINK "#FFC0CB"
-#define COLOR_LIGHT_PINK "#ff3cc8"
+#define COLOR_LIGHT_PINK "#FF3CC8"
 #define COLOR_SCIENCE_PINK "#C96DBF"
 #define COLOR_MOSTLY_PURE_PINK "#E4005B"
 #define COLOR_BLUSH_PINK "#DE5D83"
@@ -89,7 +88,7 @@
 #define COLOR_STRONG_MAGENTA "#B800B8"
 #define COLOR_PURPLE "#800080"
 #define COLOR_VIOLET "#B900F7"
-#define COLOR_STRONG_VIOLET "#6927c5"
+#define COLOR_STRONG_VIOLET "#6927C5"
 #define COLOR_DARK_PURPLE "#551A8B"
 
 #define COLOR_ORANGE "#FF9900"
@@ -174,6 +173,9 @@
 
 ///Colors for eigenstates
 #define COLOR_PERIWINKLEE "#9999FF"
+
+/// Starlight!
+#define COLOR_STARLIGHT "#8589fa"
 /**
  * Some defines to generalise colours used in lighting.
  *

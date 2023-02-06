@@ -45,7 +45,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/list/toggleable_inventory = list() //the screen objects which can be hidden
 	var/list/atom/movable/screen/hotkeybuttons = list() //the buttons that can be used via hotkeys
 	var/list/infodisplay = list() //the screen objects that display mob info (health, alien plasma, etc...)
-	var/list/screenoverlays = list() //the screen objects used as whole screen overlays (flash, damageoverlay, etc...)
+	/// Screen objects that never exit view.
+	var/list/always_visible_inventory = list()
 	var/list/inv_slots[SLOTS_AMT] // /atom/movable/screen/inventory objects, ordered by their slot ID.
 	var/list/hand_slots // /atom/movable/screen/inventory/hand objects, assoc list of "[held_index]" = object
 
@@ -222,7 +223,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	QDEL_LIST_ASSOC_VAL(master_groups)
 	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
-	QDEL_LIST(screenoverlays)
+	QDEL_LIST(always_visible_inventory)
 	mymob = null
 
 	QDEL_NULL(screentip_text)
@@ -308,6 +309,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen += hotkeybuttons
 			if(infodisplay.len)
 				screenmob.client.screen += infodisplay
+			if(always_visible_inventory.len)
+				screenmob.client.screen += always_visible_inventory
 
 			screenmob.client.screen += toggle_palette
 
@@ -324,6 +327,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen -= hotkeybuttons
 			if(infodisplay.len)
 				screenmob.client.screen += infodisplay
+			if(always_visible_inventory.len)
+				screenmob.client.screen += always_visible_inventory
 
 			//These ones are a part of 'static_inventory', 'toggleable_inventory' or 'hotkeybuttons' but we want them to stay
 			for(var/h in hand_slots)
@@ -344,6 +349,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen -= hotkeybuttons
 			if(infodisplay.len)
 				screenmob.client.screen -= infodisplay
+			if(always_visible_inventory.len)
+				screenmob.client.screen += always_visible_inventory
 
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
@@ -397,7 +404,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if (initial(ui_style) || ui_style == new_ui_style)
 		return
 
-	for(var/atom/item in static_inventory + toggleable_inventory + hotkeybuttons + infodisplay + screenoverlays + inv_slots)
+	for(var/atom/item in static_inventory + toggleable_inventory + hotkeybuttons + infodisplay + always_visible_inventory + inv_slots)
 		if (item.icon == ui_style)
 			item.icon = new_ui_style
 
