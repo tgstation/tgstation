@@ -129,14 +129,10 @@
 	name = "Disease Outbreak: Advanced"
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
-<<<<<<< HEAD
-	description = "An 'advanced' disease will infect some members of the crew." //These are the ones that get viro lynched!
-	min_wizard_trigger_potency = 2
-	max_wizard_trigger_potency = 6
-=======
 	weight = 10
 	description = "An 'advanced' disease will infect some members of the crew."
->>>>>>> master
+	min_wizard_trigger_potency = 2
+	max_wizard_trigger_potency = 6
 	admin_setup = /datum/event_admin_setup/disease_outbreak/advanced
 
 /datum/event_admin_setup/disease_outbreak/advanced
