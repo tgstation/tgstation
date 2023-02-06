@@ -8,9 +8,10 @@
 	category = EVENT_CATEGORY_INVASION
 	description = "The crew will either pay up, or face a pirate assault."
 	admin_setup = /datum/event_admin_setup/pirates
+	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event_control/pirates/preRunEvent()
-	if (!SSmapping.empty_space)
+	if (!SSmapping.is_planetary())
 		return EVENT_CANT_RUN
 	return ..()
 

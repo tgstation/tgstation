@@ -172,12 +172,15 @@
 
 # ZephyrTFA
 
+/code/__HELPERS/admin_verb.dm @ZephyrTFA
+/code/controllers/subsystem/admin_verbs.dm @ZephyrTFA
 /code/datums/json_savefile.dm @ZephyrTFA
 /code/datums/armor/ @ZephyrTFA
+/code/modules/admin/verbs/ @ZephyrTFA
 
 # MULTIPLE OWNERS
 
-/_maps/ @EOBGames @Maurukas @san7890 @ShizCalev
+/_maps/ @EOBGames @Maurukas @MMMiracles @san7890 @ShizCalev
 /icons/ @Imaginos16 @Krysonism @Twaticus
 /icons/ass/ @Ghilker @tralezab
 

@@ -177,7 +177,7 @@
 
 /obj/item/reagent_containers/spray/cleaner/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is putting the nozzle of \the [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!"))
-	if(do_mob(user,user,30))
+	if(do_after(user, 3 SECONDS, user))
 		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
 			user.visible_message(span_suicide("[user] pulls the trigger!"))
 			spray(user)

@@ -101,7 +101,7 @@
 	var/light_amount = owner_turf.get_lumcount()
 
 	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
-		owner.take_overall_damage(0.5 * delta_time, 0.5 * delta_time, 0, BODYTYPE_ORGANIC)
+		owner.take_overall_damage(brute = 0.5 * delta_time, burn = 0.5 * delta_time, required_bodytype = BODYTYPE_ORGANIC)
 	else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
 		owner.heal_overall_damage(0.5 * delta_time, 0.5 * delta_time, BODYTYPE_ORGANIC)
 
@@ -109,3 +109,4 @@
 	name = "burning red eyes"
 	desc = "Even without their shadowy owner, looking at these eyes gives you a sense of dread."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
+	pepperspray_protect = TRUE

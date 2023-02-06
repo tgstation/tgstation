@@ -2,6 +2,8 @@
 #define PRINTOUT_MISSING "Missing"
 #define PRINTOUT_RAPSHEET "Rapsheet"
 #define PRINTOUT_WANTED "Wanted"
+/// Editing this will cause UI issues.
+#define MAX_CRIME_NAME_LEN 24
 
 /obj/machinery/computer/secure_data//TODO:SANITY
 	name = "security records console"
@@ -85,13 +87,15 @@
 /obj/machinery/computer/secure_data/ui_data(mob/user)
 	var/list/data = list()
 
-	var/has_access = authenticated && isliving(user)
-	data["authenticated"] = has_access
+	var/has_access =  (authenticated && isliving(user)) || isAdminGhostAI(user)
+	data["authenticated"] = authenticated || isAdminGhostAI(user)
 	if(!has_access)
 		return data
 
 	data["assigned_view"] = "preview_[user.ckey]_[REF(src)]_records"
 	data["available_statuses"] = WANTED_STATUSES()
+	data["current_user"] = user.name
+	data["higher_access"] = has_armory_access(user)
 
 	var/list/records = list()
 	for(var/datum/record/crew/target in GLOB.manifest.general)
@@ -105,6 +109,7 @@
 				name = warrant.name,
 				paid = warrant.paid,
 				time = warrant.time,
+				valid = warrant.valid,
 			))
 
 		var/list/crimes = list()
@@ -115,6 +120,7 @@
 				details = crime.details,
 				name = crime.name,
 				time = crime.time,
+				valid = crime.valid,
 			))
 
 		records += list(list(
@@ -135,6 +141,12 @@
 
 	return data
 
+/obj/machinery/computer/secure_data/ui_static_data(mob/user)
+	var/list/data = list()
+	data["min_age"] = AGE_MIN
+	data["max_age"] = AGE_MAX
+	return data
+
 /obj/machinery/computer/secure_data/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
@@ -151,8 +163,16 @@
 			add_crime(usr, target, params)
 			return TRUE
 
-		if("delete_crime")
-			delete_crime(target, params)
+		if("delete_record")
+			qdel(target)
+			return TRUE
+
+		if("edit_crime")
+			edit_crime(usr, target, params)
+			return TRUE
+
+		if("invalidate_crime")
+			invalidate_crime(usr, target, params)
 			return TRUE
 
 		if("print_record")
@@ -168,6 +188,9 @@
 			var/wanted_status = params["status"]
 			if(!wanted_status || !(wanted_status in WANTED_STATUSES()))
 				return FALSE
+			if(wanted_status == WANTED_ARREST && !length(target.crimes))
+				return FALSE
+
 			investigate_log("[target.name] has been set from [target.wanted_status] to [wanted_status] by [key_name(usr)].", INVESTIGATE_RECORDS)
 			target.wanted_status = wanted_status
 
@@ -177,16 +200,16 @@
 
 /// Handles adding a crime to a particular record.
 /obj/machinery/computer/secure_data/proc/add_crime(mob/user, datum/record/crew/target, list/params)
-	var/input_name = trim(params["name"], 24)
+	var/input_name = trim(params["name"], MAX_CRIME_NAME_LEN)
 	if(!input_name)
 		to_chat(usr, span_warning("You must enter a name for the crime."))
-		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
+		playsound(src, 'sound/machines/terminal_error.ogg', 75, TRUE)
 		return FALSE
 
 	var/max = CONFIG_GET(number/maxfine)
 	if(params["fine"] > max)
 		to_chat(usr, span_warning("The maximum fine is [max] credits."))
-		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
+		playsound(src, 'sound/machines/terminal_error.ogg', 75, TRUE)
 		return FALSE
 
 	var/input_details
@@ -210,35 +233,70 @@
 
 	return TRUE
 
-/// Deletes a crime or citation from the chosen record.
-/obj/machinery/computer/secure_data/proc/delete_crime(datum/record/crew/target, list/params)
-	var/datum/crime/incident = locate(params["crime_ref"]) in target.crimes
-	if(incident)
-		target.crimes -= incident
-		qdel(incident)
+/// Handles editing a crime on a particular record.
+/obj/machinery/computer/secure_data/proc/edit_crime(mob/user, datum/record/crew/target, list/params)
+	var/datum/crime/editing_crime = locate(params["crime_ref"]) in target.crimes
+	if(!editing_crime?.valid)
+		return FALSE
+
+	if(user != editing_crime.author && !has_armory_access(user)) // only warden/hos/command can edit crimes they didn't author
+		return FALSE
+
+	if(params["name"] && length(params["name"]) > 2 && params["name"] != editing_crime.name)
+		editing_crime.name = trim(params["name"], MAX_CRIME_NAME_LEN)
 		return TRUE
 
-	var/datum/crime/citation/warrant = locate(params["crime_ref"]) in target.citations
-	if(warrant)
-		target.citations -= warrant
-		qdel(warrant)
+	if(params["details"] && length(params["description"]) > 2 && params["name"] != editing_crime.name)
+		editing_crime.details = trim(params["details"], MAX_MESSAGE_LEN)
 		return TRUE
 
 	return FALSE
 
 /// Deletes security information from a record.
 /obj/machinery/computer/secure_data/expunge_record_info(datum/record/crew/target)
-	target.age = 18
 	target.citations.Cut()
 	target.crimes.Cut()
-	target.fingerprint = "Unknown"
-	target.gender = "Unknown"
-	target.name = "Unknown"
-	target.rank = "Unknown"
-	target.security_note = "None"
-	target.species = "Unknown"
-	target.trim = "Unknown"
+	target.security_note = null
 	target.wanted_status = WANTED_NONE
+
+	return TRUE
+
+/// Only qualified personnel can edit records.
+/obj/machinery/computer/secure_data/proc/has_armory_access(mob/user)
+	if(!isliving(user))
+		return FALSE
+	var/mob/living/player = user
+
+	var/obj/item/card/id/auth = player.get_idcard(TRUE)
+	if(!auth)
+		return FALSE
+
+	if(!(ACCESS_ARMORY in auth.GetAccess()))
+		return FALSE
+
+	return TRUE
+
+/// Voids crimes, or sets someone to discharged if they have none left.
+/obj/machinery/computer/secure_data/proc/invalidate_crime(mob/user, datum/record/crew/target, list/params)
+	if(!has_armory_access(user))
+		return FALSE
+	var/datum/crime/to_void = locate(params["crime_ref"]) in target.crimes
+	if(!to_void)
+		return FALSE
+
+	to_void.valid = FALSE
+	investigate_log("[key_name(user)] has invalidated [target.name]'s crime: [to_void.name]", INVESTIGATE_RECORDS)
+
+	var/acquitted = TRUE
+	for(var/datum/crime/incident in target.crimes)
+		if(!incident.valid)
+			continue
+		acquitted = FALSE
+		break
+
+	if(acquitted)
+		target.wanted_status = WANTED_DISCHARGED
+		investigate_log("[key_name(user)] has invalidated [target.name]'s last valid crime. Their status is now [WANTED_DISCHARGED].", INVESTIGATE_RECORDS)
 
 	return TRUE
 
@@ -281,6 +339,9 @@
 
 			input_description += "\n\n<b>WANTED FOR:</b>"
 			for(var/datum/crime/incident in crimes)
+				if(!incident.valid)
+					input_description += "<b>--REDACTED--</b>"
+					continue
 				input_description += "\n<bCrime:</b> [incident.name]\n"
 				input_description += "<b>Details:</b> [incident.details]\n"
 

@@ -1,0 +1,7 @@
+author: "LT3"
+delete-after: True
+changes:
+  - balance: "Tram Malfunction: Decreased spread between min and max damage"
+  - balance: "Tram Malfunction: Event length decreased"
+  - balance: "Tram Malfunction: Damage multiplier added to account for different base health levels"
+  - balance: "Tram Malfunction: Event collision lethality multiplier decreased"

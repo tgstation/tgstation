@@ -101,6 +101,7 @@
 				req_one_access = board.accesses
 			else
 				req_access = board.accesses
+			balloon_alert(user, "electronics added")
 			to_chat(user, span_notice("You add [W] to the button."))
 
 		if(!device && !board && W.tool_behaviour == TOOL_WRENCH)
@@ -142,6 +143,17 @@
 /obj/machinery/button/attack_robot(mob/user)
 	return attack_ai(user)
 
+/obj/machinery/button/examine(mob/user)
+	. = ..()
+	if(!panel_open)
+		return
+	if(device)
+		. += span_notice("There is \a [device] inside, which could be removed with an <b>empty hand</b>.")
+	if(board)
+		. += span_notice("There is \a [board] inside, which could be removed with an <b>empty hand</b>.")
+	if(!board && !device)
+		. += span_notice("There is nothing currently installed in \the [src].")
+
 /obj/machinery/button/proc/setup_device()
 	if(id && istype(device, /obj/item/assembly/control))
 		var/obj/item/assembly/control/A = device
@@ -163,14 +175,15 @@
 	if(panel_open)
 		if(device || board)
 			if(device)
-				device.forceMove(drop_location())
+				user.put_in_hands(device)
 				device = null
 			if(board)
-				board.forceMove(drop_location())
+				user.put_in_hands(board)
 				req_access = list()
 				req_one_access = list()
 				board = null
 			update_appearance()
+			balloon_alert(user, "electronics removed")
 			to_chat(user, span_notice("You remove electronics from the button frame."))
 
 		else
@@ -178,6 +191,7 @@
 				skin = "launcher"
 			else
 				skin = "doorctrl"
+			balloon_alert(user, "swapped button style")
 			to_chat(user, span_notice("You change the button frame's front panel."))
 		return
 
