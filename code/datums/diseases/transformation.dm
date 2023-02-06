@@ -138,14 +138,14 @@
 	switch(stage)
 		if(2)
 			if(DT_PROB(1, delta_time))
-				to_chat(affected_mob, span_notice("Your [pick("back", "arm", "leg", "elbow", "head")] itches."))
+				to_chat(affected_mob, span_notice("Your [pick("arm", "back", "elbow", "head", "leg")] itches."))
 		if(3)
 			if(DT_PROB(2, delta_time))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
 				affected_mob.adjust_confusion(10 SECONDS)
 		if(4)
 			if(DT_PROB(1.5, delta_time))
-				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."), forced = "jungle fever")
+				affected_mob.say(pick("Eeee!", "Eeek, ook ook!", "Eee-eeek!", "Ungh, ungh."), forced = "jungle fever")
 
 /datum/disease/transformation/robot
 
@@ -158,7 +158,7 @@
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = NONE
 	stage1 = list()
-	stage2 = list("Your joints feel stiff.", span_danger("Beep...boop.."))
+	stage2 = list(span_danger("Beep...boop.."), "Your joints feel stiff.")
 	stage3 = list(
 			span_danger("You can feel something move...inside."),
 			span_danger("Your joints feel very stiff."),
@@ -179,13 +179,13 @@
 	switch(stage)
 		if(3)
 			if (DT_PROB(4, delta_time))
-				affected_mob.say(pick("Beep, boop", "beep, beep!", "Boop...bop"), forced = "robotic transformation")
+				affected_mob.say(pick("beep, beep!", "Beep, boop", "Boop...bop"), forced = "robotic transformation")
 			if (DT_PROB(2, delta_time))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
 				affected_mob.Unconscious(40)
 		if(4)
 			if (DT_PROB(10, delta_time))
-				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "kkkiiiill mmme", "I wwwaaannntt tttoo dddiiieeee..."), forced = "robotic transformation")
+				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "I wwwaaannntt tttoo dddiiieeee...", "kkkiiiill mmme"), forced = "robotic transformation")
 
 
 /datum/disease/transformation/xeno
@@ -227,7 +227,7 @@
 				affected_mob.Unconscious(40)
 		if(4)
 			if(DT_PROB(10, delta_time))
-				affected_mob.say(pick("You look delicious.", "Going to... devour you...", "Hsssshhhhh!"), forced = "xenomorph transformation")
+				affected_mob.say(pick("Going to... devour you...", "Hsssshhhhh!", "You look delicious."), forced = "xenomorph transformation")
 
 
 /datum/disease/transformation/slime
@@ -294,10 +294,10 @@
 	switch(stage)
 		if(3)
 			if (DT_PROB(4, delta_time))
-				affected_mob.say(pick("YAP", "Woof!"), forced = "corgi transformation")
+				affected_mob.say(pick("Woof!", "YAP"), forced = "corgi transformation")
 		if(4)
 			if (DT_PROB(10, delta_time))
-				affected_mob.say(pick("Bark!", "AUUUUUU"), forced = "corgi transformation")
+				affected_mob.say(pick("AUUUUUU", "Bark!"), forced = "corgi transformation")
 
 
 /datum/disease/transformation/morph
