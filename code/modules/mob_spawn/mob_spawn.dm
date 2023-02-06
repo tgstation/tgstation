@@ -148,17 +148,19 @@
 /obj/effect/mob_spawn/ghost_role/attack_ghost(mob/user)
 	if(!SSticker.HasRoundStarted() || !loc)
 		return
-	// This part prevents a strange bug related to a lot of players trying to use a single spawner at once
+
 	if(prompt_ghost)
 		var/ghost_role = tgui_alert(usr, "Become [prompt_name]? (Warning, You can no longer be revived!)", buttons = list("Yes", "No"), timeout = 10 SECONDS)
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
 			return
+
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
 		return
 	if(!uses) //just in case
 		to_chat(user, span_warning("This spawner is out of charges!"))
 		return
+
 	if(is_banned_from(user.key, role_ban))
 		to_chat(user, span_warning("You are banned from this role!"))
 		return
@@ -166,12 +168,15 @@
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
+
 	user.log_message("became a [prompt_name].", LOG_GAME)
-	uses -= 1
+	uses -= 1 // Remove a use before trying to spawn to prevent strangeness like the spawner trying to spawn more mobs than it should be able to
+
 	if(!(create(user)))
 		message_admins("[src] didn't return anything when creating a mob, this might be broken! The use of the spawner it would have taken has been refunded.")
-		uses += 1
-	check_uses()
+		uses += 1 // Oops! We messed up and somehow the mob didn't spawn, but that's alright we can refund the use.
+
+	check_uses() // Now we check if the spawner should delete itself or not
 
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
