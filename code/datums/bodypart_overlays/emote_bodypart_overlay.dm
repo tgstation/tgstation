@@ -5,9 +5,9 @@
 	var/attached_body_zone = BODY_ZONE_CHEST
 	///The offset define to use with the overlay (none by default), should correspond with a list(0,0) in a species' offset_features
 	var/offset
-	///X offset of the overlay image, stored here so we can access this even after the owner loses the bodypart we're on
+	///X offset of the overlay image, stored here so we can access this even after bodypart we're on gets severed
 	var/offset_x = 0
-	///Y offset of the overlay image, stored here so we can access this even after the owner loses the bodypart we're on
+	///Y offset of the overlay image, stored here so we can access this even after bodypart we're on gets severed
 	var/offset_y = 0
 	///The bodypart that the overlay is currently applied to
 	var/datum/weakref/attached_bodypart
@@ -37,7 +37,7 @@
 		referenced_bodypart.owner.update_body_parts()
 	else
 		referenced_bodypart.update_icon_dropped()
-	. = ..()
+	return ..()
 
 /**
  * Creates a new emote bodypart overlay and applies it to the human. The overlay can be removed by simply deleting the returned overlay.

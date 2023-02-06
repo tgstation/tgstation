@@ -3,11 +3,8 @@
 	description = "Everything just feels better after a drink or two."
 	/// The blush overlay to display when the owner is drunk
 	var/datum/bodypart_overlay/simple/emote/blush_overlay
-	/// The bodypart that the blush_overlay was applied to
-	var/datum/weakref/attached_bodypart
 
 /datum/mood_event/drunk/add_effects(param)
-	// Display blush overlay
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/human_owner = owner
