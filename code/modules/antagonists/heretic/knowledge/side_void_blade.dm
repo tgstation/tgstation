@@ -106,7 +106,7 @@
 	icon = 'icons/effects/blood.dmi'
 	base_icon_state = "bloodhand"
 	color = "#001aff"
-	item_flags = ABSTRACT | DROPDEL | HAND_ITEM
+	item_flags = ABSTRACT | DROPDEL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	hitsound = SFX_SHATTER
 	force = 16
