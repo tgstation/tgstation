@@ -112,8 +112,6 @@
 	var/uses = 1
 	/// Does the spawner delete itself when it runs out of uses?
 	var/deletes_on_zero_uses_left = TRUE
-	/// How many people are currently interacting with the spawner, prevents strange issues regarding spawning by preventing more ghosts than should be possible from trying to spawn
-	var/list/currently_deciding_ghosts = list()
 
 	////descriptions
 
@@ -151,17 +149,10 @@
 	if(!SSticker.HasRoundStarted() || !loc)
 		return
 	// This part prevents a strange bug related to a lot of players trying to use a single spawner at once
-	if(length(currently_deciding_ghosts) >= uses)
-		to_chat(user, span_warning("Other ghosts have already claimed the uses of this spawner, you can try again later if they decide to not spawn."))
-		return
 	if(prompt_ghost)
-		if(!(user.key in currently_deciding_ghosts))
-			currently_deciding_ghosts += user.key
 		var/ghost_role = tgui_alert(usr, "Become [prompt_name]? (Warning, You can no longer be revived!)", buttons = list("Yes", "No"), timeout = 10 SECONDS)
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
-			currently_deciding_ghosts -= user.key
 			return
-	currently_deciding_ghosts -= user.key
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
 		return
@@ -176,7 +167,11 @@
 	if(QDELETED(src) || QDELETED(user))
 		return
 	user.log_message("became a [prompt_name].", LOG_GAME)
-	create(user)
+	uses -= 1
+	if(!(create(user)))
+		message_admins("[src] didn't return anything when creating a mob, this might be broken! The use of the spawner it would have taken has been refunded.")
+		uses += 1
+	check_uses()
 
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
@@ -194,11 +189,8 @@
 		spawned_mob.mind.set_assigned_role(SSjob.GetJobType(spawner_job_path))
 		spawned_mind.name = spawned_mob.real_name
 
-//multiple use mob spawner functionality here- doesn't make sense on corpses
-/obj/effect/mob_spawn/ghost_role/create(mob/mob_possessor, newname)
-	. = ..()
-	if(uses > 0)
-		uses--
+/// Checks if the spawner has zero uses left, if so, delete yourself... NOW!
+/obj/effect/mob_spawn/ghost_role/proc/check_uses()
 	if(!uses && deletes_on_zero_uses_left)
 		qdel(src)
 
