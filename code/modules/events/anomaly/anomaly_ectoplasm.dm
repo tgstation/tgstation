@@ -1,3 +1,7 @@
+#define ANOMALY_INTENSITY_MINOR "anomaly_intensity_minor"
+#define ANOMALY_INTENSITY_MODERATE "anomaly_intensity_moderate"
+#define ANOMALY_INTENSITY_MAJOR "anomaly_intensity_major"
+
 /datum/round_event_control/anomaly/anomaly_ectoplasm
 	name = "Anomaly: Ectoplasmic Outburst"
 	description = "Anomaly that produces an effect of varying intensity based on how many ghosts are orbiting it."
@@ -43,22 +47,28 @@
 	..()
 
 	if(tgui_alert(usr, "Override the anomaly effect and power?", "You'll be ruining the authenticity.", list("Yes", "No")) == "Yes")
-		var/list/power_values = list("Minor", "Moderate", "Major")
+		var/list/power_values = list(ANOMALY_INTENSITY_MINOR, ANOMALY_INTENSITY_MODERATE, ANOMALY_INTENSITY_MAJOR)
 		chosen_effect = tgui_input_list(usr, "Provide effect override", "Criiiiinge.", power_values)
-		ghost_override = tgui_input_number(usr, "How many ghosts do you want simulate orbiting your anomaly? (determines the effect radius).", "Seriously, CRINGE.", 0, 20, 1)
+		if(!chosen_effect)
+			return ADMIN_CANCEL_EVENT
 
-		if(!chosen_effect || !ghost_override)
+		ghost_override = tgui_input_number(usr, "How many ghosts do you want simulate orbiting your anomaly? (determines the effect radius).", "Seriously, CRINGE.", 0, 20, 1)
+		if(!ghost_override)
 			return ADMIN_CANCEL_EVENT
 
 	switch(chosen_effect) //Converts the text choice into a number for the anomaly to use
-		if("Minor")
+		if(ANOMALY_INTENSITY_MINOR)
 			chosen_effect = 10
-		if("Moderate")
+		if(ANOMALY_INTENSITY_MODERATE)
 			chosen_effect = 35
-		if("Major")
+		if(ANOMALY_INTENSITY_MAJOR)
 			chosen_effect = 50
 
 /datum/event_admin_setup/anomaly/anomaly_ectoplasm/apply_to_event(datum/round_event/anomaly/anomaly_ectoplasm/event)
 	..()
 	event.effect_override = chosen_effect
 	event.orbit_override = ghost_override
+
+#undef ANOMALY_INTENSITY_MINOR
+#undef ANOMALY_INTENSITY_MODERATE
+#undef ANOMALY_INTENSITY_MAJOR
