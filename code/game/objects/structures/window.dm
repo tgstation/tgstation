@@ -33,6 +33,8 @@
 	var/hit_sound = 'sound/effects/glasshit.ogg'
 	/// If some inconsiderate jerk has had their blood spilled on this window, thus making it cleanable
 	var/bloodied = FALSE
+	///Datum that the shard and debris type is pulled from for when the glass is broken.
+	var/datum/material/glass_material_datum = /datum/material/glass
 
 /datum/armor/structure_window
 	melee = 50
@@ -336,13 +338,14 @@
 	update_nearby_icons()
 
 /obj/structure/window/proc/spawnDebris(location)
+	var/datum/material/glass_material_ref = GET_MATERIAL_REF(glass_material_datum)
 	. = list()
-	. += new /obj/item/shard(location)
-	. += new /obj/effect/decal/cleanable/glass(location)
+	. += new glass_material_ref.shard_type(location)
+	. += new glass_material_ref.debris_type(location)
 	if (reinf)
 		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
 	if (fulltile)
-		. += new /obj/item/shard(location)
+		new glass_material_ref.shard_type(location)
 
 /obj/structure/window/proc/AfterRotation(mob/user, degrees)
 	air_update_turf(TRUE, FALSE)
@@ -580,6 +583,7 @@
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
 	rad_insulation = RAD_MEDIUM_INSULATION
+	glass_material_datum = /datum/material/alloy/plasmaglass
 
 /datum/armor/window_plasma
 	melee = 80
@@ -591,15 +595,6 @@
 /obj/structure/window/plasma/Initialize(mapload, direct)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive)
-
-/obj/structure/window/plasma/spawnDebris(location)
-	. = list()
-	. += new /obj/item/shard/plasma(location)
-	. += new /obj/effect/decal/cleanable/glass/plasma(location)
-	if (reinf)
-		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
-	if (fulltile)
-		. += new /obj/item/shard/plasma(location)
 
 /obj/structure/window/plasma/spawner/east
 	dir = EAST
@@ -625,6 +620,7 @@
 	explosion_block = 2
 	glass_type = /obj/item/stack/sheet/plasmarglass
 	rad_insulation = RAD_HEAVY_INSULATION
+	glass_material_datum = /datum/material/alloy/plasmaglass
 
 /datum/armor/reinforced_plasma
 	melee = 80
@@ -764,21 +760,13 @@
 	glass_amount = 2
 	receive_ricochet_chance_mod = 1.2
 	rad_insulation = RAD_MEDIUM_INSULATION
+	glass_material_datum = /datum/material/alloy/titaniumglass
 
 /datum/armor/reinforced_shuttle
 	melee = 90
 	bomb = 50
 	fire = 80
 	acid = 100
-
-/obj/structure/window/reinforced/shuttle/spawnDebris(location)
-	. = list()
-	. += new /obj/item/shard/titanium(location)
-	. += new /obj/effect/decal/cleanable/glass/titanium(location)
-	if (reinf)
-		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
-	if (fulltile)
-		. += new /obj/item/shard/titanium(location)
 
 /obj/structure/window/reinforced/shuttle/narsie_act()
 	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)
@@ -810,21 +798,13 @@
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
 	rad_insulation = RAD_EXTREME_INSULATION
+	glass_material_datum = /datum/material/alloy/plastitaniumglass
 
 /datum/armor/plasma_plastitanium
 	melee = 95
 	bomb = 50
 	fire = 80
 	acid = 100
-
-/obj/structure/window/reinforced/plasma/plastitanium/spawnDebris(location)
-	. = list()
-	. += new /obj/item/shard/plastitanium(location)
-	. += new /obj/effect/decal/cleanable/glass/plastitanium(location)
-	if (reinf)
-		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
-	if (fulltile)
-		. += new /obj/item/shard/plastitanium(location)
 
 /obj/structure/window/reinforced/plasma/plastitanium/unanchored
 	anchored = FALSE
