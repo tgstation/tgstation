@@ -306,7 +306,7 @@
 	gain_text = span_notice("Your arms are full of energy!")
 	lose_text = span_danger("Your arms ache a bit.")
 	medical_record_text = "Patient displays mastery over throwing balls."
-	mail_goodies = list(/obj/item/toy/beach_ball/baseball, /obj/item/toy/beach_ball/holoball, /obj/item/toy/beach_ball/holoball/dodgeball)
+	mail_goodies = list(/obj/item/toy/beach_ball/baseball, /obj/item/toy/basketball, /obj/item/toy/dodgeball)
 
 /datum/quirk/voracious
 	name = "Voracious"
