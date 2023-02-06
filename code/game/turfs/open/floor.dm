@@ -303,7 +303,12 @@
 		if(RCD_AIRLOCK)
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
 				if(!valid_window_location(src, user.dir, is_fulltile = FALSE))
-					to_chat(user, span_notice("There is another windoor in this direction!"))
+					to_chat(user, span_notice("There is a windoor in this direction!"))
+					return FALSE
+				for(var/obj/machinery/door/door in src)
+					if(istype(door, /obj/machinery/door/window))
+						continue
+					to_chat(user, span_notice("There is already a airlock here!"))
 					return FALSE
 				to_chat(user, span_notice("You build a windoor."))
 				var/obj/machinery/door/window/new_window = new the_rcd.airlock_type(src, user.dir, the_rcd.airlock_electronics?.unres_sides)
