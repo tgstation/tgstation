@@ -46,13 +46,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 /turf/proc/TerraformTurf(path, new_baseturf, flags)
 	return ChangeTurf(path, new_baseturf, flags)
 
-GLOBAL_LIST_EMPTY(change_cost)
-GLOBAL_LIST_EMPTY(change_count)
 // Creates a new turf
 // new_baseturfs can be either a single type or list of types, formated the same as baseturfs. see turf.dm
 /turf/proc/ChangeTurf(path, list/new_baseturfs, flags)
-	INIT_COST(GLOB.change_cost, GLOB.change_count)
-	EXPORT_STATS_TO_CSV_LATER("change.csv", GLOB.change_cost, GLOB.change_count)
 	switch(path)
 		if(null)
 			return
@@ -67,16 +63,11 @@ GLOBAL_LIST_EMPTY(change_count)
 			// basic doesn't initialize and this will cause issues
 			// no warning though because this can happen naturaly as a result of it being built on top of
 			path = /turf/open/space
-	SET_COST("resolve path")
 
 	if(!GLOB.use_preloader && path == type && !(flags & CHANGETURF_FORCEOP) && (baseturfs == new_baseturfs)) // Don't no-op if the map loader requires it to be reconstructed, or if this is a new set of baseturfs
-		SET_COST("check for no-op (success)")
 		return src
-	SET_COST("check for no-op")
 	if(flags & CHANGETURF_SKIP)
-		SET_COST("check for skip (success)")
 		return new path(src)
-	SET_COST("check for skip")
 
 	var/old_lighting_object = lighting_object
 	var/old_lighting_corner_NE = lighting_corner_NE
@@ -91,10 +82,8 @@ GLOBAL_LIST_EMPTY(change_count)
 	// I'm so sorry brother
 	// This is used for a starlight optimization
 	var/old_light_range = light_range
-	SET_COST("save old turf details (vars)")
 	// We get just the bits of explosive_resistance that aren't the turf
 	var/old_explosive_resistance = explosive_resistance - get_explosive_block()
-	SET_COST("save old turf details (explosive resistance)")
 	var/old_lattice_underneath = lattice_underneath
 
 	var/old_bp = blueprint_data
@@ -102,23 +91,16 @@ GLOBAL_LIST_EMPTY(change_count)
 
 	var/list/old_baseturfs = baseturfs
 	var/old_type = type
-	SET_COST("save old turf details (vars)")
 
 	var/list/post_change_callbacks = list()
-	SET_COST("build post_change_callbacks")
 	SEND_SIGNAL(src, COMSIG_TURF_CHANGE, path, new_baseturfs, flags, post_change_callbacks)
-	SET_COST("send turf_change")
 
 	changing_turf = TRUE
-	SET_COST("set changing_turf")
 	qdel(src) //Just get the side effects and call Destroy
-	SET_COST("delete parent")
 	//We do this here so anything that doesn't want to persist can clear itself
 	var/list/old_comp_lookup = comp_lookup?.Copy()
 	var/list/old_signal_procs = signal_procs?.Copy()
-	SET_COST("copy old signal stuff")
 	var/turf/new_turf = new path(src)
-	SET_COST("make new turf")
 
 	// WARNING WARNING
 	// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS
@@ -127,23 +109,17 @@ GLOBAL_LIST_EMPTY(change_count)
 		LAZYOR(new_turf.comp_lookup, old_comp_lookup)
 	if(old_signal_procs)
 		LAZYOR(new_turf.signal_procs, old_signal_procs)
-	SET_COST("setup old turf signals")
 
 	for(var/datum/callback/callback as anything in post_change_callbacks)
-		SET_COST("walk postchange callbacks")
 		callback.InvokeAsync(new_turf)
-		SET_COST("run postchange callback")
-	SET_COST("finish postchange callbacks")
 
 	if(new_baseturfs)
 		new_turf.baseturfs = baseturfs_string_list(new_baseturfs, new_turf)
 	else
 		new_turf.baseturfs = baseturfs_string_list(old_baseturfs, new_turf) //Just to be safe
-	SET_COST("stringify baseturfs")
 
 	if(!(flags & CHANGETURF_DEFER_CHANGE))
 		new_turf.AfterChange(flags, old_type)
-	SET_COST("consume afterchange")
 
 	new_turf.blueprint_data = old_bp
 	new_turf.rcd_memory = old_rcd_memory
@@ -158,109 +134,69 @@ GLOBAL_LIST_EMPTY(change_count)
 	dynamic_lumcount = old_dynamic_lumcount
 
 	lattice_underneath = old_lattice_underneath
-	SET_COST("reset old vars")
 
 	if(SSlighting.initialized)
-		SET_COST("check lighting init")
 		new_turf.lighting_object = old_lighting_object
 
 		directional_opacity = old_directional_opacity
-		SET_COST("set old light stuff")
 		recalculate_directional_opacity()
-		SET_COST("recalc opacity")
 
 		if(lighting_object && !lighting_object.needs_update)
 			lighting_object.update()
-			SET_COST("update lighting object")
-	else
-		SET_COST("check lighting init")
 
+	// If we're space, then we're either lit, or not, and impacting our neighbors, or not
 	if(isspaceturf(src) && CONFIG_GET(flag/starlight))
-		SET_COST("check starlight home")
 		var/turf/open/space/lit_turf = src
-		SET_COST("cast src to space")
 		// This also counts as a removal, so we need to do a full rebuild
 		if(!ispath(old_type, /turf/open/space))
-			SET_COST("check old space")
 			lit_turf.update_starlight()
-			SET_COST("update our starlight")
 			for(var/turf/open/space/space_tile in RANGE_TURFS(1, src) - src)
-				SET_COST("walk update starlight")
 				space_tile.update_starlight()
-				SET_COST("update starlight")
-		else
-			SET_COST("check old space")
-			if(old_light_range)
-				SET_COST("check old range")
-				lit_turf.enable_starlight()
-				SET_COST("enable our starlight")
-			else
-				SET_COST("check old range")
+		else if(old_light_range)
+			lit_turf.enable_starlight()
+
+	// If we're a cordon we count against a light, but also don't produce any ourselves
 	else if (istype(src, /turf/cordon) && CONFIG_GET(flag/starlight))
-		SET_COST("check starlight home")
 		// This counts as removing a source of starlight, so we need to update the space tile to inform it
 		if(!ispath(old_type, /turf/open/space))
-			SET_COST("check cordon type")
 			for(var/turf/open/space/space_tile in RANGE_TURFS(1, src))
-				SET_COST("walk cordon starlight")
 				space_tile.update_starlight()
-				SET_COST("cordon update starlight")
-		else
-			SET_COST("check cordon type")
 
+	// If we're not either, but were formerly a space turf, then we want light
 	else if(ispath(old_type, /turf/open/space) && CONFIG_GET(flag/starlight))
-		SET_COST("check starlight home")
 		for(var/turf/open/space/space_tile in RANGE_TURFS(1, src))
-			SET_COST("walk enable starlight")
 			space_tile.enable_starlight()
-			SET_COST("enable starlight")
-	else
-		SET_COST("check starlight home")
 
 	if(old_opacity != opacity && SSticker)
 		GLOB.cameranet.bareMajorChunkChange(src)
-	SET_COST("check visiblity")
 
 #warn space should not have lighting objects
 	// We will only run this logic if the tile is not on the prime z layer, since we use area overlays to cover that
 	if(SSmapping.z_level_to_plane_offset[z])
-		SET_COST("check plane offset (success)")
 		var/area/our_area = new_turf.loc
 		if(our_area.lighting_effects)
 			new_turf.add_overlay(our_area.lighting_effects[SSmapping.z_level_to_plane_offset[z] + 1])
-	else
-		SET_COST("check plane offset")
 
 	 // only queue for smoothing if SSatom initialized us, and we'd be changing smoothing state
 	if(flags_1 & INITIALIZED_1)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		QUEUE_SMOOTH(src)
-	SET_COST("handle smoothing")
 
 	return new_turf
 
 /turf/open/ChangeTurf(path, list/new_baseturfs, flags) //Resist the temptation to make this default to keeping air.
-	INIT_COST(GLOB.change_cost, GLOB.change_count)
 	if ((flags & CHANGETURF_INHERIT_AIR) && ispath(path, /turf/open))
-		SET_COST("check for air inherit")
 		var/datum/gas_mixture/stashed_air = new()
 		stashed_air.copy_from(air)
-		SET_COST("stash air")
 		var/stashed_state = excited
 		var/datum/excited_group/stashed_group = excited_group
-		SET_COST("stash vars")
 		. = ..() //If path == type this will return us, don't bank on making a new type
-		SET_COST("parent call consume")
 		if (!.) // changeturf failed or didn't do anything
-			SET_COST("check .")
 			return
-		SET_COST("check .")
 		var/turf/open/new_turf = .
 		new_turf.air.copy_from(stashed_air)
-		SET_COST("copy old air")
 		new_turf.excited = stashed_state
 		new_turf.excited_group = stashed_group
-		SET_COST("copy old vars")
 		#ifdef VISUALIZE_ACTIVE_TURFS
 		if(stashed_state)
 			new_turf.add_atom_colour(COLOR_VIBRANT_LIME, TEMPORARY_COLOUR_PRIORITY)
@@ -271,12 +207,8 @@ GLOBAL_LIST_EMPTY(change_count)
 	else
 		if(excited || excited_group)
 			SSair.remove_from_active(src) //Clean up wall excitement, and refresh excited groups
-		SET_COST("remove from active")
 		if(ispath(path,/turf/closed) || ispath(path,/turf/cordon))
 			flags |= CHANGETURF_RECALC_ADJACENT
-			SET_COST("set recalc adjacent")
-		else
-			SET_COST("set recalc adjacent")
 		return ..()
 
 //If you modify this function, ensure it works correctly with lateloaded map templates.
