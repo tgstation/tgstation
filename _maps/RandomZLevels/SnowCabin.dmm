@@ -722,10 +722,6 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cD" = (
-/obj/structure/sign/barsign{
-	pixel_y = -32;
-	req_access = null
-	},
 /obj/machinery/door/window/left/directional/west{
 	name = "Bar"
 	},
@@ -3697,7 +3693,6 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/head/hats/warden/police{
-	armor = list("melee"=5,"bullet"=5,"laser"=5,"energy"=2,"bomb"=15,"bio"=0,"fire"=20,"acid"=20);
 	desc = "I am the law!"
 	},
 /obj/structure/closet{
@@ -3705,7 +3700,6 @@
 	name = "uniform closet"
 	},
 /obj/item/clothing/under/rank/security/officer/spacepol{
-	armor = list("melee"=2,"bullet"=0,"laser"=0,"energy"=0,"bomb"=0,"bio"=0,"fire"=10,"acid"=10);
 	desc = "Anyone enjoying their time while working in a megacorporation, planetary government, or band of pirates is under the jurisdiction of the fun police."
 	},
 /turf/open/floor/iron/dark,
@@ -4009,7 +4003,6 @@
 	name = "Who"
 	},
 /obj/item/clothing/head/helmet/knight/yellow{
-	armor = list("melee"=11,"bullet"=2,"laser"=1,"energy"=1,"bomb"=5,"bio"=2,"fire"=0,"acid"=10);
 	desc = "A classic metal helmet. The cold has made it unreliable though.";
 	name = "old medieval helmet";
 	pixel_y = 7
@@ -4215,6 +4208,10 @@
 /obj/structure/light_construct/directional/south,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"GL" = (
+/obj/machinery/barsign/all_access,
+/turf/closed/wall/mineral/wood,
+/area/awaymission/cabin)
 "GN" = (
 /obj/effect/decal/remains/human,
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -4578,7 +4575,7 @@
 	desc = "It looks like fancy glitter to me.";
 	name = "icy wind"
 	},
-/mob/living/simple_animal/hostile/netherworld/statue{
+/mob/living/basic/statue{
 	desc = "Just a snowman. Just a snowman. Oh god, it's just a snowman.";
 	faction = list("statue","mining");
 	health = 5000;
@@ -4840,11 +4837,7 @@
 	desc = "It looks like fancy glitter to me.";
 	name = "icy wind"
 	},
-/obj/item/clothing/head/helmet/skull{
-	armor = list("melee"=15,"bullet"=5,"laser"=5,"energy"=2,"bomb"=10,"bio"=5,"fire"=20,"acid"=20);
-	desc = "It's not bloody for some reason. Dear god.";
-	name = "human skull"
-	},
+/obj/item/clothing/head/helmet/skull,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "WK" = (
@@ -29229,7 +29222,7 @@ ev
 eu
 cK
 cD
-an
+GL
 aq
 eg
 aq

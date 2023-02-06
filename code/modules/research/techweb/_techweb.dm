@@ -30,7 +30,7 @@
 	var/list/deconstructed_items = list()
 	/// Available research points, type = number
 	var/list/research_points = list()
-	/// IC logs
+	/// Game logs of research nodes, "node_name" "node_cost" "node_researcher" "node_research_location"
 	var/list/research_logs = list()
 	/// Current per-second production, used for display only.
 	var/list/last_bitcoins = list()

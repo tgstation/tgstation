@@ -357,7 +357,7 @@
 			H.adjustOxyLoss(-0.5 * delta_time)
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		H.take_overall_damage(2,0)
+		H.take_overall_damage(brute = 2, required_bodytype = BODYTYPE_ORGANIC)
 
 /datum/species/golem/wood/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(chem.type == /datum/reagent/toxin/plantbgone)
@@ -553,6 +553,7 @@
 	return TRUE
 
 /datum/action/cooldown/unstable_teleport/proc/teleport(mob/living/carbon/human/H)
+	StartCooldown()
 	H.visible_message(span_warning("[H] disappears in a shower of sparks!"), span_danger("You teleport!"))
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(10, 0, src)

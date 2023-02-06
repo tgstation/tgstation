@@ -105,17 +105,18 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 
 /obj/machinery/bsa/middle/proc/has_space()
 	var/cannon_dir = get_cannon_direction()
-	var/x_min
-	var/x_max
+	var/width = 10
+	var/offset
 	switch(cannon_dir)
 		if(EAST)
-			x_min = x - 4 //replace with defines later
-			x_max = x + 6
+			offset = -4
 		if(WEST)
-			x_min = x + 4
-			x_max = x - 6
+			offset = -6
+		else
+			return FALSE
 
-	for(var/turf/T in block(locate(x_min,y-1,z),locate(x_max,y+1,z)))
+	var/turf/base = get_turf(src)
+	for(var/turf/T as anything in CORNER_BLOCK_OFFSET(base, width, 3, offset, -1))
 		if(T.density || isspaceturf(T))
 			return FALSE
 	return TRUE

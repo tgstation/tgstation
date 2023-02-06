@@ -1191,7 +1191,7 @@
 		affected_mob.adjust_jitter_up_to(6 SECONDS * REM * delta_time, 1 MINUTES)
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * delta_time, 150, affected_organtype)
 		if(DT_PROB(5, delta_time))
-			affected_mob.say(pick("Yeah, well, you know, that's just, like, uh, your opinion, man.", "Am I glad he's frozen in there and that we're out here, and that he's the sheriff and that we're frozen out here, and that we're in there, and I just remembered, we're out here. What I wanna know is: Where's the caveman?", "It ain't me, it ain't me...", "Make love, not war!", "Stop, hey, what's that sound? Everybody look what's going down...", "Do you believe in magic in a young girl's heart?"), forced = /datum/reagent/medicine/earthsblood)
+			affected_mob.say(return_hippie_line(), forced = /datum/reagent/medicine/earthsblood)
 	affected_mob.adjust_drugginess_up_to(20 SECONDS * REM * delta_time, 30 SECONDS * REM * delta_time)
 	..()
 	. = TRUE
@@ -1215,6 +1215,19 @@
 		hippie.gain_trauma(/datum/brain_trauma/severe/pacifism)
 	..()
 	. = TRUE
+
+/// Returns a hippie-esque string for the person affected by the reagent to say.
+/datum/reagent/medicine/earthsblood/proc/return_hippie_line()
+	var/static/list/earthsblood_lines = list(
+		"Am I glad he's frozen in there and that we're out here, and that he's the sheriff and that we're frozen out here, and that we're in there, and I just remembered, we're out here. What I wanna know is: Where's the caveman?",
+		"Do you believe in magic in a young girl's heart?",
+		"It ain't me, it ain't me...",
+		"Make love, not war!",
+		"Stop, hey, what's that sound? Everybody look what's going down...",
+		"Yeah, well, you know, that's just, like, uh, your opinion, man.",
+	)
+
+	return pick(earthsblood_lines)
 
 /datum/reagent/medicine/haloperidol
 	name = "Haloperidol"
