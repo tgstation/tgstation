@@ -601,7 +601,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 			//check if the structure can fit on this turf
 			if(target_turf.is_blocked_turf(exclude_mobs = ignore_mobs, source_atom = null, ignore_atoms = ignored_content))
-				balloon_alert(user, "something dense is blocking the turf!")
+				balloon_alert(user, "something dense or someone is blocking the turf!")
 				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 				qdel(rcd_effect)
 				return FALSE
