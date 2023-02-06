@@ -161,6 +161,7 @@
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
 			currently_deciding_ghosts -= user.key
 			return
+	currently_deciding_ghosts -= user.key
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
 		return
@@ -175,7 +176,6 @@
 	if(QDELETED(src) || QDELETED(user))
 		return
 	user.log_message("became a [prompt_name].", LOG_GAME)
-	currently_deciding_ghosts -= user.key
 	create(user)
 
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
