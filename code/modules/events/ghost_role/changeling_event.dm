@@ -43,7 +43,7 @@
  */
 
 /proc/generate_changeling_meteor(mob/candidate)
-	var/mob/dead/selected = make_body(candidate) //Give the selected player a body, and grab their mind
+	var/mob/dead/selected = candidate
 	var/datum/mind/player_mind = new(selected.key)
 	player_mind.active = TRUE
 
