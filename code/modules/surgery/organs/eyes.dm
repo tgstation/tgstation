@@ -34,6 +34,8 @@
 	var/lighting_cutoff = null
 	/// List of color cutoffs from eyes, or null if not applicable
 	var/list/color_cutoffs = null
+	/// Are these eyes immune to pepperspray?
+	var/pepperspray_protect = FALSE
 
 	var/eye_color_left = "" //set to a hex code to override a mob's left eye color
 	var/eye_color_right = "" //set to a hex code to override a mob's right eye color

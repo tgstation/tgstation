@@ -34,9 +34,6 @@
 	has_collar_resting_icon_state = TRUE
 	can_be_held = TRUE
 	held_state = "cat2"
-	///only for attacking rats
-	melee_damage_upper = 6
-	melee_damage_lower = 4
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
@@ -223,7 +220,7 @@
 
 	//MICE! RATS! OH MY!
 	if((src.loc) && isturf(src.loc))
-		if(!stat && !resting && !buckled)
+		if(!stat && !buckled)
 			//Targeting anything in the rat faction nearby
 			for(var/mob/living/M in view(1,src))
 				if(!M.stat && Adjacent(M))
@@ -243,8 +240,6 @@
 							movement_target = null
 							stop_automated_movement = 0
 							break
-						//Rat scratching, or anything else that could be in the rat faction
-						M.attack_animal(src)
 			for(var/obj/item/toy/cattoy/T in view(1,src))
 				if (T.cooldown < (world.time - 400))
 					manual_emote("bats \the [T] around with \his paw!")

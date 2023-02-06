@@ -496,7 +496,7 @@
 			return FALSE
 	return TRUE
 
-/mob/living/simple_animal/ignite_mob()
+/mob/living/simple_animal/ignite_mob(silent)
 	if(!flammable)
 		return FALSE
 	return ..()
