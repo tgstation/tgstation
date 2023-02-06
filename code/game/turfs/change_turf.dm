@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			// Should have a lighting object if we never had one
 			lighting_object = old_lighting_object || new /datum/lighting_object(src)
 		else if (old_lighting_object)
-			qdel(old_lighting_object)
+			qdel(old_lighting_object, force = TRUE)
 
 		directional_opacity = old_directional_opacity
 		recalculate_directional_opacity()
