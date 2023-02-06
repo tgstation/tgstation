@@ -217,8 +217,8 @@ GLOBAL_LIST_EMPTY(change_count)
 	else
 		SET_COST("check starlight home")
 
-	if(old_opacity != opacity)
-		GLOB.cameranet.updateVisibility(src)
+	if(old_opacity != opacity && SSticker)
+		GLOB.cameranet.bareMajorChunkChange(src)
 	SET_COST("check visiblity")
 
 #warn space should not have lighting objects
