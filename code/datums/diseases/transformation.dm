@@ -120,11 +120,11 @@
 	stage2 = list()
 	stage3 = list()
 	stage4 = list(
-			span_warning("Your back hurts."),
 			span_warning("You breathe through your mouth."),
 			span_warning("You have a craving for bananas."),
-			span_warning("Your mind feels clouded.",
-		))
+			span_warning("Your back hurts."),
+			span_warning("Your mind feels clouded."),
+		)
 	stage5 = list(span_warning("You feel like monkeying around."))
 
 /datum/disease/transformation/jungle_flu/do_disease_transformation(mob/living/carbon/affected_mob)
@@ -160,11 +160,11 @@
 	stage1 = list()
 	stage2 = list("Your joints feel stiff.", span_danger("Beep...boop.."))
 	stage3 = list(
+			span_danger("You can feel something move...inside."),
 			span_danger("Your joints feel very stiff."),
 			span_warning("Your skin feels loose."),
-			span_danger("You can feel something move...inside.",
-		))
-	stage4 = list(span_danger("Your skin feels very loose."), span_danger("You can feel... something...inside you."))
+		)
+	stage4 = list(span_danger("You can feel... something...inside you."), span_danger("Your skin feels very loose."),)
 	stage5 = list(span_danger("Your skin feels as if it's about to burst off!"))
 	new_form = /mob/living/silicon/robot
 	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC
@@ -201,15 +201,15 @@
 	stage1 = list()
 	stage2 = list("Your throat feels scratchy.", span_danger("Kill..."))
 	stage3 = list(
+			span_danger("You can feel something move...inside."),
 			span_danger("Your throat feels very scratchy."),
 			span_warning("Your skin feels tight."),
-			span_danger("You can feel something move...inside.",
-		))
+		)
 	stage4 = list(
-			span_danger("Your skin feels very tight."),
+			span_danger("You can feel... something...inside you."),
 			span_danger("Your blood boils!"),
-			span_danger("You can feel... something...inside you.",
-		))
+			span_danger("Your skin feels very tight."),
+		)
 	stage5 = list(span_danger("Your skin feels as if it's about to burst off!"))
 	new_form = /mob/living/carbon/alien/adult/hunter
 	bantype = ROLE_ALIEN
@@ -333,8 +333,8 @@
 	stage3 = list(
 			span_danger("A cruel sense of calm overcomes you."),
 			span_danger("You can't feel your arms!"),
-			span_danger("You let go of the urge to hurt clowns."
-		))
+			span_danger("You let go of the urge to hurt clowns."),
+		)
 	stage4 = list(span_danger("You can't feel your arms. It does not bother you anymore."), span_danger("You forgive the clown for hurting you."))
 	stage5 = list(span_danger("You have become a Gondola."))
 	new_form = /mob/living/simple_animal/pet/gondola
