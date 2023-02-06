@@ -1,21 +1,22 @@
-
 //Yes, they can only be rectangular.
 //Yes, I'm sorry.
 /datum/turf_reservation
 	var/list/reserved_turfs = list()
+	///Turfs around the reservation for cordoning
 	var/list/cordon_turfs = list()
+	///Area of turfs next to the cordon to fill with pre_cordon_area's
+	var/list/pre_cordon_turfs = list()
 	var/width = 0
 	var/height = 0
 	var/bottom_left_coords[3]
 	var/top_right_coords[3]
 	var/turf_type = /turf/open/space
-	///Turf type we put around the area to 'cordon it off'
-	var/turf/cordon_type = /turf/cordon
+	///Area next to the cordon, registers a bunch of signals to the tiles there so you can throw people away if they get too close to the actual cordon
+	var/pre_cordon_distance = 0
 
 /datum/turf_reservation/transit
 	turf_type = /turf/open/space/transit
-	cordon_type = /turf/cordon/transit
-
+	pre_cordon_distance = 7
 
 /datum/turf_reservation/proc/Release()
 	var/list/reserved_copy = reserved_turfs.Copy()
@@ -44,6 +45,12 @@
 		if(!(cordon_turf.flags_1 & UNUSED_RESERVATION_TURF))
 			return FALSE
 	cordon_turfs = possible_turfs
+
+	pre_cordon_turfs.Cut()
+
+	var/turf/offset_turf = locate(BL.x + pre_cordon_distance, BL.y + pre_cordon_distance, BL.z)
+	pre_cordon_turfs += CORNER_OUTLINE(offset_turf, width - pre_cordon_distance * 2, height - pre_cordon_distance * 2) //we step-by-stop move inwards from the outer cordon
+
 	return TRUE
 
 /// Actually generates the cordon around the reservation, and marking the cordon turfs as reserved
@@ -54,11 +61,45 @@
 		old_area.turfs_to_uncontain += cordon_turf
 		cordon_area.contained_turfs += cordon_turf
 		cordon_area.contents += cordon_turf
-		cordon_turf.ChangeTurf(cordon_type, /turf/cordon)
+		cordon_turf.ChangeTurf(/turf/cordon, /turf/cordon)
 
 		cordon_turf.flags_1 &= ~UNUSED_RESERVATION_TURF
 		SSmapping.unused_turfs["[cordon_turf.z]"] -= cordon_turf
 		SSmapping.used_turfs[cordon_turf] = src
+
+	//swap the area with the pre-cordoning area
+	for(var/turf/pre_cordon_turf as anything in pre_cordon_turfs)
+		MakeRepel(pre_cordon_turf)
+
+///Register signals in the cordon "danger zone" to do something with whoever trespasses
+/datum/turf_reservation/proc/MakeRepel(turf/pre_cordon_turf)
+	//Okay so hear me out. If we place a special turf IN the reserved area, it will be overwritten, so we can't do that
+	//But signals are preserved even between turf changes, so even if we register a signal now it will stay even if that turf is overriden by the template
+	RegisterSignal(pre_cordon_turf, COMSIG_PARENT_QDELETING, PROC_REF(OnStopRepel))
+
+/datum/turf_reservation/proc/OnStopRepel(turf/pre_cordon_turf)
+	SIGNAL_HANDLER
+
+	StopRepel(pre_cordon_turf)
+
+///Unregister all the signals we added in RegisterRepelSignals
+/datum/turf_reservation/proc/StopRepel(turf/pre_cordon_turf)
+	UnregisterSignal(pre_cordon_turf, COMSIG_PARENT_QDELETING)
+
+/datum/turf_reservation/transit/MakeRepel(turf/pre_cordon_turf)
+	..()
+
+	RegisterSignal(pre_cordon_turf, COMSIG_ATOM_ENTERED, PROC_REF(space_dump))
+
+/datum/turf_reservation/StopRepel(turf/pre_cordon_turf)
+	..()
+
+	UnregisterSignal(pre_cordon_turf, COMSIG_ATOM_ENTERED)
+
+/datum/turf_reservation/transit/proc/space_dump(atom/source, atom/movable/enterer)
+	SIGNAL_HANDLER
+
+	dump_in_space(enterer)
 
 /datum/turf_reservation/proc/Reserve(width, height, zlevel)
 	src.width = width
