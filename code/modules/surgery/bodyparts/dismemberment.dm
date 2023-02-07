@@ -156,7 +156,7 @@
 		return
 
 	forceMove(drop_loc)
-	SEND_SIGNAL(owner, COMSIG_CARBON_POST_REMOVE_LIMB, src, dismembered)
+	SEND_SIGNAL(phantom_owner, COMSIG_CARBON_POST_REMOVE_LIMB, src, dismembered)
 
 /**
  * get_mangled_state() is relevant for flesh and bone bodyparts, and returns whether this bodypart has mangled skin, mangled bone, or both (or neither i guess)
