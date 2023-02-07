@@ -1,9 +1,28 @@
+/**
+ * Organ Unit Tests
+ *
+ * Test 1. organ_sanity:
+ * Checks all implantable organs.
+ * Ensures algorithmic correctness of the "Insert()" and "Remove()" procs.
+ * This test is especially useful because developers frequently  override those.
+ *
+ * Test 2. organ_set_bonus_id:
+ * Checks that all "organ_set_bonus" status effects have unique "id" vars.
+ * Required to ensure that the status effects are treated as "unique".
+ *
+ * Test 3. organ_set_bonus_sanity
+ * Checks that all implantable DNA Infuser organs are set up correctly and without error.
+ * Ensures that the "organ_set_bonus" status effects activate and deactivate.
+ *
+ * "Life's about having a good time and having candy, not putting roaches in your hair!"
+ * - Dr. Steve Brule
+ */
 /// Ensures the organ inserted properly by validating specific variables.
-#define ORGAN_INSERTED_OK(lab_rat, test_organ) ((test_organ.owner == lab_rat) && (test_organ in lab_rat.internal_organs) && test_organ.slot ? (lab_rat.getorganslot(test_organ.slot) == test_organ) : TRUE)
+#define TEST_ORGAN_INSERTED_OK(lab_rat, test_organ) ((test_organ.owner == lab_rat) && (test_organ in lab_rat.internal_organs) && test_organ.slot ? (lab_rat.getorganslot(test_organ.slot) == test_organ) : TRUE)
 /// Ensures the organ removed properly by validating specific variables.
-#define ORGAN_REMOVED_OK(lab_rat, test_organ) ((test_organ.owner == null) && !(test_organ in lab_rat.internal_organs) && test_organ.slot ? (lab_rat.getorganslot(test_organ.slot) != test_organ) : TRUE)
+#define TEST_ORGAN_REMOVED_OK(lab_rat, test_organ) ((test_organ.owner == null) && !(test_organ in lab_rat.internal_organs) && test_organ.slot ? (lab_rat.getorganslot(test_organ.slot) != test_organ) : TRUE)
 /// List of organ typepaths which are not test-able, such as certain class prototypes.
-#define ORGAN_BLACKLIST list(\
+#define TEST_ORGAN_BLACKLIST list(\
 	/obj/item/organ/internal,\
 	/obj/item/organ/external,\
 	/obj/item/organ/external/wings,\
@@ -16,12 +35,12 @@
 	/obj/item/organ/internal/alien,\
 )
 
-//-- ALL ORGANS --//
-/// Sanity-check organ insertion and removal, for all organ subtypes usable in-game.
+//-- Sanity: ALL ORGANS --//
+/// Check organ insertion and removal, for all organ subtypes usable in-game.
 /datum/unit_test/organ_sanity/Run()
 	for(var/obj/item/organ/organ_type as anything in subtypesof(/obj/item/organ))
 		// Skip prototypes.
-		if(organ_type in ORGAN_BLACKLIST)
+		if(organ_type in TEST_ORGAN_BLACKLIST)
 			continue
 
 		// Appropriate mob (Human) which will receive organ.
@@ -52,7 +71,7 @@
 			continue
 
 		// Check vars on Human and organ, they are expected to be present after Insert().
-		if(!ORGAN_INSERTED_OK(lab_rat, test_organ))
+		if(!TEST_ORGAN_INSERTED_OK(lab_rat, test_organ))
 			TEST_FAIL("The organ \"[test_organ.type]\" was not properly inserted in the mob, some variables were not assigned when expected.")
 			continue
 
@@ -60,16 +79,16 @@
 		test_organ.Remove(lab_rat, special = TRUE)
 
 		// Check vars on Human and organ, they are expected to be deleted after Remove().
-		if(!ORGAN_REMOVED_OK(lab_rat, test_organ))
+		if(!TEST_ORGAN_REMOVED_OK(lab_rat, test_organ))
 			TEST_FAIL("The organ \"[test_organ.type]\" was not properly removed from the mob, some variables were not reset when expected.")
 
-#undef ORGAN_INSERTED_OK
-#undef ORGAN_REMOVED_OK
-#undef ORGAN_BLACKLIST
+#undef TEST_ORGAN_INSERTED_OK
+#undef TEST_ORGAN_REMOVED_OK
+#undef TEST_ORGAN_BLACKLIST
 
-//-- DNA INFUSER ORGANS - SANITY CHECK --//
+//-- Sanity: DNA INFUSER ORGANS / ORGAN SET BONUS --//
 /// Ensures the developers properly change IDs to be unique.
-/datum/unit_test/organ_set_bonus_id/Run()
+/datum/unit_test/organ_sanity/organ_set_bonus_id/Run()
 	var/list/bonus_effects = typesof(/datum/status_effect/organ_set_bonus)
 	var/list/existing_ids = list()
 	for(var/datum/status_effect/organ_set_bonus/bonus_effect as anything in bonus_effects)
@@ -81,14 +100,14 @@
 			existing_ids += effect_id
 
 /// Utility proc which searches a mob for a Status Effect using a given typepath.
-/datum/unit_test/organ_set_bonus_sanity/proc/check_status_type(mob/living/carbon/human/lab_rat, datum/status_effect/status_type)
+/datum/unit_test/organ_sanity/organ_set_bonus_sanity/proc/check_status_type(mob/living/carbon/human/lab_rat, datum/status_effect/status_type)
 	for(var/datum/status_effect/present_effect as anything in lab_rat.status_effects)
 		if(istype(present_effect, status_type))
 			return present_effect
 
 /// Tests the "organ set bonus" Elements and Status Effects, which are for the DNA Infuser.
 /// Ensures that each Element and Status Effect gets properly added/removed from mobs.
-/datum/unit_test/organ_set_bonus_sanity/Run()
+/datum/unit_test/organ_sanity/organ_set_bonus_sanity/Run()
 	// Fetch the globally instantiated DNA Infuser entries.
 	for(var/datum/infuser_entry/infuser_entry as anything in GLOB.infuser_entries)
 		var/output_organs = infuser_entry.output_organs

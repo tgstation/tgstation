@@ -6,7 +6,7 @@
 	slot = ORGAN_SLOT_LUNGS
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_SMALL
-	
+
 	var/respiration_type = NONE // The type(s) of gas this lung needs for respiration
 
 	healing_factor = STANDARD_ORGAN_HEALING
@@ -92,10 +92,10 @@
 // assign the respiration_type
 /obj/item/organ/internal/lungs/Initialize(mapload)
 	. = ..()
-	
+
 	if(safe_co2_min)
 		respiration_type |= RESPIRATION_CO2
-	if(safe_nitro_min) 
+	if(safe_nitro_min)
 		respiration_type |= RESPIRATION_N2
 	if(safe_oxygen_min)
 		respiration_type |= RESPIRATION_OXYGEN
@@ -453,17 +453,17 @@
 	// Activates helium speech when partial pressure gets high enough
 	if(!helium_pp)
 		helium_speech = FALSE
-		UnregisterSignal(owner, COMSIG_MOB_SAY)
+		UnregisterSignal(breather, COMSIG_MOB_SAY)
 	else
 		// Inhale Helium. Exhale nothing.
 		breathe_gas_volume(breath_gases, /datum/gas/helium)
 		// Helium side-effects.
 		if(helium_speech && (helium_pp <= helium_speech_min))
 			helium_speech = FALSE
-			UnregisterSignal(owner, COMSIG_MOB_SAY)
+			UnregisterSignal(breather, COMSIG_MOB_SAY)
 		else if(!helium_speech && (helium_pp > helium_speech_min))
 			helium_speech = TRUE
-			RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_helium_speech))
+			RegisterSignal(breather, COMSIG_MOB_SAY, PROC_REF(handle_helium_speech))
 
 	//-- HYPER-NOBILUM --//
 	if(hypernob_pp)
@@ -477,7 +477,7 @@
 	//-- MIASMA --//
 	if(!miasma_pp || !suffers_miasma)
 		// Clear out moods when immune to miasma, or if there's no miasma at all.
-		owner.clear_mood_event("smell")
+		breather.clear_mood_event("smell")
 	else
 		// Inhale Miasma. Exhale nothing.
 		breathe_gas_volume(breath_gases, /datum/gas/miasma)
@@ -487,36 +487,36 @@
 			// tl;dr the first argument chooses the smaller of miasma_pp/2 or 6(typical max virus symptoms), the second chooses the smaller of miasma_pp or 8(max virus symptom level)
 			// Each argument has a minimum of 1 and rounds to the nearest value. Feel free to change the pp scaling I couldn't decide on good numbers for it.
 			miasma_disease.name = "Unknown"
-			miasma_disease.try_infect(owner)
+			miasma_disease.try_infect(breather)
 		// Miasma side effects
 		switch(miasma_pp)
 			if(0.25 to 5)
 				// At lower pp, give out a little warning
-				owner.clear_mood_event("smell")
+				breather.clear_mood_event("smell")
 				if(prob(5))
-					to_chat(owner, span_notice("There is an unpleasant smell in the air."))
+					to_chat(breather, span_notice("There is an unpleasant smell in the air."))
 			if(5 to 15)
 				//At somewhat higher pp, warning becomes more obvious
 				if(prob(15))
-					to_chat(owner, span_warning("You smell something horribly decayed inside this room."))
-					owner.add_mood_event("smell", /datum/mood_event/disgust/bad_smell)
+					to_chat(breather, span_warning("You smell something horribly decayed inside this room."))
+					breather.add_mood_event("smell", /datum/mood_event/disgust/bad_smell)
 			if(15 to 30)
 				//Small chance to vomit. By now, people have internals on anyway
 				if(prob(5))
-					to_chat(owner, span_warning("The stench of rotting carcasses is unbearable!"))
-					owner.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
-					owner.vomit()
+					to_chat(breather, span_warning("The stench of rotting carcasses is unbearable!"))
+					breather.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
+					breather.vomit()
 			if(30 to INFINITY)
 				//Higher chance to vomit. Let the horror start
 				if(prob(15))
-					to_chat(owner, span_warning("The stench of rotting carcasses is unbearable!"))
-					owner.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
-					owner.vomit()
+					to_chat(breather, span_warning("The stench of rotting carcasses is unbearable!"))
+					breather.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
+					breather.vomit()
 			else
-				owner.clear_mood_event("smell")
+				breather.clear_mood_event("smell")
 		// In a full miasma atmosphere with 101.34 pKa, about 10 disgust per breath, is pretty low compared to threshholds
 		// Then again, this is a purely hypothetical scenario and hardly reachable
-		owner.adjust_disgust(0.1 * miasma_pp)
+		breather.adjust_disgust(0.1 * miasma_pp)
 
 	//-- N2O --//
 	// N2O side-effects. "Too much N2O!"
@@ -588,9 +588,9 @@
 
 	// Handle chemical euphoria mood event, caused by gases such as N2O or healium.
 	if (n2o_euphoria == EUPHORIA_ACTIVE || healium_euphoria == EUPHORIA_ACTIVE)
-		owner.add_mood_event("chemical_euphoria", /datum/mood_event/chemical_euphoria)
+		breather.add_mood_event("chemical_euphoria", /datum/mood_event/chemical_euphoria)
 	else if (n2o_euphoria == EUPHORIA_INACTIVE && healium_euphoria == EUPHORIA_INACTIVE)
-		owner.clear_mood_event("chemical_euphoria")
+		breather.clear_mood_event("chemical_euphoria")
 	// Activate mood on first flag, remove on second, do nothing on third.
 
 	if(has_moles)
@@ -714,7 +714,7 @@
 	. = ..()
 	if (breath?.gases[/datum/gas/plasma])
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
-		owner.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
+		breather_slime.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 
 /obj/item/organ/internal/lungs/cybernetic
 	name = "basic cybernetic lungs"
