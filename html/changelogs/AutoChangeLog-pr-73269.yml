@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Changeling meteors on Icebox will now land close to the station instead of a random map edge tile."
