@@ -179,7 +179,7 @@
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	src.log_talk(message, LOG_SAY)
-	var/rendered = span_revennotice("<b>[src]</b> says, \"[message]\"")
+	var/rendered = span_deadsay("<b>UNDEAD: [src]</b> says, \"[message]\"")
 	for(var/mob/M in GLOB.mob_list)
 		if(isrevenant(M))
 			to_chat(M, rendered)

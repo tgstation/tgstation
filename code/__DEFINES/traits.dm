@@ -219,6 +219,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///This carbon doesn't bleed
 #define TRAIT_NOBLOOD "noblood"
 #define TRAIT_NOMETABOLISM "no_metabolism"
+// Use when you want a mob to be able to metabolize plasma temporarily (e.g. plasma fixation disease symptom)
+#define TRAIT_PLASMA_LOVER_METABOLISM "plasma_lover_metabolism"
 #define TRAIT_NOCLONELOSS "no_cloneloss"
 #define TRAIT_TOXIMMUNE "toxin_immune"
 #define TRAIT_EASYDISMEMBER "easy_dismember"
@@ -467,6 +469,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PRETENDER_ROYAL_METABOLISM "pretender_royal_metabolism"
 #define TRAIT_BALLMER_SCIENTIST "ballmer_scientist"
 
+//LUNG TRAITS
+/// Lungs always breathe normally when in vacuum/space.
+#define TRAIT_SPACEBREATHING "spacebreathing"
+
 /// This mob can strip other mobs.
 #define TRAIT_CAN_STRIP "can_strip"
 /// Can use the nuclear device's UI, regardless of a lack of hands
@@ -630,6 +636,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_INTROVERT "introvert"
 #define TRAIT_ANXIOUS "anxious"
 #define TRAIT_SMOKER "smoker"
+#define TRAIT_POSTERBOY "poster_boy"
+#define TRAIT_THROWINGARM "throwing_arm"
 
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"

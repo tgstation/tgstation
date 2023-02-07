@@ -43,12 +43,12 @@
 	if(patient == user)
 		if(!silent)
 			user.visible_message(span_notice("[user] starts to apply [src] on [user.p_them()]self..."), span_notice("You begin applying [src] on yourself..."))
-		if(!do_mob(user, patient, self_delay, extra_checks=CALLBACK(patient, TYPE_PROC_REF(/mob/living, try_inject), user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
+		if(!do_after(user, self_delay, patient, extra_checks=CALLBACK(patient, TYPE_PROC_REF(/mob/living, try_inject), user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
 			return
 	else if(other_delay)
 		if(!silent)
 			user.visible_message(span_notice("[user] starts to apply [src] on [patient]."), span_notice("You begin applying [src] on [patient]..."))
-		if(!do_mob(user, patient, other_delay, extra_checks=CALLBACK(patient, TYPE_PROC_REF(/mob/living, try_inject), user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
+		if(!do_after(user, other_delay, patient, extra_checks=CALLBACK(patient, TYPE_PROC_REF(/mob/living, try_inject), user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
 			return
 
 	if(heal(patient, user))
@@ -158,7 +158,7 @@
 		to_chat(user, span_notice("There's no wounds that require bandaging on [user == M ? "your" : "[M]'s"] [limb.plaintext_zone]!")) // good problem to have imo
 		return
 
-	if(limb.current_gauze && (limb.current_gauze.absorption_capacity * 0.8 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
+	if(limb.current_gauze && (limb.current_gauze.absorption_capacity * 1.2 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
 		to_chat(user, span_warning("The bandage currently on [user == M ? "your" : "[M]'s"] [limb.plaintext_zone] is still in good condition!"))
 		return
 

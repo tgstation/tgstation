@@ -41,6 +41,9 @@
 	if(!succeeded)
 		controller.blackboard -= target_key
 
+/datum/ai_behavior/basic_melee_attack/average_speed
+	action_cooldown = 1 SECONDS
+
 /datum/ai_behavior/basic_ranged_attack
 	action_cooldown = 0.6 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM

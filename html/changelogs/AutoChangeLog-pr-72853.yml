@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Hacked autolathes and Limbgrowers can now properly print things again."

@@ -239,13 +239,6 @@
 	operating = FALSE
 	return 1
 
-///When the tram is in station, the doors are locked to engineering only.
-/obj/machinery/door/window/lock()
-	req_access = list("engineering")
-
-/obj/machinery/door/window/unlock()
-	req_access = null
-
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)

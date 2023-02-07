@@ -1647,3 +1647,29 @@
 	if(doll.getToxLoss() && DT_PROB(10, delta_time))
 		doll.adjustToxLoss(-0.5, FALSE, required_biotype = affected_biotype)
 	return ..()
+
+/datum/reagent/consumable/mississippi_queen
+	name = "Mississippi Queen"
+	description = "If you think you're so hot, how about a victory drink?"
+	color = "#d4422f" // rgb: 212,66,47
+	taste_description = "sludge seeping down your throat"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/mississippi_queen
+	required_drink_type = /datum/reagent/consumable/mississippi_queen
+	name = "Mississippi Queen"
+	desc = "Mullets and cut-up jorts not included."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "mississippiglass"
+
+/datum/reagent/consumable/mississippi_queen/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	switch(current_cycle)
+		if(10 to 20)
+			drinker.adjust_dizzy(4 SECONDS * REM * delta_time)
+		if(20 to 30)
+			if(DT_PROB(15, delta_time))
+				drinker.adjust_confusion(4 SECONDS * REM * delta_time)
+		if(30 to 200)
+			drinker.adjust_hallucinations(60 SECONDS * REM * delta_time)
+
+	return ..()

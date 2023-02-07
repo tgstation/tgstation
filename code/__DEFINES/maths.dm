@@ -16,7 +16,6 @@
 
 #define NUM_E 2.71828183
 
-#define SQRT_2 1.414214 //CLOSE ENOUGH!
 
 #define PI 3.1416
 #define INFINITY 1e31 //closer then enough

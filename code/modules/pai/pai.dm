@@ -163,6 +163,17 @@
 	GLOB.pai_list.Remove(src)
 	return ..()
 
+// Need to override parent here because the message we dispatch is turf-based, not based on the location of the object because that could be fuckin anywhere
+/mob/living/silicon/pai/send_applicable_messages()
+	var/turf/location = get_turf(src)
+	location.visible_message(span_danger(get_visible_suicide_message()), null, span_hear(get_blind_suicide_message())) // null in the second arg here because we're sending from the turf
+
+/mob/living/silicon/pai/get_visible_suicide_message()
+	return "[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\""
+
+/mob/living/silicon/pai/get_blind_suicide_message()
+	return "[src] bleeps electronically."
+
 /mob/living/silicon/pai/emag_act(mob/user)
 	handle_emag(user)
 
