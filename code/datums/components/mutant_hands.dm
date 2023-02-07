@@ -113,14 +113,17 @@
  *
  * After having a pesky nodrop item disappear, we should replcace the slot with a mutant hand as intended
  */
-/datum/component/mutant_hands/proc/on_nodrop_item_lost(datum/source, obj/item/unequipped)
+/datum/component/mutant_hands/proc/on_nodrop_item_lost(obj/item/source)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(unequipped, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING))
+	if(QDELETED(source))
+		return
+	// Get rid of these first
+	UnregisterSignal(source, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING))
 
 	if(QDELING(src) || QDELING(parent))
 		return
-	// Just do a full re-application
+	// Do a full re-application
 	INVOKE_ASYNC(src, PROC_REF(apply_mutant_hands))
 
 /**
