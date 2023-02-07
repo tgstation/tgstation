@@ -6,14 +6,14 @@
  */
 /datum/component/soul_stealer
 	/// List of soulstones captured by this item.
-	var/list/obj/item/soulstones = list()
+	var/list/obj/item/soulstone/soulstones = list()
 
 /datum/component/soul_stealer/Initialize()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/soul_stealer/Destroy()
-	QDEL_LIST(soulstones)
+	QDEL_LIST(soulstones) // We own these, so we'll also just get rid of them. Any souls inside will die, this is fine.
 	return ..()
 
 /datum/component/soul_stealer/RegisterWithParent()
