@@ -108,7 +108,11 @@
 
 /datum/species/zombie/infectious/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/zombie, signals_which_destroy_us = list(COMSIG_SPECIES_LOSS))
+	C.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/zombie)
+
+/datum/species/zombie/infectious/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	. = ..()
+	qdel(C.GetComponent(/datum/component/mutant_hands))
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE

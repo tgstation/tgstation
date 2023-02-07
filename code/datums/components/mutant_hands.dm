@@ -20,19 +20,15 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// The item typepath that we insert into the parent's hands
 	var/obj/item/mutant_hand_path
-	/// Optional, a list of signals which - when recieved - results in us self terminating
-	var/list/signals_which_destroy_us
-	/// Used to prevent un-necessary updates, this was the length of the mob's held_items list the last time we updated
-	var/last_held_items_len = -1
 
-/datum/component/mutant_hands/Initialize(obj/item/mutant_hand_path, list/signals_which_destroy_us)
+/datum/component/mutant_hands/Initialize(obj/item/mutant_hand_path)
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.mutant_hand_path = mutant_hand_path
-	src.signals_which_destroy_us = signals_which_destroy_us
 
 /datum/component/mutant_hands/RegisterWithParent()
+	// Give them a hand before registering ANYTHING just so it's clean
 	INVOKE_ASYNC(src, PROC_REF(apply_mutant_hands))
 
 	RegisterSignals(parent, list(
@@ -41,19 +37,17 @@
 		COMSIG_MOB_NUM_HANDS_CHANGED,
 	), PROC_REF(try_reapply_hands))
 
-	if(length(signals_which_destroy_us))
-		RegisterSignals(parent, signals_which_destroy_us, PROC_REF(destroy_self))
+	RegisterSignal(parent, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(mob_equipped_item))
 
 /datum/component/mutant_hands/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_CARBON_ATTACH_LIMB,
 		COMSIG_CARBON_REMOVE_LIMB,
 		COMSIG_MOB_NUM_HANDS_CHANGED,
+		COMSIG_MOB_EQUIPPED_ITEM,
 	))
 
-	if(length(signals_which_destroy_us))
-		UnregisterSignal(parent, signals_which_destroy_us)
-
+	// Remove all their hands after unregistering everything so they don't return
 	INVOKE_ASYNC(src, PROC_REF(remove_mutant_hands))
 
 /**
@@ -72,7 +66,7 @@
 			continue
 		// This slot is not empty
 		// Yes the held item lists contains nulls to represent empty hands
-		// Save us a cast to use as anything in the loop
+		// It saves us a /item cast by using as anything in the loop
 		if(!isnull(hand_slot))
 			if(HAS_TRAIT(hand_slot, TRAIT_NODROP))
 				// There's a nodrop item in the way of putting a mutant hand in
@@ -86,9 +80,6 @@
 
 		// Put in hands has a sleep somewhere in there
 		human_parent.put_in_hands(new mutant_hand_path(), del_on_fail = TRUE)
-
-	// Record how many hands we ended up iterating over, to prevent un-necessary updates going forward
-	last_held_items_len = length(human_parent.held_items)
 
 /**
  * Removes all mutant idems from the parent's hand slots
@@ -115,13 +106,6 @@
 	if(QDELING(src) || QDELING(parent))
 		return
 
-	// When any of these events occur, check to see if the number of held slots have changed
-	// If not, then we likely don't need to attempt to apply the hands again
-	// And if so, then we'll try to put new hands in
-	var/mob/living/carbon/human/human_parent = parent
-	if(last_held_items_len == length(human_parent.held_items))
-		return
-
 	INVOKE_ASYNC(src, PROC_REF(apply_mutant_hands))
 
 /**
@@ -140,19 +124,31 @@
 	INVOKE_ASYNC(src, PROC_REF(apply_mutant_hands))
 
 /**
- * General signal proc for when we recieve a signal that tells us to self delete
+ * Signal proc for [COMSIG_MOB_EQUIPPED_ITEM]
+ *
+ * This is a failsafe - the mob managed to pick up something that isn't a mutant hand
  */
-/datum/component/mutant_hands/proc/destroy_self(datum/source)
+/datum/component/mutant_hands/proc/mob_equipped_item(datum/source, obj/item/thing, slot)
 	SIGNAL_HANDLER
 
-	qdel(src)
+	if(!(slot & ITEM_SLOT_HANDS)) // Who cares
+		return
+
+	if(istype(thing, mutant_hand_path)) // This is definitely meant to be here
+		return
+
+	if(thing.item_flags & ABSTRACT) // This is meant to be here
+		return
+
+	// We equipped something to hands that wasn't a mutant hand, and wasn't abstract!
+	// This means they're meant to have a mutant hand. So help them out.
+	INVOKE_ASYNC(src, PROC_REF(apply_mutant_hands))
 
 /**
  * Generic mutant hand type for use with the mutant hands component
- * (Well the component doesn't require you use this type, but it's here for posterity)
+ * (Technically speaking, the component doesn't require you use this type. B.ut it's here for posterity)
  *
- * Does nothing except change its icon state between left and right depending on hand slot equipped in
- * Implement var overrides and proc extension to make your hands to special things
+ * Implements nothing except changing its icon state between left and right depending on hand slot equipped in
  */
 /obj/item/mutant_hand
 	name = "mutant hand"
