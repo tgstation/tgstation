@@ -159,10 +159,10 @@
 	if(HAS_TRAIT(accursed, TRAIT_NOBLOOD) || !accursed.dna)
 		return
 
-	accursed_human.blood_volume = max(accursed_human.blood_volume - blood_loss, 0)
-	to_chat(accursed_human, span_userdanger("You have to keep pumping your blood!"))
+	accursed.blood_volume = max(accursed.blood_volume - blood_loss, 0)
+	to_chat(accursed, span_userdanger("You have to keep pumping your blood!"))
 	if(add_colour)
-		accursed_human.add_client_colour(/datum/client_colour/cursed_heart_blood) //bloody screen so real
+		accursed.add_client_colour(/datum/client_colour/cursed_heart_blood) //bloody screen so real
 		add_colour = FALSE
 
 /obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/accursed, special = FALSE, drop_if_replaced = TRUE)
