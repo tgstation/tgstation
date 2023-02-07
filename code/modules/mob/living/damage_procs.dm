@@ -186,7 +186,7 @@
 		return
 	if(iscarbon(src))
 		var/obj/item/organ/internal/lungs/affected_lungs = getorganslot(ORGAN_SLOT_LUNGS)
-		if(!forced && !(affected_lungs?.respiration_type & required_respiration_type))
+		if(!forced && affected_lungs && !(affected_lungs.respiration_type & required_respiration_type))
 			return
 	. = oxyloss
 	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -199,7 +199,7 @@
 		return
 	if(iscarbon(src))
 		var/obj/item/organ/internal/lungs/affected_lungs = getorganslot(ORGAN_SLOT_LUNGS)
-		if(!forced && !(affected_lungs?.respiration_type & required_respiration_type))
+		if(!forced && affected_lungs && !(affected_lungs.respiration_type & required_respiration_type))
 			return
 	. = oxyloss
 	oxyloss = amount
