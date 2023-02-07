@@ -147,7 +147,7 @@
 	datahud.show_to(src)
 	AddComponent(\
 		/datum/component/healing_touch,\
-		interaction_key = INTERACTION_SPIDER_KEY,\
+		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/simple_animal/hostile/giant_spider)),\
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
 		complete_text = "%SOURCE% wraps the wounds of %TARGET%.",\
@@ -390,7 +390,7 @@
 		heal_brute = maxHealth * 0.5,\
 		heal_burn = maxHealth * 0.5,\
 		allow_self = TRUE,\
-		interaction_key = INTERACTION_SPIDER_KEY,\
+		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/simple_animal/hostile/giant_spider/hunter/flesh)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
 		action_text = "%SOURCE% begins mending themselves...",\
