@@ -123,8 +123,6 @@
  * * breather: A carbon mob that is using the lungs to breathe.
  */
 /obj/item/organ/internal/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
-	. = TRUE
-
 	if(breather.status_flags & GODMODE)
 		breather.failed_last_breath = FALSE
 		breather.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
@@ -212,7 +210,6 @@
 			breather.adjustOxyLoss(-5)
 	else
 		// Can't breathe!
-		. = FALSE
 		breather.failed_last_breath = TRUE
 
 	// Handle subtypes' breath processing
@@ -255,7 +252,7 @@
 				breathe_gas_volume(breath_gases, /datum/gas/oxygen, /datum/gas/carbon_dioxide, volume = gas_breathed)
 			else
 				// No amount of O2, just suffocate
-				gas_breathed = handle_suffocation(breather, o2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
+				handle_suffocation(breather, o2_pp, safe_oxygen_min, 0)
 		else
 			// Enough oxygen to breathe.
 			breather.failed_last_breath = FALSE
@@ -290,8 +287,8 @@
 				gas_breathed = handle_suffocation(breather, n2_pp, safe_nitro_min, breath_gases[/datum/gas/nitrogen][MOLES])
 				breathe_gas_volume(breath_gases, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, volume = gas_breathed)
 			else
-				// no amount of N2, just suffocate
-				gas_breathed = handle_suffocation(breather, n2_pp, safe_nitro_min, breath_gases[/datum/gas/nitrogen][MOLES])
+				// No amount of N2, just suffocate
+				handle_suffocation(breather, n2_pp, safe_nitro_min, 0)
 		else
 			// Enough nitrogen to breathe.
 			breather.failed_last_breath = FALSE
@@ -339,7 +336,7 @@
 				breathe_gas_volume(breath_gases, /datum/gas/carbon_dioxide, /datum/gas/oxygen, volume = gas_breathed)
 			else
 				// No amount of CO2, just suffocate
-				gas_breathed = handle_suffocation(breather, co2_pp, safe_co2_min, breath_gases[/datum/gas/carbon_dioxide][MOLES])
+				handle_suffocation(breather, co2_pp, safe_co2_min, 0)
 		else
 			// Enough CO2 to breathe.
 			breather.failed_last_breath = FALSE
@@ -375,7 +372,7 @@
 				breathe_gas_volume(breath_gases, /datum/gas/plasma, /datum/gas/carbon_dioxide, volume = gas_breathed)
 			else
 				// No amount of plasma, just suffocate
-				gas_breathed = handle_suffocation(breather, plasma_pp, safe_plasma_min, breath_gases[/datum/gas/plasma][MOLES])
+				handle_suffocation(breather, plasma_pp, safe_plasma_min, 0)
 		else
 			// Enough Plasma to breathe.
 			breather.failed_last_breath = FALSE
@@ -597,6 +594,10 @@
 		handle_breath_temperature(breath, breather)
 
 	breath.garbage_collect()
+
+	// Returned status code 0 indicates breath failed.
+	if(!breather.failed_last_breath)
+		return TRUE
 
 ///override this for breath handling unique to lung subtypes, breath_gas is the list of gas in the breath while gas breathed is just what is being added or removed from that list, just as they are when this is called in check_breath()
 /obj/item/organ/internal/lungs/proc/handle_gas_override(mob/living/carbon/human/breather, list/breath_gas, gas_breathed)
