@@ -31,19 +31,13 @@
 	// Give them a hand before registering ANYTHING just so it's clean
 	INVOKE_ASYNC(src, PROC_REF(apply_mutant_hands))
 
-	RegisterSignals(parent, list(
-		COMSIG_CARBON_ATTACH_LIMB,
-		COMSIG_CARBON_REMOVE_LIMB,
-		COMSIG_MOB_NUM_HANDS_CHANGED,
-	), PROC_REF(try_reapply_hands))
-
+	RegisterSignals(parent, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB), PROC_REF(try_reapply_hands))
 	RegisterSignal(parent, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(mob_equipped_item))
 
 /datum/component/mutant_hands/UnregisterFromParent()
 	UnregisterSignal(parent, list(
-		COMSIG_CARBON_ATTACH_LIMB,
-		COMSIG_CARBON_REMOVE_LIMB,
-		COMSIG_MOB_NUM_HANDS_CHANGED,
+		COMSIG_CARBON_POST_ATTACH_LIMB,
+		COMSIG_CARBON_POST_REMOVE_LIMB,
 		COMSIG_MOB_EQUIPPED_ITEM,
 	))
 
@@ -70,10 +64,10 @@
 		if(!isnull(hand_slot))
 			if(HAS_TRAIT(hand_slot, TRAIT_NODROP))
 				// There's a nodrop item in the way of putting a mutant hand in
-				// We'll register some signals such that, if the item is removed at some point,
+				// We'll register a signal such that, if the item is removed at some point,
 				// We can instantly jump in and replace it with a new mutant hand
 				// But we need to override existing signals here - as the nodrop item could persist through multiple attempts
-				RegisterSignals(hand_slot, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING), PROC_REF(on_nodrop_item_lost), override = TRUE)
+				RegisterSignals(hand_slot, COMSIG_ITEM_DROPPED, PROC_REF(on_nodrop_item_lost), override = TRUE)
 				continue
 			// Drop any existing non-nodrop items to the ground
 			human_parent.dropItemToGround(hand_slot)
@@ -89,6 +83,8 @@
 	for(var/obj/item/hand_slot as anything in human_parent.held_items)
 		// Not a mutant hand, don't need to delete it
 		if(!istype(hand_slot, mutant_hand_path))
+			if(HAS_TRAIT(hand_slot, TRAIT_NODROP))
+				UnregisterSignal(hand_slot, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING))
 			continue
 
 		// Just send it to the shadow realm, this will handle unequipping and remove it for us
@@ -117,7 +113,7 @@
 	SIGNAL_HANDLER
 
 	// Get rid of these first
-	UnregisterSignal(source, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
 
 	if(QDELING(src) || QDELING(parent))
 		return

@@ -156,6 +156,7 @@
 		return
 
 	forceMove(drop_loc)
+	SEND_SIGNAL(owner, COMSIG_CARBON_POST_REMOVE_LIMB, src, dismembered)
 
 /**
  * get_mangled_state() is relevant for flesh and bone bodyparts, and returns whether this bodypart has mangled skin, mangled bone, or both (or neither i guess)
@@ -395,6 +396,7 @@
 	new_limb_owner.updatehealth()
 	new_limb_owner.update_body()
 	new_limb_owner.update_damage_overlays()
+	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_POST_ATTACH_LIMB, src, special)
 	return TRUE
 
 /obj/item/bodypart/head/try_attach_limb(mob/living/carbon/new_head_owner, special = FALSE, abort = FALSE)
