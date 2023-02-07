@@ -29,7 +29,7 @@
 
 	examine_list += span_notice("It will steal the soul of anyone it defeats in battle.")
 
-	var/num_souls = length(souls)
+	var/num_souls = length(soulstones)
 	switch(num_souls)
 		if(0)
 			examine_list += span_notice("It has not consumed any souls yet.")
@@ -47,8 +47,8 @@
 	if(ishuman(target))
 		INVOKE_ASYNC(src, PROC_REF(try_capture), target, user)
 
-	if(istype(target, /obj/structure/constructshell) && length(souls))
-		var/obj/item/soulstone/soulstone = souls[1]
+	if(istype(target, /obj/structure/constructshell) && length(soulstones))
+		var/obj/item/soulstone/soulstone = soulstones[1]
 		INVOKE_ASYNC(soulstone, TYPE_PROC_REF(/obj/item/soulstone, transfer_to_construct), target, user)
 		if(QDELETED(soulstone)) // successful transfer (transfer deletes us)
 			soulstones -= soulstone
