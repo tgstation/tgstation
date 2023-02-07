@@ -1,0 +1,6 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes oxyloss not being applied when there is a partial pressure of 0 (no more being able to breathe in space)"
+  - code_imp: "fixes any lingering damage-application issues related to non MOB_ORGANIC biotypes"
+  - refactor: "refactored lungs to have a respiration_type flag which is then used by adjustOxyloss/setOxyloss to determine whether to take 'oxygen' damage."

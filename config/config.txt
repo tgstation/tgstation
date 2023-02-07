@@ -642,3 +642,6 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 ## Comment to disable sending a toast notification on the host server when initializations complete.
 ## Even if this is enabled, a notification will only be sent if there are no clients connected.
 TOAST_NOTIFICATION_ON_INIT
+
+## Causes configuration errors to spit out runtimes
+CONFIG_ERRORS_RUNTIME
