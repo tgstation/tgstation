@@ -74,11 +74,13 @@
 
 ///Register signals in the cordon "danger zone" to do something with whoever trespasses
 /datum/turf_reservation/proc/MakeRepel(turf/pre_cordon_turf)
+	SHOULD_CALL_PARENT(TRUE)
 	//Okay so hear me out. If we place a special turf IN the reserved area, it will be overwritten, so we can't do that
 	//But signals are preserved even between turf changes, so even if we register a signal now it will stay even if that turf is overriden by the template
 	RegisterSignal(pre_cordon_turf, COMSIG_PARENT_QDELETING, PROC_REF(OnStopRepel))
 
 /datum/turf_reservation/proc/OnStopRepel(turf/pre_cordon_turf)
+	SHOULD_CALL_PARENT(TRUE)
 	SIGNAL_HANDLER
 
 	StopRepel(pre_cordon_turf)
