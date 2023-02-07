@@ -487,6 +487,10 @@
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		if(limb in needs_update) //Checks to see if the limb needs to be redrawn
 			var/bodypart_icon = limb.get_limb_icon()
+			if(!istype(limb, /obj/item/bodypart/leg))
+				var/top_offset = get_top_offset()
+				for(var/image/image as anything in bodypart_icon)
+					image.pixel_y += top_offset
 			new_limbs += bodypart_icon
 			limb_icon_cache[icon_render_keys[limb.body_zone]] = bodypart_icon //Caches the icon with the bodypart key, as it is new
 		else
@@ -499,6 +503,17 @@
 
 	apply_overlay(BODYPARTS_LAYER)
 
+/mob/living/carbon/proc/get_top_offset()
+	var/from_chest
+	var/from_leg
+	for(var/obj/item/bodypart/leg/leg_checked in bodyparts)
+		if(leg_checked.top_offset > from_leg || isnull(from_leg))
+			from_leg = leg_checked.top_offset
+	if(isnull(from_leg))
+		from_leg = 0
+	for(var/obj/item/bodypart/chest/chest_checked in bodyparts)
+		from_chest = chest_checked.top_offset
+	return(from_chest + from_leg)
 
 /////////////////////////
 // Limb Icon Cache 2.0 //
