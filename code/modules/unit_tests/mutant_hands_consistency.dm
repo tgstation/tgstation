@@ -36,12 +36,12 @@
 	incredible_hulk.AddComponent(/datum/component/mutant_hands)
 
 	if(!istype(incredible_hulk.held_items[1], /obj/item/storage/toolbox))
-		TEST_FAIL("Dummy's left hand was not a toolbox, though it was supposed to be. Instead, it was [hand || "nothing"].")
+		TEST_FAIL("Dummy's left hand was not a toolbox, though it was supposed to be. Instead, it was [incredible_hulk.held_items[1] || "nothing"].")
 
 	if(!istype(incredible_hulk.held_items[2], /obj/item/mutant_hand))
-		TEST_FAIL("Dummy didn't have a mutant hand on gaining the mutant hands comp! Instead they had [hand || "nothing"].")
+		TEST_FAIL("Dummy didn't have a mutant hand on gaining the mutant hands comp! Instead they had [incredible_hulk.held_items[2] || "nothing"].")
 
 	QDEL_NULL(item_to_hold)
 
 	if(!istype(incredible_hulk.held_items[1], /obj/item/mutant_hand))
-		TEST_FAIL("Dummy's left hand was not a mutant hand after losing the nodrop item. Instead, it was [hand || "nothing"].")
+		TEST_FAIL("Dummy's left hand was not a mutant hand after losing the nodrop item. Instead, it was [incredible_hulk.held_items[1] || "nothing"].")
