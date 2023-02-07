@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "The wizard's magickal printing press has been corrected such that ye magickal text describing what the semi-randomize option do is no longer printed _underneath_ the semi-randomize button."

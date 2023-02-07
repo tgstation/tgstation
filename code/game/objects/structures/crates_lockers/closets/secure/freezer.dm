@@ -24,6 +24,7 @@
 /obj/structure/closet/secure_closet/freezer/close(mob/living/user)
 	if(..()) //if we actually closed the locker
 		toggle_organ_decay(src)
+		return TRUE
 
 /obj/structure/closet/secure_closet/freezer/ex_act()
 	if(jones)

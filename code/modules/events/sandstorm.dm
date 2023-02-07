@@ -16,6 +16,7 @@
 	category = EVENT_CATEGORY_SPACE
 	description = "A wave of space dust continually grinds down a side of the station."
 	admin_setup = /datum/event_admin_setup/listed_options/sandstorm
+	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event/sandstorm
 	start_when = 60
@@ -69,6 +70,7 @@
 	earliest_start = 0 MINUTES
 	category = EVENT_CATEGORY_SPACE
 	description = "The station is pelted by an extreme amount of dust, from all sides, for several minutes. Very destructive and likely to cause lag. Use at own risk."
+	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event/sandstorm_classic
 	start_when = 1

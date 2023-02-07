@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - qol: "Add emissive effects and balloon alerts to barsigns (neon lights now glow in the dark). Barsigns are now considered machinery and will be affected by power."
-  - refactor: "Refactor barsign code to be more robust"

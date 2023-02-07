@@ -1,0 +1,4 @@
+author: "tf-4"
+delete-after: True
+changes:
+  - spellcheck: "The message given when a limb is disabled has had its spelling corrected."

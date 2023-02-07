@@ -8,6 +8,7 @@
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
+	var/starlight_source_count = 0
 
 	var/destination_z
 	var/destination_x
@@ -101,15 +102,23 @@
 /turf/open/space/remove_air(amount)
 	return null
 
+/// Updates starlight. Called when we're unsure of a turf's starlight state
+/// Returns TRUE if we succeed, FALSE otherwise
 /turf/open/space/proc/update_starlight()
-	if(CONFIG_GET(flag/starlight))
-		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-			if(isspaceturf(t))
-				//let's NOT update this that much pls
-				continue
-			set_light(2)
-			return
-		set_light(0)
+	for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+		// I've got a lot of cordons near spaceturfs, be good kids
+		if(isspaceturf(t) || istype(t, /turf/cordon))
+			//let's NOT update this that much pls
+			continue
+		enable_starlight()
+		return TRUE
+	set_light(0)
+	return FALSE
+
+/// Turns on the stars, if they aren't already
+/turf/open/space/proc/enable_starlight()
+	if(!light_range)
+		set_light(2)
 
 /turf/open/space/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -243,7 +252,6 @@
 /turf/open/space/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
 	icon_state = "invisible"
-	update_starlight()
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/space/openspace/LateInitialize()
@@ -284,16 +292,25 @@
 		return TRUE
 	return FALSE
 
-/turf/open/space/openspace/update_starlight()
-	if(!CONFIG_GET(flag/starlight))
-		return
+/turf/open/space/openspace/enable_starlight()
 	var/turf/below = SSmapping.get_turf_below(src)
+	// Override = TRUE beacuse we could have our starlight updated many times without a failure, which'd trigger this
+	RegisterSignal(below, COMSIG_TURF_CHANGE, PROC_REF(on_below_change), override = TRUE)
 	if(!isspaceturf(below))
 		return
-	for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-		if(isspaceturf(t))
-			//let's NOT update this that much pls
-			continue
-		set_light(2)
+	set_light(2)
+
+/turf/open/space/openspace/update_starlight()
+	. = ..()
+	if(.)
 		return
-	set_light(0)
+	// If we're here, the starlight is not to be
+	var/turf/below = SSmapping.get_turf_below(src)
+	UnregisterSignal(below, COMSIG_TURF_CHANGE)
+
+/turf/open/space/openspace/proc/on_below_change(turf/source, path, list/new_baseturfs, flags, list/post_change_callbacks)
+	SIGNAL_HANDLER
+	if(isspaceturf(source) && !ispath(path, /turf/open/space))
+		set_light(2)
+	else if(!isspaceturf(source) && ispath(path, /turf/open/space))
+		set_light(0)

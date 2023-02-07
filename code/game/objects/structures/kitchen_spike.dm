@@ -9,6 +9,27 @@
 	anchored = FALSE
 	max_integrity = 200
 
+/obj/structure/kitchenspike_frame/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/structure/kitchenspike_frame/examine(mob/user)
+	. = ..()
+	. += "It can be <b>welded</b> apart."
+	. += "You could attach <b>[MEATSPIKE_IRONROD_REQUIREMENT]</b> iron rods to it to create a <b>Meat Spike</b>."
+
+/obj/structure/kitchenspike_frame/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	var/message = ""
+	if(held_item.tool_behaviour == TOOL_WELDER)
+		message = "Deconstruct"
+	else if(held_item.tool_behaviour == TOOL_WRENCH)
+		message = "Bolt Down Frame"
+
+	if(!message)
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = message
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/structure/kitchenspike_frame/welder_act(mob/living/user, obj/item/tool)
 	if(!tool.tool_start_check(user, amount = 0))
 		return FALSE
@@ -33,10 +54,12 @@
 	var/obj/item/stack/rods/used_rods = attacking_item
 	if(used_rods.get_amount() >= MEATSPIKE_IRONROD_REQUIREMENT)
 		used_rods.use(MEATSPIKE_IRONROD_REQUIREMENT)
-		to_chat(user, span_notice("You add spikes to the frame."))
+		balloon_alert(user, "meatspike built")
 		var/obj/structure/new_meatspike = new /obj/structure/kitchenspike(loc)
 		transfer_fingerprints_to(new_meatspike)
 		qdel(src)
+		return
+	balloon_alert(user, "[MEATSPIKE_IRONROD_REQUIREMENT] rods needed!")
 
 /obj/structure/kitchenspike
 	name = "meat spike"
@@ -48,6 +71,22 @@
 	buckle_lying = FALSE
 	can_buckle = TRUE
 	max_integrity = 250
+
+/obj/structure/kitchenspike/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/structure/kitchenspike/examine(mob/user)
+	. = ..()
+	. += "<b>Drag a mob</b> onto it to hook it in place."
+	. += "A <b>crowbar</b> could remove those spikes."
+
+/obj/structure/kitchenspike/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(held_item.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Remove Spikes"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
 
 /obj/structure/kitchenspike/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

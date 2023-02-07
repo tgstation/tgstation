@@ -1,4 +1,0 @@
-author: "SeigaSeiga"
-delete-after: True
-changes:
-  - bugfix: "Different types of spear now display accurate materials on examine, and recycle appropriately."
