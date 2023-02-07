@@ -1,5 +1,0 @@
-author: "Comxy"
-delete-after: True
-changes:
-  - rscadd: "Added new damage buffs for netherworld mobs"
-  - refactor: "Refactors netherworld mobs into basic mobs"

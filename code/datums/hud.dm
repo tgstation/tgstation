@@ -323,12 +323,16 @@ GLOBAL_LIST_INIT(huds, list(
 		for(var/atom/hud_atom as anything in hud_atoms)
 			if(mob_exceptions && (hud_atom in hud_exceptions[requesting_mob]))
 				continue
-			requesting_mob.client.images |= hud_atom.active_hud_list[hud_category]
+			var/image/output = hud_atom.active_hud_list?[hud_category]
+			// byond throws a fit if you try to add null to the images list
+			if(!output)
+				continue
+			requesting_mob.client.images |= output
 
 /// add just hud_atom's hud images (that are part of this atom_hud) to all the requesting_mobs's client.images list
 /// optimization of [/datum/atom_hud/proc/add_atom_to_single_mob_hud] for hot cases, we assert that no nulls will be passed in via the list
 /datum/atom_hud/proc/add_atom_to_all_mob_huds(list/mob/requesting_mobs, atom/hud_atom) //unsafe, no sanity apart from client
-	if(!hud_atom)
+	if(!hud_atom?.active_hud_list)
 		return
 
 	var/list/images_to_add = list()
@@ -357,7 +361,7 @@ GLOBAL_LIST_INIT(huds, list(
 		return
 	for(var/hud_image in hud_icons)
 		for(var/atom/atom_to_remove as anything in atoms_to_remove)
-			client_mob.client.images -= atom_to_remove.active_hud_list[hud_image]
+			client_mob.client.images -= atom_to_remove.active_hud_list?[hud_image]
 
 /// remove every hud image for this hud on atom_to_remove from client_mobs's client.images list
 /// optimization of [/datum/atom_hud/proc/remove_atom_from_single_hud] for hot cases, we assert that no nulls will be passed in via the list

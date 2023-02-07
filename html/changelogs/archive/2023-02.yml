@@ -241,3 +241,91 @@
   - admin: Admin verbs now come with a handy description when you hover over them!
   lizardqueenlexi:
   - bugfix: Corrected the skintone on arms grown back by the Rod of Asclepius
+2023-02-06:
+  Comxy:
+  - rscadd: Added new damage buffs for netherworld mobs
+  - refactor: Refactors netherworld mobs into basic mobs
+  Jacquerel:
+  - bugfix: Biotypes will be more consistently applied when taking damage, pod and
+      shadowperson prosthetic limbs won't be corroded due to light levels.
+  - bugfix: Podperson and Wooden Golem prosthetic limbs won't be corroded by having
+      a hungry tummy.
+  JohnFulpWillard:
+  - bugfix: There will no longer have 2 of the same station trait roll twice in the
+      same round.
+  - bugfix: Announcements of ghost roles don't play if no one accepts the poll to
+      play as the role.
+  LT3:
+  - refactor: 'Rewrite of random event Disease Outbreak: Advanced. Listen to those
+      level 7 biohazard warnings!'
+  - admin: Fully customizable build-your-own virus is available in the admin Secrets
+      panel, for those people you really hate
+  NamelessFairy:
+  - bugfix: Some misplaced pixel on TGC cards have been cleaned up.
+  Profakos:
+  - bugfix: United Surplus Crate Key is no longer visible in the nuke ops uplink
+  - bugfix: pod person hair can be once again styled by secateaurs
+  Rhials:
+  - bugfix: abductor scientist's retrieval implants will now properly recall the owner,
+      and inform them upon recall failure.
+  ShizCalev:
+  - bugfix: Fixed some duplicated and incorrect messages being presented when infected
+      with a virus that has the spontaneous combustion symptom.
+  SyncIt21:
+  - qol: examining a meat spike frame & meat spike will tell you about itself
+  Tattle:
+  - admin: Admins are no longer alerted when an inert BoH is printed
+  Unit2E:
+  - balance: The hypnotic flash now works on unconscious people (not crit), one of
+      us, one of us!
+  scriptis:
+  - bugfix: asays are no longer double-escaped
+  - admin: asay now uses tgui say
+  tralezab:
+  - admin: There's a cog next to events you can trigger if it has an admin setup.
+2023-02-07:
+  ArcaneMusic:
+  - qol: Improves feedback on buttons as well as the blast door electronics so that
+      installing your very own blast doors is less tedious.
+  Capsandi:
+  - balance: There's a second detonation wire on payload bombs now.
+  - balance: Cutting the proceed wire no longer detonates the bomb but instead deactivates
+      the countdown timer on examine. This is reset once the bomb is defused
+  Ebin-Halcyon:
+  - imageadd: Winter coats have been resprited.
+  Jacquerel:
+  - bugfix: Meteors can't be triggered automatically or manually on Icebox, where
+      they do nothing.
+  - bugfix: Hacking a comms console as a traitor won't try to summon meteors or pirates
+      to Icebox, where they do nothing.
+  Kapu1178:
+  - bugfix: The "Rest" and "Pull" HUD icons correctly match the mob's current state
+      on Login().
+  LT3:
+  - balance: 'Tram Malfunction: Decreased spread between min and max damage'
+  - balance: 'Tram Malfunction: Event length decreased'
+  - balance: 'Tram Malfunction: Damage multiplier added to account for different base
+      health levels'
+  - balance: 'Tram Malfunction: Event collision lethality multiplier decreased'
+  - bugfix: Fixed motion sensors on tram doors, they will now crush you much less
+      often!
+  - balance: Reduced damage from being crushed by tram doors
+  - code_imp: Un-nested emag blacklist
+  - code_imp: emag works properly on tram doors
+  - bugfix: Backwards tram door sparks animation
+  - bugfix: Tram displays power consumption
+  - bugfix: Tram crossing signals power consumption
+  - balance: Increased brightness on tram crossing signals
+  - bugfix: West Wing NW/SW and East Wing NE/SE crossing signals now shut off when
+      power is lost
+  - bugfix: Tram benches don't override standard benches
+  - bugfix: Reduced saturation and brightness of standard bench
+  NamelessFairy:
+  - bugfix: Transferring objects from a belt to another storage object now removes
+      those objects from the belts visuals.
+  - bugfix: Freezer no longer lock automatically when closed.
+  Profakos:
+  - bugfix: swapping to a stored DNA no longer forces you to be human instead of the
+      species stored in the DNA
+  itseasytosee:
+  - imageadd: inhands for fairy grass tiles
