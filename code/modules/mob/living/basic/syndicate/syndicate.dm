@@ -8,8 +8,8 @@
 	sentience_type = SENTIENCE_HUMANOID
 	maxHealth = 100
 	health = 100
+	speed = 0.9
 	basic_mob_flags = DEL_ON_DEATH
-	speed = 1.1
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	melee_damage_lower = 10
 	melee_damage_upper = 10
@@ -198,6 +198,7 @@
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot //buckshot (up to 72.5 brute) fired in a two-round burst
 	ai_controller = /datum/ai_controller/basic_controller/syndicate/ranged/shotgunner
 	r_hand = /obj/item/gun/ballistic/shotgun/bulldog
+	speed = 0.8
 
 /mob/living/basic/syndicate/ranged/shotgun/space
 	name = "Syndicate Commando"
@@ -205,7 +206,6 @@
 	health = 170
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
-	speed = 1
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatecommando
 
 /mob/living/basic/syndicate/ranged/shotgun/space/Initialize(mapload)
