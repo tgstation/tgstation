@@ -34,7 +34,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 		obscured.override = TRUE
 		obscured_images += obscured
 
-/datum/cameranet/proc/on_offset_growth(datum/sourcAe, old_offset, new_offset)
+/datum/cameranet/proc/on_offset_growth(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
 	update_offsets(new_offset)
 
