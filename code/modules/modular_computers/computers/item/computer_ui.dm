@@ -16,12 +16,6 @@
 	if(!user.can_read(src, READING_CHECK_LITERACY))
 		return
 
-	if(ishuman(user) && !allow_chunky)
-		var/mob/living/carbon/human/human_user = user
-		if(human_user.check_chunky_fingers())
-			balloon_alert(human_user, "fingers are too big!")
-			return
-
 	// Robots don't really need to see the screen, their wireless connection works as long as computer is on.
 	if(!screen_on && !issilicon(user))
 		if(ui)
@@ -50,7 +44,7 @@
 	. = ..()
 	var/list/data = list()
 
-	data["show_imprint"] = istype(src, /obj/item/modular_computer/tablet)
+	data["show_imprint"] = istype(src, /obj/item/modular_computer/pda)
 
 	return data
 
@@ -102,6 +96,12 @@
 	. = ..()
 	if(.)
 		return
+
+	if(ishuman(usr) && !allow_chunky) //in /datum/computer_file/program/ui_act() too
+		var/mob/living/carbon/human/human_user = usr
+		if(human_user.check_chunky_fingers())
+			balloon_alert(human_user, "fingers are too big!")
+			return TRUE
 
 	switch(action)
 		if("PC_exit")
@@ -192,6 +192,7 @@
 					usr.put_in_hands(inserted_pai)
 					to_chat(usr, span_notice("You remove [inserted_pai] from the [name]."))
 					inserted_pai = null
+					update_appearance(UPDATE_ICON)
 				if("interact")
 					inserted_pai.attack_self(usr)
 			return UI_UPDATE

@@ -60,12 +60,12 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_MIME = /obj/item/clothing/gloves/color/white,
 		DYE_CLOWN = /obj/item/clothing/gloves/color/rainbow,
 		DYE_QM = /obj/item/clothing/gloves/color/brown,
-		DYE_CAPTAIN = /obj/item/clothing/gloves/color/captain,
+		DYE_CAPTAIN = /obj/item/clothing/gloves/captain,
 		DYE_HOP = /obj/item/clothing/gloves/color/grey,
 		DYE_HOS = /obj/item/clothing/gloves/color/black,
-		DYE_CE = /obj/item/clothing/gloves/color/chief_engineer,
+		DYE_CE = /obj/item/clothing/gloves/chief_engineer,
 		DYE_RD = /obj/item/clothing/gloves/color/grey,
-		DYE_CMO = /obj/item/clothing/gloves/color/latex/nitrile,
+		DYE_CMO = /obj/item/clothing/gloves/latex/nitrile,
 		DYE_REDCOAT = /obj/item/clothing/gloves/color/white,
 		DYE_SYNDICATE = /obj/item/clothing/gloves/combat,
 		DYE_CENTCOM = /obj/item/clothing/gloves/combat
@@ -276,6 +276,10 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	investigate_log("has been gibbed by a washing machine.", INVESTIGATE_DEATHS)
 	gib()
 
+/mob/living/basic/pet/machine_wash(obj/machinery/washing_machine/washer)
+	washer.bloody_mess = TRUE
+	gib()
+
 /obj/item/machine_wash(obj/machinery/washing_machine/washer)
 	if(washer.color_source)
 		dye_item(washer.color_source.dye_color)
@@ -369,7 +373,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		if(L.buckled || L.has_buckled_mobs())
 			return
 		if(state_open)
-			if(istype(L, /mob/living/simple_animal/pet))
+			if(istype(L, /mob/living/simple_animal/pet) || istype(L, /mob/living/basic/pet))
 				L.forceMove(src)
 				update_appearance()
 		return

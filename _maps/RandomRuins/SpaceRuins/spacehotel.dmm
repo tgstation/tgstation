@@ -267,7 +267,7 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "cB" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 8
 	},
 /turf/open/floor/carpet/lone,
@@ -518,7 +518,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "fv" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 8
 	},
 /obj/structure/cable,
@@ -567,8 +567,6 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "fZ" = (
-/obj/structure/table/wood,
-/obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = 7;
 	pixel_y = 9
@@ -577,12 +575,13 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	pixel_y = 6
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/structure/table/wood/fancy,
 /turf/open/floor/stone,
 /area/ruin/space/has_grav/hotel/bar)
 "gc" = (
@@ -721,7 +720,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel)
 "hq" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 4
 	},
 /obj/machinery/light_switch/directional/south,
@@ -1390,7 +1389,7 @@
 /turf/template_noop,
 /area/template_noop)
 "mj" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/west,
@@ -1426,7 +1425,7 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "mM" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 8
 	},
 /obj/machinery/airalarm/directional/east,
@@ -2895,8 +2894,6 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/hotel)
 "EC" = (
-/obj/structure/table/wood,
-/obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = 7;
 	pixel_y = 9
@@ -2905,6 +2902,7 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
+/obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/bar)
 "ED" = (
@@ -2933,7 +2931,7 @@
 /turf/open/floor/carpet/red,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "EP" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/west,
@@ -3019,7 +3017,7 @@
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/hotel/dock)
 "FV" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblue,
@@ -3146,7 +3144,7 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "Ho" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -3489,7 +3487,7 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "Mz" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/west,
@@ -3655,8 +3653,6 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "OJ" = (
-/obj/structure/table/wood,
-/obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = 7;
 	pixel_y = 9
@@ -3665,9 +3661,10 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	pixel_y = 6
 	},
+/obj/structure/table/wood/fancy,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hotel/bar)
 "OM" = (
@@ -3949,7 +3946,7 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "RV" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 8
 	},
 /obj/machinery/airalarm/directional/east,
@@ -4094,7 +4091,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hotel)
 "TQ" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 8
 	},
 /turf/open/floor/carpet/orange,
@@ -4376,11 +4373,10 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "WZ" = (
-/obj/structure/table/wood,
-/obj/structure/table/wood/fancy,
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	pixel_y = 6
 	},
+/obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/bar)
 "Xd" = (
@@ -4399,7 +4395,7 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "Xf" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 8
 	},
 /obj/machinery/airalarm/directional/east,

@@ -69,7 +69,6 @@
 
 ///Ran when an object finished grilling
 /datum/component/grillable/proc/finish_grilling(atom/grill_source)
-
 	var/atom/original_object = parent
 	var/atom/grilled_result
 
@@ -81,6 +80,9 @@
 		grilled_result = new cook_result(original_object.loc)
 		if(original_object.custom_materials)
 			grilled_result.set_custom_materials(original_object.custom_materials)
+
+	if(IS_EDIBLE(grilled_result))
+		BLACKBOX_LOG_FOOD_MADE(grilled_result.type)
 
 	SEND_SIGNAL(parent, COMSIG_ITEM_GRILLED, grilled_result)
 	if(who_placed_us)

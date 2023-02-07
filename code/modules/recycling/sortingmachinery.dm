@@ -1,5 +1,5 @@
 /obj/item/delivery
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage/wrapping.dmi'
 	inhand_icon_state = "deliverypackage"
 	var/giftwrapped = 0
 	var/sort_tag = 0
@@ -260,7 +260,7 @@
 	desc = "Used to set the destination of properly wrapped packages."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "cargo tagger"
-	worn_icon_state = "cargo tagger"
+	worn_icon_state = "cargotagger"
 	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
 	var/locked_destination = FALSE //if true, users can't open the destination tag window to prevent changing the tagger's current destination
 	w_class = WEIGHT_CLASS_TINY
@@ -326,7 +326,7 @@
 	name = "sales tagger"
 	desc = "A scanner that lets you tag wrapped items for sale, splitting the profit between you and cargo."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "salestagger"
+	icon_state = "sales tagger"
 	worn_icon_state = "salestagger"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'

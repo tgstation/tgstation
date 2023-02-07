@@ -69,8 +69,8 @@
 				organ_owner.adjustOrganLoss(ORGAN_SLOT_APPENDIX, 15)
 
 
-/obj/item/organ/internal/appendix/get_availability(datum/species/owner_species)
-	return !((TRAIT_NOHUNGER in owner_species.inherent_traits) || (NOAPPENDIX in owner_species.species_traits))
+/obj/item/organ/internal/appendix/get_availability(datum/species/owner_species, mob/living/owner_mob)
+	return owner_species.mutantappendix
 
 /obj/item/organ/internal/appendix/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	REMOVE_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)

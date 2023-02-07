@@ -32,7 +32,7 @@
 	faction = list("spooky")
 	del_on_death = 1
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS|SEE_BLACKNESS
+	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 
 /mob/living/simple_animal/hostile/eyeball/Initialize(mapload)
 	. = ..()

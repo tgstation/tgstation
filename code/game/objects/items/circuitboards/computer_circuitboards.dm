@@ -466,11 +466,10 @@
 	build_path = /obj/machinery/computer/camera_advanced/syndie
 
 //Service
-
-/obj/item/circuitboard/computer/chef_order
+/obj/item/circuitboard/computer/order_console
 	name = "Produce Orders Console"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/chef_order
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/computer/order_console/cook
 
 //Supply
 
@@ -527,6 +526,15 @@
 	name = "Supply Request Console"
 	build_path = /obj/machinery/computer/cargo/request
 
+/obj/item/circuitboard/computer/order_console/mining
+	name = "Mining Vending Console"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/order_console/mining
+
+/obj/item/circuitboard/computer/order_console/mining/golem
+	name = "Golem Ship Equipment Vendor Console"
+	build_path = /obj/machinery/computer/order_console/mining/golem
+
 /obj/item/circuitboard/computer/ferry
 	name = "Transport Ferry"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
@@ -550,6 +558,11 @@
 /obj/item/circuitboard/computer/mining_shuttle/common
 	name = "Lavaland Shuttle"
 	build_path = /obj/machinery/computer/shuttle/mining/common
+
+/obj/item/circuitboard/computer/emergency_pod
+	name = "Emergency Pod Controls"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/computer/shuttle/pod
 
 /obj/item/circuitboard/computer/exoscanner_console
 	name = "Scanner Array Control Console"

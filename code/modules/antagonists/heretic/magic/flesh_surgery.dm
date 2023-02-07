@@ -3,8 +3,9 @@
 	desc = "A touch spell that allows you to either harvest or restore flesh of target. \
 		Left-clicking will extract the organs of a victim without needing to complete surgery or disembowel. \
 		Right-clicking, if done on summons or minions, will restore health. Can also be used to heal damaged organs."
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "mad_touch"
 	sound = null
 
@@ -220,7 +221,7 @@
 
 /// Extra checks ran while we're healing something (organ, mob).
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/heal_checks(obj/item/melee/touch_attack/hand, atom/healing, mob/living/carbon/caster)
-	if(QDELETED(src) || QDELETED(hand) ||QDELETED(healing) || !IsAvailable())
+	if(QDELETED(src) || QDELETED(hand) || QDELETED(healing) || !IsAvailable())
 		return FALSE
 
 	return TRUE

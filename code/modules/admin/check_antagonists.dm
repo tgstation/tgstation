@@ -110,7 +110,7 @@
 			dat += "ETA: <a href='?_src_=holder;[HrefToken()];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_leading(num2text(timeleft % 60), 2, "0")]</a><BR>"
 	dat += "<a href='?_src_=holder;[HrefToken()];end_round=[REF(usr)]'>End Round Now</a><br>"
 	if(SSticker.delay_end)
-		dat += "<a href='?_src_=holder;[HrefToken()];undelay_round_end=1'>End Round Normally</a><br>"
+		dat += "<a href='?_src_=holder;[HrefToken()];undelay_round_end=1'>Undelay Round End</a><br>"
 	else
 		dat += "<a href='?_src_=holder;[HrefToken()];delay_round_end=1'>Delay Round End</a><br>"
 	dat += "<a href='?_src_=holder;[HrefToken()];ctf_toggle=1'>Enable/Disable CTF</a><br>"

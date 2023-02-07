@@ -72,7 +72,7 @@
 "hj" = (
 /obj/structure/filingcabinet/chestdrawer/wheeled,
 /obj/item/storage/fancy/heart_box,
-/obj/item/food/tinychocolate,
+/obj/item/food/bonbon,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)
 "hk" = (
@@ -227,7 +227,7 @@
 	dir = 4
 	},
 /obj/item/pressure_plate/hologrid{
-	reward = /mob/living/simple_animal/pet/dog/bullterrier
+	reward = /mob/living/basic/pet/dog/bullterrier
 	},
 /turf/open/floor/plating,
 /area/ruin/powered/mailroom)

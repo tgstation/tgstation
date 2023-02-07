@@ -1,6 +1,7 @@
 /obj/item/storage/lockbox
 	name = "lockbox"
 	desc = "A locked box."
+	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "lockbox+l"
 	inhand_icon_state = "lockbox"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
@@ -19,6 +20,8 @@
 	atom_storage.max_total_storage = 14
 	atom_storage.max_slots = 4
 	atom_storage.locked = TRUE
+
+	register_context()
 
 /obj/item/storage/lockbox/attackby(obj/item/W, mob/user, params)
 	var/locked = atom_storage.locked
@@ -50,11 +53,15 @@
 	if(!broken)
 		broken = TRUE
 		atom_storage.locked = FALSE
-		desc += "It appears to be broken."
 		icon_state = src.icon_broken
 		if(user)
 			visible_message(span_warning("\The [src] is broken by [user] with an electromagnetic card!"))
 			return
+
+/obj/item/storage/lockbox/examine(mob/user)
+	. = ..()
+	if(broken)
+		. += span_notice("It appears to be broken.")
 
 /obj/item/storage/lockbox/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
@@ -211,8 +218,8 @@
 /obj/item/storage/lockbox/order
 	name = "order lockbox"
 	desc = "A box used to secure small cargo orders from being looted by those who didn't order it. Yeah, cargo tech, that means you."
-	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "secure"
+	icon_broken = "secure+b"
 	inhand_icon_state = "sec-case"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
@@ -226,10 +233,10 @@
 	ADD_TRAIT(src, TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_GENERIC)
 
 /obj/item/storage/lockbox/order/attackby(obj/item/W, mob/user, params)
-	if(!isidcard(W))
+	var/obj/item/card/id/id_card = W.GetID()
+	if(!id_card)
 		return ..()
 
-	var/obj/item/card/id/id_card = W
 	if(iscarbon(user))
 		add_fingerprint(user)
 
@@ -241,3 +248,14 @@
 	privacy_lock = atom_storage.locked
 	user.visible_message(span_notice("[user] [privacy_lock ? "" : "un"]locks [src]'s privacy lock."),
 					span_notice("You [privacy_lock ? "" : "un"]lock [src]'s privacy lock."))
+
+///screentips for lockboxes
+/obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item)
+		return NONE
+	if(src.broken)
+		return NONE
+	if(!held_item.GetID())
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
+	return CONTEXTUAL_SCREENTIP_SET

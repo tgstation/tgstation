@@ -6,7 +6,6 @@
 	total_positions = 2
 	spawn_positions = 1
 	supervisors = SUPERVISOR_HOP
-	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "COOK"
 	var/cooks = 0 //Counts cooks amount
@@ -67,7 +66,7 @@
 		/obj/item/choice_beacon/ingredient = 1,
 		/obj/item/sharpener = 1,
 	)
-	belt = /obj/item/modular_computer/tablet/pda/cook
+	belt = /obj/item/modular_computer/pda/cook
 	ears = /obj/item/radio/headset/headset_srv
 	head = /obj/item/clothing/head/utility/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian

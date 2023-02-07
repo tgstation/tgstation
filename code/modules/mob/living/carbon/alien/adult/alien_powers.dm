@@ -10,7 +10,8 @@ Doesn't work on other aliens/AI.*/
 	name = "Alien Power"
 	panel = "Alien"
 	background_icon_state = "bg_alien"
-	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
+	overlay_icon_state = "bg_alien_border"
+	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "spell_default"
 	check_flags = AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 	melee_cooldown_time = 0 SECONDS
@@ -258,7 +259,7 @@ Doesn't work on other aliens/AI.*/
 	to_chat(on_who, span_notice("You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B>"))
 
 	button_icon_state = "alien_neurotoxin_1"
-	UpdateButtons()
+	build_all_button_icons()
 	on_who.update_icons()
 
 /datum/action/cooldown/alien/acid/neurotoxin/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
@@ -270,21 +271,16 @@ Doesn't work on other aliens/AI.*/
 		to_chat(on_who, span_notice("You empty your neurotoxin gland."))
 
 	button_icon_state = "alien_neurotoxin_0"
-	UpdateButtons()
+	build_all_button_icons()
 	on_who.update_icons()
 
+// We do this in InterceptClickOn() instead of Activate()
+// because we use the click parameters for aiming the projectile
+// (or something like that)
 /datum/action/cooldown/alien/acid/neurotoxin/InterceptClickOn(mob/living/caller, params, atom/target)
 	. = ..()
 	if(!.)
 		unset_click_ability(caller, refund_cooldown = FALSE)
-		return FALSE
-
-	// We do this in InterceptClickOn() instead of Activate()
-	// because we use the click parameters for aiming the projectile
-	// (or something like that)
-	var/turf/user_turf = caller.loc
-	var/turf/target_turf = get_step(caller, target.dir) // Get the tile infront of the move, based on their direction
-	if(!isturf(target_turf))
 		return FALSE
 
 	var/modifiers = params2list(params)
@@ -296,7 +292,7 @@ Doesn't work on other aliens/AI.*/
 	neurotoxin.preparePixelProjectile(target, caller, modifiers)
 	neurotoxin.firer = caller
 	neurotoxin.fire()
-	caller.newtonian_move(get_dir(target_turf, user_turf))
+	caller.newtonian_move(get_dir(target, caller))
 	return TRUE
 
 // Has to return TRUE, otherwise is skipped.
@@ -413,7 +409,7 @@ Doesn't work on other aliens/AI.*/
 	vessel.stored_plasma = max(vessel.stored_plasma + amount,0)
 	vessel.stored_plasma = min(vessel.stored_plasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
 	for(var/datum/action/cooldown/alien/ability in actions)
-		ability.UpdateButtons()
+		ability.build_all_button_icons()
 	return TRUE
 
 /mob/living/carbon/alien/adjustPlasma(amount)

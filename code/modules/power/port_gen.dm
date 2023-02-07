@@ -4,6 +4,7 @@
 	desc = "A portable generator for emergency backup power."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "portgen0_0"
+	base_icon_state = "portgen0"
 	density = TRUE
 	anchored = FALSE
 	use_power = NO_POWER_USE
@@ -12,7 +13,6 @@
 	var/power_gen = 5000
 	var/power_output = 1
 	var/consumption = 0
-	var/base_icon = "portgen0"
 	var/datum/looping_sound/generator/soundloop
 
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_REQUIRES_ANCHORED
@@ -57,7 +57,7 @@
 		soundloop.start()
 
 /obj/machinery/power/port_gen/update_icon_state()
-	icon_state = "[base_icon]_[active]"
+	icon_state = "[base_icon_state]_[active]"
 	return ..()
 
 /obj/machinery/power/port_gen/process()
@@ -106,7 +106,7 @@
 	var/obj/item/circuitboard/machine/pacman/our_board = circuit
 	if(our_board.high_production_profile)
 		icon_state = "portgen1_0"
-		base_icon = "portgen1"
+		base_icon_state = "portgen1"
 		max_sheets = 20
 		time_per_sheet = 20
 		power_gen = 15000
@@ -198,7 +198,7 @@
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			return
 		else if(O.tool_behaviour == TOOL_SCREWDRIVER)
-			panel_open = !panel_open
+			toggle_panel_open()
 			O.play_tool_sound(src)
 			if(panel_open)
 				to_chat(user, span_notice("You open the access panel."))
@@ -271,7 +271,7 @@
 
 /obj/machinery/power/port_gen/pacman/super
 	icon_state = "portgen1_0"
-	base_icon = "portgen1"
+	base_icon_state = "portgen1"
 	max_sheets = 20
 	time_per_sheet = 20
 	power_gen = 15000

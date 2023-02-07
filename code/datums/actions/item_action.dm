@@ -3,34 +3,31 @@
 	name = "Item Action"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 	button_icon_state = null
-	// If you want to override the normal icon being the item
-	// then change this to an icon state
+
+/datum/action/item_action/New(Target)
+	. = ..()
+
+	// If our button state is null, use the target's icon instead
+	if(target && isnull(button_icon_state))
+		AddComponent(/datum/component/action_item_overlay, target)
+
+/datum/action/item_action/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(!. || !target)
+		return
+
+	if(var_name == NAMEOF(src, button_icon_state))
+		// If someone vv's our icon either add or remove the component
+		if(isnull(var_name))
+			AddComponent(/datum/component/action_item_overlay, target)
+		else
+			qdel(GetComponent(/datum/component/action_item_overlay))
 
 /datum/action/item_action/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE
 	if(target)
-		var/obj/item/I = target
-		I.ui_action_click(owner, src)
+		var/obj/item/item_target = target
+		item_target.ui_action_click(owner, src)
 	return TRUE
-
-/datum/action/item_action/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
-	var/obj/item/item_target = target
-	if(button_icon && button_icon_state)
-		// If set, use the custom icon that we set instead
-		// of the item appearance
-		..()
-	else if((target && current_button.appearance_cache != item_target.appearance) || force) //replace with /ref comparison if this is not valid.
-		var/old_layer = item_target.layer
-		var/old_plane = item_target.plane
-		// reset the x & y offset so that item is aligned center
-		item_target.pixel_x = 0
-		item_target.pixel_y = 0		
-		item_target.layer = FLOAT_LAYER //AAAH
-		item_target.plane = FLOAT_PLANE //^ what that guy said
-		current_button.cut_overlays()
-		current_button.add_overlay(item_target)
-		item_target.layer = old_layer
-		item_target.plane = old_plane
-		current_button.appearance_cache = item_target.appearance

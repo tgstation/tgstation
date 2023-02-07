@@ -204,7 +204,7 @@
 		owner.visible_message(span_warning("[aggressor] places [aggressor.p_their()] [hand_name]s on [victim]'s back, and begins forcefully striking it!"), \
 			span_boldwarning("You feel [aggressor]\s [hand_name]s on your back, and then repeated striking!"))
 
-	if(!do_after_mob(aggressor, victim, 7 SECONDS, extra_checks = CALLBACK(src, PROC_REF(thrusting_continues), victim, aggressor), interaction_key = "heimlich"))
+	if(!do_after(aggressor, 7 SECONDS, victim, extra_checks = CALLBACK(src, PROC_REF(thrusting_continues), victim, aggressor), interaction_key = "heimlich"))
 		aggressor.stop_pulling()
 		return
 	aggressor.stop_pulling()
@@ -282,7 +282,8 @@
 	if(flaming)
 		var/obj/item/bodypart/head = owner.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
-			head.receive_damage(0, 2 * delta_time, 2 * delta_time)
+			head.receive_damage(0, 2 * delta_time)
+		owner.adjustStaminaLoss(2 * delta_time)
 
 /datum/status_effect/choke/proc/do_vfx(client/vfx_on)
 	var/old_x = delta_x

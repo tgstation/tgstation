@@ -5,7 +5,7 @@
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
-	armor = list(MELEE = 50, BULLET = 20, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 90, ACID = 50)
+	armor_type = /datum/armor/structure_fireaxecabinet
 	max_integrity = 150
 	integrity_failure = 0.33
 	/// Do we need to be unlocked to be opened.
@@ -18,12 +18,23 @@
 	var/item_path = /obj/item/fireaxe
 	/// Overlay we get when the item is inside us.
 	var/item_overlay = "axe"
+	/// Whether we should populate our own contents on Initialize()
+	var/populate_contents = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
+/datum/armor/structure_fireaxecabinet
+	melee = 50
+	bullet = 20
+	energy = 100
+	bomb = 10
+	fire = 90
+	acid = 50
+
 /obj/structure/fireaxecabinet/Initialize(mapload)
 	. = ..()
-	held_item = new item_path(src)
+	if(populate_contents)
+		held_item = new item_path(src)
 	update_appearance()
 
 /obj/structure/fireaxecabinet/Destroy()
@@ -107,7 +118,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(held_item && loc)
 			held_item.forceMove(loc)
-		new /obj/item/stack/sheet/iron(loc, 2)
+		new /obj/item/wallframe/fireaxecabinet(loc)
 	qdel(src)
 
 /obj/structure/fireaxecabinet/blob_act(obj/structure/blob/B)
@@ -182,6 +193,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 		update_appearance()
 		return
 
+/obj/structure/fireaxecabinet/empty
+	populate_contents = FALSE
+
+/obj/item/wallframe/fireaxecabinet
+	name = "fire axe cabinet"
+	desc = "Home to a window's greatest nightmare. Apply to wall to use."
+	icon = 'icons/obj/wallmounts.dmi'
+	icon_state = "fireaxe"
+	result_path = /obj/structure/fireaxecabinet/empty
+	pixel_shift = 32
+
 /obj/structure/fireaxecabinet/mechremoval
 	name = "mech removal tool cabinet"
 	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the tool. As if."
@@ -190,3 +212,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	item_overlay = "crowbar"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
+
+/obj/structure/fireaxecabinet/mechremoval/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(held_item && loc)
+			held_item.forceMove(loc)
+		new /obj/item/wallframe/fireaxecabinet/mechremoval(loc)
+	qdel(src)
+
+/obj/structure/fireaxecabinet/mechremoval/empty
+	populate_contents = FALSE
+
+/obj/item/wallframe/fireaxecabinet/mechremoval
+	name = "mech removal tool cabinet"
+	desc = "Home to a very special crowbar. Apply to wall to use."
+	icon_state = "mechremoval"
+	result_path = /obj/structure/fireaxecabinet/mechremoval/empty

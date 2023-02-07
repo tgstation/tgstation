@@ -20,6 +20,7 @@
 	var/emagged = FALSE
 	var/list/main_repo
 	var/list/antag_repo
+
 	var/list/show_categories = list(
 		PROGRAM_CATEGORY_CREW,
 		PROGRAM_CATEGORY_ENGI,
@@ -30,8 +31,8 @@
 
 /datum/computer_file/program/ntnetdownload/on_start()
 	. = ..()
-	main_repo = SSnetworks.station_network.available_station_software
-	antag_repo = SSnetworks.station_network.available_antag_software
+	main_repo = SSmodular_computers.available_station_software
+	antag_repo = SSmodular_computers.available_antag_software
 
 /datum/computer_file/program/ntnetdownload/run_emag()
 	if(emagged)
@@ -44,7 +45,7 @@
 	if(downloaded_file)
 		return FALSE
 
-	var/datum/computer_file/program/PRG = SSnetworks.station_network.find_ntnet_file_by_name(filename)
+	var/datum/computer_file/program/PRG = SSmodular_computers.find_ntnet_file_by_name(filename)
 
 	if(!PRG || !istype(PRG))
 		return FALSE
@@ -158,7 +159,7 @@
 			"installed" = !!computer.find_file_by_name(programs.filename),
 			"compatible" = check_compatibility(programs),
 			"size" = programs.size,
-			"access" = emagged && programs.available_on_syndinet ? TRUE : programs.can_run(user,transfer = 1, access = access),
+			"access" = emagged && programs.available_on_syndinet ? TRUE : programs.can_run(user,transfer = TRUE, access = access),
 			"verifiedsource" = programs.available_on_ntnet,
 		))
 
@@ -176,24 +177,3 @@
 /datum/computer_file/program/ntnetdownload/kill_program(forced)
 	abort_file_download()
 	return ..()
-
-////////////////////////
-//Syndicate Downloader//
-////////////////////////
-
-/// This app only lists programs normally found in the emagged section of the normal downloader app
-
-/datum/computer_file/program/ntnetdownload/syndicate
-	filename = "syndownloader"
-	filedesc = "Software Download Tool"
-	program_icon_state = "generic"
-	extended_desc = "This program allows downloads of software from shared Syndicate repositories"
-	requires_ntnet = FALSE
-	ui_header = "downloader_finished.gif"
-	tgui_id = "NtosNetDownloader"
-	emagged = TRUE
-
-/datum/computer_file/program/ntnetdownload/syndicate/on_start()
-	. = ..()
-	main_repo = SSnetworks.station_network.available_antag_software
-	antag_repo = null

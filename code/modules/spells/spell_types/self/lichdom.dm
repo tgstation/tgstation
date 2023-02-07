@@ -4,7 +4,7 @@
 		Binding your soul to an item will turn you into an immortal Lich. \
 		So long as the item remains intact, you will revive from death, \
 		no matter the circumstances."
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "skeleton"
 
 	school = SCHOOL_NECROMANCY

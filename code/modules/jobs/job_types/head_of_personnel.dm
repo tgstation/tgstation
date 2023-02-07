@@ -1,6 +1,6 @@
 /datum/job/head_of_personnel
 	title = JOB_HEAD_OF_PERSONNEL
-	description = "Alter access on ID cards, manage civil and supply departments, \
+	description = "Alter access on ID cards, manage the service department, \
 		protect Ian, run the station when the captain dies."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list(JOB_CAPTAIN)
@@ -9,7 +9,6 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = SUPERVISOR_HOP
-	selection_color = "#ddddff"
 	req_admin_notify = 1
 	minimal_player_age = 10
 	exp_requirements = 180
@@ -59,7 +58,7 @@
 		/obj/item/melee/baton/telescopic = 1,
 		/obj/item/storage/box/ids = 1,
 		)
-	belt = /obj/item/modular_computer/tablet/pda/heads/hop
+	belt = /obj/item/modular_computer/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
 	head = /obj/item/clothing/head/hats/hopcap
 	shoes = /obj/item/clothing/shoes/laceup
@@ -79,7 +78,7 @@
 /datum/job/head_of_personnel/get_mail_goodies(mob/recipient)
 	. = ..()
 	// Strange Reagent if the pet is dead.
-	for(var/mob/living/simple_animal/pet/dog/corgi/ian/staff_pet in GLOB.dead_mob_list)
+	for(var/mob/living/basic/pet/dog/corgi/ian/staff_pet in GLOB.dead_mob_list)
 		. += list(/datum/reagent/medicine/strange_reagent = 20)
 		break
 

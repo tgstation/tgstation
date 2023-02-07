@@ -9,7 +9,7 @@
 						  /mob/living/simple_animal/hostile/asteroid/lobstrosity = 15)
 	weighted_flora_spawn_list = list(/obj/structure/flora/tree/pine/style_random = 2, /obj/structure/flora/rock/icy/style_random = 2, /obj/structure/flora/rock/pile/icy/style_random = 2, /obj/structure/flora/grass/both/style_random = 6, /obj/structure/flora/ash/chilly = 2)
 	///Note that this spawn list is also in the lavaland generator
-	weighted_feature_spawn_list = list(/obj/structure/geyser/wittel = 6, /obj/structure/geyser/random = 2, /obj/structure/geyser/plasma_oxide = 10, /obj/structure/geyser/protozine = 10, /obj/structure/geyser/hollowwater = 10)
+	weighted_feature_spawn_list = list(/obj/structure/geyser/wittel = 10, /obj/structure/geyser/random = 2, /obj/structure/geyser/plasma_oxide = 10, /obj/structure/geyser/protozine = 10, /obj/structure/geyser/hollowwater = 10)
 
 /datum/map_generator/cave_generator/icemoon/surface
 	flora_spawn_chance = 4

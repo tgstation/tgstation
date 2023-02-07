@@ -98,6 +98,16 @@
 		return "<hr><b>Identified shift divergencies:</b><BR>" + trait_list_string
 	return
 
+/datum/game_mode/proc/generate_report_footnote()
+	var/footnote_pile = ""
+
+	for(var/datum/command_footnote/footnote in SScommunications.command_report_footnotes)
+		footnote_pile += "[footnote.message]<BR>"
+		footnote_pile += "<i>[footnote.signature]</i><BR>"
+		footnote_pile += "<BR>"
+
+	return "<hr><b>Additional Notes: </b><BR><BR>" + footnote_pile
+
 /proc/reopen_roundstart_suicide_roles()
 	var/include_command = CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions)
 	var/list/reopened_jobs = list()
@@ -188,7 +198,7 @@
 /datum/game_mode/proc/generate_station_goals(greenshift)
 	var/goal_budget = greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget)
 	var/list/possible = subtypesof(/datum/station_goal)
-	if(!(SSmapping.empty_space))
+	if(SSmapping.is_planetary())
 		for(var/datum/station_goal/goal in possible)
 			if(goal.requires_space)
 				///Removes all goals that require space if space is not present

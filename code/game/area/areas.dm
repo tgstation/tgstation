@@ -115,8 +115,11 @@
 	///Used to decide what kind of reverb the area makes sound have
 	var/sound_environment = SOUND_ENVIRONMENT_NONE
 
-	var/list/air_vent_info = list()
-	var/list/air_scrub_info = list()
+	/// List of all air vents in the area
+	var/list/obj/machinery/atmospherics/components/unary/vent_pump/air_vents = list()
+
+	/// List of all air scrubbers in the area
+	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/air_scrubbers = list()
 
 /**
  * A list of teleport locations
@@ -174,8 +177,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!ambientsounds)
 		ambientsounds = GLOB.ambience_assoc[ambience_index]
 
-	if(area_flags & AREA_USES_STARLIGHT)
-		static_lighting = CONFIG_GET(flag/starlight)
+	if(area_flags & AREA_USES_STARLIGHT && CONFIG_GET(flag/starlight))
+		// Areas lit by starlight are not supposed to be fullbright 4head
+		base_lighting_alpha = 0
+		base_lighting_color = null
+		static_lighting = TRUE
 
 	if(requires_power)
 		luminosity = 0
@@ -276,6 +282,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	GLOB.areas -= src
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(alarm_manager)
+	air_vents = null
 	return ..()
 
 /**

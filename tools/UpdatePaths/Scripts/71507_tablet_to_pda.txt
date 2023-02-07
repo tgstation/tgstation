@@ -1,0 +1,6 @@
+# updates pda subtypes to their new type, and deletes base pdas as they were removed.
+
+/obj/item/modular_computer/tablet : @DELETE
+/obj/item/modular_computer/tablet/nukeops : /obj/item/modular_computer/pda/nukeops{@OLD}
+/obj/item/modular_computer/tablet/integrated/@SUBTYPES : /obj/item/modular_computer/pda/silicon/@SUBTYPES{@OLD}
+/obj/item/modular_computer/tablet/pda/@SUBTYPES : /obj/item/modular_computer/pda/@SUBTYPES{@OLD}

@@ -5,9 +5,13 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 
+
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+	///category for plumbing RCD
+	category="Synthesizers"
+
 	///input dir
 	var/eat_dir = SOUTH
 

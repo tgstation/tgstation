@@ -31,12 +31,12 @@
 
 /obj/item/grenade/spawnergrenade/manhacks
 	name = "viscerator delivery grenade"
-	spawner_type = /mob/living/simple_animal/hostile/viscerator
+	spawner_type = /mob/living/basic/viscerator
 	deliveryamt = 10
 
 /obj/item/grenade/spawnergrenade/spesscarp
 	name = "carp delivery grenade"
-	spawner_type = /mob/living/simple_animal/hostile/carp
+	spawner_type = /mob/living/basic/carp
 	deliveryamt = 5
 
 /obj/item/grenade/spawnergrenade/syndiesoap

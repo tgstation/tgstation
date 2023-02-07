@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/charge
 	name = "Charge"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	desc = "Allows you to charge at a chosen position."
 	cooldown_time = 1.5 SECONDS
@@ -214,7 +214,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge/hallucination_charge
 	name = "Hallucination Charge"
-	icon_icon = 'icons/effects/bubblegum.dmi'
+	button_icon = 'icons/effects/bubblegum.dmi'
 	button_icon_state = "smack ya one"
 	desc = "Allows you to create hallucinations that charge around your target."
 	cooldown_time = 2 SECONDS
@@ -227,7 +227,7 @@
 	var/spawn_blood = FALSE
 
 /datum/action/cooldown/mob_cooldown/charge/hallucination_charge/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
-	if(!enraged)
+	if(!enraged || prob(33))
 		hallucination_charge(target_atom, 6, 8, 0, 6, TRUE)
 		return
 	for(var/i in 0 to 2)
@@ -273,7 +273,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge/hallucination_charge/hallucination_surround
 	name = "Surround Target"
-	icon_icon = 'icons/turf/walls/wall.dmi'
+	button_icon = 'icons/turf/walls/wall.dmi'
 	button_icon_state = "wall-0"
 	desc = "Allows you to create hallucinations that charge around your target."
 	charge_delay = 0.6 SECONDS

@@ -254,6 +254,8 @@
 					if(((hand % 2) == 0))
 						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_R_ARM, FALSE, FALSE)
 						if(L.try_attach_limb(itemUser))
+							L.update_limb(is_creating = TRUE)
+							itemUser.update_body_parts()
 							itemUser.put_in_hand(newRod, hand, forced = TRUE)
 						else
 							qdel(L)
@@ -262,6 +264,8 @@
 					else
 						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_L_ARM, FALSE, FALSE)
 						if(L.try_attach_limb(itemUser))
+							L.update_limb(is_creating = TRUE)
+							itemUser.update_body_parts()
 							itemUser.put_in_hand(newRod, hand, forced = TRUE)
 						else
 							qdel(L)
@@ -278,7 +282,7 @@
 			itemUser.adjustBruteLoss(-1.5)
 			itemUser.adjustFireLoss(-1.5)
 			itemUser.adjustToxLoss(-1.5, forced = TRUE) //Because Slime People are people too
-			itemUser.adjustOxyLoss(-1.5)
+			itemUser.adjustOxyLoss(-1.5, forced = TRUE)
 			itemUser.adjustStaminaLoss(-1.5)
 			itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5)
 			itemUser.adjustCloneLoss(-0.5) //Becasue apparently clone damage is the bastion of all health
@@ -450,3 +454,28 @@
 /datum/status_effect/limited_buff/health_buff/maxed_out()
 	. = ..()
 	to_chat(owner, span_warning("You don't feel any healthier."))
+
+/datum/status_effect/nest_sustenance
+	id = "nest_sustenance"
+	duration = -1
+	tick_interval = 0.4 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/nest_sustenance
+
+/datum/status_effect/nest_sustenance/tick(delta_time, times_fired)
+	. = ..()
+
+	if(owner.stat == DEAD) //If the victim has died due to complications in the nest
+		qdel(src)
+		return
+
+	owner.adjustBruteLoss(-2 * delta_time, updating_health = FALSE)
+	owner.adjustFireLoss(-2 * delta_time, updating_health = FALSE)
+	owner.adjustOxyLoss(-4 * delta_time, updating_health = FALSE)
+	owner.adjustStaminaLoss(-4 * delta_time, updating_stamina = FALSE)
+	owner.adjust_bodytemperature(BODYTEMP_NORMAL, 0, BODYTEMP_NORMAL) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
+
+
+/atom/movable/screen/alert/status_effect/nest_sustenance
+	name = "Nest Vitalization"
+	desc = "The resin seems to pulsate around you. It seems to be sustaining your vital functions. You feel ill..."
+	icon_state = "nest_life"

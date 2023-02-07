@@ -92,8 +92,8 @@
 	user.remote_control = null
 	current_user = null
 	user.unset_machine()
-	var/atom/movable/screen/plane_master/plane_static = user.hud_used?.get_plane_master(CAMERA_STATIC_PLANE)
-	if(plane_static)
+
+	for(var/atom/movable/screen/plane_master/plane_static in user.hud_used?.get_true_plane_masters(CAMERA_STATIC_PLANE))
 		plane_static.hide_plane(user)
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
@@ -180,8 +180,7 @@
 	if(should_supress_view_changes)
 		user.client.view_size.supress()
 	// Who passes control like this god I hate static code
-	var/atom/movable/screen/plane_master/plane_static = user.hud_used?.get_plane_master(CAMERA_STATIC_PLANE)
-	if(plane_static)
+	for(var/atom/movable/screen/plane_master/plane_static in user.hud_used?.get_true_plane_masters(CAMERA_STATIC_PLANE))
 		plane_static.unhide_plane(user)
 
 /mob/camera/ai_eye/remote
@@ -254,7 +253,7 @@
 
 /datum/action/innate/camera_off
 	name = "End Camera View"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "camera_off"
 
 /datum/action/innate/camera_off/Activate()
@@ -266,7 +265,7 @@
 
 /datum/action/innate/camera_jump
 	name = "Jump To Camera"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "camera_jump"
 
 /datum/action/innate/camera_jump/Activate()
@@ -311,7 +310,7 @@
 
 /datum/action/innate/camera_multiz_up
 	name = "Move up a floor"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "move_up"
 
 /datum/action/innate/camera_multiz_up/Activate()
@@ -325,7 +324,7 @@
 
 /datum/action/innate/camera_multiz_down
 	name = "Move down a floor"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "move_down"
 
 /datum/action/innate/camera_multiz_down/Activate()

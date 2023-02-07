@@ -16,7 +16,7 @@
 		if(b)
 			new /obj/item/storage/spooky(b)
 
-	for(var/mob/living/simple_animal/pet/dog/corgi/ian/Ian in GLOB.mob_living_list)
+	for(var/mob/living/basic/pet/dog/corgi/ian/Ian in GLOB.mob_living_list)
 		Ian.place_on_head(new /obj/item/bedsheet(Ian))
 	for(var/mob/living/simple_animal/parrot/poly/Poly in GLOB.mob_living_list)
 		new /mob/living/simple_animal/parrot/poly/ghost(Poly.loc)

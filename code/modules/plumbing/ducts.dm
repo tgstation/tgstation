@@ -8,7 +8,6 @@ All the important duct code:
 	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
 	icon_state = "nduct"
 	layer = PLUMBING_PIPE_VISIBILE_LAYER
-
 	use_power = NO_POWER_USE
 
 	///bitfield with the directions we're connected in

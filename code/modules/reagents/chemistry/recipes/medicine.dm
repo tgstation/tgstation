@@ -64,9 +64,9 @@
 	overheat_temp = 500
 	optimal_ph_min = 5
 	optimal_ph_max = 10
-	determin_ph_range = 10
+	determin_ph_range = 4
 	temp_exponent_factor = 0.35
-	ph_exponent_factor = 0.5
+	ph_exponent_factor = 1
 	thermic_constant = 20
 	H_ion_release = 1.5
 	rate_up_lim = 3

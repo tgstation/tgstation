@@ -73,6 +73,11 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
+/obj/item/clothing/glasses/hud/health/night/meson
+	name = "night vision meson health scanner HUD"
+	desc = "Truly combat ready."
+	vision_flags = SEE_TURFS
+
 /obj/item/clothing/glasses/hud/health/night/science
 	name = "night vision medical science scanner HUD"
 	desc = "An clandestine medical science heads-up display that allows operatives to find \
@@ -151,6 +156,13 @@
 	name = "eyepatch HUD"
 	desc = "The cooler looking cousin of HUDSunglasses."
 	icon_state = "hudpatch"
+	base_icon_state = "hudpatch"
+	actions_types = list(/datum/action/item_action/flip)
+
+/obj/item/clothing/glasses/hud/security/sunglasses/eyepatch/attack_self(mob/user, modifiers)
+	. = ..()
+	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
+	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/hud/security/sunglasses
 	name = "security HUDSunglasses"

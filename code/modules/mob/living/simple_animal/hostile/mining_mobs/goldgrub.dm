@@ -51,6 +51,7 @@
 
 /datum/action/innate/goldgrub
 	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
 
 /datum/action/innate/goldgrub/spitore
 	name = "Spit Ore"
@@ -132,8 +133,11 @@
 		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/projectile/P)
-	visible_message(span_danger("The [P.name] is repelled by [name]'s girth!"))
-	return BULLET_ACT_BLOCK
+	if(stat == DEAD)
+		return BULLET_ACT_FORCE_PIERCE
+	else
+		visible_message(span_danger("The [P.name] is repelled by [name]'s girth!"))
+		return BULLET_ACT_BLOCK
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	vision_range = 9

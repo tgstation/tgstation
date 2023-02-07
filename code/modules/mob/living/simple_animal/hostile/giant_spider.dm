@@ -76,9 +76,8 @@
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	if(directive)
-		to_chat(src, span_spider("Your mother left you a directive! Follow it at all costs."))
-		to_chat(src, span_spider("<b>[directive]</b>"))
+	var/datum/antagonist/spider/spider_antag = new(directive)
+	mind.add_antag_datum(spider_antag)
 	GLOB.spidermobs[src] = TRUE
 
 /mob/living/simple_animal/hostile/giant_spider/Destroy()
@@ -301,8 +300,9 @@
 	not_hivemind_talk.Grant(src)
 
 /datum/action/innate/spider
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_alien"
+	overlay_icon_state = "bg_alien_border"
 
 /datum/action/innate/spider/lay_web // Todo: Unify this with the genetics power
 	name = "Spin Web"
@@ -314,7 +314,7 @@
 	. = ..()
 	if (!owner)
 		return
-	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_icon_on_signal))
+	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_status_on_signal))
 
 /datum/action/innate/spider/lay_web/Remove(mob/removed_from)
 	. = ..()
@@ -361,7 +361,7 @@
 				qdel(web)
 				new /obj/structure/spider/stickyweb/sealed(spider_turf)
 			new /obj/structure/spider/stickyweb(spider_turf)
-		UpdateButtons()
+		build_all_button_icons()
 
 	spider.stop_automated_movement = FALSE
 
@@ -371,7 +371,8 @@
 		you'll also consume them, allowing you to lay enriched eggs. \
 		Activate this ability and then click on an adjacent target to begin wrapping them."
 	background_icon_state = "bg_alien"
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	overlay_icon_state = "bg_alien_border"
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "wrap_0"
 	check_flags = AB_CHECK_CONSCIOUS
 	click_to_activate = TRUE
@@ -383,7 +384,7 @@
 	. = ..()
 	if (!owner)
 		return
-	RegisterSignals(owner, list(COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_icon_on_signal))
+	RegisterSignals(owner, list(COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_status_on_signal))
 
 /datum/action/cooldown/wrap/Remove(mob/removed_from)
 	. = ..()
@@ -406,7 +407,7 @@
 
 	on_who.balloon_alert(on_who, "prepared to wrap")
 	button_icon_state = "wrap_1"
-	UpdateButtons()
+	build_all_button_icons()
 
 /datum/action/cooldown/wrap/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
@@ -416,7 +417,7 @@
 	if (refund_cooldown)
 		on_who.balloon_alert(on_who, "wrap cancelled")
 	button_icon_state = "wrap_0"
-	UpdateButtons()
+	build_all_button_icons()
 
 /datum/action/cooldown/wrap/Activate(atom/to_wrap)
 	if(!owner.Adjacent(to_wrap))
@@ -466,7 +467,7 @@
 			var/datum/action/innate/spider/lay_eggs/enriched/egg_power = locate() in owner.actions
 			if(egg_power)
 				egg_power.charges++
-				egg_power.UpdateButtons()
+				egg_power.build_all_button_icons()
 				owner.visible_message(
 					span_danger("[owner] sticks a proboscis into [living_wrapped] and sucks a viscous substance out."),
 					span_notice("You suck the nutriment out of [living_wrapped], feeding you enough to lay a cluster of enriched eggs."),
@@ -496,7 +497,7 @@
 	. = ..()
 	if (!owner)
 		return
-	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_icon_on_signal))
+	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_status_on_signal))
 
 /datum/action/innate/spider/lay_eggs/Remove(mob/removed_from)
 	. = ..()
@@ -532,7 +533,7 @@
 			owner.balloon_alert(owner, "already eggs here!")
 		else
 			lay_egg()
-		UpdateButtons(TRUE)
+		build_all_button_icons(UPDATE_BUTTON_STATUS)
 	spider.stop_automated_movement = FALSE
 
 /datum/action/innate/spider/lay_eggs/proc/lay_egg()

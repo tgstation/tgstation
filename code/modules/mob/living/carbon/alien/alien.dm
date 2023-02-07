@@ -4,15 +4,13 @@
 	gender = FEMALE //All xenos are girls!!
 	dna = null
 	faction = list(ROLE_ALIEN)
-	sight = SEE_MOBS | SEE_BLACKNESS
+	sight = SEE_MOBS
 	see_in_dark = 4
 	verb_say = "hisses"
 	initial_language_holder = /datum/language_holder/alien
 	bubble_icon = "alien"
 	type_of_meat = /obj/item/food/meat/slab/xeno
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-
-	var/move_delay_add = 0 // movement delay to add
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
@@ -73,10 +71,6 @@
 /mob/living/carbon/alien/reagent_check(datum/reagent/R, delta_time, times_fired) //can metabolize all reagents
 	return FALSE
 
-/mob/living/carbon/alien/get_status_tab_items()
-	. = ..()
-	. += "Combat mode: [combat_mode ? "On" : "Off"]"
-
 /mob/living/carbon/alien/getTrail()
 	if(getBruteLoss() < 200)
 		return pick (list("xltrails_1", "xltrails2"))
@@ -114,6 +108,12 @@ Des: Removes all infected images from the alien.
 	if(num_hands < 2)
 		return FALSE
 	return TRUE
+
+/mob/living/carbon/alien/get_visible_suicide_message()
+	return "[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide."
+
+/mob/living/carbon/alien/get_blind_suicide_message()
+	return "You hear thrashing."
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	visible_message(

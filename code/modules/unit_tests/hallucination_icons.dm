@@ -19,6 +19,8 @@
 
 	// Test preset delusion hallucinations for invalid image setups
 	for(var/datum/hallucination/delusion/preset/hallucination as anything in subtypesof(/datum/hallucination/delusion/preset))
+		if(initial(hallucination.dynamic_icon))
+			continue
 		var/icon = initial(hallucination.delusion_icon_file)
 		var/icon_state = initial(hallucination.delusion_icon_state)
 		check_hallucination_icon(hallucination, icon, icon_state)

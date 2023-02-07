@@ -28,24 +28,27 @@
 	pickup_sound = 'sound/items/handling/wirecutter_pickup.ogg'
 	tool_behaviour = TOOL_WIRECUTTER
 	toolspeed = 1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/item_wirecutters
 	/// If the item should be assigned a random color
 	var/random_color = TRUE
 	/// List of possible random colors
 	var/static/list/wirecutter_colors = list(
-		"blue" = "#1861d5",
-		"red" = "#951710",
-		"pink" = "#d5188d",
-		"brown" = "#a05212",
-		"green" = "#0e7f1b",
-		"cyan" = "#18a2d5",
-		"yellow" = "#d58c18"
+		COLOR_TOOL_BLUE,
+		COLOR_TOOL_RED,
+		COLOR_TOOL_PINK,
+		COLOR_TOOL_BROWN,
+		COLOR_TOOL_GREEN,
+		COLOR_TOOL_CYAN,
+		COLOR_TOOL_YELLOW,
 	)
+
+/datum/armor/item_wirecutters
+	fire = 50
+	acid = 30
 
 /obj/item/wirecutters/Initialize(mapload)
 	if(random_color)
-		var/our_color = pick(wirecutter_colors)
-		set_greyscale(colors=list(wirecutter_colors[our_color]))
+		set_greyscale(colors = list(pick(wirecutter_colors)))
 
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
 

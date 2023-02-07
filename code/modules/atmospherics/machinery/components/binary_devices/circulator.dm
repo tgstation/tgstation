@@ -147,15 +147,15 @@
 	if(generator)
 		disconnectFromGenerator()
 	mode = !mode
-	to_chat(user, span_notice("You set [src] to [mode?"cold":"hot"] mode."))
+	to_chat(user, span_notice("You set [src] to [mode ? "cold" : "hot"] mode."))
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/circulator/screwdriver_act(mob/user, obj/item/I)
 	if(..())
 		return TRUE
-	panel_open = !panel_open
+	toggle_panel_open()
 	I.play_tool_sound(src)
-	to_chat(user, span_notice("You [panel_open?"open":"close"] the panel on [src]."))
+	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the panel on [src]."))
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/circulator/crowbar_act(mob/user, obj/item/I)

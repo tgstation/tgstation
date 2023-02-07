@@ -89,6 +89,9 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		if(req_keyword && keyword)
 			. += "<b>Keyword:</b> [keyword]"
 
+/obj/effect/rune/attack_paw(mob/living/user, list/modifiers)
+	return attack_hand(user, modifiers)
+
 /obj/effect/rune/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -1011,7 +1014,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(M, span_cultlarge("An Apocalypse Rune was invoked in the [place.name], it is no longer available as a summoning site!"))
 			SEND_SOUND(M, 'sound/effects/pope_entry.ogg')
 	image_handler(images, duration)
-	if(intensity>=285) // Based on the prior formula, this means the cult makes up <15% of current players
+	if(intensity >= 285) // Based on the prior formula, this means the cult makes up <15% of current players
 		var/outcome = rand(1,100)
 		switch(outcome)
 			if(1 to 10)

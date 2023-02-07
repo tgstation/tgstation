@@ -1,0 +1,5 @@
+author: "Capsandi"
+delete-after: True
+changes:
+  - balance: "There's a second detonation wire on payload bombs now."
+  - balance: "Cutting the proceed wire no longer detonates the bomb but instead deactivates the countdown timer on examine. This is reset once the bomb is defused"

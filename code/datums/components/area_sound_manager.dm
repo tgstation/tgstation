@@ -18,8 +18,16 @@
 
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(react_to_move))
 	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(react_to_z_move))
-	RegisterSignal(parent, change_on, PROC_REF(handle_change))
-	RegisterSignal(parent, remove_on, PROC_REF(handle_removal))
+	// change on can be a list of signals
+	if(islist(change_on))
+		RegisterSignals(parent, change_on, PROC_REF(handle_change))
+	else if(!isnull(change_on))
+		RegisterSignal(parent, change_on, PROC_REF(handle_change))
+	// remove on can be a list of signals
+	if(islist(remove_on))
+		RegisterSignals(parent, remove_on, PROC_REF(handle_removal))
+	else if(!isnull(remove_on))
+		RegisterSignal(parent, remove_on, PROC_REF(handle_removal))
 
 /datum/component/area_sound_manager/Destroy(force, silent)
 	QDEL_NULL(our_loop)

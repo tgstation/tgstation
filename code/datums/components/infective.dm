@@ -99,14 +99,14 @@
 	if(isitem(parent))
 		//if you are putting an infective item on, it obviously will not protect you, so set its bio armor low enough that it will never block ContactContractDisease()
 		var/obj/item/equipped_item = parent
-		old_bio_armor = equipped_item.armor.getRating(BIO)
-		equipped_item.armor.setRating(bio = 0)
+		old_bio_armor = equipped_item.get_armor_rating(BIO)
+		equipped_item.set_armor_rating(BIO, 0)
 
 	try_infect(L, slot2body_zone(slot))
 
 	if(isitem(parent))
 		var/obj/item/equipped_item = parent
-		equipped_item.armor.setRating(bio = old_bio_armor)
+		equipped_item.set_armor_rating(BIO, old_bio_armor)
 
 /datum/component/infective/proc/try_infect_crossed(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER

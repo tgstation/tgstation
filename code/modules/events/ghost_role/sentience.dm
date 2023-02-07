@@ -1,4 +1,5 @@
 GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
+	/mob/living/basic/pet,
 	/mob/living/simple_animal/pet,
 	/mob/living/simple_animal/parrot,
 	/mob/living/simple_animal/hostile/lizard,
@@ -8,7 +9,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/simple_animal/chicken,
 	/mob/living/basic/cow,
 	/mob/living/simple_animal/hostile/retaliate/bat,
-	/mob/living/simple_animal/hostile/carp/cayenne,
+	/mob/living/basic/carp/pet/cayenne,
 	/mob/living/simple_animal/butterfly,
 	/mob/living/simple_animal/hostile/retaliate/snake,
 	/mob/living/simple_animal/hostile/retaliate/goose/vomit,

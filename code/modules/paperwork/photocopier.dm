@@ -14,6 +14,8 @@
 #define ASS_TONER_USE 0.625
 /// The maximum amount of copies you can make with one press of the copy button.
 #define MAX_COPIES_AT_ONCE 10
+/// How much toner is used for making a copy of paperwork
+#define PAPERWORK_TONER_USE 0.75
 
 /obj/machinery/photocopier
 	name = "photocopier"
@@ -34,6 +36,8 @@
 	var/mob/living/ass
 	/// A reference to the toner cartridge that's inserted into the copier. Null if there is no cartridge.
 	var/obj/item/toner/toner_cartridge
+	/// A reference to an `/obj/item/paperwork` inside the copier, if one is inserted. Otherwise null.
+	var/obj/item/paperwork/paperwork_copy
 	/// How many copies will be printed with one click of the "copy" button.
 	var/num_copies = 1
 	/// Used with photos. Determines if the copied photo will be in greyscale or color.
@@ -59,12 +63,15 @@
 		ass = null
 	if(deleting_atom == toner_cartridge)
 		toner_cartridge = null
+	if(deleting_atom == paperwork_copy)
+		paperwork_copy = null
 	return ..()
 
 /obj/machinery/photocopier/Destroy()
 	QDEL_NULL(paper_copy)
 	QDEL_NULL(photo_copy)
 	QDEL_NULL(toner_cartridge)
+	QDEL_NULL(paperwork_copy)
 	ass = null //the mob isn't actually contained and just referenced, no need to delete it.
 	return ..()
 
@@ -143,6 +150,10 @@
 			if(ass)
 				do_copy_loop(CALLBACK(src, PROC_REF(make_ass_copy)), usr)
 				return TRUE
+			// Copying paperwork
+			if(paperwork_copy)
+				do_copy_loop(CALLBACK(src, PROC_REF(make_paperwork_copy)), usr)
+				return TRUE
 
 		// Remove the paper/photo/document from the photocopier.
 		if("remove")
@@ -157,6 +168,9 @@
 				document_copy = null
 			else if(check_ass())
 				to_chat(ass, span_notice("You feel a slight pressure on your ass."))
+			else if(paperwork_copy)
+				remove_photocopy(paperwork_copy, usr)
+				paperwork_copy = null
 			return TRUE
 
 		// AI printing photos from their saved images.
@@ -229,6 +243,8 @@
 		return toner_cartridge.charges >= (PHOTO_TONER_USE * num_copies)
 	else if(ass)
 		return toner_cartridge.charges >= (ASS_TONER_USE * num_copies)
+	else if(paperwork_copy)
+		return toner_cartridge.charges >= (PAPERWORK_TONER_USE * num_copies)
 	return FALSE
 
 /**
@@ -312,6 +328,23 @@
 	var/obj/item/documents/photocopy/copied_doc = new(loc, document_copy)
 	give_pixel_offset(copied_doc)
 	toner_cartridge.charges -= DOCUMENT_TONER_USE
+
+/**
+ * Handles the copying of documents.
+ *
+ * Checks first if `paperwork_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
+ * Copies the stamp from a given piece of paperwork if it is already stamped, allowing for you to sell photocopied paperwork at the risk of losing budget money.
+ */
+/obj/machinery/photocopier/proc/make_paperwork_copy()
+	if(!paperwork_copy || !toner_cartridge)
+		return
+	var/obj/item/paperwork/photocopy/copied_paperwork = new(loc, paperwork_copy)
+	copied_paperwork.copy_stamp_info(paperwork_copy)
+	if(paperwork_copy.stamped)
+		copied_paperwork.stamp_icon = "paper_stamp-pc" //Override with the photocopy overlay sprite
+		copied_paperwork.add_stamp()
+	give_pixel_offset(copied_paperwork)
+	toner_cartridge.charges -= PAPERWORK_TONER_USE
 
 /**
  * The procedure is called when printing a blank to write off toner consumption.
@@ -430,7 +463,17 @@
 
 	else if(istype(O, /obj/item/areaeditor/blueprints))
 		to_chat(user, span_warning("The Blueprint is too large to put into the copier. You need to find something else to record the document."))
-	else
+	else if(istype(O, /obj/item/paperwork))
+		if(copier_empty())
+			if(istype(O, /obj/item/paperwork/photocopy)) //No infinite paper chain. You need the original paperwork to make more copies.
+				to_chat(user, span_warning("The [O] is far too messy to produce a good copy!"))
+			else
+				if(!user.temporarilyRemoveItemFromInventory(O))
+					return
+				paperwork_copy = O
+				do_insertion(O, user)
+		else
+			to_chat(user, span_warning("There is already something in [src]!"))
 		return ..()
 
 /obj/machinery/photocopier/atom_break(damage_flag)
@@ -514,7 +557,7 @@
  * Return `FALSE` is the copier has something inside of it. Returns `TRUE` if it doesn't.
  */
 /obj/machinery/photocopier/proc/copier_empty()
-	if(paper_copy || photo_copy || document_copy || check_ass())
+	if(paper_copy || photo_copy || document_copy || check_ass() || paperwork_copy)
 		return FALSE
 	else
 		return TRUE
@@ -555,3 +598,4 @@
 #undef DOCUMENT_TONER_USE
 #undef ASS_TONER_USE
 #undef MAX_COPIES_AT_ONCE
+#undef PAPERWORK_TONER_USE

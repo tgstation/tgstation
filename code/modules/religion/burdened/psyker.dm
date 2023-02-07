@@ -12,7 +12,7 @@
 
 /obj/item/organ/internal/brain/psyker/Insert(mob/living/carbon/inserted_into, special, drop_if_replaced, no_id_transfer)
 	. = ..()
-	inserted_into.AddComponent(/datum/component/echolocation, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
+	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
 /obj/item/organ/internal/brain/psyker/Remove(mob/living/carbon/removed_from, special, no_id_transfer)
@@ -30,23 +30,38 @@
 	to_chat(owner, span_userdanger("Your head hurts... It can't fit your brain!"))
 	owner.adjust_disgust(33 * delta_time)
 	applyOrganDamage(5 * delta_time, 199)
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5 * delta_time)
 
 /obj/item/bodypart/head/psyker
 	limb_id = BODYPART_ID_PSYKER
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED, TRAIT_BLIND)
+	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
 
 /obj/item/bodypart/head/psyker/try_attach_limb(mob/living/carbon/new_head_owner, special, abort)
 	. = ..()
-	if(!. || !new_head_owner.dna?.species)
+	if(!.)
 		return
+	new_head_owner.become_blind(limb_id)
+	if(!new_head_owner.dna?.species)
+		return
+
 	new_head_owner.dna.species.species_traits |= NOEYESPRITES //MAKE VISUALS TIED TO BODYPARTS ARGHH
 	new_head_owner.update_body()
 
-/// Makes us go through a transform sequency, to turn into a psyker.
-/mob/living/carbon/human/proc/psykerize()
+/obj/item/bodypart/head/psyker/drop_limb(special, dismembered)
+	owner.cure_blind(limb_id)
+	if(!owner.dna?.species)
+		return ..()
+
+	if(initial(owner.dna.species.species_traits) & NOEYESPRITES)
+		return ..()
+
+	owner.dna.species.species_traits &= ~NOEYESPRITES
+	owner.update_body()
+	return ..()
+
+/// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()
+/mob/living/carbon/human/proc/slow_psykerize()
 	if(stat == DEAD || !get_bodypart(BODY_ZONE_HEAD) || istype(get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/psyker))
 		return
 	to_chat(src, span_userdanger("You feel unwell..."))
@@ -57,18 +72,25 @@
 	emote("scream")
 	apply_damage(30, BRUTE, BODY_ZONE_HEAD)
 	sleep(5 SECONDS)
+	if(!psykerize())
+		to_chat(src, span_warning("The transformation subsides..."))
+		return
+	var/obj/item/bodypart/head/psyker_head = get_bodypart(BODY_ZONE_HEAD)
+	psyker_head.receive_damage(brute = 50)
+	to_chat(src, span_userdanger("Your head splits open! Your brain mutates!"))
+	new /obj/effect/gibspawner/generic(drop_location(), src)
+	emote("scream")
+
+/// Proc with no side effects that turns someone into a psyker. returns FALSE if it could not psykerize.
+/mob/living/carbon/human/proc/psykerize()
 	var/obj/item/bodypart/head/old_head = get_bodypart(BODY_ZONE_HEAD)
 	var/obj/item/organ/internal/brain/old_brain = getorganslot(ORGAN_SLOT_BRAIN)
 	var/obj/item/organ/internal/old_eyes = getorganslot(ORGAN_SLOT_EYES)
 	if(stat == DEAD || !old_head || !old_brain)
-		return
-	to_chat(src, span_userdanger("Your head splits open! Your brain mutates!"))
-	new /obj/effect/gibspawner/generic(drop_location(), src)
-	emote("scream")
+		return FALSE
 	var/obj/item/bodypart/head/psyker/psyker_head = new()
-	psyker_head.receive_damage(brute = 50)
 	if(!psyker_head.replace_limb(src, special = TRUE))
-		return
+		return FALSE
 	qdel(old_head)
 	var/obj/item/organ/internal/brain/psyker/psyker_brain = new()
 	old_brain.before_organ_replacement(psyker_brain)
@@ -77,6 +99,7 @@
 	psyker_brain.Insert(src, special = TRUE, drop_if_replaced = FALSE)
 	if(old_eyes)
 		qdel(old_eyes)
+	return TRUE
 
 /datum/religion_rites/nullrod_transformation
 	name = "Transmogrify"
@@ -222,7 +245,7 @@
 	desc = "Project your psychics into a target to warp their view, and instill absolute terror that will cause them to fire their gun rapidly."
 	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 	button_icon_state = "blind"
-	school = SCHOOL_HOLY
+	school = SCHOOL_PSYCHIC
 	cooldown_time = 1 MINUTES
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 	spell_max_level = 1
@@ -304,7 +327,7 @@
 	desc = "Charge up your mind to shoot firearms faster and home in on your targets. Think smarter, not harder."
 	button_icon_state = "projectile"
 	sound = 'sound/weapons/gun/shotgun/rack.ogg'
-	school = SCHOOL_HOLY
+	school = SCHOOL_PSYCHIC
 	cooldown_time = 1 MINUTES
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 	spell_max_level = 1
@@ -362,7 +385,7 @@
 /datum/action/cooldown/spell/forcewall/psychic_wall
 	name = "Psychic Wall"
 	desc = "Form a psychic wall, able to deflect projectiles and prevent things from going through."
-	school = SCHOOL_HOLY
+	school = SCHOOL_PSYCHIC
 	cooldown_time = 30 SECONDS
 	cooldown_reduction_per_rank = 0 SECONDS
 	antimagic_flags = MAGIC_RESISTANCE_MIND

@@ -78,12 +78,12 @@
 					return
 
 /datum/brain_trauma/mild/phobia/handle_hearing(datum/source, list/hearing_args)
-	if(!owner.can_hear() || !COOLDOWN_FINISHED(src, scare_cooldown)) //words can't trigger you if you can't hear them *taps head*
+	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER] || !owner.has_language(hearing_args[HEARING_LANGUAGE])) 	//words can't trigger you if you can't hear them *taps head*
 		return
-	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS) || !COOLDOWN_FINISHED(src, scare_cooldown))
 		return
-	if(!owner.has_language(hearing_args[HEARING_LANGUAGE])) //can't be triggered if you don't know the language
-		return
+
 	if(trigger_regex.Find(hearing_args[HEARING_RAW_MESSAGE]) != 0)
 		addtimer(CALLBACK(src, PROC_REF(freak_out), null, trigger_regex.group[2]), 10) //to react AFTER the chat message
 		hearing_args[HEARING_RAW_MESSAGE] = trigger_regex.Replace(hearing_args[HEARING_RAW_MESSAGE], "[span_phobia("$2")]$3")
@@ -117,11 +117,11 @@
 			owner.set_jitter_if_lower(10 SECONDS)
 			owner.say("AAAAH!!", forced = "phobia")
 			if(reason)
-				owner.pointed(reason)
+				owner._pointed(reason)
 		if(3)
 			to_chat(owner, span_warning("You shut your eyes in terror!"))
 			owner.set_jitter_if_lower(10 SECONDS)
-			owner.adjust_blindness(10)
+			owner.adjust_temp_blindness(20 SECONDS)
 		if(4)
 			owner.adjust_dizzy(20 SECONDS)
 			owner.adjust_confusion(10 SECONDS)

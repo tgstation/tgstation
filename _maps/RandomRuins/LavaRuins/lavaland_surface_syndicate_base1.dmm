@@ -26,10 +26,7 @@
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
 	dir = 1
 	},
-/obj/structure/sign/barsign{
-	pixel_y = -32;
-	req_access = null
-	},
+/obj/machinery/barsign/all_access/directional/south,
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/bar)
 "ai" = (
@@ -756,7 +753,7 @@
 "fj" = (
 /obj/structure/table/glass,
 /obj/structure/reagent_dispensers/wall/virusfood/directional/north,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/healthanalyzer,
 /obj/item/clothing/glasses/hud/health,
 /obj/structure/disposalpipe/segment,
@@ -3061,7 +3058,7 @@
 /area/ruin/syndicate_lava_base/engineering)
 "yh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_syndicatelava{
+/obj/machinery/airlock_controller/incinerator_syndicatelava{
 	pixel_x = -8;
 	pixel_y = -26
 	},

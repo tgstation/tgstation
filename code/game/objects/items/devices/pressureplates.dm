@@ -1,6 +1,7 @@
 /obj/item/pressure_plate
 	name = "pressure plate"
-	desc = "An electronic device that triggers when stepped on. Ctrl-Click to toggle the pressure plate off and on."
+	desc = "An electronic device that triggers when stepped on."
+	desc_controls = "Ctrl-Click to toggle the pressure plate off and on."
 	icon = 'icons/obj/puzzle_small.dmi'
 	inhand_icon_state = "flashtool"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
@@ -85,8 +86,8 @@
 		to_chat(user, span_notice("You turn [src] off."))
 
 ///Called from COMSIG_OBJ_HIDE to toggle the active part, because yeah im not making a special exception on the element to support it
-/obj/item/pressure_plate/proc/ToggleActive(datum/source, covered)
+/obj/item/pressure_plate/proc/ToggleActive(datum/source, underfloor_accessibility)
 	SIGNAL_HANDLER
 
-	active = covered
+	active = underfloor_accessibility < UNDERFLOOR_VISIBLE
 

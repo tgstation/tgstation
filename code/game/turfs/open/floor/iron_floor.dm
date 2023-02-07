@@ -2,10 +2,10 @@
 	icon_state = "floor"
 	floor_tile = /obj/item/stack/tile/iron/base
 
-/turf/open/floor/iron/setup_broken_states()
+/turf/open/floor/iron/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
-/turf/open/floor/iron/setup_burnt_states()
+/turf/open/floor/iron/burnt_states()
 	return list("floorscorched1", "floorscorched2")
 
 

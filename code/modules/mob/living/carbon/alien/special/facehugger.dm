@@ -155,7 +155,7 @@
 						span_userdanger("[src] leaps at your face!"))
 
 	// probiscis-blocker handling
-	if(target.is_mouth_covered(head_only = TRUE))
+	if(target.is_mouth_covered(ITEM_SLOT_HEAD))
 		target.visible_message(span_danger("[src] smashes against [target]'s [target.head]!"), \
 							span_userdanger("[src] smashes against your [target.head]!"))
 		Die()
@@ -214,6 +214,8 @@
 			new /obj/item/organ/internal/body_egg/alien_embryo(target)
 			target.log_message("was impregnated by a facehugger", LOG_GAME)
 			target.log_message("was impregnated by a facehugger", LOG_VICTIM, log_globally = FALSE)
+			if(target.stat != DEAD && istype(target.buckled, /obj/structure/bed/nest)) //Handles toggling the nest sustenance status effect if the user was already buckled to a nest.
+				target.apply_status_effect(/datum/status_effect/nest_sustenance)
 
 	else
 		target.visible_message(span_danger("[src] violates [target]'s face!"), \
@@ -258,7 +260,7 @@
 	var/mob/living/carbon/C = M
 	if(ishuman(C) && !(C.dna.species.no_equip_flags & ITEM_SLOT_MASK))
 		var/mob/living/carbon/human/H = C
-		if(H.is_mouth_covered(head_only = 1))
+		if(H.is_mouth_covered(ITEM_SLOT_HEAD))
 			return FALSE
 		return TRUE
 	return FALSE
