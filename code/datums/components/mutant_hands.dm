@@ -33,12 +33,14 @@
 
 	RegisterSignals(parent, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB), PROC_REF(try_reapply_hands))
 	RegisterSignal(parent, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(mob_equipped_item))
+	RegisterSignal(parent, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(mob_dropped_item))
 
 /datum/component/mutant_hands/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_CARBON_POST_ATTACH_LIMB,
 		COMSIG_CARBON_POST_REMOVE_LIMB,
 		COMSIG_MOB_EQUIPPED_ITEM,
+		COMSIG_MOB_UNEQUIPPED_ITEM,
 	))
 
 	// Remove all their hands after unregistering everything so they don't return
@@ -64,10 +66,7 @@
 		if(!isnull(hand_slot))
 			if(HAS_TRAIT(hand_slot, TRAIT_NODROP))
 				// There's a nodrop item in the way of putting a mutant hand in
-				// We'll register a signal such that, if the item is removed at some point,
-				// We can instantly jump in and replace it with a new mutant hand
-				// But we need to override existing signals here - as the nodrop item could persist through multiple attempts
-				RegisterSignal(hand_slot, COMSIG_ITEM_DROPPED, PROC_REF(on_nodrop_item_lost), override = TRUE)
+				// It can stay, for now, but if it gets dropped / unequipped we'll swoop in to replace the slot
 				continue
 			// Drop any existing non-nodrop items to the ground
 			human_parent.dropItemToGround(hand_slot)
@@ -83,8 +82,6 @@
 	for(var/obj/item/hand_slot in human_parent.held_items)
 		// Not a mutant hand, don't need to delete it
 		if(!istype(hand_slot, mutant_hand_path))
-			if(HAS_TRAIT(hand_slot, TRAIT_NODROP))
-				UnregisterSignal(hand_slot, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING))
 			continue
 
 		// Just send it to the shadow realm, this will handle unequipping and remove it for us
@@ -93,8 +90,7 @@
 /**
  * Signal proc for any signals that may result in the number of hands of the parent mob changing
  *
- * If the length of the parent's hand indexes changes from our last hand application,
- * attempts to insert new  mutant hands into new slots.
+ * Always try to re-insert mutanthands if we gain or lose hands
  */
 /datum/component/mutant_hands/proc/try_reapply_hands(datum/source)
 	SIGNAL_HANDLER
@@ -105,27 +101,11 @@
 	INVOKE_ASYNC(src, PROC_REF(apply_mutant_hands))
 
 /**
- * Signal proc when a nodrop item is dropped or deleted from our parent mob
- *
- * After having a pesky nodrop item disappear, we should replcace the slot with a mutant hand as intended
- */
-/datum/component/mutant_hands/proc/on_nodrop_item_lost(obj/item/source)
-	SIGNAL_HANDLER
-
-	// Get rid of these first
-	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
-
-	if(QDELING(src) || QDELING(parent))
-		return
-	// Do a full re-application
-	INVOKE_ASYNC(src, PROC_REF(apply_mutant_hands))
-
-/**
  * Signal proc for [COMSIG_MOB_EQUIPPED_ITEM]
  *
  * This is a failsafe - the mob managed to pick up something that isn't a mutant hand
  */
-/datum/component/mutant_hands/proc/mob_equipped_item(datum/source, obj/item/thing, slot)
+/datum/component/mutant_hands/proc/mob_equipped_item(mob/living/carbon/human/source, obj/item/thing, slot)
 	SIGNAL_HANDLER
 
 	if(!(slot & ITEM_SLOT_HANDS)) // Who cares
@@ -140,6 +120,20 @@
 	// We equipped something to hands that wasn't a mutant hand, and wasn't abstract!
 	// This means they're meant to have a mutant hand. So help them out.
 	INVOKE_ASYNC(src, PROC_REF(apply_mutant_hands))
+
+/**
+ * Signal proc for [COMSIG_MOB_UNEQUIPPED_ITEM]
+ *
+ * This is another failsafe - the mob dropped something, maybe from their hands, so try to re-equip
+ */
+/datum/component/mutant_hands/proc/mob_dropped_item(mob/living/carbon/human/source, obj/item/thing)
+	SIGNAL_HANDLER
+
+	if(QDELING(src) || QDELING(parent))
+		return
+
+	if(null in source.held_items)
+		INVOKE_ASYNC(src, PROC_REF(apply_mutant_hands))
 
 /**
  * Generic mutant hand type for use with the mutant hands component

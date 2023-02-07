@@ -25,14 +25,14 @@
 	var/mob/living/carbon/human/incredible_hulk = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/item_to_hold = allocate(/obj/item/storage/toolbox)
 	ADD_TRAIT(item_to_hold, TRAIT_NODROP, TRAIT_SOURCE_UNIT_TESTS)
-	incredible_hulk.put_in_l_hand(item_to_hold)
+	incredible_hulk.put_in_hand(item_to_hold, 1)
 	incredible_hulk.AddComponent(/datum/component/mutant_hands)
 
 	if(!istype(incredible_hulk.held_items[1], /obj/item/storage/toolbox))
 		TEST_FAIL("Dummy's left hand was not a toolbox, though it was supposed to be. Was: [incredible_hulk.held_items[1] || "nothing"].")
 
 	if(!istype(incredible_hulk.held_items[2], /obj/item/mutant_hand))
-		TEST_FAIL("Dummy didn't have a mutant hand on gaining the mutant hands comp! Was: [incredible_hulk.held_items[2] || "nothing"].")
+		TEST_FAIL("Dummy 's right hand was not a mutant hand! Was: [incredible_hulk.held_items[2] || "nothing"].")
 
 	QDEL_NULL(item_to_hold)
 
@@ -49,12 +49,14 @@
 	carried.set_resting(TRUE, instant = TRUE)
 
 	incredible_hulk.buckle_mob(carried, force = TRUE, check_loc = TRUE, buckle_mob_flags = CARRIER_NEEDS_ARM)
+	TEST_ASSERT(length(incredible_hulk.buckled_mobs), "Fireman carry failed in mutant hands carry test.")
+
 	if(!istype(incredible_hulk.held_items[1], /obj/item/riding_offhand))
-		TEST_FAIL("Dummy's left hand was not a riding offhand, though it was supposed to be. Instead, it was [incredible_hulk.held_items[1] || "nothing"].")
+		TEST_FAIL("Dummy's left hand was not a riding offhand, though it was supposed to be. Was: [incredible_hulk.held_items[1] || "nothing"].")
 	if(!istype(incredible_hulk.held_items[2], /obj/item/mutant_hand))
-		TEST_FAIL("Dummy's left hand was not a mutant hand, though it was supposed to be. Instead, it was [incredible_hulk.held_items[2] || "nothing"].")
+		TEST_FAIL("Dummy's right hand was not a mutant hand! Was: [incredible_hulk.held_items[2] || "nothing"].")
 
 	incredible_hulk.unbuckle_mob(carried, force = TRUE)
 	for(var/obj/item/hand as anything in incredible_hulk.held_items)
 		if(!istype(hand, /obj/item/mutant_hand))
-			TEST_FAIL("Dummy didn't have a mutant hand after dropping a fireman carry! Instead they had [hand || "nothing"].")
+			TEST_FAIL("Dummy didn't have a mutant hand after dropping a fireman carry! Was: [hand || "nothing"].")
