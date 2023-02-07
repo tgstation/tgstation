@@ -1,4 +1,0 @@
-author: "Kapu1178"
-delete-after: True
-changes:
-  - bugfix: "The \"Rest\" and \"Pull\" HUD icons correctly match the mob's current state on Login()."

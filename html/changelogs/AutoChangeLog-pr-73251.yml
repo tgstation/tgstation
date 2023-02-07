@@ -1,4 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - bugfix: "Transferring objects from a belt to another storage object now removes those objects from the belts visuals."
