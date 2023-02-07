@@ -19,9 +19,9 @@
 	// First come, first serve
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// The item typepath that we insert into the parent's hands
-	var/obj/item/mutant_hand_path
+	var/obj/item/mutant_hand_path = /obj/item/mutant_hand
 
-/datum/component/mutant_hands/Initialize(obj/item/mutant_hand_path)
+/datum/component/mutant_hands/Initialize(obj/item/mutant_hand_path = /obj/item/mutant_hand)
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
 
