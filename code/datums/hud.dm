@@ -332,7 +332,7 @@ GLOBAL_LIST_INIT(huds, list(
 /// add just hud_atom's hud images (that are part of this atom_hud) to all the requesting_mobs's client.images list
 /// optimization of [/datum/atom_hud/proc/add_atom_to_single_mob_hud] for hot cases, we assert that no nulls will be passed in via the list
 /datum/atom_hud/proc/add_atom_to_all_mob_huds(list/mob/requesting_mobs, atom/hud_atom) //unsafe, no sanity apart from client
-	if(!hud_atom || !hud_atom.active_hud_list)
+	if(!hud_atom?.active_hud_list)
 		return
 
 	var/list/images_to_add = list()
