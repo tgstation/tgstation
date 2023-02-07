@@ -16,7 +16,7 @@
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	// if the scanner is currently busy processing
-	var/is_scanner_busy = FALSE
+	var/scanner_busy = FALSE
 	var/list/log = list()
 	var/range = 8
 	var/view_check = TRUE
@@ -35,17 +35,17 @@
 	if(!LAZYLEN(log))
 		balloon_alert(user, "no logs!")
 		return
-	if(is_scanner_busy)
+	if(scanner_busy)
 		balloon_alert(user, "scanner busy!")
 		return
-	is_scanner_busy = TRUE
+	scanner_busy = TRUE
 	balloon_alert(user, "printing report...")
 	addtimer(CALLBACK(src, PROC_REF(safePrintReport)), 10 SECONDS)
 
 // calls print_report(), and should a runtime occur within we can still reset the 'busy' state
 /obj/item/detective_scanner/proc/safePrintReport()
 	print_report()
-	is_scanner_busy = FALSE
+	scanner_busy = FALSE
 
 /obj/item/detective_scanner/proc/print_report()
 	// Create our paper
@@ -82,11 +82,11 @@
 // calls scan(), and should a runtime occur within we can still reset the 'busy' state
 /obj/item/detective_scanner/proc/safe_scan(atom/A, mob/user)
 	set waitfor = FALSE
-	if(is_scanner_busy)
+	if(scanner_busy)
 		return
 	if(!scan(A,user)) // this should only return FALSE if a runtime occurs during the scan proc, so ideally never
 		balloon_alert(user, "scanner error!") // but in case it does, we 'error' instead of just bricking the scanner
-	is_scanner_busy = FALSE
+	scanner_busy = FALSE
 
 // this should always return TRUE barring a runtime
 /obj/item/detective_scanner/proc/scan(atom/A, mob/user)
@@ -94,7 +94,7 @@
 	if((get_dist(A, user) > range) || (!(A in view(range, user)) && view_check) || (loc != user))
 		return TRUE
 
-	is_scanner_busy = TRUE
+	scanner_busy = TRUE
 	
 
 	user.visible_message(
@@ -193,7 +193,7 @@
 	return TRUE
 
 /obj/item/detective_scanner/proc/add_log(msg, broadcast = 1)
-	if(is_scanner_busy)
+	if(scanner_busy)
 		if(broadcast && ismob(loc))
 			var/mob/logger = loc
 			to_chat(logger, msg)
@@ -211,7 +211,7 @@
 	if(!LAZYLEN(log))
 		balloon_alert(user, "no logs!")
 		return
-	if(is_scanner_busy)
+	if(scanner_busy)
 		balloon_alert(user, "scanner busy!")
 		return
 	balloon_alert(user, "deleting logs...")
@@ -221,7 +221,7 @@
 
 /obj/item/detective_scanner/examine(mob/user)
 	. = ..()
-	if(LAZYLEN(log) && !is_scanner_busy)
+	if(LAZYLEN(log) && !scanner_busy)
 		. += span_notice("Alt-click to clear scanner logs.")
 
 /obj/item/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
@@ -229,7 +229,7 @@
 	if(!LAZYLEN(log))
 		balloon_alert(user, "no logs!")
 		return
-	if(is_scanner_busy)
+	if(scanner_busy)
 		balloon_alert(user, "scanner busy!")
 		return
 	to_chat(user, span_notice("<B>Scanner Report</B>"))
