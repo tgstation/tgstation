@@ -283,3 +283,49 @@
   - admin: asay now uses tgui say
   tralezab:
   - admin: There's a cog next to events you can trigger if it has an admin setup.
+2023-02-07:
+  ArcaneMusic:
+  - qol: Improves feedback on buttons as well as the blast door electronics so that
+      installing your very own blast doors is less tedious.
+  Capsandi:
+  - balance: There's a second detonation wire on payload bombs now.
+  - balance: Cutting the proceed wire no longer detonates the bomb but instead deactivates
+      the countdown timer on examine. This is reset once the bomb is defused
+  Ebin-Halcyon:
+  - imageadd: Winter coats have been resprited.
+  Jacquerel:
+  - bugfix: Meteors can't be triggered automatically or manually on Icebox, where
+      they do nothing.
+  - bugfix: Hacking a comms console as a traitor won't try to summon meteors or pirates
+      to Icebox, where they do nothing.
+  Kapu1178:
+  - bugfix: The "Rest" and "Pull" HUD icons correctly match the mob's current state
+      on Login().
+  LT3:
+  - balance: 'Tram Malfunction: Decreased spread between min and max damage'
+  - balance: 'Tram Malfunction: Event length decreased'
+  - balance: 'Tram Malfunction: Damage multiplier added to account for different base
+      health levels'
+  - balance: 'Tram Malfunction: Event collision lethality multiplier decreased'
+  - bugfix: Fixed motion sensors on tram doors, they will now crush you much less
+      often!
+  - balance: Reduced damage from being crushed by tram doors
+  - code_imp: Un-nested emag blacklist
+  - code_imp: emag works properly on tram doors
+  - bugfix: Backwards tram door sparks animation
+  - bugfix: Tram displays power consumption
+  - bugfix: Tram crossing signals power consumption
+  - balance: Increased brightness on tram crossing signals
+  - bugfix: West Wing NW/SW and East Wing NE/SE crossing signals now shut off when
+      power is lost
+  - bugfix: Tram benches don't override standard benches
+  - bugfix: Reduced saturation and brightness of standard bench
+  NamelessFairy:
+  - bugfix: Transferring objects from a belt to another storage object now removes
+      those objects from the belts visuals.
+  - bugfix: Freezer no longer lock automatically when closed.
+  Profakos:
+  - bugfix: swapping to a stored DNA no longer forces you to be human instead of the
+      species stored in the DNA
+  itseasytosee:
+  - imageadd: inhands for fairy grass tiles

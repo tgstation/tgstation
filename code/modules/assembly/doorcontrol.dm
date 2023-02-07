@@ -3,9 +3,10 @@
 	desc = "A small electronic device able to control a blast door remotely."
 	icon_state = "control"
 	attachable = TRUE
+	/// The ID of the blast door electronics to match to the ID of the blast door being used.
 	var/id = null
-	var/can_change_id = 0
-	var/cooldown = FALSE //Door cooldowns
+	/// Cooldown of the door's controller. Updates when pressed (activate())
+	var/cooldown = FALSE
 	var/sync_doors = TRUE
 
 /obj/item/assembly/control/examine(mob/user)
@@ -18,6 +19,7 @@
 	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	id = change_id
+	balloon_alert(user, "id changed")
 	to_chat(user, span_notice("You change the ID to [id]."))
 
 /obj/item/assembly/control/activate()
