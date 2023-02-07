@@ -116,8 +116,6 @@
 /datum/component/mutant_hands/proc/on_nodrop_item_lost(obj/item/source)
 	SIGNAL_HANDLER
 
-	if(QDELETED(source))
-		return
 	// Get rid of these first
 	UnregisterSignal(source, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING))
 
