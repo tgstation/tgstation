@@ -110,7 +110,6 @@
 
 
 /// Weaker variant of ghosts that can smash structures. Meant to be summoned in swarms via the ectoplasmic anomaly and associated ghost portal.
-
 /mob/living/basic/ghost/swarm
 	name = "vengeful spirit"
 	desc = "Back from the grave, and not happy about it."

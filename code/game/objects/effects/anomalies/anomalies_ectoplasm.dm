@@ -37,18 +37,20 @@
 /obj/effect/anomaly/ectoplasm/anomalyEffect(delta_time)
 	. = ..()
 
-	if(!override_ghosts)
-		ghosts_orbiting = 0
-		for(var/mob/dead/observer/orbiter in orbiters?.orbiter_list)
-			ghosts_orbiting++
+	if(override_ghosts)
+		return
 
-		if(ghosts_orbiting)
-			var/total_dead = length(GLOB.dead_player_list) + length(GLOB.current_observers_list)
-			effect_power = ghosts_orbiting / total_dead * 100
-		else
-			effect_power = 0
+	ghosts_orbiting = 0
+	for(var/mob/dead/observer/orbiter in orbiters?.orbiter_list)
+		ghosts_orbiting++
 
-		intensity_update()
+	if(ghosts_orbiting)
+		var/total_dead = length(GLOB.dead_player_list) + length(GLOB.current_observers_list)
+		effect_power = ghosts_orbiting / total_dead * 100
+	else
+		effect_power = 0
+
+	intensity_update()
 
 /obj/effect/anomaly/ectoplasm/detonate()
 	. = ..()
@@ -197,7 +199,7 @@
  */
 
 /obj/structure/ghost_portal/proc/cleanup_ghosts()
-	for(var/mob/living/mob_to_delete in ghosts_spawned)
+	for(var/mob/living/mob_to_delete as anything in ghosts_spawned)
 		mob_to_delete.visible_message(span_alert("The [mob_to_delete] wails as it is torn back into the void!"), span_alert("You let out one last wail as you are sucked back into the realm of the dead. Then suddenly, you're back in the comforting embrace of the afterlife."), span_hear("You hear ethereal wailing."))
 		playsound(src, pick(spooky_noises), 50)
 		new /obj/effect/temp_visual/revenant/cracks(get_turf(src))

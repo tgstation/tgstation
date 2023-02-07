@@ -24,17 +24,17 @@
 /datum/round_event/anomaly/anomaly_ectoplasm/start()
 	if(!effect_override)
 		..() //If we provide no override, just run the usual startup.
-	else
-		var/turf/anomaly_turf = placer.findValidTurf(impact_area)
-		var/obj/effect/anomaly/ectoplasm/newAnomaly
-		if(anomaly_turf)
-			newAnomaly = new anomaly_path(anomaly_turf)
-			newAnomaly.override_ghosts = TRUE
-			newAnomaly.effect_power = effect_override
-			newAnomaly.ghosts_orbiting = orbit_override
-			newAnomaly.intensity_update()
-		if (newAnomaly)
-			announce_to_ghosts(newAnomaly)
+
+	var/turf/anomaly_turf = placer.findValidTurf(impact_area)
+	var/obj/effect/anomaly/ectoplasm/newAnomaly
+	if(anomaly_turf)
+		newAnomaly = new anomaly_path(anomaly_turf)
+		newAnomaly.override_ghosts = TRUE
+		newAnomaly.effect_power = effect_override
+		newAnomaly.ghosts_orbiting = orbit_override
+		newAnomaly.intensity_update()
+	if(newAnomaly)
+		announce_to_ghosts(newAnomaly)
 
 /datum/round_event/anomaly/anomaly_ectoplasm/announce(fake)
 	priority_announce("Localized ectoplasmic outburst detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
