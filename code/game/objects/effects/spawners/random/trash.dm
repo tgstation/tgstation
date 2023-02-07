@@ -87,6 +87,9 @@
 		/obj/effect/spawner/random/trash/food_packaging = 3,
 		/obj/effect/spawner/random/trash/cigbutt = 1,
 		/obj/item/food/deadmouse = 1,
+		/obj/item/food/breadslice/moldy/bacteria = 1,
+		/obj/item/food/pizzaslice/moldy/bacteria = 1,
+		/obj/item/food/badrecipe/moldy/bacteria = 1,
 	)
 
 /obj/effect/spawner/random/trash/hobo_squat
