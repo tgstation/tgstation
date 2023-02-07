@@ -32,7 +32,7 @@
 			"You feel a part of your mind repeating this over and over. You need to follow these words.",
 			"You feel your thoughts focusing on this phrase... you can't seem to get it out of your head.",
 			"Your head hurts, but this is all you can think of. It must be vitally important.",
-		))]"))
+	))]"))
 	to_chat(owner, span_boldwarning("You've been hypnotized by this sentence. You must follow these words. \
 		If it isn't a clear order, you can freely interpret how to do so, as long as you act like the words are your highest priority."))
 	var/atom/movable/screen/alert/hypnosis/hypno_alert = owner.throw_alert(ALERT_HYPNOSIS, /atom/movable/screen/alert/hypnosis)
