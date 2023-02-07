@@ -113,7 +113,7 @@
 
 /mob/living/basic/ghost/swarm
 	name = "vengeful spirit"
-	desc = "Oh my god, they're EVERYWHERE."
+	desc = "Back from the grave, and not happy about it."
 	maxHealth = 30
 	health = 30
 	attack_verb_continuous = "smashes"

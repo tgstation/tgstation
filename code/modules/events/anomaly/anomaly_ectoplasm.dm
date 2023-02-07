@@ -1,6 +1,6 @@
-#define ANOMALY_INTENSITY_MINOR "anomaly_intensity_minor"
-#define ANOMALY_INTENSITY_MODERATE "anomaly_intensity_moderate"
-#define ANOMALY_INTENSITY_MAJOR "anomaly_intensity_major"
+#define ANOMALY_INTENSITY_MINOR "Minor Intensity"
+#define ANOMALY_INTENSITY_MODERATE "Moderate Intensity"
+#define ANOMALY_INTENSITY_MAJOR "Major Intensity"
 
 /datum/round_event_control/anomaly/anomaly_ectoplasm
 	name = "Anomaly: Ectoplasmic Outburst"

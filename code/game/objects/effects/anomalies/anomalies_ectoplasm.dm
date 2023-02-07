@@ -17,9 +17,6 @@
 
 	AddComponent(/datum/component/deadchat_control/cardinal_movement, ANARCHY_MODE, list(), 7 SECONDS)
 
-	if(. == COMPONENT_INCOMPATIBLE)
-		return
-
 /obj/effect/anomaly/ectoplasm/examine(mob/user)
 	. = ..()
 
@@ -180,20 +177,17 @@
 		candidate_list += GLOB.dead_player_list
 
 	var/list/candidates = poll_candidates("Would you like to participate in a spooky ghost swarm? (Warning: you will not be able to return to your body!)", ROLE_SENTIENCE, FALSE, 10 SECONDS, group = candidate_list)
-	for(var/candidate in candidates)
-		if(!isobserver(candidate))
-			continue
-		var/mob/dead/observer/candidate_ghost = candidate
+	for(var/mob/dead/observer/candidate_ghost as anything in candidates)
 		var/mob/living/basic/ghost/swarm/new_ghost = new(get_turf(src))
+		ghosts_spawned += new_ghost
 		new_ghost.ghostize(FALSE)
 		new_ghost.key = candidate_ghost.key
-		new_ghost.log_message("was returned to the living world as a ghost by an ectoplasmic anomaly.", LOG_GAME)
 		var/policy = get_policy(ROLE_ANOMALY_GHOST)
-		if (policy)
+		if(policy)
 			to_chat(new_ghost, policy)
 		else
 			to_chat(new_ghost, span_revenboldnotice("You are a lost soul, brought back to the realm of the living. Your time on this plane is limited, and you will soon be dragged back into the void!"))
-		ghosts_spawned += new_ghost
+		new_ghost.log_message("was returned to the living world as a ghost by an ectoplasmic anomaly.", LOG_GAME)
 
 /**
  * Gives a farewell message and deletes the ghosts the anomaly produced.
