@@ -133,12 +133,7 @@
 	spawn_scatter_radius = 2
 	loot = list( // This spawner will scatter garbage around a dirty site.
 		/obj/effect/spawner/random/trash/garbage = 6,
-		/mob/living/basic/mouse = 5,
-		/mob/living/basic/mouse/rat = 2,
 		/mob/living/basic/cockroach = 5,
-		/mob/living/basic/cockroach/glockroach = 1,
-		/mob/living/basic/cockroach/hauberoach = 0.5,
-		/mob/living/basic/cockroach/glockroach/mobroach = 0.2,
 		/obj/effect/decal/cleanable/garbage = 4,
 		/obj/effect/decal/cleanable/vomit/old = 3,
 		/obj/effect/spawner/random/trash/cigbutt = 2,
