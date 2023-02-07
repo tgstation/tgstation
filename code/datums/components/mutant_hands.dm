@@ -64,8 +64,8 @@
 		// Yes the held item lists contains nulls to represent empty hands
 		// It saves us a /item cast by using as anything in the loop
 		if(!isnull(hand_slot))
-			if(HAS_TRAIT(hand_slot, TRAIT_NODROP))
-				// There's a nodrop item in the way of putting a mutant hand in
+			if(HAS_TRAIT(hand_slot, TRAIT_NODROP) || (hand_slot.item_flags & ABSTRACT))
+				// There's a nodrop / abstract item in the way of putting a mutant hand in
 				// It can stay, for now, but if it gets dropped / unequipped we'll swoop in to replace the slot
 				continue
 			// Drop any existing non-nodrop items to the ground
@@ -114,7 +114,7 @@
 	if(istype(thing, mutant_hand_path)) // This is definitely meant to be here
 		return
 
-	if(thing.item_flags & ABSTRACT) // This is meant to be here
+	if(HAS_TRAIT(thing, TRAIT_NODROP) || (thing.item_flags & ABSTRACT)) // This is meant to be here
 		return
 
 	// We equipped something to hands that wasn't a mutant hand, and wasn't abstract!
