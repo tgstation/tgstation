@@ -147,10 +147,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
 
-	// visibilityChanged() will never hit any path with side effects during mapload
-	if (!mapload)
-		visibilityChanged()
-
 	for(var/atom/movable/content as anything in src)
 		Entered(content, null)
 
@@ -186,12 +182,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(!changing_turf)
 		stack_trace("Incorrect turf deletion")
 	changing_turf = FALSE
-	var/turf/T = SSmapping.get_turf_above(src)
-	if(T)
-		T.multiz_turf_del(src, DOWN)
-	T = SSmapping.get_turf_below(src)
-	if(T)
-		T.multiz_turf_del(src, UP)
+	if(GET_LOWEST_STACK_OFFSET(z))
+		var/turf/T = SSmapping.get_turf_above(src)
+		if(T)
+			T.multiz_turf_del(src, DOWN)
+		T = SSmapping.get_turf_below(src)
+		if(T)
+			T.multiz_turf_del(src, UP)
 	if(force)
 		..()
 		//this will completely wipe turf state
@@ -199,7 +196,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		for(var/A in B.contents)
 			qdel(A)
 		return
-	visibilityChanged()
 	QDEL_LIST(blueprint_data)
 	flags_1 &= ~INITIALIZED_1
 	requires_activation = FALSE
