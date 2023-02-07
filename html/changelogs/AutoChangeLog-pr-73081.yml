@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes:
-  - balance: "EMP requires aluminum, but the aluminum doesn't contribute to a bigger EMP size."

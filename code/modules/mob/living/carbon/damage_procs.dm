@@ -58,7 +58,7 @@
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
-		take_overall_damage(amount, 0, updating_health, required_bodytype)
+		take_overall_damage(brute = amount, updating_health = updating_health, required_bodytype = required_bodytype)
 	else
 		heal_overall_damage(abs(amount), 0, required_bodytype, updating_health)
 	return amount
@@ -74,7 +74,7 @@
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
-		take_overall_damage(0, amount, updating_health, required_bodytype)
+		take_overall_damage(burn = amount, updating_health = updating_health, required_bodytype = required_bodytype)
 	else
 		heal_overall_damage(0, abs(amount), required_bodytype, updating_health)
 	return amount
@@ -245,7 +245,7 @@
 		update_damage_overlays()
 
 /// damage MANY bodyparts, in random order
-/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype)
+/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_bodytype)
 	if(status_flags & GODMODE)
 		return //godmode
 

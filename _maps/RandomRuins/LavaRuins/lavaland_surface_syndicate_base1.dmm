@@ -26,10 +26,7 @@
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
 	dir = 1
 	},
-/obj/structure/sign/barsign{
-	pixel_y = -32;
-	req_access = null
-	},
+/obj/machinery/barsign/all_access/directional/south,
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/bar)
 "ai" = (
