@@ -27,6 +27,8 @@
 			TEST_FAIL("Dummy didn't have a mutant hand after re-gaining a limb! Instead they had [hand || "nothing"].")
 
 /datum/unit_test/mutant_hands_with_nodrop
+
+/datum/unit_test/mutant_hands_with_nodrop/Run()
 	var/mob/living/carbon/human/incredible_hulk = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/item_to_hold = allocate(/obj/item/storage/toolbox)
 	ADD_TRAIT(item_to_hold, TRAIT_NODROP, TRAIT_SOURCE_UNIT_TESTS)
