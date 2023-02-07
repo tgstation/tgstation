@@ -58,6 +58,7 @@
 	RegisterSignal(user, COMSIG_MOB_EMOTED("spin"), PROC_REF(on_spin))
 	RegisterSignal(user, COMSIG_HUMAN_DISARM_HIT, PROC_REF(on_equipped_mob_disarm))
 	RegisterSignal(user, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(on_equipped_mob_knockdown))
+	RegisterSignal(user, COMSIG_MOB_THROW, PROC_REF(on_throw))
 
 	// use this to check shoving?
 	//RegisterSignal(parent, COMSIG_MOB_ATTACK_HAND, PROC_REF(check_shove))
@@ -66,7 +67,14 @@
 	SIGNAL_HANDLER
 
 	wielder = null
-	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN))
+	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOB_THROW))
+
+/obj/item/toy/basketball/proc/on_throw(mob/living/carbon/thrower)
+	SIGNAL_HANDLER
+
+	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
+	wielder = null
+	UnregisterSignal(thrower, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOB_THROW))
 
 /obj/item/toy/basketball/attack_hand(mob/living/user, list/modifiers)
 	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = FALSE, need_hands = !iscyborg(user)))
@@ -158,6 +166,7 @@
 	if(!prob(disarm_chance))
 		return // the disarm failed
 
+	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
 	var/blocking_dir_bonus = calculate_deviation(baller, stealer)
 
 	switch(blocking_dir_bonus)
@@ -232,6 +241,11 @@
 /obj/item/toy/basketball/afterattack_secondary(atom/aim_target, mob/living/baller, params)
 	//attack_hand(user, modifiers, flip_card = TRUE)
 	//if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE, need_hands = !iscyborg(user)))
+
+	// dunking negates shooting
+	if(istype(aim_target, /obj/structure/hoop) && baller.Adjacent(aim_target))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	baller.balloon_alert_to_viewers("shooting...")
 	baller.adjustStaminaLoss(10)
 
