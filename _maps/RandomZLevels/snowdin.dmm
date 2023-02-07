@@ -2848,7 +2848,7 @@
 	},
 /area/awaymission/snowdin/cave/cavern)
 "in" = (
-/mob/living/simple_animal/hostile/netherworld/blankbody{
+/mob/living/basic/blankbody{
 	desc = "It's Caleb Reed, but their flesh has an ashy texture, and their face is featureless save an eerie smile.";
 	name = "Caleb Reed"
 	},
@@ -3546,7 +3546,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
 "jO" = (
-/mob/living/simple_animal/hostile/netherworld/blankbody{
+/mob/living/basic/blankbody{
 	desc = "It's Jacob Ullman, but their flesh has an ashy texture, and their face is featureless save an eerie smile.";
 	name = "Jacob Ullman"
 	},
@@ -6461,7 +6461,7 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/igloo)
 "rZ" = (
-/mob/living/simple_animal/hostile/netherworld/migo,
+/mob/living/basic/migo,
 /turf/open/floor/engine/cult,
 /area/awaymission/snowdin/post/cavern2)
 "sa" = (
@@ -7491,7 +7491,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/mob/living/simple_animal/hostile/netherworld/migo,
+/mob/living/basic/migo,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_dock)
 "xB" = (
@@ -8649,7 +8649,7 @@
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "BJ" = (
-/mob/living/simple_animal/hostile/netherworld/blankbody{
+/mob/living/basic/blankbody{
 	desc = "It's Caleb Reed, but their flesh has an ashy texture, and their face is featureless save an eerie smile.";
 	name = "Caleb Reed"
 	},
@@ -9757,7 +9757,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_dock)
 "Hb" = (
-/mob/living/simple_animal/hostile/netherworld/migo,
+/mob/living/basic/migo,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_dock)
 "Hc" = (
@@ -9956,7 +9956,7 @@
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "HQ" = (
 /obj/effect/turf_decal/stripes/line,
-/mob/living/simple_animal/hostile/netherworld/migo,
+/mob/living/basic/migo,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main/mechbay)
@@ -12839,7 +12839,7 @@
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Vd" = (
-/mob/living/simple_animal/hostile/netherworld/migo,
+/mob/living/basic/migo,
 /turf/open/floor/iron/white,
 /area/awaymission/snowdin/post/mining_main/robotics)
 "Ve" = (

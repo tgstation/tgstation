@@ -1,4 +1,6 @@
-ADMIN_VERB(server, trigger_random_map_rotation, "Trigger Random Map Rotation", "", R_SERVER)
+/client/proc/forcerandomrotate()
+	set category = "Server"
+	set name = "Trigger Random Map Rotation"
 	var/rotate = tgui_alert(usr,"Force a random map rotation to trigger?", "Rotate map?", list("Yes", "Cancel"))
 	if (rotate != "Yes")
 		return
@@ -6,7 +8,9 @@ ADMIN_VERB(server, trigger_random_map_rotation, "Trigger Random Map Rotation", "
 	log_admin("[key_name(usr)] is forcing a random map rotation.")
 	SSmapping.maprotate()
 
-ADMIN_VERB(server, change_map, "Change Map", "", R_SERVER)
+/client/proc/adminchangemap()
+	set category = "Server"
+	set name = "Change Map"
 	var/list/maprotatechoices = list()
 	for (var/map in config.maplist)
 		var/datum/map_config/virtual_map = config.maplist[map]
@@ -42,7 +46,7 @@ ADMIN_VERB(server, change_map, "Change Map", "", R_SERVER)
 			return
 
 		if(copytext("[map_file]", -4) != ".dmm")//4 == length(".dmm")
-			to_chat(usr, span_warning("Filename must end in '.dmm': [map_file]"))
+			to_chat(src, span_warning("Filename must end in '.dmm': [map_file]"))
 			return
 
 		if(fexists("_maps/custom/[map_file]"))
@@ -52,11 +56,11 @@ ADMIN_VERB(server, change_map, "Change Map", "", R_SERVER)
 		// This is to make sure the map works so the server does not start without a map.
 		var/datum/parsed_map/M = new (map_file)
 		if(!M)
-			to_chat(usr, span_warning("Map '[map_file]' failed to parse properly."))
+			to_chat(src, span_warning("Map '[map_file]' failed to parse properly."))
 			return
 
 		if(!M.bounds)
-			to_chat(usr, span_warning("Map '[map_file]' has non-existant bounds."))
+			to_chat(src, span_warning("Map '[map_file]' has non-existant bounds."))
 			qdel(M)
 			return
 
@@ -69,14 +73,14 @@ ADMIN_VERB(server, change_map, "Change Map", "", R_SERVER)
 			if(isnull(config_file))
 				return
 			if(copytext("[config_file]", -5) != ".json")
-				to_chat(usr, span_warning("Filename must end in '.json': [config_file]"))
+				to_chat(src, span_warning("Filename must end in '.json': [config_file]"))
 				return
 			if(fexists("data/custom_map_json/[config_file]"))
 				fdel("data/custom_map_json/[config_file]")
 			if(!fcopy(config_file, "data/custom_map_json/[config_file]"))
 				return
 			if (virtual_map.LoadConfig("data/custom_map_json/[config_file]", TRUE) != TRUE)
-				to_chat(usr, span_warning("Failed to load config: [config_file]. Check that the fields are filled out correctly. \"map_path\": \"custom\" and \"map_file\": \"your_map_name.dmm\""))
+				to_chat(src, span_warning("Failed to load config: [config_file]. Check that the fields are filled out correctly. \"map_path\": \"custom\" and \"map_file\": \"your_map_name.dmm\""))
 				return
 			json_value = list(
 				"version" = MAP_CURRENT_VERSION,

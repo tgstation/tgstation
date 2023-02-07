@@ -141,37 +141,40 @@
 // HERE BE DEBUG DRAGONS //
 ///////////////////////////
 
-ADMIN_VERB(debug, test_nature_map_generator, "Test Nature Map Generator", "", R_DEBUG)
+/client/proc/debugNatureMapGenerator()
+	set name = "Test Nature Map Generator"
+	set category = "Debug"
+
 	var/datum/map_generator/nature/N = new()
 	var/startInput = input(usr,"Start turf of Map, (X;Y;Z)", "Map Gen Settings", "1;1;1") as text|null
 
 	if (isnull(startInput))
 		return
 
-	var/endInput = input(usr,"End turf of Map (X;Y;Z)", "Map Gen Settings", "[world.maxx];[world.maxy];[usr.z]") as text|null
+	var/endInput = input(usr,"End turf of Map (X;Y;Z)", "Map Gen Settings", "[world.maxx];[world.maxy];[mob ? mob.z : 1]") as text|null
 
 	if (isnull(endInput))
 		return
 
 	//maxx maxy and current z so that if you fuck up, you only fuck up one entire z level instead of the entire universe
 	if(!startInput || !endInput)
-		to_chat(usr, "Missing Input")
+		to_chat(src, "Missing Input")
 		return
 
 	var/list/startCoords = splittext(startInput, ";")
 	var/list/endCoords = splittext(endInput, ";")
 	if(!startCoords || !endCoords)
-		to_chat(usr, "Invalid Coords")
-		to_chat(usr, "Start Input: [startInput]")
-		to_chat(usr, "End Input: [endInput]")
+		to_chat(src, "Invalid Coords")
+		to_chat(src, "Start Input: [startInput]")
+		to_chat(src, "End Input: [endInput]")
 		return
 
 	var/turf/Start = locate(text2num(startCoords[1]),text2num(startCoords[2]),text2num(startCoords[3]))
 	var/turf/End = locate(text2num(endCoords[1]),text2num(endCoords[2]),text2num(endCoords[3]))
 	if(!Start || !End)
-		to_chat(usr, "Invalid Turfs")
-		to_chat(usr, "Start Coords: [startCoords[1]] - [startCoords[2]] - [startCoords[3]]")
-		to_chat(usr, "End Coords: [endCoords[1]] - [endCoords[2]] - [endCoords[3]]")
+		to_chat(src, "Invalid Turfs")
+		to_chat(src, "Start Coords: [startCoords[1]] - [startCoords[2]] - [startCoords[3]]")
+		to_chat(src, "End Coords: [endCoords[1]] - [endCoords[2]] - [endCoords[3]]")
 		return
 
 	var/list/clusters = list("None"=CLUSTER_CHECK_NONE,"All"=CLUSTER_CHECK_ALL,"Sames"=CLUSTER_CHECK_SAMES,"Differents"=CLUSTER_CHECK_DIFFERENTS, \
@@ -184,7 +187,7 @@ ADMIN_VERB(debug, test_nature_map_generator, "Test Nature Map Generator", "", R_
 	var/theCluster = 0
 	if(moduleClusters != "None")
 		if(!clusters[moduleClusters])
-			to_chat(usr, "Invalid Cluster Flags")
+			to_chat(src, "Invalid Cluster Flags")
 			return
 		theCluster = clusters[moduleClusters]
 	else
@@ -195,9 +198,9 @@ ADMIN_VERB(debug, test_nature_map_generator, "Test Nature Map Generator", "", R_
 			M.clusterCheckFlags = theCluster
 
 
-	to_chat(usr, "Defining Region")
+	to_chat(src, "Defining Region")
 	N.defineRegion(Start, End)
-	to_chat(usr, "Region Defined")
-	to_chat(usr, "Generating Region")
+	to_chat(src, "Region Defined")
+	to_chat(src, "Generating Region")
 	N.generate()
-	to_chat(usr, "Generated Region")
+	to_chat(src, "Generated Region")

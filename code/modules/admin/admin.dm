@@ -46,9 +46,14 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
-ADMIN_VERB(debug, spawn_atom, "Spawn Atom", "", R_SPAWN, object as text)
-	if(!object)
+/datum/admins/proc/spawn_atom(object as text)
+	set category = "Debug"
+	set desc = "(atom path) Spawn an atom"
+	set name = "Spawn"
+
+	if(!check_rights(R_SPAWN) || !object)
 		return
+
 	var/list/preparsed = splittext(object,":")
 	var/path = preparsed[1]
 	var/amount = 1
@@ -68,8 +73,16 @@ ADMIN_VERB(debug, spawn_atom, "Spawn Atom", "", R_SPAWN, object as text)
 			A.flags_1 |= ADMIN_SPAWNED_1
 
 	log_admin("[key_name(usr)] spawned [amount] x [chosen] at [AREACOORD(usr)]")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-ADMIN_VERB(debug, podspawn_atom, "Podspawn Atom", "Spawn an atom typepath via supply drop", R_SPAWN, object as text)
+/datum/admins/proc/podspawn_atom(object as text)
+	set category = "Debug"
+	set desc = "(atom path) Spawn an atom via supply drop"
+	set name = "Podspawn"
+
+	if(!check_rights(R_SPAWN))
+		return
+
 	var/chosen = pick_closest_path(object)
 	if(!chosen)
 		return
@@ -85,22 +98,27 @@ ADMIN_VERB(debug, podspawn_atom, "Podspawn Atom", "Spawn an atom typepath via su
 		//we need to set the admin spawn flag for the spawned items so we do it outside of the podspawn proc
 		var/atom/A = new chosen(pod)
 		A.flags_1 |= ADMIN_SPAWNED_1
-	log_admin("[key_name(usr)] pod-spawned [chosen] at [AREACOORD(usr)]")
 
-ADMIN_VERB(debug, spawn_cargo_crate, "Spawn Cargo Crate", "Spawn a cargo crate", R_SPAWN, object as text)
+	log_admin("[key_name(usr)] pod-spawned [chosen] at [AREACOORD(usr)]")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Podspawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/admins/proc/spawn_cargo(object as text)
+	set category = "Debug"
+	set desc = "(atom path) Spawn a cargo crate"
+	set name = "Spawn Cargo"
+
+	if(!check_rights(R_SPAWN))
+		return
+
 	var/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/datum/supply_pack)))
 	if(!chosen)
 		return
 	var/datum/supply_pack/S = new chosen
 	S.admin_spawned = TRUE
 	S.generate(get_turf(usr))
-	log_admin("[key_name(usr)] spawned cargo pack [chosen] at [AREACOORD(usr)]")
 
-ADMIN_VERB(debug, toggle_tinted_welding_helmets, "Toggle Tinted Welding Helmets", "Reduces view range when wearing welding helmets", R_DEBUG)
-	GLOB.tinted_weldhelh = !GLOB.tinted_weldhelh
-	to_chat(world, span_bold("Welding Helmet tinting has been [(GLOB.tinted_weldhelh ? "enabled" : "disabled")]"))
-	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
-	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.")
+	log_admin("[key_name(usr)] spawned cargo pack [chosen] at [AREACOORD(usr)]")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Cargo") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/dynamic_mode_options(mob/user)
 	var/dat = {"
@@ -125,7 +143,9 @@ ADMIN_VERB(debug, toggle_tinted_welding_helmets, "Toggle Tinted Welding Helmets"
 
 	user << browse(dat, "window=dyn_mode_options;size=900x650")
 
-ADMIN_VERB(debug, create_or_modify_area, "Create or Modify Area", "", R_DEBUG)
+/datum/admins/proc/create_or_modify_area()
+	set category = "Debug"
+	set name = "Create or modify area"
 	create_area(usr)
 
 //Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked

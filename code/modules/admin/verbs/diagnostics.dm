@@ -1,7 +1,15 @@
-ADMIN_VERB(debug, display_air_status, "Display Air Status", "", R_DEBUG, turf/target in view())
-	atmos_scan(user=usr, target=target, silent=TRUE)
+/client/proc/air_status(turf/target)
+	set category = "Debug"
+	set name = "Display Air Status"
 
-ADMIN_VERB(debug, unfreeze_everyone, "Unfreeze Everyone", "When movement gets fucked", R_ADMIN)
+	if(!isturf(target))
+		return
+	atmos_scan(user=usr, target=target, silent=TRUE)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Air Status") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/fix_next_move()
+	set category = "Debug"
+	set name = "Unfreeze Everyone"
 	var/largest_move_time = 0
 	var/largest_click_time = 0
 	var/mob/largest_move_mob = null
@@ -25,8 +33,13 @@ ADMIN_VERB(debug, unfreeze_everyone, "Unfreeze Everyone", "When movement gets fu
 	message_admins("[ADMIN_LOOKUPFLW(largest_move_mob)] had the largest move delay with [largest_move_time] frames / [DisplayTimeText(largest_move_time)]!")
 	message_admins("[ADMIN_LOOKUPFLW(largest_click_mob)] had the largest click delay with [largest_click_time] frames / [DisplayTimeText(largest_click_time)]!")
 	message_admins("world.time = [world.time]")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unfreeze Everyone") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
 
-ADMIN_VERB(debug, radio_report, "Radio Report", "", R_DEBUG)
+/client/proc/radio_report()
+	set category = "Debug"
+	set name = "Radio report"
+
 	var/output = "<b>Radio Report</b><hr>"
 	for (var/fq in SSradio.frequencies)
 		output += "<b>Freq: [fq]</b><br>"
@@ -50,9 +63,28 @@ ADMIN_VERB(debug, radio_report, "Radio Report", "", R_DEBUG)
 					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device] ([AREACOORD(A)])<br>"
 				else
 					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device]<br>"
-	usr << browse(output,"window=radioreport")
 
-ADMIN_VERB(server, toggle_cdn, "Toggle CDN", "", R_SERVER|R_DEBUG)
+	usr << browse(output,"window=radioreport")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Radio Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/reload_admins()
+	set name = "Reload Admins"
+	set category = "Admin"
+
+	if(!src.holder)
+		return
+
+	var/confirm = tgui_alert(usr, "Are you sure you want to reload all admins?", "Confirm", list("Yes", "No"))
+	if(confirm != "Yes")
+		return
+
+	load_admins()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Reload All Admins") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	message_admins("[key_name_admin(usr)] manually reloaded admins")
+
+/client/proc/toggle_cdn()
+	set name = "Toggle CDN"
+	set category = "Server"
 	var/static/admin_disabled_cdn_transport = null
 	if (alert(usr, "Are you sure you want to toggle the CDN asset transport?", "Confirm", "Yes", "No") != "Yes")
 		return

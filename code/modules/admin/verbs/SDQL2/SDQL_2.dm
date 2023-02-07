@@ -198,11 +198,17 @@
 		state = SDQL2_STATE_ERROR;\
 		CRASH("SDQL2 fatal error");};
 
-ADMIN_VERB(debug, query_text, "Query Text", "", R_DEBUG, query_text as message)
+/client/proc/SDQL2_query(query_text as message)
+	set category = "Debug"
+	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
+		message_admins(span_danger("ERROR: Non-admin [key_name(usr)] attempted to execute a SDQL query!"))
+		usr.log_message("non-admin attempted to execute a SDQL query!", LOG_ADMIN)
+		return FALSE
 	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[key_name(usr)]")
 	if(length(results) == 3)
 		for(var/I in 1 to 3)
 			to_chat(usr, results[I], confidential = TRUE)
+	SSblackbox.record_feedback("nested tally", "SDQL query", 1, list(ckey, query_text))
 
 /world/proc/SDQL2_query(query_text, log_entry1, log_entry2, silent = FALSE)
 	var/query_log = "executed SDQL query(s): \"[query_text]\"."
@@ -1224,4 +1230,4 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 		message_admins("[key_name_admin(usr)] non-holder clicked on a statclick! ([src])")
 		usr.log_message("non-holder clicked on a statclick! ([src])", LOG_ADMIN)
 		return
-	SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/debug/view_variables, GLOB.sdql2_queries)
+	usr.client.debug_variables(GLOB.sdql2_queries)

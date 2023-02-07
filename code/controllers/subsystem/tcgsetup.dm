@@ -118,10 +118,10 @@ SUBSYSTEM_DEF(trading_card_game)
 ///Prints all the cards names
 /datum/controller/subsystem/trading_card_game/proc/printAllCards()
 	for(var/card_set in cached_cards)
-		to_chat(usr, span_admin("Printing the [card_set] set"))
+		message_admins("Printing the [card_set] set")
 		for(var/card in cached_cards[card_set]["ALL"])
 			var/datum/card/toPrint = cached_cards[card_set]["ALL"][card]
-			to_chat(usr, span_admin("[toPrint.name]"))
+			message_admins(toPrint.name)
 
 ///Checks the passed type list for missing raritys, or raritys out of bounds
 /datum/controller/subsystem/trading_card_game/proc/check_cardpacks(card_pack_list)
@@ -186,5 +186,5 @@ SUBSYSTEM_DEF(trading_card_game)
 		if(id)
 			var/datum/card/template = cached_cards[pack.series]["ALL"][id]
 			toSend += "\nID:[id] [template.name] [(cardsByCount[id] * 100) / totalCards]% Total:[cardsByCount[id]]"
-	to_chat(usr, toSend)
+	message_admins(toSend)
 	qdel(pack)

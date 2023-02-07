@@ -276,7 +276,10 @@
 
 /// Debug verb for validating that all puzzgrids can be created successfully.
 /// Locked behind a verb because it's fairly slow and memory intensive.
-ADMIN_VERB(debug, validate_puzzgrids, "Validate Puzzgrids", "", R_DEBUG)
+/client/proc/validate_puzzgrids()
+	set name = "Validate Puzzgrid Config"
+	set category = "Debug"
+
 	var/line_number = 0
 
 	for (var/line in world.file2list(PUZZGRID_CONFIG))
@@ -287,16 +290,16 @@ ADMIN_VERB(debug, validate_puzzgrids, "Validate Puzzgrids", "", R_DEBUG)
 
 		var/line_json_decoded = safe_json_decode(line)
 		if (isnull(line_json_decoded))
-			to_chat(usr, span_warning("Line [line_number] in puzzgrids.txt is not a JSON: [line]"))
+			to_chat(src, span_warning("Line [line_number] in puzzgrids.txt is not a JSON: [line]"))
 			continue
 
 		var/datum/puzzgrid/puzzgrid = new
 		var/populate_result = puzzgrid.populate(line_json_decoded)
 
 		if (populate_result != TRUE)
-			to_chat(usr, span_warning("Line [line_number] in puzzgrids.txt is not formatted correctly: [populate_result]"))
+			to_chat(src, span_warning("Line [line_number] in puzzgrids.txt is not formatted correctly: [populate_result]"))
 
-	to_chat(usr, span_notice("Validated. If you did not see any errors, you're in the clear."))
+	to_chat(src, span_notice("Validated. If you did not see any errors, you're in the clear."))
 
 #undef PUZZGRID_CONFIG
 #undef PUZZGRID_GROUP_COUNT

@@ -13,9 +13,9 @@
 	RegisterSignal(src, COMSIG_TURF_RESERVATION_RELEASED, PROC_REF(launch_contents))
 
 /turf/open/space/transit/Destroy()
-	. = ..()
 	//Signals are NOT removed from turfs upon replacement, and we get replaced ALOT, so unregister our signal
 	UnregisterSignal(src, COMSIG_TURF_RESERVATION_RELEASED)
+	return ..()
 
 /turf/open/space/transit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	. = ..()

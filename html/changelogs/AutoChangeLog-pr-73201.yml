@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - refactor: "Tidied up spider ability code, they should all work the same, but please report if they do not."
+  - refactor: "Spiders and Geneticists now use the same ability to make webs rather than two virtually-identical ones, which should also perform just as it did before this change."
+  - bugfix: "Setting a directive as a Spider Midwife should properly pass and announce itself to new spiders."

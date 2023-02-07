@@ -11,7 +11,7 @@
 	else if(islist(target))
 		vv_do_list(target, href_list)
 	if(href_list["Vars"])
-		SSadmin_verbs.dynamic_invoke_admin_verb(src, /mob/admin_module_holder/debug/view_variables, locate(href_list["Vars"]))
+		debug_variables(locate(href_list["Vars"]))
 
 //Stuff below aren't in dropdowns/etc.
 
@@ -82,25 +82,25 @@
 			var/newamt
 			switch(Text)
 				if("brute")
-					L.adjustBruteLoss(amount)
+					L.adjustBruteLoss(amount, forced = TRUE)
 					newamt = L.getBruteLoss()
 				if("fire")
-					L.adjustFireLoss(amount)
+					L.adjustFireLoss(amount, forced = TRUE)
 					newamt = L.getFireLoss()
 				if("toxin")
-					L.adjustToxLoss(amount)
+					L.adjustToxLoss(amount, forced = TRUE)
 					newamt = L.getToxLoss()
 				if("oxygen")
-					L.adjustOxyLoss(amount)
+					L.adjustOxyLoss(amount, forced = TRUE)
 					newamt = L.getOxyLoss()
 				if("brain")
 					L.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount)
 					newamt = L.getOrganLoss(ORGAN_SLOT_BRAIN)
 				if("clone")
-					L.adjustCloneLoss(amount)
+					L.adjustCloneLoss(amount, forced = TRUE)
 					newamt = L.getCloneLoss()
 				if("stamina")
-					L.adjustStaminaLoss(amount)
+					L.adjustStaminaLoss(amount, forced = TRUE)
 					newamt = L.getStaminaLoss()
 				else
 					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]", confidential = TRUE)
@@ -118,4 +118,5 @@
 	if(href_list["datumrefresh"])
 		var/datum/DAT = locate(href_list["datumrefresh"])
 		if(isdatum(DAT) || istype(DAT, /client) || islist(DAT))
-			SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/debug/view_variables, DAT)
+			debug_variables(DAT)
+
