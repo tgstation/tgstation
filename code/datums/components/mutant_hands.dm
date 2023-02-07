@@ -67,7 +67,7 @@
 				// We'll register a signal such that, if the item is removed at some point,
 				// We can instantly jump in and replace it with a new mutant hand
 				// But we need to override existing signals here - as the nodrop item could persist through multiple attempts
-				RegisterSignals(hand_slot, COMSIG_ITEM_DROPPED, PROC_REF(on_nodrop_item_lost), override = TRUE)
+				RegisterSignal(hand_slot, COMSIG_ITEM_DROPPED, PROC_REF(on_nodrop_item_lost), override = TRUE)
 				continue
 			// Drop any existing non-nodrop items to the ground
 			human_parent.dropItemToGround(hand_slot)
@@ -80,7 +80,7 @@
  */
 /datum/component/mutant_hands/proc/remove_mutant_hands()
 	var/mob/living/carbon/human/human_parent = parent
-	for(var/obj/item/hand_slot as anything in human_parent.held_items)
+	for(var/obj/item/hand_slot in human_parent.held_items)
 		// Not a mutant hand, don't need to delete it
 		if(!istype(hand_slot, mutant_hand_path))
 			if(HAS_TRAIT(hand_slot, TRAIT_NODROP))
