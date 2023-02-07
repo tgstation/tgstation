@@ -242,11 +242,10 @@
 			breather.failed_last_breath = FALSE
 			breather.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 			// Inhale Oxygen, exhale equivalent amount of CO2.
-			if(o2_pp)
-				breathe_gas_volume(breath_gases, /datum/gas/oxygen, /datum/gas/carbon_dioxide)
-				// Heal mob if not in crit.
-				if(breather.health >= breather.crit_threshold)
-					breather.adjustOxyLoss(-5)
+			breathe_gas_volume(breath_gases, /datum/gas/oxygen, /datum/gas/carbon_dioxide)
+			// Heal mob if not in crit.
+			if(breather.health >= breather.crit_threshold)
+				breather.adjustOxyLoss(-5)
 
 	//-- NITROGEN --//
 	// Maximum Nitrogen effects. "Too much N2!"
@@ -267,19 +266,17 @@
 		if(!can_breathe_vacuum && (n2_pp < safe_nitro_min))
 			breather.throw_alert(ALERT_NOT_ENOUGH_NITRO, /atom/movable/screen/alert/not_enough_nitro)
 			// Inhale insufficient amount of N2, exhale CO2.
-			if(n2_pp)
-				gas_breathed = handle_suffocation(breather, n2_pp, safe_nitro_min, breath_gases[/datum/gas/nitrogen][MOLES])
-				breathe_gas_volume(breath_gases, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, volume = gas_breathed)
+			gas_breathed = handle_suffocation(breather, n2_pp, safe_nitro_min, breath_gases[/datum/gas/nitrogen][MOLES])
+			breathe_gas_volume(breath_gases, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, volume = gas_breathed)
 		else
 			// Enough nitrogen to breathe.
 			breather.failed_last_breath = FALSE
 			breather.clear_alert(ALERT_NOT_ENOUGH_NITRO)
 			// Inhale N2, exhale equivalent amount of CO2. Look ma, sideways breathing!
-			if(n2_pp)
-				breathe_gas_volume(breath_gases, /datum/gas/nitrogen, /datum/gas/carbon_dioxide)
-				// Heal mob if not in crit.
-				if(breather.health >= breather.crit_threshold)
-					breather.adjustOxyLoss(-5)
+			breathe_gas_volume(breath_gases, /datum/gas/nitrogen, /datum/gas/carbon_dioxide)
+			// Heal mob if not in crit.
+			if(breather.health >= breather.crit_threshold)
+				breather.adjustOxyLoss(-5)
 
 	//-- CARBON DIOXIDE --//
 	// Maximum CO2 effects. "Too much CO2!"
@@ -311,20 +308,18 @@
 		// Suffocation side-effects.
 		if(!can_breathe_vacuum && (co2_pp < safe_co2_min))
 			breather.throw_alert(ALERT_NOT_ENOUGH_CO2, /atom/movable/screen/alert/not_enough_co2)
-			// Inhale insufficient amount of CO2, exhale O2.
-			if(co2_pp)
-				gas_breathed = handle_suffocation(breather, co2_pp, safe_co2_min, breath_gases[/datum/gas/carbon_dioxide][MOLES])
-				breathe_gas_volume(breath_gases, /datum/gas/carbon_dioxide, /datum/gas/oxygen, volume = gas_breathed)
+
+			gas_breathed = handle_suffocation(breather, co2_pp, safe_co2_min, breath_gases[/datum/gas/carbon_dioxide][MOLES])
+			breathe_gas_volume(breath_gases, /datum/gas/carbon_dioxide, /datum/gas/oxygen, volume = gas_breathed)
 		else
 			// Enough CO2 to breathe.
 			breather.failed_last_breath = FALSE
 			breather.clear_alert(ALERT_NOT_ENOUGH_CO2)
 			// Inhale CO2, exhale equivalent amount of O2. Look ma, reverse breathing!
-			if(co2_pp)
-				breathe_gas_volume(breath_gases, /datum/gas/carbon_dioxide, /datum/gas/oxygen)
-				// Heal mob if not in crit.
-				if(breather.health >= breather.crit_threshold)
-					breather.adjustOxyLoss(-5)
+			breathe_gas_volume(breath_gases, /datum/gas/carbon_dioxide, /datum/gas/oxygen)
+			// Heal mob if not in crit.
+			if(breather.health >= breather.crit_threshold)
+				breather.adjustOxyLoss(-5)
 
 	//-- PLASMA --//
 	// Maximum Plasma effects. "Too much Plasma!"
@@ -345,9 +340,8 @@
 		if(!can_breathe_vacuum && (plasma_pp < safe_plasma_min))
 			breather.throw_alert(ALERT_NOT_ENOUGH_PLASMA, /atom/movable/screen/alert/not_enough_plas)
 			// Breathe insufficient amount of Plasma, exhale CO2.
-			if(plasma_pp)
-				gas_breathed = handle_suffocation(breather, plasma_pp, safe_plasma_min, breath_gases[/datum/gas/plasma][MOLES])
-				breathe_gas_volume(breath_gases, /datum/gas/plasma, /datum/gas/carbon_dioxide, volume = gas_breathed)
+			gas_breathed = handle_suffocation(breather, plasma_pp, safe_plasma_min, breath_gases[/datum/gas/plasma][MOLES])
+			breathe_gas_volume(breath_gases, /datum/gas/plasma, /datum/gas/carbon_dioxide, volume = gas_breathed)
 		else
 			// Enough Plasma to breathe.
 			breather.failed_last_breath = FALSE
