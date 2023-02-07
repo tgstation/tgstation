@@ -436,8 +436,16 @@ Used by the AI doomsday and the self-destruct nuke.
 		// And as the file is now removed set the next map to default.
 		next_map_config = load_default_map_config()
 
+/**
+ * Global list of AREA TYPES that are associated with the station.
+ *
+ * This tracks the types of all areas in existence that are a UNIQUE_AREA and are on the station Z.
+ *
+ * This does not track the area instances themselves - See [GLOB.areas] for that.
+ */
 GLOBAL_LIST_EMPTY(the_station_areas)
 
+/// Generates the global station area list, filling it with typepaths of unique areas found on the station Z.
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
 	for(var/area/station/station_area in GLOB.areas)
 		if (!(station_area.area_flags & UNIQUE_AREA))
