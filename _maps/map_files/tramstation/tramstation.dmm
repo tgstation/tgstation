@@ -793,7 +793,7 @@
 	dir = 1
 	},
 /obj/structure/industrial_lift/tram,
-/obj/structure/chair/sofa/bench/right{
+/obj/structure/chair/sofa/bench/tram/right{
 	dir = 8
 	},
 /turf/open/openspace,
@@ -8095,7 +8095,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/hangover,
-/obj/structure/chair/sofa/bench/left{
+/obj/structure/chair/sofa/bench/tram/left{
 	dir = 4
 	},
 /turf/open/openspace,
@@ -13400,7 +13400,7 @@
 "eOi" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/window/reinforced/tram/left/directional/north,
-/obj/structure/chair/sofa/bench/right{
+/obj/structure/chair/sofa/bench/tram/right{
 	dir = 8
 	},
 /turf/open/openspace,
@@ -13490,7 +13490,7 @@
 /obj/machinery/destination_sign/north{
 	pixel_y = 10
 	},
-/obj/structure/chair/sofa/bench/left{
+/obj/structure/chair/sofa/bench/tram/left{
 	dir = 4
 	},
 /turf/open/openspace,
@@ -16828,7 +16828,7 @@
 	pixel_y = 10
 	},
 /obj/structure/window/reinforced/tram/left/directional/north,
-/obj/structure/chair/sofa/bench/right{
+/obj/structure/chair/sofa/bench/tram/right{
 	dir = 8
 	},
 /turf/open/openspace,
@@ -28761,7 +28761,7 @@
 	},
 /obj/structure/window/reinforced/tram/left/directional/south,
 /obj/effect/landmark/start/hangover,
-/obj/structure/chair/sofa/bench/left{
+/obj/structure/chair/sofa/bench/tram/left{
 	dir = 8
 	},
 /turf/open/openspace,
@@ -29057,7 +29057,7 @@
 "kBX" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/window/reinforced/tram/left/directional/south,
-/obj/structure/chair/sofa/bench/right{
+/obj/structure/chair/sofa/bench/tram/right{
 	dir = 4
 	},
 /turf/open/openspace,
@@ -44212,7 +44212,7 @@
 "pWK" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/window/reinforced/tram/right/directional/north,
-/obj/structure/chair/sofa/bench/right{
+/obj/structure/chair/sofa/bench/tram/right{
 	dir = 8
 	},
 /turf/open/openspace,
@@ -49044,7 +49044,7 @@
 /obj/structure/fluff/tram_rail,
 /obj/structure/industrial_lift/tram,
 /obj/effect/landmark/start/hangover,
-/obj/structure/chair/sofa/bench/left{
+/obj/structure/chair/sofa/bench/tram/left{
 	dir = 8
 	},
 /turf/open/openspace,
@@ -49850,7 +49850,7 @@
 "rPU" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/fluff/tram_rail,
-/obj/structure/chair/sofa/bench/left{
+/obj/structure/chair/sofa/bench/tram/left{
 	dir = 8
 	},
 /turf/open/openspace,
@@ -51044,7 +51044,7 @@
 	pixel_y = -11
 	},
 /obj/effect/landmark/start/hangover,
-/obj/structure/chair/sofa/bench/right{
+/obj/structure/chair/sofa/bench/tram/right{
 	dir = 4
 	},
 /turf/open/openspace,
@@ -55109,7 +55109,7 @@
 /obj/structure/fluff/tram_rail,
 /obj/effect/landmark/start/hangover,
 /obj/structure/industrial_lift/tram,
-/obj/structure/chair/sofa/bench/right{
+/obj/structure/chair/sofa/bench/tram/right{
 	dir = 4
 	},
 /turf/open/openspace,
@@ -59304,7 +59304,7 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/chair/sofa/bench/left{
+/obj/structure/chair/sofa/bench/tram/left{
 	dir = 4
 	},
 /turf/open/openspace,
@@ -61298,7 +61298,7 @@
 /obj/structure/industrial_lift/tram,
 /obj/structure/fluff/tram_rail,
 /obj/effect/landmark/start/hangover,
-/obj/structure/chair/sofa/bench/left{
+/obj/structure/chair/sofa/bench/tram/left{
 	dir = 8
 	},
 /turf/open/openspace,
@@ -62974,7 +62974,7 @@
 "wHs" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/window/reinforced/tram/right/directional/south,
-/obj/structure/chair/sofa/bench/right{
+/obj/structure/chair/sofa/bench/tram/right{
 	dir = 4
 	},
 /turf/open/openspace,
