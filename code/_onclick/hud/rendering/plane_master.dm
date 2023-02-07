@@ -143,12 +143,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 			return TRUE
 		our_client.screen += src
 
-		if(!(critical & PLANE_CRITICAL_NO_EMPTY_RELAY))
+		if(!(critical & PLANE_CRITICAL_NO_RELAY))
 			our_client.screen += relays
 			return TRUE
-		for(var/atom/movable/render_plane_relay/relay as anything in relays)
-			if(relay.critical_target)
-				our_client.screen += relay
 		return TRUE
 
 	if(!our_client)
@@ -208,34 +205,33 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	is_outside_bounds = TRUE
 	// If we're of critical importance, AND we're below the rendering layer
 	if(critical & PLANE_CRITICAL_DISPLAY)
-		if(!(critical & PLANE_CRITICAL_NO_EMPTY_RELAY))
+		// We here assume that your render target starts with *
+		if(critical & PLANE_CRITICAL_CUT_RENDER && render_target)
+			render_target = copytext_char(render_target, 2)
+		if(!(critical & PLANE_CRITICAL_NO_RELAY))
 			return
 		var/client/our_client = relevant.client
 		if(our_client)
 			for(var/atom/movable/render_plane_relay/relay as anything in relays)
-				if(!relay.critical_target)
-					our_client.screen -= relay
+				our_client.screen -= relay
 
-		// We here assume that your render target starts with *
-		if(render_target)
-			render_target = copytext_char(render_target, 2)
 		return
 	hide_from(relevant)
 
 /atom/movable/screen/plane_master/proc/inside_bounds(mob/relevant)
 	is_outside_bounds = FALSE
 	if(critical & PLANE_CRITICAL_DISPLAY)
-		if(!(critical & PLANE_CRITICAL_NO_EMPTY_RELAY))
+		// We here assume that your render target starts with *
+		if(critical & PLANE_CRITICAL_CUT_RENDER && render_target)
+			render_target = "*[render_target]"
+
+		if(!(critical & PLANE_CRITICAL_NO_RELAY))
 			return
 		var/client/our_client = relevant.client
 		if(our_client)
 			for(var/atom/movable/render_plane_relay/relay as anything in relays)
-				if(!relay.critical_target)
-					our_client.screen += relay
+				our_client.screen += relay
 
-		// We here assume that your render target starts with *
-		if(render_target)
-			render_target = "*[render_target]"
 		return
 	show_to(relevant)
 
@@ -361,6 +357,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		<br>We use this to draw to just the light mask plane, cause if it's not there we get holes of blackness over openspace"
 	plane = TRANSPARENT_FLOOR_PLANE
 	render_relay_planes = list(LIGHT_MASK_PLANE)
+	// Needs to be critical or it uh, it'll look white
+	critical = PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_RELAY
 
 /atom/movable/screen/plane_master/floor/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
