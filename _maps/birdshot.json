@@ -2,10 +2,10 @@
 	"version": 1,
 	"map_name": "Birdboat Station",
 	"map_path": "map_files/Birdshot",
-	"map_file": "birdshot.dmm",
+	"map_file": "godhasforsakenme.dmm",
 	"shuttles": {
 		"cargo": "cargo_box",
-		"ferry": "ferry_fancy",
+		"ferry": "ferry_kilo",
 		"whiteship": "whiteship_meta",
 		"emergency": "emergency_meta"
 	},
