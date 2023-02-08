@@ -263,8 +263,9 @@
 
 	//Hands
 	for(var/obj/item/I in held_items)
-		if(!(I.item_flags & ABSTRACT))
-			. += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))]."
+		if(I.item_flags & (ABSTRACT|EXAMINE_SKIP|HAND_ITEM))
+			continue
+		. += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))]."
 
 	//Internal storage
 	if(internal_storage && !(internal_storage.item_flags & ABSTRACT))

@@ -19,8 +19,9 @@
 		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck."
 
 	for(var/obj/item/I in held_items)
-		if(!(I.item_flags & ABSTRACT))
-			. += "[t_He] [t_is] holding [I.get_examine_string(user)] in [t_his] [get_held_index_name(get_held_index_of_item(I))]."
+		if(I.item_flags & (ABSTRACT|EXAMINE_SKIP|HAND_ITEM))
+			continue
+		. += "[t_He] [t_is] holding [I.get_examine_string(user)] in [t_his] [get_held_index_name(get_held_index_of_item(I))]."
 
 	if (back)
 		. += "[t_He] [t_has] [back.get_examine_string(user)] on [t_his] back."
