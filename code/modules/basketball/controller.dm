@@ -22,10 +22,12 @@ GLOBAL_VAR(basketball_game)
  * It is first created when the first ghost signs up to play.
  */
 /datum/basketball_controller
-	///template picked when the game starts. used for the name and desc reading
+	/// Template picked when the game starts. used for the name and desc reading
 	var/datum/map_template/basketball/current_map
-	///map generation tool that deletes the current map after the game finishes
+	/// Map generation tool that deletes the current map after the game finishes
 	var/datum/map_generator/massdelete/map_deleter
+	/// Total amount of time basketball is played for
+	var/game_duration = 2 MINUTES
 
 	/// Spawn points for home team players
 	var/list/home_team_landmarks = list()
@@ -115,8 +117,10 @@ GLOBAL_VAR(basketball_game)
  * * Starts the first day manually (so no timer) with the second proc
  */
 /datum/basketball_controller/proc/start_game()
+	message_admins("The players have spoken! Voting has enabled the basketball minigame!")
+	notify_ghosts("Basketball minigame is about to start!",'sound/effects/ghost2.ogg')
 	create_bodies()
-	//start_game()
+	addtimer(CALLBACK(src, PROC_REF(victory)), game_duration)
 
 /**
  * Called when the game is setting up, AFTER map is loaded but BEFORE the phase timers start. Creates and places each role's body and gives the correct player key
@@ -186,15 +190,59 @@ GLOBAL_VAR(basketball_game)
 		SEND_SOUND(baller, 'sound/machines/scanbuzz.ogg')
 		to_chat(baller, span_danger("You are a basketball player for the [team_name]. Score as much as you can before time runs out."))
 
-/datum/basketball_controller/proc/check_victory()
-	return
+/datum/basketball_controller/proc/victory()
+	for(var/mob/_competitor in GLOB.mob_living_list)
+		var/mob/living/competitor = _competitor
+		var/area/mob_area = get_area(competitor)
+		if(istype(mob_area, game_area))
+			to_chat(competitor, "<span class='narsie [team_span]'>[team] team wins!</span>")
+			to_chat(competitor, victory_rejoin_text)
+			for(var/obj/item/ctf/W in competitor)
+				competitor.dropItemToGround(W)
+			competitor.dust()
+
+	var/is_game_draw
+	var/winner_team_ckeys
+	var/loser_team_ckeys
+	
+	if(home_hoop.score === away_hoop.score)
+		is_game_draw = TRUE
+		winner_team_ckeys |= home_team_players
+		winner_team_ckeys |= away_team_players
+	else if(home_hoop.score > away_hoop.score)
+		winner_team_ckeys = home_team_players
+		loser_team_ckeys = away_team_players
+	else if(home_hoop.score < away_hoop.score)
+		winner_team_ckeys = away_team_players
+		loser_team_ckeys = home_team_players
+
+	if(is_game_draw)
+		for(ckey in winner_team_ckeys)
+		to_chat(competitor, "<span class='narsie [team_span]'>The game ends in a draw!</span>")
+	else
+		for(ckey in winner_team_ckeys)
+			if(user.mind && user.mind.current)
+				
+			
+			
+			to_chat(competitor, "<span class='narsie [team_span]'>[team] team wins!</span>")
+			player.gib()
+
+	addtimer(CALLBACK(src, PROC_REF(end_game)), 20 SECONDS) // give winners time for a victory lap
+
+
 
 /**
  * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
  */
 /datum/basketball_controller/proc/end_game()
-	return
+	map_deleter.generate() //remove the map, it will be loaded at the start of the next one
+	QDEL_LIST(home_team_players)
+	QDEL_LIST(away_team_players)
 
+	//map gen does not deal with landmarks
+	QDEL_LIST(home_team_landmarks)
+	QDEL_LIST(away_team_landmarks)	
 
 //////////////////////////////////////////
 
