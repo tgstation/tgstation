@@ -1,0 +1,449 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/lesser)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "i";
+	name = "graffiti";
+	paint_colour = "#FF9300";
+	pixel_x = 37;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "i";
+	name = "graffiti";
+	paint_colour = "#FF9300";
+	pixel_x = 22;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "i";
+	name = "graffiti";
+	paint_colour = "#FF9300";
+	pixel_x = 27;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "i";
+	name = "graffiti";
+	paint_colour = "#FF9300";
+	pixel_x = 32;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "x";
+	name = "graffiti";
+	paint_colour = "#FF9300";
+	pixel_x = 32
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"h" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/folder/blue{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/folder/red{
+	pixel_x = 8
+	},
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen/fourcolor,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/spawner/random/trash/hobo_squat,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/filingcabinet/chestdrawer{
+	pixel_y = 2
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "i";
+	name = "graffiti";
+	paint_colour = "#FF9300";
+	pixel_x = 37;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "i";
+	name = "graffiti";
+	paint_colour = "#FF9300";
+	pixel_x = 22;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "i";
+	name = "graffiti";
+	paint_colour = "#FF9300";
+	pixel_x = 27;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "i";
+	name = "graffiti";
+	paint_colour = "#FF9300";
+	pixel_x = 32;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "x";
+	name = "graffiti";
+	paint_colour = "#FF9300";
+	pixel_x = 32
+	},
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"u" = (
+/obj/item/weldingtool/empty,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"w" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "i";
+	name = "graffiti";
+	paint_colour = "#FF9300";
+	pixel_x = 37;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "i";
+	name = "graffiti";
+	paint_colour = "#FF9300";
+	pixel_x = 22;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "i";
+	name = "graffiti";
+	paint_colour = "#FF9300";
+	pixel_x = 27;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "i";
+	name = "graffiti";
+	paint_colour = "#FF9300";
+	pixel_x = 32;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "x";
+	name = "graffiti";
+	paint_colour = "#FF9300";
+	pixel_x = 32
+	},
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/chair/stool,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"F" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"I" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"L" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/pen/fountain{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/paper{
+	name = "my last will and testament";
+	default_raw_text = "if you are reading this, that means i have died during the construction of this abomination against mankind. i leave behind all my material wealth to my dog brian and i part this plane of existence with these words of wisdom: do no take contract work from nanotrasen they don't give you health benefits"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"M" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/radio/off,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"N" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/wrench,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/cup/glass/waterbottle/empty,
+/obj/item/reagent_containers/cup/glass/waterbottle/empty{
+	pixel_x = -7;
+	pixel_y = -4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"Q" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/remains/human,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/head/utility/hardhat/orange,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"W" = (
+/turf/template_noop,
+/area/template_noop)
+"Y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/cardboard,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+
+(1,1,1) = {"
+W
+a
+a
+a
+a
+a
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(2,1,1) = {"
+W
+k
+F
+F
+E
+a
+a
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(3,1,1) = {"
+w
+F
+F
+C
+R
+L
+a
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(4,1,1) = {"
+W
+N
+E
+E
+s
+h
+a
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(5,1,1) = {"
+W
+u
+A
+d
+I
+M
+a
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(6,1,1) = {"
+W
+O
+x
+g
+t
+a
+a
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(7,1,1) = {"
+W
+Q
+a
+a
+a
+a
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(8,1,1) = {"
+W
+E
+E
+a
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(9,1,1) = {"
+W
+Y
+Y
+a
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(10,1,1) = {"
+W
+Y
+Y
+a
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(11,1,1) = {"
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
