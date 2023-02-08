@@ -128,7 +128,10 @@ GLOBAL_VAR(basketball_game)
  * * sends the greeting text (goals, role name, etc)
  */
 /datum/basketball_controller/proc/create_bodies(ready_players)
-	var/list/possible_away_teams = subtypesof(/datum/map_template/basketball) - current_map
+	var/meowth = current_map // debug var delet this plox
+
+	var/list/possible_away_teams = subtypesof(/datum/map_template/basketball)
+	possible_away_teams -= current_map
 	var/datum/map_template/basketball/away_map = pick(possible_away_teams)
 	away_map = new away_map
 
