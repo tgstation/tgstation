@@ -25316,14 +25316,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"hMo" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/engineering/engine_smes)
 "hMr" = (
 /obj/effect/landmark/start/chaplain,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -76835,12 +76827,6 @@
 /obj/structure/sign/warning/cold_temp/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
-"xFV" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/effect/landmark/start/hangover,
-/obj/effect/turf_decal/bot_red,
-/turf/open/floor/carpet,
-/area/station/commons/dorms)
 "xGp" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/left/directional/north{
@@ -238769,7 +238755,7 @@ bTq
 xUP
 ouE
 rpF
-hMo
+twt
 fcg
 eTx
 fDn
@@ -240236,7 +240222,7 @@ ygB
 qbF
 oqg
 ygB
-xFV
+vZz
 bnt
 ygB
 vZz
