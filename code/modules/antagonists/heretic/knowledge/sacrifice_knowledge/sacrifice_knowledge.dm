@@ -373,7 +373,7 @@
 	else
 		RegisterSignal(sac_target, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
 		to_chat(sac_target, span_hypnophrase("Your link to the Mansus feels weaker, as if someone stole all your powers. You dont think you will be able to cast your spells anytime soon."))
-		gain_knowledge(mansus_restoration)
+		sac_target.gain_knowledge(/datum/heretic_knowledge/mansus_restoration)
 
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
