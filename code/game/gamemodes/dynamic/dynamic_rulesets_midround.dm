@@ -800,7 +800,7 @@
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat=0)
-	if (!SSmapping.empty_space)
+	if (SSmapping.is_planetary())
 		return FALSE
 	return ..()
 

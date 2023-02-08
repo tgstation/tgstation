@@ -33,6 +33,8 @@
 	/// Datum that will handle admin options for forcing the event.
 	/// If there are no options, just leave it null.
 	var/datum/event_admin_setup/admin_setup = null
+	/// Flags dictating whether this event should be run on certain kinds of map
+	var/map_flags = NONE
 
 /datum/round_event_control/New()
 	if(config && !wizardevent) // Magic is unaffected by configs
@@ -44,6 +46,18 @@
 /datum/round_event_control/wizard
 	category = EVENT_CATEGORY_WIZARD
 	wizardevent = TRUE
+
+/// Returns true if event can run in current map
+/datum/round_event_control/proc/valid_for_map()
+	if (!map_flags)
+		return TRUE
+	if (SSmapping.is_planetary())
+		if (map_flags & EVENT_SPACE_ONLY)
+			return FALSE
+	else
+		if (map_flags & EVENT_PLANETARY_ONLY)
+			return FALSE
+	return TRUE
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.

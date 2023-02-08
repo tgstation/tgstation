@@ -393,11 +393,12 @@ GLOBAL_LIST_EMPTY(lifts)
 					qdel(victim_machine)
 
 			for(var/mob/living/collided in dest_turf.contents)
+				var/damage_multiplier = collided.maxHealth * 0.01
 				if(lift_master_datum.ignored_smashthroughs[collided.type])
 					continue
 				to_chat(collided, span_userdanger("[src] collides into you!"))
 				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-				var/damage = rand(9, 28) * collision_lethality
+				var/damage = rand(14, 44) * collision_lethality * damage_multiplier
 				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD)
 				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_CHEST)
 				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG)

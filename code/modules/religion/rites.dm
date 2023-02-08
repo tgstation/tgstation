@@ -37,7 +37,7 @@
 		return FALSE
 	to_chat(user, span_notice("You begin to perform the rite of [name]..."))
 	if(!ritual_invocations)
-		if(do_after(user, target = user, delay = ritual_length))
+		if(do_after(user, ritual_length))
 			return TRUE
 		return FALSE
 	var/first_invoke = TRUE
@@ -48,10 +48,10 @@
 			continue
 		if(!length(ritual_invocations)) //we divide so we gotta protect
 			return FALSE
-		if(!do_after(user, target = user, delay = ritual_length/length(ritual_invocations)))
+		if(!do_after(user, ritual_length/length(ritual_invocations)))
 			return FALSE
 		user.say(i)
-	if(!do_after(user, target = user, delay = ritual_length/length(ritual_invocations))) //because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
+	if(!do_after(user, ritual_length/length(ritual_invocations))) //because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
 		return FALSE
 	if(invoke_msg)
 		user.say(invoke_msg)

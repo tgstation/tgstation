@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix kilo barsign spawning under windows"
+  - bugfix: "Fix barsign updatePath being backwards"

@@ -395,12 +395,8 @@
 
 	return pick(possible_loc)
 
-///Prevents power_failure message spam if a traitor purchases repeatedly.
-GLOBAL_VAR_INIT(power_failure_message_cooldown, 0)
-
 ///Disable power in the station APCs
 /proc/power_fail(duration_min, duration_max)
-	var/message_cooldown
 	for(var/obj/machinery/power/apc/current_apc as anything in GLOB.apcs_list)
 		if(!current_apc.cell || !SSmapping.level_trait(current_apc.z, ZTRAIT_STATION))
 			continue
@@ -409,9 +405,7 @@ GLOBAL_VAR_INIT(power_failure_message_cooldown, 0)
 			continue
 
 		var/duration = rand(duration_min,duration_max)
-		message_cooldown = max(duration, message_cooldown)
 		current_apc.energy_fail(duration)
-	GLOB.power_failure_message_cooldown = world.time + message_cooldown
 
 /**
  * Sends a round tip to a target. If selected_tip is null, a random tip will be sent instead (5% chance of it being silly).

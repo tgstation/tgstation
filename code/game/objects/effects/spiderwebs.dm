@@ -43,8 +43,9 @@
 		return
 	if(!HAS_TRAIT(user,TRAIT_WEB_WEAVER))
 		return
-	user.visible_message(span_notice("[user] begins weaving [src] into cloth."), span_notice("You begin weaving [src] into cloth."))
+	user.balloon_alert_to_viewers("weaving...")
 	if(!do_after(user, 2 SECONDS))
+		user.balloon_alert(user, "interrupted!")
 		return
 	qdel(src)
 	var/obj/item/stack/sheet/cloth/woven_cloth = new /obj/item/stack/sheet/cloth
@@ -67,7 +68,7 @@
 		if(istype(mover.pulledby, /mob/living/simple_animal/hostile/giant_spider))
 			return TRUE
 		if(prob(50))
-			to_chat(mover, span_danger("You get stuck in \the [src] for a moment."))
+			balloon_alert(mover, "stuck in web!")
 			return FALSE
 	else if(isprojectile(mover))
 		return prob(30)
@@ -95,7 +96,7 @@
 		if(mover.pulledby == allowed_mob)
 			return TRUE
 		if(prob(50))
-			to_chat(mover, span_danger("You get stuck in \the [src] for a moment."))
+			balloon_alert(mover, "stuck in web!")
 			return FALSE
 	else if(isprojectile(mover))
 		return prob(30)
