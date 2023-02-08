@@ -26,18 +26,10 @@
 	power_channel = AREA_USAGE_EQUIP
 	max_integrity = 300
 	integrity_failure = 0.33
-	/// A reference to an `/obj/item/paper` inside the copier, if one is inserted. Otherwise null.
-	var/obj/item/paper/paper_copy
-	/// A reference to an `/obj/item/photo` inside the copier, if one is inserted. Otherwise null.
-	var/obj/item/photo/photo_copy
-	/// A reference to an `/obj/item/documents` inside the copier, if one is inserted. Otherwise null.
-	var/obj/item/documents/document_copy
 	/// A reference to a mob on top of the photocopier trying to copy their ass. Null if there is no mob.
 	var/mob/living/ass
 	/// A reference to the toner cartridge that's inserted into the copier. Null if there is no cartridge.
 	var/obj/item/toner/toner_cartridge
-	/// A reference to an `/obj/item/paperwork` inside the copier, if one is inserted. Otherwise null.
-	var/obj/item/paperwork/paperwork_copy
 	/// How many copies will be printed with one click of the "copy" button.
 	var/num_copies = 1
 	/// Used with photos. Determines if the copied photo will be in greyscale or color.
@@ -46,6 +38,9 @@
 	var/busy = FALSE
 	/// Variable needed to determine the selected category of forms on Photocopier.js
 	var/category
+	///Variable that describes what object is trying to be copied.
+	var/obj/object_copy
+	var/copy_type
 
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
@@ -53,25 +48,18 @@
 	toner_cartridge = new(src)
 
 /obj/machinery/photocopier/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == paper_copy)
-		paper_copy = null
-	if(deleting_atom == photo_copy)
-		photo_copy = null
-	if(deleting_atom == document_copy)
-		document_copy = null
+	if(deleting_atom == object_copy)
+		object_copy = null
+		copy_type = null
 	if(deleting_atom == ass)
 		ass = null
 	if(deleting_atom == toner_cartridge)
 		toner_cartridge = null
-	if(deleting_atom == paperwork_copy)
-		paperwork_copy = null
 	return ..()
 
 /obj/machinery/photocopier/Destroy()
-	QDEL_NULL(paper_copy)
-	QDEL_NULL(photo_copy)
+	QDEL_NULL(object_copy)
 	QDEL_NULL(toner_cartridge)
-	QDEL_NULL(paperwork_copy)
 	ass = null //the mob isn't actually contained and just referenced, no need to delete it.
 	return ..()
 
@@ -98,7 +86,7 @@
 	catch()
 		data["forms_exist"] = FALSE
 
-	if(photo_copy)
+	if(copy_type == "photo")
 		data["is_photo"] = TRUE
 		data["color_mode"] = color_mode
 
@@ -129,47 +117,43 @@
 		if("make_copy")
 			if(check_busy())
 				return FALSE
-			if(paper_copy)
+			if(copy_type == "paper")
+				var/obj/item/paper/paper_copy = object_copy
 				if(!paper_copy.get_total_length())
 					to_chat(usr, span_warning("An error message flashes across [src]'s screen: \"The supplied paper is blank. Aborting.\""))
 					return FALSE
 				// Basic paper
-				if(istype(paper_copy, /obj/item/paper))
-					do_copy_loop(CALLBACK(src, PROC_REF(make_paper_copy)), usr)
+				if(istype(object_copy, /obj/item/paper))
+					do_copy_loop(CALLBACK(src, PROC_REF(make_paper_copy), paper_copy), usr)
 					return TRUE
 			// Copying photo.
-			if(photo_copy)
-				do_copy_loop(CALLBACK(src, PROC_REF(make_photo_copy)), usr)
+			if(copy_type == "photo")
+				var/obj/item/photo/photo_copy = object_copy
+				do_copy_loop(CALLBACK(src, PROC_REF(make_photo_copy), photo_copy), usr)
 				return TRUE
 			// Copying Documents.
-			if(document_copy)
-				do_copy_loop(CALLBACK(src, PROC_REF(make_document_copy)), usr)
+			if(copy_type == "document")
+				var/obj/item/documents/document_copy = object_copy
+				do_copy_loop(CALLBACK(src, PROC_REF(make_document_copy), document_copy), usr)
 				return TRUE
 			// ASS COPY. By Miauw
 			if(ass)
 				do_copy_loop(CALLBACK(src, PROC_REF(make_ass_copy)), usr)
 				return TRUE
 			// Copying paperwork
-			if(paperwork_copy)
-				do_copy_loop(CALLBACK(src, PROC_REF(make_paperwork_copy)), usr)
+			if(copy_type == "paperwork")
+				var/obj/item/paperwork/paperwork_copy = object_copy
+				do_copy_loop(CALLBACK(src, PROC_REF(make_paperwork_copy), paperwork_copy), usr)
 				return TRUE
 
 		// Remove the paper/photo/document from the photocopier.
 		if("remove")
-			if(paper_copy)
-				remove_photocopy(paper_copy, usr)
-				paper_copy = null
-			else if(photo_copy)
-				remove_photocopy(photo_copy, usr)
-				photo_copy = null
-			else if(document_copy)
-				remove_photocopy(document_copy, usr)
-				document_copy = null
+			if(object_copy)
+				remove_photocopy(object_copy, usr)
+				object_copy = null
+				copy_type = null
 			else if(check_ass())
 				to_chat(ass, span_notice("You feel a slight pressure on your ass."))
-			else if(paperwork_copy)
-				remove_photocopy(paperwork_copy, usr)
-				paperwork_copy = null
 			return TRUE
 
 		// AI printing photos from their saved images.
@@ -223,16 +207,18 @@
  * Determines if the photocopier has enough toner to create `num_copies` amount of copies of the currently inserted item.
  */
 /obj/machinery/photocopier/proc/has_enough_toner()
-	if(paper_copy)
-		return toner_cartridge.charges >= (PAPER_TONER_USE * num_copies)
-	else if(document_copy)
-		return toner_cartridge.charges >= (DOCUMENT_TONER_USE * num_copies)
-	else if(photo_copy)
-		return toner_cartridge.charges >= (PHOTO_TONER_USE * num_copies)
-	else if(ass)
+	if(ass)
 		return toner_cartridge.charges >= (ASS_TONER_USE * num_copies)
-	else if(paperwork_copy)
-		return toner_cartridge.charges >= (PAPERWORK_TONER_USE * num_copies)
+	else
+		switch(copy_type)
+			if("paper")
+				return toner_cartridge.charges >= (PAPER_TONER_USE * num_copies)
+			if("document")
+				return toner_cartridge.charges >= (DOCUMENT_TONER_USE * num_copies)
+			if("photo")
+				return toner_cartridge.charges >= (PHOTO_TONER_USE * num_copies)
+			if("paperwork")
+				return toner_cartridge.charges >= (PAPERWORK_TONER_USE * num_copies)
 	return FALSE
 
 /**
@@ -286,7 +272,7 @@
  *
  * Checks first if `paper_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
  */
-/obj/machinery/photocopier/proc/make_paper_copy()
+/obj/machinery/photocopier/proc/make_paper_copy(obj/item/paper/paper_copy)
 	if(!paper_copy || !toner_cartridge)
 		return
 
@@ -305,7 +291,7 @@
  *
  * Checks first if `photo_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
  */
-/obj/machinery/photocopier/proc/make_photo_copy()
+/obj/machinery/photocopier/proc/make_photo_copy(obj/item/photo/photo_copy)
 	if(!photo_copy || !toner_cartridge)
 		return
 	var/obj/item/photo/copied_pic = new(loc, photo_copy.picture.Copy(color_mode == PHOTO_GREYSCALE ? TRUE : FALSE))
@@ -317,7 +303,7 @@
  *
  * Checks first if `document_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
  */
-/obj/machinery/photocopier/proc/make_document_copy()
+/obj/machinery/photocopier/proc/make_document_copy(obj/item/documents/document_copy)
 	if(!document_copy || !toner_cartridge)
 		return
 	var/obj/item/documents/photocopy/copied_doc = new(loc, document_copy)
@@ -330,7 +316,7 @@
  * Checks first if `paperwork_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
  * Copies the stamp from a given piece of paperwork if it is already stamped, allowing for you to sell photocopied paperwork at the risk of losing budget money.
  */
-/obj/machinery/photocopier/proc/make_paperwork_copy()
+/obj/machinery/photocopier/proc/make_paperwork_copy(obj/item/paperwork/paperwork_copy)
 	if(!paperwork_copy || !toner_cartridge)
 		return
 	var/obj/item/paperwork/photocopy/copied_paperwork = new(loc, paperwork_copy)
@@ -428,56 +414,47 @@
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/paper))
-		if(copier_empty())
-			if(!user.temporarilyRemoveItemFromInventory(O))
-				return
-			paper_copy = O
-			do_insertion(O, user)
-		else
-			to_chat(user, span_warning("There is already something in [src]!"))
+/obj/machinery/photocopier/attackby(obj/item/object, mob/user, params)
+	if(istype(object, /obj/item/paper))
+		insert_copy_object(object, user, "paper")
+	else if(istype(object, /obj/item/photo))
+		insert_copy_object(object, user, "photo")
+	else if(istype(object, /obj/item/documents))
+		insert_copy_object(object, user, "document")
 
-	else if(istype(O, /obj/item/photo))
-		if(copier_empty())
-			if(!user.temporarilyRemoveItemFromInventory(O))
-				return
-			photo_copy = O
-			do_insertion(O, user)
-		else
-			to_chat(user, span_warning("There is already something in [src]!"))
-
-	else if(istype(O, /obj/item/documents))
-		if(copier_empty())
-			if(!user.temporarilyRemoveItemFromInventory(O))
-				return
-			document_copy = O
-			do_insertion(O, user)
-		else
-			to_chat(user, span_warning("There is already something in [src]!"))
-
-	else if(istype(O, /obj/item/toner))
+	else if(istype(object, /obj/item/toner))
 		if(toner_cartridge)
 			to_chat(user, span_warning("[src] already has a toner cartridge inserted. Remove that one first."))
 			return
-		O.forceMove(src)
-		toner_cartridge = O
-		to_chat(user, span_notice("You insert [O] into [src]."))
+		object.forceMove(src)
+		toner_cartridge = object
+		to_chat(user, span_notice("You insert [object] into [src]."))
 
-	else if(istype(O, /obj/item/areaeditor/blueprints))
+	else if(istype(object, /obj/item/areaeditor/blueprints))
 		to_chat(user, span_warning("The Blueprint is too large to put into the copier. You need to find something else to record the document."))
-	else if(istype(O, /obj/item/paperwork))
+	else if(istype(object, /obj/item/paperwork))
 		if(copier_empty())
-			if(istype(O, /obj/item/paperwork/photocopy)) //No infinite paper chain. You need the original paperwork to make more copies.
-				to_chat(user, span_warning("The [O] is far too messy to produce a good copy!"))
+			if(istype(object, /obj/item/paperwork/photocopy)) //No infinite paper chain. You need the original paperwork to make more copies.
+				to_chat(user, span_warning("The [object] is far too messy to produce a good copy!"))
 			else
-				if(!user.temporarilyRemoveItemFromInventory(O))
+				if(!user.temporarilyRemoveItemFromInventory(object))
 					return
-				paperwork_copy = O
-				do_insertion(O, user)
+				object_copy = object
+				copy_type = "paperwork"
+				do_insertion(object, user)
 		else
 			to_chat(user, span_warning("There is already something in [src]!"))
 		return ..()
+
+/obj/machinery/photocopier/proc/insert_copy_object(obj/item/object, mob/user, object_copy_type)
+	if(copier_empty())
+		if(!user.temporarilyRemoveItemFromInventory(object))
+			return
+		object_copy = object
+		copy_type = object_copy_type
+		do_insertion(object, user)
+	else
+		to_chat(user, span_warning("There is already something in [src]!"))
 
 /obj/machinery/photocopier/atom_break(damage_flag)
 	. = ..()
@@ -507,20 +484,11 @@
 		target.forceMove(drop_location())
 		ass = target
 
-		if(photo_copy)
-			photo_copy.forceMove(drop_location())
-			visible_message(span_warning("[photo_copy] is shoved out of the way by [ass]!"))
-			photo_copy = null
-
-		else if(paper_copy)
-			paper_copy.forceMove(drop_location())
-			visible_message(span_warning("[paper_copy] is shoved out of the way by [ass]!"))
-			paper_copy = null
-
-		else if(document_copy)
-			document_copy.forceMove(drop_location())
-			visible_message(span_warning("[document_copy] is shoved out of the way by [ass]!"))
-			document_copy = null
+		if(copy_type != "ass" || !isnull(copy_type))
+			object_copy.forceMove(drop_location())
+			visible_message(span_warning("[object_copy] is shoved out of the way by [ass]!"))
+			object_copy = null
+			copy_type = null
 
 /obj/machinery/photocopier/Exited(atom/movable/gone, direction)
 	check_ass() // There was potentially a person sitting on the copier, check if they're still there.
@@ -560,7 +528,7 @@
  * Return `FALSE` is the copier has something inside of it. Returns `TRUE` if it doesn't.
  */
 /obj/machinery/photocopier/proc/copier_empty()
-	if(paper_copy || photo_copy || document_copy || check_ass() || paperwork_copy)
+	if(object_copy || check_ass())
 		return FALSE
 	else
 		return TRUE
