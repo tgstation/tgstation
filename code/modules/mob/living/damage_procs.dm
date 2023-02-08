@@ -189,7 +189,7 @@
 		if(!forced && !(mob_respiration_type & required_respiration_type))  // if the mob has no lungs, use mob_respiration_type
 			return
 	else 
-		if (!forced && !(affected_lungs.respiration_type & required_respiration_type)) // otherwise use the lungs' respiration_type
+		if(!forced && !(affected_lungs.respiration_type & required_respiration_type)) // otherwise use the lungs' respiration_type
 			return
 	. = oxyloss
 	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -205,7 +205,7 @@
 		if(!(mob_respiration_type & required_respiration_type))
 			return
 	else 
-		if (!forced && !(affected_lungs.respiration_type & required_respiration_type))
+		if(!forced && !(affected_lungs.respiration_type & required_respiration_type))
 			return
 	. = oxyloss
 	oxyloss = amount
