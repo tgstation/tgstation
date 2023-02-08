@@ -18,9 +18,13 @@
 /// The maximum amount of copies you can make with one press of the copy button.
 #define MAX_COPIES_AT_ONCE 10
 
+/// copy_type value that indicates the photocopier is copying a sheet of paper
 #define PAPER_COPY_TYPE "paper"
+/// copy_type value that indicates the photocopier is copying a photo
 #define PHOTO_COPY_TYPE "photo"
+/// copy_type value that indicates the photocopier is copying a document
 #define DOCUMENT_COPY_TYPE "document"
+/// copy_type value that indicates the photocopier is copying a stack of paperwork
 #define PAPERWORK_COPY_TYPE "paperwork"
 
 /obj/machinery/photocopier
