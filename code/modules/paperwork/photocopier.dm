@@ -127,8 +127,7 @@
 	switch(action)
 		// Copying paper, photos, documents and asses.
 		if("make_copy")
-			if(busy)
-				to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
+			if(check_busy())
 				return FALSE
 			if(paper_copy)
 				if(!paper_copy.get_total_length())
@@ -175,8 +174,7 @@
 
 		// AI printing photos from their saved images.
 		if("ai_photo")
-			if(busy)
-				to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
+			if(check_busy())
 				return FALSE
 			var/mob/living/silicon/ai/tempAI = usr
 			if(!length(tempAI.aicamera.stored))
@@ -196,8 +194,7 @@
 
 		// Remove the toner cartridge from the copier.
 		if("remove_toner")
-			if(busy)
-				to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
+			if(check_busy())
 				return
 			if(issilicon(usr) || (ishuman(usr) && !usr.put_in_hands(toner_cartridge)))
 				toner_cartridge.forceMove(drop_location())
@@ -214,22 +211,13 @@
 			return TRUE
 		// Called when you press print blank
 		if("print_blank")
-			if(busy)
-				to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
+			if(check_busy())
 				return FALSE
 			if (toner_cartridge.charges - PAPER_TONER_USE < 0)
 				to_chat(usr, span_warning("There is not enough toner in [src] to print the form, please replace the cartridge."))
 				return FALSE
-			do_copy_loop(CALLBACK(src, PROC_REF(make_blank_print)), usr)
-			var/obj/item/paper/printblank = new /obj/item/paper (loc)
-			var/printname = sanitize(params["name"])
-			var/list/printinfo
-			for(var/infoline as anything in params["info"])
-				printinfo += infoline
-			printblank.name = printname
-			printblank.add_raw_text(printinfo)
-			printblank.update_appearance()
-			return printblank
+			do_copy_loop(CALLBACK(src, PROC_REF(make_blank_print), params), usr)
+			return TRUE
 
 /**
  * Determines if the photocopier has enough toner to create `num_copies` amount of copies of the currently inserted item.
@@ -273,6 +261,13 @@
 /obj/machinery/photocopier/proc/reset_busy()
 	update_use_power(IDLE_POWER_USE)
 	busy = FALSE
+
+/obj/machinery/photocopier/proc/check_busy()
+	if(busy)
+		to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
+		return TRUE
+	return FALSE
+
 
 /**
  * Gives items a random x and y pixel offset, between -10 and 10 for each.
@@ -349,9 +344,17 @@
 /**
  * The procedure is called when printing a blank to write off toner consumption.
  */
-/obj/machinery/photocopier/proc/make_blank_print()
+/obj/machinery/photocopier/proc/make_blank_print(params)
 	if(!toner_cartridge)
 		return
+	var/obj/item/paper/printblank = new /obj/item/paper (loc)
+	var/printname = sanitize(params["name"])
+	var/list/printinfo
+	for(var/infoline as anything in params["info"])
+		printinfo += infoline
+	printblank.name = printname
+	printblank.add_raw_text(printinfo)
+	printblank.update_appearance()
 	toner_cartridge.charges -= PAPER_TONER_USE
 
 /**
