@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "midround changelings no longer spawn a dummy body on the arrivals shuttle."

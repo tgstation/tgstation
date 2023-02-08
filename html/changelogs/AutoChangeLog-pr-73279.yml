@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "False alarm radiation leaks should be less obvious"
-  - bugfix: "Fixes some traitor objectives from dropping in blacklisted areas, like security."

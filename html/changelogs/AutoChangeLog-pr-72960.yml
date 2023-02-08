@@ -1,7 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes:
-  - qol: "CTF guns spawn in the default active hand"
-  - qol: "CTF shields become transparent as they lose charge"
-  - qol: "CTF King of the Hill scores are visible to players in-game"
-  - qol: "CTF controllers can no longer be blocked by players standing on them"

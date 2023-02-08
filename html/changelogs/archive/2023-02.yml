@@ -329,3 +329,51 @@
       species stored in the DNA
   itseasytosee:
   - imageadd: inhands for fairy grass tiles
+2023-02-08:
+  ArcaneMusic:
+  - qol: Adds screentips to both signs and plaque construction/modification.
+  Jacquerel:
+  - bugfix: Changeling meteors on Icebox will now land close to the station instead
+      of a random map edge tile.
+  - refactor: Tidied up spider ability code, they should all work the same, but please
+      report if they do not.
+  - refactor: Spiders and Geneticists now use the same ability to make webs rather
+      than two virtually-identical ones, which should also perform just as it did
+      before this change.
+  - bugfix: Setting a directive as a Spider Midwife should properly pass and announce
+      itself to new spiders.
+  LT3:
+  - spellcheck: Gloves now mention modes, not intents
+  LemonInTheDark:
+  - bugfix: Your hud should break much less now
+  Melbert:
+  - bugfix: Custom named drinks (with a pen) no longer reset after their glass volume
+      updates
+  - bugfix: Admins, "All areas unpowered" in the secrets menu will now function again.
+  - bugfix: DNA injecting other people is no longer instant
+  - bugfix: Forcing people to drink is no longer instant
+  - bugfix: False alarm radiation leaks should be less obvious
+  - bugfix: Fixes some traitor objectives from dropping in blacklisted areas, like
+      security.
+  Mey-Ha-Zah:
+  - imageadd: 'Updated Regal Rat Sprites: Provided by Onule.'
+  Rhials:
+  - bugfix: midround changelings no longer spawn a dummy body on the arrivals shuttle.
+  SyncIt21:
+  - bugfix: Bibles can convert other bibles
+  Thunder12345:
+  - qol: CTF guns spawn in the default active hand
+  - qol: CTF shields become transparent as they lose charge
+  - qol: CTF King of the Hill scores are visible to players in-game
+  - qol: CTF controllers can no longer be blocked by players standing on them
+  itseasytosee:
+  - imageadd: Shotgun shell suit storage sprites
+  tf-4:
+  - spellcheck: The message given when a limb is disabled has had its spelling corrected.
+  vinylspiders:
+  - bugfix: fixes oxyloss not being applied when there is a partial pressure of 0
+      (no more being able to breathe in space)
+  - code_imp: fixes any lingering damage-application issues related to non MOB_ORGANIC
+      biotypes
+  - refactor: refactored lungs to have a respiration_type flag which is then used
+      by adjustOxyloss/setOxyloss to determine whether to take 'oxygen' damage.

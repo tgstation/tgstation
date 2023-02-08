@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Admins, \"All areas unpowered\" in the secrets menu will now function again."
