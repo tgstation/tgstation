@@ -17,6 +17,11 @@
 /// How much toner is used for making a copy of paperwork
 #define PAPERWORK_TONER_USE 0.75
 
+#define PAPER_COPY_TYPE "paper"
+#define PHOTO_COPY_TYPE "photo"
+#define DOCUMENT_COPY_TYPE "document"
+#define PAPERWORK_COPY_TYPE "paperwork"
+
 /obj/machinery/photocopier
 	name = "photocopier"
 	desc = "Used to copy important documents and anatomy studies."
@@ -38,8 +43,9 @@
 	var/busy = FALSE
 	/// Variable needed to determine the selected category of forms on Photocopier.js
 	var/category
-	///Variable that describes what object is trying to be copied.
+	///Variable that holds a reference to any object supported for photocopying inside the photocopier
 	var/obj/object_copy
+	///Variable that describes what object is trying to be copied.
 	var/copy_type
 
 /obj/machinery/photocopier/Initialize(mapload)
@@ -86,7 +92,7 @@
 	catch()
 		data["forms_exist"] = FALSE
 
-	if(copy_type == "photo")
+	if(copy_type == PHOTO_COPY_TYPE)
 		data["is_photo"] = TRUE
 		data["color_mode"] = color_mode
 
@@ -117,7 +123,7 @@
 		if("make_copy")
 			if(check_busy())
 				return FALSE
-			if(copy_type == "paper")
+			if(copy_type == PAPER_COPY_TYPE)
 				var/obj/item/paper/paper_copy = object_copy
 				if(!paper_copy.get_total_length())
 					to_chat(usr, span_warning("An error message flashes across [src]'s screen: \"The supplied paper is blank. Aborting.\""))
@@ -127,12 +133,12 @@
 					do_copy_loop(CALLBACK(src, PROC_REF(make_paper_copy), paper_copy), usr)
 					return TRUE
 			// Copying photo.
-			if(copy_type == "photo")
+			if(copy_type == PHOTO_COPY_TYPE)
 				var/obj/item/photo/photo_copy = object_copy
 				do_copy_loop(CALLBACK(src, PROC_REF(make_photo_copy), photo_copy), usr)
 				return TRUE
 			// Copying Documents.
-			if(copy_type == "document")
+			if(copy_type == DOCUMENT_COPY_TYPE)
 				var/obj/item/documents/document_copy = object_copy
 				do_copy_loop(CALLBACK(src, PROC_REF(make_document_copy), document_copy), usr)
 				return TRUE
@@ -141,7 +147,7 @@
 				do_copy_loop(CALLBACK(src, PROC_REF(make_ass_copy)), usr)
 				return TRUE
 			// Copying paperwork
-			if(copy_type == "paperwork")
+			if(copy_type == PAPERWORK_COPY_TYPE)
 				var/obj/item/paperwork/paperwork_copy = object_copy
 				do_copy_loop(CALLBACK(src, PROC_REF(make_paperwork_copy), paperwork_copy), usr)
 				return TRUE
@@ -211,13 +217,13 @@
 		return toner_cartridge.charges >= (ASS_TONER_USE * num_copies)
 	else
 		switch(copy_type)
-			if("paper")
+			if(PAPER_COPY_TYPE)
 				return toner_cartridge.charges >= (PAPER_TONER_USE * num_copies)
-			if("document")
+			if(DOCUMENT_COPY_TYPE)
 				return toner_cartridge.charges >= (DOCUMENT_TONER_USE * num_copies)
-			if("photo")
+			if(PHOTO_COPY_TYPE)
 				return toner_cartridge.charges >= (PHOTO_TONER_USE * num_copies)
-			if("paperwork")
+			if(PAPERWORK_COPY_TYPE)
 				return toner_cartridge.charges >= (PAPERWORK_TONER_USE * num_copies)
 	return FALSE
 
@@ -416,11 +422,11 @@
 
 /obj/machinery/photocopier/attackby(obj/item/object, mob/user, params)
 	if(istype(object, /obj/item/paper))
-		insert_copy_object(object, user, "paper")
+		insert_copy_object(object, user, PAPER_COPY_TYPE)
 	else if(istype(object, /obj/item/photo))
-		insert_copy_object(object, user, "photo")
+		insert_copy_object(object, user, PHOTO_COPY_TYPE)
 	else if(istype(object, /obj/item/documents))
-		insert_copy_object(object, user, "document")
+		insert_copy_object(object, user, DOCUMENT_COPY_TYPE)
 
 	else if(istype(object, /obj/item/toner))
 		if(toner_cartridge)
@@ -440,7 +446,7 @@
 				if(!user.temporarilyRemoveItemFromInventory(object))
 					return
 				object_copy = object
-				copy_type = "paperwork"
+				copy_type = PAPERWORK_COPY_TYPE
 				do_insertion(object, user)
 		else
 			to_chat(user, span_warning("There is already something in [src]!"))
@@ -570,3 +576,7 @@
 #undef ASS_TONER_USE
 #undef MAX_COPIES_AT_ONCE
 #undef PAPERWORK_TONER_USE
+#undef PAPER_COPY_TYPE
+#undef PHOTO_COPY_TYPE
+#undef DOCUMENT_COPY_TYPE
+#undef PAPERWORK_COPY_TYPE
