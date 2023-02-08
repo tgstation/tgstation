@@ -4444,6 +4444,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "aul" = (
@@ -5798,7 +5799,7 @@
 /obj/effect/turf_decal/caution{
 	dir = 1
 	},
-/obj/machinery/crossing_signal/southwest,
+/obj/machinery/crossing_signal/northeast,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "aFp" = (
@@ -5812,7 +5813,7 @@
 /obj/effect/turf_decal/caution{
 	dir = 1
 	},
-/obj/machinery/crossing_signal/southwest,
+/obj/machinery/crossing_signal/northeast,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "aFs" = (
@@ -6017,6 +6018,7 @@
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/caution,
+/obj/machinery/static_signal/southwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "aGK" = (
@@ -10043,7 +10045,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/caution,
-/obj/machinery/crossing_signal/northwest,
+/obj/machinery/crossing_signal/southeast,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "bJz" = (
@@ -10136,6 +10138,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/mail_sorting/science/robotics,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "bKK" = (
@@ -26514,7 +26517,7 @@
 /obj/effect/turf_decal/caution{
 	dir = 1
 	},
-/obj/machinery/crossing_signal/southeast,
+/obj/machinery/crossing_signal/northwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "hYJ" = (
@@ -26565,6 +26568,7 @@
 /obj/effect/turf_decal/caution{
 	dir = 1
 	},
+/obj/machinery/static_signal/northeast,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "hZr" = (
@@ -29186,6 +29190,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/caution,
+/obj/machinery/static_signal/southeast,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "iYv" = (
@@ -35804,6 +35809,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/white/full,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "lqy" = (
@@ -44699,6 +44705,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "oKZ" = (
@@ -45662,6 +45669,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"pdZ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 2
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/station/science/research)
 "pec" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -46025,6 +46041,7 @@
 /obj/effect/mapping_helpers/mail_sorting/science/research,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "pkp" = (
@@ -46299,7 +46316,7 @@
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/caution,
-/obj/machinery/crossing_signal/northeast,
+/obj/machinery/crossing_signal/southwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "poH" = (
@@ -46551,7 +46568,7 @@
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/caution,
-/obj/machinery/crossing_signal/northeast,
+/obj/machinery/crossing_signal/southwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "ptQ" = (
@@ -51225,6 +51242,7 @@
 /obj/effect/turf_decal/caution{
 	dir = 1
 	},
+/obj/machinery/static_signal/northwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "rbn" = (
@@ -52080,7 +52098,7 @@
 /obj/effect/turf_decal/caution{
 	dir = 1
 	},
-/obj/machinery/crossing_signal/southeast,
+/obj/machinery/crossing_signal/northwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "rrc" = (
@@ -59582,6 +59600,7 @@
 /obj/structure/disposalpipe/junction/flip,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "udb" = (
@@ -63707,6 +63726,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/mail_sorting/science/rd_office,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "vDv" = (
@@ -69567,7 +69587,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/caution,
-/obj/machinery/crossing_signal/northwest,
+/obj/machinery/crossing_signal/southeast,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "xXf" = (
@@ -180060,18 +180080,18 @@ mUX
 ccO
 lSU
 pko
-dcd
-dcd
+pdZ
+pdZ
 bKJ
 ucZ
-dcd
-dcd
-dcd
+pdZ
+pdZ
+pdZ
 lqo
-dcd
-dcd
+pdZ
+pdZ
 vDi
-dcd
+pdZ
 dcd
 dcd
 dcd
