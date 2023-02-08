@@ -123,7 +123,6 @@
 
 /obj/structure/sign/poster/Initialize(mapload)
 	. = ..()
-	register_context()
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)
@@ -135,7 +134,6 @@
 
 /// Adds contextual screentips
 /obj/structure/sign/poster/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
 	if (!held_item)
 		if (ruined)
 			return .
