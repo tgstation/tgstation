@@ -23,6 +23,8 @@
 
 /// When we move, check if we're still on a web
 /datum/element/web_walker/proc/on_moved(mob/living/source)
+	SIGNAL_HANDLER
+
 	var/obj/structure/spider/stickyweb/web = locate() in get_turf(source)
 	if (web)
 		source.remove_movespeed_modifier(off_web_slowdown)

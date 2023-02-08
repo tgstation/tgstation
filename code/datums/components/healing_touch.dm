@@ -104,7 +104,7 @@
 	if (action_text)
 		healer.visible_message(span_notice("[format_string(action_text, healer, target)]"))
 
-	if (!do_after(healer, heal_time, target = target, interaction_key = interaction_key))
+	if (heal_time && !do_after(healer, heal_time, target = target, interaction_key = interaction_key))
 		healer.balloon_alert(healer, "interrupted!")
 		return
 
