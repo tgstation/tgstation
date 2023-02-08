@@ -40,8 +40,10 @@
 	priority_announce("Localized ectoplasmic outburst detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
 
 /datum/event_admin_setup/anomaly/anomaly_ectoplasm
-	var/ghost_override
+	///The admin-selected intensity
 	var/chosen_effect
+	///The number of ghosts the admin has selected to simulate orbiting the anomaly.
+	var/ghost_override
 
 /datum/event_admin_setup/anomaly/anomaly_ectoplasm/prompt_admins()
 	..()

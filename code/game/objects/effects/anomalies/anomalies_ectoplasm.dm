@@ -94,7 +94,7 @@
 
 	if(effect_power >= 35)
 		var/effect_range = ghosts_orbiting + 3
-		haunt_outburst(get_turf(src), effect_range, 45, 2 MINUTES)
+		haunt_outburst(epicenter = get_turf(src), range = effect_range, haunt_chance = 45, duration = 2 MINUTES)
 
 	if(effect_power >= 50) //Summon a ghost swarm!
 		var/list/candidate_list = list()

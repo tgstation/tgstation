@@ -43,7 +43,7 @@
 			continue
 		object_to_possess.AddComponent(/datum/component/haunted_item, \
 			haunt_color = "#52336e", \
-			haunt_duration = rand(duration), \
+			haunt_duration = duration, \
 			aggro_radius = range, \
 			spawn_message = span_revenwarning("[object_to_possess] slowly rises upward, hanging menacingly in the air..."), \
 			despawn_message = span_revenwarning("[object_to_possess] settles to the floor, lifeless and unmoving."), \

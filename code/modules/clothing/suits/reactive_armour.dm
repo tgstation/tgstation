@@ -504,7 +504,7 @@
 	playsound(get_turf(owner),'sound/hallucinations/veryfar_noise.ogg', 100, TRUE)
 	owner.visible_message(span_danger("The [src] lets loose a burst of otherworldly energy!"))
 
-	haunt_outburst(get_turf(owner), 5, 85, 30 SECONDS)
+	haunt_outburst(epicenter = get_turf(owner), range = 5, haunt_chance = 85, duration = 30 SECONDS)
 
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
