@@ -128,34 +128,36 @@
 		if("make_copy")
 			if(check_busy())
 				return FALSE
-			if(copy_type == PAPER_COPY_TYPE)
-				var/obj/item/paper/paper_copy = object_copy
-				if(!paper_copy.get_total_length())
-					to_chat(usr, span_warning("An error message flashes across [src]'s screen: \"The supplied paper is blank. Aborting.\""))
-					return FALSE
-				// Basic paper
-				if(istype(object_copy, /obj/item/paper))
-					do_copy_loop(CALLBACK(src, PROC_REF(make_paper_copy), paper_copy), usr)
-					return TRUE
-			// Copying photo.
-			if(copy_type == PHOTO_COPY_TYPE)
-				var/obj/item/photo/photo_copy = object_copy
-				do_copy_loop(CALLBACK(src, PROC_REF(make_photo_copy), photo_copy), usr)
-				return TRUE
-			// Copying Documents.
-			if(copy_type == DOCUMENT_COPY_TYPE)
-				var/obj/item/documents/document_copy = object_copy
-				do_copy_loop(CALLBACK(src, PROC_REF(make_document_copy), document_copy), usr)
-				return TRUE
 			// ASS COPY. By Miauw
 			if(ass)
 				do_copy_loop(CALLBACK(src, PROC_REF(make_ass_copy)), usr)
 				return TRUE
-			// Copying paperwork
-			if(copy_type == PAPERWORK_COPY_TYPE)
-				var/obj/item/paperwork/paperwork_copy = object_copy
-				do_copy_loop(CALLBACK(src, PROC_REF(make_paperwork_copy), paperwork_copy), usr)
-				return TRUE
+			else
+				switch(copy_type)
+					if(PAPER_COPY_TYPE)
+						var/obj/item/paper/paper_copy = object_copy
+						if(!paper_copy.get_total_length())
+							to_chat(usr, span_warning("An error message flashes across [src]'s screen: \"The supplied paper is blank. Aborting.\""))
+							return FALSE
+						// Basic paper
+						if(istype(object_copy, /obj/item/paper))
+							do_copy_loop(CALLBACK(src, PROC_REF(make_paper_copy), paper_copy), usr)
+							return TRUE
+					// Copying photo.
+					if(PHOTO_COPY_TYPE)
+						var/obj/item/photo/photo_copy = object_copy
+						do_copy_loop(CALLBACK(src, PROC_REF(make_photo_copy), photo_copy), usr)
+						return TRUE
+					// Copying Documents.
+					if(DOCUMENT_COPY_TYPE)
+						var/obj/item/documents/document_copy = object_copy
+						do_copy_loop(CALLBACK(src, PROC_REF(make_document_copy), document_copy), usr)
+						return TRUE
+					// Copying paperwork
+					if(PAPERWORK_COPY_TYPE)
+						var/obj/item/paperwork/paperwork_copy = object_copy
+						do_copy_loop(CALLBACK(src, PROC_REF(make_paperwork_copy), paperwork_copy), usr)
+						return TRUE
 
 		// Remove the paper/photo/document from the photocopier.
 		if("remove")
