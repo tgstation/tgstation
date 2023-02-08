@@ -16,6 +16,8 @@
 /turf/open/openspace/airless/planetary
 	planetary_atmos = TRUE
 
+// Reminder, any behavior code written here needs to be duped to /turf/open/space/openspace
+// I am so sorry
 /turf/open/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_INITIALIZED_ON, PROC_REF(on_atom_created))
