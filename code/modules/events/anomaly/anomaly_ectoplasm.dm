@@ -22,8 +22,8 @@
 	var/orbit_override
 
 /datum/round_event/anomaly/anomaly_ectoplasm/start()
-	if(!effect_override)
-		..() //If we provide no override, just run the usual startup.
+	if(!effect_override || !orbit_override)
+		return ..() //If we provide no override, just run the usual startup.
 
 	var/turf/anomaly_turf = placer.findValidTurf(impact_area)
 	var/obj/effect/anomaly/ectoplasm/newAnomaly

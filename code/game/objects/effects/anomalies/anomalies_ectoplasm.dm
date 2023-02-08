@@ -204,4 +204,5 @@
 		playsound(src, pick(spooky_noises), 50)
 		new /obj/effect/temp_visual/revenant/cracks(get_turf(src))
 		new /obj/effect/decal/cleanable/greenglow/ecto(get_turf(src))
+		mob_to_delete.ghostize(FALSE) //So we don't throw an alert for deleting a mob with a key inside.
 		qdel(mob_to_delete)
