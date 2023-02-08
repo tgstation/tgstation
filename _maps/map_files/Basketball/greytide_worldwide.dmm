@@ -89,7 +89,7 @@
 /area/centcom/basketball)
 "fp" = (
 /obj/structure/sign/poster/contraband/grey_tide,
-/turf/closed/indestructible/reinforced,
+/turf/closed/wall/r_wall,
 /area/centcom/basketball)
 "fu" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -138,7 +138,11 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "ju" = (
-/turf/closed/indestructible/fakedoor/maintenance,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "jK" = (
 /obj/structure/rack,
@@ -272,9 +276,6 @@
 	},
 /turf/open/floor/plating,
 /area/centcom/basketball)
-"tO" = (
-/turf/closed/indestructible,
-/area/centcom/basketball)
 "tU" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -379,9 +380,6 @@
 "CD" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
-/area/centcom/basketball)
-"CV" = (
-/turf/closed/indestructible/reinforced,
 /area/centcom/basketball)
 "De" = (
 /obj/effect/decal/cleanable/dirt,
@@ -639,7 +637,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "WM" = (
-/turf/closed/wall/rust,
+/turf/closed/wall/r_wall,
 /area/centcom/basketball)
 "Xm" = (
 /obj/effect/turf_decal/delivery,
@@ -675,7 +673,7 @@
 /area/centcom/basketball)
 "Yp" = (
 /obj/structure/sign/poster/contraband/hacking_guide,
-/turf/closed/indestructible/reinforced,
+/turf/closed/wall/r_wall,
 /area/centcom/basketball)
 "YH" = (
 /obj/structure/girder,
@@ -723,36 +721,36 @@ Hu
 "}
 (2,1,1) = {"
 Hu
-tO
-tO
-tO
-tO
-CV
-CV
-CV
-CV
-CV
+lh
+lh
+lh
+lh
+WM
+WM
+WM
+WM
+WM
 ju
 Yp
-CV
-CV
-CV
-CV
-CV
-CV
-tO
-tO
-tO
-tO
+WM
+WM
+WM
+WM
+WM
+WM
+lh
+lh
+lh
+lh
 Hu
 "}
 (3,1,1) = {"
 Hu
-tO
-tO
-tO
-tO
-CV
+lh
+lh
+lh
+lh
+WM
 dJ
 zX
 TV
@@ -764,20 +762,20 @@ WB
 Xn
 lh
 KH
-CV
-tO
-tO
-tO
-tO
+WM
+lh
+lh
+lh
+lh
 Hu
 "}
 (4,1,1) = {"
 Hu
-tO
-tO
-tO
-tO
-CV
+lh
+lh
+lh
+lh
+WM
 Qh
 LU
 Qh
@@ -789,20 +787,20 @@ lh
 Ga
 Qh
 lh
-CV
-tO
-tO
-tO
-tO
+WM
+lh
+lh
+lh
+lh
 Hu
 "}
 (5,1,1) = {"
 Hu
-tO
-CV
-CV
-CV
-CV
+lh
+WM
+WM
+WM
+WM
 eS
 uH
 zo
@@ -814,17 +812,17 @@ zo
 zo
 Nt
 kT
-CV
-CV
-CV
-CV
-tO
+WM
+WM
+WM
+WM
+lh
 Hu
 "}
 (6,1,1) = {"
 Hu
-tO
-CV
+lh
+WM
 Dt
 PU
 lh
@@ -842,14 +840,14 @@ wJ
 SF
 bA
 AC
-CV
-tO
+WM
+lh
 Hu
 "}
 (7,1,1) = {"
 Hu
-tO
-CV
+lh
+WM
 Qh
 AI
 pu
@@ -867,14 +865,14 @@ Qh
 oh
 YH
 YH
-CV
-tO
+WM
+lh
 Hu
 "}
 (8,1,1) = {"
 Hu
-CV
-CV
+WM
+WM
 nE
 AI
 AI
@@ -892,13 +890,13 @@ Qh
 lh
 hf
 LV
-CV
-CV
+WM
+WM
 Hu
 "}
 (9,1,1) = {"
 Hu
-CV
+WM
 Tc
 Gi
 jK
@@ -918,12 +916,12 @@ te
 Gh
 Gh
 Gh
-CV
+WM
 Hu
 "}
 (10,1,1) = {"
 Hu
-CV
+WM
 dr
 HH
 lh
@@ -943,12 +941,12 @@ PW
 my
 hB
 FA
-CV
+WM
 Hu
 "}
 (11,1,1) = {"
 Hu
-CV
+WM
 Se
 Lu
 Cw
@@ -968,12 +966,12 @@ NS
 LI
 Xo
 fu
-CV
+WM
 Hu
 "}
 (12,1,1) = {"
 Hu
-CV
+WM
 Tl
 dg
 OB
@@ -998,7 +996,7 @@ Hu
 "}
 (13,1,1) = {"
 Hu
-CV
+WM
 oR
 tU
 Cw
@@ -1018,7 +1016,7 @@ PW
 wZ
 Qh
 AU
-CV
+WM
 Hu
 "}
 (14,1,1) = {"
@@ -1043,12 +1041,12 @@ PW
 Qh
 XR
 lh
-CV
+WM
 Hu
 "}
 (15,1,1) = {"
 Hu
-CV
+WM
 Uq
 lh
 Cw
@@ -1068,13 +1066,13 @@ lD
 WK
 WK
 WK
-CV
+WM
 Hu
 "}
 (16,1,1) = {"
 Hu
-CV
-CV
+WM
+WM
 at
 Sv
 Vr
@@ -1092,14 +1090,14 @@ Qh
 TV
 lh
 fj
-CV
-CV
+WM
+WM
 Hu
 "}
 (17,1,1) = {"
 Hu
-tO
-CV
+lh
+WM
 ly
 Cw
 Cw
@@ -1117,14 +1115,14 @@ zZ
 YH
 Qh
 gk
-CV
-tO
+WM
+lh
 Hu
 "}
 (18,1,1) = {"
 Hu
-tO
-CV
+lh
+WM
 Xp
 TV
 lh
@@ -1142,17 +1140,17 @@ Qh
 Qh
 lh
 rU
-CV
-tO
+WM
+lh
 Hu
 "}
 (19,1,1) = {"
 Hu
-tO
-CV
-CV
-CV
-CV
+lh
+WM
+WM
+WM
+WM
 at
 AI
 zo
@@ -1164,20 +1162,20 @@ zo
 zo
 lh
 aw
-CV
+WM
 ju
-CV
-CV
-tO
+WM
+WM
+lh
 Hu
 "}
 (20,1,1) = {"
 Hu
-tO
-tO
-tO
-tO
-CV
+lh
+lh
+lh
+lh
+WM
 lh
 cz
 lh
@@ -1189,20 +1187,20 @@ pq
 oh
 JM
 lh
-CV
-tO
-tO
-tO
-tO
+WM
+lh
+lh
+lh
+lh
 Hu
 "}
 (21,1,1) = {"
 Hu
-tO
-tO
-tO
-tO
-CV
+lh
+lh
+lh
+lh
+WM
 fi
 Qh
 Gi
@@ -1214,36 +1212,36 @@ jj
 CD
 Gi
 KH
-CV
-tO
-tO
-tO
-tO
+WM
+lh
+lh
+lh
+lh
 Hu
 "}
 (22,1,1) = {"
 Hu
-tO
-tO
-tO
-tO
-CV
-CV
-CV
-CV
-CV
-CV
+lh
+lh
+lh
+lh
+WM
+WM
+WM
+WM
+WM
+WM
 fp
-CV
-CV
-CV
-CV
-CV
-CV
-tO
-tO
-tO
-tO
+WM
+WM
+WM
+WM
+WM
+WM
+lh
+lh
+lh
+lh
 Hu
 "}
 (23,1,1) = {"

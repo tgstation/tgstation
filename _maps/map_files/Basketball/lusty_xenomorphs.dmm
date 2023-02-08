@@ -28,7 +28,8 @@
 /area/centcom/basketball)
 "cz" = (
 /obj/structure/sign/poster/contraband/lusty_xenomorph,
-/turf/closed/indestructible/resin,
+/obj/structure/alien/resin/wall/immovable,
+/turf/open/floor/engine,
 /area/centcom/basketball)
 "dg" = (
 /obj/structure/alien/weeds,
@@ -91,7 +92,8 @@
 /area/centcom/basketball)
 "gk" = (
 /obj/structure/sign/departments/xenobio,
-/turf/closed/indestructible/resin,
+/obj/structure/alien/resin/wall/immovable,
+/turf/open/floor/engine,
 /area/centcom/basketball)
 "gq" = (
 /obj/structure/alien/weeds,
@@ -243,7 +245,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "tO" = (
-/turf/closed/indestructible,
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "tU" = (
 /obj/structure/alien/weeds,
@@ -336,7 +338,8 @@
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "Cw" = (
-/turf/closed/indestructible/resin/membrane,
+/obj/structure/alien/resin/membrane,
+/turf/open/floor/engine,
 /area/centcom/basketball)
 "CD" = (
 /obj/structure/alien/weeds,
@@ -400,7 +403,8 @@
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "Lu" = (
-/turf/closed/indestructible/resin,
+/obj/structure/alien/resin/wall/immovable,
+/turf/open/floor/engine,
 /area/centcom/basketball)
 "LI" = (
 /obj/item/bodypart/arm/right/monkey,
@@ -495,7 +499,8 @@
 /area/centcom/basketball)
 "Qi" = (
 /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6,
-/turf/closed/indestructible/resin,
+/obj/structure/alien/resin/wall/immovable,
+/turf/open/floor/engine,
 /area/centcom/basketball)
 "Ql" = (
 /obj/structure/alien/weeds,

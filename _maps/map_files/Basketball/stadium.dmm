@@ -271,7 +271,7 @@
 /turf/open/floor/noslip,
 /area/centcom/basketball)
 "tO" = (
-/turf/closed/indestructible,
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "tU" = (
 /obj/structure/chair/plastic,
@@ -664,7 +664,7 @@
 /turf/open/floor/wood,
 /area/centcom/basketball)
 "WM" = (
-/turf/closed/indestructible/wood,
+/turf/closed/wall/mineral/wood/nonmetal,
 /area/centcom/basketball)
 "Xm" = (
 /obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{

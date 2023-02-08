@@ -43,7 +43,7 @@
 /turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "gY" = (
-/turf/closed/indestructible,
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "ku" = (
 /obj/structure/grille/indestructible,
@@ -181,7 +181,11 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Se" = (
-/turf/closed/indestructible/fakedoor/engineering,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/engineering{
+	name = "Starboard Quarter Solar Access"
+	},
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "Tc" = (
 /obj/structure/cable,
