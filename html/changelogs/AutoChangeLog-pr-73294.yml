@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Hostile Basic Mobs such as carp, rats, and moonicorns will no longer gain the power to bite anyone they can see regardless of distance and intervening obstacles upon defeating their first target in combat."
