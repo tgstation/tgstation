@@ -1025,6 +1025,12 @@
 /mob/living/carbon/human/species/golem/diamond
 	race = /datum/species/golem/diamond
 
+/mob/living/carbon/human/species/monkey/humand_legged
+	race = /datum/species/monkey/human_legged
+
+/mob/living/carbon/human/species/monkey/monkey_freak
+	race = /datum/species/monkey/monkey_freak
+
 /mob/living/carbon/human/species/golem/gold
 	race = /datum/species/golem/gold
 
