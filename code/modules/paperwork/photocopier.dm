@@ -12,10 +12,11 @@
 #define DOCUMENT_TONER_USE 0.75
 /// How much toner is used for making a copy of an ass.
 #define ASS_TONER_USE 0.625
-/// The maximum amount of copies you can make with one press of the copy button.
-#define MAX_COPIES_AT_ONCE 10
 /// How much toner is used for making a copy of paperwork
 #define PAPERWORK_TONER_USE 0.75
+
+/// The maximum amount of copies you can make with one press of the copy button.
+#define MAX_COPIES_AT_ONCE 10
 
 #define PAPER_COPY_TYPE "paper"
 #define PHOTO_COPY_TYPE "photo"
