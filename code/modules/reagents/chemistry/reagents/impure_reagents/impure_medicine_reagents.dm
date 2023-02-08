@@ -31,6 +31,8 @@
 	metabolization_rate = 1 * REM//This is fast
 	addiction_types = list(/datum/addiction/medicine = 7.5)
 	ph = 11
+	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // no healing ghosts
+	affected_respiration_type = ALL
 
 //Random healing of the 4 main groups
 /datum/reagent/impurity/healing/medicine_failure/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
@@ -43,7 +45,7 @@
 		if("tox")
 			owner.adjustToxLoss(-0.5, required_biotype = affected_biotype)
 		if("oxy")
-			owner.adjustOxyLoss(-0.5, required_biotype = affected_biotype)
+			owner.adjustOxyLoss(-0.5, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	..()
 
 // C2 medications

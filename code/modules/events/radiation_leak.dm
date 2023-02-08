@@ -48,7 +48,7 @@
 	var/area/station/location_descriptor
 
 	if(fake)
-		location_descriptor = pick(GLOB.the_station_areas)
+		location_descriptor = GLOB.areas_by_type[pick(GLOB.the_station_areas)]
 
 	else if(the_source_of_our_problems)
 		location_descriptor = get_area(the_source_of_our_problems)
