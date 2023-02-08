@@ -339,13 +339,17 @@
 
 /obj/structure/window/proc/spawnDebris(location)
 	var/datum/material/glass_material_ref = GET_MATERIAL_REF(glass_material_datum)
+	var/obj/item/shard_type = glass_material_ref.shard_type
+	var/obj/effect/decal/debris_type = glass_material_ref.debris_type
 	. = list()
-	. += new glass_material_ref.shard_type(location)
-	. += new glass_material_ref.debris_type(location)
+	if(!isnull(shard_type))
+		. += new shard_type(location)
+		if (fulltile)
+			. += new shard_type(location)
+	if(!isnull(debris_type))
+		. += new debris_type(location)
 	if (reinf)
 		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
-	if (fulltile)
-		new glass_material_ref.shard_type(location)
 
 /obj/structure/window/proc/AfterRotation(mob/user, degrees)
 	air_update_turf(TRUE, FALSE)
