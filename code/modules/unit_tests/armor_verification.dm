@@ -4,7 +4,7 @@
 /datum/unit_test/armor_verification/Run()
 	var/obj/dummy = allocate(/obj)
 
-	dummy.armor_type = /datum/armor/none
+	UNLINT(dummy.armor_type = /datum/armor/none)
 	var/datum/armor/armor = dummy.get_armor()
 	TEST_ASSERT_NOTNULL(armor, "armor didn't populate correctly when needed")
 	TEST_ASSERT_EQUAL(armor_totals(armor), 0, "none armor type had armor values")
@@ -21,7 +21,7 @@
 	TEST_ASSERT_EQUAL(armor_totals(armor), totals, "modified an immune armor type")
 
 	var/wanted = 40
-	dummy.armor = null
+	UNLINT(dummy.armor = null)
 	dummy.set_armor_rating(ENERGY, wanted * 0.5)
 	dummy.set_armor_rating(FIRE, wanted * 0.5)
 	TEST_ASSERT_EQUAL(armor_totals(dummy.get_armor()), wanted, "modified armor type had incorrect values")
