@@ -2286,8 +2286,12 @@
 /turf/open/openspace,
 /area/station/asteroid)
 "afW" = (
+/obj/effect/spawner/random{
+	loot = list(/obj/effect/decal/cleanable/oil/slippery=10,/obj/effect/decal/cleanable/oil=90);
+	name = "funny slipper :)"
+	},
 /turf/open/floor/noslip/tram_plate,
-/area/station/asteroid)
+/area/station/hallway/primary/tram/right)
 "afX" = (
 /obj/structure/fluff/tram_rail{
 	dir = 1
@@ -13272,7 +13276,7 @@
 	name = "funny slipper :)"
 	},
 /turf/open/floor/noslip/tram_plate,
-/area/station/asteroid)
+/area/station/hallway/primary/tram/left)
 "cPx" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
@@ -157167,7 +157171,7 @@ qUg
 yiM
 afy
 afP
-afW
+nJq
 afX
 afy
 yiM
@@ -157424,7 +157428,7 @@ lIQ
 yiM
 afy
 afP
-afW
+nJq
 afX
 afy
 yiM
@@ -157681,7 +157685,7 @@ ifS
 yiM
 afy
 afP
-afW
+nJq
 afX
 afy
 yiM
@@ -157938,7 +157942,7 @@ ojT
 iPy
 afy
 afP
-afW
+nJq
 afX
 afy
 iPy
@@ -158195,7 +158199,7 @@ iPy
 yiM
 afz
 afS
-afW
+nJq
 afY
 afz
 yiM
@@ -158452,7 +158456,7 @@ afz
 afH
 afy
 afP
-afW
+nJq
 afX
 afy
 afH
@@ -158709,7 +158713,7 @@ afy
 afy
 afy
 afP
-afW
+nJq
 afX
 afy
 afy
@@ -158966,7 +158970,7 @@ afy
 afy
 afy
 afP
-afW
+nJq
 afX
 afy
 afy
@@ -159223,7 +159227,7 @@ afy
 afy
 afy
 afP
-afW
+nJq
 afX
 afy
 afy
@@ -159480,7 +159484,7 @@ afy
 afy
 afy
 afP
-afW
+nJq
 afX
 afy
 afy
@@ -159737,7 +159741,7 @@ afy
 afy
 afy
 afP
-afW
+nJq
 afX
 afy
 afy
@@ -159994,7 +159998,7 @@ afE
 afJ
 afy
 afP
-afW
+nJq
 afX
 afy
 agb
@@ -160508,7 +160512,7 @@ afG
 afM
 afy
 afP
-afW
+nJq
 afX
 afy
 agd
@@ -160765,7 +160769,7 @@ afy
 afy
 afy
 afP
-afW
+nJq
 afX
 afy
 afy
@@ -161022,7 +161026,7 @@ afy
 afy
 afy
 afP
-afW
+nJq
 afX
 afy
 afy
@@ -161279,7 +161283,7 @@ afy
 afy
 afy
 afP
-afW
+omp
 afX
 afy
 afy
@@ -161536,7 +161540,7 @@ afy
 afy
 afy
 afP
-afW
+omp
 afX
 afy
 afy
@@ -161793,7 +161797,7 @@ afE
 afJ
 afy
 afP
-afW
+omp
 afX
 afy
 agb
@@ -162050,7 +162054,7 @@ izU
 afK
 afy
 afP
-afW
+omp
 afX
 afy
 agc
@@ -162307,7 +162311,7 @@ afG
 afN
 afy
 afP
-afW
+omp
 afX
 afy
 agd
@@ -162564,7 +162568,7 @@ afy
 afy
 afy
 afP
-afW
+omp
 afX
 afy
 afy
@@ -162821,7 +162825,7 @@ afy
 afy
 afy
 afP
-afW
+omp
 afX
 afy
 afy
@@ -163078,7 +163082,7 @@ afy
 afy
 afy
 afP
-afW
+omp
 afX
 afy
 afy
@@ -163335,7 +163339,7 @@ afy
 afy
 afy
 afP
-afW
+omp
 afX
 afy
 afy
@@ -163592,7 +163596,7 @@ afy
 afy
 afy
 afP
-afW
+omp
 afX
 afy
 afy
@@ -163849,7 +163853,7 @@ afz
 afO
 afy
 afP
-afW
+omp
 afX
 afy
 afO
@@ -164106,7 +164110,7 @@ nEl
 izU
 afz
 afV
-afW
+omp
 aga
 afz
 izU
@@ -164363,7 +164367,7 @@ wYw
 nEl
 afy
 afP
-afW
+omp
 afX
 afy
 nEl
@@ -164620,7 +164624,7 @@ gGI
 izU
 afy
 afP
-afW
+omp
 afX
 afy
 izU
@@ -164877,7 +164881,7 @@ dXc
 izU
 afy
 afP
-afW
+omp
 afX
 afy
 izU
@@ -165134,7 +165138,7 @@ vYA
 izU
 afy
 afP
-afW
+omp
 afX
 afy
 izU
@@ -170788,7 +170792,7 @@ vYA
 izU
 afy
 afP
-afW
+omp
 afX
 afy
 izU
@@ -171045,7 +171049,7 @@ suw
 izU
 afy
 afP
-afW
+omp
 afX
 afy
 izU
@@ -171302,7 +171306,7 @@ qtS
 izU
 afy
 afP
-afW
+omp
 afX
 afy
 izU
@@ -171559,7 +171563,7 @@ wYw
 nEl
 afy
 afP
-afW
+omp
 afX
 afy
 nEl
@@ -171816,7 +171820,7 @@ nEl
 izU
 afz
 afS
-afW
+omp
 afY
 afz
 izU
@@ -172073,7 +172077,7 @@ afz
 afH
 afy
 afP
-afW
+omp
 afX
 afy
 afH
@@ -172330,7 +172334,7 @@ afy
 afy
 afy
 afP
-afW
+omp
 afX
 afy
 afy
@@ -172587,7 +172591,7 @@ afy
 afy
 afy
 afP
-afW
+omp
 afX
 afy
 afy
@@ -172844,7 +172848,7 @@ afy
 afy
 afy
 afP
-afW
+omp
 afX
 afy
 afy
@@ -173101,7 +173105,7 @@ afy
 afy
 afy
 afP
-afW
+omp
 afX
 afy
 afy
@@ -173358,7 +173362,7 @@ afy
 afy
 afy
 afP
-afW
+omp
 afX
 afy
 afy
@@ -173615,7 +173619,7 @@ afE
 afJ
 afy
 afP
-afW
+omp
 afX
 afy
 agb
@@ -173872,7 +173876,7 @@ qas
 afK
 afy
 afP
-afW
+omp
 afX
 afy
 agc
@@ -174129,7 +174133,7 @@ afG
 afN
 afy
 afP
-afW
+omp
 afX
 afy
 agd
@@ -174386,7 +174390,7 @@ afy
 afy
 afy
 afP
-afW
+omp
 afX
 afy
 afy
@@ -174643,7 +174647,7 @@ afy
 afy
 afy
 afP
-afW
+omp
 afX
 afy
 afy
@@ -174900,7 +174904,7 @@ afy
 afy
 afy
 afP
-afW
+ozQ
 afX
 afy
 afy
@@ -175157,7 +175161,7 @@ afy
 afy
 afy
 afP
-afW
+ozQ
 afX
 afy
 afy
@@ -175414,7 +175418,7 @@ afE
 afJ
 afy
 afP
-afW
+ozQ
 afX
 afy
 agb
@@ -175671,7 +175675,7 @@ bMb
 afK
 afy
 afP
-afW
+ozQ
 afX
 afy
 agc
@@ -175928,7 +175932,7 @@ afG
 afN
 afy
 afP
-afW
+ozQ
 afX
 afy
 agd
@@ -176185,7 +176189,7 @@ afy
 afy
 afy
 afP
-cPu
+afW
 afX
 afy
 afy
@@ -176442,7 +176446,7 @@ afy
 afy
 afy
 afP
-afW
+ozQ
 afX
 afy
 afy
@@ -176699,7 +176703,7 @@ afy
 afy
 afy
 afP
-afW
+ozQ
 afX
 afy
 afy
@@ -176956,7 +176960,7 @@ afy
 afy
 afy
 afP
-afW
+ozQ
 afX
 afy
 afy
@@ -177213,7 +177217,7 @@ afy
 afy
 afy
 afP
-afW
+ozQ
 afX
 afy
 afy
@@ -177470,7 +177474,7 @@ afz
 afO
 afy
 afP
-afW
+ozQ
 afX
 afy
 afO
@@ -177727,7 +177731,7 @@ ghV
 bMb
 afz
 afS
-afW
+ozQ
 afY
 afz
 bMb
@@ -177984,7 +177988,7 @@ rxO
 ghV
 afy
 afP
-afW
+ozQ
 afX
 afy
 ghV
@@ -178241,7 +178245,7 @@ mzf
 bMb
 afy
 afP
-afW
+ozQ
 afX
 afy
 bMb
@@ -178498,7 +178502,7 @@ qHo
 bMb
 afy
 afP
-afW
+ozQ
 afX
 afy
 bMb
@@ -178755,7 +178759,7 @@ lVe
 bMb
 afy
 afP
-afW
+ozQ
 afX
 afy
 bMb
