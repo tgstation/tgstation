@@ -79,6 +79,7 @@
 #include "anchored_mobs.dm"
 #include "anonymous_themes.dm"
 #include "area_contents.dm"
+#include "armor_verification.dm"
 #include "autowiki.dm"
 #include "barsigns.dm"
 #include "baseturfs.dm"
