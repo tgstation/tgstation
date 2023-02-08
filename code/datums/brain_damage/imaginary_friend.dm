@@ -2,8 +2,8 @@
 	name = "Imaginary Friend"
 	desc = "Patient can see and hear an imaginary person."
 	scan_desc = "partial schizophrenia"
-	gain_text = "<span class='notice'>You feel in good company, for some reason.</span>"
-	lose_text = "<span class='warning'>You feel lonely again.</span>"
+	gain_text = span_notice("You feel in good company, for some reason.")
+	lose_text = span_warning("You feel lonely again.")
 	var/mob/camera/imaginary_friend/friend
 	var/friend_initialized = FALSE
 
@@ -236,15 +236,15 @@
 			log_talk(message, LOG_SAY, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 
 	var/quoted_message = say_quote(say_emphasis(message), spans, message_mods)
-	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[quoted_message]</span></span>"
-	var/dead_rendered = "<span class='game say'>[span_name("[name] (Imaginary friend of [owner])")] <span class='message'>[quoted_message]</span></span>"
+	var/rendered = "[span_name("[name]")] [quoted_message]"
+	var/dead_rendered = "[span_name("[name] (Imaginary friend of [owner])")] [quoted_message]"
 
 	var/language = message_language || owner.language_holder.get_selected_language()
 	Hear(rendered, src, language, message, null, spans, message_mods) // We always hear what we say
 	var/group = owner.imaginary_group - src // The people in our group don't, so we have to exclude ourselves not to hear twice
 	for(var/mob/person in group)
 		if(eavesdrop_range && get_dist(src, person) > 1 + eavesdrop_range)
-			var/new_rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(say_emphasis(eavesdropped_message), spans, message_mods)]</span></span>"
+			var/new_rendered = "[span_name("[name]")] [say_quote(say_emphasis(eavesdropped_message), spans, message_mods)]"
 			person.Hear(new_rendered, src, language, eavesdropped_message, null, spans, message_mods)
 		else
 			person.Hear(rendered, src, language, message, null, spans, message_mods)
@@ -303,8 +303,8 @@
 		return TRUE
 
 	var/mob/camera/imaginary_friend/friend = user
-	var/dchatmsg = "<b>[friend] (Imaginary friend of [friend.owner])</b> [msg]"
-	message = "<span class='emote'><b>[user]</b> [msg]</span>"
+	var/dchatmsg = "[span_bold("[friend] (Imaginary friend of [friend.owner])")] [msg]"
+	message = "[span_name("[user]")] [msg]"
 
 	var/user_turf = get_turf(user)
 	if (user.client)
@@ -312,7 +312,7 @@
 			if(!ghost.client || isnewplayer(ghost))
 				continue
 			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
-				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
+				ghost.show_message("[FOLLOW_LINK(ghost, user)] [dchatmsg]")
 
 	for(var/mob/person in friend.owner.imaginary_group)
 		to_chat(person, message)
@@ -513,7 +513,7 @@
 	desc = "The previous host of this body."
 
 /mob/camera/imaginary_friend/trapped/greet()
-	to_chat(src, span_notice("<b>You have managed to hold on as a figment of the new host's imagination!</b>"))
+	to_chat(src, span_notice(span_bold("You have managed to hold on as a figment of the new host's imagination!")))
 	to_chat(src, span_notice("All hope is lost for you, but at least you may interact with your host. You do not have to be loyal to them."))
 	to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what the host cannot."))
 

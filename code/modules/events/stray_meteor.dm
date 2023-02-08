@@ -10,6 +10,7 @@
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 7
 	admin_setup = /datum/event_admin_setup/listed_options/stray_meteor
+	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event/stray_meteor
 	announce_when = 1

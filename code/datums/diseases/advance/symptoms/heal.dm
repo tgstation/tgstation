@@ -53,7 +53,7 @@
 	stage_speed = 0
 	transmittable = 1
 	level = 6
-	passive_message = "<span class='notice'>You miss the feeling of starlight on your skin.</span>"
+	passive_message = span_notice("You miss the feeling of starlight on your skin.")
 	var/nearspace_penalty = 0.3
 	threshold_descs = list(
 		"Stage Speed 6" = "Increases healing speed.",
@@ -271,7 +271,7 @@
 	stage_speed = -2
 	transmittable = -1
 	level = 6
-	passive_message = "<span class='notice'>You feel tingling on your skin as light passes over it.</span>"
+	passive_message = span_notice("You feel tingling on your skin as light passes over it.")
 	threshold_descs = list(
 		"Stage Speed 8" = "Doubles healing speed.",
 	)
@@ -327,7 +327,7 @@
 	stage_speed = -3
 	transmittable = -2
 	level = 8
-	passive_message = "<span class='notice'>The pain from your wounds makes you feel oddly sleepy...</span>"
+	passive_message = span_notice("The pain from your wounds makes you feel oddly sleepy...")
 	var/deathgasp = FALSE
 	var/stabilize = FALSE
 	var/active_coma = FALSE //to prevent multiple coma procs
@@ -425,7 +425,7 @@
 	stage_speed = 0
 	transmittable = 1
 	level = 6
-	passive_message = "<span class='notice'>Your skin feels oddly dry...</span>"
+	passive_message = span_notice("Your skin feels oddly dry...")
 	var/absorption_coeff = 1
 	threshold_descs = list(
 		"Resistance 5" = "Water is consumed at a much slower rate.",
@@ -497,7 +497,7 @@
 	stage_speed = -2
 	transmittable = -2
 	level = 8
-	passive_message = "<span class='notice'>You feel an odd attraction to plasma.</span>"
+	passive_message = span_notice("You feel an odd attraction to plasma.")
 	var/temp_rate = 1
 	threshold_descs = list(
 		"Transmission 6" = "Increases temperature adjustment rate.",
@@ -518,10 +518,10 @@
 	. = ..()
 	if(!.)
 		return FALSE
-		
+
 	if(advanced_disease.stage >= 4)
 		ADD_TRAIT(advanced_disease.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
-	else 
+	else
 		REMOVE_TRAIT(advanced_disease.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
 	return TRUE
 
@@ -529,7 +529,7 @@
 	. = ..()
 	if(!.)
 		return
-		
+
 	REMOVE_TRAIT(advanced_disease.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
 
 // Check internals breath, environmental plasma, and plasma in bloodstream to determine the heal power
@@ -553,7 +553,7 @@
 				if(tank_contents.gases[/datum/gas/plasma])
 					// higher tank distribution pressure leads to more healing, but once you get to about 15kpa you reach the max
 					. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, internals_tank.distribute_pressure * HEALING_PER_BREATH_PRESSURE)
-	// Check environment			
+	// Check environment
 	if(diseased_mob.loc)
 		environment = diseased_mob.loc.return_air()
 	if(environment)
@@ -610,7 +610,7 @@
 	level = 6
 	symptom_delay_min = 1
 	symptom_delay_max = 1
-	passive_message = "<span class='notice'>Your skin glows faintly for a moment.</span>"
+	passive_message = span_notice("Your skin glows faintly for a moment.")
 	var/cellular_damage = FALSE
 	threshold_descs = list(
 		"Transmission 6" = "Additionally heals cellular damage.",

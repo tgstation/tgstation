@@ -1,5 +1,6 @@
 GLOBAL_LIST_EMPTY(tram_signals)
 GLOBAL_LIST_EMPTY(tram_signs)
+GLOBAL_LIST_EMPTY(tram_doors)
 
 /obj/machinery/computer/tram_controls
 	name = "tram controls"
@@ -13,7 +14,7 @@ GLOBAL_LIST_EMPTY(tram_signs)
 	circuit = /obj/item/circuitboard/computer/tram_controls
 	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
+	light_color = COLOR_BLUE_LIGHT
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement
 
 	///Weakref to the tram piece we control
@@ -238,15 +239,14 @@ GLOBAL_LIST_EMPTY(tram_signs)
 	plane = GAME_PLANE_UPPER
 	max_integrity = 250
 	integrity_failure = 0.25
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 2.4
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.74
 	anchored = TRUE
 	density = FALSE
 	// pointless if it only takes 2 seconds to cross but updates every 2 seconds
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
-
 	light_range = 1.5
-	light_power = 1
+	light_power = 3
 	light_color = COLOR_VIBRANT_LIME
 	luminosity = 1
 
@@ -273,17 +273,17 @@ GLOBAL_LIST_EMPTY(tram_signs)
 	name = "crossing signal"
 	desc = "Indicates to pedestrians if it's safe to cross the tracks."
 	icon = 'icons/obj/machines/crossing_signal.dmi'
-	icon_state = "static-base-left"
-	base_icon_state = "static-"
+	icon_state = "static-left-on"
+	base_icon_state = "static-left-"
 	plane = GAME_PLANE_UPPER
 	max_integrity = 250
 	integrity_failure = 0.25
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 2.4
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.74
 	anchored = TRUE
 	density = FALSE
 	light_range = 1.5
-	light_power = 1
+	light_power = 3
 	light_color = COLOR_VIBRANT_LIME
 	luminosity = 1
 
@@ -359,6 +359,9 @@ GLOBAL_LIST_EMPTY(tram_signs)
  * Returns whether we are still processing.
  */
 /obj/machinery/crossing_signal/proc/update_operating()
+
+	use_power(idle_power_usage)
+
 	// Emagged crossing signals don't update
 	if(obj_flags & EMAGGED)
 		return
@@ -481,6 +484,16 @@ GLOBAL_LIST_EMPTY(tram_signs)
 	. += mutable_appearance(icon, lights_overlay)
 	. += emissive_appearance(icon, "[lights_overlay]e", offset_spokesman = src, alpha = src.alpha)
 
+/obj/machinery/static_signal/power_change()
+	..()
+	if(!is_operational)
+		icon_state = "[base_icon_state]off"
+		set_light(l_on = FALSE)
+		return
+
+	icon_state = "[base_icon_state]on"
+	set_light(l_on = TRUE)
+
 /// Shifted to NE corner for east side of northern passage.
 /obj/machinery/crossing_signal/northeast
 	icon_state = "crossing-base-left"
@@ -512,25 +525,27 @@ GLOBAL_LIST_EMPTY(tram_signs)
 	pixel_y = 20
 
 /obj/machinery/static_signal/northeast
-	icon_state = "static-base-left"
+	icon_state = "static-left-on"
 	pixel_x = -2
 	pixel_y = -1
 
 /// Shifted to NW corner for west side of northern passage.
 /obj/machinery/static_signal/northwest
-	icon_state = "static-base-right"
+	icon_state = "static-right-on"
+	base_icon_state = "static-right-"
 	pixel_x = -32
 	pixel_y = -1
 
 /// Shifted to SE corner for east side of northern passage.
 /obj/machinery/static_signal/southeast
-	icon_state = "static-base-left"
+	icon_state = "static-left-on"
 	pixel_x = -2
 	pixel_y = 20
 
 /// Shifted to SW corner for west side of northern passage.
 /obj/machinery/static_signal/southwest
-	icon_state = "static-base-right"
+	icon_state = "static-right-on"
+	base_icon_state = "static-right-"
 	pixel_x = -32
 	pixel_y = 20
 
@@ -540,8 +555,8 @@ GLOBAL_LIST_EMPTY(tram_signs)
 	icon = 'icons/obj/machines/tram_sign.dmi'
 	icon_state = "desto_off"
 	base_icon_state = "desto_"
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 1.2
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.47
 	anchored = TRUE
 	density = FALSE
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
@@ -660,7 +675,7 @@ GLOBAL_LIST_EMPTY(tram_signs)
 	var/datum/weakref/tram_ref
 	/// Directions the tram door can be forced open in an emergency
 	var/space_dir = null
-	safe = FALSE
+	var/malfunctioning = FALSE
 
 /obj/machinery/door/window/tram/left
 	icon_state = "left"
@@ -679,6 +694,26 @@ GLOBAL_LIST_EMPTY(tram_signs)
 	icon_state = "windoor"
 	base_state = "windoor"
 
+/obj/machinery/door/window/tram/emag_act(mob/living/user)
+	if(obj_flags & EMAGGED)
+		return
+	balloon_alert(user, "disabled motion sensors")
+	obj_flags |= EMAGGED
+
+/obj/machinery/door/window/tram/proc/start_malfunction()
+	if(obj_flags & EMAGGED)
+		return
+
+	malfunctioning = TRUE
+	process()
+
+/obj/machinery/door/window/tram/proc/end_malfunction()
+	if(obj_flags & EMAGGED)
+		return
+
+	malfunctioning = FALSE
+	process()
+
 /obj/machinery/door/window/tram/proc/cycle_doors(command, forced=FALSE)
 	if(command == "open" && icon_state == "[base_state]open")
 		if(!forced)
@@ -687,13 +722,6 @@ GLOBAL_LIST_EMPTY(tram_signs)
 		return 1
 	if(command == "close" && icon_state == base_state)
 		return 1
-	if(operating) //doors can still function when emag-disabled
-		return 0
-	if(forced < 2)
-		if(obj_flags & EMAGGED)
-			return 0
-	if(!operating) //in case of emag
-		operating = TRUE
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
 	switch(command)
 		if("open")
@@ -702,22 +730,25 @@ GLOBAL_LIST_EMPTY(tram_signs)
 			sleep(7 DECISECONDS)
 			set_density(FALSE)
 			air_update_turf(TRUE, FALSE)
-			if(operating == 1) //emag again
-				operating = FALSE
 		if("close")
+			if(obj_flags & EMAGGED | malfunctioning)
+				flick("[base_state]spark", src)
+				playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+				sleep(6 DECISECONDS)
 			do_animate("closing")
 			icon_state = base_state
 			sleep(19 DECISECONDS)
-			for(var/i=1 to 4)
-				for(var/mob/living/crushee in get_turf(src))
-					if(crushee.dir == NORTH && dir == SOUTH)
+			if(obj_flags & EMAGGED | malfunctioning)
+				if(malfunctioning && prob(85))
+					return
+				for(var/i=1 to 3)
+					for(var/mob/living/crushee in get_turf(src))
 						crush()
-					if(crushee.dir == SOUTH && dir == NORTH)
-						crush()
-					sleep(1 DECISECONDS)
+					sleep(2 DECISECONDS)
 			air_update_turf(TRUE, TRUE)
 			operating = FALSE
 			set_density(TRUE)
+
 	update_freelook_sight()
 	return 1
 
@@ -740,7 +771,12 @@ GLOBAL_LIST_EMPTY(tram_signs)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 	INVOKE_ASYNC(src, PROC_REF(open))
+	GLOB.tram_doors += src
 	find_tram()
+
+/obj/machinery/door/window/tram/Destroy()
+	GLOB.tram_doors -= src
+	return ..()
 
 /obj/machinery/door/window/tram/examine(mob/user)
 	. = ..()
