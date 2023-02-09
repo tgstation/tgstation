@@ -207,8 +207,8 @@ GLOBAL_VAR(basketball_game)
 	var/is_game_draw
 	var/winner_team_ckeys
 	var/loser_team_ckeys
-	
-	if(home_hoop.score === away_hoop.score)
+
+	if(home_hoop.score == away_hoop.score)
 		is_game_draw = TRUE
 		winner_team_ckeys |= home_team_players
 		winner_team_ckeys |= away_team_players
@@ -225,9 +225,9 @@ GLOBAL_VAR(basketball_game)
 	else
 		for(ckey in winner_team_ckeys)
 			if(user.mind && user.mind.current)
-				
-			
-			
+
+
+
 			to_chat(competitor, "<span class='narsie [team_span]'>[team] team wins!</span>")
 			player.gib()
 
@@ -245,7 +245,7 @@ GLOBAL_VAR(basketball_game)
 
 	//map gen does not deal with landmarks
 	QDEL_LIST(home_team_landmarks)
-	QDEL_LIST(away_team_landmarks)	
+	QDEL_LIST(away_team_landmarks)
 
 //////////////////////////////////////////
 
