@@ -536,6 +536,29 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	user.visible_message(span_suicide("[user] pulls the trigger... But there is not enough ammo!"))
 	return SHAME
 
+/**
+ * checks if the turf has no dense objects that could block construction of big structures such as walls, airlocks etc
+ * Arguments:
+ * * turf/target_turf - The turf we are checking
+ * * ignore_mobs - should we ignore mobs when checking for dense objects. this is FALSE only for windoors
+ * * ignored_atoms - ignore these object types when checking for dense objects on the turf. ege. ignore directional windows when building windoors cause they all can exist on the same turf
+ * * user - the user to show the ballon alert to
+ */
+/obj/item/construction/rcd/proc/density_check(turf/target_turf, ignore_mobs, list/ignored_atoms, mob/user)
+	//find the structures to ignore
+	var/list/ignored_content = list()
+	if(length(ignored_atoms))
+		for(var/atom/movable/movable_content in target_turf)
+			if(is_type_in_list(movable_content, ignored_atoms))
+				ignored_content += movable_content
+
+	//check if the turf is blocked
+	if(target_turf.is_blocked_turf(exclude_mobs = ignore_mobs, source_atom = null, ignore_atoms = ignored_content))
+		balloon_alert(user, "something dense or someone is blocking the turf!")
+		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+		return FALSE
+	return TRUE
+
 /obj/item/construction/rcd/proc/rcd_create(atom/A, mob/user)
 	//does this atom allow for rcd actions?
 	var/list/rcd_results = A.rcd_vals(user, src)
@@ -556,13 +579,21 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	 */
 	if(rcd_results["mode"] != RCD_WALLFRAME && rcd_results["mode"] != RCD_DECONSTRUCT)
 		//if we are trying to build a window on top of a grill then we skip this check because thats normal behaviour
-		if(rcd_results["mode"] == RCD_WINDOWGRILLE && istype(A, /obj/structure/grille)) {}
+		if(rcd_results["mode"] == RCD_WINDOWGRILLE && istype(A, /obj/structure/grille))
+			//if a player builds a grill on top of himself manually with rods he can't finish the window if he is still in the grill. Exclude the grill/directional windows built on the grill itself when checking for other dense objects on the turf
+			if(!density_check(target_turf, FALSE, list(/obj/structure/grille, /obj/structure/window, /obj/structure/window/reinforced), user))
+				qdel(rcd_effect)
+				return FALSE
 
 		/**
 		 * if we are trying to create plating on turf which is not a proper floor then dont check for objects on top of the turf just allow that turf to be converted into plating. e.g. create plating beneath a player or underneath a machine frame/any dense object
 		 * if we are trying to finish a wall girder then let it finish
 		 */
-		else if(rcd_results["mode"] == RCD_FLOORWALL && (!istype(target_turf, /turf/open/floor) || istype(A, /obj/structure/girder))) {}
+		else if(rcd_results["mode"] == RCD_FLOORWALL && (!istype(target_turf, /turf/open/floor) || istype(A, /obj/structure/girder)))
+			//if a player builds a wallgirder on top of himself manually with iron sheets he can't finish the wall if he is still on the girder. Exclude the girder itself when checking for other dense objects on the turf
+			if(istype(A, /obj/structure/girder) && !density_check(target_turf, FALSE, list(/obj/structure/girder), user))
+				qdel(rcd_effect)
+				return FALSE
 
 		//turf density check
 		else
@@ -591,16 +622,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				else if(rcd_results["mode"] == RCD_AIRLOCK)
 					ignored_atoms = list()
 
-			//find the structures to ignore
-			var/list/ignored_content = list()
-			for(var/atom/movable/movable_content in target_turf)
-				if(is_type_in_list(movable_content, ignored_atoms))
-					ignored_content += movable_content
-
 			//check if the structure can fit on this turf
-			if(target_turf.is_blocked_turf(exclude_mobs = ignore_mobs, source_atom = null, ignore_atoms = ignored_content))
-				balloon_alert(user, "something dense or someone is blocking the turf!")
-				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+			if(!density_check(target_turf, ignore_mobs, ignored_atoms, user))
 				qdel(rcd_effect)
 				return FALSE
 	if(!do_after(user, delay, target = A))
