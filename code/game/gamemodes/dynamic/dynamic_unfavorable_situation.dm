@@ -25,6 +25,7 @@
 		log_dynamic_and_announce("An unfavorable situation was requested, spawning [initial(heavy_ruleset.name)]")
 		picking_specific_rule(heavy_ruleset, forced = TRUE, ignore_cost = TRUE)
 
+/// Return a valid heavy dynamic ruleset, or an empty list if there's no time to run any rulesets
 /datum/game_mode/dynamic/proc/generate_unfavourable_heavy_rulesets()
 	if (EMERGENCY_PAST_POINT_OF_NO_RETURN)
 		return list()
