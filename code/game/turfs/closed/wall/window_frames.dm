@@ -67,20 +67,19 @@
 /obj/structure/window_frame/proc/shock(mob/user, shock_chance)
 	if(!has_grille) // no grille? dont shock.
 		return FALSE
+	if(!underlaying_cable)
+		return FALSE
 	if(!prob(shock_chance))
 		return FALSE
 	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
 		return FALSE
 	var/turf/my_turf = get_turf(src)
 	var/obj/structure/cable/underlaying_cable = my_turf.get_cable_node()
-	if(underlaying_cable)
-		if(electrocute_mob(user, underlaying_cable, src, 1, TRUE))
-			var/datum/effect_system/spark_spread/spark_effect = new /datum/effect_system/spark_spread
-			spark_effect.set_up(3, 1, src)
-			spark_effect.start()
-			return TRUE
-		else
-			return FALSE
+	if(electrocute_mob(user, underlaying_cable, src, 1, TRUE))
+		var/datum/effect_system/spark_spread/spark_effect = new /datum/effect_system/spark_spread
+		spark_effect.set_up(3, 1, src)
+		spark_effect.start()
+		return TRUE
 	return FALSE
 
 /obj/structure/window_frame/proc/on_entered(datum/source, AM as mob|obj)
