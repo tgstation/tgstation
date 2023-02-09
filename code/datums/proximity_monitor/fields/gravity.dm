@@ -1,4 +1,5 @@
 /datum/proximity_monitor/advanced/gravity
+	edge_is_a_field = TRUE
 	var/gravity_value = 0
 	var/list/modified_turfs = list()
 
