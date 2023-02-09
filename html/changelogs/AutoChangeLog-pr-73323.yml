@@ -1,0 +1,10 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Tramstation: Crossing signals updated to work on the new map"
+  - bugfix: "Tramstation: Fixes missing wiring in West Wing"
+  - bugfix: "Tramstation: Connects a few scrubbers to waste"
+  - bugfix: "Tramstation: Add various decals that are missing"
+  - bugfix: "Tramstation: Fixes part of medbay area being set as space"
+  - bugfix: "Tramstation: Medbay's elevator buttons are now accessible"
+  - bugfix: "Tramstation: Elevator doors, buttons, and indicators are linked"
