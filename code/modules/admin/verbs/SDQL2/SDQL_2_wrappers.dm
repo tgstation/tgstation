@@ -33,6 +33,15 @@
 /proc/_cos(X)
 	return cos(X)
 
+/proc/_findtext(Haystack, Needle, Start = 1, End = 0)
+	return findtext(Haystack, Needle, Start, End)
+
+/proc/_findtextEx(Haystack, Needle, Start = 1, End = 0)
+	return findtextEx(Haystack, Needle, Start, End)
+
+/proc/_flick(Icon, Object)
+	flick(Icon, Object)
+
 /proc/_get_dir(Loc1, Loc2)
 	return get_dir(Loc1, Loc2)
 
@@ -262,6 +271,12 @@
 
 /proc/_turn(dir, angle)
 	return turn(dir, angle)
+
+/proc/_view(Dist, Center = usr)
+	return oiew(Dist, Center)
+
+/proc/_viewers(Dist, Center = usr)
+	return viewers(Dist, Center)
 
 /// Auxtools REALLY doesn't know how to handle filters as values;
 /// when passed as arguments to auxtools-called procs, they aren't simply treated as nulls -
