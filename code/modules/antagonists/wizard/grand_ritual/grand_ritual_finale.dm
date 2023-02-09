@@ -95,8 +95,7 @@
 			continue
 		if (crewmate == invoker)
 			continue
-		var/job_title = crewmate.mind.assigned_role.title
-		if (job_title == JOB_CAPTAIN)
+		if (is_captain_job(crewmate.mind.assigned_role))
 			former_captains += crewmate
 			demote_to_assistant(crewmate)
 			continue
@@ -219,10 +218,9 @@
 			continue
 		if (victim == invoker)
 			continue
-		var/job_title = victim.mind.assigned_role.title
 		if (HAS_TRAIT(victim, TRAIT_CLOWN_ENJOYER))
 			victim.add_mood_event("clown_world", /datum/mood_event/clown_world)
-		if (job_title == JOB_CLOWN)
+		if (is_clown_job(victim.mind.assigned_role))
 			var/datum/action/cooldown/spell/conjure_item/clown_pockets/new_spell = new(victim)
 			new_spell.Grant(victim)
 			continue
@@ -401,6 +399,7 @@
 			meteors.meteordelay = 0
 			var/datum/game_mode/dynamic/mode = SSticker.mode
 			mode.execute_roundstart_rule(meteors) // Meteors will continue until morale is crushed.
+			priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", ANNOUNCER_METEORS)
 
 #undef DOOM_SINGULARITY
 #undef DOOM_TESLA

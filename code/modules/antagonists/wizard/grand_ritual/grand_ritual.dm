@@ -77,15 +77,9 @@
 	if (!.)
 		return
 
-	// Cannot use while inside a vent.
-	if (owner.movement_type & VENTCRAWLING)
+	if(!isturf(owner.loc))
 		if (feedback)
-			owner.balloon_alert(owner, "exit the vent!")
-		return FALSE
-	// Cannot use while phased
-	if (HAS_TRAIT(owner, TRAIT_MAGICALLY_PHASED))
-		if (feedback)
-			owner.balloon_alert(owner, "become tangible first!")
+			owner.balloon_alert(owner, "can't reach the floor!")
 		return FALSE
 	return TRUE
 
@@ -103,17 +97,11 @@
 		return
 	if (!target_area)
 		set_new_area()
-	RegisterSignals(owner, list(
-			COMSIG_MOB_ENTER_JAUNT,
-			COMSIG_MOB_AFTER_EXIT_JAUNT,
-		), PROC_REF(update_status_on_signal))
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
 
 /datum/action/cooldown/grand_ritual/Remove(mob/remove_from)
 	. = ..()
-	UnregisterSignal(remove_from, list(
-		COMSIG_MOB_AFTER_EXIT_JAUNT,
-		COMSIG_MOB_ENTER_JAUNT,
-	))
+	UnregisterSignal(remove_from, COMSIG_MOVABLE_MOVED)
 
 /// If the target area doesn't exist or has been invalidated somehow, pick another one
 /datum/action/cooldown/grand_ritual/proc/validate_area()

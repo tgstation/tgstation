@@ -1,4 +1,3 @@
-
 /obj/effect/anomaly/flux
 	name = "flux wave anomaly"
 	icon_state = "flux"
@@ -54,5 +53,6 @@
 /obj/effect/anomaly/flux/minor
 	explosive = FLUX_NO_EXPLOSION
 
+// We need to override the default arguments here to achieve the desired effect
 /obj/effect/anomaly/flux/minor/Initialize(mapload, new_lifespan, drops_core = FALSE, explosive = FLUX_NO_EXPLOSION)
 	return ..()

@@ -65,6 +65,10 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	return wiz_team
 
 /datum/antagonist/wizard/on_gain()
+	if(!owner)
+		CRASH("Wizard datum with no owner.")
+	ritual = new(owner.current)
+	RegisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE, PROC_REF(on_ritual_complete))
 	equip_wizard()
 	if(give_objectives)
 		create_objectives()
@@ -97,8 +101,6 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	// And now we ensure that its loaded
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_WIZARDDEN)
 
-	if(!owner)
-		CRASH("Antag datum with no owner.")
 	if(!owner.current)
 		return
 	if(!GLOB.wizardstart.len)
@@ -162,8 +164,6 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	return ..()
 
 /datum/antagonist/wizard/proc/equip_wizard()
-	if(!owner)
-		CRASH("Antag datum with no owner.")
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return
@@ -208,9 +208,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/mob/living/wizard_mob = mob_override || owner.current
 	wizard_mob.faction |= ROLE_WIZARD
 	add_team_hud(wizard_mob)
-	ritual = new(wizard_mob)
-	ritual.Grant(wizard_mob)
-	RegisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE, PROC_REF(on_ritual_complete))
+	ritual.Grant(owner.current)
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/wizard_mob = mob_override || owner.current
@@ -249,8 +247,6 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard/apprentice/equip_wizard()
 	. = ..()
-	if(!owner)
-		CRASH("Antag datum with no owner.")
 	if(!ishuman(owner.current))
 		return
 
