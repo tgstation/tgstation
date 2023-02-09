@@ -194,42 +194,43 @@ GLOBAL_VAR(basketball_game)
 		to_chat(baller, span_danger("You are a basketball player for the [team_name]. Score as much as you can before time runs out."))
 
 /datum/basketball_controller/proc/victory()
-	for(var/mob/_competitor in GLOB.mob_living_list)
-		var/mob/living/competitor = _competitor
-		var/area/mob_area = get_area(competitor)
-		if(istype(mob_area, game_area))
-			to_chat(competitor, "<span class='narsie [team_span]'>[team] team wins!</span>")
-			to_chat(competitor, victory_rejoin_text)
-			for(var/obj/item/ctf/W in competitor)
-				competitor.dropItemToGround(W)
-			competitor.dust()
-
 	var/is_game_draw
 	var/winner_team_ckeys
 	var/loser_team_ckeys
+	var/winner_team_name
 
-	if(home_hoop.score == away_hoop.score)
+	if(home_hoop.total_score == away_hoop.total_score)
 		is_game_draw = TRUE
 		winner_team_ckeys |= home_team_players
 		winner_team_ckeys |= away_team_players
-	else if(home_hoop.score > away_hoop.score)
+	else if(home_hoop.total_score > away_hoop.total_score)
 		winner_team_ckeys = home_team_players
+		winner_team_name = home_hoop.name
 		loser_team_ckeys = away_team_players
-	else if(home_hoop.score < away_hoop.score)
+	else if(home_hoop.total_score < away_hoop.total_score)
 		winner_team_ckeys = away_team_players
+		winner_team_name = away_hoop.name
 		loser_team_ckeys = home_team_players
 
 	if(is_game_draw)
-		for(ckey in winner_team_ckeys)
-		to_chat(competitor, "<span class='narsie [team_span]'>The game ends in a draw!</span>")
+		for(var/ckey in winner_team_ckeys)
+			var/mob/living/competitor = get_mob_by_ckey(ckey)
+			var/area/mob_area = get_area(competitor)
+			if(istype(competitor) && istype(mob_area, /area/centcom/basketball))
+				to_chat(competitor, span_narsie("The game resulted in a draw!"))
 	else
-		for(ckey in winner_team_ckeys)
-			if(user.mind && user.mind.current)
+		for(var/ckey in winner_team_ckeys)
+			var/mob/living/competitor = get_mob_by_ckey(ckey)
+			var/area/mob_area = get_area(competitor)
+			if(istype(competitor) && istype(mob_area, /area/centcom/basketball))
+				to_chat(competitor, span_narsie("[winner_team_name] team wins!"))
 
-
-
-			to_chat(competitor, "<span class='narsie [team_span]'>[team] team wins!</span>")
-			player.gib()
+		for(var/ckey in loser_team_ckeys)
+			var/mob/living/competitor = get_mob_by_ckey(ckey)
+			var/area/mob_area = get_area(competitor)
+			if(istype(competitor) && istype(mob_area, /area/centcom/basketball))
+				to_chat(competitor, span_narsie("[winner_team_name] team wins!"))
+				competitor.dust()
 
 	addtimer(CALLBACK(src, PROC_REF(end_game)), 20 SECONDS) // give winners time for a victory lap
 
