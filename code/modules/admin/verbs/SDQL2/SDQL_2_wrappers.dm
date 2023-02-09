@@ -154,6 +154,9 @@
 /proc/_range(Dist, Center = usr)
 	return range(Dist, Center)
 
+/proc/_range_turfs(Dist, Center = usr)
+	return RANGE_TURFS(Dist, Center)
+
 /proc/_regex(pattern, flags)
 	return regex(pattern, flags)
 
@@ -273,7 +276,7 @@
 	return turn(dir, angle)
 
 /proc/_view(Dist, Center = usr)
-	return oiew(Dist, Center)
+	return view(Dist, Center)
 
 /proc/_viewers(Dist, Center = usr)
 	return viewers(Dist, Center)
