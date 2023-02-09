@@ -1,7 +1,7 @@
 /turf/closed/overmap_edge
 	icon = 'voidcrew/modules/overmap/icons/turf/overmap.dmi'
 	icon_state = "overmap"
-	always_lit = TRUE
+	space_lit = TRUE
 
 /turf/closed/overmap_edge/Initialize(mapload)
 	. = ..()

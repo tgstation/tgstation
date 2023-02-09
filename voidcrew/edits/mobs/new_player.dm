@@ -125,7 +125,7 @@
 
 	if(humanc) //These procs all expect humans
 		joined_ship.manifest_inject(humanc, job)
-		GLOB.data_core.manifest_inject(humanc)
+		GLOB.manifest.inject(humanc)
 
 		humanc.increment_scar_slot()
 		humanc.load_persistent_scars()
@@ -138,7 +138,7 @@
 	if((job.job_flags & JOB_ASSIGN_QUIRKS) && humanc && CONFIG_GET(flag/roundstart_traits))
 		SSquirks.AssignQuirks(humanc, humanc.client)
 
-	log_manifest(character.mind.key,character.mind,character, latejoin = TRUE)
+	log_manifest(character.mind.key, character.mind, character, latejoin = TRUE)
 	log_shuttle("[character.mind.key] / [character.mind.name] has joined [joined_ship.name] as [job.title]")
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, character, job.title)
