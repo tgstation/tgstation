@@ -46723,7 +46723,6 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "qEF" = (
-/obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4
 	},
