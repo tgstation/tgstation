@@ -121,6 +121,12 @@ GLOBAL_VAR(basketball_game)
 	notify_ghosts("Basketball minigame is about to start!",'sound/effects/ghost2.ogg')
 	create_bodies()
 	addtimer(CALLBACK(src, PROC_REF(victory)), game_duration)
+	for(var/i in 1 to 10)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), home_hoop, 'sound/items/timer.ogg', 75, FALSE), game_duration - (i SECONDS))
+		addtimer(CALLBACK(home_hoop, TYPE_PROC_REF(/atom/movable/, say), "[i] seconds left"), game_duration - (i SECONDS))
+		
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), away_hoop, 'sound/items/timer.ogg', 75, FALSE), game_duration - (i SECONDS))
+		addtimer(CALLBACK(away_hoop, TYPE_PROC_REF(/atom/movable/, say), "[i] seconds left"), game_duration - (i SECONDS))
 
 /**
  * Called when the game is setting up, AFTER map is loaded but BEFORE the phase timers start. Creates and places each role's body and gives the correct player key
