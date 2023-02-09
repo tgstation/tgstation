@@ -623,7 +623,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 					//only ignore mobs if we are trying to create windoors and not grills. We dont want to drop a grill on top of somebody
 					ignore_mobs = rcd_results["mode"] == RCD_AIRLOCK
 					ignored_atoms += /obj/machinery/door/window
-				//if we are trying to create full airlock doors then we do the regular checks and make sure we have the full space for them. i.e. dont ignore anyhting dense on the turf
+				//if we are trying to create full airlock doors then we do the regular checks and make sure we have the full space for them. i.e. dont ignore anything dense on the turf
 				else if(rcd_results["mode"] == RCD_AIRLOCK)
 					ignored_atoms = list()
 
