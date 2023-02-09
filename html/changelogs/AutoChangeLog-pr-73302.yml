@@ -1,0 +1,4 @@
+author: "ZephyrTFA"
+delete-after: True
+changes:
+  - bugfix: "Using a hacking cable will no longer permanently spam you with balloon messages"
