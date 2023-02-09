@@ -377,3 +377,24 @@
       biotypes
   - refactor: refactored lungs to have a respiration_type flag which is then used
       by adjustOxyloss/setOxyloss to determine whether to take 'oxygen' damage.
+2023-02-09:
+  Jacquerel:
+  - bugfix: Hostile Basic Mobs such as carp, rats, and moonicorns will no longer gain
+      the power to bite anyone they can see regardless of distance and intervening
+      obstacles upon defeating their first target in combat.
+  MMMiracles:
+  - rscadd: Tramstation has received a substantial overhaul! Please consult your local
+      tour guide and station maps for changes.
+  Melbert:
+  - bugfix: Revolutionary Heretics and Cultists Traitors no longer lose all of their
+      joy in life after being de-converted from their respective causes.
+  NamelessFairy:
+  - bugfix: Some misplaced decals on icebox have been removed.
+  Xander3359:
+  - bugfix: metastation toxins no longer has a weird double light fixture.
+  mc-oofert:
+  - rscadd: Luxury Shuttle is now bigger, and less ugly! Poor people still get it
+      rough though...
+  timothymtorres:
+  - bugfix: Fix kilo barsign spawning under windows
+  - bugfix: Fix barsign updatePath being backwards
