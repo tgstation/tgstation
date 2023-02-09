@@ -496,13 +496,8 @@
 /area/station/escapepodbay)
 "abu" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/station/escapepodbay)
@@ -48140,6 +48135,14 @@
 	},
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
+"pUU" = (
+/obj/docking_port/stationary/random{
+	dir = 8;
+	name = "lavaland";
+	shuttle_id = "pod_3_lavaland"
+	},
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
 "pUV" = (
 /obj/structure/table,
 /obj/item/clipboard,
@@ -81364,25 +81367,25 @@ aac
 aac
 aac
 aac
+pUU
 aac
 aac
 aac
 aac
 aac
+pUU
 aac
 aac
 aac
 aac
 aac
+pUU
 aac
 aac
 aac
 aac
 aac
-aac
-aac
-aac
-aac
+pUU
 aac
 aac
 aac
