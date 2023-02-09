@@ -490,11 +490,10 @@
 			var/top_offset = get_top_offset()
 			for(var/image/image as anything in bodypart_icon)
 				image.pixel_y += top_offset
-		//if(limb in needs_update) //Checks to see if the limb needs to be redrawn
 		new_limbs += bodypart_icon
 		limb_icon_cache[icon_render_keys[limb.body_zone]] = bodypart_icon //Caches the icon with the bodypart key, as it is new
-		//else
-		//	new_limbs += limb_icon_cache[icon_render_keys[limb.body_zone]] //Pulls existing sprites from the cache
+		last_top_offset = get_top_offset()
+
 
 	remove_overlay(BODYPARTS_LAYER)
 
