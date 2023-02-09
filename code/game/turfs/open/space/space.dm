@@ -8,6 +8,7 @@
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
+	var/starlight_source_count = 0
 
 	var/destination_z
 	var/destination_x
@@ -19,8 +20,9 @@
 	run_later = TRUE
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
-	light_power = 0.25
-	always_lit = TRUE
+	light_power = 0.75
+	light_color = COLOR_STARLIGHT
+	space_lit = TRUE
 	bullet_bounce_sound = null
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
@@ -58,7 +60,7 @@
 		plane = PLANE_SPACE - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
 
 	var/area/our_area = loc
-	if(!our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
+	if(!our_area.area_has_base_lighting && space_lit) //Only provide your own lighting if the area doesn't for you
 		// Intentionally not add_overlay for performance reasons.
 		// add_overlay does a bunch of generic stuff, like creating a new list for overlays,
 		// queueing compile, cloning appearance, etc etc etc that is not necessary here.
@@ -100,20 +102,30 @@
 /turf/open/space/remove_air(amount)
 	return null
 
+/// Updates starlight. Called when we're unsure of a turf's starlight state
+/// Returns TRUE if we succeed, FALSE otherwise
 /turf/open/space/proc/update_starlight()
-	if(CONFIG_GET(flag/starlight))
-		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-			if(isspaceturf(t))
-				//let's NOT update this that much pls
-				continue
-			set_light(2, 1.25, COLOR_BLUE_WHITE)
-			return
-		set_light(0)
+	for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+		// I've got a lot of cordons near spaceturfs, be good kids
+		if(isspaceturf(t) || istype(t, /turf/cordon))
+			//let's NOT update this that much pls
+			continue
+		enable_starlight()
+		return TRUE
+	set_light(0)
+	return FALSE
+
+/// Turns on the stars, if they aren't already
+/turf/open/space/proc/enable_starlight()
+	if(!light_range)
+		set_light(2)
 
 /turf/open/space/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
 /turf/open/space/proc/CanBuildHere()
+	if(destination_z)
+		return FALSE
 	return TRUE
 
 /turf/open/space/handle_slip()
@@ -182,9 +194,7 @@
 	return FALSE
 
 /turf/open/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/space.dmi'
-	underlay_appearance.icon_state = "space"
-	SET_PLANE(underlay_appearance, PLANE_SPACE, src)
+	generate_space_underlay(underlay_appearance, asking_turf)
 	return TRUE
 
 
@@ -194,11 +204,17 @@
 
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
-			var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-			if(L)
+			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
+			if(lattice)
 				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
 			else
 				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
+		if(RCD_CATWALK)
+			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
+			if(lattice)
+				return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 1)
+			else
+				return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 2)
 	return FALSE
 
 /turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
@@ -206,6 +222,13 @@
 		if(RCD_FLOORWALL)
 			to_chat(user, span_notice("You build a floor."))
 			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			return TRUE
+		if(RCD_CATWALK)
+			to_chat(user, span_notice("You build a catwalk."))
+			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
+			if(lattice)
+				qdel(lattice)
+			new /obj/structure/lattice/catwalk(src)
 			return TRUE
 	return FALSE
 
@@ -268,3 +291,26 @@
 				return FALSE
 		return TRUE
 	return FALSE
+
+/turf/open/space/openspace/enable_starlight()
+	var/turf/below = SSmapping.get_turf_below(src)
+	// Override = TRUE beacuse we could have our starlight updated many times without a failure, which'd trigger this
+	RegisterSignal(below, COMSIG_TURF_CHANGE, PROC_REF(on_below_change), override = TRUE)
+	if(!isspaceturf(below))
+		return
+	set_light(2)
+
+/turf/open/space/openspace/update_starlight()
+	. = ..()
+	if(.)
+		return
+	// If we're here, the starlight is not to be
+	var/turf/below = SSmapping.get_turf_below(src)
+	UnregisterSignal(below, COMSIG_TURF_CHANGE)
+
+/turf/open/space/openspace/proc/on_below_change(turf/source, path, list/new_baseturfs, flags, list/post_change_callbacks)
+	SIGNAL_HANDLER
+	if(isspaceturf(source) && !ispath(path, /turf/open/space))
+		set_light(2)
+	else if(!isspaceturf(source) && ispath(path, /turf/open/space))
+		set_light(0)

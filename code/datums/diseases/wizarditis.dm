@@ -84,7 +84,7 @@ STI KALY - blind
 	for(var/area/space/S in theareas)
 		theareas -= S
 
-	if(!theareas||!theareas.len)
+	if(!theareas || !theareas.len)
 		return
 
 	var/area/thearea = pick(theareas)

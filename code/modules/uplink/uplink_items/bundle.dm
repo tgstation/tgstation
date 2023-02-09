@@ -173,4 +173,5 @@
 	cost = 20
 	item = /obj/item/syndicrate_key
 	progression_minimum = 30 MINUTES
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS

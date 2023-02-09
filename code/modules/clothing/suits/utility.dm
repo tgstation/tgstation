@@ -57,6 +57,9 @@
 /obj/item/clothing/suit/utility/fire/firefighter
 	icon_state = "firesuit"
 	inhand_icon_state = "firefighter"
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 
 /obj/item/clothing/suit/utility/fire/heavy
 	name = "heavy firesuit"
@@ -66,11 +69,15 @@
 	slowdown = 1.5
 
 /obj/item/clothing/suit/utility/fire/atmos
-	name = "firesuit"
+	name = "atmospheric firesuit"
 	desc = "An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame."
 	icon_state = "atmos_firesuit"
-	inhand_icon_state = null
+	inhand_icon_state = "firefighter_atmos"
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 /*
  * Bomb protection

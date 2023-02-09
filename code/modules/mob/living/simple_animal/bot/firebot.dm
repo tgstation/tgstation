@@ -253,8 +253,6 @@
 
 //Look for burning people or turfs around the bot
 /mob/living/simple_animal/bot/firebot/process_scan(atom/scan_target)
-	if(scan_target == src)
-		return src
 	if(!is_burning(scan_target))
 		return null
 

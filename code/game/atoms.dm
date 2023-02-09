@@ -74,8 +74,6 @@
 	///Last fingerprints to touch this atom
 	var/fingerprintslast
 
-	var/list/filter_data //For handling persistent filters
-
 	//List of datums orbiting this atom
 	var/datum/component/orbiter/orbiters
 
@@ -324,9 +322,10 @@
 		overlays.Cut()
 
 	LAZYNULL(managed_overlays)
-
-	QDEL_NULL(ai_controller)
-	QDEL_NULL(light)
+	if(ai_controller)
+		QDEL_NULL(ai_controller)
+	if(light)
+		QDEL_NULL(light)
 	if (length(light_sources))
 		light_sources.Cut()
 
@@ -1047,15 +1046,6 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_CONTENTS_DEL, deleting_atom)
 
 /**
- * called when the turf the atom resides on is ChangeTurfed
- *
- * Default behaviour is to loop through atom contents and call their HandleTurfChange() proc
- */
-/atom/proc/HandleTurfChange(turf/changing_turf)
-	for(var/atom/current_atom as anything in src)
-		current_atom.HandleTurfChange(changing_turf)
-
-/**
  * the vision impairment to give to the mob whose perspective is set to that atom
  *
  * (e.g. an unfocused camera giving you an impaired vision when looking through it)
@@ -1601,101 +1591,6 @@
 /atom/proc/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return
 
-/** Add a filter to the atom.
- * Can also be used to assert a filter's existence. I.E. update a filter regardless if it exists or not.
- *
- * Arguments:
- * * name - Filter name
- * * priority - Priority used when sorting the filter.
- * * params - Parameters of the filter.
- */
-/atom/proc/add_filter(name, priority, list/params)
-	LAZYINITLIST(filter_data)
-	var/list/copied_parameters = params.Copy()
-	copied_parameters["priority"] = priority
-	filter_data[name] = copied_parameters
-	update_filters()
-
-/atom/proc/update_filters()
-	filters = null
-	filter_data = sortTim(filter_data, GLOBAL_PROC_REF(cmp_filter_data_priority), TRUE)
-	for(var/f in filter_data)
-		var/list/data = filter_data[f]
-		var/list/arguments = data.Copy()
-		arguments -= "priority"
-		filters += filter(arglist(arguments))
-	UNSETEMPTY(filter_data)
-
-/** Update a filter's parameter and animate this change. If the filter doesnt exist we won't do anything.
- * Basically a [atom/proc/modify_filter] call but with animations. Unmodified filter parameters are kept.
- *
- * Arguments:
- * * name - Filter name
- * * new_params - New parameters of the filter
- * * time - time arg of the BYOND animate() proc.
- * * easing - easing arg of the BYOND animate() proc.
- * * loop - loop arg of the BYOND animate() proc.
- */
-/atom/proc/transition_filter(name, list/new_params, time, easing, loop)
-	var/filter = get_filter(name)
-	if(!filter)
-		return
-	animate(filter, new_params, time = time, easing = easing, loop = loop)
-	modify_filter(name, new_params)
-
-/** Update a filter's parameter to the new one. If the filter doesnt exist we won't do anything.
- *
- * Arguments:
- * * name - Filter name
- * * new_params - New parameters of the filter
- * * overwrite - TRUE means we replace the parameter list completely. FALSE means we only replace the things on new_params.
- */
-/atom/proc/modify_filter(name, list/new_params, overwrite = FALSE)
-	var/filter = get_filter(name)
-	if(!filter)
-		return
-	if(overwrite)
-		filter_data[name] = new_params
-	else
-		for(var/thing in new_params)
-			filter_data[name][thing] = new_params[thing]
-	update_filters()
-
-/atom/proc/change_filter_priority(name, new_priority)
-	if(!filter_data || !filter_data[name])
-		return
-
-	filter_data[name]["priority"] = new_priority
-	update_filters()
-
-/obj/item/update_filters()
-	. = ..()
-	update_item_action_buttons()
-
-/atom/proc/get_filter(name)
-	if(filter_data && filter_data[name])
-		return filters[filter_data.Find(name)]
-
-/// Returns the indice in filters of the given filter name.
-/// If it is not found, returns null.
-/atom/proc/get_filter_index(name)
-	return filter_data?.Find(name)
-
-/atom/proc/remove_filter(name_or_names)
-	if(!filter_data)
-		return
-
-	var/list/names = islist(name_or_names) ? name_or_names : list(name_or_names)
-
-	for(var/name in names)
-		if(filter_data[name])
-			filter_data -= name
-	update_filters()
-
-/atom/proc/clear_filters()
-	filter_data = null
-	filters = null
-
 /atom/proc/intercept_zImpact(list/falling_movables, levels = 1)
 	SHOULD_CALL_PARENT(TRUE)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, falling_movables, levels)
@@ -1745,11 +1640,10 @@
  * Fetches a list of all of the materials this object has of the desired type. Returns null if there is no valid materials of the type
  *
  * Arguments:
- * - [mat_type][/datum/material]: The type of material we are checking for
- * - exact: Whether to search for the _exact_ material type
+ * - [required_material][/datum/material]: The type of material we are checking for
  * - mat_amount: The minimum required amount of material
  */
-/atom/proc/has_material_type(datum/material/mat_type, exact=FALSE, mat_amount=0)
+/atom/proc/has_material_type(datum/material/required_material, mat_amount = 0)
 	var/list/cached_materials = custom_materials
 	if(!length(cached_materials))
 		return null
@@ -1759,7 +1653,7 @@
 		if(cached_materials[current_material] < mat_amount)
 			continue
 		var/datum/material/material = GET_MATERIAL_REF(current_material)
-		if(exact ? material.type != current_material : !istype(material, mat_type))
+		if(!istype(material, required_material))
 			continue
 		LAZYSET(materials_of_type, material, cached_materials[current_material])
 

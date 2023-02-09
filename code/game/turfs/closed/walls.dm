@@ -42,9 +42,7 @@
 	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && fixed_underlay) //Set underlays for the diagonal walls.
 		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
 		if(fixed_underlay["space"])
-			underlay_appearance.icon = 'icons/turf/space.dmi'
-			underlay_appearance.icon_state = "space"
-			SET_PLANE(underlay_appearance, PLANE_SPACE, src)
+			generate_space_underlay(underlay_appearance, src)
 		else
 			underlay_appearance.icon = fixed_underlay["icon"]
 			underlay_appearance.icon_state = fixed_underlay["icon_state"]
@@ -222,11 +220,11 @@
 		var/obj/item/wallframe/F = W
 		if(F.try_build(src, user))
 			F.attach(src, user)
-		return TRUE
+			return TRUE
+		return FALSE
 	//Poster stuff
 	else if(istype(W, /obj/item/poster) && Adjacent(user)) //no tk memes.
-		place_poster(W,user)
-		return TRUE
+		return place_poster(W,user)
 
 	return FALSE
 
@@ -277,10 +275,18 @@
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 26)
+		if(RCD_WALLFRAME)
+			return list("mode" = RCD_WALLFRAME, "delay" = 10, "cost" = 25)
 	return FALSE
 
 /turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
+		if(RCD_WALLFRAME)
+			var/obj/item/wallframe/new_wallmount = new the_rcd.wallframe_type(user.drop_location())
+			if(!try_wallmount(new_wallmount, user, src))
+				qdel(new_wallmount)
+				return FALSE
+			return TRUE
 		if(RCD_DECONSTRUCT)
 			to_chat(user, span_notice("You deconstruct the wall."))
 			ScrapeAway()

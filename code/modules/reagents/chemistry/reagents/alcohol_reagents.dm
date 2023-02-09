@@ -729,7 +729,7 @@
 		cubano.adjustBruteLoss(-1 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		cubano.adjustFireLoss(-1 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		cubano.adjustToxLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-		cubano.adjustOxyLoss(-5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		cubano.adjustOxyLoss(-5 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		. = TRUE
 	return ..() || .
 
@@ -1473,7 +1473,7 @@
 		playsound(get_turf(drinker), 'sound/effects/supermatter.ogg', 150, TRUE)
 		drinker.add_filter("singulo_rays", 1, ray_filter)
 		animate(drinker.get_filter("singulo_rays"), offset = 10, time = 1.5 SECONDS, loop = -1)
-		addtimer(CALLBACK(drinker, TYPE_PROC_REF(/atom/, remove_filter), "singulo_rays"), 1.5 SECONDS)
+		addtimer(CALLBACK(drinker, TYPE_PROC_REF(/datum, remove_filter), "singulo_rays"), 1.5 SECONDS)
 		drinker.emote("burp")
 	return ..()
 
@@ -1798,7 +1798,7 @@
 	icon_state = "silencerglass"
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(ishuman(drinker) && drinker.mind?.miming)
+	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
@@ -1899,7 +1899,7 @@
 		drinker.adjustBruteLoss(-3 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		drinker.adjustFireLoss(-3 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		drinker.adjustCloneLoss(-5 * REM * delta_time, 0)
-		drinker.adjustOxyLoss(-4 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		drinker.adjustOxyLoss(-4 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		drinker.adjustToxLoss(-3 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	return ..() || .
@@ -2296,7 +2296,7 @@
 		drinker.adjustBruteLoss(-1, required_bodytype = affected_bodytype)
 		drinker.adjustFireLoss(-1, required_bodytype = affected_bodytype)
 		drinker.adjustToxLoss(-1, required_biotype = affected_biotype)
-		drinker.adjustOxyLoss(-1, required_biotype = affected_biotype)
+		drinker.adjustOxyLoss(-1, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		drinker.adjustStaminaLoss(-1, required_biotype = affected_biotype)
 	drinker.visible_message(span_warning("[drinker] shivers with renewed vigor!"), span_notice("One taste of [lowertext(name)] fills you with energy!"))
 	if(!drinker.stat && heal_points == 20) //brought us out of softcrit
@@ -2307,7 +2307,7 @@
 		drinker.adjustBruteLoss(-1 * REM * delta_time, required_bodytype = affected_bodytype)
 		drinker.adjustFireLoss(-1 * REM * delta_time, required_bodytype = affected_bodytype)
 		drinker.adjustToxLoss(-0.5 * REM * delta_time, required_biotype = affected_biotype)
-		drinker.adjustOxyLoss(-3 * REM * delta_time, required_biotype = affected_biotype)
+		drinker.adjustOxyLoss(-3 * REM * delta_time, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		drinker.adjustStaminaLoss(-5 * REM * delta_time, required_biotype = affected_biotype)
 		. = TRUE
 	..()
@@ -2703,7 +2703,7 @@
 	icon_state = "blank_paper"
 
 /datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(ishuman(drinker) && drinker.mind?.miming)
+	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
@@ -2857,7 +2857,7 @@
 	//A healing drink similar to Quadruple Sec, Ling Stings, and Screwdrivers for the Wizznerds; the check is consistent with the changeling sting
 	if(drinker?.mind?.has_antag_datum(/datum/antagonist/wizard))
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
-		drinker.adjustOxyLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		drinker.adjustOxyLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		drinker.adjustToxLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		drinker.adjustStaminaLoss(-1  * REM * delta_time, required_biotype = affected_biotype)
 	return ..()

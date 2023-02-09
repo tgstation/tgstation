@@ -1,0 +1,348 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"g" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/central)
+"h" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/paper/crumpled{
+	default_raw_text = "these are my plants please do not touch them i water them twice a day and shine my pda light on them if i do not come back in 2 shifts please give them away to the clown";
+	name = "scribbled notes"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/decoration/paint,
+/obj/effect/spawner/random/decoration/paint,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/material_cheap,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/tank,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/wrench,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"F" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"R" = (
+/obj/structure/girder,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"T" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"V" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"X" = (
+/obj/structure/girder,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+
+(1,1,1) = {"
+a
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+a
+"}
+(2,1,1) = {"
+a
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+a
+"}
+(3,1,1) = {"
+F
+g
+T
+T
+T
+X
+j
+V
+V
+R
+w
+W
+z
+a
+"}
+(4,1,1) = {"
+F
+g
+T
+T
+T
+g
+V
+V
+E
+g
+W
+W
+W
+a
+"}
+(5,1,1) = {"
+F
+g
+T
+T
+g
+g
+g
+g
+g
+g
+c
+W
+W
+a
+"}
+(6,1,1) = {"
+F
+g
+g
+g
+g
+F
+F
+F
+F
+g
+c
+W
+W
+a
+"}
+(7,1,1) = {"
+F
+F
+F
+F
+F
+F
+a
+a
+a
+a
+a
+a
+h
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

@@ -769,8 +769,12 @@
 		if("message")
 			status_signal.data["top_text"] = data1
 			status_signal.data["bottom_text"] = data2
+			log_game("[key_name(usr)] has changed the station status display message to \"[data1] [data2]\" [loc_name(usr)]")
+
 		if("alert")
 			status_signal.data["picture_state"] = data1
+			log_game("[key_name(usr)] has changed the station status display message to \"[data1]\" [loc_name(usr)]")
+
 
 	frequency.post_signal(src, status_signal)
 
@@ -841,10 +845,10 @@
 	var/num_ghosts = length(GLOB.current_observers_list) + length(GLOB.dead_player_list)
 
 	// Pirates require empty space for the ship, and ghosts for the pirates obviously
-	if(SSmapping.empty_space && (num_ghosts >= MIN_GHOSTS_FOR_PIRATES))
+	if(!SSmapping.is_planetary() && (num_ghosts >= MIN_GHOSTS_FOR_PIRATES))
 		hack_options += HACK_PIRATE
 	// Fugitives require empty space for the hunter's ship, and ghosts for both fugitives and hunters (Please no waldo)
-	if(SSmapping.empty_space && (num_ghosts >= MIN_GHOSTS_FOR_FUGITIVES))
+	if(!SSmapping.is_planetary() && (num_ghosts >= MIN_GHOSTS_FOR_FUGITIVES))
 		hack_options += HACK_FUGITIVES
 	// If less than a certain percent of the population is ghosts, consider sleeper agents
 	if(num_ghosts < (length(GLOB.clients) * MAX_PERCENT_GHOSTS_FOR_SLEEPER))

@@ -184,11 +184,22 @@
 /datum/supply_pack/critter/snake
 	name = "Snake Crate"
 	desc = "Tired of these MOTHER FUCKING snakes on this MOTHER FUCKING space station? \
-		Then this isn't the crate for you. Contains three poisonous snakes."
+		Then this isn't the crate for you. Contains three venomous snakes."
 	cost = CARGO_CRATE_VALUE * 6
 	access_view = ACCESS_SECURITY
 	contains = list(/mob/living/simple_animal/hostile/retaliate/snake = 3)
 	crate_name = "snake crate"
+
+/datum/supply_pack/critter/amphibians
+	name = "Amphibian Friends Crate"
+	desc = "Two disgustingly cute slimey friends. Cytologists love them! \
+		Contains one frog and one axolotl. Warning: Frog may have hallucinogenic properties."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(
+		/mob/living/basic/axolotl,
+		/mob/living/basic/frog,
+	)
+	crate_name = "amphibian crate"
 
 /datum/supply_pack/critter/lizard
 	name = "Lizard Crate"
@@ -197,3 +208,16 @@
 	access_view = ACCESS_JANITOR
 	contains = list(/mob/living/simple_animal/hostile/lizard)
 	crate_name = "lizard crate"
+
+/datum/supply_pack/critter/garden_gnome
+	name = "Garden Gnome Crate"
+	desc = "Collect them all for your garden. Comes with three!"
+	hidden = TRUE
+	cost = CARGO_CRATE_VALUE * 20
+	contains = list(/mob/living/basic/garden_gnome)
+	crate_name = "garden gnome crate"
+
+/datum/supply_pack/critter/garden_gnome/generate()
+	. = ..()
+	for(var/i in 1 to 2)
+		new /mob/living/basic/garden_gnome(.)

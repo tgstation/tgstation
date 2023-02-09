@@ -37,6 +37,9 @@ GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect
 		spawn_meteor(meteor_types, direction)
 
 /proc/spawn_meteor(list/meteor_types, direction)
+	if (SSmapping.is_planetary())
+		stack_trace("Tried to spawn meteors in a map which isn't in space.")
+		return // We're not going to find any space turfs here
 	var/turf/picked_start
 	var/turf/picked_goal
 	var/max_i = 10//number of tries to spawn meteor.
@@ -50,7 +53,7 @@ GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect
 		picked_start = spaceDebrisStartLoc(start_side, start_Z)
 		picked_goal = spaceDebrisFinishLoc(start_side, start_Z)
 		max_i--
-		if(max_i<=0)
+		if(max_i <= 0)
 			return
 	var/new_meteor = pick_weight(meteor_types)
 	new new_meteor(picked_start, picked_goal)

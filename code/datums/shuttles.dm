@@ -176,6 +176,12 @@
 	description = "A respectable mid-sized shuttle that first saw service shuttling Nanotrasen crew to and from their asteroid belt embedded facilities."
 	credit_cost = CARGO_CRATE_VALUE * 6
 
+/datum/map_template/shuttle/emergency/venture
+	suffix = "venture"
+	name = "Venture Emergency Shuttle"
+	description = "A mid-sized shuttle for those who like a lot of space for their legs."
+	credit_cost = CARGO_CRATE_VALUE * 10
+
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
@@ -221,7 +227,8 @@
 	description = "A luxurious golden shuttle complete with an indoor swimming pool. Each crewmember wishing to board must bring 500 credits, payable in cash and mineral coin."
 	extra_desc = "This shuttle costs 500 credits to board."
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
-	credit_cost = CARGO_CRATE_VALUE * 20
+	emag_only = TRUE
+	credit_cost = EMAG_LOCKED_SHUTTLE_COST
 
 /datum/map_template/shuttle/emergency/medisim
 	suffix = "medisim"

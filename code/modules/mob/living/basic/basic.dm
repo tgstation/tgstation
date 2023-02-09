@@ -149,7 +149,7 @@
 	icon_state = icon_dead
 	if(basic_mob_flags & FLIP_ON_DEATH)
 		transform = transform.Turn(180)
-	if(basic_mob_flags & UNDENSIFY_ON_DEATH)
+	if(!(basic_mob_flags & REMAIN_DENSE_WHILE_DEAD))
 		set_density(FALSE)
 
 /mob/living/basic/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
@@ -163,7 +163,7 @@
 	icon_state = icon_living
 	if(basic_mob_flags & FLIP_ON_DEATH)
 		transform = transform.Turn(180)
-	if(basic_mob_flags & UNDENSIFY_ON_DEATH)
+	if(!(basic_mob_flags & REMAIN_DENSE_WHILE_DEAD))
 		set_density(initial(density))
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers)
@@ -202,3 +202,6 @@
 	. = ..()
 	. += "Health: [round((health / maxHealth) * 100)]%"
 	. += "Combat Mode: [combat_mode ? "On" : "Off"]"
+
+/mob/living/basic/compare_sentience_type(compare_type)
+	return sentience_type == compare_type

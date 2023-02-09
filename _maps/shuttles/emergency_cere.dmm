@@ -798,7 +798,7 @@
 	dir = 4
 	},
 /obj/item/clothing/suit/apron/surgical,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/surgical_drapes,
 /obj/item/razor,

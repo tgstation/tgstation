@@ -1199,10 +1199,8 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/obj/structure/sign/barsign{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/barsign/all_access/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "hx" = (
@@ -5016,10 +5014,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
-"xG" = (
-/obj/machinery/button/showtime,
-/turf/closed/indestructible/fakeglass,
-/area/centcom/tdome/administration)
 "xN" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
@@ -5413,7 +5407,7 @@
 /obj/item/hemostat{
 	pixel_x = -4
 	},
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue{
@@ -5962,10 +5956,7 @@
 /area/centcom/central_command_areas/evacuation)
 "Cg" = (
 /obj/item/cardboard_cutout{
-	desc = "They seem to be ignoring you... Typical.";
-	dir = 1;
-	icon_state = "cutout_ntsec";
-	name = "Private Security Officer"
+	starting_cutout = "Private Security Officer"
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -7872,10 +7863,8 @@
 	pixel_y = 5
 	},
 /obj/structure/table/wood,
-/obj/structure/sign/barsign{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/barsign/all_access/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "Pq" = (
@@ -8056,7 +8045,8 @@
 /obj/machinery/requests_console/directional/north{
 	announcementConsole = 1;
 	department = "Captain's Desk";
-	departmentType = 5
+	assistance_requestable = 1;
+	anon_tips_receiver = 1
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
@@ -8859,9 +8849,7 @@
 /area/centcom/central_command_areas/admin)
 "UA" = (
 /obj/item/cardboard_cutout{
-	desc = "They seem to be ignoring you... Typical.";
-	icon_state = "cutout_ntsec";
-	name = "Private Security Officer"
+	starting_cutout = "Private Security Officer"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -9270,10 +9258,8 @@
 "Wv" = (
 /obj/structure/chair,
 /obj/effect/landmark/thunderdome/observe,
-/obj/structure/sign/barsign{
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/barsign/all_access/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "Wy" = (
@@ -52365,7 +52351,7 @@ IG
 IG
 IG
 It
-xG
+Pj
 Xn
 Sz
 Sz

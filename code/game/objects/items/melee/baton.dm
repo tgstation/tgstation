@@ -590,7 +590,8 @@
 	if(!target.IsKnockdown())
 		to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
 
-	target.Knockdown(knockdown_time * (trait_check ? 0.1 : 1))
+	if(!trait_check)
+		target.Knockdown(knockdown_time)
 
 /obj/item/melee/baton/security/get_wait_description()
 	return span_danger("The baton is still charging!")
