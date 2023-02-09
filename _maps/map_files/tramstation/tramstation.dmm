@@ -16641,13 +16641,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit)
-"efG" = (
-/obj/structure/fluff/tram_rail/floor{
-	dir = 1
-	},
-/turf/open/floor/glass/reinforced/tram,
-/turf/open/floor/glass/reinforced/tram,
-/area/station/hallway/primary/tram/left)
 "efT" = (
 /obj/structure/railing{
 	dir = 4
@@ -155490,7 +155483,7 @@ aFm
 jva
 qWY
 lxz
-efG
+jEc
 jva
 bJu
 kjm
