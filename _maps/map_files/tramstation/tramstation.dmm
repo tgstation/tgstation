@@ -13879,6 +13879,10 @@
 	dir = 4
 	},
 /obj/structure/industrial_lift/public,
+/obj/machinery/elevator_control_panel/directional/east{
+	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck");
+	linked_elevator_id = "tram_lower_center_lift"
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/secondary/construction/engineering)
 "cZT" = (
@@ -55130,10 +55134,6 @@
 	dir = 8
 	},
 /obj/structure/industrial_lift/public,
-/obj/machinery/elevator_control_panel/directional/west{
-	linked_elevator_id = "tram_lower_center_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
-	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/secondary/construction/engineering)
 "sxR" = (
@@ -119400,7 +119400,7 @@ aac
 aai
 pHM
 pHM
-pHM
+vle
 aaS
 aaa
 abM
