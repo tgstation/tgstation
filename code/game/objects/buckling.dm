@@ -121,6 +121,10 @@
 	M.Move(loc)
 	M.setDir(dir)
 
+	//Something has unbuckled us in reaction to the above movement
+	if(!M.buckled)
+		return FALSE
+
 	post_buckle_mob(M)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M, force)
