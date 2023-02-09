@@ -20042,7 +20042,7 @@
 /area/station/security/prison)
 "fsQ" = (
 /obj/structure/closet{
-	name = "Evidence Closet 1"
+	name = "evidence closet 7"
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
@@ -29733,11 +29733,11 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "jil" = (
-/obj/structure/closet{
-	name = "Evidence Closet 1"
-	},
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
+/obj/structure/closet{
+	name = "evidence closet 5"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "jim" = (
@@ -31592,7 +31592,7 @@
 /area/station/engineering/supermatter/room)
 "jPw" = (
 /obj/structure/closet{
-	name = "Beekeeper Uniform"
+	name = "beekeeper uniform closet"
 	},
 /obj/item/clothing/head/utility/beekeeper_head,
 /obj/item/melee/flyswatter,
@@ -42830,11 +42830,11 @@
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "nVx" = (
-/obj/structure/closet{
-	name = "Evidence Closet 1"
-	},
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/closet{
+	name = "evidence closet 2"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "nVL" = (
@@ -46355,6 +46355,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"ppg" = (
+/obj/structure/closet{
+	name = "evidence closet 3"
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/evidence)
 "ppr" = (
 /obj/machinery/computer/security{
 	dir = 1
@@ -49146,10 +49152,10 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "qnr" = (
-/obj/structure/closet{
-	name = "Evidence Closet 1"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/closet{
+	name = "evidence closet 6"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "qnu" = (
@@ -58063,11 +58069,11 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance/testlab)
 "tyx" = (
-/obj/structure/closet{
-	name = "Evidence Closet 1"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/spawner/random/contraband/narcotics,
+/obj/structure/closet{
+	name = "evidence closet 4"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "tyE" = (
@@ -59363,11 +59369,11 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "tYg" = (
-/obj/structure/closet{
-	name = "Evidence Closet 1"
-	},
 /obj/item/storage/secure/safe/directional/east,
 /obj/effect/spawner/random/contraband/cannabis,
+/obj/structure/closet{
+	name = "evidence closet 1"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "tYK" = (
@@ -158947,7 +158953,7 @@ abM
 abM
 tFJ
 tYg
-fsQ
+ppg
 jil
 fsQ
 jKq

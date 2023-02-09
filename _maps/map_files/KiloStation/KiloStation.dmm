@@ -43081,7 +43081,7 @@
 	},
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 5";
-	name = "Cell 5 Locker"
+	name = "cell 5 locker"
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -43614,7 +43614,7 @@
 	},
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 6";
-	name = "Cell 6 Locker"
+	name = "cell 6 locker"
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -48231,7 +48231,7 @@
 	},
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 2";
-	name = "Cell 2 Locker"
+	name = "cell 2 locker"
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -58477,7 +58477,7 @@
 	},
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 3";
-	name = "Cell 3 Locker"
+	name = "cell 3 locker"
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -59400,7 +59400,7 @@
 /area/station/maintenance/port/greater)
 "qXX" = (
 /obj/structure/closet{
-	name = "Evidence Closet"
+	name = "evidence closet"
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -59685,7 +59685,7 @@
 	},
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 1";
-	name = "Cell 1 Locker"
+	name = "cell 1 locker"
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -65915,7 +65915,7 @@
 	},
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 4";
-	name = "Cell 4 Locker"
+	name = "cell 4 locker"
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -66510,7 +66510,7 @@
 	pixel_y = -3
 	},
 /obj/structure/closet/secure_closet{
-	name = "shotgun rubber rounds";
+	name = "shotgun rubber rounds locker";
 	req_access = list("armory")
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -71335,7 +71335,7 @@
 /area/station/engineering/atmos)
 "unv" = (
 /obj/structure/closet/secure_closet/injection{
-	name = "Justice Injections"
+	name = "justice injections locker"
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -78032,7 +78032,7 @@
 /area/station/hallway/primary/central/fore)
 "weR" = (
 /obj/structure/closet{
-	name = "Evidence Closet"
+	name = "evidence closet"
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1

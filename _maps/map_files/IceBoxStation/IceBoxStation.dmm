@@ -8853,7 +8853,7 @@
 /area/station/tcommsat/server)
 "cEP" = (
 /obj/structure/closet{
-	name = "Evidence Closet 3"
+	name = "evidence closet 3"
 	},
 /obj/machinery/camera/directional/north{
 	c_tag = "Security - Lower Brig Evidence"
@@ -18351,7 +18351,7 @@
 /area/station/service/hydroponics/garden)
 "fzG" = (
 /obj/structure/closet{
-	name = "Evidence Closet 5"
+	name = "evidence closet 5"
 	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
@@ -33469,7 +33469,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 2";
-	name = "Cell 2 Locker"
+	name = "cell 2 locker"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
@@ -54258,7 +54258,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 1";
-	name = "Cell 1 Locker"
+	name = "cell 1 locker"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
@@ -57110,7 +57110,7 @@
 /area/station/command/heads_quarters/rd)
 "rEe" = (
 /obj/structure/closet{
-	name = "Evidence Closet 4"
+	name = "evidence closet 4"
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark/textured_edge{
@@ -61205,7 +61205,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 3";
-	name = "Cell 3 Locker"
+	name = "cell 3 locker"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
@@ -62899,7 +62899,7 @@
 /area/station/maintenance/department/medical/central)
 "tvK" = (
 /obj/structure/closet{
-	name = "Evidence Closet 2"
+	name = "evidence closet 2"
 	},
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark/textured_edge,
@@ -69327,7 +69327,7 @@
 /area/station/science/lab)
 "vvG" = (
 /obj/structure/closet{
-	name = "Evidence Closet 6"
+	name = "evidence closet 6"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_edge{
@@ -70230,7 +70230,7 @@
 /area/station/hallway/secondary/entry)
 "vIH" = (
 /obj/structure/closet{
-	name = "Evidence Closet 1"
+	name = "evidence closet 1"
 	},
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark/textured_edge,
