@@ -31,3 +31,12 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/monkey,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
+
+/mob/living/carbon/human/species/monkey/humand_legged
+	race = /datum/species/monkey/human_legged
+
+/mob/living/carbon/human/species/monkey/monkey_freak
+	race = /datum/species/monkey/monkey_freak
+
+/mob/living/carbon/human/species/tallboy
+	race = /datum/species/human/tallboy
