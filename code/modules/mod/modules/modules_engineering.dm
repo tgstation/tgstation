@@ -12,12 +12,12 @@
 	overlay_state_inactive = "module_welding"
 
 /obj/item/mod/module/welding/on_suit_activation()
-	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
+//	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/mod/module/welding/on_suit_deactivation(deleting = FALSE)
 	if(deleting)
 		return
-	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
+//	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
 
 ///T-Ray Scan - Scans the terrain for undertile objects.
 /obj/item/mod/module/t_ray

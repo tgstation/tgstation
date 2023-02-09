@@ -25,7 +25,7 @@
 	var/datum/storage/modstorage = mod.create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
 	modstorage.set_real_location(src)
 	atom_storage.locked = FALSE
-	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_chestplate_unequip))
+//	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_chestplate_unequip))
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
 	var/datum/storage/modstorage = mod.atom_storage
@@ -33,7 +33,7 @@
 	qdel(modstorage)
 	if(!deleting)
 		atom_storage.remove_all(get_turf(src))
-	UnregisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
+//	UnregisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
 
 /obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	if(QDELETED(source) || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
@@ -175,16 +175,16 @@
 	var/former_visor_flags = NONE
 
 /obj/item/mod/module/mouthhole/on_install()
-	former_flags = mod.helmet.flags_cover
-	former_visor_flags = mod.helmet.visor_flags_cover
-	mod.helmet.flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
-	mod.helmet.visor_flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
+//	former_flags = mod.helmet.flags_cover
+//	former_visor_flags = mod.helmet.visor_flags_cover
+//	mod.helmet.flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
+//	mod.helmet.visor_flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
 
 /obj/item/mod/module/mouthhole/on_uninstall(deleting = FALSE)
 	if(deleting)
 		return
-	mod.helmet.flags_cover |= former_flags
-	mod.helmet.visor_flags_cover |= former_visor_flags
+//	mod.helmet.flags_cover |= former_flags
+//	mod.helmet.visor_flags_cover |= former_visor_flags
 
 ///EMP Shield - Protects the suit from EMPs.
 /obj/item/mod/module/emp_shield

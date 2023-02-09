@@ -34,12 +34,12 @@
 	energy = 15
 
 /obj/item/mod/module/armor_booster/on_suit_activation()
-	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
+//	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/mod/module/armor_booster/on_suit_deactivation(deleting = FALSE)
 	if(deleting)
 		return
-	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
+//	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
 
 /obj/item/mod/module/armor_booster/on_activation()
 	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -484,11 +484,11 @@
 /obj/item/mod/module/infiltrator/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_UNKNOWN, MOD_TRAIT)
-	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
+//	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/mod/module/infiltrator/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_UNKNOWN, MOD_TRAIT)
 	if(deleting)
 		return
-	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
+//	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)

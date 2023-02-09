@@ -22,12 +22,12 @@
 
 /obj/item/mod/module/magnetic_harness/on_install()
 	already_allowed_guns = guns_typecache & mod.chestplate.allowed
-	mod.chestplate.allowed |= guns_typecache
+//	mod.chestplate.allowed |= guns_typecache
 
 /obj/item/mod/module/magnetic_harness/on_uninstall(deleting = FALSE)
 	if(deleting)
 		return
-	mod.chestplate.allowed -= (guns_typecache - already_allowed_guns)
+//	mod.chestplate.allowed -= (guns_typecache - already_allowed_guns)
 
 /obj/item/mod/module/magnetic_harness/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(check_dropped_item))
