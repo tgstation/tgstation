@@ -154,8 +154,8 @@
 /proc/_range(Dist, Center = usr)
 	return range(Dist, Center)
 
-/proc/_range_turfs(Dist, Center = usr)
-	return RANGE_TURFS(Dist, Center)
+/proc/_rect_turfs(H_Radius = 0, V_Radius = 0, atom/Center)
+	return RECT_TURFS(H_Radius, V_Radius, Center)
 
 /proc/_regex(pattern, flags)
 	return regex(pattern, flags)
