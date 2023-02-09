@@ -16399,7 +16399,6 @@
 /obj/machinery/door/poddoor/lift{
 	id = "tram_cargo_lift"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
 	},
@@ -22250,7 +22249,6 @@
 /obj/machinery/door/poddoor/lift{
 	id = "tram_cargo_lift"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
 	},
@@ -26832,6 +26830,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
+"iih" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/turf/closed/wall,
+/area/station/cargo/miningdock)
 "iij" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Post - Research Division"
@@ -49388,6 +49390,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/right)
+"qBL" = (
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/machinery/door/airlock/mining{
+	name = "Mining Office"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningdock)
 "qBQ" = (
 /obj/effect/turf_decal/trimline/white/filled/corner{
 	dir = 8
@@ -68255,6 +68264,12 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
+"xJR" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/turf/closed/wall,
+/area/station/cargo/miningdock)
 "xKe" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
@@ -113564,9 +113579,9 @@ uGW
 fbH
 cZB
 uGW
-eyR
-kDi
-cJX
+xJR
+qBL
+iih
 uGW
 kot
 nmz
