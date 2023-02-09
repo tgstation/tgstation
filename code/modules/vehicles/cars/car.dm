@@ -58,7 +58,7 @@
 	if(occupant_amount() >= max_occupants)
 		return FALSE
 	var/atom/old_loc = loc
-	if(do_mob(forcer, kidnapped, get_enter_delay(kidnapped), extra_checks=CALLBACK(src, TYPE_PROC_REF(/obj/vehicle/sealed/car, is_car_stationary), old_loc)))
+	if(do_after(forcer, get_enter_delay(kidnapped), kidnapped, extra_checks=CALLBACK(src, TYPE_PROC_REF(/obj/vehicle/sealed/car, is_car_stationary), old_loc)))
 		mob_forced_enter(kidnapped, silent)
 		return TRUE
 	return FALSE

@@ -74,3 +74,7 @@
 #define COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED "!light_mechanism_completed"
 /// Global Signal sent when the crew wins the revolution (No arguments).
 #define COMSIG_GLOB_REVOLUTION_VICTORY "!revolution_victory"
+
+/// Global signal called after the station changes its name.
+/// (new_name, old_name)
+#define COMSIG_GLOB_STATION_NAME_CHANGED "!station_name_changed"

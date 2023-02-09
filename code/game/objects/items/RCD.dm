@@ -278,6 +278,7 @@ RLD
 #define WINDOW_GLASS "window_glass"
 #define WINDOW_SIZE "window_size"
 #define COMPUTER_DIR "computer_dir"
+#define WALLFRAME_TYPE "wallframe_type"
 #define FURNISH_TYPE "furnish_type"
 #define FURNISH_COST "furnish_cost"
 #define FURNISH_DELAY "furnish_delay"
@@ -317,6 +318,8 @@ RLD
 				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/reinforced, WINDOW_GLASS = RCD_WINDOW_REINFORCED, WINDOW_SIZE =  RCD_WINDOW_DIRECTIONAL, ICON = "windowtype", TITLE = "Directional Reinforced Window"),
 				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/fulltile, WINDOW_GLASS = RCD_WINDOW_NORMAL, WINDOW_SIZE =  RCD_WINDOW_FULLTILE, ICON = "window0", TITLE = "Full Tile Window"),
 				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/reinforced/fulltile, WINDOW_GLASS = RCD_WINDOW_REINFORCED, WINDOW_SIZE =  RCD_WINDOW_FULLTILE, ICON = "rwindow0", TITLE = "Full Tile Reinforced Window"),
+				list(CONSTRUCTION_MODE = RCD_CATWALK, ICON = "catwalk-0", TITLE = "Catwalk"),
+				list(CONSTRUCTION_MODE = RCD_REFLECTOR, ICON = "reflector_base", TITLE = "Reflector"),
 			),
 
 			//Computers & Machine Frames
@@ -326,14 +329,21 @@ RLD
 				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = 2, ICON = "csouth", TITLE = "Computer South"),
 				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = 4, ICON = "ceast", TITLE = "Computer East"),
 				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = 8, ICON = "cwest", TITLE = "Computer West"),
+				list(CONSTRUCTION_MODE = RCD_FLOODLIGHT, ICON = "floodlight_c1", TITLE = "FloodLight Frame"),
+				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/apc, ICON = "apc", TITLE = "APC WallFrame"),
+				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/airalarm, ICON = "alarm_bitem", TITLE = "AirAlarm WallFrame"),
+				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/firealarm, ICON = "fire_bitem", TITLE = "FireAlarm WallFrame"),
 			),
 
 			//Interior Design[construction_mode = RCD_FURNISHING is implied]
 			"Furniture" = list(
 				list(FURNISH_TYPE = /obj/structure/chair, FURNISH_COST = 8, FURNISH_DELAY = 10, ICON = "chair", TITLE = "Chair"),
 				list(FURNISH_TYPE = /obj/structure/chair/stool, FURNISH_COST = 8, FURNISH_DELAY = 10, ICON = "stool", TITLE = "Stool"),
+				list(FURNISH_TYPE = /obj/structure/chair/stool/bar, FURNISH_COST = 4, FURNISH_DELAY = 5, ICON = "bar", TITLE = "Bar Stool"),
 				list(FURNISH_TYPE = /obj/structure/table, FURNISH_COST = 16, FURNISH_DELAY = 20, ICON = "table",TITLE = "Table"),
 				list(FURNISH_TYPE = /obj/structure/table/glass, FURNISH_COST = 16, FURNISH_DELAY = 20, ICON = "glass_table", TITLE = "Glass Table"),
+				list(FURNISH_TYPE = /obj/structure/rack, FURNISH_COST = 20, FURNISH_DELAY = 25, ICON = "rack", TITLE = "Rack"),
+				list(FURNISH_TYPE = /obj/structure/bed, FURNISH_COST = 10, FURNISH_DELAY = 15, ICON = "bed", TITLE = "Bed"),
 			),
 		),
 
@@ -403,6 +413,7 @@ RLD
 	var/window_type = /obj/structure/window/fulltile
 	var/window_glass = RCD_WINDOW_NORMAL
 	var/window_size = RCD_WINDOW_FULLTILE
+	var/obj/item/wallframe/wallframe_type = /obj/item/wallframe/apc
 	var/furnish_type = /obj/structure/chair
 	var/furnish_cost = 8
 	var/furnish_delay = 10
@@ -526,27 +537,47 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return SHAME
 
 /obj/item/construction/rcd/proc/rcd_create(atom/A, mob/user)
+	//does this atom allow for rcd actions?
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
+	var/turf/target_turf = get_turf(A)
+	//start animation & check resource for the action
 	var/delay = rcd_results["delay"] * delay_mod
-	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(A), delay, src.mode)
+	var/obj/effect/constructing_effect/rcd_effect = new(target_turf, delay, src.mode)
 	if(!checkResource(rcd_results["cost"], user))
 		qdel(rcd_effect)
 		return FALSE
-	if(rcd_results["mode"] == RCD_MACHINE || rcd_results["mode"] == RCD_COMPUTER || rcd_results["mode"] == RCD_FURNISHING)
-		var/turf/target_turf = get_turf(A)
-		//ignore all directional windows on the turf
-		var/static/list/ignored_atoms = list(/obj/structure/window, /obj/structure/window/reinforced)
-		var/list/ignored_content = list()
-		for(var/atom/movable/movable_content in target_turf)
-			if(is_type_in_list(movable_content, ignored_atoms))
-				ignored_content += movable_content
-		//check if the machine can fit on this turf
-		if(target_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = null, ignore_atoms = ignored_content))
-			playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
-			qdel(rcd_effect)
-			return FALSE
+	/**
+	 *For anything that does not go an a wall we have to make sure that turf is clear for us to put the structure on it
+	 *If we are just trying to destory something then this check is not nessassary
+	 *RCD_WALLFRAME is also returned as the mode when upgrading apc, airalarm, firealarm using simple circuits upgrade
+	 */
+	if(rcd_results["mode"] != RCD_WALLFRAME && rcd_results["mode"] != RCD_DECONSTRUCT)
+		//if we are trying to build a window on top of a grill [only if there isnt already a window there] then we skip this check because thats normal behaviour
+		if(rcd_results["mode"] == RCD_WINDOWGRILLE && locate(/obj/structure/grille, target_turf) && (!locate(/obj/structure/window, target_turf) && !locate(/obj/structure/window/reinforced, target_turf)))
+			//no checks proceed
+		else
+			//structures which are small enough to fit on turfs containing directional windows.
+			var/static/list/small_structures = list(
+				RCD_MACHINE,
+				RCD_COMPUTER,
+				RCD_REFLECTOR,
+				RCD_FLOODLIGHT,
+				RCD_FURNISHING
+			)
+			//find all directional windows on the turf
+			var/list/ignored_content = list()
+			if(rcd_results["mode"] in small_structures)
+				var/static/list/ignored_atoms = list(/obj/structure/window, /obj/structure/window/reinforced)
+				for(var/atom/movable/movable_content in target_turf)
+					if(is_type_in_list(movable_content, ignored_atoms))
+						ignored_content += movable_content
+			//check if the structure can fit on this turf
+			if(target_turf.is_blocked_turf(exclude_mobs = FALSE, source_atom = null, ignore_atoms = ignored_content))
+				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+				qdel(rcd_effect)
+				return FALSE
 	if(!do_after(user, delay, target = A))
 		qdel(rcd_effect)
 		return FALSE
@@ -705,6 +736,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				construction_mode = design[CONSTRUCTION_MODE]
 				if(design[COMPUTER_DIR] != null)
 					computer_dir = design[COMPUTER_DIR]
+				if(design[WALLFRAME_TYPE] != null)
+					wallframe_type = design[WALLFRAME_TYPE]
 			else if(category_name == "Furniture")
 				construction_mode = RCD_FURNISHING
 				furnish_type = design[FURNISH_TYPE]
@@ -725,17 +758,9 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	. = ..()
 	ui_interact(user)
 
-/obj/item/construction/rcd/proc/target_check(atom/A, mob/user) // only returns true for stuff the device can actually work with
-	if((isturf(A) && A.density && mode == RCD_DECONSTRUCT) || (isturf(A) && !A.density) || (istype(A, /obj/machinery/door/airlock) && mode == RCD_DECONSTRUCT) || istype(A, /obj/structure/grille) || (istype(A, /obj/structure/window) && mode == RCD_DECONSTRUCT) || istype(A, /obj/structure/girder))
-		return TRUE
-	else
-		return FALSE
-
 /obj/item/construction/rcd/pre_attack(atom/A, mob/user, params)
 	. = ..()
 	mode = construction_mode
-	if(!A.rcd_vals(user, src))
-		return
 	rcd_create(A, user)
 	return TRUE
 
@@ -746,7 +771,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		return
 	rcd_create(target, user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 
 /obj/item/construction/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \
@@ -824,6 +848,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 #undef WINDOW_GLASS
 #undef WINDOW_SIZE
 #undef COMPUTER_DIR
+#undef WALLFRAME_TYPE
 #undef FURNISH_TYPE
 #undef FURNISH_COST
 #undef FURNISH_DELAY

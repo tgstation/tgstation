@@ -54,7 +54,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/dynamic_lumcount = 0
 
 	///Bool, whether this turf will always be illuminated no matter what area it is in
-	var/always_lit = FALSE
+	///Makes it look blue, be warned
+	var/space_lit = FALSE
 
 	var/tmp/lighting_corners_initialised = FALSE
 
@@ -146,15 +147,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
 
-	// visibilityChanged() will never hit any path with side effects during mapload
-	if (!mapload)
-		visibilityChanged()
-
 	for(var/atom/movable/content as anything in src)
 		Entered(content, null)
 
 	var/area/our_area = loc
-	if(!our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
+	if(!our_area.area_has_base_lighting && space_lit) //Only provide your own lighting if the area doesn't for you
 		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
 		add_overlay(overlay)
 
@@ -185,12 +182,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(!changing_turf)
 		stack_trace("Incorrect turf deletion")
 	changing_turf = FALSE
-	var/turf/T = SSmapping.get_turf_above(src)
-	if(T)
-		T.multiz_turf_del(src, DOWN)
-	T = SSmapping.get_turf_below(src)
-	if(T)
-		T.multiz_turf_del(src, UP)
+	if(GET_LOWEST_STACK_OFFSET(z))
+		var/turf/T = SSmapping.get_turf_above(src)
+		if(T)
+			T.multiz_turf_del(src, DOWN)
+		T = SSmapping.get_turf_below(src)
+		if(T)
+			T.multiz_turf_del(src, UP)
 	if(force)
 		..()
 		//this will completely wipe turf state
@@ -198,7 +196,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		for(var/A in B.contents)
 			qdel(A)
 		return
-	visibilityChanged()
 	QDEL_LIST(blueprint_data)
 	flags_1 &= ~INITIALIZED_1
 	requires_activation = FALSE

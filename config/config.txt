@@ -106,6 +106,9 @@ LOG_GAME
 ## log player votes
 LOG_VOTE
 
+## log manual target zone switching
+LOG_ZONE_SWITCH
+
 ## log client Whisper
 LOG_WHISPER
 
@@ -487,10 +490,13 @@ MINUTE_CLICK_LIMIT 400
 ## Various messages to be sent to connected chat channels.
 ## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4.
 ## If using TGS4, the string option can be set as one of more chat channel tags (separated by ','s) to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
-## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
+## i.e. CHANNEL_ANNOUNCE_NEW_GAME chat_channel_tag
 
-## Send a message with the station name starting a new game.
-#CHAT_ANNOUNCE_NEW_GAME
+## Which channel will have a message about a new game starting, message includes the station name.
+#CHANNEL_ANNOUNCE_NEW_GAME
+
+## Which channel will have a message about a new game starting, message includes the round ID of the game that has just ended.
+#CHANNEL_ANNOUNCE_END_GAME
 
 ## Ping users who use the `notify` command when a new game starts.
 #CHAT_NEW_GAME_NOTIFICATIONS
@@ -636,3 +642,6 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 ## Comment to disable sending a toast notification on the host server when initializations complete.
 ## Even if this is enabled, a notification will only be sent if there are no clients connected.
 TOAST_NOTIFICATION_ON_INIT
+
+## Causes configuration errors to spit out runtimes
+CONFIG_ERRORS_RUNTIME
