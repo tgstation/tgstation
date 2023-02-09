@@ -64806,7 +64806,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/lift_id{
-	specific_lift_id =  "tram_sci_lift"
+	specific_lift_id = "tram_sci_lift"
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/lower)
