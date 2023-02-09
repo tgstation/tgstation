@@ -1,6 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ab" = (
-/obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
 	color = "#008000"
 	},
@@ -676,11 +675,6 @@
 /turf/closed/wall/mineral/iron,
 /area/shuttle/voidcrew/lamia/study)
 "gz" = (
-/mob/living/simple_animal/hostile/carp/ranged{
-	desc = "A wizard's favorite familiar, the Magicarp!";
-	faction = list("neutral");
-	name = "Melchom"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bed/dogbed/cayenne{
 	name = "Melchom's bed"
@@ -746,7 +740,6 @@
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/lamia/bar)
 "jF" = (
-/obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
 	color = "#008000"
 	},
@@ -790,7 +783,6 @@
 /turf/closed/wall/mineral/iron,
 /area/shuttle/voidcrew/lamia/kitchen)
 "ma" = (
-/obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
 	color = "#008000"
 	},
@@ -883,7 +875,6 @@
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/lamia/hallway/fore)
 "qN" = (
-/obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
 	color = "#008000"
 	},
@@ -1174,7 +1165,6 @@
 /turf/open/floor/carpet/orange,
 /area/shuttle/voidcrew/lamia/archive)
 "GT" = (
-/obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
 	color = "#008000"
 	},
@@ -1431,7 +1421,6 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/lamia/engines)
 "Rk" = (
-/obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
 	color = "#008000"
 	},
@@ -1439,7 +1428,6 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/lamia/bar)
 "RD" = (
-/obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
 	color = "#008000"
 	},
