@@ -47,12 +47,21 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 		var/bits_to_add = NONE
 		if(connections != NONE)
 			bits_to_add |= REVERSE_DIR(connections) & initialize_directions
-		var/candidates = initialize_directions
+
+		var/candidate = 0
 		var/shift = 0
+
 		// Note that candidates "should" never reach 0, as stub pipes are not allowed and break things
-		while (ISSTUB(connections | bits_to_add) && (candidates >> shift) != 0)
-			bits_to_add |= candidates & (1 << shift)
+		var/test_connection = connections | bits_to_add
+		while (ISSTUB(test_connection) && (initialize_directions >> shift)!=0)
+			//lets see if this direction is eligable to be added
+			candidate= initialize_directions & (1 << shift)
+			//we dont want to add connections again else it creates wrong values & its also redundant[bitfield was already initialized with connections so we shoudnt append it again]
+			if(!(candidate & connections))
+				bits_to_add |= candidate
 			shift += 1
+			//temporary pipe to see if we have a full sprite
+			test_connection = connections | bits_to_add
 		bitfield |= CARDINAL_TO_SHORTPIPES(bits_to_add)
 	icon_state = "[bitfield]_[piping_layer]"
 
