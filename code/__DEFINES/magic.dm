@@ -54,7 +54,7 @@
 #define SPELL_CASTABLE_WHILE_PHASED (1 << 3)
 /// Whether the spell can be cast while the user has antimagic on them that corresponds to the spell's own antimagic flags.
 #define SPELL_REQUIRES_NO_ANTIMAGIC (1 << 4)
-/// Whether the spell can be cast on the centcom z level.
+/// Whether the spell requires being on the station z-level to be cast.
 #define SPELL_REQUIRES_STATION (1 << 5)
 /// Whether the spell must be cast by someone with a mind datum.
 #define SPELL_REQUIRES_MIND (1 << 6)
