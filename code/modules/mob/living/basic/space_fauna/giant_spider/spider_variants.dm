@@ -48,7 +48,7 @@
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.show_to(src)
 
-	AddElement(/datum/element/healing_touch,\
+	AddElement(/datum/component/healing_touch,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider)),\
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
@@ -272,10 +272,10 @@
 		blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
 		blood_spawn_chance = 5)
 	// It might be easier and more fitting to just replace this with Regenerator
-	AddElement(/datum/element/healing_touch,\
+	AddElement(/datum/component/healing_touch,\
 		heal_brute = maxHealth * 0.5,\
 		heal_burn = maxHealth * 0.5,\
-		allow_self = TRUE,\
+		self_targetting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/hunter/flesh)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
@@ -285,9 +285,6 @@
 
 /// Prevent you from healing other flesh spiders, or healing when on fire
 /mob/living/basic/giant_spider/hunter/flesh/proc/can_mend(mob/living/source, mob/living/target)
-	if (target != src)
-		balloon_alert(src, "can only heal yourself!")
-		return FALSE
 	if (on_fire)
 		balloon_alert(src, "on fire!")
 		return FALSE
