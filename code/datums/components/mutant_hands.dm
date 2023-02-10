@@ -50,7 +50,7 @@
  * Tries to give the parent mob mutant hands.
  *
  * * If a hand slot is empty, places the mutanthand type into their hand.
- * * If a hand slot is filled with a nodrop item, it will instead hook a signal onto that item to check if / when it disappears.
+ * * If a hand slot is filled with a nodrop item, it will do nothing.
  * * If a hand slot is filled with a non-nodrop item, drops the item to the ground.
  * * If a hand slot is filled with a hand already, does nothing.
  */
@@ -60,14 +60,17 @@
 		// This slot is already a mutant hand
 		if(istype(hand_slot, mutant_hand_path))
 			continue
+		message_admins("Checking [hand_slot || "nothing"]")
 		// This slot is not empty
 		// Yes the held item lists contains nulls to represent empty hands
 		// It saves us a /item cast by using as anything in the loop
 		if(!isnull(hand_slot))
 			if(HAS_TRAIT(hand_slot, TRAIT_NODROP) || (hand_slot.item_flags & ABSTRACT))
+				message_admins("[hand_slot] is nodrop or abstract")
 				// There's a nodrop / abstract item in the way of putting a mutant hand in
 				// It can stay, for now, but if it gets dropped / unequipped we'll swoop in to replace the slot
 				continue
+			message_admins("[hand_slot] can be dropped safely")
 			// Drop any existing non-nodrop items to the ground
 			human_parent.dropItemToGround(hand_slot)
 

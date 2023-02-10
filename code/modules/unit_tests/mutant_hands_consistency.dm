@@ -39,6 +39,20 @@
 	if(!istype(incredible_hulk.held_items[1], /obj/item/mutant_hand))
 		TEST_FAIL("Dummy's left hand was not a mutant hand after losing the nodrop item. Was: [incredible_hulk.held_items[1] || "nothing"].")
 
+/datum/unit_test/species_change_with_nodrop
+
+/datum/unit_test/species_change_with_nodrop/Run()
+	var/mob/living/carbon/human/incredible_hulk = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/item_to_hold = allocate(/obj/item/storage/toolbox)
+	ADD_TRAIT(item_to_hold, TRAIT_NODROP, TRAIT_SOURCE_UNIT_TESTS)
+	incredible_hulk.put_in_hands(item_to_hold)
+	incredible_hulk.set_species(/datum/species/zombie/infectious)
+
+	TEST_ASSERT((locate(/obj/item/storage/toolbox) in incredible_hulk.held_items), \
+		"Dummy with a no-drop item in their hands lost it when changing species to zombie.")
+	TEST_ASSERT(!(null in incredible_hulk.held_items), \
+		"Dummy, after becoming a zombie, had an empty hand.")
+
 /datum/unit_test/mutant_hands_carry
 
 /datum/unit_test/mutant_hands_carry/Run()
@@ -48,15 +62,6 @@
 
 	carried.set_resting(TRUE, instant = TRUE)
 
+	// Try a fireman carry. It should fail, we have no open hands
 	incredible_hulk.buckle_mob(carried, force = TRUE, check_loc = TRUE, buckle_mob_flags = CARRIER_NEEDS_ARM)
-	TEST_ASSERT(length(incredible_hulk.buckled_mobs), "Fireman carry failed in mutant hands carry test.")
-
-	if(!istype(incredible_hulk.held_items[1], /obj/item/riding_offhand))
-		TEST_FAIL("Dummy's left hand was not a riding offhand, though it was supposed to be. Was: [incredible_hulk.held_items[1] || "nothing"].")
-	if(!istype(incredible_hulk.held_items[2], /obj/item/mutant_hand))
-		TEST_FAIL("Dummy's right hand was not a mutant hand! Was: [incredible_hulk.held_items[2] || "nothing"].")
-
-	incredible_hulk.unbuckle_mob(carried, force = TRUE)
-	for(var/obj/item/hand as anything in incredible_hulk.held_items)
-		if(!istype(hand, /obj/item/mutant_hand))
-			TEST_FAIL("Dummy didn't have a mutant hand after dropping a fireman carry! Was: [hand || "nothing"].")
+	TEST_ASSERT(!length(incredible_hulk.buckled_mobs), "Someone with mutant hands was able to fireman carry, despite having no hands to do so.")
