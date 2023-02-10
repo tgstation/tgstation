@@ -3,7 +3,6 @@
 /obj/machinery/processor
 	name = "food processor"
 	desc = "An industrial grinder used to process meat and other foods. Keep hands clear of intake area while operating."
-	desc_controls = "Alt click to eject processor contents."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "processor1"
 	layer = BELOW_OBJ_LAYER
@@ -48,16 +47,6 @@
 		rating_amount = matter_bin.tier
 	for(var/datum/stock_part/manipulator/manipulator in component_parts)
 		rating_speed = manipulator.tier
-
-/obj/machinery/processor/AltClick(mob/living/user)
-	. = ..()
-	if(!can_interact(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE, need_hands = TRUE))
-		return
-	if(processing)
-		to_chat(user, span_warning("[src] is in the process of processing!"))
-		return
-	dump_inventory_contents()
-	add_fingerprint(usr)
 
 /obj/machinery/processor/examine(mob/user)
 	. = ..()
@@ -177,6 +166,21 @@
 	pixel_x = base_pixel_x //return to its spot after shaking
 	processing = FALSE
 	visible_message(span_notice("\The [src] finishes processing."))
+
+/obj/machinery/processor/verb/eject()
+	set category = "Object"
+	set name = "Eject Contents"
+	set src in oview(1)
+	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+		return
+	if (!usr.canUseTopic())
+		return
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(!(L.mobility_flags & MOBILITY_UI))
+			return
+	dump_inventory_contents()
+	add_fingerprint(usr)
 
 /obj/machinery/processor/container_resist_act(mob/living/user)
 	user.forceMove(drop_location())
