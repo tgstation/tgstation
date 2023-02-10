@@ -314,3 +314,11 @@
 		set_light(2)
 	else if(!isspaceturf(source) && ispath(path, /turf/open/space))
 		set_light(0)
+
+/turf/open/space/replace_floor(turf/open/new_floor_path, flags)
+	if (!initial(new_floor_path.overfloor_placed))
+		ChangeTurf(new_floor_path, flags = flags)
+		return
+	// Create plating under tiled floor we try to create directly onto space
+	PlaceOnTop(/turf/open/floor/plating, flags = flags)
+	PlaceOnTop(new_floor_path, flags = flags)
