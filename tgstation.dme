@@ -5088,6 +5088,7 @@
 #include "voidcrew\edits\jobs.dm"
 #include "voidcrew\edits\keybindings.dm"
 #include "voidcrew\edits\map_config.dm"
+#include "voidcrew\edits\station_areas.dm"
 #include "voidcrew\edits\antagonist\_locate_weakpoint.dm"
 #include "voidcrew\edits\mobs\new_player.dm"
 #include "voidcrew\edits\subsystem\economy.dm"
