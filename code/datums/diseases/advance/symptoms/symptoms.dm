@@ -3,6 +3,7 @@
 /datum/symptom
 	var/name = ""
 	var/desc = "If you see this something went very wrong." //Basic symptom description
+	var/illness = "Unrecognizable" // Basic illness name
 	///Descriptions of threshold effects
 	var/threshold_descs = list()
 	///How the symptom affects the disease's stealth stat, positive values make it less noticeable
