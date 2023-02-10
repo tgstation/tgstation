@@ -512,7 +512,7 @@
 		from_leg = 0
 	for(var/obj/item/bodypart/chest/chest_checked in bodyparts)
 		from_chest = chest_checked.top_offset
-	return(from_chest + from_leg)
+	return (from_chest + from_leg)
 
 /////////////////////////
 // Limb Icon Cache 2.0 //
