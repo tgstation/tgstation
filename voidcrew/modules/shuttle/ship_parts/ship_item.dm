@@ -1,7 +1,7 @@
 /obj/item/ship_parts
 	name = "ship parts"
 	desc = "Ship parts, use them in hand to redeem them. Used for building ships."
-	icon = 'voidcrew/modules/ship_parts/icons/ship_item.dmi'
+	icon = 'voidcrew/modules/shuttle/ship_parts/icons/ship_item.dmi'
 	icon_state = "ship"
 
 	///The faction this ship can purchase
