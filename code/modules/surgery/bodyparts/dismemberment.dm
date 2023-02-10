@@ -93,7 +93,7 @@
 	update_limb(1)
 	owner.remove_bodypart(src)
 
-	if(held_index)
+	if(held_index && !special)
 		if(owner.hand_bodyparts[held_index] == src)
 			// We only want to do this if the limb being removed is the active hand part.
 			// This catches situations where limbs are "hot-swapped" such as augmentations and roundstart prosthetics.

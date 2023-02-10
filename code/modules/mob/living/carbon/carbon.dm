@@ -1080,7 +1080,7 @@
 			switch(edit_action)
 				if("remove")
 					if(BP)
-						BP.drop_limb(special = TRUE)
+						BP.drop_limb()
 						admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [parse_zone(BP.body_zone)]")
 					else
 						to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
