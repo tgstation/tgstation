@@ -92,6 +92,8 @@
 
 /// Called when a turf in the edge of the monitor is unlinked
 /datum/proximity_monitor/advanced/proc/cleanup_edge_turf(turf/target)
+	if(edge_is_a_field) // If the edge is considered a field, clean it up like one
+		cleanup_field_turf(target)
 	edge_turfs -= target
 
 /datum/proximity_monitor/advanced/proc/update_new_turfs()
@@ -165,11 +167,17 @@
 	else if(!operating)
 		QDEL_NULL(current)
 
+/obj/item/multitool/field_debug/attack_self_secondary(mob/user, modifiers)
+	current.edge_is_a_field = !current.edge_is_a_field
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 //DEBUG FIELDS
 /datum/proximity_monitor/advanced/debug
 	current_range = 5
 	var/set_fieldturf_color = "#aaffff"
 	var/set_edgeturf_color = "#ffaaff"
+
+/datum/proximity_monitor/advanced/debug
 
 /datum/proximity_monitor/advanced/debug/setup_edge_turf(turf/target)
 	. = ..()
