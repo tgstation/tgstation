@@ -24,8 +24,8 @@
 
 	var/datum/surgery/amputation/left_leg_amputation = new(john_doe, BODY_ZONE_L_LEG, john_doe.get_bodypart(BODY_ZONE_L_LEG))
 
-	var/datum/surgery_step/sever_limb/sever_limb = new
-	sever_limb.success(mad_surgeon, john_doe, BODY_ZONE_L_ARM, null, left_leg_amputation)
+	var/datum/surgery_step/sever_limb/sever_limb_left = new
+	sever_limb_left.success(mad_surgeon, john_doe, BODY_ZONE_L_ARM, null, left_leg_amputation)
 
 	var/obj/item/bodypart/leg/left/monkey/left_monky_leg = allocate(/obj/item/bodypart/leg/left/monkey)
 	if(!left_monky_leg.try_attach_limb(john_doe))
@@ -34,7 +34,7 @@
 
 	var/datum/surgery/amputation/right_leg_amputation = new(john_doe, BODY_ZONE_R_LEG, john_doe.get_bodypart(BODY_ZONE_R_LEG))
 
-	var/datum/surgery_step/sever_limb/sever_limb = new
-	sever_limb.success(mad_surgeon, john_doe, BODY_ZONE_R_ARM, null, right_leg_amputation)
+	var/datum/surgery_step/sever_limb/sever_limb_right = new
+	sever_limb_right.success(mad_surgeon, john_doe, BODY_ZONE_R_ARM, null, right_leg_amputation)
 
 	TEST_ASSERT_EQUAL(john_doe.get_top_offset(), -3, "John Doe has a top offset other than -3 with one monkey leg.")
