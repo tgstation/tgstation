@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Plating replaced by floor tiles from a dimensional anomaly or colossus crystal will now still have plating underneath when crowbarred, instead of space (or open space on z level maps)."
+  - bugfix: "Summoning a cult wall on plating as an Artificer will leave the plating intact underneath when it is removed, rather than replacing it with a void."
+  - admin: "Admins can pick the initial flavour of a manually triggered dimensional anomaly."
