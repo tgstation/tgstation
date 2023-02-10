@@ -5,11 +5,11 @@
 /// How long the virus stays hidden before announcement
 #define ADV_ANNOUNCE_DELAY 75
 /// Numerical define for medium severity advanced virus
-#define ADV_DISEASE_MEDIUM 4
+#define ADV_DISEASE_MEDIUM 2
 /// Numerical define for harmful severity advanced virus
-#define ADV_DISEASE_HARMFUL 5
+#define ADV_DISEASE_HARMFUL 3
 /// Numerical define for dangerous severity advanced virus
-#define ADV_DISEASE_DANGEROUS 7
+#define ADV_DISEASE_DANGEROUS 5
 /// Percentile for low severity advanced virus
 #define ADV_RNG_LOW 30
 /// Percentile for mid severity advanced virus
@@ -171,12 +171,12 @@
 		return ADMIN_CANCEL_EVENT
 
 /datum/event_admin_setup/disease_outbreak/advanced/apply_to_event(datum/round_event/disease_outbreak/advanced/event)
-	event.max_severity = chosen_severity
+	event.requested_severity = chosen_severity
 	event.max_symptoms = chosen_max_symptoms
 
 /datum/round_event/disease_outbreak/advanced
 	///Number of symptoms for our virus
-	var/max_severity
+	var/requested_severity
 	//Maximum symptoms for our virus
 	var/max_symptoms
 
@@ -194,18 +194,18 @@
 	if(!max_symptoms)
 		max_symptoms = rand(ADV_MIN_SYMPTOMS, ADV_MAX_SYMPTOMS)
 
-	if(!max_severity)
+	if(!requested_severity)
 		var/rng_severity = rand(1, 100)
 		if(rng_severity < ADV_RNG_LOW)
-			max_severity = ADV_DISEASE_MEDIUM
+			requested_severity = ADV_DISEASE_MEDIUM
 
 		else if(rng_severity < ADV_RNG_MID)
-			max_severity = ADV_DISEASE_HARMFUL
+			requested_severity = ADV_DISEASE_HARMFUL
 
 		else
-			max_severity = ADV_DISEASE_DANGEROUS
+			requested_severity = ADV_DISEASE_DANGEROUS
 
-	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random/event(max_symptoms, max_severity)
+	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random/event(max_symptoms, requested_severity)
 
 	var/list/name_symptoms = list()
 	for(var/datum/symptom/new_symptom as anything in advanced_disease.symptoms)
@@ -220,7 +220,7 @@
 		log_game("An event attempted to trigger a random advanced virus outbreak on [key_name(victim)], but failed.")
 
 /datum/disease/advance/random/event
-	name = "Experimental Disease"
+	name = "Event Disease"
 	copy_type = /datum/disease/advance
 
 /datum/round_event/disease_outbreak/advance/setup()
@@ -233,31 +233,33 @@
  * Viral Evolution and Eternal Youth are special modifiers, so we roll separately.
  */
 
-/datum/disease/advance/random/event/New(max_symptoms, max_severity)
+/datum/disease/advance/random/event/New(max_symptoms, requested_severity)
 	var/list/datum/symptom/possible_symptoms = list(
 		/datum/symptom/beard,
 		/datum/symptom/chills,
-		/datum/symptom/choking,
 		/datum/symptom/confusion,
 		/datum/symptom/cough,
-		/datum/symptom/deafness,
+		/datum/symptom/disfiguration,
 		/datum/symptom/dizzy,
 		/datum/symptom/fever,
+		/datum/symptom/hallucigen,
 		/datum/symptom/headache,
 		/datum/symptom/itching,
+		/datum/symptom/polyvitiligo,
 		/datum/symptom/shedding,
 		/datum/symptom/sneeze,
-		/datum/symptom/vomit,
-		/datum/symptom/weight_loss,
+		/datum/symptom/voice_change,
 	)
 
-	switch(max_severity)
+	switch(requested_severity)
 		if(ADV_DISEASE_HARMFUL)
 			possible_symptoms += list(
-				/datum/symptom/disfiguration,
-				/datum/symptom/hallucigen,
-				/datum/symptom/polyvitiligo,
-				/datum/symptom/visionloss,
+				/datum/symptom/choking,
+				/datum/symptom/deafness,
+				/datum/symptom/genetic_mutation,
+				/datum/symptom/narcolepsy,
+				/datum/symptom/vomit,
+				/datum/symptom/weight_loss,
 			)
 
 		if(ADV_DISEASE_DANGEROUS)
@@ -267,25 +269,35 @@
 				/datum/symptom/fire,
 				/datum/symptom/flesh_death,
 				/datum/symptom/flesh_eating,
-				/datum/symptom/narcolepsy,
-				/datum/symptom/voice_change,
+				/datum/symptom/visionloss,
 			)
 
-	for(var/i in 1 to max_symptoms)
+	var/current_severity = 0
+
+	while(symptoms.len < max_symptoms)
 		var/datum/symptom/chosen_symptom = pick_n_take(possible_symptoms)
-		if(chosen_symptom)
-			var/datum/symptom/new_symptom = new chosen_symptom
-			symptoms += new_symptom
+
+		if(!chosen_symptom)
+			CRASH("Advanced disease could not pick a symptom!")
+
+		var/datum/symptom/new_symptom = new chosen_symptom
+
+		if(symptoms.len == (max_symptoms - 1) && (current_severity < requested_severity) && (new_symptom.severity < requested_severity))
+			continue
+
+		symptoms += new_symptom
+		if(new_symptom.severity > current_severity)
+			name = "[new_symptom.illness]"
+			current_severity = new_symptom.severity
+
+	if(prob(50))
+		symptoms += new /datum/symptom/youth
+		name = "Advanced [name]"
 
 	if(prob(50))
 		symptoms += new /datum/symptom/viralevolution
 
-	if(prob(50))
-		symptoms += new /datum/symptom/youth
-
 	Refresh()
-
-	name = "Sample #[rand(1, 9999)]"
 
 /**
  * Assign virus properties
@@ -307,24 +319,26 @@
 		stage_prob = max(0.5 * properties["stage_rate"], 1)
 		SetSeverity(properties["severity"])
 		visibility_flags |= HIDDEN_SCANNER
+
 		switch(severity)
 			if("Dangerous", "BIOHAZARD")
 				visibility_flags &= ~HIDDEN_SCANNER
+				SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
 
-		GenerateCure(properties)
+			else if(transmissibility < ADV_SPREAD_LOW)
+				SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
 
-		if(transmissibility < ADV_SPREAD_LOW)
-			SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
+			else if(transmissibility < ADV_SPREAD_MID)
+				SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
 
-		else if(transmissibility < ADV_SPREAD_MID)
-			SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
-
-		else
-			SetSpread(DISEASE_SPREAD_AIRBORNE)
-			visibility_flags &= ~HIDDEN_SCANNER
+			else
+				SetSpread(DISEASE_SPREAD_AIRBORNE)
+				visibility_flags &= ~HIDDEN_SCANNER
 
 	else
 		CRASH("Advanced virus properties were empty or null!")
+
+	GenerateCure(properties)
 
 /**
  * Set the transmission methods on the generated virus
@@ -346,15 +360,13 @@
 /**
  * Determine the cure
  *
- * Rolls one of six possible cure groups, then selects a cure from it and applies it to the virus.
+ * Rolls one of five possible cure groups, then selects a cure from it and applies it to the virus.
  */
 /datum/disease/advance/random/event/GenerateCure()
 	if(!length(properties))
 		stack_trace("Advanced virus properties were empty or null!")
 		return
-	var/res = rand(1, 6)
-	if(res == oldres)
-		return
+	var/res = rand(2, 6)
 	cures = list(pick(advance_cures[res]))
 	oldres = res
 	// Get the cure name from the cure_id
