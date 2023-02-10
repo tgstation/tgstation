@@ -177,8 +177,6 @@
 	var/set_fieldturf_color = "#aaffff"
 	var/set_edgeturf_color = "#ffaaff"
 
-/datum/proximity_monitor/advanced/debug
-
 /datum/proximity_monitor/advanced/debug/setup_edge_turf(turf/target)
 	. = ..()
 	target.color = set_edgeturf_color
