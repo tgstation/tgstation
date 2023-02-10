@@ -14,8 +14,8 @@
 
 /obj/effect/anomaly/ectoplasm/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
-
-	AddComponent(/datum/component/deadchat_control/cardinal_movement, ANARCHY_MODE, list(), 7 SECONDS)
+	// CHECK IF THIS STILL WORKS AFTER YOU CHANGED IT
+	AddComponent(deadchat_mode = /datum/component/deadchat_control/cardinal_movement, inputs = ANARCHY_MODE, input_cooldown = 7 SECONDS)
 
 /obj/effect/anomaly/ectoplasm/examine(mob/user)
 	. = ..()
@@ -164,7 +164,8 @@
 	. = ..()
 
 	STOP_PROCESSING(SSobj, src)
-	cleanup_ghosts()
+	INVOKE_ASYNC(src, PROC_REF(cleanup_ghosts), ghosts_spawned)
+	ghosts_spawned = null
 
 /**
  * Generates a poll for observers, spawning anyone who signs up in a large group of ghost mobs

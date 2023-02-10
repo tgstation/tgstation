@@ -46,7 +46,7 @@
 	var/ghost_override
 
 /datum/event_admin_setup/anomaly/anomaly_ectoplasm/prompt_admins()
-	..()
+	. = ..()
 
 	if(tgui_alert(usr, "Override the anomaly effect and power?", "You'll be ruining the authenticity.", list("Yes", "No")) == "Yes")
 		var/list/power_values = list(ANOMALY_INTENSITY_MINOR, ANOMALY_INTENSITY_MODERATE, ANOMALY_INTENSITY_MAJOR)
@@ -67,7 +67,7 @@
 			chosen_effect = 50
 
 /datum/event_admin_setup/anomaly/anomaly_ectoplasm/apply_to_event(datum/round_event/anomaly/anomaly_ectoplasm/event)
-	..()
+	. = ..()
 	event.effect_override = chosen_effect
 	event.orbit_override = ghost_override
 
