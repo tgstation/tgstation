@@ -596,7 +596,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		else if(rcd_results["mode"] == RCD_FLOORWALL && (!istype(target_turf, /turf/open/floor) || istype(A, /obj/structure/girder)))
 			//if a player builds a wallgirder on top of himself manually with iron sheets he can't finish the wall if he is still on the girder. Exclude the girder itself when checking for other dense objects on the turf
 			if(istype(A, /obj/structure/girder) && !density_check(target_turf, FALSE, list(/obj/structure/girder), user))
-				balloon_alert(user, "something/soneone is stuck in the girder!")
+				balloon_alert(user, "something/someone is stuck in the girder!")
 				qdel(rcd_effect)
 				return FALSE
 
