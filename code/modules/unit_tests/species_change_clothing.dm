@@ -41,7 +41,7 @@
 	var/pre_change_num = length(morphing_human.get_empty_held_indexes())
 	TEST_ASSERT_EQUAL(pre_change_num, 0, "Human had empty hands before the species change happened.")
 
-	morphing_human.set_species(/datum/species_lizard)
+	morphing_human.set_species(/datum/species/lizard)
 
 	var/post_change_num = length(morphing_human.get_empty_held_indexes())
 	TEST_ASSERT_EQUAL(post_change_num, 0, "Human had empty hands after the species change happened, but they should've kept their items.")
