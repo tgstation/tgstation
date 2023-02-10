@@ -14,8 +14,8 @@
 
 /obj/effect/anomaly/ectoplasm/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
-	// CHECK IF THIS STILL WORKS AFTER YOU CHANGED IT
-	AddComponent(deadchat_mode = /datum/component/deadchat_control/cardinal_movement, inputs = ANARCHY_MODE, input_cooldown = 7 SECONDS)
+
+	AddComponent(/datum/component/deadchat_control/cardinal_movement, _deadchat_mode = ANARCHY_MODE, _inputs = list(), _input_cooldown = 7 SECONDS)
 
 /obj/effect/anomaly/ectoplasm/examine(mob/user)
 	. = ..()
