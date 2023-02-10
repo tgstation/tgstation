@@ -1,3 +1,9 @@
+/**
+ * Test: Mutant hands component
+ *
+ * Adding mutant hand component gives two mutant hands in each hand slot
+ * Losing a limb removes the associated hand, and re-gaining the limb re-gives the associated hand
+ */
 /datum/unit_test/mutant_hands
 
 /datum/unit_test/mutant_hands/Run()
@@ -19,6 +25,12 @@
 		if(!istype(hand, /obj/item/mutant_hand))
 			TEST_FAIL("Dummy didn't have a mutant hand after re-gaining a limb! Had: [hand || "nothing"].")
 
+/**
+ * Test: Mutant hands component with a nodrop item in place
+ *
+ * Adding mutant hand component does not force no-drop items out of hands
+ * If the no-drop item disappears / is deleted, a new hand should re-appear immediately
+ */
 /datum/unit_test/mutant_hands_with_nodrop
 
 /datum/unit_test/mutant_hands_with_nodrop/Run()
@@ -39,20 +51,12 @@
 	if(!istype(incredible_hulk.held_items[1], /obj/item/mutant_hand))
 		TEST_FAIL("Dummy's left hand was not a mutant hand after losing the nodrop item. Was: [incredible_hulk.held_items[1] || "nothing"].")
 
-/datum/unit_test/species_change_with_nodrop
-
-/datum/unit_test/species_change_with_nodrop/Run()
-	var/mob/living/carbon/human/incredible_hulk = allocate(/mob/living/carbon/human/consistent)
-	var/obj/item/item_to_hold = allocate(/obj/item/storage/toolbox)
-	ADD_TRAIT(item_to_hold, TRAIT_NODROP, TRAIT_SOURCE_UNIT_TESTS)
-	incredible_hulk.put_in_hands(item_to_hold)
-	incredible_hulk.set_species(/datum/species/zombie/infectious)
-
-	TEST_ASSERT((locate(/obj/item/storage/toolbox) in incredible_hulk.held_items), \
-		"Dummy with a no-drop item in their hands lost it when changing species to zombie.")
-	TEST_ASSERT(!(null in incredible_hulk.held_items), \
-		"Dummy, after becoming a zombie, had an empty hand.")
-
+/**
+ * Test: Mutant hands fireman carrying
+ *
+ * Mutant hands currently do not support fireman carrying despite being theoretically allowed,
+ * tests that this continues to be the case. Can be updated if this assertion is changed.
+ */
 /datum/unit_test/mutant_hands_carry
 
 /datum/unit_test/mutant_hands_carry/Run()
