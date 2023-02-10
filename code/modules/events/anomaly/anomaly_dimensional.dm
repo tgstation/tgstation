@@ -35,7 +35,7 @@
 /datum/event_admin_setup/listed_options/anomaly_dimensional/prompt_admins()
 	. = ..()
 	if (. == ADMIN_CANCEL_EVENT)
-		return
+		return ADMIN_CANCEL_EVENT
 	if (tgui_alert(usr, "Spawn anomaly at your current location?", "Anomaly Alert", list("Yes", "No")) == "Yes")
 		spawn_location = get_turf(usr)
 

@@ -353,12 +353,13 @@
 /obj/machinery/anomalous_crystal/theme_warp/ActivationReaction(mob/user, method)
 	. = ..()
 	if (!.)
-		return
+		return FALSE
 	var/area/current_area = get_area(src)
 	if (current_area in affected_targets)
-		return
+		return FALSE
 	if (terrain_theme.transform_area(current_area))
 		affected_targets += current_area
+	return TRUE
 
 /// Transforms an area's turfs and objects into a different theme
 /datum/crystal_warp_theme
@@ -395,12 +396,11 @@
 
 /// Replaces a turf with a different themed turf
 /datum/crystal_warp_theme/proc/replace_turf(turf/target_turf)
-	if(isindestructiblefloor(target_turf) || isindestructiblewall(target_turf))
+	if(isindestructiblefloor(target_turf) || isindestructiblewall(target_turf) || isopenspaceturf(target_turf))
 		return
 
-	if(iswallturf(target_turf))
-		if (wall)
-			target_turf.ChangeTurf(wall)
+	if(iswallturf(target_turf) && wall)
+		target_turf.ChangeTurf(wall)
 		return
 
 	if(!isopenturf(target_turf))
@@ -409,9 +409,6 @@
 	if(length(flora_and_fauna) && !target_turf.is_blocked_turf(exclude_mobs = TRUE) && prob(flora_and_fauna_chance))
 		var/atom/new_flora_and_fauna = pick(flora_and_fauna)
 		new new_flora_and_fauna(target_turf)
-
-	if(isopenspaceturf(target_turf))
-		return // We replace space but not open space for whatever reason
 
 	if(floor)
 		var/turf/open/open_turf = target_turf
