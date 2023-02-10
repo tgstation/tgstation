@@ -77,6 +77,11 @@
 	for (var/turf/target_turf as anything in transform_turfs)
 		theme.apply_theme(target_turf)
 
+/// Minimum number of anomalies to create
+#define MIN_ANOMALIES_CREATED 1
+/// Maximum number of anomalies to create
+#define MAX_ANOMALIES_CREATED 4
+
 /// Spawn some anomalies in the area, ones which are not too dangerous
 /datum/grand_side_effect/create_anomalies
 	abstract = FALSE
@@ -87,15 +92,11 @@
 		/obj/effect/anomaly/grav = 2,
 		/obj/effect/anomaly/flux/minor = 3,
 	)
-	/// Minimum number of anomalies to create
-	var/static/min_created = 1
-	/// Maximum number of anomalies to create
-	var/static/max_created = 4
 
 /datum/grand_side_effect/create_anomalies/trigger(potency, turf/ritual_location, mob/invoker)
-	var/to_create = rand(min_created, max_created)
+	var/to_create = rand(MIN_ANOMALIES_CREATED, MAX_ANOMALIES_CREATED)
 	var/potency_add = LERP(-1, 1, potency/GRAND_RITUAL_FINALE_COUNT)
-	to_create = clamp(round(to_create + potency_add), min_created, max_created)
+	to_create = clamp(round(to_create + potency_add), MIN_ANOMALIES_CREATED, MAX_ANOMALIES_CREATED)
 
 	var/list/can_create = permitted_anomalies.Copy()
 	var/list/anomaly_positions = list()
@@ -111,6 +112,9 @@
 		can_create[create_path] = can_create[create_path] - 1
 		new create_path(pick(anomaly_positions), new_lifespan = rand(150, 300), drops_core = FALSE)
 		to_create--
+
+#undef MIN_ANOMALIES_CREATED
+#undef MAX_ANOMALIES_CREATED
 
 /// EMP nearby machines
 /datum/grand_side_effect/emp
@@ -139,28 +143,26 @@
 	return TRUE
 
 /datum/grand_side_effect/translocate/trigger(potency, turf/ritual_location, mob/invoker)
-	var/list/moblocs = list()
 	var/list/mobs = list()
+	var/list/mob_locations = list()
 
 	for (var/mob/living/victim in range(5, ritual_location))
-		moblocs += victim.loc
+		mob_locations += victim.loc
 		mobs += victim
 
-	if (!mobs)
+	if (!length(mobs))
 		return
 
-	shuffle_inplace(moblocs)
+	shuffle_inplace(mob_locations)
 	shuffle_inplace(mobs)
 
-	for (var/mob/living/victim in mobs)
-		if (!moblocs)
+	for (var/mob/living/victim as anything in mobs)
+		if (!length(mob_locations))
 			break //locs aren't always unique, so this may come into play
-		do_teleport(victim, moblocs[moblocs.len], channel = TELEPORT_CHANNEL_MAGIC)
-		moblocs.len -= 1
-	for (var/mob/living/victim in GLOB.alive_mob_list)
 		var/obj/effect/particle_effect/fluid/smoke/poof = new(get_turf(victim))
 		poof.lifetime = 2 SECONDS
-
+		var/atom/new_loc = pop(mob_locations)
+		do_teleport(victim, new_loc, channel = TELEPORT_CHANNEL_MAGIC)
 
 /// Spawn lube in the area
 /datum/grand_side_effect/slippery
@@ -168,7 +170,7 @@
 
 /datum/grand_side_effect/slippery/trigger(potency, turf/ritual_location, mob/invoker)
 	var/range = LERP(2, 4, potency/GRAND_RITUAL_FINALE_COUNT)
-	var/datum/reagents/lube = new /datum/reagents(1000)
+	var/datum/reagents/lube = new(1000)
 	lube.add_reagent(/datum/reagent/lube, 100)
 	lube.my_atom = ritual_location
 	lube.create_foam(/datum/effect_system/fluid_spread/foam, DIAMOND_AREA(range))
@@ -192,9 +194,7 @@
 	return FALSE
 
 /datum/grand_side_effect/summon_crewmate/proc/is_valid_crewmate(mob/living/carbon/human/crewmate, area/our_area)
-	if (ismonkey(crewmate))
-		return FALSE
-	if (!crewmate.mind)
+	if (!crewmate.mind || IS_NUKE_OP(crewmate) || IS_SPACE_NINJA(crewmate))
 		return FALSE
 	return get_area(crewmate) != our_area
 
@@ -226,6 +226,8 @@
 	victim.add_filter("teleport_glow", 2, list("type" = "outline", "color" = "#de3aff48", "size" = 2))
 	victim.visible_message(span_warning("[victim] suddenly floats up into the air!"), span_warning("You feel a tug in your chest, and are lifted upwards into the air!"))
 	addtimer(CALLBACK(src, PROC_REF(summon_crewmate), victim, landing_pos), CREWMATE_SUMMON_TELEPORT_DELAY)
+
+#undef CREWMATE_SUMMON_TELEPORT_DELAY
 
 /datum/grand_side_effect/summon_crewmate/proc/summon_crewmate(mob/victim, turf/destination)
 	var/turf/was_position = victim.loc
@@ -311,8 +313,8 @@
 	START_PROCESSING(SSprocessing, src)
 
 /obj/effect/abstract/local_food_rain/Destroy(force)
-	. = ..()
 	STOP_PROCESSING(SSprocessing, src)
+	return ..()
 
 /obj/effect/abstract/local_food_rain/process(delta_time)
 	create_food(delta_time)
@@ -356,7 +358,8 @@
 		/mob/living/simple_animal/hostile/killertomato,
 		/mob/living/simple_animal/hostile/ooze,
 		/mob/living/simple_animal/hostile/illusion,
-		/mob/living/basic/carp,)
+		/mob/living/basic/carp,
+	)
 
 /datum/grand_side_effect/spawn_delayed_mobs/trigger(potency, turf/ritual_location, mob/invoker)
 	var/count = LERP(1, 4, potency/GRAND_RITUAL_FINALE_COUNT)

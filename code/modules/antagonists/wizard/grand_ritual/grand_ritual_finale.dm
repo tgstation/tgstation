@@ -90,30 +90,27 @@
 	message_admins("[key_name(invoker)] has replaced the Captain")
 	var/list/former_captains = list()
 	var/list/other_crew = list()
-	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
-		if(!crewmate.mind)
-			continue
-		if (crewmate == invoker)
-			continue
-		if (is_captain_job(crewmate.mind.assigned_role))
-			former_captains += crewmate
-			demote_to_assistant(crewmate)
-			continue
-		if (crewmate.stat != DEAD)
-			other_crew += crewmate
-
 	SEND_SOUND(world, sound('sound/magic/timeparadox2.ogg'))
-	for(var/mob/living/carbon/human/victim as anything in GLOB.human_list)
-		victim.Unconscious(3 SECONDS)
-		if (!victim.mind)
+
+	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
+		if (!crewmate.mind)
 			continue
-		to_chat(victim, span_notice("The world spins and dissolves. Your past flashes before your eyes, backwards.\n\
+		crewmate.Unconscious(3 SECONDS) // Everyone falls unconscious but not everyone gets told about a new captain
+		if (crewmate == invoker || IS_NUKE_OP(crewmate) || IS_SPACE_NINJA(crewmate))
+			continue
+		to_chat(crewmate, span_notice("The world spins and dissolves. Your past flashes before your eyes, backwards.\n\
 			Life strolls back into the ocean and shrinks into nothingness, planets explode into storms of solar dust, \
 			the stars rush back to greet each other at the beginning of things and then... you snap back to the present. \n\
 			Everything is just as it was and always has been. \n\n\
 			A stray thought sticks in the forefront of your mind. \n\
 			[span_hypnophrase("I'm so glad that [invoker.real_name] is our legally appointed Captain!")] \n\
 			Is... that right?"))
+		if (is_captain_job(crewmate.mind.assigned_role))
+			former_captains += crewmate
+			demote_to_assistant(crewmate)
+			continue
+		if (crewmate.stat != DEAD)
+			other_crew += crewmate
 
 	dress_candidate(invoker)
 	GLOB.manifest.modify(invoker.real_name, JOB_CAPTAIN, JOB_CAPTAIN)
@@ -144,9 +141,7 @@
 	var/list/valid_turfs = list()
 	// Used to be into prison but that felt a bit too mean
 	for (var/turf/exile_turf as anything in get_area_turfs(/area/station/maintenance, subtypes = TRUE))
-		if (isspaceturf(exile_turf))
-			continue
-		if (exile_turf.is_blocked_turf())
+		if (isspaceturf(exile_turf) || exile_turf.is_blocked_turf())
 			continue
 		valid_turfs += exile_turf
 	do_teleport(former_captain, pick(valid_turfs), no_effects = TRUE)
@@ -217,9 +212,7 @@
 				A stray thought sticks in the forefront of your mind. \n\
 				[span_hypnophrase("I'm so glad that I work at Clown Research Station [station_name()]!")] \n\
 				Is... that right?"))
-		if (ismonkey(victim))
-			continue
-		if (victim == invoker)
+		if (ismonkey(victim) || IS_NUKE_OP(victim) || IS_SPACE_NINJA(victim) || victim == invoker)
 			continue
 		if (HAS_TRAIT(victim, TRAIT_CLOWN_ENJOYER))
 			victim.add_mood_event("clown_world", /datum/mood_event/clown_world)
@@ -297,7 +290,7 @@
 
 /datum/grand_finale/all_access/trigger(mob/living/carbon/human/invoker)
 	message_admins("[key_name(invoker)] removed all door access requirements")
-	for(var/obj/machinery/door/target_door in GLOB.machines)
+	for(var/obj/machinery/door/target_door as anything in GLOB.airlocks)
 		if(is_station_level(target_door.z))
 			target_door.unlock()
 			target_door.req_access = list()

@@ -189,7 +189,7 @@
 	if (potency == 0) // Not on the first one
 		return
 	var/list/possible_effects = list()
-	for (var/effect_path as anything in subtypesof(/datum/grand_side_effect))
+	for (var/effect_path in subtypesof(/datum/grand_side_effect))
 		var/datum/grand_side_effect/effect = new effect_path()
 		if (!effect.can_trigger(loc))
 			continue
@@ -282,7 +282,7 @@
 /obj/effect/grand_rune/finale/proc/select_finale(mob/living/user)
 	var/list/options = list()
 	var/list/picks_to_instances = list()
-	for (var/typepath as anything in subtypesof(/datum/grand_finale))
+	for (var/typepath in subtypesof(/datum/grand_finale))
 		var/datum/grand_finale/finale_type = new typepath()
 		var/datum/radial_menu_choice/choice = finale_type.get_radial_choice()
 		if (!choice)
