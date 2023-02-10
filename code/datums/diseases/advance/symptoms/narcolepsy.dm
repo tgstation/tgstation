@@ -9,6 +9,7 @@
 /datum/symptom/narcolepsy
 	name = "Narcolepsy"
 	desc = "The virus causes a hormone imbalance, making the host sleepy and narcoleptic."
+	illness = "Aurora Snorealis"
 	stealth = -1
 	resistance = -2
 	stage_speed = -3

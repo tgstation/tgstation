@@ -9,7 +9,7 @@
 /datum/symptom/visionloss
 	name = "Hyphema"
 	desc = "Sufferers exhibit dangerously low levels of frames per second in the eyes, leading to damage and eventually blindness."
-	illness = "Square Eyes"
+	illness = "Diluted Pupils"
 	stealth = -1
 	resistance = -4
 	stage_speed = -4
