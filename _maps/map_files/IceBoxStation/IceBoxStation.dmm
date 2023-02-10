@@ -74313,6 +74313,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
+"wRZ" = (
+/obj/machinery/rnd/experimentor,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "wSd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -259046,7 +259050,7 @@ pdO
 sFA
 rDZ
 vJU
-rDZ
+wRZ
 uie
 bgx
 jCl
