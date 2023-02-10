@@ -1,0 +1,288 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/template_noop)
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/wrench,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"j" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"k" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"m" = (
+/turf/template_noop,
+/area/template_noop)
+"t" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/door/window/left/directional/north{
+	name = "Containment Pen";
+	req_access = list("xenobiology")
+	},
+/obj/machinery/door/window/left/directional/north{
+	dir = 2;
+	name = "Containment Pen";
+	req_access = list("xenobiology")
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"w" = (
+/obj/effect/landmark/xeno_spawn,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/science)
+"z" = (
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/obj/item/electropack,
+/obj/item/assembly/signaler,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"A" = (
+/obj/structure/cable,
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"C" = (
+/obj/effect/landmark/blobstart,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/science)
+"F" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"G" = (
+/turf/closed/wall/r_wall,
+/area/station/maintenance/department/science)
+"H" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"L" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"M" = (
+/mob/living/simple_animal/crab{
+	name = "la creatura";
+	desc = "ay dios mios..."
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/science)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Creature Containment Maintenance Hatch"
+	},
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/science)
+"Q" = (
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/science)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"X" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"Y" = (
+/turf/closed/wall/rock/porous,
+/area/station/maintenance/department/science)
+
+(1,1,1) = {"
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+a
+a
+a
+"}
+(2,1,1) = {"
+m
+m
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+m
+G
+G
+G
+G
+G
+a
+Y
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+m
+G
+z
+R
+A
+G
+k
+k
+Q
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+m
+m
+R
+c
+L
+k
+Q
+Q
+w
+Q
+Q
+a
+a
+"}
+(6,1,1) = {"
+m
+O
+H
+j
+t
+k
+Q
+M
+Q
+Q
+X
+Y
+a
+"}
+(7,1,1) = {"
+m
+m
+R
+R
+L
+k
+Q
+k
+C
+Q
+a
+a
+a
+"}
+(8,1,1) = {"
+m
+m
+m
+F
+A
+G
+Q
+Q
+k
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+m
+m
+m
+G
+G
+G
+a
+Q
+Y
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+m
+m
+m
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+m
+m
+m
+m
+m
+m
+m
+m
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+m
+m
+m
+m
+m
+m
+m
+m
+m
+a
+a
+a
+a
+"}

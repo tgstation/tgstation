@@ -2,9 +2,9 @@
 #define MEND_REPLACE_KEY_TARGET "%TARGET%"
 
 /**
- * # Healing Touch element
+ * # Healing Touch component
  *
- * A mob with this element will be able to heal certain targets by attacking them.
+ * A mob with this component will be able to heal certain targets by attacking them.
  * This intercepts the attack and starts a do_after if the target is in its allowed type list.
  */
 /datum/component/healing_touch
@@ -16,20 +16,31 @@
 	var/heal_stamina
 	/// Interaction will use this key, and be blocked while this key is in use
 	var/interaction_key
-	/// Any extra conditions which need to be true to permit healing
+	/// Any extra conditions which need to be true to permit healing. Returning TRUE permits the healing, FALSE or null cancels it.
 	var/datum/callback/extra_checks
 	/// Time it takes to perform the healing action
 	var/heal_time
 	/// Typecache of mobs we can heal
 	var/list/valid_targets_typecache
-	/// Can this be used on yourself?
-	var/allow_self = FALSE
-	/// Text to print when action starts
+	/// How targetting yourself works, expects one of HEALING_TOUCH_ANYONE, HEALING_TOUCH_NOT_SELF, or HEALING_TOUCH_SELF_ONLY
+	var/self_targetting
+	/// Text to print when action starts, replaces %SOURCE% with healer and %TARGET% with healed mob
 	var/action_text
-	/// Text to print when action completes
+	/// Text to print when action completes, replaces %SOURCE% with healer and %TARGET% with healed mob
 	var/complete_text
 
-/datum/component/healing_touch/Initialize(heal_brute = 20, heal_burn = 20, heal_stamina = 0, heal_time = 2 SECONDS, interaction_key = DOAFTER_SOURCE_HEAL_TOUCH, datum/callback/extra_checks = null, list/valid_targets_typecache = list(), allow_self = FALSE, action_text = "%SOURCE% begins healing %TARGET%", complete_text = "%SOURCE% finishes healing %TARGET%")
+/datum/component/healing_touch/Initialize(
+	heal_brute = 20,
+	heal_burn = 20,
+	heal_stamina = 0,
+	heal_time = 2 SECONDS,
+	interaction_key = DOAFTER_SOURCE_HEAL_TOUCH,
+	datum/callback/extra_checks = null,
+	list/valid_targets_typecache = list(),
+	self_targetting = HEALING_TOUCH_NOT_SELF,
+	action_text = "%SOURCE% begins healing %TARGET%",
+	complete_text = "%SOURCE% finishes healing %TARGET%",
+)
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -40,7 +51,7 @@
 	src.interaction_key = interaction_key
 	src.extra_checks = extra_checks
 	src.valid_targets_typecache = valid_targets_typecache.Copy()
-	src.allow_self = allow_self
+	src.self_targetting = self_targetting
 	src.action_text = action_text
 	src.complete_text = complete_text
 
@@ -52,8 +63,8 @@
 	return ..()
 
 /datum/component/healing_touch/Destroy(force, silent)
-	. = ..()
 	QDEL_NULL(extra_checks)
+	return ..()
 
 /// Validate our target, and interrupt the attack chain to start healing it if it is allowed
 /datum/component/healing_touch/proc/try_healing(mob/living/healer, atom/target)
@@ -71,9 +82,15 @@
 		healer.balloon_alert(healer, "busy!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if (!allow_self && target == healer)
-		healer.balloon_alert(healer, "can't heal yourself!")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+	switch (self_targetting)
+		if (HEALING_TOUCH_NOT_SELF)
+			if (target == healer)
+				healer.balloon_alert(healer, "can't heal yourself!")
+				return COMPONENT_CANCEL_ATTACK_CHAIN
+		if (HEALING_TOUCH_SELF_ONLY)
+			if (target != healer)
+				healer.balloon_alert(healer, "can only heal yourself!")
+				return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	var/mob/living/living_target = target
 	if (living_target.health >= living_target.maxHealth)
@@ -93,7 +110,7 @@
 	if (action_text)
 		healer.visible_message(span_notice("[format_string(action_text, healer, target)]"))
 
-	if (!do_after(healer, heal_time, target = target, interaction_key = interaction_key))
+	if (heal_time && !do_after(healer, heal_time, target = target, interaction_key = interaction_key))
 		healer.balloon_alert(healer, "interrupted!")
 		return
 

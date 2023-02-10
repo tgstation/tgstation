@@ -18,7 +18,7 @@
 	if(GET_MUTATION_ENERGY(src) == 1) // Energetic chromosome outputs a value less than 1 when present, 1 by default
 		to_modify.webbing_time = initial(to_modify.webbing_time)
 		return
-	to_modify.webbing_time = 2 SECONDS // This lets you lay web faster but not more often
+	to_modify.webbing_time = 2 SECONDS // Spin webs faster but not more often
 
 /datum/mutation/human/webbing/on_acquiring(mob/living/carbon/human/owner)
 	if(..())

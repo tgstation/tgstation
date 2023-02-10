@@ -280,7 +280,8 @@
 	if(user in gun_owners)
 		if(multi_payment && credit_card_details)
 			if(credit_card_details.adjust_money(-payment_amount, "Firing Pin: Gun Rent"))
-				pin_owner.registered_account.adjust_money(payment_amount, "Firing Pin: Payout For Gun Rent")
+				if(pin_owner)
+					pin_owner.registered_account.adjust_money(payment_amount, "Firing Pin: Payout For Gun Rent")
 				return TRUE
 			to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
 			return FALSE
@@ -294,7 +295,8 @@
 		switch(license_request)
 			if("Yes")
 				if(credit_card_details.adjust_money(-payment_amount, "Firing Pin: Gun License"))
-					pin_owner.registered_account.adjust_money(payment_amount, "Firing Pin: Gun License Bought")
+					if(pin_owner)
+						pin_owner.registered_account.adjust_money(payment_amount, "Firing Pin: Gun License Bought")
 					gun_owners += user
 					to_chat(user, span_notice("Gun license purchased, have a secure day!"))
 					active_prompt = FALSE

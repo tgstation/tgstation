@@ -68,7 +68,7 @@
 		if(istype(mover.pulledby, /mob/living/basic/giant_spider))
 			return TRUE
 		if(prob(50))
-			mover.balloon_alert(mover, "stuck!")
+			balloon_alert(mover, "stuck in web!")
 			return FALSE
 	else if(isprojectile(mover))
 		return prob(30)
@@ -96,7 +96,7 @@
 		if(mover.pulledby == allowed_mob)
 			return TRUE
 		if(prob(50))
-			mover.balloon_alert(mover, "stuck!")
+			balloon_alert(mover, "stuck in web!")
 			return FALSE
 	else if(isprojectile(mover))
 		return prob(30)

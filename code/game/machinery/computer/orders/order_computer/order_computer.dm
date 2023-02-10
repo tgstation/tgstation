@@ -34,6 +34,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	var/list/order_categories = list()
 	///The current list of things we're trying to order, waiting for checkout.
 	var/list/datum/orderable_item/grocery_list = list()
+	///For blackbox logging, what kind of order is this? set nothing to not tally, like golem orders
+	var/blackbox_key
 
 /obj/machinery/computer/order_console/Initialize(mapload)
 	. = ..()
@@ -146,6 +148,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			if(get_total_cost() < CARGO_CRATE_VALUE)
 				say("For the delivery order needs to cost more or equal to [CARGO_CRATE_VALUE] points!")
 				return
+			if(blackbox_key)
+				SSblackbox.record_feedback("tally", "non_express_[blackbox_key]_order", 1, name)
 			order_groceries(living_user, used_id_card, grocery_list)
 			grocery_list.Cut()
 			COOLDOWN_START(src, order_cooldown, cooldown_time)
@@ -163,6 +167,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 				say_message += "Please note: The charge of this purchase and machine cooldown has been multiplied by [express_cost_multiplier]!"
 			COOLDOWN_START(src, order_cooldown, cooldown_time * express_cost_multiplier)
 			say(say_message)
+			if(blackbox_key)
+				SSblackbox.record_feedback("tally", "express_[blackbox_key]_order", 1, name)
 			var/list/ordered_paths = list()
 			for(var/datum/orderable_item/item as anything in grocery_list)//every order
 				if(!(item.category_index in order_categories))

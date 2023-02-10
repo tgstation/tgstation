@@ -47,7 +47,8 @@
 /mob/living/simple_animal/hostile/lightgeist/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	AddComponent(/datum/component/healing_touch,\
+	AddComponent(\
+		/datum/component/healing_touch,\
 		heal_brute = melee_damage_upper,\
 		heal_burn = melee_damage_upper,\
 		valid_targets_typecache = typecacheof(list(/mob/living)),\

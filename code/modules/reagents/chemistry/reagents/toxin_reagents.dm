@@ -188,7 +188,7 @@
 		. = FALSE
 
 	if(.)
-		affected_mob.adjustOxyLoss(5 * REM * normalise_creation_purity() * delta_time, FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(5 * REM * normalise_creation_purity() * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		affected_mob.losebreath += 2 * REM * normalise_creation_purity() * delta_time
 		if(DT_PROB(10, delta_time))
 			affected_mob.emote("gasp")
@@ -250,7 +250,7 @@
 
 /datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/holder_mob)
 	. = ..()
-	holder_mob.adjustOxyLoss(0.5*REM, FALSE, required_biotype = affected_biotype)
+	holder_mob.adjustOxyLoss(0.5*REM, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(data?["method"] & INGEST)
 		holder_mob.fakedeath(type)
 
@@ -303,7 +303,7 @@
 	..()
 
 /datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.adjustOxyLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	..()
 	. = TRUE
 
@@ -633,7 +633,7 @@
 	..()
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/affected_mob, delta_time, times_fired)
-	affected_mob.adjustOxyLoss(2 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(2 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	affected_mob.adjustBruteLoss(2 * REM * delta_time, FALSE, FALSE, BODYTYPE_ORGANIC)
 	affected_mob.adjustToxLoss(2 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
@@ -799,7 +799,7 @@
 				. = TRUE
 			if(2)
 				affected_mob.losebreath += 10
-				affected_mob.adjustOxyLoss(rand(5,25), FALSE, required_biotype = affected_biotype)
+				affected_mob.adjustOxyLoss(rand(5,25), FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 				. = TRUE
 			if(3)
 				if(!affected_mob.undergoing_cardiac_arrest() && affected_mob.can_heartattack())
@@ -808,7 +808,7 @@
 						affected_mob.visible_message(span_userdanger("[affected_mob] clutches at [affected_mob.p_their()] chest as if [affected_mob.p_their()] heart stopped!"))
 				else
 					affected_mob.losebreath += 10
-					affected_mob.adjustOxyLoss(rand(5,25), FALSE, required_biotype = affected_biotype)
+					affected_mob.adjustOxyLoss(rand(5,25), FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 					. = TRUE
 	return ..() || .
 
@@ -968,7 +968,7 @@
 /datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(current_cycle >= 11)
 		affected_mob.Paralyze(60 * REM * delta_time)
-	affected_mob.adjustOxyLoss(0.5*REM*delta_time, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(0.5*REM*delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	. = TRUE
 	..()
 

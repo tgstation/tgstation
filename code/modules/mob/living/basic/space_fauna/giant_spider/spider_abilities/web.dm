@@ -41,8 +41,7 @@
 
 /// Returns true if there's a web we can't put stuff on in our turf
 /datum/action/cooldown/lay_web/proc/obstructed_by_other_web()
-	var/obj/structure/spider/stickyweb/web = locate() in get_turf(owner)
-	return web != null
+	return !!(locate(/obj/structure/spider/stickyweb) in get_turf(owner))
 
 /datum/action/cooldown/lay_web/Activate()
 	. = ..()
@@ -53,18 +52,11 @@
 	else
 		owner.balloon_alert_to_viewers("spinning web...")
 
-	var/mob/living/simple_animal/animal_owner = owner
-	if(istype(animal_owner))
-		animal_owner.stop_automated_movement = TRUE
-
 	if(do_after(owner, webbing_time, target = spider_turf, interaction_key = DOAFTER_SOURCE_SPIDER) && owner.loc == spider_turf)
 		plant_web(spider_turf, web)
 	else
 		owner.balloon_alert(owner, "interrupted!")
 	build_all_button_icons()
-
-	if(istype(animal_owner))
-		animal_owner.stop_automated_movement = FALSE
 
 /// Creates a web in the current turf
 /datum/action/cooldown/lay_web/proc/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
@@ -90,5 +82,4 @@
 	new /obj/structure/spider/stickyweb(target_turf)
 
 /datum/action/cooldown/lay_web/sealer/obstructed_by_other_web()
-	var/obj/structure/spider/stickyweb/sealed/web = locate() in get_turf(owner)
-	return web != null
+	return !!(locate(/obj/structure/spider/stickyweb/sealed) in get_turf(owner))

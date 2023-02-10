@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - bugfix: "Solar trackers actually uh, look right again"
+  - bugfix: "Solar panels and trackers will now properly block space lighting on multiz maps"

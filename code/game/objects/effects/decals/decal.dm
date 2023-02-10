@@ -9,6 +9,10 @@
 	. = ..()
 	if(turf_loc_check && (!isturf(loc) || NeverShouldHaveComeHere(loc)))
 		return INITIALIZE_HINT_QDEL
+	var/static/list/loc_connections = list(
+		COMSIG_TURF_CHANGED = PROC_REF(handle_turf_change),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/decal/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
@@ -24,9 +28,12 @@
 	if(!(resistance_flags & FIRE_PROOF)) //non fire proof decal or being burned by lava
 		qdel(src)
 
-/obj/effect/decal/HandleTurfChange(turf/T)
-	..()
-	if(T == loc && NeverShouldHaveComeHere(T))
+/obj/effect/decal/proc/handle_turf_change(turf/source, path, list/new_baseturfs, flags, list/post_change_callbacks)
+	SIGNAL_HANDLER
+	post_change_callbacks += CALLBACK(src, PROC_REF(sanity_check_self))
+
+/obj/effect/decal/proc/sanity_check_self(turf/changed)
+	if(changed == loc && NeverShouldHaveComeHere(changed))
 		qdel(src)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

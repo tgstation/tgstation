@@ -11,16 +11,17 @@
 	overlay_icon_state = "bg_alien_border"
 	check_flags = AB_CHECK_CONSCIOUS
 	/// Current directive to apply
-	var/current_directive
+	var/current_directive = ""
 
 /datum/action/set_spider_directive/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
-	current_directive = tgui_input_text(owner, "Enter the new directive", "Create directive", "[current_directive]")
-	if(isnull(current_directive) || QDELETED(src) || QDELETED(owner) || !IsAvailable(feedback = TRUE))
+	var/new_directive = tgui_input_text(owner, "Enter the new directive", "Create directive", "[current_directive]")
+	if(isnull(new_directive) || QDELETED(src) || QDELETED(owner) || !IsAvailable(feedback = TRUE))
 		return FALSE
 
+	current_directive = new_directive
 	message_admins("[ADMIN_LOOKUPFLW(owner)] set its directive to: '[current_directive]'.")
 	owner.log_message("set its directive to: '[current_directive]'.", LOG_GAME)
 	return TRUE
@@ -60,8 +61,7 @@
 /datum/action/command_spiders/proc/spider_command(mob/living/user, message)
 	if(!message)
 		return
-	var/my_message
-	my_message = span_spider("<b>Command from [user]:</b> [message]")
+	var/my_message = span_spider("<b>Command from [user]:</b> [message]")
 	for(var/mob/living/basic/giant_spider/spider as anything in GLOB.spidermobs)
 		to_chat(spider, my_message)
 	for(var/ghost in GLOB.dead_mob_list)

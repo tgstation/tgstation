@@ -26,11 +26,11 @@
 
 /datum/action/cooldown/wrap/IsAvailable(feedback = FALSE)
 	. = ..()
-	if(!.)
-		return FALSE
-	if(owner.incapacitated())
+	if(!. || owner.incapacitated())
 		return FALSE
 	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
+		if (feedback)
+			owner.balloon_alert(owner, "busy!")
 		return FALSE
 	return TRUE
 
@@ -58,10 +58,7 @@
 		owner.balloon_alert(owner, "must be closer!")
 		return FALSE
 
-	if(!ismob(to_wrap) && !isobj(to_wrap))
-		return FALSE
-
-	if(to_wrap == owner)
+	if(!ismovable(to_wrap) || to_wrap == owner)
 		return FALSE
 
 	if(isspider(to_wrap))
@@ -81,17 +78,10 @@
 		span_notice("[owner] begins to secrete a sticky substance around [to_wrap]."),
 		span_notice("You begin wrapping [to_wrap] into a cocoon."),
 	)
-
-	var/mob/living/simple_animal/animal_owner = owner
-	if(istype(animal_owner))
-		animal_owner.stop_automated_movement = TRUE
-
 	if(do_after(owner, wrap_time, target = to_wrap, interaction_key = DOAFTER_SOURCE_SPIDER))
 		wrap_target(to_wrap)
 	else
 		owner.balloon_alert(owner, "interrupted!")
-	if(istype(animal_owner))
-		animal_owner.stop_automated_movement = FALSE
 
 /datum/action/cooldown/wrap/proc/wrap_target(atom/movable/to_wrap)
 	var/obj/structure/spider/cocoon/casing = new(to_wrap.loc)
