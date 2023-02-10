@@ -299,6 +299,7 @@
 	maxHealth = 80
 	health = 80
 	menu_description = "Stronger assassin spider variant with an unmatched speed, high amount of health and very deadly poison, but deals very low amount of damage. It also has ability to ventcrawl."
+	apply_spider_antag = FALSE
 
 /mob/living/basic/giant_spider/viper/wizard/Initialize(mapload)
 	. = ..()
@@ -319,12 +320,10 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider/retaliate
+	apply_spider_antag = FALSE
 
 /mob/living/basic/giant_spider/sgt_araneus/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "chitters proudly!")
 	AddElement(/datum/element/ai_retaliate)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-
-/mob/living/basic/giant_spider/sgt_araneus/apply_antag_datum()
-	return // Araneus doesn't care about that

@@ -56,6 +56,8 @@
 	var/directive = ""
 	/// Short description of what this mob is capable of, for radial menu uses
 	var/menu_description = "Versatile spider variant for frontline combat with high health and damage."
+	/// If true then you shouldn't be told that you're a spider antagonist as soon as you are placed into this mob
+	var/apply_spider_antag = TRUE
 
 /mob/living/basic/giant_spider/Initialize(mapload)
 	. = ..()
@@ -76,11 +78,9 @@
 		return FALSE
 	GLOB.spidermobs[src] = TRUE
 	set_varspeed(player_speed)
-	apply_antag_datum()
-
-/mob/living/basic/giant_spider/proc/apply_antag_datum()
-	var/datum/antagonist/spider/spider_antag = new(directive)
-	mind.add_antag_datum(spider_antag)
+	if (apply_spider_antag)
+		var/datum/antagonist/spider/spider_antag = new(directive)
+		mind.add_antag_datum(spider_antag)
 
 /mob/living/basic/giant_spider/Logout()
 	. = ..()
