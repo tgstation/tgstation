@@ -50,8 +50,8 @@
 	abstract = FALSE
 
 /datum/grand_side_effect/transmogrify_area/trigger(potency, turf/ritual_location, mob/invoker)
-	var/datum/dimension_theme/theme = new()
-	theme = theme.get_random_theme()
+	var/new_theme_path = pick(subtypesof(/datum/dimension_theme))
+	var/datum/dimension_theme/theme = new new_theme_path()
 	var/range = round(LERP(2, 4, potency/GRAND_RITUAL_FINALE_COUNT))
 
 	var/list/turfs_to_transform = list()

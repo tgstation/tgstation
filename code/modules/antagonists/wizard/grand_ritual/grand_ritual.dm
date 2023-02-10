@@ -151,12 +151,12 @@
 /datum/action/cooldown/grand_ritual/proc/draw_rune(turf/target_turf)
 	drawing_rune = TRUE
 	target_turf.balloon_alert(owner, "conjuring rune...")
-	var/obj/effect/temp_visual/drawing_rune/draw_effect = new(target_turf)
+	var/obj/effect/temp_visual/wizard_rune/drawing/draw_effect = new(target_turf)
 	if(!do_after(owner, 4 SECONDS, target_turf))
 		target_turf.balloon_alert(owner, "interrupted!")
 		drawing_rune = FALSE
 		qdel(draw_effect)
-		new /obj/effect/temp_visual/failed_draw(target_turf)
+		new /obj/effect/temp_visual/wizard_rune/failed(target_turf)
 		return
 
 	var/evaporated_obstacles = FALSE
@@ -257,28 +257,29 @@
 
 	return balloon_message
 
-/// Animates drawing a cool rune
-/obj/effect/temp_visual/drawing_rune
+/// Abstract holder for shared animation behaviour
+/obj/effect/temp_visual/wizard_rune
 	icon = 'icons/effects/96x96.dmi'
-	icon_state = "wizard_rune_draw"
+	icon_state = null
 	pixel_x = -28
 	pixel_y = -33
 	anchored = TRUE
-	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
-	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = SIGIL_LAYER
 	plane = GAME_PLANE
+	duration = 0 SECONDS
+
+/obj/effect/temp_visual/wizard_rune/Initialize(mapload)
+	. = ..()
+	var/image/silicon_image = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
+	silicon_image.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "wizard_rune", silicon_image)
+
+/// Animates drawing a cool rune
+/obj/effect/temp_visual/wizard_rune/drawing
+	icon_state = "wizard_rune_draw"
 	duration = 4 SECONDS
 
 /// Displayed if you stop drawing it
-/obj/effect/temp_visual/failed_draw
-	icon = 'icons/effects/96x96.dmi'
+/obj/effect/temp_visual/wizard_rune/failed
 	icon_state = "wizard_rune_fail"
-	pixel_x = -28
-	pixel_y = -33
-	anchored = TRUE
-	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
-	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = SIGIL_LAYER
-	plane = GAME_PLANE
 	duration = 0.5 SECONDS
