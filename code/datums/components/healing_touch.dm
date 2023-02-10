@@ -22,8 +22,8 @@
 	var/heal_time
 	/// Typecache of mobs we can heal
 	var/list/valid_targets_typecache
-	/// Can this be used on yourself?
-	var/allow_self = FALSE
+	/// How targetting yourself works, expects one of HEALING_TOUCH_ANYONE, HEALING_TOUCH_NOT_SELF, or HEALING_TOUCH_SELF_ONLY
+	var/self_targetting
 	/// Text to print when action starts, replaces %SOURCE% with healer and %TARGET% with healed mob
 	var/action_text
 	/// Text to print when action completes, replaces %SOURCE% with healer and %TARGET% with healed mob
@@ -37,7 +37,7 @@
 	interaction_key = DOAFTER_SOURCE_HEAL_TOUCH,
 	datum/callback/extra_checks = null,
 	list/valid_targets_typecache = list(),
-	allow_self = FALSE,
+	self_targetting = HEALING_TOUCH_NOT_SELF,
 	action_text = "%SOURCE% begins healing %TARGET%",
 	complete_text = "%SOURCE% finishes healing %TARGET%",
 )
@@ -51,7 +51,7 @@
 	src.interaction_key = interaction_key
 	src.extra_checks = extra_checks
 	src.valid_targets_typecache = valid_targets_typecache.Copy()
-	src.allow_self = allow_self
+	src.self_targetting = self_targetting
 	src.action_text = action_text
 	src.complete_text = complete_text
 
@@ -82,9 +82,15 @@
 		healer.balloon_alert(healer, "busy!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if (!allow_self && target == healer)
-		healer.balloon_alert(healer, "can't heal yourself!")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+	switch (self_targetting)
+		if (HEALING_TOUCH_NOT_SELF)
+			if (target == healer)
+				healer.balloon_alert(healer, "can't heal yourself!")
+				return COMPONENT_CANCEL_ATTACK_CHAIN
+		if (HEALING_TOUCH_SELF_ONLY)
+			if (target != healer)
+				healer.balloon_alert(healer, "can only heal yourself!")
+				return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	var/mob/living/living_target = target
 	if (living_target.health >= living_target.maxHealth)

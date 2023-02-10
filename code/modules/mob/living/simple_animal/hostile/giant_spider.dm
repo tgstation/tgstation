@@ -389,7 +389,7 @@
 		/datum/component/healing_touch,\
 		heal_brute = maxHealth * 0.5,\
 		heal_burn = maxHealth * 0.5,\
-		allow_self = TRUE,\
+		self_targetting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/simple_animal/hostile/giant_spider/hunter/flesh)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
@@ -399,9 +399,6 @@
 
 /// Prevent you from healing other flesh spiders, or healing when on fire
 /mob/living/simple_animal/hostile/giant_spider/hunter/flesh/proc/can_mend(mob/living/source, mob/living/target)
-	if (target != src)
-		balloon_alert(src, "can only heal yourself!")
-		return FALSE
 	if (on_fire)
 		balloon_alert(src, "on fire!")
 		return FALSE
