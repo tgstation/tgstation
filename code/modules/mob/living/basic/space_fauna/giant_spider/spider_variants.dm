@@ -308,7 +308,7 @@
 /**
  * # Sergeant Araneus
  *
- * Once a bat, now finally a spider. This friendly arachnid hangs out in the HoS office on some space stations.
+ * This friendly arachnid hangs out in the HoS office on some space stations. Better trained than an average officer and does not attack except in self-defence.
  */
 /mob/living/basic/giant_spider/sgt_araneus
 	name = "Sergeant Araneus"
