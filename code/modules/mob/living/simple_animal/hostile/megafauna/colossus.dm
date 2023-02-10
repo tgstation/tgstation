@@ -399,7 +399,7 @@
 	if(isindestructiblefloor(target_turf) || isindestructiblewall(target_turf) || isopenspaceturf(target_turf))
 		return
 
-	if(iswallturf(target_turf) && wall)
+	if(wall && iswallturf(target_turf))
 		target_turf.ChangeTurf(wall)
 		return
 
