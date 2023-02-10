@@ -64491,7 +64491,7 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/button/door/directional/east{
 	id = "cargowarehouse";
-	name = s
+	name = "Cargo Warehouse Shutters"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
