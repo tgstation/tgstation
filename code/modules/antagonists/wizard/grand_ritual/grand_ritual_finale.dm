@@ -90,7 +90,7 @@
 	message_admins("[key_name(invoker)] has replaced the Captain")
 	var/list/former_captains = list()
 	var/list/other_crew = list()
-	for (var/mob/living/carbon/human/crewmate in GLOB.mob_list)
+	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
 		if(!crewmate.mind)
 			continue
 		if (crewmate == invoker)
@@ -103,8 +103,10 @@
 			other_crew += crewmate
 
 	SEND_SOUND(world, sound('sound/magic/timeparadox2.ogg'))
-	for(var/mob/living/victim as anything in GLOB.player_list)
+	for(var/mob/living/carbon/human/victim as anything in GLOB.human_list)
 		victim.Unconscious(3 SECONDS)
+		if (!victim.mind)
+			continue
 		to_chat(victim, span_notice("The world spins and dissolves. Your past flashes before your eyes, backwards.\n\
 			Life strolls back into the ocean and shrinks into nothingness, planets explode into storms of solar dust, \
 			the stars rush back to greet each other at the beginning of things and then... you snap back to the present. \n\
@@ -193,7 +195,7 @@
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
 		/obj/item/station_charter = 1,
-		)
+	)
 	box = null
 
 /// Dress the crew as magical clowns
@@ -205,15 +207,16 @@
 	glow_colour = "#ffff0048"
 
 /datum/grand_finale/clown/trigger(mob/living/carbon/human/invoker)
-	for(var/mob/living/victim as anything in GLOB.player_list)
+	for(var/mob/living/carbon/human/victim as anything in GLOB.human_list)
 		victim.Unconscious(3 SECONDS)
-		to_chat(victim, span_notice("The world spins and dissolves. Your past flashes before your eyes, backwards.\n\
-			Life strolls back into the ocean and shrinks into nothingness, planets explode into storms of solar dust, \
-			the stars rush back to greet each other at the beginning of things and then... you snap back to the present. \n\
-			Everything is just as it was and always has been. \n\n\
-			A stray thought sticks in the forefront of your mind. \n\
-			[span_hypnophrase("I'm so glad that I work at Clown Research Station [station_name()]!")] \n\
-			Is... that right?"))
+		if (victim.mind)
+			to_chat(victim, span_notice("The world spins and dissolves. Your past flashes before your eyes, backwards.\n\
+				Life strolls back into the ocean and shrinks into nothingness, planets explode into storms of solar dust, \
+				the stars rush back to greet each other at the beginning of things and then... you snap back to the present. \n\
+				Everything is just as it was and always has been. \n\n\
+				A stray thought sticks in the forefront of your mind. \n\
+				[span_hypnophrase("I'm so glad that I work at Clown Research Station [station_name()]!")] \n\
+				Is... that right?"))
 		if (ismonkey(victim))
 			continue
 		if (victim == invoker)
@@ -300,6 +303,7 @@
 			target_door.req_access = list()
 			target_door.req_one_access = list()
 			INVOKE_ASYNC(target_door, TYPE_PROC_REF(/obj/machinery/door/airlock, open))
+			CHECK_TICK
 	priority_announce("AULIE OXIN FIERA!!", null, 'sound/magic/knock.ogg', sender_override = "[invoker.real_name]")
 
 /// Completely transform the station
@@ -336,6 +340,7 @@
 
 	if (chosen_theme.can_convert(start_turf))
 		chosen_theme.apply_theme(start_turf)
+		CHECK_TICK
 
 	for (var/iterator in 1 to greatest_dist)
 		if(!turfs_to_transform["[iterator]"])
