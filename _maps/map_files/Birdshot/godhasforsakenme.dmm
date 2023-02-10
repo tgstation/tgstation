@@ -1059,10 +1059,8 @@
 /turf/open/floor/iron/dark/textured,
 /area/space)
 "bcG" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/structure/sink/directional/south,
-/obj/structure/cable,
-/turf/open/floor/iron/white,
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/noslip,
 /area/space)
 "bda" = (
 /obj/effect/turf_decal/siding/blue{
@@ -3364,12 +3362,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/space)
-"dUR" = (
-/obj/effect/turf_decal/trimline/blue/end,
-/obj/machinery/shower/directional/south,
-/obj/structure/cable,
-/turf/open/floor/iron/white,
-/area/space)
 "dVF" = (
 /obj/machinery/light/cold/directional/west,
 /obj/machinery/firealarm/directional/west,
@@ -3672,12 +3664,6 @@
 "enm" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
-/area/space)
-"enn" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/machinery/power/smes/magical,
-/obj/structure/cable,
-/turf/open/floor/iron/white,
 /area/space)
 "enF" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -9538,13 +9524,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/space)
-"kCx" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/white,
-/area/space)
 "kCH" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -12351,7 +12330,6 @@
 	dir = 8
 	},
 /obj/structure/tank_holder/extinguisher,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/space)
 "nHt" = (
@@ -20230,11 +20208,6 @@
 /obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/iron,
 /area/space)
-"waN" = (
-/obj/structure/bed/roller,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/space)
 "waS" = (
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/iron/freezer,
@@ -21947,11 +21920,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
-/area/space)
-"xLg" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/structure/cable,
-/turf/open/floor/iron/white,
 /area/space)
 "xLj" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -42785,7 +42753,7 @@ fhK
 fhK
 fhK
 gxu
-fhK
+wJR
 fhK
 fhK
 fhK
@@ -45111,7 +45079,7 @@ gxu
 aSM
 fhK
 fhK
-gSm
+bcG
 hxv
 ozV
 kfC
@@ -45882,7 +45850,7 @@ gxu
 wJR
 fhK
 fhK
-gSm
+bcG
 hxv
 ozV
 kfC
@@ -46899,9 +46867,9 @@ xle
 xle
 xle
 gxu
-dDB
-dDB
-dDB
+xyM
+xyM
+xyM
 gxu
 pBT
 pBT
@@ -47156,9 +47124,9 @@ xle
 xle
 xle
 gxu
-dDB
-dDB
-dDB
+xyM
+xyM
+xyM
 gxu
 pBT
 pBT
@@ -54877,7 +54845,7 @@ gxu
 wJR
 fhK
 fhK
-gSm
+bcG
 hxv
 ozV
 kfC
@@ -55112,7 +55080,7 @@ sTP
 dDB
 dDB
 sTP
-enn
+pLf
 aAw
 hsd
 gxu
@@ -55369,7 +55337,7 @@ gxu
 dDB
 dDB
 sTP
-xLg
+pLf
 aAw
 cFq
 gxu
@@ -55626,7 +55594,7 @@ gxu
 tyv
 tyv
 gxu
-xLg
+pLf
 aAw
 fQM
 gxu
@@ -55648,7 +55616,7 @@ gxu
 opv
 fhK
 fhK
-gSm
+bcG
 hxv
 ozV
 kfC
@@ -55883,7 +55851,7 @@ gxu
 dDB
 dDB
 sTP
-xLg
+pLf
 aAw
 keT
 gxu
@@ -56140,7 +56108,7 @@ gxu
 bKe
 bKe
 gxu
-xLg
+pLf
 aAw
 nBT
 gxu
@@ -56160,7 +56128,7 @@ gxu
 gyx
 gxu
 gxu
-gxu
+gyx
 gxu
 gxu
 vxM
@@ -56397,7 +56365,7 @@ wmx
 nKG
 rTA
 wBq
-xLg
+pLf
 aAw
 gxu
 gxu
@@ -56654,7 +56622,7 @@ sTP
 gHT
 gHT
 sTP
-xLg
+pLf
 aAw
 eCW
 pLf
@@ -56911,7 +56879,7 @@ sTP
 tyv
 tyv
 sTP
-xLg
+pLf
 aAw
 eCW
 lzS
@@ -57168,7 +57136,7 @@ dDB
 dDB
 dDB
 gxu
-bcG
+qxc
 aAw
 gxu
 pBr
@@ -57425,7 +57393,7 @@ dDB
 dDB
 dDB
 gxu
-dUR
+kof
 aAw
 gxu
 inT
@@ -57682,7 +57650,7 @@ dDB
 dDB
 sTP
 sTP
-xLg
+pLf
 aAw
 gxu
 tuW
@@ -57939,7 +57907,7 @@ gxu
 gxu
 sTP
 uQo
-xLg
+pLf
 aAw
 gxu
 qzq
@@ -58196,7 +58164,7 @@ pLf
 eCW
 pLf
 pLf
-xLg
+pLf
 aAw
 gxu
 wjV
@@ -58453,7 +58421,7 @@ aAw
 eCW
 aAw
 aAw
-kCx
+aAw
 aAw
 gxu
 wjV
@@ -58967,7 +58935,7 @@ vAT
 rXC
 gxu
 gxu
-waN
+yiV
 rem
 gxu
 wjV
@@ -67910,9 +67878,9 @@ gxu
 gyx
 gyx
 gxu
-dDB
-dDB
-dDB
+fhK
+fhK
+fhK
 gxu
 fhK
 fhK
@@ -68167,9 +68135,9 @@ gxu
 gyx
 gxu
 gxu
-dDB
-dDB
-dDB
+fhK
+fhK
+fhK
 gxu
 fhK
 fhK
@@ -68422,11 +68390,11 @@ xoW
 awL
 gxu
 gyx
-dDB
-dDB
-dDB
-dDB
-dDB
+hsA
+fhK
+fhK
+fhK
+fhK
 gxu
 gxu
 gxu
@@ -68680,10 +68648,10 @@ thv
 gxu
 gyx
 gxu
-dDB
-dDB
-dDB
-dDB
+fhK
+fhK
+fhK
+fhK
 gxu
 dDB
 dDB
