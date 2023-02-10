@@ -349,13 +349,13 @@
 	switch(spread_id)
 		if(DISEASE_SPREAD_CONTACT_FLUIDS)
 			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS
-			spread_text = "fluids"
+			spread_text = "Fluids"
 		if(DISEASE_SPREAD_CONTACT_SKIN)
 			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
-			spread_text = "skin contact"
+			spread_text = "Skin contact"
 		if(DISEASE_SPREAD_AIRBORNE)
 			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_AIRBORNE
-			spread_text = "respiration"
+			spread_text = "Respiration"
 
 /**
  * Determine the cure
