@@ -48,7 +48,7 @@
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.show_to(src)
 
-	AddElement(/datum/component/healing_touch,\
+	AddComponent(/datum/component/healing_touch,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider)),\
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
@@ -272,7 +272,7 @@
 		blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
 		blood_spawn_chance = 5)
 	// It might be easier and more fitting to just replace this with Regenerator
-	AddElement(/datum/component/healing_touch,\
+	AddComponent(/datum/component/healing_touch,\
 		heal_brute = maxHealth * 0.5,\
 		heal_burn = maxHealth * 0.5,\
 		self_targetting = HEALING_TOUCH_SELF_ONLY,\
