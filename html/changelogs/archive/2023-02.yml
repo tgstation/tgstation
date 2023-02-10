@@ -398,3 +398,17 @@
   timothymtorres:
   - bugfix: Fix kilo barsign spawning under windows
   - bugfix: Fix barsign updatePath being backwards
+2023-02-10:
+  LT3:
+  - bugfix: 'Tramstation: Crossing signals updated to work on the new map'
+  - bugfix: 'Tramstation: Fixes missing wiring in West Wing'
+  - bugfix: 'Tramstation: Connects a few scrubbers to waste'
+  - bugfix: 'Tramstation: Add various decals that are missing'
+  - bugfix: 'Tramstation: Fixes part of medbay area being set as space'
+  - bugfix: 'Tramstation: Medbay''s elevator buttons are now accessible'
+  - bugfix: 'Tramstation: Elevator doors, buttons, and indicators are linked'
+  Time-Green:
+  - bugfix: fixes issues with being walking against hyperspace locking you
+  ZephyrTFA:
+  - bugfix: Using a hacking cable will no longer permanently spam you with balloon
+      messages
