@@ -204,7 +204,7 @@
 	frozen_mobs += L
 	L.Stun(20, ignore_canstun = TRUE)
 	ADD_TRAIT(L, TRAIT_MUTE, TIMESTOP_TRAIT)
-	SSmove_manager.stop_looping(src) //stops them mid pathing even if they're stunimmune //This is really dumb
+	SSmove_manager.stop_looping(L) //stops them mid pathing even if they're stunimmune //This is really dumb
 	if(isanimal(L))
 		var/mob/living/simple_animal/S = L
 		S.toggle_ai(AI_OFF)

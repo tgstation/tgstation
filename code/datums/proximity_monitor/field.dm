@@ -138,7 +138,7 @@
 
 /datum/proximity_monitor/advanced/proc/field_edge_uncrossed(atom/movable/movable, turf/location)
 	if(edge_is_a_field) // If the edge is considered a field, pass uncrossed to that
-		field_edge_uncrossed(movable, location)
+		field_turf_uncrossed(movable, location)
 	return
 
 
