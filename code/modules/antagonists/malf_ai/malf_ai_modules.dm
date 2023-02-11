@@ -371,7 +371,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/lockdown/Activate()
 	hack_in_progess = TRUE
 	for(var/obj/machinery/door/locked_down as anything in GLOB.airlocks)
-		if(!is_station_level(locked_down.z))
+		if(QDELETED(locked_down) || !is_station_level(locked_down.z))
 			continue
 		INVOKE_ASYNC(locked_down, TYPE_PROC_REF(/obj/machinery/door, hostile_lockdown), owner)
 		CHECK_TICK
@@ -391,7 +391,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /// For Lockdown malf AI ability. Opens all doors on the station.
 /proc/_malf_ai_undo_lockdown()
 	for(var/obj/machinery/door/locked_down as anything in GLOB.airlocks)
-		if(!is_station_level(locked_down.z))
+		if(QDELETED(locked_down) || !is_station_level(locked_down.z))
 			continue
 		INVOKE_ASYNC(locked_down, TYPE_PROC_REF(/obj/machinery/door, disable_lockdown))
 		CHECK_TICK
