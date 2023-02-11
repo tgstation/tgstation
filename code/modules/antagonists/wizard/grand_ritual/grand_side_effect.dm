@@ -194,7 +194,7 @@
 	return FALSE
 
 /datum/grand_side_effect/summon_crewmate/proc/is_valid_crewmate(mob/living/carbon/human/crewmate, area/our_area)
-	if (!crewmate.mind || IS_NUKE_OP(crewmate) || IS_SPACE_NINJA(crewmate))
+	if (!crewmate.mind || IS_HUMAN_INVADER(crewmate))
 		return FALSE
 	return get_area(crewmate) != our_area
 

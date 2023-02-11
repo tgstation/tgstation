@@ -96,7 +96,7 @@
 		if (!crewmate.mind)
 			continue
 		crewmate.Unconscious(3 SECONDS) // Everyone falls unconscious but not everyone gets told about a new captain
-		if (crewmate == invoker || IS_NUKE_OP(crewmate) || IS_SPACE_NINJA(crewmate))
+		if (crewmate == invoker || IS_HUMAN_INVADER(crewmate))
 			continue
 		to_chat(crewmate, span_notice("The world spins and dissolves. Your past flashes before your eyes, backwards.\n\
 			Life strolls back into the ocean and shrinks into nothingness, planets explode into storms of solar dust, \
@@ -204,23 +204,23 @@
 /datum/grand_finale/clown/trigger(mob/living/carbon/human/invoker)
 	for(var/mob/living/carbon/human/victim as anything in GLOB.human_list)
 		victim.Unconscious(3 SECONDS)
-		if (victim.mind)
-			to_chat(victim, span_notice("The world spins and dissolves. Your past flashes before your eyes, backwards.\n\
-				Life strolls back into the ocean and shrinks into nothingness, planets explode into storms of solar dust, \
-				the stars rush back to greet each other at the beginning of things and then... you snap back to the present. \n\
-				Everything is just as it was and always has been. \n\n\
-				A stray thought sticks in the forefront of your mind. \n\
-				[span_hypnophrase("I'm so glad that I work at Clown Research Station [station_name()]!")] \n\
-				Is... that right?"))
-		if (ismonkey(victim) || IS_NUKE_OP(victim) || IS_SPACE_NINJA(victim) || victim == invoker)
+		if (!victim.mind || IS_HUMAN_INVADER(victim) || victim == invoker)
 			continue
 		if (HAS_TRAIT(victim, TRAIT_CLOWN_ENJOYER))
 			victim.add_mood_event("clown_world", /datum/mood_event/clown_world)
+		to_chat(victim, span_notice("The world spins and dissolves. Your past flashes before your eyes, backwards.\n\
+			Life strolls back into the ocean and shrinks into nothingness, planets explode into storms of solar dust, \
+			the stars rush back to greet each other at the beginning of things and then... you snap back to the present. \n\
+			Everything is just as it was and always has been. \n\n\
+			A stray thought sticks in the forefront of your mind. \n\
+			[span_hypnophrase("I'm so glad that I work at Clown Research Station [station_name()]!")] \n\
+			Is... that right?"))
 		if (is_clown_job(victim.mind.assigned_role))
 			var/datum/action/cooldown/spell/conjure_item/clown_pockets/new_spell = new(victim)
 			new_spell.Grant(victim)
 			continue
-		dress_as_magic_clown(victim)
+		if (!ismonkey(victim)) // Monkeys cannot yet wear clothes
+			dress_as_magic_clown(victim)
 		if (prob(15))
 			create_vendetta(victim.mind, invoker.mind)
 

@@ -235,6 +235,20 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a malf ai.
 #define IS_MALF_AI(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/malf_ai))
 
+/// List of human antagonist types which don't spawn directly on the space station
+GLOBAL_LIST_INIT(human_invader_antagonists, list(
+	/datum/antagonist/abductor,
+	/datum/antagonist/fugitive,
+	/datum/antagonist/fugitive_hunter,
+	/datum/antagonist/ninja,
+	/datum/antagonist/nukeop,
+	/datum/antagonist/pirate,
+	/datum/antagonist/wizard,
+))
+
+/// Returns true if the given mob has an antag datum which is assigned to a human antagonist who doesn't spawn on the space station
+#define IS_HUMAN_INVADER(mob) (mob?.mind?.has_antag_datum_in_list(GLOB.human_invader_antagonists))
+
 /// The dimensions of the antagonist preview icon. Will be scaled to this size.
 #define ANTAGONIST_PREVIEW_ICON_SIZE 96
 
