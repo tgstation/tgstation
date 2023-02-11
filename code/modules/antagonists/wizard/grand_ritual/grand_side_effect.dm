@@ -217,7 +217,6 @@
 
 	var/turf/landing_pos = pick(nearby_turfs)
 	var/obj/effect/temp_visual/teleport_abductor/landing_indicator = new(landing_pos)
-	landing_indicator.duration = CREWMATE_SUMMON_TELEPORT_DELAY
 
 	var/mob/living/carbon/human/victim = pick(potential_victims)
 	playsound(get_turf(victim),'sound/magic/repulse.ogg', 60, TRUE)
