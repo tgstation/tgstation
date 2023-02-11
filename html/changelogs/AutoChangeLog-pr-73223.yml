@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes:
+  - admin: "Every tier of \"Scrubber Overflow\" can now choose a random single reagent mode"
+  - admin: "\"Custom\" overflow, which was kinda confusing and unintuitive, is now called \"Every Vent\", much more self-explanatory in what it does."
