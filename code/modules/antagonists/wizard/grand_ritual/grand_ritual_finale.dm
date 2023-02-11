@@ -333,7 +333,6 @@
 
 	if (chosen_theme.can_convert(start_turf))
 		chosen_theme.apply_theme(start_turf)
-		CHECK_TICK
 
 	for (var/iterator in 1 to greatest_dist)
 		if(!turfs_to_transform["[iterator]"])
@@ -345,6 +344,7 @@
 		if (!chosen_theme.can_convert(transform_turf))
 			continue
 		chosen_theme.apply_theme(transform_turf)
+		CHECK_TICK
 
 /// Kill yourself and probably a bunch of other people
 /datum/grand_finale/armageddon
