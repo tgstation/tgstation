@@ -164,7 +164,7 @@
 	. = ..()
 
 	STOP_PROCESSING(SSobj, src)
-	INVOKE_ASYNC(src, PROC_REF(cleanup_ghosts), ghosts_spawned)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(cleanup_ghosts), ghosts_spawned)
 	ghosts_spawned = null
 
 /**
@@ -197,13 +197,15 @@
  *
  * Handles cleanup of all ghost mobs spawned by the anomaly. Iterates through the list
  * and calls qdel on its contents.
+ *
+ * * delete_list - The list of entities to be deleted by this proc.
  */
 
-/obj/structure/ghost_portal/proc/cleanup_ghosts()
-	for(var/mob/living/mob_to_delete as anything in ghosts_spawned)
+/proc/cleanup_ghosts(list/delete_list)
+	for(var/mob/living/mob_to_delete as anything in delete_list)
 		mob_to_delete.visible_message(span_alert("The [mob_to_delete] wails as it is torn back into the void!"), span_alert("You let out one last wail as you are sucked back into the realm of the dead. Then suddenly, you're back in the comforting embrace of the afterlife."), span_hear("You hear ethereal wailing."))
-		playsound(src, pick(spooky_noises), 50)
-		new /obj/effect/temp_visual/revenant/cracks(get_turf(src))
-		new /obj/effect/decal/cleanable/greenglow/ecto(get_turf(src))
+		playsound(mob_to_delete, pick(delete_list), 50)
+		new /obj/effect/temp_visual/revenant/cracks(get_turf(mob_to_delete))
+		new /obj/effect/decal/cleanable/greenglow/ecto(get_turf(mob_to_delete))
 		mob_to_delete.ghostize(FALSE) //So we don't throw an alert for deleting a mob with a key inside.
 		qdel(mob_to_delete)
