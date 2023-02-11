@@ -29,7 +29,7 @@
 /datum/action/item_action/display_detective_scan_results/Trigger(trigger_flags)
 	var/obj/item/detective_scanner/scanner = target
 	if(istype(scanner))
-		scanner.displayDetectiveScanResults(usr)
+		scanner.display_detective_scan_results(usr)
 
 /obj/item/detective_scanner/attack_self(mob/user)
 	if(!LAZYLEN(log))
@@ -40,10 +40,10 @@
 		return
 	scanner_busy = TRUE
 	balloon_alert(user, "printing report...")
-	addtimer(CALLBACK(src, PROC_REF(safePrintReport)), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(safe_print_report)), 10 SECONDS)
 
 // calls print_report(), and should a runtime occur within we can still reset the 'busy' state
-/obj/item/detective_scanner/proc/safePrintReport()
+/obj/item/detective_scanner/proc/safe_print_report()
 	print_report()
 	scanner_busy = FALSE
 
@@ -224,7 +224,7 @@
 	if(LAZYLEN(log) && !scanner_busy)
 		. += span_notice("Alt-click to clear scanner logs.")
 
-/obj/item/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
+/obj/item/detective_scanner/proc/display_detective_scan_results(mob/living/user)
 	// No need for can-use checks since the action button should do proper checks
 	if(!LAZYLEN(log))
 		balloon_alert(user, "no logs!")
