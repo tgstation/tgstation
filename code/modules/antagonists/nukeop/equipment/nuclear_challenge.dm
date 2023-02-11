@@ -1,7 +1,7 @@
 #define CHALLENGE_TELECRYSTALS 280
-#define CHALLENGE_TIME_LIMIT 5 MINUTES
+#define CHALLENGE_TIME_LIMIT (5 MINUTES)
 #define CHALLENGE_MIN_PLAYERS 50
-#define CHALLENGE_SHUTTLE_DELAY 25 MINUTES // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
+#define CHALLENGE_SHUTTLE_DELAY (25 MINUTES) // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
 GLOBAL_LIST_EMPTY(jam_on_wardec)
 
@@ -160,6 +160,14 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	return TRUE
 
 /obj/item/nuclear_challenge/literally_just_does_the_message/war_was_declared(mob/living/user, memo)
+#ifndef TESTING
+	// Reminder for our friends the admins
+	var/are_you_sure = tgui_alert(user, "Last second reminder that fake war declarations is a horrible idea and yes, \
+		the does the whole shebang, so be careful what you're doing.", "Don't do it", list("I'm sure", "You're right"))
+	if(are_you_sure != "I'm sure")
+		return
+#endif
+
 	priority_announce(memo, title = "Declaration of War", sound = 'sound/machines/alarm.ogg', has_important_message = TRUE)
 
 /obj/item/nuclear_challenge/literally_just_does_the_message/distribute_tc()
