@@ -159,7 +159,7 @@
 		if("edit_field")
 			target = locate(params["ref"]) in GLOB.manifest.general
 			var/field = params["field"]
-			if(!field || !target?.vars[field])
+			if(!field || !(field in target?.vars))
 				return FALSE
 
 			var/value = trim(params["value"], MAX_BROADCAST_LEN)
