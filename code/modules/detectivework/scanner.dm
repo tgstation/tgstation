@@ -15,7 +15,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
-	// if the scanner is currently busy processing
+	/// if the scanner is currently busy processing
 	var/scanner_busy = FALSE
 	var/list/log = list()
 	var/range = 8
@@ -42,7 +42,11 @@
 	balloon_alert(user, "printing report...")
 	addtimer(CALLBACK(src, PROC_REF(safe_print_report)), 10 SECONDS)
 
-// calls print_report(), and should a runtime occur within we can still reset the 'busy' state
+/**
+ * safe_print_repot - a wrapper proc for print_report
+ *
+ * Calls print_report(), and should a runtime occur within we can still reset the 'busy' state
+ */
 /obj/item/detective_scanner/proc/safe_print_report()
 	print_report()
 	scanner_busy = FALSE
@@ -79,7 +83,11 @@
 	safe_scan(A, user)
 	return . | AFTERATTACK_PROCESSED_ITEM
 
-// calls scan(), and should a runtime occur within we can still reset the 'busy' state
+/** 
+ * safe_scan - a wrapper proc for scan()
+ *
+ * calls scan(), and should a runtime occur within we can still reset the 'busy' state
+ */
 /obj/item/detective_scanner/proc/safe_scan(atom/A, mob/user)
 	set waitfor = FALSE
 	if(scanner_busy)
@@ -88,7 +96,11 @@
 		balloon_alert(user, "scanner error!") // but in case it does, we 'error' instead of just bricking the scanner
 	scanner_busy = FALSE
 
-// this should always return TRUE barring a runtime
+/** 
+ * scan - scans an atom for forensic data and outputs 
+ *
+ * This should always return TRUE barring a runtime
+ */
 /obj/item/detective_scanner/proc/scan(atom/A, mob/user)
 	// Can remotely scan objects and mobs.
 	if((get_dist(A, user) > range) || (!(A in view(range, user)) && view_check) || (loc != user))
