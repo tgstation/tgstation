@@ -122,7 +122,7 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/paying_customer = user
 			var/successfully_put_in_hands
-			spawn(-1) //Put_in_hands can sleep, we don't want that.
+			ASYNC //Put_in_hands can sleep, we don't want that to block this proc.
 				successfully_put_in_hands = paying_customer.put_in_hands(holochange)
 			if(!successfully_put_in_hands)
 				user.pulling = holochange

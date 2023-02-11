@@ -384,7 +384,7 @@
 	outer_plating_amount=1
 
 /datum/component/construction/mecha/gygax/action(datum/source, atom/used_atom, mob/user)
-	spawn(-1) //Please stop trying to get the return value from procs that can sleep
+	ASYNC //This proc will never actually sleep, it calls do_after with a time of 0.
 		. = check_step(used_atom, user)
 	return .
 

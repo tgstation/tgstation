@@ -33,7 +33,7 @@
 
 /datum/component/construction/proc/action(datum/source, obj/item/I, mob/living/user)
 	SIGNAL_HANDLER
-	spawn(-1) //Please stop trying to get the return value from procs that can sleep
+	ASYNC //This proc will never actually sleep, it calls do_after with a time of 0.
 		. = check_step(I, user)
 	return .
 
