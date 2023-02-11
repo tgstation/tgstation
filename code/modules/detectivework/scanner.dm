@@ -88,32 +88,32 @@
  *
  * calls scan(), and should a runtime occur within we can still reset the 'busy' state
  */
-/obj/item/detective_scanner/proc/safe_scan(atom/A, mob/user)
+/obj/item/detective_scanner/proc/safe_scan(atom/atom_to_scan, mob/user)
 	set waitfor = FALSE
 	if(scanner_busy)
 		return
-	if(!scan(A,user)) // this should only return FALSE if a runtime occurs during the scan proc, so ideally never
+	if(!scan(atom_to_scan, user)) // this should only return FALSE if a runtime occurs during the scan proc, so ideally never
 		balloon_alert(user, "scanner error!") // but in case it does, we 'error' instead of just bricking the scanner
 	scanner_busy = FALSE
 
 /** 
- * scan - scans an atom for forensic data and outputs 
+ * scan - scans an atom for forensic data and outputs it to the mob holding the scanner
  *
  * This should always return TRUE barring a runtime
  */
-/obj/item/detective_scanner/proc/scan(atom/A, mob/user)
+/obj/item/detective_scanner/proc/scan(atom/scanned_atom, mob/user)
 	// Can remotely scan objects and mobs.
-	if((get_dist(A, user) > range) || (!(A in view(range, user)) && view_check) || (loc != user))
+	if((get_dist(scanned_atom, user) > range) || (!(scanned_atom in view(range, user)) && view_check) || (loc != user))
 		return TRUE
 
 	scanner_busy = TRUE
 	
 
 	user.visible_message(
-		span_notice("\The [user] points the [src.name] at \the [A] and performs a forensic scan."),
+		span_notice("\The [user] points the [src.name] at \the [scanned_atom] and performs a forensic scan."),
 		ignored_mobs = user
 	)
-	to_chat(user, span_notice("You scan \the [A]. The scanner is now analysing the results..."))
+	to_chat(user, span_notice("You scan \the [scanned_atom]. The scanner is now analysing the results..."))
 
 
 	// GATHER INFORMATION
@@ -121,25 +121,25 @@
 	//Make our assoc list array
 	// The keys are the headers used for it, and the value is a list of each line printed
 	var/list/det_data = list()
-	var/list/blood = GET_ATOM_BLOOD_DNA(A)
-	det_data[DETSCAN_CATEGORY_FIBER] = GET_ATOM_FIBRES(A)
+	var/list/blood = GET_ATOM_BLOOD_DNA(scanned_atom)
+	det_data[DETSCAN_CATEGORY_FIBER] = GET_ATOM_FIBRES(scanned_atom)
 
-	var/target_name = A.name
+	var/target_name = scanned_atom.name
 
 	// Start gathering
 
-	if(ishuman(A))
+	if(ishuman(scanned_atom))
 
-		var/mob/living/carbon/human/H = A
+		var/mob/living/carbon/human/H = scanned_atom
 		if(!H.gloves)
 			LAZYADD(det_data[DETSCAN_CATEGORY_FINGERS], md5(H.dna?.unique_identity))
 
-	else if(!ismob(A))
+	else if(!ismob(scanned_atom))
 
-		det_data[DETSCAN_CATEGORY_FINGERS] = GET_ATOM_FINGERPRINTS(A)
+		det_data[DETSCAN_CATEGORY_FINGERS] = GET_ATOM_FINGERPRINTS(scanned_atom)
 
 		// Only get reagents from non-mobs.
-		for(var/datum/reagent/present_reagent as anything in A.reagents?.reagent_list)
+		for(var/datum/reagent/present_reagent as anything in scanned_atom.reagents?.reagent_list)
 			LAZYADD(det_data[DETSCAN_CATEGORY_DRINK], \
 				"Reagent: <font color='red'>[present_reagent.name]</font> Volume: <font color='red'>[present_reagent.volume]</font>")
 
@@ -154,8 +154,8 @@
 
 			LAZYSET(blood, blood_DNA, blood_type)
 
-	if(istype(A, /obj/item/card/id))
-		var/obj/item/card/id/user_id = A
+	if(istype(scanned_atom, /obj/item/card/id))
+		var/obj/item/card/id/user_id = scanned_atom
 		for(var/region in DETSCAN_ACCESS_ORDER())
 			var/access_in_region = SSid_access.accesses_by_region[region] & user_id.GetAccess()
 			if(!length(access_in_region))
@@ -172,7 +172,7 @@
 		"Type: <font color='red'>[blood[bloodtype]]</font> DNA (UE): <font color='red'>[bloodtype]</font>")
 
 	// sends it off to be modified by the items
-	SEND_SIGNAL(A, COMSIG_DETECTIVE_SCANNED, user, det_data)
+	SEND_SIGNAL(scanned_atom, COMSIG_DETECTIVE_SCANNED, user, det_data)
 
 	// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 
@@ -188,9 +188,11 @@
 			add_log(line)
 		found_something = TRUE
 
-	// Get a new user
+	// Make sure the original user is still holding the scanner before sending them the results
 	var/mob/holder = null
-	if(ismob(src.loc))
+	if(src.loc == user)
+		holder = user
+	else if(ismob(src.loc))
 		holder = src.loc
 
 	if(!found_something)
