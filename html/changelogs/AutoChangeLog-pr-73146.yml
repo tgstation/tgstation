@@ -1,0 +1,5 @@
+author: "kawoppi"
+delete-after: True
+changes:
+  - refactor: "refactored *blush and *cry emote visuals into bodypart_overlays"
+  - rscdel: "lack of eyes will no longer prevent the *cry emote overlay from displaying"
