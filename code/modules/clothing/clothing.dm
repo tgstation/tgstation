@@ -40,9 +40,6 @@
 	/// How many zones (body parts, not precise) we have disabled so far, for naming purposes
 	var/zones_disabled
 
-	/// A lazily initiated "food" version of the clothing for moths
-	var/obj/item/food/clothing/moth_snack
-
 /obj/item/clothing/Initialize(mapload)
 	if(clothing_flags & VOICEBOX_TOGGLABLE)
 		actions_types += /datum/action/item_action/toggle_voice_box
@@ -53,6 +50,7 @@
 	AddElement(/datum/element/attack_equip)
 	if(!icon_state)
 		item_flags |= ABSTRACT
+	make_edible()
 
 /obj/item/clothing/MouseDrop(atom/over_object)
 	. = ..()
@@ -66,42 +64,28 @@
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
 
-//This code is cursed, moths are cursed, and someday I will destroy it. but today is not that day.
-/obj/item/food/clothing
-	name = "temporary moth clothing snack item"
-	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object. <--- stinky idiot wrote this"
-	bite_consumption = 1
-	// sigh, ok, so it's not ACTUALLY infinite nutrition. this is so you can eat clothes more than...once.
-	// bite_consumption limits how much you actually get, and the take_damage in after eat makes sure you can't abuse this.
-	// ...maybe this was a mistake after all.
-	food_reagents = list(/datum/reagent/consumable/nutriment/cloth_fibers = INFINITY)
-	tastes = list("dust" = 1, "lint" = 1)
-	foodtypes = CLOTH
+//If clothing is eligible for moth consumption give it the edible component
+/obj/item/clothing/proc/make_edible()
+	if(clothing_flags & (INEDIBLE_CLOTHING | INDESTRUCTIBLE))
+		return
+	if(ispickedupmob(src))
+		return
+	var/bites = max_integrity / MOTH_EATING_CLOTHING_DAMAGE
+	AddComponent(/datum/component/edible,\
+		initial_reagents = list(/datum/reagent/consumable/nutriment/cloth_fibers = bites),\
+		tastes = list("dust" = 1, "lint" = 1),\
+		foodtypes = CLOTH,\
+		refined = FALSE,\
+		bite_consumption = 1,\
+		can_eat = CALLBACK(src, PROC_REF(can_eat)),\
+		after_eat = CALLBACK(src, PROC_REF(after_eat)))
 
-	/// A weak reference to the clothing that created us
-	var/datum/weakref/clothing
 
-/obj/item/food/clothing/make_edible()
-	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)))
+/obj/item/clothing/proc/after_eat(mob/eater)
+	take_damage(MOTH_EATING_CLOTHING_DAMAGE, sound_effect = FALSE, damage_flag = CONSUME)
 
-/obj/item/food/clothing/proc/after_eat(mob/eater)
-	var/obj/item/clothing/resolved_clothing = clothing.resolve()
-	if (resolved_clothing)
-		resolved_clothing.take_damage(MOTH_EATING_CLOTHING_DAMAGE, sound_effect = FALSE, damage_flag = CONSUME)
-	else
-		qdel(src)
-
-/obj/item/clothing/attack(mob/living/target, mob/living/user, params)
-	if(user.combat_mode || !ismoth(target) || ispickedupmob(src))
-		return ..()
-	if((clothing_flags & INEDIBLE_CLOTHING) || (resistance_flags & INDESTRUCTIBLE))
-		return ..()
-	if(isnull(moth_snack))
-		moth_snack = new
-		moth_snack.name = name
-		moth_snack.clothing = WEAKREF(src)
-	moth_snack.attack(target, user, params)
+/obj/item/clothing/proc/can_eat(mob/living/eater)
+	return ismoth(eater)
 
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
 	if(!istype(W, repairable_by))
@@ -211,7 +195,6 @@
 
 /obj/item/clothing/Destroy()
 	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
-	QDEL_NULL(moth_snack)
 	return ..()
 
 /obj/item/clothing/dropped(mob/living/user)

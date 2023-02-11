@@ -30,6 +30,8 @@ Behavior that's still missing from this component that original food items had t
 	var/junkiness = 0
 	///Message to send when eating
 	var/list/eatverbs
+	///Callback to be ran for checking if a carbon can eat something
+	var/datum/callback/can_eat
 	///Callback to be ran for when you take a bite of something
 	var/datum/callback/after_eat
 	///Callback to be ran for when you take a bite of something
@@ -54,6 +56,7 @@ Behavior that's still missing from this component that original food items had t
 	list/eatverbs = list("bite", "chew", "nibble", "gnaw", "gobble", "chomp"),
 	bite_consumption = 2,
 	junkiness,
+	datum/callback/can_eat,
 	datum/callback/after_eat,
 	datum/callback/on_consume,
 	datum/callback/check_liked,
@@ -69,6 +72,7 @@ Behavior that's still missing from this component that original food items had t
 	src.eat_time = eat_time
 	src.eatverbs = string_list(eatverbs)
 	src.junkiness = junkiness
+	src.can_eat = can_eat
 	src.after_eat = after_eat
 	src.on_consume = on_consume
 	src.tastes = string_assoc_list(tastes)
@@ -130,6 +134,7 @@ Behavior that's still missing from this component that original food items had t
 	list/eatverbs,
 	bite_consumption,
 	junkiness,
+	datum/callback/can_eat,
 	datum/callback/after_eat,
 	datum/callback/on_consume,
 	datum/callback/check_liked,
@@ -183,6 +188,8 @@ Behavior that's still missing from this component that original food items had t
 		src.eat_time = eat_time
 	if(!isnull(junkiness))
 		src.junkiness = junkiness
+	if(!isnull(can_eat))
+		src.can_eat = can_eat
 	if(!isnull(after_eat))
 		src.after_eat = after_eat
 	if(!isnull(on_consume))
@@ -194,6 +201,7 @@ Behavior that's still missing from this component that original food items had t
 	setup_initial_reagents(initial_reagents)
 
 /datum/component/edible/Destroy(force, silent)
+	QDEL_NULL(can_eat)
 	QDEL_NULL(after_eat)
 	QDEL_NULL(on_consume)
 	QDEL_NULL(check_liked)
@@ -457,6 +465,8 @@ Behavior that's still missing from this component that original food items had t
 	if(!iscarbon(eater))
 		return FALSE
 	var/mob/living/carbon/C = eater
+	if(can_eat && !can_eat.Invoke(C))
+		return FALSE
 	var/covered = ""
 	if(C.is_mouth_covered(ITEM_SLOT_HEAD))
 		covered = "headgear"
