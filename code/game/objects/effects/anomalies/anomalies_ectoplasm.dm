@@ -193,10 +193,11 @@
 		new_ghost.log_message("was returned to the living world as a ghost by an ectoplasmic anomaly.", LOG_GAME)
 
 /**
- * Gives a farewell message and deletes the ghosts the anomaly produced.
+ * Gives a farewell message and deletes the ghosts produced by a ghost portal structure.
  *
- * Handles cleanup of all ghost mobs spawned by the anomaly. Iterates through the list
- * and calls qdel on its contents.
+ * Handles cleanup of all ghost mobs spawned a ghost portal. Iterates through the list
+ * and calls qdel on its contents, gives a short message, and leaves behind some goop.
+ * Stored as a global, as it is called immediately after the portal deletes itself.
  *
  * * delete_list - The list of entities to be deleted by this proc.
  */
