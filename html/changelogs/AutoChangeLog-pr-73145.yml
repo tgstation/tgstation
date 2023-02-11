@@ -1,0 +1,4 @@
+author: "the-orange-cow"
+delete-after: True
+changes:
+  - bugfix: "heretic blades can now properly butcher"
