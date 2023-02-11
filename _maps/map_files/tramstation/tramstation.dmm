@@ -11552,23 +11552,7 @@
 /turf/open/floor/plating,
 /area/station/solars/starboard/fore)
 "cks" = (
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/caution,
 /obj/machinery/crossing_signal/tramstation/southeast,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/crossing_signal/southeast,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
@@ -24539,21 +24523,10 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "hnj" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/structure/railing/corner,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/caution{
-	dir = 1
-	},
 /obj/machinery/crossing_signal/tramstation/northwest,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/crossing_signal/northwest,
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
@@ -38817,21 +38790,8 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "mAi" = (
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj/structure/railing/corner{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
-/obj/effect/turf_decal/caution,
 /obj/machinery/crossing_signal/tramstation/southwest,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/crossing_signal/southwest,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
@@ -45510,23 +45470,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/monastery)
 "pgD" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/caution{
-	dir = 1
-	},
 /obj/machinery/crossing_signal/tramstation/northeast,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/crossing_signal/northeast,
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
@@ -47414,21 +47358,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "pLj" = (
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner,
-/obj/effect/turf_decal/caution,
 /obj/machinery/crossing_signal/tramstation/southwest,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/crossing_signal/southwest,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
@@ -47812,21 +47742,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "pTw" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
 /obj/structure/railing/corner,
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/caution{
-	dir = 1
-	},
-/obj/machinery/crossing_signal/tramstation/northwest,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/crossing_signal/northwest,
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
@@ -58223,22 +58139,7 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "tJL" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/caution{
-	dir = 1
-	},
 /obj/machinery/crossing_signal/tramstation/northeast,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/crossing_signal/northeast,
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron,
@@ -58320,22 +58221,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/tram/left)
 "tLb" = (
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/caution,
 /obj/machinery/crossing_signal/tramstation/southeast,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/crossing_signal/southeast,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -60795,6 +60681,9 @@
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
 /obj/machinery/firealarm/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "uHU" = (
