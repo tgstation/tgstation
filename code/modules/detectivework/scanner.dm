@@ -75,12 +75,12 @@
 	log = list()
 
 /obj/item/detective_scanner/pre_attack_secondary(atom/A, mob/user, params)
-	safe_scan(A, user)
+	safe_scan(user, atom_to_scan = A)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
 	. = ..()
-	safe_scan(A, user)
+	safe_scan(user, atom_to_scan = A)
 	return . | AFTERATTACK_PROCESSED_ITEM
 
 /** 
@@ -88,11 +88,11 @@
  *
  * calls scan(), and should a runtime occur within we can still reset the 'busy' state
  */
-/obj/item/detective_scanner/proc/safe_scan(atom/atom_to_scan, mob/user)
+/obj/item/detective_scanner/proc/safe_scan(mob/user, atom/atom_to_scan)
 	set waitfor = FALSE
 	if(scanner_busy)
 		return
-	if(!scan(atom_to_scan, user)) // this should only return FALSE if a runtime occurs during the scan proc, so ideally never
+	if(!scan(user, atom_to_scan)) // this should only return FALSE if a runtime occurs during the scan proc, so ideally never
 		balloon_alert(user, "scanner error!") // but in case it does, we 'error' instead of just bricking the scanner
 	scanner_busy = FALSE
 
@@ -101,7 +101,7 @@
  *
  * This should always return TRUE barring a runtime
  */
-/obj/item/detective_scanner/proc/scan(atom/scanned_atom, mob/user)
+/obj/item/detective_scanner/proc/scan(mob/user, atom/scanned_atom)
 	// Can remotely scan objects and mobs.
 	if((get_dist(scanned_atom, user) > range) || (!(scanned_atom in view(range, user)) && view_check) || (loc != user))
 		return TRUE
