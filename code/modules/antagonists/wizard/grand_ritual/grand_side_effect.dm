@@ -216,7 +216,7 @@
 		nearby_turfs += potential_turf
 
 	var/turf/landing_pos = pick(nearby_turfs)
-	var/obj/effect/temp_visual/teleport_abductor/landing_indicator = new(landing_pos)
+	new /obj/effect/temp_visual/teleport_abductor(landing_pos)
 
 	var/mob/living/carbon/human/victim = pick(potential_victims)
 	playsound(get_turf(victim),'sound/magic/repulse.ogg', 60, TRUE)
