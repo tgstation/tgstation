@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "The bastard sword can create constructs again. Just hit the shells with it"
