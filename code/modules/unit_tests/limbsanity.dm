@@ -29,7 +29,7 @@
 
 	var/obj/item/bodypart/leg/left/monkey/left_monky_leg = allocate(/obj/item/bodypart/leg/left/monkey)
 	if(!left_monky_leg.try_attach_limb(john_doe))
-		Fail("Unable to attach monkey leg to John Doe")
+		TEST_FAIL("Unable to attach monkey leg to John Doe")
 	TEST_ASSERT_EQUAL(john_doe.get_top_offset(), 0, "John Doe has a top offset other than 0 with one human leg and one monkey leg.")
 
 	var/datum/surgery/amputation/right_leg_amputation = new(john_doe, BODY_ZONE_R_LEG, john_doe.get_bodypart(BODY_ZONE_R_LEG))
