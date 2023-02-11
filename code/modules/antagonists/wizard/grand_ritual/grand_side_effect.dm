@@ -188,7 +188,7 @@
 	if (!.)
 		return
 	var/area/our_area = get_area(ritual_location)
-	for (var/mob/living/carbon/human/crewmate in GLOB.mob_list)
+	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
 		if (is_valid_crewmate(crewmate, our_area))
 			return TRUE
 	return FALSE
@@ -204,7 +204,7 @@
 	playsound(ritual_location, 'sound/magic/lightning_chargeup.ogg', 65, TRUE)
 	var/list/potential_victims = list()
 	var/area/our_area = get_area(ritual_location)
-	for (var/mob/living/carbon/human/crewmate in GLOB.mob_list)
+	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
 		if (!is_valid_crewmate(crewmate, our_area))
 			continue
 		potential_victims += crewmate
