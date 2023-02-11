@@ -5,7 +5,7 @@
 /// How long the virus stays hidden before announcement
 #define ADV_ANNOUNCE_DELAY 75
 /// Numerical define for medium severity advanced virus
-#define ADV_DISEASE_MEDIUM 2
+#define ADV_DISEASE_MEDIUM 1
 /// Numerical define for harmful severity advanced virus
 #define ADV_DISEASE_HARMFUL 3
 /// Numerical define for dangerous severity advanced virus
