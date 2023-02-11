@@ -56,6 +56,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		AddComponent(/datum/component/edible,\
 			initial_reagents = food_reagents,\
 			foodtypes = RAW | MEAT | GORE,\
+			refined = FALSE,\
 			volume = reagent_vol,\
 			after_eat = CALLBACK(src, PROC_REF(OnEatFrom)))
 

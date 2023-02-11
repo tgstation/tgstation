@@ -46,6 +46,7 @@
 		bite_consumption = 2, \
 		food_flags = FOOD_FINGER_FOOD, \
 		junkiness = 10, \
+		refined = TRUE, \
 		foodtypes = FRIED, \
 	)
 

@@ -33,6 +33,7 @@
 	source.AddComponent(/datum/component/edible, \
 		initial_reagents = list(/datum/reagent/consumable/nutriment = nutriment_count, /datum/reagent/consumable/cooking_oil = oil_count), \
 		foodtypes = RAW | MEAT | GROSS, \
+		refined = FALSE, \
 		eat_time = 3 SECONDS, \
 		tastes = list("Fleshy"))
 

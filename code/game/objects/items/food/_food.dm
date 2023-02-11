@@ -16,6 +16,8 @@
 	var/food_flags
 	///Bitflag of the types of food this food is
 	var/foodtypes
+	///Whether the food can give mood boost
+	var/refined = TRUE
 	///Amount of volume the food can contain
 	var/max_volume
 	///How long it will take to eat this food without any other modifiers
@@ -72,6 +74,7 @@
 		initial_reagents = food_reagents,\
 		food_flags = food_flags,\
 		foodtypes = foodtypes,\
+		refined = refined,\
 		volume = max_volume,\
 		eat_time = eat_time,\
 		tastes = tastes,\

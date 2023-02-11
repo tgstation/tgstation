@@ -22,6 +22,8 @@ Behavior that's still missing from this component that original food items had t
 	var/food_flags = NONE
 	///Bitfield of the types of this food
 	var/foodtypes = NONE
+	///Unrefined food is too boring to give mood boosts
+	var/refined = TRUE
 	///Amount of seconds it takes to eat this food
 	var/eat_time = 30
 	///Defines how much it lowers someones satiety (Need to eat, essentialy)
@@ -45,6 +47,7 @@ Behavior that's still missing from this component that original food items had t
 	list/initial_reagents,
 	food_flags = NONE,
 	foodtypes = NONE,
+	refined = TRUE,
 	volume = 50,
 	eat_time = 10,
 	list/tastes,
@@ -61,6 +64,7 @@ Behavior that's still missing from this component that original food items had t
 	src.bite_consumption = bite_consumption
 	src.food_flags = food_flags
 	src.foodtypes = foodtypes
+	src.refined = refined
 	src.volume = volume
 	src.eat_time = eat_time
 	src.eatverbs = string_list(eatverbs)
@@ -119,6 +123,7 @@ Behavior that's still missing from this component that original food items had t
 	list/initial_reagents,
 	food_flags = NONE,
 	foodtypes = NONE,
+	refined,
 	volume,
 	eat_time,
 	list/tastes,
@@ -170,6 +175,8 @@ Behavior that's still missing from this component that original food items had t
 	// just set these directly
 	if(!isnull(bite_consumption))
 		src.bite_consumption = bite_consumption
+	if(!isnull(refined))
+		src.refined = refined
 	if(!isnull(volume))
 		src.volume = volume
 	if(!isnull(eat_time))
@@ -508,9 +515,12 @@ Behavior that's still missing from this component that original food items had t
 			H.adjust_disgust(11 + 15 * fraction)
 			H.add_mood_event("gross_food", /datum/mood_event/gross_food)
 		if(FOOD_LIKED)
-			to_chat(H,span_notice("I love this taste!"))
 			H.adjust_disgust(-5 + -2.5 * fraction)
-			H.add_mood_event("fav_food", /datum/mood_event/favorite_food)
+			if(refined)
+				to_chat(H,span_notice("I love this taste!"))
+				H.add_mood_event("fav_food", /datum/mood_event/favorite_food)
+			else
+				to_chat(H,span_notice("I like this taste, but I'd prefer something more refined."))
 			if(istype(parent, /obj/item/food))
 				var/obj/item/food/memorable_food = parent
 				if(memorable_food.venue_value >= FOOD_PRICE_EXOTIC)
