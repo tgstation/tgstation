@@ -83,11 +83,13 @@
 	announce_when = ADV_ANNOUNCE_DELAY
 	///The disease type we will be spawning
 	var/datum/disease/virus_type
+	///The preset (classic) or generated (advanced) illness name
+	var/datum/disease/illness_type
 	///Disease recipient candidates, passed from the round_event_control object
 	var/list/afflicted = list()
 
 /datum/round_event/disease_outbreak/announce(fake)
-	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK7)
+	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "[illness_type] Alert", ANNOUNCER_OUTBREAK7)
 
 /datum/round_event/disease_outbreak/setup()
 	announce_when = ADV_ANNOUNCE_DELAY
@@ -114,6 +116,7 @@
 	var/datum/disease/new_disease
 	new_disease = new virus_type()
 	new_disease.carrier = TRUE
+	illness_type = new_disease.name
 
 	var/mob/living/carbon/human/victim = pick_n_take(afflicted)
 	if(victim.ForceContractDisease(new_disease, FALSE))
@@ -210,6 +213,8 @@
 	var/list/name_symptoms = list()
 	for(var/datum/symptom/new_symptom as anything in advanced_disease.symptoms)
 		name_symptoms += new_symptom.name
+
+	illness_type = advanced_disease.name
 
 	var/mob/living/carbon/human/victim = pick_n_take(afflicted)
 	if(victim.ForceContractDisease(advanced_disease, FALSE))
