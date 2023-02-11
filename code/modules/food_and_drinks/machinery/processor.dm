@@ -227,11 +227,11 @@
 	if (!istype(processed_slime))
 		return
 
-	var/core_count = processed_slime.cores
 	if(processed_slime.stat != DEAD)
 		processed_slime.forceMove(drop_location())
-		processed_slime.visible_message(span_notice("[core_count] crawls free of the processor!"))
+		processed_slime.balloon_alert_to_viewers("crawls free!")
 		return
+	var/core_count = processed_slime.cores
 	for(var/i in 1 to (core_count+rating_amount-1))
 		var/atom/movable/item = new processed_slime.coretype(drop_location())
 		adjust_item_drop_location(item)
