@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - bugfix: "AIs can no longer change their shell's icon_state to any image at will"
