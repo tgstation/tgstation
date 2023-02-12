@@ -15,7 +15,7 @@
 	////Human specific stuff. Don't set these if you aren't using a human, the unit tests will put a stop to your sinful hand.
 
 	///sets the human as a species, use a typepath (example: /datum/species/skeleton)
-	var/mob_species
+	var/datum/species/mob_species
 	///equips the human with an outfit.
 	var/datum/outfit/outfit
 	///for mappers to override parts of the outfit. really only in here for secret away missions, please try to refrain from using this out of laziness
@@ -181,7 +181,10 @@
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
 	if(mob_possessor)
-		spawned_mob.ckey = mob_possessor.ckey
+		if(mob_possessor.mind)
+			mob_possessor.mind.transfer_to(spawned_mob, force_key_move = TRUE)
+		else
+			spawned_mob.key = mob_possessor.key
 	if(show_flavor)
 		var/output_message = "<span class='infoplain'><span class='big bold'>[you_are_text]</span></span>"
 		if(flavour_text != "")

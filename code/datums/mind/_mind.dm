@@ -62,8 +62,9 @@
 	var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud = null
 	var/holy_role = NONE //is this person a chaplain or admin role allowed to use bibles, Any rank besides 'NONE' allows for this.
 
-	///If this mind's master is another mob (i.e. adamantine golems)
-	var/mob/living/enslaved_to
+	///If this mind's master is another mob (i.e. adamantine golems). Weakref of a /living.
+	var/datum/weakref/enslaved_to
+
 	var/datum/language_holder/language_holder
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
