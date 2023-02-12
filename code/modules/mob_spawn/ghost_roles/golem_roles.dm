@@ -95,6 +95,7 @@
 		return
 	if(QDELETED(src) || uses <= 0)
 		return
+	uses -= 1
 	H.log_message("golem-swapped into [src].", LOG_GAME)
 	H.visible_message(
 		span_notice("A faint light leaves [H], moving to [src] and animating it!"),
@@ -104,7 +105,7 @@
 	var/mob/living/carbon/human/newgolem = create(user, H.real_name)
 	H.transfer_quirk_datums(newgolem)
 	H.death()
-	qdel(src)
+	check_uses()
 	return TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/golem/servant
