@@ -34,7 +34,6 @@ GLOBAL_LIST_INIT(ruins_ambience,list(
 	'sound/ambience/ambidanger.ogg',
 	'sound/ambience/ambidanger2.ogg',
 	'sound/ambience/ambimaint1.ogg',
-	'sound/ambience/ambimine.ogg',
 	'sound/ambience/ambimystery.ogg',
 	'sound/ambience/ambiruin.ogg',
 	'sound/ambience/ambiruin2.ogg',
@@ -66,7 +65,6 @@ GLOBAL_LIST_INIT(mining_ambience,list(
 	'sound/ambience/ambilava2.ogg',
 	'sound/ambience/ambilava3.ogg',
 	'sound/ambience/ambimaint1.ogg',
-	'sound/ambience/ambimine.ogg',
 	'sound/ambience/ambiruin.ogg',
 	'sound/ambience/ambiruin2.ogg',
 	'sound/ambience/ambiruin3.ogg',
@@ -95,10 +93,10 @@ GLOBAL_LIST_INIT(spooky_ambience,list(
 
 GLOBAL_LIST_INIT(space_ambience,list(
 	'sound/ambience/ambiatmos.ogg',
-	'sound/ambience/ambispace.ogg',
-	'sound/ambience/ambispace2.ogg',
-	'sound/ambience/ambispace3.ogg',
-	'sound/ambience/title2.ogg',
+	'sound/ambience/signal.ogg',
+	'sound/ambience/ambispace4.ogg',
+	'sound/ambience/ambispace5.ogg',
+	'sound/ambience/ambispace6.ogg',
 ))
 
 GLOBAL_LIST_INIT(maint_ambience,list(
