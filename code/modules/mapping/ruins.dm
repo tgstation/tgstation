@@ -82,7 +82,7 @@
 	var/list/ruins_available = list() //we can try these in the current pass
 
 	if(PERFORM_ALL_TESTS(log_mapping))
-		log_mapping("All ruins being loaded for map")
+		log_mapping("All ruins being loaded for map testing.")
 
 	//Set up the starting ruin list
 	for(var/key in ruins)
