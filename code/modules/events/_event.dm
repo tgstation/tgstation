@@ -134,7 +134,9 @@ Runs the event
 	UnregisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT)
 	var/datum/round_event/round_event = new typepath(TRUE, src)
 	if(admin_forced && admin_setup)
+		//not part of the signal because it's conditional and relies on usr heavily
 		admin_setup.apply_to_event(round_event)
+	SEND_SIGNAL(src, COMSIG_CREATED_ROUND_EVENT, round_event)
 	round_event.setup()
 	round_event.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	occurrences++
@@ -155,14 +157,10 @@ Runs the event
 		log_game("Random Event triggering: [name] ([typepath]).")
 
 	if(alert_observers)
-		announce_deadchat(random)
+		round_event.announce_deadchat(random)
 
 	SSblackbox.record_feedback("tally", "event_ran", 1, "[round_event]")
 	return round_event
-
-///Annouces the event name to deadchat, override this if what an event should show to deadchat is different to its event name.
-/datum/round_event_control/proc/announce_deadchat(random)
-	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
 
 //Returns the component for the listener
 /datum/round_event_control/proc/stop_random_event()
@@ -204,6 +202,10 @@ Runs the event
 /datum/round_event/proc/setup()
 	SHOULD_CALL_PARENT(FALSE)
 	return
+
+///Annouces the event name to deadchat, override this if what an event should show to deadchat is different to its event name.
+/datum/round_event/proc/announce_deadchat(random)
+	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[control.name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
 
 //Called when the tick is equal to the start_when variable.
 //Allows you to start before announcing or vice versa.
