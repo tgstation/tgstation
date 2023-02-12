@@ -48,7 +48,7 @@
 /datum/species/vampire/spec_life(mob/living/carbon/human/vampire, delta_time, times_fired)
 	. = ..()
 	if(istype(vampire.loc, /obj/structure/closet/crate/coffin))
-		vampire.heal_overall_damage(2 * delta_time, 2 * delta_time, BODYTYPE_ORGANIC)
+		vampire.heal_overall_damage(brute = 2 * delta_time, burn = 2 * delta_time, required_bodytype = BODYTYPE_ORGANIC)
 		vampire.adjustToxLoss(-2 * delta_time)
 		vampire.adjustOxyLoss(-2 * delta_time)
 		vampire.adjustCloneLoss(-2 * delta_time)
@@ -107,11 +107,6 @@
 	)
 
 	return to_add
-
-/datum/species/vampire/randomize_active_underwear_only(mob/living/carbon/human/human_mob)
-	human_mob.undershirt = random_undershirt(human_mob.gender)
-	human_mob.underwear = random_underwear(human_mob.gender)
-	human_mob.socks = random_socks(human_mob.gender)
 
 // Vampire blood is special, so it needs to be handled with its own entry.
 /datum/species/vampire/create_pref_blood_perks()

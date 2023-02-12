@@ -102,14 +102,11 @@
 			to_chat(user, span_warning("\The [src] is not ready to hatch yet!"))
 		return FALSE
 
-/obj/effect/mob_spawn/ghost_role/spider/equip(mob/living/simple_animal/hostile/giant_spider/spawned_spider)
-	if(spawned_spider)
-		spawned_spider.directive = directive
-
-/obj/effect/mob_spawn/ghost_role/spider/special(mob/user)
-	. = ..()
+/obj/effect/mob_spawn/ghost_role/spider/special(mob/living/simple_animal/hostile/giant_spider/spawned_mob, mob/mob_possessor)
+	spawned_mob.directive = directive
 	egg.spawner = null
 	QDEL_NULL(egg)
+	return ..()
 
 /obj/effect/mob_spawn/ghost_role/spider/enriched
 	name = "enriched egg cluster"

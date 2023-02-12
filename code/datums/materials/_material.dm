@@ -20,6 +20,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/greyscale_colors
 	///Base alpha of the material, is used for greyscale icons.
 	var/alpha = 255
+	///Starlight color of the material
+	///This is the color of light it'll emit if its turf is transparent and over space
+	var/starlight_color = COLOR_STARLIGHT
 	///Bitflags that influence how SSmaterials handles this material.
 	var/init_flags = MATERIAL_INIT_MAPLOAD
 	///Materials "Traits". its a map of key = category | Value = Bool. Used to define what it can be used for
@@ -140,7 +143,16 @@ Simple datum which is instanced once per type and is used for every object of sa
 			O.heavyfootstep = turf_sound_override
 	if(alpha < 255)
 		T.AddElement(/datum/element/turf_z_transparency)
+		setup_glow(T)
 	return
+
+/datum/material/proc/setup_glow(turf/on)
+	if(GET_TURF_PLANE_OFFSET(on) != GET_LOWEST_STACK_OFFSET(on.z)) // We ain't the bottom brother
+		return
+	// We assume no parallax means no space means no light
+	if(SSmapping.level_trait(on.z, ZTRAIT_NOPARALLAX))
+		return
+	on.set_light(2, 0.75, starlight_color)
 
 /datum/material/proc/get_greyscale_config_for(datum/greyscale_config/config_path)
 	if(!config_path)

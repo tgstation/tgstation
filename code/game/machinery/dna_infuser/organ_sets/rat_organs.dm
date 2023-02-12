@@ -1,25 +1,15 @@
-
 #define RAT_ORGAN_COLOR "#646464"
 #define RAT_SCLERA_COLOR "#f0e055"
 #define RAT_PUPIL_COLOR "#000000"
-
 #define RAT_COLORS RAT_ORGAN_COLOR + RAT_SCLERA_COLOR + RAT_PUPIL_COLOR
 
 ///bonus of the rat: you can ventcrawl!
 /datum/status_effect/organ_set_bonus/rat
+	id = "organ_set_bonus_rat"
 	organs_needed = 4
 	bonus_activate_text = span_notice("Rodent DNA is deeply infused with you! You've learned how to traverse ventilation!")
 	bonus_deactivate_text = span_notice("Your DNA is no longer majority rat, and so fades your ventilation skills...")
-
-/datum/status_effect/organ_set_bonus/rat/enable_bonus()
-	. = ..()
-	ADD_TRAIT(owner, TRAIT_VENTCRAWLER_NUDE, REF(src))
-
-/datum/status_effect/organ_set_bonus/rat/disable_bonus()
-	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_VENTCRAWLER_NUDE, REF(src))
-
-
+	bonus_traits = TRAIT_VENTCRAWLER_NUDE
 
 ///way better night vision, super sensitive. lotta things work like this, huh?
 /obj/item/organ/internal/eyes/night_vision/rat
@@ -39,8 +29,6 @@
 	AddElement(/datum/element/noticable_organ, "eyes have deep, shifty black pupils, surrounded by a sickening yellow sclera.", BODY_ZONE_PRECISE_EYES)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
-
-
 ///increases hunger, disgust recovers quicker, expands what is defined as "food"
 /obj/item/organ/internal/stomach/rat
 	name = "mutated rat-stomach"
@@ -51,27 +39,29 @@
 	icon_state = "stomach"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
+	/// Multiplier of [physiology.hunger_mod].
+	var/hunger_mod = 10
 
 /obj/item/organ/internal/stomach/rat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
+	AddElement(/datum/element/noticable_organ, "mouth is drooling excessively.", BODY_ZONE_PRECISE_MOUTH)
 
-/obj/item/organ/internal/stomach/rat/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
-	AddElement(/datum/element/noticable_organ, "salivate[reciever.p_s()] excessively.", BODY_ZONE_HEAD)
-	return ..()
-
-/obj/item/organ/internal/stomach/rat/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
+/obj/item/organ/internal/stomach/rat/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
-	if(!ishuman(reciever))
+	if(!ishuman(receiver))
 		return
-	var/mob/living/carbon/human/human_holder = reciever
+	var/mob/living/carbon/human/human_holder = receiver
+	if(!human_holder.can_mutate())
+		return
 	var/datum/species/species = human_holder.dna.species
 	//mmm, cheese. doesn't especially like anything else
 	species.liked_food = DAIRY
 	//but a rat can eat anything without issue
 	species.disliked_food = NONE
 	species.toxic_food = NONE
-	human_holder.physiology.hunger_mod *= 10
+	if(human_holder.physiology)
+		human_holder.physiology.hunger_mod *= hunger_mod
 	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
 
 /obj/item/organ/internal/stomach/rat/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
@@ -85,14 +75,15 @@
 	if(!ishuman(stomach_owner))
 		return
 	var/mob/living/carbon/human/human_holder = stomach_owner
+	if(!human_holder.can_mutate())
+		return
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food = initial(species.liked_food)
 	species.disliked_food = initial(species.disliked_food)
 	species.toxic_food = initial(species.toxic_food)
-	human_holder.physiology.hunger_mod /= 10
+	if(human_holder.physiology)
+		human_holder.physiology.hunger_mod /= hunger_mod
 	UnregisterSignal(stomach_owner, COMSIG_SPECIES_GAIN)
-
-
 
 /// makes you smaller, walk over tables, and take 1.5x damage
 /obj/item/organ/internal/heart/rat
@@ -107,29 +98,30 @@
 /obj/item/organ/internal/heart/rat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
+	AddElement(/datum/element/noticable_organ, "hunch%PRONOUN_ES over unnaturally!")
 
-/obj/item/organ/internal/heart/rat/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
-	AddElement(/datum/element/noticable_organ, "hunch[owner.p_es()] over unnaturally!")
-	return ..()
-
-/obj/item/organ/internal/heart/rat/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
+/obj/item/organ/internal/heart/rat/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
-	if(!ishuman(reciever))
+	if(!ishuman(receiver))
 		return
-	var/mob/living/carbon/human/human_reciever = reciever
-	human_reciever.dna.add_mutation(/datum/mutation/human/dwarfism)
+	var/mob/living/carbon/human/human_receiver = receiver
+	if(!human_receiver.can_mutate())
+		return
+	human_receiver.dna.add_mutation(/datum/mutation/human/dwarfism)
 	//but 1.5 damage
-	human_reciever.physiology.damage_resistance -= 50
+	if(human_receiver.physiology)
+		human_receiver.physiology.damage_resistance -= 50
 
 /obj/item/organ/internal/heart/rat/Remove(mob/living/carbon/heartless, special)
 	. = ..()
 	if(!ishuman(heartless))
 		return
 	var/mob/living/carbon/human/human_heartless = heartless
+	if(!human_heartless.can_mutate())
+		return
 	human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
-	human_heartless.physiology.damage_resistance += 50
-
-
+	if(human_heartless.physiology)
+		human_heartless.physiology.damage_resistance += 50
 
 /// you occasionally squeak, and have some rat related verbal tics
 /obj/item/organ/internal/tongue/rat
@@ -145,7 +137,7 @@
 
 /obj/item/organ/internal/tongue/rat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "teeth are oddly shaped and yellowing", BODY_ZONE_HEAD)
+	AddElement(/datum/element/noticable_organ, "teeth are oddly shaped and yellowing", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
 /obj/item/organ/internal/tongue/rat/modify_speech(datum/source, list/speech_args)
@@ -181,5 +173,4 @@
 #undef RAT_ORGAN_COLOR
 #undef RAT_SCLERA_COLOR
 #undef RAT_PUPIL_COLOR
-
 #undef RAT_COLORS
