@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Heretic runes are now invisible to the AI (and cyborgs) while being drawn as well as when finished."
