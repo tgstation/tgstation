@@ -169,7 +169,7 @@
 
 	power_lottery[user_weakref] = gained_mutation
 
-/obj/machinery/dna_vault/ui_data(mob/user) //TODO Make it % bars maybe
+/obj/machinery/dna_vault/ui_data(mob/user)
 	var/list/data = list()
 	data["plants"] = plant_dna.len
 	data["plants_max"] = plants_max
@@ -220,5 +220,5 @@
 		return
 	H.dna.add_mutation(associated_mutation[upgrade_type], MUT_OTHER, 0)
 	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
-	power_lottery[human_weakref] = list()
+	power_lottery[human_weakref] = Cut()
 	use_power(active_power_usage)
