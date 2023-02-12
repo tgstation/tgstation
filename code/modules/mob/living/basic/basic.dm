@@ -127,9 +127,8 @@
 
 /mob/living/basic/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
-	///Automatic stamina re-gain
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery * delta_time, FALSE, TRUE)
+		adjustStaminaLoss(-stamina_recovery * delta_time, forced = TRUE)
 
 /mob/living/basic/say_mod(input, list/message_mods = list())
 	if(length(speak_emote))
@@ -208,6 +207,10 @@
 
 /mob/living/basic/compare_sentience_type(compare_type)
 	return sentience_type == compare_type
+
+/// Updates movement speed based on stamina loss
+/mob/living/basic/update_stamina()
+	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
 /mob/living/basic/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	adjust_bodytemperature((maximum_survivable_temperature + (fire_handler.stacks * 12)) * 0.5 * delta_time)

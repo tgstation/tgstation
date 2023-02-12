@@ -15,7 +15,7 @@
 	melee_damage_upper = 20
 	poison_per_bite = 5
 	speed = 3
-	player_speed = -0.1
+	player_speed_modifier = -3.1
 	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage."
 
 /**
@@ -74,7 +74,7 @@
 	obj_damage = 100
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	speed = 6
-	player_speed = 0.5 // Doesn't seem that slow but it gets a debuff off web
+	player_speed_modifier = -5.5 // Doesn't seem that slow but it gets a debuff off web
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
 	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup."
@@ -115,7 +115,7 @@
 	poison_per_bite = 5
 	poison_type = /datum/reagent/toxin/viperspider
 	speed = 2
-	player_speed = -0.5
+	player_speed_modifier = -2.5
 	gold_core_spawnable = NO_SPAWN
 	menu_description = "Assassin spider variant with an unmatched speed and very deadly poison, but has very low amount of health and damage."
 

@@ -42,8 +42,8 @@
 	see_in_dark = NIGHTVISION_FOV_RANGE
 	flammable = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider
-	/// For some reason spiders move at different speeds depending on if they are AI controlled or not
-	var/player_speed = 0
+	/// Speed modifier to apply if controlled by a human player
+	var/player_speed_modifier = -4
 	/// What reagent the mob injects targets with
 	var/poison_type = /datum/reagent/toxin/hunterspider
 	/// How much of a reagent the mob injects on attack
@@ -77,14 +77,14 @@
 	if(!. || !client)
 		return FALSE
 	GLOB.spidermobs[src] = TRUE
-	set_varspeed(player_speed)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/player_spider_modifier, multiplicative_slowdown = player_speed_modifier)
 	if (apply_spider_antag)
 		var/datum/antagonist/spider/spider_antag = new(directive)
 		mind.add_antag_datum(spider_antag)
 
 /mob/living/basic/giant_spider/Logout()
 	. = ..()
-	set_varspeed(initial(speed))
+	remove_movespeed_modifier(/datum/movespeed_modifier/player_spider_modifier)
 
 /mob/living/basic/giant_spider/Destroy()
 	GLOB.spidermobs -= src
