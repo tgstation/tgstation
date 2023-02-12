@@ -107,8 +107,10 @@
 	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums
-	var/pump_delay = 3 SECONDS // How long between needed pumps; you can pump one second early
-	var/blood_loss = (BLOOD_VOLUME_NORMAL / 5) // You lose 20% of your blood volume per missed pump
+	// How long between needed pumps; you can pump one second early
+	var/pump_delay = 3 SECONDS
+	// How much blood volume you lose every missed pump, this is a flat amount not a percentage!
+	var/blood_loss = (BLOOD_VOLUME_NORMAL / 5) // 20% of normal volume, missing five pumps is instant death
 
 	//How much to heal per pump, negative numbers would HURT the player
 	var/heal_brute = 0
@@ -124,6 +126,7 @@
 	else
 		return ..()
 
+/// Worker proc that checks logic for if a pump can happen, and applies effects/notifications from doing so
 /obj/item/organ/internal/heart/cursed/proc/on_pump(mob/owner)
 	var/next_pump = last_pump + pump_delay - (1 SECONDS) // pump a second early
 	if(world.time < next_pump)
@@ -152,7 +155,7 @@
 		last_pump = world.time
 		return
 
-	if(world.time < (last_pump + pump_delay))
+	if(world.time <= (last_pump + pump_delay))
 		return
 
 	var/mob/living/carbon/human/accursed = owner
@@ -187,7 +190,7 @@
 
 	var/obj/item/organ/internal/heart/cursed/cursed_heart = target
 	if(!istype(cursed_heart))
-		return
+		CRASH("Cursed heart pump action created on non-cursed heart!")
 	cursed_heart.on_pump(owner)
 
 /datum/client_colour/cursed_heart_blood
