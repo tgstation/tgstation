@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - refactor: "Spider healing abilities have been refactored to reuse the same code rather than reimplement it across two different mobs, it should work the same as it used to. This is also used by Lightgeists."
-  - bugfix: "Mob biotype on `heal_overall_damage` should be applied more consistently. This might mean that some things which were previously healing prosthetic limbs have stopped doing that."

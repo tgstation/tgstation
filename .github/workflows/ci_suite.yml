@@ -8,6 +8,10 @@ on:
     branches:
     - master
     - 'project/**'
+  merge_group:
+    branches:
+    - master
+    - 'project/commit_queue_testing'
 jobs:
   run_linters:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"

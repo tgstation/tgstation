@@ -1,4 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes:
-  - bugfix: "Ghost role spawners will now no longer try and spawn people when they /should/ have been out of uses but due to a bug were not"
