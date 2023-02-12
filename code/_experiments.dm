@@ -8,6 +8,8 @@
 // EXPERIMENT_515_QDEL_HARD_REFERENCE
 // - On 515, will hold a hard reference for qdeleted items, and check ref_count, rather than using refs.
 
+#define MERGE_SKEW_FAIL2
+
 #if DM_VERSION < 515
 
 // You can't X-macro custom names :(
