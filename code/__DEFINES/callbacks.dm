@@ -14,7 +14,7 @@
 		}; \
 	} \
 	else { \
-		ASYNC{ \
+		ASYNC { \
 			call(proc_owner, proc_path)(##proc_arguments); \
 		}; \
 	} \
