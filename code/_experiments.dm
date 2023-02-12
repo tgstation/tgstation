@@ -3,7 +3,7 @@
 // Any flag you see here can be flipped with the `-D` CLI argument.
 // For example, if you want to enable EXPERIMENT_MY_COOL_FEATURE, compile with -DEXPERIMENT_MY_COOL_FEATURE
 
-#define MERGE_SKEW_FAIL
+// #define MERGE_SKEW_FAIL
 
 // EXPERIMENT_515_QDEL_HARD_REFERENCE
 // - On 515, will hold a hard reference for qdeleted items, and check ref_count, rather than using refs.
