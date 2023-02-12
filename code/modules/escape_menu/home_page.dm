@@ -23,7 +23,7 @@
 		new /atom/movable/screen/escape_menu/home_button/admin_help(
 			null,
 			src,
-			"Admin Help",
+			"Get Help",
 			/* offset = */ 2,
 		)
 	)
