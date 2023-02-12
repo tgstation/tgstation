@@ -453,3 +453,25 @@
   - bugfix: AIs can no longer change their shell's icon_state to any image at will
   carshalash:
   - spellcheck: Adjusted punctuation marks for several emotes.
+2023-02-12:
+  Capybara Holly:
+  - bugfix: Fixes a theoretical bug where glide-size could get unsynced from your
+      movespeed after unbuckling
+  LT3:
+  - imageadd: Fixed alignment of corner railings
+  Profakos:
+  - bugfix: slipping on lube while buckling will lead to less weird states
+  kawoppi:
+  - refactor: refactored *blush and *cry emote visuals into bodypart_overlays
+  - rscdel: lack of eyes will no longer prevent the *cry emote overlay from displaying
+  mc-oofert:
+  - bugfix: Any circuit boards with custom sprites now actually use that sprite
+  the-orange-cow:
+  - bugfix: heretic blades can now properly butcher
+  tralezab:
+  - rscadd: 'Added two new sanguine wizard spells: Exsanguinating Strike and Scream
+      For Me'
+  - admin: Every tier of "Scrubber Overflow" can now choose a random single reagent
+      mode
+  - admin: '"Custom" overflow, which was kinda confusing and unintuitive, is now called
+      "Every Vent", much more self-explanatory in what it does.'

@@ -1,4 +1,0 @@
-author: "Capybara Holly"
-delete-after: True
-changes:
-  - bugfix: "Fixes a theoretical bug where glide-size could get unsynced from your movespeed after unbuckling"
