@@ -822,7 +822,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -2570,7 +2570,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/tram/left)
 "agM" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -9218,7 +9218,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 8
 	},
 /obj/structure/cable,
@@ -13960,7 +13960,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/records/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "del" = (
@@ -17733,7 +17733,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "eCp" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /obj/structure/sign/clock/directional/north,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
@@ -20148,7 +20148,7 @@
 /area/station/security/brig)
 "fxM" = (
 /obj/structure/table/glass,
-/obj/machinery/computer/med_data/laptop{
+/obj/machinery/computer/records/medical/laptop{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -20727,7 +20727,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "fLb" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -32480,7 +32480,7 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "kmP" = (
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner,
@@ -34033,7 +34033,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /obj/machinery/light/directional/north,
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/camera/directional/north{
@@ -35697,7 +35697,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "lvm" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -36000,7 +36000,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "lBB" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
@@ -39737,7 +39737,7 @@
 /area/station/hallway/primary/tram/center)
 "mTQ" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 1
 	},
 /obj/structure/reagent_dispensers/wall/peppertank/directional/south,
@@ -47885,7 +47885,7 @@
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "pXh" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -48466,7 +48466,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom/holding)
 "qjw" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /obj/machinery/requests_console/directional/north{
 	announcementConsole = 1;
 	department = "Head of Security's Desk";
@@ -56224,7 +56224,7 @@
 /area/station/engineering/supermatter/room)
 "sZD" = (
 /obj/structure/table/glass,
-/obj/machinery/computer/med_data/laptop,
+/obj/machinery/computer/records/medical/laptop,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
@@ -57317,7 +57317,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "tsR" = (
-/obj/machinery/computer/med_data/syndie{
+/obj/machinery/computer/records/medical/syndie{
 	dir = 1;
 	req_access = list("syndicate")
 	},
@@ -59617,7 +59617,7 @@
 /area/station/security/prison)
 "upx" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/med_data/laptop{
+/obj/machinery/computer/records/medical/laptop{
 	dir = 1;
 	pixel_y = 4
 	},
@@ -63160,7 +63160,7 @@
 /turf/open/floor/plating,
 /area/station/commons/vacant_room)
 "vDG" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner,
@@ -64402,7 +64402,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "wbT" = (
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -64671,7 +64671,7 @@
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "whn" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/records/medical,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "whp" = (
