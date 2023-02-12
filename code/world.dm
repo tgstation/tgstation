@@ -1,7 +1,7 @@
 //This file is just for the necessary /world definition
 //Try looking in game/world.dm
 
-#ifdef MERGE_SKEW_FAIL
+#ifdef MERGE_SKEW_FAIL2
 #error "oh no merge skew"
 #endif
 
