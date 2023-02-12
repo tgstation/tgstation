@@ -47744,6 +47744,7 @@
 "pTw" = (
 /obj/structure/railing/corner,
 /obj/effect/turf_decal/stripes/white/line,
+/obj/machinery/crossing_signal/tramstation/northwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "pUj" = (
@@ -58140,7 +58141,7 @@
 /area/station/security/execution/transfer)
 "tJL" = (
 /obj/machinery/crossing_signal/tramstation/northeast,
-/obj/machinery/crossing_signal/northeast,
+/obj/machinery/crossing_signal/tramstation/northeast,
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
@@ -58222,7 +58223,7 @@
 /area/station/maintenance/tram/left)
 "tLb" = (
 /obj/machinery/crossing_signal/tramstation/southeast,
-/obj/machinery/crossing_signal/southeast,
+/obj/machinery/crossing_signal/tramstation/southeast,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
