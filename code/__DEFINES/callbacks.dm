@@ -9,7 +9,7 @@
 
 #define INVOKE_ASYNC(proc_owner, proc_path, proc_arguments...) \
 	if ((proc_owner) == GLOBAL_PROC) { \
-		ASYNC{ \
+		ASYNC { \
 			call(proc_path)(##proc_arguments); \
 		}; \
 	} \
