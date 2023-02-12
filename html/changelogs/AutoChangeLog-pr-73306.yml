@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Removes a duplicate file which was preventing the new regal rat sprite from being used."
