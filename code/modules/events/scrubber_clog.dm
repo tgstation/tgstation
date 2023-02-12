@@ -86,7 +86,7 @@
 			scrubber_list += scrubber
 	return pick(scrubber_list)
 
-/datum/round_event_control/scrubber_clog/can_spawn_event(players_amt)
+/datum/round_event_control/scrubber_clog/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -139,6 +139,8 @@
 	max_occurrences = 3
 	earliest_start = 10 MINUTES
 	description = "Dangerous mobs climb out of a scrubber."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 4
 
 /datum/round_event/scrubber_clog/major/setup()
 	. = ..()
@@ -164,6 +166,8 @@
 	max_occurrences = 1
 	earliest_start = 25 MINUTES
 	description = "Really dangerous mobs climb out of a scrubber."
+	min_wizard_trigger_potency = 3
+	max_wizard_trigger_potency = 6
 
 /datum/round_event/scrubber_clog/critical
 	maximum_spawns = 3
@@ -189,6 +193,8 @@
 	weight = 5
 	max_occurrences = 1
 	description = "Strange mobs climb out of a scrubber, harmfulness varies."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/scrubber_clog/strange
 	maximum_spawns = 3
