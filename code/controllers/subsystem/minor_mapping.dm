@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(minor_mapping)
 	var/turf/open/proposed_turf
 	while((num_mice > 0) && exposed_wires.len)
 		proposed_turf = pick_n_take(exposed_wires)
-		if (!istype(proposed_turf)||
+		if (!istype(proposed_turf) ||
 			!proposed_turf.air.has_gas(/datum/gas/oxygen, 5) ||
 			proposed_turf.temperature > NPC_DEFAULT_MAX_TEMP ||
 			proposed_turf.temperature < NPC_DEFAULT_MIN_TEMP)
