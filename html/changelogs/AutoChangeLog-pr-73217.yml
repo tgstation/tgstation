@@ -1,0 +1,5 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "Soporific sniper magazines use the correct icon again."
+  - imageadd: "Penetrator and Marksman sniper magazines now have icons."

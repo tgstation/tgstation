@@ -118,6 +118,8 @@
 	inhand_icon_state = "det_hat"
 	var/candy_cooldown = 0
 	dog_fashion = /datum/dog_fashion/head/detective
+	///Path for the flask that spawns inside their hat roundstart
+	var/flask_path = /obj/item/reagent_containers/cup/glass/flask/det
 
 /datum/armor/fedora_det_hat
 	melee = 25
@@ -133,7 +135,7 @@
 
 	create_storage(type = /datum/storage/pockets/small/fedora/detective)
 
-	new /obj/item/reagent_containers/cup/glass/flask/det(src)
+	new flask_path(src)
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	. = ..()
@@ -150,6 +152,9 @@
 		candy_cooldown = world.time+1200
 	else
 		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
+
+/obj/item/clothing/head/fedora/det_hat/minor
+	flask_path = /obj/item/reagent_containers/cup/glass/flask/det/minor
 
 //Mime
 /obj/item/clothing/head/beret
@@ -401,12 +406,6 @@
 	greyscale_colors = "#FFBC30"
 	flags_1 = NONE
 
-/obj/item/clothing/head/beret/atmos
-	name = "atmospheric beret"
-	desc = "While \"pipes\" and \"style\" might not rhyme, this beret sure makes you feel like they should!"
-	greyscale_colors = "#FFDE15"
-	flags_1 = NONE
-
 //Cargo
 /obj/item/clothing/head/beret/cargo
 	name = "cargo beret"
@@ -419,15 +418,6 @@
 	name = "treasure hunter's fedora"
 	desc = "You got red text today kid, but it doesn't mean you have to like it."
 	icon_state = "curator"
-
-//Miscellaneous
-/obj/item/clothing/head/beret/black
-	name = "black beret"
-	desc = "A black beret, perfect for war veterans and dark, brooding, anti-hero mimes."
-	icon_state = "beret"
-	greyscale_config = /datum/greyscale_config/beret
-	greyscale_config_worn = /datum/greyscale_config/beret/worn
-	greyscale_colors = "#3f3c40"
 
 /obj/item/clothing/head/beret/durathread
 	name = "durathread beret"

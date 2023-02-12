@@ -467,7 +467,8 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/proc/disarm_nuke(mob/disarmer)
 	var/turf/our_turf = get_turf(src)
 	message_admins("\The [src] at [ADMIN_VERBOSEJMP(our_turf)] was disarmed by [disarmer ? ADMIN_LOOKUPFLW(disarmer) : "an unknown user"].")
-	disarmer.log_message("disarmed \the [src].", LOG_GAME)
+	if(disarmer)
+		disarmer.log_message("disarmed [src].", LOG_GAME)
 
 	detonation_timer = null
 	SSsecurity_level.set_level(previous_level)

@@ -13,15 +13,21 @@
 	var/static/file_uid = 0
 	///The modular computer hosting the file.
 	var/obj/item/modular_computer/computer
+	///The computer disk hosting the file.
+	var/obj/item/computer_disk/disk_host
 
 /datum/computer_file/New()
 	..()
 	uid = file_uid++
+	RegisterSignal(src, COMSIG_MODULAR_COMPUTER_FILE_ADDED, PROC_REF(on_install))
 
 /datum/computer_file/Destroy(force)
 	if(computer)
 		computer.remove_file(src)
 		computer = null
+	if(disk_host)
+		disk_host.remove_file(src)
+		disk_host = null
 	return ..()
 
 // Returns independent copy of this file.
@@ -35,6 +41,11 @@
 		temp.filename = filename
 	temp.filetype = filetype
 	return temp
+
+///Called post-installation of an application in a computer, after 'computer' var is set.
+/datum/computer_file/proc/on_install()
+	SIGNAL_HANDLER
+	return
 
 /**
  * Called when examining a modular computer

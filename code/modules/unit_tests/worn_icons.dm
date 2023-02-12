@@ -29,7 +29,7 @@
 			continue
 
 
-		if(initial(item_path.greyscale_colors) && initial(item_path.greyscale_config)) //GAGS has its own unit test.
+		if(initial(item_path.greyscale_colors) && initial(item_path.greyscale_config_worn)) //GAGS has its own unit test.
 			continue
 
 		var/worn_icon = initial(item_path.worn_icon) //override icon file. where our sprite is contained if set. (ie modularity stuff)

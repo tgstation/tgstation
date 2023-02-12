@@ -231,11 +231,11 @@
 		else
 			visibility_flags &= ~HIDDEN_SCANNER
 
-		if(properties["transmittable"]>=11)
+		if(properties["transmittable"] >= 11)
 			SetSpread(DISEASE_SPREAD_AIRBORNE)
-		else if(properties["transmittable"]>=7)
+		else if(properties["transmittable"] >= 7)
 			SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
-		else if(properties["transmittable"]>=3)
+		else if(properties["transmittable"] >= 3)
 			SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
 		else
 			SetSpread(DISEASE_SPREAD_BLOOD)
@@ -499,3 +499,16 @@
 
 /datum/disease/advance/proc/totalTransmittable()
 	return properties["transmittable"]
+
+/**
+ *  Make virus visible to heath scanners
+ */
+/datum/disease/advance/proc/MakeVisible()
+	visibility_flags &= ~HIDDEN_SCANNER
+	for(var/datum/disease/advance/virus in SSdisease.active_diseases)
+		if(!virus.id)
+			stack_trace("Advanced virus ID is empty or null!")
+			return
+
+		if(virus.id == id)
+			virus.visibility_flags &= ~HIDDEN_SCANNER

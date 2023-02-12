@@ -8,7 +8,7 @@ multiple modular subtrees with behaviors
 	///The atom this controller is controlling
 	var/atom/pawn
 	///Bitfield of traits for this AI to handle extra behavior
-	var/ai_traits = STOP_ACTING_WHILE_DEAD
+	var/ai_traits = NONE
 	///Current actions planned to be performed by the AI in the upcoming plan
 	var/list/planned_behaviors
 	///Current actions being performed by the AI.
@@ -110,6 +110,7 @@ multiple modular subtrees with behaviors
 		set_ai_status(AI_STATUS_ON)
 	else
 		set_ai_status(get_setup_mob_ai_status(new_pawn))
+		RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
@@ -120,10 +121,11 @@ multiple modular subtrees with behaviors
 	if(!continue_processing_when_client && mob_pawn.client)
 		final_status = AI_STATUS_OFF
 
-	if(ai_traits & STOP_ACTING_WHILE_DEAD)
-		RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
-		if(mob_pawn.stat == DEAD)
-			final_status = AI_STATUS_OFF
+	if(ai_traits & CAN_ACT_WHILE_DEAD)
+		return final_status
+
+	if(mob_pawn.stat == DEAD)
+		final_status = AI_STATUS_OFF
 
 	return final_status
 
@@ -298,7 +300,7 @@ multiple modular subtrees with behaviors
 /// Turn the controller on or off based on if you're alive, we only register to this if the flag is present so don't need to check again
 /datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
-	var/new_ai_status = (new_stat == DEAD) ? AI_STATUS_OFF : AI_STATUS_ON
+	var/new_ai_status = get_setup_mob_ai_status(source)
 	set_ai_status(new_ai_status)
 
 /datum/ai_controller/proc/on_sentience_gained()

@@ -237,7 +237,7 @@
 
 	// Link machine with research techweb. Used for discovering and accessing
 	// already discovered mutations
-	if(!CONFIG_GET(flag/no_default_techweb_link))
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, datum/tgui/ui)
@@ -692,7 +692,7 @@
 				new_pair = (pair_str ? char + (pair_str[1] == char ? pair_str[2] : pair_str[1]) : null)
 				// every second letter in the sequence represents a valid pair of the new sequence, otherwise it belongs to old
 				if(new_pair)
-					if(i%2==0)
+					if(i%2 == 0)
 						new_sequence+=new_pair
 					else
 						old_sequence+=new_pair

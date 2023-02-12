@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Wizards can now perform a Grand Ritual to summon unpleasant events to the space station."
+  - rscadd: "Wizards completing the Grand Ritual a sufficient number of times can achieve victory at the end of the round, and cast a powerful round-changing spell."

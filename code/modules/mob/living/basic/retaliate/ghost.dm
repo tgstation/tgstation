@@ -68,14 +68,14 @@
 			ghost_facial_hairstyle = random_facial_hairstyle()
 			ghost_facial_hair_color = ghost_hair_color
 
-	if(!isnull(ghost_hairstyle))
+	if(!isnull(ghost_hairstyle) && ghost_hairstyle != "Bald") //Bald hairstyle and the Shaved facial hairstyle lack an associated sprite and will not properly generate hair, and just cause runtimes.
 		var/datum/sprite_accessory/hair_style = GLOB.hairstyles_list[ghost_hairstyle] //We use the hairstyle name to get the sprite accessory, which we copy the icon_state from.
 		ghost_hair = mutable_appearance('icons/mob/species/human/human_face.dmi', "[hair_style.icon_state]", -HAIR_LAYER)
 		ghost_hair.alpha = 200
 		ghost_hair.color = ghost_hair_color
 		add_overlay(ghost_hair)
 
-	if(!isnull(ghost_facial_hairstyle))
+	if(!isnull(ghost_facial_hairstyle) && ghost_facial_hairstyle != "Shaved")
 		var/datum/sprite_accessory/facial_hair_style = GLOB.facial_hairstyles_list[ghost_facial_hairstyle]
 		ghost_facial_hair = mutable_appearance('icons/mob/species/human/human_face.dmi', "[facial_hair_style.icon_state]", -HAIR_LAYER)
 		ghost_facial_hair.alpha = 200
@@ -107,3 +107,18 @@
 
 /datum/ai_behavior/basic_melee_attack/ghost
 	action_cooldown = 2 SECONDS
+
+
+/// Weaker variant of ghosts that can smash structures. Meant to be summoned in swarms via the ectoplasmic anomaly and associated ghost portal.
+/mob/living/basic/ghost/swarm
+	name = "vengeful spirit"
+	desc = "Back from the grave, and not happy about it."
+	maxHealth = 30
+	health = 30
+	attack_verb_continuous = "smashes"
+	attack_verb_simple = "smash"
+	melee_damage_lower = 10
+	melee_damage_upper = 10
+	death_message = "wails as it is torn back to the realm from which it came!"
+	random_identity = FALSE
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES

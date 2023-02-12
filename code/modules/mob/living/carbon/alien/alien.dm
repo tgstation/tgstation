@@ -12,8 +12,6 @@
 	type_of_meat = /obj/item/food/meat/slab/xeno
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
-	var/move_delay_add = 0 // movement delay to add
-
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
 	heat_protection = 0.5 // minor heat insulation
@@ -110,6 +108,12 @@ Des: Removes all infected images from the alien.
 	if(num_hands < 2)
 		return FALSE
 	return TRUE
+
+/mob/living/carbon/alien/get_visible_suicide_message()
+	return "[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide."
+
+/mob/living/carbon/alien/get_blind_suicide_message()
+	return "You hear thrashing."
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	visible_message(

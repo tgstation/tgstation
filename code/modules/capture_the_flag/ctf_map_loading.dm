@@ -48,7 +48,7 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 		else
 			current_map = map_choices[chosen_map]
 
-	if(!user || chosen_map=="Random")
+	if(!user || chosen_map == "Random")
 		current_map = pick(map_options)
 
 	current_map = new current_map()

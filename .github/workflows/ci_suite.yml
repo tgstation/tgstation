@@ -4,10 +4,15 @@ on:
     branches:
     - master
     - 'project/**'
+    - 'gh-readonly-queue/master/**'
+    - 'gh-readonly-queue/project/**'
   pull_request:
     branches:
     - master
     - 'project/**'
+  merge_group:
+    branches:
+    - master
 jobs:
   run_linters:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -53,7 +58,7 @@ jobs:
           bash tools/ci/check_grep.sh
           bash tools/ci/check_misc.sh
           tools/bootstrap/python tools/validate_dme.py <tgstation.dme
-          tools/bootstrap/python -m tools.maplint.source
+          tools/bootstrap/python -m tools.maplint.source --github
           tools/build/build --ci lint tgui-test
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test

@@ -246,12 +246,12 @@
 
 					//infer available overlays on the floor to recreate them to the best extent
 					QDEL_LIST(design_overlays)
-					var/floor_designs = floor.managed_overlays
-					if(isnull(floor_designs))
-						floor_designs = list()
-					else if(!islist(floor_designs))
-						floor_designs = list(floor.managed_overlays)
-					for(var/mutable_appearance/appearance as anything in floor_designs)
+					var/floor_overlays = floor.managed_overlays
+					if(isnull(floor_overlays))
+						floor_overlays = list()
+					else if(!islist(floor_overlays))
+						floor_overlays = list(floor.managed_overlays)
+					for(var/mutable_appearance/appearance as anything in floor_overlays)
 						design_overlays += new /datum/overlay_info(appearance)
 
 					//store all information about this tile

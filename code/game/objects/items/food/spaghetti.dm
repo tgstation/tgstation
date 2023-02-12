@@ -23,6 +23,9 @@
 	icon_state = "spaghetti"
 	tastes = list("pasta" = 1)
 
+/obj/item/food/spaghetti/make_bakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/spaghetti/boiledspaghetti, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
+
 /obj/item/food/spaghetti/raw/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/spaghetti/boiledspaghetti)
 
@@ -51,6 +54,21 @@
 	)
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtypes = GRAIN | VEGETABLES
+
+/obj/item/food/spaghetti/pastatomato/soulful
+	name = "soul food"
+	desc = "Just how mom used to make it."
+	food_reagents = list(
+		// same as normal pasghetti
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/tomatojuice = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		// where the soul comes from
+		/datum/reagent/pax = 5,
+		/datum/reagent/medicine/psicodine = 10,
+		/datum/reagent/medicine/morphine = 5,
+	)
+	tastes = list("nostalgia" = 1, "happiness" = 1)
 
 /obj/item/food/spaghetti/copypasta
 	name = "copypasta"
@@ -110,7 +128,7 @@
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 6,
-		/datum/reagent/liquidgibs = 3,
+		/datum/reagent/consumable/liquidgibs = 3,
 	)
 	tastes = list("noodles" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
