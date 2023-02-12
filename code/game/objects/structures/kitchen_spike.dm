@@ -85,6 +85,9 @@
 	. += "A <b>crowbar</b> could remove those spikes."
 
 /obj/structure/kitchenspike/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+
 	if(held_item.tool_behaviour == TOOL_CROWBAR)
 		context[SCREENTIP_CONTEXT_LMB] = "Remove Spikes"
 		return CONTEXTUAL_SCREENTIP_SET
