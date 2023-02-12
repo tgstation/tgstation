@@ -1,3 +1,6 @@
+#define APPLY_BUFF "apply buff"
+#define REMOVE_BUFF "remove buff"
+
 /datum/mutation/human/breathless
 	name = "Breathless"
 	desc = "A mutation within the skin that allows for filtering and absorption of oxygen from the skin."
@@ -130,14 +133,18 @@
 	SIGNAL_HANDLER
 
 	if(istype(old_organ, /obj/item/organ/internal/lungs))
-		var/obj/item/organ/internal/lungs/old_pair = old_organ
-		old_pair.plas_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
-		old_pair.plas_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
+		modify_lungs(old_organ, REMOVE_BUFF)
 
 /datum/mutation/human/plasmocile/proc/reapply_modification(mob/source, obj/item/organ/new_organ)
 	SIGNAL_HANDLER
 
 	if(istype(new_organ, /obj/item/organ/internal/lungs))
-		var/obj/item/organ/internal/lungs/new_pair = new_organ
-		new_pair.plas_breath_dam_min *= 0
-		new_pair.plas_breath_dam_max *= 0
+		modify_lungs(new_organ, APPLY_BUFF)
+
+/datum/mutation/human/plasmocile/proc/modify_lungs(obj/item/organ/internal/lungs/our_lungs, modify_type)
+	if(modify_type == APPLY_BUFF)
+		our_lungs.plas_breath_dam_min *= 0
+		our_lungs.plas_breath_dam_max *= 0
+	else if(modify_type == REMOVE_BUFF)
+		our_lungs.plas_breath_dam_min = initial(our_lungs.plas_breath_dam_min)
+		our_lungs.plas_breath_dam_max = initial(our_lungs.plas_breath_dam_max)

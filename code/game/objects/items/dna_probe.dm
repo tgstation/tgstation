@@ -29,8 +29,6 @@
 	var/list/stored_dna_human = list()
 	///weak ref to the dna vault
 	var/datum/weakref/dna_vault_ref
-	///holder for the vault
-	var/obj/machinery/dna_vault/our_vault
 
 /obj/item/dna_probe/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -39,9 +37,9 @@
 
 	if (isitem(target))
 		. |= AFTERATTACK_PROCESSED_ITEM
-	if(istype(target, /obj/machinery/dna_vault) && !dna_vault_ref)
+	var/obj/machinery/dna_vault/our_vault = dna_vault_ref?.resolve()
+	if(istype(target, /obj/machinery/dna_vault) && !our_vault)
 		dna_vault_ref = WEAKREF(target)//linking the dna vault with the probe
-		our_vault = dna_vault_ref?.resolve()
 		balloon_alert(user, "vault linked")
 		playsound(src, 'sound/machines/terminal_success.ogg', 50)
 	else if (!our_vault)//for when we try to upload with no linked vault
@@ -113,7 +111,6 @@
 		. = list(span_notice("Using this on a Space Carp will harvest its DNA. Use it in-hand once complete to mutate it with yourself."))
 
 /obj/item/dna_probe/carp_scanner/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
 	if(!proximity_flag || !target)
 		return .
 
