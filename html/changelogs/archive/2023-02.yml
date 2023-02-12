@@ -412,3 +412,66 @@
   ZephyrTFA:
   - bugfix: Using a hacking cable will no longer permanently spam you with balloon
       messages
+2023-02-11:
+  Fikou:
+  - admin: adds findtext (+ex), view, viewers, rect_turfs and flick as sdql2 wrappers
+  Jacquerel:
+  - bugfix: Plating replaced by floor tiles from a dimensional anomaly or colossus
+      crystal will now still have plating underneath when crowbarred, instead of space
+      (or open space on z level maps).
+  - bugfix: Summoning a cult wall on plating as an Artificer will leave the plating
+      intact underneath when it is removed, rather than replacing it with a void.
+  - admin: Admins can pick the initial flavour of a manually triggered dimensional
+      anomaly.
+  - refactor: Spider healing abilities have been refactored to reuse the same code
+      rather than reimplement it across two different mobs, it should work the same
+      as it used to. This is also used by Lightgeists.
+  - bugfix: Mob biotype on `heal_overall_damage` should be applied more consistently.
+      This might mean that some things which were previously healing prosthetic limbs
+      have stopped doing that.
+  - bugfix: Removes a duplicate file which was preventing the new regal rat sprite
+      from being used.
+  LT3:
+  - admin: Changed color for watchlist notifications
+  LemonInTheDark:
+  - bugfix: Solar trackers actually uh, look right again
+  - bugfix: Solar panels and trackers will now properly block space lighting on multiz
+      maps
+  MMMiracles:
+  - bugfix: The elevator panel for Tramstation's medical elevator will no longer clip
+      into the side window when raised up.
+  - bugfix: The escape pods should now actually launch with the shuttle.
+  Melbert:
+  - bugfix: The bastard sword can create constructs again. Just hit the shells with
+      it
+  Paxilmaniac:
+  - bugfix: Ghost role spawners will now no longer try and spawn people when they
+      /should/ have been out of uses but due to a bug were not
+  SuperSlayer0:
+  - bugfix: Fixes reverse revolver name being different from syndicate revolver name
+  ZephyrTFA:
+  - bugfix: AIs can no longer change their shell's icon_state to any image at will
+  carshalash:
+  - spellcheck: Adjusted punctuation marks for several emotes.
+2023-02-12:
+  Capybara Holly:
+  - bugfix: Fixes a theoretical bug where glide-size could get unsynced from your
+      movespeed after unbuckling
+  LT3:
+  - imageadd: Fixed alignment of corner railings
+  Profakos:
+  - bugfix: slipping on lube while buckling will lead to less weird states
+  kawoppi:
+  - refactor: refactored *blush and *cry emote visuals into bodypart_overlays
+  - rscdel: lack of eyes will no longer prevent the *cry emote overlay from displaying
+  mc-oofert:
+  - bugfix: Any circuit boards with custom sprites now actually use that sprite
+  the-orange-cow:
+  - bugfix: heretic blades can now properly butcher
+  tralezab:
+  - rscadd: 'Added two new sanguine wizard spells: Exsanguinating Strike and Scream
+      For Me'
+  - admin: Every tier of "Scrubber Overflow" can now choose a random single reagent
+      mode
+  - admin: '"Custom" overflow, which was kinda confusing and unintuitive, is now called
+      "Every Vent", much more self-explanatory in what it does.'
