@@ -1,0 +1,4 @@
+author: "Shadow-Quill"
+delete-after: True
+changes:
+  - bugfix: "Gravity generators have been re-centered."
