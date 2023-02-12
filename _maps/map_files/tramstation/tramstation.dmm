@@ -20180,7 +20180,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "fxd" = (
-/obj/machinery/crossing_signal/southwest,
+/obj/machinery/crossing_signal/tramstation/southwest,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
@@ -27704,7 +27704,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "izK" = (
-/obj/machinery/crossing_signal/northeast,
+/obj/machinery/crossing_signal/tramstation/northeast,
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
@@ -47617,7 +47617,7 @@
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "pQn" = (
-/obj/machinery/crossing_signal/southeast,
+/obj/machinery/crossing_signal/tramstation/southeast,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
@@ -47780,7 +47780,7 @@
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "pUR" = (
-/obj/machinery/crossing_signal/southeast,
+/obj/machinery/crossing_signal/tramstation/southeast,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
@@ -50456,7 +50456,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "qUW" = (
-/obj/machinery/crossing_signal/southwest,
+/obj/machinery/crossing_signal/tramstation/southwest,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
@@ -52170,7 +52170,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/tram/right)
 "rCT" = (
-/obj/machinery/crossing_signal/northeast,
+/obj/machinery/crossing_signal/tramstation/northeast,
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
@@ -53815,7 +53815,7 @@
 /turf/open/floor/carpet,
 /area/station/hallway/secondary/entry)
 "skm" = (
-/obj/machinery/crossing_signal/northwest,
+/obj/machinery/crossing_signal/tramstation/northwest,
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
@@ -55851,7 +55851,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom/holding)
 "sSJ" = (
-/obj/machinery/crossing_signal/northwest,
+/obj/machinery/crossing_signal/tramstation/northwest,
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
