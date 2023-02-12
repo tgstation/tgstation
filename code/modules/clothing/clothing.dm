@@ -47,8 +47,8 @@
 	// 2. Creating this component for all clothing has a non-negligible impact on init times and memory.
 	// 3. Creating the component contextually to solve #2 will make #1 much more confusing,
 	// and frankly not be a better solution than what we are doing now.
-	// All 3 could be solved if "edible" checks were more granular, such that you never actually cared
-	// about checking if something is *edible*.
+	// The first issue could be solved if "edible" checks were more granular,
+	// such that you never actually cared about checking if something is *edible*.
 	var/obj/item/food/clothing/moth_snack
 
 /obj/item/clothing/Initialize(mapload)
