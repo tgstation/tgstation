@@ -19,6 +19,9 @@
 	. += "You could attach <b>[MEATSPIKE_IRONROD_REQUIREMENT]</b> iron rods to it to create a <b>Meat Spike</b>."
 
 /obj/structure/kitchenspike_frame/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+
 	var/message = ""
 	if(held_item.tool_behaviour == TOOL_WELDER)
 		message = "Deconstruct"
