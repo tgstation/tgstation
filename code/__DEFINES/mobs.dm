@@ -775,6 +775,9 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// The layer above mutant body parts
 #define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
 
+
+/**
+
 //used by canPerformAction
 /// If silicons need to be next to the atom to use this
 #define BE_CLOSE TRUE
@@ -784,6 +787,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define NO_TK TRUE
 /// If mobs can use this while resting
 #define FLOOR_OKAY TRUE
+
+*/
 
 /// If gravity must be present to perform action (can't use pens without gravity)
 #define NEED_GRAVITY (1<<0)
@@ -798,8 +803,13 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// If telekinesis is allowed to perform action from a distance (telekinesis can push buttons from far away)
 #define ALLOW_TELEKINESIS_REACH (1<<5)
 /// If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
-#define ALLOW_SILICON_FROM_AFAR (1<<6)
+#define ALLOW_SILICON_REACH (1<<6)
 
+/// These are pretty redundant
+/// If close proximity is required to perform action must be adjacent (1 tile away)
+//#define ALLOW_AFAR_REACH
+/// If resting on the floor is allowed to perform action ()
+#define ALLOW_RESTING (1<<7)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1
