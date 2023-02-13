@@ -497,7 +497,7 @@
 		target.forceMove(drop_location())
 		ass = target
 
-		if(copy_type != "ass" || !isnull(copy_type))
+		if(!isnull(copy_type))
 			object_copy.forceMove(drop_location())
 			visible_message(span_warning("[object_copy] is shoved out of the way by [ass]!"))
 			object_copy = null
