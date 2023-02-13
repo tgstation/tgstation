@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - bugfix: "Spells which are only able to be cast on the station can now only be cast on the station"
