@@ -7617,8 +7617,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/spawner/north,
+/obj/structure/window/spawner/west,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "cma" = (
@@ -12526,6 +12526,7 @@
 	dir = 8
 	},
 /obj/machinery/newscaster/directional/west,
+/obj/structure/window/spawner/west,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "dJx" = (
@@ -12848,6 +12849,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/window/spawner/west,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "dOQ" = (
@@ -16970,7 +16972,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/spawner/north,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "fdJ" = (
@@ -23661,10 +23663,6 @@
 /area/mine/living_quarters)
 "hjp" = (
 /obj/effect/turf_decal/stripes/corner,
-/obj/machinery/camera/directional/south{
-	c_tag = "Research Division Testing Lab";
-	network = list("ss13","rd")
-	},
 /turf/open/floor/iron,
 /area/station/science/explab)
 "hjt" = (
@@ -25958,10 +25956,8 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "hWI" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/window/reinforced/spawner/west,
+/obj/machinery/camera/autoname/directional/south,
+/obj/structure/window/spawner/east,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "hWP" = (
@@ -32809,10 +32805,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/east,
 /obj/machinery/door/window/left/directional{
 	dir = 1
 	},
+/obj/structure/window/spawner/east,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "kaw" = (
@@ -37249,7 +37245,6 @@
 /obj/item/target/clown,
 /obj/item/target/syndicate,
 /obj/item/target/syndicate,
-/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/science/explab)
 "lqU" = (
@@ -63269,7 +63264,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/fore)
 "tBP" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/spawner/east,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "tBW" = (
@@ -256462,7 +256457,7 @@ fOl
 cyL
 cSo
 clY
-hWI
+dOK
 dOK
 dJv
 vzD
@@ -257235,7 +257230,7 @@ xPI
 jZY
 tBP
 tBP
-tBP
+hWI
 bgx
 uAJ
 lXi
