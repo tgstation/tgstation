@@ -20,7 +20,7 @@ export const handleIncrementChannel = function (this: Modal) {
     return;
   }
   this.fields.radioPrefix = '';
-  if (channel === CHANNELS.length - 1) {
+  if (channel === CHANNELS.length - 2) {
     this.timers.channelDebounce({ mode: true });
     this.setState({
       buttonContent: CHANNELS[0],
