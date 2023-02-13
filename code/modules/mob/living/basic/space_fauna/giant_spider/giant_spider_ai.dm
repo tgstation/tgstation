@@ -35,5 +35,3 @@
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/insect,
 	)
-
-#undef SPIDER_ATTACK_COOLDOWN

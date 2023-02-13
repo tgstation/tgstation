@@ -30,4 +30,4 @@
 	multiplicative_slowdown = 1.5
 
 /datum/movespeed_modifier/status_effect/inflated
-	multiplicative_slowdown = 1
+	multiplicative_slowdown = 3.5
