@@ -537,25 +537,22 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return SHAME
 
 /**
- * checks if the turf has no dense objects that could block construction of big structures such as walls, airlocks etc
+ * checks if the turf has dense objects that could block construction of big structures such as walls, airlocks etc
  * Arguments:
- * * turf/target_turf - The turf we are checking
- * * ignore_mobs - should we ignore mobs when checking for dense objects. this is FALSE only for windoors
- * * ignored_atoms - ignore these object types when checking for dense objects on the turf. ege. ignore directional windows when building windoors cause they all can exist on the same turf
+ * * turf/the_turf - The turf we are checking
+ * * ignore_mobs - should we ignore mobs when checking for dense objects. this is TRUE only for windoors
+ * * ignored_atoms - ignore these object types when checking for dense objects on the turf. e.g. ignore directional windows when building windoors cause they all can exist on the same turf
  */
-/obj/item/construction/rcd/proc/density_check(turf/target_turf, ignore_mobs, list/ignored_atoms)
+/obj/item/construction/rcd/proc/is_turf_blocked(turf/the_turf, ignore_mobs, list/ignored_atoms)
 	//find the structures to ignore
 	var/list/ignored_content = list()
 	if(length(ignored_atoms))
-		for(var/atom/movable/movable_content in target_turf)
+		for(var/atom/movable/movable_content in the_turf)
 			if(is_type_in_list(movable_content, ignored_atoms))
 				ignored_content += movable_content
 
-	//check if the turf is blocked
-	if(target_turf.is_blocked_turf(exclude_mobs = ignore_mobs, source_atom = null, ignore_atoms = ignored_content))
-		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
-		return FALSE
-	return TRUE
+	//return if the turf is blocked
+	return the_turf.is_blocked_turf(exclude_mobs = ignore_mobs, source_atom = null, ignore_atoms = ignored_content)
 
 /obj/item/construction/rcd/proc/rcd_create(atom/A, mob/user)
 	//does this atom allow for rcd actions?
@@ -579,13 +576,14 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		//if we are trying to build a window on top of a grill then we skip this check because thats normal behaviour
 		if(rcd_results["mode"] == RCD_WINDOWGRILLE && istype(A, /obj/structure/grille))
 			//if a player builds a grill on top of himself manually with rods he can't finish the window if he is still in the grill.
-			var/list/window_types_to_ignore
+			var/list/structures_to_ignore
 			if(window_type == /obj/structure/window/fulltile || window_type == /obj/structure/window/reinforced/fulltile) //if we are trying to build an fultile window we only ignore the grill but other directional windows on the grill can block its construction
-				window_types_to_ignore = list(/obj/structure/grille)
+				structures_to_ignore = list(/obj/structure/grille)
 			else //for normal directional windows we ignore other directional windows as they can be in diffrent directions on the grill. There is a later check during construction to deal with those
-				window_types_to_ignore = list(/obj/structure/grille, /obj/structure/window, /obj/structure/window/reinforced)
-			if(!density_check(target_turf, FALSE, window_types_to_ignore, user))
-				balloon_alert(user, "something/someone is hogging the grill!")
+				structures_to_ignore = list(/obj/structure/grille, /obj/structure/window, /obj/structure/window/reinforced)
+			if(is_turf_blocked(the_turf = target_turf, ignore_mobs = FALSE, ignored_atoms = structures_to_ignore))
+				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+				balloon_alert(user, "something is on the grille!")
 				qdel(rcd_effect)
 				return FALSE
 
@@ -595,8 +593,9 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		 */
 		else if(rcd_results["mode"] == RCD_FLOORWALL && (!istype(target_turf, /turf/open/floor) || istype(A, /obj/structure/girder)))
 			//if a player builds a wallgirder on top of himself manually with iron sheets he can't finish the wall if he is still on the girder. Exclude the girder itself when checking for other dense objects on the turf
-			if(istype(A, /obj/structure/girder) && !density_check(target_turf, FALSE, list(/obj/structure/girder), user))
-				balloon_alert(user, "something/someone is stuck in the girder!")
+			if(istype(A, /obj/structure/girder) && is_turf_blocked(the_turf = target_turf, ignore_mobs = FALSE, ignored_atoms = list(/obj/structure/girder)))
+				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+				balloon_alert(user, "something is on the girder!")
 				qdel(rcd_effect)
 				return FALSE
 
@@ -613,23 +612,24 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				RCD_AIRLOCK
 			)
 
-			var/ignore_mobs = FALSE
+			var/exclude_mobs = FALSE
 			//ignore directional windows on the turf
-			var/list/ignored_atoms
+			var/list/ignored_types
 			if(rcd_results["mode"] in small_structures)
-				ignored_atoms = list(/obj/structure/window, /obj/structure/window/reinforced)
+				ignored_types = list(/obj/structure/window)
 				//if we are trying to create grills/windoors we can go ahead and further ignore other windoors on the turf
 				if(rcd_results["mode"] == RCD_WINDOWGRILLE || (rcd_results["mode"] == RCD_AIRLOCK && ispath(airlock_type, /obj/machinery/door/window)))
 					//only ignore mobs if we are trying to create windoors and not grills. We dont want to drop a grill on top of somebody
-					ignore_mobs = rcd_results["mode"] == RCD_AIRLOCK
-					ignored_atoms += /obj/machinery/door/window
+					exclude_mobs = rcd_results["mode"] == RCD_AIRLOCK
+					ignored_types += /obj/machinery/door/window
 				//if we are trying to create full airlock doors then we do the regular checks and make sure we have the full space for them. i.e. dont ignore anything dense on the turf
 				else if(rcd_results["mode"] == RCD_AIRLOCK)
-					ignored_atoms = list()
+					ignored_types = list()
 
 			//check if the structure can fit on this turf
-			if(!density_check(target_turf, ignore_mobs, ignored_atoms))
-				balloon_alert(user, "something/someone is hogging the tile!")
+			if(is_turf_blocked(the_turf = target_turf, ignore_mobs = exclude_mobs, ignored_atoms = ignored_types))
+				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+				balloon_alert(user, "something is on the tile!")
 				qdel(rcd_effect)
 				return FALSE
 	if(!do_after(user, delay, target = A))
