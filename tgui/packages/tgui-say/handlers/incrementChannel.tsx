@@ -12,6 +12,13 @@ export const handleIncrementChannel = function (this: Modal) {
   if (radioPrefix === ':b ') {
     this.timers.channelDebounce({ mode: true });
   }
+  if (channel === 4) {
+    this.setState({
+      buttonContent: CHANNELS[channel],
+      channel: channel,
+    });
+    return;
+  }
   this.fields.radioPrefix = '';
   if (channel === CHANNELS.length - 1) {
     this.timers.channelDebounce({ mode: true });
