@@ -222,16 +222,15 @@
 /obj/machinery/photocopier/proc/has_enough_toner()
 	if(ass)
 		return toner_cartridge.charges >= (ASS_TONER_USE * num_copies)
-	else
-		switch(copy_type)
-			if(PAPER_COPY_TYPE)
-				return toner_cartridge.charges >= (PAPER_TONER_USE * num_copies)
-			if(DOCUMENT_COPY_TYPE)
-				return toner_cartridge.charges >= (DOCUMENT_TONER_USE * num_copies)
-			if(PHOTO_COPY_TYPE)
-				return toner_cartridge.charges >= (PHOTO_TONER_USE * num_copies)
-			if(PAPERWORK_COPY_TYPE)
-				return toner_cartridge.charges >= (PAPERWORK_TONER_USE * num_copies)
+	switch(copy_type)
+		if(PAPER_COPY_TYPE)
+			return toner_cartridge.charges >= (PAPER_TONER_USE * num_copies)
+		if(DOCUMENT_COPY_TYPE)
+			return toner_cartridge.charges >= (DOCUMENT_TONER_USE * num_copies)
+		if(PHOTO_COPY_TYPE)
+			return toner_cartridge.charges >= (PHOTO_TONER_USE * num_copies)
+		if(PAPERWORK_COPY_TYPE)
+			return toner_cartridge.charges >= (PAPERWORK_TONER_USE * num_copies)
 	return FALSE
 
 /**
