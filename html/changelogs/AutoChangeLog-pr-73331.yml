@@ -1,0 +1,5 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - spellcheck: "All station closet and lockers have had their naming conventions standardized."
+  - bugfix: "Tram now has evidence lockers labelled 1 through 7 instead of 7 evidence lockers labelled as locker 1."

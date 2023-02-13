@@ -77,10 +77,6 @@
 	///The image for facial hair gradient
 	var/mutable_appearance/facial_gradient_overlay
 
-	var/is_blushing = FALSE
-	var/face_offset_x = 0
-	var/face_offset_y = 0
-
 
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
@@ -174,8 +170,6 @@
 
 	return ..()
 
-#define OFFSET_X 1
-#define OFFSET_Y 2
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()
 
@@ -188,28 +182,11 @@
 		stored_lipstick_trait = null
 	update_hair_and_lips()
 
-	if(OFFSET_FACE in owner.dna?.species.offset_features)
-		var/offset = owner.dna.species.offset_features[OFFSET_FACE]
-		face_offset_x = offset[OFFSET_X]
-		face_offset_y = offset[OFFSET_Y]
-
-	is_blushing = HAS_TRAIT(owner, TRAIT_BLUSHING) // Caused by either the *blush emote or the "drunk" mood event
-
-#undef OFFSET_X
-#undef OFFSET_Y
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/item/bodypart/head/get_limb_icon(dropped, draw_external_organs)
 	cut_overlays()
 	. = ..()
-
-	// Blush emote overlay
-	if (is_blushing)
-		var/mutable_appearance/blush_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "blush", -BODY_ADJ_LAYER) // Should appear behind the eyes
-		blush_overlay.color = COLOR_BLUSH_PINK
-		blush_overlay.pixel_x += face_offset_x
-		blush_overlay.pixel_y += face_offset_y
-		. += blush_overlay
 
 	if(dropped) //certain overlays only appear when the limb is being detached from its owner.
 
