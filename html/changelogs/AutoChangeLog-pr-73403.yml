@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes:
+  - bugfix: "Using a fire extinguisher with a chair now properly does...something with how fast you move I think it makes you slower"
