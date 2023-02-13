@@ -432,6 +432,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	var/list/policytext = list(header,"<hr>")
 	var/anything = FALSE
 	for(var/keyword in keywords)
+		// if(ispath(keyword)) // path 2 text (policy is from json)
+		//	keyword = "[keyword]"
 		var/p = get_policy(keyword)
 		if(p)
 			policytext += p
