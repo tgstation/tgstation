@@ -4,11 +4,12 @@
 	desc = "Don't worry, it won't sting."
 	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
 	icon_state = "biopsy"
+	worn_icon_state = "biopsy"
 
 ///Adds the swabbing component to the biopsy tool
 /obj/item/biopsy_tool/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/swabbing, FALSE, FALSE, TRUE, CALLBACK(src, .proc/update_swab_icon), max_items = 1)
+	AddComponent(/datum/component/swabbing, FALSE, FALSE, TRUE, CALLBACK(src, PROC_REF(update_swab_icon)), max_items = 1)
 
 
 /obj/item/biopsy_tool/proc/update_swab_icon(list/swabbed_items)

@@ -4,7 +4,7 @@
 /atom/movable/screen/alert/status_effect/unholy_determination
 	name = "Unholy Determination"
 	desc = "You appear in a unfamiliar room. The darkness begins to close in. Panic begins to set in. There is no time. Fight on, or die!"
-	icon_state = "regenerative_core"
+	icon_state = "wounded"
 
 /// The buff given to people within the shadow realm to assist them in surviving.
 /datum/status_effect/unholy_determination
@@ -45,9 +45,9 @@
 		healing_amount *= -0.5
 
 	if(owner.health > owner.crit_threshold && prob(4))
-		owner.Jitter(10)
-		owner.Dizzy(5)
-		owner.hallucination = min(owner.hallucination + 3, 24)
+		owner.set_jitter_if_lower(20 SECONDS)
+		owner.set_dizzy_if_lower(10 SECONDS)
+		owner.adjust_hallucinations_up_to(6 SECONDS, 48 SECONDS)
 
 	if(prob(2))
 		playsound(owner, pick(GLOB.creepy_ambience), 50, TRUE)
@@ -61,7 +61,7 @@
  */
 /datum/status_effect/unholy_determination/proc/adjust_all_damages(amount)
 
-	owner.set_fire_stacks(max(owner.fire_stacks - 1, 0))
+	owner.adjust_fire_stacks(-1)
 	owner.losebreath = max(owner.losebreath - 0.5, 0)
 
 	owner.adjustToxLoss(-amount, FALSE, TRUE)
@@ -102,5 +102,7 @@
 		if(iter_wound.blood_flow && (iter_wound.blood_flow > bloodiest_wound?.blood_flow))
 			bloodiest_wound = iter_wound
 
-	if(bloodiest_wound)
-		bloodiest_wound.blood_flow = max(0, bloodiest_wound.blood_flow - 0.5)
+	if(!bloodiest_wound)
+		return
+
+	bloodiest_wound.adjust_blood_flow(-0.5)

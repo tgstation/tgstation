@@ -5,10 +5,6 @@
 	max_integrity = 250
 	volume = 1000
 
-	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
-	var/heat_limit = 5000
-	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
-	var/pressure_limit = 50000
 	///Is the machine on?
 	var/on = FALSE
 	///the rate the machine will scrub air
@@ -54,11 +50,7 @@
 		. += "scrubber-connector"
 
 /obj/machinery/portable_atmospherics/scrubber/process_atmos()
-	var/pressure = air_contents.return_pressure()
-	var/temperature = air_contents.return_temperature()
-	///function used to check the limit of the scrubbers and also set the amount of damage that the scrubber can receive, if the heat and pressure are way higher than the limit the more damage will be done
-	if(temperature > heat_limit || pressure > pressure_limit)
-		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
+	if(take_atmos_damage())
 		excited = TRUE
 		return ..()
 
@@ -69,8 +61,6 @@
 
 	var/atom/target = holding || get_turf(src)
 	scrub(target.return_air())
-
-
 	return ..()
 
 /**
@@ -124,11 +114,13 @@
 	data["connected"] = connected_port ? 1 : 0
 	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 
-	data["id_tag"] = -1 //must be defined in order to reuse code between portable and vent scrubbers
-	data["filter_types"] = list()
+	data["hasHypernobCrystal"] = !!nob_crystal_inserted
+	data["reactionSuppressionEnabled"] = !!suppress_reactions
+
+	data["filterTypes"] = list()
 	for(var/path in GLOB.meta_gas_info)
 		var/list/gas = GLOB.meta_gas_info[path]
-		data["filter_types"] += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in scrubbing)))
+		data["filterTypes"] += list(list("gasId" = gas[META_GAS_ID], "gasName" = gas[META_GAS_NAME], "enabled" = (path in scrubbing)))
 
 	if(holding)
 		data["holding"] = list()
@@ -148,7 +140,7 @@
 			on = FALSE
 			update_appearance()
 	else if(on && holding)
-		investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
+		user.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/scrubber/ui_act(action, params)
 	. = ..()
@@ -167,6 +159,15 @@
 		if("toggle_filter")
 			scrubbing ^= gas_id2path(params["val"])
 			. = TRUE
+		if("reaction_suppression")
+			if(!nob_crystal_inserted)
+				message_admins("[ADMIN_LOOKUPFLW(usr)] tried to toggle reaction suppression on a scrubber without a noblium crystal inside, possible href exploit attempt.")
+				return
+			suppress_reactions = !suppress_reactions
+			SSair.start_processing_machine(src)
+			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+			usr.investigate_log("turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+			. = TRUE
 	update_appearance()
 
 /obj/machinery/portable_atmospherics/scrubber/unregister_holding()
@@ -177,8 +178,7 @@
 	name = "huge air scrubber"
 	icon_state = "hugescrubber"
 	anchored = TRUE
-	active_power_usage = 500
-	idle_power_usage = 10
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 
 	overpressure_m = 200
 	volume_rate = 1500
@@ -214,9 +214,10 @@
 
 	return ..()
 
-/obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/W, mob/user)
-	if(default_unfasten_wrench(user, W))
+/obj/machinery/portable_atmospherics/scrubber/huge/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_unfasten_wrench(user, tool))
 		if(!movable)
 			on = FALSE
-	else
-		return ..()
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return FALSE

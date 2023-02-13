@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/alien
 	name = "alien hunter"
 	desc = "Hiss!"
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "alienh"
 	icon_living = "alienh"
 	icon_dead = "alienh_dead"
@@ -28,12 +28,12 @@
 	status_flags = CANPUSH
 	minbodytemp = 0
 	unsuitable_heat_damage = 20
-	see_in_dark = 8
+	see_in_dark = NIGHTVISION_FOV_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	unique_name = 1
 	gold_core_spawnable = NO_SPAWN
-	deathsound = 'sound/voice/hiss6.ogg'
-	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
+	death_sound = 'sound/voice/hiss6.ogg'
+	death_message = "lets out a waning guttural screech, green blood bubbling from its maw..."
 	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/hostile/alien/drone
@@ -51,7 +51,7 @@
 		return
 	plant_cooldown--
 	if(AIStatus == AI_IDLE)
-		if(!plants_off && prob(10) && plant_cooldown<=0)
+		if(!plants_off && prob(10) && plant_cooldown <= 0)
 			plant_cooldown = initial(plant_cooldown)
 			SpreadPlants()
 
@@ -67,7 +67,7 @@
 	ranged = 1
 	retreat_distance = 5
 	minimum_distance = 5
-	projectiletype = /obj/projectile/neurotox
+	projectiletype = /obj/projectile/neurotoxin/damaging
 	projectilesound = 'sound/weapons/pierce.ogg'
 
 
@@ -86,7 +86,7 @@
 	move_to_delay = 4
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)
-	projectiletype = /obj/projectile/neurotox
+	projectiletype = /obj/projectile/neurotoxin/damaging
 	projectilesound = 'sound/weapons/pierce.ogg'
 	status_flags = 0
 	unique_name = 0
@@ -101,10 +101,10 @@
 	egg_cooldown--
 	plant_cooldown--
 	if(AIStatus == AI_IDLE)
-		if(!plants_off && prob(10) && plant_cooldown<=0)
+		if(!plants_off && prob(10) && plant_cooldown <= 0)
 			plant_cooldown = initial(plant_cooldown)
 			SpreadPlants()
-		if(!sterile && prob(10) && egg_cooldown<=0)
+		if(!sterile && prob(10) && egg_cooldown <= 0)
 			egg_cooldown = initial(egg_cooldown)
 			LayEggs()
 
@@ -126,7 +126,7 @@
 
 /mob/living/simple_animal/hostile/alien/queen/large
 	name = "alien empress"
-	icon = 'icons/mob/alienqueen.dmi'
+	icon = 'icons/mob/nonhuman-player/alienqueen.dmi'
 	icon_state = "alienq"
 	icon_living = "alienq"
 	icon_dead = "alienq_dead"
@@ -139,11 +139,6 @@
 							/obj/item/stack/sheet/animalhide/xeno = 2)
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
-
-/obj/projectile/neurotox
-	name = "neurotoxin"
-	damage = 30
-	icon_state = "toxin"
 
 /mob/living/simple_animal/hostile/alien/maid
 	name = "lusty xenomorph maid"

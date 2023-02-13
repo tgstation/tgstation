@@ -49,10 +49,15 @@
 	name = "opened cryogenic pod"
 	desc = "A cryogenic pod that has recently discharged its occupant. The pod appears non-functional."
 
+/obj/structure/showcase/machinery/oldpod/used/psyker
+	name = "opened mental energizer"
+	desc = "A mental energizer that has recently discharged its occupant. The pod appears non-functional."
+	icon_state = "psykerpod-open"
+
 /obj/structure/showcase/cyborg/old
 	name = "Cyborg Statue"
 	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze."
-	icon = 'icons/mob/robots.dmi'
+	icon = 'icons/mob/silicon/robots.dmi'
 	icon_state = "robot_old"
 	density = FALSE
 
@@ -77,8 +82,8 @@
 /obj/structure/showcase/machinery/microwave
 	name = "\improper Nanotrasen-brand microwave"
 	desc = "The famous Nanotrasen-brand microwave, the multi-purpose cooking appliance every station needs! This one appears to be drawn onto a cardboard box."
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "mw"
+	icon = 'icons/obj/machines/microwave.dmi'
+	icon_state = "map_icon"
 
 /obj/structure/showcase/machinery/cloning_pod
 	name = "cloning pod exhibit"
@@ -102,7 +107,24 @@
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "processor"
 
+/obj/structure/showcase/wizard
+	name = "wizard of yendor showcase"
+	desc = "A historical figure of great importance to the wizard federation. He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney."
+	icon = 'icons/mob/simple/mob.dmi'
+	icon_state = "nim"
 
+/obj/structure/showcase/machinery/rng
+	name = "byond random number generator"
+	desc = "A strange machine supposedly from another world. The Wizard Federation has been meddling with it for years."
+	icon = 'icons/obj/machines/telecomms.dmi'
+	icon_state = "processor"
+
+/obj/structure/showcase/katana
+	name = "seppuku katana"
+	density = 0
+	desc = "Welp, only one way to recover your honour."
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon_state = "katana"
 
 //Deconstructing
 //Showcases can be any sprite, so it makes sense that they can't be constructed.
@@ -130,8 +152,10 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/showcase/wrench_act(mob/living/user, obj/item/tool)
-	if(deconstruction_state == SHOWCASE_CONSTRUCTED && default_unfasten_wrench(user, tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(deconstruction_state != SHOWCASE_CONSTRUCTED)
+		return FALSE
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 //Feedback is given in examine because showcases can basically have any sprite assigned to them
 
@@ -140,8 +164,8 @@
 
 	switch(deconstruction_state)
 		if(SHOWCASE_CONSTRUCTED)
-			. += "The showcase is fully constructed."
+			. += "It's fully constructed."
 		if(SHOWCASE_SCREWDRIVERED)
-			. += "The showcase has its screws loosened."
+			. += "It has its screws loosened."
 		else
 			. += "If you see this, something is wrong."

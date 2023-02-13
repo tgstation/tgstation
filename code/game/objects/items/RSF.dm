@@ -20,7 +20,7 @@ RSF
 	density = FALSE
 	anchored = FALSE
 	item_flags = NOBLUDGEON
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 	///The current matter count
 	var/matter = 0
 	///The max amount of matter in the device
@@ -31,7 +31,7 @@ RSF
 	var/dispense_cost = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	///An associated list of atoms and charge costs. This can contain a separate list, as long as it's associated item is an object
-	var/list/cost_by_item = list(/obj/item/reagent_containers/food/drinks/drinkingglass = 20,
+	var/list/cost_by_item = list(/obj/item/reagent_containers/cup/glass/drinkingglass = 20,
 								/obj/item/paper = 10,
 								/obj/item/storage/dice = 200,
 								/obj/item/pen = 50,
@@ -86,7 +86,7 @@ RSF
 	var/cost = 0
 	//Warning, prepare for bodgecode
 	while(islist(target))//While target is a list we continue the loop
-		var/picked = show_radial_menu(user, src, formRadial(target), custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
+		var/picked = show_radial_menu(user, src, formRadial(target), custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE)
 		if(!check_menu(user) || picked == null)
 			return
 		for(var/emem in target)//Back through target agian
@@ -119,13 +119,17 @@ RSF
 	if(cooldown > world.time)
 		return
 	. = ..()
-	if(!proximity || !is_allowed(A))
-		return
+	if(!proximity)
+		return .
+	. |= AFTERATTACK_PROCESSED_ITEM
+	if (!is_allowed(A))
+		return .
 	if(use_matter(dispense_cost, user))//If we can charge that amount of charge, we do so and return true
 		playsound(loc, 'sound/machines/click.ogg', 10, TRUE)
 		var/atom/meme = new to_dispense(get_turf(A))
 		to_chat(user, span_notice("[action_type] [meme.name]..."))
 		cooldown = world.time + cooldowndelay
+	return .
 
 ///A helper proc. checks to see if we can afford the amount of charge that is passed, and if we can docs the charge from our base, and returns TRUE. If we can't we return FALSE
 /obj/item/rsf/proc/use_matter(charge, mob/user)

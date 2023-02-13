@@ -10,16 +10,25 @@
 	name = null
 	icon = 'icons/obj/power.dmi'
 	anchored = TRUE
-	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
-	var/datum/powernet/powernet = null
+	obj_flags = CAN_BE_HIT
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
-	var/machinery_layer = MACHINERY_LAYER_1 //cable layer to which the machine is connected
+
+	///The powernet our machine is connected to.
+	var/datum/powernet/powernet
+	///Cable layer to which the machine is connected.
+	var/machinery_layer = MACHINERY_LAYER_1
+
+/obj/machinery/power/Initialize(mapload)
+	. = ..()
+	if(isturf(loc))
+		var/turf/turf_loc = loc
+		turf_loc.add_blueprints_preround(src)
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/update_cable_icons_on_turf, get_turf(src)), 3)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(update_cable_icons_on_turf), get_turf(src)), 3)
 	return ..()
 
 ///////////////////////////////
@@ -79,10 +88,10 @@
 
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
-/obj/machinery/proc/powered(chan = power_channel)
+/obj/machinery/proc/powered(chan = power_channel, ignore_use_power = FALSE)
 	if(!loc)
 		return FALSE
-	if(!use_power)
+	if(!use_power && !ignore_use_power)
 		return TRUE
 
 	var/area/A = get_area(src) // make sure it's in an area
@@ -93,6 +102,7 @@
 
 // increment the power usage stats for an area
 /obj/machinery/proc/use_power(amount, chan = power_channel)
+	amount = max(amount * machine_power_rectifier, 0) // make sure we don't use negative power
 	var/area/A = get_area(src) // make sure it's in an area
 	A?.use_power(amount, chan)
 
@@ -178,7 +188,14 @@
 		if(!(initial_stat & NOPOWER))
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
 			. = TRUE
-	update_appearance()
+
+	if(appearance_power_state != (machine_stat & NOPOWER))
+		update_appearance()
+
+// Saves like 300ms of init by not duping calls in the above proc
+/obj/machinery/update_appearance(updates)
+	. = ..()
+	appearance_power_state = machine_stat & NOPOWER
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()
@@ -416,6 +433,6 @@
 		return null
 	for(var/obj/structure/cable/C in src)
 		if(C.machinery_layer & machinery_layer)
-			C.update_appearance()
+			C.update_appearance() // I hate this. it's here because update_icon_state SCANS nearby turfs for objects to connect to. Wastes cpu time
 			return C
 	return null

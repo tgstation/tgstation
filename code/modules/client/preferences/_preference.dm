@@ -105,6 +105,10 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// will show the feature as selectable.
 	var/relevant_species_trait = null
 
+	/// If the selected species has this in its /datum/species/var/external_organs,
+	/// will show the feature as selectable.
+	var/relevant_external_organ = null
+
 /// Called on the saved input when retrieving.
 /// Also called by the value sent from the user through UI. Do not trust it.
 /// Input is the value inside the savefile, output is to tell other code
@@ -152,13 +156,13 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /// Given a savefile, return either the saved data or an acceptable default.
 /// This will write to the savefile if a value was not found with the new value.
-/datum/preference/proc/read(savefile/savefile, datum/preferences/preferences)
+/datum/preference/proc/read(list/save_data, datum/preferences/preferences)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/value
 
-	if (!isnull(savefile))
-		READ_FILE(savefile[savefile_key], value)
+	if (!isnull(save_data))
+		value = save_data[savefile_key]
 
 	if (isnull(value))
 		return null
@@ -168,14 +172,14 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Given a savefile, writes the inputted value.
 /// Returns TRUE for a successful application.
 /// Return FALSE if it is invalid.
-/datum/preference/proc/write(savefile/savefile, value)
+/datum/preference/proc/write(list/save_data, value)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if (!is_valid(value))
 		return FALSE
 
-	if (!isnull(savefile))
-		WRITE_FILE(savefile[savefile_key], serialize(value))
+	if (!isnull(save_data))
+		save_data[savefile_key] = serialize(value)
 
 	return TRUE
 
@@ -201,31 +205,22 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	CRASH("`apply_to_human()` was not implemented for [type]!")
 
 /// Returns which savefile to use for a given savefile identifier
-/datum/preferences/proc/get_savefile_for_savefile_identifier(savefile_identifier)
-	RETURN_TYPE(/savefile)
+/datum/preferences/proc/get_save_data_for_savefile_identifier(savefile_identifier)
+	RETURN_TYPE(/list)
 
 	if (!parent)
 		return null
+	if(!savefile)
+		CRASH("Attempted to get the savedata for [savefile_identifier] of [parent] without a savefile. This should have been handled by load_preferences()")
 
 	// Both of these will cache savefiles, but only for a tick.
 	// This is because storing a savefile will lock it, causing later issues down the line.
 	// Do not change them to addtimer, since the timer SS might not be running at this time.
-
 	switch (savefile_identifier)
 		if (PREFERENCE_CHARACTER)
-			if (!character_savefile)
-				character_savefile = new /savefile(path)
-				character_savefile.cd = "/character[default_slot]"
-				spawn (1)
-					character_savefile = null
-			return character_savefile
+			return savefile.get_entry("character[default_slot]")
 		if (PREFERENCE_PLAYER)
-			if (!game_savefile)
-				game_savefile = new /savefile(path)
-				game_savefile.cd = "/"
-				spawn (1)
-					game_savefile = null
-			return game_savefile
+			return savefile.get_entry()
 		else
 			CRASH("Unknown savefile identifier [savefile_identifier]")
 
@@ -240,13 +235,15 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		// things running pre-assets-initialization.
 		if (!isnull(Master.current_initializing_subsystem))
 			extra_info = "Info was attempted to be retrieved while [Master.current_initializing_subsystem] was initializing."
+		else if (!MC_RUNNING())
+			extra_info = "Info was attempted to be retrieved before the MC started, but not while it was actively initializing a subsystem"
 
 		CRASH("Preference type `[preference_type]` is invalid! [extra_info]")
 
 	if (preference_type in value_cache)
 		return value_cache[preference_type]
 
-	var/value = preference_entry.read(get_savefile_for_savefile_identifier(preference_entry.savefile_identifier), src)
+	var/value = preference_entry.read(get_save_data_for_savefile_identifier(preference_entry.savefile_identifier), src)
 	if (isnull(value))
 		value = preference_entry.create_informed_default_value(src)
 		if (write_preference(preference_entry, value))
@@ -260,9 +257,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Returns TRUE for a successful preference application.
 /// Returns FALSE if it is invalid.
 /datum/preferences/proc/write_preference(datum/preference/preference, preference_value)
-	var/savefile = get_savefile_for_savefile_identifier(preference.savefile_identifier)
+	var/save_data = get_save_data_for_savefile_identifier(preference.savefile_identifier)
 	var/new_value = preference.deserialize(preference_value, src)
-	var/success = preference.write(savefile, new_value)
+	var/success = preference.write(save_data, new_value)
 	if (success)
 		value_cache[preference.type] = new_value
 	return success
@@ -316,7 +313,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	if (!isnull(relevant_mutant_bodypart) || !isnull(relevant_species_trait))
+	if (!isnull(relevant_mutant_bodypart) || !isnull(relevant_species_trait) || !isnull(relevant_external_organ))
 		var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 
 		var/datum/species/species = new species_type
@@ -472,6 +469,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	for (var/name in sprite_accessories)
 		var/datum/sprite_accessory/sprite_accessory = sprite_accessories[name]
+		if(sprite_accessory.locked)
+			continue
 
 		var/icon/final_icon
 
@@ -521,7 +520,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		"step" = step,
 	)
 
-/// A prefernece whose value is always TRUE or FALSE
+/// A preference whose value is always TRUE or FALSE
 /datum/preference/toggle
 	abstract_type = /datum/preference/toggle
 
@@ -536,3 +535,27 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /datum/preference/toggle/is_valid(value)
 	return value == TRUE || value == FALSE
+
+
+/// A string-based preference accepting arbitrary string values entered by the user, with a maximum length.
+/datum/preference/text
+	abstract_type = /datum/preference/text
+
+	/// What is the maximum length of the value allowed in this field?
+	var/maximum_value_length = 256
+
+	/// Should we strip HTML the input or simply restrict it to the maximum_value_length?
+	var/should_strip_html = TRUE
+
+
+/datum/preference/text/deserialize(input, datum/preferences/preferences)
+	return should_strip_html ? STRIP_HTML_SIMPLE(input, maximum_value_length) : copytext(input, 1, maximum_value_length)
+
+/datum/preference/text/create_default_value()
+	return ""
+
+/datum/preference/text/is_valid(value)
+	return istext(value) && length(value) < maximum_value_length
+
+/datum/preference/text/compile_constant_data()
+	return list("maximum_length" = maximum_value_length)

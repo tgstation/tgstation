@@ -87,15 +87,15 @@
 
 /datum/action/innate/cellular_emporium
 	name = "Cellular Emporium"
-	icon_icon = 'icons/obj/drinks.dmi'
+	button_icon = 'icons/obj/drinks/soda.dmi'
 	button_icon_state = "changelingsting"
 	background_icon_state = "bg_changeling"
+	overlay_icon_state = "bg_changeling_border"
 	/// The cell emporium we open.
 	var/datum/cellular_emporium/cellular_emporium
 
 /datum/action/innate/cellular_emporium/New(our_target)
 	. = ..()
-	button.name = name
 	if(istype(our_target, /datum/cellular_emporium))
 		cellular_emporium = our_target
 	else

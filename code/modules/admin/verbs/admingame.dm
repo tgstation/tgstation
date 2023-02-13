@@ -18,7 +18,7 @@
 	body += "<body>Options panel for <b>[M]</b>"
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
-		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=[(GLOB.admin_datums[M.client.ckey] || GLOB.deadmins[M.client.ckey]) ? "rank" : "add"];key=[M.key]'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
+		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=[(GLOB.admin_datums[M.client.ckey] || GLOB.deadmins[M.client.ckey]) ? "rank" : "add"];key=[M.key]'>[M.client.holder ? M.client.holder.rank_names() : "Player"]</A>\]"
 		if(CONFIG_GET(flag/use_exp_tracking))
 			body += "\[<A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(M)]'>" + M.client.get_exp_living(FALSE) + "</a>\]"
 
@@ -133,6 +133,7 @@
 		body += "<br>"
 		if(!isnewplayer(M))
 			body += "<A href='?_src_=holder;[HrefToken()];forcespeech=[REF(M)]'>Forcesay</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];applyquirks=[REF(M)]'>Apply Client Quirks</A> | "
 			body += "<A href='?_src_=holder;[HrefToken()];tdome1=[REF(M)]'>Thunderdome 1</A> | "
 			body += "<A href='?_src_=holder;[HrefToken()];tdome2=[REF(M)]'>Thunderdome 2</A> | "
 			body += "<A href='?_src_=holder;[HrefToken()];tdomeadmin=[REF(M)]'>Thunderdome Admin</A> | "
@@ -189,7 +190,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(G_found.mind && !G_found.mind.active) //mind isn't currently in use by someone/something
 		//check if they were a monkey
 		if(findtext(G_found.real_name,"monkey"))
-			if(tgui_alert(usr,"This character appears to have been a monkey. Would you like to respawn them as such?",,list("Yes","No"))=="Yes")
+			if(tgui_alert(usr,"This character appears to have been a monkey. Would you like to respawn them as such?",,list("Yes","No")) == "Yes")
 				var/mob/living/carbon/human/species/monkey/new_monkey = new
 				SSjob.SendToLateJoin(new_monkey)
 				G_found.mind.transfer_to(new_monkey) //be careful when doing stuff like this! I've already checked the mind isn't in use
@@ -205,19 +206,16 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
 	SSjob.SendToLateJoin(new_character)
 
-	var/datum/data/record/record_found //Referenced to later to either randomize or not randomize the character.
+	var/datum/record/locked/record_found //Referenced to later to either randomize or not randomize the character.
 	if(G_found.mind && !G_found.mind.active) //mind isn't currently in use by someone/something
-		/*Try and locate a record for the person being respawned through GLOB.data_core.
-		This isn't an exact science but it does the trick more often than not.*/
-		var/id = md5("[G_found.real_name][G_found.mind.assigned_role.title]")
-
-		record_found = find_record("id", id, GLOB.data_core.locked)
+		record_found = find_record(G_found.name, locked_only = TRUE)
 
 	if(record_found)//If they have a record we can determine a few things.
-		new_character.real_name = record_found.fields["name"]
-		new_character.gender = record_found.fields["gender"]
-		new_character.age = record_found.fields["age"]
-		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], null, record_found.fields["name"], record_found.fields["blood_type"], new record_found.fields["species"], record_found.fields["features"])
+		new_character.real_name = record_found.name
+		new_character.gender = record_found.gender
+		new_character.age = record_found.age
+		var/datum/dna/found_dna = record_found.dna_ref
+		new_character.hardset_dna(found_dna.unique_identity, record_found.dna_string, null, record_found.name, record_found.blood_type, new record_found.species, found_dna.features)
 	else
 		new_character.randomize_human_appearance()
 		new_character.dna.update_dna_identity()
@@ -280,10 +278,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	//Announces the character on all the systems, based on the record.
 	if(!record_found && (new_character.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 		//Power to the user!
-		if(tgui_alert(new_character,"Warning: No data core entry detected. Would you like to announce the arrival of this character by adding them to various databases, such as medical records?",,list("No","Yes"))=="Yes")
-			GLOB.data_core.manifest_inject(new_character)
+		if(tgui_alert(new_character,"Warning: No data core entry detected. Would you like to announce the arrival of this character by adding them to various databases, such as medical records?",,list("No","Yes")) == "Yes")
+			GLOB.manifest.inject(new_character)
 
-		if(tgui_alert(new_character,"Would you like an active AI to announce this character?",,list("No","Yes"))=="Yes")
+		if(tgui_alert(new_character,"Would you like an active AI to announce this character?",,list("No","Yes")) == "Yes")
 			announce_arrival(new_character, new_character.mind.assigned_role.title)
 
 	var/msg = span_adminnotice("[admin] has respawned [player_key] as [new_character.real_name].")
@@ -385,10 +383,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED))
 		var/datum/atom_hud/atom_hud = GLOB.huds[hudtype]
-		atom_hud.add_hud_to(mob)
+		atom_hud.show_to(mob)
 
 	for (var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud in GLOB.active_alternate_appearances)
-		antag_hud.add_hud_to(mob)
+		antag_hud.show_to(mob)
 
 	mob.lighting_alpha = mob.default_lighting_alpha()
 	mob.update_sight()
@@ -401,10 +399,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED))
 		var/datum/atom_hud/atom_hud = GLOB.huds[hudtype]
-		atom_hud.remove_hud_from(mob)
+		atom_hud.hide_from(mob)
 
 	for (var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud in GLOB.active_alternate_appearances)
-		antag_hud.remove_hud_from(mob)
+		antag_hud.hide_from(mob)
 
 	mob.lighting_alpha = mob.default_lighting_alpha()
 	mob.update_sight()

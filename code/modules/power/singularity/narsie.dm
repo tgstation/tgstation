@@ -44,7 +44,7 @@
 	singularity = WEAKREF(AddComponent(
 		/datum/component/singularity, \
 		bsa_targetable = FALSE, \
-		consume_callback = CALLBACK(src, .proc/consume), \
+		consume_callback = CALLBACK(src, PROC_REF(consume)), \
 		consume_range = NARSIE_CONSUME_RANGE, \
 		disregard_failed_movements = TRUE, \
 		grav_pull = NARSIE_GRAV_PULL, \
@@ -87,7 +87,7 @@
 			souls_needed[player] = TRUE
 
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.75)
-	INVOKE_ASYNC(GLOBAL_PROC, .proc/begin_the_end)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(begin_the_end))
 
 /obj/narsie/Destroy()
 	send_to_playing_players(span_narsie("\"<b>[pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-")]\"</b>"))
@@ -194,7 +194,7 @@
 /obj/narsie/proc/narsie_spawn_animation()
 	setDir(SOUTH)
 	flick("narsie_spawn_anim", src)
-	addtimer(CALLBACK(src, .proc/narsie_spawn_animation_end), 3.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(narsie_spawn_animation_end)), 3.5 SECONDS)
 
 /obj/narsie/proc/narsie_spawn_animation_end()
 	var/datum/component/singularity/singularity_component = singularity.resolve()
@@ -211,34 +211,34 @@
  *  * [/proc/cult_ending_helper()]
  */
 /proc/begin_the_end()
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/narsie_end_begin_check), 5 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_end_begin_check)), 5 SECONDS)
 
 ///First crew last second win check and flufftext for [/proc/begin_the_end()]
 /proc/narsie_end_begin_check()
 	if(QDELETED(GLOB.cult_narsie)) // uno
 		priority_announce("Status report? We detected an anomaly, but it disappeared almost immediately.","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
 		GLOB.cult_narsie = null
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 2), 2 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_FAILURE_NARSIE_KILLED), 2 SECONDS)
 		return
 	priority_announce("An acausal dimensional event has been detected in your sector. Event has been flagged EXTINCTION-CLASS. Directing all available assets toward simulating solutions. SOLUTION ETA: 60 SECONDS.","Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/narsie_end_second_check), 50 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_end_second_check)), 50 SECONDS)
 
 ///Second crew last second win check and flufftext for [/proc/begin_the_end()]
 /proc/narsie_end_second_check()
 	if(QDELETED(GLOB.cult_narsie)) // dos
 		priority_announce("Simulations aborted, sensors report that the acasual event is normalizing. Good work, crew.","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
 		GLOB.cult_narsie = null
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 2), 2 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_FAILURE_NARSIE_KILLED), 2 SECONDS)
 		return
 	priority_announce("Simulations on acausal dimensional event complete. Deploying solution package now. Deployment ETA: ONE MINUTE. ","Central Command Higher Dimensional Affairs")
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/narsie_start_destroy_station), 5 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_start_destroy_station)), 5 SECONDS)
 
 ///security level and shuttle lockdowns for [/proc/begin_the_end()]
 /proc/narsie_start_destroy_station()
-	set_security_level("delta")
+	SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 	SSshuttle.registerHostileEnvironment(GLOB.cult_narsie)
 	SSshuttle.lockdown = TRUE
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/narsie_apocalypse), 1 MINUTES)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_apocalypse)), 1 MINUTES)
 
 ///Third crew last second win check and flufftext for [/proc/begin_the_end()]
 /proc/narsie_apocalypse()
@@ -246,34 +246,40 @@
 		priority_announce("Normalization detected! Abort the solution package!","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
 		SSshuttle.clearHostileEnvironment(GLOB.cult_narsie)
 		GLOB.cult_narsie = null
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/narsie_last_second_win), 2 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_last_second_win)), 2 SECONDS)
 		return
 	if(GLOB.cult_narsie.resolved == FALSE)
 		GLOB.cult_narsie.resolved = TRUE
 		sound_to_playing_players('sound/machines/alarm.ogg')
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper), 12 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper)), 12 SECONDS)
 
 ///Called only if the crew managed to destroy narsie at the very last second for [/proc/begin_the_end()]
 /proc/narsie_last_second_win()
-	set_security_level("red")
+	SSsecurity_level.set_level(SEC_LEVEL_RED)
 	SSshuttle.lockdown = FALSE
-	INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, 2)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_FAILURE_NARSIE_KILLED)
 
 ///Helper to set the round to end asap. Current usage Cult round end code
 /proc/ending_helper()
-	SSticker.force_ending = 1
+	SSticker.force_ending = TRUE
 
 /**
  * Selects cinematic to play as part of the cult end depending on the outcome then ends the round afterward
  * called either when narsie eats everyone, or when [/proc/begin_the_end()] reaches it's conclusion
  */
-/proc/cult_ending_helper(ending_type = 0)
-	if(ending_type == 2) //narsie fukkin died
-		Cinematic(CINEMATIC_CULT_FAIL,world,CALLBACK(GLOBAL_PROC,/proc/ending_helper))
-	else if(ending_type) //no explosion
-		Cinematic(CINEMATIC_CULT,world,CALLBACK(GLOBAL_PROC,/proc/ending_helper))
-	else // explosion
-		Cinematic(CINEMATIC_CULT_NUKE,world,CALLBACK(GLOBAL_PROC,/proc/ending_helper))
+/proc/cult_ending_helper(ending_type = CULT_VICTORY_NUKE)
+	switch(ending_type)
+		// Narsie was killed
+		if(CULT_FAILURE_NARSIE_KILLED)
+			play_cinematic(/datum/cinematic/cult_fail, world, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ending_helper)))
+
+		// The cult "converted" (harvested) most of the station
+		if(CULT_VICTORY_MASS_CONVERSION)
+			play_cinematic(/datum/cinematic/cult_arm, world, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ending_helper)))
+
+		// The cult won, but centcom deployed a nuke. Default
+		if(CULT_VICTORY_NUKE)
+			play_cinematic(/datum/cinematic/nuke/cult, world, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ending_helper)))
 
 #undef NARSIE_CHANCE_TO_PICK_NEW_TARGET
 #undef NARSIE_CONSUME_RANGE

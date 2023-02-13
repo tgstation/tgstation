@@ -6,6 +6,9 @@
 	cost = 5
 	ruin_type = ZTRAIT_ICE_RUINS
 	default_area = /area/icemoon/surface/outdoors/unexplored
+	has_ceiling = TRUE
+	ceiling_turf = /turf/closed/mineral/random/snow
+	ceiling_baseturfs = list(/turf/open/misc/asteroid/snow/icemoon)
 
 // above ground only
 
@@ -67,6 +70,7 @@
 	id = "miningsite-underground"
 	description = "Who knew ladders could be so useful?"
 	suffix = "icemoon_underground_mining_site.dmm"
+	has_ceiling = FALSE
 	unpickable = TRUE
 
 // below ground only

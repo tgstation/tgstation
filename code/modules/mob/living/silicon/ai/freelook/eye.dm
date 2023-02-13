@@ -6,7 +6,7 @@
 	name = "Inactive AI Eye"
 
 	icon_state = "ai_camera"
-	icon = 'icons/mob/cameramob.dmi'
+	icon = 'icons/mob/silicon/cameramob.dmi'
 	invisibility = INVISIBILITY_MAXIMUM
 	hud_possible = list(ANTAG_HUD, AI_DETECT_HUD = HUD_LIST_LIST)
 	var/list/visibleCameraChunks = list()
@@ -16,13 +16,19 @@
 	var/static_visibility_range = 16
 	var/ai_detector_visible = TRUE
 	var/ai_detector_color = COLOR_RED
-	interaction_range = null
+	interaction_range = INFINITY
 
 /mob/camera/ai_eye/Initialize(mapload)
 	. = ..()
 	GLOB.aiEyes += src
 	update_ai_detect_hud()
 	setLoc(loc, TRUE)
+
+/mob/camera/ai_eye/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	update_ai_detect_hud()
 
 /mob/camera/ai_eye/examine(mob/user) //Displays a silicon's laws to ghosts
 	. = ..()
@@ -35,21 +41,26 @@
 	var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
 	var/list/old_images = hud_list[AI_DETECT_HUD]
 	if(!ai_detector_visible)
-		hud.remove_from_hud(src)
+		hud.remove_atom_from_hud(src)
 		QDEL_LIST(old_images)
 		return
 
-	if(!length(hud.hudusers))
+	if(!length(hud.hud_users))
 		return //no one is watching, do not bother updating anything
 
-	hud.remove_from_hud(src)
+	hud.remove_atom_from_hud(src)
 
 	var/static/list/vis_contents_opaque = list()
-	var/obj/effect/overlay/ai_detect_hud/hud_obj = vis_contents_opaque[ai_detector_color]
+	var/turf/our_turf = get_turf(src)
+	var/our_z_offset = GET_TURF_PLANE_OFFSET(our_turf)
+	var/key = "[our_z_offset]-[ai_detector_color]"
+
+	var/obj/effect/overlay/ai_detect_hud/hud_obj = vis_contents_opaque[key]
 	if(!hud_obj)
 		hud_obj = new /obj/effect/overlay/ai_detect_hud()
+		SET_PLANE_W_SCALAR(hud_obj, PLANE_TO_TRUE(hud_obj.plane), our_z_offset)
 		hud_obj.color = ai_detector_color
-		vis_contents_opaque[ai_detector_color] = hud_obj
+		vis_contents_opaque[key] = hud_obj
 
 	var/list/new_images = list()
 	var/list/turfs = get_visible_turfs()
@@ -61,7 +72,7 @@
 	for(var/i in (new_images.len + 1) to old_images.len)
 		qdel(old_images[i])
 	hud_list[AI_DETECT_HUD] = new_images
-	hud.add_to_hud(src)
+	hud.add_atom_to_hud(src)
 
 /mob/camera/ai_eye/proc/get_visible_turfs()
 	if(!isturf(loc))
@@ -71,6 +82,12 @@
 	var/turf/lowerleft = locate(max(1, x - (view[1] - 1)/2), max(1, y - (view[2] - 1)/2), z)
 	var/turf/upperright = locate(min(world.maxx, lowerleft.x + (view[1] - 1)), min(world.maxy, lowerleft.y + (view[2] - 1)), lowerleft.z)
 	return block(lowerleft, upperright)
+
+/// Used in cases when the eye is located in a movable object (i.e. mecha)
+/mob/camera/ai_eye/proc/update_visibility()
+	SIGNAL_HANDLER
+	if(use_static)
+		ai.camera_visibility(src)
 
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
@@ -89,7 +106,7 @@
 		if(use_static)
 			ai.camera_visibility(src)
 		if(ai.client && !ai.multicam_on)
-			ai.client.eye = src
+			ai.client.set_eye(src)
 		update_ai_detect_hud()
 		update_parallax_contents()
 		//Holopad
@@ -124,7 +141,7 @@
 	GLOB.aiEyes -= src
 	if(ai_detector_visible)
 		var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
-		hud.remove_from_hud(src)
+		hud.remove_atom_from_hud(src)
 		var/list/L = hud_list[AI_DETECT_HUD]
 		QDEL_LIST(L)
 	return ..()
@@ -206,7 +223,7 @@
 	acceleration = !acceleration
 	to_chat(usr, "Camera acceleration has been toggled [acceleration ? "on" : "off"].")
 
-/mob/camera/ai_eye/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+/mob/camera/ai_eye/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && near_camera(speaker))
 		ai.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)

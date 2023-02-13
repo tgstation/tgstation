@@ -6,12 +6,12 @@
 	name = "\improper Nanotrasen minebot"
 	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
 	gender = NEUTER
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH
 	mouse_opacity = MOUSE_OPACITY_ICON
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 	combat_mode = TRUE
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -39,7 +39,7 @@
 	light_range = 6
 	light_on = FALSE
 	var/mode = MINEDRONE_COLLECT
-	var/obj/item/gun/energy/kinetic_accelerator/minebot/stored_gun
+	var/obj/item/gun/energy/recharge/kinetic_accelerator/minebot/stored_gun
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize(mapload)
 	. = ..()
@@ -64,6 +64,7 @@
 	SetCollectBehavior()
 
 /mob/living/simple_animal/hostile/mining_drone/Destroy()
+	QDEL_NULL(stored_gun)
 	for (var/datum/action/innate/minedrone/action in actions)
 		qdel(action)
 	return ..()
@@ -119,7 +120,7 @@
 	if(stored_gun)
 		for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
 			modkit.uninstall(stored_gun)
-	deathmessage = "blows apart!"
+	death_message = "blows apart!"
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)
@@ -206,10 +207,10 @@
 /datum/action/innate/minedrone/toggle_meson_vision/Activate()
 	var/mob/living/simple_animal/hostile/mining_drone/user = owner
 	if(user.sight & SEE_TURFS)
-		user.sight &= ~SEE_TURFS
+		user.clear_sight(SEE_TURFS)
 		user.lighting_alpha = initial(user.lighting_alpha)
 	else
-		user.sight |= SEE_TURFS
+		user.add_sight(SEE_TURFS)
 		user.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
 	user.sync_lighting_plane_alpha()
@@ -228,8 +229,9 @@
 
 /datum/action/innate/minedrone
 	check_flags = AB_CHECK_CONSCIOUS
-	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
 
 /datum/action/innate/minedrone/toggle_light
 	name = "Toggle Light"
@@ -319,7 +321,7 @@
 	minebot.melee_damage_lower = initial(minebot.melee_damage_lower) + base_damage_add
 	minebot.melee_damage_upper = initial(minebot.melee_damage_upper) + base_damage_add
 	minebot.move_to_delay = initial(minebot.move_to_delay) + base_speed_add
-	minebot.stored_gun?.overheat_time += base_cooldown_add
+	minebot.stored_gun?.recharge_time += base_cooldown_add
 
 #undef MINEDRONE_COLLECT
 #undef MINEDRONE_ATTACK

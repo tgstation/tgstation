@@ -10,11 +10,12 @@
 
 /obj/machinery/porta_turret_construct
 	name = "turret frame"
-	icon = 'icons/obj/turrets.dmi'
+	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "turret_frame"
 	desc = "An unfinished covered turret frame."
 	anchored = FALSE
 	density = TRUE
+	use_power = NO_POWER_USE
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
 	var/finish_name = "turret" //the name applied to the product turret
 	var/obj/item/gun/installed_gun = null
@@ -53,7 +54,7 @@
 			else if(I.tool_behaviour == TOOL_CROWBAR && !anchored)
 				I.play_tool_sound(src, 75)
 				to_chat(user, span_notice("You dismantle the turret construction."))
-				new /obj/item/stack/sheet/iron( loc, 5)
+				new /obj/item/stack/sheet/iron(loc, 5)
 				qdel(src)
 				return
 
@@ -84,12 +85,12 @@
 				return
 
 			else if(I.tool_behaviour == TOOL_WELDER)
-				if(!I.tool_start_check(user, amount=5)) //uses up 5 fuel
+				if(!I.tool_start_check(user, amount = 5)) //uses up 5 fuel
 					return
 
 				to_chat(user, span_notice("You start to remove the turret's interior metal armor..."))
 
-				if(I.use_tool(src, user, 20, volume=50, amount=5)) //uses up 5 fuel
+				if(I.use_tool(src, user, 20, volume = 50, amount = 5)) //uses up 5 fuel
 					build_step = PTURRET_BOLTED
 					to_chat(user, span_notice("You remove the turret's interior metal armor."))
 					new /obj/item/stack/sheet/iron(drop_location(), 2)
@@ -105,7 +106,6 @@
 				to_chat(user, span_notice("You add [I] to the turret."))
 				build_step = PTURRET_GUN_EQUIPPED
 				return
-
 			else if(I.tool_behaviour == TOOL_WRENCH)
 				I.play_tool_sound(src, 100)
 				to_chat(user, span_notice("You remove the turret's metal armor bolts."))
@@ -148,11 +148,11 @@
 
 		if(PTURRET_START_EXTERNAL_ARMOUR)
 			if(I.tool_behaviour == TOOL_WELDER)
-				if(!I.tool_start_check(user, amount=5))
+				if(!I.tool_start_check(user, amount = 5))
 					return
 
 				to_chat(user, span_notice("You begin to weld the turret's armor down..."))
-				if(I.use_tool(src, user, 30, volume=50, amount=5))
+				if(I.use_tool(src, user, 30, volume = 50, amount = 5))
 					build_step = PTURRET_EXTERNAL_ARMOUR_ON
 					to_chat(user, span_notice("You weld the turret's armor down."))
 
@@ -167,6 +167,7 @@
 					turret.name = finish_name
 					turret.installation = installed_gun.type
 					turret.setup(installed_gun)
+					turret.locked = FALSE
 					qdel(src)
 					return
 
@@ -181,7 +182,7 @@
 		var/choice = tgui_input_text(user, "Enter a new turret name", "Turret Classification", finish_name, MAX_NAME_LEN)
 		if(!choice)
 			return
-		if(!user.canUseTopic(src, BE_CLOSE))
+		if(!user.canUseTopic(src, be_close = TRUE))
 			return
 
 		finish_name = choice

@@ -1,5 +1,6 @@
 #define CONFUSION_STACK_MAX_MULTIPLIER 2
 
+
 /// No deviation at all. Flashed from the front or front-left/front-right. Alternatively, flashed in direct view.
 #define DEVIATION_NONE 0
 /// Partial deviation. Flashed from the side. Alternatively, flashed out the corner of your eyes.
@@ -49,7 +50,7 @@
 	flashing = flash
 	. = ..()
 	if(flash)
-		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_icon)), 5)
 	holder?.update_icon(updates)
 
 /obj/item/assembly/flash/update_overlays()
@@ -68,7 +69,7 @@
 
 /obj/item/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-		flash_carbon(user, user, 15, 0)
+		flash_carbon(user, user, confusion_duration = 15 SECONDS, targeted = FALSE)
 		return FALSE
 	return TRUE
 
@@ -90,15 +91,15 @@
 	return TRUE
 
 //BYPASS CHECKS ALSO PREVENTS BURNOUT!
-/obj/item/assembly/flash/proc/AOE_flash(bypass_checks = FALSE, range = 3, power = 5, targeted = FALSE, mob/user)
+/obj/item/assembly/flash/proc/AOE_flash(bypass_checks = FALSE, range = 3, confusion_duration = 5 SECONDS, targeted = FALSE, mob/user)
 	if(!bypass_checks && !try_use_flash())
 		return FALSE
 	var/list/mob/targets = get_flash_targets(get_turf(src), range, FALSE)
 	if(user)
 		targets -= user
 		to_chat(user, span_danger("[src] emits a blinding light!"))
-	for(var/mob/living/carbon/C in targets)
-		flash_carbon(C, user, power, targeted, TRUE)
+	for(var/mob/living/carbon/nearby_carbon in targets)
+		flash_carbon(nearby_carbon, user, confusion_duration = confusion_duration, targeted = targeted, generic_message = TRUE)
 	return TRUE
 
 /obj/item/assembly/flash/proc/get_flash_targets(atom/target_loc, range = 3, override_vision_checks = FALSE)
@@ -117,7 +118,7 @@
 	last_trigger = world.time
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 	set_light_on(TRUE)
-	addtimer(CALLBACK(src, .proc/flash_end), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(flash_end)), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 	times_used++
 	if(!flash_recharge())
 		return FALSE
@@ -138,22 +139,22 @@
  * Arguments:
  * * M - Victim
  * * user - Attacker
- * * power - handles the amount of confusion it gives you
+ * * confusion_duration - handles the amount of confusion it gives you
  * * targeted - determines if it was aoe or targeted
  * * generic_message - checks if it should display default message.
  */
-/obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
-	if(!istype(M))
+/obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/flashed, mob/user, confusion_duration = 15 SECONDS, targeted = TRUE, generic_message = FALSE)
+	if(!istype(flashed))
 		return
 	if(user)
-		log_combat(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
+		log_combat(user, flashed, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
 	else //caused by emp/remote signal
-		M.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]",LOG_ATTACK)
+		flashed.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]", LOG_ATTACK)
 
-	if(generic_message && M != user)
-		to_chat(M, span_danger("[src] emits a blinding light!"))
+	if(generic_message && flashed != user)
+		to_chat(flashed, span_danger("[src] emits a blinding light!"))
 
-	var/deviation = calculate_deviation(M, user ? user : src)
+	var/deviation = calculate_deviation(flashed, user || src)
 
 	var/datum/antagonist/rev/head/converter = user?.mind?.has_antag_datum(/datum/antagonist/rev/head)
 
@@ -162,31 +163,28 @@
 		return
 
 	if(targeted)
-		if(M.flash_act(1, 1))
-			if(M.get_confusion() < power)
-				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
-				M.add_confusion(min(power, diff))
+		if(flashed.flash_act(1, 1))
+			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 			// Special check for if we're a revhead. Special cases to attempt conversion.
 			if(converter)
 				// Did we try to flash them from behind?
 				if(deviation == DEVIATION_FULL)
 					// Headrevs can use a tacticool leaning technique so that they don't have to worry about facing for their conversions.
-					to_chat(user, span_notice("You use the tacticool tier, lean over the shoulder technique to blind [M] with a flash!"))
+					to_chat(user, span_notice("You use the tacticool tier, lean over the shoulder technique to blind [flashed] with a flash!"))
 					deviation = DEVIATION_PARTIAL
 				// Convert them. Terribly.
-				terrible_conversion_proc(M, user)
-				visible_message(span_danger("[user] blinds [M] with the flash!"),span_userdanger("[user] blinds you with the flash!"))
+				terrible_conversion_proc(flashed, user)
+				visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
 			//easy way to make sure that you can only long stun someone who is facing in your direction
-			M.adjustStaminaLoss(rand(80,120)*(1-(deviation*0.5)))
-			M.Paralyze(rand(25,50)*(1-(deviation*0.5)))
+			flashed.adjustStaminaLoss(rand(80, 120) * (1 - (deviation * 0.5)))
+			flashed.Paralyze(rand(25, 50) * (1 - (deviation * 0.5)))
 		else if(user)
-			visible_message(span_warning("[user] fails to blind [M] with the flash!"),span_danger("[user] fails to blind you with the flash!"))
+			visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_danger("[user] fails to blind you with the flash!"))
 		else
-			to_chat(M, span_danger("[src] fails to blind you!"))
+			to_chat(flashed, span_danger("[src] fails to blind you!"))
 	else
-		if(M.flash_act())
-			var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
-			M.add_confusion(min(power, diff))
+		if(flashed.flash_act())
+			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 
 /**
  * Handles the directionality of the attack
@@ -203,8 +201,10 @@
 	if(victim.flags_1 & IS_SPINNING_1)
 		return DEVIATION_NONE
 
-	if(HAS_TRAIT(victim, TRAIT_FLASH_SENSITIVE)) //If your eyes are sensitive and can be flashed from any direction.
-		return DEVIATION_NONE
+	if(iscarbon(victim))
+		var/mob/living/carbon/carbon_victim = victim
+		if(carbon_victim.get_eye_protection() < FLASH_PROTECTION_SENSITIVE) // If we have really bad flash sensitivity, usually due to really sensitive eyes, we get flashed from all directions
+			return DEVIATION_NONE
 
 	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
 	// or flashing someone they're stood on the same turf as, or a borg flashing someone buckled to them.
@@ -242,7 +242,7 @@
 
 	. = TRUE
 	if(iscarbon(M))
-		flash_carbon(M, user, 5, TRUE)
+		flash_carbon(M, user, confusion_duration = 5 SECONDS, targeted = TRUE)
 		return
 	if(issilicon(M))
 		var/mob/living/silicon/robot/flashed_borgo = M
@@ -252,8 +252,7 @@
 			user.visible_message(span_warning("[user] fails to blind [flashed_borgo] with the flash!"), span_warning("You fail to blind [flashed_borgo] with the flash!"))
 			return
 		flashed_borgo.Paralyze(rand(80,120))
-		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
-		flashed_borgo.add_confusion(min(5, diff))
+		flashed_borgo.set_confusion_if_lower(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER)
 		user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors with the flash!"), span_danger("You overload [flashed_borgo]'s sensors with the flash!"))
 		return
 
@@ -262,16 +261,15 @@
 /obj/item/assembly/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(holder)
 		return FALSE
-	if(!AOE_flash(FALSE, 3, 5, FALSE, user))
+	if(!AOE_flash(user = user))
 		return FALSE
 
 /obj/item/assembly/flash/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(!try_use_flash())
+	if(!AOE_flash())
 		return
-	AOE_flash()
 	burn_out()
 
 /obj/item/assembly/flash/activate()//AOE flash on signal received
@@ -300,7 +298,7 @@
 	//If this proc fires the mob must be a revhead
 	var/datum/antagonist/rev/head/converter = aggressor.mind.has_antag_datum(/datum/antagonist/rev/head)
 	if(converter.add_revolutionary(victim.mind))
-		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		if(prob(1) || check_holidays(APRIL_FOOLS))
 			victim.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
 		times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 	else
@@ -328,6 +326,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "memorizer"
 	inhand_icon_state = "nullrod"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 
 /obj/item/assembly/flash/handheld //this is now the regular pocket flashes
 
@@ -340,21 +340,21 @@
 	var/datum/weakref/arm
 
 /obj/item/assembly/flash/armimplant/burn_out()
-	var/obj/item/organ/cyberimp/arm/flash/real_arm = arm.resolve()
+	var/obj/item/organ/internal/cyberimp/arm/flash/real_arm = arm.resolve()
 	if(real_arm?.owner)
 		to_chat(real_arm.owner, span_warning("Your photon projector implant overheats and deactivates!"))
 		real_arm.Retract()
 	overheat = TRUE
-	addtimer(CALLBACK(src, .proc/cooldown), flashcd * 2)
+	addtimer(CALLBACK(src, PROC_REF(cooldown)), flashcd * 2)
 
 /obj/item/assembly/flash/armimplant/try_use_flash(mob/user = null)
 	if(overheat)
-		var/obj/item/organ/cyberimp/arm/flash/real_arm = arm.resolve()
+		var/obj/item/organ/internal/cyberimp/arm/flash/real_arm = arm.resolve()
 		if(real_arm?.owner)
 			to_chat(real_arm.owner, span_warning("Your photon projector is running too hot to be used again so quickly!"))
 		return FALSE
 	overheat = TRUE
-	addtimer(CALLBACK(src, .proc/cooldown), flashcd)
+	addtimer(CALLBACK(src, PROC_REF(cooldown)), flashcd)
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 	update_icon(ALL, TRUE)
 	return TRUE
@@ -362,6 +362,10 @@
 
 /obj/item/assembly/flash/armimplant/proc/cooldown()
 	overheat = FALSE
+
+/obj/item/assembly/flash/armimplant/screwdriver_act(mob/living/user, obj/item/I)
+	to_chat(user, span_notice("\The [src] is an implant! It cannot be unsecured!"))
+	add_fingerprint(user)
 
 /obj/item/assembly/flash/hypnotic
 	desc = "A modified flash device, programmed to emit a sequence of subliminal flashes that can send a vulnerable target into a hypnotic trance."
@@ -372,13 +376,13 @@
 /obj/item/assembly/flash/hypnotic/burn_out()
 	return
 
-/obj/item/assembly/flash/hypnotic/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
+/obj/item/assembly/flash/hypnotic/flash_carbon(mob/living/carbon/M, mob/user, confusion_duration = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
 	if(user)
 		log_combat(user, M, "[targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]", src)
 	else //caused by emp/remote signal
-		M.log_message("was [targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]",LOG_ATTACK)
+		M.log_message("was [targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]", LOG_ATTACK)
 	if(generic_message && M != user)
 		to_chat(M, span_notice("[src] emits a soothing light..."))
 	if(targeted)
@@ -391,10 +395,10 @@
 
 			if(!hypnosis)
 				to_chat(M, span_hypnophrase("The light makes you feel oddly relaxed..."))
-				M.add_confusion(min(M.get_confusion() + 10, 20))
-				M.dizziness += min(M.dizziness + 10, 20)
-				M.adjust_drowsyness(min(M.drowsyness+10, 20))
-				M.apply_status_effect(/datum/status_effect/pacify, 100)
+				M.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
+				M.adjust_dizzy_up_to(20 SECONDS, 40 SECONDS)
+				M.adjust_drowsiness_up_to(20 SECONDS, 40 SECONDS)
+				M.adjust_pacifism(10 SECONDS)
 			else
 				M.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
 
@@ -405,10 +409,10 @@
 
 	else if(M.flash_act())
 		to_chat(M, span_notice("Such a pretty light..."))
-		M.add_confusion(min(M.get_confusion() + 4, 20))
-		M.dizziness += min(M.dizziness + 4, 20)
-		M.adjust_drowsyness(min(M.drowsyness+4, 20))
-		M.apply_status_effect(/datum/status_effect/pacify, 40)
+		M.adjust_confusion_up_to(4 SECONDS, 20 SECONDS)
+		M.adjust_dizzy_up_to(8 SECONDS, 40 SECONDS)
+		M.adjust_drowsiness_up_to(8 SECONDS, 40 SECONDS)
+		M.adjust_pacifism(4 SECONDS)
 
 #undef CONFUSION_STACK_MAX_MULTIPLIER
 #undef DEVIATION_NONE

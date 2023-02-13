@@ -1,4 +1,4 @@
-#define TANK_PLATING_SHEETS 20
+#define TANK_PLATING_SHEETS 12
 
 /obj/machinery/atmospherics/components/tank
 	icon = 'icons/obj/atmospherics/stationary_canisters.dmi'
@@ -21,9 +21,9 @@
 	custom_reconcilation = TRUE
 
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_OBJ
-	smoothing_groups = list(SMOOTH_GROUP_GAS_TANK)
-	canSmoothWith = list(SMOOTH_GROUP_GAS_TANK)
-	appearance_flags = KEEP_TOGETHER
+	smoothing_groups = SMOOTH_GROUP_GAS_TANK
+	canSmoothWith = SMOOTH_GROUP_GAS_TANK
+	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
 
 	greyscale_config = /datum/greyscale_config/stationary_canister
 	greyscale_colors = "#ffffff"
@@ -34,7 +34,7 @@
 	/// The volume of the gas mixture
 	var/volume = 2500 //in liters
 	/// The max pressure of the gas mixture before damaging the tank
-	var/max_pressure = 20000
+	var/max_pressure = 46000
 	/// The typepath of the gas this tank should be filled with.
 	var/gas_type = null
 
@@ -81,9 +81,9 @@
 	AddElement(/datum/element/volatile_gas_storage)
 	AddElement(/datum/element/crackable, 'icons/obj/atmospherics/stationary_canisters.dmi', crack_states)
 
-	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/merger_adding)
-	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/merger_removing)
-	RegisterSignal(src, COMSIG_ATOM_SMOOTHED_ICON, .proc/smoothed)
+	RegisterSignal(src, COMSIG_MERGER_ADDING, PROC_REF(merger_adding))
+	RegisterSignal(src, COMSIG_MERGER_REMOVING, PROC_REF(merger_removing))
+	RegisterSignal(src, COMSIG_ATOM_SMOOTHED_ICON, PROC_REF(smoothed))
 
 	air_contents = new
 	air_contents.temperature = T20C
@@ -203,7 +203,7 @@
 	SIGNAL_HANDLER
 	if(new_merger.id != merger_id)
 		return
-	RegisterSignal(new_merger, COMSIG_MERGER_REFRESH_COMPLETE, .proc/merger_refresh_complete)
+	RegisterSignal(new_merger, COMSIG_MERGER_REFRESH_COMPLETE, PROC_REF(merger_refresh_complete))
 
 /obj/machinery/atmospherics/components/tank/proc/merger_removing(obj/machinery/atmospherics/components/tank/us, datum/merger/old_merger)
 	SIGNAL_HANDLER
@@ -270,7 +270,7 @@
 	window = image(icon, icon_state = "window-bg", layer = FLOAT_LAYER)
 
 	var/list/new_underlays = list()
-	for(var/obj/effect/overlay/gas/gas as anything in air_contents.return_visuals())
+	for(var/obj/effect/overlay/gas/gas as anything in air_contents.return_visuals(get_turf(src)))
 		var/image/new_underlay = image(gas.icon, icon_state = gas.icon_state, layer = FLOAT_LAYER)
 		new_underlay.filters = alpha_mask_filter(icon = icon(icon, icon_state = "window-bg"))
 		new_underlays += new_underlay
@@ -474,13 +474,14 @@
 			icon_state = "plated_frame"
 
 /obj/structure/tank_frame/attackby(obj/item/item, mob/living/user, params)
-	if(construction_state == TANK_FRAME && istype(item, /obj/item/stack) && add_plating(user, item))
+	if(construction_state == TANK_FRAME && isstack(item) && add_plating(user, item))
 		return
 	return ..()
 
 /obj/structure/tank_frame/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	return default_unfasten_wrench(user, tool, 0.5 SECONDS)
+	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/tank_frame/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()

@@ -7,23 +7,20 @@
 /area/shuttle/abandoned)
 "ac" = (
 /obj/machinery/door/airlock/titanium{
-	name = "mech bay external airlock"
+	name = "Mech Bay External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/docking_port/mobile{
 	dir = 2;
-	dwidth = 8;
-	height = 16;
-	id = "whiteship";
+	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "NT Recovery White-Ship";
-	port_direction = 8;
-	width = 16
+	port_direction = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "ad" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -56,7 +53,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aj" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
@@ -97,7 +94,7 @@
 /area/shuttle/abandoned)
 "aq" = (
 /obj/machinery/door/airlock/titanium{
-	name = "mech bay"
+	name = "Mech Bay"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
@@ -303,7 +300,7 @@
 /area/shuttle/abandoned)
 "aN" = (
 /obj/machinery/door/airlock/titanium{
-	name = "cockpit"
+	name = "Cockpit"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/blue,

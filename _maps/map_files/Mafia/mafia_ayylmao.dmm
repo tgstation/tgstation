@@ -1,50 +1,49 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/riveted,
-/area/mafia)
+/area/centcom/mafia)
 "b" = (
 /turf/closed/indestructible/alien,
-/area/mafia)
+/area/centcom/mafia)
 "g" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/mafia)
-"h" = (
-/obj/structure/grille/indestructable,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/mafia)
+/area/centcom/mafia)
+"h" = (
+/obj/structure/grille/indestructible,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "i" = (
 /turf/open/floor/fakespace,
-/area/mafia)
+/area/centcom/mafia)
 "j" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien22"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "k" = (
 /obj/mafia_game_board,
 /turf/open/floor/plating,
-/area/mafia)
+/area/centcom/mafia)
 "l" = (
 /obj/structure/closet/abductor,
 /turf/open/floor/plating/abductor,
-/area/mafia)
+/area/centcom/mafia)
 "m" = (
 /obj/effect/landmark/mafia,
 /obj/structure/bed/abductor,
 /turf/open/floor/plating/abductor,
-/area/mafia)
+/area/centcom/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
 /obj/structure/bed/abductor,
 /turf/open/floor/plating/abductor2,
-/area/mafia)
+/area/centcom/mafia)
 "o" = (
 /obj/structure/closet/abductor,
 /turf/open/floor/plating/abductor2,
-/area/mafia)
+/area/centcom/mafia)
 "p" = (
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
@@ -53,27 +52,26 @@
 	name = "Station Night Shutters"
 	},
 /turf/closed/indestructible/fakeglass,
-/area/mafia)
+/area/centcom/mafia)
 "q" = (
 /turf/open/floor/plating/abductor,
-/area/mafia)
+/area/centcom/mafia)
 "r" = (
 /turf/open/floor/plating/abductor2,
-/area/mafia)
+/area/centcom/mafia)
 "t" = (
 /turf/open/floor/light/colour_cycle/dancefloor_a,
-/area/mafia)
+/area/centcom/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
-/area/mafia)
+/area/centcom/mafia)
 "v" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/mafia)
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "x" = (
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
@@ -83,107 +81,107 @@
 	},
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating/abductor2,
-/area/mafia)
+/area/centcom/mafia)
 "z" = (
-/obj/structure/grille/indestructable,
+/obj/structure/grille/indestructible,
 /turf/open/floor/fakespace,
-/area/mafia)
+/area/centcom/mafia)
 "B" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien2"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "D" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien15"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "E" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien7"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "F" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien12"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "G" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien17"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "H" = (
 /turf/open/space/basic,
-/area/mafia)
+/area/centcom/mafia)
 "I" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien24"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "J" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien18"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "K" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien11"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "L" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien14"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "M" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien4"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "N" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien21"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "P" = (
 /turf/closed/indestructible/abductor,
-/area/mafia)
+/area/centcom/mafia)
 "Q" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien5"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "S" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien3"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "U" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien23"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "V" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien13"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "W" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien20"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "Y" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien8"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "Z" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien10"
 	},
-/area/mafia)
+/area/centcom/mafia)
 
 (1,1,1) = {"
 a

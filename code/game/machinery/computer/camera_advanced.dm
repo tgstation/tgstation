@@ -50,16 +50,16 @@
 	if(move_down_action)
 		actions += new move_down_action(src)
 
-/obj/machinery/computer/camera_advanced/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/machinery/computer/camera_advanced/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in networks)
 		networks -= i
-		networks += "[port.id]_[i]"
+		networks += "[port.shuttle_id]_[i]"
 
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"
 	circuit = /obj/item/circuitboard/computer/advanced_camera
 
-/obj/machinery/computer/camera_advanced/syndie/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/machinery/computer/camera_advanced/syndie/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return //For syndie nuke shuttle, to spy for station.
 
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
@@ -92,6 +92,9 @@
 	user.remote_control = null
 	current_user = null
 	user.unset_machine()
+
+	for(var/atom/movable/screen/plane_master/plane_static in user.hud_used?.get_true_plane_masters(CAMERA_STATIC_PLANE))
+		plane_static.hide_plane(user)
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
@@ -138,7 +141,7 @@
 			if((!length(z_lock) || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
 				camera_location = myturf
 			else
-				for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+				for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 					if(!C.can_use() || length(z_lock) && !(C.z in z_lock))
 						continue
 					var/list/network_overlap = networks & C.network
@@ -174,8 +177,11 @@
 	user.remote_control = eyeobj
 	user.reset_perspective(eyeobj)
 	eyeobj.setLoc(eyeobj.loc)
-	if(should_supress_view_changes )
+	if(should_supress_view_changes)
 		user.client.view_size.supress()
+	// Who passes control like this god I hate static code
+	for(var/atom/movable/screen/plane_master/plane_static in user.hud_used?.get_true_plane_masters(CAMERA_STATIC_PLANE))
+		plane_static.unhide_plane(user)
 
 /mob/camera/ai_eye/remote
 	name = "Inactive Camera Eye"
@@ -190,9 +196,9 @@
 	var/image/user_image = null
 
 /mob/camera/ai_eye/remote/update_remote_sight(mob/living/user)
-	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
-	user.sight = SEE_TURFS | SEE_BLACKNESS
-	user.see_in_dark = 2
+	user.set_invis_see(SEE_INVISIBLE_LIVING) //can't see ghosts through cameras
+	user.set_sight(SEE_TURFS)
+	user.set_see_in_dark(2)
 	return TRUE
 
 /mob/camera/ai_eye/remote/Destroy()
@@ -224,7 +230,7 @@
 			if(eye_user.client)
 				eye_user.client.images -= user_image
 				user_image = image(icon,loc,icon_state, FLY_LAYER)
-				user_image.plane = ABOVE_GAME_PLANE
+				SET_PLANE(user_image, ABOVE_GAME_PLANE, destination)
 				eye_user.client.images += user_image
 
 /mob/camera/ai_eye/remote/relaymove(mob/living/user, direction)
@@ -247,7 +253,7 @@
 
 /datum/action/innate/camera_off
 	name = "End Camera View"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "camera_off"
 
 /datum/action/innate/camera_off/Activate()
@@ -259,7 +265,7 @@
 
 /datum/action/innate/camera_jump
 	name = "Jump To Camera"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "camera_jump"
 
 /datum/action/innate/camera_jump/Activate()
@@ -270,7 +276,7 @@
 
 	var/list/L = list()
 
-	for (var/obj/machinery/camera/cam in GLOB.cameranet.cameras)
+	for (var/obj/machinery/camera/cam as anything in GLOB.cameranet.cameras)
 		if(length(origin.z_lock) && !(cam.z in origin.z_lock))
 			continue
 		L.Add(cam)
@@ -304,7 +310,7 @@
 
 /datum/action/innate/camera_multiz_up
 	name = "Move up a floor"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "move_up"
 
 /datum/action/innate/camera_multiz_up/Activate()
@@ -318,7 +324,7 @@
 
 /datum/action/innate/camera_multiz_down
 	name = "Move down a floor"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "move_down"
 
 /datum/action/innate/camera_multiz_down/Activate()

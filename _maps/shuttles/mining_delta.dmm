@@ -69,12 +69,9 @@
 	},
 /obj/docking_port/mobile{
 	dir = 4;
-	dwidth = 3;
-	height = 5;
-	id = "mining";
+	shuttle_id = "mining";
 	name = "mining shuttle";
-	port_direction = 8;
-	width = 7
+	port_direction = 8
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/mining)
@@ -182,23 +179,23 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
@@ -211,7 +208,7 @@
 /turf/open/floor/iron,
 /area/shuttle/mining)
 "r" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -232,7 +229,7 @@
 /turf/open/floor/iron,
 /area/shuttle/mining)
 "t" = (
-/obj/structure/shuttle/engine/propulsion/burst,
+/obj/machinery/power/shuttle_engine/propulsion/burst,
 /obj/structure/window/reinforced{
 	dir = 1;
 	layer = 2.9

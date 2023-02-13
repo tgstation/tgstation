@@ -16,7 +16,7 @@
 
 	new /obj/effect/temp_visual/monkeyify(loc)
 
-	transformation_timer = addtimer(CALLBACK(src, .proc/finish_monkeyize), TRANSFORMATION_DURATION, TIMER_UNIQUE)
+	transformation_timer = addtimer(CALLBACK(src, PROC_REF(finish_monkeyize)), TRANSFORMATION_DURATION, TIMER_UNIQUE)
 
 /mob/living/carbon/proc/finish_monkeyize()
 	transformation_timer = null
@@ -27,6 +27,7 @@
 	set_species(/datum/species/monkey)
 	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
 	uncuff()
+	regenerate_icons()
 	return src
 
 //////////////////////////           Humanize               //////////////////////////////
@@ -47,7 +48,7 @@
 	invisibility = INVISIBILITY_MAXIMUM
 
 	new /obj/effect/temp_visual/monkeyify/humanify(loc)
-	transformation_timer = addtimer(CALLBACK(src, .proc/finish_humanize, species), TRANSFORMATION_DURATION, TIMER_UNIQUE)
+	transformation_timer = addtimer(CALLBACK(src, PROC_REF(finish_humanize), species), TRANSFORMATION_DURATION, TIMER_UNIQUE)
 
 /mob/living/carbon/proc/finish_humanize(species = /datum/species/human)
 	transformation_timer = null
@@ -57,9 +58,10 @@
 	invisibility = 0
 	set_species(species)
 	SEND_SIGNAL(src, COMSIG_MONKEY_HUMANIZE)
+	regenerate_icons()
 	return src
 
-/mob/proc/AIize(transfer_after = TRUE, client/preference_source, move = TRUE)
+/mob/proc/AIize(client/preference_source, move = TRUE)
 	var/list/turf/landmark_loc = list()
 
 	if(!move)
@@ -87,13 +89,6 @@
 
 	var/mob/living/silicon/ai/our_AI = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
 	. = our_AI
-
-	if(mind)
-		if(!transfer_after)
-			mind.active = FALSE
-		mind.transfer_to(our_AI)
-	else if(transfer_after)
-		our_AI.key = key
 
 	if(preference_source)
 		apply_pref_name(/datum/preference/name/ai, preference_source)
@@ -124,35 +119,35 @@
 	if(notransform)
 		return
 	notransform = TRUE
-	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot(loc)
+	var/mob/living/silicon/robot/new_borg = new /mob/living/silicon/robot(loc)
 
-	R.gender = gender
-	R.invisibility = 0
+	new_borg.gender = gender
+	new_borg.invisibility = 0
 
 	if(client)
-		R.updatename(client)
+		new_borg.updatename(client)
 
 	if(mind) //TODO //TODO WHAT
 		if(!transfer_after)
 			mind.active = FALSE
-		mind.transfer_to(R)
+		mind.transfer_to(new_borg)
 	else if(transfer_after)
-		R.key = key
+		new_borg.key = key
 
-	if(R.mmi)
-		R.mmi.name = "[initial(R.mmi.name)]: [real_name]"
-		if(R.mmi.brain)
-			R.mmi.brain.name = "[real_name]'s brain"
-		if(R.mmi.brainmob)
-			R.mmi.brainmob.real_name = real_name //the name of the brain inside the cyborg is the robotized human's name.
-			R.mmi.brainmob.name = real_name
+	if(new_borg.mmi)
+		new_borg.mmi.name = "[initial(new_borg.mmi.name)]: [real_name]"
+		if(new_borg.mmi.brain)
+			new_borg.mmi.brain.name = "[real_name]'s brain"
+		if(new_borg.mmi.brainmob)
+			new_borg.mmi.brainmob.real_name = real_name //the name of the brain inside the cyborg is the robotized human's name.
+			new_borg.mmi.brainmob.name = real_name
 
-	R.job = JOB_CYBORG
-	R.notify_ai(AI_NOTIFICATION_NEW_BORG)
+	new_borg.job = JOB_CYBORG
+	new_borg.notify_ai(AI_NOTIFICATION_NEW_BORG)
 
-	. = R
-	if(R.ckey && is_banned_from(R.ckey, JOB_CYBORG))
-		INVOKE_ASYNC(R, /mob/living/silicon/robot.proc/replace_banned_cyborg)
+	. = new_borg
+	if(new_borg.ckey && is_banned_from(new_borg.ckey, JOB_CYBORG))
+		INVOKE_ASYNC(new_borg, TYPE_PROC_REF(/mob/living/silicon/robot, replace_banned_cyborg))
 	qdel(src)
 
 /mob/living/Robotize(delete_items = 0, transfer_after = TRUE)
@@ -199,14 +194,14 @@
 		qdel(t)
 
 	var/alien_caste = pick("Hunter","Sentinel","Drone")
-	var/mob/living/carbon/alien/humanoid/new_xeno
+	var/mob/living/carbon/alien/adult/new_xeno
 	switch(alien_caste)
 		if("Hunter")
-			new_xeno = new /mob/living/carbon/alien/humanoid/hunter(loc)
+			new_xeno = new /mob/living/carbon/alien/adult/hunter(loc)
 		if("Sentinel")
-			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(loc)
+			new_xeno = new /mob/living/carbon/alien/adult/sentinel(loc)
 		if("Drone")
-			new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
+			new_xeno = new /mob/living/carbon/alien/adult/drone(loc)
 
 	new_xeno.set_combat_mode(TRUE)
 	new_xeno.key = key
@@ -269,7 +264,7 @@
 	for(var/t in bodyparts) //this really should not be necessary
 		qdel(t)
 
-	var/mob/living/simple_animal/pet/dog/corgi/new_corgi = new /mob/living/simple_animal/pet/dog/corgi (loc)
+	var/mob/living/basic/pet/dog/corgi/new_corgi = new /mob/living/basic/pet/dog/corgi (loc)
 	new_corgi.set_combat_mode(TRUE)
 	new_corgi.key = key
 
@@ -305,8 +300,8 @@
 
 /mob/living/carbon/human/Animalize()
 
-	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sort_list(mobtypes, /proc/cmp_typepaths_asc))
+	var/list/mobtypes = typesof(/mob/living/simple_animal) + typesof(/mob/living/basic)
+	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sort_list(mobtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 	if(isnull(mobpath))
 		return
 	if(!safe_animal(mobpath))
@@ -339,8 +334,8 @@
 
 /mob/proc/Animalize()
 
-	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sort_list(mobtypes, /proc/cmp_typepaths_asc))
+	var/list/mobtypes = typesof(/mob/living/simple_animal) + typesof(/mob/living/basic)
+	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sort_list(mobtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 	if(isnull(mobpath))
 		return
 	if(!safe_animal(mobpath))
@@ -373,11 +368,11 @@
 //Good mobs!
 	if(ispath(MP, /mob/living/simple_animal/pet/cat))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/pet/dog/corgi))
+	if(ispath(MP, /mob/living/basic/pet/dog/corgi))
 		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/crab))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/hostile/carp))
+	if(ispath(MP, /mob/living/basic/carp))
 		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/hostile/mushroom))
 		return TRUE
@@ -385,7 +380,7 @@
 		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/hostile/killertomato))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/mouse))
+	if(ispath(MP, /mob/living/basic/mouse))
 		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/hostile/bear))
 		return TRUE

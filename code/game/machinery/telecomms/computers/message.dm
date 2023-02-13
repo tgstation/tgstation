@@ -21,7 +21,7 @@
 	//Server linked to.
 	var/obj/machinery/telecomms/message_server/linkedServer = null
 	//Sparks effect - For emag
-	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
+	var/datum/effect_system/spark_spread/spark_system
 	//Messages - Saves me time if I want to change something.
 	var/noserver = "<span class='alert'>ALERT: No server detected.</span>"
 	var/incorrectkey = "<span class='warning'>ALERT: Incorrect decryption key!</span>"
@@ -35,9 +35,11 @@
 	var/optioncount = 7
 	// Custom Message Properties
 	var/customsender = "System Administrator"
-	var/obj/item/pda/customrecepient = null
+	var/customrecepient = null
 	var/customjob = "Admin"
 	var/custommessage = "This is a test, please ignore."
+
+
 
 /obj/machinery/computer/message_monitor/screwdriver_act(mob/living/user, obj/item/I)
 	if(obj_flags & EMAGGED)
@@ -54,17 +56,18 @@
 		screen = MSG_MON_SCREEN_HACKED
 		spark_system.set_up(5, 0, src)
 		spark_system.start()
-		var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
+		var/obj/item/paper/monitorkey/monitor_key_paper = new(loc, linkedServer)
 		// Will help make emagging the console not so easy to get away with.
-		MK.info += "<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>"
+		monitor_key_paper.add_raw_text("<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>")
 		var/time = 100 * length(linkedServer.decryptkey)
-		addtimer(CALLBACK(src, .proc/UnmagConsole), time)
+		addtimer(CALLBACK(src, PROC_REF(UnmagConsole)), time)
 		message = rebootmsg
 	else
 		to_chat(user, span_notice("A no server error appears on the screen."))
 
 /obj/machinery/computer/message_monitor/Initialize(mapload)
 	..()
+	spark_system = new
 	GLOB.telecomms_list += src
 	return INITIALIZE_HINT_LATELOAD
 
@@ -137,7 +140,7 @@
 			var/index = 0
 			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</a></center><hr>"
 			dat += "<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sender</th><th width='15%'>Recipient</th><th width='300px' word-wrap: break-word>Message</th></tr>"
-			for(var/datum/data_pda_msg/pda in linkedServer.pda_msgs)
+			for(var/datum/data_tablet_msg/pda in linkedServer.pda_msgs)
 				index++
 				if(index > 3000)
 					break
@@ -202,7 +205,7 @@
 
 			dat += {"<tr><td width='20%'>[customsender]</td>
 			<td width='20%'>[customjob]</td>
-			<td width='20%'>[customrecepient ? customrecepient.owner : "NONE"]</td>
+			<td width='20%'>[customrecepient ? customrecepient : "NONE"]</td>
 			<td width='300px'>[custommessage]</td></tr>"}
 			dat += "</table><br><center><A href='?src=[REF(src)];select=Send'>Send</a>"
 
@@ -342,7 +345,7 @@
 				hacking = TRUE
 				screen = MSG_MON_SCREEN_HACKED
 				//Time it takes to bruteforce is dependant on the password length.
-				addtimer(CALLBACK(src, .proc/finish_bruteforce, usr), 100*length(linkedServer.decryptkey))
+				addtimer(CALLBACK(src, PROC_REF(finish_bruteforce), usr), 100*length(linkedServer.decryptkey))
 
 		//Delete the log.
 		if (href_list["delete_logs"])
@@ -350,7 +353,7 @@
 			if(screen == MSG_MON_SCREEN_LOGS)
 				if(LINKED_SERVER_NONRESPONSIVE)
 					message = noserver
-				else //if(istype(href_list["delete_logs"], /datum/data_pda_msg))
+				else if(istype(href_list["delete_logs"], /datum/data_tablet_msg))
 					linkedServer.pda_msgs -= locate(href_list["delete_logs"]) in linkedServer.pda_msgs
 					message = span_notice("NOTICE: Log Deleted!")
 		//Delete the request console log.
@@ -359,15 +362,17 @@
 			if(screen == MSG_MON_SCREEN_REQUEST_LOGS)
 				if(LINKED_SERVER_NONRESPONSIVE)
 					message = noserver
-				else //if(istype(href_list["delete_logs"], /datum/data_pda_msg))
+				else if(istype(href_list["delete_logs"], /datum/data_tablet_msg))
 					linkedServer.rc_msgs -= locate(href_list["delete_requests"]) in linkedServer.rc_msgs
 					message = span_notice("NOTICE: Log Deleted!")
+
 		//Create a custom message
 		if (href_list["msg"])
 			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
 			else if(auth)
 				screen = MSG_MON_SCREEN_CUSTOM_MSG
+
 		//Fake messaging selection - KEY REQUIRED
 		if (href_list["select"])
 			if(LINKED_SERVER_NONRESPONSIVE)
@@ -386,10 +391,17 @@
 
 					//Select Receiver
 					if("Recepient")
-						//Get out list of viable PDAs
-						var/list/obj/item/pda/sendPDAs = get_viewable_pdas()
-						if(GLOB.PDAs && length(GLOB.PDAs) > 0)
-							customrecepient = tgui_input_list(usr, "Select a PDA from the list", "PDA Selection", sendPDAs)
+						// Get out list of viable tablets
+						var/list/viewable_tablets = list()
+						for (var/obj/item/modular_computer/tablet as anything in GLOB.TabletMessengers)
+							var/datum/computer_file/program/messenger/message_app = locate() in tablet.stored_files
+							if(!message_app || message_app.invisible)
+								continue
+							if(!tablet.saved_identification)
+								continue
+							viewable_tablets += tablet
+						if(length(viewable_tablets) > 0)
+							customrecepient = tgui_input_list(usr, "Select a tablet from the list", "Tablet Selection", viewable_tablets)
 						else
 							customrecepient = null
 
@@ -414,16 +426,18 @@
 							message = span_notice("NOTICE: No message entered!")
 							return attack_hand(usr)
 
-						var/datum/signal/subspace/messaging/pda/signal = new(src, list(
+						var/datum/signal/subspace/messaging/tablet_msg/signal = new(src, list(
 							"name" = "[customsender]",
 							"job" = "[customjob]",
-							"message" = custommessage,
-							"targets" = list(STRINGIFY_PDA_TARGET(customrecepient.owner, customrecepient.ownjob))
+							"message" = html_decode(custommessage),
+							"ref" = REF(src),
+							"targets" = list(customrecepient),
+							"rigged" = FALSE,
+							"automated" = FALSE,
 						))
 						// this will log the signal and transmit it to the target
 						linkedServer.receive_information(signal, null)
-						usr.log_message("(PDA: [name] | [usr.real_name]) sent \"[custommessage]\" to [signal.format_target()]", LOG_PDA)
-
+						usr.log_message("(Tablet: [name] | [usr.real_name]) sent \"[custommessage]\" to [signal.format_target()]", LOG_PDA)
 
 		//Request Console Logs - KEY REQUIRED
 		if(href_list["view_requests"])
@@ -464,8 +478,9 @@
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/item/paper/monitorkey/proc/print(obj/machinery/telecomms/message_server/server)
-	info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
+	add_raw_text("<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one.")
 	add_overlay("paper_words")
+	update_appearance()
 
 /obj/item/paper/monitorkey/LateInitialize()
 	for (var/obj/machinery/telecomms/message_server/preset/server in GLOB.telecomms_list)

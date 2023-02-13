@@ -12,11 +12,10 @@
 	name = "reaction chamber" //Maybe this name is more accurate?
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "mixer0b"
 	base_icon_state = "mixer"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 40
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.4
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_heater
 
@@ -61,11 +60,20 @@
 	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
 	return ..()
 
-/obj/machinery/chem_heater/AltClick(mob/living/user)
+/obj/machinery/chem_heater/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, no_tk = TRUE))
 		return
 	replace_beaker(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/chem_heater/attack_robot_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
+
+/obj/machinery/chem_heater/attack_ai_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
 
 /obj/machinery/chem_heater/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)
@@ -76,14 +84,15 @@
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
-		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, .proc/on_reaction_step)
+		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, PROC_REF(on_reaction_step))
 	update_appearance()
 	return TRUE
 
 /obj/machinery/chem_heater/RefreshParts()
+	. = ..()
 	heater_coefficient = 0.1
-	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
-		heater_coefficient *= M.rating
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		heater_coefficient *= micro_laser.tier
 
 /obj/machinery/chem_heater/examine(mob/user)
 	. = ..()
@@ -145,6 +154,8 @@
 			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			beaker.reagents.handle_reactions()
 
+			use_power(active_power_usage * delta_time)
+
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
 		return
@@ -152,14 +163,14 @@
 	if(default_deconstruction_crowbar(I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
+	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = TRUE //no afterattack
 		var/obj/item/reagent_containers/B = I
 		if(!user.transferItemToLoc(B, src))
 			return
 		replace_beaker(user, B)
 		to_chat(user, span_notice("You add [B] to [src]."))
-		updateUsrDialog()
+		ui_interact(user)
 		update_appearance()
 		return
 
@@ -212,7 +223,7 @@
 */
 /obj/machinery/chem_heater/proc/add_ui_client_list(new_ui)
 	LAZYADD(ui_client_list, new_ui)
-	RegisterSignal(new_ui, COMSIG_PARENT_QDELETING, .proc/on_ui_deletion)
+	RegisterSignal(new_ui, COMSIG_PARENT_QDELETING, PROC_REF(on_ui_deletion))
 
 ///This removes an open ui instance from the ui list and deregsiters the signal
 /obj/machinery/chem_heater/proc/remove_ui_client_list(old_ui)
@@ -458,17 +469,17 @@ To continue set your target temperature to 390K."}
 /obj/machinery/chem_heater/proc/get_purity_color(datum/equilibrium/equilibrium)
 	var/_reagent = equilibrium.reaction.results[1]
 	var/datum/reagent/reagent = equilibrium.holder.get_reagent(_reagent)
-	switch(reagent.purity)
-		if(1 to INFINITY)
-			return "blue"
-		if(0.8 to 1)
-			return "green"
-		if(reagent.inverse_chem_val to 0.8)
-			return "olive"
-		if(equilibrium.reaction.purity_min to reagent.inverse_chem_val)
-			return "orange"
-		if(-INFINITY to equilibrium.reaction.purity_min)
-			return "red"
+	// Can't be a switch due to http://www.byond.com/forum/post/2750423
+	if(reagent.purity in 1 to INFINITY)
+		return "blue"
+	else if(reagent.purity in 0.8 to 1)
+		return "green"
+	else if(reagent.purity in reagent.inverse_chem_val to 0.8)
+		return "olive"
+	else if(reagent.purity in equilibrium.reaction.purity_min to reagent.inverse_chem_val)
+		return "orange"
+	else if(reagent.purity in -INFINITY to equilibrium.reaction.purity_min)
+		return "red"
 
 //Has a lot of buffer and is upgraded
 /obj/machinery/chem_heater/debug

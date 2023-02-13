@@ -1,7 +1,7 @@
 /obj/structure/hivebot_beacon
 	name = "beacon"
 	desc = "Some odd beacon thing."
-	icon = 'icons/mob/hivebot.dmi'
+	icon = 'icons/mob/simple/hivebot.dmi'
 	icon_state = "def_radar-off"
 	anchored = TRUE
 	density = TRUE
@@ -10,12 +10,12 @@
 
 /obj/structure/hivebot_beacon/Initialize(mapload)
 	. = ..()
-	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(2, loc)
+	var/datum/effect_system/fluid_spread/smoke/smoke = new
+	smoke.set_up(2, holder = src, location = loc)
 	smoke.start()
 	visible_message(span_boldannounce("[src] warps in!"))
 	playsound(src.loc, 'sound/effects/empulse.ogg', 25, TRUE)
-	addtimer(CALLBACK(src, .proc/warpbots), rand(10, 600))
+	addtimer(CALLBACK(src, PROC_REF(warpbots)), rand(10, 600))
 
 /obj/structure/hivebot_beacon/proc/warpbots()
 	icon_state = "def_radar"
@@ -29,7 +29,7 @@
 				new /mob/living/simple_animal/hostile/hivebot/range(get_turf(src))
 			if("rapid")
 				new /mob/living/simple_animal/hostile/hivebot/rapid(get_turf(src))
-	sleep(100)
+	sleep(10 SECONDS)
 	visible_message(span_boldannounce("[src] warps out!"))
 	playsound(src.loc, 'sound/effects/empulse.ogg', 25, TRUE)
 	qdel(src)

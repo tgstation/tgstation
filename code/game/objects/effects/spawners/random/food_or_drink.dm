@@ -14,6 +14,18 @@
 		/obj/item/storage/box/donkpockets/donkpockethonk,
 	)
 
+/obj/effect/spawner/random/food_or_drink/donkpockets_single
+	name = "single donk pocket spawner"
+	icon_state = "donkpocket_single"
+	loot = list(
+		/obj/item/food/donkpocket,
+		/obj/item/food/donkpocket/spicy,
+		/obj/item/food/donkpocket/teriyaki,
+		/obj/item/food/donkpocket/pizza,
+		/obj/item/food/donkpocket/berry,
+		/obj/item/food/donkpocket/honk,
+	)
+
 /obj/effect/spawner/random/food_or_drink/seed
 	name = "seed spawner"
 	icon_state = "seed"
@@ -33,6 +45,7 @@
 		/obj/item/seeds/chanter,
 		/obj/item/seeds/potato,
 		/obj/item/seeds/sugarcane,
+		/obj/item/seeds/cucumber,
 	)
 
 /obj/effect/spawner/random/food_or_drink/seed_rare
@@ -104,54 +117,54 @@
 	name = "good soda spawner"
 	icon_state = "can"
 	loot = list(
-		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 3,
-		/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 3,
-		/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy = 2,
-		/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/beer/light = 2,
-		/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/starkist = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/cola = 1,
+		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 3,
+		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 3,
+		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 2,
+		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 2,
+		/obj/item/reagent_containers/cup/glass/bottle/beer/light = 2,
+		/obj/item/reagent_containers/cup/soda_cans/shamblers = 1,
+		/obj/item/reagent_containers/cup/soda_cans/pwr_game = 1,
+		/obj/item/reagent_containers/cup/soda_cans/dr_gibb = 1,
+		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind = 1,
+		/obj/item/reagent_containers/cup/soda_cans/starkist = 1,
+		/obj/item/reagent_containers/cup/soda_cans/space_up = 1,
+		/obj/item/reagent_containers/cup/soda_cans/sol_dry = 1,
+		/obj/item/reagent_containers/cup/soda_cans/cola = 1,
 	)
 
 /obj/effect/spawner/random/food_or_drink/booze
 	name = "booze spawner"
 	icon_state = "beer"
 	loot = list(
-		/obj/item/reagent_containers/food/drinks/bottle/beer = 75,
-		/obj/item/reagent_containers/food/drinks/bottle/ale = 25,
-		/obj/item/reagent_containers/food/drinks/bottle/beer/light = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/maltliquor = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/whiskey = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/gin = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/vodka = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/tequila = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/rum = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/vermouth = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/cognac = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/wine = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/kahlua = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/amaretto = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/hcider = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/absinthe = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/sake = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/grappa = 5,
-		/obj/item/reagent_containers/food/drinks/bottle/applejack = 5,
-		/obj/item/reagent_containers/glass/bottle/ethanol = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/fernet = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/champagne = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/absinthe/premium = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/goldschlager = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/patron = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/kong = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/lizardwine = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/trappist = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/beer = 75,
+		/obj/item/reagent_containers/cup/glass/bottle/ale = 25,
+		/obj/item/reagent_containers/cup/glass/bottle/beer/light = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/maltliquor = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/whiskey = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/gin = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/vodka = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/tequila = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/rum = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/vermouth = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/cognac = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/wine = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/kahlua = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/amaretto = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/hcider = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/absinthe = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/sake = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/grappa = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/applejack = 5,
+		/obj/item/reagent_containers/cup/bottle/ethanol = 2,
+		/obj/item/reagent_containers/cup/glass/bottle/fernet = 2,
+		/obj/item/reagent_containers/cup/glass/bottle/champagne = 2,
+		/obj/item/reagent_containers/cup/glass/bottle/absinthe/premium = 2,
+		/obj/item/reagent_containers/cup/glass/bottle/goldschlager = 2,
+		/obj/item/reagent_containers/cup/glass/bottle/patron = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/kong = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/trappist = 1,
 	)
 
 /obj/effect/spawner/random/food_or_drink/pizzaparty
@@ -190,7 +203,7 @@
 		/obj/item/food/peanuts = 5,
 		/obj/item/food/cnds = 5,
 		/obj/item/food/energybar = 5,
-		/obj/item/reagent_containers/food/drinks/dry_ramen = 5,
+		/obj/item/reagent_containers/cup/glass/dry_ramen = 5,
 		/obj/item/food/cornchips/random = 5,
 		/obj/item/food/semki = 5,
 		/obj/item/food/peanuts/random = 3,
@@ -219,16 +232,18 @@
 	name = "condiment spawner"
 	icon_state = "condiment"
 	loot = list(
-		/obj/item/reagent_containers/food/condiment/saltshaker = 3,
-		/obj/item/reagent_containers/food/condiment/peppermill = 3,
-		/obj/item/reagent_containers/food/condiment/pack/ketchup = 3,
-		/obj/item/reagent_containers/food/condiment/pack/hotsauce = 3,
-		/obj/item/reagent_containers/food/condiment/pack/astrotame = 3,
-		/obj/item/reagent_containers/food/condiment/pack/bbqsauce = 3,
-		/obj/item/reagent_containers/food/condiment/bbqsauce = 1,
-		/obj/item/reagent_containers/food/condiment/soysauce = 1,
-		/obj/item/reagent_containers/food/condiment/vinegar = 1,
-		/obj/item/reagent_containers/food/condiment/quality_oil = 1,
+		/obj/item/reagent_containers/condiment/saltshaker = 3,
+		/obj/item/reagent_containers/condiment/peppermill = 3,
+		/obj/item/reagent_containers/condiment/pack/ketchup = 3,
+		/obj/item/reagent_containers/condiment/pack/hotsauce = 3,
+		/obj/item/reagent_containers/condiment/pack/astrotame = 3,
+		/obj/item/reagent_containers/condiment/pack/bbqsauce = 3,
+		/obj/item/reagent_containers/condiment/bbqsauce = 1,
+		/obj/item/reagent_containers/condiment/soysauce = 1,
+		/obj/item/reagent_containers/condiment/vinegar = 1,
+		/obj/item/reagent_containers/condiment/peanut_butter = 1,
+		/obj/item/reagent_containers/condiment/quality_oil = 1,
+		/obj/item/reagent_containers/condiment/cherryjelly = 1,
 	)
 
 /obj/effect/spawner/random/food_or_drink/cups

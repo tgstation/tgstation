@@ -12,25 +12,31 @@
 	var/on = FALSE
 	var/stabilizers = FALSE
 	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
-	var/datum/effect_system/trail_follow/ion/ion_trail
+	var/datum/callback/get_mover
+	var/datum/callback/check_on_move
 
 /obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()
-	ion_trail = new
-	ion_trail.auto_process = FALSE
-	ion_trail.set_up(src)
+	get_mover = CALLBACK(src, PROC_REF(get_user))
+	check_on_move = CALLBACK(src, PROC_REF(allow_thrust), 0.01)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE)
+	refresh_jetpack()
 
 /obj/item/tank/jetpack/Destroy()
-	QDEL_NULL(ion_trail)
+	get_mover = null
+	check_on_move = null
 	return ..()
 
+/obj/item/tank/jetpack/proc/refresh_jetpack()
+	AddComponent(/datum/component/jetpack, stabilizers, COMSIG_JETPACK_ACTIVATED, COMSIG_JETPACK_DEACTIVATED, JETPACK_ACTIVATION_FAILED, get_mover, check_on_move, /datum/effect_system/trail_follow/ion)
+
 /obj/item/tank/jetpack/item_action_slot_check(slot)
-	if(slot == ITEM_SLOT_BACK)
+	if(slot & slot_flags)
 		return TRUE
 
 /obj/item/tank/jetpack/equipped(mob/user, slot, initial)
 	. = ..()
-	if(on && slot != ITEM_SLOT_BACK)
+	if(on && !(slot & slot_flags))
 		turn_off(user)
 
 /obj/item/tank/jetpack/dropped(mob/user, silent)
@@ -49,11 +55,10 @@
 		cycle(user)
 	else if(istype(action, /datum/action/item_action/jetpack_stabilization))
 		if(on)
-			stabilizers = !stabilizers
+			set_stabilizers(!stabilizers)
 			to_chat(user, span_notice("You turn the jetpack stabilization [stabilizers ? "on" : "off"]."))
 	else
 		toggle_internals(user)
-
 
 /obj/item/tank/jetpack/proc/cycle(mob/user)
 	if(user.incapacitated())
@@ -68,85 +73,66 @@
 	else
 		turn_off(user)
 		to_chat(user, span_notice("You turn the jetpack off."))
-	update_action_buttons()
+	update_item_action_buttons()
 
+/obj/item/tank/jetpack/proc/set_stabilizers(new_stabilizers)
+	if(new_stabilizers == stabilizers)
+		return
+	stabilizers = new_stabilizers
+	refresh_jetpack()
+
+/obj/item/tank/jetpack/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][on ? "-on" : ""]"
 
 /obj/item/tank/jetpack/proc/turn_on(mob/user)
-	if(!allow_thrust(0.01, user))
+	if(SEND_SIGNAL(src, COMSIG_JETPACK_ACTIVATED) & JETPACK_ACTIVATION_FAILED)
 		return FALSE
 	on = TRUE
-	icon_state = "[initial(icon_state)]-on"
-	ion_trail.start()
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/move_react)
-	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
-	RegisterSignal(user, COMSIG_MOVABLE_SPACEMOVE, .proc/spacemove_react)
+	update_icon(UPDATE_ICON_STATE)
 	if(full_speed)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 	return TRUE
 
-
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
+	SEND_SIGNAL(src, COMSIG_JETPACK_DEACTIVATED)
 	on = FALSE
-	stabilizers = FALSE
-	icon_state = initial(icon_state)
-	ion_trail.stop()
+	set_stabilizers(FALSE)
+	update_icon(UPDATE_ICON_STATE)
 	if(user)
-		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-		UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
-		UnregisterSignal(user, COMSIG_MOVABLE_SPACEMOVE)
 		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
-/obj/item/tank/jetpack/proc/move_react(mob/user)
-	SIGNAL_HANDLER
-	if(!on)//If jet dont work, it dont work
-		return
-	if(!user || !user.client)//Don't allow jet self using
-		return
-	if(!isturf(user.loc))//You can't use jet in nowhere or from mecha/closet
-		return
-	if(!(user.movement_type & FLOATING) || user.buckled)//You don't want use jet in gravity or while buckled.
-		return
-	if(user.pulledby)//You don't must use jet if someone pull you
-		return
-	if(user.throwing)//You don't must use jet if you thrown
-		return
-	if(length(user.client.keys_held & user.client.movement_keys))//You use jet when press keys. yes.
-		allow_thrust(0.01, user)
-
-/obj/item/tank/jetpack/proc/pre_move_react(mob/user)
-	SIGNAL_HANDLER
-	ion_trail.oldposition = get_turf(src)
-
-/obj/item/tank/jetpack/proc/spacemove_react(mob/user, movement_dir)
-	SIGNAL_HANDLER
-
-	if(on && (movement_dir || stabilizers))
-		return COMSIG_MOVABLE_STOP_SPACEMOVE
-
-/obj/item/tank/jetpack/proc/allow_thrust(num, mob/living/user)
+/obj/item/tank/jetpack/proc/allow_thrust(num, use_fuel = TRUE)
 	if((num < 0.005 || air_contents.total_moles() < num))
-		turn_off(user)
-		return
+		turn_off(get_user())
+		return FALSE
+
+	// We've got the gas, it's chill
+	if(!use_fuel)
+		return TRUE
 
 	var/datum/gas_mixture/removed = remove_air(num)
 	if(removed.total_moles() < 0.005)
-		turn_off(user)
-		return
+		turn_off(get_user())
+		return FALSE
 
-	var/turf/T = get_turf(user)
+	var/turf/T = get_turf(src)
 	T.assume_air(removed)
-	ion_trail.generate_effect()
-
 	return TRUE
 
-/obj/item/tank/jetpack/suicide_act(mob/user)
-	if (istype(user, /mob/living/carbon/human/))
-		var/mob/living/carbon/human/H = user
-		H.say("WHAT THE FUCK IS CARBON DIOXIDE?")
-		H.visible_message(span_suicide("[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!"))
-		return (OXYLOSS)
-	else
-		..()
+// Gives the jetpack component the user it expects
+/obj/item/tank/jetpack/proc/get_user()
+	if(!ismob(loc))
+		return null
+	return loc
+
+/obj/item/tank/jetpack/suicide_act(mob/living/user)
+	if (!ishuman(user))
+		return
+	var/mob/living/carbon/human/suffocater = user
+	suffocater.say("WHAT THE FUCK IS CARBON DIOXIDE?")
+	suffocater.visible_message(span_suicide("[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!"))
+	return OXYLOSS
 
 /obj/item/tank/jetpack/improvised
 	name = "improvised jetpack"
@@ -159,7 +145,10 @@
 	gas_type = null //it starts empty
 	full_speed = FALSE //moves at modsuit jetpack speeds
 
-/obj/item/tank/jetpack/improvised/allow_thrust(num, mob/living/user)
+/obj/item/tank/jetpack/improvised/allow_thrust(num)
+	var/mob/user = get_user()
+	if(!user)
+		return FALSE
 	if(rand(0,250) == 0)
 		to_chat(user, span_notice("You feel your jetpack's engines cut out."))
 		turn_off(user)
@@ -182,7 +171,7 @@
 	name = "jet harness (oxygen)"
 	desc = "A lightweight tactical harness, used by those who don't want to be weighed down by traditional jetpacks."
 	icon_state = "jetpack-mini"
-	inhand_icon_state = "jetpack-mini"
+	inhand_icon_state = "jetpack-black"
 	volume = 40
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
@@ -195,6 +184,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	volume = 90
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //steal objective items are hard to destroy.
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
 
 /obj/item/tank/jetpack/oxygen/security
 	name = "security jetpack (oxygen)"

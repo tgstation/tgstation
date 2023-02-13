@@ -7,7 +7,6 @@
 /datum/uplink_item/role_restricted
 	category = /datum/uplink_category/role_restricted
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-	surplus = 0
 
 // No progression cost
 /datum/uplink_item/role_restricted/haunted_magic_eightball
@@ -18,6 +17,7 @@
 	cost = 2
 	restricted_roles = list(JOB_CURATOR)
 	limited_stock = 1 //please don't spam deadchat
+	surplus = 5
 
 /datum/uplink_item/role_restricted/bureaucratic_error_remote
 	name = "Organic Resources Disturbance Inducer"
@@ -26,6 +26,7 @@
 	limited_stock = 1
 	item = /obj/item/devices/bureaucratic_error_remote
 	restricted_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_QUARTERMASTER)
+	surplus = 5
 
 /datum/uplink_item/role_restricted/clumsinessinjector //clown ops can buy this too, but it's in the pointless badassery section for them
 	name = "Clumsiness Injector"
@@ -34,12 +35,21 @@
 	cost = 1
 	restricted_roles = list(JOB_CLOWN)
 	illegal_tech = FALSE
+	surplus = 25
 
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you."
 	item = /obj/item/clothing/under/color/grey/ancient
 	cost = 20
+	restricted_roles = list(JOB_ASSISTANT)
+	surplus = 0
+
+/datum/uplink_item/role_restricted/oldtoolboxclean
+	name = "Ancient Toolbox"
+	desc = "An iconic toolbox design notorious with Assistants everywhere, this design was especially made to become more robust the more telecrystals it has inside it! Tools and insulated gloves included."
+	item = /obj/item/storage/toolbox/mechanical/old/clean
+	cost = 2
 	restricted_roles = list(JOB_ASSISTANT)
 	surplus = 0
 
@@ -53,6 +63,7 @@
 	item = /obj/item/firing_pin/clown/ultra
 	restricted_roles = list(JOB_CLOWN)
 	illegal_tech = FALSE
+	surplus = 25
 
 /datum/uplink_item/role_restricted/clownsuperpin
 	name = "Super Ultra Hilarious Firing Pin"
@@ -62,6 +73,7 @@
 	item = /obj/item/firing_pin/clown/ultra/selfdestruct
 	restricted_roles = list(JOB_CLOWN)
 	illegal_tech = FALSE
+	surplus = 25
 
 /datum/uplink_item/role_restricted/syndimmi
 	name = "Syndicate Brand MMI"
@@ -79,8 +91,16 @@
 	progression_minimum = 10 MINUTES
 	item = /obj/item/hot_potato/syndicate
 	cost = 4
-	surplus = 0
 	restricted_roles = list(JOB_COOK, JOB_BOTANIST, JOB_CLOWN, JOB_MIME)
+
+/datum/uplink_item/role_restricted/combat_baking
+	name = "Combat Bakery Kit"
+	desc = "A kit of clandestine baked weapons. Contains a baguette which a skilled mime could use as a sword, \
+		a pair of throwing croissants, and the recipe to make more on demand. Once the job is done, eat the evidence."
+	progression_minimum = 20 MINUTES
+	item = /obj/item/storage/box/syndie_kit/combat_baking
+	cost = 7
+	restricted_roles = list(JOB_COOK, JOB_MIME)
 
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
@@ -154,6 +174,7 @@
 	item = /obj/item/disk/surgery/brainwashing
 	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_ROBOTICIST)
 	cost = 5
+	surplus = 50
 
 /datum/uplink_item/role_restricted/springlock_module
 	name = "Heavily Modified Springlock MODsuit Module"
@@ -166,6 +187,7 @@
 	item = /obj/item/mod/module/springlock/bite_of_87
 	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
 	cost = 2
+	surplus = 15
 
 /datum/uplink_item/role_restricted/reverse_revolver
 	name = "Reverse Revolver"
@@ -185,6 +207,7 @@
 	cost = 5 //you need two for full damage, so total of 10 for maximum damage
 	limited_stock = 2 //you can't use more than two!
 	restricted_roles = list("Shaft Miner")
+	surplus = 20
 
 /datum/uplink_item/role_restricted/mimery
 	name = "Guide to Advanced Mimery Series"
@@ -201,12 +224,13 @@
 	desc = "An implant that grants you a recharging laser gun inside your arm. Weak to EMPs. Comes with a syndicate autosurgeon for immediate self-application."
 	progression_minimum = 30 MINUTES
 	cost = 10
-	item = /obj/item/autosurgeon/organ/syndicate/laser_arm
+	item = /obj/item/autosurgeon/syndicate/laser_arm
 	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
+	surplus = 20
 
 /datum/uplink_item/role_restricted/chemical_gun
 	name = "Reagent Dartgun"
-	desc = "A heavily modified syringe gun which is capable of synthesizing its own chemical darts using input reagents. Can hold 100u of reagents."
+	desc = "A heavily modified syringe gun which is capable of synthesizing its own chemical darts using input reagents. Can hold 90u of reagents."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/gun/chem
 	cost = 12
@@ -219,29 +243,23 @@
 	cost = 10
 	item = /obj/item/pneumatic_cannon/pie/selfcharge
 	restricted_roles = list(JOB_CLOWN)
-	surplus = 0 //No fun unless you're the clown!
 
 /datum/uplink_item/role_restricted/clown_bomb
 	name = "Clown Bomb"
 	desc = "The Clown bomb is a hilarious device capable of massive pranks. It has an adjustable timer, \
-			with a minimum of 60 seconds, and can be bolted to the floor with a wrench to prevent \
-			movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
-			transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
-			be defused, and some crew may attempt to do so."
+		with a minimum of %MIN_BOMB_TIMER seconds, and can be bolted to the floor with a wrench to prevent \
+		movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
+		transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
+		be defused, and some crew may attempt to do so."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop/clownbomb
 	cost = 15
 	restricted_roles = list(JOB_CLOWN)
+	surplus = 10
 
-/datum/uplink_item/role_restricted/concealed_weapon_bay
-	name = "Concealed Weapon Bay"
-	desc = "A modification for non-combat mechas that allows them to equip one piece of equipment designed for combat mechs. \
-			It also hides the equipped weapon from plain sight. \
-			Only one can fit on a mecha."
-	progression_minimum = 30 MINUTES
-	item = /obj/item/mecha_parts/concealed_weapon_bay
-	cost = 3
-	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
+/datum/uplink_item/role_restricted/clown_bomb/New()
+	. = ..()
+	desc = replacetext(desc, "%MIN_BOMB_TIMER", SYNDIEBOMB_MIN_TIMER_SECONDS)
 
 /datum/uplink_item/role_restricted/clowncar
 	name = "Clown Car"
@@ -255,6 +273,19 @@
 	item = /obj/vehicle/sealed/car/clowncar
 	cost = 20
 	restricted_roles = list(JOB_CLOWN)
+	surplus = 10
+
+/datum/uplink_item/role_restricted/concealed_weapon_bay
+	name = "Concealed Weapon Bay"
+	desc = "A modification for non-combat exosuits that allows them to equip one piece of equipment designed for combat units. \
+			Attach to an exosuit with an existing equipment to disguise the bay as that equipment. The sacrificed equipment will be lost.\
+			Alternatively, you can attach the bay to an empty equipment slot, but the bay will not be concealed. Once the bay is \
+			attached, an exosuit weapon can be fitted inside."
+	progression_minimum = 30 MINUTES
+	item = /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay
+	cost = 3
+	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
+	surplus = 15
 
 /datum/uplink_item/role_restricted/his_grace
 	name = "His Grace"
@@ -266,7 +297,7 @@
 	item = /obj/item/his_grace
 	cost = 20
 	restricted_roles = list(JOB_CHAPLAIN)
-	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
+	surplus = 5
 
 
 // High progression cost
@@ -281,6 +312,7 @@
 	item = /obj/item/reagent_containers/syringe/spider_extract
 	cost = 10
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST)
+	surplus = 10
 
 /datum/uplink_item/role_restricted/blastcannon
 	name = "Blast Cannon"
@@ -292,3 +324,4 @@
 	item = /obj/item/gun/blastcannon
 	cost = 14 //High cost because of the potential for extreme damage in the hands of a skilled scientist.
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
+	surplus = 5

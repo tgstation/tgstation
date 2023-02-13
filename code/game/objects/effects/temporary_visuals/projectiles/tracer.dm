@@ -22,7 +22,7 @@
 
 /obj/effect/projectile/tracer
 	name = "beam"
-	icon = 'icons/obj/guns/projectiles_tracer.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles_tracer.dmi'
 
 /obj/effect/projectile/tracer/laser
 	name = "laser"
@@ -59,6 +59,12 @@
 	name = "solar beam"
 	icon_state = "solar"
 
+/obj/effect/projectile/tracer/solar/thin
+	icon_state = "solar_thin"
+
+/obj/effect/projectile/tracer/solar/thinnest
+	icon_state = "solar_thinnest"
+
 //BEAM RIFLE
 /obj/effect/projectile/tracer/tracer/beam_rifle
 	icon_state = "tracer_beam"
@@ -73,3 +79,6 @@
 /obj/effect/projectile/tracer/laser/emitter
 	name = "emitter beam"
 	icon_state = "emitter"
+
+/obj/effect/projectile/tracer/sniper
+	icon_state = "sniper"

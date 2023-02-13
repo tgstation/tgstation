@@ -12,12 +12,12 @@
 
 /datum/element/knockback/Attach(datum/target, throw_distance = 1, throw_anchored = FALSE, throw_gentle = FALSE)
 	. = ..()
-	if(ismachinery(target) || isstructure(target) || isgun(target)) // turrets, etc
-		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
+	if(ismachinery(target) || isstructure(target) || isgun(target) || isprojectilespell(target)) // turrets, etc
+		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, PROC_REF(projectile_hit))
 	else if(isitem(target))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)
+		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(item_afterattack))
 	else if(ishostile(target))
-		RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, .proc/hostile_attackingtarget)
+		RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(hostile_attackingtarget))
 	else
 		return ELEMENT_INCOMPATIBLE
 
@@ -36,6 +36,7 @@
 	if(!proximity_flag)
 		return
 	do_knockback(target, user, get_dir(source, target))
+	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
 /// triggered after a hostile simplemob attacks something
 /datum/element/knockback/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
@@ -45,7 +46,7 @@
 	do_knockback(target, attacker, get_dir(attacker, target))
 
 /// triggered after a projectile hits something
-/datum/element/knockback/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
+/datum/element/knockback/proc/projectile_hit(datum/fired_from, atom/movable/firer, atom/target, Angle)
 	SIGNAL_HANDLER
 
 	do_knockback(target, null, angle2dir(Angle))

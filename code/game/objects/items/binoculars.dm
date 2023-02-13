@@ -6,7 +6,7 @@
 	worn_icon_state = "binoculars"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_NECK | ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	var/mob/listeningTo
 	var/zoom_out_amt = 5.5
@@ -14,22 +14,15 @@
 
 /obj/item/binoculars/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-
-/obj/item/binoculars/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
+	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)))
 
 /obj/item/binoculars/Destroy()
 	listeningTo = null
 	return ..()
 
 /obj/item/binoculars/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_walk)
-	RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_walk))
+	RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, PROC_REF(rotate))
 	listeningTo = user
 	user.visible_message(span_notice("[user] holds [src] up to [user.p_their()] eyes."), span_notice("You hold [src] up to your eyes."))
 	inhand_icon_state = "binoculars_wielded"
@@ -50,8 +43,6 @@
 	attack_self(listeningTo) //Yes I have sinned, why do you ask?
 
 /obj/item/binoculars/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	if(listeningTo)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		UnregisterSignal(user, COMSIG_ATOM_DIR_CHANGE)

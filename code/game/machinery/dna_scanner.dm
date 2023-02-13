@@ -6,10 +6,7 @@
 	base_icon_state = "scanner"
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the door is open
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 50
-	active_power_usage = 300
-	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/brain)
+	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/internal/brain)
 	circuit = /obj/item/circuitboard/machine/dnascanner
 	var/locked = FALSE
 	var/damage_coeff
@@ -20,15 +17,16 @@
 	var/obj/machinery/computer/scan_consolenew/linked_console = null
 
 /obj/machinery/dna_scannernew/RefreshParts()
+	. = ..()
 	scan_level = 0
 	damage_coeff = 0
 	precision_coeff = 0
-	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
-		scan_level += P.rating
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		precision_coeff = M.rating
-	for(var/obj/item/stock_parts/micro_laser/P in component_parts)
-		damage_coeff = P.rating
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		scan_level += scanning_module.tier
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		precision_coeff = matter_bin.tier
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		damage_coeff = micro_laser.tier
 
 /obj/machinery/dna_scannernew/examine(mob/user)
 	. = ..()
@@ -153,7 +151,7 @@
 		UnregisterSignal(linked_console, COMSIG_PARENT_QDELETING)
 	linked_console = new_console
 	if(linked_console)
-		RegisterSignal(linked_console, COMSIG_PARENT_QDELETING, .proc/react_to_console_del)
+		RegisterSignal(linked_console, COMSIG_PARENT_QDELETING, PROC_REF(react_to_console_del))
 
 /obj/machinery/dna_scannernew/proc/react_to_console_del(datum/source)
 	SIGNAL_HANDLER
@@ -171,8 +169,20 @@
 
 /obj/item/disk/data/Initialize(mapload)
 	. = ..()
-	icon_state = "datadisk[rand(0,6)]"
+	icon_state = "datadisk[rand(0,7)]"
 	add_overlay("datadisk_gene")
+
+/obj/item/disk/data/debug
+	name = "\improper CentCom DNA disk"
+	desc = "A debug item for genetics"
+	custom_materials = null
+
+/obj/item/disk/data/debug/Initialize(mapload)
+	. = ..()
+	// Grabs all instances of mutations and adds them to the disk
+	for(var/datum/mutation/human/mut as anything in subtypesof(/datum/mutation/human))
+		var/datum/mutation/human/ref = GET_INITIALIZED_MUTATION(mut)
+		mutations += ref
 
 /obj/item/disk/data/attack_self(mob/user)
 	read_only = !read_only

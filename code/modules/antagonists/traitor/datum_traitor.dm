@@ -47,6 +47,7 @@
 			uplink.uplink_handler = uplink_handler
 		else
 			uplink_handler = uplink.uplink_handler
+		uplink_handler.primary_objectives = objectives
 		uplink_handler.has_progression = TRUE
 		SStraitor.register_uplink_handler(uplink_handler)
 
@@ -65,16 +66,12 @@
 				if((uplink_handler.assigned_role in item.restricted_roles) || (uplink_handler.assigned_species in item.restricted_species))
 					uplink_items += item
 					continue
-		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, -1, uplink_items)
+		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, 1, uplink_items)
 
 	if(give_objectives)
 		forge_traitor_objectives()
 
-	var/faction = prob(75) ? FACTION_SYNDICATE : FACTION_NANOTRASEN
-
-	pick_employer(faction)
-
-	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
+	pick_employer()
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
@@ -137,8 +134,10 @@
 	owner.special_role = null
 	return ..()
 
-/datum/antagonist/traitor/proc/pick_employer(faction)
+/datum/antagonist/traitor/proc/pick_employer()
+	var/faction = prob(75) ? FACTION_SYNDICATE : FACTION_NANOTRASEN
 	var/list/possible_employers = list()
+
 	possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
 
 	switch(faction)
@@ -147,72 +146,35 @@
 		if(FACTION_NANOTRASEN)
 			possible_employers -= GLOB.syndicate_employers
 	employer = pick(possible_employers)
+	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
 
-/datum/objective/traitor_progression
-	name = "traitor progression"
-	explanation_text = "Become a living legend by getting a total of %REPUTATION% reputation points"
-
-	var/possible_range = list(40 MINUTES, 90 MINUTES)
-	var/required_total_progression_points
-
-/datum/objective/traitor_progression/New(text)
-	. = ..()
-	required_total_progression_points = round(rand(possible_range[1], possible_range[2]) / 60)
-	explanation_text = replacetext(explanation_text, "%REPUTATION%", required_total_progression_points)
-
-/datum/objective/traitor_progression/check_completion()
-	if(!owner)
-		return FALSE
-	var/datum/antagonist/traitor/traitor = owner.has_antag_datum(/datum/antagonist/traitor)
-	if(!traitor)
-		return FALSE
-	if(!traitor.uplink_handler)
-		return FALSE
-	if(traitor.uplink_handler.progression_points < required_total_progression_points)
-		return FALSE
-	return TRUE
-
-/datum/objective/traitor_objectives
-	name = "traitor objective"
-	explanation_text = "Complete objectives colletively worth more than %REPUTATION% reputation points"
-
-	var/possible_range = list(20 MINUTES, 30 MINUTES)
-	var/required_progression_in_objectives
-
-/datum/objective/traitor_objectives/New(text)
-	. = ..()
-	required_progression_in_objectives = round(rand(possible_range[1], possible_range[2]) / 60)
-	explanation_text = replacetext(explanation_text, "%REPUTATION%", required_progression_in_objectives)
-
-/datum/objective/traitor_objectives/check_completion()
-	if(!owner)
-		return FALSE
-	var/datum/antagonist/traitor/traitor = owner.has_antag_datum(/datum/antagonist/traitor)
-	if(!traitor)
-		return FALSE
-	if(!traitor.uplink_handler)
-		return FALSE
-	var/total_points = 0
-	for(var/datum/traitor_objective/objective as anything in traitor.uplink_handler.completed_objectives)
-		if(objective.objective_state != OBJECTIVE_STATE_COMPLETED)
-			continue
-		total_points += objective.progression_reward
-	if(total_points < required_progression_in_objectives)
-		return FALSE
-	return TRUE
-
-/// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	objectives.Cut()
 
-	var/datum/objective/traitor_progression/final_objective = new /datum/objective/traitor_progression()
-	final_objective.owner = owner
-	objectives += final_objective
+	var/list/kill_targets = list() //for blacklisting already-set targets
+	var/objective_limit = CONFIG_GET(number/traitor_objectives_amount)
+	for(var/i in 1 to objective_limit)
+		var/list/ai_targets = active_ais(z = 2) //For multiZ stations, this proc will include AIs on all station levels if the provided arg is 2.
+		ai_targets -= kill_targets
+		if(ai_targets.len)
+			var/diceroll = rand(1, (living_player_count() - 1)) //AI kill and crew kill objectives are different, but I want a rough equal chance for AIs to be targets. Maybe I'll refractor this someday
+			if(diceroll <= ai_targets.len)
+				var/datum/objective/task = new /datum/objective/destroy()
+				task.owner = owner
+				task.find_target(blacklist = kill_targets)
+				kill_targets += task.target
+				objectives += task
+				continue
 
-	var/datum/objective/traitor_objectives/objective_completion = new /datum/objective/traitor_objectives()
-	objective_completion.owner = owner
-	objectives += objective_completion
+		var/datum/objective/task = new /datum/objective/assassinate()
+		task.owner = owner
+		task.find_target(blacklist = kill_targets)
+		kill_targets += task.target
+		objectives += task
 
+	var/datum/objective/escape/bye = new /datum/objective/escape()
+	objectives += bye
+	bye.owner = owner
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -280,6 +242,9 @@
 				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
 				traitor_won = FALSE
 			count++
+		if(uplink_handler.final_objective)
+			objectives_text += "<br>[span_greentext("[traitor_won ? "Additionally" : "However"], the final objective \"[uplink_handler.final_objective]\" was completed!")]"
+			traitor_won = TRUE
 
 	result += "<br>[owner.name] <B>[traitor_flavor["roundend_report"]]</B>"
 
@@ -293,11 +258,7 @@
 	result += objectives_text
 
 	if(uplink_handler)
-		var/completed_objectives_text = "Completed Uplink Objectives: "
-		for(var/datum/traitor_objective/objective as anything in uplink_handler.completed_objectives)
-			if(objective.objective_state == OBJECTIVE_STATE_COMPLETED)
-				completed_objectives_text += "<br><B>[objective.name]</B> - ([objective.telecrystal_reward] TC, [round(objective.progression_reward/600, 0.1)] Reputation)"
-		result += completed_objectives_text
+		result += "<br>The traitor had a total of [DISPLAY_PROGRESSION(uplink_handler.progression_points)] Reputation and [uplink_handler.telecrystals] Unused Telecrystals."
 
 	var/special_role_text = lowertext(name)
 
@@ -326,11 +287,16 @@
 	gloves = /obj/item/clothing/gloves/color/yellow
 	mask = /obj/item/clothing/mask/gas
 	l_hand = /obj/item/melee/energy/sword
-	r_hand = /obj/item/gun/energy/kinetic_accelerator/crossbow
+	r_hand = /obj/item/gun/energy/recharge/ebow
 
 /datum/outfit/traitor/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/obj/item/melee/energy/sword/sword = locate() in H.held_items
-	sword.icon_state = "e_sword_on_red"
-	sword.worn_icon_state = "e_sword_on_red"
+	if(sword.flags_1 & INITIALIZED_1)
+		sword.attack_self()
+	else //Atoms aren't initialized during the screenshots unit test, so we can't call attack_self for it as the sword doesn't have the transforming weapon component to handle the icon changes. The below part is ONLY for the antag screenshots unit test.
+		sword.icon_state = "e_sword_on_red"
+		sword.inhand_icon_state = "e_sword_on_red"
+		sword.worn_icon_state = "e_sword_on_red"
 
-	H.update_inv_hands()
+		H.update_held_items()
+

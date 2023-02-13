@@ -17,14 +17,16 @@
 	progression_reward = list(2 MINUTES, 8 MINUTES)
 	telecrystal_reward = list(0, 1)
 
+	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 
 	var/list/applicable_heads = list(
-		JOB_RESEARCH_DIRECTOR = /area/command/heads_quarters/rd,
-		JOB_CHIEF_MEDICAL_OFFICER = /area/command/heads_quarters/cmo,
-		JOB_CHIEF_ENGINEER = /area/command/heads_quarters/ce,
-		JOB_HEAD_OF_PERSONNEL = /area/command/heads_quarters/hop,
-		JOB_CAPTAIN = /area/command/heads_quarters/captain, // For head roles so that they can still get this objective.
+		JOB_RESEARCH_DIRECTOR = /area/station/command/heads_quarters/rd,
+		JOB_CHIEF_MEDICAL_OFFICER = /area/station/command/heads_quarters/cmo,
+		JOB_CHIEF_ENGINEER = /area/station/command/heads_quarters/ce,
+		JOB_HEAD_OF_PERSONNEL = /area/station/command/heads_quarters/hop,
+		JOB_CAPTAIN = /area/station/command/heads_quarters/captain, // For head roles so that they can still get this objective.
+		JOB_QUARTERMASTER = /area/station/command/heads_quarters/qm,
 	)
 	var/datum/job/target_office
 	var/requires_head_as_supervisor = TRUE
@@ -35,7 +37,7 @@
 	progression_minimum = 10 MINUTES
 	progression_maximum = 40 MINUTES
 	applicable_heads = list(
-		JOB_CAPTAIN = /area/command/heads_quarters/captain,
+		JOB_CAPTAIN = /area/station/command/heads_quarters/captain,
 	)
 	progression_reward = list(5 MINUTES, 10 MINUTES)
 	telecrystal_reward = list(1, 2)
@@ -45,7 +47,7 @@
 	progression_minimum = 20 MINUTES
 	progression_maximum = 60 MINUTES
 	applicable_heads = list(
-		JOB_HEAD_OF_SECURITY = /area/command/heads_quarters/hos,
+		JOB_HEAD_OF_SECURITY = /area/station/command/heads_quarters/hos,
 	)
 	progression_reward = list(10 MINUTES, 15 MINUTES)
 	telecrystal_reward = list(2, 3)
@@ -74,8 +76,8 @@
 			bug.balloon_alert(user, "the bug materializes in your hand")
 			bug.target_area_type = applicable_heads[target_office.title]
 			AddComponent(/datum/component/traitor_objective_register, bug, \
-				succeed_signals = COMSIG_TRAITOR_BUG_PLANTED_GROUND, \
-				fail_signals = COMSIG_PARENT_QDELETING, \
+				succeed_signals = list(COMSIG_TRAITOR_BUG_PLANTED_GROUND), \
+				fail_signals = list(COMSIG_PARENT_QDELETING), \
 				penalty = TRUE)
 
 /datum/traitor_objective/bug_room/generate_objective(datum/mind/generating_for, list/possible_duplicates)
@@ -98,17 +100,12 @@
 /datum/traitor_objective/bug_room/ungenerate_objective()
 	bug = null
 
-/datum/traitor_objective/bug_room/is_duplicate(datum/traitor_objective/bug_room/objective_to_compare)
-	if(objective_to_compare.target_office == target_office)
-		return TRUE
-	return FALSE
-
 /obj/item/traitor_bug
 	name = "suspicious device"
 	desc = "It looks dangerous."
 	item_flags = EXAMINE_SKIP
 
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "bug"
 
 	/// The area at which this bug can be planted at. Has to be a type.
@@ -157,6 +154,7 @@
 		return
 	if(!user.Adjacent(target))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	var/result = SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT, target)
 	if(!(result & COMPONENT_FORCE_PLACEMENT))
 		if(result & COMPONENT_FORCE_FAIL_PLACEMENT || !istype(target, target_object_type))
@@ -168,8 +166,9 @@
 		return
 	forceMove(target)
 	target.vis_contents += src
+	vis_flags |= VIS_INHERIT_PLANE
 	planted_on = target
-	RegisterSignal(planted_on, COMSIG_PARENT_QDELETING, .proc/handle_planted_on_deletion)
+	RegisterSignal(planted_on, COMSIG_PARENT_QDELETING, PROC_REF(handle_planted_on_deletion))
 	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PLANTED_OBJECT, target)
 
 /obj/item/traitor_bug/proc/handle_planted_on_deletion()
@@ -177,16 +176,21 @@
 
 /obj/item/traitor_bug/Destroy()
 	if(planted_on)
+		vis_flags &= ~VIS_INHERIT_PLANE
 		planted_on.vis_contents -= src
 	return ..()
 
-/obj/item/traitor_bug/Moved(atom/OldLoc, Dir)
+/obj/item/traitor_bug/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(planted_on)
+		vis_flags &= ~VIS_INHERIT_PLANE
 		planted_on.vis_contents -= src
 		anchored = FALSE
 		UnregisterSignal(planted_on, COMSIG_PARENT_QDELETING)
 		planted_on = null
+
+/obj/item/traitor_bug/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+	return !istype(storage_holder, target_object_type)
 
 /obj/structure/traitor_bug
 	name = "suspicious device"
@@ -194,12 +198,12 @@
 
 	anchored = TRUE
 
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "bug-animated"
 
 /obj/structure/traitor_bug/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/fade_out, 10 SECONDS), 3 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(fade_out), 10 SECONDS), 3 MINUTES)
 
 /obj/structure/traitor_bug/proc/fade_out(seconds)
 	animate(src, alpha = 30, time = seconds)

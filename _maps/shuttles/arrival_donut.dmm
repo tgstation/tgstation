@@ -6,13 +6,13 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "c" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "d" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
@@ -60,12 +60,11 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "p" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /obj/docking_port/mobile/arrivals{
 	dir = 2;
-	height = 13;
 	name = "donut arrivals shuttle"
 	},
 /turf/open/floor/plating/airless,

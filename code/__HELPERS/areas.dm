@@ -1,9 +1,9 @@
 #define BP_MAX_ROOM_SIZE 300
 
-GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engineering/main, \
-															    /area/engineering/supermatter, \
-															    /area/engineering/atmospherics_engine, \
-															    /area/ai_monitored/turret_protected/ai))
+GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/engineering/main, \
+															    /area/station/engineering/supermatter, \
+															    /area/station/engineering/atmospherics_engine, \
+															    /area/station/ai_monitored/turret_protected/ai))
 
 // Gets an atmos isolated contained space
 // Returns an associative list of turf|dirs pairs
@@ -39,6 +39,43 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engineerin
 			if(!cardinal_cache["[dir]"] || !TURFS_CAN_SHARE(sourceT, checkT))
 				continue
 			found_turfs += checkT // Since checkT is connected, add it to the list to be processed
+
+/**
+ * Create an atmos zone (Think ZAS), similiar to [proc/detect_room] but it ignores walls and turfs which are non-[atmos_can_pass]
+ *
+ * Arguments
+ * source - the turf which to find all connected atmos turfs
+ * range - the max range to check
+ *
+ * Returns a list of turfs, which is an area of isolated atmos
+ */
+/proc/create_atmos_zone(turf/source, range = INFINITY)
+	var/counter = 1 // a counter which increment each loop
+	var/loops = 0
+	if(source.blocks_air)
+		return
+	var/list/connected_turfs = list(source)
+	. = connected_turfs
+	while(length(connected_turfs))
+		var/list/turf/adjacent_turfs = list(
+			get_step(connected_turfs[counter], NORTH),
+			get_step(connected_turfs[counter], SOUTH),
+			get_step(connected_turfs[counter], EAST),
+			get_step(connected_turfs[counter], WEST)
+		)// get a tile in each cardinal direction at once and add that to the list
+		for(var/turf/valid_turf in adjacent_turfs)//loop through the list and check for atmos adjacency
+			var/turf/reference_turf = connected_turfs[counter]
+			if(valid_turf in connected_turfs)//if the turf is already added, skip
+				loops += 1
+				continue
+			if(length(connected_turfs) >= range)
+				return
+			if(TURFS_CAN_SHARE(reference_turf, valid_turf))
+				loops = 0
+				connected_turfs |= valid_turf//add that to the original list
+		if(loops >= 7)//if the loop has gone 7 consecutive times with no new turfs added, return the result. Number is arbitrary, subject to change
+			return
+		counter += 1 //increment by one so the next loop will start at the next position in the list
 
 /proc/create_area(mob/creator)
 	// Passed into the above proc as list/break_if_found
@@ -86,8 +123,10 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engineerin
 	for(var/i in 1 to length(turfs))
 		var/turf/thing = turfs[i]
 		var/area/old_area = thing.loc
+		old_area.turfs_to_uncontain += thing
 		newA.contents += thing
-		thing.change_area(old_area, newA)
+		newA.contained_turfs += thing
+		thing.transfer_area_lighting(old_area, newA)
 
 	newA.reg_in_areas_in_z()
 
@@ -99,23 +138,21 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engineerin
 		var/obj/machinery/door/firedoor/FD = door
 		FD.CalculateAffectingAreas()
 
+	SEND_GLOBAL_SIGNAL(COMSIG_AREA_CREATED, newA, oldA, creator)
 	to_chat(creator, span_notice("You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered."))
+	creator.log_message("created a new area: [AREACOORD(creator)] (previously \"[oldA.name]\")", LOG_GAME)
 	return TRUE
 
 #undef BP_MAX_ROOM_SIZE
 
-//Repopulates sortedAreas list
-/proc/repopulate_sorted_areas()
-	GLOB.sortedAreas = list()
+/proc/require_area_resort()
+	GLOB.sortedAreas = null
 
-	for(var/area/A in world)
-		GLOB.sortedAreas.Add(A)
-
-	sortTim(GLOB.sortedAreas, /proc/cmp_name_asc)
-
-/area/proc/addSorted()
-	GLOB.sortedAreas.Add(src)
-	sortTim(GLOB.sortedAreas, /proc/cmp_name_asc)
+/// Returns a sorted version of GLOB.areas, by name
+/proc/get_sorted_areas()
+	if(!GLOB.sortedAreas)
+		GLOB.sortedAreas = sortTim(GLOB.areas.Copy(), /proc/cmp_name_asc)
+	return GLOB.sortedAreas
 
 //Takes: Area type as a text string from a variable.
 //Returns: Instance for the area in the world.
@@ -138,14 +175,22 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engineerin
 	var/list/areas = list()
 	if(subtypes)
 		var/list/cache = typecacheof(areatype)
-		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+		for(var/area/area_to_check as anything in GLOB.areas)
 			if(cache[area_to_check.type])
 				areas += area_to_check
 	else
-		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+		for(var/area/area_to_check as anything in GLOB.areas)
 			if(area_to_check.type == areatype)
 				areas += area_to_check
 	return areas
+
+/// Iterates over all turfs in the target area and returns the first non-dense one
+/proc/get_first_open_turf_in_area(area/target)
+	if(!target)
+		return
+	for(var/turf/turf in target)
+		if(!turf.density)
+			return turf
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.
@@ -157,21 +202,42 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engineerin
 		areatype = areatemp.type
 	else if(!ispath(areatype))
 		return null
-
-	var/list/turfs = list()
+	// Pull out the areas
+	var/list/areas_to_pull = list()
 	if(subtypes)
 		var/list/cache = typecacheof(areatype)
-		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+		for(var/area/area_to_check as anything in GLOB.areas)
 			if(!cache[area_to_check.type])
 				continue
-			for(var/turf/turf_in_area in area_to_check)
-				if(target_z == 0 || target_z == turf_in_area.z)
-					turfs += turf_in_area
+			areas_to_pull += area_to_check
 	else
-		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+		for(var/area/area_to_check as anything in GLOB.areas)
 			if(area_to_check.type != areatype)
 				continue
-			for(var/turf/turf_in_area in area_to_check)
-				if(target_z == 0 || target_z == turf_in_area.z)
+			areas_to_pull += area_to_check
+
+	// Now their turfs
+	var/list/turfs = list()
+	for(var/area/pull_from as anything in areas_to_pull)
+		var/list/our_turfs = pull_from.get_contained_turfs()
+		if(target_z == 0)
+			turfs += our_turfs
+		else
+			for(var/turf/turf_in_area as anything in our_turfs)
+				if(target_z == turf_in_area.z)
 					turfs += turf_in_area
 	return turfs
+
+
+///Takes: list of area types
+///Returns: all mobs that are in an area type
+/proc/mobs_in_area_type(list/area/checked_areas)
+	var/list/mobs_in_area = list()
+	for(var/mob/living/mob as anything in GLOB.mob_living_list)
+		if(QDELETED(mob))
+			continue
+		for(var/area in checked_areas)
+			if(istype(get_area(mob), area))
+				mobs_in_area += mob
+				break
+	return mobs_in_area

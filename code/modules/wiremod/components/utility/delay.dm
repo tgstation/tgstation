@@ -25,8 +25,8 @@
 
 /obj/item/circuit_component/delay/populate_ports()
 	delay_amount = add_input_port("Delay", PORT_TYPE_NUMBER, trigger = null)
-	trigger = add_input_port("Trigger", PORT_TYPE_SIGNAL, trigger = .proc/trigger_delay)
-	interrupt = add_input_port("Interrupt", PORT_TYPE_SIGNAL, trigger = .proc/interrupt_timer)
+	trigger = add_input_port("Trigger", PORT_TYPE_SIGNAL, trigger = PROC_REF(trigger_delay))
+	interrupt = add_input_port("Interrupt", PORT_TYPE_SIGNAL, trigger = PROC_REF(interrupt_timer))
 
 	output = add_output_port("Result", PORT_TYPE_SIGNAL)
 
@@ -35,7 +35,7 @@
 	var/delay = delay_amount.value
 	if(delay > COMP_DELAY_MIN_VALUE)
 		// Convert delay into deciseconds
-		timer_id = addtimer(CALLBACK(output, /datum/port/output.proc/set_output, trigger.value), delay*10, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
+		timer_id = addtimer(CALLBACK(output, TYPE_PROC_REF(/datum/port/output, set_output), trigger.value), delay*10, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
 	else
 		if(timer_id != TIMER_ID_NULL)
 			deltimer(timer_id)

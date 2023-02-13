@@ -28,7 +28,8 @@
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
 	desc = "A key that, when inserted into a radio headset, allows you to listen to all station department channels \
-			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
+			as well as talk on an encrypted Syndicate channel with other agents that have the same key. In addition, this key also protects \
+			your headset from radio jammers."
 	item = /obj/item/encryptionkey/syndicate
 	cost = 2
 	surplus = 75
@@ -68,6 +69,15 @@
 	item = /obj/item/storage/briefcase/launchpad
 	cost = 6
 
+/datum/uplink_item/device_tools/syndicate_teleporter
+	name = "Experimental Syndicate Teleporter"
+	desc = "A handheld device that teleports the user 4-8 meters forward. \
+			Beware, teleporting into a wall will trigger a parallel emergency teleport; \
+			however if that fails, you may need to be stitched back together. \
+			Comes with 4 charges, recharges randomly. Warranty null and void if exposed to an electromagnetic pulse."
+	item = /obj/item/storage/box/syndie_kit/syndicate_teleporter
+	cost = 8
+
 /datum/uplink_item/device_tools/camera_bug
 	name = "Camera Bug"
 	desc = "Enables you to view all cameras on the main network, set up motion alerts and track a target. \
@@ -75,6 +85,7 @@
 	item = /obj/item/camera_bug
 	cost = 1
 	surplus = 90
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Chest Rig"
@@ -99,18 +110,19 @@
 	illegal_tech = FALSE
 
 /datum/uplink_item/device_tools/frame
-	name = "F.R.A.M.E. PDA Cartridge"
-	desc = "When inserted into a personal digital assistant, this cartridge gives you five PDA viruses which \
-			when used cause the targeted PDA to become a new uplink with zero TCs, and immediately become unlocked. \
+	name = "F.R.A.M.E. disk"
+	desc = "When inserted into a tablet, this cartridge gives you five messenger viruses which \
+			when used cause the targeted tablet to become a new uplink with zero TCs, and immediately become unlocked. \
 			You will receive the unlock code upon activating the virus, and the new uplink may be charged with \
 			telecrystals normally."
-	item = /obj/item/cartridge/virus/frame
+	item = /obj/item/computer_disk/virus/frame
 	cost = 4
 	restricted = TRUE
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/frame/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()
-	var/obj/item/cartridge/virus/frame/target = .
+	var/obj/item/computer_disk/virus/frame/target = .
 	if(!target)
 		return
 	target.current_progression = uplink_handler.progression_points
@@ -128,9 +140,17 @@
 	var/datum/component/uplink/uplink = source.GetComponent(/datum/component/uplink)
 	if(!uplink)
 		return
+	if(!uplink.unlock_note) //no note means it can't be locked (typically due to being an implant.)
+		to_chat(user, span_warning("This device doesn't support code entry!"))
+		return
+
 	uplink.failsafe_code = uplink.generate_code()
 	var/code = "[islist(uplink.failsafe_code) ? english_list(uplink.failsafe_code) : uplink.failsafe_code]"
-	to_chat(user, span_warning("The new failsafe code for this uplink is now : [code]. You may check your antagonist info to recall this."))
+	var/datum/antagonist/traitor/traitor_datum = user.mind?.has_antag_datum(/datum/antagonist/traitor)
+	if(traitor_datum)
+		traitor_datum.antag_memory += "<b>Uplink Failsafe Code:</b> [code]" + "<br>"
+		traitor_datum.update_static_data_for_all_viewers()
+	to_chat(user, span_warning("The new failsafe code for this uplink is now: [code].[traitor_datum ? " You may check your antagonist info to recall this." : null]"))
 	return source //For log icon
 
 /datum/uplink_item/device_tools/toolbox
@@ -149,7 +169,7 @@
 			and wavelength, which controls the delay before the effect kicks in."
 	item = /obj/item/healthanalyzer/rad_laser
 	cost = 3
-
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/suspiciousphone
 	name = "Protocol CRAB-17 Phone"
@@ -189,6 +209,13 @@
 	cost = 5
 	surplus = 90
 
+/datum/uplink_item/device_tools/super_pointy_tape
+	name = "Super Pointy Tape"
+	desc = "An all-purpose super pointy tape roll. The tape is built with hundreds of tiny metal needles, the roll comes with in 5 pieces. When added to items the \
+			item that was taped will embed when thrown at people. Taping people's mouthes with it will hurt them if pulled off by someone else."
+	progression_minimum = 10 MINUTES
+	item = /obj/item/stack/sticky_tape/pointy/super
+	cost = 1
 
 // Medium progression cost
 
@@ -223,6 +250,8 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop
 	cost = 10
+	surplus = 0 // not while there isnt one on any station
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"

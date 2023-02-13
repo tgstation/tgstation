@@ -1,4 +1,4 @@
-/// The chance for a manifest or crate to be created with errors 
+/// The chance for a manifest or crate to be created with errors
 #define MANIFEST_ERROR_CHANCE 5
 
 // MANIFEST BITFLAGS
@@ -6,7 +6,7 @@
 #define MANIFEST_ERROR_NAME (1 << 0)
 /// Determines if contents will be deleted from the manifest but still be present in the crate
 #define MANIFEST_ERROR_CONTENTS (1 << 1)
-/// Determines if contents will be deleted from the crate but still be present in the manifest 
+/// Determines if contents will be deleted from the crate but still be present in the manifest
 #define MANIFEST_ERROR_ITEM (1 << 2)
 
 /obj/item/paper/fluff/jobs/cargo/manifest
@@ -14,39 +14,65 @@
 	var/order_id = 0
 	var/errors = 0
 
-/obj/item/paper/fluff/jobs/cargo/manifest/Initialize(mapload, id, cost)
+/obj/item/paper/fluff/jobs/cargo/manifest/Initialize(mapload, id, cost, manifest_can_fail = TRUE)
 	. = ..()
 	order_id = id
 	order_cost = cost
+	if(!manifest_can_fail)
+		return
 
 	if(prob(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_NAME
+		investigate_log("Supply order #[order_id] generated a manifest with an incorrect station name.", INVESTIGATE_CARGO)
 	if(prob(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_CONTENTS
+		investigate_log("Supply order #[order_id] generated a manifest missing listed contents.", INVESTIGATE_CARGO)
 	if(prob(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_ITEM
+		investigate_log("Supply order #[order_id] generated with incorrect contents shipped.", INVESTIGATE_CARGO)
 
 /obj/item/paper/fluff/jobs/cargo/manifest/proc/is_approved()
-	return stamped?.len && !is_denied()
+	return LAZYLEN(stamp_cache) && !is_denied()
 
 /obj/item/paper/fluff/jobs/cargo/manifest/proc/is_denied()
-	return stamped && ("stamp-deny" in stamped)
+	return LAZYLEN(stamp_cache) && ("stamp-deny" in stamp_cache)
 
 /datum/supply_order
 	var/id
+	var/cost_type
 	var/orderer
 	var/orderer_rank
 	var/orderer_ckey
 	var/reason
 	var/discounted_pct
+	///If set to FALSE, we won't charge when the cargo shuttle arrives with this.
+	var/charge_on_purchase = TRUE
 	///area this order wants to reach, if not null then it will come with the deliver_first component set to this area
 	var/department_destination
 	var/datum/supply_pack/pack
 	var/datum/bank_account/paying_account
 	var/obj/item/coupon/applied_coupon
+	///Boolean on whether the manifest can fail or not.
+	var/manifest_can_fail = TRUE
+	///Boolean on whether the manifest can be cancelled through cargo consoles.
+	var/can_be_cancelled = TRUE
 
-/datum/supply_order/New(datum/supply_pack/pack, orderer, orderer_rank, orderer_ckey, reason, paying_account, department_destination, coupon)
+/datum/supply_order/New(
+	datum/supply_pack/pack,
+	orderer,
+	orderer_rank,
+	orderer_ckey,
+	reason,
+	paying_account,
+	department_destination,
+	coupon,
+	charge_on_purchase = TRUE,
+	manifest_can_fail = TRUE,
+	cost_type = "cr",
+	can_be_cancelled = TRUE,
+)
 	id = SSshuttle.order_number++
+	src.cost_type = cost_type
 	src.pack = pack
 	src.orderer = orderer
 	src.orderer_rank = orderer_rank
@@ -55,72 +81,89 @@
 	src.paying_account = paying_account
 	src.department_destination = department_destination
 	src.applied_coupon = coupon
+	src.charge_on_purchase = charge_on_purchase
+	src.manifest_can_fail = manifest_can_fail
+	src.can_be_cancelled = can_be_cancelled
+
+//returns the total cost of this order. Its not the total price paid by cargo but the total value of this order
+/datum/supply_order/proc/get_final_cost()
+	var/cost = pack.get_cost()
+	if(applied_coupon) //apply discount price
+		cost -= (cost * applied_coupon.discount_pct_off)
+	if(!isnull(paying_account)) //privately purchased means 1.1x the cost
+		cost *= 1.1
+	return cost
 
 /datum/supply_order/proc/generateRequisition(turf/T)
-	var/obj/item/paper/P = new(T)
+	var/obj/item/paper/requisition_paper = new(T)
 
-	P.name = "requisition form - #[id] ([pack.name])"
-	P.info += "<h2>[station_name()] Supply Requisition</h2>"
-	P.info += "<hr/>"
-	P.info += "Order #[id]<br/>"
-	P.info += "Time of Order: [station_time_timestamp()]<br/>"
-	P.info += "Item: [pack.name]<br/>"
-	P.info += "Access Restrictions: [SSid_access.get_access_desc(pack.access)]<br/>"
-	P.info += "Requested by: [orderer]<br/>"
+	requisition_paper.name = "requisition form - #[id] ([pack.name])"
+	var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
+	requisition_text += "<hr/>"
+	requisition_text += "Order #[id]<br/>"
+	requisition_text+= "Time of Order: [station_time_timestamp()]<br/>"
+	requisition_text += "Item: [pack.name]<br/>"
+	requisition_text += "Access Restrictions: [SSid_access.get_access_desc(pack.access)]<br/>"
+	requisition_text += "Requested by: [orderer]<br/>"
 	if(paying_account)
-		P.info += "Paid by: [paying_account.account_holder]<br/>"
-	P.info += "Rank: [orderer_rank]<br/>"
-	P.info += "Comment: [reason]<br/>"
+		requisition_text += "Paid by: [paying_account.account_holder]<br/>"
+	requisition_text += "Rank: [orderer_rank]<br/>"
+	requisition_text += "Comment: [reason]<br/>"
 
-	P.update_appearance()
-	return P
+	requisition_paper.add_raw_text(requisition_text)
+	requisition_paper.update_appearance()
+	return requisition_paper
 
 /datum/supply_order/proc/generateManifest(obj/container, owner, packname, cost) //generates-the-manifests.
-	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(null, id, cost)
+	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest_paper = new(null, id, cost, manifest_can_fail)
 
-	var/station_name = (P.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
+	var/station_name = (manifest_paper.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
 
-	P.name = "shipping manifest - [packname?"#[id] ([pack.name])":"(Grouped Item Crate)"]"
-	P.info += "<h2>[command_name()] Shipping Manifest</h2>"
-	P.info += "<hr/>"
+	manifest_paper.name = "shipping manifest - [packname?"#[id] ([pack.name])":"(Grouped Item Crate)"]"
+
+	var/manifest_text = "<h2>[command_name()] Shipping Manifest</h2>"
+	manifest_text += "<hr/>"
 	if(owner && !(owner == "Cargo"))
-		P.info += "Direct purchase from [owner]<br/>"
-		P.name += " - Purchased by [owner]"
-	P.info += "Order[packname?"":"s"]: [id]<br/>"
-	P.info += "Destination: [station_name]<br/>"
+		manifest_text += "Direct purchase from [owner]<br/>"
+		manifest_paper.name += " - Purchased by [owner]"
+	manifest_text += "Order[packname?"":"s"]: [id]<br/>"
+	manifest_text += "Destination: [station_name]<br/>"
 	if(packname)
-		P.info += "Item: [packname]<br/>"
-	P.info += "Contents: <br/>"
-	P.info += "<ul>"
-	for(var/atom/movable/AM in container.contents - P)
-		if((P.errors & MANIFEST_ERROR_CONTENTS))
+		manifest_text += "Item: [packname]<br/>"
+	manifest_text += "Contents: <br/>"
+	manifest_text += "<ul>"
+	for(var/atom/movable/AM in container.contents - manifest_paper)
+		if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS))
 			if(prob(50))
-				P.info += "<li>[AM.name]</li>"
+				manifest_text += "<li>[AM.name]</li>"
 			else
 				continue
-		P.info += "<li>[AM.name]</li>"
-	P.info += "</ul>"
-	P.info += "<h4>Stamp below to confirm receipt of goods:</h4>"
+		manifest_text += "<li>[AM.name]</li>"
+	manifest_text += "</ul>"
+	manifest_text += "<h4>Stamp below to confirm receipt of goods:</h4>"
 
-	if(P.errors & MANIFEST_ERROR_ITEM)
-		if(istype(container, /obj/structure/closet/crate/secure) || istype(container, /obj/structure/closet/crate/large))
-			P.errors &= ~MANIFEST_ERROR_ITEM
+	manifest_paper.add_raw_text(manifest_text)
+
+	if(manifest_paper.errors & MANIFEST_ERROR_ITEM)
+		if(HAS_TRAIT(container, TRAIT_NO_MISSING_ITEM_ERROR))
+			manifest_paper.errors &= ~MANIFEST_ERROR_ITEM
 		else
 			var/lost = max(round(container.contents.len / 10), 1)
 			while(--lost >= 0)
 				qdel(pick(container.contents))
 
-	P.update_appearance()
-	P.forceMove(container)
+
+	manifest_paper.update_appearance()
+	manifest_paper.forceMove(container)
 
 	if(istype(container, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/C = container
-		C.manifest = P
+		C.manifest = manifest_paper
 		C.update_appearance()
 	else
-		container.contents += P
+		container.contents += manifest_paper
 
-	return P
+	return manifest_paper
 
 /datum/supply_order/proc/generate(atom/A)
 	var/account_holder

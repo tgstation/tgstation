@@ -3,6 +3,11 @@
 	mood_change = 1
 	timeout = 2 MINUTES
 
+/datum/mood_event/bear_hug
+	description = "I got squeezed very tightly, but it was quite nice."
+	mood_change = 1
+	timeout = 2 MINUTES
+
 /datum/mood_event/betterhug
 	description = "Someone was very nice to me."
 	mood_change = 3
@@ -181,6 +186,7 @@
 	description = "I just love my robotic friends!"
 	mood_change = 3
 	timeout = 5 MINUTES
+	required_job = list(/datum/job/research_director, /datum/job/scientist, /datum/job/roboticist, /datum/job/geneticist)
 
 /datum/mood_event/bottle_flip
 	description = "The bottle landing like that was satisfying."
@@ -204,6 +210,20 @@
 	description = "I love getting high fives!"
 	mood_change = 2
 	timeout = 45 SECONDS
+
+/datum/mood_event/helped_up
+	description = "Helping them up felt good!"
+	mood_change = 2
+	timeout = 45 SECONDS
+
+/datum/mood_event/helped_up/add_effects(mob/other_person, helper)
+	if(!other_person)
+		return
+
+	if(helper)
+		description = "Helping [other_person] up felt good!"
+	else
+		description = "[other_person] helped me up, how nice of [other_person.p_them()]!"
 
 /datum/mood_event/high_ten
 	description = "AMAZING! A HIGH-TEN!"
@@ -272,3 +292,69 @@
 	mood_change = 10
 	timeout = 5 MINUTES
 
+/datum/mood_event/love_reagent
+	description = "This food reminds me of the good ol' days."
+	mood_change = 5
+
+/datum/mood_event/love_reagent/add_effects(duration)
+	if(isnum(duration))
+		timeout = duration
+
+/datum/mood_event/won_52_card_pickup
+	description = "HA! That loser will be picking cards up for a long time!"
+	mood_change = 3
+	timeout = 3 MINUTES
+
+/datum/mood_event/playing_cards
+	description = "I'm enjoying playing cards with other people!"
+	mood_change = 2
+	timeout = 3 MINUTES
+
+/datum/mood_event/garland
+	description = "These flowers are rather soothing."
+	mood_change = 1
+
+/datum/mood_event/playing_cards/add_effects(param)
+	var/card_players = 1
+	for(var/mob/living/carbon/player in viewers(COMBAT_MESSAGE_RANGE, owner))
+		var/player_has_cards = player.is_holding(/obj/item/toy/singlecard) || player.is_holding_item_of_type(/obj/item/toy/cards)
+		if(player_has_cards)
+			card_players++
+			if(card_players > 5)
+				break
+
+	mood_change *= card_players
+	return ..()
+
+/datum/mood_event/russian_roulette_win
+	description = "I gambled my life and won! I'm lucky to be alive..."
+	mood_change = 2
+	timeout = 5 MINUTES
+
+/datum/mood_event/russian_roulette_win/add_effects(loaded_rounds)
+	mood_change = 2 ** loaded_rounds
+
+/datum/mood_event/fishing
+	description = "Fishing is relaxing."
+	mood_change = 5
+	timeout = 3 MINUTES
+
+/datum/mood_event/kobun
+	description = "You are all loved by the Universe. I’m not alone, and you aren’t either."
+	mood_change = 14
+	timeout = 10 SECONDS
+
+/datum/mood_event/sabrage_success
+	description = "I pulled that sabrage stunt off! Feels good to be a show-off."
+	mood_change = 2
+	timeout = 4 MINUTES
+
+/datum/mood_event/sabrage_witness
+	description = "I saw someone pop the cork off a champagne bottle in quite a radical fashion."
+	mood_change = 1
+	timeout = 2 MINUTES
+
+/datum/mood_event/it_was_on_the_mouse
+	description = "Heh heh. \"It's on the mouse\". What a play on words."
+	mood_change = 1
+	timeout = 2 MINUTES

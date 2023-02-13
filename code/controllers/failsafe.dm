@@ -41,7 +41,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 				break
 			else if (defcon == 1) //Exit Failsafe if we weren't able to recover the MC in the last stage
 				log_game("FailSafe: Failed to recover MC while in emergency state. Failsafe exiting.")
-				message_admins(span_boldannounce("Failsafe failed criticaly while trying to recreate broken MC. Please manually fix the MC or reboot the server. Failsafe exiting now."))
+				message_admins(span_boldannounce("Failsafe failed critically while trying to recreate broken MC. Please manually fix the MC or reboot the server. Failsafe exiting now."))
 				message_admins(span_boldannounce("You can try manually calling these two procs:."))
 				message_admins(span_boldannounce("/proc/recover_all_SS_and_recreate_master: Most stuff should still function but expect instability/runtimes/broken stuff."))
 				message_admins(span_boldannounce("/proc/delete_all_SS_and_recreate_master: Most stuff will be broken but basic stuff like movement and chat should still work."))
@@ -148,7 +148,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 /proc/recover_all_SS_and_recreate_master()
 	del(Master)
 	var/list/subsytem_types = subtypesof(/datum/controller/subsystem)
-	sortTim(subsytem_types, /proc/cmp_subsystem_init)
+	sortTim(subsytem_types, GLOBAL_PROC_REF(cmp_subsystem_init))
 	for(var/I in subsytem_types)
 		new I
 	. = Recreate_MC()

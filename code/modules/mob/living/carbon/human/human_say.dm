@@ -1,14 +1,29 @@
+
+
+/mob/living/carbon/human/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced, filterproof, message_range, datum/saymode/saymode)
+	if(!HAS_TRAIT(src, TRAIT_SPEAKS_CLEARLY))
+		var/static/regex/tongueless_lower = new("\[gdntke]+", "g")
+		var/static/regex/tongueless_upper = new("\[GDNTKE]+", "g")
+		if(message[1] != "*")
+			message = tongueless_lower.Replace(message, pick("aa","oo","'"))
+			message = tongueless_upper.Replace(message, pick("AA","OO","'"))
+	return ..()
+
 /mob/living/carbon/human/say_mod(input, list/message_mods = list())
-	verb_say = dna.species.say_mod
-	if(slurring)
-		if (HAS_TRAIT(src, TRAIT_SIGN_LANG))
-			return "loosely signs"
+	var/obj/item/organ/internal/tongue/tongue = getorganslot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
+			verb_say = "signs"
 		else
-			return "slurs"
+			verb_say = "gurgles"
 	else
-		. = ..()
+		verb_say = tongue.temp_say_mod || tongue.say_mod
+	return ..()
 
 /mob/living/carbon/human/GetVoice()
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return ("Unknown")
+
 	if(istype(wear_mask, /obj/item/clothing/mask/chameleon))
 		var/obj/item/clothing/mask/chameleon/V = wear_mask
 		if(V.voice_change && wear_id)
@@ -19,12 +34,7 @@
 				return real_name
 		else
 			return real_name
-	if(istype(wear_mask, /obj/item/clothing/mask/infiltrator))
-		var/obj/item/clothing/mask/infiltrator/V = wear_mask
-		if(V.voice_unknown)
-			return ("Unknown")
-		else
-			return real_name
+
 	if(mind)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling?.mimicing)
@@ -32,14 +42,6 @@
 	if(GetSpecialVoice())
 		return GetSpecialVoice()
 	return real_name
-
-/mob/living/carbon/human/IsVocal()
-	// how do species that don't breathe talk? magic, that's what.
-	if(!HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT) && !getorganslot(ORGAN_SLOT_LUNGS))
-		return FALSE
-	if(mind)
-		return !mind.miming
-	return TRUE
 
 /mob/living/carbon/human/proc/SetSpecialVoice(new_voice)
 	if(new_voice)
@@ -83,4 +85,4 @@
 
 /mob/living/carbon/human/get_alt_name()
 	if(name != GetVoice())
-		return " (as [get_id_name("Unknown")])"\
+		return " (as [get_id_name("Unknown")])"

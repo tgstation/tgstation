@@ -20,8 +20,6 @@ GLOBAL_LIST_EMPTY(undershirt_f)  //stores only undershirt name
 GLOBAL_LIST_EMPTY(socks_list) //stores /datum/sprite_accessory/socks indexed by name
 	//Lizard Bits (all datum lists indexed by name)
 GLOBAL_LIST_EMPTY(body_markings_list)
-GLOBAL_LIST_EMPTY(tails_list_lizard)
-GLOBAL_LIST_EMPTY(animated_tails_list_lizard)
 GLOBAL_LIST_EMPTY(snouts_list)
 GLOBAL_LIST_EMPTY(horns_list)
 GLOBAL_LIST_EMPTY(frills_list)
@@ -30,8 +28,9 @@ GLOBAL_LIST_EMPTY(legs_list)
 GLOBAL_LIST_EMPTY(animated_spines_list)
 
 	//Mutant Human bits
-GLOBAL_LIST_EMPTY(tails_list_human)
-GLOBAL_LIST_EMPTY(animated_tails_list_human)
+GLOBAL_LIST_EMPTY(tails_list)
+GLOBAL_LIST_EMPTY(tails_list_human) //Only exists for preference choices. Use "tails_list" otherwise.
+GLOBAL_LIST_EMPTY(tails_list_lizard) //See above!
 GLOBAL_LIST_EMPTY(ears_list)
 GLOBAL_LIST_EMPTY(wings_list)
 GLOBAL_LIST_EMPTY(wings_open_list)
@@ -39,7 +38,6 @@ GLOBAL_LIST_EMPTY(moth_wings_list)
 GLOBAL_LIST_EMPTY(moth_antennae_list)
 GLOBAL_LIST_EMPTY(moth_markings_list)
 GLOBAL_LIST_EMPTY(caps_list)
-GLOBAL_LIST_EMPTY(tails_list_monkey)
 GLOBAL_LIST_EMPTY(pod_hair_list)
 
 GLOBAL_LIST_INIT(color_list_ethereal, list(
@@ -337,3 +335,19 @@ GLOBAL_LIST_INIT(admiral_messages, list(
 ))
 
 GLOBAL_LIST_INIT(junkmail_messages, world.file2list("strings/junkmail.txt"))
+
+// All valid inputs to status display post_status
+GLOBAL_LIST_INIT(status_display_approved_pictures, list(
+	"blank",
+	"shuttle",
+	"default",
+	"biohazard",
+	"lockdown",
+	"redalert",
+))
+
+// Members of status_display_approved_pictures that are actually states and not alert values
+GLOBAL_LIST_INIT(status_display_state_pictures, list(
+	"blank",
+	"shuttle",
+))

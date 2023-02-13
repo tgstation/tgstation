@@ -17,6 +17,8 @@
 		COOLDOWN_START(src, retaliate_cooldown, 2.5 SECONDS) // 2.5 seconds before auto-retaliate can whack everything within 1 tile again
 		B.visible_message(span_boldwarning("The blob retaliates, lashing out!"))
 		for(var/atom/A in range(1, B))
+			if(!A.can_blob_attack())
+				continue
 			var/attacked_turf = get_turf(A)
 			if(isliving(A) && !isblobmonster(A)) // Make sure to inject strain-reagents with automatic attacks when needed.
 				B.blob_attack_animation(attacked_turf, overmind)
@@ -33,7 +35,7 @@
 	color = "#9ACD32"
 
 /datum/reagent/blob/reactive_spines/return_mob_expose_reac_volume(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
-	if(exposed_mob.stat == DEAD || istype(exposed_mob, /mob/living/simple_animal/hostile/blob))
+	if(exposed_mob.stat == DEAD || isblobmonster(exposed_mob))
 		return 0 //the dead, and blob mobs, don't cause reactions
 	return reac_volume
 

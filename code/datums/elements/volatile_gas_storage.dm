@@ -1,7 +1,7 @@
 /// An element to make an /obj explode based on gas pressure when broken
 /datum/element/volatile_gas_storage
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 	/// The minimum pressure of the gas storage to consider an explosion when broken
 	var/minimum_explosive_pressure
@@ -13,9 +13,9 @@
 /datum/element/volatile_gas_storage/Attach(datum/target, minimum_explosive_pressure=5000, max_explosive_pressure=100000, max_explosive_force=9)
 	. = ..()
 	if(istype(target, /obj/machinery/atmospherics/components))
-		RegisterSignal(target, COMSIG_ATOM_BREAK, .proc/AtmosComponentBreak)
+		RegisterSignal(target, COMSIG_ATOM_BREAK, PROC_REF(AtmosComponentBreak))
 	else if(isobj(target))
-		RegisterSignal(target, COMSIG_ATOM_BREAK, .proc/ObjBreak)
+		RegisterSignal(target, COMSIG_ATOM_BREAK, PROC_REF(ObjBreak))
 	else
 		return ELEMENT_INCOMPATIBLE
 

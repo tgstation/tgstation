@@ -8,7 +8,7 @@
 
 
 /obj/structure/alien
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	max_integrity = 100
 
 /obj/structure/alien/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
@@ -59,8 +59,8 @@
 	opacity = TRUE
 	anchored = TRUE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN)
-	canSmoothWith = list(SMOOTH_GROUP_ALIEN_RESIN)
+	smoothing_groups = SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_RESIN
 	max_integrity = 200
 	var/resintype = null
 	can_atmos_pass = ATMOS_PASS_DENSITY
@@ -86,8 +86,8 @@
 	icon_state = "resin_wall-0"
 	base_icon_state = "resin_wall"
 	resintype = "wall"
-	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WALLS)
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
 
 /obj/structure/alien/resin/wall/block_superconductivity()
 	return 1
@@ -99,7 +99,7 @@
 
 /obj/structure/alien/resin/wall/creature
 	name = "gelatinous wall"
-	desc = "Thick material shaped into a wall. Eugh."
+	desc = "Thick material shaped into a wall. Yuck."
 	color = "#8EC127"
 
 /obj/structure/alien/resin/membrane
@@ -111,8 +111,8 @@
 	opacity = FALSE
 	max_integrity = 160
 	resintype = "membrane"
-	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WALLS)
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
 
 /obj/structure/alien/resin/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -142,8 +142,8 @@
 	base_icon_state = "weeds1"
 	max_integrity = 15
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WEEDS)
-	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WEEDS, SMOOTH_GROUP_WALLS)
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WEEDS + SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_WEEDS + SMOOTH_GROUP_WALLS
 	///the range of the weeds going to be affected by the node
 	var/node_range = NODERANGE
 	///the parent node that will determine if we grow or die
@@ -214,7 +214,7 @@
 		check_weed = new(check_turf)
 		//set the new one's parent node to our parent node
 		check_weed.parent_node = parent_node
-		check_weed.RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, .proc/after_parent_destroyed)
+		check_weed.RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, PROC_REF(after_parent_destroyed))
 
 /**
  * Called when the parent node is destroyed
@@ -222,7 +222,7 @@
 /obj/structure/alien/weeds/proc/after_parent_destroyed()
 	if(!find_new_parent())
 		var/random_time = rand(2 SECONDS, 8 SECONDS)
-		addtimer(CALLBACK(src, .proc/do_qdel), random_time)
+		addtimer(CALLBACK(src, PROC_REF(do_qdel)), random_time)
 
 /**
  * Called when trying to find a new parent after our previous parent died
@@ -236,7 +236,7 @@
 		if(new_parent == previous_node)
 			continue
 		parent_node = new_parent
-		RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, .proc/after_parent_destroyed)
+		RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, PROC_REF(after_parent_destroyed))
 		return parent_node
 	return FALSE
 
@@ -307,7 +307,7 @@
 
 /obj/structure/alien/weeds/creature
 	name = "gelatinous floor"
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes."
+	desc = "A thick gelatinous surface covers the floor.  Someone get the galoshes."
 	color = "#4BAE56"
 
 
@@ -329,8 +329,8 @@
 /obj/structure/alien/egg
 	name = "egg"
 	desc = "A large mottled egg."
-	var/base_icon = "egg"
 	icon_state = "egg_growing"
+	base_icon_state = "egg"
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 100
@@ -348,7 +348,7 @@
 	if(status == GROWING || status == GROWN)
 		child = new(src)
 	if(status == GROWING)
-		addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
+		addtimer(CALLBACK(src, PROC_REF(Grow)), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 	proximity_monitor = new(src, status == GROWN ? 1 : 0)
 	if(status == BURST)
 		atom_integrity = integrity_failure * max_integrity
@@ -358,11 +358,11 @@
 /obj/structure/alien/egg/update_icon_state()
 	switch(status)
 		if(GROWING)
-			icon_state = "[base_icon]_growing"
+			icon_state = "[base_icon_state]_growing"
 		if(GROWN)
-			icon_state = "[base_icon]"
+			icon_state = "[base_icon_state]"
 		if(BURST)
-			icon_state = "[base_icon]_hatched"
+			icon_state = "[base_icon_state]_hatched"
 	return ..()
 
 /obj/structure/alien/egg/attack_paw(mob/living/user, list/modifiers)
@@ -375,7 +375,7 @@
 	. = ..()
 	if(.)
 		return
-	if(user.getorgan(/obj/item/organ/alien/plasmavessel))
+	if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
 		switch(status)
 			if(BURSTING)
 				to_chat(user, span_notice("The child is hatching out."))
@@ -408,7 +408,7 @@
 		status = BURSTING
 		proximity_monitor.set_range(0)
 		flick("egg_opening", src)
-		addtimer(CALLBACK(src, .proc/finish_bursting, kill), 15)
+		addtimer(CALLBACK(src, PROC_REF(finish_bursting), kill), 15)
 
 /obj/structure/alien/egg/proc/finish_bursting(kill = TRUE)
 	status = BURST
@@ -443,7 +443,7 @@
 			return
 
 		var/mob/living/carbon/C = AM
-		if(C.stat == CONSCIOUS && C.getorgan(/obj/item/organ/body_egg/alien_embryo))
+		if(C.stat == CONSCIOUS && C.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
 			return
 
 		Burst(kill=FALSE)

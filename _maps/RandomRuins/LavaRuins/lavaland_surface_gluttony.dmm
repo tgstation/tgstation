@@ -1,527 +1,805 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
+"aE" = (
+/obj/structure/stone_tile/center/burnt,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding/cracked,
+/obj/effect/mob_spawn/corpse/human/skeleton,
+/turf/open/indestructible/necropolis,
 /area/lavaland/surface/outdoors)
-"b" = (
+"aO" = (
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"bv" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"bD" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"dI" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/slab/cracked{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/food/meat/slab/human/mutant/lizard,
+/obj/item/food/meat/slab/human/mutant/lizard,
+/obj/item/food/meat/slab/human/mutant/lizard,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"eb" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/food/meat/slab/corgi{
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/obj/item/food/meat/slab/corgi{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/knife/combat/bone,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"eq" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/structure/stone_tile/block,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"eN" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"fa" = (
+/obj/structure/table/wood,
+/obj/item/food/meat/slab/human,
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"fY" = (
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
+"hV" = (
+/obj/structure/stone_tile/center/burnt,
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 8
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"c" = (
+"ie" = (
+/obj/item/veilrender/vealrender,
+/obj/structure/stone_tile/slab/cracked{
+	dir = 6
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"iw" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"jK" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"jM" = (
+/turf/closed/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"kr" = (
+/obj/effect/gluttony,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"kB" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"ll" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/spear/bonespear,
+/obj/item/slime_extract/silver,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"ls" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"ly" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"nM" = (
+/obj/structure/stone_tile/center/burnt,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"nT" = (
+/turf/closed/indestructible/riveted/boss,
+/area/ruin/powered/gluttony)
+"pj" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"pD" = (
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/ruin/powered/gluttony)
+"qs" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/ruin/powered/gluttony)
+"qC" = (
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 8
+	},
+/obj/structure/bonfire/prelit,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"rg" = (
+/obj/structure/stone_tile/block/burnt,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"vU" = (
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"wD" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"wI" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding/cracked,
+/obj/structure/stone_tile/center/cracked,
+/turf/open/lava/smooth/lava_land_surface,
+/area/ruin/powered/gluttony)
+"xA" = (
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 5
+	},
+/obj/structure/headpike/bone,
+/turf/open/lava/smooth/lava_land_surface,
+/area/ruin/powered/gluttony)
+"yx" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/food/meat/slab/goliath,
+/obj/item/food/meat/slab/human/mutant/ethereal,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"zd" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
+"zr" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"Av" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"Ci" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"Ck" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/gluttony)
+"CM" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"CU" = (
+/obj/effect/gluttony,
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"DB" = (
+/obj/structure/stone_tile/slab/burnt,
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
+"DH" = (
+/obj/structure/headpike/bone,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"DY" = (
+/obj/structure/stone_tile/center/burnt,
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 6
+	},
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
+"Eq" = (
+/obj/structure/stone_tile/surrounding_tile/burnt,
+/obj/structure/stone_tile/center/burnt,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"ED" = (
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"EN" = (
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
+"Fi" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"Ie" = (
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 1
+	},
+/obj/structure/stone_tile/slab/cracked{
+	dir = 1
+	},
+/obj/effect/mob_spawn/corpse/human/miner,
+/obj/item/clothing/gloves/butchering,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"IM" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 10
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"IW" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/effect/gluttony,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"LT" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"Ma" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"MH" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"e" = (
-/turf/open/lava/smooth,
+"NT" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Ol" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked,
+/turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
-"f" = (
-/obj/item/reagent_containers/syringe/gluttony,
-/turf/open/floor/iron/freezer,
+"OA" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
-"g" = (
+"Pd" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"Qr" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/structure/bonfire/dense,
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"Rf" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 5
+	},
+/turf/open/indestructible/necropolis,
+/area/ruin/powered/gluttony)
+"Rj" = (
+/obj/structure/stone_tile/block,
 /obj/effect/gluttony,
-/turf/open/floor/iron/freezer,
+/turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
-"h" = (
-/obj/item/veilrender/vealrender,
-/turf/open/floor/iron/freezer,
+"Rz" = (
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
+"Sr" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
-"i" = (
-/turf/open/floor/iron/freezer,
+"UG" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
-"j" = (
-/obj/item/plate,
-/turf/open/floor/iron/freezer,
+"UH" = (
+/obj/structure/stone_tile/slab/burnt,
+/turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
-"l" = (
-/obj/item/trash/candy,
-/turf/open/floor/iron/freezer,
+"Vc" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
-"m" = (
-/obj/item/trash/raisins,
-/turf/open/floor/iron/freezer,
+"Vz" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt,
+/turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
-"n" = (
-/obj/item/trash/pistachios,
-/turf/open/floor/iron/freezer,
+"Wy" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/food/meat/slab/human/mutant/moth,
+/turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
-"o" = (
-/obj/item/trash/popcorn,
-/turf/open/floor/iron/freezer,
+"WR" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"XY" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
-"p" = (
-/obj/item/trash/semki,
-/turf/open/floor/iron/freezer,
+"YG" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
-"q" = (
-/obj/item/trash/syndi_cakes,
-/turf/open/floor/iron/freezer,
+"Zd" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/obj/structure/stone_tile/block,
+/turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
-"r" = (
-/obj/effect/gluttony,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/freezer,
+"Zu" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Zx" = (
+/obj/structure/stone_tile/surrounding/cracked,
+/obj/structure/bonfire/prelit,
+/turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
-"t" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/freezer,
+"ZT" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/bonfire/prelit,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/powered/gluttony)
-"v" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/freezer,
-/area/ruin/powered/gluttony)
-"z" = (
-/obj/item/plate,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/freezer,
-/area/ruin/powered/gluttony)
-"A" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/freezer,
-/area/ruin/powered/gluttony)
-"R" = (
-/turf/closed/indestructible/riveted/uranium,
-/area/ruin/powered/gluttony)
-"S" = (
-/obj/machinery/door/airlock/uranium/safe,
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/iron/freezer,
+"ZV" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
 
 (1,1,1) = {"
-a
-a
-a
-b
-b
-a
-a
-b
-a
-b
-b
-b
-b
-b
-b
-b
-a
-a
-a
-a
+Zu
+WR
+WR
+WR
+WR
+Zu
+Zu
+Zu
+Zu
+Zu
+Zu
+Zu
+Zu
+Zu
 "}
 (2,1,1) = {"
-a
-a
-a
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-a
-a
-a
-a
+Zu
+Zu
+Zu
+Zu
+Zu
+Zu
+Zu
+Zu
+nT
+jM
+jM
+jM
+Zu
+Zu
 "}
 (3,1,1) = {"
-b
-a
-a
-a
-b
-b
-b
-c
-c
-c
-b
-c
-c
-c
-b
-b
-a
-a
-a
-a
+Zu
+Zu
+jM
+jM
+jM
+nT
+jM
+jM
+jM
+kr
+ie
+nT
+Zu
+Zu
 "}
 (4,1,1) = {"
-b
-a
-a
-a
-b
-b
-b
-c
-R
-R
-S
-R
-R
-c
-b
-a
-a
-a
-a
-a
+Zu
+Zu
+jM
+ZT
+UG
+Vc
+qs
+UH
+pj
+CU
+kr
+nT
+MH
+Zu
 "}
 (5,1,1) = {"
-b
-b
-a
-a
-a
-b
-b
-c
-R
-h
-i
-o
-R
-c
-b
-a
-a
-a
-a
-a
+Zu
+Zu
+nT
+CM
+Zd
+XY
+LT
+bD
+kB
+IM
+CU
+jM
+MH
+MH
 "}
 (6,1,1) = {"
-a
-a
-a
-a
-a
-b
-b
-c
-R
-i
-i
-v
-R
-c
-b
-b
-b
-b
-b
-a
+Zu
+MH
+nT
+Rj
+Ol
+Wy
+eb
+nT
+zr
+Av
+YG
+jM
+MH
+MH
 "}
 (7,1,1) = {"
-a
-b
-b
-b
-b
-b
-b
-c
-R
-i
-l
-i
-R
-c
-b
-b
-b
-b
-b
-a
+Zu
+MH
+nT
+ZV
+eq
+nT
+nT
+nT
+wI
+rg
+Ie
+jM
+MH
+Zu
 "}
 (8,1,1) = {"
-a
-b
-c
-c
-c
-c
-c
-c
-R
-t
-i
-m
-R
-c
-c
-c
-c
-c
-c
-b
+Zu
+MH
+MH
+ly
+Vz
+Ck
+xA
+ED
+nT
+nT
+nT
+nT
+Zu
+Zu
 "}
 (9,1,1) = {"
-b
-b
-c
-R
-R
-R
-R
-R
-R
-g
-m
-v
-R
-R
-R
-R
-R
-R
-c
-b
+Zu
+MH
+nT
+ll
+iw
+ls
+ls
+eN
+vU
+Rz
+MH
+MH
+DH
+Zu
 "}
 (10,1,1) = {"
-a
-b
-c
-R
-e
-R
-r
-g
-g
-g
-g
-i
-p
-i
-z
-l
-i
-R
-c
-b
+Zu
+Zu
+jM
+dI
+OA
+Fi
+nT
+OA
+Pd
+EN
+NT
+NT
+jK
+Zu
 "}
 (11,1,1) = {"
-a
-b
-c
-R
-f
-g
-g
-g
-g
-g
-n
-i
-i
-i
-i
-i
-i
-S
-b
-b
+Zu
+Zu
+nT
+yx
+Rf
+Vc
+nT
+UH
+Pd
+DB
+aE
+DY
+hV
+Zu
 "}
 (12,1,1) = {"
-a
-b
-c
-R
-e
-R
-r
-g
-g
-g
-i
-g
-i
-l
-A
-i
-q
-R
-c
-b
+Zu
+Zu
+nT
+IW
+UH
+pD
+Ck
+Eq
+Sr
+fY
+zd
+Ma
+nM
+Zu
 "}
 (13,1,1) = {"
-a
-b
-c
-R
-R
-R
-R
-R
-R
-g
-i
-v
-R
-R
-R
-R
-R
-R
-c
-b
+Zu
+Zu
+nT
+Qr
+bv
+Ci
+wD
+aO
+fa
+MH
+MH
+MH
+DH
+Zu
 "}
 (14,1,1) = {"
-a
-b
-c
-c
-c
-c
-c
-c
-R
-r
-i
-i
-R
-c
-c
-c
-c
-c
-c
-b
+Zu
+Zu
+jM
+nT
+MH
+MH
+Zx
+qC
+MH
+MH
+MH
+MH
+Zu
+Zu
 "}
 (15,1,1) = {"
-a
-b
-b
-b
-b
-b
-b
-c
-R
-i
-g
-i
-R
-c
-b
-b
-b
-b
-b
-b
+Zu
+Zu
+Zu
+Zu
+Zu
+MH
+MH
+MH
+MH
+MH
+MH
+Zu
+Zu
+WR
 "}
 (16,1,1) = {"
-b
-b
-b
-a
-b
-b
-b
-c
-R
-j
-i
-v
-R
-c
-b
-b
-b
-a
-a
-a
-"}
-(17,1,1) = {"
-b
-b
-b
-a
-b
-b
-b
-c
-R
-i
-n
-i
-R
-c
-b
-b
-b
-a
-a
-a
-"}
-(18,1,1) = {"
-a
-a
-a
-a
-b
-b
-b
-c
-R
-R
-S
-R
-R
-c
-b
-b
-b
-a
-a
-a
-"}
-(19,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-c
-c
-c
-b
-c
-c
-c
-b
-b
-a
-a
-a
-a
-"}
-(20,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-b
-b
-b
-b
-b
-b
-b
-a
-a
-b
-a
-a
-a
+WR
+Zu
+Zu
+Zu
+Zu
+Zu
+Zu
+Zu
+Zu
+Zu
+Zu
+Zu
+WR
+WR
 "}

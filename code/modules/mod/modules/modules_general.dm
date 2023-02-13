@@ -7,9 +7,7 @@
 		the surface of the suit, useful for storing various bits, and or bobs."
 	icon_state = "storage"
 	complexity = 3
-	incompatible_modules = list(/obj/item/mod/module/storage)
-	/// The storage component of the module.
-	var/datum/component/storage/concrete/storage
+	incompatible_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/plate_compression)
 	/// Max weight class of items in the storage.
 	var/max_w_class = WEIGHT_CLASS_NORMAL
 	/// Max combined weight of all items in the storage.
@@ -19,34 +17,30 @@
 
 /obj/item/mod/module/storage/Initialize(mapload)
 	. = ..()
-	storage = AddComponent(/datum/component/storage/concrete)
-	storage.max_w_class = max_w_class
-	storage.max_combined_w_class = max_combined_w_class
-	storage.max_items = max_items
-	storage.allow_big_nesting = TRUE
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
+	create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
+	atom_storage.allow_big_nesting = TRUE
+	atom_storage.locked = TRUE
 
 /obj/item/mod/module/storage/on_install()
-	var/datum/component/storage/modstorage = mod.AddComponent(/datum/component/storage, storage)
-	modstorage.max_w_class = max_w_class
-	modstorage.max_combined_w_class = max_combined_w_class
-	modstorage.max_items = max_items
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
-	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_chestplate_unequip)
+	var/datum/storage/modstorage = mod.create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
+	modstorage.set_real_location(src)
+	atom_storage.locked = FALSE
+	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_chestplate_unequip))
 
-/obj/item/mod/module/storage/on_uninstall()
-	var/datum/component/storage/modstorage = mod.GetComponent(/datum/component/storage)
-	storage.slaves -= modstorage
+/obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
+	var/datum/storage/modstorage = mod.atom_storage
+	atom_storage.locked = TRUE
 	qdel(modstorage)
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
+	if(!deleting)
+		atom_storage.remove_all(get_turf(src))
 	UnregisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
 
 /obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
-	if(QDELETED(source) || newloc == mod.wearer || !mod.wearer.s_store)
+	if(QDELETED(source) || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
 		return
 	to_chat(mod.wearer, span_notice("[src] tries to store [mod.wearer.s_store] inside itself."))
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, mod.wearer.s_store, mod.wearer, TRUE)
+	if(atom_storage?.attempt_insert(mod.wearer.s_store, mod.wearer, override = TRUE))
+		mod.wearer.temporarilyRemoveItemFromInventory(mod.wearer.s_store)
 
 /obj/item/mod/module/storage/large_capacity
 	name = "MOD expanded storage module"
@@ -66,6 +60,18 @@
 	max_combined_w_class = 30
 	max_items = 21
 
+/obj/item/mod/module/storage/belt
+	name = "MOD case storage module"
+	desc = "Some concessions had to be made when creating a compressed modular suit core. \
+	As a result, Roseus Galactic equipped their suit with a slimline storage case.  \
+	If you find this equipped to a standard modular suit, then someone has almost certainly shortchanged you on a proper storage module."
+	icon_state = "storage_case"
+	complexity = 0
+	max_w_class = WEIGHT_CLASS_SMALL
+	removable = FALSE
+	max_combined_w_class = 21
+	max_items = 7
+
 /obj/item/mod/module/storage/bluespace
 	name = "MOD bluespace storage module"
 	desc = "A storage system developed by Nanotrasen, these compartments employ \
@@ -74,7 +80,6 @@
 	max_w_class = WEIGHT_CLASS_GIGANTIC
 	max_combined_w_class = 60
 	max_items = 21
-
 
 ///Ion Jetpack - Lets the user fly freely through space using battery charge.
 /obj/item/mod/module/jetpack
@@ -95,38 +100,38 @@
 	var/stabilizers = FALSE
 	/// Do we give the wearer a speed buff.
 	var/full_speed = FALSE
-	/// The ion trail particles left after the jetpack.
-	var/datum/effect_system/trail_follow/ion/grav_allowed/ion_trail
+	var/datum/callback/get_mover
+	var/datum/callback/check_on_move
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
-	ion_trail = new()
-	ion_trail.auto_process = FALSE
-	ion_trail.set_up(src)
+	get_mover = CALLBACK(src, PROC_REF(get_user))
+	check_on_move = CALLBACK(src, PROC_REF(allow_thrust))
+	refresh_jetpack()
 
 /obj/item/mod/module/jetpack/Destroy()
-	QDEL_NULL(ion_trail)
+	get_mover = null
+	check_on_move = null
 	return ..()
+
+/obj/item/mod/module/jetpack/proc/refresh_jetpack()
+	AddComponent(/datum/component/jetpack, stabilizers, COMSIG_MODULE_TRIGGERED, COMSIG_MODULE_DEACTIVATED, MOD_ABORT_USE, get_mover, check_on_move, /datum/effect_system/trail_follow/ion/grav_allowed)
+
+/obj/item/mod/module/jetpack/proc/set_stabilizers(new_stabilizers)
+	if(stabilizers == new_stabilizers)
+		return
+	stabilizers = new_stabilizers
+	refresh_jetpack()
 
 /obj/item/mod/module/jetpack/on_activation()
 	. = ..()
 	if(!.)
 		return
-	ion_trail.start()
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/move_react)
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_SPACEMOVE, .proc/spacemove_react)
 	if(full_speed)
 		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
-/obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
-	if(!.)
-		return
-	ion_trail.stop()
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE)
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_SPACEMOVE)
 	if(full_speed)
 		mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
@@ -137,40 +142,17 @@
 /obj/item/mod/module/jetpack/configure_edit(key, value)
 	switch(key)
 		if("stabilizers")
-			stabilizers = text2num(value)
+			set_stabilizers(text2num(value))
 
-/obj/item/mod/module/jetpack/proc/move_react(mob/user)
-	SIGNAL_HANDLER
-
-	if(!active)//If jet dont work, it dont work
-		return
-	if(!isturf(mod.wearer.loc))//You can't use jet in nowhere or from mecha/closet
-		return
-	if(!(mod.wearer.movement_type & FLOATING) || mod.wearer.buckled)//You don't want use jet in gravity or while buckled.
-		return
-	if(mod.wearer.pulledby)//You don't must use jet if someone pull you
-		return
-	if(mod.wearer.throwing)//You don't must use jet if you thrown
-		return
-	if(user.client && length(user.client.keys_held & user.client.movement_keys))//You use jet when press keys. yes.
-		allow_thrust()
-
-/obj/item/mod/module/jetpack/proc/pre_move_react(mob/user)
-	SIGNAL_HANDLER
-
-	ion_trail.oldposition = get_turf(src)
-
-/obj/item/mod/module/jetpack/proc/spacemove_react(mob/user, movement_dir)
-	SIGNAL_HANDLER
-
-	if(active && (stabilizers || movement_dir))
-		return COMSIG_MOVABLE_STOP_SPACEMOVE
-
-/obj/item/mod/module/jetpack/proc/allow_thrust()
+/obj/item/mod/module/jetpack/proc/allow_thrust(use_fuel = TRUE)
+	if(!use_fuel)
+		return check_power(use_power_cost)
 	if(!drain_power(use_power_cost))
-		return
-	ion_trail.generate_effect()
+		return FALSE
 	return TRUE
+
+/obj/item/mod/module/jetpack/proc/get_user()
+	return mod.wearer
 
 /obj/item/mod/module/jetpack/advanced
 	name = "MOD advanced ion jetpack module"
@@ -186,7 +168,7 @@
 	name = "MOD eating apparatus module"
 	desc = "A favorite by Miners, this modification to the helmet utilizes a nanotechnology barrier infront of the mouth \
 		to allow eating and drinking while retaining protection and atmosphere. However, it won't free you from masks, \
-		and it will do nothing to improve the taste of a goliath steak."
+		lets pepper spray pass through and it will do nothing to improve the taste of a goliath steak."
 	icon_state = "apparatus"
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/mouthhole)
@@ -199,23 +181,21 @@
 /obj/item/mod/module/mouthhole/on_install()
 	former_flags = mod.helmet.flags_cover
 	former_visor_flags = mod.helmet.visor_flags_cover
-	if(former_flags & HEADCOVERSMOUTH)
-		mod.helmet.flags_cover &= ~HEADCOVERSMOUTH
-	if(former_visor_flags & HEADCOVERSMOUTH)
-		mod.helmet.visor_flags_cover &= ~HEADCOVERSMOUTH
+	mod.helmet.flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
+	mod.helmet.visor_flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
 
-/obj/item/mod/module/mouthhole/on_uninstall()
-	if(former_flags & HEADCOVERSMOUTH)
-		mod.helmet.flags_cover |= HEADCOVERSMOUTH
-	if(former_visor_flags & HEADCOVERSMOUTH)
-		mod.helmet.visor_flags_cover |= HEADCOVERSMOUTH
+/obj/item/mod/module/mouthhole/on_uninstall(deleting = FALSE)
+	if(deleting)
+		return
+	mod.helmet.flags_cover |= former_flags
+	mod.helmet.visor_flags_cover |= former_visor_flags
 
 ///EMP Shield - Protects the suit from EMPs.
 /obj/item/mod/module/emp_shield
 	name = "MOD EMP shield module"
 	desc = "A field inhibitor installed into the suit, protecting it against feedback such as \
-		electromagnetic pulses that would otherwise damage the electronic systems of the suit or devices on the wearer. \
-		However, it will take from the suit's power to do so. Luckily, your PDA already has one of these."
+		electromagnetic pulses that would otherwise damage the electronic systems of the suit or it's modules. \
+		However, it will take from the suit's power to do so."
 	icon_state = "empshield"
 	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
@@ -224,13 +204,26 @@
 /obj/item/mod/module/emp_shield/on_install()
 	mod.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
 
-/obj/item/mod/module/emp_shield/on_uninstall()
+/obj/item/mod/module/emp_shield/on_uninstall(deleting = FALSE)
 	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
+
+/obj/item/mod/module/emp_shield/advanced
+	name = "MOD advanced EMP shield module"
+	desc = "An advanced field inhibitor installed into the suit, protecting it against feedback such as \
+		electromagnetic pulses that would otherwise damage the electronic systems of the suit or electronic devices on the wearer, \
+		including augmentations. However, it will take from the suit's power to do so."
+	complexity = 2
+
+/obj/item/mod/module/emp_shield/advanced/on_suit_activation()
+	mod.wearer.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
+
+/obj/item/mod/module/emp_shield/advanced/on_suit_deactivation(deleting)
+	mod.wearer.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
 
 ///Flashlight - Gives the suit a customizable flashlight.
 /obj/item/mod/module/flashlight
 	name = "MOD flashlight module"
-	desc = "A simple pair of flashlights installed on the left and right sides of the helmet, \
+	desc = "A simple pair of configurable flashlights installed on the left and right sides of the helmet, \
 		useful for providing light in a variety of ranges and colors. \
 		Some survivalists prefer the color green for their illumination, for reasons unknown."
 	icon_state = "flashlight"
@@ -242,7 +235,7 @@
 	overlay_state_inactive = "module_light"
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_color = COLOR_WHITE
-	light_range = 3
+	light_range = 4
 	light_power = 1
 	light_on = FALSE
 	/// Charge drain per range amount.
@@ -260,7 +253,7 @@
 	set_light_on(active)
 	active_power_cost = base_power * light_range
 
-/obj/item/mod/module/flashlight/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/flashlight/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -268,16 +261,14 @@
 	set_light_on(active)
 
 /obj/item/mod/module/flashlight/on_process(delta_time)
-	. = ..()
-	if(!.)
-		return
 	active_power_cost = base_power * light_range
+	return ..()
 
 /obj/item/mod/module/flashlight/generate_worn_overlay(mutable_appearance/standing)
 	. = ..()
 	if(!active)
 		return
-	var/mutable_appearance/light_icon = mutable_appearance('icons/mob/clothing/mod.dmi', "module_light_on", layer = standing.layer + 0.2)
+	var/mutable_appearance/light_icon = mutable_appearance(overlay_icon_file, "module_light_on", layer = standing.layer + 0.2)
 	light_icon.appearance_flags = RESET_COLOR
 	light_icon.color = light_color
 	. += light_icon
@@ -297,7 +288,7 @@
 				balloon_alert(mod.wearer, "too dark!")
 				return
 			set_light_color(value)
-			mod.wearer.update_inv_back()
+			mod.wearer.update_clothing(mod.slot_flags)
 		if("light_range")
 			set_light_range(clamp(value, min_range, max_range))
 
@@ -331,6 +322,7 @@
 	balloon_alert(mod.wearer, "[dispensed] dispensed")
 	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
 	drain_power(use_power_cost)
+	return dispensed
 
 ///Longfall - Nullifies fall damage, removing charge instead.
 /obj/item/mod/module/longfall
@@ -345,9 +337,9 @@
 	incompatible_modules = list(/obj/item/mod/module/longfall)
 
 /obj/item/mod/module/longfall/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT, .proc/z_impact_react)
+	RegisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT, PROC_REF(z_impact_react))
 
-/obj/item/mod/module/longfall/on_suit_deactivation()
+/obj/item/mod/module/longfall/on_suit_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT)
 
 /obj/item/mod/module/longfall/proc/z_impact_react(datum/source, levels, turf/fell_on)
@@ -405,12 +397,12 @@
 	var/dna = null
 
 /obj/item/mod/module/dna_lock/on_install()
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
-	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, .proc/on_mod_removal)
-	RegisterSignal(mod, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
-	RegisterSignal(mod, COMSIG_ATOM_EMAG_ACT, .proc/on_emag)
+	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_mod_activation))
+	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, PROC_REF(on_mod_removal))
+	RegisterSignal(mod, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp))
+	RegisterSignal(mod, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag))
 
-/obj/item/mod/module/dna_lock/on_uninstall()
+/obj/item/mod/module/dna_lock/on_uninstall(deleting = FALSE)
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	UnregisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL)
 	UnregisterSignal(mod, COMSIG_ATOM_EMP_ACT)
@@ -468,10 +460,10 @@
 ///Plasma Stabilizer - Prevents plasmamen from igniting in the suit
 /obj/item/mod/module/plasma_stabilizer
 	name = "MOD plasma stabilizer module"
-	desc = "This system essentially forms an atmosphere of its' own inside the suit, \
-		safely ejecting oxygen from the inside and allowing the wearer, a plasmaman, \
-		to have their internal plasma circulate around them somewhat like a sauna. \
-		This prevents them from self-igniting, and leads to greater comfort overall. \
+	desc = "This system essentially forms an atmosphere of its own, within the suit, \
+		efficiently and quickly preventing oxygen from causing the user's head to burst into flame. \
+		This allows plasmamen to safely remove their helmet, allowing for easier \
+		equipping of any MODsuit-related equipment, or otherwise. \
 		The purple glass of the visor seems to be constructed for nostalgic purposes."
 	icon_state = "plasma_stabilizer"
 	complexity = 1
@@ -480,10 +472,10 @@
 	overlay_state_inactive = "module_plasma"
 
 /obj/item/mod/module/plasma_stabilizer/on_equip()
-	ADD_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION_HEAD_ONLY, MOD_TRAIT)
 
 /obj/item/mod/module/plasma_stabilizer/on_unequip()
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION_HEAD_ONLY, MOD_TRAIT)
 
 
 //Finally, https://pipe.miroware.io/5b52ba1d94357d5d623f74aa/mspfa/Nuke%20Ops/Panels/0648.gif can be real:
@@ -503,39 +495,41 @@
 	/// Whitelist of attachable hats, read note in Initialize() below this line
 	var/static/list/attachable_hats_list
 
-/obj/item/mod/module/hat_stabilizer/Initialize()
+/obj/item/mod/module/hat_stabilizer/Initialize(mapload)
 	. = ..()
 	attachable_hats_list = typecacheof(
 	//List of attachable hats. Make sure these and their subtypes are all tested, so they dont appear janky.
 	//This list should also be gimmicky, so captains can have fun. I.E. the Santahat, Pirate hat, Tophat, Chefhat...
 	//Yes, I said it, the captain should have fun.
 		list(
-			/obj/item/clothing/head/caphat,
-			/obj/item/clothing/head/crown,
-			/obj/item/clothing/head/centhat,
-			/obj/item/clothing/head/centcom_cap,
-			/obj/item/clothing/head/pirate,
-			/obj/item/clothing/head/santa,
-			/obj/item/clothing/head/hardhat/reindeer,
-			/obj/item/clothing/head/sombrero,
-			/obj/item/clothing/head/kitty,
-			/obj/item/clothing/head/rabbitears,
-			/obj/item/clothing/head/festive,
-			/obj/item/clothing/head/powdered_wig,
-			/obj/item/clothing/head/weddingveil,
-			/obj/item/clothing/head/that,
-			/obj/item/clothing/head/nursehat,
-			/obj/item/clothing/head/chefhat,
-			/obj/item/clothing/head/papersack,
-			)) - /obj/item/clothing/head/caphat/beret
-			//Need to subtract the beret because its annoying
+			/obj/item/clothing/head/hats/caphat,
+			/obj/item/clothing/head/costume/crown,
+			/obj/item/clothing/head/hats/centhat,
+			/obj/item/clothing/head/hats/centcom_cap,
+			/obj/item/clothing/head/costume/pirate,
+			/obj/item/clothing/head/costume/santa,
+			/obj/item/clothing/head/utility/hardhat/reindeer,
+			/obj/item/clothing/head/costume/sombrero/green,
+			/obj/item/clothing/head/costume/kitty,
+			/obj/item/clothing/head/costume/rabbitears,
+			/obj/item/clothing/head/costume/festive,
+			/obj/item/clothing/head/costume/powdered_wig,
+			/obj/item/clothing/head/costume/weddingveil,
+			/obj/item/clothing/head/hats/tophat,
+			/obj/item/clothing/head/costume/nursehat,
+			/obj/item/clothing/head/utility/chefhat,
+			/obj/item/clothing/head/costume/papersack,
+			/obj/item/clothing/head/caphat/beret,
+			))
 
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()
-	RegisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE, .proc/add_examine)
-	RegisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY, .proc/place_hat)
-	RegisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/remove_hat)
+	RegisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE, PROC_REF(add_examine))
+	RegisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY, PROC_REF(place_hat))
+	RegisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(remove_hat))
 
-/obj/item/mod/module/hat_stabilizer/on_suit_deactivation()
+/obj/item/mod/module/hat_stabilizer/on_suit_deactivation(deleting = FALSE)
+	if(deleting)
+		return
 	if(attached_hat)	//knock off the helmet if its on their head. Or, technically, auto-rightclick it for them; that way it saves us code, AND gives them the bubble
 		remove_hat(src, mod.wearer)
 	UnregisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE)
@@ -565,12 +559,12 @@
 	if(mod.wearer.transferItemToLoc(hitting_item, src, force = FALSE, silent = TRUE))
 		attached_hat = hitting_item
 		balloon_alert(user, "hat attached, right-click to remove")
-		mod.wearer.update_inv_back()
+		mod.wearer.update_clothing(mod.slot_flags)
 
 /obj/item/mod/module/hat_stabilizer/generate_worn_overlay()
 	. = ..()
 	if(attached_hat)
-		. += attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head.dmi')
+		. += attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 
 /obj/item/mod/module/hat_stabilizer/proc/remove_hat(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -583,7 +577,7 @@
 	else
 		balloon_alert_to_viewers("the hat falls to the floor!")
 	attached_hat = null
-	mod.wearer.update_inv_back()
+	mod.wearer.update_clothing(mod.slot_flags)
 
 ///Sign Language Translator - allows people to sign over comms using the modsuit's gloves.
 /obj/item/mod/module/signlang_radio
@@ -599,5 +593,5 @@
 /obj/item/mod/module/signlang_radio/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)
 
-/obj/item/mod/module/signlang_radio/on_suit_deactivation()
+/obj/item/mod/module/signlang_radio/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)

@@ -58,25 +58,25 @@
 	if(usage_flags & SHOCK_REQUIREMENT_ITEM)
 		required_object = input_item
 		required_object.Move(parent_as_movable)
-		RegisterSignal(required_object, COMSIG_PARENT_PREQDELETED, .proc/delete_self)
-		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/move_required_object_from_contents)
+		RegisterSignal(required_object, COMSIG_PARENT_QDELETING, PROC_REF(delete_self))
+		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), PROC_REF(move_required_object_from_contents))
 
 		if(usage_flags & SHOCK_REQUIREMENT_ON_SIGNAL_RECEIVED)
 			shock_on_loop = FALSE
-			RegisterSignal(required_object, COMSIG_ASSEMBLY_PULSED, .proc/shock_on_demand)
+			RegisterSignal(required_object, COMSIG_ASSEMBLY_PULSED, PROC_REF(shock_on_demand))
 		else if(usage_flags & SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE)
-			RegisterSignal(required_object, COMSIG_ASSEMBLY_PULSED, .proc/toggle_shock_loop)
+			RegisterSignal(required_object, COMSIG_ASSEMBLY_PULSED, PROC_REF(toggle_shock_loop))
 
 	if((usage_flags & SHOCK_REQUIREMENT_PARENT_MOB_ISALIVE) && ismob(parent))
-		RegisterSignal(parent, COMSIG_LIVING_DEATH, .proc/delete_self)
+		RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(delete_self))
 
-	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/on_buckle)
+	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, PROC_REF(on_buckle))
 
 	ADD_TRAIT(parent_as_movable, TRAIT_ELECTRIFIED_BUCKLE, INNATE_TRAIT)
 
 	//if parent wants us to manually shock on some specified action
 	if(signal_to_register_from_parent)
-		RegisterSignal(parent, signal_to_register_from_parent, .proc/shock_on_demand)
+		RegisterSignal(parent, signal_to_register_from_parent, PROC_REF(shock_on_demand))
 		requested_signal_parent_emits = signal_to_register_from_parent
 
 	if(overlays_to_add)
@@ -109,7 +109,7 @@
 			UnregisterSignal(parent, requested_signal_parent_emits)
 
 	if(required_object)
-		UnregisterSignal(required_object, list(COMSIG_PARENT_PREQDELETED, COMSIG_ASSEMBLY_PULSED))
+		UnregisterSignal(required_object, list(COMSIG_PARENT_QDELETING, COMSIG_ASSEMBLY_PULSED))
 		if(parent_as_movable && (required_object in parent_as_movable.contents))
 			required_object.Move(parent_as_movable.loc)
 

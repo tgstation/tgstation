@@ -1,9 +1,9 @@
 /obj/item/onetankbomb
 	name = "bomb"
-	icon = 'icons/obj/tank.dmi'
+	icon = 'icons/obj/atmospherics/tank.dmi'
 	inhand_icon_state = "assembly"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
@@ -77,7 +77,7 @@
 /obj/item/onetankbomb/receive_signal() //This is mainly called by the sensor through sense() to the holder, and from the holder to here.
 	audible_message(span_warning("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
 	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
-	sleep(10)
+	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
 	if(status)
@@ -136,6 +136,7 @@
 
 	bomb.bombassembly = assembly //Tell the bomb about its assembly part
 	assembly.master = bomb //Tell the assembly about its new owner
+	assembly.on_attach()
 
 	bomb.bombtank = src //Same for tank
 	master = bomb
@@ -162,13 +163,13 @@
 	if(bomb_mixture.temperature > (T0C + 400))
 		strength = (fuel_moles/15)
 
-		if(strength >=2)
+		if(strength >= 2)
 			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*3,1), flash_range = round(strength*4,1), explosion_cause = src)
-		else if(strength >=1)
+		else if(strength >= 1)
 			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
-		else if(strength >=0.5)
+		else if(strength >= 0.5)
 			explosion(ground_zero, heavy_impact_range = 1, light_impact_range = 2, flash_range = 4, explosion_cause = src)
-		else if(strength >=0.2)
+		else if(strength >= 0.2)
 			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 		else
 			ground_zero.assume_air(bomb_mixture)
@@ -177,9 +178,9 @@
 	else if(bomb_mixture.temperature > (T0C + 250))
 		strength = (fuel_moles/20)
 
-		if(strength >=1)
+		if(strength >= 1)
 			explosion(ground_zero, heavy_impact_range = round(strength,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
-		else if(strength >=0.5)
+		else if(strength >= 0.5)
 			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 		else
 			ground_zero.assume_air(bomb_mixture)
@@ -188,7 +189,7 @@
 	else if(bomb_mixture.temperature > (T0C + 100))
 		strength = (fuel_moles/25)
 
-		if(strength >=1)
+		if(strength >= 1)
 			explosion(ground_zero, devastation_range = -1, light_impact_range = round(strength,1), flash_range = round(strength*3,1), explosion_cause = src)
 		else
 			ground_zero.assume_air(bomb_mixture)

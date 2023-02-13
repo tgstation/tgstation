@@ -67,7 +67,7 @@
 	var/icon/bluespace
 
 /datum/status_effect/slimerecall/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/resistField)
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(resistField))
 	to_chat(owner, span_danger("You feel a sudden tug from an unknown force, and feel a pull to bluespace!"))
 	to_chat(owner, span_notice("Resist if you wish avoid the force!"))
 	bluespace = icon('icons/effects/effects.dmi',"chronofield")
@@ -101,7 +101,7 @@
 	var/obj/structure/ice_stasis/cube
 
 /datum/status_effect/frozenstasis/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/breakCube)
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(breakCube))
 	cube = new /obj/structure/ice_stasis(get_turf(owner))
 	owner.forceMove(cube)
 	owner.status_flags |= GODMODE
@@ -212,7 +212,7 @@
 /datum/status_effect/bonechill/tick()
 	if(prob(50))
 		owner.adjustFireLoss(1)
-		owner.Jitter(3)
+		owner.set_jitter_if_lower(6 SECONDS)
 		owner.adjust_bodytemperature(-10)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/humi = owner
@@ -383,7 +383,7 @@
 	duration = 300
 
 /datum/status_effect/spookcookie/on_apply()
-	var/image/I = image(icon = 'icons/mob/simple_human.dmi', icon_state = "skeleton", layer = ABOVE_MOB_LAYER, loc = owner)
+	var/image/I = image(icon = 'icons/mob/species/human/human.dmi', icon_state = "skeleton", layer = ABOVE_MOB_LAYER, loc = owner)
 	I.override = 1
 	owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "spookyscary", I)
 	return ..()
@@ -442,11 +442,29 @@
 	var/obj/item/slimecross/stabilized/linked_extract
 	var/colour = "null"
 
+/datum/status_effect/stabilized/proc/location_check()
+	if(linked_extract.loc == owner)
+		return TRUE
+	if(linked_extract.loc.loc == owner)
+		return TRUE
+	for(var/atom/storage_loc as anything in get_storage_locs(linked_extract))
+		if(storage_loc == owner)
+			return TRUE
+		if(storage_loc.loc == owner)
+			return TRUE
+		for(var/atom/storage_loc_storage_loc as anything in get_storage_locs(storage_loc))
+			if(storage_loc_storage_loc == owner)
+				return TRUE
+	for(var/atom/loc_storage_loc as anything in get_storage_locs(linked_extract.loc))
+		if(loc_storage_loc == owner)
+			return TRUE
+	return FALSE
+
 /datum/status_effect/stabilized/tick()
 	if(!linked_extract || !linked_extract.loc) //Sanity checking
 		qdel(src)
 		return
-	if(linked_extract && linked_extract.loc != owner && linked_extract.loc.loc != owner)
+	if(linked_extract && !location_check())
 		linked_extract.linked_effect = null
 		if(!QDELETED(linked_extract))
 			linked_extract.owner = null
@@ -485,24 +503,36 @@
 /datum/status_effect/stabilized/purple
 	id = "stabilizedpurple"
 	colour = "purple"
+	/// Whether we healed from our last tick
+	var/healed_last_tick = FALSE
 
 /datum/status_effect/stabilized/purple/tick()
-	var/is_healing = FALSE
+	healed_last_tick = FALSE
+
 	if(owner.getBruteLoss() > 0)
 		owner.adjustBruteLoss(-0.2)
-		is_healing = TRUE
+		healed_last_tick = TRUE
+
 	if(owner.getFireLoss() > 0)
 		owner.adjustFireLoss(-0.2)
-		is_healing = TRUE
+		healed_last_tick = TRUE
+
 	if(owner.getToxLoss() > 0)
-		owner.adjustToxLoss(-0.2, forced = TRUE) //Slimepeople should also get healed.
-		is_healing = TRUE
-	if(is_healing)
-		examine_text = "<span class='warning'>SUBJECTPRONOUN is regenerating slowly, purplish goo filling in small injuries!</span>"
+		// Forced, so slimepeople are healed as well.
+		owner.adjustToxLoss(-0.2, forced = TRUE)
+		healed_last_tick = TRUE
+
+	// Technically, "healed this tick" by now.
+	if(healed_last_tick)
 		new /obj/effect/temp_visual/heal(get_turf(owner), "#FF0000")
-	else
-		examine_text = null
-	..()
+
+	return ..()
+
+/datum/status_effect/stabilized/purple/get_examine_text()
+	if(healed_last_tick)
+		return span_warning("[owner.p_they(TRUE)] [owner.p_are()] regenerating slowly, purplish goo filling in small injuries!")
+
+	return null
 
 /datum/status_effect/stabilized/blue
 	id = "stabilizedblue"
@@ -544,7 +574,9 @@
 	colour = "yellow"
 	var/cooldown = 10
 	var/max_cooldown = 10
-	examine_text = "<span class='warning'>Nearby electronics seem just a little more charged wherever SUBJECTPRONOUN goes.</span>"
+
+/datum/status_effect/stabilized/yellow/get_examine_text()
+	return span_warning("Nearby electronics seem just a little more charged wherever [owner.p_they()] go[owner.p_es()].")
 
 /datum/status_effect/stabilized/yellow/tick()
 	if(cooldown > 0)
@@ -572,7 +604,6 @@
 	id = "stabilizeddarkpurple"
 	colour = "dark purple"
 	var/obj/item/hothands/fire
-	examine_text = "<span class='notice'>Their fingertips burn brightly!</span>"
 
 /datum/status_effect/stabilized/darkpurple/on_apply()
 	ADD_TRAIT(owner, TRAIT_RESISTHEATHANDS, "slimestatus")
@@ -581,16 +612,19 @@
 
 /datum/status_effect/stabilized/darkpurple/tick()
 	var/obj/item/item = owner.get_active_held_item()
-	if(IS_EDIBLE(item))
-		if(item.microwave_act())
+	if(item)
+		if(IS_EDIBLE(item) && (item.microwave_act(microwaver = owner) & COMPONENT_MICROWAVE_SUCCESS))
 			to_chat(owner, span_warning("[linked_extract] flares up brightly, and your hands alone are enough cook [item]!"))
-	else
-		item.attackby(fire, owner)
+		else
+			item.attackby(fire, owner)
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_RESISTHEATHANDS, "slimestatus")
 	qdel(fire)
+
+/datum/status_effect/stabilized/darkpurple/get_examine_text()
+	return span_notice("[owner.p_their(TRUE)] fingertips burn brightly!")
 
 /datum/status_effect/stabilized/darkblue
 	id = "stabilizeddarkblue"
@@ -598,7 +632,7 @@
 
 /datum/status_effect/stabilized/darkblue/tick()
 	if(owner.fire_stacks > 0 && prob(80))
-		owner.adjust_fire_stacks(-1)
+		owner.adjust_wet_stacks(1)
 		if(owner.fire_stacks <= 0)
 			to_chat(owner, span_notice("[linked_extract] coats you in a watery goo, extinguishing the flames."))
 	var/obj/O = owner.get_active_held_item()
@@ -776,15 +810,14 @@
 		originalname = H.real_name
 		H.dna.copy_dna(originalDNA)
 		randomize_human(H)
-		H.dna.update_dna_identity()
 	return ..()
 
-/datum/status_effect/stabilized/green/tick() //Only occasionally give examiners a warning.
+// Only occasionally give examiners a warning.
+/datum/status_effect/stabilized/green/get_examine_text()
 	if(prob(50))
-		examine_text = "<span class='warning'>SUBJECTPRONOUN looks a bit green and gooey...</span>"
-	else
-		examine_text = null
-	return ..()
+		return span_warning("[owner.p_they(TRUE)] look[owner.p_s()] a bit green and gooey...")
+
+	return null
 
 /datum/status_effect/stabilized/green/on_remove()
 	to_chat(owner, span_notice("You feel more like yourself."))
@@ -860,46 +893,86 @@
 /datum/status_effect/stabilized/oil
 	id = "stabilizedoil"
 	colour = "oil"
-	examine_text = "<span class='warning'>SUBJECTPRONOUN smells of sulfer and oil!</span>"
 
 /datum/status_effect/stabilized/oil/tick()
 	if(owner.stat == DEAD)
 		explosion(owner, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5, explosion_cause = src)
 	return ..()
 
+/datum/status_effect/stabilized/oil/get_examine_text()
+	return span_warning("[owner.p_they(TRUE)] smell[owner.p_s()] of sulfur and oil!")
+
+/// How much damage is dealt per healing done for the stabilized back.
+/// This multiplier is applied to prevent two people from converting each other's damage away.
+#define DRAIN_DAMAGE_MULTIPLIER 1.2
+
 /datum/status_effect/stabilized/black
 	id = "stabilizedblack"
 	colour = "black"
-	var/messagedelivered = FALSE
+	/// How much we heal per tick (also how much we damage per tick times DRAIN_DAMAGE_MULTIPLIER).
 	var/heal_amount = 1
+	/// Weakref to the mob we're currently draining every tick.
+	var/datum/weakref/draining_ref
+
+/datum/status_effect/stabilized/black/on_apply()
+	RegisterSignal(owner, COMSIG_MOVABLE_SET_GRAB_STATE, PROC_REF(on_grab))
+	return ..()
+
+/datum/status_effect/stabilized/black/on_remove()
+	UnregisterSignal(owner, COMSIG_MOVABLE_SET_GRAB_STATE)
+	return ..()
+
+/// Whenever we grab someone by the neck, set "draining" to a weakref of them.
+/datum/status_effect/stabilized/black/proc/on_grab(mob/living/source, new_state)
+	SIGNAL_HANDLER
+
+	if(new_state < GRAB_KILL || !isliving(source.pulling))
+		draining_ref = null
+		return
+
+	var/mob/living/draining = source.pulling
+	if(draining.stat == DEAD)
+		return
+
+	draining_ref = WEAKREF(draining)
+	to_chat(owner, span_boldnotice("You feel your hands melt around [draining]'s neck as you start to drain [draining.p_them()] of [draining.p_their()] life!"))
+	to_chat(draining, span_userdanger("[owner]'s hands melt around your neck as you can feel your life starting to drain away!"))
+
+/datum/status_effect/stabilized/black/get_examine_text()
+	var/mob/living/draining = draining_ref?.resolve()
+	if(!draining)
+		return null
+
+	return span_warning("[owner.p_they(TRUE)] [owner.p_are()] draining health from [draining]!")
 
 /datum/status_effect/stabilized/black/tick()
-	if(owner.pulling && isliving(owner.pulling) && owner.grab_state == GRAB_KILL)
-		var/mob/living/M = owner.pulling
-		if(M.stat == DEAD)
-			return
-		if(!messagedelivered)
-			to_chat(owner,span_notice("You feel your hands melt around [M]'s neck and start to drain [M.p_them()] of life."))
-			to_chat(owner.pulling, span_userdanger("[owner]'s hands melt around your neck, and you can feel your life starting to drain away!"))
-			messagedelivered = TRUE
-		examine_text = "<span class='warning'>SUBJECTPRONOUN is draining health from [owner.pulling]!</span>"
-		var/list/healing_types = list()
-		if(owner.getBruteLoss() > 0)
-			healing_types += BRUTE
-		if(owner.getFireLoss() > 0)
-			healing_types += BURN
-		if(owner.getToxLoss() > 0)
-			healing_types += TOX
-		if(owner.getCloneLoss() > 0)
-			healing_types += CLONE
-		if(length(healing_types))
-			owner.apply_damage_type(-heal_amount, damagetype=pick(healing_types))
-		owner.adjust_nutrition(3)
-		M.adjustCloneLoss(heal_amount * 1.2) //This way, two people can't just convert each other's damage away.
-	else
-		messagedelivered = FALSE
-		examine_text = null
+	if(owner.grab_state < GRAB_KILL || !IS_WEAKREF_OF(owner.pulling, draining_ref))
+		return
+
+	var/mob/living/drained = draining_ref.resolve()
+	if(drained.stat == DEAD)
+		to_chat(owner, span_warning("[drained] is dead, you cannot drain anymore life from them!"))
+		draining_ref = null
+		return
+
+	var/list/healing_types = list()
+	if(owner.getBruteLoss() > 0)
+		healing_types += BRUTE
+	if(owner.getFireLoss() > 0)
+		healing_types += BURN
+	if(owner.getToxLoss() > 0)
+		healing_types += TOX
+	if(owner.getCloneLoss() > 0)
+		healing_types += CLONE
+
+	if(length(healing_types))
+		owner.apply_damage_type(-heal_amount, damagetype = pick(healing_types))
+
+	owner.adjust_nutrition(3)
+	drained.adjustCloneLoss(heal_amount * DRAIN_DAMAGE_MULTIPLIER)
 	return ..()
+
+#undef DRAIN_DAMAGE_MULTIPLIER
 
 /datum/status_effect/stabilized/lightpink
 	id = "stabilizedlightpink"
@@ -924,7 +997,9 @@
 /datum/status_effect/stabilized/adamantine
 	id = "stabilizedadamantine"
 	colour = "adamantine"
-	examine_text = "<span class='warning'>SUBJECTPRONOUN has a strange metallic coating on their skin.</span>"
+
+/datum/status_effect/stabilized/adamantine/get_examine_text()
+	return span_warning("[owner.p_they(TRUE)] [owner.p_have()] strange metallic coating on [owner.p_their()] skin.")
 
 /datum/status_effect/stabilized/gold
 	id = "stabilizedgold"

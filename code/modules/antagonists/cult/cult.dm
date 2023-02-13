@@ -58,9 +58,9 @@
 	owner.announce_objectives()
 
 /datum/antagonist/cult/on_gain()
+	add_objectives()
 	. = ..()
 	var/mob/living/current = owner.current
-	add_objectives()
 	if(give_equipment)
 		equip_cultist(TRUE)
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
@@ -126,7 +126,7 @@
 	else
 		to_chat(mob, span_danger("You have a [item_name] in your [where]."))
 		if(where == "backpack")
-			SEND_SIGNAL(mob.back, COMSIG_TRY_STORAGE_SHOW, mob)
+			mob.back.atom_storage?.show_contents(mob)
 		return TRUE
 
 /datum/antagonist/cult/apply_innate_effects(mob/living/mob_override)
@@ -184,9 +184,9 @@
 
 /datum/antagonist/cult/get_admin_commands()
 	. = ..()
-	.["Dagger"] = CALLBACK(src,.proc/admin_give_dagger)
-	.["Dagger and Metal"] = CALLBACK(src,.proc/admin_give_metal)
-	.["Remove Dagger and Metal"] = CALLBACK(src, .proc/admin_take_all)
+	.["Dagger"] = CALLBACK(src, PROC_REF(admin_give_dagger))
+	.["Dagger and Metal"] = CALLBACK(src, PROC_REF(admin_give_metal))
+	.["Remove Dagger and Metal"] = CALLBACK(src, PROC_REF(admin_take_all))
 
 /datum/antagonist/cult/proc/admin_give_dagger(mob/admin)
 	if(!equip_cultist(metal=FALSE))
@@ -229,7 +229,7 @@
 		reckoning.Grant(current)
 	bloodmark.Grant(current)
 	throwing.Grant(current)
-	current.update_action_buttons_icon()
+	current.update_mob_action_buttons()
 	current.apply_status_effect(/datum/status_effect/cult_master)
 	if(cult_team.cult_risen)
 		current.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS)
@@ -245,14 +245,14 @@
 	reckoning.Remove(current)
 	bloodmark.Remove(current)
 	throwing.Remove(current)
-	current.update_action_buttons_icon()
+	current.update_mob_action_buttons()
 	current.remove_status_effect(/datum/status_effect/cult_master)
 
 /datum/team/cult
-	name = "Cult"
+	name = "\improper Cult"
 
 	///The blood mark target
-	var/blood_target
+	var/atom/blood_target
 	///Image of the blood mark target
 	var/image/blood_target_image
 	///Timer for the blood mark expiration
@@ -271,6 +271,8 @@
 
 	///Has narsie been summoned yet?
 	var/narsie_summoned = FALSE
+	///How large were we at max size.
+	var/size_at_maximum = 0
 
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
@@ -284,7 +286,9 @@
 				++cultplayers
 			else
 				++alive
-	var/ratio = cultplayers/alive
+
+	ASSERT(cultplayers) //we shouldn't be here.
+	var/ratio = alive ? cultplayers/alive : 1
 	if(ratio > CULT_RISEN && !cult_risen)
 		for(var/datum/mind/mind as anything in members)
 			if(mind.current)
@@ -302,6 +306,13 @@
 				mind.current.AddElement(/datum/element/cult_halo)
 		cult_ascendent = TRUE
 		log_game("The blood cult has ascended with [cultplayers] players.")
+
+/datum/team/cult/add_member(datum/mind/new_member)
+	. = ..()
+	// A little hacky, but this checks that cult ghosts don't contribute to the size at maximum value.
+	if(is_unassigned_job(new_member.assigned_role))
+		return
+	size_at_maximum++
 
 /datum/team/cult/proc/make_image(datum/objective/sacrifice/sac_objective)
 	var/datum/job/job_of_sacrifice = sac_objective.target.assigned_role
@@ -336,7 +347,7 @@
 		UnregisterSignal(target.current, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
 	target = null
 
-/datum/objective/sacrifice/find_target(dupe_search_range)
+/datum/objective/sacrifice/find_target(dupe_search_range, list/blacklist)
 	clear_sacrifice()
 	if(!istype(team, /datum/team/cult))
 		return
@@ -356,9 +367,9 @@
 		update_explanation_text()
 		// Register a bunch of signals to both the target mind and its body
 		// to stop cult from softlocking everytime the target is deleted before being actually sacrificed.
-		RegisterSignal(target, COMSIG_MIND_TRANSFERRED, .proc/on_mind_transfer)
-		RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
-		RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
+		RegisterSignal(target, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer))
+		RegisterSignal(target.current, COMSIG_PARENT_QDELETING, PROC_REF(on_target_body_del))
+		RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, PROC_REF(on_possible_mindswap))
 	else
 		message_admins("Cult Sacrifice: Could not find unconvertible or convertible target. WELP!")
 		sacced = TRUE // Prevents another hypothetical softlock. This basically means every PC is a cultist.
@@ -371,30 +382,30 @@
 
 /datum/objective/sacrifice/proc/on_target_body_del()
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/find_target)
+	INVOKE_ASYNC(src, PROC_REF(find_target))
 
 /datum/objective/sacrifice/proc/on_mind_transfer(datum/source, mob/previous_body)
 	SIGNAL_HANDLER
 	//If, for some reason, the mind was transferred to a ghost (better safe than sorry), find a new target.
 	if(!isliving(target.current))
-		INVOKE_ASYNC(src, .proc/find_target)
+		INVOKE_ASYNC(src, PROC_REF(find_target))
 		return
 	UnregisterSignal(previous_body, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
-	RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
-	RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
+	RegisterSignal(target.current, COMSIG_PARENT_QDELETING, PROC_REF(on_target_body_del))
+	RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, PROC_REF(on_possible_mindswap))
 
 /datum/objective/sacrifice/proc/on_possible_mindswap(mob/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(target.current, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
 	//we check if the mind is bodyless only after mindswap shenanigeans to avoid issues.
-	addtimer(CALLBACK(src, .proc/do_we_have_a_body), 0 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(do_we_have_a_body)), 0 SECONDS)
 
 /datum/objective/sacrifice/proc/do_we_have_a_body()
 	if(!target.current) //The player was ghosted and the mind isn't probably going to be transferred to another mob at this point.
 		find_target()
 		return
-	RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
-	RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
+	RegisterSignal(target.current, COMSIG_PARENT_QDELETING, PROC_REF(on_target_body_del))
+	RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, PROC_REF(on_possible_mindswap))
 
 /datum/objective/sacrifice/check_completion()
 	return sacced || completed
@@ -414,7 +425,7 @@
 	..()
 	var/sanity = 0
 	while(summon_spots.len < SUMMON_POSSIBILITIES && sanity < 100)
-		var/area/summon_area = pick(GLOB.sortedAreas - summon_spots)
+		var/area/summon_area = pick(GLOB.areas - summon_spots)
 		if(summon_area && is_station_level(summon_area.z) && (summon_area.area_flags & VALID_TERRITORY))
 			summon_spots += summon_area
 		sanity++
@@ -470,23 +481,83 @@
 	return FALSE
 
 /// Returns whether the given mob is convertable to the blood cult
-/proc/is_convertable_to_cult(mob/living/M, datum/team/cult/specific_cult)
-	if(!istype(M))
+/proc/is_convertable_to_cult(mob/living/target, datum/team/cult/specific_cult)
+	if(!istype(target))
 		return FALSE
-	if(M.mind)
-		if(ishuman(M) && (M.mind.holy_role))
+	if(target.mind)
+		if(ishuman(target) && (target.mind.holy_role))
 			return FALSE
-		if(specific_cult?.is_sacrifice_target(M.mind))
+		if(specific_cult?.is_sacrifice_target(target.mind))
 			return FALSE
-		if(M.mind.enslaved_to && !IS_CULTIST(M.mind.enslaved_to))
+		if(target.mind.enslaved_to && !IS_CULTIST(target.mind.enslaved_to))
 			return FALSE
-		if(M.mind.unconvertable)
+		if(target.mind.unconvertable)
+			return FALSE
+		if(target.mind.has_antag_datum(/datum/antagonist/heretic))
 			return FALSE
 	else
 		return FALSE
-	if(HAS_TRAIT(M, TRAIT_MINDSHIELD) || issilicon(M) || isbot(M) || isdrone(M) || !M.client)
+	if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || issilicon(target) || isbot(target) || isdrone(target) || !target.client)
 		return FALSE //can't convert machines, shielded, or braindead
 	return TRUE
+
+/// Sets a blood target for the cult.
+/datum/team/cult/proc/set_blood_target(atom/new_target, mob/marker, duration = 90 SECONDS)
+	if(QDELETED(new_target))
+		CRASH("A null or invalid target was passed to set_blood_target.")
+
+	if(blood_target_reset_timer)
+		return FALSE
+
+	blood_target = new_target
+	RegisterSignal(blood_target, COMSIG_PARENT_QDELETING, PROC_REF(unset_blood_target_and_timer))
+	var/area/target_area = get_area(new_target)
+
+	blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', new_target, "glow", ABOVE_MOB_LAYER)
+	blood_target_image.appearance_flags = RESET_COLOR
+	blood_target_image.pixel_x = -new_target.pixel_x
+	blood_target_image.pixel_y = -new_target.pixel_y
+
+	for(var/datum/mind/cultist as anything in members)
+		if(!cultist.current)
+			continue
+		if(cultist.current.stat == DEAD || !cultist.current.client)
+			continue
+
+		to_chat(cultist.current, span_bold(span_cultlarge("[marker] has marked [blood_target] in the [target_area.name] as the cult's top priority, get there immediately!")))
+		SEND_SOUND(cultist.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'), 0, 1, 75))
+		cultist.current.client.images += blood_target_image
+
+	blood_target_reset_timer = addtimer(CALLBACK(src, PROC_REF(unset_blood_target)), duration, TIMER_STOPPABLE)
+	return TRUE
+
+/// Unsets out blood target, clearing the images from all the cultists.
+/datum/team/cult/proc/unset_blood_target()
+	blood_target_reset_timer = null
+
+	for(var/datum/mind/cultist as anything in members)
+		if(!cultist.current)
+			continue
+		if(cultist.current.stat == DEAD || !cultist.current.client)
+			continue
+
+		if(QDELETED(blood_target))
+			to_chat(cultist.current, span_bold(span_cultlarge("The blood mark's target is lost!")))
+		else
+			to_chat(cultist.current, span_bold(span_cultlarge("The blood mark has expired!")))
+		cultist.current.client.images -= blood_target_image
+
+	UnregisterSignal(blood_target, COMSIG_PARENT_QDELETING)
+	blood_target = null
+
+	QDEL_NULL(blood_target_image)
+
+/// Unsets our blood target when they get deleted.
+/datum/team/cult/proc/unset_blood_target_and_timer(datum/source)
+	SIGNAL_HANDLER
+
+	deltimer(blood_target_reset_timer)
+	unset_blood_target()
 
 /datum/outfit/cultist
 	name = "Cultist (Preview only)"
@@ -496,10 +567,7 @@
 	shoes = /obj/item/clothing/shoes/cult/alt
 	r_hand = /obj/item/melee/blood_magic/stun
 
-/datum/outfit/cultist/post_equip(mob/living/carbon/human/H, visualsOnly)
-	H.eye_color = BLOODCULT_EYE
-	H.update_body()
-
-	var/obj/item/clothing/suit/hooded/hooded = locate() in H
-	hooded.MakeHood() // This is usually created on Initialize, but we run before atoms
-	hooded.ToggleHood()
+/datum/outfit/cultist/post_equip(mob/living/carbon/human/equipped, visualsOnly)
+	equipped.eye_color_left = BLOODCULT_EYE
+	equipped.eye_color_right = BLOODCULT_EYE
+	equipped.update_body()

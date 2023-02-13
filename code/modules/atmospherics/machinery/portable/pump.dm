@@ -1,26 +1,21 @@
-///The machine pumps from the internal source to the turf
-#define PUMP_OUT "out"
-///The machine pumps from the turf to the internal tank
-#define PUMP_IN "in"
 ///Maximum settable pressure
 #define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 25)
 ///Minimum settable pressure
 #define PUMP_MIN_PRESSURE (ONE_ATMOSPHERE / 10)
 ///Defaul pressure, used in the UI to reset the settings
 #define PUMP_DEFAULT_PRESSURE (ONE_ATMOSPHERE)
+///What direction is the machine pumping (into pump/port or out to the tank/area)?
+#define PUMP_IN TRUE
+#define PUMP_OUT FALSE
 
 /obj/machinery/portable_atmospherics/pump
 	name = "portable air pump"
 	icon_state = "siphon"
 	density = TRUE
 	max_integrity = 250
-	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
-	var/heat_limit = 5000
-	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
-	var/pressure_limit = 50000
 	///Is the machine on?
 	var/on = FALSE
-	///What direction is the machine pumping (in or out)?
+	///What direction is the machine pumping (into pump/port or out to the tank/area)?
 	var/direction = PUMP_OUT
 	///Player configurable, sets what's the release pressure
 	var/target_pressure = ONE_ATMOSPHERE
@@ -44,11 +39,7 @@
 		. += "siphon-connector"
 
 /obj/machinery/portable_atmospherics/pump/process_atmos()
-	var/pressure = air_contents.return_pressure()
-	var/temperature = air_contents.return_temperature()
-	///function used to check the limit of the pumps and also set the amount of damage that the pump can receive, if the heat and pressure are way higher than the limit the more damage will be done
-	if(temperature > heat_limit || pressure > pressure_limit)
-		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
+	if(take_atmos_damage())
 		excited = TRUE
 		return ..()
 
@@ -58,14 +49,16 @@
 	excited = TRUE
 
 	var/turf/local_turf = get_turf(src)
+
 	var/datum/gas_mixture/sending
 	var/datum/gas_mixture/receiving
-	if(direction == PUMP_OUT) // Hook up the internal pump.
-		sending = (holding ? holding.return_air() : air_contents)
-		receiving = (holding ? air_contents : local_turf.return_air())
+
+	if (holding) //Work with tank when inserted, otherwise - with area
+		sending = (direction == PUMP_IN ? holding.return_air() : air_contents)
+		receiving = (direction == PUMP_IN ? air_contents : holding.return_air())
 	else
-		sending = (holding ? air_contents : local_turf.return_air())
-		receiving = (holding ? holding.return_air() : air_contents)
+		sending = (direction == PUMP_IN ? local_turf.return_air() : air_contents)
+		receiving = (direction == PUMP_IN ? air_contents : local_turf.return_air())
 
 	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
 		air_update_turf(FALSE, FALSE) // Update the environment if needed.
@@ -96,7 +89,7 @@
 			on = FALSE
 			update_appearance()
 	else if(on && holding && direction == PUMP_OUT)
-		investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
+		user.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -107,13 +100,15 @@
 /obj/machinery/portable_atmospherics/pump/ui_data()
 	var/data = list()
 	data["on"] = on
-	data["direction"] = direction == PUMP_IN ? TRUE : FALSE
-	data["connected"] = connected_port ? TRUE : FALSE
+	data["direction"] = direction
+	data["connected"] = !!connected_port
 	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
-	data["target_pressure"] = round(target_pressure ? target_pressure : 0)
-	data["default_pressure"] = round(PUMP_DEFAULT_PRESSURE)
-	data["min_pressure"] = round(PUMP_MIN_PRESSURE)
-	data["max_pressure"] = round(PUMP_MAX_PRESSURE)
+	data["targetPressure"] = round(target_pressure ? target_pressure : 0)
+	data["defaultPressure"] = round(PUMP_DEFAULT_PRESSURE)
+	data["minPressure"] = round(PUMP_MIN_PRESSURE)
+	data["maxPressure"] = round(PUMP_MAX_PRESSURE)
+	data["hasHypernobCrystal"] = !!nob_crystal_inserted
+	data["reactionSuppressionEnabled"] = !!suppress_reactions
 
 	if(holding)
 		data["holding"] = list()
@@ -140,14 +135,14 @@
 					message_admins("[ADMIN_LOOKUPFLW(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [ADMIN_VERBOSEJMP(src)]")
 					log_admin("[key_name(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [AREACOORD(src)]")
 			else if(on && direction == PUMP_OUT)
-				investigate_log("[key_name(usr)] started a transfer into [holding].", INVESTIGATE_ATMOS)
+				usr.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("direction")
 			if(direction == PUMP_OUT)
 				direction = PUMP_IN
 			else
 				if(on && holding)
-					investigate_log("[key_name(usr)] started a transfer into [holding].", INVESTIGATE_ATMOS)
+					usr.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 				direction = PUMP_OUT
 			. = TRUE
 		if("pressure")
@@ -171,8 +166,30 @@
 			if(holding)
 				replace_tank(usr, FALSE)
 				. = TRUE
+		if("reaction_suppression")
+			if(!nob_crystal_inserted)
+				stack_trace("[usr] tried to toggle reaction suppression on a pump without a noblium crystal inside, possible href exploit attempt.")
+				return
+			suppress_reactions = !suppress_reactions
+			SSair.start_processing_machine(src)
+			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+			usr.investigate_log("turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+			. = TRUE
 	update_appearance()
 
 /obj/machinery/portable_atmospherics/pump/unregister_holding()
 	on = FALSE
 	return ..()
+
+/obj/machinery/portable_atmospherics/pump/lil_pump
+	name = "Lil' Pump"
+
+/obj/machinery/portable_atmospherics/pump/lil_pump/Initialize(mapload)
+	. = ..()
+	//25% chance to occur
+	if(prob(25))
+		name = "Liler' Pump"
+		desc = "When a Lil' Pump and a portable air pump love each other very much."
+		var/matrix/lil_pump = matrix()
+		lil_pump.Scale(0.8)
+		src.transform = lil_pump

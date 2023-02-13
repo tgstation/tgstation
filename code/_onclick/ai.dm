@@ -20,6 +20,11 @@
 		return
 	next_click = world.time + 1
 
+	var/list/modifiers = params2list(params)
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
+		return
+
 	if(!can_interact_with(A))
 		return
 
@@ -41,17 +46,8 @@
 	if(isnull(pixel_turf))
 		return
 	if(!can_see(A))
-		if(isturf(A)) //On unmodified clients clicking the static overlay clicks the turf underneath
-			return //So there's no point messaging admins
-		message_admins("[ADMIN_LOOKUPFLW(src)] might be running a modified client! (failed can_see on AI click of [A] (Turf Loc: [ADMIN_VERBOSEJMP(pixel_turf)]))")
-		var/message = "[key_name(src)] might be running a modified client! (failed can_see on AI click of [A] (Turf Loc: [AREACOORD(pixel_turf)]))"
-		log_admin(message)
-		if(REALTIMEOFDAY >= chnotify + 9000)
-			chnotify = REALTIMEOFDAY
-			send2tgs_adminless_only("NOCHEAT", message)
 		return
 
-	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(LAZYACCESS(modifiers, CTRL_CLICK))
 			CtrlShiftClickOn(A)
@@ -78,7 +74,7 @@
 		return
 
 	if(aicamera.in_camera_mode)
-		aicamera.camera_mode_off()
+		aicamera.toggle_camera_mode(sound = FALSE)
 		aicamera.captureimage(pixel_turf, usr)
 		return
 	if(waypoint_mode)

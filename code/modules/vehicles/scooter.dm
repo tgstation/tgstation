@@ -26,7 +26,7 @@
 	qdel(src)
 	return TRUE
 
-/obj/vehicle/ridden/scooter/Moved()
+/obj/vehicle/ridden/scooter/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	for(var/mob/living/buckled_mob as anything in buckled_mobs)
 		if(buckled_mob.num_legs > 0)
@@ -72,6 +72,7 @@
 /obj/vehicle/ridden/scooter/skateboard/generate_actions()
 	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/ridden/scooter/skateboard/ollie, VEHICLE_CONTROL_DRIVE)
+	initialize_controller_action_type(/datum/action/vehicle/ridden/scooter/skateboard/kickflip, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/ridden/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
 	set_density(TRUE)
@@ -102,7 +103,7 @@
 			return
 		rider.throw_at(throw_target, 3, 2)
 		var/head_slot = rider.get_item_by_slot(ITEM_SLOT_HEAD)
-		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
+		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/utility/hardhat)))
 			rider.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 			rider.updatehealth()
 		visible_message(span_danger("[src] crashes into [bumped_thing], sending [rider] flying!"))
@@ -150,12 +151,11 @@
 	for(var/mob/living/carbon/victim in location)
 		if(victim.body_position == LYING_DOWN)
 			playsound(location, 'sound/items/trayhit2.ogg', 40)
-			var/body_part = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_CHEST)
-			victim.apply_damage(damage = 25, damagetype = BRUTE, def_zone = body_part, wound_bonus = 20)
+			victim.apply_damage(damage = 25, damagetype = BRUTE, def_zone = victim.get_random_valid_zone(even_weights = TRUE), wound_bonus = 20)
 			victim.Paralyze(1.5 SECONDS)
 			skater.adjustStaminaLoss(instability)
 			victim.visible_message(span_danger("[victim] straight up gets grinded into the ground by [skater]'s [src]! Radical!"))
-	addtimer(CALLBACK(src, .proc/grind), 1)
+	addtimer(CALLBACK(src, PROC_REF(grind)), 1)
 
 /obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
 	. = ..()

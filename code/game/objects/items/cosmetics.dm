@@ -2,13 +2,39 @@
 	gender = PLURAL
 	name = "red lipstick"
 	desc = "A generic brand of lipstick."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "lipstick"
+	inhand_icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
 	var/colour = "red"
 	var/open = FALSE
 	/// A trait that's applied while someone has this lipstick applied, and is removed when the lipstick is removed
 	var/lipstick_trait
+
+/obj/item/lipstick/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+	update_appearance(UPDATE_ICON)
+
+/obj/item/lipstick/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, open))
+		update_appearance(UPDATE_ICON)
+
+/obj/item/lipstick/update_icon_state()
+	icon_state = "lipstick[open ? "_uncap" : null]"
+	inhand_icon_state = "lipstick[open ? "open" : null]"
+	return ..()
+
+
+/obj/item/lipstick/update_overlays()
+	. = ..()
+	if(!open)
+		return
+	var/mutable_appearance/colored_overlay = mutable_appearance(icon, "lipstick_uncap_color")
+	colored_overlay.color = colour
+	. += colored_overlay
+
 
 /obj/item/lipstick/purple
 	name = "purple lipstick"
@@ -39,16 +65,9 @@
 	name = "[colour] lipstick"
 
 /obj/item/lipstick/attack_self(mob/user)
-	cut_overlays()
-	to_chat(user, span_notice("You twist \the [src] [open ? "closed" : "open"]."))
+	to_chat(user, span_notice("You twist [src] [open ? "closed" : "open"]."))
 	open = !open
-	if(open)
-		var/mutable_appearance/colored_overlay = mutable_appearance(icon, "lipstick_uncap_color")
-		colored_overlay.color = colour
-		icon_state = "lipstick_uncap"
-		add_overlay(colored_overlay)
-	else
-		icon_state = "lipstick"
+	update_appearance(UPDATE_ICON)
 
 /obj/item/lipstick/attack(mob/M, mob/user)
 	if(!open || !ismob(M))
@@ -104,8 +123,9 @@
 /obj/item/razor
 	name = "electric razor"
 	desc = "The latest and greatest power razor born from the science of shaving."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "razor"
+	inhand_icon_state = "razor"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 
@@ -121,7 +141,7 @@
 	else
 		H.hairstyle = "Skinhead"
 
-	H.update_hair()
+	H.update_body_parts()
 	playsound(loc, 'sound/items/welder2.ogg', 20, TRUE)
 
 
@@ -138,7 +158,7 @@
 					if (H == user)
 						to_chat(user, span_warning("You need a mirror to properly style your own facial hair!"))
 						return
-					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+					if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 						return
 					var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
 					if(isnull(new_style))
@@ -146,11 +166,14 @@
 					if(!get_location_accessible(H, location))
 						to_chat(user, span_warning("The mask is in the way!"))
 						return
+					if(HAS_TRAIT(H, TRAIT_SHAVED))
+						to_chat(user, span_warning("[H] is just way too shaved. Like, really really shaved."))
+						return
 					user.visible_message(span_notice("[user] tries to change [H]'s facial hairstyle using [src]."), span_notice("You try to change [H]'s facial hairstyle using [src]."))
 					if(new_style && do_after(user, 60, target = H))
 						user.visible_message(span_notice("[user] successfully changes [H]'s facial hairstyle using [src]."), span_notice("You successfully change [H]'s facial hairstyle using [src]."))
 						H.facial_hairstyle = new_style
-						H.update_hair()
+						H.update_body_parts()
 						return
 				else
 					return
@@ -186,7 +209,7 @@
 				if (H == user)
 					to_chat(user, span_warning("You need a mirror to properly style your own hair!"))
 					return
-				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+				if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 					return
 				var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
 				if(isnull(new_style))
@@ -195,13 +218,13 @@
 					to_chat(user, span_warning("The headgear is in the way!"))
 					return
 				if(HAS_TRAIT(H, TRAIT_BALD))
-					to_chat(H, span_warning("[H] is just way too bald. Like, really really bald."))
+					to_chat(user, span_warning("[H] is just way too bald. Like, really really bald."))
 					return
 				user.visible_message(span_notice("[user] tries to change [H]'s hairstyle using [src]."), span_notice("You try to change [H]'s hairstyle using [src]."))
 				if(new_style && do_after(user, 60, target = H))
 					user.visible_message(span_notice("[user] successfully changes [H]'s hairstyle using [src]."), span_notice("You successfully change [H]'s hairstyle using [src]."))
 					H.hairstyle = new_style
-					H.update_hair()
+					H.update_body_parts()
 					return
 
 			else

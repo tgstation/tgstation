@@ -2,6 +2,7 @@
 	name = "Not A Piano"
 	desc = "Something broke, contact coderbus."
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_REQUIRES_DEXTERITY
+	integrity_failure = 0.25
 	var/can_play_unanchored = FALSE
 	var/list/allowed_instrument_ids = list("r3grand","r3harpsi","crharpsi","crgrand1","crbright1", "crichugan", "crihamgan","piano")
 	var/datum/song/song
@@ -26,27 +27,42 @@
 	. = ..()
 	song.ui_interact(user)
 
-/obj/structure/musician/wrench_act(mob/living/user, obj/item/I)
-	default_unfasten_wrench(user, I, 40)
-	return TRUE
+/obj/structure/musician/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool, time = 4 SECONDS)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/musician/piano
-	name = "space minimoog"
-	icon = 'icons/obj/musician.dmi'
-	icon_state = "minimoog"
+	name = "space piano"
+	desc = "This is a space piano, like a regular piano, but always in tune! Even if the musician isn't."
+	icon = 'icons/obj/art/musician.dmi'
+	icon_state = "piano"
 	anchored = TRUE
 	density = TRUE
+	var/broken_icon_state = "pianobroken"
+
+/obj/structure/musician/piano/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/falling_hazard, damage = 60, wound_bonus = 10, hardhat_safety = FALSE, crushes = TRUE, impact_sound = 'sound/effects/piano_hit.ogg')
+
+/obj/structure/musician/piano/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(src, 'sound/effects/piano_hit.ogg', 100, TRUE)
+		if(BURN)
+			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+
+/obj/structure/musician/piano/atom_break(damage_flag)
+	. = ..()
+	if(!broken)
+		broken = TRUE
+		icon_state = broken_icon_state
 
 /obj/structure/musician/piano/unanchored
 	anchored = FALSE
 
-/obj/structure/musician/piano/Initialize(mapload)
-	. = ..()
-	if(prob(50) && icon_state == initial(icon_state))
-		name = "space minimoog"
-		desc = "This is a minimoog, like a space piano, but more spacey!"
-		icon_state = "minimoog"
-	else
-		name = "space piano"
-		desc = "This is a space piano, like a regular piano, but always in tune! Even if the musician isn't."
-		icon_state = "piano"
+/obj/structure/musician/piano/minimoog
+	name = "space minimoog"
+	desc = "This is a minimoog, like a space piano, but more spacey!"
+	icon_state = "minimoog"
+	broken_icon_state = "minimoogbroken"

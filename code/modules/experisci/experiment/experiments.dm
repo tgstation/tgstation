@@ -32,14 +32,14 @@
 	description = "A scientist needs vermin to test on, use the cytology equipment to grow some of these simple critters!"
 	total_requirement = 3
 	max_requirement_per_type = 2
-	possible_types = list(/mob/living/basic/cockroach, /mob/living/simple_animal/mouse)
+	possible_types = list(/mob/living/basic/cockroach, /mob/living/basic/mouse)
 
 /datum/experiment/scanning/random/cytology/medium
 	name = "Advanced Cytology Scanning Experiment"
 	description = "We need to see how the body functions from the earliest moments. Some cytology experiments will help us gain this understanding."
 	total_requirement = 3
 	max_requirement_per_type = 2
-	possible_types = list(/mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/retaliate/snake, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/dog/corgi, /mob/living/basic/cow, /mob/living/simple_animal/chicken)
+	possible_types = list(/mob/living/basic/carp, /mob/living/simple_animal/hostile/retaliate/snake, /mob/living/simple_animal/pet/cat, /mob/living/basic/pet/dog/corgi, /mob/living/basic/cow, /mob/living/simple_animal/chicken)
 
 /datum/experiment/scanning/random/cytology/medium/one
 	name = "Advanced Cytology Scanning Experiment One"
@@ -56,7 +56,7 @@
 
 /datum/experiment/ordnance/explosive/lowyieldbomb
 	name = "Low-Yield Explosives"
-	description = "Low-yield explosives may prove useful for our asset protection teams. Perform research and publish papers on this field. Explosion from any source is allowed."
+	description = "Low-yield explosives may prove useful for our asset protection teams. Capture a small explosion with a Doppler Array and publish the data in a paper."
 	gain = list(10,15,20)
 	target_amount = list(5,10,20)
 	experiment_proper = TRUE
@@ -66,7 +66,7 @@
 
 /datum/experiment/ordnance/explosive/highyieldbomb
 	name = "High-Yield Explosives"
-	description =  "Several reactions react very energetically and can be utilized for bigger explosives. Perform research and publish papers on this field. Any gas reaction is allowed."
+	description =  "Several reactions react very energetically and can be utilized for bigger explosives. Capture any tank explosion with a Doppler Array and publish the data in a paper. Any gas reaction is allowed."
 	gain = list(10,50,100)
 	target_amount = list(50,100,300)
 	experiment_proper = TRUE
@@ -75,7 +75,7 @@
 
 /datum/experiment/ordnance/explosive/hydrogenbomb
 	name = "Hydrogen Explosives"
-	description = "Combustion of Hydrogen and it's derivatives can be very powerful. Perform research and publish papers on this field. Only the specified gas reactions are allowed."
+	description = "Combustion of Hydrogen and it's derivatives can be very powerful. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only Hydrogen or Tritium Fires are allowed."
 	gain = list(15,40,60)
 	target_amount = list(50,75,150)
 	experiment_proper = TRUE
@@ -86,7 +86,7 @@
 
 /datum/experiment/ordnance/explosive/nobliumbomb
 	name = "Noblium Explosives"
-	description = "The formation of Hyper-Noblium is very energetic and can be harnessed for explosives. Perform research and publish papers on this field. Only the specified gas reaction is allowed."
+	description = "The formation of Hyper-Noblium is very energetic and can be harnessed for explosives. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only Hyper-Noblium Condensation is allowed."
 	gain = list(15,60,120)
 	target_amount = list(50,100,300)
 	experiment_proper = TRUE
@@ -96,44 +96,36 @@
 
 /datum/experiment/ordnance/explosive/pressurebomb
 	name = "Reactionless Explosives"
-	description = "Gases with high specific heat can heat up those with a low one and produce a lot of pressure. Perform research and publish papers on this field. No gas reactions are allowed."
+	description = "Gases with high specific heat can heat up those with a low one and produce a lot of pressure.Capture any tank explosion with a Doppler Array and publish the data in a paper. No gas reactions are allowed."
 	gain = list(10,50,100)
-	target_amount = list(20,75,200)
+	target_amount = list(20,50,100)
 	experiment_proper = TRUE
 	sanitized_misc = FALSE
 	sanitized_reactions = TRUE
 
-/datum/experiment/ordnance/gaseous/nitrium
-	name = "Nitrium Gas Shells"
-	description = "The delivery of Nitrium gas into an area of operation might prove useful. Perform research and publish papers on this field."
-	gain = list(20,60,120)
-	target_amount = list(20,120,500)
+/datum/experiment/ordnance/gaseous/nitrous_oxide
+	name = "Nitrous Oxide Gas Shells"
+	description = "The delivery of N2O into an area of operation might prove useful. Pack the specified gas into a tank and burst it using a Tank Compressor. Publish the data in a paper."
+	gain = list(10,40)
+	target_amount = list(200,600)
 	experiment_proper = TRUE
-	required_gas = /datum/gas/nitrium
+	required_gas = /datum/gas/nitrous_oxide
 
 /datum/experiment/ordnance/gaseous/bz
 	name = "BZ Gas Shells"
-	description = "The delivery of BZ gas into an area of operation might prove useful. Perform research and publish papers on this field."
-	gain = list(25,50)
-	target_amount = list(200,600)
+	description = "The delivery of BZ gas into an area of operation might prove useful. Pack the specified gas into a tank and burst it using a Tank Compressor. Publish the data in a paper."
+	gain = list(10,30,60)
+	target_amount = list(50,125,400)
 	experiment_proper = TRUE
 	required_gas = /datum/gas/bz
 
 /datum/experiment/ordnance/gaseous/noblium
-	name = "Noblium Gas Shells"
-	description = "The delivery of Noblium gas into an area of operation might prove useful. Perform research and publish papers on this field."
+	name = "Hypernoblium Gas Shells"
+	description = "The delivery of Hypernoblium gas into an area of operation might prove useful. Pack the specified gas into a tank and burst it using a Tank Compressor. Publish the data in a paper."
 	gain = list(10,40,80)
 	target_amount = list(15,55,250)
 	experiment_proper = TRUE
 	required_gas = /datum/gas/hypernoblium
-
-/datum/experiment/ordnance/gaseous/halon
-	name = "Halon Gas Shells"
-	description = "The delivery of Halon gas into an area of operation might prove useful. Perform research and publish papers on this field."
-	gain = list(10,30,60)
-	target_amount = list(15,55,250)
-	experiment_proper = TRUE
-	required_gas = /datum/gas/halon
 
 /datum/experiment/scanning/random/material/meat
 	name = "Biological Material Scanning Experiment"
@@ -177,13 +169,13 @@
 
 /datum/experiment/scanning/random/plants/wild
 	name = "Wild Biomatter Mutation Sample"
-	description = "Due to a number of reasons, (Solar Rays, a diet consisting only of unstable mutagen, entropy) plants with lower levels of instability may occasionally mutate with little reason. Scan one of these samples for us."
+	description = "Due to a number of reasons, (Solar Rays, a diet consisting only of unstable mutagen, entropy) plants with lower levels of instability may occasionally mutate upon harvest. Scan one of these samples for us."
 	performance_hint = "\"Wild\" mutations have been recorded to occur above 30 points of instability, while species mutations occur above 60 points of instability."
 	total_requirement = 1
 
 /datum/experiment/scanning/random/plants/traits
 	name = "Unique Biomatter Mutation Sample"
-	description = "We here at centcom are on the look out for rare and exotic plants with unique properties to brag about to our shareholders. We're looking for a sample with a very specific genes currently."
+	description = "We here at CentCom are on the look out for rare and exotic plants with unique properties to brag about to our shareholders. We're looking for a sample with a very specific genes currently."
 	performance_hint = "The wide varities of plants on station each carry various traits, some unique to them. Look for plants that may mutate into what we're looking for."
 	total_requirement = 3
 	possible_plant_genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/glow/shadow, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/brewing, /datum/plant_gene/trait/juicing, /datum/plant_gene/trait/eyes, /datum/plant_gene/trait/sticky)
@@ -309,9 +301,34 @@
 		/obj/machinery/mecha_part_fabricator = 1,
 		/obj/machinery/microwave = 1,
 		/obj/machinery/rnd/experimentor = 1,
-		/obj/machinery/atmospherics/components/binary/thermomachine/freezer = 2,
+		/obj/machinery/atmospherics/components/unary/thermomachine/freezer = 2,
 		/obj/machinery/power/emitter = 2,
 		/obj/machinery/chem_heater = 2,
 		/obj/machinery/chem_mass_spec = 3
 	)
 	required_stock_part = /obj/item/stock_parts/micro_laser/ultra
+
+/datum/experiment/scanning/random/mecha_damage_scan
+	name = "Exosuit Materials 1: Stress Failure Test"
+	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to more traditional means."
+	exp_tag = "Scan"
+	possible_types = list(/obj/vehicle/sealed/mecha)
+	total_requirement = 2
+	///Damage percent that each mech needs to be at for a scan to work.
+	var/damage_percent
+
+/datum/experiment/scanning/random/mecha_damage_scan/New()
+	. = ..()
+	damage_percent = rand(15, 95)
+	//updating the description with the damage_percent var set
+	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to those made with more traditional means. Damage a few exosuits to around [damage_percent]% integrity and scan them to help us determine how the armor fails under stress."
+
+/datum/experiment/scanning/random/mecha_damage_scan/final_contributing_index_checks(atom/target, typepath)
+	var/found_percent = round((target.get_integrity() / target.max_integrity) * 100)
+	return ..() && (found_percent <= (damage_percent + 2) && found_percent >= (damage_percent - 2))
+
+/datum/experiment/scanning/random/mecha_destroyed_scan
+	name = "Exosuit Materials 2: Excessive Damage Test"
+	description = "As an extension of testing exosuit damage results, scanning examples of complete structural failure will accelerate our material stress simulations."
+	possible_types = list(/obj/structure/mecha_wreckage)
+	total_requirement = 2

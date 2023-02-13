@@ -3,7 +3,7 @@
  */
 /obj/item/photo
 	name = "photo"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "photo"
 	inhand_icon_state = "paper"
 	w_class = WEIGHT_CLASS_TINY
@@ -68,11 +68,10 @@
 	if(burn_paper_product_attackby_check(P, user))
 		return
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
-		if(!user.is_literate())
-			to_chat(user, span_notice("You scribble illegibly on [src]!"))
+		if(!user.can_write(P))
 			return
 		var/txt = tgui_input_text(user, "What would you like to write on the back?", "Photo Writing", max_length = 128)
-		if(txt && user.canUseTopic(src, BE_CLOSE))
+		if(txt && user.canUseTopic(src, be_close = TRUE))
 			scribble = txt
 	else
 		return ..()

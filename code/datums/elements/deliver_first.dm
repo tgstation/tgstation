@@ -9,8 +9,8 @@
 
 #define DENY_SOUND_COOLDOWN (2 SECONDS)
 /datum/element/deliver_first
-	element_flags = ELEMENT_DETACH | ELEMENT_BESPOKE
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	///typepath of the area we will be allowed to be opened in
 	var/goal_area_type
 	///how much is earned on delivery of the crate
@@ -24,17 +24,17 @@
 		return ELEMENT_INCOMPATIBLE
 	src.goal_area_type = goal_area_type
 	src.payment = payment
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(target, COMSIG_ATOM_EMAG_ACT, .proc/on_emag)
-	RegisterSignal(target, COMSIG_CLOSET_POST_OPEN, .proc/on_post_open)
-	ADD_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(target, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag))
+	RegisterSignal(target, COMSIG_CLOSET_POST_OPEN, PROC_REF(on_post_open))
+	ADD_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, REF(src))
 	//registers pre_open when appropriate
 	area_check(target)
 
 /datum/element/deliver_first/Detach(datum/target)
 	. = ..()
-	REMOVE_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
+	REMOVE_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, REF(src))
 	UnregisterSignal(target, list(
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_MOVABLE_MOVED,
@@ -56,7 +56,7 @@
 		UnregisterSignal(target, COMSIG_CLOSET_PRE_OPEN)
 		return TRUE
 	else
-		RegisterSignal(target, COMSIG_CLOSET_PRE_OPEN, .proc/on_pre_open, override = TRUE) //very purposefully overriding
+		RegisterSignal(target, COMSIG_CLOSET_PRE_OPEN, PROC_REF(on_pre_open), override = TRUE) //very purposefully overriding
 		return FALSE
 
 /datum/element/deliver_first/proc/on_moved(obj/structure/closet/target, atom/oldloc, direction)

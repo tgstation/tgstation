@@ -52,7 +52,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "m" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -61,7 +61,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "n" = (
-/obj/structure/shuttle/engine/propulsion/burst/right{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -82,7 +82,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "s" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -94,7 +94,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "u" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /obj/docking_port/mobile/arrivals,
@@ -127,7 +127,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "A" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,

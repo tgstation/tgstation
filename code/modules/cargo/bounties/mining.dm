@@ -1,6 +1,6 @@
 /datum/bounty/item/mining/goliath_steaks
 	name = "Lava-Cooked Goliath Steaks"
-	description = "Admiral Pavlov has gone on hunger strike ever since the canteen started serving only monkey and monkey byproducts. She is demanding lava-cooked Goliath steaks."
+	description = "Admiral Pavlov has gone on hunger strike ever since the canteen started serving only monkey and monkey byproducts. She is demanding lava-cooked goliath steaks."
 	reward = CARGO_CRATE_VALUE * 10
 	required_count = 3
 	wanted_types = list(/obj/item/food/meat/steak/goliath = TRUE)
@@ -45,7 +45,7 @@
 
 /datum/bounty/item/mining/bone_dagger
 	name = "Bone Daggers"
-	description = "Central Command's canteen is undergoing budget cuts. Ship over some bone daggers so our Chef can keep working."
+	description = "Central Command's canteen is undergoing budget cuts. Ship over some bone daggers so our chef can keep working."
 	reward = CARGO_CRATE_VALUE * 10
 	required_count = 3
 	wanted_types = list(/obj/item/knife/combat/bone = TRUE)
@@ -54,7 +54,7 @@
 	name = "Mushroom Bowl"
 	description = "Lieutenant Jeb dropped his favorite mushroom bowl. Cheer him up by shipping a new one, will you?"
 	reward = CARGO_CRATE_VALUE * 15 //5x mushroom shavings
-	wanted_types = list(/obj/item/reagent_containers/glass/bowl/mushroom_bowl = TRUE)
+	wanted_types = list(/obj/item/reagent_containers/cup/bowl/mushroom_bowl = TRUE)
 
 /datum/bounty/item/mining/inocybe_mushroom
 	name = "Mushroom Caps"

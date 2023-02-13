@@ -11,8 +11,7 @@
 	to_chat(c, span_notice("Left Mouse Button + alt on turf/obj    = Copy object type"))
 	to_chat(c, span_notice("Left Mouse Button on turf/obj          = Place objects"))
 	to_chat(c, span_notice("Right Mouse Button                     = Delete objects"))
-	to_chat(c, "")
-	to_chat(c, span_notice("Use the button in the upper left corner to"))
+	to_chat(c, span_notice("\nUse the button in the upper left corner to"))
 	to_chat(c, span_notice("change the direction of built objects."))
 	to_chat(c, span_notice("***********************************************************"))
 
@@ -36,7 +35,7 @@
 	var/alt_click = LAZYACCESS(modifiers, ALT_CLICK)
 
 	if(left_click && alt_click)
-		if (istype(object, /turf) || istype(object, /obj) || istype(object, /mob))
+		if (istype(object, /turf) || isobj(object) || istype(object, /mob))
 			objholder = object.type
 			to_chat(c, span_notice("[initial(object.name)] ([object.type]) selected."))
 		else

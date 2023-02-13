@@ -65,7 +65,7 @@
 		SEND_SOUND(owner, sound('sound/effects/adminhelp.ogg'))
 		to_chat(owner, "<font color='red' size='4'><b>-- Interview Update --</b></font>" \
 			+ "\n[span_adminsay("Your interview was approved, you will now be reconnected in 5 seconds.")]", confidential = TRUE)
-		addtimer(CALLBACK(src, .proc/reconnect_owner), 50)
+		addtimer(CALLBACK(src, PROC_REF(reconnect_owner)), 50)
 
 /**
  * Denies the interview and adds the owner to the cooldown for new interviews.
@@ -80,7 +80,7 @@
 	GLOB.interviews.cooldown_ckeys |= owner_ckey
 	log_admin_private("[key_name(denied_by)] has denied interview #[id] for [owner_ckey][!owner ? "(DC)": ""].")
 	message_admins(span_adminnotice("[key_name(denied_by)] has denied [link_self()] for [owner_ckey][!owner ? "(DC)": ""]."))
-	addtimer(CALLBACK(GLOB.interviews, /datum/interview_manager.proc/release_from_cooldown, owner_ckey), 180)
+	addtimer(CALLBACK(GLOB.interviews, TYPE_PROC_REF(/datum/interview_manager, release_from_cooldown), owner_ckey), 180)
 	if (owner)
 		SEND_SOUND(owner, sound('sound/effects/adminhelp.ogg'))
 		to_chat(owner, "<font color='red' size='4'><b>-- Interview Update --</b></font>" \
@@ -117,6 +117,8 @@
 		ui.open()
 
 /datum/interview/ui_state(mob/user)
+	if(check_rights_for(user.client, R_ADMIN))
+		return GLOB.always_state
 	return GLOB.new_player_state
 
 /datum/interview/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -165,4 +167,4 @@
  * Generates a clickable link to open this interview
  */
 /datum/interview/proc/link_self()
-	return "<a href='?_src_=holder;[HrefToken(TRUE)];interview=[REF(src)]'>Interview #[id]</a>"
+	return "<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];interview=[REF(src)]'>Interview #[id]</a>"

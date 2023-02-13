@@ -5,6 +5,7 @@ $include dbconfig.txt
 $include comms.txt
 $include resources.txt
 $include interviews.txt
+$include lua.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -105,6 +106,9 @@ LOG_GAME
 ## log player votes
 LOG_VOTE
 
+## log manual target zone switching
+LOG_ZONE_SWITCH
+
 ## log client Whisper
 LOG_WHISPER
 
@@ -132,6 +136,9 @@ LOG_SILICON
 ## log economy actions
 LOG_ECON
 
+## log traitor objectives
+LOG_TRAITOR
+
 ## log crew manifest to separate file
 LOG_MANIFEST
 
@@ -154,9 +161,6 @@ LOG_PICTURES
 ## log virus and actions
 LOG_VIRUS
 
-## log cloning actions
-LOG_CLONING
-
 ## log shuttle actions
 LOG_SHUTTLE
 
@@ -165,6 +169,9 @@ LOG_TOOLS
 
 ## Log all timers on timer auto reset
 # LOG_TIMERS_ON_BUCKET_RESET
+
+## log speech indicators
+LOG_SPEECH_INDICATORS
 
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
@@ -195,6 +202,12 @@ ID_CONSOLE_JOBSLOT_DELAY 30
 
 ## allow players to initiate a map-change vote
 #ALLOW_VOTE_MAP
+
+## allow players to rock the vote, or to vote on the map again if they didn't like the last results
+#ALLOW_ROCK_THE_VOTE
+
+## the number of times you wish to allow players to rock the vote in a given shift
+MAX_ROCKING_VOTES 1
 
 ## min delay (deciseconds) between voting sessions (default 10 minutes)
 VOTE_DELAY 6000
@@ -286,8 +299,12 @@ CHECK_RANDOMIZER
 # INVOKE_YOUTUBEDL youtube-dl
 
 ## In-game features
-##Toggle for having jobs load up from the .txt
-# LOAD_JOBS_FROM_TXT
+
+## Toggle for having jobs load up from the jobconfig.toml (or jobs.txt) file. Will use codebase defaults if commented out.
+## Jobs have specific "keys" tied to their in-game datums, those should sync up otherwise it will fail to load.
+## Setting Total/Spawn Positions to -1 will open unlimited join slots for it.
+## Playtime Requirements is in minutes, Required Account Age is in days.
+#LOAD_JOBS_FROM_TXT
 
 ## Uncomment this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
@@ -302,9 +319,8 @@ ALLOW_HOLIDAYS
 ## Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
 #SHOW_IRC_NAME
 
-## Defines the ticklimit for subsystem initialization (In percents of a byond tick). Lower makes world start smoother. Higher makes it faster.
-##This is currently a testing optimized setting. A good value for production would be 98.
-TICK_LIMIT_MC_INIT 500
+## Uncomment to prevent machines syncing to the Science techweb by default.
+#NO_DEFAULT_TECHWEB_LINK
 
 ##Defines the ticklag for the world. Ticklag is the amount of time between game ticks (aka byond ticks) (in 1/10ths of a second).
 ##	This also controls the client network update rate, as well as the default client fps
@@ -474,10 +490,13 @@ MINUTE_CLICK_LIMIT 400
 ## Various messages to be sent to connected chat channels.
 ## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4.
 ## If using TGS4, the string option can be set as one of more chat channel tags (separated by ','s) to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
-## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
+## i.e. CHANNEL_ANNOUNCE_NEW_GAME chat_channel_tag
 
-## Send a message with the station name starting a new game.
-#CHAT_ANNOUNCE_NEW_GAME
+## Which channel will have a message about a new game starting, message includes the station name.
+#CHANNEL_ANNOUNCE_NEW_GAME
+
+## Which channel will have a message about a new game starting, message includes the round ID of the game that has just ended.
+#CHANNEL_ANNOUNCE_END_GAME
 
 ## Ping users who use the `notify` command when a new game starts.
 #CHAT_NEW_GAME_NOTIFICATIONS
@@ -564,13 +583,19 @@ DEFAULT_VIEW_SQUARE 15x15
 
 ## The URL to the webhook for adminhelps to relay the urgent ahelp message to
 ## If not set, will disable urgent ahelps.
-#ADMINHELP_WEBHOOK_URL
+#URGENT_ADMINHELP_WEBHOOK_URL
+
+## See above, but for non-urgent ahelps
+#REGULAR_ADMINHELP_WEBHOOK_URL
 
 ## The urgent ahelp cooldown for a given player if they're alone on a server and need to send an urgent ahelp.
 URGENT_AHELP_COOLDOWN 300
 
 ## The message that is sent to the discord if an urgent ahelp is sent. Useful for sending a role ping.
-#URGENT_AHELP_MESSAGE Ban ban ban ban
+#URGENT_AHELP_MESSAGE
+
+## See above, but for non-urgent ahelps.
+#AHELP_MESSAGE
 
 ## The message that the player receives whenever prompted whether they want to send an urgent ahelp or not.
 #URGENT_AHELP_USER_PROMPT This'll ping the admins!
@@ -613,3 +638,10 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 
 ## Uncomment to block granting profiling privileges to users with R_DEBUG, for performance purposes
 #FORBID_ADMIN_PROFILING
+
+## Comment to disable sending a toast notification on the host server when initializations complete.
+## Even if this is enabled, a notification will only be sent if there are no clients connected.
+TOAST_NOTIFICATION_ON_INIT
+
+## Causes configuration errors to spit out runtimes
+CONFIG_ERRORS_RUNTIME

@@ -24,7 +24,7 @@
 
 	circuit_components = list()
 
-	set_circuit_components(circuit_component_types)
+	src.circuit_component_types = circuit_component_types
 
 /datum/component/usb_port/proc/set_circuit_components(list/components)
 	var/should_register = FALSE
@@ -37,17 +37,19 @@
 		var/obj/item/circuit_component/component = circuit_component
 		if(ispath(circuit_component))
 			component = new circuit_component(null)
-		RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_SAVE, .proc/save_component)
+		if(!should_register)
+			component.register_usb_parent(parent)
+		RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_SAVE, PROC_REF(save_component))
 		circuit_components += component
 
 	if(should_register)
 		RegisterWithParent()
 
 /datum/component/usb_port/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, .proc/on_load)
+	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, PROC_REF(on_atom_usb_cable_try_attach))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, PROC_REF(on_load))
 
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		component.register_usb_parent(parent)
@@ -118,7 +120,7 @@
 /datum/component/usb_port/proc/attach_circuit_components(obj/item/integrated_circuit/circuitboard)
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		circuitboard.add_component(component)
-		RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/on_circuit_component_removed)
+		RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, PROC_REF(on_circuit_component_removed))
 
 /datum/component/usb_port/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
@@ -135,6 +137,9 @@
 
 /datum/component/usb_port/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/connecting_cable, mob/user)
 	SIGNAL_HANDLER
+
+	if (!length(circuit_components))
+		set_circuit_components(circuit_component_types)
 
 	var/atom/atom_parent = parent
 
@@ -156,7 +161,7 @@
 	if (connecting_cable.attached_circuit.locked)
 		connecting_cable.balloon_alert(user, "shell is locked!")
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
-	
+
 	usb_cable_ref = WEAKREF(connecting_cable)
 	attached_circuit = connecting_cable.attached_circuit
 
@@ -169,9 +174,9 @@
 	if(!new_physical_object)
 		new_physical_object = attached_circuit
 
-	RegisterSignal(attached_circuit, COMSIG_CIRCUIT_SHELL_REMOVED, .proc/on_circuit_shell_removed)
-	RegisterSignal(attached_circuit, COMSIG_PARENT_QDELETING, .proc/on_circuit_deleting)
-	RegisterSignal(attached_circuit, COMSIG_CIRCUIT_SET_SHELL, .proc/on_set_shell)
+	RegisterSignal(attached_circuit, COMSIG_CIRCUIT_SHELL_REMOVED, PROC_REF(on_circuit_shell_removed))
+	RegisterSignal(attached_circuit, COMSIG_PARENT_QDELETING, PROC_REF(on_circuit_deleting))
+	RegisterSignal(attached_circuit, COMSIG_CIRCUIT_SET_SHELL, PROC_REF(on_set_shell))
 	set_physical_object(new_physical_object)
 
 	return COMSIG_USB_CABLE_ATTACHED
@@ -185,8 +190,8 @@
 	var/atom/atom_parent = parent
 	usb_cable_beam = atom_parent.Beam(new_physical_object, "usb_cable_beam", 'icons/obj/wiremod.dmi')
 
-	RegisterSignal(new_physical_object, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(new_physical_object, COMSIG_PARENT_EXAMINE, .proc/on_examine_shell)
+	RegisterSignal(new_physical_object, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(new_physical_object, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine_shell))
 	physical_object = new_physical_object
 
 // Adds support for loading circuits without shells but with usb cables, or loading circuits with shells because the shells might not load first.

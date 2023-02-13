@@ -29,6 +29,21 @@ Stabilized extracts:
 		humanfound = loc
 	if(ishuman(loc.loc)) //Check if in backpack.
 		humanfound = (loc.loc)
+	for(var/atom/storage_loc as anything in get_storage_locs(src))
+		if(ishuman(storage_loc))
+			humanfound = storage_loc
+			break
+		if(ishuman(storage_loc.loc))
+			humanfound = storage_loc.loc
+			break
+		for(var/atom/storage_loc_storage_loc as anything in get_storage_locs(storage_loc))
+			if(ishuman(storage_loc_storage_loc))
+				humanfound = storage_loc_storage_loc
+				break
+	for(var/atom/loc_storage_loc as anything in get_storage_locs(loc))
+		if(ishuman(loc_storage_loc))
+			humanfound = loc_storage_loc
+			break
 	if(!humanfound)
 		return
 	var/mob/living/carbon/human/H = humanfound
@@ -137,7 +152,7 @@ Stabilized extracts:
 	var/choice = tgui_input_list(user, "Which do you want to reset?", "Familiar Adjustment", sort_list(list("Familiar Location", "Familiar Species", "Familiar Sentience", "Familiar Name")))
 	if(isnull(choice))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 	if(isliving(user))
 		var/mob/living/L = user

@@ -21,23 +21,23 @@
 		/obj/item/food/cnds = 6,
 		/obj/item/food/cnds/random = 3,
 		/obj/item/food/semki = 6,
-		/obj/item/reagent_containers/food/drinks/dry_ramen = 3,
+		/obj/item/reagent_containers/cup/glass/dry_ramen = 3,
 		/obj/item/storage/box/gum = 3,
-		/obj/item/food/energybar = 6
+		/obj/item/food/energybar = 6,
 	)
 	contraband = list(
 		/obj/item/food/syndicake = 6,
 		/obj/item/food/peanuts/ban_appeal = 3,
-		/obj/item/food/candy/bronx = 1
+		/obj/item/food/candy/bronx = 1,
 	)
 	premium = list(
 		/obj/item/food/spacers_sidekick = 3,
-		/obj/item/food/pistachios = 3
+		/obj/item/food/pistachios = 3,
 	)
 	refill_canister = /obj/item/vending_refill/snack
-	canload_access_list = list(ACCESS_KITCHEN)
-	default_price = PAYCHECK_ASSISTANT * 0.6
-	extra_price = PAYCHECK_EASY
+	req_access = list(ACCESS_KITCHEN)
+	default_price = PAYCHECK_CREW * 0.6
+	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SRV
 	input_display_header = "Chef's Food Selection"
 

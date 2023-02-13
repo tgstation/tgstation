@@ -29,7 +29,7 @@ For people that want to see additional stuff, we add an extended description wit
 ```
 
 Next we want to set the statistics, you can view them all in the theme file, so let's just grab our relevant ones, armor, charge and capacity and set them to what we establilished. \
-Currently crew MODsuits should be unarmored in combat relevant stats.
+Currently crew MODsuits should be lightly armored in combat relevant stats.
 
 ```dm
 /datum/mod_theme/psychological
@@ -40,7 +40,7 @@ Currently crew MODsuits should be unarmored in combat relevant stats.
 		for operating at lower power levels, keeping people sane. As consequence, the capacity \
 		of the suit has decreased, not being able to fit many modules at all."
 	default_skin = "psychological"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 10, ACID = 75, WOUND = 5)
+	armor_type = /datum/armor/modtheme_psychological
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 7
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
 ```
@@ -79,7 +79,7 @@ So, now that we have our theme, we want to add a skin to it (or another theme of
 		for operating at lower power levels, keeping people sane. As consequence, the capacity \
 		of the suit has decreased, not being able to fit many modules at all."
 	default_skin = "psychological"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 10, ACID = 75, WOUND = 5)
+	armor_type = /datum/armor/modtheme_psychological
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 7
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
 	skins = list(
@@ -134,7 +134,7 @@ There are specific cases of helmets that semi-cover the head, like the cosmohonk
 		for operating at lower power levels, keeping people sane. As consequence, the capacity \
 		of the suit has decreased, not being able to fit many modules at all."
 	default_skin = "psychological"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 10, ACID = 75, WOUND = 5)
+	armor_type = /datum/armor/modtheme_psychological
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 7
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
 	skins = list(
@@ -206,6 +206,7 @@ As we want this effect to be on demand, we probably want this to be an usable mo
 - Togglable: You can turn these on and off.
 - Usable: You can use these for a one time effect.
 - Active: You can only have one selected at a time. It gives you a special click effect.
+
 As we have an usable module, we want to set a cooldown time. All modules are also incompatible with themselves, have a specific power cost and complexity varying on how powerful they are, so let's update our definition, and also add a new variable for how much brain damage we'll heal.
 
 ```dm
@@ -267,7 +268,7 @@ Now we want to add it to the psychological theme, which is very simple, finishin
 		for operating at lower power levels, keeping people sane. As consequence, the capacity \
 		of the suit has decreased, not being able to fit many modules at all."
 	default_skin = "psychological"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 10, ACID = 75, WOUND = 5)
+	armor_type = /datum/armor/modtheme_psychological
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 7
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
 	inbuilt_modules = list(/obj/item/mod/module/neuron_healer/advanced)
@@ -320,4 +321,4 @@ Now we want to add it to the psychological theme, which is very simple, finishin
 ```
 
 ## Ending
-This finishes this hopefully easy to follow along tutorial. You should now know how to make a basic theme a skin for it and a module.
+This finishes this hopefully easy to follow along tutorial. You should now know how to make a basic theme, a skin for it, and a module.

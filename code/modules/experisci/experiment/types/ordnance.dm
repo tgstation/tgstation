@@ -7,7 +7,7 @@
 	name = "Toxin Research"
 	description = "An experiment conducted in the ordnance subdepartment."
 	exp_tag = "ordnance"
-	performance_hint = "Perform research experiments in the ordnance lab and publish them with NT Frontier."
+	performance_hint = "Perform research experiments in the ordnance lab using the specified equipment, print them unto a data disk, and publish them with the NT Frontier app."
 	/// Lookup experiments are initialized using subtypes, 
 	/// this lets us ignore the ones made for subtyping.
 	var/experiment_proper = FALSE
@@ -22,7 +22,7 @@
 	return completed 
 		
 /datum/experiment/ordnance/check_progress()
-	var/status_message = "You must publish or purchase a paper on [name]"
+	var/status_message = "You must publish a paper on [name] using the NT Frontier app"
 	. += EXPERIMENT_PROG_BOOL(status_message, is_complete())
 
 /datum/experiment/ordnance/actionable(datum/component/experiment_handler/experiment_handler)

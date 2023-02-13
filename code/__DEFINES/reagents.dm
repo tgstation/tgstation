@@ -9,12 +9,15 @@
 #define DRAINABLE (1<<3) // Makes it possible to remove reagents through any reagent container.
 #define DUNKABLE (1<<4) // Allows items to be dunked into this container for transfering reagents. Used in conjunction with the dunkable component.
 
-#define TRANSPARENT (1<<5) // Used on containers which you want to be able to see the reagents off.
+#define TRANSPARENT (1<<5) // Used on containers which you want to be able to see the reagents of.
 #define AMOUNT_VISIBLE (1<<6) // For non-transparent containers that still have the general amount of reagents in them visible.
 #define NO_REACT (1<<7) // Applied to a reagent holder, the contents will not react with each other.
 #define REAGENT_HOLDER_INSTANT_REACT (1<<8)  // Applied to a reagent holder, all of the reactions in the reagents datum will be instant. Meant to be used for things like smoke effects where reactions aren't meant to occur
 ///If the holder is "alive" (i.e. mobs and organs) - If this flag is applied to a holder it will cause reagents to split upon addition to the object
 #define REAGENT_HOLDER_ALIVE (1<<9)
+
+///If the holder a sealed container - Used if you don't want reagent contents boiling out (plasma, specifically, in which case it only bursts out when at ignition temperatures)
+#define SEALED_CONTAINER (1<<10)
 
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER (REFILLABLE | DRAINABLE | TRANSPARENT)
@@ -31,7 +34,8 @@
 /// Used for direct injection of reagents.
 #define INJECT (1<<4)
 
-#define MIMEDRINK_SILENCE_DURATION 30  //ends up being 60 seconds given 1 tick every 2 seconds
+// How long do mime drinks silence the drinker (if they are a mime)?
+#define MIMEDRINK_SILENCE_DURATION (1 MINUTES)
 ///Health threshold for synthflesh and rezadone to unhusk someone
 #define UNHUSK_DAMAGE_THRESHOLD 50
 ///Amount of synthflesh required to unhusk someone
@@ -120,7 +124,7 @@
 #define MAX_ADDICTION_POINTS 1000
 
 ///Addiction start/ends
-#define WITHDRAWAL_STAGE1_START_CYCLE 60
+#define WITHDRAWAL_STAGE1_START_CYCLE 61
 #define WITHDRAWAL_STAGE1_END_CYCLE 120
 #define WITHDRAWAL_STAGE2_START_CYCLE 121
 #define WITHDRAWAL_STAGE2_END_CYCLE 180

@@ -21,7 +21,7 @@
 			var/msg = "[ADMIN_LOOKUPFLW(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
 			message_admins(msg)
 			send2tgs_adminless_only("Mob", msg, R_ADMIN)
-			log_game("[key_name(src)] was found to have no .loc with an attached client.")
+			src.log_message("was found to have no .loc with an attached client.", LOG_GAME)
 
 		// This is a temporary error tracker to make sure we've caught everything
 		else if (registered_z != T.z)
@@ -67,12 +67,6 @@
 
 		handle_gravity(delta_time, times_fired)
 
-		if(stat != DEAD)
-			handle_traits(delta_time, times_fired) // eye, ear, brain damages
-			handle_status_effects(delta_time, times_fired) //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
-
-	handle_fire(delta_time, times_fired)
-
 	if(machine)
 		machine.check_eye(src)
 
@@ -110,23 +104,6 @@
 	else // this is a hot place
 		adjust_bodytemperature(min(min(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_HEATING_MAX) * delta_time, temp_delta))
 
-/mob/living/proc/handle_fire(delta_time, times_fired)
-	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
-		set_fire_stacks(min(0, fire_stacks + (0.5 * delta_time))) //So we dry ourselves back to default, nonflammable.
-	if(!on_fire)
-		return TRUE //the mob is no longer on fire, no need to do the rest.
-	if(fire_stacks > 0)
-		adjust_fire_stacks(-0.05 * delta_time) //the fire is slowly consumed
-	else
-		extinguish_mob()
-		return TRUE //mob was put out, on_fire = FALSE via extinguish_mob(), no need to update everything down the chain.
-	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(!G.gases[/datum/gas/oxygen] || G.gases[/datum/gas/oxygen][MOLES] < 1)
-		extinguish_mob() //If there's no oxygen in the tile we're on, put out the fire
-		return TRUE
-	var/turf/location = get_turf(src)
-	location.hotspot_expose(700, 25 * delta_time, TRUE)
-
 /**
  * Get the fullness of the mob
  *
@@ -156,28 +133,6 @@
 /mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	return reagents.has_reagent(reagent, amount, needs_metabolizing)
 
-/*
- * this updates some effects: mostly old stuff such as drunkness, druggy, stuttering, etc.
- * that should be converted to status effect datums one day.
- */
-/mob/living/proc/handle_status_effects(delta_time, times_fired)
-	if(stuttering)
-		stuttering = max(stuttering - (0.5 * delta_time), 0)
-	if(slurring)
-		slurring = max(slurring - (0.5 * delta_time),0)
-	if(cultslurring)
-		cultslurring = max(cultslurring - (0.5 * delta_time), 0)
-
-/mob/living/proc/handle_traits(delta_time, times_fired)
-	//Eyes
-	if(eye_blind) //blindness, heals slowly over time
-		if(HAS_TRAIT_FROM(src, TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
-			adjust_blindness(-1.5 * delta_time)
-		else if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
-			adjust_blindness(-0.5 * delta_time)
-	else if(eye_blurry) //blurry eyes heal slowly
-		adjust_blurriness(-0.5 * delta_time)
-
 /mob/living/proc/update_damage_hud()
 	return
 
@@ -194,11 +149,11 @@
 /mob/living/proc/gravity_animate()
 	if(!get_filter("gravity"))
 		add_filter("gravity",1,list("type"="motion_blur", "x"=0, "y"=0))
-	INVOKE_ASYNC(src, .proc/gravity_pulse_animation)
+	INVOKE_ASYNC(src, PROC_REF(gravity_pulse_animation))
 
 /mob/living/proc/gravity_pulse_animation()
 	animate(get_filter("gravity"), y = 1, time = 10)
-	sleep(10)
+	sleep(1 SECONDS)
 	animate(get_filter("gravity"), y = 0, time = 10)
 
 /mob/living/proc/handle_high_gravity(gravity, delta_time, times_fired)

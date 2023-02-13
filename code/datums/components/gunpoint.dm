@@ -1,9 +1,9 @@
 /// How many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2
 /// How long it takes from the gunpoint is initiated to reach stage 2
-#define GUNPOINT_DELAY_STAGE_2 2.5 SECONDS
+#define GUNPOINT_DELAY_STAGE_2 (2.5 SECONDS)
 /// How long it takes from stage 2 starting to move up to stage 3
-#define GUNPOINT_DELAY_STAGE_3 7.5 SECONDS
+#define GUNPOINT_DELAY_STAGE_3 (7.5 SECONDS)
 /// If the projectile doesn't have a wound_bonus of CANT_WOUND, we add (this * the stage mult) to their wound_bonus and bare_wound_bonus upon triggering
 #define GUNPOINT_BASE_WOUND_BONUS 5
 /// How much the damage and wound bonus mod is multiplied when you're on stage 1
@@ -33,17 +33,17 @@
 	var/mob/living/shooter = parent
 	target = targ
 	weapon = wep
-	RegisterSignal(targ, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN), .proc/trigger_reaction)
+	RegisterSignals(targ, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN), PROC_REF(trigger_reaction))
 
-	RegisterSignal(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), .proc/cancel)
+	RegisterSignals(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), PROC_REF(cancel))
 
 	shooter.visible_message(span_danger("[shooter] aims [weapon] point blank at [target]!"), \
 		span_danger("You aim [weapon] point blank at [target]!"), ignored_mobs = target)
 	to_chat(target, span_userdanger("[shooter] aims [weapon] point blank at you!"))
-	add_memory_in_range(target, 7, MEMORY_GUNPOINT, list(DETAIL_PROTAGONIST = target, DETAIL_DEUTERAGONIST = shooter, DETAIL_WHAT_BY = weapon), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS)
+	add_memory_in_range(target, 7, /datum/memory/held_at_gunpoint, protagonist = target, deuteragonist = shooter, antagonist = weapon)
 
 	shooter.apply_status_effect(/datum/status_effect/holdup, shooter)
-	target.apply_status_effect(/datum/status_effect/grouped/heldup, shooter)
+	target.apply_status_effect(/datum/status_effect/grouped/heldup, REF(shooter))
 
 	if(istype(weapon, /obj/item/gun/ballistic/rocketlauncher) && weapon.chambered)
 		if(target.stat == CONSCIOUS && IS_NUKE_OP(shooter) && !IS_NUKE_OP(target) && (locate(/obj/item/disk/nuclear) in target.get_contents()) && shooter.client)
@@ -51,26 +51,28 @@
 
 	target.do_alert_animation()
 	target.playsound_local(target.loc, 'sound/machines/chime.ogg', 50, TRUE)
-	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gunpoint", /datum/mood_event/gunpoint)
+	target.add_mood_event("gunpoint", /datum/mood_event/gunpoint)
 
-	addtimer(CALLBACK(src, .proc/update_stage, 2), GUNPOINT_DELAY_STAGE_2)
+	addtimer(CALLBACK(src, PROC_REF(update_stage), 2), GUNPOINT_DELAY_STAGE_2)
 
 /datum/component/gunpoint/Destroy(force, silent)
 	var/mob/living/shooter = parent
 	shooter.remove_status_effect(/datum/status_effect/holdup)
-	target.remove_status_effect(/datum/status_effect/grouped/heldup, shooter)
-	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
+	target.remove_status_effect(/datum/status_effect/grouped/heldup, REF(shooter))
+	target.clear_mood_event("gunpoint")
 	return ..()
 
 /datum/component/gunpoint/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/check_deescalate)
-	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, .proc/flinch)
-	RegisterSignal(parent, COMSIG_MOB_ATTACK_HAND, .proc/check_shove)
-	RegisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP), .proc/check_bump)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(check_deescalate))
+	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(flinch))
+	RegisterSignal(parent, COMSIG_MOB_ATTACK_HAND, PROC_REF(check_shove))
+	RegisterSignal(parent, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(check_deescalate))
+	RegisterSignals(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP), PROC_REF(check_bump))
 
 /datum/component/gunpoint/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
+	UnregisterSignal(parent, COMSIG_MOB_UPDATE_SIGHT)
 	UnregisterSignal(parent, COMSIG_MOB_ATTACK_HAND)
 	UnregisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP))
 
@@ -99,12 +101,14 @@
 
 ///Update the damage multiplier for whatever stage we're entering into
 /datum/component/gunpoint/proc/update_stage(new_stage)
+	if(check_deescalate())
+		return
 	stage = new_stage
 	if(stage == 2)
 		to_chat(parent, span_danger("You steady [weapon] on [target]."))
 		to_chat(target, span_userdanger("[parent] has steadied [weapon] on you!"))
 		damage_mult = GUNPOINT_MULT_STAGE_2
-		addtimer(CALLBACK(src, .proc/update_stage, 3), GUNPOINT_DELAY_STAGE_3)
+		addtimer(CALLBACK(src, PROC_REF(update_stage), 3), GUNPOINT_DELAY_STAGE_3)
 	else if(stage == 3)
 		to_chat(parent, span_danger("You have fully steadied [weapon] on [target]."))
 		to_chat(target, span_userdanger("[parent] has fully steadied [weapon] on you!"))
@@ -114,30 +118,24 @@
 /datum/component/gunpoint/proc/check_deescalate()
 	SIGNAL_HANDLER
 
-	if(!can_see(parent, target, GUNPOINT_SHOOTER_STRAY_RANGE - 1))
+	if(!can_see(parent, target, GUNPOINT_SHOOTER_STRAY_RANGE))
 		cancel()
+		return TRUE
 
 ///Bang bang, we're firing a charged shot off
 /datum/component/gunpoint/proc/trigger_reaction()
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/async_trigger_reaction)
+	INVOKE_ASYNC(src, PROC_REF(async_trigger_reaction))
 
 /datum/component/gunpoint/proc/async_trigger_reaction()
 	var/mob/living/shooter = parent
 	shooter.remove_status_effect(/datum/status_effect/holdup) // try doing these before the trigger gets pulled since the target (or shooter even) may not exist after pulling the trigger, dig?
-	target.remove_status_effect(/datum/status_effect/grouped/heldup, shooter)
-	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
+	target.remove_status_effect(/datum/status_effect/grouped/heldup, REF(shooter))
+	target.clear_mood_event("gunpoint")
 
 	if(point_of_no_return)
 		return
 	point_of_no_return = TRUE
-
-	if(!weapon.can_shoot() || !weapon.can_trigger_gun(shooter) || (weapon.weapon_weight == WEAPON_HEAVY && shooter.get_inactive_held_item()))
-		shooter.visible_message(span_danger("[shooter] fumbles [weapon]!"), \
-			span_danger("You fumble [weapon] and fail to fire at [target]!"), ignored_mobs = target)
-		to_chat(target, span_userdanger("[shooter] fumbles [weapon] and fails to fire at you!"))
-		qdel(src)
-		return
 
 	if(weapon.chambered && weapon.chambered.loaded_projectile)
 		weapon.chambered.loaded_projectile.damage *= damage_mult
@@ -145,10 +143,7 @@
 			weapon.chambered.loaded_projectile.wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
 			weapon.chambered.loaded_projectile.bare_wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
 
-	if(weapon.check_botched(shooter))
-		return
-
-	var/fired = weapon.process_fire(target, shooter)
+	var/fired = weapon.fire_gun(target, shooter)
 	if(!fired && weapon.chambered?.loaded_projectile)
 		weapon.chambered.loaded_projectile.damage /= damage_mult
 		if(weapon.chambered.loaded_projectile.wound_bonus != CANT_WOUND)
@@ -187,9 +182,8 @@
 	if(prob(flinch_chance))
 		shooter.visible_message(span_danger("[shooter] flinches!"), \
 			span_danger("You flinch!"))
-		INVOKE_ASYNC(src, .proc/trigger_reaction)
+		INVOKE_ASYNC(src, PROC_REF(trigger_reaction))
 
-#undef GUNPOINT_SHOOTER_STRAY_RANGE
 #undef GUNPOINT_DELAY_STAGE_2
 #undef GUNPOINT_DELAY_STAGE_3
 #undef GUNPOINT_BASE_WOUND_BONUS

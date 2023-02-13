@@ -8,7 +8,7 @@
 /area/template_noop)
 "ac" = (
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "ad" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
@@ -25,11 +25,11 @@
 /area/template_noop)
 "ag" = (
 /turf/closed/wall/r_wall,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "ah" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "ai" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -41,47 +41,43 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "ak" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "al" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "am" = (
 /obj/item/stock_parts/cell,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "an" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "ao" = (
 /obj/item/coin/bananium,
 /turf/open/floor/engine,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "ap" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aq" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "ar" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
-/area/tcommsat/oldaisat)
-"as" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
-/area/tcommsat/oldaisat)
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
+/area/ruin/space/tcommsat_oldaisat)
 "at" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
@@ -92,18 +88,18 @@
 "au" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "av" = (
 /obj/item/wrench,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aw" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "ax" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
@@ -114,59 +110,59 @@
 "ay" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "az" = (
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aA" = (
 /obj/structure/table,
 /obj/item/paper,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aB" = (
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen/blue,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aC" = (
 /obj/structure/frame/computer,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aD" = (
 /obj/structure/table,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aE" = (
 /obj/item/food/meat/slab/synthmeat{
 	name = "Cuban Pete-Meat"
 	},
 /turf/open/floor/engine,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aF" = (
 /obj/structure/grille,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aG" = (
 /obj/structure/grille/broken,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aH" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aI" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aJ" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aK" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -174,7 +170,7 @@
 	},
 /obj/structure/closet,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aL" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -184,12 +180,14 @@
 "aM" = (
 /obj/item/folder/yellow,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aN" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/effect/decal/remains/human,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aO" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -217,7 +215,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aR" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -237,41 +235,41 @@
 /turf/template_noop,
 /area/template_noop)
 "aU" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aV" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aW" = (
 /obj/item/paper/crumpled,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aX" = (
 /obj/item/food/meat/slab/synthmeat{
 	name = "Cuban Pete-Meat"
 	},
 /obj/item/stack/spacecash/c200,
 /turf/open/floor/engine,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aY" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "aZ" = (
 /obj/structure/table,
 /obj/item/storage/fancy/cigarettes,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "ba" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bb" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -280,18 +278,18 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bc" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bd" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "be" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -299,55 +297,55 @@
 	},
 /obj/item/electronics/airlock,
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bf" = (
 /obj/structure/door_assembly/door_assembly_hatch,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bg" = (
 /obj/item/cigbutt,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bh" = (
 /obj/machinery/vending/snack,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bi" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bj" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bk" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bn" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bo" = (
 /obj/structure/disposaloutlet{
 	dir = 4
@@ -356,7 +354,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bp" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -365,7 +363,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bq" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -393,22 +391,22 @@
 /obj/item/gps/spaceruin,
 /obj/item/radio/off,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bu" = (
 /obj/structure/chair,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bv" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bw" = (
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bx" = (
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "by" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -424,29 +422,29 @@
 	icon_state = "medium"
 	},
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bA" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bB" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bC" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bD" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bE" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -455,7 +453,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bF" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -472,49 +470,49 @@
 	},
 /obj/item/stack/rods,
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bH" = (
 /obj/item/stack/rods,
 /obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bI" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bJ" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bK" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bL" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bM" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bN" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/scalpel{
 	pixel_y = 12
 	},
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bO" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -523,70 +521,70 @@
 	icon_state = "medium"
 	},
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bP" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bQ" = (
 /obj/structure/rack,
 /obj/item/circuitboard/computer/teleporter,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bR" = (
 /obj/item/radio/off,
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bS" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bT" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bU" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/chair,
-/obj/item/clothing/under/rank/centcom/officer,
+/obj/item/clothing/under/rank/centcom/official,
 /obj/item/restraints/handcuffs,
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bV" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bW" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bX" = (
 /obj/structure/door_assembly/door_assembly_mhatch,
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bY" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "bZ" = (
 /obj/item/cigbutt,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "ca" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/assembly/signaler,
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cb" = (
 /obj/structure/table,
 /obj/item/reagent_containers/syringe/lethal/choral,
@@ -594,38 +592,38 @@
 	pixel_y = 4
 	},
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cc" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cd" = (
 /obj/item/storage/toolbox/syndicate,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "ce" = (
 /obj/structure/table,
 /obj/item/electropack,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cf" = (
 /obj/structure/table,
 /obj/item/hemostat,
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cg" = (
 /obj/structure/table,
 /obj/item/circular_saw,
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "ch" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "ci" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -635,7 +633,7 @@
 	},
 /obj/item/stack/rods,
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cj" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -653,25 +651,25 @@
 	dir = 9
 	},
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cm" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "co" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cp" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -685,37 +683,37 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cr" = (
 /obj/item/paper/crumpled,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cs" = (
 /obj/item/stack/rods,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "ct" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cu" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cw" = (
 /obj/machinery/light/small/directional/south,
 /obj/item/paper,
@@ -723,13 +721,13 @@
 	dir = 8
 	},
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cy" = (
 /obj/item/shard{
 	icon_state = "medium"
@@ -747,7 +745,7 @@
 "cB" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plating,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cC" = (
 /obj/structure/grille/broken,
 /turf/template_noop,
@@ -755,81 +753,81 @@
 "cD" = (
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cH" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cI" = (
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cJ" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cK" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cL" = (
 /obj/structure/sign/warning/vacuum,
 /turf/closed/wall/r_wall,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cM" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cN" = (
 /obj/item/paper/crumpled,
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cO" = (
 /obj/structure/closet/malf/suits,
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cP" = (
 /obj/structure/door_assembly/door_assembly_ext,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cQ" = (
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cS" = (
 /obj/item/crowbar,
 /turf/open/floor/plating/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cT" = (
 /obj/structure/closet/crate,
 /obj/item/clothing/glasses/night,
@@ -837,13 +835,13 @@
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cU" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cV" = (
 /obj/item/storage/toolbox/electrical{
 	pixel_x = 1;
@@ -853,40 +851,40 @@
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cW" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cX" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cY" = (
 /obj/structure/frame/computer,
 /turf/open/floor/plating,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "cZ" = (
 /obj/machinery/teleport/station,
 /turf/open/floor/plating,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "da" = (
 /obj/machinery/teleport/hub,
 /turf/open/floor/plating,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "jZ" = (
 /obj/structure/table,
 /obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/iron/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 "AX" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/spawner/random/exotic/tool,
 /turf/open/floor/iron/dark/airless,
-/area/tcommsat/oldaisat)
+/area/ruin/space/tcommsat_oldaisat)
 
 (1,1,1) = {"
 aa
@@ -2634,7 +2632,7 @@ ag
 cn
 az
 ar
-as
+ar
 ar
 az
 cD
@@ -2749,7 +2747,7 @@ cg
 bw
 ac
 ag
-as
+ar
 cs
 ar
 ag
@@ -3204,7 +3202,7 @@ aa
 ab
 ah
 ac
-as
+ar
 ar
 az
 aY
@@ -3264,7 +3262,7 @@ aa
 ac
 ab
 ac
-as
+ar
 ar
 aZ
 bj
@@ -3323,7 +3321,7 @@ aa
 ab
 ab
 ac
-as
+ar
 ar
 ba
 bk

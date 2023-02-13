@@ -12,8 +12,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	verb_ask = "queries"
 	verb_exclaim = "alarms"
 
-	idle_power_usage = 20
-	active_power_usage = 50
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.05
 
 	circuit = /obj/item/circuitboard/machine/announcement_system
 
@@ -55,7 +54,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system/screwdriver_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
-	panel_open = !panel_open
+	toggle_panel_open()
 	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance hatch of [src]."))
 	update_appearance()
 	return TRUE
@@ -100,6 +99,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /// Sends a message to the appropriate channels.
 /obj/machinery/announcement_system/proc/broadcast(message, list/channels)
+	use_power(active_power_usage)
 	if(channels.len == 0)
 		radio.talk_into(src, message, null)
 	else
@@ -137,14 +137,14 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 				return
 			if(NewMessage)
 				arrival = NewMessage
-				log_game("The arrivals announcement was updated: [NewMessage] by:[key_name(usr)]")
+				usr.log_message("updated the arrivals announcement to: [NewMessage]", LOG_GAME)
 		if("NewheadText")
 			var/NewMessage = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
 			if(!usr.canUseTopic(src, !issilicon(usr)))
 				return
 			if(NewMessage)
 				newhead = NewMessage
-				log_game("The head announcement was updated: [NewMessage] by:[key_name(usr)]")
+				usr.log_message("updated the head announcement to: [NewMessage]", LOG_GAME)
 		if("NewheadToggle")
 			newheadToggle = !newheadToggle
 			update_appearance()

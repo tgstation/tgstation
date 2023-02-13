@@ -1,0 +1,703 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"am" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"aq" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/engineering/material,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"as" = (
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "ws_westbolts"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge)
+"aY" = (
+/obj/machinery/light/small/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"aZ" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/abandoned/engine)
+"bh" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge)
+"bq" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/splatter,
+/mob/living/simple_animal/hostile/zombie{
+	desc = "This undead fiend looks to be badly decomposed.";
+	environment_smash = 0;
+	health = 60;
+	melee_damage_lower = 11;
+	melee_damage_upper = 11;
+	name = "Rotting Carcass";
+	outfit = /datum/outfit/corpse_assistant
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"by" = (
+/obj/machinery/light/small/directional/west,
+/obj/machinery/suit_storage_unit/spaceruin{
+	desc = "An industrial suit storage device carrying retro space suits. Neat!"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"bE" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/machinery/power/port_gen/pacman,
+/obj/item/stack/sheet/mineral/plasma/five,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"bG" = (
+/obj/machinery/light/small/directional/south,
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/dinner,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/entertainment/plushie,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"bM" = (
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "ws_eastbolts"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge)
+"ce" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"ci" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/engine)
+"cl" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/abandoned/engine)
+"cx" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"cD" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"cG" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"cH" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"cL" = (
+/obj/machinery/power/shuttle_engine/propulsion/right{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"cM" = (
+/turf/template_noop,
+/area/template_noop)
+"cV" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"cY" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"da" = (
+/obj/machinery/light/small/directional/south,
+/obj/item/bedsheet/dorms{
+	dir = 4
+	},
+/obj/structure/bed/pod{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light_switch/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"dc" = (
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"de" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/visible{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/effect/mob_spawn/corpse/human/engineer{
+	outfit = /datum/outfit/job/engineer
+	},
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"df" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/item/weldingtool,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"dj" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Sleeping Quarter"
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"do" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
+	dir = 8
+	},
+/obj/machinery/button/door/directional/west{
+	name = "Bolt Control";
+	id = "ws_westbolts";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/effect/mob_spawn/corpse/human/damaged,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"dp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"dq" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/button/door/directional/east{
+	name = "Bolt Control";
+	id = "ws_eastbolts";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"ds" = (
+/obj/machinery/light/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"dt" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"dx" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows";
+	name = "Exterior Window Blast Door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge)
+"dy" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/bridge)
+"dA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/simple_animal/hostile/zombie{
+	desc = "This undead fiend looks to be badly decomposed.";
+	environment_smash = 0;
+	health = 60;
+	melee_damage_lower = 11;
+	melee_damage_upper = 11;
+	name = "Rotting Carcass";
+	outfit = /datum/outfit/corpse_assistant
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"fh" = (
+/obj/machinery/computer/shuttle/white_ship/bridge{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"gG" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Left Engine Maintenance"
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/barricade/wooden/crude,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"mj" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	dir = 1;
+	view_range = 14;
+	x_offset = -3;
+	y_offset = -3
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"nM" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"nV" = (
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "ws_westbolts"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge)
+"oI" = (
+/obj/machinery/light/small/directional/north,
+/obj/machinery/suit_storage_unit/open,
+/obj/item/paper{
+	default_raw_text = "yoink"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge)
+"qQ" = (
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "wsnorthbolts"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/docking_port/mobile{
+	callTime = 250;
+	can_move_docking_ports = 1;
+	dir = 2;
+	shuttle_id = "whiteship";
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
+	name = "White Ship";
+	port_direction = 2;
+	preferred_direction = 2
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"sw" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows";
+	name = "Exterior Window Blast Door"
+	},
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge)
+"sL" = (
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "ws_eastbolts"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge)
+"ue" = (
+/obj/machinery/light/directional/east,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/medical/medkit,
+/obj/structure/table,
+/obj/effect/spawner/random/medical/minor_healing,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"wp" = (
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "wsnorthbolts"
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"Fp" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Right Engine Maintenance"
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/barricade/wooden/crude,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"FE" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge)
+"Io" = (
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "whiteship_windows";
+	name = "Windows Blast Door Control"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/paper/crumpled{
+	pixel_x = -10;
+	default_raw_text = "So... we were on our way to an outpost, but while we were going there, we saw a goddamn abandoned spaceship. So, naturally we went over to loot it, and we are docking now. It cant be that bad right?"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"Jv" = (
+/obj/machinery/light/small/directional/north,
+/obj/machinery/suit_storage_unit/spaceruin{
+	desc = "An industrial suit storage device carrying retro space suits. Neat!"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge)
+"JD" = (
+/obj/machinery/light_switch/directional/north{
+	pixel_y = 23
+	},
+/obj/machinery/airalarm/all_access{
+	dir = 1;
+	pixel_y = 30
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"Ki" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"NT" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/airalarm/all_access{
+	dir = 8;
+	pixel_x = -28
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"NX" = (
+/obj/structure/cable,
+/obj/machinery/button/door/directional/north{
+	normaldoorcontrol = 1;
+	specialfunctions = 4;
+	id = "wsnorthbolts";
+	name = "Exterior Bolt Control"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"Rg" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"Tj" = (
+/obj/machinery/power/shuttle_engine/propulsion/left{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"UC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/structure/chair/comfy/shuttle,
+/mob/living/simple_animal/hostile/zombie{
+	desc = "This undead fiend looks to be badly decomposed.";
+	environment_smash = 0;
+	health = 60;
+	melee_damage_lower = 11;
+	melee_damage_upper = 11;
+	name = "Rotting Carcass";
+	outfit = /datum/outfit/corpse_assistant
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+
+(1,1,1) = {"
+cM
+cl
+cl
+ci
+ci
+ci
+cM
+cM
+cM
+cM
+cM
+cM
+cM
+"}
+(2,1,1) = {"
+cM
+Tj
+cV
+aY
+bE
+ci
+dy
+nV
+dy
+cM
+cM
+cM
+cM
+"}
+(3,1,1) = {"
+cM
+Tj
+cV
+bq
+dc
+ci
+oI
+FE
+dy
+cM
+cM
+cM
+cM
+"}
+(4,1,1) = {"
+aZ
+cl
+cl
+gG
+ci
+ci
+ci
+as
+dy
+dy
+sw
+sw
+dy
+"}
+(5,1,1) = {"
+cl
+by
+cl
+NX
+NT
+da
+ci
+JD
+do
+ds
+cH
+mj
+dx
+"}
+(6,1,1) = {"
+qQ
+cY
+wp
+dA
+aa
+am
+dj
+cD
+dp
+dt
+cG
+Io
+dx
+"}
+(7,1,1) = {"
+cl
+nM
+cl
+cx
+Rg
+bG
+ci
+Ki
+dq
+ue
+UC
+fh
+dx
+"}
+(8,1,1) = {"
+aZ
+cl
+cl
+Fp
+ci
+ci
+ci
+sL
+dy
+dy
+dx
+dx
+dy
+"}
+(9,1,1) = {"
+cM
+cL
+cV
+de
+ce
+ci
+Jv
+bh
+dy
+cM
+cM
+cM
+cM
+"}
+(10,1,1) = {"
+cM
+cL
+cV
+aq
+df
+ci
+dy
+bM
+dy
+cM
+cM
+cM
+cM
+"}
+(11,1,1) = {"
+cM
+cl
+cl
+ci
+ci
+ci
+cM
+cM
+cM
+cM
+cM
+cM
+cM
+"}

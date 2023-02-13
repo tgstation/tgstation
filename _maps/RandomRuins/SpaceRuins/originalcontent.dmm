@@ -24,7 +24,7 @@
 /area/template_noop)
 "af" = (
 /turf/closed/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "ag" = (
 /obj/structure/fluff/paper{
 	dir = 10
@@ -46,7 +46,7 @@
 /area/template_noop)
 "aj" = (
 /obj/machinery/door/airlock/freezer{
-	name = "airlock";
+	name = "Airlock";
 	opacity = 0
 	},
 /obj/structure/fluff/paper{
@@ -57,25 +57,25 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "ak" = (
 /obj/structure/fluff/paper{
 	dir = 9
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "al" = (
 /obj/structure/fluff/paper{
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "am" = (
 /obj/structure/fluff/paper{
 	dir = 5
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "an" = (
 /obj/structure/fluff/paper{
 	dir = 4
@@ -84,36 +84,36 @@
 	dir = 8
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "ao" = (
 /obj/structure/fluff/paper/corner{
 	dir = 4
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "ap" = (
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aq" = (
 /obj/structure/fluff/paper{
 	dir = 4
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "ar" = (
 /obj/structure/fluff/paper{
 	dir = 8
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "as" = (
 /obj/item/paper/crumpled/ruins/originalcontent,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "at" = (
 /mob/living/basic/stickman,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "au" = (
 /obj/structure/fluff/paper/stack{
 	dir = 4
@@ -122,7 +122,7 @@
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "av" = (
 /obj/structure/fluff/paper/corner{
 	dir = 1
@@ -131,7 +131,7 @@
 	dir = 4
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aw" = (
 /obj/structure/fluff/paper{
 	dir = 8
@@ -143,30 +143,30 @@
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "ay" = (
 /obj/structure/fluff/paper{
 	dir = 10
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "az" = (
 /obj/structure/fluff/paper,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aA" = (
 /obj/structure/fluff/paper/corner{
 	dir = 8
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aB" = (
 /obj/structure/fluff/paper/stack,
 /obj/structure/fluff/paper/stack{
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aC" = (
 /obj/structure/fluff/paper{
 	dir = 5
@@ -175,7 +175,7 @@
 	dir = 9
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aD" = (
 /obj/structure/fluff/paper/corner{
 	dir = 8
@@ -183,7 +183,7 @@
 /obj/structure/fluff/paper/corner,
 /mob/living/basic/stickman,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aE" = (
 /obj/structure/fluff/paper{
 	dir = 8
@@ -192,7 +192,7 @@
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aF" = (
 /obj/structure/fluff/paper{
 	dir = 8
@@ -202,7 +202,7 @@
 	},
 /obj/structure/barricade/wooden,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aG" = (
 /obj/structure/fluff/paper{
 	dir = 10
@@ -212,7 +212,7 @@
 	},
 /obj/structure/barricade/wooden,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aH" = (
 /obj/structure/fluff/paper/corner{
 	dir = 8
@@ -222,27 +222,27 @@
 	},
 /obj/structure/barricade/wooden,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aI" = (
 /obj/structure/fluff/paper/stack{
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aJ" = (
 /obj/structure/fluff/paper/corner{
 	dir = 1
 	},
 /obj/structure/fluff/paper/corner,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aK" = (
 /obj/structure/fluff/paper{
 	dir = 1
 	},
 /obj/structure/fluff/paper,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aL" = (
 /obj/structure/fluff/paper{
 	dir = 1
@@ -252,13 +252,13 @@
 	},
 /mob/living/basic/stickman,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aM" = (
 /obj/structure/fluff/paper/stack{
 	dir = 10
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aN" = (
 /obj/structure/fluff/paper/corner{
 	dir = 8
@@ -267,12 +267,12 @@
 	dir = 4
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aO" = (
 /obj/structure/fluff/paper,
 /mob/living/basic/stickman/dog,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aP" = (
 /obj/structure/fluff/paper{
 	dir = 8
@@ -281,7 +281,7 @@
 	dir = 4
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aQ" = (
 /obj/structure/fluff/paper{
 	dir = 10
@@ -290,7 +290,7 @@
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aR" = (
 /obj/structure/fluff/paper{
 	dir = 1
@@ -299,25 +299,25 @@
 	dir = 8
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aS" = (
 /obj/structure/fluff/paper/corner,
 /mob/living/basic/stickman/dog,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aT" = (
 /obj/structure/fluff/paper{
 	dir = 6
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aU" = (
 /obj/structure/fluff/paper/corner{
 	dir = 1
 	},
 /obj/structure/fluff/paper,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aV" = (
 /obj/structure/fluff/paper{
 	dir = 6
@@ -326,25 +326,25 @@
 	dir = 4
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aW" = (
 /obj/structure/fluff/paper{
 	dir = 1
 	},
 /obj/structure/fluff/paper/stack,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aX" = (
 /obj/structure/fluff/paper/stack,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aY" = (
 /obj/structure/fluff/paper/corner,
 /obj/structure/fluff/paper/corner{
 	dir = 4
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "aZ" = (
 /obj/structure/fluff/paper/corner{
 	dir = 8
@@ -353,14 +353,14 @@
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "ba" = (
 /obj/structure/fluff/paper{
 	dir = 1
 	},
 /mob/living/basic/stickman/dog,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bb" = (
 /obj/structure/fluff/paper/corner{
 	dir = 1
@@ -369,7 +369,7 @@
 	dir = 8
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bc" = (
 /obj/structure/fluff/paper{
 	dir = 9
@@ -396,35 +396,35 @@
 	dir = 9
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bg" = (
 /obj/structure/fluff/paper{
 	dir = 8
 	},
 /obj/item/toy/crayon/yellow,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bh" = (
 /obj/structure/fluff/paper{
 	dir = 1
 	},
 /obj/item/toy/crayon/red,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bi" = (
 /obj/structure/fluff/paper{
 	dir = 1
 	},
 /obj/structure/fluff/paper/corner,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bj" = (
 /obj/structure/fluff/paper,
 /obj/structure/fluff/paper/corner{
 	dir = 4
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bk" = (
 /obj/structure/fluff/paper/corner{
 	dir = 8
@@ -434,18 +434,18 @@
 	},
 /mob/living/basic/stickman,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bl" = (
 /obj/structure/fluff/paper/stack{
 	dir = 9
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bm" = (
 /obj/structure/fluff/paper,
 /mob/living/basic/stickman,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bn" = (
 /obj/structure/fluff/paper{
 	dir = 9
@@ -470,7 +470,7 @@
 	},
 /obj/item/toy/crayon/rainbow,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bq" = (
 /obj/structure/fluff/paper{
 	dir = 4
@@ -479,7 +479,7 @@
 	dir = 4
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "br" = (
 /obj/structure/fluff/paper{
 	dir = 8
@@ -488,19 +488,19 @@
 	dir = 4
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bs" = (
 /obj/item/toy/crayon/spraycan,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bt" = (
 /obj/item/storage/crayons,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bu" = (
 /mob/living/basic/stickman/ranged,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bv" = (
 /obj/structure/fluff/paper/corner{
 	dir = 8
@@ -512,7 +512,7 @@
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bw" = (
 /obj/structure/fluff/paper/corner{
 	dir = 1
@@ -528,30 +528,30 @@
 "by" = (
 /obj/structure/fluff/paper/corner,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bz" = (
 /obj/structure/fluff/paper/stack{
 	dir = 9
 	},
 /obj/structure/fluff/paper,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bA" = (
 /obj/item/toner,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bB" = (
 /obj/structure/easel,
 /obj/item/paper/pamphlet/ruin/originalcontent/stickman,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bC" = (
 /obj/item/toy/crayon/yellow,
 /obj/structure/fluff/paper{
 	dir = 8
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bD" = (
 /obj/structure/fluff/paper{
 	dir = 4
@@ -560,11 +560,11 @@
 	dir = 8
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bE" = (
 /mob/living/basic/stickman/dog,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bF" = (
 /obj/structure/fluff/paper/stack{
 	dir = 1
@@ -574,19 +574,19 @@
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bG" = (
 /obj/item/toy/crayon/blue,
 /mob/living/basic/stickman/ranged,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bH" = (
 /obj/structure/fluff/paper{
 	dir = 4
 	},
 /obj/item/toy/crayon/yellow,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bI" = (
 /obj/structure/fluff/paper{
 	dir = 9
@@ -597,7 +597,7 @@
 /obj/item/paper/crumpled/ruins/originalcontent,
 /obj/item/gps/spaceruin,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bJ" = (
 /obj/structure/fluff/paper{
 	dir = 1
@@ -605,7 +605,7 @@
 /obj/structure/easel,
 /obj/item/paper/pamphlet/ruin/originalcontent/treeside,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bK" = (
 /obj/structure/fluff/paper{
 	dir = 5
@@ -613,7 +613,7 @@
 /obj/structure/table/wood,
 /obj/item/storage/crayons,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bL" = (
 /obj/structure/fluff/paper{
 	dir = 4
@@ -622,21 +622,21 @@
 	dir = 6
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bM" = (
 /obj/item/toy/crayon/purple,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bN" = (
 /obj/structure/fluff/paper/corner,
 /obj/structure/fluff/paper/corner{
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bO" = (
 /obj/machinery/door/airlock/freezer{
-	name = "airlock";
+	name = "Airlock";
 	opacity = 0
 	},
 /obj/structure/fluff/paper{
@@ -644,7 +644,7 @@
 	},
 /obj/structure/fluff/paper,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bP" = (
 /obj/structure/fluff/paper{
 	dir = 1
@@ -656,7 +656,7 @@
 	dir = 4
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bQ" = (
 /obj/structure/fluff/paper{
 	dir = 1
@@ -666,20 +666,20 @@
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bR" = (
 /obj/structure/fluff/paper/stack{
 	dir = 4
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bS" = (
 /obj/structure/fluff/paper/stack{
 	dir = 1
 	},
 /obj/structure/fluff/paper/stack,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bT" = (
 /obj/structure/fluff/paper/corner{
 	dir = 1
@@ -688,18 +688,18 @@
 	dir = 6
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bU" = (
 /obj/structure/fluff/paper{
 	dir = 4
 	},
 /mob/living/basic/stickman,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bV" = (
 /obj/item/toy/crayon/yellow,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bW" = (
 /obj/structure/fluff/paper{
 	dir = 8
@@ -707,15 +707,15 @@
 /obj/structure/easel,
 /obj/item/paper/pamphlet/ruin/originalcontent/pennywise,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bX" = (
 /obj/item/toy/crayon/blue,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bY" = (
 /obj/item/toy/crayon/red,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "bZ" = (
 /obj/structure/fluff/paper{
 	dir = 4
@@ -723,7 +723,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/rainbow,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "ca" = (
 /obj/structure/fluff/paper{
 	dir = 10
@@ -731,18 +731,18 @@
 /obj/structure/table/wood,
 /obj/item/storage/crayons,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cb" = (
 /obj/structure/fluff/paper/stack{
 	dir = 9
 	},
 /obj/item/toy/crayon/purple,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cc" = (
 /mob/living/simple_animal/hostile/boss/paper_wizard,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cd" = (
 /obj/structure/fluff/paper{
 	dir = 4
@@ -751,7 +751,7 @@
 /obj/item/toy/crayon/rainbow,
 /obj/item/toy/crayon/spraycan,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "ce" = (
 /obj/structure/fluff/paper{
 	dir = 4
@@ -760,14 +760,14 @@
 	dir = 4
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cf" = (
 /obj/structure/fluff/paper{
 	dir = 8
 	},
 /obj/structure/fluff/paper/stack,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cg" = (
 /obj/structure/fluff/paper{
 	dir = 4
@@ -775,26 +775,26 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "ch" = (
 /obj/structure/fluff/paper,
 /obj/item/paper/crumpled/ruins/originalcontent,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "ci" = (
 /obj/structure/fluff/paper,
 /obj/structure/fluff/paper/corner{
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cj" = (
 /obj/structure/fluff/paper{
 	dir = 1
 	},
 /mob/living/basic/stickman,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "ck" = (
 /obj/structure/fluff/paper{
 	dir = 6
@@ -803,21 +803,21 @@
 	dir = 5
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cl" = (
 /obj/structure/fluff/paper/corner,
 /obj/structure/fluff/paper/stack{
 	dir = 4
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cm" = (
 /obj/structure/fluff/paper,
 /obj/structure/table/wood,
 /obj/item/storage/crayons,
 /obj/item/storage/crayons,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cn" = (
 /obj/structure/fluff/paper{
 	dir = 6
@@ -827,7 +827,7 @@
 /obj/item/canvas,
 /obj/item/canvas/nineteen_nineteen,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "co" = (
 /obj/structure/fluff/paper,
 /obj/structure/fluff/paper/stack{
@@ -835,27 +835,27 @@
 	},
 /obj/item/toy/crayon/blue,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cp" = (
 /obj/structure/fluff/paper{
 	dir = 10
 	},
 /obj/machinery/photocopier,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cq" = (
 /obj/structure/fluff/paper,
 /obj/structure/table/wood,
 /obj/item/storage/crayons,
 /obj/item/pen/fourcolor,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cr" = (
 /obj/structure/fluff/paper,
 /obj/structure/easel,
 /obj/item/paper/pamphlet/ruin/originalcontent/yelling,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cs" = (
 /obj/structure/fluff/paper,
 /obj/structure/fluff/paper{
@@ -863,14 +863,14 @@
 	},
 /mob/living/basic/stickman/dog,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "ct" = (
 /obj/structure/fluff/paper,
 /obj/structure/fluff/paper{
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cu" = (
 /obj/structure/fluff/paper{
 	dir = 8
@@ -879,24 +879,24 @@
 	dir = 6
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cv" = (
 /obj/structure/fluff/paper,
 /obj/structure/fluff/paper/stack{
 	dir = 6
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "cw" = (
 /obj/structure/fluff/paper{
 	dir = 1
 	},
 /mob/living/basic/stickman/ranged,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "wr" = (
 /obj/machinery/door/airlock/freezer{
-	name = "airlock";
+	name = "Airlock";
 	opacity = 0
 	},
 /obj/structure/fluff/paper{
@@ -909,11 +909,11 @@
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "Ns" = (
 /obj/item/paper/secretrecipe,
 /turf/open/indestructible/paper,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 
 (1,1,1) = {"
 aa

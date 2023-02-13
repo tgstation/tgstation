@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - balance: "Flesh Heretic's summon objective now counts all summons done, alive or dead, instead of all alive summons. Still does not include flesh ghouls or voiceless dead."

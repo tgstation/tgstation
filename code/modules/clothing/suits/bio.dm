@@ -1,39 +1,55 @@
 //Biosuit complete with shoes (in the item sprite)
 /obj/item/clothing/head/bio_hood
 	name = "bio hood"
-	icon_state = "bio"
 	desc = "A hood that protects the head and face from biological contaminants."
-	permeability_coefficient = 0.01
-	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 30, ACID = 100)
+	icon = 'icons/obj/clothing/head/bio.dmi'
+	worn_icon = 'icons/mob/clothing/head/bio.dmi'
+	icon_state = "bio"
+	inhand_icon_state = "bio_hood"
+	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
+	armor_type = /datum/armor/head_bio_hood
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
 	resistance_flags = ACID_PROOF
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
+/obj/item/clothing/head/bio_hood/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+
+/datum/armor/head_bio_hood
+	bio = 100
+	fire = 30
+	acid = 100
+
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"
 	desc = "A suit that protects against biological contamination."
+	icon = 'icons/obj/clothing/suits/bio.dmi'
 	icon_state = "bio"
+	worn_icon = 'icons/mob/clothing/suits/bio.dmi'
 	inhand_icon_state = "bio_suit"
 	w_class = WEIGHT_CLASS_BULKY
-	permeability_coefficient = 0.01
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 0.5
-	allowed = list(/obj/item/tank/internals, /obj/item/reagent_containers/dropper, /obj/item/flashlight/pen, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/glass/beaker, /obj/item/gun/syringe)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 30, ACID = 100)
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	allowed = list(/obj/item/tank/internals, /obj/item/reagent_containers/dropper, /obj/item/flashlight/pen, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/cup/beaker, /obj/item/gun/syringe)
+	armor_type = /datum/armor/suit_bio_suit
+	flags_inv = HIDEGLOVES|HIDEJUMPSUIT
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = ACID_PROOF
 
 //Standard biosuit, orange stripe
+/datum/armor/suit_bio_suit
+	bio = 100
+	fire = 30
+	acid = 100
+
 /obj/item/clothing/head/bio_hood/general
-	icon_state = "bio_general"
+	icon_state = "bio"
 
 /obj/item/clothing/suit/bio_suit/general
-	icon_state = "bio_general"
-
+	icon_state = "bio"
 
 //Virology biosuit, green stripe
 /obj/item/clothing/head/bio_hood/virology
@@ -42,15 +58,34 @@
 /obj/item/clothing/suit/bio_suit/virology
 	icon_state = "bio_virology"
 
-
 //Security biosuit, grey with red stripe across the chest
 /obj/item/clothing/head/bio_hood/security
-	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 100, FIRE = 30, ACID = 100)
+	armor_type = /datum/armor/bio_hood_security
 	icon_state = "bio_security"
 
+/datum/armor/bio_hood_security
+	melee = 25
+	bullet = 15
+	laser = 25
+	energy = 35
+	bomb = 25
+	bio = 100
+	fire = 30
+	acid = 100
+
 /obj/item/clothing/suit/bio_suit/security
-	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 100, FIRE = 30, ACID = 100)
+	armor_type = /datum/armor/bio_suit_security
 	icon_state = "bio_security"
+
+/datum/armor/bio_suit_security
+	melee = 25
+	bullet = 15
+	laser = 25
+	energy = 35
+	bomb = 25
+	bio = 100
+	fire = 30
+	acid = 100
 
 /obj/item/clothing/suit/bio_suit/security/Initialize(mapload)
 	. = ..()

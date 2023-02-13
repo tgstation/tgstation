@@ -5,8 +5,8 @@
 	icon_state = "aicard" // aicard-full
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NOBLUDGEON
@@ -38,7 +38,7 @@
 	else //No AI on the card, therefore the user wants to download one.
 		target.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
 		if(AI)
-			log_combat(user, AI, "carded", src)
+			log_silicon("[key_name(user)] carded [key_name(AI)]", src)
 			update_appearance()
 			return TRUE
 	return ..()
@@ -98,13 +98,13 @@
 						while(AI.stat != DEAD && flush)
 							AI.adjustOxyLoss(5)
 							AI.updatehealth()
-							sleep(5)
+							sleep(0.5 SECONDS)
 						flush = FALSE
 			. = TRUE
 		if("wireless")
 			AI.control_disabled = !AI.control_disabled
 			if(!AI.control_disabled)
-				AI.interaction_range = null
+				AI.interaction_range = INFINITY
 			else
 				AI.interaction_range = 0
 			to_chat(AI, span_warning("[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!"))

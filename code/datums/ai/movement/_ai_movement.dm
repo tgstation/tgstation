@@ -15,7 +15,9 @@
 /datum/ai_movement/proc/stop_moving_towards(datum/ai_controller/controller)
 	controller.pathing_attempts = 0
 	moving_controllers -= controller
-	SSmove_manager.stop_looping(controller.pawn, SSai_movement)
+	// We got deleted as we finished an action
+	if(!QDELETED(controller.pawn))
+		SSmove_manager.stop_looping(controller.pawn, SSai_movement)
 
 /datum/ai_movement/proc/increment_pathing_failures(datum/ai_controller/controller)
 	controller.pathing_attempts++
@@ -56,7 +58,7 @@
 //Anything to do post movement
 /datum/ai_movement/proc/post_move(datum/move_loop/source, succeeded)
 	SIGNAL_HANDLER
-	if(succeeded)
+	if(succeeded != FALSE)
 		return
 	var/datum/ai_controller/controller = source.extra_info
 	increment_pathing_failures(controller)

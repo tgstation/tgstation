@@ -1,9 +1,6 @@
 /obj/docking_port/mobile/assault_pod
 	name = "assault pod"
-	id = "steel_rain"
-	dwidth = 3
-	width = 7
-	height = 7
+	shuttle_id = "steel_rain"
 
 /obj/docking_port/mobile/assault_pod/request(obj/docking_port/stationary/S)
 	if(!(z in SSmapping.levels_by_trait(ZTRAIT_STATION))) //No launching pods that have already launched
@@ -22,8 +19,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-red"
 	inhand_icon_state = "radio"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	desc = "Used to select a landing zone for assault pods."
 	var/shuttle_id = "steel_rain"
 	var/dwidth = 3
@@ -48,7 +45,7 @@
 		return
 	var/turf/T = pick(turfs)
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
-	landing_zone.id = "assault_pod([REF(src)])"
+	landing_zone.shuttle_id = "assault_pod([REF(src)])"
 	landing_zone.port_destinations = "assault_pod([REF(src)])"
 	landing_zone.name = "Landing Zone"
 	landing_zone.dwidth = dwidth
@@ -59,7 +56,7 @@
 
 	for(var/obj/machinery/computer/shuttle/S in GLOB.machines)
 		if(S.shuttleId == shuttle_id)
-			S.possible_destinations = "[landing_zone.id]"
+			S.possible_destinations = "[landing_zone.shuttle_id]"
 
 	to_chat(user, span_notice("Landing zone set."))
 

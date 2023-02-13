@@ -12,7 +12,7 @@
 			if ((stat != DEAD) && (damage > 4.9))
 				Unconscious(rand(100,200))
 
-			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected))
+			var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(user.zone_selected))
 			apply_damage(damage, BRUTE, affecting)
 		else
 			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)

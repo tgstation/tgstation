@@ -15,7 +15,6 @@
 		return
 	owner.cure_nearsighted(GENETIC_MUTATION)
 
-
 ///Blind makes you blind. Who knew?
 /datum/mutation/human/blind
 	name = "Blindness"
@@ -41,66 +40,70 @@
 	difficulty = 18
 	text_gain_indication = "<span class='notice'>You can see the heat rising off of your skin...</span>"
 	text_lose_indication = "<span class='notice'>You can no longer see the heat rising off of your skin...</span>"
-	time_coeff = 2
 	instability = 25
 	synchronizer_coeff = 1
 	power_coeff = 1
 	energy_coeff = 1
-	power = /obj/effect/proc_holder/spell/self/thermal_vision_activate
-
-
-/datum/mutation/human/thermal/modify()
-	if(!power)
-		return FALSE
-	var/obj/effect/proc_holder/spell/self/thermal_vision_activate/modified_power = power
-	modified_power.eye_damage = 10 * GET_MUTATION_SYNCHRONIZER(src)
-	modified_power.thermal_duration = 10 * GET_MUTATION_POWER(src)
-	modified_power.charge_max = (25 * GET_MUTATION_ENERGY(src)) SECONDS
-
-
-/obj/effect/proc_holder/spell/self/thermal_vision_activate
-	name = "Activate Thermal Vision"
-	desc = "You can see thermal signatures, at the cost of your eyesight."
-	charge_max = 25 SECONDS
-	var/eye_damage = 10
-	var/thermal_duration = 10
-	clothes_req = FALSE
-	action_icon = 'icons/mob/actions/actions_changeling.dmi'
-	action_icon_state = "augmented_eyesight"
-
-/obj/effect/proc_holder/spell/self/thermal_vision_activate/cast(list/targets, mob/user = usr)
-	. = ..()
-
-	if(HAS_TRAIT(user,TRAIT_THERMAL_VISION))
-		return
-
-	ADD_TRAIT(user, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
-	user.update_sight()
-	to_chat(user, text("You focus your eyes intensely, as your vision becomes filled with heat signatures."))
-
-	addtimer(CALLBACK(src, .proc/thermal_vision_deactivate), thermal_duration SECONDS)
-
-/obj/effect/proc_holder/spell/self/thermal_vision_activate/proc/thermal_vision_deactivate(mob/user = usr)
-
-
-	if(!HAS_TRAIT_FROM(user,TRAIT_THERMAL_VISION, GENETIC_MUTATION))
-		return
-
-	REMOVE_TRAIT(user, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
-	user.update_sight()
-	to_chat(user, text("You blink a few times, your vision returning to normal as a dull pain settles in your eyes."))
-
-	var/mob/living/carbon/user_mob = user
-	if(!istype(user_mob))
-		return
-
-	user_mob.adjustOrganLoss(ORGAN_SLOT_EYES, eye_damage)
+	power_path = /datum/action/cooldown/spell/thermal_vision
 
 /datum/mutation/human/thermal/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
-	owner.update_sight()
+
+	// Something went wront and we still have the thermal vision from our power, no cheating.
+	if(HAS_TRAIT_FROM(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION))
+		REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
+		owner.update_sight()
+
+/datum/mutation/human/thermal/modify()
+	. = ..()
+	var/datum/action/cooldown/spell/thermal_vision/to_modify = .
+	if(!istype(to_modify)) // null or invalid
+		return
+
+	to_modify.eye_damage = 10 * GET_MUTATION_SYNCHRONIZER(src)
+	to_modify.thermal_duration = 10 SECONDS * GET_MUTATION_POWER(src)
+
+/datum/action/cooldown/spell/thermal_vision
+	name = "Activate Thermal Vision"
+	desc = "You can see thermal signatures, at the cost of your eyesight."
+	button_icon = 'icons/mob/actions/actions_changeling.dmi'
+	button_icon_state = "augmented_eyesight"
+
+	cooldown_time = 25 SECONDS
+	spell_requirements = NONE
+
+	/// How much eye damage is given on cast
+	var/eye_damage = 10
+	/// The duration of the thermal vision
+	var/thermal_duration = 10 SECONDS
+
+/datum/action/cooldown/spell/thermal_vision/Remove(mob/living/remove_from)
+	REMOVE_TRAIT(remove_from, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
+	remove_from.update_sight()
+	return ..()
+
+/datum/action/cooldown/spell/thermal_vision/is_valid_target(atom/cast_on)
+	return isliving(cast_on) && !HAS_TRAIT(cast_on, TRAIT_THERMAL_VISION)
+
+/datum/action/cooldown/spell/thermal_vision/cast(mob/living/cast_on)
+	. = ..()
+	ADD_TRAIT(cast_on, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
+	cast_on.update_sight()
+	to_chat(cast_on, span_info("You focus your eyes intensely, as your vision becomes filled with heat signatures."))
+	addtimer(CALLBACK(src, PROC_REF(deactivate), cast_on), thermal_duration)
+
+/datum/action/cooldown/spell/thermal_vision/proc/deactivate(mob/living/cast_on)
+	if(QDELETED(cast_on) || !HAS_TRAIT_FROM(cast_on, TRAIT_THERMAL_VISION, GENETIC_MUTATION))
+		return
+
+	REMOVE_TRAIT(cast_on, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
+	cast_on.update_sight()
+	to_chat(cast_on, span_info("You blink a few times, your vision returning to normal as a dull pain settles in your eyes."))
+
+	if(iscarbon(cast_on))
+		var/mob/living/carbon/carbon_cast_on = cast_on
+		carbon_cast_on.adjustOrganLoss(ORGAN_SLOT_EYES, eye_damage)
 
 ///X-ray Vision lets you see through walls.
 /datum/mutation/human/xray
@@ -143,7 +146,7 @@
 	. = ..()
 	if(.)
 		return
-	RegisterSignal(H, COMSIG_MOB_ATTACK_RANGED, .proc/on_ranged_attack)
+	RegisterSignal(H, COMSIG_MOB_ATTACK_RANGED, PROC_REF(on_ranged_attack))
 
 /datum/mutation/human/laser_eyes/on_losing(mob/living/carbon/human/H)
 	. = ..()
@@ -167,7 +170,7 @@
 	LE.firer = source
 	LE.def_zone = ran_zone(source.zone_selected)
 	LE.preparePixelProjectile(target, source, modifiers)
-	INVOKE_ASYNC(LE, /obj/projectile.proc/fire)
+	INVOKE_ASYNC(LE, TYPE_PROC_REF(/obj/projectile, fire))
 	playsound(source, 'sound/weapons/taser2.ogg', 75, TRUE)
 
 ///Projectile type used by laser eyes
@@ -175,3 +178,20 @@
 	name = "beam"
 	icon = 'icons/effects/genetics.dmi'
 	icon_state = "eyelasers"
+
+/datum/mutation/human/illiterate
+	name = "Illiterate"
+	desc = "Causes a severe case of Aphasia that prevents reading or writing."
+	quality = NEGATIVE
+	text_gain_indication = "<span class='danger'>You feel unable to read or write.</span>"
+	text_lose_indication = "<span class='danger'>You feel able to read and write again.</span>"
+
+/datum/mutation/human/illiterate/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	ADD_TRAIT(owner, TRAIT_ILLITERATE, GENETIC_MUTATION)
+
+/datum/mutation/human/illiterate/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, GENETIC_MUTATION)

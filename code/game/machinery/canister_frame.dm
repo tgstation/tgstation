@@ -1,7 +1,7 @@
 //Canister Frames
 /obj/structure/canister_frame
 	name = "canister frame"
-	icon = 'icons/obj/atmos.dmi'
+	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "frame_0"
 	density = TRUE
 
@@ -37,40 +37,20 @@
 			i_prev = initial(i_prev.prev_tier)
 	qdel(src)
 
-/obj/structure/canister_frame/machine/frame_tier_0
-	name = "tier 0 canister frame"
+/obj/structure/canister_frame/machine/unfinished_canister_frame
+	name = "unfinished canister frame"
 	icon_state = "frame_0"
 
-	next_tier = /obj/structure/canister_frame/machine/frame_tier_1
+	next_tier = /obj/structure/canister_frame/machine/finished_canister_frame
 	next_tier_reqitem = /obj/item/stack/sheet/iron
 	next_tier_reqitem_am = 5
 
-/obj/structure/canister_frame/machine/frame_tier_1
-	name = "tier 1 canister frame"
+/obj/structure/canister_frame/machine/finished_canister_frame
+	name = "finished canister frame"
 	icon_state = "frame_1"
 
-	prev_tier = /obj/structure/canister_frame/machine/frame_tier_0
-	next_tier = /obj/structure/canister_frame/machine/frame_tier_2
-	next_tier_reqitem = /obj/item/stack/sheet/plasteel
-	next_tier_reqitem_am = 5
-	finished_obj = /obj/machinery/portable_atmospherics/canister/tier_1
-
-/obj/structure/canister_frame/machine/frame_tier_2
-	name = "tier 2 canister frame"
-	icon_state = "frame_2"
-
-	prev_tier = /obj/structure/canister_frame/machine/frame_tier_1
-	next_tier = /obj/structure/canister_frame/machine/frame_tier_3
-	next_tier_reqitem = /obj/item/stack/sheet/bluespace_crystal
-	next_tier_reqitem_am = 1
-	finished_obj = /obj/machinery/portable_atmospherics/canister/tier_2
-
-/obj/structure/canister_frame/machine/frame_tier_3
-	name = "tier 3 canister frame"
-	icon_state = "frame_3"
-
-	prev_tier = /obj/structure/canister_frame/machine/frame_tier_2
-	finished_obj = /obj/machinery/portable_atmospherics/canister/tier_3
+	prev_tier = /obj/structure/canister_frame/machine/unfinished_canister_frame
+	finished_obj = /obj/machinery/portable_atmospherics/canister
 
 /obj/structure/canister_frame/machine/examine(user)
 	. = ..()

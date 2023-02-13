@@ -5,6 +5,7 @@
 	show_name_in_check_antagonists = TRUE
 	can_elimination_hijack = ELIMINATION_ENABLED
 	suicide_cry = "FOR SCOTLAND!!" // If they manage to lose their no-drop stuff somehow
+	count_against_dynamic_roll_chance = FALSE
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
@@ -25,7 +26,7 @@
 	if(L.has_quirk(/datum/quirk/nonviolent))
 		ADD_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
-/datum/antagonist/highlander/proc/forge_objectives()
+/datum/antagonist/highlander/forge_objectives()
 	var/datum/objective/steal/steal_objective = new
 	steal_objective.owner = owner
 	steal_objective.set_target(new /datum/objective_item/steal/nukedisc)
@@ -55,7 +56,7 @@
 		if(!H.dropItemToGround(I))
 			qdel(I)
 	H.regenerate_icons()
-	H.revive(full_heal = TRUE, admin_revive = TRUE)
+	H.revive(ADMIN_HEAL_ALL)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), ITEM_SLOT_ICLOTHING)
 	H.equip_to_slot_or_del(new /obj/item/radio/headset/syndicate(H), ITEM_SLOT_EARS)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), ITEM_SLOT_HEAD)
@@ -94,7 +95,7 @@
 	var/mob/living/silicon/robot/robotlander = owner.current
 	if(!istype(robotlander))
 		return ..()
-	robotlander.revive(full_heal = TRUE, admin_revive = TRUE)
+	robotlander.revive(ADMIN_HEAL_ALL)
 	robotlander.set_connected_ai() //DISCONNECT FROM AI
 	robotlander.laws.clear_inherent_laws()
 	robotlander.laws.set_zeroth_law("THERE CAN BE ONLY ONE")

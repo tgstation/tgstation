@@ -32,9 +32,19 @@
 		var/command = macro_set[key]
 		winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[command]")
 
-	if(hotkeys)
-		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
-	else
-		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_DISABLED]")
+	//Reactivate any active tgui windows mouse passthroughs macros
+	for(var/datum/tgui_window/window in tgui_windows)
+		if(window.mouse_event_macro_set)
+			window.mouse_event_macro_set = FALSE
+			window.set_mouse_macro()
 
 	update_special_keybinds()
+
+/// Manually clears any held keys, in case due to lag or other undefined behavior a key gets stuck.
+/client/proc/reset_held_keys()
+	for(var/key in keys_held)
+		keyUp(key)
+
+	//In case one got stuck and the previous loop didn't clean it, somehow.
+	for(var/key in key_combos_held)
+		keyUp(key_combos_held[key])

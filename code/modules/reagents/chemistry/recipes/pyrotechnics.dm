@@ -140,7 +140,7 @@
 				to_chat(C, span_userdanger("The divine explosion sears you!"))
 				C.Paralyze(40)
 				C.adjust_fire_stacks(5)
-				C.IgniteMob()
+				C.ignite_mob()
 	..()
 
 /datum/chemical_reaction/gunpowder
@@ -153,10 +153,10 @@
 	required_temp = 474
 	strengthdiv = 10
 	modifier = 5
-	mix_message = "<span class='boldannounce'>Sparks start flying around the gunpowder!</span>"
+	mix_message = "<span class='boldnotice'>Sparks start flying around the gunpowder!</span>"
 
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	addtimer(CALLBACK(src, .proc/default_explode, holder, created_volume, modifier, strengthdiv), rand(5,10) SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(default_explode), holder, created_volume, modifier, strengthdiv), rand(5,10) SECONDS)
 
 /datum/chemical_reaction/thermite
 	results = list(/datum/reagent/thermite = 3)
@@ -164,16 +164,17 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/emp_pulse
-	required_reagents = list(/datum/reagent/uranium = 1, /datum/reagent/iron = 1) // Yes, laugh, it's the best recipe I could think of that makes a little bit of sense
+	required_reagents = list(/datum/reagent/uranium = 1, /datum/reagent/iron = 1, /datum/reagent/aluminium = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
 
 /datum/chemical_reaction/emp_pulse/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	//pretending this reaction took two ingredients and not three for its effects
+	var/two_thirds = created_volume / 1.5
 	var/location = get_turf(holder.my_atom)
 	// 100 created volume = 4 heavy range & 7 light range. A few tiles smaller than traitor EMP grandes.
 	// 200 created volume = 8 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
-	empulse(location, round(created_volume / 12), round(created_volume / 7), 1)
+	empulse(location, round(two_thirds / 12), round(two_thirds / 7), 1)
 	holder.clear_reagents()
-
 
 /datum/chemical_reaction/beesplosion
 	required_reagents = list(/datum/reagent/consumable/honey = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/uranium/radium = 1)
@@ -331,14 +332,13 @@
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
 	holder.remove_reagent(/datum/reagent/smoke_powder, created_volume*3)
-	var/smoke_radius = round(sqrt(created_volume * 1.5), 1)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/smoke_spread/chem/S = new
+	var/datum/effect_system/fluid_spread/smoke/chem/S = new
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	if(S)
-		S.set_up(holder, smoke_radius, location, 0)
-		S.start()
+		S.set_up(amount = created_volume * 3, holder = holder.my_atom, location = location, carry = holder, silent = FALSE)
+		S.start(log = TRUE)
 	if(holder?.my_atom)
 		holder.clear_reagents()
 
@@ -351,13 +351,12 @@
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	var/smoke_radius = round(sqrt(created_volume / 2), 1)
-	var/datum/effect_system/smoke_spread/chem/S = new
+	var/datum/effect_system/fluid_spread/smoke/chem/S = new
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	if(S)
-		S.set_up(holder, smoke_radius, location, 0)
-		S.start()
+		S.set_up(amount = created_volume, holder = holder.my_atom, location = location, carry = holder, silent = FALSE)
+		S.start(log = TRUE)
 	if(holder?.my_atom)
 		holder.clear_reagents()
 
@@ -548,14 +547,14 @@
 	var/T3 = created_volume * 120
 	var/added_delay = 0.5 SECONDS
 	if(created_volume >= 75)
-		addtimer(CALLBACK(src, .proc/zappy_zappy, holder, T1), added_delay)
+		addtimer(CALLBACK(src, PROC_REF(zappy_zappy), holder, T1), added_delay)
 		added_delay += 1.5 SECONDS
 	if(created_volume >= 40)
-		addtimer(CALLBACK(src, .proc/zappy_zappy, holder, T2), added_delay)
+		addtimer(CALLBACK(src, PROC_REF(zappy_zappy), holder, T2), added_delay)
 		added_delay += 1.5 SECONDS
 	if(created_volume >= 10) //10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
-		addtimer(CALLBACK(src, .proc/zappy_zappy, holder, T3), added_delay)
-	addtimer(CALLBACK(src, .proc/default_explode, holder, created_volume, modifier, strengthdiv), added_delay)
+		addtimer(CALLBACK(src, PROC_REF(zappy_zappy), holder, T3), added_delay)
+	addtimer(CALLBACK(src, PROC_REF(default_explode), holder, created_volume, modifier, strengthdiv), added_delay)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/proc/zappy_zappy(datum/reagents/holder, power)
 	if(QDELETED(holder.my_atom))

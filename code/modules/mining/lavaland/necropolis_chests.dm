@@ -13,31 +13,26 @@
 	/// var to check if it got opened by a key
 	var/spawned_loot = FALSE
 
-/obj/structure/closet/crate/necropolis/tendril/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/try_spawn_loot)
-
-/obj/structure/closet/crate/necropolis/tendril/proc/try_spawn_loot(datum/source, obj/item/item, mob/user, params) ///proc that handles key checking and generating loot
-	SIGNAL_HANDLER
-
+/obj/structure/closet/crate/necropolis/tendril/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/skeleton_key) || spawned_loot)
-		return FALSE
+		return ..()
 	var/loot = rand(1,20)
+	var/mod
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
 		if(2)
 			new /obj/item/soulstone/anybody/mining(src)
 		if(3)
-			new /obj/item/organ/cyberimp/arm/katana(src)
+			new /obj/item/organ/internal/cyberimp/arm/katana(src)
 		if(4)
 			new /obj/item/clothing/glasses/godeye(src)
 		if(5)
-			new /obj/item/reagent_containers/glass/bottle/potion/flight(src)
+			new /obj/item/reagent_containers/cup/bottle/potion/flight(src)
 		if(6)
 			new /obj/item/clothing/gloves/gauntlets(src)
 		if(7)
-			var/mod = rand(1,4)
+			mod = rand(1,4)
 			switch(mod)
 				if(1)
 					new /obj/item/disk/design_disk/modkit_disc/resonator_blast(src)
@@ -50,7 +45,7 @@
 		if(8)
 			new /obj/item/rod_of_asclepius(src)
 		if(9)
-			new /obj/item/organ/heart/cursed/wizard(src)
+			new /obj/item/organ/internal/heart/cursed/wizard(src)
 		if(10)
 			new /obj/item/ship_in_a_bottle(src)
 		if(11)
@@ -66,7 +61,7 @@
 		if(16)
 			new /obj/item/immortality_talisman(src)
 		if(17)
-			new /obj/item/book/granter/spell/summonitem(src)
+			new /obj/item/book/granter/action/spell/summonitem(src)
 		if(18)
 			new /obj/item/book_of_babel(src)
 		if(19)
@@ -74,10 +69,12 @@
 			new /obj/item/bedsheet/cult(src)
 		if(20)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
+	if(!contents.len)
+		to_chat(user, span_warning("[src] makes a clunking sound as you try to open it. You feel compelled to let the gods know! (Please open an adminhelp and try again!)"))
+		CRASH("Failed to generate loot. loot number: [loot][mod ? "subloot: [mod]" : null]")
 	spawned_loot = TRUE
 	qdel(item)
 	to_chat(user, span_notice("You disable the magic lock, revealing the loot."))
-	return TRUE
 
 /obj/structure/closet/crate/necropolis/tendril/can_open(mob/living/user, force = FALSE)
 	if(!spawned_loot)
@@ -97,7 +94,7 @@
 		if(2)
 			new /obj/item/lava_staff(src)
 		if(3)
-			new /obj/item/book/granter/spell/sacredflame(src)
+			new /obj/item/book/granter/action/spell/sacredflame(src)
 		if(4)
 			new /obj/item/dragons_blood(src)
 
@@ -139,7 +136,7 @@
 	var/list/choices = subtypesof(/obj/machinery/anomalous_crystal)
 	var/random_crystal = pick(choices)
 	new random_crystal(src)
-	new /obj/item/organ/vocal_cords/colossus(src)
+	new /obj/item/organ/internal/vocal_cords/colossus(src)
 
 /obj/structure/closet/crate/necropolis/colossus/crusher
 	name = "angelic colossus chest"

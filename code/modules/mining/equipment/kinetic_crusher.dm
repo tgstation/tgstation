@@ -29,31 +29,19 @@
 	var/charge_time = 15
 	var/detonation_damage = 50
 	var/backstab_bonus = 30
-	var/wielded = FALSE // track wielded status on item
 
 /obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-
-/obj/item/kinetic_crusher/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/butchering, 60, 110) //technically it's huge and bulky, but this provides an incentive to use it
+	AddComponent(/datum/component/butchering, \
+		speed = 6 SECONDS, \
+		effectiveness = 110, \
+	)
+	//technically it's huge and bulky, but this provides an incentive to use it
 	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
 	return ..()
-
-/// triggered on wield of two handed item
-/obj/item/kinetic_crusher/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/kinetic_crusher/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-	wielded = FALSE
 
 /obj/item/kinetic_crusher/examine(mob/living/user)
 	. = ..()
@@ -80,7 +68,7 @@
 		return ..()
 
 /obj/item/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
-	if(!wielded)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		to_chat(user, span_warning("[src] is too heavy to use with one hand! You fumble and drop everything."))
 		user.drop_all_held_items()
 		return
@@ -129,7 +117,7 @@
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/kinetic_crusher/afterattack_secondary(atom/target, mob/living/user, clickparams)
-	if(!wielded)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		balloon_alert(user, "wield it first!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target == user)
@@ -156,7 +144,7 @@
 	destabilizer.fire()
 	charged = FALSE
 	update_appearance()
-	addtimer(CALLBACK(src, .proc/Recharge), charge_time)
+	addtimer(CALLBACK(src, PROC_REF(Recharge)), charge_time)
 
 /obj/item/kinetic_crusher/proc/Recharge()
 	if(!charged)
@@ -171,7 +159,7 @@
 
 
 /obj/item/kinetic_crusher/update_icon_state()
-	inhand_icon_state = "crusher[wielded]" // this is not icon_state and not supported by 2hcomponent
+	inhand_icon_state = "crusher[HAS_TRAIT(src, TRAIT_WIELDED)]" // this is not icon_state and not supported by 2hcomponent
 	return ..()
 
 /obj/item/kinetic_crusher/update_overlays()
@@ -180,6 +168,10 @@
 		. += "[icon_state]_uncharged"
 	if(light_on)
 		. += "[icon_state]_lit"
+
+/obj/item/kinetic_crusher/compact //for admins
+	name = "compact kinetic crusher"
+	w_class = WEIGHT_CLASS_NORMAL
 
 //destablizing force
 /obj/projectile/destabilizer
@@ -235,21 +227,20 @@
 	else
 		..()
 
-/obj/item/crusher_trophy/proc/add_to(obj/item/kinetic_crusher/H, mob/living/user)
-	for(var/t in H.trophies)
-		var/obj/item/crusher_trophy/T = t
-		if(istype(T, denied_type) || istype(src, T.denied_type))
-			to_chat(user, span_warning("You can't seem to attach [src] to [H]. Maybe remove a few trophies?"))
+/obj/item/crusher_trophy/proc/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
+	for(var/obj/item/crusher_trophy/trophy as anything in crusher.trophies)
+		if(istype(trophy, denied_type) || istype(src, trophy.denied_type))
+			to_chat(user, span_warning("You can't seem to attach [src] to [crusher]. Maybe remove a few trophies?"))
 			return FALSE
-	if(!user.transferItemToLoc(src, H))
+	if(!user.transferItemToLoc(src, crusher))
 		return
-	H.trophies += src
-	to_chat(user, span_notice("You attach [src] to [H]."))
+	crusher.trophies += src
+	to_chat(user, span_notice("You attach [src] to [crusher]."))
 	return TRUE
 
-/obj/item/crusher_trophy/proc/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
-	forceMove(get_turf(H))
-	H.trophies -= src
+/obj/item/crusher_trophy/proc/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
+	forceMove(get_turf(crusher))
+	crusher.trophies -= src
 	return TRUE
 
 /obj/item/crusher_trophy/proc/on_melee_hit(mob/living/target, mob/living/user) //the target and the user
@@ -372,7 +363,7 @@
 			continue
 		playsound(L, 'sound/magic/fireball.ogg', 20, TRUE)
 		new /obj/effect/temp_visual/fire(L.loc)
-		addtimer(CALLBACK(src, .proc/pushback, L, user), 1) //no free backstabs, we push AFTER module stuff is done
+		addtimer(CALLBACK(src, PROC_REF(pushback), L, user), 1) //no free backstabs, we push AFTER module stuff is done
 		L.adjustFireLoss(bonus_value, forced = TRUE)
 
 /obj/item/crusher_trophy/tail_spike/proc/pushback(mob/living/target, mob/living/user)
@@ -436,7 +427,7 @@
 
 /obj/item/crusher_trophy/blaster_tubes/on_mark_detonation(mob/living/target, mob/living/user)
 	deadly_shot = TRUE
-	addtimer(CALLBACK(src, .proc/reset_deadly_shot), 300, TIMER_UNIQUE|TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(reset_deadly_shot)), 300, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/item/crusher_trophy/blaster_tubes/proc/reset_deadly_shot()
 	deadly_shot = FALSE
@@ -449,17 +440,11 @@
 	denied_type = /obj/item/crusher_trophy/vortex_talisman
 
 /obj/item/crusher_trophy/vortex_talisman/effect_desc()
-	return "mark detonation to create a barrier you can pass"
+	return "mark detonation to create a homing hierophant chaser"
 
 /obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/living/user)
-	var/turf/T = get_turf(user)
-	new /obj/effect/temp_visual/hierophant/wall/crusher(T, user) //a wall only you can pass!
-	var/turf/otherT = get_step(T, turn(user.dir, 90))
-	if(otherT)
-		new /obj/effect/temp_visual/hierophant/wall/crusher(otherT, user)
-	otherT = get_step(T, turn(user.dir, -90))
-	if(otherT)
-		new /obj/effect/temp_visual/hierophant/wall/crusher(otherT, user)
-
-/obj/effect/temp_visual/hierophant/wall/crusher
-	duration = 75
+	if(isliving(target))
+		var/obj/effect/temp_visual/hierophant/chaser/chaser = new(get_turf(user), user, target, 3, TRUE)
+		chaser.monster_damage_boost = FALSE // Weaker cuz no cooldown
+		chaser.damage = 20
+		log_combat(user, target, "fired a chaser at", src)

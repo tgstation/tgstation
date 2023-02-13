@@ -22,6 +22,10 @@
 	var/buildstackamount = 2
 	var/bolts = TRUE
 
+/obj/structure/bed/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/soft_landing)
+
 /obj/structure/bed/examine(mob/user)
 	. = ..()
 	if(bolts)
@@ -49,16 +53,23 @@
  */
 /obj/structure/bed/roller
 	name = "roller bed"
-	icon = 'icons/obj/rollerbed.dmi'
+	icon = 'icons/obj/medical/rollerbed.dmi'
 	icon_state = "down"
 	anchored = FALSE
 	resistance_flags = NONE
+	///The item it spawns when it's folded up.
 	var/foldabletype = /obj/item/roller
 
+/obj/structure/bed/roller/Initialize(mapload)
+	. = ..()
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Fold up", \
+	)
 
 /obj/structure/bed/roller/examine(mob/user)
 	. = ..()
-	. += span_notice("You can fold it up by <b>dragging</b> it onto you.")
+	. += span_notice("You can fold it up with a Right-click.")
 
 /obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/roller/robo))
@@ -81,17 +92,19 @@
 	else
 		return ..()
 
-/obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
+/obj/structure/bed/roller/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(over_object == usr && Adjacent(usr))
-		if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
-			return FALSE
-		if(has_buckled_mobs())
-			return FALSE
-		usr.visible_message(span_notice("[usr] collapses \the [src.name]."), span_notice("You collapse \the [src.name]."))
-		var/obj/structure/bed/roller/B = new foldabletype(get_turf(src))
-		usr.put_in_hands(B)
-		qdel(src)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!ishuman(user) || !user.canUseTopic(src, be_close = TRUE))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(has_buckled_mobs())
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))
+	var/obj/structure/bed/roller/folding_bed = new foldabletype(get_turf(src))
+	user.put_in_hands(folding_bed)
+	qdel(src)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
 	set_density(TRUE)
@@ -99,7 +112,7 @@
 	//Push them up from the normal lying position
 	M.pixel_y = M.base_pixel_y
 
-/obj/structure/bed/roller/Moved()
+/obj/structure/bed/roller/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
@@ -115,7 +128,7 @@
 /obj/item/roller
 	name = "roller bed"
 	desc = "A collapsed roller bed that can be carried around."
-	icon = 'icons/obj/rollerbed.dmi'
+	icon = 'icons/obj/medical/rollerbed.dmi'
 	icon_state = "folded"
 	w_class = WEIGHT_CLASS_NORMAL // No more excuses, stop getting blood everywhere
 

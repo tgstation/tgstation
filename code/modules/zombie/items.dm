@@ -4,7 +4,7 @@
 		humans, butchering all other living things to \
 		sustain the zombie, smashing open airlock doors and opening \
 		child-safe caps on bottles."
-	item_flags = ABSTRACT | DROPDEL
+	item_flags = ABSTRACT | DROPDEL | HAND_ITEM
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
@@ -38,6 +38,7 @@
 		if(ishuman(target))
 			try_to_zombie_infect(target)
 		else
+			. |= AFTERATTACK_PROCESSED_ITEM
 			check_feast(target, user)
 
 /proc/try_to_zombie_infect(mob/living/carbon/human/target)
@@ -48,26 +49,27 @@
 		// zombies)
 		return
 
-	var/obj/item/organ/zombie_infection/infection
+	// spaceacillin has a 75% chance to block infection
+	if(istype(target) && target.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) && prob(75))
+		return
+
+	var/obj/item/organ/internal/zombie_infection/infection
 	infection = target.getorganslot(ORGAN_SLOT_ZOMBIE)
 	if(!infection)
 		infection = new()
 		infection.Insert(target)
 
-
-
-/obj/item/zombie_hand/suicide_act(mob/user)
+/obj/item/zombie_hand/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is ripping [user.p_their()] brains out! It looks like [user.p_theyre()] trying to commit suicide!"))
-	if(isliving(user))
-		var/mob/living/L = user
-		var/obj/item/bodypart/O = L.get_bodypart(BODY_ZONE_HEAD)
-		if(O)
-			O.dismember()
-	return (BRUTELOSS)
+	var/obj/item/bodypart/head = user.get_bodypart(BODY_ZONE_HEAD)
+	if(head)
+		head.dismember()
+	return BRUTELOSS
 
 /obj/item/zombie_hand/proc/check_feast(mob/living/target, mob/living/user)
 	if(target.stat == DEAD)
 		var/hp_gained = target.maxHealth
+		target.investigate_log("has been devoured by a zombie.", INVESTIGATE_DEATHS)
 		target.gib()
 		// zero as argument for no instant health update
 		user.adjustBruteLoss(-hp_gained, 0)

@@ -7,6 +7,7 @@
 	prevent_roundtype_conversion = FALSE
 	antag_hud_name = "fugitive_hunter"
 	suicide_cry = "FOR GLORY!!"
+	count_against_dynamic_roll_chance = FALSE
 	var/datum/team/fugitive_hunters/hunter_team
 	var/backstory = "error"
 
@@ -14,7 +15,7 @@
 	forge_objectives()
 	. = ..()
 
-/datum/antagonist/fugitive_hunter/proc/forge_objectives() //this isn't an actual objective because it's about round end rosters
+/datum/antagonist/fugitive_hunter/forge_objectives() //this isn't an actual objective because it's about round end rosters
 	var/datum/objective/capture = new /datum/objective
 	capture.owner = owner
 	capture.explanation_text = "Capture the fugitives in the station and put them into the bluespace capture machine on your ship."
@@ -53,6 +54,9 @@
 
 /datum/antagonist/fugitive_hunter/get_team()
 	return hunter_team
+
+/datum/antagonist/fugitive_hunter/apply_innate_effects(mob/living/mob_override)
+	add_team_hud(mob_override || owner.current)
 
 /datum/team/fugitive_hunters
 	var/backstory = "error"

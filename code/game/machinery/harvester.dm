@@ -7,7 +7,6 @@
 	base_icon_state = "harvester"
 	verb_say = "states"
 	state_open = FALSE
-	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/machine/harvester
 	light_color = LIGHT_COLOR_BLUE
 	var/interval = 20
@@ -23,10 +22,11 @@
 		name = "auto-autopsy"
 
 /obj/machinery/harvester/RefreshParts()
+	. = ..()
 	interval = 0
 	var/max_time = 40
-	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
-		max_time -= L.rating
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		max_time -= micro_laser.tier
 	interval = max(max_time,1)
 
 /obj/machinery/harvester/update_icon_state()
@@ -98,7 +98,7 @@
 	visible_message(span_notice("The [name] begins warming up!"))
 	say("Initializing harvest protocol.")
 	update_appearance()
-	addtimer(CALLBACK(src, .proc/harvest), interval)
+	addtimer(CALLBACK(src, PROC_REF(harvest)), interval)
 
 /obj/machinery/harvester/proc/harvest()
 	warming_up = FALSE
@@ -115,7 +115,7 @@
 		var/turf/T = get_step(src,adir)
 		if(!T)
 			continue
-		if(istype(T, /turf/closed))
+		if(isclosedturf(T))
 			continue
 		target = T
 		break
@@ -132,8 +132,8 @@
 				O.forceMove(target) //Some organs, like chest ones, are different so we need to manually move them
 		operation_order.Remove(BP)
 		break
-	use_power(5000)
-	addtimer(CALLBACK(src, .proc/harvest), interval)
+	use_power(active_power_usage)
+	addtimer(CALLBACK(src, PROC_REF(harvest)), interval)
 
 /obj/machinery/harvester/proc/end_harvesting()
 	warming_up = FALSE

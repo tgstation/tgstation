@@ -1,6 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes: 
-  - bugfix: "Fixes tritium fires not releasing radiation when they should."
-  - bugfix: "Fixes water vapour condensation requiring a temperature 20K lower than usual."
-  - code_imp: "Adds defines for tritium fire radiation stuff."

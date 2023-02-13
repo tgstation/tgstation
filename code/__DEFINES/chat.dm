@@ -13,6 +13,7 @@
 #define MESSAGE_TYPE_ADMINPM "adminpm"
 #define MESSAGE_TYPE_COMBAT "combat"
 #define MESSAGE_TYPE_ADMINCHAT "adminchat"
+#define MESSAGE_TYPE_PRAYER "prayer"
 #define MESSAGE_TYPE_MODCHAT "modchat"
 #define MESSAGE_TYPE_EVENTCHAT "eventchat"
 #define MESSAGE_TYPE_ADMINLOG "adminlog"
@@ -25,7 +26,7 @@
 	type = MESSAGE_TYPE_DEBUG, \
 	text = "DEBUG: [msg]")
 /// Used for debug messages to the player
-#define debug_usr(msg) if (GLOB.Debug2&&usr) to_chat(usr, \
+#define debug_usr(msg) if (GLOB.Debug2 && usr) to_chat(usr, \
 	type = MESSAGE_TYPE_DEBUG, \
 	text = "DEBUG: [msg]")
 /// Used for debug messages to the admins
@@ -34,3 +35,5 @@
 	text = "DEBUG: [msg]")
 /// Used for debug messages to the server
 #define debug_world_log(msg) if (GLOB.Debug2) log_world("DEBUG: [msg]")
+/// Adds a generic box around whatever message you're sending in chat. Really makes things stand out.
+#define examine_block(str) ("<div class='examine_block'>" + str + "</div>")

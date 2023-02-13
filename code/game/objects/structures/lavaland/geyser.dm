@@ -10,16 +10,12 @@
 
 	///set to null to get it greyscaled from "[icon_state]_soup". Not very usable with the whole random thing, but more types can be added if you change the spawn prob
 	var/erupting_state = null
-	//whether we are active and generating chems
-	var/activated = FALSE
 	///what chem do we produce?
 	var/reagent_id = /datum/reagent/fuel/oil
 	///how much reagents we add every process (2 seconds)
 	var/potency = 2
 	///maximum volume
 	var/max_volume = 500
-	///how much we start with after getting activated
-	var/start_volume = 50
 
 	///Have we been discovered with a mining scanner?
 	var/discovered = FALSE
@@ -35,12 +31,11 @@
 
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC, 1, 5)
 
-///start producing chems, should be called just once
-/obj/structure/geyser/proc/start_chemming()
-	activated = TRUE
 	create_reagents(max_volume, DRAINABLE)
-	reagents.add_reagent(reagent_id, start_volume)
-	START_PROCESSING(SSfluids, src) //It's main function is to be plumbed, so use SSfluids
+	reagents.add_reagent(reagent_id, max_volume)
+
+	RegisterSignals(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), PROC_REF(start_chemming))
+
 	if(erupting_state)
 		icon_state = erupting_state
 	else
@@ -48,21 +43,20 @@
 		I.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(I)
 
+///start making those CHHHHHEEEEEEMS. Called whenever chems are removed, it's fine because START_PROCESSING checks if we arent already processing
+/obj/structure/geyser/proc/start_chemming()
+	START_PROCESSING(SSplumbing, src) //It's main function is to be plumbed, so use SSplumbing
+
+///We're full so stop processing
+/obj/structure/geyser/proc/stop_chemming()
+	STOP_PROCESSING(SSplumbing, src)
+
+///Add reagents until we are full
 /obj/structure/geyser/process()
-	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive
+	if(reagents.total_volume <= reagents.maximum_volume)
 		reagents.add_reagent(reagent_id, potency)
-
-/obj/structure/geyser/plunger_act(obj/item/plunger/P, mob/living/user, _reinforced)
-	if(!_reinforced)
-		to_chat(user, span_warning("The [P.name] isn't strong enough!"))
-		return
-	if(activated)
-		to_chat(user, span_warning("The [name] is already active!"))
-		return
-
-	to_chat(user, span_notice("You start vigorously plunging [src]!"))
-	if(do_after(user, 50 * P.plunge_mod, target = src) && !activated)
-		start_chemming()
+	else
+		stop_chemming() //we're full
 
 /obj/structure/geyser/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/mining_scanner) && !istype(item, /obj/item/t_scanner/adv_mining_scanner))
@@ -88,7 +82,7 @@
 		var/obj/item/card/id/card = living.get_idcard()
 		if(card)
 			to_chat(user, span_notice("[point_value] mining points have been paid out!"))
-			card.mining_points += point_value
+			card.registered_account.mining_points += point_value
 
 /obj/structure/geyser/wittel
 	reagent_id = /datum/reagent/wittel
@@ -114,8 +108,9 @@
 	discovery_message = "It's a strange geyser! How does any of this even work?" //it doesnt
 
 /obj/structure/geyser/random/Initialize(mapload)
-	. = ..()
 	reagent_id = get_random_reagent_id()
+
+	return ..()
 
 ///A wearable tool that lets you empty plumbing machinery and some other stuff
 /obj/item/plunger
@@ -138,9 +133,6 @@
 	var/layer_mode = FALSE
 	///What layer we set it to
 	var/target_layer = DUCT_LAYER_DEFAULT
-
-	///Assoc list for possible layers
-	var/list/layers = list("Second Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT, "Fourth Layer" = FOURTH_DUCT_LAYER)
 
 /obj/item/plunger/attack_atom(obj/O, mob/living/user, params)
 	if(layer_mode)
@@ -175,13 +167,13 @@
 	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
 
 /obj/item/plunger/AltClick(mob/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE))
 		return
 
-	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", layers)
+	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers)
 	if(isnull(new_layer))
 		return
-	target_layer = layers[new_layer]
+	target_layer = GLOB.plumbing_layers[new_layer]
 
 ///A faster reinforced plunger
 /obj/item/plunger/reinforced
@@ -193,4 +185,4 @@
 	plunge_mod = 0.5
 	layer_mode_sprite = "reinforced_plunger_layer"
 
-	custom_premium_price = PAYCHECK_MEDIUM * 8
+	custom_premium_price = PAYCHECK_CREW * 8

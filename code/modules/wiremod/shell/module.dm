@@ -23,9 +23,13 @@
 		. = COMPONENT_OVERRIDE_POWER_USAGE
 
 /obj/item/mod/module/circuit/on_install()
-	RegisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, .proc/override_power_usage)
+	if(!shell?.attached_circuit)
+		return
+	RegisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, PROC_REF(override_power_usage))
 
-/obj/item/mod/module/circuit/on_uninstall()
+/obj/item/mod/module/circuit/on_uninstall(deleting = FALSE)
+	if(!shell?.attached_circuit)
+		return
 	UnregisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE)
 
 /obj/item/mod/module/circuit/on_use()
@@ -75,7 +79,10 @@
 	var/obj/item/mod/module/attached_module
 
 	/// The name of the module to select
-	var/datum/port/input/module_to_select
+	var/datum/port/input/option/module_to_select
+
+	/// The signal to toggle deployment of the modsuit
+	var/datum/port/input/toggle_deploy
 
 	/// The signal to toggle the suit
 	var/datum/port/input/toggle_suit
@@ -86,32 +93,56 @@
 	/// A reference to the wearer of the MODsuit
 	var/datum/port/output/wearer
 
+	/// Whether or not the suit is deployed
+	var/datum/port/output/deployed
+
+	/// Whether or not the suit is activated
+	var/datum/port/output/activated
+
 	/// The name of the last selected module
 	var/datum/port/output/selected_module
+
+	/// A list of the names of all currently deployed parts
+	var/datum/port/output/deployed_parts
 
 	/// The signal that is triggered when a module is selected
 	var/datum/port/output/on_module_selected
 
+	/// The signal that is triggered when the suit is deployed by a signal
+	var/datum/port/output/on_deploy
+
+	/// The signal that is triggered when the suit has finished toggling itself after being activated by a signal
+	var/datum/port/output/on_toggle_finish
+
+/obj/item/circuit_component/mod_adapter_core/populate_options()
+	module_to_select = add_option_port("Module to Select", list())
+
 /obj/item/circuit_component/mod_adapter_core/populate_ports()
 	// Input Signals
-	module_to_select = add_input_port("Module to Select", PORT_TYPE_STRING)
+	toggle_deploy = add_input_port("Toggle Deployment", PORT_TYPE_SIGNAL)
 	toggle_suit = add_input_port("Toggle Suit", PORT_TYPE_SIGNAL)
 	select_module = add_input_port("Select Module", PORT_TYPE_SIGNAL)
 	// States
 	wearer = add_output_port("Wearer", PORT_TYPE_ATOM)
+	deployed = add_output_port("Deployed", PORT_TYPE_NUMBER)
+	activated = add_output_port("Activated", PORT_TYPE_NUMBER)
 	selected_module = add_output_port("Selected Module", PORT_TYPE_STRING)
+	deployed_parts = add_output_port("Deployed Parts", PORT_TYPE_LIST(PORT_TYPE_STRING))
 	// Output Signals
 	on_module_selected = add_output_port("On Module Selected", PORT_TYPE_SIGNAL)
+	on_deploy = add_output_port("On Deploy", PORT_TYPE_SIGNAL)
+	on_toggle_finish = add_output_port("Finished Toggling", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/mod_adapter_core/register_shell(atom/movable/shell)
 	. = ..()
 	if(istype(shell, /obj/item/mod/module))
 		attached_module = shell
-	RegisterSignal(attached_module, COMSIG_MOVABLE_MOVED, .proc/on_move)
+		RegisterSignal(attached_module, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
 /obj/item/circuit_component/mod_adapter_core/unregister_shell(atom/movable/shell)
-	UnregisterSignal(attached_module, COMSIG_MOVABLE_MOVED)
-	attached_module = null
+	if(attached_module)
+		UnregisterSignal(attached_module, COMSIG_MOVABLE_MOVED)
+		attached_module = null
 	return ..()
 
 /obj/item/circuit_component/mod_adapter_core/input_received(datum/port/input/port)
@@ -122,30 +153,87 @@
 		if(potential_module.name == module_to_select.value)
 			module = potential_module
 	if(COMPONENT_TRIGGERED_BY(toggle_suit, port))
-		INVOKE_ASYNC(attached_module.mod, /obj/item/mod/control.proc/toggle_activate, attached_module.mod.wearer)
+		INVOKE_ASYNC(attached_module.mod, TYPE_PROC_REF(/obj/item/mod/control, toggle_activate), attached_module.mod.wearer)
+	if(COMPONENT_TRIGGERED_BY(toggle_deploy, port))
+		INVOKE_ASYNC(attached_module.mod, TYPE_PROC_REF(/obj/item/mod/control, quick_deploy), attached_module.mod.wearer)
 	if(attached_module.mod.active && module && COMPONENT_TRIGGERED_BY(select_module, port))
-		INVOKE_ASYNC(module, /obj/item/mod/module.proc/on_select)
+		INVOKE_ASYNC(module, TYPE_PROC_REF(/obj/item/mod/module, on_select))
 
 /obj/item/circuit_component/mod_adapter_core/proc/on_move(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 	if(istype(source.loc, /obj/item/mod/control))
-		RegisterSignal(source.loc, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
-		RegisterSignal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/equip_check)
-		equip_check()
+		var/obj/item/mod/control/mod = source.loc
+		RegisterSignal(mod, COMSIG_MOD_MODULE_SELECTED, PROC_REF(on_module_select))
+		RegisterSignal(mod, COMSIG_MOD_DEPLOYED, PROC_REF(on_mod_part_toggled))
+		RegisterSignal(mod, COMSIG_MOD_RETRACTED, PROC_REF(on_mod_part_toggled))
+		RegisterSignal(mod, COMSIG_MOD_TOGGLED, PROC_REF(on_mod_toggled))
+		RegisterSignal(mod, COMSIG_MOD_MODULE_ADDED, PROC_REF(on_module_changed))
+		RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVED, PROC_REF(on_module_changed))
+		RegisterSignal(mod, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_check))
+		wearer.set_output(mod.wearer)
+		var/modules_list = list()
+		for(var/obj/item/mod/module/module in mod.modules)
+			if(module.module_type != MODULE_PASSIVE)
+				modules_list += module.name
+		module_to_select.possible_options = modules_list
+		if (module_to_select.possible_options.len)
+			module_to_select.set_value(module_to_select.possible_options[1])
 	else if(istype(old_loc, /obj/item/mod/control))
 		UnregisterSignal(old_loc, list(COMSIG_MOD_MODULE_SELECTED, COMSIG_ITEM_EQUIPPED))
+		UnregisterSignal(old_loc, COMSIG_MOD_DEPLOYED)
+		UnregisterSignal(old_loc, COMSIG_MOD_RETRACTED)
+		UnregisterSignal(old_loc, COMSIG_MOD_TOGGLED)
+		UnregisterSignal(old_loc, COMSIG_MOD_MODULE_ADDED)
+		UnregisterSignal(old_loc, COMSIG_MOD_MODULE_REMOVED)
 		selected_module.set_output(null)
 		wearer.set_output(null)
+		deployed.set_output(FALSE)
+		activated.set_output(FALSE)
 
 /obj/item/circuit_component/mod_adapter_core/proc/on_module_select(datum/source, obj/item/mod/module/module)
 	SIGNAL_HANDLER
 	selected_module.set_output(module.name)
 	on_module_selected.set_output(COMPONENT_SIGNAL)
 
+/obj/item/circuit_component/mod_adapter_core/proc/on_module_changed()
+	SIGNAL_HANDLER
+	var/modules_list = list()
+	for(var/obj/item/mod/module/module in attached_module.mod.modules)
+		if(module.module_type != MODULE_PASSIVE)
+			modules_list += module.name
+	module_to_select.possible_options = modules_list
+	if (module_to_select.possible_options.len)
+		module_to_select.set_value(module_to_select.possible_options[1])
+
+/obj/item/circuit_component/mod_adapter_core/proc/on_mod_part_toggled()
+	SIGNAL_HANDLER
+	var/string_list = list()
+	var/is_deployed = TRUE
+	for(var/obj/item/part as anything in attached_module.mod.mod_parts)
+		if(part.loc == attached_module.mod)
+			is_deployed = FALSE
+		else
+			var/part_name = "Undefined"
+			if(istype(part, /obj/item/clothing/head/mod))
+				part_name = "Helmet"
+			if(istype(part, /obj/item/clothing/suit/mod))
+				part_name = "Chestplate"
+			if(istype(part, /obj/item/clothing/gloves/mod))
+				part_name = "Gloves"
+			if(istype(part, /obj/item/clothing/shoes/mod))
+				part_name = "Boots"
+			string_list += part_name
+	deployed_parts.set_output(string_list)
+	deployed.set_output(is_deployed)
+	on_deploy.set_output(COMPONENT_SIGNAL)
+
+/obj/item/circuit_component/mod_adapter_core/proc/on_mod_toggled()
+	SIGNAL_HANDLER
+	activated.set_output(attached_module.mod.active)
+	on_toggle_finish.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/mod_adapter_core/proc/equip_check()
 	SIGNAL_HANDLER
-
 	if(!attached_module.mod?.wearer)
 		return
 	wearer.set_output(attached_module.mod.wearer)

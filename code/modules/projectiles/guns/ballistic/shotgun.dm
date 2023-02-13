@@ -9,7 +9,6 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
-	vary_fire_sound = FALSE
 	fire_sound_volume = 90
 	rack_sound = 'sound/weapons/gun/shotgun/rack.ogg'
 	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
@@ -71,12 +70,23 @@
 	desc = "An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types."
 	icon_state = "cycler"
 	inhand_icon_state = "bulldog"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	worn_icon_state = "cshotgun"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	w_class = WEIGHT_CLASS_HUGE
-	var/toggled = FALSE
-	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
 	semi_auto = TRUE
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
+	/// If defined, the secondary tube is this type, if you want different shell loads
+	var/alt_mag_type
+	/// If TRUE, we're drawing from the alternate_magazine
+	var/toggled = FALSE
+	/// The B tube
+	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
+
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/bounty
+	name = "bounty cycler shotgun"
+	desc = "An advanced shotgun with two separate magazine tubes. This one shows signs of bounty hunting customization, meaning it likely has a dual rubbershot/fire slug load."
+	alt_mag_type = /obj/item/ammo_box/magazine/internal/shot/tube/fire
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
 	. = ..()
@@ -84,8 +94,12 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize(mapload)
 	. = ..()
-	if (!alternate_magazine)
-		alternate_magazine = new mag_type(src)
+	alt_mag_type = alt_mag_type || mag_type
+	alternate_magazine = new alt_mag_type(src)
+
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/Destroy()
+	QDEL_NULL(alternate_magazine)
+	return ..()
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/attack_self(mob/living/user)
 	if(!chambered && magazine.contents.len)
@@ -100,12 +114,12 @@
 	alternate_magazine = current_mag
 	toggled = !toggled
 	if(toggled)
-		to_chat(user, span_notice("You switch to tube B."))
+		balloon_alert(user, "switched to tube B")
 	else
-		to_chat(user, span_notice("You switch to tube A."))
+		balloon_alert(user, "switched to tube A")
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
 		return
 	rack()
 
@@ -113,7 +127,7 @@
 
 /obj/item/gun/ballistic/shotgun/bulldog
 	name = "\improper Bulldog Shotgun"
-	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
+	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines. Can have a secondary magazine attached to quickly swap between ammo types, or just to keep shooting."
 	icon_state = "bulldog"
 	inhand_icon_state = "bulldog"
 	worn_icon_state = "cshotgun"
@@ -137,7 +151,95 @@
 	semi_auto = TRUE
 	internal_magazine = FALSE
 	tac_reloads = TRUE
+	///the type of secondary magazine for the bulldog
+	var/secondary_magazine_type
+	///the secondary magazine
+	var/obj/item/ammo_box/magazine/secondary_magazine
 
+/obj/item/gun/ballistic/shotgun/bulldog/Initialize(mapload)
+	. = ..()
+	secondary_magazine_type = secondary_magazine_type || mag_type
+	secondary_magazine = new secondary_magazine_type(src)
+	update_appearance()
+
+/obj/item/gun/ballistic/shotgun/bulldog/Destroy()
+	QDEL_NULL(secondary_magazine)
+	return ..()
+
+/obj/item/gun/ballistic/shotgun/bulldog/examine(mob/user)
+	. = ..()
+	if(secondary_magazine)
+		var/secondary_ammo_count = secondary_magazine.ammo_count()
+		. += "There is a secondary magazine."
+		. += "It has [secondary_ammo_count] round\s remaining."
+		. += "Shoot with right-click to swap to the secondary magazine after firing."
+		. += "If the magazine is empty, [src] will automatically swap to the secondary magazine."
+	. += "You can load a secondary magazine by right-clicking [src] with the magazine you want to load."
+	. += "You can remove a secondary magazine by alt-right-clicking [src]."
+	. += "Right-click to swap the magazine to the secondary position, and vice versa."
+
+/obj/item/gun/ballistic/shotgun/bulldog/update_overlays()
+	. = ..()
+	if(secondary_magazine)
+		. += "[icon_state]_secondary_mag_[initial(secondary_magazine.icon_state)]"
+		if(!secondary_magazine.ammo_count())
+			. += "[icon_state]_secondary_mag_empty"
+	else
+		. += "[icon_state]_no_secondary_mag"
+
+/obj/item/gun/ballistic/shotgun/bulldog/handle_chamber()
+	if(!secondary_magazine)
+		return ..()
+	var/secondary_shells_left = LAZYLEN(secondary_magazine.stored_ammo)
+	if(magazine)
+		var/shells_left = LAZYLEN(magazine.stored_ammo)
+		if(shells_left <= 0 && secondary_shells_left >= 1)
+			toggle_magazine()
+	else
+		toggle_magazine()
+	return ..()
+
+/obj/item/gun/ballistic/shotgun/bulldog/attack_self_secondary(mob/user, modifiers)
+	toggle_magazine()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/gun/ballistic/shotgun/bulldog/afterattack_secondary(mob/living/victim, mob/living/user, params)
+	if(secondary_magazine)
+		toggle_magazine()
+	return SECONDARY_ATTACK_CALL_NORMAL
+
+/obj/item/gun/ballistic/shotgun/bulldog/attackby_secondary(obj/item/weapon, mob/user, params)
+	if(!istype(weapon, secondary_magazine_type))
+		balloon_alert(user, "[weapon.name] doesn't fit!")
+		return SECONDARY_ATTACK_CALL_NORMAL
+	if(!user.transferItemToLoc(weapon, src))
+		to_chat(user, span_warning("You cannot seem to get [src] out of your hands!"))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	var/obj/item/ammo_box/magazine/old_mag = secondary_magazine
+	secondary_magazine = weapon
+	if(old_mag)
+		user.put_in_hands(old_mag)
+	balloon_alert(user, "secondary [magazine_wording] loaded")
+	playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+	update_appearance()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/gun/ballistic/shotgun/bulldog/alt_click_secondary(mob/user)
+	if(secondary_magazine)
+		var/obj/item/ammo_box/magazine/old_mag = secondary_magazine
+		secondary_magazine = null
+		user.put_in_hands(old_mag)
+		update_appearance()
+		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/gun/ballistic/shotgun/bulldog/proc/toggle_magazine()
+	var/primary_magazine = magazine
+	var/alternative_magazine = secondary_magazine
+	magazine = alternative_magazine
+	secondary_magazine = primary_magazine
+	playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+	update_appearance()
 
 /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 	pin = /obj/item/firing_pin
@@ -173,7 +275,7 @@
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+	if(unique_reskin && !current_skin && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE))
 		reskin_obj(user)
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
@@ -211,6 +313,10 @@
 /obj/item/gun/ballistic/shotgun/hook/Initialize(mapload)
 	. = ..()
 	hook = new /obj/item/gun/magic/hook/bounty(src)
+
+/obj/item/gun/ballistic/shotgun/hook/Destroy()
+	QDEL_NULL(hook)
+	return ..()
 
 /obj/item/gun/ballistic/shotgun/hook/examine(mob/user)
 	. = ..()

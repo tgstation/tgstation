@@ -45,15 +45,27 @@
 /obj/item/plate/proc/AddToPlate(obj/item/item_to_plate)
 	vis_contents += item_to_plate
 	item_to_plate.flags_1 |= IS_ONTOP_1
-	RegisterSignal(item_to_plate, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
-	RegisterSignal(item_to_plate, COMSIG_PARENT_QDELETING, .proc/ItemMoved)
+	item_to_plate.vis_flags |= VIS_INHERIT_PLANE
+	RegisterSignal(item_to_plate, COMSIG_MOVABLE_MOVED, PROC_REF(ItemMoved))
+	RegisterSignal(item_to_plate, COMSIG_PARENT_QDELETING, PROC_REF(ItemMoved))
+	// We gotta offset ourselves via pixel_w/z, so we don't end up z fighting with the plane
+	item_to_plate.pixel_w = item_to_plate.pixel_x
+	item_to_plate.pixel_z = item_to_plate.pixel_y
+	item_to_plate.pixel_x = 0
+	item_to_plate.pixel_y = 0
 	update_appearance()
 
 ///This proc cleans up any signals on the item when it is removed from a plate, and ensures it has the correct state again.
 /obj/item/plate/proc/ItemRemovedFromPlate(obj/item/removed_item)
 	removed_item.flags_1 &= ~IS_ONTOP_1
+	removed_item.vis_flags &= ~VIS_INHERIT_PLANE
 	vis_contents -= removed_item
 	UnregisterSignal(removed_item, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	// Resettt
+	removed_item.pixel_x = removed_item.pixel_w
+	removed_item.pixel_y = removed_item.pixel_z
+	removed_item.pixel_w = 0
+	removed_item.pixel_z = 0
 
 ///This proc is called by signals that remove the food from the plate.
 /obj/item/plate/proc/ItemMoved(obj/item/moved_item, atom/OldLoc, Dir, Forced)
@@ -65,7 +77,7 @@
 /obj/item/plate/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(.)
 		return
-	var/generator/scatter_gen = generator("circle", 0, 48, NORMAL_RAND)
+	var/generator/scatter_gen = generator(GEN_CIRCLE, 0, 48, NORMAL_RAND)
 	var/scatter_turf = get_turf(hit_atom)
 
 	for(var/obj/item/scattered_item as anything in contents)
@@ -104,6 +116,7 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "plate_shard1"
 	base_icon_state = "plate_shard"
+	w_class = WEIGHT_CLASS_TINY
 	force = 5
 	throwforce = 5
 	sharpness = SHARP_EDGED

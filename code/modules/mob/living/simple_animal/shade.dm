@@ -3,7 +3,7 @@
 	real_name = "Shade"
 	desc = "A bound spirit."
 	gender = PLURAL
-	icon = 'icons/mob/cult.dmi'
+	icon = 'icons/mob/nonhuman-player/cult.dmi'
 	icon_state = "shade_cult"
 	icon_living = "shade_cult"
 	mob_biotypes = MOB_SPIRIT
@@ -42,11 +42,11 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/shade/death()
-	if(deathmessage == initial(deathmessage))
-		deathmessage = "lets out a contented sigh as [p_their()] form unwinds."
+	if(death_message == initial(death_message))
+		death_message = "lets out a contented sigh as [p_their()] form unwinds."
 	..()
 
-/mob/living/simple_animal/shade/canSuicide()
+/mob/living/simple_animal/shade/can_suicide()
 	if(istype(loc, /obj/item/soulstone)) //do not suicide inside the soulstone
 		return FALSE
 	return ..()

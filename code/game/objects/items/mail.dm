@@ -18,13 +18,14 @@
 	var/datum/weakref/recipient_ref
 	/// How many goodies this mail contains.
 	var/goodie_count = 1
-	/// Goodies which can be given to anyone. The base weight for cash is 56. For there to be a 50/50 chance of getting a department item, they need 56 weight as well.
+	/// Goodies which can be given to anyone. The base weight is 50. For there to be a 50/50 chance of getting a department item, they need 50 weight as well.
 	var/list/generic_goodies = list(
-		/obj/item/stack/spacecash/c50 = 10,
-		/obj/item/stack/spacecash/c100 = 25,
-		/obj/item/stack/spacecash/c200 = 15,
-		/obj/item/stack/spacecash/c500 = 5,
-		/obj/item/stack/spacecash/c1000 = 1,
+		/obj/effect/spawner/random/entertainment/money_medium = 25,
+		/obj/effect/spawner/random/food_or_drink/refreshing_beverage = 10,
+		/obj/effect/spawner/random/food_or_drink/snack = 5,
+		/obj/effect/spawner/random/food_or_drink/donkpockets_single = 5,
+		/obj/effect/spawner/random/entertainment/toy = 3,
+		/obj/effect/spawner/random/entertainment/coin = 2,
 	)
 	// Overlays (pure fluff)
 	/// Does the letter have the postmark overlay?
@@ -52,7 +53,7 @@
 
 /obj/item/mail/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
+	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, PROC_REF(disposal_handling))
 	AddElement(/datum/element/item_scaling, 0.75, 1)
 	if(isnull(department_colors))
 		department_colors = list(
@@ -146,21 +147,33 @@
 	var/list/goodies = generic_goodies
 
 	var/datum/job/this_job = recipient.assigned_role
+	var/is_mail_restricted = FALSE // certain roles and jobs (prisoner) do not receive generic gifts
+
 	if(this_job)
 		if(this_job.paycheck_department && department_colors[this_job.paycheck_department])
 			color = department_colors[this_job.paycheck_department]
+
 		var/list/job_goodies = this_job.get_mail_goodies()
+		is_mail_restricted = this_job.exclusive_mail_goodies
 		if(LAZYLEN(job_goodies))
-			// certain roles and jobs (prisoner) do not receive generic gifts.
-			if(this_job.exclusive_mail_goodies)
+			if(is_mail_restricted)
 				goodies = job_goodies
 			else
 				goodies += job_goodies
 
+	if(!is_mail_restricted)
+		// the weighted list is 50 (generic items) + 50 (job items)
+		// every quirk adds 5 to the final weighted list (regardless the number of items or weights in the quirk list)
+		// 5% is not too high or low so that stacking multiple quirks doesn't tilt the weighted list too much
+		for(var/datum/quirk/quirk as anything in body.quirks)
+			if(LAZYLEN(quirk.mail_goodies))
+				var/quirk_goodie = pick(quirk.mail_goodies)
+				goodies[quirk_goodie] = 5
+
 	for(var/iterator in 1 to goodie_count)
 		var/target_good = pick_weight(goodies)
 		var/atom/movable/target_atom = new target_good(src)
-		body.log_message("[key_name(body)] received [target_atom.name] in the mail ([target_good])", LOG_GAME)
+		body.log_message("received [target_atom.name] in the mail ([target_good])", LOG_GAME)
 
 	return TRUE
 
@@ -268,34 +281,35 @@
 	worn_icon_state = "mailbag"
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/mail/ComponentInitialize()
+/obj/item/storage/bag/mail/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	storage.max_w_class = WEIGHT_CLASS_NORMAL
-	storage.max_combined_w_class = 42
-	storage.max_items = 21
-	storage.display_numerical_stacking = FALSE
-	storage.set_holdable(list(
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 42
+	atom_storage.max_slots = 21
+	atom_storage.numerical_stacking = FALSE
+	atom_storage.set_holdable(list(
 		/obj/item/mail,
-		/obj/item/small_delivery,
+		/obj/item/delivery/small,
 		/obj/item/paper
 	))
 
 /obj/item/paper/fluff/junkmail_redpill
 	name = "smudged paper"
 	icon_state = "scrap"
+	show_written_words = FALSE
 	var/nuclear_option_odds = 0.1
 
 /obj/item/paper/fluff/junkmail_redpill/Initialize(mapload)
-	. = ..()
-	if(!prob(nuclear_option_odds)) // 1 in 1000 chance of getting 2 random nuke code characters.
-		info = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]...'"
-		return
-	var/code = random_nukecode()
-	for(var/obj/machinery/nuclearbomb/selfdestruct/self_destruct in GLOB.nuke_list)
-		self_destruct.r_code = code
-	message_admins("Through junkmail, the self-destruct code was set to \"[code]\".")
-	info = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[code[rand(1,5)]][code[rand(1,5)]]...'"
+	var/obj/machinery/nuclearbomb/selfdestruct/self_destruct = locate() in GLOB.nuke_list
+	if(!self_destruct || !prob(nuclear_option_odds)) // 1 in 1000 chance of getting 2 random nuke code characters.
+		add_raw_text("<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]...'")
+		return ..()
+
+	if(self_destruct.r_code == NUKE_CODE_UNSET)
+		self_destruct.r_code = random_nukecode()
+		message_admins("Through junkmail, the self-destruct code was set to \"[self_destruct.r_code]\".")
+	add_raw_text("<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[self_destruct.r_code[rand(1,5)]][self_destruct.r_code[rand(1,5)]]...'")
+	return ..()
 
 /obj/item/paper/fluff/junkmail_redpill/true //admin letter enabling players to brute force their way through the nuke code if they're so inclined.
 	nuclear_option_odds = 100
@@ -303,7 +317,8 @@
 /obj/item/paper/fluff/junkmail_generic
 	name = "important document"
 	icon_state = "paper_words"
+	show_written_words = FALSE
 
 /obj/item/paper/fluff/junkmail_generic/Initialize(mapload)
-	. = ..()
-	info = pick(GLOB.junkmail_messages)
+	default_raw_text = pick(GLOB.junkmail_messages)
+	return ..()

@@ -13,9 +13,12 @@
 	if(!.)
 		return
 
-	if(buckled)
+	// We get some passive bruteloss healing if we're not dead
+	if(stat != DEAD && DT_PROB(16, delta_time))
+		adjustBruteLoss(-0.5 * delta_time)
+	if(ismob(buckled))
 		handle_feeding(delta_time, times_fired)
-	if(stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
+	if(stat != CONSCIOUS) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
 		return
 	handle_nutrition(delta_time, times_fired)
 	if(QDELETED(src)) // Stop if the slime split during handle_nutrition()
@@ -164,15 +167,7 @@
 
 	updatehealth()
 
-
-/mob/living/simple_animal/slime/handle_status_effects(delta_time, times_fired)
-	..()
-	if(!stat && DT_PROB(16, delta_time))
-		adjustBruteLoss(-0.5 * delta_time)
-
 /mob/living/simple_animal/slime/proc/handle_feeding(delta_time, times_fired)
-	if(!ismob(buckled))
-		return
 	var/mob/M = buckled
 
 	if(stat)
@@ -246,7 +241,7 @@
 	else if (nutrition >= get_grow_nutrition() && amount_grown < SLIME_EVOLUTION_THRESHOLD)
 		adjust_nutrition(-10 * delta_time)
 		amount_grown++
-		update_action_buttons_icon()
+		update_mob_action_buttons()
 
 	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD && !buckled && !Target && !ckey)
 		if(is_adult && loc.AllowDrop())
@@ -326,7 +321,7 @@
 
 					var/ally = FALSE
 					for(var/F in faction)
-						if(F == "neutral") //slimes are neutral so other mobs not target them, but they can target neutral mobs
+						if(F == FACTION_NEUTRAL) //slimes are neutral so other mobs not target them, but they can target neutral mobs
 							continue
 						if(F in L.faction)
 							ally = TRUE
@@ -382,7 +377,7 @@
 				else if(!HAS_TRAIT(src, TRAIT_IMMOBILIZED) && isturf(loc) && prob(33))
 					step(src, pick(GLOB.cardinals))
 		else if(!AIproc)
-			INVOKE_ASYNC(src, .proc/AIprocess)
+			INVOKE_ASYNC(src, PROC_REF(AIprocess))
 
 /mob/living/simple_animal/slime/handle_automated_movement()
 	return //slime random movement is currently handled in handle_targets()

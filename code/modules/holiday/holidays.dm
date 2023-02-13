@@ -22,6 +22,9 @@
 	var/obj/item/drone_hat
 	///When this holiday is active, does this prevent mail from arriving to cargo? Try not to use this for longer holidays.
 	var/mail_holiday = FALSE
+	var/poster_name = "generic celebration poster"
+	var/poster_desc = "A poster for celebrating some holiday. Unfortunately, its unfinished, so you can't see what the holiday is."
+	var/poster_icon = "holiday_unfinished"
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
@@ -116,6 +119,9 @@
 	begin_day = 13
 	end_day = 15
 	begin_month = FEBRUARY
+	poster_name = "lovey poster"
+	poster_desc = "A poster celebrating all the relationships built today. Of course, you probably don't have one."
+	poster_icon = "holiday_love"
 
 /datum/holiday/valentines/getStationPrefix()
 	return pick("Love","Amore","Single","Smootch","Hug")
@@ -124,7 +130,10 @@
 	name = "Birthday of Space Station 13"
 	begin_day = 16
 	begin_month = FEBRUARY
-	drone_hat = /obj/item/clothing/head/festive
+	drone_hat = /obj/item/clothing/head/costume/festive
+	poster_name = "station birthday poster"
+	poster_desc = "A poster celebrating another year of the station's operation. Why anyone would be happy to be here is byond you."
+	poster_icon = "holiday_cake" // is a lie
 
 /datum/holiday/birthday/greet()
 	var/game_age = text2num(time2text(world.timeofday, "YYYY")) - 2003
@@ -157,6 +166,9 @@
 	name = "Random Acts of Kindness Day"
 	begin_day = 17
 	begin_month = FEBRUARY
+	poster_name = "act of kindness poster"
+	poster_desc = "A poster notifying the reader today is 'Act of Kindness' day. What a nice thing to do."
+	poster_icon = "holiday_kind"
 
 /datum/holiday/random_kindness/greet()
 	return "Go do some random acts of kindness for a stranger!" //haha yeah right
@@ -172,6 +184,9 @@
 	name = "Pi Day"
 	begin_day = 14
 	begin_month = MARCH
+	poster_name = "pi day poster"
+	poster_desc = "A poster celebrating the 3.141529th day of the year. At least theres free pie."
+	poster_icon = "holiday_pi"
 
 /datum/holiday/pi/getStationPrefix()
 	return pick("Sine","Cosine","Tangent","Secant", "Cosecant", "Cotangent")
@@ -251,7 +266,7 @@
 	name = "Labor Day"
 	begin_day = 1
 	begin_month = MAY
-	drone_hat = /obj/item/clothing/head/hardhat
+	drone_hat = /obj/item/clothing/head/utility/hardhat
 	mail_holiday = TRUE
 
 //Draconic Day is celebrated on May 3rd, the date on which the Draconic language was merged (#26780)
@@ -270,7 +285,7 @@
 	name = "Firefighter's Day"
 	begin_day = 4
 	begin_month = MAY
-	drone_hat = /obj/item/clothing/head/hardhat/red
+	drone_hat = /obj/item/clothing/head/utility/hardhat/red
 
 /datum/holiday/firefighter/getStationPrefix()
 	return pick("Burning","Blazing","Plasma","Fire")
@@ -279,7 +294,7 @@
 	name = "Bee Day"
 	begin_day = 20
 	begin_month = MAY
-	drone_hat = /obj/item/clothing/mask/animal/rat/bee
+	drone_hat = /obj/item/clothing/mask/animal/small/bee
 
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
@@ -339,7 +354,7 @@
 	name = "Doctor's Day"
 	begin_day = 1
 	begin_month = JULY
-	drone_hat = /obj/item/clothing/head/nursehat
+	drone_hat = /obj/item/clothing/head/costume/nursehat
 
 /datum/holiday/ufo
 	name = "UFO Day"
@@ -415,6 +430,16 @@
 /datum/holiday/indigenous/getStationPrefix()
 	return pick("Endangered language", "Word", "Language", "Language revitalization", "Potato", "Corn")
 
+// AUGUST
+
+/datum/holiday/ukraine
+	name = "Independence Day of Ukraine"
+	begin_month = AUGUST
+	begin_day = 24
+
+/datum/holiday/indigenous/getStationPrefix()
+	return pick("Kyiv", "Ukraine")
+
 // SEPTEMBER
 
 //Tiziran Unification Day is celebrated on Sept 1st, the day on which lizards were made a roundstart race
@@ -445,7 +470,7 @@
 	name = "Talk-Like-a-Pirate Day"
 	begin_day = 19
 	begin_month = SEPTEMBER
-	drone_hat = /obj/item/clothing/head/pirate
+	drone_hat = /obj/item/clothing/head/costume/pirate
 
 /datum/holiday/pirate/greet()
 	return "Ye be talkin' like a pirate today or else ye'r walkin' tha plank, matey!"
@@ -475,13 +500,13 @@
 	name = "Smiling Day"
 	begin_day = 7
 	begin_month = OCTOBER
-	drone_hat = /obj/item/clothing/head/papersack/smiley
+	drone_hat = /obj/item/clothing/head/costume/papersack/smiley
 
 /datum/holiday/boss
 	name = "Boss' Day"
 	begin_day = 16
 	begin_month = OCTOBER
-	drone_hat = /obj/item/clothing/head/that
+	drone_hat = /obj/item/clothing/head/hats/tophat
 
 /datum/holiday/un_day
 	name = "Anniversary of the Foundation of the United Nations"
@@ -581,7 +606,7 @@
 	begin_day = 1
 	begin_month = DECEMBER
 	end_day = 31
-	drone_hat = /obj/item/clothing/head/santa
+	drone_hat = /obj/item/clothing/head/costume/santa
 
 /datum/holiday/festive_season/greet()
 	return "Have a nice festive season!"
@@ -601,14 +626,14 @@
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
 	begin_month = DECEMBER
-	drone_hat = /obj/item/clothing/mask/animal/rat/tribal
+	drone_hat = /obj/item/clothing/mask/animal/small/tribal
 
 /datum/holiday/xmas
 	name = CHRISTMAS
 	begin_day = 23
 	begin_month = DECEMBER
 	end_day = 27
-	drone_hat = /obj/item/clothing/head/santa
+	drone_hat = /obj/item/clothing/head/costume/santa
 	mail_holiday = TRUE
 
 /datum/holiday/xmas/greet()
@@ -625,7 +650,7 @@
 	begin_month = DECEMBER
 	end_day = 2
 	end_month = JANUARY
-	drone_hat = /obj/item/clothing/head/festive
+	drone_hat = /obj/item/clothing/head/costume/festive
 	mail_holiday = TRUE
 
 /datum/holiday/new_year/getStationPrefix()
@@ -720,11 +745,11 @@
 
 /datum/holiday/xmas/celebrate()
 	. = ..()
-	SSticker.OnRoundstart(CALLBACK(src, .proc/roundstart_celebrate))
+	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(roundstart_celebrate)))
 	GLOB.maintenance_loot += list(
 		list(
 			/obj/item/toy/xmas_cracker = 3,
-			/obj/item/clothing/head/santa = 1,
+			/obj/item/clothing/head/costume/santa = 1,
 			/obj/item/a_gift/anything = 1
 		) = maint_holiday_weight,
 	)
@@ -733,7 +758,7 @@
 	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
 		Monitor.icon_state_on = "entertainment_xmas"
 
-	for(var/mob/living/simple_animal/pet/dog/corgi/ian/Ian in GLOB.mob_living_list)
+	for(var/mob/living/basic/pet/dog/corgi/ian/Ian in GLOB.mob_living_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 
 
@@ -741,7 +766,7 @@
 
 /datum/holiday/easter
 	name = EASTER
-	drone_hat = /obj/item/clothing/head/rabbitears
+	drone_hat = /obj/item/clothing/head/costume/rabbitears
 	var/const/days_early = 1 //to make editing the holiday easier
 	var/const/days_extra = 1
 
@@ -784,3 +809,20 @@
 
 /datum/holiday/easter/getStationPrefix()
 	return pick("Fluffy","Bunny","Easter","Egg")
+
+/// Takes a holiday datum, a starting month, ending month, max amount of days to test in, and min/max year as input
+/// Returns a list in the form list("yyyy/m/d", ...) representing all days the holiday runs on in the tested range
+/proc/poll_holiday(datum/holiday/path, min_month, max_month, min_year, max_year, max_day)
+	var/list/deets = list()
+	for(var/year in min_year to max_year)
+		for(var/month in min_month to max_month)
+			for(var/day in 1 to max_day)
+				var/datum/holiday/new_day = new path()
+				if(new_day.shouldCelebrate(day, month, year, iso_to_weekday(day_of_month(year, month, day))))
+					deets += "[year]/[month]/[day]"
+	return deets
+
+/// Does the same as [/proc/poll_holiday], but prints the output to admins instead of returning it
+/proc/print_holiday(datum/holiday/path, min_month, max_month, min_year, max_year, max_day)
+	var/list/deets = poll_holiday(path, min_month, max_month, min_year, max_year, max_day)
+	message_admins("The accepted dates for [path] in the input range [min_year]-[max_year]/[min_month]-[max_month]/1-[max_day] are [deets.Join("\n")]")

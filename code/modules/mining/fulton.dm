@@ -34,6 +34,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!beacon)
 		to_chat(user, span_warning("[src] is not linked to a beacon, and cannot be used!"))
 		return
@@ -63,7 +64,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			to_chat(user, span_notice("You attach the pack to [A] and activate it."))
 			if(loc == user && istype(user.back, /obj/item/storage/backpack))
 				var/obj/item/storage/backpack/B = user.back
-				SEND_SIGNAL(B, COMSIG_TRY_STORAGE_INSERT, src, user, FALSE, FALSE)
+				B.atom_storage?.attempt_insert(src, user)
 			uses_left--
 			if(uses_left <= 0)
 				user.transferItemToLoc(src, A, TRUE)
@@ -85,7 +86,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			balloon2.pixel_y = 10
 			balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.add_overlay(balloon2)
-			sleep(4)
+			sleep(0.4 SECONDS)
 			balloon = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_balloon")
 			balloon.pixel_y = 10
 			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
@@ -93,44 +94,44 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			holder_obj.add_overlay(balloon)
 			playsound(holder_obj.loc, 'sound/items/fultext_deploy.ogg', 50, TRUE, -3)
 			animate(holder_obj, pixel_z = 10, time = 20)
-			sleep(20)
+			sleep(2 SECONDS)
 			animate(holder_obj, pixel_z = 15, time = 10)
-			sleep(10)
+			sleep(1 SECONDS)
 			animate(holder_obj, pixel_z = 10, time = 10)
-			sleep(10)
+			sleep(1 SECONDS)
 			animate(holder_obj, pixel_z = 15, time = 10)
-			sleep(10)
+			sleep(1 SECONDS)
 			animate(holder_obj, pixel_z = 10, time = 10)
-			sleep(10)
+			sleep(1 SECONDS)
 			playsound(holder_obj.loc, 'sound/items/fultext_launch.ogg', 50, TRUE, -3)
 			animate(holder_obj, pixel_z = 1000, time = 30)
 			if(ishuman(A))
 				var/mob/living/carbon/human/L = A
 				L.SetUnconscious(0)
-				L.set_drowsyness(0)
+				L.remove_status_effect(/datum/status_effect/drowsiness)
 				L.SetSleeping(0)
-			sleep(30)
+			sleep(3 SECONDS)
 			var/list/flooring_near_beacon = list()
 			for(var/turf/open/floor in orange(1, beacon))
 				flooring_near_beacon += floor
 			holder_obj.forceMove(pick(flooring_near_beacon))
 			animate(holder_obj, pixel_z = 10, time = 50)
-			sleep(50)
+			sleep(5 SECONDS)
 			animate(holder_obj, pixel_z = 15, time = 10)
-			sleep(10)
+			sleep(1 SECONDS)
 			animate(holder_obj, pixel_z = 10, time = 10)
-			sleep(10)
+			sleep(1 SECONDS)
 			balloon3 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_retract")
 			balloon3.pixel_y = 10
 			balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.cut_overlay(balloon)
 			holder_obj.add_overlay(balloon3)
-			sleep(4)
+			sleep(0.4 SECONDS)
 			holder_obj.cut_overlay(balloon3)
 			A.set_anchored(FALSE) // An item has to be unanchored to be extracted in the first place.
 			A.set_density(initial(A.density))
 			animate(holder_obj, pixel_z = 0, time = 5)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			A.forceMove(holder_obj.loc)
 			qdel(holder_obj)
 			if(uses_left <= 0)
@@ -138,14 +139,15 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 
 /obj/item/fulton_core
-	name = "extraction beacon signaller"
-	desc = "Emits a signal which fulton recovery devices can lock onto. Activate in hand to create a beacon."
-	icon = 'icons/obj/stock_parts.dmi'
-	icon_state = "subspace_amplifier"
+	name = "extraction beacon assembly kit"
+	desc = "When built, emits a signal which fulton recovery devices can lock onto. Activate in hand to unfold into a beacon."
+	icon = 'icons/obj/fulton.dmi'
+	icon_state = "folded_extraction"
 
 /obj/item/fulton_core/attack_self(mob/user)
 	if(do_after(user,15,target = user) && !QDELETED(src))
 		new /obj/structure/extraction_point(get_turf(user))
+		playsound(src, 'sound/items/deconstruct.ogg', vol = 50, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
 		qdel(src)
 
 /obj/structure/extraction_point
@@ -161,10 +163,15 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	. = ..()
 	name += " ([rand(100,999)]) ([get_area_name(src, TRUE)])"
 	GLOB.total_extraction_beacons += src
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/extraction_point/Destroy()
 	GLOB.total_extraction_beacons -= src
 	return ..()
+
+/obj/structure/extraction_point/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "[icon_state]_light", src, alpha = src.alpha)
 
 /obj/effect/extraction_holder
 	name = "extraction holder"

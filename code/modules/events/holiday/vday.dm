@@ -12,6 +12,8 @@
 	weight = -1 //forces it to be called, regardless of weight
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	category = EVENT_CATEGORY_HOLIDAY
+	description = "Puts people on dates! They must protect each other. Sometimes a vengeful third wheel spawns."
 
 /datum/round_event/valentines/start()
 	..()
@@ -55,8 +57,8 @@
 /obj/item/valentine
 	name = "valentine"
 	desc = "A Valentine's card! Wonder what it says..."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "sc_Ace of Hearts_syndicate" // shut up
+	icon = 'icons/obj/toys/playing_cards.dmi'
+	icon_state = "sc_Ace of Hearts_syndicate" // shut up // bye felicia
 	var/message = "A generic message of love or whatever."
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
@@ -68,12 +70,11 @@
 /obj/item/valentine/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/pen) || istype(W, /obj/item/toy/crayon))
-		if(!user.is_literate())
-			to_chat(user, span_notice("You scribble illegibly on [src]!"))
+		if(!user.can_write(W))
 			return
 		var/recipient = tgui_input_text(user, "Who is receiving this valentine?", "To:", max_length = MAX_NAME_LEN)
 		var/sender = tgui_input_text(user, "Who is sending this valentine?", "From:", max_length = MAX_NAME_LEN)
-		if(!user.canUseTopic(src, BE_CLOSE))
+		if(!user.canUseTopic(src, be_close = TRUE))
 			return
 		if(recipient && sender)
 			name = "valentine - To: [recipient] From: [sender]"
@@ -95,7 +96,7 @@
 
 /obj/item/food/candyheart
 	name = "candy heart"
-	icon = 'icons/obj/holiday_misc.dmi'
+	icon = 'icons/obj/holiday/holiday_misc.dmi'
 	icon_state = "candyheart"
 	desc = "A heart-shaped candy that reads: "
 	food_reagents = list(/datum/reagent/consumable/sugar = 2)

@@ -79,12 +79,6 @@
 /obj/item/mod/construction/plating/cosmohonk
 	theme = /datum/mod_theme/cosmohonk
 
-/obj/item/mod/paint
-	name = "MOD paint kit"
-	desc = "This kit will repaint your MODsuit to something unique."
-	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
-	icon_state = "paintkit"
-
 #define START_STEP "start"
 #define CORE_STEP "core"
 #define SCREWED_CORE_STEP "screwed_core"
@@ -202,7 +196,7 @@
 					balloon_alert(user, "boots added")
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, "You fit [part] onto [src].")
+				balloon_alert(user, "fit [part.name]")
 				boots = part
 				step = BOOTS_STEP
 			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct

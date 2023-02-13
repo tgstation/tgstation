@@ -25,22 +25,13 @@
 	id = "lavalandsyndi_fredrickleft";
 	name = "Security Blast Door Control";
 	pixel_y = -26;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/telecomms)
-"h" = (
-/obj/structure/railing,
-/obj/effect/mapping_helpers/no_lava,
-/obj/effect/turf_decal/stripes/line,
-/obj/item/clothing/gloves/tackler/offbrand{
-	desc = "For a different kind of tackle fishing."
-	},
-/turf/open/floor/plating/lavaland_atmos,
-/area/template_noop)
 "j" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
@@ -116,9 +107,9 @@
 /area/ruin/syndicate_lava_base/telecomms)
 "y" = (
 /obj/machinery/door/airlock/security{
-	name = "Security Office";
-	req_access_txt = "150"
+	name = "Security Office"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
@@ -129,7 +120,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/item/pda/chameleon/broken{
+/obj/item/modular_computer/pda/chameleon/broken{
 	pixel_x = 5;
 	pixel_y = 4
 	},
@@ -180,9 +171,9 @@
 /obj/structure/cable,
 /obj/modular_map_connector,
 /obj/machinery/door/airlock/security{
-	name = "Security Office";
-	req_access_txt = "150"
+	name = "Security Office"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/template_noop,
 /area/ruin/syndicate_lava_base/telecomms)
 "G" = (
@@ -196,7 +187,7 @@
 	id = "lavalandsyndi_telecomms";
 	name = "Telecomms Blast Door Control";
 	pixel_x = 26;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/red{
@@ -247,7 +238,7 @@
 	id = "lavalandsyndi_fredrickright";
 	name = "Security Blast Door Control";
 	pixel_y = 26;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/stack/tile/iron/grimy,
@@ -289,7 +280,7 @@ o
 b
 w
 K
-h
+v
 "}
 (4,1,1) = {"
 G

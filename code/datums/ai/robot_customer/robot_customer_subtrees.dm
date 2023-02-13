@@ -15,9 +15,9 @@
 		controller.queue_behavior(/datum/ai_behavior/find_seat)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
-	controller.current_movement_target = seat_marker
+	controller.set_movement_target(type, seat_marker)
 
-	if(!controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]) //We havn't ordered yet even ordered yet. go on! go over there and go do it!
+	if(!controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]) //We haven't ordered yet even ordered yet. go on! go over there and go do it!
 		controller.queue_behavior(/datum/ai_behavior/order_food)
 		return SUBTREE_RETURN_FINISH_PLANNING
 	else

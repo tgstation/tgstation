@@ -5,8 +5,9 @@
 
 /obj/item/areaeditor
 	name = "area modification item"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "blueprints"
+	inhand_icon_state = "blueprints"
 	attack_verb_continuous = list("attacks", "baps", "hits")
 	attack_verb_simple = list("attack", "bap", "hit")
 	var/fluffnotice = "Nobody's gonna read this stuff!"
@@ -47,7 +48,7 @@
 /obj/item/areaeditor/blueprints
 	name = "station blueprints"
 	desc = "Blueprints of the station. There is a \"Classified\" stamp and several coffee stains on it."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "blueprints"
 	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -92,7 +93,7 @@
 	if(..())
 		return
 	if(href_list["edit_area"])
-		if(get_area_type()!=AREA_STATION)
+		if(get_area_type() != AREA_STATION)
 			return
 		if(in_use)
 			return
@@ -156,11 +157,11 @@
 	var/list/SPECIALS = list(
 		/area/shuttle,
 		/area/centcom,
-		/area/asteroid,
-		/area/tdome,
-		/area/wizard_station,
-		/area/hilbertshotel,
-		/area/hilbertshotelstorage
+		/area/centcom/asteroid,
+		/area/centcom/tdome,
+		/area/centcom/wizard_station,
+		/area/misc/hilbertshotel,
+		/area/misc/hilbertshotelstorage
 	)
 	for (var/type in SPECIALS)
 		if ( istype(A,type) )
@@ -191,7 +192,7 @@
 	var/area/A = get_area(usr)
 	var/prevname = "[A.name]"
 	var/str = tgui_input_text(usr, "New area name", "Area Creation", max_length = MAX_NAME_LEN)
-	if(!str || !length(str) || str==prevname) //cancel
+	if(!str || !length(str) || str == prevname) //cancel
 		return
 	if(length(str) > 50)
 		to_chat(usr, span_warning("The given name is too long. The area's name is unchanged."))
@@ -200,7 +201,7 @@
 	rename_area(A, str)
 
 	to_chat(usr, span_notice("You rename the '[prevname]' to '[str]'."))
-	log_game("[key_name(usr)] has renamed [prevname] to [str]")
+	usr.log_message("has renamed [prevname] to [str]", LOG_GAME)
 	A.update_areasize()
 	interact()
 	return TRUE
@@ -210,7 +211,7 @@
 /obj/item/areaeditor/blueprints/cyborg
 	name = "station schematics"
 	desc = "A digital copy of the station blueprints stored in your memory."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "blueprints"
 	fluffnotice = "Intellectual Property of Nanotrasen. For use in engineering cyborgs only. Wipe from memory upon departure from the station."
 

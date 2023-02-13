@@ -1,14 +1,3 @@
-GLOBAL_LIST_INIT(pipe_cleaner_colors, list(
-	"blue" = COLOR_STRONG_BLUE,
-	"cyan" = COLOR_CYAN,
-	"green" = COLOR_DARK_LIME,
-	"orange" = COLOR_MOSTLY_PURE_ORANGE,
-	"pink" = COLOR_LIGHT_PINK,
-	"red" = COLOR_RED,
-	"white" = COLOR_WHITE,
-	"yellow" = COLOR_YELLOW
-	))
-
 //This is the old cable code, but minus any actual powernet logic
 //Wireart is fun
 
@@ -41,8 +30,10 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon_state = "0-1"
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
-	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
-	color = COLOR_RED
+	obj_flags = CAN_BE_HIT
+	color = CABLE_HEX_COLOR_RED
+	///For updating inhand icons.
+	var/pipecleaner_color = CABLE_COLOR_RED
 	/// Pipe_cleaner direction 1 (see above)
 	var/d1 = 0
 	/// pipe_cleaner direction 2 (see above)
@@ -51,25 +42,37 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/obj/item/stack/pipe_cleaner_coil/stored
 
 /obj/structure/pipe_cleaner/yellow
-	color = COLOR_YELLOW
+	color = CABLE_HEX_COLOR_YELLOW
+	pipecleaner_color = CABLE_COLOR_YELLOW
 
 /obj/structure/pipe_cleaner/green
-	color = COLOR_DARK_LIME
+	color = CABLE_HEX_COLOR_GREEN
+	pipecleaner_color = CABLE_COLOR_GREEN
 
 /obj/structure/pipe_cleaner/blue
-	color = COLOR_STRONG_BLUE
+	color = CABLE_HEX_COLOR_BLUE
+	pipecleaner_color = CABLE_COLOR_BLUE
 
 /obj/structure/pipe_cleaner/pink
-	color = COLOR_LIGHT_PINK
+	color = CABLE_HEX_COLOR_PINK
+	pipecleaner_color = CABLE_COLOR_YELLOW
 
 /obj/structure/pipe_cleaner/orange
-	color = COLOR_MOSTLY_PURE_ORANGE
+	color = CABLE_HEX_COLOR_ORANGE
+	pipecleaner_color = CABLE_COLOR_ORANGE
 
 /obj/structure/pipe_cleaner/cyan
-	color = COLOR_CYAN
+	color = CABLE_HEX_COLOR_CYAN
+	pipecleaner_color = CABLE_COLOR_CYAN
 
 /obj/structure/pipe_cleaner/white
-	color = COLOR_WHITE
+	color = CABLE_HEX_COLOR_WHITE
+	pipecleaner_color = CABLE_COLOR_WHITE
+
+/obj/structure/pipe_cleaner/brown
+	color = CABLE_HEX_COLOR_BROWN
+	pipecleaner_color = CABLE_COLOR_BROWN
+
 
 // the power pipe_cleaner object
 /obj/structure/pipe_cleaner/Initialize(mapload, param_color)
@@ -81,16 +84,26 @@ By design, d1 is the smallest direction and d2 is the highest
 	d2 = text2num(copytext(icon_state, dash + length(icon_state[dash])))
 
 	if(d1)
-		stored = new/obj/item/stack/pipe_cleaner_coil(null, 2, null, null, null, color)
+		stored = new/obj/item/stack/pipe_cleaner_coil(null, 2, null, null, null)
 	else
-		stored = new/obj/item/stack/pipe_cleaner_coil(null, 1, null, null, null, color)
+		stored = new/obj/item/stack/pipe_cleaner_coil(null, 1, null, null, null)
 
-	color = param_color || color
+	if(param_color)
+		color = GLOB.cable_colors[param_color]
+		pipecleaner_color = param_color
+
 	if(!color)
-		var/list/pipe_cleaner_colors = GLOB.pipe_cleaner_colors
+		var/list/pipe_cleaner_colors = GLOB.cable_colors
 		var/random_color = pick(pipe_cleaner_colors)
 		color = pipe_cleaner_colors[random_color]
+		pipecleaner_color = random_color
+
 	update_appearance()
+	stored?.set_pipecleaner_color(pipecleaner_color)
+
+	if(isturf(loc))
+		var/turf/turf_loc = loc
+		turf_loc.add_blueprints_preround(src)
 
 /obj/structure/pipe_cleaner/Destroy() // called when a pipe_cleaner is deleted
 	//If we have a stored item at this point, lets just delete it, since that should be
@@ -159,7 +172,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	stored.update_appearance()
 
 /obj/structure/pipe_cleaner/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 	cut_pipe_cleaner(user)
 
@@ -174,11 +187,11 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/pipe_cleaner_coil
 	name = "pipe cleaner coil"
 	desc = "A coil of pipe cleaners. Good for arts and crafts, not to build with."
-	custom_price = PAYCHECK_ASSISTANT * 0.5
+	custom_price = PAYCHECK_CREW * 0.5
 	gender = NEUTER //That's a pipe_cleaner coil sounds better than that's some pipe_cleaner coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "pipecleaner"
-	inhand_icon_state = "pipecleaner"
+	inhand_icon_state = "coil_red"
 	worn_icon_state = "coil"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -200,21 +213,22 @@ By design, d1 is the smallest direction and d2 is the highest
 	usesound = 'sound/items/deconstruct.ogg'
 	cost = 1
 	source = /datum/robot_energy_storage/pipe_cleaner
-	color = COLOR_RED
+	color = CABLE_HEX_COLOR_RED
+	///For updating inhand icons.
+	var/pipecleaner_color = CABLE_COLOR_RED
 
 /obj/item/stack/pipe_cleaner_coil/cyborg/attack_self(mob/user)
-	var/list/pipe_cleaner_colors = GLOB.pipe_cleaner_colors
+	var/list/pipe_cleaner_colors = GLOB.cable_colors
 	var/list/possible_colors = list()
 	for(var/color in pipe_cleaner_colors)
 		var/image/pipe_icon = image(icon = src.icon, icon_state = src.icon_state)
 		pipe_icon.color = pipe_cleaner_colors[color]
 		possible_colors += list("[color]" = pipe_icon)
 
-	var/selected_color = show_radial_menu(user, src, possible_colors, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 40, require_near = TRUE)
+	var/selected_color = show_radial_menu(user, src, possible_colors, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 40, require_near = TRUE)
 	if(!selected_color)
 		return
-	color = pipe_cleaner_colors[selected_color]
-	update_appearance()
+	set_pipecleaner_color(selected_color)
 
 /**
  * Checks if we are allowed to interact with a radial menu
@@ -231,22 +245,28 @@ By design, d1 is the smallest direction and d2 is the highest
 		return FALSE
 	return TRUE
 
-/obj/item/stack/pipe_cleaner_coil/suicide_act(mob/user)
+/obj/item/stack/pipe_cleaner_coil/proc/set_pipecleaner_color(new_color)
+	color = GLOB.cable_colors[new_color]
+	pipecleaner_color = new_color
+	update_appearance()
+
+/obj/item/stack/pipe_cleaner_coil/suicide_act(mob/living/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
 		user.visible_message(span_suicide("[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	else
 		user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return(OXYLOSS)
+	return OXYLOSS
 
 /obj/item/stack/pipe_cleaner_coil/Initialize(mapload, new_amount = null, list/mat_override=null, mat_amt=1, param_color = null)
 	. = ..()
 
+	AddElement(/datum/element/update_icon_updates_onmob, slot_flags)
 	if(param_color)
-		color = param_color
+		set_pipecleaner_color(param_color)
 	if(!color)
-		var/list/pipe_cleaner_colors = GLOB.pipe_cleaner_colors
+		var/list/pipe_cleaner_colors = GLOB.cable_colors
 		var/random_color = pick(pipe_cleaner_colors)
-		color = pipe_cleaner_colors[random_color]
+		set_pipecleaner_color(random_color)
 
 	pixel_x = base_pixel_x + rand(-2, 2)
 	pixel_y = base_pixel_y + rand(-2, 2)
@@ -262,7 +282,8 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/pipe_cleaner_coil/update_icon_state()
 	. = ..()
-	icon_state = "[initial(inhand_icon_state)][amount < 3 ? amount : ""]"
+	icon_state = "[initial(icon_state)][amount < 3 ? amount : ""]"
+	inhand_icon_state = "coil_[pipecleaner_color]"
 
 /obj/item/stack/pipe_cleaner_coil/update_icon()
 	. = ..()
@@ -270,12 +291,11 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/pipe_cleaner_coil/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(!.)
 		return
-	var/obj/item/stack/pipe_cleaner_coil/new_pipe_cleaner = ..()
+	var/obj/item/stack/pipe_cleaner_coil/new_pipe_cleaner = .
 	if(istype(new_pipe_cleaner))
-		new_pipe_cleaner.color = color
-		new_pipe_cleaner.update_appearance()
+		new_pipe_cleaner.set_pipecleaner_color(pipecleaner_color)
 
 //add pipe_cleaners to the stack
 /obj/item/stack/pipe_cleaner_coil/proc/give(extra)
@@ -290,8 +310,7 @@ By design, d1 is the smallest direction and d2 is the highest
 //////////////////////////////////////////////
 
 /obj/item/stack/pipe_cleaner_coil/proc/get_new_pipe_cleaner(location)
-	var/path = /obj/structure/pipe_cleaner
-	return new path(location, color)
+	return new /obj/structure/pipe_cleaner(location, pipecleaner_color)
 
 // called when pipe_cleaner_coil is clicked on a turf
 /obj/item/stack/pipe_cleaner_coil/proc/place_turf(turf/T, mob/user, dirnew)
@@ -321,7 +340,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	for(var/obj/structure/pipe_cleaner/LC in T)
 		if(LC.d2 == dirn && LC.d1 == 0)
-			to_chat(user, span_warning("There's already a pipe leaner at that position!"))
+			to_chat(user, span_warning("There's already a pipe cleaner at that position!"))
 			return
 
 	var/obj/structure/pipe_cleaner/C = get_new_pipe_cleaner(T)
@@ -432,28 +451,40 @@ By design, d1 is the smallest direction and d2 is the highest
 /////////////////////////////
 
 /obj/item/stack/pipe_cleaner_coil/red
-	color = COLOR_RED
+	color = CABLE_HEX_COLOR_RED
+	pipecleaner_color = CABLE_COLOR_RED
 
 /obj/item/stack/pipe_cleaner_coil/yellow
-	color = COLOR_YELLOW
+	color = CABLE_HEX_COLOR_YELLOW
+	pipecleaner_color = CABLE_COLOR_YELLOW
 
 /obj/item/stack/pipe_cleaner_coil/blue
-	color = COLOR_STRONG_BLUE
+	color = CABLE_HEX_COLOR_BLUE
+	pipecleaner_color = CABLE_COLOR_BLUE
 
 /obj/item/stack/pipe_cleaner_coil/green
-	color = COLOR_DARK_LIME
+	color = CABLE_HEX_COLOR_GREEN
+	pipecleaner_color = CABLE_COLOR_GREEN
 
 /obj/item/stack/pipe_cleaner_coil/pink
-	color = COLOR_LIGHT_PINK
+	color = CABLE_HEX_COLOR_PINK
+	pipecleaner_color = CABLE_COLOR_PINK
 
 /obj/item/stack/pipe_cleaner_coil/orange
-	color = COLOR_MOSTLY_PURE_ORANGE
+	color =CABLE_HEX_COLOR_ORANGE
+	pipecleaner_color = CABLE_COLOR_ORANGE
 
 /obj/item/stack/pipe_cleaner_coil/cyan
-	color = COLOR_CYAN
+	color = CABLE_HEX_COLOR_CYAN
+	pipecleaner_color = CABLE_COLOR_CYAN
 
 /obj/item/stack/pipe_cleaner_coil/white
-	color = COLOR_WHITE
+	color = CABLE_HEX_COLOR_WHITE
+	pipecleaner_color = CABLE_COLOR_WHITE
+
+/obj/item/stack/pipe_cleaner_coil/brown
+	color = CABLE_HEX_COLOR_BROWN
+	pipecleaner_color = CABLE_COLOR_BROWN
 
 /obj/item/stack/pipe_cleaner_coil/random
 	color = null
@@ -474,28 +505,40 @@ By design, d1 is the smallest direction and d2 is the highest
 	update_appearance()
 
 /obj/item/stack/pipe_cleaner_coil/cut/red
-	color = COLOR_RED
+	color = CABLE_HEX_COLOR_RED
+	pipecleaner_color = CABLE_COLOR_RED
 
 /obj/item/stack/pipe_cleaner_coil/cut/yellow
-	color = COLOR_YELLOW
+	color = CABLE_HEX_COLOR_YELLOW
+	pipecleaner_color = CABLE_COLOR_YELLOW
 
 /obj/item/stack/pipe_cleaner_coil/cut/blue
-	color = COLOR_STRONG_BLUE
+	color = CABLE_HEX_COLOR_BLUE
+	pipecleaner_color = CABLE_COLOR_BLUE
 
 /obj/item/stack/pipe_cleaner_coil/cut/green
-	color = COLOR_DARK_LIME
+	color = CABLE_HEX_COLOR_GREEN
+	pipecleaner_color = CABLE_COLOR_GREEN
 
 /obj/item/stack/pipe_cleaner_coil/cut/pink
-	color = COLOR_LIGHT_PINK
+	color = CABLE_HEX_COLOR_PINK
+	pipecleaner_color = CABLE_COLOR_PINK
 
 /obj/item/stack/pipe_cleaner_coil/cut/orange
-	color = COLOR_MOSTLY_PURE_ORANGE
+	color = CABLE_HEX_COLOR_ORANGE
+	pipecleaner_color = CABLE_COLOR_ORANGE
 
 /obj/item/stack/pipe_cleaner_coil/cut/cyan
-	color = COLOR_CYAN
+	color = CABLE_HEX_COLOR_CYAN
+	pipecleaner_color = CABLE_COLOR_CYAN
 
 /obj/item/stack/pipe_cleaner_coil/cut/white
-	color = COLOR_WHITE
+	color = CABLE_HEX_COLOR_WHITE
+	pipecleaner_color = CABLE_COLOR_WHITE
+
+/obj/item/stack/pipe_cleaner_coil/cut/brown
+	color = CABLE_HEX_COLOR_BROWN
+	pipecleaner_color = CABLE_COLOR_BROWN
 
 /obj/item/stack/pipe_cleaner_coil/cut/random
 	color = null

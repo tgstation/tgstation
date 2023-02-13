@@ -70,14 +70,6 @@
 		return (occupied_space.contents_pressure_protection * ONE_ATMOSPHERE + (1 - occupied_space.contents_pressure_protection) * pressure)
 	return pressure
 
-
-/mob/living/carbon/human/handle_traits(delta_time, times_fired)
-	if (getOrganLoss(ORGAN_SLOT_BRAIN) >= 60)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
-	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
-	return ..()
-
 /mob/living/carbon/human/breathe()
 	if(!HAS_TRAIT(src, TRAIT_NOBREATH))
 		return ..()
@@ -107,8 +99,8 @@
 
 		return FALSE
 	else
-		if(istype(L, /obj/item/organ/lungs))
-			var/obj/item/organ/lungs/lun = L
+		if(istype(L, /obj/item/organ/internal/lungs))
+			var/obj/item/organ/internal/lungs/lun = L
 			lun.check_breath(breath,src)
 
 /// Environment handlers for species
@@ -154,22 +146,6 @@
 /mob/living/carbon/human/get_body_temp_cold_damage_limit()
 	return dna.species.bodytemp_cold_damage_limit
 
-///FIRE CODE
-/mob/living/carbon/human/handle_fire(delta_time, times_fired)
-	. = ..()
-	if(.) //if the mob isn't on fire anymore
-		return
-
-	if(dna)
-		. = dna.species.handle_fire(src, delta_time, times_fired) //do special handling based on the mob's species. TRUE = they are immune to the effects of the fire.
-
-	if(!last_fire_update)
-		last_fire_update = fire_stacks
-	if((fire_stacks > HUMAN_FIRE_STACK_ICON_NUM && last_fire_update <= HUMAN_FIRE_STACK_ICON_NUM) || (fire_stacks <= HUMAN_FIRE_STACK_ICON_NUM && last_fire_update > HUMAN_FIRE_STACK_ICON_NUM))
-		last_fire_update = fire_stacks
-		update_fire()
-
-
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
 	if(wear_suit)
@@ -181,19 +157,7 @@
 	thermal_protection = round(thermal_protection)
 	return thermal_protection
 
-/mob/living/carbon/human/IgniteMob()
-	//If have no DNA or can be Ignited, call parent handling to light user
-	//If firestacks are high enough
-	if(!dna || dna.species.CanIgniteMob(src))
-		return ..()
-	. = FALSE //No ignition
-
-/mob/living/carbon/human/extinguish_mob()
-	if(!dna || !dna.species.extinguish_mob(src))
-		last_fire_update = null
-		..()
 //END FIRE CODE
-
 
 //This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.

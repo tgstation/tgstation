@@ -6,6 +6,7 @@
 	head = /obj/item/clothing/head/helmet/space/plasmaman
 	mask = /obj/item/clothing/mask/breath
 	r_hand= /obj/item/tank/internals/plasmaman/belt/full
+	internals_slot = ITEM_SLOT_HANDS
 
 /datum/outfit/plasmaman/security
 	name = "Security Plasmaman"
@@ -144,7 +145,7 @@
 	name = "Botany Plasmaman"
 
 	uniform = /obj/item/clothing/under/plasmaman/botany
-	gloves = /obj/item/clothing/gloves/botanic_leather/plasmaman
+	gloves = /obj/item/clothing/gloves/color/plasmaman/botanic_leather
 	head = /obj/item/clothing/head/helmet/space/plasmaman/botany
 
 /datum/outfit/plasmaman/janitor
@@ -181,7 +182,7 @@
 	name = "Captain Plasmaman"
 
 	uniform = /obj/item/clothing/under/plasmaman/captain
-	gloves = /obj/item/clothing/gloves/color/captain //Too iconic to be replaced with a plasma version
+	gloves = /obj/item/clothing/gloves/captain //Too iconic to be replaced with a plasma version
 	head = /obj/item/clothing/head/helmet/space/plasmaman/captain
 
 /datum/outfit/plasmaman/head_of_personnel

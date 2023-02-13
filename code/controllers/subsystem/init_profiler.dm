@@ -5,12 +5,13 @@
 SUBSYSTEM_DEF(init_profiler)
 	name = "Init Profiler"
 	init_order = INIT_ORDER_INIT_PROFILER
+	init_stage = INITSTAGE_MAX
 	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/init_profiler/Initialize()
 	if(CONFIG_GET(flag/auto_profile))
 		write_init_profile()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/init_profiler/proc/write_init_profile()
 	var/current_profile_data = world.Profile(PROFILE_REFRESH, format = "json")

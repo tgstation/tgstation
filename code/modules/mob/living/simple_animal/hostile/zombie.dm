@@ -1,9 +1,7 @@
 /mob/living/simple_animal/hostile/zombie
 	name = "Shambling Corpse"
 	desc = "When there is no more room in hell, the dead will walk in outer space."
-	icon = 'icons/mob/simple_human.dmi'
-	icon_state = "zombie"
-	icon_living = "zombie"
+	icon = 'icons/mob/simple/simple_human.dmi'
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_HUMANOID
 	speak_chance = 0
@@ -21,29 +19,33 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	status_flags = CANPUSH
-	del_on_death = 1
-	var/zombiejob = JOB_MEDICAL_DOCTOR
+	death_message = "collapses, flesh gone in a pile of bones!"
+	del_on_death = TRUE
+	loot = list(/obj/effect/decal/remains/human)
+	/// The probability that we give people real zombie infections on hit.
 	var/infection_chance = 0
+	/// Outfit the zombie spawns with for visuals.
+	var/outfit = /datum/outfit/corpse_doctor
 
 /mob/living/simple_animal/hostile/zombie/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/setup_visuals)
-
-/mob/living/simple_animal/hostile/zombie/proc/setup_visuals()
-	var/datum/job/job = SSjob.GetJob(zombiejob)
-
-	var/datum/outfit/outfit = new job.outfit
-	outfit.l_hand = null
-	outfit.r_hand = null
-
-	var/mob/living/carbon/human/dummy/dummy = new
-	dummy.equipOutfit(outfit)
-	dummy.set_species(/datum/species/zombie)
-	COMPILE_OVERLAYS(dummy)
-	icon = getFlatIcon(dummy)
-	qdel(dummy)
+	apply_dynamic_human_icon(src, outfit, /datum/species/zombie, bloody_slots = ITEM_SLOT_OCLOTHING)
 
 /mob/living/simple_animal/hostile/zombie/AttackingTarget()
 	. = ..()
 	if(. && ishuman(target) && prob(infection_chance))
 		try_to_zombie_infect(target)
+
+/datum/outfit/corpse_doctor
+	name = "Corpse Doctor"
+	suit = /obj/item/clothing/suit/toggle/labcoat
+	uniform = /obj/item/clothing/under/rank/medical/doctor
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	back = /obj/item/storage/backpack/medic
+
+/datum/outfit/corpse_assistant
+	name = "Corpse Assistant"
+	mask = /obj/item/clothing/mask/gas
+	uniform = /obj/item/clothing/under/color/grey
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	back = /obj/item/storage/backpack

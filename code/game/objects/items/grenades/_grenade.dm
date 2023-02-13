@@ -11,7 +11,7 @@
 	name = "grenade"
 	desc = "It has an adjustable timer."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "grenade"
 	inhand_icon_state = "flashbang"
 	worn_icon_state = "grenade"
@@ -52,6 +52,11 @@
 	var/shrapnel_radius
 	///Did we add the component responsible for spawning sharpnel to this?
 	var/shrapnel_initialized
+
+/obj/item/grenade/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_ODD_CUSTOMIZABLE_FOOD_INGREDIENT, type)
+	RegisterSignal(src, COMSIG_ITEM_USED_AS_INGREDIENT, PROC_REF(on_used_as_ingredient))
 
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -129,11 +134,11 @@
 		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
 	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
 	if(istype(user))
-		user.mind?.add_memory(MEMORY_BOMB_PRIMED, list(DETAIL_BOMB_TYPE = src), story_value = STORY_VALUE_OKAY)
+		user.add_mob_memory(/datum/memory/bomb_planted, antagonist = src)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
 	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
-	addtimer(CALLBACK(src, .proc/detonate), isnull(delayoverride)? det_time : delayoverride)
+	addtimer(CALLBACK(src, PROC_REF(detonate)), isnull(delayoverride)? det_time : delayoverride)
 
 /**
  * detonate (formerly prime) refers to when the grenade actually delivers its payload (whether or not a boom/bang/detonation is involved)
@@ -163,6 +168,22 @@
 		var/mob/mob = loc
 		mob.dropItemToGround(src)
 
+///Signal sent by someone putting the grenade in as an ingredient. Registers signals onto what it was put into so it can explode.
+/obj/item/grenade/proc/on_used_as_ingredient(datum/source, atom/used_in)
+	SIGNAL_HANDLER
+
+	RegisterSignal(used_in, COMSIG_FOOD_EATEN, PROC_REF(ingredient_detonation))
+	RegisterSignal(used_in, COMSIG_TOOL_ATOM_ACTED_PRIMARY(TOOL_KNIFE), PROC_REF(ingredient_detonation))
+	RegisterSignal(used_in, COMSIG_TOOL_ATOM_ACTED_PRIMARY(TOOL_ROLLINGPIN), PROC_REF(ingredient_detonation))
+
+///Signal sent by someone eating food this is an ingredient in "used_in". Makes the grenade go kerblooey, destroying the food.
+/obj/item/grenade/proc/ingredient_detonation(atom/used_in, mob/living/target, mob/living/user, bitecount, bitesize)
+	SIGNAL_HANDLER
+
+	detonate()
+	//can't remove it as an ingredient so we need to get rid of the food. deleted ingredients not good
+	return DESTROY_FOOD
+
 /obj/item/grenade/screwdriver_act(mob/living/user, obj/item/tool)
 	if(active)
 		return FALSE
@@ -181,7 +202,7 @@
 	var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", list("Instant", 3, 4, 5))
 	if (isnull(newtime))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 	if(newtime == "Instant" && change_det_time(0))
 		to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))
@@ -214,7 +235,9 @@
 	if(damage && attack_type == PROJECTILE_ATTACK && hit_projectile.damage_type != STAMINA && prob(15))
 		owner.visible_message(span_danger("[attack_text] hits [owner]'s [src], setting it off! What a shot!"))
 		var/turf/source_turf = get_turf(src)
-		log_game("A projectile ([hitby]) detonated a grenade held by [key_name(owner)] at [COORD(source_turf)]")
+		var/logmsg = "held a grenade detonated by a projectile ([hitby]) at [COORD(source_turf)]"
+		owner.log_message(logmsg, LOG_GAME)
+		owner.log_message(logmsg, LOG_VICTIM, log_globally = FALSE)
 		message_admins("A projectile ([hitby]) detonated a grenade held by [key_name_admin(owner)] at [ADMIN_COORDJMP(source_turf)]")
 		detonate()
 
@@ -226,3 +249,4 @@
 	. = ..()
 	if(active)
 		user.throw_item(target)
+		return . | AFTERATTACK_PROCESSED_ITEM

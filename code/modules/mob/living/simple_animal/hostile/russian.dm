@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/russian
 	name = "Russian"
 	desc = "For the Motherland!"
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "russianmelee"
 	icon_living = "russianmelee"
 	icon_dead = "russianmelee_dead"
@@ -26,27 +26,35 @@
 	unsuitable_atmos_damage = 7.5
 	faction = list("russian")
 	status_flags = CANPUSH
-	del_on_death = 1
-
 	footstep_type = FOOTSTEP_MOB_SHOE
+	del_on_death = TRUE
+	/// The mob spawner we base the icon off of.
+	var/mob_spawner = /obj/effect/mob_spawn/corpse/human/russian
+	/// The item the icon will hold.
+	var/held_item = /obj/item/knife/kitchen
 
+/mob/living/simple_animal/hostile/russian/Initialize(mapload)
+	. = ..()
+	apply_dynamic_human_icon(src, mob_spawn_path = mob_spawner, r_hand = held_item)
 
 /mob/living/simple_animal/hostile/russian/ranged
 	icon_state = "russianranged"
 	icon_living = "russianranged"
 	loot = list(/obj/effect/mob_spawn/corpse/human/russian/ranged,
 				/obj/item/gun/ballistic/revolver/nagant)
-	ranged = 1
+	ranged = TRUE
 	retreat_distance = 5
 	minimum_distance = 5
 	projectilesound = 'sound/weapons/gun/revolver/shot.ogg'
 	casingtype = /obj/item/ammo_casing/n762
-
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/russian/ranged
+	held_item = /obj/item/gun/ballistic/revolver/nagant
 
 /mob/living/simple_animal/hostile/russian/ranged/mosin
 	loot = list(/obj/effect/mob_spawn/corpse/human/russian/ranged,
 				/obj/item/gun/ballistic/rifle/boltaction)
 	casingtype = /obj/item/ammo_casing/a762
+	held_item = /obj/item/gun/ballistic/rifle/boltaction
 
 /mob/living/simple_animal/hostile/russian/ranged/trooper
 	icon_state = "russianrangedelite"
@@ -56,6 +64,8 @@
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot
 	loot = list(/obj/effect/mob_spawn/corpse/human/russian/ranged/trooper,
 				/obj/item/gun/ballistic/shotgun/lethal)
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/russian/ranged/trooper
+	held_item = /obj/item/gun/ballistic/shotgun/lethal
 
 /mob/living/simple_animal/hostile/russian/ranged/officer
 	name = "Russian Officer"
@@ -67,6 +77,8 @@
 	casingtype = /obj/item/ammo_casing/c9mm
 	loot = list(/obj/effect/mob_spawn/corpse/human/russian/ranged/officer,
 				/obj/item/gun/ballistic/automatic/pistol/aps)
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/russian/ranged/officer
+	held_item = /obj/item/gun/ballistic/automatic/pistol/aps
 
 /mob/living/simple_animal/hostile/russian/ranged/officer/Aggro()
 	..()

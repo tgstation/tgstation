@@ -7,12 +7,13 @@
 	program_icon_state = "power_monitor"
 	extended_desc = "This program connects to sensors around the station to provide information about electrical systems"
 	ui_header = "power_norm.gif"
-	transfer_access = list(ACCESS_ENGINE)
+	transfer_access = list(ACCESS_ENGINEERING)
 	usage_flags = PROGRAM_CONSOLE
-	requires_ntnet = 0
-	size = 9
+	requires_ntnet = FALSE
+	size = 8
 	tgui_id = "NtosPowerMonitor"
 	program_icon = "plug"
+	detomatix_resistance = DETOMATIX_RESIST_MINOR
 
 	var/has_alert = 0
 	var/datum/weakref/attached_wire_ref
@@ -23,14 +24,14 @@
 	var/next_record = 0
 
 
-/datum/computer_file/program/power_monitor/run_program(mob/living/user)
+/datum/computer_file/program/power_monitor/on_start(mob/living/user)
 	. = ..(user)
 	search()
 	history["supply"] = list()
 	history["demand"] = list()
 
 
-/datum/computer_file/program/power_monitor/process_tick()
+/datum/computer_file/program/power_monitor/process_tick(delta_time)
 	if(!get_powernet())
 		search()
 	else
@@ -44,7 +45,7 @@
 	var/area/A = get_area(computer) //if the computer isn't directly connected to a wire, attempt to find the APC powering it to pull it's powernet instead
 	if(!A)
 		return
-	var/obj/machinery/power/apc/local_apc = WEAKREF(A.apc)
+	var/obj/machinery/power/apc/local_apc = A.apc
 	if(!local_apc)
 		return
 	if(!local_apc.terminal) //this really shouldn't happen without badminnery.

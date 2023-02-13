@@ -9,8 +9,8 @@
 	icon_state = "setup_small"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_on = FALSE
 
@@ -41,7 +41,7 @@
 	signal = add_output_port("Scanned", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/wiremod_scanner/register_shell(atom/movable/shell)
-	RegisterSignal(shell, COMSIG_ITEM_AFTERATTACK, .proc/handle_afterattack)
+	RegisterSignal(shell, COMSIG_ITEM_AFTERATTACK, PROC_REF(handle_afterattack))
 
 /obj/item/circuit_component/wiremod_scanner/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, COMSIG_ITEM_AFTERATTACK)
@@ -58,4 +58,5 @@
 	attacker.set_output(user)
 	attacking.set_output(target)
 	signal.set_output(COMPONENT_SIGNAL)
+	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 

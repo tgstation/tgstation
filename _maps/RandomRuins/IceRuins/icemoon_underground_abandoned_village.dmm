@@ -20,7 +20,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "bY" = (
-/obj/structure/flora/stump,
+/obj/structure/flora/tree/stump,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "cj" = (
@@ -48,10 +48,10 @@
 /obj/item/food/sashimi{
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	pixel_x = -10
 	},
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	pixel_x = 10;
 	pixel_y = -4
 	},
@@ -76,13 +76,13 @@
 /turf/open/floor/wood,
 /area/ruin/powered)
 "jH" = (
-/obj/item/clothing/head/bearpelt,
+/obj/item/clothing/head/costume/bearpelt,
 /obj/structure/table/wood,
 /obj/item/food/burger/fish,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = -4
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = 10;
 	pixel_y = 6
 	},
@@ -97,7 +97,7 @@
 /turf/closed/wall,
 /area/icemoon/underground/explored)
 "ks" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -114,7 +114,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "lg" = (
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /obj/effect/decal/remains/human,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -143,15 +143,15 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "mI" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/grass/both/style_random,
 /obj/structure/fence{
 	dir = 8
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "nR" = (
-/obj/structure/chair/sofa/left,
+/obj/structure/chair/sofa/left/brown,
 /turf/closed/mineral/snowmountain/cavern/icemoon,
 /area/icemoon/underground/explored)
 "oB" = (
@@ -162,14 +162,14 @@
 /turf/open/floor/wood,
 /area/ruin/powered)
 "oF" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "pc" = (
 /turf/open/misc/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/explored)
 "pj" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "pH" = (
@@ -177,14 +177,14 @@
 /turf/closed/wall/mineral/wood,
 /area/ruin/powered)
 "pI" = (
-/obj/structure/flora/rock/pile/icy,
+/obj/structure/flora/rock/pile/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "pP" = (
-/obj/structure/chair/sofa/left{
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/sofa/right/brown{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/ruin/powered)
 "pV" = (
@@ -196,9 +196,9 @@
 /obj/item/food/fishmeat/carp,
 /obj/item/food/fishmeat/carp,
 /obj/item/food/fishmeat/carp,
-/obj/item/reagent_containers/food/condiment/pack/ketchup,
-/obj/item/reagent_containers/food/condiment/pack/ketchup,
-/obj/item/reagent_containers/food/condiment/pack/ketchup,
+/obj/item/reagent_containers/condiment/pack/ketchup,
+/obj/item/reagent_containers/condiment/pack/ketchup,
+/obj/item/reagent_containers/condiment/pack/ketchup,
 /turf/open/floor/iron/checker,
 /area/ruin/powered)
 "sG" = (
@@ -209,10 +209,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered)
 "sY" = (
-/obj/structure/sink/kitchen{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/kitchen/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/checker,
 /area/ruin/powered)
@@ -277,7 +274,7 @@
 /turf/open/floor/carpet,
 /area/ruin/powered)
 "yb" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/left/brown{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -309,8 +306,8 @@
 /obj/structure/closet/cabinet,
 /obj/item/restraints/legcuffs/beartrap,
 /obj/item/restraints/legcuffs/beartrap,
-/obj/item/reagent_containers/glass/bottle/venom,
-/obj/item/reagent_containers/glass/bottle/curare,
+/obj/item/reagent_containers/cup/bottle/venom,
+/obj/item/reagent_containers/cup/bottle/curare,
 /obj/item/knife/combat/survival,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/food/meat/slab/human,
@@ -319,7 +316,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered)
 "Bq" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Cd" = (
@@ -335,7 +332,7 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "Dm" = (
-/obj/structure/flora/grass/brown,
+/obj/structure/flora/grass/brown/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "DI" = (
@@ -348,7 +345,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/powered)
 "DM" = (
-/obj/structure/flora/bush,
+/obj/structure/flora/bush/snow/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Ed" = (
@@ -412,12 +409,16 @@
 /turf/open/floor/carpet,
 /area/ruin/powered)
 "Kd" = (
-/obj/structure/flora/grass/green,
+/obj/structure/flora/grass/green/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "LZ" = (
-/obj/structure/bed,
-/obj/item/bedsheet/random,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/random{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/ruin/powered)
 "Nq" = (
@@ -439,7 +440,7 @@
 "PQ" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /mob/living/simple_animal/hostile/illusion{
-	deathmessage = "disperses into the air in a cloud of red mist, you feel slightly more at ease.";
+	death_message = "disperses into the air in a cloud of red mist, you feel slightly more at ease.";
 	desc = "You can't quite make out what you're seeing.";
 	faction = list("cult");
 	health = 500;
@@ -455,18 +456,18 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
 /obj/item/bodypart/head,
-/obj/item/bodypart/l_arm{
+/obj/item/bodypart/arm/left{
 	pixel_x = -9;
 	pixel_y = -9
 	},
-/obj/item/bodypart/l_leg,
-/obj/item/bodypart/r_arm,
-/obj/item/bodypart/r_leg{
+/obj/item/bodypart/leg/left,
+/obj/item/bodypart/arm/right,
+/obj/item/bodypart/leg/right{
 	pixel_x = 8;
 	pixel_y = 4
 	},
 /obj/item/bodypart/chest,
-/obj/item/organ/heart,
+/obj/item/organ/internal/heart,
 /obj/item/multitool,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered)
@@ -477,14 +478,14 @@
 /obj/item/restraints/legcuffs/beartrap{
 	armed = 1
 	},
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "QR" = (
 /turf/closed/wall/rust,
 /area/ruin/powered)
 "Rv" = (
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Sk" = (
@@ -502,12 +503,12 @@
 /turf/open/floor/wood,
 /area/ruin/powered)
 "Tc" = (
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "TW" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "UI" = (
@@ -527,15 +528,19 @@
 /area/icemoon/underground/explored)
 "WH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/bed,
-/obj/item/bedsheet/cult,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/cult{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/ruin/powered)
 "Ze" = (
 /turf/closed/wall,
 /area/icemoon/underground/explored)
 "Zw" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
 "Zx" = (

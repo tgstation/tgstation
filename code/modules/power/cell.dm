@@ -13,8 +13,8 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	inhand_icon_state = "cell"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	force = 5
 	throwforce = 5
 	throw_speed = 2
@@ -60,10 +60,52 @@
 		desc += " This one has a rating of [display_energy(maxcharge)][prob(10) ? ", and you should not swallow it" : ""]." //joke works better if it's not on every cell
 	update_appearance()
 
+	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, PROC_REF(on_magic_charge))
+	var/static/list/loc_connections = list(
+		COMSIG_ITEM_MAGICALLY_CHARGED = PROC_REF(on_magic_charge),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/**
+ * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]
+ *
+ * If we, or the item we're located in, is subject to the charge spell, gain some charge back
+ */
+/obj/item/stock_parts/cell/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/charge/spell, mob/living/caster)
+	SIGNAL_HANDLER
+
+	// This shouldn't be running if we're not being held by a mob,
+	// or if we're not within an object being held by a mob, but just in case...
+	if(!ismovable(loc))
+		return
+
+	. = COMPONENT_ITEM_CHARGED
+
+	if(prob(80))
+		maxcharge -= 200
+
+	if(maxcharge <= 1) // Div by 0 protection
+		maxcharge = 1
+		. |= COMPONENT_ITEM_BURNT_OUT
+
+	charge = maxcharge
+	update_appearance()
+
+	// Guns need to process their chamber when we've been charged
+	if(isgun(loc))
+		var/obj/item/gun/gun_loc = loc
+		gun_loc.process_chamber()
+
+	// The thing we're in might have overlays or icon states for whether the cell is charged
+	if(!ismob(loc))
+		loc.update_appearance()
+
+	return .
+
 /obj/item/stock_parts/cell/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
 
 /// Handles properly detaching signal hooks.
 /obj/item/stock_parts/cell/proc/on_reagents_del(datum/reagents/reagents)
@@ -78,6 +120,19 @@
 	if((charge < 0.01) || !charge_light_type)
 		return
 	. += mutable_appearance('icons/obj/power.dmi', "cell-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
+
+/obj/item/stock_parts/cell/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, charge))
+		charge = clamp(vval, 0, maxcharge)
+		return TRUE
+	if(vname == NAMEOF(src, maxcharge))
+		if(charge > vval)
+			charge = vval
+	if(vname == NAMEOF(src, corrupted) && vval && !corrupted)
+		corrupt(TRUE)
+		return TRUE
+	return ..()
+
 
 /obj/item/stock_parts/cell/proc/percent() // return % charge of cell
 	return 100 * charge / maxcharge
@@ -112,9 +167,9 @@
 	else
 		. += "The charge meter reads [CEILING(percent(), 0.1)]%." //so it doesn't say 0% charge when the overlay indicates it still has charge
 
-/obj/item/stock_parts/cell/suicide_act(mob/user)
+/obj/item/stock_parts/cell/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (FIRELOSS)
+	return FIRELOSS
 
 /obj/item/stock_parts/cell/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
@@ -123,29 +178,29 @@
 
 
 /obj/item/stock_parts/cell/proc/explode()
-	var/turf/T = get_turf(src.loc)
-	if (charge==0)
+	if(!charge)
 		return
 	var/range_devastation = -1 //round(charge/11000)
 	var/range_heavy = round(sqrt(charge)/60)
 	var/range_light = round(sqrt(charge)/30)
 	var/range_flash = range_light
-	if (range_light==0)
+	if(!range_light)
 		rigged = FALSE
 		corrupt()
 		return
 
-	message_admins("[ADMIN_LOOKUPFLW(usr)] has triggered a rigged/corrupted power cell explosion at [AREACOORD(T)].")
-	log_game("[key_name(usr)] has triggered a rigged/corrupted power cell explosion at [AREACOORD(T)].")
+	message_admins("[ADMIN_LOOKUPFLW(usr)] has triggered a rigged/corrupted power cell explosion at [AREACOORD(loc)].")
+	usr?.log_message("triggered a rigged/corrupted power cell explosion", LOG_GAME)
+	usr?.log_message("triggered a rigged/corrupted power cell explosion", LOG_VICTIM, log_globally = FALSE)
 
 	//explosion(T, 0, 1, 2, 2)
 	explosion(src, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash)
 	qdel(src)
 
-/obj/item/stock_parts/cell/proc/corrupt()
+/obj/item/stock_parts/cell/proc/corrupt(force)
 	charge /= 2
 	maxcharge = max(maxcharge/2, chargerate)
-	if (prob(10))
+	if (force || prob(10))
 		rigged = TRUE //broken batterys are dangerous
 		corrupted = TRUE
 
@@ -173,12 +228,12 @@
 /obj/item/stock_parts/cell/attack_self(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/stomach/maybe_stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+		var/obj/item/organ/internal/stomach/maybe_stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
 
-		if(istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
+		if(istype(maybe_stomach, /obj/item/organ/internal/stomach/ethereal))
 
 			var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
-			var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
+			var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
 			if((stomach.drain_time > world.time) || !stomach)
 				return
 			if(charge < CELL_POWER_DRAIN)
@@ -213,7 +268,7 @@
 /obj/item/stock_parts/cell/get_part_rating()
 	return maxcharge * 10 + charge
 
-/obj/item/stock_parts/cell/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
+/obj/item/stock_parts/cell/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	var/obj/item/mod/control/mod = storage_holder
 	return !(istype(mod) && mod.open)
 
@@ -270,6 +325,13 @@
 /obj/item/stock_parts/cell/pulse/pistol //10 pulse shots
 	name = "pulse pistol power cell"
 	maxcharge = 2000
+
+/obj/item/stock_parts/cell/ninja
+	name = "black power cell"
+	icon_state = "bscell"
+	maxcharge = 10000
+	custom_materials = list(/datum/material/glass=60)
+	chargerate = 2000
 
 /obj/item/stock_parts/cell/high
 	name = "high-capacity power cell"
@@ -331,9 +393,9 @@
 	maxcharge = 50000
 	ratingdesc = FALSE
 
-/obj/item/stock_parts/cell/infinite/abductor/ComponentInitialize()
-	. = ..()
+/obj/item/stock_parts/cell/infinite/abductor/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/stock_parts/cell/potato
 	name = "potato battery"
@@ -346,16 +408,16 @@
 	connector_type = null
 	custom_materials = null
 	grown_battery = TRUE //it has the overlays for wires
-	custom_premium_price = PAYCHECK_ASSISTANT
+	custom_premium_price = PAYCHECK_CREW
 
 /obj/item/stock_parts/cell/emproof
 	name = "\improper EMP-proof cell"
 	desc = "An EMP-proof cell."
 	maxcharge = 500
 
-/obj/item/stock_parts/cell/emproof/ComponentInitialize()
-	. = ..()
+/obj/item/stock_parts/cell/emproof/Initialize(mapload)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
+	return ..()
 
 /obj/item/stock_parts/cell/emproof/empty
 	empty = TRUE
@@ -366,7 +428,7 @@
 /obj/item/stock_parts/cell/emproof/slime
 	name = "EMP-proof slime core"
 	desc = "A yellow slime core infused with plasma. Its organic nature makes it immune to EMPs."
-	icon = 'icons/mob/slimes.dmi'
+	icon = 'icons/mob/simple/slimes.dmi'
 	icon_state = "yellow slime extract"
 	custom_materials = null
 	maxcharge = 5000

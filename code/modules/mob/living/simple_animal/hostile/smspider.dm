@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/smspider
 	name = "supermatter spider"
 	desc= "A sliver of supermatter placed upon a robotically enhanced pedestal."
-	icon = 'icons/mob/smspider.dmi'
+	icon = 'icons/mob/simple/smspider.dmi'
 	icon_state = "smspider"
 	icon_living = "smspider"
 	icon_dead = "smspider_dead"
@@ -25,9 +25,9 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	robust_searching = 1
 	faction = list("hostile")
-	see_in_dark = 8
+	see_in_dark = NIGHTVISION_FOV_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	deathmessage = "falls to the ground, its shard dulling to a miserable grey!"
+	death_message = "falls to the ground, its shard dulling to a miserable grey!"
 	footstep_type = FOOTSTEP_MOB_CLAW
 	var/overcharged = FALSE // if true, spider will not die if it dusts a limb
 
@@ -37,6 +37,7 @@
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 10, TRUE)
 		visible_message(span_danger("[src] knocks into [target], turning them to dust in a brilliant flash of light!"))
 		var/mob/living/victim = target
+		victim.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 		victim.dust()
 		if(!overcharged)
 			death()

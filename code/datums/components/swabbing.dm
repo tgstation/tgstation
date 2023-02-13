@@ -21,10 +21,10 @@ This component is used in vat growing to swab for microbiological samples which 
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_to_swab)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/handle_overlays)
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, .proc/handle_icon)
+	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(try_to_swab))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(handle_overlays))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, PROC_REF(handle_icon))
 
 	src.can_swab_objs = can_swab_objs
 	src.can_swab_turfs = can_swab_turfs
@@ -97,7 +97,7 @@ This component is used in vat growing to swab for microbiological samples which 
 		return
 
 	to_chat(user, span_notice("You start swabbing [target] for samples!"))
-	INVOKE_ASYNC(src, .proc/async_try_to_swab, target, user)
+	INVOKE_ASYNC(src, PROC_REF(async_try_to_swab), target, user)
 
 /datum/component/swabbing/proc/async_try_to_swab(atom/target, mob/user)
 	if(!do_after(user, 3 SECONDS, target)) // Start swabbing boi

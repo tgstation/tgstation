@@ -1,7 +1,6 @@
 /datum/team/ashwalkers
 	name = "Ashwalkers"
 	show_roundend_report = FALSE
-	var/list/players_spawned = new
 
 /datum/antagonist/ashwalker
 	name = "\improper Ash Walker"
@@ -9,8 +8,9 @@
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
 	prevent_roundtype_conversion = FALSE
-	antagpanel_category = "Ash Walkers"
+	antagpanel_category = ANTAG_GROUP_ASHWALKERS
 	suicide_cry = "I HAVE NO IDEA WHAT THIS THING DOES!!"
+	count_against_dynamic_roll_chance = FALSE
 	var/datum/team/ashwalkers/ashie_team
 
 /datum/antagonist/ashwalker/create_team(datum/team/team)
@@ -26,11 +26,11 @@
 /datum/antagonist/ashwalker/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
 	UnregisterSignal(old_body, COMSIG_MOB_EXAMINATE)
-	RegisterSignal(new_body, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
+	RegisterSignal(new_body, COMSIG_MOB_EXAMINATE, PROC_REF(on_examinate))
 
 /datum/antagonist/ashwalker/on_gain()
 	. = ..()
-	RegisterSignal(owner.current, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
+	RegisterSignal(owner.current, COMSIG_MOB_EXAMINATE, PROC_REF(on_examinate))
 	owner.teach_crafting_recipe(/datum/crafting_recipe/skeleton_key)
 
 /datum/antagonist/ashwalker/on_removal()
@@ -41,4 +41,4 @@
 	SIGNAL_HANDLER
 
 	if(istype(A, /obj/structure/headpike))
-		SEND_SIGNAL(owner.current, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)
+		owner.current.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)

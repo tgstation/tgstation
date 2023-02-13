@@ -37,11 +37,11 @@ SUBSYSTEM_DEF(eigenstates)
 	for(var/atom/target as anything in targets)
 		eigen_targets["[id_counter]"] += target
 		eigen_id[target] = "[id_counter]"
-		RegisterSignal(target, COMSIG_CLOSET_INSERT, .proc/use_eigenlinked_atom)
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/remove_eigen_entry)
-		RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/tool_interact)
-		target.RegisterSignal(target, COMSIG_EIGENSTATE_ACTIVATE, /obj/structure/closet/proc/bust_open)
-		ADD_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
+		RegisterSignal(target, COMSIG_CLOSET_INSERT, PROC_REF(use_eigenlinked_atom))
+		RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(remove_eigen_entry))
+		RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), PROC_REF(tool_interact))
+		target.RegisterSignal(target, COMSIG_EIGENSTATE_ACTIVATE, TYPE_PROC_REF(/obj/structure/closet,bust_open))
+		ADD_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, REF(src))
 		var/obj/item = target
 		if(item)
 			item.color = COLOR_PERIWINKLEE //Tint the locker slightly.
@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(eigenstates)
 		COMSIG_CLOSET_INSERT,
 		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
 	))
-	REMOVE_TRAIT(entry, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
+	REMOVE_TRAIT(entry, TRAIT_BANNED_FROM_CARGO_SHUTTLE, REF(src))
 	entry.UnregisterSignal(entry, COMSIG_EIGENSTATE_ACTIVATE) //This is a signal on the object itself so we have to call it from that
 	///Remove the current entry if we're empty
 	for(var/targets in eigen_targets)

@@ -1,23 +1,40 @@
 /*
-The /tg/ codebase allows mixing of hardcoded and dynamically-loaded z-levels.
+The /tg/ codebase allows mixing of hardcoded and dynamically-loaded Z-levels.
 Z-levels can be reordered as desired and their properties are set by "traits".
-See map_config.dm for how a particular station's traits may be chosen.
+See code/datums/map_config.dm for how a particular station's traits may be chosen.
 The list DEFAULT_MAP_TRAITS at the bottom of this file should correspond to
 the maps that are hardcoded, as set in _maps/_basemap.dm. SSmapping is
-responsible for loading every non-hardcoded z-level.
+responsible for loading every non-hardcoded Z-level.
 
-As of 2018-02-04, the typical z-levels for a single-level station are:
+As of April 26th, 2022, the typical Z-levels for a single-level station are:
 1: CentCom
 2: Station
-3-4: Randomized space
+3-4: Randomized Space (Ruins)
 5: Mining
-6: City of Cogs
-7-11: Randomized space
-12: Empty space
-13: Transit space
+6-11: Randomized Space (Ruins)
+12: Transit/Reserved Space
 
-Multi-Z stations are supported and multi-Z mining and away missions would
-require only minor tweaks.
+However, if away missions are enabled:
+12: Away Mission
+13: Transit/Reserved Space
+
+Multi-Z stations are supported and Multi-Z mining and away missions would
+require only minor tweaks. They also handle their Z-Levels differently on their
+own case by case basis.
+
+This information will absolutely date quickly with how we handle Z-Levels, and will
+continue to handle them in the future. Currently, you can go into the Debug tab
+of your stat-panel (in game) and hit "Mapping verbs - Enable". You will then get a new tab
+called "Mapping", as well as access to the verb "Debug-Z-Levels". Although the information
+presented in this comment is factual for the time it was written for, it's ill-advised
+to trust the words presented within.
+
+We also provide this information to you so that you can have an at-a-glance look at how
+Z-Levels are arranged. It is extremely ill-advised to ever use the location of a Z-Level
+to assign traits to it or use it in coding. Use Z-Traits (ZTRAITs) for these.
+
+If you want to start toying around with Z-Levels, do not take these words for fact.
+Always compile, always use that verb, and always make sure that it works for what you want to do.
 */
 
 // helpers for modifying jobs, used in various job_changes.dm files
@@ -103,6 +120,9 @@ require only minor tweaks.
 // string - type path of the z-level's baseturf (defaults to space)
 #define ZTRAIT_BASETURF "Baseturf"
 
+///boolean - does this z disable parallax?
+#define ZTRAIT_NOPARALLAX "No Parallax"
+
 // default trait definitions, used by SSmapping
 ///Z level traits for CentCom
 #define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE, ZTRAIT_NOPHASE = TRUE)
@@ -113,6 +133,7 @@ require only minor tweaks.
 ///Z level traits for Lavaland
 #define ZTRAITS_LAVALAND list(\
 	ZTRAIT_MINING = TRUE, \
+	ZTRAIT_NOPARALLAX = TRUE, \
 	ZTRAIT_ASHSTORM = TRUE, \
 	ZTRAIT_LAVA_RUINS = TRUE, \
 	ZTRAIT_BOMBCAP_MULTIPLIER = 2, \

@@ -8,11 +8,14 @@ SUBSYSTEM_DEF(ticker)
 	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
 
-	var/current_state = GAME_STATE_STARTUP //state of current round (used by process()) Use the defines GAME_STATE_* !
-	var/force_ending = 0 //Round was ended by admin intervention
-	// If true, there is no lobby phase, the game starts immediately.
+	/// state of current round (used by process()) Use the defines GAME_STATE_* !
+	var/current_state = GAME_STATE_STARTUP
+	/// Boolean to track if round was ended by admin intervention or a "round-ending" event, like summoning Nar'Sie, a blob victory, the nuke going off, etc.
+	var/force_ending = FALSE
+	/// If TRUE, there is no lobby phase, the game starts immediately.
 	var/start_immediately = FALSE
-	var/setup_done = FALSE //All game setup done including mode post setup and
+	/// Boolean to track and check if our subsystem setup is done.
+	var/setup_done = FALSE
 
 	var/datum/game_mode/mode = null
 
@@ -45,6 +48,7 @@ SUBSYSTEM_DEF(ticker)
 	var/queue_delay = 0
 	var/list/queued_players = list() //used for join queues when the server exceeds the hard population cap
 
+	/// What is going to be reported to other stations at end of round?
 	var/news_report
 
 
@@ -62,7 +66,7 @@ SUBSYSTEM_DEF(ticker)
 	/// Why an emergency shuttle was called
 	var/emergency_reason
 
-/datum/controller/subsystem/ticker/Initialize(timeofday)
+/datum/controller/subsystem/ticker/Initialize()
 	var/list/byond_sound_formats = list(
 		"mid" = TRUE,
 		"midi" = TRUE,
@@ -140,7 +144,7 @@ SUBSYSTEM_DEF(ticker)
 		gametime_offset = rand(0, 23) HOURS
 	else if(CONFIG_GET(flag/shift_time_realtime))
 		gametime_offset = world.timeofday
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ticker/fire()
 	switch(current_state)
@@ -150,7 +154,7 @@ SUBSYSTEM_DEF(ticker)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, span_notice("<b>Welcome to [station_name()]!</b>"))
-			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
+			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/channel_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
 
@@ -251,7 +255,7 @@ SUBSYSTEM_DEF(ticker)
 	collect_minds()
 	equip_characters()
 
-	GLOB.data_core.manifest()
+	GLOB.manifest.build()
 
 	transfer_characters() //transfer keys to the new mobs
 
@@ -260,11 +264,11 @@ SUBSYSTEM_DEF(ticker)
 		cb.InvokeAsync()
 	LAZYCLEARLIST(round_start_events)
 
-	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING)
+	round_start_time = world.time //otherwise round_start_time would be 0 for the signals
+	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING, world.time)
 
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
-	round_start_time = world.time
-	SSdbcore.SetRoundStart()
+	INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore,SetRoundStart))
 
 	to_chat(world, span_notice("<B>Welcome to [station_name()], enjoy your stay!</B>"))
 	SEND_SOUND(world, sound(SSstation.announcer.get_rand_welcome_sound()))
@@ -272,10 +276,10 @@ SUBSYSTEM_DEF(ticker)
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
-	if(SSevents.holidays)
+	if(length(GLOB.holidays))
 		to_chat(world, span_notice("and..."))
-		for(var/holidayname in SSevents.holidays)
-			var/datum/holiday/holiday = SSevents.holidays[holidayname]
+		for(var/holidayname in GLOB.holidays)
+			var/datum/holiday/holiday = GLOB.holidays[holidayname]
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	PostSetup()
@@ -407,7 +411,7 @@ SUBSYSTEM_DEF(ticker)
 			captainless = FALSE
 			var/acting_captain = !is_captain_job(player_assigned_role)
 			SSjob.promote_to_captain(new_player_living, acting_captain)
-			OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, player_assigned_role.get_captaincy_announcement(new_player_living)))
+			OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce), player_assigned_role.get_captaincy_announcement(new_player_living)))
 		if((player_assigned_role.job_flags & JOB_ASSIGN_QUIRKS) && ishuman(new_player_living) && CONFIG_GET(flag/roundstart_traits))
 			if(new_player_mob.client?.prefs?.should_be_random_hardcore(player_assigned_role, new_player_living.mind))
 				new_player_mob.client.prefs.hardcore_random_setup(new_player_living)
@@ -461,7 +465,7 @@ SUBSYSTEM_DEF(ticker)
 				living.client.init_verbs()
 			livings += living
 	if(livings.len)
-		addtimer(CALLBACK(src, .proc/release_characters, livings), 30, TIMER_CLIENT_TIME)
+		addtimer(CALLBACK(src, PROC_REF(release_characters), livings), 30, TIMER_CLIENT_TIME)
 
 /datum/controller/subsystem/ticker/proc/release_characters(list/livings)
 	for(var/I in livings)
@@ -471,13 +475,13 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len)
 		return
-	var/hpc = CONFIG_GET(number/hard_popcap)
-	if(!hpc)
+	var/hard_popcap = CONFIG_GET(number/hard_popcap)
+	if(!hard_popcap)
 		list_clear_nulls(queued_players)
-		for (var/mob/dead/new_player/NP in queued_players)
-			to_chat(NP, span_userdanger("The alive players limit has been released!<br><a href='?src=[REF(NP)];late_join=override'>[html_encode(">>Join Game<<")]</a>"))
-			SEND_SOUND(NP, sound('sound/misc/notice1.ogg'))
-			NP.LateChoices()
+		for (var/mob/dead/new_player/new_player in queued_players)
+			to_chat(new_player, span_userdanger("The alive players limit has been released!<br><a href='?src=[REF(new_player)];late_join=override'>[html_encode(">>Join Game<<")]</a>"))
+			SEND_SOUND(new_player, sound('sound/misc/notice1.ogg'))
+			GLOB.latejoin_menu.ui_interact(new_player)
 		queued_players.len = 0
 		queue_delay = 0
 		return
@@ -488,11 +492,11 @@ SUBSYSTEM_DEF(ticker)
 	switch(queue_delay)
 		if(5) //every 5 ticks check if there is a slot available
 			list_clear_nulls(queued_players)
-			if(living_player_count() < hpc)
+			if(living_player_count() < hard_popcap)
 				if(next_in_line?.client)
 					to_chat(next_in_line, span_userdanger("A slot has opened! You have approximately 20 seconds to join. <a href='?src=[REF(next_in_line)];late_join=override'>\>\>Join Game\<\<</a>"))
 					SEND_SOUND(next_in_line, sound('sound/misc/notice1.ogg'))
-					next_in_line.LateChoices()
+					next_in_line.ui_interact(next_in_line)
 					return
 				queued_players -= next_in_line //Client disconnected, remove he
 			queue_delay = 0 //No vacancy: restart timer
@@ -506,7 +510,7 @@ SUBSYSTEM_DEF(ticker)
 		return
 	if(world.time - SSticker.round_start_time < 10 MINUTES) //Not forcing map rotation for very short rounds.
 		return
-	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
+	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping/, maprotate))
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING
@@ -555,51 +559,98 @@ SUBSYSTEM_DEF(ticker)
 	var/news_message
 	var/news_source = "Nanotrasen News Network"
 	var/decoded_station_name = html_decode(station_name()) //decode station_name to avoid minor_announce double encode
+
 	switch(news_report)
+		// The nuke was detonated on the syndicate recon outpost
 		if(NUKE_SYNDICATE_BASE)
-			news_message = "In a daring raid, the heroic crew of [decoded_station_name] detonated a nuclear device in the heart of a terrorist base."
+			news_message = "In a daring raid, the heroic crew of [decoded_station_name] \
+				detonated a nuclear device in the heart of a terrorist base."
+		// The station was destroyed by nuke ops
 		if(STATION_DESTROYED_NUKE)
-			news_message = "We would like to reassure all employees that the reports of a Syndicate backed nuclear attack on [decoded_station_name] are, in fact, a hoax. Have a secure day!"
+			news_message = "We would like to reassure all employees that the reports of a Syndicate \
+				backed nuclear attack on [decoded_station_name] are, in fact, a hoax. Have a secure day!"
+		// The station was evacuated (normal result)
 		if(STATION_EVACUATED)
+			// Had an emergency reason supplied to pass along
 			if(emergency_reason)
-				news_message = "[decoded_station_name] has been evacuated after transmitting the following distress beacon:\n\n[html_decode(emergency_reason)]"
+				news_message = "[decoded_station_name] has been evacuated after transmitting \
+					the following distress beacon:\n\n[html_decode(emergency_reason)]"
 			else
-				news_message = "The crew of [decoded_station_name] has been evacuated amid unconfirmed reports of enemy activity."
+				news_message = "The crew of [decoded_station_name] has been \
+					evacuated amid unconfirmed reports of enemy activity."
+		// A blob won
 		if(BLOB_WIN)
-			news_message = "[decoded_station_name] was overcome by an unknown biological outbreak, killing all crew on board. Don't let it happen to you! Remember, a clean work station is a safe work station."
-		if(BLOB_NUKE)
-			news_message = "[decoded_station_name] is currently undergoing decontanimation after a controlled burst of radiation was used to remove a biological ooze. All employees were safely evacuated prior, and are enjoying a relaxing vacation."
+			news_message = "[decoded_station_name] was overcome by an unknown biological outbreak, killing \
+				all crew on board. Don't let it happen to you! Remember, a clean work station is a safe work station."
+		// A blob was destroyed
 		if(BLOB_DESTROYED)
-			news_message = "[decoded_station_name] is currently undergoing decontamination procedures after the destruction of a biological hazard. As a reminder, any crew members experiencing cramps or bloating should report immediately to security for incineration."
+			news_message = "[decoded_station_name] is currently undergoing decontamination procedures \
+				after the destruction of a biological hazard. As a reminder, any crew members experiencing \
+				cramps or bloating should report immediately to security for incineration."
+		// A certain percentage of all cultists managed to escape at the end of round
 		if(CULT_ESCAPE)
 			news_message = "Security Alert: A group of religious fanatics have escaped from [decoded_station_name]."
+		// Cult was completely or almost completely wiped out
 		if(CULT_FAILURE)
-			news_message = "Following the dismantling of a restricted cult aboard [decoded_station_name], we would like to remind all employees that worship outside of the Chapel is strictly prohibited, and cause for termination."
+			news_message = "Following the dismantling of a restricted cult aboard [decoded_station_name], \
+				we would like to remind all employees that worship outside of the Chapel is strictly prohibited, \
+				and cause for termination."
+		// Cult summoned Nar'sie
 		if(CULT_SUMMON)
-			news_message = "Company officials would like to clarify that [decoded_station_name] was scheduled to be decommissioned following meteor damage earlier this year. Earlier reports of an unknowable eldritch horror were made in error."
+			news_message = "Company officials would like to clarify that [decoded_station_name] was scheduled \
+				to be decommissioned following meteor damage earlier this year. Earlier reports of an \
+				unknowable eldritch horror were made in error."
+		// Nuke detonated, but missed the station entirely
 		if(NUKE_MISS)
-			news_message = "The Syndicate have bungled a terrorist attack [decoded_station_name], detonating a nuclear weapon in empty space nearby."
+			news_message = "The Syndicate have bungled a terrorist attack [decoded_station_name], \
+				detonating a nuclear weapon in empty space nearby."
+		// All nuke ops got killed
 		if(OPERATIVES_KILLED)
-			news_message = "Repairs to [decoded_station_name] are underway after an elite Syndicate death squad was wiped out by the crew."
+			news_message = "Repairs to [decoded_station_name] are underway after an elite \
+				Syndicate death squad was wiped out by the crew."
+		// Nuke ops results inconclusive - Crew escaped without the disk, or nukies were left alive, or something
 		if(OPERATIVE_SKIRMISH)
-			news_message = "A skirmish between security forces and Syndicate agents aboard [decoded_station_name] ended with both sides bloodied but intact."
+			news_message = "A skirmish between security forces and Syndicate agents aboard [decoded_station_name] \
+				ended with both sides bloodied but intact."
+		// Revolution victory
 		if(REVS_WIN)
-			news_message = "Company officials have reassured investors that despite a union led revolt aboard [decoded_station_name] there will be no wage increases for workers."
+			news_message = "Company officials have reassured investors that despite a union led revolt \
+				aboard [decoded_station_name] there will be no wage increases for workers."
+		// Revolution defeat
 		if(REVS_LOSE)
-			news_message = "[decoded_station_name] quickly put down a misguided attempt at mutiny. Remember, unionizing is illegal!"
+			news_message = "[decoded_station_name] quickly put down a misguided attempt at mutiny. \
+				Remember, unionizing is illegal!"
+		// All wizards (plus apprentices) have been killed
 		if(WIZARD_KILLED)
-			news_message = "Tensions have flared with the Space Wizard Federation following the death of one of their members aboard [decoded_station_name]."
+			news_message = "Tensions have flared with the Space Wizard Federation following the death \
+				of one of their members aboard [decoded_station_name]."
+		// The station was nuked generically
 		if(STATION_NUKED)
-			news_message = "[decoded_station_name] activated its self-destruct device for unknown reasons. Attempts to clone the Captain for arrest and execution are underway."
+			// There was a blob on board, guess it was nuked to stop it
+			if(length(GLOB.overminds))
+				for(var/mob/camera/blob/overmind as anything in GLOB.overminds)
+					if(overmind.max_count < overmind.announcement_size)
+						continue
+
+					news_message = "[decoded_station_name] is currently undergoing decontanimation after a controlled \
+						burst of radiation was used to remove a biological ooze. All employees were safely evacuated prior, \
+						and are enjoying a relaxing vacation."
+					break
+			// A self destruct or something else
+			else
+				news_message = "[decoded_station_name] activated its self-destruct device for unknown reasons. \
+					Attempts to clone the Captain for arrest and execution are underway."
+		// The emergency escape shuttle was hijacked
 		if(SHUTTLE_HIJACK)
-			news_message = "During routine evacuation procedures, the emergency shuttle of [decoded_station_name] had its navigation protocols corrupted and went off course, but was recovered shortly after."
-		if(GANG_OPERATING)
-			news_message = "The company would like to state that any rumors of criminal organizing on board stations such as [decoded_station_name] are falsehoods, and not to be emulated."
-		if(GANG_DESTROYED)
-			news_message = "The crew of [decoded_station_name] would like to thank the Spinward Stellar Coalition Police Department for quickly resolving a minor terror threat to the station."
+			news_message = "During routine evacuation procedures, the emergency shuttle of [decoded_station_name] \
+				had its navigation protocols corrupted and went off course, but was recovered shortly after."
+		// A supermatter cascade triggered
+		if(SUPERMATTER_CASCADE)
+			news_message = "Officials are advising nearby colonies about a newly declared exclusion zone in \
+				the sector surrounding [decoded_station_name]."
 
 	if(news_message)
-		send2otherserver(news_source, news_message,"News_Report")
+		send2otherserver(news_source, news_message, "News_Report")
 
 /datum/controller/subsystem/ticker/proc/GetTimeLeft()
 	if(isnull(SSticker.timeLeft))
@@ -668,7 +719,7 @@ SUBSYSTEM_DEF(ticker)
 	///The reference to the end of round sound that we have chosen.
 	var/sound/end_of_round_sound_ref = sound(round_end_sound)
 	for(var/mob/M in GLOB.player_list)
-		if(M.client.prefs?.toggles & SOUND_ENDOFROUND)
+		if(M.client.prefs.read_preference(/datum/preference/toggle/sound_endofround))
 			SEND_SOUND(M.client, end_of_round_sound_ref)
 
 	text2file(login_music, "data/last_round_lobby_music.txt")

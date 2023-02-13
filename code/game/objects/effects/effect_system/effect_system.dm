@@ -20,7 +20,8 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	GLOB.cameranet.updateVisibility(src)
 	return ..()
 
-/obj/effect/particle_effect/newtonian_move(direction, instant = FALSE) // Prevents effects from getting registered for SSspacedrift
+// Prevents effects from getting registered for SSspacedrift
+/obj/effect/particle_effect/newtonian_move(direction, instant = FALSE, start_delay = 0)
 	return TRUE
 
 /datum/effect_system
@@ -67,7 +68,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	var/step_delay = 5
 
 	var/datum/move_loop/loop = SSmove_manager.move(effect, direction, step_delay, timeout = step_delay * step_amt, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
-	RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/decrement_total_effect)
+	RegisterSignal(loop, COMSIG_PARENT_QDELETING, PROC_REF(decrement_total_effect))
 
 /datum/effect_system/proc/decrement_total_effect(datum/source)
 	SIGNAL_HANDLER

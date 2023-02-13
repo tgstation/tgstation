@@ -10,7 +10,7 @@
 
 /obj/machinery/computer/station_alert/Initialize(mapload)
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z), title = name)
-	RegisterSignal(alert_control.listener, list(COMSIG_ALARM_TRIGGERED, COMSIG_ALARM_CLEARED), .proc/update_alarm_display)
+	RegisterSignals(alert_control.listener, list(COMSIG_ALARM_LISTENER_TRIGGERED, COMSIG_ALARM_LISTENER_CLEARED), PROC_REF(update_alarm_display))
 	return ..()
 
 /obj/machinery/computer/station_alert/Destroy()
@@ -18,6 +18,7 @@
 	return ..()
 
 /obj/machinery/computer/station_alert/ui_interact(mob/user)
+	. = ..()
 	alert_control.ui_interact(user)
 
 /obj/machinery/computer/station_alert/on_set_machine_stat(old_value)

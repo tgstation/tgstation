@@ -13,7 +13,7 @@
 	//queue this message because verbs are scheduled to process after SendMaps in the tick and speech is pretty expensive when it happens.
 	//by queuing this for next tick the mc can compensate for its cost instead of having speech delay the start of the next tick
 	if(message)
-		SSspeech_controller.queue_say_for_mob(src, message, SPEECH_CONTROLLER_QUEUE_SAY_VERB)
+		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), message), SSspeech_controller)
 
 ///Whisper verb
 /mob/verb/whisper_verb(message as text)
@@ -26,10 +26,16 @@
 		return
 
 	if(message)
-		SSspeech_controller.queue_say_for_mob(src, message, SPEECH_CONTROLLER_QUEUE_WHISPER_VERB)
+		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, whisper), message), SSspeech_controller)
 
-///whisper a message
-/mob/proc/whisper(message, datum/language/language=null)
+/**
+ * Whisper a message.
+ *
+ * Basic level implementation just speaks the message, nothing else.
+ */
+/mob/proc/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language, ignore_spam = FALSE, forced, filterproof)
+	if(!message)
+		return
 	say(message, language = language)
 
 ///The me emote verb
@@ -43,7 +49,47 @@
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	SSspeech_controller.queue_say_for_mob(src, message, SPEECH_CONTROLLER_QUEUE_EMOTE_VERB)
+	QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, emote), "me", 1, message, TRUE), SSspeech_controller)
+
+/mob/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	if(!..())
+		return FALSE
+	var/list/filter_result
+	var/list/soft_filter_result
+	if(client && !forced && !filterproof)
+		//The filter doesn't act on the sanitized message, but the raw message.
+		filter_result = CAN_BYPASS_FILTER(src) ? null : is_ic_filtered(message)
+		if(!filter_result)
+			soft_filter_result = CAN_BYPASS_FILTER(src) ? null : is_soft_ic_filtered(message)
+
+	if(filter_result && !filterproof)
+		//The filter warning message shows the sanitized message though.
+		to_chat(src, span_warning("That message contained a word prohibited in IC chat! Consider reviewing the server rules."))
+		to_chat(src, span_warning("\"[message]\""))
+		REPORT_CHAT_FILTER_TO_USER(src, filter_result)
+		log_filter("IC", message, filter_result)
+		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
+		return FALSE
+
+	if(soft_filter_result && !filterproof)
+		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
+			log_filter("Soft IC", message, filter_result)
+			return FALSE
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[message]\"")
+		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[message]\"")
+		SSblackbox.record_feedback("tally", "passed_soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
+		log_filter("Soft IC (Passed)", message, filter_result)
+
+	if(client && !(ignore_spam || forced))
+		if(client.prefs.muted & MUTE_IC)
+			to_chat(src, span_danger("You cannot speak IC (muted)."))
+			return FALSE
+		if(client.handle_spam_prevention(message, MUTE_IC))
+			return FALSE
+	// Including can_speak() here would ignore COMPONENT_CAN_ALWAYS_SPEAK in /mob/living/try_speak()
+	return TRUE
 
 ///Speak as a dead person (ghost etc)
 /mob/proc/say_dead(message)

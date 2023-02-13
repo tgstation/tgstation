@@ -6,7 +6,7 @@
 	extended_desc = "Nanotrasen Internal Requisition Network interface for supply purchasing using a department budget account."
 	requires_ntnet = TRUE
 	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
-	size = 20
+	size = 10
 	tgui_id = "NtosCargo"
 	///Are you actually placing orders with it?
 	var/requestonly = TRUE
@@ -22,12 +22,12 @@
 		homing beacons, unstable eigenstates, or machinery housing any form of artificial intelligence."
 	///If you're being raided by pirates, what do you tell the crew?
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
-	///The name of the shuttle template being used as the cargo shuttle. 'supply' is default and contains critical code. Don't change this unless you know what you're doing.
-	var/cargo_shuttle = "supply"
+	///The name of the shuttle template being used as the cargo shuttle. 'cargo' is default and contains critical code. Don't change this unless you know what you're doing.
+	var/cargo_shuttle = "cargo"
 	///The docking port called when returning to the station.
-	var/docking_home = "supply_home"
+	var/docking_home = "cargo_home"
 	///The docking port called when leaving the station.
-	var/docking_away = "supply_away"
+	var/docking_away = "cargo_away"
 	///If this console can loan the cargo shuttle. Set to false to disable.
 	var/stationcargo = TRUE
 	///The account this console processes and displays. Independent from the account the shuttle processes.
@@ -50,11 +50,7 @@
 
 	//Aquire access from the inserted ID card.
 	if(!length(access))
-		var/obj/item/card/id/D
-		var/obj/item/computer_hardware/card_slot/card_slot
-		if(computer)
-			card_slot = computer.all_components[MC_CARD]
-			D = card_slot?.GetID()
+		var/obj/item/card/id/D = computer?.computer_id_slot?.GetID()
 		if(!D)
 			return FALSE
 		access = D.GetAccess()
@@ -68,17 +64,20 @@
 	. = ..()
 	var/list/data = get_header_data()
 	data["location"] = SSshuttle.supply.getStatusText()
+	data["department"] = "Cargo"
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(cargo_account)
-	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
-	var/obj/item/card/id/id_card = card_slot?.GetID()
+	var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
 	if(id_card?.registered_account)
-		if((ACCESS_HEADS in id_card.access) || (ACCESS_QM in id_card.access))
+		if((ACCESS_COMMAND in id_card.access))
 			requestonly = FALSE
 			buyer = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
 			can_approve_requests = TRUE
 		else
 			requestonly = TRUE
 			can_approve_requests = FALSE
+		if(ACCESS_COMMAND in id_card.access)
+			// If buyer is a departmental budget, replaces "Cargo" with that budget - we're not using the cargo budget here
+			data["department"] = addtext(buyer.account_holder, " Requisitions")
 	else
 		requestonly = TRUE
 	if(buyer)
@@ -96,7 +95,7 @@
 				"name" = P.group,
 				"packs" = list()
 			)
-		if((P.hidden && (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.DropPodOnly))
+		if((P.hidden && (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.drop_pod_only))
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
@@ -126,11 +125,14 @@
 	data["cart"] = list()
 	for(var/datum/supply_order/SO in SSshuttle.shopping_list)
 		data["cart"] += list(list(
+			"cost_type" = SO.cost_type,
 			"object" = SO.pack.name,
 			"cost" = SO.pack.get_cost(),
 			"id" = SO.id,
 			"orderer" = SO.orderer,
-			"paid" = !isnull(SO.paying_account) //paid by requester
+			"paid" = !isnull(SO.paying_account), //paid by requester
+			"dep_order" = !!SO.department_destination,
+			"can_be_cancelled" = SO.can_be_cancelled,
 		))
 
 	data["requests"] = list()
@@ -146,9 +148,9 @@
 	return data
 
 /datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui)
-	if(..())
+	. = ..()
+	if(.)
 		return
-	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	switch(action)
 		if("send")
 			if(!SSshuttle.supply.canMove())
@@ -161,9 +163,9 @@
 				SSshuttle.supply.export_categories = get_export_categories()
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				computer.say("The supply shuttle is departing.")
-				computer.investigate_log("[key_name(usr)] sent the supply shuttle away.", INVESTIGATE_CARGO)
+				usr.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
-				computer.investigate_log("[key_name(usr)] called the supply shuttle.", INVESTIGATE_CARGO)
+				usr.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
 				computer.say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 			. = TRUE
@@ -182,15 +184,15 @@
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
 				computer.say("The supply shuttle has been loaned to CentCom.")
-				computer.investigate_log("[key_name(usr)] accepted a shuttle loan event.", INVESTIGATE_CARGO)
-				log_game("[key_name(usr)] accepted a shuttle loan event.")
+				usr.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
+				usr.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
 		if("add")
 			var/id = text2path(params["id"])
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
-			if(pack.hidden || pack.contraband || pack.DropPodOnly || (pack.special && !pack.special_enabled))
+			if(pack.hidden || pack.contraband || pack.drop_pod_only || (pack.special && !pack.special_enabled))
 				return
 
 			var/name = "*None Provided*"
@@ -220,7 +222,7 @@
 					return
 
 			var/reason = ""
-			if((requestonly && !self_paid) || !(card_slot?.GetID()))
+			if((requestonly && !self_paid) || !(computer.computer_id_slot?.GetID()))
 				reason = tgui_input_text(usr, "Reason", name)
 				if(isnull(reason) || ..())
 					return
@@ -230,14 +232,14 @@
 				computer.say("ERROR: Small crates may only be purchased by private accounts.")
 				return
 
-			if(!self_paid && ishuman(usr) && !account)
-				var/obj/item/card/id/id_card = card_slot?.GetID()
+			if(!requestonly && !self_paid && ishuman(usr) && !account)
+				var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
 				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 
 			var/turf/T = get_turf(src)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
 			SO.generateRequisition(T)
-			if((requestonly && !self_paid) || !(card_slot?.GetID()))
+			if((requestonly && !self_paid) || !(computer.computer_id_slot?.GetID()))
 				SSshuttle.request_list += SO
 			else
 				SSshuttle.shopping_list += SO
@@ -252,13 +254,16 @@
 					. = TRUE
 					break
 		if("clear")
-			SSshuttle.shopping_list.Cut()
+			for(var/datum/supply_order/cancelled_order in SSshuttle.shopping_list)
+				if(cancelled_order.department_destination || cancelled_order.can_be_cancelled)
+					continue //don't cancel other department's orders or orders that can't be cancelled
+				SSshuttle.shopping_list -= cancelled_order
 			. = TRUE
 		if("approve")
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.request_list)
 				if(SO.id == id)
-					var/obj/item/card/id/id_card = card_slot?.GetID()
+					var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
 					if(id_card && id_card?.registered_account)
 						SO.paying_account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 					SSshuttle.request_list -= SO

@@ -2,7 +2,7 @@
 #define APPENDICITIS_PROB 100 * (0.1 * (1 / 25) / 3600)
 #define INFLAMATION_ADVANCEMENT_PROB 2
 
-/obj/item/organ/appendix
+/obj/item/organ/internal/appendix
 	name = "appendix"
 	icon_state = "appendix"
 	base_icon_state = "appendix"
@@ -19,15 +19,15 @@
 
 	var/inflamation_stage = 0
 
-/obj/item/organ/appendix/update_name()
+/obj/item/organ/internal/appendix/update_name()
 	. = ..()
 	name = "[inflamation_stage ? "inflamed " : null][initial(name)]"
 
-/obj/item/organ/appendix/update_icon_state()
+/obj/item/organ/internal/appendix/update_icon_state()
 	icon_state = "[base_icon_state][inflamation_stage ? "inflamed" : ""]"
 	return ..()
 
-/obj/item/organ/appendix/on_life(delta_time, times_fired)
+/obj/item/organ/internal/appendix/on_life(delta_time, times_fired)
 	..()
 	var/mob/living/carbon/organ_owner = owner
 	if(!organ_owner)
@@ -41,14 +41,14 @@
 	else if(DT_PROB(APPENDICITIS_PROB, delta_time))
 		become_inflamed()
 
-/obj/item/organ/appendix/proc/become_inflamed()
+/obj/item/organ/internal/appendix/proc/become_inflamed()
 	inflamation_stage = 1
 	update_appearance()
 	if(owner)
 		ADD_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 		owner.med_hud_set_status()
 
-/obj/item/organ/appendix/proc/inflamation(delta_time)
+/obj/item/organ/internal/appendix/proc/inflamation(delta_time)
 	var/mob/living/carbon/organ_owner = owner
 	if(inflamation_stage < 3 && DT_PROB(INFLAMATION_ADVANCEMENT_PROB, delta_time))
 		inflamation_stage += 1
@@ -69,21 +69,22 @@
 				organ_owner.adjustOrganLoss(ORGAN_SLOT_APPENDIX, 15)
 
 
-/obj/item/organ/appendix/get_availability(datum/species/owner_species)
-	return !(TRAIT_NOHUNGER in owner_species.inherent_traits)
+/obj/item/organ/internal/appendix/get_availability(datum/species/owner_species, mob/living/owner_mob)
+	return owner_species.mutantappendix
 
-/obj/item/organ/appendix/Remove(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/internal/appendix/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	REMOVE_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 	organ_owner.med_hud_set_status()
 	..()
 
-/obj/item/organ/appendix/Insert(mob/living/carbon/organ_owner, special = FALSE)
-	..()
-	if(inflamation_stage)
-		ADD_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
-		organ_owner.med_hud_set_status()
+/obj/item/organ/internal/appendix/Insert(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	if(.)
+		if(inflamation_stage)
+			ADD_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
+			organ_owner.med_hud_set_status()
 
-/obj/item/organ/appendix/get_status_text()
+/obj/item/organ/internal/appendix/get_status_text()
 	if((!(organ_flags & ORGAN_FAILING)) && inflamation_stage)
 		return "<font color='#ff9933'>Inflamed</font>"
 	else

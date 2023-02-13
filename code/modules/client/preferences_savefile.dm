@@ -5,13 +5,13 @@
 // You do not need to raise this if you are adding new values that have sane defaults.
 // Only raise this value when changing the meaning/format/name/layout of an existing value
 // where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 42
+#define SAVEFILE_VERSION_MAX 43
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
 	It is to be used by the load_character and load_preferences procs.
-	(S.cd=="/" is preferences, S.cd=="/character[integer]" is a character slot, etc)
+	(S.cd == "/" is preferences, S.cd == "/character[integer]" is a character slot, etc)
 
 	if the current directory's version is below SAVEFILE_VERSION_MIN it will simply wipe everything in that directory
 	(if we're at root "/" then it'll just wipe the entire savefile, for instance.)
@@ -23,15 +23,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	Failing all that, the standard sanity checks are performed. They simply check the data is suitable, reverting to
 	initial() values if necessary.
 */
-/datum/preferences/proc/savefile_needs_update(savefile/S)
-	var/savefile_version
-	READ_FILE(S["version"], savefile_version)
-
-	if(savefile_version < SAVEFILE_VERSION_MIN)
-		S.dir.Cut()
+/datum/preferences/proc/save_data_needs_update(list/save_data)
+	if(!save_data) // empty list, either savefile isnt loaded or its a new char
+		return -1
+	if(save_data["version"] < SAVEFILE_VERSION_MIN)
 		return -2
-	if(savefile_version < SAVEFILE_VERSION_MAX)
-		return savefile_version
+	if(save_data["version"] < SAVEFILE_VERSION_MAX)
+		return save_data["version"]
 	return -1
 
 //should these procs get fairly long
@@ -41,10 +39,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //This only really meant to avoid annoying frequent players
 //if your savefile is 3 months out of date, then 'tough shit'.
 
-/datum/preferences/proc/update_preferences(current_version, savefile/S)
-	if(current_version < 33)
-		toggles |= SOUND_ENDOFROUND
-
+/datum/preferences/proc/update_preferences(current_version, datum/json_savefile/S)
 	if(current_version < 34)
 		write_preference(/datum/preference/toggle/auto_fit_viewport, TRUE)
 
@@ -96,12 +91,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (current_version < 41)
 		migrate_preferences_to_tgui_prefs_menu()
 
-/datum/preferences/proc/update_character(current_version, savefile/savefile)
+/datum/preferences/proc/update_character(current_version, list/save_data)
 	if (current_version < 41)
 		migrate_character_to_tgui_prefs_menu()
 
 	if (current_version < 42)
-		migrate_body_types(savefile)
+		migrate_body_types(save_data)
+
+	if (current_version < 43)
+		migrate_legacy_sound_toggles(savefile)
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
@@ -132,7 +130,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			notadded += kb
 	save_preferences() //Save the players pref so that new keys that were set to Unbound as default are permanently stored
 	if(length(notadded))
-		addtimer(CALLBACK(src, .proc/announce_conflict, notadded), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(announce_conflict), notadded), 5 SECONDS)
 
 /datum/preferences/proc/announce_conflict(list/notadded)
 	to_chat(parent, "<span class='warningplain'><b><u>Keybinding Conflict</u></b></span>\n\
@@ -141,50 +139,48 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/datum/keybinding/conflicted = item
 		to_chat(parent, span_danger("[conflicted.category]: [conflicted.full_name] needs updating"))
 
-
-/datum/preferences/proc/load_path(ckey,filename="preferences.sav")
-	if(!ckey)
+/datum/preferences/proc/load_path(ckey, filename="preferences.json")
+	if(!ckey || !load_and_save)
 		return
 	path = "data/player_saves/[ckey[1]]/[ckey]/[filename]"
 
+/datum/preferences/proc/load_savefile()
+	if(load_and_save && !path)
+		CRASH("Attempted to load savefile without first loading a path!")
+	savefile = new /datum/json_savefile(load_and_save ? path : null)
+
 /datum/preferences/proc/load_preferences()
-	if(!path)
-		return FALSE
-	if(!fexists(path))
-		return FALSE
+	if(!savefile)
+		stack_trace("Attempted to load the preferences of [parent] without a savefile; did you forget to call load_savefile?")
+		load_savefile()
+		if(!savefile)
+			stack_trace("Failed to load the savefile for [parent] after manually calling load_savefile; something is very wrong.")
+			return FALSE
 
-	var/savefile/S = new /savefile(path)
-	if(!S)
-		return FALSE
-	S.cd = "/"
-
-	var/needs_update = savefile_needs_update(S)
-	if(needs_update == -2) //fatal, can't load any data
+	var/needs_update = save_data_needs_update(savefile.get_entry())
+	if(load_and_save && (needs_update == -2)) //fatal, can't load any data
 		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
-		fcopy(S, bacpath) //byond helpfully lets you use a savefile for the first arg.
+		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
 		return FALSE
 
 	apply_all_client_preferences()
 
 	//general preferences
-	READ_FILE(S["lastchangelog"], lastchangelog)
-
-	READ_FILE(S["be_special"] , be_special)
-
-
-	READ_FILE(S["default_slot"], default_slot)
-	READ_FILE(S["chat_toggles"], chat_toggles)
-	READ_FILE(S["toggles"], toggles)
-	READ_FILE(S["ignoring"], ignoring)
+	lastchangelog = savefile.get_entry("lastchangelog", lastchangelog)
+	be_special = savefile.get_entry("be_special", be_special)
+	default_slot = savefile.get_entry("default_slot", default_slot)
+	chat_toggles = savefile.get_entry("chat_toggles", chat_toggles)
+	toggles = savefile.get_entry("toggles", toggles)
+	ignoring = savefile.get_entry("ignoring", ignoring)
 
 	// OOC commendations
-	READ_FILE(S["hearted_until"], hearted_until)
+	hearted_until = savefile.get_entry("hearted_until", hearted_until)
 	if(hearted_until > world.realtime)
 		hearted = TRUE
 	//favorite outfits
-	READ_FILE(S["favorite_outfits"], favorite_outfits)
+	favorite_outfits = savefile.get_entry("favorite_outfits", favorite_outfits)
 
 	var/list/parsed_favs = list()
 	for(var/typetext in favorite_outfits)
@@ -194,15 +190,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	favorite_outfits = unique_list(parsed_favs)
 
 	// Custom hotkeys
-	READ_FILE(S["key_bindings"], key_bindings)
+	key_bindings = savefile.get_entry("key_bindings", key_bindings)
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
-		fcopy(S, bacpath) //byond helpfully lets you use a savefile for the first arg.
-		update_preferences(needs_update, S) //needs_update = savefile_version if we need an update (positive integer)
+		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
+		update_preferences(needs_update, savefile) //needs_update = savefile_version if we need an update (positive integer)
 
 	check_keybindings() // this apparently fails every time and overwrites any unloaded prefs with the default values, so don't load anything after this line or it won't actually save
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
@@ -219,7 +215,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/old_default_slot = default_slot
 		var/old_max_save_slots = max_save_slots
 
-		for (var/slot in S.dir) //but first, update all current character slots.
+		for (var/slot in savefile.get_entry()) //but first, update all current character slots.
 			if (copytext(slot, 1, 10) != "character")
 				continue
 			var/slotnum = text2num(copytext(slot, 10))
@@ -236,14 +232,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return TRUE
 
 /datum/preferences/proc/save_preferences()
-	if(!path)
-		return FALSE
-	var/savefile/S = new /savefile(path)
-	if(!S)
-		return FALSE
-	S.cd = "/"
-
-	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX) //updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
+	if(!savefile)
+		CRASH("Attempted to save the preferences of [parent] without a savefile. This should have been handled by load_preferences()")
+	savefile.set_entry("version", SAVEFILE_VERSION_MAX) //updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
 
 	for (var/preference_type in GLOB.preference_entries)
 		var/datum/preference/preference = GLOB.preference_entries[preference_type]
@@ -258,41 +249,30 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (preference_type in value_cache)
 			write_preference(preference, preference.serialize(value_cache[preference_type]))
 
-	//general preferences
-	WRITE_FILE(S["lastchangelog"], lastchangelog)
-	WRITE_FILE(S["be_special"], be_special)
-	WRITE_FILE(S["default_slot"], default_slot)
-	WRITE_FILE(S["toggles"], toggles)
-	WRITE_FILE(S["chat_toggles"], chat_toggles)
-	WRITE_FILE(S["ignoring"], ignoring)
-	WRITE_FILE(S["key_bindings"], key_bindings)
-	WRITE_FILE(S["hearted_until"], (hearted_until > world.realtime ? hearted_until : null))
-	WRITE_FILE(S["favorite_outfits"], favorite_outfits)
+	savefile.set_entry("lastchangelog", lastchangelog)
+	savefile.set_entry("be_special", be_special)
+	savefile.set_entry("default_slot", default_slot)
+	savefile.set_entry("toggles", toggles)
+	savefile.set_entry("chat_toggles", chat_toggles)
+	savefile.set_entry("ignoring", ignoring)
+	savefile.set_entry("key_bindings", key_bindings)
+	savefile.set_entry("hearted_until", (hearted_until > world.realtime ? hearted_until : null))
+	savefile.set_entry("favorite_outfits", favorite_outfits)
+	savefile.save()
 	return TRUE
 
 /datum/preferences/proc/load_character(slot)
 	SHOULD_NOT_SLEEP(TRUE)
-
-	if(!path)
-		return FALSE
-	if(!fexists(path))
-		return FALSE
-
-	character_savefile = null
-
-	var/savefile/S = new /savefile(path)
-	if(!S)
-		return FALSE
-	S.cd = "/"
 	if(!slot)
 		slot = default_slot
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
-		WRITE_FILE(S["default_slot"] , slot)
+		savefile.set_entry("default_slot", slot)
 
-	S.cd = "/character[slot]"
-	var/needs_update = savefile_needs_update(S)
+	var/tree_key = "character[slot]"
+	var/list/save_data = savefile.get_entry(tree_key)
+	var/needs_update = save_data_needs_update(save_data)
 	if(needs_update == -2) //fatal, can't load any data
 		return FALSE
 
@@ -306,22 +286,23 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		read_preference(preference_type)
 
 	//Character
-	READ_FILE(S["randomise"],  randomise)
+	randomise = save_data?["randomise"]
 
 	//Load prefs
-	READ_FILE(S["job_preferences"], job_preferences)
+	job_preferences = save_data?["job_preferences"]
 
 	//Quirks
-	READ_FILE(S["all_quirks"], all_quirks)
+	all_quirks = save_data?["all_quirks"]
 
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
 	if(needs_update >= 0)
-		update_character(needs_update, S) //needs_update == savefile_version if we need an update (positive integer)
+		update_character(needs_update, save_data) //needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
 	randomise = SANITIZE_LIST(randomise)
-
+	job_preferences = SANITIZE_LIST(job_preferences)
+	all_quirks = SANITIZE_LIST(all_quirks)
 
 	//Validate job prefs
 	for(var/j in job_preferences)
@@ -335,13 +316,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/save_character()
 	SHOULD_NOT_SLEEP(TRUE)
-
 	if(!path)
 		return FALSE
-	var/savefile/S = new /savefile(path)
-	if(!S)
-		return FALSE
-	S.cd = "/character[default_slot]"
+	var/tree_key = "character[default_slot]"
+	if(!(tree_key in savefile.get_entry()))
+		savefile.set_entry(tree_key, list())
+	var/save_data = savefile.get_entry(tree_key)
 
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (preference.savefile_identifier != PREFERENCE_CHARACTER)
@@ -355,7 +335,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (preference.type in value_cache)
 			write_preference(preference, preference.serialize(value_cache[preference.type]))
 
-	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX) //load_character will sanitize any bad data, so assume up-to-date.)
+	save_data["version"] = SAVEFILE_VERSION_MAX //load_character will sanitize any bad data, so assume up-to-date.
 
 	// This is the version when the random security department was removed.
 	// When the minimum is higher than that version, it's impossible for someone to have the "Random" department.
@@ -364,13 +344,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	#endif
 
 	//Character
-	WRITE_FILE(S["randomise"] , randomise)
+	save_data["randomise"] = randomise
 
 	//Write prefs
-	WRITE_FILE(S["job_preferences"] , job_preferences)
+	save_data["job_preferences"] = job_preferences
 
 	//Quirks
-	WRITE_FILE(S["all_quirks"] , all_quirks)
+	save_data["all_quirks"] = all_quirks
 
 	return TRUE
 
@@ -392,17 +372,3 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
-
-#ifdef TESTING
-//DEBUG
-//Some crude tools for testing savefiles
-//path is the savefile path
-/client/verb/savefile_export(path as text)
-	var/savefile/S = new /savefile(path)
-	S.ExportText("/",file("[path].txt"))
-//path is the savefile path
-/client/verb/savefile_import(path as text)
-	var/savefile/S = new /savefile(path)
-	S.ImportText("/",file("[path].txt"))
-
-#endif

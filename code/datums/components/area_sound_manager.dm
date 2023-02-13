@@ -16,10 +16,18 @@
 	accepted_zs = acceptable_zs
 	change_the_track()
 
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/react_to_move)
-	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, .proc/react_to_z_move)
-	RegisterSignal(parent, change_on, .proc/handle_change)
-	RegisterSignal(parent, remove_on, .proc/handle_removal)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(react_to_move))
+	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(react_to_z_move))
+	// change on can be a list of signals
+	if(islist(change_on))
+		RegisterSignals(parent, change_on, PROC_REF(handle_change))
+	else if(!isnull(change_on))
+		RegisterSignal(parent, change_on, PROC_REF(handle_change))
+	// remove on can be a list of signals
+	if(islist(remove_on))
+		RegisterSignals(parent, remove_on, PROC_REF(handle_removal))
+	else if(!isnull(remove_on))
+		RegisterSignal(parent, remove_on, PROC_REF(handle_removal))
 
 /datum/component/area_sound_manager/Destroy(force, silent)
 	QDEL_NULL(our_loop)
@@ -32,9 +40,9 @@
 		return
 	change_the_track(TRUE)
 
-/datum/component/area_sound_manager/proc/react_to_z_move(datum/source, old_z, new_z)
+/datum/component/area_sound_manager/proc/react_to_z_move(datum/source, turf/old_turf, turf/new_turf)
 	SIGNAL_HANDLER
-	if(!length(accepted_zs) || (new_z in accepted_zs))
+	if(!length(accepted_zs) || (new_turf.z in accepted_zs))
 		return
 	qdel(src)
 
@@ -50,7 +58,7 @@
 	var/time_remaining = 0
 
 	if(our_loop)
-		var/our_id = our_loop.timerid || timerid
+		var/our_id = our_loop.timer_id || timerid
 		if(our_id)
 			time_remaining = timeleft(our_id, SSsound_loops) || 0
 			//Time left will sometimes return negative values, just ignore them and start a new sound loop now
@@ -66,7 +74,7 @@
 
 	//If we're still playing, wait a bit before changing the sound so we don't double up
 	if(time_remaining)
-		timerid = addtimer(CALLBACK(src, .proc/start_looping_sound), time_remaining, TIMER_UNIQUE | TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_NO_HASH_WAIT | TIMER_DELETE_ME, SSsound_loops)
+		timerid = addtimer(CALLBACK(src, PROC_REF(start_looping_sound)), time_remaining, TIMER_UNIQUE | TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_NO_HASH_WAIT | TIMER_DELETE_ME, SSsound_loops)
 		return
 	timerid = null
 	our_loop.start()

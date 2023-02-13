@@ -4,17 +4,14 @@
 #define EMAGGED (1<<0)
 #define IN_USE (1<<1) // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 #define CAN_BE_HIT (1<<2) //can this be bludgeoned by items?
-#define BEING_SHOCKED (1<<3) // Whether this thing is currently (already) being shocked by a tesla
-#define DANGEROUS_POSSESSION (1<<4) //Admin possession yes/no
-#define ON_BLUEPRINTS (1<<5)  //Are we visible on the station blueprints at roundstart?
-#define UNIQUE_RENAME (1<<6) // can you customize the description/name of the thing?
-#define USES_TGUI (1<<7) //put on things that use tgui on ui_interact instead of custom/old UI.
-#define FROZEN (1<<8)
-#define BLOCK_Z_OUT_DOWN (1<<9)  // Should this object block z falling from loc?
-#define BLOCK_Z_OUT_UP (1<<10) // Should this object block z uprise from loc?
-#define BLOCK_Z_IN_DOWN (1<<11) // Should this object block z falling from above?
-#define BLOCK_Z_IN_UP (1<<12) // Should this object block z uprise from below?
-#define NO_BUILD (1<<13) // Can we build on this object?
+#define DANGEROUS_POSSESSION (1<<3) //Admin possession yes/no
+#define UNIQUE_RENAME (1<<4) // can you customize the description/name of the thing?
+#define USES_TGUI (1<<5) //put on things that use tgui on ui_interact instead of custom/old UI.
+#define BLOCK_Z_OUT_DOWN (1<<6)  // Should this object block z falling from loc?
+#define BLOCK_Z_OUT_UP (1<<7) // Should this object block z uprise from loc?
+#define BLOCK_Z_IN_DOWN (1<<8) // Should this object block z falling from above?
+#define BLOCK_Z_IN_UP (1<<9) // Should this object block z uprise from below?
+#define NO_BUILD (1<<10) // Can we build on this object?
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -41,6 +38,8 @@
 #define IGNORE_DIGITIGRADE (1<<18)
 /// Has contextual screentips when HOVERING OVER OTHER objects
 #define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
+/// No blood overlay is allowed to appear on this item, and it cannot gain blood DNA forensics 
+#define NO_BLOOD_ON_ITEM (1 << 20)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
@@ -62,17 +61,14 @@
 /// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
 #define BLOCKS_SPEECH (1<<16)
 #define PLASMAMAN_HELMET_EXEMPT (1<<17) //prevents from placing on plasmaman helmet
-
-/// Flags for the organ_flags var on /obj/item/organ
-
-#define ORGAN_SYNTHETIC (1<<0) //Synthetic organs, or cybernetic organs. Reacts to EMPs and don't deteriorate or heal
-#define ORGAN_FROZEN (1<<1) //Frozen organs, don't deteriorate
-#define ORGAN_FAILING (1<<2) //Failing organs perform damaging effects until replaced or fixed
-#define ORGAN_EXTERNAL (1<<3) //Was this organ implanted/inserted/etc, if true will not be removed during species change.
-#define ORGAN_VITAL (1<<4) //Currently only the brain
-#define ORGAN_EDIBLE (1<<5) //is a snack? :D
-#define ORGAN_SYNTHETIC_EMP (1<<6) //Synthetic organ affected by an EMP. Deteriorates over time.
-#define ORGAN_UNREMOVABLE (1<<7) //Can't be removed using surgery
+/// Prevents plasmamen from igniting when wearing this
+#define PLASMAMAN_PREVENT_IGNITION (1<<18)
+/// Usable as casting clothes by wizards (only matters for suits and headwear)
+#define CASTING_CLOTHES (1<<19)
+///Moths can't eat the clothing that has this flag.
+#define INEDIBLE_CLOTHING (1<<20)
+/// Headgear/helmet allows internals
+#define HEADINTERNALS (1<<21)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing
@@ -84,6 +80,8 @@
 
 /// Flags for the gun_flags var for firearms
 #define TOY_FIREARM_OVERLAY (1<<0) // If update_overlay would add some indicator that the gun is a toy, like a plastic cap on a pistol
+/// Currently used to identify valid guns to steal
+#define NOT_A_REAL_GUN (1<<1)
 
 /// Flags for sharpness in obj/item
 #define SHARP_EDGED (1<<0)

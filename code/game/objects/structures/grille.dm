@@ -12,12 +12,18 @@
 	pass_flags_self = PASSGRILLE
 	flags_1 = CONDUCT_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
-	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/structure_grille
 	max_integrity = 50
 	integrity_failure = 0.4
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
-	var/rods_broken = TRUE
+
+/datum/armor/structure_grille
+	melee = 50
+	bullet = 70
+	laser = 70
+	energy = 100
+	bomb = 10
 
 /obj/structure/grille/Initialize(mapload)
 	. = ..()
@@ -163,12 +169,12 @@
 
 /obj/structure/grille/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(!. && istype(mover, /obj/projectile))
+	if(!. && isprojectile(mover))
 		return prob(30)
 
-/obj/structure/grille/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+/obj/structure/grille/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
 	. = !density
-	if(istype(caller))
+	if(caller)
 		. = . || (caller.pass_flags & PASSGRILLE)
 
 /obj/structure/grille/wirecutter_act(mob/living/user, obj/item/tool)
@@ -180,12 +186,13 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/grille/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!isturf(loc) || !anchored)
+	if(!isturf(loc))
 		return FALSE
 	add_fingerprint(user)
 	if(shock(user, 90))
 		return FALSE
-	tool.play_tool_sound(src, 100)
+	if(!tool.use_tool(src, user, 0, volume=100))
+		return FALSE
 	set_anchored(!anchored)
 	user.visible_message(span_notice("[user] [anchored ? "fastens" : "unfastens"] [src]."), \
 		span_notice("You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor."))
@@ -193,8 +200,7 @@
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	add_fingerprint(user)
-	if(istype(W, /obj/item/stack/rods) && broken)
+	if(istype(W, /obj/item/stack/rods) && broken && do_after(user, 1 SECONDS, target = src))
 		if(shock(user, 90))
 			return
 		var/obj/item/stack/rods/R = W
@@ -251,8 +257,10 @@
 			return
 //window placing end
 
-	else if(istype(W, /obj/item/shard) || !shock(user, 70))
-		return ..()
+	else if((W.flags_1 & CONDUCT_1) && shock(user, 70))
+		return
+
+	return ..()
 
 /obj/structure/grille/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -282,9 +290,8 @@
 		atom_integrity = 20
 		broken = TRUE
 		rods_amount = 1
-		rods_broken = FALSE
-		var/obj/R = new rods_type(drop_location(), rods_broken)
-		transfer_fingerprints_to(R)
+		var/obj/item/dropped_rods = new rods_type(drop_location(), rods_amount)
+		transfer_fingerprints_to(dropped_rods)
 
 /obj/structure/grille/proc/repair_grille()
 	if(broken)
@@ -293,7 +300,6 @@
 		atom_integrity = max_integrity
 		broken = FALSE
 		rods_amount = 2
-		rods_broken = TRUE
 		return TRUE
 	return FALSE
 
@@ -346,7 +352,6 @@
 	density = FALSE
 	broken = TRUE
 	rods_amount = 1
-	rods_broken = FALSE
 
 /obj/structure/grille/broken/Initialize(mapload)
 	. = ..()

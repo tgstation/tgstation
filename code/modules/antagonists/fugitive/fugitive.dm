@@ -9,6 +9,7 @@
 	antag_hud_name = "fugitive"
 	suicide_cry = "FOR FREEDOM!!"
 	preview_outfit = /datum/outfit/prisoner
+	count_against_dynamic_roll_chance = FALSE
 	var/datum/team/fugitive/fugitive_team
 	var/is_captured = FALSE
 	var/backstory = "error"
@@ -40,7 +41,7 @@
 	forge_objectives()
 	. = ..()
 
-/datum/antagonist/fugitive/proc/forge_objectives() //this isn't the actual survive objective because it's about who in the team survives
+/datum/antagonist/fugitive/forge_objectives() //this isn't the actual survive objective because it's about who in the team survives
 	var/datum/objective/survive = new /datum/objective
 	survive.owner = owner
 	survive.explanation_text = "Avoid capture from the fugitive hunters."

@@ -1,12 +1,14 @@
 {
   "private": true,
   "name": "tgui",
-  "version": "4.3.0",
+  "version": "4.3.1",
   "dependencies": {
     "@popperjs/core": "^2.9.3",
+    "@types/marked": "^4.0.3",
     "common": "workspace:*",
     "dateformat": "^4.5.1",
     "dompurify": "^2.3.1",
+    "highlight.js": "^11.5.1",
     "inferno": "^7.4.8",
     "inferno-vnode-flags": "^7.4.8",
     "js-yaml": "^4.1.0",

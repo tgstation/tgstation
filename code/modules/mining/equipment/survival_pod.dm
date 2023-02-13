@@ -1,5 +1,5 @@
 /*****************************Survival Pod********************************/
-/area/survivalpod
+/area/misc/survivalpod
 	name = "\improper Emergency Shelter"
 	icon_state = "away"
 	static_lighting = TRUE
@@ -43,7 +43,7 @@
 	if(!used)
 		loc.visible_message(span_warning("\The [src] begins to shake. Stand back!"))
 		used = TRUE
-		sleep(50)
+		sleep(5 SECONDS)
 		var/turf/deploy_location = get_turf(src)
 		var/status = template.check_deploy(deploy_location)
 		switch(status)
@@ -64,7 +64,7 @@
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [AREACOORD(T)]")
 
 		playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
-		new /obj/effect/particle_effect/smoke(get_turf(src))
+		new /obj/effect/particle_effect/fluid/smoke(get_turf(src))
 		qdel(src)
 
 //Non-default pods
@@ -88,29 +88,30 @@
 	icon_state = "pod_window-0"
 	base_icon_state = "pod_window"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
-	canSmoothWith = list(SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
-
-/obj/structure/window/reinforced/shuttle/survival_pod/spawner/north
-	dir = NORTH
-
-/obj/structure/window/reinforced/shuttle/survival_pod/spawner/east
-	dir = EAST
-
-/obj/structure/window/reinforced/shuttle/survival_pod/spawner/west
-	dir = WEST
+	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
 
 /obj/structure/window/reinforced/survival_pod
 	name = "pod window"
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "pwindow"
 
+/obj/structure/window/reinforced/survival_pod/spawner/north
+	dir = NORTH
+
+/obj/structure/window/reinforced/survival_pod/spawner/east
+	dir = EAST
+
+/obj/structure/window/reinforced/survival_pod/spawner/west
+	dir = WEST
+
 //Door
 /obj/machinery/door/airlock/survival_pod
-	name = "airlock"
+	name = "Airlock"
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
+	smoothing_groups = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
 
 /obj/machinery/door/airlock/survival_pod/glass
 	opacity = FALSE
@@ -204,9 +205,9 @@
 	pixel_y = -4
 	flags_1 = NODECONSTRUCT_1
 
-/obj/machinery/smartfridge/survival_pod/ComponentInitialize()
-	. = ..()
+/obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/machinery/smartfridge/survival_pod/preloaded/Initialize(mapload)
 	. = ..()
@@ -222,56 +223,6 @@
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	return isitem(O)
-
-//Fans
-/obj/structure/fans
-	icon = 'icons/obj/lavaland/survival_pod.dmi'
-	icon_state = "fans"
-	name = "environmental regulation system"
-	desc = "A large machine releasing a constant gust of air."
-	anchored = TRUE
-	density = TRUE
-	var/buildstacktype = /obj/item/stack/sheet/iron
-	var/buildstackamount = 5
-	can_atmos_pass = ATMOS_PASS_NO
-
-/obj/structure/fans/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(buildstacktype)
-			new buildstacktype(loc,buildstackamount)
-	qdel(src)
-
-/obj/structure/fans/wrench_act(mob/living/user, obj/item/I)
-	..()
-	if(flags_1 & NODECONSTRUCT_1)
-		return TRUE
-
-	user.visible_message(span_warning("[user] disassembles [src]."),
-		span_notice("You start to disassemble [src]..."), span_hear("You hear clanking and banging noises."))
-	if(I.use_tool(src, user, 20, volume=50))
-		deconstruct()
-	return TRUE
-
-/obj/structure/fans/tiny
-	name = "tiny fan"
-	desc = "A tiny fan, releasing a thin gust of air."
-	layer = ABOVE_NORMAL_TURF_LAYER
-	density = FALSE
-	icon_state = "fan_tiny"
-	buildstackamount = 2
-
-/obj/structure/fans/Initialize(mapload)
-	. = ..()
-	air_update_turf(TRUE, TRUE)
-
-/obj/structure/fans/Destroy()
-	air_update_turf(TRUE, FALSE)
-	. = ..()
-//Invisible, indestructible fans
-/obj/structure/fans/tiny/invisible
-	name = "air flow blocker"
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	invisibility = INVISIBILITY_ABSTRACT
 
 //Fluff
 /obj/structure/tubes

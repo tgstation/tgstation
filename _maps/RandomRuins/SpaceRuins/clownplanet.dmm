@@ -6,48 +6,48 @@
 /turf/closed/mineral{
 	color = "#de1d1d"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "ac" = (
 /turf/open/floor/bronze,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "ad" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/floor/bronze,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "ae" = (
 /turf/closed/indestructible/rock{
 	color = "#de1d1d"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "af" = (
 /turf/closed/wall/mineral/sandstone,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "ag" = (
 /turf/open/floor/engine,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "ah" = (
 /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/destroyer,
 /turf/open/floor/engine,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "ai" = (
 /obj/structure/sign/warning,
 /turf/closed/wall/mineral/sandstone,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aj" = (
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "ak" = (
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "al" = (
 /obj/structure/sign/warning/xeno_mining,
 /turf/closed/wall/mineral/sandstone,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "am" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -55,86 +55,86 @@
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "an" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/bush/reed/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "ao" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/banana,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "ap" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aq" = (
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "ar" = (
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "as" = (
 /obj/structure/water_source/puddle,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "at" = (
 /turf/open/floor/iron/bluespace,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "au" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "av" = (
 /turf/open/floor/mineral/bananium,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aw" = (
 /obj/machinery/door/airlock/bananium,
 /turf/open/floor/grass,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "ax" = (
 /obj/item/assembly/mousetrap/armed,
 /turf/open/floor/iron/bluespace,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "ay" = (
-/obj/structure/flora/tree/jungle,
+/obj/structure/flora/tree/jungle/style_random,
 /turf/open/floor/iron/bluespace,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "az" = (
 /obj/structure/signpost,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aA" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aB" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -142,10 +142,10 @@
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aD" = (
 /turf/open/misc/asteroid,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aE" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -153,35 +153,35 @@
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aF" = (
 /obj/item/shovel,
 /turf/open/misc/asteroid,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aG" = (
 /obj/effect/mob_spawn/corpse/human/clown,
 /turf/open/misc/asteroid,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aH" = (
 /turf/closed/mineral/bananium{
 	color = "#de1d1d"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aI" = (
 /obj/item/gps/spaceruin,
 /obj/item/pickaxe,
 /turf/open/misc/asteroid,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aJ" = (
 /obj/item/flashlight/lamp/bananalamp,
 /turf/open/misc/asteroid,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aK" = (
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/sunny/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -189,30 +189,30 @@
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aM" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aN" = (
 /obj/structure/mineral_door/sandstone,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/bronze,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aO" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aP" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -220,41 +220,41 @@
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aQ" = (
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aR" = (
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aS" = (
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aT" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aU" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aV" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -262,7 +262,7 @@
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -270,7 +270,7 @@
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -278,39 +278,39 @@
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aY" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "aZ" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "ba" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/bush/reed/style_random,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "bb" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "bc" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -318,7 +318,7 @@
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "bd" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -326,56 +326,55 @@
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "be" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "bf" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/stripes/white/box,
 /turf/open/floor/bluespace,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "bg" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/stripes/white/box,
 /turf/open/floor/bluespace,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "bh" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/stripes/white/box,
 /turf/open/floor/bluespace,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "bi" = (
 /turf/closed/wall/mineral/wood/nonmetal,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "bj" = (
 /obj/structure/mineral_door/wood,
-/turf/open/floor/wood{
-	icon_state = "wood-broken5"
-	},
-/area/ruin/powered/clownplanet)
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/clownplanet)
 "bk" = (
 /obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/stripes/white/box,
 /turf/open/floor/bluespace,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "bl" = (
 /obj/item/bedsheet/clown,
 /obj/structure/bed,
 /obj/effect/mob_spawn/corpse/human/clown,
 /turf/open/floor/wood,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 "bm" = (
 /obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
 /turf/open/misc/asteroid,
-/area/ruin/powered/clownplanet)
+/area/ruin/space/has_grav/powered/clownplanet)
 
 (1,1,1) = {"
 aa

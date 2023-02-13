@@ -31,10 +31,14 @@
 	attack_verb_continuous = list("attacks", "stabs", "pokes")
 	attack_verb_simple = list("attack", "stab", "poke")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/kitchen_fork
 	sharpness = SHARP_POINTY
 	var/datum/reagent/forkload //used to eat omelette
-	custom_price = PAYCHECK_PRISONER
+	custom_price = PAYCHECK_LOWER
+
+/datum/armor/kitchen_fork
+	fire = 50
+	acid = 30
 
 /obj/item/kitchen/fork/Initialize(mapload)
 	. = ..()
@@ -69,7 +73,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	custom_materials = list(/datum/material/plastic=80)
-	custom_price = PAYCHECK_PRISONER * 2
+	custom_price = PAYCHECK_LOWER * 2
 
 /obj/item/kitchen/fork/plastic/Initialize(mapload)
 	. = ..()
@@ -92,7 +96,7 @@
 	attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
 	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 	sharpness = SHARP_EDGED
-	custom_price = PAYCHECK_PRISONER * 2
+	custom_price = PAYCHECK_LOWER * 2
 
 /obj/item/knife/plastic/Initialize(mapload)
 	. = ..()
@@ -103,6 +107,7 @@
 	desc = "Used to knock out the Bartender."
 	icon_state = "rolling_pin"
 	worn_icon_state = "rolling_pin"
+	inhand_icon_state = "rolling_pin"
 	force = 8
 	throwforce = 5
 	throw_speed = 3
@@ -111,8 +116,19 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
-	custom_price = PAYCHECK_EASY * 1.5
+	custom_price = PAYCHECK_CREW * 1.5
 	tool_behaviour = TOOL_ROLLINGPIN
+
+/obj/item/kitchen/rollingpin/illegal
+	name = "metal rolling pin"
+	desc = "A heavy metallic rolling pin used to bash in those annoying ingredients."
+	icon_state = "metal_rolling_pin"
+	inhand_icon_state = "metal_rolling_pin"
+	force = 12
+	flags_1 = CONDUCT_1
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 1.5, /datum/material/plastic = MINERAL_MATERIAL_AMOUNT * 1.5)
+	custom_price = PAYCHECK_CREW * 2
+	bare_wound_bonus = 14
 
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -130,9 +146,9 @@
 	throw_range = 5
 	attack_verb_simple = list("whack", "spoon", "tap")
 	attack_verb_continuous = list("whacks", "spoons", "taps")
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/kitchen_spoon
 	custom_materials = list(/datum/material/iron=120)
-	custom_price = PAYCHECK_PRISONER * 5
+	custom_price = PAYCHECK_LOWER * 5
 	tool_behaviour = TOOL_MINING
 	toolspeed = 25 // Literally 25 times worse than the base pickaxe
 
@@ -141,8 +157,12 @@
 	icon_state = "plastic_spoon"
 	force = 0
 	custom_materials = list(/datum/material/plastic=120)
-	custom_price = PAYCHECK_PRISONER * 2
+	custom_price = PAYCHECK_LOWER * 2
 	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf... It's one, continuous, breakable, do_after...
+
+/datum/armor/kitchen_spoon
+	fire = 50
+	acid = 30
 
 /obj/item/kitchen/spoon/plastic/Initialize(mapload)
 	. = ..()

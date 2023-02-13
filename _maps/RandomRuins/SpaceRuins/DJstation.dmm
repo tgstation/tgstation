@@ -13,6 +13,13 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
+"f" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Telecommunications"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/djstation/service)
 "h" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/closet/crate,
@@ -24,6 +31,11 @@
 /obj/structure/reagent_dispensers/plumbed{
 	dir = 8
 	},
+/turf/open/floor/plating,
+/area/ruin/space/djstation/service)
+"j" = (
+/obj/machinery/light/small/directional/south,
+/obj/item/taperecorder,
 /turf/open/floor/plating,
 /area/ruin/space/djstation/service)
 "n" = (
@@ -39,6 +51,10 @@
 	},
 /turf/template_noop,
 /area/template_noop)
+"u" = (
+/obj/machinery/telecomms/relay/preset/telecomms,
+/turf/open/floor/plating,
+/area/ruin/space/djstation/service)
 "v" = (
 /turf/closed/wall,
 /area/ruin/space/djstation/service)
@@ -77,7 +93,7 @@
 /obj/structure/cable,
 /obj/machinery/light/small/directional/south,
 /obj/structure/closet/crate,
-/obj/item/clothing/head/ushanka,
+/obj/item/clothing/head/costume/ushanka,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/ruin/space/djstation/service)
@@ -129,9 +145,7 @@
 /turf/template_noop,
 /area/template_noop)
 "V" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/south,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/djstation/service)
@@ -555,9 +569,9 @@ o
 e
 e
 v
-y
-P
-y
+v
+f
+v
 v
 o
 o
@@ -581,11 +595,11 @@ o
 o
 o
 o
-o
-o
-U
-o
-o
+v
+u
+A
+j
+v
 o
 o
 b
@@ -608,11 +622,11 @@ o
 o
 o
 o
-o
-o
-o
-o
-o
+v
+y
+P
+y
+v
 o
 o
 o
@@ -637,7 +651,7 @@ o
 o
 o
 o
-o
+U
 o
 o
 o

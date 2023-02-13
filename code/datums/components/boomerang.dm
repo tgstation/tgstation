@@ -24,9 +24,9 @@
 		src.thrower_easy_catch_enabled = thrower_easy_catch_enabled
 
 /datum/component/boomerang/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/prepare_throw) //Collect data on current thrower and the throwing datum
-	RegisterSignal(parent, COMSIG_MOVABLE_THROW_LANDED, .proc/return_missed_throw)
-	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/return_hit_throw)
+	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, PROC_REF(prepare_throw)) //Collect data on current thrower and the throwing datum
+	RegisterSignal(parent, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(return_missed_throw))
+	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, PROC_REF(return_hit_throw))
 
 /datum/component/boomerang/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_POST_THROW, COMSIG_MOVABLE_THROW_LANDED, COMSIG_MOVABLE_IMPACT))
@@ -78,7 +78,7 @@
 /datum/component/boomerang/proc/aerodynamic_swing(datum/thrownthing/throwing_datum, obj/item/true_parent)
 	var/mob/thrown_by = true_parent.thrownby?.resolve()
 	if(thrown_by)
-		addtimer(CALLBACK(true_parent, /atom/movable.proc/throw_at, thrown_by, boomerang_throw_range, throwing_datum.speed, null, TRUE), 1)
+		addtimer(CALLBACK(true_parent, TYPE_PROC_REF(/atom/movable, throw_at), thrown_by, boomerang_throw_range, throwing_datum.speed, null, TRUE), 1)
 		COOLDOWN_START(src, last_boomerang_throw, BOOMERANG_REBOUND_INTERVAL)
 	true_parent.visible_message(span_danger("[true_parent] is flying back at [throwing_datum.thrower]!"), \
 						span_danger("You see [true_parent] fly back at you!"), \

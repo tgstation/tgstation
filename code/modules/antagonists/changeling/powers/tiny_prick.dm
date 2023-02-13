@@ -20,16 +20,16 @@
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.chosen_sting = src
 
-	user.hud_used.lingstingdisplay.icon_state = button_icon_state
-	user.hud_used.lingstingdisplay.invisibility = 0
+	changeling.lingstingdisplay.icon_state = button_icon_state
+	changeling.lingstingdisplay.invisibility = 0
 
 /datum/action/changeling/sting/proc/unset_sting(mob/user)
 	to_chat(user, span_warning("We retract our sting, we can't sting anyone for now."))
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.chosen_sting = null
 
-	user.hud_used.lingstingdisplay.icon_state = null
-	user.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
+	changeling.lingstingdisplay.icon_state = null
+	changeling.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /mob/living/carbon/proc/unset_sting()
 	if(mind)
@@ -146,7 +146,7 @@
 	target.visible_message(span_warning("A grotesque blade forms around [target.name]\'s arm!"), span_userdanger("Your arm twists and mutates, transforming into a horrific monstrosity!"), span_hear("You hear organic matter ripping and tearing!"))
 	playsound(target, 'sound/effects/blobattack.ogg', 30, TRUE)
 
-	addtimer(CALLBACK(src, .proc/remove_fake, target, blade), 600)
+	addtimer(CALLBACK(src, PROC_REF(remove_fake), target, blade), 600)
 	return TRUE
 
 /datum/action/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/melee/arm_blade/false/blade)
@@ -157,7 +157,7 @@
 	"<span class='italics>You hear organic matter ripping and tearing!</span>")
 
 	qdel(blade)
-	target.update_inv_hands()
+	target.update_held_items()
 
 /datum/action/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
@@ -189,7 +189,7 @@
 
 /datum/action/changeling/sting/mute/sting_action(mob/user, mob/living/carbon/target)
 	log_combat(user, target, "stung", "mute sting")
-	target.silent += 30
+	target.adjust_silence(1 MINUTES)
 	return TRUE
 
 /datum/action/changeling/sting/blind
@@ -201,11 +201,16 @@
 	dna_cost = 1
 
 /datum/action/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
+	var/obj/item/organ/internal/eyes/eyes = target.getorganslot(ORGAN_SLOT_EYES)
+	if(!eyes)
+		to_chat(user, span_notice("You prepare to sting [target], but one of the voices in your hivemind points out they have no eyes."))
+		return FALSE
+
 	log_combat(user, target, "stung", "blind sting")
 	to_chat(target, span_danger("Your eyes burn horrifically!"))
-	target.become_nearsighted(EYE_DAMAGE)
-	target.blind_eyes(20)
-	target.blur_eyes(40)
+	eyes.applyOrganDamage(eyes.maxHealth * 0.8)
+	target.adjust_temp_blindness(40 SECONDS)
+	target.set_eye_blur_if_lower(80 SECONDS)
 	return TRUE
 
 /datum/action/changeling/sting/lsd
@@ -218,12 +223,13 @@
 
 /datum/action/changeling/sting/lsd/sting_action(mob/user, mob/living/carbon/target)
 	log_combat(user, target, "stung", "LSD sting")
-	addtimer(CALLBACK(src, .proc/hallucination_time, target), rand(300,600))
+	addtimer(CALLBACK(src, PROC_REF(hallucination_time), target), rand(30 SECONDS, 60 SECONDS))
 	return TRUE
 
 /datum/action/changeling/sting/lsd/proc/hallucination_time(mob/living/carbon/target)
-	if(target)
-		target.hallucination = max(90, target.hallucination)
+	if(QDELETED(src) || QDELETED(target))
+		return
+	target.adjust_hallucinations(180 SECONDS)
 
 /datum/action/changeling/sting/cryo
 	name = "Cryogenic Sting"

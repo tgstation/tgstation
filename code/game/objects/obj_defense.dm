@@ -49,36 +49,24 @@
 			return
 	take_damage(400, BRUTE, MELEE, 0, get_dir(src, B))
 
-/obj/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/obj/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(attack_generic(user, 60, BRUTE, MELEE, 0))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
 
-/obj/attack_basic_mob(mob/living/basic/user, list/modifiers)
-	if(!user.melee_damage_upper && !user.obj_damage) //No damage
-		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
-		return FALSE
-	else
-		if(user.obj_damage)
-			. = attack_generic(user, user.obj_damage, user.melee_damage_type, MELEE, TRUE, user.armour_penetration)
-		else
-			. = attack_generic(user, rand(user.melee_damage_lower,user.melee_damage_upper), user.melee_damage_type, MELEE,TRUE, user.armour_penetration)
-		if(.)
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-
 /obj/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	. = ..()
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
 		return FALSE
 	else
-		var/play_soundeffect = TRUE
-		if(user.environment_smash)
-			play_soundeffect = FALSE
+		var/turf/current_turf = get_turf(src) //we want to save the turf to play the sound there, cause being destroyed deletes us!
+		var/play_soundeffect = user.environment_smash
 		if(user.obj_damage)
 			. = attack_generic(user, user.obj_damage, user.melee_damage_type, MELEE, play_soundeffect, user.armour_penetration)
 		else
 			. = attack_generic(user, rand(user.melee_damage_lower,user.melee_damage_upper), user.melee_damage_type, MELEE, play_soundeffect, user.armour_penetration)
-		if(. && !play_soundeffect)
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+		if(. && play_soundeffect)
+			playsound(current_turf, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		if(user.client)
 			log_combat(user, src, "attacked")
 
@@ -93,11 +81,11 @@
 	var/amt = max(0, ((force - (move_resist * MOVE_FORCE_CRUSH_RATIO)) / (move_resist * MOVE_FORCE_CRUSH_RATIO)) * 10)
 	take_damage(amt, BRUTE)
 
-/obj/attack_slime(mob/living/simple_animal/slime/user)
+/obj/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
 	if(!user.is_adult)
 		return
-	attack_generic(user, rand(10, 15), BRUTE, MELEE, 1)
-
+	if(attack_generic(user, rand(10, 15), BRUTE, MELEE, 1))
+		log_combat(user, src, "attacked")
 
 /obj/singularity_act()
 	SSexplosions.high_mov_atom += src
@@ -157,8 +145,8 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/zap_act(power, zap_flags)
 	if(QDELETED(src))
 		return 0
-	obj_flags |= BEING_SHOCKED
-	addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
+	ADD_TRAIT(src, TRAIT_BEING_SHOCKED, WAS_SHOCKED)
+	addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_BEING_SHOCKED, WAS_SHOCKED), 1 SECONDS)
 	return power / 2
 
 //The surgeon general warns that being buckled to certain objects receiving powerful shocks is greatly hazardous to your health
@@ -169,9 +157,6 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 			var/mob/living/buckled_mob = m
 			buckled_mob.electrocute_act((clamp(round(strength/400), 10, 90) + rand(-5, 5)), src, flags = SHOCK_TESLA)
 
-/obj/proc/reset_shocked()
-	obj_flags &= ~BEING_SHOCKED
-
 ///the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
 /obj/proc/deconstruct(disassembled = TRUE)
 	SEND_SIGNAL(src, COMSIG_OBJ_DECONSTRUCT, disassembled)
@@ -179,6 +164,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 ///what happens when the obj's integrity reaches zero.
 /obj/atom_destruction(damage_flag)
+	. = ..()
 	if(damage_flag == ACID)
 		acid_melt()
 	else if(damage_flag == FIRE)

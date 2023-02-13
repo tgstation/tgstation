@@ -22,8 +22,6 @@
 	desc = "A gate able to perform mid-depth scans on any organisms who pass under it."
 	icon = 'icons/obj/machines/scangate.dmi'
 	icon_state = "scangate"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/machine/scanner_gate
 
 	var/scanline_timer
@@ -54,7 +52,7 @@
 	wires = new /datum/wires/scanner_gate(src)
 	set_scanline("passive")
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -72,7 +70,7 @@
 
 /obj/machinery/scanner_gate/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/auto_scan, AM)
+	INVOKE_ASYNC(src, PROC_REF(auto_scan), AM)
 
 /obj/machinery/scanner_gate/proc/auto_scan(atom/movable/AM)
 	if(!(machine_stat & (BROKEN|NOPOWER)) && isliving(AM) & (!panel_open))
@@ -83,7 +81,7 @@
 	deltimer(scanline_timer)
 	add_overlay(type)
 	if(duration)
-		scanline_timer = addtimer(CALLBACK(src, .proc/set_scanline, "passive"), duration, TIMER_STOPPABLE)
+		scanline_timer = addtimer(CALLBACK(src, PROC_REF(set_scanline), "passive"), duration, TIMER_STOPPABLE)
 
 /obj/machinery/scanner_gate/attackby(obj/item/W, mob/user, params)
 	var/obj/item/card/id/card = W.GetID()
@@ -125,8 +123,8 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/perpname = H.get_face_name(H.get_id_name())
-				var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
-				if(!R || (R.fields["criminal"] == "*Arrest*"))
+				var/datum/record/crew/target = find_record(perpname)
+				if(!target || (target.wanted_status == WANTED_ARREST))
 					beep = TRUE
 		if(SCANGATE_MINDSHIELD)
 			if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
@@ -166,7 +164,7 @@
 						beep = TRUE
 		if(SCANGATE_GUNS)
 			for(var/I in M.get_contents())
-				if(istype(I, /obj/item/gun))
+				if(isgun(I))
 					beep = TRUE
 					break
 		if(SCANGATE_NUTRITION)
@@ -193,6 +191,8 @@
 			var/obj/item/assembly/assembly = wires.get_attached(color)
 			assembly?.activate()
 		set_scanline("scanning", 10)
+
+	use_power(active_power_usage)
 
 /obj/machinery/scanner_gate/proc/alarm_beep()
 	if(next_beep <= world.time)

@@ -8,7 +8,7 @@
 	value_per_unit = 0.05
 	beauty_modifier = 0.1
 	strength_modifier = 0.7
-	armor_modifiers = list(MELEE = 0.3, BULLET = 0.3, LASER = 1.2, ENERGY = 1.2, BOMB = 0.3, BIO = 0, FIRE = 1, ACID = 1)
+	armor_modifiers = list(MELEE = 0.3, BULLET = 0.3, LASER = 1.2, ENERGY = 1.2, BOMB = 0.3, FIRE = 1, ACID = 1)
 	item_sound_override = 'sound/effects/meatslap.ogg'
 	turf_sound_override = FOOTSTEP_MEAT
 	texture_layer_icon_state = "pizza"
@@ -28,4 +28,8 @@
 /datum/material/pizza/proc/make_edible(atom/source, amount, material_flags)
 	var/nutriment_count = 3 * (amount / MINERAL_MATERIAL_AMOUNT)
 	var/oil_count = 2 * (amount / MINERAL_MATERIAL_AMOUNT)
-	source.AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment = nutriment_count, /datum/reagent/consumable/cooking_oil = oil_count), null, GRAIN | MEAT | DAIRY | VEGETABLES, null, 30, list("crust", "tomato", "cheese", "meat"))
+	source.AddComponent(/datum/component/edible, \
+		initial_reagents = list(/datum/reagent/consumable/nutriment = nutriment_count, /datum/reagent/consumable/cooking_oil = oil_count), \
+		foodtypes = GRAIN | MEAT | DAIRY | VEGETABLES, \
+		eat_time = 3 SECONDS, \
+		tastes = list("crust", "tomato", "cheese", "meat"))

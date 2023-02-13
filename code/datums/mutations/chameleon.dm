@@ -6,18 +6,18 @@
 	difficulty = 16
 	text_gain_indication = "<span class='notice'>You feel one with your surroundings.</span>"
 	text_lose_indication = "<span class='notice'>You feel oddly exposed.</span>"
-	time_coeff = 5
 	instability = 25
+	power_coeff = 1
 
 /datum/mutation/human/chameleon/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
-	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_attack_hand)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 
 /datum/mutation/human/chameleon/on_life(delta_time, times_fired)
-	owner.alpha = max(owner.alpha - (12.5 * delta_time), 0)
+	owner.alpha = max(owner.alpha - (12.5 * (GET_MUTATION_POWER(src)) * delta_time), 0)
 
 /**
  * Resets the alpha of the host to the chameleon default if they move.

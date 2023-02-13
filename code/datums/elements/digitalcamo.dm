@@ -1,5 +1,5 @@
 /datum/element/digitalcamo
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 	var/list/attached_mobs = list()
 
 /datum/element/digitalcamo/New()
@@ -10,8 +10,8 @@
 	. = ..()
 	if(!isliving(target) || (target in attached_mobs))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(target, COMSIG_LIVING_CAN_TRACK, .proc/can_track)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
 	var/image/img = image(loc = target)
 	img.override = TRUE
 	attached_mobs[target] = img
@@ -44,7 +44,7 @@
 
 	to_chat(M, span_warning("[source.p_their()] skin seems to be shifting like something is moving below it."))
 
-/datum/element/digitalcamo/proc/can_track(datum/source)
+/datum/element/digitalcamo/proc/can_track(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	return COMPONENT_CANT_TRACK

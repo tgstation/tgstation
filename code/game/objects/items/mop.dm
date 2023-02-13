@@ -3,6 +3,7 @@
 	name = "mop"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
+	inhand_icon_state = "mop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	force = 8
@@ -19,52 +20,44 @@
 	var/mopspeed = 1.5 SECONDS
 	force_string = "robust... against germs"
 	var/insertable = TRUE
+	var/static/list/clean_blacklist = typecacheof(list(
+		/obj/item/reagent_containers/cup/bucket,
+		/obj/structure/mop_bucket,
+	))
 
 /obj/item/mop/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/cleaner, mopspeed, pre_clean_callback=CALLBACK(src, PROC_REF(should_clean)), on_cleaned_callback=CALLBACK(src, PROC_REF(apply_reagents)))
 	create_reagents(max_reagent_volume)
+	GLOB.janitor_devices += src
 
+/obj/item/mop/Destroy(force)
+	GLOB.janitor_devices -= src
+	return ..()
 
-/obj/item/mop/proc/clean(turf/A, mob/living/cleaner)
-	if(reagents.has_chemical_flag(REAGENT_CLEANS, 1))
-		// If there's a cleaner with a mind, let's gain some experience!
-		if(cleaner?.mind)
-			var/total_experience_gain = 0
-			for(var/obj/effect/decal/cleanable/cleanable_decal in A)
-				//it is intentional that the mop rounds xp but soap does not, USE THE SACRED TOOL
-				total_experience_gain += max(round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT, 1), 0)
-			cleaner.mind.adjust_experience(/datum/skill/cleaning, total_experience_gain)
-		A.wash(CLEAN_SCRUB)
+///Checks whether or not we should clean.
+/obj/item/mop/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
+	if(clean_blacklist[atom_to_clean.type])
+		return DO_NOT_CLEAN
+	if(reagents.total_volume < 0.1)
+		to_chat(cleaner, span_warning("Your mop is dry!"))
+		return DO_NOT_CLEAN
+	return reagents.has_chemical_flag(REAGENT_CLEANS, 1)
 
-	reagents.expose(A, TOUCH, 10) //Needed for proper floor wetting.
+/**
+ * Applies reagents to the cleaned floor and removes them from the mop.
+ *
+ * Arguments
+ * * cleaning_source the source of the cleaning
+ * * cleaned_turf the turf that is being cleaned
+ * * cleaner the mob that is doing the cleaning
+ */
+/obj/item/mop/proc/apply_reagents(datum/cleaning_source, turf/cleaned_turf, mob/living/cleaner)
+	reagents.expose(cleaned_turf, TOUCH, 10) //Needed for proper floor wetting.
 	var/val2remove = 1
 	if(cleaner?.mind)
-		val2remove = round(cleaner.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER),0.1)
+		val2remove = round(cleaner.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER), 0.1)
 	reagents.remove_any(val2remove) //reaction() doesn't use up the reagents
-
-
-/obj/item/mop/afterattack(atom/A, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-
-	if(reagents.total_volume < 0.1)
-		to_chat(user, span_warning("Your mop is dry!"))
-		return
-
-	var/turf/T = get_turf(A)
-
-	if(istype(A, /obj/item/reagent_containers/glass/bucket) || istype(A, /obj/structure/janitorialcart))
-		return
-
-	if(T)
-		user.visible_message(span_notice("[user] begins to clean \the [T] with [src]."), span_notice("You begin to clean \the [T] with [src]..."))
-		var/clean_speedies = 1
-		if(user.mind)
-			clean_speedies = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
-		if(do_after(user, mopspeed*clean_speedies, target = T))
-			to_chat(user, span_notice("You finish mopping."))
-			clean(T, user)
 
 /obj/item/mop/cyborg/Initialize(mapload)
 	. = ..()
@@ -75,7 +68,7 @@
 	name = "advanced mop"
 	max_reagent_volume = 10
 	icon_state = "advmop"
-	inhand_icon_state = "mop"
+	inhand_icon_state = "advmop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	force = 12

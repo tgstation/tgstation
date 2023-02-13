@@ -5,15 +5,14 @@
 	Or you can just drop your plates on the floor, like civilized folk."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "synthesizer"
-	idle_power_usage = 8 //5 with default parts
-	active_power_usage = 13 //10 with default parts
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.04
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/dish_drive
 	pass_flags = PASSTABLE
 	var/static/list/collectable_items = list(/obj/item/trash/waffles,
 		/obj/item/trash/tray,
-		/obj/item/reagent_containers/glass/bowl,
-		/obj/item/reagent_containers/food/drinks/drinkingglass,
+		/obj/item/reagent_containers/cup/bowl,
+		/obj/item/reagent_containers/cup/glass/drinkingglass,
 		/obj/item/kitchen/fork,
 		/obj/item/shard,
 		/obj/item/broken_bottle)
@@ -47,6 +46,11 @@
 	playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
 	flick("synthesizer_beam", src)
 
+/obj/machinery/dish_drive/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/dish_drive/attackby(obj/item/I, mob/living/user, params)
 	if(is_type_in_list(I, collectable_items) && !user.combat_mode)
 		if(!user.transferItemToLoc(I, src))
@@ -58,16 +62,15 @@
 		return
 	else if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 		return
-	else if(default_unfasten_wrench(user, I))
-		return
 	else if(default_deconstruction_crowbar(I, FALSE))
 		return
 	..()
 
 /obj/machinery/dish_drive/RefreshParts()
+	. = ..()
 	var/total_rating = 0
-	for(var/obj/item/stock_parts/S in component_parts)
-		total_rating += S.rating
+	for(var/datum/stock_part/stock_part in component_parts)
+		total_rating += stock_part.tier
 	if(total_rating >= 9)
 		update_mode_power_usage(ACTIVE_POWER_USE, 0)
 	else
@@ -77,7 +80,6 @@
 	if(board)
 		suction_enabled = board.suction
 		transmit_enabled = board.transmit
-
 
 /obj/machinery/dish_drive/process()
 	if(time_since_dishes <= world.time && transmit_enabled)

@@ -61,7 +61,7 @@
 
 /datum/chemical_reaction/New()
 	. = ..()
-	SSticker.OnRoundstart(CALLBACK(src,.proc/update_info))
+	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(update_info)))
 
 /**
  * Updates information during the roundstart
@@ -132,22 +132,8 @@
 		if(!reagent)
 			continue
 		//Split like this so it's easier for people to edit this function in a child
-		convert_into_failed(reagent, holder)
 		reaction_clear_check(reagent, holder)
 	holder.chem_temp = cached_temp
-
-/**
- * Converts a reagent into the type specified by the failed_chem var of the input reagent
- *
- * Arguments:
- * * reagent - the target reagent to convert
- */
-/datum/chemical_reaction/proc/convert_into_failed(datum/reagent/reagent, datum/reagents/holder)
-	if(reagent.purity < purity_min && reagent.failed_chem)
-		var/cached_volume = reagent.volume
-		holder.remove_reagent(reagent.type, cached_volume, FALSE)
-		holder.add_reagent(reagent.failed_chem, cached_volume, FALSE, added_purity = 1)
-		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[type] failed reactions")
 
 /**
  * REACTION_CLEAR handler
@@ -168,15 +154,8 @@
 		if((reaction_flags & REACTION_CLEAR_INVERSE) && reagent.inverse_chem)
 			if(reagent.inverse_chem_val > reagent.purity)
 				holder.remove_reagent(reagent.type, cached_volume, FALSE)
-				holder.add_reagent(reagent.inverse_chem, cached_volume, FALSE, added_purity = 1-cached_purity)
+				holder.add_reagent(reagent.inverse_chem, cached_volume, FALSE, added_purity = reagent.get_inverse_purity(cached_purity))
 				return
-
-		if((reaction_flags & REACTION_CLEAR_IMPURE) && reagent.impure_chem)
-			var/impureVol = cached_volume * (1 - reagent.purity)
-			holder.remove_reagent(reagent.type, (impureVol), FALSE)
-			holder.add_reagent(reagent.impure_chem, impureVol, FALSE, added_purity = 1-cached_purity)
-			reagent.creation_purity = cached_purity
-			reagent.chemical_flags = reagent.chemical_flags | REAGENT_DONOTSPLIT
 
 /**
  * Occurs when a reation is overheated (i.e. past it's overheatTemp)
@@ -288,10 +267,10 @@
 		else
 			if(setting_type)
 				if(step_away(X, T) && moving_power > 1) //Can happen twice at most. So this is fine.
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_away, X, T), 2)
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), X, T), 2)
 			else
 				if(step_towards(X, T) && moving_power > 1)
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_towards, X, T), 2)
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_towards), X, T), 2)
 
 //////////////////Generic explosions/failures////////////////////
 // It is HIGHLY, HIGHLY recomended that you consume all/a good volume of the reagents/products in an explosion - because it will just keep going forever until the reaction stops
@@ -359,7 +338,7 @@
 //Spews out the inverse of the chems in the beaker of the products/reactants only
 /datum/chemical_reaction/proc/explode_invert_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE, accept_impure = TRUE)
 	var/datum/reagents/invert_reagents = new (2100, NO_REACT)//I think the biggest size we can get is 2100?
-	var/datum/effect_system/smoke_spread/chem/smoke = new()
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
 	var/sum_volume = 0
 	invert_reagents.my_atom = holder.my_atom //Give the gas a fingerprint
 	for(var/datum/reagent/reagent as anything in holder.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
@@ -369,18 +348,14 @@
 			invert_reagents.add_reagent(reagent.inverse_chem, reagent.volume, no_react = TRUE)
 			holder.remove_reagent(reagent.type, reagent.volume)
 			continue
-		else if (reagent.impure_chem && accept_impure)
-			invert_reagents.add_reagent(reagent.impure_chem, reagent.volume, no_react = TRUE)
-			holder.remove_reagent(reagent.type, reagent.volume)
-			continue
 		invert_reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
 		sum_volume += reagent.volume
 		holder.remove_reagent(reagent.type, reagent.volume)
 	if(!force_range)
 		force_range = (sum_volume/6) + 3
 	if(invert_reagents.reagent_list)
-		smoke.set_up(invert_reagents, force_range, holder.my_atom)
-		smoke.start()
+		smoke.set_up(force_range, holder = holder.my_atom, location = holder.my_atom, carry = invert_reagents)
+		smoke.start(log = TRUE)
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
 		clear_reactants(holder)
@@ -390,7 +365,7 @@
 //Spews out the corrisponding reactions reagents  (products/required) of the beaker in a smokecloud. Doesn't spew catalysts
 /datum/chemical_reaction/proc/explode_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE)
 	var/datum/reagents/reagents = new/datum/reagents(2100, NO_REACT)//Lets be safe first
-	var/datum/effect_system/smoke_spread/chem/smoke = new()
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
 	reagents.my_atom = holder.my_atom //fingerprint
 	var/sum_volume = 0
 	for (var/datum/reagent/reagent as anything in holder.reagent_list)
@@ -400,8 +375,8 @@
 	if(!force_range)
 		force_range = (sum_volume/6) + 3
 	if(reagents.reagent_list)
-		smoke.set_up(reagents, force_range, holder.my_atom)
-		smoke.start()
+		smoke.set_up(force_range, holder = holder.my_atom, location = holder.my_atom, carry = reagents)
+		smoke.start(log = TRUE)
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
 		clear_reactants(holder)
@@ -504,7 +479,7 @@
 */
 /datum/chemical_reaction/proc/freeze_radius(datum/reagents/holder, datum/equilibrium/equilibrium, temp, radius = 2, freeze_duration = 50 SECONDS, snowball_chance = 0)
 	for(var/any_turf in circle_range_turfs(center = get_turf(holder.my_atom), radius = radius))
-		if(!istype(any_turf, /turf/open))
+		if(!isopenturf(any_turf))
 			continue
 		var/turf/open/open_turf = any_turf
 		open_turf.MakeSlippery(TURF_WET_PERMAFROST, freeze_duration, freeze_duration, freeze_duration)

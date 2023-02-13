@@ -16,11 +16,11 @@
 /obj/structure/destructible/cult/item_dispenser/forge/setup_options()
 	var/static/list/forge_items = list(
 		NARSIE_ARMOR = list(
-			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cult_armor"),
+			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/suits/armor.dmi', icon_state = "cult_armor"),
 			OUTPUT_ITEMS = list(/obj/item/clothing/suit/hooded/cultrobes/hardened),
 			),
 		FLAGELLANT_ARMOR = list(
-			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cultrobes"),
+			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/suits/armor.dmi', icon_state = "cultrobes"),
 			OUTPUT_ITEMS = list(/obj/item/clothing/suit/hooded/cultrobes/berserker),
 			),
 		ELDRITCH_SWORD = list(

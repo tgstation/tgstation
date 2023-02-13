@@ -1,6 +1,17 @@
 /datum/mood_event/drunk
 	mood_change = 3
 	description = "Everything just feels better after a drink or two."
+	/// The blush overlay to display when the owner is drunk
+	var/datum/bodypart_overlay/simple/emote/blush_overlay
+
+/datum/mood_event/drunk/add_effects(param)
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/human_owner = owner
+	blush_overlay = human_owner.give_emote_overlay(/datum/bodypart_overlay/simple/emote/blush)
+
+/datum/mood_event/drunk/remove_effects()
+	QDEL_NULL(blush_overlay)
 
 /datum/mood_event/quality_nice
 	description = "That drink wasn't bad at all."

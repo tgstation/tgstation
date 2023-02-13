@@ -45,7 +45,7 @@
 	reason_failed = add_output_port("Fail reason", PORT_TYPE_STRING)
 
 /obj/item/circuit_component/pathfind/input_received(datum/port/input/port)
-	INVOKE_ASYNC(src, .proc/perform_pathfinding, port)
+	INVOKE_ASYNC(src, PROC_REF(perform_pathfinding), port)
 
 /obj/item/circuit_component/pathfind/proc/perform_pathfinding(datum/port/input/port)
 	var/target_X = input_X.value
@@ -57,7 +57,7 @@
 		return
 
 	var/atom/path_id = id_card.value
-	if(path_id && !istype(path_id, /obj/item/card/id))
+	if(path_id && !isidcard(path_id))
 		path_id = null
 		failed.set_output(COMPONENT_SIGNAL)
 		reason_failed.set_output("Object marked is not an ID! Using no ID instead.")

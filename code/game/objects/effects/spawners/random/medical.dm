@@ -25,18 +25,20 @@
 	icon_state = "eyes"
 	spawn_loot_count = 3
 	loot = list(
-		/obj/item/organ/heart/gland/egg = 7,
-		/obj/item/organ/heart/gland/plasma = 7,
-		/obj/item/organ/heart/gland/chem = 5,
-		/obj/item/organ/heart/gland/mindshock = 5,
-		/obj/item/organ/heart/gland/transform = 5,
-		/obj/item/organ/heart/gland/spiderman = 5,
-		/obj/item/organ/heart/gland/slime = 4,
-		/obj/item/organ/heart/gland/trauma = 4,
-		/obj/item/organ/heart/gland/electric = 3,
-		/obj/item/organ/regenerative_core = 2,
-		/obj/item/organ/heart/gland/ventcrawling = 1,
-		/obj/item/organ/body_egg/alien_embryo = 1,
+		/obj/item/organ/internal/heart/gland/egg = 7,
+		/obj/item/organ/internal/heart/gland/plasma = 7,
+		/obj/item/organ/internal/heart/gland/chem = 5,
+		/obj/item/organ/internal/heart/gland/mindshock = 5,
+		/obj/item/organ/internal/heart/gland/transform = 5,
+		/obj/item/organ/internal/heart/gland/spiderman = 5,
+		/obj/item/organ/internal/heart/gland/slime = 4,
+		/obj/item/organ/internal/heart/gland/trauma = 4,
+		/obj/item/organ/internal/heart/gland/electric = 3,
+		/obj/item/organ/internal/monster_core/regenerative_core = 2,
+		/obj/item/organ/internal/monster_core/rush_gland = 2,
+		/obj/item/organ/internal/monster_core/brimdust_sac = 2,
+		/obj/item/organ/internal/heart/gland/ventcrawling = 1,
+		/obj/item/organ/internal/body_egg/alien_embryo = 1,
 	)
 
 /obj/effect/spawner/random/medical/memeorgans
@@ -44,23 +46,23 @@
 	icon_state = "eyes"
 	spawn_loot_count = 5
 	loot = list(
-		/obj/item/organ/ears/penguin,
-		/obj/item/organ/ears/cat,
-		/obj/item/organ/eyes/moth,
-		/obj/item/organ/eyes/snail,
-		/obj/item/organ/tongue/bone,
-		/obj/item/organ/tongue/fly,
-		/obj/item/organ/tongue/snail,
-		/obj/item/organ/tongue/lizard,
-		/obj/item/organ/tongue/alien,
-		/obj/item/organ/tongue/ethereal,
-		/obj/item/organ/tongue/robot,
-		/obj/item/organ/tongue/zombie,
-		/obj/item/organ/appendix,
-		/obj/item/organ/liver/fly,
-		/obj/item/organ/lungs/plasmaman,
-		/obj/item/organ/tail/cat,
-		/obj/item/organ/tail/lizard,
+		/obj/item/organ/internal/ears/penguin,
+		/obj/item/organ/internal/ears/cat,
+		/obj/item/organ/internal/eyes/moth,
+		/obj/item/organ/internal/eyes/snail,
+		/obj/item/organ/internal/tongue/bone,
+		/obj/item/organ/internal/tongue/fly,
+		/obj/item/organ/internal/tongue/snail,
+		/obj/item/organ/internal/tongue/lizard,
+		/obj/item/organ/internal/tongue/alien,
+		/obj/item/organ/internal/tongue/ethereal,
+		/obj/item/organ/internal/tongue/robot,
+		/obj/item/organ/internal/tongue/zombie,
+		/obj/item/organ/internal/appendix,
+		/obj/item/organ/internal/liver/fly,
+		/obj/item/organ/internal/lungs/plasmaman,
+		/obj/item/organ/external/tail/cat,
+		/obj/item/organ/external/tail/lizard,
 	)
 
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner

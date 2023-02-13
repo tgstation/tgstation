@@ -18,6 +18,7 @@
 	icon_keyboard = "id_key"
 	warmup_time = 3 SECONDS
 	circuit = /obj/item/circuitboard/computer/bountypad
+	interface_type = "CivCargoHoldTerminal"
 	///Typecast of an inserted, scanned ID card inside the console, as bounties are held within the ID card.
 	var/obj/item/card/id/inserted_scan_id
 
@@ -143,13 +144,6 @@
 		return FALSE
 	id_eject(user, inserted_scan_id)
 
-/obj/machinery/computer/piratepad_control/civilian/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "CivCargoHoldTerminal", name)
-		ui.open()
-
-
 /obj/machinery/computer/piratepad_control/civilian/ui_data(mob/user)
 	var/list/data = list()
 	data["points"] = points
@@ -181,7 +175,7 @@
 		return
 	if(!pad_ref?.resolve())
 		return
-	if(!usr.canUseTopic(src, BE_CLOSE) || (machine_stat & (NOPOWER|BROKEN)))
+	if(!usr.canUseTopic(src, be_close = TRUE) || (machine_stat & (NOPOWER|BROKEN)))
 		return
 	switch(action)
 		if("recalc")
@@ -199,7 +193,7 @@
 			inserted_scan_id = null
 	. = TRUE
 
-///Self explanitory, holds the ID card inthe console for bounty payout and manipulation.
+///Self explanitory, holds the ID card in the console for bounty payout and manipulation.
 /obj/machinery/computer/piratepad_control/civilian/proc/id_insert(mob/user, obj/item/inserting_item, obj/item/target)
 	var/obj/item/card/id/card_to_insert = inserting_item
 	var/holder_item = FALSE
@@ -220,7 +214,7 @@
 	user.visible_message(span_notice("[user] inserts \the [card_to_insert] into \the [src]."),
 						span_notice("You insert \the [card_to_insert] into \the [src]."))
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-	updateUsrDialog()
+	ui_interact(user)
 	return TRUE
 
 ///Removes A stored ID card.
@@ -236,7 +230,6 @@
 							span_notice("You get \the [target] from \the [src]."))
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		inserted_scan_id = null
-		updateUsrDialog()
 		return TRUE
 
 ///Upon completion of a civilian bounty, one of these is created. It is sold to cargo to give the cargo budget bounty money, and the person who completed it cash.
@@ -281,11 +274,12 @@
 	radio.keyslot = new radio_key
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
-	RegisterSignal(radio, COMSIG_ITEM_PRE_EXPORT, .proc/on_export)
+	RegisterSignal(radio, COMSIG_ITEM_PRE_EXPORT, PROC_REF(on_export))
 
 /obj/item/bounty_cube/Destroy()
-	UnregisterSignal(radio, COMSIG_ITEM_PRE_EXPORT)
-	QDEL_NULL(radio)
+	if(radio)
+		UnregisterSignal(radio, COMSIG_ITEM_PRE_EXPORT)
+		QDEL_NULL(radio)
 	return ..()
 
 /obj/item/bounty_cube/examine()
@@ -376,7 +370,7 @@
 
 /obj/item/civ_bounty_beacon/attack_self()
 	loc.visible_message(span_warning("\The [src] begins to beep loudly!"))
-	addtimer(CALLBACK(src, .proc/launch_payload), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 1 SECONDS)
 
 /obj/item/civ_bounty_beacon/proc/launch_payload()
 	playsound(src, SFX_SPARKS, 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)

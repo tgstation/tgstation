@@ -4,7 +4,7 @@
 	name = "brimdemon"
 	desc = "A misshapen demon with big, red eyes and a hinged mouth. Not much is known about the creatures \
 		due to their response to any unexpected stimulus being \"brimbeam\", a deadly blood-laser barrage."
-	icon = 'icons/mob/brimdemon.dmi'
+	icon = 'icons/mob/simple/lavaland/brimdemon.dmi'
 	icon_state = "brimdemon"
 	icon_living = "brimdemon"
 	icon_dead = "brimdemon_dead"
@@ -29,12 +29,16 @@
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	butcher_results = list(/obj/item/food/meat/slab = 2, /obj/effect/decal/cleanable/brimdust = 1)
+	butcher_results = list(
+		/obj/item/food/meat/slab = 2,
+		/obj/effect/decal/cleanable/brimdust = 1,
+		/obj/item/organ/internal/monster_core/brimdust_sac = 1,
+	)
 	loot = list()
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
-	deathmessage = "wails as infernal energy escapes from its wounds, leaving it an empty husk."
-	deathsound = 'sound/magic/demon_dies.ogg'
+	death_message = "wails as infernal energy escapes from its wounds, leaving it an empty husk."
+	death_sound = 'sound/magic/demon_dies.ogg'
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_power = 5
 	light_range = 1.4
@@ -43,6 +47,10 @@
 	var/firing = FALSE
 	/// A list of all the beam parts.
 	var/list/beamparts = list()
+
+/mob/living/simple_animal/hostile/asteroid/brimdemon/Destroy()
+	QDEL_LIST(beamparts)
+	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/Login()
 	ranged = TRUE
@@ -92,10 +100,10 @@
 	add_overlay("brimdemon_telegraph_dir")
 	visible_message(span_danger("[src] starts charging!"))
 	balloon_alert(src, "charging...")
-	addtimer(CALLBACK(src, .proc/fire_laser), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(fire_laser)), 1 SECONDS)
 	COOLDOWN_START(src, ranged_cooldown, ranged_cooldown_time)
 
-/mob/living/simple_animal/hostile/asteroid/brimdemon/Moved()
+/mob/living/simple_animal/hostile/asteroid/brimdemon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	check_fire()
 
@@ -137,7 +145,7 @@
 		last_brimbeam.icon_state = "brimbeam_end"
 		var/atom/first_brimbeam = beamparts[1]
 		first_brimbeam.icon_state = "brimbeam_start"
-	addtimer(CALLBACK(src, .proc/end_laser), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(end_laser)), 2 SECONDS)
 
 /// Deletes all the brimbeam parts and sets variables back to their initial ones.
 /mob/living/simple_animal/hostile/asteroid/brimdemon/proc/end_laser()
@@ -153,7 +161,7 @@
 
 /obj/effect/brimbeam
 	name = "brimbeam"
-	icon = 'icons/mob/brimdemon.dmi'
+	icon = 'icons/mob/simple/lavaland/brimdemon.dmi'
 	icon_state = "brimbeam_mid"
 	layer = ABOVE_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -162,7 +170,7 @@
 	light_power = 3
 	light_range = 2
 
-/obj/effect/brimbeam/Initialize()
+/obj/effect/brimbeam/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -216,7 +224,7 @@
 
 /obj/item/ore_sensor/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot == ITEM_SLOT_EARS)
+	if(slot & ITEM_SLOT_EARS)
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)

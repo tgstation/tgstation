@@ -136,7 +136,7 @@ If you make a derivative work from this code, you must include this notification
 	D.forceMove(A.loc)
 	D.setDir(get_dir(D, A))
 
-	D.Stun(80)
+	D.Stun(8 SECONDS)
 	D.visible_message(span_danger("[A] starts spinning around with [D]!"), \
 					span_userdanger("You're spun around by [A]!"), span_hear("You hear aggressive shuffling!"), null, A)
 	to_chat(A, span_danger("You start spinning around with [D]!"))
@@ -199,7 +199,7 @@ If you make a derivative work from this code, you must include this notification
 		if (T && isturf(T))
 			if (!D.stat)
 				D.emote("scream")
-			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living.proc/Paralyze, 20))
+			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, TYPE_PROC_REF(/mob/living, Paralyze), 20))
 	log_combat(A, D, "has thrown with wrestling")
 	return
 
@@ -207,7 +207,7 @@ If you make a derivative work from this code, you must include this notification
 	set waitfor = FALSE
 	if (D)
 		animate(D, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
-	sleep(15)
+	sleep(1.5 SECONDS)
 	if (D)
 		animate(D, transform = null, time = 1, loop = 0)
 
@@ -268,7 +268,7 @@ If you make a derivative work from this code, you must include this notification
 				D.pixel_y = D.base_pixel_y
 			return
 
-		sleep(1)
+		sleep(0.1 SECONDS)
 
 	if (A && D)
 		A.pixel_x = A.base_pixel_x
@@ -299,7 +299,7 @@ If you make a derivative work from this code, you must include this notification
 		playsound(A.loc, SFX_SWING_HIT, 50, TRUE)
 		if (!D.stat)
 			D.emote("scream")
-			D.Paralyze(40)
+			D.Paralyze(4 SECONDS)
 
 			switch(rand(1,3))
 				if (2)
@@ -336,14 +336,14 @@ If you make a derivative work from this code, you must include this notification
 			A.setDir(turn(A.dir, 90))
 
 		A.forceMove(D.loc)
-		addtimer(CALLBACK(src, .proc/CheckStrikeTurf, A, T), 4)
+		addtimer(CALLBACK(src, PROC_REF(CheckStrikeTurf), A, T), 4)
 
 		D.visible_message(span_danger("[A] headbutts [D]!"), \
 						span_userdanger("You're headbutted by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, span_danger("You headbutt [D]!"))
 		D.adjustBruteLoss(rand(10,20))
 		playsound(A.loc, SFX_SWING_HIT, 50, TRUE)
-		D.Unconscious(20)
+		D.Unconscious(2 SECONDS)
 	log_combat(A, D, "headbutted")
 
 /datum/martial_art/wrestling/proc/kick(mob/living/A, mob/living/D)
@@ -361,7 +361,7 @@ If you make a derivative work from this code, you must include this notification
 
 	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 	if (T && isturf(T))
-		D.Paralyze(20)
+		D.Paralyze(2 SECONDS)
 		D.throw_at(T, 3, 2)
 	log_combat(A, D, "roundhouse-kicked")
 
@@ -391,7 +391,7 @@ If you make a derivative work from this code, you must include this notification
 						span_danger("You climb onto [surface]!"))
 		A.pixel_y = A.base_pixel_y + 10
 		falling = 1
-		sleep(10)
+		sleep(1 SECONDS)
 
 	if (A && D)
 		// These are necessary because of the sleep call.
@@ -413,7 +413,7 @@ If you make a derivative work from this code, you must include this notification
 
 		if(A)
 			animate(A, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)
-		sleep(10)
+		sleep(1 SECONDS)
 		if(A)
 			animate(A, transform = null, time = 1, loop = 0)
 
@@ -433,7 +433,7 @@ If you make a derivative work from this code, you must include this notification
 		else
 			D.adjustBruteLoss(rand(20,30))
 
-		D.Paralyze(40)
+		D.Paralyze(4 SECONDS)
 
 		A.pixel_y = A.base_pixel_y
 
@@ -458,7 +458,7 @@ If you make a derivative work from this code, you must include this notification
 	D.visible_message(span_danger("[A] gets [D] in a cinch!"), \
 					span_userdanger("You're put into a cinch by [A]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, A)
 	to_chat(A, span_danger("You get [D] in a cinch!"))
-	D.Stun(rand(60,100))
+	D.Stun(rand(6 SECONDS, 10 SECONDS))
 	log_combat(A, D, "cinched")
 	return 1
 
@@ -468,7 +468,7 @@ If you make a derivative work from this code, you must include this notification
 
 /obj/item/storage/belt/champion/wrestling/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_BELT)
+	if(slot & ITEM_SLOT_BELT)
 		style.teach(user, TRUE)
 	return
 

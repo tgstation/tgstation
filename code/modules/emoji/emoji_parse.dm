@@ -1,4 +1,6 @@
 /proc/emoji_parse(text) //turns :ai: into an emoji in text.
+	if(!text)
+		return text
 	. = text
 	if(!CONFIG_GET(flag/emojis))
 		return

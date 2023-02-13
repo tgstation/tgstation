@@ -3,12 +3,12 @@
 	name = "NASA Void Helmet"
 	desc = "An old, NASA CentCom branch designed, dark red space suit helmet."
 	icon_state = "void"
-	inhand_icon_state = "void"
+	inhand_icon_state = "void_helmet"
 
 /obj/item/clothing/suit/space/nasavoid
 	name = "NASA Voidsuit"
 	icon_state = "void"
-	inhand_icon_state = "void"
+	inhand_icon_state = "void_suit"
 	desc = "An old, NASA CentCom branch designed, dark red space suit."
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
 
@@ -16,12 +16,11 @@
 	name = "Engineering Void Helmet"
 	desc = "A CentCom engineering dark red space suit helmet. While old and dusty, it still gets the job done."
 	icon_state = "void"
-	inhand_icon_state = "void"
 
 /obj/item/clothing/suit/space/nasavoid/old
 	name = "Engineering Voidsuit"
 	icon_state = "void"
-	inhand_icon_state = "void"
+	inhand_icon_state = "void_suit"
 	desc = "A CentCom engineering dark red space suit. Age has degraded the suit making it difficult to move around in."
 	slowdown = 4
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
@@ -32,15 +31,20 @@
 	icon_state = "space"
 	inhand_icon_state = "s_suit"
 	desc = "A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies."
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 50, ACID = 65)
+	armor_type = /datum/armor/space_eva
 
 /obj/item/clothing/head/helmet/space/eva
 	name = "EVA helmet"
 	icon_state = "space"
-	inhand_icon_state = "space"
+	inhand_icon_state = "space_helmet"
 	desc = "A lightweight space helmet with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	flash_protect = FLASH_PROTECTION_NONE
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 50, ACID = 65)
+	armor_type = /datum/armor/space_eva
+
+/datum/armor/space_eva
+	bio = 100
+	fire = 50
+	acid = 65
 
 /obj/item/clothing/head/helmet/space/eva/examine(mob/user)
 	. = ..()
@@ -50,7 +54,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!istype(attacked_with, /obj/item/bodypart/l_leg/robot) && !istype(attacked_with, /obj/item/bodypart/r_leg/robot))
+	if(!istype(attacked_with, /obj/item/bodypart/leg/left/robot) && !istype(attacked_with, /obj/item/bodypart/leg/right/robot))
 		return
 	if(ismob(loc))
 		user.balloon_alert(user, "drop the helmet first!")
@@ -65,8 +69,8 @@
 	name = "emergency space helmet"
 	desc = "A bulky, air-tight helmet meant to protect the user during emergency situations. It doesn't look very durable."
 	icon_state = "syndicate-helm-orange"
-	inhand_icon_state = "syndicate-helm-orange"
-	armor = list(MELEE = 5, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	inhand_icon_state = "syndicate-helm-orange" //resprite?
+	armor_type = /datum/armor/space_fragile
 	strip_delay = 65
 
 /obj/item/clothing/suit/space/fragile
@@ -76,8 +80,11 @@
 	icon_state = "syndicate-orange"
 	inhand_icon_state = "syndicate-orange"
 	slowdown = 2
-	armor = list(MELEE = 5, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/space_fragile
 	strip_delay = 65
+
+/datum/armor/space_fragile
+	melee = 5
 
 /obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!torn && prob(50))

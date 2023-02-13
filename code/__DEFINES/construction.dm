@@ -81,14 +81,6 @@
 #define MAXCOIL 30
 
 //tablecrafting defines
-#define CAT_NONE ""
-#define CAT_WEAPONRY "Weaponry"
-#define CAT_WEAPON "Weapons"
-#define CAT_AMMO "Ammunition"
-#define CAT_ROBOT "Robots"
-#define CAT_MISC "Misc"
-#define CAT_PRIMAL  "Tribal"
-#define CAT_CLOTHING "Clothing"
 #define CAT_FOOD "Foods"
 #define CAT_BREAD "Breads"
 #define CAT_BURGER "Burgers"
@@ -109,8 +101,26 @@
 #define CAT_SPAGHETTI "Spaghettis"
 #define CAT_ICE "Frozen"
 #define CAT_DRINK "Drinks"
+
+//crafting defines
+#define CAT_WEAPON_RANGED "Weapons Ranged"
+#define CAT_WEAPON_MELEE "Weapons Melee"
+#define CAT_WEAPON_AMMO "Weapon Ammo"
+#define CAT_ROBOT "Robotics"
+#define CAT_MISC "Misc"
+#define CAT_CLOTHING "Clothing"
 #define CAT_CHEMISTRY "Chemistry"
-#define CAT_ATMOSPHERIC "Atmospheric"
+#define CAT_ATMOSPHERIC "Atmospherics"
+#define CAT_STRUCTURE "Structures"
+#define CAT_TILES "Tiles"
+#define CAT_WINDOWS "Windows"
+#define CAT_DOORS "Doors"
+#define CAT_FURNITURE "Furniture"
+#define CAT_EQUIPMENT "Equipment"
+#define CAT_CONTAINERS "Containers"
+#define CAT_ENTERTAINMENT "Entertainment"
+#define CAT_TOOLS "Tools"
+#define CAT_CULT "Blood Cult"
 
 //rcd modes
 #define RCD_FLOORWALL 0
@@ -120,6 +130,11 @@
 #define RCD_MACHINE 4
 #define RCD_COMPUTER 5
 #define RCD_FURNISHING 6
+#define RCD_CATWALK 7
+#define RCD_FLOODLIGHT 8
+#define RCD_WALLFRAME 9
+#define RCD_REFLECTOR 10
+
 
 #define RCD_UPGRADE_FRAMES (1<<0)
 #define RCD_UPGRADE_SIMPLE_CIRCUITS (1<<1)

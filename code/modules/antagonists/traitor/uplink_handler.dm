@@ -16,8 +16,8 @@
 	var/progression_points = 0
 	/// The purchase log of this uplink handler
 	var/datum/uplink_purchase_log/purchase_log
-	/// Associative array of uplink item = stock left
-	var/list/item_stock = list()
+	/// Associative array of stock keys = stock left. For items that don't share stock, the key is their typepath
+	var/list/item_stock = list(UPLINK_SHARED_STOCK_KITS = 1 , UPLINK_SHARED_STOCK_SURPLUS = 1)
 	/// Extra stuff that can be purchased by an uplink, regardless of flag.
 	var/list/extra_purchasable = list()
 	/// Whether this uplink handler has objectives.
@@ -36,6 +36,10 @@
 	var/list/completed_objectives = list()
 	/// All objectives assigned by type to handle any duplicates
 	var/list/potential_duplicate_objectives = list()
+	/// Text of the final objective, once assigned. Used for uplink data and traitor greentext. Empty string means not yet reached.
+	var/final_objective = ""
+	/// Objectives that must be completed for traitor greentext. Set by the traitor datum.
+	var/list/primary_objectives
 	/// The role that this uplink handler is associated to.
 	var/assigned_role
 	/// The species this uplink handler is associated to.
@@ -52,38 +56,48 @@
 	SEND_SIGNAL(src, COMSIG_UPLINK_HANDLER_ON_UPDATE)
 	return
 
+/// Checks if traitor has enough reputation to purchase an item
+/datum/uplink_handler/proc/not_enough_reputation(datum/uplink_item/to_purchase)
+	return has_progression && progression_points < to_purchase.progression_minimum
+
+/// Checks for uplink flags as well as items restricted to roles and species
+/datum/uplink_handler/proc/check_if_restricted(datum/uplink_item/to_purchase)
+	if((to_purchase in extra_purchasable))
+		return TRUE
+	if(!(to_purchase.purchasable_from & uplink_flag))
+		return FALSE
+	if(length(to_purchase.restricted_roles) && !(assigned_role in to_purchase.restricted_roles))
+		return FALSE
+	if(length(to_purchase.restricted_species) && !(assigned_species in to_purchase.restricted_species))
+		return FALSE
+	return TRUE
+
 /datum/uplink_handler/proc/can_purchase_item(mob/user, datum/uplink_item/to_purchase)
 	if(debug_mode)
 		return TRUE
 
-	if(!(to_purchase in extra_purchasable))
-		if(!(to_purchase.purchasable_from & uplink_flag))
-			return FALSE
+	if(!check_if_restricted(to_purchase))
+		return FALSE
 
-		if(length(to_purchase.restricted_roles) && !(assigned_role in to_purchase.restricted_roles))
-			return FALSE
-		if(length(to_purchase.restricted_species) && !(assigned_species in to_purchase.restricted_species))
-			return FALSE
-
-	var/current_stock = item_stock[to_purchase]
+	var/current_stock = item_stock[to_purchase.stock_key]
 	var/stock = current_stock != null? current_stock : INFINITY
-	if(telecrystals < to_purchase.cost || stock <= 0 || (has_progression && progression_points < to_purchase.progression_minimum))
+	if(telecrystals < to_purchase.cost || stock <= 0 || not_enough_reputation(to_purchase))
 		return FALSE
 
 	return TRUE
 
-/datum/uplink_handler/proc/purchase_item(mob/user, datum/uplink_item/to_purchase)
+/datum/uplink_handler/proc/purchase_item(mob/user, datum/uplink_item/to_purchase, atom/movable/source)
 	if(!can_purchase_item(user, to_purchase))
 		return
 
-	if(to_purchase.limited_stock != -1 && !(to_purchase in item_stock))
-		item_stock[to_purchase] = to_purchase.limited_stock
+	if(to_purchase.limited_stock != -1 && !(to_purchase.stock_key in item_stock))
+		item_stock[to_purchase.stock_key] = to_purchase.limited_stock
 
 	telecrystals -= to_purchase.cost
-	to_purchase.purchase(user, src)
+	to_purchase.purchase(user, src, source)
 
-	if(to_purchase in item_stock)
-		item_stock[to_purchase] -= 1
+	if(to_purchase.stock_key in item_stock)
+		item_stock[to_purchase.stock_key] -= 1
 
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(to_purchase.name)]", "[to_purchase.cost]"))
 	on_update()
@@ -114,19 +128,32 @@
 		potential_objectives_left--
 	on_update()
 
-/datum/uplink_handler/proc/try_add_objective(datum/traitor_objective/objective_typepath)
+/datum/uplink_handler/proc/try_add_objective(datum/traitor_objective/objective_typepath, force = FALSE)
 	var/datum/traitor_objective/objective = new objective_typepath(src)
-	var/should_abort = SEND_SIGNAL(objective, COMSIG_TRAITOR_OBJECTIVE_PRE_GENERATE, owner, potential_duplicate_objectives[objective_typepath]) & COMPONENT_TRAITOR_OBJECTIVE_ABORT_GENERATION
-	if(should_abort || !objective.generate_objective(owner, potential_duplicate_objectives[objective_typepath]))
+	var/duplicate_typepath = objective.duplicate_type
+	if(!duplicate_typepath)
+		if(objective.abstract_type != /datum/traitor_objective)
+			duplicate_typepath = objective.abstract_type
+		else
+			duplicate_typepath = objective_typepath
+
+	if(!force && !objective.can_generate_objective(owner, potential_duplicate_objectives[duplicate_typepath]))
+		qdel(objective)
+		return
+
+	var/should_abort = SEND_SIGNAL(objective, COMSIG_TRAITOR_OBJECTIVE_PRE_GENERATE, owner, potential_duplicate_objectives[duplicate_typepath]) & COMPONENT_TRAITOR_OBJECTIVE_ABORT_GENERATION
+	if(should_abort || !objective.generate_objective(owner, potential_duplicate_objectives[duplicate_typepath]))
 		qdel(objective)
 		return
 	if(!handle_duplicate(objective))
 		qdel(objective)
 		return
-	log_traitor("[key_name(owner)] has received a potential objective: [objective.to_debug_string()]")
+	objective.forced = force
+	log_traitor("[key_name(owner)] has received a potential objective: [objective.to_debug_string()] | Forced: [force]")
 	objective.original_progression = objective.progression_reward
 	objective.update_progression_reward()
 	potential_objectives += objective
+	SStraitor.add_objective_to_list(objective, SStraitor.all_objectives_by_type)
 	return objective
 
 /datum/uplink_handler/proc/handle_duplicate(datum/traitor_objective/potential_duplicate)
@@ -139,11 +166,6 @@
 		if(!potential_duplicate_objectives[current_type])
 			potential_duplicate_objectives[current_type] = list(potential_duplicate)
 		else
-			for(var/datum/traitor_objective/duplicate_checker as anything in potential_duplicate_objectives[current_type])
-				if(duplicate_checker.is_duplicate(potential_duplicate))
-					for(var/typepath in added_types)
-						potential_duplicate_objectives[typepath] -= potential_duplicate
-					return FALSE
 			potential_duplicate_objectives[current_type] += potential_duplicate
 
 		added_types += current_type
@@ -185,7 +207,7 @@
 		objective.update_progression_reward()
 
 /datum/uplink_handler/proc/abort_objective(datum/traitor_objective/to_abort)
-	if(istype(to_abort, /datum/traitor_objective/final))
+	if(istype(to_abort, /datum/traitor_objective/ultimate))
 		return
 	if(to_abort.objective_state != OBJECTIVE_STATE_ACTIVE)
 		return

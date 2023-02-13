@@ -7,8 +7,8 @@
  * just having the variables, behavior, and procs be standardized is still a big improvement.
  */
 /datum/element/ridable
-	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY
+	argument_hash_start_idx = 2
 
 	/// The specific riding component subtype we're loading our instructions from, don't leave this as default please!
 	var/riding_component_type = /datum/component/riding
@@ -24,15 +24,19 @@
 		stack_trace("Tried attaching a ridable element to [target] with basic/abstract /datum/component/riding component type. Please designate a specific riding component subtype when adding the ridable element.")
 		return COMPONENT_INCOMPATIBLE
 
+	target.can_buckle = TRUE
 	riding_component_type = component_type
 	potion_boosted = potion_boost
 
-	RegisterSignal(target, COMSIG_MOVABLE_PREBUCKLE, .proc/check_mounting)
+	RegisterSignal(target, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(check_mounting))
 	if(isvehicle(target))
-		RegisterSignal(target, COMSIG_SPEED_POTION_APPLIED, .proc/check_potion)
+		RegisterSignal(target, COMSIG_SPEED_POTION_APPLIED, PROC_REF(check_potion))
+	if(ismob(target))
+		RegisterSignal(target, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
-/datum/element/ridable/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_MOVABLE_PREBUCKLE, COMSIG_SPEED_POTION_APPLIED))
+/datum/element/ridable/Detach(atom/movable/target)
+	target.can_buckle = initial(target.can_buckle)
+	UnregisterSignal(target, list(COMSIG_MOVABLE_PREBUCKLE, COMSIG_SPEED_POTION_APPLIED, COMSIG_MOB_STATCHANGE))
 	return ..()
 
 /// Someone is buckling to this movable, which is literally the only thing we care about (other than speed potions)
@@ -40,7 +44,9 @@
 	SIGNAL_HANDLER
 
 	if(HAS_TRAIT(potential_rider, TRAIT_CANT_RIDE))
-		return
+		//Do not prevent buckle, but stop any riding, do not block buckle here
+		//There are things that are supposed to buckle (like slimes) but not ride the creature
+		return NONE
 
 	var/arms_needed = 0
 	if(ride_check_flags & RIDER_NEEDS_ARMS)
@@ -83,7 +89,7 @@
 			inhand.rider = riding_target_override
 		inhand.parent = AM
 		for(var/obj/item/I in user.held_items) // delete any hand items like slappers that could still totally be used to grab on
-			if((I.obj_flags & HAND_ITEM))
+			if((I.item_flags & HAND_ITEM))
 				qdel(I)
 
 		// this would be put_in_hands() if it didn't have the chance to sleep, since this proc gets called from a signal handler that relies on what this returns
@@ -99,7 +105,7 @@
 			amount_equipped++
 		else
 			qdel(inhand)
-			break
+			return FALSE
 
 	if(amount_equipped >= amount_required)
 		return TRUE
@@ -143,12 +149,21 @@
 			qdel(O)
 	return TRUE
 
+/datum/element/ridable/proc/on_stat_change(mob/source)
+	SIGNAL_HANDLER
 
+	// If we're dead, don't let anyone buckle onto us
+	if(source.stat == DEAD)
+		source.can_buckle = FALSE
+		source.unbuckle_all_mobs()
 
+	// If we're alive, back to being buckle-able
+	else
+		source.can_buckle = TRUE
 
 /obj/item/riding_offhand
 	name = "offhand"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT | DROPDEL | NOBLUDGEON

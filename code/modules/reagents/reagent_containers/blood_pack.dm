@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/blood
 	name = "blood pack"
 	desc = "Contains blood used for transfusion. Must be attached to an IV drip."
-	icon = 'icons/obj/bloodpack.dmi'
+	icon = 'icons/obj/medical/bloodpack.dmi'
 	icon_state = "bloodpack"
 	volume = 200
 	var/blood_type = null
@@ -70,11 +70,10 @@
 
 /obj/item/reagent_containers/blood/attackby(obj/item/tool, mob/user, params)
 	if (istype(tool, /obj/item/pen) || istype(tool, /obj/item/toy/crayon))
-		if(!user.is_literate())
-			to_chat(user, span_notice("You scribble illegibly on the label of [src]!"))
+		if(!user.can_write(tool))
 			return
 		var/custom_label = tgui_input_text(user, "What would you like to label the blood pack?", "Blood Pack", name, MAX_NAME_LEN)
-		if(!user.canUseTopic(src, BE_CLOSE))
+		if(!user.canUseTopic(src, be_close = TRUE))
 			return
 		if(user.get_active_held_item() != tool)
 			return

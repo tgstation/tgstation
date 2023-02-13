@@ -2,7 +2,7 @@
 /obj/item/gun/ballistic/bow
 	name = "longbow"
 	desc = "While pretty finely crafted, surely you can find something better to use in the current year."
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "bow"
 	inhand_icon_state = "bow"
 	load_sound = null
@@ -14,6 +14,7 @@
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	internal_magazine = TRUE
+	cartridge_wording = "arrow"
 	bolt_type = BOLT_TYPE_NO_BOLT
 	var/drawn = FALSE
 
@@ -38,11 +39,12 @@
 
 /obj/item/gun/ballistic/bow/attack_self(mob/user)
 	if(chambered)
-		to_chat(user, span_notice("You [drawn ? "release the tension on" : "draw the string on"] [src]."))
+		balloon_alert(user, "[drawn ? "string released" : "string drawn"]")
 		drawn = !drawn
 	update_appearance()
 
 /obj/item/gun/ballistic/bow/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!chambered)
 		return
 	if(!drawn)
@@ -68,6 +70,7 @@
 	name = "arrow"
 	desc = "Stabby Stabman!"
 	icon_state = "arrow"
+	inhand_icon_state = "arrow"
 	flags_1 = NONE
 	throwforce = 1
 	projectile_type = /obj/projectile/bullet/reusable/arrow
@@ -77,7 +80,7 @@
 
 /obj/item/ammo_casing/caseless/arrow/despawning/dropped()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(floor_vanish)), 5 SECONDS)
 
 /obj/item/ammo_casing/caseless/arrow/despawning/proc/floor_vanish()
 	if(isturf(loc))
@@ -97,17 +100,16 @@
 	name = "quiver"
 	desc = "Holds arrows for your bow. Good, because while pocketing arrows is possible, it surely can't be pleasant."
 	icon_state = "quiver"
-	inhand_icon_state = "quiver"
+	inhand_icon_state = null
 	worn_icon_state = "harpoon_quiver"
 	var/arrow_path = /obj/item/ammo_casing/caseless/arrow
 
 /obj/item/storage/bag/quiver/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	storage.max_w_class = WEIGHT_CLASS_TINY
-	storage.max_items = 40
-	storage.max_combined_w_class = 100
-	storage.set_holdable(list(
+	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
+	atom_storage.max_slots = 40
+	atom_storage.max_total_storage = 100
+	atom_storage.set_holdable(list(
 		/obj/item/ammo_casing/caseless/arrow
 		))
 

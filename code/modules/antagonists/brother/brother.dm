@@ -49,7 +49,7 @@
 	brother1_icon.Blend(icon('icons/effects/blood.dmi', "maskblood"), ICON_OVERLAY)
 	brother1_icon.Shift(WEST, 8)
 
-	var/icon/brother2_icon = render_preview_outfit(/datum/outfit/job/scientist, brother2)
+	var/icon/brother2_icon = render_preview_outfit(/datum/outfit/job/scientist/consistent, brother2)
 	brother2_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
 	brother2_icon.Shift(EAST, 8)
 
@@ -88,6 +88,7 @@
 
 /datum/antagonist/brother/proc/finalize_brother()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	team.update_name()
 
 /datum/antagonist/brother/admin_add(datum/mind/new_owner,mob/admin)
 	//show list of possible brothers
@@ -108,7 +109,6 @@
 	T.forge_brother_objectives()
 	new_owner.add_antag_datum(/datum/antagonist/brother,T)
 	bro.add_antag_datum(/datum/antagonist/brother, T)
-	T.update_name()
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] and [key_name_admin(bro)] into blood brothers.")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] and [key_name(bro)] into blood brothers.")
 
@@ -120,13 +120,22 @@
 	return data
 
 /datum/team/brother_team
-	name = "brotherhood"
+	name = "\improper Blood Brothers"
 	member_name = "blood brother"
+	///Selected meeting area given to the team members
 	var/meeting_area
-	var/static/meeting_areas = list("The Bar", "Dorms", "Escape Dock", "Arrivals", "Holodeck", "Primary Tool Storage", "Recreation Area", "Chapel", "Library")
-
-/datum/team/brother_team/is_solo()
-	return FALSE
+	///List of meeting areas that are randomly selected.
+	var/static/meeting_areas = list(
+		"The Bar",
+		"Dorms",
+		"Escape Dock",
+		"Arrivals",
+		"Holodeck",
+		"Primary Tool Storage",
+		"Recreation Area",
+		"Chapel",
+		"Library",
+	)
 
 /datum/team/brother_team/proc/pick_meeting_area()
 	meeting_area = pick(meeting_areas)
@@ -134,40 +143,11 @@
 
 /datum/team/brother_team/proc/update_name()
 	var/list/last_names = list()
-	for(var/datum/mind/M in members)
-		var/list/split_name = splittext(M.name," ")
+	for(var/datum/mind/team_minds as anything in members)
+		var/list/split_name = splittext(team_minds.name," ")
 		last_names += split_name[split_name.len]
 
-	name = last_names.Join(" & ")
-
-/datum/team/brother_team/roundend_report()
-	var/list/parts = list()
-
-	parts += "<span class='header'>The blood brothers of [name] were:</span>"
-	for(var/datum/mind/M in members)
-		parts += printplayer(M)
-	var/win = TRUE
-	var/objective_count = 1
-	for(var/datum/objective/objective in objectives)
-		if(objective.check_completion())
-			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] [span_greentext("Success!")]"
-		else
-			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
-			win = FALSE
-		objective_count++
-	if(win)
-		parts += span_greentext("The blood brothers were successful!")
-	else
-		parts += span_redtext("The blood brothers have failed!")
-
-	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
-
-/datum/team/brother_team/proc/add_objective(datum/objective/O, needs_target = FALSE)
-	O.team = src
-	if(needs_target)
-		O.find_target(dupe_search_range = list(src))
-	O.update_explanation_text()
-	objectives += O
+	name = "[initial(name)] of " + last_names.Join(" & ")
 
 /datum/team/brother_team/proc/forge_brother_objectives()
 	objectives = list()
@@ -176,20 +156,17 @@
 		forge_single_objective()
 	if(is_hijacker)
 		if(!locate(/datum/objective/hijack) in objectives)
-			add_objective(new/datum/objective/hijack)
+			add_objective(new /datum/objective/hijack)
 	else if(!locate(/datum/objective/escape) in objectives)
-		add_objective(new/datum/objective/escape)
+		add_objective(new /datum/objective/escape)
 
 /datum/team/brother_team/proc/forge_single_objective()
 	if(prob(50))
 		if(LAZYLEN(active_ais()) && prob(100/GLOB.joined_player_list.len))
-			add_objective(new/datum/objective/destroy, TRUE)
+			add_objective(new /datum/objective/destroy, needs_target = TRUE)
 		else if(prob(30))
-			add_objective(new/datum/objective/maroon, TRUE)
+			add_objective(new /datum/objective/maroon, needs_target = TRUE)
 		else
-			add_objective(new/datum/objective/assassinate, TRUE)
+			add_objective(new /datum/objective/assassinate, needs_target = TRUE)
 	else
-		add_objective(new/datum/objective/steal, TRUE)
-
-/datum/team/brother_team/antag_listing_name()
-	return "[name] blood brothers"
+		add_objective(new /datum/objective/steal, needs_target = TRUE)

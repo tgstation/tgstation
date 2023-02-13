@@ -1,7 +1,9 @@
 /obj/item/storage/briefcase
 	name = "briefcase"
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
+	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "briefcase"
+	inhand_icon_state = "briefcase"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -16,11 +18,10 @@
 	max_integrity = 150
 	var/folder_path = /obj/item/folder //this is the path of the folder that gets spawned in New()
 
-/obj/item/storage/briefcase/ComponentInitialize()
+/obj/item/storage/briefcase/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 21
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 21
 
 /obj/item/storage/briefcase/PopulateContents()
 	new /obj/item/pen(src)
@@ -35,7 +36,7 @@
 	new /obj/item/stamp/law(src)
 	..()
 
-/obj/item/storage/briefcase/suicide_act(mob/user)
+/obj/item/storage/briefcase/suicide_act(mob/living/user)
 	var/list/papers_found = list()
 	var/turf/item_loc = get_turf(src)
 
@@ -66,9 +67,8 @@
 /obj/item/storage/briefcase/sniperbundle/PopulateContents()
 	..() // in case you need any paperwork done after your rampage
 	new /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate(src)
-	new /obj/item/clothing/neck/tie/red(src)
+	new /obj/item/clothing/neck/tie/red/hitman(src)
 	new /obj/item/clothing/under/syndicate/sniper(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
 	new /obj/item/suppressor/specialoffer(src)
-

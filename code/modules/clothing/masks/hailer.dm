@@ -2,8 +2,8 @@
 // **** Security gas mask ****
 
 // Cooldown times
-#define PHRASE_COOLDOWN 30
-#define OVERUSE_COOLDOWN 180
+#define PHRASE_COOLDOWN (3 SECONDS)
+#define OVERUSE_COOLDOWN (18 SECONDS)
 
 // Aggression levels
 #define AGGR_GOOD_COP 1
@@ -57,6 +57,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_cover = MASKCOVERSMOUTH
 	tint = 0
 	has_fov = FALSE
+	COOLDOWN_DECLARE(hailer_cooldown)
 	var/aggressiveness = AGGR_BAD_COP
 	var/overuse_cooldown = FALSE
 	var/recent_uses = 0
@@ -80,7 +81,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	name = "spacepol mask"
 	desc = "A close-fitting tactical mask created in cooperation with a certain megacorporation, comes with an especially aggressive Compli-o-nator 3000."
 	icon_state = "spacepol"
-	inhand_icon_state = "spacepol"
+	inhand_icon_state = "spacepol_mask"
 	tint = 1.5
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
@@ -123,13 +124,13 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user)
 	if(safety)
 		safety = FALSE
-		to_chat(user, span_warning("You silently fry [src]'s vocal circuit with the cryptographic sequencer."))
+		to_chat(user, span_warning("You silently fry [src]'s vocal circuit."))
 
 /obj/item/clothing/mask/gas/sechailer/verb/halt()
 	set category = "Object"
 	set name = "HALT"
 	set src in usr
-	if(!isliving(usr) || !can_use(usr) || cooldown)
+	if(!isliving(usr) || !can_use(usr) || !COOLDOWN_FINISHED(src, hailer_cooldown))
 		return
 	if(broken_hailer)
 		to_chat(usr, span_warning("\The [src]'s hailing system is broken."))
@@ -140,7 +141,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	if(!overuse_cooldown) // check if we can reset recent uses
 		recent_uses = 0
 		overuse_cooldown = TRUE
-		addtimer(CALLBACK(src, /obj/item/clothing/mask/gas/sechailer/proc/reset_overuse_cooldown), OVERUSE_COOLDOWN)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/clothing/mask/gas/sechailer, reset_overuse_cooldown)), OVERUSE_COOLDOWN)
 
 	switch(recent_uses)
 		if(3)
@@ -171,16 +172,12 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		return rand(aggressiveness == AGGR_BROKEN ? BROKE_PHRASES : EMAG_PHRASE + 1, upper_limit)
 
 /obj/item/clothing/mask/gas/sechailer/proc/play_phrase(mob/user, datum/hailer_phrase/phrase)
-	. = FALSE
-	if (!cooldown)
-		usr.audible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[initial(phrase.phrase_text)]</b></font>")
-		playsound(src, "sound/runtime/complionator/[initial(phrase.phrase_sound)].ogg", 100, FALSE, 4)
-		cooldown = TRUE
-		addtimer(CALLBACK(src, /obj/item/clothing/mask/gas/sechailer/proc/reset_cooldown), PHRASE_COOLDOWN)
-		. = TRUE
-
-/obj/item/clothing/mask/gas/sechailer/proc/reset_cooldown()
-	cooldown = FALSE
+	if(!COOLDOWN_FINISHED(src, hailer_cooldown))
+		return
+	COOLDOWN_START(src, hailer_cooldown, PHRASE_COOLDOWN)
+	user.audible_message("[user]'s Compli-o-Nator: <font color='red' size='4'><b>[initial(phrase.phrase_text)]</b></font>")
+	playsound(src, "sound/runtime/complionator/[initial(phrase.phrase_sound)].ogg", 100, FALSE, 4)
+	return TRUE
 
 /obj/item/clothing/mask/gas/sechailer/proc/reset_overuse_cooldown()
 	overuse_cooldown = FALSE
@@ -189,16 +186,22 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	name = "police whistle"
 	desc = "A police whistle for when you need to make sure the criminals hear you."
 	icon_state = "whistle"
-	inhand_icon_state = "whistle"
+	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_NECK
-	custom_price = PAYCHECK_HARD * 1.5
+	custom_price = PAYCHECK_COMMAND * 1.5
+	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/halt)
+	COOLDOWN_DECLARE(whistle_cooldown)
 
 /obj/item/clothing/mask/whistle/ui_action_click(mob/user, action)
-	if(cooldown < world.time - 100)
-		usr.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
-		playsound(src, 'sound/misc/whistle.ogg', 100, FALSE, 4)
-		cooldown = world.time
+	if(!COOLDOWN_FINISHED(src, whistle_cooldown))
+		return
+	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
+	user.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
+	playsound(src, 'sound/misc/whistle.ogg', 75, FALSE, 4)
+
+/datum/action/item_action/halt
+	name = "HALT!"
 
 #undef PHRASE_COOLDOWN
 #undef OVERUSE_COOLDOWN

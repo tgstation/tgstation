@@ -5,14 +5,18 @@
 	var/list/accesses = list()
 	/// If the airlock should require ALL or only ONE of the listed accesses
 	var/one_access = 0
+	/// Checks to see if this airlock has an unrestricted helper (will set to TRUE if present).
+	var/unres_sensor = FALSE
 	/// Unrestricted sides, or sides of the airlock that will open regardless of access
-	var/unres_sides = 0
+	var/unres_sides = NONE
 	///what name are we passing to the finished airlock
 	var/passed_name
 	///what string are we passing to the finished airlock as the cycle ID
 	var/passed_cycle_id
 	/// A holder of the electronics, in case of them working as an integrated part
 	var/holder
+	/// Whether this airlock can have an integrated circuit inside of it or not
+	var/shell = FALSE
 
 /obj/item/electronics/airlock/examine(mob/user)
 	. = ..()
@@ -45,55 +49,53 @@
 	data["unres_direction"] = unres_sides
 	data["passedName"] = passed_name
 	data["passedCycleId"] = passed_cycle_id
+	data["shell"] = shell
 	return data
 
-/obj/item/electronics/airlock/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
-
+///shared by rcd & airlock electronics
+/obj/item/electronics/airlock/proc/do_action(action, params)
 	switch(action)
 		if("clear_all")
 			accesses = list()
 			one_access = 0
-			. = TRUE
 		if("grant_all")
 			accesses = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
-			. = TRUE
 		if("one_access")
 			one_access = !one_access
-			. = TRUE
 		if("set")
-			var/access = text2num(params["access"])
+			var/access = params["access"]
 			if (!(access in accesses))
 				accesses += access
 			else
 				accesses -= access
-			. = TRUE
+		if("set_shell")
+			shell = !!params["on"]
 		if("direc_set")
 			var/unres_direction = text2num(params["unres_direction"])
 			unres_sides ^= unres_direction //XOR, toggles only the bit that was clicked
-			. = TRUE
 		if("grant_region")
 			var/region = params["region"]
 			if(isnull(region))
 				return
 			accesses |= SSid_access.get_region_access_list(list(region))
-			. = TRUE
 		if("deny_region")
 			var/region = params["region"]
 			if(isnull(region))
 				return
 			accesses -= SSid_access.get_region_access_list(list(region))
-			. = TRUE
 		if("passedName")
 			var/new_name = trim("[params["passedName"]]", 30)
 			passed_name = new_name
-			. = TRUE
 		if("passedCycleId")
 			var/new_cycle_id = trim(params["passedCycleId"], 30)
 			passed_cycle_id = new_cycle_id
-			. = TRUE
+
+/obj/item/electronics/airlock/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	do_action(action, params)
+	return TRUE
 
 /obj/item/electronics/airlock/ui_host()
 	if(holder)

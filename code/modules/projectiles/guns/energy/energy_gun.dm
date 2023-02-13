@@ -6,11 +6,15 @@
 	inhand_icon_state = null //so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	modifystate = TRUE
-	can_flashlight = TRUE
 	ammo_x_offset = 3
-	flight_x_offset = 15
-	flight_y_offset = 10
 	dual_wield_spread = 60
+
+/obj/item/gun/energy/e_gun/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 15, \
+		overlay_y = 10)
 
 /obj/item/gun/energy/e_gun/mini
 	name = "miniature energy gun"
@@ -21,15 +25,17 @@
 	cell_type = /obj/item/stock_parts/cell/mini_egun
 	ammo_x_offset = 2
 	charge_sections = 3
-	can_flashlight = FALSE // Can't attach or detach the flashlight, and override it's icon update
-	gunlight_state = "mini-light"
-	flight_x_offset = 19
-	flight_y_offset = 13
 	single_shot_type_overlay = FALSE
 
-/obj/item/gun/energy/e_gun/mini/Initialize(mapload)
-	set_gun_light(new /obj/item/flashlight/seclite(src))
-	return ..()
+/obj/item/gun/energy/e_gun/mini/add_seclight_point()
+	// The mini energy gun's light comes attached but is unremovable.
+	AddComponent(/datum/component/seclite_attachable, \
+		starting_light = new /obj/item/flashlight/seclite(src), \
+		is_light_removable = FALSE, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "mini-light", \
+		overlay_x = 19, \
+		overlay_y = 13)
 
 /obj/item/gun/energy/e_gun/stun
 	name = "tactical energy gun"
@@ -52,6 +58,7 @@
 	icon_state = "decloner"
 	//You have no icons for energy types, you're a decloner
 	modifystate = FALSE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/e_gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
@@ -63,6 +70,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/ion/hos)
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 
 /obj/item/gun/energy/e_gun/dragnet
 	name = "\improper DRAGnet"
@@ -74,8 +82,10 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
 	modifystate = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
-	can_flashlight = FALSE
 	ammo_x_offset = 1
+
+/obj/item/gun/energy/e_gun/dragnet/add_seclight_point()
+	return
 
 /obj/item/gun/energy/e_gun/dragnet/snare
 	name = "Energy Snare Launcher"
@@ -91,9 +101,11 @@
 	w_class = WEIGHT_CLASS_HUGE
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	weapon_weight = WEAPON_HEAVY
-	can_flashlight = FALSE
 	trigger_guard = TRIGGER_GUARD_NONE
 	ammo_x_offset = 2
+
+/obj/item/gun/energy/e_gun/turret/add_seclight_point()
+	return
 
 /obj/item/gun/energy/e_gun/nuclear
 	name = "advanced energy gun"
@@ -152,3 +164,6 @@
 			. += "[icon_state]_fail_1"
 		if(151 to INFINITY)
 			. += "[icon_state]_fail_2"
+
+/obj/item/gun/energy/e_gun/lethal
+	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)

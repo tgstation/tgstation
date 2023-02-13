@@ -25,7 +25,7 @@ Difficulty: Medium
 	maxHealth = 900
 	icon_state = "miner"
 	icon_living = "miner"
-	icon = 'icons/mob/broadMobs.dmi'
+	icon = 'icons/mob/simple/broadMobs.dmi'
 	health_doll_icon = "miner"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	light_color = COLOR_LIGHT_GRAYISH_RED
@@ -37,8 +37,8 @@ Difficulty: Medium
 	ranged_cooldown_time = 1.6 SECONDS
 	pixel_x = -16
 	base_pixel_x = -16
-	crusher_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye)
-	loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/kinetic_accelerator)
+	crusher_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye)
+	loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
@@ -48,14 +48,16 @@ Difficulty: Medium
 	score_achievement_type = /datum/award/score/blood_miner_score
 	var/obj/item/melee/cleaving_saw/miner/miner_saw
 	var/guidance = FALSE
-	deathmessage = "falls to the ground, decaying into glowing particles."
-	deathsound = SFX_BODYFALL
+	death_message = "falls to the ground, decaying into glowing particles."
+	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
 	/// Dash ability
 	var/datum/action/cooldown/mob_cooldown/dash/dash
 	/// Kinetic accelerator ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator/kinetic_accelerator
+	/// Dash Attack Ability
+	var/datum/action/cooldown/mob_cooldown/dash_attack/dash_attack
 	/// Transform weapon ability
 	var/datum/action/cooldown/mob_cooldown/transform_weapon/transform_weapon
 
@@ -65,14 +67,17 @@ Difficulty: Medium
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	dash = new /datum/action/cooldown/mob_cooldown/dash()
 	kinetic_accelerator = new /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator()
+	dash_attack = new /datum/action/cooldown/mob_cooldown/dash_attack()
 	transform_weapon = new /datum/action/cooldown/mob_cooldown/transform_weapon()
 	dash.Grant(src)
 	kinetic_accelerator.Grant(src)
+	dash_attack.Grant(src)
 	transform_weapon.Grant(src)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy()
 	QDEL_NULL(dash)
 	QDEL_NULL(kinetic_accelerator)
+	QDEL_NULL(dash_attack)
 	QDEL_NULL(transform_weapon)
 	return ..()
 
@@ -81,10 +86,8 @@ Difficulty: Medium
 		return
 
 	Goto(target, move_to_delay, minimum_distance)
-	if(get_dist(src, target) > 4)
-		if(dash.Trigger(target = target))
-			kinetic_accelerator.StartCooldown(0)
-			kinetic_accelerator.Trigger(target = target)
+	if(get_dist(src, target) > 4 && dash_attack.IsAvailable())
+		dash_attack.Trigger(target = target)
 	else
 		kinetic_accelerator.Trigger(target = target)
 	transform_weapon.Trigger(target = target)
@@ -139,6 +142,7 @@ Difficulty: Medium
 					adjustHealth(-L.maxHealth)
 				else
 					adjustHealth(-(L.maxHealth * 0.5))
+			L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			L.gib()
 			return TRUE
 	changeNext_move(CLICK_CD_MELEE)
@@ -164,7 +168,7 @@ Difficulty: Medium
 
 /obj/effect/temp_visual/dir_setting/miner_death/Initialize(mapload, set_dir)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/fade_out)
+	INVOKE_ASYNC(src, PROC_REF(fade_out))
 
 /obj/effect/temp_visual/dir_setting/miner_death/proc/fade_out()
 	var/matrix/M = new
@@ -174,9 +178,9 @@ Difficulty: Medium
 		final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
 	animate(src, transform = M, pixel_y = -6, dir = final_dir, time = 2, easing = EASE_IN|EASE_OUT)
-	sleep(5)
+	sleep(0.5 SECONDS)
 	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 10, easing = EASE_IN, flags = ANIMATION_PARALLEL)
-	sleep(4)
+	sleep(0.4 SECONDS)
 	animate(src, alpha = 0, time = 6, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance
@@ -185,7 +189,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter/AttackingTarget()
 	. = ..()
 	if(. && prob(12))
-		INVOKE_ASYNC(dash, /datum/action/proc/Trigger, target)
+		INVOKE_ASYNC(dash, TYPE_PROC_REF(/datum/action, Trigger), target)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom
 	name = "hostile-environment miner"

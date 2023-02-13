@@ -45,12 +45,12 @@ Burning extracts:
 
 /obj/item/slimecross/burning/orange/do_effect(mob/user)
 	user.visible_message(span_danger("[src] boils over with a caustic gas!"))
-	var/datum/reagents/R = new/datum/reagents(100)
-	R.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 100)
+	var/datum/reagents/tmp_holder = new/datum/reagents(100)
+	tmp_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 100)
 
-	var/datum/effect_system/smoke_spread/chem/smoke = new
-	smoke.set_up(R, 7, get_turf(user))
-	smoke.start()
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
+	smoke.set_up(7, holder = src, location = get_turf(user), carry = tmp_holder)
+	smoke.start(log = TRUE)
 	..()
 
 /obj/item/slimecross/burning/purple
@@ -116,16 +116,16 @@ Burning extracts:
 
 /obj/item/slimecross/burning/darkblue
 	colour = "dark blue"
-	effect_desc = "Expels a burst of chilling smoke while also filling you with cryoxadone."
+	effect_desc = "Expels a burst of chilling smoke while also filling you with regenerative jelly."
 
 /obj/item/slimecross/burning/darkblue/do_effect(mob/user)
 	user.visible_message(span_danger("[src] releases a burst of chilling smoke!"))
-	var/datum/reagents/R = new/datum/reagents(100)
-	R.add_reagent(/datum/reagent/consumable/frostoil, 40)
-	user.reagents.add_reagent(/datum/reagent/medicine/cryoxadone,10)
-	var/datum/effect_system/smoke_spread/chem/smoke = new
-	smoke.set_up(R, 7, get_turf(user))
-	smoke.start()
+	var/datum/reagents/tmp_holder = new/datum/reagents(100)
+	tmp_holder.add_reagent(/datum/reagent/consumable/frostoil, 40)
+	user.reagents.add_reagent(/datum/reagent/medicine/regen_jelly, 10)
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
+	smoke.set_up(7, holder = src, location = get_turf(user), carry = tmp_holder)
+	smoke.start(log = TRUE)
 	..()
 
 /obj/item/slimecross/burning/silver
@@ -141,7 +141,7 @@ Burning extracts:
 		var/path = get_random_food()
 		var/obj/item/food/food = new path(pick(turfs))
 		food.reagents.add_reagent(/datum/reagent/toxin/slimejelly,5) //Oh god it burns
-		food.food_flags |= FOOD_SILVER_SPAWNED
+		ADD_TRAIT(food, TRAIT_FOOD_SILVER, INNATE_TRAIT)
 		if(prob(50))
 			food.desc += " It smells strange..."
 	user.visible_message(span_danger("[src] produces a few pieces of food!"))
@@ -260,7 +260,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/oil/do_effect(mob/user)
 	user.visible_message(span_warning("[user] activates [src]. It's going to explode!"), span_danger("You activate [src]. It crackles in anticipation"))
-	addtimer(CALLBACK(src, .proc/boom), 50)
+	addtimer(CALLBACK(src, PROC_REF(boom)), 50)
 
 /// Inflicts a blastwave upon every mob within a small radius.
 /obj/item/slimecross/burning/oil/proc/boom()
@@ -276,15 +276,14 @@ Burning extracts:
 	effect_desc = "Transforms the user into a slime. They can transform back at will and do not lose any items."
 
 /obj/item/slimecross/burning/black/do_effect(mob/user)
-	var/mob/living/L = user
-	if(!istype(L))
+	if(!isliving(user))
 		return
 	user.visible_message(span_danger("[src] absorbs [user], transforming [user.p_them()] into a slime!"))
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform/S = new()
-	S.remove_on_restore = TRUE
-	user.mind.AddSpell(S)
-	S.cast(list(user),user)
-	..()
+	var/datum/action/cooldown/spell/shapeshift/slime_form/transform = new(user.mind || user)
+	transform.remove_on_restore = TRUE
+	transform.Grant(user)
+	transform.cast(user)
+	return ..()
 
 /obj/item/slimecross/burning/lightpink
 	colour = "light pink"

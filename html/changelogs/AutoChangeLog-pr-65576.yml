@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "Nanotrasen realized that they should stop installing grilles right on top of the Air Flow Meters on IceBoxStation."

@@ -6,6 +6,7 @@
  */
 /mob/proc/getorgan(typepath)
 	return
+
 /**
  * Get organ objects by zone
  *
@@ -28,19 +29,15 @@
 /mob/living/carbon/getorgan(typepath)
 	return (locate(typepath) in internal_organs)
 
-/mob/living/carbon/getorganszone(zone, subzones = 0)
-	var/list/returnorg = list()
-	if(subzones)
-		// Include subzones - groin for chest, eyes and mouth for head
-		if(zone == BODY_ZONE_HEAD)
-			returnorg = getorganszone(BODY_ZONE_PRECISE_EYES) + getorganszone(BODY_ZONE_PRECISE_MOUTH)
-		if(zone == BODY_ZONE_CHEST)
-			returnorg = getorganszone(BODY_ZONE_PRECISE_GROIN)
-
+/mob/living/carbon/getorganszone(zone, include_children = FALSE)
+	var/valid_organs = list()
 	for(var/obj/item/organ/organ as anything in internal_organs)
 		if(zone == organ.zone)
-			returnorg += organ
-	return returnorg
+			valid_organs += organ
+		else if(include_children && zone == deprecise_zone(organ.zone))
+			valid_organs += organ
+	return valid_organs
 
 /mob/living/carbon/getorganslot(slot)
-	return internal_organs_slot[slot]
+	. = internal_organs_slot[slot]
+

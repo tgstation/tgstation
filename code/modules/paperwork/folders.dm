@@ -8,6 +8,13 @@
 	resistance_flags = FLAMMABLE
 	/// The background color for tgui in hex (with a `#`)
 	var/bg_color = "#7f7f7f"
+	/// A typecache of the objects that can be inserted into a folder
+	var/static/list/folder_insertables = typecacheof(list(
+		/obj/item/paper,
+		/obj/item/photo,
+		/obj/item/documents,
+		/obj/item/paperwork,
+	))
 
 /obj/item/folder/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins filing an imaginary death warrant! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -29,9 +36,8 @@
 	if(length(contents))
 		. += span_notice("Right-click to remove [contents[1]].")
 
-/obj/item/folder/proc/rename(mob/user)
-	if(!user.is_literate())
-		to_chat(user, span_notice("You scribble illegibly on the cover of [src]!"))
+/obj/item/folder/proc/rename(mob/user, obj/item/writing_instrument)
+	if(!user.can_write(writing_instrument))
 		return
 
 	var/inputvalue = tgui_input_text(user, "What would you like to label the folder?", "Folder Labelling", max_length = MAX_NAME_LEN)
@@ -39,7 +45,7 @@
 	if(!inputvalue)
 		return
 
-	if(user.canUseTopic(src, BE_CLOSE))
+	if(user.canUseTopic(src, be_close = TRUE))
 		name = "folder[(inputvalue ? " - '[inputvalue]'" : null)]"
 
 /obj/item/folder/proc/remove_item(obj/item/Item, mob/user)
@@ -63,14 +69,14 @@
 /obj/item/folder/attackby(obj/item/weapon, mob/user, params)
 	if(burn_paper_product_attackby_check(weapon, user))
 		return
-	if(istype(weapon, /obj/item/paper) || istype(weapon, /obj/item/photo) || istype(weapon, /obj/item/documents))
+	if(is_type_in_typecache(weapon, folder_insertables))
 		//Add paper, photo or documents into the folder
 		if(!user.transferItemToLoc(weapon, src))
 			return
 		to_chat(user, span_notice("You put [weapon] into [src]."))
 		update_appearance()
 	else if(istype(weapon, /obj/item/pen))
-		rename(user)
+		rename(user, weapon)
 
 /obj/item/folder/attack_self(mob/user)
 	add_fingerprint(usr)

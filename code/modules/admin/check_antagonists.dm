@@ -48,35 +48,6 @@
 	parts += antag_listing_commands()
 	return "<tr><td>[parts.Join("</td><td>")]</td></tr>"
 
-
-/datum/team/proc/get_team_antags(antag_type,specific = FALSE)
-	. = list()
-	for(var/datum/antagonist/A in GLOB.antagonists)
-		if(A.get_team() == src && (!antag_type || !specific && istype(A,antag_type) || specific && A.type == antag_type))
-			. += A
-
-//Builds section for the team
-/datum/team/proc/antag_listing_entry()
-	//NukeOps:
-	// Jim (Status) FLW PM TP
-	// Joe (Status) FLW PM TP
-	//Disk:
-	// Deep Space FLW
-	var/list/parts = list()
-	parts += "<b>[antag_listing_name()]</b><br>"
-	parts += "<table cellspacing=5>"
-	for(var/datum/antagonist/A in get_team_antags())
-		parts += A.antag_listing_entry()
-	parts += "</table>"
-	parts += antag_listing_footer()
-	return parts.Join()
-
-/datum/team/proc/antag_listing_name()
-	return name
-
-/datum/team/proc/antag_listing_footer()
-	return
-
 /datum/admins/proc/build_antag_listing()
 	var/list/sections = list()
 	var/list/priority_sections = list()
@@ -96,7 +67,7 @@
 				all_antagonists -= X
 		sections += T.antag_listing_entry()
 
-	sortTim(all_antagonists, /proc/cmp_antag_category)
+	sortTim(all_antagonists, GLOBAL_PROC_REF(cmp_antag_category))
 
 	var/current_category
 	var/list/current_section = list()
@@ -139,7 +110,7 @@
 			dat += "ETA: <a href='?_src_=holder;[HrefToken()];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_leading(num2text(timeleft % 60), 2, "0")]</a><BR>"
 	dat += "<a href='?_src_=holder;[HrefToken()];end_round=[REF(usr)]'>End Round Now</a><br>"
 	if(SSticker.delay_end)
-		dat += "<a href='?_src_=holder;[HrefToken()];undelay_round_end=1'>End Round Normally</a><br>"
+		dat += "<a href='?_src_=holder;[HrefToken()];undelay_round_end=1'>Undelay Round End</a><br>"
 	else
 		dat += "<a href='?_src_=holder;[HrefToken()];delay_round_end=1'>Delay Round End</a><br>"
 	dat += "<a href='?_src_=holder;[HrefToken()];ctf_toggle=1'>Enable/Disable CTF</a><br>"
@@ -151,38 +122,57 @@
 	var/observers_connected = 0
 	var/living_players = 0
 	var/living_players_connected = 0
-	var/living_players_antagonist = 0
+	var/antagonists = 0
+	var/antagonists_dead = 0
 	var/brains = 0
 	var/other_players = 0
 	var/living_skipped = 0
 	var/drones = 0
-	for(var/mob/M in GLOB.mob_list)
-		if(M.ckey)
-			if(isnewplayer(M))
+	var/security = 0
+	var/security_dead = 0
+	for(var/mob/checked_mob in GLOB.mob_list)
+		if(checked_mob.ckey)
+			if(isnewplayer(checked_mob))
 				lobby_players++
 				continue
-			else if(M.stat != DEAD && M.mind && !isbrain(M))
-				if(isdrone(M))
-					drones++
-					continue
-				if(is_centcom_level(M.z))
-					living_skipped++
-					continue
-				living_players++
-				if(M.mind.special_role)
-					living_players_antagonist++
-				if(M.client)
-					living_players_connected++
-			else if(M.stat == DEAD || isobserver(M))
+			else if(checked_mob.mind && !isbrain(checked_mob) && !isobserver(checked_mob))
+				if(checked_mob.stat != DEAD)
+					if(isdrone(checked_mob))
+						drones++
+						continue
+					if(is_centcom_level(checked_mob.z))
+						living_skipped++
+						continue
+					living_players++
+					if(checked_mob.client)
+						living_players_connected++
+				else if (checked_mob.ckey)
+					// This finds all dead mobs that still have a ckey inside them
+					// Ie, they have died, but have not ghosted
+					observers++
+					if (checked_mob.client)
+						observers_connected++
+
+				if(checked_mob.mind.special_role)
+					antagonists++
+					if(checked_mob.stat == DEAD)
+						antagonists_dead++
+				if(checked_mob.mind.assigned_role?.departments_list?.Find(/datum/job_department/security))
+					security++
+					if(checked_mob.stat == DEAD)
+						security_dead++
+			else if(checked_mob.stat == DEAD || isobserver(checked_mob))
 				observers++
-				if(M.client)
+				if(checked_mob.client)
 					observers_connected++
-			else if(isbrain(M))
+			else if(isbrain(checked_mob))
 				brains++
 			else
 				other_players++
 	dat += "<BR><b><font color='blue' size='3'>Players:|[connected_players - lobby_players] ingame|[connected_players] connected|[lobby_players] lobby|</font></b>"
-	dat += "<BR><b><font color='green'>Living Players:|[living_players_connected] active|[living_players - living_players_connected] disconnected|[living_players_antagonist] antagonists|</font></b>"
+	dat += "<BR><b><font color='green'>Living Players:|[living_players_connected] active|[living_players - living_players_connected] disconnected|</font></b>"
+	dat += "<BR><b><font color='#e29300'>Antagonists Players:|[antagonists] ingame|[antagonists-antagonists_dead] alive|[antagonists_dead] dead|</font></b>"
+	dat += "<BR><b><font color='#860e03'>Security Players:|[security] ingame|[security-security_dead] alive|[security_dead] dead|</font></b>"
 	dat += "<BR><b><font color='#bf42f4'>SKIPPED \[On centcom Z-level\]: [living_skipped] living players|[drones] living drones|</font></b>"
 	dat += "<BR><b><font color='red'>Dead/Observing players:|[observers_connected] active|[observers - observers_connected] disconnected|[brains] brains|</font></b>"
 	if(other_players)

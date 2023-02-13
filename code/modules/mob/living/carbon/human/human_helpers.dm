@@ -4,17 +4,40 @@
 		return FALSE
 	return TRUE
 
+///returns a list of "damtype" => damage description based off of which bodypart description is most common
+///used in human examines
+/mob/living/carbon/human/proc/get_majority_bodypart_damage_desc()
+	var/list/seen_damage = list() // This looks like: ({Damage type} = list({Damage description for that damage type} = {number of times it has appeared}, ...), ...)
+	var/list/most_seen_damage = list() // This looks like: ({Damage type} = {Frequency of the most common description}, ...)
+	var/list/final_descriptions = list() // This looks like: ({Damage type} = {Most common damage description for that type}, ...)
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		for(var/damage_type in part.damage_examines)
+			var/damage_desc = part.damage_examines[damage_type]
+			if(!seen_damage[damage_type])
+				seen_damage[damage_type] = list()
+
+			if(!seen_damage[damage_type][damage_desc])
+				seen_damage[damage_type][damage_desc] = 1
+			else
+				seen_damage[damage_type][damage_desc] += 1
+
+			if(seen_damage[damage_type][damage_desc] > most_seen_damage[damage_type])
+				most_seen_damage[damage_type] = seen_damage[damage_type][damage_desc]
+				final_descriptions[damage_type] = damage_desc
+	return final_descriptions
 
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_assignment(if_no_id = "No id", if_no_job = "No job", hand_first = TRUE)
 	var/obj/item/card/id/id = get_idcard(hand_first)
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return if_no_id
 	if(id)
 		. = id.assignment
 	else
-		var/obj/item/pda/pda = wear_id
+		var/obj/item/modular_computer/pda = wear_id
 		if(istype(pda))
-			. = pda.ownjob
+			. = pda.saved_job
 		else
 			return if_no_id
 	if(!.)
@@ -24,17 +47,21 @@
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_authentification_name(if_no_id = "Unknown")
 	var/obj/item/card/id/id = get_idcard(FALSE)
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return if_no_id
 	if(id)
 		return id.registered_name
-	var/obj/item/pda/pda = wear_id
+	var/obj/item/modular_computer/pda = wear_id
 	if(istype(pda))
-		return pda.owner
+		return pda.saved_identification
 	return if_no_id
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
 /mob/living/carbon/human/get_visible_name()
 	var/face_name = get_face_name("")
 	var/id_name = get_id_name("")
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return "Unknown"
 	if(name_override)
 		return name_override
 	if(face_name)
@@ -47,6 +74,8 @@
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return if_no_face //We're Unknown, no face information for you
 	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) ) //Wearing a mask which hides our face, use id-name if possible
 		return if_no_face
 	if( head && (head.flags_inv&HIDEFACE) )
@@ -60,19 +89,16 @@
 //Useful when player is being seen by other mobs
 /mob/living/carbon/human/proc/get_id_name(if_no_id = "Unknown")
 	var/obj/item/storage/wallet/wallet = wear_id
-	var/obj/item/pda/pda = wear_id
+	var/obj/item/modular_computer/pda/pda = wear_id
 	var/obj/item/card/id/id = wear_id
-	var/obj/item/modular_computer/tablet/tablet = wear_id
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		. = if_no_id //You get NOTHING, no id name, good day sir
 	if(istype(wallet))
 		id = wallet.front_id
 	if(istype(id))
 		. = id.registered_name
-	else if(istype(pda))
-		. = pda.owner
-	else if(istype(tablet))
-		var/obj/item/computer_hardware/card_slot/card_slot = tablet.all_components[MC_CARD]
-		if(card_slot?.stored_card)
-			. = card_slot.stored_card.registered_name
+	else if(istype(pda) && pda.computer_id_slot)
+		. = pda.computer_id_slot.registered_name
 	if(!.)
 		. = if_no_id //to prevent null-names making the mob unclickable
 	return
@@ -88,25 +114,20 @@
 	return dna.species.handle_chemicals(R, src, delta_time, times_fired)
 	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
 
-
-/mob/living/carbon/human/can_track(mob/living/user)
-	if(istype(head, /obj/item/clothing/head))
-		var/obj/item/clothing/head/hat = head
-		if(hat.blockTracking)
-			return 0
-
-	return ..()
-
 /mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
-		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
+		if(check_chunky_fingers())
 			balloon_alert(src, "fingers are too big!")
 			return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOGUNS))
 		to_chat(src, span_warning("You can't bring yourself to use a ranged weapon!"))
 		return FALSE
 
+/mob/living/carbon/human/proc/check_chunky_fingers()
+	if(HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT) && HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT))
+		return TRUE
+	return (active_hand_index % 2) ? HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT) : HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT)
 /mob/living/carbon/human/get_policy_keywords()
 	. = ..()
 	. += "[dna.species.type]"
@@ -205,9 +226,6 @@
 	WRITE_FILE(F["scar[char_index]-[scar_index]"], sanitize_text(valid_scars))
 	WRITE_FILE(F["current_scar_index"], sanitize_integer(scar_index))
 
-/mob/living/carbon/human/get_biological_state()
-	return dna.species.get_biological_state()
-
 ///Returns death message for mob examine text
 /mob/living/carbon/human/proc/generate_death_examine_text()
 	var/mob/dead/observer/ghost = get_ghost(TRUE, TRUE)
@@ -215,7 +233,7 @@
 	var/t_his = p_their()
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
-	if(key || !getorgan(/obj/item/organ/brain) || ghost?.can_reenter_corpse)
+	if(key || !getorgan(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse)
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
@@ -231,7 +249,7 @@
 
 /// Fully randomizes everything according to the given flags.
 /mob/living/carbon/human/proc/randomize_human_appearance(randomize_flags = ALL)
-	var/datum/preferences/preferences = new
+	var/datum/preferences/preferences = new(new /datum/client_interface)
 
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (!preference.included_in_randomization_flags(randomize_flags))
@@ -239,3 +257,33 @@
 
 		if (preference.is_randomizable())
 			preference.apply_to_human(src, preference.create_random_value(preferences))
+
+/**
+ * Setter for mob height
+ *
+ * Exists so that the update is done immediately
+ *
+ * Returns TRUE if changed, FALSE otherwise
+ */
+/mob/living/carbon/human/proc/set_mob_height(new_height)
+	if(mob_height == new_height)
+		return FALSE
+	if(new_height == HUMAN_HEIGHT_DWARF)
+		CRASH("Don't set height to dwarf height directly, use dwarf trait")
+
+	mob_height = new_height
+	regenerate_icons()
+	return TRUE
+
+/**
+ * Getter for mob height
+ *
+ * Mainly so that dwarfism can adjust height without needing to override existing height
+ *
+ * Returns a mob height num
+ */
+/mob/living/carbon/human/proc/get_mob_height()
+	if(HAS_TRAIT(src, TRAIT_DWARF))
+		return HUMAN_HEIGHT_DWARF
+
+	return mob_height

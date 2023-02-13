@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
 	desc = "A worm that grows fat from eating everything in its sight. Seems to enjoy precious metals and other shiny things, hence the name."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goldgrub"
 	icon_living = "Goldgrub"
 	icon_aggro = "Goldgrub_alert"
@@ -25,7 +25,7 @@
 	combat_mode = FALSE
 	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
-	deathmessage = "stops moving as green liquid oozes from the carcass!"
+	death_message = "stops moving as green liquid oozes from the carcass!"
 	status_flags = CANPUSH
 	gold_core_spawnable = HOSTILE_SPAWN
 	search_objects = 1
@@ -51,6 +51,7 @@
 
 /datum/action/innate/goldgrub
 	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
 
 /datum/action/innate/goldgrub/spitore
 	name = "Spit Ore"
@@ -72,7 +73,7 @@
 	if(G.stat == DEAD)
 		return
 	var/turf/T = get_turf(G)
-	if (!istype(T, /turf/open/misc/asteroid) || !do_after(G, 30, target = T))
+	if (!isasteroidturf(T) || !do_after(G, 30, target = T))
 		to_chat(G, span_warning("You can only burrow in and out of mining turfs and must stay still!"))
 		return
 	if (get_dist(G, T) != 0)
@@ -80,16 +81,15 @@
 		return
 	if(G.is_burrowed)
 		holder = G.loc
-		G.forceMove(T)
-		QDEL_NULL(holder)
+		holder.eject_jaunter()
+		holder = null
 		G.is_burrowed = FALSE
 		G.visible_message(span_danger("[G] emerges from the ground!"))
 		playsound(get_turf(G), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
 	else
 		G.visible_message(span_danger("[G] buries into the ground, vanishing from sight!"))
 		playsound(get_turf(G), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
-		holder = new /obj/effect/dummy/phased_mob(T)
-		G.forceMove(holder)
+		holder = new /obj/effect/dummy/phased_mob(T, G)
 		G.is_burrowed = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
@@ -103,7 +103,7 @@
 			retreat_distance = 10
 			minimum_distance = 10
 			if(will_burrow)
-				addtimer(CALLBACK(src, .proc/Burrow), chase_time)
+				addtimer(CALLBACK(src, PROC_REF(Burrow)), chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/stack/ore))
@@ -133,8 +133,11 @@
 		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/projectile/P)
-	visible_message(span_danger("The [P.name] is repelled by [name]'s girth!"))
-	return BULLET_ACT_BLOCK
+	if(stat == DEAD)
+		return BULLET_ACT_FORCE_PIERCE
+	else
+		visible_message(span_danger("The [P.name] is repelled by [name]'s girth!"))
+		return BULLET_ACT_BLOCK
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	vision_range = 9

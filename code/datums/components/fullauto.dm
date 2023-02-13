@@ -11,16 +11,34 @@
 	var/autofire_shot_delay = 0.3 SECONDS //Time between individual shots.
 	var/mouse_status = AUTOFIRE_MOUSEUP //This seems hacky but there can be two MouseDown() without a MouseUp() in between if the user holds click and uses alt+tab, printscreen or similar.
 
+	///windup autofire vars
+	///Whether the delay between shots increases over time, simulating a spooling weapon
+	var/windup_autofire = FALSE
+	///the reduction to shot delay for windup
+	var/current_windup_reduction = 0
+	///the percentage of autfire_shot_delay that is added to current_windup_reduction
+	var/windup_autofire_reduction_multiplier = 0.3
+	///How high of a reduction that current_windup_reduction can reach
+	var/windup_autofire_cap = 0.3
+	///How long it takes for weapons that have spooled-up to reset back to the original firing speed
+	var/windup_spindown = 3 SECONDS
+	///Timer for tracking the spindown reset timings
+	var/timerid
 	COOLDOWN_DECLARE(next_shot_cd)
 
-/datum/component/automatic_fire/Initialize(_autofire_shot_delay)
+/datum/component/automatic_fire/Initialize(autofire_shot_delay, windup_autofire, windup_autofire_reduction_multiplier, windup_autofire_cap, windup_spindown)
 	. = ..()
 	if(!isgun(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/obj/item/gun = parent
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/wake_up)
-	if(_autofire_shot_delay)
-		autofire_shot_delay = _autofire_shot_delay
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(wake_up))
+	if(autofire_shot_delay)
+		src.autofire_shot_delay = autofire_shot_delay
+	if(windup_autofire)
+		src.windup_autofire = windup_autofire
+		src.windup_autofire_reduction_multiplier = windup_autofire_reduction_multiplier
+		src.windup_autofire_cap = windup_autofire_cap
+		src.windup_spindown = windup_spindown
 	if(autofire_stat == AUTOFIRE_STAT_IDLE && ismob(gun.loc))
 		var/mob/user = gun.loc
 		wake_up(src, user)
@@ -59,13 +77,13 @@
 	if(!QDELETED(usercli))
 		clicker = usercli
 		shooter = clicker.mob
-		RegisterSignal(clicker, COMSIG_CLIENT_MOUSEDOWN, .proc/on_mouse_down)
+		RegisterSignal(clicker, COMSIG_CLIENT_MOUSEDOWN, PROC_REF(on_mouse_down))
 	if(!QDELETED(shooter))
-		RegisterSignal(shooter, COMSIG_MOB_LOGOUT, .proc/autofire_off)
+		RegisterSignal(shooter, COMSIG_MOB_LOGOUT, PROC_REF(autofire_off))
 		UnregisterSignal(shooter, COMSIG_MOB_LOGIN)
-	RegisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED), .proc/autofire_off)
-	parent.RegisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, /obj/item/gun/.proc/autofire_bypass_check)
-	parent.RegisterSignal(parent, COMSIG_AUTOFIRE_SHOT, /obj/item/gun/.proc/do_autofire)
+	RegisterSignals(parent, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(autofire_off))
+	parent.RegisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, TYPE_PROC_REF(/obj/item/gun/, autofire_bypass_check))
+	parent.RegisterSignal(parent, COMSIG_AUTOFIRE_SHOT, TYPE_PROC_REF(/obj/item/gun/, do_autofire))
 
 
 /datum/component/automatic_fire/proc/autofire_off(datum/source)
@@ -82,9 +100,9 @@
 	mouse_status = AUTOFIRE_MOUSEUP //In regards to the component there's no click anymore to care about.
 	clicker = null
 	if(!QDELETED(shooter))
-		RegisterSignal(shooter, COMSIG_MOB_LOGIN, .proc/on_client_login)
+		RegisterSignal(shooter, COMSIG_MOB_LOGIN, PROC_REF(on_client_login))
 		UnregisterSignal(shooter, COMSIG_MOB_LOGOUT)
-	UnregisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED))
+	UnregisterSignal(parent, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED))
 	shooter = null
 	parent.UnregisterSignal(parent, COMSIG_AUTOFIRE_SHOT)
 	parent.UnregisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN)
@@ -138,7 +156,7 @@
 	target = _target
 	target_loc = get_turf(target)
 	mouse_parameters = params
-	INVOKE_ASYNC(src, .proc/start_autofiring)
+	INVOKE_ASYNC(src, PROC_REF(start_autofiring))
 
 
 //Dakka-dakka
@@ -151,10 +169,10 @@
 	clicker.mouse_pointer_icon = clicker.mouse_override_icon
 
 	if(mouse_status == AUTOFIRE_MOUSEUP) //See mouse_status definition for the reason for this.
-		RegisterSignal(clicker, COMSIG_CLIENT_MOUSEUP, .proc/on_mouse_up)
+		RegisterSignal(clicker, COMSIG_CLIENT_MOUSEUP, PROC_REF(on_mouse_up))
 		mouse_status = AUTOFIRE_MOUSEDOWN
 
-	RegisterSignal(shooter, COMSIG_MOB_SWAP_HANDS, .proc/stop_autofiring)
+	RegisterSignal(shooter, COMSIG_MOB_SWAP_HANDS, PROC_REF(stop_autofiring))
 
 	if(isgun(parent))
 		var/obj/item/gun/shoota = parent
@@ -168,7 +186,7 @@
 		return //If it fails, such as when the gun is empty, then there's no need to schedule a second shot.
 
 	START_PROCESSING(SSprojectiles, src)
-	RegisterSignal(clicker, COMSIG_CLIENT_MOUSEDRAG, .proc/on_mouse_drag)
+	RegisterSignal(clicker, COMSIG_CLIENT_MOUSEDRAG, PROC_REF(on_mouse_drag))
 
 
 /datum/component/automatic_fire/proc/on_mouse_up(datum/source, atom/object, turf/location, control, params)
@@ -233,6 +251,10 @@
 		return FALSE
 	shooter.face_atom(target)
 	var/next_delay = autofire_shot_delay
+	if(windup_autofire)
+		next_delay = clamp(next_delay - current_windup_reduction, round(autofire_shot_delay * windup_autofire_cap), autofire_shot_delay)
+		current_windup_reduction = (current_windup_reduction + round(autofire_shot_delay * windup_autofire_reduction_multiplier))
+		timerid = addtimer(CALLBACK(src, PROC_REF(windup_reset), FALSE), windup_spindown, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 	if(HAS_TRAIT(shooter, TRAIT_DOUBLE_TAP))
 		next_delay = round(next_delay * 0.5)
 	COOLDOWN_START(src, next_shot_cd, next_delay)
@@ -240,6 +262,12 @@
 		return TRUE
 	stop_autofiring()
 	return FALSE
+
+/// Reset for our windup, resetting everything back to initial values after a variable set amount of time (determined by var/windup_spindown).
+/datum/component/automatic_fire/proc/windup_reset(deltimer)
+	current_windup_reduction = initial(current_windup_reduction)
+	if(deltimer && timerid)
+		deltimer(timerid)
 
 // Gun procs.
 
@@ -251,7 +279,7 @@
 		return FALSE
 	var/obj/item/bodypart/other_hand = shooter.has_hand_for_held_index(shooter.get_inactive_hand_index())
 	if(weapon_weight == WEAPON_HEAVY && (shooter.get_inactive_held_item() || !other_hand))
-		to_chat(shooter, span_warning("You need two hands to fire [src]!"))
+		balloon_alert(shooter, "use both hands!")
 		return FALSE
 	return TRUE
 
@@ -269,7 +297,7 @@
 	if(!can_shoot())
 		shoot_with_empty_chamber(shooter)
 		return NONE
-	INVOKE_ASYNC(src, .proc/do_autofire_shot, source, target, shooter, params)
+	INVOKE_ASYNC(src, PROC_REF(do_autofire_shot), source, target, shooter, params)
 	return COMPONENT_AUTOFIRE_SHOT_SUCCESS //All is well, we can continue shooting.
 
 
@@ -279,7 +307,7 @@
 	if(istype(akimbo_gun) && weapon_weight < WEAPON_MEDIUM)
 		if(akimbo_gun.weapon_weight < WEAPON_MEDIUM && akimbo_gun.can_trigger_gun(shooter))
 			bonus_spread = dual_wield_spread
-			addtimer(CALLBACK(akimbo_gun, /obj/item/gun.proc/process_fire, target, shooter, TRUE, params, null, bonus_spread), 1)
+			addtimer(CALLBACK(akimbo_gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, shooter, TRUE, params, null, bonus_spread), 1)
 	process_fire(target, shooter, TRUE, params, null, bonus_spread)
 
 #undef AUTOFIRE_MOUSEUP

@@ -1,0 +1,4 @@
+#comment This repaths the riothelmet and justice helmet to toggleable subtypes. see (https://github.com/tgstation/tgstation/pull/70773)
+
+/obj/item/clothing/head/helmet/riot : /obj/item/clothing/head/helmet/toggleable/riot{@OLD}
+/obj/item/clothing/head/helmet/justice/@SUBTYPES : /obj/item/clothing/head/helmet/toggleable/justice/@SUBTYPES {@OLD}

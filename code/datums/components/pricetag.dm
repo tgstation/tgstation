@@ -23,14 +23,13 @@
 	src.delete_on_unwrap = delete_on_unwrap
 
 /datum/component/pricetag/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_EXPORTED, .proc/on_parent_sold)
+	RegisterSignal(parent, COMSIG_ITEM_EXPORTED, PROC_REF(on_parent_sold))
 	// Register this regardless of delete_on_unwrap because it could change by inherited components.
-	RegisterSignal(parent, list(COMSIG_STRUCTURE_UNWRAPPED, COMSIG_ITEM_UNWRAPPED), .proc/on_parent_unwrap)
+	RegisterSignal(parent, COMSIG_ITEM_UNWRAPPED, PROC_REF(on_parent_unwrap))
 
 /datum/component/pricetag/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_EXPORTED,
-		COMSIG_STRUCTURE_UNWRAPPED,
 		COMSIG_ITEM_UNWRAPPED,
 		))
 
@@ -91,7 +90,7 @@
 		// And of course, the cut is removed from what cargo gets. (But not below zero, just in case)
 		overall_item_price = max(0, overall_item_price - payee_cut)
 
-		payee.adjust_money(payee_cut)
+		payee.adjust_money(payee_cut, "Pricetag: [capitalize(format_text(source.name))] Sale")
 		payee.bank_card_talk("Sale of [source] recorded. [payee_cut] credits added to account.")
 
 	// Update the report with the modified final price

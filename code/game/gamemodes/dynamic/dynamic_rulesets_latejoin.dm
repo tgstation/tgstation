@@ -18,18 +18,23 @@
 			candidates.Remove(P)
 
 /datum/dynamic_ruleset/latejoin/ready(forced = 0)
-	if (!forced)
-		var/job_check = 0
-		if (enemy_roles.len > 0)
-			for (var/mob/M in GLOB.alive_player_list)
-				if (M.stat == DEAD)
-					continue // Dead players cannot count as opponents
-				if (M.mind && (M.mind.assigned_role.title in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role.title in restricted_roles)))
-					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
+	if (forced)
+		return ..()
 
-		var/threat = round(mode.threat_level/10)
-		if (job_check < required_enemies[threat])
-			return FALSE
+	var/job_check = 0
+	if (enemy_roles.len > 0)
+		for (var/mob/M in GLOB.alive_player_list)
+			if (M.stat == DEAD)
+				continue // Dead players cannot count as opponents
+			if (M.mind && (M.mind.assigned_role.title in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role.title in restricted_roles)))
+				job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
+
+	var/threat = round(mode.threat_level/10)
+
+	if (job_check < required_enemies[threat])
+		log_dynamic("FAIL: [src] is not ready, because there are not enough enemies: [required_enemies[threat]] needed, [job_check] found")
+		return FALSE
+
 	return ..()
 
 /datum/dynamic_ruleset/latejoin/execute()
@@ -90,6 +95,7 @@
 		JOB_HEAD_OF_PERSONNEL,
 		JOB_HEAD_OF_SECURITY,
 		JOB_PRISONER,
+		JOB_QUARTERMASTER,
 		JOB_RESEARCH_DIRECTOR,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
@@ -107,14 +113,12 @@
 	required_candidates = 1
 	weight = 2
 	delay = 1 MINUTES // Prevents rule start while head is offstation.
-	cost = 20
+	cost = 10
 	requirements = list(101,101,70,40,30,20,20,20,20,20)
 	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
 	var/required_heads_of_staff = 3
 	var/finished = FALSE
-	/// How much threat should be injected when the revolution wins?
-	var/revs_win_threat_injection = 20
 	var/datum/team/revolution/revolution
 
 /datum/dynamic_ruleset/latejoin/provocateur/ready(forced=FALSE)
@@ -144,12 +148,12 @@
 		SSshuttle.registerHostileEnvironment(revolution)
 		return TRUE
 	else
-		log_game("DYNAMIC: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
-		log_game("DYNAMIC: [ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
+		log_dynamic("[ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
+		log_dynamic("[ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
 		return FALSE
 
 /datum/dynamic_ruleset/latejoin/provocateur/rule_process()
-	var/winner = revolution.process_victory(revs_win_threat_injection)
+	var/winner = revolution.process_victory()
 	if (isnull(winner))
 		return
 
@@ -192,8 +196,8 @@
 	)
 	required_candidates = 1
 	weight = 4
-	cost = 10
-	requirements = list(101,101,101,10,10,10,10,10,10,10)
+	cost = 6
+	requirements = list(101,101,50,10,10,10,10,10,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/latejoin/heretic_smuggler/execute()

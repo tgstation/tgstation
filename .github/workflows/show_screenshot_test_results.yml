@@ -1,0 +1,43 @@
+# This is a separate workflow so that it can access secrets, which are necessary
+# because we need to be able to upload the images and post a comment.
+# In the event this workflow fails, the screenshot test results are still
+# available as an artifact of the screenshot test comparison workflow itself.
+# This simply provides necessary quality of life.
+name: Show Screenshot Test Results
+on:
+  workflow_run:
+    workflows: [CI Suite]
+    types:
+      - completed
+jobs:
+  show_screenshot_test_results:
+    if: "!contains(github.event.head_commit.message, '[ci skip]') && github.event.workflow_run.run_attempt == 1"
+    name: Show Screenshot Test Results
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Check for ARTIFACTS_FILE_HOUSE_KEY"
+        id: secrets_set
+        env:
+          ENABLER_SECRET: ${{ secrets.ARTIFACTS_FILE_HOUSE_KEY }}
+        run: |
+          unset SECRET_EXISTS
+          if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
+          echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
+      - name: Checkout
+        if: steps.secrets_set.outputs.SECRETS_ENABLED
+        uses: actions/checkout@v3
+      - name: Prepare module
+        if: steps.secrets_set.outputs.SECRETS_ENABLED
+        run: |
+          # This is needed because node-fetch needs import and doesn't work with require :/
+          echo "{\"type\": \"module\"}" > package.json
+          npm install node-fetch
+      - name: Show screenshot test results
+        if: steps.secrets_set.outputs.SECRETS_ENABLED
+        uses: actions/github-script@v6
+        env:
+          FILE_HOUSE_KEY: ${{ secrets.ARTIFACTS_FILE_HOUSE_KEY }}
+        with:
+          script: |
+            const { showScreenshotTestResults } = await import('${{ github.workspace }}/tools/ci/show_screenshot_test_results.js')
+            await showScreenshotTestResults({ github, context, exec })

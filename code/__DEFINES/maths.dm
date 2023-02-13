@@ -1,7 +1,13 @@
 // Remove these once we have Byond implementation.
-#define ISNAN(a) (!(a==a))
-#define ISINF(a) (!ISNAN(a) && ISNAN(a-a))
-#define IS_INF_OR_NAN(a) (ISNAN(a-a))
+// ------------------------------------
+#define IS_NAN(a) (a != a)
+
+#define IS_INF__UNSAFE(a) (a == a && a-a != a-a)
+#define IS_INF(a) (isnum(a) && IS_INF__UNSAFE(a))
+
+#define IS_FINITE__UNSAFE(a) (a-a == a-a)
+#define IS_FINITE(a) (isnum(a) && IS_FINITE__UNSAFE(a))
+// ------------------------------------
 // Aight dont remove the rest
 
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
@@ -10,7 +16,6 @@
 
 #define NUM_E 2.71828183
 
-#define SQRT_2 1.414214 //CLOSE ENOUGH!
 
 #define PI 3.1416
 #define INFINITY 1e31 //closer then enough
@@ -43,6 +48,9 @@
 
 // Similar to clamp but the bottom rolls around to the top and vice versa. min is inclusive, max is exclusive
 #define WRAP(val, min, max) clamp(( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) ),min,max)
+
+/// Increments a value and wraps it if it exceeds some value. Can be used to circularly iterate through a list through `idx = WRAP_UP(idx, length_of_list)`.
+#define WRAP_UP(val, max) (((val) % (max)) + 1)
 
 // Real modulus that handles decimals
 #define MODULUS(x, y) ( (x) - FLOOR(x, y))
@@ -101,7 +109,7 @@
 	. = list()
 	var/d = b*b - 4 * a * c
 	var/bottom  = 2 * a
-	if(d < 0 || IS_INF_OR_NAN(d) || IS_INF_OR_NAN(bottom))
+	if(d < 0 || !IS_FINITE__UNSAFE(d) || !IS_FINITE__UNSAFE(bottom))
 		return
 	var/root = sqrt(d)
 	. += (-b + root) / bottom
@@ -114,7 +122,8 @@
 #define TORADIANS(degrees) ((degrees) * 0.0174532925)
 
 /// Gets shift x that would be required the bitflag (1<<x)
-#define TOBITSHIFT(bit) ( log(2, bit) )
+/// We need the round because log has floating-point inaccuracy, and if we undershoot at all on list indexing we'll get the wrong index.
+#define TOBITSHIFT(bit) ( round(log(2, bit), 1) )
 
 // Will filter out extra rotations and negative rotations
 // E.g: 540 becomes 180. -180 becomes 180.
@@ -159,7 +168,7 @@
 			R1 = rand(-ACCURACY,ACCURACY)/ACCURACY
 			R2 = rand(-ACCURACY,ACCURACY)/ACCURACY
 			working = R1*R1 + R2*R2
-		while(working >= 1 || working==0)
+		while(working >= 1 || working == 0)
 		working = sqrt(-2 * log(working) / working)
 		R1 *= working
 		gaussian_next = R2 * working
@@ -226,3 +235,10 @@
 // )
 
 #define GET_TRUE_DIST(a, b) (a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y), abs(a.z-b.z))
+
+//We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
+//And lo and behold, it is, and it's more accurate to boot.
+#define CHEAP_HYPOTENUSE(Ax, Ay, Bx, By) (sqrt(abs(Ax - Bx) ** 2 + abs(Ay - By) ** 2)) //A squared + B squared = C squared
+
+/// The number of cells in a taxicab circle (rasterized diamond) of radius X.
+#define DIAMOND_AREA(X) (1 + 2*(X)*((X)+1))

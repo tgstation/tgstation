@@ -7,7 +7,7 @@
 
 /datum/component/riding/vehicle/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, .proc/driver_move)
+	RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, PROC_REF(driver_move))
 
 /datum/component/riding/vehicle/riding_can_z_move(atom/movable/movable_parent, direction, turf/start, turf/destination, z_move_flags, mob/living/rider)
 	if(!(z_move_flags & ZMOVE_CAN_FLY_CHECKS))
@@ -267,8 +267,8 @@
 	var/delay_multiplier = 6.7 // magic number from wheelchair code
 
 	var/obj/vehicle/ridden/wheelchair/motorized/our_chair = parent
-	for(var/obj/item/stock_parts/manipulator/M in our_chair.contents)
-		speed += M.rating
+	for(var/datum/stock_part/manipulator/manipulator in our_chair.component_parts)
+		speed += manipulator.tier
 	vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / speed
 	return ..()
 

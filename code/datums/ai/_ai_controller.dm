@@ -8,7 +8,9 @@ multiple modular subtrees with behaviors
 	///The atom this controller is controlling
 	var/atom/pawn
 	///Bitfield of traits for this AI to handle extra behavior
-	var/ai_traits
+	var/ai_traits = NONE
+	///Current actions planned to be performed by the AI in the upcoming plan
+	var/list/planned_behaviors
 	///Current actions being performed by the AI.
 	var/list/current_behaviors
 	///Current actions and their respective last time ran as an assoc list.
@@ -17,6 +19,8 @@ multiple modular subtrees with behaviors
 	var/ai_status
 	///Current movement target of the AI, generally set by decision making.
 	var/atom/current_movement_target
+	///Identifier for what last touched our movement target, so it can be cleared conditionally
+	var/movement_target_source
 	///This is a list of variables the AI uses and can be mutated by actions. When an action is performed you pass this list and any relevant keys for the variables it can mutate.
 	var/list/blackboard = list()
 	///Stored arguments for behaviors given during their initial creation
@@ -61,6 +65,13 @@ multiple modular subtrees with behaviors
 	UnpossessPawn(FALSE)
 	return ..()
 
+///Sets the current movement target, with an optional param to override the movement behavior
+/datum/ai_controller/proc/set_movement_target(source, atom/target, datum/ai_movement/new_movement)
+	movement_target_source = source
+	current_movement_target = target
+	if(new_movement)
+		change_ai_movement_type(new_movement)
+
 ///Overrides the current ai_movement of this controller with a new one
 /datum/ai_controller/proc/change_ai_movement_type(datum/ai_movement/new_movement)
 	ai_movement = SSai_movement.movement_types[new_movement]
@@ -95,16 +106,28 @@ multiple modular subtrees with behaviors
 	pawn = new_pawn
 	pawn.ai_controller = src
 
-	if(!continue_processing_when_client && istype(new_pawn, /mob))
-		var/mob/possible_client_holder = new_pawn
-		if(possible_client_holder.client)
-			set_ai_status(AI_STATUS_OFF)
-		else
-			set_ai_status(AI_STATUS_ON)
-	else
+	if (!ismob(new_pawn))
 		set_ai_status(AI_STATUS_ON)
+	else
+		set_ai_status(get_setup_mob_ai_status(new_pawn))
+		RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 
-	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
+	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
+
+/// Mobs have more complicated factors about whether their AI should be on or not
+/datum/ai_controller/proc/get_setup_mob_ai_status(mob/mob_pawn)
+	var/final_status = AI_STATUS_ON
+
+	if(!continue_processing_when_client && mob_pawn.client)
+		final_status = AI_STATUS_OFF
+
+	if(ai_traits & CAN_ACT_WHILE_DEAD)
+		return final_status
+
+	if(mob_pawn.stat == DEAD)
+		final_status = AI_STATUS_OFF
+
+	return final_status
 
 ///Abstract proc for initializing the pawn to the new controller
 /datum/ai_controller/proc/TryPossessPawn(atom/new_pawn)
@@ -112,7 +135,7 @@ multiple modular subtrees with behaviors
 
 ///Proc for deinitializing the pawn to the old controller
 /datum/ai_controller/proc/UnpossessPawn(destroy)
-	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT))
+	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE))
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
 	pawn.ai_controller = null
@@ -123,6 +146,8 @@ multiple modular subtrees with behaviors
 
 ///Returns TRUE if the ai controller can actually run at the moment.
 /datum/ai_controller/proc/able_to_run()
+	if(HAS_TRAIT(pawn, TRAIT_AI_PAUSED))
+		return FALSE
 	if(world.time < paused_until)
 		return FALSE
 	return TRUE
@@ -138,13 +163,18 @@ multiple modular subtrees with behaviors
 		idle_behavior.perform_idle_behavior(delta_time, src) //Do some stupid shit while we have nothing to do
 		return
 
-	if(current_movement_target && get_dist(pawn, current_movement_target) > max_target_distance) //The distance is out of range
-		CancelActions()
-		return
+	if(current_movement_target)
+		if(!isatom(current_movement_target))
+			stack_trace("[pawn]'s current movement target is not an atom, rather a [current_movement_target.type]! Did you accidentally set it to a weakref?")
+			CancelActions()
+			return
 
-	for(var/i in current_behaviors)
-		var/datum/ai_behavior/current_behavior = i
+		if(get_dist(pawn, current_movement_target) > max_target_distance) //The distance is out of range
+			CancelActions()
+			return
 
+
+	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 
 		// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
 		// Then pick the max of this and the delta_time passed to ai_controller.process()
@@ -178,6 +208,14 @@ multiple modular subtrees with behaviors
 			ProcessBehavior(action_delta_time, current_behavior)
 			return
 
+///Determines whether the AI can currently make a new plan
+/datum/ai_controller/proc/able_to_plan()
+	. = TRUE
+	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
+		if(!(current_behavior.behavior_flags & AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION)) //We have a behavior that blocks planning
+			. = FALSE
+			break
+
 ///This is where you decide what actions are taken by the AI.
 /datum/ai_controller/proc/SelectBehaviors(delta_time)
 	SHOULD_NOT_SLEEP(TRUE) //Fuck you don't sleep in procs like this.
@@ -185,11 +223,21 @@ multiple modular subtrees with behaviors
 		return FALSE
 
 	LAZYINITLIST(current_behaviors)
+	LAZYCLEARLIST(planned_behaviors)
 
 	if(LAZYLEN(planning_subtrees))
 		for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
 			if(subtree.SelectBehaviors(src, delta_time) == SUBTREE_RETURN_FINISH_PLANNING)
 				break
+
+	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
+		if(LAZYACCESS(planned_behaviors, current_behavior))
+			continue
+		var/list/arguments = list(src, FALSE)
+		var/list/stored_arguments = behavior_args[type]
+		if(stored_arguments)
+			arguments += stored_arguments
+		current_behavior.finish_action(arglist(arguments))
 
 ///This proc handles changing ai status, and starts/stops processing if required.
 /datum/ai_controller/proc/set_ai_status(new_ai_status)
@@ -216,9 +264,15 @@ multiple modular subtrees with behaviors
 		CRASH("Behavior [behavior_type] not found.")
 	var/list/arguments = args.Copy()
 	arguments[1] = src
+
+	if(LAZYACCESS(current_behaviors, behavior)) ///It's still in the plan, don't add it again to current_behaviors but do keep it in the planned behavior list so its not cancelled
+		LAZYADDASSOC(planned_behaviors, behavior, TRUE)
+		return
+
 	if(!behavior.setup(arglist(arguments)))
 		return
-	LAZYADD(current_behaviors, behavior)
+	LAZYADDASSOC(current_behaviors, behavior, TRUE)
+	LAZYADDASSOC(planned_behaviors, behavior, TRUE)
 	arguments.Cut(1, 2)
 	if(length(arguments))
 		behavior_args[behavior_type] = arguments
@@ -243,18 +297,24 @@ multiple modular subtrees with behaviors
 			arguments += stored_arguments
 		current_behavior.finish_action(arglist(arguments))
 
+/// Turn the controller on or off based on if you're alive, we only register to this if the flag is present so don't need to check again
+/datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
+	SIGNAL_HANDLER
+	var/new_ai_status = get_setup_mob_ai_status(source)
+	set_ai_status(new_ai_status)
+
 /datum/ai_controller/proc/on_sentience_gained()
 	SIGNAL_HANDLER
 	UnregisterSignal(pawn, COMSIG_MOB_LOGIN)
 	if(!continue_processing_when_client)
 		set_ai_status(AI_STATUS_OFF) //Can't do anything while player is connected
-	RegisterSignal(pawn, COMSIG_MOB_LOGOUT, .proc/on_sentience_lost)
+	RegisterSignal(pawn, COMSIG_MOB_LOGOUT, PROC_REF(on_sentience_lost))
 
 /datum/ai_controller/proc/on_sentience_lost()
 	SIGNAL_HANDLER
 	UnregisterSignal(pawn, COMSIG_MOB_LOGOUT)
 	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
-	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
+	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
 /// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding, likely pointing to whatever ID slot is relevant
 /datum/ai_controller/proc/get_access()
@@ -270,3 +330,8 @@ multiple modular subtrees with behaviors
 		if(iter_behavior.required_distance < minimum_distance)
 			minimum_distance = iter_behavior.required_distance
 	return minimum_distance
+
+/// If this controller is applied to a human subtype, this proc will be called to generate examine text
+/datum/ai_controller/proc/get_human_examine_text()
+	var/text = "[span_deadsay("[pawn.p_they(TRUE)] do[pawn.p_es()]n't appear to be [pawn.p_them()]self.")]"
+	return text

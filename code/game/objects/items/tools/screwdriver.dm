@@ -11,6 +11,7 @@
 	flags_1 = CONDUCT_1 | IS_PLAYER_COLORABLE_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
+	demolition_mod = 0.5
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
 	throw_speed = 3
@@ -22,7 +23,7 @@
 	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
 	tool_behaviour = TOOL_SCREWDRIVER
 	toolspeed = 1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/item_screwdriver
 	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
 	pickup_sound = 'sound/items/handling/screwdriver_pickup.ogg'
 	sharpness = SHARP_POINTY
@@ -34,25 +35,29 @@
 	var/random_color = TRUE
 	/// List of possible random colors
 	var/static/list/screwdriver_colors = list(
-		"blue" = "#1861d5",
-		"red" = "#ff0000",
-		"pink" = "#d5188d",
-		"brown" = "#a05212",
-		"green" = "#0e7f1b",
-		"cyan" = "#18a2d5",
-		"yellow" = "#ffa500"
+		COLOR_TOOL_BLUE,
+		COLOR_TOOL_RED,
+		COLOR_TOOL_PINK,
+		COLOR_TOOL_BROWN,
+		COLOR_TOOL_GREEN,
+		COLOR_TOOL_CYAN,
+		COLOR_TOOL_YELLOW,
 	)
 
-/obj/item/screwdriver/suicide_act(mob/user)
+/datum/armor/item_screwdriver
+	fire = 50
+	acid = 30
+
+/obj/item/screwdriver/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return(BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/screwdriver/Initialize(mapload)
 	if(random_color)
-		var/our_color = pick(screwdriver_colors)
-		set_greyscale(colors=list(screwdriver_colors[our_color]))
+		set_greyscale(colors = list(pick(screwdriver_colors)))
 	. = ..()
 	AddElement(/datum/element/eyestab)
+	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
 
 /obj/item/screwdriver/abductor
 	name = "alien screwdriver"
@@ -81,7 +86,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_materials = list(/datum/material/iron=3500, /datum/material/silver=1500, /datum/material/titanium=2500) //what research value?
 	force = 8 //might or might not be too high, subject to change
-	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 8
 	throw_speed = 2
 	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
@@ -89,6 +93,7 @@
 	attack_verb_simple = list("drill", "screw", "jab", "whack")
 	hitsound = 'sound/items/drill_hit.ogg'
 	usesound = 'sound/items/drill_use.ogg'
+	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	random_color = FALSE
 	greyscale_config = null
@@ -104,7 +109,7 @@
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
 		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -123,13 +128,13 @@
 	. = ..()
 	. += " It's fitted with a [tool_behaviour == TOOL_SCREWDRIVER ? "screw" : "bolt"] bit."
 
-/obj/item/screwdriver/power/suicide_act(mob/user)
+/obj/item/screwdriver/power/suicide_act(mob/living/user)
 	if(tool_behaviour == TOOL_SCREWDRIVER)
 		user.visible_message(span_suicide("[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!"))
 	else
 		user.visible_message(span_suicide("[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/items/drill_use.ogg', 50, TRUE, -1)
-	return(BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/screwdriver/cyborg
 	name = "automated screwdriver"
@@ -140,3 +145,10 @@
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.5
 	random_color = FALSE
+
+/obj/item/screwdriver/red
+	random_color = FALSE
+
+/obj/item/screwdriver/red/Initialize(mapload)
+	. = ..()
+	set_greyscale(colors=list(screwdriver_colors["red"]))

@@ -102,20 +102,25 @@
 	// We can't add the timer without the timer ID, but we can't get the timer ID without the timer!
 	// To solve this, we just use a list that we mutate later.
 	var/list/data = list("input" = input)
-	var/timer_id = addtimer(CALLBACK(src, .proc/receive_cross_comms_message, data), CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
+	// Did we have to pass the soft filter on our origin server? Passed as a boolean value.
+	var/soft_filter_passed = !!input["is_filtered"]
+	var/timer_id = addtimer(CALLBACK(src, PROC_REF(receive_cross_comms_message), data), soft_filter_passed ? EXTENDED_CROSS_SECTOR_CANCEL_TIME : CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
 	data["timer_id"] = timer_id
 
 	LAZYADD(timers, timer_id)
 
-	to_chat(
-		GLOB.admins,
-		span_adminnotice( \
-			"<b color='orange'>CROSS-SECTOR MESSAGE (INCOMING):</b> [input["sender_ckey"]] (from [input["source"]]) is about to send \
-			the following message (will autoapprove in [DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
-			<b><a href='?src=[REF(src)];reject_cross_comms_message=[timer_id]'>REJECT</a></b><br> \
-			[html_encode(input["message"])]" \
-		)
-	)
+	var/extended_time_display = DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME)
+	var/normal_time_display = DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)
+
+	var/message = "<b color='orange'>CROSS-SECTOR MESSAGE (INCOMING):</b> [input["sender_ckey"]] (from [input["source"]]) is about to send \
+			the following message (will autoapprove in [soft_filter_passed ? "[extended_time_display]" : "[normal_time_display]"]): \
+			<b><a href='?src=[REF(src)];reject_cross_comms_message=[timer_id]'>REJECT</a></b><br><br>\
+			[html_encode(input["message"])]"
+
+	if(soft_filter_passed)
+		message += "<br><br><b>NOTE: This message passed the soft filter on the origin server! The time was automatically expanded to [extended_time_display].</b>"
+
+	message_admins(span_adminnotice(message))
 
 /datum/world_topic/comms_console/Topic(href, list/href_list)
 	. = ..()
@@ -149,7 +154,7 @@
 
 	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
 	message_admins("Receiving a message from [input["sender_ckey"]] at [input["source"]]")
-	for(var/obj/machinery/computer/communications/communications_console in GLOB.machines)
+	for(var/obj/machinery/computer/communications/communications_console in GLOB.shuttle_caller_list)
 		communications_console.override_cooldown()
 
 /datum/world_topic/news_report
@@ -213,7 +218,7 @@
 	if(key_valid)
 		.["active_players"] = get_active_player_count()
 
-	.["security_level"] = get_security_level()
+	.["security_level"] = SSsecurity_level.get_current_level_as_text()
 	.["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0
 	// Amount of world's ticks in seconds, useful for calculating round duration
 

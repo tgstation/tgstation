@@ -5,8 +5,6 @@
 	icon = 'icons/obj/machines/suit_storage.dmi'
 	icon_state = "classic"
 	base_icon_state = "classic"
-	use_power = ACTIVE_POWER_USE
-	active_power_usage = 60
 	power_channel = AREA_USAGE_EQUIP
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the unit is open
@@ -59,6 +57,12 @@
 	suit_type = /obj/item/clothing/suit/space/eva
 	helmet_type = /obj/item/clothing/head/helmet/space/eva
 	mask_type = /obj/item/clothing/mask/breath
+
+/obj/machinery/suit_storage_unit/spaceruin
+	suit_type = /obj/item/clothing/suit/space
+	helmet_type = /obj/item/clothing/head/helmet/space
+	mask_type = /obj/item/clothing/mask/breath
+	storage_type = /obj/item/tank/internals/oxygen
 
 /obj/machinery/suit_storage_unit/captain
 	mask_type = /obj/item/clothing/mask/gas/atmos/captain
@@ -114,6 +118,7 @@
 
 /obj/machinery/suit_storage_unit/rd
 	mask_type = /obj/item/clothing/mask/breath
+	storage_type = /obj/item/tank/internals/oxygen
 	mod_type = /obj/item/mod/control/pre_equipped/research
 
 /obj/machinery/suit_storage_unit/syndicate
@@ -121,10 +126,18 @@
 	storage_type = /obj/item/tank/jetpack/oxygen/harness
 	mod_type = /obj/item/mod/control/pre_equipped/nuclear
 
+/obj/machinery/suit_storage_unit/void_old
+	suit_type = /obj/item/clothing/suit/space/nasavoid/old
+	helmet_type = /obj/item/clothing/head/helmet/space/nasavoid/old
+	storage_type = /obj/item/tank/internals/oxygen/yellow
+
+/obj/machinery/suit_storage_unit/void_old/jetpack
+	storage_type = /obj/item/tank/jetpack/void
+
 /obj/machinery/suit_storage_unit/radsuit
 	name = "radiation suit storage unit"
-	suit_type = /obj/item/clothing/suit/radiation
-	helmet_type = /obj/item/clothing/head/radiation
+	suit_type = /obj/item/clothing/suit/utility/radiation
+	helmet_type = /obj/item/clothing/head/utility/radiation
 	storage_type = /obj/item/geiger_counter
 
 /obj/machinery/suit_storage_unit/open
@@ -262,7 +275,7 @@
 		user,
 		src,
 		choices,
-		custom_check = CALLBACK(src, .proc/check_interactable, user),
+		custom_check = CALLBACK(src, PROC_REF(check_interactable), user),
 		require_near = !issilicon(user),
 	)
 
@@ -349,7 +362,7 @@
 	else
 		target.visible_message(span_warning("[user] starts shoving [target] into [src]!"), span_userdanger("[user] starts shoving you into [src]!"))
 
-	if(do_mob(user, target, 30))
+	if(do_after(user, 30, target))
 		if(occupant || helmet || suit || storage)
 			return
 		if(target == user)
@@ -382,7 +395,7 @@
 			if(iscarbon(mob_occupant) && mob_occupant.stat < UNCONSCIOUS)
 				//Awake, organic and screaming
 				mob_occupant.emote("scream")
-		addtimer(CALLBACK(src, .proc/cook), 50)
+		addtimer(CALLBACK(src, PROC_REF(cook)), 50)
 	else
 		uv_cycles = initial(uv_cycles)
 		uv = FALSE
@@ -390,8 +403,8 @@
 		if(uv_super)
 			visible_message(span_warning("[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber."))
 			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
-			var/datum/effect_system/smoke_spread/bad/black/smoke = new
-			smoke.set_up(0, src)
+			var/datum/effect_system/fluid_spread/smoke/bad/black/smoke = new
+			smoke.set_up(0, holder = src, location = src)
 			smoke.start()
 			QDEL_NULL(helmet)
 			QDEL_NULL(suit)
@@ -439,10 +452,12 @@
 		cell = suit.cell
 	if(mod)
 		cell = mod.get_cell()
-	if(!cell)
+	if(!cell || cell.charge == cell.maxcharge)
 		return
-	use_power(charge_rate * delta_time)
-	cell.give(charge_rate * delta_time)
+
+	var/cell_charged = cell.give(charge_rate * delta_time)
+	if(cell_charged)
+		use_power((active_power_usage + charge_rate) * delta_time)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))
@@ -483,7 +498,7 @@
 	if(locked)
 		visible_message(span_notice("You see [user] kicking against the doors of [src]!"), \
 			span_notice("You start kicking against the doors..."))
-		addtimer(CALLBACK(src, .proc/resist_open, user), 300)
+		addtimer(CALLBACK(src, PROC_REF(resist_open), user), 300)
 	else
 		open_machine()
 		dump_inventory_contents()

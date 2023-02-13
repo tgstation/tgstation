@@ -1,7 +1,7 @@
 /obj/item/stack/sheet/hot_ice
 	name = "hot ice"
 	icon_state = "hot-ice"
-	inhand_icon_state = "hot-ice"
+	inhand_icon_state = null
 	singular_name = "hot ice piece"
 	icon = 'icons/obj/stack_objects.dmi'
 	mats_per_unit = list(/datum/material/hot_ice=MINERAL_MATERIAL_AMOUNT)

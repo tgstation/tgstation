@@ -2,7 +2,7 @@
 /obj/singularity
 	name = "gravitational singularity"
 	desc = "A gravitational singularity."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "singularity_s1"
 	anchored = TRUE
 	density = TRUE
@@ -53,7 +53,7 @@
 
 	var/datum/component/singularity/new_component = AddComponent(
 		/datum/component/singularity, \
-		consume_callback = CALLBACK(src, .proc/consume), \
+		consume_callback = CALLBACK(src, PROC_REF(consume)), \
 	)
 
 	singularity_component = WEAKREF(new_component)
@@ -102,7 +102,7 @@
 		rip_u.dismember(BURN) //nice try jedi
 		qdel(rip_u)
 		return
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/carbon_tk_part_two, jedi), 0.1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(carbon_tk_part_two), jedi), 0.1 SECONDS)
 
 /obj/singularity/proc/carbon_tk_part_two(mob/living/carbon/jedi)
 	if(QDELETED(jedi))
@@ -118,7 +118,7 @@
 			rip_u.dismember(BURN)
 			qdel(rip_u)
 		return
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/carbon_tk_part_three, jedi), 0.1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(carbon_tk_part_three), jedi), 0.1 SECONDS)
 
 /obj/singularity/proc/carbon_tk_part_three(mob/living/carbon/jedi)
 	if(QDELETED(jedi))
@@ -137,7 +137,7 @@
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			if(current_size <= STAGE_TWO)
-				investigate_log("has been destroyed by a heavy explosion.", INVESTIGATE_SINGULO)
+				investigate_log("has been destroyed by a heavy explosion.", INVESTIGATE_ENGINE)
 				qdel(src)
 				return
 
@@ -184,7 +184,7 @@
 	switch(temp_allowed_size)
 		if(STAGE_ONE)
 			current_size = STAGE_ONE
-			icon = 'icons/obj/singularity.dmi'
+			icon = 'icons/obj/engine/singularity.dmi'
 			icon_state = "singularity_s1"
 			pixel_x = 0
 			pixel_y = 0
@@ -257,7 +257,7 @@
 		resolved_singularity.singularity_size = current_size
 
 	if(current_size == allowed_size)
-		investigate_log("<font color='red'>grew to size [current_size]</font>", INVESTIGATE_SINGULO)
+		investigate_log("grew to size [current_size].", INVESTIGATE_ENGINE)
 		return TRUE
 	else if(current_size < (--temp_allowed_size))
 		expand(temp_allowed_size)
@@ -266,7 +266,7 @@
 
 /obj/singularity/proc/check_energy()
 	if(energy <= 0)
-		investigate_log("collapsed.", INVESTIGATE_SINGULO)
+		investigate_log("collapsed.", INVESTIGATE_ENGINE)
 		qdel(src)
 		return FALSE
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
@@ -362,7 +362,7 @@
 /obj/singularity/proc/can_move(turf/considered_turf)
 	if(!considered_turf)
 		return FALSE
-	if((locate(/obj/machinery/field/containment) in considered_turf)||(locate(/obj/machinery/shieldwall) in considered_turf))
+	if((locate(/obj/machinery/field/containment) in considered_turf) || (locate(/obj/machinery/shieldwall) in considered_turf))
 		return FALSE
 	else if(locate(/obj/machinery/field/generator) in considered_turf)
 		var/obj/machinery/field/generator/check_generator = locate(/obj/machinery/field/generator) in considered_turf
@@ -396,7 +396,7 @@
 			span_userdanger("You feel an inner fire as your skin bursts into flames!")
 		)
 		burned_mob.adjust_fire_stacks(5)
-		burned_mob.IgniteMob()
+		burned_mob.ignite_mob()
 	return
 
 /obj/singularity/proc/mezzer()
@@ -411,7 +411,7 @@
 		var/mob/living/carbon/human/stunned_human = stunned_mob
 		if(istype(stunned_human.glasses, /obj/item/clothing/glasses/meson))
 			var/obj/item/clothing/glasses/meson/check_meson = stunned_human.glasses
-			if(check_meson.vision_flags == SEE_TURFS)
+			if(check_meson.vision_flags & SEE_TURFS)
 				to_chat(stunned_human, span_notice("You look directly into the [name], good thing you had your protective eyewear on!"))
 				continue
 
@@ -430,7 +430,7 @@
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)
 	var/dist = max((current_size - 2),1)
-	investigate_log("has been destroyed by another singularity.", INVESTIGATE_SINGULO)
+	investigate_log("has been destroyed by another singularity.", INVESTIGATE_ENGINE)
 	explosion(
 		src,
 		devastation_range = dist,
@@ -441,7 +441,7 @@
 	return gain
 
 /obj/singularity/deadchat_plays(mode = DEMOCRACY_MODE, cooldown = 12 SECONDS)
-	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown, CALLBACK(src, .proc/stop_deadchat_plays))
+	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown, CALLBACK(src, PROC_REF(stop_deadchat_plays)))
 
 	if(. == COMPONENT_INCOMPATIBLE)
 		return

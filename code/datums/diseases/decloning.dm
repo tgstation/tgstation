@@ -11,6 +11,7 @@
 	cures = list(/datum/reagent/medicine/rezadone)
 	disease_flags = CAN_CARRY|CAN_RESIST
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
+	spread_text = "Organic meltdown"
 	process_dead = TRUE
 
 /datum/disease/decloning/stage_act(delta_time, times_fired)
@@ -47,7 +48,7 @@
 				affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 170)
 				affected_mob.adjustCloneLoss(2, FALSE)
 			if(DT_PROB(7.5, delta_time))
-				affected_mob.stuttering += 3
+				affected_mob.adjust_stutter(6 SECONDS)
 		if(5)
 			if(DT_PROB(1, delta_time))
 				affected_mob.emote("itch")

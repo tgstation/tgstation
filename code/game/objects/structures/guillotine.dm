@@ -1,22 +1,32 @@
-#define GUILLOTINE_BLADE_MAX_SHARP  10 // This is maxiumum sharpness and will decapitate without failure
-#define GUILLOTINE_DECAP_MIN_SHARP  7  // Minimum amount of sharpness for decapitation. Any less and it will just do severe brute damage
-#define GUILLOTINE_ANIMATION_LENGTH 9 // How many deciseconds the animation is
-#define GUILLOTINE_BLADE_RAISED     1
-#define GUILLOTINE_BLADE_MOVING     2
-#define GUILLOTINE_BLADE_DROPPED    3
+#define GUILLOTINE_BLADE_IDLE 0
+#define GUILLOTINE_BLADE_RAISED 1
+#define GUILLOTINE_BLADE_MOVING 2
+#define GUILLOTINE_BLADE_DROPPED 3
 #define GUILLOTINE_BLADE_SHARPENING 4
-#define GUILLOTINE_HEAD_OFFSET      16 // How much we need to move the player to center their head
-#define GUILLOTINE_LAYER_DIFF       1.2 // How much to increase/decrease a head when it's buckled/unbuckled
-#define GUILLOTINE_ACTIVATE_DELAY   30 // Delay for executing someone
-#define GUILLOTINE_WRENCH_DELAY     10
-#define GUILLOTINE_ACTION_INUSE      5
-#define GUILLOTINE_ACTION_WRENCH     6
+#define GUILLOTINE_ACTION_INUSE 5
+#define GUILLOTINE_ACTION_WRENCH 6
+
+/// This is maxiumum sharpness and will decapitate without failure
+#define GUILLOTINE_BLADE_MAX_SHARP 10
+/// Minimum amount of sharpness for decapitation. Any less and it will just do severe brute damage
+#define GUILLOTINE_DECAP_MIN_SHARP 7
+/// How long the guillotine animation lasts
+#define GUILLOTINE_ANIMATION_LENGTH (0.9 SECONDS)
+/// How much we need to move the player to center their head
+#define GUILLOTINE_HEAD_OFFSET 16
+/// How much to increase/decrease a head when it's buckled/unbuckled
+#define GUILLOTINE_LAYER_DIFF 1.2
+/// Delay for executing someone
+#define GUILLOTINE_ACTIVATE_DELAY (3 SECONDS)
+#define GUILLOTINE_WRENCH_DELAY (1 SECONDS)
 
 /obj/structure/guillotine
 	name = "guillotine"
 	desc = "A large structure used to remove the heads of traitors and treasonists."
 	icon = 'icons/obj/guillotine.dmi'
 	icon_state = "guillotine_raised"
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "guilliotine"
 	can_buckle = TRUE
 	anchored = TRUE
 	density = TRUE
@@ -25,10 +35,11 @@
 	buckle_prevents_pull = TRUE
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
+	var/drop_sound = 'sound/weapons/guillotine.ogg'
 	var/blade_status = GUILLOTINE_BLADE_RAISED
 	var/blade_sharpness = GUILLOTINE_BLADE_MAX_SHARP // How sharp the blade is
 	var/kill_count = 0
-	var/current_action = 0 // What's currently happening to the guillotine
+	var/current_action = GUILLOTINE_BLADE_IDLE // What's currently happening to the guillotine
 
 /obj/structure/guillotine/Initialize(mapload)
 	LAZYINITLIST(buckled_mobs)
@@ -80,7 +91,7 @@
 		if (GUILLOTINE_BLADE_DROPPED)
 			blade_status = GUILLOTINE_BLADE_MOVING
 			icon_state = "guillotine_raise"
-			addtimer(CALLBACK(src, .proc/raise_blade), GUILLOTINE_ANIMATION_LENGTH)
+			addtimer(CALLBACK(src, PROC_REF(raise_blade)), GUILLOTINE_ANIMATION_LENGTH)
 			return
 		if (GUILLOTINE_BLADE_RAISED)
 			if (LAZYLEN(buckled_mobs))
@@ -90,12 +101,12 @@
 					current_action = GUILLOTINE_ACTION_INUSE
 
 					if (do_after(user, GUILLOTINE_ACTIVATE_DELAY, target = src) && blade_status == GUILLOTINE_BLADE_RAISED)
-						current_action = 0
+						current_action = GUILLOTINE_BLADE_IDLE
 						blade_status = GUILLOTINE_BLADE_MOVING
 						icon_state = "guillotine_drop"
-						addtimer(CALLBACK(src, .proc/drop_blade, user), GUILLOTINE_ANIMATION_LENGTH - 2) // Minus two so we play the sound and decap faster
+						addtimer(CALLBACK(src, PROC_REF(drop_blade), user), GUILLOTINE_ANIMATION_LENGTH - 2) // Minus two so we play the sound and decap faster
 					else
-						current_action = 0
+						current_action = GUILLOTINE_BLADE_IDLE
 				else
 					var/mob/living/carbon/human/H = buckled_mobs[1]
 
@@ -106,7 +117,7 @@
 			else
 				blade_status = GUILLOTINE_BLADE_MOVING
 				icon_state = "guillotine_drop"
-				addtimer(CALLBACK(src, .proc/drop_blade), GUILLOTINE_ANIMATION_LENGTH)
+				addtimer(CALLBACK(src, PROC_REF(drop_blade)), GUILLOTINE_ANIMATION_LENGTH)
 
 /obj/structure/guillotine/proc/raise_blade()
 	blade_status = GUILLOTINE_BLADE_RAISED
@@ -124,7 +135,7 @@
 		if (QDELETED(head))
 			return
 
-		playsound(src, 'sound/weapons/guillotine.ogg', 100, TRUE)
+		playsound(src, drop_sound, 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 			head.dismember()
 			log_combat(user, H, "beheaded", src)
@@ -149,7 +160,7 @@
 			for(var/mob/M in viewers(src, 7))
 				var/mob/living/carbon/human/C = M
 				if (ishuman(M))
-					addtimer(CALLBACK(C, /mob/.proc/emote, "clap"), delay_offset * 0.3)
+					addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/, emote), "clap"), delay_offset * 0.3)
 					delay_offset++
 		else
 			H.apply_damage(15 * blade_sharpness, BRUTE, head)
@@ -195,7 +206,7 @@
 		to_chat(usr, span_warning("[src] needs to be wrenched to the floor!"))
 		return FALSE
 
-	if (!istype(M, /mob/living/carbon/human))
+	if (!ishuman(M))
 		to_chat(usr, span_warning("It doesn't look like [M.p_they()] can fit into this properly!"))
 		return FALSE // Can't decapitate non-humans
 
@@ -206,10 +217,10 @@
 	return ..(M, user, check_loc = FALSE) //check_loc = FALSE to allow moving people in from adjacent turfs
 
 /obj/structure/guillotine/post_buckle_mob(mob/living/M)
-	if (!istype(M, /mob/living/carbon/human))
+	if (!ishuman(M))
 		return
 
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "dying", /datum/mood_event/deaths_door)
+	M.add_mood_event("dying", /datum/mood_event/deaths_door)
 	var/mob/living/carbon/human/H = M
 
 	if (H.dna)
@@ -219,6 +230,7 @@
 			if (istype(S))
 				H.cut_overlays()
 				H.update_body_parts_head_only()
+				H.remove_overlay(BODY_ADJ_LAYER)
 				H.pixel_y += -GUILLOTINE_HEAD_OFFSET // Offset their body so it looks like they're in the guillotine
 				H.layer += GUILLOTINE_LAYER_DIFF
 			else
@@ -234,7 +246,7 @@
 	M.regenerate_icons()
 	M.pixel_y -= -GUILLOTINE_HEAD_OFFSET // Move their body back
 	M.layer -= GUILLOTINE_LAYER_DIFF
-	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "dying")
+	M.clear_mood_event("dying")
 	..()
 
 /obj/structure/guillotine/can_be_unfasten_wrench(mob/user, silent)
@@ -246,33 +258,29 @@
 	if (current_action)
 		return FAILED_UNFASTEN
 
+	current_action = GUILLOTINE_ACTION_WRENCH
 	return ..()
 
-/obj/structure/guillotine/wrench_act(mob/living/user, obj/item/I)
+/obj/structure/guillotine/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if (current_action)
-		return
-
-	current_action = GUILLOTINE_ACTION_WRENCH
-
-	if (do_after(user, GUILLOTINE_WRENCH_DELAY, target = src))
-		current_action = 0
-		default_unfasten_wrench(user, I, 0)
+	if(default_unfasten_wrench(user, tool, time = GUILLOTINE_WRENCH_DELAY))
 		setDir(SOUTH)
-		return TRUE
-	else
-		current_action = 0
+		current_action = GUILLOTINE_BLADE_IDLE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	current_action = GUILLOTINE_BLADE_IDLE
+	return FALSE
 
 #undef GUILLOTINE_BLADE_MAX_SHARP
 #undef GUILLOTINE_DECAP_MIN_SHARP
 #undef GUILLOTINE_ANIMATION_LENGTH
+#undef GUILLOTINE_HEAD_OFFSET
+#undef GUILLOTINE_LAYER_DIFF
+#undef GUILLOTINE_ACTIVATE_DELAY
+
+#undef GUILLOTINE_BLADE_IDLE
 #undef GUILLOTINE_BLADE_RAISED
 #undef GUILLOTINE_BLADE_MOVING
 #undef GUILLOTINE_BLADE_DROPPED
 #undef GUILLOTINE_BLADE_SHARPENING
-#undef GUILLOTINE_HEAD_OFFSET
-#undef GUILLOTINE_LAYER_DIFF
-#undef GUILLOTINE_ACTIVATE_DELAY
 #undef GUILLOTINE_WRENCH_DELAY
 #undef GUILLOTINE_ACTION_INUSE
-#undef GUILLOTINE_ACTION_WRENCH

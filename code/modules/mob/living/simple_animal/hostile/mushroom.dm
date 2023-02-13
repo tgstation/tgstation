@@ -33,7 +33,7 @@
 	robust_searching = 1
 	unique_name = 1
 	speak_emote = list("squeaks")
-	deathmessage = "fainted."
+	death_message = "fainted."
 	var/cap_color = "#ffffff"
 	var/powerlevel = 0 //Tracks our general strength level gained from eating other shrooms
 	var/bruised = 0 //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it won't award levels to shrooms that eat it
@@ -92,7 +92,7 @@
 /mob/living/simple_animal/hostile/mushroom/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5
-		addtimer(CALLBACK(src, .proc/stop_retreat), 30)
+		addtimer(CALLBACK(src, PROC_REF(stop_retreat)), 30)
 	. = ..()
 
 /mob/living/simple_animal/hostile/mushroom/proc/stop_retreat()
@@ -116,14 +116,16 @@
 		return TRUE
 	return ..()
 
-/mob/living/simple_animal/hostile/mushroom/revive(full_heal = FALSE, admin_revive = FALSE)
-	if(..())
-		icon_state = "mushroom_color"
-		UpdateMushroomCap()
-		. = 1
+/mob/living/simple_animal/hostile/mushroom/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+	. = ..()
+	if(!.)
+		return
+
+	icon_state = "mushroom_color"
+	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/death(gibbed)
-	..(gibbed)
+	. = ..()
 	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/proc/UpdateMushroomCap()
@@ -138,10 +140,10 @@
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
 	visible_message(span_notice("[src] slowly begins to recover."))
 	faint_ticker = 0
-	revive(full_heal = TRUE, admin_revive = FALSE)
+	revive(HEAL_ALL)
 	UpdateMushroomCap()
 	recovery_cooldown = 1
-	addtimer(CALLBACK(src, .proc/recovery_recharge), 300)
+	addtimer(CALLBACK(src, PROC_REF(recovery_recharge)), 300)
 
 /mob/living/simple_animal/hostile/mushroom/proc/recovery_recharge()
 	recovery_cooldown = 0
@@ -180,7 +182,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	..()
-	if(istype(AM, /obj/item))
+	if(isitem(AM))
 		var/obj/item/T = AM
 		if(T.throwforce)
 			Bruise()
@@ -192,7 +194,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/harvest()
 	var/counter
-	for(counter=0, counter<=powerlevel, counter++)
+	for(counter=0, counter <= powerlevel, counter++)
 		var/obj/item/food/hugemushroomslice/S = new /obj/item/food/hugemushroomslice(src.loc)
 		S.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, powerlevel)
 		S.reagents.add_reagent(/datum/reagent/medicine/omnizine, powerlevel)

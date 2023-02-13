@@ -1,6 +1,6 @@
 /obj/structure/spawner
 	name = "monster nest"
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "hole"
 	max_integrity = 100
 
@@ -9,8 +9,8 @@
 	density = TRUE
 
 	var/max_mobs = 5
-	var/spawn_time = 300 //30 seconds default
-	var/mob_types = list(/mob/living/simple_animal/hostile/carp)
+	var/spawn_time = 30 SECONDS
+	var/mob_types = list(/mob/living/basic/carp)
 	var/spawn_text = "emerges from"
 	var/faction = list("hostile")
 	var/spawner_type = /datum/component/spawner
@@ -30,17 +30,17 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	spawn_text = "warps in from"
-	mob_types = list(/mob/living/simple_animal/hostile/syndicate/ranged)
+	mob_types = list(/mob/living/basic/syndicate/ranged)
 	faction = list(ROLE_SYNDICATE)
 
 /obj/structure/spawner/skeleton
 	name = "bone pit"
 	desc = "A pit full of bones, and some still seem to be moving..."
 	icon_state = "hole"
-	icon = 'icons/mob/nest.dmi'
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	max_integrity = 150
 	max_mobs = 15
-	spawn_time = 150
+	spawn_time = 15 SECONDS
 	mob_types = list(/mob/living/simple_animal/hostile/skeleton)
 	spawn_text = "climbs out of"
 	faction = list("skeleton")
@@ -52,7 +52,7 @@
 	icon = 'icons/obj/device.dmi'
 	max_integrity = 200
 	max_mobs = 15
-	spawn_time = 150
+	spawn_time = 15 SECONDS
 	mob_types = list(/mob/living/simple_animal/hostile/retaliate/clown, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk, /mob/living/simple_animal/hostile/retaliate/clown/longface, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus, /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton, /mob/living/simple_animal/hostile/retaliate/clown/banana, /mob/living/simple_animal/hostile/retaliate/clown/honkling, /mob/living/simple_animal/hostile/retaliate/clown/lube)
 	spawn_text = "climbs out of"
 	faction = list("clown")
@@ -63,7 +63,7 @@
 	icon_state = "hole"
 	max_integrity = 200
 	max_mobs = 3
-	icon = 'icons/mob/nest.dmi'
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	spawn_text = "crawls out of"
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goldgrub, /mob/living/simple_animal/hostile/asteroid/goliath, /mob/living/simple_animal/hostile/asteroid/hivelord, /mob/living/simple_animal/hostile/asteroid/basilisk, /mob/living/simple_animal/hostile/asteroid/fugu)
 	faction = list("mining")
@@ -92,3 +92,48 @@
 	name = "wumborian fugu den"
 	desc = "A den housing a nest of wumborian fugus, how do they all even fit in there?"
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/fugu)
+
+/obj/structure/spawner/nether
+	name = "netherworld link"
+	desc = null //see examine()
+	icon_state = "nether"
+	max_integrity = 50
+	spawn_time = 60 SECONDS
+	max_mobs = 15
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
+	spawn_text = "crawls through"
+	mob_types = list(/mob/living/basic/migo, /mob/living/basic/creature, /mob/living/basic/blankbody)
+	faction = list("nether")
+
+/obj/structure/spawner/nether/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSprocessing, src)
+
+/obj/structure/spawner/nether/examine(mob/user)
+	. = ..()
+	if(isskeleton(user) || iszombie(user))
+		. += "A direct link to another dimension full of creatures very happy to see you. [span_nicegreen("You can see your house from here!")]"
+	else
+		. += "A direct link to another dimension full of creatures not very happy to see you. [span_warning("Entering the link would be a very bad idea.")]"
+
+/obj/structure/spawner/nether/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(isskeleton(user) || iszombie(user))
+		to_chat(user, span_notice("You don't feel like going home yet..."))
+	else
+		user.visible_message(span_warning("[user] is violently pulled into the link!"), \
+							span_userdanger("Touching the portal, you are quickly pulled through into a world of unimaginable horror!"))
+		contents.Add(user)
+
+/obj/structure/spawner/nether/process(delta_time)
+	for(var/mob/living/living_mob in contents)
+		if(living_mob)
+			playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+			living_mob.adjustBruteLoss(60 * delta_time)
+			new /obj/effect/gibspawner/generic(get_turf(living_mob), living_mob)
+			if(living_mob.stat == DEAD)
+				var/mob/living/basic/blankbody/newmob = new(loc)
+				newmob.name = "[living_mob]"
+				newmob.desc = "It's [living_mob], but [living_mob.p_their()] flesh has an ashy texture, and [living_mob.p_their()] face is featureless save an eerie smile."
+				src.visible_message(span_warning("[living_mob] reemerges from the link!"))
+				qdel(living_mob)

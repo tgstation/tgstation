@@ -5,7 +5,7 @@
 
 ///returns the number of ticks slept
 /proc/stoplag(initial_delay)
-	if (!Master || !(Master.current_runlevel & RUNLEVELS_DEFAULT))
+	if (!Master || Master.init_stage_completed < INITSTAGE_MAX)
 		sleep(world.tick_lag)
 		return 1
 	if (!initial_delay)
@@ -19,5 +19,3 @@
 	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
 
 #undef DELTA_CALC
-
-#define UNTIL(X) while(!(X)) stoplag()

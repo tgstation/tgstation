@@ -45,12 +45,12 @@
 	cant_discount = TRUE
 
 /datum/uplink_item/explosives/detomatix
-	name = "Detomatix PDA Cartridge"
-	desc = "When inserted into a personal digital assistant, this cartridge gives you four opportunities to \
-			detonate PDAs of crewmembers who have their message feature enabled. \
+	name = "Detomatix disk"
+	desc = "When inserted into a tablet, this cartridge gives you four opportunities to \
+			detonate tablets of crewmembers who have their message feature enabled. \
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer."
 	progression_minimum = 30 MINUTES
-	item = /obj/item/cartridge/virus/syndicate
+	item = /obj/item/computer_disk/virus/detomatix
 	cost = 6
 	restricted = TRUE
 
@@ -61,6 +61,11 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndie_kit/emp
 	cost = 2
+
+/datum/uplink_item/explosives/emp/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		cost *= 3
 
 /datum/uplink_item/explosives/pizza_bomb
 	name = "Pizza Bomb"
@@ -88,16 +93,25 @@
 	item = /obj/item/sbeacondrop/emp
 	cost = 7
 
+/datum/uplink_item/explosives/syndicate_bomb/emp/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		cost *= 2
+
 // High progression cost
 
 /datum/uplink_item/explosives/syndicate_bomb
 	name = "Syndicate Bomb"
 	desc = "The Syndicate bomb is a fearsome device capable of massive destruction. It has an adjustable timer, \
-			with a minimum of 60 seconds, and can be bolted to the floor with a wrench to prevent \
-			movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
-			transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
-			be defused, and some crew may attempt to do so. \
-			The bomb core can be pried out and manually detonated with other explosives."
+		with a minimum of %MIN_BOMB_TIMER seconds, and can be bolted to the floor with a wrench to prevent \
+		movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
+		transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
+		be defused, and some crew may attempt to do so. \
+		The bomb core can be pried out and manually detonated with other explosives."
 	progression_minimum = 40 MINUTES
 	item = /obj/item/sbeacondrop/bomb
 	cost = 11
+
+/datum/uplink_item/explosives/syndicate_bomb/New()
+	. = ..()
+	desc = replacetext(desc, "%MIN_BOMB_TIMER", SYNDIEBOMB_MIN_TIMER_SECONDS)

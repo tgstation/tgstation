@@ -34,34 +34,6 @@
 /datum/objective_item/steal/low_risk
 	objective_type = OBJECTIVE_ITEM_TYPE_TRAITOR
 
-/datum/objective_item/steal/low_risk/techboard
-	name = "the (TECH BOARD) circuitboard in secure tech storage"
-	var/circuitboard_name
-	excludefromjob = list(
-		JOB_CAPTAIN,
-		JOB_CHIEF_ENGINEER,
-		JOB_RESEARCH_DIRECTOR,
-	)
-	exists_on_map = TRUE
-
-/datum/objective_item/steal/low_risk/techboard/aiupload
-	targetitem = /obj/item/circuitboard/computer/aiupload
-	circuitboard_name = "ai upload"
-
-/obj/item/circuitboard/computer/aiupload/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/circuitboard/computer/aiupload)
-
-/datum/objective_item/steal/low_risk/techboard/borgupload
-	targetitem = /obj/item/circuitboard/computer/borgupload
-	circuitboard_name = "cyborg upload"
-
-/obj/item/circuitboard/computer/borgupload/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/circuitboard/computer/borgupload)
-
-/datum/objective_item/steal/low_risk/techboard/New()
-	. = ..()
-	name = replacetext(name, "(TECH BOARD)", circuitboard_name)
-
 /datum/objective_item/steal/low_risk/aicard
 	targetitem = /obj/item/aicard
 	name = "an intelliCard"
@@ -258,13 +230,13 @@
 
 /datum/objective_item/steal/hdd_extraction
 	name = "the source code for Project Goon from the master R&D server mainframe"
-	targetitem = /obj/item/computer_hardware/hard_drive/cluster/hdd_theft
+	targetitem = /obj/item/computer_disk/hdd_theft
 	difficulty = 10
 	excludefromjob = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST)
 	exists_on_map = TRUE
 
-/obj/item/computer_hardware/hard_drive/cluster/hdd_theft/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/computer_hardware/hard_drive/cluster/hdd_theft)
+/obj/item/computer_disk/hdd_theft/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/computer_disk/hdd_theft)
 
 /datum/objective_item/steal/hdd_extraction/New()
 	special_equipment += /obj/item/paper/guides/antag/hdd_extraction
@@ -299,7 +271,7 @@
 	var/found_amount = 0
 	var/datum/gas_mixture/mix = T.return_air()
 	found_amount += mix.gases[/datum/gas/plasma] ? mix.gases[/datum/gas/plasma][MOLES] : 0
-	return found_amount>=target_amount
+	return found_amount >= target_amount
 
 
 /datum/objective_item/steal/functionalai
@@ -307,10 +279,26 @@
 	targetitem = /obj/item/aicard
 	difficulty = 20 //beyond the impossible
 
-/datum/objective_item/steal/functionalai/check_special_completion(obj/item/aicard/C)
-	for(var/mob/living/silicon/ai/A in C)
-		if(isAI(A) && A.stat != DEAD) //See if any AI's are alive inside that card.
-			return TRUE
+/datum/objective_item/steal/functionalai/New()
+	. = ..()
+	altitems += typesof(/obj/item/mod/control) // only here so we can account for AIs tucked away in a MODsuit.
+
+/datum/objective_item/steal/functionalai/check_special_completion(obj/item/potential_storage)
+	var/mob/living/silicon/ai/being
+
+	if(istype(potential_storage, /obj/item/aicard))
+		var/obj/item/aicard/card = potential_storage
+		being = card.AI // why is this one capitalized and the other one not? i wish i knew.
+	else if(istype(potential_storage, /obj/item/mod/control))
+		var/obj/item/mod/control/suit = potential_storage
+		being = suit.ai
+	else
+		stack_trace("check_special_completion() called on [src] with [potential_storage] ([potential_storage.type])! That's not supposed to happen!")
+		return FALSE
+
+	if(isAI(being) && being.stat != DEAD)
+		return TRUE
+
 	return FALSE
 
 /datum/objective_item/steal/blueprints
@@ -430,7 +418,7 @@
 
 	if(istype(S, targetitem))
 		found_amount = S.amount
-	return found_amount>=target_amount
+	return found_amount >= target_amount
 
 /datum/objective_item/stack/diamond
 	name = "10 diamonds"

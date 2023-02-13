@@ -115,7 +115,7 @@
 	opacity = FALSE
 	anchored = FALSE
 	pressure_resistance = 2*ONE_ATMOSPHERE
-	req_access = list(ACCESS_ENGINE)
+	req_access = list(ACCESS_ENGINEERING)
 	max_integrity = 100
 	var/active = FALSE
 	var/list/deployed_shields
@@ -187,7 +187,7 @@
 
 /obj/machinery/shieldgen/screwdriver_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 100)
-	panel_open = !panel_open
+	toggle_panel_open()
 	if(panel_open)
 		to_chat(user, span_notice("You open the panel and expose the wiring."))
 	else
@@ -201,11 +201,11 @@
 		return
 	if(!anchored && !isinspace())
 		tool.play_tool_sound(src, 100)
-		to_chat(user, span_notice("You secure \the [src] to the floor!"))
+		balloon_alert(user, "secured")
 		set_anchored(TRUE)
 	else if(anchored)
 		tool.play_tool_sound(src, 100)
-		to_chat(user, span_notice("You unsecure \the [src] from the floor!"))
+		balloon_alert(user, "unsecured")
 		if(active)
 			to_chat(user, span_notice("\The [src] shuts off!"))
 			shields_down()
@@ -265,8 +265,6 @@
 	req_access = list(ACCESS_TELEPORTER)
 	flags_1 = CONDUCT_1
 	use_power = NO_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 50
 	max_integrity = 300
 	var/active = FALSE
 	var/locked = TRUE
@@ -292,7 +290,7 @@
 	. = ..()
 	if(anchored)
 		connect_to_network()
-	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
 
 /obj/machinery/power/shieldwallgen/Destroy()
 	for(var/d in GLOB.cardinals)
@@ -393,9 +391,9 @@
 	return ..()
 
 
-/obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/I)
+/obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	. |= default_unfasten_wrench(user, I, 0)
+	. |= default_unfasten_wrench(user, tool, time = 0)
 	var/turf/T = get_turf(src)
 	update_cable_icons_on_turf(T)
 	if(. == SUCCESSFUL_UNFASTEN && anchored)
@@ -435,13 +433,13 @@
 			span_notice("You turn off \the [src]."), \
 			span_hear("You hear heavy droning fade out."))
 		active = FALSE
-		log_game("[src] was deactivated by [key_name(user)] at [AREACOORD(src)]")
+		user.log_message("deactivated [src].", LOG_GAME)
 	else
 		user.visible_message(span_notice("[user] turned \the [src] on."), \
 			span_notice("You turn on \the [src]."), \
 			span_hear("You hear heavy droning."))
 		active = ACTIVE_SETUPFIELDS
-		log_game("[src] was activated by [key_name(user)] at [AREACOORD(src)]")
+		user.log_message("activated [src].", LOG_GAME)
 	add_fingerprint(user)
 
 /obj/machinery/power/shieldwallgen/emag_act(mob/user)
@@ -475,8 +473,9 @@
 		setDir(get_dir(gen_primary, gen_secondary))
 	for(var/mob/living/L in get_turf(src))
 		visible_message(span_danger("\The [src] is suddenly occupying the same space as \the [L]!"))
+		L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 		L.gib()
-	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity)
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity))
 
 /obj/machinery/shieldwall/Destroy()
 	gen_primary = null
@@ -521,5 +520,5 @@
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return prob(20)
 	else
-		if(istype(mover, /obj/projectile))
+		if(isprojectile(mover))
 			return prob(10)

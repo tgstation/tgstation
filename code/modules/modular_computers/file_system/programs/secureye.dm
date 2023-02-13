@@ -22,43 +22,27 @@
 	var/list/concurrent_users = list()
 
 	// Stuff needed to render the map
-	var/map_name
 	var/atom/movable/screen/map_view/cam_screen
-	/// All the plane masters that need to be applied.
-	var/list/cam_plane_masters
 	var/atom/movable/screen/background/cam_background
 
 /datum/computer_file/program/secureye/New()
 	. = ..()
 	// Map name has to start and end with an A-Z character,
 	// and definitely NOT with a square bracket or even a number.
-	map_name = "camera_console_[REF(src)]_map"
+	var/map_name = "camera_console_[REF(src)]_map"
 	// Convert networks to lowercase
 	for(var/i in network)
 		network -= i
 		network += lowertext(i)
 	// Initialize map objects
 	cam_screen = new
-	cam_screen.name = "screen"
-	cam_screen.assigned_map = map_name
-	cam_screen.del_on_map_removal = FALSE
-	cam_screen.screen_loc = "[map_name]:1,1"
-	cam_plane_masters = list()
-	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
-		var/atom/movable/screen/plane_master/instance = new plane()
-		instance.assigned_map = map_name
-		if(instance.blend_mode_override)
-			instance.blend_mode = instance.blend_mode_override
-		instance.del_on_map_removal = FALSE
-		instance.screen_loc = "[map_name]:CENTER"
-		cam_plane_masters += instance
+	cam_screen.generate_view(map_name)
 	cam_background = new
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
 
 /datum/computer_file/program/secureye/Destroy()
 	QDEL_NULL(cam_screen)
-	QDEL_LIST(cam_plane_masters)
 	QDEL_NULL(cam_background)
 	return ..()
 
@@ -77,9 +61,7 @@
 		if(is_living)
 			concurrent_users += user_ref
 		// Register map objects
-		user.client.register_map_obj(cam_screen)
-		for(var/plane in cam_plane_masters)
-			user.client.register_map_obj(plane)
+		cam_screen.display_to(user)
 		user.client.register_map_obj(cam_background)
 		return ..()
 
@@ -103,7 +85,7 @@
 
 /datum/computer_file/program/secureye/ui_static_data()
 	var/list/data = list()
-	data["mapRef"] = map_name
+	data["mapRef"] = cam_screen.assigned_map
 	var/list/cameras = get_available_cameras()
 	data["cameras"] = list()
 	for(var/i in cameras)
@@ -140,7 +122,7 @@
 	// Living creature or not, we remove you anyway.
 	concurrent_users -= user_ref
 	// Unregister map objects
-	user.client.clear_map(map_name)
+	cam_screen.hide_from(user)
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
 		camera_ref = null
@@ -155,24 +137,25 @@
 
 	var/list/visible_turfs = list()
 
-	// Is this camera located in or attached to a living thing? If so, assume the camera's loc is the living thing.
-	var/cam_location = isliving(active_camera.loc) ? active_camera.loc : active_camera
+	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
+	var/new_cam_turf = get_turf(active_camera)
 
 	// If we're not forcing an update for some reason and the cameras are in the same location,
 	// we don't need to update anything.
 	// Most security cameras will end here as they're not moving.
-	var/newturf = get_turf(cam_location)
-	if(last_camera_turf == newturf)
+	if(last_camera_turf == new_cam_turf)
 		return
 
 	// Cameras that get here are moving, and are likely attached to some moving atom such as cyborgs.
-	last_camera_turf = get_turf(cam_location)
+	last_camera_turf = new_cam_turf
 
-	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, cam_location) : view(active_camera.view_range, cam_location)
+	//Here we gather what's visible from the camera's POV based on its view_range and xray modifier if present
+	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, new_cam_turf) : view(active_camera.view_range, new_cam_turf)
 
 	for(var/turf/visible_turf in visible_things)
 		visible_turfs += visible_turf
 
+	//Get coordinates for a rectangle area that contains the turfs we see so we can then clear away the static in the resulting rectangle area
 	var/list/bbox = get_bbox_of_atoms(visible_turfs)
 	var/size_x = bbox[3] - bbox[1] + 1
 	var/size_y = bbox[4] - bbox[2] + 1
@@ -189,8 +172,10 @@
 // Returns the list of cameras accessible from this computer
 /datum/computer_file/program/secureye/proc/get_available_cameras()
 	var/list/L = list()
-	for (var/obj/machinery/camera/cam in GLOB.cameranet.cameras)
-		if(!is_station_level(cam.z))//Only show station cameras.
+	for (var/obj/machinery/camera/cam as anything in GLOB.cameranet.cameras)
+		//Get the camera's turf in case it's inside something like a borg
+		var/turf/camera_turf = get_turf(cam)
+		if(!is_station_level(camera_turf.z))//Only show station cameras.
 			continue
 		L.Add(cam)
 	var/list/camlist = list()

@@ -19,6 +19,7 @@ const log = (level, ns, ...args) => {
   }
   // Send important logs to the backend
   if (level >= LEVEL_INFO) {
+    // prettier-ignore
     const logEntry = [ns, ...args]
       .map(value => {
         if (typeof value === 'string') {
@@ -32,9 +33,7 @@ const log = (level, ns, ...args) => {
       .filter(value => value)
       .join(' ')
       + '\nUser Agent: ' + navigator.userAgent;
-    Byond.topic({
-      tgui: 1,
-      window_id: window.__windowId__,
+    Byond.sendMessage({
       type: 'log',
       ns,
       message: logEntry,
@@ -42,7 +41,7 @@ const log = (level, ns, ...args) => {
   }
 };
 
-export const createLogger = ns => {
+export const createLogger = (ns) => {
   return {
     debug: (...args) => log(LEVEL_DEBUG, ns, ...args),
     log: (...args) => log(LEVEL_LOG, ns, ...args),

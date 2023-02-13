@@ -7,11 +7,14 @@
 	clothing_flags = MASKINTERNALS
 	visor_flags = MASKINTERNALS
 	w_class = WEIGHT_CLASS_SMALL
-	permeability_coefficient = 0.5
+	armor_type = /datum/armor/mask_breath
 	actions_types = list(/datum/action/item_action/adjust)
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
+
+/datum/armor/mask_breath
+	bio = 50
 
 /obj/item/clothing/mask/breath/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is wrapping \the [src]'s tube around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -22,7 +25,7 @@
 
 /obj/item/clothing/mask/breath/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
 		adjustmask(user)
 
 /obj/item/clothing/mask/breath/examine(mob/user)
@@ -34,5 +37,8 @@
 	name = "medical mask"
 	icon_state = "medical"
 	inhand_icon_state = "m_mask"
-	permeability_coefficient = 0.01
+	armor_type = /datum/armor/breath_medical
 	equip_delay_other = 10
+
+/datum/armor/breath_medical
+	bio = 90

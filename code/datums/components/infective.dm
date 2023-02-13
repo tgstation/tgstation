@@ -17,25 +17,23 @@
 		return COMPONENT_INCOMPATIBLE
 
 	var/static/list/disease_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/try_infect_crossed,
+		COMSIG_ATOM_ENTERED = PROC_REF(try_infect_crossed),
 	)
 	AddComponent(/datum/component/connect_loc_behalf, parent, disease_connections)
 
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean)
-	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/try_infect_buckle)
-	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/try_infect_collide)
-	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT_ZONE, .proc/try_infect_impact_zone)
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean))
+	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, PROC_REF(try_infect_buckle))
+	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(try_infect_collide))
+	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(try_infect_impact_zone))
 	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, .proc/try_infect_attack_zone)
-		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/try_infect_attack)
-		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/try_infect_equipped)
-		RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/try_infect_eat)
-		if(istype(parent, /obj/item/reagent_containers/food/drinks))
-			RegisterSignal(parent, COMSIG_DRINK_DRANK, .proc/try_infect_drink)
-		else if(istype(parent, /obj/item/reagent_containers/glass))
-			RegisterSignal(parent, COMSIG_GLASS_DRANK, .proc/try_infect_drink)
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, PROC_REF(try_infect_attack_zone))
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(try_infect_attack))
+		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(try_infect_equipped))
+		RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(try_infect_eat))
+		if(istype(parent, /obj/item/reagent_containers/cup))
+			RegisterSignal(parent, COMSIG_GLASS_DRANK, PROC_REF(try_infect_drink))
 	else if(istype(parent, /obj/effect/decal/cleanable/blood/gibs))
-		RegisterSignal(parent, COMSIG_GIBS_STREAK, .proc/try_infect_streak)
+		RegisterSignal(parent, COMSIG_GIBS_STREAK, PROC_REF(try_infect_streak))
 
 /datum/component/infective/proc/try_infect_eat(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
@@ -97,18 +95,18 @@
 /datum/component/infective/proc/try_infect_equipped(datum/source, mob/living/L, slot)
 	SIGNAL_HANDLER
 
-	var/old_permeability
+	var/old_bio_armor
 	if(isitem(parent))
-		//if you are putting an infective item on, it obviously will not protect you, so set its permeability high enough that it will never block ContactContractDisease()
-		var/obj/item/I = parent
-		old_permeability = I.permeability_coefficient
-		I.permeability_coefficient = 1.01
+		//if you are putting an infective item on, it obviously will not protect you, so set its bio armor low enough that it will never block ContactContractDisease()
+		var/obj/item/equipped_item = parent
+		old_bio_armor = equipped_item.get_armor_rating(BIO)
+		equipped_item.set_armor_rating(BIO, 0)
 
 	try_infect(L, slot2body_zone(slot))
 
 	if(isitem(parent))
-		var/obj/item/I = parent
-		I.permeability_coefficient = old_permeability
+		var/obj/item/equipped_item = parent
+		equipped_item.set_armor_rating(BIO, old_bio_armor)
 
 /datum/component/infective/proc/try_infect_crossed(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
@@ -118,6 +116,10 @@
 
 /datum/component/infective/proc/try_infect_streak(datum/source, list/directions, list/output_diseases)
 	SIGNAL_HANDLER
+
+	// This blood is not infectable / does not have a diseases list
+	if(!islist(output_diseases))
+		return
 
 	output_diseases |= diseases
 

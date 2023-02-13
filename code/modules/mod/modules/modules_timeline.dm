@@ -16,14 +16,14 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/eradication_lock, /obj/item/mod/module/dna_lock)
 	cooldown_time = 0.5 SECONDS
-	/// The ckey we lock with, to allow all alternate versions of the user, huhehuehe
+	/// The ckey we lock with, to allow all alternate versions of the user.
 	var/true_owner_ckey
 
 /obj/item/mod/module/eradication_lock/on_install()
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
-	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, .proc/on_mod_removal)
+	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_mod_activation))
+	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, PROC_REF(on_mod_removal))
 
-/obj/item/mod/module/eradication_lock/on_uninstall()
+/obj/item/mod/module/eradication_lock/on_uninstall(deleting = FALSE)
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	UnregisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL)
 
@@ -74,10 +74,10 @@
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	//stops all mods from triggering during rewinding
 	for(var/obj/item/mod/module/module as anything in mod.modules)
-		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, .proc/on_module_triggered)
+		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, PROC_REF(on_module_triggered))
 	mod.wearer.AddComponent(/datum/component/dejavu/timeline, 1, 10 SECONDS)
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
-	addtimer(CALLBACK(src, .proc/unblock_suit_activation), 10 SECONDS)
+	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_block))
+	addtimer(CALLBACK(src, PROC_REF(unblock_suit_activation)), 10 SECONDS)
 
 ///Unregisters the modsuit deactivation blocking signal, after dejavu functionality finishes.
 /obj/item/mod/module/rewinder/proc/unblock_suit_activation()
@@ -109,7 +109,7 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/timestopper)
 	cooldown_time = 60 SECONDS
-	///the current timestop in progress
+	///The current timestop in progress.
 	var/obj/effect/timestop/channelled/timestop
 
 /obj/item/mod/module/timestopper/on_use()
@@ -121,9 +121,9 @@
 		return
 	//stops all mods from triggering during timestop- including timestop itself
 	for(var/obj/item/mod/module/module as anything in mod.modules)
-		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, .proc/on_module_triggered)
+		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, PROC_REF(on_module_triggered))
 	timestop = new /obj/effect/timestop/channelled(get_turf(mod.wearer), 2, INFINITY, list(mod.wearer))
-	RegisterSignal(timestop, COMSIG_PARENT_QDELETING, .proc/unblock_suit_activation)
+	RegisterSignal(timestop, COMSIG_PARENT_QDELETING, PROC_REF(unblock_suit_activation))
 
 ///Unregisters the modsuit deactivation blocking signal, after timestop functionality finishes.
 /obj/item/mod/module/timestopper/proc/unblock_suit_activation(datum/source)
@@ -157,7 +157,7 @@
 	incompatible_modules = list(/obj/item/mod/module/timeline_jumper)
 	cooldown_time = 5 SECONDS
 	allowed_in_phaseout = TRUE
-	///the dummy for phasing from this module, the wearer is phased out while this exists.
+	///The dummy for phasing from this module, the wearer is phased out while this exists.
 	var/obj/effect/dummy/phased_mob/chrono/phased_mob
 
 /obj/item/mod/module/timeline_jumper/on_use()
@@ -174,12 +174,12 @@
 		mod.visible_message(span_warning("[mod.wearer] leaps out of the timeline!"))
 		mod.wearer.SetAllImmobility(0)
 		mod.wearer.setStaminaLoss(0, 0)
-		phased_mob = new(get_turf(mod.wearer.loc))
-		mod.wearer.forceMove(phased_mob)
-		RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
+		phased_mob = new(get_turf(mod.wearer.loc), mod.wearer)
+		RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_block))
 	else
 		//phasing in
-		QDEL_NULL(phased_mob)
+		phased_mob.eject_jaunter()
+		phased_mob = null
 		UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 		mod.visible_message(span_warning("[mod.wearer] drops into the timeline!"))
 
@@ -190,7 +190,7 @@
 /obj/item/mod/module/timeline_jumper/proc/on_activate_block(datum/source, user)
 	SIGNAL_HANDLER
 	//has to be a to_chat because you're phased out.
-	to_chat(user, span_boldwarning("Deactivating your suit while inbetween timelines would be a very bad idea."))
+	to_chat(user, span_warning("Deactivating your suit while inbetween timelines would be a very bad idea."))
 	return MOD_CANCEL_ACTIVATE
 
 ///special subtype for phased mobs.
@@ -210,9 +210,9 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/tem)
 	cooldown_time = 0.5 SECONDS
-	///reference to the chrono field being controlled by this module
+	///Reference to the chrono field being controlled by this module
 	var/obj/structure/chrono_field/field = null
-	///where the chronofield maker was when the field went up
+	///Where the chronofield maker was when the field went up
 	var/turf/startpos
 
 /obj/item/mod/module/tem/on_select_use(atom/target)
@@ -223,16 +223,17 @@
 	if(field)
 		field_disconnect(field)
 	//fire projectile
-	var/obj/projectile/energy/chrono_beam/projectile = new /obj/projectile/energy/chrono_beam(get_turf(src))
+	var/obj/projectile/energy/chrono_beam/chrono_beam = new /obj/projectile/energy/chrono_beam(get_turf(src))
+	chrono_beam.tem_weakref = WEAKREF(src)
+	chrono_beam.preparePixelProjectile(target, mod.wearer)
+	chrono_beam.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
-	projectile.tem_weakref = WEAKREF(src)
-	projectile.firer = mod.wearer
-	projectile.fired_from = src
-	projectile.fire(get_angle(mod.wearer, target), target)
+	INVOKE_ASYNC(chrono_beam, TYPE_PROC_REF(/obj/projectile, fire))
 
-/obj/item/mod/module/tem/on_uninstall()
-	if(field)
-		field_disconnect(field)
+/obj/item/mod/module/tem/on_uninstall(deleting = FALSE)
+	if(!field)
+		return
+	field_disconnect(field)
 
 /**
  * ### field_connect
@@ -246,14 +247,14 @@
 /obj/item/mod/module/tem/proc/field_connect(obj/structure/chrono_field/field)
 	if(field.tem)
 		if(field.captured)
-			to_chat(mod.wearer, span_alert("<b>FAIL: <i>[field.captured]</i> already has an existing connection.</b>"))
+			balloon_alert(mod.wearer, "already has connection!")
 		field_disconnect(field)
 		return
 	startpos = get_turf(mod.wearer)
 	src.field = field
 	field.tem = src
 	if(field.captured)
-		to_chat(mod.wearer, span_notice("Connection established with target: <b>[field.captured]</b>"))
+		balloon_alert(mod.wearer, "connection estabilished")
 
 /**
  * ### field_disconnect
@@ -268,7 +269,7 @@
 		if(field.tem == src)
 			field.tem = null
 		if(field.captured)
-			to_chat(mod.wearer, span_alert("Disconnected from target: <b>[field.captured]</b>"))
+			balloon_alert(mod.wearer, "connection lost!")
 	field = null
 	startpos = null
 
@@ -294,7 +295,7 @@
 	icon_state = "chronobolt"
 	range = CHRONO_BEAM_RANGE
 	nodamage = TRUE
-	///reference to the tem... given by the tem! weakref because back in the day we didn't know about harddels- or maybe we didn't care.
+	///Reference to the tem... given by the tem! weakref because back in the day we didn't know about harddels- or maybe we didn't care.
 	var/datum/weakref/tem_weakref
 
 /obj/projectile/energy/chrono_beam/on_hit(atom/target)
@@ -313,17 +314,17 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	move_resist = INFINITY
 	interaction_flags_atom = NONE
-	///mob being eradicated by this field
+	/// Mob being eradicated by this field
 	var/mob/living/captured
-	///linked module. while this exists, the field will progress towards eradication. while it isn't, the field progresses away until it disappears. see attached for a special case
+	/// Linked module. while this exists, the field will progress towards eradication. while it isn't, the field progresses away until it disappears. see attached for a special case
 	var/obj/item/mod/module/tem/tem
-	///time in seconds before someone is eradicated, assuming progress isn't interrupted
-	var/timetokill = 30
-	///the eradication appearance
+	/// Time in seconds before someone is eradicated, assuming progress isn't interrupted
+	var/timetokill = 3 SECONDS
+	/// The eradication appearance
 	var/mutable_appearance/mob_underlay
-	///the actual frame the animation is at in eradication, only changing when the progress towards eradication progresses enough to move to the next frame.
+	/// The actual frame the animation is at in eradication, only changing when the progress towards eradication progresses enough to move to the next frame.
 	var/RPpos = null
-	///if a tem to link to isn't provided initially, this chrono field will progress towards eradication by itself without one.
+	/// If a TEM to link to isn't provided initially, this chrono field will progress towards eradication by itself without one.
 	var/attached = TRUE
 
 /obj/structure/chrono_field/Initialize(mapload, mob/living/target, obj/item/mod/module/tem/tem)
@@ -373,15 +374,15 @@
 			freed_movable.forceMove(drop_location())
 		qdel(src)
 	else if(timetokill <= 0)
-		to_chat(captured, span_boldnotice("As the last essence of your being is erased from time, you are taken back to your most enjoyable memory. You feel happy..."))
-		var/mob/dead/observer/ghost = captured.ghostize(1)
+		to_chat(captured, span_notice("As the last essence of your being is erased from time, you are taken back to your most enjoyable memory. You feel happy..."))
+		var/mob/dead/observer/ghost = captured.ghostize(can_reenter_corpse = TRUE)
 		if(captured.mind)
 			if(ghost)
 				ghost.mind = null
 		qdel(captured)
 		qdel(src)
 	else
-		captured.Unconscious(80)
+		captured.Unconscious(8 SECONDS)
 		if(captured.loc != src)
 			captured.forceMove(src)
 		update_appearance()

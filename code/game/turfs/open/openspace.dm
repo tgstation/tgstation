@@ -1,16 +1,3 @@
-GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdrop, new)
-
-/atom/movable/openspace_backdrop
-	name = "openspace_backdrop"
-
-	anchored = TRUE
-
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "grey"
-	plane = OPENSPACE_BACKDROP_PLANE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	vis_flags = VIS_INHERIT_ID
-
 /turf/open/openspace
 	name = "open space"
 	desc = "Watch your step!"
@@ -19,6 +6,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	pathing_pass_method = TURF_PATHING_PASS_PROC
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
@@ -28,18 +16,22 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/open/openspace/airless/planetary
 	planetary_atmos = TRUE
 
+// Reminder, any behavior code written here needs to be duped to /turf/open/space/openspace
+// I am so sorry
 /turf/open/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
-	overlays += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
-	RegisterSignal(src, COMSIG_ATOM_CREATED, .proc/on_atom_created)
+	RegisterSignal(src, COMSIG_ATOM_INITIALIZED_ON, PROC_REF(on_atom_created))
+	var/area/our_area = loc
+	if(istype(our_area, /area/space))
+		force_no_gravity = TRUE
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/openspace/LateInitialize()
 	. = ..()
-	AddElement(/datum/element/turf_z_transparency, is_openspace = TRUE)
+	AddElement(/datum/element/turf_z_transparency)
 
 /turf/open/openspace/ChangeTurf(path, list/new_baseturfs, flags)
-	UnregisterSignal(src, COMSIG_ATOM_CREATED)
+	UnregisterSignal(src, COMSIG_ATOM_INITIALIZED_ON)
 	return ..()
 
 /**
@@ -67,7 +59,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	SIGNAL_HANDLER
 	if(ismovable(created_atom))
 		//Drop it only when it's finished initializing, not before.
-		addtimer(CALLBACK(src, .proc/zfall_if_on_turf, created_atom), 0 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(zfall_if_on_turf), created_atom), 0 SECONDS)
 
 /turf/open/openspace/proc/zfall_if_on_turf(atom/movable/movable)
 	if(QDELETED(movable) || movable.loc != src)
@@ -98,8 +90,8 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 		return TRUE
 	return FALSE
 
-/turf/open/openspace/zPassOut(atom/movable/A, direction, turf/destination)
-	if(A.anchored)
+/turf/open/openspace/zPassOut(atom/movable/A, direction, turf/destination, allow_anchored_movement)
+	if(A.anchored && !allow_anchored_movement)
 		return FALSE
 	if(direction == DOWN)
 		for(var/obj/contained_object in contents)
@@ -156,6 +148,19 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 
 /turf/open/openspace/rust_heretic_act()
 	return FALSE
+
+/turf/open/openspace/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
+	if(caller && !caller.can_z_move(DOWN, src, null , ZMOVE_FALL_FLAGS)) //If we can't fall here (flying/lattice), it's fine to path through
+		return TRUE
+	return FALSE
+
+/turf/open/openspace/replace_floor(turf/open/new_floor_path, flags)
+	if (!initial(new_floor_path.overfloor_placed))
+		ChangeTurf(new_floor_path, flags = flags)
+		return
+	// Create plating under tiled floor we try to create directly onto the air
+	PlaceOnTop(/turf/open/floor/plating, flags = flags)
+	PlaceOnTop(new_floor_path, flags = flags)
 
 /turf/open/openspace/icemoon
 	name = "ice chasm"

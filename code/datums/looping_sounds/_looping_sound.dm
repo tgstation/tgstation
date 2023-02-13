@@ -1,41 +1,63 @@
-/*
-	mid_sounds (list or soundfile) Since this can be either a list or a single soundfile you can have random sounds. May contain further lists but must contain a soundfile at the end.
-	mid_length (num) The length to wait between playing mid_sounds
-
-	start_sound (soundfile) Played before starting the mid_sounds loop
-	start_length (num) How long to wait before starting the main loop after playing start_sound
-
-	end_sound (soundfile) The sound played after the main loop has concluded
-
-	chance (num) Chance per loop to play a mid_sound
-	volume (num) Sound output volume
-	max_loops (num) The max amount of loops to run for.
-	direct (bool) If true plays directly to provided atoms instead of from them
-*/
+/**
+ * A datum for sounds that need to loop, with a high amount of configurability.
+ */
 /datum/looping_sound
-	var/atom/parent
+	/// (list or soundfile) Since this can be either a list or a single soundfile you can have random sounds. May contain further lists but must contain a soundfile at the end.
 	var/mid_sounds
+	/// The length of time to wait between playing mid_sounds.
 	var/mid_length
-	///Override for volume of start sound
+	/// Amount of time to add/take away from the mid length, randomly
+	var/mid_length_vary = 0
+	/// If we should always play each sound once per loop of all sounds. Weights here only really effect order, and could be disgarded
+	var/each_once = FALSE
+	/// Override for volume of start sound.
 	var/start_volume
+	/// (soundfile) Played before starting the mid_sounds loop.
 	var/start_sound
+	/// How long to wait before starting the main loop after playing start_sound.
 	var/start_length
-	///Override for volume of end sound
+	/// Override for volume of end sound.
 	var/end_volume
+	/// (soundfile) The sound played after the main loop has concluded.
 	var/end_sound
+	/// Chance per loop to play a mid_sound.
 	var/chance
+	/// Sound output volume.
 	var/volume = 100
+	/// Whether or not the sounds will vary in pitch when played.
 	var/vary = FALSE
+	/// The max amount of loops to run for.
 	var/max_loops
-	var/direct
+	/// The extra range of the sound in tiles, defaults to 0.
 	var/extra_range = 0
+	/// How much the sound will be affected by falloff per tile.
 	var/falloff_exponent
-	var/timerid
+	/// The falloff distance of the sound,
 	var/falloff_distance
-	var/skip_starting_sounds = FALSE
-	var/loop_started = FALSE
+	/// Are the sounds affected by pressure? Defaults to TRUE.
+	var/pressure_affected = TRUE
+	/// Are the sounds subject to reverb? Defaults to TRUE.
+	var/use_reverb = TRUE
+	/// Are we ignoring walls? Defaults to TRUE.
+	var/ignore_walls = TRUE
 
-/datum/looping_sound/New(_parent, start_immediately=FALSE, _direct=FALSE, _skip_starting_sounds = FALSE)
+	// State stuff
+	/// The source of the sound, or the recipient of the sound.
+	var/atom/parent
+	/// The ID of the timer that's used to loop the sounds.
+	var/timer_id
+	/// Has the looping started yet?
+	var/loop_started = FALSE
+	/// If we're using cut_mid, this is the list we cut from
+	var/list/cut_list
+
+	// Args
+	/// Do we skip the starting sounds?
+	var/skip_starting_sounds = FALSE
+	/// If true, plays directly to provided atoms instead of from them.
+	var/direct
+
+/datum/looping_sound/New(_parent, start_immediately = FALSE, _direct = FALSE, _skip_starting_sounds = FALSE)
 	if(!mid_sounds)
 		WARNING("A looping sound datum was created without sounds to play.")
 		return
@@ -51,70 +73,147 @@
 	stop(TRUE)
 	return ..()
 
+/**
+ * The proc to actually kickstart the whole sound sequence. This is what you should call to start the `looping_sound`.
+ *
+ * Arguments:
+ * * on_behalf_of - The new object to set as a parent.
+ */
 /datum/looping_sound/proc/start(on_behalf_of)
 	if(on_behalf_of)
 		set_parent(on_behalf_of)
-	if(timerid)
+	if(timer_id)
 		return
 	on_start()
 
+/**
+ * The proc to call to stop the sound loop.
+ *
+ * Arguments:
+ * * null_parent - Whether or not we should set the parent to null (useful when destroying the `looping_sound` itself). Defaults to FALSE.
+ */
 /datum/looping_sound/proc/stop(null_parent = FALSE)
 	if(null_parent)
 		set_parent(null)
-	if(!timerid)
+	if(!timer_id)
 		return
 	on_stop()
-	deltimer(timerid, SSsound_loops)
-	timerid = null
+	deltimer(timer_id, SSsound_loops)
+	timer_id = null
 	loop_started = FALSE
 
+/// The proc that handles starting the actual core sound loop.
 /datum/looping_sound/proc/start_sound_loop()
 	loop_started = TRUE
 	sound_loop()
-	timerid = addtimer(CALLBACK(src, .proc/sound_loop, world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME, SSsound_loops)
+	timer_id = addtimer(CALLBACK(src, PROC_REF(sound_loop), world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME, SSsound_loops)
 
-/datum/looping_sound/proc/sound_loop(starttime)
-	if(max_loops && world.time >= starttime + mid_length * max_loops)
+/**
+ * A simple proc handling the looping of the sound itself.
+ *
+ * Arguments:
+ * * start_time - The time at which the `mid_sounds` started being played (so we know when to stop looping).
+ */
+/datum/looping_sound/proc/sound_loop(start_time)
+	if(max_loops && world.time >= start_time + mid_length * max_loops)
 		stop()
 		return
+	// If we have a timer, we're varying mid length, and this is happening while we're runnin mid_sounds
+	if(timer_id && mid_length_vary && start_time)
+		updatetimedelay(timer_id, mid_length + rand(-mid_length_vary, mid_length_vary))
 	if(!chance || prob(chance))
-		play(get_sound(starttime))
+		play(get_sound())
 
+/**
+ * The proc that handles actually playing the sound.
+ *
+ * Arguments:
+ * * soundfile - The soundfile we want to play.
+ * * volume_override - The volume we want to play the sound at, overriding the `volume` variable.
+ */
 /datum/looping_sound/proc/play(soundfile, volume_override)
-	var/sound/S = sound(soundfile)
+	var/sound/sound_to_play = sound(soundfile)
 	if(direct)
-		S.channel = SSsounds.random_available_channel()
-		S.volume = volume_override || volume //Use volume as fallback if theres no override
-		SEND_SOUND(parent, S)
+		sound_to_play.channel = SSsounds.random_available_channel()
+		sound_to_play.volume = volume_override || volume //Use volume as fallback if theres no override
+		SEND_SOUND(parent, sound_to_play)
 	else
-		playsound(parent, S, volume, vary, extra_range, falloff_exponent = falloff_exponent, falloff_distance = falloff_distance)
+		playsound(
+			parent,
+			sound_to_play,
+			volume,
+			vary,
+			extra_range,
+			falloff_exponent = falloff_exponent,
+			pressure_affected = pressure_affected,
+			ignore_walls = ignore_walls,
+			falloff_distance = falloff_distance,
+			use_reverb = use_reverb
+		)
 
-/datum/looping_sound/proc/get_sound(starttime, _mid_sounds)
-	. = _mid_sounds || mid_sounds
+/// Returns the sound we should now be playing.
+/datum/looping_sound/proc/get_sound(_mid_sounds)
+	var/list/play_from = _mid_sounds || mid_sounds
+	if(!each_once)
+		. = play_from
+		while(!isfile(.) && !isnull(.))
+			. = pick_weight(.)
+		return .
+
+
+	if(!length(cut_list))
+		cut_list = shuffle(play_from.Copy())
+	var/list/tree = list()
+	. = cut_list
 	while(!isfile(.) && !isnull(.))
+		// Tree is a list of lists containign files
+		// If an entry in the tree goes to 0 length, we cut it from the list
+		tree += list(.)
 		. = pick_weight(.)
 
+	if(!isfile(.))
+		return
+
+	// Remove the sound file
+	tree[length(tree)] -= .
+
+	// Walk the tree bottom up, remove any lists that are empty
+	// Don't do anything for the topmost list, cause we do not care
+	for(var/i in length(tree) to 2 step -1)
+		var/list/branch = tree[i]
+		if(length(branch))
+			break
+		tree[i - 1] -= list(branch) // Remove the empty list
+	return .
+
+
+
+/// A proc that's there to handle delaying the main sounds if there's a start_sound, and simply starting the sound loop in general.
 /datum/looping_sound/proc/on_start()
 	var/start_wait = 0
 	if(start_sound && !skip_starting_sounds)
 		play(start_sound, start_volume)
 		start_wait = start_length
-	timerid = addtimer(CALLBACK(src, .proc/start_sound_loop), start_wait, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
+	timer_id = addtimer(CALLBACK(src, PROC_REF(start_sound_loop)), start_wait, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
 
+/// Simple proc that's executed when the looping sound is stopped, so that the `end_sound` can be played, if there's one.
 /datum/looping_sound/proc/on_stop()
 	if(end_sound && loop_started)
 		play(end_sound, end_volume)
 
+/// A simple proc to change who our parent is set to, also handling registering and unregistering the QDELETING signals on the parent.
 /datum/looping_sound/proc/set_parent(new_parent)
 	if(parent)
 		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
 	parent = new_parent
 	if(parent)
-		RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/handle_parent_del)
+		RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(handle_parent_del))
 
+/// A simple proc that lets us know whether the sounds are currently active or not.
 /datum/looping_sound/proc/is_active()
-	return !!timerid
+	return !!timer_id
 
+/// A simple proc to handle the deletion of the parent, so that it does not force it to hard-delete.
 /datum/looping_sound/proc/handle_parent_del(datum/source)
 	SIGNAL_HANDLER
 	set_parent(null)

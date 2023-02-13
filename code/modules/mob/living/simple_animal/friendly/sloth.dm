@@ -1,7 +1,9 @@
+GLOBAL_DATUM(cargo_sloth, /mob/living/simple_animal/sloth)
+
 /mob/living/simple_animal/sloth
 	name = "sloth"
 	desc = "An adorable, sleepy creature."
-	icon = 'icons/mob/pets.dmi'
+	icon = 'icons/mob/simple/pets.dmi'
 	icon_state = "sloth"
 	icon_living = "sloth"
 	icon_dead = "sloth_dead"
@@ -37,6 +39,15 @@
 /mob/living/simple_animal/sloth/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "slowly smiles!")
+	// If someone adds non-cargo sloths to maps we'll have a problem but we're fine for now
+	if(!GLOB.cargo_sloth && mapload && is_station_level(z))
+		GLOB.cargo_sloth = src
+
+/mob/living/simple_animal/sloth/Destroy()
+	if(GLOB.cargo_sloth == src)
+		GLOB.cargo_sloth = null
+
+	return ..()
 
 //Cargo Sloth
 /mob/living/simple_animal/sloth/paperwork

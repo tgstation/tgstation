@@ -3,6 +3,9 @@
 	weight = 3
 	typepath = /datum/round_event/wizard/blobies
 	max_occurrences = 3
+	description = "Spawns a blob spore on every corpse."
+	min_wizard_trigger_potency = 3
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/wizard/blobies/start()
 

@@ -196,22 +196,6 @@
 /obj/item/bedsheet/random,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
-"aO" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/bed,
-/obj/item/bedsheet/random,
-/turf/open/floor/mineral/bananium,
-/area/shuttle/escape)
-"aP" = (
-/obj/structure/bed,
-/obj/item/bedsheet/random,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/mineral/bananium,
-/area/shuttle/escape)
 "aQ" = (
 /obj/machinery/door/airlock/bananium{
 	name = "Emergency Shuttle Airlock"
@@ -295,12 +279,21 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bg" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"kT" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/random{
+	dir = 4
+	},
+/turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "lT" = (
 /obj/machinery/status_display/evac/directional/north,
@@ -310,6 +303,18 @@
 /obj/item/toy/snappop/phoenix,
 /obj/machinery/light/directional/south,
 /turf/open/floor/bluespace,
+/area/shuttle/escape)
+"EM" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/random{
+	dir = 4
+	},
+/turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "RX" = (
 /obj/item/toy/snappop/phoenix,
@@ -359,11 +364,11 @@ au
 au
 ab
 aJ
-aM
-aM
-aM
-aM
-aM
+kT
+kT
+kT
+kT
+kT
 aR
 ab
 aV
@@ -431,11 +436,11 @@ aA
 ac
 aF
 RX
-aO
-aO
-aO
-aO
-aO
+EM
+EM
+EM
+EM
+EM
 ak
 ab
 aW
@@ -503,11 +508,11 @@ ak
 aE
 aH
 ak
-aP
-aO
-aO
-aO
-aO
+EM
+EM
+EM
+EM
+EM
 ak
 aU
 aV

@@ -30,15 +30,16 @@
 /obj/machinery/light/red
 	bulb_colour = "#FF3232"
 	nightshift_allowed = FALSE
-	no_emergency = TRUE
+	no_low_power = TRUE
+
+/obj/machinery/light/red/dim
 	brightness = 4
 	bulb_power = 0.7
+	fire_brightness = 2
 
 /obj/machinery/light/blacklight
 	bulb_colour = "#A700FF"
 	nightshift_allowed = FALSE
-	brightness = 4
-	bulb_power = 0.8
 
 /obj/machinery/light/dim
 	nightshift_allowed = FALSE
@@ -53,7 +54,9 @@
 	fitting = "bulb"
 	brightness = 4
 	nightshift_brightness = 4
+	fire_brightness = 3
 	bulb_colour = "#FFD6AA"
+	fire_colour = "#bd3f46"
 	desc = "A small lighting fixture."
 	light_type = /obj/item/light/bulb
 
@@ -72,16 +75,21 @@
 
 /obj/machinery/light/small/red
 	bulb_colour = "#FF3232"
-	no_emergency = TRUE
+	no_low_power = TRUE
 	nightshift_allowed = FALSE
+	fire_colour = "#ff1100"
+
+/obj/machinery/light/small/red/dim
 	brightness = 2
 	bulb_power = 0.8
+	fire_brightness = 2
 
 /obj/machinery/light/small/blacklight
 	bulb_colour = "#A700FF"
 	nightshift_allowed = FALSE
-	brightness = 2
-	bulb_power = 0.9
+	brightness = 4
+	fire_brightness = 3
+	fire_colour = "#d400ff"
 
 // -------- Directional presets
 // The directions are backwards on the lights we have now
@@ -114,6 +122,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/cold/no_nightlight, 0)
 // ---- Red tubes
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/red, 0)
 
+// ---- Red dim tubes
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/red/dim, 0)
+
 // ---- Blacklight tubes
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/blacklight, 0)
 
@@ -135,6 +146,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/broken, 0)
 
 // ---- Red bulbs
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/red, 0)
+
+// ---- Red dim bulbs
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/red/dim, 0)
 
 // ---- Blacklight bulbs
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/blacklight, 0)

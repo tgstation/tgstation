@@ -1,6 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - qol: "Mood events colors now accurately reflect the severity for the positive or negative. Really good is bold green, good is green, neutral is gray, bad is red, and really bad is bold red."
-  - bugfix: "Fixed icebox plasma facility mood event color not working."
-  - code_imp: "Improved mood events descriptions to be simpler to write."

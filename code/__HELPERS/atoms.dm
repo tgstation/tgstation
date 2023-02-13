@@ -273,11 +273,11 @@ rough example of the "cone" made by the 3 dirs checked
 	if(!isnull(value) && value != "")
 		matches = filter_fancy_list(matches, value)
 
-	if(matches.len==0)
+	if(matches.len == 0)
 		return
 
 	var/chosen
-	if(matches.len==1)
+	if(matches.len == 1)
 		chosen = matches[1]
 	else if(random)
 		chosen = pick(matches) || null
@@ -313,3 +313,13 @@ rough example of the "cone" made by the 3 dirs checked
 ///A do nothing proc
 /proc/pass(...)
 	return
+
+///Returns a list of the parents of all storage components that contain the target item
+/proc/get_storage_locs(obj/item/target)
+	. = list()
+	if(!istype(target) || !(target.item_flags & IN_STORAGE))
+		return
+	var/datum/storage/storage_datum = target.loc.atom_storage
+	if(!storage_datum)
+		return
+	. += storage_datum.real_location?.resolve()

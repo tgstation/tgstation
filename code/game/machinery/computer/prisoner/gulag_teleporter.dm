@@ -12,7 +12,7 @@
 	var/obj/machinery/gulag_teleporter/teleporter = null
 	var/obj/structure/gulag_beacon/beacon = null
 	var/mob/living/carbon/human/prisoner = null
-	var/datum/data/record/temporary_record = null
+	var/datum/record/crew/temporary_record = null
 
 
 /obj/machinery/computer/prisoner/gulag_teleporter_computer/Initialize(mapload)
@@ -20,6 +20,7 @@
 	scan_machinery()
 
 /obj/machinery/computer/prisoner/gulag_teleporter_computer/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "GulagTeleporterConsole", name)
@@ -36,12 +37,11 @@
 		prisoner_list["name"] = prisoner.real_name
 		if(contained_id)
 			can_teleport = TRUE
-		if(!isnull(GLOB.data_core.general))
-			for(var/r in GLOB.data_core.security)
-				var/datum/data/record/R = r
-				if(R.fields["name"] == prisoner_list["name"])
-					temporary_record = R
-					prisoner_list["crimstat"] = temporary_record.fields["criminal"]
+		if(!isnull(GLOB.manifest.general))
+			for(var/datum/record/crew/record as anything in GLOB.manifest.general)
+				if(record.name == prisoner_list["name"])
+					temporary_record = record
+					prisoner_list["crimstat"] = temporary_record.wanted_status
 
 	data["prisoner"] = prisoner_list
 
@@ -114,7 +114,7 @@
 		if("teleport")
 			if(!teleporter || !beacon)
 				return
-			addtimer(CALLBACK(src, .proc/teleport, usr), 5)
+			addtimer(CALLBACK(src, PROC_REF(teleport), usr), 5)
 			return TRUE
 
 /obj/machinery/computer/prisoner/gulag_teleporter_computer/proc/scan_machinery()
@@ -141,7 +141,8 @@
 		id_goal_not_set = TRUE
 		contained_id.goal = default_goal
 		say("[contained_id]'s ID card goal defaulting to [contained_id.goal] points.")
-	log_game("[key_name(user)] teleported [key_name(prisoner)] to the Labor Camp [COORD(beacon)] for [id_goal_not_set ? "default goal of ":""][contained_id.goal] points.")
+	user.log_message("teleported [key_name(prisoner)] to the Labor Camp [COORD(beacon)] for [id_goal_not_set ? "default goal of ":""][contained_id.goal] points.", LOG_GAME)
+	prisoner.log_message("teleported to Labor Camp [COORD(beacon)] by [key_name(user)] for [id_goal_not_set ? "default goal of ":""][contained_id.goal] points.", LOG_GAME, log_globally = FALSE)
 	teleporter.handle_prisoner(contained_id, temporary_record)
 	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	prisoner.forceMove(get_turf(beacon))

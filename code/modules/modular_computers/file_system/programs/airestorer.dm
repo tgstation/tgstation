@@ -1,127 +1,140 @@
-/datum/computer_file/program/aidiag
-	filename = "aidiag"
-	filedesc = "NT FRK"
+/datum/computer_file/program/ai_restorer
+	filename = "ai_restore"
+	filedesc = "AI Manager & Restorer"
 	category = PROGRAM_CATEGORY_SCI
 	program_icon_state = "generic"
 	extended_desc = "Firmware Restoration Kit, capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
 	requires_ntnet = FALSE
 	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
-	transfer_access = list(ACCESS_HEADS)
+	transfer_access = list(ACCESS_RD)
 	available_on_ntnet = TRUE
 	tgui_id = "NtosAiRestorer"
 	program_icon = "laptop-code"
+
+	/// The AI stored in the program
+	var/obj/item/aicard/stored_card
 	/// Variable dictating if we are in the process of restoring the AI in the inserted intellicard
 	var/restoring = FALSE
 
-/datum/computer_file/program/aidiag/proc/get_ai(cardcheck)
+/datum/computer_file/program/ai_restorer/on_examine(obj/item/modular_computer/source, mob/user)
+	var/list/examine_text = list()
+	if(!stored_card)
+		examine_text += "It has a slot installed for an intelliCard."
+		return examine_text
 
-	var/obj/item/computer_hardware/ai_slot/ai_slot
+	if(computer.Adjacent(user))
+		examine_text += "It has a slot installed for an intelliCard which contains: [stored_card.name]"
+	else
+		examine_text += "It has a slot installed for an intelliCard, which appears to be occupied."
+	examine_text += span_info("Alt-click to eject the intelliCard.")
+	return examine_text
 
-	if(computer)
-		ai_slot = computer.all_components[MC_AI]
+/datum/computer_file/program/ai_restorer/kill_program(forced)
+	try_eject(forced = TRUE)
+	return ..()
 
-	if(computer && ai_slot?.check_functionality())
-		if(cardcheck == 1)
-			return ai_slot
-		if(ai_slot.enabled && ai_slot.stored_card)
-			if(cardcheck == 2)
-				return ai_slot.stored_card
-			if(ai_slot.stored_card.AI)
-				return ai_slot.stored_card.AI
-
-	return
-
-/datum/computer_file/program/aidiag/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
-
-	var/mob/living/silicon/ai/A = get_ai()
-	if(!A)
-		restoring = FALSE
-
-	switch(action)
-		if("PRG_beginReconstruction")
-			if(A && A.health < 100)
-				restoring = TRUE
-				A.notify_ghost_cloning("Your core files are being restored!", source = computer)
-			return TRUE
-		if("PRG_eject")
-			if(computer.all_components[MC_AI])
-				var/obj/item/computer_hardware/ai_slot/ai_slot = computer.all_components[MC_AI]
-				if(ai_slot?.stored_card)
-					ai_slot.try_eject(usr)
-					return TRUE
-
-/datum/computer_file/program/aidiag/process_tick()
+/datum/computer_file/program/ai_restorer/process_tick(delta_time)
 	. = ..()
 	if(!restoring) //Put the check here so we don't check for an ai all the time
 		return
-	var/obj/item/aicard/cardhold = get_ai(2)
 
-	var/obj/item/computer_hardware/ai_slot/ai_slot = get_ai(1)
-
-
-	var/mob/living/silicon/ai/A = get_ai()
-	if(!A || !cardhold)
-		restoring = FALSE // If the AI was removed, stop the restoration sequence.
-		if(ai_slot)
-			ai_slot.locked = FALSE
-		return
-
-	if(cardhold.flush)
-		ai_slot.locked = FALSE
+	var/mob/living/silicon/ai/A = stored_card.AI
+	if(stored_card.flush)
 		restoring = FALSE
 		return
-	ai_slot.locked = TRUE
 	A.adjustOxyLoss(-5, FALSE)
 	A.adjustFireLoss(-5, FALSE)
 	A.adjustBruteLoss(-5, FALSE)
 
 	// Please don't forget to update health, otherwise the below if statements will probably always fail.
 	A.updatehealth()
-
 	if(A.health >= 0 && A.stat == DEAD)
-		A.revive(full_heal = FALSE, admin_revive = FALSE)
-		cardhold.update_appearance()
+		A.revive()
+		stored_card.update_appearance()
 
 	// Finished restoring
 	if(A.health >= 100)
-		ai_slot.locked = FALSE
 		restoring = FALSE
 
 	return TRUE
 
+/datum/computer_file/program/ai_restorer/application_attackby(obj/item/attacking_item, mob/living/user)
+	if(!computer)
+		return FALSE
+	if(!istype(attacking_item, /obj/item/aicard))
+		return FALSE
 
-/datum/computer_file/program/aidiag/ui_data(mob/user)
+	if(stored_card)
+		to_chat(user, span_warning("You try to insert \the [attacking_item] into \the [computer.name], but the slot is occupied."))
+		return FALSE
+	if(user && !user.transferItemToLoc(attacking_item, computer))
+		return FALSE
+
+	stored_card = attacking_item
+	to_chat(user, span_notice("You insert \the [attacking_item] into \the [computer.name]."))
+
+	return TRUE
+
+/datum/computer_file/program/ai_restorer/try_eject(mob/living/user, forced = FALSE)
+	if(!stored_card)
+		if(user)
+			to_chat(user, span_warning("There is no card in \the [computer.name]."))
+		return FALSE
+
+	if(restoring && !forced)
+		if(user)
+			to_chat(user, span_warning("Safeties prevent you from removing the card until reconstruction is complete..."))
+		return FALSE
+
+	if(user && computer.Adjacent(user))
+		to_chat(user, span_notice("You remove [stored_card] from [computer.name]."))
+		user.put_in_hands(stored_card)
+	else
+		stored_card.forceMove(computer.drop_location())
+
+	stored_card = null
+	restoring = FALSE
+	return TRUE
+
+
+/datum/computer_file/program/ai_restorer/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("PRG_beginReconstruction")
+			if(!stored_card || !stored_card.AI)
+				return FALSE
+			var/mob/living/silicon/ai/A = stored_card.AI
+			if(A && A.health < 100)
+				restoring = TRUE
+				A.notify_ghost_cloning("Your core files are being restored!", source = computer)
+			return TRUE
+		if("PRG_eject")
+			if(stored_card)
+				try_eject(usr)
+				return TRUE
+
+/datum/computer_file/program/ai_restorer/ui_data(mob/user)
 	var/list/data = get_header_data()
-	var/mob/living/silicon/ai/AI = get_ai()
-
-	var/obj/item/aicard/aicard = get_ai(2)
 
 	data["ejectable"] = TRUE
-	data["AI_present"] = FALSE
+	data["AI_present"] = !!stored_card?.AI
 	data["error"] = null
-	if(!aicard)
+
+	if(!stored_card)
 		data["error"] = "Please insert an intelliCard."
+	else if(!stored_card.AI)
+		data["error"] = "No AI located..."
+	else if(stored_card.flush)
+		data["error"] = "Flush in progress!"
 	else
-		if(!AI)
-			data["error"] = "No AI located"
-		else
-			var/obj/item/aicard/cardhold = AI.loc
-			if(cardhold.flush)
-				data["error"] = "Flush in progress"
-			else
-				data["AI_present"] = TRUE
-				data["name"] = AI.name
-				data["restoring"] = restoring
-				data["health"] = (AI.health + 100) / 2
-				data["isDead"] = AI.stat == DEAD
-				data["laws"] = AI.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
+		data["name"] = stored_card.AI.name
+		data["restoring"] = restoring
+		data["health"] = (stored_card.AI.health + 100) / 2
+		data["isDead"] = stored_card.AI.stat == DEAD
+		data["laws"] = stored_card.AI.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
 
 	return data
-
-/datum/computer_file/program/aidiag/kill_program(forced)
-	restoring = FALSE
-	return ..()

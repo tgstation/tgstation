@@ -55,12 +55,12 @@
 /datum/export/gear/radhelmet
 	cost = CARGO_CRATE_VALUE * 0.1
 	unit_name = "radsuit hood"
-	export_types = list(/obj/item/clothing/head/radiation)
+	export_types = list(/obj/item/clothing/head/utility/radiation)
 
 /datum/export/gear/radsuit
 	cost = CARGO_CRATE_VALUE * 0.2
 	unit_name = "radsuit"
-	export_types = list(/obj/item/clothing/suit/radiation)
+	export_types = list(/obj/item/clothing/suit/utility/radiation)
 
 /datum/export/gear/biohood
 	cost = CARGO_CRATE_VALUE * 0.1
@@ -75,12 +75,12 @@
 /datum/export/gear/bombhelmet
 	cost = CARGO_CRATE_VALUE * 0.1
 	unit_name = "bomb suit hood"
-	export_types = list(/obj/item/clothing/head/bomb_hood)
+	export_types = list(/obj/item/clothing/head/utility/bomb_hood)
 
 /datum/export/gear/bombsuit
 	cost = CARGO_CRATE_VALUE * 0.2
 	unit_name = "bomb suit"
-	export_types = list(/obj/item/clothing/suit/bomb_suit)
+	export_types = list(/obj/item/clothing/suit/utility/bomb_suit)
 
 /datum/export/gear/lizardboots
 	cost = CARGO_CRATE_VALUE * 0.7

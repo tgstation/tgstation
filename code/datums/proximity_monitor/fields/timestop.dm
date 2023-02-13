@@ -16,8 +16,7 @@
 	var/duration = 140
 	var/datum/proximity_monitor/advanced/timestop/chronofield
 	alpha = 125
-	var/check_anti_magic = FALSE
-	var/check_holy = FALSE
+	var/antimagic_flags = NONE
 	///if true, immune atoms moving ends the timestop instead of duration.
 	var/channelled = FALSE
 
@@ -29,14 +28,14 @@
 		freezerange = radius
 	for(var/A in immune_atoms)
 		immune[A] = TRUE
-	for(var/mob/living/L in GLOB.player_list)
-		if(locate(/obj/effect/proc_holder/spell/aoe_turf/timestop) in L.mind.spell_list) //People who can stop time are immune to its effects
-			immune[L] = TRUE
-	for(var/mob/living/simple_animal/hostile/guardian/G in GLOB.parasites)
-		if(G.summoner && locate(/obj/effect/proc_holder/spell/aoe_turf/timestop) in G.summoner.mind.spell_list) //It would only make sense that a person's stand would also be immune.
-			immune[G] = TRUE
+	for(var/mob/living/to_check in GLOB.player_list)
+		if(HAS_TRAIT(to_check, TRAIT_TIME_STOP_IMMUNE))
+			immune[to_check] = TRUE
+	for(var/mob/living/simple_animal/hostile/guardian/stand in GLOB.parasites)
+		if(stand.summoner && HAS_TRAIT(stand.summoner, TRAIT_TIME_STOP_IMMUNE)) //It would only make sense that a person's stand would also be immune.
+			immune[stand] = TRUE
 	if(start)
-		INVOKE_ASYNC(src, .proc/timestop)
+		INVOKE_ASYNC(src, PROC_REF(timestop))
 
 /obj/effect/timestop/Destroy()
 	QDEL_NULL(chronofield)
@@ -46,12 +45,13 @@
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
 	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, -1)
-	chronofield = new(src, freezerange, TRUE, immune, check_anti_magic, check_holy, channelled)
+	chronofield = new (src, freezerange, TRUE, immune, antimagic_flags, channelled)
 	if(!channelled)
 		QDEL_IN(src, duration)
 
+
 /obj/effect/timestop/magic
-	check_anti_magic = TRUE
+	antimagic_flags = MAGIC_RESISTANCE
 
 ///indefinite version, but only if no immune atoms move.
 /obj/effect/timestop/channelled
@@ -63,18 +63,16 @@
 	var/list/frozen_mobs = list() //cached separately for processing
 	var/list/frozen_structures = list() //Also machinery, and only frozen aestethically
 	var/list/frozen_turfs = list() //Only aesthetically
-	var/check_anti_magic = FALSE
-	var/check_holy = FALSE
+	var/antimagic_flags = NONE
 	///if true, this doesn't time out after a duration but rather when an immune atom inside moves.
 	var/channelled = FALSE
 
 	var/static/list/global_frozen_atoms = list()
 
-/datum/proximity_monitor/advanced/timestop/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, list/immune, check_anti_magic, check_holy, channelled)
+/datum/proximity_monitor/advanced/timestop/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, list/immune, antimagic_flags, channelled)
 	..()
 	src.immune = immune
-	src.check_anti_magic = check_anti_magic
-	src.check_holy = check_holy
+	src.antimagic_flags = antimagic_flags
 	src.channelled = channelled
 	recalculate_field()
 	START_PROCESSING(SSfastprocess, src)
@@ -95,19 +93,19 @@
 		return FALSE
 	if(immune[A]) //a little special logic but yes immune things don't freeze
 		if(channelled)
-			RegisterSignal(A, COMSIG_MOVABLE_MOVED, .proc/atom_broke_channel, override = TRUE)
+			RegisterSignal(A, COMSIG_MOVABLE_MOVED, PROC_REF(atom_broke_channel), override = TRUE)
 		return FALSE
 	if(ismob(A))
 		var/mob/M = A
-		if(M.anti_magic_check(check_anti_magic, check_holy))
+		if(M.can_block_magic(antimagic_flags))
 			immune[A] = TRUE
 			return
 	var/frozen = TRUE
 	if(isliving(A))
 		freeze_mob(A)
-	else if(istype(A, /obj/projectile))
+	else if(isprojectile(A))
 		freeze_projectile(A)
-	else if(istype(A, /obj/vehicle/sealed/mecha))
+	else if(ismecha(A))
 		freeze_mecha(A)
 	else if((ismachinery(A) && !istype(A, /obj/machinery/light)) || isstructure(A)) //Special exception for light fixtures since recoloring causes them to change light
 		freeze_structure(A)
@@ -123,8 +121,8 @@
 	A.move_resist = INFINITY
 	global_frozen_atoms[A] = src
 	into_the_negative_zone(A)
-	RegisterSignal(A, COMSIG_MOVABLE_PRE_MOVE, .proc/unfreeze_atom)
-	RegisterSignal(A, COMSIG_ITEM_PICKUP, .proc/unfreeze_atom)
+	RegisterSignal(A, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(unfreeze_atom))
+	RegisterSignal(A, COMSIG_ITEM_PICKUP, PROC_REF(unfreeze_atom))
 
 	return TRUE
 
@@ -141,9 +139,9 @@
 		unfreeze_throwing(A)
 	if(isliving(A))
 		unfreeze_mob(A)
-	else if(istype(A, /obj/projectile))
+	else if(isprojectile(A))
 		unfreeze_projectile(A)
-	else if(istype(A, /obj/vehicle/sealed/mecha))
+	else if(ismecha(A))
 		unfreeze_mecha(A)
 
 	UnregisterSignal(A, COMSIG_MOVABLE_PRE_MOVE)

@@ -7,7 +7,7 @@
 #define CHANNEL_AMBIENCE 1019
 #define CHANNEL_BUZZ 1018
 #define CHANNEL_TRAITOR 1017
-#define CHANNEL_MBOX 1016
+#define CHANNEL_CHARGED_SPELL 1016
 
 ///Default range of a sound.
 #define SOUND_RANGE 17
@@ -43,6 +43,7 @@
 #define AMBIENCE_ENGI "engi"
 #define AMBIENCE_MINING "mining"
 #define AMBIENCE_MEDICAL "med"
+#define AMBIENCE_VIROLOGY "viro"
 #define AMBIENCE_SPOOKY "spooky"
 #define AMBIENCE_SPACE "space"
 #define AMBIENCE_MAINT "maint"
@@ -162,3 +163,6 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_SWING_HIT "swing_hit"
 #define SFX_TERMINAL_TYPE "terminal_type"
 #define SFX_WARPSPEED "warpspeed"
+#define SFX_CRUNCHY_BUSH_WHACK "crunchy_bush_whack"
+#define SFX_TREE_CHOP "tree_chop"
+#define SFX_ROCK_TAP "rock_tap"

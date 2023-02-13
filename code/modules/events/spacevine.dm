@@ -1,5 +1,8 @@
 /// Determines brightness of the light emitted by kudzu with the light mutation
 #define LIGHT_MUTATION_BRIGHTNESS 4
+/// Kudzu light states
+#define PASS_LIGHT 0
+#define BLOCK_LIGHT 1
 /// Determines the probability that the toxicity mutation will harm someone who passes through it
 #define TOXICITY_MUTATION_PROB 10
 /// Determines the impact radius of kudzu's explosive mutation
@@ -10,6 +13,8 @@
 #define THORN_MUTATION_CUT_PROB 10
 /// Determines the probability that a kudzu plant with the flowering mutation will spawn a venus flower bud
 #define FLOWERING_MUTATION_SPAWN_PROB 10
+/// Maximum energy used per atmos tick that the temperature stabilisation mutation will use to bring the temperature to T20C
+#define TEMP_STABILISATION_MUTATION_MAXIMUM_ENERGY 40000
 
 /// Temperature below which the kudzu can't spread
 #define VINE_FREEZING_POINT 100
@@ -22,19 +27,27 @@
 #define SEVERITY_MAJOR 10
 
 /// Kudzu mutativeness is based on a scale factor * potency
-#define MUTATIVENESS_SCALE_FACTOR 0.1
+#define MUTATIVENESS_SCALE_FACTOR 0.2
 
 /// Kudzu maximum mutation severity is a linear function of potency
-#define MAX_SEVERITY_LINEAR_COEFF 0.1
+#define MAX_SEVERITY_LINEAR_COEFF 0.15
 #define MAX_SEVERITY_CONSTANT_TERM 10
+
+/// Additional maximum mutation severity given to kudzu spawned by a random event
+#define MAX_SEVERITY_EVENT_BONUS 10
 
 /// The maximum possible productivity value of a (normal) kudzu plant, used for calculating a plant's spread cap and multiplier
 #define MAX_POSSIBLE_PRODUCTIVITY_VALUE 10
 
 /// Kudzu spread cap is a scaled version of production speed, such that the better the production speed, ie. the lower the speed value is, the faster is spreads
-#define SPREAD_CAP_SCALE_FACTOR 4
+#define SPREAD_CAP_LINEAR_COEFF 4
+#define SPREAD_CAP_CONSTANT_TERM 20
 /// Kudzu spread multiplier is a reciporal function of production speed, such that the better the production speed, ie. the lower the speed value is, the faster it spreads
 #define SPREAD_MULTIPLIER_MAX 50
+
+/// Kudzu's maximum possible maximum mutation severity (assuming ideal potency), used to balance mutation appearance chance
+#define IDEAL_MAX_SEVERITY 20
+
 
 /datum/round_event_control/spacevine
 	name = "Space Vines"
@@ -42,6 +55,10 @@
 	weight = 15
 	max_occurrences = 3
 	min_players = 10
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Kudzu begins to overtake the station. Might spawn man-traps."
+	min_wizard_trigger_potency = 4
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/spacevine
 	fakeable = FALSE
@@ -51,8 +68,8 @@
 
 	var/obj/structure/spacevine/vine = new()
 
-	for(var/area/hallway/area in world)
-		for(var/turf/floor in area)
+	for(var/area/station/hallway/area in GLOB.areas)
+		for(var/turf/floor as anything in area.get_contained_turfs())
 			if(floor.Enter(vine))
 				turfs += floor
 
@@ -108,6 +125,9 @@
 /datum/spacevine_mutation/proc/on_explosion(severity, target, obj/structure/spacevine/holder)
 	return
 
+/datum/spacevine_mutation/proc/additional_atmos_processes(obj/structure/spacevine/holder, datum/gas_mixture/air)
+	return
+
 /datum/spacevine_mutation/aggressive_spread/proc/aggrospread_act(obj/structure/spacevine/vine, mob/living/M)
 	return
 
@@ -142,7 +162,7 @@
 	name = "Explosive"
 	hue = "#D83A56"
 	quality = NEGATIVE
-	severity = SEVERITY_ABOVE_AVERAGE
+	severity = SEVERITY_MAJOR
 
 /datum/spacevine_mutation/explosive/on_explosion(explosion_severity, target, obj/structure/spacevine/holder)
 	if(explosion_severity < 3)
@@ -180,6 +200,29 @@
 	. = ..()
 	holder.trait_flags |= SPACEVINE_COLD_RESISTANT
 
+/datum/spacevine_mutation/temp_stabilisation
+	name = "Temperature stabilisation"
+	hue = "#B09856"
+	quality = POSITIVE
+	severity = SEVERITY_MINOR
+
+/datum/spacevine_mutation/temp_stabilisation/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
+	. = ..()
+	holder.always_atmos_process = TRUE
+
+/datum/spacevine_mutation/temp_stabilisation/additional_atmos_processes(obj/structure/spacevine/holder, datum/gas_mixture/air)
+	var/heat_capacity = air.heat_capacity()
+	if(!heat_capacity) // No heating up space or vacuums
+		return
+	var/energy_used = min(abs(air.temperature - T20C) * heat_capacity, TEMP_STABILISATION_MUTATION_MAXIMUM_ENERGY)
+	var/delta_temperature = energy_used / heat_capacity
+	if(delta_temperature < 0.1)
+		return
+	if(air.temperature > T20C)
+		delta_temperature *= -1
+	air.temperature += delta_temperature
+	holder.air_update_turf(FALSE, FALSE)
+
 /datum/spacevine_mutation/vine_eating
 	name = "Vine eating"
 	hue = "#F4A442"
@@ -211,10 +254,10 @@
 /datum/spacevine_mutation/aggressive_spread/aggrospread_act(obj/structure/spacevine/vine, mob/living/living_mob)
 	var/mob/living/carbon/victim = living_mob //If the mob is carbon then it now also exists as a victim, and not just an living mob.
 	if(istype(victim)) //If the mob (M) is a carbon subtype (C) we move on to pick a more complex damage proc, with damage zones, wounds and armor mitigation.
-		var/obj/item/bodypart/limb = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD, BODY_ZONE_CHEST) //Picks a random bodypart. Does not runtime even if it's missing.
+		var/obj/item/bodypart/limb = victim.get_bodypart(victim.get_random_valid_zone(even_weights = TRUE)) //Picks a random bodypart.
 		var/armor = victim.run_armor_check(limb, MELEE, null, null) //armor = the armor value of that randomly chosen bodypart. Nulls to not print a message, because it would still print on pierce.
 		var/datum/spacevine_mutation/thorns/thorn = locate() in vine.mutations //Searches for the thorns mutation in the "mutations"-list inside obj/structure/spacevine, and defines T if it finds it.
-		if(thorn && (prob(40))) //If we found the thorns mutation there is now a chance to get stung instead of lashed or smashed.
+		if(thorn && prob(40) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE)) //If we found the thorns mutation there is now a chance to get stung instead of lashed or smashed.
 			victim.apply_damage(50, BRUTE, def_zone = limb, wound_bonus = rand(-20,10), sharpness = SHARP_POINTY) //This one gets a bit lower damage because it ignores armor.
 			victim.Stun(1 SECONDS) //Stopped in place for a moment.
 			playsound(living_mob, 'sound/weapons/pierce.ogg', 50, TRUE, -1)
@@ -222,7 +265,7 @@
 			span_userdanger("You are nailed by a sharp thorn!"))
 			log_combat(vine, living_mob, "aggressively pierced") //"Aggressively" for easy ctrl+F'ing in the attack logs.
 		else
-			if(prob(80))
+			if(prob(80) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 				victim.apply_damage(60, BRUTE, def_zone = limb, blocked = armor, wound_bonus = rand(-20,10), sharpness = SHARP_EDGED)
 				victim.Knockdown(2 SECONDS)
 				playsound(victim, 'sound/weapons/whip.ogg', 50, TRUE, -1)
@@ -252,7 +295,7 @@
 	severity = SEVERITY_TRIVIAL
 
 /datum/spacevine_mutation/transparency/on_grow(obj/structure/spacevine/holder)
-	holder.set_opacity(0)
+	holder.light_state = PASS_LIGHT
 	holder.alpha = 125
 
 /datum/spacevine_mutation/oxy_eater
@@ -322,17 +365,30 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
+	if(istype(crosser) && HAS_TRAIT(crosser, TRAIT_PIERCEIMMUNE))
+		return
+
 	if(prob(THORN_MUTATION_CUT_PROB) && istype(crosser) && !isvineimmune(crosser))
 		var/mob/living/victim = crosser
 		victim.adjustBruteLoss(15)
 		to_chat(victim, span_danger("You cut yourself on the thorny vines."))
 
 /datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/item, expected_damage)
+	if(iscarbon(hitter))
+		var/mob/living/carbon/carbon_victim = hitter
+		for(var/obj/item/clothing/worn_item in carbon_victim.get_equipped_items())
+			if((worn_item.body_parts_covered & HANDS) && (worn_item.clothing_flags & THICKMATERIAL))
+				return expected_damage
+
+	if(HAS_TRAIT(hitter, TRAIT_PIERCEIMMUNE) || HAS_TRAIT(hitter, TRAIT_PLANT_SAFE))
+		return expected_damage
+
 	if(prob(THORN_MUTATION_CUT_PROB) && istype(hitter) && !isvineimmune(hitter))
 		var/mob/living/victim = hitter
 		victim.adjustBruteLoss(15)
 		to_chat(victim, span_danger("You cut yourself on the thorny vines."))
-	. = expected_damage
+
+	return expected_damage
 
 /datum/spacevine_mutation/woodening
 	name = "Hardened"
@@ -350,6 +406,19 @@
 		. = expected_damage * 0.5
 	else
 		. = expected_damage
+
+/datum/spacevine_mutation/timid
+	name = "Timid"
+	hue = "#a4a9ac"
+	quality = POSITIVE
+	severity = SEVERITY_MINOR
+
+//This specific mutation only covers floors instead of structures, items, mobs and cant tangle mobs
+/datum/spacevine_mutation/timid/on_birth(obj/structure/spacevine/holder)
+	SET_PLANE_IMPLICIT(holder, FLOOR_PLANE)
+	holder.light_state = PASS_LIGHT
+	holder.can_tangle = FALSE
+	return ..()
 
 /datum/spacevine_mutation/flowering
 	name = "Flowering"
@@ -375,22 +444,29 @@
 	anchored = TRUE
 	density = FALSE
 	layer = SPACEVINE_LAYER
-	plane = GAME_PLANE_UPPER
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	mouse_opacity = MOUSE_OPACITY_OPAQUE //Clicking anywhere on the turf is good enough
 	pass_flags = PASSTABLE | PASSGRILLE
 	max_integrity = 50
 	var/energy = 0
-	var/can_spread = TRUE //Can this kudzu spread?
+	/// Can this kudzu spread?
+	var/can_spread = TRUE
+	/// Can this kudzu buckle mobs in?
+	var/can_tangle = TRUE
 	var/datum/spacevine_controller/master = null
 	/// List of mutations for a specific vine
 	var/list/mutations = list()
 	var/trait_flags = 0
+	/// Should atmos always process this tile
+	var/always_atmos_process = FALSE
+	/// The kudzu blocks light on default once it grows
+	var/light_state = BLOCK_LIGHT
 
 /obj/structure/spacevine/Initialize(mapload)
 	. = ..()
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -414,7 +490,7 @@
 	if(master)
 		master.VineDestroyed(src)
 	mutations = list()
-	set_opacity(0)
+	set_opacity(PASS_LIGHT)
 	if(has_buckled_mobs())
 		unbuckle_all_mobs(force=1)
 	return ..()
@@ -424,7 +500,7 @@
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		override += mutation.on_chem(src, chem)
 	if(!override && istype(chem, /datum/reagent/toxin/plantbgone))
-		if(prob(50))
+		if(prob(75))
 			qdel(src)
 
 /obj/structure/spacevine/proc/eat(mob/eater)
@@ -484,12 +560,16 @@
 	var/list/growth_queue
 	//List of currently processed vines, on this level to prevent runtime tomfoolery
 	var/list/obj/structure/spacevine/queue_end
-	var/spread_multiplier = 5 // corresponds to artifical kudzu with production speed of 1, 10% of total vines will spread per second
+	///Spread multiplier, depends on productivity, affects how often kudzu spreads
+	var/spread_multiplier = 5 // corresponds to artifical kudzu with production speed of 1, approaches 10% of total vines will spread per second
+	///Maximum spreading limit (ie. how many kudzu can there be) for this controller
 	var/spread_cap = 30 // corresponds to artifical kudzu with production speed of 3.5
-	var/list/vine_mutations_list
+	var/static/list/vine_mutations_list
 	var/mutativeness = 1
 	///Maximum sum of mutation severities
 	var/max_mutation_severity = 20
+	///Minimum spread rate per second
+	var/minimum_spread_rate = 1
 
 /datum/spacevine_controller/New(turf/location, list/muts, potency, production, datum/round_event/event = null)
 	vines = list()
@@ -499,16 +579,20 @@
 	if(event)
 		event.announce_to_ghosts(vine)
 	START_PROCESSING(SSobj, src)
-	vine_mutations_list = list()
-	init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
-	for(var/datum/spacevine_mutation/mutation as anything in vine_mutations_list)
-		vine_mutations_list[mutation] = max_mutation_severity - mutation.severity // this is intended to be before the potency check as the ideal maximum potency is used for weighting
+	if(!vine_mutations_list)
+		vine_mutations_list = list()
+		init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
+		for(var/datum/spacevine_mutation/mutation as anything in vine_mutations_list)
+			vine_mutations_list[mutation] = IDEAL_MAX_SEVERITY - mutation.severity // the ideal maximum potency is used for weighting
 	if(potency != null)
-		mutativeness = potency * MUTATIVENESS_SCALE_FACTOR // If potency is 100, 10 mutativeness; if 1: 0.1 mutativeness
-		max_mutation_severity = round(potency * MAX_SEVERITY_LINEAR_COEFF + MAX_SEVERITY_CONSTANT_TERM) // If potency is 100, 20 max mutation severity; if 1, 10 max mutation severity
+		mutativeness = potency * MUTATIVENESS_SCALE_FACTOR // If potency is 100, 20 mutativeness; if 1: 0.2 mutativeness
+		max_mutation_severity = round(potency * MAX_SEVERITY_LINEAR_COEFF + MAX_SEVERITY_CONSTANT_TERM) // If potency is 100, 25 max mutation severity; if 1, 10 max mutation severity
 	if(production != null && production <= MAX_POSSIBLE_PRODUCTIVITY_VALUE) //Prevents runtime in case production is set to 11.
-		spread_cap = SPREAD_CAP_SCALE_FACTOR * (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production) //Best production speed of 1 increases spread_cap to 40, worst production speed of 10 lowers it to 4, even distribution
+		spread_cap = SPREAD_CAP_LINEAR_COEFF * (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production) + SPREAD_CAP_CONSTANT_TERM //Best production speed of 1 increases spread_cap to 60, worst production speed of 10 lowers it to 24, even distribution
 		spread_multiplier = SPREAD_MULTIPLIER_MAX / (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production) // Best production speed of 1: 10% of total vines will spread per second, worst production speed of 10: 1% of total vines (with minimum of 1) will spread per second
+	if(event != null) // spawned by space vine event
+		max_mutation_severity += MAX_SEVERITY_EVENT_BONUS
+		minimum_spread_rate = 3
 
 /datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
@@ -579,9 +663,14 @@
 		qdel(src) //space vines exterminated. Remove the controller
 		return
 
-	var/spread_max = round(clamp(delta_time * 0.5 * vine_count / spread_multiplier, 1, spread_cap))
+	/// Bonus spread for kudzu that has just started out (ie. with low vine count)
+	var/start_spread_bonus = max(5 - spread_multiplier * (vine_count ** 2) / 400, 0)
+	/// Base spread rate, depends solely on spread multiplier and vine count
+	var/spread_base = 0.5 * vine_count / spread_multiplier
+	/// Actual maximum spread rate for this process tick
+	var/spread_max = round(clamp(delta_time * (spread_base + start_spread_bonus), max(delta_time * minimum_spread_rate, 1), spread_cap))
 	var/amount_processed = 0
-	for(var/obj/structure/spacevine/vine as anything in growth_queue)
+	for(var/obj/structure/spacevine/vine in growth_queue)
 		if(!vine.can_spread)
 			continue
 		growth_queue -= vine
@@ -610,7 +699,7 @@
 	if(!energy)
 		src.icon_state = pick("Med1", "Med2", "Med3")
 		energy = 1
-		set_opacity(1)
+		set_opacity(light_state)
 	else
 		src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
 		energy = 2
@@ -631,7 +720,7 @@
 		return
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		mutation.on_buckle(src, victim)
-	if((victim.stat != DEAD) && (victim.buckled != src)) //not dead or captured
+	if((victim.stat != DEAD) && (victim.buckled != src) && can_tangle) //not dead and not captured and can tangle
 		to_chat(victim, span_userdanger("The vines [pick("wind", "tangle", "tighten")] around you!"))
 		buckle_mob(victim, 1)
 
@@ -639,6 +728,9 @@
 /obj/structure/spacevine/proc/spread()
 	var/direction = pick(GLOB.cardinals)
 	var/turf/stepturf = get_step(src, direction)
+	if(!istype(stepturf))
+		return
+
 	if(!isspaceturf(stepturf) && stepturf.Enter(src))
 		var/obj/structure/spacevine/spot_taken = locate() in stepturf //Locates any vine on target turf. Calls that vine "spot_taken".
 		var/datum/spacevine_mutation/vine_eating/eating = locate() in mutations //Locates the vine eating trait in our own seed and calls it E.
@@ -664,9 +756,11 @@
 		qdel(src)
 
 /obj/structure/spacevine/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return (exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || exposed_temperature < VINE_FREEZING_POINT || !can_spread)//if you're room temperature you're safe
+	return (always_atmos_process || exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || exposed_temperature < VINE_FREEZING_POINT || !can_spread)//if you're room temperature you're safe
 
 /obj/structure/spacevine/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	for(var/datum/spacevine_mutation/mutation in mutations)
+		mutation.additional_atmos_processes(src, air)
 	if(!can_spread && (exposed_temperature >= VINE_FREEZING_POINT || (trait_flags & SPACEVINE_COLD_RESISTANT)))
 		can_spread = TRUE // not returning here just in case its now a plasmafire and the kudzu should be deleted
 	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD && !(trait_flags & SPACEVINE_HEAT_RESISTANT))
@@ -691,6 +785,8 @@
 	return FALSE
 
 #undef LIGHT_MUTATION_BRIGHTNESS
+#undef PASS_LIGHT
+#undef BLOCK_LIGHT
 #undef TOXICITY_MUTATION_PROB
 #undef EXPLOSION_MUTATION_IMPACT_RADIUS
 #undef GAS_MUTATION_REMOVAL_MULTIPLIER
@@ -702,3 +798,12 @@
 #undef SEVERITY_AVERAGE
 #undef SEVERITY_ABOVE_AVERAGE
 #undef SEVERITY_MAJOR
+#undef MUTATIVENESS_SCALE_FACTOR
+#undef MAX_SEVERITY_LINEAR_COEFF
+#undef MAX_SEVERITY_CONSTANT_TERM
+#undef MAX_SEVERITY_EVENT_BONUS
+#undef MAX_POSSIBLE_PRODUCTIVITY_VALUE
+#undef SPREAD_CAP_LINEAR_COEFF
+#undef SPREAD_CAP_CONSTANT_TERM
+#undef SPREAD_MULTIPLIER_MAX
+#undef IDEAL_MAX_SEVERITY

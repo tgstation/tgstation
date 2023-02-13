@@ -9,6 +9,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 
 	greyscale_config = /datum/greyscale_config/wirecutters
+	greyscale_config_belt = /datum/greyscale_config/wirecutters_belt_overlay
+	greyscale_config_inhand_left = /datum/greyscale_config/wirecutter_inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/wirecutter_inhand_right
 
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
@@ -25,24 +28,30 @@
 	pickup_sound = 'sound/items/handling/wirecutter_pickup.ogg'
 	tool_behaviour = TOOL_WIRECUTTER
 	toolspeed = 1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/item_wirecutters
 	/// If the item should be assigned a random color
 	var/random_color = TRUE
 	/// List of possible random colors
 	var/static/list/wirecutter_colors = list(
-		"blue" = "#1861d5",
-		"red" = "#951710",
-		"pink" = "#d5188d",
-		"brown" = "#a05212",
-		"green" = "#0e7f1b",
-		"cyan" = "#18a2d5",
-		"yellow" = "#d58c18"
+		COLOR_TOOL_BLUE,
+		COLOR_TOOL_RED,
+		COLOR_TOOL_PINK,
+		COLOR_TOOL_BROWN,
+		COLOR_TOOL_GREEN,
+		COLOR_TOOL_CYAN,
+		COLOR_TOOL_YELLOW,
 	)
+
+/datum/armor/item_wirecutters
+	fire = 50
+	acid = 30
 
 /obj/item/wirecutters/Initialize(mapload)
 	if(random_color)
-		var/our_color = pick(wirecutter_colors)
-		set_greyscale(colors=list(wirecutter_colors[our_color]))
+		set_greyscale(colors = list(pick(wirecutter_colors)))
+
+	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
+
 	return ..()
 
 /obj/item/wirecutters/attack(mob/living/carbon/attacked_carbon, mob/user)
@@ -50,20 +59,13 @@
 		user.visible_message(span_notice("[user] cuts [attacked_carbon]'s restraints with [src]!"))
 		qdel(attacked_carbon.handcuffed)
 		return
-	else if(istype(attacked_carbon) && attacked_carbon.has_status_effect(/datum/status_effect/strandling))
-		user.visible_message(span_notice("[user] attempts to cut the durathread strand from around [attacked_carbon]'s neck."))
-		if(do_after(user, 1.5 SECONDS, attacked_carbon))
-			user.visible_message(span_notice("[user] succesfully cuts the durathread strand from around [attacked_carbon]'s neck."))
-			attacked_carbon.remove_status_effect(/datum/status_effect/strandling)
-			playsound(loc, usesound, 50, TRUE, -1)
-		return
-	else
-		..()
 
-/obj/item/wirecutters/suicide_act(mob/user)
+	return ..()
+
+/obj/item/wirecutters/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is cutting at [user.p_their()] arteries with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, usesound, 50, TRUE, -1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/wirecutters/abductor
 	name = "alien wirecutters"

@@ -115,7 +115,7 @@
 		updateDialog(usr) // make sure updates when complete
 
 /datum/song/Topic(href, href_list)
-	if(!usr.canUseTopic(parent, TRUE, FALSE, FALSE, FALSE))
+	if(!usr.canUseTopic(parent, be_close = TRUE, no_dexterity = FALSE, no_tk = FALSE, need_hands = FALSE, floor_okay = TRUE))
 		usr << browse(null, "window=instrument")
 		usr.unset_machine()
 		return
@@ -154,7 +154,7 @@
 		tempo = sanitize_tempo(tempo + text2num(href_list["tempo"]))
 
 	else if(href_list["play"])
-		INVOKE_ASYNC(src, .proc/start_playing, usr)
+		INVOKE_ASYNC(src, PROC_REF(start_playing), usr)
 
 	else if(href_list["newline"])
 		var/newline = tgui_input_text(usr, "Enter your line ", parent.name)

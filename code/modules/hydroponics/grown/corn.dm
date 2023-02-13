@@ -21,22 +21,25 @@
 	name = "ear of corn"
 	desc = "Needs some butter!"
 	icon_state = "corn"
-	microwaved_type = /obj/item/food/popcorn
 	trash_type = /obj/item/grown/corncob
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
+	grind_results = list(/datum/reagent/consumable/cornmeal = 0)
 	juice_results = list(/datum/reagent/consumable/corn_starch = 0)
 	tastes = list("corn" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/whiskey
 
-/obj/item/food/grown/corn/MakeBakeable()
-	AddComponent(/datum/component/bakeable, /obj/item/food/oven_baked_corn, rand(15 SECONDS, 35 SECONDS), TRUE, TRUE)
+/obj/item/food/grown/corn/make_bakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/oven_baked_corn, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
+
+/obj/item/food/grown/corn/make_microwaveable()
+	AddElement(/datum/element/microwavable, /obj/item/food/popcorn)
 
 /obj/item/grown/corncob
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
 	icon_state = "corncob"
-	inhand_icon_state = "corncob"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3
@@ -67,7 +70,7 @@
 	name = "snap corn"
 	desc = "A cob with snap pops."
 	icon_state = "snapcorn"
-	inhand_icon_state = "corncob"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3

@@ -1,5 +1,6 @@
 # When passed an `init_times.json` file (received from enabling `PROFILE_MAPLOAD_INIT_ATOM`),
 # and an optional max-depth level, this will output init times from worst to best.
+import errno
 import json
 import sys
 
@@ -19,4 +20,10 @@ for (type, time) in init_times.items():
     init_times_per_type[type] = init_times_per_type.get(type, 0) + time
 
 for (type, time) in sorted(init_times_per_type.items(), key = lambda x: x[1], reverse = True):
-    print(type, time)
+    try:
+        print(type, time)
+    except IOError as error:
+        # Prevents broken pipe error if you do something like `read_init_times.py init_times.json | head`
+        if error.errno == errno.EPIPE:
+            sys.stderr.close()
+            sys.exit(0)

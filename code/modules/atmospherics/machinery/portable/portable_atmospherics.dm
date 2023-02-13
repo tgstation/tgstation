@@ -1,10 +1,13 @@
+#define PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT 0
+
 /obj/machinery/portable_atmospherics
 	name = "portable_atmospherics"
-	icon = 'icons/obj/atmos.dmi'
+	icon = 'icons/obj/atmospherics/atmos.dmi'
 	use_power = NO_POWER_USE
 	max_integrity = 250
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 60, ACID = 30)
+	armor_type = /datum/armor/machinery_portable_atmospherics
 	anchored = FALSE
+	layer = ABOVE_OBJ_LAYER
 
 	///Stores the gas mixture of the portable component. Don't access this directly, use return_air() so you support the temporary processing it provides
 	var/datum/gas_mixture/air_contents
@@ -14,8 +17,25 @@
 	var/obj/item/tank/holding
 	///Volume (in L) of the inside of the machine
 	var/volume = 0
-	///Used to track if anything of note has happen while running process_atmos()
-	var/excited = TRUE
+	///Used to track if anything of note has happen while running process_atmos().
+	///Treat it as a process_atmos() scope var, we just declare it here to pass it between parent calls.
+	///Should be false on start of every process_atmos() proc, since true means we'll process again next tick.
+	var/excited = FALSE
+
+	/// Max amount of heat allowed inside the machine before it starts to melt. [PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT] is special value meaning we are immune.
+	var/temp_limit = 10000
+	/// Max amount of pressure allowed inside of the canister before it starts to break. [PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT] is special value meaning we are immune.
+	var/pressure_limit = 500000
+
+	/// Should reactions inside the object be suppressed
+	var/suppress_reactions = FALSE
+	/// Is there a hypernoblium crystal inserted into this
+	var/nob_crystal_inserted = FALSE
+
+/datum/armor/machinery_portable_atmospherics
+	energy = 100
+	fire = 60
+	acid = 30
 
 /obj/machinery/portable_atmospherics/Initialize(mapload)
 	. = ..()
@@ -29,11 +49,21 @@
 	air_contents = null
 	SSair.stop_processing_machine(src)
 
+	if(nob_crystal_inserted)
+		new /obj/item/hypernoblium_crystal(src)
+
 	return ..()
+
+/obj/machinery/portable_atmospherics/examine(mob/user)
+	. = ..()
+	if(nob_crystal_inserted)
+		. += "There is a hypernoblium crystal inside it that allows for reactions inside to be suppressed."
+	if(suppress_reactions)
+		. += "The hypernoblium crystal inside is glowing with a faint blue colour, indicating reactions inside are currently being suppressed."
 
 /obj/machinery/portable_atmospherics/ex_act(severity, target)
 	if(resistance_flags & INDESTRUCTIBLE)
-		return FALSE //Indestructable cans shouldn't release air
+		return FALSE //Indestructible cans shouldn't release air
 
 	if(severity == EXPLODE_DEVASTATE || target == src)
 		//This explosion will destroy the can, release its air.
@@ -43,11 +73,33 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/process_atmos()
-	if(!connected_port) // Pipe network handles reactions if connected, and we can't stop processing if there's a port effecting our mix
-		excited = (excited | air_contents.react(src))
-		if(!excited)
-			return PROCESS_KILL
+	excited = (!suppress_reactions && (excited || air_contents.react(src)))
+	if(!excited)
+		return PROCESS_KILL
 	excited = FALSE
+
+/// Take damage if a variable is exceeded. Damage is equal to temp/limit * heat/limit.
+/// The damage multiplier is treated as 1 if something is being ignored while the other one is exceeded.
+/// On most cases only one will be exceeded, so the other one is scaled down.
+/obj/machinery/portable_atmospherics/proc/take_atmos_damage()
+	var/taking_damage = FALSE
+
+	var/temp_damage = 1
+	var/pressure_damage = 1
+
+	if(temp_limit != PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT)
+		temp_damage = air_contents.temperature / temp_limit
+		taking_damage = temp_damage > 1
+
+	if(pressure_limit != PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT)
+		pressure_damage = air_contents.return_pressure() / pressure_limit
+		taking_damage = taking_damage || pressure_damage > 1
+
+	if(!taking_damage)
+		return FALSE
+
+	take_damage(clamp(temp_damage * pressure_damage, 5, 50), BURN, 0)
+	return TRUE
 
 /obj/machinery/portable_atmospherics/return_air()
 	SSair.start_processing_machine(src)
@@ -107,7 +159,7 @@
 
 /obj/machinery/portable_atmospherics/AltClick(mob/living/user)
 	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)) || !can_interact(user))
+	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)) || !can_interact(user))
 		return
 	if(!holding)
 		return
@@ -132,12 +184,15 @@
 	if(!user)
 		return FALSE
 	if(holding)
-		user.put_in_hands(holding)
+		if(Adjacent(user))
+			user.put_in_hands(holding)
+		else
+			holding.forceMove(get_turf(src))
 		UnregisterSignal(holding, COMSIG_PARENT_QDELETING)
 		holding = null
 	if(new_tank)
 		holding = new_tank
-		RegisterSignal(holding, COMSIG_PARENT_QDELETING, .proc/unregister_holding)
+		RegisterSignal(holding, COMSIG_PARENT_QDELETING, PROC_REF(unregister_holding))
 
 	SSair.start_processing_machine(src)
 	update_appearance()
@@ -193,10 +248,10 @@
 	add_fingerprint(user)
 	return ..()
 
-/// Holding tanks can get to zero integrity and be destroyed without other warnings due to pressure change. 
+/// Holding tanks can get to zero integrity and be destroyed without other warnings due to pressure change.
 /// This checks for that case and removes our reference to it.
 /obj/machinery/portable_atmospherics/proc/unregister_holding()
 	SIGNAL_HANDLER
-	
+
 	UnregisterSignal(holding, COMSIG_PARENT_QDELETING)
 	holding = null

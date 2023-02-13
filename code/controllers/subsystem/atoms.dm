@@ -22,21 +22,23 @@ SUBSYSTEM_DEF(atoms)
 	/// Atoms that will be deleted once the subsystem is initialized
 	var/list/queued_deletions = list()
 
+	var/init_start_time
+
 	#ifdef PROFILE_MAPLOAD_INIT_ATOM
 	var/list/mapload_init_times = list()
 	#endif
 
 	initialized = INITIALIZATION_INSSATOMS
 
-/datum/controller/subsystem/atoms/Initialize(timeofday)
-	GLOB.fire_overlay.appearance_flags = RESET_COLOR
+/datum/controller/subsystem/atoms/Initialize()
+	init_start_time = world.time
 	setupGenetics() //to set the mutations' sequence
 
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
 	initialized = INITIALIZATION_INNEW_REGULAR
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 #ifdef PROFILE_MAPLOAD_INIT_ATOM
 #define PROFILE_INIT_ATOM_BEGIN(...) var/__profile_stat_time = TICK_USAGE
@@ -85,12 +87,18 @@ SUBSYSTEM_DEF(atoms)
 	if (atoms_to_return)
 		LAZYINITLIST(created_atoms)
 
+	#ifdef TESTING
 	var/count
+	#endif
+
 	var/list/mapload_arg = list(TRUE)
 
 	if(atoms)
+		#ifdef TESTING
 		count = atoms.len
-		for(var/I in 1 to count)
+		#endif
+
+		for(var/I in 1 to atoms.len)
 			var/atom/A = atoms[I]
 			if(!(A.flags_1 & INITIALIZED_1))
 				CHECK_TICK
@@ -98,49 +106,59 @@ SUBSYSTEM_DEF(atoms)
 				InitAtom(A, TRUE, mapload_arg)
 				PROFILE_INIT_ATOM_END(A)
 	else
+		#ifdef TESTING
 		count = 0
-		for(var/atom/A in world)
+		#endif
+
+		for(var/atom/A as anything in world)
 			if(!(A.flags_1 & INITIALIZED_1))
 				PROFILE_INIT_ATOM_BEGIN()
 				InitAtom(A, FALSE, mapload_arg)
 				PROFILE_INIT_ATOM_END(A)
+				#ifdef TESTING
 				++count
+				#endif
 				CHECK_TICK
 
 	testing("Initialized [count] atoms")
-	pass(count)
 
 /// Init this specific atom
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, from_template = FALSE, list/arguments)
 	var/the_type = A.type
+
 	if(QDELING(A))
-		BadInitializeCalls[the_type] |= BAD_INIT_QDEL_BEFORE
+		// Check init_start_time to not worry about atoms created before the atoms SS that are cleaned up before this
+		if (A.gc_destroyed > init_start_time)
+			BadInitializeCalls[the_type] |= BAD_INIT_QDEL_BEFORE
 		return TRUE
 
+	// This is handled and battle tested by dreamchecker. Limit to UNIT_TESTS just in case that ever fails.
+	#ifdef UNIT_TESTS
 	var/start_tick = world.time
+	#endif
 
 	var/result = A.Initialize(arglist(arguments))
 
+	#ifdef UNIT_TESTS
 	if(start_tick != world.time)
 		BadInitializeCalls[the_type] |= BAD_INIT_SLEPT
+	#endif
 
 	var/qdeleted = FALSE
 
-	if(result != INITIALIZE_HINT_NORMAL)
-		switch(result)
-			if(INITIALIZE_HINT_LATELOAD)
-				if(arguments[1]) //mapload
-					late_loaders += A
-				else
-					A.LateInitialize()
-			if(INITIALIZE_HINT_QDEL)
-				qdel(A)
-				qdeleted = TRUE
-			if(INITIALIZE_HINT_QDEL_FORCE)
-				qdel(A, force = TRUE)
-				qdeleted = TRUE
+	switch(result)
+		if (INITIALIZE_HINT_NORMAL)
+			// pass
+		if(INITIALIZE_HINT_LATELOAD)
+			if(arguments[1]) //mapload
+				late_loaders += A
 			else
-				BadInitializeCalls[the_type] |= BAD_INIT_NO_HINT
+				A.LateInitialize()
+		if(INITIALIZE_HINT_QDEL)
+			qdel(A)
+			qdeleted = TRUE
+		else
+			BadInitializeCalls[the_type] |= BAD_INIT_NO_HINT
 
 	if(!A) //possible harddel
 		qdeleted = TRUE

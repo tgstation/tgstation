@@ -1,9 +1,10 @@
-#define REVERSE_BEAR_TRAP_COUNTDOWN 60 SECONDS
+#define REVERSE_BEAR_TRAP_COUNTDOWN (60 SECONDS)
 
 /obj/item/reverse_bear_trap
 	name = "reverse bear trap"
 	desc = "A horrifying set of shut metal jaws, rigged to a kitchen timer and secured by padlock to a head-mounted clamp. To apply, hit someone with it."
 	icon = 'icons/obj/device.dmi'
+	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "reverse_bear_trap"
 	slot_flags = ITEM_SLOT_HEAD
 	flags_1 = CONDUCT_1
@@ -50,7 +51,7 @@
 	soundloop.stop()
 	soundloop2.stop()
 	to_chat(loc, span_userdanger("*ding*"))
-	addtimer(CALLBACK(src, .proc/snap), 0.2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(snap)), 0.2 SECONDS)
 	COOLDOWN_RESET(src, kill_countdown) // reset the countdown in case it wasn't finished
 
 /obj/item/reverse_bear_trap/attack_hand(mob/user, list/modifiers)
@@ -121,6 +122,7 @@
 		playsound(src, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
 		jill.apply_damage(9999, BRUTE, BODY_ZONE_HEAD)
+		jill.investigate_log("has been killed by [src].", INVESTIGATE_DEATHS)
 		jill.death() //just in case, for some reason, they're still alive
 		flash_color(jill, flash_color = "#FF0000", flash_time = 100)
 

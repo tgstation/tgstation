@@ -28,14 +28,25 @@
 /obj/structure/stairs/west
 	dir = WEST
 
+/obj/structure/stairs/wood
+	icon_state = "stairs_wood"
+
+/obj/structure/stairs/stone
+	icon_state = "stairs_stone"
+
+/obj/structure/stairs/material
+	icon_state = "stairs_material"
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
 /obj/structure/stairs/Initialize(mapload)
+	GLOB.stairs += src
 	if(force_open_above)
 		force_open_above()
 		build_signal_listener()
 	update_surrounding()
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXIT = .proc/on_exit,
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -44,6 +55,7 @@
 
 /obj/structure/stairs/Destroy()
 	listeningTo = null
+	GLOB.stairs -= src
 	return ..()
 
 /obj/structure/stairs/Move() //Look this should never happen but...
@@ -68,17 +80,13 @@
 
 	if(!isobserver(leaving) && isTerminator() && direction == dir)
 		leaving.set_currently_z_moving(CURRENTLY_Z_ASCENDING)
-		INVOKE_ASYNC(src, .proc/stair_ascend, leaving)
+		INVOKE_ASYNC(src, PROC_REF(stair_ascend), leaving)
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/stairs/Cross(atom/movable/AM)
 	if(isTerminator() && (get_dir(src, AM) == dir))
 		return FALSE
-	return ..()
-
-/obj/structure/stairs/update_icon_state()
-	icon_state = "stairs[isTerminator() ? "_t" : null]"
 	return ..()
 
 /obj/structure/stairs/proc/stair_ascend(atom/movable/climber)
@@ -114,7 +122,7 @@
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_TURF_MULTIZ_NEW)
 	var/turf/open/openspace/T = get_step_multiz(get_turf(src), UP)
-	RegisterSignal(T, COMSIG_TURF_MULTIZ_NEW, .proc/on_multiz_new)
+	RegisterSignal(T, COMSIG_TURF_MULTIZ_NEW, PROC_REF(on_multiz_new))
 	listeningTo = T
 
 /obj/structure/stairs/proc/force_open_above()
@@ -148,3 +156,98 @@
 		if(S.dir == dir)
 			return FALSE
 	return TRUE
+
+/obj/structure/stairs_frame
+	name = "stairs frame"
+	desc = "Everything you need to call something a staircase, aside from the stuff you actually step on."
+	icon = 'icons/obj/stairs.dmi'
+	icon_state = "stairs_frame"
+	density = FALSE
+	anchored = FALSE
+	/// What type of stack will this drop on deconstruction?
+	var/frame_stack = /obj/item/stack/rods
+	/// How much of frame_stack should this drop on deconstruction?
+	var/frame_stack_amount = 10
+
+/obj/structure/stairs_frame/wood
+	name = "wooden stairs frame"
+	desc = "Everything you need to build a staircase, minus the actual stairs, this one is made of wood."
+	frame_stack = /obj/item/stack/sheet/mineral/wood
+
+/obj/structure/stairs_frame/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation)
+
+/obj/structure/stairs_frame/examine(mob/living/carbon/human/user)
+	. = ..()
+	if(anchored)
+		. += span_notice("The frame is anchored and can be made into proper stairs with 10 sheets of material.")
+	else
+		. += span_notice("The frame will need to be secured with a wrench before it can be completed.")
+
+/obj/structure/stairs_frame/wrench_act(mob/living/user, obj/item/used_tool)
+	user.balloon_alert_to_viewers("securing stairs frame", "securing frame")
+	used_tool.play_tool_sound(src)
+	if(!used_tool.use_tool(src, user, 3 SECONDS))
+		return TRUE
+	if(anchored)
+		anchored = FALSE
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		return TRUE
+	anchored = TRUE
+	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	return TRUE
+
+/obj/structure/stairs_frame/wrench_act_secondary(mob/living/user, obj/item/used_tool)
+	to_chat(user, span_notice("You start disassembling [src]..."))
+	used_tool.play_tool_sound(src)
+	if(!used_tool.use_tool(src, user, 3 SECONDS))
+		return TRUE
+	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	deconstruct(TRUE)
+	return TRUE
+
+/obj/structure/stairs_frame/deconstruct(disassembled = TRUE)
+	new frame_stack(get_turf(src), frame_stack_amount)
+	qdel(src)
+
+/obj/structure/stairs_frame/attackby(obj/item/attacked_by, mob/user, params)
+	if(!isstack(attacked_by))
+		return ..()
+	if(!anchored)
+		user.balloon_alert(user, "secure frame first")
+		return TRUE
+	var/obj/item/stack/material = attacked_by
+	if(material.stairs_type)
+		if(material.get_amount() < 10)
+			to_chat(user, span_warning("You need ten [material.name] sheets to do this!"))
+			return
+		if(locate(/obj/structure/stairs) in loc)
+			to_chat(user, span_warning("There's already stairs built here!"))
+			return
+		to_chat(user, span_notice("You start adding [material] to [src]..."))
+		if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
+			return
+		make_new_stairs(material.stairs_type)
+	else if(istype(material, /obj/item/stack/sheet))
+		if(material.get_amount() < 10)
+			to_chat(user, span_warning("You need ten sheets to do this!"))
+			return
+		if(locate(/obj/structure/stairs) in loc)
+			to_chat(user, span_warning("There's already stairs built here!"))
+			return
+		to_chat(user, span_notice("You start adding [material] to [src]..."))
+		if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
+			return
+		var/list/material_list = list()
+		if(material.material_type)
+			material_list[material.material_type] = MINERAL_MATERIAL_AMOUNT * 10
+		make_new_stairs(/obj/structure/stairs/material, material_list)
+	return TRUE
+
+/obj/structure/stairs_frame/proc/make_new_stairs(stairs_type, custom_materials)
+	var/obj/structure/stairs/new_stairs = new stairs_type(loc)
+	new_stairs.setDir(dir)
+	if(custom_materials)
+		new_stairs.set_custom_materials(custom_materials)
+	qdel(src)

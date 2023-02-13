@@ -48,16 +48,18 @@
 /// from /obj/machinery/computer/teleporter/proc/set_target(target, old_target)
 #define COMSIG_TELEPORTER_NEW_TARGET "teleporter_new_target"
 
-// /obj/machinery/power/supermatter_crystal signals
-/// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM delam reaches the point of sounding alarms
-#define COMSIG_SUPERMATTER_DELAM_START_ALARM "sm_delam_start_alarm"
+// /obj/machinery/power/supermatter_crystal
 /// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM sounds an audible alarm
 #define COMSIG_SUPERMATTER_DELAM_ALARM "sm_delam_alarm"
+
 
 // /obj/machinery/atmospherics/components/unary/cryo_cell signals
 
 /// from /obj/machinery/atmospherics/components/unary/cryo_cell/set_on(bool): (on)
 #define COMSIG_CRYO_SET_ON "cryo_set_on"
+
+/// from /obj/proc/unfreeze()
+#define COMSIG_OBJ_UNFREEZE "obj_unfreeze"
 
 // /obj/machinery/atmospherics/components/binary/valve signals
 
@@ -78,9 +80,9 @@
 
 #define COMSIG_OBJ_ALLOWED "door_try_to_activate"
 	#define COMPONENT_OBJ_ALLOW (1<<0)
+	#define COMPONENT_OBJ_DISALLOW (1<<1)
 
 #define COMSIG_AIRLOCK_SHELL_ALLOWED "airlock_shell_try_allowed"
-	#define COMPONENT_AIRLOCK_SHELL_ALLOW (1<<0)
 
 // /obj/machinery/door/airlock signals
 
@@ -90,12 +92,19 @@
 #define COMSIG_AIRLOCK_CLOSE "airlock_close"
 ///from /obj/machinery/door/airlock/set_bolt():
 #define COMSIG_AIRLOCK_SET_BOLT "airlock_set_bolt"
+///from /obj/machinery/door/airlock/bumpopen(), to the carbon who bumped: (airlock)
+#define COMSIG_CARBON_BUMPED_AIRLOCK_OPEN "carbon_bumped_airlock_open"
+	/// Return to stop the door opening on bump.
+	#define STOP_BUMP (1<<0)
+
 // /obj/item signals
 
-///from base of obj/item/equipped(): (/mob/equipper, slot)
+///from base of obj/item/equipped(): (mob/equipper, slot)
 #define COMSIG_ITEM_EQUIPPED "item_equip"
 /// A mob has just equipped an item. Called on [/mob] from base of [/obj/item/equipped()]: (/obj/item/equipped_item, slot)
 #define COMSIG_MOB_EQUIPPED_ITEM "mob_equipped_item"
+/// A mob has just unequipped an item.
+#define COMSIG_MOB_UNEQUIPPED_ITEM "mob_unequipped_item"
 ///called on [/obj/item] before unequip from base of [mob/proc/doUnEquip]: (force, atom/newloc, no_move, invdrop, silent)
 #define COMSIG_ITEM_PRE_UNEQUIP "item_pre_unequip"
 	///only the pre unequip can be cancelled
@@ -114,40 +123,24 @@
 #define COMSIG_ITEM_DROPPED "item_drop"
 ///from base of obj/item/pickup(): (/mob/taker)
 #define COMSIG_ITEM_PICKUP "item_pickup"
+
+/// Sebt from obj/item/ui_action_click(): (mob/user, datum/action)
+#define COMSIG_ITEM_UI_ACTION_CLICK "item_action_click"
+	/// Return to prevent the default behavior (attack_selfing) from ocurring.
+	#define COMPONENT_ACTION_HANDLED (1<<0)
+
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"
-///return a truthy value to prevent ensouling, checked in /obj/effect/proc_holder/spell/targeted/lichdom/cast(): (mob/user)
-#define COMSIG_ITEM_IMBUE_SOUL "item_imbue_soul"
-	#define COMPONENT_BLOCK_IMBUE (1 << 0)
-///called before marking an object for retrieval, checked in /obj/effect/proc_holder/spell/targeted/summonitem/cast() : (mob/user)
-#define COMSIG_ITEM_MARK_RETRIEVAL "item_mark_retrieval"
-	#define COMPONENT_BLOCK_MARK_RETRIEVAL (1<<0)
 ///from base of obj/item/hit_reaction(): (list/args)
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"
 	#define COMPONENT_HIT_REACTION_BLOCK (1<<0)
-///called on item when microwaved (): (obj/machinery/microwave/M)
-#define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"
-	#define COMPONENT_SUCCESFUL_MICROWAVE (1<<0)
-///called on item when created through microwaving (): (obj/machinery/microwave/M, cooking_efficiency)
-#define COMSIG_ITEM_MICROWAVE_COOKED "microwave_cooked"
 ///from base of item/sharpener/attackby(): (amount, max)
 #define COMSIG_ITEM_SHARPEN_ACT "sharpen_act"
 	#define COMPONENT_BLOCK_SHARPEN_APPLIED (1<<0)
 	#define COMPONENT_BLOCK_SHARPEN_BLOCKED (1<<1)
 	#define COMPONENT_BLOCK_SHARPEN_ALREADY (1<<2)
 	#define COMPONENT_BLOCK_SHARPEN_MAXED (1<<3)
-///Called when an object is grilled ontop of a griddle
-#define COMSIG_ITEM_GRILLED "item_griddled"
-	#define COMPONENT_HANDLED_GRILLING (1<<0)
-///Called when an object is turned into another item through grilling ontop of a griddle
-#define COMSIG_GRILL_COMPLETED "item_grill_completed"
-//Called when an object is in an oven
-#define COMSIG_ITEM_BAKED "item_baked"
-	#define COMPONENT_HANDLED_BAKING (1<<0)
-	#define COMPONENT_BAKING_GOOD_RESULT (1<<1)
-	#define COMPONENT_BAKING_BAD_RESULT (1<<2)
-///Called when an object is turned into another item through baking in an oven
-#define COMSIG_BAKE_COMPLETED "item_bake_completed"
+
 ///Called when an armor plate is successfully applied to an object
 #define COMSIG_ARMOR_PLATED "armor_plated"
 ///Called when an item gets recharged by the ammo powerup
@@ -162,6 +155,8 @@
 	#define COMPONENT_OFFER_TAKE_INTERRUPT (1<<0)
 /// sent from obj/effect/attackby(): (/obj/effect/hit_effect, /mob/living/attacker, params)
 #define COMSIG_ITEM_ATTACK_EFFECT "item_effect_attacked"
+/// Called by /obj/item/proc/worn_overlays(list/overlays, mutable_appearance/standing, isinhands, icon_file)
+#define COMSIG_ITEM_GET_WORN_OVERLAYS "item_get_worn_overlays"
 
 ///from base of [/obj/item/proc/tool_check_callback]: (mob/living/user)
 #define COMSIG_TOOL_IN_USE "tool_in_use"
@@ -213,8 +208,6 @@
 #define COMSIG_ITEM_EXPORTED "item_sold"
 	/// Stops the export from adding the export information to the report, so you can handle it manually.
 	#define COMPONENT_STOP_EXPORT_REPORT (1<<0)
-///called when a wrapped up structure is opened by hand
-#define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"
 ///called when a wrapped up item is opened by hand
 #define COMSIG_ITEM_UNWRAPPED "item_unwrapped"
 ///called when getting the item's exact ratio for cargo's profit.
@@ -226,8 +219,6 @@
 
 ///from [/mob/living/carbon/human/Move]: ()
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"
-///from base of /obj/item/clothing/suit/space/proc/toggle_spacesuit(): (obj/item/clothing/suit/space/suit)
-#define COMSIG_SUIT_SPACE_TOGGLE "suit_space_toggle"
 
 // /obj/item/implant signals
 ///from base of /obj/item/implant/proc/activate(): ()
@@ -266,15 +257,17 @@
 // /obj/item/pda signals
 
 ///called on pda when the user changes the ringtone: (mob/living/user, new_ringtone)
-#define COMSIG_PDA_CHANGE_RINGTONE "pda_change_ringtone"
+#define COMSIG_TABLET_CHANGE_ID "comsig_tablet_change_id"
 	#define COMPONENT_STOP_RINGTONE_CHANGE (1<<0)
-#define COMSIG_PDA_CHECK_DETONATE "pda_check_detonate"
-	#define COMPONENT_PDA_NO_DETONATE (1<<0)
+#define COMSIG_TABLET_CHECK_DETONATE "pda_check_detonate"
+	#define COMPONENT_TABLET_NO_DETONATE (1<<0)
 
 // /obj/item/radio signals
 
 ///called from base of /obj/item/radio/proc/set_frequency(): (list/args)
 #define COMSIG_RADIO_NEW_FREQUENCY "radio_new_frequency"
+///called from base of /obj/item/radio/proc/talk_into(): (atom/movable/M, message, channel)
+#define COMSIG_RADIO_NEW_MESSAGE "radio_new_message"
 
 // /obj/item/pen signals
 
@@ -283,6 +276,9 @@
 
 // /obj/item/gun signals
 
+///called in /obj/item/gun/fire_gun (user, target, flag, params)
+#define COMSIG_GUN_TRY_FIRE "gun_try_fire"
+	#define COMPONENT_CANCEL_GUN_FIRE (1<<0)
 ///called in /obj/item/gun/process_fire (src, target, params, zone_override)
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
@@ -292,14 +288,20 @@
 ///called in /obj/item/gun/ballistic/process_chamber (casing)
 #define COMSIG_CASING_EJECTED "casing_ejected"
 
-// /obj/effect/proc_holder/spell signals
+// Jetpack things
+// Please kill me
 
-///called from /obj/effect/proc_holder/spell/cast_check (src)
-#define COMSIG_MOB_PRE_CAST_SPELL "mob_cast_spell"
-	/// Return to cancel the cast from beginning.
-	#define COMPONENT_CANCEL_SPELL (1<<0)
-///called from /obj/effect/proc_holder/spell/perform (src)
-#define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
+//called in /obj/item/tank/jetpack/proc/turn_on() : ()
+#define COMSIG_JETPACK_ACTIVATED "jetpack_activated"
+	#define JETPACK_ACTIVATION_FAILED (1<<0)
+//called in /obj/item/tank/jetpack/proc/turn_off() : ()
+#define COMSIG_JETPACK_DEACTIVATED "jetpack_deactivated"
+
+//called in /obj/item/organ/cyberimp/chest/thrusters/proc/toggle() : ()
+#define COMSIG_THRUSTER_ACTIVATED "jetmodule_activated"
+	#define THRUSTER_ACTIVATION_FAILED (1<<0)
+//called in /obj/item/organ/cyberimp/chest/thrusters/proc/toggle() : ()
+#define COMSIG_THRUSTER_DEACTIVATED "jetmodule_deactivated"
 
 // /obj/item/camera signals
 
@@ -323,20 +325,42 @@
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"
 ///from base of /obj/projectile/proc/fire(): (obj/projectile, atom/original_target)
 #define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire"
+///from base of /obj/projectile/proc/fire(): (obj/projectile, atom/firer, atom/original_target)
+#define COMSIG_PROJECTILE_FIRER_BEFORE_FIRE "projectile_firer_before_fire"
 ///from the base of /obj/projectile/proc/fire(): ()
 #define COMSIG_PROJECTILE_FIRE "projectile_fire"
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"
-///sent to targets during the process_hit proc of projectiles
+///from the base of /obj/projectile/Range(): ()
+#define COMSIG_PROJECTILE_RANGE "projectile_range"
+///from the base of /obj/projectile/on_range(): ()
 #define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"
 ///from [/obj/item/proc/tryEmbed] sent when trying to force an embed (mainly for projectiles and eating glass)
 #define COMSIG_EMBED_TRY_FORCE "item_try_embed"
 	#define COMPONENT_EMBED_SUCCESS (1<<1)
+// FROM [/obj/item/proc/updateEmbedding] sent when an item's embedding properties are changed : ()
+#define COMSIG_ITEM_EMBEDDING_UPDATE "item_embedding_update"
 
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"
 
+// /obj/vehicle/sealed/car/vim signals
+
+///from /datum/action/vehicle/sealed/noise/chime/Trigger(): ()
+#define COMSIG_VIM_CHIME_USED "vim_chime_used"
+///from /datum/action/vehicle/sealed/noise/buzz/Trigger(): ()
+#define COMSIG_VIM_BUZZ_USED "vim_buzz_used"
+///from /datum/action/vehicle/sealed/headlights/vim/Trigger(): (headlights_on)
+#define COMSIG_VIM_HEADLIGHTS_TOGGLED "vim_headlights_toggled"
+
 // /obj/vehicle/sealed/mecha signals
+
+/// sent if you attach equipment to mecha
+#define COMSIG_MECHA_EQUIPMENT_ATTACHED "mecha_equipment_attached"
+/// sent if you detach equipment to mecha
+#define COMSIG_MECHA_EQUIPMENT_DETACHED "mecha_equipment_detached"
+/// sent when you are able to drill through a mob
+#define COMSIG_MECHA_DRILL_MOB "mecha_drill_mob"
 
 ///sent from mecha action buttons to the mecha they're linked to
 #define COMSIG_MECHA_ACTION_TRIGGER "mecha_action_activate"
@@ -368,16 +392,16 @@
 #define COMSIG_ITEM_ATTACK_SECONDARY "item_pre_attack_secondary"
 ///from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"
+	/// Flag for when /afterattack potentially acts on an item.
+	/// Used for the swap hands/drop tutorials to know when you might just be trying to do something normally.
+	/// Does not necessarily imply success, or even that it did hit an item, just intent.
+	#define COMPONENT_AFTERATTACK_PROCESSED_ITEM (1<<0)
 ///from base of obj/item/afterattack_secondary(): (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_ITEM_AFTERATTACK_SECONDARY "item_afterattack_secondary"
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
-// Aquarium related signals
-#define COMSIG_AQUARIUM_BEFORE_INSERT_CHECK "aquarium_about_to_be_inserted"
-#define COMSIG_AQUARIUM_SURFACE_CHANGED "aquarium_surface_changed"
-#define COMSIG_AQUARIUM_FLUID_CHANGED "aquarium_fluid_changed"
 
-///from /obj/item/assembly/proc/pulsed()
+///from /obj/item/assembly/proc/pulsed(mob/pulser)
 #define COMSIG_ASSEMBLY_PULSED "assembly_pulsed"
 
 ///from base of /obj/item/mmi/set_brainmob(): (mob/living/brain/new_brainmob)
@@ -387,3 +411,8 @@
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
 	#define SPEED_POTION_STOP (1<<0)
 
+/// from /obj/structure/sign/poster/trap_succeeded() : (mob/user)
+#define COMSIG_POSTER_TRAP_SUCCEED "poster_trap_succeed"
+
+/// from /obj/item/detective_scanner/scan(): (mob/user, list/extra_data)
+#define COMSIG_DETECTIVE_SCANNED "det_scanned"

@@ -45,10 +45,12 @@
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
 
+#define MODE_CHANGELING "changeling"
+#define MODE_KEY_CHANGELING "g"
+#define MODE_TOKEN_CHANGELING ":g"
+
 #define MODE_VOCALCORDS "cords"
 #define MODE_KEY_VOCALCORDS "x"
-
-#define MODE_MONKEY "monkeyhive"
 
 #define MODE_MAFIA "mafia"
 
@@ -69,6 +71,7 @@
 #define SPAN_CLOWN "clown"
 #define SPAN_SINGING "singing"
 #define SPAN_TAPE_RECORDER "tape_recorder"
+#define SPAN_HELIUM "small"
 
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS (1<<0)
@@ -91,6 +94,7 @@
 #define MAX_NAME_LEN 42
 #define MAX_BROADCAST_LEN 512
 #define MAX_CHARTER_LEN 80
+#define MAX_PLAQUE_LEN 144
 
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
 #define MSG_VISUAL (1<<0)

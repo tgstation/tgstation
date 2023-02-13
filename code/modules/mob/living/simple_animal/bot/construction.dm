@@ -1,14 +1,14 @@
 //Bot Construction
 
 /obj/item/bot_assembly
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 3
 	throw_speed = 2
 	throw_range = 5
 	var/created_name
 	var/build_step = ASSEMBLY_FIRST_STEP
-	var/robot_arm = /obj/item/bodypart/r_arm/robot
+	var/robot_arm = /obj/item/bodypart/arm/right/robot
 
 /obj/item/bot_assembly/attackby(obj/item/I, mob/user, params)
 	..()
@@ -45,15 +45,42 @@
 	desc = "It's a bucket with a sensor attached."
 	name = "incomplete cleanbot assembly"
 	icon_state = "bucket_proxy"
+	greyscale_config = /datum/greyscale_config/buckets_cleanbot
 	throwforce = 5
 	created_name = "Cleanbot"
+	var/obj/item/reagent_containers/cup/bucket/bucket_obj
+
+/obj/item/bot_assembly/cleanbot/Initialize(mapload, obj/item/reagent_containers/cup/bucket/new_bucket)
+	if(!new_bucket)
+		new_bucket = new()
+	new_bucket.forceMove(src)
+	return ..()
+
+/obj/item/bot_assembly/cleanbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(istype(arrived, /obj/item/reagent_containers/cup/bucket))
+		if(bucket_obj && bucket_obj != arrived)
+			qdel(bucket_obj)
+		bucket_obj = arrived
+		set_greyscale(bucket_obj.greyscale_colors)
+	return ..()
+
+/obj/item/bot_assembly/cleanbot/Exited(atom/movable/gone, direction)
+	if(gone == bucket_obj)
+		bucket_obj = null
+	return ..()
+
+
+/obj/item/bot_assembly/cleanbot/Destroy(force)
+	QDEL_NULL(bucket_obj)
+	return ..()
+
 
 /obj/item/bot_assembly/cleanbot/attackby(obj/item/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
+	if(istype(W, /obj/item/bodypart/arm/left/robot) || istype(W, /obj/item/bodypart/arm/right/robot))
 		if(!can_finish_build(W, user))
 			return
-		var/mob/living/simple_animal/bot/cleanbot/A = new(drop_location())
+		var/mob/living/simple_animal/bot/cleanbot/A = new(drop_location(), bucket_obj)
 		A.name = created_name
 		A.robot_arm = W.type
 		to_chat(user, span_notice("You add [W] to [src]. Beep boop!"))
@@ -66,7 +93,7 @@
 	name = "incomplete ED-209 assembly"
 	desc = "Some sort of bizarre assembly."
 	icon_state = "ed209_frame"
-	inhand_icon_state = "ed209_frame"
+	inhand_icon_state = null
 	created_name = "ED-209 Security Robot" //To preserve the name if it's a unique securitron I guess
 	var/lasercolor = ""
 	var/vest_type = /obj/item/clothing/suit/armor/vest
@@ -75,7 +102,7 @@
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP, ASSEMBLY_SECOND_STEP)
-			if(istype(W, /obj/item/bodypart/l_leg/robot) || istype(W, /obj/item/bodypart/r_leg/robot))
+			if(istype(W, /obj/item/bodypart/leg/left/robot) || istype(W, /obj/item/bodypart/leg/right/robot))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				to_chat(user, span_notice("You add [W] to [src]."))
@@ -214,7 +241,7 @@
 				update_appearance()
 
 		if(ASSEMBLY_SECOND_STEP)
-			if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
+			if(istype(W, /obj/item/bodypart/arm/left/robot) || istype(W, /obj/item/bodypart/arm/right/robot))
 				if(!can_finish_build(W, user))
 					return
 				var/mob/living/simple_animal/bot/floorbot/A = new(drop_location(), toolbox_color)
@@ -311,6 +338,8 @@
 	desc = "Some sort of bizarre assembly made from a proximity sensor, helmet, and signaler."
 	icon_state = "helmet_signaler"
 	inhand_icon_state = "helmet"
+	lefthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
 	created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 	var/swordamt = 0 //If you're converting it into a grievousbot, how many swords have you attached
 	var/toyswordamt = 0 //honk
@@ -349,7 +378,7 @@
 					build_step--
 
 		if(ASSEMBLY_THIRD_STEP)
-			if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
+			if((istype(I, /obj/item/bodypart/arm/left/robot)) || (istype(I, /obj/item/bodypart/arm/right/robot)))
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
 				to_chat(user, span_notice("You add [I] to [src]!"))
@@ -453,7 +482,7 @@
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(istype(I, /obj/item/clothing/head/hardhat/red))
+			if(istype(I, /obj/item/clothing/head/utility/hardhat/red))
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
 				to_chat(user,span_notice("You add the [I] to [src]!"))
@@ -540,7 +569,7 @@
 		return
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(istype(part, /obj/item/bodypart/l_leg/robot) || istype(part, /obj/item/bodypart/r_leg/robot))
+			if(istype(part, /obj/item/bodypart/leg/left/robot) || istype(part, /obj/item/bodypart/leg/right/robot))
 				if(!user.temporarilyRemoveItemFromInventory(part))
 					return
 				balloon_alert(user, "leg attached")

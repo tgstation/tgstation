@@ -7,14 +7,16 @@
 	name = "Market Crash"
 	typepath = /datum/round_event/market_crash
 	weight = 10
+	category = EVENT_CATEGORY_BUREAUCRATIC
+	description = "Temporarily increases the prices of vending machines."
 
 /datum/round_event/market_crash
 	var/market_dip = 0
 
 /datum/round_event/market_crash/setup()
-	startWhen = 1
-	endWhen = rand(25, 50)
-	announceWhen = 2
+	start_when = 1
+	end_when = rand(25, 50)
+	announce_when = 2
 
 /datum/round_event/market_crash/announce(fake)
 	var/list/poss_reasons = list("the alignment of the moon and the sun",\

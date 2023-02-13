@@ -21,8 +21,14 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
 	show_in_report = TRUE
-	report_message = "For experimental purposes, this station AI might show divergence from default lawset. Do not meddle with this experiment."
+	report_message = "For experimental purposes, this station AI might show divergence from default lawset. Do not meddle with this experiment, we've removed \
+		access to your set of alternative upload modules because we know you're already thinking about meddling with this experiment."
 	trait_to_give = STATION_TRAIT_UNIQUE_AI
+
+/datum/station_trait/unique_ai/on_round_start()
+	. = ..()
+	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
+		ai.show_laws()
 
 /datum/station_trait/ian_adventure
 	name = "Ian's Adventure"
@@ -32,15 +38,15 @@
 	report_message = "Ian has gone exploring somewhere in the station."
 
 /datum/station_trait/ian_adventure/on_round_start()
-	for(var/mob/living/simple_animal/pet/dog/corgi/dog in GLOB.mob_list)
-		if(!(istype(dog, /mob/living/simple_animal/pet/dog/corgi/ian) || istype(dog, /mob/living/simple_animal/pet/dog/corgi/puppy/ian)))
+	for(var/mob/living/basic/pet/dog/corgi/dog in GLOB.mob_list)
+		if(!(istype(dog, /mob/living/basic/pet/dog/corgi/ian) || istype(dog, /mob/living/basic/pet/dog/corgi/puppy/ian)))
 			continue
 
 		// Makes this station trait more interesting. Ian probably won't go anywhere without a little external help.
 		// Also gives him a couple extra lives to survive eventual tiders.
 		dog.deadchat_plays(DEMOCRACY_MODE|MUTE_DEMOCRACY_MESSAGES, 3 SECONDS)
 		dog.AddComponent(/datum/component/multiple_lives, 2)
-		RegisterSignal(dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, .proc/do_corgi_respawn)
+		RegisterSignal(dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, PROC_REF(do_corgi_respawn))
 
 		// The extended safety checks at time of writing are about chasms and lava
 		// if there are any chasms and lava on stations in the future, woah
@@ -53,7 +59,7 @@
 		do_smoke(location=adventure_turf)
 
 /// Moves the new dog somewhere safe, equips it with the old one's inventory and makes it deadchat_playable.
-/datum/station_trait/ian_adventure/proc/do_corgi_respawn(mob/living/simple_animal/pet/dog/corgi/old_dog, mob/living/simple_animal/pet/dog/corgi/new_dog, gibbed, lives_left)
+/datum/station_trait/ian_adventure/proc/do_corgi_respawn(mob/living/basic/pet/dog/corgi/old_dog, mob/living/basic/pet/dog/corgi/new_dog, gibbed, lives_left)
 	SIGNAL_HANDLER
 
 	var/turf/current_turf = get_turf(new_dog)
@@ -78,7 +84,7 @@
 	new_dog.regenerate_icons()
 	new_dog.deadchat_plays(DEMOCRACY_MODE|MUTE_DEMOCRACY_MESSAGES, 3 SECONDS)
 	if(lives_left)
-		RegisterSignal(new_dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, .proc/do_corgi_respawn)
+		RegisterSignal(new_dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, PROC_REF(do_corgi_respawn))
 
 	if(!gibbed) //The old dog will now disappear so we won't have more than one Ian at a time.
 		qdel(old_dog)
@@ -127,3 +133,59 @@
 
 	var/new_colored_assistant_type = pick(subtypesof(/datum/colored_assistant) - get_configured_colored_assistant_type())
 	GLOB.colored_assistant = new new_colored_assistant_type
+
+/datum/station_trait/cargorilla
+	name = "Cargo Gorilla"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 1
+	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
+
+	/// The gorilla we created, we only hold this ref until the round starts.
+	var/mob/living/simple_animal/hostile/gorilla/cargo_domestic/cargorilla
+
+/datum/station_trait/cargorilla/New()
+	. = ..()
+	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(replace_cargo))
+
+/// Replace some cargo equipment and 'personnel' with a gorilla.
+/datum/station_trait/cargorilla/proc/replace_cargo(datum/source)
+	SIGNAL_HANDLER
+
+	var/mob/living/simple_animal/sloth/cargo_sloth = GLOB.cargo_sloth
+	if(!cargo_sloth)
+		return
+
+	cargorilla = new(cargo_sloth.loc)
+	cargorilla.name = cargo_sloth.name
+	// We do a poll on roundstart, don't let ghosts in early
+	cargorilla.being_polled_for = TRUE
+	INVOKE_ASYNC(src, PROC_REF(make_id_for_gorilla))
+
+	// hm our sloth looks funny today
+	qdel(cargo_sloth)
+
+	// monkey carries the crates, the age of robot is over
+	if(GLOB.cargo_ripley)
+		qdel(GLOB.cargo_ripley)
+
+/// Makes an ID card for the gorilla
+/datum/station_trait/cargorilla/proc/make_id_for_gorilla()
+	var/obj/item/card/id/advanced/cargo_gorilla/gorilla_id = new(cargorilla.loc)
+	gorilla_id.registered_name = cargorilla.name
+	gorilla_id.update_label()
+
+	cargorilla.put_in_hands(gorilla_id, del_on_fail = TRUE)
+
+/datum/station_trait/cargorilla/on_round_start()
+	if(!cargorilla)
+		return
+
+	addtimer(CALLBACK(src, PROC_REF(get_ghost_for_gorilla), cargorilla), 12 SECONDS) // give ghosts a bit of time to funnel in
+	cargorilla = null
+
+/// Get us a ghost for the gorilla.
+/datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/living/simple_animal/hostile/gorilla/cargo_domestic/gorilla)
+	if(QDELETED(gorilla))
+		return
+
+	gorilla.poll_for_gorilla()

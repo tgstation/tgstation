@@ -1,0 +1,68 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"t" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/computer/shuttle/pod{
+	pixel_x = -32
+	},
+/obj/machinery/status_display/evac/directional/east,
+/turf/open/floor/carpet/executive,
+/area/shuttle/pod_1)
+"B" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/pod_1)
+"G" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/carpet/executive,
+/area/shuttle/pod_1)
+"N" = (
+/obj/docking_port/mobile/pod{
+	port_direction = 2
+	},
+/obj/machinery/door/airlock/titanium/glass{
+	name = "Escape Pod Airlock"
+	},
+/turf/open/floor/carpet/executive,
+/area/shuttle/pod_1)
+"Q" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/pod_1)
+"U" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/item/radio/intercom/directional/east,
+/obj/item/storage/pod/directional/west,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/carpet/executive,
+/area/shuttle/pod_1)
+"Z" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/pod_1)
+
+(1,1,1) = {"
+B
+B
+Q
+B
+Z
+"}
+(2,1,1) = {"
+Q
+t
+G
+U
+N
+"}
+(3,1,1) = {"
+B
+B
+Q
+B
+Z
+"}

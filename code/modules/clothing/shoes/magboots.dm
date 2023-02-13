@@ -2,18 +2,22 @@
 	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
 	name = "magboots"
 	icon_state = "magboots0"
+	inhand_icon_state = "magboots"
 	var/magboot_state = "magboots"
 	var/magpulse = FALSE
 	var/slowdown_active = 2
-	permeability_coefficient = 0.05
+	armor_type = /datum/armor/shoes_magboots
 	actions_types = list(/datum/action/item_action/toggle)
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = FIRE_PROOF
 
+/datum/armor/shoes_magboots
+	bio = 90
+
 /obj/item/clothing/shoes/magboots/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_FEET)
+	if(slot & ITEM_SLOT_FEET)
 		update_gravity_trait(user)
 	else
 		REMOVE_TRAIT(user, TRAIT_NEGATES_GRAVITY, type)
@@ -41,10 +45,10 @@
 	icon_state = "[magboot_state][magpulse]"
 	to_chat(user, span_notice("You [magpulse ? "enable" : "disable"] the mag-pulse traction system."))
 	update_gravity_trait(user)
-	user.update_inv_shoes() //so our mob-overlays update
+	user.update_worn_shoes() //so our mob-overlays update
 	user.update_gravity(user.has_gravity())
 	user.update_equipment_speed_mods() //we want to update our speed so we arent running at max speed in regular magboots
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/clothing/shoes/magboots/examine(mob/user)
 	. = ..()

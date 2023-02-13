@@ -30,7 +30,7 @@
 	if(locked)
 		to_chat(user, span_notice("The crate is locked with a Deca-code lock."))
 		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text|null
-		if(user.canUseTopic(src, BE_CLOSE) && locked)
+		if(user.canUseTopic(src, be_close = TRUE) && locked)
 			var/list/sanitised = list()
 			var/sanitycheck = TRUE
 			var/char = ""
@@ -45,9 +45,6 @@
 			if(input == code)
 				if(!spawned_loot)
 					spawn_loot()
-				if(qdel_on_open)
-					qdel(src)
-					return
 				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
 				togglelock(user)
 			else if(!input || !sanitycheck || length(sanitised) != codelen)
@@ -63,7 +60,7 @@
 	return ..()
 
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 	return attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
 
@@ -127,15 +124,20 @@
 		return
 	return ..()
 
+/obj/structure/closet/crate/secure/loot/open(mob/living/user, force = FALSE)
+	. = ..()
+	if(qdel_on_open)
+		qdel(src)
+
 /obj/structure/closet/crate/secure/loot/proc/spawn_loot()
 	var/loot = rand(1,100) //100 different crates with varying chances of spawning
 	switch(loot)
 		if(1 to 5) //5% chance
-			new /obj/item/reagent_containers/food/drinks/bottle/rum(src)
-			new /obj/item/reagent_containers/food/drinks/bottle/whiskey(src)
-			new /obj/item/reagent_containers/food/drinks/bottle/whiskey(src)
+			new /obj/item/reagent_containers/cup/glass/bottle/rum(src)
+			new /obj/item/reagent_containers/cup/glass/bottle/whiskey(src)
+			new /obj/item/reagent_containers/cup/glass/bottle/whiskey(src)
 			new /obj/item/lighter(src)
-			new /obj/item/reagent_containers/food/drinks/bottle/absinthe/premium(src)
+			new /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium(src)
 			for(var/i in 1 to 3)
 				new /obj/item/clothing/mask/cigarette/rollie(src)
 		if(6 to 10)
@@ -157,7 +159,7 @@
 			for(var/i in 1 to 5)
 				new /obj/item/toy/snappop/phoenix(src)
 		if(41 to 45)
-			new /obj/item/pda/clear(src)
+			new /obj/item/modular_computer/pda/clear(src)
 		if(46 to 50)
 			new /obj/item/storage/box/syndie_kit/chameleon/broken
 		if(51 to 52) // 2% chance
@@ -175,12 +177,12 @@
 			new /obj/item/clothing/head/helmet/space(src)
 		if(61 to 62)
 			for(var/i in 1 to 5)
-				new /obj/item/clothing/head/kitty(src)
+				new /obj/item/clothing/head/costume/kitty(src)
 				new /obj/item/clothing/neck/petcollar(src)
 		if(63 to 64)
 			new /obj/item/clothing/shoes/kindle_kicks(src)
 		if(65 to 66)
-			new /obj/item/clothing/suit/ianshirt(src)
+			new /obj/item/clothing/suit/costume/ianshirt(src)
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
 		if(67 to 68)
 			new /obj/item/toy/plush/awakenedplushie(src)
@@ -205,7 +207,7 @@
 		if(87) //1% chance
 			new /obj/item/weed_extract(src)
 		if(88)
-			new /obj/item/reagent_containers/food/drinks/bottle/lizardwine(src)
+			new /obj/item/reagent_containers/cup/glass/bottle/lizardwine(src)
 		if(89)
 			new /obj/item/melee/energy/sword/bananium(src)
 		if(90)

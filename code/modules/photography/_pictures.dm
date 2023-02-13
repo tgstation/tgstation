@@ -53,7 +53,7 @@
 	if(!picture_image)
 		return
 	var/icon/small_img = icon(picture_image)
-	var/icon/ic = icon('icons/obj/items_and_weapons.dmi', iconstate ? iconstate :"photo")
+	var/icon/ic = icon('icons/obj/weapons/items_and_weapons.dmi', iconstate ? iconstate :"photo")
 	small_img.Scale(8, 8)
 	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 	picture_icon = ic

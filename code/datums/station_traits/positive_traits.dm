@@ -1,5 +1,5 @@
-#define PARTY_COOLDOWN_LENGTH_MIN 6 MINUTES
-#define PARTY_COOLDOWN_LENGTH_MAX 12 MINUTES
+#define PARTY_COOLDOWN_LENGTH_MIN (6 MINUTES)
+#define PARTY_COOLDOWN_LENGTH_MAX (12 MINUTES)
 
 
 /datum/station_trait/lucky_winner
@@ -28,7 +28,7 @@
 	var/obj/item/pizzabox/pizza_to_spawn = pick(list(/obj/item/pizzabox/margherita, /obj/item/pizzabox/mushroom, /obj/item/pizzabox/meat, /obj/item/pizzabox/vegetable, /obj/item/pizzabox/pineapple))
 	new pizza_to_spawn(toLaunch)
 	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/food/drinks/bottle/beer(toLaunch)
+		new /obj/item/reagent_containers/cup/glass/bottle/beer(toLaunch)
 	new /obj/effect/pod_landingzone(T, toLaunch)
 
 /datum/station_trait/galactic_grant
@@ -45,9 +45,9 @@
 /datum/station_trait/premium_internals_box
 	name = "Premium internals boxes"
 	trait_type = STATION_TRAIT_POSITIVE
-	weight = 10
+	weight = 5
 	show_in_report = TRUE
-	report_message = "The internals boxes for your crew have been filled with bonus equipment."
+	report_message = "The internals boxes for your crew have been upsized and filled with bonus equipment."
 	trait_to_give = STATION_TRAIT_PREMIUM_INTERNALS
 
 /datum/station_trait/bountiful_bounties
@@ -90,12 +90,12 @@
 		"A shipment of scarves was delivered to the station.",
 	)
 	scarves = typesof(/obj/item/clothing/neck/scarf) + list(
-		/obj/item/clothing/neck/stripedredscarf,
-		/obj/item/clothing/neck/stripedgreenscarf,
-		/obj/item/clothing/neck/stripedbluescarf,
+		/obj/item/clothing/neck/large_scarf/red,
+		/obj/item/clothing/neck/large_scarf/green,
+		/obj/item/clothing/neck/large_scarf/blue,
 	)
 
-	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
 
 /datum/station_trait/scarves/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
@@ -110,7 +110,7 @@
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	show_in_report = TRUE
-	report_message = "Our workers accidentaly forgot more of their personal belongings in the maintenace areas."
+	report_message = "Our workers accidentally forgot more of their personal belongings in the maintenace areas."
 	blacklist = list(/datum/station_trait/empty_maint)
 	trait_to_give = STATION_TRAIT_FILLED_MAINT
 
@@ -145,7 +145,7 @@
 	deathrattle_group = new("[department_name] group")
 	blacklist += subtypesof(/datum/station_trait/deathrattle_department) - type //All but ourselves
 	report_message = "All members of [department_name] have received an implant to notify each other if one of them dies. This should help improve job-safety!"
-	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
 
 /datum/station_trait/deathrattle_department/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
@@ -221,7 +221,7 @@
 	. = ..()
 	deathrattle_group = new("station group")
 	blacklist = subtypesof(/datum/station_trait/deathrattle_department)
-	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
 
 /datum/station_trait/deathrattle_all/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
@@ -241,7 +241,7 @@
 
 /datum/station_trait/wallets/New()
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
 /datum/station_trait/wallets/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
 	SIGNAL_HANDLER
@@ -263,10 +263,82 @@
 
 	var/holochip_amount = id_card.registered_account.account_balance
 	new /obj/item/holochip(wallet, holochip_amount)
-	id_card.registered_account.adjust_money(-holochip_amount)
+	id_card.registered_account.adjust_money(-holochip_amount, "System: Withdrawal")
 
 	new /obj/effect/spawner/random/entertainment/wallet_storage(wallet)
 
 	// Put our filthy fingerprints all over the contents
 	for(var/obj/item/item in wallet)
 		item.add_fingerprint(living_mob, ignoregloves = TRUE)
+
+/datum/station_trait/cybernetic_revolution
+	name = "Cybernetic Revolution"
+	trait_type = STATION_TRAIT_POSITIVE
+	show_in_report = TRUE
+	weight = 1
+	report_message = "The new trends in cybernetics have come to the station! Everyone has some form of cybernetic implant."
+	trait_to_give = STATION_TRAIT_CYBERNETIC_REVOLUTION
+	/// List of all job types with the cybernetics they should receive.
+	var/static/list/job_to_cybernetic = list(
+		/datum/job/assistant = /obj/item/organ/internal/heart/cybernetic, //real cardiac
+		/datum/job/atmospheric_technician = /obj/item/organ/internal/cyberimp/mouth/breathing_tube,
+		/datum/job/bartender = /obj/item/organ/internal/liver/cybernetic/tier3,
+		/datum/job/botanist = /obj/item/organ/internal/cyberimp/chest/nutriment,
+		/datum/job/captain = /obj/item/organ/internal/heart/cybernetic/tier3,
+		/datum/job/cargo_technician = /obj/item/organ/internal/stomach/cybernetic/tier2,
+		/datum/job/chaplain = /obj/item/organ/internal/cyberimp/brain/anti_drop,
+		/datum/job/chemist = /obj/item/organ/internal/liver/cybernetic/tier2,
+		/datum/job/chief_engineer = /obj/item/organ/internal/cyberimp/chest/thrusters,
+		/datum/job/chief_medical_officer = /obj/item/organ/internal/cyberimp/chest/reviver,
+		/datum/job/clown = /obj/item/organ/internal/cyberimp/brain/anti_stun, //HONK!
+		/datum/job/cook = /obj/item/organ/internal/cyberimp/chest/nutriment/plus,
+		/datum/job/curator = /obj/item/organ/internal/eyes/robotic/glow,
+		/datum/job/detective = /obj/item/organ/internal/lungs/cybernetic/tier3,
+		/datum/job/doctor = /obj/item/organ/internal/cyberimp/arm/surgery,
+		/datum/job/geneticist = /obj/item/organ/internal/fly, //we don't care about implants, we have cancer.
+		/datum/job/head_of_personnel = /obj/item/organ/internal/eyes/robotic,
+		/datum/job/head_of_security = /obj/item/organ/internal/eyes/robotic/thermals,
+		/datum/job/janitor = /obj/item/organ/internal/eyes/robotic/xray,
+		/datum/job/lawyer = /obj/item/organ/internal/heart/cybernetic/tier2,
+		/datum/job/mime = /obj/item/organ/internal/tongue/robot, //...
+		/datum/job/paramedic = /obj/item/organ/internal/cyberimp/eyes/hud/medical,
+		/datum/job/prisoner = /obj/item/organ/internal/eyes/robotic/shield,
+		/datum/job/psychologist = /obj/item/organ/internal/ears/cybernetic/upgraded,
+		/datum/job/quartermaster = /obj/item/organ/internal/stomach/cybernetic/tier3,
+		/datum/job/research_director = /obj/item/organ/internal/cyberimp/bci,
+		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
+		/datum/job/scientist = /obj/item/organ/internal/ears/cybernetic,
+		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/flash,
+		/datum/job/shaft_miner = /obj/item/organ/internal/monster_core/rush_gland,
+		/datum/job/station_engineer = /obj/item/organ/internal/cyberimp/arm/toolset,
+		/datum/job/virologist = /obj/item/organ/internal/lungs/cybernetic/tier2,
+		/datum/job/warden = /obj/item/organ/internal/cyberimp/eyes/hud/security,
+	)
+
+/datum/station_trait/cybernetic_revolution/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/cybernetic_revolution/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+	SIGNAL_HANDLER
+
+	var/datum/quirk/body_purist/body_purist = /datum/quirk/body_purist
+	if(initial(body_purist.name) in player_client.prefs.all_quirks)
+		return
+	var/cybernetic_type = job_to_cybernetic[job.type]
+	if(!cybernetic_type)
+		if(isAI(spawned))
+			var/mob/living/silicon/ai/ai = spawned
+			ai.eyeobj.relay_speech = TRUE //surveillance upgrade. the ai gets cybernetics too.
+		return
+	var/obj/item/organ/internal/cybernetic = new cybernetic_type()
+	cybernetic.Insert(spawned, special = TRUE, drop_if_replaced = FALSE)
+
+/datum/station_trait/luxury_escape_pods
+	name = "Luxury Escape Pods"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 5
+	show_in_report = TRUE
+	report_message = "Due to good performance, we've provided your station with luxury escape pods."
+	trait_to_give = STATION_TRAIT_BIGGER_PODS
+	blacklist = list(/datum/station_trait/cramped_escape_pods)

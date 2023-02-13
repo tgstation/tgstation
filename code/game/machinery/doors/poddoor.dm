@@ -10,45 +10,56 @@
 	heat_proof = TRUE
 	safe = FALSE
 	max_integrity = 600
-	armor = list(MELEE = 50, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 50, BIO = 100, FIRE = 100, ACID = 70)
+	armor_type = /datum/armor/door_poddoor
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 70
+	can_open_with_hands = FALSE
 	var/datum/crafting_recipe/recipe_type = /datum/crafting_recipe/blast_doors
 	var/deconstruction = BLASTDOOR_FINISHED // deconstruction step
 	var/id = 1
+
+/datum/armor/door_poddoor
+	melee = 50
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 50
+	fire = 100
+	acid = 70
 
 /obj/machinery/door/poddoor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	else if (default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		return TRUE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/poddoor/multitool_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
 		return
 	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door Controller ID", id, 100)
-	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	id = change_id
 	to_chat(user, span_notice("You change the ID to [id]."))
-	balloon_alert(user, "ID changed")
+	balloon_alert(user, "id changed")
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/poddoor/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(machine_stat & NOPOWER)
 		open(TRUE)
-		return
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
@@ -59,13 +70,13 @@
 		id = null
 		deconstruction = BLASTDOOR_NEEDS_ELECTRONICS
 		balloon_alert(user, "removed airlock electronics")
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/poddoor/wirecutter_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_NEEDS_ELECTRONICS)
@@ -77,13 +88,13 @@
 		new /obj/item/stack/cable_coil(loc, amount)
 		deconstruction = BLASTDOOR_NEEDS_WIRES
 		balloon_alert(user, "removed internal cables")
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/poddoor/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_NEEDS_WIRES)
@@ -95,20 +106,59 @@
 		new /obj/item/stack/sheet/plasteel(loc, amount)
 		user.balloon_alert(user, "torn apart")
 		qdel(src)
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/poddoor/examine(mob/user)
 	. = ..()
 	if(panel_open)
 		if(deconstruction == BLASTDOOR_FINISHED)
 			. += span_notice("The maintenance panel is opened and the electronics could be <b>pried</b> out.")
+			. += span_notice("\The [src] could be calibrated to a blast door controller ID with a <b>multitool</b>.")
 		else if(deconstruction == BLASTDOOR_NEEDS_ELECTRONICS)
 			. += span_notice("The <i>electronics</i> are missing and there are some <b>wires</b> sticking out.")
 		else if(deconstruction == BLASTDOOR_NEEDS_WIRES)
 			. += span_notice("The <i>wires</i> have been removed and it's ready to be <b>sliced apart</b>.")
 
-/obj/machinery/door/poddoor/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	id = "[port.id]_[id]"
+/obj/machinery/door/poddoor/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.shuttle_id]_[id]"
+
+//"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
+/obj/machinery/door/poddoor/ex_act(severity, target)
+	if(severity <= EXPLODE_LIGHT)
+		return FALSE
+	return ..()
+
+/obj/machinery/door/poddoor/do_animate(animation)
+	switch(animation)
+		if("opening")
+			flick("opening", src)
+			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
+		if("closing")
+			flick("closing", src)
+			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
+
+/obj/machinery/door/poddoor/update_icon_state()
+	. = ..()
+	icon_state = density ? "closed" : "open"
+
+/obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
+	if(density & !(resistance_flags & INDESTRUCTIBLE))
+		add_fingerprint(user)
+		user.visible_message(span_warning("[user] begins prying open [src]."),\
+					span_noticealien("You begin digging your claws into [src] with all your might!"),\
+					span_warning("You hear groaning metal..."))
+		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+
+		var/time_to_open = 5 SECONDS
+		if(hasPower())
+			time_to_open = 15 SECONDS
+
+		if(do_after(user, time_to_open, src))
+			if(density && !open(TRUE)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
+				to_chat(user, span_warning("Despite your efforts, [src] managed to resist your attempts to open it!"))
+
+	else
+		return ..()
 
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
@@ -128,9 +178,9 @@
 /obj/machinery/door/poddoor/shuttledock/proc/check()
 	var/turf/turf = get_step(src, checkdir)
 	if(!istype(turf, turftype))
-		INVOKE_ASYNC(src, .proc/open)
+		INVOKE_ASYNC(src, PROC_REF(open))
 	else
-		INVOKE_ASYNC(src, .proc/close)
+		INVOKE_ASYNC(src, PROC_REF(close))
 
 /obj/machinery/door/poddoor/incinerator_ordmix
 	name = "combustion chamber vent"
@@ -171,54 +221,3 @@
 /obj/machinery/door/poddoor/massdriver_trash
 	name = "Disposals Launcher Bay Door"
 	id = MASSDRIVER_DISPOSALS
-
-/obj/machinery/door/poddoor/Bumped(atom/movable/AM)
-	if(density)
-		return 0
-	else
-		return ..()
-
-/obj/machinery/door/poddoor/bumpopen()
-	return
-
-//"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
-/obj/machinery/door/poddoor/ex_act(severity, target)
-	if(severity <= EXPLODE_LIGHT)
-		return FALSE
-	return ..()
-
-/obj/machinery/door/poddoor/do_animate(animation)
-	switch(animation)
-		if("opening")
-			flick("opening", src)
-			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
-		if("closing")
-			flick("closing", src)
-			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
-
-/obj/machinery/door/poddoor/update_icon_state()
-	. = ..()
-	icon_state = density ? "closed" : "open"
-
-/obj/machinery/door/poddoor/try_to_activate_door(mob/user)
-	return
-
-/obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
-	if(density & !(resistance_flags & INDESTRUCTIBLE))
-		add_fingerprint(user)
-		user.visible_message(span_warning("[user] begins prying open [src]."),\
-					span_noticealien("You begin digging your claws into [src] with all your might!"),\
-					span_warning("You hear groaning metal..."))
-		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
-
-		var/time_to_open = 5 SECONDS
-		if(hasPower())
-			time_to_open = 15 SECONDS
-
-		if(do_after(user, time_to_open, src))
-			if(density && !open(TRUE)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
-				to_chat(user, span_warning("Despite your efforts, [src] managed to resist your attempts to open it!"))
-
-	else
-		return ..()
-

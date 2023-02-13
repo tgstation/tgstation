@@ -7,20 +7,32 @@
 	projectile_piercing = ALL
 	dismemberment = 0
 	paralyze = 5 SECONDS
-	stutter = 10 SECONDS
+	stutter = 20 SECONDS
 	embedding = null
 	hitsound = 'sound/effects/meteorimpact.ogg'
 	hitsound_wall = 'sound/weapons/sonic_jackhammer.ogg'
+	/// If our cannonball hits something, it reduces the damage by this value.
+	var/damage_decrease_on_hit = 10
+	/// This is the cutoff point of our cannonball, so that it stops piercing past this value.
+	var/stop_piercing_threshold = 40
+	/// This is the damage value we do to objects on hit. Usually, more than the actual projectile damage
+	var/object_damage = 80
+	/// Whether or not our cannonball loses object damage upon hitting an object.
+	var/object_damage_decreases = FALSE
+	/// How much our object damage decreases on hit, similar to normal damage.
+	var/object_damage_decrease_on_hit = 0
 
 /obj/projectile/bullet/cannonball/on_hit(atom/target, blocked = FALSE)
-	damage -= 10
-	if(damage < 40)
+	damage -= damage_decrease_on_hit
+	if(object_damage_decreases)
+		object_damage -= min(damage, object_damage_decrease_on_hit)
+	if(damage < stop_piercing_threshold)
 		projectile_piercing = NONE //so it finishes its rampage
 	if(blocked == 100)
 		return ..()
 	if(isobj(target))
 		var/obj/hit_object = target
-		hit_object.take_damage(80, BRUTE, BULLET, FALSE)
+		hit_object.take_damage(object_damage, BRUTE, BULLET, FALSE)
 	else if(isclosedturf(target))
 		damage -= max(damage - 30, 10) //lose extra momentum from busting through a wall
 		if(!isindestructiblewall(target))
@@ -62,3 +74,16 @@
 	name = "trashball"
 	icon_state = "trashball"
 	damage = 90 //better than the biggest one but no explosion, so kinda just a worse normal cannonball
+
+/obj/projectile/bullet/cannonball/meteorslug
+	name = "meteorslug"
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "small"
+	damage = 40 //REALLY not as bad as a real cannonball but they'll fucking hurt
+	paralyze = 1 SECONDS //The original stunned, okay?
+	knockdown = 8 SECONDS
+	stutter = null
+	stop_piercing_threshold = 10
+	object_damage_decreases = TRUE
+	object_damage_decrease_on_hit = 40
+	range = 7 //let's keep it a bit sane, okay?

@@ -6,31 +6,37 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = ACID_PROOF
-	armor = list(MELEE = 30, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 70, ACID = 100)
+	armor_type = /datum/armor/structure_displaycase
 	max_integrity = 200
 	integrity_failure = 0.25
+	///The showpiece item inside the case
 	var/obj/item/showpiece = null
-	var/obj/item/showpiece_type = null //This allows for showpieces that can only hold items if they're the same istype as this.
+	///This allows for showpieces that can only hold items if they're the same istype as this.
+	var/obj/item/showpiece_type = null
+	///Is the displaycase hooked up to a burglar alarm?
 	var/alert = TRUE
+	///Is the displaycase open at the moment?
 	var/open = FALSE
-	var/openable = TRUE
-	var/custom_glass_overlay = FALSE ///If we have a custom glass overlay to use.
+	///If we have a custom glass overlay to use.
+	var/custom_glass_overlay = FALSE
 	var/obj/item/electronics/airlock/electronics
-	var/start_showpiece_type = null //add type for items on display
-	var/list/start_showpieces = list() //Takes sublists in the form of list("type" = /obj/item/bikehorn, "trophy_message" = "henk")
-	var/trophy_message = ""
+	///Add type for items on display
+	var/start_showpiece_type = null
+	///Displaycase is fixed by glass
 	var/glass_fix = TRUE
 	///Represents a signel source of screaming when broken
 	var/datum/alarm_handler/alarm_manager
+	///Used for subtypes that have a UI in them. The examine on click while adjecent will not fire, as we already get a popup
+	var/autoexamine_while_closed = TRUE
+
+/datum/armor/structure_displaycase
+	melee = 30
+	bomb = 10
+	fire = 70
+	acid = 100
 
 /obj/structure/displaycase/Initialize(mapload)
 	. = ..()
-	if(start_showpieces.len && !start_showpiece_type)
-		var/list/showpiece_entry = pick(start_showpieces)
-		if (showpiece_entry && showpiece_entry["type"])
-			start_showpiece_type = showpiece_entry["type"]
-			if (showpiece_entry["trophy_message"])
-				trophy_message = showpiece_entry["trophy_message"]
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)
 	update_appearance()
@@ -61,9 +67,8 @@
 		. += span_notice("Hooked up with an anti-theft system.")
 	if(showpiece)
 		. += span_notice("There's \a [showpiece] inside.")
-	if(trophy_message)
-		. += "The plaque reads:\n [trophy_message]"
 
+///Removes the showpiece from the displaycase
 /obj/structure/displaycase/proc/dump()
 	if(QDELETED(showpiece))
 		return
@@ -104,7 +109,7 @@
 	alarmed.burglaralert(src)
 
 	alarm_manager.send_alarm(ALARM_BURGLAR)
-	addtimer(CALLBACK(alarm_manager, /datum/alarm_handler/proc/clear_alarm, ALARM_BURGLAR), 1 MINUTES)
+	addtimer(CALLBACK(alarm_manager, TYPE_PROC_REF(/datum/alarm_handler, clear_alarm), ALARM_BURGLAR), 1 MINUTES)
 
 	playsound(src, 'sound/effects/alert.ogg', 50, TRUE)
 
@@ -124,27 +129,27 @@
 		. += "[initial(icon_state)]_closed"
 		return
 
-/obj/structure/displaycase/attackby(obj/item/W, mob/living/user, params)
-	if(W.GetID() && !broken && openable)
+/obj/structure/displaycase/attackby(obj/item/tool, mob/living/user, params)
+	if(tool.GetID() && !broken)
 		if(allowed(user))
-			to_chat(user,  span_notice("You [open ? "close":"open"] [src]."))
+			to_chat(user, span_notice("You [open ? "close":"open"] [src]."))
 			toggle_lock(user)
 		else
 			to_chat(user, span_alert("Access denied."))
-	else if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
+	else if(tool.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
 		if(atom_integrity < max_integrity)
-			if(!W.tool_start_check(user, amount=5))
+			if(!tool.tool_start_check(user, amount=5))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
-			if(W.use_tool(src, user, 40, amount=5, volume=50))
+			if(tool.use_tool(src, user, 40, amount=5, volume=50))
 				atom_integrity = max_integrity
 				update_appearance()
 				to_chat(user, span_notice("You repair [src]."))
 		else
 			to_chat(user, span_warning("[src] is already in good condition!"))
 		return
-	else if(!alert && W.tool_behaviour == TOOL_CROWBAR && openable) //Only applies to the lab cage and player made display cases
+	else if(!alert && tool.tool_behaviour == TOOL_CROWBAR) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
 				to_chat(user, span_warning("Remove the displayed object first!"))
@@ -153,35 +158,39 @@
 				qdel(src)
 		else
 			to_chat(user, span_notice("You start to [open ? "close":"open"] [src]..."))
-			if(W.use_tool(src, user, 20))
-				to_chat(user,  span_notice("You [open ? "close":"open"] [src]."))
+			if(tool.use_tool(src, user, 20))
+				to_chat(user, span_notice("You [open ? "close":"open"] [src]."))
 				toggle_lock(user)
 	else if(open && !showpiece)
-		insert_showpiece(W, user)
-	else if(glass_fix && broken && istype(W, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/G = W
-		if(G.get_amount() < 2)
+		insert_showpiece(tool, user)
+		return TRUE //cancel the attack chain, wether we successfully placed an item or not
+	else if(glass_fix && broken && istype(tool, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/glass_sheet = tool
+		if(glass_sheet.get_amount() < 2)
 			to_chat(user, span_warning("You need two glass sheets to fix the case!"))
 			return
 		to_chat(user, span_notice("You start fixing [src]..."))
 		if(do_after(user, 20, target = src))
-			G.use(2)
+			glass_sheet.use(2)
 			broken = FALSE
 			atom_integrity = max_integrity
 			update_appearance()
 	else
 		return ..()
 
-/obj/structure/displaycase/proc/insert_showpiece(obj/item/wack, mob/user)
-	if(showpiece_type && !istype(wack, showpiece_type))
+///Handles placing an item into the display case. Returns TRUE if the item failed to be placed inside the container, useful for descendants
+/obj/structure/displaycase/proc/insert_showpiece(obj/item/new_showpiece, mob/user)
+	if(showpiece_type && !istype(new_showpiece, showpiece_type))
 		to_chat(user, span_notice("This doesn't belong in this kind of display."))
 		return TRUE
-	if(user.transferItemToLoc(wack, src))
-		showpiece = wack
-		to_chat(user, span_notice("You put [wack] on display."))
+	if(user.transferItemToLoc(new_showpiece, src))
+		showpiece = new_showpiece
+		to_chat(user, span_notice("You put [new_showpiece] on display."))
 		update_appearance()
 
+///Opens and closes the display case
 /obj/structure/displaycase/proc/toggle_lock(mob/user)
+	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 	open = !open
 	update_appearance()
 
@@ -200,10 +209,12 @@
 		add_fingerprint(user)
 		return
 	else
-	    //prevents remote "kicks" with TK
+		//prevents remote "kicks" with TK
 		if (!Adjacent(user))
 			return
 		if (!user.combat_mode)
+			if(!open && !autoexamine_while_closed)
+				return
 			if(!user.is_blind())
 				user.examinate(src)
 			return
@@ -290,11 +301,17 @@
 /obj/structure/displaycase/trophy
 	name = "trophy display case"
 	desc = "Store your trophies of accomplishment in here, and they will stay forever."
-	var/placer_key = ""
-	var/added_roundstart = TRUE
-	var/is_locked = TRUE
 	integrity_failure = 0
-	openable = FALSE
+	req_access = list(ACCESS_LIBRARY)
+	autoexamine_while_closed = FALSE
+	///the key of the player who placed the item in the case
+	var/placer_key = ""
+	///is the trophy a hologram, not a real item placed by a player?
+	var/holographic_showpiece = FALSE
+	///are we about to edit
+	var/historian_mode = FALSE
+	///the trophy message
+	var/trophy_message = ""
 
 /obj/structure/displaycase/trophy/Initialize(mapload)
 	. = ..()
@@ -304,93 +321,121 @@
 	GLOB.trophy_cases -= src
 	return ..()
 
+///Creates a showpiece dummy to display, using persistent data
+/obj/structure/displaycase/trophy/proc/set_up_trophy(datum/trophy_data/chosen_trophy)
+	showpiece = new /obj/item/showpiece_dummy(src, text2path(chosen_trophy.path))
+	trophy_message = trim(chosen_trophy.message, MAX_PLAQUE_LEN)
+	if(trophy_message == "")
+		trophy_message = trim(showpiece.desc, MAX_PLAQUE_LEN)
+	placer_key = trim(chosen_trophy.placer_key)
+	holographic_showpiece = TRUE
+	update_appearance()
+
 /obj/structure/displaycase/trophy/attackby(obj/item/W, mob/living/user, params)
-
-	if(!user.Adjacent(src)) //no TK museology
+	if(istype(W, /obj/item/key/displaycase))
+		toggle_historian_mode(user)
 		return
-	if(user.combat_mode)
-		return ..()
-	if(W.tool_behaviour == TOOL_WELDER && !broken)
-		return ..()
-
-	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
-		if(added_roundstart)
-			is_locked = !is_locked
-			to_chat(user, span_notice("You [!is_locked ? "un" : ""]lock the case."))
-		else
-			to_chat(user, span_warning("The lock is stuck shut!"))
-		return
-
-	if(is_locked)
-		to_chat(user, span_warning("The case is shut tight with an old-fashioned physical lock. Maybe you should ask the curator for the key?"))
-		return
-
-	if(!added_roundstart)
-		to_chat(user, span_warning("You've already put something new in this case!"))
-		return
-
-	if(is_type_in_typecache(W, GLOB.blacklisted_cargo_types))
-		to_chat(user, span_warning("The case rejects the [W]!"))
-		return
-
-	for(var/a in W.get_all_contents())
-		if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
-			to_chat(user, span_warning("The case rejects the [W]!"))
-			return
-
-	if(user.transferItemToLoc(W, src))
-
-		if(showpiece)
-			to_chat(user, span_notice("You press a button, and [showpiece] descends into the floor of the case."))
-			QDEL_NULL(showpiece)
-
-		to_chat(user, span_notice("You insert [W] into the case."))
-		showpiece = W
-		added_roundstart = FALSE
-		update_appearance()
-
-		placer_key = user.ckey
-
-		trophy_message = W.desc //default value
-
-		var/chosen_plaque = tgui_input_text(user, "What would you like the plaque to say? Default value is item's description.", "Trophy Plaque", trophy_message)
-		if(chosen_plaque)
-			if(user.Adjacent(src))
-				trophy_message = chosen_plaque
-				to_chat(user, span_notice("You set the plaque's text."))
-			else
-				to_chat(user, span_warning("You are too far to set the plaque's text!"))
-
-		SSpersistence.SaveTrophy(src)
-		return TRUE
-
-	else
-		to_chat(user, span_warning("\The [W] is stuck to your hand, you can't put it in the [src.name]!"))
-
-	return
+	return ..()
 
 /obj/structure/displaycase/trophy/dump()
 	if (showpiece)
-		if(added_roundstart)
-			visible_message(span_danger("The [showpiece] crumbles to dust!"))
-			new /obj/effect/decal/cleanable/ash(loc)
+		if(holographic_showpiece)
+			visible_message(span_danger("[showpiece] fizzles and vanishes!"))
+			do_sparks(number = 1, cardinal_only = FALSE, source = src)
 			QDEL_NULL(showpiece)
+			holographic_showpiece = FALSE
 		else
-			return ..()
+			..()
+		placer_key = ""
+		trophy_message = null
+
+/obj/structure/displaycase/trophy/insert_showpiece(obj/item/new_showpiece, mob/user)
+	if(..())
+		return TRUE
+	if(showpiece == new_showpiece)
+		placer_key = user.ckey
+
+///Toggles the mode that shows the historian panel on the UI, enabling saving the looks and the trophy message of the current trophy
+/obj/structure/displaycase/trophy/proc/toggle_historian_mode(mob/user)
+	historian_mode = !historian_mode
+	balloon_alert(user, "[historian_mode ? "enabled" : "disabled"] historian mode.")
+	playsound(src, 'sound/machines/twobeep.ogg', vary = 50)
+	SStgui.update_uis(src)
+
+/obj/structure/displaycase/trophy/toggle_lock(mob/user)
+	..()
+	SStgui.close_uis(src)
+
+/obj/structure/displaycase/trophy/ui_data(mob/user)
+	var/list/data = list()
+	data["historian_mode"] = historian_mode
+	data["holographic_showpiece"] = holographic_showpiece
+	data["max_length"] = MAX_PLAQUE_LEN
+	data["has_showpiece"] = showpiece ? TRUE : FALSE
+	if(showpiece)
+		data["showpiece_name"] = capitalize(format_text(showpiece.name))
+		data["showpiece_description"] = trophy_message ? format_text(trophy_message) : null
+	return data
+
+/obj/structure/displaycase/trophy/ui_static_data(mob/user)
+	var/list/data = list()
+	if(showpiece)
+		data["showpiece_icon"] = icon2base64(getFlatIcon(showpiece, no_anim=TRUE))
+	return data
+
+/obj/structure/displaycase/trophy/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("insert_key")
+			if(historian_mode)
+				return
+			var/obj/item/key/displaycase/trophy_key = usr.get_active_held_item()
+			if(istype(trophy_key))
+				toggle_historian_mode(usr)
+				return TRUE
+			return
+		if("change_message")
+			if(showpiece && !holographic_showpiece)
+				var/new_trophy_message = tgui_input_text(usr, "Let's make history!", "Trophy Message", trophy_message, MAX_PLAQUE_LEN)
+				if(!new_trophy_message)
+					return
+				trophy_message = new_trophy_message
+				return TRUE
+		if("lock")
+			if(!historian_mode)
+				return
+			toggle_historian_mode(usr)
+			return TRUE
+
+/obj/structure/displaycase/trophy/ui_interact(mob/user, datum/tgui/ui)
+	if(open)
+		return
+	if(isliving(usr))
+		var/mob/living/living_usr = usr
+		if(living_usr.combat_mode)
+			return
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Trophycase", name)
+		ui.set_autoupdate(FALSE)
+		ui.open()
 
 /obj/item/key/displaycase
 	name = "display case key"
 	desc = "The key to the curator's display cases."
 
 /obj/item/showpiece_dummy
-	name = "Cheap replica"
+	name = "holographic replica"
 
 /obj/item/showpiece_dummy/Initialize(mapload, path)
 	. = ..()
-	var/obj/item/I = path
-	name = initial(I.name)
-	icon = initial(I.icon)
-	icon_state = initial(I.icon_state)
+	var/obj/item/item_path = path
+	name = initial(item_path.name)
+	desc = initial(item_path.desc)
+	icon = initial(item_path.icon)
+	icon_state = initial(item_path.icon_state)
 
 /obj/structure/displaycase/forsale
 	name = "vend-a-tray"
@@ -403,6 +448,7 @@
 	alert = FALSE //No, we're not calling the fire department because someone stole your cookie.
 	glass_fix = FALSE //Fixable with tools instead.
 	pass_flags = PASSTABLE ///Can be placed and moved onto a table.
+	autoexamine_while_closed = FALSE
 	///The price of the item being sold. Altered by grab intent ID use.
 	var/sale_price = 20
 	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
@@ -417,6 +463,19 @@
 	if(!broken && !open)
 		. += "[initial(icon_state)]_overlay"
 
+/obj/structure/displaycase/forsale/insert_showpiece(obj/item/new_showpiece, mob/user)
+	if(..())
+		return TRUE
+	update_static_data_for_all_viewers()
+
+/obj/structure/displaycase/forsale/dump()
+	..()
+	update_static_data_for_all_viewers()
+
+/obj/structure/displaycase/forsale/toggle_lock()
+	..()
+	SStgui.update_uis(src)
+
 /obj/structure/displaycase/forsale/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -426,17 +485,16 @@
 
 /obj/structure/displaycase/forsale/ui_data(mob/user)
 	var/list/data = list()
-	var/register = FALSE
-	if(payments_acc)
-		register = TRUE
-		data["owner_name"] = payments_acc.account_holder
-	if(showpiece)
-		data["product_name"] = capitalize(showpiece.name)
-		var/base64 = icon2base64(icon(showpiece.icon, showpiece.icon_state))
-		data["product_icon"] = base64
-	data["registered"] = register
+	data["owner_name"] = payments_acc ? payments_acc.account_holder : null
+	data["product_name"] = showpiece ?capitalize(format_text(showpiece.name)) : null
+	data["registered"] = payments_acc ? TRUE : FALSE
 	data["product_cost"] = sale_price
 	data["tray_open"] = open
+	return data
+
+/obj/structure/displaycase/forsale/ui_static_data(mob/user)
+	var/list/data = list()
+	data["product_icon"] = showpiece ? icon2base64(getFlatIcon(showpiece, no_anim=TRUE)) : null
 	return data
 
 /obj/structure/displaycase/forsale/ui_act(action, params)
@@ -458,7 +516,7 @@
 			if(!payments_acc)
 				to_chat(usr, span_notice("[src] hasn't been registered yet."))
 				return TRUE
-			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			if(!usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 				return TRUE
 			if(!potential_acc)
 				to_chat(usr, span_notice("No ID card detected."))
@@ -471,16 +529,16 @@
 				to_chat(usr, span_notice("You do not possess the funds to purchase this."))
 				return TRUE
 			else
-				account.adjust_money(-sale_price)
+				account.adjust_money(-sale_price, "Display Case: [capitalize(showpiece.name)]")
 				if(payments_acc)
-					payments_acc.adjust_money(sale_price)
+					payments_acc.adjust_money(sale_price, "Display Case: [capitalize(showpiece.name)]")
 				usr.put_in_hands(showpiece)
 				to_chat(usr, span_notice("You purchase [showpiece] for [sale_price] credits."))
 				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
 				flick("[initial(icon_state)]_vend", src)
 				showpiece = null
 				update_appearance()
-				SStgui.update_uis(src)
+				update_static_data_for_all_viewers()
 				return TRUE
 		if("Open")
 			if(!payments_acc)
@@ -492,7 +550,6 @@
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 				return
 			toggle_lock()
-			SStgui.update_uis(src)
 		if("Register")
 			if(payments_acc)
 				return
@@ -514,7 +571,7 @@
 			if(payments_acc != potential_acc.registered_account)
 				to_chat(usr, span_warning("[src] rejects your new price."))
 				return
-			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			if(!usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 				to_chat(usr, span_warning("You need to get closer!"))
 				return
 			sale_price = new_price_input
@@ -522,6 +579,7 @@
 			SStgui.update_uis(src)
 			return TRUE
 	. = TRUE
+
 /obj/structure/displaycase/forsale/attackby(obj/item/I, mob/living/user, params)
 	if(isidcard(I))
 		//Card Registration
@@ -530,18 +588,16 @@
 			to_chat(user, span_warning("This ID card has no account registered!"))
 			return
 		if(payments_acc == potential_acc.registered_account)
-			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 			toggle_lock()
 			return
-	if(istype(I, /obj/item/pda))
+	if(istype(I, /obj/item/modular_computer))
 		return TRUE
 	SStgui.update_uis(src)
-	. = ..()
-
+	return ..()
 
 /obj/structure/displaycase/forsale/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(atom_integrity <= (integrity_failure *  max_integrity))
+	if(atom_integrity <= (integrity_failure * max_integrity))
 		to_chat(user, span_notice("You start recalibrating [src]'s hover field..."))
 		if(do_after(user, 20, target = src))
 			broken = FALSE
@@ -593,4 +649,3 @@
 /obj/structure/displaycase/forsale/kitchen
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
 	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR)
-

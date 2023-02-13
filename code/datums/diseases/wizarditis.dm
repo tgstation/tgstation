@@ -8,7 +8,7 @@
 	agent = "Rincewindus Vulgaris"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
-	permeability_mod = 0.75
+	spreading_modifier = 0.75
 	desc = "Some speculate that this virus is the cause of the Space Wizard Federation's existence. Subjects affected show the signs of brain damage, yelling obscure sentences or total gibberish. On late stages subjects sometime express the feelings of inner power, and, cite, 'the ability to control the forces of cosmos themselves!' A gulp of strong, manly spirits usually reverts them to normal, humanlike, condition."
 	severity = DISEASE_SEVERITY_HARMFUL
 	required_organs = list(/obj/item/bodypart/head)
@@ -84,14 +84,15 @@ STI KALY - blind
 	for(var/area/space/S in theareas)
 		theareas -= S
 
-	if(!theareas||!theareas.len)
+	if(!theareas || !theareas.len)
 		return
 
 	var/area/thearea = pick(theareas)
 
 	var/list/L = list()
+	var/turf/mob_turf = get_turf(affected_mob)
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(T.z != affected_mob.z)
+		if(!is_valid_z_level(T, mob_turf))
 			continue
 		if(T.name == "space")
 			continue

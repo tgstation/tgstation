@@ -5,22 +5,22 @@
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 2
-	supervisors = "the chief engineer"
-	selection_color = "#fff5cc"
+	supervisors = SUPERVISOR_CE
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "ATMOSPHERIC_TECHNICIAN"
 
 	outfit = /datum/outfit/job/atmos
 	plasmaman_outfit = /datum/outfit/plasmaman/atmospherics
 
-	paycheck = PAYCHECK_MEDIUM
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_ENG
 
 	liver_traits = list(TRAIT_ENGINEER_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_ATMOSPHERIC_TECHNICIAN
-	bounty_types = CIV_JOB_ENG
+	bounty_types = CIV_JOB_ATMOS
 	departments_list = list(
 		/datum/job_department/engineering,
 		)
@@ -44,12 +44,9 @@
 
 	id_trim = /datum/id_trim/job/atmospheric_technician
 	uniform = /obj/item/clothing/under/rank/engineering/atmospheric_technician
-	backpack_contents = list(
-		/obj/item/modular_computer/tablet/preset/advanced/atmos = 1,
-		)
 	belt = /obj/item/storage/belt/utility/atmostech
 	ears = /obj/item/radio/headset/headset_eng
-	l_pocket = /obj/item/pda/atmos
+	l_pocket = /obj/item/modular_computer/pda/atmos
 	r_pocket = /obj/item/analyzer
 
 	backpack = /obj/item/storage/backpack/industrial

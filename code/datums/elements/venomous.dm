@@ -1,11 +1,11 @@
 /**
  * Venomous element; which makes the attacks of the simplemob attached poison the enemy.
  *
- * Used for spiders and bees!
+ * Used for spiders, frogs, and bees!
  */
 /datum/element/venomous
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	///Path of the reagent added
 	var/poison_type
 	///How much of the reagent added. if it's a list, it'll pick a range with the range being list(lower_value, upper_value)
@@ -14,12 +14,12 @@
 /datum/element/venomous/Attach(datum/target, poison_type, amount_added)
 	. = ..()
 
-	if(isgun(target))
-		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
+	if(ismachinery(target) || isstructure(target) || isgun(target) || isprojectilespell(target))
+		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, PROC_REF(projectile_hit))
 	else if(isitem(target))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)
+		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(item_afterattack))
 	else if(ishostile(target) || isbasicmob(target))
-		RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, .proc/hostile_attackingtarget)
+		RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(hostile_attackingtarget))
 	else
 		return ELEMENT_INCOMPATIBLE
 
@@ -41,6 +41,7 @@
 	if(!proximity_flag)
 		return
 	add_reagent(target)
+	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
 /datum/element/venomous/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
 	SIGNAL_HANDLER

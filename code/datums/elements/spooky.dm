@@ -1,6 +1,6 @@
 /datum/element/spooky
-	element_flags = ELEMENT_DETACH|ELEMENT_BESPOKE
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	var/too_spooky = TRUE //will it spawn a new instrument?
 
 /datum/element/spooky/Attach(datum/target, too_spooky = TRUE)
@@ -8,7 +8,7 @@
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 	src.too_spooky = too_spooky
-	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/spectral_attack)
+	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(spectral_attack))
 
 /datum/element/spooky/Detach(datum/source)
 	UnregisterSignal(source, COMSIG_ITEM_ATTACK)
@@ -21,11 +21,11 @@
 		var/mob/living/carbon/human/U = user
 		if(!istype(U.dna.species, /datum/species/skeleton))
 			U.adjustStaminaLoss(35) //Extra Damage
-			U.Jitter(35)
-			U.stuttering = 20
+			U.set_jitter_if_lower(70 SECONDS)
+			U.set_stutter(40 SECONDS)
 			if(U.getStaminaLoss() > 95)
 				to_chat(U, "<font color ='red', size ='4'><B>Your ears weren't meant for this spectral sound.</B></font>")
-				INVOKE_ASYNC(src, .proc/spectral_change, U)
+				INVOKE_ASYNC(src, PROC_REF(spectral_change), U)
 			return
 
 	if(ishuman(C))
@@ -35,16 +35,16 @@
 		if(istype(H.dna.species, /datum/species/zombie))
 			H.adjustStaminaLoss(25)
 			H.Paralyze(15) //zombies can't resist the doot
-		C.Jitter(35)
-		C.stuttering = 20
+		C.set_jitter_if_lower(70 SECONDS)
+		C.set_stutter(40 SECONDS)
 		if((!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))
 			C.adjustStaminaLoss(25) //boneless humanoids don't lose the will to live
 		to_chat(C, "<font color='red' size='4'><B>DOOT</B></font>")
-		INVOKE_ASYNC(src, .proc/spectral_change, H)
+		INVOKE_ASYNC(src, PROC_REF(spectral_change), H)
 
 	else //the sound will spook monkeys.
-		C.Jitter(15)
-		C.stuttering = 20
+		C.set_jitter_if_lower(30 SECONDS)
+		C.set_stutter(40 SECONDS)
 
 /datum/element/spooky/proc/spectral_change(mob/living/carbon/human/H, mob/user)
 	if((H.getStaminaLoss() > 95) && (!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))

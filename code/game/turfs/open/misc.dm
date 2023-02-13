@@ -15,8 +15,8 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
-	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN)
-	canSmoothWith = list(SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_TURF_OPEN)
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN
+	canSmoothWith = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_OPEN_FLOOR
 
 	thermal_conductivity = 0.04
 	heat_capacity = 10000
@@ -34,7 +34,7 @@
 		build_with_floor_tiles(W, user)
 		return TRUE
 
-/turf/open/misc/plating/asteroid/attack_paw(mob/user, list/modifiers)
+/turf/open/misc/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
 /turf/open/misc/ex_act(severity, target)
@@ -141,6 +141,7 @@
 				new_airlock.req_access = new_airlock.electronics.accesses
 			if(new_airlock.electronics.unres_sides)
 				new_airlock.unres_sides = new_airlock.electronics.unres_sides
+				new_airlock.unres_sensor = TRUE
 			if(new_airlock.electronics.passed_name)
 				new_airlock.name = sanitize(new_airlock.electronics.passed_name)
 			if(new_airlock.electronics.passed_cycle_id)

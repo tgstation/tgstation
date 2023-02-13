@@ -33,19 +33,19 @@
 		return
 	var/list/data = list()
 	var/turf/ai_current_turf = get_turf(owner)
-	var/ai_zlevel = ai_current_turf.z
 
 	data["robots"] = list()
-	for(var/mob/living/simple_animal/bot/B in GLOB.bots_list)
-		if(B.z != ai_zlevel || !(B.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
+	for(var/mob/living/simple_animal/bot/simple_bot as anything in GLOB.bots_list)
+		//Only non-emagged bots on a valid Z-level are detected!
+		if(!is_valid_z_level(ai_current_turf, get_turf(simple_bot)) || !(simple_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED))
 			continue
 		var/list/robot_data = list(
-			name = B.name,
-			model = B.bot_type,
-			mode = B.get_mode(),
-			hacked = B.bot_cover_flags & BOT_COVER_HACKED,
-			location = get_area_name(B, TRUE),
-			ref = REF(B)
+			name = simple_bot.name,
+			model = simple_bot.bot_type,
+			mode = simple_bot.get_mode(),
+			hacked = !!(simple_bot.bot_cover_flags & BOT_COVER_HACKED),
+			location = get_area_name(simple_bot, TRUE),
+			ref = REF(simple_bot),
 		)
 		data["robots"] += list(robot_data)
 

@@ -51,6 +51,7 @@
 		var/mob/living/carbon/human/spawned_human = spawned_mob
 		if(mob_species)
 			spawned_human.set_species(mob_species)
+		spawned_human.dna.species.give_important_for_life(spawned_human) // for preventing plasmamen from combusting immediately upon spawning
 		spawned_human.underwear = "Nude"
 		spawned_human.undershirt = "Nude"
 		spawned_human.socks = "Nude"
@@ -74,8 +75,7 @@
 			spawned_human.skin_tone = skin_tone
 		else
 			spawned_human.skin_tone = random_skin_tone()
-		spawned_human.update_hair()
-		spawned_human.update_body()
+		spawned_human.update_body(is_creating = TRUE)
 
 /obj/effect/mob_spawn/proc/name_mob(mob/living/spawned_mob, forced_name)
 	var/chosen_name
@@ -108,8 +108,10 @@
 	var/prompt_name = ""
 	///if false, you won't prompt for this role. best used for replacing the prompt system with something else like a radial, or something.
 	var/prompt_ghost = TRUE
-	///how many times this spawner can be used (it won't delete unless it's out of uses)
+	///how many times this spawner can be used (it won't delete unless it's out of uses and the var to delete itself is set)
 	var/uses = 1
+	/// Does the spawner delete itself when it runs out of uses?
+	var/deletes_on_zero_uses_left = TRUE
 
 	////descriptions
 
@@ -146,16 +148,19 @@
 /obj/effect/mob_spawn/ghost_role/attack_ghost(mob/user)
 	if(!SSticker.HasRoundStarted() || !loc)
 		return
+
 	if(prompt_ghost)
-		var/ghost_role = tgui_alert(usr, "Become [prompt_name]? (Warning, You can no longer be revived!)",, list("Yes", "No"))
+		var/ghost_role = tgui_alert(usr, "Become [prompt_name]? (Warning, You can no longer be revived!)", buttons = list("Yes", "No"), timeout = 10 SECONDS)
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
 			return
+
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
 		return
 	if(!uses) //just in case
 		to_chat(user, span_warning("This spawner is out of charges!"))
 		return
+
 	if(is_banned_from(user.key, role_ban))
 		to_chat(user, span_warning("You are banned from this role!"))
 		return
@@ -163,8 +168,15 @@
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
-	log_game("[key_name(user)] became a [prompt_name]")
-	create(user)
+
+	user.log_message("became a [prompt_name].", LOG_GAME)
+	uses -= 1 // Remove a use before trying to spawn to prevent strangeness like the spawner trying to spawn more mobs than it should be able to
+
+	if(!(create(user)))
+		message_admins("[src] didn't return anything when creating a mob, this might be broken! The use of the spawner it would have taken has been refunded.")
+		uses += 1 // Oops! We messed up and somehow the mob didn't spawn, but that's alright we can refund the use.
+
+	check_uses() // Now we check if the spawner should delete itself or not
 
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
@@ -182,12 +194,9 @@
 		spawned_mob.mind.set_assigned_role(SSjob.GetJobType(spawner_job_path))
 		spawned_mind.name = spawned_mob.real_name
 
-//multiple use mob spawner functionality here- doesn't make sense on corpses
-/obj/effect/mob_spawn/ghost_role/create(mob/mob_possessor, newname)
-	. = ..()
-	if(uses > 0)
-		uses--
-	if(!uses)
+/// Checks if the spawner has zero uses left, if so, delete yourself... NOW!
+/obj/effect/mob_spawn/ghost_role/proc/check_uses()
+	if(!uses && deletes_on_zero_uses_left)
 		qdel(src)
 
 ///override this to add special spawn conditions to a ghost role
@@ -208,14 +217,16 @@
 	///burn damage this corpse will spawn with
 	var/burn_damage = 0
 
-/obj/effect/mob_spawn/corpse/Initialize(mapload)
+/obj/effect/mob_spawn/corpse/Initialize(mapload, no_spawn)
 	. = ..()
+	if(no_spawn)
+		return
 	switch(spawn_when)
 		if(CORPSE_INSTANT)
-			INVOKE_ASYNC(src, .proc/create)
+			INVOKE_ASYNC(src, PROC_REF(create))
 		if(CORPSE_ROUNDSTART)
 			if(mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))
-				INVOKE_ASYNC(src, .proc/create)
+				INVOKE_ASYNC(src, PROC_REF(create))
 
 /obj/effect/mob_spawn/corpse/special(mob/living/spawned_mob)
 	. = ..()
@@ -255,13 +266,15 @@
 	. = ..()
 	if(conceal_presence)
 		// We don't want corpse PDAs to show up in the messenger list.
-		var/obj/item/pda/messenger = locate(/obj/item/pda) in spawned_human
+		var/obj/item/modular_computer/pda/messenger = locate() in spawned_human
 		if(messenger)
-			messenger.toff = TRUE
+			var/datum/computer_file/program/messenger/message_app = locate() in messenger.stored_files
+			if(message_app)
+				message_app.invisible = TRUE
 		// Or on crew monitors
 		var/obj/item/clothing/under/sensor_clothes = spawned_human.w_uniform
 		if(istype(sensor_clothes))
-			sensor_clothes.sensor_mode = NO_SENSORS
+			sensor_clothes.sensor_mode = SENSOR_OFF
 			spawned_human.update_suit_sensors()
 
 //don't use this in subtypes, just add 1000 brute yourself. that being said, this is a type that has 1000 brute. it doesn't really have a home anywhere else, it just needs to exist

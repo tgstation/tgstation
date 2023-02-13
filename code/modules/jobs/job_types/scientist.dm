@@ -5,17 +5,19 @@
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 3
-	supervisors = "the research director"
-	selection_color = "#ffeeff"
+	supervisors = SUPERVISOR_RD
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "SCIENTIST"
 
 	outfit = /datum/outfit/job/scientist
 	plasmaman_outfit = /datum/outfit/plasmaman/science
 
-	paycheck = PAYCHECK_MEDIUM
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SCI
+
+	liver_traits = list(TRAIT_BALLMER_SCIENTIST)
 
 	display_order = JOB_DISPLAY_ORDER_SCIENTIST
 	bounty_types = CIV_JOB_SCI
@@ -33,6 +35,8 @@
 	rpg_title = "Thaumaturgist"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
+	job_tone = "boom"
+
 
 /datum/outfit/job/scientist
 	name = "Scientist"
@@ -41,10 +45,7 @@
 	id_trim = /datum/id_trim/job/scientist
 	uniform = /obj/item/clothing/under/rank/rnd/scientist
 	suit = /obj/item/clothing/suit/toggle/labcoat/science
-	backpack_contents = list(
-		/obj/item/modular_computer/tablet/preset/science = 1,
-		)
-	belt = /obj/item/pda/science
+	belt = /obj/item/modular_computer/pda/science
 	ears = /obj/item/radio/headset/headset_sci
 	shoes = /obj/item/clothing/shoes/sneakers/white
 
@@ -54,9 +55,19 @@
 
 /datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
 	..()
-	if(prob(0.4))
+	try_giving_horrible_tie()
+
+/datum/outfit/job/scientist/proc/try_giving_horrible_tie()
+	if (prob(0.4))
 		neck = /obj/item/clothing/neck/tie/horrible
 
 /datum/outfit/job/scientist/get_types_to_preload()
 	. = ..()
 	. += /obj/item/clothing/neck/tie/horrible
+
+/// A version of the scientist outfit that is guaranteed to be the same every time
+/datum/outfit/job/scientist/consistent
+	name = "Scientist - Consistent"
+
+/datum/outfit/job/scientist/consistent/try_giving_horrible_tie()
+	return

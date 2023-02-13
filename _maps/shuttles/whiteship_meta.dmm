@@ -36,15 +36,12 @@
 	callTime = 250;
 	can_move_docking_ports = 1;
 	dir = 2;
-	dwidth = 11;
-	height = 17;
-	id = "whiteship";
+	shuttle_id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Salvage Ship";
 	port_direction = 8;
-	preferred_direction = 4;
-	width = 33
+	preferred_direction = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
@@ -159,15 +156,13 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
 "at" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/built/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
 "ax" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -176,7 +171,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -213,25 +208,25 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = -2
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = 1;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = 8;
 	pixel_y = -3
 	},
@@ -260,7 +255,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
 "aL" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -293,7 +288,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged{
+/mob/living/basic/syndicate/ranged{
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
@@ -556,18 +551,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/built/directional/south,
 /obj/structure/curtain,
-/obj/machinery/shower{
-	pixel_y = 15
-	},
+/obj/machinery/shower/directional/south,
 /obj/item/soap,
 /turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/crew)
 "bG" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/structure/toilet{
 	dir = 1
 	},
@@ -834,9 +824,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "ci" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/machinery/light/small/built/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -862,19 +850,19 @@
 "cn" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -8;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 1;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/drinks/soda_cans/cola{
+/obj/item/reagent_containers/cup/soda_cans/cola{
 	pixel_x = 6
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -922,7 +910,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/item/mop,
 /obj/item/storage/bag/trash{
 	pixel_x = 6
@@ -1042,7 +1030,7 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -2;
 	pixel_y = 1
 	},
@@ -1057,18 +1045,18 @@
 /area/shuttle/abandoned/cargo)
 "cL" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/vodka{
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
 	pixel_y = 12
 	},
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
 	pixel_x = 16;
 	pixel_y = 12
 	},
-/obj/item/reagent_containers/food/drinks/bottle/gin{
+/obj/item/reagent_containers/cup/glass/bottle/gin{
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/drinks/bottle/cognac{
+/obj/item/reagent_containers/cup/glass/bottle/cognac{
 	pixel_x = 8;
 	pixel_y = 4
 	},
@@ -1086,14 +1074,14 @@
 "cM" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/wine{
+/obj/item/reagent_containers/cup/glass/bottle/wine{
 	pixel_y = 12
 	},
-/obj/item/reagent_containers/food/drinks/bottle/vermouth{
+/obj/item/reagent_containers/cup/glass/bottle/vermouth{
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/drinks/bottle/tequila{
+/obj/item/reagent_containers/cup/glass/bottle/tequila{
 	pixel_x = 8;
 	pixel_y = 4
 	},
@@ -1219,7 +1207,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot_white,
 /obj/structure/rack,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -1242,11 +1230,11 @@
 "dj" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/secure_closet/freezer/fridge/open,
-/obj/item/reagent_containers/food/condiment/flour{
+/obj/item/reagent_containers/condiment/flour{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
 /obj/item/food/meat/slab/synthmeat{
 	pixel_x = -3;
 	pixel_y = 3
@@ -1440,11 +1428,11 @@
 "dQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -8;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = -8;
 	pixel_y = 4
 	},
@@ -1456,10 +1444,7 @@
 /area/shuttle/abandoned/bar)
 "dR" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/effect/decal/cleanable/food/flour,
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/abandoned/bar)
@@ -1469,11 +1454,7 @@
 /area/shuttle/abandoned/bar)
 "dT" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
@@ -1489,7 +1470,7 @@
 /obj/item/shovel/spade,
 /obj/item/cultivator,
 /obj/item/plant_analyzer,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/watering_can,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -1549,9 +1530,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bar)
 "ec" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/machinery/light/small/built/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bar)
@@ -1569,11 +1548,11 @@
 /obj/item/knife/kitchen{
 	pixel_x = 16
 	},
-/obj/item/reagent_containers/food/condiment/sugar{
+/obj/item/reagent_containers/condiment/sugar{
 	pixel_x = -9;
 	pixel_y = 14
 	},
-/obj/item/reagent_containers/food/condiment/enzyme{
+/obj/item/reagent_containers/condiment/enzyme{
 	layer = 5;
 	pixel_x = -5;
 	pixel_y = 6
@@ -1746,7 +1725,7 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/simple_animal/hostile/syndicate/melee{
+/mob/living/basic/syndicate/melee{
 	environment_smash = 0
 	},
 /turf/open/floor/iron/dark,
@@ -1807,7 +1786,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/simple_animal/hostile/syndicate/melee{
+/mob/living/basic/syndicate/melee{
 	environment_smash = 0
 	},
 /turf/open/floor/iron/dark,
@@ -1826,7 +1805,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/hostile/syndicate/melee{
+/mob/living/basic/syndicate/melee{
 	environment_smash = 0
 	},
 /turf/open/floor/iron/dark,
@@ -1835,7 +1814,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/medical,
 /obj/item/storage/medkit/fire,
-/obj/item/reagent_containers/glass/bottle/morphine,
+/obj/item/reagent_containers/cup/bottle/morphine,
 /obj/item/reagent_containers/syringe,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
@@ -1913,7 +1892,7 @@
 /obj/structure/rack,
 /obj/item/storage/belt/utility,
 /obj/item/weldingtool,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
@@ -2032,7 +2011,7 @@
 	pixel_x = -11;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = 6;
 	pixel_y = 14
 	},
@@ -2186,9 +2165,13 @@
 /area/shuttle/abandoned/cargo)
 "Sv" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/machinery/light/small/built/directional/east,
-/obj/item/bedsheet/brown,
+/obj/item/bedsheet/brown{
+	dir = 4
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,

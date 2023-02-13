@@ -42,7 +42,7 @@
 		sprite_text = no_icon? "\[NO ICON\]" : "<img src='vv[hash].png'></td><td>"
 	var/list/header = islist(D)? list("<b>/list</b>") : D.vv_get_header()
 
-	var/ref_line = copytext(refid, 2, -1) // get rid of the brackets
+	var/ref_line = "@[copytext(refid, 2, -1)]" // get rid of the brackets, add a @ prefix for copy pasting in asay
 
 	var/marked_line
 	if(holder && holder.marked_datum && holder.marked_datum == D)
@@ -81,7 +81,7 @@
 	if(!islist)
 		for(var/V in D.vars)
 			names += V
-	sleep(1)
+	sleep(1 TICKS)
 
 	var/list/variable_html = list()
 	if(islist)
@@ -123,8 +123,8 @@
 				var ca = document.cookie.split(';');
 				for(var i=0; i<ca.length; i++) {
 					var c = ca\[i];
-					while (c.charAt(0)==' ') c = c.substring(1,c.length);
-					if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+					while (c.charAt(0) == ' ') c = c.substring(1,c.length);
+					if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
 				}
 				return "";
 			}

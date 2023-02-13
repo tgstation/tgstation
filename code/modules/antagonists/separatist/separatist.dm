@@ -1,5 +1,5 @@
 /datum/team/nation
-	name = "Nation"
+	name = "\improper Nation"
 	member_name = "separatist"
 	///a list of ranks that can join this nation.
 	var/list/potential_recruits
@@ -10,7 +10,7 @@
 
 /datum/team/nation/New(starting_members, potential_recruits, department)
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_possible_separatist)
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(new_possible_separatist))
 	src.potential_recruits = potential_recruits
 	src.department = department
 
@@ -105,7 +105,7 @@
 	objectives -= nation.objectives
 
 /datum/antagonist/separatist/proc/setup_ui_color()
-	var/list/hsl = rgb2num(nation.department.latejoin_color, COLORSPACE_HSL)
+	var/list/hsl = rgb2num(nation.department.ui_color, COLORSPACE_HSL)
 	hsl[3] = 25 //setting lightness very low
 	ui_color = rgb(hsl[1], hsl[2], hsl[3], space = COLORSPACE_HSL)
 

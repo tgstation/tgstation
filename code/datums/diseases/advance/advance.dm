@@ -93,7 +93,7 @@
 		advance_diseases += P
 	var/replace_num = advance_diseases.len + 1 - DISEASE_LIMIT //amount of diseases that need to be removed to fit this one
 	if(replace_num > 0)
-		sortTim(advance_diseases, /proc/cmp_advdisease_resistance_asc)
+		sortTim(advance_diseases, GLOBAL_PROC_REF(cmp_advdisease_resistance_asc))
 		for(var/i in 1 to replace_num)
 			var/datum/disease/advance/competition = advance_diseases[i]
 			if(totalTransmittable() > competition.totalResistance())
@@ -154,19 +154,6 @@
 	A.oldres = oldres
 	//this is a new disease starting over at stage 1, so processing is not copied
 	return A
-
-//Describe this disease to an admin in detail (for logging)
-/datum/disease/advance/admin_details()
-	var/list/name_symptoms = list()
-	for(var/datum/symptom/S in symptoms)
-		name_symptoms += S.name
-	return "[name] sym:[english_list(name_symptoms)] r:[totalResistance()] s:[totalStealth()] ss:[totalStageSpeed()] t:[totalTransmittable()]"
-
-/*
-
-	NEW PROCS
-
- */
 
 // Mix the symptoms of two diseases (the src and the argument)
 /datum/disease/advance/proc/Mix(datum/disease/advance/D)
@@ -244,16 +231,16 @@
 		else
 			visibility_flags &= ~HIDDEN_SCANNER
 
-		if(properties["transmittable"]>=11)
+		if(properties["transmittable"] >= 11)
 			SetSpread(DISEASE_SPREAD_AIRBORNE)
-		else if(properties["transmittable"]>=7)
+		else if(properties["transmittable"] >= 7)
 			SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
-		else if(properties["transmittable"]>=3)
+		else if(properties["transmittable"] >= 3)
 			SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
 		else
 			SetSpread(DISEASE_SPREAD_BLOOD)
 
-		permeability_mod = max(CEILING(0.4 * properties["transmittable"], 1), 1)
+		spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // can be between 5 and 10
 		stage_prob = max(0.5 * properties["stage_rate"], 1)
 		SetSeverity(properties["severity"])
@@ -451,7 +438,7 @@
 	symptoms += SSdisease.list_symptoms.Copy()
 	do
 		if(user)
-			var/symptom = tgui_input_list(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom", sort_list(symptoms, /proc/cmp_typepaths_asc))
+			var/symptom = tgui_input_list(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom", sort_list(symptoms, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 			if(isnull(symptom))
 				return
 			else if(istext(symptom))
@@ -512,3 +499,16 @@
 
 /datum/disease/advance/proc/totalTransmittable()
 	return properties["transmittable"]
+
+/**
+ *  Make virus visible to heath scanners
+ */
+/datum/disease/advance/proc/MakeVisible()
+	visibility_flags &= ~HIDDEN_SCANNER
+	for(var/datum/disease/advance/virus in SSdisease.active_diseases)
+		if(!virus.id)
+			stack_trace("Advanced virus ID is empty or null!")
+			return
+
+		if(virus.id == id)
+			virus.visibility_flags &= ~HIDDEN_SCANNER

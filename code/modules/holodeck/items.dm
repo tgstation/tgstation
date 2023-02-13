@@ -32,11 +32,29 @@
 /obj/item/melee/energy/sword/holographic/red
 	sword_color_icon = "red"
 
+/obj/item/toy/cards/deck/syndicate/holographic
+	desc = "A deck of holographic playing cards."
+
+/obj/item/toy/cards/deck/syndicate/holographic/Initialize(mapload, obj/machinery/computer/holodeck/holodeck)
+	src.holodeck = holodeck
+	RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(handle_card_delete))
+	. = ..()
+
+/obj/item/toy/cards/deck/syndicate/holographic/proc/handle_card_delete(datum/source)
+	SIGNAL_HANDLER
+
+	//if any REAL cards have been inserted into the deck they are moved outside before destroying it
+	for(var/obj/item/toy/singlecard/card in card_atoms)
+		if(card.flags_1 & HOLOGRAM_1)
+			continue
+		card_atoms -= card
+		card.forceMove(drop_location())
+
 //BASKETBALL OBJECTS
 
 /obj/item/toy/beach_ball/holoball
 	name = "basketball"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "basketball"
 	inhand_icon_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
@@ -118,9 +136,8 @@
 	var/area/currentarea = null
 	var/eventstarted = FALSE
 
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 6
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.006
 	power_channel = AREA_USAGE_ENVIRON
 
 /obj/machinery/readybutton/attack_ai(mob/user)
@@ -187,11 +204,11 @@
 
 /obj/item/paper/fluff/holodeck/trek_diploma
 	name = "paper - Starfleet Academy Diploma"
-	info = {"<h2>Starfleet Academy</h2></br><p>Official Diploma</p></br>"}
+	default_raw_text = {"<h2>Starfleet Academy</h2></br><p>Official Diploma</p></br>"}
 
 /obj/item/paper/fluff/holodeck/disclaimer
 	name = "Holodeck Disclaimer"
-	info = "Bruises sustained in the holodeck can be healed simply by sleeping."
+	default_raw_text = "Bruises sustained in the holodeck can be healed simply by sleeping."
 
 /obj/vehicle/ridden/scooter/skateboard/pro/holodeck
 	name = "holographic skateboard"

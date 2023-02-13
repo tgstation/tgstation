@@ -7,19 +7,18 @@
 	worn_icon_state = "moistnugget"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
-	bolt_type = BOLT_TYPE_STANDARD
+	bolt_type = BOLT_TYPE_LOCKING
 	semi_auto = FALSE
 	internal_magazine = TRUE
 	fire_sound = 'sound/weapons/gun/rifle/shot.ogg'
 	fire_sound_volume = 90
-	vary_fire_sound = FALSE
 	rack_sound = 'sound/weapons/gun/rifle/bolt_out.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/rifle/bolt_in.ogg'
 	tac_reloads = FALSE
 
 /obj/item/gun/ballistic/rifle/rack(mob/user = null)
 	if (bolt_locked == FALSE)
-		to_chat(user, span_notice("You open the bolt of \the [src]."))
+		balloon_alert(user, "bolt opened")
 		playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
 		process_chamber(FALSE, FALSE, FALSE)
 		bolt_locked = TRUE
@@ -34,7 +33,7 @@
 
 /obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	if (!bolt_locked && !istype(A, /obj/item/stack/sheet/cloth))
-		to_chat(user, span_notice("The bolt is closed!"))
+		balloon_alert(user, "[bolt_wording] is closed!")
 		return
 	return ..()
 
@@ -81,7 +80,7 @@
 				unjam_chance = 10
 			else
 				unjam_chance += 10
-				to_chat(user, span_warning("[src] is jammed!"))
+				balloon_alert(user, "jammed!")
 				playsound(user,'sound/weapons/jammed.ogg', 75, TRUE)
 				return FALSE
 	..()

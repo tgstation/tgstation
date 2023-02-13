@@ -5,6 +5,10 @@
 
 	icon_state = "synthesizer"
 	icon = 'icons/obj/plumbing/plumbers.dmi'
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+
+	///category for plumbing RCD
+	category="Synthesizers"
 
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
 	var/amount = 1
@@ -51,6 +55,7 @@
 	if(reagents.total_volume >= amount*delta_time*0.5) //otherwise we get leftovers, and we need this to be precise
 		return
 	reagents.add_reagent(reagent_id, amount*delta_time*0.5)
+	use_power(active_power_usage * amount * delta_time * 0.5)
 
 /obj/machinery/plumbing/synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -61,7 +66,10 @@
 /obj/machinery/plumbing/synthesizer/ui_data(mob/user)
 	var/list/data = list()
 
-	var/is_hallucinating = user.hallucinating()
+	var/is_hallucinating = FALSE
+	if(isliving(user))
+		var/mob/living/living_user = user
+		is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
 	var/list/chemicals = list()
 
 	for(var/A in dispensable_reagents)
@@ -102,3 +110,68 @@
 	var/mutable_appearance/r_overlay = mutable_appearance(icon, "[icon_state]_overlay")
 	r_overlay.color = reagent_id ? initial(reagent_id.color) : "#FFFFFF"
 	. += r_overlay
+
+/obj/machinery/plumbing/synthesizer/soda
+	name = "soda synthesizer"
+	desc = "Produces a single chemical at a given volume. Must be plumbed."
+	icon_state = "synthesizer_soda"
+
+	//Copied from soda dispenser
+	dispensable_reagents = list(
+		/datum/reagent/consumable/coffee,
+		/datum/reagent/consumable/space_cola,
+		/datum/reagent/consumable/cream,
+		/datum/reagent/consumable/dr_gibb,
+		/datum/reagent/consumable/grenadine,
+		/datum/reagent/consumable/ice,
+		/datum/reagent/consumable/icetea,
+		/datum/reagent/consumable/lemonjuice,
+		/datum/reagent/consumable/lemon_lime,
+		/datum/reagent/consumable/limejuice,
+		/datum/reagent/consumable/menthol,
+		/datum/reagent/consumable/orangejuice,
+		/datum/reagent/consumable/pineapplejuice,
+		/datum/reagent/consumable/pwr_game,
+		/datum/reagent/consumable/shamblers,
+		/datum/reagent/consumable/spacemountainwind,
+		/datum/reagent/consumable/sodawater,
+		/datum/reagent/consumable/space_up,
+		/datum/reagent/consumable/sugar,
+		/datum/reagent/consumable/tea,
+		/datum/reagent/consumable/tomatojuice,
+		/datum/reagent/consumable/tonic,
+		/datum/reagent/water,
+	)
+
+/obj/machinery/plumbing/synthesizer/beer
+	name = "beer synthesizer"
+	desc = "Produces a single chemical at a given volume. Must be plumbed."
+
+	icon_state = "synthesizer_booze"
+
+	//Copied from beer dispenser
+	dispensable_reagents = list(
+		/datum/reagent/consumable/ethanol/absinthe,
+		/datum/reagent/consumable/ethanol/ale,
+		/datum/reagent/consumable/ethanol/applejack,
+		/datum/reagent/consumable/ethanol/beer,
+		/datum/reagent/consumable/ethanol/cognac,
+		/datum/reagent/consumable/ethanol/creme_de_cacao,
+		/datum/reagent/consumable/ethanol/creme_de_coconut,
+		/datum/reagent/consumable/ethanol/creme_de_menthe,
+		/datum/reagent/consumable/ethanol/curacao,
+		/datum/reagent/consumable/ethanol/gin,
+		/datum/reagent/consumable/ethanol/hcider,
+		/datum/reagent/consumable/ethanol/kahlua,
+		/datum/reagent/consumable/ethanol/beer/maltliquor,
+		/datum/reagent/consumable/ethanol/navy_rum,
+		/datum/reagent/consumable/ethanol/rum,
+		/datum/reagent/consumable/ethanol/sake,
+		/datum/reagent/consumable/ethanol/tequila,
+		/datum/reagent/consumable/ethanol/triple_sec,
+		/datum/reagent/consumable/ethanol/vermouth,
+		/datum/reagent/consumable/ethanol/vodka,
+		/datum/reagent/consumable/ethanol/whiskey,
+		/datum/reagent/consumable/ethanol/wine,
+	)
+

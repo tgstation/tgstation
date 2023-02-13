@@ -4,9 +4,6 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
 	density = FALSE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
-	active_power_usage = 1000
 	req_access = list(ACCESS_ROBOTICS)
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/cyborgrecharger
@@ -35,14 +32,15 @@
 	GLOB.roundstart_station_borgcharger_areas += area_name
 
 /obj/machinery/recharge_station/RefreshParts()
+	. = ..()
 	recharge_speed = 0
 	repairs = 0
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		recharge_speed += C.rating * 100
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		repairs += M.rating - 1
-	for(var/obj/item/stock_parts/cell/C in component_parts)
-		recharge_speed *= C.maxcharge / 10000
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		recharge_speed += capacitor.tier * 100
+	for(var/datum/stock_part/manipulator/matter_bin in component_parts)
+		repairs += matter_bin.tier - 1
+	for(var/obj/item/stock_parts/cell/cell in component_parts)
+		recharge_speed *= cell.maxcharge / 10000
 
 /obj/machinery/recharge_station/examine(mob/user)
 	. = ..()

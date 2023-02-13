@@ -10,12 +10,11 @@
 	if(check_rights(R_ADMIN,1))
 		var/range=input("Enter range:","Num",2) as num
 		message_admins("[key_name_admin(usr)] fixed air with range [range] in area [T.loc.name]")
-		log_game("[key_name_admin(usr)] fixed air with range [range] in area [T.loc.name]")
-		var/datum/gas_mixture/GM = new
+		usr.log_message("fixed air with range [range] in area [T.loc.name]", LOG_ADMIN)
 		for(var/turf/open/F in range(range,T))
 			if(F.blocks_air)
 			//skip walls
 				continue
-			GM.parse_gas_string(F.initial_gas_mix)
+			var/datum/gas_mixture/GM = SSair.parse_gas_string(F.initial_gas_mix, /datum/gas_mixture/turf)
 			F.copy_air(GM)
 			F.update_visuals()

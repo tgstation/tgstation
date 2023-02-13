@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/cat_butcherer
 	name = "Cat Surgeon"
 	desc = "A man with the quest of chasing endless feline tail."
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "cat_butcher"
 	icon_living = "cat_butcher"
 	icon_dead = "syndicate_dead"
@@ -28,16 +28,20 @@
 	faction = list("hostile")
 	check_friendly_fire = 1
 	status_flags = CANPUSH
-	del_on_death = 1
+	del_on_death = TRUE
+
+/mob/living/simple_animal/hostile/cat_butcherer/Initialize(mapload)
+	. = ..()
+	apply_dynamic_human_icon(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/cat_butcher, l_hand = /obj/item/circular_saw, bloody_slots = ITEM_SLOT_GLOVES|ITEM_SLOT_OCLOTHING)
 
 /mob/living/simple_animal/hostile/cat_butcherer/AttackingTarget()
 	. = ..()
 	if(. && prob(35) && iscarbon(target))
 		var/mob/living/carbon/human/L = target
-		var/obj/item/organ/tail/cat/tail = L.getorgan(/obj/item/organ/tail/cat)
+		var/obj/item/organ/external/tail/cat/tail = L.getorgan(/obj/item/organ/external/tail/cat)
 		if(!QDELETED(tail))
 			visible_message(span_notice("[src] severs [L]'s tail in one swift swipe!"), span_notice("You sever [L]'s tail in one swift swipe."))
 			tail.Remove(L)
-			var/obj/item/organ/tail/cat/dropped_tail = new(target.drop_location())
+			var/obj/item/organ/external/tail/cat/dropped_tail = new(target.drop_location())
 			dropped_tail.color = L.hair_color
 		return 1

@@ -1,7 +1,7 @@
 //The contant in the rate of reagent transfer on life ticks
 #define STOMACH_METABOLISM_CONSTANT 0.25
 
-/obj/item/organ/stomach
+/obj/item/organ/internal/stomach
 	name = "stomach"
 	icon_state = "stomach"
 	visual = FALSE
@@ -28,10 +28,11 @@
 	var/disgust_metabolism = 1
 
 	///The rate that the stomach will transfer reagents to the body
-	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.05
+	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.025
 
+	var/operated = FALSE //whether the stomach's been repaired with surgery and can be fixed again or not
 
-/obj/item/organ/stomach/Initialize(mapload)
+/obj/item/organ/internal/stomach/Initialize(mapload)
 	. = ..()
 	//None edible organs do not get a reagent holder by default
 	if(!reagents)
@@ -39,11 +40,11 @@
 	else
 		reagents.flags |= REAGENT_HOLDER_ALIVE
 
-/obj/item/organ/stomach/on_life(delta_time, times_fired)
+/obj/item/organ/internal/stomach/on_life(delta_time, times_fired)
 	. = ..()
 
 	//Manage species digestion
-	if(istype(owner, /mob/living/carbon/human))
+	if(ishuman(owner))
 		var/mob/living/carbon/human/humi = owner
 		if(!(organ_flags & ORGAN_FAILING))
 			handle_hunger(humi, delta_time, times_fired)
@@ -115,7 +116,7 @@
 		body.vomit(damage)
 		to_chat(body, span_warning("Your stomach reels in pain as you're incapable of holding down all that food!"))
 
-/obj/item/organ/stomach/proc/handle_hunger(mob/living/carbon/human/human, delta_time, times_fired)
+/obj/item/organ/internal/stomach/proc/handle_hunger(mob/living/carbon/human/human, delta_time, times_fired)
 	if(HAS_TRAIT(human, TRAIT_NOHUNGER))
 		return //hunger is for BABIES
 
@@ -125,23 +126,22 @@
 			to_chat(human, span_notice("You feel fit again!"))
 			REMOVE_TRAIT(human, TRAIT_FAT, OBESITY)
 			human.remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			human.update_inv_w_uniform()
-			human.update_inv_wear_suit()
+			human.update_worn_undersuit()
+			human.update_worn_oversuit()
 	else
 		if(human.overeatduration >= (200 SECONDS))
 			to_chat(human, span_danger("You suddenly feel blubbery!"))
 			ADD_TRAIT(human, TRAIT_FAT, OBESITY)
 			human.add_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			human.update_inv_w_uniform()
-			human.update_inv_wear_suit()
+			human.update_worn_undersuit()
+			human.update_worn_oversuit()
 
 	// nutrition decrease and satiety
 	if (human.nutrition > 0 && human.stat != DEAD)
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
-		var/datum/component/mood/mood = human.GetComponent(/datum/component/mood)
-		if(mood && mood.sanity > SANITY_DISTURBED)
-			hunger_rate *= max(1 - 0.002 * mood.sanity, 0.5) //0.85 to 0.75
+		if(human.mob_mood && human.mob_mood.sanity > SANITY_DISTURBED)
+			hunger_rate *= max(1 - 0.002 * human.mob_mood.sanity, 0.5) //0.85 to 0.75
 		// Whether we cap off our satiety or move it towards 0
 		if(human.satiety > MAX_SATIETY)
 			human.satiety = MAX_SATIETY
@@ -152,12 +152,13 @@
 		else if(human.satiety < 0)
 			human.satiety++
 			if(DT_PROB(round(-human.satiety/77), delta_time))
-				human.Jitter(5)
+				human.set_jitter_if_lower(10 SECONDS)
 			hunger_rate = 3 * HUNGER_FACTOR
 		hunger_rate *= human.physiology.hunger_mod
 		human.adjust_nutrition(-hunger_rate * delta_time)
 
-	if(human.nutrition > NUTRITION_LEVEL_FULL)
+	var/nutrition = human.nutrition
+	if(nutrition > NUTRITION_LEVEL_FULL)
 		if(human.overeatduration < 20 MINUTES) //capped so people don't take forever to unfat
 			human.overeatduration = min(human.overeatduration + (1 SECONDS * delta_time), 20 MINUTES)
 	else
@@ -165,13 +166,13 @@
 			human.overeatduration = max(human.overeatduration - (2 SECONDS * delta_time), 0) //doubled the unfat rate
 
 	//metabolism change
-	if(human.nutrition > NUTRITION_LEVEL_FAT)
+	if(nutrition > NUTRITION_LEVEL_FAT)
 		human.metabolism_efficiency = 1
-	else if(human.nutrition > NUTRITION_LEVEL_FED && human.satiety > 80)
+	else if(nutrition > NUTRITION_LEVEL_FED && human.satiety > 80)
 		if(human.metabolism_efficiency != 1.25)
 			to_chat(human, span_notice("You feel vigorous."))
 			human.metabolism_efficiency = 1.25
-	else if(human.nutrition < NUTRITION_LEVEL_STARVING + 50)
+	else if(nutrition < NUTRITION_LEVEL_STARVING + 50)
 		if(human.metabolism_efficiency != 0.8)
 			to_chat(human, span_notice("You feel sluggish."))
 		human.metabolism_efficiency = 0.8
@@ -184,7 +185,9 @@
 	if(CONFIG_GET(flag/disable_human_mood))
 		handle_hunger_slowdown(human)
 
-	switch(human.nutrition)
+	// If we did anything more then just set and throw alerts here I would add bracketing
+	// But well, it is all we do, so there's not much point bothering with it you get me?
+	switch(nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
 			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/fat)
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
@@ -195,69 +198,85 @@
 			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/starving)
 
 ///for when mood is disabled and hunger should handle slowdowns
-/obj/item/organ/stomach/proc/handle_hunger_slowdown(mob/living/carbon/human/human)
+/obj/item/organ/internal/stomach/proc/handle_hunger_slowdown(mob/living/carbon/human/human)
 	var/hungry = (500 - human.nutrition) / 5 //So overeat would be 100 and default level would be 80
 	if(hungry >= 70)
 		human.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (hungry / 50))
 	else
 		human.remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
 
-/obj/item/organ/stomach/get_availability(datum/species/owner_species)
-	return !(NOSTOMACH in owner_species.inherent_traits)
+/obj/item/organ/internal/stomach/get_availability(datum/species/owner_species, mob/living/owner_mob)
+	return owner_species.mutantstomach
 
-/obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, delta_time, times_fired)
-	if(disgusted.disgust)
-		var/pukeprob = 2.5 + (0.025 * disgusted.disgust)
-		if(disgusted.disgust >= DISGUST_LEVEL_GROSS)
+///This gets called after the owner takes a bite of food
+/obj/item/organ/internal/stomach/proc/after_eat(atom/edible)
+	return
+
+/obj/item/organ/internal/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, delta_time, times_fired)
+	var/old_disgust = disgusted.old_disgust
+	var/disgust = disgusted.disgust
+
+	if(disgust)
+		var/pukeprob = 2.5 + (0.025 * disgust)
+		if(disgust >= DISGUST_LEVEL_GROSS)
 			if(DT_PROB(5, delta_time))
-				disgusted.stuttering += 1
-				disgusted.add_confusion(2)
+				disgusted.adjust_stutter(2 SECONDS)
+				disgusted.adjust_confusion(2 SECONDS)
 			if(DT_PROB(5, delta_time) && !disgusted.stat)
 				to_chat(disgusted, span_warning("You feel kind of iffy..."))
-			disgusted.jitteriness = max(disgusted.jitteriness - 3, 0)
-		if(disgusted.disgust >= DISGUST_LEVEL_VERYGROSS)
+			disgusted.adjust_jitter(-6 SECONDS)
+		if(disgust >= DISGUST_LEVEL_VERYGROSS)
 			if(DT_PROB(pukeprob, delta_time)) //iT hAndLeS mOrE ThaN PukInG
-				disgusted.add_confusion(2.5)
-				disgusted.stuttering += 1
-				disgusted.vomit(10, 0, 1, 0, 1, 0)
-			disgusted.Dizzy(5)
-		if(disgusted.disgust >= DISGUST_LEVEL_DISGUSTED)
+				disgusted.adjust_confusion(2.5 SECONDS)
+				disgusted.adjust_stutter(2 SECONDS)
+				disgusted.vomit(10, distance = 0, vomit_type = NONE)
+			disgusted.set_dizzy_if_lower(10 SECONDS)
+		if(disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(DT_PROB(13, delta_time))
-				disgusted.blur_eyes(3) //We need to add more shit down here
+				disgusted.set_eye_blur_if_lower(6 SECONDS) //We need to add more shit down here
 
 		disgusted.adjust_disgust(-0.25 * disgust_metabolism * delta_time)
-	switch(disgusted.disgust)
+
+	// I would consider breaking this up into steps matching the disgust levels
+	// But disgust is used so rarely it wouldn't save a significant amount of time, and it makes the code just way worse
+	// We're in the same state as the last time we processed, so don't bother
+	if(old_disgust == disgust)
+		return
+
+	disgusted.old_disgust = disgust
+	switch(disgust)
 		if(0 to DISGUST_LEVEL_GROSS)
 			disgusted.clear_alert(ALERT_DISGUST)
-			SEND_SIGNAL(disgusted, COMSIG_CLEAR_MOOD_EVENT, "disgust")
+			disgusted.clear_mood_event("disgust")
 		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
 			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/gross)
-			SEND_SIGNAL(disgusted, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/gross)
+			disgusted.add_mood_event("disgust", /datum/mood_event/gross)
 		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
 			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/verygross)
-			SEND_SIGNAL(disgusted, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/verygross)
+			disgusted.add_mood_event("disgust", /datum/mood_event/verygross)
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/disgusted)
-			SEND_SIGNAL(disgusted, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgusted)
+			disgusted.add_mood_event("disgust", /datum/mood_event/disgusted)
 
-/obj/item/organ/stomach/Remove(mob/living/carbon/stomach_owner, special = 0)
+/obj/item/organ/internal/stomach/Remove(mob/living/carbon/stomach_owner, special = 0)
 	if(ishuman(stomach_owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.clear_alert(ALERT_DISGUST)
-		SEND_SIGNAL(human_owner, COMSIG_CLEAR_MOOD_EVENT, "disgust")
+		human_owner.clear_mood_event("disgust")
 		human_owner.clear_alert(ALERT_NUTRITION)
 
 	return ..()
 
-/obj/item/organ/stomach/bone
+/obj/item/organ/internal/stomach/bone
 	desc = "You have no idea what this strange ball of bones does."
 	metabolism_efficiency = 0.025 //very bad
+	organ_traits = list(TRAIT_NOHUNGER)
 	/// How much [BRUTE] damage milk heals every second
 	var/milk_brute_healing = 2.5
 	/// How much [BURN] damage milk heals every second
 	var/milk_burn_healing = 2.5
 
-/obj/item/organ/stomach/bone/on_life(delta_time, times_fired)
+/obj/item/organ/internal/stomach/bone/on_life(delta_time, times_fired)
 	var/datum/reagent/consumable/milk/milk = locate(/datum/reagent/consumable/milk) in reagents.reagent_list
 	if(milk)
 		var/mob/living/carbon/body = owner
@@ -271,23 +290,24 @@
 		reagents.remove_reagent(milk.type, milk.metabolization_rate * delta_time)
 	return ..()
 
-/obj/item/organ/stomach/bone/plasmaman
+/obj/item/organ/internal/stomach/bone/plasmaman
 	name = "digestive crystal"
 	icon_state = "stomach-p"
+	organ_traits = list()
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
 	metabolism_efficiency = 0.06
 	milk_burn_healing = 0
 
-/obj/item/organ/stomach/cybernetic
+/obj/item/organ/internal/stomach/cybernetic
 	name = "basic cybernetic stomach"
 	icon_state = "stomach-c"
 	desc = "A basic device designed to mimic the functions of a human stomach"
 	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
-	metabolism_efficiency = 0.35 // not as good at digestion
+	metabolism_efficiency = 0.035 // not as good at digestion
 
-/obj/item/organ/stomach/cybernetic/tier2
+/obj/item/organ/internal/stomach/cybernetic/tier2
 	name = "cybernetic stomach"
 	icon_state = "stomach-c-u"
 	desc = "An electronic device designed to mimic the functions of a human stomach. Handles disgusting food a bit better."
@@ -296,7 +316,7 @@
 	emp_vulnerability = 40
 	metabolism_efficiency = 0.07
 
-/obj/item/organ/stomach/cybernetic/tier3
+/obj/item/organ/internal/stomach/cybernetic/tier3
 	name = "upgraded cybernetic stomach"
 	icon_state = "stomach-c-u2"
 	desc = "An upgraded version of the cybernetic stomach, designed to improve further upon organic stomachs. Handles disgusting food very well."
@@ -305,7 +325,7 @@
 	emp_vulnerability = 20
 	metabolism_efficiency = 0.1
 
-/obj/item/organ/stomach/cybernetic/emp_act(severity)
+/obj/item/organ/internal/stomach/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return

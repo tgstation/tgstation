@@ -47,7 +47,7 @@
 			return FALSE
 
 		if(I.buy(uplink, user, method))
-			uplink.current_user.adjust_money(-price)
+			uplink.current_user.adjust_money(-price, "Other: Third Party Transaction")
 			if(ismob(user))
 				var/mob/m_user = user
 				m_user.playsound_local(get_turf(m_user), 'sound/machines/twobeep_high.ogg', 50, TRUE)

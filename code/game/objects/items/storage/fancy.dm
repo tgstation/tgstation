@@ -7,34 +7,43 @@
  * Egg Box
  * Candle Box
  * Cigarette Box
+ * Rolling Paper Pack
  * Cigar Case
  * Heart Shaped Box w/ Chocolates
+ * Coffee condiments display
  */
 
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "donutbox"
-	base_icon_state = "donutbox"
 	resistance_flags = FLAMMABLE
 	custom_materials = list(/datum/material/cardboard = 2000)
 	/// Used by examine to report what this thing is holding.
 	var/contents_tag = "errors"
 	/// What type of thing to fill this storage with.
-	var/spawn_type = null
+	var/spawn_type
+	/// How many of the things to fill this storage with.
+	var/spawn_count = 0
 	/// Whether the container is open or not
 	var/is_open = FALSE
 	/// What this container folds up into when it's empty.
 	var/obj/fold_result = /obj/item/stack/sheet/cardboard
+	/// Whether it supports open and closed state icons.
+	var/has_open_closed_states = TRUE
+
+/obj/item/storage/fancy/Initialize(mapload)
+	. = ..()
+
+	atom_storage.max_slots = spawn_count
 
 /obj/item/storage/fancy/PopulateContents()
 	if(!spawn_type)
 		return
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	for(var/i = 1 to STR.max_items)
-		new spawn_type(src)
+	for(var/i = 1 to spawn_count)
+		var/thing_in_box = pick(spawn_type)
+		new thing_in_box(src)
 
 /obj/item/storage/fancy/update_icon_state()
-	icon_state = "[base_icon_state][is_open ? contents.len : null]"
+	icon_state = "[base_icon_state][has_open_closed_states && is_open ? contents.len : null]"
 	return ..()
 
 /obj/item/storage/fancy/examine(mob/user)
@@ -52,8 +61,10 @@
 	. = ..()
 	if(contents.len)
 		return
+	if(!fold_result)
+		return
 	new fold_result(user.drop_location())
-	to_chat(user, span_notice("You fold the [src] into [initial(fold_result.name)]."))
+	balloon_alert(user, "folded")
 	user.put_in_active_hand(fold_result)
 	qdel(src)
 
@@ -77,19 +88,18 @@
 	name = "donut box"
 	desc = "Mmm. Donuts."
 	icon = 'icons/obj/food/donuts.dmi'
-	icon_state = "donutbox_inner"
+	icon_state = "donutbox_open" //composite image used for mapping
 	base_icon_state = "donutbox"
 	spawn_type = /obj/item/food/donut/plain
+	spawn_count = 6
 	is_open = TRUE
-	appearance_flags = KEEP_TOGETHER
-	custom_premium_price = PAYCHECK_HARD * 1.75
+	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
+	custom_premium_price = PAYCHECK_COMMAND * 1.75
 	contents_tag = "donut"
 
-/obj/item/storage/fancy/donut_box/ComponentInitialize()
+/obj/item/storage/fancy/donut_box/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.set_holdable(list(/obj/item/food/donut))
+	atom_storage.set_holdable(list(/obj/item/food/donut))
 
 /obj/item/storage/fancy/donut_box/PopulateContents()
 	. = ..()
@@ -126,18 +136,17 @@
 	inhand_icon_state = "eggbox"
 	icon_state = "eggbox"
 	base_icon_state = "eggbox"
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	name = "egg box"
 	desc = "A carton for containing eggs."
 	spawn_type = /obj/item/food/egg
+	spawn_count = 12
 	contents_tag = "egg"
 
-/obj/item/storage/fancy/egg_box/ComponentInitialize()
+/obj/item/storage/fancy/egg_box/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 12
-	STR.set_holdable(list(/obj/item/food/egg))
+	atom_storage.set_holdable(list(/obj/item/food/egg))
 
 /*
  * Candle Box
@@ -149,23 +158,19 @@
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candlebox5"
 	base_icon_state = "candlebox"
-	inhand_icon_state = "candlebox5"
+	inhand_icon_state = null
 	worn_icon_state = "cigpack"
 	throwforce = 2
 	slot_flags = ITEM_SLOT_BELT
-	spawn_type = /obj/item/candle
+	spawn_type = /obj/item/flashlight/flare/candle
+	spawn_count = 5
 	is_open = TRUE
 	contents_tag = "candle"
-
-/obj/item/storage/fancy/candle_box/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 5
 
 /obj/item/storage/fancy/candle_box/attack_self(mob/user)
 	if(!contents.len)
 		new fold_result(user.drop_location())
-		to_chat(user, span_notice("You fold the [src] into [initial(fold_result.name)]."))
+		balloon_alert(user, "folded")
 		user.put_in_active_hand(fold_result)
 		qdel(src)
 
@@ -184,7 +189,8 @@
 	throwforce = 0
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
-	custom_price = PAYCHECK_MEDIUM
+	spawn_count = 6
+	custom_price = PAYCHECK_CREW
 	age_restricted = TRUE
 	contents_tag = "cigarette"
 	///for cigarette overlay
@@ -200,7 +206,7 @@
 	if(contents.len != 0 || !spawn_coupon)
 		return ..()
 
-	to_chat(user, span_notice("You rip the back off \the [src] and get a coupon!"))
+	balloon_alert(user, "ooh, free coupon")
 	var/obj/item/coupon/attached_coupon = new
 	user.put_in_hands(attached_coupon)
 	attached_coupon.generate(rigged_omen)
@@ -208,34 +214,46 @@
 	spawn_coupon = FALSE
 	name = "discarded cigarette packet"
 	desc = "An old cigarette packet with the back torn off, worth less than nothing now."
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 0
+	atom_storage.max_slots = 0
 	return
 
-/obj/item/storage/fancy/cigarettes/ComponentInitialize()
+/obj/item/storage/fancy/cigarettes/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
+	atom_storage.display_contents = FALSE
+	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
+	register_context()
+
+/obj/item/storage/fancy/cigarettes/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	quick_remove_item(/obj/item/clothing/mask/cigarette, user)
+
+/obj/item/storage/fancy/cigarettes/AltClick(mob/user)
+	. = ..()
+	var/obj/item/lighter = locate(/obj/item/lighter) in contents
+	if(lighter)
+		quick_remove_item(lighter, user)
+	else
+		quick_remove_item(/obj/item/clothing/mask/cigarette, user)
+
+/// Removes an item from the packet if there is one
+/obj/item/storage/fancy/cigarettes/proc/quick_remove_item(obj/item/grabbies, mob/user)
+	var/obj/item/finger = locate(grabbies) in contents
+	if(finger)
+		atom_storage.attempt_remove(finger, drop_location())
+		user.put_in_hands(finger)
+
+/obj/item/storage/fancy/cigarettes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(locate(/obj/item/lighter) in contents)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove lighter"
+	context[SCREENTIP_CONTEXT_RMB] = "Remove [contents_tag]"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Alt-click to extract contents.")
 	if(spawn_coupon)
 		. += span_notice("There's a coupon on the back of the pack! You can tear it off once it's empty.")
-
-/obj/item/storage/fancy/cigarettes/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
-		return
-	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
-	if(W && contents.len > 0)
-		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
-		user.put_in_hands(W)
-		contents -= W
-		to_chat(user, span_notice("You take \a [W] out of the pack."))
-	else
-		to_chat(user, span_notice("There are no [contents_tag]s left in the pack."))
 
 /obj/item/storage/fancy/cigarettes/update_icon_state()
 	. = ..()
@@ -266,24 +284,6 @@
 
 		. += "[use_icon_state]_[cig_position]"
 		cig_position++
-
-/obj/item/storage/fancy/cigarettes/attack(mob/living/carbon/target, mob/living/carbon/user)
-	if(!istype(target))
-		return
-
-	var/obj/item/clothing/mask/cigarette/cig = locate() in contents
-	if(!cig)
-		to_chat(user, span_notice("There are no [contents_tag]s left in the pack."))
-		return
-	if(target != user || !contents.len || user.wear_mask)
-		return ..()
-
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, cig, target)
-	target.equip_to_slot_if_possible(cig, ITEM_SLOT_MASK)
-	contents -= cig
-	to_chat(user, span_notice("You take \a [cig] out of the pack."))
-	return
-
 
 /obj/item/storage/fancy/cigarettes/dromedaryco
 	name = "\improper DromedaryCo packet"
@@ -386,18 +386,13 @@
 	base_icon_state = "cig_paper_pack"
 	contents_tag = "rolling paper"
 	spawn_type = /obj/item/rollingpaper
-	custom_price = PAYCHECK_PRISONER
+	spawn_count = 10
+	custom_price = PAYCHECK_LOWER
+	has_open_closed_states = FALSE
 
-/obj/item/storage/fancy/rollingpapers/ComponentInitialize()
+/obj/item/storage/fancy/rollingpapers/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 10
-	STR.set_holdable(list(/obj/item/rollingpaper))
-
-///Overrides to do nothing because fancy boxes are fucking insane.
-/obj/item/storage/fancy/rollingpapers/update_icon_state()
-	SHOULD_CALL_PARENT(FALSE)
-	return
+	atom_storage.set_holdable(list(/obj/item/rollingpaper))
 
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
@@ -417,14 +412,13 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	contents_tag = "premium cigar"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
+	spawn_count = 5
 	spawn_coupon = FALSE
 	display_cigs = FALSE
 
-/obj/item/storage/fancy/cigarettes/cigars/ComponentInitialize()
+/obj/item/storage/fancy/cigarettes/cigars/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 5
-	STR.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
+	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
 
 /obj/item/storage/fancy/cigarettes/cigars/update_icon_state()
 	. = ..()
@@ -465,16 +459,21 @@
 	inhand_icon_state = "chocolatebox"
 	icon_state = "chocolatebox"
 	base_icon_state = "chocolatebox"
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	contents_tag = "chocolate"
-	spawn_type = /obj/item/food/tinychocolate
+	spawn_type = list(
+		/obj/item/food/bonbon,
+		/obj/item/food/bonbon/chocolate_truffle,
+		/obj/item/food/bonbon/caramel_truffle,
+		/obj/item/food/bonbon/peanut_truffle,
+		/obj/item/food/bonbon/peanut_butter_cup,
+	)
+	spawn_count = 8
 
-/obj/item/storage/fancy/heart_box/ComponentInitialize()
+/obj/item/storage/fancy/heart_box/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 8
-	STR.set_holdable(list(/obj/item/food/tinychocolate))
+	atom_storage.set_holdable(list(/obj/item/food/bonbon))
 
 
 /obj/item/storage/fancy/nugget_box
@@ -485,9 +484,105 @@
 	base_icon_state = "nuggetbox"
 	contents_tag = "nugget"
 	spawn_type = /obj/item/food/nugget
+	spawn_count = 6
 
-/obj/item/storage/fancy/nugget_box/ComponentInitialize()
+/obj/item/storage/fancy/nugget_box/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.set_holdable(list(/obj/item/food/nugget))
+	atom_storage.set_holdable(list(/obj/item/food/nugget))
+
+/*
+ * Jar of pickles
+ */
+
+/obj/item/storage/fancy/pickles_jar
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "pickles"
+	base_icon_state = "pickles"
+	name = "pickles"
+	desc = "A jar for containing pickles."
+	spawn_type = /obj/item/food/pickle
+	spawn_count = 10
+	contents_tag = "pickle"
+	fold_result = null
+	custom_materials = list(/datum/material/glass = 2000)
+	has_open_closed_states = FALSE
+
+/obj/item/storage/fancy/pickles_jar/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(list(/obj/item/food/pickle))
+
+/obj/item/storage/fancy/pickles_jar/update_icon_state()
+	. = ..()
+	if(!contents.len)
+		icon_state = "[base_icon_state]_empty"
+	else
+		if(contents.len < 5)
+			icon_state = "[base_icon_state]_[contents.len]"
+		else
+			icon_state = base_icon_state
+	return
+
+/*
+ * Coffee condiments display
+ */
+
+/obj/item/storage/fancy/coffee_condi_display
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "coffee_condi_display"
+	base_icon_state = "coffee_condi_display"
+	name = "coffee condiments display"
+	desc = "A neat small wooden box, holding all your favorite coffee condiments."
+	contents_tag = "coffee condiment"
+	custom_materials = list(/datum/material/wood = 1000)
+	fold_result = /obj/item/stack/sheet/mineral/wood
+	is_open = TRUE
+	has_open_closed_states = FALSE
+
+/obj/item/storage/fancy/coffee_condi_display/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 14
+	atom_storage.set_holdable(list(
+		/obj/item/reagent_containers/condiment/pack/sugar,
+		/obj/item/reagent_containers/condiment/creamer,
+		/obj/item/reagent_containers/condiment/pack/astrotame,
+		/obj/item/reagent_containers/condiment/chocolate,
+	))
+
+/obj/item/storage/fancy/coffee_condi_display/update_overlays()
+	. = ..()
+	var/has_sugar = FALSE
+	var/has_sweetener = FALSE
+	var/has_creamer = FALSE
+	var/has_chocolate = FALSE
+
+	for(var/thing in contents)
+		if(istype(thing, /obj/item/reagent_containers/condiment/pack/sugar))
+			has_sugar = TRUE
+		else if(istype(thing, /obj/item/reagent_containers/condiment/pack/astrotame))
+			has_sweetener = TRUE
+		else if(istype(thing, /obj/item/reagent_containers/condiment/creamer))
+			has_creamer = TRUE
+		else if(istype(thing, /obj/item/reagent_containers/condiment/chocolate))
+			has_chocolate = TRUE
+
+	if (has_sugar)
+		. += "condi_display_sugar"
+	if (has_sweetener)
+		. += "condi_display_sweetener"
+	if (has_creamer)
+		. += "condi_display_creamer"
+	if (has_chocolate)
+		. += "condi_display_chocolate"
+
+/obj/item/storage/fancy/coffee_condi_display/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/reagent_containers/condiment/pack/sugar(src)
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/condiment/pack/astrotame(src)
+	for(var/i in 1 to 4)
+		new /obj/item/reagent_containers/condiment/creamer(src)
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/condiment/chocolate(src)
+	update_appearance()
+
+

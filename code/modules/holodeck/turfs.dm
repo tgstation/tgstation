@@ -45,6 +45,11 @@
 	name = "white floor"
 	icon_state = "white"
 
+/turf/open/floor/holofloor/pure_white
+	name = "white floor"
+	desc = "Hey look, it's the inside of a greytiders mind!"
+	icon_state = "pure_white"
+
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"
 	initial_gas_mix = BURNMIX_ATMOS
@@ -52,6 +57,7 @@
 /turf/open/floor/holofloor/grass
 	gender = PLURAL
 	name = "lush grass"
+	desc = "Looking at the lushious field, you suddenly feel homesick."
 	icon_state = "grass0"
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
@@ -63,6 +69,7 @@
 /turf/open/floor/holofloor/beach
 	gender = PLURAL
 	name = "sand"
+	desc = "This is better than a vacation, since you're still getting paid."
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "sand"
 	bullet_bounce_sound = null
@@ -80,12 +87,14 @@
 
 /turf/open/floor/holofloor/beach/water
 	name = "water"
+	desc = "Gives the impression you can walk on water. Chaplains love it."
 	icon_state = "water"
 	bullet_sizzle = TRUE
 
 /turf/open/floor/holofloor/asteroid
 	gender = PLURAL
 	name = "asteroid sand"
+	desc = "The sand crunches beneath your feet, though it feels soft to the touch."
 	icon_state = "asteroid"
 	tiled_dirt = FALSE
 
@@ -96,6 +105,7 @@
 /turf/open/floor/holofloor/basalt
 	gender = PLURAL
 	name = "basalt"
+	desc = "You still feel hot, despite the cool walls of the holodeck."
 	icon_state = "basalt0"
 	tiled_dirt = FALSE
 
@@ -107,15 +117,14 @@
 
 /turf/open/floor/holofloor/space
 	name = "\proper space"
+	desc = "Space-looking floor. Thankfully, the deadly aspects of space are not emulated here."
 	icon = 'icons/turf/space.dmi'
-	icon_state = "0"
-
-/turf/open/floor/holofloor/space/Initialize(mapload)
-	icon_state = SPACE_ICON_STATE // so realistic
-	. = ..()
+	icon_state = "space"
+	plane = PLANE_SPACE
 
 /turf/open/floor/holofloor/hyperspace
 	name = "\proper hyperspace"
+	desc = "Gives the impression of moving at hyper-speed, without moving. May induce motion sickness."
 	icon = 'icons/turf/space.dmi'
 	icon_state = "speedspace_ns_1"
 	bullet_bounce_sound = null
@@ -137,14 +146,14 @@
 	base_icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET)
-	canSmoothWith = list(SMOOTH_GROUP_CARPET)
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET
+	canSmoothWith = SMOOTH_GROUP_CARPET
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/carpet/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, /atom/.proc/update_appearance), 1)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 1)
 
 /turf/open/floor/holofloor/carpet/update_icon(updates=ALL)
 	. = ..()
@@ -153,12 +162,13 @@
 
 /turf/open/floor/holofloor/wood
 	icon_state = "wood"
+	desc = "Makes you feel at home."
 	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/snow
 	gender = PLURAL
 	name = "snow"
-	desc = "Looks cold."
+	desc = "The puffy snow clumps together to make a solid-looking floor, though it sinks beneath your feet."
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
 	slowdown = 2
@@ -171,3 +181,18 @@
 
 /turf/open/floor/holofloor/dark
 	icon_state = "darkfull"
+	desc = "The surrounding enviroment is so dark you can hardly see yourself."
+
+/turf/open/floor/holofloor/stairs
+	name = "stairs"
+	icon_state = "stairs"
+	tiled_dirt = FALSE
+
+/turf/open/floor/holofloor/stairs/left
+	icon_state = "stairs-l"
+
+/turf/open/floor/holofloor/stairs/medium
+	icon_state = "stairs-m"
+
+/turf/open/floor/holofloor/stairs/right
+	icon_state = "stairs-r"

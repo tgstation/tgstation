@@ -38,6 +38,15 @@
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 
+/obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear
+	outfit = /datum/outfit/syndicatecommandocorpse/lessenedgear
+
+/datum/outfit/syndicatecommandocorpse/lessenedgear
+	name = "Syndicate Commando Corpse"
+	gloves = /obj/item/clothing/gloves/tackler
+	back = null
+	id = null
+	id_trim = null
 
 /obj/effect/mob_spawn/corpse/human/syndicatestormtrooper
 	name = "Syndicate Stormtrooper"
@@ -56,6 +65,27 @@
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 
+/obj/effect/mob_spawn/corpse/human/syndicatepilot
+	name = "Syndicate Pilot"
+	hairstyle = "Bald"
+	facial_hairstyle = "Shaved"
+	outfit = /datum/outfit/syndicatepilotcorpse
+
+/datum/outfit/syndicatepilotcorpse
+	name = "Syndicate Pilot Corpse"
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/armor/vest/alt
+	shoes = /obj/item/clothing/shoes/combat
+	neck = /obj/item/clothing/neck/large_scarf/syndie
+	glasses = /obj/item/clothing/glasses/cold
+	gloves = /obj/item/clothing/gloves/combat
+	ears = /obj/item/radio/headset
+	mask = /obj/item/clothing/mask/gas
+	head = /obj/item/clothing/head/helmet/swat
+	back = /obj/item/storage/backpack
+	id = /obj/item/card/id/advanced/chameleon
+	id_trim = /datum/id_trim/chameleon/operative
+
 /obj/effect/mob_spawn/corpse/human/pirate
 	name = "Pirate"
 	skin_tone = "caucasian1" //all pirates are white because it's easier that way
@@ -67,9 +97,25 @@
 	name = "Pirate Corpse"
 	uniform = /obj/item/clothing/under/costume/pirate
 	shoes = /obj/item/clothing/shoes/jackboots
-	glasses = /obj/item/clothing/glasses/eyepatch
-	head = /obj/item/clothing/head/bandana
 
+/obj/effect/mob_spawn/corpse/human/pirate/melee
+	name = "Pirate Swashbuckler"
+	outfit = /datum/outfit/piratecorpse/melee
+
+/datum/outfit/piratecorpse/melee
+	name = "Pirate Swashbuckler Corpse"
+	glasses = /obj/item/clothing/glasses/eyepatch
+	head = /obj/item/clothing/head/costume/pirate/bandana/armored
+
+/obj/effect/mob_spawn/corpse/human/pirate/melee/space
+	name = "Pirate Swashbuckler - Space"
+	outfit = /datum/outfit/piratecorpse/melee/space
+
+/datum/outfit/piratecorpse/melee/space
+	name = "Pirate Swashbuckler Corpse - Space"
+	suit = /obj/item/clothing/suit/space/pirate
+	head = /obj/item/clothing/head/helmet/space/pirate/bandana
+	back = /obj/item/tank/jetpack/carbondioxide
 
 /obj/effect/mob_spawn/corpse/human/pirate/ranged
 	name = "Pirate Gunner"
@@ -77,9 +123,19 @@
 
 /datum/outfit/piratecorpse/ranged
 	name = "Pirate Gunner Corpse"
-	suit = /obj/item/clothing/suit/pirate
-	head = /obj/item/clothing/head/pirate
+	glasses = /obj/item/clothing/glasses/eyepatch
+	suit = /obj/item/clothing/suit/costume/pirate/armored
+	head = /obj/item/clothing/head/costume/pirate/armored
 
+/obj/effect/mob_spawn/corpse/human/pirate/ranged/space
+	name = "Pirate Gunner - Space"
+	outfit = /datum/outfit/piratecorpse/ranged/space
+
+/datum/outfit/piratecorpse/ranged/space
+	name = "Pirate Gunner Corpse - Space"
+	suit = /obj/item/clothing/suit/space/pirate
+	head = /obj/item/clothing/head/helmet/space/pirate
+	back = /obj/item/tank/jetpack/carbondioxide
 
 /obj/effect/mob_spawn/corpse/human/russian
 	name = "Russian"
@@ -91,7 +147,7 @@
 	name = "Russian Corpse"
 	uniform = /obj/item/clothing/under/costume/soviet
 	shoes = /obj/item/clothing/shoes/jackboots
-	head = /obj/item/clothing/head/bearpelt
+	head = /obj/item/clothing/head/costume/bearpelt
 	gloves = /obj/item/clothing/gloves/color/black
 	mask = /obj/item/clothing/mask/gas
 
@@ -102,7 +158,7 @@
 
 /datum/outfit/russiancorpse/ranged
 	name = "Ranged Russian Corpse"
-	head = /obj/item/clothing/head/ushanka
+	head = /obj/item/clothing/head/costume/ushanka
 
 
 /obj/effect/mob_spawn/corpse/human/russian/ranged/trooper
@@ -126,10 +182,10 @@
 /datum/outfit/russiancorpse/officer
 	name = "Russian Officer Corpse"
 	uniform = /obj/item/clothing/under/costume/russian_officer
-	suit = /obj/item/clothing/suit/security/officer/russian
+	suit = /obj/item/clothing/suit/jacket/officer/tan
 	shoes = /obj/item/clothing/shoes/combat
 	ears = /obj/item/radio/headset
-	head = /obj/item/clothing/head/ushanka
+	head = /obj/item/clothing/head/costume/ushanka
 
 
 /obj/effect/mob_spawn/corpse/human/wizard
@@ -147,15 +203,32 @@
 	shoes = /obj/item/clothing/shoes/sandal/magic
 	head = /obj/item/clothing/head/wizard
 
+/obj/effect/mob_spawn/corpse/human/wizard/dark
+	name = "Dark Wizard Corpse"
+	outfit = /datum/outfit/wizardcorpse/dark
+
+/datum/outfit/wizardcorpse/dark
+	head = /obj/item/clothing/head/wizard/hood
+
+/obj/effect/mob_spawn/corpse/human/wizard/paper
+	name = "Paper Wizard Corpse"
+	outfit = /datum/outfit/paper_wizard
+
+/datum/outfit/paper_wizard
+	name = "Paper Wizard"
+	uniform = /obj/item/clothing/under/color/white
+	suit = /obj/item/clothing/suit/wizrobe/paper
+	shoes = /obj/item/clothing/shoes/sandal/magic
+	head = /obj/item/clothing/head/collectable/paper
 
 /obj/effect/mob_spawn/corpse/human/nanotrasensoldier
 	name = "\improper Nanotrasen Private Security Officer"
-	outfit = /datum/outfit/nanotrasensoldiercorpse2
+	outfit = /datum/outfit/nanotrasensoldiercorpse
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
 
-/datum/outfit/nanotrasensoldiercorpse2
-	name = "NT Private Security Officer Corpse"
+/datum/outfit/nanotrasensoldiercorpse
+	name = "\improper NT Private Security Officer Corpse"
 	uniform = /obj/item/clothing/under/rank/security/officer
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
@@ -168,13 +241,13 @@
 	id_trim = /datum/id_trim/centcom/corpse/private_security/tradepost_officer
 
 /obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier
-	name = "Nanotrasen Private Security Officer"
+	name = "\improper Nanotrasen Assault Officer Corpse"
 	outfit = /datum/outfit/nanotrasenassaultsoldiercorpse
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
 
 /datum/outfit/nanotrasenassaultsoldiercorpse
-	name = "NT Assault Officer Corpse"
+	name = "\improper NT Assault Officer Corpse"
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
@@ -185,6 +258,22 @@
 	back = /obj/item/storage/backpack/security
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/corpse/assault
+
+/obj/effect/mob_spawn/corpse/human/nanotrasenelitesoldier
+	name = "\improper Nanotrasen Elite Assault Officer Corpse"
+	outfit = /datum/outfit/nanotrasenelitesoldiercorpse
+	hairstyle = "Bald"
+	facial_hairstyle = "Shaved"
+
+/datum/outfit/nanotrasenelitesoldiercorpse
+	name = "\improper NT Elite Assault Officer Corpse"
+	uniform = /obj/item/clothing/under/rank/centcom/military
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	back = /obj/item/mod/control/pre_equipped/responsory/security
+	id = /obj/item/card/id/advanced/centcom
+	id_trim = /datum/id_trim/centcom/ert/security
 
 /obj/effect/mob_spawn/corpse/human/cat_butcher
 	name = "The Cat Surgeon"
@@ -198,7 +287,7 @@
 	uniform = /obj/item/clothing/under/rank/medical/scrubs/green
 	suit = /obj/item/clothing/suit/apron/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	gloves = /obj/item/clothing/gloves/color/latex/nitrile
+	gloves = /obj/item/clothing/gloves/latex/nitrile
 	ears = /obj/item/radio/headset
 	back = /obj/item/storage/backpack/satchel/med
 	id = /obj/item/card/id/advanced
@@ -219,4 +308,12 @@
 	belt = /obj/item/storage/belt/fannypack/yellow/bee_terrorist
 	id = /obj/item/card/id/advanced
 	l_pocket = /obj/item/paper/fluff/bee_objectives
-	mask = /obj/item/clothing/mask/animal/rat/bee
+	mask = /obj/item/clothing/mask/animal/small/bee
+
+/obj/effect/mob_spawn/corpse/human/generic_assistant
+	name = "Generic Assistant"
+	hairstyle = "Short Hair"
+	haircolor = COLOR_BLACK
+	facial_hairstyle = "Shaved"
+	skin_tone = "caucasian1"
+	outfit = /datum/outfit/job/assistant/consistent

@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - bugfix: "BCI overlays now actually work"
-  - imageadd: "Changed BCI counter overlay numbers to make them more readable"

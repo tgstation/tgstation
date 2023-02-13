@@ -26,6 +26,10 @@
 
 /obj/structure/closet/cardboard/agent/open(mob/living/user, force = FALSE)
 	. = ..()
+
+	if(!.)
+		return
+
 	qdel(src)
 
 /obj/structure/closet/cardboard/agent/process()
@@ -33,7 +37,7 @@
 
 /obj/structure/closet/cardboard/agent/proc/reveal()
 	alpha = 255
-	addtimer(CALLBACK(src, .proc/go_invisible), 10, TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(go_invisible)), 10, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /obj/structure/closet/cardboard/agent/Bump(atom/A)
 	. = ..()
