@@ -1,7 +1,7 @@
 import { CHANNELS } from '../constants';
 import { Modal } from '../types';
 const ADMIN_CHANNEL = CHANNELS.findIndex(
-  (channel) => channel == 'Admin'
+  (channel) => channel === 'Admin'
 ) as number;
 /**
  * Increments the channel or resets to the beginning of the list.
