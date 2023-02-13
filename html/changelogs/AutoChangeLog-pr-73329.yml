@@ -1,5 +1,0 @@
-author: "MMMiracles"
-delete-after: True
-changes:
-  - bugfix: "The elevator panel for Tramstation's medical elevator will no longer clip into the side window when raised up."
-  - bugfix: "The escape pods should now actually launch with the shuttle."

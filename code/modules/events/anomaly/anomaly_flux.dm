@@ -6,6 +6,8 @@
 	max_occurrences = 5
 	weight = 20
 	description = "This anomaly shocks and explodes."
+	min_wizard_trigger_potency = 1
+	max_wizard_trigger_potency = 4
 
 /datum/round_event/anomaly/anomaly_flux
 	start_when = 10

@@ -880,7 +880,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		/obj/effect/decal/cleanable/ants,
 	))
 	strong_against = typecacheof(list(
-		/mob/living/simple_animal/hostile/giant_spider,
+		/mob/living/basic/giant_spider,
 	))
 
 

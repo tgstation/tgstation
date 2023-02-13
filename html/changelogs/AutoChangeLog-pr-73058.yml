@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes a potential bug that can cause the detective scanner to get stuck in a scanning state indefinitely"
