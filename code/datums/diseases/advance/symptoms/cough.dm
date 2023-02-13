@@ -26,44 +26,54 @@
 		"Transmission 7" = "Coughing will now infect bystanders up to 2 tiles away.",
 		"Stealth 4" = "The symptom remains hidden until active.",
 	)
+	///emote cooldowns
+	COOLDOWN_DECLARE(cough_cooldown)
+	///if FALSE, there is a percentage chance that the mob will emote coughing while cough_cooldown is on cooldown. If TRUE, won't emote again until after the off cooldown cough occurs.
+	var/off_cooldown_coughed = FALSE
 
-/datum/symptom/cough/Start(datum/disease/advance/A)
+/datum/symptom/cough/Start(datum/disease/advance/active_disease)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalStealth() >= 4)
+	if(active_disease.totalStealth() >= 4)
 		suppress_warning = TRUE
-	if(A.totalTransmittable() >= 7)
+	if(active_disease.totalTransmittable() >= 7)
 		spread_range = 2
-	if(A.totalResistance() >= 11) //strong enough to drop items
+	if(active_disease.totalResistance() >= 11) //strong enough to drop items
 		power = 1.5
-	if(A.totalResistance() >= 15) //strong enough to stun (occasionally)
+	if(active_disease.totalResistance() >= 15) //strong enough to stun (occasionally)
 		power = 2
-	if(A.totalStageSpeed() >= 6) //cough more often
+	if(active_disease.totalStageSpeed() >= 6) //cough more often
 		symptom_delay_max = 10
 
-/datum/symptom/cough/Activate(datum/disease/advance/A)
+/datum/symptom/cough/Activate(datum/disease/advance/active_disease)
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/M = A.affected_mob
-	if(HAS_TRAIT(M, TRAIT_SOOTHED_THROAT))
+	var/mob/living/affected_mob = active_disease.affected_mob
+	if(HAS_TRAIT(affected_mob, TRAIT_SOOTHED_THROAT))
 		return
-	switch(A.stage)
+	switch(active_disease.stage)
 		if(1, 2, 3)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, span_warning("[pick("You swallow excess mucus.", "You lightly cough.")]"))
+				to_chat(affected_mob, span_warning("[pick("You swallow excess mucus.", "You lightly cough.")]"))
 		else
-			M.emote("cough")
-			if(M.CanSpreadAirborneDisease())
-				A.spread(spread_range)
+			if(COOLDOWN_FINISHED(src, cough_cooldown) || !COOLDOWN_FINISHED(src, cough_cooldown) && prob(60) && !off_cooldown_coughed)
+				affected_mob.emote("cough")
+				COOLDOWN_START(src, cough_cooldown, 5 SECONDS)
+				if(!off_cooldown_coughed && !COOLDOWN_FINISHED(src, cough_cooldown))
+					off_cooldown_coughed = TRUE
+				else
+					off_cooldown_coughed = FALSE
+			if(affected_mob.CanSpreadAirborneDisease())
+				active_disease.spread(spread_range)
 			if(power >= 1.5)
-				var/obj/item/I = M.get_active_held_item()
-				if(I && I.w_class == WEIGHT_CLASS_TINY)
-					M.dropItemToGround(I)
+				var/obj/item/held_object = affected_mob.get_active_held_item()
+				if(held_object && held_object.w_class == WEIGHT_CLASS_TINY)
+					affected_mob.dropItemToGround(held_object)
 			if(power >= 2 && prob(30))
-				to_chat(M, span_userdanger("[pick("You have a coughing fit!", "You can't stop coughing!")]"))
-				M.Immobilize(20)
-				addtimer(CALLBACK(M, TYPE_PROC_REF(/mob/, emote), "cough"), 6)
-				addtimer(CALLBACK(M, TYPE_PROC_REF(/mob/, emote), "cough"), 12)
-				addtimer(CALLBACK(M, TYPE_PROC_REF(/mob/, emote), "cough"), 18)
+				to_chat(affected_mob, span_userdanger("[pick("You have a coughing fit!", "You can't stop coughing!")]"))
+				affected_mob.Immobilize(20)
+				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 6)
+				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 12)
+				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 18)
