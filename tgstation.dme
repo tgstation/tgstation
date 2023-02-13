@@ -3767,6 +3767,7 @@
 #include "code\modules\mob\living\basic\retaliate\garden_gnome.dm"
 #include "code\modules\mob\living\basic\retaliate\ghost.dm"
 #include "code\modules\mob\living\basic\ruin_defender\stickman.dm"
+#include "code\modules\mob\living\basic\space_fauna\wumborian_fugu.dm"
 #include "code\modules\mob\living\basic\space_fauna\carp\carp.dm"
 #include "code\modules\mob\living\basic\space_fauna\carp\carp_abilities.dm"
 #include "code\modules\mob\living\basic\space_fauna\carp\carp_ai_actions.dm"
