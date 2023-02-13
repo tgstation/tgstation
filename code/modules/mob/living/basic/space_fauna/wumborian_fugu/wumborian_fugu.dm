@@ -112,9 +112,10 @@
 	owner.AddElement(/datum/element/wall_smasher)
 	owner.mob_size = MOB_SIZE_LARGE
 	owner.icon_state = "Fugu1"
-	owner.obj_damage = 60
 	owner.melee_damage_lower = 15
 	owner.melee_damage_upper = 20
+	var/mob/living/basic/basic_owner = owner
+	basic_owner.obj_damage = 60
 
 /datum/status_effect/inflated/on_remove()
 	. = ..()
@@ -124,11 +125,12 @@
 		return
 	owner.RemoveElement(/datum/element/wall_smasher)
 	owner.mob_size = MOB_SIZE_SMALL
-	owner.obj_damage = 0
 	owner.melee_damage_lower = 0
 	owner.melee_damage_upper = 0
 	if (owner.stat != DEAD)
 		owner.icon_state = "Fugu0"
+	var/mob/living/basic/basic_owner = owner
+	basic_owner.obj_damage = 0
 
 /// Item you use on a mob to make it bigger and stronger
 /obj/item/fugu_gland
