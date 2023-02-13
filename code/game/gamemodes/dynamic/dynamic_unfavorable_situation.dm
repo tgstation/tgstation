@@ -12,7 +12,7 @@
 	if (!length(unfavorable_random_events))
 		unfavorable_random_events = generate_unfavourable_events()
 	var/list/possible_heavies = generate_unfavourable_heavy_rulesets()
-	if (possible_heavies.len == 0)
+	if (!length(possible_heavies))
 		var/datum/round_event_control/round_event_control_type = pick(unfavorable_random_events)
 		var/delay = rand(20 SECONDS, 1 MINUTES)
 
