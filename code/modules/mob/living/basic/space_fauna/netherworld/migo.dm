@@ -49,19 +49,19 @@
 		health_full_behaviour()
 
 /mob/living/basic/migo/proc/health_full_behaviour()
-	set_varspeed(1)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = 0)
 	dodge_prob = 10
 
 /mob/living/basic/migo/proc/health_high_behaviour()
-	set_varspeed(0.5)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = -0.5)
 	dodge_prob = 20
 
 /mob/living/basic/migo/proc/health_medium_behaviour()
-	set_varspeed(0)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = -1)
 	dodge_prob = 30
 
 /mob/living/basic/migo/proc/health_low_behaviour()
-	set_varspeed(-0.5)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = -1.5)
 	dodge_prob = 50
 
 /mob/living/basic/migo/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)

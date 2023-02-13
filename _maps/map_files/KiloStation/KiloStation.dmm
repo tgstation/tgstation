@@ -23475,7 +23475,7 @@
 "gLm" = (
 /obj/machinery/status_display/ai/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/giant_spider/hunter/scrawny,
+/mob/living/basic/giant_spider/hunter/scrawny,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "gLn" = (
@@ -38930,7 +38930,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/mob/living/simple_animal/hostile/giant_spider/tarantula/scrawny,
+/mob/living/basic/giant_spider/tarantula/scrawny,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/greater)
 "kZK" = (
@@ -42963,7 +42963,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/blood/old,
-/mob/living/simple_animal/hostile/giant_spider/hunter/scrawny,
+/mob/living/basic/giant_spider/hunter/scrawny,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/greater)
 "mii" = (
@@ -62741,7 +62741,7 @@
 "rSL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/simple_animal/hostile/giant_spider/hunter/scrawny,
+/mob/living/basic/giant_spider/hunter/scrawny,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "rSN" = (
