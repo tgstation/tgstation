@@ -33871,7 +33871,7 @@
 /area/station/maintenance/port/aft)
 "iju" = (
 /obj/structure/closet{
-	name = "Evidence Closet"
+	name = "evidence closet"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/firealarm/directional/west,
@@ -42342,11 +42342,11 @@
 /area/station/security/execution/transfer)
 "kiG" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/closet{
+	name = "evidence closet"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "kiQ" = (
@@ -47223,7 +47223,7 @@
 "luD" = (
 /obj/structure/closet/secure_closet/brig{
 	id = "brig2";
-	name = "Cell 2 Locker"
+	name = "cell 2 locker"
 	},
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -47251,7 +47251,7 @@
 "lvk" = (
 /obj/structure/closet/secure_closet/brig{
 	id = "brig1";
-	name = "Cell 1 Locker"
+	name = "cell 1 locker"
 	},
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -71633,11 +71633,11 @@
 /turf/open/floor/iron,
 /area/station/security/holding_cell)
 "ryB" = (
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/north,
+/obj/structure/closet{
+	name = "evidence closet"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "ryC" = (
@@ -90607,7 +90607,7 @@
 "weh" = (
 /obj/structure/closet/secure_closet/brig{
 	id = "cargocell";
-	name = "Cargo Cell Locker"
+	name = "cargo cell locker"
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
@@ -95990,10 +95990,10 @@
 /turf/open/floor/iron,
 /area/station/command/corporate_showroom)
 "xsW" = (
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/closet{
+	name = "evidence closet"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "xtg" = (

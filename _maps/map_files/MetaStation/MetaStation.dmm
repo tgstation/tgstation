@@ -1204,7 +1204,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 3";
-	name = "Cell 3 Locker"
+	name = "cell 3 locker"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -24491,7 +24491,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 2";
-	name = "Cell 2 Locker"
+	name = "cell 2 locker"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -28186,7 +28186,7 @@
 /area/station/engineering/atmos)
 "kaU" = (
 /obj/structure/closet{
-	name = "Evidence Closet 3"
+	name = "evidence closet 3"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -37559,7 +37559,7 @@
 /area/station/medical/pharmacy)
 "nqD" = (
 /obj/structure/closet{
-	name = "Evidence Closet 2"
+	name = "evidence closet 2"
 	},
 /obj/machinery/airalarm/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -57625,7 +57625,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 1";
-	name = "Cell 1 Locker"
+	name = "cell 1 locker"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -57736,7 +57736,7 @@
 /area/station/hallway/primary/aft)
 "urf" = (
 /obj/structure/closet/secure_closet/injection{
-	name = "educational injections";
+	name = "educational injections locker";
 	pixel_x = 2
 	},
 /obj/structure/cable,
@@ -58424,7 +58424,7 @@
 /area/station/security/prison)
 "uCW" = (
 /obj/structure/closet{
-	name = "Evidence Closet 1"
+	name = "evidence closet 1"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
@@ -59264,7 +59264,7 @@
 /area/station/maintenance/aft/lesser)
 "uQK" = (
 /obj/structure/closet{
-	name = "Evidence Closet 4"
+	name = "evidence closet 4"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -63515,7 +63515,7 @@
 /area/station/medical/virology)
 "wrb" = (
 /obj/structure/closet{
-	name = "Evidence Closet 5"
+	name = "evidence closet 5"
 	},
 /obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
