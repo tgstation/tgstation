@@ -212,7 +212,6 @@
  */
 /mob/living/basic/giant_spider/hunter/scrawny
 	name = "scrawny spider"
-	environment_smash = ENVIRONMENT_SMASH_NONE
 	health = 60
 	maxHealth = 60
 	melee_damage_lower = 5

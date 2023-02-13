@@ -21,6 +21,7 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/insect,
+	)
 
 /// Used by Araneus, who only attacks those who attack first
 /datum/ai_controller/basic_controller/giant_spider/retaliate
