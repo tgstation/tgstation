@@ -1,0 +1,10 @@
+version: 1
+static_files:
+  - name: config
+    populate: true
+  - name: data
+linux_scripts:
+  PreCompile.sh: tools/tgs_scripts/PreCompile.sh
+  WatchdogLaunch.sh: tools/tgs_scripts/WatchdogLaunch.sh
+windows_scripts:
+  PreCompile.bat: tools/tgs_scripts/PreCompile.bat
