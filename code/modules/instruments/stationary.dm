@@ -20,7 +20,7 @@
 	if(!(anchored || can_play_unanchored) || !ismob(music_player))
 		return STOP_PLAYING
 	var/mob/user = music_player
-	if(!user.canUseTopic(src, FALSE, TRUE, FALSE, FALSE)) //can play with TK and while resting because fun.
+	if(!user.canPerformAction(src, FALSE, TRUE, FALSE, FALSE)) //can play with TK and while resting because fun.
 		return STOP_PLAYING
 
 /obj/structure/musician/ui_interact(mob/user)

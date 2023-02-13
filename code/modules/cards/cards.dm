@@ -111,7 +111,7 @@
  * * obj/item/toy/singlecard/card (optional) - The card drawn from the hand
 **/
 /obj/item/toy/cards/proc/draw(mob/living/user, obj/item/toy/singlecard/card)
-	if(!isliving(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE))
+	if(!isliving(user) || !user.canPerformAction(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE))
 		return
 
 	if(count_cards() == 0)

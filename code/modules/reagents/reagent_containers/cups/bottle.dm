@@ -533,7 +533,7 @@
 	if(!inputvalue)
 		return
 
-	if(user.canUseTopic(src, be_close = TRUE))
+	if(user.canPerformAction(src, be_close = TRUE))
 		name = "[(inputvalue ? "[inputvalue]" : null)] bottle"
 
 //types of syrups

@@ -131,7 +131,7 @@
 	set src in oview(1)
 	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
-	if(!usr.canUseTopic())
+	if(!usr.canPerformAction())
 		return
 	src.go_out()
 	add_fingerprint(usr)

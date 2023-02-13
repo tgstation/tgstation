@@ -215,7 +215,7 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.canPerformAction(src, !issilicon(user)))
 		return
 
 	eject_disk(user)

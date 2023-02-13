@@ -173,7 +173,7 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
+	if(!user.canPerformAction(src, !issilicon(user)) || !isturf(loc))
 		return
 	if(!ishuman(user))
 		return

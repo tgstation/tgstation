@@ -587,7 +587,7 @@
   ArcaneMusic:
   - refactor: Pastries have been refactored for new foods.
   Ghommie:
-  - bugfix: Jungle fever monkeys will now pass canUseTopic() dexterity checks and
+  - bugfix: Jungle fever monkeys will now pass canPerformAction() dexterity checks and
       be able to use tgui machineries.
   Timberpoes:
   - bugfix: Mecha Diamond Drills can now properly gib and butcher all simple mobs.

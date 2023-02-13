@@ -80,7 +80,7 @@
 	to_chat(user, span_notice("[src] linked to [C]."))
 
 /obj/item/supplypod_beacon/AltClick(mob/user)
-	if (!user.canUseTopic(src, !issilicon(user)))
+	if (!user.canPerformAction(src, !issilicon(user)))
 		return
 	if (express_console)
 		unlink_console()
@@ -93,7 +93,7 @@
 	var/new_beacon_name = tgui_input_text(user, "What would you like the tag to be?", "Beacon Tag", max_length = MAX_NAME_LEN)
 	if(isnull(new_beacon_name))
 		return
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.canPerformAction(src, be_close = TRUE))
 		return
 	name += " ([tag])"
 

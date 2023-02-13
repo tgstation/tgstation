@@ -77,10 +77,10 @@
 
 	var/original_host = source
 	var/fakename = sanitize_name(tgui_input_text(user, "Enter a name for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
-	if(!fakename || source != original_host || !user.canUseTopic(source, be_close = TRUE))
+	if(!fakename || source != original_host || !user.canPerformAction(source, be_close = TRUE))
 		return
 	var/fakejob = sanitize_name(tgui_input_text(user, "Enter a job for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
-	if(!fakejob || source != original_host || !user.canUseTopic(source, be_close = TRUE))
+	if(!fakejob || source != original_host || !user.canPerformAction(source, be_close = TRUE))
 		return
 
 	var/datum/computer_file/program/messenger/app = locate() in source.stored_files

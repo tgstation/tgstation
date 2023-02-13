@@ -683,7 +683,7 @@
 	..()
 	if(!can_interact(usr))
 		return TRUE
-	if(!usr.canUseTopic(src))
+	if(!usr.canPerformAction(src))
 		return TRUE
 	add_fingerprint(usr)
 	update_last_used(usr)
