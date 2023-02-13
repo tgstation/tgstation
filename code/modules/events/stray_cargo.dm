@@ -147,6 +147,8 @@
 	max_occurrences = 1
 	earliest_start = 30 MINUTES
 	description = "A pod containing syndicate gear lands on the station."
+	min_wizard_trigger_potency = 3
+	max_wizard_trigger_potency = 6
 	admin_setup = /datum/event_admin_setup/stray_cargo/syndicate
 
 /datum/event_admin_setup/stray_cargo/syndicate

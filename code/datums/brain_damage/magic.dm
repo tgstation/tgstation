@@ -9,8 +9,8 @@
 	name = "Lumiphobia"
 	desc = "Patient has an inexplicable adverse reaction to light."
 	scan_desc = "light hypersensitivity"
-	gain_text = "<span class='warning'>You feel a craving for darkness.</span>"
-	lose_text = "<span class='notice'>Light no longer bothers you.</span>"
+	gain_text = span_warning("You feel a craving for darkness.")
+	lose_text = span_notice("Light no longer bothers you.")
 	/// Cooldown to prevent warning spam
 	COOLDOWN_DECLARE(damage_warning_cooldown)
 	var/next_damage_warning = 0
@@ -33,8 +33,8 @@
 	name = "Poltergeist"
 	desc = "Patient appears to be targeted by a violent invisible entity."
 	scan_desc = "paranormal activity"
-	gain_text = "<span class='warning'>You feel a hateful presence close to you.</span>"
-	lose_text = "<span class='notice'>You feel the hateful presence fade away.</span>"
+	gain_text = span_warning("You feel a hateful presence close to you.")
+	lose_text = span_notice("You feel the hateful presence fade away.")
 
 /datum/brain_trauma/magic/poltergeist/on_life(delta_time, times_fired)
 	..()
@@ -56,8 +56,8 @@
 	name = "Athaumasia"
 	desc = "Patient is completely inert to magical forces."
 	scan_desc = "thaumic blank"
-	gain_text = "<span class='notice'>You realize that magic cannot be real.</span>"
-	lose_text = "<span class='notice'>You realize that magic might be real.</span>"
+	gain_text = span_notice("You realize that magic cannot be real.")
+	lose_text = span_notice("You realize that magic might be real.")
 
 /datum/brain_trauma/magic/antimagic/on_gain()
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, TRAUMA_TRAIT)
@@ -71,8 +71,8 @@
 	name = "Stalking Phantom"
 	desc = "Patient is stalked by a phantom only they can see."
 	scan_desc = "extra-sensory paranoia"
-	gain_text = "<span class='warning'>You feel like something wants to kill you...</span>"
-	lose_text = "<span class='notice'>You no longer feel eyes on your back.</span>"
+	gain_text = span_warning("You feel like something wants to kill you...")
+	lose_text = span_notice("You no longer feel eyes on your back.")
 	var/obj/effect/client_image_holder/stalker_phantom/stalker
 	var/close_stalker = FALSE //For heartbeat
 

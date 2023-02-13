@@ -40,7 +40,15 @@
 	/// How many zones (body parts, not precise) we have disabled so far, for naming purposes
 	var/zones_disabled
 
-	/// A lazily initiated "food" version of the clothing for moths
+	/// A lazily initiated "food" version of the clothing for moths.
+	// This intentionally does not use the edible component, for a few reasons.
+	// 1. Effectively everything that wants something edible, from now and into the future,
+	// does not want to receive clothing, simply because moths *can* eat it.
+	// 2. Creating this component for all clothing has a non-negligible impact on init times and memory.
+	// 3. Creating the component contextually to solve #2 will make #1 much more confusing,
+	// and frankly not be a better solution than what we are doing now.
+	// The first issue could be solved if "edible" checks were more granular,
+	// such that you never actually cared about checking if something is *edible*.
 	var/obj/item/food/clothing/moth_snack
 
 /obj/item/clothing/Initialize(mapload)
@@ -66,7 +74,6 @@
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
 
-//This code is cursed, moths are cursed, and someday I will destroy it. but today is not that day.
 /obj/item/food/clothing
 	name = "temporary moth clothing snack item"
 	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object. <--- stinky idiot wrote this"
