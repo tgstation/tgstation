@@ -475,3 +475,35 @@
       mode
   - admin: '"Custom" overflow, which was kinda confusing and unintuitive, is now called
       "Every Vent", much more self-explanatory in what it does.'
+2023-02-13:
+  Jacquerel:
+  - rscadd: Wizards can now perform a Grand Ritual to summon unpleasant events to
+      the space station.
+  - rscadd: Wizards completing the Grand Ritual a sufficient number of times can achieve
+      victory at the end of the round, and cast a powerful round-changing spell.
+  - bugfix: Heretic runes are now invisible to the AI (and cyborgs) while being drawn
+      as well as when finished.
+  Melbert:
+  - bugfix: Fixes player panel "make ai" button not fully working on observers
+  - bugfix: Fixes some situations where paradox clones go sicko mode
+  NamelessFairy:
+  - bugfix: Soporific sniper magazines use the correct icon again.
+  - imageadd: Penetrator and Marksman sniper magazines now have icons.
+  Rhials:
+  - rscadd: Ectoplasmic Outburst anomaly event
+  - rscadd: Reactive Ectoplasm Armor
+  Shadow-Quill:
+  - bugfix: Gravity generators have been re-centered.
+  ZephyrTFA:
+  - bugfix: Spells which are only able to be cast on the station can now only be cast
+      on the station
+  itseasytosee:
+  - imagedel: Android abductors and skeletons have lost all modesty and have stopped
+      wearing underwear.
+  kawoppi:
+  - imageadd: when equipped with a bluespace trash bag the pimpin' ride janicart will
+      now display a bluespace trash bag instead of a normal trash bag
+  mc-oofert:
+  - bugfix: aux base turrets now shoot fauna
+  scriptis:
+  - bugfix: preferences now respects your preferences
