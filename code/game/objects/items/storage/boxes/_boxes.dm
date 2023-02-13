@@ -47,8 +47,8 @@
 	if(!ispath(foldable))
 		return
 
+	var/obj/item/I = new foldable(user.drop_location())
 	balloon_alert(user, "folded")
-	var/obj/item/I = new foldable
 	qdel(src)
 	user.put_in_hands(I)
 

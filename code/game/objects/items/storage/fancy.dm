@@ -13,6 +13,10 @@
  * Coffee condiments display
  */
 
+#define CONTAINER_CLOSED 0
+#define CONTAINER_OPEN 1
+#define CONTAINER_ALWAYS_OPEN 2
+
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
 	resistance_flags = FLAMMABLE
@@ -23,10 +27,10 @@
 	var/spawn_type
 	/// How many of the things to fill this storage with.
 	var/spawn_count = 0
-	/// Whether the container is open or not
-	var/is_open = FALSE
-	/// What this container folds up into when it's empty.
-	var/obj/fold_result = /obj/item/stack/sheet/cardboard
+	/// Whether the container is open, always open, or closed
+	var/is_open = CONTAINER_CLOSED
+	/// What material do we get when we fold this box?
+	var/foldable = /obj/item/stack/sheet/cardboard
 	/// Whether it supports open and closed state icons.
 	var/has_open_closed_states = TRUE
 
@@ -56,26 +60,33 @@
 		. += "There are [contents.len <= 0 ? "no" : "[contents.len]"] [contents_tag]s left."
 
 /obj/item/storage/fancy/attack_self(mob/user)
-	is_open = !is_open
+	if(is_open == CONTAINER_CLOSED)
+		is_open = CONTAINER_OPEN
+	else if(is_open == CONTAINER_OPEN)
+		is_open = CONTAINER_CLOSED
+
 	update_appearance()
 	. = ..()
 	if(contents.len)
 		return
-	if(!fold_result)
+	if(!foldable || (flags_1 & HOLOGRAM_1))
 		return
-	new fold_result(user.drop_location())
+	var/obj/item/I = new foldable(user.drop_location())
 	balloon_alert(user, "folded")
-	user.put_in_active_hand(fold_result)
+	// Gotta delete first, so then the cardboard appears in the same hand
 	qdel(src)
+	user.put_in_hands(I)
 
 /obj/item/storage/fancy/Exited(atom/movable/gone, direction)
 	. = ..()
-	is_open = TRUE
+	if(is_open == CONTAINER_CLOSED)
+		is_open = CONTAINER_OPEN
 	update_appearance()
 
 /obj/item/storage/fancy/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	is_open = TRUE
+	if(is_open == CONTAINER_CLOSED)
+		is_open = CONTAINER_OPEN
 	update_appearance()
 
 #define DONUT_INBOX_SPRITE_WIDTH 3
@@ -164,15 +175,9 @@
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/flashlight/flare/candle
 	spawn_count = 5
-	is_open = TRUE
+	is_open = CONTAINER_ALWAYS_OPEN
 	contents_tag = "candle"
 
-/obj/item/storage/fancy/candle_box/attack_self(mob/user)
-	if(!contents.len)
-		new fold_result(user.drop_location())
-		balloon_alert(user, "folded")
-		user.put_in_active_hand(fold_result)
-		qdel(src)
 
 ////////////
 //CIG PACK//
@@ -215,7 +220,6 @@
 	name = "discarded cigarette packet"
 	desc = "An old cigarette packet with the back torn off, worth less than nothing now."
 	atom_storage.max_slots = 0
-	return
 
 /obj/item/storage/fancy/cigarettes/Initialize(mapload)
 	. = ..()
@@ -503,8 +507,9 @@
 	spawn_type = /obj/item/food/pickle
 	spawn_count = 10
 	contents_tag = "pickle"
-	fold_result = null
+	foldable = null
 	custom_materials = list(/datum/material/glass = 2000)
+	is_open = CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
 
 /obj/item/storage/fancy/pickles_jar/Initialize(mapload)
@@ -520,7 +525,6 @@
 			icon_state = "[base_icon_state]_[contents.len]"
 		else
 			icon_state = base_icon_state
-	return
 
 /*
  * Coffee condiments display
@@ -534,8 +538,8 @@
 	desc = "A neat small wooden box, holding all your favorite coffee condiments."
 	contents_tag = "coffee condiment"
 	custom_materials = list(/datum/material/wood = 1000)
-	fold_result = /obj/item/stack/sheet/mineral/wood
-	is_open = TRUE
+	foldable = /obj/item/stack/sheet/mineral/wood
+	is_open = CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
 
 /obj/item/storage/fancy/coffee_condi_display/Initialize(mapload)
@@ -586,3 +590,6 @@
 	update_appearance()
 
 
+#undef CONTAINER_CLOSED
+#undef CONTAINER_OPEN
+#undef CONTAINER_ALWAYS_OPEN
