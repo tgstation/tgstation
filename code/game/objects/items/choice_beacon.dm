@@ -27,7 +27,7 @@
 
 /// Checks if this mob can use the beacon, returns TRUE if so or FALSE otherwise.
 /obj/item/choice_beacon/proc/can_use_beacon(mob/living/user)
-	if(user.canPerformAction(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(user.canPerformAction(src, be_close = TRUE,  no_tk = TRUE))
 		return TRUE
 
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)

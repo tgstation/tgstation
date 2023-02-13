@@ -16,7 +16,7 @@
 
 /obj/item/assembly/control/multitool_act(mob/living/user)
 	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door ID", id, 100)
-	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.canPerformAction(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.canPerformAction(src, be_close = TRUE,  no_tk = TRUE))
 		return
 	id = change_id
 	balloon_alert(user, "id changed")

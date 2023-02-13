@@ -102,7 +102,7 @@
 	AfterRotation.Invoke(user, degrees)
 
 /datum/component/simple_rotation/proc/CanUserRotate(mob/user, degrees)
-	if(isliving(user) && user.canPerformAction(parent, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
+	if(isliving(user) && user.canPerformAction(parent, be_close = TRUE, NEED_DEXTERITY| no_tk = FALSE, need_hands = !iscyborg(user)))
 		return TRUE
 	if((rotation_flags & ROTATION_GHOSTS_ALLOWED) && isobserver(user) && CONFIG_GET(flag/ghost_interaction))
 		return TRUE

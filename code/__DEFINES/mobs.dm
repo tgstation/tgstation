@@ -781,8 +781,6 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 //used by canPerformAction
 /// If silicons need to be next to the atom to use this
 #define BE_CLOSE TRUE
-/// If other mobs (monkeys, aliens, etc) can use this
-#define NO_DEXTERITY TRUE // I had to change 20+ files because some non-dnd-playing fuckchumbis can't spell "dexterity"
 // If telekinesis you can use it from a distance
 #define NO_TK TRUE
 /// If mobs can use this while resting

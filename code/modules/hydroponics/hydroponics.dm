@@ -1064,7 +1064,7 @@
 
 /obj/machinery/hydroponics/CtrlClick(mob/user)
 	. = ..()
-	if(!user.canPerformAction(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.canPerformAction(src, be_close = TRUE,  no_tk = TRUE))
 		return
 	if(!powered())
 		to_chat(user, span_warning("[name] has no power."))
@@ -1085,7 +1085,7 @@
 	if(!anchored)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/warning = tgui_alert(user, "Are you sure you wish to empty the tray's nutrient beaker?","Empty Tray Nutrients?", list("Yes", "No"))
-	if(warning == "Yes" && user.canPerformAction(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(warning == "Yes" && user.canPerformAction(src, be_close = TRUE,  no_tk = TRUE))
 		reagents.clear_reagents()
 		to_chat(user, span_warning("You empty [src]'s nutrient tank."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

@@ -261,7 +261,7 @@
 			source.delay = 3
 
 /obj/item/extinguisher/AltClick(mob/user)
-	if(!user.canPerformAction(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
+	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| no_tk = FALSE, need_hands = TRUE))
 		return
 	if(!user.is_holding(src))
 		to_chat(user, span_notice("You must be holding the [src] in your hands do this!"))

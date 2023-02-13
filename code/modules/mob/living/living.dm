@@ -1202,7 +1202,7 @@
 /mob/living/can_hold_items(obj/item/I)
 	return usable_hands && ..()
 
-/mob/living/canPerformAction(atom/movable/target, action_bitflags) //be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE)
+/mob/living/canPerformAction(atom/movable/target, action_bitflags) //be_close=FALSE, no_tk=FALSE, need_hands = FALSE)
 	if(!(mobility_flags & MOBILITY_UI) && !(action_bitflags & ALLOW_RESTING))
 		to_chat(src, span_warning("You can't do that right now!"))
 		return FALSE

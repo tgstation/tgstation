@@ -119,7 +119,7 @@
 		balloon_alert(user, "switched to tube A")
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
-	if(!user.canPerformAction(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
+	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| no_tk = FALSE, need_hands = TRUE))
 		return
 	rack()
 
@@ -275,7 +275,7 @@
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && !current_skin && user.canPerformAction(src, be_close = TRUE, no_dexterity = TRUE))
+	if(unique_reskin && !current_skin && user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY))
 		reskin_obj(user)
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)

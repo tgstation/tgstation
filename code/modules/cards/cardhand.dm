@@ -44,7 +44,7 @@
 	return NONE
 
 /obj/item/toy/cards/cardhand/attack_self(mob/living/user)
-	if(!isliving(user) || !user.canPerformAction(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE))
+	if(!isliving(user) || !user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| no_tk = TRUE))
 		return
 
 	var/list/handradial = list()
