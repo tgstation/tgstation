@@ -346,10 +346,10 @@
 /obj/machinery/photocopier/proc/make_blank_print(params)
 	if(!toner_cartridge)
 		return
-	var/obj/item/paper/printblank = new /obj/item/paper (loc)
+	var/obj/item/paper/printblank = new(loc)
 	var/printname = sanitize(params["name"])
 	var/list/printinfo
-	for(var/infoline as anything in params["info"])
+	for(var/infoline in params["info"])
 		printinfo += infoline
 	printblank.name = printname
 	printblank.add_raw_text(printinfo)
