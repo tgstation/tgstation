@@ -41,7 +41,7 @@
 
 /mob/living/simple_animal/hostile/skeleton/Initialize(mapload)
 	. = ..()
-	apply_dynamic_human_icon(src, outfit, species, r_hand = held_item)
+	apply_dynamic_human_appearance(src, outfit, species, r_hand = held_item)
 
 /mob/living/simple_animal/hostile/skeleton/eskimo
 	name = "undead eskimo"

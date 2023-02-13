@@ -401,7 +401,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	return TRUE
 
 /obj/effect/mapping_helpers/atom_injector/human_icon_injector/inject(atom/target)
-	apply_dynamic_human_icon(target, outfit_path, species_path, mob_spawn_path, r_hand, l_hand, bloody_slots, generated_dirs, animated)
+	apply_dynamic_human_appearance(target, outfit_path, species_path, mob_spawn_path, r_hand, l_hand, bloody_slots, generated_dirs, animated)
 
 /obj/effect/mapping_helpers/atom_injector/human_icon_injector/generate_stack_trace()
 	. = ..()
