@@ -26,9 +26,10 @@
 		"Transmission 7" = "Coughing will now infect bystanders up to 2 tiles away.",
 		"Stealth 4" = "The symptom remains hidden until active.",
 	)
-	//emote cooldowns
+	///emote cooldowns
 	COOLDOWN_DECLARE(cough_cooldown)
-	var/off_cooldown_coughed = FALSE //if FALSE, there is a percentage chance that the mob will emote coughing while cough_cooldown is on cooldown. If TRUE, won't emote again until after the off cooldown cough occurs.
+	///if FALSE, there is a percentage chance that the mob will emote coughing while cough_cooldown is on cooldown. If TRUE, won't emote again until after the off cooldown cough occurs.
+	var/off_cooldown_coughed = FALSE
 
 /datum/symptom/cough/Start(datum/disease/advance/active_disease)
 	. = ..()

@@ -24,9 +24,10 @@
 		"Stealth 4" = "The symptom remains hidden until active.",
 		"Stage Speed 17" = "The force of each sneeze catapults the host backwards, potentially stunning and lightly damaging them if they hit a wall or another person mid-flight."
 	)
+	///Emote cooldowns
 	COOLDOWN_DECLARE(sneeze_cooldown)
-	var/off_cooldown_sneezed = FALSE //if FALSE, there is a percentage chance that the mob will emote sneezing while sneeze_cooldown is on cooldown. If TRUE, won't emote again until after the off cooldown sneeze occurs.
-
+	///if FALSE, there is a percentage chance that the mob will emote sneezing while sneeze_cooldown is on cooldown. If TRUE, won't emote again until after the off cooldown sneeze occurs.
+	var/off_cooldown_sneezed = FALSE
 
 /datum/symptom/sneeze/Start(datum/disease/advance/active_disease)
 	. = ..()
