@@ -11,7 +11,7 @@
  *
  * Arguments
  * * text - required, the text to announce
- * * title - optinal, the title of the announcement.
+ * * title - optional, the title of the announcement.
  * * sound - optional, the sound played accompanying the announcement
  * * type - optional, the type of the announcement, for some "preset" announcement templates. "Priority", "Captain", "Syndicate Captain"
  * * sender_override - optional, modifies the sender of the announcement

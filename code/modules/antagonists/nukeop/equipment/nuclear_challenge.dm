@@ -163,7 +163,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 #ifndef TESTING
 	// Reminder for our friends the admins
 	var/are_you_sure = tgui_alert(user, "Last second reminder that fake war declarations is a horrible idea and yes, \
-		the does the whole shebang, so be careful what you're doing.", "Don't do it", list("I'm sure", "You're right"))
+		this does the whole shebang, so be careful what you're doing.", "Don't do it", list("I'm sure", "You're right"))
 	if(are_you_sure != "I'm sure")
 		return
 #endif
