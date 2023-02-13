@@ -29261,6 +29261,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
+"iWD" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "iWM" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -32805,10 +32809,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/door/window/left/directional{
-	dir = 1
-	},
 /obj/structure/window/spawner/east,
+/obj/machinery/door/window/left/directional/south{
+	dir = 1;
+	name = "Test Chamber";
+	req_access = list("xenobiology")
+	},
+/obj/effect/mapping_helpers/airlock/access/all/science/research,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "kaw" = (
@@ -256716,7 +256723,7 @@ mXq
 fdH
 rDZ
 wRZ
-rDZ
+iWD
 vzD
 tKz
 lXi
