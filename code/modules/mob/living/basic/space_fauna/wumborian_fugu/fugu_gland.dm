@@ -28,7 +28,7 @@
 		balloon_alert(user, "it's dead!")
 		return
 	if(HAS_TRAIT(animal, TRAIT_FUGU_GLANDED))
-		balloon_alert(user, "already wumboed!")
+		balloon_alert(user, "already large!")
 		return
 
 	ADD_TRAIT(animal, TRAIT_FUGU_GLANDED, type)

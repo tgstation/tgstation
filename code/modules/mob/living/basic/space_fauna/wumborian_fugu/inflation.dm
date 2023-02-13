@@ -23,7 +23,7 @@
 		return FALSE
 	if(HAS_TRAIT(owner, TRAIT_FUGU_GLANDED))
 		if (feedback)
-			owner.balloon_alert(owner, "ALREADY WUMBO!")
+			owner.balloon_alert(owner, "already large!")
 		return FALSE
 	return TRUE
 

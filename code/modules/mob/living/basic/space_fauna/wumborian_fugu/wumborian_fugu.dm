@@ -41,6 +41,7 @@
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
 	ai_controller = /datum/ai_controller/basic_controller/wumborian_fugu
+	/// Ability used by the mob to become large, dangerous, and invulnerable
 	var/datum/action/cooldown/fugu_expand/expand
 
 /mob/living/basic/wumborian_fugu/Initialize(mapload)

@@ -1,4 +1,4 @@
-v/**
+/**
  * # Loot on Death element
  *
  * A mob with this element will create the provided atoms when it dies.
