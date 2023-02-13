@@ -126,11 +126,11 @@
 	switch(action)
 		// Copying paper, photos, documents and asses.
 		if("make_copy")
-			if(check_busy())
+			if(check_busy(usr))
 				return FALSE
 			// ASS COPY. By Miauw
 			if(ass)
-				do_copy_loop(CALLBACK(src, PROC_REF(make_ass_copy)), usr)
+				do_copy_loop(CALLBACK(src, PROC_REF(make_ass_copy), usr), usr)
 				return TRUE
 			else
 				switch(copy_type)
@@ -171,7 +171,7 @@
 
 		// AI printing photos from their saved images.
 		if("ai_photo")
-			if(check_busy())
+			if(check_busy(usr))
 				return FALSE
 			var/mob/living/silicon/ai/tempAI = usr
 			if(!length(tempAI.aicamera.stored))
@@ -191,7 +191,7 @@
 
 		// Remove the toner cartridge from the copier.
 		if("remove_toner")
-			if(check_busy())
+			if(check_busy(usr))
 				return
 			if(issilicon(usr) || (ishuman(usr) && !usr.put_in_hands(toner_cartridge)))
 				toner_cartridge.forceMove(drop_location())
@@ -208,7 +208,7 @@
 			return TRUE
 		// Called when you press print blank
 		if("print_blank")
-			if(check_busy())
+			if(check_busy(usr))
 				return FALSE
 			if (toner_cartridge.charges - PAPER_TONER_USE < 0)
 				to_chat(usr, span_warning("There is not enough toner in [src] to print the form, please replace the cartridge."))
@@ -261,9 +261,9 @@
 	update_use_power(IDLE_POWER_USE)
 	busy = FALSE
 
-/obj/machinery/photocopier/proc/check_busy()
+/obj/machinery/photocopier/proc/check_busy(mob/user)
 	if(busy)
-		to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
+		to_chat(user, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
 		return TRUE
 	return FALSE
 
@@ -362,11 +362,11 @@
  * Calls `check_ass()` first to make sure that `ass` exists, among other conditions. Since this proc is called from a timer, it's possible that it was removed.
  * Additionally checks that the mob has their clothes off.
  */
-/obj/machinery/photocopier/proc/make_ass_copy()
+/obj/machinery/photocopier/proc/make_ass_copy(mob/user)
 	if(!check_ass() || !toner_cartridge)
 		return
 	if(ishuman(ass) && (ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_by_slot(ITEM_SLOT_OCLOTHING)))
-		to_chat(usr, span_notice("You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "[ass.p_their()]"] clothes on.") )
+		to_chat(user, span_notice("You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "[ass.p_their()]"] clothes on.") )
 		return
 
 	var/icon/temp_img
