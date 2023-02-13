@@ -156,7 +156,7 @@ const ChoicesPanel = (props, context) => {
 
   return (
     <Stack.Item grow>
-      <Section fill scrollable title="Choices">
+      <Section fill scrollable title="Toggle any number of options">
         {currentVote && currentVote.choices.length !== 0 ? (
           <LabeledList>
             {currentVote.choices.map((choice) => (
