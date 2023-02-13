@@ -4,7 +4,7 @@
 /datum/unit_test/armor_verification/Run()
 	var/obj/dummy = allocate(/obj)
 
-	UNLINT(dummy.armor_type = /datum/armor/none)
+	dummy.set_armor(/datum/armor/none)
 	var/datum/armor/armor = dummy.get_armor()
 	TEST_ASSERT_NOTNULL(armor, "armor didn't populate correctly when needed")
 	TEST_ASSERT_EQUAL(armor_totals(armor), 0, "none armor type had armor values")
