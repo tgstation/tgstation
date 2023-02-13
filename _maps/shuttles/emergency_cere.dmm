@@ -89,7 +89,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "az" = (
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -1192,7 +1192,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "CO" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,

@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - admin: "adds findtext (+ex), view, viewers, rect_turfs and flick as sdql2 wrappers"

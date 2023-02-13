@@ -61,7 +61,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/cockroach,
+		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/find_and_hunt_target/roach,
 	)
 
@@ -94,7 +94,7 @@
 /datum/ai_controller/basic_controller/cockroach/glockroach
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/random_speech/cockroach,
+		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach, //If we are attacking someone, this will prevent us from hunting
 		/datum/ai_planning_subtree/find_and_hunt_target/roach,
@@ -140,7 +140,7 @@
 /datum/ai_controller/basic_controller/cockroach/hauberoach
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/random_speech/cockroach,
+		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach,  //If we are attacking someone, this will prevent us from hunting
 		/datum/ai_planning_subtree/find_and_hunt_target/roach,
@@ -155,7 +155,7 @@
 /datum/ai_controller/basic_controller/cockroach/sewer
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/random_speech/cockroach,
+		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/sewer,
 		/datum/ai_planning_subtree/find_and_hunt_target/roach,
@@ -176,7 +176,7 @@
 /datum/ai_controller/basic_controller/cockroach/mobroach
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/random_speech/cockroach,
+		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/mobroach, //If we are attacking someone, this will prevent us from hunting
 		/datum/ai_planning_subtree/find_and_hunt_target/roach,

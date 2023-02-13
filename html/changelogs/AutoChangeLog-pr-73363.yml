@@ -1,0 +1,5 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Security can set notes through consoles again"
+  - bugfix: "Observers are now properly logged out of record consoles"
