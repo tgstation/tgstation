@@ -100,7 +100,7 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	desc = "Perfectly designed to be comfortable to sit on, and hellish to sleep on."
 	icon_state = "bench_middle"
 	greyscale_config = /datum/greyscale_config/bench_middle
-	greyscale_colors = "#2E668A"
+	greyscale_colors = "#af7d28"
 
 /obj/structure/chair/sofa/bench/left
 	icon_state = "bench_left"
