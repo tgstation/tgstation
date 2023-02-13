@@ -155,7 +155,9 @@
 		return FALSE
 	return TRUE
 
+// Cutouts always face forward
 /obj/item/cardboard_cutout/setDir(newdir)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/item/cardboard_cutout/adaptive //Purchased by Syndicate agents, these cutouts are indistinguishable from normal cutouts but aren't discolored when their appearance is changed
