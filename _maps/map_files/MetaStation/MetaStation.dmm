@@ -210,7 +210,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
 "afa" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 4
 	},
 /obj/machinery/keycard_auth/directional/west,
@@ -985,7 +985,7 @@
 /area/station/hallway/primary/aft)
 "atN" = (
 /obj/structure/cable,
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -6467,7 +6467,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "ctL" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -8213,7 +8213,7 @@
 /area/station/security/office)
 "dbj" = (
 /obj/machinery/airalarm/directional/east,
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 8
 	},
 /turf/open/floor/carpet,
@@ -11150,7 +11150,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
-/obj/machinery/computer/med_data/laptop{
+/obj/machinery/computer/records/medical/laptop{
 	dir = 8;
 	pixel_y = 1
 	},
@@ -19457,7 +19457,7 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "hiu" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
@@ -19688,7 +19688,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_x = -20
 	},
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
@@ -26645,7 +26645,7 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "jyQ" = (
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 8
 	},
 /obj/machinery/newscaster/directional/east,
@@ -26674,7 +26674,7 @@
 /turf/closed/wall/r_wall,
 /area/station/command/corporate_showroom)
 "jAl" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
@@ -26982,7 +26982,7 @@
 /area/station/maintenance/starboard/lesser)
 "jGw" = (
 /obj/structure/table/glass,
-/obj/machinery/computer/med_data/laptop,
+/obj/machinery/computer/records/medical/laptop,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
@@ -28386,7 +28386,7 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "kfC" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -36383,7 +36383,7 @@
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
 "mWa" = (
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
@@ -37690,7 +37690,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "nsO" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
@@ -39943,7 +39943,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/central)
 "ohH" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/east,
@@ -40442,7 +40442,7 @@
 /area/station/maintenance/department/science/central)
 "orx" = (
 /obj/structure/cable,
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
@@ -42040,7 +42040,7 @@
 "oWZ" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/computer/med_data/laptop,
+/obj/machinery/computer/records/medical/laptop,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
@@ -45121,7 +45121,7 @@
 /area/station/maintenance/starboard/lesser)
 "qbC" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/med_data/laptop{
+/obj/machinery/computer/records/medical/laptop{
 	dir = 1
 	},
 /obj/machinery/light/small/directional/west,
@@ -54327,7 +54327,7 @@
 "tgC" = (
 /obj/structure/noticeboard/directional/south,
 /obj/structure/table/wood,
-/obj/machinery/computer/med_data/laptop{
+/obj/machinery/computer/records/medical/laptop{
 	dir = 1;
 	pixel_y = 4
 	},
@@ -57507,7 +57507,7 @@
 /area/station/security/prison/mess)
 "umS" = (
 /obj/item/radio/intercom/directional/west,
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 4
 	},
 /obj/machinery/button/door/directional/west{
@@ -62644,7 +62644,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "wag" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/records/medical,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
@@ -62959,7 +62959,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms)
 "wfU" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 4
 	},
 /obj/structure/cable,
