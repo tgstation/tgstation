@@ -54,6 +54,7 @@
 		. += span_notice("The status display reads: Outputting <b>[rating_amount]</b> item(s) at <b>[rating_speed*100]%</b> speed.")
 
 /obj/machinery/processor/Exited(atom/movable/gone, direction)
+	..()
 	LAZYREMOVE(processor_contents, gone)
 
 /*
@@ -229,7 +230,7 @@
 
 	if(processed_slime.stat != DEAD)
 		processed_slime.forceMove(drop_location())
-		processed_slime.balloon_alert_to_viewers("crawls free!")
+		processed_slime.balloon_alert_to_viewers("crawls free")
 		return
 	var/core_count = processed_slime.cores
 	for(var/i in 1 to (core_count+rating_amount-1))
