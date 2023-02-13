@@ -21,7 +21,7 @@
 	TEST_ASSERT_EQUAL(armor_totals(armor), totals, "modified an immune armor type")
 
 	var/wanted = 40
-	UNLINT(dummy.armor = null)
+	dummy.set_armor(/datum/armor/none)
 	dummy.set_armor_rating(ENERGY, wanted * 0.5)
 	dummy.set_armor_rating(FIRE, wanted * 0.5)
 	TEST_ASSERT_EQUAL(armor_totals(dummy.get_armor()), wanted, "modified armor type had incorrect values")
