@@ -27,11 +27,13 @@
 	weight = 5
 	category = EVENT_CATEGORY_HEALTH
 	description = "A 'classic' virus will infect some members of the crew."
+	min_wizard_trigger_potency = 2
+	max_wizard_trigger_potency = 6
 	admin_setup = /datum/event_admin_setup/disease_outbreak
 	///Disease recipient candidates
 	var/list/disease_candidates = list()
 
-/datum/round_event_control/disease_outbreak/can_spawn_event(players_amt)
+/datum/round_event_control/disease_outbreak/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	if(!.)
 		return .
@@ -132,6 +134,8 @@
 	category = EVENT_CATEGORY_HEALTH
 	weight = 10
 	description = "An 'advanced' disease will infect some members of the crew."
+	min_wizard_trigger_potency = 2
+	max_wizard_trigger_potency = 6
 	admin_setup = /datum/event_admin_setup/disease_outbreak/advanced
 
 /datum/event_admin_setup/disease_outbreak/advanced

@@ -4,6 +4,7 @@
 	sexes = FALSE
 	species_traits = list(
 		NOEYESPRITES,
+		NO_UNDERWEAR,
 	)
 	inherent_traits = list(
 		TRAIT_NOBREATH,

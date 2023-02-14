@@ -3762,7 +3762,7 @@
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp)
 "vN" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9

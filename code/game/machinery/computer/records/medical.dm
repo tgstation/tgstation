@@ -1,4 +1,4 @@
-/obj/machinery/computer/med_data
+/obj/machinery/computer/records/medical
 	name = "medical records console"
 	desc = "This can be used to check medical records."
 	icon_screen = "medcomp"
@@ -7,11 +7,11 @@
 	circuit = /obj/item/circuitboard/computer/med_data
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/machinery/computer/med_data/syndie
+/obj/machinery/computer/records/medical/syndie
 	icon_keyboard = "syndie_key"
 	req_one_access = list(ACCESS_SYNDICATE)
 
-/obj/machinery/computer/med_data/laptop
+/obj/machinery/computer/records/medical/laptop
 	name = "medical laptop"
 	desc = "A cheap Nanotrasen medical laptop, it functions as a medical records computer. It's bolted to the table."
 	icon_state = "laptop"
@@ -19,13 +19,13 @@
 	icon_keyboard = "laptop_key"
 	pass_flags = PASSTABLE
 
-/obj/machinery/computer/med_data/attacked_by(obj/item/attacking_item, mob/living/user)
+/obj/machinery/computer/records/medical/attacked_by(obj/item/attacking_item, mob/living/user)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/photo))
 		return
 	insert_new_record(user, attacking_item)
 
-/obj/machinery/computer/med_data/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/computer/records/medical/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -36,15 +36,8 @@
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/obj/machinery/computer/med_data/ui_data(mob/user)
-	var/list/data = list()
-
-	var/has_access = (authenticated && isliving(user))|| isAdminGhostAI(user)
-	data["authenticated"] = authenticated || isAdminGhostAI(user)
-	if(!has_access)
-		return data
-
-	data["assigned_view"] = "preview_[user.ckey]_[REF(src)]_records"
+/obj/machinery/computer/records/medical/ui_data(mob/user)
+	var/list/data = ..()
 
 	var/list/records = list()
 	for(var/datum/record/crew/target in GLOB.manifest.general)
@@ -76,13 +69,13 @@
 
 	return data
 
-/obj/machinery/computer/med_data/ui_static_data(mob/user)
+/obj/machinery/computer/records/medical/ui_static_data(mob/user)
 	var/list/data = list()
 	data["min_age"] = AGE_MIN
 	data["max_age"] = AGE_MAX
 	return data
 
-/obj/machinery/computer/med_data/ui_act(action, list/params, datum/tgui/ui)
+/obj/machinery/computer/records/medical/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -120,7 +113,7 @@
 	return FALSE
 
 /// Deletes medical information from a record.
-/obj/machinery/computer/med_data/expunge_record_info(datum/record/crew/target)
+/obj/machinery/computer/records/medical/expunge_record_info(datum/record/crew/target)
 	if(!target)
 		return FALSE
 

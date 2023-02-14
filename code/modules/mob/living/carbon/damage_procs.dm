@@ -60,7 +60,7 @@
 	if(amount > 0)
 		take_overall_damage(brute = amount, updating_health = updating_health, required_bodytype = required_bodytype)
 	else
-		heal_overall_damage(abs(amount), 0, required_bodytype, updating_health)
+		heal_overall_damage(brute = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health)
 	return amount
 
 /mob/living/carbon/setBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
@@ -76,7 +76,7 @@
 	if(amount > 0)
 		take_overall_damage(burn = amount, updating_health = updating_health, required_bodytype = required_bodytype)
 	else
-		heal_overall_damage(0, abs(amount), required_bodytype, updating_health)
+		heal_overall_damage(burn = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health)
 	return amount
 
 /mob/living/carbon/setFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
@@ -223,7 +223,7 @@
 		update_damage_overlays()
 
 ///Heal MANY bodyparts, in random order
-/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, required_bodytype, updating_health = TRUE)
+/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_bodytype, updating_health = TRUE)
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, required_bodytype)
 
 	var/update = NONE

@@ -415,7 +415,7 @@
 /area/shuttle/escape/brig)
 "sE" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
 "uF" = (

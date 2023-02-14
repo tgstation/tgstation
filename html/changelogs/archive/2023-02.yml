@@ -412,3 +412,150 @@
   ZephyrTFA:
   - bugfix: Using a hacking cable will no longer permanently spam you with balloon
       messages
+2023-02-11:
+  Fikou:
+  - admin: adds findtext (+ex), view, viewers, rect_turfs and flick as sdql2 wrappers
+  Jacquerel:
+  - bugfix: Plating replaced by floor tiles from a dimensional anomaly or colossus
+      crystal will now still have plating underneath when crowbarred, instead of space
+      (or open space on z level maps).
+  - bugfix: Summoning a cult wall on plating as an Artificer will leave the plating
+      intact underneath when it is removed, rather than replacing it with a void.
+  - admin: Admins can pick the initial flavour of a manually triggered dimensional
+      anomaly.
+  - refactor: Spider healing abilities have been refactored to reuse the same code
+      rather than reimplement it across two different mobs, it should work the same
+      as it used to. This is also used by Lightgeists.
+  - bugfix: Mob biotype on `heal_overall_damage` should be applied more consistently.
+      This might mean that some things which were previously healing prosthetic limbs
+      have stopped doing that.
+  - bugfix: Removes a duplicate file which was preventing the new regal rat sprite
+      from being used.
+  LT3:
+  - admin: Changed color for watchlist notifications
+  LemonInTheDark:
+  - bugfix: Solar trackers actually uh, look right again
+  - bugfix: Solar panels and trackers will now properly block space lighting on multiz
+      maps
+  MMMiracles:
+  - bugfix: The elevator panel for Tramstation's medical elevator will no longer clip
+      into the side window when raised up.
+  - bugfix: The escape pods should now actually launch with the shuttle.
+  Melbert:
+  - bugfix: The bastard sword can create constructs again. Just hit the shells with
+      it
+  Paxilmaniac:
+  - bugfix: Ghost role spawners will now no longer try and spawn people when they
+      /should/ have been out of uses but due to a bug were not
+  SuperSlayer0:
+  - bugfix: Fixes reverse revolver name being different from syndicate revolver name
+  ZephyrTFA:
+  - bugfix: AIs can no longer change their shell's icon_state to any image at will
+  carshalash:
+  - spellcheck: Adjusted punctuation marks for several emotes.
+2023-02-12:
+  Capybara Holly:
+  - bugfix: Fixes a theoretical bug where glide-size could get unsynced from your
+      movespeed after unbuckling
+  LT3:
+  - imageadd: Fixed alignment of corner railings
+  Profakos:
+  - bugfix: slipping on lube while buckling will lead to less weird states
+  kawoppi:
+  - refactor: refactored *blush and *cry emote visuals into bodypart_overlays
+  - rscdel: lack of eyes will no longer prevent the *cry emote overlay from displaying
+  mc-oofert:
+  - bugfix: Any circuit boards with custom sprites now actually use that sprite
+  the-orange-cow:
+  - bugfix: heretic blades can now properly butcher
+  tralezab:
+  - rscadd: 'Added two new sanguine wizard spells: Exsanguinating Strike and Scream
+      For Me'
+  - admin: Every tier of "Scrubber Overflow" can now choose a random single reagent
+      mode
+  - admin: '"Custom" overflow, which was kinda confusing and unintuitive, is now called
+      "Every Vent", much more self-explanatory in what it does.'
+2023-02-13:
+  Jacquerel:
+  - rscadd: Wizards can now perform a Grand Ritual to summon unpleasant events to
+      the space station.
+  - rscadd: Wizards completing the Grand Ritual a sufficient number of times can achieve
+      victory at the end of the round, and cast a powerful round-changing spell.
+  - bugfix: Heretic runes are now invisible to the AI (and cyborgs) while being drawn
+      as well as when finished.
+  Melbert:
+  - bugfix: Fixes player panel "make ai" button not fully working on observers
+  - bugfix: Fixes some situations where paradox clones go sicko mode
+  NamelessFairy:
+  - bugfix: Soporific sniper magazines use the correct icon again.
+  - imageadd: Penetrator and Marksman sniper magazines now have icons.
+  Rhials:
+  - rscadd: Ectoplasmic Outburst anomaly event
+  - rscadd: Reactive Ectoplasm Armor
+  Shadow-Quill:
+  - bugfix: Gravity generators have been re-centered.
+  ZephyrTFA:
+  - bugfix: Spells which are only able to be cast on the station can now only be cast
+      on the station
+  itseasytosee:
+  - imagedel: Android abductors and skeletons have lost all modesty and have stopped
+      wearing underwear.
+  kawoppi:
+  - imageadd: when equipped with a bluespace trash bag the pimpin' ride janicart will
+      now display a bluespace trash bag instead of a normal trash bag
+  mc-oofert:
+  - bugfix: aux base turrets now shoot fauna
+  scriptis:
+  - bugfix: preferences now respects your preferences
+2023-02-14:
+  Jacquerel:
+  - refactor: Spider code has been refactored and AI-controlled spiders may have slightly
+      different movement or reaction times.
+  - bugfix: Basic mobs can now be slowed when they take stamina damage, however currently
+      only spiders actually _can_ take stamina damage.
+  - bugfix: Spiders should now more reliably disable their AI when controlled by a
+      player.
+  - bugfix: Araneus is no longer considered to be a bat and so cannot fly.
+  - bugfix: Araneus is no longer considered to be a bat and so is no longer frightening
+      to people who are scared of the supernatural.
+  LT3:
+  - bugfix: Tram damage calculation takes into account compound wounds
+  - code_imp: Tram crossing signals are now map specific
+  - admin: Combat log now generated when the tram collides with someone
+  LemonInTheDark:
+  - bugfix: Equipping an fov item, disconnecting, waiting 6 minutes and reconnecting
+      will no longer break your game
+  Melbert:
+  - bugfix: Syndicate declarations of war no longer murder apostrophes and their friends
+  - bugfix: The alert box for the declaration of war no longer looks funky, and counts
+      forwards in time rather than backwards
+  - bugfix: Fixed being able to send unencoded HTML to newscasters
+  - bugfix: Fixed a runtime from hovering over a meat spike / kitchen spike with an
+      empty hand
+  - bugfix: Changing species no longer drops all held items
+  - bugfix: Losing your right hand not un-cuffing you or dropping your gloves
+  Mothblocks:
+  - bugfix: Using a fire extinguisher with a chair now properly does...something with
+      how fast you move I think it makes you slower
+  NamelessFairy:
+  - spellcheck: All station closet and lockers have had their naming conventions standardized.
+  - bugfix: Tram now has evidence lockers labelled 1 through 7 instead of 7 evidence
+      lockers labelled as locker 1.
+  Profakos:
+  - bugfix: taking an item out of the food processor and putting back in will not
+      dupe the results when you process them
+  SyncIt21:
+  - rscdel: Removes sprite changes done to smart pipes
+  - bugfix: pipes disappearing at weird angles
+  ZephyrTFA:
+  - bugfix: Mechs no longer have zero armor when built.
+  coiax:
+  - bugfix: Tiziran canned goods no longer decompose into mush.
+  jlsnow301:
+  - bugfix: Security can set notes through consoles again
+  - bugfix: Observers are now properly logged out of record consoles
+  necromanceranne:
+  - qol: Limits the amount of emotes being passed to chat by viruses.
+  vinylspiders:
+  - bugfix: fixes a potential bug that can cause the detective scanner to get stuck
+      in a scanning state indefinitely
