@@ -5,6 +5,8 @@
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 	description = "Spawns a doppelganger of the wizard."
+	min_wizard_trigger_potency = 2
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/wizard/imposter/start()
 	for(var/datum/mind/M as anything in get_antag_minds(/datum/antagonist/wizard))
@@ -12,7 +14,7 @@
 			continue
 		var/mob/living/carbon/human/W = M.current
 		var/list/candidates = poll_ghost_candidates("Would you like to be an imposter wizard?", ROLE_WIZARD)
-		if(!candidates)
+		if(!length(candidates))
 			return //Sad Trombone
 		var/mob/dead/observer/C = pick(candidates)
 

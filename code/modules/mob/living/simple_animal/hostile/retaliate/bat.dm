@@ -38,27 +38,3 @@
 	AddElement(/datum/element/simple_flying)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-
-/mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus //Despite being a bat for... reasons, this is now a spider, and is one of the HoS' pets.
-	name = "Sergeant Araneus"
-	real_name = "Sergeant Araneus"
-	desc = "A fierce companion of the Head of Security, this spider has been carefully trained by Nanotrasen specialists. Its beady, staring eyes send shivers down your spine."
-	emote_hear = list("chitters")
-	faction = list("spiders")
-	harm_intent_damage = 3
-	icon_dead = "guard_dead"
-	icon_gib = "guard_dead"
-	icon_living = "guard"
-	icon_state = "guard"
-	maxHealth = 250
-	health = 250
-	melee_damage_lower = 15
-	melee_damage_upper = 20
-	movement_type = GROUND
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	turns_per_move = 10
-
-/mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/pet_bonus, "chitters proudly!")

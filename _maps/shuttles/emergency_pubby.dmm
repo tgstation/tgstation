@@ -47,7 +47,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ak" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,

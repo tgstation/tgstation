@@ -6,6 +6,8 @@
 	description = "Vending machines will attack people until the Patient Zero is disabled."
 	min_players = 15
 	max_occurrences = 1
+	min_wizard_trigger_potency = 2
+	max_wizard_trigger_potency = 6
 	admin_setup = /datum/event_admin_setup/listed_options/brand_intelligence
 
 /datum/round_event/brand_intelligence

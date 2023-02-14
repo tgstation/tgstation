@@ -163,13 +163,13 @@
 /area/shuttle/syndicate/bridge)
 "as" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/secure_data/syndie{
+/obj/machinery/computer/records/security/syndie{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/bridge)
 "at" = (
-/obj/machinery/computer/med_data/syndie{
+/obj/machinery/computer/records/medical/syndie{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
