@@ -47,15 +47,17 @@
 /datum/component/shuttle_cling/proc/update_state()
 	SIGNAL_HANDLER
 
-	if(!is_on_hyperspace(parent))
+	var/atom/movable/movable = parent
+
+	if(!is_on_hyperspace(movable) || !isturf(movable))
 		qdel(src)
 		return
 
 	var/should_loop = FALSE
 
-	switch(is_holding_on(parent))
+	switch(is_holding_on(movable))
 		if(SUPER_NOT_HOLDING_ON)
-			launch_very_hard(parent)
+			launch_very_hard(movable)
 			should_loop = TRUE
 		if(NOT_HOLDING_ON)
 			hyperloop.set_delay(not_clinging_move_delay)
@@ -64,7 +66,7 @@
 		if(CLINGING)
 			hyperloop.set_delay(clinging_move_delay)
 			should_loop = TRUE
-			update_drift_direction(parent)
+			update_drift_direction(movable)
 		if(ALL_GOOD)
 			should_loop = FALSE
 
@@ -76,7 +78,7 @@
 
 ///Check if we're "holding on" to the shuttle
 /datum/component/shuttle_cling/proc/is_holding_on(atom/movable/movee)
-	if(movee.pulledby || !isturf(movee.loc))
+	if(movee.pulledby)
 		return ALL_GOOD
 
 	if(!isliving(movee))
