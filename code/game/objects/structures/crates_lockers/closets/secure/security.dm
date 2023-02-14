@@ -1,5 +1,5 @@
 /obj/structure/closet/secure_closet/captains
-	name = "Captain's locker"
+	name = "captain's locker"
 	req_access = list(ACCESS_CAPTAIN)
 	icon_state = "cap"
 
@@ -22,7 +22,7 @@
 	new /obj/item/storage/photo_album/captain(src)
 
 /obj/structure/closet/secure_closet/hop
-	name = "Head of Personnel's locker"
+	name = "head of personnel's locker"
 	req_access = list(ACCESS_HOP)
 	icon_state = "hop"
 
@@ -46,7 +46,7 @@
 	new /obj/item/storage/lockbox/medal/hop(src)
 
 /obj/structure/closet/secure_closet/hos
-	name = "Head of Security's locker"
+	name = "head of security's locker"
 	req_access = list(ACCESS_HOS)
 	icon_state = "hos"
 
@@ -74,7 +74,7 @@
 	new /obj/item/pinpointer/nuke(src)
 
 /obj/structure/closet/secure_closet/warden
-	name = "\proper warden's locker"
+	name = "warden's locker"
 	req_access = list(ACCESS_ARMORY)
 	icon_state = "warden"
 
