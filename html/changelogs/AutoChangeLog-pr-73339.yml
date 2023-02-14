@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixed a FIVE YEAR OLD issue causing Time Stop to be a 3x3 instead of a 5x5. Really."
+  - bugfix: "The gravity generator correctly gives \"forced gravity\" to all adjacent mobs"
+  - bugfix: "Fixed some runtimes with Time Stop, and other miscellaneous issues"
