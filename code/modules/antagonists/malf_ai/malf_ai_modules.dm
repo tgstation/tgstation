@@ -366,10 +366,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/hack_in_progress  = FALSE
 
 /datum/action/innate/ai/lockdown/IsAvailable(feedback)
-	return ..() && !hack_in_progess
+	return ..() && !hack_in_progress
 
 /datum/action/innate/ai/lockdown/Activate()
-	hack_in_progess = TRUE
+	hack_in_progress = TRUE
 	for(var/obj/machinery/door/locked_down as anything in GLOB.airlocks)
 		if(QDELETED(locked_down) || !is_station_level(locked_down.z))
 			continue
@@ -386,7 +386,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce),
 		"Automatic system reboot complete. Have a secure day.",
 		"Network reset:"), 90 SECONDS)
-	hack_in_progess = FALSE
+	hack_in_progress = FALSE
 
 /// For Lockdown malf AI ability. Opens all doors on the station.
 /proc/_malf_ai_undo_lockdown()
