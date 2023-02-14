@@ -1219,8 +1219,12 @@
 			to_chat(src, span_warning("You don't have the physical ability to do this!"))
 			return FALSE
 
-	if(!(action_bitflags & ALLOW_SILICON_REACH && iscarbon(src))) // silicons can ignore range checks
-		if(!Adjacent(target) && (target.loc != src))
+	if(!Adjacent(target) && (target.loc != src))
+		if(issilicon(src))
+			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks
+				to_chat(src, span_warning("You are too far away!"))
+				return FALSE
+		else // just a normal carbon mob
 			if((action_bitflags & FORBID_TELEKINESIS_REACH))
 				to_chat(src, span_warning("You are too far away!"))
 				return FALSE
