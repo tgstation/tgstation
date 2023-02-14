@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Syndicate declarations of war no longer murder apostrophes and their friends"
-  - bugfix: "The alert box for the declaration of war no longer looks funky, and counts forwards in time rather than backwards"
-  - bugfix: "Fixed being able to send unencoded HTML to newscasters"

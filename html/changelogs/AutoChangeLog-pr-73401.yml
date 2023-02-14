@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes:
-  - bugfix: "Tiziran canned goods no longer decompose into mush."

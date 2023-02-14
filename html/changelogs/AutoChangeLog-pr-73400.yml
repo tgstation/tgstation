@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - bugfix: "Equipping an fov item, disconnecting, waiting 6 minutes and reconnecting will no longer break your game"

@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - bugfix: "taking an item out of the food processor and putting back in will not dupe the results when you process them"

@@ -507,3 +507,55 @@
   - bugfix: aux base turrets now shoot fauna
   scriptis:
   - bugfix: preferences now respects your preferences
+2023-02-14:
+  Jacquerel:
+  - refactor: Spider code has been refactored and AI-controlled spiders may have slightly
+      different movement or reaction times.
+  - bugfix: Basic mobs can now be slowed when they take stamina damage, however currently
+      only spiders actually _can_ take stamina damage.
+  - bugfix: Spiders should now more reliably disable their AI when controlled by a
+      player.
+  - bugfix: Araneus is no longer considered to be a bat and so cannot fly.
+  - bugfix: Araneus is no longer considered to be a bat and so is no longer frightening
+      to people who are scared of the supernatural.
+  LT3:
+  - bugfix: Tram damage calculation takes into account compound wounds
+  - code_imp: Tram crossing signals are now map specific
+  - admin: Combat log now generated when the tram collides with someone
+  LemonInTheDark:
+  - bugfix: Equipping an fov item, disconnecting, waiting 6 minutes and reconnecting
+      will no longer break your game
+  Melbert:
+  - bugfix: Syndicate declarations of war no longer murder apostrophes and their friends
+  - bugfix: The alert box for the declaration of war no longer looks funky, and counts
+      forwards in time rather than backwards
+  - bugfix: Fixed being able to send unencoded HTML to newscasters
+  - bugfix: Fixed a runtime from hovering over a meat spike / kitchen spike with an
+      empty hand
+  - bugfix: Changing species no longer drops all held items
+  - bugfix: Losing your right hand not un-cuffing you or dropping your gloves
+  Mothblocks:
+  - bugfix: Using a fire extinguisher with a chair now properly does...something with
+      how fast you move I think it makes you slower
+  NamelessFairy:
+  - spellcheck: All station closet and lockers have had their naming conventions standardized.
+  - bugfix: Tram now has evidence lockers labelled 1 through 7 instead of 7 evidence
+      lockers labelled as locker 1.
+  Profakos:
+  - bugfix: taking an item out of the food processor and putting back in will not
+      dupe the results when you process them
+  SyncIt21:
+  - rscdel: Removes sprite changes done to smart pipes
+  - bugfix: pipes disappearing at weird angles
+  ZephyrTFA:
+  - bugfix: Mechs no longer have zero armor when built.
+  coiax:
+  - bugfix: Tiziran canned goods no longer decompose into mush.
+  jlsnow301:
+  - bugfix: Security can set notes through consoles again
+  - bugfix: Observers are now properly logged out of record consoles
+  necromanceranne:
+  - qol: Limits the amount of emotes being passed to chat by viruses.
+  vinylspiders:
+  - bugfix: fixes a potential bug that can cause the detective scanner to get stuck
+      in a scanning state indefinitely

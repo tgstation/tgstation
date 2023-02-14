@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed a runtime from hovering over a meat spike / kitchen spike with an empty hand"
