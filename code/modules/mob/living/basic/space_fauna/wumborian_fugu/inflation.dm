@@ -52,38 +52,40 @@
 
 /datum/status_effect/inflated/on_apply()
 	. = ..()
-	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(check_death))
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/inflated)
-	ADD_TRAIT(owner, TRAIT_FUGU_GLANDED, TRAIT_STATUS_EFFECT(id))
-	owner.AddElement(/datum/element/wall_smasher)
-	owner.mob_size = MOB_SIZE_LARGE
-	owner.icon_state = "Fugu1"
-	owner.melee_damage_lower = 15
-	owner.melee_damage_upper = 20
-	owner.status_flags |= GODMODE
-	var/mob/living/basic/basic_owner = owner
-	basic_owner.obj_damage = 60
-	basic_owner.ai_controller.blackboard[BB_BASIC_MOB_FLEEING] = FALSE
-	basic_owner.ai_controller.CancelActions()
+	var/mob/living/basic/wumborian_fugu/fugu = owner
+	if (!istype(fugu))
+		return FALSE
+	RegisterSignal(fugu, COMSIG_MOB_STATCHANGE, PROC_REF(check_death))
+	fugu.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/inflated)
+	ADD_TRAIT(fugu, TRAIT_FUGU_GLANDED, TRAIT_STATUS_EFFECT(id))
+	fugu.AddElement(/datum/element/wall_smasher)
+	fugu.mob_size = MOB_SIZE_LARGE
+	fugu.icon_state = "Fugu1"
+	fugu.melee_damage_lower = 15
+	fugu.melee_damage_upper = 20
+	fugu.status_flags |= GODMODE
+	fugu.obj_damage = 60
+	fugu.ai_controller.blackboard[BB_BASIC_MOB_FLEEING] = FALSE
+	fugu.ai_controller.CancelActions()
 
 /datum/status_effect/inflated/on_remove()
 	. = ..()
-	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/inflated)
-	REMOVE_TRAIT(owner, TRAIT_FUGU_GLANDED, TRAIT_STATUS_EFFECT(id))
-	if (!istype(owner, /mob/living/basic/wumborian_fugu))
-		return
-	owner.RemoveElement(/datum/element/wall_smasher)
-	owner.mob_size = MOB_SIZE_SMALL
-	owner.melee_damage_lower = 0
-	owner.melee_damage_upper = 0
-	owner.status_flags &= ~GODMODE
-	if (owner.stat != DEAD)
-		owner.icon_state = "Fugu0"
-	var/mob/living/basic/basic_owner = owner
-	basic_owner.obj_damage = 0
-	basic_owner.ai_controller.blackboard[BB_BASIC_MOB_FLEEING] = TRUE
-	basic_owner.ai_controller.CancelActions()
+	var/mob/living/basic/wumborian_fugu/fugu = owner
+	if (!istype(fugu))
+		return // Check again in case you changed mob after application but somehow kept the status effect
+	UnregisterSignal(fugu, COMSIG_MOB_STATCHANGE)
+	fugu.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/inflated)
+	REMOVE_TRAIT(fugu, TRAIT_FUGU_GLANDED, TRAIT_STATUS_EFFECT(id))
+	fugu.RemoveElement(/datum/element/wall_smasher)
+	fugu.mob_size = MOB_SIZE_SMALL
+	fugu.melee_damage_lower = 0
+	fugu.melee_damage_upper = 0
+	fugu.status_flags &= ~GODMODE
+	if (fugu.stat != DEAD)
+		fugu.icon_state = "Fugu0"
+	fugu.obj_damage = 0
+	fugu.ai_controller.blackboard[BB_BASIC_MOB_FLEEING] = TRUE
+	fugu.ai_controller.CancelActions()
 
 /// Remove status effect if we die
 /datum/status_effect/inflated/proc/check_death(mob/living/source, new_stat)
