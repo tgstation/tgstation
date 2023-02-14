@@ -30,4 +30,4 @@
 	for (var/typepath in loot)
 		new typepath(source.loc)
 	if (only_once)
-		source.RemoveElement(/datum/element/loot_drop)
+		source.RemoveElement(/datum/element/loot_drop, loot, only_once)
