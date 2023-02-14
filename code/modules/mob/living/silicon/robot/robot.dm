@@ -588,7 +588,7 @@
 	if(lockcharge || low_power_mode)
 		to_chat(src, span_warning("You can't do that right now!"))
 		return FALSE
-	return can_see(src, target) && ..() //stop cyborgs from leaving windows open and using then after they lose vision
+	return ..()
 
 /mob/living/silicon/robot/updatehealth()
 	..()
