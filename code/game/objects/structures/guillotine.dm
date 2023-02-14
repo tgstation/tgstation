@@ -255,7 +255,7 @@
 			to_chat(user, span_warning("Can't unfasten, someone's strapped in!"))
 		return FAILED_UNFASTEN
 
-	if (current_action)
+	if (current_action && current_action != GUILLOTINE_ACTION_WRENCH)
 		return FAILED_UNFASTEN
 
 	current_action = GUILLOTINE_ACTION_WRENCH
