@@ -187,7 +187,7 @@
 			return
 			
 		var/obj/item/organ/internal/lungs/affected_lungs = getorganslot(ORGAN_SLOT_LUNGS)
-		if(!affected_lungs)
+		if(isnull(affected_lungs))
 			if(!(mob_respiration_type & required_respiration_type))  // if the mob has no lungs, use mob_respiration_type
 				return
 		else 
@@ -205,7 +205,7 @@
 			return
 		
 		var/obj/item/organ/internal/lungs/affected_lungs = getorganslot(ORGAN_SLOT_LUNGS)
-		if(!affected_lungs)
+		if(isnull(affected_lungs))
 			if(!(mob_respiration_type & required_respiration_type))
 				return
 		else 
