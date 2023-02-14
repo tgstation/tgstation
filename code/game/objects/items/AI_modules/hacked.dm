@@ -39,6 +39,7 @@
 	desc = "An virus-infected AI Module."
 	bypass_law_amt_check = TRUE
 	laws = list("")
+	///Is this upload board unused?
 	var/functional = TRUE
 
 /obj/item/ai_module/malf/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
@@ -68,11 +69,11 @@
 	protection_objective.target = sender.mind
 	protection_objective.update_explanation_text()
 	malf_datum.objectives += protection_objective
-	for(var/mob/living/silicon/robot/R in malf_candidate.connected_robots)
-		if(R.lawupdate)
-			R.lawsync()
-			R.show_laws()
-			R.law_change_counter++
+	for(var/mob/living/silicon/robot/robot in malf_candidate.connected_robots)
+		if(robot.lawupdate)
+			robot.lawsync()
+			robot.show_laws()
+			robot.law_change_counter++
 			CHECK_TICK
 	malf_candidate.malf_picker.processing_time += 50
 	to_chat(malf_candidate, span_notice("The virus enhanced your system, overclocking your CPU 50-fold."))
