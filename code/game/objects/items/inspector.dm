@@ -380,7 +380,7 @@
 	grind_results = list(/datum/reagent/water = 5)
 
 /obj/item/paper/fake_report/water/AltClick(mob/living/user, obj/item/I)
-	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| need_hands = TRUE))
+	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY|NEED_HANDS))
 		return
 	var/datum/action/innate/origami/origami_action = locate() in user.actions
 	if(origami_action?.active) //Origami masters can fold water

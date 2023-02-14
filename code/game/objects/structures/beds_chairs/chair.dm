@@ -281,7 +281,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 	if(over_object == usr && Adjacent(usr))
 		if(!item_chair || has_buckled_mobs() || src.flags_1 & NODECONSTRUCT_1)
 			return
-		if(!usr.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| need_hands = TRUE))
+		if(!usr.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY|NEED_HANDS))
 			return
 		usr.visible_message(span_notice("[usr] grabs \the [src.name]."), span_notice("You grab \the [src.name]."))
 		var/obj/item/C = new item_chair(loc)

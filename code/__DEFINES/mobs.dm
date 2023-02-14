@@ -781,8 +781,6 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 //used by canPerformAction
 /// If silicons need to be next to the atom to use this
 #define BE_CLOSE TRUE
-// If telekinesis you can use it from a distance
-#define NO_TK TRUE
 /// If mobs can use this while resting
 #define FLOOR_OKAY TRUE
 
@@ -798,8 +796,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define NEED_DEXTERITY (1<<3)
 /// If hands are required to perform action (can't pickup items if you are a cyborg)
 #define NEED_HANDS (1<<4)
-/// If telekinesis is allowed to perform action from a distance (telekinesis can push buttons from far away)
-#define ALLOW_TELEKINESIS_REACH (1<<5)
+/// If telekinesis is forbidden to perform action from a distance (telekinesis can push buttons from far away)
+#define FORBID_TELEKINESIS_REACH (1<<5)
 /// If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
 #define ALLOW_SILICON_REACH (1<<6)
 

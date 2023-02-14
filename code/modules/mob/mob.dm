@@ -1000,6 +1000,7 @@
  * The default behavior checks if the mob is:
  * * Directly adjacent (1-tile radius)
  * * Standing up (not resting)
+ * * Allows telekinesis to be used to skip adjacent checks (if they have DNA mutation)
  * *
  * action_bitflags: (see code/__DEFINES/mobs.dm)
  * * NEED_GRAVITY - If gravity must be present to perform action (can't use pens without gravity)
