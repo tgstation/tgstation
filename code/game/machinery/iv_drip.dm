@@ -325,7 +325,7 @@
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
 		return
-	if (!usr.canPerformAction()) // USED_FAR_AWAY_WHHHHY
+	if(!usr.canPerformAction(src))
 		return
 	if(usr.incapacitated())
 		return
@@ -345,7 +345,7 @@
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
 		return
-	if (!usr.canPerformAction()) // USED_FAR_AWAY_WHHHHY
+	if(!usr.canPerformAction(src))
 		return
 	if(usr.incapacitated())
 		return
