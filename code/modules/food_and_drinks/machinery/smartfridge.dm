@@ -219,7 +219,7 @@
 				if(!desired)
 					return FALSE
 
-			if(QDELETED(src) || QDELETED(usr) || !usr.canPerformAction(src, be_close = TRUE,  FORBID_TELEKINESIS_REACH)) // Sanity checkin' in case stupid stuff happens while we wait for input()
+			if(QDELETED(src) || QDELETED(usr) || !usr.canPerformAction(src, FORBID_TELEKINESIS_REACH)) // Sanity checkin' in case stupid stuff happens while we wait for input()
 				return FALSE
 
 			for(var/obj/item/dispensed_item in src)

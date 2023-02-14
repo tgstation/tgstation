@@ -202,7 +202,7 @@
 	var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", list("Instant", 3, 4, 5))
 	if (isnull(newtime))
 		return
-	if(!user.canPerformAction(src, be_close = TRUE))
+	if(!user.canPerformAction(src))
 		return
 	if(newtime == "Instant" && change_det_time(0))
 		to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))

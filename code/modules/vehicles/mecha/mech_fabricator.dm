@@ -125,7 +125,7 @@
 
 /obj/machinery/mecha_part_fabricator/AltClick(mob/user)
 	. = ..()
-	if(!user.canPerformAction(src, be_close = TRUE))
+	if(!user.canPerformAction(src))
 		return
 	if(panel_open)
 		dir = turn(dir, -90)

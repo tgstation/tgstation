@@ -111,7 +111,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		toggle_cabinet(user)
 
 /obj/structure/extinguisher_cabinet/attack_hand_secondary(mob/living/user)
-	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY|NEED_HANDS))
+	if(!user.canPerformAction(src, NEED_DEXTERITY|NEED_HANDS))
 		return ..()
 	toggle_cabinet(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

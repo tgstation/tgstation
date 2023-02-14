@@ -104,7 +104,7 @@
 	do_the_dishes(TRUE)
 
 /obj/machinery/dish_drive/AltClick(mob/living/user)
-	if(user.canPerformAction(src, !issilicon(user)))
+	if(user.canPerformAction(src, ALLOW_SILICON_REACH))
 		do_the_dishes(TRUE)
 
 /obj/machinery/dish_drive/proc/do_the_dishes(manual)

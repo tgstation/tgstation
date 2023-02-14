@@ -64,7 +64,7 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(!user.canPerformAction(src, !issilicon(user)) || !isturf(loc))
+	if(!user.canPerformAction(src, ALLOW_SILICON_REACH) || !isturf(loc))
 		return
 	togglelock(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

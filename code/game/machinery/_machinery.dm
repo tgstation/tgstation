@@ -683,7 +683,7 @@
 	..()
 	if(!can_interact(usr))
 		return TRUE
-	if(!usr.canPerformAction(src))
+	if(!usr.canPerformAction(src)) // USED_FAR_AWAY_WHHHHY
 		return TRUE
 	add_fingerprint(usr)
 	update_last_used(usr)

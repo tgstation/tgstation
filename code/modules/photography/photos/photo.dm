@@ -71,7 +71,7 @@
 		if(!user.can_write(P))
 			return
 		var/txt = tgui_input_text(user, "What would you like to write on the back?", "Photo Writing", max_length = 128)
-		if(txt && user.canPerformAction(src, be_close = TRUE))
+		if(txt && user.canPerformAction(src))
 			scribble = txt
 	else
 		return ..()

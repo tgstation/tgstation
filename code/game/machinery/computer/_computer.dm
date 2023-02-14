@@ -131,7 +131,7 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(!user.canPerformAction(src, be_close = !issilicon(user)) || !is_operational)
+	if(!user.canPerformAction(src, ALLOW_SILICON_REACH) || !is_operational)
 		return
 
 /obj/machinery/computer/ui_interact(mob/user, datum/tgui/ui)

@@ -64,7 +64,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.canPerformAction(src, !issilicon(user), FALSE, FORBID_TELEKINESIS_REACH))
+	if(!can_interact(user) || !user.canPerformAction(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
 		return
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

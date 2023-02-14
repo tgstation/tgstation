@@ -9,7 +9,7 @@
 
 /obj/structure/sacrificealtar/AltClick(mob/living/user)
 	..()
-	if(!istype(user) || !user.canPerformAction(src, be_close = TRUE))
+	if(!istype(user) || !user.canPerformAction(src))
 		return
 	if(!has_buckled_mobs())
 		return

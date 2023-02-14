@@ -274,7 +274,7 @@
 
 
 /obj/item/gun/ballistic/automatic/l6_saw/AltClick(mob/user)
-	if(!user.canPerformAction(src))
+	if(!user.canPerformAction(src)) // USED_FAR_AWAY_WHHHHY
 		return
 	cover_open = !cover_open
 	balloon_alert(user, "cover [cover_open ? "opened" : "closed"]")

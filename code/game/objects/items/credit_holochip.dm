@@ -99,13 +99,13 @@
 		qdel(H)
 
 /obj/item/holochip/AltClick(mob/user)
-	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
+	if(!user.canPerformAction(src, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
 		return
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the holochip to continue!"))
 		return FALSE
 	var/split_amount = tgui_input_number(user, "How many credits do you want to extract from the holochip? (Max: [credits] cr)", "Holochip", max_value = credits)
-	if(!split_amount || QDELETED(user) || QDELETED(src) || issilicon(user) || !usr.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION) || loc != user)
+	if(!split_amount || QDELETED(user) || QDELETED(src) || issilicon(user) || !usr.canPerformAction(src, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION) || loc != user)
 		return
 	var/new_credits = spend(split_amount, TRUE)
 	var/obj/item/holochip/H = new(user ? user : drop_location(), new_credits)

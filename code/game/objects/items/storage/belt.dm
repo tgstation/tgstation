@@ -798,7 +798,7 @@
 		. += span_notice("Alt-click it to quickly draw the blade.")
 
 /obj/item/storage/belt/sabre/AltClick(mob/user)
-	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY|NEED_HANDS))
+	if(!user.canPerformAction(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	if(length(contents))
 		var/obj/item/I = contents[1]

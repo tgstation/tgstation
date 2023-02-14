@@ -172,7 +172,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	stored.update_appearance()
 
 /obj/structure/pipe_cleaner/AltClick(mob/living/user)
-	if(!user.canPerformAction(src, be_close = TRUE))
+	if(!user.canPerformAction(src))
 		return
 	cut_pipe_cleaner(user)
 

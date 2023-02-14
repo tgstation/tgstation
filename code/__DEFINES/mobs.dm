@@ -803,6 +803,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
 #define ALLOW_SILICON_REACH (1<<7)
 
+// USED_FAR_AWAY_WHHHHY tracking var
+
 /// These are pretty redundant
 /// If close proximity is required to perform action must be adjacent (1 tile away)
 //#define ALLOW_AFAR_REACH

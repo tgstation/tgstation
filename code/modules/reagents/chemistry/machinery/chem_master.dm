@@ -143,7 +143,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.canPerformAction(src, !issilicon(user), FALSE, FORBID_TELEKINESIS_REACH))
+	if(!can_interact(user) || !user.canPerformAction(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
 		return
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -379,7 +379,7 @@
 				"Name",
 				name_default,
 				MAX_NAME_LEN)
-		if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canPerformAction(src, !issilicon(usr)))
+		if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canPerformAction(src, ALLOW_SILICON_REACH))
 			return FALSE
 		// Start filling
 		if(item_type == "pill")

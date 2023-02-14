@@ -213,7 +213,7 @@
 			visible_message(span_danger("[user] disturbs the [name] to no effect!"))
 	else
 		var/option = tgui_alert(user, "Which piece do you wish to remove?", "Apiary Adjustment", list("Honey Frame", "Queen Bee"))
-		if(!option || QDELETED(user) || QDELETED(src) || !user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY))
+		if(!option || QDELETED(user) || QDELETED(src) || !user.canPerformAction(src, NEED_DEXTERITY))
 			return
 		switch(option)
 			if("Honey Frame")

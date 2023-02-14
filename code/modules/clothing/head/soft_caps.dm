@@ -25,7 +25,7 @@
 
 /obj/item/clothing/head/soft/AltClick(mob/user)
 	..()
-	if(user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
+	if(user.canPerformAction(src, NEED_DEXTERITY|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
 		flip(user)
 
 

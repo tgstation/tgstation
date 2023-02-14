@@ -29,7 +29,7 @@
 /obj/item/areaeditor/Topic(href, href_list)
 	if(..())
 		return TRUE
-	if(!usr.canPerformAction(src) || usr != loc)
+	if(!usr.canPerformAction(src) || usr != loc) // USED_FAR_AWAY_WHHHHY
 		usr << browse(null, "window=blueprints")
 		return TRUE
 	if(href_list["create_area"])

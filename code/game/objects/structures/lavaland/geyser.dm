@@ -167,7 +167,7 @@
 	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
 
 /obj/item/plunger/AltClick(mob/user)
-	if(!istype(user) || !user.canPerformAction(src, be_close = TRUE))
+	if(!istype(user) || !user.canPerformAction(src))
 		return
 
 	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers)

@@ -220,7 +220,7 @@
 
 /obj/item/detective_scanner/AltClick(mob/living/user)
 	// Best way for checking if a player can use while not incapacitated, etc
-	if(!user.canPerformAction(src, be_close=TRUE))
+	if(!user.canPerformAction(src))
 		return
 	if(!LAZYLEN(log))
 		balloon_alert(user, "no logs!")

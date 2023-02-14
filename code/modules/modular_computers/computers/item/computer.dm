@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	. = ..()
 	if(issilicon(user))
 		return FALSE
-	if(!user.canPerformAction(src, be_close = TRUE))
+	if(!user.canPerformAction(src))
 		return FALSE
 
 	if(RemoveID(user))
@@ -300,7 +300,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
-	if((!istype(over_object, /atom/movable/screen)) && usr.canPerformAction(src, be_close = TRUE))
+	if((!istype(over_object, /atom/movable/screen)) && usr.canPerformAction(src))
 		return attack_self(M)
 	return ..()
 
