@@ -176,7 +176,7 @@
 
 /obj/structure/training_machine/AltClick(mob/user)
 	. = ..()
-	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH| floor_okay = TRUE))
+	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
 		return
 	if(has_buckled_mobs())
 		user_unbuckle_mob(buckled_mobs[1], user)
