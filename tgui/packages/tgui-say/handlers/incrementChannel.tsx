@@ -27,7 +27,7 @@ export const handleIncrementChannel = function (this: Modal) {
   if (BLACKLISTED_CHANNEL_INDICES.length === CHANNELS.length) {
     this.setState({
       buttonContent: CHANNELS[channel],
-      channel: channel,
+      channel,
     });
     return;
   }
