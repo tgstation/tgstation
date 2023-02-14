@@ -503,7 +503,7 @@
 /**
  *  Make virus visible to heath scanners
  */
-/datum/disease/advance/proc/MakeVisible()
+/datum/disease/advance/proc/makeVisible()
 	visibility_flags &= ~HIDDEN_SCANNER
 	for(var/datum/disease/advance/virus in SSdisease.active_diseases)
 		if(!virus.id)

@@ -104,13 +104,13 @@
 		var/list/virus_candidates = list()
 
 		//Practically harmless diseases. Mostly just gives medical something to do.
-		virus_candidates += list(/datum/disease/flu, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/cold9, /datum/disease/cold)
+		virus_candidates += list(/datum/disease/flu, /datum/disease/cold9)
 
 		//The more dangerous ones
 		virus_candidates += list(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)
 
 		//The wacky ones
-		virus_candidates += list(/datum/disease/dnaspread, /datum/disease/magnitis, /datum/disease/anxiety, /datum/disease/pierrot_throat)
+		virus_candidates += list(/datum/disease/magnitis, /datum/disease/anxiety)
 
 		//The rest of the diseases either aren't conventional "diseases" or are too unique/extreme to be considered for a normal event
 		virus_type = pick(virus_candidates)
@@ -168,11 +168,12 @@
 			else
 				return ADMIN_CANCEL_EVENT
 
-		chosen_max_symptoms = tgui_input_number(usr, "How many symptoms do you want your virus to have?", "A pox upon ye!", 4, 15)
+		chosen_max_symptoms = tgui_input_number(usr, "How many symptoms do you want your virus to have?", "A pox upon ye!", 4, 7, 1)
 
 	else
 		chosen_severity = null
 		chosen_max_symptoms = null
+		return
 
 	if(tgui_alert(usr,"Are you happy with your selections?", "Epidemic warning, Standby!", list("Yes", "Cancel")) != "Yes")
 		return ADMIN_CANCEL_EVENT
@@ -289,11 +290,12 @@
 		if(!chosen_symptom)
 			CRASH("Advanced disease could not pick a symptom!")
 
-		//Checks if the last chosen symptom is severe enough to meet requested severity. If not, pick a new symptom.
-		if(symptoms.len == (max_symptoms - 1) && (current_severity < requested_severity) && (chosen_symptom.severity < requested_severity))
-			continue
-
+		//Checks if the chosen symptom is severe enough to meet requested severity. If not, pick a new symptom.
+		//If we've met requested severity already, we don't care and will keep the chosen symptom.
 		var/datum/symptom/new_symptom = new chosen_symptom
+
+		if((current_severity < requested_severity) && (new_symptom.severity < requested_severity))
+			continue
 
 		symptoms += new_symptom
 
@@ -302,13 +304,13 @@
 			name = "[new_symptom.illness]"
 			current_severity = new_symptom.severity
 
-	//Roll the additional traits. Can be one, both, or neither.
-	if(prob(50))
-		symptoms += new /datum/symptom/youth
-		name = "Advanced [name]"
+	//Finalize the generated virus with EY on the end.
+	symptoms += new /datum/symptom/youth
 
-	if(prob(50))
-		symptoms += new /datum/symptom/viralevolution
+	//Advanced variants have increased resistance but spread slower
+	if(prob(40))
+		symptoms += new /datum/symptom/viraladaptation
+		name = "Advanced [name]"
 
 	Refresh()
 
@@ -322,31 +324,32 @@
  * If the virus is airborne, also don't hide it.
  */
 /datum/disease/advance/random/event/AssignProperties()
-	var/transmissibility = rand(1, 100)
 
-	addtimer(CALLBACK(src, PROC_REF(MakeVisible)), ((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(makeVisible)), ((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS)
 
 	if(length(properties))
 		spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // Can be between 5 and 10
-		stage_prob = max(0.5 * properties["stage_rate"], 1)
+		stage_prob = max(0.4 * properties["stage_rate"], 1)
 		SetSeverity(properties["severity"])
 		visibility_flags |= HIDDEN_SCANNER
 
-		switch(severity)
-			if("Dangerous", "BIOHAZARD")
-				visibility_flags &= ~HIDDEN_SCANNER
-				SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
+		if(severity == "Dangerous" || severity == "BIOHAZARD")
+			visibility_flags &= ~HIDDEN_SCANNER
+			SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
+			return
 
-			else if(transmissibility < ADV_SPREAD_LOW)
-				SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
+		var/transmissibility = rand(1, 100)
 
-			else if(transmissibility < ADV_SPREAD_MID)
-				SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
+		if(transmissibility < ADV_SPREAD_LOW)
+			SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
 
-			else
-				SetSpread(DISEASE_SPREAD_AIRBORNE)
-				visibility_flags &= ~HIDDEN_SCANNER
+		else if(transmissibility < ADV_SPREAD_MID)
+			SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
+
+		else
+			SetSpread(DISEASE_SPREAD_AIRBORNE)
+			visibility_flags &= ~HIDDEN_SCANNER
 
 	else
 		CRASH("Advanced virus properties were empty or null!")
