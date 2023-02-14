@@ -8,3 +8,4 @@ linux_scripts:
   WatchdogLaunch.sh: tools/tgs_scripts/WatchdogLaunch.sh
 windows_scripts:
   PreCompile.bat: tools/tgs_scripts/PreCompile.bat
+security: Trusted
