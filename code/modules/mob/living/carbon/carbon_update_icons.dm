@@ -470,7 +470,7 @@
 		var/old_key = icon_render_keys?[limb.body_zone] //Checks the mob's icon render key list for the bodypart
 		icon_render_keys[limb.body_zone] = (limb.is_husked) ? limb.generate_husk_key().Join() : limb.generate_icon_key().Join() //Generates a key for the current bodypart
 
-		if(icon_render_keys[limb.body_zone] != old_key) //If the keys match, that means the limb doesn't need to be redrawn
+		if(icon_render_keys[limb.body_zone] != old_key || get_top_offset() != last_top_offset) //If the keys match, that means the limb doesn't need to be redrawn
 			needs_update += limb
 
 	var/list/missing_bodyparts = get_missing_limbs()
@@ -485,13 +485,16 @@
 	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		var/bodypart_icon = limb.get_limb_icon()
-		if(!istype(limb, /obj/item/bodypart/leg))
-			var/top_offset = get_top_offset()
-			for(var/image/image as anything in bodypart_icon)
-				image.pixel_y += top_offset
-		new_limbs += bodypart_icon
-		limb_icon_cache[icon_render_keys[limb.body_zone]] = bodypart_icon //Caches the icon with the bodypart key, as it is new
+		if(limb in needs_update)
+			var/bodypart_icon = limb.get_limb_icon()
+			if(!istype(limb, /obj/item/bodypart/leg))
+				var/top_offset = get_top_offset()
+				for(var/image/image as anything in bodypart_icon)
+					image.pixel_y += top_offset
+			new_limbs += bodypart_icon
+			limb_icon_cache[icon_render_keys[limb.body_zone]] = bodypart_icon //Caches the icon with the bodypart key, as it is new
+		else
+			new_limbs += limb_icon_cache[icon_render_keys[limb.body_zone]] //Pulls existing sprites from the cache
 		last_top_offset = get_top_offset()
 
 

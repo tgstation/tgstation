@@ -16,25 +16,21 @@
 /datum/unit_test/limb_hight_adjustment/Run()
 	var/mob/living/carbon/human/john_doe = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/species/monkey/monkey = allocate(/mob/living/carbon/human/species/monkey)
-	var/mob/living/carbon/human/species/tallboy/tallboy = allocate(/mob/living/carbon/human/species/tallboy)
-	var/mob/living/carbon/human/mad_surgeon = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/tallboy = allocate(/mob/living/carbon/human/consistent)
+
+	tallboy.set_species(tallboy)
 	TEST_ASSERT_EQUAL(john_doe.get_top_offset(), 0, "John Doe found to have a top offset other than zero.")
 	TEST_ASSERT_EQUAL(monkey.get_top_offset(), -8, "Monkey found to have a top offset other than -8.")
 	TEST_ASSERT_EQUAL(tallboy.get_top_offset(), 23, "Tallboy human varient found to have a top offset other than 23.")
 
-	var/datum/surgery/amputation/left_leg_amputation = new(john_doe, BODY_ZONE_L_LEG, john_doe.get_bodypart(BODY_ZONE_L_LEG))
-
-	var/datum/surgery_step/sever_limb/sever_limb_left = new
-	sever_limb_left.success(mad_surgeon, john_doe, BODY_ZONE_L_ARM, null, left_leg_amputation)
 
 	var/obj/item/bodypart/leg/left/monkey/left_monky_leg = allocate(/obj/item/bodypart/leg/left/monkey)
-	if(!left_monky_leg.try_attach_limb(john_doe))
-		TEST_FAIL("Unable to attach monkey leg to John Doe")
+	var/obj/item/bodypart/leg/right/monkey/right_monky_leg = allocate(/obj/item/bodypart/leg/right/monkey)
+
+	left_monky_leg.replace_limb(john_doe, TRUE)
+
 	TEST_ASSERT_EQUAL(john_doe.get_top_offset(), 0, "John Doe has a top offset other than 0 with one human leg and one monkey leg.")
 
-	var/datum/surgery/amputation/right_leg_amputation = new(john_doe, BODY_ZONE_R_LEG, john_doe.get_bodypart(BODY_ZONE_R_LEG))
-
-	var/datum/surgery_step/sever_limb/sever_limb_right = new
-	sever_limb_right.success(mad_surgeon, john_doe, BODY_ZONE_R_ARM, null, right_leg_amputation)
+	right_monky_leg.replace_limb(john_doe, TRUE)
 
 	TEST_ASSERT_EQUAL(john_doe.get_top_offset(), -3, "John Doe has a top offset other than -3 with one monkey leg.")
