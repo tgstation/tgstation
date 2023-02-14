@@ -633,6 +633,15 @@
 	fire = 99
 	acid = 100
 
+/obj/structure/window/reinforced/plasma/spawnDebris(location)
+	. = list()
+	. += new /obj/item/shard/plasma(location)
+	. += new /obj/effect/decal/cleanable/glass/plasma(location)
+	if (reinf)
+		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
+	if (fulltile)
+		. += new /obj/item/shard/plasma(location)
+
 /obj/structure/window/reinforced/plasma/block_superconductivity()
 	return TRUE
 
