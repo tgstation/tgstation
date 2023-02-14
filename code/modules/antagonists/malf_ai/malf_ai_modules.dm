@@ -363,7 +363,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	uses = 1
 	/// Badmin / exploit abuse prevention.
 	/// Check tick may sleep in activate() and we don't want this to be spammable.
-	var/hack_in_progess = FALSE
+	var/hack_in_progress  = FALSE
 
 /datum/action/innate/ai/lockdown/IsAvailable(feedback)
 	return ..() && !hack_in_progess
