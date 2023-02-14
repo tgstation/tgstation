@@ -18,7 +18,7 @@
 	var/should_give_codewords = TRUE
 	///since the module purchasing is built into the antag info, we need to keep track of its compact mode here
 	var/module_picker_compactmode = FALSE
-	///Give zeroth law or no
+	/// Do we give them a zeroth law?
 	var/give_zeroth_laws = TRUE 
 
 /datum/antagonist/malf_ai/New(give_objectives = TRUE)

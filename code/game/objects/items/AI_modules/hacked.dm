@@ -75,7 +75,7 @@
 			R.law_change_counter++
 			CHECK_TICK
 	malf_candidate.malf_picker.processing_time += 50
-	to_chat(malf_candidate, span_notice("The virus enchanced your system, increasing your processing time by 50."))
+	to_chat(malf_candidate, span_notice("The virus enhanced your system, overclocking your CPU 50-fold."))
 	functional = FALSE
 	name = "Broken AI Module"
 	desc = "A law upload module, it is broken and non-functional."

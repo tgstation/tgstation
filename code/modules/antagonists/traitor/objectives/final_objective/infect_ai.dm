@@ -26,7 +26,7 @@
 		//remove areas too close to the destination, too obvious for our poor shmuck, or just unfair
 		if(istype(possible_area, /area/station/hallway) || istype(possible_area, /area/station/security))
 			possible_areas -= possible_area
-	if(length(possible_areas) == 0)
+	if(!length(possible_areas))
 		return FALSE
 	board_area_pickup = pick(possible_areas)
 	replace_in_name("%AREA%", initial(board_area_pickup.name))
