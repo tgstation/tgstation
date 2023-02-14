@@ -34,4 +34,4 @@
 
 	right_monky_leg.replace_limb(john_doe, TRUE)
 
-	TEST_ASSERT_EQUAL(john_doe.get_top_offset(), -3, "John Doe has a top offset other than -3 with one monkey leg.")
+	TEST_ASSERT_EQUAL(john_doe.get_top_offset(), -3, "John Doe has a top offset other than -3 with two monkey legs.")
