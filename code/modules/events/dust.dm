@@ -7,6 +7,7 @@
 	alert_observers = FALSE
 	category = EVENT_CATEGORY_SPACE
 	description = "A single space dust is hurled at the station."
+	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event/space_dust
 	start_when = 1
@@ -25,6 +26,8 @@
 	max_occurrences = 3
 	earliest_start = 25 MINUTES
 	category = EVENT_CATEGORY_SPACE
+	min_wizard_trigger_potency = 4
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/space_dust/major_dust
 	start_when = 6

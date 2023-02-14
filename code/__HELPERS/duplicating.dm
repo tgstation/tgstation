@@ -1,14 +1,15 @@
 ///List of all vars that will not be copied over when using duplicate_object()
 GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
+	"AIStatus",
 	"actions",
 	"active_hud_list",
 	"active_timers",
-	"AIStatus",
 	"appearance",
 	"area",
 	"atmos_adjacent_turfs",
 	"bodyparts",
 	"ckey",
+	"client_mobs_in_contents",
 	"comp_lookup",
 	"computer_id",
 	"contents",
@@ -38,11 +39,13 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
 	"quirks",
 	"reagents",
 	"signal_procs",
-	"status_traits",
 	"stat",
+	"status_effects",
+	"status_traits",
 	"tag",
 	"tgui_shared_states",
 	"type",
+	"update_on_z",
 	"vars",
 	"verbs",
 	"x", "y", "z",
@@ -78,16 +81,17 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 			var/mob/living/carbon/original_carbon = original
 			var/mob/living/carbon/copied_carbon = made_copy
 			//transfer DNA over (also body features), then update skin color.
-			original_carbon.dna.transfer_identity(copied_carbon, transfer_SE = TRUE)
+			original_carbon.dna.copy_dna(copied_carbon.dna)
 			copied_carbon.updateappearance(mutcolor_update = TRUE)
 
 		var/mob/living/original_living = original
+		var/mob/living/copied_living = made_copy
 		//transfer implants, we do this so the original's implants being removed won't destroy ours.
 		for(var/obj/item/implant/original_implants as anything in original_living.implants)
 			var/obj/item/implant/copied_implant = new original_implants.type
 			copied_implant.implant(made_copy, silent = TRUE, force = TRUE)
 		//transfer quirks, we do this because transfering the original's quirks keeps the 'owner' as the original.
 		for(var/datum/quirk/original_quirks as anything in original_living.quirks)
-			original_living.add_quirk(original_quirks.type)
+			copied_living.add_quirk(original_quirks.type)
 
 	return made_copy

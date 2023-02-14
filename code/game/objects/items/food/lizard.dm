@@ -191,7 +191,7 @@
 	icon_state = "brain_pate"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 8,
-		/datum/reagent/liquidgibs = 2,
+		/datum/reagent/consumable/liquidgibs = 2,
 	)
 	tastes = list("brains" = 2)
 	foodtypes = MEAT | VEGETABLES | GORE
@@ -641,7 +641,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 10,
 		/datum/reagent/blood = 8,
-		/datum/reagent/liquidgibs = 2,
+		/datum/reagent/consumable/liquidgibs = 2,
 	)
 	tastes = list("vinegar" = 1, "metal" = 1)
 	foodtypes = MEAT | VEGETABLES | GORE
@@ -805,6 +805,7 @@
 	tastes = list("slime" = 1, "burning" = 1, "salt" = 1)
 	foodtypes = SEAFOOD | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	preserved_food = TRUE
 
 /obj/item/food/desert_snails
 	name = "canned desert snails"
@@ -818,6 +819,7 @@
 	tastes = list("snails" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	preserved_food = TRUE
 
 /obj/item/food/larvae
 	name = "canned bee larva"
@@ -831,3 +833,4 @@
 	tastes = list("sweet bugs" = 1)
 	foodtypes = MEAT | GORE | BUGS
 	w_class = WEIGHT_CLASS_SMALL
+	preserved_food = TRUE

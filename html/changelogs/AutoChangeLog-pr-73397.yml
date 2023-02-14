@@ -1,0 +1,5 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Sitting on benches no longer gives you a weird offset that makes you look like you're standing on them."
+  - bugfix: "Returns benches to their original light brown color, rather than the middle between brown and cyan that they were at for a bit."

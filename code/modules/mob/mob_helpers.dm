@@ -398,6 +398,7 @@
 	if(mind)
 		if(mind.assigned_role.policy_index)
 			. += mind.assigned_role.policy_index
+		. += mind.assigned_role.title //A bit redunant, but both title and policy index are used
 		. += mind.special_role //In case there's something special leftover, try to avoid
 		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
 			. += "[antag_datum.type]"
@@ -474,3 +475,46 @@
 	else if(iscarbon(mob) || isAI(mob) || isbrain(mob))
 		divided_health = abs(HEALTH_THRESHOLD_DEAD - mob.health) / abs(HEALTH_THRESHOLD_DEAD - mob.maxHealth)
 	return divided_health * 100
+
+/**
+ * Generates a log message when a user manually changes their targeted zone.
+ * Only need to one of new_target or old_target, and the other will be auto populated with the current selected zone.
+ */
+/mob/proc/log_manual_zone_selected_update(source, new_target, old_target)
+	if(!new_target && !old_target)
+		CRASH("Called log_manual_zone_selected_update without specifying a new or old target")
+
+	old_target ||= zone_selected
+	new_target ||= zone_selected
+	if(old_target == new_target)
+		return
+
+	var/list/data = list(
+		"new_target" = new_target,
+		"old_target" = old_target,
+	)
+
+	if(mind?.assigned_role)
+		data["assigned_role"] = mind.assigned_role.title
+	if(job)
+		data["assigned_job"] = job
+
+	var/atom/handitem = get_active_held_item()
+	if(handitem)
+		data["active_item"] = list(
+			"type" = handitem.type,
+			"name" = handitem.name,
+		)
+
+	var/atom/offhand = get_inactive_held_item()
+	if(offhand)
+		data["offhand_item"] = list(
+			"type" = offhand.type,
+			"name" = offhand.name,
+		)
+
+	GLOB.logger.Log(
+		LOG_CATEGORY_TARGET_ZONE_SWITCH,
+		"[key_name(src)] manually changed selected zone",
+		data,
+	)

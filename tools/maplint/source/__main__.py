@@ -13,31 +13,49 @@ def green(text):
 def red(text):
     return "\033[31m" + str(text) + "\033[0m"
 
-def process_dmm(map_filename, lints):
-    problems = []
+def process_dmm(map_filename, lints: dict[str, lint.Lint]) -> list[MaplintError]:
+    problems: list[MaplintError] = []
 
     with open(map_filename, "r") as file:
         try:
             map_data = dmm.parse_dmm(file)
         except MaplintError as error:
-            problems.append(red(f"Error parsing map.\n  {error}") + traceback.format_exc())
+            problems.append(error)
+            # No structured data to lint.
+            return problems
 
         for lint_name, lint in lints.items():
             try:
-                for result in lint.run(map_data):
-                    tail = f"\n  {lint.help}" if lint.help is not None else ""
-                    problems.append(f"{red(lint_name)}: {result}{tail}")
+                problems.extend(lint.run(map_data))
             except KeyboardInterrupt:
                 raise
             except Exception:
-                problems.append(f"{red('An exception occurred, this is either a bug in maplint or a bug in a lint.')}\n{traceback.format_exc()}")
+                problems.append(MaplintError(
+                    f"An exception occurred, this is either a bug in maplint or a bug in a lint. \n{traceback.format_exc()}",
+                    lint_name,
+                ))
 
     return problems
 
+def print_error(message: str, filename: str, line_number: int, github_error_style: bool):
+    if github_error_style:
+        print(f"::error file={filename},line={line_number},title=DMM Linter::{message}")
+    else:
+        print(red(f"- Error parsing {filename} (line {line_number}): {message}"))
+
+def print_maplint_error(error: MaplintError, github_error_style: bool):
+    print_error(
+        f"{f'(in pop {error.pop_id}) ' if error.pop_id else ''}{f'(at {error.coordinates}) ' if error.coordinates else ''}{error}",
+        error.file_name,
+        error.line_number,
+        github_error_style,
+    )
+
 def main(args):
     any_failed = False
+    github_error_style = args.github
 
-    lints = {}
+    lints: dict[str, lint.Lint] = {}
 
     lint_base = pathlib.Path(__file__).parent.parent / "lints"
     lint_filenames = []
@@ -48,12 +66,12 @@ def main(args):
 
     for lint_filename in lint_filenames:
         try:
-            lints[lint_filename.stem] = lint.Lint(yaml.safe_load(lint_filename.read_text()))
+            lints[lint_filename] = lint.Lint(yaml.safe_load(lint_filename.read_text()))
         except MaplintError as error:
-            print(red(f"Error loading {lint_filename.stem}.\n  ") + str(error))
+            print_maplint_error(error, github_error_style)
             any_failed = True
         except Exception:
-            print(red(f"Error loading {lint_filename.stem}."))
+            print_error("Error loading lint file.", lint_filename, 1, github_error_style)
             traceback.print_exc()
             any_failed = True
 
@@ -61,19 +79,22 @@ def main(args):
         print(map_filename, end = " ")
 
         success = True
-        message = []
+        all_failures: list[MaplintError] = []
 
         try:
             problems = process_dmm(map_filename, lints)
             if len(problems) > 0:
                 success = False
-                message += problems
+                all_failures.extend(problems)
         except KeyboardInterrupt:
             raise
         except Exception:
             success = False
 
-            message.append(f"{red('An exception occurred, this is either a bug in maplint or a bug in a lint.')}\n{traceback.format_exc()}")
+            all_failures.append(MaplintError(
+                f"An exception occurred, this is either a bug in maplint or a bug in a lint.' {traceback.format_exc()}",
+                map_filename,
+            ))
 
         if success:
             print(green("OK"))
@@ -81,8 +102,8 @@ def main(args):
             print(red("X"))
             any_failed = True
 
-        for line in message:
-            print(f"- {line}")
+        for failure in all_failures:
+            print_maplint_error(failure, github_error_style)
 
     if any_failed:
         exit(1)
@@ -95,6 +116,7 @@ if __name__ == "__main__":
 
     parser.add_argument("maps", nargs = "*")
     parser.add_argument("--lints", nargs = "*")
+    parser.add_argument("--github", action='store_true')
 
     args = parser.parse_args()
 
