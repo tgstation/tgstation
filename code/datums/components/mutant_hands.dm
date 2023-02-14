@@ -60,17 +60,14 @@
 		// This slot is already a mutant hand
 		if(istype(hand_slot, mutant_hand_path))
 			continue
-		message_admins("Checking [hand_slot || "nothing"]")
 		// This slot is not empty
 		// Yes the held item lists contains nulls to represent empty hands
 		// It saves us a /item cast by using as anything in the loop
 		if(!isnull(hand_slot))
 			if(HAS_TRAIT(hand_slot, TRAIT_NODROP) || (hand_slot.item_flags & ABSTRACT))
-				message_admins("[hand_slot] is nodrop or abstract")
 				// There's a nodrop / abstract item in the way of putting a mutant hand in
 				// It can stay, for now, but if it gets dropped / unequipped we'll swoop in to replace the slot
 				continue
-			message_admins("[hand_slot] can be dropped safely")
 			// Drop any existing non-nodrop items to the ground
 			human_parent.dropItemToGround(hand_slot)
 
@@ -140,7 +137,7 @@
 
 /**
  * Generic mutant hand type for use with the mutant hands component
- * (Technically speaking, the component doesn't require you use this type. B.ut it's here for posterity)
+ * (Technically speaking, the component doesn't require you use this type. But it's here for posterity)
  *
  * Implements nothing except changing its icon state between left and right depending on hand slot equipped in
  */
