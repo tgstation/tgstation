@@ -477,7 +477,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/structure/chair/bronze/AltClick(mob/user)
 	turns = 0
-	if(!user.canPerformAction(src, NEED_DEXTERITY|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
+	if(!user.canPerformAction(src, NEED_DEXTERITY))
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		user.visible_message(span_notice("[user] spins [src] around, and the last vestiges of Ratvarian technology keeps it spinning FOREVER."), \

@@ -41,7 +41,7 @@
 		. += span_notice("Insert [src] into an active quantum pad to link it.")
 
 /obj/item/quantum_keycard/AltClick(mob/living/user)
-	if(!istype(user) || !user.canPerformAction(src, NEED_DEXTERITY|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
+	if(!istype(user) || !user.canPerformAction(src, NEED_DEXTERITY))
 		return
 	to_chat(user, span_notice("You start pressing [src]'s unlink button..."))
 	if(do_after(user, 40, target = src))

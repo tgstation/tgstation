@@ -143,7 +143,7 @@
 				other_players = other_players)
 
 /obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers, flip_card = FALSE)
-	if(!ishuman(user) || !user.canPerformAction(src, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
+	if(!ishuman(user) || !user.canPerformAction(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
 		return
 
 	var/obj/item/toy/singlecard/card = draw(user)
@@ -160,7 +160,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/toy/cards/deck/AltClick(mob/living/user)
-	if(user.canPerformAction(src, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
+	if(user.canPerformAction(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
 		if(wielded)
 			shuffle_cards(user)
 		else

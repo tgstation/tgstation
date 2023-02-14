@@ -70,7 +70,7 @@
 	return
 
 /obj/item/clothing/accessory/attack_self_secondary(mob/user)
-	if(user.canPerformAction(src, NEED_DEXTERITY|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
+	if(user.canPerformAction(src, NEED_DEXTERITY))
 		above_suit = !above_suit
 		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
 		return

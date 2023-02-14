@@ -310,7 +310,7 @@
 	if(.)
 		return
 
-	if(!user.canPerformAction(src, NEED_DEXTERITY|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
+	if(!user.canPerformAction(src, NEED_DEXTERITY))
 		return
 	if(attached_accessory)
 		remove_accessory(user)

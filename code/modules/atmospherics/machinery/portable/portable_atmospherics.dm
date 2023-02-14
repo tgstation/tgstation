@@ -159,7 +159,7 @@
 
 /obj/machinery/portable_atmospherics/AltClick(mob/living/user)
 	. = ..()
-	if(!istype(user) || !user.canPerformAction(src, NEED_DEXTERITY|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION) || !can_interact(user))
+	if(!istype(user) || !user.canPerformAction(src, NEED_DEXTERITY) || !can_interact(user))
 		return
 	if(!holding)
 		return

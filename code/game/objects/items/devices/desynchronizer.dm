@@ -33,10 +33,10 @@
 	. += span_notice("Can be used again to interrupt the effect early. The recharge time is the same as the time spent in desync.")
 
 /obj/item/desynchronizer/AltClick(mob/living/user)
-	if(!user.canPerformAction(src, NEED_DEXTERITY|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
+	if(!user.canPerformAction(src, NEED_DEXTERITY))
 		return
 	var/new_duration = tgui_input_number(user, "Set the duration", "Desynchronizer", duration / 10, max_duration, 5)
-	if(!new_duration || QDELETED(user) || QDELETED(src) || !usr.canPerformAction(src, NEED_DEXTERITY|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
+	if(!new_duration || QDELETED(user) || QDELETED(src) || !usr.canPerformAction(src, NEED_DEXTERITY))
 		return
 	duration = new_duration
 	to_chat(user, span_notice("You set the duration to [DisplayTimeText(duration)]."))

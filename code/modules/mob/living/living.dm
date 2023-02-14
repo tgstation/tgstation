@@ -1203,18 +1203,20 @@
 	return usable_hands && ..()
 
 /mob/living/canPerformAction(atom/movable/target, action_bitflags)
+	// If the MOBILITY_UI bitflag is not set it indicates the mob's hands are cutoff, blocked, or handcuffed
+	// Note - AI's and borgs have the MOBILITY_UI bitflag set even though they don't have hands
+	// Also if it is not set, the mob could be incapcitated, knocked out, unconscious, asleep, EMP'd, etc.
 	if(!(mobility_flags & MOBILITY_UI) && !(action_bitflags & ALLOW_RESTING))
 		to_chat(src, span_warning("You can't do that right now!"))
 		return FALSE
 
-	if((action_bitflags & NEED_HANDS) && !(iscyborg(src) && (action_bitflags & CYBORG_IGNORE_HAND_RESTRICTION)))
+	// NEED_HANDS is already checked by MOBILITY_UI for humans so this is for silicons
+	if((action_bitflags & NEED_HANDS))
 		if(!can_hold_items(isitem(target) ? target : null)) // almost redundant if it weren't for mobs
 			to_chat(src, span_warning("You don't have the physical ability to do this!"))
 			return FALSE
 
-	// ALLOW_SILICON_REACH needs to check range?
-	// check to make sure robots can't use this from halfway across a map
-	if(!(action_bitflags & ALLOW_SILICON_REACH) && !Adjacent(target) && (target.loc != src)) // double check we need the last tenary operator
+	if(!(action_bitflags & ALLOW_SILICON_REACH) && !Adjacent(target) && (target.loc != src))
 		if((action_bitflags & FORBID_TELEKINESIS_REACH))
 			to_chat(src, span_warning("You are too far away!"))
 			return FALSE

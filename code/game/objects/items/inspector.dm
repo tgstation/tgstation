@@ -77,7 +77,7 @@
 	return ..()
 
 /obj/item/inspector/CtrlClick(mob/living/user)
-	if(!user.canPerformAction(src, NEED_DEXTERITY|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION) || !cell_cover_open || !cell)
+	if(!user.canPerformAction(src, NEED_DEXTERITY) || !cell_cover_open || !cell)
 		return ..()
 	user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
 		span_notice("You remove [cell]."))

@@ -138,7 +138,7 @@ LINEN BINS
 
 /obj/item/bedsheet/AltClick(mob/living/user)
 	// double check the canUseTopic args to make sure it's correct
-	if(!istype(user) || !user.canPerformAction(src, NEED_DEXTERITY|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
+	if(!istype(user) || !user.canPerformAction(src, NEED_DEXTERITY))
 		return
 	dir = turn(dir, 180)
 
