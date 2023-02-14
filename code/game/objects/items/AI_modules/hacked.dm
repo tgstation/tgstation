@@ -36,7 +36,7 @@
 
 /obj/item/ai_module/malf // Gives syndie laws as well as making AI malf
 	name = "Infected AI Module"
-	desc = "An AI Module, infected with a virus."
+	desc = "An virus-infected AI Module."
 	bypass_law_amt_check = TRUE
 	laws = list("")
 	var/functional = TRUE
