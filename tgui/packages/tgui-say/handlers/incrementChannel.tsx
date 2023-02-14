@@ -44,6 +44,6 @@ export const handleIncrementChannel = function (this: Modal) {
   }
   this.setState({
     buttonContent: CHANNELS[channel],
-    channel: channel,
+    channel,
   });
 };
