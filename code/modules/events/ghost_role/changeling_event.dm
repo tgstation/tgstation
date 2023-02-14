@@ -89,6 +89,13 @@
 	hitpwr = EXPLODE_LIGHT
 	threat = 100
 	signature = "xenobiological lifesign" //In the extremely unlikely one-in-a-million chance that one of these gets reported by the stray meteor event
+	///The turf we want our changeling to, by whatever means, end up at.
+	var/atom/landing_target
+
+/obj/effect/meteor/meaty/changeling/Initialize(mapload, turf/target)
+	. = ..()
+
+	landing_target = target
 
 /obj/effect/meteor/meaty/changeling/meteor_effect()
 	..()
@@ -100,37 +107,16 @@
 	return //So we don't instantly smash into our occupant upon unloading them.
 
 /obj/effect/meteor/meaty/changeling/shield_defense(obj/machinery/satellite/meteor_shield/defender)
-	catapult(defender)
+	landing_target = defender
 	..()
 
 /obj/effect/meteor/meaty/changeling/handle_stopping() //If the meteor misses the station and deletes itself, we make absolutely sure the changeling reaches the station.
-	if(dest)
-		catapult(dest)
-	else
-		var/obj/effect/landmark/observer_start/backup_target = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
-		catapult(backup_target) //If our destination turf is gone for some reason, we chuck them at
-	..()						//the observer_start landmark (usually at the center of the station) as a last resort.
+	if(!landing_target)
+		landing_target = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list //If our destination turf is gone for some reason, we chuck them at the observer_start landmark (usually at the center of the station) as a last resort.
 
-/obj/effect/meteor/meaty/changeling/Destroy()
-	for(var/atom/movable/child in contents) //If we get deleted and somehow still have contents, that's bad.
-		child.forceMove(get_turf(src)) //We still eject the occupant, who will probably have to float their way to the station with the tentacle mutation.
-		log_runtime("Changeling meteor destroyed self before ejecting contents!")
-
-	. = ..()
-
-/**
- * Launches the meteor contents at the meteor destination atom.
- *
- * Performs an emergency ejection of the meteor's contents, launching them towards the meteor destination atom.
- * If the turf is gone, we pick a new emergency location to send them towards. Used to ensure the changeling is still
- * able to play the game if the meteor encounters an issue.
- *
- * Arguments:
- * * target - The thing we're launching our contents towards.
- */
-
-/obj/effect/meteor/meaty/changeling/proc/catapult(atom/target)
 	for(var/atom/movable/child in contents)
 		child.forceMove(get_turf(src))
-		child.throw_at(target, 1, 1)
-		to_chat(child, span_changeling("Sensing that something is terribly wrong, we forcibly eject ourselves from the [name]!"))
+		child.throw_at(landing_target, 2, 2)
+		child.visible_message(span_warning("[child] is launched out from inside of the [name]"), span_changeling("Sensing that something is terribly wrong, we forcibly eject ourselves from the [name]!"))
+
+	..()

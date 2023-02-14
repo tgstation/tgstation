@@ -138,7 +138,6 @@ GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect
 	z_original = z
 	GLOB.meteor_list += src
 	SSaugury.register_doom(src, threat)
-	dest = target
 	SpinAnimation()
 	chase_target(target)
 
