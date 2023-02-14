@@ -148,3 +148,6 @@
 	else if(modify_type == REMOVE_BUFF)
 		our_lungs.plas_breath_dam_min = initial(our_lungs.plas_breath_dam_min)
 		our_lungs.plas_breath_dam_max = initial(our_lungs.plas_breath_dam_max)
+
+#undef APPLY_BUFF
+#undef REMOVE_BUFF
