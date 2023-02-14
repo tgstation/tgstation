@@ -1008,8 +1008,9 @@
  * * NEED_LIGHT - If lighting must be present to perform action (can't heal someone in the dark)
  * * NEED_DEXTERITY - If other mobs (monkeys, aliens, etc) can perform action (can't use computers if you are a monkey)
  * * NEED_HANDS - If hands are required to perform action (can't pickup items if you are a cyborg)
- * * FORBID_TELEKINESIS_REACH - If telekinesis is forbidden to perform action from a distance (telekinesis can push buttons from far away)
+ * * FORBID_TELEKINESIS_REACH - If telekinesis is forbidden to perform action from a distance (ex. canisters are blacklisted from telekinesis manipulation)
  * * ALLOW_SILICON_REACH - If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
+ * * ALLOW_RESTING - If resting on the floor is allowed to perform action ()
 **/
 /mob/proc/canPerformAction(atom/movable/target, action_bitflags)
 	return

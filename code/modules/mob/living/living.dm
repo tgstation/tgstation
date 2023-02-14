@@ -1219,18 +1219,31 @@
 			to_chat(src, span_warning("You don't have the physical ability to do this!"))
 			return FALSE
 
-	if(!(action_bitflags & ALLOW_SILICON_REACH) && !Adjacent(target) && (target.loc != src))
-		if((action_bitflags & FORBID_TELEKINESIS_REACH))
-			to_chat(src, span_warning("You are too far away!"))
-			return FALSE
+	if(!(action_bitflags & ALLOW_SILICON_REACH && iscarbon(src))) // silicons can ignore range checks
+		if(!Adjacent(target) && (target.loc != src))
+			if((action_bitflags & FORBID_TELEKINESIS_REACH))
+				to_chat(src, span_warning("You are too far away!"))
+				return FALSE
 
-		var/datum/dna/mob_DNA = has_dna()
-		if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, target))
-			to_chat(src, span_warning("You are too far away!"))
-			return FALSE
+			var/datum/dna/mob_DNA = has_dna()
+			if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, target))
+				to_chat(src, span_warning("You are too far away!"))
+				return FALSE
 
 	if((action_bitflags & NEED_DEXTERITY) && !ISADVANCEDTOOLUSER(src))
 		to_chat(src, span_warning("You don't have the dexterity to do this!"))
+		return FALSE
+
+	if((action_bitflags & NEED_LITERACY) && !is_literate())
+		to_chat(src, span_warning("You can't comprehend any of this!"))
+		return FALSE
+
+	if((action_bitflags & NEED_LIGHT) && !has_light_nearby() && !has_nightvision())
+		to_chat(src, span_warning("You need more light to do this!"))
+		return FALSE
+
+	if((action_bitflags & NEED_GRAVITY) && !has_gravity())
+		to_chat(src, span_warning("You need gravity to do this!"))
 		return FALSE
 
 	return TRUE

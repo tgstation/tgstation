@@ -448,7 +448,7 @@
 /obj/item/healthanalyzer/AltClick(mob/user)
 	..()
 
-	if(!user.canPerformAction(src) || !user.can_read(src) || user.is_blind())
+	if(!user.canPerformAction(src, NEED_LITERACY|NEED_LIGHT) || user.is_blind())
 		return
 
 	mode = !mode
