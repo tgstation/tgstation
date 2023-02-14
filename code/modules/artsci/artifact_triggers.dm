@@ -1,13 +1,22 @@
+/* WOE
+	Here are Stimuli for artifacts. They decide what way you need to activate them.
+	What applies what stimulus is actually handled by the artifact itself, these datums serve to give them a name, and all those cool variables
+	So far, artifacts should need higher tier parts for machines to be able to dish out higher stimuli.
+	Stimulus base_amount needed is multiplied by the artifact type, so more potent artifacts need higher stimuli.
+*/
 /datum/artifact_trigger
 	var/name = "Call coderbus!"
 	///stimulus like STIMULUS_CARBON_TOUCH
 	var/needed_stimulus
 	var/check_amount = TRUE
-	///stimulus severity to trigger
-	var/stimulus_amount = 0
-	///Either "<=" or ">=", what operator to use for stimulus amount
+	///base stimulus severity for math magic... base_amount + (max_amount - base_amount) * percentage...
+	var/base_amount = 0
+	var/max_amount = 0
+	///stimulus severity needed to activate, changed after setup()..
+	var/amount = 0
+	///Either "<=" or ">=", what operator to use for stimulus base_amount
 	var/stimulus_operator = ">="
-	///Probability for a hint to be shown when the stimulus is hint_range close to the needed stimuli amount.
+	///Probability for a hint to be shown when the stimulus is hint_range close to the needed stimuli base_amount.
 	var/hint_range = 0
 	var/hint_prob = 35
 
@@ -26,45 +35,47 @@
 	needed_stimulus = STIMULUS_FORCE
 	hint_range = 20
 	hint_prob = 75
+	max_amount = 35
 
 /datum/artifact_trigger/force/New()
 		..()
-		stimulus_amount = rand(2,30)
+		base_amount = rand(2,15)
 
 /datum/artifact_trigger/heat
 	name = "Heat"
 	needed_stimulus = STIMULUS_HEAT
 	hint_range = 20
+	max_amount = 10000
 
 /datum/artifact_trigger/heat/New()
 		..()
-		stimulus_amount = rand(320,950)
+		base_amount = rand(320,950)
 
 /datum/artifact_trigger/cold
 	name = "Cold"
 	needed_stimulus = STIMULUS_HEAT
 	hint_range = 20
 	stimulus_operator = "<="
+	max_amount = 300
 
 /datum/artifact_trigger/cold/New()
 		..()
-		stimulus_amount = rand(170,300)
+		base_amount = rand(43,270)
 
 /datum/artifact_trigger/shock
 	name = "Electricity"
 	needed_stimulus = STIMULUS_SHOCK
+	max_amount = 10000
 
 /datum/artifact_trigger/shock/New()
 		..()
-		stimulus_amount = rand(400,1200)
+		base_amount = rand(400,1200)
 
 /datum/artifact_trigger/radiation
 	name = "Radiation"
 	needed_stimulus = STIMULUS_RADIATION
-
-/datum/artifact_trigger/radiation/New()
-		..()
-		stimulus_amount = rand(1,10)
+	max_amount = 10
+	base_amount = 1
 
 /datum/artifact_trigger/data
 	name = "Data"

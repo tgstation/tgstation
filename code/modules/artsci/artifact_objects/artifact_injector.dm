@@ -1,6 +1,6 @@
 /obj/structure/artifact/injector
-	assoc_datum = /datum/artifact/injector
-/datum/artifact/injector
+	assoc_comp = /datum/component/artifact/injector
+/datum/component/artifact/injector
 	associated_object = /obj/structure/artifact/injector
 	weight = 550
 	type_name = "Injector"
@@ -12,8 +12,8 @@
 	var/cooldown_time = 10 SECONDS
 	COOLDOWN_DECLARE(activation_cooldown)
 
-/datum/artifact/injector/setup()
-	..()
+/datum/component/artifact/injector/setup()
+	. = ..()
 	holder.create_reagents(200, NO_REACT | SEALED_CONTAINER)
 	reagent_amount = rand(10,25)
 	max_reagents = rand(1,2)
@@ -29,14 +29,16 @@
 		if(ORIGIN_WIZARD)
 			max_reagents = rand(1,3)
 			reagent_amount = rand(1,50)
+			potency += 5
 			for(var/i in 1 to max_reagents)
 				reagent_datums += get_random_reagent_id() // funny
 		if(ORIGIN_SILICON)
 			var/list/silicon_reagents = list(/datum/reagent/uranium, /datum/reagent/silicon, /datum/reagent/fuel/oil, /datum/reagent/toxin/leadacetate)
 			for(var/i in 1 to max_reagents)
 				reagent_datums += pick(silicon_reagents)
+	potency += reagent_amount + max_reagents
 
-/datum/artifact/injector/effect_touched(mob/living/user)
+/datum/component/artifact/injector/effect_touched(mob/living/user)
 	if(!ishuman(user) || !COOLDOWN_FINISHED(src,activation_cooldown))
 		holder.visible_message(span_smallnoticeital("[holder] does not react to [user]."))
 		return

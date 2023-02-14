@@ -159,8 +159,7 @@
 
 /obj/item/debug/artifact_activator/afterattack(atom/target, mob/user, proximity)
 	..()
-	if(istype(target, /obj/structure/artifact))
-		var/obj/structure/artifact/artifact = target
-		if(artifact.assoc_datum)
-			artifact.assoc_datum.Activate()
+	var/datum/component/artifact = target.GetComponent(/datum/component/artifact)
+	if(isobj(target) && artifact)
+		artifact.Activate()
 

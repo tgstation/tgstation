@@ -50,5 +50,6 @@
 	nouns_small = list("implement","device", "apparatus","mechanism")
 	touch_descriptors = list("It feels cold.","Touching it makes you feel uneasy..","It feels smooth.")
 	destroy_message = "sputters violently, falling apart!"
+	max_icons = 1
 /datum/artifact_origin/silicon/generate_name()
 		return "Unit-[pick(GLOB.phonetic_alphabet)] [pick(GLOB.phonetic_alphabet)] [rand(0,9000)]"

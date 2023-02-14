@@ -1,5 +1,5 @@
-/datum/artifact
-	///object related to this datum
+/datum/component/artifact
+	///object related to this datum for spawning
 	var/obj/associated_object
 	///actual specific object for this instance
 	var/obj/holder
@@ -10,7 +10,7 @@
 	///type name for displaying visually
 	var/type_name = "coderbus moment"
 	///real name of the artifact when properly analyzed
-	var/real_name = ""
+	var/real_name
 	///Is the artifact active?
 	var/active = FALSE
 	///Activate on start?
@@ -23,7 +23,7 @@
 	var/min_triggers = 1
 	var/max_triggers = 1
 	///Valid triggers to pick
-	var/list/valid_triggers = list(/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/force, /datum/artifact_trigger/heat, /datum/artifact_trigger/cold, /datum/artifact_trigger/shock, /datum/artifact_trigger/radiation, /datum/artifact_trigger/data)
+	var/list/valid_triggers = list(/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/force, /datum/artifact_trigger/heat, /datum/artifact_trigger/shock, /datum/artifact_trigger/radiation, /datum/artifact_trigger/data)
 	///origin datum
 	var/datum/artifact_origin/artifact_origin
 	///origin datums to pick
@@ -35,13 +35,17 @@
 	///Text on hint
 	var/hint_text = "emits a <i>faint</i> noise.."
 	///examine hint
-	var/examine_hint = ""
+	var/examine_hint
 	/// cool effect
 	var/mutable_appearance/act_effect
+	/// Potency in percentage, used for making more strong artifacts need more stimulus. (1% - 100%) 100 is strongest.
+	var/potency = 1
 	
-
-/datum/artifact/proc/setup(obj/art, var/forced_origin = null)
-	holder = art
+/datum/component/artifact/Initialize(var/forced_origin = null)
+	. = ..()
+	if(!isobj(parent))
+		return COMPONENT_INCOMPATIBLE
+	holder = parent
 	SSartifacts.artifacts += holder
 	if(forced_origin)
 		valid_origins = list(forced_origin)
@@ -70,9 +74,27 @@
 		valid_triggers -= selection
 		triggers += new selection()
 		trigger_amount--
-	//RegisterSignal(holder, COMSIG_IN_RANGE_OF_IRRADIATION, PROC_REF(Irradiating))
+//Seperate from initialize, for artifact inheritance funnies
+/datum/component/artifact/proc/setup()
+	potency = min(100,potency) //just incase
+	for(var/datum/artifact_trigger/trigger in triggers)
+		trigger.amount = max(trigger.base_amount,trigger.base_amount + (trigger.max_amount - trigger.base_amount) * (potency/100))
 
-/datum/artifact/proc/Activate(silent=FALSE)
+/datum/component/artifact/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_ATOM_DESTRUCTION, PROC_REF(Destroyed))
+	if(isitem(parent)) // if we registered both on an item it would call twice..
+		RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(Touched))
+	else
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(Touched))
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attack_by))
+	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(emp_act))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(ex_act))
+
+/datum/component/artifact/UnregisterFromParent()
+	SSartifacts.artifacts -= parent
+	UnregisterSignal(parent, list(COMSIG_ITEM_PICKUP,COMSIG_ATOM_ATTACK_HAND,COMSIG_ATOM_DESTRUCTION,COMSIG_PARENT_EXAMINE,COMSIG_ATOM_EMP_ACT,COMSIG_ATOM_EX_ACT))
+/datum/component/artifact/proc/Activate(silent=FALSE)
 	if(active) //dont activate activated objects
 		return FALSE
 	if(LAZYLEN(artifact_origin.activation_sounds) && !silent)
@@ -84,7 +106,12 @@
 	effect_activate()
 	return TRUE
 
-/datum/artifact/proc/Deactivate(silent=FALSE)
+/datum/component/artifact/proc/on_examine(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	if(examine_hint)
+		examine_list += examine_hint
+
+/datum/component/artifact/proc/Deactivate(silent=FALSE)
 	if(!active)
 		return
 	if(LAZYLEN(artifact_origin.deactivation_sounds) && !silent)
@@ -95,16 +122,16 @@
 	holder.cut_overlay(act_effect)
 	effect_deactivate()
 
-/datum/artifact/proc/Took_Damage(damage_amount, damage_type = BRUTE)
-	//add faults oki thank
-/datum/artifact/proc/Destroyed(silent=FALSE)
+/datum/component/artifact/proc/Destroyed(atom/source, silent=FALSE)
+	SIGNAL_HANDLER
 	//UnregisterSignal(holder, COMSIG_IN_RANGE_OF_IRRADIATION)
 	if(!silent)
 		holder.loc.visible_message(span_warning("[holder] [artifact_origin.destroy_message]"))
 	Deactivate(silent=TRUE)
-	qdel(holder)
+	if(!QDELETED(holder))
+		qdel(holder) // if it isnt already...
 ///////////// Stimuli stuff
-/datum/artifact/proc/Stimulate(var/stimuli,var/severity = 0)
+/datum/component/artifact/proc/Stimulate(var/stimuli,var/severity = 0)
 	if(!stimuli || active)
 		return
 	for(var/datum/artifact_trigger/trigger in triggers)
@@ -112,17 +139,18 @@
 			break
 		if(trigger.needed_stimulus == stimuli)
 			if(trigger.check_amount)
-				if(trigger.stimulus_operator == ">=" && severity >= trigger.stimulus_amount)
+				if(trigger.stimulus_operator == ">=" && severity >= trigger.amount)
 					Activate()
-				else if(trigger.stimulus_operator == "<=" && severity <= trigger.stimulus_amount)
+				else if(trigger.stimulus_operator == "<=" && severity <= trigger.amount)
 					Activate()
-				else if(hint_text && (severity >= trigger.stimulus_amount - trigger.hint_range && severity <= trigger.stimulus_amount + trigger.hint_range))
+				else if(hint_text && (severity >= trigger.amount - trigger.hint_range && severity <= trigger.amount + trigger.hint_range))
 					if(prob(trigger.hint_prob))
 						holder.visible_message(span_notice("[holder] [hint_text]"))
 			else
 				Activate()
 
-/datum/artifact/proc/Touched(mob/living/user)
+/datum/component/artifact/proc/Touched(atom/source,mob/living/user)
+	SIGNAL_HANDLER
 	if(!user.Adjacent(holder))
 		return
 	if(isAI(user) || isobserver(user)) //sanity
@@ -155,13 +183,14 @@
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), user, span_notice("<i>[pick(artifact_origin.touch_descriptors)]</i>")), 0.5 SECONDS)
 
 //doesnt work
-/*/datum/artifact/proc/Irradiating(datum/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
+/*/datum/artifact/proc/Irradiating(atom/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
 	SIGNAL_HANDLER
 	to_chat(world,"[get_perceived_radiation_danger(pulse_information,insulation_to_target)]")
 	if(!active)
 		Stimulate(STIMULUS_RADIATION, get_perceived_radiation_danger(pulse_information,insulation_to_target)*2)*/
 
-/datum/artifact/proc/attack_by(obj/item/I, mob/user)
+/datum/component/artifact/proc/attack_by(atom/source, obj/item/I, mob/user)
+	SIGNAL_HANDLER
 	. = TRUE
 	if(istype(I,/obj/item/weldingtool))
 		if(I.use(1))
@@ -212,28 +241,30 @@
 	if(I.force)
 		Stimulate(STIMULUS_FORCE,I.force)
 
-/datum/artifact/proc/ex_act(severity)
+/datum/component/artifact/proc/ex_act(atom/source, severity)
+	SIGNAL_HANDLER
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
-			Stimulate(STIMULUS_FORCE,200)
+			Stimulate(STIMULUS_FORCE,100)
 			Stimulate(STIMULUS_HEAT,600)
 		if(EXPLODE_HEAVY)
-			Stimulate(STIMULUS_FORCE,100)
+			Stimulate(STIMULUS_FORCE,50)
 			Stimulate(STIMULUS_HEAT,450)
 		if(EXPLODE_LIGHT)
-			Stimulate(STIMULUS_FORCE,40)
+			Stimulate(STIMULUS_FORCE,25)
 			Stimulate(STIMULUS_HEAT,360)
 
-/datum/artifact/proc/emp_act(severity)
-	Stimulate(STIMULUS_SHOCK, 800)
-	Stimulate(STIMULUS_RADIATION, 4)
+/datum/component/artifact/proc/emp_act(atom/source, severity)
+	SIGNAL_HANDLER
+	Stimulate(STIMULUS_SHOCK, 800 * severity)
+	Stimulate(STIMULUS_RADIATION, 2 * severity)
 
 ///////////// Effects for subtypes
-/datum/artifact/proc/effect_activate()
+/datum/component/artifact/proc/effect_activate()
 	return
-/datum/artifact/proc/effect_deactivate()
+/datum/component/artifact/proc/effect_deactivate()
 	return
-/datum/artifact/proc/effect_touched()
+/datum/component/artifact/proc/effect_touched()
 	return
-/datum/artifact/proc/effect_process()
+/datum/component/artifact/proc/effect_process()
 	return

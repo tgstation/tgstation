@@ -19,8 +19,8 @@ SUBSYSTEM_DEF(artifacts)
 
 	///instances of object artifacts
 	var/list/artifacts = list()
-	///artifact datums instances
-	var/list/datum/artifact/artifact_types = list()
+	///artifact comp instances
+	var/list/datum/component/artifact/artifact_types = list()
 	//var/list/artifact_types_from_name = list()
 	/// instances of origins
 	var/list/artifact_origins = list()
@@ -38,8 +38,8 @@ SUBSYSTEM_DEF(artifacts)
 		artifact_origins += origin
 		artifact_origins_by_name[origin.type_name] = origin
 		artifact_rarities[origin.type_name] = list()
-	for (var/artifact_type in subtypesof(/datum/artifact))
-		var/datum/artifact/artifact = new artifact_type
+	for (var/artifact_type in subtypesof(/datum/component/artifact))
+		var/datum/component/artifact/artifact = new artifact_type
 		artifact_types += artifact
 		//artifact_types_from_name[artifact.type_name] = artifact
 
