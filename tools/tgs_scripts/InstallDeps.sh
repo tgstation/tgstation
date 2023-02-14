@@ -23,12 +23,12 @@ if ! ( [ -x "$has_git" ] && [ -f "/usr/lib/i386-linux-gnu/libssl.so" ] ); then
 	if ! [ -x "$has_sudo" ]; then
 		dpkg --add-architecture i386
 		apt-get update
-		apt-get install -y lib32z1 git pkg-config libssl-dev:i386 libssl-dev libssl1.1:i386
+		apt-get install -y lib32z1 git pkg-config libssl-dev:i386 libssl-dev zlib1g-dev:i386
 		rm -rf /var/lib/apt/lists/*
 	else
 		sudo dpkg --add-architecture i386
 		sudo apt-get update
-		sudo apt-get install -y lib32z1 git pkg-config libssl-dev:i386 libssl-dev libssl1.1:i386
+		sudo apt-get install -y lib32z1 git pkg-config libssl-dev:i386 libssl-dev zlib1g-dev:i386
 		sudo rm -rf /var/lib/apt/lists/*
 	fi
 fi
