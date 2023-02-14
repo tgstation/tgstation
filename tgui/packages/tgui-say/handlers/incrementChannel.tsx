@@ -2,10 +2,9 @@ import { CHANNELS } from '../constants';
 import { Modal } from '../types';
 // Insert the names of channels you want to not cycle on tab here
 const BLACKLIST = ['Admin'];
-const BLACKLISTED_CHANNELS = [] as number[];
-CHANNELS.forEach((channel, index) => {
+const BLACKLISTED_CHANNEL_INDICES = CHANNELS.map((channel, index) => {
   if (BLACKLIST.includes(channel)) {
-    BLACKLISTED_CHANNELS.push(index);
+    return index;
   }
 });
 
@@ -21,10 +20,10 @@ export const handleIncrementChannel = function (this: Modal) {
     this.timers.channelDebounce({ mode: true });
   }
   this.fields.radioPrefix = '';
-  if (BLACKLISTED_CHANNELS.includes(channel)) {
+  if (BLACKLISTED_CHANNEL_INDICES.includes(channel)) {
     return;
   }
-  if (BLACKLISTED_CHANNELS.length === CHANNELS.length) {
+  if (BLACKLISTED_CHANNEL_INDICES.length === CHANNELS.length) {
     this.setState({
       buttonContent: CHANNELS[channel],
       channel: channel,
@@ -37,7 +36,7 @@ export const handleIncrementChannel = function (this: Modal) {
       this.timers.channelDebounce({ mode: true });
       channel = 0;
     }
-  } while (BLACKLISTED_CHANNELS.includes(channel));
+  } while (BLACKLISTED_CHANNEL_INDICES.includes(channel));
   if (channel === CHANNELS.indexOf('OOC')) {
     // Disables thinking indicator for OOC channel
     this.timers.channelDebounce({ mode: false });
