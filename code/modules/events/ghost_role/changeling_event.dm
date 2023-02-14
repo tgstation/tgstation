@@ -121,3 +121,6 @@
 		playsound(changeling, 'sound/effects/splat.ogg', 50, pressure_affected = FALSE)
 
 	..()
+
+/obj/effect/meteor/meaty/changeling/check_examine_award(mob/user) //We don't want this to be a free achievement that comes with the role.
+	return
