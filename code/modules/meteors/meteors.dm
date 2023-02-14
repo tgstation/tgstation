@@ -138,6 +138,7 @@ GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect
 	z_original = z
 	GLOB.meteor_list += src
 	SSaugury.register_doom(src, threat)
+	dest = target
 	SpinAnimation()
 	chase_target(target)
 
@@ -254,6 +255,20 @@ GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect
 /obj/effect/meteor/proc/check_examine_award(mob/user)
 	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
 		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
+
+/**
+ * Handles the meteor's interaction with meteor shields.
+ *
+ * Fires a beam at the meteor, makes it explode, and deletes it.
+ * Flexible enough to be overridden in meteor subtypes, for special interactions.
+ *
+ * Arguments:
+ * * defender - The meteor shield that is vaporizing us.
+ */
+
+/obj/effect/meteor/proc/shield_defense(obj/machinery/satellite/meteor_shield/defender)
+	defender.Beam(get_turf(src), icon_state="sat_beam", time = 5)
+	qdel(src)
 
 ///////////////////////
 //Meteor types

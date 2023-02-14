@@ -158,14 +158,13 @@
 /obj/machinery/satellite/meteor_shield/process()
 	if(!active)
 		return
-	for(var/obj/effect/meteor/M in GLOB.meteor_list)
-		if(M.z != z)
+	for(var/obj/effect/meteor/meteor_to_destroy in GLOB.meteor_list)
+		if(meteor_to_destroy.z != z)
 			continue
-		if(get_dist(M,src) > kill_range)
+		if(get_dist(meteor_to_destroy, src) > kill_range)
 			continue
-		if(!(obj_flags & EMAGGED) && space_los(M))
-			Beam(get_turf(M),icon_state="sat_beam", time = 5)
-			qdel(M)
+		if(!(obj_flags & EMAGGED) && space_los(meteor_to_destroy))
+			meteor_to_destroy.shield_defense(src)
 
 /obj/machinery/satellite/meteor_shield/toggle(user)
 	if(!..(user))

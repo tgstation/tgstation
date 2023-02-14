@@ -98,3 +98,32 @@
 
 /obj/effect/meteor/meaty/changeling/ram_turf()
 	return //So we don't instantly smash into our occupant upon unloading them.
+
+/obj/effect/meteor/meaty/changeling/shield_defense(obj/machinery/satellite/meteor_shield/defender)
+	catapult(defender)
+	..()
+
+/obj/effect/meteor/meaty/changeling/handle_stopping() //In the event that we miss the station and reach the z level far end without hitting anything...
+	if(dest)
+		catapult(dest) //We eject the stored changeling and hurl them in the direction of their target turf.
+	else
+		var/obj/effect/landmark/observer_start/backup_target = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
+		catapult(backup_target)
+	..()
+
+/**
+ * Launches the meteor contents at the meteor destination atom.
+ *
+ * Performs an emergency ejection of the meteor's contents, launching them towards the meteor destination atom.
+ * If the turf is gone, we pick a new emergency location to send them towards. Used to ensure the changeling is still
+ * able to play the game if the meteor encounters an issue.
+ *
+ * Arguments:
+ * * target - The thing we're launching our contents towards.
+ */
+
+/obj/effect/meteor/meaty/changeling/proc/catapult(atom/target)
+	for(var/atom/movable/child in contents)
+		child.forceMove(get_turf(src))
+		child.throw_at(target, 2, 2, force = MOVE_FORCE_STRONG)
+		to_chat(child, span_changeling("Sensing that something is terribly wrong, we forcibly eject ourselves from the [name]!"))
