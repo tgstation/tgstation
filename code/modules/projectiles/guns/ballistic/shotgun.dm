@@ -119,7 +119,7 @@
 		balloon_alert(user, "switched to tube A")
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
-	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| no_tk = FALSE, need_hands = TRUE))
+	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| need_hands = TRUE))
 		return
 	rack()
 

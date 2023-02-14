@@ -222,7 +222,7 @@
 
 /obj/machinery/biogenerator/AltClick(mob/living/user)
 	. = ..()
-	if(user.canPerformAction(src, be_close = TRUE,  no_tk = TRUE) && can_interact(user))
+	if(user.canPerformAction(src, be_close = TRUE,  FORBID_TELEKINESIS_REACH) && can_interact(user))
 		eject_beaker(user)
 
 

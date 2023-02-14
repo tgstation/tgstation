@@ -1202,7 +1202,7 @@
 /mob/living/can_hold_items(obj/item/I)
 	return usable_hands && ..()
 
-/mob/living/canPerformAction(atom/movable/target, action_bitflags) //be_close=FALSE, no_tk=FALSE, need_hands = FALSE)
+/mob/living/canPerformAction(atom/movable/target, action_bitflags) //be_close=FALSE, need_hands = FALSE)
 	if(!(mobility_flags & MOBILITY_UI) && !(action_bitflags & ALLOW_RESTING))
 		to_chat(src, span_warning("You can't do that right now!"))
 		return FALSE
@@ -1214,7 +1214,7 @@
 	// ALLOW_SILICON_REACH needs to check range?
 	// check to make sure robots can't use this from halfway across a map
 	if(!(action_bitflags & ALLOW_SILICON_REACH) && !Adjacent(target) && (target.loc != src)) // double check we need the last tenary operator
-		if(!(action_bitflags & ALLOW_TELEKINESIS_REACH))
+		if((action_bitflags & FORBID_TELEKINESIS_REACH))
 			to_chat(src, span_warning("You are too far away!"))
 			return FALSE
 

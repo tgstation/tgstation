@@ -80,7 +80,7 @@
 	var/answer = tgui_input_list(user, "Analyze Potential", "Sequence Analyzer", sort_list(options))
 	if(isnull(answer))
 		return
-	if(!ready || !user.canPerformAction(src, be_close = TRUE,  no_tk = TRUE) || !user.can_read(src))
+	if(!ready || !user.canPerformAction(src, be_close = TRUE,  FORBID_TELEKINESIS_REACH) || !user.can_read(src))
 		return
 
 	var/sequence

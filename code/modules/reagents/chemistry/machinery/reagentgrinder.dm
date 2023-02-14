@@ -99,7 +99,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.canPerformAction(src, !issilicon(user), FALSE, no_tk = TRUE))
+	if(!can_interact(user) || !user.canPerformAction(src, !issilicon(user), FALSE, FORBID_TELEKINESIS_REACH))
 		return
 	if(operating)
 		return

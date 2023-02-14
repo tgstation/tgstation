@@ -310,7 +310,7 @@
 	if(.)
 		return
 
-	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| no_tk = FALSE, need_hands = !iscyborg(user)))
+	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| need_hands = !iscyborg(user)))
 		return
 	if(attached_accessory)
 		remove_accessory(user)

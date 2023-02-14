@@ -516,7 +516,7 @@
 			if(!payments_acc)
 				to_chat(usr, span_notice("[src] hasn't been registered yet."))
 				return TRUE
-			if(!usr.canPerformAction(src, be_close = TRUE,  no_tk = TRUE))
+			if(!usr.canPerformAction(src, be_close = TRUE,  FORBID_TELEKINESIS_REACH))
 				return TRUE
 			if(!potential_acc)
 				to_chat(usr, span_notice("No ID card detected."))
@@ -571,7 +571,7 @@
 			if(payments_acc != potential_acc.registered_account)
 				to_chat(usr, span_warning("[src] rejects your new price."))
 				return
-			if(!usr.canPerformAction(src, be_close = TRUE,  no_tk = TRUE))
+			if(!usr.canPerformAction(src, be_close = TRUE,  FORBID_TELEKINESIS_REACH))
 				to_chat(usr, span_warning("You need to get closer!"))
 				return
 			sale_price = new_price_input
