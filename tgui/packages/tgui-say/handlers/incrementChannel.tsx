@@ -1,5 +1,6 @@
 import { CHANNELS } from '../constants';
 import { Modal } from '../types';
+
 // Insert the names of channels you want to not cycle on tab here
 const BLACKLIST = ['Admin'];
 const BLACKLISTED_CHANNEL_INDICES = CHANNELS.map((channel, index) => {
