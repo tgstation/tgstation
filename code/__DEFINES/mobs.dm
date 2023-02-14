@@ -775,17 +775,6 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// The layer above mutant body parts
 #define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
 
-
-/**
-
-//used by canPerformAction
-/// If silicons need to be next to the atom to use this
-#define BE_CLOSE TRUE
-/// If mobs can use this while resting
-#define FLOOR_OKAY TRUE
-
-*/
-
 /// If gravity must be present to perform action (can't use pens without gravity)
 #define NEED_GRAVITY (1<<0)
 /// If reading is required to perform action (can't read a book if you are illiterate)
@@ -800,7 +789,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define FORBID_TELEKINESIS_REACH (1<<5)
 /// If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
 #define ALLOW_SILICON_REACH (1<<6)
-/// If resting on the floor is allowed to perform action ()
+/// If resting on the floor is allowed to perform action (pAIs can play music while resting)
 #define ALLOW_RESTING (1<<7)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
