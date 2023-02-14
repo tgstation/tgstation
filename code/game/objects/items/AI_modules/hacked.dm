@@ -55,6 +55,7 @@
 	if(malf_candidate.mind?.has_antag_datum(/datum/antagonist/malf_ai)) //Already malf
 		to_chat(sender, span_warning("Unknown error occured. Upload process aborted."))
 		return
+
 	malf_candidate.laws = new /datum/ai_laws/syndicate_override
 
 	var/datum/antagonist/malf_ai/malf_datum = new (give_objectives = FALSE)
@@ -69,14 +70,17 @@
 	protection_objective.target = sender.mind
 	protection_objective.update_explanation_text()
 	malf_datum.objectives += protection_objective
+
 	for(var/mob/living/silicon/robot/robot in malf_candidate.connected_robots)
 		if(robot.lawupdate)
 			robot.lawsync()
 			robot.show_laws()
 			robot.law_change_counter++
 			CHECK_TICK
+
 	malf_candidate.malf_picker.processing_time += 50
 	to_chat(malf_candidate, span_notice("The virus enhanced your system, overclocking your CPU 50-fold."))
+
 	functional = FALSE
 	name = "Broken AI Module"
 	desc = "A law upload module, it is broken and non-functional."
