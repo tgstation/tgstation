@@ -1203,6 +1203,9 @@
 	return usable_hands && ..()
 
 /mob/living/canPerformAction(atom/movable/target, action_bitflags)
+	if(!istype(target))
+		CRASH("Missing target arg for canPerformAction")
+
 	// If the MOBILITY_UI bitflag is not set it indicates the mob's hands are cutoff, blocked, or handcuffed
 	// Note - AI's and borgs have the MOBILITY_UI bitflag set even though they don't have hands
 	// Also if it is not set, the mob could be incapcitated, knocked out, unconscious, asleep, EMP'd, etc.
