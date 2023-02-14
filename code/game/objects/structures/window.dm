@@ -332,24 +332,27 @@
 	if(!disassembled)
 		playsound(src, break_sound, 70, TRUE)
 		if(!(flags_1 & NODECONSTRUCT_1))
-			for(var/obj/item/shard/debris in spawnDebris(drop_location()))
+			for(var/obj/item/shard/debris in spawn_debris(drop_location()))
 				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
 	qdel(src)
 	update_nearby_icons()
 
-/obj/structure/window/proc/spawnDebris(location)
+
+///Spawns shard and debris decal based on the glass_material_datum, spawns rods if window is reinforned and number of shards/rods is determined by the window being fulltile or not.
+/obj/structure/window/proc/spawn_debris(location)
 	var/datum/material/glass_material_ref = GET_MATERIAL_REF(glass_material_datum)
 	var/obj/item/shard_type = glass_material_ref.shard_type
 	var/obj/effect/decal/debris_type = glass_material_ref.debris_type
-	. = list()
+	var/list/dropped_debris = list()
 	if(!isnull(shard_type))
-		. += new shard_type(location)
+		dropped_debris += new shard_type(location)
 		if (fulltile)
-			. += new shard_type(location)
+			dropped_debris += new shard_type(location)
 	if(!isnull(debris_type))
-		. += new debris_type(location)
+		dropped_debris += new debris_type(location)
 	if (reinf)
-		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
+		dropped_debris += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
+	return dropped_debris
 
 /obj/structure/window/proc/AfterRotation(mob/user, degrees)
 	air_update_turf(TRUE, FALSE)
@@ -850,7 +853,7 @@
 	if(atom_integrity < max_integrity)
 		. += span_info("It looks a bit damaged, you may be able to fix it with some <b>paper</b>.")
 
-/obj/structure/window/paperframe/spawnDebris(location)
+/obj/structure/window/paperframe/spawn_debris(location)
 	. = list(new /obj/item/stack/sheet/mineral/wood(location))
 	for (var/i in 1 to rand(1,4))
 		. += new /obj/item/paper/natural(location)
