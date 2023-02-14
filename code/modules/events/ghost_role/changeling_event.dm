@@ -114,9 +114,10 @@
 	if(!landing_target)
 		landing_target = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list //If our destination turf is gone for some reason, we chuck them at the observer_start landmark (usually at the center of the station) as a last resort.
 
-	for(var/atom/movable/child in contents)
-		child.forceMove(get_turf(src))
-		child.throw_at(landing_target, 2, 2)
-		child.visible_message(span_warning("[child] is launched out from inside of the [name]"), span_changeling("Sensing that something is terribly wrong, we forcibly eject ourselves from the [name]!"))
+	for(var/atom/movable/changeling in contents)
+		changeling.forceMove(get_turf(src))
+		changeling.throw_at(landing_target, 2, 2)
+		changeling.visible_message(span_warning("[changeling] is launched out from inside of the [name]"), span_changeling("Sensing that something is terribly wrong, we forcibly eject ourselves from the [name]!"))
+		playsound(changeling, 'sound/effects/splat.ogg', 50, TRUE)
 
 	..()
