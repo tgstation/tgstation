@@ -176,7 +176,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 /obj/durand_shield/Initialize(mapload, chassis, plane, layer, dir)
 	. = ..()
 	src.chassis = chassis
-	src.layer = layer
+	src.layer = ABOVE_MOB_LAYER
 	SET_PLANE_IMPLICIT(src, plane)
 	setDir(dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, PROC_REF(activate))
@@ -258,11 +258,6 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 
 /obj/durand_shield/proc/resetdir(datum/source, olddir, newdir)
 	SIGNAL_HANDLER
-
-	if(newdir & SOUTH) // so the shield appears on top of the mech
-		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
-	else // other directions make the shield appear under the mech
-		SET_PLANE_IMPLICIT(src, initial(plane))
 
 	setDir(newdir)
 
