@@ -190,13 +190,13 @@
 
 /// Open the cell cover when ALT+Click on the suit
 /obj/item/clothing/suit/space/AltClick(mob/living/user)
-	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| need_hands = !iscyborg(user)))
+	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
 		return ..()
 	toggle_spacesuit_cell(user)
 
 /// Remove the cell whent he cover is open on CTRL+Click
 /obj/item/clothing/suit/space/CtrlClick(mob/living/user)
-	if(user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| need_hands = !iscyborg(user)))
+	if(user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
 		if(cell_cover_open && cell)
 			remove_cell(user)
 			return

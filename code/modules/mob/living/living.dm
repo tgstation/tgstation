@@ -1207,9 +1207,10 @@
 		to_chat(src, span_warning("You can't do that right now!"))
 		return FALSE
 
-	if((action_bitflags & NEED_HANDS) && !can_hold_items(isitem(target) ? target : null)) //almost redundant if it weren't for mobs,
-		to_chat(src, span_warning("You don't have the physical ability to do this!"))
-		return FALSE
+	if((action_bitflags & NEED_HANDS) && !(iscyborg(src) && (action_bitflags & CYBORG_IGNORE_HAND_RESTRICTION)))
+		if(!can_hold_items(isitem(target) ? target : null)) // almost redundant if it weren't for mobs
+			to_chat(src, span_warning("You don't have the physical ability to do this!"))
+			return FALSE
 
 	// ALLOW_SILICON_REACH needs to check range?
 	// check to make sure robots can't use this from halfway across a map

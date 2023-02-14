@@ -171,7 +171,7 @@
 	return TRUE
 
 /obj/structure/reflector/AltClick(mob/user)
-	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| need_hands = !iscyborg(user)))
+	if(!user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
 		return
 	else if(finished)
 		rotate(user)

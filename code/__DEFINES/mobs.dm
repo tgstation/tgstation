@@ -794,18 +794,20 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define NEED_LIGHT (1<<2)
 /// If other mobs (monkeys, aliens, etc) can perform action (can't use computers if you are a monkey)
 #define NEED_DEXTERITY (1<<3)
-/// If hands are required to perform action (can't pickup items if you are a cyborg)
+/// If hands are required to perform action (can't pickup items if your arms are cutoff)
 #define NEED_HANDS (1<<4)
+/// If cyborgs (not AIs) can perform the action despite having no hands (lets them rotate chairs)
+#define CYBORG_IGNORE_HAND_RESTRICTION (1<<5)
 /// If telekinesis is forbidden to perform action from a distance (telekinesis can push buttons from far away)
-#define FORBID_TELEKINESIS_REACH (1<<5)
+#define FORBID_TELEKINESIS_REACH (1<<6)
 /// If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
-#define ALLOW_SILICON_REACH (1<<6)
+#define ALLOW_SILICON_REACH (1<<7)
 
 /// These are pretty redundant
 /// If close proximity is required to perform action must be adjacent (1 tile away)
 //#define ALLOW_AFAR_REACH
 /// If resting on the floor is allowed to perform action ()
-#define ALLOW_RESTING (1<<7)
+#define ALLOW_RESTING (1<<8)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1

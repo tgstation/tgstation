@@ -230,7 +230,7 @@
 	attack_self(user)
 
 /obj/item/toy/singlecard/attack_self(mob/living/carbon/human/user)
-	if(!ishuman(user) || !user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH| need_hands = !iscyborg(user)))
+	if(!ishuman(user) || !user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
 		return
 
 	Flip()
@@ -238,7 +238,7 @@
 		user.balloon_alert_to_viewers("flips a card")
 
 /obj/item/toy/singlecard/AltClick(mob/living/carbon/human/user)
-	if(user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH| need_hands = !iscyborg(user)))
+	if(user.canPerformAction(src, be_close = TRUE, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH|NEED_HANDS|CYBORG_IGNORE_HAND_RESTRICTION))
 		transform = turn(transform, 90)
 		// use the simple_rotation component to make this turn with Alt+RMB & Alt+LMB at some point in the future - TimT
 	return ..()
