@@ -507,7 +507,7 @@
 	if(!.)
 		return
 
-	to_chat(src, "<span class='infoplain'><b>You are the [new_role.title].</b></span>")
+	to_chat(src, span_infoplain("<b>You are the [new_role.title].</b>"))
 
 	var/related_policy = get_policy(new_role.title)
 	if(related_policy)
