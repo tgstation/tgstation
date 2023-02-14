@@ -6,7 +6,7 @@ const BLACKLISTED_CHANNEL_INDICES = CHANNELS.map((channel, index) => {
   if (BLACKLIST.includes(channel)) {
     return index;
   }
-});
+}).filter((x) => x !== undefined);
 
 /**
  * Increments the channel or resets to the beginning of the list.
