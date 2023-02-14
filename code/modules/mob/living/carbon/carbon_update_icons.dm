@@ -505,17 +505,18 @@
 
 	apply_overlay(BODYPARTS_LAYER)
 
+/// This looks at the chest and legs of the mob and decides how much our chest, arms, and head should be adjusted. This is useful for limbs that are larger or smaller than the scope of normal human height while keeping the feet anchored to the bottom of the tile
 /mob/living/carbon/proc/get_top_offset()
 	var/from_chest
 	var/from_leg
 	for(var/obj/item/bodypart/leg/leg_checked in bodyparts)
-		if(leg_checked.top_offset > from_leg || isnull(from_leg))
+		if(leg_checked.top_offset > from_leg || isnull(from_leg)) // We find the tallest leg available
 			from_leg = leg_checked.top_offset
 	if(isnull(from_leg))
-		from_leg = 0
-	for(var/obj/item/bodypart/chest/chest_checked in bodyparts)
+		from_leg = 0 // If we have no legs, we set this to zero to avoid any math issues that might stem from it being NULL
+	for(var/obj/item/bodypart/chest/chest_checked in bodyparts) // Take the height from the chest
 		from_chest = chest_checked.top_offset
-	return (from_chest + from_leg)
+	return (from_chest + from_leg) // The total hight of the chest and legs together
 
 /////////////////////////
 // Limb Icon Cache 2.0 //

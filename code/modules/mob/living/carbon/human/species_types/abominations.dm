@@ -1,3 +1,4 @@
+/// These won't appear normally in games, they are meant to for debuging the adjustment of limbs based on the height of a humans bodyparts.
 /datum/species/human/tallboy
 	name = "\improper Tall Boy"
 	id = SPECIES_TALLBOY

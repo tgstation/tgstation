@@ -11,9 +11,10 @@
 		else if(!icon_exists(UNLINT(part.should_draw_greyscale ? part.icon_greyscale : part.icon_static), "[part.limb_id]_[part.body_zone]"))
 			Fail("[path] does not have a valid icon")
 
-/datum/unit_test/limb_hight_adjustment
+/datum/unit_test/limb_height_adjustment
 
-/datum/unit_test/limb_hight_adjustment/Run()
+/// Tests the height adjustment system which dynamically changes how much the chest, head, and arms of a carbon are adjusted upwards or downwards based on the length of their legs and chest.
+/datum/unit_test/limb_height_adjustment/Run()
 	var/mob/living/carbon/human/john_doe = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/species/monkey/monkey = allocate(/mob/living/carbon/human/species/monkey)
 	var/mob/living/carbon/human/tallboy = allocate(/mob/living/carbon/human/consistent)
