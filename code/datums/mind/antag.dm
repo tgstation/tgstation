@@ -52,6 +52,14 @@
 		else if(A.type == datum_type)
 			return A
 
+/// Returns true if mind has any antag datum from a list of types
+/datum/mind/proc/has_antag_datum_in_list(list/antag_types)
+	for(var/antag_datum in antag_datums)
+		var/datum/antagonist/check_datum = antag_datum
+		if(is_type_in_list(check_datum, antag_types))
+			return TRUE
+	return FALSE
+
 /*
 	Removes antag type's references from a mind.
 	objectives, uplinks, powers etc are all handled.

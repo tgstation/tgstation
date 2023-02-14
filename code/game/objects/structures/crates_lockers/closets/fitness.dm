@@ -15,7 +15,7 @@
 
 
 /obj/structure/closet/boxinggloves
-	name = "boxing gloves"
+	name = "boxing gloves closet"
 	desc = "It's a storage unit for gloves for use in the boxing ring."
 
 /obj/structure/closet/boxinggloves/PopulateContents()

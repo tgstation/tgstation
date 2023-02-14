@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes:
+  - bugfix: "Drones no longer destroy toner cartridges when ejecting them from photocopiers."

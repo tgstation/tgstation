@@ -55,9 +55,6 @@
 	var/datum/species/golem/golem_species = mob_species
 	to_chat(new_spawn, "[initial(golem_species.info_text)]")
 	if(isnull(real_owner))
-		var/policy = get_policy(ROLE_FREE_GOLEM)
-		if (policy)
-			to_chat(new_spawn, policy)
 		if(!is_station_level(new_spawn.z))
 			to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! \
 				You are generally a peaceful group unless provoked.")

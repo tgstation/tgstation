@@ -185,6 +185,11 @@
 			mob_possessor.mind.transfer_to(spawned_mob, force_key_move = TRUE)
 		else
 			spawned_mob.key = mob_possessor.key
+	var/datum/mind/spawned_mind = spawned_mob.mind
+	if(spawned_mind)
+		spawned_mob.mind.set_assigned_role_with_greeting(SSjob.GetJobType(spawner_job_path))
+		spawned_mind.name = spawned_mob.real_name
+
 	if(show_flavor)
 		var/output_message = "<span class='infoplain'><span class='big bold'>[you_are_text]</span></span>"
 		if(flavour_text != "")
@@ -192,10 +197,6 @@
 		if(important_text != "")
 			output_message += "\n[span_userdanger("[important_text]")]"
 		to_chat(spawned_mob, output_message)
-	var/datum/mind/spawned_mind = spawned_mob.mind
-	if(spawned_mind)
-		spawned_mob.mind.set_assigned_role(SSjob.GetJobType(spawner_job_path))
-		spawned_mind.name = spawned_mob.real_name
 
 /// Checks if the spawner has zero uses left, if so, delete yourself... NOW!
 /obj/effect/mob_spawn/ghost_role/proc/check_uses()
