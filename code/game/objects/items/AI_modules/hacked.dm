@@ -73,6 +73,7 @@
 			R.lawsync()
 			R.show_laws()
 			R.law_change_counter++
+			CHECK_TICK
 	malf_candidate.malf_picker.processing_time += 50
 	to_chat(malf_candidate, span_notice("The virus enchanced your system, increasing your processing time by 50."))
 	functional = FALSE
