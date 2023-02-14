@@ -147,8 +147,9 @@
 
 // See software.dm for Topic()
 /mob/living/silicon/pai/canPerformAction(atom/movable/target, action_bitflags)
-	// Resting is just an aesthetic feature for them.
-	return ..(target, action_bitflags|ALLOW_RESTING)
+	action_bitflags |= ALLOW_RESTING // Resting is just an aesthetic feature for them
+	action_bitflags &= ~ALLOW_SILICON_REACH // They don't get long reach like the rest of silicons
+	return ..(target, action_bitflags)
 
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(atmos_analyzer)

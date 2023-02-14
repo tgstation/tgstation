@@ -1220,8 +1220,8 @@
 			return FALSE
 
 	if(!Adjacent(target) && (target.loc != src))
-		if(issilicon(src))
-			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks
+		if(issilicon(src) && !ispAI(src))
+			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
 				to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 		else // just a normal carbon mob
