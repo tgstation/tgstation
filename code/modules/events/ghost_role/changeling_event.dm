@@ -112,11 +112,11 @@
 	..()						//the observer_start landmark (usually at the center of the station) as a last resort.
 
 /obj/effect/meteor/meaty/changeling/Destroy()
-	. = ..()
-
 	for(var/atom/movable/child in contents) //If we get deleted and somehow still have contents, that's bad.
 		child.forceMove(get_turf(src)) //We still eject the occupant, who will probably have to float their way to the station with the tentacle mutation.
 		log_runtime("Changeling meteor destroyed self before ejecting contents!")
+
+	. = ..()
 
 /**
  * Launches the meteor contents at the meteor destination atom.
@@ -132,5 +132,5 @@
 /obj/effect/meteor/meaty/changeling/proc/catapult(atom/target)
 	for(var/atom/movable/child in contents)
 		child.forceMove(get_turf(src))
-		child.throw_at(target, 2, 2)
+		child.throw_at(target, 1, 1)
 		to_chat(child, span_changeling("Sensing that something is terribly wrong, we forcibly eject ourselves from the [name]!"))
