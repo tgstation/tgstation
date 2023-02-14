@@ -15,21 +15,25 @@ SUBSYSTEM_DEF(minor_mapping)
 
 /datum/controller/subsystem/minor_mapping/proc/trigger_migration(num_mice=10)
 	var/list/exposed_wires = find_exposed_wires()
-
 	var/turf/open/proposed_turf
 	while((num_mice > 0) && exposed_wires.len)
 		proposed_turf = pick_n_take(exposed_wires)
-		if (!istype(proposed_turf) || \
-			!proposed_turf.air.has_gas(/datum/gas/oxygen, 5) || \
-			proposed_turf.temperature > NPC_DEFAULT_MAX_TEMP || \
-			proposed_turf.temperature < NPC_DEFAULT_MIN_TEMP)
+		if (!valid_mouse_turf(proposed_turf))
 			continue
 
-		num_mice -= 1
+		num_mice--
 		if (prob(PROB_MOUSE_SPAWN))
 			new /mob/living/basic/mouse(proposed_turf)
 		else
 			new /mob/living/simple_animal/hostile/regalrat/controlled(proposed_turf)
+
+/// Returns true if a mouse won't die if spawned on this turf
+/datum/controller/subsystem/minor_mapping/proc/valid_mouse_turf(turf/open/proposed_turf)
+	if(!istype(proposed_turf))
+		return FALSE
+	var/datum/gas_mixture/turf/turf_gasmix = proposed_turf.air
+	var/turf_temperature = proposed_turf.temperature
+	return turf_gasmix.has_gas(/datum/gas/oxygen, 5) && proposed_turf.temperature < NPC_DEFAULT_MAX_TEMP && proposed_turf.temperature > NPC_DEFAULT_MIN_TEMP
 
 /datum/controller/subsystem/minor_mapping/proc/place_satchels(amount=10)
 	var/list/turfs = find_satchel_suitable_turfs()
