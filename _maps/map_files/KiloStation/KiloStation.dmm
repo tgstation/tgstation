@@ -65333,11 +65333,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "sHm" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/obj/machinery/barsign/all_access/directional/north,
-/turf/open/floor/wood,
+/obj/machinery/barsign,
+/turf/closed/wall,
 /area/station/service/bar/atrium)
 "sHn" = (
 /obj/structure/bed/roller,
@@ -114411,8 +114408,8 @@ rOR
 tEE
 mfJ
 bqd
-ijQ
 sHm
+ddp
 ddp
 vRO
 rsb
