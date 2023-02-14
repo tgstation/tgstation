@@ -289,16 +289,20 @@
 		if(!chosen_symptom)
 			CRASH("Advanced disease could not pick a symptom!")
 
-		var/datum/symptom/new_symptom = new chosen_symptom
-
-		if(symptoms.len == (max_symptoms - 1) && (current_severity < requested_severity) && (new_symptom.severity < requested_severity))
+		//Checks if the last chosen symptom is severe enough to meet requested severity. If not, pick a new symptom.
+		if(symptoms.len == (max_symptoms - 1) && (current_severity < requested_severity) && (chosen_symptom.severity < requested_severity))
 			continue
 
+		var/datum/symptom/new_symptom = new chosen_symptom
+
 		symptoms += new_symptom
+
+		//Applies the illness name based on the most severe symptom.
 		if(new_symptom.severity > current_severity)
 			name = "[new_symptom.illness]"
 			current_severity = new_symptom.severity
 
+	//Roll the additional traits. Can be one, both, or neither.
 	if(prob(50))
 		symptoms += new /datum/symptom/youth
 		name = "Advanced [name]"
