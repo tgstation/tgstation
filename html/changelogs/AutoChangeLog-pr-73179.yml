@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - code_imp: "Added unit testing to force all ruins to spawn for CI build"

@@ -39,7 +39,12 @@
 	if(anomaly_turf)
 		newAnomaly = new anomaly_path(anomaly_turf)
 	if (newAnomaly)
+		apply_anomaly_properties(newAnomaly)
 		announce_to_ghosts(newAnomaly)
+
+/// Make any further post-creation modifications to the anomaly
+/datum/round_event/anomaly/proc/apply_anomaly_properties(obj/effect/anomaly/new_anomaly)
+	return
 
 /datum/event_admin_setup/anomaly
 	///The admin-chosen spawn location.

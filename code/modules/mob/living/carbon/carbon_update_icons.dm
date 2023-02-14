@@ -549,8 +549,6 @@
 			. += "-[facial_hair_gradient_color]"
 	if(facial_hair_hidden)
 		. += "-FACIAL_HAIR_HIDDEN"
-	if(is_blushing)
-		. += "-IS_BLUSHING"
 	if(show_debrained)
 		. += "-SHOW_DEBRAINED"
 		return .

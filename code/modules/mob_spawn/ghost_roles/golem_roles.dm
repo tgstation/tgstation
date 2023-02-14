@@ -48,9 +48,6 @@
 	var/datum/species/golem/X = mob_species
 	to_chat(new_spawn, "[initial(X.info_text)]")
 	if(!owner)
-		var/policy = get_policy(ROLE_FREE_GOLEM)
-		if (policy)
-			to_chat(new_spawn, policy)
 		to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked.")
 		try_keep_home(new_spawn)
 	else
@@ -64,9 +61,9 @@
 			G.owner = owner
 		H.set_cloned_appearance()
 	if(has_owner && new_spawn.mind)
-		new_spawn.mind.set_assigned_role(SSjob.GetJobType(/datum/job/servant_golem))
+		new_spawn.mind.set_assigned_role_with_greeting(SSjob.GetJobType(/datum/job/servant_golem))
 	else
-		new_spawn.mind.set_assigned_role(SSjob.GetJobType(/datum/job/free_golem))
+		new_spawn.mind.set_assigned_role_with_greeting(SSjob.GetJobType(/datum/job/free_golem))
 
 /obj/effect/mob_spawn/ghost_role/human/golem/proc/try_keep_home(mob/new_spawn)
 	var/static/list/allowed_areas = typecacheof(list(/area/icemoon, /area/lavaland, /area/ruin)) + typecacheof(/area/misc/survivalpod)

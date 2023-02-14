@@ -5,6 +5,8 @@
 	max_occurrences = 5
 	weight = 25
 	description = "This anomaly throws things around."
+	min_wizard_trigger_potency = 1
+	max_wizard_trigger_potency = 3
 
 /datum/round_event/anomaly/anomaly_grav
 	start_when = 3
