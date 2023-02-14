@@ -88,7 +88,6 @@
 /datum/proximity_monitor/advanced/proc/setup_edge_turf(turf/target)
 	if(edge_is_a_field) // If the edge is considered a field, set it up like one
 		setup_field_turf(target)
-	return
 
 /// Called when a turf in the edge of the monitor is unlinked
 /datum/proximity_monitor/advanced/proc/cleanup_edge_turf(turf/target)
@@ -134,13 +133,10 @@
 /datum/proximity_monitor/advanced/proc/field_edge_crossed(atom/movable/movable, turf/location)
 	if(edge_is_a_field) // If the edge is considered a field, pass crossed to that
 		field_turf_crossed(movable, location)
-	return
 
 /datum/proximity_monitor/advanced/proc/field_edge_uncrossed(atom/movable/movable, turf/location)
 	if(edge_is_a_field) // If the edge is considered a field, pass uncrossed to that
 		field_turf_uncrossed(movable, location)
-	return
-
 
 //DEBUG FIELD ITEM
 /obj/item/multitool/field_debug
