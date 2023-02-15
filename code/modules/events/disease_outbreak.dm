@@ -168,6 +168,7 @@
 			else
 				return ADMIN_CANCEL_EVENT
 
+		//Ask the admin for max symptoms. Arguments: default, max, min
 		chosen_max_symptoms = tgui_input_number(usr, "How many symptoms do you want your virus to have?", "A pox upon ye!", 4, 7, 1)
 
 	else
