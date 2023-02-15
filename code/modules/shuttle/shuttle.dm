@@ -196,8 +196,12 @@
 
 	var/last_dock_time
 
+	/// Map template to load when the dock is loaded
 	var/datum/map_template/shuttle/roundstart_template
+	/// Used to check if the shuttle template is enabled in the config file
 	var/json_key
+	///If true, the shuttle can always dock at this docking port, despite its area checks, or if something is already docked
+	var/override_can_dock_checks = FALSE
 
 /obj/docking_port/stationary/register(replace = FALSE)
 	. = ..()
@@ -298,8 +302,12 @@
 
 /obj/docking_port/stationary/transit
 	name = "In Transit"
+	override_can_dock_checks = TRUE
+	/// The turf reservation returned by the transit area request
 	var/datum/turf_reservation/reserved_area
+	/// The area created during the transit area reservation
 	var/area/shuttle/transit/assigned_area
+	/// The mobile port that owns this transit port
 	var/obj/docking_port/mobile/owner
 
 /obj/docking_port/stationary/transit/Initialize(mapload)
@@ -609,7 +617,7 @@
 	if(!istype(stationary_dock))
 		return SHUTTLE_NOT_A_DOCKING_PORT
 
-	if(istype(stationary_dock, /obj/docking_port/stationary/transit) || istype(stationary_dock, /obj/docking_port/stationary/random))
+	if(stationary_dock.override_can_dock_checks)
 		return SHUTTLE_CAN_DOCK
 
 	if(dwidth > stationary_dock.dwidth)

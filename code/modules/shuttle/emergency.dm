@@ -646,6 +646,7 @@
 	name = "escape pod"
 	shuttle_id = "pod"
 	hidden = TRUE
+	override_can_dock_checks = TRUE
 	/// The area the pod tries to land at
 	var/target_area = /area/lavaland/surface/outdoors
 	/// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
