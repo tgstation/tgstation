@@ -559,3 +559,49 @@
   vinylspiders:
   - bugfix: fixes a potential bug that can cause the detective scanner to get stuck
       in a scanning state indefinitely
+2023-02-15:
+  GoldenAlpharex:
+  - bugfix: Sitting on benches no longer gives you a weird offset that makes you look
+      like you're standing on them.
+  - bugfix: Returns benches to their original light brown color, rather than the middle
+      between brown and cyan that they were at for a bit.
+  Jacquerel:
+  - bugfix: Hacking the Comms Console or winning a Revolution can no longer spawn
+      antagonists if there's not enough time left in the round for them to antagonise
+      anyone.
+  Melbert:
+  - bugfix: Fixed a runtime from mime *kissing silicons and simplemobs.
+  - code_imp: Hostile Station Lockdown, from Malfunctioning AIs, will no longer halt
+      the server momentarily
+  - config: 'Policy.json config got updated. The following values need to be updated:'
+  - config: '"Obsession" -> /datum/antagonist/obessed'
+  - config: '"Heretic" -> /datum/antagonist/heretic'
+  - config: '"Headslug Changeling" -> /datum/antagonist/changeling/headslug'
+  - config: '"Pyroclastic Anomaly Slime" -> /datum/antagonist/pyro_slime'
+  - config: ALL antags in the policy.json file will now get notified of any existing
+      policy set by the admin team, rather than only a handful.
+  - bugfix: Fixed a runtime with examining empty bomb frames
+  - bugfix: Fixed a FIVE YEAR OLD issue causing Time Stop to be a 3x3 instead of a
+      5x5. Really.
+  - bugfix: The gravity generator correctly gives "forced gravity" to all adjacent
+      mobs
+  - bugfix: Fixed some runtimes with Time Stop, and other miscellaneous issues
+  NamelessFairy:
+  - spellcheck: Head of staff lockers and prison cell lockers have had their proper
+      noun status returned.
+  SuperSlayer0:
+  - balance: Mech disabler now works as a shotgun, shooting 5 weak disabler beams
+      at one time.
+  - balance: Mech disabler now uses 100 energy instead of 30, and it's attack cooldown
+      increased to 1.5 seconds instead of 0.8
+  coiax:
+  - bugfix: Drones no longer destroy toner cartridges when ejecting them from photocopiers.
+  timothymtorres:
+  - code_imp: Added unit testing to force all ruins to spawn for CI build
+  tralezab:
+  - balance: Malf AI turret upgrades are now much stronger, fully healing, increasing
+      max health, and setting stun projectiles to taze.
+  vinylspiders:
+  - bugfix: hotfix for lungless oxyloss immunity
+  - bugfix: hotfix for mobs being able to circumvent reagent respiration_type requirements
+      by removing their lungs
