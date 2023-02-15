@@ -890,7 +890,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/light/directional/west,
-/obj/machinery/computer/med_data/syndie{
+/obj/machinery/computer/records/medical/syndie{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
@@ -1046,7 +1046,7 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/medical)
 "Nr" = (
-/obj/machinery/computer/secure_data/laptop/syndie,
+/obj/machinery/computer/records/security/laptop/syndie,
 /obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/airlock)

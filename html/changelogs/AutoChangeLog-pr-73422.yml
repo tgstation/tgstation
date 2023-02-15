@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Medieval Sim holograms no longer spawn holding unusable laser rifles which also block using their old timey weaponry."

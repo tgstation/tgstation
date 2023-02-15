@@ -1,0 +1,7 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "Reinforced plasma windows will now drop plasma glass instead of regular glass when broken."
+  - bugfix: "Tram windows drop the correct number of rods and a shard when broken instead of a sheet."
+  - code_imp: "Removed a ton of duplicate vars in tram window code and re-organize the file slightly."
+  - refactor: "spawnDebris has been un-hardcoded and all (but one) override of it has been removed."
