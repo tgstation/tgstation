@@ -322,9 +322,10 @@
 		overlays.Cut()
 
 	LAZYNULL(managed_overlays)
-
-	QDEL_NULL(ai_controller)
-	QDEL_NULL(light)
+	if(ai_controller)
+		QDEL_NULL(ai_controller)
+	if(light)
+		QDEL_NULL(light)
 	if (length(light_sources))
 		light_sources.Cut()
 
@@ -1043,15 +1044,6 @@
  */
 /atom/proc/handle_atom_del(atom/deleting_atom)
 	SEND_SIGNAL(src, COMSIG_ATOM_CONTENTS_DEL, deleting_atom)
-
-/**
- * called when the turf the atom resides on is ChangeTurfed
- *
- * Default behaviour is to loop through atom contents and call their HandleTurfChange() proc
- */
-/atom/proc/HandleTurfChange(turf/changing_turf)
-	for(var/atom/current_atom as anything in src)
-		current_atom.HandleTurfChange(changing_turf)
 
 /**
  * the vision impairment to give to the mob whose perspective is set to that atom

@@ -256,18 +256,58 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	var/tram_id = MAIN_STATION_TRAM
 	/// Weakref to the tram piece we control
 	var/datum/weakref/tram_ref
-	/// Proximity threshold for amber warning (slow people may be in danger).
-	/// This is specific to Tramstation and may need to be adjusted if the map changes in the distance between tram stops.
-	var/amber_distance_threshold = 45
-	/** Proximity threshold for red warning (running people will likely not be able to cross) This is specific to Tramstation and may need to be adjusted if the map changes in the distance between tram stops.
-	* This checks the distance between the tram and the signal, and based on the current Tramstation map this is the optimal number to prevent the lights from turning red for no reason for a few moments.
-	* If the value is set too high, it will cause the lights to turn red when the tram arrives at another station. You want to optimize the amount of warning without turning it red unnessecarily.
+
+	/** Proximity thresholds for crossing signal states
+	*
+	* The proc that checks the distance between the tram and crossing signal uses these vars to determine the distance between tram and signal to change
+	* colors. The numbers are specifically set for Tramstation. If we get another map with crossing signals we'll have to probably subtype it or something.
+	* If the value is set too high, it will cause the lights to turn red when the tram arrives at another station. You want to optimize the amount of
+	* warning without turning it red unnessecarily.
+	*
+	* Red: decent chance of getting hit, but if you're quick it's a decent gamble.
+	* Amber: slow people may be in danger.
 	*/
-	var/red_distance_threshold = 33
+	var/amber_distance_threshold = XING_DISTANCE_AMBER
+	var/red_distance_threshold = XING_DISTANCE_RED
 	/// If the signal is facing east or west
 	var/signal_direction
-	/// Are we malfunctioning?
+	/// Is the signal malfunctioning?
 	var/malfunctioning = FALSE
+
+/** Crossing signal subtypes
+ *
+ *  Each map will have a different amount of tiles between stations, so adjust the signals here based on the map.
+ *  The distance is calculated from the bottom left corner of the tram,
+ *  so signals on the east side have their distance reduced by the tram length, in this case 10 for Tramstation.
+*/
+
+/obj/machinery/crossing_signal/tramstation/northeast
+	icon_state = "crossing-base-left"
+	signal_direction = XING_SIGNAL_DIRECTION_EAST
+	amber_distance_threshold = XING_DISTANCE_AMBER - 10
+	red_distance_threshold = XING_DISTANCE_RED - 10
+	pixel_x = -2
+	pixel_y = -1
+
+/obj/machinery/crossing_signal/tramstation/northwest
+	icon_state = "crossing-base-right"
+	signal_direction = XING_SIGNAL_DIRECTION_WEST
+	pixel_x = -32
+	pixel_y = -1
+
+/obj/machinery/crossing_signal/tramstation/southeast
+	icon_state = "crossing-base-left"
+	signal_direction = XING_SIGNAL_DIRECTION_EAST
+	amber_distance_threshold = XING_DISTANCE_AMBER - 10
+	red_distance_threshold = XING_DISTANCE_RED - 10
+	pixel_x = -2
+	pixel_y = 20
+
+/obj/machinery/crossing_signal/tramstation/southwest
+	icon_state = "crossing-base-right"
+	signal_direction = XING_SIGNAL_DIRECTION_WEST
+	pixel_x = -32
+	pixel_y = 20
 
 /obj/machinery/static_signal
 	name = "crossing signal"

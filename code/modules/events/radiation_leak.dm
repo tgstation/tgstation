@@ -6,6 +6,8 @@
 	weight = 15
 	max_occurrences = 3
 	category = EVENT_CATEGORY_ENGINEERING
+	min_wizard_trigger_potency = 3
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/radiation_leak
 	start_when = 1 // 2 seconds in
@@ -48,7 +50,7 @@
 	var/area/station/location_descriptor
 
 	if(fake)
-		location_descriptor = pick(GLOB.the_station_areas)
+		location_descriptor = GLOB.areas_by_type[pick(GLOB.the_station_areas)]
 
 	else if(the_source_of_our_problems)
 		location_descriptor = get_area(the_source_of_our_problems)

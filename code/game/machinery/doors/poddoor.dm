@@ -113,6 +113,7 @@
 	if(panel_open)
 		if(deconstruction == BLASTDOOR_FINISHED)
 			. += span_notice("The maintenance panel is opened and the electronics could be <b>pried</b> out.")
+			. += span_notice("\The [src] could be calibrated to a blast door controller ID with a <b>multitool</b>.")
 		else if(deconstruction == BLASTDOOR_NEEDS_ELECTRONICS)
 			. += span_notice("The <i>electronics</i> are missing and there are some <b>wires</b> sticking out.")
 		else if(deconstruction == BLASTDOOR_NEEDS_WIRES)

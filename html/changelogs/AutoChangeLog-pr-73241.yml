@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Meteors can't be triggered automatically or manually on Icebox, where they do nothing."
-  - bugfix: "Hacking a comms console as a traitor won't try to summon meteors or pirates to Icebox, where they do nothing."
