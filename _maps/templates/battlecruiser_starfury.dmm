@@ -301,7 +301,7 @@
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "aU" = (
-/obj/machinery/computer/secure_data/syndie{
+/obj/machinery/computer/records/security/syndie{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar/anticorner/contrasted{
@@ -4075,7 +4075,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "pm" = (
-/obj/machinery/computer/med_data/syndie,
+/obj/machinery/computer/records/medical/syndie,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},

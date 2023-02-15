@@ -78,7 +78,7 @@
 /mob/living/silicon/pai/proc/handle_move(atom/movable/source, atom/movable/old_loc)
 	if(ismovable(old_loc))
 		untrack_thing(old_loc)
-	if(!IN_GIVEN_RANGE(src, hacking_cable, CABLE_LENGTH))
+	if(hacking_cable && (!IN_GIVEN_RANGE(src, hacking_cable, CABLE_LENGTH)))
 		retract_cable()
 		return
 	if(ismovable(source.loc))
@@ -89,6 +89,7 @@
  */
 /mob/living/silicon/pai/proc/retract_cable()
 	balloon_alert(src, "cable retracted")
+	untrack_pai()
 	QDEL_NULL(hacking_cable)
 	return TRUE
 

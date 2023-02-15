@@ -629,8 +629,10 @@
 
 /obj/projectile/kiss/french/harmless_on_hit(mob/living/living_target)
 	. = ..()
+	if(isnull(living_target.reagents))
+		return
 	//Don't stack the garlic
-	if(! living_target.has_reagent(/datum/reagent/consumable/garlic) )
+	if(!living_target.has_reagent(/datum/reagent/consumable/garlic))
 		//Phwoar
 		living_target.reagents.add_reagent(/datum/reagent/consumable/garlic, 1)
 	living_target.visible_message("[living_target] has a funny look on [living_target.p_their()] face.", "Wow, that is a strong after taste of garlic!", vision_distance=COMBAT_MESSAGE_RANGE)

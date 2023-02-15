@@ -34,7 +34,7 @@
 		else
 			controller.queue_behavior(/datum/ai_behavior/perform_speech, pick(speak))
 
-/datum/ai_planning_subtree/random_speech/cockroach
+/datum/ai_planning_subtree/random_speech/insect
 	speech_chance = 5
 	emote_hear = list("chitters.")
 
