@@ -90,7 +90,7 @@
 /obj/item/assembly/prox_sensor/proc/sense()
 	if(!scanning || !secured || next_activate > world.time)
 		return FALSE
-	next_activate = world.time + 30 // this must happen before anythign else
+	next_activate = world.time + (3 SECONDS) // this must happen before anything else
 	pulse()
 	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
 	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
