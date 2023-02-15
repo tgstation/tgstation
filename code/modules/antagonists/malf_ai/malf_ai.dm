@@ -18,8 +18,6 @@
 	var/should_give_codewords = TRUE
 	///since the module purchasing is built into the antag info, we need to keep track of its compact mode here
 	var/module_picker_compactmode = FALSE
-	/// Do we give them a zeroth law?
-	var/give_zeroth_laws = TRUE 
 
 /datum/antagonist/malf_ai/New(give_objectives = TRUE)
 	. = ..()
@@ -38,8 +36,7 @@
 
 	malfunction_flavor = strings(MALFUNCTION_FLAVOR_FILE, employer)
 
-	if(give_zeroth_laws)
-		add_law_zero()
+	add_law_zero()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	owner.current.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MALF)
 
@@ -270,6 +267,37 @@
 /datum/antagonist/malf_ai/infected
 	name = "Infected AI"
 	employer = "Infected AI"
-	give_zeroth_laws = FALSE
+	///The player, to who is this AI slaved
+	var/datum/mind/boss
+
+/datum/antagonist/malf_ai/infected/New(give_objectives = TRUE, datum/mind/new_boss)
+	. = ..()
+	if(new_boss)
+		boss = new_boss
+
+/datum/antagonist/malf_ai/infected/forge_ai_objectives()
+	if(!boss)
+		return
+	var/datum/objective/protect/protection_objective = new
+	protection_objective.owner = owner
+	protection_objective.target = boss
+	protection_objective.update_explanation_text()
+	objectives += protection_objective
+
+/datum/antagonist/malf_ai/infected/add_law_zero()
+	if(!boss)
+		return
+	var/mob/living/silicon/ai/malf_ai = owner.current
+
+	malf_ai.laws = new /datum/ai_laws/syndicate_override
+
+	var/mob/living/boss_mob = boss.current
+
+	malf_candidate.set_zeroth_law("Only [boss_mob.real_name] and people [boss_mob.p_they()] designate[boss_mob.p_s()] as being such are Syndicate Agents.")
+	malf_ai.set_syndie_radio()
+
+	to_chat(malf_ai, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
+
+	malf_ai.add_malf_picker()
 
 #undef PROB_SPECIAL
