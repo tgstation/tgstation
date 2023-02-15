@@ -913,6 +913,7 @@
 #include "code\datums\components\mirv.dm"
 #include "code\datums\components\mob_harvest.dm"
 #include "code\datums\components\multiple_lives.dm"
+#include "code\datums\components\mutant_hands.dm"
 #include "code\datums\components\ntnet_interface.dm"
 #include "code\datums\components\nuclear_bomb_operator.dm"
 #include "code\datums\components\omen.dm"
