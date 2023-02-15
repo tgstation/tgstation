@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Bileworms which have been struck down but not butchered no longer return in a more powerful form."
