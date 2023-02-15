@@ -192,7 +192,7 @@
 	if(direct_icon)
 		applied_appearance = mutable_appearance(direct_icon, direct_icon_state)
 	else
-		applied_appearance = get_dynamic_human_appearance(outfit, species, mob_spawner, l_hand, r_hand, generated_dirs = list(SOUTH), animated = FALSE)
+		applied_appearance = get_dynamic_human_appearance(outfit, species, mob_spawner, l_hand, r_hand, animated = FALSE)
 
 /// This proc returns the name that the cardboard cutout item will use.
 /datum/cardboard_cutout/proc/get_name()
