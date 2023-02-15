@@ -609,7 +609,7 @@
 	if(!istype(S))
 		return SHUTTLE_NOT_A_DOCKING_PORT
 
-	if(istype(S, /obj/docking_port/stationary/transit))
+	if(istype(S, /obj/docking_port/stationary/transit) || istype(S, /obj/docking_port/stationary/random))
 		return SHUTTLE_CAN_DOCK
 
 	if(dwidth > S.dwidth)

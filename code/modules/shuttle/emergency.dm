@@ -613,7 +613,20 @@
 /obj/machinery/computer/shuttle/pod/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
 	if(port)
-		possible_destinations += ";[port.shuttle_id]_lavaland"
+		//Checks if the computer has already added the shuttle destination with the initial id
+		//This has to be done because connect_to_shuttle is called again after its ID is updated
+		//due to conflicting id names
+		var/base_shuttle_destination = ";[initial(port.shuttle_id)]_lavaland"
+		var/shuttle_destination = ";[port.shuttle_id]_lavaland"
+
+		var/position = findtext(possible_destinations, base_shuttle_destination)
+		if(position)
+			if(base_shuttle_destination == shuttle_destination)
+				return
+			possible_destinations = splicetext(possible_destinations, position, position + length(base_shuttle_destination), shuttle_destination)
+			return
+
+		possible_destinations += shuttle_destination
 
 /**
  * Signal handler for checking if we should lock or unlock escape pods accordingly to a newly set security level
