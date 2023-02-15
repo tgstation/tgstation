@@ -11,7 +11,7 @@
 	var/bottom_left_coords[3]
 	var/top_right_coords[3]
 	var/turf_type = /turf/open/space
-	///Distance away from the cordon where we can put a "sort-cordon" and run some extra code (see MakeRepel). 0 makes nothing happen
+	///Distance away from the cordon where we can put a "sort-cordon" and run some extra code (see make_repel). 0 makes nothing happen
 	var/pre_cordon_distance = 0
 
 /datum/turf_reservation/transit
@@ -72,31 +72,31 @@
 
 	//swap the area with the pre-cordoning area
 	for(var/turf/pre_cordon_turf as anything in pre_cordon_turfs)
-		MakeRepel(pre_cordon_turf)
+		make_repel(pre_cordon_turf)
 
 ///Register signals in the cordon "danger zone" to do something with whoever trespasses
-/datum/turf_reservation/proc/MakeRepel(turf/pre_cordon_turf)
+/datum/turf_reservation/proc/make_repel(turf/pre_cordon_turf)
 	SHOULD_CALL_PARENT(TRUE)
 	//Okay so hear me out. If we place a special turf IN the reserved area, it will be overwritten, so we can't do that
 	//But signals are preserved even between turf changes, so even if we register a signal now it will stay even if that turf is overriden by the template
-	RegisterSignals(pre_cordon_turf, list(COMSIG_PARENT_QDELETING, COMSIG_TURF_RESERVATION_RELEASED), PROC_REF(OnStopRepel))
+	RegisterSignals(pre_cordon_turf, list(COMSIG_PARENT_QDELETING, COMSIG_TURF_RESERVATION_RELEASED), PROC_REF(on_stop_repel))
 
-/datum/turf_reservation/proc/OnStopRepel(turf/pre_cordon_turf)
+/datum/turf_reservation/proc/on_stop_repel(turf/pre_cordon_turf)
 	SHOULD_CALL_PARENT(TRUE)
 	SIGNAL_HANDLER
 
-	StopRepel(pre_cordon_turf)
+	stop_repel(pre_cordon_turf)
 
 ///Unregister all the signals we added in RegisterRepelSignals
-/datum/turf_reservation/proc/StopRepel(turf/pre_cordon_turf)
+/datum/turf_reservation/proc/stop_repel(turf/pre_cordon_turf)
 	UnregisterSignal(pre_cordon_turf, list(COMSIG_PARENT_QDELETING, COMSIG_TURF_RESERVATION_RELEASED))
 
-/datum/turf_reservation/transit/MakeRepel(turf/pre_cordon_turf)
+/datum/turf_reservation/transit/make_repel(turf/pre_cordon_turf)
 	..()
 
 	RegisterSignal(pre_cordon_turf, COMSIG_ATOM_ENTERED, PROC_REF(space_dump))
 
-/datum/turf_reservation/StopRepel(turf/pre_cordon_turf)
+/datum/turf_reservation/stop_repel(turf/pre_cordon_turf)
 	..()
 
 	UnregisterSignal(pre_cordon_turf, COMSIG_ATOM_ENTERED)
