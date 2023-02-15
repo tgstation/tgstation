@@ -325,7 +325,7 @@
  */
 /datum/disease/advance/random/event/AssignProperties()
 
-	addtimer(CALLBACK(src, PROC_REF(makeVisible)), ((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(make_visible)), ((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS)
 
 	if(length(properties))
 		spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
