@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	uses += amt
 	if(!silent && uses)
 		to_chat(owner, span_notice("[name] now has <b>[uses]</b> use[uses > 1 ? "s" : ""] remaining."))
-	if(!uses)
+	if(uses <= 0)
 		if(initial(uses) > 1) //no need to tell 'em if it was one-use anyway!
 			to_chat(owner, span_warning("[name] has run out of uses!"))
 		qdel(src)
@@ -361,23 +361,40 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	desc = "Closes, bolts, and depowers every airlock, firelock, and blast door on the station. After 90 seconds, they will reset themselves."
 	button_icon_state = "lockdown"
 	uses = 1
+	/// Badmin / exploit abuse prevention.
+	/// Check tick may sleep in activate() and we don't want this to be spammable.
+	var/hack_in_progress  = FALSE
+
+/datum/action/innate/ai/lockdown/IsAvailable(feedback)
+	return ..() && !hack_in_progress
 
 /datum/action/innate/ai/lockdown/Activate()
-	for(var/obj/machinery/door/D in GLOB.airlocks)
-		if(!is_station_level(D.z))
+	hack_in_progress = TRUE
+	for(var/obj/machinery/door/locked_down as anything in GLOB.airlocks)
+		if(QDELETED(locked_down) || !is_station_level(locked_down.z))
 			continue
-		INVOKE_ASYNC(D, TYPE_PROC_REF(/obj/machinery/door, hostile_lockdown), owner)
-		addtimer(CALLBACK(D, TYPE_PROC_REF(/obj/machinery/door, disable_lockdown)), 900)
+		INVOKE_ASYNC(locked_down, TYPE_PROC_REF(/obj/machinery/door, hostile_lockdown), owner)
+		CHECK_TICK
 
-	var/obj/machinery/computer/communications/C = locate() in GLOB.shuttle_caller_list
-	if(C)
-		C.post_status("alert", "lockdown")
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_malf_ai_undo_lockdown)), 90 SECONDS)
+
+	var/obj/machinery/computer/communications/random_comms_console = locate() in GLOB.shuttle_caller_list
+	random_comms_console?.post_status("alert", "lockdown")
 
 	minor_announce("Hostile runtime detected in door controllers. Isolation lockdown protocols are now in effect. Please remain calm.", "Network Alert:", TRUE)
 	to_chat(owner, span_danger("Lockdown initiated. Network reset in 90 seconds."))
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce),
 		"Automatic system reboot complete. Have a secure day.",
-		"Network reset:"), 900)
+		"Network reset:"), 90 SECONDS)
+	hack_in_progress = FALSE
+
+/// For Lockdown malf AI ability. Opens all doors on the station.
+/proc/_malf_ai_undo_lockdown()
+	for(var/obj/machinery/door/locked_down as anything in GLOB.airlocks)
+		if(QDELETED(locked_down) || !is_station_level(locked_down.z))
+			continue
+		INVOKE_ASYNC(locked_down, TYPE_PROC_REF(/obj/machinery/door, disable_lockdown))
+		CHECK_TICK
 
 /// Override Machine: Allows the AI to override a machine, animating it into an angry, living version of itself.
 /datum/ai_module/destructive/override_machine
