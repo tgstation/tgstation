@@ -243,7 +243,6 @@
  * Uses the parameters to create a list of symptoms, picking from various severities
  * Viral Evolution and Eternal Youth are special modifiers, so we roll separately.
  */
-
 /datum/disease/advance/random/event/New(max_symptoms, requested_severity)
 	var/list/datum/symptom/possible_symptoms = list(
 		/datum/symptom/beard,
@@ -289,7 +288,8 @@
 		var/datum/symptom/chosen_symptom = pick_n_take(possible_symptoms)
 
 		if(!chosen_symptom)
-			CRASH("Advanced disease could not pick a symptom!")
+			stack_trace("Advanced disease could not pick a symptom!")
+			return
 
 		//Checks if the chosen symptom is severe enough to meet requested severity. If not, pick a new symptom.
 		//If we've met requested severity already, we don't care and will keep the chosen symptom.
@@ -305,13 +305,17 @@
 			name = "[new_symptom.illness]"
 			current_severity = new_symptom.severity
 
-	//Finalize the generated virus with Eternal Youth on the end.
-	symptoms += new /datum/symptom/youth
-
-	//Advanced variants have increased resistance but spread slower.
-	if(prob(40))
-		symptoms += new /datum/symptom/viraladaptation
-		name = "Advanced [name]"
+	//Modifiers to keep the disease base stats above 0 (unless RNG gets a really bad roll.)
+	//Eternal Youth for +4 to resistance and stage speed.
+	//Viral modifiers to slow down/resist or go fast and loud.
+	if(prob(66))
+		var/list/datum/symptom/possible_modifiers = list(
+			/datum/symptom/viraladaptation,
+			/datum/symptom/viralevolution,
+		)
+		var/datum/symptom/chosen_modifier = pick(possible_modifiers)
+		symptoms += new chosen_modifier
+		symptoms += new /datum/symptom/youth
 
 	Refresh()
 
@@ -337,6 +341,10 @@
 	stage_prob = max(0.4 * properties["stage_rate"], 1)
 	set_severity(properties["severity"])
 	visibility_flags |= HIDDEN_SCANNER
+
+	//If we have an advanced (high stage) disease, add it to the name.
+	if(properties["stage_rate"] >= 7)
+		name = "Advanced [name]"
 
 	if(severity == "Dangerous" || severity == "BIOHAZARD")
 		visibility_flags &= ~HIDDEN_SCANNER
@@ -383,6 +391,7 @@
 	if(!length(properties))
 		stack_trace("Advanced virus properties were empty or null!")
 		return
+
 	var/res = rand(2, 6)
 	cures = list(pick(advance_cures[res]))
 	oldres = res
