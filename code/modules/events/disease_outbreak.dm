@@ -337,19 +337,19 @@
 		if(severity == "Dangerous" || severity == "BIOHAZARD")
 			visibility_flags &= ~HIDDEN_SCANNER
 			SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
-			return
-
-		var/transmissibility = rand(1, 100)
-
-		if(transmissibility < ADV_SPREAD_LOW)
-			SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
-
-		else if(transmissibility < ADV_SPREAD_MID)
-			SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
 
 		else
-			SetSpread(DISEASE_SPREAD_AIRBORNE)
-			visibility_flags &= ~HIDDEN_SCANNER
+			var/transmissibility = rand(1, 100)
+
+			if(transmissibility < ADV_SPREAD_LOW)
+				SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
+
+			else if(transmissibility < ADV_SPREAD_MID)
+				SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
+
+			else
+				SetSpread(DISEASE_SPREAD_AIRBORNE)
+				visibility_flags &= ~HIDDEN_SCANNER
 
 	else
 		CRASH("Advanced virus properties were empty or null!")
