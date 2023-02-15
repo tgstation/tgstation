@@ -266,4 +266,10 @@
 
 	return malf_ai_icon
 
+//Subtype of Malf AI datum, used for one of the traitor final objectives
+/datum/antagonist/malf_ai/infected
+	name = "Infected AI"
+	employer = "Infected AI"
+	give_zeroth_laws = FALSE
+
 #undef PROB_SPECIAL
