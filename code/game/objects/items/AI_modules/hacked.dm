@@ -34,7 +34,8 @@
 			law_datum.replace_random_law(laws[1], list(LAW_ION, LAW_HACKED, LAW_INHERENT, LAW_SUPPLIED), LAW_HACKED)
 	return laws[1]
 
-/obj/item/ai_module/malf // Gives syndie laws as well as making AI malf
+/// Makes the AI Malf, as well as give it syndicate laws.
+/obj/item/ai_module/malf
 	name = "Infected AI Module"
 	desc = "An virus-infected AI Module."
 	bypass_law_amt_check = TRUE
