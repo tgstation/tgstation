@@ -304,10 +304,10 @@
 			name = "[new_symptom.illness]"
 			current_severity = new_symptom.severity
 
-	//Finalize the generated virus with EY on the end.
+	//Finalize the generated virus with Eternal Youth on the end.
 	symptoms += new /datum/symptom/youth
 
-	//Advanced variants have increased resistance but spread slower
+	//Advanced variants have increased resistance but spread slower.
 	if(prob(40))
 		symptoms += new /datum/symptom/viraladaptation
 		name = "Advanced [name]"
