@@ -83,6 +83,7 @@
 	return TRUE
 
 /obj/item/organ/internal/heart/gland/Remove(mob/living/carbon/gland_owner, special = FALSE)
+	. = ..()
 	active = FALSE
 	if(initial(uses) == 1)
 		uses = initial(uses)
