@@ -86,7 +86,7 @@
 	///The disease type we will be spawning
 	var/datum/disease/virus_type
 	///The preset (classic) or generated (advanced) illness name
-	var/illness_type
+	var/illness_type = ""
 	///Disease recipient candidates, passed from the round_event_control object
 	var/list/afflicted = list()
 
