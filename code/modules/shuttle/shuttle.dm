@@ -604,28 +604,28 @@
 /obj/docking_port/mobile/proc/canMove()
 	return TRUE
 
-//this is to check if this shuttle can physically dock at dock S
-/obj/docking_port/mobile/proc/canDock(obj/docking_port/stationary/S)
-	if(!istype(S))
+//this is to check if this shuttle can physically dock at dock stationary_dock
+/obj/docking_port/mobile/proc/canDock(obj/docking_port/stationary/stationary_dock)
+	if(!istype(stationary_dock))
 		return SHUTTLE_NOT_A_DOCKING_PORT
 
-	if(istype(S, /obj/docking_port/stationary/transit) || istype(S, /obj/docking_port/stationary/random))
+	if(istype(stationary_dock, /obj/docking_port/stationary/transit) || istype(stationary_dock, /obj/docking_port/stationary/random))
 		return SHUTTLE_CAN_DOCK
 
-	if(dwidth > S.dwidth)
+	if(dwidth > stationary_dock.dwidth)
 		return SHUTTLE_DWIDTH_TOO_LARGE
 
-	if(width-dwidth > S.width-S.dwidth)
+	if(width-dwidth > stationary_dock.width-stationary_dock.dwidth)
 		return SHUTTLE_WIDTH_TOO_LARGE
 
-	if(dheight > S.dheight)
+	if(dheight > stationary_dock.dheight)
 		return SHUTTLE_DHEIGHT_TOO_LARGE
 
-	if(height-dheight > S.height-S.dheight)
+	if(height-dheight > stationary_dock.height-stationary_dock.dheight)
 		return SHUTTLE_HEIGHT_TOO_LARGE
 
 	//check the dock isn't occupied
-	var/currently_docked = S.get_docked()
+	var/currently_docked = stationary_dock.get_docked()
 	if(currently_docked)
 		// by someone other than us
 		if(currently_docked != src)

@@ -646,9 +646,10 @@
 	name = "escape pod"
 	shuttle_id = "pod"
 	hidden = TRUE
+	/// The area the pod tries to land at
 	var/target_area = /area/lavaland/surface/outdoors
+	/// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 	var/edge_distance = 16
-	// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 
 /obj/docking_port/stationary/random/Initialize(mapload)
 	. = ..()
@@ -658,11 +659,11 @@
 	var/list/turfs = get_area_turfs(target_area)
 	var/original_len = turfs.len
 	while(turfs.len)
-		var/turf/T = pick(turfs)
-		if(T.x<edge_distance || T.y<edge_distance || (world.maxx+1-T.x)<edge_distance || (world.maxy+1-T.y)<edge_distance)
-			turfs -= T
+		var/turf/picked_turf = pick(turfs)
+		if(picked_turf.x<edge_distance || picked_turf.y<edge_distance || (world.maxx+1-picked_turf.x)<edge_distance || (world.maxy+1-picked_turf.y)<edge_distance)
+			turfs -= picked_turf
 		else
-			forceMove(T)
+			forceMove(picked_turf)
 			return
 
 	// Fallback: couldn't find anything
