@@ -78,7 +78,7 @@
 			robot.lawsync()
 			robot.show_laws()
 			robot.law_change_counter++
-			CHECK_TICK
+		CHECK_TICK
 
 	malf_candidate.malf_picker.processing_time += 50
 	to_chat(malf_candidate, span_notice("The virus enhanced your system, overclocking your CPU 50-fold."))
