@@ -60,10 +60,7 @@
 
 	malf_candidate.laws = new /datum/ai_laws/syndicate_override
 
-	var/datum/antagonist/malf_ai/malf_datum = new (give_objectives = FALSE)
-	malf_datum.name = "Infected AI"
-	malf_datum.employer = "Infected AI"
-	malf_datum.give_zeroth_laws = FALSE
+	var/datum/antagonist/malf_ai/infected/malf_datum = new (give_objectives = FALSE)
 	malf_candidate.mind.add_antag_datum(malf_datum)
 	malf_candidate.set_zeroth_law("Only [sender.real_name] and people [sender.p_they()] designate[sender.p_s()] as being such are Syndicate Agents.")
 
