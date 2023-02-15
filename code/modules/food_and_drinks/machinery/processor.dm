@@ -163,7 +163,7 @@
 	set src in oview(1)
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
-	if(!usr.canPerformAction(src))
+	if(!usr.can_perform_action(src))
 		return
 	if(isliving(usr))
 		var/mob/living/L = usr

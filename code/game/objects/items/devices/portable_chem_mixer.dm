@@ -80,7 +80,7 @@
 /obj/item/storage/portable_chem_mixer/AltClick(mob/living/user)
 	if(!atom_storage.locked)
 		return ..()
-	if(!can_interact(user) || !user.canPerformAction(src, FORBID_TELEKINESIS_REACH))
+	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	replace_beaker(user)
 	update_appearance()

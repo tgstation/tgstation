@@ -25,7 +25,7 @@
 
 /obj/item/clothing/mask/breath/AltClick(mob/user)
 	..()
-	if(user.canPerformAction(src, NEED_DEXTERITY))
+	if(user.can_perform_action(src, NEED_DEXTERITY))
 		adjustmask(user)
 
 /obj/item/clothing/mask/breath/examine(mob/user)

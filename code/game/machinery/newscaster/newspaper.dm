@@ -166,7 +166,7 @@
 			var/s = tgui_input_text(user, "Write something", "Newspaper")
 			if (!s)
 				return
-			if(!user.canPerformAction(src))
+			if(!user.can_perform_action(src))
 				return
 			scribble_page = curr_page
 			scribble = s

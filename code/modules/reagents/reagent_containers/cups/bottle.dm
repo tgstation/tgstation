@@ -533,7 +533,7 @@
 	if(!inputvalue)
 		return
 
-	if(user.canPerformAction(src))
+	if(user.can_perform_action(src))
 		name = "[(inputvalue ? "[inputvalue]" : null)] bottle"
 
 //types of syrups

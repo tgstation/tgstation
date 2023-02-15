@@ -1012,7 +1012,7 @@
  * * ALLOW_SILICON_REACH - If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
  * * ALLOW_RESTING - If resting on the floor is allowed to perform action ()
 **/
-/mob/proc/canPerformAction(atom/movable/target, action_bitflags)
+/mob/proc/can_perform_action(atom/movable/target, action_bitflags)
 	return
 
 ///Can this mob use storage

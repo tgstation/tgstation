@@ -657,13 +657,13 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 
-	if(is_cyborg || !user.canPerformAction(src, NEED_DEXTERITY))
+	if(is_cyborg || !user.can_perform_action(src, NEED_DEXTERITY))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(is_zero_amount(delete_if_zero = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/max = get_amount()
 	var/stackmaterial = tgui_input_number(user, "How many sheets do you wish to take out of this stack?", "Stack Split", max_value = max)
-	if(!stackmaterial || QDELETED(user) || QDELETED(src) || !usr.canPerformAction(src, FORBID_TELEKINESIS_REACH))
+	if(!stackmaterial || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	split_stack(user, stackmaterial)
 	to_chat(user, span_notice("You take [stackmaterial] sheets out of the stack."))

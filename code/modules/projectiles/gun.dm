@@ -445,7 +445,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!user.canPerformAction(src, FORBID_TELEKINESIS_REACH))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
 	if(bayonet && can_bayonet) //if it has a bayonet, and the bayonet can be removed
@@ -466,7 +466,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!user.canPerformAction(src, FORBID_TELEKINESIS_REACH))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(pin && user.is_holding(src))
 		user.visible_message(span_warning("[user] attempts to remove [pin] from [src] with [I]."),
@@ -483,7 +483,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!user.canPerformAction(src, FORBID_TELEKINESIS_REACH))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(pin && user.is_holding(src))
 		user.visible_message(span_warning("[user] attempts to remove [pin] from [src] with [I]."),

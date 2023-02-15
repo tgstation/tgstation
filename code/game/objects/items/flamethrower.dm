@@ -153,7 +153,7 @@
 	toggle_igniter(user)
 
 /obj/item/flamethrower/AltClick(mob/user)
-	if(ptank && isliving(user) && user.canPerformAction(src, NEED_DEXTERITY|NEED_HANDS))
+	if(ptank && isliving(user) && user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		user.put_in_hands(ptank)
 		ptank = null
 		to_chat(user, span_notice("You remove the plasma tank from [src]!"))

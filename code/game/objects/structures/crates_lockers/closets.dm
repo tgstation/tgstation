@@ -614,7 +614,7 @@
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.canPerformAction(src) || !isturf(loc))
+	if(!usr.can_perform_action(src) || !isturf(loc))
 		return
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
@@ -677,7 +677,7 @@
 /obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
 
-	if(!user.canPerformAction(src) || !isturf(loc))
+	if(!user.can_perform_action(src) || !isturf(loc))
 		return
 
 	if(!opened && secure)

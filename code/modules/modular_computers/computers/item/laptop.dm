@@ -84,7 +84,7 @@
 		return
 	if(!isturf(loc) && !ismob(loc)) // No opening it in backpack.
 		return
-	if(!user.canPerformAction(src))
+	if(!user.can_perform_action(src))
 		return
 
 	toggle_open(user)

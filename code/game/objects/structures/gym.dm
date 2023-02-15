@@ -107,7 +107,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!user.canPerformAction(src, FORBID_TELEKINESIS_REACH))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(obj_flags & IN_USE)
 		balloon_alert(user, "wait your turn!")

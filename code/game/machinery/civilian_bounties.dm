@@ -175,7 +175,7 @@
 		return
 	if(!pad_ref?.resolve())
 		return
-	if(!usr.canPerformAction(src) || (machine_stat & (NOPOWER|BROKEN)))
+	if(!usr.can_perform_action(src) || (machine_stat & (NOPOWER|BROKEN)))
 		return
 	switch(action)
 		if("recalc")

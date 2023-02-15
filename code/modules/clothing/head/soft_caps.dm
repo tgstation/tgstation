@@ -25,7 +25,7 @@
 
 /obj/item/clothing/head/soft/AltClick(mob/user)
 	..()
-	if(user.canPerformAction(src, NEED_DEXTERITY))
+	if(user.can_perform_action(src, NEED_DEXTERITY))
 		flip(user)
 
 

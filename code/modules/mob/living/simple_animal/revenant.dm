@@ -99,7 +99,7 @@
 	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	random_revenant_name()
 
-/mob/living/simple_animal/revenant/canPerformAction(atom/movable/target, action_bitflags)
+/mob/living/simple_animal/revenant/can_perform_action(atom/movable/target, action_bitflags)
 	return FALSE
 
 /mob/living/simple_animal/revenant/proc/random_revenant_name()

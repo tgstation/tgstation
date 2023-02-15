@@ -165,7 +165,7 @@
 			return result
 
 		// Make sure they can still interact with the parent hydroponics tray.
-		if(!user.canPerformAction(parent))
+		if(!user.can_perform_action(parent))
 			to_chat(user, text = "You are no longer able to harvest the seeds from [parent]!", type = MESSAGE_TYPE_INFO)
 			return result
 

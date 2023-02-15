@@ -165,13 +165,13 @@
 		to_chat(user, span_warning("The rotation is locked!"))
 		return FALSE
 	var/new_angle = tgui_input_number(user, "New angle for primary reflection face", "Reflector Angle", rotation_angle, 360)
-	if(isnull(new_angle) || QDELETED(user) || QDELETED(src) || !usr.canPerformAction(src, FORBID_TELEKINESIS_REACH))
+	if(isnull(new_angle) || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return FALSE
 	set_angle(SIMPLIFY_DEGREES(new_angle))
 	return TRUE
 
 /obj/structure/reflector/AltClick(mob/user)
-	if(!user.canPerformAction(src, NEED_DEXTERITY))
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return
 	else if(finished)
 		rotate(user)

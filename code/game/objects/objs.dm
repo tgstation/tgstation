@@ -290,7 +290,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /obj/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && (!current_skin || infinite_reskin) && user.canPerformAction(src, NEED_DEXTERITY))
+	if(unique_reskin && (!current_skin || infinite_reskin) && user.can_perform_action(src, NEED_DEXTERITY))
 		reskin_obj(user)
 
 /**

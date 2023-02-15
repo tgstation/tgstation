@@ -310,7 +310,7 @@
 	if(.)
 		return
 
-	if(!user.canPerformAction(src, NEED_DEXTERITY))
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return
 	if(attached_accessory)
 		remove_accessory(user)

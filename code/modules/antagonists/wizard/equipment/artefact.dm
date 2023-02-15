@@ -230,7 +230,7 @@
 	if(!istype(M))
 		return ..()
 
-	if(!istype(user) || !user.canPerformAction(M))
+	if(!istype(user) || !user.can_perform_action(M))
 		return
 
 	if(M.stat != DEAD)

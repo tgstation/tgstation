@@ -44,7 +44,7 @@
 	return NONE
 
 /obj/item/toy/cards/cardhand/attack_self(mob/living/user)
-	if(!isliving(user) || !user.canPerformAction(src, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH))
+	if(!isliving(user) || !user.can_perform_action(src, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH))
 		return
 
 	var/list/handradial = list()

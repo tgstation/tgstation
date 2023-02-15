@@ -207,7 +207,7 @@
 		return
 	var/sniped_amount = painting_metadata.credit_value
 	var/offer_amount = tgui_input_number(user, "How much do you want to offer?", "Patronage Amount", (painting_metadata.credit_value + 1), account.account_balance, painting_metadata.credit_value)
-	if(!offer_amount || QDELETED(user) || QDELETED(src) || !usr.canPerformAction(src, FORBID_TELEKINESIS_REACH))
+	if(!offer_amount || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(sniped_amount != painting_metadata.credit_value)
 		return
@@ -324,7 +324,7 @@
 	if(painting_metadata.loaded_from_json) // No renaming old paintings
 		return
 	var/new_name = tgui_input_text(user, "What do you want to name the painting?", "Title Your Masterpiece")
-	if(new_name != painting_metadata.title && new_name && user.canPerformAction(src))
+	if(new_name != painting_metadata.title && new_name && user.can_perform_action(src))
 		painting_metadata.title = new_name
 	var/sign_choice = tgui_alert(user, "Do you want to sign it or remain anonymous?", "Sign painting?", list("Yes", "No"))
 	if(sign_choice != "Yes")

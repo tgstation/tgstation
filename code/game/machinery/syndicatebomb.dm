@@ -228,10 +228,10 @@
 	update_appearance()
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
-	if(!user.canPerformAction(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
 		return
 	var/new_timer = tgui_input_number(user, "Set the timer", "Countdown", timer_set, maximum_timer, minimum_timer)
-	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.canPerformAction(src, FORBID_TELEKINESIS_REACH))
+	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	timer_set = new_timer
 	loc.visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))

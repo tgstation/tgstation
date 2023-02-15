@@ -683,7 +683,7 @@
 	..()
 	if(!can_interact(usr))
 		return TRUE
-	if(!usr.canPerformAction(src))
+	if(!usr.can_perform_action(src))
 		return TRUE
 	add_fingerprint(usr)
 	update_last_used(usr)

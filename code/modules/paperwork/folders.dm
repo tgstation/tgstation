@@ -45,7 +45,7 @@
 	if(!inputvalue)
 		return
 
-	if(user.canPerformAction(src))
+	if(user.can_perform_action(src))
 		name = "folder[(inputvalue ? " - '[inputvalue]'" : null)]"
 
 /obj/item/folder/proc/remove_item(obj/item/Item, mob/user)
