@@ -1,9 +1,9 @@
 #!/bin/bash
 
+./InstallDeps.sh
+
 set -e
 set -x
-
-./InstallDeps.sh
 
 #load dep exports
 #need to switch to game dir for Dockerfile weirdness

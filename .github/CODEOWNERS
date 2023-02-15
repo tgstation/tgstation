@@ -21,6 +21,7 @@
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
 /tools/tgs_scripts/ @Cyberboss
+/tools/tgs_test/ @Cyberboss
 
 # Dragomagol/Tattle
 
