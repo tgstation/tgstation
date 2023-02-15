@@ -5,7 +5,7 @@
 	max_occurrences = 1
 	description = "Makes everyone dressed up like a wizard."
 
-/datum/round_event_control/wizard/identity_spoof/can_spawn_event(players_amt)
+/datum/round_event_control/wizard/identity_spoof/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	if(!.)
 		return .

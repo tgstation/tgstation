@@ -65,7 +65,7 @@
 	if(isspider(mover))
 		return TRUE
 	else if(isliving(mover))
-		if(istype(mover.pulledby, /mob/living/simple_animal/hostile/giant_spider))
+		if(istype(mover.pulledby, /mob/living/basic/giant_spider))
 			return TRUE
 		if(prob(50))
 			balloon_alert(mover, "stuck in web!")
@@ -127,19 +127,19 @@
 	AddComponent(/datum/component/swarming)
 
 /obj/structure/spider/spiderling/hunter
-	grow_as = /mob/living/simple_animal/hostile/giant_spider/hunter
+	grow_as = /mob/living/basic/giant_spider/hunter
 
 /obj/structure/spider/spiderling/nurse
-	grow_as = /mob/living/simple_animal/hostile/giant_spider/nurse
+	grow_as = /mob/living/basic/giant_spider/nurse
 
 /obj/structure/spider/spiderling/midwife
-	grow_as = /mob/living/simple_animal/hostile/giant_spider/midwife
+	grow_as = /mob/living/basic/giant_spider/midwife
 
 /obj/structure/spider/spiderling/viper
-	grow_as = /mob/living/simple_animal/hostile/giant_spider/viper
+	grow_as = /mob/living/basic/giant_spider/viper
 
 /obj/structure/spider/spiderling/tarantula
-	grow_as = /mob/living/simple_animal/hostile/giant_spider/tarantula
+	grow_as = /mob/living/basic/giant_spider/tarantula
 
 /obj/structure/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
@@ -219,10 +219,10 @@
 		if(amount_grown >= 100)
 			if(!grow_as)
 				if(prob(3))
-					grow_as = pick(/mob/living/simple_animal/hostile/giant_spider/tarantula, /mob/living/simple_animal/hostile/giant_spider/viper, /mob/living/simple_animal/hostile/giant_spider/midwife)
+					grow_as = pick(/mob/living/basic/giant_spider/tarantula, /mob/living/basic/giant_spider/viper, /mob/living/basic/giant_spider/midwife)
 				else
-					grow_as = pick(/mob/living/simple_animal/hostile/giant_spider, /mob/living/simple_animal/hostile/giant_spider/hunter, /mob/living/simple_animal/hostile/giant_spider/nurse)
-			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(src.loc)
+					grow_as = pick(/mob/living/basic/giant_spider, /mob/living/basic/giant_spider/hunter, /mob/living/basic/giant_spider/nurse)
+			var/mob/living/basic/giant_spider/S = new grow_as(src.loc)
 			S.faction = faction.Copy()
 			S.directive = directive
 			qdel(src)

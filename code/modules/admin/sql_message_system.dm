@@ -668,13 +668,13 @@
 		var/editor_key = query_get_message_output.item[5]
 		switch(type)
 			if("message")
-				output += "<font color='red' size='3'><b>Admin message left by [span_prefix("[admin_key]")] on [timestamp]</b></font>"
-				output += "<br><font color='red'>[text] <A href='?_src_=holder;[HrefToken()];messageread=[message_id]'>(Click here to verify you have read this message)</A></font><br>"
+				output += "<font color='[COLOR_RED]' size='3'><b>Admin message left by [span_prefix("[admin_key]")] on [timestamp]</b></font>"
+				output += "<br><font color='[COLOR_RED]'>[text] <A href='?_src_=holder;[HrefToken()];messageread=[message_id]'>(Click here to verify you have read this message)</A></font><br>"
 			if("note")
-				output += "<font color='red' size='3'><b>Note left by [span_prefix("[admin_key]")] on [timestamp]</b></font>"
-				output += "<br><font color='red'>[text]</font><br>"
+				output += "<font color='[COLOR_RED]' size='3'><b>Note left by [span_prefix("[admin_key]")] on [timestamp]</b></font>"
+				output += "<br><font color='[COLOR_RED]'>[text]</font><br>"
 			if("watchlist entry")
-				message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(target_ckey)] has been on the watchlist since [timestamp] and has just connected - Reason: [text]</font>")
+				message_admins("<font color='[COLOR_RED]'><B>Notice: </B></font><font color='[COLOR_ADMIN_PINK]'>[key_name_admin(target_ckey)] has been on the watchlist since [timestamp] and has just connected - Reason: [text]</font>")
 				send2tgs_adminless_only("Watchlist", "[key_name(target_ckey)] is on the watchlist and has just connected - Reason: [text]")
 			if("memo")
 				output += "[span_memo("Memo by <span class='prefix'>[admin_key]")] on [timestamp]"

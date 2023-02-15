@@ -398,6 +398,7 @@
 	if(mind)
 		if(mind.assigned_role.policy_index)
 			. += mind.assigned_role.policy_index
+		. += mind.assigned_role.title //A bit redunant, but both title and policy index are used
 		. += mind.special_role //In case there's something special leftover, try to avoid
 		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
 			. += "[antag_datum.type]"

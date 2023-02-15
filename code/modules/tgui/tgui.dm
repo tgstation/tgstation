@@ -11,7 +11,7 @@
 	var/mob/user
 	/// The object which owns the UI.
 	var/datum/src_object
-	/// The title of te UI.
+	/// The title of the UI.
 	var/title
 	/// The window_id for browse() and onclose().
 	var/datum/tgui_window/window
