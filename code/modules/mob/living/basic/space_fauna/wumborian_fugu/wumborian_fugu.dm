@@ -46,7 +46,7 @@
 
 /mob/living/basic/wumborian_fugu/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/loot_drop, loot = list(/obj/item/fugu_gland))
+	AddElement(/datum/element/death_drops, loot = list(/obj/item/fugu_gland))
 	ADD_TRAIT(src, TRAIT_LAVA_IMMUNE, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT)
 	expand = new(src)
