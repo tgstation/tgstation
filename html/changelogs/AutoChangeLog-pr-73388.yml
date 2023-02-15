@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Mice and Regal Rats will no longer spawn in icebox's solar panels and die of cold."
