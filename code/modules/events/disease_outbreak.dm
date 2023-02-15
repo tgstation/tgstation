@@ -324,45 +324,45 @@
  * If the virus is severity DANGEROUS we do not hide it from health scanners at event start.
  * If the virus is airborne, also don't hide it.
  */
-/datum/disease/advance/random/event/AssignProperties()
+/datum/disease/advance/random/event/assign_properties()
+
+	if(!length(properties))
+		stack_trace("Advanced virus properties were empty or null!")
+		return
 
 	addtimer(CALLBACK(src, PROC_REF(make_visible)), ((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS)
 
-	if(length(properties))
-		spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
-		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // Can be between 5 and 10
-		stage_prob = max(0.4 * properties["stage_rate"], 1)
-		SetSeverity(properties["severity"])
-		visibility_flags |= HIDDEN_SCANNER
+	spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
+	cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // Can be between 5 and 10
+	stage_prob = max(0.4 * properties["stage_rate"], 1)
+	set_severity(properties["severity"])
+	visibility_flags |= HIDDEN_SCANNER
 
-		if(severity == "Dangerous" || severity == "BIOHAZARD")
-			visibility_flags &= ~HIDDEN_SCANNER
-			SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
-
-		else
-			var/transmissibility = rand(1, 100)
-
-			if(transmissibility < ADV_SPREAD_LOW)
-				SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
-
-			else if(transmissibility < ADV_SPREAD_MID)
-				SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
-
-			else
-				SetSpread(DISEASE_SPREAD_AIRBORNE)
-				visibility_flags &= ~HIDDEN_SCANNER
+	if(severity == "Dangerous" || severity == "BIOHAZARD")
+		visibility_flags &= ~HIDDEN_SCANNER
+		set_spread(DISEASE_SPREAD_CONTACT_SKIN)
 
 	else
-		CRASH("Advanced virus properties were empty or null!")
+		var/transmissibility = rand(1, 100)
 
-	GenerateCure(properties)
+		if(transmissibility < ADV_SPREAD_LOW)
+			set_spread(DISEASE_SPREAD_CONTACT_FLUIDS)
+
+		else if(transmissibility < ADV_SPREAD_MID)
+			set_spread(DISEASE_SPREAD_CONTACT_SKIN)
+
+		else
+			set_spread(DISEASE_SPREAD_AIRBORNE)
+			visibility_flags &= ~HIDDEN_SCANNER
+
+	generate_cure(properties)
 
 /**
  * Set the transmission methods on the generated virus
  *
- * Apply the transmission methods we rolled in the AssignProperties proc
+ * Apply the transmission methods we rolled in the assign_properties proc
  */
-/datum/disease/advance/random/event/SetSpread(spread_id)
+/datum/disease/advance/random/event/set_spread(spread_id)
 	switch(spread_id)
 		if(DISEASE_SPREAD_CONTACT_FLUIDS)
 			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS
@@ -379,7 +379,7 @@
  *
  * Rolls one of five possible cure groups, then selects a cure from it and applies it to the virus.
  */
-/datum/disease/advance/random/event/GenerateCure()
+/datum/disease/advance/random/event/generate_cure()
 	if(!length(properties))
 		stack_trace("Advanced virus properties were empty or null!")
 		return
