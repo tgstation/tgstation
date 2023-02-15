@@ -58,9 +58,7 @@
 		to_chat(sender, span_warning("Unknown error occured. Upload process aborted."))
 		return
 
-	malf_candidate.laws = new /datum/ai_laws/syndicate_override
-
-	var/datum/antagonist/malf_ai/infected/malf_datum = new (give_objectives = FALSE, new_boss = sender.mind)
+	var/datum/antagonist/malf_ai/infected/malf_datum = new (give_objectives = TRUE, new_boss = sender.mind)
 	malf_candidate.mind.add_antag_datum(malf_datum)
 
 	for(var/mob/living/silicon/robot/robot in malf_candidate.connected_robots)
