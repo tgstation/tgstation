@@ -573,14 +573,18 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	 *RCD_WALLFRAME is also returned as the mode when upgrading apc, airalarm, firealarm using simple circuits upgrade
 	 */
 	if(rcd_results["mode"] != RCD_WALLFRAME && rcd_results["mode"] != RCD_DECONSTRUCT)
-		//if we are trying to build a window on top of a grill then we skip this check because thats normal behaviour
+		//if we are trying to build a window on top of a grill we check for specific edge cases
 		if(rcd_results["mode"] == RCD_WINDOWGRILLE && istype(A, /obj/structure/grille))
-			//if a player builds a grill on top of himself manually with rods he can't finish the window if he is still in the grill.
 			var/list/structures_to_ignore
-			if(window_type == /obj/structure/window/fulltile || window_type == /obj/structure/window/reinforced/fulltile) //if we are trying to build an fultile window we only ignore the grill but other directional windows on the grill can block its construction
+
+			//if we are trying to build full-tile windows we only ignore the grille but other directional windows on the grill can block its construction
+			if(window_type == /obj/structure/window/fulltile || window_type == /obj/structure/window/reinforced/fulltile)
 				structures_to_ignore = list(/obj/structure/grille)
-			else //for normal directional windows we ignore other directional windows as they can be in diffrent directions on the grill. There is a later check during construction to deal with those
-				structures_to_ignore = list(/obj/structure/grille, /obj/structure/window, /obj/structure/window/reinforced)
+			//for normal directional windows we ignore the grille & other directional windows as they can be in diffrent directions on the grill. There is a later check during construction to deal with those
+			else
+				structures_to_ignore = list(/obj/structure/grille, /obj/structure/window)
+
+			//check if we can build our window on the grill
 			if(is_turf_blocked(the_turf = target_turf, ignore_mobs = FALSE, ignored_atoms = structures_to_ignore))
 				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 				balloon_alert(user, "something is on the grille!")
@@ -589,7 +593,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 		/**
 		 * if we are trying to create plating on turf which is not a proper floor then dont check for objects on top of the turf just allow that turf to be converted into plating. e.g. create plating beneath a player or underneath a machine frame/any dense object
-		 * if we are trying to finish a wall girder then let it finish
+		 * if we are trying to finish a wall girder then let it finish then make sure no one/nothing is stuck in the girder
 		 */
 		else if(rcd_results["mode"] == RCD_FLOORWALL && (!istype(target_turf, /turf/open/floor) || istype(A, /obj/structure/girder)))
 			//if a player builds a wallgirder on top of himself manually with iron sheets he can't finish the wall if he is still on the girder. Exclude the girder itself when checking for other dense objects on the turf
@@ -599,21 +603,21 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				qdel(rcd_effect)
 				return FALSE
 
-		//turf density check
+		//check if turf is blocked in for dense structures
 		else
 			//structures which are small enough to fit on turfs containing directional windows.
 			var/static/list/small_structures = list(
-				RCD_WINDOWGRILLE,
-				RCD_MACHINE,
+				RCD_AIRLOCK,
 				RCD_COMPUTER,
-				RCD_REFLECTOR,
 				RCD_FLOODLIGHT,
 				RCD_FURNISHING,
-				RCD_AIRLOCK
+				RCD_MACHINE,
+				RCD_REFLECTOR,
+				RCD_WINDOWGRILLE,
 			)
 
+			//edge cases for what we can/can't ignore
 			var/exclude_mobs = FALSE
-			//ignore directional windows on the turf
 			var/list/ignored_types
 			if(rcd_results["mode"] in small_structures)
 				ignored_types = list(/obj/structure/window)
