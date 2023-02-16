@@ -93,8 +93,12 @@
 				return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	var/mob/living/living_target = target
-	if (!has_healable_damage(living_target))
+	if (living_target.health >= living_target.maxHealth)
 		target.balloon_alert(healer, "not hurt!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if (!has_healable_damage(living_target))
+		target.balloon_alert(healer, "can't heal that!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if (living_target.stat == DEAD)
