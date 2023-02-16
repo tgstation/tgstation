@@ -14088,10 +14088,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"dfz" = (
-/obj/effect/spawner/random/vending/snackvend,
-/turf/open/floor/noslip,
-/area/station/hallway/primary/tram/right)
 "dfP" = (
 /obj/machinery/rnd/production/techfab/department/service,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -20365,7 +20361,6 @@
 "fBK" = (
 /obj/effect/landmark/tram/middle_part,
 /obj/structure/industrial_lift/tram/white,
-/obj/structure/sign/plaques/tram,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "fBX" = (
@@ -40083,6 +40078,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
+"naH" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/machinery/computer/order_console/cook,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
 "naN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/grunge{
@@ -46239,7 +46241,8 @@
 	name = "Head of Personnel's Requests Console";
 	assistance_requestable = 1;
 	anon_tips_receiver = 1;
-	supplies_requestable = 1
+	supplies_requestable = 1;
+	announcementConsole = 1
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -49758,6 +49761,7 @@
 /area/station/command/gateway)
 "qHk" = (
 /obj/structure/industrial_lift/tram,
+/obj/structure/sign/plaques/tram,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "qHo" = (
@@ -67087,7 +67091,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "tram_dorm_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
+	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck","4"="Lower Level","5"="Platform Level")
 	},
 /obj/structure/railing,
 /turf/open/floor/plating/elevatorshaft,
@@ -101523,7 +101527,7 @@ dQt
 iRL
 snQ
 iRL
-pjC
+naH
 jra
 dWn
 cWZ
@@ -179933,7 +179937,7 @@ iOd
 ozQ
 vPi
 brm
-dfz
+xYV
 tfc
 aHr
 wpK
