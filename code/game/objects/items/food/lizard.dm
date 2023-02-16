@@ -792,45 +792,42 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/canned_jellyfish
+/obj/item/food/canned/jellyfish
 	name = "canned gunner jellyfish"
 	desc = "A can of gunner jellyfish packed in brine. Contains a mild hallucinogen which is destroyed by cooking."
-	icon = 'icons/obj/food/canned.dmi'
-	icon_state = "canned_jellyfish"
+	icon_state = "jellyfish"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 8,
 		/datum/reagent/toxin/mindbreaker = 2,
 		/datum/reagent/consumable/salt = 1,
 	)
+	trash_type = /obj/item/trash/can/food/jellyfish
 	tastes = list("slime" = 1, "burning" = 1, "salt" = 1)
 	foodtypes = SEAFOOD | GORE
 	w_class = WEIGHT_CLASS_SMALL
-	preserved_food = TRUE
 
-/obj/item/food/desert_snails
+/obj/item/food/canned/desert_snails
 	name = "canned desert snails"
 	desc = "Giant snails from the Tiziran desert, packaged in brine. Shells included. Probably best not eaten raw, unless you're a lizard."
-	icon = 'icons/obj/food/canned.dmi'
-	icon_state = "canned_snails"
+	icon_state = "snails"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 8,
 		/datum/reagent/consumable/salt = 2,
 	)
+	trash_type = /obj/item/trash/can/food/desert_snails
 	tastes = list("snails" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
-	preserved_food = TRUE
 
-/obj/item/food/larvae
+/obj/item/food/canned/larvae
 	name = "canned bee larva"
 	desc = "A can of bee larva packaged in honey. Probably appetizing to someone."
-	icon = 'icons/obj/food/canned.dmi'
-	icon_state = "canned_larvae"
+	icon_state = "larvae"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 8,
 		/datum/reagent/consumable/honey = 2,
 	)
+	trash_type = /obj/item/trash/can/food/larvae
 	tastes = list("sweet bugs" = 1)
 	foodtypes = MEAT | GORE | BUGS
 	w_class = WEIGHT_CLASS_SMALL
-	preserved_food = TRUE
