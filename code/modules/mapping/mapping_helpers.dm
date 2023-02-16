@@ -81,7 +81,7 @@
 /obj/effect/baseturf_helper/reinforced_plating/replace_baseturf(turf/thing)
 	if(istype(thing, /turf/open/floor/plating))
 		return //Plates should not be placed under other plates
-	thing.stack_ontop(/turf/open/floor/plating, baseturf)
+	thing.stack_ontop_of_baseturf(/turf/open/floor/plating, baseturf)
 
 //This applies the reinforced plating to the above Z level for every tile in the area where this is placed
 /obj/effect/baseturf_helper/reinforced_plating/ceiling

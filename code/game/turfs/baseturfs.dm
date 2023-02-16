@@ -191,7 +191,7 @@
 	baseturfs = baseturfs_string_list(baseturfs_copy, src)
 
 /// Places a baseturf ontop of a searched for baseturf.
-/turf/proc/stack_ontop(floor, roof)
+/turf/proc/stack_ontop_of_baseturf(floor, roof)
 	if (!islist(baseturfs))
 		baseturfs = list(baseturfs)
 	var/floor_position = baseturfs.Find(floor)
