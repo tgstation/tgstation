@@ -2,7 +2,7 @@
  * ### Keep Me Secure component!
  *
  * Component that attaches to items, invoking a function to react when left unmoved and unsecured for too long.
- * Used for Nuclear Authentication Disks, and whiny plushy.
+ * Used for Nuclear Authentication Disks, and whiny plushy as an example (which changes sprites depending on whether it considers itself secure.)
  */
 /datum/component/keep_me_secure
 	/// callback for the parent being secure
@@ -25,10 +25,13 @@
 /datum/component/keep_me_secure/RegisterWithParent()
 	last_move = world.time
 	START_PROCESSING(SSobj, src)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/keep_me_secure/UnregisterFromParent()
 	STOP_PROCESSING(SSobj, src)
+	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
 
+/// Returns whether the game is supposed to consider the parent "secure".
 /datum/component/keep_me_secure/proc/is_secured()
 	var/obj/item/item_parent = parent
 	if (last_secured_location == get_turf(item_parent))
@@ -51,3 +54,14 @@
 	else
 		if(unsecured_callback)
 			unsecured_callback.Invoke(last_move)
+
+/// signal sent when parent is examined
+/datum/component/keep_me_secure/proc/on_examine(mob/living/source, mob/examiner, list/examine_list)
+	SIGNAL_HANDLER
+
+	examine_list += span_boldnotice("[src] should be secured at all times.")
+	if(is_secured())
+		examine_list += span_warning("Right now, it isn't...")
+	else
+		examine_list += span_warning("Right now, it is.")
+
