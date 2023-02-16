@@ -26,6 +26,8 @@
 	last_move = world.time
 	START_PROCESSING(SSobj, src)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(on_examine_more))
+
 
 /datum/component/keep_me_secure/UnregisterFromParent()
 	STOP_PROCESSING(SSobj, src)
@@ -44,10 +46,8 @@
 	return TRUE
 
 /datum/component/keep_me_secure/process(delta_time)
-	var/turf/current_turf = get_turf(parent)
-
 	if(is_secured())
-		last_secured_location = current_turf
+		last_secured_location = get_turf(parent)
 		last_move = world.time
 		if(secured_callback)
 			secured_callback.Invoke(last_move)
@@ -59,8 +59,17 @@
 /datum/component/keep_me_secure/proc/on_examine(mob/living/source, mob/examiner, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_boldnotice("[src] should be secured at all times.")
+	examine_list += span_boldnotice("[parent] should be secured at all times.")
 	if(is_secured())
-		examine_list += span_warning("Right now, it isn't...")
-	else
 		examine_list += span_notice("Right now, it is.")
+	else
+		examine_list += span_warning("Right now, it isn't...")
+	examine_list += span_notice("Examine closer for more info.")
+
+/// signal sent when parent is examined more
+/datum/component/keep_me_secure/proc/on_examine_more(mob/living/source, mob/examiner, list/examine_list)
+	SIGNAL_HANDLER
+
+	examine_list += span_notice("For [parent] to be secure, it needs to be:")
+	examine_list += span_notice("1. Always on the move, and...")
+	examine_list += span_notice("2. Held or dragged by someone.")
