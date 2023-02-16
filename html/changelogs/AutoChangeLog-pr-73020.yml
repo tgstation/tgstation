@@ -1,0 +1,4 @@
+author: "SuperSlayer0"
+delete-after: True
+changes:
+  - rscadd: "Added a traitor final objective to infect the station AI with a virus, that turns it malf and fully loyal to the traitor"

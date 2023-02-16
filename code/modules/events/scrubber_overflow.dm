@@ -85,7 +85,7 @@
 	if(!scrubbers.len)
 		return kill()
 
-/datum/round_event_control/scrubber_overflow/can_spawn_event(players_amt)
+/datum/round_event_control/scrubber_overflow/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -132,6 +132,8 @@
 	max_occurrences = 1
 	earliest_start = 35 MINUTES
 	description = "The scrubbers release a tide of moderately harmless froth."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 4
 
 /datum/round_event/scrubber_overflow/threatening
 	danger_chance = 10
@@ -145,6 +147,8 @@
 	max_occurrences = 1
 	earliest_start = 45 MINUTES
 	description = "The scrubbers release a tide of mildly harmless froth."
+	min_wizard_trigger_potency = 3
+	max_wizard_trigger_potency = 6
 
 /datum/round_event/scrubber_overflow/catastrophic
 	danger_chance = 30
