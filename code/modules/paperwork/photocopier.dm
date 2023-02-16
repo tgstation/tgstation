@@ -199,8 +199,10 @@
 			if(busy)
 				to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
 				return
-			if(issilicon(usr) || (ishuman(usr) && !usr.put_in_hands(toner_cartridge)))
+			var/success = usr.put_in_hands(toner_cartridge)
+			if(!success)
 				toner_cartridge.forceMove(drop_location())
+
 			toner_cartridge = null
 			return TRUE
 

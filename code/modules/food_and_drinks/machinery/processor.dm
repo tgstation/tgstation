@@ -8,10 +8,13 @@
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/processor
-	var/broken = FALSE
+	///Is the processor blending items at the moment
 	var/processing = FALSE
+	///The speed at which the processor processes items
 	var/rating_speed = 1
+	///The amount of items the processor produces, without any food specific multipliers
 	var/rating_amount = 1
+	///Lazylist of items to be blended
 	var/list/processor_contents
 	/*
 	 * Static, nested list. The first layer contains all food processor types.
@@ -50,6 +53,14 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Outputting <b>[rating_amount]</b> item(s) at <b>[rating_speed*100]%</b> speed.")
 
+/obj/machinery/processor/Exited(atom/movable/gone, direction)
+	..()
+	LAZYREMOVE(processor_contents, gone)
+
+/*
+*	Spawns the items based on the passed processor recipes, and transfers materials and reagents
+*	If the input was a mob, gibs them, otherwise, deletes the item
+*/
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	if(recipe.output && loc && !QDELETED(src))
 		var/list/cached_mats = recipe.preserve_materials && what.custom_materials
@@ -72,45 +83,41 @@
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/processor/attackby(obj/item/O, mob/living/user, params)
+/obj/machinery/processor/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(processing)
 		to_chat(user, span_warning("[src] is in the process of processing!"))
 		return TRUE
-	if(default_deconstruction_screwdriver(user, "processor", "processor1", O))
+	if(default_deconstruction_screwdriver(user, "processor", "processor1", attacking_item) || default_pry_open(attacking_item) || default_deconstruction_crowbar(attacking_item))
 		return
 
-	if(default_pry_open(O))
-		return
-
-	if(default_deconstruction_crowbar(O))
-		return
-
-	if(istype(O, /obj/item/storage/bag/tray))
-		var/obj/item/storage/T = O
+	if(istype(attacking_item, /obj/item/storage/bag/tray))
+		var/obj/item/storage/attacking_storage = attacking_item
 		var/loaded = 0
-		for(var/obj/S in T.contents)
-			if(!IS_EDIBLE(S))
+		for(var/obj/content_item in attacking_storage.contents)
+			if(!IS_EDIBLE(content_item))
 				continue
-			var/datum/food_processor_process/P = PROCESSOR_SELECT_RECIPE(S)
-			if(P)
-				if(T.atom_storage.attempt_remove(S, src))
-					LAZYADD(processor_contents, S)
+			var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(content_item)
+			if(recipe)
+				if(attacking_storage.atom_storage.attempt_remove(content_item, src))
+					LAZYADD(processor_contents, content_item)
 					loaded++
 
 		if(loaded)
 			to_chat(user, span_notice("You insert [loaded] items into [src]."))
 		return
 
-	var/datum/food_processor_process/P = PROCESSOR_SELECT_RECIPE(O)
-	if(P)
-		user.visible_message(span_notice("[user] put [O] into [src]."), \
-			span_notice("You put [O] into [src]."))
-		user.transferItemToLoc(O, src, TRUE)
-		LAZYADD(processor_contents, O)
-		return 1
+	var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(attacking_item)
+	if(recipe)
+		user.visible_message(
+			span_notice("[user] put [attacking_item] into [src]."),
+			span_notice("You put [attacking_item] into [src]."),
+		)
+		user.transferItemToLoc(attacking_item, src, TRUE)
+		LAZYADD(processor_contents, attacking_item)
+		return TRUE
 	else if(!user.combat_mode)
 		to_chat(user, span_warning("That probably won't blend!"))
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -147,12 +154,12 @@
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = (total_time / rating_speed)*5) //start shaking
 	sleep(total_time / rating_speed)
-	for(var/atom/movable/O in processor_contents)
-		var/datum/food_processor_process/P = PROCESSOR_SELECT_RECIPE(O)
-		if (!P)
-			log_admin("DEBUG: [O] in processor doesn't have a suitable recipe. How do you put it in?")
+	for(var/atom/movable/content_item in processor_contents)
+		var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(content_item)
+		if (!recipe)
+			log_admin("DEBUG: [content_item] in processor doesn't have a suitable recipe. How do you put it in?")
 			continue
-		process_food(P, O)
+		process_food(recipe, content_item)
 	pixel_x = base_pixel_x //return to its spot after shaking
 	processing = FALSE
 	visible_message(span_notice("\The [src] finishes processing."))
@@ -172,11 +179,6 @@
 	dump_inventory_contents()
 	add_fingerprint(usr)
 
-/obj/machinery/processor/dump_inventory_contents()
-	. = ..()
-	if(!LAZYLEN(processor_contents))
-		processor_contents = null
-
 /obj/machinery/processor/container_resist_act(mob/living/user)
 	user.forceMove(drop_location())
 	user.visible_message(span_notice("[user] crawls free of the processor!"))
@@ -186,18 +188,18 @@
 	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
 	circuit = /obj/item/circuitboard/machine/processor/slime
 
-/obj/machinery/processor/slime/adjust_item_drop_location(atom/movable/AM)
+/obj/machinery/processor/slime/adjust_item_drop_location(atom/movable/atom_to_drop)
 	var/static/list/slimecores = subtypesof(/obj/item/slime_extract)
 	var/i = 0
-	if(!(i = slimecores.Find(AM.type))) // If the item is not found
+	if(!(i = slimecores.Find(atom_to_drop.type))) // If the item is not found
 		return
 	if (i <= 16) // If in the first 12 slots
-		AM.pixel_x = AM.base_pixel_x - 12 + ((i%4)*8)
-		AM.pixel_y = AM.base_pixel_y - 12 + (round(i/4)*8)
+		atom_to_drop.pixel_x = atom_to_drop.base_pixel_x - 12 + ((i%4)*8)
+		atom_to_drop.pixel_y = atom_to_drop.base_pixel_y - 12 + (round(i/4)*8)
 		return i
 	var/ii = i - 16
-	AM.pixel_x = AM.base_pixel_x - 8 + ((ii%3)*8)
-	AM.pixel_y = AM.base_pixel_y - 8 + (round(ii/3)*8)
+	atom_to_drop.pixel_x = atom_to_drop.base_pixel_x - 8 + ((ii%3)*8)
+	atom_to_drop.pixel_y = atom_to_drop.base_pixel_y - 8 + (round(ii/3)*8)
 	return i
 
 /obj/machinery/processor/slime/process()
@@ -213,8 +215,8 @@
 				break
 	if(!picked_slime)
 		return
-	var/datum/food_processor_process/P = PROCESSOR_SELECT_RECIPE(picked_slime)
-	if (!P)
+	var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(picked_slime)
+	if (!recipe)
 		return
 
 	visible_message(span_notice("[picked_slime] is sucked into [src]."))
@@ -222,18 +224,19 @@
 	picked_slime.forceMove(src)
 
 /obj/machinery/processor/slime/process_food(datum/food_processor_process/recipe, atom/movable/what)
-	var/mob/living/simple_animal/slime/S = what
-	if (istype(S))
-		var/C = S.cores
-		if(S.stat != DEAD)
-			LAZYREMOVE(processor_contents, S)
-			S.forceMove(drop_location())
-			S.visible_message(span_notice("[C] crawls free of the processor!"))
-			return
-		for(var/i in 1 to (C+rating_amount-1))
-			var/atom/movable/item = new S.coretype(drop_location())
-			adjust_item_drop_location(item)
-			SSblackbox.record_feedback("tally", "slime_core_harvested", 1, S.colour)
-	..()
+	var/mob/living/simple_animal/slime/processed_slime = what
+	if (!istype(processed_slime))
+		return
+
+	if(processed_slime.stat != DEAD)
+		processed_slime.forceMove(drop_location())
+		processed_slime.balloon_alert_to_viewers("crawls free")
+		return
+	var/core_count = processed_slime.cores
+	for(var/i in 1 to (core_count+rating_amount-1))
+		var/atom/movable/item = new processed_slime.coretype(drop_location())
+		adjust_item_drop_location(item)
+		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, processed_slime.colour)
+	return ..()
 
 #undef PROCESSOR_SELECT_RECIPE

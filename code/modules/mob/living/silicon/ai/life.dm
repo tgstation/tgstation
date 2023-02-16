@@ -54,10 +54,17 @@
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
 		return
+
+	var/old_health = health
 	set_health(maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss() - getFireLoss())
+
+	var/old_stat = stat
 	update_stat()
+
 	diag_hud_set_health()
-	disconnect_shell()
+
+	if(old_health > health || old_stat != stat) // only disconnect if we lose health or change stat
+		disconnect_shell()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/silicon/ai/update_stat()
