@@ -31,9 +31,9 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/New(atom/new_pawn)
 	AddElement(/datum/element/ai_control_examine, list(
-		ORGAN_SLOT_EYES = span_monkey("eyes have a primal look in them.")
+		ORGAN_SLOT_EYES = span_monkey("eyes have a primal look in them."),
 	))
-	. = ..()
+	return ..()
 
 /datum/ai_controller/monkey/pun_pun
 	movement_delay = 0.7 SECONDS //pun pun moves slower so the bartender can keep track of them
