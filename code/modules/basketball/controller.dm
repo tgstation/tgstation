@@ -124,7 +124,7 @@ GLOBAL_VAR(basketball_game)
 	for(var/i in 1 to 10)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), home_hoop, 'sound/items/timer.ogg', 75, FALSE), game_duration - (i SECONDS))
 		addtimer(CALLBACK(home_hoop, TYPE_PROC_REF(/atom/movable/, say), "[i] seconds left"), game_duration - (i SECONDS))
-		
+
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), away_hoop, 'sound/items/timer.ogg', 75, FALSE), game_duration - (i SECONDS))
 		addtimer(CALLBACK(away_hoop, TYPE_PROC_REF(/atom/movable/, say), "[i] seconds left"), game_duration - (i SECONDS))
 
@@ -138,10 +138,7 @@ GLOBAL_VAR(basketball_game)
  * * sends the greeting text (goals, role name, etc)
  */
 /datum/basketball_controller/proc/create_bodies(ready_players)
-	var/meowth = current_map // debug var delet this plox
-
-	var/list/possible_away_teams = subtypesof(/datum/map_template/basketball)
-	possible_away_teams -= current_map
+	var/list/possible_away_teams = subtypesof(/datum/map_template/basketball) - current_map.type
 	var/datum/map_template/basketball/away_map = pick(possible_away_teams)
 	away_map = new away_map
 
