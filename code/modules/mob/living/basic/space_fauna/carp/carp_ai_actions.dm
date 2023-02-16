@@ -42,7 +42,8 @@
 /datum/ai_planning_subtree/find_nearest_magicarp_spell_target
 
 /datum/ai_planning_subtree/find_nearest_magicarp_spell_target/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	var/datum/action/cooldown/using_action = controller.blackboard[BB_MAGICARP_SPELL]
+	var/datum/weakref/weak_action = controller.blackboard[BB_MAGICARP_SPELL]
+	var/datum/action/cooldown/using_action = weak_action?.resolve()
 	if (QDELETED(using_action))
 		return
 	if (!using_action.IsAvailable())
@@ -68,7 +69,7 @@
 /datum/ai_behavior/find_potential_targets/nearest/magicarp
 
 /// Then use it on that target
-/datum/ai_planning_subtree/targetted_mob_ability/magicarp
+/datum/ai_planning_subtree/targeted_mob_ability/magicarp
 	ability_key = BB_MAGICARP_SPELL
 	target_key = BB_MAGICARP_SPELL_TARGET
-	use_ability_behaviour = /datum/ai_behavior/try_mob_ability/and_clear_target
+	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/and_clear_target
