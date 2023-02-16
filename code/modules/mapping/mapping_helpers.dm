@@ -76,7 +76,12 @@
 /obj/effect/baseturf_helper/reinforced_plating
 	name = "reinforced plating baseturf editor"
 	baseturf = /turf/open/floor/plating/reinforced
-	baseturf_to_replace = list(/turf/open/floor/plating,/turf/open/space,/turf/baseturf_bottom)
+	baseturf_to_replace = list(/turf/open/floor/plating)
+
+/obj/effect/baseturf_helper/reinforced_plating/replace_baseturf(turf/thing)
+	if(istype(thing, /turf/open/floor/plating/reinforced))
+		return //Reinforced plates should not be placed under other reinforced plates
+	return ..(thing)
 
 //This applies the reinforced plating to the above Z level for every tile in the area where this is placed
 /obj/effect/baseturf_helper/reinforced_plating/ceiling
