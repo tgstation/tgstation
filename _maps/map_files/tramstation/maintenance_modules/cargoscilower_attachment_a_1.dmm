@@ -27,6 +27,15 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/spawner/random/decoration/carpet,
+/obj/effect/spawner/random/decoration/material,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
 "w" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
@@ -119,8 +128,8 @@ V
 R
 w
 W
-z
-a
+W
+s
 "}
 (4,1,1) = {"
 F
@@ -133,10 +142,10 @@ V
 V
 E
 g
+z
 W
 W
 W
-a
 "}
 (5,1,1) = {"
 F
@@ -152,7 +161,7 @@ g
 c
 W
 W
-a
+W
 "}
 (6,1,1) = {"
 F
@@ -168,7 +177,7 @@ g
 c
 W
 W
-a
+W
 "}
 (7,1,1) = {"
 F

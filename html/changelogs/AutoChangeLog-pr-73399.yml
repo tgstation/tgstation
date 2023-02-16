@@ -1,0 +1,5 @@
+author: "MrStonedOne"
+delete-after: True
+changes:
+  - config: "Repeated configs in other files (from $include) will no longer trigger a config error. Repeated configs in the same file still will."
+  - config: "In all cases the new value will still be used"

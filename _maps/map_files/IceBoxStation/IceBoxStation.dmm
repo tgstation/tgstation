@@ -2025,9 +2025,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "aJh" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Starboard Primary Hallway West"
-	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "aJi" = (
@@ -4255,7 +4253,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/engine_smes)
 "bpf" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -8194,9 +8192,11 @@
 /turf/open/floor/iron,
 /area/station/service/theater)
 "cwh" = (
-/obj/machinery/firealarm/directional/south,
-/turf/open/floor/wood/parquet,
-/area/station/service/bar/atrium)
+/obj/structure/plaque/static_plaque/golden/commission/icebox{
+	pixel_y = 29
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "cwn" = (
 /obj/structure/cable,
 /obj/structure/transit_tube/crossing/horizontal,
@@ -8853,7 +8853,7 @@
 /area/station/tcommsat/server)
 "cEP" = (
 /obj/structure/closet{
-	name = "Evidence Closet 3"
+	name = "evidence closet 3"
 	},
 /obj/machinery/camera/directional/north{
 	c_tag = "Security - Lower Brig Evidence"
@@ -10172,7 +10172,7 @@
 	},
 /area/station/service/chapel)
 "cZd" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -11544,7 +11544,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "dtr" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/records/medical,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -16517,7 +16517,7 @@
 /area/station/engineering/atmos)
 "eWn" = (
 /obj/structure/table/glass,
-/obj/machinery/computer/med_data/laptop,
+/obj/machinery/computer/records/medical/laptop,
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/cmo)
@@ -18351,7 +18351,7 @@
 /area/station/service/hydroponics/garden)
 "fzG" = (
 /obj/structure/closet{
-	name = "Evidence Closet 5"
+	name = "evidence closet 5"
 	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
@@ -24116,7 +24116,7 @@
 /turf/open/floor/engine/cult,
 /area/station/service/library)
 "hro" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -24539,7 +24539,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue/full,
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 1
 	},
 /turf/open/floor/iron/large,
@@ -26300,8 +26300,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "ibI" = (
-/obj/effect/turf_decal/siding/white,
-/obj/item/kirbyplants/random,
+/obj/structure/chair/stool/directional/south,
+/obj/machinery/camera/directional/north{
+	c_tag = "Starboard Primary Hallway West"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "ibM" = (
@@ -28480,7 +28482,7 @@
 "iLe" = (
 /obj/item/radio/intercom/directional/north,
 /obj/structure/table/glass,
-/obj/machinery/computer/med_data/laptop,
+/obj/machinery/computer/records/medical/laptop,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
@@ -33317,10 +33319,8 @@
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "khA" = (
-/obj/structure/plaque/static_plaque/golden/commission/icebox{
-	pixel_y = 29
-	},
 /obj/machinery/firealarm/directional/west,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "khR" = (
@@ -33469,7 +33469,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 2";
-	name = "Cell 2 Locker"
+	name = "Cell 2 locker"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
@@ -34198,7 +34198,7 @@
 /turf/open/floor/iron/half,
 /area/station/hallway/primary/starboard)
 "kwU" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -34325,7 +34325,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "kyW" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/records/medical,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/full,
 /turf/open/floor/iron/dark/smooth_large,
@@ -35088,7 +35088,7 @@
 /turf/closed/wall,
 /area/station/maintenance/starboard/fore)
 "kKQ" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 1
 	},
 /obj/machinery/requests_console/directional/south{
@@ -36774,7 +36774,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "ljQ" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /obj/machinery/requests_console/directional/north{
 	anon_tips_receiver = 1;
 	assistance_requestable = 1;
@@ -38070,8 +38070,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "lEO" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/barsign,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/service/bar/atrium)
 "lEP" = (
@@ -39076,7 +39075,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "lYz" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
@@ -44922,8 +44921,8 @@
 	dir = 4;
 	pixel_x = -4
 	},
-/obj/machinery/light/small/directional/south,
-/obj/structure/sign/poster/random/directional/west,
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/grimy,
 /area/station/service/bar/atrium)
 "nNQ" = (
@@ -45803,7 +45802,7 @@
 /area/station/hallway/primary/starboard)
 "oal" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 1
 	},
 /turf/open/floor/iron/showroomfloor,
@@ -49047,7 +49046,7 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance/testlab)
 "pbI" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -53398,7 +53397,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
@@ -54258,7 +54257,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 1";
-	name = "Cell 1 Locker"
+	name = "Cell 1 locker"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
@@ -55743,7 +55742,7 @@
 	dir = 4
 	},
 /obj/item/radio/intercom/directional/east,
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -57110,7 +57109,7 @@
 /area/station/command/heads_quarters/rd)
 "rEe" = (
 /obj/structure/closet{
-	name = "Evidence Closet 4"
+	name = "evidence closet 4"
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark/textured_edge{
@@ -57187,7 +57186,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/computer/med_data/laptop{
+/obj/machinery/computer/records/medical/laptop{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -57723,7 +57722,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "rPP" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/hos)
 "rPX" = (
@@ -58190,10 +58189,10 @@
 	pixel_y = 8
 	},
 /obj/effect/landmark/start/hangover,
-/obj/machinery/light/small/directional/north,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/sign/poster/random/directional/west,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/grimy,
 /area/station/service/bar/atrium)
 "rXe" = (
@@ -58584,7 +58583,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Security - Detective's Office"
 	},
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
@@ -61205,7 +61204,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 3";
-	name = "Cell 3 Locker"
+	name = "Cell 3 locker"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
@@ -62899,7 +62898,7 @@
 /area/station/maintenance/department/medical/central)
 "tvK" = (
 /obj/structure/closet{
-	name = "Evidence Closet 2"
+	name = "evidence closet 2"
 	},
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark/textured_edge,
@@ -64052,7 +64051,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "tLp" = (
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/full,
@@ -69327,7 +69326,7 @@
 /area/station/science/lab)
 "vvG" = (
 /obj/structure/closet{
-	name = "Evidence Closet 6"
+	name = "evidence closet 6"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_edge{
@@ -70230,7 +70229,7 @@
 /area/station/hallway/secondary/entry)
 "vIH" = (
 /obj/structure/closet{
-	name = "Evidence Closet 1"
+	name = "evidence closet 1"
 	},
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark/textured_edge,
@@ -73000,7 +72999,7 @@
 "wzc" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/records/medical,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "wzg" = (
@@ -78580,8 +78579,7 @@
 "yjX" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
-/obj/effect/turf_decal/siding/white,
-/obj/item/kirbyplants/random,
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "yki" = (
@@ -244613,7 +244611,7 @@ exw
 exw
 exw
 exw
-lso
+cwh
 dEV
 bai
 azw
@@ -244867,7 +244865,7 @@ aAc
 igi
 bOu
 nNG
-izC
+lEO
 khA
 lso
 lso
@@ -245637,10 +245635,10 @@ nOB
 rRy
 rRy
 mdy
-cwh
-izC
-tLF
+fmD
+lEO
 aJh
+lso
 lso
 dEV
 bai
@@ -245895,7 +245893,7 @@ jRA
 jRA
 ixH
 fmD
-lEO
+ptO
 ibI
 lso
 lso
@@ -246152,7 +246150,7 @@ jRA
 dGP
 fZo
 nGz
-eEz
+izC
 yjX
 mqq
 mqq

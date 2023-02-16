@@ -6,6 +6,8 @@
 	weight = 20
 	category = EVENT_CATEGORY_ENGINEERING
 	description = "Destroys all lights in a large area."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 4
 
 /datum/round_event/electrical_storm
 	var/lightsoutAmount = 1

@@ -99,11 +99,18 @@
 
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/ghost,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
-/datum/ai_planning_subtree/basic_melee_attack_subtree/ghost
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/ghost
-
-/datum/ai_behavior/basic_melee_attack/ghost
-	action_cooldown = 2 SECONDS
+/// Weaker variant of ghosts. Meant to be summoned in swarms via the ectoplasmic anomaly and associated ghost portal.
+/mob/living/basic/ghost/swarm
+	name = "vengeful spirit"
+	desc = "Back from the grave, and not happy about it."
+	maxHealth = 30
+	health = 30
+	attack_verb_continuous = "smashes"
+	attack_verb_simple = "smash"
+	melee_damage_lower = 10
+	melee_damage_upper = 10
+	death_message = "wails as it is torn back to the realm from which it came!"
+	random_identity = FALSE

@@ -50,22 +50,22 @@
 /mob/living/basic/creature/proc/health_full_behaviour()
 	melee_damage_lower = 20
 	melee_damage_upper = 30
-	set_varspeed(2)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = 0)
 
 /mob/living/basic/creature/proc/health_high_behaviour()
 	melee_damage_lower = 25
 	melee_damage_upper = 40
-	set_varspeed(1.5)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = -0.5)
 
 /mob/living/basic/creature/proc/health_medium_behaviour()
 	melee_damage_lower = 30
 	melee_damage_upper = 50
-	set_varspeed(1)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = -1)
 
 /mob/living/basic/creature/proc/health_low_behaviour()
 	melee_damage_lower = 35
 	melee_damage_upper = 60
-	set_varspeed(0.5)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = -1.5)
 
 /mob/living/basic/creature/proc/can_be_seen(turf/location)
 	// Check for darkness

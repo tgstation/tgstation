@@ -125,18 +125,21 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 		falling_atoms -= falling_ref
 		return
 	falling_atoms[falling_ref] = (falling_atoms[falling_ref] || 0) + 1
-	var/turf/T = target_turf
+	var/turf/below_turf = target_turf
 	var/atom/parent = src.parent
 
-	if(T)
+	if(falling_atoms[falling_ref] > 1)
+		return // We're already handling this
+
+	if(below_turf)
 		// send to the turf below
 		dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[fall_message]"))
-		T.visible_message(span_boldwarning("[dropped_thing] falls from above!"))
-		dropped_thing.forceMove(T)
+		below_turf.visible_message(span_boldwarning("[dropped_thing] falls from above!"))
+		dropped_thing.forceMove(below_turf)
 		if(isliving(dropped_thing))
-			var/mob/living/L = dropped_thing
-			L.Paralyze(100)
-			L.adjustBruteLoss(30)
+			var/mob/living/fallen = dropped_thing
+			fallen.Paralyze(100)
+			fallen.adjustBruteLoss(30)
 		falling_atoms -= falling_ref
 		return
 
@@ -150,6 +153,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	var/oldtransform = dropped_thing.transform
 	var/oldcolor = dropped_thing.color
 	var/oldalpha = dropped_thing.alpha
+	var/oldoffset = dropped_thing.pixel_y
 
 	animate(dropped_thing, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
 	for(var/i in 1 to 5)
@@ -163,31 +167,32 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	if(!dropped_thing || QDELETED(dropped_thing))
 		return
 
-	if (!storage)
+	if(!storage)
 		storage = new(get_turf(parent))
 		RegisterSignal(storage, COMSIG_ATOM_EXITED, PROC_REF(left_chasm))
 		GLOB.chasm_storage += WEAKREF(storage)
 
-	if (storage.contains(dropped_thing))
+	if(storage.contains(dropped_thing))
 		return
 
 	dropped_thing.alpha = oldalpha
 	dropped_thing.color = oldcolor
 	dropped_thing.transform = oldtransform
+	dropped_thing.pixel_y = oldoffset
 
-	if (dropped_thing.forceMove(storage))
+	if(dropped_thing.forceMove(storage))
 		if (isliving(dropped_thing))
 			RegisterSignal(dropped_thing, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
 	else
 		parent.visible_message(span_boldwarning("[parent] spits out [dropped_thing]!"))
 		dropped_thing.throw_at(get_edge_target_turf(parent, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
 
-	if (isliving(dropped_thing))
+	if(isliving(dropped_thing))
 		var/mob/living/fallen_mob = dropped_thing
-		if(fallen_mob.stat != DEAD)
+		fallen_mob.notransform = FALSE
+		if (fallen_mob.stat != DEAD)
 			fallen_mob.investigate_log("has died from falling into a chasm.", INVESTIGATE_DEATHS)
 			fallen_mob.death(TRUE)
-			fallen_mob.notransform = FALSE
 			fallen_mob.apply_damage(300)
 
 	falling_atoms -= falling_ref

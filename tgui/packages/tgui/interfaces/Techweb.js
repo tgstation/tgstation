@@ -618,7 +618,7 @@ const TechNode = (props, context) => {
     </ProgressBar>
   );
 
-  // Notice this logic will have te be changed if we make the discounts
+  // Notice that this logic will have to be changed if we make the discounts
   // pool-specific
   const nodeDiscount = Object.keys(discount_experiments)
     .filter((x) => experiments[x]?.completed)
