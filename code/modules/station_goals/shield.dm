@@ -164,7 +164,9 @@
 		if(get_dist(meteor_to_destroy, src) > kill_range)
 			continue
 		if(!(obj_flags & EMAGGED) && space_los(meteor_to_destroy))
-			meteor_to_destroy.shield_defense(src)
+			Beam(get_turf(meteor_to_destroy), icon_state="sat_beam", time = 5)
+			if(meteor_to_destroy.shield_defense(src))
+				qdel(meteor_to_destroy)
 
 /obj/machinery/satellite/meteor_shield/toggle(user)
 	if(!..(user))

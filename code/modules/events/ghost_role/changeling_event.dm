@@ -108,7 +108,7 @@
 
 /obj/effect/meteor/meaty/changeling/shield_defense(obj/machinery/satellite/meteor_shield/defender)
 	landing_target = defender
-	..()
+	return TRUE
 
 /obj/effect/meteor/meaty/changeling/handle_stopping() //If the meteor misses the station and deletes itself, we make absolutely sure the changeling reaches the station.
 	if(!landing_target)

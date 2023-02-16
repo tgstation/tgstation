@@ -258,16 +258,15 @@ GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect
 /**
  * Handles the meteor's interaction with meteor shields.
  *
- * Fires a beam at the meteor, makes it explode, and deletes it.
- * Flexible enough to be overridden in meteor subtypes, for special interactions.
+ * Returns TRUE if the meteor should be destroyed. Overridable for custom shield interaction.
+ * Return FALSE if a meteor's interaction with meteor shields should NOT destroy it.
  *
  * Arguments:
  * * defender - The meteor shield that is vaporizing us.
  */
 
 /obj/effect/meteor/proc/shield_defense(obj/machinery/satellite/meteor_shield/defender)
-	defender.Beam(get_turf(src), icon_state="sat_beam", time = 5)
-	qdel(src)
+	return TRUE
 
 ///////////////////////
 //Meteor types
