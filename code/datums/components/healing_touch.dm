@@ -105,6 +105,7 @@
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
+/// Returns true if the target has a kind of damage which we can heal
 /datum/component/healing_touch/proc/has_healable_damage(mob/living/target)
 	return (target.getBruteLoss() > 0 && heal_brute) || (target.getFireLoss() > 0 && heal_burn) || (target.getStaminaLoss() > 0 && heal_stamina)
 
