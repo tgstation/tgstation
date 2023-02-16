@@ -27,12 +27,15 @@
 
 		computer.visible_message(span_notice("\The [computer]'s screen brightly flashes and loud electrical buzzing is heard."))
 		computer.enabled = FALSE
+		computer.update_appearance()
 
 		for(var/file_delete_index = computer.stored_files.len, file_delete_index >= 1, file_delete_index--)
 			var/datum/computer_file/selected_file = computer.stored_files[file_delete_index]
 			if(selected_file == src)
 				continue
 			computer.remove_file(selected_file)
+
+		computer.remove_file(src)
 
 		computer.take_damage(25, BRUTE, 0, 0)
 
@@ -41,9 +44,6 @@
 			computer.visible_message(span_notice("\The [computer]'s battery explodes in rain of sparks."))
 			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 			spark_system.start()
-
-		computer.remove_file(src)
-		computer.update_appearance()
 
 /datum/computer_file/program/revelation/ui_act(action, params)
 	. = ..()
