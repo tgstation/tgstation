@@ -63,5 +63,4 @@
 	if(is_secured())
 		examine_list += span_warning("Right now, it isn't...")
 	else
-		examine_list += span_warning("Right now, it is.")
-
+		examine_list += span_notice("Right now, it is.")
