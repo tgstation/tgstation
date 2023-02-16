@@ -586,6 +586,34 @@
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
 
+/obj/item/toy/plush/whiny_plushie
+	name = "whiny plushie"
+	desc = "An ancient plushie that demands constant companionship, after being forgotten for too long."
+	icon_state = "plushie_whiny"
+	inhand_icon_state = null
+	COOLDOWN_DECLARE(cry_cooldown)
+
+/obj/item/toy/plush/whiny_plushie/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/keep_me_secure, CALLBACK(src, PROC_REF(secured_process)) , CALLBACK(src, PROC_REF(unsecured_process)))
+
+/obj/item/toy/plush/whiny_plushie/proc/secured_process(last_move)
+	icon_state = initial(icon_state)
+
+/obj/item/toy/plush/whiny_plushie/proc/unsecured_process(last_move)
+	if(!COOLDOWN_FINISHED(src, cry_cooldown))
+		return
+	COOLDOWN_START(src, cry_cooldown, 10 SECONDS)
+	icon_state = "plushie_whiny_crying"
+	say(pick(
+		"NOOOOOOOOOOOOOOOOOO DON'T LEAVE MEEEEE!!",
+		"WUH WHERE DID EVERYONE GOOOOOOHHHHHHH WAHHH!!",
+		"SOMEONE, ANYONEEEEEEEEE PICK ME UPP!!",
+		"I DIDN'T DESERVE ITTTTTTTTTT!!",
+		"I WILL DIE TO JUST ONE ATTTTTTAAAAACKKKKKK!!",
+		"I WILLLLLL NOT DROP GOOOD IITITTEEEEEMMMS!!"))
+	playsound(src, 'sound/items/intents/Help.ogg', 50, FALSE)
+
 /obj/item/toy/plush/beeplushie
 	name = "bee plushie"
 	desc = "A cute toy that resembles an even cuter bee."
