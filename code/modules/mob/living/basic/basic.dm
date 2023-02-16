@@ -35,8 +35,8 @@
 	///Played when someone punches the creature.
 	var/attacked_sound = SFX_PUNCH //This should be an element
 
-	///What kind of objects this mob can smash.
-	var/environment_smash = ENVIRONMENT_SMASH_NONE
+	/// Variable maintained for compatibility with attack_animal procs until simple animals can be refactored away. Use element instead of setting manually.
+	var/environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 
 	/// 1 for full damage, 0 for none, -1 for 1:1 heal from that source.
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
