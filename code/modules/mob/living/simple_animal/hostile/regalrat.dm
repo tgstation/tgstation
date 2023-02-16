@@ -388,7 +388,7 @@
 	command_feedback = "squeak!" // Frogs and roaches can squeak too it's fine
 	pointed_reaction = "and squeaks aggressively"
 	refuse_reaction = "quivers"
-	attack_behaviour = /datum/ai_behavior/basic_melee_attack/rat
+	attack_behaviour = /datum/ai_behavior/basic_melee_attack
 
 // Command you can give to a mouse to make it kill someone
 /datum/pet_command/point_targetting/attack/glockroach

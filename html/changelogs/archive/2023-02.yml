@@ -605,3 +605,31 @@
   - bugfix: hotfix for lungless oxyloss immunity
   - bugfix: hotfix for mobs being able to circumvent reagent respiration_type requirements
       by removing their lungs
+2023-02-16:
+  Jacquerel:
+  - bugfix: Things dropped into a chasm should no longer occasionally become invisible
+      and intangible.
+  - bugfix: Bileworms which have been struck down but not butchered no longer return
+      in a more powerful form.
+  - bugfix: Mice and Regal Rats will no longer spawn in icebox's solar panels and
+      die of cold.
+  - bugfix: Medieval Sim holograms no longer spawn holding unusable laser rifles which
+      also block using their old timey weaponry.
+  Melbert:
+  - bugfix: It should be way harder to lose your special hands as a zombie or shattered
+      risen ghoul.
+  - refactor: Refactored mutanthands for zombies and shattered risen.
+  NamelessFairy:
+  - bugfix: Reinforced plasma windows will now drop plasma glass instead of regular
+      glass when broken.
+  - bugfix: Tram windows drop the correct number of rods and a shard when broken instead
+      of a sheet.
+  - code_imp: Removed a ton of duplicate vars in tram window code and re-organize
+      the file slightly.
+  - refactor: spawnDebris has been un-hardcoded and all (but one) override of it has
+      been removed.
+  Profakos:
+  - bugfix: eyesnatchers that say that they haven been used up can't be used again
+  ZephyrTFA:
+  - bugfix: You can no longer keep an AI trapped in their core by healing them with
+      a Rod of Asclepius
