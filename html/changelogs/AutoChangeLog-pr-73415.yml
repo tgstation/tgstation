@@ -1,0 +1,7 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "The Fugu Gland can once more be used on Ian, Carp, Giant Spiders, or other basic mobs."
+  - bugfix: "Syndicate mobs will once again attack windows to try to reach you, and space ruin spiders won't."
+  - bugfix: "Netherworld-themed mobs will correctly adjust their speed as they take damage."
+  - refactor: "Made the Wumborian Fugu into a basic mob, which should act largely the same way but may have slightly different speed and reaction times."
