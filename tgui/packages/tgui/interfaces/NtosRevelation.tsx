@@ -44,6 +44,7 @@ export const NtosRevelation = (props, context) => {
             textAlign="center"
             color="bad"
             disabled={!armed}
+            onClick={() => act('PRG_activate')}
           />
         </Section>
       </NtosWindow.Content>
