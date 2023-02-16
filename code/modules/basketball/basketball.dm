@@ -84,8 +84,8 @@
 		user.balloon_alert(user, "cant pickup while resting!")
 		return
 
-	if(user.ckey in pickup_restriction_ckeys && !COOLDOWN_FINISHED(src, pickup_cooldown))
-		user.balloon_alert(user, "cant pickup for [COOLDOWN_TIMELEFT(src, pickup_cooldown) SECONDS] seconds!")
+	if((user.ckey in pickup_restriction_ckeys) && !COOLDOWN_FINISHED(src, pickup_cooldown))
+		user.balloon_alert(user, "cant pickup for [COOLDOWN_TIMELEFT(src, pickup_cooldown) DECISECONDS] seconds!")
 		return
 
 	reset_pickup_restriction()
@@ -351,6 +351,7 @@
 	update_appearance()
 	// whoever scored doesn't get to pickup the ball instantly
 	COOLDOWN_START(ball, pickup_cooldown, PICKUP_RESTRICTION_TIME)
+
 	ball.pickup_restriction_ckeys |= baller.ckey
 	return TRUE
 
