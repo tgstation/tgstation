@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix icebox barsign spawning under windows for Icebox."
+  - bugfix: "Fix kilo barsign to spawn directly on top of wall so people can see it from both inside the bar and outside the main hallway."

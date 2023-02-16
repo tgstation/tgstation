@@ -114,10 +114,11 @@
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	. = ..()
-	. += {"The patented external shell design is resistant to "probably all" forms of external explosive compression, protecting the electronically-trigged bomb core from accidental early detonation."}
-	. += "A small window reveals some information about the payload: [payload.desc]."
+	. += "The patented external shell design is resistant to \"probably all\" forms of external explosive compression, protecting the electronically-trigged bomb core from accidental early detonation."
+	if(istype(payload))
+		. += "A small window reveals some information about the payload: [payload.desc]."
 	if(examinable_countdown)
-		. += {"A digital display on it reads "[seconds_remaining()]"."}
+		. += "A digital display on it reads \"[seconds_remaining()]\"."
 	else
 		. +={"The digital display on it is inactive."}
 

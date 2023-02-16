@@ -105,7 +105,7 @@
 
 	teleport = new(src)
 	teleport.Grant(src)
-	ai_controller.blackboard[BB_CARP_RIFT] = teleport
+	ai_controller.blackboard[BB_CARP_RIFT] = WEAKREF(teleport)
 
 /mob/living/basic/carp/Destroy()
 	QDEL_NULL(teleport)

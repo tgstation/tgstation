@@ -22,7 +22,7 @@
 
 /// Something is in our way, get it outta here
 /datum/ai_behavior/attack_obstructions
-	action_cooldown = 1 SECONDS
+	action_cooldown = 2 SECONDS
 	/// If we should attack walls, be prepared for complaints about breaches
 	var/can_attack_turfs = FALSE
 	/// Tries to bump open airlocks with an attack

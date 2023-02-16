@@ -1,0 +1,4 @@
+author: "YehnBeep"
+delete-after: True
+changes:
+  - server: "Updated instructions on setting up a TGUI CDN, noting that TGUI via CDN malfunctions in the event CORS headers are absent."
