@@ -13,6 +13,9 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	wound_bonus = 15
 
+	/// If this baton checks the security level before seeing if it can be used
+	var/requires_security_check = TRUE
+
 	/// Whether this baton is active or not
 	var/active = TRUE
 	/// Used interally, you don't want to modify
@@ -60,11 +63,20 @@
 
 /obj/item/melee/baton/Initialize(mapload)
 	. = ..()
+	//So we can deactivate batons when the security level changes
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_security_level))
 	// Adding an extra break for the sake of presentation
 	if(stamina_damage != 0)
 		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only [span_warning("[CEILING(100 / stamina_damage, 1)] hit\s!")]"
 
 	register_item_context()
+
+/obj/item/melee/baton/proc/check_security_level(datum/source, new_level)
+	SIGNAL_HANDLER
+	var/mob/living/user = src.loc
+	if(requires_security_check && active && istype(user) && new_level < SEC_LEVEL_RED)
+		to_chat(user, span_alert("Your baton turns off as the threat to the station has passed"))
+		attack_self(user)
 
 /**
  * Ok, think of baton attacks like a melee attack chain:
@@ -92,6 +104,7 @@
 			return ..()
 		if(BATON_ATTACKING)
 			finalize_baton_attack(target, user, modifiers)
+
 
 /obj/item/melee/baton/add_item_context(datum/source, list/context, atom/target, mob/living/user)
 	if (isturf(target))
@@ -319,6 +332,7 @@
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	RegisterSignal(src, COMSIG_TRANSFORMING_PRE_TRANSFORM, PROC_REF(pre_transform))
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
@@ -354,6 +368,17 @@
 	playsound(user ? user : src, on_sound, 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_PRE_TRANSFORM].
+ *
+ * Block using the telescoping effect if the red alert is activate
+ */
+/obj/item/melee/baton/telescopic/proc/pre_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+	if(requires_security_check && !active && SSsecurity_level.get_current_level_as_number() <= SEC_LEVEL_RED)
+		to_chat(user, span_warning("You cannot use your baton during this emergency level"))
+		return COMPONENT_BLOCK_TRANSFORM
+
 /obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
@@ -375,6 +400,7 @@
 	on_inhand_icon_state = "contractor_baton_on"
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	active_force = 16
+	requires_security_check = FALSE
 
 /obj/item/melee/baton/telescopic/contractor_baton/get_wait_description()
 	return span_danger("The baton is still charging!")
@@ -519,9 +545,19 @@
 
 /obj/item/melee/baton/security/attack_self(mob/user)
 	if(cell?.charge >= cell_hit_cost)
-		active = !active
-		balloon_alert(user, "turned [active ? "on" : "off"]")
-		playsound(src, SFX_SPARKS, 75, TRUE, -1)
+		if(requires_security_check && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
+			active = !active
+			balloon_alert(user, "turned [active ? "on" : "off"]")
+			playsound(src, SFX_SPARKS, 75, TRUE, -1)
+		else
+			//Allow turning it off
+			if (!active)
+				to_chat(user, span_warning("You cannot use your baton in a non emergency situation"))
+			else
+				active = FALSE
+				balloon_alert(user, "turned [active ? "on" : "off"]")
+				playsound(src, SFX_SPARKS, 75, TRUE, -1)
+
 	else
 		active = FALSE
 		if(!cell)
