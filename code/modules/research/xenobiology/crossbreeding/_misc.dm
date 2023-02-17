@@ -186,7 +186,7 @@ Slimecrossing Items
 	if(M.mind)
 		to_chat(user, span_notice("You offer the device to [M]."))
 		if(tgui_alert(M, "Would you like to enter [user]'s capture device?", "Gold Capture Device", list("Yes", "No")) == "Yes")
-			if(user.canUseTopic(src, be_close = TRUE) && user.canUseTopic(M, be_close = TRUE))
+			if(user.can_perform_action(src) && user.can_perform_action(M))
 				to_chat(user, span_notice("You store [M] in the capture device."))
 				to_chat(M, span_notice("The world warps around you, and you're suddenly in an endless void, with a window to the outside floating in front of you."))
 				store(M, user)
