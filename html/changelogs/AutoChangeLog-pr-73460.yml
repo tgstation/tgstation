@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "On metastation the gravity generator foyer airlock access has been made consistent with the rest of the engine room airlocks."
