@@ -1,11 +1,11 @@
 import { useBackend, useLocalState } from 'tgui/backend';
-import { NoticeBox, Stack, Section, Button, LabeledList, Box, RestrictedInput, Table } from 'tgui/components';
+import { Box, Button, LabeledList, NoticeBox, RestrictedInput, Section, Stack, Table } from 'tgui/components';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { EditableText } from '../common/EditableText';
-import { CRIMESTATUS2COLOR, CRIMESTATUS2DESC } from './constants';
 import { CrimeWatcher } from './CrimeWatcher';
-import { getSecurityRecord } from './helpers';
 import { RecordPrint } from './RecordPrint';
+import { CRIMESTATUS2COLOR, CRIMESTATUS2DESC } from './constants';
+import { getSecurityRecord } from './helpers';
 import { SecurityRecordsData } from './types';
 
 /** Views a selected record. */
@@ -48,6 +48,7 @@ const RecordInfo = (props, context) => {
   const {
     age,
     crew_ref,
+    crimes,
     fingerprint,
     gender,
     name,
@@ -56,6 +57,8 @@ const RecordInfo = (props, context) => {
     species,
     wanted_status,
   } = foundRecord;
+
+  const hasValidCrimes = !!crimes.find((crime) => !!crime.valid);
 
   return (
     <Stack fill vertical>
@@ -76,8 +79,8 @@ const RecordInfo = (props, context) => {
                 <Button.Confirm
                   content="Delete"
                   icon="trash"
-                  onClick={() => act('expunge_record', { crew_ref: crew_ref })}
-                  tooltip="Expunge record data."
+                  onClick={() => act('delete_record', { crew_ref: crew_ref })}
+                  tooltip="Delete record data."
                 />
               </Stack.Item>
             </Stack>
@@ -95,9 +98,10 @@ const RecordInfo = (props, context) => {
                 const isSelected = button === wanted_status;
                 return (
                   <Button
-                    key={index}
-                    icon={isSelected ? 'check' : ''}
                     color={isSelected ? CRIMESTATUS2COLOR[button] : 'grey'}
+                    disabled={button === 'Arrest' && !hasValidCrimes}
+                    icon={isSelected ? 'check' : ''}
+                    key={index}
                     onClick={() =>
                       act('set_wanted', {
                         crew_ref: crew_ref,
@@ -165,7 +169,11 @@ const RecordInfo = (props, context) => {
               />
             </LabeledList.Item>
             <LabeledList.Item label="Note">
-              <EditableText field="note" target_ref={crew_ref} text={note} />
+              <EditableText
+                field="security_note"
+                target_ref={crew_ref}
+                text={note}
+              />
             </LabeledList.Item>
           </LabeledList>
         </Section>

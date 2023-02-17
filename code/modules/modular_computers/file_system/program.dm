@@ -17,6 +17,8 @@
 	var/category = PROGRAM_CATEGORY_MISC
 	/// Program-specific screen icon state
 	var/program_icon_state = null
+	///Boolean on whether the program will appear at the top on PDA menus, or in the app list with everything else.
+	var/header_program = FALSE
 	/// Set to 1 for program to require nonstop NTNet connection to run. If NTNet connection is lost program crashes.
 	var/requires_ntnet = FALSE
 	/// Optional, if above is set to 1 checks for specific function of NTNet (currently NTNET_SOFTWAREDOWNLOAD and NTNET_COMMUNICATION)
@@ -168,20 +170,6 @@
 			generate_network_log("Connection opened -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
 		program_state = PROGRAM_STATE_ACTIVE
 		return TRUE
-	return FALSE
-
-/**
- *
- *Called by the device when it is emagged.
- *
- *Emagging the device allows certain programs to unlock new functions. However, the program will
- *need to be downloaded first, and then handle the unlock on their own in their run_emag() proc.
- *The device will allow an emag to be run multiple times, so the user can re-emag to run the
- *override again, should they download something new. The run_emag() proc should return TRUE if
- *the emagging affected anything, and FALSE if no change was made (already emagged, or has no
- *emag functions).
-**/
-/datum/computer_file/program/proc/run_emag()
 	return FALSE
 
 /**

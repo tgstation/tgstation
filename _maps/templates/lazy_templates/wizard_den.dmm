@@ -188,7 +188,7 @@
 /area/centcom/wizard_station)
 "tv" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/mob/living/simple_animal/hostile/netherworld{
+/mob/living/basic/creature{
 	name = "Experiment 35b"
 	},
 /turf/open/floor/grass,

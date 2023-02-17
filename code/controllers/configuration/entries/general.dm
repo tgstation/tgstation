@@ -525,7 +525,7 @@
 /datum/config_entry/string/chat_announce_new_game
 	deprecated_by = /datum/config_entry/string/channel_announce_new_game
 
-/datum/config_entry/flag/chat_announce_new_game/DeprecationUpdate(value)
+/datum/config_entry/string/chat_announce_new_game/DeprecationUpdate(value)
 	return "" //default broadcast
 
 /datum/config_entry/string/channel_announce_new_game
@@ -659,3 +659,6 @@
 /datum/config_entry/string/morgue_cadaver_override_species
 
 /datum/config_entry/flag/toast_notification_on_init
+
+/datum/config_entry/flag/config_errors_runtime
+	default = FALSE

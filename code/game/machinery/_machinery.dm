@@ -204,10 +204,12 @@
 		// Don't delete the stock part singletons
 		for (var/atom/atom_part in component_parts)
 			qdel(atom_part)
-
 		component_parts.Cut()
+		component_parts = null
 
-	LAZYCLEARLIST(cached_stack_parts)
+	//delete any reference to cached stack parts created during display parts
+	QDEL_LIST_ASSOC_VAL(cached_stack_parts)
+	cached_stack_parts = null
 
 	QDEL_NULL(circuit)
 	unset_static_power()
@@ -356,6 +358,7 @@
 	set_occupant(null)
 	circuit = null
 	LAZYCLEARLIST(component_parts)
+	LAZYCLEARLIST(cached_stack_parts)
 
 /**
  * Drop every movable atom in the machine's contents list that is not a component_part.
@@ -372,6 +375,9 @@
 			continue
 
 		if(movable_atom in component_parts)
+			continue
+
+		if(cached_stack_parts && cached_stack_parts[movable_atom.type])
 			continue
 
 		movable_atom.forceMove(this_turf)
@@ -677,7 +683,7 @@
 	..()
 	if(!can_interact(usr))
 		return TRUE
-	if(!usr.canUseTopic(src))
+	if(!usr.can_perform_action(src))
 		return TRUE
 	add_fingerprint(usr)
 	update_last_used(usr)

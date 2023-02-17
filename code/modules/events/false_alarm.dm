@@ -7,7 +7,7 @@
 	description = "Fakes an event announcement."
 	admin_setup = /datum/event_admin_setup/listed_options/false_alarm
 
-/datum/round_event_control/falsealarm/can_spawn_event(players_amt)
+/datum/round_event_control/falsealarm/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	if(!.)
 		return .

@@ -7,6 +7,9 @@
 	max_occurrences = 6
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Summons a school of space carp."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 3
+	admin_setup = /datum/event_admin_setup/carp_migration
 
 /datum/round_event_control/carp_migration/New()
 	. = ..()
@@ -27,6 +30,8 @@
 	var/boss_type = /mob/living/basic/carp/mega
 	/// What to describe detecting near the station
 	var/fluff_signal = "Unknown biological entities"
+	/// Associated lists of z level to a list of points to travel to, so that grouped fish move to the same places
+	var/list/z_migration_paths = list()
 
 /datum/round_event/carp_migration/setup()
 	start_when = rand(40, 60)
@@ -37,8 +42,6 @@
 /datum/round_event/carp_migration/start()
 	// Stores the most recent fish we spawn
 	var/mob/living/basic/carp/fish
-	// Associated lists of z level to a list of points to travel to, so that grouped fish move to the same places
-	var/list/z_migration_paths = list()
 
 	for(var/obj/effect/landmark/carpspawn/spawn_point in GLOB.landmarks_list)
 		if(prob(95))
@@ -74,3 +77,26 @@
 	if (!hasAnnounced)
 		announce_to_ghosts(fish) //Only anounce the first fish
 		hasAnnounced = TRUE
+
+/datum/event_admin_setup/carp_migration
+	/// Admin set list of turfs for carp to travel to for each z level
+	var/list/targets_per_z = list()
+
+/datum/event_admin_setup/carp_migration/prompt_admins()
+	targets_per_z = list()
+	if (tgui_alert(usr, "Direct carp to your current location? Only applies to your current Z level.", "Carp Direction", list("Yes", "No")) != "Yes")
+		return
+	record_admin_location()
+	while (tgui_alert(usr, "Add additional locations? Only applies to your current Z level.", "More Carp Direction", list("Yes", "No")) == "Yes")
+		record_admin_location()
+
+/// Stores the admin's current location corresponding to the z level of that location
+/datum/event_admin_setup/carp_migration/proc/record_admin_location()
+	var/turf/aimed_turf = get_turf(usr)
+	var/z_level_key = "[aimed_turf.z]"
+	if (!targets_per_z[z_level_key])
+		targets_per_z[z_level_key] = list()
+	targets_per_z[z_level_key] += WEAKREF(aimed_turf)
+
+/datum/event_admin_setup/carp_migration/apply_to_event(datum/round_event/carp_migration/event)
+	event.z_migration_paths = targets_per_z

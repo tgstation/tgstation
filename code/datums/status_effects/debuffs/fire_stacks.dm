@@ -27,8 +27,10 @@
 	. = ..()
 
 	if(isbasicmob(owner))
-		qdel(src)
-		return
+		var/mob/living/basic/basic_owner = owner
+		if(!basic_owner.flammable)
+			qdel(src)
+			return
 
 	if(isanimal(owner))
 		var/mob/living/simple_animal/animal_owner = owner

@@ -107,8 +107,10 @@
 	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums
-	var/pump_delay = 30 //you can pump 1 second early, for lag, but no more (otherwise you could spam heal)
-	var/blood_loss = 100 //600 blood is human default, so 5 failures (below 122 blood is where humans die because reasons?)
+	/// How long between needed pumps; you can pump one second early
+	var/pump_delay = 3 SECONDS
+	/// How much blood volume you lose every missed pump, this is a flat amount not a percentage!
+	var/blood_loss = (BLOOD_VOLUME_NORMAL / 5) // 20% of normal volume, missing five pumps is instant death
 
 	//How much to heal per pump, negative numbers would HURT the player
 	var/heal_brute = 0
@@ -124,21 +126,51 @@
 	else
 		return ..()
 
+/// Worker proc that checks logic for if a pump can happen, and applies effects/notifications from doing so
+/obj/item/organ/internal/heart/cursed/proc/on_pump(mob/owner)
+	var/next_pump = last_pump + pump_delay - (1 SECONDS) // pump a second early
+	if(world.time < next_pump)
+		to_chat(owner, span_userdanger("Too soon!"))
+		return
+
+	last_pump = world.time
+	playsound(owner,'sound/effects/singlebeat.ogg', 40, TRUE)
+	to_chat(owner, span_notice("Your heart beats."))
+
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/accursed = owner
+
+	if(HAS_TRAIT(accursed, TRAIT_NOBLOOD) || !accursed.dna)
+		return
+	accursed.blood_volume = min(accursed.blood_volume + (blood_loss * 0.5), BLOOD_VOLUME_MAXIMUM)
+	accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
+	add_colour = TRUE
+	accursed.adjustBruteLoss(-heal_brute)
+	accursed.adjustFireLoss(-heal_burn)
+	accursed.adjustOxyLoss(-heal_oxy)
+
 /obj/item/organ/internal/heart/cursed/on_life(delta_time, times_fired)
-	if(world.time > (last_pump + pump_delay))
-		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
-			var/mob/living/carbon/human/accursed_human = owner
-			if(accursed_human.dna && !HAS_TRAIT(accursed_human, TRAIT_NOBLOOD))
-				accursed_human.blood_volume = max(accursed_human.blood_volume - blood_loss, 0)
-				to_chat(accursed_human, span_userdanger("You have to keep pumping your blood!"))
-				if(add_colour)
-					accursed_human.add_client_colour(/datum/client_colour/cursed_heart_blood) //bloody screen so real
-					add_colour = FALSE
-		else
-			last_pump = world.time //lets be extra fair *sigh*
+	if(!owner.client || !ishuman(owner)) // Let's be fair, if you're not here to pump, you're not here to suffer.
+		last_pump = world.time
+		return
+
+	if(world.time <= (last_pump + pump_delay))
+		return
+
+	var/mob/living/carbon/human/accursed = owner
+	if(HAS_TRAIT(accursed, TRAIT_NOBLOOD) || !accursed.dna)
+		return
+
+	accursed.blood_volume = max(accursed.blood_volume - blood_loss, 0)
+	to_chat(accursed, span_userdanger("You have to keep pumping your blood!"))
+	if(add_colour)
+		accursed.add_client_colour(/datum/client_colour/cursed_heart_blood) //bloody screen so real
+		add_colour = FALSE
 
 /obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/accursed, special = FALSE, drop_if_replaced = TRUE)
 	..()
+	last_pump = world.time // give them time to react
 	if(owner)
 		to_chat(owner, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
 
@@ -153,27 +185,13 @@
 //You are now brea- pumping blood manually
 /datum/action/item_action/organ_action/cursed_heart/Trigger(trigger_flags)
 	. = ..()
-	if(. && istype(target, /obj/item/organ/internal/heart/cursed))
-		var/obj/item/organ/internal/heart/cursed/cursed_heart = target
+	if(!.)
+		return
 
-		if(world.time < (cursed_heart.last_pump + (cursed_heart.pump_delay-10))) //no spam
-			to_chat(owner, span_userdanger("Too soon!"))
-			return
-
-		cursed_heart.last_pump = world.time
-		playsound(owner,'sound/effects/singlebeat.ogg',40,TRUE)
-		to_chat(owner, span_notice("Your heart beats."))
-
-		var/mob/living/carbon/human/accursed = owner
-		if(istype(accursed))
-			if(accursed.dna && !HAS_TRAIT(accursed, TRAIT_NOBLOOD))
-				accursed.blood_volume = min(accursed.blood_volume + cursed_heart.blood_loss*0.5, BLOOD_VOLUME_MAXIMUM)
-				accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
-				cursed_heart.add_colour = TRUE
-				accursed.adjustBruteLoss(-cursed_heart.heal_brute)
-				accursed.adjustFireLoss(-cursed_heart.heal_burn)
-				accursed.adjustOxyLoss(-cursed_heart.heal_oxy)
-
+	var/obj/item/organ/internal/heart/cursed/cursed_heart = target
+	if(!istype(cursed_heart))
+		CRASH("Cursed heart pump action created on non-cursed heart!")
+	cursed_heart.on_pump(owner)
 
 /datum/client_colour/cursed_heart_blood
 	priority = 100 //it's an indicator you're dying, so it's very high priority
@@ -255,7 +273,7 @@
 	if(owner.health < 5 && COOLDOWN_FINISHED(src, adrenaline_cooldown))
 		COOLDOWN_START(src, adrenaline_cooldown, rand(25 SECONDS, 1 MINUTES))
 		to_chat(owner, span_userdanger("You feel yourself dying, but you refuse to give up!"))
-		owner.heal_overall_damage(15, 15, BODYTYPE_ORGANIC)
+		owner.heal_overall_damage(brute = 15, burn = 15, required_bodytype = BODYTYPE_ORGANIC)
 		if(owner.reagents.get_reagent_amount(/datum/reagent/medicine/ephedrine) < 20)
 			owner.reagents.add_reagent(/datum/reagent/medicine/ephedrine, 10)
 
