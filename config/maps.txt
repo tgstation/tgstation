@@ -17,6 +17,8 @@ map birdshot
 	#default
 	minplayers 25
 	votable
+endmap
+
 map metastation
 	minplayers 25
 	#voteweight 0.5
