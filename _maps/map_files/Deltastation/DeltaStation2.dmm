@@ -3613,11 +3613,13 @@
 	},
 /obj/machinery/button/door/directional/east{
 	pixel_y = -8;
-	id = "qmspace"
+	id = "qmspace";
+	name = "Space Shutters Control"
 	},
 /obj/machinery/button/door/directional/east{
 	pixel_y = 6;
-	id = "qmprivacy"
+	id = "qmprivacy";
+	name = "Privacy Control"
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -49208,7 +49210,8 @@
 	},
 /obj/machinery/button/door/directional/east{
 	id = "qmroom";
-	pixel_y = -6
+	pixel_y = -6;
+	name = "Privacy Control"
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
