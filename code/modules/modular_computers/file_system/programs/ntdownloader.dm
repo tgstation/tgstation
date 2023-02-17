@@ -17,7 +17,6 @@
 	var/download_completion = FALSE //GQ of downloaded data.
 	var/download_netspeed = 0
 	var/downloaderror = ""
-	var/emagged = FALSE
 	var/list/main_repo
 	var/list/antag_repo
 
@@ -34,13 +33,6 @@
 	main_repo = SSmodular_computers.available_station_software
 	antag_repo = SSmodular_computers.available_antag_software
 
-/datum/computer_file/program/ntnetdownload/run_emag()
-	if(emagged)
-		return FALSE
-	emagged = TRUE
-	return TRUE
-
-
 /datum/computer_file/program/ntnetdownload/proc/begin_file_download(filename)
 	if(downloaded_file)
 		return FALSE
@@ -51,7 +43,7 @@
 		return FALSE
 
 	// Attempting to download antag only program, but without having emagged/syndicate computer. No.
-	if(PRG.available_on_syndinet && !emagged)
+	if(PRG.available_on_syndinet && !(computer.obj_flags & EMAGGED))
 		return FALSE
 
 	if(!computer || !computer.can_store_file(PRG))
@@ -142,7 +134,7 @@
 
 	data["disk_size"] = computer.max_capacity
 	data["disk_used"] = computer.used_capacity
-	data["emagged"] = emagged
+	data["emagged"] = (computer.obj_flags & EMAGGED)
 
 	var/list/repo = antag_repo | main_repo
 	var/list/program_categories = list()
@@ -159,7 +151,7 @@
 			"installed" = !!computer.find_file_by_name(programs.filename),
 			"compatible" = check_compatibility(programs),
 			"size" = programs.size,
-			"access" = emagged && programs.available_on_syndinet ? TRUE : programs.can_run(user,transfer = TRUE, access = access),
+			"access" = (computer.obj_flags & EMAGGED) && programs.available_on_syndinet ? TRUE : programs.can_run(user,transfer = TRUE, access = access),
 			"verifiedsource" = programs.available_on_ntnet,
 		))
 
