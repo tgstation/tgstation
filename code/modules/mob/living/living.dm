@@ -1202,24 +1202,54 @@
 /mob/living/can_hold_items(obj/item/I)
 	return usable_hands && ..()
 
-/mob/living/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
-	if(!(mobility_flags & MOBILITY_UI) && !floor_okay)
+/mob/living/can_perform_action(atom/movable/target, action_bitflags)
+	if(!istype(target))
+		CRASH("Missing target arg for can_perform_action")
+
+	// If the MOBILITY_UI bitflag is not set it indicates the mob's hands are cutoff, blocked, or handcuffed
+	// Note - AI's and borgs have the MOBILITY_UI bitflag set even though they don't have hands
+	// Also if it is not set, the mob could be incapcitated, knocked out, unconscious, asleep, EMP'd, etc.
+	if(!(mobility_flags & MOBILITY_UI) && !(action_bitflags & ALLOW_RESTING))
 		to_chat(src, span_warning("You can't do that right now!"))
 		return FALSE
-	if(be_close && !Adjacent(M) && (M.loc != src))
-		if(no_tk)
-			to_chat(src, span_warning("You are too far away!"))
+
+	// NEED_HANDS is already checked by MOBILITY_UI for humans so this is for silicons
+	if((action_bitflags & NEED_HANDS))
+		if(!can_hold_items(isitem(target) ? target : null)) // almost redundant if it weren't for mobs
+			to_chat(src, span_warning("You don't have the physical ability to do this!"))
 			return FALSE
-		var/datum/dna/D = has_dna()
-		if(!D || !D.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, M))
-			to_chat(src, span_warning("You are too far away!"))
-			return FALSE
-	if(need_hands && !can_hold_items(isitem(M) ? M : null)) //almost redundant if it weren't for mobs,
-		to_chat(src, span_warning("You don't have the physical ability to do this!"))
-		return FALSE
-	if(!no_dexterity && !ISADVANCEDTOOLUSER(src))
+
+	if(!Adjacent(target) && (target.loc != src))
+		if(issilicon(src) && !ispAI(src))
+			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
+				to_chat(src, span_warning("You are too far away!"))
+				return FALSE
+		else // just a normal carbon mob
+			if((action_bitflags & FORBID_TELEKINESIS_REACH))
+				to_chat(src, span_warning("You are too far away!"))
+				return FALSE
+
+			var/datum/dna/mob_DNA = has_dna()
+			if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, target))
+				to_chat(src, span_warning("You are too far away!"))
+				return FALSE
+
+	if((action_bitflags & NEED_DEXTERITY) && !ISADVANCEDTOOLUSER(src))
 		to_chat(src, span_warning("You don't have the dexterity to do this!"))
 		return FALSE
+
+	if((action_bitflags & NEED_LITERACY) && !is_literate())
+		to_chat(src, span_warning("You can't comprehend any of this!"))
+		return FALSE
+
+	if((action_bitflags & NEED_LIGHT) && !has_light_nearby() && !has_nightvision())
+		to_chat(src, span_warning("You need more light to do this!"))
+		return FALSE
+
+	if((action_bitflags & NEED_GRAVITY) && !has_gravity())
+		to_chat(src, span_warning("You need gravity to do this!"))
+		return FALSE
+
 	return TRUE
 
 /mob/living/proc/can_use_guns(obj/item/G)//actually used for more than guns!

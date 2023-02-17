@@ -49737,7 +49737,6 @@
 	pixel_x = -7;
 	pixel_y = 8
 	},
-/obj/item/computer_disk/chemistry,
 /obj/item/computer_disk/medical,
 /obj/item/computer_disk/medical,
 /turf/open/floor/iron/white,

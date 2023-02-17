@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Lightgeists won't try to heal any damage which isn't burn or brute, because they can't."
+  - bugfix: "Lightgeists don't need to perform an action bar in order to heal someone, which was added by mistake."

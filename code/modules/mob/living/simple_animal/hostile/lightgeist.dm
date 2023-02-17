@@ -51,6 +51,7 @@
 		/datum/component/healing_touch,\
 		heal_brute = melee_damage_upper,\
 		heal_burn = melee_damage_upper,\
+		heal_time = 0,\
 		valid_targets_typecache = typecacheof(list(/mob/living)),\
 		action_text = "%SOURCE% begins mending the wounds of %TARGET%",\
 		complete_text = "%TARGET%'s wounds mend together.",\

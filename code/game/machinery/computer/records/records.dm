@@ -129,7 +129,7 @@
 
 /// Inserts a new record into GLOB.manifest.general. Requires a photo to be taken.
 /obj/machinery/computer/records/proc/insert_new_record(mob/user, obj/item/photo/mugshot)
-	if(!mugshot || !is_operational || !user.canUseTopic(src, be_close = !issilicon(user)))
+	if(!mugshot || !is_operational || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return FALSE
 
 	if(!authenticated && !has_auth(user))
@@ -139,7 +139,7 @@
 
 	var/trimmed = copytext(mugshot.name, 9, MAX_NAME_LEN) // Remove "photo - "
 	var/name = tgui_input_text(user, "Enter the name of the new record.", "New Record", trimmed, MAX_NAME_LEN)
-	if(!name || !is_operational || !user.canUseTopic(src, be_close = !issilicon(user)) || !mugshot || QDELETED(mugshot) || QDELETED(src))
+	if(!name || !is_operational || !user.can_perform_action(src, ALLOW_SILICON_REACH) || !mugshot || QDELETED(mugshot) || QDELETED(src))
 		return FALSE
 
 	new /datum/record/crew(name = name, character_appearance = mugshot.picture.picture_image)
@@ -153,7 +153,7 @@
 
 /// Secure login
 /obj/machinery/computer/records/proc/secure_login(mob/user)
-	if(!user.canUseTopic(src, be_close = !issilicon(user)) || !is_operational)
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !is_operational)
 		return FALSE
 
 	if(!has_auth(user))

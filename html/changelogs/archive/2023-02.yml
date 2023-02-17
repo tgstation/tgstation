@@ -633,3 +633,58 @@
   ZephyrTFA:
   - bugfix: You can no longer keep an AI trapped in their core by healing them with
       a Rod of Asclepius
+2023-02-17:
+  Jacquerel:
+  - bugfix: The Fugu Gland can once more be used on Ian, Carp, Giant Spiders, or other
+      basic mobs.
+  - bugfix: Syndicate mobs will once again attack windows to try to reach you, and
+      space ruin spiders won't.
+  - bugfix: Netherworld-themed mobs will correctly adjust their speed as they take
+      damage.
+  - refactor: Made the Wumborian Fugu into a basic mob, which should act largely the
+      same way but may have slightly different speed and reaction times.
+  Kubisopplay:
+  - admin: Lowered the chance of accidentally leaking asay
+  LT3:
+  - bugfix: 'Tramstation: Added missing produce order console'
+  - bugfix: 'Tramstation: Removed duplicate vending machine in east wing'
+  - bugfix: 'Tramstation: HoP office can now broadcast announcements'
+  - code_imp: 'Tramstation: Moved information plate for symmetry'
+  - code_imp: 'Disease Outbreak: Disease max severity replaced with requested severity'
+  - code_imp: 'Disease Outbreak: Generated disease now includes symptom based name'
+  - code_imp: 'Disease Outbreak: Disease name is now included in the station announcement'
+  - code_imp: 'Disease Outbreak: Now in snake case'
+  - balance: 'Disease Outbreak: Tier 1 cures removed from pool'
+  - bugfix: 'Disease Outbreak: Dangerous/Biohazard diseases are now visible'
+  - bugfix: 'Disease Outbreak: Event setup generates the correct severity'
+  - bugfix: 'Disease Outbreak: Various potential symptoms were in the wrong symptom
+      pool'
+  MrStonedOne:
+  - config: Repeated configs in other files (from $include) will no longer trigger
+      a config error. Repeated configs in the same file still will.
+  - config: In all cases the new value will still be used
+  NamelessFairy:
+  - spellcheck: A grammatical error in strip text has been removed.
+  Profakos:
+  - bugfix: Health analyzers will properly report missing stomachs and tongues
+  - bugfix: Guillotines can be unanchored again
+  SuperSlayer0:
+  - rscadd: Added a traitor final objective to infect the station AI with a virus,
+      that turns it malf and fully loyal to the traitor
+  Time-Green:
+  - bugfix: fixes taking items from inventories glitching out in hyperspace
+  YehnBeep:
+  - server: Updated instructions on setting up a TGUI CDN, noting that TGUI via CDN
+      malfunctions in the event CORS headers are absent.
+  lizardqueenlexi:
+  - bugfix: Placed a missing mining order console on Tramstation.
+  - bugfix: Rearranged furniture in the Tramstation pharmacy to make the fridges accessible.
+  timothymtorres:
+  - bugfix: Fix icebox barsign spawning under windows for Icebox.
+  - bugfix: Fix kilo barsign to spawn directly on top of wall so people can see it
+      from both inside the bar and outside the main hallway.
+  - bugfix: Fix durand shield overlay to appear above the mech when facing south.  Also
+      fixed a lighting runtime when shield would turn on/off.
+  tralezab:
+  - refactor: Monkey AI descriptions of "primal eyes" no longer show if the monkey
+      is missing eyes.

@@ -21048,7 +21048,6 @@
 /obj/item/computer_disk/medical,
 /obj/item/computer_disk/medical,
 /obj/item/computer_disk/medical,
-/obj/item/computer_disk/chemistry,
 /obj/item/clothing/neck/stethoscope{
 	pixel_y = 5
 	},
