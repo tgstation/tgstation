@@ -96,7 +96,7 @@
 
 	RegisterSignal(pre_cordon_turf, COMSIG_ATOM_ENTERED, PROC_REF(space_dump))
 
-/datum/turf_reservation/stop_repel(turf/pre_cordon_turf)
+/datum/turf_reservation/transit/stop_repel(turf/pre_cordon_turf)
 	..()
 
 	UnregisterSignal(pre_cordon_turf, COMSIG_ATOM_ENTERED)
