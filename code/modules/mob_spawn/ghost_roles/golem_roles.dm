@@ -86,22 +86,22 @@
 	if(!isgolem(user) || !can_transfer)
 		return
 
-	var/mob/living/carbon/human/H = user
+	var/mob/living/carbon/human/golem = user
 	var/transfer_choice = tgui_alert(usr, "Transfer your soul to [src]? (Warning, your old body will die!)",,list("Yes","No"))
 	if(transfer_choice != "Yes")
 		return
 	if(QDELETED(src) || uses <= 0)
 		return
 	uses -= 1
-	H.log_message("golem-swapped into [src].", LOG_GAME)
-	H.visible_message(
-		span_notice("A faint light leaves [H], moving to [src] and animating it!"),
+	golem.log_message("golem-swapped into [src].", LOG_GAME)
+	golem.visible_message(
+		span_notice("A faint light leaves [golem], moving to [src] and animating it!"),
 		span_notice("You leave your old body behind, and transfer into [src]!"),
 	)
 	show_flavor = FALSE
-	var/mob/living/carbon/human/newgolem = create(user, H.real_name)
-	H.transfer_quirk_datums(newgolem)
-	H.death()
+	var/mob/living/carbon/human/newgolem = create(user, golem.real_name)
+	golem.transfer_quirk_datums(newgolem)
+	golem.death()
 	check_uses()
 	return TRUE
 
