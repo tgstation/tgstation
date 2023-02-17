@@ -12,7 +12,7 @@ export const NtosRevelation = (props, context) => {
   const { armed } = data;
 
   return (
-    <NtosWindow width={400} height={250} theme="syndicate">
+    <NtosWindow width={400} height={250}>
       <NtosWindow.Content>
         <Section>
           <Button.Input

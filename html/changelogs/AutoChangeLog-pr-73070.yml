@@ -1,0 +1,12 @@
+author: "Chubbygummibear & JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "A ton of new NtOS themes, which are accessible by the new Themify application that comes with all PCs."
+  - rscadd: "Emagging a PC now defaults it to the Syndicate option (and adds it to go back to it if you wish)"
+  - rscadd: "There's a new maintenance app that gives you rarer themes"
+  - qol: "The NtOS Main menu was moved around, added \"header\" applications that are shown where the Flashlight is, such as your Theme manager and PDA messenger."
+  - code_imp: "Made defines for device_themes"
+  - code_imp: "Added support for special app-side checks to download files"
+  - code_imp: "Removes the 'run_emag' proc, since apps can directly refer to the computer to check for emag status instead."
+  - bugfix: "Programs no longer download twice."
+  - rscdel: "Removes the Chemistry computer disk as it was empty due to chemistry app's removal"

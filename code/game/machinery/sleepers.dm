@@ -166,7 +166,7 @@
 
 /obj/machinery/sleeper/AltClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if(state_open)
 		close_machine()

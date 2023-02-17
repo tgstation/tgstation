@@ -8,6 +8,7 @@
 		NOTRANSSTING,
 		NOEYESPRITES,
 		NO_DNA_COPY,
+		NO_UNDERWEAR,
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
