@@ -1,5 +1,5 @@
 /datum/ai_behavior/basic_melee_attack
-	action_cooldown = 0.6 SECONDS
+	action_cooldown = 2 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
