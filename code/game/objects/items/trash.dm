@@ -119,6 +119,7 @@
 
 /obj/item/trash/can/food
 	icon = 'icons/obj/food/canned.dmi'
+	icon_state = "peachcan_empty"
 
 /obj/item/trash/can/food/peaches
 	name = "canned peaches"
