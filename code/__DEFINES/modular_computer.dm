@@ -70,7 +70,7 @@
 #define PDA_THEME_TERMINAL_NAME "Terminal"
 #define SYNDICATE_THEME_NAME "Syndicate"
 #define CAT_THEME_NAME "Cat"
-#define LIGHT_THEME_NAME "NtOS Light mode"
+#define LIGHT_THEME_NAME "NtOS Light Mode"
 #define ELDRITCH_THEME_NAME "Eldritch"
 
 ///List of PDA themes that are accessible to everyone by default.
