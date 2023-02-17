@@ -172,8 +172,11 @@
 	user.log_message("became a [prompt_name].", LOG_GAME)
 	uses -= 1 // Remove a use before trying to spawn to prevent strangeness like the spawner trying to spawn more mobs than it should be able to
 
-	if(!(create(user)))
-		message_admins("[src] didn't return anything when creating a mob, this might be broken! The use of the spawner it would have taken has been refunded.")
+	var/created = create(user)
+	if(!created)
+		if(created != MOB_SPAWN_REJECTED)
+			message_admins("[src] didn't return anything when creating a mob, this might be broken! The use of the spawner it would have taken has been refunded. [ADMIN_FLW(src)]")
+
 		uses += 1 // Oops! We messed up and somehow the mob didn't spawn, but that's alright we can refund the use.
 
 	check_uses() // Now we check if the spawner should delete itself or not

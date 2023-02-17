@@ -172,7 +172,7 @@
 	var/chosen_spider = show_radial_menu(user, egg, display_spiders, radius = 38)
 	chosen_spider = spider_list[chosen_spider]
 	if(QDELETED(src) || QDELETED(user) || !chosen_spider)
-		return FALSE
+		return MOB_SPAWN_REJECTED
 	mob_type = chosen_spider
 	mob_name = "[mob_name] ([rand(1, 1000)])"
 	return ..()
