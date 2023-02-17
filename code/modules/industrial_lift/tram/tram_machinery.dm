@@ -836,6 +836,39 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	if(tram_part.travelling) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
 		return PROCESS_KILL
 
+/obj/machinery/button/tram
+	name = "tram request"
+	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
+	icon_state = "tramctrl"
+	skin = "tramctrl"
+	light_color = LIGHT_COLOR_DARK_BLUE
+	var/light_mask = "tram-light-mask"
+	device_type = /obj/item/assembly/control/tram
+	req_access = list()
+	id = 1
+	/// The specific lift id of the tram we're calling.
+	var/lift_id = MAIN_STATION_TRAM
+
+/obj/machinery/button/tram/setup_device()
+	var/obj/item/assembly/control/tram/tram_device = device
+	tram_device.initial_id = id
+	tram_device.specific_lift_id = lift_id
+	return ..()
+
+/obj/machinery/button/tram/examine(mob/user)
+	. = ..()
+	. += span_notice("There's a small inscription on the button...")
+	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")
+
+/obj/machinery/button/tram/update_overlays()
+	. = ..()
+	if(!light_mask)
+		return
+
+	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
+		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/left, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/right, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/tram, 2)
