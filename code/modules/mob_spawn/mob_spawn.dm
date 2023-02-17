@@ -36,6 +36,7 @@
 	if(faction)
 		faction = string_list(faction)
 
+/// Creates whatever mob the spawner makes. Return FALSE if we want to exit from here without doing that, returning NULL will be logged to admins.
 /obj/effect/mob_spawn/proc/create(mob/mob_possessor, newname)
 	var/mob/living/spawned_mob = new mob_type(get_turf(src)) //living mobs only
 	name_mob(spawned_mob, newname)
@@ -174,10 +175,10 @@
 
 	var/created = create(user)
 	if(!created)
-		if(created != MOB_SPAWN_REJECTED)
+		if(isnull(created)) // If we explicitly return FALSE instead of just not returning a mob, we don't want to spam the admins
 			message_admins("[src] didn't return anything when creating a mob, this might be broken! The use of the spawner it would have taken has been refunded. [ADMIN_FLW(src)]")
 
-		uses += 1 // Oops! We messed up and somehow the mob didn't spawn, but that's alright we can refund the use.
+		uses += 1 // Refund use because we didn't actually spawn anything
 
 	check_uses() // Now we check if the spawner should delete itself or not
 
