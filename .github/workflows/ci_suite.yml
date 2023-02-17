@@ -108,7 +108,7 @@ jobs:
           General__ApiPort: ${{ env.TGS_API_PORT }}
           General__SetupWizardMode: Never
         ports:
-          - ${{ env.TGS_API_PORT }}:${{ env.TGS_API_PORT }}
+          - 5000:5000
     steps:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v2
