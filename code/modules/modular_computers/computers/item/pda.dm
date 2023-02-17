@@ -224,24 +224,26 @@
  * if it has one.
  *
  * Arguments:
- * * ringtone_client - The client whose prefs we'll use to set the ringtone of this PDA.
+ * * owner_client - The client whose prefs we'll use to set the ringtone of this PDA.
  */
-/obj/item/modular_computer/pda/proc/update_ringtone_pref(client/ringtone_client)
-	if(!ringtone_client)
+/obj/item/modular_computer/pda/proc/update_pda_prefs(client/owner_client)
+	if(!owner_client)
 		return
 
-	var/new_ringtone = ringtone_client?.prefs?.read_preference(/datum/preference/text/pda_ringtone)
+	var/new_ringtone = owner_client.prefs.read_preference(/datum/preference/text/pda_ringtone)
+	if(new_ringtone && (new_ringtone != MESSENGER_RINGTONE_DEFAULT))
+		update_ringtone(new_ringtone)
 
-	if(!new_ringtone || new_ringtone == MESSENGER_RINGTONE_DEFAULT)
-		return
-
-	update_ringtone(new_ringtone)
+	var/new_theme = owner_client.prefs.read_preference(/datum/preference/choiced/pda_theme)
+	if(new_theme)
+		device_theme = GLOB.pda_name_to_theme[new_theme]
 
 /// A simple proc to set the ringtone from a pda.
 /obj/item/modular_computer/pda/proc/update_ringtone(new_ringtone)
 	if(!istext(new_ringtone))
 		return
-	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
+	var/datum/computer_file/program/messenger/messenger_app = locate() in stored_files
+	if(messenger_app)
 		messenger_app.ringtone = new_ringtone
 
 /**
@@ -252,7 +254,7 @@
  */
 /obj/item/modular_computer/pda/nukeops
 	name = "nuclear pda"
-	device_theme = "syndicate"
+	device_theme = PDA_THEME_SYNDICATE
 	comp_light_luminosity = 6.3 //matching a flashlight
 	light_color = COLOR_RED
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
@@ -298,7 +300,6 @@
 
 /obj/item/modular_computer/pda/silicon/cyborg
 	starting_programs = list(
-		/datum/computer_file/program/computerconfig,
 		/datum/computer_file/program/filemanager,
 		/datum/computer_file/program/robotact,
 	)
@@ -395,7 +396,7 @@
 
 /obj/item/modular_computer/pda/silicon/cyborg/syndicate
 	icon_state = "tablet-silicon-syndicate"
-	device_theme = "syndicate"
+	device_theme = PDA_THEME_SYNDICATE
 
 /obj/item/modular_computer/pda/silicon/cyborg/syndicate/Initialize(mapload)
 	. = ..()
