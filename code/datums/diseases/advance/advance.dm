@@ -196,7 +196,7 @@
 
 /datum/disease/advance/proc/Refresh(new_name = FALSE)
 	GenerateProperties()
-	AssignProperties()
+	assign_properties()
 	if(processing && symptoms?.len)
 		for(var/datum/symptom/S in symptoms)
 			S.Start(src)
@@ -223,7 +223,7 @@
 			properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity non-neutered symptom
 
 // Assign the properties that are in the list.
-/datum/disease/advance/proc/AssignProperties()
+/datum/disease/advance/proc/assign_properties()
 
 	if(properties?.len)
 		if(properties["stealth"] >= 2)
@@ -232,25 +232,25 @@
 			visibility_flags &= ~HIDDEN_SCANNER
 
 		if(properties["transmittable"] >= 11)
-			SetSpread(DISEASE_SPREAD_AIRBORNE)
+			set_spread(DISEASE_SPREAD_AIRBORNE)
 		else if(properties["transmittable"] >= 7)
-			SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
+			set_spread(DISEASE_SPREAD_CONTACT_SKIN)
 		else if(properties["transmittable"] >= 3)
-			SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
+			set_spread(DISEASE_SPREAD_CONTACT_FLUIDS)
 		else
-			SetSpread(DISEASE_SPREAD_BLOOD)
+			set_spread(DISEASE_SPREAD_BLOOD)
 
 		spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // can be between 5 and 10
 		stage_prob = max(0.5 * properties["stage_rate"], 1)
-		SetSeverity(properties["severity"])
-		GenerateCure(properties)
+		set_severity(properties["severity"])
+		generate_cure(properties)
 	else
 		CRASH("Our properties were empty or null!")
 
 
 // Assign the spread type and give it the correct description.
-/datum/disease/advance/proc/SetSpread(spread_id)
+/datum/disease/advance/proc/set_spread(spread_id)
 	switch(spread_id)
 		if(DISEASE_SPREAD_NON_CONTAGIOUS)
 			spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
@@ -271,7 +271,7 @@
 			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_AIRBORNE
 			spread_text = "Airborne"
 
-/datum/disease/advance/proc/SetSeverity(level_sev)
+/datum/disease/advance/proc/set_severity(level_sev)
 
 	switch(level_sev)
 
@@ -294,7 +294,7 @@
 
 
 // Will generate a random cure, the more resistance the symptoms have, the harder the cure.
-/datum/disease/advance/proc/GenerateCure()
+/datum/disease/advance/proc/generate_cure()
 	if(properties?.len)
 		var/res = clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
 		if(res == oldres)
@@ -503,7 +503,7 @@
 /**
  *  Make virus visible to heath scanners
  */
-/datum/disease/advance/proc/MakeVisible()
+/datum/disease/advance/proc/make_visible()
 	visibility_flags &= ~HIDDEN_SCANNER
 	for(var/datum/disease/advance/virus in SSdisease.active_diseases)
 		if(!virus.id)

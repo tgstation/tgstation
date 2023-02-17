@@ -1,0 +1,11 @@
+author: "LT3"
+delete-after: True
+changes:
+  - code_imp: "Disease Outbreak: Disease max severity replaced with requested severity"
+  - code_imp: "Disease Outbreak: Generated disease now includes symptom based name"
+  - code_imp: "Disease Outbreak: Disease name is now included in the station announcement"
+  - code_imp: "Disease Outbreak: Now in snake case"
+  - balance: "Disease Outbreak: Tier 1 cures removed from pool"
+  - bugfix: "Disease Outbreak: Dangerous/Biohazard diseases are now visible"
+  - bugfix: "Disease Outbreak: Event setup generates the correct severity"
+  - bugfix: "Disease Outbreak: Various potential symptoms were in the wrong symptom pool"

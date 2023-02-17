@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Changing species no longer drops all held items"
-  - bugfix: "Losing your right hand not un-cuffing you or dropping your gloves"

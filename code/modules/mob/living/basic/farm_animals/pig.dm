@@ -59,11 +59,5 @@
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/pig,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/pig
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/pig
-
-/datum/ai_behavior/basic_melee_attack/pig
-	action_cooldown = 2 SECONDS
