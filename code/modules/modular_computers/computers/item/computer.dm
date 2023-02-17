@@ -659,8 +659,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)
-	for(var/datum/computer_file/program/P in idle_threads)
-		P.kill_program(forced = TRUE)
+	for(var/datum/computer_file/program/idle_program in idle_threads)
+		idle_program.kill_program(forced = TRUE)
 	if(looping_sound)
 		soundloop.stop()
 	if(physical && loud)

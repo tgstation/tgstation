@@ -9,7 +9,7 @@
 
 /datum/computer_file/program/maintenance/theme/New()
 	. = ..()
-	filename = "[theme_name] NtOS theme"
+	filename = "[theme_name] Theme"
 
 /datum/computer_file/program/maintenance/theme/can_store_file(obj/item/modular_computer/potential_host)
 	. = ..()
