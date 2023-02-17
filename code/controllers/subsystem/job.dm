@@ -521,10 +521,7 @@ SUBSYSTEM_DEF(job)
 
 	SEND_SIGNAL(equipping, COMSIG_JOB_RECEIVED, job)
 
-	equipping.mind?.set_assigned_role(job)
-
-	if(player_client)
-		to_chat(player_client, "<span class='infoplain'><b>You are the [job.title].</b></span>")
+	equipping.mind?.set_assigned_role_with_greeting(job)
 
 	equipping.on_job_equipping(job)
 
@@ -543,13 +540,12 @@ SUBSYSTEM_DEF(job)
 
 	if(player_client)
 		if(job.req_admin_notify)
-			to_chat(player_client, "<span class='infoplain'><b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b></span>")
+			to_chat(player_client, span_infoplain("<b>You are playing a job that is important for Game Progression. \
+				If you have to disconnect, please notify the admins via adminhelp.</b>"))
 		if(CONFIG_GET(number/minimal_access_threshold))
-			to_chat(player_client, span_notice("<B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B>"))
-
-		var/related_policy = get_policy(job.title)
-		if(related_policy)
-			to_chat(player_client, related_policy)
+			to_chat(player_client, span_boldnotice("As this station was initially staffed with a \
+				[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
+				have been added to your ID card."))
 
 	if(ishuman(equipping))
 		var/mob/living/carbon/human/wageslave = equipping

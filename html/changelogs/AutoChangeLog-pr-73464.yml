@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "Reinforced Plating baseturf helpers work and should now be bug free enough to be used in maps."

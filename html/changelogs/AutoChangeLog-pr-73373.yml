@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Transferring golem shells no longer make you a free man and also results in infinite golem shells"
+  - bugfix: "Servant golems are considerably less free"
+  - bugfix: "Fixes some hard deletes related to mob minds being enslaved to other mobs"

@@ -42,8 +42,4 @@
 	pyro.key = chosen.key
 	pyro.mind.special_role = ROLE_PYROCLASTIC_SLIME
 	pyro.mind.add_antag_datum(/datum/antagonist/pyro_slime)
-	var/policy = get_policy(ROLE_PYROCLASTIC_SLIME)
-
-	if (policy)
-		to_chat(pyro, policy)
 	pyro.log_message("was made into a slime by pyroclastic anomaly", LOG_GAME)
