@@ -9334,12 +9334,11 @@
 /obj/machinery/modular_computer/console/preset/id{
 	dir = 1
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/east{
 	id = "qmprivacy";
 	name = "Privacy Shutters Control";
-	pixel_x = 24;
-	pixel_y = 38;
-	req_access = list("qm")
+	req_access = list("qm");
+	pixel_y = 38
 	},
 /obj/machinery/keycard_auth/directional/east{
 	pixel_y = 26

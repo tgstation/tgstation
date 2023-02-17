@@ -61597,11 +61597,11 @@
 /obj/machinery/keycard_auth/directional/south{
 	pixel_x = -6
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/south{
 	id = "qmprivacy";
 	name = "Privacy Shutters Control";
-	pixel_y = -26;
 	req_access = list("qm");
+	pixel_y = -26;
 	pixel_x = 8
 	},
 /turf/open/floor/wood,
