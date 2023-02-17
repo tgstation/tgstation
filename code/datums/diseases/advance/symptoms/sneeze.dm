@@ -9,6 +9,7 @@
 /datum/symptom/sneeze
 	name = "Sneezing"
 	desc = "The virus causes irritation of the nasal cavity, making the host sneeze occasionally. Sneezes from this symptom will spread the virus in a 4 meter cone in front of the host."
+	illness = "Bard Flu"
 	stealth = -2
 	resistance = 3
 	stage_speed = 0

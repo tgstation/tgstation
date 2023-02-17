@@ -43,7 +43,7 @@
 	var/scramble_response = tgui_alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", list("Yes", "Cancel"))
 	if(scramble_response != "Yes")
 		return
-	if(active || !user.canUseTopic(src, be_close = TRUE))
+	if(active || !user.can_perform_action(src))
 		return
 	toggle_on(user)
 	update_appearance()

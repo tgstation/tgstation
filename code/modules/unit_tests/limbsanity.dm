@@ -5,11 +5,11 @@
 		var/obj/item/bodypart/part = new path(null)
 		if(part.is_dimorphic)
 			if(!icon_exists(UNLINT(part.should_draw_greyscale ? part.icon_greyscale : part.icon_static), "[part.limb_id]_[part.body_zone]_m"))
-				Fail("[path] does not have a valid icon for male variants")
+				TEST_FAIL("[path] does not have a valid icon for male variants")
 			if(!icon_exists(UNLINT(part.should_draw_greyscale ? part.icon_greyscale : part.icon_static), "[part.limb_id]_[part.body_zone]_f"))
-				Fail("[path] does not have a valid icon for female variants")
+				TEST_FAIL("[path] does not have a valid icon for female variants")
 		else if(!icon_exists(UNLINT(part.should_draw_greyscale ? part.icon_greyscale : part.icon_static), "[part.limb_id]_[part.body_zone]"))
-			Fail("[path] does not have a valid icon")
+			TEST_FAIL("[path] does not have a valid icon")
 
 /// Tests the height adjustment system which dynamically changes how much the chest, head, and arms of a carbon are adjusted upwards or downwards based on the length of their legs and chest.
 /datum/unit_test/limb_height_adjustment
@@ -35,3 +35,4 @@
 	right_monky_leg.replace_limb(john_doe, TRUE)
 
 	TEST_ASSERT_EQUAL(john_doe.get_top_offset(), -3, "John Doe has a top offset other than -3 with two monkey legs.")
+

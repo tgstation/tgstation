@@ -130,7 +130,7 @@
 	. = ..()
 	if(over_object != usr || !Adjacent(usr) || !foldabletype)
 		return FALSE
-	if(!ishuman(usr) || !usr.canUseTopic(src, be_close = TRUE))
+	if(!ishuman(usr) || !usr.can_perform_action(src))
 		return FALSE
 	if(has_buckled_mobs())
 		return FALSE
