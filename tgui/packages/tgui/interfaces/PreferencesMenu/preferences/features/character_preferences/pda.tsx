@@ -1,7 +1,7 @@
 import { Feature, FeatureChoiced, FeatureDropdownInput, FeatureShortTextInput } from '../base';
 
 export const pda_theme: FeatureChoiced = {
-  name: 'PDA theme',
+  name: 'PDA Theme',
   category: 'GAMEPLAY',
   description: 'The theme of your PDA.',
   component: FeatureDropdownInput,
