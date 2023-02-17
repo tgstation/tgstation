@@ -449,7 +449,6 @@
 			to_chat(user, span_warning("The [object] is far too messy to produce a good copy!"))
 		else
 			insert_copy_object(object, user, PAPERWORK_COPY_TYPE)
-		return ..()
 
 /obj/machinery/photocopier/proc/insert_copy_object(obj/item/object, mob/user, object_copy_type)
 	if(copier_empty())
