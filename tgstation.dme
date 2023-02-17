@@ -903,6 +903,7 @@
 #include "code\datums\components\itempicky.dm"
 #include "code\datums\components\jetpack.dm"
 #include "code\datums\components\jousting.dm"
+#include "code\datums\components\keep_me_secure.dm"
 #include "code\datums\components\knockoff.dm"
 #include "code\datums\components\label.dm"
 #include "code\datums\components\light_eater.dm"
