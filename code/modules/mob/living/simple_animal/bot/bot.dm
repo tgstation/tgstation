@@ -350,7 +350,7 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	unlock_with_id(user)
 
@@ -946,7 +946,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	return ..()
 
 /mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return TRUE
 	// 0 for access, 1 for denied.
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.

@@ -201,7 +201,7 @@
 	log_message("has thrown [thrown_thing] [power_throw ? "really hard" : ""]", LOG_ATTACK)
 	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
 	newtonian_move(get_dir(target, src))
-	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, thrown_thing.throw_speed + power_throw, src, null, null, null, move_force)
+	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return FALSE
@@ -214,7 +214,7 @@
 
 /mob/living/carbon/Topic(href, href_list)
 	..()
-	if(href_list["embedded_object"] && usr.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE))
+	if(href_list["embedded_object"] && usr.can_perform_action(src, NEED_DEXTERITY))
 		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
 		if(!L)
 			return

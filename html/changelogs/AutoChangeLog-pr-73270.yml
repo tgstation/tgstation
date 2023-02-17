@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "rcd's not building plating underneath mobs & structures"
+  - bugfix: "wall girders not being completed by the rcd"
+  - bugfix: "unable to build windoors on the turf you are standing on"

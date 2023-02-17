@@ -1,0 +1,4 @@
+author: "Roryl-c"
+delete-after: True
+changes:
+  - bugfix: "fixed chat offsets with the RPG Titles event"

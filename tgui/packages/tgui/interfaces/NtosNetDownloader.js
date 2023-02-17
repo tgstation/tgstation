@@ -8,7 +8,6 @@ import { NtosWindow } from '../layouts';
 export const NtosNetDownloader = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    PC_device_theme,
     disk_size,
     disk_used,
     downloadcompletion,
@@ -35,7 +34,7 @@ export const NtosNetDownloader = (props, context) => {
       filter((program) => program.category === selectedCategory),
     // This filters the list to only contain verified programs
     !emagged &&
-      PC_device_theme === 'ntos' &&
+      PC_device_theme !== 'syndicate' &&
       filter((program) => program.verifiedsource === 1),
     // This sorts all programs in the lists by name and compatibility
     sortBy(
@@ -47,7 +46,7 @@ export const NtosNetDownloader = (props, context) => {
     ? disk_size - toFixed(disk_used + downloadcompletion)
     : disk_size - disk_used;
   return (
-    <NtosWindow theme={PC_device_theme} width={600} height={600}>
+    <NtosWindow width={600} height={600}>
       <NtosWindow.Content scrollable>
         {!!error && (
           <NoticeBox>

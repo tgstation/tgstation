@@ -132,7 +132,7 @@
 		ignored_mobs = user,
 	)
 
-	to_chat(user, span_danger("You try to remove [source]'s [item]..."))
+	to_chat(user, span_danger("You try to remove [source]'s [item.name]..."))
 	user.log_message("is stripping [key_name(source)] of [item].", LOG_ATTACK, color="red")
 	source.log_message("is being stripped of [item] by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
 	item.add_fingerprint(src)
