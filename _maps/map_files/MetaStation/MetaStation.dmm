@@ -61595,8 +61595,7 @@
 "vHG" = (
 /obj/structure/table/wood,
 /obj/machinery/keycard_auth/directional/south{
-	pixel_x = -5;
-	pixel_y = -25
+	pixel_x = -6
 	},
 /obj/machinery/button/door{
 	id = "qmprivacy";

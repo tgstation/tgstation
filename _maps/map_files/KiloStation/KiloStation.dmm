@@ -9337,8 +9337,8 @@
 /obj/machinery/button/door{
 	id = "qmprivacy";
 	name = "Privacy Shutters Control";
-	pixel_x = 25;
-	pixel_y = 36;
+	pixel_x = 24;
+	pixel_y = 38;
 	req_access = list("qm")
 	},
 /obj/machinery/keycard_auth/directional/east{

@@ -44881,14 +44881,14 @@
 	},
 /obj/item/folder/yellow,
 /obj/machinery/keycard_auth/directional/west{
-	pixel_y = -4
+	pixel_y = -5;
+	pixel_x = -25
 	},
 /obj/machinery/button/door/directional/west{
 	id = "qmprivacy";
 	name = "Privacy Shutters Control";
 	req_access = list("qm");
-	pixel_y = 5;
-	pixel_x = -25
+	pixel_y = 5
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)

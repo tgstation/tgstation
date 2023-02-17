@@ -10895,13 +10895,12 @@
 	dir = 4
 	},
 /obj/machinery/keycard_auth/directional/east{
-	pixel_y = -5
+	pixel_y = -6
 	},
 /obj/machinery/button/door/directional/east{
 	id = "qmprivacy";
 	name = "Privacy Shutters Control";
-	pixel_x = 25;
-	pixel_y = 4;
+	pixel_y = 5;
 	req_access = list("qm")
 	},
 /obj/structure/cable,
@@ -22968,6 +22967,9 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"gEz" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area)
 "gEC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door_buttons/airlock_controller{
@@ -45798,7 +45800,7 @@
 	name = "Privacy Shutters"
 	},
 /turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/office)
 "plk" = (
 /turf/closed/wall/r_wall,
 /area/station/solars/starboard/fore)
@@ -174788,7 +174790,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+gEz
 aaa
 aaa
 aaa
