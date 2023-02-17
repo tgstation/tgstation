@@ -12,6 +12,7 @@
 		NOTRANSSTING,
 	)
 	inherent_traits = list(
+		// SHARED WITH ALL ZOMBIES
 		TRAIT_EASILY_WOUNDED,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
@@ -19,7 +20,6 @@
 		TRAIT_NOBREATH,
 		TRAIT_NOCLONELOSS,
 		TRAIT_NODEATH,
-		TRAIT_SUCCUMB_OVERRIDE,
 		TRAIT_NOHUNGER,
 		TRAIT_NOMETABOLISM,
 		TRAIT_RADIMMUNE,
@@ -27,6 +27,8 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
+		// HIGH FUNCTIONING UNIQUE
+		TRAIT_SUCCUMB_OVERRIDE,
 		TRAIT_NOBLOOD,
 	)
 	mutantstomach = null
@@ -99,6 +101,7 @@
 	COOLDOWN_DECLARE(regen_cooldown)
 
 	inherent_traits = list(
+		// SHARED WITH ALL ZOMBIES
 		TRAIT_EASILY_WOUNDED,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
@@ -113,6 +116,9 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
+		// INFECTIOUS UNIQUE
+		TRAIT_STABLEHEART, // Replacement for noblood. Infectious zombies can bleed but don't need their heart.
+		TRAIT_STABLELIVER, // Not necessary but for consistency with above
 	)
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
