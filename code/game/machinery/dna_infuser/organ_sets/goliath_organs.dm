@@ -158,6 +158,7 @@
 
 /// we dont have a beating and dead heart state so no need to update it
 /obj/item/organ/internal/heart/goliath/update_icon_state()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/item/organ/internal/heart/goliath/Initialize(mapload)
