@@ -863,13 +863,14 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
 	icon_state = "tramctrl"
 	skin = "tramctrl"
-	light_power = 0.5
-	light_range = 1.5
-	light_color = LIGHT_COLOR_DARK_BLUE
-	var/light_mask = "tram-light-mask"
 	device_type = /obj/item/assembly/control/tram
 	req_access = list()
 	id = 1
+	light_power = 0.5
+	light_range = 1.5
+	light_color = LIGHT_COLOR_DARK_BLUE
+	/// The light mask used in the icon file for emissive layer
+	var/light_mask = "tram-light-mask"
 	/// The specific lift id of the tram we're calling.
 	var/lift_id = MAIN_STATION_TRAM
 
