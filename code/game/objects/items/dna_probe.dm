@@ -29,6 +29,8 @@
 	var/list/stored_dna_human = list()
 	///weak ref to the dna vault
 	var/datum/weakref/dna_vault_ref
+	//storing this here so i dont have to do more work for the link_vault and scan_dna
+	var/obj/machinery/dna_vault/our_vault
 
 /obj/item/dna_probe/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -37,7 +39,11 @@
 
 	if (isitem(target))
 		. |= AFTERATTACK_PROCESSED_ITEM
-	var/obj/machinery/dna_vault/our_vault = dna_vault_ref?.resolve()
+	our_vault = dna_vault_ref?.resolve()
+	link_vault(target, user)
+	scan_dna(target, user)
+
+/obj/item/dna_probe/proc/link_vault(atom/target, mob/user)
 	if(istype(target, /obj/machinery/dna_vault) && !our_vault)
 		dna_vault_ref = WEAKREF(target)//linking the dna vault with the probe
 		balloon_alert(user, "vault linked")
@@ -47,11 +53,12 @@
 		balloon_alert(user, "need a database!")
 		return
 
+/obj/item/dna_probe/proc/scan_dna(atom/target, mob/user)
 	if((allowed_scans & DNA_PROBE_SCAN_PLANTS) && istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/hydro_tray = target
 		if(!hydro_tray.myseed)
 			return
-		if(our_vault.plant_dna[hydro_tray.myseed.type])
+		if(our_vault?.plant_dna[hydro_tray.myseed.type])
 			to_chat(user, span_notice("Plant data is already present in vault storage."))
 			return
 		if(stored_dna_plants[hydro_tray.myseed.type])
@@ -64,26 +71,9 @@
 		playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
 		balloon_alert(user, "data added")
 
-	if(allowed_scans & DNA_PROBE_SCAN_ANIMALS)
-		var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
-		if(isanimal_or_basicmob(target) || is_type_in_typecache(target, non_simple_animals) || ismonkey(target))
-			var/mob/living/living_target = target
-			if(our_vault.animal_dna[living_target.type])
-				to_chat(user, span_notice("Animal data already present in vault storage."))
-				return
-			if(stored_dna_animal[living_target.type])
-				to_chat(user, span_notice("Animal data already present in local storage."))
-				return
-			if(!(living_target.mob_biotypes & MOB_ORGANIC))
-				to_chat(user, span_alert("No compatible DNA detected."))
-				return .
-			stored_dna_animal[living_target.type] = TRUE
-			playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
-			balloon_alert(user, "data added")
-
-	if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && ishuman(target))
+	else if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if(our_vault.human_dna[human_target.dna.unique_identity])
+		if(our_vault?.human_dna[human_target.dna.unique_identity])
 			to_chat(user, span_notice("Humanoid data already present in vault storage."))
 			return
 		if(stored_dna_human[human_target.dna.unique_identity])
@@ -96,6 +86,22 @@
 		playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
 		balloon_alert(user, "data added")
 
+	else if((allowed_scans & DNA_PROBE_SCAN_ANIMALS) && isliving(target))
+		var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
+		if(isanimal_or_basicmob(target) || is_type_in_typecache(target, non_simple_animals) || ismonkey(target))
+			var/mob/living/living_target = target
+			if(our_vault?.animal_dna[living_target.type])
+				to_chat(user, span_notice("Animal data already present in vault storage."))
+				return
+			if(stored_dna_animal[living_target.type])
+				to_chat(user, span_notice("Animal data already present in local storage."))
+				return
+			if(!(living_target.mob_biotypes & MOB_ORGANIC))
+				to_chat(user, span_alert("No compatible DNA detected."))
+				return .
+			stored_dna_animal[living_target.type] = TRUE
+			playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
+			balloon_alert(user, "data added")
 
 #define CARP_MIX_DNA_TIMER (15 SECONDS)
 
@@ -110,16 +116,15 @@
 	if(user.mind.has_antag_datum(/datum/antagonist/traitor))
 		. = list(span_notice("Using this on a Space Carp will harvest its DNA. Use it in-hand once complete to mutate it with yourself."))
 
-/obj/item/dna_probe/carp_scanner/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!proximity_flag || !target)
-		return .
+/obj/item/dna_probe/carp_scanner/link_vault(atom/target, mob/user)
+	return
 
-	if (isitem(target))
-		. |= AFTERATTACK_PROCESSED_ITEM
-
+/obj/item/dna_probe/carp_scanner/scan_dna(atom/target, mob/user)
 	if(allowed_scans & DNA_PROBE_SCAN_ANIMALS)
 		if(istype(target, /mob/living/basic/carp))
 			carp_dna_loaded = TRUE
+		playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
+		balloon_alert(user, "dna scanned")
 
 /obj/item/dna_probe/carp_scanner/attack_self(mob/user, modifiers)
 	. = ..()

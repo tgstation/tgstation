@@ -125,6 +125,8 @@
 	. = ..()
 	var/obj/item/organ/internal/lungs/improved_lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
 	REMOVE_TRAIT(owner, TRAIT_VIRUSIMMUNE, GENETIC_MUTATION)
+	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
+	UnregisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN)
 	if(improved_lungs)
 		improved_lungs.plas_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 		improved_lungs.plas_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
