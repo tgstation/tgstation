@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { get_pref_addition_key } from './setting_config';
+import { get_pref_addition_key } from './config_setter';
 
 export const IMPL_MEMORY = 0;
 export const IMPL_LOCAL_STORAGE = 1;

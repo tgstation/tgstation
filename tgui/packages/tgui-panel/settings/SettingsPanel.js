@@ -14,7 +14,8 @@ import { THEMES } from '../themes';
 import { changeSettingsTab, updateSettings, addHighlightSetting, removeHighlightSetting, updateHighlightSetting } from './actions';
 import { SETTINGS_TABS, FONTS, MAX_HIGHLIGHT_SETTINGS } from './constants';
 import { selectActiveTab, selectSettings, selectHighlightSettings, selectHighlightSettingById } from './selectors';
-import { PREF_KEYS, PREF_ADDITION_KEY, get_config_key, set_config_key } from 'common/setting_config';
+import { get_config_key, set_config_key } from 'common/config_setter';
+import { PREF_ADDITION_KEY, PREF_KEYS } from '../../../../config/tgui_config';
 
 export const SettingsPanel = (props, context) => {
   const activeTab = useSelector(context, selectActiveTab);
