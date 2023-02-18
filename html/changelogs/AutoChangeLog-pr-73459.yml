@@ -1,4 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - bugfix: "False walls will no longer tell you to wait until they've stopped moving when you use an item on them."

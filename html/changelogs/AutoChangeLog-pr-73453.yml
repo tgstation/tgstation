@@ -1,5 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes:
-  - refactor: "Refactors how nuclear activation disk works. Shouldn't notice a whole lot but if you do, it might be because of this."
-  - admin: "Disk now has an examine message for whether it's secure or not, to make it less ambiguous for players."

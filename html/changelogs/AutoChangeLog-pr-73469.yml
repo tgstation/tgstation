@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes:
-  - refactor: "Lizard related canned food now acts like canned food"

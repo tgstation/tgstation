@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Cramped escape pod walls no longer appear to merge with those of the station, which will be a big relief to the single occupant."
