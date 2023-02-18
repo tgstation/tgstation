@@ -293,8 +293,8 @@
 
 /datum/reagent/medicine/c2/seiver //a bit of a gray joke
 	name = "Seiver"
-	description = "A medicine that shifts functionality based on temperature. Hotter temperatures will remove amounts of toxins, while coder temperatures will heal larger amounts of toxins only while the patient is irradiated. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
-	var/radbonustemp = (T0C - 100) //being below this number gives you 10% off rads.
+	description = "A medicine that shifts functionality based on temperature. Hotter temperatures will heal more toxicity, while colder temperatures will heal larger amounts of toxicity but only while the patient is irradiated. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
+	var/radbonustemp = 100 //being below this number gives you radiation healing.
 	inverse_chem_val = 0.3
 	ph = 3.7
 	inverse_chem = /datum/reagent/inverse/technetium
@@ -313,18 +313,18 @@
 	//you're hot
 	var/toxcalc = min(round(5 + ((chemtemp-1000)/175), 0.1), 5) * REM * delta_time * normalise_creation_purity() //max 2.5 tox healing per second
 	if(toxcalc > 0)
-		affected_mob.adjustToxLoss(-toxcalc * delta_time * normalise_creation_purity(), required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(-toxcalc, required_biotype = affected_biotype)
 		healypoints += toxcalc
 
 	//and you're cold
 	var/radcalc = round((T0C-chemtemp) / 6, 0.1) * REM * delta_time //max ~45 rad loss unless you've hit below 0K. if so, wow.
 	if(radcalc > 0 && HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
 		radcalc *= normalise_creation_purity()
-		// no cost percent healing if you are SUPER cold (on top of cost healing)
+		// extra rad healing if you are SUPER cold
 		if(chemtemp < radbonustemp*0.1)
-			affected_mob.adjustToxLoss(-radcalc * (0.9**(REM * delta_time)), required_biotype = affected_biotype)
+			affected_mob.adjustToxLoss(-radcalc * 0.9, required_biotype = affected_biotype)
 		else if(chemtemp < radbonustemp)
-			affected_mob.adjustToxLoss(-radcalc * (0.75**(REM * delta_time)), required_biotype = affected_biotype)
+			affected_mob.adjustToxLoss(-radcalc * 0.75), required_biotype = affected_biotype)
 		healypoints += (radcalc / 5)
 
 	//you're yes and... oh no!
