@@ -7,6 +7,7 @@
 	max_integrity = 250
 	armor_type = /datum/armor/machinery_portable_atmospherics
 	anchored = FALSE
+	layer = ABOVE_OBJ_LAYER
 
 	///Stores the gas mixture of the portable component. Don't access this directly, use return_air() so you support the temporary processing it provides
 	var/datum/gas_mixture/air_contents
@@ -158,7 +159,7 @@
 
 /obj/machinery/portable_atmospherics/AltClick(mob/living/user)
 	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)) || !can_interact(user))
+	if(!istype(user) || !user.can_perform_action(src, NEED_DEXTERITY) || !can_interact(user))
 		return
 	if(!holding)
 		return

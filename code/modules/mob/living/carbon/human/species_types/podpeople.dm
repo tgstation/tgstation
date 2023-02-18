@@ -47,7 +47,7 @@
 		light_amount = min(1, T.get_lumcount()) - 0.5
 		H.adjust_nutrition(5 * light_amount * delta_time)
 		if(light_amount > 0.2) //if there's enough light, heal
-			H.heal_overall_damage(0.5 * delta_time, 0.5 * delta_time, BODYTYPE_ORGANIC)
+			H.heal_overall_damage(brute = 0.5 * delta_time, burn = 0.5 * delta_time, required_bodytype = BODYTYPE_ORGANIC)
 			H.adjustToxLoss(-0.5 * delta_time)
 			H.adjustOxyLoss(-0.5 * delta_time)
 
@@ -55,7 +55,7 @@
 		H.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		H.take_overall_damage(1 * delta_time, 0)
+		H.take_overall_damage(brute = 1 * delta_time, required_bodytype = BODYTYPE_ORGANIC)
 	..()
 
 /datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)

@@ -186,6 +186,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		playsound(src.loc, SFX_PUNCH, 25, TRUE, -1)
 		log_combat(user, M, "attacked", src)
 
+/obj/item/storage/book/bible/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+	return !istype(storage_holder, /obj/item/storage/book/bible)
+
 /obj/item/storage/book/bible/afterattack(atom/bible_smacked, mob/user, proximity)
 	. = ..()
 	if(!proximity)
@@ -264,6 +267,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	name = "Syndicate Tome"
 	attack_verb_continuous = list("attacks", "burns", "blesses", "damns", "scorches")
 	attack_verb_simple = list("attack", "burn", "bless", "damn", "scorch")
+	item_flags = NO_BLOOD_ON_ITEM
 	var/uses = 1
 	var/ownername
 
@@ -287,6 +291,3 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		return ..()
 	else
 		return ..(M,user,heal_mode = FALSE)
-
-/obj/item/storage/book/bible/syndicate/add_blood_DNA(list/blood_dna)
-	return FALSE

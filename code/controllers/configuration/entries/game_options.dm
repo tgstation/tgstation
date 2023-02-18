@@ -414,3 +414,4 @@
 
 /datum/config_entry/flag/disallow_circuit_sounds
 
+/datum/config_entry/flag/give_tutorials_without_db

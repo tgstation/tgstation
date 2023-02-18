@@ -9,7 +9,6 @@
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	speak_emote = list("baas","bleats")
 	speed = 1.1
-	see_in_dark = 6
 	butcher_results = list(/obj/item/food/meat/slab = 3)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -85,7 +84,7 @@
 		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
 	)
-	ai_traits = STOP_MOVING_WHEN_PULLED | STOP_ACTING_WHILE_DEAD
+	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(

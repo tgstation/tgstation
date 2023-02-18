@@ -744,7 +744,9 @@
 		/obj/item/reagent_containers/borghypo/borgshaker,
 		/obj/item/borg/lollipop,
 		/obj/item/stack/pipe_cleaner_coil/cyborg,
-		/obj/item/borg/apparatus/beaker/service)
+		/obj/item/borg/apparatus/beaker/service,
+		/obj/item/chisel,
+	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/borgshaker/hacked)
 	cyborg_base_icon = "service_m" // display as butlerborg for radial model selection

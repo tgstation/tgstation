@@ -6,6 +6,8 @@
 	max_occurrences = 5
 	weight = 20
 	description = "This anomaly causes you to hallucinate."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 2
 
 /datum/round_event/anomaly/anomaly_hallucination
 	start_when = 10

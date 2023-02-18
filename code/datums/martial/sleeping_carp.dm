@@ -75,7 +75,7 @@
 	if(D.body_position == STANDING_UP)
 		D.apply_damage(10, A.get_attack_type(), BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
 		D.apply_damage(40, STAMINA, BODY_ZONE_HEAD)
-		D.Knockdown(40)
+		D.Knockdown(4 SECONDS)
 		D.visible_message(span_warning("[A] kicks [D] in the head, sending them face first into the floor!"), \
 					span_userdanger("You are kicked in the head by [A], sending you crashing to the floor!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
 	else
@@ -204,7 +204,7 @@
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, span_warning("You club yourself over the head with [src]."))
-		user.Paralyze(60)
+		user.Paralyze(6 SECONDS)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
@@ -235,14 +235,14 @@
 		if(prob(10))
 			H.visible_message(span_warning("[H] collapses!"), \
 							span_userdanger("Your legs give out!"))
-			H.Paralyze(80)
+			H.Paralyze(8 SECONDS)
 		if(H.staminaloss && !H.IsSleeping())
 			var/total_health = (H.health - H.staminaloss)
 			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)
 				H.visible_message(span_warning("[user] delivers a heavy hit to [H]'s head, knocking [H.p_them()] out cold!"), \
 								span_userdanger("You're knocked unconscious by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 				to_chat(user, span_danger("You deliver a heavy hit to [H]'s head, knocking [H.p_them()] out cold!"))
-				H.SetSleeping(600)
+				H.SetSleeping(60 SECONDS)
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
 	else
 		return ..()

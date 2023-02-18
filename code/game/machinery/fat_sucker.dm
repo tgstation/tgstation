@@ -39,8 +39,8 @@
 /obj/machinery/fat_sucker/RefreshParts()
 	. = ..()
 	var/rating = 0
-	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
-		rating += L.rating
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		rating += micro_laser.tier
 	bite_size = initial(bite_size) + rating * 2.5
 	nutrient_to_meat = initial(nutrient_to_meat) - rating * 5
 
@@ -99,7 +99,7 @@
 		to_chat(user, span_warning("The safety hatch has been disabled!"))
 
 /obj/machinery/fat_sucker/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.can_perform_action(src))
 		return
 	if(user == occupant)
 		to_chat(user, span_warning("You can't reach the controls from inside!"))

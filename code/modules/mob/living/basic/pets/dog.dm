@@ -26,7 +26,6 @@
 	response_harm_simple = "kick"
 	speak_emote = list("barks", "woofs")
 	faction = list(FACTION_NEUTRAL)
-	see_in_dark = 5
 	can_be_held = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/dog
 	// The dog attack pet command can raise melee attack above 0

@@ -199,8 +199,10 @@
 			if(busy)
 				to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
 				return
-			if(issilicon(usr) || (ishuman(usr) && !usr.put_in_hands(toner_cartridge)))
+			var/success = usr.put_in_hands(toner_cartridge)
+			if(!success)
 				toner_cartridge.forceMove(drop_location())
+
 			toner_cartridge = null
 			return TRUE
 
@@ -484,7 +486,7 @@
 
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
-	if(!istype(target) || target.anchored || target.buckled || !Adjacent(target) || !user.canUseTopic(src, be_close = TRUE) || target == ass || copier_blocked())
+	if(!istype(target) || target.anchored || target.buckled || !Adjacent(target) || !user.can_perform_action(src) || target == ass || copier_blocked())
 		return
 	add_fingerprint(user)
 	if(target == user)

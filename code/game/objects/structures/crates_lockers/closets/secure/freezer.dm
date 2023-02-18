@@ -24,6 +24,7 @@
 /obj/structure/closet/secure_closet/freezer/close(mob/living/user)
 	if(..()) //if we actually closed the locker
 		toggle_organ_decay(src)
+		return TRUE
 
 /obj/structure/closet/secure_closet/freezer/ex_act()
 	if(jones)
@@ -32,7 +33,7 @@
 	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
 
 /obj/structure/closet/secure_closet/freezer/empty
-	name = "empty freezer"
+	name = "freezer"
 
 /obj/structure/closet/secure_closet/freezer/empty/open
 	req_access = null

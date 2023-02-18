@@ -98,14 +98,14 @@
 
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	if (tamer)
+		on_tamed(tamer, feedback = FALSE)
 		befriend(tamer)
-		on_tamed(tamer, FALSE)
 	else
 		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(on_tamed)))
 
 	teleport = new(src)
 	teleport.Grant(src)
-	ai_controller.blackboard[BB_CARP_RIFT] = teleport
+	ai_controller.blackboard[BB_CARP_RIFT] = WEAKREF(teleport)
 
 /mob/living/basic/carp/Destroy()
 	QDEL_NULL(teleport)

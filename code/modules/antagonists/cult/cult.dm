@@ -489,7 +489,8 @@
 			return FALSE
 		if(specific_cult?.is_sacrifice_target(target.mind))
 			return FALSE
-		if(target.mind.enslaved_to && !IS_CULTIST(target.mind.enslaved_to))
+		var/mob/living/master = target.mind.enslaved_to?.resolve()
+		if(master && !IS_CULTIST(master))
 			return FALSE
 		if(target.mind.unconvertable)
 			return FALSE
@@ -571,7 +572,3 @@
 	equipped.eye_color_left = BLOODCULT_EYE
 	equipped.eye_color_right = BLOODCULT_EYE
 	equipped.update_body()
-
-	var/obj/item/clothing/suit/hooded/hooded = locate() in equipped
-	hooded.MakeHood() // This is usually created on Initialize, but we run before atoms
-	hooded.ToggleHood()

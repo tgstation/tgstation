@@ -3,6 +3,17 @@
 /////////////////Tools///////////////////
 /////////////////////////////////////////
 
+/datum/design/fire_extinguisher_advanced
+	name = "Advanced Fire Extinguisher"
+	id = "adv_fire_extinguisher"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/titanium = 500, /datum/material/gold = 500)
+	build_path = /obj/item/extinguisher/advanced/empty
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/handdrill
 	name = "Hand Drill"
 	desc = "A small electric hand drill with an interchangeable screwdriver and bolt bit"
@@ -380,3 +391,14 @@
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
 	)
+/datum/design/bolter_wrench
+	name = "Bolter Wrench"
+	desc = "A wrench that can unbolt airlocks regardless of power status."
+	id = "bolter_wrench"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 2000)
+	build_path = /obj/item/wrench/bolter
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING

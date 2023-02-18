@@ -57,7 +57,7 @@
 
 /datum/supply_pack/organic/exoticseeds
 	name = "Exotic Seeds Crate"
-	desc = "Any entrepreneuring botanist's dream. Contains fourteen different seeds, \
+	desc = "Any entrepreneuring botanist's dream. Contains twelve different seeds, \
 		including one replica-pod seed and two mystery seeds!"
 	cost = CARGO_CRATE_VALUE * 3
 	access_view = ACCESS_HYDROPONICS
@@ -143,7 +143,7 @@
 /datum/supply_pack/organic/hydroponics/hydrotank
 	name = "Hydroponics Backpack Crate"
 	desc = "Bring on the flood with this high-capacity backpack crate. \
-		Contains 500 units of life-giving H2O. Requires hydroponics access to open."
+		Contains 500 units of life-giving H2O."
 	cost = CARGO_CRATE_VALUE * 2
 	access = ACCESS_HYDROPONICS
 	contains = list(/obj/item/watertank)
@@ -224,7 +224,7 @@
 
 /// adds a randomized pizza from the pizza list
 /datum/supply_pack/organic/pizza/proc/add_normal_pizza(obj/structure/closet/crate/new_crate, list/rng_pizza_list)
-	var/randomize_pizza = pick_n_take(rng_pizza_list)
+	var/randomize_pizza = pick_weight(rng_pizza_list)
 	rng_pizza_list -= randomize_pizza
 	var/obj/item/pizzabox/new_pizza_box = new(new_crate)
 	new_pizza_box.pizza = new randomize_pizza

@@ -162,6 +162,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
 	throwforce = 10
+	attack_speed = CLICK_CD_RAPID
 	block_chance = 20
 	armour_penetration = 65
 	attack_verb_continuous = list("slashes", "stings", "prickles", "pokes")
@@ -172,7 +173,6 @@
 	. = ..()
 	if(!proximity)
 		return
-	user.changeNext_move(CLICK_CD_RAPID)
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		carbon_target.reagents.add_reagent(/datum/reagent/toxin, 4)
@@ -195,6 +195,7 @@
 	force = 0.001
 	armour_penetration = 1000
 	force_string = "INFINITE"
+	item_flags = NEEDS_PERMIT|NO_BLOOD_ON_ITEM
 	var/obj/machinery/power/supermatter_crystal/shard
 	var/balanced = 1
 
@@ -281,9 +282,6 @@
 		span_hear("You hear a loud crack as you are washed with a wave of heat."),
 	)
 	shard.Bump(turf)
-
-/obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
-	return FALSE
 
 /obj/item/melee/curator_whip
 	name = "curator's whip"

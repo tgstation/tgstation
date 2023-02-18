@@ -351,7 +351,7 @@
 			for(var/direction in GLOB.alldirs)
 				var/turf/stepped_turf = get_step(get_turf(user), direction)
 				do_sparks(3, FALSE, stepped_turf)
-				new /mob/living/simple_animal/hostile/netherworld(stepped_turf)
+				new /mob/living/basic/creature(stepped_turf)
 		if(4)
 			//Destroy Equipment
 			selected_turf.visible_message(span_userdanger("Everything [user] is holding and wearing disappears!"))

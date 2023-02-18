@@ -13,14 +13,16 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_on_shuttle = 1
-	see_in_dark = NIGHTVISION_FOV_RANGE
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
 	see_invisible = SEE_INVISIBLE_LIVING
 	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Vivid blue green, would be cool to make this change with strain
+	lighting_cutoff_red = 0
+	lighting_cutoff_green = 35
+	lighting_cutoff_blue = 20
 	hud_type = /datum/hud/blob_overmind
 	var/obj/structure/blob/special/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0

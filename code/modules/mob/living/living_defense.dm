@@ -44,13 +44,48 @@
 		return 1
 	return 0
 
-/mob/living/proc/is_mouth_covered(head_only = 0, mask_only = 0)
-	return FALSE
+/**
+ * Checks if our mob has their mouth covered.
+ *
+ * Note that we only care about [ITEM_SLOT_HEAD] and [ITEM_SLOT_MASK].
+ *  (so if you check all slots, it'll return head, then mask)
+ *That is also the priority order
+ * Arguments
+ * * check_flags: What item slots should we check?
+ *
+ * Retuns a truthy value (a ref to what is covering mouth), or a falsy value (null)
+ */
+/mob/living/proc/is_mouth_covered(check_flags = ALL)
+	return null
 
-/mob/living/proc/is_eyes_covered(check_glasses = 1, check_head = 1, check_mask = 1)
-	return FALSE
-/mob/living/proc/is_pepper_proof(check_head = TRUE, check_mask = TRUE)
-	return FALSE
+/**
+ * Checks if our mob has their eyes covered.
+ *
+ * Note that we only care about [ITEM_SLOT_HEAD], [ITEM_SLOT_MASK], and [ITEM_SLOT_GLASSES].
+ * That is also the priority order (so if you check all slots, it'll return head, then mask, then glasses)
+ *
+ * Arguments
+ * * check_flags: What item slots should we check?
+ *
+ * Retuns a truthy value (a ref to what is covering eyes), or a falsy value (null)
+ */
+/mob/living/proc/is_eyes_covered(check_flags = ALL)
+	return null
+
+/**
+ * Checks if our mob is protected from pepper spray.
+ *
+ * Note that we only care about [ITEM_SLOT_HEAD] and [ITEM_SLOT_MASK].
+ * That is also the priority order (so if you check all slots, it'll return head, then mask)
+ *
+ * Arguments
+ * * check_flags: What item slots should we check?
+ *
+ * Retuns a truthy value (a ref to what is protecting us), or a falsy value (null)
+ */
+/mob/living/proc/is_pepper_proof(check_flags = ALL)
+	return null
+
 /mob/living/proc/on_hit(obj/projectile/P)
 	return BULLET_ACT_HIT
 
@@ -171,7 +206,7 @@
 				log_combat(user, src, "attempted to neck grab", addition="neck grab")
 			if(GRAB_NECK)
 				log_combat(user, src, "attempted to strangle", addition="kill grab")
-		if(!do_mob(user, src, grab_upgrade_time))
+		if(!do_after(user, grab_upgrade_time, src))
 			return FALSE
 		if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state)
 			return FALSE
@@ -277,7 +312,7 @@
 		to_chat(user, span_warning("You don't want to hurt anyone!"))
 		return FALSE
 
-	if(user.is_muzzled() || user.is_mouth_covered(FALSE, TRUE))
+	if(user.is_muzzled() || user.is_mouth_covered(ITEM_SLOT_MASK))
 		to_chat(user, span_warning("You can't bite with your mouth covered!"))
 		return FALSE
 	user.do_attack_animation(src, ATTACK_EFFECT_BITE)

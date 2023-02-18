@@ -26,7 +26,7 @@
 	type = MESSAGE_TYPE_DEBUG, \
 	text = "DEBUG: [msg]")
 /// Used for debug messages to the player
-#define debug_usr(msg) if (GLOB.Debug2&&usr) to_chat(usr, \
+#define debug_usr(msg) if (GLOB.Debug2 && usr) to_chat(usr, \
 	type = MESSAGE_TYPE_DEBUG, \
 	text = "DEBUG: [msg]")
 /// Used for debug messages to the admins

@@ -371,19 +371,19 @@ em {
 }
 
 .redteamradio {
-  color: #ff4444;
+  color: #ff4444 !important;
 }
 
 .blueteamradio {
-  color: #3434fd;
+  color: #3434fd !important;
 }
 
 .greenteamradio {
-  color: #34fd34;
+  color: #34fd34 !important;
 }
 
 .yellowteamradio {
-  color: #fdfd34;
+  color: #fdfd34 !important;
 }
 
 .yell {
@@ -800,6 +800,10 @@ em {
 
 .bigicon {
   font-size: 2.5em;
+}
+
+.hugeicon {
+  font-size: 5em;
 }
 
 .memo {

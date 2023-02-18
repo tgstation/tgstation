@@ -198,7 +198,7 @@
 			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)
 				var/mob/living/L = P.petrified_mob
-				var/mob/living/simple_animal/hostile/netherworld/statue/S = new(P.loc, owner)
+				var/mob/living/basic/statue/S = new(P.loc, owner)
 				S.name = "statue of [L.name]"
 				if(owner)
 					S.faction = list("[REF(owner)]")

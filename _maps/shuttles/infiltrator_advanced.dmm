@@ -163,13 +163,13 @@
 /area/shuttle/syndicate/bridge)
 "as" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/secure_data/syndie{
+/obj/machinery/computer/records/security/syndie{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/bridge)
 "at" = (
-/obj/machinery/computer/med_data/syndie{
+/obj/machinery/computer/records/medical/syndie{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
@@ -922,7 +922,7 @@
 	pixel_y = 4
 	},
 /obj/item/book/manual/wiki/surgery,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/suit/apron/surgical,
 /obj/structure/table/reinforced,

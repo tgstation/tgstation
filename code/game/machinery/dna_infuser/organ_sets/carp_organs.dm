@@ -1,29 +1,24 @@
-
 #define CARP_ORGAN_COLOR "#4caee7"
 #define CARP_SCLERA_COLOR "#ffffff"
 #define CARP_PUPIL_COLOR "#00b1b1"
-
 #define CARP_COLORS CARP_ORGAN_COLOR + CARP_SCLERA_COLOR + CARP_PUPIL_COLOR
 
 ///bonus of the carp: you can swim through space!
 /datum/status_effect/organ_set_bonus/carp
+	id = "organ_set_bonus_carp"
 	organs_needed = 4
 	bonus_activate_text = span_notice("Carp DNA is deeply infused with you! You've learned how to propel yourself through space!")
 	bonus_deactivate_text = span_notice("Your DNA is once again mostly yours, and so fades your ability to space-swim...")
-
-/datum/status_effect/organ_set_bonus/carp/enable_bonus()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, REF(src))
-
-/datum/status_effect/organ_set_bonus/carp/disable_bonus()
-	. = ..()
-	REMOVE_TRAIT(src, TRAIT_SPACEWALK, REF(src))
+	bonus_traits = TRAIT_SPACEWALK
 
 ///Carp lungs! You can breathe in space! Oh... you can't breathe on the station, you need low oxygen environments.
+/// Inverts behavior of lungs. Bypasses suffocation due to space / lack of gas, but also allows Oxygen to suffocate.
 /obj/item/organ/internal/lungs/carp
 	name = "mutated carp-lungs"
 	desc = "Carp DNA infused into what was once some normal lungs."
-	safe_oxygen_min = 0 //we don't breathe this!
+	// Oxygen causes suffocation.
+	safe_oxygen_min = 0
+	safe_oxygen_max = 15
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "lungs"
@@ -32,8 +27,9 @@
 
 /obj/item/organ/internal/lungs/carp/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "has odd neck gills.", BODY_ZONE_HEAD)
+	AddElement(/datum/element/noticable_organ, "neck has odd gills.", BODY_ZONE_HEAD)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
+	ADD_TRAIT(src, TRAIT_SPACEBREATHING, REF(src))
 
 ///occasionally sheds carp teeth, stronger melee (bite) attacks, but you can't cover your mouth anymore.
 /obj/item/organ/internal/tongue/carp
@@ -49,6 +45,7 @@
 
 /obj/item/organ/internal/tongue/carp/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/noticable_organ, "has big sharp teeth.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 
 /obj/item/organ/internal/tongue/carp/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
@@ -56,6 +53,8 @@
 	if(!ishuman(tongue_owner))
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
+	if(!human_receiver.can_mutate())
+		return
 	var/datum/species/rec_species = human_receiver.dna.species
 	rec_species.update_no_equip_flags(tongue_owner, rec_species.no_equip_flags | ITEM_SLOT_MASK)
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
@@ -68,6 +67,8 @@
 	if(!ishuman(tongue_owner))
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
+	if(!human_receiver.can_mutate())
+		return
 	var/datum/species/rec_species = human_receiver.dna.species
 	rec_species.update_no_equip_flags(tongue_owner, initial(rec_species.no_equip_flags))
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
@@ -106,8 +107,8 @@
 
 /obj/item/organ/internal/brain/carp/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "seems unable to stay still.")
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
+	AddElement(/datum/element/noticable_organ, "seem%PRONOUN_S unable to stay still.")
 
 /obj/item/organ/internal/brain/carp/Insert(mob/living/carbon/brain_owner, special, drop_if_replaced, no_id_transfer)
 	. = ..()
@@ -117,7 +118,7 @@
 //technically you could get around the mood issue by extracting and reimplanting the brain but it will be far easier to just go one z there and back
 /obj/item/organ/internal/brain/carp/Remove(mob/living/carbon/brain_owner, special, no_id_transfer)
 	. = ..()
-	UnregisterSignal(brain_owner)
+	UnregisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED)
 	deltimer(cooldown_timer)
 
 /obj/item/organ/internal/brain/carp/get_attacking_limb(mob/living/carbon/human/target)
@@ -145,11 +146,10 @@
 
 /obj/item/organ/internal/heart/carp/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "skin has small patches of scales growing...")
+	AddElement(/datum/element/noticable_organ, "skin has small patches of scales growing on it.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 
 #undef CARP_ORGAN_COLOR
 #undef CARP_SCLERA_COLOR
 #undef CARP_PUPIL_COLOR
-
 #undef CARP_COLORS
