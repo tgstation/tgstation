@@ -18,7 +18,10 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	obj_damage = 40
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Greenish, seems about right for it
+	lighting_cutoff_red = 10
+	lighting_cutoff_green = 25
+	lighting_cutoff_blue = 20
 	attack_sound = 'sound/weapons/punch3.ogg'
 	attack_verb_continuous = "slaps"
 	attack_verb_simple = "slap"
