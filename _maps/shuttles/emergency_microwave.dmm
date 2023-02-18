@@ -1,0 +1,520 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
+"b" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/escape)
+"c" = (
+/obj/machinery/light/warm/directional/east,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/obj/effect/spawner/random/food_or_drink,
+/turf/open/floor/iron/white/smooth_half{
+	dir = 1
+	},
+/area/shuttle/escape)
+"d" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/effect/spawner/random/food_or_drink/soup,
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/escape)
+"e" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/iron/white/smooth_corner,
+/area/shuttle/escape)
+"f" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"g" = (
+/turf/template_noop,
+/area/shuttle/escape)
+"h" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"i" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/escape)
+"j" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/escape)
+"k" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on{
+	target_temperature = 999.00;
+	max_temperature = 999.00
+	},
+/obj/item/screwdriver/nuke,
+/obj/item/wrench/combat,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"m" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	dir = 4;
+	name = "Cockpit Heat Shield";
+	id = cockpitheatshield
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"n" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/floor/iron/white/smooth_half{
+	dir = 1
+	},
+/area/shuttle/escape)
+"o" = (
+/obj/machinery/status_display/shuttle{
+	pixel_y = -32
+	},
+/obj/machinery/atmospherics/miner/plasma,
+/obj/item/toy/plush/plasmamanplushie,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"p" = (
+/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/effect/turf_decal/delivery/red,
+/obj/machinery/atmospherics/components/binary/volume_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"q" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/structure/sign/warning/hot_temp/directional/south,
+/turf/open/floor/iron/white/smooth_half,
+/area/shuttle/escape)
+"r" = (
+/obj/machinery/button/door/directional/west{
+	pixel_y = 6;
+	name = "Shuttle Heat Shield";
+	id = shuttleheatshield
+	},
+/obj/machinery/button/door/directional/west{
+	pixel_y = -6;
+	id = cockpitheatshield;
+	name = "Cockpit Heat Shield"
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/microwave,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"s" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/effect/spawner/random/food_or_drink,
+/turf/open/floor/iron/white/smooth_half,
+/area/shuttle/escape)
+"t" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/obj/effect/spawner/random/food_or_drink,
+/turf/open/floor/iron/white/smooth_half{
+	dir = 1
+	},
+/area/shuttle/escape)
+"u" = (
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	dir = 1;
+	name = "Shuttle Heat Shield";
+	id = shuttleheatshield
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/iron/white/textured_large,
+/area/shuttle/escape)
+"v" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/obj/structure/sign/poster/contraband/donk_co{
+	pixel_x = 32
+	},
+/turf/open/floor/iron/white/smooth_half{
+	dir = 1
+	},
+/area/shuttle/escape)
+"w" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/escape)
+"x" = (
+/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/effect/turf_decal/delivery/red,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"y" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/turf/open/floor/iron/white/smooth_half{
+	dir = 1
+	},
+/area/shuttle/escape)
+"z" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/effect/spawner/random/food_or_drink/soup,
+/turf/open/floor/iron/white/smooth_half,
+/area/shuttle/escape)
+"A" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/escape)
+"B" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced/plasma/spawner/east,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"C" = (
+/obj/structure/chair/office/tactical{
+	dir = 1
+	},
+/obj/item/toy/plush/nukeplushie,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"D" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/escape)
+"E" = (
+/obj/machinery/light/warm/directional/south,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/iron/white/smooth_half,
+/area/shuttle/escape)
+"F" = (
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/machinery/door/airlock/hatch,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/escape)
+"G" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
+/obj/machinery/meter,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"H" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"I" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/iron/white/smooth_corner{
+	dir = 4
+	},
+/area/shuttle/escape)
+"J" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/obj/effect/spawner/random/food_or_drink/soup,
+/turf/open/floor/iron/white/smooth_half{
+	dir = 1
+	},
+/area/shuttle/escape)
+"L" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/iron/white/smooth_half,
+/area/shuttle/escape)
+"M" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	dir = 4;
+	name = "Cockpit Heat Shield";
+	id = cockpitheatshield
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"N" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/iron/white/smooth_half,
+/area/shuttle/escape)
+"Q" = (
+/obj/machinery/light/warm/directional/east,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/turf/open/floor/iron/white/smooth_half{
+	dir = 1
+	},
+/area/shuttle/escape)
+"R" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"T" = (
+/obj/docking_port/mobile/emergency{
+	dir = 2;
+	name = "Microwave emergency shuttle"
+	},
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	dir = 1;
+	name = "Shuttle Heat Shield";
+	id = shuttleheatshield
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/iron/white/textured_large,
+/area/shuttle/escape)
+"U" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/escape)
+"V" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/effect/spawner/random/food_or_drink,
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/escape)
+"W" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/ash,
+/obj/item/clothing/mask/gas/clown_hat,
+/obj/item/thermometer{
+	pixel_x = 9;
+	pixel_y = -4
+	},
+/turf/open/floor/iron/white/smooth_corner{
+	dir = 1
+	},
+/area/shuttle/escape)
+"X" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/iron/white/smooth_corner{
+	dir = 8
+	},
+/area/shuttle/escape)
+"Y" = (
+/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/status_display/shuttle{
+	pixel_y = 32
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"Z" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output{
+	dir = 1
+	},
+/obj/structure/sign/warning/fire/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+g
+H
+H
+g
+g
+H
+H
+g
+"}
+(2,1,1) = {"
+a
+B
+B
+a
+a
+B
+B
+a
+"}
+(3,1,1) = {"
+a
+Y
+C
+r
+k
+x
+o
+a
+"}
+(4,1,1) = {"
+F
+R
+h
+G
+f
+p
+Z
+a
+"}
+(5,1,1) = {"
+b
+m
+m
+M
+M
+M
+M
+a
+"}
+(6,1,1) = {"
+u
+e
+J
+n
+t
+n
+I
+a
+"}
+(7,1,1) = {"
+u
+L
+U
+i
+U
+D
+E
+a
+"}
+(8,1,1) = {"
+u
+z
+V
+j
+A
+V
+q
+a
+"}
+(9,1,1) = {"
+u
+N
+j
+j
+j
+j
+N
+a
+"}
+(10,1,1) = {"
+u
+L
+j
+d
+V
+j
+E
+a
+"}
+(11,1,1) = {"
+u
+s
+j
+j
+j
+j
+s
+a
+"}
+(12,1,1) = {"
+T
+L
+A
+j
+w
+d
+q
+a
+"}
+(13,1,1) = {"
+u
+L
+j
+V
+j
+j
+E
+a
+"}
+(14,1,1) = {"
+u
+X
+Q
+v
+y
+c
+W
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}

@@ -466,6 +466,14 @@
 	admin_notes = "There's a chasm in it, it has railings but that won't stop determined players."
 	credit_cost = CARGO_CRATE_VALUE * 10
 
+/datum/map_template/shuttle/emergency/microwave
+	suffix = "microwave"
+	name = "MMMMMMMMMMMMMBEEPBEEPBEEP"
+	description = "Cooks food in record time! People, eh... not so much."
+	admin_notes = "Death by extreme heat... spawn at own peril."
+	emag_only = TRUE
+	credit_cost = EMAG_LOCKED_SHUTTLE_COST
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
