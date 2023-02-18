@@ -7,6 +7,8 @@
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns spider eggs, ready to hatch."
+	min_wizard_trigger_potency = 5
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/spider_infestation
 	announce_when = 400

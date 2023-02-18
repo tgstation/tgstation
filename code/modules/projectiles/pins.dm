@@ -265,7 +265,7 @@
 			owned = FALSE
 			return
 		var/transaction_amount = tgui_input_number(user, "Insert valid deposit amount for gun purchase", "Money Deposit")
-		if(!transaction_amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+		if(!transaction_amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 			return
 		pin_owner = id
 		owned = TRUE
@@ -280,7 +280,8 @@
 	if(user in gun_owners)
 		if(multi_payment && credit_card_details)
 			if(credit_card_details.adjust_money(-payment_amount, "Firing Pin: Gun Rent"))
-				pin_owner.registered_account.adjust_money(payment_amount, "Firing Pin: Payout For Gun Rent")
+				if(pin_owner)
+					pin_owner.registered_account.adjust_money(payment_amount, "Firing Pin: Payout For Gun Rent")
 				return TRUE
 			to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
 			return FALSE
@@ -288,13 +289,14 @@
 	if(credit_card_details && !active_prompt)
 		var/license_request = tgui_alert(user, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", list("Yes", "No"))
 		active_prompt = TRUE
-		if(!user.canUseTopic(src, be_close = TRUE))
+		if(!user.can_perform_action(src))
 			active_prompt = FALSE
 			return FALSE
 		switch(license_request)
 			if("Yes")
 				if(credit_card_details.adjust_money(-payment_amount, "Firing Pin: Gun License"))
-					pin_owner.registered_account.adjust_money(payment_amount, "Firing Pin: Gun License Bought")
+					if(pin_owner)
+						pin_owner.registered_account.adjust_money(payment_amount, "Firing Pin: Gun License Bought")
 					gun_owners += user
 					to_chat(user, span_notice("Gun license purchased, have a secure day!"))
 					active_prompt = FALSE

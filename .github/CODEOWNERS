@@ -172,8 +172,11 @@
 
 # ZephyrTFA
 
+/code/__HELPERS/admin_verb.dm @ZephyrTFA
+/code/controllers/subsystem/admin_verbs.dm @ZephyrTFA
 /code/datums/json_savefile.dm @ZephyrTFA
 /code/datums/armor/ @ZephyrTFA
+/code/modules/admin/verbs/ @ZephyrTFA
 
 # MULTIPLE OWNERS
 

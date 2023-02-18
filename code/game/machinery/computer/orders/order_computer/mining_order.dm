@@ -26,6 +26,7 @@
 		CATEGORY_TOYS_DRONE,
 		CATEGORY_PKA,
 	)
+	blackbox_key = "mining"
 
 /obj/machinery/computer/order_console/mining/purchase_items(obj/item/card/id/card, express = FALSE)
 	var/final_cost = get_total_cost()

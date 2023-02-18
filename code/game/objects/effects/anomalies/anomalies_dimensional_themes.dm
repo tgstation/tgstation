@@ -33,13 +33,6 @@
 		window_colour = using_mat.greyscale_colors
 
 /**
- * Returns a subtype of dimensional theme.
- */
-/datum/dimension_theme/proc/get_random_theme()
-	var/subtype = pick(subtypesof(/datum/dimension_theme))
-	return new subtype()
-
-/**
  * Applies themed transformation to the provided turf.
  *
  * Arguments
@@ -105,7 +98,7 @@
 /datum/dimension_theme/proc/transform_floor(turf/open/floor/affected_floor)
 	if (replace_floors.len == 0)
 		return FALSE
-	affected_floor.ChangeTurf(pick_weight(replace_floors), flags = CHANGETURF_INHERIT_AIR)
+	affected_floor.replace_floor(pick_weight(replace_floors), flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
 /**
@@ -191,6 +184,7 @@
 		if (!permit_replace_material(thing))
 			continue
 		thing.set_custom_materials(custom_materials)
+		thing.update_appearance(updates = UPDATE_ICON)
 
 #undef PERMITTED_MATERIAL_REPLACE_TYPES
 

@@ -158,7 +158,7 @@
 
 /obj/machinery/iv_drip/MouseDrop(atom/target)
 	. = ..()
-	if(!Adjacent(target) || !usr.canUseTopic(src, be_close = TRUE))
+	if(!Adjacent(target) || !usr.can_perform_action(src))
 		return
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
@@ -325,7 +325,7 @@
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
 		return
-	if (!usr.canUseTopic())
+	if(!usr.can_perform_action(src))
 		return
 	if(usr.incapacitated())
 		return
@@ -345,7 +345,7 @@
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
 		return
-	if (!usr.canUseTopic())
+	if(!usr.can_perform_action(src))
 		return
 	if(usr.incapacitated())
 		return

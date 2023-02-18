@@ -301,12 +301,15 @@
 			reflector_base.set_anchored(TRUE)
 			return TRUE
 		if(RCD_AIRLOCK)
-			for(var/obj/machinery/door/door in src)
-				if(door.sub_door)
-					continue
-				to_chat(user, span_notice("There is another door here!"))
-				return FALSE
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
+				if(!valid_window_location(src, user.dir, is_fulltile = FALSE))
+					balloon_alert(user, "there's already a windoor!")
+					return FALSE
+				for(var/obj/machinery/door/door in src)
+					if(istype(door, /obj/machinery/door/window))
+						continue
+					balloon_alert(user, "there's already a door!")
+					return FALSE
 				to_chat(user, span_notice("You build a windoor."))
 				var/obj/machinery/door/window/new_window = new the_rcd.airlock_type(src, user.dir, the_rcd.airlock_electronics?.unres_sides)
 				if(the_rcd.airlock_electronics)
@@ -318,7 +321,12 @@
 				new_window.autoclose = TRUE
 				new_window.update_appearance()
 				return TRUE
-			to_chat(user, span_notice("You build an airlock."))
+
+			for(var/obj/machinery/door/door in src)
+				if(door.sub_door)
+					continue
+				balloon_alert(user, "there's already a door!")
+				return FALSE
 			var/obj/machinery/door/airlock/new_airlock = new the_rcd.airlock_type(src)
 			new_airlock.electronics = new /obj/item/electronics/airlock(new_airlock)
 			if(the_rcd.airlock_electronics)
