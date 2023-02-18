@@ -147,7 +147,7 @@
 	. += span_notice("Alt-click to set your war cry.")
 
 /obj/item/spear/explosive/AltClick(mob/user)
-	if(user.canUseTopic(src, be_close = TRUE))
+	if(user.can_perform_action(src))
 		..()
 		if(istype(user) && loc == user)
 			var/input = tgui_input_text(user, "What do you want your war cry to be? You will shout it when you hit someone in melee.", "War Cry", max_length = 50)

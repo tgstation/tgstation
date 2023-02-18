@@ -38,8 +38,10 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	unique_name = 1
 	gold_core_spawnable = HOSTILE_SPAWN
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-	see_in_dark = NIGHTVISION_FOV_RANGE
+	// VERY red, to fit the eyes
+	lighting_cutoff_red = 22
+	lighting_cutoff_green = 5
+	lighting_cutoff_blue = 5
 	flammable = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider
 	/// Speed modifier to apply if controlled by a human player

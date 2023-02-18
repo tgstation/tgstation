@@ -43,7 +43,7 @@
 	addtimer(CALLBACK(src, PROC_REF(safe_print_report)), 10 SECONDS)
 
 /**
- * safe_print_repot - a wrapper proc for print_report
+ * safe_print_report - a wrapper proc for print_report
  *
  * Calls print_report(), and should a runtime occur within we can still reset the 'busy' state
  */
@@ -83,7 +83,7 @@
 	safe_scan(user, atom_to_scan = A)
 	return . | AFTERATTACK_PROCESSED_ITEM
 
-/** 
+/**
  * safe_scan - a wrapper proc for scan()
  *
  * calls scan(), and should a runtime occur within we can still reset the 'busy' state
@@ -96,7 +96,7 @@
 		balloon_alert(user, "scanner error!") // but in case it does, we 'error' instead of just bricking the scanner
 	scanner_busy = FALSE
 
-/** 
+/**
  * scan - scans an atom for forensic data and outputs it to the mob holding the scanner
  *
  * This should always return TRUE barring a runtime
@@ -107,7 +107,7 @@
 		return TRUE
 
 	scanner_busy = TRUE
-	
+
 
 	user.visible_message(
 		span_notice("\The [user] points the [src.name] at \the [scanned_atom] and performs a forensic scan."),
@@ -220,7 +220,7 @@
 
 /obj/item/detective_scanner/AltClick(mob/living/user)
 	// Best way for checking if a player can use while not incapacitated, etc
-	if(!user.canUseTopic(src, be_close=TRUE))
+	if(!user.can_perform_action(src))
 		return
 	if(!LAZYLEN(log))
 		balloon_alert(user, "no logs!")

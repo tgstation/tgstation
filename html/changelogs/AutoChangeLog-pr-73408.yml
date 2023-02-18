@@ -1,9 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - config: "Policy.json config got updated. The following values need to be updated:"
-  - config: "\"Obsession\" -> /datum/antagonist/obessed"
-  - config: "\"Heretic\" -> /datum/antagonist/heretic"
-  - config: "\"Headslug Changeling\" -> /datum/antagonist/changeling/headslug"
-  - config: "\"Pyroclastic Anomaly Slime\" -> /datum/antagonist/pyro_slime"
-  - config: "ALL antags in the policy.json file will now get notified of any existing policy set by the admin team, rather than only a handful."

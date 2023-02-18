@@ -162,7 +162,7 @@
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	if(has_cap && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
+	if(has_cap && user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		is_capped = !is_capped
 		to_chat(user, span_notice("The cap on [src] is now [is_capped ? "on" : "off"]."))
 		update_appearance()
