@@ -301,6 +301,7 @@
 	var/trash_type = /obj/item/trash/flare
 	/// If the light source can be extinguished
 	var/can_be_extinguished = FALSE
+	custom_materials = list(/datum/material/plastic=50)
 
 /obj/item/flashlight/flare/Initialize(mapload)
 	. = ..()
