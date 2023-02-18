@@ -116,7 +116,7 @@
 	if(!gibbed)
 		var/obj/item/food/deadmouse/mouse = new(loc)
 		mouse.name = name
-		mouse.icon_state = icon_dead
+		mouse.icon_state = "mouse_[body_color]_dead"
 		if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
 			mouse.desc = "They're toast."
 			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
