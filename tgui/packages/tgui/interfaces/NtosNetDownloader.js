@@ -8,6 +8,7 @@ import { NtosWindow } from '../layouts';
 export const NtosNetDownloader = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    PC_device_theme,
     disk_size,
     disk_used,
     downloadcompletion,
