@@ -35,8 +35,8 @@
 	///Played when someone punches the creature.
 	var/attacked_sound = SFX_PUNCH //This should be an element
 
-	///What kind of objects this mob can smash.
-	var/environment_smash = ENVIRONMENT_SMASH_NONE
+	/// Variable maintained for compatibility with attack_animal procs until simple animals can be refactored away. Use element instead of setting manually.
+	var/environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 
 	/// 1 for full damage, 0 for none, -1 for 1:1 heal from that source.
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -167,6 +167,10 @@
 		transform = transform.Turn(180)
 	if(!(basic_mob_flags & REMAIN_DENSE_WHILE_DEAD))
 		set_density(initial(density))
+
+/mob/living/basic/update_sight()
+	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
+	return ..()
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers)
 	face_atom(target)

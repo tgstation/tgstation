@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "It should be way harder to lose your special hands as a zombie or shattered risen ghoul."
-  - refactor: "Refactored mutanthands for zombies and shattered risen."

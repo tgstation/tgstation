@@ -1,5 +1,3 @@
-#define SPIDER_ATTACK_COOLDOWN (2 SECONDS)
-
 /// For now, essentially just a Simple Hostile but room for expansion
 /datum/ai_controller/basic_controller/giant_spider
 	blackboard = list(
@@ -12,11 +10,18 @@
 
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/giant_spider,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/giant_spider,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/insect, // Space spiders are taxonomically insects not arachnids, don't DM me
 	)
 
+/// Giant spider which won't attack structures
+/datum/ai_controller/basic_controller/giant_spider/weak
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/random_speech/insect,
+	)
 
 /// Used by Araneus, who only attacks those who attack first
 /datum/ai_controller/basic_controller/giant_spider/retaliate
@@ -26,21 +31,7 @@
 
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/giant_spider,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/giant_spider,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/insect,
 	)
-
-/datum/ai_planning_subtree/attack_obstacle_in_path/giant_spider
-	attack_behaviour = /datum/ai_behavior/attack_obstructions/giant_spider
-
-/datum/ai_behavior/attack_obstructions/giant_spider
-	action_cooldown = SPIDER_ATTACK_COOLDOWN
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/giant_spider
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/giant_spider
-
-/datum/ai_behavior/basic_melee_attack/giant_spider
-	action_cooldown = SPIDER_ATTACK_COOLDOWN
-
-#undef SPIDER_ATTACK_COOLDOWN

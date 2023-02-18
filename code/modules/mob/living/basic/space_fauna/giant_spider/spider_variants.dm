@@ -212,13 +212,13 @@
  */
 /mob/living/basic/giant_spider/hunter/scrawny
 	name = "scrawny spider"
-	environment_smash = ENVIRONMENT_SMASH_NONE
 	health = 60
 	maxHealth = 60
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes, and looks abnormally thin and frail."
 	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less damage than a normal hunter spider at the cost of a little more health."
+	ai_controller = /datum/ai_controller/basic_controller/giant_spider/weak
 
 /**
  * # Scrawny Tarantula
@@ -228,13 +228,13 @@
  */
 /mob/living/basic/giant_spider/tarantula/scrawny
 	name = "scrawny tarantula"
-	environment_smash = ENVIRONMENT_SMASH_NONE
 	health = 150
 	maxHealth = 150
 	melee_damage_lower = 20
 	melee_damage_upper = 25
 	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes, and looks abnormally thin and frail."
 	menu_description = "A weaker variant of the tarantula with reduced amount of health and damage, very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup."
+	ai_controller = /datum/ai_controller/basic_controller/giant_spider/weak
 
 /**
  * # Scrawny Nurse Spider
@@ -245,11 +245,11 @@
  */
 /mob/living/basic/giant_spider/nurse/scrawny
 	name = "scrawny nurse spider"
-	environment_smash = ENVIRONMENT_SMASH_NONE
 	health = 30
 	maxHealth = 30
 	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes, and looks abnormally thin and frail."
 	menu_description = "Weaker version of the nurse spider, specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage."
+	ai_controller = /datum/ai_controller/basic_controller/giant_spider/weak
 
 /**
  * # Flesh Spider

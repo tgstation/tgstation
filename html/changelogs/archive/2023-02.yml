@@ -605,3 +605,146 @@
   - bugfix: hotfix for lungless oxyloss immunity
   - bugfix: hotfix for mobs being able to circumvent reagent respiration_type requirements
       by removing their lungs
+2023-02-16:
+  Jacquerel:
+  - bugfix: Things dropped into a chasm should no longer occasionally become invisible
+      and intangible.
+  - bugfix: Bileworms which have been struck down but not butchered no longer return
+      in a more powerful form.
+  - bugfix: Mice and Regal Rats will no longer spawn in icebox's solar panels and
+      die of cold.
+  - bugfix: Medieval Sim holograms no longer spawn holding unusable laser rifles which
+      also block using their old timey weaponry.
+  Melbert:
+  - bugfix: It should be way harder to lose your special hands as a zombie or shattered
+      risen ghoul.
+  - refactor: Refactored mutanthands for zombies and shattered risen.
+  NamelessFairy:
+  - bugfix: Reinforced plasma windows will now drop plasma glass instead of regular
+      glass when broken.
+  - bugfix: Tram windows drop the correct number of rods and a shard when broken instead
+      of a sheet.
+  - code_imp: Removed a ton of duplicate vars in tram window code and re-organize
+      the file slightly.
+  - refactor: spawnDebris has been un-hardcoded and all (but one) override of it has
+      been removed.
+  Profakos:
+  - bugfix: eyesnatchers that say that they haven been used up can't be used again
+  ZephyrTFA:
+  - bugfix: You can no longer keep an AI trapped in their core by healing them with
+      a Rod of Asclepius
+2023-02-17:
+  Jacquerel:
+  - bugfix: The Fugu Gland can once more be used on Ian, Carp, Giant Spiders, or other
+      basic mobs.
+  - bugfix: Syndicate mobs will once again attack windows to try to reach you, and
+      space ruin spiders won't.
+  - bugfix: Netherworld-themed mobs will correctly adjust their speed as they take
+      damage.
+  - refactor: Made the Wumborian Fugu into a basic mob, which should act largely the
+      same way but may have slightly different speed and reaction times.
+  Kubisopplay:
+  - admin: Lowered the chance of accidentally leaking asay
+  LT3:
+  - bugfix: 'Tramstation: Added missing produce order console'
+  - bugfix: 'Tramstation: Removed duplicate vending machine in east wing'
+  - bugfix: 'Tramstation: HoP office can now broadcast announcements'
+  - code_imp: 'Tramstation: Moved information plate for symmetry'
+  - code_imp: 'Disease Outbreak: Disease max severity replaced with requested severity'
+  - code_imp: 'Disease Outbreak: Generated disease now includes symptom based name'
+  - code_imp: 'Disease Outbreak: Disease name is now included in the station announcement'
+  - code_imp: 'Disease Outbreak: Now in snake case'
+  - balance: 'Disease Outbreak: Tier 1 cures removed from pool'
+  - bugfix: 'Disease Outbreak: Dangerous/Biohazard diseases are now visible'
+  - bugfix: 'Disease Outbreak: Event setup generates the correct severity'
+  - bugfix: 'Disease Outbreak: Various potential symptoms were in the wrong symptom
+      pool'
+  MrStonedOne:
+  - config: Repeated configs in other files (from $include) will no longer trigger
+      a config error. Repeated configs in the same file still will.
+  - config: In all cases the new value will still be used
+  NamelessFairy:
+  - spellcheck: A grammatical error in strip text has been removed.
+  Profakos:
+  - bugfix: Health analyzers will properly report missing stomachs and tongues
+  - bugfix: Guillotines can be unanchored again
+  SuperSlayer0:
+  - rscadd: Added a traitor final objective to infect the station AI with a virus,
+      that turns it malf and fully loyal to the traitor
+  Time-Green:
+  - bugfix: fixes taking items from inventories glitching out in hyperspace
+  YehnBeep:
+  - server: Updated instructions on setting up a TGUI CDN, noting that TGUI via CDN
+      malfunctions in the event CORS headers are absent.
+  lizardqueenlexi:
+  - bugfix: Placed a missing mining order console on Tramstation.
+  - bugfix: Rearranged furniture in the Tramstation pharmacy to make the fridges accessible.
+  timothymtorres:
+  - bugfix: Fix icebox barsign spawning under windows for Icebox.
+  - bugfix: Fix kilo barsign to spawn directly on top of wall so people can see it
+      from both inside the bar and outside the main hallway.
+  - bugfix: Fix durand shield overlay to appear above the mech when facing south.  Also
+      fixed a lighting runtime when shield would turn on/off.
+  tralezab:
+  - refactor: Monkey AI descriptions of "primal eyes" no longer show if the monkey
+      is missing eyes.
+2023-02-18:
+  Chubbygummibear & JohnFulpWillard:
+  - rscadd: A ton of new NtOS themes, which are accessible by the new Themify application
+      that comes with all PCs.
+  - rscadd: Emagging a PC now defaults it to the Syndicate option (and adds it to
+      go back to it if you wish)
+  - rscadd: There's a new maintenance app that gives you rarer themes
+  - qol: The NtOS Main menu was moved around, added "header" applications that are
+      shown where the Flashlight is, such as your Theme manager and PDA messenger.
+  - code_imp: Made defines for device_themes
+  - code_imp: Added support for special app-side checks to download files
+  - code_imp: Removes the 'run_emag' proc, since apps can directly refer to the computer
+      to check for emag status instead.
+  - bugfix: Programs no longer download twice.
+  - rscdel: Removes the Chemistry computer disk as it was empty due to chemistry app's
+      removal
+  Jacquerel:
+  - bugfix: Cramped escape pod walls no longer appear to merge with those of the station,
+      which will be a big relief to the single occupant.
+  - bugfix: Lightgeists won't try to heal any damage which isn't burn or brute, because
+      they can't.
+  - bugfix: Lightgeists don't need to perform an action bar in order to heal someone,
+      which was added by mistake.
+  LT3:
+  - bugfix: Fixed broken icon path in TCG set
+  Melbert:
+  - bugfix: Transferring golem shells no longer make you a free man and also results
+      in infinite golem shells
+  - bugfix: Servant golems are considerably less free
+  - bugfix: Fixes some hard deletes related to mob minds being enslaved to other mobs
+  NamelessFairy:
+  - bugfix: Reinforced Plating baseturf helpers work and should now be bug free enough
+      to be used in maps.
+  - bugfix: On metastation the gravity generator foyer airlock access has been made
+      consistent with the rest of the engine room airlocks.
+  - bugfix: False walls will no longer tell you to wait until they've stopped moving
+      when you use an item on them.
+  Profakos:
+  - bugfix: emagged/delta pods properly fly to lavaland
+  - bugfix: Revelation once again wipes the stored files on the computer
+  Roryl-c:
+  - bugfix: fixed chat offsets with the RPG Titles event
+  SyncIt21:
+  - bugfix: rcd's not building plating underneath mobs & structures
+  - bugfix: wall girders not being completed by the rcd
+  - bugfix: unable to build windoors on the turf you are standing on
+  TheBoondock:
+  - bugfix: fixed weak dwarfs being too weak as to be unable to throw books
+  Time-Green:
+  - bugfix: falling off the shuttle wont trap you in a box anymore
+  timothymtorres:
+  - bugfix: Fix runtimes for IV drips, food processors, and gibber
+  - refactor: Refactored, improve, and rename canUseTopic to be can_perform_action
+      that now uses bitflags to determine if a mob can perform an action.
+  tralezab:
+  - refactor: Lizard related canned food now acts like canned food
+  - refactor: Refactors how nuclear activation disk works. Shouldn't notice a whole
+      lot but if you do, it might be because of this.
+  - admin: Disk now has an examine message for whether it's secure or not, to make
+      it less ambiguous for players.
