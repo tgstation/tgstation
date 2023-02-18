@@ -11,9 +11,6 @@ import { Box, Button, ColorBox, Divider, Dropdown, Flex, Input, LabeledList, Num
 import { ChatPageSettings } from '../chat';
 import { rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
-import { changeSettingsTab, updateSettings } from './actions';
-import { FONTS, SETTINGS_TABS } from './constants';
-import { selectActiveTab, selectSettings } from './selectors';
 import { changeSettingsTab, updateSettings, addHighlightSetting, removeHighlightSetting, updateHighlightSetting } from './actions';
 import { SETTINGS_TABS, FONTS, MAX_HIGHLIGHT_SETTINGS } from './constants';
 import { selectActiveTab, selectSettings, selectHighlightSettings, selectHighlightSettingById } from './selectors';
@@ -228,7 +225,7 @@ export const SettingUIConfig = (props, context) => {
       ))}
       <Divider />
     </Section>
-    
+
 const TextHighlightSetting = (props, context) => {
   const { id, ...rest } = props;
   const highlightSettingById = useSelector(context, selectHighlightSettingById);
