@@ -5,7 +5,6 @@
 	dna = null
 	faction = list(ROLE_ALIEN)
 	sight = SEE_MOBS
-	see_in_dark = 4
 	verb_say = "hisses"
 	initial_language_holder = /datum/language_holder/alien
 	bubble_icon = "alien"
@@ -39,7 +38,7 @@
 	internal_organs += new /obj/item/organ/internal/brain/alien
 	internal_organs += new /obj/item/organ/internal/alien/hivenode
 	internal_organs += new /obj/item/organ/internal/tongue/alien
-	internal_organs += new /obj/item/organ/internal/eyes/night_vision/alien
+	internal_organs += new /obj/item/organ/internal/eyes/alien
 	internal_organs += new /obj/item/organ/internal/liver/alien
 	internal_organs += new /obj/item/organ/internal/ears
 	..()

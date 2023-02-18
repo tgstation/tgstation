@@ -31,8 +31,8 @@
 	owner.special_role = job_rank
 	if(give_objectives)
 		forge_ai_objectives()
-
-	employer = pick(GLOB.ai_employers)
+	if(!employer)
+		employer = pick(GLOB.ai_employers)
 
 	malfunction_flavor = strings(MALFUNCTION_FLAVOR_FILE, employer)
 
@@ -262,5 +262,42 @@
 	malf_ai_icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return malf_ai_icon
+
+//Subtype of Malf AI datum, used for one of the traitor final objectives
+/datum/antagonist/malf_ai/infected
+	name = "Infected AI"
+	employer = "Infected AI"
+	///The player, to who is this AI slaved
+	var/datum/mind/boss
+
+/datum/antagonist/malf_ai/infected/New(give_objectives = TRUE, datum/mind/new_boss)
+	. = ..()
+	if(new_boss)
+		boss = new_boss
+
+/datum/antagonist/malf_ai/infected/forge_ai_objectives()
+	if(!boss)
+		return
+	var/datum/objective/protect/protection_objective = new
+	protection_objective.owner = owner
+	protection_objective.target = boss
+	protection_objective.update_explanation_text()
+	objectives += protection_objective
+
+/datum/antagonist/malf_ai/infected/add_law_zero()
+	if(!boss)
+		return
+	var/mob/living/silicon/ai/malf_ai = owner.current
+
+	malf_ai.laws = new /datum/ai_laws/syndicate_override
+
+	var/mob/living/boss_mob = boss.current
+
+	malf_ai.set_zeroth_law("Only [boss_mob.real_name] and people [boss_mob.p_they()] designate[boss_mob.p_s()] as being such are Syndicate Agents.")
+	malf_ai.set_syndie_radio()
+
+	to_chat(malf_ai, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
+
+	malf_ai.add_malf_picker()
 
 #undef PROB_SPECIAL

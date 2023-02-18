@@ -65,7 +65,7 @@
 /datum/crafting_recipe/food/lizard_escargot
 	name = "Desert snail cocleas"
 	reqs = list(
-		/obj/item/food/desert_snails = 1,
+		/obj/item/food/canned/desert_snails = 1,
 		/obj/item/food/grown/garlic = 1,
 		/datum/reagent/consumable/lemonjuice = 3,
 		/datum/reagent/consumable/blackpepper = 2,
@@ -129,7 +129,7 @@
 /datum/crafting_recipe/food/nectar_larvae
 	name = "Nectar larvae"
 	reqs = list(
-		/obj/item/food/larvae = 1,
+		/obj/item/food/canned/larvae = 1,
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/grown/chili = 1,
 		/datum/reagent/consumable/korta_nectar = 5
@@ -185,7 +185,7 @@
 /datum/crafting_recipe/food/snail_nizaya
 	name = "Desert snail nizaya"
 	reqs = list(
-		/obj/item/food/desert_snails = 1,
+		/obj/item/food/canned/desert_snails = 1,
 		/obj/item/food/spaghetti/nizaya = 1,
 		/obj/item/food/grown/garlic = 1,
 		/datum/reagent/consumable/ethanol/wine = 5
@@ -275,8 +275,8 @@
 	name = "Stinging flatbread"
 	reqs = list(
 		/obj/item/food/root_flatbread = 1,
-		/obj/item/food/larvae = 1,
-		/obj/item/food/canned_jellyfish = 1
+		/obj/item/food/canned/larvae = 1,
+		/obj/item/food/canned/jellyfish = 1
 	)
 	result = /obj/item/food/pizza/flatbread/stinging
 	category = CAT_LIZARD
@@ -389,7 +389,7 @@
 	name = "Jellyfish stew"
 	reqs = list(
 		/obj/item/reagent_containers/cup/bowl = 1,
-		/obj/item/food/canned_jellyfish = 1,
+		/obj/item/food/canned/jellyfish = 1,
 		/obj/item/food/grown/soybeans = 1,
 		/obj/item/food/grown/redbeet = 1,
 		/obj/item/food/grown/potato = 1

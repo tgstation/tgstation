@@ -31,7 +31,10 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	faction = list("spooky")
 	del_on_death = 1
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Redish ethereal glow. These lads live on the cult ship
+	lighting_cutoff_red = 40
+	lighting_cutoff_green = 20
+	lighting_cutoff_blue = 30
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 
 /mob/living/simple_animal/hostile/eyeball/Initialize(mapload)

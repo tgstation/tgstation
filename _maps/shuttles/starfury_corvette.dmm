@@ -195,7 +195,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
 "ay" = (
-/obj/machinery/computer/secure_data/syndie{
+/obj/machinery/computer/records/security/syndie{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/red/line,

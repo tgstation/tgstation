@@ -22,6 +22,9 @@
 	var/input_text = "Unset Text"
 	/// If set, picking this will be the same as running the event without admin setup.
 	var/normal_run_option
+	/// if you want a special button, this will add it. Remember to actually handle that case for chosen in `apply_to_event`
+	/// Example is in scrubber_overflow.dm
+	var/special_run_option
 	/// Picked list option to be applied.
 	var/chosen
 
@@ -31,6 +34,8 @@
 
 /datum/event_admin_setup/listed_options/prompt_admins()
 	var/list/options = get_list()
+	if(special_run_option)
+		options.Insert(1, special_run_option)
 	if(normal_run_option)
 		options.Insert(1, normal_run_option)
 	chosen = tgui_input_list(usr, input_text, event_control.name, options)

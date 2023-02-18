@@ -1,0 +1,151 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/template_noop)
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/shaker,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/vending_refill/boozeomat,
+/obj/item/vending_refill/boozeomat{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/effect/spawner/random/food_or_drink/cups,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"o" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Bar Storage Maintenance Hatch"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/beerkeg,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"s" = (
+/turf/template_noop,
+/area/template_noop)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood,
+/obj/machinery/light/small/directional/north,
+/obj/item/storage/box/beanbag,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/rag{
+	pixel_y = 13;
+	pixel_x = -7
+	},
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_random_offset = 1
+	},
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_random_offset = 1
+	},
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_random_offset = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"Z" = (
+/turf/closed/wall,
+/area/station/maintenance/department/cargo)
+
+(1,1,1) = {"
+s
+s
+s
+s
+s
+s
+s
+s
+s
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+Z
+Z
+q
+q
+s
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+Z
+K
+q
+q
+o
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+Z
+w
+q
+q
+s
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+Z
+c
+q
+q
+s
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+Z
+Z
+p
+m
+s
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+Z
+Z
+Z
+s
+"}
