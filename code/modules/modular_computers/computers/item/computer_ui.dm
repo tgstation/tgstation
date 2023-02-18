@@ -70,7 +70,7 @@
 		data["removable_media"] += "intelliCard"
 
 	data["programs"] = list()
-	for(var/datum/computer_file/program/program as anything in stored_files)
+	for(var/datum/computer_file/program/program in stored_files)
 		data["programs"] += list(list(
 			"name" = program.filename,
 			"desc" = program.filedesc,
