@@ -163,4 +163,4 @@
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/organ/internal/cyberimp/arm/muscle = 2)
 	crate_name = "arm empower implant crate"
-	acess = null
+	acess_view = null
