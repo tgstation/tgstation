@@ -7,9 +7,7 @@
  * @license MIT
  */
 
-import { storage } from "./storage";
-
-
+import { storage } from './storage';
 
 // This key is important as a configurable setting.
 // This key is recommended to be different up to each codebase
@@ -50,17 +48,18 @@ export const PREF_KEYS = [
   },
 ];
 
-
 // -------------------------------------------------------------------------
 // These are NOT configurable.
 export const get_pref_addition_key = () => {
-  const thing = '-cfg-'+PREF_ADDITION_KEY;
+  const thing = '-cfg-' + PREF_ADDITION_KEY;
   return thing;
 };
 
 export const get_config_key = () => {
   let thing = sessionStorage.getItem(get_pref_addition_key());
-  if (thing === undefined) { return ''; }
+  if (thing === undefined) {
+    return '';
+  }
   return thing;
 };
 
@@ -71,6 +70,8 @@ export const set_config_key = (value) => {
 
 export const init_config_key = async () => {
   let thing = await storage.get_config_key();
-  if (thing === undefined) { thing = ''; }
+  if (thing === undefined) {
+    thing = '';
+  }
   sessionStorage.setItem(get_pref_addition_key(), thing);
 };
