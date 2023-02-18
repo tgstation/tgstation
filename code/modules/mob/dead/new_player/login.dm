@@ -3,8 +3,12 @@
 		return
 
 	if(CONFIG_GET(flag/use_exp_tracking))
-		client.set_exp_from_db()
-		client.set_db_player_flags()
+		client?.set_exp_from_db()
+		client?.set_db_player_flags()
+		if(!client)
+			// client disconnected during one of the db queries
+			return FALSE
+
 	if(!mind)
 		mind = new /datum/mind(key)
 		mind.active = TRUE
@@ -38,6 +42,8 @@
 
 	var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/lobby)
 	asset_datum.send(client)
+	if(!client) // client disconnected during asset transit
+		return FALSE
 
 	// The parent call for Login() may do a bunch of stuff, like add verbs.
 	// Delaying the register_for_interview until the very end makes sure it can clean everything up

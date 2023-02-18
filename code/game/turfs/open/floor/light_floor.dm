@@ -25,7 +25,7 @@
 	///used for light floors that cycle colours
 	var/cycle = FALSE
 
-/turf/open/floor/light/setup_broken_states()
+/turf/open/floor/light/broken_states()
 	return list("light_broken")
 
 /turf/open/floor/light/examine(mob/user)

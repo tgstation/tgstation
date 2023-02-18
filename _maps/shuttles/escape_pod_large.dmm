@@ -3,9 +3,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/item/storage/pod{
-	pixel_x = -24
-	},
+/obj/item/storage/pod/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "r" = (

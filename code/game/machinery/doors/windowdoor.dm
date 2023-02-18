@@ -9,7 +9,7 @@
 	var/base_state = "left"
 	max_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ max_integrity at the bottom of this .dm file
 	integrity_failure = 0
-	armor = list(MELEE = 20, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 0, FIRE = 70, ACID = 100)
+	armor_type = /datum/armor/door_window
 	visible = FALSE
 	flags_1 = ON_BORDER_1
 	opacity = FALSE
@@ -24,6 +24,15 @@
 	var/rods = 2
 	var/cable = 1
 	var/list/debris = list()
+
+/datum/armor/door_window
+	melee = 20
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 10
+	fire = 70
+	acid = 100
 
 /obj/machinery/door/window/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
@@ -230,13 +239,6 @@
 	operating = FALSE
 	return 1
 
-///When the tram is in station, the doors are locked to engineering only.
-/obj/machinery/door/window/lock()
-	req_access = list("engineering")
-
-/obj/machinery/door/window/unlock()
-	req_access = null
-
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
@@ -277,8 +279,12 @@
 		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		sleep(0.6 SECONDS)
 		operating = FALSE
-		desc += "<BR>[span_warning("Its access panel is smoking slightly.")]"
 		open(2)
+
+/obj/machinery/door/window/examine(mob/user)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		. += span_warning("Its access panel is smoking slightly.")
 
 /obj/machinery/door/window/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -289,7 +295,7 @@
 		return
 	add_fingerprint(user)
 	tool.play_tool_sound(src)
-	panel_open = !panel_open
+	toggle_panel_open()
 	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance panel."))
 	return TRUE
 
@@ -355,8 +361,8 @@
 		return turn(dir,180) & unres_sides
 	return ..()
 
-/obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user)
-	if(!hasPower())
+/obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user, forced = FALSE)
+	if(!hasPower() || forced)
 		if(density)
 			open(2)
 		else

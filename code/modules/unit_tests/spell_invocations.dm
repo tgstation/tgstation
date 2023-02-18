@@ -14,13 +14,13 @@
 		switch(invoke_type)
 			if(INVOCATION_EMOTE)
 				if(isnull(initial(spell_type.invocation_self_message)))
-					Fail("Spell: [spell_name] ([spell_type]) set emote invocation type but did not set a self message.")
+					TEST_FAIL("Spell: [spell_name] ([spell_type]) set emote invocation type but did not set a self message.")
 				if(isnull(initial(spell_type.invocation)))
-					Fail("Spell: [spell_name] ([spell_type]) set emote invocation type but did not set an invocation message.")
+					TEST_FAIL("Spell: [spell_name] ([spell_type]) set emote invocation type but did not set an invocation message.")
 
 			if(INVOCATION_SHOUT, INVOCATION_WHISPER)
 				if(isnull(initial(spell_type.invocation)))
-					Fail("Spell: [spell_name] ([spell_type]) set a speaking invocation type but did not set an invocation message.")
+					TEST_FAIL("Spell: [spell_name] ([spell_type]) set a speaking invocation type but did not set an invocation message.")
 
 			// INVOCATION_NONE:
 			// It doesn't matter what they have set for invocation text. So not it's skipped.

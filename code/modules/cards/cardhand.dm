@@ -2,7 +2,7 @@
 	name = "hand of cards"
 	desc = "A number of cards not in a deck, customarily held in ones hand."
 	icon = 'icons/obj/toys/playing_cards.dmi'
-	icon_state = "none"
+	icon_state = "nothing"
 	w_class = WEIGHT_CLASS_TINY
 	worn_icon_state = "card"
 
@@ -44,7 +44,7 @@
 	return NONE
 
 /obj/item/toy/cards/cardhand/attack_self(mob/living/user)
-	if(!isliving(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE))
+	if(!isliving(user) || !user.can_perform_action(src, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH))
 		return
 
 	var/list/handradial = list()

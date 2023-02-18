@@ -6,7 +6,6 @@
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
 	initial_language_holder = /datum/language_holder/synthetic
-	see_in_dark = NIGHTVISION_FOV_RANGE
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
 	death_sound = 'sound/voice/borg_deathsound.ogg'
@@ -24,8 +23,8 @@
 
 	var/obj/item/radio/borg/radio = null  ///If this is a path, this gets created as an object in Initialize.
 
-	var/list/alarm_types_show = list(ALARM_ATMOS = 0, ALARM_FIRE = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
-	var/list/alarm_types_clear = list(ALARM_ATMOS = 0, ALARM_FIRE = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
+	var/list/alarm_types_show = list(ALARM_ATMOS = 0, ALARM_ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
+	var/list/alarm_types_clear = list(ALARM_ATMOS = 0, ALARM_ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
 
 	//These lists will contain each law that should be announced / set to yes in the state laws menu.
 	///List keeping track of which laws to announce
@@ -76,6 +75,7 @@
 	QDEL_NULL(builtInCamera)
 	laws?.owner = null //Laws will refuse to die otherwise.
 	QDEL_NULL(laws)
+	QDEL_NULL(modularInterface)
 	GLOB.silicon_mobs -= src
 	return ..()
 

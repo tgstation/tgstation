@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(throwing)
 	var/maxrange
 	///The speed of the projectile thrownthing being thrown.
 	var/speed
-	///If a mob is the one who has thrown the object, then it's moved here.
+	///If a mob is the one who has thrown the object, then it's moved here. This can be null and must be null checked before trying to use it.
 	var/mob/thrower
 	///A variable that helps in describing objects thrown at an angle, if it should be moved diagonally first or last.
 	var/diagonals_first
@@ -147,7 +147,7 @@ SUBSYSTEM_DEF(throwing)
 				continue
 			if(obstacle.pass_flags_self & LETPASSTHROW)
 				continue
-			if (obstacle == actual_target || (obstacle.density && !(obstacle.flags_1 & ON_BORDER_1)))
+			if (obstacle == actual_target || (obstacle.density && !(obstacle.flags_1 & ON_BORDER_1) && !(obstacle in AM.buckled_mobs)))
 				finalize(TRUE, obstacle)
 				return
 

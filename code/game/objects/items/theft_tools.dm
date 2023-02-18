@@ -300,8 +300,12 @@
 	. = ..()
 	if(!sliver)
 		return
-	if(proximity && ismovable(O) && O != sliver)
+	if (!proximity)
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
+	if(ismovable(O) && O != sliver)
 		Consume(O, user)
+	return .
 
 /obj/item/hemostat/supermatter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum) // no instakill supermatter javelins
 	if(sliver)

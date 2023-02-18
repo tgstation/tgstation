@@ -45,8 +45,9 @@ GLOBAL_VAR(command_name)
 
 	return GLOB.station_name
 
-/proc/set_station_name(newname)
-	GLOB.station_name = newname
+/proc/set_station_name(new_name)
+	var/old_name = GLOB.station_name
+	GLOB.station_name = new_name
 
 	var/config_server_name = CONFIG_GET(string/servername)
 	if(config_server_name)
@@ -54,6 +55,7 @@ GLOBAL_VAR(command_name)
 	else
 		world.name = html_decode(GLOB.station_name)
 
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_STATION_NAME_CHANGED, new_name, old_name)
 
 /proc/new_station_name()
 	var/random = rand(1,5)
@@ -176,23 +178,23 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 	var/locations = strings(LOCATIONS_FILE, "locations")
 
 	var/list/names = list()
-	for(var/datum/data/record/t in GLOB.data_core.general)//Picks from crew manifest.
-		names += t.fields["name"]
+	for(var/datum/record/crew/target in GLOB.manifest.general)//Picks from crew manifest.
+		names += target.name
 
 	var/maxwords = words//Extra var to check for duplicates.
 
 	for(words,words>0,words--)//Randomly picks from one of the choices below.
 
-		if(words==1&&(1 in safety)&&(2 in safety))//If there is only one word remaining and choice 1 or 2 have not been selected.
+		if(words == 1 && (1 in safety) && (2 in safety))//If there is only one word remaining and choice 1 or 2 have not been selected.
 			safety = list(pick(1,2))//Select choice 1 or 2.
-		else if(words==1&&maxwords==2)//Else if there is only one word remaining (and there were two originally), and 1 or 2 were chosen,
+		else if(words == 1 && maxwords == 2)//Else if there is only one word remaining (and there were two originally), and 1 or 2 were chosen,
 			safety = list(3)//Default to list 3
 
 		switch(pick(safety))//Chance based on the safety list.
 			if(1)//1 and 2 can only be selected once each to prevent more than two specific names/places/etc.
 				switch(rand(1,2))//Mainly to add more options later.
 					if(1)
-						if(names.len&&prob(70))
+						if(names.len && prob(70))
 							. += pick(names)
 						else
 							if(prob(10))
@@ -230,7 +232,7 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 					if(4)
 						. += lowertext(pick(threats))
 		if(!return_list)
-			if(words==1)
+			if(words == 1)
 				. += "."
 			else
 				. += ", "

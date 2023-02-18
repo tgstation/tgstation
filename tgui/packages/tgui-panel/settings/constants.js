@@ -9,6 +9,11 @@ export const SETTINGS_TABS = [
     id: 'general',
     name: 'General',
   },
+
+  {
+    id: 'textHighlight',
+    name: 'Text Highlights',
+  },
   {
     id: 'uiconfig',
     name: 'UI Config',
@@ -34,3 +39,5 @@ export const FONTS = [
   'Courier New',
   'Lucida Console',
 ];
+
+export const MAX_HIGHLIGHT_SETTINGS = 10;

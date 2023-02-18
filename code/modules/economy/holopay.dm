@@ -5,7 +5,7 @@
 	icon_state = "card_scanner"
 	alpha = 150
 	anchored = TRUE
-	armor = list(MELEE = 0, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 0, BIO = 0, FIRE = 20, ACID = 20)
+	armor_type = /datum/armor/structure_holopay
 	max_integrity = 15
 	layer = FLY_LAYER
 	/// ID linked to the holopay
@@ -16,6 +16,13 @@
 	var/shop_logo = "donate"
 	/// Replaces the "pay whatever" functionality with a set amount when non-zero.
 	var/force_fee = 0
+
+/datum/armor/structure_holopay
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
 
 /obj/structure/holopay/examine(mob/user)
 	. = ..()
@@ -90,7 +97,7 @@
 		/// Exit sanity checks
 		if(!cash_deposit)
 			return TRUE
-		if(QDELETED(held_item) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+		if(QDELETED(held_item) || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 			return FALSE
 		if(!chip.spend(cash_deposit, FALSE))
 			balloon_alert(user, "insufficient credits")
@@ -260,7 +267,7 @@
 	/// If the user has enough money, ask them the amount or charge the force fee
 	var/amount = force_fee || tgui_input_number(user, "How much? (Max: [payee.account_balance])", "Patronage", max_value = payee.account_balance)
 	/// Exit checks in case the user cancelled or entered an invalid amount
-	if(!amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return FALSE
 	if(!payee.adjust_money(-amount, "Holopay: [capitalize(name)]"))
 		balloon_alert(user, "insufficient credits")

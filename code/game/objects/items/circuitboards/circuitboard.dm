@@ -25,7 +25,8 @@
 /obj/item/circuitboard/Initialize(mapload)
 	if(name_extension)
 		name = "[initial(name)] [name_extension]"
-	set_greyscale(new_config = /datum/greyscale_config/circuit)
+	if(icon_state == "circuit_map") // some circuitboards have cool custom sprites
+		set_greyscale(new_config = /datum/greyscale_config/circuit)
 	return ..()
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/machine)
@@ -92,12 +93,12 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			comp_path = def_components[comp_path]
 
 		if(ispath(comp_path, /obj/item/stack))
-			machine.component_parts += new comp_path(machine, comp_amt)
+			continue
 		else if (ispath(comp_path, /datum/stock_part))
+			var/stock_part_datum = GLOB.stock_part_datums[comp_path]
+			if (isnull(stock_part_datum))
+				CRASH("[comp_path] didn't have a matching stock part datum")
 			for (var/_ in 1 to comp_amt)
-				var/stock_part_datum = GLOB.stock_part_datums[comp_path]
-				if (isnull(stock_part_datum))
-					CRASH("[comp_path] didn't have a matching stock part datum")
 				machine.component_parts += stock_part_datum
 		else
 			for(var/component in 1 to comp_amt)
@@ -125,21 +126,19 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 				component_name = initial(stack_path.singular_name) //e.g. "glass sheet" vs. "glass"
 		else if(ispath(component_path, /obj/item/stock_parts) && !specific_parts)
 			var/obj/item/stock_parts/stock_part = component_path
-			if(initial(stock_part.base_name))
-				component_name = initial(stock_part.base_name)
+			component_name = initial(stock_part.base_name) || initial(stock_part.name)
 		else if(ispath(component_path, /obj/item/stock_parts))
 			var/obj/item/stock_parts/stock_part = component_path
-			if(initial(stock_part.name))
-				component_name = initial(stock_part.name)
+			component_name = initial(stock_part.name)
 		else if(ispath(component_path, /datum/stock_part))
 			var/datum/stock_part/stock_part = component_path
-			var/obj/item/physical_object_type = initial(stock_part.physical_object_type)
-			if (initial(physical_object_type.name))
-				component_name = initial(physical_object_type.name)
+			var/obj/item/stock_parts/physical_object_type = initial(stock_part.physical_object_type)
+			component_name = initial(physical_object_type.base_name) || initial(physical_object_type.name)
 		else if(ispath(component_path, /atom))
 			var/atom/stock_part = component_path
 			component_name = initial(stock_part.name)
-		else
+
+		if (isnull(component_name))
 			stack_trace("[component_path] was an invalid component")
 
 		nice_list += list("[component_amount] [component_name]\s")

@@ -8,6 +8,7 @@
 	school = SCHOOL_CONJURATION
 	cooldown_time = 12 SECONDS
 	cooldown_reduction_per_rank = 2.5 SECONDS
+	spell_requirements = NONE
 
 	invocation_type = INVOCATION_NONE
 
@@ -21,7 +22,6 @@
 
 	school = SCHOOL_HOLY
 	cooldown_time = 36 SECONDS
-	spell_requirements = NONE
 
 	smoke_type = /datum/effect_system/fluid_spread/smoke
 	smoke_amt = 2

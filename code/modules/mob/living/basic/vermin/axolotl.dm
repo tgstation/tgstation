@@ -34,20 +34,7 @@
 /mob/living/basic/axolotl/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-
-	var/list/habitable_atmos = string_assoc_list(list(
-		"min_oxy" = 5,
-		"max_oxy" = 0,
-		"min_plas" = 0,
-		"max_plas" = 1,
-		"min_co2" = 0,
-		"max_co2" = 5,
-		"min_n2" = 0,
-		"max_n2" = 0,
-	))
-
-	AddElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage = 1)
-	AddElement(/datum/element/basic_body_temp_sensitive)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_AXOLOTL, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /datum/ai_controller/basic_controller/axolotl
 	ai_traits = STOP_MOVING_WHEN_PULLED

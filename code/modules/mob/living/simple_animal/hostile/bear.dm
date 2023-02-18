@@ -14,7 +14,6 @@
 	speak_chance = 1
 	taunt_chance = 25
 	turns_per_move = 5
-	see_in_dark = 6
 	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/clothing/head/costume/bearpelt = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -132,7 +131,7 @@
 	icon_living = "butterbear"
 	icon_dead = "butterbear_dead"
 	desc = "I can't believe its not a bear!"
-	faction = list("neutral", "russian")
+	faction = list(FACTION_NEUTRAL, "russian")
 	obj_damage = 11
 	melee_damage_lower = 0
 	melee_damage_upper = 0

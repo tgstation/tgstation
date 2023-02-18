@@ -2,7 +2,7 @@
 /obj/machinery/door
 	name = "door"
 	desc = "It opens and closes."
-	icon = 'icons/obj/doors/Doorint.dmi'
+	icon = 'icons/obj/doors/doorint.dmi'
 	icon_state = "door1"
 	base_icon_state = "door"
 	opacity = TRUE
@@ -12,7 +12,7 @@
 	power_channel = AREA_USAGE_ENVIRON
 	pass_flags_self = PASSDOORS
 	max_integrity = 350
-	armor = list(MELEE = 30, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 10, BIO = 0, FIRE = 80, ACID = 70)
+	armor_type = /datum/armor/machinery_door
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	flags_1 = PREVENT_CLICK_UNDER_1
 	receive_ricochet_chance_mod = 0.8
@@ -47,7 +47,17 @@
 	/// Whether or not this door can be opened through a door remote, ever
 	var/opens_with_door_remote = FALSE
 
+/datum/armor/machinery_door
+	melee = 30
+	bullet = 30
+	laser = 20
+	energy = 20
+	bomb = 10
+	fire = 80
+	acid = 70
+
 /obj/machinery/door/Initialize(mapload)
+	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	set_init_door_layer()
 	update_freelook_sight()
@@ -63,7 +73,7 @@
 
 	//doors only block while dense though so we have to use the proc
 	real_explosion_block = explosion_block
-	explosion_block = EXPLOSION_BLOCK_PROC
+	update_explosive_block()
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_security_level))
 
 	var/static/list/loc_connections = list(
@@ -474,9 +484,6 @@
 	//if it blows up a wall it should blow up a door
 	return ..(severity ? min(EXPLODE_DEVASTATE, severity + 1) : EXPLODE_NONE, target)
 
-/obj/machinery/door/GetExplosionBlock()
-	return density ? real_explosion_block : 0
-
 /obj/machinery/door/power_change()
 	. = ..()
 	if(. && !(machine_stat & NOPOWER))
@@ -491,5 +498,20 @@
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(open))
+
+/obj/machinery/door/set_density(new_value)
+	. = ..()
+	update_explosive_block()
+
+/obj/machinery/door/proc/update_explosive_block()
+	set_explosion_block(real_explosion_block)
+
+// Kinda roundabout, essentially if we're dense, we respect real_explosion_block
+// Otherwise, we block nothing
+/obj/machinery/door/set_explosion_block(explosion_block)
+	real_explosion_block = explosion_block
+	if(density)
+		return ..()
+	return ..(0)
 
 #undef DOOR_CLOSE_WAIT

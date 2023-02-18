@@ -1,6 +1,7 @@
 /datum/martial_art/boxing
 	name = "Boxing"
 	id = MARTIALART_BOXING
+	pacifist_style = TRUE
 
 /datum/martial_art/boxing/disarm_act(mob/living/A, mob/living/D)
 	to_chat(A, span_warning("Can't disarm while boxing!"))
@@ -46,8 +47,8 @@
 			D.visible_message(span_danger("[A] knocks [D] out with a haymaker!"), \
 							span_userdanger("You're knocked unconscious by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
 			to_chat(A, span_danger("You knock [D] out with a haymaker!"))
-			D.apply_effect(200,EFFECT_KNOCKDOWN,armor_block)
-			D.SetSleeping(100)
+			D.apply_effect(20 SECONDS,EFFECT_KNOCKDOWN,armor_block)
+			D.SetSleeping(10 SECONDS)
 			log_combat(A, D, "knocked out (boxing) ")
 	return TRUE
 

@@ -72,7 +72,7 @@
 "hj" = (
 /obj/structure/filingcabinet/chestdrawer/wheeled,
 /obj/item/storage/fancy/heart_box,
-/obj/item/food/tinychocolate,
+/obj/item/food/bonbon,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)
 "hk" = (

@@ -98,7 +98,7 @@
 		return
 
 	// Register some signals so our button's icon stays up to date
-	if(spell_requirements & SPELL_REQUIRES_OFF_CENTCOM)
+	if(spell_requirements & SPELL_REQUIRES_STATION)
 		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(update_status_on_signal))
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
 		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(update_status_on_signal))
@@ -150,7 +150,8 @@
 
 	// Certain spells are not allowed on the centcom zlevel
 	var/turf/caster_turf = get_turf(owner)
-	if((spell_requirements & SPELL_REQUIRES_OFF_CENTCOM) && is_centcom_level(caster_turf.z))
+	// Spells which require being on the station
+	if((spell_requirements & SPELL_REQUIRES_STATION) && !is_station_level(caster_turf.z))
 		if(feedback)
 			to_chat(owner, span_warning("You can't cast [src] here!"))
 		return FALSE
@@ -159,7 +160,7 @@
 		// No point in feedback here, as mindless mobs aren't players
 		return FALSE
 
-	if((spell_requirements & SPELL_REQUIRES_MIME_VOW) && !owner.mind?.miming)
+	if((spell_requirements & SPELL_REQUIRES_MIME_VOW) && !HAS_TRAIT(owner, TRAIT_MIMING))
 		// In the future this can be moved out of spell checks exactly
 		if(feedback)
 			to_chat(owner, span_warning("You must dedicate yourself to silence first!"))

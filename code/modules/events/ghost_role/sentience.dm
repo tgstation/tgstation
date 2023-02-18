@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/simple_animal/chicken,
 	/mob/living/basic/cow,
 	/mob/living/simple_animal/hostile/retaliate/bat,
-	/mob/living/simple_animal/hostile/carp/cayenne,
+	/mob/living/basic/carp/pet/cayenne,
 	/mob/living/simple_animal/butterfly,
 	/mob/living/simple_animal/hostile/retaliate/snake,
 	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
@@ -23,6 +23,8 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	weight = 10
 	category = EVENT_CATEGORY_FRIENDLY
 	description = "An animal or robot becomes sentient!"
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 7
 
 
 /datum/round_event/ghost_role/sentience

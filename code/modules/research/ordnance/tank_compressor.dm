@@ -51,10 +51,10 @@
 		var/obj/item/tank/tank_item = item
 		if(inserted_tank)
 			if(!eject_tank(user))
-				balloon_alert(user, span_warning("[inserted_tank] is stuck inside."))
+				balloon_alert(user, "it's stuck inside!")
 				return ..()
 		if(!user.transferItemToLoc(tank_item, src))
-			balloon_alert(user, span_warning("[tank_item] is stuck to your hand."))
+			balloon_alert(user, "it's stuck to your hand!")
 			return ..()
 		inserted_tank = tank_item
 		last_recorded_pressure = 0
@@ -67,7 +67,7 @@
 		if(user.transferItemToLoc(attacking_disk, src))
 			inserted_disk = attacking_disk
 		else
-			balloon_alert(user, span_warning("[attacking_disk] is stuck to your hand."))
+			balloon_alert(user, "it's stuck to your hand!")
 		return
 	return ..()
 

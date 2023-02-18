@@ -93,6 +93,6 @@
 	desc = "Pump your rush gland to give yourself a boost of speed. \
 		Impacts with objects can be dangerous under atmospheric pressure."
 	button_icon_state = "lobster_gland_stable"
-	cooldown_time = 3 MINUTES
+	cooldown_time = 90 SECONDS
 
 #undef HEALTH_DANGER_ZONE

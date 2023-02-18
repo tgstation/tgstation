@@ -122,7 +122,7 @@
 /datum/ai_behavior/leave_venue/setup(datum/ai_controller/controller, venue_key)
 	. = ..()
 	var/datum/venue/attending_venue = controller.blackboard[venue_key]
-	controller.set_movement_target(attending_venue.restaurant_portal)
+	set_movement_target(controller, attending_venue.restaurant_portal)
 
 /datum/ai_behavior/leave_venue/perform(delta_time, datum/ai_controller/controller, venue_key)
 	. = ..()

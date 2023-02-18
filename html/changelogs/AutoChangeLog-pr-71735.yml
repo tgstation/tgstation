@@ -1,5 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes:
-  - bugfix: "Door remotes now open windoors again."
-  - qol: "Door remotes now use balloon alerts for failures."

@@ -31,11 +31,14 @@
 			clear_alert(category)
 			return .()
 		else if(!severity || severity == thealert.severity)
-			if(thealert.timeout)
-				clear_alert(category)
-				return .()
-			else //no need to update
+			if(!thealert.timeout)
+				// No need to update existing alert
 				return thealert
+			// Reset timeout of existing alert
+			var/timeout = initial(thealert.timeout)
+			addtimer(CALLBACK(src, PROC_REF(alert_timeout), thealert, category), timeout)
+			thealert.timeout = world.time + timeout - world.tick_lag
+			return thealert
 	else
 		thealert = new type()
 		thealert.override_alerts = override
@@ -117,6 +120,13 @@
 
 
 //Gas alerts
+// Gas alerts are continuously thrown/cleared by:
+// * /obj/item/organ/internal/lungs/proc/check_breath()
+// * /mob/living/carbon/check_breath()
+// * /mob/living/carbon/human/check_breath()
+// * /datum/element/atmos_requirements/proc/on_non_stasis_life()
+// * /mob/living/simple_animal/handle_environment()
+
 /atom/movable/screen/alert/not_enough_oxy
 	name = "Choking (No O2)"
 	desc = "You're not getting enough oxygen. Find some good air before you pass out! The box in your backpack has an oxygen tank and breath mask in it."
@@ -220,12 +230,6 @@
 	desc = "The air around you is hazardously thick. A fire suit would protect you."
 	icon_state = "highpressure"
 
-/atom/movable/screen/alert/blind
-	name = "Blind"
-	desc = "You can't see! This may be caused by a genetic defect, eye trauma, being unconscious, \
-		or something covering your eyes."
-	icon_state = ALERT_BLIND
-
 /atom/movable/screen/alert/hypnosis
 	name = "Hypnosis"
 	desc = "Something's hypnotizing you, but you're not really sure about what."
@@ -302,6 +306,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "default"
 	var/mob/living/carbon/offerer
 	var/obj/item/receiving
+	/// Additional text displayed in the description of the alert.
+	var/additional_desc_text = "Click this alert to take it."
 
 /atom/movable/screen/alert/give/Destroy()
 	offerer = null
@@ -312,20 +318,41 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
  * Handles assigning most of the variables for the alert that pops up when an item is offered
  *
  * Handles setting the name, description and icon of the alert and tracking the person giving
- * and the item being offered, also registers a signal that removes the alert from anyone who moves away from the offerer
+ * and the item being offered.
  * Arguments:
  * * taker - The person receiving the alert
  * * offerer - The person giving the alert and item
  * * receiving - The item being given by the offerer
  */
 /atom/movable/screen/alert/give/proc/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
-	name = "[offerer] is offering [receiving]"
-	desc = "[offerer] is offering [receiving]. Click this alert to take it."
+	var/receiving_name = get_receiving_name(taker, offerer, receiving)
+	name = "[offerer] is offering [receiving_name]"
+	desc = "[offerer] is offering [receiving_name]. [additional_desc_text]"
 	icon_state = "template"
 	cut_overlays()
 	add_overlay(receiving)
 	src.receiving = receiving
 	src.offerer = offerer
+
+
+/**
+ * Called right before `setup()`, to do any sort of logic to change the name of
+ * what's displayed as the name of what's being offered in the alert. Use this to
+ * add pronouns and the like, or to totally override the displayed name!
+ * Also the best place to make changes to `additional_desc_text` before `setup()`
+ * without having to override `setup()` entirely.
+ *
+ * Arguments:
+ * * taker - The person receiving the alert
+ * * offerer - The person giving the alert and item
+ * * receiving - The item being given by the offerer
+ *
+ * Returns a string that will be displayed in the alert, which is `receiving.name`
+ * by default.
+ */
+/atom/movable/screen/alert/give/proc/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	return receiving.name
+
 
 /atom/movable/screen/alert/give/Click(location, control, params)
 	. = ..()
@@ -343,11 +370,19 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	taker.take(offerer, receiving)
 	SEND_SIGNAL(offerer, COMSIG_CARBON_ITEM_GIVEN, taker, receiving)
 
+
+/atom/movable/screen/alert/give/highfive
+	additional_desc_text = "Click this alert to slap it."
+
+
+/atom/movable/screen/alert/give/highfive/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	return "a high-five"
+
+
 /atom/movable/screen/alert/give/highfive/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
 	. = ..()
-	name = "[offerer] is offering a high-five!"
-	desc = "[offerer] is offering a high-five! Click this alert to slap it."
 	RegisterSignal(offerer, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(check_fake_out))
+
 
 /atom/movable/screen/alert/give/highfive/handle_transfer()
 	var/mob/living/carbon/taker = owner
@@ -390,6 +425,17 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 	if(!receiving)
 		examine_list += "[span_warning("[offerer]'s arm appears tensed up, as if [offerer.p_they()] plan on pulling it back suddenly...")]\n"
+
+
+/atom/movable/screen/alert/give/hand/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	additional_desc_text = "Click this alert to take it and let [offerer.p_them()] pull you around!"
+	return "[offerer.p_their()] [receiving.name]"
+
+
+/atom/movable/screen/alert/give/hand/helping/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	. = ..()
+	additional_desc_text = "Click this alert to let them help you up!"
+
 
 /atom/movable/screen/alert/give/secret_handshake
 	icon_state = "default"

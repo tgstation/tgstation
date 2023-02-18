@@ -66,11 +66,16 @@
 	///Multiplier for this light's base brightness in low power power mode
 	var/bulb_low_power_brightness_mul = 0.25
 	///Determines the colour of the light while it's in low power mode
-	var/bulb_low_power_colour = "#FF3232"
+	var/bulb_low_power_colour = COLOR_VIVID_RED
 	///The multiplier for determining the light's power in low power mode
 	var/bulb_low_power_pow_mul = 0.75
 	///The minimum value for the light's power in low power mode
 	var/bulb_low_power_pow_min = 0.5
+	///The Light range to use when working in fire alarm status
+	var/fire_brightness = 4
+	///The Light colour to use when working in fire alarm status
+	var/fire_colour = COLOR_FIRE_LIGHT_RED
+
 	///Power usage - W per unit of luminosity
 	var/power_consumption_rate = 20
 
@@ -90,6 +95,9 @@
 
 	if(!start_with_cell || no_low_power)
 		has_mock_cell = FALSE
+
+	if(is_station_level(z))
+		RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE_LIGHT, PROC_REF(grey_tide)) //Only put the signal on station lights
 
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -149,7 +157,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/area/our_area =get_room_area(src)
+	var/area/our_area = get_room_area(src)
 	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, PROC_REF(handle_fire))
 
 /obj/machinery/light/on_enter_area(datum/source, area/area_to_register)
@@ -181,7 +189,8 @@
 			START_PROCESSING(SSmachines, src)
 		var/area/local_area =get_room_area(src)
 		if (local_area?.fire)
-			color_set = bulb_low_power_colour
+			color_set = fire_colour
+			brightness_set = fire_brightness
 		else if (nightshift_enabled)
 			brightness_set = nightshift_brightness
 			power_set = nightshift_light_power
@@ -297,7 +306,7 @@
 	//Light replacer code
 	if(istype(tool, /obj/item/lightreplacer))
 		var/obj/item/lightreplacer/replacer = tool
-		replacer.ReplaceLight(src, user)
+		replacer.replace_light(src, user)
 		return
 
 	// attempt to insert light
@@ -641,11 +650,17 @@
 	tube?.burn()
 	return
 
+/obj/machinery/light/proc/grey_tide(datum/source, list/grey_tide_areas)
+	SIGNAL_HANDLER
 
-
+	for(var/area_type in grey_tide_areas)
+		if(!istype(get_area(src), area_type))
+			continue
+		INVOKE_ASYNC(src, PROC_REF(flicker))
 
 /obj/machinery/light/floor
 	name = "floor light"
+	desc = "A lightbulb you can walk on without breaking it, amazing."
 	icon = 'icons/obj/lighting.dmi'
 	base_state = "floor" // base description and icon_state
 	icon_state = "floor"
@@ -654,3 +669,4 @@
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"
+	fire_brightness = 2

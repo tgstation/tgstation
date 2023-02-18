@@ -1,5 +1,0 @@
-author: "ReinaCoder"
-delete-after: True
-changes:
-  - rscadd: "The Syndicate uplink revolver has been changed from the default .357 to the S-357. It has the same stats and price as the old version but with a new sprite."
-  - qol: "Adds a better explanation on the .357 uplink entry so players have an better understanding of what they are buying."

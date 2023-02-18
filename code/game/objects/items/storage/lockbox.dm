@@ -1,6 +1,7 @@
 /obj/item/storage/lockbox
 	name = "lockbox"
 	desc = "A locked box."
+	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "lockbox+l"
 	inhand_icon_state = "lockbox"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
@@ -52,11 +53,15 @@
 	if(!broken)
 		broken = TRUE
 		atom_storage.locked = FALSE
-		desc += "It appears to be broken."
 		icon_state = src.icon_broken
 		if(user)
 			visible_message(span_warning("\The [src] is broken by [user] with an electromagnetic card!"))
 			return
+
+/obj/item/storage/lockbox/examine(mob/user)
+	. = ..()
+	if(broken)
+		. += span_notice("It appears to be broken.")
 
 /obj/item/storage/lockbox/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
@@ -111,7 +116,7 @@
 		. += span_notice("Alt-click to [open ? "close":"open"] it.")
 
 /obj/item/storage/lockbox/medal/AltClick(mob/user)
-	if(user.canUseTopic(src, be_close = TRUE))
+	if(user.can_perform_action(src))
 		if(!atom_storage.locked)
 			open = (open ? FALSE : TRUE)
 			update_appearance()
@@ -213,7 +218,6 @@
 /obj/item/storage/lockbox/order
 	name = "order lockbox"
 	desc = "A box used to secure small cargo orders from being looted by those who didn't order it. Yeah, cargo tech, that means you."
-	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "secure"
 	icon_broken = "secure+b"
 	inhand_icon_state = "sec-case"

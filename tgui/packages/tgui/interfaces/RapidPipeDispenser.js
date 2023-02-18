@@ -1,5 +1,6 @@
 import { classes } from 'common/react';
 import { multiline } from 'common/string';
+import { capitalizeAll } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, ColorBox, LabeledList, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
@@ -15,6 +16,7 @@ export const ICON_BY_CATEGORY_NAME = {
   'Devices': 'microchip',
   'Heat Exchange': 'thermometer-half',
   'Station Equipment': 'microchip',
+  'Air Sensors': 'microchip',
 };
 
 const TOOLS = [
@@ -38,11 +40,13 @@ const TOOLS = [
 
 export const ColorItem = (props, context) => {
   const { act, data } = useBackend(context);
+  const { space } = props;
   const { selected_color } = data;
   return (
     <LabeledList.Item label="Color">
+      {space ? <span>&nbsp;</span> : ''}
       <Box inline width="64px" color={data.paint_colors[selected_color]}>
-        {selected_color}
+        {capitalizeAll(selected_color)}
       </Box>
       {Object.keys(data.paint_colors).map((colorName) => (
         <ColorBox
@@ -189,7 +193,7 @@ const LayerSection = (props, context) => {
 const PipeTypeSection = (props, context) => {
   const { act, data } = useBackend(context);
   const { categories = [] } = data;
-  const { selected_category } = data;
+  const { selected_category, selected_recipe } = data;
   const [categoryName, setCategoryName] = useLocalState(
     context,
     'categoryName',
@@ -217,7 +221,7 @@ const PipeTypeSection = (props, context) => {
           key={recipe.pipe_index}
           fluid
           ellipsis
-          checked={recipe.selected}
+          checked={recipe.pipe_name === selected_recipe}
           content={recipe.pipe_name}
           title={recipe.pipe_name}
           onClick={() =>
@@ -315,7 +319,7 @@ export const RapidPipeDispenser = (props, context) => {
   const { data } = useBackend(context);
   const { category: rootCategoryIndex } = data;
   return (
-    <Window width={450} height={575}>
+    <Window width={500} height={540}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>

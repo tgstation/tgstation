@@ -1,13 +1,13 @@
 import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
 import { useBackend, useSharedState } from '../backend';
-import { AnimatedNumber, Box, Button, Flex, Icon, Input, LabeledList, NoticeBox, Section, Stack, Table, Tabs } from '../components';
+import { AnimatedNumber, Box, Button, Flex, Icon, Input, RestrictedInput, LabeledList, NoticeBox, Section, Stack, Table, Tabs } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
 export const Cargo = (props, context) => {
   return (
-    <Window width={780} height={750}>
+    <Window width={800} height={750}>
       <Window.Content scrollable>
         <CargoContent />
       </Window.Content>
@@ -16,11 +16,10 @@ export const Cargo = (props, context) => {
 };
 
 export const CargoContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { data } = useBackend(context);
   const [tab, setTab] = useSharedState(context, 'tab', 'catalog');
-  const { requestonly } = data;
-  const cart = data.cart || [];
-  const requests = data.requests || [];
+  const { cart = [], requests = [], requestonly } = data;
+  const cart_length = cart.reduce((total, entry) => total + entry.amount, 0);
   return (
     <Box>
       <CargoStatus />
@@ -43,10 +42,10 @@ export const CargoContent = (props, context) => {
             <>
               <Tabs.Tab
                 icon="shopping-cart"
-                textColor={tab !== 'cart' && cart.length > 0 && 'yellow'}
+                textColor={tab !== 'cart' && cart_length > 0 && 'yellow'}
                 selected={tab === 'cart'}
                 onClick={() => setTab('cart')}>
-                Checkout ({cart.length})
+                Checkout ({cart_length})
               </Tabs.Tab>
               <Tabs.Tab
                 icon="question"
@@ -268,6 +267,7 @@ export const CargoCatalog = (props, context) => {
                       onClick={() =>
                         act('add', {
                           id: pack.id,
+                          amount: 1,
                         })
                       }>
                       {formatMoney(
@@ -359,9 +359,6 @@ const CargoCartButtons = (props, context) => {
   const { requestonly, can_send, can_approve_requests } = data;
   const cart = data.cart || [];
   const total = cart.reduce((total, entry) => total + entry.cost, 0);
-  if (requestonly || !can_send || !can_approve_requests) {
-    return null;
-  }
   return (
     <>
       <Box inline mx={1}>
@@ -370,13 +367,32 @@ const CargoCartButtons = (props, context) => {
         {cart.length >= 2 && cart.length + ' items'}{' '}
         {total > 0 && `(${formatMoney(total)} cr)`}
       </Box>
-      <Button
-        icon="times"
-        color="transparent"
-        content="Clear"
-        onClick={() => act('clear')}
-      />
+      {!requestonly && !!can_send && !!can_approve_requests && (
+        <Button
+          icon="times"
+          color="transparent"
+          content="Clear"
+          onClick={() => act('clear')}
+        />
+      )}
     </>
+  );
+};
+
+const CartHeader = (props, context) => {
+  const { data } = useBackend(context);
+  return (
+    <Section>
+      <Stack>
+        <Stack.Item mt="4px">Current-Cart</Stack.Item>
+        <Stack.Item ml="200px" mt="3px">
+          Quantity
+        </Stack.Item>
+        <Stack.Item ml="72px">
+          <CargoCartButtons />
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
 
@@ -385,42 +401,56 @@ const CargoCart = (props, context) => {
   const { requestonly, away, docked, location, can_send } = data;
   const cart = data.cart || [];
   return (
-    <Section title="Current Cart" buttons={<CargoCartButtons />}>
+    <Section fill>
+      <CartHeader />
       {cart.length === 0 && <Box color="label">Nothing in cart</Box>}
       {cart.length > 0 && (
         <Table>
           {cart.map((entry) => (
             <Table.Row key={entry.id} className="candystripe">
-              <Table.Cell collapsing color="label">
-                #{entry.id}
+              <Table.Cell collapsing color="label" inline width="210px">
+                #{entry.id}&nbsp;{entry.object}
               </Table.Cell>
-              <Table.Cell>{entry.object}</Table.Cell>
-              <Table.Cell collapsing>
-                {!!entry.paid && <b>[Paid Privately]</b>}
+              <Table.Cell inline ml="65px" width="40px">
+                {(can_send && entry.can_be_cancelled && (
+                  <RestrictedInput
+                    width="40px"
+                    minValue={0}
+                    maxValue={50}
+                    value={entry.amount}
+                    onEnter={(e, value) =>
+                      act('modify', {
+                        order_name: entry.object,
+                        amount: value,
+                      })
+                    }
+                  />
+                )) || <Input width="40px" value={entry.amount} disabled />}
               </Table.Cell>
-              {(entry.dep_order && (
-                <Table.Cell collapsing textAlign="right">
-                  {formatMoney(entry.cost)} cr earned on delivery
-                </Table.Cell>
-              )) || (
-                <>
-                  <Table.Cell collapsing textAlign="right">
-                    {formatMoney(entry.cost)} cr
-                  </Table.Cell>
-                  <Table.Cell collapsing>
-                    {can_send && (
-                      <Button
-                        icon="minus"
-                        onClick={() =>
-                          act('remove', {
-                            id: entry.id,
-                          })
-                        }
-                      />
-                    )}
-                  </Table.Cell>
-                </>
-              )}
+              <Table.Cell inline ml="5px" width="10px">
+                {!!can_send && !!entry.can_be_cancelled && (
+                  <Button
+                    icon="plus"
+                    onClick={() =>
+                      act('add_by_name', { order_name: entry.object })
+                    }
+                  />
+                )}
+              </Table.Cell>
+              <Table.Cell inline ml="15px" width="10px">
+                {!!can_send && !!entry.can_be_cancelled && (
+                  <Button
+                    icon="minus"
+                    onClick={() => act('remove', { order_name: entry.object })}
+                  />
+                )}
+              </Table.Cell>
+              <Table.Cell collapsing textAlign="right" inline ml="50px">
+                {entry.paid > 0 && <b>[Paid Privately x {entry.paid}]</b>}
+                {formatMoney(entry.cost)} {entry.cost_type}
+                {entry.dep_order > 0 && <b>[Department x {entry.dep_order}]</b>}
+              </Table.Cell>
+              <Table.Cell inline mt="20px" />
             </Table.Row>
           ))}
         </Table>

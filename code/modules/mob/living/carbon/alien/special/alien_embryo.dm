@@ -61,7 +61,8 @@
 /obj/item/organ/internal/body_egg/alien_embryo/proc/advance_embryo_stage()
 	if(stage >= 6)
 		return
-	if(++stage < 6)
+	stage++
+	if(stage < 6)
 		INVOKE_ASYNC(src, PROC_REF(RefreshInfectionImage))
 		var/slowdown = 1
 		if(ishuman(owner))

@@ -86,6 +86,7 @@
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
 	AddElement(/datum/element/content_barfer)
@@ -174,9 +175,12 @@
 	UnregisterSignal(small_sprite, COMSIG_ACTION_TRIGGER)
 
 /mob/living/simple_animal/hostile/space_dragon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+	var/was_dead = stat == DEAD
 	. = ..()
 	add_dragon_overlay()
-	RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, PROC_REF(add_dragon_overlay))
+
+	if (was_dead)
+		RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, PROC_REF(add_dragon_overlay))
 
 /**
  * Allows space dragon to choose its own name.
@@ -301,6 +305,8 @@
 	T.hotspot_expose(700,50,1)
 	for(var/mob/living/L in T.contents)
 		if(L in hit_list)
+			continue
+		if(L.mind?.has_antag_datum(/datum/antagonist/space_carp))
 			continue
 		hit_list += L
 		L.adjustFireLoss(30)

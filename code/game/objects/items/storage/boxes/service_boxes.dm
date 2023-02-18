@@ -114,13 +114,12 @@
 
 /obj/item/storage/box/lights
 	name = "box of replacement bulbs"
-	icon = 'icons/obj/storage/storage.dmi'
-	illustration = "light"
 	desc = "This box is shaped on the inside so that only light tubes and bulbs fit."
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
+	illustration = "light"
 
 /obj/item/storage/box/lights/Initialize(mapload)
 	. = ..()
@@ -174,7 +173,7 @@
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/wrench = 1,
-		)
+	)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/actionfigure
