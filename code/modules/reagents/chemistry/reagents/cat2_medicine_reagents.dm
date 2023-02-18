@@ -324,7 +324,7 @@
 		if(chemtemp < radbonustemp*0.1)
 			affected_mob.adjustToxLoss(-radcalc * 0.9, required_biotype = affected_biotype)
 		else if(chemtemp < radbonustemp)
-			affected_mob.adjustToxLoss(-radcalc * 0.75), required_biotype = affected_biotype)
+			affected_mob.adjustToxLoss(-radcalc * 0.75, required_biotype = affected_biotype)
 		healypoints += (radcalc / 5)
 
 	//you're yes and... oh no!
