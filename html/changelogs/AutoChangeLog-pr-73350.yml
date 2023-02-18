@@ -1,8 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - refactor: "Spider code has been refactored and AI-controlled spiders may have slightly different movement or reaction times."
-  - bugfix: "Basic mobs can now be slowed when they take stamina damage, however currently only spiders actually _can_ take stamina damage."
-  - bugfix: "Spiders should now more reliably disable their AI when controlled by a player."
-  - bugfix: "Araneus is no longer considered to be a bat and so cannot fly."
-  - bugfix: "Araneus is no longer considered to be a bat and so is no longer frightening to people who are scared of the supernatural."

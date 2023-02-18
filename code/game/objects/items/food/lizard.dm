@@ -805,6 +805,7 @@
 	tastes = list("slime" = 1, "burning" = 1, "salt" = 1)
 	foodtypes = SEAFOOD | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	preserved_food = TRUE
 
 /obj/item/food/desert_snails
 	name = "canned desert snails"
@@ -818,6 +819,7 @@
 	tastes = list("snails" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	preserved_food = TRUE
 
 /obj/item/food/larvae
 	name = "canned bee larva"
@@ -831,3 +833,4 @@
 	tastes = list("sweet bugs" = 1)
 	foodtypes = MEAT | GORE | BUGS
 	w_class = WEIGHT_CLASS_SMALL
+	preserved_food = TRUE

@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix durand shield overlay to appear above the mech when facing south.  Also fixed a lighting runtime when shield would turn on/off."

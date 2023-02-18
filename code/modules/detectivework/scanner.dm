@@ -43,7 +43,7 @@
 	addtimer(CALLBACK(src, PROC_REF(safe_print_report)), 10 SECONDS)
 
 /**
- * safe_print_repot - a wrapper proc for print_report
+ * safe_print_report - a wrapper proc for print_report
  *
  * Calls print_report(), and should a runtime occur within we can still reset the 'busy' state
  */
