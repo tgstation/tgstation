@@ -141,7 +141,7 @@
 
 /obj/item/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pen))
-		if(!user.canUseTopic(src, be_close = TRUE) || !user.can_write(I))
+		if(!user.can_perform_action(src) || !user.can_write(I))
 			return
 		if(user.is_blind())
 			to_chat(user, span_warning("As you are trying to write on the book, you suddenly feel very stupid!"))
@@ -153,12 +153,12 @@
 		var/choice = tgui_input_list(usr, "What would you like to change?", "Book Alteration", list("Title", "Contents", "Author", "Cancel"))
 		if(isnull(choice))
 			return
-		if(!user.canUseTopic(src, be_close = TRUE) || !user.can_write(I))
+		if(!user.can_perform_action(src) || !user.can_write(I))
 			return
 		switch(choice)
 			if("Title")
 				var/newtitle = reject_bad_text(tgui_input_text(user, "Write a new title", "Book Title", max_length = 30))
-				if(!user.canUseTopic(src, be_close = TRUE) || !user.can_write(I))
+				if(!user.can_perform_action(src) || !user.can_write(I))
 					return
 				if (length_char(newtitle) > 30)
 					to_chat(user, span_warning("That title won't fit on the cover!"))
@@ -170,7 +170,7 @@
 				book_data.set_title(html_decode(newtitle)) //Don't want to double encode here
 			if("Contents")
 				var/content = tgui_input_text(user, "Write your book's contents (HTML NOT allowed)", "Book Contents", multiline = TRUE)
-				if(!user.canUseTopic(src, be_close = TRUE) || !user.can_write(I))
+				if(!user.can_perform_action(src) || !user.can_write(I))
 					return
 				if(!content)
 					to_chat(user, span_warning("The content is invalid."))
@@ -178,7 +178,7 @@
 				book_data.set_content(html_decode(content))
 			if("Author")
 				var/author = tgui_input_text(user, "Write the author's name", "Author Name")
-				if(!user.canUseTopic(src, be_close = TRUE) || !user.can_write(I))
+				if(!user.can_perform_action(src) || !user.can_write(I))
 					return
 				if(!author)
 					to_chat(user, span_warning("The name is invalid."))

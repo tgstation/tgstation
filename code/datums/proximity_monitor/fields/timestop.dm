@@ -58,6 +58,7 @@
 	channelled = TRUE
 
 /datum/proximity_monitor/advanced/timestop
+	edge_is_a_field = TRUE
 	var/list/immune = list()
 	var/list/frozen_things = list()
 	var/list/frozen_mobs = list() //cached separately for processing
@@ -187,12 +188,11 @@
 		var/mob/living/m = i
 		m.Stun(20, ignore_canstun = TRUE)
 
-/datum/proximity_monitor/advanced/timestop/setup_field_turf(turf/T)
+/datum/proximity_monitor/advanced/timestop/setup_field_turf(turf/target)
 	. = ..()
-	for(var/i in T.contents)
+	for(var/i in target.contents)
 		freeze_atom(i)
-	freeze_turf(T)
-
+	freeze_turf(target)
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_projectile(obj/projectile/P)
 	P.paused = TRUE
@@ -204,7 +204,8 @@
 	frozen_mobs += L
 	L.Stun(20, ignore_canstun = TRUE)
 	ADD_TRAIT(L, TRAIT_MUTE, TIMESTOP_TRAIT)
-	SSmove_manager.stop_looping(src) //stops them mid pathing even if they're stunimmune //This is really dumb
+	ADD_TRAIT(L, TRAIT_EMOTEMUTE, TIMESTOP_TRAIT)
+	SSmove_manager.stop_looping(L) //stops them mid pathing even if they're stunimmune //This is really dumb
 	if(isanimal(L))
 		var/mob/living/simple_animal/S = L
 		S.toggle_ai(AI_OFF)
@@ -215,6 +216,7 @@
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/L)
 	L.AdjustStun(-20, ignore_canstun = TRUE)
 	REMOVE_TRAIT(L, TRAIT_MUTE, TIMESTOP_TRAIT)
+	REMOVE_TRAIT(L, TRAIT_EMOTEMUTE, TIMESTOP_TRAIT)
 	frozen_mobs -= L
 	if(isanimal(L))
 		var/mob/living/simple_animal/S = L

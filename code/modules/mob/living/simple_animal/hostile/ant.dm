@@ -11,7 +11,6 @@
 	emote_see = list("shakes their head.", "twitches their antennae.")
 	speak_chance = 1
 	turns_per_move = 5
-	see_in_dark = 6
 	gender = PLURAL // We are Ven-ant
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL

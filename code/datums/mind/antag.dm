@@ -211,7 +211,7 @@
 		add_antag_datum(N,converter.nuke_team)
 
 
-	enslaved_to = creator
+	enslaved_to = WEAKREF(creator)
 
 	current.faction |= creator.faction
 	creator.faction |= current.faction

@@ -21,7 +21,10 @@
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Green and blue, bit dim cause yaknow morphlike 
+	lighting_cutoff_red = 5
+	lighting_cutoff_green = 25
+	lighting_cutoff_blue = 15
 
 	ai_controller = /datum/ai_controller/basic_controller/creature
 	/// Used for checking if the mob is phased or not.
@@ -50,22 +53,22 @@
 /mob/living/basic/creature/proc/health_full_behaviour()
 	melee_damage_lower = 20
 	melee_damage_upper = 30
-	set_varspeed(2)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = 0)
 
 /mob/living/basic/creature/proc/health_high_behaviour()
 	melee_damage_lower = 25
 	melee_damage_upper = 40
-	set_varspeed(1.5)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = -0.5)
 
 /mob/living/basic/creature/proc/health_medium_behaviour()
 	melee_damage_lower = 30
 	melee_damage_upper = 50
-	set_varspeed(1)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = -1)
 
 /mob/living/basic/creature/proc/health_low_behaviour()
 	melee_damage_lower = 35
 	melee_damage_upper = 60
-	set_varspeed(0.5)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = -1.5)
 
 /mob/living/basic/creature/proc/can_be_seen(turf/location)
 	// Check for darkness

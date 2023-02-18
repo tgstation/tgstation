@@ -494,7 +494,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/giant_spider/hunter/scrawny,
+/mob/living/basic/giant_spider/hunter/scrawny,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
 "bd" = (
@@ -1026,7 +1026,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/giant_spider/tarantula/scrawny,
+/mob/living/basic/giant_spider/tarantula/scrawny,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
 "cg" = (
@@ -1609,7 +1609,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/giant_spider/nurse/scrawny,
+/mob/living/basic/giant_spider/nurse/scrawny,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/cargo)
 "dx" = (
@@ -1685,7 +1685,7 @@
 "dG" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/giant_spider/hunter/scrawny,
+/mob/living/basic/giant_spider/hunter/scrawny,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "dH" = (
