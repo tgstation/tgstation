@@ -125,6 +125,7 @@
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
 	color = "#0000C8"
 	taste_description = "blue"
+	creation_purity = REAGENT_STANDARD_PURITY
 	ph = 11
 	burning_temperature = 20 //cold burning
 	burning_volume = 0.1
@@ -132,10 +133,10 @@
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (affected_mob.bodytemperature ** 2) + 0.5)
-	if(affected_mob.bodytemperature >= T0C || !HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT))
+	if(affected_mob.bodytemperature >= T0C)
 		..()
 		return
-	var/power = -0.00003 * (affected_mob.bodytemperature ** 2) + 3
+	var/power = (-0.00004 * (affected_mob.bodytemperature ** 2) + 3) * normalise_creation_purity() * HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT) ? 1 : 0.75
 	affected_mob.adjustOxyLoss(-3 * power * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	affected_mob.adjustBruteLoss(-power * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustFireLoss(-power * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
