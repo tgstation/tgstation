@@ -156,15 +156,11 @@
 
 	organ_traits = list(TRAIT_ASHSTORM_IMMUNE)
 
-/// we dont have a beating and dead heart state so no need to update it
-/obj/item/organ/internal/heart/goliath/update_icon_state()
-	SHOULD_CALL_PARENT(FALSE)
-	return
-
 /obj/item/organ/internal/heart/goliath/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "skin has visible hard plates growing from within.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
+	AddElement(/datum/element/update_icon_blocker)
 
 #undef GOLIATH_ORGAN_COLOR
 #undef GOLIATH_SCLERA_COLOR
