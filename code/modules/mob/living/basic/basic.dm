@@ -170,7 +170,7 @@
 
 /mob/living/basic/update_sight()
 	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
-	. = ..()
+	return ..()
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers)
 	face_atom(target)

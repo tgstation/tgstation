@@ -192,20 +192,19 @@
 #define NIGHTVISION_LIGHT_HIG 3
 
 /obj/item/organ/internal/eyes/night_vision
+	actions_types = list(/datum/action/item_action/organ_action/use)
+
 	// These lists are used as the color cutoff for the eye
 	// They need to be filled out for subtypes
 	var/list/low_light_cutoff
 	var/list/medium_light_cutoff
 	var/list/high_light_cutoff
 	var/light_level = NIGHTVISION_LIGHT_OFF
-	actions_types = list(/datum/action/item_action/organ_action/use)
 
 /obj/item/organ/internal/eyes/night_vision/Initialize(mapload)
 	. = ..()
-	if (type != /obj/item/organ/internal/eyes/night_vision && PERFORM_ALL_TESTS(focus_only/nightvision_color_cutoffs))
-		if(length(low_light_cutoff) != 3 || \
-			length(medium_light_cutoff) != 3 || \
-			length(high_light_cutoff) != 3)
+	if (PERFORM_ALL_TESTS(focus_only/nightvision_color_cutoffs) && type != /obj/item/organ/internal/eyes/night_vision)
+		if(length(low_light_cutoff) != 3 || length(medium_light_cutoff) != 3 || length(high_light_cutoff) != 3)
 			stack_trace("[type] did not have fully filled out color cutoff lists")
 	if(low_light_cutoff)
 		color_cutoffs = low_light_cutoff.Copy()

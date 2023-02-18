@@ -21,10 +21,10 @@
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
-	// Real blue, trying to go for the migo's look
-	lighting_cutoff_red = 15
-	lighting_cutoff_green = 15
-	lighting_cutoff_blue = 50
+	// Green and blue, bit dim cause yaknow morphlike 
+	lighting_cutoff_red = 5
+	lighting_cutoff_green = 25
+	lighting_cutoff_blue = 15
 
 	ai_controller = /datum/ai_controller/basic_controller/creature
 	/// Used for checking if the mob is phased or not.
