@@ -13,10 +13,6 @@
  * Coffee condiments display
  */
 
-#define CONTAINER_CLOSED 0
-#define CONTAINER_OPEN 1
-#define CONTAINER_ALWAYS_OPEN 2
-
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
 	resistance_flags = FLAMMABLE
@@ -28,9 +24,9 @@
 	/// How many of the things to fill this storage with.
 	var/spawn_count = 0
 	/// Whether the container is open, always open, or closed
-	var/is_open = CONTAINER_CLOSED
+	var/open_status = FANCY_CONTAINER_CLOSED
 	/// What material do we get when we fold this box?
-	var/foldable = /obj/item/stack/sheet/cardboard
+	var/foldable_result = /obj/item/stack/sheet/cardboard
 	/// Whether it supports open and closed state icons.
 	var/has_open_closed_states = TRUE
 
@@ -47,12 +43,12 @@
 		new thing_in_box(src)
 
 /obj/item/storage/fancy/update_icon_state()
-	icon_state = "[base_icon_state][has_open_closed_states && is_open ? contents.len : null]"
+	icon_state = "[base_icon_state][has_open_closed_states && open_status ? contents.len : null]"
 	return ..()
 
 /obj/item/storage/fancy/examine(mob/user)
 	. = ..()
-	if(!is_open)
+	if(!open_status)
 		return
 	if(length(contents) == 1)
 		. += "There is one [contents_tag] left."
@@ -60,33 +56,33 @@
 		. += "There are [contents.len <= 0 ? "no" : "[contents.len]"] [contents_tag]s left."
 
 /obj/item/storage/fancy/attack_self(mob/user)
-	if(is_open == CONTAINER_CLOSED)
-		is_open = CONTAINER_OPEN
-	else if(is_open == CONTAINER_OPEN)
-		is_open = CONTAINER_CLOSED
+	if(open_status == FANCY_CONTAINER_CLOSED)
+		open_status = FANCY_CONTAINER_OPEN
+	else if(open_status == FANCY_CONTAINER_OPEN)
+		open_status = FANCY_CONTAINER_CLOSED
 
 	update_appearance()
 	. = ..()
 	if(contents.len)
 		return
-	if(!foldable || (flags_1 & HOLOGRAM_1))
+	if(!foldable_result || (flags_1 & HOLOGRAM_1))
 		return
-	var/obj/item/I = new foldable(user.drop_location())
+	var/obj/item/result = new foldable_result(user.drop_location())
 	balloon_alert(user, "folded")
 	// Gotta delete first, so then the cardboard appears in the same hand
 	qdel(src)
-	user.put_in_hands(I)
+	user.put_in_hands(result)
 
 /obj/item/storage/fancy/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(is_open == CONTAINER_CLOSED)
-		is_open = CONTAINER_OPEN
+	if(open_status == FANCY_CONTAINER_CLOSED)
+		open_status = FANCY_CONTAINER_OPEN
 	update_appearance()
 
 /obj/item/storage/fancy/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(is_open == CONTAINER_CLOSED)
-		is_open = CONTAINER_OPEN
+	if(open_status == FANCY_CONTAINER_CLOSED)
+		open_status = FANCY_CONTAINER_OPEN
 	update_appearance()
 
 #define DONUT_INBOX_SPRITE_WIDTH 3
@@ -103,7 +99,7 @@
 	base_icon_state = "donutbox"
 	spawn_type = /obj/item/food/donut/plain
 	spawn_count = 6
-	is_open = TRUE
+	open_status = TRUE
 	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
 	custom_premium_price = PAYCHECK_COMMAND * 1.75
 	contents_tag = "donut"
@@ -118,11 +114,11 @@
 
 /obj/item/storage/fancy/donut_box/update_icon_state()
 	. = ..()
-	icon_state = "[base_icon_state][is_open ? "_inner" : null]"
+	icon_state = "[base_icon_state][open_status ? "_inner" : null]"
 
 /obj/item/storage/fancy/donut_box/update_overlays()
 	. = ..()
-	if(!is_open)
+	if(!open_status)
 		return
 
 	var/donuts = 0
@@ -175,7 +171,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/flashlight/flare/candle
 	spawn_count = 5
-	is_open = CONTAINER_ALWAYS_OPEN
+	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	contents_tag = "candle"
 
 
@@ -265,7 +261,7 @@
 
 /obj/item/storage/fancy/cigarettes/update_overlays()
 	. = ..()
-	if(!is_open || !contents.len)
+	if(!open_status || !contents.len)
 		return
 
 	. += "[icon_state]_open"
@@ -431,7 +427,7 @@
 
 /obj/item/storage/fancy/cigarettes/cigars/update_overlays()
 	. = ..()
-	if(!is_open)
+	if(!open_status)
 		return
 	var/cigar_position = 1 //generate sprites for cigars in the box
 	for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
@@ -507,9 +503,9 @@
 	spawn_type = /obj/item/food/pickle
 	spawn_count = 10
 	contents_tag = "pickle"
-	foldable = null
+	foldable_result = null
 	custom_materials = list(/datum/material/glass = 2000)
-	is_open = CONTAINER_ALWAYS_OPEN
+	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
 
 /obj/item/storage/fancy/pickles_jar/Initialize(mapload)
@@ -538,8 +534,8 @@
 	desc = "A neat small wooden box, holding all your favorite coffee condiments."
 	contents_tag = "coffee condiment"
 	custom_materials = list(/datum/material/wood = 1000)
-	foldable = /obj/item/stack/sheet/mineral/wood
-	is_open = CONTAINER_ALWAYS_OPEN
+	foldable_result = /obj/item/stack/sheet/mineral/wood
+	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
 
 /obj/item/storage/fancy/coffee_condi_display/Initialize(mapload)
@@ -588,8 +584,3 @@
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/condiment/chocolate(src)
 	update_appearance()
-
-
-#undef CONTAINER_CLOSED
-#undef CONTAINER_OPEN
-#undef CONTAINER_ALWAYS_OPEN
