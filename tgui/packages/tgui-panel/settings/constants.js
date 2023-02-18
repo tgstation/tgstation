@@ -10,6 +10,10 @@ export const SETTINGS_TABS = [
     name: 'General',
   },
   {
+    id: 'uiconfig',
+    name: 'UI Config',
+  },
+  {
     id: 'chatPage',
     name: 'Chat Tabs',
   },

@@ -6,6 +6,8 @@
  * @license MIT
  */
 
+import { get_pref_addition_key } from './setting_config';
+
 export const IMPL_MEMORY = 0;
 export const IMPL_LOCAL_STORAGE = 1;
 export const IMPL_INDEXED_DB = 2;
@@ -46,19 +48,27 @@ class MemoryBackend {
   }
 
   get(key) {
-    return this.store[key];
+    return this.store[key+this.get_config_key()];
   }
 
   set(key, value) {
-    this.store[key] = value;
+    this.store[key+this.get_config_key()] = value;
   }
 
   remove(key) {
-    this.store[key] = undefined;
+    this.store[key+this.get_config_key()] = undefined;
   }
 
   clear() {
     this.store = {};
+  }
+
+  get_config_key() {
+    return this.store[get_pref_addition_key()];
+  }
+
+  set_config_key(value) {
+    this.store[get_pref_addition_key()] = value;
   }
 }
 
@@ -68,22 +78,35 @@ class LocalStorageBackend {
   }
 
   get(key) {
-    const value = localStorage.getItem(key);
+    const value = localStorage.getItem(key+this.get_config_key());
     if (typeof value === 'string') {
       return JSON.parse(value);
     }
   }
 
   set(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key+this.get_config_key(), JSON.stringify(value));
   }
 
   remove(key) {
-    localStorage.removeItem(key);
+    localStorage.removeItem(key+this.get_config_key());
   }
 
   clear() {
     localStorage.clear();
+  }
+
+  get_config_key() {
+    const value = localStorage.getItem(get_pref_addition_key());
+    if (value === null) {
+      return '';
+    } else if (typeof value === 'string') {
+      return JSON.parse(value);
+    }
+  }
+
+  set_config_key(value) {
+    localStorage.setItem(get_pref_addition_key(), JSON.stringify(value));
   }
 }
 
@@ -118,7 +141,7 @@ class IndexedDbBackend {
   async get(key) {
     const store = await this.getStore(READ_ONLY);
     return new Promise((resolve, reject) => {
-      const req = store.get(key);
+      const req = store.get(key+this.get_config_key());
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => reject(req.error);
     });
@@ -134,19 +157,36 @@ class IndexedDbBackend {
     }
     // NOTE: We deliberately make this operation transactionless
     const store = await this.getStore(READ_WRITE);
-    store.put(value, key);
+    store.put(value, key+this.get_config_key());
   }
 
   async remove(key) {
     // NOTE: We deliberately make this operation transactionless
     const store = await this.getStore(READ_WRITE);
-    store.delete(key);
+    store.delete(key+this.get_config_key());
   }
 
   async clear() {
     // NOTE: We deliberately make this operation transactionless
     const store = await this.getStore(READ_WRITE);
     store.clear();
+  }
+
+  async get_config_key() {
+    const store = await this.getStore(READ_ONLY);
+    return new Promise((resolve, reject) => {
+      const req = store.get(get_pref_addition_key());
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  async set_config_key(value) {
+    if (value === null) {
+      value = undefined;
+    }
+    const store = await this.getStore(READ_WRITE);
+    store.put(value, get_pref_addition_key());
   }
 }
 
@@ -189,6 +229,16 @@ class StorageProxy {
   async clear() {
     const backend = await this.backendPromise;
     return backend.clear();
+  }
+
+  async get_config_key() {
+    const backend = await this.backendPromise;
+    return backend.get_config_key();
+  }
+
+  async set_config_key(value) {
+    const backend = await this.backendPromise;
+    return backend.set_config_key(value);
   }
 }
 

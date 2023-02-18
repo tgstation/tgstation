@@ -14,6 +14,7 @@ import { THEMES } from '../themes';
 import { changeSettingsTab, updateSettings } from './actions';
 import { FONTS, SETTINGS_TABS } from './constants';
 import { selectActiveTab, selectSettings } from './selectors';
+import { PREF_KEYS, PREF_ADDITION_KEY, get_config_key, set_config_key } from 'common/setting_config';
 
 export const SettingsPanel = (props, context) => {
   const activeTab = useSelector(context, selectActiveTab);
@@ -42,6 +43,7 @@ export const SettingsPanel = (props, context) => {
       </Stack.Item>
       <Stack.Item grow={1} basis={0}>
         {activeTab === 'general' && <SettingsGeneral />}
+        {activeTab === 'uiconfig' && <SettingUIConfig />}
         {activeTab === 'chatPage' && <ChatPageSettings />}
       </Stack.Item>
     </Stack>
@@ -226,6 +228,32 @@ export const SettingsGeneral = (props, context) => {
       <Button icon="save" onClick={() => dispatch(saveChatToDisk())}>
         Save chat log
       </Button>
+    </Section>
+  );
+};
+
+export const SettingUIConfig = (props, context) => {
+  const dispatch = useDispatch(context);
+  return (
+    <Section>
+      <Flex bold>
+        Config Settings
+      </Flex>
+      <Divider />
+      The config key for this server is: {PREF_ADDITION_KEY}<br />
+      Enabling an option will change TGUI settings, and take some delay to refresh your TGUI.<br />
+      {PREF_KEYS.map(each => (
+        <Button.Checkbox
+          key={each.id}
+          checked={(each.value === get_config_key()) || (!each.value && !get_config_key())}
+          onClick={() => {
+            set_config_key(each.value);
+            location.reload();
+          }}>
+          {each.id}
+        </Button.Checkbox>
+      ))}
+      <Divider />
     </Section>
   );
 };

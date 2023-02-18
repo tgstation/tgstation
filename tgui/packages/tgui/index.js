@@ -52,6 +52,7 @@ const setupApp = () => {
   setupGlobalEvents();
   setupHotKeys();
   captureExternalLinks();
+  init_config_key();
 
   // Re-render UI on store updates
   store.subscribe(renderApp);
