@@ -333,6 +333,12 @@
 	credit_cost = CARGO_CRATE_VALUE * 4
 	description = "A train but in space, choo choo!"
 
+/datum/map_template/shuttle/emergency/birdshot
+	suffix = "birdshot"
+	name = "Birdshot Station Emergency Shuttle"
+	credit_cost = = CARGO_CRATE_VALUE * 2
+	description = "We pulled this one out of Mothball just for you!"
+
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
@@ -569,6 +575,10 @@
 	suffix = "pubby"
 	name = "supply shuttle (Pubby)"
 
+/datum/map_template/shuttle/cargo/birdshot
+	suffix = "birdshot"
+	name = "supply shuttle (Birdshot)"
+
 /datum/map_template/shuttle/emergency/delta
 	suffix = "delta"
 	name = "Delta Station Emergency Shuttle"
@@ -619,6 +629,10 @@
 /datum/map_template/shuttle/arrival/donut
 	suffix = "donut"
 	name = "arrival shuttle (Donut)"
+
+/datum/map_template/shuttle/arrival/birdshot
+	suffix = "birdshot"
+	name = "arrival shuttle (Birdshot)"
 
 /datum/map_template/shuttle/infiltrator/basic
 	suffix = "basic"
