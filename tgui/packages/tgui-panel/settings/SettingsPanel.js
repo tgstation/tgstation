@@ -206,16 +206,20 @@ export const SettingUIConfig = (props, context) => {
   const dispatch = useDispatch(context);
   return (
     <Section>
-      <Flex bold>
-        Config Settings
-      </Flex>
+      <Flex bold>Config Settings</Flex>
       <Divider />
-      The config key for this server is: {PREF_ADDITION_KEY}<br />
-      Enabling an option will change TGUI settings, and take some delay to refresh your TGUI.<br />
-      {PREF_KEYS.map(each => (
+      The config key for this server is: {PREF_ADDITION_KEY}
+      <br />
+      Enabling an option will change TGUI settings, and take some delay to
+      refresh your TGUI.
+      <br />
+      {PREF_KEYS.map((each) => (
         <Button.Checkbox
           key={each.id}
-          checked={(each.value === get_config_key()) || (!each.value && !get_config_key())}
+          checked={
+            each.value === get_config_key() ||
+            (!each.value && !get_config_key())
+          }
           onClick={() => {
             set_config_key(each.value);
             location.reload();

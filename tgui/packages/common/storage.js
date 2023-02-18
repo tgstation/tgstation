@@ -48,15 +48,15 @@ class MemoryBackend {
   }
 
   get(key) {
-    return this.store[key+this.get_config_key()];
+    return this.store[key + this.get_config_key()];
   }
 
   set(key, value) {
-    this.store[key+this.get_config_key()] = value;
+    this.store[key + this.get_config_key()] = value;
   }
 
   remove(key) {
-    this.store[key+this.get_config_key()] = undefined;
+    this.store[key + this.get_config_key()] = undefined;
   }
 
   clear() {
@@ -78,18 +78,18 @@ class LocalStorageBackend {
   }
 
   get(key) {
-    const value = localStorage.getItem(key+this.get_config_key());
+    const value = localStorage.getItem(key + this.get_config_key());
     if (typeof value === 'string') {
       return JSON.parse(value);
     }
   }
 
   set(key, value) {
-    localStorage.setItem(key+this.get_config_key(), JSON.stringify(value));
+    localStorage.setItem(key + this.get_config_key(), JSON.stringify(value));
   }
 
   remove(key) {
-    localStorage.removeItem(key+this.get_config_key());
+    localStorage.removeItem(key + this.get_config_key());
   }
 
   clear() {
@@ -141,7 +141,7 @@ class IndexedDbBackend {
   async get(key) {
     const store = await this.getStore(READ_ONLY);
     return new Promise((resolve, reject) => {
-      const req = store.get(key+this.get_config_key());
+      const req = store.get(key + this.get_config_key());
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => reject(req.error);
     });
@@ -157,13 +157,13 @@ class IndexedDbBackend {
     }
     // NOTE: We deliberately make this operation transactionless
     const store = await this.getStore(READ_WRITE);
-    store.put(value, key+this.get_config_key());
+    store.put(value, key + this.get_config_key());
   }
 
   async remove(key) {
     // NOTE: We deliberately make this operation transactionless
     const store = await this.getStore(READ_WRITE);
-    store.delete(key+this.get_config_key());
+    store.delete(key + this.get_config_key());
   }
 
   async clear() {
