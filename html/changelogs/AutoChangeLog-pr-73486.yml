@@ -1,0 +1,4 @@
+author: "ZephyrTFA"
+delete-after: True
+changes:
+  - bugfix: "Moth wings can now correctly be healed"
