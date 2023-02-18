@@ -336,7 +336,7 @@
 /datum/map_template/shuttle/emergency/birdshot
 	suffix = "birdshot"
 	name = "Birdshot Station Emergency Shuttle"
-	credit_cost = = CARGO_CRATE_VALUE * 2
+	credit_cost = CARGO_CRATE_VALUE * 2
 	description = "We pulled this one out of Mothball just for you!"
 
 /datum/map_template/shuttle/emergency/scrapheap
