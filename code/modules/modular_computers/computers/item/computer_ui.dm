@@ -50,7 +50,6 @@
 
 /obj/item/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
-	data["device_theme"] = device_theme
 
 	data["login"] = list(
 		IDName = saved_identification || "Unknown",
