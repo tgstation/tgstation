@@ -1352,7 +1352,6 @@
 		"ci-thermals",
 		"ci-thrusters",
 		"ci-xray",
-		"ci-muscle",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

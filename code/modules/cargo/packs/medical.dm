@@ -156,3 +156,11 @@
 	contains = list(/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck,
 					/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck/skirt,
 				)
+
+/datum/supply_pack/medical/arm_implants
+	name = "Arm Empower Implant Crate"
+	desc = "A crate containing two implants, which are used to empower physical strenght of human arms."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/organ/internal/cyberimp/arm/muscle = 2)
+	crate_name = "arm empower implant crate"
+	acess = null

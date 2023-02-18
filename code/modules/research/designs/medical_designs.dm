@@ -484,19 +484,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
-/datum/design/cyberimp_muscle
-	name = "Arm Empower Implant"
-	desc = "This implant will empover the muscle system of a human arm, increasing punch damage."
-	id = "ci-muscle"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	construction_time = 60
-	materials = list(/datum/material/iron = 1200, /datum/material/silver = 300)
-	build_path = /obj/item/organ/internal/cyberimp/arm/muscle
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
 /datum/design/cyberimp_nutriment
 	name = "Nutriment Pump Implant"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
