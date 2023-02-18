@@ -225,6 +225,8 @@ export const SettingUIConfig = (props, context) => {
       ))}
       <Divider />
     </Section>
+  );
+};
 
 const TextHighlightSetting = (props, context) => {
   const { id, ...rest } = props;
