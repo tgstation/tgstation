@@ -2,12 +2,12 @@
 	"version": 1,
 	"map_name": "Birdshot Station",
 	"map_path": "map_files/Birdshot",
-	"map_file": "godhasforsakenme.dmm",
+	"map_file": "birdshot.dmm",
 	"shuttles": {
-		"cargo": "cargo_box",
+		"cargo": "cargo_birdshot",
 		"ferry": "ferry_kilo",
-		"whiteship": "whiteship_meta",
-		"emergency": "emergency_meta"
+		"whiteship": "whiteship_birdshot",
+		"emergency": "emergency_birdshot"
 	},
 	"job_changes": {
 		"Cook": {
