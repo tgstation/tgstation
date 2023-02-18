@@ -206,9 +206,19 @@
 
 	///Icon state to be fed into the shielded component
 	var/team_shield_icon = "shield-old"
+	var/max_charges = 150
+	var/recharge_start_delay = 20 SECONDS
+	var/charge_increment_delay = 1 SECONDS
+	var/charge_recovery = 30
+	var/lose_multiple_charges = TRUE
+	var/show_charge_as_alpha = TRUE
 
-/obj/item/clothing/suit/armor/vest/ctf/setup_shielding()
-	AddComponent(/datum/component/shielded, max_charges = 150, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 30, lose_multiple_charges = TRUE, shield_icon = team_shield_icon)
+/obj/item/clothing/suit/armor/vest/ctf/equipped(mob/user, slot)
+	. = ..()
+	if(!slot || slot & ITEM_SLOT_HANDS)
+		return
+	AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
+	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, show_charge_as_alpha = show_charge_as_alpha, shield_icon = team_shield_icon)
 
 // LIGHT SHIELDED VEST
 
@@ -220,8 +230,7 @@
 	greyscale_config_worn = /datum/greyscale_config/ctf_light_worn
 	slowdown = -0.25
 
-/obj/item/clothing/suit/armor/vest/ctf/light/setup_shielding()
-	AddComponent(/datum/component/shielded, max_charges = 30, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 30, lose_multiple_charges = TRUE, shield_icon = team_shield_icon)
+	max_charges = 30
 
 // RED TEAM GUNS
 

@@ -421,9 +421,9 @@
 /obj/item/storage/box/tiziran_cans/PopulateContents()
 	for(var/i in 1 to 8)
 		var/random_food = pick_weight(list(
-			/obj/item/food/canned_jellyfish = 5,
-			/obj/item/food/desert_snails = 5,
-			/obj/item/food/larvae = 5,
+			/obj/item/food/canned/jellyfish = 5,
+			/obj/item/food/canned/desert_snails = 5,
+			/obj/item/food/canned/larvae = 5,
 			))
 		new random_food(src)
 

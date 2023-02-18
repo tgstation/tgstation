@@ -4,6 +4,7 @@
 	species_traits = list(
 		NO_DNA_COPY,
 		NOTRANSSTING,
+		NO_UNDERWEAR,
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,

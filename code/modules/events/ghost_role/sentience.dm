@@ -23,6 +23,8 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	weight = 10
 	category = EVENT_CATEGORY_FRIENDLY
 	description = "An animal or robot becomes sentient!"
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 7
 
 
 /datum/round_event/ghost_role/sentience

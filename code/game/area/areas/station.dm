@@ -1144,6 +1144,9 @@
 	icon_state = "courtroom"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
+/area/station/security/courtroom/holding
+	name = "\improper Courtroom Prisoner Holding Room"
+
 /area/station/security/prison
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
@@ -1472,6 +1475,20 @@
 	name = "\improper Abandoned Research Lab"
 	icon_state = "abandoned_sci"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/station/escapepodbay
+	name = "\improper Pod Bay"
+	icon_state = "podbay"
+
+/area/station/asteroid
+	name = "\improper Station Asteroid"
+	icon_state = "station_asteroid"
+	always_unpowered = TRUE
+	power_environ = FALSE
+	power_equip = FALSE
+	power_light = FALSE
+	requires_power = TRUE
+	ambience_index = AMBIENCE_MINING
 
 // Telecommunications Satellite
 
