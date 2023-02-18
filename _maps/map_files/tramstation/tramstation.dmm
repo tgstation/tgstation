@@ -19745,7 +19745,6 @@
 /area/station/security/brig)
 "foD" = (
 /obj/structure/table/glass,
-/obj/item/computer_disk/chemistry,
 /obj/item/computer_disk/medical,
 /obj/item/computer_disk/medical,
 /obj/effect/turf_decal/tile/blue/fourcorners,

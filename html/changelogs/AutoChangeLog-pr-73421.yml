@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - bugfix: "Health analyzers will properly report missing stomachs and tongues"

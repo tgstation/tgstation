@@ -40,16 +40,3 @@
 	var/old_invis = see_invisible
 	see_invisible = new_sight
 	SEND_SIGNAL(src, COMSIG_MOB_SEE_INVIS_CHANGE, see_invisible, old_invis)
-
-/// see_in_dark is essentially just a range value
-/// Basically, if a tile has 0 luminosity affecting it, it will be counted as "dark"
-/// Then, if said tile is farther then see_in_dark from your mob, it will, rather then being rendered
-/// As a normal tile with contents, instead be covered by "darkness". This effectively means it gets masked away, we don't even try to draw it.
-/// You can see this effect by going somewhere dark, and cranking the alpha on the lighting plane to 0
-/mob/proc/set_see_in_dark(new_dark)
-	SHOULD_CALL_PARENT(TRUE)
-	if(new_dark == see_in_dark)
-		return
-	var/old_dark = see_in_dark
-	see_in_dark = new_dark
-	SEND_SIGNAL(src, COMSIG_MOB_SEE_IN_DARK_CHANGE, see_in_dark, old_dark)

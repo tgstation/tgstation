@@ -250,7 +250,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	var/obj/item/choice = tgui_input_list(user, "Select a part to remove", "Part Removal", sort_names(droppable_parts))
 	if(isnull(choice))
 		return
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	to_chat(user, span_notice("You remove [choice] from [src]."))
 	if(choice == assembly.xray_module)
@@ -586,9 +586,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	user.set_invis_see(SEE_INVISIBLE_LIVING) //can't see ghosts through cameras
 	if(isXRay())
 		user.add_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		user.set_see_in_dark(max(user.see_in_dark, 8))
 	else
 		user.clear_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		user.sight = 0
-		user.set_see_in_dark(2)
 	return 1

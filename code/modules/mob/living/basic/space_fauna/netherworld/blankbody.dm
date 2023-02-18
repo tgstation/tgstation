@@ -20,7 +20,10 @@
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Pink, like their skin
+	lighting_cutoff_red = 30
+	lighting_cutoff_green = 15
+	lighting_cutoff_blue = 40
 
 	ai_controller = /datum/ai_controller/basic_controller/blankbody
 	/// Used for mobs that get spawned in a spawner appearently.

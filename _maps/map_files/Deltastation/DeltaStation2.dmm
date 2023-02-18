@@ -67218,9 +67218,6 @@
 "qtq" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/structure/table,
-/obj/item/computer_disk/chemistry{
-	pixel_y = 4
-	},
 /obj/item/computer_disk/medical{
 	pixel_x = 3
 	},

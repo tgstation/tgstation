@@ -635,17 +635,12 @@
 	improve_eyesight(affected_mob, eyes)
 
 /datum/reagent/medicine/oculine/proc/improve_eyesight(mob/living/carbon/affected_mob, obj/item/organ/internal/eyes/eyes)
-	delta_light = creation_purity*30
-	if(eyes.lighting_alpha)
-		eyes.lighting_alpha -= delta_light
-	else
-		eyes.lighting_alpha = 255 - delta_light
-	eyes.see_in_dark += 3
+	delta_light = creation_purity*10
+	eyes.lighting_cutoff += delta_light
 	affected_mob.update_sight()
 
 /datum/reagent/medicine/oculine/proc/restore_eyesight(mob/living/carbon/affected_mob, obj/item/organ/internal/eyes/eyes)
-	eyes.lighting_alpha += delta_light
-	eyes.see_in_dark -= 3
+	eyes.lighting_cutoff -= delta_light
 	affected_mob.update_sight()
 
 /datum/reagent/medicine/oculine/proc/on_gained_organ(mob/affected_mob, obj/item/organ/organ)

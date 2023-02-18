@@ -447,7 +447,7 @@
 /obj/item/healthanalyzer/AltClick(mob/user)
 	..()
 
-	if(!user.canUseTopic(src, be_close = TRUE) || !user.can_read(src) || user.is_blind())
+	if(!user.can_perform_action(src, NEED_LITERACY|NEED_LIGHT) || user.is_blind())
 		return
 
 	mode = !mode

@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "B" = (
-/turf/closed/wall/mineral/titanium/survival,
+/turf/closed/wall/mineral/titanium/survival/pod,
 /area/shuttle/pod_1)
 "N" = (
 /obj/docking_port/mobile/pod{
@@ -25,7 +25,7 @@
 /area/shuttle/pod_1)
 "Z" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst,
-/turf/closed/wall/mineral/titanium/survival,
+/turf/closed/wall/mineral/titanium/survival/pod,
 /area/shuttle/pod_1)
 
 (1,1,1) = {"
