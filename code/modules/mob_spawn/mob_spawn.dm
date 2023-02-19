@@ -176,7 +176,7 @@
 	var/created = create(user)
 	if(!created)
 		if(isnull(created)) // If we explicitly return FALSE instead of just not returning a mob, we don't want to spam the admins
-			message_admins("[src] didn't return anything when creating a mob, this might be broken! The use of the spawner it would have taken has been refunded. [ADMIN_FLW(src)]")
+			CRASH("An instance of [type] didn't return anything when creating a mob, this might be broken!")
 
 		uses += 1 // Refund use because we didn't actually spawn anything
 
