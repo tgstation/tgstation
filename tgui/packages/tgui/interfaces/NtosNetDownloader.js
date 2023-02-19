@@ -8,6 +8,7 @@ import { NtosWindow } from '../layouts';
 export const NtosNetDownloader = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    PC_device_theme,
     disk_size,
     disk_used,
     downloadcompletion,
@@ -196,7 +197,7 @@ const Program = (props, context) => {
       <Box mt={1} italic color="label">
         {program.fileinfo}
       </Box>
-      {!program.verifiedsource && PC_device_theme === 'ntos' && (
+      {!program.verifiedsource && PC_device_theme !== 'syndicate' && (
         <NoticeBox mt={1} mb={0} danger fontSize="12px">
           Unverified source. Please note that Nanotrasen does not recommend
           download and usage of software from non-official servers.

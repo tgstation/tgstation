@@ -31,7 +31,7 @@
 
 /mob/living/simple_animal/hostile/pirate/Initialize(mapload)
 	. = ..()
-	apply_dynamic_human_icon(src, mob_spawn_path = mob_spawner, r_hand = held_item)
+	apply_dynamic_human_appearance(src, mob_spawn_path = mob_spawner, r_hand = held_item)
 
 /mob/living/simple_animal/hostile/pirate/melee
 	name = "Pirate Swashbuckler"

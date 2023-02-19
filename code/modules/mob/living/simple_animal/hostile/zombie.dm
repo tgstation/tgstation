@@ -29,7 +29,7 @@
 
 /mob/living/simple_animal/hostile/zombie/Initialize(mapload)
 	. = ..()
-	apply_dynamic_human_icon(src, outfit, /datum/species/zombie, bloody_slots = ITEM_SLOT_OCLOTHING)
+	apply_dynamic_human_appearance(src, outfit, /datum/species/zombie, bloody_slots = ITEM_SLOT_OCLOTHING)
 
 /mob/living/simple_animal/hostile/zombie/AttackingTarget()
 	. = ..()
