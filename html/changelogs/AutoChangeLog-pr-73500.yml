@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "NtOS program downloader now works again, and will now properly alert you of downloading illegal ROMs if you change your theme to anything that isn't Syndicate."
+  - bugfix: "NtOS themes are now recognized by all windows."
