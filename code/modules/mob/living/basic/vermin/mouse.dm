@@ -46,8 +46,8 @@
 	src.tame = tame
 	if(isnull(body_color))
 		body_color = pick("brown", "gray", "white")
-		held_state = "mouse_[body_color]" // not handled by variety element
-		AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
+	held_state = "mouse_[body_color]" // not handled by variety element
+	AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	var/static/list/loc_connections = list(
@@ -116,7 +116,7 @@
 	if(!gibbed)
 		var/obj/item/food/deadmouse/mouse = new(loc)
 		mouse.name = name
-		mouse.icon_state = "mouse_[body_color]_dead"
+		mouse.icon_state = icon_dead
 		if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
 			mouse.desc = "They're toast."
 			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
