@@ -1,0 +1,5 @@
+author: "Roryl-c"
+delete-after: True
+changes:
+  - bugfix: "seiver no longer applies purity and delta time twice"
+  - code_imp: "made seiver code much less confusing"
