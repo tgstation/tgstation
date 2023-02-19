@@ -110,9 +110,9 @@
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click [src] to fold it into a paper plane.")
+	. += span_notice("Right click [src] to fold it into a paper plane.")
 
-/obj/item/paper/AltClick(mob/living/user, obj/item/I)
+/obj/item/paper/attack_self_secondary(mob/user, modifiers)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	if(istype(src, /obj/item/paper/carbon))
@@ -123,9 +123,9 @@
 	//Origami Master
 	var/datum/action/innate/origami/origami_action = locate() in user.actions
 	if(origami_action?.active)
-		make_plane(user, I, /obj/item/paperplane/syndicate)
+		make_plane(user, src, /obj/item/paperplane/syndicate)
 	else
-		make_plane(user, I, /obj/item/paperplane)
+		make_plane(user, src, /obj/item/paperplane)
 
 /**
  * Paper plane folding
