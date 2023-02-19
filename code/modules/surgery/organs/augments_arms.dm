@@ -336,8 +336,8 @@
 	)
 
 /obj/item/organ/internal/cyberimp/arm/muscle
-	name = "empovered musculature implant"
-	desc = "A cybernetic implant that empowers the strength of a human arm."
+	name = "\proper Strong-Arm empowered musculature implant"
+	desc = "When implanted, this cybernetic implant will enhance the muscles of the arm to deliver more power-per-action."
 	icon_state = "muscle_implant"
 
 	zone = BODY_ZONE_R_ARM
@@ -375,13 +375,12 @@
 /obj/item/organ/internal/cyberimp/arm/muscle/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(source.get_active_hand() != source.get_bodypart(check_zone(zone)))
-		return
-	if(!proximity)
+	if(source.get_active_hand() != source.get_bodypart(check_zone(zone)) || !proximity)
 		return
 	if(!source.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return
-	if(isliving(target))
+	if(!isliving(target))
+		return //include whatever value you need to here
 		var/mob/living/living_target = target
 
 		source.changeNext_move(CLICK_CD_MELEE)
@@ -414,8 +413,13 @@
 			var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
 			living_target.throw_at(throw_target, attack_throw_range, rand(throw_power_min,throw_power_max), source, gentle)
 
-		living_target.visible_message(span_danger("[source] [picked_hit_type]ed [living_target]!"), \
-					span_userdanger("You're [picked_hit_type]ed by [source]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, source)
+		living_target.visible_message(
+			span_danger("[source] [picked_hit_type]ed [living_target]!"), 
+			span_userdanger("You're [picked_hit_type]ed by [source]!"),
+			span_hear("You hear a sickening sound of flesh hitting flesh!"),
+			COMBAT_MESSAGE_RANGE,
+			source,
+		)
 		to_chat(source, span_danger("You [picked_hit_type] [target]!"))
 
 		log_combat(source, target, "[picked_hit_type]ed", "muscle implant")
