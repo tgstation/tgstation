@@ -1,0 +1,6 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "You cannot print blank documents from a photocopier if you cannot afford them anymore."
+  - bugfix: "Mounting the photocopier will now eject paperwork as it does with photos and paper."
+  - refactor: "Lots of duplicate code and some unnecessary vars removed from photocopier code."
