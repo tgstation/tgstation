@@ -300,7 +300,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 
-	if(feeder.combat_mode)
+	if(feeder.combat_mode || !in_range(owner, eater))
 		return
 
 	. = COMPONENT_CANCEL_ATTACK_CHAIN //Point of no return I suppose
