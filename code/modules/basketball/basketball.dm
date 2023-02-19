@@ -77,15 +77,11 @@
 	UnregisterSignal(thrower, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOB_THROW))
 
 /obj/item/toy/basketball/attack_hand(mob/living/user, list/modifiers)
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = FALSE, need_hands = !iscyborg(user)))
-		return
-
-	if(user.resting)
-		user.balloon_alert(user, "cant pickup while resting!")
+	if(!user.can_perform_action(src, NEED_HANDS))
 		return
 
 	if((user.ckey in pickup_restriction_ckeys) && !COOLDOWN_FINISHED(src, pickup_cooldown))
-		user.balloon_alert(user, "cant pickup for [COOLDOWN_TIMELEFT(src, pickup_cooldown) DECISECONDS] seconds!")
+		user.balloon_alert(user, "cant pickup for [COOLDOWN_TIMELEFT(src, pickup_cooldown) *0.1] seconds!")
 		return
 
 	reset_pickup_restriction()
@@ -240,7 +236,6 @@
 
 /obj/item/toy/basketball/afterattack_secondary(atom/aim_target, mob/living/baller, params)
 	//attack_hand(user, modifiers, flip_card = TRUE)
-	//if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE, need_hands = !iscyborg(user)))
 
 	// dunking negates shooting
 	if(istype(aim_target, /obj/structure/hoop) && baller.Adjacent(aim_target))
@@ -437,12 +432,14 @@
 		..()
 
 /obj/structure/hoop/CtrlClick(mob/living/user)
-	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE, need_hands = !iscyborg(user)))
-		user.balloon_alert_to_viewers("resetting score...")
-		playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
-		if(do_after(user, 5 SECONDS, target = src))
-			total_score = 0
-			update_appearance()
+	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|NEED_HANDS))
+		return
+
+	user.balloon_alert_to_viewers("resetting score...")
+	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
+	if(do_after(user, 5 SECONDS, target = src))
+		total_score = 0
+		update_appearance()
 	return ..()
 
 /*
