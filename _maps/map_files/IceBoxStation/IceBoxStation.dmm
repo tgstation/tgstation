@@ -19224,8 +19224,8 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "fOl" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/station/science/explab)
 "fOz" = (
@@ -23760,6 +23760,9 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
+"hlc" = (
+/turf/closed/indestructible/reinforced,
+/area/station/maintenance/starboard/aft)
 "hle" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -32810,12 +32813,7 @@
 	dir = 1
 	},
 /obj/structure/window/spawner/east,
-/obj/machinery/door/window/left/directional/south{
-	dir = 1;
-	name = "Test Chamber";
-	req_access = list("xenobiology")
-	},
-/obj/effect/mapping_helpers/airlock/access/all/science/research,
+/obj/machinery/door/window/left/directional/north,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "kaw" = (
@@ -52570,6 +52568,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/meter/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "qis" = (
@@ -256210,7 +256209,7 @@ yeC
 yeC
 bgx
 bgx
-vzD
+hlc
 vzD
 lXi
 vzD
@@ -256467,7 +256466,7 @@ clY
 dOK
 dOK
 dJv
-vzD
+hlc
 puh
 lXi
 tgq
@@ -256724,7 +256723,7 @@ fdH
 rDZ
 wRZ
 iWD
-vzD
+hlc
 tKz
 lXi
 jPY
@@ -256981,7 +256980,7 @@ fdH
 rDZ
 rDZ
 mfK
-vzD
+hlc
 vzD
 lXi
 vzD
@@ -257238,7 +257237,7 @@ jZY
 tBP
 tBP
 hWI
-bgx
+hlc
 uAJ
 lXi
 vzD
