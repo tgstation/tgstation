@@ -73,12 +73,14 @@
 		for(var/key in default_choices)
 			choices[key] = 0
 
+	var/eligible_players = get_active_player_count(alive_check = 0, afk_check = 1, human_check = 1)
+
 	for(var/map in choices)
 		var/datum/map_config/possible_config = config.maplist[map]
-		if(possible_config.config_min_users > 0 && GLOB.clients.len < possible_config.config_min_users)
+		if(possible_config.config_min_users > 0 && eligible_players < possible_config.config_min_users)
 			choices -= map
 
-		else if(possible_config.config_max_users > 0 && GLOB.clients.len > possible_config.config_max_users)
+		else if(possible_config.config_max_users > 0 && eligible_players > possible_config.config_max_users)
 			choices -= map
 
 	return choices
