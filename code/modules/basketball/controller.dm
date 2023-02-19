@@ -27,7 +27,7 @@ GLOBAL_VAR(basketball_game)
 	/// Map generation tool that deletes the current map after the game finishes
 	var/datum/map_generator/massdelete/map_deleter
 	/// Total amount of time basketball is played for
-	var/game_duration = 2 MINUTES
+	var/game_duration = 30 SECONDS // debugging for now //2 MINUTES
 
 	/// Spawn points for home team players
 	var/list/home_team_landmarks = list()
@@ -193,7 +193,7 @@ GLOBAL_VAR(basketball_game)
 			player_client.prefs.safe_transfer_prefs_to(baller, is_antag = TRUE)
 		baller.key = player_key
 
-		SEND_SOUND(baller, 'sound/machines/scanbuzz.ogg')
+		SEND_SOUND(baller, 'sound/misc/whistle.ogg')
 		to_chat(baller, span_danger("You are a basketball player for the [team_name]. Score as much as you can before time runs out."))
 
 /datum/basketball_controller/proc/victory()
