@@ -723,6 +723,9 @@
 "aqV" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 8
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "art" = (
@@ -2589,6 +2592,9 @@
 	pixel_y = -9
 	},
 /obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 8
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "bmP" = (
@@ -3802,6 +3808,9 @@
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/flora/rock/pile/style_random,
 /obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 8
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "bNJ" = (
@@ -5411,7 +5420,10 @@
 /turf/open/floor/plating,
 /area/station/security/prison/work)
 "cGG" = (
-/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/machinery/door/airlock/maintenance{
+	name = "Engineering Maintenance"
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -5692,6 +5704,9 @@
 "cOU" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/window/reinforced/spawner/west,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "cPd" = (
@@ -5813,15 +5828,17 @@
 /turf/open/floor/plating,
 /area/station/service/chapel/funeral)
 "cTD" = (
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/obj/machinery/door/airlock/maintenance{
-	name = "Engineering Maintenance"
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 6
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/station/maintenance/department/engine/atmos)
+/turf/open/floor/iron/dark/small,
+/area/station/engineering/supermatter/room)
 "cTH" = (
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
@@ -6446,6 +6463,9 @@
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/flora/rock/pile/style_random,
 /obj/structure/window/reinforced/spawner/west,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "dky" = (
@@ -6724,6 +6744,9 @@
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/rock/pile/jungle/style_random,
 /obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 8
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "dsq" = (
@@ -6817,7 +6840,7 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/effect/turf_decal/stripes/box,
+/obj/effect/turf_decal/stripes/end,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "duF" = (
@@ -7625,6 +7648,10 @@
 /obj/structure/chair/office,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/execution/education)
+"dQb" = (
+/obj/effect/landmark/tram/maint_right,
+/turf/open/floor/noslip/tram_plate,
+/area/station/maintenance/department/medical/central)
 "dQw" = (
 /obj/structure/chair{
 	dir = 1
@@ -9181,6 +9208,9 @@
 	},
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 8
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "eAK" = (
@@ -9198,6 +9228,9 @@
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 8
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "eBd" = (
@@ -10254,6 +10287,9 @@
 	pixel_y = 1
 	},
 /obj/structure/window/reinforced/spawner/west,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "fao" = (
@@ -10277,6 +10313,9 @@
 "faw" = (
 /obj/structure/flora/rock/pile/style_random,
 /obj/structure/window/reinforced/spawner/west,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "faX" = (
@@ -11775,6 +11814,9 @@
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 8
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "fNk" = (
@@ -12317,6 +12359,9 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/rock/pile/jungle/style_random,
 /obj/structure/window/reinforced/spawner/west,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "fVU" = (
@@ -15625,10 +15670,14 @@
 	},
 /area/station/science/ordnance/bomb)
 "hui" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/disposal/incinerator)
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/tank{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
 "huz" = (
 /obj/structure/table/reinforced/titaniumglass,
 /obj/effect/turf_decal/siding/wideplating_new/light{
@@ -17679,6 +17728,9 @@
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/rock/pile/jungle/style_random,
 /obj/structure/window/reinforced/spawner/west,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "ioQ" = (
@@ -19120,7 +19172,7 @@
 	},
 /obj/structure/window/reinforced/tram/front,
 /obj/machinery/computer/tram_controls/directional/north{
-	specific_lift_id = "prisontram"
+	specific_lift_id = "prison_tram"
 	},
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
@@ -19989,6 +20041,9 @@
 	},
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/window/reinforced/spawner/west,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "jrG" = (
@@ -21734,6 +21789,9 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 8
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "kfK" = (
@@ -22897,12 +22955,12 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/button/tram{
 	id = "sec_wing";
-	lift_id = "prisontram";
+	lift_id = "prison_tram";
 	pixel_y = 32
 	},
 /obj/machinery/destination_sign/indicator{
 	pixel_y = 32;
-	tram_id = "prisontram"
+	tram_id = "prison_tram"
 	},
 /turf/open/floor/noslip,
 /area/station/security/tram)
@@ -23113,7 +23171,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /turf/open/floor/iron/smooth_half,
 /area/station/maintenance/disposal/incinerator)
 "kLu" = (
@@ -23124,6 +23181,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
+"kLy" = (
+/obj/effect/landmark/tram/maint_left,
+/turf/open/floor/noslip/tram_plate,
+/area/station/maintenance/port/aft)
 "kLB" = (
 /obj/machinery/duct,
 /turf/open/floor/iron/kitchen/small,
@@ -24540,9 +24601,8 @@
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
 "luZ" = (
-/obj/effect/landmark/tram/right_part{
-	destination_id = "prison_wing";
-	specific_lift_id = "prisontram"
+/obj/effect/landmark/tram/prison_wing{
+	specific_lift_id = "prison_tram"
 	},
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
@@ -25979,6 +26039,9 @@
 	},
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/window/reinforced/spawner/west,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "mbi" = (
@@ -28465,6 +28528,9 @@
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/flora/rock/pile/jungle/style_random,
 /obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 8
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "ncu" = (
@@ -29340,6 +29406,9 @@
 "nyf" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
 /obj/structure/window/reinforced/spawner/west,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "nyi" = (
@@ -29952,6 +30021,9 @@
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/window/reinforced/spawner/west,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "nNN" = (
@@ -30683,6 +30755,9 @@
 "oer" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/window/reinforced/spawner/west,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "oeH" = (
@@ -32348,6 +32423,9 @@
 "oRP" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 8
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "oRT" = (
@@ -32728,9 +32806,6 @@
 /turf/closed/wall,
 /area/station/science/ordnance/testlab)
 "oZZ" = (
-/obj/machinery/airlock_sensor/incinerator_ordmix{
-	pixel_x = -24
-	},
 /obj/machinery/atmospherics/components/binary/pump,
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
@@ -32868,6 +32943,9 @@
 	},
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 8
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "pee" = (
@@ -34485,7 +34563,7 @@
 	lift_id = "prisontram"
 	},
 /obj/effect/landmark/lift_id{
-	specific_lift_id = "prisontram"
+	specific_lift_id = "prison_tram"
 	},
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
@@ -35170,11 +35248,17 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1
 	},
+/obj/machinery/airlock_sensor/incinerator_ordmix{
+	pixel_x = 24
+	},
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
 "qdS" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/window/reinforced/spawner/west,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "qdW" = (
@@ -35229,6 +35313,9 @@
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/flora/rock/pile/jungle/style_random,
 /obj/structure/window/reinforced/spawner/west,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "qfi" = (
@@ -37230,9 +37317,7 @@
 /turf/open/floor/catwalk_floor/flat_white,
 /area/station/science/robotics/augments)
 "qYc" = (
-/obj/machinery/atmospherics/components/binary/tank_compressor{
-	dir = 8
-	},
+/obj/machinery/atmospherics/components/binary/tank_compressor,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
@@ -38459,6 +38544,10 @@
 /area/station/service/janitor)
 "rwQ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
+/obj/machinery/airalarm/mixingchamber{
+	dir = 4;
+	pixel_x = 25
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/freezerchamber)
 "rwR" = (
@@ -40022,6 +40111,9 @@
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 8
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "sgV" = (
@@ -43660,9 +43752,8 @@
 /obj/structure/industrial_lift/tram/white{
 	lift_id = "prisontram"
 	},
-/obj/effect/landmark/tram/left_part{
-	destination_id = "sec_wing";
-	specific_lift_id = "prisontram"
+/obj/effect/landmark/tram/sec_wing{
+	specific_lift_id = "prison_tram"
 	},
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
@@ -45189,6 +45280,9 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos/storage/gas)
 "uve" = (
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_ordmix{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
 "uvm" = (
@@ -46186,12 +46280,12 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/button/tram{
 	id = "prison_wing";
-	lift_id = "prisiontram";
+	lift_id = "prison_tram";
 	pixel_y = 32
 	},
 /obj/machinery/destination_sign/indicator{
 	pixel_y = 32;
-	tram_id = "prisontram"
+	tram_id = "prison_tram"
 	},
 /turf/open/floor/noslip,
 /area/station/security/tram)
@@ -47558,6 +47652,9 @@
 "vxU" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
 /obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 8
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "vxV" = (
@@ -54088,6 +54185,9 @@
 /area/station/hallway/primary/aft)
 "yiq" = (
 /obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 8
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "yit" = (
@@ -70815,9 +70915,9 @@ uGU
 uGU
 uGU
 kRJ
-knv
+kRJ
 cGG
-knv
+aiO
 aiO
 kRJ
 knv
@@ -71072,9 +71172,9 @@ uGU
 bJI
 bSz
 cbr
-kRJ
+qnD
 cTD
-aiO
+hui
 dux
 qnD
 fGU
@@ -74416,7 +74516,7 @@ ykU
 pSK
 yfa
 qLa
-hui
+qLa
 vnI
 eUJ
 qyE
@@ -75057,7 +75157,7 @@ uLn
 uLn
 xFl
 lBn
-rts
+kLy
 hHV
 xQn
 rkR
@@ -85080,7 +85180,7 @@ tCz
 tCz
 fIX
 nlS
-mIa
+dQb
 gzs
 jIB
 mhQ
