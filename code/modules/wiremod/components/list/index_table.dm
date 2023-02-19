@@ -1,7 +1,7 @@
 /**
  * # Index Table Component
  *
- * Gets the row of a table using the index inputted. Will return no value if the index is invalid or a proper table is not returned.
+ * Gets the row of a table using the index inputted as an associative list. Will return no value if the index is invalid or a proper table is not returned.
  */
 /obj/item/circuit_component/index_table
 	display_name = "Index Table"
