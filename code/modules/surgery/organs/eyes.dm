@@ -24,18 +24,18 @@
 	var/sight_flags = NONE
 	/// changes how the eyes overlay is applied, makes it apply over the lighting layer
 	var/overlay_ignore_lighting = FALSE
-	/// How much a mob can see in the dark with these eyes
-	var/see_in_dark = 2
 	/// How much innate tint these eyes have
 	var/tint = 0
 	/// How much innare flash protection these eyes have, usually paired with tint
 	var/flash_protect = FLASH_PROTECTION_NONE
 	/// What level of invisibility these eyes can see
 	var/see_invisible = SEE_INVISIBLE_LIVING
+	/// How much darkness to cut out of your view (basically, night vision)
+	var/lighting_cutoff = null
+	/// List of color cutoffs from eyes, or null if not applicable
+	var/list/color_cutoffs = null
 	/// Are these eyes immune to pepperspray?
 	var/pepperspray_protect = FALSE
-	/// How much alpha lighting has (basically, night vision)
-	var/lighting_alpha
 
 	var/eye_color_left = "" //set to a hex code to override a mob's left eye color
 	var/eye_color_right = "" //set to a hex code to override a mob's right eye color
@@ -76,8 +76,8 @@
 		affected_human.eye_color_right = eye_color_right
 	else
 		eye_color_right = affected_human.eye_color_right
-	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_alpha)
-		lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
+	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_cutoff)
+		lighting_cutoff = LIGHTING_CUTOFF_REAL_LOW
 	if(CONFIG_GET(flag/native_fov) && native_fov)
 		owner.add_fov_trait(type, native_fov)
 
@@ -186,37 +186,69 @@
 
 	damaged = TRUE
 
+#define NIGHTVISION_LIGHT_OFF 0
+#define NIGHTVISION_LIGHT_LOW 1
+#define NIGHTVISION_LIGHT_MID 2
+#define NIGHTVISION_LIGHT_HIG 3
+
 /obj/item/organ/internal/eyes/night_vision
-	see_in_dark = NIGHTVISION_FOV_RANGE
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	actions_types = list(/datum/action/item_action/organ_action/use)
-	var/night_vision = TRUE
+
+	// These lists are used as the color cutoff for the eye
+	// They need to be filled out for subtypes
+	var/list/low_light_cutoff
+	var/list/medium_light_cutoff
+	var/list/high_light_cutoff
+	var/light_level = NIGHTVISION_LIGHT_OFF
+
+/obj/item/organ/internal/eyes/night_vision/Initialize(mapload)
+	. = ..()
+	if (PERFORM_ALL_TESTS(focus_only/nightvision_color_cutoffs) && type != /obj/item/organ/internal/eyes/night_vision)
+		if(length(low_light_cutoff) != 3 || length(medium_light_cutoff) != 3 || length(high_light_cutoff) != 3)
+			stack_trace("[type] did not have fully filled out color cutoff lists")
+	if(low_light_cutoff)
+		color_cutoffs = low_light_cutoff.Copy()
+	light_level = NIGHTVISION_LIGHT_LOW
 
 /obj/item/organ/internal/eyes/night_vision/ui_action_click()
 	sight_flags = initial(sight_flags)
-	switch(lighting_alpha)
-		if (LIGHTING_PLANE_ALPHA_VISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+	switch(light_level)
+		if (NIGHTVISION_LIGHT_OFF)
+			color_cutoffs = low_light_cutoff.Copy()
+			light_level = NIGHTVISION_LIGHT_LOW
+		if (NIGHTVISION_LIGHT_LOW)
+			color_cutoffs = medium_light_cutoff.Copy()
+			light_level = NIGHTVISION_LIGHT_MID
+		if (NIGHTVISION_LIGHT_MID)
+			color_cutoffs = high_light_cutoff.Copy()
+			light_level = NIGHTVISION_LIGHT_HIG
 		else
-			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+			color_cutoffs = list()
+			light_level = NIGHTVISION_LIGHT_OFF
 	owner.update_sight()
 
-/obj/item/organ/internal/eyes/night_vision/alien
-	name = "alien eyes"
-	desc = "It turned out they had them after all!"
-	sight_flags = SEE_MOBS
-
-/obj/item/organ/internal/eyes/night_vision/zombie
-	name = "undead eyes"
-	desc = "Somewhat counterintuitively, these half-rotten eyes actually have superior vision to those of a living human."
+#undef NIGHTVISION_LIGHT_OFF
+#undef NIGHTVISION_LIGHT_LOW
+#undef NIGHTVISION_LIGHT_MID
+#undef NIGHTVISION_LIGHT_HIG
 
 /obj/item/organ/internal/eyes/night_vision/mushroom
 	name = "fung-eye"
 	desc = "While on the outside they look inert and dead, the eyes of mushroom people are actually very advanced."
+	low_light_cutoff = list(0, 15, 20)
+	medium_light_cutoff = list(0, 20, 35)
+	high_light_cutoff = list(0, 40, 50)
+
+/obj/item/organ/internal/eyes/zombie
+	name = "undead eyes"
+	desc = "Somewhat counterintuitively, these half-rotten eyes actually have superior vision to those of a living human."
+	color_cutoffs = list(25, 35, 5)
+
+/obj/item/organ/internal/eyes/alien
+	name = "alien eyes"
+	desc = "It turned out they had them after all!"
+	sight_flags = SEE_MOBS
+	color_cutoffs = list(25, 5, 42)
 
 ///Robotic
 
@@ -258,7 +290,6 @@
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	eye_color_left = "000"
 	eye_color_right = "000"
-	see_in_dark = NIGHTVISION_FOV_RANGE
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
 
 /obj/item/organ/internal/eyes/robotic/xray/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = TRUE)
@@ -274,10 +305,10 @@
 	desc = "These cybernetic eye implants will give you thermal vision. Vertical slit pupil included."
 	eye_color_left = "FC0"
 	eye_color_right = "FC0"
+	// We're gonna downshift green and blue a bit so darkness looks yellow
+	color_cutoffs = list(25, 8, 5)
 	sight_flags = SEE_MOBS
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	see_in_dark = NIGHTVISION_FOV_RANGE
 
 /obj/item/organ/internal/eyes/robotic/flashlight
 	name = "flashlight eyes"
@@ -546,6 +577,9 @@
 	icon_state = "adapted_eyes"
 	eye_icon_state = "eyes_glow"
 	overlay_ignore_lighting = TRUE
+	low_light_cutoff = list(5, 12, 20)
+	medium_light_cutoff = list(15, 20, 30)
+	high_light_cutoff = list(30, 35, 50)
 	var/obj/item/flashlight/eyelight/adapted/adapt_light
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted/Insert(mob/living/carbon/adapted, special = FALSE, drop_if_replaced = TRUE)

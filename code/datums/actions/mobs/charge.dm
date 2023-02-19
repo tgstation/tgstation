@@ -173,8 +173,10 @@
 	cooldown_time = 6 SECONDS
 	charge_delay = 1.5 SECONDS
 	charge_distance = 4
+	/// How long to shake for before charging
 	var/shake_duration = 1 SECONDS
-	var/shake_pixel_shift = 15
+	/// Intensity of shaking animation
+	var/shake_pixel_shift = 2
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/do_charge_indicator(atom/charger, atom/charge_target)
 	charger.Shake(shake_pixel_shift, shake_pixel_shift, shake_duration)

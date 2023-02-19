@@ -586,9 +586,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	user.set_invis_see(SEE_INVISIBLE_LIVING) //can't see ghosts through cameras
 	if(isXRay())
 		user.add_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		user.set_see_in_dark(max(user.see_in_dark, 8))
 	else
 		user.clear_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		user.sight = 0
-		user.set_see_in_dark(2)
 	return 1

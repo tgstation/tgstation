@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Clicking a spider egg and then closing the radial menu won't print a message in admin channel informing admins that the egg didn't spawn anything."
