@@ -748,3 +748,37 @@
       lot but if you do, it might be because of this.
   - admin: Disk now has an examine message for whether it's secure or not, to make
       it less ambiguous for players.
+2023-02-19:
+  Jacquerel:
+  - bugfix: You can no longer eat pizza floor tiles with your brain.
+  - bugfix: Lobstrosities and Tarantulas will once more vibrate to let you know they're
+      about to charge at you.
+  - bugfix: The Savannah Ivanov will once more vibrate to let you know it's about
+      to jump into the air.
+  - bugfix: The DNA infuser will now vibrate to let people know that it's busy blending
+      someone with a dead animal.
+  LemonInTheDark:
+  - rscadd: The darkness that glasses and hud goggles that impact your nightvision
+      (think mesons, nightvision goggles, etc) lighten is now tinted to match the
+      glasses. S pretty IMO, and hopefully it helps with forgetting you're wearing
+      X.
+  - balance: Nightvision is darker. I think bright looks bad, and things like mesons
+      do way too much
+  - balance: Mesons (and mobs in general) no longer have a static distance you can
+      see stuff in the dark. If a tile is lit, you can now see it.
+  - bugfix: Nightvision no longer dims colored lights, instead simply thresholding
+      off bits of darkness that are dimmer then some level.
+  Melbert:
+  - bugfix: Cult Ghosts can see in the dark and invisible stuff, a mechanic intended
+      for over 5 years and never functional
+  - bugfix: Ethereal revival causing traumas again.
+  - bugfix: Heartless zombies will now revive again
+  - bugfix: Zombies no longer take constant ticking damage from lacking a heart
+  ZephyrTFA:
+  - bugfix: Moth wings can now correctly be healed
+  coiax:
+  - bugfix: Folding a "fancy box" like donut or candles will now put cardboard in
+      your hand, rather than on the floor.
+  - bugfix: You can always see how many pickles are in a jar of pickles, or rolling
+      papers there are in a pack of rolling papers, since it's not possible to close
+      them.

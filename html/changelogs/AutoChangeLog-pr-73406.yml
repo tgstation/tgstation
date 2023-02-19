@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes:
-  - bugfix: "Folding a \"fancy box\" like donut or candles will now put cardboard in your hand, rather than on the floor."
-  - bugfix: "You can always see how many pickles are in a jar of pickles, or rolling papers there are in a pack of rolling papers, since it's not possible to close them."

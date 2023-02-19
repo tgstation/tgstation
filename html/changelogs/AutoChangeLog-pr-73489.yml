@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Heartless zombies will now revive again"
-  - bugfix: "Zombies no longer take constant ticking damage from lacking a heart"
