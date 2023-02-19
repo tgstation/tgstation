@@ -5,7 +5,7 @@ import { NtosWindow } from '../layouts';
 export const NtosMain = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    device_theme,
+    PC_device_theme,
     show_imprint,
     programs = [],
     has_light,
@@ -22,9 +22,9 @@ export const NtosMain = (props, context) => {
   return (
     <NtosWindow
       title={
-        (device_theme === 'syndicate' && 'Syndix Main Menu') || 'NtOS Main Menu'
+        (PC_device_theme === 'syndicate' && 'Syndix Main Menu') ||
+        'NtOS Main Menu'
       }
-      theme={device_theme}
       width={400}
       height={500}>
       <NtosWindow.Content scrollable>
