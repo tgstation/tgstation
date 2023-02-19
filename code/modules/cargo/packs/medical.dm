@@ -158,7 +158,7 @@
 				)
 
 /datum/supply_pack/medical/arm_implants
-	name = "Arm Empower Implant Crate"
+	name = "Strong-Arm Implant Set"
 	desc = "A crate containing two implants, which are used to empower physical strenght of human arms."
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/organ/internal/cyberimp/arm/muscle = 2)
