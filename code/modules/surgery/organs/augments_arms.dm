@@ -344,14 +344,19 @@
 	slot = ORGAN_SLOT_RIGHT_ARM_AUG
 
 	actions_types = list()
-
-	var/punch_damage = 13 ///The amount of damage dealt by your punches. Not really high, but better then normall punches.
-	var/gentle = TRUE //Will your throws be gentle or no
-	var/attack_throw_range = 1 ///How far away your attack will throw your oponent
+	
+	///The amount of damage dealt by the empowered attack.
+	var/punch_damage = 13
+	///Will the punch smash people into walls?
+	var/gentle = TRUE
+	///How far away your attack will throw your oponent
+	var/attack_throw_range = 1
+	///Minimum throw power of the attack
 	var/throw_power_min = 1
+	///Maximum throw power of the attack
 	var/throw_power_max = 4
-
-	var/emp_base_duration = 9 SECONDS ///How long will the implant malfunction if it is EMP'd
+	///How long will the implant malfunction if it is EMP'd
+	var/emp_base_duration = 9 SECONDS 
 
 /obj/item/organ/internal/cyberimp/arm/muscle/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
@@ -366,11 +371,13 @@
 	. = ..()
 	if((organ_flags & ORGAN_FAILING) || . & EMP_PROTECT_SELF)
 		return
+	owner.balloon_alert(owner, "your arm spasms wildly!")
 	organ_flags |= ORGAN_FAILING
 	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
 
 /obj/item/organ/internal/cyberimp/arm/muscle/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
+	owner.balloon_alert(owner, "your arm stops spasming!")
 
 /obj/item/organ/internal/cyberimp/arm/muscle/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
@@ -381,47 +388,47 @@
 		return
 	if(!isliving(target))
 		return //include whatever value you need to here
-		var/mob/living/living_target = target
+	var/mob/living/living_target = target
 
-		source.changeNext_move(CLICK_CD_MELEE)
-		var/picked_hit_type = pick("punch", "smash", "kick")
+	source.changeNext_move(CLICK_CD_MELEE)
+	var/picked_hit_type = pick("punch", "smash", "kick")
 
-		if(organ_flags & ORGAN_FAILING)
-			if(source.body_position != LYING_DOWN && living_target != source && prob(50))
-				to_chat(source, span_danger("You try to [picked_hit_type] [living_target], but loose your balance and fall!"))
-				source.Knockdown(3 SECONDS)
-				source.forceMove(get_turf(living_target))
-			else
-				to_chat(source, span_danger("Your muscles spasm!"))
-				source.Paralyze(1 SECONDS)
+	if(organ_flags & ORGAN_FAILING)
+		if(source.body_position != LYING_DOWN && living_target != source && prob(50))
+			to_chat(source, span_danger("You try to [picked_hit_type] [living_target], but loose your balance and fall!"))
+			source.Knockdown(3 SECONDS)
+			source.forceMove(get_turf(living_target))
+		else
+			to_chat(source, span_danger("Your muscles spasm!"))
+			source.Paralyze(1 SECONDS)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		if(human_target.check_shields(source, punch_damage, "[source]'s' [picked_hit_type]"))
+			source.do_attack_animation(target)
+			playsound(living_target.loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+			log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
-		if(ishuman(target))
-			var/mob/living/carbon/human/human_target = target
-			if(human_target.check_shields(source, punch_damage, "[source]'s' [picked_hit_type]"))
-				source.do_attack_animation(target)
-				playsound(living_target.loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
-				log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
-				return COMPONENT_CANCEL_ATTACK_CHAIN
+	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
+	playsound(living_target.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 
-		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
-		playsound(living_target.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	living_target.apply_damage(punch_damage, BRUTE)
 
-		living_target.apply_damage(punch_damage, BRUTE)
+	if(source.body_position != LYING_DOWN) //Throw them if we are standing
+		var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
+		living_target.throw_at(throw_target, attack_throw_range, rand(throw_power_min,throw_power_max), source, gentle)
 
-		if(source.body_position != LYING_DOWN) //Throw them if we are standing
-			var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
-			living_target.throw_at(throw_target, attack_throw_range, rand(throw_power_min,throw_power_max), source, gentle)
-
-		living_target.visible_message(
-			span_danger("[source] [picked_hit_type]ed [living_target]!"), 
-			span_userdanger("You're [picked_hit_type]ed by [source]!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
-			COMBAT_MESSAGE_RANGE,
-			source,
+	living_target.visible_message(
+		span_danger("[source] [picked_hit_type]ed [living_target]!"), 
+		span_userdanger("You're [picked_hit_type]ed by [source]!"),
+		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		COMBAT_MESSAGE_RANGE,
+		source,
 		)
-		to_chat(source, span_danger("You [picked_hit_type] [target]!"))
+	to_chat(source, span_danger("You [picked_hit_type] [target]!"))
 
-		log_combat(source, target, "[picked_hit_type]ed", "muscle implant")
+	log_combat(source, target, "[picked_hit_type]ed", "muscle implant")
 
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+	return COMPONENT_CANCEL_ATTACK_CHAIN
