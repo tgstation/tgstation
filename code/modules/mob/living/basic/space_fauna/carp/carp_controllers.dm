@@ -63,7 +63,7 @@
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/find_nearest_magicarp_spell_target,
-		/datum/ai_planning_subtree/targetted_mob_ability/magicarp,
+		/datum/ai_planning_subtree/targeted_mob_ability/magicarp,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/carp,
 		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,

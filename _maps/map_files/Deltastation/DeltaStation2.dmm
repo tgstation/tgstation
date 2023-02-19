@@ -47223,7 +47223,7 @@
 "luD" = (
 /obj/structure/closet/secure_closet/brig{
 	id = "brig2";
-	name = "cell 2 locker"
+	name = "Cell 2 locker"
 	},
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -47251,7 +47251,7 @@
 "lvk" = (
 /obj/structure/closet/secure_closet/brig{
 	id = "brig1";
-	name = "cell 1 locker"
+	name = "Cell 1 locker"
 	},
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -90607,7 +90607,7 @@
 "weh" = (
 /obj/structure/closet/secure_closet/brig{
 	id = "cargocell";
-	name = "cargo cell locker"
+	name = "Cargo Cell locker"
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1

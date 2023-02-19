@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - rscdel: "Removes sprite changes done to smart pipes"
-  - bugfix: "pipes disappearing at weird angles"

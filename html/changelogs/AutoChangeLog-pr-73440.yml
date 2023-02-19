@@ -1,0 +1,5 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - bugfix: "Placed a missing mining order console on Tramstation."
+  - bugfix: "Rearranged furniture in the Tramstation pharmacy to make the fridges accessible."

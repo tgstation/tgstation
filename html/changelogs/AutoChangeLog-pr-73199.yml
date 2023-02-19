@@ -1,6 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Tram damage calculation takes into account compound wounds"
-  - code_imp: "Tram crossing signals are now map specific"
-  - admin: "Combat log now generated when the tram collides with someone"
