@@ -34,7 +34,7 @@
 
 /mob/living/simple_animal/hostile/nanotrasen/Initialize(mapload)
 	. = ..()
-	apply_dynamic_human_icon(src, mob_spawn_path = mob_spawner, r_hand = held_item)
+	apply_dynamic_human_appearance(src, mob_spawn_path = mob_spawner, r_hand = held_item)
 
 /mob/living/simple_animal/hostile/nanotrasen/screaming/Aggro()
 	..()
@@ -91,7 +91,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/Initialize(mapload)
 	. = ..()
-	apply_dynamic_human_icon(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/nanotrasensoldier, r_hand = held_item)
+	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/nanotrasensoldier, r_hand = held_item)
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/Aggro()
 	..()

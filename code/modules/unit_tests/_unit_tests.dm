@@ -91,6 +91,7 @@
 #include "breath.dm"
 #include "cable_powernets.dm"
 #include "card_mismatch.dm"
+#include "cardboard_cutouts.dm"
 #include "chain_pull_through_space.dm"
 #include "chat_filter.dm"
 #include "circuit_component_category.dm"
