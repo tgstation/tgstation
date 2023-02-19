@@ -73,7 +73,7 @@
 		for(var/key in default_choices)
 			choices[key] = 0
 
-	var/eligible_players = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = TRUE)
+	var/eligible_players = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
 
 	for(var/map in choices)
 		var/datum/map_config/possible_config = config.maplist[map]
