@@ -25,25 +25,25 @@
 			// in the future, this could / should be de-harcoded and
 			// just draw from a pool uplink, theft, and antag item typepaths
 			var/static/list/stash_item_paths = list(
-				/obj/item/gun/ballistic/revolver,
-				/obj/item/melee/energy,
-				/obj/item/card/emag,
-				/obj/item/powersink, //this is a bulky item what
-				/obj/item/grenade/c4,
-				/obj/item/gun/energy/recharge/ebow,
-				/obj/item/melee/baton/security,
-				/obj/item/assembly/flash,
-				/obj/item/gun/syringe/syndicate,
-				/obj/item/circular_saw,
-				/obj/item/melee/cultblade/dagger,
-				/obj/item/spellbook,
-				/obj/item/codex_cicatrix,
-				/obj/item/card/id/advanced/gold/captains_spare,
-				/obj/item/hand_tele,
-				/obj/item/reagent_containers/hypospray/cmo,
-				/obj/item/gun/energy/laser/captain,
-				/obj/item/gun/energy/e_gun/hos,
 				/obj/item/areaeditor/blueprints,
+				/obj/item/assembly/flash,
+				/obj/item/card/id/advanced/gold/captains_spare,
+				/obj/item/card/emag,
+				/obj/item/circular_saw,
+				/obj/item/codex_cicatrix,
+				/obj/item/grenade/c4,
+				/obj/item/gun/ballistic/revolver,
+				/obj/item/gun/energy/e_gun/hos,
+				/obj/item/gun/energy/laser/captain,
+				/obj/item/gun/energy/recharge/ebow,
+				/obj/item/gun/syringe/syndicate,
+				/obj/item/hand_tele,
+				/obj/item/melee/baton/security,
+				/obj/item/melee/cultblade/dagger,
+				/obj/item/melee/energy,
+				/obj/item/powersink, //this is a bulky item what
+				/obj/item/reagent_containers/hypospray/cmo,
+				/obj/item/spellbook,
 			)
 			var/obj/item/stashed_item = pick(stash_item_paths)
 			message_pool[span_notice("[suspicious_personnel] puts the [initial(stashed_item.name)] into [equipped_backpack].")] = 5
