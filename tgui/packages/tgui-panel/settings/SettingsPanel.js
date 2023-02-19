@@ -14,7 +14,7 @@ import { THEMES } from '../themes';
 import { changeSettingsTab, updateSettings, addHighlightSetting, removeHighlightSetting, updateHighlightSetting } from './actions';
 import { SETTINGS_TABS, FONTS, MAX_HIGHLIGHT_SETTINGS } from './constants';
 import { selectActiveTab, selectSettings, selectHighlightSettings, selectHighlightSettingById } from './selectors';
-import { get_config_key, set_config_key } from 'common/config_setter';
+import { getConfigKey, setConfigKey } from 'common/config_setter';
 import { PREF_ADDITION_KEY, PREF_KEYS } from '../../../../config/tgui_config';
 
 export const SettingsPanel = (props, context) => {
@@ -218,11 +218,10 @@ export const SettingUIConfig = (props, context) => {
         <Button.Checkbox
           key={each.id}
           checked={
-            each.value === get_config_key() ||
-            (!each.value && !get_config_key())
+            each.value === getConfigKey() || (!each.value && !getConfigKey())
           }
           onClick={() => {
-            set_config_key(each.value);
+            setConfigKey(each.value);
             location.reload();
           }}>
           {each.id}

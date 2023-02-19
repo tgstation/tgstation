@@ -8,28 +8,28 @@
 import { PREF_ADDITION_KEY } from '../../../config/tgui_config';
 import { storage } from './storage';
 
-export const get_pref_addition_key = () => {
+export const getPrefAdditionKey = () => {
   const thing = '-cfg-' + PREF_ADDITION_KEY;
   return thing;
 };
 
-export const get_config_key = () => {
-  let thing = sessionStorage.getItem(get_pref_addition_key());
+export const getConfigKey = () => {
+  let thing = sessionStorage.getItem(getPrefAdditionKey());
   if (thing === undefined) {
     return '';
   }
   return thing;
 };
 
-export const set_config_key = (value) => {
-  sessionStorage.setItem(get_pref_addition_key(), value);
-  storage.set_config_key(value);
+export const setConfigKey = (value) => {
+  sessionStorage.setItem(getPrefAdditionKey(), value);
+  storage.set_noconfig(getPrefAdditionKey(), value);
 };
 
-export const init_config_key = async () => {
-  let thing = await storage.get_config_key();
+export const setupConfigKey = async () => {
+  let thing = await storage.get_noconfig(getPrefAdditionKey());
   if (thing === undefined) {
     thing = '';
   }
-  sessionStorage.setItem(get_pref_addition_key(), thing);
+  sessionStorage.setItem(getPrefAdditionKey(), thing);
 };

@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { get_pref_addition_key } from './config_setter';
+import { getPrefAdditionKey } from './config_setter';
 
 export const IMPL_MEMORY = 0;
 export const IMPL_LOCAL_STORAGE = 1;
@@ -48,27 +48,32 @@ class MemoryBackend {
   }
 
   get(key) {
-    return this.store[key + this.get_config_key()];
+    return this.store[key + this.get_noconfig(getPrefAdditionKey())];
   }
 
   set(key, value) {
-    this.store[key + this.get_config_key()] = value;
+    this.store[key + this.get_noconfig(getPrefAdditionKey())] = value;
   }
 
   remove(key) {
-    this.store[key + this.get_config_key()] = undefined;
+    this.store[key + this.get_noconfig(getPrefAdditionKey())] = undefined;
   }
 
   clear() {
     this.store = {};
   }
 
-  get_config_key() {
-    return this.store[get_pref_addition_key()];
+  // these are 98% identical to things above
+  get_noconfig(key) {
+    return this.store[key];
   }
 
-  set_config_key(value) {
-    this.store[get_pref_addition_key()] = value;
+  set_noconfig(key, value) {
+    this.store[key] = value;
+  }
+
+  remove_noconfig(key) {
+    this.store[key] = undefined;
   }
 }
 
@@ -78,35 +83,43 @@ class LocalStorageBackend {
   }
 
   get(key) {
-    const value = localStorage.getItem(key + this.get_config_key());
+    const value = localStorage.getItem(
+      key + this.get_noconfig(getPrefAdditionKey())
+    );
     if (typeof value === 'string') {
       return JSON.parse(value);
     }
   }
 
   set(key, value) {
-    localStorage.setItem(key + this.get_config_key(), JSON.stringify(value));
+    localStorage.setItem(
+      key + this.get_noconfig(getPrefAdditionKey()),
+      JSON.stringify(value)
+    );
   }
 
   remove(key) {
-    localStorage.removeItem(key + this.get_config_key());
+    localStorage.removeItem(key + this.get_noconfig(getPrefAdditionKey()));
   }
 
   clear() {
     localStorage.clear();
   }
 
-  get_config_key() {
-    const value = localStorage.getItem(get_pref_addition_key());
-    if (value === null) {
-      return '';
-    } else if (typeof value === 'string') {
+  // these are 98% identical to things above
+  get_noconfig(key) {
+    const value = localStorage.getItem(key);
+    if (typeof value === 'string') {
       return JSON.parse(value);
     }
   }
 
-  set_config_key(value) {
-    localStorage.setItem(get_pref_addition_key(), JSON.stringify(value));
+  set_noconfig(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  remove_noconfig(key) {
+    localStorage.removeItem(key);
   }
 }
 
@@ -141,7 +154,7 @@ class IndexedDbBackend {
   async get(key) {
     const store = await this.getStore(READ_ONLY);
     return new Promise((resolve, reject) => {
-      const req = store.get(key + this.get_config_key());
+      const req = store.get(key + this.get_noconfig(getPrefAdditionKey()));
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => reject(req.error);
     });
@@ -157,13 +170,13 @@ class IndexedDbBackend {
     }
     // NOTE: We deliberately make this operation transactionless
     const store = await this.getStore(READ_WRITE);
-    store.put(value, key + this.get_config_key());
+    store.put(value, key + this.get_noconfig(getPrefAdditionKey()));
   }
 
   async remove(key) {
     // NOTE: We deliberately make this operation transactionless
     const store = await this.getStore(READ_WRITE);
-    store.delete(key + this.get_config_key());
+    store.delete(key + this.get_noconfig(getPrefAdditionKey()));
   }
 
   async clear() {
@@ -172,21 +185,29 @@ class IndexedDbBackend {
     store.clear();
   }
 
-  async get_config_key() {
+  // these are 98% identical to things above
+  async get_noconfig(key) {
     const store = await this.getStore(READ_ONLY);
     return new Promise((resolve, reject) => {
-      const req = store.get(get_pref_addition_key());
+      const req = store.get(key);
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => reject(req.error);
     });
   }
 
-  async set_config_key(value) {
+  async set_noconfig(key, value) {
     if (value === null) {
       value = undefined;
     }
+    // NOTE: We deliberately make this operation transactionless
     const store = await this.getStore(READ_WRITE);
-    store.put(value, get_pref_addition_key());
+    store.put(value, key);
+  }
+
+  async remove_noconfig(key) {
+    // NOTE: We deliberately make this operation transactionless
+    const store = await this.getStore(READ_WRITE);
+    store.delete(key);
   }
 }
 
@@ -216,14 +237,14 @@ class StorageProxy {
     return backend.get(key);
   }
 
-  async set(key, value) {
-    const backend = await this.backendPromise;
-    return backend.set(key, value);
-  }
-
   async remove(key) {
     const backend = await this.backendPromise;
     return backend.remove(key);
+  }
+
+  async set(key, value) {
+    const backend = await this.backendPromise;
+    return backend.set(key, value);
   }
 
   async clear() {
@@ -231,14 +252,21 @@ class StorageProxy {
     return backend.clear();
   }
 
-  async get_config_key() {
+  // these are identical to things above, but with config key.
+  // this is why it is named `_noconfig`, not as camelCase, because it's 98% identical.
+  async get_noconfig(key) {
     const backend = await this.backendPromise;
-    return backend.get_config_key();
+    return backend.get_noconfig(key);
   }
 
-  async set_config_key(value) {
+  async set_noconfig(key, value) {
     const backend = await this.backendPromise;
-    return backend.set_config_key(value);
+    return backend.set_noconfig(key, value);
+  }
+
+  async remove_noconfig(key) {
+    const backend = await this.backendPromise;
+    return backend.remove_noconfig(key);
   }
 }
 
