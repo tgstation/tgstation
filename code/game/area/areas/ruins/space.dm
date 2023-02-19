@@ -185,6 +185,10 @@
 /area/ruin/space/has_grav/abandonedzoo
 	name = "\improper Abandoned Zoo"
 
+//Ruin of Dangerous Research
+
+/area/ruin/space/has_grav/dangerous_research
+	name = "\improper Alternate Sciences Research Center"
 
 //Ruin of ancient Space Station (OldStation)
 
