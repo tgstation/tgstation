@@ -40,22 +40,22 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 /obj/effect/landmark/tram/sec_wing
 	name = "Security Wing"
 	destination_id = "sec_wing"
-	tgui_icons = ("Security" = "gavel")
+	tgui_icons = list("Security" = "gavel")
 
 /obj/effect/landmark/tram/prison_wing
 	name = "Prison Wing"
 	destination_id = "prison_wing"
-	tgui_icons = ("Prison" = "box")
+	tgui_icons = list("Prison" = "box")
 
 /obj/effect/landmark/tram/maint_left
 	name = "Port Platform"
 	destination_id = "maint_left"
-	tgui_icons = ("Port Platform" = "plane-departure")
+	tgui_icons = list("Port Platform" = "plane-departure")
 
 /obj/effect/landmark/tram/maint_right
 	name = "Starboard Platform"
 	destination_id = "maint_right"
-	tgui_icons = ("Starboard Platform" = "plane-arrival")
+	tgui_icons = list("Starboard Platform" = "plane-arrival")
 
 /**
  * lift_id landmarks. used to map in specific_lift_id to trams. when the trams lift_master encounters one on a trams tile
