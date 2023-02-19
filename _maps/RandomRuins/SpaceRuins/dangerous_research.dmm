@@ -786,9 +786,7 @@
 	dir = 4
 	},
 /obj/machinery/computer/med_data/laptop{
-	dir = 8;
-	pixel_y = 1;
-	req_one_access = list("detective","medical","genetics")
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/half,
 /turf/open/floor/iron/dark,
