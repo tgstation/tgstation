@@ -1,7 +1,0 @@
-author: "JohnFulpWillard and itsmeow"
-delete-after: True
-changes:
-  - bugfix: "Messenger now clears photos after you send it, so you don't send a photo repeatedly until you manually clear it."
-  - bugfix: "Sending a photo now has a hyperlink in chat for the target to see (like with old PDAs)"
-  - bugfix: "AIs can now select photos in their Messenger app."
-  - bugfix: "Messenger no longer says you're sending outgoing messages to yourself."

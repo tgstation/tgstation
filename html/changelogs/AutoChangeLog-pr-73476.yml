@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - imageadd: "Wall mounted tram sign now has improved emissives and casing"
