@@ -33103,17 +33103,6 @@
 /obj/structure/bookcase/random,
 /turf/open/floor/plating,
 /area/station/service/library/abandoned)
-"mGX" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1;
-	name = "WASTE PURGE!!!"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/plating/rust,
-/area/station/maintenance/department/engine/atmos)
 "mGY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
@@ -34748,7 +34737,6 @@
 /obj/structure/window{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/plating,
 /area/station/ai_monitored/command/storage/eva)
 "nlB" = (
@@ -41451,6 +41439,17 @@
 	},
 /turf/open/floor/iron/large,
 /area/station/command/heads_quarters/hop)
+"pNp" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "WASTE PURGE!!!"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/department/engine/atmos)
 "pNy" = (
 /obj/structure/industrial_lift/tram/white{
 	lift_id = "prisontram"
@@ -47365,6 +47364,29 @@
 "rTt" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/modular_computer/console/preset/id,
+/obj/machinery/button/ticket_machine{
+	pixel_x = 9;
+	pixel_y = 23
+	},
+/obj/machinery/button/door/directional/south{
+	id = "hop";
+	name = "Privacy Shutters Control";
+	pixel_x = -2;
+	pixel_y = 23;
+	req_access = list("hop")
+	},
+/obj/machinery/button/door/directional/south{
+	id = "hopqueue";
+	name = "Queue Shutters Control";
+	pixel_x = -13;
+	pixel_y = 23;
+	req_access = list("hop")
+	},
+/obj/machinery/button/flasher{
+	id = "hopflash";
+	pixel_x = -23;
+	pixel_y = 11
+	},
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/command/heads_quarters/hop)
 "rTA" = (
@@ -81645,7 +81667,7 @@ uGU
 uGU
 knv
 bSs
-mGX
+pNp
 azq
 jLr
 inb
