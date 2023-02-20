@@ -61,10 +61,10 @@
 /datum/action/changeling/weapon/sting_action(mob/living/carbon/user)
 	var/obj/item/held = user.get_active_held_item()
 	if(held && !user.dropItemToGround(held))
-		to_chat(user, span_warning("[held] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!"))
+		user.balloon_alert(user, "hand occupied!")
 		return
 	if(!istype(user))
-		to_chat(user, span_warning("You can't do that in this state!"))
+		user.balloon_alert(user, "wrong shape!")
 		return
 	..()
 	var/limb_regen = 0
@@ -142,10 +142,10 @@
 
 /datum/action/changeling/suit/sting_action(mob/living/carbon/human/user)
 	if(!user.canUnEquip(user.wear_suit))
-		to_chat(user, span_warning("\the [user.wear_suit] is stuck to your body, you cannot grow a [suit_name_simple] over it!"))
+		user.balloon_alert(user, "body occupied!")
 		return
 	if(!user.canUnEquip(user.head))
-		to_chat(user, span_warning("\the [user.head] is stuck on your head, you cannot grow a [helmet_name_simple] over it!"))
+		user.balloon_alert(user, "head occupied!")
 		return
 	..()
 	user.dropItemToGround(user.head)
@@ -222,24 +222,24 @@
 		C.attack_alien(user) //muh copypasta
 
 	else if(istype(target, /obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/A = target
+		var/obj/machinery/door/airlock/opening = target
 
-		if((!A.requiresID() || A.allowed(user)) && A.hasPower()) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message, power requirement is so this doesn't stop unpowered doors from being pried open if you have access
+		if((!opening.requiresID() || opening.allowed(user)) && opening.hasPower()) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message, power requirement is so this doesn't stop unpowered doors from being pried open if you have access
 			return
-		if(A.locked)
-			to_chat(user, span_warning("The airlock's bolts prevent it from being forced!"))
+		if(opening.locked)
+			opening.balloon_alert(user, "bolted!")
 			return
 
-		if(A.hasPower())
-			user.visible_message(span_warning("[user] jams [src] into the airlock and starts prying it open!"), span_warning("We start forcing the [A] open."), \
+		if(opening.hasPower())
+			user.visible_message(span_warning("[user] jams [src] into the airlock and starts prying it open!"), span_warning("We start forcing the [opening] open."), \
 			span_hear("You hear a metal screeching sound."))
-			playsound(A, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
-			if(!do_after(user, 100, target = A))
+			playsound(opening, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+			if(!do_after(user, 100, target = opening))
 				return
 		//user.say("Heeeeeeeeeerrre's Johnny!")
-		user.visible_message(span_warning("[user] forces the airlock to open with [user.p_their()] [src]!"), span_warning("We force the [A] to open."), \
+		user.visible_message(span_warning("[user] forces the airlock to open with [user.p_their()] [src]!"), span_warning("We force the [opening] to open."), \
 		span_hear("You hear a metal screeching sound."))
-		A.open(2)
+		opening.open(2)
 
 /obj/item/melee/arm_blade/dropped(mob/user)
 	..()
@@ -299,7 +299,7 @@
 
 
 /obj/item/gun/magic/tentacle/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	to_chat(user, span_warning("The [name] is not ready yet."))
+	user.balloon_alert(user, "not ready!")
 
 /obj/item/gun/magic/tentacle/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
 	var/obj/projectile/tentacle/tentacle_shot = chambered.loaded_projectile //Gets the actual projectile we will fire
