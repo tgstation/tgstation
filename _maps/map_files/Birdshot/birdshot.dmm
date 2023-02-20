@@ -8969,13 +8969,13 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "dGy" = (
-/obj/machinery/door/airlock{
-	name = "Maintenance"
+/obj/structure/table,
+/obj/item/circuitboard/machine/coffeemaker/impressa,
+/obj/item/coffee_cartridge/decaf{
+	pixel_y = 9
 	},
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
-/obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance/central/greater)
+/area/station/commons/vacant_room/commissary)
 "dGG" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -24612,6 +24612,7 @@
 "jBd" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/screwdriver,
 /turf/open/floor/plating,
 /area/station/commons/vacant_room/commissary)
 "jBo" = (
@@ -26335,6 +26336,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/table/wood,
 /obj/machinery/camera/directional/south,
+/obj/item/stack/cable_coil/five,
 /turf/open/floor/plating,
 /area/station/commons/vacant_room/commissary)
 "kgZ" = (
@@ -39291,10 +39293,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/warden)
-"oUU" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/central/greater)
 "oVg" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/disposalpipe/segment,
@@ -43382,6 +43380,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/table/wood,
 /obj/machinery/light/small/built/directional/north,
+/obj/item/stack/sheet/iron/ten,
 /turf/open/floor/wood/tile,
 /area/station/commons/vacant_room/commissary)
 "qrU" = (
@@ -49583,11 +49582,11 @@
 "sCi" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "sCp" = (
@@ -55310,8 +55309,8 @@
 /obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
 	},
-/obj/structure/hedge,
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/structure/hedge,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/cafeteria)
 "uGk" = (
@@ -57990,8 +57989,12 @@
 /obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
 	},
-/obj/structure/hedge,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/bot,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/cafeteria)
 "vFB" = (
@@ -61349,6 +61352,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/cafeteria)
 "wQB" = (
@@ -62593,6 +62599,7 @@
 /obj/structure/chair,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/landmark/start/hangover,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/cafeteria)
 "xkX" = (
@@ -63853,6 +63860,7 @@
 /obj/structure/table,
 /obj/item/trash/cnds,
 /obj/item/radio/intercom/directional/west,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/cafeteria)
 "xGe" = (
@@ -65516,6 +65524,7 @@
 	dir = 1
 	},
 /obj/machinery/light/cold/directional/west,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/cafeteria)
 "yiF" = (
@@ -93104,7 +93113,7 @@ aRd
 cEp
 fLn
 sCi
-oUU
+wWk
 xyc
 vlb
 sAU
@@ -93361,7 +93370,7 @@ kTd
 xyc
 jVM
 jVM
-dGy
+nTg
 jVM
 jVM
 jVM
@@ -104159,7 +104168,7 @@ fJz
 jNH
 xLu
 eeJ
-wUZ
+dGy
 odS
 pxM
 nfX
