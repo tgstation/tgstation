@@ -16477,6 +16477,19 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white/small,
 /area/station/security/warden)
+"gEI" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "com_guest";
+	name = "Privacy Shutter"
+	},
+/turf/open/floor/plating,
+/area/station/command/corporate_suite)
 "gEJ" = (
 /obj/structure/table/wood/fancy/green,
 /obj/item/paperplane{
@@ -29210,6 +29223,12 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/button/door/directional/north{
+	id = "com_guest2";
+	name = "Privacy Shutters";
+	pixel_x = -32;
+	pixel_y = 35
+	},
 /turf/open/floor/wood/large,
 /area/station/command/corporate_suite)
 "lnf" = (
@@ -30321,6 +30340,17 @@
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
+"lGT" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "WASTE PURGE!!!"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/department/engine/atmos)
 "lHc" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
@@ -41439,17 +41469,6 @@
 	},
 /turf/open/floor/iron/large,
 /area/station/command/heads_quarters/hop)
-"pNp" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1;
-	name = "WASTE PURGE!!!"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/plating/rust,
-/area/station/maintenance/department/engine/atmos)
 "pNy" = (
 /obj/structure/industrial_lift/tram/white{
 	lift_id = "prisontram"
@@ -54975,7 +54994,7 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
-	id = "com_guest";
+	id = "com_guest2";
 	name = "Privacy Shutter"
 	},
 /turf/open/floor/plating,
@@ -81667,7 +81686,7 @@ uGU
 uGU
 knv
 bSs
-pNp
+lGT
 azq
 jLr
 inb
@@ -95066,7 +95085,7 @@ vhw
 gcs
 llD
 uFo
-uFo
+gEI
 gcs
 mTo
 wxu
