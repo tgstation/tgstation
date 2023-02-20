@@ -7,8 +7,10 @@
 	var/climb_stun = (2 SECONDS)
 	///Assoc list of object being climbed on - climbers.  This allows us to check who needs to be shoved off a climbable object when its clicked on.
 	var/list/current_climbers
+	///Procpath of the proc to call if someone tries to climb onto our owner!
+	var/on_try_climb_procpath
 
-/datum/element/climbable/Attach(datum/target, climb_time, climb_stun)
+/datum/element/climbable/Attach(datum/target, climb_time, climb_stun, on_try_climb_procpath)
 	. = ..()
 
 	if(!isatom(target) || isarea(target))
@@ -17,6 +19,8 @@
 		src.climb_time = climb_time
 	if(climb_stun)
 		src.climb_stun = climb_stun
+	if(on_try_climb_procpath)
+		src.on_try_climb_procpath = on_try_climb_procpath
 
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand))
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
@@ -69,6 +73,8 @@
 		adjusted_climb_time *= 0.8
 		adjusted_climb_stun *= 0.8
 	LAZYADDASSOCLIST(current_climbers, climbed_thing, user)
+	if(on_try_climb_procpath)
+		call(climbed_thing, on_try_climb_procpath)(user)
 	if(do_after(user, adjusted_climb_time, climbed_thing))
 		if(QDELETED(climbed_thing)) //Checking if structure has been destroyed
 			return

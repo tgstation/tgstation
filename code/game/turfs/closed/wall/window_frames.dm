@@ -40,10 +40,15 @@
 	. = ..()
 
 	update_appearance()
-	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/climbable, on_try_climb_procpath = TYPE_PROC_REF(/obj/structure/window_frame/, on_try_climb))
 
 	if(mapload && start_with_window)
 		create_structure_window(window_type, TRUE)
+
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 ///helper proc to check if we already have a window
 /obj/structure/window_frame/proc/has_window()
@@ -54,6 +59,102 @@
 			return TRUE
 
 	return FALSE
+
+///Called by the climbable element if you try climb up. Better hope you're well protected against shocks! XD
+/obj/structure/window_frame/proc/on_try_climb(mob/climber)
+	try_shock(climber, 100)
+
+///Gives the user a shock if they get unlucky (Based on shock chance)
+/obj/structure/window_frame/proc/try_shock(mob/user, shock_chance)
+	if(!has_grille) // no grille? dont shock.
+		return FALSE
+	if(!underlaying_cable)
+		return FALSE
+	if(!prob(shock_chance))
+		return FALSE
+	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
+		return FALSE
+	var/turf/my_turf = get_turf(src)
+	var/obj/structure/cable/underlaying_cable = my_turf.get_cable_node()
+	if(electrocute_mob(user, underlaying_cable, src, 1, TRUE))
+		var/datum/effect_system/spark_spread/spark_effect = new /datum/effect_system/spark_spread
+		spark_effect.set_up(3, 1, src)
+		spark_effect.start()
+		return TRUE
+	return FALSE
+
+/obj/structure/window_frame/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+	if(!isliving(AM))
+		return
+	var/mob/living/potential_victim = AM
+	if(potential_victim.movement_type & (FLOATING|FLYING))
+		return
+	try_shock(potential_victim, 100)
+
+
+/obj/structure/window_frame/attack_animal(mob/user, list/modifiers)
+	. = ..()
+	if(!.)
+		return
+	if(!try_shock(user, 70) && !QDELETED(src)) //Last hit still shocks but shouldn't deal damage to the grille
+		take_damage(rand(5,10), BRUTE, MELEE, 1)
+
+/obj/structure/window_frame/attack_hulk(mob/living/carbon/human/user)
+	if(try_shock(user, 70))
+		return
+	. = ..()
+
+/obj/structure/window_frame/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
+	user.visible_message(span_warning("[user] hits [src]."), null, null, COMBAT_MESSAGE_RANGE)
+	log_combat(user, src, "hit")
+	if(!try_shock(user, 70))
+		take_damage(rand(5,10), BRUTE, MELEE, 1)
+
+/obj/structure/window_frame/attack_alien(mob/living/user, list/modifiers)
+	user.do_attack_animation(src)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.visible_message(span_warning("[user] mangles [src]."), null, null, COMBAT_MESSAGE_RANGE)
+	if(!try_shock(user, 70))
+		take_damage(20, BRUTE, MELEE, 1)
+
+/obj/structure/window_frame/wirecutter_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	if(try_shock(user, 100))
+		return
+	if(!has_grille)
+		return
+	if(!tool.use_tool(src, user, 0, volume = 50))
+		return
+	tool.play_tool_sound(src, 100)
+	to_chat(user, "<span class='notice'>You cut the grille on [src].</span>")
+	has_grille = FALSE
+	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+
+/obj/structure/window_frame/welder_act(mob/living/user, obj/item/tool)
+	. = ..()
+	add_fingerprint(user)
+	if(atom_integrity >= max_integrity)
+		to_chat(user, span_warning("[src] is already in good condition!"))
+		return
+	if(!tool.tool_start_check(user, amount = 0))
+		return
+
+	to_chat(user, span_notice("You begin repairing [src]..."))
+	if(!tool.use_tool(src, user, 40, volume = 50))
+		return
+
+	atom_integrity = max_integrity
+	to_chat(user, span_notice("You repair [src]."))
+	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 ///creates a window from the typepath given from window_type, which is either a glass sheet typepath or a /obj/structure/window subtype
 /obj/structure/window_frame/proc/create_structure_window(window_material_type, start_anchored = TRUE)
@@ -93,38 +194,8 @@
 	our_window.update_appearance()
 
 /obj/structure/window_frame/attackby(obj/item/attacking_item, mob/living/user, params)
-
 	add_fingerprint(user)
-
-	if(attacking_item.tool_behaviour == TOOL_WELDER)
-		if(atom_integrity < max_integrity)
-			if(!attacking_item.tool_start_check(user, amount = 0))
-				return
-
-			to_chat(user, span_notice("You begin repairing [src]..."))
-			if(!attacking_item.use_tool(src, user, 40, volume = 50))
-				return
-
-			atom_integrity = max_integrity
-			to_chat(user, span_notice("You repair [src]."))
-			update_appearance()
-		else
-			to_chat(user, span_warning("[src] is already in good condition!"))
-		return
-
-	else if(attacking_item.tool_behaviour == TOOL_WIRECUTTER)
-		if(has_grille)
-
-			if(!attacking_item.use_tool(src, user, 0, volume = 50))
-				return
-
-			to_chat(user, "<span class='notice'>You cut the grille on [src].</span>")
-
-			has_grille = FALSE
-			update_appearance()
-			return
-
-	else if(isstack(attacking_item))
+	if(isstack(attacking_item))
 		var/obj/item/stack/adding_stack = attacking_item
 		var/stack_name = "[adding_stack]" // in case the stack gets deleted after use()
 
@@ -140,6 +211,9 @@
 			has_grille = TRUE
 			to_chat(user, "<span class='notice'>You add [stack_name] to [src]")
 			update_appearance()
+
+	else if((attacking_item.flags_1 & CONDUCT_1) && try_shock(user, 70))
+		return
 
 	return ..()
 
