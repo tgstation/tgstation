@@ -53006,7 +53006,7 @@
 /area/station/science/xenobiology)
 "pii" = (
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_ordmix{
-	dir = 8
+	dir = 4
 	},
 /obj/effect/landmark/blobstart,
 /turf/open/floor/engine,
