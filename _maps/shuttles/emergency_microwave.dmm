@@ -10,7 +10,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
 	},
-/obj/effect/spawner/random/food_or_drink,
+/obj/effect/spawner/random/food_or_drink/dinner,
 /turf/open/floor/iron/white/smooth_half{
 	dir = 1
 	},
@@ -32,8 +32,8 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
-	dir = 4
+/obj/machinery/atmospherics/components/binary/volume_pump{
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
@@ -64,12 +64,8 @@
 /area/shuttle/escape)
 "k" = (
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/machinery/atmospherics/components/unary/thermomachine/heater/on{
-	target_temperature = 999.00;
-	max_temperature = 999.00
-	},
-/obj/item/screwdriver/nuke,
-/obj/item/wrench/combat,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/microwave/hell,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "m" = (
@@ -102,9 +98,8 @@
 /obj/structure/window/reinforced/plasma/spawner,
 /obj/structure/window/reinforced/plasma/spawner/north,
 /obj/effect/turf_decal/delivery/red,
-/obj/machinery/atmospherics/components/binary/volume_pump/on{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
+/obj/machinery/meter,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "q" = (
@@ -125,21 +120,24 @@
 	id = cockpitheatshield;
 	name = "Cockpit Heat Shield"
 	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/machinery/microwave,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on{
+	dir = 4;
+	initialize_directions = 4
+	},
+/obj/item/screwdriver/nuke,
+/obj/item/wrench/combat,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "s" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
-/obj/effect/spawner/random/food_or_drink,
+/obj/effect/spawner/random/food_or_drink/dinner,
 /turf/open/floor/iron/white/smooth_half,
 /area/shuttle/escape)
 "t" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/effect/spawner/random/food_or_drink,
+/obj/effect/spawner/random/food_or_drink/dinner,
 /turf/open/floor/iron/white/smooth_half{
 	dir = 1
 	},
@@ -236,8 +234,10 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "H" = (
@@ -327,7 +327,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
-/obj/effect/spawner/random/food_or_drink,
+/obj/effect/spawner/random/food_or_drink/dinner,
 /turf/open/floor/iron/white/smooth_large,
 /area/shuttle/escape)
 "W" = (
