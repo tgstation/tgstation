@@ -223,7 +223,7 @@
 		/obj/item/food/breadslice/root = 5,
 		/obj/item/food/kebab/candied_mushrooms = 5,
 		/obj/item/food/steeped_mushrooms = 5,
-		/obj/item/food/larvae = 5,
+		/obj/item/food/canned/larvae = 5,
 		/obj/item/food/emperor_roll = 5,
 		/obj/item/food/honey_roll = 5,
 	)

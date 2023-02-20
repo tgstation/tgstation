@@ -97,7 +97,7 @@
 
 /datum/reagent/drug/nicotine/overdose_process(mob/living/affected_mob, delta_time, times_fired)
 	affected_mob.adjustToxLoss(0.1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-	affected_mob.adjustOxyLoss(1.1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(1.1 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	..()
 	. = TRUE
 
@@ -271,7 +271,7 @@
 	affected_mob.adjustToxLoss(0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	if(DT_PROB(30, delta_time))
 		affected_mob.losebreath++
-		affected_mob.adjustOxyLoss(1, FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(1, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	..()
 	. = TRUE
 

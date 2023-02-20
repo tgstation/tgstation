@@ -16,12 +16,6 @@
 	if(!user.can_read(src, READING_CHECK_LITERACY))
 		return
 
-	if(ishuman(user) && !allow_chunky)
-		var/mob/living/carbon/human/human_user = user
-		if(human_user.check_chunky_fingers())
-			balloon_alert(human_user, "fingers are too big!")
-			return
-
 	// Robots don't really need to see the screen, their wireless connection works as long as computer is on.
 	if(!screen_on && !issilicon(user))
 		if(ui)
@@ -56,7 +50,6 @@
 
 /obj/item/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
-	data["device_theme"] = device_theme
 
 	data["login"] = list(
 		IDName = saved_identification || "Unknown",
@@ -77,17 +70,14 @@
 		data["removable_media"] += "intelliCard"
 
 	data["programs"] = list()
-	for(var/datum/computer_file/program/P in stored_files)
-		var/running = FALSE
-		if(P in idle_threads)
-			running = TRUE
-
+	for(var/datum/computer_file/program/program in stored_files)
 		data["programs"] += list(list(
-			"name" = P.filename,
-			"desc" = P.filedesc,
-			"running" = running,
-			"icon" = P.program_icon,
-			"alert" = P.alert_pending,
+			"name" = program.filename,
+			"desc" = program.filedesc,
+			"header_program" = program.header_program,
+			"running" = !!(program in idle_threads),
+			"icon" = program.program_icon,
+			"alert" = program.alert_pending,
 		))
 
 	data["has_light"] = has_light
@@ -102,6 +92,12 @@
 	. = ..()
 	if(.)
 		return
+
+	if(ishuman(usr) && !allow_chunky) //in /datum/computer_file/program/ui_act() too
+		var/mob/living/carbon/human/human_user = usr
+		if(human_user.check_chunky_fingers())
+			balloon_alert(human_user, "fingers are too big!")
+			return TRUE
 
 	switch(action)
 		if("PC_exit")

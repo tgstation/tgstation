@@ -146,7 +146,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 				ui_interact(M)
 		if(issilicon(usr) || isAdminGhostAI(usr))
 			if (!(usr in nearby))
-				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
+				if (usr.client && usr.machine == src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
 					is_in_use = TRUE
 					ui_interact(usr)
 
@@ -155,7 +155,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			if(!(usr in nearby))
-				if(usr.client && usr.machine==src)
+				if(usr.client && usr.machine == src)
 					if(H.dna.check_mutation(/datum/mutation/human/telekinesis))
 						is_in_use = TRUE
 						ui_interact(usr)
@@ -290,7 +290,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /obj/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && (!current_skin || infinite_reskin) && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE))
+	if(unique_reskin && (!current_skin || infinite_reskin) && user.can_perform_action(src, NEED_DEXTERITY))
 		reskin_obj(user)
 
 /**

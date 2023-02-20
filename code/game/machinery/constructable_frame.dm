@@ -101,6 +101,37 @@
 		amt += req_components[path]
 	return amt
 
+/**
+ * install the circuitboard in this frame
+ * * board - the machine circuitboard to install
+ * * user - the player
+ * * by_hand - is the player installing the board by hand or from the RPED. Used to decide how to transfer the board into the frame
+ */
+/obj/structure/frame/machine/proc/install_board(obj/item/circuitboard/machine/board, mob/user, by_hand)
+	if(!board.build_path)
+		to_chat(user, span_warning("This circuitboard seems to be broken."))
+		return
+	if(!anchored && board.needs_anchored)
+		to_chat(user, span_warning("The frame needs to be secured first!"))
+		return
+	if(by_hand && !user.transferItemToLoc(board, src))
+		return
+	else if(!board.forceMove(src))
+		return
+
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	to_chat(user, span_notice("You add the circuit board to the frame."))
+	circuit = board
+	icon_state = "box_2"
+	state = 3
+	components = list()
+	//add circuit board as the first component to the list of components
+	//required for part_replacer to locate it while exchanging parts so it does not early return in /obj/machinery/proc/exchange_parts
+	components += circuit
+	req_components = board.req_components.Copy()
+	update_namelist(board.specific_parts)
+	return TRUE
+
 /obj/structure/frame/machine/attackby(obj/item/P, mob/living/user, params)
 	switch(state)
 		if(1)
@@ -152,27 +183,34 @@
 					set_anchored(!anchored)
 				return
 
+			if(istype(P, /obj/item/storage/part_replacer) && P.contents.len)
+				var/obj/item/storage/part_replacer/replacer = P
+				// map of circuitboard names to the board
+				var/list/circuit_boards = list()
+				for(var/obj/item/circuitboard/machine/board in replacer.contents)
+					circuit_boards[board.name] = board
+				if(!length(circuit_boards))
+					return
+				//if there is only one board directly install it else pick from list
+				var/obj/item/circuitboard/machine/target_board
+				if(circuit_boards.len == 1)
+					for(var/board_name in circuit_boards)
+						target_board = circuit_boards[board_name]
+				else
+					var/option = tgui_input_list(user, "Select Circuitboard To Install"," Available Boards", circuit_boards)
+					target_board = circuit_boards[option]
+					if(!target_board)
+						return
+				//install board
+				if(install_board(target_board, user, FALSE))
+					replacer.play_rped_sound()
+					//attack this frame again with the rped so it can install stock parts since its now in state 3
+					attackby(replacer, user, params)
+					return
+
 			if(istype(P, /obj/item/circuitboard/machine))
-				var/obj/item/circuitboard/machine/board = P
-				if(!board.build_path)
-					to_chat(user, span_warning("This circuitboard seems to be broken."))
-					return
-				if(!anchored && board.needs_anchored)
-					to_chat(user, span_warning("The frame needs to be secured first!"))
-					return
-				if(!user.transferItemToLoc(board, src))
-					return
-				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-				to_chat(user, span_notice("You add the circuit board to the frame."))
-				circuit = board
-				icon_state = "box_2"
-				state = 3
-				components = list()
-				//add circuit board as the first component to the list of components
-				//required for part_replacer to locate it while exchanging parts so it does not early return in /obj/machinery/proc/exchange_parts
-				components += circuit
-				req_components = board.req_components.Copy()
-				update_namelist(board.specific_parts)
+				var/obj/item/circuitboard/machine/machine_board = P
+				install_board(machine_board, user, TRUE)
 				return
 
 			else if(istype(P, /obj/item/circuitboard))
@@ -230,7 +268,6 @@
 							new_machine.circuit.moveToNullspace()
 							QDEL_NULL(new_machine.circuit)
 						for(var/obj/old_part in new_machine.component_parts)
-							// Move to nullspace and delete.
 							old_part.moveToNullspace()
 							qdel(old_part)
 
@@ -251,11 +288,17 @@
 					qdel(src)
 				return
 
-			if(istype(P, /obj/item/storage/part_replacer) && P.contents.len && get_req_components_amt())
-				var/obj/item/storage/part_replacer/replacer = P
-				var/list/added_components = list()
-				var/list/part_list = replacer.get_sorted_parts() //parts sorted in order of tier
+			if(istype(P, /obj/item/storage/part_replacer))
+				/**
+				 * more efficient return so no if conditions after this are executed.
+				 * Required when the rped is re attacking the frame after installing circuitboard so it returns quickly
+				 */
+				if(!P.contents.len || !get_req_components_amt())
+					return
 
+				var/obj/item/storage/part_replacer/replacer = P
+				var/play_sound = FALSE
+				var/list/part_list = replacer.get_sorted_parts() //parts sorted in order of tier
 				for(var/path in req_components)
 					var/target_path
 					if(ispath(path, /datum/stock_part))
@@ -270,34 +313,25 @@
 						if(istype(part,/obj/item/stack))
 							var/obj/item/stack/S = part
 							var/used_amt = min(round(S.get_amount()), req_components[path])
+							var/stack_name = S.singular_name
 							if(!used_amt || !S.use(used_amt))
 								continue
-							var/NS = new S.merge_type(src, used_amt)
-							added_components[NS] = path
 							req_components[path] -= used_amt
-						else
-							added_components[part] = path
-							if(replacer.atom_storage.attempt_remove(part, src))
-								req_components[path]--
+							to_chat(user, span_notice("You add [used_amt] [stack_name] to [src]."))
+							play_sound = TRUE
+						else if(replacer.atom_storage.attempt_remove(part, src))
+							var/stock_part_datum = GLOB.stock_part_datums_per_object[part.type]
+							if (!isnull(stock_part_datum))
+								components += stock_part_datum
+								qdel(part)
+							else
+								components += part
+								part.forceMove(src)
+							req_components[path]--
+							to_chat(user, span_notice("You add [part] to [src]."))
+							play_sound = TRUE
 
-				for(var/obj/item/part in added_components)
-					if(istype(part,/obj/item/stack))
-						var/obj/item/stack/incoming_stack = part
-						for(var/obj/item/stack/merge_stack in components)
-							if(incoming_stack.can_merge(merge_stack))
-								incoming_stack.merge(merge_stack)
-								if(QDELETED(incoming_stack))
-									break
-					if(!QDELETED(part)) //If we're a stack and we merged we might not exist anymore
-						var/stock_part_datum = GLOB.stock_part_datums_per_object[part.type]
-						if (!isnull(stock_part_datum))
-							components += stock_part_datum
-							qdel(part)
-						else
-							components += part
-							part.forceMove(src)
-					to_chat(user, span_notice("You add [part] to [src]."))
-				if(added_components.len)
+				if(play_sound)
 					replacer.play_rped_sound()
 				return
 
@@ -322,16 +356,7 @@
 				if(isstack(P))
 					var/obj/item/stack/S = P
 					var/used_amt = min(round(S.get_amount()), req_components[stock_part_path])
-
 					if(used_amt && S.use(used_amt))
-						var/obj/item/stack/NS = locate(S.merge_type) in components
-
-						if(!NS)
-							NS = new S.merge_type(src, used_amt)
-							components += NS
-						else
-							NS.add(used_amt)
-
 						req_components[stock_part_path] -= used_amt
 						to_chat(user, span_notice("You add [P] to [src]."))
 					return

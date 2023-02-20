@@ -67,9 +67,6 @@
 
 		handle_gravity(delta_time, times_fired)
 
-		if(stat != DEAD)
-			handle_traits(delta_time, times_fired) // eye, ear, brain damages
-
 	if(machine)
 		machine.check_eye(src)
 
@@ -135,14 +132,6 @@
  */
 /mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	return reagents.has_reagent(reagent, amount, needs_metabolizing)
-
-/mob/living/proc/handle_traits(delta_time, times_fired)
-	//Eyes
-	if(eye_blind) //blindness, heals slowly over time
-		if(HAS_TRAIT_FROM(src, TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
-			adjust_blindness(-1.5 * delta_time)
-		else if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
-			adjust_blindness(-0.5 * delta_time)
 
 /mob/living/proc/update_damage_hud()
 	return

@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - qol: "Rapid Part Exchange Devices and their bluespace variants now automatically drop their current lowest tier of parts, instead of all of their parts."

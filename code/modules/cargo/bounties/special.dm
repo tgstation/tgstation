@@ -9,7 +9,7 @@
 		/obj/item/organ/internal/body_egg/alien_embryo = TRUE,
 		/obj/item/organ/internal/liver/alien = TRUE,
 		/obj/item/organ/internal/tongue/alien = TRUE,
-		/obj/item/organ/internal/eyes/night_vision/alien = TRUE,
+		/obj/item/organ/internal/eyes/alien = TRUE,
 	)
 
 /datum/bounty/item/syndicate_documents

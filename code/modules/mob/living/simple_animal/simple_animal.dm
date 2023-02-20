@@ -59,9 +59,9 @@
 	var/stamina_recovery = 5
 
 	///Minimal body temperature without receiving damage
-	var/minbodytemp = 250
+	var/minbodytemp = NPC_DEFAULT_MIN_TEMP
 	///Maximal body temperature without receiving damage
-	var/maxbodytemp = 350
+	var/maxbodytemp = NPC_DEFAULT_MAX_TEMP
 	///This damage is taken when the body temp is too cold.
 	var/unsuitable_cold_damage
 	///This damage is taken when the body temp is too hot.
@@ -496,7 +496,7 @@
 			return FALSE
 	return TRUE
 
-/mob/living/simple_animal/ignite_mob()
+/mob/living/simple_animal/ignite_mob(silent)
 	if(!flammable)
 		return FALSE
 	return ..()
@@ -577,12 +577,11 @@
 			set_sight(initial(sight))
 		else
 			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		set_see_in_dark(NIGHTVISION_FOV_RANGE)
 		set_invis_see(SEE_INVISIBLE_OBSERVER)
 		return
 
+	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
 	set_invis_see(initial(see_invisible))
-	set_see_in_dark(initial(see_in_dark))
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
 		set_sight(null)
 	else
@@ -616,7 +615,7 @@
 	else
 		mode()
 
-/mob/living/simple_animal/swap_hand(hand_index)
+/mob/living/simple_animal/perform_hand_swap(hand_index)
 	. = ..()
 	if(!.)
 		return
@@ -751,3 +750,6 @@
 		hunted = null
 		COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 		return
+
+/mob/living/simple_animal/compare_sentience_type(compare_type)
+	return sentience_type == compare_type

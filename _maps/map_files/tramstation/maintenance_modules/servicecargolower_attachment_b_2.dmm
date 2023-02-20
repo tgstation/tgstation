@@ -1,0 +1,182 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"b" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Privacy Shutter";
+	id = "supportourtroops"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"i" = (
+/obj/modular_map_connector,
+/turf/closed/wall,
+/area/station/maintenance/starboard/greater)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"p" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"q" = (
+/obj/structure/table,
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/spawner/random/entertainment/money_small,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Privacy Shutter";
+	id = "supportourtroops"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"v" = (
+/obj/machinery/light/small/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"x" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/greater)
+"A" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"G" = (
+/obj/structure/chair/stool/bar/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"J" = (
+/turf/template_noop,
+/area/template_noop)
+"K" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/random/clothing/beret_or_rabbitears,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"L" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/eight,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"O" = (
+/obj/machinery/button/door/directional/north{
+	pixel_x = 9;
+	id = "supportourtroops";
+	name = "Privacy Shutter Toggle"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"Q" = (
+/obj/effect/spawner/random/engineering/tank,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"R" = (
+/obj/structure/table,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/spawner/random/engineering/tool,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Privacy Shutter";
+	id = "supportourtroops"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"T" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"Z" = (
+/obj/structure/table,
+/obj/structure/window/reinforced/spawner,
+/obj/machinery/door/window/left/directional/east,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Privacy Shutter";
+	id = "supportourtroops"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+
+(1,1,1) = {"
+J
+J
+J
+J
+a
+a
+"}
+(2,1,1) = {"
+J
+J
+x
+x
+x
+x
+"}
+(3,1,1) = {"
+J
+J
+K
+L
+T
+Q
+"}
+(4,1,1) = {"
+J
+J
+o
+o
+o
+o
+"}
+(5,1,1) = {"
+J
+J
+O
+G
+o
+o
+"}
+(6,1,1) = {"
+J
+i
+q
+Z
+b
+R
+"}
+(7,1,1) = {"
+J
+p
+o
+o
+o
+o
+"}
+(8,1,1) = {"
+J
+J
+A
+v
+A
+o
+"}

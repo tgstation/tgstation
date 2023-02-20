@@ -32,6 +32,7 @@
 		overmind.blobstrain.on_gain()
 		update_appearance()
 	AddComponent(/datum/component/stationloving, FALSE, TRUE)
+	AddElement(/datum/element/blocks_explosives)
 	return ..()
 
 /obj/structure/blob/special/core/Destroy()

@@ -118,6 +118,8 @@
 /// If found, returns how deep it is for use in other baseturf procs, or null if it cannot be found.
 /// For example, this number can be passed into ScrapeAway to scrape everything until that point.
 /turf/proc/depth_to_find_baseturf(baseturf_type)
+	if(!islist(baseturfs))
+		return baseturfs == baseturf_type ? 1 : null
 	var/index = baseturfs.Find(baseturf_type)
 	if (index == 0)
 		return null
@@ -187,3 +189,11 @@
 	var/list/baseturfs_copy = baseturfs.Copy()
 	baseturfs_copy.Insert(level, turf_type)
 	baseturfs = baseturfs_string_list(baseturfs_copy, src)
+
+/// Places a baseturf ontop of a searched for baseturf.
+/turf/proc/stack_ontop_of_baseturf(floor, roof)
+	if (!islist(baseturfs))
+		baseturfs = list(baseturfs)
+	var/floor_position = baseturfs.Find(floor)
+	if(floor_position != 0)
+		insert_baseturf(floor_position + 1, roof)

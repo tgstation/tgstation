@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - admin: "Adds a warning to \"View Runtimes\" informing you (yes, you) that it can (and will) crash the server if you attempt to render 100,000 runtimes into the UI at once"

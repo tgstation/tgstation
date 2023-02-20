@@ -62,33 +62,36 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /*
  * Insert the organ into the select mob.
  *
- * reciever - the mob who will get our organ
+ * receiver - the mob who will get our organ
  * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  * drop_if_replaced - if there's an organ in the slot already, whether we drop it afterwards
  */
-/obj/item/organ/proc/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
-	if(!iscarbon(reciever) || owner == reciever)
+/obj/item/organ/proc/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
+	if(!iscarbon(receiver) || owner == receiver)
 		return FALSE
 
-	var/obj/item/organ/replaced = reciever.getorganslot(slot)
+	var/obj/item/organ/replaced = receiver.getorganslot(slot)
 	if(replaced)
-		replaced.Remove(reciever, special = TRUE)
+		replaced.Remove(receiver, special = TRUE)
 		if(drop_if_replaced)
-			replaced.forceMove(get_turf(reciever))
+			replaced.forceMove(get_turf(receiver))
 		else
 			qdel(replaced)
 
-	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, reciever)
-	SEND_SIGNAL(reciever, COMSIG_CARBON_GAIN_ORGAN, src, special)
+	receiver.internal_organs |= src
+	receiver.internal_organs_slot[slot] = src
+	owner = receiver
 
-	owner = reciever
 	moveToNullspace()
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(on_owner_examine))
-	update_organ_traits(reciever)
+	update_organ_traits(receiver)
 	for(var/datum/action/action as anything in actions)
-		action.Grant(reciever)
-	return TRUE
+		action.Grant(receiver)
 
+	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, receiver)
+	SEND_SIGNAL(receiver, COMSIG_CARBON_GAIN_ORGAN, src, special)
+
+	return TRUE
 
 /*
  * Remove the organ from the select mob.
@@ -98,7 +101,11 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  */
 /obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE)
 
-	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(organ_owner, COMSIG_PARENT_EXAMINE)
+
+	organ_owner.internal_organs -= src
+	if(organ_owner.internal_organs_slot[slot] == src)
+		organ_owner.internal_organs_slot.Remove(slot)
 
 	owner = null
 	for(var/datum/action/action as anything in actions)
@@ -179,8 +186,13 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		return
 	damage = clamp(damage + damage_amount, 0, maximum)
 	var/mess = check_damage_thresholds(owner)
-	check_failing_thresholds()
 	prev_damage = damage
+
+	if(damage >= maxHealth)
+		organ_flags |= ORGAN_FAILING
+	else
+		organ_flags &= ~ORGAN_FAILING
+
 	if(mess && owner && owner.stat <= SOFT_CRIT)
 		to_chat(owner, mess)
 
@@ -212,13 +224,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			return high_threshold_cleared
 		if(prev_damage == maxHealth)
 			return now_fixed
-
-///Checks if an organ should/shouldn't be failing and gives the appropriate organ flag
-/obj/item/organ/proc/check_failing_thresholds()
-	if(damage >= maxHealth)
-		organ_flags |= ORGAN_FAILING
-	if(damage < maxHealth)
-		organ_flags &= ~ORGAN_FAILING
 
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm

@@ -17,6 +17,8 @@
 	var/category = PROGRAM_CATEGORY_MISC
 	/// Program-specific screen icon state
 	var/program_icon_state = null
+	///Boolean on whether the program will appear at the top on PDA menus, or in the app list with everything else.
+	var/header_program = FALSE
 	/// Set to 1 for program to require nonstop NTNet connection to run. If NTNet connection is lost program crashes.
 	var/requires_ntnet = FALSE
 	/// Optional, if above is set to 1 checks for specific function of NTNet (currently NTNET_SOFTWAREDOWNLOAD and NTNET_COMMUNICATION)
@@ -31,7 +33,7 @@
 	var/available_on_syndinet = FALSE
 	/// Name of the tgui interface
 	var/tgui_id
-	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
+	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images must also be inserted into /datum/asset/simple/headers.
 	var/ui_header = null
 	/// Font Awesome icon to use as this program's icon in the modular computer main menu. Defaults to a basic program maximize window icon if not overridden.
 	var/program_icon = "window-maximize-o"
@@ -77,7 +79,7 @@
  *user is the person making the attack action
  *params is anything the pre_attack() proc had in the same-named variable.
 */
-/datum/computer_file/program/proc/tap(atom/A, mob/living/user, params)
+/datum/computer_file/program/proc/tap(atom/tapped_atom, mob/living/user, params)
 	return FALSE
 
 ///Makes sure a program can run on this hardware (for apps limited to tablets/computers/laptops)
@@ -171,20 +173,6 @@
 	return FALSE
 
 /**
- *
- *Called by the device when it is emagged.
- *
- *Emagging the device allows certain programs to unlock new functions. However, the program will
- *need to be downloaded first, and then handle the unlock on their own in their run_emag() proc.
- *The device will allow an emag to be run multiple times, so the user can re-emag to run the
- *override again, should they download something new. The run_emag() proc should return TRUE if
- *the emagging affected anything, and FALSE if no change was made (already emagged, or has no
- *emag functions).
-**/
-/datum/computer_file/program/proc/run_emag()
-	return FALSE
-
-/**
  * Kills the running program
  *
  * Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
@@ -213,10 +201,16 @@
 // Calls beginning with "PRG_" are reserved for programs handling.
 // Calls beginning with "PC_" are reserved for computer handling (by whatever runs the program)
 // ALWAYS INCLUDE PARENT CALL ..() OR DIE IN FIRE.
-/datum/computer_file/program/ui_act(action,list/params,datum/tgui/ui)
+/datum/computer_file/program/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
+
+	if(ishuman(usr) && !computer.allow_chunky) //in /obj/item/modular_computer/ui_act() too
+		var/mob/living/carbon/human/human_user = usr
+		if(human_user.check_chunky_fingers())
+			computer.balloon_alert(human_user, "fingers are too big!")
+			return TRUE
 
 	if(computer)
 		switch(action)

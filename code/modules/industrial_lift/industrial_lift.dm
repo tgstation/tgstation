@@ -393,17 +393,23 @@ GLOBAL_LIST_EMPTY(lifts)
 					qdel(victim_machine)
 
 			for(var/mob/living/collided in dest_turf.contents)
+				var/damage_multiplier = collided.maxHealth * 0.01
 				if(lift_master_datum.ignored_smashthroughs[collided.type])
 					continue
 				to_chat(collided, span_userdanger("[src] collides into you!"))
 				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-				var/damage = rand(9, 28) * collision_lethality
-				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD)
-				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_CHEST)
-				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG)
-				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG)
-				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM)
-				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM)
+				var/damage = 0
+				if(prob(15)) //sorry buddy, luck wasn't on your side
+					damage = 29 * collision_lethality * damage_multiplier
+				else
+					damage = rand(7, 21) * collision_lethality * damage_multiplier
+				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
+				collided.apply_damage(3 * damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = 21)
+				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 14)
+				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 14)
+				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 14)
+				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 14)
+				log_combat(src, collided, "collided with")
 
 				if(QDELETED(collided)) //in case it was a mob that dels on death
 					continue
@@ -418,7 +424,7 @@ GLOBAL_LIST_EMPTY(lifts)
 				var/datum/callback/land_slam = new(collided, TYPE_PROC_REF(/mob/living/, tram_slam_land))
 				collided.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality, callback = land_slam)
 
-				SEND_SIGNAL(src, COMSIG_TRAM_COLLISION)
+				SEND_SIGNAL(src, COMSIG_TRAM_COLLISION, collided)
 
 	unset_movement_registrations(exited_locs)
 	group_move(things_to_move, going)
@@ -711,6 +717,11 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(direction == DOWN)
 		user.visible_message(span_notice("[user] moves the lift downwards."), span_notice("You move the lift downwards."))
 
+/obj/machinery/door/poddoor/lift
+	name = "elevator door"
+	desc = "Keeps idiots like you from walking into an open elevator shaft."
+	icon = 'icons/obj/doors/liftdoor.dmi'
+
 // A subtype intended for "public use"
 /obj/structure/industrial_lift/public
 	icon = 'icons/turf/floors.dmi'
@@ -790,7 +801,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	name = "tram"
 	desc = "A tram for tramversing the station."
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "titanium"
+	icon_state = "textured_large"
 	layer = TRAM_FLOOR_LAYER
 	base_icon_state = null
 	smoothing_flags = NONE
@@ -814,7 +825,21 @@ GLOBAL_LIST_EMPTY(lifts)
 	create_multitile_platform = TRUE
 
 /obj/structure/industrial_lift/tram/white
-	icon_state = "titanium_white"
+	icon_state = "textured_white_large"
+
+/obj/structure/industrial_lift/tram/purple
+	icon_state = "titanium_purple"
+
+/obj/structure/industrial_lift/tram/subfloor
+	icon_state = "tram_subfloor"
+
+/obj/structure/industrial_lift/tram/subfloor/window
+	icon_state = "tram_subfloor_window"
+
+/datum/armor/structure_industrial_lift
+	melee = 50
+	fire = 80
+	acid = 50
 
 /obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
 	. = ..()
@@ -847,7 +872,6 @@ GLOBAL_LIST_EMPTY(lifts)
  * Tram finds its location at this point before fully unlocking controls to the user.
  */
 /obj/structure/industrial_lift/tram/proc/unlock_controls()
-	visible_message(span_notice("[src]'s controls are now unlocked."))
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.
 		tram_part.set_travelling(FALSE)
 		lift_master_datum.set_controls(LIFT_PLATFORM_UNLOCKED)

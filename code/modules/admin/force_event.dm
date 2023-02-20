@@ -3,7 +3,7 @@
 	set name = "Trigger Event"
 	set category = "Admin.Events"
 
-	if(!holder ||!check_rights(R_FUN))
+	if(!holder || !check_rights(R_FUN))
 		return
 
 	holder.forceEvent()
@@ -66,6 +66,7 @@
 			"description" = event_control.description,
 			"type" = event_control.type,
 			"category" = event_control.category,
+			"has_customization" = !isnull(event_control.admin_setup),
 		))
 	data["categories"] = categories
 	data["events"] = events
@@ -88,7 +89,7 @@
 			var/datum/round_event_control/event = locate(event_to_run_type) in SSevents.control
 			if(!event)
 				return
-			if(event.admin_setup(usr) == ADMIN_CANCEL_EVENT)
+			if(event.admin_setup && event.admin_setup.prompt_admins() == ADMIN_CANCEL_EVENT)
 				return
 			var/always_announce_chance = 100
 			var/no_announce_chance = 0

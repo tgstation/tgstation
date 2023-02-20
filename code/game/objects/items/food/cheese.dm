@@ -84,6 +84,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 35
 
+/obj/item/food/cheese/curd_cheese/make_bakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/cheese/cheese_curds, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
+
 /obj/item/food/cheese/curd_cheese/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/cheese/cheese_curds)
 

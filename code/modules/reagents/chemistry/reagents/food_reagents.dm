@@ -385,16 +385,14 @@
 
 	var/mob/living/carbon/victim = exposed_mob
 	if(methods & (TOUCH|VAPOR))
-		var/pepper_proof = victim.is_pepper_proof()
-
 		//check for protection
 		//actually handle the pepperspray effects
-		if (!(pepper_proof)) // you need both eye and mouth protection
+		if (!victim.is_pepper_proof()) // you need both eye and mouth protection
 			if(prob(5))
 				victim.emote("scream")
 			victim.emote("cry")
 			victim.set_eye_blur_if_lower(10 SECONDS)
-			victim.adjust_blindness(3) // 6 seconds
+			victim.adjust_temp_blindness(6 SECONDS)
 			victim.set_confusion_if_lower(5 SECONDS)
 			victim.Knockdown(3 SECONDS)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
@@ -500,7 +498,7 @@
 		if (!tear_proof)
 			to_chat(exposed_mob, span_warning("Your eyes sting!"))
 			victim.emote("cry")
-			victim.set_eye_blur_if_lower(6 SECONDS)
+			victim.adjust_eye_blur(6 SECONDS)
 
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
@@ -1099,3 +1097,16 @@
 	nutriment_factor = 1.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/creamer
+	
+/datum/reagent/consumable/mintextract
+	name = "Mint Extract"
+	description = "Useful for dealing with undesirable customers."
+	color = "#CF3600" // rgb: 207, 54, 0
+	taste_description = "mint"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/mintextract/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	if(HAS_TRAIT(affected_mob, TRAIT_FAT))
+		affected_mob.investigate_log("has been gibbed by consuming [src] while fat.", INVESTIGATE_DEATHS)
+		affected_mob.inflate_gib()
+	return ..()

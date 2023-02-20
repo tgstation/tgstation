@@ -27,8 +27,10 @@
 	. = ..()
 
 	if(isbasicmob(owner))
-		qdel(src)
-		return
+		var/mob/living/basic/basic_owner = owner
+		if(!basic_owner.flammable)
+			qdel(src)
+			return
 
 	if(isanimal(owner))
 		var/mob/living/simple_animal/animal_owner = owner
@@ -47,8 +49,8 @@
 				continue
 
 			var/cur_stacks = stacks
-			adjust_stacks(-enemy_effect.stacks * enemy_effect.stack_modifier / stack_modifier)
-			enemy_effect.adjust_stacks(-cur_stacks * stack_modifier / enemy_effect.stack_modifier)
+			adjust_stacks(-abs(enemy_effect.stacks * enemy_effect.stack_modifier / stack_modifier))
+			enemy_effect.adjust_stacks(-abs(cur_stacks * stack_modifier / enemy_effect.stack_modifier))
 			if(enemy_effect.stacks <= 0)
 				qdel(enemy_effect)
 

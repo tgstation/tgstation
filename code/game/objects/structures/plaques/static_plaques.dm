@@ -141,3 +141,15 @@
 /obj/structure/sign/plaques/kiddie/gameoflife
 	name = "\improper Conway's The Game Of Life plaque"
 	desc = "A plaque detailing the historical significance of The Game Of Life in the field of computer science, and that the mural underfoot is a representation of the game in action."
+
+/obj/structure/sign/plaques/tram
+	name = "\improper tram information plate"
+	desc = "A plate showing details from the manufacturer about this Nakamura Engineering SkyyTram Mk IV, serial number LT304TG2563.<br><br>We are not responsible for any injuries or fatalities caused by usage of the tram. \
+	Using the tram carries inherent risks, and we cannot guarantee the safety of all passengers. By using the tram, you assume, acknowledge, and accept all the risks and responsibilities. <br><br>\
+	Please be aware that riding the tram can cause a variety of injuries, including but not limited to: slips, trips, and falls; collisions with other passengers or objects; strains, sprains, and other musculoskeletal injuries; \
+	cuts, bruises, and lacerations; and more severe injuries such as head trauma, spinal cord injuries, and even death. These injuries can be caused by a variety of factors, including the movements of the tram, the behaviour \
+	of other passengers, and unforeseen circumstances such as foul play or mechanical issues.<br><br>\
+	By entering the tram, guideway, or crossings you agree Nanotrasen is not liable for any injuries, damages, or losses that may occur. If you do not agree to these terms, please do not use the tram.<br>"
+	icon_state = "commission_tram"
+	custom_materials = list(/datum/material/titanium = 2000)
+	plane = FLOOR_PLANE

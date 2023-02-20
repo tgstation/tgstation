@@ -60,12 +60,12 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_MIME = /obj/item/clothing/gloves/color/white,
 		DYE_CLOWN = /obj/item/clothing/gloves/color/rainbow,
 		DYE_QM = /obj/item/clothing/gloves/color/brown,
-		DYE_CAPTAIN = /obj/item/clothing/gloves/color/captain,
+		DYE_CAPTAIN = /obj/item/clothing/gloves/captain,
 		DYE_HOP = /obj/item/clothing/gloves/color/grey,
 		DYE_HOS = /obj/item/clothing/gloves/color/black,
-		DYE_CE = /obj/item/clothing/gloves/color/chief_engineer,
+		DYE_CE = /obj/item/clothing/gloves/chief_engineer,
 		DYE_RD = /obj/item/clothing/gloves/color/grey,
-		DYE_CMO = /obj/item/clothing/gloves/color/latex/nitrile,
+		DYE_CMO = /obj/item/clothing/gloves/latex/nitrile,
 		DYE_REDCOAT = /obj/item/clothing/gloves/color/white,
 		DYE_SYNDICATE = /obj/item/clothing/gloves/combat,
 		DYE_CENTCOM = /obj/item/clothing/gloves/combat
@@ -389,7 +389,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(busy)
 		to_chat(user, span_warning("[src] is busy!"))

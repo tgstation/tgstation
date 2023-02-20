@@ -95,6 +95,7 @@
 				CRASH("Invalid window path type in RCD: [the_rcd.window_type]")
 			var/obj/structure/window/window_path = the_rcd.window_type
 			if(!valid_window_location(T, user.dir, is_fulltile = initial(window_path.fulltile)))
+				to_chat(user, span_notice("Already a window in this direction!"))
 				return FALSE
 			to_chat(user, span_notice("You construct the window."))
 			var/obj/structure/window/WD = new the_rcd.window_type(T, user.dir)
@@ -200,7 +201,7 @@
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(W, /obj/item/stack/rods) && broken)
+	if(istype(W, /obj/item/stack/rods) && broken && do_after(user, 1 SECONDS, target = src))
 		if(shock(user, 90))
 			return
 		var/obj/item/stack/rods/R = W

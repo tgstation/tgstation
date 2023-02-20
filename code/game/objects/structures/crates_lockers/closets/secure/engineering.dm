@@ -1,5 +1,5 @@
 /obj/structure/closet/secure_closet/engineering_chief
-	name = "\proper chief engineer's locker"
+	name = "chief engineer's locker"
 	req_access = list(ACCESS_CE)
 	icon_state = "ce"
 
@@ -72,7 +72,7 @@
 
 
 /obj/structure/closet/secure_closet/atmospherics
-	name = "\proper atmospheric technician's locker"
+	name = "atmospheric technician's locker"
 	req_access = list(ACCESS_ATMOSPHERICS)
 	icon_state = "atmos"
 
@@ -85,7 +85,8 @@
 	new /obj/item/holosign_creator/atmos(src)
 	new /obj/item/watertank/atmos(src)
 	new /obj/item/clothing/suit/utility/fire/atmos(src)
+	new /obj/item/clothing/gloves/atmos(src)
 	new /obj/item/clothing/mask/gas/atmos(src)
-	new /obj/item/clothing/head/utility/hardhat/atmos(src)
+	new /obj/item/clothing/head/utility/hardhat/welding/atmos(src)
 	new /obj/item/clothing/glasses/meson/engine/tray(src)
 	new /obj/item/extinguisher/advanced(src)

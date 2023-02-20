@@ -15,7 +15,7 @@
 	var/visor_flags_inv = 0 //same as visor_flags, but for flags_inv
 	var/visor_flags_cover = 0 //same as above, but for flags_cover
 	///What to toggle when toggled with weldingvisortoggle()
-	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_DARKNESSVIEW | VISOR_INVISVIEW
+	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_INVISVIEW
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
@@ -40,7 +40,15 @@
 	/// How many zones (body parts, not precise) we have disabled so far, for naming purposes
 	var/zones_disabled
 
-	/// A lazily initiated "food" version of the clothing for moths
+	/// A lazily initiated "food" version of the clothing for moths.
+	// This intentionally does not use the edible component, for a few reasons.
+	// 1. Effectively everything that wants something edible, from now and into the future,
+	// does not want to receive clothing, simply because moths *can* eat it.
+	// 2. Creating this component for all clothing has a non-negligible impact on init times and memory.
+	// 3. Creating the component contextually to solve #2 will make #1 much more confusing,
+	// and frankly not be a better solution than what we are doing now.
+	// The first issue could be solved if "edible" checks were more granular,
+	// such that you never actually cared about checking if something is *edible*.
 	var/obj/item/food/clothing/moth_snack
 
 /obj/item/clothing/Initialize(mapload)
@@ -66,7 +74,6 @@
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
 
-//This code is cursed, moths are cursed, and someday I will destroy it. but today is not that day.
 /obj/item/food/clothing
 	name = "temporary moth clothing snack item"
 	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object. <--- stinky idiot wrote this"
@@ -95,7 +102,7 @@
 /obj/item/clothing/attack(mob/living/target, mob/living/user, params)
 	if(user.combat_mode || !ismoth(target) || ispickedupmob(src))
 		return ..()
-	if(clothing_flags & INEDIBLE_CLOTHING)
+	if((clothing_flags & INEDIBLE_CLOTHING) || (resistance_flags & INDESTRUCTIBLE))
 		return ..()
 	if(isnull(moth_snack))
 		moth_snack = new
@@ -314,7 +321,7 @@
 			if(!added_durability_header)
 				readout += "\n<b>DURABILITY (I-X)</b>"
 				added_damage_header = TRUE
-			readout += "\n[armor_to_protection_name(durability_key)] [armor_to_protection_class(durability_key)]"
+			readout += "\n[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
 
 		if(flags_cover & HEADCOVERSMOUTH || flags_cover & PEPPERPROOF)
 			var/list/things_blocked = list()

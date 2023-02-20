@@ -55,6 +55,7 @@
 				/obj/item/clothing/suit/costume/dracula = 1,
 				/obj/item/clothing/under/costume/draculass = 1,
 				/obj/item/clothing/suit/costume/gothcoat = 1,
+				/obj/item/clothing/glasses/eyepatch = 1,
 			),
 		),
 		list(

@@ -37,6 +37,9 @@ GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect
 		spawn_meteor(meteor_types, direction)
 
 /proc/spawn_meteor(list/meteor_types, direction)
+	if (SSmapping.is_planetary())
+		stack_trace("Tried to spawn meteors in a map which isn't in space.")
+		return // We're not going to find any space turfs here
 	var/turf/picked_start
 	var/turf/picked_goal
 	var/max_i = 10//number of tries to spawn meteor.
@@ -50,7 +53,7 @@ GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect
 		picked_start = spaceDebrisStartLoc(start_side, start_Z)
 		picked_goal = spaceDebrisFinishLoc(start_side, start_Z)
 		max_i--
-		if(max_i<=0)
+		if(max_i <= 0)
 			return
 	var/new_meteor = pick_weight(meteor_types)
 	new new_meteor(picked_start, picked_goal)
@@ -251,6 +254,19 @@ GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect
 /obj/effect/meteor/proc/check_examine_award(mob/user)
 	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
 		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
+
+/**
+ * Handles the meteor's interaction with meteor shields.
+ *
+ * Returns TRUE if the meteor should be destroyed. Overridable for custom shield interaction.
+ * Return FALSE if a meteor's interaction with meteor shields should NOT destroy it.
+ *
+ * Arguments:
+ * * defender - The meteor shield that is vaporizing us.
+ */
+
+/obj/effect/meteor/proc/shield_defense(obj/machinery/satellite/meteor_shield/defender)
+	return TRUE
 
 ///////////////////////
 //Meteor types
