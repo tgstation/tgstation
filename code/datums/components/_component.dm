@@ -179,7 +179,7 @@
 /datum/component/proc/on_source_add(source)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!uses_sources)
-		CRASH("Component [type] does not use sources but has been given a source")
+		CRASH("Component '[type]' does not use sources but has been given a source")
 	LAZYOR(sources, source)
 
 /**
@@ -188,7 +188,7 @@
 /datum/component/proc/on_source_remove(source)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!uses_sources)
-		CRASH("Component [type] does not use sources but is trying to remove a source")
+		CRASH("Component '[type]' does not use sources but is trying to remove a source")
 	LAZYREMOVE(sources, source)
 	if(!LAZYLEN(sources))
 		qdel(src)
@@ -447,6 +447,8 @@
 	var/dupe_mode = initial(component_type.dupe_mode)
 	var/dupe_type = initial(component_type.dupe_type)
 	var/uses_sources = initial(component_type.uses_sources)
+	if(uses_sources && !source)
+		CRASH("Attempted to add a sourced component of type '[component_type]' to '[type]' without a source!")
 
 	var/datum/component/old_component
 	var/datum/component/new_component
@@ -518,11 +520,11 @@
 /**
  * Removes a component source from this datum
  */
-/datum/proc/RemoveComponentSource(source, var/datum/component/component_type)
+/datum/proc/RemoveComponentSource(source, datum/component/component_type)
 	if(ispath(component_type))
 		component_type = GetExactComponent(component_type)
 	if(!component_type)
-		CRASH("Attempted to remove a null component source of type \[[source.type]\] from a parent of type \[[type]\] with a component type of \[[component_type]\]!")
+		CRASH("Attempted to remove a null or non-existent component '[component_type]' from '[type]'")
 	component_type.on_source_remove(source)
 
 /**
