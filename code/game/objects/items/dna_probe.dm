@@ -29,8 +29,6 @@
 	var/list/stored_dna_human = list()
 	///weak ref to the dna vault
 	var/datum/weakref/dna_vault_ref
-	//storing this here so i dont have to do more work for the link_vault and scan_dna
-	var/obj/machinery/dna_vault/our_vault
 
 /obj/item/dna_probe/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -39,21 +37,26 @@
 
 	if (isitem(target))
 		. |= AFTERATTACK_PROCESSED_ITEM
-	our_vault = dna_vault_ref?.resolve()
-	link_vault(target, user)
-	scan_dna(target, user)
 
-/obj/item/dna_probe/proc/link_vault(atom/target, mob/user)
-	if(istype(target, /obj/machinery/dna_vault) && !our_vault)
+	if(istype(target, /obj/machinery/dna_vault) && !dna_vault_ref)
+		try_linking_vault(target, user)
+	else
+		scan_dna(target, user)
+
+/obj/item/dna_probe/proc/try_linking_vault(atom/target, mob/user)
+	var/obj/machinery/dna_vault/our_vault = dna_vault_ref?.resolve()
+	if(!our_vault)
 		dna_vault_ref = WEAKREF(target)//linking the dna vault with the probe
 		balloon_alert(user, "vault linked")
 		playsound(src, 'sound/machines/terminal_success.ogg', 50)
-	else if (!our_vault)//for when we try to upload with no linked vault
-		playsound(src, 'sound/machines/scanbuzz.ogg', 50)
-		balloon_alert(user, "need a database!")
 		return
 
 /obj/item/dna_probe/proc/scan_dna(atom/target, mob/user)
+	var/obj/machinery/dna_vault/our_vault = dna_vault_ref?.resolve()
+	if(!our_vault)
+		playsound(user, 'sound/machines/buzz-sigh.ogg', 50)
+		balloon_alert(user, "need database!")
+		return
 	if((allowed_scans & DNA_PROBE_SCAN_PLANTS) && istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/hydro_tray = target
 		if(!hydro_tray.myseed)
@@ -116,16 +119,13 @@
 	if(user.mind.has_antag_datum(/datum/antagonist/traitor))
 		. = list(span_notice("Using this on a Space Carp will harvest its DNA. Use it in-hand once complete to mutate it with yourself."))
 
-/obj/item/dna_probe/carp_scanner/link_vault(atom/target, mob/user)
-	return
-
 /obj/item/dna_probe/carp_scanner/scan_dna(atom/target, mob/user)
-	if(allowed_scans & DNA_PROBE_SCAN_ANIMALS)
-		if(istype(target, /mob/living/basic/carp))
-			carp_dna_loaded = TRUE
+	if(istype(target, /mob/living/basic/carp))
+		carp_dna_loaded = TRUE
 		playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
 		balloon_alert(user, "dna scanned")
-
+	else
+		. = ..()
 /obj/item/dna_probe/carp_scanner/attack_self(mob/user, modifiers)
 	. = ..()
 	if(!is_special_character(user))

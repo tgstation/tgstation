@@ -1,5 +1,3 @@
-#define APPLY_BUFF "apply buff"
-#define REMOVE_BUFF "remove buff"
 
 /datum/mutation/human/breathless
 	name = "Breathless"
@@ -85,7 +83,7 @@
 	. = ..()
 	owner.physiology.burn_mod /= 0.5
 	REMOVE_TRAIT(owner, TRAIT_RESISTHEAT, GENETIC_MUTATION)
-	REMOVE_TRAIT( owner, TRAIT_NOFIRE, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_NOFIRE, GENETIC_MUTATION)
 
 /datum/mutation/human/quick_recovery
 	name = "Quick Recovery"
@@ -116,8 +114,7 @@
 	var/obj/item/organ/internal/lungs/improved_lungs = acquirer.getorganslot(ORGAN_SLOT_LUNGS)
 	ADD_TRAIT(owner, TRAIT_VIRUSIMMUNE, GENETIC_MUTATION)
 	if(improved_lungs)
-		improved_lungs.plas_breath_dam_min *= 0
-		improved_lungs.plas_breath_dam_max *= 0
+		apply_buff(improved_lungs)
 	RegisterSignal(acquirer, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(remove_modification))
 	RegisterSignal(acquirer, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(reapply_modification))
 
@@ -128,28 +125,25 @@
 	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
 	UnregisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN)
 	if(improved_lungs)
-		improved_lungs.plas_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
-		improved_lungs.plas_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
+		remove_buff(improved_lungs)
 
 /datum/mutation/human/plasmocile/proc/remove_modification(mob/source, obj/item/organ/old_organ)
 	SIGNAL_HANDLER
 
 	if(istype(old_organ, /obj/item/organ/internal/lungs))
-		modify_lungs(old_organ, REMOVE_BUFF)
+		apply_buff(old_organ)
 
 /datum/mutation/human/plasmocile/proc/reapply_modification(mob/source, obj/item/organ/new_organ)
 	SIGNAL_HANDLER
 
 	if(istype(new_organ, /obj/item/organ/internal/lungs))
-		modify_lungs(new_organ, APPLY_BUFF)
+		remove_buff(new_organ)
 
-/datum/mutation/human/plasmocile/proc/modify_lungs(obj/item/organ/internal/lungs/our_lungs, modify_type)
-	if(modify_type == APPLY_BUFF)
-		our_lungs.plas_breath_dam_min *= 0
-		our_lungs.plas_breath_dam_max *= 0
-	else if(modify_type == REMOVE_BUFF)
-		our_lungs.plas_breath_dam_min = initial(our_lungs.plas_breath_dam_min)
-		our_lungs.plas_breath_dam_max = initial(our_lungs.plas_breath_dam_max)
+/datum/mutation/human/plasmocile/proc/apply_buff(obj/item/organ/internal/lungs/our_lungs)
+	our_lungs.plas_breath_dam_min *= 0
+	our_lungs.plas_breath_dam_max *= 0
 
-#undef APPLY_BUFF
-#undef REMOVE_BUFF
+/datum/mutation/human/plasmocile/proc/remove_buff(obj/item/organ/internal/lungs/our_lungs)
+	our_lungs.plas_breath_dam_min = initial(our_lungs.plas_breath_dam_min)
+	our_lungs.plas_breath_dam_max = initial(our_lungs.plas_breath_dam_max)
+
