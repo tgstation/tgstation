@@ -61,10 +61,10 @@
 
 ///Called by the climbable element if you try climb up. Better hope you're well protected against shocks! XD
 /obj/structure/window_frame/proc/on_try_climb(mob/climber)
-	shock(climber, 100)
+	try_shock(climber, 100)
 
 ///Gives the user a shock if they get unlucky (Based on shock chance)
-/obj/structure/window_frame/proc/shock(mob/user, shock_chance)
+/obj/structure/window_frame/proc/try_shock(mob/user, shock_chance)
 	if(!has_grille) // no grille? dont shock.
 		return FALSE
 	if(!underlaying_cable)
@@ -82,25 +82,25 @@
 		return TRUE
 	return FALSE
 
-/obj/structure/window_frame/proc/on_entered(datum/source, AM as mob|obj)
+/obj/structure/window_frame/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(!isliving(AM))
 		return
 	var/mob/living/potential_victim = AM
 	if(potential_victim.movement_type & (FLOATING|FLYING))
 		return
-	shock(potential_victim, 100)
+	try_shock(potential_victim, 100)
 
 
 /obj/structure/window_frame/attack_animal(mob/user, list/modifiers)
 	. = ..()
 	if(!.)
 		return
-	if(!shock(user, 70) && !QDELETED(src)) //Last hit still shocks but shouldn't deal damage to the grille
+	if(!try_shock(user, 70) && !QDELETED(src)) //Last hit still shocks but shouldn't deal damage to the grille
 		take_damage(rand(5,10), BRUTE, MELEE, 1)
 
 /obj/structure/window_frame/attack_hulk(mob/living/carbon/human/user)
-	if(shock(user, 70))
+	if(try_shock(user, 70))
 		return
 	. = ..()
 
@@ -112,19 +112,19 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message(span_warning("[user] hits [src]."), null, null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "hit")
-	if(!shock(user, 70))
+	if(!try_shock(user, 70))
 		take_damage(rand(5,10), BRUTE, MELEE, 1)
 
 /obj/structure/window_frame/attack_alien(mob/living/user, list/modifiers)
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_warning("[user] mangles [src]."), null, null, COMBAT_MESSAGE_RANGE)
-	if(!shock(user, 70))
+	if(!try_shock(user, 70))
 		take_damage(20, BRUTE, MELEE, 1)
 
 /obj/structure/window_frame/wirecutter_act(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
-	if(shock(user, 100))
+	if(try_shock(user, 100))
 		return
 	if(!has_grille)
 		return
@@ -211,7 +211,7 @@
 			to_chat(user, "<span class='notice'>You add [stack_name] to [src]")
 			update_appearance()
 
-	else if((attacking_item.flags_1 & CONDUCT_1) && shock(user, 70))
+	else if((attacking_item.flags_1 & CONDUCT_1) && try_shock(user, 70))
 		return
 
 	return ..()
