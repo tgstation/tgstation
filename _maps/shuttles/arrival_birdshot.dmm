@@ -2,6 +2,22 @@
 "a" = (
 /turf/template_noop,
 /area/template_noop)
+"f" = (
+/obj/structure/table,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"g" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"i" = (
+/obj/structure/closet/wardrobe/black,
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
 "o" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 4
@@ -16,6 +32,7 @@
 /area/shuttle/arrival)
 "r" = (
 /obj/effect/spawner/random/entertainment/arcade,
+/obj/machinery/light/cold/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "u" = (
@@ -26,6 +43,12 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"v" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "B" = (
 /turf/open/floor/mineral/titanium/blue,
@@ -38,6 +61,7 @@
 /area/shuttle/arrival)
 "I" = (
 /obj/structure/closet/wardrobe/black,
+/obj/machinery/light/cold/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "J" = (
@@ -58,6 +82,14 @@
 	pixel_y = 4
 	},
 /obj/item/storage/toolbox/emergency,
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"O" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/cold/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "P" = (
@@ -98,9 +130,9 @@ a
 (2,1,1) = {"
 a
 Q
-J
-J
-J
+f
+f
+f
 Q
 a
 "}
@@ -108,7 +140,7 @@ a
 V
 q
 q
-B
+v
 q
 q
 V
@@ -144,7 +176,7 @@ Q
 Q
 U
 B
-U
+O
 B
 U
 Q
@@ -180,7 +212,7 @@ V
 Q
 U
 B
-U
+g
 B
 U
 Q
@@ -209,7 +241,7 @@ I
 K
 P
 K
-I
+i
 q
 "}
 (15,1,1) = {"
