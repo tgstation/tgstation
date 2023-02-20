@@ -28,7 +28,7 @@
 			var/obj/item/gun/G = target
 			var/obj/item/firing_pin/old_pin = G.pin
 			if(old_pin && (force_replace || old_pin.pin_removeable))
-				to_chat(user, span_notice("You remove [old_pin] from [G]."))
+				balloon_alert(user, "firing pin removed")
 				if(Adjacent(user))
 					user.put_in_hands(old_pin)
 				else
@@ -39,7 +39,7 @@
 				if(!user.temporarilyRemoveItemFromInventory(src))
 					return .
 				if(gun_insert(user, G))
-					to_chat(user, span_notice("You insert [src] into [G]."))
+					balloon_alert(user, "firing pin inserted.")
 			else
 				to_chat(user, span_notice("This firearm already has a firing pin installed."))
 
