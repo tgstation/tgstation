@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes:
+  - bugfix: "You can use ninja adrenaline to cure unconsciousness as intended"
+  - code_imp: "Cleaned up some modsuit code"
