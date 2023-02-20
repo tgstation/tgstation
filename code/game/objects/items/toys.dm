@@ -120,7 +120,7 @@
 	inhand_icon_state = "balloon"
 	lefthand_file = 'icons/mob/inhands/items/balloons_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/balloons_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7

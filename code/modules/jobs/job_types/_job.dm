@@ -309,6 +309,7 @@
 				back = duffelbag //Department duffel bag
 			else
 				back = backpack //Department backpack
+		backpack_contents += list(/obj/item/food/cakeslice/birthday, /obj/item/toy/balloon)
 
 	//converts the uniform string into the path we'll wear, whether it's the skirt or regular variant
 	var/holder
