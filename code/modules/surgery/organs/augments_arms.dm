@@ -387,7 +387,8 @@
 	if(!source.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return
 	if(!isliving(target))
-		return //include whatever value you need to here
+		return
+
 	var/mob/living/living_target = target
 
 	source.changeNext_move(CLICK_CD_MELEE)
