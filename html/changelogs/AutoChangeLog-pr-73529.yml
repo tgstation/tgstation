@@ -1,0 +1,5 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "Holopads will blink when being called rather than just glowing."
+  - bugfix: "Holopads will not blink forever if you missed a call."
