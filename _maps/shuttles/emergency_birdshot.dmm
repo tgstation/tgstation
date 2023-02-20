@@ -29,6 +29,7 @@
 "bx" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/effect/decal/cleanable/generic,
+/obj/structure/window/reinforced/survival_pod/spawner/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "by" = (
@@ -132,10 +133,6 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
-"fr" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/shuttle/escape)
 "fv" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -199,11 +196,6 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"jU" = (
-/obj/structure/lattice,
-/obj/structure/window/reinforced/survival_pod/spawner,
-/turf/template_noop,
-/area/shuttle/escape)
 "kj" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium,
@@ -215,11 +207,6 @@
 	},
 /obj/machinery/light/small/built/directional/north,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"kY" = (
-/obj/structure/window/reinforced/survival_pod/spawner,
-/obj/structure/lattice,
-/turf/template_noop,
 /area/shuttle/escape)
 "kZ" = (
 /obj/machinery/light/small/directional/south,
@@ -274,9 +261,8 @@
 /area/shuttle/escape)
 "mU" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced/survival_pod/spawner/north,
 /turf/template_noop,
-/area/shuttle/escape)
+/area/template_noop)
 "no" = (
 /obj/item/trash/popcorn/caramel,
 /turf/open/floor/mineral/titanium,
@@ -301,6 +287,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/robot_debris,
+/obj/structure/window/reinforced/survival_pod/spawner,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "oL" = (
@@ -379,6 +366,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
+/obj/structure/window/reinforced/survival_pod/spawner,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "rZ" = (
@@ -536,7 +524,7 @@
 /obj/structure/lattice,
 /obj/item/stack/rods/two,
 /turf/template_noop,
-/area/shuttle/escape)
+/area/template_noop)
 "Ay" = (
 /obj/item/shard{
 	pixel_y = 19
@@ -562,12 +550,18 @@
 /obj/item/defibrillator/loaded,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
+"AZ" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/escape)
 "Bd" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/trash/shrimp_chips{
 	pixel_x = -8;
 	pixel_y = 8
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/escape)
 "Bm" = (
@@ -657,6 +651,7 @@
 	pixel_x = 15;
 	pixel_y = -9
 	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "Hn" = (
@@ -692,7 +687,7 @@
 /obj/item/stack/rods/two,
 /obj/machinery/light/small/broken/directional/north,
 /turf/template_noop,
-/area/shuttle/escape)
+/area/template_noop)
 "Id" = (
 /obj/structure/chair{
 	dir = 4
@@ -712,6 +707,7 @@
 /area/shuttle/escape)
 "IN" = (
 /obj/structure/chair/comfy/shuttle,
+/obj/structure/window/reinforced/survival_pod/spawner/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "Ju" = (
@@ -1135,7 +1131,7 @@ WH
 De
 ye
 LX
-fr
+mU
 nQ
 ax
 LX
@@ -1146,14 +1142,14 @@ LX
 ax
 nQ
 nQ
-fr
+mU
 ax
 LX
 LX
 rZ
 LX
 ax
-fr
+mU
 ax
 LX
 nQ
@@ -1166,25 +1162,25 @@ yj
 MW
 rZ
 rZ
-fr
-fr
-fr
-jU
+mU
+mU
+mU
+mU
 IN
 pl
 ry
 mU
-fr
-fr
-fr
-fr
+mU
+mU
+mU
+mU
 nQ
 nQ
-fr
+mU
 nQ
 nQ
 nQ
-fr
+mU
 nQ
 nQ
 nQ
@@ -1200,7 +1196,7 @@ nQ
 nQ
 nQ
 nQ
-kY
+mU
 IN
 cr
 oC
@@ -1208,14 +1204,14 @@ mU
 nQ
 nQ
 nQ
-fr
-fr
-fr
-fr
-fr
-fr
-fr
-fr
+mU
+mU
+mU
+mU
+mU
+mU
+mU
+mU
 nQ
 nQ
 nQ
@@ -1228,25 +1224,25 @@ nO
 MW
 rZ
 rZ
-fr
-fr
-fr
-jU
+mU
+mU
+mU
+mU
 bx
 ig
 ry
 mU
-fr
-fr
-fr
-fr
+mU
+mU
+mU
+mU
 nQ
 nQ
-fr
+mU
 nQ
 nQ
 nQ
-fr
+mU
 nQ
 nQ
 nQ
@@ -1259,7 +1255,7 @@ xg
 De
 eR
 LX
-fr
+mU
 nQ
 ax
 LX
@@ -1270,16 +1266,16 @@ LX
 ax
 nQ
 nQ
-fr
+mU
 ax
 LX
 LX
 rZ
 LX
 ax
-fr
+mU
 bo
-fr
+mU
 nQ
 nQ
 "}
@@ -1311,14 +1307,14 @@ ho
 LX
 LX
 RW
-fr
+mU
 nQ
 "}
 (13,1,1) = {"
 nQ
 rZ
 rZ
-cX
+AZ
 iU
 lE
 dv
@@ -1341,7 +1337,7 @@ Ly
 ho
 HS
 MC
-fr
+mU
 LX
 ST
 "}
@@ -1374,7 +1370,7 @@ mp
 VA
 Em
 Ay
-fr
+mU
 "}
 (15,1,1) = {"
 nQ
@@ -1403,7 +1399,7 @@ tu
 xC
 tj
 Iv
-fr
+mU
 fv
 ce
 "}

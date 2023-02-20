@@ -1997,7 +1997,7 @@
 	dir = 1
 	},
 /turf/open/space/basic,
-/area/station/engineering/atmospherics_engine)
+/area/space/nearstation)
 "aPx" = (
 /obj/machinery/shower/directional/west,
 /obj/effect/turf_decal/siding/wideplating/dark/end{
@@ -2098,7 +2098,7 @@
 	dir = 4
 	},
 /turf/open/space/basic,
-/area/station/engineering/atmospherics_engine)
+/area/space/nearstation)
 "aRv" = (
 /obj/structure/table/wood,
 /turf/open/floor/plating,
@@ -23726,7 +23726,7 @@
 /obj/structure/lattice,
 /obj/structure/window/spawner/north,
 /turf/open/space/basic,
-/area/station/hallway/secondary/command)
+/area/space/nearstation)
 "jhm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -23956,7 +23956,7 @@
 /obj/structure/lattice,
 /obj/structure/window/spawner,
 /turf/open/space/basic,
-/area/station/hallway/secondary/command)
+/area/space/nearstation)
 "jll" = (
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
@@ -37266,8 +37266,8 @@
 /turf/open/floor/iron,
 /area/station/science/lower)
 "ojd" = (
-/mob/living/simple_animal/slime,
 /obj/effect/decal/cleanable/dirt/dust,
+/mob/living/simple_animal/slime,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "ojg" = (
@@ -40577,7 +40577,7 @@
 /obj/structure/lattice,
 /obj/machinery/door/poddoor/incinerator_atmos_aux,
 /turf/open/space/basic,
-/area/station/maintenance/disposal/incinerator)
+/area/space/nearstation)
 "ptG" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
