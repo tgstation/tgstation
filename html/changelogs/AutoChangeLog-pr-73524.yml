@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes:
-  - bugfix: "Eating fish and meat poke bowls no longer consumes the bowl, just the food inside."

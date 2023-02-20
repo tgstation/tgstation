@@ -782,3 +782,52 @@
   - bugfix: You can always see how many pickles are in a jar of pickles, or rolling
       papers there are in a pack of rolling papers, since it's not possible to close
       them.
+2023-02-20:
+  Jacquerel:
+  - bugfix: Removes a runtime error caused by moving your PDA between slots.
+  - bugfix: Clicking a spider egg and then closing the radial menu won't print a message
+      in admin channel informing admins that the egg didn't spawn anything.
+  JohnFulpWillard:
+  - bugfix: NtOS program downloader now works again, and will now properly alert you
+      of downloading illegal ROMs if you change your theme to anything that isn't
+      Syndicate.
+  - bugfix: NtOS themes are now recognized by all windows.
+  - spellcheck: Hallucinations where you see people put things away now tell you they
+      put the right thing away.
+  JohnFulpWillard and itsmeow:
+  - bugfix: Messenger now clears photos after you send it, so you don't send a photo
+      repeatedly until you manually clear it.
+  - bugfix: Sending a photo now has a hyperlink in chat for the target to see (like
+      with old PDAs)
+  - bugfix: AIs can now select photos in their Messenger app.
+  - bugfix: Messenger no longer says you're sending outgoing messages to yourself.
+  LT3:
+  - imageadd: Wall mounted tram sign now has improved emissives and casing
+  LemonInTheDark:
+  - bugfix: Moving up and down z levels will break hud stuff slightly less often
+  MidoriWroth:
+  - qol: Tweaked around some foods to make them easier to make
+  NamelessFairy:
+  - bugfix: A accidently stacked roller bed on lavaland has been removed.
+  - bugfix: You cannot print blank documents from a photocopier if you cannot afford
+      them anymore.
+  - bugfix: Mounting the photocopier will now eject paperwork as it does with photos
+      and paper.
+  - refactor: Lots of duplicate code and some unnecessary vars removed from photocopier
+      code.
+  Rhials:
+  - bugfix: Midround Changelings are now ejected from their meteor when something
+      bad happens, ensuring they reach the station.
+  Roryl-c:
+  - bugfix: seiver no longer applies purity and delta time twice
+  - code_imp: made seiver code much less confusing
+  SuperSlayer0:
+  - bugfix: Fixes mending globule ability not having a cooldown
+  TheBoondock:
+  - bugfix: fixed throwing description to always say "it was thrown very hard" even
+      when its not
+  coiax:
+  - bugfix: Eating fish and meat poke bowls no longer consumes the bowl, just the
+      food inside.
+  tralezab:
+  - bugfix: Valentines and other antags no longer break highlander
