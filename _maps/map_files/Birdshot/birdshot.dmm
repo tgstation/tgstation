@@ -1243,6 +1243,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 5
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
 "azs" = (
@@ -2233,6 +2236,7 @@
 /area/station/hallway/primary/starboard)
 "aTW" = (
 /obj/structure/table/reinforced/titaniumglass,
+/obj/item/analyzer,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "aUo" = (
@@ -3121,6 +3125,10 @@
 "bma" = (
 /obj/effect/spawner/structure/window,
 /obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "Bridge Blast Door"
+	},
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "bmk" = (
@@ -4855,11 +4863,10 @@
 	},
 /area/station/hallway/secondary/dock)
 "bSs" = (
-/obj/effect/spawner/random/decoration/showcase,
-/obj/structure/window/spawner,
-/obj/structure/sign/poster/official/random/directional/north,
-/turf/open/floor/iron/showroomfloor,
-/area/station/command/corporate_showroom)
+/obj/machinery/atmospherics/components/tank,
+/obj/effect/turf_decal/stripes/end,
+/turf/open/floor/plating,
+/area/station/maintenance/department/engine/atmos)
 "bSz" = (
 /obj/structure/reflector/box{
 	dir = 4
@@ -6184,6 +6191,9 @@
 /obj/structure/rack,
 /obj/item/pickaxe,
 /obj/effect/spawner/random/maintenance/two,
+/obj/effect/turf_decal/stripes/white/end{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
 "cwX" = (
@@ -6614,6 +6624,9 @@
 	name = "Engineering Maintenance"
 	},
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -7130,11 +7143,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 6
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
+	dir = 1
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/engineering/supermatter/room)
@@ -8622,6 +8635,11 @@
 "dAU" = (
 /obj/structure/rack,
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
+/obj/item/storage/belt/utility,
+/obj/item/clothing/head/utility/welding{
+	pixel_x = -5;
+	pixel_y = 3
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/engineering/supermatter/room)
 "dBa" = (
@@ -8840,11 +8858,6 @@
 	layer = 2.7
 	},
 /obj/machinery/light/directional/south,
-/obj/machinery/button/door/directional/south{
-	id = "pharmacy_shutters_2";
-	name = "pharmacy shutters control";
-	req_access = list("pharmacy")
-	},
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "dFx" = (
@@ -17528,6 +17541,10 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "Bridge Blast Door"
+	},
 /turf/open/floor/plating,
 /area/station/command/meeting_room)
 "gVn" = (
@@ -20809,6 +20826,8 @@
 	dir = 4
 	},
 /obj/effect/spawner/random/maintenance,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/small,
 /area/station/engineering/engine_smes)
 "ifI" = (
@@ -31258,6 +31277,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "Bridge Blast Door"
+	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/command/bridge)
 "mbV" = (
@@ -33080,6 +33103,17 @@
 /obj/structure/bookcase/random,
 /turf/open/floor/plating,
 /area/station/service/library/abandoned)
+"mGX" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "WASTE PURGE!!!"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/department/engine/atmos)
 "mGY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
@@ -33730,6 +33764,10 @@
 "mTl" = (
 /obj/effect/spawner/structure/window,
 /obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "Bridge Blast Door"
+	},
 /turf/open/floor/plating,
 /area/station/command/corporate_showroom)
 "mTo" = (
@@ -37464,6 +37502,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "Bridge Blast Door"
+	},
 /turf/open/floor/plating,
 /area/station/command/corporate_showroom)
 "orz" = (
@@ -41210,6 +41252,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "Bridge Blast Door"
+	},
 /turf/open/floor/plating,
 /area/station/command/meeting_room)
 "pJg" = (
@@ -41682,6 +41728,7 @@
 /obj/structure/table/reinforced/titaniumglass,
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/item/analyzer,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
@@ -54530,7 +54577,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/button/door/directional/east{
-	id = "pharmacy_shutters_2";
+	id = "pharmacy_shutters";
 	name = "Pharmacy Shutters Control";
 	req_access = list("pharmacy")
 	},
@@ -54869,7 +54916,6 @@
 /obj/effect/decal/cleanable/greenglow,
 /obj/item/radio/intercom/directional/west,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/engine_smes)
 "uEG" = (
@@ -54905,6 +54951,11 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "com_guest";
+	name = "Privacy Shutter"
+	},
 /turf/open/floor/plating,
 /area/station/command/corporate_suite)
 "uFs" = (
@@ -58720,6 +58771,7 @@
 "waM" = (
 /obj/effect/spawner/random/trash,
 /obj/structure/cable,
+/obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
 "waO" = (
@@ -59530,6 +59582,10 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "Bridge Blast Door"
+	},
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -62417,6 +62473,11 @@
 	},
 /obj/effect/turf_decal/siding/yellow,
 /obj/machinery/light/cold/directional/south,
+/obj/machinery/button/door/directional/south{
+	id = "bridge blast";
+	name = "Bridge Access Blast Door Control";
+	req_access = list("command")
+	},
 /turf/open/floor/wood/tile,
 /area/station/command/bridge)
 "xnu" = (
@@ -63620,6 +63681,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "Bridge Blast Door"
+	},
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
@@ -81321,7 +81386,7 @@ nYr
 nYr
 nYr
 nYr
-nYr
+smc
 knv
 cwP
 cSX
@@ -81578,9 +81643,9 @@ uGU
 uGU
 uGU
 uGU
-uGU
-smc
-cAs
+knv
+bSs
+mGX
 azq
 jLr
 inb
@@ -81835,7 +81900,7 @@ uGU
 uGU
 uGU
 uGU
-uGU
+knv
 kRJ
 kRJ
 cGG
@@ -91382,7 +91447,7 @@ nIS
 lkC
 xnm
 thH
-bSs
+mks
 gGy
 nqg
 nWl
