@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { getPrefAdditionKey } from './config_setter';
+import { getPrefCodebaseKey } from './config_setter';
 
 export const IMPL_MEMORY = 0;
 export const IMPL_LOCAL_STORAGE = 1;
@@ -48,15 +48,15 @@ class MemoryBackend {
   }
 
   get(key) {
-    return this.store[key + this.get_noconfig(getPrefAdditionKey())];
+    return this.store[key + this.get_noconfig(getPrefCodebaseKey())];
   }
 
   set(key, value) {
-    this.store[key + this.get_noconfig(getPrefAdditionKey())] = value;
+    this.store[key + this.get_noconfig(getPrefCodebaseKey())] = value;
   }
 
   remove(key) {
-    this.store[key + this.get_noconfig(getPrefAdditionKey())] = undefined;
+    this.store[key + this.get_noconfig(getPrefCodebaseKey())] = undefined;
   }
 
   clear() {
@@ -84,7 +84,7 @@ class LocalStorageBackend {
 
   get(key) {
     const value = localStorage.getItem(
-      key + this.get_noconfig(getPrefAdditionKey())
+      key + this.get_noconfig(getPrefCodebaseKey())
     );
     if (typeof value === 'string') {
       return JSON.parse(value);
@@ -93,13 +93,13 @@ class LocalStorageBackend {
 
   set(key, value) {
     localStorage.setItem(
-      key + this.get_noconfig(getPrefAdditionKey()),
+      key + this.get_noconfig(getPrefCodebaseKey()),
       JSON.stringify(value)
     );
   }
 
   remove(key) {
-    localStorage.removeItem(key + this.get_noconfig(getPrefAdditionKey()));
+    localStorage.removeItem(key + this.get_noconfig(getPrefCodebaseKey()));
   }
 
   clear() {
@@ -154,7 +154,7 @@ class IndexedDbBackend {
   async get(key) {
     const store = await this.getStore(READ_ONLY);
     return new Promise((resolve, reject) => {
-      const req = store.get(key + this.get_noconfig(getPrefAdditionKey()));
+      const req = store.get(key + this.get_noconfig(getPrefCodebaseKey()));
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => reject(req.error);
     });
@@ -170,13 +170,13 @@ class IndexedDbBackend {
     }
     // NOTE: We deliberately make this operation transactionless
     const store = await this.getStore(READ_WRITE);
-    store.put(value, key + this.get_noconfig(getPrefAdditionKey()));
+    store.put(value, key + this.get_noconfig(getPrefCodebaseKey()));
   }
 
   async remove(key) {
     // NOTE: We deliberately make this operation transactionless
     const store = await this.getStore(READ_WRITE);
-    store.delete(key + this.get_noconfig(getPrefAdditionKey()));
+    store.delete(key + this.get_noconfig(getPrefCodebaseKey()));
   }
 
   async clear() {

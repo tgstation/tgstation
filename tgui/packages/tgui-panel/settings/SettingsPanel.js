@@ -14,8 +14,8 @@ import { THEMES } from '../themes';
 import { changeSettingsTab, updateSettings, addHighlightSetting, removeHighlightSetting, updateHighlightSetting } from './actions';
 import { SETTINGS_TABS, FONTS, MAX_HIGHLIGHT_SETTINGS } from './constants';
 import { selectActiveTab, selectSettings, selectHighlightSettings, selectHighlightSettingById } from './selectors';
-import { getConfigKey, setConfigKey } from 'common/config_setter';
-import { PREF_ADDITION_KEY, PREF_KEYS } from '../../../../config/tgui_config';
+import { getPrefConfigKey } from 'common/config_setter';
+import { PREF_CODEBASE_KEY, PREF_KEYS } from '../../../../config/tgui_config';
 
 export const SettingsPanel = (props, context) => {
   const activeTab = useSelector(context, selectActiveTab);
@@ -204,12 +204,11 @@ const TextHighlightSettings = (props, context) => {
 };
 
 export const SettingUIConfig = (props, context) => {
-  const dispatch = useDispatch(context);
   return (
     <Section>
-      <Flex bold>Config Settings</Flex>
+      <Flex bold>Config Saves</Flex>
       <Divider />
-      The config key for this server is: {PREF_ADDITION_KEY}
+      Codebase key for this server is: {PREF_CODEBASE_KEY}
       <br />
       Enabling an option will change TGUI settings, and take some delay to
       refresh your TGUI.
@@ -218,10 +217,11 @@ export const SettingUIConfig = (props, context) => {
         <Button.Checkbox
           key={each.id}
           checked={
-            each.value === getConfigKey() || (!each.value && !getConfigKey())
+            each.value === getPrefConfigKey() ||
+            (!each.value && !getPrefConfigKey())
           }
           onClick={() => {
-            setConfigKey(each.value);
+            setPrefConfigKey(each.value);
             location.reload();
           }}>
           {each.id}

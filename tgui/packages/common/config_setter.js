@@ -5,31 +5,31 @@
  * @license MIT
  */
 
-import { PREF_ADDITION_KEY } from '../../../config/tgui_config';
+import { PREF_CODEBASE_KEY } from '../../../config/tgui_config';
 import { storage } from './storage';
 
-export const getPrefAdditionKey = () => {
-  const thing = '-cfg-' + PREF_ADDITION_KEY;
+export const getPrefCodebaseKey = () => {
+  const thing = '-cfg-' + PREF_CODEBASE_KEY;
   return thing;
 };
 
-export const getConfigKey = () => {
-  let thing = sessionStorage.getItem(getPrefAdditionKey());
+export const getPrefConfigKey = () => {
+  let thing = sessionStorage.getItem(getPrefCodebaseKey());
   if (thing === undefined) {
     return '';
   }
   return thing;
 };
 
-export const setConfigKey = (value) => {
-  sessionStorage.setItem(getPrefAdditionKey(), value);
-  storage.set_noconfig(getPrefAdditionKey(), value);
+export const setPrefConfigKey = (value) => {
+  sessionStorage.setItem(getPrefCodebaseKey(), value);
+  storage.set_noconfig(getPrefCodebaseKey(), value);
 };
 
 export const setupConfigKey = async () => {
-  let thing = await storage.get_noconfig(getPrefAdditionKey());
+  let thing = await storage.get_noconfig(getPrefCodebaseKey());
   if (thing === undefined) {
     thing = '';
   }
-  sessionStorage.setItem(getPrefAdditionKey(), thing);
+  sessionStorage.setItem(getPrefCodebaseKey(), thing);
 };

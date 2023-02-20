@@ -8,7 +8,7 @@
 
 // This key is important as a configurable setting.
 // This key is recommended to be different up to each codebase
-export const PREF_ADDITION_KEY = 'tgstation';
+export const PREF_CODEBASE_KEY = 'tgstation';
 
 // This is the list of configurable options.
 // You can put more options as much as you want
