@@ -60,22 +60,25 @@
 /// Apply the actual effects of the healing if it's a simple animal, goes to [/obj/item/stack/medical/proc/heal_carbon] if it's a carbon, returns TRUE if it works, FALSE if it doesn't
 /obj/item/stack/medical/proc/heal(mob/living/patient, mob/user)
 	if(patient.stat == DEAD)
-		to_chat(user, span_warning("[patient] is dead! You can not help [patient.p_them()]."))
+		patient.balloon_alert(user, "they're dead!")
 		return
-	if(isanimal(patient) && heal_brute) // only brute can heal
+	if(isanimal_or_basicmob(patient) && heal_brute) // only brute can heal
 		var/mob/living/simple_animal/critter = patient
-		if (!critter.healable)
-			to_chat(user, span_warning("You cannot use [src] on [patient]!"))
+		if (istype(critter) && !critter.healable)
+			patient.balloon_alert(user, "won't work!")
 			return FALSE
-		else if (critter.health == critter.maxHealth)
-			to_chat(user, span_notice("[patient] is at full health."))
+		if (!(patient.mob_biotypes & MOB_ORGANIC))
+			patient.balloon_alert(user, "can't fix that!")
+			return FALSE
+		if (patient.health == patient.maxHealth)
+			patient.balloon_alert(user, "not hurt!")
 			return FALSE
 		user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] on [patient].</span></span>", "<span class='infoplain'><span class='green'>You apply [src] on [patient].</span></span>")
 		patient.heal_bodypart_damage((heal_brute * 0.5))
 		return TRUE
 	if(iscarbon(patient))
 		return heal_carbon(patient, user, heal_brute, heal_burn)
-	to_chat(user, span_warning("You can't heal [patient] with [src]!"))
+	patient.balloon_alert(user, "can't heal that!")
 
 /// The healing effects on a carbon patient. Since we have extra details for dealing with bodyparts, we get our own fancy proc. Still returns TRUE on success and FALSE on fail
 /obj/item/stack/medical/proc/heal_carbon(mob/living/carbon/C, mob/user, brute, burn)
