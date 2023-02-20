@@ -1,0 +1,4 @@
+author: "sqnztb"
+delete-after: True
+changes:
+  - bugfix: "frail and paraplegia quirks can once again be taken together."
