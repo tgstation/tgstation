@@ -32,7 +32,7 @@
 
 /mob/living/simple_animal/hostile/cat_butcherer/Initialize(mapload)
 	. = ..()
-	apply_dynamic_human_icon(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/cat_butcher, l_hand = /obj/item/circular_saw, bloody_slots = ITEM_SLOT_GLOVES|ITEM_SLOT_OCLOTHING)
+	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/cat_butcher, l_hand = /obj/item/circular_saw, bloody_slots = ITEM_SLOT_GLOVES|ITEM_SLOT_OCLOTHING)
 
 /mob/living/simple_animal/hostile/cat_butcherer/AttackingTarget()
 	. = ..()

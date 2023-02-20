@@ -127,6 +127,8 @@
 	blend_mode_override = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	critical = PLANE_CRITICAL_DISPLAY
+	/// A list of light cutoffs we're actively using, (mass, r, g, b) to avoid filter churn
+	var/list/light_cutoffs
 
 /*!
  * This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.
@@ -142,6 +144,7 @@
 	. = ..()
 	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_RENDER_TARGET, offset), flags = MASK_INVERSE))
 	add_filter("object_lighting", 2, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(O_LIGHTING_VISUAL_RENDER_TARGET, offset), flags = MASK_INVERSE))
+	set_light_cutoff(10)
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/show_to(mob/mymob)
 	. = ..()
@@ -152,10 +155,10 @@
 	// Basically, we need something to brighten
 	// unlit is perhaps less needed rn, it exists to provide a fullbright for things that can't see the lighting plane
 	// but we don't actually use invisibility to hide the lighting plane anymore, so it's pointless
-	var/atom/movable/screen/backdrop = mymob.overlay_fullscreen("lighting_backdrop_lit#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/lit)
+	var/atom/movable/screen/backdrop = mymob.overlay_fullscreen("lighting_backdrop_lit_[home.key]#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/lit)
 	// Need to make sure they're on our plane, ALL the time. We always need a backdrop
 	SET_PLANE_EXPLICIT(backdrop, PLANE_TO_TRUE(backdrop.plane), src)
-	backdrop = mymob.overlay_fullscreen("lighting_backdrop_unlit#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
+	backdrop = mymob.overlay_fullscreen("lighting_backdrop_unlit_[home.key]#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
 	SET_PLANE_EXPLICIT(backdrop, PLANE_TO_TRUE(backdrop.plane), src)
 
 	// Sorry, this is a bit annoying
@@ -166,13 +169,13 @@
 	if(hud)
 		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
 	offset_change(hud?.current_plane_offset || 0)
-	set_alpha(mymob.lighting_alpha)
+	set_light_cutoff(mymob.lighting_cutoff, mymob.lighting_color_cutoffs)
 
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/hide_from(mob/oldmob)
 	. = ..()
-	oldmob.clear_fullscreen("lighting_backdrop_lit")
-	oldmob.clear_fullscreen("lighting_backdrop_unlit")
+	oldmob.clear_fullscreen("lighting_backdrop_lit_[home.key]#[offset]")
+	oldmob.clear_fullscreen("lighting_backdrop_unlit_[home.key]#[offset]")
 	var/datum/hud/hud = home.our_hud
 	if(hud)
 		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
@@ -187,6 +190,24 @@
 		disable_alpha()
 	else
 		enable_alpha()
+
+/atom/movable/screen/plane_master/rendering_plate/lighting/proc/set_light_cutoff(light_cutoff, list/color_cutoffs)
+	var/list/new_cutoffs = list(light_cutoff)
+	new_cutoffs += color_cutoffs
+	if(new_cutoffs ~= light_cutoffs)
+		return
+
+	remove_filter(list("light_cutdown", "light_cutup"))
+
+	var/ratio = light_cutoff/100
+	if(!color_cutoffs)
+		color_cutoffs = list(0, 0, 0)
+
+	var/red = color_cutoffs[1] / 100
+	var/green = color_cutoffs[2] / 100
+	var/blue = color_cutoffs[3] / 100
+	add_filter("light_cutdown", 3, color_matrix_filter(list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, -(ratio + red),-(ratio+green),-(ratio+blue),0)))
+	add_filter("light_cutup", 4, color_matrix_filter(list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, ratio+red,ratio+green,ratio+blue,0)))
 
 /atom/movable/screen/plane_master/rendering_plate/emissive_slate
 	name = "Emissive Plate"
@@ -206,26 +227,60 @@
 
 /atom/movable/screen/plane_master/rendering_plate/emissive_slate/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
-	add_filter("emissive_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_MASK_RENDER_TARGET, offset)))
 	add_filter("em_block_masking", 2, color_matrix_filter(GLOB.em_mask_matrix))
 	if(offset != 0)
 		add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset - 1), relay_layer = EMISSIVE_Z_BELOW_LAYER)
 
-/atom/movable/screen/plane_master/rendering_plate/mask_emissive
-	name = "Emissive Mask"
-	documentation = "Any part of this plane that is transparent will be transparent in the emissive plane.\
-		<br>This is done to ensure emissives don't light things up \"through\" the darkness that normally sits at the bottom of the lighting plane.\
-		<br>We relay copies of the space, floor and wall planes to it, so we can use them as masks. Then we just boost any existing alpha to 100% and we're done."
-	plane = EMISSIVE_MASK_PLANE
+/atom/movable/screen/plane_master/rendering_plate/light_mask
+	name = "Light Mask"
+	documentation = "Any part of this plane that is transparent will be black below it on the game rendering plate.\
+		<br>This is done to ensure emissives and overlay lights don't light things up \"through\" the darkness that normally sits at the bottom of the lighting plane.\
+		<br>We relay copies of the space, floor and wall planes to it, so we can use them as masks. Then we just boost any existing alpha to 100% and we're done.\
+		<br>If we ever switch to a sight setup that shows say, mobs but not floors, we instead mask just overlay lighting and emissives.\
+		<br>This avoids dumb seethrough without breaking stuff like thermals."
+	plane = LIGHT_MASK_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	// Fullwhite where there's any color, no alpha otherwise
+	color = list(255,255,255,255, 255,255,255,255, 255,255,255,255, 0,0,0,0, 0,0,0,0)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_target = EMISSIVE_MASK_RENDER_TARGET
-	render_relay_planes = list()
+	render_target = LIGHT_MASK_RENDER_TARGET
+	// We blend against the game plane, so she's gotta multiply!
+	blend_mode = BLEND_MULTIPLY
+	render_relay_planes = list(RENDER_PLANE_GAME)
 
-/atom/movable/screen/plane_master/rendering_plate/mask_emissive/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/rendering_plate/light_mask/show_to(mob/mymob)
 	. = ..()
-	// Uses a filter cause the alpha slider will fuck up colors and we want to be editable
-	add_filter("pump_alpha", 1, color_matrix_filter(list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,255, 0,0,0,0)))
+	if(!.)
+		return
+
+	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(handle_sight))
+	handle_sight(mymob, mymob.sight, NONE)
+
+/atom/movable/screen/plane_master/rendering_plate/light_mask/hide_from(mob/oldmob)
+	. = ..()
+	var/atom/movable/screen/plane_master/overlay_lights = home.get_plane(GET_NEW_PLANE(O_LIGHTING_VISUAL_PLANE, offset))
+	overlay_lights.remove_filter("lighting_mask")
+	var/atom/movable/screen/plane_master/emissive = home.get_plane(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset))
+	emissive.remove_filter("lighting_mask")
+	remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME, offset))
+	UnregisterSignal(oldmob, COMSIG_MOB_SIGHT_CHANGE)
+
+/atom/movable/screen/plane_master/rendering_plate/light_mask/proc/handle_sight(datum/source, new_sight, old_sight)
+	// If we can see something that shows "through" blackness, and we can't see turfs, disable our draw to the game plane
+	// And instead mask JUST the overlay lighting plane, since that will look fuckin wrong
+	var/atom/movable/screen/plane_master/overlay_lights = home.get_plane(GET_NEW_PLANE(O_LIGHTING_VISUAL_PLANE, offset))
+	var/atom/movable/screen/plane_master/emissive = home.get_plane(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset))
+	if(new_sight & SEE_AVOID_TURF_BLACKNESS && !(new_sight & SEE_TURFS))
+		remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME, offset))
+		overlay_lights.add_filter("lighting_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(LIGHT_MASK_RENDER_TARGET, offset)))
+		emissive.add_filter("lighting_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(LIGHT_MASK_RENDER_TARGET, offset)))
+	// If we CAN'T see through the black, then draw er down brother!
+	else
+		overlay_lights.remove_filter("lighting_mask")
+		emissive.remove_filter("lighting_mask")
+		// We max alpha here, so our darkness is actually.. dark
+		// Can't do it before cause it fucks with the filter
+		add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME, offset), relay_color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,1))
 
 ///render plate for OOC stuff like ghosts, hud-screen effects, etc
 /atom/movable/screen/plane_master/rendering_plate/non_game

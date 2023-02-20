@@ -23,3 +23,6 @@
 
 /// Checks that floor tiles are properly mapped to broken/burnt
 /datum/unit_test/focus_only/valid_turf_states
+
+/// Checks that nightvision eyes have a full set of color lists
+/datum/unit_test/focus_only/nightvision_color_cutoffs

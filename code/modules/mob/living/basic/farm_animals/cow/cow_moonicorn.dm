@@ -56,15 +56,8 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		//...or something to eat, possibly. both types of target handled by melee attack subtree
 		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/moonicorn,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/moonicorn
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/moonicorn
-
-/datum/ai_behavior/basic_melee_attack/moonicorn
-	//it's a fairly strong attack and it applies pax, so they do not attack often
-	action_cooldown = 2 SECONDS
 
 ///moonicorns will not attack people holding something that could tame them.
 /datum/targetting_datum/basic/allow_items/moonicorn

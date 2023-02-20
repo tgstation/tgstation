@@ -376,7 +376,7 @@
 	greyscale_colors = "#891417#80FF80"
 	saved_identification = "John Doe"
 	saved_job = "Citizen"
-	device_theme = "syndicate"
+	device_theme = PDA_THEME_SYNDICATE
 
 /obj/item/modular_computer/pda/syndicate/Initialize(mapload)
 	. = ..()

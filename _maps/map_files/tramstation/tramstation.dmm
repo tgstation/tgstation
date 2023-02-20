@@ -2248,6 +2248,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown,
+/obj/machinery/computer/order_console/mining,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "afS" = (
@@ -6398,7 +6399,7 @@
 /area/station/security/checkpoint/medical)
 "aII" = (
 /obj/machinery/destination_sign/indicator,
-/obj/machinery/button/tram{
+/obj/machinery/button/tram/directional/north{
 	id = "left_part"
 	},
 /turf/closed/wall,
@@ -6993,7 +6994,7 @@
 /obj/machinery/destination_sign/indicator{
 	dir = 1
 	},
-/obj/machinery/button/tram{
+/obj/machinery/button/tram/directional/south{
 	id = "left_part"
 	},
 /turf/closed/wall,
@@ -14088,10 +14089,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"dfz" = (
-/obj/effect/spawner/random/vending/snackvend,
-/turf/open/floor/noslip,
-/area/station/hallway/primary/tram/right)
 "dfP" = (
 /obj/machinery/rnd/production/techfab/department/service,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -15266,7 +15263,7 @@
 /area/station/hallway/primary/tram/center)
 "dCf" = (
 /obj/machinery/destination_sign/indicator,
-/obj/machinery/button/tram{
+/obj/machinery/button/tram/directional/north{
 	id = "right_part"
 	},
 /turf/closed/wall,
@@ -19507,7 +19504,7 @@
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "fld" = (
-/obj/machinery/button/tram{
+/obj/machinery/button/tram/directional/north{
 	id = "middle_part"
 	},
 /obj/machinery/destination_sign/indicator,
@@ -19748,7 +19745,6 @@
 /area/station/security/brig)
 "foD" = (
 /obj/structure/table/glass,
-/obj/item/computer_disk/chemistry,
 /obj/item/computer_disk/medical,
 /obj/item/computer_disk/medical,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -20365,7 +20361,6 @@
 "fBK" = (
 /obj/effect/landmark/tram/middle_part,
 /obj/structure/industrial_lift/tram/white,
-/obj/structure/sign/plaques/tram,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "fBX" = (
@@ -20532,16 +20527,10 @@
 "fFQ" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner,
-/obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
-/obj/item/reagent_containers/dropper,
-/obj/item/reagent_containers/cup/beaker/large{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/syringe,
+/obj/machinery/chem_master,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "fFR" = (
@@ -25078,16 +25067,10 @@
 "hzT" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/window/reinforced/spawner/north,
-/obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
-/obj/item/reagent_containers/dropper,
-/obj/item/reagent_containers/cup/beaker/large{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/syringe,
+/obj/machinery/chem_master,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "hzV" = (
@@ -30746,7 +30729,7 @@
 /obj/machinery/destination_sign/indicator{
 	dir = 1
 	},
-/obj/machinery/button/tram{
+/obj/machinery/button/tram/directional/south{
 	id = "middle_part"
 	},
 /turf/closed/wall,
@@ -40083,6 +40066,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
+"naH" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/machinery/computer/order_console/cook,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
 "naN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/grunge{
@@ -41247,7 +41237,7 @@
 /obj/machinery/destination_sign/indicator{
 	dir = 1
 	},
-/obj/machinery/button/tram{
+/obj/machinery/button/tram/directional/south{
 	id = "right_part"
 	},
 /turf/closed/wall,
@@ -46239,7 +46229,8 @@
 	name = "Head of Personnel's Requests Console";
 	assistance_requestable = 1;
 	anon_tips_receiver = 1;
-	supplies_requestable = 1
+	supplies_requestable = 1;
+	announcementConsole = 1
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -49758,6 +49749,7 @@
 /area/station/command/gateway)
 "qHk" = (
 /obj/structure/industrial_lift/tram,
+/obj/structure/sign/plaques/tram,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "qHo" = (
@@ -54465,7 +54457,6 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "suG" = (
-/obj/machinery/chem_master,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
@@ -54474,6 +54465,13 @@
 	name = "Pharmacy Privacy Shutters Toggle";
 	req_one_access = list("pharmacy")
 	},
+/obj/structure/table/glass,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/syringe,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "suK" = (
@@ -64978,7 +64976,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/left)
 "wmy" = (
-/obj/machinery/chem_master,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
@@ -64987,6 +64984,13 @@
 	name = "Pharmacy Privacy Shutters Toggle";
 	req_access = list("pharmacy")
 	},
+/obj/structure/table/glass,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/syringe,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "wmz" = (
@@ -67087,7 +67091,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "tram_dorm_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
+	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck","4"="Lower Level","5"="Platform Level")
 	},
 /obj/structure/railing,
 /turf/open/floor/plating/elevatorshaft,
@@ -101523,7 +101527,7 @@ dQt
 iRL
 snQ
 iRL
-pjC
+naH
 jra
 dWn
 cWZ
@@ -179933,7 +179937,7 @@ iOd
 ozQ
 vPi
 brm
-dfz
+xYV
 tfc
 aHr
 wpK

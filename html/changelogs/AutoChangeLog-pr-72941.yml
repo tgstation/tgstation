@@ -1,5 +1,0 @@
-author: "SuperSlayer0"
-delete-after: True
-changes:
-  - balance: "Mech disabler now works as a shotgun, shooting 5 weak disabler beams at one time."
-  - balance: "Mech disabler now uses 100 energy instead of 30, and it's attack cooldown increased to 1.5 seconds instead of 0.8"

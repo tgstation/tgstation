@@ -1,3 +1,5 @@
+from typing import Optional
+
 """Linting error with associated filename and line number."""
 class MaplintError(Exception):
     """The DMM file name the exception occurred in"""
@@ -7,10 +9,13 @@ class MaplintError(Exception):
     line_number = 1
 
     """The optional coordinates"""
-    coordinates: str = None
+    coordinates: Optional[str] = None
 
     """The optional pop ID"""
-    pop_id: str = None
+    pop_id: Optional[str] = None
+
+    """The optional help message"""
+    help: Optional[str] = None
 
     def __init__(self, message: str, file_name: str, line_number = 1):
         Exception.__init__(self, message)

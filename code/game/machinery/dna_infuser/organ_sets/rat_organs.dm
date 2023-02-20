@@ -23,6 +23,9 @@
 	icon_state = "eyes"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
+	low_light_cutoff = list(16, 11, 0)
+	medium_light_cutoff = list(30, 20, 5)
+	high_light_cutoff = list(45, 35, 10)
 
 /obj/item/organ/internal/eyes/night_vision/rat/Initialize(mapload)
 	. = ..()

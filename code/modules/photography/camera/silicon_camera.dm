@@ -15,15 +15,15 @@
 	to_chat(user, span_notice("Camera mode: [in_camera_mode ? "Activated" : "Deactivated"]."))
 
 /obj/item/camera/siliconcam/proc/selectpicture(mob/user)
-	var/list/nametemp = list()
+	RETURN_TYPE(/datum/picture)
 	if(!length(stored))
-		to_chat(usr, span_warning("No images saved"))
+		to_chat(user, span_notice("ERROR: No stored photos located."))
 		return
+	var/list/nametemp = list()
 	var/list/temp = list()
-	for(var/i in stored)
-		var/datum/picture/p = i
-		nametemp += p.picture_name
-		temp[p.picture_name] = p
+	for(var/datum/picture/stored_photo as anything in stored)
+		nametemp += stored_photo.picture_name
+		temp[stored_photo.picture_name] = stored_photo
 	var/find = tgui_input_list(user, "Select image", "Storage", nametemp)
 	if(isnull(find))
 		return
