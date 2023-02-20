@@ -36,6 +36,10 @@
 	ai_controller = /datum/ai_controller/basic_controller/rabbit
 	/// passed to animal_varity as the prefix icon.
 	var/icon_prefix = "rabbit"
+	///passed to the egg_layer component as how many eggs it starts out as able to lay.
+	var/initial_egg_amount = 0
+	///passed to the egg_layer component as how many eggs it's allowed to hold at most.
+	var/max_eggs_held = 8
 
 /mob/living/basic/rabbit/Initialize(mapload)
 	. = ..()
@@ -44,6 +48,18 @@
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown", "black", "white"), TRUE)
 	if(prob(20)) // bunny
 		name = "bunny"
+	//passed to the egg_layer component as how many eggs it gets when it eats something.
+	var/eggs_added_from_eating = rand(1, 4)
+	var/list/feed_messages = list("[p_they()] nibbles happily.", "[p_they()] noms happily.")
+	AddComponent(/datum/component/egg_layer,\
+		/obj/item/surprise_egg,\
+		list(/obj/item/food/grown/carrot),\
+		feed_messages,\
+		list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling."),\
+		initial_egg_amount,\
+		eggs_added_from_eating,\
+		max_eggs_held,\
+	)
 
 /datum/ai_controller/basic_controller/rabbit
 	blackboard = list(
@@ -67,25 +83,8 @@
 	icon_dead = "easter_rabbit_white_dead"
 	icon_prefix = "easter_rabbit"
 	ai_controller = /datum/ai_controller/basic_controller/rabbit/easter
-	///passed to the egg_layer component as how many eggs it starts out as able to lay.
-	var/initial_egg_amount = 10
-	///passed to the egg_layer component as how many eggs it's allowed to hold at most.
-	var/max_eggs_held = 8
+	var/initial_egg_amount = 8 //they start full on eggs instead of empty
 
-/mob/living/basic/rabbit/easter/Initialize(mapload)
-	. = ..()
-	//passed to the egg_layer component as how many eggs it gets when it eats something.
-	var/eggs_added_from_eating = rand(1, 4)
-	var/list/feed_messages = list("[p_they()] nibbles happily.", "[p_they()] noms happily.")
-	AddComponent(/datum/component/egg_layer,\
-		/obj/item/surprise_egg,\
-		list(/obj/item/food/grown/carrot),\
-		feed_messages,\
-		list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling."),\
-		initial_egg_amount,\
-		eggs_added_from_eating,\
-		max_eggs_held,\
-	)
 
 /datum/ai_controller/basic_controller/rabbit/easter
 	planning_subtrees = list(
