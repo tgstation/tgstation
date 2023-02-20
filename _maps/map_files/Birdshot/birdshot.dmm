@@ -39573,6 +39573,12 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/service/chapel/storage)
+"paV" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/kitchen/small,
+/area/station/hallway/secondary/service)
 "pbd" = (
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible,
 /obj/structure/cable,
@@ -65059,7 +65065,9 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/cable,
 /obj/machinery/duct,
-/obj/machinery/duct,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/hallway/secondary/service)
 "ybx" = (
@@ -86140,7 +86148,7 @@ izB
 kQp
 xyX
 ybL
-hMQ
+paV
 wLJ
 wTC
 fSv
