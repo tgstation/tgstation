@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes:
+  - bugfix: "Paper planes when unfolded will put the paper in your active hand, rather than a different hand, just like cardboard boxes."
