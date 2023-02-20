@@ -21,10 +21,32 @@
 	var/weapon_type
 	var/weapon_name_simple
 
+/datum/action/changeling/weapon/Grant(mob/granted_to)
+	. = ..()
+	if (!owner || !req_human)
+		return
+	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey))
+
+/datum/action/changeling/weapon/Remove(mob/remove_from)
+	UnregisterSignal(remove_from, COMSIG_HUMAN_MONKEYIZE)
+	unequip_held(remove_from)
+	return ..()
+
+/// Remove weapons if we become a monkey
+/datum/action/changeling/weapon/proc/became_monkey(mob/source)
+	SIGNAL_HANDLER
+	unequip_held(source)
+
+/// Removes weapon if it exists, returns true if we removed something
+/datum/action/changeling/weapon/proc/unequip_held(mob/user)
+	var/found_weapon = FALSE
+	for(var/obj/item/held in user.held_items)
+		found_weapon = check_weapon(user, held) | found_weapon
+	return found_weapon
+
 /datum/action/changeling/weapon/try_to_sting(mob/user, mob/target)
-	for(var/obj/item/I in user.held_items)
-		if(check_weapon(user, I))
-			return
+	if (unequip_held(user))
+		return
 	..(user, target)
 
 /datum/action/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item)
@@ -34,7 +56,7 @@
 			playsound(user, 'sound/effects/blobattack.ogg', 30, TRUE)
 			user.visible_message(span_warning("With a sickening crunch, [user] reforms [user.p_their()] [weapon_name_simple] into an arm!"), span_notice("We assimilate the [weapon_name_simple] back into our body."), "<span class='italics>You hear organic matter ripping and tearing!</span>")
 		user.update_held_items()
-		return 1
+		return TRUE
 
 /datum/action/changeling/weapon/sting_action(mob/living/carbon/user)
 	var/obj/item/held = user.get_active_held_item()
@@ -59,11 +81,6 @@
 		playsound(user, 'sound/effects/blobattack.ogg', 30, TRUE)
 	return W
 
-/datum/action/changeling/weapon/Remove(mob/user)
-	for(var/obj/item/I in user.held_items)
-		check_weapon(user, I)
-	..()
-
 
 //Parent to space suits and armor.
 /datum/action/changeling/suit
@@ -79,6 +96,22 @@
 	var/helmet_name_simple = "     "
 	var/recharge_slowdown = 0
 	var/blood_on_castoff = 0
+
+/datum/action/changeling/suit/Grant(mob/granted_to)
+	. = ..()
+	if (!owner || !req_human)
+		return
+	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey))
+
+/datum/action/changeling/suit/Remove(mob/remove_from)
+	UnregisterSignal(remove_from, COMSIG_HUMAN_MONKEYIZE)
+	check_suit(remove_from)
+	return ..()
+
+/// Remove suit if we become a monkey
+/datum/action/changeling/suit/proc/became_monkey()
+	SIGNAL_HANDLER
+	check_suit(owner)
 
 /datum/action/changeling/suit/try_to_sting(mob/user, mob/target)
 	if(check_suit(user))
@@ -106,13 +139,6 @@
 
 		changeling.chem_recharge_slowdown -= recharge_slowdown
 		return 1
-
-/datum/action/changeling/suit/Remove(mob/user)
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	check_suit(H)
-	..()
 
 /datum/action/changeling/suit/sting_action(mob/living/carbon/human/user)
 	if(!user.canUnEquip(user.wear_suit))

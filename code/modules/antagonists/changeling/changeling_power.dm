@@ -69,21 +69,21 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 /datum/action/changeling/proc/can_sting(mob/living/user, mob/living/target)
 	if(!can_be_used_by(user))
 		return FALSE
-	var/datum/antagonist/changeling/c = user.mind.has_antag_datum(/datum/antagonist/changeling)
-	if(c.chem_charges < chemical_cost)
-		to_chat(user, span_warning("We require at least [chemical_cost] unit\s of chemicals to do that!"))
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	if(changeling.chem_charges < chemical_cost)
+		user.balloon_alert(user, "needs [chemical_cost] chemicals!")
 		return FALSE
-	if(c.absorbed_count < req_dna)
-		to_chat(user, span_warning("We require at least [req_dna] sample\s of compatible DNA."))
+	if(changeling.absorbed_count < req_dna)
+		user.balloon_alert(user, "needs [req_dna] dna sample\s!")
 		return FALSE
-	if(c.true_absorbs < req_absorbs)
-		to_chat(user, span_warning("We require at least [req_absorbs] sample\s of DNA gained through our Absorb ability."))
+	if(changeling.true_absorbs < req_absorbs)
+		user.balloon_alert(user, "needs [req_absorbs] absorption\s!")
 		return FALSE
 	if(req_stat < user.stat)
-		to_chat(user, span_warning("We are incapacitated."))
+		user.balloon_alert(user, "incapacitated!")
 		return FALSE
 	if((HAS_TRAIT(user, TRAIT_DEATHCOMA)) && (!ignores_fakedeath))
-		to_chat(user, span_warning("We are incapacitated."))
+		user.balloon_alert(user, "playing dead!")
 		return FALSE
 	return TRUE
 
@@ -93,6 +93,6 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 	if(!ishuman(user))
 		return FALSE
 	if(req_human && ismonkey(user))
-		to_chat(user, span_warning("This ability requires you be in human form!"))
+		user.balloon_alert(user, "become human!")
 		return FALSE
 	return TRUE
