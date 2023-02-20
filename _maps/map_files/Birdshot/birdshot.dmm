@@ -1424,10 +1424,11 @@
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
 	},
-/obj/structure/disposalpipe/junction/flip{
+/obj/vehicle/ridden/janicart,
+/obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4
 	},
-/obj/vehicle/ridden/janicart,
+/obj/effect/mapping_helpers/mail_sorting/service/janitor_closet,
 /turf/open/floor/iron/white/small,
 /area/station/service/janitor)
 "aDf" = (
@@ -1587,6 +1588,12 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"aGf" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/fore/greater)
 "aGF" = (
 /obj/structure/cable,
 /obj/effect/spawner/random/structure/crate,
@@ -4422,7 +4429,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark/side,
 /area/station/cargo/office)
@@ -5626,6 +5632,13 @@
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/item/radio{
+	desc = "An old handheld radio. You could use it, if you really wanted to.";
+	icon_state = "radio";
+	name = "old radio";
+	pixel_x = -6;
+	pixel_y = 10
 	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
@@ -10166,6 +10179,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/paramedic)
 "egI" = (
@@ -11631,7 +11645,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
 	id = "medlock";
 	name = "Lockdown Shutters"
 	},
@@ -13091,7 +13104,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/no2{
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2o{
 	dir = 8
 	},
 /obj/effect/landmark/start/atmospheric_technician,
@@ -13660,7 +13673,6 @@
 "fAs" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
 	id = "medlock";
 	name = "Lockdown Shutters"
 	},
@@ -15707,7 +15719,6 @@
 	pixel_x = 9;
 	pixel_y = 3
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/small,
 /area/station/medical/cryo)
 "gmG" = (
@@ -16008,6 +16019,7 @@
 "gtT" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
 "gtW" = (
@@ -16754,8 +16766,10 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible,
-/obj/machinery/portable_atmospherics/pump,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "Plasma to Pure"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "gIa" = (
@@ -18441,12 +18455,11 @@
 /area/station/command/heads_quarters/ce)
 "hkY" = (
 /obj/structure/cable,
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/mail_sorting/science/rd_office,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/white/side{
 	dir = 10
 	},
@@ -21482,6 +21495,7 @@
 	name = "Chief Engineer's Bedroom"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/ce,
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
@@ -22287,15 +22301,14 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "iFs" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible,
+/obj/machinery/atmospherics/components/trinary/filter/atmos/co2{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
 "iFw" = (
@@ -22832,7 +22845,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
 	id = "medlock";
 	name = "Lockdown Shutters"
 	},
@@ -23690,7 +23702,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "jfP" = (
-/obj/effect/turf_decal/bot_white,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
 /area/station/engineering/gravity_generator)
 "jfQ" = (
@@ -27501,12 +27513,8 @@
 	},
 /area/station/science/research)
 "kDm" = (
-/obj/machinery/power/port_gen/pacman,
-/obj/structure/cable,
-/obj/structure/sign/warning/radiation/rad_area/directional/east,
-/obj/machinery/light/small/directional/north,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/bot_white/right,
+/turf/open/floor/engine,
 /area/station/engineering/gravity_generator)
 "kDo" = (
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
@@ -29605,7 +29613,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/light/cold/directional/east,
 /obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
 	id = "medlock";
 	name = "Lockdown Shutters"
 	},
@@ -30403,10 +30410,11 @@
 /area/station/security/tram)
 "lGg" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/disposalpipe/junction/flip{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 2
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/mail_sorting/service/hop_office,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "lGk" = (
@@ -30450,15 +30458,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/directional/south,
-/obj/item/radio{
-	desc = "An old handheld radio. You could use it, if you really wanted to.";
-	icon_state = "radio";
-	name = "old radio";
-	pixel_x = -6;
-	pixel_y = -6
-	},
-/obj/structure/cable,
+/obj/machinery/photocopier,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "lGF" = (
@@ -34014,9 +34014,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "mUt" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/maintenance/fore/greater)
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "mUz" = (
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall/r_wall,
@@ -35154,7 +35155,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "nsL" = (
-/obj/effect/turf_decal/bot_white/right,
+/obj/effect/turf_decal/bot_white,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
 /area/station/engineering/gravity_generator)
 "nsO" = (
@@ -36964,7 +36966,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/cargo/office)
@@ -36991,7 +36992,7 @@
 /turf/open/floor/iron/white/small,
 /area/station/science/cubicle)
 "odA" = (
-/obj/effect/turf_decal/bot_white/left,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/engine,
 /area/station/engineering/gravity_generator)
 "odN" = (
@@ -38413,7 +38414,7 @@
 /area/station/cargo/storage)
 "oGm" = (
 /obj/machinery/door/airlock/command{
-	name = "Gateway Atrium"
+	name = "Gravity Generator"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -38672,6 +38673,7 @@
 	},
 /area/station/security/execution/transfer)
 "oLj" = (
+/obj/effect/turf_decal/sand/plating,
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
@@ -38818,8 +38820,7 @@
 /turf/open/floor/iron/checker,
 /area/station/command/heads_quarters/hos)
 "oNX" = (
-/obj/effect/turf_decal/bot_white,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/bot_white/left,
 /turf/open/floor/engine,
 /area/station/engineering/gravity_generator)
 "oOb" = (
@@ -38846,7 +38847,8 @@
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/lab)
 "oOk" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/gravity_generator/main,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/engine,
 /area/station/engineering/gravity_generator)
 "oOv" = (
@@ -40211,7 +40213,10 @@
 "pnq" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/turf_decal/stripes/line,
+/obj/machinery/power/port_gen/pacman,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/plating,
 /area/station/engineering/gravity_generator)
 "pnH" = (
@@ -46201,8 +46206,7 @@
 /turf/open/floor/iron/white/small,
 /area/station/science/server)
 "rrH" = (
-/obj/machinery/gravity_generator/main,
-/obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/station/engineering/gravity_generator)
 "rrU" = (
@@ -47189,6 +47193,9 @@
 /obj/item/clothing/gloves/color/orange{
 	pixel_x = 4;
 	pixel_y = -2
+	},
+/obj/item/stack/tile/iron{
+	pixel_y = 18
 	},
 /turf/open/floor/iron/white/small,
 /area/station/service/janitor)
@@ -48555,7 +48562,6 @@
 /area/station/hallway/primary/port)
 "sjJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -48971,6 +48977,7 @@
 	id = "garbage";
 	name = "trash chute"
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white/small,
 /area/station/service/janitor)
 "srF" = (
@@ -49236,7 +49243,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
 	id = "medlock";
 	name = "Lockdown Shutters"
 	},
@@ -50877,6 +50883,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "sYK" = (
@@ -51716,6 +51723,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "medlock";
+	name = "Lockdown Shutters"
+	},
+/obj/effect/turf_decal/delivery/red,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/medbay/lobby)
 "tpE" = (
@@ -53028,13 +53041,12 @@
 /area/station/medical/virology)
 "tSe" = (
 /obj/structure/table,
-/obj/effect/spawner/random/decoration/statue{
-	pixel_x = 3;
-	pixel_y = 3;
-	spawn_loot_chance = 50
-	},
 /obj/item/taperecorder{
 	pixel_x = -16;
+	pixel_y = 3
+	},
+/obj/item/flashlight/lamp/green{
+	pixel_x = 8;
 	pixel_y = 3
 	},
 /turf/open/floor/wood/parquet,
@@ -54264,6 +54276,7 @@
 	name = "Paramedic Dispatch Room"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/iron/white/small,
 /area/station/medical/paramedic)
 "unj" = (
@@ -56570,6 +56583,12 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "medlock";
+	name = "Lockdown Shutters"
+	},
+/obj/effect/turf_decal/delivery/red,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/medbay/lobby)
 "vht" = (
@@ -80959,7 +80978,7 @@ eHW
 eXx
 fnr
 fNl
-pdY
+mUt
 gHP
 nxt
 hpc
@@ -101804,7 +101823,7 @@ bKw
 kDm
 nsL
 oNX
-odA
+rrH
 puC
 vZW
 vZs
@@ -102058,7 +102077,7 @@ lNw
 moz
 ptY
 bKw
-lTF
+odA
 jfP
 oOk
 rrH
@@ -102314,13 +102333,13 @@ oVy
 oVy
 vqq
 tMi
-oVy
 bKw
+oNX
 odA
-jfP
-nsL
+kDm
+rrH
 vZW
-oLj
+nXq
 wJR
 hnW
 rwy
@@ -102571,8 +102590,8 @@ jbm
 jbm
 jbm
 jbm
-jbm
-jbm
+vZW
+vZW
 vZW
 vZW
 vZW
@@ -103859,7 +103878,7 @@ oDV
 jbm
 oDV
 xDW
-kSO
+oLj
 qrN
 gtT
 ceP
@@ -104118,8 +104137,8 @@ jbm
 jbm
 jbm
 nXq
-vmH
-mUt
+aGf
+nFW
 nFW
 nFW
 pvA
