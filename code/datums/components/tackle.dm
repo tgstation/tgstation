@@ -1,5 +1,5 @@
 /// how many things can we knock off a table at once by diving into it?
-#define MAX_TABLE_MESSES 24
+#define MAX_TABLE_MESSES 18
 
 /**
  * For when you want to throw a person at something and have fun stuff happen
@@ -115,7 +115,6 @@
 	if(get_dist(user, clicked_atom) < min_distance)
 		var/tackle_angle = get_angle(user, clicked_atom)
 		clicked_atom = get_turf_in_angle(tackle_angle, get_turf(user), min_distance)
-		//clicked_atom = get_ranged_target_turf(user, get_dir(user, clicked_atom), min_distance) //TODO: this only works in cardinals/diagonals, make it work with in-betweens too!
 
 	user.Knockdown(base_knockdown, ignore_canstun = TRUE)
 	user.adjustStaminaLoss(stamina_cost)

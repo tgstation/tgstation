@@ -92,7 +92,7 @@
 	tackle_stam_cost = 50
 	base_knockdown = 2 SECONDS
 	tackle_range = 10
-	min_distance = 5
+	min_distance = 7
 	tackle_speed = 6
 	skill_mod = 7
 
