@@ -318,5 +318,12 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on
 	on = TRUE
 	icon_state = "thermo_base_1"
+	
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on/fullupgrade
+	desc = "Heats or cools gas in connected pipes. This one appears to be decked out in upgrades."
+	circuit = /obj/item/circuitboard/machine/thermomachine/fullupgrade
+
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on/fullupgrade/Initialize(mapload)
+	. = ..()
 
 #undef THERMOMACHINE_POWER_CONVERSION

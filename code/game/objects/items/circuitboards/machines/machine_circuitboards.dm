@@ -290,6 +290,16 @@
 		/datum/stock_part/micro_laser = 2,
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 1)
+		
+/obj/item/circuitboard/machine/thermomachine/fullupgrade
+	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater/on/fullupgrade
+	specific_parts = TRUE
+	req_components = list(
+		/datum/stock_part/matter_bin/tier4 = 2,
+		/datum/stock_part/micro_laser/tier4 = 2,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/stack/sheet/glass = 1
+	)
 
 /obj/item/circuitboard/machine/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	. = ..()

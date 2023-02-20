@@ -6,11 +6,11 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
 "c" = (
-/obj/machinery/light/warm/directional/east,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
 	},
 /obj/effect/spawner/random/food_or_drink/dinner,
+/obj/machinery/light/warm/directional/east,
 /turf/open/floor/iron/white/smooth_half{
 	dir = 1
 	},
@@ -120,7 +120,7 @@
 	id = cockpitheatshield;
 	name = "Cockpit Heat Shield"
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/heater/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on/fullupgrade{
 	dir = 4;
 	initialize_directions = 4
 	},
@@ -218,16 +218,17 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/shuttle/escape)
 "E" = (
-/obj/machinery/light/warm/directional/south,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
+/obj/machinery/light/warm/directional/south,
 /turf/open/floor/iron/white/smooth_half,
 /area/shuttle/escape)
 "F" = (
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /obj/machinery/door/airlock/hatch,
 /obj/structure/fans/tiny/invisible,
+/obj/effect/turf_decal/loading_area/red,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "G" = (
@@ -287,10 +288,10 @@
 /turf/open/floor/iron/white/smooth_half,
 /area/shuttle/escape)
 "Q" = (
-/obj/machinery/light/warm/directional/east,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 9
 	},
+/obj/machinery/light/warm/directional/east,
 /turf/open/floor/iron/white/smooth_half{
 	dir = 1
 	},
@@ -465,7 +466,7 @@ j
 d
 V
 j
-E
+L
 a
 "}
 (11,1,1) = {"
