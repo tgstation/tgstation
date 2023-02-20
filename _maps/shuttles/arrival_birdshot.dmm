@@ -4,6 +4,10 @@
 /area/template_noop)
 "f" = (
 /obj/structure/table,
+/obj/item/reagent_containers/cup/glass/mug/coco{
+	pixel_x = 5;
+	pixel_y = 1
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "g" = (
@@ -17,6 +21,17 @@
 /obj/structure/closet/wardrobe/black,
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"n" = (
+/obj/structure/table,
+/obj/item/folder/yellow{
+	pixel_x = 4
+	},
+/obj/item/phone{
+	pixel_x = -2;
+	pixel_y = 10
+	},
+/turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "o" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst/left{
@@ -89,7 +104,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/light/cold/directional/east,
+/obj/machinery/light/dim/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "P" = (
@@ -101,6 +116,11 @@
 "Q" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
+/area/shuttle/arrival)
+"R" = (
+/obj/structure/table,
+/obj/item/clothing/head/costume/lobsterhat,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "U" = (
 /obj/structure/chair/comfy/shuttle{
@@ -131,8 +151,8 @@ a
 a
 Q
 f
-f
-f
+n
+R
 Q
 a
 "}

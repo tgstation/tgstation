@@ -6343,7 +6343,7 @@
 /area/station/medical/medbay/central)
 "cBc" = (
 /obj/machinery/door/window/right/directional/east{
-	name = "access shutter";
+	name = "Access Shutter";
 	req_access = list("security")
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -9852,6 +9852,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
+"eag" = (
+/mob/living/simple_animal/hostile/asteroid/lobstrosity,
+/turf/open/misc/asteroid/airless,
+/area/station/engineering/atmospherics_engine)
 "ean" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -60257,16 +60261,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
-"wzV" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "cmoprivacy";
-	name = "Privacy Shutters"
-	},
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/cmo)
 "wAn" = (
 /turf/closed/wall,
 /area/station/service/theater)
@@ -81329,7 +81323,7 @@ dDB
 dDB
 aJq
 nYr
-qbr
+eag
 nYr
 nYr
 nYr
@@ -96359,7 +96353,7 @@ lDf
 nYh
 mTt
 bgH
-wzV
+pUc
 pks
 pFV
 nei
