@@ -395,7 +395,7 @@
 
 	if(organ_flags & ORGAN_FAILING)
 		if(source.body_position != LYING_DOWN && living_target != source && prob(50))
-			to_chat(source, span_danger("You try to [picked_hit_type] [living_target], but loose your balance and fall!"))
+			to_chat(source, span_danger("You try to [picked_hit_type] [living_target], but lose your balance and fall!"))
 			source.Knockdown(3 SECONDS)
 			source.forceMove(get_turf(living_target))
 		else
@@ -426,7 +426,8 @@
 		span_hear("You hear a sickening sound of flesh hitting flesh!"),
 		COMBAT_MESSAGE_RANGE,
 		source,
-		)
+	)
+
 	to_chat(source, span_danger("You [picked_hit_type] [target]!"))
 
 	log_combat(source, target, "[picked_hit_type]ed", "muscle implant")
