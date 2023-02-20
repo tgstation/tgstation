@@ -2335,6 +2335,7 @@
 	pixel_y = 3
 	},
 /obj/machinery/light/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/engine_smes)
 "aWq" = (
@@ -64763,6 +64764,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white/textured_half{
 	dir = 1
 	},
