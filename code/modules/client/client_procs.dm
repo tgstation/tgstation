@@ -381,33 +381,35 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	connection_realtime = world.realtime
 	connection_timeofday = world.timeofday
 	winset(src, null, "command=\".configure graphics-hwmode on\"")
-	var/cev = CONFIG_GET(number/client_error_version)
-	var/ceb = CONFIG_GET(number/client_error_build)
-	var/cwv = CONFIG_GET(number/client_warn_version)
-	if (byond_version < cev || (byond_version == cev && byond_build < ceb)) //Out of date client.
+	var/breaking_version = CONFIG_GET(number/client_error_version)
+	var/breaking_build = CONFIG_GET(number/client_error_build)
+	var/warn_version = CONFIG_GET(number/client_warn_version)
+	var/warn_build = CONFIG_GET(number/client_warn_build)
+
+	if (byond_version < breaking_version || (byond_version == breaking_version && byond_build < breaking_build)) //Out of date client.
 		to_chat(src, span_danger("<b>Your version of BYOND is too old:</b>"))
 		to_chat(src, CONFIG_GET(string/client_error_message))
 		to_chat(src, "Your version: [byond_version].[byond_build]")
-		to_chat(src, "Required version: [cev].[ceb] or later")
+		to_chat(src, "Required version: [breaking_version].[breaking_build] or later")
 		to_chat(src, "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.")
 		if (connecting_admin)
 			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
 		else
 			qdel(src)
 			return
-	else if (byond_version < cwv) //We have words for this client.
+	else if (byond_version < warn_version || (byond_version == warn_version && byond_build < warn_build)) //We have words for this client.
 		if(CONFIG_GET(flag/client_warn_popup))
 			var/msg = "<b>Your version of byond may be getting out of date:</b><br>"
 			msg += CONFIG_GET(string/client_warn_message) + "<br><br>"
-			msg += "Your version: [byond_version]<br>"
-			msg += "Required version to remove this message: [cwv] or later<br>"
+			msg += "Your version: [byond_version].[byond_build]<br>"
+			msg += "Required version to remove this message: [warn_version].[warn_build] or later<br>"
 			msg += "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.<br>"
 			src << browse(msg, "window=warning_popup")
 		else
 			to_chat(src, span_danger("<b>Your version of byond may be getting out of date:</b>"))
 			to_chat(src, CONFIG_GET(string/client_warn_message))
-			to_chat(src, "Your version: [byond_version]")
-			to_chat(src, "Required version to remove this message: [cwv] or later")
+			to_chat(src, "Your version: [byond_version].[byond_build]")
+			to_chat(src, "Required version to remove this message: [warn_version].[warn_build] or later")
 			to_chat(src, "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.")
 
 	if (connection == "web" && !connecting_admin)
