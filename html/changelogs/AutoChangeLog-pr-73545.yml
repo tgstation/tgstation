@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes:
-  - bugfix: "Fixes some cases where AI couldn't interact with some old non-tgui machines"
