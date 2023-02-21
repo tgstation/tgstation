@@ -1873,9 +1873,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/department/prison)
-"aOf" = (
-/turf/open/space/basic,
-/area/station/maintenance/starboard/greater)
 "aOt" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -63128,7 +63125,7 @@
 /area/station/service/chapel/office)
 "xgW" = (
 /obj/machinery/door/poddoor/incinerator_atmos_aux,
-/turf/open/space/basic,
+/turf/open/floor/engine/airless,
 /area/station/maintenance/disposal/incinerator)
 "xhe" = (
 /obj/structure/altar_of_gods,
@@ -120985,8 +120982,8 @@ ylD
 ylD
 ylD
 ylD
-aOf
-aOf
+dDB
+dDB
 ylD
 cNR
 ylD
