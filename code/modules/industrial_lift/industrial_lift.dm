@@ -722,6 +722,23 @@ GLOBAL_LIST_EMPTY(lifts)
 	desc = "Keeps idiots like you from walking into an open elevator shaft."
 	icon = 'icons/obj/doors/liftdoor.dmi'
 
+/**
+ * Let them pry open the elevator doors for that foul play.
+ */
+/obj/machinery/door/poddoor/lift/try_safety_unlock(mob/living/user)
+	if(density)
+		to_chat(user, span_notice("You begin pulling the elevator doors apart..."))
+		if(do_after(user, 7 SECONDS, target = src))
+			open(TRUE)
+			return TRUE
+
+/obj/machinery/door/poddoor/lift/crowbar_act(mob/living/user, obj/item/tool)
+	if(density)
+		to_chat(user, span_notice("You begin prying the elevator doors apart..."))
+		if(do_after(user, 2 SECONDS, target = src))
+			open(TRUE)
+			return TOOL_ACT_TOOLTYPE_SUCCESS
+
 // A subtype intended for "public use"
 /obj/structure/industrial_lift/public
 	icon = 'icons/turf/floors.dmi'
