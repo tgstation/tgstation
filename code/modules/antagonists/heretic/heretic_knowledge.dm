@@ -116,11 +116,11 @@
  * Called whenever the knowledge's associated ritual is completed successfully.
  *
  * Creates atoms from types in result_atoms.
- * Override this is you want something else to happen.
+ * Override this if you want something else to happen.
  * This CAN sleep, such as for summoning rituals which poll for ghosts.
  *
  * Arguments
- * * user - the mob who did the  ritual
+ * * user - the mob who did the ritual
  * * selected_atoms - an list of atoms chosen as a part of this ritual.
  * * loc - the turf the ritual's occuring on
  *
