@@ -127,14 +127,11 @@
 	if(!isnull(generated_seeds))
 		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
 			//find all seeds lying on the turf and add them to the machine
-			for(var/obj/item/seeds/seed in loc)
+			for(var/obj/item/seeds/seed as anything in generated_seeds)
 				//machine is full
 				if(contents.len >= max_seeds)
 					to_chat(user, span_warning("[src] is full."))
 					break
-				//pick only those seeds which we generated and not every seed on the turf
-				if(!(seed in generated_seeds))
-					continue
 				//add seed to machine. second argument is null which means just force move into the machine
 				add_seed(seed)
 		to_chat(user, span_notice("You extract some seeds."))
