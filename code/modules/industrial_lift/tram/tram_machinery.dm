@@ -866,11 +866,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	device_type = /obj/item/assembly/control/tram
 	req_access = list()
 	id = 1
-	light_power = 0.5
-	light_range = 1.5
-	light_color = LIGHT_COLOR_DARK_BLUE
-	/// The light mask used in the icon file for emissive layer
-	var/light_mask = "tram-light-mask"
+	light_mask = "tram-light-mask"
 	/// The specific lift id of the tram we're calling.
 	var/lift_id = MAIN_STATION_TRAM
 
@@ -884,14 +880,6 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	. = ..()
 	. += span_notice("There's a small inscription on the button...")
 	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")
-
-/obj/machinery/button/tram/update_overlays()
-	. = ..()
-	if(!light_mask)
-		return
-
-	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
-		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/left, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/right, 0)

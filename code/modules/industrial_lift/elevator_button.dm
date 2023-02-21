@@ -150,11 +150,12 @@
 /obj/machinery/button/elevator
 	name = "elevator button"
 	desc = "Go back. Go back. Go back. Can you operate the elevator."
-	icon_state = "launcher"
-	skin = "launcher"
+	icon_state = "hallctrl"
+	skin = "hallctrl"
 	device_type = /obj/item/assembly/control/elevator
 	req_access = list()
 	id = 1
+	light_mask = "elev-light-mask"
 
 /obj/machinery/button/elevator/Initialize(mapload, ndir, built)
 	. = ..()
