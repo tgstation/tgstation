@@ -16,12 +16,12 @@
 	density = FALSE
 
 	light_range = 1
-	light_power = 0.5
-	light_color = "#F8E398"
+	light_power = 1
+	light_color = LIGHT_COLOR_DARK_BLUE
 	luminosity = 1
 
 	maptext_x = 17
-	maptext_y = 12
+	maptext_y = 3
 	maptext_width = 4
 	maptext_height = 8
 
