@@ -51642,7 +51642,8 @@
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "tram_sci_lift";
 	pixel_y = 32;
-	pixel_x = -32
+	pixel_x = -32;
+	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
