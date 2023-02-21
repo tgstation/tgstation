@@ -73,7 +73,6 @@
 		stored_dna_plants[hydro_tray.myseed.type] = TRUE
 		playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
 		balloon_alert(user, "data added")
-
 	else if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		if(our_vault?.human_dna[human_target.dna.unique_identity])
@@ -112,7 +111,6 @@
 /obj/item/dna_probe/carp_scanner
 	name = "Carp DNA Sampler"
 	desc = "Can be used to take chemical and genetic samples of animals."
-	allowed_scans = DNA_PROBE_SCAN_ANIMALS
 
 /obj/item/dna_probe/carp_scanner/examine_more(mob/user)
 	. = ..()
@@ -125,7 +123,7 @@
 		playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
 		balloon_alert(user, "dna scanned")
 	else
-		. = ..()
+		return ..()
 /obj/item/dna_probe/carp_scanner/attack_self(mob/user, modifiers)
 	. = ..()
 	if(!is_special_character(user))
