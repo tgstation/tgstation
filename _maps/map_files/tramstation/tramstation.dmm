@@ -25787,12 +25787,6 @@
 /obj/effect/turf_decal/stripes/white/full,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/lobby)
-"hNs" = (
-/obj/machinery/lift_indicator{
-	linked_elevator_id = "tram_sci_lift"
-	},
-/turf/closed/wall,
-/area/station/science/lab)
 "hNx" = (
 /obj/machinery/door/airlock/external{
 	name = "Port Docking Bay 2"
@@ -44528,6 +44522,9 @@
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/button/elevator/directional/south{
 	id = "tram_sci_lift"
+	},
+/obj/machinery/lift_indicator/directional/south{
+	linked_elevator_id = "tram_sci_lift"
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
@@ -180695,7 +180692,7 @@ doC
 aKy
 iZz
 rNQ
-hNs
+tPZ
 ezw
 ezw
 umP
