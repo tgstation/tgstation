@@ -27766,7 +27766,7 @@
 /area/station/security/prison/mess)
 "kJJ" = (
 /obj/machinery/button/door/directional/east{
-	id = "amory";
+	id = "armory";
 	name = "Armory Shutters";
 	req_access = list("armory")
 	},
