@@ -155,7 +155,7 @@
 	device_type = /obj/item/assembly/control/elevator
 	req_access = list()
 	id = 1
-	light_mask = "elev-light-mask"
+	light_mask = "hall-light-mask"
 
 /obj/machinery/button/elevator/Initialize(mapload, ndir, built)
 	. = ..()

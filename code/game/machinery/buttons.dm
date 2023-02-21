@@ -71,16 +71,14 @@
 
 /obj/machinery/button/update_overlays()
 	. = ..()
+	if(light_mask && !(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
+		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
 	if(!panel_open)
 		return
 	if(device)
 		. += "button-device"
 	if(board)
 		. += "button-board"
-	if(!light_mask)
-		return
-	else if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
-		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
 
 /obj/machinery/button/screwdriver_act(mob/living/user, obj/item/tool)
 	if(panel_open || allowed(user))

@@ -618,10 +618,10 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	layer = BELOW_OBJ_LAYER
 
 /obj/machinery/destination_sign/indicator
-	icon_state = "indicator_central_idle"
+	icon_state = "indicator_off"
 	base_icon_state = "indicator_"
-	light_power = 2
-	light_range = 1.7
+	light_power = 1
+	light_range = 1.5
 	light_color = LIGHT_COLOR_DARK_BLUE
 	light_mask = "indicator_off_e"
 
