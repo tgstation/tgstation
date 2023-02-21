@@ -123,6 +123,7 @@
 	if (prob(50))
 		crate.opened = TRUE
 		crate.update_appearance()
+		crate.dump_contents()
 
 	return INITIALIZE_HINT_QDEL
 
