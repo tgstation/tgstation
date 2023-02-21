@@ -448,6 +448,7 @@ AUTOADMIN_RANK Game Master
 ## These messages will be followed by one stating the clients current version and the required version for clarity.
 ## If CLIENT_WARN_POPUP is uncommented a popup window with the message will be displayed instead
 #CLIENT_WARN_VERSION 511
+#CLIENT_WARN_BUILD 1421
 #CLIENT_WARN_POPUP
 #CLIENT_WARN_MESSAGE Byond released 511 as the stable release. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
 CLIENT_ERROR_VERSION 511
