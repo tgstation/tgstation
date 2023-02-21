@@ -55,14 +55,14 @@
 		piping_layer = board.pipe_layer
 		set_layer = piping_layer
 
-	if(check_pipe_on_turf()) //If you're seeing weird behaviours from thermomachines, skipping the rest of on_construction() could be the cause.
+	..() //Skipping the rest of on_construction() would be a bad idea so we clean up after it instead.
+
+	if(check_pipe_on_turf())
 		set_anchored(FALSE)
 		set_panel_open(TRUE)
+		change_pipe_connection(TRUE)
 		icon_state = "thermo-open"
-		atmos_init() //Normally called in a parent on_construction() but we do it here since we're skipping that.
 		visible_message(span_warning("You fail to anchor the thermomachine as it's port is being hogged up by something else."))
-		return
-	return ..()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	. = ..()
