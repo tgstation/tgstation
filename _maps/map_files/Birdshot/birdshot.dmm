@@ -38754,6 +38754,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/all/medical/cmo,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/cmo)
 "oPc" = (
