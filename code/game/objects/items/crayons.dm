@@ -24,54 +24,82 @@
 	icon = 'icons/obj/art/crayons.dmi'
 	icon_state = "crayonred"
 	worn_icon_state = "crayon"
-
-	var/icon_capped
-	var/icon_uncapped
-	var/use_overlays = FALSE
-
-	var/crayon_color = "red"
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("attacks", "colours")
 	attack_verb_simple = list("attack", "colour")
 	grind_results = list()
-	var/paint_color = "#FF0000" //RGB
 
+	/// Icon state to use when capped
+	var/icon_capped
+	/// Icon state to use when uncapped
+	var/icon_uncapped
+	/// If true, a coloured overlay is applied to display the currently selected colour
+	var/overlay_paint_colour = FALSE
+
+	/// Crayon overlay to use if placed into a crayon box
+	var/crayon_color = "red"
+	/// Current paint colour
+	var/paint_color = "#FF0000"
+
+	/// Contains chosen symbol to draw
 	var/drawtype
+	/// Stores buffer of text to draw, one character at a time
 	var/text_buffer = ""
 
-	var/static/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","star","poseur tag","prolizard","antilizard")
-	var/static/list/symbols = list("danger","firedanger","electricdanger","biohazard","radiation","safe","evac","space","med","trade","shop","food","peace","like","skull","nay","heart","credit")
-	var/static/list/drawings = list("smallbrush","brush","largebrush","splatter","snake","stickman","carp","ghost","clown","taser","disk","fireaxe","toolbox","corgi","cat","toilet","blueprint","beepsky","scroll","bottle","shotgun")
-	var/static/list/oriented = list("arrow","line","thinline","shortline","body","chevron","footprint","clawprint","pawprint") // These turn to face the same way as the drawer
-	var/static/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
-	var/static/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
-		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER, RANDOM_SYMBOL, RANDOM_PUNCTUATION, RANDOM_DRAWING)
-	var/static/list/graffiti_large_h = list("yiffhell", "furrypride", "secborg", "paint")
-
-	var/static/list/all_drawables = graffiti + symbols + drawings + oriented + runes + graffiti_large_h
-
+	/// Dictates how large of an area we cover with our paint
 	var/paint_mode = PAINT_NORMAL
 
-	var/charges = 30 //-1 or less for unlimited uses
+	/// Number of times this item can be used, -1 for unlimited
+	var/charges = 30
+	/// Number of remaining charges
 	var/charges_left
-	var/volume_multiplier = 1 // Increases reagent effect
-
+	/// Multiplies effect of reagent when applied to mobs or surfaces
+	var/volume_multiplier = 1
+	/// If true, sprayed turfs should also have the internal chemical applied to them
+	var/expose_turfs = FALSE
+	/// If set to false, this just applies a chemical and cannot paint symbols
 	var/actually_paints = TRUE
 
+	/// If false a do_after is required to draw something, otherwise it applies immediately
 	var/instant = FALSE
-	var/self_contained = TRUE // If it deletes itself when it is empty
+	/// If true, this deletes itself when empty
+	var/self_contained = TRUE
 
-	var/edible = TRUE // That doesn't mean eating it is a good idea
+	/// Whether or not you can eat this. Doesn't mean it is a good idea to eat it.
+	var/edible = TRUE
 
+	/// Reagents which are applied to things you use this on, or yourself if you eat it
 	var/list/reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5)
-	// If the user can toggle the colour, a la vanilla spraycan
+	/// If the user can toggle the colour, a la vanilla spraycan
 	var/can_change_colour = FALSE
 
+	/// Whether this item has a cap that can be toggled on and off
 	var/has_cap = FALSE
+	/// Whether the cap is currently on or off
 	var/is_capped = FALSE
 
+	/// Whether to play a sound before using
 	var/pre_noise = FALSE
+	/// Whether to play a sound after using
 	var/post_noise = FALSE
+
+	/// List of selectable graffiti options
+	var/static/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","star","poseur tag","prolizard","antilizard")
+	/// List of selectable symbol options
+	var/static/list/symbols = list("danger","firedanger","electricdanger","biohazard","radiation","safe","evac","space","med","trade","shop","food","peace","like","skull","nay","heart","credit")
+	/// List of selectable drawing options
+	var/static/list/drawings = list("smallbrush","brush","largebrush","splatter","snake","stickman","carp","ghost","clown","taser","disk","fireaxe","toolbox","corgi","cat","toilet","blueprint","beepsky","scroll","bottle","shotgun")
+	/// List of selectable orientable options
+	var/static/list/oriented = list("arrow","line","thinline","shortline","body","chevron","footprint","clawprint","pawprint") // These turn to face the same way as the drawer
+	/// List of selectable rune options
+	var/static/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
+	/// List of selectable random options
+	var/static/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
+		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER, RANDOM_SYMBOL, RANDOM_PUNCTUATION, RANDOM_DRAWING)
+	/// List of selectable large options
+	var/static/list/graffiti_large_h = list("yiffhell", "furrypride", "secborg", "paint")
+	/// Combined lists
+	var/static/list/all_drawables = graffiti + symbols + drawings + oriented + runes + graffiti_large_h
 
 /obj/item/toy/crayon/proc/isValidSurface(surface)
 	return isfloorturf(surface)
@@ -137,23 +165,25 @@
 	if(QDELETED(src))
 		return TRUE
 
-	. = FALSE
 	// -1 is unlimited charges
 	if(charges == -1)
-		. = FALSE
-	else if(!charges_left)
-		to_chat(user, span_warning("There is no more of [src] left!"))
+		return FALSE
+	if(!charges_left)
+		balloon_alert(user, "empty!")
 		if(self_contained)
 			qdel(src)
-		. = TRUE
-	else if(charges_left < amount && requires_full)
-		to_chat(user, span_warning("There is not enough of [src] left!"))
-		. = TRUE
+		return TRUE
+	if(charges_left < amount && requires_full)
+		balloon_alert(user, "not enough left!")
+		return TRUE
+	return FALSE
 
 /obj/item/toy/crayon/ui_state(mob/user)
 	return GLOB.hands_state
 
 /obj/item/toy/crayon/ui_interact(mob/user, datum/tgui/ui)
+	if (!actually_paints)
+		return
 	// tgui is a plague upon this codebase
 	// no u
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -162,13 +192,13 @@
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	if(has_cap && user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		is_capped = !is_capped
-		to_chat(user, span_notice("The cap on [src] is now [is_capped ? "on" : "off"]."))
-		update_appearance()
+	if(!has_cap || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+		return
+	is_capped = !is_capped
+	balloon_alert(user, is_capped ? "capped" : "cap removed")
+	update_appearance()
 
 /obj/item/toy/crayon/proc/staticDrawables()
-
 	. = list()
 
 	var/list/g_items = list()
@@ -208,7 +238,6 @@
 
 
 /obj/item/toy/crayon/ui_data()
-
 	var/static/list/crayon_drawables
 
 	if (!crayon_drawables)
@@ -286,6 +315,7 @@
 		target = target.loc
 
 	if(!isValidSurface(target))
+		balloon_alert(user, "can't use there!")
 		return 0
 
 	var/drawing = drawtype
@@ -369,7 +399,7 @@
 		drawing = text_buffer[1]
 
 
-	var/list/turf/affected_turfs = list()
+	var/list/turf/affected_turfs = list(target)
 
 	if(actually_paints)
 		var/obj/effect/decal/cleanable/crayon/C
@@ -378,7 +408,6 @@
 				C = new(target, paint_color, drawing, temp, graf_rot)
 				C.pixel_x = clickx
 				C.pixel_y = clicky
-				affected_turfs += target
 			if(PAINT_LARGE_HORIZONTAL)
 				var/turf/left = locate(target.x-1,target.y,target.z)
 				var/turf/right = locate(target.x+1,target.y,target.z)
@@ -386,9 +415,8 @@
 					C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
 					affected_turfs += left
 					affected_turfs += right
-					affected_turfs += target
 				else
-					to_chat(user, span_warning("There isn't enough space to paint!"))
+					balloon_alert(user, "no room!")
 					return
 		C.add_hiddenprint(user)
 		if(istagger)
@@ -412,8 +440,9 @@
 	var/fraction = min(1, . / reagents.maximum_volume)
 	if(affected_turfs.len)
 		fraction /= affected_turfs.len
-	for(var/t in affected_turfs)
-		reagents.trans_to(t, ., volume_multiplier, transfered_by = user, methods = TOUCH)
+	if (expose_turfs)
+		for(var/draw_turf in affected_turfs)
+			reagents.expose(draw_turf, methods = TOUCH, volume_modifier = volume_multiplier)
 	check_empty(user)
 	return .
 
@@ -432,26 +461,24 @@
 	use_on(target, user, params)
 	return .
 
-/obj/item/toy/crayon/attack(mob/M, mob/user)
-	if(edible && (M == user))
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			var/covered = ""
-			if(C.is_mouth_covered(ITEM_SLOT_HEAD))
-				covered = "headgear"
-			else if(C.is_mouth_covered(ITEM_SLOT_MASK))
-				covered = "mask"
-			if(covered)
-				to_chat(C, span_warning("You have to remove your [covered] first!"))
-				return
-		to_chat(user, span_notice("You take a bite of the [src.name]. Delicious!"))
-		var/eaten = use_charges(user, 5, FALSE)
-		if(check_empty(user)) //Prevents divsion by zero
+/obj/item/toy/crayon/attack(mob/target, mob/user)
+	if(!edible || (target != user))
+		return ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/crayon_eater = target
+		var/covered = ""
+		if(crayon_eater.is_mouth_covered(ITEM_SLOT_HEAD))
+			covered = "headgear"
+		else if(crayon_eater.is_mouth_covered(ITEM_SLOT_MASK))
+			covered = "mask"
+		if(covered)
+			balloon_alert(user, "remove your [covered]!")
 			return
-		reagents.trans_to(M, eaten, volume_multiplier, transfered_by = user, methods = INGEST)
-		// check_empty() is called during afterattack
-	else
-		..()
+	to_chat(user, span_notice("You take a bite of the [src.name]. Delicious!"))
+	var/eaten = use_charges(user, 5, FALSE)
+	if(check_empty(user)) //Prevents divsion by zero
+		return
+	reagents.trans_to(target, eaten, volume_multiplier, transfered_by = user, methods = INGEST)
 
 /obj/item/toy/crayon/get_writing_implement_details()
 	return list(
@@ -585,12 +612,13 @@
 		var/obj/item/toy/crayon/C = W
 		switch(C.crayon_color)
 			if("mime")
-				to_chat(usr, span_warning("This crayon is too sad to be contained in this box!"))
+				balloon_alert(user, "crayon doesn't belong!")
 				return
 			if("rainbow")
-				to_chat(usr, span_warning("This crayon is too powerful to be contained in this box!"))
+				balloon_alert(user, "crayon is too powerful!")
 				return
 		if(istype(W, /obj/item/toy/crayon/spraycan))
+			balloon_alert(user, "not a crayon!")
 			to_chat(user, span_warning("Spraycans are not crayons!"))
 			return
 	return ..()
@@ -598,7 +626,7 @@
 /obj/item/storage/crayons/attack_self(mob/user)
 	. = ..()
 	if(contents.len > 0)
-		to_chat(user, span_warning("You can't fold down [src] with crayons inside!"))
+		balloon_alert(user, "too full to fold!")
 		return
 	if(flags_1 & HOLOGRAM_1)
 		return
@@ -617,7 +645,7 @@
 
 	icon_capped = "spraycan_cap"
 	icon_uncapped = "spraycan"
-	use_overlays = TRUE
+	overlay_paint_colour = TRUE
 	paint_color = null
 
 	inhand_icon_state = "spraycan"
@@ -775,11 +803,11 @@
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target.color)
 		paint_color = target.color
-		to_chat(user, span_notice("You adjust the color of [src] to match [target]."))
+		balloon_alert(user, "matched colour of [target]")
 		update_appearance()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	else
-		to_chat(user, span_warning("[target] is not colorful enough, you can't match that color!"))
+		balloon_alert(user, "can't match [target]!")
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
@@ -792,7 +820,7 @@
 
 /obj/item/toy/crayon/spraycan/update_overlays()
 	. = ..()
-	if(use_overlays)
+	if(overlay_paint_colour)
 		var/mutable_appearance/spray_overlay = mutable_appearance('icons/obj/art/crayons.dmi', "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 		spray_overlay.color = paint_color
 		. += spray_overlay
@@ -838,13 +866,17 @@
 	icon_state = "deathcan2_cap"
 	icon_capped = "deathcan2_cap"
 	icon_uncapped = "deathcan2"
-	use_overlays = FALSE
+	overlay_paint_colour = FALSE
 
 	volume_multiplier = 25
+	actually_paints = FALSE
+	expose_turfs = TRUE
 	charges = 100
 	reagent_contents = list(/datum/reagent/clf3 = 1)
-	actually_paints = FALSE
 	paint_color = "#000000"
+
+/obj/item/toy/crayon/spraycan/hellcan/isValidSurface(surface)
+	return isfloorturf(surface)
 
 /obj/item/toy/crayon/spraycan/lubecan
 	name = "slippery spraycan"
@@ -852,10 +884,11 @@
 	icon_state = "clowncan2_cap"
 	icon_capped = "clowncan2_cap"
 	icon_uncapped = "clowncan2"
-	use_overlays = FALSE
+	overlay_paint_colour = FALSE
 
 	reagent_contents = list(/datum/reagent/lube = 1, /datum/reagent/consumable/banana = 1)
 	volume_multiplier = 5
+	expose_turfs = TRUE
 
 /obj/item/toy/crayon/spraycan/lubecan/isValidSurface(surface)
 	return isfloorturf(surface)
@@ -866,7 +899,7 @@
 	icon_state = "mimecan_cap"
 	icon_capped = "mimecan_cap"
 	icon_uncapped = "mimecan"
-	use_overlays = FALSE
+	overlay_paint_colour = FALSE
 
 	can_change_colour = FALSE
 	paint_color = "#FFFFFF" //RGB
