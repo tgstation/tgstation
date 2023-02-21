@@ -1,6 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - imageadd: "new inhand sprites for the broken holy flask"
-  - bugfix: "fixes broken holy water flask looking like a broken beer bottle"
-  - bugfix: "unholy flasks now use a blackened holy flask inhand sprite instead of the beaker one"

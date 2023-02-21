@@ -5,7 +5,7 @@
 	button_icon_state = "lay_eggs"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
-	check_flags = AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	///How long it takes for a broodmother to lay eggs.
 	var/egg_lay_time = 12 SECONDS
 	///The type of egg we create
