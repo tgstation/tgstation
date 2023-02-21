@@ -11253,13 +11253,6 @@
 "cdy" = (
 /turf/open/floor/plating,
 /area/station/cargo/storage)
-"cdG" = (
-/obj/machinery/elevator_control_panel/directional/north{
-	linked_elevator_id = "tram_sci_lift";
-	pixel_y = 0
-	},
-/turf/closed/wall,
-/area/station/science/lab)
 "cdN" = (
 /obj/machinery/button/ignition/incinerator/atmos,
 /turf/closed/wall/r_wall,
@@ -51645,6 +51638,11 @@
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
+	},
+/obj/machinery/elevator_control_panel/directional/north{
+	linked_elevator_id = "tram_sci_lift";
+	pixel_y = 32;
+	pixel_x = -32
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
@@ -180949,7 +180947,7 @@ ios
 aKz
 mai
 tdm
-cdG
+tPZ
 ezw
 ezw
 bmQ
