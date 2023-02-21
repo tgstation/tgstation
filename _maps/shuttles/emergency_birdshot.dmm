@@ -470,8 +470,8 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Brig"
 	},
-/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape/brig)
 "xN" = (
@@ -642,8 +642,8 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "GI" = (
-/obj/machinery/light/small/directional/east,
 /obj/effect/spawner/random/trash/soap,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "GJ" = (
@@ -726,10 +726,10 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "Kp" = (
+/obj/effect/decal/cleanable/glass,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/glitter,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "Lx" = (
