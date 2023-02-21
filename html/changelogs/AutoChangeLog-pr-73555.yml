@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - bugfix: "Fixes activating two flashlights without moving only turning on one flashlight (until you move)"
+  - bugfix: "Purely black things drawn on the floor (like carpets, those foam dispensers, etc) will no longer cause things on top of them to be fully masked in darkness"
