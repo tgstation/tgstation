@@ -30694,7 +30694,7 @@
 "jEO" = (
 /obj/machinery/destination_sign/indicator,
 /obj/machinery/button/tram{
-	id = "middle part"
+	id = "middle_part"
 	},
 /turf/closed/wall,
 /area/station/hallway/primary/tram/center)
@@ -49421,8 +49421,10 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/right)
 "qBL" = (
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
-/obj/machinery/door/window/brigdoor/left/directional/east,
+/obj/machinery/door/window/brigdoor/left/directional/east{
+	req_access = list("mining");
+	name = "Mining Office"
+	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "qBQ" = (
