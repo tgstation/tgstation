@@ -35016,6 +35016,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"kJL" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/station/maintenance/port/fore)
 "kJO" = (
 /obj/structure/table,
 /obj/item/storage/box/firingpins,
@@ -229426,14 +229430,14 @@ lJO
 dDV
 sFN
 biY
-oSy
-oSy
-oSy
-oSy
-oSy
-oSy
-oSy
-oSy
+kJL
+kJL
+kJL
+kJL
+kJL
+kJL
+kJL
+kJL
 biY
 wJz
 aJA
