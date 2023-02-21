@@ -36,7 +36,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/rabbit
 	/// passed to animal_varity as the prefix icon.
 	var/icon_prefix = "rabbit"
-	///passed to the egg_layer component as how many eggs it starts out as able to lay.
+	///passed to the egg_layer component as how many eggs it starts out as able to lay. yes, non-easter rabbits being able to lay eggs if fed is intentional.
 	var/initial_egg_amount = 0
 	///passed to the egg_layer component as how many eggs it's allowed to hold at most.
 	var/max_eggs_held = 8
