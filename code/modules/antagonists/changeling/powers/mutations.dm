@@ -41,7 +41,7 @@
 /datum/action/changeling/weapon/proc/unequip_held(mob/user)
 	var/found_weapon = FALSE
 	for(var/obj/item/held in user.held_items)
-		found_weapon = check_weapon(user, held) | found_weapon
+		found_weapon = check_weapon(user, held) || found_weapon
 	return found_weapon
 
 /datum/action/changeling/weapon/try_to_sting(mob/user, mob/target)
