@@ -5011,9 +5011,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
-"bZy" = (
-/turf/closed/wall/r_wall/rust,
-/area/space)
 "bZL" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/trimline/yellow/line{
@@ -5767,9 +5764,6 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
-"cpT" = (
-/turf/open/floor/plating,
-/area/space)
 "cpW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/closed/wall/r_wall,
@@ -15283,6 +15277,7 @@
 /area/station/security/detectives_office)
 "geu" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor/heavy,
 /turf/open/floor/plating,
 /area/station/medical/treatment_center)
 "geE" = (
@@ -19422,6 +19417,7 @@
 /area/station/commons/storage/tools)
 "hDd" = (
 /obj/structure/table/glass,
+/obj/item/circular_saw,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/augments)
 "hDt" = (
@@ -28083,6 +28079,7 @@
 /area/station/cargo/storage)
 "kQe" = (
 /obj/structure/table/reinforced,
+/obj/item/surgical_drapes,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/theatre)
 "kQf" = (
@@ -56698,6 +56695,11 @@
 "uXC" = (
 /obj/structure/table/glass,
 /obj/machinery/light/small/directional/east,
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/obj/item/retractor,
+/obj/item/hemostat,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/augments)
 "uXN" = (
@@ -65152,6 +65154,7 @@
 "xLZ" = (
 /obj/structure/table/glass,
 /obj/machinery/status_display/ai/directional/south,
+/obj/item/surgical_drapes,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/augments)
 "xMa" = (
@@ -91072,7 +91075,7 @@ dDB
 dDB
 wBf
 dxP
-cpT
+kqX
 hNb
 gWs
 gWs
@@ -91329,7 +91332,7 @@ blb
 nEo
 xvT
 xvT
-bZy
+sHg
 sHg
 xvT
 xvT
