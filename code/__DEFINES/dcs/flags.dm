@@ -30,6 +30,8 @@
 #define COMPONENT_DUPE_ALLOWED 1
 /// new component is deleted
 #define COMPONENT_DUPE_UNIQUE 2
+/// component uses sources
+#define COMPONENT_DUPE_SOURCES 3
 /// old component is given the initialization args of the new
 #define COMPONENT_DUPE_UNIQUE_PASSARGS 4
 /// each component of the same type is consulted as to whether the duplicate should be allowed

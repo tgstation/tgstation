@@ -38,11 +38,6 @@
 	  */
 	var/can_transfer = FALSE
 
-	/**
-	 * Only set to true if the component should use source tracking and handling
-	 */
-	var/uses_sources = FALSE
-
 	/// A lazy list of the sources for this component
 	var/list/sources
 
@@ -178,16 +173,17 @@
  */
 /datum/component/proc/on_source_add(source)
 	SHOULD_CALL_PARENT(TRUE)
-	if(!uses_sources)
+	if(dupe_mode != COMPONENT_DUPE_SOURCES)
 		CRASH("Component '[type]' does not use sources but has been given a source")
 	LAZYOR(sources, source)
 
 /**
- * Called when the component has a source removed
+ * Called when the component has a source removed.
+ * You probably want to call parent after you do your logic because at the end of this we qdel if we have no sources remaining!
  */
 /datum/component/proc/on_source_remove(source)
 	SHOULD_CALL_PARENT(TRUE)
-	if(!uses_sources)
+	if(dupe_mode != COMPONENT_DUPE_SOURCES)
 		CRASH("Component '[type]' does not use sources but is trying to remove a source")
 	LAZYREMOVE(sources, source)
 	if(!LAZYLEN(sources))
@@ -448,9 +444,11 @@
 
 	var/dupe_mode = initial(component_type.dupe_mode)
 	var/dupe_type = initial(component_type.dupe_type)
-	var/uses_sources = initial(component_type.uses_sources)
+	var/uses_sources = (dupe_mode == COMPONENT_DUPE_SOURCES)
 	if(uses_sources && !source)
 		CRASH("Attempted to add a sourced component of type '[component_type]' to '[type]' without a source!")
+	else if(!uses_sources && source)
+		CRASH("Attempted to add a normal component of type '[component_type]' to '[type]' with a source!")
 
 	var/datum/component/old_component
 	var/datum/component/new_component
@@ -493,6 +491,11 @@
 					else
 						old_component.InheritComponent(new_component, TRUE)
 
+				if(COMPONENT_DUPE_SOURCES)
+					if(source in old_component.sources)
+						return old_component // source already registered, no work to do
+					old_component.on_source_add(source)
+
 		else if(!new_component)
 			new_component = new component_type(raw_args) // There's a valid dupe mode but there's no old component, act like normal
 	else if(dupe_mode == COMPONENT_DUPE_SELECTIVE)
@@ -510,13 +513,11 @@
 		new_component = new component_type(raw_args) // Dupes are allowed, act like normal
 
 	if(!old_component && !QDELETED(new_component)) // Nothing related to duplicate components happened and the new component is healthy
-		if(uses_sources)
-			new_component.on_source_add()
+		if(uses_sources) // make sure they have the source added if they use sources
+			new_component.on_source_add(source)
 		SEND_SIGNAL(src, COMSIG_COMPONENT_ADDED, new_component)
 		return new_component
 
-	if(uses_sources)
-		old_component.on_source_add()
 	return old_component
 
 /**
