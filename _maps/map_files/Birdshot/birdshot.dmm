@@ -5905,7 +5905,7 @@
 	dir = 6
 	},
 /turf/closed/wall/rust,
-/area/space)
+/area/station/ai_monitored/turret_protected/ai)
 "csp" = (
 /obj/structure/flora/bush/flowers_pp/style_random,
 /obj/effect/landmark/event_spawn,
@@ -5996,7 +5996,7 @@
 	name = "AI Core Shutter"
 	},
 /turf/open/floor/catwalk_floor,
-/area/space)
+/area/station/ai_monitored/turret_protected/ai)
 "ctZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -6010,7 +6010,7 @@
 	dir = 4
 	},
 /turf/closed/wall/rust,
-/area/space)
+/area/station/ai_monitored/turret_protected/ai)
 "cuN" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -6046,7 +6046,7 @@
 	name = "AI Core Shutter"
 	},
 /turf/open/floor/catwalk_floor,
-/area/space)
+/area/station/ai_monitored/turret_protected/ai)
 "cvy" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery/red,
@@ -54804,7 +54804,7 @@
 	dir = 10
 	},
 /turf/closed/wall/rust,
-/area/space)
+/area/station/ai_monitored/turret_protected/ai)
 "upb" = (
 /obj/structure/table/reinforced,
 /obj/effect/mapping_helpers/broken_floor,
@@ -58596,7 +58596,7 @@
 	},
 /obj/effect/spawner/structure/window/survival_pod,
 /turf/open/floor/plating,
-/area/space)
+/area/station/ai_monitored/turret_protected/ai)
 "vIh" = (
 /obj/structure/closet/firecloset,
 /obj/effect/decal/cleanable/dirt/dust,
