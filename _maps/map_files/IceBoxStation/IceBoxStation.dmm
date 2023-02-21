@@ -35016,10 +35016,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
-"kJL" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/maintenance/port/fore)
 "kJO" = (
 /obj/structure/table,
 /obj/item/storage/box/firingpins,
@@ -45784,6 +45780,10 @@
 /obj/item/stock_parts/subspace/amplifier,
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
+"nZG" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/station/maintenance/port/fore)
 "nZH" = (
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
@@ -229429,16 +229429,16 @@ lJO
 lJO
 dDV
 sFN
-biY
-kJL
-kJL
-kJL
-kJL
-kJL
-kJL
-kJL
-kJL
-biY
+lJO
+nZG
+nZG
+nZG
+nZG
+nZG
+nZG
+nZG
+nZG
+lJO
 wJz
 aJA
 gpp
