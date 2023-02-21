@@ -55,10 +55,13 @@
 		piping_layer = board.pipe_layer
 		set_layer = piping_layer
 
-	if(check_pipe_on_turf())
-		deconstruct(TRUE)
+	if(check_pipe_on_turf()) //If you're seeing weird behaviours from thermomachines, skipping the rest of on_construction() could be the cause.
+		set_anchored(FALSE)
+		set_panel_open(TRUE)
+		visible_message(span_warning("You fail to anchor the thermomachine as it's port is being hogged up by something else."))
+		icon_state = "thermo-open"
 		return
-	return..()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	. = ..()
@@ -213,13 +216,13 @@
 		if(device == src)
 			continue
 		if(device.piping_layer == piping_layer)
-			visible_message(span_warning("A pipe is hogging the port, remove the obstruction or change the machine piping layer."))
 			return TRUE
 	return FALSE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!panel_open || check_pipe_on_turf())
-		return
+		visible_message(span_warning("A pipe is hogging the port, remove the obstruction or change the machine piping layer."))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(default_unfasten_wrench(user, tool))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	return
