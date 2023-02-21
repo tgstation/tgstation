@@ -170,4 +170,4 @@
 	. += mutable_appearance(icon, arrow_icon_state)
 	. += emissive_appearance(icon, "[arrow_icon_state]e", offset_spokesman = src, alpha = src.alpha)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/lift_indicator, 31)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/lift_indicator, 32)
