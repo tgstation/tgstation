@@ -128,6 +128,13 @@ if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' $code_files; then
 	st=1
 fi;
 
+part "can_perform_action argument check"
+if $grep 'can_perform_action\(\s*\)' $code_files; then
+	echo
+	echo -e "${RED}ERROR: Found a can_perform_action() proc with improper arguments.${NC}"
+	st=1
+fi;
+
 part "balloon_alert sanity"
 if $grep 'balloon_alert\(".*"\)' $code_files; then
 	echo
