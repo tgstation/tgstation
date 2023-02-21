@@ -8,6 +8,13 @@
 	category = EVENT_CATEGORY_ENGINEERING
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 7
+	var/list/radiation_immune_machinery = typecacheof(list(
+	/obj/machinery/power/supermatter_crystal,
+	/obj/machinery/iv_drip,
+	/obj/machinery/atmospherics/components/tank,
+	/obj/machinery/anomalous_crystal,
+	//review the rest l8r
+	))
 
 /datum/round_event/radiation_leak
 	start_when = 1 // 2 seconds in
@@ -46,6 +53,8 @@
 			return
 
 /datum/round_event/radiation_leak/announce(fake)
+	for(var/mob/dead/observer/player in GLOB.dead_player_list)
+		tgui_input_list(player, "pee", "poo", subtypesof(/obj/machinery))
 	var/obj/machinery/the_source_of_our_problems = picked_machine_ref?.resolve()
 	var/area/station/location_descriptor
 
