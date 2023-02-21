@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Restores lost behaviour to heal Ian with sutures. Or giant spiders, if you want to do that for some reason."
