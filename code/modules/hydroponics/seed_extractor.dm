@@ -15,13 +15,7 @@
  */
 /proc/seedify(obj/item/object, t_max, obj/machinery/seed_extractor/extractor, mob/living/user)
 	//try to get the seed from this item
-	var/obj/item/seeds/seed
-	if(istype(object, /obj/item/food/grown/))
-		var/obj/item/food/grown/grown_food = object
-		seed = grown_food.seed
-	else if(istype(object, /obj/item/grown))
-		var/obj/item/grown/grown_weapon = object
-		seed = grown_weapon.seed
+	var/obj/item/seeds/seed = object.get_plant_seed()
 	if(isnull(seed))
 		return null
 
