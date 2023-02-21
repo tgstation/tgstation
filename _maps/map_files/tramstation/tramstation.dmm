@@ -58914,7 +58914,7 @@
 "uaX" = (
 /obj/machinery/button/elevator{
 	pixel_y = 11;
-	linked_elevator_id = "tram_sci_lift"
+	id = "tram_sci_lift"
 	},
 /turf/closed/wall,
 /area/station/command/heads_quarters/rd)
