@@ -15750,9 +15750,9 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
-/obj/machinery/light/small/directional/west,
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/camera/directional/west,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/kitchen/small,
 /area/station/hallway/secondary/service)
 "gux" = (
@@ -40894,13 +40894,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/kitchen/small,
 /area/station/hallway/secondary/service)
-"pPa" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/duct,
-/turf/open/floor/wood,
-/area/station/hallway/secondary/service)
 "pPq" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -41692,7 +41685,6 @@
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/secondary/construction)
 "qcl" = (
-/obj/effect/mapping_helpers/broken_floor,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
@@ -44752,7 +44744,7 @@
 "rdC" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/tile/blue/half,
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white/small,
 /area/station/service/hydroponics)
 "rdE" = (
@@ -52238,7 +52230,6 @@
 "tDP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/duct,
 /turf/open/floor/iron/kitchen/small,
 /area/station/hallway/secondary/service)
@@ -52974,7 +52965,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "tSh" = (
-/obj/effect/mapping_helpers/broken_floor,
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
@@ -53629,7 +53619,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "udU" = (
-/obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -54906,7 +54895,6 @@
 /area/station/command/bridge)
 "uAV" = (
 /obj/structure/cable,
-/obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/duct,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -67162,6 +67150,7 @@
 "ykY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/east,
+/obj/item/kirbyplants/dead,
 /turf/open/floor/iron/dark/small,
 /area/station/command/heads_quarters/rd)
 "yla" = (
@@ -85078,7 +85067,7 @@ rHH
 oUJ
 wCR
 pup
-pPa
+tbq
 qcl
 uej
 yfC
