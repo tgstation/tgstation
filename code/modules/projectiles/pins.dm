@@ -215,12 +215,16 @@
 	desc = "A firing pin with a built-in configurable paywall."
 	color = "#FFD700"
 	fail_message = ""
-	var/list/gun_owners = list() //list of account IDs which have accepted the license prompt. If this is the multi-payment pin, then this means they accepted the waiver that each shot will cost them money
-	var/payment_amount //how much gets paid out to license yourself to the gun
+	///list of account IDs which have accepted the license prompt. If this is the multi-payment pin, then this means they accepted the waiver that each shot will cost them money
+	var/list/gun_owners = list() 
+	///how much gets paid out to license yourself to the gun
+	var/payment_amount 
 	var/datum/bank_account/pin_owner
-	var/multi_payment = FALSE //if true, user has to pay everytime they fire the gun
+	///if true, user has to pay everytime they fire the gun
+	var/multi_payment = FALSE 
 	var/owned = FALSE
-	var/active_prompt = FALSE //purchase prompt to prevent spamming it
+	///purchase prompt to prevent spamming it
+	var/active_prompt = FALSE 
 
 /obj/item/firing_pin/paywall/attack_self(mob/user)
 	multi_payment = !multi_payment
