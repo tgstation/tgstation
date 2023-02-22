@@ -85,13 +85,14 @@ GLOBAL_PROTECT(logger)
 			stack_trace("log category type '[category_type]' does not have a valid schema version, skipping")
 			continue
 
-		if(initial(category_type.master_category))
-			sub_categories[category_type.master_category] += list(category_type)
+		var/master_category = initial(category_type.master_category)
+		if(master_category)
+			sub_categories[master_category] += list(category_type)
 			continue
 		category_tree[category_type] = list()
 
 	// Sort the sub categories
-	for(var/datum/log_category/master in sub_categories)
+	for(var/datum/log_category/master as anything in sub_categories)
 		if(!(master in category_tree))
 			stack_trace("log category [master] is an invalid master category as its a sub category")
 			continue
