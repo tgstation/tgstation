@@ -2681,6 +2681,9 @@
 /obj/effect/turf_decal/stripes/asteroid/end{
 	dir = 1
 	},
+/obj/item/crowbar/mechremoval{
+	pixel_y = -17
+	},
 /turf/open/floor/circuit/green,
 /area/station/science/robotics/mechbay)
 "boL" = (
@@ -10789,6 +10792,7 @@
 	dir = 5
 	},
 /obj/machinery/camera/directional/north,
+/obj/structure/fireaxecabinet/mechremoval/directional/north,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/robotics/mechbay)
 "eAu" = (
@@ -65200,6 +65204,7 @@
 "xKq" = (
 /obj/machinery/rnd/production/circuit_imprinter/department/science,
 /obj/effect/turf_decal/bot,
+/obj/structure/fireaxecabinet/mechremoval/directional/west,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "xKx" = (
