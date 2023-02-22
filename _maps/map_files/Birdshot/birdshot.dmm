@@ -2215,12 +2215,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
-"aTW" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 6
-	},
-/turf/open/space/basic,
-/area/space)
 "aUc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2255,7 +2249,7 @@
 	dir = 10
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "aVj" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -2964,10 +2958,6 @@
 	},
 /turf/open/floor/iron/small,
 /area/station/engineering/supermatter/room)
-"bkH" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "bkQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2983,11 +2973,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
-"blr" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/turf/open/space/basic,
-/area/space)
 "blC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -4193,8 +4178,10 @@
 /turf/open/floor/circuit,
 /area/station/tcommsat/server)
 "bHW" = (
-/obj/structure/lattice,
-/turf/closed/mineral/random/stationside,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
+/turf/open/space/basic,
 /area/space/nearstation)
 "bHZ" = (
 /obj/structure/closet/secure_closet/hydroponics,
@@ -4225,11 +4212,12 @@
 /turf/open/floor/iron/white/small,
 /area/station/science/lobby)
 "bIt" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 5
+	dir = 4
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "bIx" = (
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
@@ -7077,7 +7065,6 @@
 	},
 /area/station/science/lobby)
 "cRD" = (
-/obj/structure/lattice,
 /turf/closed/wall,
 /area/station/engineering/engine_smes)
 "cRH" = (
@@ -7091,7 +7078,7 @@
 	dir = 4
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "cRJ" = (
 /obj/machinery/rnd/production/techfab/department/medical,
 /obj/effect/turf_decal/stripes/box,
@@ -7159,7 +7146,7 @@
 	dir = 4
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "cSz" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/binary/pump/on{
@@ -7210,12 +7197,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
 "cTr" = (
-/obj/structure/lattice,
+/obj/effect/landmark/carpspawn,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 9
+	dir = 4
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "cTw" = (
 /obj/effect/turf_decal/siding/dark_red,
 /obj/item/stack/sheet/cardboard{
@@ -7257,7 +7244,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "cTY" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail/flip{
@@ -38362,12 +38349,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "oDm" = (
-/obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 10
+	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "oDs" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -43919,7 +43906,7 @@
 	dir = 9
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "qyq" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 8
@@ -49172,9 +49159,11 @@
 /turf/closed/wall,
 /area/station/maintenance/port/fore)
 "smc" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "smf" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -56839,6 +56828,10 @@
 "uWo" = (
 /turf/closed/wall,
 /area/station/medical/paramedic)
+"uWt" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/space/basic,
+/area/space/nearstation)
 "uWv" = (
 /turf/closed/wall,
 /area/station/science/cubicle)
@@ -61541,7 +61534,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/fuchsia,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "wBs" = (
 /obj/structure/table,
 /turf/open/floor/iron/cafeteria,
@@ -73910,7 +73903,7 @@ dDB
 dDB
 dDB
 dDB
-bkH
+blb
 dDB
 dDB
 dDB
@@ -74167,12 +74160,12 @@ dDB
 dDB
 dDB
 dDB
-bkH
-dDB
-aTW
+blb
+bHW
 smc
-bIt
 dDB
+bHW
+smc
 rpi
 hmk
 blb
@@ -74424,12 +74417,12 @@ dDB
 dDB
 dDB
 dDB
-bkH
-bkH
+blb
+cRI
 cRI
 wBr
 cRI
-bkH
+cRI
 blb
 hmk
 hmk
@@ -74681,12 +74674,12 @@ dDB
 dDB
 dDB
 dDB
-bkH
-fNA
+blb
+cTr
 cSv
 dDB
 cSv
-dDB
+cSv
 blb
 dDB
 hmk
@@ -74937,15 +74930,15 @@ dDB
 dDB
 dDB
 dDB
+bHW
+oer
+oDm
+qyo
 dDB
-bkH
-dDB
-cSv
-dDB
-cSv
-dDB
-blb
-dDB
+aUQ
+oDm
+oer
+smc
 dDB
 blb
 dDB
@@ -75194,15 +75187,15 @@ dDB
 dDB
 dDB
 dDB
-aTW
-blr
-blr
-cTr
-bkH
-oDm
-blr
-oer
-bIt
+cSv
+blb
+cRI
+blb
+blb
+blb
+cRI
+blb
+cSv
 dDB
 blb
 jZl
@@ -75452,12 +75445,12 @@ dDB
 dDB
 dDB
 aUQ
-blr
+oer
 bIt
+smc
 dDB
-dDB
-dDB
-aTW
+bHW
+bIt
 oer
 qyo
 dDB
@@ -75709,11 +75702,11 @@ aJq
 aJq
 dDB
 dDB
-bkH
+blb
 aUQ
-bIt
-dDB
-aTW
+oDm
+uWt
+oDm
 qyo
 ayK
 lIw
@@ -75969,7 +75962,7 @@ ayK
 ayK
 ayK
 cTD
-bkH
+blb
 cTD
 ayK
 ayK
@@ -80335,7 +80328,7 @@ aJq
 aJq
 aJq
 aJq
-bHW
+aJq
 cRD
 pTN
 pVa
