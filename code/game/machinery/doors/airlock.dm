@@ -1185,14 +1185,14 @@
 
 		else
 			stack_trace("Invalid forced argument [forced] passed to open() on this airlock.")
+			return TRUE // We ballsed it up somehow, but let's assume we wanted it open.
 
-
-/obj/machinery/door/airlock/close(forced = FALSE, force_crush = FALSE)
+/obj/machinery/door/airlock/close(forced = DOOR_DEFAULT_CHECKS, force_crush = FALSE)
 	if(operating || welded || locked || seal)
 		return
 	if(density)
 		return TRUE
-	if(!forced)
+	if(forced == DOOR_DEFAULT_CHECKS) // Do this up here and outside of try_to_force_door_shut because if we don't have power, we shouldn't be doing any dangerous_close stuff.
 		if(!hasPower() || wires.is_cut(WIRE_BOLTS))
 			return
 
@@ -1202,14 +1202,9 @@
 			if(M.density && M != src) //something is blocking the door
 				autoclose_in(DOOR_CLOSE_WAIT)
 				return
-	if(forced < 2)
-		if(obj_flags & EMAGGED)
-			return
-		use_power(50)
-		playsound(src, doorClose, 30, TRUE)
 
-	else
-		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+	if(!try_to_force_door_shut(forced))
+		return
 
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
@@ -1240,6 +1235,23 @@
 	if(!dangerous_close)
 		CheckForMobs()
 	return TRUE
+
+/obj/machinery/door/airlock/try_to_force_door_shut(force_type = DOOR_DEFAULT_CHECKS)
+	switch(force_type)
+		if(DOOR_DEFAULT_CHECKS to DOOR_FORCED_CHECKS)
+			if(obj_flags & EMAGGED)
+				return FALSE
+			use_power(50)
+			playsound(src, doorClose, 30, TRUE)
+			return TRUE
+
+		if(DOOR_BYPASS_CHECKS)
+			playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+			return TRUE
+
+		else
+			stack_trace("Invalid forced argument [forced] passed to close() on this airlock.")
+			return TRUE // We ballsed it up somehow, but let's assume we wanted it closed.
 
 /obj/machinery/door/airlock/proc/prison_open()
 	if(obj_flags & EMAGGED)

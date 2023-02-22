@@ -220,31 +220,26 @@
 /// Additional checks depending on what we want to happen to this windoor
 /obj/machinery/door/window/try_to_force_door_open(force_type = DOOR_DEFAULT_CHECKS)
 	switch(force_type)
-		if(DOOR_DEFAULT_CHECKS) // Regular behavior.
+		if(DOOR_DEFAULT_CHECKS)
 			if(!hasPower() || (obj_flags & EMAGGED))
 				return FALSE
 			return TRUE
 
-		if(DOOR_FORCED_CHECKS) // Only one check.
+		if(DOOR_FORCED_CHECKS)
 			if(obj_flags & EMAGGED)
 				return FALSE
 			return TRUE
 
-		if(DOOR_BYPASS_CHECKS) // No power usage, special sound, get it open.
+		if(DOOR_BYPASS_CHECKS) // Get it open!
 			return TRUE
 
 		else
 			stack_trace("Invalid forced argument [forced] passed to open() on this airlock.")
 
-/obj/machinery/door/window/close(forced=FALSE)
-	if (operating)
-		return 0
-	if(!forced)
-		if(!hasPower())
-			return 0
-	if(forced < 2)
-		if(obj_flags & EMAGGED)
-			return 0
+/obj/machinery/door/window/close(forced = DOOR_DEFAULT_CHECKS)
+	if(operating || !try_to_force_door_shut(forced))
+		return FALSE
+
 	operating = TRUE
 	do_animate("closing")
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
@@ -256,7 +251,25 @@
 	sleep(1 SECONDS)
 
 	operating = FALSE
-	return 1
+	return TRUE
+
+/obj/machinery/door/window/try_to_force_door_shut(force_type = DOOR_DEFAULT_CHECKS)
+	switch(force_type)
+		if(DOOR_DEFAULT_CHECKS)
+			if(!hasPower() || (obj_flags & EMAGGED))
+				return FALSE
+			return TRUE
+
+		if(DOOR_FORCED_CHECKS)
+			if(obj_flags & EMAGGED)
+				return FALSE
+			return TRUE
+
+		if(DOOR_BYPASS_CHECKS) // Get it shut!
+			return TRUE
+
+		else
+			stack_trace("Invalid forced argument [forced] passed to close() on this airlock.")
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -385,7 +398,7 @@
 		if(density)
 			open(DOOR_BYPASS_CHECKS)
 		else
-			close(2)
+			close(DOOR_BYPASS_CHECKS)
 	else
 		to_chat(user, span_warning("The door's motors resist your efforts to force it!"))
 

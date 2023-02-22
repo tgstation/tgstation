@@ -352,12 +352,13 @@
 			if(!machine_stat)
 				flick("door_deny", src)
 
-
-/obj/machinery/door/proc/open()
+/// Public proc that simply handles opening the door. Returns TRUE if the door was opened, FALSE otherwise.
+/// Use argument "forced" in conjunction with try_to_force_door_open if you want/need additional checks depending on how sorely you need the door opened.
+/obj/machinery/door/proc/open(forced = DOOR_DEFAULT_CHECKS)
 	if(!density)
 		return TRUE
 	if(operating)
-		return
+		return FALSE
 	operating = TRUE
 	use_power(active_power_usage)
 	do_animate("opening")
@@ -376,21 +377,23 @@
 		autoclose_in(DOOR_CLOSE_WAIT)
 	return TRUE
 
-/// Proc that runs a series of checks to see if we should forcibly open the door. Returns TRUE if we should open the door, FALSE otherwise. Implemented in child types.
+/// Private proc that runs a series of checks to see if we should forcibly open the door. Returns TRUE if we should open the door, FALSE otherwise. Implemented in child types.
 /obj/machinery/door/proc/try_to_force_door_open(force_type = DOOR_DEFAULT_CHECKS)
 	return TRUE // the base "door" can always be forced open since there's no power or anything like emagging it to prevent an open, not even invoked on the base type anyways.
 
-/obj/machinery/door/proc/close()
+/// Public proc that simply handles closing the door. Returns TRUE if the door was closed, FALSE otherwise.
+/// Use argument "forced" in conjuction with try_to_force_door_shut if you want/need additional checks depending on how sorely you need the door closed.
+/obj/machinery/door/proc/close(forced = DOOR_DEFAULT_CHECKS)
 	if(density)
 		return TRUE
 	if(operating || welded)
-		return
+		return FALSE
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				if(autoclose)
 					autoclose_in(DOOR_CLOSE_WAIT)
-				return
+				return FALSE
 
 	operating = TRUE
 
@@ -416,7 +419,7 @@
 		crush()
 	return TRUE
 
-/// Proc that runs a series of checks to see if we should forcibly shut the door. Returns TRUE if we should shut the door, FALSE otherwise. Implemented in child types.
+/// Private proc that runs a series of checks to see if we should forcibly shut the door. Returns TRUE if we should shut the door, FALSE otherwise. Implemented in child types.
 /obj/machinery/door/proc/try_to_force_door_shut(force_type = DOOR_DEFAULT_CHECKS)
 	return TRUE // the base "door" can always be forced shut
 
