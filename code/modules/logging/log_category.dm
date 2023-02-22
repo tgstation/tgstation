@@ -19,6 +19,8 @@
 	/// List of all entries, in chronological order of when they were added
 	var/list/entries = list()
 
+GENERAL_PROTECT_DATUM(/datum/log_category)
+
 /// Backup log category to catch attempts to log to a category that doesn't exist
 /datum/log_category/backup_category_not_found
 	category = LOG_CATEGORY_NOT_FOUND

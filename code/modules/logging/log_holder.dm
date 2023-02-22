@@ -23,6 +23,8 @@ GLOBAL_PROTECT(logger)
 	var/initialized = FALSE
 	var/shutdown = FALSE
 
+GENERAL_PROTECT_DATUM(/datum/log_holder)
+
 /// Assembles basic information for logging, creating the log category datums and checking for config flags as required
 /datum/log_holder/proc/init_logging()
 	if(initialized)
