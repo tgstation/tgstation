@@ -56,8 +56,10 @@
 
 // Log header keys
 #define LOG_HEADER_CATEGORY "category"
+#define LOG_HEADER_SCHEMA_LIST "schema-list"
 #define LOG_HEADER_INIT_TIMESTAMP "timestamp"
-#define LOG_HEADER_ROUND_ID "round_id"
+#define LOG_HEADER_ROUND_ID "round-id"
+#define LOG_HEADER_SECRET "secret"
 
 // Log data keys
 #define LOG_ENTRY_MESSAGE "message"
@@ -72,6 +74,8 @@
 // Log categories
 #define LOG_CATEGORY_NOT_FOUND "invalid_category"
 #define LOG_CATEGORY_TARGET_ZONE_SWITCH "target_zone_switch"
+
+#define LOG_CATEGORY_SCHEMA_VERSION_NOT_SET "0.0"
 
 //wrapper macros for easier grepping
 #define DIRECT_OUTPUT(A, B) A << B

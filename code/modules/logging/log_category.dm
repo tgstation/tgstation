@@ -1,9 +1,21 @@
 /// The main datum that contains all log entries for a category
 /datum/log_category
-	/// The category this datum contains
+	/// The category name
 	var/category
+
+	/// The schema version of this log category.
+	/// Expected format of "Major.Minor"
+	var/schema_version = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET
+
+	/// The master category that contains this category
+	var/datum/log_category/master_category
+
 	/// If set this config flag is checked to enable this log category
 	var/config_flag
+
+	/// Whether or not this log should not be publically visible
+	var/secret = FALSE
+
 	/// List of all entries, in chronological order of when they were added
 	var/list/entries = list()
 
@@ -24,8 +36,9 @@
 	write_entry(entry)
 
 /// Allows for category specific file splitting. Needs to accept a null entry for the default file.
+/// If master_category it will always return the output of master_category.get_output_file(entry)
 /datum/log_category/proc/get_output_file(list/entry)
-	return "[GLOB.log_directory]/[category].json"
+	return master_category?.get_output_file(entry) || "[GLOB.log_directory]/[category].json"
 
 /// Writes an entry to the output file for the category
 /datum/log_category/proc/write_entry(list/entry)
