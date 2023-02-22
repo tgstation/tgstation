@@ -41,13 +41,13 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		for(var/datum/log_category/sub_category as anything in sub_categories)
 			config_flag = initial(sub_category.config_flag)
 			if(config_flag && !config.Get(config_flag))
-				disabled_categories += initial(sub_category.category)
+				disabled_categories[initial(sub_category.category)] = TRUE
 				sub_categories -= sub_category
 				continue
 
 		config_flag = initial(master_category.config_flag)
 		if(config_flag && !config.Get(config_flag))
-			disabled_categories += initial(master_category.category)
+			disabled_categories[initial(master_category.category)] = TRUE
 			if(!length(sub_categories))
 				continue
 		// enabled, or any of the sub categories are enabled
