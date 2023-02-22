@@ -281,6 +281,8 @@
 /obj/item/firing_pin/paywall/pin_auth(mob/living/user)
 	if(!istype(user))//nice try commie
 		return FALSE
+	if(active_prompt)
+		return FALSE
 	var/datum/bank_account/credit_card_details = user.get_bank_account()
 	if(credit_card_details in gun_owners)
 		if(multi_payment && credit_card_details)
@@ -293,35 +295,36 @@
 			to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
 			return FALSE
 		return TRUE
+	if(!credit_card_details)
+		to_chat(user, span_warning("ERROR: User has no valid bank account to subtract neccesary funds from!"))
+		return FALSE
 	if(active_prompt)
 		return FALSE
-	if(credit_card_details)
-		active_prompt = TRUE
-		var/license_request = tgui_alert(user, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", list("Yes", "No"))
-		if(!user.can_perform_action(src))
+	active_prompt = TRUE
+	var/license_request = tgui_alert(user, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", list("Yes", "No"))
+	if(!user.can_perform_action(src))
+		active_prompt = FALSE
+		return FALSE
+	switch(license_request)
+		if("Yes")
+			if(multi_payment)
+				gun_owners += credit_card_details
+				to_chat(user, span_notice("Gun rental terms agreed to, have a secure day!"))
+
+			else if(credit_card_details.adjust_money(-payment_amount, "Firing Pin: Gun License"))
+				if(pin_owner)
+					pin_owner.adjust_money(payment_amount, "Firing Pin: Gun License Bought")
+				gun_owners += credit_card_details
+				to_chat(user, span_notice("Gun license purchased, have a secure day!"))
+					
+			else 
+				to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
+			active_prompt = FALSE
+			return FALSE //we return false here so you don't click initially to fire, get the prompt, accept the prompt, and THEN the gun
+		if("No", null)
+			to_chat(user, span_warning("ERROR: User has declined to purchase gun license!"))
 			active_prompt = FALSE
 			return FALSE
-		switch(license_request)
-			if("Yes")
-				if(multi_payment)
-					gun_owners += credit_card_details
-					to_chat(user, span_notice("Gun rental terms agreed to, have a secure day!"))
-
-				else if(credit_card_details.adjust_money(-payment_amount, "Firing Pin: Gun License"))
-					if(pin_owner)
-						pin_owner.adjust_money(payment_amount, "Firing Pin: Gun License Bought")
-					gun_owners += credit_card_details
-					to_chat(user, span_notice("Gun license purchased, have a secure day!"))
-					
-				else 
-					to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
-				active_prompt = FALSE
-				return FALSE //we return false here so you don't click initially to fire, get the prompt, accept the prompt, and THEN the gun
-			if("No", null)
-				to_chat(user, span_warning("ERROR: User has declined to purchase gun license!"))
-				active_prompt = FALSE
-				return FALSE
-	to_chat(user, span_warning("ERROR: User has no valid bank account to subtract neccesary funds from!"))
 	return FALSE
 
 // Explorer Firing Pin- Prevents use on station Z-Level, so it's justifiable to give Explorers guns that don't suck.
