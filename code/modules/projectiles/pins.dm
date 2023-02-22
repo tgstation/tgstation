@@ -306,11 +306,13 @@
 				if(multi_payment)
 					gun_owners += credit_card_details
 					to_chat(user, span_notice("Gun rental terms agreed to, have a secure day!"))
+
 				else if(credit_card_details.adjust_money(-payment_amount, "Firing Pin: Gun License"))
 					if(pin_owner)
 						pin_owner.adjust_money(payment_amount, "Firing Pin: Gun License Bought")
 					gun_owners += credit_card_details
 					to_chat(user, span_notice("Gun license purchased, have a secure day!"))
+					
 				else 
 					to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
 				active_prompt = FALSE
