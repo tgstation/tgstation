@@ -146,19 +146,22 @@
 	return ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
-/obj/effect/mob_spawn/ghost_role/attack_ghost(mob/user)
+/obj/effect/mob_spawn/ghost_role/attack_ghost(mob/dead/observer/user)
 	if(!SSticker.HasRoundStarted() || !loc)
 		return
 
 	if(prompt_ghost)
-		var/ghost_role = tgui_alert(usr, "Become [prompt_name]? (Warning, You can no longer be revived!)", buttons = list("Yes", "No"), timeout = 10 SECONDS)
+		var/prompt = "Become [prompt_name]?"
+		if(user.can_reenter_corpse && user.mind)
+			prompt += " (Warning, You can no longer be revived!)"
+		var/ghost_role = tgui_alert(usr, prompt, buttons = list("Yes", "No"), timeout = 10 SECONDS)
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
 			return
 
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
 		return
-	if(!uses) //just in case
+	if(uses <= 0) //just in case
 		to_chat(user, span_warning("This spawner is out of charges!"))
 		return
 
@@ -172,6 +175,7 @@
 
 	user.log_message("became a [prompt_name].", LOG_GAME)
 	uses -= 1 // Remove a use before trying to spawn to prevent strangeness like the spawner trying to spawn more mobs than it should be able to
+	user.mind = null // dissassociate mind, don't let it follow us to the next life
 
 	var/created = create(user)
 	if(!created)

@@ -1,0 +1,13 @@
+version: 1
+byond: 514.1588
+static_files:
+  - name: config
+    populate: true
+  - name: data
+linux_scripts:
+  PreCompile.sh: tools/tgs_scripts/PreCompile.sh
+  WatchdogLaunch.sh: tools/tgs_scripts/WatchdogLaunch.sh
+  InstallDeps.sh: tools/tgs_scripts/InstallDeps.sh
+windows_scripts:
+  PreCompile.bat: tools/tgs_scripts/PreCompile.bat
+security: Trusted
