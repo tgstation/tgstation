@@ -97,9 +97,6 @@
 	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the basic_body_temp_sensitive element.
 	var/unsuitable_heat_damage = 1
 
-	///Whether or not this mob can catch on fire
-	var/flammable = FALSE
-
 /mob/living/basic/Initialize(mapload)
 	. = ..()
 

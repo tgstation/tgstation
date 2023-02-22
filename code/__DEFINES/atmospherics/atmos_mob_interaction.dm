@@ -112,6 +112,13 @@
 /// what max_heat_protection_temperature is set to for firesuit quality suits and helmets. MUST NOT BE 0.
 #define FIRE_IMMUNITY_MAX_TEMP_PROTECT 35000
 
+/// Speed at which basic mobs should discard fire stacks
+#define BASIC_MOB_FIRE_DECAY_RATE -5
+/// Speed at which cyborg mobs should discard fire stacks
+#define SILICON_FIRE_DECAY_RATE -0.55
+/// Speed at which other mobs should discard fire stacks
+#define FIRE_DECAY_RATE -0.05
+
 /// For normal helmets
 #define HELMET_MIN_TEMP_PROTECT 160
 /// For normal helmets

@@ -79,10 +79,6 @@
 	///This damage is taken when atmos doesn't fit all the requirements above.
 	var/unsuitable_atmos_damage = 1
 
-	///Whether or not this mob is flammable
-	var/flammable = FALSE
-	///How quickly should fire stacks on this mob diminish?
-	var/fire_stack_removal_speed = -5
 	///How fast the mob's temperature normalizes. The greater the value, the slower their temperature normalizes. Should always be greater than 0.
 	var/temperature_normalization_speed = 5
 
@@ -495,31 +491,6 @@
 		if(LAZYLEN(M.occupants))
 			return FALSE
 	return TRUE
-
-/mob/living/simple_animal/ignite_mob(silent)
-	if(!flammable)
-		return FALSE
-	return ..()
-
-/mob/living/simple_animal/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
-	adjust_bodytemperature((maxbodytemp + (fire_handler.stacks * 12)) * 0.5 * delta_time)
-
-/mob/living/simple_animal/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
-	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/effects/onfire.dmi', "generic_fire")
-	if(on_fire && isnull(last_icon_state))
-		add_overlay(fire_overlay)
-		return fire_overlay
-	else if(!on_fire && !isnull(last_icon_state))
-		cut_overlay(fire_overlay)
-		return null
-	else if(on_fire && !isnull(last_icon_state))
-		return last_icon_state
-	return null
-
-/mob/living/simple_animal/extinguish_mob()
-	if(!flammable)
-		return
-	return ..()
 
 /mob/living/simple_animal/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
