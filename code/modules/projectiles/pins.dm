@@ -25,20 +25,20 @@
 	if(proximity_flag)
 		if(isgun(target))
 			. |= AFTERATTACK_PROCESSED_ITEM
-			var/obj/item/gun/G = target
-			var/obj/item/firing_pin/old_pin = G.pin
+			var/obj/item/gun/targetted_gun = target
+			var/obj/item/firing_pin/old_pin = targetted_gun.pin
 			if(old_pin && (force_replace || old_pin.pin_removeable))
 				balloon_alert(user, "firing pin removed")
 				if(Adjacent(user))
 					user.put_in_hands(old_pin)
 				else
-					old_pin.forceMove(G.drop_location())
+					old_pin.forceMove(targetted_gun.drop_location())
 				old_pin.gun_remove(user)
 
-			if(!G.pin)
+			if(!targetted_gun.pin)
 				if(!user.temporarilyRemoveItemFromInventory(src))
 					return .
-				if(gun_insert(user, G))
+				if(gun_insert(user, targetted_gun))
 					balloon_alert(user, "firing pin inserted.")
 			else
 				to_chat(user, span_notice("This firearm already has a firing pin installed."))
@@ -293,9 +293,9 @@
 			to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
 			return FALSE
 		return TRUE
+	if(active_prompt)
+		return FALSE
 	if(credit_card_details)
-		if(active_prompt)
-			return FALSE
 		active_prompt = TRUE
 		var/license_request = tgui_alert(user, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", list("Yes", "No"))
 		if(!user.can_perform_action(src))
@@ -317,7 +317,7 @@
 					to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
 				active_prompt = FALSE
 				return FALSE //we return false here so you don't click initially to fire, get the prompt, accept the prompt, and THEN the gun
-			if("No")
+			if("No", null)
 				to_chat(user, span_warning("ERROR: User has declined to purchase gun license!"))
 				active_prompt = FALSE
 				return FALSE
