@@ -21996,11 +21996,11 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/command{
-	name = "Gravity Generator"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/machinery/door/airlock/highsecurity{
+	name = "Gravity Generator"
+	},
 /turf/open/floor/catwalk_floor/iron,
 /area/station/engineering/gravity_generator)
 "iFT" = (
@@ -37891,6 +37891,9 @@
 	name = "Brig"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "sci-entrance"
+	},
 /turf/open/floor/iron/textured_half,
 /area/station/security/brig/entrance)
 "oFm" = (
@@ -45116,11 +45119,11 @@
 /turf/open/floor/plating,
 /area/station/science/auxlab/firing_range)
 "reZ" = (
-/obj/machinery/computer/secure_data{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/light/cold/directional/north,
+/obj/machinery/computer/records/security{
+	dir = 4
+	},
 /turf/open/floor/iron/checker{
 	dir = 1
 	},
@@ -48896,6 +48899,9 @@
 	name = "Brig"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "sci-entrance"
+	},
 /turf/open/floor/iron/textured_half,
 /area/station/security/brig/entrance)
 "sxA" = (
@@ -59710,6 +59716,9 @@
 	name = "Brig"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "sci-entrance"
+	},
 /turf/open/floor/iron/textured_half,
 /area/station/security/brig/entrance)
 "woB" = (
@@ -62461,6 +62470,9 @@
 	name = "Brig"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "sci-entrance"
+	},
 /turf/open/floor/iron/textured_half,
 /area/station/security/brig/entrance)
 "xjm" = (
