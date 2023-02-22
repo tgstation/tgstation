@@ -223,8 +223,8 @@
 	///if true, user has to pay everytime they fire the gun
 	var/multi_payment = FALSE 
 	var/owned = FALSE
-	///purchase prompt to prevent spamming it
-	var/active_prompt = FALSE 
+	///purchase prompt to prevent spamming it, set to the user who opens to prompt to prevent locking the gun up for other users.
+	var/active_prompt_user
 
 /obj/item/firing_pin/paywall/attack_self(mob/user)
 	multi_payment = !multi_payment
@@ -281,8 +281,6 @@
 /obj/item/firing_pin/paywall/pin_auth(mob/living/user)
 	if(!istype(user))//nice try commie
 		return FALSE
-	if(active_prompt)
-		return FALSE
 	var/datum/bank_account/credit_card_details = user.get_bank_account()
 	if(credit_card_details in gun_owners)
 		if(multi_payment && credit_card_details)
@@ -298,12 +296,12 @@
 	if(!credit_card_details)
 		to_chat(user, span_warning("ERROR: User has no valid bank account to subtract neccesary funds from!"))
 		return FALSE
-	if(active_prompt)
+	if(active_prompt_user == user)
 		return FALSE
-	active_prompt = TRUE
-	var/license_request = tgui_alert(user, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", list("Yes", "No"))
+	active_prompt_user = user
+	var/license_request = tgui_alert(user, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", list("Yes", "No"), 15 SECONDS)
 	if(!user.can_perform_action(src))
-		active_prompt = FALSE
+		active_prompt_user = null
 		return FALSE
 	switch(license_request)
 		if("Yes")
@@ -319,13 +317,11 @@
 					
 			else 
 				to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
-			active_prompt = FALSE
-			return FALSE //we return false here so you don't click initially to fire, get the prompt, accept the prompt, and THEN the gun
+ 
 		if("No", null)
 			to_chat(user, span_warning("ERROR: User has declined to purchase gun license!"))
-			active_prompt = FALSE
-			return FALSE
-	return FALSE
+	active_prompt_user = null
+	return FALSE //we return false here so you don't click initially to fire, get the prompt, accept the prompt, and THEN the gun
 
 // Explorer Firing Pin- Prevents use on station Z-Level, so it's justifiable to give Explorers guns that don't suck.
 /obj/item/firing_pin/explorer
