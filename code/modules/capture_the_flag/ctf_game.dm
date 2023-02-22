@@ -629,7 +629,7 @@
 	desc = "You should capture this."
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
 	///This is how many points are gained a second while controlling this point
