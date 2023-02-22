@@ -62,7 +62,7 @@
 		set_panel_open(TRUE)
 		change_pipe_connection(TRUE)
 		icon_state = "thermo-open"
-		visible_message(span_warning("You fail to anchor the thermomachine as it's port is being hogged up by something else."))
+		visible_message(span_warning("The thermomachine is left unanchored as it's port is being hogged up by something else."))
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	. = ..()
