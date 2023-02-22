@@ -865,3 +865,25 @@
   - bugfix: fixes broken holy water flask looking like a broken beer bottle
   - bugfix: unholy flasks now use a blackened holy flask inhand sprite instead of
       the beaker one
+2023-02-22:
+  Jacquerel:
+  - bugfix: Restores lost behaviour to heal Ian with sutures. Or giant spiders, if
+      you want to do that for some reason.
+  LemonInTheDark:
+  - config: Added a warning build config setting, you can now lightly repremand but
+      not block clients with older builds but fine major versions
+  - bugfix: Fixes activating two flashlights without moving only turning on one flashlight
+      (until you move)
+  - bugfix: Purely black things drawn on the floor (like carpets, those foam dispensers,
+      etc) will no longer cause things on top of them to be fully masked in darkness
+  Melbert:
+  - bugfix: Ghost roles from spawners keeping antag datums
+  Ryll/Shaps:
+  - bugfix: Landing a monster tackle that applies an auto aggro-grab while stamcrit
+      will no longer try applying an aggro-grab that leads to a permanent slowdown
+      to the user, and will instead just knock the target down a bit harder.
+  - bugfix: Launching dolphin and rocket glove tackles on targets at ranges shorter
+      than their minimum distance will be more accurate at targeting where you clicked
+      at, rather than locking you into the nearest cardinal/diagonal direction.
+  - balance: You can now knock more things off a table full of stuff by tackling it
+      than you could before.

@@ -236,6 +236,8 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/TryToEatIt(datum/source, mob/user)
 	SIGNAL_HANDLER
 
+	if (!in_range(source, user))
+		return
 	return TryToEat(user, user)
 
 ///Called when food is created through processing (Usually this means it was sliced). We use this to pass the OG items reagents.
@@ -300,7 +302,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 
-	if(feeder.combat_mode || !in_range(owner, eater))
+	if(feeder.combat_mode)
 		return
 
 	. = COMPONENT_CANCEL_ATTACK_CHAIN //Point of no return I suppose

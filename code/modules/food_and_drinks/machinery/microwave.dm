@@ -306,6 +306,7 @@
 				ingredients += S
 		if(loaded)
 			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+			update_appearance()
 		return
 
 	if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && !user.combat_mode)
