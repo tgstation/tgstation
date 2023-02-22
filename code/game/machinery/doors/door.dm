@@ -355,7 +355,7 @@
 
 /obj/machinery/door/proc/open()
 	if(!density)
-		return 1
+		return TRUE
 	if(operating)
 		return
 	operating = TRUE
@@ -374,7 +374,11 @@
 	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
-	return 1
+	return TRUE
+
+/// Proc that runs a series of checks to see if we should forcibly open the door. Returns TRUE if we should open the door, FALSE otherwise. Implemented in child types.
+/obj/machinery/door/proc/try_to_force_door_open(force_type = DOOR_DEFAULT_CHECKS)
+	return TRUE // the base "door" can always be forced open since there's no power or anything like emagging it to prevent an open, not even invoked on the base type anyways.
 
 /obj/machinery/door/proc/close()
 	if(density)
@@ -412,9 +416,9 @@
 		crush()
 	return TRUE
 
-/// Proc that runs a series of checks to see if we should forcibly open the door. Returns TRUE if we should open the door, FALSE otherwise. Implemented in child types.
-/obj/machinery/door/proc/try_to_force_door(force_type = DOOR_DEFAULT_OPEN)
-	return TRUE // the base "door" can always be forced open since there's no power or anything like emagging it to prevent an open, not even invoked on the base type anyways.
+/// Proc that runs a series of checks to see if we should forcibly shut the door. Returns TRUE if we should shut the door, FALSE otherwise. Implemented in child types.
+/obj/machinery/door/proc/try_to_force_door_shut(force_type = DOOR_DEFAULT_CHECKS)
+	return TRUE // the base "door" can always be forced shut
 
 /obj/machinery/door/proc/CheckForMobs()
 	if(locate(/mob/living) in get_turf(src))

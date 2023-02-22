@@ -1096,9 +1096,9 @@
 					if(check_electrified && shock(user,100))
 						prying_so_hard = FALSE
 						return
-					open(DOOR_ALWAYS_OPEN)
+					open(DOOR_BYPASS_CHECKS)
 					take_damage(25, BRUTE, 0, 0) // Enough to sometimes spark
-					if(density && !open(DOOR_ALWAYS_OPEN))
+					if(density && !open(DOOR_BYPASS_CHECKS))
 						to_chat(user, span_warning("Despite your attempts, [src] refuses to open."))
 				prying_so_hard = FALSE
 				return
@@ -1111,12 +1111,12 @@
 			return
 		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), 2)
 
-/obj/machinery/door/airlock/open(forced = DOOR_DEFAULT_OPEN)
+/obj/machinery/door/airlock/open(forced = DOOR_DEFAULT_CHECKS)
 	if( operating || welded || locked || seal )
 		return FALSE
 
 	// Since we aren't physically held shut, do extra checks to see if we should open.
-	if(!try_to_force_door(forced))
+	if(!try_to_force_door_open(forced))
 		return FALSE
 
 	if(autoclose)
@@ -1163,23 +1163,23 @@
 	return TRUE
 
 /// Additional checks depending on what we want to happen to door (should we try and open it normally, or do we want this open at all costs?)
-/obj/machinery/door/airlock/try_to_force_door(force_type = DOOR_DEFAULT_OPEN)
+/obj/machinery/door/airlock/try_to_force_door_open(force_type = DOOR_DEFAULT_CHECKS)
 	switch(force_type)
-		if(DOOR_DEFAULT_OPEN) // Regular behavior.
+		if(DOOR_DEFAULT_CHECKS) // Regular behavior.
 			if(!hasPower() || wires.is_cut(WIRE_OPEN) || (obj_flags & EMAGGED))
 				return FALSE
 			use_power(50)
 			playsound(src, doorOpen, 30, TRUE)
 			return TRUE
 
-		if(DOOR_FORCED_OPEN) // Only one check.
+		if(DOOR_FORCED_CHECKS) // Only one check.
 			if(obj_flags & EMAGGED)
 				return FALSE
 			use_power(50)
 			playsound(src, doorOpen, 30, TRUE)
 			return TRUE
 
-		if(DOOR_ALWAYS_OPEN) // No power usage, special sound, get it open.
+		if(DOOR_BYPASS_CHECKS) // No power usage, special sound, get it open.
 			playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
 			return TRUE
 
@@ -1318,7 +1318,7 @@
 
 
 	if(do_after(user, time_to_open, src))
-		if(density && !open(DOOR_ALWAYS_OPEN)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
+		if(density && !open(DOOR_BYPASS_CHECKS)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
 			to_chat(user, span_warning("Despite your efforts, [src] managed to resist your attempts to open it!"))
 
 /obj/machinery/door/airlock/hostile_lockdown(mob/origin)

@@ -213,7 +213,7 @@
 		//user.say("Heeeeeeeeeerrre's Johnny!")
 		user.visible_message(span_warning("[user] forces the airlock to open with [user.p_their()] [src]!"), span_warning("We force the [A] to open."), \
 		span_hear("You hear a metal screeching sound."))
-		A.open(DOOR_ALWAYS_OPEN)
+		A.open(DOOR_BYPASS_CHECKS)
 
 /obj/item/melee/arm_blade/dropped(mob/user)
 	..()
