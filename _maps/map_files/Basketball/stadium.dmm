@@ -315,6 +315,10 @@
 /obj/item/reagent_containers/cup/glass/bottle/whiskey,
 /turf/open/floor/wood,
 /area/centcom/basketball)
+"zr" = (
+/obj/effect/landmark/basketball/team_spawn/referee,
+/turf/open/floor/wood,
+/area/centcom/basketball)
 "zy" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/effect/turf_decal/trimline/blue/line{
@@ -999,7 +1003,7 @@ YX
 oR
 KH
 AI
-tX
+zr
 tX
 PW
 wZ

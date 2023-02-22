@@ -208,6 +208,11 @@
 /obj/item/clothing/mask/facehugger/dead,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
+"oj" = (
+/obj/structure/alien/weeds,
+/obj/effect/landmark/basketball/team_spawn/referee,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
 "oR" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
@@ -876,7 +881,7 @@ YX
 oR
 uH
 Cw
-Vr
+oj
 kc
 WK
 wZ

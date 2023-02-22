@@ -22,6 +22,9 @@
 /obj/effect/landmark/basketball/team_spawn/away_hoop
 	name = "Basketball Away Hoop Spawner"
 
+/obj/effect/landmark/basketball/team_spawn/referee
+	name = "Referee Spawn"
+
 /area/centcom/basketball
 	name = "Basketball Minigame"
 	icon_state = "b_ball"

@@ -39,6 +39,14 @@
 
 	human_to_equip.dna.species.stunmod = 0
 
+/datum/outfit/basketball/referee
+	name = "Basketball Referee"
+	uniform = /obj/item/clothing/under/costume/referee
+	shoes = /obj/item/clothing/shoes/laceup
+	mask = /obj/item/clothing/mask/whistle
+	gloves = /obj/item/clothing/gloves/latex
+	head = /obj/item/clothing/head/soft/black
+
 /datum/outfit/basketball/blue
 	name = "Basketball Blue Team"
 	undershirt = /datum/sprite_accessory/undershirt/bluejersey

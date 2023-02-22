@@ -29,19 +29,25 @@ GLOBAL_VAR(basketball_game)
 	/// Total amount of time basketball is played for
 	var/game_duration = 30 SECONDS // debugging for now //2 MINUTES
 
+	/// List of all players ckeys involved in the minigame
+	var/list/minigame_players = list()
+
 	/// Spawn points for home team players
 	var/list/home_team_landmarks = list()
-	/// Home team players
+	/// List of home team players ckeys
 	var/list/home_team_players = list()
 	/// The basketball hoop used by home team
 	var/obj/structure/hoop/minigame/home_hoop
 
 	/// Spawn points for away team players
 	var/list/away_team_landmarks = list()
-	/// Away team players
+	/// List of away team players ckeys
 	var/list/away_team_players = list()
 	/// The basketball hoop used by away team
 	var/obj/structure/hoop/minigame/away_hoop
+
+	/// Spawn point for referee (there should only be one spot on minigame map)
+	var/list/referee_landmark = list()
 
 /datum/basketball_controller/New()
 	. = ..()
@@ -104,10 +110,13 @@ GLOBAL_VAR(basketball_game)
 		for(var/obj/effect/landmark/basketball/team_spawn/away/possible_spawn in GLOB.landmarks_list)
 			away_team_landmarks += possible_spawn
 
+	for(var/obj/effect/landmark/basketball/team_spawn/referee/possible_spawn in GLOB.landmarks_list)
+		referee_landmark += possible_spawn
+
 	//var/list/home_spawnpoints = home_team_landmarks.Copy()
 	//var/list/away_spawnpoints = away_team_landmarks.Copy()
 
-	create_bodies(ready_players)
+	start_game(ready_players)
 
 /**
  * The game by this point is now all set up, and so we can put people in their bodies and start the first phase.
@@ -116,10 +125,10 @@ GLOBAL_VAR(basketball_game)
  * * Creates bodies for all of the roles with the first proc
  * * Starts the first day manually (so no timer) with the second proc
  */
-/datum/basketball_controller/proc/start_game()
+/datum/basketball_controller/proc/start_game(ready_players)
 	message_admins("The players have spoken! Voting has enabled the basketball minigame!")
 	notify_ghosts("Basketball minigame is about to start!",'sound/effects/ghost2.ogg')
-	create_bodies()
+	create_bodies(ready_players)
 	addtimer(CALLBACK(src, PROC_REF(victory)), game_duration)
 	for(var/i in 1 to 10)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), home_hoop, 'sound/items/timer.ogg', 75, FALSE), game_duration - (i SECONDS))
@@ -144,6 +153,7 @@ GLOBAL_VAR(basketball_game)
 
 	var/list/home_spawnpoints = home_team_landmarks.Copy()
 	var/list/away_spawnpoints = away_team_landmarks.Copy()
+	var/list/referee_spawnpoint = referee_landmark.Copy()
 	var/obj/effect/landmark/basketball/team_spawn/spawn_landmark
 
 	var/team_uniform
@@ -154,11 +164,19 @@ GLOBAL_VAR(basketball_game)
 	away_hoop.name = away_map.team_name
 
 	var/player_count = 0
+	// if total players is odd number then the odd man out is a referee
+	var/minigame_has_referee = length(ready_players) % 2
 
 	for(var/player_key in ready_players)
 		player_count++
+		minigame_players |= player_key
 
-		if(player_count % 2) // odd is home team
+		var/is_player_referee = FALSE //(player_count == length(ready_players) && minigame_has_referee)
+
+		if(is_player_referee)
+			spawn_landmark = pick_n_take(referee_spawnpoint)
+			team_uniform = /datum/outfit/basketball/referee
+		else if(player_count % 2) // odd is home team
 			spawn_landmark = pick_n_take(home_spawnpoints)
 			home_team_players |= player_key
 			home_hoop.team_ckeys |= player_key
@@ -194,23 +212,26 @@ GLOBAL_VAR(basketball_game)
 		baller.key = player_key
 
 		SEND_SOUND(baller, 'sound/misc/whistle.ogg')
-		to_chat(baller, span_danger("You are a basketball player for the [team_name]. Score as much as you can before time runs out."))
+		if(is_player_referee)
+			to_chat(baller, span_danger("You are a referee. Make sure the teams play fair and call fouls appropriately."))
+		else
+			to_chat(baller, span_danger("You are a basketball player for the [team_name]. Score as much as you can before time runs out."))
 
 /datum/basketball_controller/proc/victory()
 	var/is_game_draw
-	var/winner_team_ckeys
-	var/loser_team_ckeys
+	var/list/winner_team_ckeys = list()
+	var/list/loser_team_ckeys = list()
 	var/winner_team_name
 
 	if(home_hoop.total_score == away_hoop.total_score)
 		is_game_draw = TRUE
 		winner_team_ckeys |= home_team_players
 		winner_team_ckeys |= away_team_players
-	else if(home_hoop.total_score > away_hoop.total_score)
+	else if(home_hoop.total_score < away_hoop.total_score)
 		winner_team_ckeys = home_team_players
 		winner_team_name = home_hoop.name
 		loser_team_ckeys = away_team_players
-	else if(home_hoop.total_score < away_hoop.total_score)
+	else if(home_hoop.total_score > away_hoop.total_score)
 		winner_team_ckeys = away_team_players
 		winner_team_name = away_hoop.name
 		loser_team_ckeys = home_team_players
@@ -243,13 +264,18 @@ GLOBAL_VAR(basketball_game)
  * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
  */
 /datum/basketball_controller/proc/end_game()
+	for(var/ckey in minigame_players)
+		var/mob/living/competitor = get_mob_by_ckey(ckey)
+		var/area/mob_area = get_area(competitor)
+		if(istype(competitor) && istype(mob_area, /area/centcom/basketball))
+			qdel(competitor)
+
 	map_deleter.generate() //remove the map, it will be loaded at the start of the next one
-	QDEL_LIST(home_team_players)
-	QDEL_LIST(away_team_players)
 
 	//map gen does not deal with landmarks
 	QDEL_LIST(home_team_landmarks)
 	QDEL_LIST(away_team_landmarks)
+	QDEL_LIST(referee_landmark)
 
 //////////////////////////////////////////
 

@@ -283,6 +283,7 @@
 "tX" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/basketball/team_spawn/referee,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "uH" = (
