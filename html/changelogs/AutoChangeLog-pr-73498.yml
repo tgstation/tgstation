@@ -1,4 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes:
-  - bugfix: "fixed throwing description to always say \"it was thrown very hard\" even when its not"

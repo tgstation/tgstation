@@ -683,7 +683,7 @@
 	..()
 	if(!can_interact(usr))
 		return TRUE
-	if(!usr.can_perform_action(src))
+	if(!usr.can_perform_action(src, ALLOW_SILICON_REACH))
 		return TRUE
 	add_fingerprint(usr)
 	update_last_used(usr)

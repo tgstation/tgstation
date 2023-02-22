@@ -13,7 +13,7 @@ Doesn't work on other aliens/AI.*/
 	overlay_icon_state = "bg_alien_border"
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "spell_default"
-	check_flags = AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	melee_cooldown_time = 0 SECONDS
 
 	/// How much plasma this action uses.

@@ -160,6 +160,7 @@
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "skin has visible hard plates growing from within.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
+	AddElement(/datum/element/update_icon_blocker)
 
 #undef GOLIATH_ORGAN_COLOR
 #undef GOLIATH_SCLERA_COLOR
