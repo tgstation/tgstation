@@ -88,9 +88,6 @@ GLOBAL_PROTECT(world_cloning_log)
 GLOBAL_VAR(world_econ_log)
 GLOBAL_PROTECT(world_econ_log)
 
-GLOBAL_VAR(world_game_log)
-GLOBAL_PROTECT(world_game_log)
-
 GLOBAL_VAR(world_href_log)
 GLOBAL_PROTECT(world_href_log)
 

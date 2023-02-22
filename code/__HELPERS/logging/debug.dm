@@ -57,7 +57,7 @@
 
 /// Logging for world/Topic
 /proc/log_topic(text)
-	WRITE_LOG(GLOB.world_game_log, "TOPIC: [text]")
+	GLOB.logger.Log(LOG_CATEGORY_GAME_TOPIC, text)
 
 /// Log to both DD and the logfile.
 /proc/log_world(text)

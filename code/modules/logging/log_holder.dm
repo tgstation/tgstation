@@ -14,6 +14,8 @@ GLOBAL_PROTECT(logger)
 	var/list/datum/log_category/log_categories
 	/// typecache list for categories that exist but are disabled
 	var/list/disabled_categories
+	/// category nesting tree for ui purposes
+	var/list/category_group_tree
 
 	/// list of Log args waiting for processing pending log initialization
 	var/list/waiting_log_calls
@@ -31,10 +33,10 @@ GLOBAL_PROTECT(logger)
 	log_categories = list()
 	disabled_categories = list()
 
-	var/list/category_tree = assemble_log_category_tree()
+	category_group_tree = assemble_log_category_tree()
 	var/config_flag
-	for(var/datum/log_category/master_category as anything in category_tree)
-		var/list/sub_categories = category_tree[master_category]
+	for(var/datum/log_category/master_category as anything in category_group_tree)
+		var/list/sub_categories = category_group_tree[master_category]
 		for(var/datum/log_category/sub_category as anything in sub_categories)
 			config_flag = initial(sub_category.config_flag)
 			if(config_flag && !config.Get(config_flag))

@@ -18,13 +18,11 @@
 
 /// Logging for generic spoken messages
 /proc/log_say(text)
-	if (CONFIG_GET(flag/log_say))
-		WRITE_LOG(GLOB.world_game_log, "SAY: [text]")
+	GLOB.logger.Log(LOG_CATEGORY_GAME_SAY, text)
 
 /// Logging for whispered messages
 /proc/log_whisper(text)
-	if (CONFIG_GET(flag/log_whisper))
-		WRITE_LOG(GLOB.world_game_log, "WHISPER: [text]")
+	GLOB.logger.Log(LOG_CATEGORY_GAME_WHISPER, text)
 
 /// Helper for logging of messages with only one sender and receiver (i.e. mind links)
 /proc/log_directed_talk(atom/source, atom/target, message, message_type, tag)

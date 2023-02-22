@@ -62,6 +62,7 @@
 #define LOG_HEADER_SECRET "secret"
 
 // Log data keys
+#define LOG_ENTRY_CATEGORY "category"
 #define LOG_ENTRY_MESSAGE "message"
 #define LOG_ENTRY_TIMESTAMP "timestamp"
 #define LOG_ENTRY_DATA "data"
@@ -69,12 +70,29 @@
 // Log json keys
 #define LOG_JSON_CATEGORY "category"
 #define LOG_JSON_ENTRIES "entries"
-#define LOG_JSON_LOGGING_START "log_start"
+#define LOG_JSON_LOGGING_START "log-start"
 
 // Log categories
-#define LOG_CATEGORY_NOT_FOUND "invalid_category"
-#define LOG_CATEGORY_TARGET_ZONE_SWITCH "target_zone_switch"
+#define LOG_CATEGORY_NOT_FOUND "invalid-category"
+#define LOG_CATEGORY_TARGET_ZONE_SWITCH "target-zone-switch"
+#define LOG_CATEGORY_ADMIN "admin"
+#define LOG_CATEGORY_ADMIN_PRIVATE "admin-private"
+#define LOG_CATEGORY_ADMIN_ASAY "admin-asay"
+#define LOG_CATEGORY_ADMIN_DSAY "admin-dsay"
+#define LOG_CATEGORY_ADMIN_CIRCUIT "admin-circuit"
+#define LOG_CATEGORY_GAME "game"
+#define LOG_CATEGORY_GAME_VOTE "game-vote"
+#define LOG_CATEGORY_GAME_EMOTE "game-emote"
+#define LOG_CATEGORY_GAME_RADIO_EMOTE "game-radio-emote"
+#define LOG_CATEGORY_GAME_TRAITOR "game-traitor"
+#define LOG_CATEGORY_GAME_SAY "game-say"
+#define LOG_CATEGORY_GAME_WHISPER "game-whisper"
+#define LOG_CATEGORY_GAME_TOPIC "game-topic"
+#define LOG_CATEGORY_GAME_OOC "game-ooc"
+#define LOG_CATEGORY_GAME_PRAYER "game-prayer"
+#define LOG_CATEGORY_GAME_ACCESS "game-access"
 
+// Default log schema version
 #define LOG_CATEGORY_SCHEMA_VERSION_NOT_SET "0.0"
 
 //wrapper macros for easier grepping

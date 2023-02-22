@@ -1,7 +1,6 @@
 /// Logging for traitor objectives
 /proc/log_traitor(text)
-	if (CONFIG_GET(flag/log_traitor))
-		WRITE_LOG(GLOB.world_game_log, "TRAITOR: [text]")
+	GLOB.logger.Log(LOG_CATEGORY_GAME_TRAITOR, text)
 
 /// Logging for items purchased from a traitor uplink
 /proc/log_uplink(text)
