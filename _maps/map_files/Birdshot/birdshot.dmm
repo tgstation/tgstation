@@ -5248,9 +5248,11 @@
 	},
 /area/station/maintenance/starboard/greater)
 "cqx" = (
-/obj/machinery/atmospherics/components/tank,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/tank{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -8862,8 +8864,10 @@
 /turf/open/floor/plating,
 /area/station/hallway/primary/starboard)
 "dOP" = (
-/obj/machinery/atmospherics/components/tank,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/tank{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/science/ordnance/storage)
 "dOT" = (
@@ -22495,7 +22499,9 @@
 /turf/open/floor/iron/dark/small,
 /area/station/hallway/secondary/dock)
 "iSh" = (
-/obj/machinery/atmospherics/components/tank,
+/obj/machinery/atmospherics/components/tank{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
@@ -52583,9 +52589,11 @@
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "tKG" = (
-/obj/machinery/atmospherics/components/tank,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/atmospherics/components/tank{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/science/ordnance/storage)
 "tKO" = (
