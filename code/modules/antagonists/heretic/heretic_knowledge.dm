@@ -725,4 +725,4 @@
 	route = null
 
 /datum/heretic_knowledge/mansus_restoration/on_finished_recipe
-	UnregisterSignal(our_heretic, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
+	REMOVE_TRAIT(owner, TRAIT_BAN_HERETIC_CASTING, source)
