@@ -18,7 +18,7 @@
 /// Logging for AdminSay (ASAY) messages
 /proc/log_adminsay(text)
 	GLOB.admin_log.Add(text)
-	GLOB.logger.Log(LOG_CATEGORY_ADMIN_ASAY, text)
+	GLOB.logger.Log(LOG_CATEGORY_ADMIN_PRIVATE_ASAY, text)
 
 /// Logging for DeachatSay (DSAY) messages
 /proc/log_dsay(text)

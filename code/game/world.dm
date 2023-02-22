@@ -43,7 +43,7 @@ GLOBAL_VAR(restart_counter)
 
 	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
-	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_econ_log = GLOB.world_shuttle_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+	GLOB.config_error_log = GLOB.sql_error_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 	#ifdef REFERENCE_DOING_IT_LIVE
 	GLOB.harddel_log = GLOB.world_game_log
 	#endif
@@ -142,28 +142,9 @@ GLOBAL_VAR(restart_counter)
 	GLOB.signals_log = "[GLOB.log_directory]/signals.log"
 	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
 	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
-	GLOB.world_asset_log = "[GLOB.log_directory]/asset.log"
-	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
-	GLOB.world_cloning_log = "[GLOB.log_directory]/cloning.log"
-	GLOB.world_econ_log = "[GLOB.log_directory]/econ.log"
-	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
-	GLOB.world_job_debug_log = "[GLOB.log_directory]/job_debug.log"
-	GLOB.world_manifest_log = "[GLOB.log_directory]/manifest.log"
-	GLOB.world_map_error_log = "[GLOB.log_directory]/map_errors.log"
-	GLOB.world_mecha_log = "[GLOB.log_directory]/mecha.log"
-	GLOB.world_mob_tag_log = "[GLOB.log_directory]/mob_tags.log"
-	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
-	GLOB.world_paper_log = "[GLOB.log_directory]/paper.log"
-	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
-	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
-	GLOB.world_shuttle_log = "[GLOB.log_directory]/shuttle.log"
-	GLOB.world_silicon_log = "[GLOB.log_directory]/silicon.log"
 	GLOB.world_speech_indicators_log = "[GLOB.log_directory]/speech_indicators.log"
 	GLOB.world_suspicious_login_log = "[GLOB.log_directory]/suspicious_logins.log"
 	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
-	GLOB.world_tool_log = "[GLOB.log_directory]/tools.log"
-	GLOB.world_uplink_log = "[GLOB.log_directory]/uplink.log"
-	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = "[GLOB.log_directory]/tests.log"
@@ -175,18 +156,6 @@ GLOBAL_VAR(restart_counter)
 	start_log(GLOB.harddel_log)
 #endif
 	start_log(GLOB.tgui_log)
-	start_log(GLOB.world_attack_log)
-	start_log(GLOB.world_econ_log)
-	start_log(GLOB.world_href_log)
-	start_log(GLOB.world_job_debug_log)
-	start_log(GLOB.world_manifest_log)
-	start_log(GLOB.world_mob_tag_log)
-	start_log(GLOB.world_qdel_log)
-	start_log(GLOB.world_runtime_log)
-	start_log(GLOB.world_shuttle_log)
-	start_log(GLOB.world_telecomms_log)
-	start_log(GLOB.world_uplink_log)
-	start_log(GLOB.world_pda_log)
 
 	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
 	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently

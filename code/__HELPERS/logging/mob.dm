@@ -4,11 +4,10 @@
  * * text - text to log.
  */
 /mob/proc/log_mob_tag(text)
-	WRITE_LOG(GLOB.world_mob_tag_log, "TAG: \[[tag]\] [text]")
+	GLOB.logger.Log(LOG_CATEGORY_MOB_TAG, text)
 
 /proc/log_silicon(text)
-	if (CONFIG_GET(flag/log_silicon))
-		WRITE_LOG(GLOB.world_silicon_log, "SILICON: [text]")
+	GLOB.logger.Log(LOG_CATEGORY_SILICON, text)
 
 
 /// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true

@@ -20,7 +20,7 @@
 	secret = TRUE
 
 /datum/log_category/admin_asay
-	category = LOG_CATEGORY_ADMIN_ASAY
+	category = LOG_CATEGORY_ADMIN_PRIVATE_ASAY
 	master_category = /datum/log_category/admin_private
 	config_flag = /datum/config_entry/flag/log_adminchat
 	secret = TRUE

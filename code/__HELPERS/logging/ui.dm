@@ -1,5 +1,5 @@
 /proc/log_href(text)
-	WRITE_LOG(GLOB.world_href_log, "HREF: [text]")
+	GLOB.logger.Log(LOG_CATEGORY_HREF, text)
 
 /**
  * Appends a tgui-related log entry. All arguments are optional.

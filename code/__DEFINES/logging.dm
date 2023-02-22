@@ -72,25 +72,60 @@
 #define LOG_JSON_ENTRIES "entries"
 #define LOG_JSON_LOGGING_START "log-start"
 
-// Log categories
+// Misc categories
 #define LOG_CATEGORY_NOT_FOUND "invalid-category"
 #define LOG_CATEGORY_TARGET_ZONE_SWITCH "target-zone-switch"
+#define LOG_CATEGORY_VIRUS "virus"
+#define LOG_CATEGORY_TOOL "tool"
+#define LOG_CATEGORY_MECHA "mecha"
+#define LOG_CATEGORY_SILICON "silicon"
+#define LOG_CATEGORY_MOB_TAG "mob-tag"
+#define LOG_CATEGORY_PAPER "paper"
+#define LOG_CATEGORY_ATTACK "attack"
+#define LOG_CATEGORY_ASSET "asset"
+#define LOG_CATEGORY_JOB_DEBUG "job-debug"
+#define LOG_CATEGORY_MAP_ERRORS "map-errors"
+#define LOG_CATEGORY_QDEL "qdel"
+#define LOG_CATEGORY_QUERY_DEBUG "query-debug"
+#define LOG_CATEGORY_RUNTIME "runtime"
+#define LOG_CATEGORY_ECONOMY "economy"
+#define LOG_CATEGORY_MANIFEST "manifest"
+#define LOG_CATEGORY_SHUTTLE "shuttle"
+#define LOG_CATEGORY_HREF "href"
+
+// Admin categories
 #define LOG_CATEGORY_ADMIN "admin"
-#define LOG_CATEGORY_ADMIN_PRIVATE "admin-private"
-#define LOG_CATEGORY_ADMIN_ASAY "admin-asay"
-#define LOG_CATEGORY_ADMIN_DSAY "admin-dsay"
 #define LOG_CATEGORY_ADMIN_CIRCUIT "admin-circuit"
+#define LOG_CATEGORY_ADMIN_DSAY "admin-dsay"
+
+// Admin private categories
+#define LOG_CATEGORY_ADMIN_PRIVATE "admin-private"
+#define LOG_CATEGORY_ADMIN_PRIVATE_ASAY "admin-asay"
+
+// Game categories
 #define LOG_CATEGORY_GAME "game"
-#define LOG_CATEGORY_GAME_VOTE "game-vote"
+#define LOG_CATEGORY_GAME_ACCESS "game-access"
 #define LOG_CATEGORY_GAME_EMOTE "game-emote"
-#define LOG_CATEGORY_GAME_RADIO_EMOTE "game-radio-emote"
-#define LOG_CATEGORY_GAME_TRAITOR "game-traitor"
-#define LOG_CATEGORY_GAME_SAY "game-say"
-#define LOG_CATEGORY_GAME_WHISPER "game-whisper"
-#define LOG_CATEGORY_GAME_TOPIC "game-topic"
 #define LOG_CATEGORY_GAME_OOC "game-ooc"
 #define LOG_CATEGORY_GAME_PRAYER "game-prayer"
-#define LOG_CATEGORY_GAME_ACCESS "game-access"
+#define LOG_CATEGORY_GAME_RADIO_EMOTE "game-radio-emote"
+#define LOG_CATEGORY_GAME_SAY "game-say"
+#define LOG_CATEGORY_GAME_TOPIC "game-topic"
+#define LOG_CATEGORY_GAME_TRAITOR "game-traitor"
+#define LOG_CATEGORY_GAME_VOTE "game-vote"
+#define LOG_CATEGORY_GAME_WHISPER "game-whisper"
+
+// Uplink categories
+#define LOG_CATEGORY_UPLINK "uplink"
+#define LOG_CATEGORY_UPLINK_CHANGELING "uplink-changeling"
+#define LOG_CATEGORY_UPLINK_HERETIC "uplink-heretic"
+#define LOG_CATEGORY_UPLINK_MALF "uplink-malf"
+#define LOG_CATEGORY_UPLINK_SPELL "uplink-spell"
+
+// PDA categories
+#define LOG_CATEGORY_PDA "pda"
+#define LOG_CATEGORY_PDA_CHAT "pda-chat"
+#define LOG_CATEGORY_PDA_COMMENT "pda-comment"
 
 // Default log schema version
 #define LOG_CATEGORY_SCHEMA_VERSION_NOT_SET "0.0"
