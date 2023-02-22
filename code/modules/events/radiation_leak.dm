@@ -8,13 +8,6 @@
 	category = EVENT_CATEGORY_ENGINEERING
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 7
-	var/list/radiation_immune_machinery = typecacheof(list(
-	/obj/machinery/power/supermatter_crystal,
-	/obj/machinery/iv_drip,
-	/obj/machinery/atmospherics/components/tank,
-	/obj/machinery/anomalous_crystal,
-	//review the rest l8r
-	))
 
 /datum/round_event/radiation_leak
 	start_when = 1 // 2 seconds in
@@ -26,6 +19,14 @@
 	/// List of signals added to the picked machine, so we can clear them later
 	var/list/signals_to_add
 
+	/// Blacklist of machinery that shouldn't be irradiated, for whatever reason.
+	var/static/list/radiation_immune_machinery = typecacheof(list(
+	/obj/machinery/anomalous_crystal, //Nonsensical
+	/obj/machinery/atmospherics/components/tank, //Can be dragged around, also barely qualifies as machinery
+	/obj/machinery/iv_drip, //See above
+	/obj/machinery/power/supermatter_crystal //No, no, just no
+	))
+
 /datum/round_event/radiation_leak/setup()
 	// Pick a generic event spawn somewhere in the world.
 	// We will try to find a machine within a few turfs of it to start spewing rads from.
@@ -33,6 +34,9 @@
 	while(length(possible_locs))
 		var/turf/chosen_loc = get_turf(pick_n_take(possible_locs))
 		for(var/obj/machinery/sick_device in range(3, chosen_loc))
+			// Check if we've selected a blacklisted piece of machinery
+			if(is_type_in_typecache(sick_device, radiation_immune_machinery))
+				continue
 			// Look for dense machinery. Basically stops stuff like wall mounts and pipes, silly ones.
 			// But keep in vents and scrubbers. I think it's funny if they start spitting out radiation
 			if(!sick_device.density && !istype(sick_device, /obj/machinery/atmospherics/components/unary))
