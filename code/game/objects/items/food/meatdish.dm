@@ -226,8 +226,9 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 		/datum/reagent/consumable/nutriment/protein = 2,
 	)
-	tastes = list("rice and meat" = 4, "lettuce" = 2, "soy sauce" = 2)
 	foodtypes = SEAFOOD | MEAT | VEGETABLES
+	tastes = list("rice and meat" = 4, "lettuce" = 2, "soy sauce" = 2)
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/fish_poke
@@ -240,8 +241,9 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 		/datum/reagent/consumable/nutriment/protein = 2,
 	)
-	tastes = list("rice and fish" = 4, "lettuce" = 2, "soy sauce" = 2)
 	foodtypes = SEAFOOD | VEGETABLES
+	tastes = list("rice and fish" = 4, "lettuce" = 2, "soy sauce" = 2)
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	w_class = WEIGHT_CLASS_SMALL
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////

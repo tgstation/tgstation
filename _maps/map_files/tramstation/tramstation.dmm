@@ -6399,7 +6399,7 @@
 /area/station/security/checkpoint/medical)
 "aII" = (
 /obj/machinery/destination_sign/indicator,
-/obj/machinery/button/tram{
+/obj/machinery/button/tram/directional/north{
 	id = "left_part"
 	},
 /turf/closed/wall,
@@ -6994,7 +6994,7 @@
 /obj/machinery/destination_sign/indicator{
 	dir = 1
 	},
-/obj/machinery/button/tram{
+/obj/machinery/button/tram/directional/south{
 	id = "left_part"
 	},
 /turf/closed/wall,
@@ -15263,7 +15263,7 @@
 /area/station/hallway/primary/tram/center)
 "dCf" = (
 /obj/machinery/destination_sign/indicator,
-/obj/machinery/button/tram{
+/obj/machinery/button/tram/directional/north{
 	id = "right_part"
 	},
 /turf/closed/wall,
@@ -19504,7 +19504,7 @@
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "fld" = (
-/obj/machinery/button/tram{
+/obj/machinery/button/tram/directional/north{
 	id = "middle_part"
 	},
 /obj/machinery/destination_sign/indicator,
@@ -19745,7 +19745,6 @@
 /area/station/security/brig)
 "foD" = (
 /obj/structure/table/glass,
-/obj/item/computer_disk/chemistry,
 /obj/item/computer_disk/medical,
 /obj/item/computer_disk/medical,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -30730,7 +30729,7 @@
 /obj/machinery/destination_sign/indicator{
 	dir = 1
 	},
-/obj/machinery/button/tram{
+/obj/machinery/button/tram/directional/south{
 	id = "middle_part"
 	},
 /turf/closed/wall,
@@ -41238,7 +41237,7 @@
 /obj/machinery/destination_sign/indicator{
 	dir = 1
 	},
-/obj/machinery/button/tram{
+/obj/machinery/button/tram/directional/south{
 	id = "right_part"
 	},
 /turf/closed/wall,

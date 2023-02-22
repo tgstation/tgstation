@@ -68,9 +68,9 @@
 	desc = "An advanced medical heads-up display that allows doctors to find patients in complete darkness."
 	icon_state = "healthhudnight"
 	inhand_icon_state = "glasses"
-	darkness_view = 8
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	// Blue green, dark
+	color_cutoffs = list(5, 15, 30)
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/hud/health/night/meson
@@ -88,7 +88,6 @@
 	name = "medical HUDSunglasses"
 	desc = "Sunglasses with a medical HUD."
 	icon_state = "sunhudmed"
-	darkness_view = 1
 	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/blue
@@ -106,9 +105,9 @@
 	desc = "A robotics diagnostic HUD fitted with a light amplifier."
 	icon_state = "diagnostichudnight"
 	inhand_icon_state = "glasses"
-	darkness_view = 8
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	// Pale yellow
+	color_cutoffs = list(30, 20, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/hud/diagnostic/sunglasses
@@ -168,7 +167,6 @@
 	name = "security HUDSunglasses"
 	desc = "Sunglasses with a security HUD."
 	icon_state = "sunhudsec"
-	darkness_view = 1
 	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
@@ -177,9 +175,9 @@
 	name = "night vision security HUD"
 	desc = "An advanced heads-up display that provides ID data and vision in complete darkness."
 	icon_state = "securityhudnight"
-	darkness_view = 8
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	// Red with a tint of green
+	color_cutoffs = list(35, 5, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
@@ -239,7 +237,7 @@
 	icon_state = "thermal"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 	vision_flags = SEE_MOBS
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	color_cutoffs = list(25, 8, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/hud/toggle/thermal/attack_self(mob/user)
@@ -247,13 +245,17 @@
 	switch (hud_type)
 		if (DATA_HUD_MEDICAL_ADVANCED)
 			icon_state = "meson"
+			color_cutoffs = list(5, 15, 5)
 			change_glass_color(user, /datum/client_colour/glass_colour/green)
 		if (DATA_HUD_SECURITY_ADVANCED)
 			icon_state = "thermal"
+			color_cutoffs = list(25, 8, 5)
 			change_glass_color(user, /datum/client_colour/glass_colour/red)
 		else
 			icon_state = "purple"
+			color_cutoffs = list(15, 0, 25)
 			change_glass_color(user, /datum/client_colour/glass_colour/purple)
+	user.update_sight()
 	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/hud/toggle/thermal/emp_act(severity)
@@ -266,7 +268,6 @@
 	name = "police aviators"
 	desc = "For thinking you look cool while brutalizing protestors and minorities."
 	icon_state = "bigsunglasses"
-	darkness_view = 1
 	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/gray

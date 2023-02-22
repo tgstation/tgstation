@@ -633,3 +633,257 @@
   ZephyrTFA:
   - bugfix: You can no longer keep an AI trapped in their core by healing them with
       a Rod of Asclepius
+2023-02-17:
+  Jacquerel:
+  - bugfix: The Fugu Gland can once more be used on Ian, Carp, Giant Spiders, or other
+      basic mobs.
+  - bugfix: Syndicate mobs will once again attack windows to try to reach you, and
+      space ruin spiders won't.
+  - bugfix: Netherworld-themed mobs will correctly adjust their speed as they take
+      damage.
+  - refactor: Made the Wumborian Fugu into a basic mob, which should act largely the
+      same way but may have slightly different speed and reaction times.
+  Kubisopplay:
+  - admin: Lowered the chance of accidentally leaking asay
+  LT3:
+  - bugfix: 'Tramstation: Added missing produce order console'
+  - bugfix: 'Tramstation: Removed duplicate vending machine in east wing'
+  - bugfix: 'Tramstation: HoP office can now broadcast announcements'
+  - code_imp: 'Tramstation: Moved information plate for symmetry'
+  - code_imp: 'Disease Outbreak: Disease max severity replaced with requested severity'
+  - code_imp: 'Disease Outbreak: Generated disease now includes symptom based name'
+  - code_imp: 'Disease Outbreak: Disease name is now included in the station announcement'
+  - code_imp: 'Disease Outbreak: Now in snake case'
+  - balance: 'Disease Outbreak: Tier 1 cures removed from pool'
+  - bugfix: 'Disease Outbreak: Dangerous/Biohazard diseases are now visible'
+  - bugfix: 'Disease Outbreak: Event setup generates the correct severity'
+  - bugfix: 'Disease Outbreak: Various potential symptoms were in the wrong symptom
+      pool'
+  MrStonedOne:
+  - config: Repeated configs in other files (from $include) will no longer trigger
+      a config error. Repeated configs in the same file still will.
+  - config: In all cases the new value will still be used
+  NamelessFairy:
+  - spellcheck: A grammatical error in strip text has been removed.
+  Profakos:
+  - bugfix: Health analyzers will properly report missing stomachs and tongues
+  - bugfix: Guillotines can be unanchored again
+  SuperSlayer0:
+  - rscadd: Added a traitor final objective to infect the station AI with a virus,
+      that turns it malf and fully loyal to the traitor
+  Time-Green:
+  - bugfix: fixes taking items from inventories glitching out in hyperspace
+  YehnBeep:
+  - server: Updated instructions on setting up a TGUI CDN, noting that TGUI via CDN
+      malfunctions in the event CORS headers are absent.
+  lizardqueenlexi:
+  - bugfix: Placed a missing mining order console on Tramstation.
+  - bugfix: Rearranged furniture in the Tramstation pharmacy to make the fridges accessible.
+  timothymtorres:
+  - bugfix: Fix icebox barsign spawning under windows for Icebox.
+  - bugfix: Fix kilo barsign to spawn directly on top of wall so people can see it
+      from both inside the bar and outside the main hallway.
+  - bugfix: Fix durand shield overlay to appear above the mech when facing south.  Also
+      fixed a lighting runtime when shield would turn on/off.
+  tralezab:
+  - refactor: Monkey AI descriptions of "primal eyes" no longer show if the monkey
+      is missing eyes.
+2023-02-18:
+  Chubbygummibear & JohnFulpWillard:
+  - rscadd: A ton of new NtOS themes, which are accessible by the new Themify application
+      that comes with all PCs.
+  - rscadd: Emagging a PC now defaults it to the Syndicate option (and adds it to
+      go back to it if you wish)
+  - rscadd: There's a new maintenance app that gives you rarer themes
+  - qol: The NtOS Main menu was moved around, added "header" applications that are
+      shown where the Flashlight is, such as your Theme manager and PDA messenger.
+  - code_imp: Made defines for device_themes
+  - code_imp: Added support for special app-side checks to download files
+  - code_imp: Removes the 'run_emag' proc, since apps can directly refer to the computer
+      to check for emag status instead.
+  - bugfix: Programs no longer download twice.
+  - rscdel: Removes the Chemistry computer disk as it was empty due to chemistry app's
+      removal
+  Jacquerel:
+  - bugfix: Cramped escape pod walls no longer appear to merge with those of the station,
+      which will be a big relief to the single occupant.
+  - bugfix: Lightgeists won't try to heal any damage which isn't burn or brute, because
+      they can't.
+  - bugfix: Lightgeists don't need to perform an action bar in order to heal someone,
+      which was added by mistake.
+  LT3:
+  - bugfix: Fixed broken icon path in TCG set
+  Melbert:
+  - bugfix: Transferring golem shells no longer make you a free man and also results
+      in infinite golem shells
+  - bugfix: Servant golems are considerably less free
+  - bugfix: Fixes some hard deletes related to mob minds being enslaved to other mobs
+  NamelessFairy:
+  - bugfix: Reinforced Plating baseturf helpers work and should now be bug free enough
+      to be used in maps.
+  - bugfix: On metastation the gravity generator foyer airlock access has been made
+      consistent with the rest of the engine room airlocks.
+  - bugfix: False walls will no longer tell you to wait until they've stopped moving
+      when you use an item on them.
+  Profakos:
+  - bugfix: emagged/delta pods properly fly to lavaland
+  - bugfix: Revelation once again wipes the stored files on the computer
+  Roryl-c:
+  - bugfix: fixed chat offsets with the RPG Titles event
+  SyncIt21:
+  - bugfix: rcd's not building plating underneath mobs & structures
+  - bugfix: wall girders not being completed by the rcd
+  - bugfix: unable to build windoors on the turf you are standing on
+  TheBoondock:
+  - bugfix: fixed weak dwarfs being too weak as to be unable to throw books
+  Time-Green:
+  - bugfix: falling off the shuttle wont trap you in a box anymore
+  timothymtorres:
+  - bugfix: Fix runtimes for IV drips, food processors, and gibber
+  - refactor: Refactored, improve, and rename canUseTopic to be can_perform_action
+      that now uses bitflags to determine if a mob can perform an action.
+  tralezab:
+  - refactor: Lizard related canned food now acts like canned food
+  - refactor: Refactors how nuclear activation disk works. Shouldn't notice a whole
+      lot but if you do, it might be because of this.
+  - admin: Disk now has an examine message for whether it's secure or not, to make
+      it less ambiguous for players.
+2023-02-19:
+  Jacquerel:
+  - bugfix: You can no longer eat pizza floor tiles with your brain.
+  - bugfix: Lobstrosities and Tarantulas will once more vibrate to let you know they're
+      about to charge at you.
+  - bugfix: The Savannah Ivanov will once more vibrate to let you know it's about
+      to jump into the air.
+  - bugfix: The DNA infuser will now vibrate to let people know that it's busy blending
+      someone with a dead animal.
+  LemonInTheDark:
+  - rscadd: The darkness that glasses and hud goggles that impact your nightvision
+      (think mesons, nightvision goggles, etc) lighten is now tinted to match the
+      glasses. S pretty IMO, and hopefully it helps with forgetting you're wearing
+      X.
+  - balance: Nightvision is darker. I think bright looks bad, and things like mesons
+      do way too much
+  - balance: Mesons (and mobs in general) no longer have a static distance you can
+      see stuff in the dark. If a tile is lit, you can now see it.
+  - bugfix: Nightvision no longer dims colored lights, instead simply thresholding
+      off bits of darkness that are dimmer then some level.
+  Melbert:
+  - bugfix: Cult Ghosts can see in the dark and invisible stuff, a mechanic intended
+      for over 5 years and never functional
+  - bugfix: Ethereal revival causing traumas again.
+  - bugfix: Heartless zombies will now revive again
+  - bugfix: Zombies no longer take constant ticking damage from lacking a heart
+  ZephyrTFA:
+  - bugfix: Moth wings can now correctly be healed
+  coiax:
+  - bugfix: Folding a "fancy box" like donut or candles will now put cardboard in
+      your hand, rather than on the floor.
+  - bugfix: You can always see how many pickles are in a jar of pickles, or rolling
+      papers there are in a pack of rolling papers, since it's not possible to close
+      them.
+2023-02-20:
+  Jacquerel:
+  - bugfix: Removes a runtime error caused by moving your PDA between slots.
+  - bugfix: Clicking a spider egg and then closing the radial menu won't print a message
+      in admin channel informing admins that the egg didn't spawn anything.
+  JohnFulpWillard:
+  - bugfix: NtOS program downloader now works again, and will now properly alert you
+      of downloading illegal ROMs if you change your theme to anything that isn't
+      Syndicate.
+  - bugfix: NtOS themes are now recognized by all windows.
+  - spellcheck: Hallucinations where you see people put things away now tell you they
+      put the right thing away.
+  JohnFulpWillard and itsmeow:
+  - bugfix: Messenger now clears photos after you send it, so you don't send a photo
+      repeatedly until you manually clear it.
+  - bugfix: Sending a photo now has a hyperlink in chat for the target to see (like
+      with old PDAs)
+  - bugfix: AIs can now select photos in their Messenger app.
+  - bugfix: Messenger no longer says you're sending outgoing messages to yourself.
+  LT3:
+  - imageadd: Wall mounted tram sign now has improved emissives and casing
+  LemonInTheDark:
+  - bugfix: Moving up and down z levels will break hud stuff slightly less often
+  MidoriWroth:
+  - qol: Tweaked around some foods to make them easier to make
+  NamelessFairy:
+  - bugfix: A accidently stacked roller bed on lavaland has been removed.
+  - bugfix: You cannot print blank documents from a photocopier if you cannot afford
+      them anymore.
+  - bugfix: Mounting the photocopier will now eject paperwork as it does with photos
+      and paper.
+  - refactor: Lots of duplicate code and some unnecessary vars removed from photocopier
+      code.
+  Rhials:
+  - bugfix: Midround Changelings are now ejected from their meteor when something
+      bad happens, ensuring they reach the station.
+  Roryl-c:
+  - bugfix: seiver no longer applies purity and delta time twice
+  - code_imp: made seiver code much less confusing
+  SuperSlayer0:
+  - bugfix: Fixes mending globule ability not having a cooldown
+  TheBoondock:
+  - bugfix: fixed throwing description to always say "it was thrown very hard" even
+      when its not
+  coiax:
+  - bugfix: Eating fish and meat poke bowls no longer consumes the bowl, just the
+      food inside.
+  tralezab:
+  - bugfix: Valentines and other antags no longer break highlander
+2023-02-21:
+  Jacquerel:
+  - bugfix: Many spell-like abilities which could be stunned, paralysed, or frozen
+      in time now cannot be.
+  - bugfix: Pet dogs will once again fetch items for you
+  Maurukas:
+  - bugfix: a vent pump that was installed backwards in the Kilostation Ordnance airlock
+      has been repaired.
+  NamelessFairy:
+  - bugfix: Holopads will blink when being called rather than just glowing.
+  - bugfix: Holopads will not blink forever if you missed a call.
+  - bugfix: Mice will now retain their color when they die.
+  RikuTheKiller:
+  - bugfix: Oculater works again.
+  SuperSlayer0:
+  - rscadd: Added a new cybernetic implant that increases punch damage of a human
+  TheBoondock:
+  - bugfix: fixed goliath heart having missing icon
+  coiax:
+  - bugfix: Paper planes when unfolded will put the paper in your active hand, rather
+      than a different hand, just like cardboard boxes.
+  skylord-a52:
+  - bugfix: candles are made of a more appropriate material
+  sqnztb:
+  - bugfix: frail and paraplegia quirks can once again be taken together.
+  tralezab:
+  - bugfix: You can use ninja adrenaline to cure unconsciousness as intended
+  - code_imp: Cleaned up some modsuit code
+  - bugfix: Fixes some cases where AI couldn't interact with some old non-tgui machines
+  vinylspiders:
+  - imageadd: new inhand sprites for the broken holy flask
+  - bugfix: fixes broken holy water flask looking like a broken beer bottle
+  - bugfix: unholy flasks now use a blackened holy flask inhand sprite instead of
+      the beaker one
+2023-02-22:
+  Jacquerel:
+  - bugfix: Restores lost behaviour to heal Ian with sutures. Or giant spiders, if
+      you want to do that for some reason.
+  LemonInTheDark:
+  - config: Added a warning build config setting, you can now lightly repremand but
+      not block clients with older builds but fine major versions
+  - bugfix: Fixes activating two flashlights without moving only turning on one flashlight
+      (until you move)
+  - bugfix: Purely black things drawn on the floor (like carpets, those foam dispensers,
+      etc) will no longer cause things on top of them to be fully masked in darkness
+  Melbert:
+  - bugfix: Ghost roles from spawners keeping antag datums
+  Ryll/Shaps:
+  - bugfix: Landing a monster tackle that applies an auto aggro-grab while stamcrit
+      will no longer try applying an aggro-grab that leads to a permanent slowdown
+      to the user, and will instead just knock the target down a bit harder.
+  - bugfix: Launching dolphin and rocket glove tackles on targets at ranges shorter
+      than their minimum distance will be more accurate at targeting where you clicked
+      at, rather than locking you into the nearest cardinal/diagonal direction.
+  - balance: You can now knock more things off a table full of stuff by tackling it
+      than you could before.

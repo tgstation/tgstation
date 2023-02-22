@@ -8,7 +8,6 @@
 
 	maxHealth = 5
 	health = 5
-	see_in_dark = 6
 	density = FALSE
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -47,8 +46,8 @@
 	src.tame = tame
 	if(isnull(body_color))
 		body_color = pick("brown", "gray", "white")
-		held_state = "mouse_[body_color]" // not handled by variety element
-		AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
+	held_state = "mouse_[body_color]" // not handled by variety element
+	AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	var/static/list/loc_connections = list(

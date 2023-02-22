@@ -348,6 +348,8 @@
 	var/filter = get_filter(name)
 	if(!filter)
 		return
+	// This can get injected by the filter procs, we want to support them so bye byeeeee
+	new_params -= "type"
 	animate(filter, new_params, time = time, easing = easing, loop = loop)
 	modify_filter(name, new_params)
 

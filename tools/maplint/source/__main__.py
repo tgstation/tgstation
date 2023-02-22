@@ -45,7 +45,7 @@ def print_error(message: str, filename: str, line_number: int, github_error_styl
 
 def print_maplint_error(error: MaplintError, github_error_style: bool):
     print_error(
-        f"{f'(in pop {error.pop_id}) ' if error.pop_id else ''}{f'(at {error.coordinates}) ' if error.coordinates else ''}{error}",
+        f"{f'(in pop {error.pop_id}) ' if error.pop_id else ''}{f'(at {error.coordinates}) ' if error.coordinates else ''}{error}" + (f"\n  {error.help}" if error.help is not None else ""),
         error.file_name,
         error.line_number,
         github_error_style,

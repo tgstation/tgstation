@@ -31,7 +31,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 		var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
 		if(isnull(new_style))
 			return TRUE
-		if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+		if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 			return TRUE //no tele-grooming
 		if(HAS_TRAIT(hairdresser, TRAIT_SHAVED))
 			to_chat(hairdresser, span_notice("If only growing back facial hair were that easy for you..."))
@@ -43,7 +43,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
 	if(isnull(new_style))
 		return TRUE
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return TRUE //no tele-grooming
 	if(HAS_TRAIT(hairdresser, TRAIT_BALD))
 		to_chat(hairdresser, span_notice("If only growing back hair were that easy for you..."))
@@ -167,7 +167,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	if(isnull(choice))
 		return TRUE
 
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return TRUE
 
 	switch(choice)
@@ -175,7 +175,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 			var/newname = sanitize_name(tgui_input_text(amazed_human, "Who are we again?", "Name change", amazed_human.name, MAX_NAME_LEN), allow_numbers = TRUE) //It's magic so whatever.
 			if(!newname)
 				return TRUE
-			if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+			if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 				return TRUE
 			amazed_human.real_name = newname
 			amazed_human.name = newname
@@ -190,7 +190,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 				return TRUE
 			if(!selectable_races[racechoice])
 				return TRUE
-			if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+			if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 				return TRUE
 
 			var/datum/species/newrace = selectable_races[racechoice]
@@ -204,7 +204,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 			if(MUTCOLORS in amazed_human.dna.species.species_traits)
 				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change", amazed_human.dna.features["mcolor"]) as color|null
-				if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+				if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 					return TRUE
 				if(new_mutantcolor)
 					var/temp_hsv = RGBtoHSV(new_mutantcolor)
@@ -225,7 +225,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 				return TRUE
 			if(amazed_human.gender == "male")
 				if(tgui_alert(amazed_human, "Become a Witch?", "Confirmation", list("Yes", "No")) == "Yes")
-					if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+					if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 						return TRUE
 					amazed_human.gender = FEMALE
 					amazed_human.physique = FEMALE
@@ -235,7 +235,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 			else
 				if(tgui_alert(amazed_human, "Become a Warlock?", "Confirmation", list("Yes", "No")) == "Yes")
-					if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+					if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 						return TRUE
 					amazed_human.gender = MALE
 					amazed_human.physique = MALE
@@ -248,13 +248,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 		if("hair")
 			var/hairchoice = tgui_alert(amazed_human, "Hairstyle or hair color?", "Change Hair", list("Style", "Color"))
-			if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+			if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 				return TRUE
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				return ..()
 			else
 				var/new_hair_color = input(amazed_human, "Choose your hair color", "Hair Color",amazed_human.hair_color) as color|null
-				if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+				if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 					return TRUE
 				if(new_hair_color)
 					amazed_human.hair_color = sanitize_hexcolor(new_hair_color)
@@ -268,7 +268,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 		if(BODY_ZONE_PRECISE_EYES)
 			var/new_eye_color = input(amazed_human, "Choose your eye color", "Eye Color", amazed_human.eye_color_left) as color|null
-			if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+			if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 				return TRUE
 			if(new_eye_color)
 				amazed_human.eye_color_left = sanitize_hexcolor(new_eye_color)

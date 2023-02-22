@@ -776,7 +776,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/oculine/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(headache)
 		return ..()
-	if(DT_PROB(100*(1-creation_purity), delta_time))
+	if(DT_PROB(100 * creation_purity, delta_time))
 		affected_mob.become_blind(IMPURE_OCULINE)
 		to_chat(affected_mob, span_danger("You suddenly develop a pounding headache as your vision fluxuates."))
 		headache = TRUE

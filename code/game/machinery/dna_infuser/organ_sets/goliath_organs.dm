@@ -24,6 +24,9 @@
 	eye_color_left = "#FF0000"
 	eye_color_right = "#FF0000"
 
+	low_light_cutoff = list(15, 0, 8)
+	medium_light_cutoff = list(35, 15, 25)
+	high_light_cutoff = list(50, 10, 40)
 	organ_traits = list(TRAIT_UNNATURAL_RED_GLOWY_EYES)
 
 /obj/item/organ/internal/eyes/night_vision/goliath/Initialize(mapload)
@@ -157,6 +160,7 @@
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "skin has visible hard plates growing from within.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
+	AddElement(/datum/element/update_icon_blocker)
 
 #undef GOLIATH_ORGAN_COLOR
 #undef GOLIATH_SCLERA_COLOR

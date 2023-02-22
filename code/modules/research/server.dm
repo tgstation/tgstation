@@ -124,9 +124,7 @@
 	add_overlay("RD-server-objective-stripes")
 
 /obj/machinery/rnd/server/master/Destroy()
-	if (source_code_hdd && (deconstruction_state == HDD_OVERLOADED))
-		QDEL_NULL(source_code_hdd)
-
+	QDEL_NULL(source_code_hdd)
 	return ..()
 
 /obj/machinery/rnd/server/master/get_status_text()
@@ -228,6 +226,8 @@
 /obj/machinery/rnd/server/master/on_deconstruction()
 	// If the machine contains a source code HDD, destroying it will negatively impact research speed. Safest to log this.
 	if(source_code_hdd)
+		// Destroyed with a hard drive inside = harm income
+		stored_research.income_modifier *= 0.5
 		// If there's a usr, this was likely a direct deconstruction of some sort. Extra logging info!
 		if(usr)
 			var/mob/user = usr
@@ -245,6 +245,8 @@
 /obj/machinery/rnd/server/master/proc/overload_source_code_hdd()
 	if(source_code_hdd)
 		QDEL_NULL(source_code_hdd)
+		// Overloaded = harm income
+		stored_research.income_modifier *= 0.5
 
 	if(deconstruction_state == HDD_PANEL_CLOSED)
 		add_overlay("RD-server-hdd-panel-open")
