@@ -49,6 +49,7 @@
  * This proc needs to be run at some point to ensure the event has candidates to infect.
  */
 /datum/round_event_control/disease_outbreak/proc/generate_candidates()
+	disease_candidates.Cut() //We clear the list and rebuild it again.
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list)) //Player list is much more up to date and requires less checks(?)
 		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER) || candidate.stat == DEAD)
 			continue
