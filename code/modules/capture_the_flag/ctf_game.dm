@@ -20,7 +20,7 @@
 	throw_range = 1
 	force = 200
 	armour_penetration = 1000
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
 	item_flags = SLOWS_WHILE_IN_HAND
 	var/team = WHITE_TEAM
@@ -241,7 +241,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	density = TRUE
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/game_id = CTF_GHOST_CTF_GAME_ID
 
 	var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>"
@@ -543,7 +543,7 @@
 	name = "Spawn protection"
 	desc = "Stay outta the enemy spawn!"
 	icon_state = "trap"
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
 	anchored = TRUE
