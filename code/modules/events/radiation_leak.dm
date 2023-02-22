@@ -57,8 +57,6 @@
 			return
 
 /datum/round_event/radiation_leak/announce(fake)
-	for(var/mob/dead/observer/player in GLOB.dead_player_list)
-		tgui_input_list(player, "pee", "poo", subtypesof(/obj/machinery))
 	var/obj/machinery/the_source_of_our_problems = picked_machine_ref?.resolve()
 	var/area/station/location_descriptor
 
