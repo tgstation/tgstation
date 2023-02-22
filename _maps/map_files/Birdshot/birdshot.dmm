@@ -8887,8 +8887,8 @@
 /area/station/hallway/primary/starboard)
 "dOP" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/tank{
-	dir = 1
+/obj/machinery/atmospherics/components/tank/oxygen{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/station/science/ordnance/storage)
@@ -20467,7 +20467,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/plating,
 /area/station/science/ordnance/storage)
 "idu" = (
@@ -35879,7 +35879,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 10
 	},
-/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/ordnance/storage)
 "nWO" = (
@@ -44060,7 +44060,7 @@
 "qSC" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/white/line,
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/ordnance/storage)
 "qSG" = (
@@ -58022,7 +58022,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/directional/north,
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/ordnance/storage)
 "vDB" = (
@@ -61143,7 +61143,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
 	},
-/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/ordnance/storage)
 "wCK" = (
