@@ -84,6 +84,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 /datum/controller/master/New()
 	if(!config)
 		config = new
+	if(!Logger)
+		Logger = new
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
 
 	if(!random_seed)

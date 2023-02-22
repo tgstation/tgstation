@@ -1,5 +1,4 @@
-GLOBAL_DATUM_INIT(logger, /datum/log_holder, new)
-GLOBAL_PROTECT(logger)
+GLOBAL_REAL(Logger, /datum/log_holder)
 
 /**
  * Main datum to manage logging actions
@@ -136,7 +135,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		CRASH("Attempted to perform logging after shutdown!")
 
 	if(!initialized)
-		waiting_log_calls += list(args)
+		waiting_log_calls += list(list(category, message, data))
 		return
 
 	if(disabled_categories[category])

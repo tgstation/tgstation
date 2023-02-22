@@ -18,11 +18,11 @@
 
 /// Logging for generic spoken messages
 /proc/log_say(text)
-	GLOB.logger.Log(LOG_CATEGORY_GAME_SAY, text)
+	Logger.Log(LOG_CATEGORY_GAME_SAY, text)
 
 /// Logging for whispered messages
 /proc/log_whisper(text)
-	GLOB.logger.Log(LOG_CATEGORY_GAME_WHISPER, text)
+	Logger.Log(LOG_CATEGORY_GAME_WHISPER, text)
 
 /// Helper for logging of messages with only one sender and receiver (i.e. mind links)
 /proc/log_directed_talk(atom/source, atom/target, message, message_type, tag)

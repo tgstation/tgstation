@@ -1,5 +1,5 @@
 /proc/log_href(text)
-	GLOB.logger.Log(LOG_CATEGORY_HREF, text)
+	Logger.Log(LOG_CATEGORY_HREF, text)
 
 /**
  * Appends a tgui-related log entry. All arguments are optional.

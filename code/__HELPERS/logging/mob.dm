@@ -4,10 +4,10 @@
  * * text - text to log.
  */
 /mob/proc/log_mob_tag(text)
-	GLOB.logger.Log(LOG_CATEGORY_MOB_TAG, text)
+	Logger.Log(LOG_CATEGORY_MOB_TAG, text)
 
 /proc/log_silicon(text)
-	GLOB.logger.Log(LOG_CATEGORY_SILICON, text)
+	Logger.Log(LOG_CATEGORY_SILICON, text)
 
 
 /// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true

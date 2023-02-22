@@ -1,6 +1,6 @@
 /// Logging for loading and caching assets
 /proc/log_asset(text)
-	GLOB.logger.Log(LOG_CATEGORY_ASSET, text)
+	Logger.Log(LOG_CATEGORY_ASSET, text)
 
 /// Logging for config errors
 /// Rarely gets called; just here in case the config breaks.
@@ -13,7 +13,7 @@
 
 /// Logging for job slot changes
 /proc/log_job_debug(text)
-	GLOB.logger.Log(LOG_CATEGORY_JOB_DEBUG, text)
+	Logger.Log(LOG_CATEGORY_JOB_DEBUG, text)
 
 /// Logging for lua scripting
 /proc/log_lua(text)
@@ -24,7 +24,7 @@
 #ifdef UNIT_TESTS
 	GLOB.unit_test_mapping_logs += text
 #endif
-	GLOB.logger.Log(LOG_CATEGORY_MAP_ERRORS, text)
+	Logger.Log(LOG_CATEGORY_MAP_ERRORS, text)
 	if(skip_world_log)
 		return
 	SEND_TEXT(world.log, text)
@@ -36,15 +36,15 @@
 
 /// Logging for hard deletes
 /proc/log_qdel(text)
-	GLOB.logger.Log(LOG_CATEGORY_QDEL, text)
+	Logger.Log(LOG_CATEGORY_QDEL, text)
 
 /// Logging for SQL errors
 /proc/log_query_debug(text)
-	GLOB.logger.Log(LOG_CATEGORY_QUERY_DEBUG, text)
+	Logger.Log(LOG_CATEGORY_QUERY_DEBUG, text)
 
 /* Log to the logfile only. */
 /proc/log_runtime(text)
-	GLOB.logger.Log(LOG_CATEGORY_RUNTIME, text)
+	Logger.Log(LOG_CATEGORY_RUNTIME, text)
 
 /proc/log_signal(text)
 	WRITE_LOG(GLOB.signals_log, text)
@@ -55,11 +55,11 @@
 
 /// Logging for world/Topic
 /proc/log_topic(text)
-	GLOB.logger.Log(LOG_CATEGORY_GAME_TOPIC, text)
+	Logger.Log(LOG_CATEGORY_GAME_TOPIC, text)
 
 /// Log to both DD and the logfile.
 /proc/log_world(text)
 #ifdef USE_CUSTOM_ERROR_HANDLER
-	GLOB.logger.Log(LOG_CATEGORY_RUNTIME, text)
+	Logger.Log(LOG_CATEGORY_RUNTIME, text)
 #endif
 	SEND_TEXT(world.log, text)

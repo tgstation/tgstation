@@ -3,26 +3,26 @@
 /// General logging for admin actions
 /proc/log_admin(text)
 	GLOB.admin_log.Add(text)
-	GLOB.logger.Log(LOG_CATEGORY_ADMIN, text)
+	Logger.Log(LOG_CATEGORY_ADMIN, text)
 
 /// Logging for admin actions on or with circuits
 /proc/log_admin_circuit(text)
 	GLOB.admin_log.Add(text)
-	GLOB.logger.Log(LOG_CATEGORY_ADMIN_CIRCUIT, text)
+	Logger.Log(LOG_CATEGORY_ADMIN_CIRCUIT, text)
 
 /// General logging for admin actions
 /proc/log_admin_private(text)
 	GLOB.admin_log.Add(text)
-	GLOB.logger.Log(LOG_CATEGORY_ADMIN_PRIVATE, text)
+	Logger.Log(LOG_CATEGORY_ADMIN_PRIVATE, text)
 
 /// Logging for AdminSay (ASAY) messages
 /proc/log_adminsay(text)
 	GLOB.admin_log.Add(text)
-	GLOB.logger.Log(LOG_CATEGORY_ADMIN_PRIVATE_ASAY, text)
+	Logger.Log(LOG_CATEGORY_ADMIN_PRIVATE_ASAY, text)
 
 /// Logging for DeachatSay (DSAY) messages
 /proc/log_dsay(text)
-	GLOB.logger.Log(LOG_CATEGORY_ADMIN_DSAY, text)
+	Logger.Log(LOG_CATEGORY_ADMIN_DSAY, text)
 
 /**
  * Writes to a special log file if the log_suspicious_login config flag is set,
