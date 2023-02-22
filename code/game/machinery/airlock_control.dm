@@ -18,7 +18,7 @@
 	update_appearance()
 
 	stoplag(0.2 SECONDS)
-	open(forced = TRUE)
+	open(DOOR_FORCED_OPEN)
 
 	locked = TRUE
 	update_appearance()

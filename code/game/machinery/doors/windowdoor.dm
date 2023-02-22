@@ -194,17 +194,16 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/machinery/door/window/open(forced=FALSE)
+/obj/machinery/door/window/open(forced = DOOR_DEFAULT_OPEN)
 	if (operating) //doors can still open when emag-disabled
-		return 0
-	if(!forced)
-		if(!hasPower())
-			return 0
-	if(forced < 2)
-		if(obj_flags & EMAGGED)
-			return 0
+		return FALSE
+
+	if(!try_to_force_door(forced))
+		return FALSE
+
 	if(!operating) //in case of emag
 		operating = TRUE
+
 	do_animate("opening")
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
 	icon_state ="[base_state]open"
@@ -215,7 +214,27 @@
 
 	if(operating == 1) //emag again
 		operating = FALSE
-	return 1
+
+	return TRUE
+
+/// Additional checks depending on what we want to happen to this windoor
+/obj/machinery/door/window/try_to_force_door(force_type = DOOR_DEFAULT_OPEN)
+	switch(force_type)
+		if(DOOR_DEFAULT_OPEN) // Regular behavior.
+			if(!hasPower() || (obj_flags & EMAGGED))
+				return FALSE
+			return TRUE
+
+		if(DOOR_FORCED_OPEN) // Only one check.
+			if(obj_flags & EMAGGED)
+				return FALSE
+			return TRUE
+
+		if(DOOR_ALWAYS_OPEN) // No power usage, special sound, get it open.
+			return TRUE
+
+		else
+			stack_trace("Invalid forced argument [forced] passed to open() on this airlock.")
 
 /obj/machinery/door/window/close(forced=FALSE)
 	if (operating)
@@ -279,7 +298,7 @@
 		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		sleep(0.6 SECONDS)
 		operating = FALSE
-		open(2)
+		open(DOOR_ALWAYS_OPEN)
 
 /obj/machinery/door/window/examine(mob/user)
 	. = ..()
@@ -364,7 +383,7 @@
 /obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user, forced = FALSE)
 	if(!hasPower() || forced)
 		if(density)
-			open(2)
+			open(DOOR_ALWAYS_OPEN)
 		else
 			close(2)
 	else

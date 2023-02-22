@@ -43,6 +43,14 @@
 #define SHOCK (1<<3)
 #define SAFE (1<<4)
 
+//defines to be used with the door's open() proc in order to discriminate what type of open is being done. The door will never open if it's been physically disabled (i.e. welded, sealed, etc.).
+/// We should go through the door's normal opening procedure, no overrides.
+#define DOOR_DEFAULT_OPEN 0
+/// We're not going through the door's normal opening procedure, we're forcing it open. Can still fail if it's emagged or something. Costs power.
+#define DOOR_FORCED_OPEN 1
+/// We are getting this door open if it has not been physically held shut somehow. Play a special sound to signify this level of opening.
+#define DOOR_ALWAYS_OPEN 2
+
 //used in design to specify which machine can build it
 #define IMPRINTER (1<<0) //For circuits. Uses glass/chemicals.
 #define PROTOLATHE (1<<1) //New stuff. Uses various minerals
