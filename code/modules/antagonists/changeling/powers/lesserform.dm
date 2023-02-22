@@ -26,7 +26,7 @@
 /// Stop being a monkey
 /datum/action/changeling/lesserform/proc/unmonkey(mob/living/carbon/human/user)
 	if(user.movement_type & VENTCRAWLING)
-		user.balloon_alert(user, "exit pipes!")
+		user.balloon_alert(user, "can't transform in pipes!")
 		return FALSE
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/datum/changeling_profile/chosen_form = changeling?.select_dna()
