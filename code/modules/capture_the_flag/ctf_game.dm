@@ -40,7 +40,6 @@
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 		reset.flag = src
-	RegisterSignal(src, COMSIG_PARENT_PREQDELETED, PROC_REF(reset_flag)) //just in case CTF has some map hazards (read: chasms).
 
 /obj/item/ctf/process()
 	if(is_ctf_target(loc)) //pickup code calls temporary drops to test things out, we need to make sure the flag doesn't reset from
@@ -49,7 +48,6 @@
 		reset_flag()
 
 /obj/item/ctf/proc/reset_flag(capture = FALSE)
-	SIGNAL_HANDLER
 	STOP_PROCESSING(SSobj, src)
 
 	var/turf/our_turf = get_turf(src.reset)
@@ -61,7 +59,6 @@
 		if(istype(mob_area, game_area))
 			if(!capture)
 				to_chat(M, span_userdanger("[src] has been returned to the base!"))
-	return TRUE //so if called by a signal, it doesn't delete
 
 //working with attack hand feels like taking my brain and putting it through an industrial pill press so i'm gonna be a bit liberal with the comments
 /obj/item/ctf/attack_hand(mob/living/user, list/modifiers)
