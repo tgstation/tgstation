@@ -43,7 +43,7 @@
 	name = "Basketball Referee"
 	uniform = /obj/item/clothing/under/costume/referee
 	shoes = /obj/item/clothing/shoes/laceup
-	mask = /obj/item/clothing/mask/whistle
+	mask = /obj/item/clothing/mask/whistle/minigame
 	gloves = /obj/item/clothing/gloves/latex
 	head = /obj/item/clothing/head/soft/black
 
