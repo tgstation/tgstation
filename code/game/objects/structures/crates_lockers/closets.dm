@@ -92,6 +92,7 @@
 		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	register_context()
 
 /obj/structure/closet/LateInitialize()
 	. = ..()
@@ -230,11 +231,29 @@
 		. += span_notice("It is <b>bolted</b> to the ground.")
 	if(opened && cutting_tool == /obj/item/weldingtool)
 		. += span_notice("The parts are <b>welded</b> together.")
-	else if(secure && !opened)
-		. += span_notice("Right-click to [locked ? "unlock" : "lock"].")
-
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")
+
+/obj/structure/closet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	var/screentip_change = FALSE
+
+	if(isnull(held_item))
+		if(secure && !broken)
+			context[SCREENTIP_CONTEXT_RMB] = opened ? "Lock" : "Unlock"
+		if(!welded)
+			context[SCREENTIP_CONTEXT_LMB] = opened ? "Close" : "Open"
+		screentip_change = TRUE
+
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_WELDER)
+		if(opened)
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		else
+			context[SCREENTIP_CONTEXT_LMB] = welded ? "Weld open" : "Weld shut"
+		screentip_change = TRUE
+
+	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
 
 /obj/structure/closet/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
