@@ -10125,7 +10125,7 @@
 "enU" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/kirbyplants/dead,
+/obj/machinery/computer/robotics,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "eoa" = (
