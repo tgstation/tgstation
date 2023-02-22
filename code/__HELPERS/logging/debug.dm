@@ -5,11 +5,11 @@
 /// Logging for config errors
 /// Rarely gets called; just here in case the config breaks.
 /proc/log_config(text)
-	WRITE_LOG(GLOB.config_error_log, text)
+	Logger.Log(LOG_CATEGORY_CONFIG, text)
 	SEND_TEXT(world.log, text)
 
 /proc/log_filter_raw(text)
-	WRITE_LOG(GLOB.filter_log, "FILTER: [text]")
+	Logger.Log(LOG_CATEGORY_FILTER, text)
 
 /// Logging for job slot changes
 /proc/log_job_debug(text)
@@ -17,7 +17,7 @@
 
 /// Logging for lua scripting
 /proc/log_lua(text)
-	WRITE_LOG(GLOB.lua_log, text)
+	Logger.Log(LOG_CATEGORY_LUA, text)
 
 /// Logging for mapping errors
 /proc/log_mapping(text, skip_world_log)
@@ -47,11 +47,11 @@
 	Logger.Log(LOG_CATEGORY_RUNTIME, text)
 
 /proc/log_signal(text)
-	WRITE_LOG(GLOB.signals_log, text)
+	Logger.Log(LOG_CATEGORY_SIGNAL, text)
 
 /// Logging for DB errors
 /proc/log_sql(text)
-	WRITE_LOG(GLOB.sql_error_log, "SQL: [text]")
+	Logger.Log(LOG_CATEGORY_SQL, text)
 
 /// Logging for world/Topic
 /proc/log_topic(text)

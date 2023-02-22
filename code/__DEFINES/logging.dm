@@ -92,6 +92,16 @@
 #define LOG_CATEGORY_MANIFEST "manifest"
 #define LOG_CATEGORY_SHUTTLE "shuttle"
 #define LOG_CATEGORY_HREF "href"
+#define LOG_CATEGORY_SUSPICIOUS_LOGIN "supicious-login"
+#define LOG_CATEGORY_CONFIG "config"
+#define LOG_CATEGORY_FILTER "filter"
+#define LOG_CATEGORY_LUA "lua"
+#define LOG_CATEGORY_SIGNAL "signal"
+#define LOG_CATEGORY_SQL "sql"
+#define LOG_CATEGORY_DYNAMIC "dynamic"
+#define LOG_CATEGORY_TELECOMMS "telecomms"
+#define LOG_CATEGORY_SPEECH_INDICATOR "speech-indiciator"
+#define LOG_CATEGORY_TGUI "tgui"
 
 // Admin categories
 #define LOG_CATEGORY_ADMIN "admin"

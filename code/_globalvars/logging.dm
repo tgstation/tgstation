@@ -12,18 +12,6 @@ GLOBAL_PROTECT(bombers)
 GLOBAL_LIST_EMPTY(combatlog)
 GLOBAL_PROTECT(combatlog)
 
-GLOBAL_VAR(config_error_log)
-GLOBAL_PROTECT(config_error_log)
-
-GLOBAL_VAR(demo_log)
-GLOBAL_PROTECT(demo_log)
-
-GLOBAL_VAR(dynamic_log)
-GLOBAL_PROTECT(dynamic_log)
-
-GLOBAL_VAR(filter_log)
-GLOBAL_PROTECT(filter_log)
-
 #ifdef REFERENCE_DOING_IT_LIVE
 GLOBAL_LIST_EMPTY(harddel_log)
 GLOBAL_PROTECT(harddel_log)
@@ -42,12 +30,6 @@ GLOBAL_PROTECT(lawchanges)
 GLOBAL_VAR(log_directory)
 GLOBAL_PROTECT(log_directory)
 
-GLOBAL_VAR(lua_log)
-GLOBAL_PROTECT(lua_log)
-
-GLOBAL_LIST_EMPTY(OOClog)
-GLOBAL_PROTECT(OOClog)
-
 GLOBAL_VAR(perf_log)
 GLOBAL_PROTECT(perf_log)
 
@@ -61,28 +43,5 @@ GLOBAL_PROTECT(picture_logging_id)
 GLOBAL_VAR(picture_logging_prefix)
 GLOBAL_PROTECT(picture_logging_prefix)
 
-GLOBAL_VAR(query_debug_log)
-GLOBAL_PROTECT(query_debug_log)
-
 GLOBAL_VAR(round_id)
 GLOBAL_PROTECT(round_id)
-
-GLOBAL_VAR(signals_log)
-GLOBAL_PROTECT(signals_log)
-
-GLOBAL_VAR(sql_error_log)
-GLOBAL_PROTECT(sql_error_log)
-
-GLOBAL_VAR(tgui_log)
-GLOBAL_PROTECT(tgui_log)
-
-GLOBAL_VAR(world_speech_indicators_log)
-GLOBAL_PROTECT(world_speech_indicators_log)
-
-/// Log associated with [/proc/log_suspicious_login()]
-/// Intended to hold all logins that failed due to suspicious circumstances such as ban detection, CID randomisation etc.
-GLOBAL_VAR(world_suspicious_login_log)
-GLOBAL_PROTECT(world_suspicious_login_log)
-
-GLOBAL_VAR(world_telecomms_log)
-GLOBAL_PROTECT(world_telecomms_log)

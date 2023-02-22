@@ -43,7 +43,6 @@ GLOBAL_VAR(restart_counter)
 
 	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
-	GLOB.config_error_log = GLOB.sql_error_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 	#ifdef REFERENCE_DOING_IT_LIVE
 	GLOB.harddel_log = GLOB.world_game_log
 	#endif
@@ -134,17 +133,6 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
 	Logger.init_logging()
-	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
-	GLOB.dynamic_log = "[GLOB.log_directory]/dynamic.log"
-	GLOB.filter_log = "[GLOB.log_directory]/filters.log"
-	GLOB.lua_log = "[GLOB.log_directory]/lua.log"
-	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
-	GLOB.signals_log = "[GLOB.log_directory]/signals.log"
-	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
-	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
-	GLOB.world_speech_indicators_log = "[GLOB.log_directory]/speech_indicators.log"
-	GLOB.world_suspicious_login_log = "[GLOB.log_directory]/suspicious_logins.log"
-	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = "[GLOB.log_directory]/tests.log"
@@ -155,13 +143,9 @@ GLOBAL_VAR(restart_counter)
 	GLOB.harddel_log = "[GLOB.log_directory]/harddels.log"
 	start_log(GLOB.harddel_log)
 #endif
-	start_log(GLOB.tgui_log)
 
 	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
 	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
-	if(fexists(GLOB.config_error_log))
-		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
-		fdel(GLOB.config_error_log)
 
 	if(GLOB.round_id)
 		log_game("Round ID: [GLOB.round_id]")

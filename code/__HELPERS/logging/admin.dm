@@ -32,7 +32,6 @@
  * doesn't need to be used alongside log_access and can replace it where appropriate.
  */
 /proc/log_suspicious_login(text, access_log_mirror = TRUE)
-	if (CONFIG_GET(flag/log_suspicious_login))
-		WRITE_LOG(GLOB.world_suspicious_login_log, "SUSPICIOUS_ACCESS: [text]")
+	Logger.Log(LOG_CATEGORY_SUSPICIOUS_LOGIN, text)
 	if(access_log_mirror)
 		log_access(text)

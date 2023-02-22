@@ -58,3 +58,36 @@
 
 /datum/log_category/href
 	category = LOG_CATEGORY_HREF
+
+/datum/log_category/supicious_login
+	category = LOG_CATEGORY_SUSPICIOUS_LOGIN
+	config_flag = /datum/config_entry/flag/log_suspicious_login
+
+/datum/log_category/config
+	category = LOG_CATEGORY_CONFIG
+
+/datum/log_category/filter
+	category = LOG_CATEGORY_FILTER
+
+/datum/log_category/lua
+	category = LOG_CATEGORY_LUA
+
+/datum/log_category/signal
+	category = LOG_CATEGORY_SIGNAL
+
+/datum/log_category/sql
+	category = LOG_CATEGORY_SQL
+
+/datum/log_category/dynamic
+	category = LOG_CATEGORY_DYNAMIC
+
+/datum/log_category/telecomms
+	category = LOG_CATEGORY_TELECOMMS
+	config_flag = /datum/config_entry/flag/log_telecomms
+
+/datum/log_category/speech_indicator
+	category = LOG_CATEGORY_SPEECH_INDICATOR
+	config_flag = /datum/config_entry/flag/log_speech_indicators
+
+/datum/log_category/tgui
+	category = LOG_CATEGORY_TGUI

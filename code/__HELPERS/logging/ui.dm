@@ -31,4 +31,4 @@
 	// Insert message
 	if(message)
 		entry += "\n[message]"
-	WRITE_LOG(GLOB.tgui_log, entry)
+	Logger.Log(LOG_CATEGORY_TGUI, entry)
