@@ -26,7 +26,7 @@
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/Initialize(mapload)
 	. = ..()
-	apply_dynamic_human_icon(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/wizard/paper)
+	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/wizard/paper)
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/Destroy()
 	QDEL_LIST(copies)

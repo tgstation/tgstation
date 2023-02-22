@@ -76,7 +76,12 @@
 /obj/effect/baseturf_helper/reinforced_plating
 	name = "reinforced plating baseturf editor"
 	baseturf = /turf/open/floor/plating/reinforced
-	baseturf_to_replace = list(/turf/open/floor/plating,/turf/open/space,/turf/baseturf_bottom)
+	baseturf_to_replace = list(/turf/open/floor/plating)
+
+/obj/effect/baseturf_helper/reinforced_plating/replace_baseturf(turf/thing)
+	if(istype(thing, /turf/open/floor/plating))
+		return //Plates should not be placed under other plates
+	thing.stack_ontop_of_baseturf(/turf/open/floor/plating, baseturf)
 
 //This applies the reinforced plating to the above Z level for every tile in the area where this is placed
 /obj/effect/baseturf_helper/reinforced_plating/ceiling
@@ -382,8 +387,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/l_hand = NO_REPLACE
 	/// Which slots on the mob should be bloody?
 	var/bloody_slots = NONE
-	/// Directions we generate for the mob.
-	var/generated_dirs = list(NORTH, SOUTH, EAST, WEST)
 	/// Do we draw more than one frame for the mob?
 	var/animated = TRUE
 
@@ -401,7 +404,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	return TRUE
 
 /obj/effect/mapping_helpers/atom_injector/human_icon_injector/inject(atom/target)
-	apply_dynamic_human_icon(target, outfit_path, species_path, mob_spawn_path, r_hand, l_hand, bloody_slots, generated_dirs, animated)
+	apply_dynamic_human_appearance(target, outfit_path, species_path, mob_spawn_path, r_hand, l_hand, bloody_slots, animated)
 
 /obj/effect/mapping_helpers/atom_injector/human_icon_injector/generate_stack_trace()
 	. = ..()

@@ -195,7 +195,7 @@
 	overlay_icon_state = "bg_hive_border"
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "consume"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE|AB_CHECK_INCAPACITATED
 	///The mob thats being consumed by this creature
 	var/mob/living/vored_mob
 
@@ -303,7 +303,7 @@
 	overlay_icon_state = "bg_hive_border"
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "globules"
-	check_flags = AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
 	cooldown_time = 5 SECONDS
 	click_to_activate = TRUE
 
@@ -358,6 +358,8 @@
 	globule.preparePixelProjectile(target, caller, modifiers)
 	globule.def_zone = caller.zone_selected
 	globule.fire()
+
+	StartCooldown()
 
 	return TRUE
 
@@ -417,7 +419,7 @@
 	overlay_icon_state = "bg_hive_border"
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "gel_cocoon"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE|AB_CHECK_INCAPACITATED
 	cooldown_time = 10 SECONDS
 
 /datum/action/cooldown/gel_cocoon/Activate(atom/target)

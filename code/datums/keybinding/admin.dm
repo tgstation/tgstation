@@ -7,17 +7,10 @@
 
 /datum/keybinding/admin/admin_say
 	hotkey_keys = list("F3")
-	name = "admin_say"
+	name = ADMIN_CHANNEL
 	full_name = "Admin say"
 	description = "Talk with other admins."
 	keybind_signal = COMSIG_KB_ADMIN_ASAY_DOWN
-
-/datum/keybinding/admin/admin_say/down(client/user)
-	. = ..()
-	if(.)
-		return
-	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/admin/admin_say)
-	return TRUE
 
 /datum/keybinding/admin/admin_ghost
 	hotkey_keys = list("F5")
@@ -30,7 +23,7 @@
 	. = ..()
 	if(.)
 		return
-	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/game/aghost)
+	user.admin_ghost()
 	return TRUE
 
 /datum/keybinding/admin/player_panel_new
@@ -58,7 +51,7 @@
 	. = ..()
 	if(.)
 		return
-	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/build_mode/toggle_build_mode_self)
+	user.togglebuildmodeself()
 	return TRUE
 
 /datum/keybinding/admin/stealthmode
@@ -72,7 +65,7 @@
 	. = ..()
 	if(.)
 		return
-	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/admin/stealth_mode)
+	user.stealth()
 	return TRUE
 
 /datum/keybinding/admin/invisimin
@@ -86,7 +79,7 @@
 	. = ..()
 	if(.)
 		return
-	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/game/invisimin)
+	user.invisimin()
 	return TRUE
 
 /datum/keybinding/admin/deadsay
@@ -100,7 +93,7 @@
 	. = ..()
 	if(.)
 		return
-	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/game/dead_say)
+	user.get_dead_say()
 	return TRUE
 
 /datum/keybinding/admin/deadmin
@@ -114,7 +107,7 @@
 	. = ..()
 	if(.)
 		return
-	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/admin/deadmin)
+	user.deadmin()
 	return TRUE
 
 /datum/keybinding/admin/readmin

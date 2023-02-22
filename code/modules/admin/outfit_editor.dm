@@ -110,7 +110,7 @@
 			GLOB.custom_outfits -= drip
 			SStgui.update_user_uis(owner.mob)
 		if("vv")
-			SSadmin_verbs.dynamic_invoke_admin_verb(owner, /mob/admin_module_holder/debug/view_variables, drip)
+			owner.debug_variables(drip)
 
 
 /datum/outfit_editor/proc/set_item(slot, obj/item/choice)

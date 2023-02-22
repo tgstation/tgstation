@@ -131,3 +131,9 @@
 
 /datum/movespeed_modifier/auto_wash
 	multiplicative_slowdown = 3
+
+/datum/movespeed_modifier/player_spider_modifier
+	variable = TRUE
+
+/datum/movespeed_modifier/netherworld_enrage
+	variable = TRUE

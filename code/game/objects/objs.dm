@@ -237,7 +237,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(!(. = ..()))
 		return
 	if(href_list[VV_HK_OSAY])
-		return // AVD TODO
+		if(check_rights(R_FUN, FALSE))
+			usr.client.object_say(src)
 
 	if(href_list[VV_HK_MASS_DEL_TYPE])
 		if(check_rights(R_DEBUG|R_SERVER))
@@ -289,7 +290,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /obj/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && (!current_skin || infinite_reskin) && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE))
+	if(unique_reskin && (!current_skin || infinite_reskin) && user.can_perform_action(src, NEED_DEXTERITY))
 		reskin_obj(user)
 
 /**

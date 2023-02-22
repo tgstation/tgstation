@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes:
-  - bugfix: "Reverts accidental change to pluoxium and freon gasmix power ratio values."

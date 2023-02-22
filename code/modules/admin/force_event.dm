@@ -1,9 +1,18 @@
 ///Allows an admin to force an event
-ADMIN_VERB(events, trigger_event, "", R_FUN)
-	usr.client.holder.forceEvent()
+/client/proc/forceEvent()
+	set name = "Trigger Event"
+	set category = "Admin.Events"
+
+	if(!holder || !check_rights(R_FUN))
+		return
+
+	holder.forceEvent()
 
 ///Opens up the Force Event Panel
 /datum/admins/proc/forceEvent()
+	if(!check_rights(R_FUN))
+		return
+
 	var/datum/force_event/ui = new(usr)
 	ui.ui_interact(usr)
 
@@ -57,6 +66,7 @@ ADMIN_VERB(events, trigger_event, "", R_FUN)
 			"description" = event_control.description,
 			"type" = event_control.type,
 			"category" = event_control.category,
+			"has_customization" = !isnull(event_control.admin_setup),
 		))
 	data["categories"] = categories
 	data["events"] = events

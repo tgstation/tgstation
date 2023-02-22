@@ -322,9 +322,10 @@
 		overlays.Cut()
 
 	LAZYNULL(managed_overlays)
-
-	QDEL_NULL(ai_controller)
-	QDEL_NULL(light)
+	if(ai_controller)
+		QDEL_NULL(ai_controller)
+	if(light)
+		QDEL_NULL(light)
 	if (length(light_sources))
 		light_sources.Cut()
 
@@ -1045,15 +1046,6 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_CONTENTS_DEL, deleting_atom)
 
 /**
- * called when the turf the atom resides on is ChangeTurfed
- *
- * Default behaviour is to loop through atom contents and call their HandleTurfChange() proc
- */
-/atom/proc/HandleTurfChange(turf/changing_turf)
-	for(var/atom/current_atom as anything in src)
-		current_atom.HandleTurfChange(changing_turf)
-
-/**
  * the vision impairment to give to the mob whose perspective is set to that atom
  *
  * (e.g. an unfocused camera giving you an impaired vision when looking through it)
@@ -1283,11 +1275,11 @@
 					log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to [src]")
 					message_admins(span_notice("[key_name(usr)] has added [amount] units of [chosen_id] to [src]"))
 
-	if(href_list[VV_HK_TRIGGER_EXPLOSION])
-		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/explosion, src)
+	if(href_list[VV_HK_TRIGGER_EXPLOSION] && check_rights(R_FUN))
+		usr.client.cmd_admin_explosion(src)
 
-	if(href_list[VV_HK_TRIGGER_EMP])
-		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/emp, src)
+	if(href_list[VV_HK_TRIGGER_EMP] && check_rights(R_FUN))
+		usr.client.cmd_admin_emp(src)
 
 	if(href_list[VV_HK_SHOW_HIDDENPRINTS] && check_rights(R_ADMIN))
 		usr.client.cmd_show_hiddenprints(src)

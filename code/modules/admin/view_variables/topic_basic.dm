@@ -40,12 +40,12 @@
 			message_admins("[key_name_admin(usr)] Showed [key_name_admin(C)] a <a href='?_src_=vars;datumrefresh=[REF(target)]'>VV window</a>")
 			log_admin("Admin [key_name(usr)] Showed [key_name(C)] a VV window of a [target]")
 			to_chat(C, "[holder.fakekey ? "an Administrator" : "[usr.client.key]"] has granted you access to view a View Variables window", confidential = TRUE)
-			SSadmin_verbs.dynamic_invoke_admin_verb(C, /mob/admin_module_holder/debug/view_variables, target)
+			C.debug_variables(target)
 	if(check_rights(R_DEBUG))
 		if(href_list[VV_HK_DELETE])
-			usr.client.holder.admin_delete(target)
+			usr.client.admin_delete(target)
 			if (isturf(target)) // show the turf that took its place
-				SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/debug/view_variables, target)
+				usr.client.debug_variables(target)
 				return
 
 	if(href_list[VV_HK_MARK])
@@ -137,4 +137,5 @@
 		menu.Unlock()
 		menu.ui_interact(usr)
 	if(href_list[VV_HK_CALLPROC])
-		usr.client.admin_context_wrapper_context_callproc(target)
+		usr.client.callproc_datum(target)
+
