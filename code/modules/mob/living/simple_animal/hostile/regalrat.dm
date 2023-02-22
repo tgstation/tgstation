@@ -8,8 +8,11 @@
 	turns_per_move = 5
 	maxHealth = 70
 	health = 70
-	see_in_dark = 15
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	// Slightly brown red, for the eyes
+	// Might be a bit too dim
+	lighting_cutoff_red = 22
+	lighting_cutoff_green = 8
+	lighting_cutoff_blue = 5
 	obj_damage = 10
 	butcher_results = list(/obj/item/clothing/head/costume/crown = 1,)
 	response_help_continuous = "glares at"
@@ -200,7 +203,7 @@
 /datum/action/cooldown/domain
 	name = "Rat King's Domain"
 	desc = "Corrupts this area to be more suitable for your rat army."
-	check_flags = AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
 	cooldown_time = 6 SECONDS
 	melee_cooldown_time = 0 SECONDS
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
@@ -234,7 +237,7 @@
 /datum/action/cooldown/riot
 	name = "Raise Army"
 	desc = "Raise an army out of the hordes of mice and pests crawling around the maintenance shafts."
-	check_flags = AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "riot"
 	background_icon_state = "bg_clock"

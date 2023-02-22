@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Deconstructing (or overloading) the Master RND server with an HDD preset will correctly half research rate"

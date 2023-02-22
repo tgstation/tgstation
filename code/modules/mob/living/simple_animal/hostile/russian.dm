@@ -35,7 +35,7 @@
 
 /mob/living/simple_animal/hostile/russian/Initialize(mapload)
 	. = ..()
-	apply_dynamic_human_icon(src, mob_spawn_path = mob_spawner, r_hand = held_item)
+	apply_dynamic_human_appearance(src, mob_spawn_path = mob_spawner, r_hand = held_item)
 
 /mob/living/simple_animal/hostile/russian/ranged
 	icon_state = "russianranged"

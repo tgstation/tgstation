@@ -343,7 +343,7 @@ GLOBAL_LIST_INIT(huds, list(
 	var/list/exceptions = hud_exceptions
 	for(var/mob/requesting_mob as anything in requesting_mobs)
 		if(!requesting_mob.client)
-			return
+			continue
 		if(!exceptions[requesting_mob] || !(hud_atom in exceptions[requesting_mob]))
 			requesting_mob.client.images |= images_to_add
 
@@ -375,7 +375,7 @@ GLOBAL_LIST_INIT(huds, list(
 
 	for(var/mob/client_mob as anything in client_mobs)
 		if(!client_mob.client)
-			return
+			continue
 		client_mob.client.images -= images_to_remove
 
 /datum/atom_hud/proc/unregister_atom(datum/source, force)

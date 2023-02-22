@@ -15,7 +15,7 @@
 	////Human specific stuff. Don't set these if you aren't using a human, the unit tests will put a stop to your sinful hand.
 
 	///sets the human as a species, use a typepath (example: /datum/species/skeleton)
-	var/mob_species
+	var/datum/species/mob_species
 	///equips the human with an outfit.
 	var/datum/outfit/outfit
 	///for mappers to override parts of the outfit. really only in here for secret away missions, please try to refrain from using this out of laziness
@@ -36,6 +36,7 @@
 	if(faction)
 		faction = string_list(faction)
 
+/// Creates whatever mob the spawner makes. Return FALSE if we want to exit from here without doing that, returning NULL will be logged to admins.
 /obj/effect/mob_spawn/proc/create(mob/mob_possessor, newname)
 	var/mob/living/spawned_mob = new mob_type(get_turf(src)) //living mobs only
 	name_mob(spawned_mob, newname)
@@ -145,19 +146,22 @@
 	return ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
-/obj/effect/mob_spawn/ghost_role/attack_ghost(mob/user)
+/obj/effect/mob_spawn/ghost_role/attack_ghost(mob/dead/observer/user)
 	if(!SSticker.HasRoundStarted() || !loc)
 		return
 
 	if(prompt_ghost)
-		var/ghost_role = tgui_alert(usr, "Become [prompt_name]? (Warning, You can no longer be revived!)", buttons = list("Yes", "No"), timeout = 10 SECONDS)
+		var/prompt = "Become [prompt_name]?"
+		if(user.can_reenter_corpse && user.mind)
+			prompt += " (Warning, You can no longer be revived!)"
+		var/ghost_role = tgui_alert(usr, prompt, buttons = list("Yes", "No"), timeout = 10 SECONDS)
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
 			return
 
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
 		return
-	if(!uses) //just in case
+	if(uses <= 0) //just in case
 		to_chat(user, span_warning("This spawner is out of charges!"))
 		return
 
@@ -171,17 +175,29 @@
 
 	user.log_message("became a [prompt_name].", LOG_GAME)
 	uses -= 1 // Remove a use before trying to spawn to prevent strangeness like the spawner trying to spawn more mobs than it should be able to
+	user.mind = null // dissassociate mind, don't let it follow us to the next life
 
-	if(!(create(user)))
-		message_admins("[src] didn't return anything when creating a mob, this might be broken! The use of the spawner it would have taken has been refunded.")
-		uses += 1 // Oops! We messed up and somehow the mob didn't spawn, but that's alright we can refund the use.
+	var/created = create(user)
+	if(!created)
+		if(isnull(created)) // If we explicitly return FALSE instead of just not returning a mob, we don't want to spam the admins
+			CRASH("An instance of [type] didn't return anything when creating a mob, this might be broken!")
+
+		uses += 1 // Refund use because we didn't actually spawn anything
 
 	check_uses() // Now we check if the spawner should delete itself or not
 
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
 	if(mob_possessor)
-		spawned_mob.ckey = mob_possessor.ckey
+		if(mob_possessor.mind)
+			mob_possessor.mind.transfer_to(spawned_mob, force_key_move = TRUE)
+		else
+			spawned_mob.key = mob_possessor.key
+	var/datum/mind/spawned_mind = spawned_mob.mind
+	if(spawned_mind)
+		spawned_mob.mind.set_assigned_role_with_greeting(SSjob.GetJobType(spawner_job_path))
+		spawned_mind.name = spawned_mob.real_name
+
 	if(show_flavor)
 		var/output_message = "<span class='infoplain'><span class='big bold'>[you_are_text]</span></span>"
 		if(flavour_text != "")
@@ -189,10 +205,6 @@
 		if(important_text != "")
 			output_message += "\n[span_userdanger("[important_text]")]"
 		to_chat(spawned_mob, output_message)
-	var/datum/mind/spawned_mind = spawned_mob.mind
-	if(spawned_mind)
-		spawned_mob.mind.set_assigned_role(SSjob.GetJobType(spawner_job_path))
-		spawned_mind.name = spawned_mob.real_name
 
 /// Checks if the spawner has zero uses left, if so, delete yourself... NOW!
 /obj/effect/mob_spawn/ghost_role/proc/check_uses()

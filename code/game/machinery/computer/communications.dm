@@ -735,7 +735,7 @@
 		to_chat(user, span_alert("Intercomms recharging. Please stand by."))
 		return
 	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement")
-	if(!input || !user.canUseTopic(src, !issilicon(usr)))
+	if(!input || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if(user.try_speak(input))
 		//Adds slurs and so on. Someone should make this use languages too.
