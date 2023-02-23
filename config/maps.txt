@@ -15,28 +15,29 @@ endmap
 
 map metastation
 	#default
-	minplayers 25
-	#voteweight 0.5
+	minplayers 5
 	votable
 endmap
 
 map deltastation
-	minplayers 50
+	minplayers 5
 	votable
 endmap
 
 map kilostation
 	votable
+	disabled
 endmap
 
 map icebox
-	minplayers 25
+	minplayers 5
 	votable
 endmap
 
 map tramstation
-	minplayers 35
+	minplayers 5
 	votable
+	disabled
 endmap
 
 map runtimestation

@@ -40,91 +40,112 @@
 		},
 
 		"Changelings": {
-			"weight": 0
+			"weight": 3,
+			"cost": 16
 		},
 
 		"Heretics": {
-			"weight": 0
+			"weight": 3,
+			"cost": 10
 		},
 
 		"Wizard": {
-			"weight": 0
+			"weight": 2,
+			"cost": 20
 		},
 
 		"Blood Cult": {
-			"weight": 0
+			"weight": 3,
+			"cost": 20
 		},
 
 		"Nuclear Emergency": {
-			"weight": 0
+			"weight": 3,
+			"cost": 20
 		},
 
 		"Revolution": {
-			"weight": 0
+			"weight": 3,
+			"cost": 20
 		}
 	},
 
 	"Midround": {
 		"Syndicate Sleeper Agent": {
-			"weight": 0
+			"weight": 35,
+			"cost": 3
 		},
 
 		"Malfunctioning AI": {
-			"weight": 0
+			"weight": 2,
+			"cost": 10
 		},
 
 		"Wizard": {
-			"weight": 0
+			"weight": 1,
+			"cost": 10
 		},
 
 		"Nuclear Assault": {
-			"weight": 0
+			"weight": 5,
+			"cost": 7
 		},
 
 		"Blob": {
-			"weight": 0
+			"weight": 3,
+			"cost": 8
 		},
 
 		"Blob Infection": {
-			"weight": 0
+			"weight": 3,
+			"cost": 8
 		},
 
 		"Alien Infestation": {
-			"weight": 0
+			"weight": 5,
+			"cost": 10
 		},
 
 		"Nightmare": {
-			"weight": 0
+			"weight": 3,
+			"cost": 5
 		},
 
 		"Space Dragon": {
-			"weight": 0
+			"weight": 4,
+			"cost": 7
 		},
 
 		"Abductors": {
-			"weight": 0
+			"weight": 2,
+			"cost": 7
 		},
 
 		"Space Ninja": {
-			"weight": 0
+			"weight": 4,
+			"cost": 8
 		},
 
 		"Spiders": {
-			"weight": 0
+			"weight": 3,
+			"cost": 8
 		}
 	},
 
 	"Latejoin": {
 		"Syndicate Infiltrator": {
-			"weight": 0
+			"weight": 7,
+			"cost": 3
 		},
 
 		"Provocateur": {
-			"weight": 0
+			"weight": 2,
+			"cost": 10
 		},
 
 		"Heretic Smuggler": {
-			"weight": 0
+			"weight": 4,
+			"cost": 6
 		}
 	}
 }
