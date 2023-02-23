@@ -37,6 +37,9 @@
 
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+	RegisterSignal(src, COMSIG_MOVABLE_POST_THROW, PROC_REF(after_thrown))
+	//RegisterSignal(src, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(return_missed_throw))
+	//RegisterSignal(src, COMSIG_MOVABLE_IMPACT, PROC_REF(return_hit_throw))
 
 // basketball/qdel don't forget to remove these signals
 //	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
@@ -72,9 +75,46 @@
 /obj/item/toy/basketball/proc/on_throw(mob/living/carbon/thrower)
 	SIGNAL_HANDLER
 
-	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
 	wielder = null
 	UnregisterSignal(thrower, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOB_THROW))
+
+
+/**
+ * Proc'd before the first thrown is performed in order to gather information regarding each throw as well as handle throw_mode as necessary.
+ * * source: Datum src from original signal call.
+ * * thrown_thing: The thrownthing datum from the parent object's latest throw. Updates thrown_boomerang.
+ * * spin: Carry over from POST_THROW, the speed of rotation on the boomerang when thrown.
+ */
+/obj/item/toy/basketball/proc/after_thrown(datum/source, datum/thrownthing/thrown_thing, spin)
+	SIGNAL_HANDLER
+
+	// we always need to reset our pass flags since we allow shooting to go through mobs with RMB
+	//pass_flags = initial(pass_flags)
+
+
+/**
+ * Proc that triggers when the thrown boomerang hits an object.
+ * * source: Datum src from original signal call.
+ * * hit_atom: The atom that has been hit by the boomerang component.
+ * * init_throwing_datum: The thrownthing datum that originally impacted the object, that we use to build the new throwing datum for the rebound.
+/datum/component/boomerang/proc/return_hit_throw(datum/source, atom/hit_atom, datum/thrownthing/init_throwing_datum)
+	SIGNAL_HANDLER
+	if (!COOLDOWN_FINISHED(src, last_boomerang_throw))
+		return
+	var/obj/item/true_parent = parent
+	aerodynamic_swing(init_throwing_datum, true_parent)
+
+ * Proc that triggers when the thrown boomerang does not hit a target.
+ * * source: Datum src from original signal call.
+ * * throwing_datum: The thrownthing datum that originally impacted the object, that we use to build the new throwing datum for the rebound.
+
+/datum/component/boomerang/proc/return_missed_throw(datum/source, datum/thrownthing/throwing_datum)
+	SIGNAL_HANDLER
+	if(!COOLDOWN_FINISHED(src, last_boomerang_throw))
+		return
+	var/obj/item/true_parent = parent
+	aerodynamic_swing(throwing_datum, true_parent)
+ */
 
 /obj/item/toy/basketball/attack_hand(mob/living/user, list/modifiers)
 	if(!user.can_perform_action(src, NEED_HANDS))
@@ -232,7 +272,7 @@
 /obj/item/toy/basketball/afterattack(atom/target, mob/user)
 	. = ..()
 	user.throw_item(target)
-	pass_flags = initial(pass_flags)
+//	pass_flags = initial(pass_flags)
 
 /obj/item/toy/basketball/afterattack_secondary(atom/aim_target, mob/living/baller, params)
 	//attack_hand(user, modifiers, flip_card = TRUE)
@@ -252,6 +292,7 @@
 	if(do_after(baller, 0.5 SECONDS))
 		pass_flags |= PASSMOB
 		baller.throw_item(aim_target)
+//		pass_flags = initial(pass_flags)
 		//sleep(0.5 SECONDS)
 		animate(baller, pixel_x = 0, pixel_y = 0, time = 3) // easing = BOUNCE_EASING)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
@@ -287,8 +328,10 @@
 
 /obj/item/toy/basketball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(!isliving(hit_atom)) // only reset our pass flags
-		pass_flags = initial(pass_flags)
+
+	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
+	if(throwingdatum.initial_target == hit_atom)
+	pass_flags = initial(pass_flags)
 
 /**
 /obj/item/toy/basketball/attack_secondary(mob/living/victim, mob/living/user, params)
@@ -544,9 +587,7 @@
 	to_chat(target, span_bold("[caller] has given you a timeout for a foul!"))
 	to_chat(caller, span_bold("You put [target] in a timeout!"))
 	// build_all_button_icons()
-
 	return TRUE
-
 
 #undef FACE_TO_BACK
 #undef FACE_TO_SIDE
