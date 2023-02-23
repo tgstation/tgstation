@@ -26,7 +26,7 @@
 /obj/item/organ/internal/zombie_infection/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(!.)
-		return
+		return .
 	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/internal/zombie_infection/Remove(mob/living/carbon/M, special = FALSE)
