@@ -418,8 +418,7 @@
 	living_target.apply_damage(punch_damage, BRUTE)
 
 	if(source.body_position != LYING_DOWN) //Throw them if we are standing
-		var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
-		living_target.throw_at(throw_target, attack_throw_range, rand(throw_power_min,throw_power_max), source, gentle)
+		living_target.step_away(living_target, source, 15)
 
 	living_target.visible_message(
 		span_danger("[source] [picked_hit_type]ed [living_target]!"), 
