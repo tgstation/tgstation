@@ -887,3 +887,20 @@
       at, rather than locking you into the nearest cardinal/diagonal direction.
   - balance: You can now knock more things off a table full of stuff by tackling it
       than you could before.
+2023-02-23:
+  CesarBaylina:
+  - qol: Made associative lists more apparent in circuits.
+  Jacquerel:
+  - bugfix: Moths can eat clothes again.
+  - bugfix: The paradox clones of plasmamen now come properly dressed for the occasion.
+  Melbert:
+  - bugfix: Deconstructing (or overloading) the Master RND server with an HDD preset
+      will correctly half research rate
+  SyncIt21:
+  - qol: right clicking the seed extractor with a plant/food stores the extracted
+      seeds in the machine.
+  coiax:
+  - bugfix: When loading food into a microwave via serving tray, you can now see the
+      food inside the microwave afterwards.
+  tralezab:
+  - bugfix: fixed regal rat rummaging lines sometimes getting you muted!
