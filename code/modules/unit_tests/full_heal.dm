@@ -29,7 +29,7 @@
 	dummy.fully_heal(HEAL_REFRESH_ORGANS)
 
 	for(var/obj/item/organ/organ_type as anything in we_started_with)
-		if(dummy.get_organ(organ_type))
+		if(dummy.getorgan(organ_type))
 			continue
 		TEST_FAIL("Organ [initial(organ_type.name)] didn't regenerate in the dummy after fullyheal flag HEAL_REFRESH_ORGANS.")
 
@@ -42,7 +42,7 @@
 	dummy.apply_damages(brute = 10, burn = 10, tox = 10, oxy = 10, clone = 10, stamina = 10)
 	dummy.fully_heal(HEAL_DAMAGE)
 
-	if(dummy_health == dummy.maxHealth)
+	if(dummy.health == dummy.maxHealth)
 		// Success case
 		return
 
