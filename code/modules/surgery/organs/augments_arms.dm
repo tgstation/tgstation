@@ -347,14 +347,6 @@
 	
 	///The amount of damage dealt by the empowered attack.
 	var/punch_damage = 13
-	///Will the punch smash people into walls?
-	var/gentle = TRUE
-	///How far away your attack will throw your oponent
-	var/attack_throw_range = 1
-	///Minimum throw power of the attack
-	var/throw_power_min = 1
-	///Maximum throw power of the attack
-	var/throw_power_max = 4
 	///How long will the implant malfunction if it is EMP'd
 	var/emp_base_duration = 9 SECONDS 
 
@@ -418,7 +410,7 @@
 	living_target.apply_damage(punch_damage, BRUTE)
 
 	if(source.body_position != LYING_DOWN) //Throw them if we are standing
-		living_target.step_away(living_target, source, 15)
+		step_away(living_target, source, 15)
 
 	living_target.visible_message(
 		span_danger("[source] [picked_hit_type]ed [living_target]!"), 
