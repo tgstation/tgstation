@@ -145,4 +145,28 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	if(!log_category)
 		Log(LOG_CATEGORY_NOT_FOUND, message, data)
 		CRASH("Attempted to log to a category that doesn't exist! [category]")
-	log_category.add_entry(message, data)
+	log_category.add_entry(message, recursive_jsonify(data))
+
+/// Recursively converts an associative list of datums into their jsonified(list) form
+/datum/log_holder/proc/recursive_jsonify(list/data_list)
+	if(!data_list)
+		return null
+
+	var/list/jsonified_list = list()
+	for(var/key in data_list)
+		var/datum/data = data_list[key]
+		if(!data)
+			stack_trace("recursive_jsonify called with a null value in the list")
+			continue
+
+		if(islist(data))
+			data = recursive_jsonify(data)
+		else
+			data = data.serialize_list()
+
+		if(!data) // serialize_list wasn't implemented, and errored
+			continue
+
+		jsonified_list[key] = data
+
+	return jsonified_list
