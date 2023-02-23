@@ -124,8 +124,10 @@
 
 /datum/mind/serialize_list(list/options)
 	options["key"] = key
-	options["name"] = name
-	options["ghostname"] = ghostname
+	if(name)
+		options["name"] = name
+	if(ghostname)
+		options["ghostname"] = ghostname
 	if(length(memories))
 		options["memories"] = memories
 	if(martial_art)

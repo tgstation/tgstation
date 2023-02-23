@@ -81,7 +81,8 @@
 		options["memorizer"] = memorizer
 	options["story_value"] = story_value
 	options["memory_flags"] = memory_flags
-	options["mood_verb"] = mood_verb
+	if(mood_verb)
+		options["mood_verb"] = mood_verb
 	if(protagonist_name)
 		options["protagonist_name"] = protagonist_name
 	if(deuteragonist_name)

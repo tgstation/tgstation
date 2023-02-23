@@ -175,7 +175,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 				continue
 			data = recursive_jsonify(serialization_list)
 
-		if(!data || !length(data))
+		if(isnull(data) || (islist(data) && !length(data)))
 			stack_trace("recursive_jsonify got a null value after serialization")
 			continue
 
