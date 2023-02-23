@@ -93,7 +93,6 @@
 	if(respawn_progress < HEART_RESPAWN_THRESHHOLD)
 		return
 
-	owner.revive(HEAL_ALL)
 	if(!(owner.dna.species.id == SPECIES_SHADOW || owner.dna.species.id == SPECIES_NIGHTMARE))
 		var/mob/living/carbon/old_owner = owner
 		Remove(owner, HEART_SPECIAL_SHADOWIFY)
@@ -104,6 +103,7 @@
 	owner.visible_message(span_warning("[owner] staggers to [owner.p_their()] feet!"))
 	playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
 	respawn_progress = 0
+	owner.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
 
 /obj/item/organ/internal/heart/nightmare/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	if(isnightmare(owner_mob))
