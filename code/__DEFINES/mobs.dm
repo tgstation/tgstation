@@ -828,7 +828,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Heals all organs from failing.
 #define HEAL_ORGANS (1<<8)
 /// A "super" heal organs, this refreshes all organs entirely, deleting old and replacing them with new.
-#define HEAL_REFRESH_ORGANS (1<<8)
+#define HEAL_REFRESH_ORGANS (1<<9)
 /// Removes all wounds.
 #define HEAL_WOUNDS (1<<10)
 /// Removes all brain traumas, not including permanent ones.
