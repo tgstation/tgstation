@@ -134,6 +134,12 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	if(shutdown)
 		CRASH("Attempted to perform logging after shutdown!")
 
+	if(!istext(message))
+		CRASH("Attempted to log a non-text message! [message]")
+
+	if(data && !islist(data))
+		CRASH("Attempted to log a non-list data! [data]")
+
 	if(!initialized)
 		waiting_log_calls += list(list(category, message, data))
 		return
@@ -155,16 +161,22 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	var/list/jsonified_list = list()
 	for(var/key in data_list)
 		var/datum/data = data_list[key]
-		if(!data)
+		if(isnull(data))
 			stack_trace("recursive_jsonify called with a null value in the list")
 			continue
 
 		if(islist(data))
 			data = recursive_jsonify(data)
-		else
-			data = data.serialize_list()
 
-		if(!data) // serialize_list wasn't implemented, and errored
+		else if(isdatum(data))
+			var/list/serialization_list = list()
+			data.serialize_list(serialization_list)
+			if(!length(serialization_list)) // serialize_list wasn't implemented, and errored
+				continue
+			data = recursive_jsonify(serialization_list)
+
+		if(!data || !length(data))
+			stack_trace("recursive_jsonify got a null value after serialization")
 			continue
 
 		jsonified_list[key] = data

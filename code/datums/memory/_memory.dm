@@ -75,6 +75,22 @@
 	memorizer_mind = null
 	return ..()
 
+/datum/memory/serialize_list(list/options)
+	options["name"] = name
+	if(memorizer)
+		options["memorizer"] = memorizer
+	options["story_value"] = story_value
+	options["memory_flags"] = memory_flags
+	options["mood_verb"] = mood_verb
+	if(protagonist_name)
+		options["protagonist_name"] = protagonist_name
+	if(deuteragonist_name)
+		options["deuteragonist_name"] = deuteragonist_name
+	if(antagonist_name)
+		options["antagonist_name"] = antagonist_name
+	if(where)
+		options["where"] = where
+
 /**
  * Generates a name for the memory.
  */

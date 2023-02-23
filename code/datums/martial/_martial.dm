@@ -16,6 +16,11 @@
 	/// If set to true this style allows you to punch people despite being a pacifist (for instance Boxing, which does no damage)
 	var/pacifist_style = FALSE
 
+/datum/martial_art/serialize_list(list/options)
+	options["name"] = name
+	options["id"] = id
+	options["pacifist_style"] = pacifist_style
+
 /datum/martial_art/proc/help_act(mob/living/A, mob/living/D)
 	return MARTIAL_ATTACK_INVALID
 
