@@ -158,7 +158,7 @@
 		var/mob/player_mob = GLOB.player_list[i]
 		if(!player_mob?.client)
 			continue
-		if(alive_check && player_mob.stat)
+		if(alive_check && player_mob.stat == DEAD)
 			continue
 		else if(afk_check && player_mob.client.is_afk())
 			continue
