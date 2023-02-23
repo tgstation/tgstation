@@ -380,6 +380,9 @@
 		return
 	if(!isliving(target))
 		return
+	var/datum/dna/dna = source.has_dna()
+	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+		return
 
 	var/mob/living/living_target = target
 
