@@ -2486,6 +2486,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 10
 	},
+/obj/machinery/light/dim/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos)
 "bjp" = (
@@ -8194,6 +8195,7 @@
 	dir = 6
 	},
 /obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/light/dim/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos)
 "dAh" = (
