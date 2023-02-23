@@ -5979,6 +5979,13 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/station/security)
+"cFo" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/station/engineering/atmospherics_engine)
 "cFq" = (
 /obj/machinery/door/airlock{
 	name = "Maintenance"
@@ -10106,7 +10113,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "enq" = (
@@ -18222,7 +18228,7 @@
 "hmk" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space)
+/area/station/engineering/atmospherics_engine)
 "hmy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -31750,7 +31756,6 @@
 /obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
-/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/smooth,
 /area/station/service/library)
 "mnu" = (
@@ -33653,7 +33658,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/smooth,
 /area/station/service/library)
 "ncb" = (
@@ -58250,7 +58254,6 @@
 "vId" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/white/corner,
 /area/station/science/lower)
 "vIg" = (
@@ -61445,7 +61448,6 @@
 /obj/structure/sign/painting/large/library{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/broken_floor,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/smooth,
 /area/station/service/library)
@@ -64383,7 +64385,6 @@
 "xyX" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/displaycase/trophy,
-/obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/service/library)
@@ -73115,9 +73116,9 @@ rMn
 rMn
 rMn
 rMn
-rpi
-rpi
-rpi
+hmk
+hmk
+hmk
 hmk
 dBV
 bfN
@@ -73372,9 +73373,9 @@ voO
 voO
 voO
 voO
-voO
-rpi
-rpi
+cFo
+hmk
+hmk
 blb
 vrw
 dBV
@@ -73631,7 +73632,7 @@ dDB
 dDB
 dDB
 dDB
-rpi
+hmk
 blb
 blb
 bfX
@@ -73888,7 +73889,7 @@ sRm
 dDB
 lgg
 sRm
-rpi
+hmk
 hmk
 blb
 blb
