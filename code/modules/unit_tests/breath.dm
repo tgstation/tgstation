@@ -14,13 +14,23 @@
 
 /datum/unit_test/breath_sanity/Run()
 	var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
-	var/obj/item/tank/internals/source = equip_labrat_internals(lab_rat, /obj/item/tank/internals/emergency_oxygen)
 
-	TEST_ASSERT(source.toggle_internals(lab_rat) && !isnull(lab_rat.internal), "toggle_internals() failed to open internals")
+	// Turf breathing.
+	lab_rat = allocate(/mob/living/carbon/human/consistent)
+	lab_rat.forceMove(run_loc_floor_bottom_left)
+	var/turf/open/to_fill = run_loc_floor_bottom_left
+	to_fill.initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	to_fill.air = to_fill.create_gas_mixture()
 	lab_rat.breathe()
-	TEST_ASSERT(!lab_rat.has_alert(ALERT_NOT_ENOUGH_OXYGEN), "Humans can't get a full breath from standard o2 tanks")
-	lab_rat.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
-	TEST_ASSERT(source.toggle_internals(lab_rat) || isnull(lab_rat.internal), "toggle_internals() failed to close internals")
+	TEST_ASSERT(!lab_rat.has_alert(ALERT_NOT_ENOUGH_OXYGEN), "Humans can't get a full breath from the standard initial_gas_mix on a turf")
+
+	var/obj/item/tank/internals/source = equip_labrat_internals(lab_rat, /obj/item/tank/internals/emergency_oxygen)
+	var/internals_ok = source.toggle_internals(lab_rat)
+	TEST_ASSERT(internals_ok && !isnull(lab_rat.internal), "toggle_internals() failed to open internals")
+	if(internals_ok)
+		lab_rat.breathe()
+		TEST_ASSERT(!lab_rat.has_alert(ALERT_NOT_ENOUGH_OXYGEN), "Humans can't get a full breath from standard o2 tanks")
+		TEST_ASSERT(source.toggle_internals(lab_rat) || isnull(lab_rat.internal), "toggle_internals() failed to close internals")
 
 	// Empty internals suffocation.
 	lab_rat = allocate(/mob/living/carbon/human/consistent)
@@ -37,15 +47,6 @@
 	source.toggle_internals(lab_rat)
 	lab_rat.breathe()
 	TEST_ASSERT(lab_rat.has_alert(ALERT_NOT_ENOUGH_OXYGEN), "Humans should suffocate from pure n2 tanks")
-
-	// Turf breathing.
-	lab_rat = allocate(/mob/living/carbon/human/consistent)
-	lab_rat.forceMove(run_loc_floor_bottom_left)
-	var/turf/open/to_fill = run_loc_floor_bottom_left
-	to_fill.initial_gas_mix = OPENTURF_DEFAULT_ATMOS
-	to_fill.air = to_fill.create_gas_mixture()
-	lab_rat.breathe()
-	TEST_ASSERT(!lab_rat.has_alert(ALERT_NOT_ENOUGH_OXYGEN), "Humans can't get a full breath from the standard initial_gas_mix on a turf")
 
 /datum/unit_test/breath_sanity/Destroy()
 	//Reset initial_gas_mix to avoid future issues on other tests
@@ -70,11 +71,10 @@
 	source.toggle_internals(lab_rat)
 	TEST_ASSERT(!lab_rat.internal, "Plasmaman toggle_internals() failed to toggle internals")
 
-/// Tests to make sure ashwalkers can breath from the lavaland air
-/datum/unit_test/breath_sanity/breath_sanity_ashwalker
+/// Tests to make sure ashwalkers can breathe from the lavaland air.
+/datum/unit_test/breath_sanity_ashwalker
 
-/// Tests to make sure ashwalkers can breath from the lavaland air
-/datum/unit_test/breath_sanity/breath_sanity_ashwalker/Run()
+/datum/unit_test/breath_sanity_ashwalker/Run()
 	var/mob/living/carbon/human/species/lizard/ashwalker/lab_rat = allocate(/mob/living/carbon/human/species/lizard/ashwalker)
 
 	lab_rat.forceMove(run_loc_floor_bottom_left)
