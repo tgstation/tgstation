@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes:
-  - bugfix: "When loading food into a microwave via serving tray, you can now see the food inside the microwave afterwards."
