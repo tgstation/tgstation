@@ -140,7 +140,8 @@
 
 /obj/structure/closet/crate/trashcart/filled/Initialize(mapload)
 	. = ..()
-	new /obj/effect/spawner/random/trash/grime(loc) //needs to be done before the trashcart is opened because it spawns things in a range outside of the trashcart
+	if(mapload)
+		new /obj/effect/spawner/random/trash/grime(loc) //needs to be done before the trashcart is opened because it spawns things in a range outside of the trashcart
 
 /obj/structure/closet/crate/trashcart/filled/PopulateContents()
 	. = ..()
