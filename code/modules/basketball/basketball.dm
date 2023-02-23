@@ -99,7 +99,7 @@
  * * init_throwing_datum: The thrownthing datum that originally impacted the object, that we use to build the new throwing datum for the rebound.
 /datum/component/boomerang/proc/return_hit_throw(datum/source, atom/hit_atom, datum/thrownthing/init_throwing_datum)
 	SIGNAL_HANDLER
-	if (!COOLDOWN_FINISHED(src, last_boomerang_throw))
+	if(!COOLDOWN_FINISHED(src, last_boomerang_throw))
 		return
 	var/obj/item/true_parent = parent
 	aerodynamic_swing(init_throwing_datum, true_parent)
@@ -327,11 +327,10 @@
 
 
 /obj/item/toy/basketball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
-
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
 	if(throwingdatum.initial_target == hit_atom)
-	pass_flags = initial(pass_flags)
+		pass_flags = initial(pass_flags)
+	. = ..()
 
 /**
 /obj/item/toy/basketball/attack_secondary(mob/living/victim, mob/living/user, params)
@@ -366,9 +365,9 @@
 	/// Keeps track of the total points scored
 	var/total_score = 0
 	/// The chance to score a ball into the hoop based on distance
-	/// ex. a distance of two tiles away, throw_range_success[2], results in 50% chance to score
-	/// if someone shoots 3 tiles away or more, it scores 3 points
-	var/static/list/throw_range_success = list(65, 50, 35, 20, 15, 10)
+	/// ex. a distance of two tiles away, throw_range_success[2], results in 80% chance to score
+	/// if someone shoots 3 tiles away (65% chance) or more, it scores 3 points
+	var/static/list/throw_range_success = list(95, 80, 65, 50, 35, 20)
 
 /obj/structure/hoop/Initialize(mapload)
 	. = ..()
