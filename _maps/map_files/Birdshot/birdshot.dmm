@@ -1939,6 +1939,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
 "aVq" = (
@@ -4473,6 +4474,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/construction/mining/aux_base)
+"bYk" = (
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/turf/open/floor/iron/white/small,
+/area/station/science/cubicle)
 "bYE" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -8783,6 +8788,10 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
+"dMM" = (
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "dMX" = (
 /obj/machinery/holopad/secure,
 /turf/open/floor/iron/dark,
@@ -9971,6 +9980,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron,
 /area/station/security)
 "elh" = (
@@ -30758,6 +30768,7 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "lUK" = (
@@ -37232,6 +37243,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/qm)
+"ozd" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/glass,
+/area/station/hallway/secondary/spacebridge)
 "ozn" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -43736,7 +43751,6 @@
 	dir = 5
 	},
 /obj/machinery/newscaster/directional/north,
-/obj/effect/mapping_helpers/broken_floor,
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/courtroom)
@@ -45039,6 +45053,7 @@
 	dir = 1
 	},
 /obj/machinery/holopad,
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/cafeteria)
 "rir" = (
@@ -45242,7 +45257,6 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/broken_floor,
 /obj/structure/chair{
 	dir = 8;
 	name = "Judge"
@@ -48359,7 +48373,7 @@
 /area/station/science/explab)
 "sny" = (
 /obj/machinery/holopad,
-/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "snK" = (
@@ -50491,7 +50505,6 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 6
 	},
-/obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/camera/directional/south,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/courtroom)
@@ -50647,7 +50660,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
-/obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
@@ -53765,7 +53777,6 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -54878,6 +54889,7 @@
 /area/station/hallway/primary/starboard)
 "uAF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
 "uAH" = (
@@ -57954,6 +57966,7 @@
 /area/station/maintenance/hallway/abandoned_recreation)
 "vBm" = (
 /obj/machinery/holopad,
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/white/small,
 /area/station/service/hydroponics)
 "vBu" = (
@@ -58283,11 +58296,9 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/courtroom)
 "vHL" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/dark/herringbone,
-/area/station/security/courtroom)
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/turf/open/floor/glass,
+/area/station/hallway/secondary/spacebridge)
 "vHV" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -59548,6 +59559,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "waO" = (
@@ -91513,8 +91525,8 @@ uwl
 uMX
 dDB
 vPC
-qTM
-qTM
+vHL
+ozd
 qtl
 dDB
 dDB
@@ -97414,7 +97426,7 @@ uiW
 qLt
 vrY
 vrY
-vHL
+vrY
 vrY
 sXq
 wGu
@@ -101570,7 +101582,7 @@ eJe
 cwt
 ufn
 ufn
-ufn
+dMM
 nAn
 tbK
 xqe
@@ -111817,7 +111829,7 @@ wfD
 ocb
 mau
 oGA
-ocb
+bYk
 ayu
 xVv
 oGA
