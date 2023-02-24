@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - bugfix: "The gulag shuttle's point claim console will load in again. Whooops"
