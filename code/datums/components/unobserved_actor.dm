@@ -32,36 +32,42 @@
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_ATOM_PRE_DIR_CHANGE, COMSIG_MOB_ABILITY_STARTED, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 	return ..()
 
+/// Called when the mob tries to move
 /datum/component/unobserved_actor/proc/on_tried_move(mob/living/source)
 	SIGNAL_HANDLER
 	if (!check_if_seen(source))
 		return
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
+/// Called when the mob tries to change direction
 /datum/component/unobserved_actor/proc/on_tried_turn(mob/living/source)
 	SIGNAL_HANDLER
 	if (!check_if_seen(source))
 		return
 	return COMPONENT_ATOM_BLOCK_DIR_CHANGE
 
+/// Called when the mob tries to use an ability
 /datum/component/unobserved_actor/proc/on_tried_ability(mob/living/source)
 	SIGNAL_HANDLER
 	if (!check_if_seen(source))
 		return
 	return COMPONENT_BLOCK_ABILITY_START
 
+/// Called when the mob tries to cast a spell
 /datum/component/unobserved_actor/proc/on_tried_spell(mob/living/source)
 	SIGNAL_HANDLER
 	if (!check_if_seen(source))
 		return
 	return SPELL_CANCEL_CAST
 
+/// Called when the mob tries to attack
 /datum/component/unobserved_actor/proc/on_tried_attack(mob/living/source)
 	SIGNAL_HANDLER
 	if (!check_if_seen(source))
 		return
 	return COMPONENT_HOSTILE_NO_ATTACK
 
+/// Checks if the mob is visible to something else, and provides a balloon alert of feedback if appropriate.
 /datum/component/unobserved_actor/proc/check_if_seen(mob/living/source)
 	var/observed = can_be_seen(source)
 	if (observed && COOLDOWN_FINISHED(src, message_cooldown))
