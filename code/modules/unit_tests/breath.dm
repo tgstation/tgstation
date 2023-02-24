@@ -4,7 +4,8 @@
 /// See the comment on BREATH_VOLUME for more details
 /datum/unit_test/breath_sanity
 
-/// Equips the given Human with a new instance of the given tank type, and a breathing mask.
+/// Equips the given Human with a new instance of the given tank type and a breathing mask.
+/// Returns the new equipped tank.
 /datum/unit_test/proc/equip_labrat_internals(mob/living/carbon/human/lab_rat, tank_type)
 	var/obj/item/clothing/mask/breath/mask = allocate(/obj/item/clothing/mask/breath)
 	var/obj/item/tank/internals/source = allocate(tank_type)
@@ -21,21 +22,20 @@
 	var/turf/open/to_fill = run_loc_floor_bottom_left
 	to_fill.initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	to_fill.air = to_fill.create_gas_mixture()
+	TEST_ASSERT(source.toggle_internals(lab_rat) && !isnull(lab_rat.internal), "toggle_internals() failed to open internals")
 	lab_rat.breathe()
 	TEST_ASSERT(!lab_rat.has_alert(ALERT_NOT_ENOUGH_OXYGEN), "Humans can't get a full breath from the standard initial_gas_mix on a turf")
 
 	var/obj/item/tank/internals/source = equip_labrat_internals(lab_rat, /obj/item/tank/internals/emergency_oxygen)
-	var/internals_ok = source.toggle_internals(lab_rat)
-	TEST_ASSERT(internals_ok && !isnull(lab_rat.internal), "toggle_internals() failed to open internals")
-	if(internals_ok)
-		lab_rat.breathe()
-		TEST_ASSERT(!lab_rat.has_alert(ALERT_NOT_ENOUGH_OXYGEN), "Humans can't get a full breath from standard o2 tanks")
-		TEST_ASSERT(source.toggle_internals(lab_rat) || isnull(lab_rat.internal), "toggle_internals() failed to close internals")
+	lab_rat.breathe()
+	TEST_ASSERT(!lab_rat.has_alert(ALERT_NOT_ENOUGH_OXYGEN), "Humans can't get a full breath from standard o2 tanks")
+	if(!isnull(lab_rat.internal))
+		TEST_ASSERT(source.toggle_internals(lab_rat) && isnull(lab_rat.internal), "toggle_internals() failed to close internals")
 
 	// Empty internals suffocation.
 	lab_rat = allocate(/mob/living/carbon/human/consistent)
 	source = equip_labrat_internals(lab_rat, /obj/item/tank/internals/emergency_oxygen/empty)
-	source.toggle_internals(lab_rat)
+	TEST_ASSERT(source.toggle_internals(lab_rat) && !isnull(lab_rat.internal), "Plasmaman toggle_internals() failed to toggle internals")
 	lab_rat.breathe()
 	TEST_ASSERT(lab_rat.has_alert(ALERT_NOT_ENOUGH_OXYGEN), "Humans should suffocate from empty o2 tanks")
 
@@ -44,7 +44,7 @@
 	source = equip_labrat_internals(lab_rat, /obj/item/tank/internals/emergency_oxygen/empty)
 	source.air_contents.assert_gas(/datum/gas/nitrogen)
 	source.air_contents.gases[/datum/gas/nitrogen][MOLES] = (10 * ONE_ATMOSPHERE) *  source.volume / (R_IDEAL_GAS_EQUATION * T20C)
-	source.toggle_internals(lab_rat)
+	TEST_ASSERT(source.toggle_internals(lab_rat) && !isnull(lab_rat.internal), "Plasmaman toggle_internals() failed to toggle internals")
 	lab_rat.breathe()
 	TEST_ASSERT(lab_rat.has_alert(ALERT_NOT_ENOUGH_OXYGEN), "Humans should suffocate from pure n2 tanks")
 
@@ -61,15 +61,12 @@
 	var/mob/living/carbon/human/species/plasma/lab_rat = allocate(/mob/living/carbon/human/species/plasma)
 	var/obj/item/tank/internals/plasmaman/source = equip_labrat_internals(lab_rat, /obj/item/tank/internals/plasmaman)
 
-	source.toggle_internals(lab_rat)
+	TEST_ASSERT(source.toggle_internals(lab_rat) && !isnull(lab_rat.internal), "Plasmaman toggle_internals() failed to toggle internals")
 
 	lab_rat.breathe()
 
 	TEST_ASSERT(!lab_rat.has_alert(ALERT_NOT_ENOUGH_PLASMA), "Plasmamen can't get a full breath from a standard plasma tank")
-	lab_rat.clear_alert(ALERT_NOT_ENOUGH_PLASMA)
-
-	source.toggle_internals(lab_rat)
-	TEST_ASSERT(!lab_rat.internal, "Plasmaman toggle_internals() failed to toggle internals")
+	TEST_ASSERT(source.toggle_internals(lab_rat) && !lab_rat.internal, "Plasmaman toggle_internals() failed to toggle internals")
 
 /// Tests to make sure ashwalkers can breathe from the lavaland air.
 /datum/unit_test/breath_sanity_ashwalker
