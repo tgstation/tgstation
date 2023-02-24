@@ -157,6 +157,9 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"gt" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape/brig)
 "gz" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/broken_floor,
@@ -523,6 +526,9 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
+"yz" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
 "zq" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -536,9 +542,6 @@
 	},
 /obj/item/trash/can/food/beans,
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"An" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "Aw" = (
 /obj/structure/lattice,
@@ -1214,7 +1217,7 @@ ax
 nQ
 nQ
 mU
-An
+yz
 hF
 LX
 rZ
@@ -1338,7 +1341,7 @@ ax
 nQ
 nQ
 mU
-An
+yz
 hF
 LX
 rZ
@@ -1406,7 +1409,7 @@ ho
 pI
 Ly
 Oq
-ho
+tb
 MC
 mU
 LX
@@ -1436,8 +1439,8 @@ De
 tb
 aQ
 tu
-tb
-rZ
+gt
+LX
 VA
 Em
 Ay
