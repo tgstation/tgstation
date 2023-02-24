@@ -264,6 +264,7 @@
 	if(charges_left < amount && requires_full)
 		balloon_alert(user, "not enough left!")
 		return TRUE
+
 	return FALSE
 
 /obj/item/toy/crayon/ui_state(mob/user)
