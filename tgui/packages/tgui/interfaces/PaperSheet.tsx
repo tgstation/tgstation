@@ -690,15 +690,7 @@ export class PreviewView extends Component<PreviewViewProps> {
       },
     };
 
-    return marked.parse(rawText, {
-      breaks: true,
-      gfm: true,
-      smartypants: true,
-      walkTokens,
-      extensions: [inputField],
-      // Once assets are fixed might need to change this for them
-      baseUrl: 'thisshouldbreakhttp',
-    });
+    return marked.parse(rawText);
   };
 
   // Fully formats, sanitises and parses the provided raw text and wraps it
