@@ -5,4 +5,4 @@
 
 /// Logging for dynamic procs
 /proc/log_dynamic(text)
-	Logger.Log(LOG_CATEGORY_DYNAMIC, text)
+	logger.Log(LOG_CATEGORY_DYNAMIC, text)

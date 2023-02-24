@@ -18,11 +18,11 @@
 
 /// Logging for generic spoken messages
 /proc/log_say(text)
-	Logger.Log(LOG_CATEGORY_GAME_SAY, text)
+	logger.Log(LOG_CATEGORY_GAME_SAY, text)
 
 /// Logging for whispered messages
 /proc/log_whisper(text)
-	Logger.Log(LOG_CATEGORY_GAME_WHISPER, text)
+	logger.Log(LOG_CATEGORY_GAME_WHISPER, text)
 
 /// Helper for logging of messages with only one sender and receiver (i.e. mind links)
 /proc/log_directed_talk(atom/source, atom/target, message, message_type, tag)
@@ -36,8 +36,8 @@
 
 /// Logging for speech taking place over comms, as well as tcomms equipment
 /proc/log_telecomms(text)
-	Logger.Log(LOG_CATEGORY_TELECOMMS, text)
+	logger.Log(LOG_CATEGORY_TELECOMMS, text)
 
 /// Logging for speech indicators.
 /proc/log_speech_indicators(text)
-	Logger.Log(LOG_CATEGORY_SPEECH_INDICATOR, text)
+	logger.Log(LOG_CATEGORY_SPEECH_INDICATOR, text)

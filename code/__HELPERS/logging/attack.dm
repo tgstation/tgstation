@@ -1,6 +1,6 @@
 /// Generic attack logging
 /proc/log_attack(text)
-	Logger.Log(LOG_CATEGORY_ATTACK, text)
+	logger.Log(LOG_CATEGORY_ATTACK, text)
 
 /**
  * Log a combat message in the attack log

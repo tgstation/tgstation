@@ -1,2 +1,2 @@
 /proc/log_econ(text)
-	Logger.Log(LOG_CATEGORY_ECONOMY, text)
+	logger.Log(LOG_CATEGORY_ECONOMY, text)

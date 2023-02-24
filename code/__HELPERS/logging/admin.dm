@@ -3,26 +3,26 @@
 /// General logging for admin actions
 /proc/log_admin(text)
 	GLOB.admin_log.Add(text)
-	Logger.Log(LOG_CATEGORY_ADMIN, text)
+	logger.Log(LOG_CATEGORY_ADMIN, text)
 
 /// Logging for admin actions on or with circuits
 /proc/log_admin_circuit(text)
 	GLOB.admin_log.Add(text)
-	Logger.Log(LOG_CATEGORY_ADMIN_CIRCUIT, text)
+	logger.Log(LOG_CATEGORY_ADMIN_CIRCUIT, text)
 
 /// General logging for admin actions
 /proc/log_admin_private(text)
 	GLOB.admin_log.Add(text)
-	Logger.Log(LOG_CATEGORY_ADMIN_PRIVATE, text)
+	logger.Log(LOG_CATEGORY_ADMIN_PRIVATE, text)
 
 /// Logging for AdminSay (ASAY) messages
 /proc/log_adminsay(text)
 	GLOB.admin_log.Add(text)
-	Logger.Log(LOG_CATEGORY_ADMIN_PRIVATE_ASAY, text)
+	logger.Log(LOG_CATEGORY_ADMIN_PRIVATE_ASAY, text)
 
 /// Logging for DeachatSay (DSAY) messages
 /proc/log_dsay(text)
-	Logger.Log(LOG_CATEGORY_ADMIN_DSAY, text)
+	logger.Log(LOG_CATEGORY_ADMIN_DSAY, text)
 
 /**
  * Writes to a special log file if the log_suspicious_login config flag is set,
@@ -32,6 +32,6 @@
  * doesn't need to be used alongside log_access and can replace it where appropriate.
  */
 /proc/log_suspicious_login(text, access_log_mirror = TRUE)
-	Logger.Log(LOG_CATEGORY_SUSPICIOUS_LOGIN, text)
+	logger.Log(LOG_CATEGORY_SUSPICIOUS_LOGIN, text)
 	if(access_log_mirror)
 		log_access(text)

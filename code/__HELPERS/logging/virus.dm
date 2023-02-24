@@ -1,6 +1,6 @@
 /// Logging for the creation and contraction of viruses
 /proc/log_virus(text)
-	Logger.Log(LOG_CATEGORY_VIRUS, text)
+	logger.Log(LOG_CATEGORY_VIRUS, text)
 
 /// Returns a string for admin logging uses, should describe the disease in detail
 /datum/disease/proc/admin_details()

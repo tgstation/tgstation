@@ -1,4 +1,4 @@
-GLOBAL_REAL(Logger, /datum/log_holder)
+GLOBAL_REAL(logger, /datum/log_holder)
 
 /**
  * Main datum to manage logging actions
@@ -129,13 +129,20 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	)
 	rustg_file_write("[json_encode(category_header)]\n", category_instance.get_output_file(null))
 
-/// This is Log because log is a byond internal proc
+
+/// Adds an entry to the given category, if the category is disabled it will not be logged.
+/// If the category does not exist, we will CRASH and log to the error category.
+/// the data list is optional and will be recursively json serialized.
 /datum/log_holder/proc/Log(category, message, list/data)
+	// This is Log because log is a byond internal proc
 	if(shutdown)
 		CRASH("Attempted to perform logging after shutdown!")
 
 	if(!istext(message))
 		CRASH("Attempted to log a non-text message! [message]")
+
+	if(!category)
+		CRASH("Attempted to log to a null category! [message]")
 
 	if(data && !islist(data))
 		CRASH("Attempted to log a non-list data! [data]")
