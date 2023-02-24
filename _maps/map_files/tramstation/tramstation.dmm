@@ -9810,7 +9810,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Upper External West";
 	dir = 6;
-	network = list("aicore")
+	network = list("minisat")
 	},
 /turf/open/space/openspace,
 /area/space/nearstation)
@@ -10475,7 +10475,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Upper External South";
 	dir = 9;
-	network = list("aicore")
+	network = list("minisat")
 	},
 /obj/structure/lattice,
 /turf/open/space/openspace,
@@ -23809,7 +23809,7 @@
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Secure - AI Upper Ring North";
-	network = list("ss13","aicore")
+	network = list("aicore")
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -36665,7 +36665,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Upper Ring East";
 	dir = 10;
-	network = list("ss13","aicore")
+	network = list("aicore")
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -38402,7 +38402,8 @@
 	name = "Private Channel"
 	},
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - AI Upper Ring Access"
+	c_tag = "Secure - AI Upper Ring Access";
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -52794,7 +52795,8 @@
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - AI Core South"
+	c_tag = "Secure - AI Core South";
+	network = list("aicore")
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
@@ -55446,7 +55448,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Upper Ring South";
 	dir = 9;
-	network = list("ss13","aicore")
+	network = list("aicore")
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -55799,7 +55801,8 @@
 	pixel_y = 20
 	},
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - AI Core North"
+	c_tag = "Secure - AI Core North";
+	network = list("aicore")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
@@ -57674,7 +57677,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Upper Ring West";
 	dir = 6;
-	network = list("ss13","aicore")
+	network = list("aicore")
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -58312,7 +58315,7 @@
 "tNG" = (
 /obj/machinery/camera/motion/directional/south{
 	c_tag = "Secure - AI Upper External North";
-	network = list("aicore")
+	network = list("minisat")
 	},
 /obj/structure/cable,
 /turf/open/floor/engine/hull/reinforced,
@@ -67835,7 +67838,8 @@
 	dir = 5
 	},
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - Upper Station Comms Relay"
+	c_tag = "Secure - Upper Station Comms Relay";
+	network = list("ss13","minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -69745,7 +69749,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Upper External East";
 	dir = 10;
-	network = list("aicore")
+	network = list("minisat")
 	},
 /turf/open/space/openspace,
 /area/space/nearstation)
