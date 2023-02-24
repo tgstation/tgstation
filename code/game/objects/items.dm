@@ -1549,4 +1549,3 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/update_atom_colour()
 	. = ..()
 	update_slot_icon()
-	
