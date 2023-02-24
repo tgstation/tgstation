@@ -10,6 +10,7 @@ import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
 import { Component, createRef, RefObject } from 'inferno';
 import { clamp } from 'common/math';
+import { logger } from '../logging';
 
 const Z_INDEX_STAMP = 1;
 const Z_INDEX_STAMP_PREVIEW = 2;
@@ -432,6 +433,7 @@ export class PreviewView extends Component<PreviewViewProps> {
   lastReadOnly: boolean = true;
   lastDMInputCount: number = 0;
   lastFieldCount: number = 0;
+  lastFieldInputCount: number = 0;
 
   // Cache variables for fully parsed text. Workaround for marked.js not being
   // super fast on the BYOND/IE js engine.
@@ -440,6 +442,7 @@ export class PreviewView extends Component<PreviewViewProps> {
 
   constructor(props, context) {
     super(props, context);
+    logger.log(`Configuring marked.`);
     this.configureMarked();
   }
 
@@ -566,6 +569,7 @@ export class PreviewView extends Component<PreviewViewProps> {
   createPreviewFromDM = (): { text: string; newFieldCount: number } => {
     const { data } = useBackend<PaperContext>(this.context);
     const {
+      raw_field_input,
       raw_text_input,
       default_pen_font,
       default_pen_color,
@@ -579,14 +583,17 @@ export class PreviewView extends Component<PreviewViewProps> {
     const readOnly = !canEdit(held_item_details);
 
     // If readonly is the same (input field writiability state hasn't changed)
-    // And the input count is the same (no new text inputs since last time)
+    // And the input stats are the same (no new text inputs since last time)
     // Then use any cached values.
     if (
       this.lastReadOnly === readOnly &&
-      this.lastDMInputCount === raw_text_input?.length
+      this.lastDMInputCount === raw_text_input?.length &&
+      this.lastFieldInputCount === raw_field_input?.length
     ) {
+      logger.log(`Using parsed DM cache`);
       return { text: this.parsedDMCache, newFieldCount: this.lastFieldCount };
     }
+    logger.log(`Parsing DM input`);
 
     this.lastReadOnly = readOnly;
 
@@ -618,6 +625,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     });
 
     this.lastDMInputCount = raw_text_input?.length || 0;
+    this.lastFieldInputCount = raw_field_input?.length || 0;
     this.lastFieldCount = fieldCount;
     this.parsedDMCache = output;
 
@@ -638,8 +646,11 @@ export class PreviewView extends Component<PreviewViewProps> {
 
     // Use the cache if one exists.
     if (this.parsedTextBoxCache) {
+      logger.log(`Using parsed text box cache`);
       return this.parsedTextBoxCache;
     }
+
+    logger.log(`Parsing text box input`);
 
     const readOnly = true;
 
@@ -725,7 +736,13 @@ export class PreviewView extends Component<PreviewViewProps> {
       },
     };
 
-    return marked.parse(rawText);
+    const start = performance.now();
+    const parsedText = marked.parse(rawText);
+    const end = performance.now();
+
+    logger.log(`ParseTime: ${end - start}ms`);
+
+    return parsedText;
   };
 
   // Fully formats, sanitises and parses the provided raw text and wraps it
