@@ -430,7 +430,69 @@ export class PreviewView extends Component<PreviewViewProps> {
 
   constructor(props, context) {
     super(props, context);
+    this.configureMarked();
   }
+
+  configureMarked = (): void => {
+    // This is an extension for marked defining a complete custom tokenizer.
+    // This tokenizer should run before the the non-custom ones, and gives us
+    // the ability to handle [_____] fields before the em/strong tokenizers
+    // mangle them, since underscores are used for italic/bold.
+    // This massively improves the order of operations, allowing us to run
+    // marked, THEN sanitise the output (much safer) and finally insert fields
+    // manually afterwards.
+    const inputField = {
+      name: 'inputField',
+      level: 'inline',
+
+      start(src) {
+        return src.match(/\[/)?.index;
+      },
+
+      tokenizer(src: string) {
+        const rule = /^\[_+\]/;
+        const match = src.match(rule);
+        if (match) {
+          const token = {
+            type: 'inputField',
+            raw: match[0],
+          };
+          return token;
+        }
+      },
+
+      renderer(token) {
+        return `${token.raw}`;
+      },
+    };
+
+    // Override function, any links and images should
+    // kill any other marked tokens we don't want here
+    const walkTokens = (token) => {
+      switch (token.type) {
+        case 'url':
+        case 'autolink':
+        case 'reflink':
+        case 'link':
+        case 'image':
+          token.type = 'text';
+          // Once asset system is up change to some default image
+          // or rewrite for icon images
+          token.href = '';
+          break;
+      }
+    };
+
+    marked.use({
+      extensions: [inputField],
+      breaks: true,
+      gfm: true,
+      smartypants: true,
+      walkTokens: walkTokens,
+      // Once assets are fixed might need to change this for them
+      baseUrl: 'thisshouldbreakhttp',
+    });
+  };
 
   // Extracts the paper field "counter" from a full ID.
   getHeaderID = (header: string): string => {
