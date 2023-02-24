@@ -537,6 +537,9 @@
 /obj/item/trash/can/food/beans,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"An" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
 "Aw" = (
 /obj/structure/lattice,
 /obj/item/stack/rods/two,
@@ -1211,7 +1214,7 @@ ax
 nQ
 nQ
 mU
-LX
+An
 hF
 LX
 rZ
@@ -1335,7 +1338,7 @@ ax
 nQ
 nQ
 mU
-LX
+An
 hF
 LX
 rZ

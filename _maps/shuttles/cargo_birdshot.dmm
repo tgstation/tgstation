@@ -215,6 +215,9 @@
 "T" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
+"U" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/supply)
 "V" = (
 /obj/machinery/conveyor{
 	dir = 6;
@@ -317,7 +320,7 @@ T
 A
 d
 H
-t
+U
 F
 c
 A
