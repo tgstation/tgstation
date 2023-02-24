@@ -113,6 +113,8 @@
 	var/uses = 1
 	/// Does the spawner delete itself when it runs out of uses?
 	var/deletes_on_zero_uses_left = TRUE
+	/// A list of the ckeys that currently are trying to access this spawner, so that they can't try to spawn more than once (in case there's sleeps).
+	var/list/ckeys_trying_to_spawn
 
 	////descriptions
 
@@ -150,27 +152,46 @@
 	if(!SSticker.HasRoundStarted() || !loc)
 		return
 
+	if(ckeys_trying_to_spawn)
+		// We don't open the prompt more than once at a time.
+		if(user.ckey in ckeys_trying_to_spawn)
+			return
+
+	var/user_ckey = user.ckey // Just in case shenanigans happen, we always want to remove it from the list.
+	LAZYADD(ckeys_trying_to_spawn, user_ckey)
+
 	if(prompt_ghost)
 		var/prompt = "Become [prompt_name]?"
 		if(user.can_reenter_corpse && user.mind)
 			prompt += " (Warning, You can no longer be revived!)"
 		var/ghost_role = tgui_alert(usr, prompt, buttons = list("Yes", "No"), timeout = 10 SECONDS)
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
+			ckeys_trying_to_spawn -= user_ckey
 			return
 
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
+		ckeys_trying_to_spawn -= user_ckey
 		return
 	if(uses <= 0) //just in case
 		to_chat(user, span_warning("This spawner is out of charges!"))
+		ckeys_trying_to_spawn -= user_ckey
 		return
 
 	if(is_banned_from(user.key, role_ban))
 		to_chat(user, span_warning("You are banned from this role!"))
+		ckeys_trying_to_spawn -= user_ckey
 		return
 	if(!allow_spawn(user, silent = FALSE))
+		ckeys_trying_to_spawn -= user_ckey
 		return
 	if(QDELETED(src) || QDELETED(user))
+		ckeys_trying_to_spawn -= user_ckey
+		return
+
+	if(uses <= 0) // Just in case something took longer than it should've and we got here after the uses went below zero.
+		to_chat(user, span_warning("This spawner is out of charges!"))
+		ckeys_trying_to_spawn -= user_ckey
 		return
 
 	user.log_message("became a [prompt_name].", LOG_GAME)
@@ -178,13 +199,22 @@
 	user.mind = null // dissassociate mind, don't let it follow us to the next life
 
 	var/created = create(user)
+	ckeys_trying_to_spawn -= user_ckey // We do this AFTER the create() so that we're basically sure that the user won't be in their ghost body anymore, so they can't click on the spawner again.
+
 	if(!created)
+		uses += 1 // Refund use because we didn't actually spawn anything
+
 		if(isnull(created)) // If we explicitly return FALSE instead of just not returning a mob, we don't want to spam the admins
 			CRASH("An instance of [type] didn't return anything when creating a mob, this might be broken!")
 
-		uses += 1 // Refund use because we didn't actually spawn anything
-
 	check_uses() // Now we check if the spawner should delete itself or not
+
+/obj/effect/mob_spawn/ghost_role/create(mob/mob_possessor, newname)
+	if(!mob_possessor.key) // This is in the scenario that the server is somehow lagging, or someone fucked up their code, and we try to spawn the same person in twice. We'll simply not spawn anything and CRASH(), so that we report what happened.
+		CRASH("Attempted to create an instance of [type] with a mob that had no ckey attached to it, which isn't supported by ghost role spawners!")
+
+	return ..()
+
 
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
