@@ -11,7 +11,7 @@
 
 /datum/unit_test/organ_sanity/Run()
 	// List of organ typepaths which are not test-able, such as certain class prototypes.
-	var/list/test_organ_blacklist = list(
+	var/list/test_organ_blacklist = typecacheof(list(
 		/obj/item/organ/internal,
 		/obj/item/organ/external,
 		/obj/item/organ/external/wings,
@@ -22,7 +22,13 @@
 		/obj/item/organ/internal/cyberimp/chest,
 		/obj/item/organ/internal/cyberimp/eyes,
 		/obj/item/organ/internal/alien,
-	)
+	))
+	// List of organ typepaths which cause species change.
+	// Species change swaps out all the organs, making test_organ un-usable after insertion.
+	var/list/species_changing_organs = typecacheof(list(
+		/obj/item/organ/internal/brain/shadow/nightmare,
+	))
+
 	for(var/obj/item/organ/organ_type as anything in subtypesof(/obj/item/organ))
 		// Skip prototypes.
 		if(organ_type in test_organ_blacklist)
@@ -50,7 +56,7 @@
 
 		// Inserting Nightmare brain causes the Human's species to change.
 		// Species change swaps out all the organs, making test_organ un-usable by this point.
-		if(test_organ.type == /obj/item/organ/internal/brain/shadow/nightmare)
+		if(species_changing_organs[test_organ.type])
 			continue
 
 		// Some vars on Human and Organ are expected to be assigned after Insert().
@@ -87,12 +93,18 @@
 /datum/unit_test/organ_set_bonus_sanity
 
 /datum/unit_test/organ_set_bonus_sanity/Run()
+	// List of organ typepaths which cause species change.
+	// Species change swaps out all the organs, making test_organ un-usable after insertion.
+	var/list/species_changing_entries = typecacheof(list(
+		/datum/infuser_entry/fly,
+	))
+
 	// Fetch the globally instantiated DNA Infuser entries.
 	for(var/datum/infuser_entry/infuser_entry as anything in GLOB.infuser_entries)
 		var/output_organs = infuser_entry.output_organs
-		// Human which will reiceve organs.
 		var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
 		var/list/obj/item/organ/inserted_organs = list()
+
 		// Attempt to insert entire list of mutant organs for the given infusion_entry.
 		for(var/obj/item/organ/organ as anything in output_organs)
 			organ = new organ()
@@ -131,7 +143,7 @@
 
 		// Bonus of the Fly mutation swaps out all the organs, making it rather permanent.
 		// As a result, the inserted_organs list is un-usable by this point.
-		if(istype(infuser_entry, /datum/infuser_entry/fly))
+		if(species_changing_entries[infuser_entry])
 			continue
 
 		// Remove all the organs which were just added.
