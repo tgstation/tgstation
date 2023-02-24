@@ -84,20 +84,108 @@
 	var/post_noise = FALSE
 
 	/// List of selectable graffiti options
-	var/static/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","star","poseur tag","prolizard","antilizard")
+	var/static/list/graffiti = list(
+		"amyjon",
+		"antilizard",
+		"body",
+		"cyka",
+		"dwarf",
+		"end",
+		"engie",
+		"face",
+		"guy",
+		"matt",
+		"poseur tag",
+		"prolizard",
+		"revolution",
+		"star",
+		"uboa",
+	)
 	/// List of selectable symbol options
-	var/static/list/symbols = list("danger","firedanger","electricdanger","biohazard","radiation","safe","evac","space","med","trade","shop","food","peace","like","skull","nay","heart","credit")
+	var/static/list/symbols = list(
+		"biohazard",
+		"credit",
+		"danger",
+		"electricdanger",
+		"firedanger",
+		"evac",
+		"food",
+		"heart",
+		"like",
+		"med",
+		"nay",
+		"peace",
+		"radiation",
+		"safe",
+		"shop",
+		"skull",
+		"space",
+		"trade",
+	)
 	/// List of selectable drawing options
-	var/static/list/drawings = list("smallbrush","brush","largebrush","splatter","snake","stickman","carp","ghost","clown","taser","disk","fireaxe","toolbox","corgi","cat","toilet","blueprint","beepsky","scroll","bottle","shotgun")
+	var/static/list/drawings = list(
+		"beepsky",
+		"blueprint",
+		"bottle",
+		"brush",
+		"carp",
+		"cat",
+		"clown",
+		"corgi",
+		"disk",
+		"fireaxe",
+		"ghost",
+		"largebrush",
+		"scroll",
+		"shotgun",
+		"smallbrush",
+		"snake",
+		"splatter",
+		"stickman",
+		"taser",
+		"toilet",
+		"toolbox",
+	)
 	/// List of selectable orientable options
-	var/static/list/oriented = list("arrow","line","thinline","shortline","body","chevron","footprint","clawprint","pawprint") // These turn to face the same way as the drawer
+	var/static/list/oriented = list(
+		"arrow",
+		"body",
+		"chevron",
+		"clawprint",
+		"footprint",
+		"line",
+		"pawprint",
+		"shortline",
+		"thinline",
+	)
 	/// List of selectable rune options
-	var/static/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
+	var/static/list/runes = list(
+		"rune1",
+		"rune2",
+		"rune3",
+		"rune4",
+		"rune5",
+		"rune6",
+	)
 	/// List of selectable random options
-	var/static/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
-		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER, RANDOM_SYMBOL, RANDOM_PUNCTUATION, RANDOM_DRAWING)
+	var/static/list/randoms = list(
+		RANDOM_ANY,
+		RANDOM_DRAWING,
+		RANDOM_GRAFFITI,
+		RANDOM_ORIENTED,
+		RANDOM_LETTER,
+		RANDOM_NUMBER,
+		RANDOM_PUNCTUATION,
+		RANDOM_RUNE,
+		RANDOM_SYMBOL,
+	)
 	/// List of selectable large options
-	var/static/list/graffiti_large_h = list("yiffhell", "furrypride", "secborg", "paint")
+	var/static/list/graffiti_large_h = list(
+		"furrypride",
+		"paint",
+		"secborg",
+		"yiffhell",
+	)
 	/// Combined lists
 	var/static/list/all_drawables = graffiti + symbols + drawings + oriented + runes + graffiti_large_h
 
@@ -314,8 +402,11 @@
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 
+	if(!isturf(target))
+		return 0
+
 	if(!isValidSurface(target))
-		balloon_alert(user, "can't use there!")
+		target.balloon_alert(user, "can't use there!")
 		return 0
 
 	var/drawing = drawtype
@@ -402,27 +493,27 @@
 	var/list/turf/affected_turfs = list(target)
 
 	if(actually_paints)
-		var/obj/effect/decal/cleanable/crayon/C
+		var/obj/effect/decal/cleanable/crayon/created_art
 		switch(paint_mode)
 			if(PAINT_NORMAL)
-				C = new(target, paint_color, drawing, temp, graf_rot)
-				C.pixel_x = clickx
-				C.pixel_y = clicky
+				created_art = new(target, paint_color, drawing, temp, graf_rot)
+				created_art.pixel_x = clickx
+				created_art.pixel_y = clicky
 			if(PAINT_LARGE_HORIZONTAL)
 				var/turf/left = locate(target.x-1,target.y,target.z)
 				var/turf/right = locate(target.x+1,target.y,target.z)
 				if(isValidSurface(left) && isValidSurface(right))
-					C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+					created_art = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
 					affected_turfs += left
 					affected_turfs += right
 				else
 					balloon_alert(user, "no room!")
 					return
-		C.add_hiddenprint(user)
+		created_art.add_hiddenprint(user)
 		if(istagger)
-			C.AddElement(/datum/element/art, GOOD_ART)
+			created_art.AddElement(/datum/element/art, GOOD_ART)
 		else
-			C.AddElement(/datum/element/art, BAD_ART)
+			created_art.AddElement(/datum/element/art, BAD_ART)
 
 	if(!instant)
 		to_chat(user, span_notice("You finish drawing \the [temp]."))
@@ -441,7 +532,7 @@
 	if(affected_turfs.len)
 		fraction /= affected_turfs.len
 	if (expose_turfs)
-		for(var/draw_turf in affected_turfs)
+		for(var/turf/draw_turf as anything in affected_turfs)
 			reagents.expose(draw_turf, methods = TOUCH, volume_modifier = volume_multiplier)
 	check_empty(user)
 	return .
@@ -476,7 +567,7 @@
 			return
 	to_chat(user, span_notice("You take a bite of the [src.name]. Delicious!"))
 	var/eaten = use_charges(user, 5, FALSE)
-	if(check_empty(user)) //Prevents divsion by zero
+	if(check_empty(user)) //Prevents division by zero
 		return
 	reagents.trans_to(target, eaten, volume_multiplier, transfered_by = user, methods = INGEST)
 
@@ -574,7 +665,7 @@
 
 /obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)
 	set_painting_tool_color(rgb(rand(0,255), rand(0,255), rand(0,255)))
-	. = ..()
+	return ..()
 
 /*
  * Crayon Box
@@ -607,19 +698,19 @@
 	for(var/obj/item/toy/crayon/crayon in contents)
 		. += mutable_appearance('icons/obj/art/crayons.dmi', crayon.crayon_color)
 
-/obj/item/storage/crayons/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/toy/crayon))
-		var/obj/item/toy/crayon/C = W
-		switch(C.crayon_color)
-			if("mime")
-				balloon_alert(user, "crayon doesn't belong!")
-				return
-			if("rainbow")
-				balloon_alert(user, "crayon is too powerful!")
-				return
-		if(istype(W, /obj/item/toy/crayon/spraycan))
-			balloon_alert(user, "not a crayon!")
-			to_chat(user, span_warning("Spraycans are not crayons!"))
+/obj/item/storage/crayons/attackby(obj/item/attacked_by, mob/user, params)
+	if(!istype(attacked_by, /obj/item/toy/crayon))
+		return ..()
+	if(istype(attacked_by, /obj/item/toy/crayon/spraycan))
+		balloon_alert(user, "not a crayon!")
+		return
+	var/obj/item/toy/crayon/crayon = attacked_by
+	switch(crayon.crayon_color)
+		if("mime")
+			balloon_alert(user, "crayon doesn't belong!")
+			return
+		if("rainbow")
+			balloon_alert(user, "crayon is too powerful!")
 			return
 	return ..()
 
@@ -677,19 +768,19 @@
 		user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, but nothing happens!"))
 		user.say("MEDIOCRE!!", forced = "spraycan suicide")
 		return SHAME
-	else
-		user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!"))
-		user.say("WITNESS ME!!", forced = "spraycan suicide")
-		if(pre_noise || post_noise)
-			playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
-		if(can_change_colour)
-			set_painting_tool_color("#C0C0C0")
-		update_appearance()
-		if(actually_paints)
-			H.update_lips("spray_face", paint_color)
-		var/used = use_charges(user, 10, FALSE)
-		reagents.trans_to(user, used, volume_multiplier, transfered_by = user, methods = VAPOR)
-		return OXYLOSS
+
+	user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!"))
+	user.say("WITNESS ME!!", forced = "spraycan suicide")
+	if(pre_noise || post_noise)
+		playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
+	if(can_change_colour)
+		set_painting_tool_color("#C0C0C0")
+	update_appearance()
+	if(actually_paints)
+		H.update_lips("spray_face", paint_color)
+	var/used = use_charges(user, 10, FALSE)
+	reagents.trans_to(user, used, volume_multiplier, transfered_by = user, methods = VAPOR)
+	return OXYLOSS
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
@@ -718,22 +809,22 @@
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 25, TRUE, 5)
 
-		var/mob/living/carbon/C = target
+		var/mob/living/carbon/carbon_target = target
 		user.visible_message(span_danger("[user] sprays [src] into the face of [target]!"))
 		to_chat(target, span_userdanger("[user] sprays [src] into your face!"))
 
-		if(C.client)
-			C.set_eye_blur_if_lower(6 SECONDS)
-			C.adjust_temp_blindness(2 SECONDS)
-		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks.
-			C.apply_effects(eyeblur = 5, jitter = 10)
-			flash_color(C, flash_color=paint_color, flash_time=40)
-		if(ishuman(C) && actually_paints)
-			var/mob/living/carbon/human/H = C
-			H.update_lips("spray_face", paint_color)
+		if(carbon_target.client)
+			carbon_target.set_eye_blur_if_lower(6 SECONDS)
+			carbon_target.adjust_temp_blindness(2 SECONDS)
+		if(carbon_target.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks.
+			carbon_target.apply_effects(eyeblur = 5, jitter = 10)
+			flash_color(carbon_target, flash_color=paint_color, flash_time=40)
+		if(ishuman(carbon_target) && actually_paints)
+			var/mob/living/carbon/human/human_target = carbon_target
+			human_target.update_lips("spray_face", paint_color)
 		. = use_charges(user, 10, FALSE)
 		var/fraction = min(1, . / reagents.maximum_volume)
-		reagents.expose(C, VAPOR, fraction * volume_multiplier)
+		reagents.expose(carbon_target, VAPOR, fraction * volume_multiplier)
 
 		return .
 
@@ -803,11 +894,11 @@
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target.color)
 		paint_color = target.color
-		balloon_alert(user, "matched colour of [target]")
+		balloon_alert(user, "matched colour of target")
 		update_appearance()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	else
-		balloon_alert(user, "can't match [target]!")
+		balloon_alert(user, "can't match those colours!")
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
