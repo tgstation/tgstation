@@ -14,6 +14,11 @@ const TAB2NAME = [
   },
 ];
 
+const findAmount = (item_amts, name) => {
+  const amount = item_amts.find((item) => item.name === name);
+  return amount.amt;
+};
+
 const ShoppingTab = (props, context) => {
   const { data, act } = useBackend(context);
   const { credit_type, order_categories, order_datums, item_amts } = data;
@@ -25,11 +30,6 @@ const ShoppingTab = (props, context) => {
     searchItem.length > 0
       ? data.order_datums.filter(search)
       : order_datums.filter((item) => item && item.cat === shopIndex);
-
-  const FindAmount = (name) => {
-    const amount = item_amts.find((item) => item.name === name);
-    return amount.amt;
-  };
 
   return (
     <Stack fill vertical>
@@ -131,7 +131,7 @@ const ShoppingTab = (props, context) => {
                     />
                     <NumberInput
                       animated
-                      value={FindAmount(item.name) || 0}
+                      value={findAmount(item_amts, item.name) || 0}
                       width="41px"
                       minValue={0}
                       maxValue={20}
@@ -166,13 +166,8 @@ const CheckoutTab = (props, context) => {
     item_amts,
   } = data;
 
-  const FindAmount = (name) => {
-    const amount = item_amts.find((item) => item.name === name);
-    return amount.amt;
-  };
-
   const checkout_list = order_datums.filter(
-    (food) => food && (FindAmount(food.name) || 0)
+    (food) => food && (findAmount(item_amts, food.name) || 0)
   );
   return (
     <Stack vertical fill>
@@ -210,7 +205,7 @@ const CheckoutTab = (props, context) => {
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>
                       <NumberInput
-                        value={FindAmount(item.name) || 0}
+                        value={findAmount(item_amts, item.name) || 0}
                         width="41px"
                         minValue={0}
                         maxValue={(item.cost > 10 && 50) || 10}
