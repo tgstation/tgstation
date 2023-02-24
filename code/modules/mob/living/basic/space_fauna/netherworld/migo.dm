@@ -41,7 +41,7 @@
 	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = -1.5, additional_status_callback = CALLBACK(src, PROC_REF(update_dodge_chance)))
 
 /// Makes the migo more likely to dodge around the more damaged it is
-/mob/living/basic/migo/proc/update_dodge_chance(var/health_ratio)
+/mob/living/basic/migo/proc/update_dodge_chance(health_ratio)
 	dodge_prob = LERP(50, 10, health_ratio)
 
 /mob/living/basic/migo/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
