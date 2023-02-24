@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes:
+  - bugfix: "A chef who is beheaded, and the head stitched on another body will still see their food as their own."
