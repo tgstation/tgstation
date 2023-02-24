@@ -57,19 +57,30 @@
 		return
 
 	to_chat(user, span_notice("We are ready to revive."))
-	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 	chemical_cost = 0
 	revive_ready = TRUE
+	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
 /datum/action/changeling/fakedeath/can_sting(mob/living/user)
-	if(HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, "changeling") && !revive_ready)
-		to_chat(user, span_warning("We are already reviving."))
+	if(revive_ready)
+		return ..()
+
+	if(!can_enter_stasis(user))
 		return
-	if(!user.stat && !revive_ready) //Confirmation for living changelings if they want to fake their death
-		switch(tgui_alert(usr,"Are we sure we wish to fake our own death?", "Feign Death", list("Yes", "No")))
-			if("No")
-				return
+	//Confirmation for living changelings if they want to fake their death
+	if(user.stat != DEAD)
+		if(tgui_alert(user, "Are we sure we wish to fake our own death?", "Feign Death", list("Yes", "No")) != "Yes")
+			return
+		if(QDELETED(user) || QDELETED(src) || !can_enter_stasis(user))
+			return
+
 	return ..()
+
+/datum/action/changeling/fakedeath/proc/can_enter_stasis(mob/living/user)
+	if(HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, "changeling"))
+		to_chat(user, span_warning("We are already reviving."))
+		return FALSE
+	return TRUE
 
 /datum/action/changeling/fakedeath/update_button_name(atom/movable/screen/movable/action_button/button, force)
 	if(revive_ready)
