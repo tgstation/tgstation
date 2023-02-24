@@ -118,6 +118,10 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
+"fd" = (
+/obj/effect/decal/cleanable/plastic,
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
 "fg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -155,8 +159,8 @@
 /area/shuttle/escape)
 "gz" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/spawner/random/structure/closet_maintenance,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "gN" = (
@@ -189,6 +193,10 @@
 "iU" = (
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/escape)
+"jt" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "jA" = (
 /obj/effect/turf_decal/stripes/line{
@@ -256,8 +264,17 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "mp" = (
-/obj/effect/decal/cleanable/molten_object,
-/turf/open/floor/mineral/plastitanium/red/airless,
+/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/table,
+/obj/item/bikehorn/rubberducky{
+	pixel_x = 10;
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/ash,
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = -5
+	},
+/turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "mU" = (
 /obj/structure/lattice,
@@ -533,6 +550,10 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"AK" = (
+/obj/structure/window/reinforced/survival_pod/spawner,
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
 "AQ" = (
 /obj/machinery/light/small/directional/north,
 /obj/item/kirbyplants{
@@ -598,6 +619,13 @@
 /area/shuttle/escape)
 "De" = (
 /turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/escape)
+"Dy" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "DH" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -683,11 +711,12 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "HS" = (
-/obj/structure/lattice,
-/obj/item/stack/rods/two,
-/obj/machinery/light/small/broken/directional/north,
-/turf/template_noop,
-/area/template_noop)
+/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell,
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
 "Id" = (
 /obj/structure/chair{
 	dir = 4
@@ -705,9 +734,23 @@
 /obj/item/restraints/handcuffs/cable,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/shuttle/escape)
+"IK" = (
+/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
 "IN" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/structure/window/reinforced/survival_pod/spawner/north,
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
+"Jc" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "Ju" = (
@@ -770,6 +813,13 @@
 "MW" = (
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
+"Oq" = (
+/obj/structure/chair{
+	dir = 1;
+	pixel_y = -2
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
 "Oz" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -853,6 +903,14 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"Uh" = (
+/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
 "UG" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -878,8 +936,18 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Vo" = (
-/obj/structure/closet/emcloset,
-/turf/open/floor/mineral/titanium/tiled,
+/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/table,
+/obj/item/food/pizzaslice/mothic_five_cheese{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/obj/item/food/pizzaslice/mothic_five_cheese{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/leaper_sludge,
+/turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "Vv" = (
 /obj/effect/decal/cleanable/plastic,
@@ -1143,13 +1211,13 @@ ax
 nQ
 nQ
 mU
-ax
 LX
+hF
 LX
 rZ
 LX
 ax
-mU
+nQ
 ax
 LX
 nQ
@@ -1174,13 +1242,13 @@ mU
 mU
 mU
 mU
-nQ
-nQ
+mp
+ig
+Jc
+Uh
 mU
 nQ
 nQ
-nQ
-mU
 nQ
 nQ
 nQ
@@ -1204,14 +1272,14 @@ mU
 nQ
 nQ
 nQ
+nQ
+HS
+ig
+fd
+AK
 mU
-mU
-mU
-mU
-mU
-mU
-mU
-mU
+nQ
+nQ
 nQ
 nQ
 nQ
@@ -1236,13 +1304,13 @@ mU
 mU
 mU
 mU
-nQ
-nQ
+Vo
+jt
+Dy
+IK
 mU
 nQ
 nQ
-nQ
-mU
 nQ
 nQ
 nQ
@@ -1267,13 +1335,13 @@ ax
 nQ
 nQ
 mU
-ax
 LX
+hF
 LX
 rZ
 LX
 ax
-mU
+nQ
 bo
 mU
 nQ
@@ -1299,7 +1367,7 @@ rZ
 LX
 rZ
 LX
-Vo
+De
 ho
 GH
 Id
@@ -1334,8 +1402,8 @@ kZ
 ho
 pI
 Ly
+Oq
 ho
-HS
 MC
 mU
 LX
@@ -1366,7 +1434,7 @@ tb
 aQ
 tu
 tb
-mp
+rZ
 VA
 Em
 Ay
