@@ -447,7 +447,7 @@
 	dir = 1
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "ajQ" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -9618,18 +9618,6 @@
 /obj/structure/mirror/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/auxiliary)
-"dYv" = (
-/obj/structure/lattice,
-/obj/docking_port/stationary{
-	dir = 2;
-	dwidth = 2;
-	height = 13;
-	name = "port bay 2";
-	shuttle_id = "ferry_home";
-	width = 5
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "dYD" = (
 /obj/machinery/door/window/brigdoor/left/directional/west{
 	id = "Cell 1";
@@ -18647,10 +18635,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/tools)
-"hmk" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/station/engineering/atmospherics_engine)
 "hmy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24646,13 +24630,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/science/lower)
-"jxm" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/space/basic,
-/area/station/engineering/atmospherics_engine)
 "jxp" = (
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
@@ -73853,13 +73830,13 @@ dDB
 dDB
 dDB
 dDB
-hmk
-hmk
-hmk
-hmk
-hmk
-hmk
-hmk
+rpi
+rpi
+rpi
+rpi
+rpi
+rpi
+rpi
 dDB
 dDB
 dDB
@@ -74109,15 +74086,15 @@ wCc
 wCc
 blb
 blb
-hmk
-hmk
+rpi
+rpi
 blb
 blb
-hmk
+rpi
 blb
 blb
-hmk
-hmk
+rpi
+rpi
 dDB
 dDB
 dDB
@@ -74365,8 +74342,8 @@ dDB
 dDB
 dDB
 dDB
-hmk
-hmk
+rpi
+rpi
 blb
 blb
 beL
@@ -74374,8 +74351,8 @@ dBV
 bxH
 blb
 blb
-hmk
-hmk
+rpi
+rpi
 dDB
 dDB
 dDB
@@ -74622,7 +74599,7 @@ blb
 wCc
 wCc
 blb
-hmk
+rpi
 blb
 blb
 bfG
@@ -74632,7 +74609,7 @@ bkz
 bBf
 blb
 blb
-hmk
+rpi
 dDB
 dDB
 dDB
@@ -74879,7 +74856,7 @@ dDB
 dDB
 dDB
 dDB
-hmk
+rpi
 blb
 beL
 dBV
@@ -74889,7 +74866,7 @@ bkH
 dBV
 bxH
 blb
-hmk
+rpi
 dDB
 dDB
 dDB
@@ -75134,10 +75111,10 @@ rMn
 rMn
 rMn
 rMn
-hmk
-hmk
-hmk
-hmk
+rpi
+rpi
+rpi
+rpi
 dBV
 bfN
 blG
@@ -75145,8 +75122,8 @@ btL
 bxN
 dBV
 bTa
-hmk
-hmk
+rpi
+rpi
 dDB
 dDB
 dDB
@@ -75391,9 +75368,9 @@ voO
 voO
 voO
 voO
-jxm
-hmk
-hmk
+voO
+rpi
+rpi
 blb
 vrw
 dBV
@@ -75403,7 +75380,7 @@ bkH
 bkz
 byk
 blb
-hmk
+rpi
 dDB
 dDB
 dDB
@@ -75650,7 +75627,7 @@ dDB
 dDB
 dDB
 dDB
-hmk
+rpi
 blb
 blb
 bfX
@@ -75660,7 +75637,7 @@ dBV
 bBl
 blb
 blb
-hmk
+rpi
 dDB
 dDB
 dDB
@@ -75907,8 +75884,8 @@ sRm
 dDB
 lgg
 sRm
-hmk
-hmk
+rpi
+rpi
 blb
 blb
 vrw
@@ -75916,8 +75893,8 @@ dBV
 byk
 blb
 blb
-hmk
-hmk
+rpi
+rpi
 dDB
 dDB
 dDB
@@ -76165,15 +76142,15 @@ aGa
 vrT
 vrT
 blb
-hmk
-hmk
+rpi
+rpi
 blb
 blb
-hmk
+rpi
 blb
 blb
-hmk
-hmk
+rpi
+rpi
 blb
 dDB
 dDB
@@ -76423,13 +76400,13 @@ anV
 anV
 blb
 dDB
-hmk
-hmk
-hmk
-hmk
-hmk
-hmk
-hmk
+rpi
+rpi
+rpi
+rpi
+rpi
+rpi
+rpi
 dDB
 blb
 dDB
@@ -76683,7 +76660,7 @@ sRm
 dDB
 blb
 dDB
-hmk
+rpi
 dDB
 blb
 dDB
@@ -106356,7 +106333,7 @@ tuT
 tHL
 xyR
 tuT
-dYv
+blb
 dDB
 dDB
 dDB
