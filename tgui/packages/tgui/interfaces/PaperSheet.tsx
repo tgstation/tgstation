@@ -10,7 +10,6 @@ import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
 import { Component, createRef, RefObject } from 'inferno';
 import { clamp } from 'common/math';
-import { logger } from '../logging';
 
 const Z_INDEX_STAMP = 1;
 const Z_INDEX_STAMP_PREVIEW = 2;
@@ -442,7 +441,6 @@ export class PreviewView extends Component<PreviewViewProps> {
 
   constructor(props, context) {
     super(props, context);
-    logger.log(`Configuring marked.`);
     this.configureMarked();
   }
 
@@ -590,10 +588,8 @@ export class PreviewView extends Component<PreviewViewProps> {
       this.lastDMInputCount === raw_text_input?.length &&
       this.lastFieldInputCount === raw_field_input?.length
     ) {
-      logger.log(`Using parsed DM cache`);
       return { text: this.parsedDMCache, newFieldCount: this.lastFieldCount };
     }
-    logger.log(`Parsing DM input`);
 
     this.lastReadOnly = readOnly;
 
@@ -646,11 +642,8 @@ export class PreviewView extends Component<PreviewViewProps> {
 
     // Use the cache if one exists.
     if (this.parsedTextBoxCache) {
-      logger.log(`Using parsed text box cache`);
       return this.parsedTextBoxCache;
     }
-
-    logger.log(`Parsing text box input`);
 
     const readOnly = true;
 
@@ -736,13 +729,7 @@ export class PreviewView extends Component<PreviewViewProps> {
       },
     };
 
-    const start = performance.now();
-    const parsedText = marked.parse(rawText);
-    const end = performance.now();
-
-    logger.log(`ParseTime: ${end - start}ms`);
-
-    return parsedText;
+    return marked.parse(rawText);
   };
 
   // Fully formats, sanitises and parses the provided raw text and wraps it
