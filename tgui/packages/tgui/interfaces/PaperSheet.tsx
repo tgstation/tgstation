@@ -10,7 +10,6 @@ import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
 import { Component, createRef, RefObject } from 'inferno';
 import { clamp } from 'common/math';
-import { logger } from '../logging';
 
 const Z_INDEX_STAMP = 1;
 const Z_INDEX_STAMP_PREVIEW = 2;
@@ -629,9 +628,7 @@ export class PreviewView extends Component<PreviewViewProps> {
       },
     };
 
-    const start = performance.now();
-
-    const mkd = marked.parse(rawText, {
+    return marked.parse(rawText, {
       breaks: true,
       gfm: true,
       smartypants: true,
@@ -640,12 +637,6 @@ export class PreviewView extends Component<PreviewViewProps> {
       // Once assets are fixed might need to change this for them
       baseUrl: 'thisshouldbreakhttp',
     });
-
-    const end = performance.now();
-
-    logger.log(`ParseTime: ${end - start}`);
-
-    return mkd;
   };
 
   // Fully formats, sanitises and parses the provided raw text and wraps it
