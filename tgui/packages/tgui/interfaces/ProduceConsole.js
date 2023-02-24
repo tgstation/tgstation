@@ -130,7 +130,6 @@ const ShoppingTab = (props, context) => {
                       }
                     />
                     <NumberInput
-                      animated
                       value={findAmount(item_amts, item.name) || 0}
                       width="41px"
                       minValue={0}
