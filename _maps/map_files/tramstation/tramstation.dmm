@@ -9438,7 +9438,7 @@
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/camera/directional/south{
 	c_tag = "Secure - AI Antechamber North";
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -16772,7 +16772,7 @@
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Secure - AI Minisat Teleporter";
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /obj/machinery/button/door/directional/south{
 	id = "teledoor";
@@ -22463,7 +22463,8 @@
 	dir = 4
 	},
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - AI Lower Ring Access"
+	c_tag = "Secure - AI Lower Ring Access";
+	network = list("ss13","minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -24117,7 +24118,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Minisat Entry";
 	dir = 10;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
@@ -27873,7 +27874,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Lower External East";
 	dir = 10;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -29577,7 +29578,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Lower External West";
 	dir = 6;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -34638,7 +34639,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Antechamber East";
 	dir = 10;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -37456,7 +37457,7 @@
 "mbe" = (
 /obj/machinery/camera/motion/directional/south{
 	c_tag = "Secure - AI Lower External North";
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/space/basic,
 /area/space)
@@ -39169,7 +39170,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Antechamber West";
 	dir = 6;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -41061,7 +41062,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Antechamber South";
 	dir = 9;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /obj/structure/cable,
 /turf/open/floor/circuit,
@@ -52420,7 +52421,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Minisat Internal Power Access";
 	dir = 9;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/maint)
@@ -54892,7 +54893,9 @@
 "sBI" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner,
-/obj/machinery/computer/security/telescreen/rd,
+/obj/machinery/computer/security/telescreen/rd{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -63327,7 +63330,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Lower External South";
 	dir = 9;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -65604,7 +65607,7 @@
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Secure - AI Minisat Chargebay";
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
