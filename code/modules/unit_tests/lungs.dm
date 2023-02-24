@@ -13,8 +13,8 @@
 	// Test one breath of O2/N2 mix.
 	breath_ok = test_lungs.check_breath(test_mix, lab_rat)
 	lungs_test_return(breath_ok, test_lungs)
-	lungs_test_breathe(test_lungs, lab_rat, "standard gas mixture")
-	lungs_test_alerts(test_lungs, lab_rat, test_mix)
+	lungs_test_breathe(lab_rat, test_lungs, "standard gas mixture")
+	lungs_test_alerts(lab_rat, test_lungs, test_mix)
 
 	// Suffocation with an empty gas mix.
 	var/datum/gas_mixture/empty_test_mix = allocate(/datum/gas_mixture)
@@ -23,8 +23,8 @@
 	// Test one breath of nothing. Suffocate due to the breath being empty.
 	breath_ok = test_lungs.check_breath(empty_test_mix, lab_rat)
 	lungs_test_return_fail(breath_ok, test_lungs)
-	lungs_test_suffocate(test_lungs, lab_rat, "empty gas mixture")
-	lungs_test_alerts(test_lungs, lab_rat, test_mix)
+	lungs_test_suffocate(lab_rat, test_lungs, "empty gas mixture")
+	lungs_test_alerts(lab_rat, test_lungs, test_mix)
 
 	// Suffocation with null. This does indeed happen normally.
 	lab_rat = allocate(/mob/living/carbon/human/consistent)
@@ -32,8 +32,8 @@
 	// Test one breath of nothing. Suffocate due to the breath being null.
 	breath_ok = test_lungs.check_breath(null, lab_rat)
 	lungs_test_return_fail(breath_ok, test_lungs)
-	lungs_test_suffocate(test_lungs, lab_rat, "null")
-	lungs_test_alerts(test_lungs, lab_rat, test_mix)
+	lungs_test_suffocate(lab_rat, test_lungs, "null")
+	lungs_test_alerts(lab_rat, test_lungs, test_mix)
 
 	// Suffocation with Nitrogen.
 	var/datum/gas_mixture/nitro_test_mix = create_nitrogen_mix()
@@ -42,8 +42,8 @@
 	// Test one breath of Nitrogen. Suffocate due to the breath being 100% N2.
 	breath_ok = test_lungs.check_breath(nitro_test_mix, lab_rat)
 	lungs_test_return_fail(breath_ok, test_lungs)
-	lungs_test_suffocate(test_lungs, lab_rat, "pure nitrogen")
-	lungs_test_alerts(test_lungs, lab_rat, nitro_test_mix)
+	lungs_test_suffocate(lab_rat, test_lungs, "pure nitrogen")
+	lungs_test_alerts(lab_rat, test_lungs, nitro_test_mix)
 
 /// Tests the Plasmaman lungs organ to ensure Plasma breathing and suffocation behave as expected.
 /datum/unit_test/lungs_sanity_plasmaman
@@ -56,8 +56,8 @@
 	// Test one breath of Plasma on Plasmaman lungs.
 	var/breath_ok = test_lungs.check_breath(plasma_test_mix, lab_rat)
 	lungs_test_return(breath_ok, test_lungs)
-	lungs_test_breathe(test_lungs, lab_rat, "pure plasma")
-	lungs_test_alerts(test_lungs, lab_rat, plasma_test_mix)
+	lungs_test_breathe(lab_rat, test_lungs, "pure plasma")
+	lungs_test_alerts(lab_rat, test_lungs, plasma_test_mix)
 
 	// Tests suffocation with Nitrogen.
 	var/datum/gas_mixture/nitro_test_mix = create_nitrogen_mix()
@@ -66,8 +66,8 @@
 	// Test one breath of Nitrogen on Plasmaman lungs.
 	breath_ok = test_lungs.check_breath(nitro_test_mix, lab_rat)
 	lungs_test_return_fail(breath_ok, test_lungs)
-	lungs_test_suffocate(test_lungs, lab_rat, "pure nitrogen")
-	lungs_test_alerts(test_lungs, lab_rat, nitro_test_mix)
+	lungs_test_suffocate(lab_rat, test_lungs, "pure nitrogen")
+	lungs_test_alerts(lab_rat, test_lungs, nitro_test_mix)
 
 /// Tests the lavaland/Ashwalker lungs organ.
 /// Ensures they can breathe from the lavaland air mixture properly, and suffocate on inadequate mixture.
@@ -81,8 +81,8 @@
 	// Test one breath of Lavaland gas mix on Ashwalker lungs.
 	var/breath_ok = test_lungs.check_breath(lavaland_test_mix, lab_rat)
 	lungs_test_return(breath_ok, test_lungs)
-	lungs_test_breathe(test_lungs, lab_rat, "Lavaland air mixture")
-	lungs_test_alerts(test_lungs, lab_rat, lavaland_test_mix)
+	lungs_test_breathe(lab_rat, test_lungs, "Lavaland air mixture")
+	lungs_test_alerts(lab_rat, test_lungs, lavaland_test_mix)
 
 /// Checks the given status code to ensure success / truthy.
 /datum/unit_test/proc/lungs_test_return(breath_ok, obj/item/organ/internal/lungs/test_lungs)
