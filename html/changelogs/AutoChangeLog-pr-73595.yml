@@ -1,0 +1,5 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "CTF flags will no longer catch fire when placed into lava, preventing one class from picking it up."
+  - code_imp: "CTF flags no longer respawn when they get qdeleted, this means you can now delete them when debugging/as an admin."
