@@ -1,0 +1,4 @@
+author: "kawoppi"
+delete-after: True
+changes:
+  - soundadd: "dismantling an unplaced wallframe will now make a wrench sound"
