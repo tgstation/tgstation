@@ -27,15 +27,12 @@
 	lighting_cutoff_blue = 15
 
 	ai_controller = /datum/ai_controller/basic_controller/creature
-	/// Used for checking if the mob is phased or not.
-	var/is_phased = FALSE
 
 /mob/living/basic/creature/Initialize(mapload)
 	. = ..()
 	var/datum/callback/health_changes_callback = CALLBACK(src, PROC_REF(health_check))
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
 	AddComponent(/datum/component/damage_buffs, health_changes_callback)
-	AddComponent(/datum/component/unobserved_actor, unobserved_flags = NO_OBSERVED_ACTIONS)
 	var/datum/action/cooldown/spell/jaunt/creature_teleport/teleport = new(src)
 	teleport.Grant(src)
 
@@ -91,14 +88,27 @@
 					return mechamob_target
 	return null
 
+/// Jaunt spell used by creature. Can only jaunt or unjaunt if nothing can see you.
 /datum/action/cooldown/spell/jaunt/creature_teleport
-	name = "Teleport"
-	desc = "Teleport to wherever you want, as long as you aren't seen."
+	name = "Uncanny Movement"
+	desc = "Enter or leave an alternate plane where you can travel through walls. You can only enter or emerge if unobserved."
 	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "blink"
 	background_icon_state = "bg_default"
 	overlay_icon_state = "bg_default_border"
 	spell_requirements = NONE
+	/// Component which prevents this action being used while visible
+	var/datum/component/unobserved_actor/observed_blocker
+
+/datum/action/cooldown/spell/jaunt/creature_teleport/Grant(mob/grant_to)
+	. = ..()
+	if (!owner)
+		return
+	observed_blocker = owner.AddComponent(/datum/component/unobserved_actor, unobserved_flags = NO_OBSERVED_ACTIONS)
+
+/datum/action/cooldown/spell/jaunt/creature_teleport/Remove(mob/living/remove_from)
+	QDEL_NULL(observed_blocker)
+	return ..()
 
 /datum/action/cooldown/spell/jaunt/creature_teleport/before_cast(atom/cast_on)
 	if (!owner)
