@@ -20657,15 +20657,15 @@
 /obj/machinery/computer/apc_control{
 	dir = 1
 	},
-/obj/machinery/computer/security/telescreen/ce{
-	dir = 4;
-	pixel_x = -24
-	},
 /obj/machinery/requests_console/directional/south{
 	announcementConsole = 1;
 	department = "Chief Engineer's Desk";
 	supplies_requestable = 1;
 	name = "Chief Engineer's Request Console"
+	},
+/obj/machinery/computer/security/telescreen/engine{
+	dir = 4;
+	pixel_x = -24
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
