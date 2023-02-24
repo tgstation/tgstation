@@ -6,6 +6,7 @@
 "ai" = (
 /obj/structure/sink/directional/south,
 /obj/effect/decal/cleanable/insectguts,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "ax" = (
@@ -157,9 +158,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"gt" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape/brig)
 "gz" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/broken_floor,
@@ -366,6 +364,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "pK" = (
+/obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -425,7 +424,6 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "tH" = (
-/obj/machinery/light/small/directional/west,
 /obj/item/trash/pistachios,
 /obj/item/roller{
 	pixel_x = -5
@@ -525,9 +523,6 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"yz" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "zq" = (
 /obj/structure/window/reinforced{
@@ -781,6 +776,9 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
+"KJ" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape/brig)
 "Lx" = (
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/stripes/line{
@@ -885,6 +883,9 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Sm" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "SA" = (
 /obj/structure/sink/directional/south,
@@ -1217,7 +1218,7 @@ ax
 nQ
 nQ
 mU
-yz
+Sm
 hF
 LX
 rZ
@@ -1341,7 +1342,7 @@ ax
 nQ
 nQ
 mU
-yz
+Sm
 hF
 LX
 rZ
@@ -1439,7 +1440,7 @@ De
 tb
 aQ
 tu
-gt
+KJ
 LX
 VA
 Em
@@ -1456,8 +1457,8 @@ ax
 rZ
 rZ
 LX
-DH
 pK
+dM
 dM
 dM
 FV
