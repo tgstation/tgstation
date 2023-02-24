@@ -5,6 +5,8 @@
 	button_icon_state = "lesser_form"
 	chemical_cost = 5
 	dna_cost = 1
+	/// Whether to allow the transformation animation to play
+	var/transform_instantly = FALSE
 
 /datum/action/changeling/lesserform/Grant(mob/granted_to)
 	. = ..()
@@ -29,22 +31,30 @@
 		user.balloon_alert(user, "can't transform in pipes!")
 		return FALSE
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-	var/datum/changeling_profile/chosen_form = changeling?.select_dna()
+	var/datum/changeling_profile/chosen_form = select_form(changeling, user)
 	if(!chosen_form)
 		return FALSE
 	to_chat(user, span_notice("We transform our appearance."))
 	var/datum/dna/chosen_dna = chosen_form.dna
 	var/datum/species/chosen_species = chosen_dna.species
-	user.humanize(chosen_species)
+	user.humanize(species = chosen_species, instant = transform_instantly)
 
 	changeling.transform(user, chosen_form)
 	user.regenerate_icons()
 	return TRUE
 
+/// Returns the form to transform back into, automatically selects your only profile if you only have one
+/datum/action/changeling/lesserform/proc/select_form(datum/antagonist/changeling/changeling, mob/living/carbon/human/user)
+	if (!changeling)
+		return
+	if (length(changeling.stored_profiles) == 1)
+		return changeling.first_profile
+	return changeling?.select_dna()
+
 /// Become a monkey
 /datum/action/changeling/lesserform/proc/become_monkey(mob/living/carbon/human/user)
 	to_chat(user, span_warning("Our genes cry out!"))
-	user.monkeyize()
+	user.monkeyize(instant = transform_instantly)
 	return TRUE
 
 /// Called when you become a human or monkey, whether or not it was voluntary
