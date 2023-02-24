@@ -19,7 +19,6 @@
 
 /datum/component/unobserved_actor/RegisterWithParent()
 	if (unobserved_flags & NO_OBSERVED_MOVEMENT)
-		// TODO: add rotate signal
 		RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_tried_move))
 		RegisterSignal(parent, COMSIG_ATOM_PRE_DIR_CHANGE, PROC_REF(on_tried_turn))
 	if (unobserved_flags & NO_OBSERVED_ACTIONS)
@@ -29,7 +28,13 @@
 		RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_tried_attack))
 
 /datum/component/unobserved_actor/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_ATOM_PRE_DIR_CHANGE, COMSIG_MOB_ABILITY_STARTED, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
+	UnregisterSignal(parent, list(
+		COMSIG_MOVABLE_PRE_MOVE,
+		COMSIG_ATOM_PRE_DIR_CHANGE,
+		COMSIG_MOB_ABILITY_STARTED,
+		COMSIG_MOB_BEFORE_SPELL_CAST,
+		COMSIG_HOSTILE_PRE_ATTACKINGTARGET,
+	))
 	return ..()
 
 /// Called when the mob tries to move
