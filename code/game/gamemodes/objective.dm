@@ -64,6 +64,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
  * Escaped mobs are used to check certain antag objectives / results.
  *
  * Escaped includes minds with alive, non-exiled mobs generally.
+ *
+ * Returns TRUE if they're a free person, or FALSE if they failed
  */
 /proc/considered_escaped(datum/mind/escapee)
 	if(!considered_alive(escapee))

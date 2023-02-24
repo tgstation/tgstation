@@ -68,12 +68,13 @@
 			return player_mob
 	return null
 
-///Returns true if the mob that a player is controlling is alive
 /**
  * Checks if the passed mind has a mob that is "alive"
  *
  * * player_mind - who to check for alive status
  * * enforce_human - if TRUE, the checks fails if the mind's mob is a silicon, brain, or infectious zombie.
+ *
+ * Returns TRUE if they're alive, FALSE otherwise
  */
 /proc/considered_alive(datum/mind/player_mind, enforce_human = TRUE)
 	if(player_mind?.current)

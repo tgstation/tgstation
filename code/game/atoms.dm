@@ -416,6 +416,8 @@
  *
  * Used in gamemode to identify mobs who have escaped and for some other areas of the code
  * who don't want atoms where they shouldn't be
+ *
+ * Returns TRUE if this atom is on centcom or an escape shuttle, or FALSE if not
  */
 /atom/proc/onCentCom()
 	var/turf/current_turf = get_turf(src)
@@ -444,6 +446,8 @@
  * Either in the syndie base, or any of their shuttles
  *
  * Also used in gamemode code for win conditions
+ *
+ * Returns TRUE if this atom is on the syndicate recon base, any of its shuttles, or an escape shuttle, or FALSE if not
  */
 /atom/proc/onSyndieBase()
 	var/turf/current_turf = get_turf(src)
@@ -469,7 +473,9 @@
 /**
  * Checks that we're on a shuttle that's escaped
  *
- * * check_for_launch_status - What launch status do we check for?
+ * * check_for_launch_status - What launch status do we check for? Generally the two you want to check for are ENDGAME_LAUNCHED or ENDGAME_TRANSIT
+ *
+ * Returns TRUE if this atom is on a shuttle which is escaping or has escaped, or FALSE otherwise
  */
 /atom/proc/on_escaped_shuttle(check_for_launch_status = ENDGAME_LAUNCHED)
 	var/turf/current_turf = get_turf(src)
