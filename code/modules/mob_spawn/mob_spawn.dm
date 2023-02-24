@@ -114,7 +114,8 @@
 	/// Does the spawner delete itself when it runs out of uses?
 	var/deletes_on_zero_uses_left = TRUE
 	/// A list of the ckeys that currently are trying to access this spawner, so that they can't try to spawn more than once (in case there's sleeps).
-	var/list/ckeys_trying_to_spawn
+	/// Static because you only really want to be able to spawn in one spawner at a time, obviously.
+	var/static/list/ckeys_trying_to_spawn
 
 	////descriptions
 
