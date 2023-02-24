@@ -27,6 +27,8 @@
 	lighting_cutoff_blue = 15
 
 	ai_controller = /datum/ai_controller/basic_controller/creature
+	/// Used for mobs that get spawned in a spawner appearently.
+	var/datum/component/spawner/nest
 
 /mob/living/basic/creature/Initialize(mapload)
 	. = ..()
@@ -35,6 +37,12 @@
 	AddComponent(/datum/component/damage_buffs, health_changes_callback)
 	var/datum/action/cooldown/spell/jaunt/creature_teleport/teleport = new(src)
 	teleport.Grant(src)
+
+/mob/living/basic/creature/Destroy()
+	if(nest)
+		nest.spawned_mobs -= src
+		nest = null
+	return ..()
 
 /mob/living/basic/creature/proc/health_check(mob/living/attacker)
 	if(health < maxHealth * 0.25)
