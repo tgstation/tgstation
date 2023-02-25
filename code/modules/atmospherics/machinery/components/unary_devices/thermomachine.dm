@@ -49,7 +49,7 @@
 		return FALSE
 	. = ..()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/on_construction(obj_color, set_layer)
+/obj/machinery/atmospherics/components/unary/thermomachine/on_construction(mob/user, obj_color, set_layer)
 	var/obj/item/circuitboard/machine/thermomachine/board = circuit
 	if(board)
 		piping_layer = board.pipe_layer
@@ -62,7 +62,7 @@
 		set_panel_open(TRUE)
 		change_pipe_connection(TRUE)
 		icon_state = "thermo-open"
-		visible_message(span_warning("The thermomachine is left unanchored as it's port is being hogged up by something else."))
+		balloon_alert(user, "the port is already in use!")
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	. = ..()
