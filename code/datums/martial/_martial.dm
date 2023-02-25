@@ -21,7 +21,7 @@
 	.["name"] = name
 	.["id"] = id
 	.["pacifist_style"] = pacifist_style
-	options[SCHEMA_VERSION_ID] = "1.0"
+	options[SCHEMA_VERSION] = "1.0"
 
 /datum/martial_art/proc/help_act(mob/living/A, mob/living/D)
 	return MARTIAL_ATTACK_INVALID

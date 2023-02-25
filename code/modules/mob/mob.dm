@@ -119,7 +119,7 @@
 		.["ckey"] = ckey
 	if(key)
 		.["key"] = key
-	options[SCHEMA_VERSION_ID] = "1.0"
+	options[SCHEMA_VERSION] = "1.0"
 
 /**
  * set every hud image in the given category active so other people with the given hud can see it.

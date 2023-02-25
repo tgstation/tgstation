@@ -175,12 +175,12 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 
 		else if(isdatum(data))
 			var/list/options_list = list(
-				SCHEMA_VERSION_ID = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET,
+				SCHEMA_VERSION = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET,
 			)
 			var/list/serialization_data = data.serialize_list(options_list)
 			if(!length(serialization_data)) // serialize_list wasn't implemented, and errored
 				continue
-			serialization_data[SCHEMA_VERSION_ID] = options_list[SCHEMA_VERSION_ID]
+			serialization_data[SCHEMA_VERSION] = options_list[SCHEMA_VERSION]
 			data = recursive_jsonify(serialization_data)
 
 		if(isnull(data) || (islist(data) && !length(data)))

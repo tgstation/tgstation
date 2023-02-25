@@ -145,7 +145,7 @@
 		.["assigned_role"] = assigned_role.title
 	if(current)
 		.["current"] = current
-	options[SCHEMA_VERSION_ID] = "1.0"
+	options[SCHEMA_VERSION] = "1.0"
 
 /datum/mind/vv_edit_var(var_name, var_value)
 	switch(var_name)

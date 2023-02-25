@@ -92,7 +92,7 @@
 		.["antagonist_name"] = antagonist_name
 	if(where)
 		.["where"] = where
-	options[SCHEMA_VERSION_ID] = "1.0"
+	options[SCHEMA_VERSION] = "1.0"
 
 /**
  * Generates a name for the memory.
