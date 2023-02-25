@@ -107,7 +107,7 @@
 		"credit",
 		"danger",
 		"electricdanger",
-		"firedanger",
+		"firedanger", // These symbols left intentionally un-alphabetised as they should be next to each other in the menu
 		"evac",
 		"food",
 		"heart",
