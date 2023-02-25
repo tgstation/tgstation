@@ -3601,14 +3601,25 @@
 	pixel_x = 32
 	},
 /obj/item/radio/intercom/directional/east{
-	pixel_y = 3
+	pixel_y = 3;
+	pixel_x = 38
 	},
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 4
 	},
 /obj/machinery/keycard_auth/directional/east{
-	pixel_x = 25;
+	pixel_x = 40;
 	pixel_y = -8
+	},
+/obj/machinery/button/door/directional/east{
+	pixel_y = -8;
+	id = "qmspace";
+	name = "Space Shutters Control"
+	},
+/obj/machinery/button/door/directional/east{
+	pixel_y = 6;
+	id = "qmprivacy";
+	name = "Privacy Control"
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -13314,7 +13325,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster's Office"
 	},
 /turf/open/floor/iron,
@@ -23857,7 +23868,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster's Office"
 	},
 /turf/open/floor/iron,
@@ -42901,6 +42912,10 @@
 /area/station/maintenance/department/crew_quarters/bar)
 "krp" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "qmprivacy";
+	name = "Privacy Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/qm)
 "krs" = (
@@ -46430,6 +46445,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
+"ljS" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "qmspace";
+	name = "Privacy Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/qm)
 "ljT" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -49181,7 +49205,14 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
-/obj/item/radio/intercom/directional/east,
+/obj/item/radio/intercom/directional/east{
+	pixel_y = 3
+	},
+/obj/machinery/button/door/directional/east{
+	id = "qmroom";
+	pixel_y = -6;
+	name = "Privacy Control"
+	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "lSh" = (
@@ -58154,6 +58185,10 @@
 "ofx" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "qmroom";
+	name = "Privacy Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/qm)
 "ofE" = (
@@ -78512,6 +78547,14 @@
 /obj/effect/mapping_helpers/mail_sorting/service/theater,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"tgX" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "qmspace";
+	name = "Privacy Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/qm)
 "thf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -145630,7 +145673,7 @@ aAU
 meV
 xhJ
 vMd
-krp
+tgX
 jfO
 jBM
 xVv
@@ -145881,13 +145924,13 @@ aaa
 aaa
 aaa
 aad
-ofx
+ljS
 gmo
 dfQ
 tYz
 dfQ
 cAZ
-krp
+tgX
 rWo
 rWo
 rWo
@@ -146138,13 +146181,13 @@ aaa
 aaa
 aaa
 aad
-ofx
+ljS
 aPo
 bdF
 wob
 sWD
 sNp
-krp
+tgX
 aad
 rWo
 juo

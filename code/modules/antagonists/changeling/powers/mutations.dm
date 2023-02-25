@@ -21,10 +21,32 @@
 	var/weapon_type
 	var/weapon_name_simple
 
+/datum/action/changeling/weapon/Grant(mob/granted_to)
+	. = ..()
+	if (!owner || !req_human)
+		return
+	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey))
+
+/datum/action/changeling/weapon/Remove(mob/remove_from)
+	UnregisterSignal(remove_from, COMSIG_HUMAN_MONKEYIZE)
+	unequip_held(remove_from)
+	return ..()
+
+/// Remove weapons if we become a monkey
+/datum/action/changeling/weapon/proc/became_monkey(mob/source)
+	SIGNAL_HANDLER
+	unequip_held(source)
+
+/// Removes weapon if it exists, returns true if we removed something
+/datum/action/changeling/weapon/proc/unequip_held(mob/user)
+	var/found_weapon = FALSE
+	for(var/obj/item/held in user.held_items)
+		found_weapon = check_weapon(user, held) || found_weapon
+	return found_weapon
+
 /datum/action/changeling/weapon/try_to_sting(mob/user, mob/target)
-	for(var/obj/item/I in user.held_items)
-		if(check_weapon(user, I))
-			return
+	if (unequip_held(user))
+		return
 	..(user, target)
 
 /datum/action/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item)
@@ -34,15 +56,15 @@
 			playsound(user, 'sound/effects/blobattack.ogg', 30, TRUE)
 			user.visible_message(span_warning("With a sickening crunch, [user] reforms [user.p_their()] [weapon_name_simple] into an arm!"), span_notice("We assimilate the [weapon_name_simple] back into our body."), "<span class='italics>You hear organic matter ripping and tearing!</span>")
 		user.update_held_items()
-		return 1
+		return TRUE
 
 /datum/action/changeling/weapon/sting_action(mob/living/carbon/user)
 	var/obj/item/held = user.get_active_held_item()
 	if(held && !user.dropItemToGround(held))
-		to_chat(user, span_warning("[held] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!"))
+		user.balloon_alert(user, "hand occupied!")
 		return
 	if(!istype(user))
-		to_chat(user, span_warning("You can't do that in this state!"))
+		user.balloon_alert(user, "wrong shape!")
 		return
 	..()
 	var/limb_regen = 0
@@ -59,11 +81,6 @@
 		playsound(user, 'sound/effects/blobattack.ogg', 30, TRUE)
 	return W
 
-/datum/action/changeling/weapon/Remove(mob/user)
-	for(var/obj/item/I in user.held_items)
-		check_weapon(user, I)
-	..()
-
 
 //Parent to space suits and armor.
 /datum/action/changeling/suit
@@ -79,6 +96,22 @@
 	var/helmet_name_simple = "     "
 	var/recharge_slowdown = 0
 	var/blood_on_castoff = 0
+
+/datum/action/changeling/suit/Grant(mob/granted_to)
+	. = ..()
+	if (!owner || !req_human)
+		return
+	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey))
+
+/datum/action/changeling/suit/Remove(mob/remove_from)
+	UnregisterSignal(remove_from, COMSIG_HUMAN_MONKEYIZE)
+	check_suit(remove_from)
+	return ..()
+
+/// Remove suit if we become a monkey
+/datum/action/changeling/suit/proc/became_monkey()
+	SIGNAL_HANDLER
+	check_suit(owner)
 
 /datum/action/changeling/suit/try_to_sting(mob/user, mob/target)
 	if(check_suit(user))
@@ -107,19 +140,12 @@
 		changeling.chem_recharge_slowdown -= recharge_slowdown
 		return 1
 
-/datum/action/changeling/suit/Remove(mob/user)
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	check_suit(H)
-	..()
-
 /datum/action/changeling/suit/sting_action(mob/living/carbon/human/user)
 	if(!user.canUnEquip(user.wear_suit))
-		to_chat(user, span_warning("\the [user.wear_suit] is stuck to your body, you cannot grow a [suit_name_simple] over it!"))
+		user.balloon_alert(user, "body occupied!")
 		return
 	if(!user.canUnEquip(user.head))
-		to_chat(user, span_warning("\the [user.head] is stuck on your head, you cannot grow a [helmet_name_simple] over it!"))
+		user.balloon_alert(user, "head occupied!")
 		return
 	..()
 	user.dropItemToGround(user.head)
@@ -196,24 +222,24 @@
 		C.attack_alien(user) //muh copypasta
 
 	else if(istype(target, /obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/A = target
+		var/obj/machinery/door/airlock/opening = target
 
-		if((!A.requiresID() || A.allowed(user)) && A.hasPower()) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message, power requirement is so this doesn't stop unpowered doors from being pried open if you have access
+		if((!opening.requiresID() || opening.allowed(user)) && opening.hasPower()) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message, power requirement is so this doesn't stop unpowered doors from being pried open if you have access
 			return
-		if(A.locked)
-			to_chat(user, span_warning("The airlock's bolts prevent it from being forced!"))
+		if(opening.locked)
+			opening.balloon_alert(user, "bolted!")
 			return
 
-		if(A.hasPower())
-			user.visible_message(span_warning("[user] jams [src] into the airlock and starts prying it open!"), span_warning("We start forcing the [A] open."), \
+		if(opening.hasPower())
+			user.visible_message(span_warning("[user] jams [src] into the airlock and starts prying it open!"), span_warning("We start forcing the [opening] open."), \
 			span_hear("You hear a metal screeching sound."))
-			playsound(A, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
-			if(!do_after(user, 100, target = A))
+			playsound(opening, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+			if(!do_after(user, 10 SECONDS, target = opening))
 				return
 		//user.say("Heeeeeeeeeerrre's Johnny!")
-		user.visible_message(span_warning("[user] forces the airlock to open with [user.p_their()] [src]!"), span_warning("We force the [A] to open."), \
+		user.visible_message(span_warning("[user] forces the airlock to open with [user.p_their()] [src]!"), span_warning("We force the [opening] to open."), \
 		span_hear("You hear a metal screeching sound."))
-		A.open(2)
+		opening.open(2)
 
 /obj/item/melee/arm_blade/dropped(mob/user)
 	..()
@@ -273,7 +299,7 @@
 
 
 /obj/item/gun/magic/tentacle/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	to_chat(user, span_warning("The [name] is not ready yet."))
+	user.balloon_alert(user, "not ready!")
 
 /obj/item/gun/magic/tentacle/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
 	var/obj/projectile/tentacle/tentacle_shot = chambered.loaded_projectile //Gets the actual projectile we will fire
