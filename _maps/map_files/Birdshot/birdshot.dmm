@@ -5981,9 +5981,8 @@
 	req_access = list("armory")
 	},
 /obj/item/folder/red,
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -3;
-	pixel_y = 5
+/obj/item/storage/fancy/donut_box{
+	pixel_y = 8
 	},
 /turf/open/floor/iron/textured_large,
 /area/station/security/warden)
@@ -7349,6 +7348,18 @@
 /obj/structure/table,
 /obj/effect/turf_decal/tile/dark_red,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/food/gumball{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/clothing/mask/cigarette/candy{
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/item/food/gumball{
+	pixel_x = 2;
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/processing)
 "dfo" = (
@@ -9084,7 +9095,6 @@
 "dOg" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
 /area/station/security/tram)
 "dOq" = (
@@ -12967,10 +12977,6 @@
 /obj/machinery/door/window/right/directional/north{
 	name = "Security Desk"
 	},
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -18;
-	pixel_y = 4
-	},
 /obj/structure/sign/directions/command/directional/east{
 	dir = 1
 	},
@@ -12980,6 +12986,7 @@
 /obj/structure/sign/directions/vault/directional/east{
 	pixel_y = -8
 	},
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/textured_large,
 /area/station/security/brig/entrance)
 "fnZ" = (
@@ -13324,6 +13331,10 @@
 	pixel_x = 6;
 	pixel_y = 7;
 	req_access = list("security")
+	},
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = -12;
+	pixel_y = 5
 	},
 /turf/open/floor/iron,
 /area/station/security/warden)
@@ -18159,6 +18170,10 @@
 /area/station/command/bridge)
 "hcY" = (
 /obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/tram)
 "hdd" = (
@@ -29991,6 +30006,7 @@
 "lqg" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/dark_red,
+/obj/item/flashlight/lamp,
 /turf/open/floor/iron/dark,
 /area/station/security/processing)
 "lql" = (
@@ -44574,6 +44590,12 @@
 "qCU" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/structure/table/reinforced,
+/obj/item/key/security{
+	pixel_y = 6
+	},
+/obj/item/toy/figure/warden{
+	pixel_y = -5
+	},
 /turf/open/floor/iron,
 /area/station/security/warden)
 "qCY" = (
@@ -49637,6 +49659,10 @@
 /obj/structure/cable,
 /obj/structure/table,
 /obj/effect/turf_decal/tile/dark_red/half/contrasted,
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/tram)
 "skn" = (
@@ -54646,6 +54672,7 @@
 	pixel_y = 8
 	},
 /obj/machinery/newscaster/directional/west,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/checker,
 /area/station/security/breakroom)
 "tTp" = (
@@ -55259,6 +55286,13 @@
 /obj/machinery/door/window/left/directional/north{
 	name = "Security Desk"
 	},
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = 11
+	},
 /turf/open/floor/iron/textured_large,
 /area/station/security/brig/entrance)
 "udE" = (
@@ -55772,6 +55806,17 @@
 "ulr" = (
 /obj/machinery/camera/directional/south,
 /obj/structure/table,
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clipboard{
+	pixel_x = 10;
+	pixel_y = 4
+	},
+/obj/item/folder/red{
+	pixel_x = 7
+	},
 /turf/open/floor/iron,
 /area/station/security/tram)
 "ulI" = (
@@ -60727,6 +60772,7 @@
 "vRd" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/dark_red,
+/obj/item/flashlight/lamp,
 /turf/open/floor/iron,
 /area/station/security/tram)
 "vRe" = (
@@ -66320,6 +66366,10 @@
 /obj/structure/table,
 /obj/effect/turf_decal/tile/dark_red,
 /obj/machinery/newscaster/directional/south,
+/obj/item/folder/red,
+/obj/item/pen{
+	pixel_x = 11
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/processing)
 "xxa" = (
