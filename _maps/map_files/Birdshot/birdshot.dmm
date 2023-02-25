@@ -3458,9 +3458,8 @@
 /area/station/hallway/secondary/command)
 "bBw" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/rack,
 /obj/machinery/light/small/directional/north,
-/obj/item/gun/syringe,
+/obj/machinery/suit_storage_unit/cmo,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
 "bBy" = (
@@ -31761,9 +31760,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "lVP" = (
-/obj/machinery/suit_storage_unit/cmo,
 /obj/machinery/light/cold/directional/west,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/pdapainter/security,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
 "lWk" = (
@@ -35603,6 +35602,7 @@
 /obj/item/storage/secure/safe/directional/south{
 	pixel_y = -23
 	},
+/obj/item/gun/syringe,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
 "ntY" = (
