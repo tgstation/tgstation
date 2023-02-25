@@ -41,14 +41,20 @@
  * against things, or step on them.
  *
  * The removal of the component, if this liver loses that trait, is handled
- * by the component itself.
+ * by the component listening for removal of that trait.
  */
 /obj/item/organ/internal/liver/proc/on_add_comedy_metabolism()
 	SIGNAL_HANDLER
 
 	// Are clown "bike" horns made from the livers of ex-clowns?
 	// Would that make the clown more or less likely to honk it
-	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)
+	AddComponent(\
+		/datum/component/squeak,\
+		list('sound/items/bikehorn.ogg'= 1),\
+		volume_override = 50,\
+		falloff_exponent = 20,\
+		delete_signals=list(SIGNAL_REMOVETRAIT(TRAIT_COMEDY_METABOLISM)),\
+	)
 
 /obj/item/organ/internal/liver/examine(mob/user)
 	. = ..()
@@ -108,7 +114,7 @@
 	if(filterToxins && !HAS_TRAIT(liver_owner, TRAIT_TOXINLOVER))
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
 			if(status != toxin.affected_organtype) //this particular toxin does not affect this type of organ
-				continue 
+				continue
 			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // this is an optimization
 			if(belly)
 				amount += belly.reagents.get_reagent_amount(toxin.type)

@@ -27,7 +27,7 @@
 	)
 
 
-/datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, step_delay_override, use_delay_override, extrarange, falloff_exponent, fallof_distance)
+/datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, step_delay_override, use_delay_override, extrarange, falloff_exponent, fallof_distance, list/delete_signals)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignals(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY), PROC_REF(play_squeak))
@@ -46,9 +46,9 @@
 		else if(isstructure(parent))
 			RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(use_squeak))
 
-	if(istype(parent, /obj/item/organ/internal/liver))
-		// Liver squeaking is depending on them functioning like a clown's liver
-		RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_COMEDY_METABOLISM), PROC_REF(on_comedy_metabolism_removal))
+	// List of signals, which if the parent recieves, to delete this component
+	if(islist(delete_signals) && length(delete_signals))
+		RegisterSignal(parent, delete_signals, PROC_REF(on_delete_signal))
 
 	override_squeak_sounds = custom_sounds
 	if(chance_override)
@@ -145,7 +145,7 @@
 	if(old_dir != new_dir)
 		play_squeak()
 
-/datum/component/squeak/proc/on_comedy_metabolism_removal(datum/source, trait)
+/datum/component/squeak/proc/on_delete_signal(datum/source)
 	SIGNAL_HANDLER
 
 	qdel(src)
