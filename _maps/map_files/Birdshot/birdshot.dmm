@@ -8539,6 +8539,10 @@
 "dDB" = (
 /turf/open/space/basic,
 /area/space)
+"dDF" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/science/lab)
 "dDN" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/white/line{
@@ -9312,7 +9316,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron/white/small,
-/area/station/science/research)
+/area/station/science/lab)
 "dTm" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/item/radio/intercom/directional/south,
@@ -20643,7 +20647,7 @@
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
-/area/station/science/research)
+/area/station/science/lab)
 "hYW" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/junction/flip{
@@ -21480,6 +21484,7 @@
 "inD" = (
 /obj/effect/turf_decal/siding,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/dim/directional/south,
 /turf/open/floor/iron/white/small,
 /area/station/science/lab)
 "inH" = (
@@ -35172,7 +35177,7 @@
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
-/area/station/science/research)
+/area/station/science/lab)
 "noq" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/smooth,
@@ -41896,7 +41901,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white/small,
-/area/station/science/research)
+/area/station/science/lab)
 "pNS" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -51713,7 +51718,7 @@
 "sWC" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/closed/wall/r_wall,
-/area/station/science/cytology)
+/area/station/commons/fitness/recreation)
 "sWJ" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -54618,7 +54623,7 @@
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
-/area/station/science/research)
+/area/station/science/lab)
 "tWx" = (
 /obj/effect/turf_decal/caution{
 	dir = 4
@@ -55837,6 +55842,9 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"uqw" = (
+/turf/closed/wall/r_wall,
+/area/station/commons/fitness/recreation)
 "uqH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -58457,7 +58465,7 @@
 	dir = 4
 	},
 /turf/open/floor/catwalk_floor/flat_white,
-/area/station/science/research)
+/area/station/science/lab)
 "vkr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -60369,7 +60377,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/white/small,
-/area/station/science/research)
+/area/station/science/lab)
 "vPe" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
@@ -61302,7 +61310,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white/small,
-/area/station/science/research)
+/area/station/science/lab)
 "wco" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -110401,17 +110409,17 @@ xTr
 ouY
 oPM
 sDj
-sDj
+uqw
 sWC
-sDj
-xFA
-xFA
+uqw
+uqw
+vMC
 tWr
 noe
 hYK
 pNO
 dTg
-xFA
+vMC
 wMP
 uUf
 biM
@@ -110662,13 +110670,13 @@ pnQ
 pIp
 wBI
 bIp
-xFA
-vbK
-sQb
-vbK
+vMC
+veK
+dDF
+veK
 vPa
 wbO
-xFA
+vMC
 pAo
 lOO
 xsJ
@@ -110922,10 +110930,10 @@ oHg
 qzj
 lrx
 fHT
-vbK
-sQb
+veK
+dDF
 vkn
-xFA
+vMC
 xFA
 wCu
 xFA
