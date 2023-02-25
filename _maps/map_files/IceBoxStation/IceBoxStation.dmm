@@ -26934,6 +26934,10 @@
 /area/station/hallway/primary/starboard)
 "ikO" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "qmprivacy";
+	name = "Privacy Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/qm)
 "ikT" = (
@@ -44875,7 +44879,16 @@
 	pixel_y = 4
 	},
 /obj/item/folder/yellow,
-/obj/machinery/keycard_auth/directional/west,
+/obj/machinery/keycard_auth/directional/west{
+	pixel_y = -5;
+	pixel_x = -25
+	},
+/obj/machinery/button/door/directional/west{
+	id = "qmprivacy";
+	name = "Privacy Shutters Control";
+	req_access = list("qm");
+	pixel_y = 5
+	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "nNv" = (
