@@ -7280,6 +7280,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
+/obj/effect/landmark/start/chief_medical_officer,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "ddN" = (
@@ -10228,7 +10229,7 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
-/obj/effect/landmark/start/paramedic,
+/obj/effect/landmark/start/chief_medical_officer,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
 "elM" = (
@@ -12093,6 +12094,7 @@
 /obj/structure/chair{
 	pixel_y = -2
 	},
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/iron/grimy,
 /area/station/science/cubicle)
 "eTo" = (
@@ -20534,6 +20536,13 @@
 /obj/machinery/camera/directional/east,
 /turf/open/floor/plating,
 /area/station/security/prison/work)
+"hVh" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/chief_medical_officer,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/lobby)
 "hVo" = (
 /obj/machinery/smartfridge/organ,
 /obj/effect/turf_decal/trimline/blue/corner{
@@ -20594,6 +20603,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/hallway/abandoned_command)
 "hWu" = (
+/obj/effect/landmark/start/chief_medical_officer,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
 "hWJ" = (
@@ -50261,7 +50271,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/newscaster/directional/south,
-/obj/effect/landmark/start/paramedic,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
 "sul" = (
@@ -61389,6 +61398,7 @@
 	dir = 1;
 	pixel_y = -2
 	},
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/iron/grimy,
 /area/station/science/cubicle)
 "vYH" = (
@@ -98909,7 +98919,7 @@ kov
 xyh
 xRI
 ycZ
-kov
+hVh
 elM
 pYr
 xJZ
