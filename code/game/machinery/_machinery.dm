@@ -207,10 +207,6 @@
 		component_parts.Cut()
 		component_parts = null
 
-	//delete any reference to cached stack parts created during display parts
-	QDEL_LIST_ASSOC_VAL(cached_stack_parts)
-	cached_stack_parts = null
-
 	QDEL_NULL(circuit)
 	unset_static_power()
 	return ..()
@@ -358,7 +354,6 @@
 	set_occupant(null)
 	circuit = null
 	LAZYCLEARLIST(component_parts)
-	LAZYCLEARLIST(cached_stack_parts)
 
 /**
  * Drop every movable atom in the machine's contents list that is not a component_part.
@@ -375,9 +370,6 @@
 			continue
 
 		if(movable_atom in component_parts)
-			continue
-
-		if(cached_stack_parts && cached_stack_parts[movable_atom.type])
 			continue
 
 		movable_atom.forceMove(this_turf)
@@ -822,24 +814,15 @@
 			var/obj/item/obj_part = part
 			obj_part.forceMove(loc)
 			if(istype(obj_part, /obj/item/circuitboard/machine))
-				// if the stack parts were initialized in display_parts() then just move them outside
-				if(cached_stack_parts)
-					for(var/stack_component in cached_stack_parts)
-						var/obj/item/stack/stack_ref = cached_stack_parts[stack_component]
-						stack_ref.forceMove(loc)
-					cached_stack_parts.Cut()
-				// else create the stack parts by infering them from the circuit board requested components
-				else
-					var/obj/item/circuitboard/machine/board = obj_part
-					for(var/component in board.req_components)
-						if(!ispath(component, /obj/item/stack))
-							continue
-						var/obj/item/stack/stack_path = component
-						new stack_path(loc, board.req_components[component])
+				var/obj/item/circuitboard/machine/board = obj_part
+				for(var/component in board.req_components) //loop through all stack components and spawn them
+					if(!ispath(component, /obj/item/stack))
+						continue
+					var/obj/item/stack/stack_path = component
+					new stack_path(loc, board.req_components[component])
 
 	LAZYCLEARLIST(component_parts)
 	return ..()
-
 
 /**
  * Spawns a frame where this machine is. If the machine was not disassmbled, the
@@ -1072,17 +1055,6 @@
 		replacer_tool.play_rped_sound()
 	return TRUE
 
-/// get the physical ref of the stack component used in displaying the machine parts
-/obj/machinery/proc/get_stack(obj/item/stack/component, amount)
-	if(!cached_stack_parts)
-		cached_stack_parts = list()
-
-	if(cached_stack_parts[component])
-		return cached_stack_parts[component]
-
-	cached_stack_parts[component] = new component(src, amount)
-	return cached_stack_parts[component]
-
 /obj/machinery/proc/display_parts(mob/user)
 	var/list/part_count = list()
 
@@ -1115,21 +1087,28 @@
 			for(var/component as anything in board.req_components)
 				if(!ispath(component, /obj/item/stack))
 					continue
-				var/obj/item/stack/stack_path = component
-				var/obj/item/stack/stack_ref = get_stack(stack_path, board.req_components[component])
-				part_count[stack_ref] = stack_ref.amount
+				part_count[component] = board.req_components[component]
 
 
 	var/text = span_notice("It contains the following parts:")
 	for(var/component_part in part_count)
 		var/part_name
-		if(isstack(component_part))
+		var/icon/html_icon
+		var/icon_state
+		//infer name & icon of part. stacks are just type paths so we have to get their initial values
+		if(ispath(component_part, /obj/item/stack))
 			var/obj/item/stack/stack_ref = component_part
-			part_name = stack_ref.singular_name
+			part_name = initial(stack_ref.singular_name)
+			html_icon = initial(stack_ref.icon)
+			icon_state = initial(stack_ref.icon_state)
 		else
 			var/obj/item/part = component_part
 			part_name = part.name
-		text += span_notice("[icon2html(component_part, user)] [part_count[component_part]] [part_name]\s.")
+			html_icon = part.icon
+			icon_state = part.icon_state
+		//merge icon & name into text
+		text += span_notice("[icon2html(html_icon, user, icon_state)] [part_count[component_part]] [part_name]\s.")
+
 	return text
 
 /obj/machinery/examine(mob/user)
