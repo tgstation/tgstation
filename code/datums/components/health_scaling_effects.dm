@@ -4,14 +4,23 @@
  * Scales some statistics of a living mob (speed or attack power or such) based on how hurt it is.
  */
 /datum/component/health_scaling_effects
+	/// Health percentage (between 0 and 1) at which you are considered to get the full "max" effect
 	var/max_health_threshold
+	/// Health percentage (between 0 and 1) at which you are considered to get the full "min" effect
 	var/min_health_threshold
+	/// Modification to apply to the lower bound of your attack while your health is at or above the max threshold
 	var/max_health_attack_modifier_lower
+	/// Modification to apply to the lower bound of your attack while your health is at or above the min threshold
 	var/min_health_attack_modifier_lower
+	/// Modification to apply to the upper bound of your attack while your health is at or above the max threshold
 	var/max_health_attack_modifier_upper
+	/// Modification to apply to the upper bound of your attack while your health is at or above the min threshold
 	var/min_health_attack_modifier_upper
+	/// Modification to movement speed to apply while your health is at or above the max threshold
 	var/max_health_slowdown
+	/// Modification to movement speed to apply while your health is at or above the min threshold
 	var/min_health_slowdown
+	/// A callback which is sent the mob's current ratio between the max and min values, for updating mob-specific effects
 	var/datum/callback/additional_status_callback
 
 /datum/component/health_scaling_effects/Initialize(

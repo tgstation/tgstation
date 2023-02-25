@@ -32,11 +32,7 @@
 /mob/living/basic/blankbody/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
-	AddComponent(
-		/datum/component/health_scaling_effects,\
-		min_health_attack_modifier_lower = 8,\
-		min_health_attack_modifier_upper = 14,\
-	)
+	AddComponent(/datum/component/health_scaling_effects, min_health_attack_modifier_lower = 8, min_health_attack_modifier_upper = 14)
 
 /mob/living/basic/blankbody/Destroy()
 	if(nest)
