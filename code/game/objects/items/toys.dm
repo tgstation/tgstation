@@ -1318,6 +1318,10 @@
 	for(var/i in 1 to rand(1,4))
 		new /obj/item/toy/reality_pierce(src)
 
+/obj/item/toy/reality_pierce/Initialize(mapload)
+	. = ..()
+	/obj/effect/heretic_influence/proc/generate_name()
+
 /obj/item/toy/foamfinger
 	name = "foam finger"
 	desc = "root for the home team! wait, does this station even have a sports team?"
