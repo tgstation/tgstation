@@ -76,21 +76,23 @@
 	return ..()
 
 /datum/memory/serialize_list(list/options)
-	options["name"] = name
+	. = list()
+	.["name"] = name
 	if(memorizer)
-		options["memorizer"] = memorizer
-	options["story_value"] = story_value
-	options["memory_flags"] = memory_flags
+		.["memorizer"] = memorizer
+	.["story_value"] = story_value
+	.["memory_flags"] = memory_flags
 	if(mood_verb)
-		options["mood_verb"] = mood_verb
+		.["mood_verb"] = mood_verb
 	if(protagonist_name)
-		options["protagonist_name"] = protagonist_name
+		.["protagonist_name"] = protagonist_name
 	if(deuteragonist_name)
-		options["deuteragonist_name"] = deuteragonist_name
+		.["deuteragonist_name"] = deuteragonist_name
 	if(antagonist_name)
-		options["antagonist_name"] = antagonist_name
+		.["antagonist_name"] = antagonist_name
 	if(where)
-		options["where"] = where
+		.["where"] = where
+	options[SCHEMA_VERSION_ID] = "1.0"
 
 /**
  * Generates a name for the memory.

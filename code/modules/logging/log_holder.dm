@@ -1,5 +1,3 @@
-GLOBAL_REAL(logger, /datum/log_holder)
-
 /**
  * Main datum to manage logging actions
  */
@@ -176,11 +174,14 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 			data = recursive_jsonify(data)
 
 		else if(isdatum(data))
-			var/list/serialization_list = list()
-			data.serialize_list(serialization_list)
-			if(!length(serialization_list)) // serialize_list wasn't implemented, and errored
+			var/list/options_list = list(
+				SCHEMA_VERSION_ID = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET,
+			)
+			var/list/serialization_data = data.serialize_list(options_list)
+			if(!length(serialization_data)) // serialize_list wasn't implemented, and errored
 				continue
-			data = recursive_jsonify(serialization_list)
+			serialization_data[SCHEMA_VERSION_ID] = options_list[SCHEMA_VERSION_ID]
+			data = recursive_jsonify(serialization_data)
 
 		if(isnull(data) || (islist(data) && !length(data)))
 			stack_trace("recursive_jsonify got a null value after serialization")

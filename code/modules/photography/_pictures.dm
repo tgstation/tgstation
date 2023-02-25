@@ -68,8 +68,11 @@
 	.["pixel_size_y"] = psize_y
 	.["blueprints"] = has_blueprints
 	.["logpath"] = logpath
+	options[SCHEMA_VERSION_ID] = "1.0"
 
 /datum/picture/deserialize_list(list/input, list/options)
+	if(options[SCHEMA_VERSION_ID] != "1.0")
+		CRASH("Invalid schema version for datum/picture: [options[SCHEMA_VERSION_ID]] (expected 1.0)")
 	if(!input["logpath"] || !fexists(input["logpath"]) || !input["id"] || !input["pixel_size_x"] || !input["pixel_size_y"])
 		return
 	picture_image = icon(file(input["logpath"]))

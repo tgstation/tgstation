@@ -137,6 +137,8 @@
 #define LOG_CATEGORY_PDA_CHAT "pda-chat"
 #define LOG_CATEGORY_PDA_COMMENT "pda-comment"
 
+#define SCHEMA_VERSION "schema-version"
+
 // Default log schema version
 #define LOG_CATEGORY_SCHEMA_VERSION_NOT_SET "0.0"
 

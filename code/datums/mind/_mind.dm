@@ -123,27 +123,29 @@
 	return ..()
 
 /datum/mind/serialize_list(list/options)
-	options["key"] = key
+	. = list()
+	.["key"] = key
 	if(name)
-		options["name"] = name
+		.["name"] = name
 	if(ghostname)
-		options["ghostname"] = ghostname
+		.["ghostname"] = ghostname
 	if(length(memories))
-		options["memories"] = memories
+		.["memories"] = memories
 	if(martial_art)
-		options["martial_art"] = martial_art
+		.["martial_art"] = martial_art
 	if(length(antag_datums))
-		options["antag_datums"] = antag_datums
-	options["holy_role"] = holy_role
+		.["antag_datums"] = antag_datums
+	.["holy_role"] = holy_role
 	var/mob/enslaved_to = src.enslaved_to?.resolve()
 	if(enslaved_to)
-		options["enslaved_to"] = enslaved_to.key
+		.["enslaved_to"] = enslaved_to.key
 	if(special_role)
-		options["special_role"] = special_role
+		.["special_role"] = special_role
 	if(assigned_role)
-		options["assigned_role"] = assigned_role.title
+		.["assigned_role"] = assigned_role.title
 	if(current)
-		options["current"] = current
+		.["current"] = current
+	options[SCHEMA_VERSION_ID] = "1.0"
 
 /datum/mind/vv_edit_var(var_name, var_value)
 	switch(var_name)

@@ -14,6 +14,9 @@
 GLOBAL_REAL(Debugger, /datum/debugger) = new
 //This is the ABSOLUTE ONLY THING that should init globally like this
 //2019 update: the failsafe,config and Global controllers also do it
+//2023 update: the logger also does it
+// This is created before master because Master creates the Config controller which logs
+GLOBAL_REAL(logger, /datum/log_holder) = new
 GLOBAL_REAL(Master, /datum/controller/master) = new
 
 //THIS IS THE INIT ORDER
@@ -84,8 +87,6 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 /datum/controller/master/New()
 	if(!config)
 		config = new
-	if(!Logger)
-		Logger = new
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
 
 	if(!random_seed)
