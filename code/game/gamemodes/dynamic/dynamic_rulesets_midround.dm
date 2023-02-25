@@ -679,7 +679,7 @@
 	cost = 8
 	minimum_players = 30
 	repeatable = TRUE
-	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY) /// I mean, no one uses the nets anymore but whateva
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY) // I mean, no one uses the nets anymore but whateva
 
 	var/list/spawn_locs = list()
 
