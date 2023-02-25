@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	return ..()
 
 /// Returns FALSE if we're not allowed to eat it, true otherwise
-/mob/living/carbon/alien/adult/proc/can_consume(atom/movable/poor_soul)
+/mob/living/carbon/proc/can_consume(atom/movable/poor_soul)
 	if(!isliving(poor_soul) || pulling != poor_soul)
 		return FALSE
 	if(incapacitated() || grab_state < GRAB_AGGRESSIVE || stat != CONSCIOUS)
@@ -121,9 +121,9 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	return TRUE
 
 /// Attempts to devour the passed in thing in devour_time seconds
-/// The mob needs to be consumable, as decided by [/mob/living/carbon/alien/adult/proc/can_consume]
+/// The mob needs to be consumable, as decided by [/mob/living/carbon/can_consume]
 /// Returns FALSE if the attempt never even started, TRUE otherwise
-/mob/living/carbon/alien/adult/proc/devour_lad(atom/movable/candidate, devour_time = 13.5 SECONDS)
+/mob/living/carbon/proc/devour_lad(atom/movable/candidate, devour_time = 13.5 SECONDS)
 	setDir(get_dir(src, candidate))
 	if(!can_consume(candidate))
 		return FALSE

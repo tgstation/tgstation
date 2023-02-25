@@ -7,6 +7,7 @@
 
 	mutanttongue = /obj/item/organ/internal/tongue/cat
 	mutantears = /obj/item/organ/internal/ears/cat
+	mutantstomach = /obj/item/organ/internal/stomach/alien
 	external_organs = list(
 		/obj/item/organ/external/tail/cat = "Cat",
 	)
@@ -181,3 +182,14 @@
 	)
 
 	return to_add
+
+/mob/living/carbon/MouseDrop_T(atom/dropping, atom/user)
+	// meow?
+	if(isfelinid(user) && devour_lad(dropping))
+		// Domestic cats are a major predator of wildlife in the United States,
+		// killing an estimated 1.3 to 4.0 billion birds and 6.3 to 22.3 billion mammals annually. [1][2]
+		//
+		// [1]: https://en.wikipedia.org/wiki/Cat
+		// [2]: https://www.nature.com/articles/ncomms2380
+		return
+	return ..()

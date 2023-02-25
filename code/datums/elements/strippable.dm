@@ -48,6 +48,10 @@
 		if (!cyborg_user.combat_mode)
 			return
 
+	// Felinids aren't allowed to strip people because that's gross
+	if (isfelinid(user))
+		return
+
 	if (!isnull(should_strip_proc_path) && !call(source, should_strip_proc_path)(user))
 		return
 

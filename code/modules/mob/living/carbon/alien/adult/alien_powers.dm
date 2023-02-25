@@ -394,11 +394,11 @@ Doesn't work on other aliens/AI.*/
 	playsound(owner, 'sound/creatures/alien_york.ogg', 100)
 	melting_pot.eject_stomach(slice_off_turfs(owner, border_diamond_range_turfs(owner, 9), dir_angle - angle_delta, dir_angle + angle_delta), 4, mob_speed, spit_speed)
 
-/// Gets the plasma level of this carbon's plasma vessel, or -1 if they don't have one
+/// Gets the plasma level of this carbon's plasma vessel, or 0 if they don't have one
 /mob/living/carbon/proc/getPlasma()
 	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
 	if(!vessel)
-		return -1
+		return 0
 	return vessel.stored_plasma
 
 /// Adjusts the plasma level of the carbon's plasma vessel if they have one
