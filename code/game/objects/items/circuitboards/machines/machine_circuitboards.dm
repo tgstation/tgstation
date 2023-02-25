@@ -1419,3 +1419,9 @@
 		/datum/stock_part/capacitor/tier2 = 1,
 		/datum/stock_part/micro_laser/tier2 = 2,
 	)
+
+/obj/item/circuitboard/machine/artifactxray
+	name = "Artifact X-Ray Machine"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/artifact_xray
+	req_components = list(/obj/item/stock_parts/capacitor = 1, /datum/stock_part/scanning_module = 1, /obj/item/stock_parts/micro_laser = 1)

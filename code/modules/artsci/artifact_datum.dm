@@ -76,7 +76,7 @@
 		trigger_amount--
 //Seperate from initialize, for artifact inheritance funnies
 /datum/component/artifact/proc/setup()
-	potency = min(100,potency) //just incase
+	potency = clamp(potency, 1, 100) //just incase
 	for(var/datum/artifact_trigger/trigger in triggers)
 		trigger.amount = max(trigger.base_amount,trigger.base_amount + (trigger.max_amount - trigger.base_amount) * (potency/100))
 
@@ -191,13 +191,12 @@
 
 /datum/component/artifact/proc/attack_by(atom/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
-	. = TRUE
 	if(istype(I,/obj/item/weldingtool))
 		if(I.use(1))
 			Stimulate(STIMULUS_HEAT,800)
 			holder.visible_message(span_warning("[user] burns the artifact with the [I]!"))
 			playsound(user,pick(I.usesound),50, TRUE)
-			return FALSE
+			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(istype(I, /obj/item/bodypart/arm))
 		var/obj/item/bodypart/arm/arm = I
@@ -206,25 +205,25 @@
 		else
 			Stimulate(STIMULUS_CARBON_TOUCH)
 		holder.visible_message(span_notice("[user] presses the [arm] against the artifact!")) //pressing stuff against stuff isnt very severe so
-		return FALSE
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(istype(I,/obj/item/assembly/igniter))
 		Stimulate(STIMULUS_HEAT, I.heat)
 		Stimulate(STIMULUS_SHOCK, 700)
 		holder.visible_message(span_warning("[user] zaps the artifact with the [I]!"))
-		return FALSE
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(istype(I, /obj/item/lighter))
 		var/obj/item/lighter/lighter = I
 		if(lighter.lit)
 			Stimulate(STIMULUS_HEAT, lighter.heat*0.4)
 			holder.visible_message(span_warning("[user] burns the artifact with the [I]!"))
-		return FALSE
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(I.tool_behaviour == TOOL_MULTITOOL)
 		Stimulate(STIMULUS_SHOCK, 1000)
 		holder.visible_message(span_warning("[user] shocks the artifact with the [I]!"))
-		return FALSE
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(istype(I,/obj/item/shockpaddles))
 		var/obj/item/shockpaddles/paddles = I
@@ -232,7 +231,7 @@
 			Stimulate(STIMULUS_SHOCK, 2000)
 			playsound(user,'sound/machines/defib_zap.ogg', 50, TRUE, -1)
 			holder.visible_message(span_warning("[user] shocks the artifact with the [I]."))
-			return FALSE
+			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(istype(I,/obj/item/disk/data) || istype(I,/obj/item/circuitboard))
 		holder.visible_message(span_notice("[user] touches the artifact with the [I]"))

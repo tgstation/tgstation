@@ -5,7 +5,7 @@
 	deactivation_message = "sputters a bit, and falls silent once more."
 	var/dud = FALSE
 	var/dud_message = "sputters, failing to activate! Its a dud!"
-	var/inital_warning = "begins overloading, rattling violenty!"
+	var/initial_warning = "begins overloading, rattling violenty!"
 	var/explode_delay = 1 MINUTES // also delayed by finale_delay for fluff
 	var/explode_cooldown_time = 1 MINUTES
 	var/finale_delay = 6 SECONDS //delay before we actually deliver the payload for fluff
@@ -29,7 +29,7 @@
 		sleep(2)
 		Deactivate()
 		return
-	holder.visible_message(span_bolddanger("[holder] [inital_warning]"))
+	holder.visible_message(span_bolddanger("[holder] [initial_warning]"))
 	COOLDOWN_START(src,activation_cooldown,explode_cooldown_time)
 	timer_id = addtimer(CALLBACK(src, PROC_REF(finale)), explode_delay, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 	if(do_alert && is_station_level(holder.z))
@@ -42,10 +42,7 @@
 	. = ..()
 	if(active && COOLDOWN_FINISHED(src,alarm_cooldown) && (COOLDOWN_TIMELEFT(src,alarm_cooldown) <= finale_delay))
 		playsound(holder, active_alarm, 30, 1)
-		var/pixel_x_diff = rand(-3, 3)
-		var/pixel_y_diff = rand(-2,2)
-		animate(holder, pixel_x = pixel_x_diff, pixel_y = pixel_y_diff , time = 0.2 SECONDS, loop = 6, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
-		animate(pixel_x = -pixel_x_diff , pixel_y = -pixel_y_diff , time = 0.2 SECONDS, flags = ANIMATION_RELATIVE)
+		holder.Shake(duration = 1 SECONDS)
 		COOLDOWN_START(src,alarm_cooldown, alarm_cooldown_time)
 
 /datum/component/artifact/bomb/proc/finale()
@@ -109,7 +106,7 @@
 	heavy = rand(7,12)
 	light = rand(10,25)
 	potency = (devast + heavy + light) * 2.25 // get real
-
+/* TODO
 /obj/structure/artifact/bomb/chemical
 	assoc_comp = /datum/component/artifact/bomb/chemical
 
@@ -125,4 +122,5 @@
 /datum/component/artifact/bomb/chemical/setup()
 	 . = ..()
 	 smoke = prob(50)
-	 inital_warning = "'s pores start releasing [smoke ? "a thick smoke!" : "foam!"]"
+	 initial_warning = "'s pores start releasing [smoke ? "a thick smoke!" : "foam!"]"
+	 */
