@@ -377,10 +377,12 @@
 	cost = 7
 	minimum_round_time = 70 MINUTES
 	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
+	flags = HIGH_IMPACT_RULESET
+
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	/// The nuke ops team datum.
 	var/datum/team/nuclear/nuke_team
-	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
@@ -638,6 +640,8 @@
 	cost = 7
 	minimum_players = 25
 	repeatable = TRUE
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
+
 	var/datum/team/abductor_team/new_team
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
@@ -675,6 +679,8 @@
 	cost = 8
 	minimum_players = 30
 	repeatable = TRUE
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY) // I mean, no one uses the nets anymore but whateva
+
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/execute()
