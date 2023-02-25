@@ -904,3 +904,25 @@
       food inside the microwave afterwards.
   tralezab:
   - bugfix: fixed regal rat rummaging lines sometimes getting you muted!
+2023-02-25:
+  JohnFulpWillard:
+  - bugfix: NtOS' Arcade program works again.
+  LemonInTheDark:
+  - bugfix: The gulag shuttle's point claim console will load in again. Whooops
+  NamelessFairy:
+  - bugfix: CTF flags will no longer catch fire when placed into lava, preventing
+      one class from picking it up.
+  - code_imp: CTF flags no longer respawn when they get qdeleted, this means you can
+      now delete them when debugging/as an admin.
+  Profakos:
+  - bugfix: Honourbound can no longer be gained from neurowine or from heavy brain
+      damage, no longer causing the player to be granted a spell that does nothing
+      most of the time
+  Rhials:
+  - bugfix: The disease outbreak/heart attack event candidate list will now clear
+      itself before generating.
+  coiax:
+  - bugfix: A chef who is beheaded, and the head stitched on another body will still
+      see their food as their own.
+  kawoppi:
+  - soundadd: dismantling an unplaced wallframe will now make a wrench sound
