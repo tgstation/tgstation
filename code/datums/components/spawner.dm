@@ -3,7 +3,7 @@
 	var/mob_types = list(/mob/living/basic/carp)
 	/// Time to wait between spawns
 	var/spawn_time = 30 SECONDS
-	/// List of weak references to we have already created
+	/// List of weak references to mobs we have already created
 	var/list/spawned_mobs = list()
 	/// Time until we next spawn
 	COOLDOWN_DECLARE(spawn_delay)
