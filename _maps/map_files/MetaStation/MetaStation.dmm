@@ -47655,7 +47655,6 @@
 "qUm" = (
 /obj/effect/spawner/random/vending/snackvend,
 /obj/machinery/light/directional/east,
-/obj/machinery/light/directional/east,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
