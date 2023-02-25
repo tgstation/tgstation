@@ -93,8 +93,8 @@
 /datum/unit_test/organ_set_bonus_sanity
 
 /datum/unit_test/organ_set_bonus_sanity/Run()
-	// List of organ typepaths which cause species change.
-	// Species change swaps out all the organs, making test_organ un-usable after insertion.
+	/// List of infuser_entry typepaths which contain species-changing organs.
+	/// Species change swaps out all the organs, making test_organ un-usable after insertion.
 	var/list/species_changing_entries = typecacheof(list(
 		/datum/infuser_entry/fly,
 	))
