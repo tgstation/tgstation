@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "The radiation leak event no longer targets machinery that doesn't use power."
