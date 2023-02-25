@@ -36,12 +36,12 @@
 /datum/component/spawner/proc/stop_spawning(force)
 	SIGNAL_HANDLER
 
-	STOP_PROCESSING(SSprocessing, src)=
+	STOP_PROCESSING(SSprocessing, src)
 	spawned_mobs = list()
 
 /// Try to create a new mob
 /datum/component/spawner/proc/try_spawn_mob()
-	if(!COOLDOWN_FINISHED(spawn_delay))
+	if(!COOLDOWN_FINISHED(src, spawn_delay))
 		return
 	validate_references()
 	if(length(spawned_mobs) >= max_mobs)
