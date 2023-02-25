@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Scan gates correctly flick their alarm overlays, I think they already looked correct but now it's more correct"
+  - bugfix: "If you are somehow a human without a species, the generic zap animation should be more correct, even though this will probably never ever happen"
