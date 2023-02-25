@@ -1,0 +1,4 @@
+author: "Kubisopplay"
+delete-after: True
+changes:
+  - bugfix: "Fixes split personality kicking out the original owner of the body."

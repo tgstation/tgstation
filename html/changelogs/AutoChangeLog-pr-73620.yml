@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Nuke Ops Leaders midround don't spawn on Arrivals Shuttle late for work"
+  - bugfix: "(Maybe) fixes some additional issues related to midround nukie / abductor spawns"
