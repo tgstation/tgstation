@@ -1,13 +1,18 @@
 /datum/component/spawner
+	/// List of mob types to spawn, picked randomly
 	var/mob_types = list(/mob/living/basic/carp)
-	var/spawn_time = 300 //30 seconds default
+	/// Time to wait between spawns
+	var/spawn_time = 30 SECONDS
+	/// List of weak references to we have already created
 	var/list/spawned_mobs = list()
-	var/spawn_delay = 0
+	/// Time until we next spawn
+	COOLDOWN_DECLARE(spawn_delay)
+	/// Maximum number of mobs we can have active at one time
 	var/max_mobs = 5
+	/// Visible message to show when a mob spawns
 	var/spawn_text = "emerges from"
+	/// Faction to grant to mobs
 	var/list/faction = list("mining")
-
-
 
 /datum/component/spawner/Initialize(_mob_types, _spawn_time, _faction, _spawn_text, _max_mobs)
 	if(_spawn_time)
@@ -27,27 +32,49 @@
 /datum/component/spawner/process()
 	try_spawn_mob()
 
-
+/// Stop spawning mobs
 /datum/component/spawner/proc/stop_spawning(force)
 	SIGNAL_HANDLER
 
-	STOP_PROCESSING(SSprocessing, src)
-	for(var/mob/living/simple_animal/L in spawned_mobs)
-		if(L.nest == src)
-			L.nest = null
-	spawned_mobs = null
+	STOP_PROCESSING(SSprocessing, src)=
+	spawned_mobs = list()
 
+/// Try to create a new mob
 /datum/component/spawner/proc/try_spawn_mob()
-	var/atom/P = parent
-	if(spawned_mobs.len >= max_mobs)
+	if(!COOLDOWN_FINISHED(spawn_delay))
 		return
-	if(spawn_delay > world.time)
+	validate_references()
+	if(length(spawned_mobs) >= max_mobs)
 		return
-	spawn_delay = world.time + spawn_time
+	var/atom/spawner = parent
+	COOLDOWN_START(src, spawn_delay, spawn_time)
+
 	var/chosen_mob_type = pick(mob_types)
-	var/mob/living/simple_animal/L = new chosen_mob_type(P.loc)
-	L.flags_1 |= (P.flags_1 & ADMIN_SPAWNED_1)
-	spawned_mobs += L
-	L.nest = src
-	L.faction = src.faction
-	P.visible_message(span_danger("[L] [spawn_text] [P]."))
+	var/mob/living/created = new chosen_mob_type(spawner.loc)
+	created.flags_1 |= (spawner.flags_1 & ADMIN_SPAWNED_1)
+	spawned_mobs += WEAKREF(created)
+	created.faction = src.faction
+	spawner.visible_message(span_danger("[created] [spawn_text] [spawner]."))
+
+	RegisterSignal(created, COMSIG_PARENT_QDELETING, PROC_REF(mob_deleted))
+	RegisterSignal(created, COMSIG_MOB_STATCHANGE, PROC_REF(mob_stat_changed))
+
+/// Remove weakrefs to mobs which have been killed or deleted without us picking it up somehow
+/datum/component/spawner/proc/validate_references()
+	for (var/datum/weakref/weak_mob as anything in spawned_mobs)
+		var/mob/living/previously_spawned = weak_mob.resolve()
+		if (previously_spawned && previously_spawned.stat != DEAD)
+			continue
+		spawned_mobs -= weak_mob
+
+/// Called when a mob we spawned is deleted, remove it from the list
+/datum/component/spawner/proc/mob_deleted(mob/living/source)
+	SIGNAL_HANDLER
+	spawned_mobs -= WEAKREF(source)
+
+/// Called when a mob we spawned dies, remove it from the list and unregister signals
+/datum/component/spawner/proc/mob_stat_changed(mob/living/source)
+	if (source.stat != DEAD)
+		return
+	spawned_mobs -= WEAKREF(source)
+	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_STATCHANGE))
