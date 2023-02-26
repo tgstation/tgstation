@@ -50445,7 +50445,6 @@
 /area/station/hallway/secondary/entry)
 "stX" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/light/small/directional/west,
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
