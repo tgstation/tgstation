@@ -11104,9 +11104,9 @@
 /area/station/cargo/lobby)
 "cbj" = (
 /obj/machinery/door/window/left/directional/north{
-	name = "Containment Pen #1";
 	base_state = "right";
 	icon_state = "right";
+	name = "Containment Pen #1";
 	req_access = list("xenobiology")
 	},
 /obj/effect/turf_decal/delivery,
@@ -11116,9 +11116,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/south{
-	name = "Containment Pen #1";
 	base_state = "right";
 	icon_state = "right";
+	name = "Containment Pen #1";
 	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/dark,
@@ -29722,9 +29722,9 @@
 /area/station/ai_monitored/security/armory)
 "jmb" = (
 /obj/machinery/door/window/left/directional/south{
-	name = "Containment Pen #5";
 	base_state = "right";
 	icon_state = "right";
+	name = "Containment Pen #5";
 	req_access = list("xenobiology")
 	},
 /obj/effect/turf_decal/delivery,
@@ -29734,9 +29734,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/north{
-	name = "Containment Pen #5";
 	base_state = "right";
 	icon_state = "right";
+	name = "Containment Pen #5";
 	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/dark,
@@ -48834,9 +48834,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/north{
-	name = "Containment Pen #7";
 	base_state = "right";
 	icon_state = "right";
+	name = "Containment Pen #7";
 	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/dark,
@@ -54648,9 +54648,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/south{
-	name = "Containment Pen #3";
 	base_state = "right";
 	icon_state = "right";
+	name = "Containment Pen #3";
 	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/dark,
