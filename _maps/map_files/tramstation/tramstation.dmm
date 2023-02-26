@@ -6337,7 +6337,8 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/north{
-	name = "Containment Pen #8"
+	name = "Containment Pen #8";
+	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
@@ -11104,9 +11105,9 @@
 "cbj" = (
 /obj/machinery/door/window/left/directional/north{
 	name = "Containment Pen #1";
-	req_access = list("xenobiology");
 	base_state = "right";
-	icon_state = "right"
+	icon_state = "right";
+	req_access = list("xenobiology")
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/preopen{
@@ -11117,7 +11118,8 @@
 /obj/machinery/door/window/left/directional/south{
 	name = "Containment Pen #1";
 	base_state = "right";
-	icon_state = "right"
+	icon_state = "right";
+	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
@@ -12730,7 +12732,8 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/south{
-	name = "Containment Pen #4"
+	name = "Containment Pen #4";
+	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
@@ -21063,7 +21066,8 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/south{
-	name = "Containment Pen #2"
+	name = "Containment Pen #2";
+	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
@@ -29719,9 +29723,9 @@
 "jmb" = (
 /obj/machinery/door/window/left/directional/south{
 	name = "Containment Pen #5";
-	req_access = list("xenobiology");
 	base_state = "right";
-	icon_state = "right"
+	icon_state = "right";
+	req_access = list("xenobiology")
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/preopen{
@@ -29732,7 +29736,8 @@
 /obj/machinery/door/window/left/directional/north{
 	name = "Containment Pen #5";
 	base_state = "right";
-	icon_state = "right"
+	icon_state = "right";
+	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
@@ -36417,7 +36422,8 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/north{
-	name = "Containment Pen #6"
+	name = "Containment Pen #6";
+	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
@@ -48830,7 +48836,8 @@
 /obj/machinery/door/window/left/directional/north{
 	name = "Containment Pen #7";
 	base_state = "right";
-	icon_state = "right"
+	icon_state = "right";
+	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
@@ -54643,7 +54650,8 @@
 /obj/machinery/door/window/left/directional/south{
 	name = "Containment Pen #3";
 	base_state = "right";
-	icon_state = "right"
+	icon_state = "right";
+	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
