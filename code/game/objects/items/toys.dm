@@ -1312,7 +1312,7 @@
 
 /obj/item/toy/reality_pierce/Initialize(mapload)
 	. = ..()
-	name = "\improper" + pick(strings(HERETIC_INFLUENCE_FILE, "drained")) +  " " + pick(strings(HERETIC_INFLUENCE_FILE, "prefix")) + " " + pick(strings(HERETIC_INFLUENCE_FILE, "postfix"))
+	name = "\improper" + pick(strings(HERETIC_INFLUENCE_FILE, "drained")) + " " + pick(strings(HERETIC_INFLUENCE_FILE, "prefix")) + " " + pick(strings(HERETIC_INFLUENCE_FILE, "postfix"))
 
 /obj/item/storage/box/heretic_box
 	name = "box of pierced realities"
