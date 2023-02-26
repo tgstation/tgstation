@@ -1,4 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - bugfix: "The unanchored reinforced plasma-glass windows on snowdin have been anchored."

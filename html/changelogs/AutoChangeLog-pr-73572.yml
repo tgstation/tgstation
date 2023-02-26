@@ -1,7 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - refactor: "Changeling's Lesser Form is now one ability instead of two which keep swapping, which should consistently turn you back and forth without deleting itself from your action bar."
-  - bugfix: "Hatching from an egg left by a Last Resort headcrab should correctly grant you Lesser Form in addition to your other abilities."
-  - bugfix: "Turning into a monkey while using the Changeling space suit won't leave you as a monkey with a weird inflated head."
-  - qol: "Using lesser form as a monkey with only one stored DNA profile will skip asking which profile you want and will simply transform you immediately into the only option."
