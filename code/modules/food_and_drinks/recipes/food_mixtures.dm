@@ -3,7 +3,8 @@
 	var/total_nutriment_factor
 
 /datum/crafting_recipe/food/on_craft_completion(mob/user, atom/result)
-	ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(user))
+	if(user.mind)
+		ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
 
 /datum/crafting_recipe/food/New()
 	if(ispath(result, /obj/item/food))

@@ -194,6 +194,15 @@
 	victim = null
 	dropoff_area = null
 
+/datum/traitor_objective/kidnapping/on_objective_taken(mob/user)
+	. = ..()
+	INVOKE_ASYNC(src, PROC_REF(generate_holding_area))
+
+/datum/traitor_objective/kidnapping/proc/generate_holding_area()
+	// Let's load in the holding facility ahead of time
+	// even if they fail the objective  it's better to get done now rather than later
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
+
 /datum/traitor_objective/kidnapping/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
 	if(!pod_called)
