@@ -231,8 +231,9 @@
 	while(length(afflicted))
 		victim = pick_n_take(afflicted)
 		if(victim.ForceContractDisease(advanced_disease, FALSE))
-			message_admins("Event triggered: Disease Outbreak - [advanced_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(victim)]! It has these symptoms: [english_list(name_symptoms)]. It is transmissable via [advanced_disease.spread_text].")
-			log_game("Event triggered: Disease Outbreak - [advanced_disease.name] starting with patient zero [key_name(victim)]. It has these symptoms: [english_list(name_symptoms)]. It is transmissable via [advanced_disease.spread_text].")
+			message_admins("Event triggered: Disease Outbreak: Advanced - starting with patient zero [key_name(victim)]! Details: [advanced_disease.admin_details()] spread [advanced_disease.spread_flags] ([advanced_disease.spread_text])")
+			log_game("Event triggered: Disease Outbreak: Advanced - starting with patient zero [key_name(victim)]. Details: [advanced_disease.admin_details()] sp:[advanced_disease.spread_flags] ([advanced_disease.spread_text])")
+			log_virus("Disease Outbreak: Advanced has triggered a custom virus outbreak of [advanced_disease.admin_details()] in [victim]!")
 			announce_to_ghosts(victim)
 			return
 		CHECK_TICK //don't lag the server to death
