@@ -1,30 +1,27 @@
 /datum/component/spawner
-	/// List of mob types to spawn, picked randomly
-	var/mob_types = list(/mob/living/basic/carp)
 	/// Time to wait between spawns
-	var/spawn_time = 30 SECONDS
+	var/spawn_time
+	/// Maximum number of mobs we can have active at one time
+	var/max_mobs
+	/// Visible message to show when a mob spawns
+	var/spawn_text
+	/// List of mob types to spawn, picked randomly
+	var/list/mob_types
+	/// Faction to grant to mobs
+	var/list/faction
 	/// List of weak references to mobs we have already created
 	var/list/spawned_mobs = list()
 	/// Time until we next spawn
 	COOLDOWN_DECLARE(spawn_delay)
-	/// Maximum number of mobs we can have active at one time
-	var/max_mobs = 5
-	/// Visible message to show when a mob spawns
-	var/spawn_text = "emerges from"
-	/// Faction to grant to mobs
-	var/list/faction = list("mining")
 
-/datum/component/spawner/Initialize(_mob_types, _spawn_time, _faction, _spawn_text, _max_mobs)
-	if(_spawn_time)
-		spawn_time=_spawn_time
-	if(_mob_types)
-		mob_types=_mob_types
-	if(_faction)
-		faction=_faction
-	if(_spawn_text)
-		spawn_text=_spawn_text
-	if(_max_mobs)
-		max_mobs=_max_mobs
+/datum/component/spawner/Initialize(mob_types = list(), spawn_time = 30 SECONDS, max_mobs = 5, faction = list("mining"), spawn_text = "emerges from")
+	if (!length(mob_types))
+		CRASH("No types of mob to spawn specified for spawner component!")
+	src.spawn_time = spawn_time
+	src.mob_types = mob_types
+	src.faction = faction
+	src.spawn_text = spawn_text
+	src.max_mobs = max_mobs
 
 	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(stop_spawning))
 	START_PROCESSING(SSprocessing, src)

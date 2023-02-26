@@ -282,7 +282,14 @@
 
 /mob/living/simple_animal/hostile/big_legion/Initialize(mapload)
 	.=..()
-	AddComponent(/datum/component/spawner, list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion), 200, faction, "peels itself off from", 3)
+	AddComponent(\
+		/datum/component/spawner,\
+		mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion),\
+		spawn_time = 20 SECONDS,\
+		max_mobs = 3,\
+		spawn_text = "peels itself off from",\
+		faction = faction,\
+	)
 
 // Snow Legion
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow
