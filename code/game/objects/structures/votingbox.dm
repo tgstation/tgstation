@@ -175,7 +175,7 @@
 
 		var/full_vote_text = ""
 		for(var/datum/paper_input/text as anything in paper_content.raw_text_inputs)
-			full_vote_text += "[text.raw_text]<br>"
+			full_vote_text += "[text.raw_text]"
 
 		if(!results[full_vote_text])
 			results[full_vote_text] = 1
@@ -204,12 +204,11 @@
 			.vote_box_content hr {
 				display: none;
 			}
-		</style>
-		"}
+		</style>"}
 
-	tally += "<h1>Voting Results:</h1><hr><ol>"
+	tally += "<h1>Voting Results:</h1><br/><h2>[vote_description]</h2><hr><ol>"
 	for(var/option in results)
-		tally += "<li>\"<div class='vote_box_content'>[option]</div>\" - [results[option]] Vote[results[option] > 1 ? "s" : ""].</li>"
+		tally += "<li>\"<span class='vote_box_content'>[option]</span>\" - [results[option]] Vote[results[option] > 1 ? "s" : ""].</li>"
 	tally += "</ol>"
 
 	vote_tally_paper.add_raw_text(tally.Join())

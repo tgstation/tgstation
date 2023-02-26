@@ -1,0 +1,4 @@
+author: "kawoppi"
+delete-after: True
+changes:
+  - bugfix: "filled trashcarts spawn nearby grime when initialized instead of when opened for the first time"

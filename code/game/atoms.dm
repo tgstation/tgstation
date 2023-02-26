@@ -1521,7 +1521,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	SEND_SIGNAL(src, COMSIG_ATOM_CREATEDBY_PROCESSING, original_atom, chosen_option)
-	ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user))
+	if(user.mind)
+		ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
 
 //! Tool-specific behavior procs.
 ///

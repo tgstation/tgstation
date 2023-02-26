@@ -31,8 +31,6 @@
 	var/static/list/migo_sounds
 	/// Odds migo will dodge
 	var/dodge_prob = 10
-	/// Used for mobs that get spawned in a spawner appearently.
-	var/datum/component/spawner/nest
 
 /mob/living/basic/migo/Initialize(mapload)
 	. = ..()
@@ -95,12 +93,6 @@
 	. = Move(get_step(loc,pick(cdir, ccdir)))
 	if(!.)//Can't dodge there so we just carry on
 		. = Move(moving_to, move_direction)
-
-/mob/living/basic/migo/Destroy()
-	if(nest)
-		nest.spawned_mobs -= src
-		nest = null
-	return ..()
 
 /datum/ai_controller/basic_controller/migo
 	blackboard = list(

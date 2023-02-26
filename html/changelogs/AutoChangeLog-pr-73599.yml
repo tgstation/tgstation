@@ -1,0 +1,7 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Disease Outbreak doesn't give up so easily when trying to start the event"
+  - balance: "Disease Outbreak will not spawn on positive virus mobs, but can be transmitted if resistance is low"
+  - bugfix: "Disease Outbreak creates an entry in the virus log like it should"
+  - admin: "Admins can see Disease Outbreak virus stats when the event starts"

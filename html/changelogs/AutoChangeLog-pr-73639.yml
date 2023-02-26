@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes:
+  - bugfix: "Fixes formatting for the paper containing vote box final tallies. \"I love democracy\"."

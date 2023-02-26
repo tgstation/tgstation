@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "Any worn item that has its color changed will now have its color change reflected on the item's worn icon immediately."

@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Mob spawners will no longer break if instructed to spawn certain kinds of basic mob, or monkeys."
