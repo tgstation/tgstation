@@ -13,6 +13,7 @@
 	else
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_organs(delta_time, times_fired)
+		handle_dead_metabolization(delta_time, times_fired)
 
 		. = ..()
 		if(QDELETED(src))
@@ -821,3 +822,12 @@
 		return
 
 	heart.beating = !status
+
+//////////////////////
+//SNOWFLAKE REAGENTS//
+//////////////////////
+
+/mob/living/carbon/proc/handle_dead_metabolization(delta_time, times_fired)
+	if (stat != DEAD)
+		return
+	reagents.metabolize(src, delta_time, times_fired, can_overdose = TRUE, liverless = TRUE, dead = TRUE)
