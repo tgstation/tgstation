@@ -17,9 +17,20 @@
 /obj/structure/sink/directional/east,
 /turf/open/floor/plating,
 /area/centcom/basketball)
+"bB" = (
+/obj/effect/turf_decal/loading_area/white{
+	dir = 8
+	},
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/floor/plating,
+/area/centcom/basketball)
 "ci" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/basketball/team_spawn/away,
+/obj/effect/turf_decal/caution/white,
+/obj/effect/turf_decal/arrows/white{
+	dir = 1;
+	pixel_y = -12
+	},
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "cz" = (
@@ -199,6 +210,14 @@
 /obj/effect/decal/remains/human,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
+"lU" = (
+/obj/effect/turf_decal/loading_area/white{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/floor/plating,
+/area/centcom/basketball)
 "mp" = (
 /obj/effect/spawner/random/trash/graffiti,
 /turf/open/floor/plating,
@@ -256,7 +275,12 @@
 /area/centcom/basketball)
 "qU" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/directional/west,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/caution,
+/obj/effect/turf_decal/arrows{
+	dir = 1;
+	pixel_y = -12
+	},
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "rU" = (
@@ -274,6 +298,10 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 9
 	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"tJ" = (
+/obj/structure/sink/directional/west,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "tU" = (
@@ -304,6 +332,13 @@
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/centcom/basketball)
+"wK" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/floor/plating,
+/area/centcom/basketball)
 "wZ" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -311,6 +346,11 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"xv" = (
+/obj/effect/turf_decal/caution/white,
+/obj/effect/turf_decal/arrows/white,
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "zo" = (
 /obj/structure/grille/indestructible,
@@ -404,6 +444,12 @@
 "Ev" = (
 /obj/structure/headpike,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Fk" = (
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_x = 32
+	},
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "FA" = (
@@ -522,6 +568,12 @@
 /area/centcom/basketball)
 "OB" = (
 /obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"OL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/caution,
+/obj/effect/turf_decal/arrows,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "PU" = (
@@ -686,6 +738,14 @@
 /obj/structure/bed/maint,
 /turf/open/floor/plating,
 /area/centcom/basketball)
+"Zu" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/floor/plating,
+/area/centcom/basketball)
 "ZM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -696,6 +756,8 @@
 /area/centcom/basketball)
 
 (1,1,1) = {"
+Hu
+Hu
 Hu
 Hu
 Hu
@@ -732,7 +794,9 @@ WM
 WM
 WM
 ju
+WM
 Yp
+WM
 WM
 WM
 WM
@@ -757,6 +821,8 @@ zX
 TV
 Ma
 lh
+lh
+Qh
 Qh
 sb
 WB
@@ -782,7 +848,9 @@ LU
 Qh
 oh
 lh
+lh
 hf
+lh
 Qh
 lh
 Ga
@@ -811,6 +879,8 @@ zo
 zo
 zo
 zo
+zo
+zo
 Nt
 kT
 WM
@@ -832,7 +902,9 @@ Qh
 zo
 Oj
 Om
+Qh
 Cv
+lh
 Om
 Qh
 zo
@@ -855,11 +927,13 @@ pu
 Gi
 eU
 zo
-hG
+Qh
+bB
 Qi
 Qi
 IA
-gn
+lU
+lh
 zo
 Qh
 Qh
@@ -881,9 +955,11 @@ lh
 Ev
 zo
 Qh
+lh
 qQ
 hG
 gn
+lh
 Qh
 zo
 kp
@@ -908,6 +984,8 @@ zo
 dC
 Uv
 dC
+dC
+Uv
 Uv
 gq
 zo
@@ -932,7 +1010,9 @@ QC
 zo
 Qh
 Qh
+Qh
 Gi
+lh
 Qh
 lh
 zo
@@ -955,11 +1035,13 @@ Qh
 Qh
 Uy
 zo
+xv
 lh
 mp
 mp
 LS
 Qh
+ci
 zo
 ku
 pw
@@ -981,9 +1063,11 @@ Qh
 Rl
 zo
 Qh
-LS
+Qh
+mp
 YX
 mp
+lh
 lh
 zo
 tX
@@ -1005,11 +1089,13 @@ kc
 lh
 MS
 zo
-Qh
+OL
+lh
 mp
 LS
 mp
-uW
+lh
+qU
 zo
 ZM
 lh
@@ -1034,6 +1120,8 @@ be
 lh
 lh
 lh
+Gi
+lh
 Qh
 zo
 Qh
@@ -1057,7 +1145,9 @@ CD
 zo
 Qa
 Qa
+Qa
 Xm
+Qa
 Qa
 dS
 zo
@@ -1081,9 +1171,11 @@ lh
 Ev
 zo
 HH
+Gi
 eF
 nV
 nV
+lh
 lh
 zo
 kp
@@ -1105,11 +1197,13 @@ Cw
 uW
 eU
 zo
-ci
-zy
+Qh
+Zu
+Bd
 zy
 Bd
-ci
+wK
+Qh
 zo
 YH
 zZ
@@ -1132,7 +1226,9 @@ lh
 zo
 kp
 vo
+lh
 DP
+Qh
 vo
 lh
 zo
@@ -1161,6 +1257,8 @@ zo
 zo
 zo
 zo
+zo
+zo
 lh
 aw
 WM
@@ -1181,8 +1279,10 @@ lh
 cz
 lh
 lh
+Qh
 De
 Gi
+Qh
 Qh
 pq
 oh
@@ -1205,10 +1305,12 @@ WM
 fi
 Qh
 Gi
-jj
+Fk
 oh
+lh
 Ql
-qU
+tJ
+Qh
 jj
 CD
 Gi
@@ -1232,7 +1334,9 @@ WM
 WM
 WM
 WM
+WM
 fp
+WM
 WM
 WM
 WM
@@ -1246,6 +1350,8 @@ lh
 Hu
 "}
 (23,1,1) = {"
+Hu
+Hu
 Hu
 Hu
 Hu

@@ -86,7 +86,7 @@ GLOBAL_VAR(basketball_game)
 	var/list/bounds = current_map.load(spawn_area)
 	if(!bounds)
 		CRASH("Loading basketball map failed!")
-	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 23, spawn_area.y + 23,spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
+	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 23, spawn_area.y + 25, spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
 
 	var/turf/home_hoop_turf = get_turf(locate(/obj/effect/landmark/basketball/team_spawn/home_hoop) in GLOB.landmarks_list)
 	if(!home_hoop_turf)
@@ -268,7 +268,7 @@ GLOBAL_VAR(basketball_game)
 		var/mob/living/competitor = get_mob_by_ckey(ckey)
 		var/area/mob_area = get_area(competitor)
 		if(istype(competitor) && istype(mob_area, /area/centcom/basketball))
-			qdel(competitor)
+			competitor.dust()
 
 	map_deleter.generate() //remove the map, it will be loaded at the start of the next one
 

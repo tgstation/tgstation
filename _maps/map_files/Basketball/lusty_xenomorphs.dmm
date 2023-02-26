@@ -228,6 +228,11 @@
 /obj/effect/decal/cleanable/xenoblood/xgibs/down,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
+"rT" = (
+/obj/structure/alien/weeds,
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/floor/engine,
+/area/centcom/basketball)
 "rU" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/left/directional/north{
@@ -375,6 +380,12 @@
 	},
 /turf/open/floor/engine,
 /area/centcom/basketball)
+"Fd" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/structure/alien/weeds,
+/turf/open/floor/engine,
+/area/centcom/basketball)
 "Gh" = (
 /obj/structure/alien/egg/burst,
 /turf/open/floor/engine,
@@ -399,6 +410,11 @@
 "IA" = (
 /obj/effect/decal/cleanable/xenoblood,
 /turf/open/floor/engine,
+/area/centcom/basketball)
+"Jc" = (
+/obj/structure/alien/weeds/node,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/white,
 /area/centcom/basketball)
 "JM" = (
 /turf/open/floor/iron/white,
@@ -574,6 +590,11 @@
 /obj/machinery/shower/directional/west,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
+"XF" = (
+/obj/structure/alien/weeds,
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/floor/engine,
+/area/centcom/basketball)
 "YH" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
@@ -614,6 +635,8 @@ Hu
 Hu
 Hu
 Hu
+Hu
+Hu
 "}
 (2,1,1) = {"
 Hu
@@ -627,7 +650,9 @@ Lu
 Lu
 Lu
 Lu
+Lu
 cz
+Lu
 Lu
 Lu
 Lu
@@ -651,9 +676,11 @@ fi
 YH
 Vr
 WB
+Vr
 dg
 LV
 dg
+Vr
 qU
 Vr
 Vr
@@ -677,7 +704,9 @@ Vr
 Vr
 Vr
 Vr
+Vr
 YH
+Vr
 Vr
 Vr
 oh
@@ -706,6 +735,8 @@ Cw
 Cw
 Cw
 Cw
+Cw
+Cw
 kc
 uW
 Lu
@@ -727,7 +758,9 @@ aw
 Cw
 Oj
 uH
+uH
 Cv
+uH
 uH
 Oj
 Cw
@@ -750,11 +783,13 @@ PU
 kc
 Vr
 Cw
-OS
+Oj
+XF
 uH
 uH
 uH
-OS
+XF
+Oj
 Cw
 Vr
 Vr
@@ -776,9 +811,11 @@ Vr
 Vr
 Cw
 Oj
+Oj
 OS
 OS
 OS
+Oj
 Oj
 Cw
 Vr
@@ -800,11 +837,13 @@ LS
 Vr
 Vr
 Cw
+oR
 dC
 dC
 dC
 dC
 dC
+oR
 Cw
 Vr
 Vr
@@ -825,6 +864,8 @@ Nt
 Vr
 Vr
 Cw
+uH
+uH
 uH
 uH
 uH
@@ -851,9 +892,11 @@ Vr
 Uy
 Cw
 uH
+Fd
 oR
 oR
 oR
+Fd
 uH
 Cw
 Vr
@@ -876,9 +919,11 @@ kc
 Rl
 Cw
 uH
+Fd
 oR
 YX
 oR
+Fd
 uH
 Cw
 oj
@@ -901,9 +946,11 @@ Vr
 MS
 Cw
 uH
+Fd
 oR
 oR
 oR
+Fd
 uH
 Cw
 Vr
@@ -930,6 +977,8 @@ uH
 uH
 uH
 uH
+uH
+uH
 Cw
 Vr
 Vr
@@ -950,11 +999,13 @@ LS
 Vr
 Vr
 Cw
+oR
 dC
 dC
 dC
 dC
 dC
+oR
 Cw
 Vr
 Vr
@@ -976,9 +1027,11 @@ Vr
 Vr
 Cw
 Oj
+Oj
 Le
 Le
 Le
+Oj
 Oj
 Cw
 Vr
@@ -1000,11 +1053,13 @@ PU
 Bd
 kc
 Cw
-Le
+Oj
+rT
 uH
 uH
 uH
-Le
+rT
+Oj
 Cw
 Vr
 Vr
@@ -1027,7 +1082,9 @@ Vr
 Cw
 Oj
 uH
+uH
 DP
+uH
 uH
 Oj
 Cw
@@ -1056,6 +1113,8 @@ Cw
 Cw
 Cw
 Cw
+Cw
+Cw
 Vr
 uW
 Lu
@@ -1077,7 +1136,9 @@ Vr
 kc
 Vr
 Vr
+Vr
 vo
+Vr
 Vr
 Vr
 Vr
@@ -1101,9 +1162,11 @@ AU
 Vr
 Vr
 jj
+Vr
 Xo
 Ql
 mp
+Jc
 Ic
 tU
 Vr
@@ -1127,7 +1190,9 @@ Lu
 Lu
 Lu
 Lu
+Lu
 Qi
+Lu
 Lu
 Lu
 Lu
@@ -1141,6 +1206,8 @@ tO
 Hu
 "}
 (23,1,1) = {"
+Hu
+Hu
 Hu
 Hu
 Hu
