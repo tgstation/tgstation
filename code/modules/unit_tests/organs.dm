@@ -143,14 +143,14 @@
 
 		// Bonus of the Fly mutation swaps out all the organs, making it rather permanent.
 		// As a result, the inserted_organs list is un-usable by this point.
-		if(species_changing_entries[infuser_entry])
+		if(species_changing_entries[infuser_entry.type])
 			continue
 
 		// Remove all the organs which were just added.
 		for(var/obj/item/organ/test_organ as anything in inserted_organs)
 			test_organ.Remove(lab_rat, special = TRUE)
 
-		var/removed_status = locate(/datum/status_effect/organ_set_bonus) in lab_rat.status_effects
+		var/removed_status = (locate(/datum/status_effect/organ_set_bonus) in lab_rat.status_effects)
 
 		// Search for added Status Effect.
 		TEST_ASSERT(!removed_status || !added_status.bonus_active, "The ``[added_status.type]`` bonus was not deactivated after removing [total_inserted] of the [total_organs_needed] required organs from the mob, when it was expected.")
