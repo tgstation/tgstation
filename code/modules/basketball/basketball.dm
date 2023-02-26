@@ -38,6 +38,10 @@
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(src, COMSIG_MOVABLE_POST_THROW, PROC_REF(after_thrown))
+
+	// test this and remove if it doesn't work
+	RegisterSignal(src, COMSIG_MOVABLE_IMPACT, PROC_REF(shoot_over_mob))
+
 	//RegisterSignal(src, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(return_missed_throw))
 	//RegisterSignal(src, COMSIG_MOVABLE_IMPACT, PROC_REF(return_hit_throw))
 
@@ -271,7 +275,9 @@
 
 /obj/item/toy/basketball/afterattack(atom/target, mob/user)
 	. = ..()
-	user.throw_item(target)
+//	user.throw_item(target)
+
+
 //	pass_flags = initial(pass_flags)
 
 /obj/item/toy/basketball/afterattack_secondary(atom/aim_target, mob/living/baller, params)
@@ -326,11 +332,25 @@
 //obj/item/toy/basketball/pre_attack_secondary(mob/living/user, list/modifiers)
 
 
+/obj/item/toy/basketball/Bump(atom/obstacle)
+	if(pass_flags & PASSMOB && isliving(obstacle))
+		return
+
+	. = ..()
+
+/obj/item/toy/basketball/proc/shoot_over_mobs(obj/item/source, atom/hit_atom, datum/thrownthing/thrownthing)
+	SIGNAL_HANDLER
+
+	return COMPONENT_MOVABLE_IMPACT_NEVERMIND
+
 /obj/item/toy/basketball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
+
+	//var/atom/movable/actual_target = initial_target?.resolve()
 	if(throwingdatum.initial_target == hit_atom)
 		pass_flags = initial(pass_flags)
-	. = ..()
+
+	// . = ..()
 
 /**
 /obj/item/toy/basketball/attack_secondary(mob/living/victim, mob/living/user, params)
