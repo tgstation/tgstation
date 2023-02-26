@@ -15,12 +15,10 @@ endmap
 
 map metastation
 	#default
-	minplayers 5
 	votable
 endmap
 
 map deltastation
-	minplayers 5
 	votable
 endmap
 
@@ -30,18 +28,19 @@ map kilostation
 endmap
 
 map icebox
-	minplayers 5
 	votable
 endmap
 
 map tramstation
 	minplayers 5
-	votable
 	disabled
+	votable
 endmap
 
 map runtimestation
+	disabled
 endmap
 
 map multiz_debug
+	disabled
 endmap

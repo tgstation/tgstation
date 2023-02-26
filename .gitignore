@@ -230,3 +230,6 @@ Tracy.exe
 
 # named byond versions config
 /tools/build/dm_versions.json
+config/admins.txt
+config/config.txt
+config/dbconfig.txt
