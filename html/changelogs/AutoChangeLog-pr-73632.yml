@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "Borg hypospray will correctly tell you the name of the limb that is blocked when trying to inject into a blocked limb."

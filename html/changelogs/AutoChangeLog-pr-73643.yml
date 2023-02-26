@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "MMIs/Positrons dont get slept forever when the mech theyre in gets destroyed"

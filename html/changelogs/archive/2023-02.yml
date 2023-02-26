@@ -926,3 +926,57 @@
       see their food as their own.
   kawoppi:
   - soundadd: dismantling an unplaced wallframe will now make a wrench sound
+2023-02-26:
+  Helg2:
+  - rscadd: Adds privacy shutters for quartermaster. Shutters on Kilo/IceBox and blastdoors
+      on Meta/Delta/Tram. Also changed doors with glass to common ones.
+  Jacquerel:
+  - refactor: Changeling's Lesser Form is now one ability instead of two which keep
+      swapping, which should consistently turn you back and forth without deleting
+      itself from your action bar.
+  - bugfix: Hatching from an egg left by a Last Resort headcrab should correctly grant
+      you Lesser Form in addition to your other abilities.
+  - bugfix: Turning into a monkey while using the Changeling space suit won't leave
+      you as a monkey with a weird inflated head.
+  - qol: Using lesser form as a monkey with only one stored DNA profile will skip
+      asking which profile you want and will simply transform you immediately into
+      the only option.
+  - bugfix: Painting with the slippery spraycan will now once again correctly make
+      that tile slippery.
+  - bugfix: Spraying the ground with the hellcan will now once again correctly set
+      that tile, you, and other surrounding objects on fire.
+  Kubisopplay:
+  - bugfix: Fixes split personality kicking out the original owner of the body.
+  Melbert:
+  - bugfix: Gaining nobreath in an N2O heavy environment doesn't make you forever
+      aware of it
+  - bugfix: Premade viruses (GBS, beesease, etc) now show up in the PANDEMIC again
+  - bugfix: PANDEMICs should bluescreen less often. Maybe.
+  - bugfix: Mecha speech indicators actually go away
+  - bugfix: Scan gates correctly flick their alarm overlays, I think they already
+      looked correct but now it's more correct
+  - bugfix: If you are somehow a human without a species, the generic zap animation
+      should be more correct, even though this will probably never ever happen
+  - bugfix: Nuke Ops Leaders midround don't spawn on Arrivals Shuttle late for work
+  - bugfix: (Maybe) fixes some additional issues related to midround nukie / abductor
+      spawns
+  NamelessFairy:
+  - bugfix: The unanchored reinforced plasma-glass windows on snowdin have been anchored.
+  - bugfix: Unregistered paywall firing pins wont vanish when you try to insert them
+      into a gun
+  - bugfix: Declining to pay for a paywall firing pin will no longer brick the firing
+      pin for everyone
+  - bugfix: paywall firing pins are linked to bank accounts instead of unique users,
+      so they can't be used for overly elaborate ling checks or letting people without
+      IDs fire them for free.
+  - bugfix: Attempting to fire an empty gun with a paywall firing pin will no longer
+      charge you.
+  - bugfix: Multi-shot paywall firing pins do not charge you for agreeing to the initial
+      prompt.
+  - spellcheck: Fixes a spelling mistake in paywall firing pin prompts
+  - code_imp: The owner of a paywall firing pin is now tracked via account rather
+      than ID, this stops the pin from holding a reference to a deleted ID if the
+      ID is ever destroyed.
+  Rhials:
+  - bugfix: The radiation leak event no longer targets machinery that doesn't use
+      power.

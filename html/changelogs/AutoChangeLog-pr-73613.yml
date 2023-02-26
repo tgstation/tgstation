@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Premade viruses (GBS, beesease, etc) now show up in the PANDEMIC again"
-  - bugfix: "PANDEMICs should bluescreen less often. Maybe."
