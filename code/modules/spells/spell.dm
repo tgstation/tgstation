@@ -138,7 +138,7 @@
 // Where the cast chain starts
 /datum/action/cooldown/spell/PreActivate(atom/target)
 	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
-		return
+		return FALSE
 	if(!is_valid_target(target))
 		return FALSE
 
