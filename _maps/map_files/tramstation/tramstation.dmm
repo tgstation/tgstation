@@ -6326,7 +6326,9 @@
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "aId" = (
-/obj/machinery/door/window/left/directional/north{
+/obj/machinery/door/window/left/directional/south{
+	base_state = "right";
+	icon_state = "right";
 	name = "Containment Pen #8";
 	req_access = list("xenobiology")
 	},
@@ -11100,7 +11102,6 @@
 /area/station/cargo/lobby)
 "cbj" = (
 /obj/machinery/door/window/left/directional/north{
-	dir = 2;
 	name = "Containment Pen #1";
 	req_access = list("xenobiology")
 	},
@@ -12711,7 +12712,8 @@
 /area/station/hallway/secondary/exit)
 "cFk" = (
 /obj/machinery/door/window/left/directional/north{
-	dir = 2;
+	base_state = "right";
+	icon_state = "right";
 	name = "Containment Pen #4";
 	req_access = list("xenobiology")
 	},
@@ -21042,7 +21044,6 @@
 /area/station/security/processing)
 "fPi" = (
 /obj/machinery/door/window/left/directional/north{
-	dir = 2;
 	name = "Containment Pen #2";
 	req_access = list("xenobiology")
 	},
@@ -29704,9 +29705,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "jmb" = (
-/obj/machinery/door/window/left/directional/north{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/left/directional/south{
 	name = "Containment Pen #5";
 	req_access = list("xenobiology")
 	},
@@ -36388,7 +36387,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "lIa" = (
-/obj/machinery/door/window/left/directional/north{
+/obj/machinery/door/window/left/directional/south{
 	name = "Containment Pen #6";
 	req_access = list("xenobiology")
 	},
@@ -48794,7 +48793,7 @@
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "qoo" = (
-/obj/machinery/door/window/left/directional/north{
+/obj/machinery/door/window/left/directional/south{
 	base_state = "right";
 	icon_state = "right";
 	name = "Containment Pen #7";
@@ -54604,7 +54603,6 @@
 "swy" = (
 /obj/machinery/door/window/left/directional/north{
 	base_state = "right";
-	dir = 2;
 	icon_state = "right";
 	name = "Containment Pen #3";
 	req_access = list("xenobiology")
