@@ -1,4 +1,4 @@
-This file contains a list of maps for use in map rotation.
+SSThis file contains a list of maps for use in map rotation.
 #Lines starting with # are ignored.
 Lines not inside map blocks are also ignored
 Duplicated entries use the latter one.

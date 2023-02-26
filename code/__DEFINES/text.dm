@@ -40,8 +40,8 @@
 #define ARCADE_FILE "arcade.json"
 /// File location for boomer meme catchphrases
 #define BOOMER_FILE "boomer.json"
-/// File location for locations on the station
-#define LOCATIONS_FILE "locations.json"
+/// File location for locations on the station (OBSOLETE)
+//#define LOCATIONS_FILE "locations.json"
 /// File location for wanted posters messages
 #define WANTED_FILE "wanted_message.json"
 /// File location for really dumb suggestions memes

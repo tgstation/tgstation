@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	///Type of filter that spawns on roundstart
 	var/starting_filter_type = /obj/item/gas_filter
 	///Does the mask have an FOV?
-	var/has_fov = TRUE
+	var/has_fov = FALSE
 
 /datum/armor/mask_gas
 	bio = 100

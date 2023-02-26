@@ -169,13 +169,6 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 	)
 
 	var/list/safety = list(1,2,3)//Tells the proc which options to remove later on.
-	var/nouns = strings(ION_FILE, "ionabstract")
-	var/objects = strings(ION_FILE, "ionobjects")
-	var/adjectives = strings(ION_FILE, "ionadjectives")
-	var/threats = strings(ION_FILE, "ionthreats")
-	var/foods = strings(ION_FILE, "ionfood")
-	var/drinks = strings(ION_FILE, "iondrinks")
-	var/locations = strings(LOCATIONS_FILE, "locations")
 
 	var/list/names = list()
 	for(var/datum/record/crew/target in GLOB.manifest.general)//Picks from crew manifest.
@@ -205,32 +198,23 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 								new_name += pick(GLOB.last_names)
 								. += new_name
 					if(2)
-						var/datum/job/job = pick(SSjob.joinable_occupations)
-						if(job)
-							. += job.title //Returns a job.
-						else
-							stack_trace("Failed to pick(SSjob.joinable_occupations) on generate_code_phrase()")
-							. += "Bug"
+						. += pick(GLOB.jobs)//Returns a job.
 				safety -= 1
 			if(2)
-				switch(rand(1,3))//Food, drinks, or places. Only selectable once.
+				switch(rand(1,2))//Food, drinks, or places. Only selectable once.
 					if(1)
-						. += lowertext(pick(drinks))
+						. += pick(GLOB.cocktails)
 					if(2)
-						. += lowertext(pick(foods))
-					if(3)
-						. += lowertext(pick(locations))
+						. += pick(GLOB.locations)
 				safety -= 2
 			if(3)
-				switch(rand(1,4))//Abstract nouns, objects, adjectives, threats. Can be selected more than once.
+				switch(rand(1,3))//Abstract nouns, adjectives, verbs. Can be selected more than once.
 					if(1)
-						. += lowertext(pick(nouns))
+						. += pick(GLOB.ru_nouns)
 					if(2)
-						. += lowertext(pick(objects))
+						. += pick(GLOB.ru_adjectives)
 					if(3)
-						. += lowertext(pick(adjectives))
-					if(4)
-						. += lowertext(pick(threats))
+						. += pick(GLOB.ru_verbs)
 		if(!return_list)
 			if(words == 1)
 				. += "."

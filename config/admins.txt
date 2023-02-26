@@ -8,4 +8,4 @@ Belowthesky = Host
 VladKVS193 = Host
 RomenRomenRomen = Host
 Sharkisfinetoo = Host
-Huzze = Game Master
+Huzze = Host

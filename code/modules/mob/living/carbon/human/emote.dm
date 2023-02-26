@@ -61,11 +61,10 @@
 	message = "screams!"
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	only_forced_audio = TRUE
 	vary = TRUE
 
 /datum/emote/living/carbon/human/scream/get_sound(mob/living/carbon/human/user)
-	if(!istype(user))
+	if(!istype(user) || !user.can_speak(allow_mimes = TRUE))
 		return
 
 	return user.dna.species.get_scream_sound(user)
