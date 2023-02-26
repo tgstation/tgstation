@@ -6327,8 +6327,6 @@
 /area/station/science/genetics)
 "aId" = (
 /obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	icon_state = "right";
 	name = "Containment Pen #8";
 	req_access = list("xenobiology")
 	},
@@ -6339,9 +6337,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/north{
-	name = "Containment Pen #8";
-	base_state = "right";
-	icon_state = "right"
+	name = "Containment Pen #8"
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
@@ -11108,7 +11104,9 @@
 "cbj" = (
 /obj/machinery/door/window/left/directional/north{
 	name = "Containment Pen #1";
-	req_access = list("xenobiology")
+	req_access = list("xenobiology");
+	base_state = "right";
+	icon_state = "right"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/preopen{
@@ -11117,7 +11115,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/south{
-	name = "Containment Pen #1"
+	name = "Containment Pen #1";
+	base_state = "right";
+	icon_state = "right"
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
@@ -12720,8 +12720,6 @@
 /area/station/hallway/secondary/exit)
 "cFk" = (
 /obj/machinery/door/window/left/directional/north{
-	base_state = "right";
-	icon_state = "right";
 	name = "Containment Pen #4";
 	req_access = list("xenobiology")
 	},
@@ -12732,9 +12730,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/south{
-	name = "Containment Pen #4";
-	base_state = "right";
-	icon_state = "right"
+	name = "Containment Pen #4"
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
@@ -29723,7 +29719,9 @@
 "jmb" = (
 /obj/machinery/door/window/left/directional/south{
 	name = "Containment Pen #5";
-	req_access = list("xenobiology")
+	req_access = list("xenobiology");
+	base_state = "right";
+	icon_state = "right"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/preopen{
@@ -29732,7 +29730,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/north{
-	name = "Containment Pen #5"
+	name = "Containment Pen #5";
+	base_state = "right";
+	icon_state = "right"
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
