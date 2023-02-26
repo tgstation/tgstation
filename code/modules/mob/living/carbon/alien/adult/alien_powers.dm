@@ -162,9 +162,9 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/alien/transfer/Activate(atom/target)
 	var/mob/living/carbon/carbon_owner = owner
-	var/list/mob/living/carbon/aliens_around = list()
-	for(var/mob/living/carbon/alien in view(owner))
-		if(alien.getPlasma() == -1 || alien == owner)
+	var/list/mob/living/carbon/alien/aliens_around = list()
+	for(var/mob/living/carbon/alien/alien in view(owner))
+		if(alien == owner)
 			continue
 		aliens_around += alien
 
