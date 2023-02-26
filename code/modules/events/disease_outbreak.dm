@@ -128,7 +128,7 @@
 			message_admins("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(victim)]!")
 			log_game("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [key_name(victim)].")
 			announce_to_ghosts(victim)
-			break
+			return
 		CHECK_TICK //don't lag the server to death
 	if(isnull(victim))
 		log_game("Event Disease Outbreak: Classic attempted to start, but failed.")
@@ -234,7 +234,7 @@
 			message_admins("Event triggered: Disease Outbreak - [advanced_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(victim)]! It has these symptoms: [english_list(name_symptoms)]. It is transmissable via [advanced_disease.spread_text].")
 			log_game("Event triggered: Disease Outbreak - [advanced_disease.name] starting with patient zero [key_name(victim)]. It has these symptoms: [english_list(name_symptoms)]. It is transmissable via [advanced_disease.spread_text].")
 			announce_to_ghosts(victim)
-			break
+			return
 		CHECK_TICK //don't lag the server to death
 	if(isnull(victim))
 		log_game("Event Disease Outbreak: Advanced attempted to start, but failed.")
