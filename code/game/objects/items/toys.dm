@@ -1310,6 +1310,10 @@
 	icon_state = "pierced_illusion"
 	item_flags = NO_PIXEL_RANDOM_DROP
 
+/obj/item/toy/reality_pierce/Initialize(mapload)
+	. = ..()
+	name = "\improper" + pick(strings(HERETIC_INFLUENCE_FILE, "prefix")) + " " + pick(strings(HERETIC_INFLUENCE_FILE, "postfix"))
+
 /obj/item/storage/box/heretic_box
 	name = "box of pierced realities"
 	desc = "A box containing toys resembling pierced realities."
@@ -1317,10 +1321,6 @@
 /obj/item/storage/box/heretic_box/PopulateContents()
 	for(var/i in 1 to rand(1,4))
 		new /obj/item/toy/reality_pierce(src)
-
-/obj/item/toy/reality_pierce/Initialize(mapload)
-	. = ..()
-	/obj/effect/heretic_influence/proc/generate_name()
 
 /obj/item/toy/foamfinger
 	name = "foam finger"
