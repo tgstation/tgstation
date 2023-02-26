@@ -6338,6 +6338,11 @@
 	name = "Xenobio Bottom Right Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/north{
+	name = "Containment Pen #8";
+	base_state = "right";
+	icon_state = "right"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "aIi" = (
@@ -11111,6 +11116,9 @@
 	name = "Xenobio Topleft Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/south{
+	name = "Containment Pen #1"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "cbn" = (
@@ -12723,6 +12731,11 @@
 	name = "Xenobio Top Right Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/south{
+	name = "Containment Pen #4";
+	base_state = "right";
+	icon_state = "right"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "cFl" = (
@@ -21053,6 +21066,9 @@
 	name = "Xenobio Topleft Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/south{
+	name = "Containment Pen #2"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "fPy" = (
@@ -29715,6 +29731,9 @@
 	name = "Xenobio Bottom Left Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/north{
+	name = "Containment Pen #5"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "jmk" = (
@@ -36397,6 +36416,9 @@
 	name = "Xenobio Bottom Left Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/north{
+	name = "Containment Pen #6"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "lIe" = (
@@ -48805,6 +48827,11 @@
 	name = "Xenobio Bottom Right Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/north{
+	name = "Containment Pen #7";
+	base_state = "right";
+	icon_state = "right"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "qoD" = (
@@ -54613,6 +54640,11 @@
 	name = "Xenobio Top Right Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/south{
+	name = "Containment Pen #3";
+	base_state = "right";
+	icon_state = "right"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "swC" = (
