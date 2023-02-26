@@ -5340,7 +5340,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/command/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "cpE" = (
@@ -7360,6 +7360,14 @@
 	pixel_x = 2;
 	pixel_y = 5
 	},
+/obj/item/weldingtool/mini{
+	pixel_x = 5;
+	pixel_y = -11
+	},
+/obj/item/screwdriver{
+	pixel_x = 2;
+	pixel_y = -3
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/processing)
 "dfo" = (
@@ -8143,6 +8151,14 @@
 	dir = 9
 	},
 /area/station/engineering/atmos)
+"dvl" = (
+/obj/structure/table,
+/obj/item/reagent_containers/condiment/enzyme{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/service/kitchen)
 "dvo" = (
 /obj/machinery/ore_silo,
 /obj/effect/turf_decal/bot_white,
@@ -9095,6 +9111,7 @@
 "dOg" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/tram)
 "dOq" = (
@@ -9640,12 +9657,16 @@
 "dYc" = (
 /obj/structure/table,
 /obj/machinery/recharger{
-	pixel_y = 4
+	pixel_x = 6;
+	pixel_y = 9
 	},
-/obj/item/paper/crumpled{
-	default_raw_text = "<i>Hey, assholes. We don't need a couch in the meeting room, I threw it out the airlock. I don't care if it's real leather, go patrol like you're paid to do instead of cycling through cameras all shift!";
-	name = "old, crumpled note";
-	pixel_y = 23
+/obj/item/multitool{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/clothing/mask/cigarette{
+	pixel_x = 5;
+	pixel_y = 2
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
@@ -15081,7 +15102,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/command/maintenance,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "fWJ" = (
@@ -15178,7 +15199,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/command/maintenance,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "fZC" = (
@@ -15259,7 +15280,7 @@
 	name = "AISat Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/command/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
 "gdD" = (
@@ -17188,7 +17209,7 @@
 	name = "Bridge Closet"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/command/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
 "gMb" = (
@@ -20575,7 +20596,7 @@
 /obj/machinery/door/airlock{
 	name = "Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/command/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
 "hVO" = (
@@ -21984,7 +22005,7 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "AISat Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/command/maintenance,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "iui" = (
@@ -22489,8 +22510,8 @@
 	name = "Old Bridge Security Checkpoint"
 	},
 /obj/structure/barricade/wooden,
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/command/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
 "iEQ" = (
@@ -25812,7 +25833,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/command/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/command/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
 "jQh" = (
@@ -27462,12 +27484,12 @@
 	pixel_x = -7;
 	pixel_y = 8
 	},
-/obj/item/storage/fancy/cigarettes/cigpack_xeno{
-	pixel_x = 7;
-	pixel_y = 16
-	},
 /obj/item/pen{
 	pixel_x = -5
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_robust{
+	pixel_x = 7;
+	pixel_y = 15
 	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
@@ -30447,11 +30469,11 @@
 /area/station/security/prison/safe)
 "lzg" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/rack,
+/obj/item/crowbar/large/heavy,
+/obj/item/wirecutters,
+/obj/item/wrench,
 /turf/open/floor/iron,
 /area/station/security/tram)
 "lzn" = (
@@ -31101,8 +31123,8 @@
 /obj/machinery/door/airlock{
 	name = "Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/airlock/access/any/command/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
 "lKt" = (
@@ -42464,7 +42486,12 @@
 /area/station/maintenance/port/lesser)
 "pTr" = (
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/storage/backpack/duffelbag/med/surgery{
+	pixel_y = -5
+	},
+/obj/item/wirecutters{
+	pixel_y = 8
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/security/execution/education)
 "pTs" = (
@@ -42576,7 +42603,9 @@
 /area/station/command/meeting_room)
 "pUC" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/doppler_array,
+/obj/machinery/doppler_array{
+	dir = 1
+	},
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
@@ -45778,7 +45807,7 @@
 /obj/machinery/door/airlock{
 	name = "Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/command/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
 "qXh" = (
@@ -47860,6 +47889,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/window/reinforced/spawner/east,
+/obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver{
+	pixel_x = 24
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -66526,6 +66558,7 @@
 "xym" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/camera/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/station/security/tram)
 "xyp" = (
@@ -69143,6 +69176,12 @@
 /obj/item/storage/secure/briefcase{
 	pixel_x = -1;
 	pixel_y = 8
+	},
+/obj/item/crowbar/large{
+	pixel_y = -10
+	},
+/obj/item/weldingtool/mini{
+	pixel_y = -10
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
@@ -92222,7 +92261,7 @@ xiL
 rgc
 rgc
 shU
-rgx
+dvl
 sSj
 tmV
 wZo
