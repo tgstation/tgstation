@@ -1,0 +1,5 @@
+author: "SuperSlayer0"
+delete-after: True
+changes:
+  - bugfix: "Fixes strong arm implant attacks stunlocking people"
+  - bugfix: "Strong arm implant attacks no longer stack with hulk attacks"

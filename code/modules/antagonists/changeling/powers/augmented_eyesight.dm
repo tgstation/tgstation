@@ -37,8 +37,8 @@
 			active = FALSE
 		user.update_sight()
 	else
-		to_chat(user, "We can't adjust our eyes if we don't have any!")
-	return 1
+		user.balloon_alert(user, "no eyes!")
+	return TRUE
 
 
 /datum/action/changeling/augmented_eyesight/Remove(mob/user) //Get rid of x-ray vision and flash protection when the user refunds this ability

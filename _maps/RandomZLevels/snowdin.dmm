@@ -6451,7 +6451,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "rW" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/window/reinforced/plasma/unanchored,
+/obj/structure/window/reinforced/plasma/spawner,
 /turf/open/lava/plasma,
 /area/awaymission/snowdin/cave/cavern)
 "rY" = (
@@ -7994,7 +7994,7 @@
 "zl" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced/plasma/spawner/north,
-/obj/structure/window/reinforced/plasma/unanchored,
+/obj/structure/window/reinforced/plasma/spawner,
 /turf/open/lava/plasma,
 /area/awaymission/snowdin/cave/cavern)
 "zm" = (
