@@ -144,12 +144,7 @@
 	if(!on_fire)
 		return TRUE
 
-	if(isbasicmob(owner))
-		adjust_stacks(BASIC_MOB_FIRE_DECAY_RATE * delta_time)
-	else if(iscyborg(owner))
-		adjust_stacks(SILICON_FIRE_DECAY_RATE * delta_time)
-	else
-		adjust_stacks(FIRE_DECAY_RATE * delta_time)
+	adjust_stacks(owner.fire_stack_decay_rate * delta_time)
 
 	if(stacks <= 0)
 		qdel(src)

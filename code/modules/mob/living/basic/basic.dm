@@ -7,6 +7,7 @@
 	gender = PLURAL
 	living_flags = MOVES_ON_ITS_OWN
 	status_flags = CANPUSH
+	fire_stack_decay_rate = -5 // Reasonably fast as NPCs will not usually actively extinguish themselves
 
 	var/basic_mob_flags = NONE
 
