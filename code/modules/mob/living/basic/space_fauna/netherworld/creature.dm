@@ -21,7 +21,7 @@
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
-	// Green and blue, bit dim cause yaknow morphlike 
+	// Green and blue, bit dim cause yaknow morphlike
 	lighting_cutoff_red = 5
 	lighting_cutoff_green = 25
 	lighting_cutoff_blue = 15
@@ -29,8 +29,6 @@
 	ai_controller = /datum/ai_controller/basic_controller/creature
 	/// Used for checking if the mob is phased or not.
 	var/is_phased = FALSE
-	/// Used for mobs that get spawned in a spawner appearently.
-	var/datum/component/spawner/nest
 
 /mob/living/basic/creature/Initialize(mapload)
 	. = ..()
@@ -122,12 +120,6 @@
 		playsound(get_turf(owner_mob), 'sound/effects/podwoosh.ogg', 50, TRUE, -1)
 		holder = new /obj/effect/dummy/phased_mob(owner_turf, owner_mob)
 		owner_mob.is_phased = TRUE
-
-/mob/living/basic/creature/Destroy()
-	if(nest)
-		nest.spawned_mobs -= src
-		nest = null
-	return ..()
 
 /datum/ai_controller/basic_controller/creature
 	blackboard = list(
