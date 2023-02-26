@@ -12,8 +12,8 @@
 		reagents.handle_stasis_chems(src, delta_time, times_fired)
 	else
 		//Reagent processing needs to come before breathing, to prevent edge cases.
+		handle_dead_metabolization(delta_time, times_fired) //Dead metabolization first since it can modify life metabolization.
 		handle_organs(delta_time, times_fired)
-		handle_dead_metabolization(delta_time, times_fired)
 
 		. = ..()
 		if(QDELETED(src))
