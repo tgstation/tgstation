@@ -1,73 +1,57 @@
+#define TEST_ALERT_THROW_MESSAGE(lungs_organ, alert_name) "[lungs_organ.type]/check_breath() failed to throw alert [alert_name] when expected."
+#define TEST_ALERT_INHIBIT_MESSAGE(lungs_organ, alert_name) "[lungs_organ.type]/check_breath() threw alert [alert_name] when it wasn't expected."
+
 /// Tests the standard lungs organ to ensure breathing and suffocation behave as expected.
 /// Performs a check on each main (can be life-sustaining) gas, and ensures gas alerts are only thrown when expected.
+/// TODO: Add a gas exchange test.
 /datum/unit_test/lungs_sanity
 
 /datum/unit_test/lungs_sanity/Run()
 	// "Standard" form of breathing.
-	// 50 Litres of O2/N2 gas mix, ideal for life.
+	// 2500 Litres of O2/N2 gas mix, ideal for life.
 	var/datum/gas_mixture/test_mix = create_standard_mix()
-	var/obj/item/organ/internal/lungs/test_lungs = allocate(/obj/item/organ/internal/lungs)
 	var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
-	var/breath_ok = FALSE
-
+	var/obj/item/organ/internal/lungs/test_lungs = allocate(/obj/item/organ/internal/lungs)
 	// Test one breath of O2/N2 mix.
-	breath_ok = test_lungs.check_breath(test_mix, lab_rat)
-	lungs_test_return(breath_ok, test_lungs)
-	lungs_test_breathe(lab_rat, test_lungs, "standard gas mixture")
-	lungs_test_alerts(lab_rat, test_lungs, test_mix)
+	lungs_test_check_breath("standard gas mixture", lab_rat, test_lungs, test_mix)
 
 	// Suffocation with an empty gas mix.
 	var/datum/gas_mixture/empty_test_mix = allocate(/datum/gas_mixture)
 	lab_rat = allocate(/mob/living/carbon/human/consistent)
 	test_lungs = allocate(/obj/item/organ/internal/lungs)
 	// Test one breath of nothing. Suffocate due to the breath being empty.
-	breath_ok = test_lungs.check_breath(empty_test_mix, lab_rat)
-	lungs_test_return_fail(breath_ok, test_lungs)
-	lungs_test_suffocate(lab_rat, test_lungs, "empty gas mixture")
-	lungs_test_alerts(lab_rat, test_lungs, test_mix)
+	lungs_test_check_breath("empty gas mixture", lab_rat, test_lungs, empty_test_mix, expect_failure = TRUE)
 
 	// Suffocation with null. This does indeed happen normally.
 	lab_rat = allocate(/mob/living/carbon/human/consistent)
 	test_lungs = allocate(/obj/item/organ/internal/lungs)
 	// Test one breath of nothing. Suffocate due to the breath being null.
-	breath_ok = test_lungs.check_breath(null, lab_rat)
-	lungs_test_return_fail(breath_ok, test_lungs)
-	lungs_test_suffocate(lab_rat, test_lungs, "null")
-	lungs_test_alerts(lab_rat, test_lungs, test_mix)
+	lungs_test_check_breath("null", lab_rat, test_lungs, null, expect_failure = TRUE)
 
 	// Suffocation with Nitrogen.
 	var/datum/gas_mixture/nitro_test_mix = create_nitrogen_mix()
 	lab_rat = allocate(/mob/living/carbon/human/consistent)
 	test_lungs = allocate(/obj/item/organ/internal/lungs)
 	// Test one breath of Nitrogen. Suffocate due to the breath being 100% N2.
-	breath_ok = test_lungs.check_breath(nitro_test_mix, lab_rat)
-	lungs_test_return_fail(breath_ok, test_lungs)
-	lungs_test_suffocate(lab_rat, test_lungs, "pure nitrogen")
-	lungs_test_alerts(lab_rat, test_lungs, nitro_test_mix)
+	lungs_test_check_breath("pure Nitrogen", lab_rat, test_lungs, nitro_test_mix, expect_failure = TRUE)
 
 /// Tests the Plasmaman lungs organ to ensure Plasma breathing and suffocation behave as expected.
 /datum/unit_test/lungs_sanity_plasmaman
 
 /datum/unit_test/lungs_sanity_plasmaman/Run()
-	// 50 Litres of pure Plasma.
+	// 2500 Litres of pure Plasma.
 	var/datum/gas_mixture/plasma_test_mix = create_plasma_mix()
 	var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/organ/internal/lungs/plasmaman/test_lungs = allocate(/obj/item/organ/internal/lungs/plasmaman)
 	// Test one breath of Plasma on Plasmaman lungs.
-	var/breath_ok = test_lungs.check_breath(plasma_test_mix, lab_rat)
-	lungs_test_return(breath_ok, test_lungs)
-	lungs_test_breathe(lab_rat, test_lungs, "pure plasma")
-	lungs_test_alerts(lab_rat, test_lungs, plasma_test_mix)
+	lungs_test_check_breath("pure Plasma", lab_rat, test_lungs, plasma_test_mix)
 
 	// Tests suffocation with Nitrogen.
 	var/datum/gas_mixture/nitro_test_mix = create_nitrogen_mix()
 	lab_rat = allocate(/mob/living/carbon/human/consistent)
 	test_lungs = allocate(/obj/item/organ/internal/lungs/plasmaman)
 	// Test one breath of Nitrogen on Plasmaman lungs.
-	breath_ok = test_lungs.check_breath(nitro_test_mix, lab_rat)
-	lungs_test_return_fail(breath_ok, test_lungs)
-	lungs_test_suffocate(lab_rat, test_lungs, "pure nitrogen")
-	lungs_test_alerts(lab_rat, test_lungs, nitro_test_mix)
+	lungs_test_check_breath("pure Nitrogen", lab_rat, test_lungs, nitro_test_mix, expect_failure = TRUE)
 
 /// Tests the lavaland/Ashwalker lungs organ.
 /// Ensures they can breathe from the lavaland air mixture properly, and suffocate on inadequate mixture.
@@ -79,69 +63,81 @@
 	var/obj/item/organ/internal/lungs/lavaland/test_lungs = allocate(/obj/item/organ/internal/lungs/lavaland)
 	var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
 	// Test one breath of Lavaland gas mix on Ashwalker lungs.
-	var/breath_ok = test_lungs.check_breath(lavaland_test_mix, lab_rat)
-	lungs_test_return(breath_ok, test_lungs)
-	lungs_test_breathe(lab_rat, test_lungs, "Lavaland air mixture")
-	lungs_test_alerts(lab_rat, test_lungs, lavaland_test_mix)
+	log_world("Lavaland lungs: minOxygen: [test_lungs.safe_oxygen_min], minNitrogen: [test_lungs.safe_nitro_min], minPlasma: [test_lungs.safe_plasma_min], minCO2: [test_lungs.safe_co2_min]")
+	lungs_test_check_breath("Lavaland air mixture", lab_rat, test_lungs, lavaland_test_mix)
 
-/// Checks the given status code to ensure success / truthy.
-/datum/unit_test/proc/lungs_test_return(breath_ok, obj/item/organ/internal/lungs/test_lungs)
-	TEST_ASSERT(breath_ok, "[test_lungs.type]/check_breath() returned falsy / status code 0 (failure) when it wasn't expected.")
+/// Comprehensive unit test for [/obj/item/organ/internal/lungs/proc/check_breath()]
+/// If "expect_failure" is set to TRUE, the test ensures the given Human suffocated.
+/// A "test_focus" string is required to contextualize test logs. Describe the gas you're testing.
+/datum/unit_test/proc/lungs_test_check_breath(test_focus, mob/living/carbon/human/lab_rat, obj/item/organ/internal/lungs/test_lungs, datum/gas_mixture/test_mix, expect_failure = FALSE)
+	var/oxygen_pp = 0
+	var/nitro_pp = 0
+	var/plasma_pp = 0
+	var/co2_pp = 0
 
-/// Checks the given status code to ensure failure / falsy.
-/datum/unit_test/proc/lungs_test_return_fail(breath_ok, obj/item/organ/internal/lungs/test_lungs)
-	TEST_ASSERT(!breath_ok, "[test_lungs.type]/check_breath() returned truthy / status code 1 (success) when it wasn't expected.")
+	// Setup a small volume of gas which represents one "breath" from test_mix.
+	var/datum/gas_mixture/test_breath
 
-/// Checks the given Human to ensure they successfully breathed.
-/datum/unit_test/proc/lungs_test_breathe(mob/living/carbon/human/lab_rat, obj/item/organ/internal/lungs/test_lungs, needed_gases)
-	TEST_ASSERT(!lab_rat.failed_last_breath, "[test_lungs.type]/check_breath() can't get a full breath from [needed_gases].")
+	if(!isnull(test_mix))
+		var/total_moles = test_mix.total_moles()
+		if(total_moles > 0)
+			test_breath = test_mix.remove(total_moles * BREATH_PERCENTAGE)
 
-// Checks the given Human to ensure they suffocated / failed to breathe
-/datum/unit_test/proc/lungs_test_suffocate(mob/living/carbon/human/lab_rat, obj/item/organ/internal/lungs/test_lungs, suffocant)
-	TEST_ASSERT(lab_rat.failed_last_breath, "[test_lungs.type]/check_breath() didn't suffocate from [suffocant] when expected.")
+	if(isnull(test_breath))
+		test_breath = allocate(/datum/gas_mixture, BREATH_VOLUME)
 
-/// Silver-bullet test for gas alerts which are thrown/displayed after Lungs take a breath.
-/// For each alerting gas in the game, this test ensures the Lungs' minimums and maximums are respected.
-/datum/unit_test/proc/lungs_test_alerts(mob/living/carbon/human/lab_rat, obj/item/organ/internal/lungs/test_lungs, datum/gas_mixture/test_mix)
-	// Get partial pressures for each main gas in the mix. Identical to Lungs implementation of partial pressure.
-	var/oxygen_pp = test_mix.get_breath_partial_pressure(test_mix[/datum/gas/oxygen][MOLES])
-	var/nitro_pp = test_mix.get_breath_partial_pressure(test_mix[/datum/gas/nitrogen][MOLES])
-	var/co2_pp = test_mix.get_breath_partial_pressure(test_mix[/datum/gas/carbon_dioxide][MOLES])
-	var/plasma_pp = test_mix.get_breath_partial_pressure(test_mix[/datum/gas/plasma][MOLES])
+	test_breath.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
 
-	// Minimum partial pressures.
-	TEST_ASSERT((oxygen_pp < test_lungs.safe_oxygen_min) && lab_rat.has_alert(ALERT_NOT_ENOUGH_OXYGEN), "Lungs check_breath() failed to throw ALERT_NOT_ENOUGH_OXYGEN when expected.")
-	TEST_ASSERT((oxygen_pp >= test_lungs.safe_oxygen_min) && !lab_rat.has_alert(ALERT_NOT_ENOUGH_OXYGEN), "Lungs check_breath() threw ALERT_NOT_ENOUGH_OXYGEN when it wasn't expected.")
+	if(test_breath.total_moles() > 0)
+		oxygen_pp = test_breath.get_breath_partial_pressure(test_breath.gases[/datum/gas/oxygen][MOLES])
+		nitro_pp = test_breath.get_breath_partial_pressure(test_breath.gases[/datum/gas/nitrogen][MOLES])
+		plasma_pp = test_breath.get_breath_partial_pressure(test_breath.gases[/datum/gas/plasma][MOLES])
+		co2_pp = test_breath.get_breath_partial_pressure(test_breath.gases[/datum/gas/carbon_dioxide][MOLES])
 
-	TEST_ASSERT((nitro_pp < test_lungs.safe_nitro_min) && lab_rat.has_alert(ALERT_NOT_ENOUGH_NITRO), "Lungs check_breath() failed to throw ALERT_NOT_ENOUGH_NITRO when expected.")
-	TEST_ASSERT((nitro_pp >= test_lungs.safe_nitro_min) && !lab_rat.has_alert(ALERT_NOT_ENOUGH_NITRO), "Lungs check_breath() threw ALERT_NOT_ENOUGH_NITRO when it wasn't expected.")
+	var/status_code = test_lungs.check_breath(test_breath, lab_rat)
 
-	TEST_ASSERT((co2_pp < test_lungs.safe_co2_min) && lab_rat.has_alert(ALERT_NOT_ENOUGH_CO2), "Lungs check_breath() failed to throw ALERT_NOT_ENOUGH_CO2 when expected.")
-	TEST_ASSERT((co2_pp >= test_lungs.safe_co2_min) && !lab_rat.has_alert(ALERT_NOT_ENOUGH_CO2), "Lungs check_breath() threw ALERT_NOT_ENOUGH_CO2 when it wasn't expected.")
+	if(expect_failure)
+		TEST_ASSERT(!status_code, "[test_lungs.type]/check_breath() returned truthy / status code 1 (success) when it wasn't expected.")
+		TEST_ASSERT(lab_rat.failed_last_breath, "[test_lungs.type]/check_breath() should suffocate from [test_focus].")
+	else
+		TEST_ASSERT(status_code, "[test_lungs.type]/check_breath() returned falsy / status code 0 (failure) when it wasn't expected.")
+		TEST_ASSERT(!lab_rat.failed_last_breath, "[test_lungs.type]/check_breath() can't get a full breath from [test_focus].")
 
-	TEST_ASSERT((plasma_pp < test_lungs.safe_plasma_min) && lab_rat.has_alert(ALERT_NOT_ENOUGH_PLASMA), "Lungs check_breath() failed to throw ALERT_NOT_ENOUGH_PLASMA when expected.")
-	TEST_ASSERT((plasma_pp >= test_lungs.safe_plasma_min) && !lab_rat.has_alert(ALERT_NOT_ENOUGH_PLASMA), "Lungs check_breath() threw ALERT_NOT_ENOUGH_PLASMA when it wasn't expected.")
+	// Tests for gas alerts. Validates partial pressures.
+	// Checks each "main" life-sustaining gas to ensure gas alerts are thrown/inhibited when expected.
+	lungs_test_alert_min(lab_rat, test_lungs, ALERT_NOT_ENOUGH_OXYGEN, test_lungs.safe_oxygen_min, oxygen_pp)
+	lungs_test_alert_max(lab_rat, test_lungs, ALERT_TOO_MUCH_OXYGEN, test_lungs.safe_oxygen_max, oxygen_pp)
 
-	// Maximum partial pressures.
-	TEST_ASSERT((oxygen_pp <= test_lungs.safe_oxygen_max) && !lab_rat.has_alert(ALERT_TOO_MUCH_OXYGEN), "Lungs check_breath() threw ALERT_TOO MUCH_OXYGEN when it wasn't expected.")
-	TEST_ASSERT((oxygen_pp > test_lungs.safe_oxygen_max) && lab_rat.has_alert(ALERT_TOO_MUCH_OXYGEN), "Lungs check_breath() failed to throw ALERT_TOO MUCH_OXYGEN when expected.")
+	lungs_test_alert_min(lab_rat, test_lungs, ALERT_NOT_ENOUGH_NITRO, test_lungs.safe_nitro_min, nitro_pp)
+	lungs_test_alert_max(lab_rat, test_lungs, ALERT_TOO_MUCH_NITRO, test_lungs.safe_nitro_max, nitro_pp)
 
-	TEST_ASSERT((nitro_pp <= test_lungs.safe_nitro_max) && !lab_rat.has_alert(ALERT_TOO_MUCH_NITRO), "Lungs check_breath() threw ALERT_TOO MUCH_NITRO when it wasn't expected.")
-	TEST_ASSERT((nitro_pp > test_lungs.safe_nitro_max) && lab_rat.has_alert(ALERT_TOO_MUCH_NITRO), "Lungs check_breath() failed to throw ALERT_TOO MUCH_NITRO when expected.")
+	lungs_test_alert_min(lab_rat, test_lungs, ALERT_NOT_ENOUGH_CO2, test_lungs.safe_co2_min, co2_pp)
+	lungs_test_alert_max(lab_rat, test_lungs, ALERT_TOO_MUCH_CO2, test_lungs.safe_co2_max, co2_pp)
 
-	TEST_ASSERT((co2_pp <= test_lungs.safe_co2_max) && !lab_rat.has_alert(ALERT_TOO_MUCH_CO2), "Lungs check_breath() threw ALERT_TOO MUCH_CO2 when it wasn't expected.")
-	TEST_ASSERT((co2_pp > test_lungs.safe_co2_max) && lab_rat.has_alert(ALERT_TOO_MUCH_CO2), "Lungs check_breath() failed to throw ALERT_TOO MUCH_CO2 when expected.")
+	lungs_test_alert_min(lab_rat, test_lungs, ALERT_NOT_ENOUGH_PLASMA, test_lungs.safe_plasma_min, plasma_pp)
+	lungs_test_alert_max(lab_rat, test_lungs, ALERT_TOO_MUCH_PLASMA, test_lungs.safe_plasma_max, plasma_pp)
 
-	TEST_ASSERT((plasma_pp <= test_lungs.safe_plasma_max) && !lab_rat.has_alert(ALERT_TOO_MUCH_PLASMA), "Lungs check_breath() threw ALERT_TOO MUCH_PLASMA when it wasn't expected.")
-	TEST_ASSERT((plasma_pp > test_lungs.safe_plasma_max) && lab_rat.has_alert(ALERT_TOO_MUCH_PLASMA), "Lungs check_breath() failed to throw ALERT_TOO MUCH_PLASMA when expected.")
+/// Tests minimum gas alerts by comparing gas pressure.
+/datum/unit_test/proc/lungs_test_alert_min(mob/living/carbon/human/lab_rat, obj/item/organ/internal/lungs/test_lungs, alert_name, min_pressure, pressure)
+	var/alert_thrown = lab_rat.has_alert(alert_name)
+	var/pressure_safe = (pressure >= min_pressure) || (min_pressure == 0)
+	TEST_ASSERT(!pressure_safe && alert_thrown || pressure_safe, TEST_ALERT_THROW_MESSAGE(test_lungs, alert_name))
+	TEST_ASSERT(pressure_safe && !alert_thrown || !pressure_safe, TEST_ALERT_INHIBIT_MESSAGE(test_lungs, alert_name))
 
-/// Set up a 50-Litre gas mixture with the given gases and percentages.
+/// Tests maximum gas alerts by comparing gas pressure.
+/datum/unit_test/proc/lungs_test_alert_max(mob/living/carbon/human/lab_rat, obj/item/organ/internal/lungs/test_lungs, alert_name, max_pressure, pressure)
+	var/alert_thrown = lab_rat.has_alert(alert_name)
+	var/pressure_safe = (pressure <= max_pressure) || (max_pressure == 0)
+	TEST_ASSERT(!pressure_safe && alert_thrown || pressure_safe, TEST_ALERT_THROW_MESSAGE(test_lungs, alert_name))
+	TEST_ASSERT(pressure_safe && !alert_thrown || !pressure_safe, TEST_ALERT_INHIBIT_MESSAGE(test_lungs, alert_name))
+
+/// Set up a 2500-Litre gas mixture with the given gases and percentages.
 /datum/unit_test/proc/create_gas_mix(list/gases_to_percentages)
-	var/datum/gas_mixture/test_mix = allocate(/datum/gas_mixture, 50)
+	var/datum/gas_mixture/test_mix = allocate(/datum/gas_mixture, 2500)
 	test_mix.temperature = T20C
 	for(var/datum/gas/gas_type as anything in gases_to_percentages)
-		test_mix.assert_gas(gas_type)
-		test_mix.gases[gas_type][MOLES] = (ONE_ATMOSPHERE * 50) / (R_IDEAL_GAS_EQUATION * T20C) * gases_to_percentages[gas_type]
+		test_mix.add_gas(gas_type)
+		test_mix.gases[gas_type][MOLES] = (ONE_ATMOSPHERE * 2500 / (R_IDEAL_GAS_EQUATION * T20C) * gases_to_percentages[gas_type])
 	return test_mix
 
 /// Set up an O2/N2 gas mix which is "ideal" for organic life.
@@ -156,10 +152,12 @@
 /datum/unit_test/proc/create_plasma_mix()
 	return create_gas_mix(list(/datum/gas/plasma = 1))
 
-/// Set up an O2/N2 gas mix which is "ideal" for organic life.
+/// Set up an Lavaland gas mix which is "ideal" for Ashwalker life.
 /datum/unit_test/proc/create_lavaland_mix()
 	var/datum/gas_mixture/immutable/planetary/lavaland_mix = SSair.planetary[LAVALAND_DEFAULT_ATMOS]
-	var/datum/gas_mixture/test_mix = allocate(/datum/gas_mixture, 50)
-	test_mix.temperature = T20C
-	test_mix.gases = lavaland_mix.gases.Copy()
+	var/datum/gas_mixture/test_mix = allocate(/datum/gas_mixture, 2500)
+	test_mix.copy_from(lavaland_mix)
 	return test_mix
+
+#undef TEST_ALERT_THROW_MESSAGE
+#undef TEST_ALERT_INHIBIT_MESSAGE
