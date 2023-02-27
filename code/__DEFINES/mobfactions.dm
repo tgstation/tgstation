@@ -22,8 +22,12 @@
 #define FACTION_RAT "Rats"
 /// Slimey creatures
 #define FACTION_SLIME "slime"
+/// Creatures affiliated with the AI and Cyborgs
+#define FACTION_SILICON "silicon"
 /// Spiders and their webs
 #define FACTION_SPIDER "spiders"
+/// Creatures ignored by various turrets
+#define FACTION_TURRET "turret"
 
 // Antagonist factions
 
