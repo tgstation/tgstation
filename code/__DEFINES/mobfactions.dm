@@ -14,6 +14,8 @@
 #define FACTION_HELL "hell"
 /// Maint creatures have mutual respect for eachother.
 #define FACTION_MAINT_CREATURES "Maint_Creatures"
+/// Animated objects and statues
+#define FACTION_MIMIC "mimic"
 /// Beasts found on the various mining environments
 #define FACTION_MINING "mining"
 /// Rats and mice
