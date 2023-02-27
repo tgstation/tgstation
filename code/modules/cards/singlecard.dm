@@ -48,6 +48,9 @@
 		if(parent_deck.holodeck)
 			flags_1 |= HOLOGRAM_1
 			parent_deck.holodeck.spawned += src
+	if(mapload)
+		//maploaded card needs to be faceup anyways, and doing this will give it its name and appearance properly
+		Flip(TRUE)
 
 	register_context()
 
