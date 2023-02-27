@@ -26,17 +26,13 @@
 	},
 /area/ruin/space)
 "ao" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/telecomms/server{
 	pixel_y = 12;
 	layer = 2.91;
-	density = 0;
 	name = "tgsv3";
 	desc = "It's, uh... pending an upgrade."
 	},
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/closed/mineral/ash_rock,
 /area/ruin/space)
 "ap" = (
 /obj/structure/fluff/bus/passable/seat{
@@ -271,6 +267,18 @@
 	},
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
+"FZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/telecomms/server{
+	pixel_y = 12;
+	layer = 2.91;
+	name = "tgsv3";
+	desc = "It's, uh... pending an upgrade."
+	},
+/turf/open/floor/iron/dark/airless{
+	icon_state = "bus"
+	},
+/area/ruin/space)
 "Gf" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/suit/space,
@@ -474,7 +482,7 @@ ab
 Gt
 yY
 Ne
-ba
+FZ
 ax
 ER
 yY
@@ -534,7 +542,7 @@ ab
 ab
 yY
 Ne
-ao
+ba
 aA
 KK
 uO
@@ -735,7 +743,7 @@ ab
 ab
 ab
 ab
-ab
+ao
 yY
 yY
 yY
