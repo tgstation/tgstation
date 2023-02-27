@@ -3889,6 +3889,7 @@
 #include "code\modules\mob\living\carbon\human\suicides.dm"
 #include "code\modules\mob\living\carbon\human\monkey\monkey.dm"
 #include "code\modules\mob\living\carbon\human\species_types\abductors.dm"
+#include "code\modules\mob\living\carbon\human\species_types\abominations.dm"
 #include "code\modules\mob\living\carbon\human\species_types\android.dm"
 #include "code\modules\mob\living\carbon\human\species_types\dullahan.dm"
 #include "code\modules\mob\living\carbon\human\species_types\ethereal.dm"
