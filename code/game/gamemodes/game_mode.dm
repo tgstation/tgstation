@@ -160,7 +160,7 @@
 
 		if(L.ckey && L.client)
 			var/failed = FALSE
-			if(L.client.inactivity >= (ROUNDSTART_LOGOUT_REPORT_TIME / 2)) //Connected, but inactive (alt+tabbed or something)
+			if(L.client.inactivity >= ROUNDSTART_LOGOUT_AFK_THRESHOLD) //Connected, but inactive (alt+tabbed or something)
 				msg += "<b>[L.name]</b> ([L.key]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
 				failed = TRUE //AFK client
 			if(!failed && L.stat)
