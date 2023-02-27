@@ -290,7 +290,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space)
 "vi" = (
-/obj/structure/frame/computer,
+/obj/structure/frame/computer{
+	anchored = 1
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space)
 "vw" = (
@@ -358,8 +360,8 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space)
 "Aa" = (
-/obj/structure/closet/syndicate/resources,
 /obj/item/coin/antagtoken,
+/obj/structure/closet/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space)
 "Bb" = (
@@ -439,7 +441,9 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space)
 "GN" = (
-/obj/structure/frame/computer,
+/obj/structure/frame/computer{
+	anchored = 1
+	},
 /obj/item/stack/cable_coil/five,
 /obj/item/stack/sheet/glass{
 	pixel_y = 3
@@ -483,8 +487,10 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space)
 "Kr" = (
-/obj/structure/frame/computer,
 /obj/item/circuitboard/computer/security,
+/obj/structure/frame/computer{
+	anchored = 1
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space)
 "KJ" = (
@@ -972,7 +978,7 @@ NY
 Yj
 Yj
 uS
-Pq
+ie
 Pq
 Pq
 Pq
@@ -1080,7 +1086,7 @@ NY
 Kr
 ao
 nF
-Pq
+ie
 Pq
 Pq
 Pq
