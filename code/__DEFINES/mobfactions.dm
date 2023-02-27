@@ -18,6 +18,8 @@
 #define FACTION_MINING "mining"
 /// Rats and mice
 #define FACTION_RAT "Rats"
+/// Slimey creatures
+#define FACTION_SLIME "slime"
 
 // Antagonist factions
 
