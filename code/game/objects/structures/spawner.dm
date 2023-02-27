@@ -66,7 +66,7 @@
 	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	spawn_text = "crawls out of"
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goldgrub, /mob/living/simple_animal/hostile/asteroid/goliath, /mob/living/simple_animal/hostile/asteroid/hivelord, /mob/living/simple_animal/hostile/asteroid/basilisk, /mob/living/basic/wumborian_fugu)
-	faction = list("mining")
+	faction = list(FACTION_MINING)
 
 /obj/structure/spawner/mining/goldgrub
 	name = "goldgrub den"
