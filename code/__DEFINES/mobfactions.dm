@@ -71,6 +71,8 @@
 #define FACTION_SPIDER "spiders"
 /// Currently used only by floating eyeballs
 #define FACTION_SPOOKY "spooky"
+/// Statues that move around when nobody is watching them
+#define FACTION_STATUE "statue"
 /// Stick creatures summoned by the Paperwizard, and the wizard themselves
 #define FACTION_STICKMAN "stickman"
 /// Creatures ignored by various turrets
