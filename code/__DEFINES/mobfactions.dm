@@ -7,3 +7,6 @@
 #define FACTION_MAINT_CREATURES "Maint_Creatures"
 
 #define FACTION_NEUTRAL "neutral"
+
+/// Define for the heretic faction applied to heretics and heretic mobs.
+#define FACTION_HERETIC "heretics"
