@@ -1,0 +1,7 @@
+author: "itseasytosee"
+delete-after: True
+changes:
+  - bugfix: "Monkeys ues the proper husk sprites."
+  - imageadd: "The monkey has been moved back down to its lower, more submissive position."
+  - refactor: "Your bodyparts are now dynamically rendered at a height relevant to the length of your legs and torso, what does this mean for you? Not much to be honest, but you might see a monkey pop up a bit if you cut its legs off."
+  - admin: "The Tallboy is here"

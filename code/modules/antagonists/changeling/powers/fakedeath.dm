@@ -63,7 +63,7 @@
 
 /datum/action/changeling/fakedeath/can_sting(mob/living/user)
 	if(HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, "changeling") && !revive_ready)
-		to_chat(user, span_warning("We are already reviving."))
+		user.balloon_alert(user, "already reviving!")
 		return
 	if(!user.stat && !revive_ready) //Confirmation for living changelings if they want to fake their death
 		switch(tgui_alert(usr,"Are we sure we wish to fake our own death?", "Feign Death", list("Yes", "No")))

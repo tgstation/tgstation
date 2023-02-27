@@ -26,19 +26,11 @@
 	lighting_cutoff_blue = 40
 
 	ai_controller = /datum/ai_controller/basic_controller/blankbody
-	/// Used for mobs that get spawned in a spawner appearently.
-	var/datum/component/spawner/nest
 
 /mob/living/basic/blankbody/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
 	AddComponent(/datum/component/health_scaling_effects, min_health_attack_modifier_lower = 8, min_health_attack_modifier_upper = 14)
-
-/mob/living/basic/blankbody/Destroy()
-	if(nest)
-		nest.spawned_mobs -= src
-		nest = null
-	return ..()
 
 /datum/ai_controller/basic_controller/blankbody
 	blackboard = list(

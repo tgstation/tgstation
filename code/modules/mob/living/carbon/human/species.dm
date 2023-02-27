@@ -419,7 +419,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	for(var/obj/item/equipped_item in wearer.get_all_worn_items())
 		var/equipped_item_slot = wearer.get_slot_by_item(equipped_item)
 		if(!equipped_item.mob_can_equip(wearer, equipped_item_slot, bypass_equip_delay_self = TRUE, ignore_equipped = TRUE))
-			wearer.dropItemToGround(equipped_item)
+			wearer.dropItemToGround(equipped_item, force = TRUE)
 
 /datum/species/proc/update_no_equip_flags(mob/living/carbon/wearer, new_flags)
 	no_equip_flags = new_flags
@@ -543,6 +543,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/handle_body(mob/living/carbon/human/species_human)
 	species_human.remove_overlay(BODY_LAYER)
+	var/height_offset = species_human.get_top_offset() // From high changed by varying limb height
 	if(HAS_TRAIT(species_human, TRAIT_INVISIBLE_MAN))
 		return handle_mutant_bodyparts(species_human)
 	var/list/standing = list()
@@ -557,6 +558,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(OFFSET_FACE in species_human.dna.species.offset_features)
 				lip_overlay.pixel_x += species_human.dna.species.offset_features[OFFSET_FACE][1]
 				lip_overlay.pixel_y += species_human.dna.species.offset_features[OFFSET_FACE][2]
+			lip_overlay.pixel_y += height_offset
 			standing += lip_overlay
 
 		// eyes
@@ -572,6 +574,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(OFFSET_FACE in species_human.dna.species.offset_features)
 				add_pixel_x = species_human.dna.species.offset_features[OFFSET_FACE][1]
 				add_pixel_y = species_human.dna.species.offset_features[OFFSET_FACE][2]
+			add_pixel_y += height_offset
 
 			if(!eye_organ)
 				no_eyeslay = mutable_appearance('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER)
@@ -582,7 +585,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				eye_organ.refresh(call_update = FALSE)
 
 			if(!no_eyeslay)
-				for(var/eye_overlay in eye_organ.generate_body_overlay(species_human))
+				for(var/mutable_appearance/eye_overlay in eye_organ.generate_body_overlay(species_human))
+					eye_overlay.pixel_y += height_offset
 					standing += eye_overlay
 
 	// organic body markings
@@ -597,18 +601,22 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(!HAS_TRAIT(species_human, TRAIT_HUSK))
 			if(noggin && (IS_ORGANIC_LIMB(noggin)))
 				var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head", -BODY_LAYER)
+				markings_head_overlay.pixel_y += height_offset
 				standing += markings_head_overlay
 
 			if(chest && (IS_ORGANIC_LIMB(chest)))
 				var/mutable_appearance/markings_chest_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_chest", -BODY_LAYER)
+				markings_chest_overlay.pixel_y += height_offset
 				standing += markings_chest_overlay
 
 			if(right_arm && (IS_ORGANIC_LIMB(right_arm)))
 				var/mutable_appearance/markings_r_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_arm", -BODY_LAYER)
+				markings_r_arm_overlay.pixel_y += height_offset
 				standing += markings_r_arm_overlay
 
 			if(left_arm && (IS_ORGANIC_LIMB(left_arm)))
 				var/mutable_appearance/markings_l_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_arm", -BODY_LAYER)
+				markings_l_arm_overlay.pixel_y += height_offset
 				standing += markings_l_arm_overlay
 
 			if(right_leg && (IS_ORGANIC_LIMB(right_leg)))
@@ -631,15 +639,19 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
 					underwear_overlay.color = species_human.underwear_color
+				underwear_overlay.pixel_y += height_offset
 				standing += underwear_overlay
 
 		if(species_human.undershirt)
 			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[species_human.undershirt]
 			if(undershirt)
+				var/mutable_appearance/working_shirt
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE)
-					standing += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
+					working_shirt = wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
 				else
-					standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
+					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
+				working_shirt.pixel_y += height_offset
+				standing += working_shirt
 
 		if(species_human.socks && species_human.num_legs >= 2 && !(src.bodytype & BODYTYPE_DIGITIGRADE))
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[species_human.socks]
