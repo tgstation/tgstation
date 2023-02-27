@@ -16,9 +16,9 @@
 /// CARPS
 #define FACTION_CARP "carp"
 /// Creatures summoned by chemical reactions
-#define FACTION_CHEMICAL_SUMMON "chemicalsummon"
+#define FACTION_CHEMICAL_SUMMON "chemical_summon"
 /// Clown creatures and the Clown themselves
-#define FACTION_CLOWN "Clowns"
+#define FACTION_CLOWN "clowns"
 /// Headslugs
 #define FACTION_CREATURE "creature"
 /// Faithless and shadowpeople
@@ -36,9 +36,9 @@
 /// Creatures of the never finished jungle planet, and gorillas
 #define FACTION_JUNGLE "jungle"
 /// Small lizards
-#define FACTION_LIZARD "Lizard"
+#define FACTION_LIZARD "lizard"
 /// Maint creatures have mutual respect for eachother.
-#define FACTION_MAINT_CREATURES "Maint_Creatures"
+#define FACTION_MAINT_CREATURES "maint_creatures"
 /// Animated objects and statues
 #define FACTION_MIMIC "mimic"
 /// Beasts found on the various mining environments
@@ -48,7 +48,7 @@
 /// Mushrooms and mushroompeople
 #define FACTION_MUSHROOM "mushroom"
 /// Nanotrasen private security
-#define FACTION_NANOTRASEN_PRIVATE "nanotrasenprivate"
+#define FACTION_NANOTRASEN_PRIVATE "nanotrasen_private"
 /// Mobs from the Netherworld
 #define FACTION_NETHER "nether"
 /// Mobs spawned by the emagged orion arcade
@@ -58,7 +58,7 @@
 /// Plants, lots of overlap with vines
 #define FACTION_PLANTS "plants"
 /// Rats and mice
-#define FACTION_RAT "Rats"
+#define FACTION_RAT "rats"
 /// Creatures from Space Russia
 #define FACTION_RUSSIAN "russian"
 /// Creatures affiliated with the AI and Cyborgs
