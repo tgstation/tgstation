@@ -125,7 +125,7 @@
 		tc_budget -= uplink_item.cost
 		new uplink_item.item(surplus_crate)
 
-/// overwrites purchase for surplus items to instead spawn this crate and run the previous procs
+/// overwrites item spawning proc for surplus items to spawn an appropriate crate via a podspawn
 /datum/uplink_item/bundles_tc/surplus/spawn_item(spawn_path, mob/user, datum/uplink_handler/handler, atom/movable/source)
 	var/obj/structure/closet/crate/surplus_crate = new crate_type()
 	if(!istype(surplus_crate))
