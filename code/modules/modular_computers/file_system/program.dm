@@ -177,9 +177,3 @@
 		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
 		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
 	return TRUE
-
-/datum/computer_file/program/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
-	return .
