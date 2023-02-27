@@ -1,5 +1,4 @@
-/// If this seems rather...bare at the moment, its temporary.
-/// Later all mob factions will be moved here and their current factions replaced with faction defines.
+// Contains mob factions that are not handled by special role defines (for example, viscerators having ROLE_SYNDICATE)
 
 // Creature factions
 
@@ -11,14 +10,17 @@
 #define FACTION_CLOWN "Clowns"
 /// Slaughterdemons
 #define FACTION_HELL "hell"
-/// Define for the heretic faction applied to heretics and heretic mobs.
-#define FACTION_HERETIC "heretics"
 /// Maint creatures have mutual respect for eachother.
 #define FACTION_MAINT_CREATURES "Maint_Creatures"
 /// Beasts found on the various mining environments
 #define FACTION_MINING "mining"
 /// Rats and mice
 #define FACTION_RAT "Rats"
+
+// Antagonist factions
+
+/// Define for the heretic faction applied to heretics and heretic mobs.
+#define FACTION_HERETIC "heretics"
 
 // Special factions
 
