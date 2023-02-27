@@ -29,7 +29,7 @@ Stabilized extracts:
 	if(isliving(loc))
 		return loc
 	var/atom/checked_loc = loc
-	while (checked_loc && !isturf(checked_loc) && is_type_in_list(checked_loc, GLOB.permitted_stabilized_containers))
+	while (checked_loc && is_type_in_list(checked_loc, GLOB.permitted_stabilized_containers))
 		if (isliving(checked_loc.loc))
 			return checked_loc.loc
 		checked_loc = checked_loc.loc
