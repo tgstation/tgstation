@@ -191,7 +191,7 @@
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] ([span_boldannounce("Ghosted")])\n"
 						continue //Ghosted while alive
 
-
+	log_admin(msg.Join())
 	for (var/C in GLOB.admins)
 		to_chat(C, msg.Join())
 
