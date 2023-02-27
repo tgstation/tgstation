@@ -17,7 +17,7 @@
 
 /obj/structure/spawner/Initialize(mapload)
 	. = ..()
-	AddComponent(spawner_type, mob_types, spawn_time, faction, spawn_text, max_mobs)
+	AddComponent(spawner_type, mob_types, spawn_time, max_mobs, faction, spawn_text)
 
 /obj/structure/spawner/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(faction_check(faction, user.faction, FALSE) && !user.client)

@@ -1,4 +1,0 @@
-author: "Tattle"
-delete-after: True
-changes:
-  - bugfix: "removed a double monitor from Delta cargo"
