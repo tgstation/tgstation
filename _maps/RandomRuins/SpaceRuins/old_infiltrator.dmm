@@ -210,6 +210,11 @@
 "nF" = (
 /obj/item/radio/intercom/directional/south,
 /obj/effect/decal/cleanable/blood/old,
+/obj/item/ammo_casing/a357/match,
+/obj/item/ammo_casing/a357/match{
+	pixel_y = -4;
+	pixel_x = -7
+	},
 /obj/item/camera_bug{
 	pixel_x = -5;
 	pixel_y = 9
@@ -293,6 +298,7 @@
 /area/ruin/space/unpowered)
 "uS" = (
 /obj/machinery/newscaster/directional/south,
+/obj/item/ammo_casing/a357/match,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/unpowered)
 "vi" = (
@@ -363,11 +369,16 @@
 /obj/item/crowbar/red,
 /obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/structure/rack,
+/obj/item/book/manual/nuclear,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
 "Aa" = (
-/obj/item/coin/antagtoken,
 /obj/structure/closet/syndicate,
+/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
+/obj/item/coin/antagtoken{
+	pixel_y = 4;
+	pixel_x = 3
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/unpowered)
 "Bb" = (
@@ -390,6 +401,10 @@
 	pixel_x = -8
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"Cv" = (
+/obj/item/ammo_casing/a357/match,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/unpowered)
 "CC" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
@@ -1010,7 +1025,7 @@ la
 la
 NY
 jj
-Yj
+Cv
 mq
 Yj
 Pq
@@ -1039,7 +1054,7 @@ NY
 GN
 mg
 Yj
-Yj
+Cv
 en
 DM
 EK
@@ -1065,8 +1080,8 @@ la
 NY
 gr
 Fn
-Yj
-Yj
+Cv
+Cv
 Pq
 EM
 yL
