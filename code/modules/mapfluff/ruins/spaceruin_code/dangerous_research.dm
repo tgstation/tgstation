@@ -22,7 +22,6 @@
 	
 /obj/item/paper/fluff/ruins/dangerous_research/beaches_journal_3
 	name = "Journal of Dreams-Of-Beaches - Day 52"
-	icon_state = "scrap_bloodied"
 	default_raw_text = "Smith was in the chamber, gone in an instant.<BR> I don't know what happened to the doctor or Elias, I just heard flesh tearing and glass shattering.<BR> When my eyes opened, the room was painted in red and rust.<BR>Simes was there, but she just flashed away, all that was left was the gun.<BR>Armstrong grabbed me and we somehow made it out, boarded it up with the tables in the lobby.<BR>Took two of the suits, we'll send out a distress signal when we're out there."
 	/// Armstrong Memos
 /obj/item/paper/fluff/ruins/dangerous_research/armstrong_memo_1
@@ -76,3 +75,14 @@
 	<B>047 - Heavy</B> Insertion of nerve stimulator into patient's pineal gland.<BR>\
 	<B>049 - Removal of subject's vision. Surgically removed subject's eyes, optical nerves cauterized.</B><BR>\
 	<B>050 - Removal of subject's ability to speak. Surgically removed subject's tongue, wound cauterized.</B><BR>")
+
+// Lore ID cards
+/obj/item/card/id/away/dangerous_research
+	name = "Mike R. Smith"
+	desc = "An older ID card, it has a label reading \"Researcher\"."
+	trim = /datum/id_trim/away/dangerous_research
+
+/obj/item/card/id/away/dangerous_research/head_occultist
+	name = "Elias Valentin"
+	desc = "An older ID card, it has a label reading \"Head Occultist\". It's smeared with dried blood."
+	trim = /datum/id_trim/away/dangerous_research/head_occultist
