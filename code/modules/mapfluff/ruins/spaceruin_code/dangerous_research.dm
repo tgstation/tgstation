@@ -5,7 +5,6 @@
 
 /obj/item/paper/fluff/ruins/dangerous_research/head_occultist_note
 	name = "Frantically Scrawled Note"
-	icon_state = "scrap"
 	default_raw_text = "John's been speaking to me recently, so I had Greyham take his tongue.<BR> He was looking at me, so the Doctor took his eyes.<BR>He won't stop talking and staring. He just wants a few things, he says.<BR>All the research, so close to fruition, would it be wrong to let him finish the rune?"
 
 /obj/item/paper/fluff/ruins/dangerous_research/smith
@@ -73,8 +72,8 @@
 	<B>016 - Medium</B> Treated all staff for sleep loss (Diphenhydramine, 10u)<BR>\
 	<B>DATA CORRUPTED</B><BR>\
 	<B>047 - Heavy</B> Insertion of nerve stimulator into patient's pineal gland.<BR>\
-	<B>049 - Removal of subject's vision. Surgically removed subject's eyes, optical nerves cauterized.</B><BR>\
-	<B>050 - Removal of subject's ability to speak. Surgically removed subject's tongue, wound cauterized.</B><BR>")
+	<B>049 - Heavy</B>Removal of subject's vision. Surgically removed subject's eyes, optical nerves cauterized.<BR>\
+	<B>050 - Heavy</B>Removal of subject's ability to speak. Surgically removed subject's tongue, wound cauterized.<BR>")
 
 // Lore ID cards
 /obj/item/card/id/away/dangerous_research
