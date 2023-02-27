@@ -14,7 +14,7 @@
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	faction = list("nether")
+	faction = list(FACTION_NETHER)
 	speak_emote = list("screams")
 	death_message = "falls apart into a fine dust."
 	unsuitable_atmos_damage = 0

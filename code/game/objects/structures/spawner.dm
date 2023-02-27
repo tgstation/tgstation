@@ -43,7 +43,7 @@
 	spawn_time = 15 SECONDS
 	mob_types = list(/mob/living/simple_animal/hostile/skeleton)
 	spawn_text = "climbs out of"
-	faction = list("skeleton")
+	faction = list(FACTION_SKELETON)
 
 /obj/structure/spawner/clown
 	name = "Laughing Larry"
@@ -103,7 +103,7 @@
 	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	spawn_text = "crawls through"
 	mob_types = list(/mob/living/basic/migo, /mob/living/basic/creature, /mob/living/basic/blankbody)
-	faction = list("nether")
+	faction = list(FACTION_NETHER)
 
 /obj/structure/spawner/nether/Initialize(mapload)
 	. = ..()

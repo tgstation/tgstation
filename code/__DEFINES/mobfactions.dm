@@ -47,6 +47,8 @@
 #define FACTION_MONKEY "monkey"
 /// Mushrooms and mushroompeople
 #define FACTION_MUSHROOM "mushroom"
+/// Mobs from the Netherworld
+#define FACTION_NETHER "nether"
 /// Mobs spawned by the emagged orion arcade
 #define FACTION_ORION "orion"
 /// Penguins and their chicks
@@ -57,6 +59,8 @@
 #define FACTION_RAT "Rats"
 /// Creatures affiliated with the AI and Cyborgs
 #define FACTION_SILICON "silicon"
+/// Spooky scary skeletons
+#define FACTION_SKELETON "skeleton"
 /// Slimey creatures
 #define FACTION_SLIME "slime"
 /// Spiders and their webs
