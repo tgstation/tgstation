@@ -46,7 +46,9 @@ Stabilized extracts:
 			continue
 		effectpath = effect
 		break
-	var/datum/status_effect/stabilized/active_effect = holder.apply_status_effect(effectpath, src)
+	if (holder.has_status_effect(effectpath))
+		return
+	holder.apply_status_effect(effectpath, src)
 	STOP_PROCESSING(SSobj,src)
 
 //Colors and subtypes:

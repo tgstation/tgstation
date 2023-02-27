@@ -438,7 +438,7 @@
 /datum/status_effect/stabilized //The base stabilized extract effect, has no effect of its' own.
 	id = "stabilizedbase"
 	duration = -1
-	alert_type = null
+	alert_type = /atom/movable/screen/alert/status_effect/stabilized_extract
 	/// Item which provides this buff
 	var/obj/item/slimecross/stabilized/linked_extract
 	/// Colour of the extract providing the buff
@@ -450,6 +450,8 @@
 		return FALSE
 	src.linked_extract = linked_extract
 	RegisterSignal(linked_extract, COMSIG_MOVABLE_MOVED, PROC_REF(on_extract_moved))
+	var/atom/movable/screen/alert/status_effect/stabilized_extract/screen_alert = linked_alert
+	screen_alert.copy_extract(linked_extract)
 	return TRUE
 
 /datum/status_effect/stabilized/Destroy()
@@ -466,6 +468,27 @@
 		linked_extract.linked_effect = null
 		START_PROCESSING(SSobj,linked_extract)
 	qdel(src)
+
+/// Screen alert used by stabilised extract buffs
+/atom/movable/screen/alert/status_effect/stabilized_extract
+	name = "some kind of slime extract"
+	desc = "Experiencing the effects"
+	icon_state = "template"
+	/// Colour to display slime icon as
+	var/overlay_colour = COLOR_WHITE
+
+/// Updates screen alert with properties of linked extract
+/atom/movable/screen/alert/status_effect/stabilized_extract/proc/copy_extract(obj/item/slimecross/stabilized/linked_extract)
+	name = linked_extract.name
+	desc = linked_extract.effect_desc
+	overlay_colour = linked_extract.get_item_colour()
+	update_appearance()
+
+/atom/movable/screen/alert/status_effect/stabilized_extract/update_overlays()
+	. = ..()
+	var/mutable_appearance/slime_icon = mutable_appearance('icons/obj/xenobiology/slimecrossing.dmi', "stabilized")
+	slime_icon.color = overlay_colour
+	. += slime_icon
 
 /datum/status_effect/stabilized/null //This shouldn't ever happen, but just in case.
 	id = "stabilizednull"
