@@ -1,5 +1,12 @@
 // Contains mob factions that are not handled by special role defines (for example, viscerators having ROLE_SYNDICATE)
 
+// Default factions
+
+/// Acts as a default faction for most violent creatures
+#define FACTION_HOSTILE "hostile"
+/// Acts as a default faction for most peaceful creatures
+#define FACTION_NEUTRAL "neutral"
+
 // Creature factions
 
 /// Ashwalker related creatures
@@ -37,9 +44,3 @@
 #define FACTION_HERETIC "heretics"
 /// Mainly used by pirate simplemobs. However I placed them here instead, as its also used by players
 #define FACTION_PIRATE "pirate"
-
-// Special factions
-
-/// Acts as a default faction for most peaceful creatures
-#define FACTION_NEUTRAL "neutral"
-

@@ -12,7 +12,7 @@
 	var/spawn_time = 30 SECONDS
 	var/mob_types = list(/mob/living/basic/carp)
 	var/spawn_text = "emerges from"
-	var/faction = list("hostile")
+	var/faction = list(FACTION_HOSTILE)
 	var/spawner_type = /datum/component/spawner
 
 /obj/structure/spawner/Initialize(mapload)
