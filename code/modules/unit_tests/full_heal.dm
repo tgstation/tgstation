@@ -42,23 +42,15 @@
 	dummy.apply_damages(brute = 10, burn = 10, tox = 10, oxy = 10, clone = 10, stamina = 10)
 	dummy.fully_heal(HEAL_DAMAGE)
 
-	if(dummy.health == dummy.maxHealth)
-		// Success case
-		return
-
-	// Fail case if they still have damage
-	// Go into detail as to why now
-	TEST_FAIL("After a fully heal  with flag HEAL_DAMAGE, not all damage was healed:")
-
 	if(dummy.getBruteLoss())
-		TEST_FAIL("The dummy still had brute damage!")
+		TEST_FAIL("The dummy still had brute damage after a fully heal!")
 	if(dummy.getFireLoss())
-		TEST_FAIL("The dummy still had burn damage!")
+		TEST_FAIL("The dummy still had burn damage after a fully heal!")
 	if(dummy.getToxLoss())
-		TEST_FAIL("The dummy still had toxins damage!")
+		TEST_FAIL("The dummy still had toxins damage after a fully heal!")
 	if(dummy.getOxyLoss())
-		TEST_FAIL("The dummy still had oxy damage!")
+		TEST_FAIL("The dummy still had oxy damage after a fully heal!")
 	if(dummy.getCloneLoss())
-		TEST_FAIL("The dummy still had clone damage!")
+		TEST_FAIL("The dummy still had clone damage after a fully heal!")
 	if(dummy.getStaminaLoss())
-		TEST_FAIL("The dummy still had stamina damage!")
+		TEST_FAIL("The dummy still had stamina damage after a fully heal!")
