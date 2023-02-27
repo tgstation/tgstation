@@ -47,6 +47,8 @@
 #define FACTION_MONKEY "monkey"
 /// Mushrooms and mushroompeople
 #define FACTION_MUSHROOM "mushroom"
+/// Nanotrasen private security
+#define FACTION_NANOTRASEN_PRIVATE "nanotrasenprivate"
 /// Mobs from the Netherworld
 #define FACTION_NETHER "nether"
 /// Mobs spawned by the emagged orion arcade
@@ -57,6 +59,8 @@
 #define FACTION_PLANTS "plants"
 /// Rats and mice
 #define FACTION_RAT "Rats"
+/// Creatures from Space Russia
+#define FACTION_RUSSIAN "russian"
 /// Creatures affiliated with the AI and Cyborgs
 #define FACTION_SILICON "silicon"
 /// Spooky scary skeletons
