@@ -3,11 +3,11 @@
 /obj/structure/frame/machine,
 /obj/item/stack/cable_coil/five,
 /turf/open/floor/circuit/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "ao" = (
 /obj/effect/mob_spawn/corpse/human/syndicatepilot,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "bU" = (
 /obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "EVA";
@@ -20,11 +20,11 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "cd" = (
 /obj/structure/mirror/directional/east,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "cj" = (
 /obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "Bomb Storage";
@@ -36,7 +36,7 @@
 	},
 /obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "cJ" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 1
@@ -53,26 +53,22 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "df" = (
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
-"do" = (
-/obj/machinery/status_display/evac/directional/south,
-/turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "dJ" = (
 /turf/open/floor/circuit/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "ej" = (
 /obj/item/chair{
 	dir = 4
 	},
 /mob/living/basic/carp,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "en" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Cockpit"
@@ -85,11 +81,11 @@
 	},
 /obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "fb" = (
 /obj/effect/turf_decal/syndicateemblem/top/middle,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "gr" = (
 /obj/structure/table,
 /obj/machinery/button/door{
@@ -104,7 +100,7 @@
 	pixel_x = 6
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "gT" = (
 /mob/living/basic/carp,
 /turf/template_noop,
@@ -115,14 +111,14 @@
 	pixel_y = 3
 	},
 /turf/open/floor/circuit/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "ie" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "iI" = (
 /obj/effect/turf_decal/syndicateemblem/top/left,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "jj" = (
 /obj/structure/table,
 /obj/item/folder/red{
@@ -138,23 +134,23 @@
 	pixel_x = -3
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "js" = (
 /obj/structure/frame/computer{
 	dir = 1
 	},
 /turf/open/floor/circuit/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "jt" = (
 /obj/effect/decal/cleanable/oil,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "ju" = (
 /obj/machinery/power/shuttle_engine/propulsion/right,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "kC" = (
 /obj/machinery/light/directional/east,
 /obj/structure/window/reinforced/spawner/north,
@@ -163,7 +159,7 @@
 	},
 /obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "la" = (
 /turf/template_noop,
 /area/template_noop)
@@ -178,35 +174,35 @@
 	pixel_x = 6
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "mg" = (
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "mq" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "mr" = (
 /obj/item/grenade/smokebomb{
 	pixel_x = 5
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "ms" = (
-/obj/machinery/status_display/ai/directional/north,
 /obj/structure/table,
 /obj/item/restraints/handcuffs/cable/zipties,
 /obj/item/storage/fancy/cigarettes/cigpack_syndicate{
 	pixel_x = -4;
 	pixel_y = 3
 	},
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "mO" = (
 /obj/effect/turf_decal/syndicateemblem/top/right,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "nv" = (
 /obj/item/stack/sheet/mineral/plastitanium,
 /turf/template_noop,
@@ -219,20 +215,24 @@
 	pixel_y = 9
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "nR" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
+"pi" = (
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
 "pl" = (
 /obj/structure/table,
 /obj/item/relic{
 	pixel_y = 5
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "qL" = (
 /obj/machinery/door/window/brigdoor/left/directional/west{
 	req_access = list("syndicate");
@@ -245,27 +245,32 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "ro" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "sz" = (
 /obj/structure/frame/machine,
-/obj/item/circuitboard/machine/recharger,
+/obj/item/circuitboard/machine/cyborgrecharger,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "sL" = (
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/tool,
 /obj/machinery/light/directional/north,
 /obj/item/stack/cable_coil,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "tE" = (
 /obj/effect/turf_decal/syndicateemblem/middle/middle,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
+"ur" = (
+/obj/structure/lattice,
+/obj/machinery/status_display/ai/directional/north,
+/turf/template_noop,
+/area/template_noop)
 "us" = (
 /obj/effect/spawner/random/engineering/tool,
 /obj/machinery/light/directional/west,
@@ -275,26 +280,27 @@
 	},
 /obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "uE" = (
 /obj/machinery/recharge_station,
+/obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "uP" = (
 /obj/machinery/power/shuttle_engine/propulsion/left,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "uS" = (
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "vi" = (
 /obj/structure/frame/computer{
 	anchored = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "vw" = (
 /obj/effect/turf_decal/stripes/red/line,
 /obj/effect/turf_decal/stripes/red/line{
@@ -308,11 +314,11 @@
 	pixel_x = 8
 	},
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "vK" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "wJ" = (
 /obj/machinery/door/poddoor{
 	id = "ruined_infiltrator";
@@ -326,7 +332,7 @@
 	id = "ruined_infiltrator"
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "wU" = (
 /obj/structure/table,
 /obj/item/food/ready_donk{
@@ -338,37 +344,37 @@
 	pixel_x = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "wZ" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "xk" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "yL" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "zg" = (
 /obj/item/crowbar/red,
 /obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/structure/rack,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Aa" = (
 /obj/item/coin/antagtoken,
 /obj/structure/closet/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Bb" = (
 /obj/effect/turf_decal/syndicateemblem/middle/right,
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "BA" = (
 /obj/structure/table,
 /obj/item/storage/belt/bandolier{
@@ -384,24 +390,25 @@
 	pixel_x = -8
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "CC" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "CX" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency/old{
 	pixel_y = 4;
 	pixel_x = 8
 	},
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Da" = (
 /obj/effect/turf_decal/bot_red,
 /obj/machinery/suit_storage_unit/open,
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Dx" = (
 /obj/structure/table,
 /obj/item/radio{
@@ -412,22 +419,22 @@
 	pixel_y = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "DM" = (
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "EK" = (
 /mob/living/basic/carp,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "EM" = (
 /obj/machinery/vending/assist,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "ET" = (
 /obj/structure/closet/cardboard/metal,
 /turf/open/floor/circuit/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Fn" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/shield/riot{
@@ -435,11 +442,11 @@
 	pixel_x = 7
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "FW" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "GN" = (
 /obj/structure/frame/computer{
 	anchored = 1
@@ -449,7 +456,7 @@
 	pixel_y = 3
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "GY" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 8
@@ -462,18 +469,18 @@
 	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Ig" = (
 /obj/effect/turf_decal/syndicateemblem/bottom/right,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Ix" = (
 /obj/item/tank/internals/plasma/empty{
 	pixel_y = -13;
 	pixel_x = -12
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Jd" = (
 /obj/item/stack/rods,
 /turf/template_noop,
@@ -481,22 +488,22 @@
 "JH" = (
 /obj/structure/frame/machine,
 /turf/open/floor/circuit/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "JL" = (
 /obj/effect/turf_decal/syndicateemblem/bottom/left,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Kr" = (
 /obj/item/circuitboard/computer/security,
 /obj/structure/frame/computer{
 	anchored = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "KJ" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "KM" = (
 /obj/structure/lattice,
 /turf/template_noop,
@@ -506,17 +513,17 @@
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "LF" = (
 /obj/item/rack_parts,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "LP" = (
 /obj/effect/turf_decal/bot_red,
 /obj/machinery/suit_storage_unit/open,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Mw" = (
 /obj/machinery/status_display/ai{
 	pixel_x = 32
@@ -524,17 +531,17 @@
 /obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "MB" = (
 /mob/living/basic/carp/mega,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Nv" = (
 /obj/effect/turf_decal/bot_red,
 /obj/structure/sign/poster/contraband/random/directional/west,
 /obj/machinery/suit_storage_unit/open,
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "NY" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/shutters{
@@ -542,7 +549,7 @@
 	name = "Cockpit Shutters"
 	},
 /turf/open/floor/plating,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "OT" = (
 /obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "EVA";
@@ -555,34 +562,34 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Pe" = (
 /obj/item/flamethrower{
 	pixel_x = 9;
 	pixel_y = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Pq" = (
 /turf/closed/wall/r_wall/syndicate,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "PC" = (
 /obj/item/stock_parts/capacitor/adv{
 	pixel_x = 8;
 	pixel_y = 5
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "RM" = (
 /obj/item/restraints/handcuffs/cable/zipties/used{
 	pixel_y = 13
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "RP" = (
 /obj/structure/closet/crate/secure/loot,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "SS" = (
 /obj/effect/turf_decal/stripes/red/line,
 /obj/effect/turf_decal/stripes/red/line{
@@ -590,11 +597,11 @@
 	},
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "SY" = (
 /obj/effect/turf_decal/syndicateemblem/bottom/middle,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Tc" = (
 /obj/item/stack/rods/two,
 /turf/template_noop,
@@ -611,7 +618,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "TY" = (
 /obj/effect/decal/cleanable/glass,
 /obj/item/shard,
@@ -624,7 +631,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Ux" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/structure/table,
@@ -634,7 +641,7 @@
 	},
 /obj/item/stock_parts/cell/emproof/empty,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "UN" = (
 /obj/machinery/status_display/evac{
 	pixel_x = -32
@@ -646,26 +653,26 @@
 	pixel_x = 5
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Xp" = (
 /obj/effect/turf_decal/syndicateemblem/middle/left,
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Yb" = (
 /obj/structure/chair,
 /obj/item/toy/plush/nukeplushie,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "Yj" = (
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "YL" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/syndicate/black/red,
 /obj/item/clothing/head/helmet/space/syndicate/black/red,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "YN" = (
 /obj/structure/table,
 /obj/item/reagent_containers/pill/morphine{
@@ -676,7 +683,7 @@
 	pixel_x = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "YT" = (
 /obj/item/shard,
 /turf/template_noop,
@@ -695,11 +702,11 @@
 	pixel_x = -2
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 "ZO" = (
 /obj/effect/spawner/random/structure/tank_holder,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/ruin/space)
+/area/ruin/space/unpowered)
 
 (1,1,1) = {"
 la
@@ -905,7 +912,7 @@ KM
 DM
 DM
 DM
-do
+DM
 Pq
 xk
 DM
@@ -932,7 +939,7 @@ DM
 Yb
 ej
 jt
-DM
+pi
 Pq
 ms
 vK
@@ -984,14 +991,14 @@ Pq
 Pq
 Pq
 CC
-Pq
+ie
 bU
 OT
-Pq
-Pq
+ie
+ie
 TY
 GY
-Pq
+ie
 ie
 Pq
 Pq
@@ -1092,14 +1099,14 @@ Pq
 Pq
 Pq
 Pq
-Pq
+ie
 cJ
 CC
-Pq
-Pq
+ie
+ie
 Tx
 qL
-Pq
+ie
 ie
 Pq
 Pq
@@ -1148,7 +1155,7 @@ la
 wJ
 vK
 DM
-DM
+pi
 Pq
 CX
 vK
@@ -1231,7 +1238,7 @@ la
 la
 la
 Pq
-KM
+ur
 Jd
 KM
 KJ

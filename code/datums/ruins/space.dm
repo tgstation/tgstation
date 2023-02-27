@@ -320,7 +320,6 @@
 	name = "Abandoned Infiltrator"
 	description = "Only one in five Gorlex Marauder strike forces return from their regular raids into Nanotrasen space. \
 		For the other four... well, their ship doesn't just disappear when their target evacuates."
-	always_place = TRUE
 
 /datum/map_template/ruin/space/hellfactory
 	id = "hellfactory"
