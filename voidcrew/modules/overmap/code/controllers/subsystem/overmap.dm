@@ -151,7 +151,7 @@ SUBSYSTEM_DEF(overmap)
 
 /datum/controller/subsystem/overmap/proc/setup_planets()
 	var/list/orbits = list()
-	for (var/i in 2 to (LAZYLEN(radius_tiles) - 1))
+	for (var/i in 2 to LAZYLEN(radius_tiles))
 		orbits += "[i]"
 
 	for (var/_ in 1 to MAX_OVERMAP_PLANETS_TO_SPAWN)
