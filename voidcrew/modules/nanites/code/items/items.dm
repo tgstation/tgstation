@@ -13,13 +13,14 @@
 	name = "nanite program disk"
 	desc = "A disk capable of storing nanite programs. Can be customized using a Nanite Programming Console."
 	icon = 'voidcrew/modules/nanites/icons/diskette.dmi'
-	icon_state = "nanite"
+	icon_state = "disk_map"
 
 	///Typepath of the program on the disk. If set, this will be the path added in initialize.
 	var/datum/nanite_program/program
 
 /obj/item/disk/nanite_program/Initialize(mapload)
 	. = ..()
+	add_overlay("nanite")
 	if(program)
 		program = new program
 
