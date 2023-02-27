@@ -80,14 +80,16 @@ SUBSYSTEM_DEF(overmap)
 	var/list/unsorted_turfs = get_area_turfs(/area/overmap, target_z = OVERMAP_Z_LEVEL)
 	var/max_ring = 0
 	for (var/turf/turf as anything in unsorted_turfs)
+		if (istype(turf, /turf/closed/overmap_edge))
+			continue
 		// the overmap is a square, so we can just use the x and y values to determine the actual ring
 		// 2 2 2 2 2
 		// 2 1 1 1 2
 		// 2 1 X 1 2
 		// 2 1 1 1 2
 		// 2 2 2 2 2
-		var/ring_x = turf.x - overmap_centre.x
-		var/ring_y = turf.y - overmap_centre.y
+		var/ring_x = turf.x - (overmap_centre.x + 1)
+		var/ring_y = turf.y - (overmap_centre.y + 1)
 		var/ring = max(abs(ring_x), abs(ring_y))
 		if (!ring)
 			continue
