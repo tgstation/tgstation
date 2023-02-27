@@ -25,6 +25,8 @@
 #define FACTION_MIMIC "mimic"
 /// Beasts found on the various mining environments
 #define FACTION_MINING "mining"
+/// Plants, lots of overlap with vines
+#define FACTION_PLANTS "plants"
 /// Rats and mice
 #define FACTION_RAT "Rats"
 /// Slimey creatures
@@ -35,6 +37,8 @@
 #define FACTION_SPIDER "spiders"
 /// Creatures ignored by various turrets
 #define FACTION_TURRET "turret"
+/// Vines, lots of overlap with plants
+#define FACTION_VINES "vines"
 
 // Antagonist factions
 
