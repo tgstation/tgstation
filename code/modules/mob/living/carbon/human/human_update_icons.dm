@@ -721,6 +721,9 @@ generate/load female uniform sprites matching all previously decided variables
 				.[2] = offsets["y"]
 	else
 		.[2] = worn_y_offset
+	if(ishuman(loc) && slot_flags != ITEM_SLOT_FEET) /// we adjust the human body for high given by body parts, execpt shoes, because they are always on the bottom
+		var/mob/living/carbon/human/human_holder = loc
+		.[2] += human_holder.get_top_offset()
 
 //Can't think of a better way to do this, sadly
 /mob/proc/get_item_offsets_for_index(i)
