@@ -17,6 +17,3 @@
 #define OVERMAP_SHIP_ACTING "acting"
 #define OVERMAP_SHIP_DOCKING "docking"
 #define OVERMAP_SHIP_UNDOCKING "undocking"
-
-// minimum job slots for an initial ship
-#define OVERMAP_INITIAL_SHIP_JOB_SLOT_MINIMUM 5

@@ -196,9 +196,10 @@ SUBSYSTEM_DEF(overmap)
 		var/list/remaining_templates = subtypesof(/datum/map_template/shuttle/voidcrew)
 		while(!initial_ship_template && LAZYLEN(remaining_templates))
 			var/datum/map_template/shuttle/voidcrew/random_template = pick_n_take(remaining_templates)
-			if(initial(length(random_template.job_slots)) < OVERMAP_INITIAL_SHIP_JOB_SLOT_MINIMUM)
-				continue
 			if(initial(random_template.abstract) == random_template)
+				continue
+			// the first ship will always be an NT or Syndicate one.
+			if(initial(random_template.faction_prefix) == NEUTRAL_SHIP)
 				continue
 			initial_ship_template = random_template
 
