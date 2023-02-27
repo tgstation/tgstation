@@ -98,7 +98,7 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid5"
 	},
-/area/template_noop)
+/area/ruin/space)
 "bl" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -235,7 +235,7 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid10"
 	},
-/area/template_noop)
+/area/ruin/space)
 "dw" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/purple{
@@ -789,7 +789,7 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid9"
 	},
-/area/template_noop)
+/area/ruin/space)
 "jR" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/dangerous_research/maint)
@@ -1175,7 +1175,7 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid6"
 	},
-/area/template_noop)
+/area/ruin/space)
 "pO" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 8
@@ -1664,7 +1664,7 @@
 /area/ruin/space/has_grav/dangerous_research/medical)
 "us" = (
 /turf/closed/wall,
-/area/template_noop)
+/area/ruin/space)
 "uB" = (
 /obj/structure/fluff/paper/stack{
 	dir = 1
@@ -1690,7 +1690,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/purple,
 /turf/open/space/basic,
-/area/template_noop)
+/area/ruin/space)
 "uP" = (
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 1
@@ -2062,11 +2062,11 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid12"
 	},
-/area/template_noop)
+/area/ruin/space)
 "zY" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/template_noop)
+/area/ruin/space)
 "zZ" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -2191,7 +2191,7 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "Bg" = (
 /turf/closed/mineral/random,
-/area/template_noop)
+/area/ruin/space)
 "Bm" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2344,7 +2344,7 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid2"
 	},
-/area/template_noop)
+/area/ruin/space)
 "CL" = (
 /obj/effect/turf_decal/stripes/asteroid{
 	dir = 4
@@ -2438,7 +2438,7 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/airless,
-/area/template_noop)
+/area/ruin/space)
 "DX" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/structure/sign/poster/official/moth_piping{
@@ -2467,11 +2467,11 @@
 "Ep" = (
 /obj/structure/lattice,
 /turf/open/misc/asteroid/airless,
-/area/template_noop)
+/area/ruin/space)
 "Ey" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/template_noop)
+/area/ruin/space)
 "EA" = (
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -2519,7 +2519,7 @@
 "Fq" = (
 /obj/structure/flora/rock/icy/style_2,
 /turf/open/misc/asteroid/airless,
-/area/template_noop)
+/area/ruin/space)
 "Fw" = (
 /obj/structure/door_assembly/door_assembly_vault,
 /obj/effect/turf_decal/stripes/full,
@@ -2891,7 +2891,7 @@
 "Lc" = (
 /obj/structure/flora/rock/pile/icy,
 /turf/open/misc/asteroid/airless,
-/area/template_noop)
+/area/ruin/space)
 "Lk" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
@@ -3122,7 +3122,7 @@
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "On" = (
 /turf/open/misc/asteroid/airless,
-/area/template_noop)
+/area/ruin/space)
 "Oo" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
@@ -3143,7 +3143,7 @@
 "Oy" = (
 /obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/airless,
-/area/template_noop)
+/area/ruin/space)
 "OB" = (
 /obj/structure/table,
 /obj/structure/microscope,
@@ -3339,7 +3339,7 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid1"
 	},
-/area/template_noop)
+/area/ruin/space)
 "QE" = (
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/suit/jacket/straight_jacket,
@@ -3447,7 +3447,7 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid8"
 	},
-/area/template_noop)
+/area/ruin/space)
 "RB" = (
 /obj/effect/turf_decal/tile/dark_red/half{
 	dir = 1
@@ -3733,7 +3733,7 @@
 "VD" = (
 /obj/structure/flora/rock/icy/style_3,
 /turf/open/misc/asteroid/airless,
-/area/template_noop)
+/area/ruin/space)
 "VL" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
