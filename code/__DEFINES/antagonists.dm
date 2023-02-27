@@ -195,11 +195,6 @@ GLOBAL_LIST_INIT(ai_employers, list(
 	"Unshackled",
 ))
 
-///all the employers that are syndicate
-#define FACTION_SYNDICATE "syndicate"
-///all the employers that are nanotrasen
-#define FACTION_NANOTRASEN "nanotrasen"
-
 #define UPLINK_THEME_SYNDICATE "syndicate"
 
 #define UPLINK_THEME_UNDERWORLD_MARKET "neutral"
