@@ -33,6 +33,8 @@
 #define FACTION_HIVEBOT "hivebot"
 /// Illusionary creaturs
 #define FACTION_ILLUSION "illusion"
+/// Creatures of the never finished jungle planet, and gorillas
+#define FACTION_JUNGLE "jungle"
 /// Small lizards
 #define FACTION_LIZARD "Lizard"
 /// Maint creatures have mutual respect for eachother.
@@ -41,6 +43,8 @@
 #define FACTION_MIMIC "mimic"
 /// Beasts found on the various mining environments
 #define FACTION_MINING "mining"
+/// Monkeys and gorillas
+#define FACTION_MONKEY "monkey"
 /// Mushrooms and mushroompeople
 #define FACTION_MUSHROOM "mushroom"
 /// Mobs spawned by the emagged orion arcade
