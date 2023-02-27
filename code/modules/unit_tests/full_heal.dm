@@ -23,8 +23,12 @@
 	var/list/we_started_with = list()
 
 	for(var/obj/item/organ/internal/organ in dummy.internal_organs)
+		if(organ.organ_flags & ORGAN_VITAL) // leave this for now
+			continue
 		we_started_with += organ.type
 		qdel(organ)
+
+	TEST_ASSERT(length(we_started_with), "Dummy didn't spawn with any organs to regenerate.")
 
 	dummy.fully_heal(HEAL_REFRESH_ORGANS)
 
