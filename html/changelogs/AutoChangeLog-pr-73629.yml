@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - refactor: "Migos, Creatures, and Blank Bodies use a new shared component to update their stats which scales smoothly as they take damage rather than in stages."
+  - bugfix: "Migos, Creatures and Blank Bodies will all update their stats when taking or losing damage regardless of it was from an identifiable enemy."
