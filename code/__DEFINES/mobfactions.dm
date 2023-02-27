@@ -20,6 +20,8 @@
 #define FACTION_RAT "Rats"
 /// Slimey creatures
 #define FACTION_SLIME "slime"
+/// Spiders and their webs
+#define FACTION_SPIDER "spiders"
 
 // Antagonist factions
 
