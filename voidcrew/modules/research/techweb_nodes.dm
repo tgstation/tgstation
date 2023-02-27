@@ -209,4 +209,27 @@
 
 /datum/techweb_node/basic_mining/New()
 	. = ..()
-	design_ids += list("bankmachine")
+	design_ids += list(
+		"bankmachine",
+	)
+	design_ids -= list(
+		"cargoexpress",
+	)
+
+/datum/techweb_node/comptech/New()
+	. = ..()
+	design_ids -= list(
+		"cargorequest",
+	)
+
+/datum/techweb_node/comp_recordkeeping/New()
+	. = ..()
+	design_ids -= list(
+		"account_console",
+	)
+
+/datum/techweb_node/bluespace_travel/New()
+	. = ..()
+	design_ids -= list(
+		"bluespace_pod"
+	)
