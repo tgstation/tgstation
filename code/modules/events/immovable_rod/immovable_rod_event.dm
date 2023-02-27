@@ -44,8 +44,9 @@
 	var/looper = tgui_alert(usr,"Would you like this rod to force-loop across space z-levels?", "Loopy McLoopface", list("Yes", "No"))
 	if(looper == "Yes")
 		force_looping = TRUE
-	message_admins("[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping) " : ""]at [special_target ? AREACOORD(special_target) : "a random location"].")
-	log_admin("[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping)" : ""] at [special_target ? AREACOORD(special_target) : "a random location"].")
+	var/log_message = "[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping) " : ""]at [special_target ? AREACOORD(special_target) : "a random location"]."
+	message_admins(log_message)
+	log_admin(log_message)
 
 /datum/event_admin_setup/immovable_rod/apply_to_event(datum/round_event/immovable_rod/event)
 	event.special_target = special_target
