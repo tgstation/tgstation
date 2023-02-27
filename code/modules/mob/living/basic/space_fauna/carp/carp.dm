@@ -179,7 +179,7 @@
 	name = "Lia"
 	real_name = "Lia"
 	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as the Head of Security's pet."
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 	maxHealth = 200
 	health = 200
 	icon_dead = "magicarp_dead"

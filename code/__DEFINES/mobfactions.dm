@@ -40,6 +40,6 @@
 
 // Special factions
 
-/// Creatures with this faction will not attack until attacked
+/// Acts as a default faction for most peaceful creatures
 #define FACTION_NEUTRAL "neutral"
 
