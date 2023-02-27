@@ -23,6 +23,7 @@
 	maxHealth = 80
 	health = 80
 	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = NONE
 	unsuitable_cold_damage = 4
 	unsuitable_heat_damage = 4
@@ -42,7 +43,6 @@
 	lighting_cutoff_red = 22
 	lighting_cutoff_green = 5
 	lighting_cutoff_blue = 5
-	flammable = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider
 	/// Speed modifier to apply if controlled by a human player
 	var/player_speed_modifier = -4

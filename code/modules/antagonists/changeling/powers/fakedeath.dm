@@ -78,7 +78,7 @@
 
 /datum/action/changeling/fakedeath/proc/can_enter_stasis(mob/living/user)
 	if(HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, "changeling"))
-		to_chat(user, span_warning("We are already reviving."))
+		user.balloon_alert(user, "already reviving!")
 		return FALSE
 	return TRUE
 
