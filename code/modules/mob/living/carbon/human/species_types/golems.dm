@@ -691,7 +691,7 @@
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	prefix = "Runic"
 	special_names = null
-	inherent_factions = list("cult")
+	inherent_factions = list(FACTION_CULT)
 	species_language_holder = /datum/language_holder/golem/runic
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem/cult,

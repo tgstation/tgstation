@@ -25,6 +25,8 @@
 
 // Antagonist factions
 
+/// Cultists and their constructs
+#define FACTION_CULT "cult"
 /// Define for the heretic faction applied to heretics and heretic mobs.
 #define FACTION_HERETIC "heretics"
 
