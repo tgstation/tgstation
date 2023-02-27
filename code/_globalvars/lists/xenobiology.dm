@@ -99,3 +99,10 @@ GLOBAL_LIST_INIT(xeno_sample_colors, list(
 	COLOR_SAMPLE_PURPLE,
 	COLOR_SAMPLE_YELLOW,
 ))
+
+/// Types of containers in which stabilised extracts are allowed to be active
+GLOBAL_LIST_INIT(permitted_stabilized_containers, list(
+	/obj/item/storage/backpack,
+	/obj/item/mod/module/storage,
+	/obj/item/mod/control/,
+))
