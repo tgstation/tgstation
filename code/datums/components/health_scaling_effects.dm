@@ -75,9 +75,9 @@
 		source.melee_damage_upper = initial(source.melee_damage_upper) + upper_modifier
 
 	if (max_health_slowdown != 0 || min_health_slowdown != 0)
-		source.add_or_update_variable_movespeed_modifier(\
-			/datum/movespeed_modifier/health_scaling_speed_buff,\
-			multiplicative_slowdown = LERP(min_health_slowdown, max_health_slowdown, max_min_ratio),\
+		source.add_or_update_variable_movespeed_modifier(
+			/datum/movespeed_modifier/health_scaling_speed_buff,
+			multiplicative_slowdown = LERP(min_health_slowdown, max_health_slowdown, max_min_ratio),
 		)
 
 	if (additional_status_callback)
