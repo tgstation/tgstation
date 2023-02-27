@@ -14,6 +14,7 @@
 		return data
 
 	data["assigned_view"] = "preview_[user.ckey]_[REF(src)]_records"
+	data["station_z"] = !!(z && is_station_level(z))
 
 	return data
 
@@ -41,10 +42,15 @@
 		if("expunge_record")
 			if(!target)
 				return FALSE
+			// Don't let people off station futz with the station network.
+			if(!is_station_level(z))
+				balloon_alert(usr, "out of range!")
+				return TRUE
 
 			expunge_record_info(target)
 			balloon_alert(usr, "record expunged")
 			playsound(src, 'sound/machines/terminal_eject.ogg', 70, TRUE)
+			investigate_log("[key_name(usr)] expunged the record of [target.name].", INVESTIGATE_RECORDS)
 
 			return TRUE
 
@@ -60,8 +66,13 @@
 			return TRUE
 
 		if("purge_records")
+			// Don't let people off station futz with the station network.
+			if(!is_station_level(z))
+				balloon_alert(usr, "out of range!")
+				return TRUE
+
 			ui.close()
-			balloon_alert(usr, "purging records")
+			balloon_alert(usr, "purging records...")
 			playsound(src, 'sound/machines/terminal_alert.ogg', 70, TRUE)
 
 			if(do_after(usr, 5 SECONDS))
@@ -70,6 +81,9 @@
 
 				balloon_alert(usr, "records purged")
 				playsound(src, 'sound/machines/terminal_off.ogg', 70, TRUE)
+				investigate_log("[key_name(usr)] purged all records.", INVESTIGATE_RECORDS)
+			else
+				balloon_alert(usr, "interrupted!")
 
 			return TRUE
 
