@@ -24,9 +24,8 @@
 "ah" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
-	id = "whiteship_windows"
+	id = "whiteship_bridge"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/medbay)
 "aj" = (
@@ -38,9 +37,8 @@
 "ak" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
-	id = "whiteship_windows"
+	id = "whiteship_bridge"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/cargo)
 "am" = (
@@ -1361,9 +1359,6 @@
 /area/shuttle/voidcrew/box/medbay)
 "LG" = (
 /obj/structure/table/glass,
-/obj/machinery/computer/med_data/laptop{
-	density = 0
-	},
 /obj/machinery/door/window/left/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/box/crew_quarters)
@@ -1426,9 +1421,8 @@
 "Rx" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
-	id = "whiteship_windows"
+	id = "whiteship_bridge"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/crew_quarters)
 "SJ" = (
@@ -1437,14 +1431,6 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/box/crew_quarters)
-"TB" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
-	id = "whiteship_bridge"
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/shuttle/voidcrew/box/bridge)
 "Uc" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -2052,11 +2038,11 @@ aa
 aa
 aa
 bf
-TB
+bf
 bK
 cb
 co
-TB
+bf
 bf
 aa
 aa
@@ -2071,11 +2057,11 @@ aa
 aa
 aa
 aa
-TB
-TB
-TB
-TB
-TB
+bf
+bf
+bf
+bf
+bf
 aa
 aa
 aa

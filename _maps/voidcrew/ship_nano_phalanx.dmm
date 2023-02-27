@@ -17,7 +17,7 @@
 /area/shuttle/voidcrew/phalanx/cargo)
 "ap" = (
 /obj/machinery/door/poddoor{
-	id = "phpublicblastdoors"
+	id = "phbridgeblastdoors"
 	},
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
@@ -1123,8 +1123,7 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/voidcrew/phalanx/medbay)
 "pg" = (
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/voidcrew/phalanx/medbay)
 "pl" = (
@@ -1419,11 +1418,10 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/phalanx/hallway/central)
 "tn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "phbridgeblastdoors"
 	},
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/phalanx/bridge)
 "tz" = (
@@ -1536,12 +1534,6 @@
 "uE" = (
 /turf/open/floor/engine/n2,
 /area/shuttle/voidcrew/phalanx/engineering/atmospherics)
-"uF" = (
-/obj/machinery/computer/med_data{
-	dir = 1
-	},
-/turf/open/floor/carpet/executive,
-/area/shuttle/voidcrew/phalanx/bridge)
 "uM" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1765,11 +1757,10 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/phalanx/hallway/aft)
 "yk" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
-	id = "phpublicblastdoors"
+	id = "phbridgeblastdoors"
 	},
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/phalanx/cafeteria)
 "yo" = (
@@ -2778,8 +2769,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/phalanx/cargo/mining)
 "NC" = (
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/voidcrew/phalanx/nanites)
 "NE" = (
@@ -5248,7 +5238,7 @@ GW
 Ae
 oa
 zD
-uF
+GW
 tn
 oZ
 oZ

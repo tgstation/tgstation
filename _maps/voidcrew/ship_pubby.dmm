@@ -115,14 +115,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/pubby/cargo)
-"fh" = (
-/obj/machinery/door/poddoor{
-	id = "whiteship_bridge"
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/voidcrew/pubby/bridge)
 "gr" = (
 /obj/machinery/door/airlock/titanium/glass,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -208,14 +200,6 @@
 	},
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/pubby/cargo)
-"iZ" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
-	id = "whiteship_bridge"
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/shuttle/voidcrew/pubby/bridge)
 "jJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
@@ -1492,14 +1476,14 @@ qx
 (24,1,1) = {"
 qx
 qx
-iZ
+Xc
 Xc
 TG
 JU
 hw
 iJ
 Xc
-iZ
+Xc
 qx
 qx
 "}
@@ -1507,12 +1491,12 @@ qx
 qx
 qx
 qx
-iZ
-iZ
-iZ
-fh
-fh
-iZ
+Xc
+Xc
+Xc
+Xc
+Xc
+Xc
 qx
 qx
 qx

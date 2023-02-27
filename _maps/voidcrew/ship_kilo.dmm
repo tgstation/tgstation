@@ -54,13 +54,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood/old,
-/mob/living/simple_animal/hostile/netherworld/migo{
-	environment_smash = 0;
-	faction = list("neutral");
-	melee_damage_lower = 5;
-	melee_damage_upper = 10;
-	name = "maurice"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/voidcrew/kilo/cargo/mining_dock)
@@ -275,10 +268,9 @@
 "bP" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
-	id = "whiteship_bridge";
-	name = "Cockpit Emergency Blas Door"
+	id = "whiteship_windows";
+	name = "Exterior Window Blas Door"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/bridge)
 "bQ" = (
@@ -514,8 +506,6 @@
 	id = "whiteship_windows";
 	name = "Exterior Window Blas Door"
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/cargo)
 "cV" = (
@@ -554,6 +544,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/mob/living/basic/migo{
+	faction = list("neutral");
+	name = "timothy";
+	desc = "A pinkish, fungoid crustacean-like creature with numerous pairs of clawed appendages and a head covered with waving antennae. He looks friendly."
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/voidcrew/kilo/bridge)
 "cZ" = (
@@ -647,7 +642,6 @@
 	id = "whiteship_windows";
 	name = "Exterior Window Blas Door"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/cafe)
 "eo" = (
@@ -705,7 +699,6 @@
 	id = "whiteship_windows";
 	name = "Exterior Window Blas Door"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/dorms)
 "gn" = (
@@ -1245,14 +1238,6 @@
 /obj/item/bedsheet/captain,
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/kilo/dorms)
-"Bu" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
-	id = "whiteship_bridge";
-	name = "Cockpit Emergency Blas Door"
-	},
-/turf/open/floor/plating,
-/area/shuttle/voidcrew/kilo/bridge)
 "BZ" = (
 /obj/structure/table,
 /obj/machinery/button/door{
@@ -1477,7 +1462,6 @@
 	id = "whiteship_windows";
 	name = "Exterior Window Blas Door"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/engineering)
 "LC" = (
@@ -1501,7 +1485,6 @@
 	id = "whiteship_windows";
 	name = "Exterior Window Blas Door"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/cargo/mining_dock)
 "Mj" = (
@@ -1944,7 +1927,7 @@ Jf
 bP
 Jf
 bP
-Bu
+bP
 aa
 aa
 "}
@@ -1960,7 +1943,7 @@ ng
 gC
 oj
 bP
-Bu
+bP
 aa
 "}
 (4,1,1) = {"
@@ -1976,7 +1959,7 @@ hh
 oP
 BZ
 bP
-Bu
+bP
 "}
 (5,1,1) = {"
 aa

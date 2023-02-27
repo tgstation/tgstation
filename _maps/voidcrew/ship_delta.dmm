@@ -17,7 +17,6 @@
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/delta/dorms)
 "ae" = (
@@ -37,7 +36,6 @@
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/delta/cafe)
 "ah" = (
@@ -800,7 +798,6 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/gun/ballistic/shotgun,
-/obj/item/gun/ballistic/revolver/detective,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/delta/cafe)
@@ -1061,7 +1058,6 @@
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/delta/airlock/port)
 "cu" = (
@@ -1903,7 +1899,6 @@
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/delta/hallway/central)
 "pb" = (
@@ -2068,7 +2063,6 @@
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/delta/cargo)
 "HJ" = (
@@ -2105,7 +2099,6 @@
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/delta/medbay)
 "Nf" = (

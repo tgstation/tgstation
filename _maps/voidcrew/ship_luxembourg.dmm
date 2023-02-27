@@ -108,7 +108,6 @@
 /obj/item/clothing/suit/armor/vest/capcarapace/syndicate,
 /obj/item/storage/box/syndie_kit/chameleon,
 /obj/item/card/id/advanced/black/syndicate_command,
-/obj/item/clothing/head/hos/beret/syndicate,
 /obj/item/card/emag,
 /obj/item/storage/belt/sabre,
 /obj/item/gun/energy/recharge/kinetic_accelerator,
@@ -535,7 +534,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/item/clothing/head/hos/beret/syndicate,
 /obj/item/card/id/advanced/black/syndicate_command,
 /obj/item/clothing/under/syndicate,
 /obj/item/clothing/under/syndicate/skirt,
@@ -543,8 +541,10 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel,
 /obj/item/storage/box/syndie_kit/chameleon,
 /obj/structure/closet/secure_closet/bar{
-	req_access = list(25,41)
+	req_access = null;
+	req_one_access = list(25,41)
 	},
+/obj/item/clothing/head/beret,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/luxembourg/engineering)
 "na" = (
@@ -572,7 +572,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/voidcrew/luxembourg/bridge)
 "nx" = (
-/obj/item/clothing/head/hos/beret/syndicate,
 /obj/item/card/id/advanced/black/syndicate_command,
 /obj/item/clothing/under/syndicate/skirt,
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
@@ -772,7 +771,6 @@
 /obj/item/card/id/advanced/black/syndicate_command,
 /obj/item/clothing/under/syndicate/skirt,
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
-/obj/item/clothing/head/hos/beret/syndicate,
 /obj/item/wrench/combat,
 /obj/item/pipe_dispenser,
 /obj/item/clothing/under/syndicate,
@@ -1180,7 +1178,6 @@
 /obj/item/card/id/advanced/black/syndicate_command,
 /obj/item/clothing/under/syndicate/skirt,
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
-/obj/item/clothing/head/hos/beret/syndicate,
 /obj/item/toy/figure/cargotech,
 /obj/item/clothing/head/beret/cargo,
 /obj/item/clothing/suit/hooded/wintercoat/cargo,
@@ -1198,7 +1195,6 @@
 /obj/item/card/id/advanced/black/syndicate_command,
 /obj/item/clothing/under/syndicate/skirt,
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
-/obj/item/clothing/head/hos/beret/syndicate,
 /obj/item/toy/figure/cargotech,
 /obj/item/clothing/head/beret/cargo,
 /obj/item/clothing/suit/hooded/wintercoat/cargo,
@@ -1514,9 +1510,6 @@
 /obj/item/clothing/under/syndicate,
 /obj/item/clothing/under/syndicate,
 /obj/item/clothing/under/syndicate,
-/obj/item/clothing/head/hos/beret/syndicate,
-/obj/item/clothing/head/hos/beret/syndicate,
-/obj/item/clothing/head/hos/beret/syndicate,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/carpet/donk,
 /area/shuttle/voidcrew/luxembourg/dormitories)

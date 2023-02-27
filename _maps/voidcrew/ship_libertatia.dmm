@@ -96,9 +96,7 @@
 	},
 /obj/item/storage/belt/sabre,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/gun/ballistic/revolver/detective{
-	name = "captain's revolver"
-	},
+/obj/item/gun/ballistic/revolver/c38,
 /turf/open/floor/pod/light,
 /area/shuttle/voidcrew/libertatia/bridge)
 "ci" = (
@@ -386,6 +384,7 @@
 /obj/item/knife/hunting{
 	pixel_y = -5
 	},
+/obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/voidcrew/libertatia/armory)
 "pU" = (
@@ -641,7 +640,6 @@
 	pixel_y = 30
 	},
 /obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/suit/apron/surgical,
 /obj/structure/sign/departments/medbay/alt/directional/west,
