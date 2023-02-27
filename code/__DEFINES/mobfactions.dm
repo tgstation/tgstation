@@ -6,6 +6,8 @@
 #define FACTION_ASHWALKER "ashwalker"
 /// Megafauna bosses of mining
 #define FACTION_BOSS "boss"
+/// CARPS
+#define FACTION_CARP "carp"
 /// Clown creatures and the Clown themselves
 #define FACTION_CLOWN "Clowns"
 /// Slaughterdemons

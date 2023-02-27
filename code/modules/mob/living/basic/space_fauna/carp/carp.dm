@@ -36,7 +36,7 @@
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
-	faction = list("carp")
+	faction = list(FACTION_CARP)
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 1)
 	greyscale_config = /datum/greyscale_config/carp
 	ai_controller = /datum/ai_controller/basic_controller/carp
