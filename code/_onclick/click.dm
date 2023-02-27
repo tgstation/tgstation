@@ -470,19 +470,19 @@
 */
 
 /// Simple helper to face what you clicked on, in case it should be needed in more than one place
-/mob/proc/face_atom(atom/A)
-	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y )
+/mob/proc/face_atom(atom/atom_to_face)
+	if( buckled || stat != CONSCIOUS || !atom_to_face || !x || !y || !atom_to_face.x || !atom_to_face.y )
 		return
-	var/dx = A.x - x
-	var/dy = A.y - y
+	var/dx = atom_to_face.x - x
+	var/dy = atom_to_face.y - y
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
-		if(A.pixel_y > 16)
+		if(atom_to_face.pixel_y > 16)
 			setDir(NORTH)
-		else if(A.pixel_y < -16)
+		else if(atom_to_face.pixel_y < -16)
 			setDir(SOUTH)
-		else if(A.pixel_x > 16)
+		else if(atom_to_face.pixel_x > 16)
 			setDir(EAST)
-		else if(A.pixel_x < -16)
+		else if(atom_to_face.pixel_x < -16)
 			setDir(WEST)
 		return
 

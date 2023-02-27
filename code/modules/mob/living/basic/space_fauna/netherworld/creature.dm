@@ -27,15 +27,13 @@
 	lighting_cutoff_blue = 15
 
 	ai_controller = /datum/ai_controller/basic_controller/creature
-	/// Used for checking if the mob is phased or not.
-	var/is_phased = FALSE
 
 /mob/living/basic/creature/Initialize(mapload)
 	. = ..()
 	var/datum/callback/health_changes_callback = CALLBACK(src, PROC_REF(health_check))
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
 	AddComponent(/datum/component/damage_buffs, health_changes_callback)
-	var/datum/action/innate/creature/teleport/teleport = new(src)
+	var/datum/action/cooldown/spell/jaunt/creature_teleport/teleport = new(src)
 	teleport.Grant(src)
 
 /mob/living/basic/creature/proc/health_check(mob/living/attacker)
@@ -90,36 +88,43 @@
 					return mechamob_target
 	return null
 
-/datum/action/innate/creature
+/// Jaunt spell used by creature. Can only jaunt or unjaunt if nothing can see you.
+/datum/action/cooldown/spell/jaunt/creature_teleport
+	name = "Uncanny Movement"
+	desc = "Enter or leave an alternate plane where you can travel through walls. You can only enter or emerge if unobserved."
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon_state = "blink"
 	background_icon_state = "bg_default"
 	overlay_icon_state = "bg_default_border"
+	spell_requirements = NONE
+	/// Component which prevents this action being used while visible
+	var/datum/component/unobserved_actor/observed_blocker
 
-/datum/action/innate/creature/teleport
-	name = "Teleport"
-	desc = "Teleport to wherever you want, as long as you aren't seen."
+/datum/action/cooldown/spell/jaunt/creature_teleport/Grant(mob/grant_to)
+	. = ..()
+	if (!owner)
+		return
+	observed_blocker = owner.AddComponent(/datum/component/unobserved_actor, unobserved_flags = NO_OBSERVED_ACTIONS)
 
-/datum/action/innate/creature/teleport/Activate()
-	var/mob/living/basic/creature/owner_mob = owner
-	var/obj/effect/dummy/phased_mob/holder = null
-	if(owner_mob.stat == DEAD)
+/datum/action/cooldown/spell/jaunt/creature_teleport/Remove(mob/living/remove_from)
+	QDEL_NULL(observed_blocker)
+	return ..()
+
+/datum/action/cooldown/spell/jaunt/creature_teleport/before_cast(atom/cast_on)
+	if (!owner)
+		return SPELL_CANCEL_CAST
+	if (!do_after(owner, 6 SECONDS, target = owner.loc))
+		owner.balloon_alert(owner, "interrupted!")
+		return SPELL_CANCEL_CAST
+	return ..()
+
+/datum/action/cooldown/spell/jaunt/creature_teleport/cast(atom/cast_on)
+	. = ..()
+	playsound(get_turf(owner), 'sound/effects/podwoosh.ogg', 50, TRUE, -1)
+	if(is_jaunting(cast_on))
+		exit_jaunt(cast_on)
 		return
-	var/turf/owner_turf = get_turf(owner_mob)
-	if (owner_mob.can_be_seen(owner_turf) || !do_after(owner_mob, 60, target = owner_turf))
-		to_chat(owner_mob, span_warning("You can't phase in or out while being observed and you must stay still!"))
-		return
-	if (get_dist(owner_mob, owner_turf) != 0 || owner_mob.can_be_seen(owner_turf))
-		to_chat(owner_mob, span_warning("Action cancelled, as you moved while reappearing or someone is now viewing your location."))
-		return
-	if(owner_mob.is_phased)
-		holder = owner_mob.loc
-		holder.eject_jaunter()
-		holder = null
-		owner_mob.is_phased = FALSE
-		playsound(get_turf(owner_mob), 'sound/effects/podwoosh.ogg', 50, TRUE, -1)
-	else
-		playsound(get_turf(owner_mob), 'sound/effects/podwoosh.ogg', 50, TRUE, -1)
-		holder = new /obj/effect/dummy/phased_mob(owner_turf, owner_mob)
-		owner_mob.is_phased = TRUE
+	enter_jaunt(cast_on)
 
 /datum/ai_controller/basic_controller/creature
 	blackboard = list(
