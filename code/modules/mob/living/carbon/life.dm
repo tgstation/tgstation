@@ -525,6 +525,24 @@
 		if(HM?.timeout)
 			dna.remove_mutation(HM.type)
 
+/**
+ * Handles calling metabolization for dead people.
+ * It's done here instead of the liver so that it works independently of the liver, similarly
+ * to normal metabolization.
+ * It's called as liverless since it doesn't make sense for your liver
+ * to work while you're dead, but self consuming chemicals will still be consumed by this.
+ * Due to how reagent metabolization code works and is laid out, it's done here because it
+ * couldn't be done literally anywhere else. (Trust me, I tried to fit it somewhere.)
+ * 
+ * Arguments:
+ * - delta_time: The amount of time that has elapsed since the last tick.
+ * - times_fired: The number of times SSmobs has ticked.
+ */
+/mob/living/carbon/proc/handle_dead_metabolization(delta_time, times_fired)
+	if (stat != DEAD)
+		return
+	reagents.metabolize(src, delta_time, times_fired, can_overdose = TRUE, liverless = TRUE, dead = TRUE)
+
 /// Base carbon environment handler, adds natural stabilization
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
 	var/areatemp = get_temperature(environment)
@@ -822,12 +840,3 @@
 		return
 
 	heart.beating = !status
-
-//////////////////////
-//SNOWFLAKE REAGENTS//
-//////////////////////
-
-/mob/living/carbon/proc/handle_dead_metabolization(delta_time, times_fired)
-	if (stat != DEAD)
-		return
-	reagents.metabolize(src, delta_time, times_fired, can_overdose = TRUE, liverless = TRUE, dead = TRUE)

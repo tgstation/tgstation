@@ -757,7 +757,7 @@
 	if(!owner)
 		owner = reagent.holder.my_atom
 
-	if(owner && reagent && !(dead && !(reagent.chemical_flags & REAGENT_DEAD_PROCESS)))
+	if(owner && reagent && (!dead || (reagent.chemical_flags & REAGENT_DEAD_PROCESS)))
 		if(owner.reagent_check(reagent, delta_time, times_fired))
 			return
 		if(liverless && !reagent.self_consuming) //need to be metabolized
