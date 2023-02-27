@@ -73,6 +73,8 @@
 		var/txt = tgui_input_text(user, "What would you like to write on the back?", "Photo Writing", max_length = 128)
 		if(txt && user.can_perform_action(src))
 			scribble = txt
+	if(P.get_sharpness())
+		crop_photo(user)
 	else
 		return ..()
 
@@ -106,6 +108,14 @@
 	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && !usr.incapacitated())
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
+
+/obj/item/photo/proc/crop_photo(mob/user)
+	if(isnull(picture.picture_image))
+		return
+	var/test_num = tgui_input_number(user, "Test", "Test", 1)
+	test_num = (test_num * world.icon_size) + 1
+	picture.picture_image.Crop(test_num , test_num, picture.psize_x, picture.psize_y)
+	picture.regenerate_small_icon()
 
 /obj/item/photo/old
 	icon_state = "photo_old"
