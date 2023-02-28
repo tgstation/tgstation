@@ -58,6 +58,7 @@
 	UnregisterSignal(antag, COMSIG_LIVING_LIFE)
 	UnregisterSignal(antag, COMSIG_LIVING_DEATH)
 	antag.faction -= "carp"
+	rift_ability?.Remove(antag)
 
 /datum/antagonist/space_dragon/Destroy()
 	rift_list = null
