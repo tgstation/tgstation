@@ -1673,3 +1673,23 @@
 			drinker.adjust_hallucinations(60 SECONDS * REM * delta_time)
 
 	return ..()
+
+/datum/reagent/consumable/kvass
+	name = "Kvass"
+	description = "Kvaaaaaaass."
+	color = "#351300"
+	taste_description = "mmmmm kvass"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/kvass
+	required_drink_type = /datum/reagent/consumable/kvass
+	name = "glass of Kvass"
+	desc = "A glass of Kvaaaaaaass."
+	icon_state = "kvass"
+
+/datum/reagent/consumable/kvass/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	affected_mob.adjustToxLoss(-0.5, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, -0.5 * REM * delta_time, required_organtype = affected_organtype)
+	for(var/datum/reagent/toxin/R in affected_mob.reagents.reagent_list)
+		affected_mob.reagents.remove_reagent(R.type, 2.5 * REM * delta_time)
+	..()
