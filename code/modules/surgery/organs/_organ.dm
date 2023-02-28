@@ -239,7 +239,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(dna?.species)
 		dna.species.regenerate_organs(src, replace_current = regenerate_existing)
 
-		// Species regenerate organs doesn't ALwAYS handling healing the organs because it's dumb
+		// Species regenerate organs doesn't ALWAYS handle healing the organs because it's dumb
 		for(var/obj/item/organ/organ as anything in internal_organs)
 			organ.setOrganDamage(0)
 		set_heartattack(FALSE)
