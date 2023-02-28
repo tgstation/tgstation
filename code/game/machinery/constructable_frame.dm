@@ -239,7 +239,6 @@
 					var/stack_amount = circuit.req_components[component] - req_components[component]
 					if(stack_amount > 0)
 						new stack_path(drop_location(), stack_amount)
-					new stack_path(drop_location(), circuit.req_components[component])
 				circuit = null
 				if(components.len == 0)
 					to_chat(user, span_notice("You remove the circuit board."))
