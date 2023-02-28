@@ -57,6 +57,9 @@
 /area/ruin/space)
 "ar" = (
 /obj/structure/fluff/bus/passable/seat,
+/obj/item/grown/novaflower{
+	pixel_y = 25
+	},
 /obj/item/food/grown/watermelon{
 	pixel_y = 17
 	},
@@ -138,7 +141,11 @@
 /obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/bodypart/arm/right{
-	pixel_y = 14
+	pixel_y = 26;
+	pixel_x = -4
+	},
+/obj/item/food/meat/slab/penguin{
+	pixel_y = 13
 	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
@@ -175,13 +182,16 @@
 	pixel_y = 8;
 	pixel_x = 9
 	},
+/obj/item/food/grown/tomato{
+	pixel_y = 25
+	},
+/obj/item/food/donut/plain{
+	pixel_y = 16;
+	pixel_x = 1
+	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
 	},
-/area/ruin/space)
-"dI" = (
-/obj/item/toy/plush/awakenedplushie,
-/turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "iE" = (
 /obj/structure/table,
@@ -274,6 +284,9 @@
 	layer = 2.91;
 	name = "tgsv3";
 	desc = "It's, uh... pending an upgrade."
+	},
+/obj/item/toy/plush/awakenedplushie{
+	pixel_y = 27
 	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
@@ -625,7 +638,7 @@ Ne
 aU
 aD
 KK
-dI
+yY
 Wn
 yY
 yY
