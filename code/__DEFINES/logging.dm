@@ -66,6 +66,7 @@
 #define LOG_ENTRY_MESSAGE "message"
 #define LOG_ENTRY_TIMESTAMP "timestamp"
 #define LOG_ENTRY_DATA "data"
+#define LOG_ENTRY_WORLD_DATA "world-state"
 
 // Log json keys
 #define LOG_JSON_CATEGORY "category"

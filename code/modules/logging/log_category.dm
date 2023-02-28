@@ -27,13 +27,15 @@ GENERAL_PROTECT_DATUM(/datum/log_category)
 
 /// Add an entry to this category. It is very important that any data you provide doesn't hold references to anything!
 /datum/log_category/proc/add_entry(message, list/data)
+	// Entries that are added first will be at the front of the log entry
 	var/list/entry = list(
+		LOG_ENTRY_TIMESTAMP = logger.unix_timestamp_string(),
 		LOG_ENTRY_CATEGORY = category,
 		LOG_ENTRY_MESSAGE = message,
-		LOG_ENTRY_TIMESTAMP = logger.unix_timestamp_string(),
 	)
 	if(data)
 		entry[LOG_ENTRY_DATA] = data
+	entry[LOG_ENTRY_WORLD_DATA] = world.get_world_state_for_logging()
 
 	entries += list(entry)
 	write_entry(entry)
