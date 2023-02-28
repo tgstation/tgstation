@@ -36,6 +36,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	var/config_flag
 	for(var/datum/log_category/master_category as anything in category_group_tree)
 		var/list/sub_categories = category_group_tree[master_category]
+		sub_categories = sub_categories.Copy()
 		for(var/datum/log_category/sub_category as anything in sub_categories)
 			config_flag = initial(sub_category.config_flag)
 			if(config_flag && !config.Get(config_flag))
@@ -68,7 +69,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 /datum/log_holder/proc/assemble_log_category_tree()
 	var/static/list/category_tree
 	if(category_tree)
-		return category_tree.Copy()
+		return category_tree
 
 	category_tree = list()
 	var/list/all_types = subtypesof(/datum/log_category)
@@ -102,7 +103,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 				stack_trace("log category [sub_category] has a secret status that differs from its master category [master]")
 			category_tree[master] += list(sub_category)
 
-	return category_tree.Copy()
+	return category_tree
 
 /// Initializes the given log category and populates the list of contained categories based on the sub category list
 /datum/log_holder/proc/init_log_category(datum/log_category/category_type, list/datum/log_category/sub_categories)
@@ -185,8 +186,14 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 				SCHEMA_VERSION = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET,
 			)
 			var/list/serialization_data = data.serialize_list(options_list)
+			if(!semver_to_list(options_list[SCHEMA_VERSION]))
+				stack_trace("serialization of data had an invalid semver")
+				options_list[SCHEMA_VERSION] = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET
+
 			if(!length(serialization_data)) // serialize_list wasn't implemented, and errored
+				stack_trace("serialization data was empty")
 				continue
+
 			serialization_data[SCHEMA_VERSION] = options_list[SCHEMA_VERSION]
 			data = recursive_jsonify(serialization_data)
 
