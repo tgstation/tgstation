@@ -231,6 +231,12 @@
 				state = 2
 				circuit.forceMove(drop_location())
 				components.Remove(circuit)
+				//spawn stack components from the circuitboards requested components since they no longer exist inside components
+				for(var/component in circuit.req_components)
+					if(!ispath(component, /obj/item/stack))
+						continue
+					var/obj/item/stack/stack_path = component
+					new stack_path(drop_location(), circuit.req_components[component])
 				circuit = null
 				if(components.len == 0)
 					to_chat(user, span_notice("You remove the circuit board."))
