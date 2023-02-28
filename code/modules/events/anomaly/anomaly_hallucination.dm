@@ -10,9 +10,9 @@
 	max_wizard_trigger_potency = 2
 
 /datum/round_event/anomaly/anomaly_hallucination
-	start_when = 10
-	announce_when = 3
+	start_when = ANOMALY_START_MEDIUM_TIME
+	announce_when = ANOMALY_ANNOUNCE_MEDIUM_TIME
 	anomaly_path = /obj/effect/anomaly/hallucination
 
 /datum/round_event/anomaly/anomaly_hallucination/announce(fake)
-	priority_announce("Hallucinatory event hitting the station. Expected location: [impact_area.name].", "Anomaly Alert")
+	priority_announce("Hallucinatory event [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.name].", "Anomaly Alert")

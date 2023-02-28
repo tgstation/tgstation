@@ -1,5 +1,5 @@
 /datum/round_event_control/anomaly
-	name = "Anomaly: Energetic Flux"
+	name = "Anomaly: Debug"
 	typepath = /datum/round_event/anomaly
 
 	min_players = 1
@@ -10,7 +10,8 @@
 	admin_setup = /datum/event_admin_setup/anomaly
 
 /datum/round_event/anomaly
-	announce_when = 1
+	start_when = ANOMALY_START_HARMFUL_TIME
+	announce_when = ANOMALY_ANNOUNCE_HARMFUL_TIME
 	var/area/impact_area
 	var/datum/anomaly_placer/placer = new()
 	var/obj/effect/anomaly/anomaly_path = /obj/effect/anomaly/flux
@@ -25,7 +26,7 @@
 		impact_area = placer.findValidArea()
 
 /datum/round_event/anomaly/announce(fake)
-	priority_announce("Localized energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
+	priority_announce("Energetic flux wave detected on [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.name].", "Anomaly Alert")
 
 /datum/round_event/anomaly/start()
 	var/turf/anomaly_turf
