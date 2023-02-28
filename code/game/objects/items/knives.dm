@@ -177,7 +177,6 @@
 	flags_1 &= ~CONDUCT_1
 	return ..()
 
-
 /obj/item/knife/shiv/plasma
 	name = "plasma shiv"
 	icon_state = "plasmashiv"
