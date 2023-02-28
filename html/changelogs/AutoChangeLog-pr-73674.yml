@@ -1,0 +1,4 @@
+author: "Maurukas"
+delete-after: True
+changes:
+  - bugfix: "A disconnected vent on the syndicate lavaland base is now connected"
