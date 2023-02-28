@@ -1196,7 +1196,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 /// Converts a semver string into a list of numbers
 /proc/semver_to_list(semver_string)
-	var/static/regex/semver_regex = regex(@"^(\d+)\.(\d+)\.(\d+)$", "gm")
+	var/static/regex/semver_regex = regex(@"(\d+)\.(\d+)\.(\d+)", "")
 	if(!semver_regex.Find(semver_string))
 		return null
 
