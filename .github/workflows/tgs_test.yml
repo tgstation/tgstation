@@ -59,5 +59,8 @@ jobs:
         with:
           dotnet-version: 7.0.x
 
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
       - name: Test TGS Integration
         run: dotnet run -c Release --project tools/tgs_test ${{ github.repository }} /tgs_instances/tgstation ${{ env.TGS_API_PORT }} ${{ github.event.head_commit.sha }} ${{ secrets.GITHUB_TOKEN }} ${{ env.PR_NUMBER }}
