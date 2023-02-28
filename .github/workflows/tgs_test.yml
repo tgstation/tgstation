@@ -60,4 +60,4 @@ jobs:
           dotnet-version: 7.0.x
 
       - name: Test TGS Integration
-        run: dotnet run -c Release --project tools/tgs_test ${{ github.repository }} /tgs_instances/tgstation ${{ env.TGS_API_PORT }} ${{ github.event.head_commit.sha }} ${{ secrets.GITHUB_TOKEN }} ${{ PR_NUMBER }}
+        run: dotnet run -c Release --project tools/tgs_test ${{ github.repository }} /tgs_instances/tgstation ${{ env.TGS_API_PORT }} ${{ github.event.head_commit.sha }} ${{ secrets.GITHUB_TOKEN }} ${{ env.PR_NUMBER }}
