@@ -101,15 +101,37 @@
 	return null
 
 /datum/ai_laws
+	/// The name of the lawset
 	var/name = "Unknown Laws"
-	var/zeroth = null
-	var/zeroth_borg = null
-	var/list/inherent = list()
-	var/list/supplied = list()
-	var/list/ion = list()
-	var/list/hacked = list()
+	/// The silicon linked to this lawset
 	var/mob/living/silicon/owner
+	/// The ID of this lawset, pretty much only used to tell if we're default or not
 	var/id = DEFAULT_AI_LAWID
+
+	/// Zeroth law
+	/// A lawset can only have 1 zeroth law, it's the top dog.
+	/// Nothing removes it unless it's admin forced
+	var/zeroth = null
+	/// Zeroth borg law
+	/// It's just a zeroth law but specially themed for cyborgs
+	/// ("follow your master" vs "accomplish your objectives")
+	var/zeroth_borg = null
+	/// Core laws
+	/// Inherent laws are the "core" laws of the AI
+	/// Reseting the AI will not remove these, these are intrinsit to whatever lawset they are running.
+	var/list/inherent = list()
+	/// Supplied laws
+	/// Supplied laws are supplied in addition to the inherent laws - after the fact
+	/// These laws will go away when an AI is reset
+	var/list/supplied = list()
+	/// Ion laws
+	/// Special randomized (usually) laws which are above all over laws
+	/// These laws will go away when an AI is reset
+	var/list/ion = list()
+	/// Hacked laws
+	/// Syndicate uploaded laws which are above all other laws
+	/// These laws will go away when an AI is reset
+	var/list/hacked = list()
 
 /datum/ai_laws/Destroy(force = FALSE, ...)
 	if(!QDELETED(owner)) //Stopgap to help with laws randomly being lost. This stack_trace will hopefully help find the real issues.
@@ -311,10 +333,10 @@
 /datum/ai_laws/proc/clear_hacked_laws()
 	hacked = list()
 
-/datum/ai_laws/proc/show_laws(who)
+/datum/ai_laws/proc/show_laws(mob/to_who)
 	var/list/printable_laws = get_law_list(include_zeroth = TRUE)
 	for(var/law in printable_laws)
-		to_chat(who,law)
+		to_chat(to_who, law)
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1
 	if(force)
