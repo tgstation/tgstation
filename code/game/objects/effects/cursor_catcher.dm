@@ -1,6 +1,6 @@
 /// An effect which tracks the cursor's location on the screen
 /atom/movable/screen/fullscreen/cursor_catcher
-	icon_state = "scope"
+	icon_state = "fullscreen_blocker" // Fullscreen semi transparent icon
 	plane = HUD_PLANE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	/// The mob whose cursor we are tracking.

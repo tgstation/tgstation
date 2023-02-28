@@ -2,7 +2,7 @@
 /datum/action/cooldown/spell/pointed/projectile/spell_cards
 	name = "Spell Cards"
 	desc = "Blazing hot rapid-fire homing cards. Send your foes to the shadow realm with their mystical power!"
-	button_icon_state = "spellcard0"
+	button_icon_state = "spellcard"
 	click_cd_override = 1
 
 	school = SCHOOL_EVOCATION
