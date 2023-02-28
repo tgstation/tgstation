@@ -3,6 +3,9 @@
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
+"b" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/supply)
 "c" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -270,7 +273,7 @@ M
 S
 T
 T
-T
+b
 "}
 (3,1,1) = {"
 T
@@ -312,7 +315,7 @@ e
 y
 T
 T
-T
+b
 "}
 (6,1,1) = {"
 G
