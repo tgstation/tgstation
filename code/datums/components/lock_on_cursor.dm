@@ -2,121 +2,118 @@
 #define LOCKON_IGNORE_RESULT "ignore_my_result"
 #define LOCKON_RANGING_BREAK_CHECK if(current_ranging_id != this_id){return LOCKON_IGNORE_RESULT}
 
-/datum/component/lockon_aiming
+/**
+ * ### Lock on Cursor component
+ *
+ * Finds the nearest target to your cursor and passes it into a callback, also drawing an icon on top of them.
+ */
+/datum/component/lock_on_cursor
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-	var/lock_icon = 'icons/mob/silicon/cameramob.dmi'
-	var/lock_icon_state = "marker"
+	var/lock_icon
+	var/lock_icon_state
 	var/mutable_appearance/lock_appearance
 	var/list/image/lock_images
 	var/list/target_typecache
 	var/list/immune_weakrefs //list(weakref = TRUE)
 	var/mob_stat_check = TRUE //if a potential target is a mob make sure it's conscious!
 	var/lock_amount = 1
-	var/lock_cursor_range = 5
+	var/lock_cursor_range
 	var/list/locked_weakrefs
 	var/update_disabled = FALSE
 	var/current_ranging_id = 0
 	var/list/last_location
 	var/datum/callback/on_lock
 	var/datum/callback/can_target_callback
+	var/atom/movable/screen/fullscreen/cursor_catcher/lock_on/mouse_tracker
 
-/datum/component/lockon_aiming/Initialize(range, list/typecache, amount, list/immune, datum/callback/when_locked, icon, icon_state, datum/callback/target_callback)
+/datum/component/lock_on_cursor/Initialize(range = 5, list/typecache = list(), amount = 1, list/immune = list(), icon = 'icons/mob/silicon/cameramob.dmi', icon_state = "marker", datum/callback/when_locked, datum/callback/target_callback)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
-	if(target_callback)
-		can_target_callback = target_callback
-	else
-		can_target_callback = CALLBACK(src, PROC_REF(can_target))
-	if(range)
-		lock_cursor_range = range
-	if(typecache)
-		target_typecache = typecache
-	if(amount)
-		lock_amount = amount
+	lock_cursor_range = range
+	target_typecache = typecache
+	lock_amount = amount
 	immune_weakrefs = list(WEAKREF(parent) = TRUE) //Manually take this out if you want..
-	if(immune)
-		for(var/i in immune)
-			if(isweakref(i))
-				immune_weakrefs[i] = TRUE
-			else if(isatom(i))
-				immune_weakrefs[WEAKREF(i)] = TRUE
-	if(when_locked)
-		on_lock = when_locked
-	if(icon)
-		lock_icon = icon
-	if(icon_state)
-		lock_icon_state = icon_state
+	for(var/immune_thing in immune)
+		if(isweakref(immune_thing))
+			immune_weakrefs[immune_thing] = TRUE
+		else if(isatom(immune_thing))
+			immune_weakrefs[WEAKREF(immune_thing)] = TRUE
+	on_lock = when_locked
+	can_target_callback = target_callback ? target_callback : CALLBACK(src, PROC_REF(can_target))
+	lock_icon = icon
+	lock_icon_state = icon_state
 	generate_lock_visuals()
+	var/mob/owner = parent
+	mouse_tracker = owner.overlay_fullscreen("lock_on", /atom/movable/screen/fullscreen/cursor_catcher/lock_on, 0)
+	mouse_tracker.assign_to_mob(owner)
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/component/lockon_aiming/Destroy()
+/datum/component/lock_on_cursor/Destroy()
 	clear_visuals()
 	STOP_PROCESSING(SSfastprocess, src)
+	mouse_tracker = null
+	var/mob/owner = parent
+	owner.clear_fullscreen("lock_on")
 	return ..()
 
-/datum/component/lockon_aiming/proc/show_visuals()
+/datum/component/lock_on_cursor/proc/show_visuals()
 	LAZYINITLIST(lock_images)
-	var/mob/M = parent
-	if(!M.client)
+	var/mob/owner = parent
+	if(!owner.client)
 		return
-	for(var/i in locked_weakrefs)
-		var/datum/weakref/R = i
-		var/atom/A = R.resolve()
-		if(!A)
+	for(var/datum/weakref/weak_target as anything in locked_weakrefs)
+		var/atom/target = weak_target.resolve()
+		if(!target)
 			continue //It'll be cleared by processing.
-		var/image/I = new
-		I.appearance = lock_appearance
-		I.loc = A
-		M.client.images |= I
-		lock_images |= I
+		var/image/target_overlay = new
+		target_overlay.appearance = lock_appearance
+		target_overlay.loc = target
+		owner.client.images |= target_overlay
+		lock_images |= target_overlay
 
-/datum/component/lockon_aiming/proc/clear_visuals()
-	var/mob/M = parent
-	if(!M.client)
+/datum/component/lock_on_cursor/proc/clear_visuals()
+	var/mob/owner = parent
+	if(!owner.client)
 		return
 	if(!lock_images)
 		return
-	for(var/i in lock_images)
-		M.client.images -= i
-		qdel(i)
+	for(var/image in lock_images)
+		owner.client.images -= image
+		qdel(image)
 	lock_images.Cut()
 
-/datum/component/lockon_aiming/proc/refresh_visuals()
+/datum/component/lock_on_cursor/proc/refresh_visuals()
 	clear_visuals()
 	show_visuals()
 
-/datum/component/lockon_aiming/proc/generate_lock_visuals()
+/datum/component/lock_on_cursor/proc/generate_lock_visuals()
 	lock_appearance = mutable_appearance(icon = lock_icon, icon_state = lock_icon_state, layer = FLOAT_LAYER)
 
-/datum/component/lockon_aiming/proc/unlock_all(refresh_vis = TRUE)
+/datum/component/lock_on_cursor/proc/unlock_all(refresh_vis = TRUE)
 	LAZYCLEARLIST(locked_weakrefs)
 	if(refresh_vis)
 		refresh_visuals()
 
-/datum/component/lockon_aiming/proc/unlock(atom/A, refresh_vis = TRUE)
-	if(!A.weak_reference)
-		return
-	LAZYREMOVE(locked_weakrefs, A.weak_reference)
+/datum/component/lock_on_cursor/proc/unlock(atom/target, refresh_vis = TRUE)
+	LAZYREMOVE(locked_weakrefs, WEAKREF(target))
 	if(refresh_vis)
 		refresh_visuals()
 
-/datum/component/lockon_aiming/proc/lock(atom/A, refresh_vis = TRUE)
-	LAZYOR(locked_weakrefs, WEAKREF(A))
+/datum/component/lock_on_cursor/proc/lock(atom/target, refresh_vis = TRUE)
+	LAZYOR(locked_weakrefs, WEAKREF(target))
 	if(refresh_vis)
 		refresh_visuals()
 
-/datum/component/lockon_aiming/proc/add_immune_atom(atom/A)
-	var/datum/weakref/R = WEAKREF(A)
-	if(immune_weakrefs && (immune_weakrefs[R]))
+/datum/component/lock_on_cursor/proc/add_immune_atom(atom/target)
+	var/datum/weakref/weak_target = WEAKREF(target)
+	if(immune_weakrefs && (immune_weakrefs[weak_target]))
 		return
-	LAZYSET(immune_weakrefs, R, TRUE)
+	LAZYSET(immune_weakrefs, weak_target, TRUE)
 
-/datum/component/lockon_aiming/proc/remove_immune_atom(atom/A)
-	if(!A.weak_reference || !immune_weakrefs) //if A doesn't have a weakref how did it get on the immunity list?
-		return
-	LAZYREMOVE(immune_weakrefs, A.weak_reference)
+/datum/component/lock_on_cursor/proc/remove_immune_atom(atom/target)
+	LAZYREMOVE(immune_weakrefs, WEAKREF(target))
 
-/datum/component/lockon_aiming/process()
+/datum/component/lock_on_cursor/process()
 	if(update_disabled)
 		return
 	if(!last_location)
@@ -135,7 +132,7 @@
 	if(changed)
 		autolock()
 
-/datum/component/lockon_aiming/proc/autolock()
+/datum/component/lock_on_cursor/proc/autolock()
 	var/mob/M = parent
 	if(!M.client)
 		return FALSE
@@ -152,11 +149,11 @@
 	refresh_visuals()
 	on_lock.Invoke(locked_weakrefs)
 
-/datum/component/lockon_aiming/proc/can_target(atom/A)
+/datum/component/lock_on_cursor/proc/can_target(atom/A)
 	var/mob/M = A
 	return is_type_in_typecache(A, target_typecache) && !(ismob(A) && mob_stat_check && M.stat != CONSCIOUS) && !immune_weakrefs[WEAKREF(A)]
 
-/datum/component/lockon_aiming/proc/get_nearest(turf/T, list/typecache, amount, range)
+/datum/component/lock_on_cursor/proc/get_nearest(turf/T, list/typecache, amount, range)
 	current_ranging_id++
 	var/this_id = current_ranging_id
 	var/list/L = list()
@@ -212,3 +209,6 @@
 		LOCKON_RANGING_BREAK_CHECK
 		cd++
 		CHECK_TICK
+
+/atom/movable/screen/fullscreen/cursor_catcher/lock_on
+	icon_state = "oxydamageoverlay"
