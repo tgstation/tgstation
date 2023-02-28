@@ -150,7 +150,7 @@
 
 /obj/item/knife/combat/bone/Initialize(mapload)
 	flags_1 &= ~CONDUCT_1
-	. = ..()
+	return ..()
 
 /obj/item/knife/combat/cyborg
 	name = "cyborg knife"
