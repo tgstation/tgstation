@@ -449,7 +449,7 @@
 	return ..()
 
 /datum/status_effect/stabilized/tick()
-	if (!linked_extract)
+	if(!linked_extract)
 		qdel(src)
 		return
 	if(linked_extract.get_held_mob() == owner)
@@ -850,13 +850,13 @@
 	update_nearby_mobs()
 	var/has_faction = FALSE
 	for (var/check_faction in owner.faction)
-		if (check_faction != faction_name)
+		if(check_faction != faction_name)
 			continue
 		has_faction = TRUE
 		break
 
 	if(has_faction)
-		if (owner.has_status_effect(/datum/status_effect/brokenpeace))
+		if(owner.has_status_effect(/datum/status_effect/brokenpeace))
 			owner.faction -= faction_name
 			to_chat(owner, span_userdanger("The peace has been broken! Hostile creatures will now react to you!"))
 	else if(!owner.has_status_effect(/datum/status_effect/brokenpeace))
@@ -870,7 +870,7 @@
 	// Unpacify far away or offended mobs
 	for(var/datum/weakref/weak_mob as anything in mobs)
 		var/mob/living/beast = weak_mob.resolve()
-		if (!beast)
+		if(!beast)
 			mobs -= weak_mob
 			continue
 		var/datum/status_effect/pinkdamagetracker/damage_tracker = beast.has_status_effect(/datum/status_effect/pinkdamagetracker)
@@ -886,7 +886,7 @@
 
 	// Pacify nearby mobs
 	for(var/mob/living/beast in visible_things)
-		if (!isanimal_or_basicmob(beast))
+		if(!isanimal_or_basicmob(beast))
 			continue
 		var/datum/weakref/weak_mob = WEAKREF(beast)
 		if(weak_mob in mobs)
@@ -898,7 +898,7 @@
 /datum/status_effect/stabilized/pink/on_remove()
 	for(var/datum/weakref/weak_mob as anything in mobs)
 		var/mob/living/beast = weak_mob.resolve()
-		if (!beast)
+		if(!beast)
 			continue
 		beast.faction -= faction_name
 		beast.remove_status_effect(/datum/status_effect/pinkdamagetracker)
