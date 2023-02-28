@@ -59,6 +59,8 @@
 
 /datum/antagonist/space_dragon/Destroy()
 	rift_list = null
+	carp = null
+	QDEL_NULL(rift_ability)
 	return ..()
 
 /datum/antagonist/space_dragon/get_preview_icon()
