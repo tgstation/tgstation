@@ -1115,15 +1115,15 @@
 	if( operating || welded || locked || seal )
 		return FALSE
 
+	if(!density)
+		return TRUE
+
 	// Since we aren't physically held shut, do extra checks to see if we should open.
 	if(!try_to_force_door_open(forced))
 		return FALSE
 
 	if(autoclose)
 		autoclose_in(normalspeed ? 8 SECONDS : 1.5 SECONDS)
-
-	if(!density)
-		return TRUE
 
 	if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock))
 		addtimer(CALLBACK(closeOther, PROC_REF(close)), 2)
