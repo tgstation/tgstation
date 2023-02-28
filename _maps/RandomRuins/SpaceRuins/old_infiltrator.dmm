@@ -286,6 +286,14 @@
 /obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/unpowered)
+"uv" = (
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent{
+	pixel_y = -8;
+	pixel_x = 2
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
 "uE" = (
 /obj/machinery/recharge_station,
 /obj/machinery/status_display/ai/directional/north,
@@ -379,7 +387,21 @@
 	pixel_y = 4;
 	pixel_x = 3
 	},
+/obj/item/trench_tool,
 /turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"AX" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent{
+	pixel_y = -8;
+	pixel_x = 2
+	},
+/obj/item/ammo_casing/spent{
+	pixel_y = -6;
+	pixel_x = -4
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
 "Bb" = (
 /obj/effect/turf_decal/syndicateemblem/middle/right,
@@ -605,6 +627,10 @@
 /obj/structure/closet/crate/secure/loot,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
+"SE" = (
+/obj/item/ammo_casing/spent,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
 "SS" = (
 /obj/effect/turf_decal/stripes/red/line,
 /obj/effect/turf_decal/stripes/red/line{
@@ -669,9 +695,19 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/unpowered)
+"WS" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/ammo_casing/spent{
+	pixel_y = -6;
+	pixel_x = -4
+	},
+/obj/item/ammo_casing/spent,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
 "Xp" = (
 /obj/effect/turf_decal/syndicateemblem/middle/left,
 /obj/item/radio/intercom/directional/west,
+/obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
 "Yb" = (
@@ -925,7 +961,7 @@ nv
 KM
 KM
 DM
-DM
+SE
 DM
 DM
 Pq
@@ -957,7 +993,7 @@ jt
 pi
 Pq
 ms
-vK
+WS
 DM
 Zh
 ie
@@ -1031,7 +1067,7 @@ Yj
 Pq
 LF
 ro
-DM
+SE
 Pe
 DM
 DM
@@ -1087,7 +1123,7 @@ EM
 yL
 vK
 FW
-DM
+uv
 DM
 mO
 Bb
@@ -1173,7 +1209,7 @@ DM
 pi
 Pq
 CX
-vK
+AX
 DM
 lR
 ie
