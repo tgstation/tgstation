@@ -1250,7 +1250,7 @@
 			return TRUE
 
 		else
-			stack_trace("Invalid forced argument [force_type] passed to close() on this airlock.")
+			stack_trace("Invalid forced argument '[force_type]' passed to close() on this airlock.")
 			return TRUE // We ballsed it up somehow, but let's assume we wanted it closed.
 
 /obj/machinery/door/airlock/proc/prison_open()

@@ -269,7 +269,7 @@
 			return TRUE
 
 		else
-			stack_trace("Invalid forced argument [force_type] passed to close() on this airlock.")
+			stack_trace("Invalid forced argument '[force_type]' passed to close() on this airlock.")
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
