@@ -23,16 +23,19 @@ Stabilized extracts:
 	return ..()
 
 /// Returns the mob that is currently holding us if we are either in their inventory or a backpack analogue
-/obj/item/slimecross/proc/get_held_mob()
+/obj/item/slimecross/stabilized/proc/get_held_mob()
 	if(!loc)
 		return FALSE
 	if(isliving(loc))
 		return loc
-	var/atom/checked_loc = loc
-	while (checked_loc && is_type_in_list(checked_loc, GLOB.permitted_stabilized_containers))
-		if (isliving(checked_loc.loc))
-			return checked_loc.loc
-		checked_loc = checked_loc.loc
+	// Snowflake check for modsuit backpacks, which should be valid but are 3 rather than 2 steps from the owner
+	if(istype(loc, /obj/item/mod/module/storage))
+		var/obj/item/mod/module/storage/mod_backpack = loc
+		var/mob/living/modsuit_wearer = mod_backpack.mod?.wearer
+		return modsuit_wearer ? modsuit_wearer : FALSE
+	var/nested_loc = loc.loc
+	if (isliving(nested_loc))
+		return nested_loc
 	return FALSE
 
 /obj/item/slimecross/stabilized/process()

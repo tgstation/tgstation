@@ -438,29 +438,20 @@
 /datum/status_effect/stabilized //The base stabilized extract effect, has no effect of its' own.
 	id = "stabilizedbase"
 	duration = -1
-	alert_type = /atom/movable/screen/alert/status_effect/stabilized_extract
+	alert_type = null
 	/// Item which provides this buff
 	var/obj/item/slimecross/stabilized/linked_extract
 	/// Colour of the extract providing the buff
 	var/colour = "null"
 
 /datum/status_effect/stabilized/on_creation(mob/living/new_owner, obj/item/slimecross/stabilized/linked_extract)
-	. = ..()
-	if (!. ||!linked_extract)
-		return FALSE
 	src.linked_extract = linked_extract
-	RegisterSignal(linked_extract, COMSIG_MOVABLE_MOVED, PROC_REF(on_extract_moved))
-	var/atom/movable/screen/alert/status_effect/stabilized_extract/screen_alert = linked_alert
-	screen_alert.copy_extract(linked_extract)
-	return TRUE
-
-/datum/status_effect/stabilized/Destroy()
-	if(!QDELETED(linked_extract))
-		UnregisterSignal(linked_extract, COMSIG_MOVABLE_MOVED)
 	return ..()
 
-/// When this changes location check if it's still valid to have the effect
-/datum/status_effect/stabilized/proc/on_extract_moved()
+/datum/status_effect/stabilized/tick()
+	if (!linked_extract)
+		qdel(src)
+		return
 	if(linked_extract.get_held_mob() == owner)
 		return
 	owner.balloon_alert(owner, "[colour] extract faded!")
@@ -468,27 +459,6 @@
 		linked_extract.linked_effect = null
 		START_PROCESSING(SSobj,linked_extract)
 	qdel(src)
-
-/// Screen alert used by stabilised extract buffs
-/atom/movable/screen/alert/status_effect/stabilized_extract
-	name = "some kind of slime extract"
-	desc = "Experiencing the effects"
-	icon_state = "template"
-	/// Colour to display slime icon as
-	var/overlay_colour = COLOR_WHITE
-
-/// Updates screen alert with properties of linked extract
-/atom/movable/screen/alert/status_effect/stabilized_extract/proc/copy_extract(obj/item/slimecross/stabilized/linked_extract)
-	name = linked_extract.name
-	desc = linked_extract.effect_desc
-	overlay_colour = linked_extract.get_item_colour()
-	update_appearance()
-
-/atom/movable/screen/alert/status_effect/stabilized_extract/update_overlays()
-	. = ..()
-	var/mutable_appearance/slime_icon = mutable_appearance('icons/obj/xenobiology/slimecrossing.dmi', "stabilized")
-	slime_icon.color = overlay_colour
-	. += slime_icon
 
 /datum/status_effect/stabilized/null //This shouldn't ever happen, but just in case.
 	id = "stabilizednull"
@@ -873,6 +843,7 @@
 /datum/status_effect/stabilized/pink/on_apply()
 	faction_name = "pink_[REF(owner)]"
 	owner.faction |= faction_name
+	to_chat(owner, span_notice("[linked_extract] pulses, generating a fragile aura of peace."))
 	return ..()
 
 /datum/status_effect/stabilized/pink/tick()
