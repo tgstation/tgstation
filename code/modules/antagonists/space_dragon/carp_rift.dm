@@ -42,9 +42,8 @@
 	dragon.rift_list += new_rift
 	to_chat(owner, span_boldwarning("The rift has been summoned. Prevent the crew from destroying it at all costs!"))
 	notify_ghosts("The Space Dragon has opened a rift!", source = new_rift, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Rift Opened")
-
-	ASSERT(dragon.rift_ability == src)
-	QDEL_NULL(dragon.rift_ability) // deletes us
+	ASSERT(dragon.rift_ability == src) // Badmin protection.
+	QDEL_NULL(dragon.rift_ability) // Deletes this action when used successfully, we re-gain a new one on success later.
 
 /**
  * # Carp Rift
