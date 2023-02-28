@@ -655,7 +655,7 @@
 	operating = FALSE
 	return TRUE
 
-/obj/machinery/door/airlock/instant/close(forced = FALSE, force_crush = FALSE)
+/obj/machinery/door/airlock/instant/close(forced = DOOR_DEFAULT_CHECKS, force_crush = FALSE)
 	operating = TRUE
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 	set_density(TRUE)
