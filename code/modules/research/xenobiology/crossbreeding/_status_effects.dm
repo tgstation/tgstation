@@ -449,7 +449,7 @@
 	return ..()
 
 /datum/status_effect/stabilized/tick()
-	if(!linked_extract)
+	if(isnull(linked_extract))
 		qdel(src)
 		return
 	if(linked_extract.get_held_mob() == owner)
@@ -838,7 +838,7 @@
 	/// List of weakrefs to mobs we have pacified
 	var/list/mobs = list()
 	/// Name of our faction
-	var/faction_name
+	var/faction_name = ""
 
 /datum/status_effect/stabilized/pink/on_apply()
 	faction_name = "pink_[REF(owner)]"
@@ -870,7 +870,7 @@
 	// Unpacify far away or offended mobs
 	for(var/datum/weakref/weak_mob as anything in mobs)
 		var/mob/living/beast = weak_mob.resolve()
-		if(!beast)
+		if(isnull(beast))
 			mobs -= weak_mob
 			continue
 		var/datum/status_effect/pinkdamagetracker/damage_tracker = beast.has_status_effect(/datum/status_effect/pinkdamagetracker)
@@ -898,7 +898,7 @@
 /datum/status_effect/stabilized/pink/on_remove()
 	for(var/datum/weakref/weak_mob as anything in mobs)
 		var/mob/living/beast = weak_mob.resolve()
-		if(!beast)
+		if(isnull(beast))
 			continue
 		beast.faction -= faction_name
 		beast.remove_status_effect(/datum/status_effect/pinkdamagetracker)
