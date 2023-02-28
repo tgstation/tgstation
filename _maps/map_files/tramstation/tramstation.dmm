@@ -10894,7 +10894,15 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/east,
+/obj/machinery/keycard_auth/directional/east{
+	pixel_y = -6
+	},
+/obj/machinery/button/door/directional/east{
+	id = "qmprivacy";
+	name = "Privacy Shutters Control";
+	pixel_y = 5;
+	req_access = list("qm")
+	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -21612,7 +21620,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster's Office"
 	},
 /obj/structure/disposalpipe/segment,
@@ -22958,6 +22966,9 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"gEz" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area)
 "gEC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door_buttons/airlock_controller{
@@ -45781,6 +45792,14 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"pli" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "qmprivacy";
+	name = "Privacy Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/cargo/office)
 "plk" = (
 /turf/closed/wall/r_wall,
 /area/station/solars/starboard/fore)
@@ -63960,7 +63979,7 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster's Office"
 	},
 /obj/structure/cable,
@@ -174770,7 +174789,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+gEz
 aaa
 aaa
 aaa
@@ -179919,9 +179938,9 @@ msn
 qza
 oAV
 oAV
-vYl
+pli
 vSX
-vYl
+pli
 oAV
 whL
 ged

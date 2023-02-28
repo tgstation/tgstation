@@ -53,7 +53,7 @@
 
 				current_record["bloodtype"] = person.blood_type
 				current_record["ma_dis"] = person.major_disabilities_desc
-				current_record["minor_disabilities"] = person.minor_disabilities_desc
+				current_record["mi_dis"] = person.minor_disabilities_desc
 				current_record["name"] = person.name
 				current_record["notes"] = person.medical_notes
 
