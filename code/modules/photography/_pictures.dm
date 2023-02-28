@@ -69,6 +69,7 @@
 	.["blueprints"] = has_blueprints
 	.["logpath"] = logpath
 	options[SCHEMA_VERSION] = "1.0.0"
+	return .
 
 /datum/picture/deserialize_list(list/input, list/options)
 	if((SCHEMA_VERSION in options) && (options[SCHEMA_VERSION] != "1.0.0"))
