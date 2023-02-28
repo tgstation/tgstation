@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "You can now create wanted/missing posters using player created security records. Due to a visual bug and usability issue photos above 1 by 1 meters in size will no longer work for mugshots in records."

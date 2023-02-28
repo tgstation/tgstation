@@ -35,14 +35,18 @@
 	var/force_looping = FALSE
 
 /datum/event_admin_setup/immovable_rod/prompt_admins()
+	special_target = null
+	force_looping = FALSE
+
 	var/aimed = tgui_alert(usr,"Aimed at current location?", "Sniperod", list("Yes", "No"))
 	if(aimed == "Yes")
 		special_target = get_turf(usr)
 	var/looper = tgui_alert(usr,"Would you like this rod to force-loop across space z-levels?", "Loopy McLoopface", list("Yes", "No"))
 	if(looper == "Yes")
 		force_looping = TRUE
-	message_admins("[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping)" : ""] at [AREACOORD(special_target)].")
-	log_admin("[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping)" : ""] at [AREACOORD(special_target)].")
+	var/log_message = "[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping) " : ""]at [special_target ? AREACOORD(special_target) : "a random location"]."
+	message_admins(log_message)
+	log_admin(log_message)
 
 /datum/event_admin_setup/immovable_rod/apply_to_event(datum/round_event/immovable_rod/event)
 	event.special_target = special_target

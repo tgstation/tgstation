@@ -51,7 +51,7 @@ export const SecurityRecordTabs = (props, context) => {
             <Button
               disabled
               icon="plus"
-              tooltip="Add new records by inserting a photo into the terminal. You do not need this screen open.">
+              tooltip="Add new records by inserting a 1 by 1 meter photo into the terminal. You do not need this screen open.">
               Create
             </Button>
           </Stack.Item>

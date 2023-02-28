@@ -30,41 +30,16 @@
 
 /mob/living/basic/creature/Initialize(mapload)
 	. = ..()
-	var/datum/callback/health_changes_callback = CALLBACK(src, PROC_REF(health_check))
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
-	AddComponent(/datum/component/damage_buffs, health_changes_callback)
+	AddComponent(
+		/datum/component/health_scaling_effects,\
+		min_health_attack_modifier_lower = 15,\
+		min_health_attack_modifier_upper = 30,\
+		min_health_slowdown = -1.5,\
+	)
+
 	var/datum/action/cooldown/spell/jaunt/creature_teleport/teleport = new(src)
 	teleport.Grant(src)
-
-/mob/living/basic/creature/proc/health_check(mob/living/attacker)
-	if(health < maxHealth * 0.25)
-		health_low_behaviour()
-	else if (health < maxHealth * 0.5)
-		health_medium_behaviour()
-	else if (health < maxHealth * 0.75)
-		health_high_behaviour()
-	else
-		health_full_behaviour()
-
-/mob/living/basic/creature/proc/health_full_behaviour()
-	melee_damage_lower = 20
-	melee_damage_upper = 30
-	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = 0)
-
-/mob/living/basic/creature/proc/health_high_behaviour()
-	melee_damage_lower = 25
-	melee_damage_upper = 40
-	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = -0.5)
-
-/mob/living/basic/creature/proc/health_medium_behaviour()
-	melee_damage_lower = 30
-	melee_damage_upper = 50
-	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = -1)
-
-/mob/living/basic/creature/proc/health_low_behaviour()
-	melee_damage_lower = 35
-	melee_damage_upper = 60
-	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/netherworld_enrage, multiplicative_slowdown = -1.5)
 
 /mob/living/basic/creature/proc/can_be_seen(turf/location)
 	// Check for darkness

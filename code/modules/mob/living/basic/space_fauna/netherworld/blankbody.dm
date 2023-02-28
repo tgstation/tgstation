@@ -29,35 +29,8 @@
 
 /mob/living/basic/blankbody/Initialize(mapload)
 	. = ..()
-	var/datum/callback/health_changes_callback = CALLBACK(src, PROC_REF(health_check))
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
-	AddComponent(/datum/component/damage_buffs, health_changes_callback)
-
-/mob/living/basic/blankbody/proc/health_check(mob/living/attacker)
-	if(health < maxHealth * 0.25)
-		health_low_behaviour()
-	else if (health < maxHealth * 0.5)
-		health_medium_behaviour()
-	else if (health < maxHealth * 0.75)
-		health_high_behaviour()
-	else
-		health_full_behaviour()
-
-/mob/living/basic/blankbody/proc/health_full_behaviour()
-	melee_damage_lower = 2
-	melee_damage_upper = 6
-
-/mob/living/basic/blankbody/proc/health_high_behaviour()
-	melee_damage_lower = 4
-	melee_damage_upper = 8
-
-/mob/living/basic/blankbody/proc/health_medium_behaviour()
-	melee_damage_lower = 8
-	melee_damage_upper = 12
-
-/mob/living/basic/blankbody/proc/health_low_behaviour()
-	melee_damage_lower = 10
-	melee_damage_upper = 20
+	AddComponent(/datum/component/health_scaling_effects, min_health_attack_modifier_lower = 8, min_health_attack_modifier_upper = 14)
 
 /datum/ai_controller/basic_controller/blankbody
 	blackboard = list(
