@@ -234,7 +234,10 @@
 			return TRUE
 
 		else
-			stack_trace("Invalid forced argument [force_type] passed to open() on this airlock.")
+			stack_trace("Invalid forced argument '[force_type]' passed to open() on this airlock.")
+
+	// Shit's fucked, let's just check parent real fast.
+	return ..()
 
 /obj/machinery/door/window/close(forced = DOOR_DEFAULT_CHECKS)
 	if(operating || !try_to_force_door_shut(forced))
@@ -270,6 +273,9 @@
 
 		else
 			stack_trace("Invalid forced argument '[force_type]' passed to close() on this airlock.")
+
+	// If we got here, shit's fucked, but let's presume parent can bail us out somehow.
+	return ..()
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

@@ -1184,8 +1184,10 @@
 			return TRUE
 
 		else
-			stack_trace("Invalid forced argument [force_type] passed to open() on this airlock.")
-			return TRUE // We ballsed it up somehow, but let's assume we wanted it open.
+			stack_trace("Invalid forced argument '[force_type]' passed to open() on this airlock.")
+
+	// If we got here, shit's fucked, hope parent can help us out here
+	return ..()
 
 /obj/machinery/door/airlock/close(forced = DOOR_DEFAULT_CHECKS, force_crush = FALSE)
 	if(operating || welded || locked || seal)
@@ -1251,7 +1253,9 @@
 
 		else
 			stack_trace("Invalid forced argument '[force_type]' passed to close() on this airlock.")
-			return TRUE // We ballsed it up somehow, but let's assume we wanted it closed.
+
+	// shit's fucked, let's hope parent has something to handle it.
+	return ..()
 
 /obj/machinery/door/airlock/proc/prison_open()
 	if(obj_flags & EMAGGED)
