@@ -141,6 +141,15 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 /datum/log_holder/proc/unix_timestamp_string() // pending change to rust-g
 	return RUSTG_CALL(RUST_G, "unix_timestamp")()
 
+/datum/log_holder/proc/human_readable_timestamp(precision = 3)
+	var/start = time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")
+	// now we grab the millis from the rustg timestamp
+	var/list/timestamp = splittext(unix_timestamp_string(), ".")
+	var/millis = timestamp[2]
+	if(length(millis) > precision)
+		millis = copytext(millis, 1, precision + 1)
+	return "[start].[millis]"
+
 /// Adds an entry to the given category, if the category is disabled it will not be logged.
 /// If the category does not exist, we will CRASH and log to the error category.
 /// the data list is optional and will be recursively json serialized.

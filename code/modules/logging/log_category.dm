@@ -29,7 +29,7 @@ GENERAL_PROTECT_DATUM(/datum/log_category)
 /datum/log_category/proc/add_entry(message, list/data)
 	// Entries that are added first will be at the front of the log entry
 	var/list/entry = list(
-		LOG_ENTRY_TIMESTAMP = logger.unix_timestamp_string(),
+		LOG_ENTRY_TIMESTAMP = logger.human_readable_timestamp(),
 		LOG_ENTRY_CATEGORY = category,
 		LOG_ENTRY_MESSAGE = message,
 	)
