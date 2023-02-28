@@ -22,8 +22,8 @@ Stabilized extracts:
 	qdel(linked_effect)
 	return ..()
 
-/// Returns the mob that is currently holding us if we are either in their inventory or a backpack analogue
-/// Returns null if it's in an invalid location, so that we can check explicitly for null later
+/// Returns the mob that is currently holding us if we are either in their inventory or a backpack analogue.
+/// Returns null if it's in an invalid location, so that we can check explicitly for null later.
 /obj/item/slimecross/stabilized/proc/get_held_mob()
 	if(isnull(loc))
 		return null
