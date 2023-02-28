@@ -46,53 +46,49 @@ To add a crossbreed:
 /obj/item/slimecross/Initialize(mapload)
 	. = ..()
 	name = effect + " " + colour + " extract"
-	add_atom_colour(get_item_colour(), FIXED_COLOUR_PRIORITY)
-
-/// Returns the colour we want this to be
-/obj/item/slimecross/proc/get_item_colour()
+	var/itemcolor = "#FFFFFF"
 	switch(colour)
 		if("orange")
-			return "#FFA500"
+			itemcolor = "#FFA500"
 		if("purple")
-			return "#B19CD9"
+			itemcolor = "#B19CD9"
 		if("blue")
-			return "#ADD8E6"
+			itemcolor = "#ADD8E6"
 		if("metal")
-			return "#7E7E7E"
+			itemcolor = "#7E7E7E"
 		if("yellow")
-			return "#FFFF00"
+			itemcolor = "#FFFF00"
 		if("dark purple")
-			return "#551A8B"
+			itemcolor = "#551A8B"
 		if("dark blue")
-			return "#0000FF"
+			itemcolor = "#0000FF"
 		if("silver")
-			return "#D3D3D3"
+			itemcolor = "#D3D3D3"
 		if("bluespace")
-			return "#32CD32"
+			itemcolor = "#32CD32"
 		if("sepia")
-			return "#704214"
+			itemcolor = "#704214"
 		if("cerulean")
-			return "#2956B2"
+			itemcolor = "#2956B2"
 		if("pyrite")
-			return "#FAFAD2"
+			itemcolor = "#FAFAD2"
 		if("red")
-			return "#FF0000"
+			itemcolor = "#FF0000"
 		if("green")
-			return "#00FF00"
+			itemcolor = "#00FF00"
 		if("pink")
-			return "#FF69B4"
+			itemcolor = "#FF69B4"
 		if("gold")
-			return "#FFD700"
+			itemcolor = "#FFD700"
 		if("oil")
-			return "#505050"
+			itemcolor = "#505050"
 		if("black")
-			return "#000000"
+			itemcolor = "#000000"
 		if("light pink")
-			return "#FFB6C1"
+			itemcolor = "#FFB6C1"
 		if("adamantine")
-			return "#008B8B"
-
-	return COLOR_WHITE
+			itemcolor = "#008B8B"
+	add_atom_colour(itemcolor, FIXED_COLOUR_PRIORITY)
 
 /obj/item/slimecrossbeaker //To be used as a result for extract reactions that make chemicals.
 	name = "result extract"
