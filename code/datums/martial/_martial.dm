@@ -17,11 +17,12 @@
 	var/pacifist_style = FALSE
 
 /datum/martial_art/serialize_list(list/options)
-	. = list()
+	. = ..()
 	.["name"] = name
 	.["id"] = id
 	.["pacifist_style"] = pacifist_style
-	options[SCHEMA_VERSION] = "1.0"
+	options[SCHEMA_VERSION] = "1.0.0"
+	return .
 
 /datum/martial_art/proc/help_act(mob/living/A, mob/living/D)
 	return MARTIAL_ATTACK_INVALID

@@ -110,7 +110,7 @@
 	tag = "mob_[next_mob_id++]"
 
 /mob/serialize_list(list/options)
-	. = list()
+	. = ..()
 	if(tag)
 		.["tag"] = tag
 	if(name)
@@ -119,7 +119,8 @@
 		.["ckey"] = ckey
 	if(key)
 		.["key"] = key
-	options[SCHEMA_VERSION] = "1.0"
+	options[SCHEMA_VERSION] = "1.0.0"
+	return .
 
 /**
  * set every hud image in the given category active so other people with the given hud can see it.

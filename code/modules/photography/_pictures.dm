@@ -59,7 +59,7 @@
 	picture_icon = ic
 
 /datum/picture/serialize_list(list/options)
-	. = list()
+	. = ..()
 	.["id"] = id
 	.["desc"] = picture_desc
 	.["name"] = picture_name
@@ -68,13 +68,18 @@
 	.["pixel_size_y"] = psize_y
 	.["blueprints"] = has_blueprints
 	.["logpath"] = logpath
-	options[SCHEMA_VERSION] = "1.0"
+	options[SCHEMA_VERSION] = "1.0.0"
 
 /datum/picture/deserialize_list(list/input, list/options)
-	if(options[SCHEMA_VERSION] != "1.0")
-		CRASH("Invalid schema version for datum/picture: [options[SCHEMA_VERSION]] (expected 1.0)")
+	if((SCHEMA_VERSION in options) && (options[SCHEMA_VERSION] != "1.0.0"))
+		CRASH("Invalid schema version for datum/picture: [options[SCHEMA_VERSION]] (expected 1.0.0)")
+	. = ..()
+	if(!.)
+		return .
+
 	if(!input["logpath"] || !fexists(input["logpath"]) || !input["id"] || !input["pixel_size_x"] || !input["pixel_size_y"])
-		return
+		return FALSE
+
 	picture_image = icon(file(input["logpath"]))
 	logpath = input["logpath"]
 	id = input["id"]
@@ -88,7 +93,6 @@
 		picture_desc = input["desc"]
 	if(input["name"])
 		picture_name = input["name"]
-	return src
 
 /proc/load_photo_from_disk(id, location)
 	var/datum/picture/P = load_picture_from_disk(id)
