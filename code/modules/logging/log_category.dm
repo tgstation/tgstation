@@ -30,7 +30,7 @@ GENERAL_PROTECT_DATUM(/datum/log_category)
 	var/list/entry = list(
 		LOG_ENTRY_CATEGORY = category,
 		LOG_ENTRY_MESSAGE = message,
-		LOG_ENTRY_TIMESTAMP = big_number_to_text(rustg_unix_timestamp()),
+		LOG_ENTRY_TIMESTAMP = logger.unix_timestamp_string(),
 	)
 	if(data)
 		entry[LOG_ENTRY_DATA] = data

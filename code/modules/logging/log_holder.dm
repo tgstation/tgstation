@@ -28,7 +28,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		CRASH("Attempted to call init_logging twice!")
 
 	round_id = GLOB.round_id
-	logging_start_timestamp = rustg_unix_timestamp()
+	logging_start_timestamp = unix_timestamp_string()
 	log_categories = list()
 	disabled_categories = list()
 
@@ -119,7 +119,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	contained_categories[category_instance.category] = category_instance.schema_version
 
 	var/list/category_header = list(
-		LOG_HEADER_INIT_TIMESTAMP = big_number_to_text(logging_start_timestamp),
+		LOG_HEADER_INIT_TIMESTAMP = logging_start_timestamp,
 		LOG_HEADER_ROUND_ID = big_number_to_text(GLOB.round_id),
 		LOG_HEADER_SECRET = category_instance.secret,
 		LOG_HEADER_SCHEMA_LIST = contained_categories,
@@ -127,6 +127,8 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	)
 	rustg_file_write("[json_encode(category_header)]\n", category_instance.get_output_file(null))
 
+/datum/log_holder/proc/unix_timestamp_string() // pending change to rust-g
+	return RUSTG_CALL(RUST_G, "unix_timestamp")()
 
 /// Adds an entry to the given category, if the category is disabled it will not be logged.
 /// If the category does not exist, we will CRASH and log to the error category.
@@ -134,18 +136,23 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 /datum/log_holder/proc/Log(category, message, list/data)
 	// This is Log because log is a byond internal proc
 	if(shutdown)
-		CRASH("Attempted to perform logging after shutdown!")
+		stack_trace("Performing logging after shutdown! This might not be functional in the future!")
+	// but for right now it's fine
 
+	// do not include the message because these go into the runtime log and we might be secret!
 	if(!istext(message))
-		CRASH("Attempted to log a non-text message! [message]")
+		message = "[message]"
+		stack_trace("Logging with a non-text message")
 
 	if(!category)
-		CRASH("Attempted to log to a null category! [message]")
+		category = LOG_CATEGORY_NOT_FOUND
+		stack_trace("Logging with a null or empty category")
 
 	if(data && !islist(data))
-		CRASH("Attempted to log a non-list data! [data]")
+		data = list("data" = data)
+		stack_trace("Logging with data this is not a list, it will be converted to a list with a single key 'data'")
 
-	if(!initialized)
+	if(!initialized) // we are initialized during /world/proc/SetupLogging which is called in /world/New
 		waiting_log_calls += list(list(category, message, data))
 		return
 
