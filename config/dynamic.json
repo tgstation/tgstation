@@ -45,8 +45,8 @@
 		},
 
 		"Heretics": {
-			"weight": 3,
-			"cost": 10
+			"weight": 4,
+			"cost": 8
 		},
 
 		"Wizard": {

@@ -233,3 +233,7 @@ Tracy.exe
 config/admins.txt
 config/config.txt
 config/dbconfig.txt
+config/dynamic.json
+config/dbconfig.txt
+config/config.txt
+config/admins.txt
