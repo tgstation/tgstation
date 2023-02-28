@@ -40,7 +40,7 @@
 	RegisterSignal(src, COMSIG_MOVABLE_POST_THROW, PROC_REF(after_thrown))
 
 	// test this and remove if it doesn't work
-	RegisterSignal(src, COMSIG_MOVABLE_IMPACT, PROC_REF(shoot_over_mob))
+	RegisterSignal(src, COMSIG_MOVABLE_IMPACT, PROC_REF(shoot_over_mobs))
 
 	//RegisterSignal(src, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(return_missed_throw))
 	//RegisterSignal(src, COMSIG_MOVABLE_IMPACT, PROC_REF(return_hit_throw))
