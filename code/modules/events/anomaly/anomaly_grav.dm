@@ -22,8 +22,8 @@
 	description = "This anomaly has an intense gravitational field, and can disable the gravity generator."
 
 /datum/round_event/anomaly/anomaly_grav/high
-	start_when = 1
-	announce_when = 15
+	start_when = ANOMALY_START_HARMFUL_TIME
+	announce_when = ANOMALY_ANNOUNCE_HARMFUL_TIME
 	anomaly_path = /obj/effect/anomaly/grav/high
 
 /datum/round_event/anomaly/anomaly_grav/announce(fake)
