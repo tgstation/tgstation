@@ -1,4 +1,5 @@
 name: TGS Test Suite
+on:
   push:
     branches:
     - master
@@ -58,12 +59,5 @@ jobs:
         with:
           dotnet-version: 7.0.x
 
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Get Current SHA
-        id: getsha
-        run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-
       - name: Test TGS Integration
-        run: dotnet run -c Release --project tools/tgs_test ${{ github.repository }} /tgs_instances/tgstation ${{ env.TGS_API_PORT }} ${{ steps.getsha.outputs.sha }} ${{ secrets.GITHUB_TOKEN }} ${{ PR_NUMBER }}
+        run: dotnet run -c Release --project tools/tgs_test ${{ github.repository }} /tgs_instances/tgstation ${{ env.TGS_API_PORT }} ${{ github.event.head_commit.sha }} ${{ secrets.GITHUB_TOKEN }} ${{ PR_NUMBER }}
