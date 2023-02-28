@@ -137,6 +137,11 @@
 		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE
 
+	if(mugshot.picture.psize_x > world.icon_size || mugshot.picture.psize_y > world.icon_size)
+		balloon_alert(user, "photo too large!")
+		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
+		return FALSE
+
 	var/trimmed = copytext(mugshot.name, 9, MAX_NAME_LEN) // Remove "photo - "
 	var/name = tgui_input_text(user, "Enter the name of the new record.", "New Record", trimmed, MAX_NAME_LEN)
 	if(!name || !is_operational || !user.can_perform_action(src, ALLOW_SILICON_REACH) || !mugshot || QDELETED(mugshot) || QDELETED(src))
