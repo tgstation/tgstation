@@ -337,8 +337,6 @@
 
 /datum/config_entry/flag/load_jobs_from_txt
 
-/datum/config_entry/flag/forbid_singulo_possession
-
 /datum/config_entry/flag/automute_on //enables automuting/spam prevention
 
 /datum/config_entry/string/panic_server_name
