@@ -1191,22 +1191,22 @@
 
 /obj/machinery/door/airlock/close(forced = DOOR_DEFAULT_CHECKS, force_crush = FALSE)
 	if(operating || welded || locked || seal)
-		return
+		return FALSE
 	if(density)
 		return TRUE
 	if(forced == DOOR_DEFAULT_CHECKS) // Do this up here and outside of try_to_force_door_shut because if we don't have power, we shouldn't be doing any dangerous_close stuff.
 		if(!hasPower() || wires.is_cut(WIRE_BOLTS))
-			return
+			return FALSE
 
 	var/dangerous_close = !safe || force_crush
 	if(!dangerous_close)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				autoclose_in(DOOR_CLOSE_WAIT)
-				return
+				return FALSE
 
 	if(!try_to_force_door_shut(forced))
-		return
+		return FALSE
 
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
