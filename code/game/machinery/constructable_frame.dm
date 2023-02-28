@@ -236,6 +236,9 @@
 					if(!ispath(component, /obj/item/stack))
 						continue
 					var/obj/item/stack/stack_path = component
+					var/stack_amount = circuit.req_components[component] - req_components[component]
+					if(stack_amount > 0)
+						new stack_path(drop_location(), stack_amount)
 					new stack_path(drop_location(), circuit.req_components[component])
 				circuit = null
 				if(components.len == 0)
