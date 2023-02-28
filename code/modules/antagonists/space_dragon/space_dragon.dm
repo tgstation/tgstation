@@ -42,8 +42,8 @@
 
 /datum/antagonist/space_dragon/on_gain()
 	forge_objectives()
-	. = ..()
 	rift_ability = new()
+	return ..()
 
 /datum/antagonist/space_dragon/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/antag = mob_override || owner.current
