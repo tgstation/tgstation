@@ -175,7 +175,7 @@
 
 /obj/item/knife/shiv/Initialize(mapload)
 	flags_1 &= ~CONDUCT_1
-	. = ..()
+	return ..()
 
 
 /obj/item/knife/shiv/plasma
