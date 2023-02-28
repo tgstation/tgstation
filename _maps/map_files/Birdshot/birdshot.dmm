@@ -4711,11 +4711,12 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/science/robotics/mechbay)
 "cam" = (
-/obj/structure/cable,
 /obj/machinery/flasher/directional/east{
 	id = "AI";
 	pixel_y = 26
 	},
+/obj/structure/cable/multilayer/connected,
+/obj/effect/turf_decal/box/red,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "caE" = (
@@ -7453,9 +7454,6 @@
 /area/station/security/processing)
 "dfo" = (
 /obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
@@ -7538,6 +7536,9 @@
 "dhh" = (
 /obj/structure/cable,
 /obj/machinery/status_display/ai/directional/north,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
 "dhw" = (
@@ -7960,6 +7961,7 @@
 	id = "AI";
 	pixel_y = 26
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "dov" = (
@@ -8155,6 +8157,7 @@
 	id = "AI Core shutters";
 	name = "AI Core Shutter"
 	},
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/ai_monitored/turret_protected/ai)
 "dty" = (
@@ -8184,11 +8187,11 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "AI Core shutters";
 	name = "AI Core Shutter"
 	},
+/obj/structure/cable/layer3,
 /turf/open/floor/catwalk_floor,
 /area/station/ai_monitored/turret_protected/ai)
 "dus" = (
@@ -8632,6 +8635,7 @@
 /area/station/medical/chemistry)
 "dCj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/cable,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
 "dCm" = (
@@ -8655,8 +8659,8 @@
 	},
 /area/station/service/library)
 "dCC" = (
-/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
 "dCH" = (
@@ -8669,7 +8673,7 @@
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "dCR" = (
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
 "dCU" = (
@@ -9255,9 +9259,9 @@
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "dOZ" = (
-/obj/structure/cable,
 /obj/machinery/light/floor,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "dPa" = (
@@ -9853,11 +9857,11 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/turret_protected/ai)
 "dZD" = (
-/obj/structure/cable/multilayer/connected,
 /obj/machinery/camera/directional/south{
 	c_tag = "AI Chamber - Core";
 	network = list("aicore")
 	},
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/turret_protected/ai)
 "dZF" = (
@@ -10238,6 +10242,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/firealarm/directional/east,
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/effect/turf_decal/box/red,
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/turret_protected/aisat/equipment)
 "eiK" = (
@@ -14104,6 +14109,9 @@
 	id = "ai";
 	pixel_x = -22
 	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "fDS" = (
@@ -14734,12 +14742,9 @@
 /turf/open/floor/plating/rust,
 /area/station/maintenance/disposal/incinerator)
 "fPu" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "fPA" = (
@@ -15004,7 +15009,6 @@
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/ce)
 "fSX" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/hatch{
@@ -15014,6 +15018,7 @@
 	cycle_id = "sci-maint-passthrough"
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/cable/layer3,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "fTb" = (
@@ -15112,9 +15117,10 @@
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "fUP" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/box/red,
+/obj/structure/cable/multilayer/connected,
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
