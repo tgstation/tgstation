@@ -1,5 +1,5 @@
 /datum/round_event_control/anomaly
-	name = "Anomaly: Debug"
+	name = "Anomaly: Energetic Flux"
 	typepath = /datum/round_event/anomaly
 
 	min_players = 1
