@@ -29,3 +29,6 @@
 
 /// Checks that no light shares a tile/pixel offsets with another
 /datum/unit_test/focus_only/stacked_lights
+
+/// Checks that every created emissive has a valid icon_state
+/datum/unit_test/focus_only/invalid_emissives
