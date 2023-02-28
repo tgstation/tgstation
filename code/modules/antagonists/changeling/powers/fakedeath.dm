@@ -20,7 +20,7 @@
 		build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 	else
 		to_chat(user, span_notice("We begin our stasis, preparing energy to arise once more."))
-		user.fakedeath("changeling") //play dead
+		user.fakedeath(CHANGELING_TRAIT) //play dead
 		addtimer(CALLBACK(src, PROC_REF(ready_to_regenerate), user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)
 	return TRUE
 
@@ -28,7 +28,7 @@
 	if(!istype(user))
 		return
 
-	user.cure_fakedeath("changeling")
+	user.cure_fakedeath(CHANGELING_TRAIT)
 	// Heal all damage and some minor afflictions,
 	var/flags_to_heal = (HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS|HEAL_CC_STATUS)
 	// but leave out limbs so we can do it specially
@@ -77,7 +77,7 @@
 	return ..()
 
 /datum/action/changeling/fakedeath/proc/can_enter_stasis(mob/living/user)
-	if(HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, "changeling"))
+	if(HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
 		user.balloon_alert(user, "already reviving!")
 		return FALSE
 	return TRUE
