@@ -114,9 +114,19 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		sub_category = new sub_category
 		sub_category.master_category = category_instance
 		log_categories[sub_category.category] = sub_category
+
+		if(!semver_to_list(sub_category.schema_version))
+			stack_trace("log category [sub_category.category] has an invalid schema version '[sub_category.schema_version]'")
+			sub_category.schema_version = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET
+
 		contained_categories[sub_category.category] = sub_category.schema_version
 
 	log_categories[category_instance.category] = category_instance
+
+	if(!semver_to_list(category_instance.schema_version))
+		stack_trace("log category [category_instance.category] has an invalid schema version '[category_instance.schema_version]'")
+		category_instance.schema_version = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET
+
 	contained_categories[category_instance.category] = category_instance.schema_version
 
 	var/list/category_header = list(

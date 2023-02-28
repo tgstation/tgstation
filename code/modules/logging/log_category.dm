@@ -4,7 +4,7 @@
 	var/category
 
 	/// The schema version of this log category.
-	/// Expected format of "Major.Minor"
+	/// Expected format of "Major.Minor.Patch"
 	var/schema_version = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET
 
 	/// The master category that contains this category
