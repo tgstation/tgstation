@@ -84,6 +84,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 
 /obj/item/organ/internal/liver/gondola/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/gondola)
 	AddElement(/datum/element/noticable_organ, "left arm has small needles breaching the skin all over it.", BODY_ZONE_L_ARM)
 	AddElement(/datum/element/noticable_organ, "right arm has small needles breaching the skin all over it.", BODY_ZONE_R_ARM)
 	pax_hugs = new
