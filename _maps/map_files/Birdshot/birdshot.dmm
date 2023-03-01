@@ -26198,6 +26198,17 @@
 	},
 /turf/open/floor/iron/textured_large,
 /area/station/engineering/break_room)
+"jUo" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 11;
+	height = 24;
+	name = "SS13: Auxiliary Dock, Station-Port";
+	shuttle_id = "whiteship_home";
+	width = 35
+	},
+/turf/open/space/basic,
+/area/space)
 "jUp" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -118108,7 +118119,7 @@ rHP
 mCf
 wfk
 dKA
-dDB
+jUo
 dDB
 dDB
 dDB
