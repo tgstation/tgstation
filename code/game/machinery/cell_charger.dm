@@ -27,7 +27,7 @@
 
 /obj/machinery/cell_charger/examine(mob/user)
 	. = ..()
-	. += "There's [charging ? "a" : "no"] cell in the charger."
+	. += "There's [charging ? "\a [charging]" : "no cell"] in the charger."
 	if(charging)
 		. += "Current charge: [round(charging.percent(), 1)]%."
 	if(in_range(user, src) || isobserver(user))

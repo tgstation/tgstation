@@ -56,8 +56,6 @@
 	/// Cached icon that has been built for this card. Intended for use in chat.
 	var/icon/cached_flat_icon
 
-	/// How many magical mining Disney Dollars this card has for spending at the mining equipment vendors.
-	var/mining_points = 0
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null
 	/// Linked bank account.
@@ -628,7 +626,7 @@
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
 	if(!isliving(user))
 		return
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
 	return TRUE
@@ -730,9 +728,9 @@
 
 	if(registered_age)
 		. += "The card indicates that the holder is [registered_age] years old. [(registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b>[span_danger("'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'")]</b> along the bottom of the card." : ""]"
-	if(mining_points)
-		. += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
 	if(registered_account)
+		if(registered_account.mining_points)
+			. += "There's [registered_account.mining_points] mining point\s loaded onto the card's bank account."
 		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
@@ -962,15 +960,6 @@
 	is_intern = FALSE
 	update_label()
 
-/obj/item/card/id/advanced/proc/on_holding_card_slot_moved(obj/item/modular_computer/pda/source, atom/old_loc, dir, forced)
-	SIGNAL_HANDLER
-	if(istype(old_loc, /obj/item/modular_computer/pda))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
-	if(source)
-		RegisterSignal(source, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
-		RegisterSignal(source, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
-
 /obj/item/card/id/advanced/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 
@@ -979,7 +968,6 @@
 		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	if(istype(old_loc, /obj/item/modular_computer/pda))
-		UnregisterSignal(old_loc, COMSIG_MOVABLE_MOVED)
 		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	//New loc
@@ -988,7 +976,6 @@
 		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
 
 	if(istype(loc, /obj/item/modular_computer/pda))
-		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, PROC_REF(on_holding_card_slot_moved))
 		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
 		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
 
@@ -1228,7 +1215,7 @@
 		to_chat(user, "Restating prisoner ID to default parameters.")
 		return
 	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
-	if(!choice || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
+	if(!choice || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 		return FALSE
 	time_to_assign = choice
 	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
@@ -1353,7 +1340,7 @@
 	if(ishuman(target))
 		to_chat(user, "<span class='notice'>You covertly start to scan [target] with \the [src], hoping to pick up a wireless ID card signal...</span>")
 
-		if(!do_mob(user, target, 2 SECONDS))
+		if(!do_after(user, 2 SECONDS, target))
 			to_chat(user, "<span class='notice'>The scan was interrupted.</span>")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -1554,7 +1541,7 @@
 					assignment = target_occupation
 
 				var/new_age = tgui_input_number(user, "Choose the ID's age", "Agent card age", AGE_MIN, AGE_MAX, AGE_MIN)
-				if(QDELETED(user) || QDELETED(src) || !user.canUseTopic(user, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE))
+				if(QDELETED(user) || QDELETED(src) || !user.can_perform_action(user, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH))
 					return
 				if(new_age)
 					registered_age = new_age

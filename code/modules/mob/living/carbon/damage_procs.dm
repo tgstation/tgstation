@@ -58,9 +58,9 @@
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
-		take_overall_damage(amount, 0, updating_health, required_bodytype)
+		take_overall_damage(brute = amount, updating_health = updating_health, required_bodytype = required_bodytype)
 	else
-		heal_overall_damage(abs(amount), 0, required_bodytype, updating_health)
+		heal_overall_damage(brute = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health)
 	return amount
 
 /mob/living/carbon/setBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
@@ -74,9 +74,9 @@
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
-		take_overall_damage(0, amount, updating_health, required_bodytype)
+		take_overall_damage(burn = amount, updating_health = updating_health, required_bodytype = required_bodytype)
 	else
-		heal_overall_damage(0, abs(amount), required_bodytype, updating_health)
+		heal_overall_damage(burn = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health)
 	return amount
 
 /mob/living/carbon/setFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
@@ -86,8 +86,8 @@
 		return
 	adjustFireLoss(diff, updating_health, forced, required_bodytype)
 
-/mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
-	if(required_biotype && !(mob_biotypes & required_biotype))
+/mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = MOB_ORGANIC)
+	if(!forced && !(mob_biotypes & required_biotype))
 		return
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
 		amount = -amount
@@ -223,7 +223,7 @@
 		update_damage_overlays()
 
 ///Heal MANY bodyparts, in random order
-/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, required_bodytype, updating_health = TRUE)
+/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_bodytype, updating_health = TRUE)
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, required_bodytype)
 
 	var/update = NONE
@@ -245,7 +245,7 @@
 		update_damage_overlays()
 
 /// damage MANY bodyparts, in random order
-/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype)
+/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_bodytype)
 	if(status_flags & GODMODE)
 		return //godmode
 

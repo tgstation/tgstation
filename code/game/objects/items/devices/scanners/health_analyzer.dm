@@ -66,7 +66,7 @@
 				\n[span_info("Body temperature: ???")]")
 		return
 
-	if(ispodperson(M)&& !advanced)
+	if(ispodperson(M) && !advanced)
 		to_chat(user, "<span class='info'>[M]'s biological structure is too complex for the health analyzer.")
 		return
 
@@ -212,7 +212,7 @@
 		if(istype(eyes))
 			if(carbontarget.is_blind())
 				render_list += "<span class='alert ml-2'>Subject is blind.\n</span>"
-			else if(HAS_TRAIT(carbontarget, TRAIT_NEARSIGHT))
+			else if(carbontarget.is_nearsighted())
 				render_list += "<span class='alert ml-2'>Subject is nearsighted.\n</span>"
 
 	// Body part damage report
@@ -274,9 +274,9 @@
 				missing_organs += "lungs"
 			if(!(TRAIT_NOMETABOLISM in the_dudes_species.inherent_traits) && !humantarget.getorganslot(ORGAN_SLOT_LIVER))
 				missing_organs += "liver"
-			if(!the_dudes_species.mutantstomach && !humantarget.getorganslot(ORGAN_SLOT_STOMACH))
+			if(the_dudes_species.mutantstomach && !humantarget.getorganslot(ORGAN_SLOT_STOMACH))
 				missing_organs += "stomach"
-			if(!the_dudes_species.mutanttongue && !humantarget.getorganslot(ORGAN_SLOT_TONGUE))
+			if(the_dudes_species.mutanttongue && !humantarget.getorganslot(ORGAN_SLOT_TONGUE))
 				missing_organs += "tongue"
 			if(!humantarget.getorganslot(ORGAN_SLOT_EARS))
 				missing_organs += "ears"
@@ -305,7 +305,6 @@
 			|| targetspecies.mutantheart != initial(targetspecies.mutantheart) \
 			|| targetspecies.mutanteyes != initial(targetspecies.mutanteyes) \
 			|| targetspecies.mutantears != initial(targetspecies.mutantears) \
-			|| targetspecies.mutanthands != initial(targetspecies.mutanthands) \
 			|| targetspecies.mutanttongue != initial(targetspecies.mutanttongue) \
 			|| targetspecies.mutantliver != initial(targetspecies.mutantliver) \
 			|| targetspecies.mutantstomach != initial(targetspecies.mutantstomach) \
@@ -385,36 +384,44 @@
 		return
 
 	if(istype(target) && target.reagents)
-		var/render_list = list()
+		var/list/render_list = list() //The master list of readouts, including reagents in the blood/stomach, addictions, quirks, etc.
+		var/list/render_block = list() //A second block of readout strings. If this ends up empty after checking stomach/blood contents, we give the "empty" header.
 
 		// Blood reagents
 		if(target.reagents.reagent_list.len)
-			render_list += "<span class='notice ml-1'>Subject contains the following reagents in their blood:</span>\n"
 			for(var/r in target.reagents.reagent_list)
 				var/datum/reagent/reagent = r
 				if(reagent.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems on scanners
 					continue
-				render_list += "<span class='notice ml-2'>[round(reagent.volume, 0.001)] units of [reagent.name][reagent.overdosed ? "</span> - [span_boldannounce("OVERDOSING")]" : ".</span>"]\n"
-		else
+				render_block += "<span class='notice ml-2'>[round(reagent.volume, 0.001)] units of [reagent.name][reagent.overdosed ? "</span> - [span_boldannounce("OVERDOSING")]" : ".</span>"]\n"
+
+		if(!length(render_block)) //If no VISIBLY DISPLAYED reagents are present, we report as if there is nothing.
 			render_list += "<span class='notice ml-1'>Subject contains no reagents in their blood.</span>\n"
+		else
+			render_list += "<span class='notice ml-1'>Subject contains the following reagents in their blood:</span>\n"
+			render_list += render_block //Otherwise, we add the header, reagent readouts, and clear the readout block for use on the stomach.
+			render_block.Cut()
 
 		// Stomach reagents
 		var/obj/item/organ/internal/stomach/belly = target.getorganslot(ORGAN_SLOT_STOMACH)
 		if(belly)
 			if(belly.reagents.reagent_list.len)
-				render_list += "<span class='notice ml-1'>Subject contains the following reagents in their stomach:</span>\n"
 				for(var/bile in belly.reagents.reagent_list)
 					var/datum/reagent/bit = bile
-					if(bit.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems on scanners
+					if(bit.chemical_flags & REAGENT_INVISIBLE)
 						continue
 					if(!belly.food_reagents[bit.type])
-						render_list += "<span class='notice ml-2'>[round(bit.volume, 0.001)] units of [bit.name][bit.overdosed ? "</span> - [span_boldannounce("OVERDOSING")]" : ".</span>"]\n"
+						render_block += "<span class='notice ml-2'>[round(bit.volume, 0.001)] units of [bit.name][bit.overdosed ? "</span> - [span_boldannounce("OVERDOSING")]" : ".</span>"]\n"
 					else
 						var/bit_vol = bit.volume - belly.food_reagents[bit.type]
 						if(bit_vol > 0)
-							render_list += "<span class='notice ml-2'>[round(bit_vol, 0.001)] units of [bit.name][bit.overdosed ? "</span> - [span_boldannounce("OVERDOSING")]" : ".</span>"]\n"
-			else
+							render_block += "<span class='notice ml-2'>[round(bit_vol, 0.001)] units of [bit.name][bit.overdosed ? "</span> - [span_boldannounce("OVERDOSING")]" : ".</span>"]\n"
+
+			if(!length(render_block))
 				render_list += "<span class='notice ml-1'>Subject contains no reagents in their stomach.</span>\n"
+			else
+				render_list += "<span class='notice ml-1'>Subject contains the following reagents in their stomach:</span>\n"
+				render_list += render_block
 
 		// Addictions
 		if(LAZYLEN(target.mind?.active_addictions))
@@ -440,7 +447,7 @@
 /obj/item/healthanalyzer/AltClick(mob/user)
 	..()
 
-	if(!user.canUseTopic(src, be_close = TRUE) || !user.can_read(src) || user.is_blind())
+	if(!user.can_perform_action(src, NEED_LITERACY|NEED_LIGHT) || user.is_blind())
 		return
 
 	mode = !mode

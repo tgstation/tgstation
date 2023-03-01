@@ -744,7 +744,9 @@
 		/obj/item/reagent_containers/borghypo/borgshaker,
 		/obj/item/borg/lollipop,
 		/obj/item/stack/pipe_cleaner_coil/cyborg,
-		/obj/item/borg/apparatus/beaker/service)
+		/obj/item/borg/apparatus/beaker/service,
+		/obj/item/chisel,
+	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/borgshaker/hacked)
 	cyborg_base_icon = "service_m" // display as butlerborg for radial model selection
@@ -785,12 +787,12 @@
 /obj/item/robot_model/syndicate/rebuild_modules()
 	..()
 	var/mob/living/silicon/robot/cyborg = loc
-	cyborg.faction -= "silicon" //ai turrets
+	cyborg.faction -= FACTION_SILICON //ai turrets
 
 /obj/item/robot_model/syndicate/remove_module(obj/item/removed_module, delete_after)
 	..()
 	var/mob/living/silicon/robot/cyborg = loc
-	cyborg.faction |= "silicon" //ai is your bff now!
+	cyborg.faction |= FACTION_SILICON //ai is your bff now!
 
 /obj/item/robot_model/syndicate_medical
 	name = "Syndicate Medical"

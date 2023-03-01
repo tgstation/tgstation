@@ -1,7 +1,7 @@
 /datum/antagonist/nukeop
 	name = ROLE_NUCLEAR_OPERATIVE
 	roundend_category = "syndicate operatives" //just in case
-	antagpanel_category = "NukeOp"
+	antagpanel_category = ANTAG_GROUP_SYNDICATE
 	job_rank = ROLE_OPERATIVE
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
@@ -24,11 +24,6 @@
 	var/discount_team_amount = 5
 	/// The amount of limited discounts that the team get
 	var/discount_limited_amount = 10
-
-/datum/antagonist/nukeop/New()
-	if(send_to_spawnpoint) // lets get the loading started now, but don't block waiting for it
-		INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, lazy_load_template), LAZY_TEMPLATE_KEY_NUKIEBASE)
-	return ..()
 
 /datum/antagonist/nukeop/proc/equip_op()
 	if(!ishuman(owner.current))
@@ -118,21 +113,30 @@
 	else
 		to_chat(owner, "Unfortunately the syndicate was unable to provide you with nuclear authorization code.")
 
-/datum/antagonist/nukeop/proc/forge_objectives()
+/datum/antagonist/nukeop/forge_objectives()
 	if(nuke_team)
 		objectives |= nuke_team.objectives
 
+/// Actually moves our nukie to where they should be
 /datum/antagonist/nukeop/proc/move_to_spawnpoint()
 	// Ensure that the nukiebase is loaded, and wait for it if required
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
+	var/turf/destination = get_spawnpoint()
+	owner.current.forceMove(destination)
+	if(!owner.current.onSyndieBase())
+		message_admins("[ADMIN_LOOKUPFLW(owner.current)] is a NUKE OP and move_to_spawnpoint put them somewhere that isn't the syndie base, help please.")
+		stack_trace("Nuke op move_to_spawnpoint resulted in a location not on the syndicate base. (Was moved to: [destination])")
 
+/// Gets the position we spawn at
+/datum/antagonist/nukeop/proc/get_spawnpoint()
 	var/team_number = 1
 	if(nuke_team)
 		team_number = nuke_team.members.Find(owner)
-	owner.current.forceMove(GLOB.nukeop_start[((team_number - 1) % GLOB.nukeop_start.len) + 1])
 
-/datum/antagonist/nukeop/leader/move_to_spawnpoint()
-	owner.current.forceMove(pick(GLOB.nukeop_leader_start))
+	return GLOB.nukeop_start[((team_number - 1) % GLOB.nukeop_start.len) + 1]
+
+/datum/antagonist/nukeop/leader/get_spawnpoint()
+	return pick(GLOB.nukeop_leader_start)
 
 /datum/antagonist/nukeop/create_team(datum/team/nuclear/new_team)
 	if(!new_team)

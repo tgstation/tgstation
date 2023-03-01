@@ -106,6 +106,9 @@ LOG_GAME
 ## log player votes
 LOG_VOTE
 
+## log manual target zone switching
+LOG_ZONE_SWITCH
+
 ## log client Whisper
 LOG_WHISPER
 
@@ -193,9 +196,6 @@ ID_CONSOLE_JOBSLOT_DELAY 30
 
 ## allow players to initiate a restart vote
 #ALLOW_VOTE_RESTART
-
-## allow players to initiate a mode-change vote
-#ALLOW_VOTE_MODE
 
 ## allow players to initiate a map-change vote
 #ALLOW_VOTE_MAP
@@ -304,6 +304,8 @@ CHECK_RANDOMIZER
 #LOAD_JOBS_FROM_TXT
 
 ## Uncomment this to forbid admins from possessing the singularity.
+## It is intentional that Admins can edit this config, as its meant to serve as a deterrent/warning for admin abuse.
+## Add a `@` in front to lock admins from editing this.
 #FORBID_SINGULO_POSSESSION
 
 ## Uncomment to give admins the ability to send a maptext popup to players.
@@ -445,6 +447,7 @@ AUTOADMIN_RANK Game Master
 ## These messages will be followed by one stating the clients current version and the required version for clarity.
 ## If CLIENT_WARN_POPUP is uncommented a popup window with the message will be displayed instead
 #CLIENT_WARN_VERSION 511
+#CLIENT_WARN_BUILD 1421
 #CLIENT_WARN_POPUP
 #CLIENT_WARN_MESSAGE Byond released 511 as the stable release. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
 CLIENT_ERROR_VERSION 511
@@ -487,10 +490,13 @@ MINUTE_CLICK_LIMIT 400
 ## Various messages to be sent to connected chat channels.
 ## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4.
 ## If using TGS4, the string option can be set as one of more chat channel tags (separated by ','s) to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
-## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
+## i.e. CHANNEL_ANNOUNCE_NEW_GAME chat_channel_tag
 
-## Send a message with the station name starting a new game.
-#CHAT_ANNOUNCE_NEW_GAME
+## Which channel will have a message about a new game starting, message includes the station name.
+#CHANNEL_ANNOUNCE_NEW_GAME
+
+## Which channel will have a message about a new game starting, message includes the round ID of the game that has just ended.
+#CHANNEL_ANNOUNCE_END_GAME
 
 ## Ping users who use the `notify` command when a new game starts.
 #CHAT_NEW_GAME_NOTIFICATIONS
@@ -636,3 +642,6 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 ## Comment to disable sending a toast notification on the host server when initializations complete.
 ## Even if this is enabled, a notification will only be sent if there are no clients connected.
 TOAST_NOTIFICATION_ON_INIT
+
+## Causes configuration errors to spit out runtimes
+CONFIG_ERRORS_RUNTIME

@@ -25,7 +25,7 @@
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	faction = list("mushroom")
+	faction = list(FACTION_MUSHROOM)
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	stat_attack = DEAD
 	mouse_opacity = MOUSE_OPACITY_ICON
@@ -194,7 +194,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/harvest()
 	var/counter
-	for(counter=0, counter<=powerlevel, counter++)
+	for(counter=0, counter <= powerlevel, counter++)
 		var/obj/item/food/hugemushroomslice/S = new /obj/item/food/hugemushroomslice(src.loc)
 		S.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, powerlevel)
 		S.reagents.add_reagent(/datum/reagent/medicine/omnizine, powerlevel)

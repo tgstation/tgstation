@@ -32,7 +32,7 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	dextrous = TRUE
 	held_items = list(null, null)
-	faction = list("monkey", "jungle")
+	faction = list(FACTION_MONKEY, FACTION_JUNGLE)
 	robust_searching = TRUE
 	stat_attack = HARD_CRIT
 	minbodytemp = 270
@@ -57,7 +57,7 @@
 	for(var/obj/item/bodypart/part as anything in carbon_target.bodyparts)
 		if(part.body_part == HEAD || part.body_part == CHEST)
 			continue
-		if(part.dismemberable)
+		if(!part.dismemberable)
 			continue
 		parts += part
 	return parts
@@ -122,7 +122,7 @@
 	desc = "Cargo's pet gorilla. They seem to have an 'I love Mom' tattoo."
 	maxHealth = 200
 	health = 200
-	faction = list(FACTION_NEUTRAL, "monkey", "jungle")
+	faction = list(FACTION_NEUTRAL, FACTION_MONKEY, FACTION_JUNGLE)
 	gold_core_spawnable = NO_SPAWN
 	unique_name = FALSE
 	/// Whether we're currently being polled over

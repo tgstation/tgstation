@@ -49,6 +49,11 @@
 
 	setup_device()
 
+/obj/machinery/button/Destroy()
+	QDEL_NULL(device)
+	QDEL_NULL(board)
+	return ..()
+
 /obj/machinery/button/update_icon_state()
 	if(panel_open)
 		icon_state = "button-open"
@@ -96,6 +101,7 @@
 				req_one_access = board.accesses
 			else
 				req_access = board.accesses
+			balloon_alert(user, "electronics added")
 			to_chat(user, span_notice("You add [W] to the button."))
 
 		if(!device && !board && W.tool_behaviour == TOOL_WRENCH)
@@ -137,6 +143,17 @@
 /obj/machinery/button/attack_robot(mob/user)
 	return attack_ai(user)
 
+/obj/machinery/button/examine(mob/user)
+	. = ..()
+	if(!panel_open)
+		return
+	if(device)
+		. += span_notice("There is \a [device] inside, which could be removed with an <b>empty hand</b>.")
+	if(board)
+		. += span_notice("There is \a [board] inside, which could be removed with an <b>empty hand</b>.")
+	if(!board && !device)
+		. += span_notice("There is nothing currently installed in \the [src].")
+
 /obj/machinery/button/proc/setup_device()
 	if(id && istype(device, /obj/item/assembly/control))
 		var/obj/item/assembly/control/A = device
@@ -158,14 +175,15 @@
 	if(panel_open)
 		if(device || board)
 			if(device)
-				device.forceMove(drop_location())
+				user.put_in_hands(device)
 				device = null
 			if(board)
-				board.forceMove(drop_location())
+				user.put_in_hands(board)
 				req_access = list()
 				req_one_access = list()
 				board = null
 			update_appearance()
+			balloon_alert(user, "electronics removed")
 			to_chat(user, span_notice("You remove electronics from the button frame."))
 
 		else
@@ -173,6 +191,7 @@
 				skin = "launcher"
 			else
 				skin = "doorctrl"
+			balloon_alert(user, "swapped button style")
 			to_chat(user, span_notice("You change the button frame's front panel."))
 		return
 
@@ -330,25 +349,3 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	result_path = /obj/machinery/button
 	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	pixel_shift = 24
-
-/obj/machinery/button/tram
-	name = "tram caller"
-	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
-	icon_state = "launcher"
-	skin = "launcher"
-	device_type = /obj/item/assembly/control/tram
-	req_access = list()
-	id = 1
-	/// The specific lift id of the tram we're calling.
-	var/lift_id = MAIN_STATION_TRAM
-
-/obj/machinery/button/tram/setup_device()
-	var/obj/item/assembly/control/tram/tram_device = device
-	tram_device.initial_id = id
-	tram_device.specific_lift_id = lift_id
-	return ..()
-
-/obj/machinery/button/tram/examine(mob/user)
-	. = ..()
-	. += span_notice("There's a small inscription on the button...")
-	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")

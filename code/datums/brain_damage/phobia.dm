@@ -2,8 +2,8 @@
 	name = "Phobia"
 	desc = "Patient is unreasonably afraid of something."
 	scan_desc = "phobia"
-	gain_text = "<span class='warning'>You start finding default values very unnerving...</span>"
-	lose_text = "<span class='notice'>You no longer feel afraid of default values.</span>"
+	gain_text = span_warning("You start finding default values very unnerving...")
+	lose_text = span_notice("You no longer feel afraid of default values.")
 	var/phobia_type
 	/// Cooldown for proximity checks so we don't spam a range 7 view every two seconds.
 	COOLDOWN_DECLARE(check_cooldown)
@@ -24,8 +24,8 @@
 	if(!phobia_type)
 		phobia_type = pick(GLOB.phobia_types)
 
-	gain_text = "<span class='warning'>You start finding [phobia_type] very unnerving...</span>"
-	lose_text = "<span class='notice'>You no longer feel afraid of [phobia_type].</span>"
+	gain_text = span_warning("You start finding [phobia_type] very unnerving...")
+	lose_text = span_notice("You no longer feel afraid of [phobia_type].")
 	scan_desc += " of [phobia_type]"
 	trigger_regex = GLOB.phobia_regexes[phobia_type]
 	trigger_mobs = GLOB.phobia_mobs[phobia_type]
@@ -121,7 +121,7 @@
 		if(3)
 			to_chat(owner, span_warning("You shut your eyes in terror!"))
 			owner.set_jitter_if_lower(10 SECONDS)
-			owner.adjust_blindness(10)
+			owner.adjust_temp_blindness(20 SECONDS)
 		if(4)
 			owner.adjust_dizzy(20 SECONDS)
 			owner.adjust_confusion(10 SECONDS)

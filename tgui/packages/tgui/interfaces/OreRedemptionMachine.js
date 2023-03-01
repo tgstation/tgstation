@@ -5,7 +5,7 @@ import { Window } from '../layouts';
 
 export const OreRedemptionMachine = (props, context) => {
   const { act, data } = useBackend(context);
-  const { unclaimedPoints, materials, alloys, diskDesigns, hasDisk } = data;
+  const { unclaimedPoints, materials, alloys } = data;
   return (
     <Window title="Ore Redemption Machine" width={440} height={550}>
       <Window.Content scrollable>
@@ -27,45 +27,6 @@ export const OreRedemptionMachine = (props, context) => {
               onClick={() => act('Claim')}
             />
           </Box>
-        </Section>
-        <Section>
-          {(hasDisk && (
-            <>
-              <Box mb={1}>
-                <Button
-                  icon="eject"
-                  content="Eject design disk"
-                  onClick={() => act('diskEject')}
-                />
-              </Box>
-              <Table>
-                {diskDesigns.map((design) => (
-                  <Table.Row key={design.index}>
-                    <Table.Cell>
-                      File {design.index}: {design.name}
-                    </Table.Cell>
-                    <Table.Cell collapsing>
-                      <Button
-                        disabled={!design.canupload}
-                        content="Upload"
-                        onClick={() =>
-                          act('diskUpload', {
-                            design: design.index,
-                          })
-                        }
-                      />
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table>
-            </>
-          )) || (
-            <Button
-              icon="save"
-              content="Insert design disk"
-              onClick={() => act('diskInsert')}
-            />
-          )}
         </Section>
         <Section title="Materials">
           <Table>

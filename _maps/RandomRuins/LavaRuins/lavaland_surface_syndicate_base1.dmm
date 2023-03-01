@@ -26,10 +26,7 @@
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
 	dir = 1
 	},
-/obj/structure/sign/barsign{
-	pixel_y = -32;
-	req_access = null
-	},
+/obj/machinery/barsign/all_access/directional/south,
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/bar)
 "ai" = (
@@ -756,7 +753,7 @@
 "fj" = (
 /obj/structure/table/glass,
 /obj/structure/reagent_dispensers/wall/virusfood/directional/north,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/healthanalyzer,
 /obj/item/clothing/glasses/hud/health,
 /obj/structure/disposalpipe/segment,
@@ -1537,14 +1534,14 @@
 /area/ruin/syndicate_lava_base/main)
 "iO" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)

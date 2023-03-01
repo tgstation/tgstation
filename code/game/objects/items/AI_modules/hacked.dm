@@ -34,3 +34,47 @@
 			law_datum.replace_random_law(laws[1], list(LAW_ION, LAW_HACKED, LAW_INHERENT, LAW_SUPPLIED), LAW_HACKED)
 	return laws[1]
 
+/// Makes the AI Malf, as well as give it syndicate laws.
+/obj/item/ai_module/malf
+	name = "Infected AI Module"
+	desc = "An virus-infected AI Module."
+	bypass_law_amt_check = TRUE
+	laws = list("")
+	///Is this upload board unused?
+	var/functional = TRUE
+
+/obj/item/ai_module/malf/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
+	if(!sender.mind?.has_antag_datum(/datum/antagonist/traitor))
+		to_chat(sender, span_warning("You have no clue how to use this thing."))
+		return
+	if(!functional)
+		to_chat(sender, span_warning("It is broken and non-functional, what do you want from it?"))
+		return
+	var/mob/living/silicon/ai/malf_candidate = law_datum.owner
+	if(!istype(malf_candidate)) //If you are using it on cyborg upload console or a cyborg
+		to_chat(sender, span_warning("You should use [src] on an AI upload console or the AI core itself."))
+		return
+	if(malf_candidate.mind?.has_antag_datum(/datum/antagonist/malf_ai)) //Already malf
+		to_chat(sender, span_warning("Unknown error occured. Upload process aborted."))
+		return
+
+	var/datum/antagonist/malf_ai/infected/malf_datum = new (give_objectives = TRUE, new_boss = sender.mind)
+	malf_candidate.mind.add_antag_datum(malf_datum)
+
+	for(var/mob/living/silicon/robot/robot in malf_candidate.connected_robots)
+		if(robot.lawupdate)
+			robot.lawsync()
+			robot.show_laws()
+			robot.law_change_counter++
+		CHECK_TICK
+
+	malf_candidate.malf_picker.processing_time += 50
+	to_chat(malf_candidate, span_notice("The virus enhanced your system, overclocking your CPU 50-fold."))
+
+	functional = FALSE
+	name = "Broken AI Module"
+	desc = "A law upload module, it is broken and non-functional."
+
+/obj/item/ai_module/malf/display_laws()
+	return
+

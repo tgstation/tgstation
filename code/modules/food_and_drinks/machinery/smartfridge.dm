@@ -219,7 +219,7 @@
 				if(!desired)
 					return FALSE
 
-			if(QDELETED(src) || QDELETED(usr) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE)) // Sanity checkin' in case stupid stuff happens while we wait for input()
+			if(QDELETED(src) || QDELETED(usr) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH)) // Sanity checkin' in case stupid stuff happens while we wait for input()
 				return FALSE
 
 			for(var/obj/item/dispensed_item in src)
@@ -267,6 +267,8 @@
 	icon_state = "drying_rack"
 	visible_contents = FALSE
 	base_build_path = /obj/machinery/smartfridge/drying_rack //should really be seeing this without admin fuckery.
+	use_power = NO_POWER_USE
+	idle_power_usage = 0
 	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()

@@ -43,7 +43,7 @@
 	taste_description = "badmins"
 	chemical_flags = REAGENT_DEAD_PROCESS
 	/// Flags to fullheal every metabolism tick
-	var/full_heal_flags = ~(HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS)
+	var/full_heal_flags = ~(HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_REFRESH_ORGANS)
 
 // The best stuff there is. For testing/debugging.
 /datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -77,7 +77,7 @@
 	name = "Quantum Medicine"
 	description = "Rare and experimental particles, that apparently swap the user's body with one from an alternate dimension where it's completely healthy."
 	taste_description = "science"
-	full_heal_flags = ~(HEAL_ADMIN|HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_ALL_REAGENTS)
+	full_heal_flags = ~(HEAL_ADMIN|HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_ALL_REAGENTS|HEAL_REFRESH_ORGANS)
 
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
@@ -136,7 +136,7 @@
 		..()
 		return
 	var/power = -0.00003 * (affected_mob.bodytemperature ** 2) + 3
-	affected_mob.adjustOxyLoss(-3 * power * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(-3 * power * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	affected_mob.adjustBruteLoss(-power * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustFireLoss(-power * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustToxLoss(-power * REM * delta_time, FALSE, TRUE, affected_biotype) //heals TOXINLOVERs
@@ -193,7 +193,7 @@
 		if(affected_mob.on_fire)
 			power *= 2
 
-		affected_mob.adjustOxyLoss(-2 * power * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(-2 * power * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		affected_mob.adjustBruteLoss(-power * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustFireLoss(-1.5 * power * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustToxLoss(-power * REM * delta_time, FALSE, TRUE, affected_biotype)
@@ -371,7 +371,7 @@
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjustToxLoss(-healing * REM * delta_time, FALSE, required_biotype = affected_biotype)
-	affected_mob.adjustOxyLoss(-healing * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(-healing * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	affected_mob.adjustBruteLoss(-healing * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustFireLoss(-healing * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	..()
@@ -379,7 +379,7 @@
 
 /datum/reagent/medicine/omnizine/overdose_process(mob/living/affected_mob, delta_time, times_fired)
 	affected_mob.adjustToxLoss(1.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-	affected_mob.adjustOxyLoss(1.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(1.5 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	affected_mob.adjustBruteLoss(1.5 * REM * delta_time, FALSE, FALSE, BODYTYPE_ORGANIC)
 	affected_mob.adjustFireLoss(1.5 * REM * delta_time, FALSE, FALSE, BODYTYPE_ORGANIC)
 	..()
@@ -492,9 +492,12 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.adjustOxyLoss(-3 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(-3 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(affected_mob.losebreath >= 4)
-		affected_mob.losebreath -= 2 * REM * delta_time
+		var/obj/item/organ/internal/lungs/affected_lungs = affected_mob.getorganslot(ORGAN_SLOT_LUNGS)
+		var/our_respiration_type = affected_lungs ? affected_lungs.respiration_type : affected_mob.mob_respiration_type // use lungs' respiration type or mob_respiration_type if no lungs
+		if(our_respiration_type & affected_respiration_type)
+			affected_mob.losebreath -= 2 * REM * delta_time
 	..()
 	. = TRUE
 
@@ -632,17 +635,12 @@
 	improve_eyesight(affected_mob, eyes)
 
 /datum/reagent/medicine/oculine/proc/improve_eyesight(mob/living/carbon/affected_mob, obj/item/organ/internal/eyes/eyes)
-	delta_light = creation_purity*30
-	if(eyes.lighting_alpha)
-		eyes.lighting_alpha -= delta_light
-	else
-		eyes.lighting_alpha = 255 - delta_light
-	eyes.see_in_dark += 3
+	delta_light = creation_purity*10
+	eyes.lighting_cutoff += delta_light
 	affected_mob.update_sight()
 
 /datum/reagent/medicine/oculine/proc/restore_eyesight(mob/living/carbon/affected_mob, obj/item/organ/internal/eyes/eyes)
-	eyes.lighting_alpha += delta_light
-	eyes.see_in_dark -= 3
+	eyes.lighting_cutoff -= delta_light
 	affected_mob.update_sight()
 
 /datum/reagent/medicine/oculine/proc/on_gained_organ(mob/affected_mob, obj/item/organ/organ)
@@ -660,26 +658,24 @@
 	restore_eyesight(prev_affected_mob, eyes)
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.adjust_blindness(-2 * REM * delta_time * normalise_creation_purity())
-	affected_mob.adjust_eye_blur(-4 SECONDS * REM * delta_time * normalise_creation_purity())
+	var/normalized_purity = normalise_creation_purity()
+	affected_mob.adjust_temp_blindness(-4 SECONDS * REM * delta_time * normalized_purity)
+	affected_mob.adjust_eye_blur(-4 SECONDS * REM * delta_time * normalized_purity)
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.getorganslot(ORGAN_SLOT_EYES)
-	if (!eyes)
-		return ..()
-	var/fix_prob = 10
-	if(creation_purity >= 1)
-		fix_prob = 100
-	eyes.applyOrganDamage(-2 * REM * delta_time * normalise_creation_purity(), required_organtype = affected_organtype)
-	if(HAS_TRAIT_FROM(affected_mob, TRAIT_BLIND, EYE_DAMAGE))
-		if(DT_PROB(fix_prob, delta_time))
-			to_chat(affected_mob, span_warning("Your vision slowly returns..."))
-			affected_mob.cure_blind(EYE_DAMAGE)
-			affected_mob.cure_nearsighted(EYE_DAMAGE)
-			affected_mob.set_eye_blur_if_lower(70 SECONDS)
-	else if(HAS_TRAIT_FROM(affected_mob, TRAIT_NEARSIGHT, EYE_DAMAGE))
-		to_chat(affected_mob, span_warning("The blackness in your peripheral vision fades."))
-		affected_mob.cure_nearsighted(EYE_DAMAGE)
-		affected_mob.set_eye_blur_if_lower(20 SECONDS)
-	..()
+	if(eyes)
+		// Healing eye damage will cure nearsightedness and blindness from ... eye damage
+		eyes.applyOrganDamage(-2 * REM * delta_time * normalise_creation_purity(), required_organtype = affected_organtype)
+		// If our eyes are seriously damaged, we have a probability of causing eye blur while healing depending on purity
+		if(eyes.damaged && DT_PROB(16 - min(normalized_purity * 6, 12), delta_time))
+			// While healing, gives some eye blur
+			if(affected_mob.is_blind_from(EYE_DAMAGE))
+				to_chat(affected_mob, span_warning("Your vision slowly returns..."))
+				affected_mob.adjust_eye_blur(20 SECONDS)
+			else if(affected_mob.is_nearsighted_from(EYE_DAMAGE))
+				to_chat(affected_mob, span_warning("The blackness in your peripheral vision begins to fade."))
+				affected_mob.adjust_eye_blur(5 SECONDS)
+
+	return ..()
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/affected_mob)
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.getorganslot(ORGAN_SLOT_EYES)
@@ -747,9 +743,12 @@
 		affected_mob.adjustToxLoss(-2 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustBruteLoss(-2* REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustFireLoss(-2 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
-		affected_mob.adjustOxyLoss(-5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(-5 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		. = TRUE
-	affected_mob.losebreath = 0
+	var/obj/item/organ/internal/lungs/affected_lungs = affected_mob.getorganslot(ORGAN_SLOT_LUNGS)
+	var/our_respiration_type = affected_lungs ? affected_lungs.respiration_type : affected_mob.mob_respiration_type
+	if(our_respiration_type & affected_respiration_type)
+		affected_mob.losebreath = 0
 	if(DT_PROB(10, delta_time))
 		affected_mob.set_dizzy_if_lower(10 SECONDS)
 		affected_mob.set_jitter_if_lower(10 SECONDS)
@@ -793,9 +792,12 @@
 		affected_mob.adjustToxLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustBruteLoss(-0.5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustFireLoss(-0.5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
-		affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(affected_mob.losebreath >= 4)
-		affected_mob.losebreath -= 2 * REM * delta_time
+		var/obj/item/organ/internal/lungs/affected_lungs = affected_mob.getorganslot(ORGAN_SLOT_LUNGS)
+		var/our_respiration_type = affected_lungs ? affected_lungs.respiration_type : affected_mob.mob_respiration_type
+		if(our_respiration_type & affected_respiration_type)
+			affected_mob.losebreath -= 2 * REM * delta_time
 	if(affected_mob.losebreath < 0)
 		affected_mob.losebreath = 0
 	affected_mob.adjustStaminaLoss(-0.5 * REM * delta_time, 0)
@@ -807,7 +809,10 @@
 	if(DT_PROB(18, REM * delta_time))
 		affected_mob.adjustStaminaLoss(2.5, 0)
 		affected_mob.adjustToxLoss(1, FALSE, required_biotype = affected_biotype)
-		affected_mob.losebreath++
+		var/obj/item/organ/internal/lungs/affected_lungs = affected_mob.getorganslot(ORGAN_SLOT_LUNGS)
+		var/our_respiration_type = affected_lungs ? affected_lungs.respiration_type : affected_mob.mob_respiration_type
+		if(our_respiration_type & affected_respiration_type)
+			affected_mob.losebreath++
 		. = TRUE
 	..()
 
@@ -1065,7 +1070,7 @@
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(affected_mob.health < 50 && affected_mob.health > 0)
-		affected_mob.adjustOxyLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		affected_mob.adjustToxLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustBruteLoss(-1 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustFireLoss(-1 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
@@ -1119,6 +1124,8 @@
 	color = "#CC23FF"
 	taste_description = "jelly"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // no healing ghosts
+	affected_respiration_type = ALL
 
 /datum/reagent/medicine/regen_jelly/expose_mob(mob/living/exposed_mob, reac_volume)
 	. = ..()
@@ -1133,7 +1140,7 @@
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjustBruteLoss(-1.5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustFireLoss(-1.5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
-	affected_mob.adjustOxyLoss(-1.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(-1.5 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	affected_mob.adjustToxLoss(-1.5 * REM * delta_time, FALSE, TRUE, affected_biotype) //heals TOXINLOVERs
 	..()
 	. = TRUE
@@ -1178,7 +1185,7 @@
 	if(current_cycle <= 25) //10u has to be processed before u get into THE FUN ZONE
 		affected_mob.adjustBruteLoss(-1 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustFireLoss(-1 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
-		affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		affected_mob.adjustToxLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustCloneLoss(-0.1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustStaminaLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
@@ -1186,14 +1193,14 @@
 	else
 		affected_mob.adjustBruteLoss(-5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype) //slow to start, but very quick healing once it gets going
 		affected_mob.adjustFireLoss(-5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
-		affected_mob.adjustOxyLoss(-3 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(-3 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		affected_mob.adjustToxLoss(-3 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustCloneLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustStaminaLoss(-3 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjust_jitter_up_to(6 SECONDS * REM * delta_time, 1 MINUTES)
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * delta_time, 150, affected_organtype)
 		if(DT_PROB(5, delta_time))
-			affected_mob.say(pick("Yeah, well, you know, that's just, like, uh, your opinion, man.", "Am I glad he's frozen in there and that we're out here, and that he's the sheriff and that we're frozen out here, and that we're in there, and I just remembered, we're out here. What I wanna know is: Where's the caveman?", "It ain't me, it ain't me...", "Make love, not war!", "Stop, hey, what's that sound? Everybody look what's going down...", "Do you believe in magic in a young girl's heart?"), forced = /datum/reagent/medicine/earthsblood)
+			affected_mob.say(return_hippie_line(), forced = /datum/reagent/medicine/earthsblood)
 	affected_mob.adjust_drugginess_up_to(20 SECONDS * REM * delta_time, 30 SECONDS * REM * delta_time)
 	..()
 	. = TRUE
@@ -1217,6 +1224,19 @@
 		hippie.gain_trauma(/datum/brain_trauma/severe/pacifism)
 	..()
 	. = TRUE
+
+/// Returns a hippie-esque string for the person affected by the reagent to say.
+/datum/reagent/medicine/earthsblood/proc/return_hippie_line()
+	var/static/list/earthsblood_lines = list(
+		"Am I glad he's frozen in there and that we're out here, and that he's the sheriff and that we're frozen out here, and that we're in there, and I just remembered, we're out here. What I wanna know is: Where's the caveman?",
+		"Do you believe in magic in a young girl's heart?",
+		"It ain't me, it ain't me...",
+		"Make love, not war!",
+		"Stop, hey, what's that sound? Everybody look what's going down...",
+		"Yeah, well, you know, that's just, like, uh, your opinion, man.",
+	)
+
+	return pick(earthsblood_lines)
 
 /datum/reagent/medicine/haloperidol
 	name = "Haloperidol"
@@ -1389,7 +1409,7 @@
 			if(DT_PROB(30, delta_time))
 				affected_mob.losebreath++
 		if(41 to 80)
-			affected_mob.adjustOxyLoss(0.1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+			affected_mob.adjustOxyLoss(0.1 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 			affected_mob.adjustStaminaLoss(0.1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 			affected_mob.adjust_jitter_up_to(2 SECONDS * REM * delta_time, 40 SECONDS)
 			affected_mob.adjust_stutter_up_to(2 SECONDS * REM * delta_time, 40 SECONDS)
@@ -1402,12 +1422,12 @@
 				affected_mob.Paralyze(20) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
 			to_chat(affected_mob, span_userdanger("You feel too exhausted to continue!")) // at this point you will eventually die unless you get charcoal
-			affected_mob.adjustOxyLoss(0.1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+			affected_mob.adjustOxyLoss(0.1 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 			affected_mob.adjustStaminaLoss(0.1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		if(82 to INFINITY)
 			REMOVE_TRAIT(affected_mob, TRAIT_SLEEPIMMUNE, type)
 			affected_mob.Sleeping(100 * REM * delta_time)
-			affected_mob.adjustOxyLoss(1.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+			affected_mob.adjustOxyLoss(1.5 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 			affected_mob.adjustStaminaLoss(1.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
 	return TRUE
@@ -1593,12 +1613,12 @@
 
 	if(DT_PROB(7.5, delta_time))
 		affected_mob.losebreath += rand(2, 4)
-		affected_mob.adjustOxyLoss(rand(1, 3), required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(rand(1, 3), required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		if(prob(30))
 			to_chat(affected_mob, span_danger("You can feel your blood clotting up in your veins!"))
 		else if(prob(10))
 			to_chat(affected_mob, span_userdanger("You feel like your blood has stopped moving!"))
-			affected_mob.adjustOxyLoss(rand(3, 4), required_biotype = affected_biotype)
+			affected_mob.adjustOxyLoss(rand(3, 4), required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 
 		if(prob(50))
 			var/obj/item/organ/internal/lungs/our_lungs = affected_mob.getorganslot(ORGAN_SLOT_LUNGS)

@@ -87,6 +87,7 @@
 #define CLICK_CD_THROW 8
 #define CLICK_CD_RANGE 4
 #define CLICK_CD_RAPID 2
+#define CLICK_CD_HYPER_RAPID 1
 #define CLICK_CD_CLICK_ABILITY 6
 #define CLICK_CD_BREAKOUT 100
 #define CLICK_CD_HANDCUFFED 10
@@ -196,7 +197,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 ///  Example: c20, shotguns, m90
 #define BOLT_TYPE_STANDARD 1
 ///Gun has a bolt, it is open when ready to fire. The gun can never have a chambered bullet with no magazine, but the bolt stays ready when a mag is removed.
-///  Example: Some SMGs, the L6
+///  Example: Tomson, Uzi, the L6 SAW
 #define BOLT_TYPE_OPEN 2
 ///Gun has no moving bolt mechanism, it cannot be racked. Also dumps the entire contents when emptied instead of a magazine.
 ///  Example: Break action shotguns, revolvers

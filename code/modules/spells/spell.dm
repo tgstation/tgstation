@@ -48,7 +48,7 @@
 	button_icon_state = "spell_default"
 	overlay_icon_state = "bg_spell_border"
 	active_overlay_icon_state = "bg_spell_border_active_red"
-	check_flags = AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	panel = "Spells"
 	melee_cooldown_time = 0 SECONDS
 
@@ -98,7 +98,7 @@
 		return
 
 	// Register some signals so our button's icon stays up to date
-	if(spell_requirements & SPELL_REQUIRES_OFF_CENTCOM)
+	if(spell_requirements & SPELL_REQUIRES_STATION)
 		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(update_status_on_signal))
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
 		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(update_status_on_signal))
@@ -137,6 +137,8 @@
 
 // Where the cast chain starts
 /datum/action/cooldown/spell/PreActivate(atom/target)
+	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
+		return FALSE
 	if(!is_valid_target(target))
 		return FALSE
 
@@ -150,7 +152,8 @@
 
 	// Certain spells are not allowed on the centcom zlevel
 	var/turf/caster_turf = get_turf(owner)
-	if((spell_requirements & SPELL_REQUIRES_OFF_CENTCOM) && is_centcom_level(caster_turf.z))
+	// Spells which require being on the station
+	if((spell_requirements & SPELL_REQUIRES_STATION) && !is_station_level(caster_turf.z))
 		if(feedback)
 			to_chat(owner, span_warning("You can't cast [src] here!"))
 		return FALSE
@@ -159,7 +162,7 @@
 		// No point in feedback here, as mindless mobs aren't players
 		return FALSE
 
-	if((spell_requirements & SPELL_REQUIRES_MIME_VOW) && !owner.mind?.miming)
+	if((spell_requirements & SPELL_REQUIRES_MIME_VOW) && !HAS_TRAIT(owner, TRAIT_MIMING))
 		// In the future this can be moved out of spell checks exactly
 		if(feedback)
 			to_chat(owner, span_warning("You must dedicate yourself to silence first!"))
@@ -298,21 +301,20 @@
  */
 /datum/action/cooldown/spell/proc/after_cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
-
-	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
-	if(!owner)
+	if(!owner) // Could have been destroyed by the effect of the spell
+		SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
 		return
 
-	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
-
-	// Sparks and smoke can only occur if there's an owner to source them from.
 	if(sparks_amt)
 		do_sparks(sparks_amt, FALSE, get_turf(owner))
-
 	if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
 		var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
 		smoke.set_up(smoke_amt, holder = owner, location = get_turf(owner))
 		smoke.start()
+
+	// Send signals last in case they delete the spell
+	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
+	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
 
 /// Provides feedback after a spell cast occurs, in the form of a cast sound and/or invocation
 /datum/action/cooldown/spell/proc/spell_feedback()

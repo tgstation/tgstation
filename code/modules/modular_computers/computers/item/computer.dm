@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/list/datum/computer_file/starting_programs = list()
 	///Static list of default programs that come with ALL computers, here so computers don't have to repeat this.
 	var/static/list/datum/computer_file/default_programs = list(
-		/datum/computer_file/program/computerconfig,
+		/datum/computer_file/program/themeify,
 		/datum/computer_file/program/ntnetdownload,
 		/datum/computer_file/program/filemanager,
 	)
@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 //	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_TABLET
 
 	///The theme, used for the main menu and file browser apps.
-	var/device_theme = "ntos"
+	var/device_theme = PDA_THEME_NTOS
 
 	///Bool on whether the computer is currently active or not.
 	var/enabled = FALSE
@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	. = ..()
 	if(issilicon(user))
 		return FALSE
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.can_perform_action(src))
 		return FALSE
 
 	if(RemoveID(user))
@@ -300,7 +300,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
-	if((!istype(over_object, /atom/movable/screen)) && usr.canUseTopic(src, be_close = TRUE))
+	if((!istype(over_object, /atom/movable/screen)) && usr.can_perform_action(src))
 		return attack_self(M)
 	return ..()
 
@@ -318,22 +318,19 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		if(response == "Yes")
 			turn_on(user)
 
-/obj/item/modular_computer/emag_act(mob/user)
-	if(!enabled)
+/obj/item/modular_computer/emag_act(mob/user, forced)
+	if(!enabled && !forced)
 		to_chat(user, span_warning("You'd need to turn the [src] on first."))
 		return FALSE
-	obj_flags |= EMAGGED //Mostly for consistancy purposes; the programs will do their own emag handling
-	var/newemag = FALSE
-	for(var/datum/computer_file/program/app in stored_files)
-		if(!istype(app))
-			continue
-		if(app.run_emag())
-			newemag = TRUE
-	if(newemag)
-		to_chat(user, span_notice("You swipe \the [src]. A console window momentarily fills the screen, with white text rapidly scrolling past."))
-		return TRUE
-	to_chat(user, span_notice("You swipe \the [src]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it."))
-	return FALSE
+	if(obj_flags & EMAGGED)
+		to_chat(user, span_notice("You swipe \the [src]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it."))
+		return FALSE
+
+	. = ..()
+	obj_flags |= EMAGGED
+	device_theme = PDA_THEME_SYNDICATE
+	to_chat(user, span_notice("You swipe \the [src]. A console window momentarily fills the screen, with white text rapidly scrolling past."))
+	return TRUE
 
 /obj/item/modular_computer/examine(mob/user)
 	. = ..()
@@ -383,7 +380,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	if(inserted_disk)
-		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove SSD"
+		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Disk"
 		. = CONTEXTUAL_SCREENTIP_SET
 	return . || NONE
 
@@ -422,13 +419,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		inserted_disk = null
 		update_appearance(UPDATE_ICON)
 	return ..()
-
-// On-click handling. Turns on the computer if it's off and opens the GUI.
-/obj/item/modular_computer/interact(mob/user)
-	if(enabled)
-		ui_interact(user)
-	else
-		turn_on(user)
 
 /obj/item/modular_computer/CtrlShiftClick(mob/user)
 	. = ..()
@@ -608,7 +598,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		program.alert_pending = FALSE
 		idle_threads.Remove(program)
 		update_appearance()
-		updateUsrDialog()
 		return TRUE
 
 	if(!program.is_supported_by_hardware(hardware_flag, 1, user))
@@ -628,7 +617,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	active_program = program
 	program.alert_pending = FALSE
 	update_appearance()
-	updateUsrDialog()
+	ui_interact(user)
 	return TRUE
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
@@ -662,8 +651,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)
-	for(var/datum/computer_file/program/P in idle_threads)
-		P.kill_program(forced = TRUE)
+	for(var/datum/computer_file/program/idle_program in idle_threads)
+		idle_program.kill_program(forced = TRUE)
 	if(looping_sound)
 		soundloop.stop()
 	if(physical && loud)
@@ -780,6 +769,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	// Insert a data disk
 	if(istype(attacking_item, /obj/item/computer_disk))
+		if(inserted_disk)
+			user.put_in_hands(inserted_disk)
+			balloon_alert(user, "disks swapped")
 		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		inserted_disk = attacking_item

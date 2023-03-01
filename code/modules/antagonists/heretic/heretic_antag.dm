@@ -167,12 +167,6 @@
 
 	return finish_preview_icon(icon)
 
-/datum/antagonist/heretic/greet()
-	. = ..()
-	var/policy = get_policy(ROLE_HERETIC)
-	if(policy)
-		to_chat(owner, policy)
-
 /datum/antagonist/heretic/farewell()
 	if(!silent)
 		to_chat(owner.current, span_userdanger("Your mind begins to flare as the otherwordly knowledge escapes your grasp!"))
@@ -765,8 +759,3 @@
 
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	r_hand = /obj/item/melee/touch_attack/mansus_fist
-
-/datum/outfit/heretic/post_equip(mob/living/carbon/human/equipper, visualsOnly)
-	var/obj/item/clothing/suit/hooded/hooded = locate() in equipper
-	hooded.MakeHood() // This is usually created on Initialize, but we run before atoms
-	hooded.ToggleHood()

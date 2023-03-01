@@ -1,11 +1,11 @@
 // Remove these once we have Byond implementation.
 // ------------------------------------
-#define IS_NAN(a) (a!=a)
+#define IS_NAN(a) (a != a)
 
-#define IS_INF__UNSAFE(a) (a==a && a-a!=a-a)
+#define IS_INF__UNSAFE(a) (a == a && a-a != a-a)
 #define IS_INF(a) (isnum(a) && IS_INF__UNSAFE(a))
 
-#define IS_FINITE__UNSAFE(a) (a-a==a-a)
+#define IS_FINITE__UNSAFE(a) (a-a == a-a)
 #define IS_FINITE(a) (isnum(a) && IS_FINITE__UNSAFE(a))
 // ------------------------------------
 // Aight dont remove the rest
@@ -16,7 +16,6 @@
 
 #define NUM_E 2.71828183
 
-#define SQRT_2 1.414214 //CLOSE ENOUGH!
 
 #define PI 3.1416
 #define INFINITY 1e31 //closer then enough
@@ -100,6 +99,12 @@
 // amount=0.5 returns the mean of a and b.
 #define LERP(a, b, amount) ( amount ? ((a) + ((b) - (a)) * (amount)) : a )
 
+/**
+ * Performs an inverse linear interpolation between a, b, and a provided value between a and b
+ * This returns the amount that you would need to feed into a lerp between A and B to return the third value
+ */
+#define INVERSE_LERP(a, b, value) ((value - a) / (b - a))
+
 // Returns the nth root of x.
 #define ROOT(n, x) ((x) ** (1 / (n)))
 
@@ -169,7 +174,7 @@
 			R1 = rand(-ACCURACY,ACCURACY)/ACCURACY
 			R2 = rand(-ACCURACY,ACCURACY)/ACCURACY
 			working = R1*R1 + R2*R2
-		while(working >= 1 || working==0)
+		while(working >= 1 || working == 0)
 		working = sqrt(-2 * log(working) / working)
 		R1 *= working
 		gaussian_next = R2 * working

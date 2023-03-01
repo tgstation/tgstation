@@ -17,7 +17,6 @@
 	var/download_completion = FALSE //GQ of downloaded data.
 	var/download_netspeed = 0
 	var/downloaderror = ""
-	var/emagged = FALSE
 	var/list/main_repo
 	var/list/antag_repo
 
@@ -34,13 +33,6 @@
 	main_repo = SSmodular_computers.available_station_software
 	antag_repo = SSmodular_computers.available_antag_software
 
-/datum/computer_file/program/ntnetdownload/run_emag()
-	if(emagged)
-		return FALSE
-	emagged = TRUE
-	return TRUE
-
-
 /datum/computer_file/program/ntnetdownload/proc/begin_file_download(filename)
 	if(downloaded_file)
 		return FALSE
@@ -51,7 +43,7 @@
 		return FALSE
 
 	// Attempting to download antag only program, but without having emagged/syndicate computer. No.
-	if(PRG.available_on_syndinet && !emagged)
+	if(PRG.available_on_syndinet && !(computer.obj_flags & EMAGGED))
 		return FALSE
 
 	if(!computer || !computer.can_store_file(PRG))
@@ -126,7 +118,7 @@
 	return FALSE
 
 /datum/computer_file/program/ntnetdownload/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	var/list/access = computer.GetAccess()
 
 	data["downloading"] = !!downloaded_file
@@ -142,7 +134,7 @@
 
 	data["disk_size"] = computer.max_capacity
 	data["disk_used"] = computer.used_capacity
-	data["emagged"] = emagged
+	data["emagged"] = (computer.obj_flags & EMAGGED)
 
 	var/list/repo = antag_repo | main_repo
 	var/list/program_categories = list()
@@ -159,7 +151,7 @@
 			"installed" = !!computer.find_file_by_name(programs.filename),
 			"compatible" = check_compatibility(programs),
 			"size" = programs.size,
-			"access" = emagged && programs.available_on_syndinet ? TRUE : programs.can_run(user,transfer = TRUE, access = access),
+			"access" = (computer.obj_flags & EMAGGED) && programs.available_on_syndinet ? TRUE : programs.can_run(user,transfer = TRUE, access = access),
 			"verifiedsource" = programs.available_on_ntnet,
 		))
 
@@ -177,24 +169,3 @@
 /datum/computer_file/program/ntnetdownload/kill_program(forced)
 	abort_file_download()
 	return ..()
-
-////////////////////////
-//Syndicate Downloader//
-////////////////////////
-
-/// This app only lists programs normally found in the emagged section of the normal downloader app
-
-/datum/computer_file/program/ntnetdownload/syndicate
-	filename = "syndownloader"
-	filedesc = "Software Download Tool"
-	program_icon_state = "generic"
-	extended_desc = "This program allows downloads of software from shared Syndicate repositories"
-	requires_ntnet = FALSE
-	ui_header = "downloader_finished.gif"
-	tgui_id = "NtosNetDownloader"
-	emagged = TRUE
-
-/datum/computer_file/program/ntnetdownload/syndicate/on_start()
-	. = ..()
-	main_repo = SSmodular_computers.available_antag_software
-	antag_repo = null

@@ -13,16 +13,31 @@
 	var/static/file_uid = 0
 	///The modular computer hosting the file.
 	var/obj/item/modular_computer/computer
+	///The computer disk hosting the file.
+	var/obj/item/computer_disk/disk_host
 
 /datum/computer_file/New()
 	..()
 	uid = file_uid++
+	RegisterSignal(src, COMSIG_MODULAR_COMPUTER_FILE_ADDED, PROC_REF(on_install))
 
 /datum/computer_file/Destroy(force)
 	if(computer)
 		computer.remove_file(src)
 		computer = null
+	if(disk_host)
+		disk_host.remove_file(src)
+		disk_host = null
 	return ..()
+
+/**
+ * Used for special cases where an application
+ * Requires special circumstances to install on a PC
+ * Args:
+ * * potential_host - the ModPC that is attempting to store this file.
+ */
+/datum/computer_file/proc/can_store_file(obj/item/modular_computer/potential_host)
+	return TRUE
 
 // Returns independent copy of this file.
 /datum/computer_file/proc/clone(rename = FALSE)
@@ -35,6 +50,11 @@
 		temp.filename = filename
 	temp.filetype = filetype
 	return temp
+
+///Called post-installation of an application in a computer, after 'computer' var is set.
+/datum/computer_file/proc/on_install()
+	SIGNAL_HANDLER
+	return
 
 /**
  * Called when examining a modular computer
@@ -61,3 +81,23 @@
  */
 /datum/computer_file/proc/try_eject(mob/living/user, forced = FALSE)
 	return FALSE
+
+/**
+ * Called when a computer program is shut down from the tablet's charge dying
+ * Arguments:
+ * * background - Whether the app is running in the background.
+ */
+/datum/computer_file/program/proc/event_powerfailure(background)
+	kill_program(forced = TRUE)
+
+/**
+ * Called when a computer program is crashing due to any required connection being shut off.
+ * Arguments:
+ * * background - Whether the app is running in the background.
+ */
+/datum/computer_file/program/proc/event_networkfailure(background)
+	kill_program(forced = TRUE)
+	if(background)
+		computer.visible_message(span_danger("\The [computer]'s screen displays a \"Process [filename].[filetype] (PID [rand(100,999)]) terminated - Network Error\" error"))
+	else
+		computer.visible_message(span_danger("\The [computer]'s screen briefly freezes and then shows \"NETWORK ERROR - NTNet connection lost. Please retry. If problem persists contact your system administrator.\" error."))

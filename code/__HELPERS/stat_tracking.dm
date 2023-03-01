@@ -36,6 +36,6 @@
 
 	output += "key, cost, count"
 	for (var/key in costs)
-		output += "[replacetext(key, ",", "")], [replacetext(costs[key], ",", "")], [replacetext(counts[key], ",", "")]"
+		output += "[replacetext(key, ",", "")], [costs[key]], [counts[key]]"
 
 	rustg_file_write(output.Join("\n"), "[GLOB.log_directory]/[filename]")

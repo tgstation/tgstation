@@ -8,6 +8,7 @@
 
 # Cyberboss
 
+/.tgs.yml @Cyberboss
 /code/__HELPERS/jatum.dm @Cyberboss
 /code/controllers/subsystem/atoms.dm @Cyberboss
 /code/controllers/subsystem/mapping.dm @Cyberboss
@@ -19,6 +20,8 @@
 /code/modules/admin/verbs/adminhelp.dm @Cyberboss
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
+/tools/tgs_scripts/ @Cyberboss
+/tools/tgs_test/ @Cyberboss
 
 # Dragomagol/Tattle
 
@@ -172,12 +175,15 @@
 
 # ZephyrTFA
 
+/code/__HELPERS/admin_verb.dm @ZephyrTFA
+/code/controllers/subsystem/admin_verbs.dm @ZephyrTFA
 /code/datums/json_savefile.dm @ZephyrTFA
 /code/datums/armor/ @ZephyrTFA
+/code/modules/admin/verbs/ @ZephyrTFA
 
 # MULTIPLE OWNERS
 
-/_maps/ @EOBGames @Maurukas @san7890 @ShizCalev
+/_maps/ @EOBGames @Maurukas @MMMiracles @san7890 @ShizCalev
 /icons/ @Imaginos16 @Krysonism @Twaticus
 /icons/ass/ @Ghilker @tralezab
 

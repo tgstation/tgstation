@@ -76,7 +76,12 @@
 /obj/effect/baseturf_helper/reinforced_plating
 	name = "reinforced plating baseturf editor"
 	baseturf = /turf/open/floor/plating/reinforced
-	baseturf_to_replace = list(/turf/open/floor/plating,/turf/open/space,/turf/baseturf_bottom)
+	baseturf_to_replace = list(/turf/open/floor/plating)
+
+/obj/effect/baseturf_helper/reinforced_plating/replace_baseturf(turf/thing)
+	if(istype(thing, /turf/open/floor/plating))
+		return //Plates should not be placed under other plates
+	thing.stack_ontop_of_baseturf(/turf/open/floor/plating, baseturf)
 
 //This applies the reinforced plating to the above Z level for every tile in the area where this is placed
 /obj/effect/baseturf_helper/reinforced_plating/ceiling
@@ -134,10 +139,12 @@
 				var/turf/here = get_turf(src)
 				for(var/turf/closed/T in range(2, src))
 					here.PlaceOnTop(T.type)
+					qdel(airlock)
 					qdel(src)
 					return
 				here.PlaceOnTop(/turf/closed/wall)
 				qdel(airlock)
+				qdel(src)
 				return
 			if(9 to 11)
 				airlock.lights = FALSE
@@ -365,6 +372,45 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/atom_injector/trait_injector/generate_stack_trace()
 	. = ..()
 	. += " | trait name: [trait_name]"
+
+///This helper applies dynamic human icons to things on the map
+/obj/effect/mapping_helpers/atom_injector/human_icon_injector
+	name = "Human Icon Injector"
+	icon_state = "icon"
+	/// Path of the outfit we give the human.
+	var/outfit_path
+	/// Path of the species we give the human.
+	var/species_path = /datum/species/human
+	/// Path of the mob spawner we base the human off of.
+	var/mob_spawn_path
+	/// Path of the right hand item we give the human.
+	var/r_hand = NO_REPLACE
+	/// Path of the left hand item we give the human.
+	var/l_hand = NO_REPLACE
+	/// Which slots on the mob should be bloody?
+	var/bloody_slots = NONE
+	/// Do we draw more than one frame for the mob?
+	var/animated = TRUE
+
+/obj/effect/mapping_helpers/atom_injector/human_icon_injector/check_validity()
+	if(!ispath(species_path, /datum/species))
+		CRASH("Wrong species path in [type] - [species_path] is not a species")
+	if(outfit_path && !ispath(outfit_path, /datum/outfit))
+		CRASH("Wrong outfit path in [type] - [species_path] is not an outfit")
+	if(mob_spawn_path && !ispath(mob_spawn_path, /obj/effect/mob_spawn))
+		CRASH("Wrong mob spawn path in [type] - [mob_spawn_path] is not a mob spawner")
+	if(l_hand && !ispath(l_hand, /obj/item))
+		CRASH("Wrong left hand item path in [type] - [l_hand] is not an item")
+	if(r_hand && !ispath(r_hand, /obj/item))
+		CRASH("Wrong left hand item path in [type] - [r_hand] is not an item")
+	return TRUE
+
+/obj/effect/mapping_helpers/atom_injector/human_icon_injector/inject(atom/target)
+	apply_dynamic_human_appearance(target, outfit_path, species_path, mob_spawn_path, r_hand, l_hand, bloody_slots, animated)
+
+/obj/effect/mapping_helpers/atom_injector/human_icon_injector/generate_stack_trace()
+	. = ..()
+	. += " | outfit path: [outfit_path] | species path: [species_path] | mob spawner path: [mob_spawn_path] | right/left hand path: [r_hand]/[l_hand]"
 
 ///Fetches an external dmi and applies to the target object
 /obj/effect/mapping_helpers/atom_injector/custom_icon

@@ -45,7 +45,7 @@
 			return
 	if(istype(O, /obj/item/lightreplacer))
 		var/obj/item/lightreplacer/L = O
-		if(state == FLOODLIGHT_NEEDS_LIGHTS && L.CanUse(user))
+		if(state == FLOODLIGHT_NEEDS_LIGHTS && L.can_use(user))
 			L.Use(user)
 			to_chat(user, span_notice("You put lights in [src]."))
 			new /obj/machinery/power/floodlight(loc)

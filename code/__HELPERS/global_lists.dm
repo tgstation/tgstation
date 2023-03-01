@@ -179,6 +179,10 @@
 			for(var/atom/req_atom as anything in recipe.machinery)
 				if(!(req_atom in atom_lists[list_index]))
 					atom_lists[list_index] += req_atom
+			// Structures
+			for(var/atom/req_atom as anything in recipe.structures)
+				if(!(req_atom in atom_lists[list_index]))
+					atom_lists[list_index] += req_atom
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
@@ -215,7 +219,6 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/item/storage/secure/safe,
 	/obj/machinery/airalarm,
 	/obj/machinery/bluespace_vendor,
-	/obj/machinery/newscaster,
 	/obj/machinery/button,
 	/obj/machinery/computer/security/telescreen,
 	/obj/machinery/computer/security/telescreen/entertainment,
@@ -230,6 +233,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/machinery/status_display,
 	/obj/machinery/ticket_machine,
 	/obj/machinery/turretid,
+	/obj/machinery/barsign,
 	/obj/structure/extinguisher_cabinet,
 	/obj/structure/fireaxecabinet,
 	/obj/structure/mirror,
@@ -237,10 +241,11 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/structure/reagent_dispensers/wall,
 	/obj/structure/sign,
 	/obj/structure/sign/picture_frame,
-	/obj/structure/sign/poster/random,
 	/obj/structure/sign/poster/contraband/random,
 	/obj/structure/sign/poster/official/random,
-	)))
+	/obj/structure/sign/poster/random,
+	/obj/structure/urinal,
+)))
 
 // Wall mounted machinery which are visually coming out of the wall.
 // These do not conflict with machinery which are visually placed on the wall.
@@ -248,5 +253,5 @@ GLOBAL_LIST_INIT(WALLITEMS_EXTERIOR, typecacheof(list(
 	/obj/machinery/camera,
 	/obj/machinery/light,
 	/obj/structure/camera_assembly,
-	/obj/structure/light_construct
-	)))
+	/obj/structure/light_construct,
+)))

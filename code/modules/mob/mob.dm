@@ -24,7 +24,12 @@
  *
  * Parent call
  */
-/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
+/mob/Destroy()
+	if(client)
+		stack_trace("Mob with client has been deleted.")
+	else if(ckey)
+		stack_trace("Mob without client but with associated ckey has been deleted.")
+
 	remove_from_mob_list()
 	remove_from_dead_mob_list()
 	remove_from_alive_mob_list()
@@ -206,7 +211,7 @@
 	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
-		if(type & MSG_VISUAL && is_blind() )//Vision related
+		if(type & MSG_VISUAL && is_blind())//Vision related
 			if(!alt_msg)
 				return
 			else
@@ -277,7 +282,7 @@
 			if(M != loc) // Only give the blind message to hearers that aren't the location
 				msg = blind_message
 				msg_type = MSG_AUDIBLE
-		else if(!HAS_TRAIT(M, TRAIT_HEAR_THROUGH_DARKNESS) && M.lighting_alpha > LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE && T.is_softly_lit() && !in_range(T,M)) //if it is too dark, unless we're right next to them.
+		else if(!HAS_TRAIT(M, TRAIT_HEAR_THROUGH_DARKNESS) && M.lighting_cutoff < LIGHTING_CUTOFF_HIGH && T.is_softly_lit() && !in_range(T,M)) //if it is too dark, unless we're right next to them.
 			msg = blind_message
 			msg_type = MSG_AUDIBLE
 		if(!msg)
@@ -532,7 +537,13 @@
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
-	if(is_blind() && !blind_examine_check(examinify)) //blind people see things differently (through touch)
+	var/turf/examine_turf = get_turf(examinify)
+	if(is_blind()) //blind people see things differently (through touch)
+		if(!blind_examine_check(examinify))
+			return
+	else if(!examine_turf.luminosity && \
+		get_dist(src, examine_turf) > 1 && \
+		!has_nightvision()) // If you aren't blind, it's in darkness (that you can't see) and farther then next to you
 		return
 
 	face_atom(examinify)
@@ -678,7 +689,7 @@
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
 	var/D = dir
-	if((spintime < 1)||(speed < 1)||!spintime||!speed)
+	if((spintime < 1) || (speed < 1) || !spintime || !speed)
 		return
 
 	flags_1 |= IS_SPINNING_1
@@ -990,16 +1001,24 @@
 	return ISINRANGE(their_turf.x, our_turf.x - interaction_range, our_turf.x + interaction_range) && ISINRANGE(their_turf.y, our_turf.y - interaction_range, our_turf.y + interaction_range)
 
 /**
- * Whether the mob can use Topic to interact with machines
+ * Checks whether a mob can perform an action to interact with an object
  *
- * Args:
- * be_close - Whether you need to be next to/on top of M
- * no_dexterity - Whether you need to be an ADVANCEDTOOLUSER
- * no_tk - If be_close is TRUE, this will block Telekinesis from bypassing the requirement
- * need_hands - Whether you need hands to use this
- * floor_okay - Whether mobility flags should be checked for MOBILITY_UI to use.
- */
-/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
+ * The default behavior checks if the mob is:
+ * * Directly adjacent (1-tile radius)
+ * * Standing up (not resting)
+ * * Allows telekinesis to be used to skip adjacent checks (if they have DNA mutation)
+ * *
+ * action_bitflags: (see code/__DEFINES/mobs.dm)
+ * * NEED_GRAVITY - If gravity must be present to perform action (can't use pens without gravity)
+ * * NEED_LITERACY - If reading is required to perform action (can't read a book if you are illiterate)
+ * * NEED_LIGHT - If lighting must be present to perform action (can't heal someone in the dark)
+ * * NEED_DEXTERITY - If other mobs (monkeys, aliens, etc) can perform action (can't use computers if you are a monkey)
+ * * NEED_HANDS - If hands are required to perform action (can't pickup items if you are a cyborg)
+ * * FORBID_TELEKINESIS_REACH - If telekinesis is forbidden to perform action from a distance (ex. canisters are blacklisted from telekinesis manipulation)
+ * * ALLOW_SILICON_REACH - If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
+ * * ALLOW_RESTING - If resting on the floor is allowed to perform action ()
+**/
+/mob/proc/can_perform_action(atom/movable/target, action_bitflags)
 	return
 
 ///Can this mob use storage
@@ -1041,7 +1060,7 @@
 /**
  * Fully update the name of a mob
  *
- * This will update a mob's name, real_name, mind.name, GLOB.data_core records, pda, id and traitor text
+ * This will update a mob's name, real_name, mind.name, GLOB.manifest records, pda, id and traitor text
  *
  * Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
  */
@@ -1084,7 +1103,7 @@
 
 	return TRUE
 
-///Updates GLOB.data_core records with new name , see mob/living/carbon/human
+///Updates GLOB.manifest records with new name , see mob/living/carbon/human
 /mob/proc/replace_records_name(oldname,newname)
 	return
 
@@ -1130,14 +1149,14 @@
 /mob/proc/update_sight()
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_SIGHT)
-	sync_lighting_plane_alpha()
+	sync_lighting_plane_cutoff()
 
-///Set the lighting plane hud alpha to the mobs lighting_alpha var
-/mob/proc/sync_lighting_plane_alpha()
+///Set the lighting plane hud filters to the mobs lighting_cutoff var
+/mob/proc/sync_lighting_plane_cutoff()
 	if(!hud_used)
 		return
-	for(var/atom/movable/screen/plane_master/light_plane as anything in hud_used.get_true_plane_masters(RENDER_PLANE_LIGHTING))
-		light_plane.set_alpha(lighting_alpha)
+	for(var/atom/movable/screen/plane_master/rendering_plate/lighting/light as anything in hud_used.get_true_plane_masters(RENDER_PLANE_LIGHTING))
+		light.set_light_cutoff(lighting_cutoff, lighting_color_cutoffs)
 
 ///Update the mouse pointer of the attached client in this mob
 /mob/proc/update_mouse_pointer()
@@ -1158,14 +1177,14 @@
  * Can this mob see in the dark
  *
  * This checks all traits, glasses, and robotic eyeball implants to see if the mob can see in the dark
- * this does NOT check if the mob is missing it's eyeballs. Also see_in_dark is a BYOND mob var (that defaults to 2)
+ * this does NOT check if the mob is missing it's eyeballs.
 **/
 /mob/proc/has_nightvision()
-	return see_in_dark >= NIGHTVISION_FOV_RANGE
-
-/// Is this mob affected by nearsight
-/mob/proc/is_nearsighted()
-	return HAS_TRAIT(src, TRAIT_NEARSIGHT)
+	// Somewhat conservative, basically is your lighting plane bright enough that you the user can see stuff
+	var/light_offset = lighting_cutoff
+	if(length(lighting_color_cutoffs) == 3)
+		light_offset += (lighting_color_cutoffs[1] + lighting_color_cutoffs[2] + lighting_color_cutoffs[3]) / 3
+	return light_offset >= LIGHTING_NIGHTVISION_THRESHOLD
 
 /// This mob is abile to read books
 /mob/proc/is_literate()
@@ -1371,9 +1390,6 @@
 			. = TRUE
 		if(NAMEOF(src, stat))
 			set_stat(var_value)
-			. = TRUE
-		if(NAMEOF(src, eye_blind))
-			set_blindness(var_value)
 			. = TRUE
 
 	if(!isnull(.))

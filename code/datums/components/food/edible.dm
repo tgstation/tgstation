@@ -214,7 +214,8 @@ Behavior that's still missing from this component that original food items had t
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
 		examine_list += span_notice("It is [lowertext(english_list(types))].")
 
-	if(HAS_TRAIT_FROM(parent, TRAIT_FOOD_CHEF_MADE, REF(user)))
+	var/datum/mind/mind = user.mind
+	if(mind && HAS_TRAIT_FROM(parent, TRAIT_FOOD_CHEF_MADE, REF(mind)))
 		examine_list += span_green("[parent] was made by you!")
 
 	if(!(food_flags & FOOD_IN_CONTAINER))
@@ -236,6 +237,8 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/TryToEatIt(datum/source, mob/user)
 	SIGNAL_HANDLER
 
+	if (!in_range(source, user))
+		return
 	return TryToEat(user, user)
 
 ///Called when food is created through processing (Usually this means it was sliced). We use this to pass the OG items reagents.
@@ -280,7 +283,7 @@ Behavior that's still missing from this component that original food items had t
 
 ///Makes sure the thing hasn't been destroyed or fully eaten to prevent eating phantom edibles
 /datum/component/edible/proc/IsFoodGone(atom/owner, mob/living/feeder)
-	if(QDELETED(owner)|| !(IS_EDIBLE(owner)))
+	if(QDELETED(owner) || !(IS_EDIBLE(owner)))
 		return TRUE
 	if(owner.reagents.total_volume)
 		return FALSE
@@ -320,7 +323,7 @@ Behavior that's still missing from this component that original food items had t
 			time_to_eat *= (fullness / NUTRITION_LEVEL_FAT) * EAT_TIME_VORACIOUS_FULL_MULT // takes longer to eat the more well fed you are
 
 	if(eater == feeder)//If you're eating it yourself.
-		if(eat_time && !do_mob(feeder, eater, time_to_eat, timed_action_flags = food_flags & FOOD_FINGER_FOOD ? IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE : NONE)) //Gotta pass the minimal eat time
+		if(eat_time && !do_after(feeder, time_to_eat, eater, timed_action_flags = food_flags & FOOD_FINGER_FOOD ? IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE : NONE)) //Gotta pass the minimal eat time
 			return
 		if(IsFoodGone(owner, feeder))
 			return
@@ -386,7 +389,7 @@ Behavior that's still missing from this component that original food items had t
 			if(eater.is_blind())
 				to_chat(eater, span_userdanger("You're too full to eat what's being fed to you!"))
 			return
-		if(!do_mob(feeder, eater, time = time_to_eat)) //Wait 3-ish seconds before you can feed
+		if(!do_after(feeder, delay = time_to_eat, target = eater)) //Wait 3-ish seconds before you can feed
 			return
 		if(IsFoodGone(owner, feeder))
 			return
@@ -451,9 +454,9 @@ Behavior that's still missing from this component that original food items had t
 		return FALSE
 	var/mob/living/carbon/C = eater
 	var/covered = ""
-	if(C.is_mouth_covered(head_only = 1))
+	if(C.is_mouth_covered(ITEM_SLOT_HEAD))
 		covered = "headgear"
-	else if(C.is_mouth_covered(mask_only = 1))
+	else if(C.is_mouth_covered(ITEM_SLOT_MASK))
 		covered = "mask"
 	if(covered)
 		var/who = (isnull(feeder) || eater == feeder) ? "your" : "[eater.p_their()]"

@@ -61,7 +61,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, no_tk = TRUE))
+	if(!can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
 		return
 	eject_beaker()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -308,22 +308,21 @@
 		traits["index"] = index++
 		traits["name"] = disease.name
 		traits["spread"] = disease.spread_text || "none"
-		if(!istype(disease, /datum/disease/advance)) // Advanced diseases get more info
-			continue
-		var/datum/disease/advance/adv_disease = disease
-		var/disease_name = SSdisease.get_disease_name(adv_disease.GetDiseaseID())
-		traits["can_rename"] = ((disease_name == "Unknown") && adv_disease.mutable)
-		traits["is_adv"] = TRUE
-		traits["name"] = disease_name
-		traits["resistance"] = adv_disease.totalResistance()
-		traits["stage_speed"] = adv_disease.totalStageSpeed()
-		traits["stealth"] = adv_disease.totalStealth()
-		traits["symptoms"] = list()
-		for(var/datum/symptom/symptom as anything in adv_disease.symptoms)
-			var/list/this_symptom = list()
-			this_symptom = symptom.get_symptom_data()
-			traits["symptoms"] += list(this_symptom)
-		traits["transmission"] = adv_disease.totalTransmittable()
+		if(istype(disease, /datum/disease/advance)) // Advanced diseases get more info
+			var/datum/disease/advance/adv_disease = disease
+			var/disease_name = SSdisease.get_disease_name(adv_disease.GetDiseaseID())
+			traits["can_rename"] = ((disease_name == "Unknown") && adv_disease.mutable)
+			traits["is_adv"] = TRUE
+			traits["name"] = disease_name
+			traits["resistance"] = adv_disease.totalResistance()
+			traits["stage_speed"] = adv_disease.totalStageSpeed()
+			traits["stealth"] = adv_disease.totalStealth()
+			traits["symptoms"] = list()
+			for(var/datum/symptom/symptom as anything in adv_disease.symptoms)
+				var/list/this_symptom = list()
+				this_symptom = symptom.get_symptom_data()
+				traits["symptoms"] += list(this_symptom)
+			traits["transmission"] = adv_disease.totalTransmittable()
 		data += list(traits)
 	return data
 

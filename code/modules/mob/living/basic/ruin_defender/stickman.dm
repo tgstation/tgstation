@@ -15,7 +15,7 @@
 	melee_damage_upper = 10
 	attack_sound = 'sound/weapons/punch1.ogg'
 	combat_mode = TRUE
-	faction = list("stickman")
+	faction = list(FACTION_STICKMAN)
 	unsuitable_atmos_damage = 7.5
 	unsuitable_cold_damage = 7.5
 	unsuitable_heat_damage = 7.5

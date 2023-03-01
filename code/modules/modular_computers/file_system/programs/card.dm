@@ -77,7 +77,6 @@
 	. = ..()
 	if(.)
 		return
-
 	var/mob/user = usr
 	var/obj/item/card/id/inserted_auth_card = computer.computer_id_slot
 
@@ -133,7 +132,7 @@
 		// Eject the ID being modified.
 		if("PRG_ejectmodid")
 			if(inserted_auth_card)
-				GLOB.data_core.manifest_modify(inserted_auth_card.registered_name, inserted_auth_card.assignment, inserted_auth_card.get_trim_assignment())
+				GLOB.manifest.modify(inserted_auth_card.registered_name, inserted_auth_card.assignment, inserted_auth_card.get_trim_assignment())
 				return computer.RemoveID(usr)
 			else
 				var/obj/item/I = user.get_active_held_item()
@@ -287,7 +286,7 @@
 	return data
 
 /datum/computer_file/program/card_mod/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	var/obj/item/card/id/inserted_id = computer.computer_id_slot
 	data["authIDName"] = inserted_id ? inserted_id.name : "-----"

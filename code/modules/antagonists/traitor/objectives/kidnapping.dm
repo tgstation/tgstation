@@ -181,7 +181,7 @@
 	AddComponent(/datum/component/traitor_objective_register, victim, fail_signals = list(COMSIG_PARENT_QDELETING))
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
-		if(istype(possible_area, /area/station/hallway) || istype(possible_area, /area/station/security) || initial(possible_area.outdoors))
+		if(ispath(possible_area, /area/station/hallway) || ispath(possible_area, /area/station/security) || initial(possible_area.outdoors))
 			possible_areas -= possible_area
 
 	dropoff_area = pick(possible_areas)
@@ -193,6 +193,15 @@
 /datum/traitor_objective/kidnapping/ungenerate_objective()
 	victim = null
 	dropoff_area = null
+
+/datum/traitor_objective/kidnapping/on_objective_taken(mob/user)
+	. = ..()
+	INVOKE_ASYNC(src, PROC_REF(generate_holding_area))
+
+/datum/traitor_objective/kidnapping/proc/generate_holding_area()
+	// Let's load in the holding facility ahead of time
+	// even if they fail the objective  it's better to get done now rather than later
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
 
 /datum/traitor_objective/kidnapping/generate_ui_buttons(mob/user)
 	var/list/buttons = list()

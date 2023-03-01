@@ -90,7 +90,7 @@
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src|| (firer && A == src.firer) || A.anchored || thrown_items[A])
+		if(A == src || (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
 		if(ismob(A))
 			var/mob/M = A

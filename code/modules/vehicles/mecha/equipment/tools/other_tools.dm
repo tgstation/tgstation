@@ -97,7 +97,7 @@
 						return
 				movable_target = target
 				to_chat(source, "[icon2html(src, source)][span_notice("locked on [target].")]")
-			else if(target!=movable_target)
+			else if(target != movable_target)
 				if(movable_target in view(chassis))
 					var/turf/targ = get_turf(target)
 					var/turf/orig = get_turf(movable_target)
@@ -350,7 +350,7 @@
 	if(!chassis)
 		activated = FALSE
 		return PROCESS_KILL
-	if(fuel.amount<=0)
+	if(fuel.amount <= 0)
 		activated = FALSE
 		log_message("Deactivated - no fuel.", LOG_MECHA)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Fuel reserves depleted.")]")

@@ -362,7 +362,7 @@
 /obj/singularity/proc/can_move(turf/considered_turf)
 	if(!considered_turf)
 		return FALSE
-	if((locate(/obj/machinery/field/containment) in considered_turf)||(locate(/obj/machinery/shieldwall) in considered_turf))
+	if((locate(/obj/machinery/field/containment) in considered_turf) || (locate(/obj/machinery/shieldwall) in considered_turf))
 		return FALSE
 	else if(locate(/obj/machinery/field/generator) in considered_turf)
 		var/obj/machinery/field/generator/check_generator = locate(/obj/machinery/field/generator) in considered_turf

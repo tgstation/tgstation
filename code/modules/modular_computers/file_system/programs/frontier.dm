@@ -24,7 +24,7 @@
 
 /datum/computer_file/program/scipaper_program/on_start(mob/living/user)
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link))
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		linked_techweb = SSresearch.science_tech
 
 /datum/computer_file/program/scipaper_program/application_attackby(obj/item/attacking_item, mob/living/user)
@@ -83,7 +83,7 @@
 
 /datum/computer_file/program/scipaper_program/ui_data()
 	// Program Headers:
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["currentTab"] = current_tab
 	data["has_techweb"] = !!linked_techweb
 
@@ -168,7 +168,6 @@
 	. = ..()
 	if (.)
 		return
-
 	switch(action)
 		if("et_alia")
 			paper_to_be.et_alia = !paper_to_be.et_alia
@@ -226,7 +225,7 @@
 					playsound(computer, 'sound/machines/ping.ogg', 25)
 					return TRUE
 			playsound(computer, 'sound/machines/terminal_error.ogg', 25)
-			return FALSE
+			return TRUE
 
 /// Publication and adding points.
 /datum/computer_file/program/scipaper_program/proc/publish()
