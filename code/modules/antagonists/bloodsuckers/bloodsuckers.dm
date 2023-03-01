@@ -68,7 +68,7 @@
 	var/frenzies = 0
 
 	/// Static typecache of all bloodsucker powers.
-	var/static/list/all_bloodsucker_powers = typecacheof(/datum/action/bloodsucker, TRUE)
+	var/static/list/all_bloodsucker_powers = typecacheof(/datum/action/cooldown/bloodsucker, TRUE)
 	/// Antagonists that cannot be Vassalized no matter what
 	var/list/vassal_banned_antags = list(
 		/datum/antagonist/bloodsucker,
@@ -107,7 +107,7 @@
 	var/choice = input(usr, "What Power are you looking into?", "Mentorhelp v2") in bloodsuckerdatum.powers
 	if(!choice)
 		return
-	var/datum/action/bloodsucker/power = choice
+	var/datum/action/cooldown/bloodsucker/power = choice
 	to_chat(usr, span_warning("[power.power_explanation]"))
 
 /// These handles the application of antag huds/special abilities

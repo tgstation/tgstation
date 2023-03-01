@@ -110,7 +110,6 @@
 /datum/action/cooldown/bloodsucker/gangrel/transform/ActivatePower()
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(/datum/antagonist/bloodsucker)
 	var/mob/living/carbon/human/user = owner
-	var/datum/species/user_species = user.dna.species
 	user.Immobilize(10 SECONDS)
 	if(!do_after(user, 10 SECONDS, user, TRUE))
 		return
@@ -122,7 +121,7 @@
 			else
 				user.set_species(/datum/species/human/felinid)
 				playsound(user.loc, 'sound/effects/meow1.ogg', 50)
-			var/mob/living/carbon/carbon_vamp = owner.current
+			var/mob/living/carbon/carbon_vamp = owner
 			for(var/obj/item/bodypart/part in carbon_vamp.bodyparts) //Hope that you aren't getting them dismembered
 				part.unarmed_damage_low += 5 
 				part.unarmed_damage_high += 5

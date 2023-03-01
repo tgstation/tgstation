@@ -35,7 +35,7 @@
 
 	var/datum/antagonist/vassal/vassaldatum = IS_VASSAL(user)
 	vassaldatum.master.AddBloodVolume(-1)
-	user.Jitter(5)
+	user.adjust_jitter(5 SECONDS)
 	user.adjustStaminaLoss(bloodcost * 1.1)
 	user.adjustBruteLoss(-2.5)
 	user.adjustToxLoss(-2, forced = TRUE)

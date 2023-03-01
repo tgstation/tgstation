@@ -65,7 +65,7 @@
 	if(current_turf && current_turf.lighting_object && current_turf.get_lumcount()>= 0.1)
 		// B) Check for Viewers
 		for(var/mob/living/watchers in viewers(world.view, get_turf(owner)) - owner)
-			if(watchers.client && !watchers.has_unlimited_silicon_privilege && !watchers.eye_blind)
+			if(watchers.client && !watchers.has_unlimited_silicon_privilege && !watchers.is_blind())
 				am_seen = TRUE
 				if(!IS_BLOODSUCKER(watchers) && !IS_VASSAL(watchers))
 					drop_item = TRUE
