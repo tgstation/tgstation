@@ -42,7 +42,6 @@
 /datum/bodypart_overlay/mutant/get_image(image_layer, obj/item/bodypart/limb)
 	if(!sprite_datum)
 		CRASH("Trying to call get_image() on [type] while it didn't have a sprite_datum. This shouldn't happen, report it as soon as possible.")
-		return
 
 	var/gender = (limb?.limb_gender == FEMALE) ? "f" : "m"
 	var/list/icon_state_builder = list()
