@@ -28,6 +28,8 @@
 	/// The chosen job. Used to check for duplicates
 	var/chosen_job
 
+	var/obj/item/traitor_machine_trapper/tool
+
 /datum/traitor_objective/sabotage_machinery/can_generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	if(length(possible_duplicates) >= maximum_allowed)
 		return FALSE
@@ -59,3 +61,44 @@
 	replace_in_name("%MACHINE%", possible_machines[1].name)
 	return TRUE
 
+/// Item which you use on a machine to cause it to explode next time someone interacts with it
+/obj/item/traitor_machine_trapper/
+	name = "suspicious device"
+	desc = "It looks dangerous."
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon_state = "bug"
+
+	/// How much we explode, it only does a light explosion
+	var/explosion_range = 3
+	/// The type of object on which this can be planted on.
+	var/obj/structure/target_machine_path
+	/// The time it takes to deploy the bomb.
+	var/deploy_time = 10 SECONDS
+
+/obj/item/traitor_machine_trapper/examine(mob/user)
+	. = ..()
+	if(!user.mind?.has_antag_datum(/datum/antagonist/traitor))
+		return
+	if(target_object_type)
+		. += span_notice("This device must be placed by <b>clicking on a [initial(target_machine_path.name)]</b> with it. It can be removed with a screwdriver.")
+	. += span_notice("Remember, you may leave behind fingerprints on the device. Wear <b>gloves</b> when handling it to be safe!")
+
+/obj/item/traitor_machine_trapper/afterattack(atom/movable/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!target_machine_path)
+		return
+	if(!user.Adjacent(target))
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
+	balloon_alert(user, "planting device...")
+	if(!do_after(user, deploy_time, src))
+		return
+	forceMove(target)
+	RegisterSignal(target, COMSIG_ATOM_UI_INTERACT, PROC_REF(trigger_explosive))
+
+/obj/item/traitor_machine_trapper/proc/trigger_explosive(obj/structure/attached_machine)
+	SIGNAL_HANDLER
+
+	explosion(origin = attached_machine, light_impact_range = explosion_range, explosion_cause = src)
+	SEND_SIGNAL(src, COMSIG_TRAITOR_MACHINE_TRAP_TRIGGERED, attached_machine)
+	qdel(src)
