@@ -1,6 +1,6 @@
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
-	desc = "They seem to pulse slightly with an inner life."
+	desc = "There's something alive in there, and sooner or later it's going to find its way out."
 	icon_state = "eggs"
 	/// Mob spawner handling the actual spawn of the spider
 	var/obj/effect/mob_spawn/ghost_role/spider/spawner
@@ -26,15 +26,15 @@
 	if(istype(user, /mob/living/basic/giant_spider/midwife))
 		switch(spawner.amount_grown)
 			if(0 to 24)
-				. += span_spider("These eggs look shrunken and dormant. Dissapointing.")
+				. += span_info("These eggs look shrunken and dormant.")
 			if(25 to 49)
-				. += span_spider("These eggs are rippling, unseen life stirring beneath its skin...")
+				. += span_info("These eggs are rippling, unseen life stirring beneath its skin...")
 			if(50 to 74)
-				. += span_spider("These eggs have begun to move, pulsating, gestating...")
+				. += span_info("These eggs have begun to move, pulsating, gestating...")
 			if(75 to 99)
-				. += span_spider("These eggs swell with unseen life. They are almost ready to burst...")
+				. += span_info("These eggs swell with unseen life. They are almost ready to burst...")
 			if(100)
-				. += span_spider("These eggs are plump, teeming with life... Any moment now...")
+				. += span_info("These eggs are plump, teeming with life... Any moment now...")
 
 /obj/structure/spider/eggcluster/enriched
 	name = "enriched egg cluster"
