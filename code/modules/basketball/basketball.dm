@@ -11,7 +11,7 @@
 
 /obj/item/toy/basketball
 	name = "basketball"
-	icon = 'icons/obj/basketball.dmi'
+	icon = 'icons/obj/toys/balls.dmi'
 	icon_state = "basketball"
 	inhand_icon_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
@@ -377,7 +377,7 @@
 /obj/structure/hoop
 	name = "basketball hoop"
 	desc = "Boom, shakalaka!"
-	icon = 'icons/obj/basketball.dmi'
+	icon = 'icons/obj/toys/basketball_hoop.dmi'
 	icon_state = "hoop"
 	anchored = TRUE
 	density = TRUE
