@@ -28,13 +28,13 @@
 			if(0 to 24)
 				. += span_info("These eggs look shrunken and dormant.")
 			if(25 to 49)
-				. += span_info("These eggs are rippling, unseen life stirring beneath its skin...")
+				. += span_info("These eggs are rippling, unseen life stirring beneath its skin.")
 			if(50 to 74)
 				. += span_info("These eggs have begun to move, pulsating, gestating...")
 			if(75 to 99)
-				. += span_info("These eggs swell with unseen life. They are almost ready to burst...")
+				. += span_info("These eggs swell with unseen life. They are almost ready to burst.")
 			if(100)
-				. += span_info("These eggs are plump, teeming with life... Any moment now...")
+				. += span_info("These eggs are plump, teeming with life. Any moment now...")
 
 /obj/structure/spider/eggcluster/enriched
 	name = "enriched egg cluster"
