@@ -218,16 +218,18 @@
 	if (mat_container)
 		for(var/datum/material/material as anything in mat_container.materials)
 			var/amount = mat_container.materials[material]
+			var/sheet_amount = amount / MINERAL_MATERIAL_AMOUNT
 			var/obj/material_display = initial(material.sheet_type)
 			data["materials"] += list(list(
 			"name" = material.name,
 			"id" = REF(material),
-			"amount" = amount,
+			"amount" = sheet_amount,
 			"cat" = "material",
+			"value" = ore_values[material.type],
 			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(material_display.icon), icon_state = initial(material_display.icon_state)), no_anim=TRUE))
 		))
-		for(var/v in stored_research.researched_designs)
-			var/datum/design/alloy = SSresearch.techweb_design_by_id(v)
+		for(var/research in stored_research.researched_designs)
+			var/datum/design/alloy = SSresearch.techweb_design_by_id(research)
 			var/obj/alloy_display = initial(alloy.build_path)
 			data["materials"] += list(list(
 			"name" = alloy.name,
@@ -251,7 +253,7 @@
 	data["user"] = list()
 	if(card?.registered_account)
 		data["user"]["name"] = card.registered_account.account_holder
-		data["user"]["job"] = card.registered_account.account_job.title
+		data["user"]["cash"] = card.registered_account.account_balance
 	return data
 
 

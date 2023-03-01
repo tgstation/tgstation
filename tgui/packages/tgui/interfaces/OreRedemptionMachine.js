@@ -1,8 +1,7 @@
 import { createSearch, toTitleCase } from 'common/string';
 import { useBackend, useLocalState, useSharedState } from '../backend';
-import { BlockQuote, Box, Button, Table, Tabs, Input, Stack, Icon, Section } from '../components';
+import { BlockQuote, Box, Button, Table, Tabs, Input, Stack, Icon, Section, LabeledList } from '../components';
 import { Window } from '../layouts';
-import { UserDetails } from './Vending';
 import { formatSiUnit } from '../format';
 
 export const OreRedemptionMachine = (props, context) => {
@@ -21,7 +20,23 @@ export const OreRedemptionMachine = (props, context) => {
         <Stack fill vertical>
           <Section>
             <Stack.Item>
-              <UserDetails />
+              <Section>
+                <Stack>
+                  <Stack.Item>
+                    <Icon name="id-card" size={3} mr={1} color="green" />
+                  </Stack.Item>
+                  <Stack.Item>
+                    <LabeledList>
+                      <LabeledList.Item label="Name">
+                        {user.name || 'No name detected'}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Balance">
+                        {user.cash + ' cr' || 'No balance detected'}
+                      </LabeledList.Item>
+                    </LabeledList>
+                  </Stack.Item>
+                </Stack>
+              </Section>
             </Stack.Item>
           </Section>
           <Section>
@@ -39,6 +54,14 @@ export const OreRedemptionMachine = (props, context) => {
                   onClick={() => act('Claim')}
                 />
               </Box>
+            </Stack.Item>
+          </Section>
+          <Section>
+            <Stack.Item>
+              <BlockQuote>
+                This machine only accepts ore. Gibtonite and Slag are not
+                accepted.
+              </BlockQuote>
             </Stack.Item>
           </Section>
           <Tabs>
@@ -107,14 +130,6 @@ export const OreRedemptionMachine = (props, context) => {
               ))}
             </Table>
           </Stack.Item>
-          <Section>
-            <Stack.Item>
-              <BlockQuote>
-                This machine only accepts ore. Gibtonite and Slag are not
-                accepted.
-              </BlockQuote>
-            </Stack.Item>
-          </Section>
         </Stack>
       </Window.Content>
     </Window>
@@ -140,17 +155,22 @@ const MaterialRow = (props, context) => {
         />
       </Table.Cell>
       <Table.Cell>{toTitleCase(material.name)}</Table.Cell>
-      <Table.Cell>
-        <Box mr={2} color="label">
-          {material.value && material.value + ' cr'}
-        </Box>
-      </Table.Cell>
-      <Table.Cell collapsing textAlign="left" width="30px">
+      <Table.Cell collapsing textAlign="left">
         <Box color="label">{formatSiUnit(material.amount, 0)} sheets</Box>
       </Table.Cell>
       <Table.Cell collapsing textAlign="left">
-        <Button content="x1" color="transparent" onClick={() => onRelease(1)} />
-        <Button content="x5" color="transparent" onClick={() => onRelease(5)} />
+        <Button
+          content="x1"
+          color="transparent"
+          tooltip={material.value ? material.value + ' cr' : 'No cost'}
+          onClick={() => onRelease(1)}
+        />
+        <Button
+          content="x5"
+          color="transparent"
+          tooltip={material.value ? material.value * 5 + ' cr' : 'No cost'}
+          onClick={() => onRelease(5)}
+        />
         <Button.Input
           content={
             '[Max: ' + (material.amount < 50 ? material.amount : 50) + ']'
