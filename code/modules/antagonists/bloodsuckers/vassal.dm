@@ -25,6 +25,29 @@
 
 /datum/antagonist/vassal/apply_innate_effects(mob/living/mob_override)
 	. = ..()
+	add_team_hud(current_mob)
+
+/datum/antagonist/vassal/add_team_hud(mob/target)
+	QDEL_NULL(team_hud_ref)
+
+	team_hud_ref = WEAKREF(target.add_alt_appearance(
+		/datum/atom_hud/alternate_appearance/basic/has_antagonist,
+		"antag_team_hud_[REF(src)]",
+		image(hud_icon, target, antag_hud_name),
+	))
+
+	var/datum/atom_hud/alternate_appearance/basic/has_antagonist/hud = team_hud_ref.resolve()
+
+	var/list/mob/living/mob_list = list()
+	mob_list += master.owner.current
+	for(var/datum/antagonist/vassal/vassal as anything in master.vassals)
+		mob_list += vassal.owner.current
+
+	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
+		if(!(antag_hud.target in mob_list))
+			continue
+		antag_hud.show_to(target)
+		hud.show_to(antag_hud.target)
 
 /datum/antagonist/vassal/on_gain()
 	/// Enslave them to their Master
@@ -107,6 +130,18 @@
 	if(bloodsuckerdatum.my_clan == CLAN_GANGREL)
 		var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/batform = new
 		owner.current.AddSpell(batform)
+
+/datum/antagonist/vassal/pre_mindshield(mob/implanter, mob/living/mob_override)
+	if(favorite_vassal)
+		return COMPONENT_MINDSHIELD_RESISTED
+	return COMPONENT_MINDSHIELD_PASSED
+
+/// This is called when the antagonist is successfully mindshielded.
+/datum/antagonist/vassal/on_mindshield(mob/implanter, mob/living/mob_override)
+	owner.remove_antag_datum(/datum/antagonist/vassal)
+	owner.current.log_message("has been deconverted from Vassalization by [implanter]!", LOG_ATTACK, color="#960000")
+	return COMPONENT_MINDSHIELD_DECONVERTED
+
 /// If we weren't created by a bloodsucker, then we cannot be a vassal (assigned from antag panel)
 /datum/antagonist/vassal/can_be_owned(datum/mind/new_owner)
 	if(!master)

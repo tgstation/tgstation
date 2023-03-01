@@ -9,6 +9,9 @@
 	name = "\improper Monster Hunter"
 	roundend_category = "Monster Hunters"
 	antagpanel_category = "Monster Hunter"
+
+	preview_outfit = /datum/outfit/monsterhunter
+
 	job_rank = ROLE_MONSTERHUNTER
 	var/list/datum/action/powers = list()
 	var/datum/martial_art/hunterfu/my_kungfu = new
@@ -154,3 +157,13 @@
 	if(scan_target)
 		to_chat(owner, span_notice("You've lost the trail."))
 	. = ..() 
+
+/datum/outfit/monsterhunter
+	name = "Monster Hunter (Preview Only)"
+
+	l_hand = /obj/item/stake
+	r_hand = /obj/item/stake/hardened/silver
+	uniform = /obj/item/clothing/under/rank/medical/paramedic
+	head = /obj/item/clothing/head/soft/paramedic
+	suit =  /obj/item/clothing/suit/toggle/labcoat/paramedic
+	gloves = /obj/item/clothing/gloves/color/latex/nitrile

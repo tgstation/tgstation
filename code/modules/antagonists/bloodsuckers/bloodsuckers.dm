@@ -14,6 +14,10 @@
 	///Timer between alerts for Healing messages
 	COOLDOWN_DECLARE(static/bloodsucker_spam_healing)
 
+	ui_name = "AntagInfoBloodsucker"
+
+	preview_outfit = /datum/outfit/bloodsucker_outfit
+
 	///Used for assigning your name
 	var/bloodsucker_name
 	///Used for assigning your title
@@ -115,6 +119,7 @@
 			if(!silent)
 				H.dna.remove_mutation(CLOWNMUT)
 				to_chat(owner, "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
+	add_team_hud(current_mob)
 
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -815,3 +820,23 @@
 	var/datum/atom_hud/antag/vamphud = GLOB.huds[ANTAG_HUD_BLOODSUCKER]
 	vamphud.leave_hud(owner.current)
 	set_antag_hud(owner.current, null)
+
+/datum/outfit/bloodsucker_outfit
+	name = "Bloodsucker outfit (Preview only)"
+	suit = /obj/item/clothing/suit/costume/dracula
+
+/datum/outfit/bloodsucker_outfit/post_equip(mob/living/carbon/human/enrico, visualsOnly=FALSE)
+	enrico.hairstyle = "Undercut"
+	enrico.hair_color = "FFF"
+	enrico.skin_tone = "african2"
+	enrico.eye_color_left = "#663300"
+	enrico.eye_color_right = "#663300"
+
+	enrico.update_body(is_creating = TRUE)
+
+/datum/antagonist/bloodsucker/get_preview_icon()
+
+	var/icon/final_icon = render_preview_outfit(/datum/outfit/bloodsucker_outfit)
+	final_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
+
+	return finish_preview_icon(final_icon)
