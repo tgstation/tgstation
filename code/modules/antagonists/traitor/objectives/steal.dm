@@ -2,12 +2,8 @@
 	name = "Steal Item"
 	objectives = list(
 		list(
-			list(
-				/datum/traitor_objective/steal_item/low_risk = 1,
-				/datum/traitor_objective/destroy_item/low_risk = 1,
-			) = 1,
-			/datum/traitor_objective/steal_item/low_risk_cap = 1,
-
+			/datum/traitor_objective/steal_item/low_risk = 1,
+			/datum/traitor_objective/destroy_item/low_risk = 1,
 		) = 1,
 		/datum/traitor_objective/steal_item/somewhat_risky = 1,
 		list(
@@ -76,17 +72,6 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	var/extra_progression = 0
 
 	abstract_type = /datum/traitor_objective/steal_item
-
-/datum/traitor_objective/steal_item/low_risk_cap
-	progression_minimum = 5 MINUTES
-	progression_maximum = 20 MINUTES
-
-	progression_reward = list(5 MINUTES, 10 MINUTES)
-	telecrystal_reward = 0
-	minutes_per_telecrystal = 6
-	possible_items = list(
-		/datum/objective_item/steal/low_risk/aicard,
-	)
 
 /datum/traitor_objective/steal_item/low_risk
 	progression_minimum = 10 MINUTES
@@ -159,6 +144,9 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		var/datum/objective_item/steal/target = pick_n_take(possible_items)
 		target = new target()
 		if(!target.TargetExists())
+			qdel(target)
+			continue
+		if(!target.owner_exists())
 			qdel(target)
 			continue
 		if(role.title in target.excludefromjob)
