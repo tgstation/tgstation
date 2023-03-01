@@ -34,6 +34,10 @@
 #define COMSIG_ATOM_RELAYMOVE "atom_relaymove"
 	///prevents the "you cannot move while buckled! message"
 	#define COMSIG_BLOCK_RELAYMOVE (1<<0)
+
+/// From base of atom/setDir(): (old_dir, new_dir). Called before the direction changes
+#define COMSIG_ATOM_PRE_DIR_CHANGE "mob_pre_face_atom"
+	#define COMPONENT_ATOM_BLOCK_DIR_CHANGE (1<<0)
 ///from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.
 #define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"
 /// from /datum/component/singularity/proc/can_move(), as well as /obj/energy_ball/proc/can_move()

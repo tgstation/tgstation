@@ -6,6 +6,8 @@
 #define AB_CHECK_LYING (1<<2)
 ///Action button checks if user is conscious
 #define AB_CHECK_CONSCIOUS (1<<3)
+///Action button checks if user is incapacitated
+#define AB_CHECK_INCAPACITATED (1<<4)
 
 DEFINE_BITFIELD(check_flags, list(
 	"CHECK IF HANDS BLOCKED" = AB_CHECK_HANDS_BLOCKED,

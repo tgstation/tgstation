@@ -58,12 +58,6 @@
 	QDEL_NULL(owner_backseat)
 	..()
 
-/datum/brain_trauma/severe/split_personality/Destroy()
-	if(stranger_backseat)
-		QDEL_NULL(stranger_backseat)
-	if(owner_backseat)
-		QDEL_NULL(owner_backseat)
-	return ..()
 
 /datum/brain_trauma/severe/split_personality/proc/switch_personalities(reset_to_owner = FALSE)
 	if(QDELETED(owner) || QDELETED(stranger_backseat) || QDELETED(owner_backseat))

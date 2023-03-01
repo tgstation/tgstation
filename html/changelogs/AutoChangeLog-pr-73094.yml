@@ -1,7 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - rscadd: "The darkness that glasses and hud goggles that impact your nightvision (think mesons, nightvision goggles, etc) lighten is now tinted to match the glasses. S pretty IMO, and hopefully it helps with forgetting you're wearing X."
-  - balance: "Nightvision is darker. I think bright looks bad, and things like mesons do way too much"
-  - balance: "Mesons (and mobs in general) no longer have a static distance you can see stuff in the dark. If a tile is lit, you can now see it."
-  - bugfix: "Nightvision no longer dims colored lights, instead simply thresholding off bits of darkness that are dimmer then some level."
