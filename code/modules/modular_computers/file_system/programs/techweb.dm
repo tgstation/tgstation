@@ -41,7 +41,7 @@
 
 // heavy data from this proc should be moved to static data when possible
 /datum/computer_file/program/science/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["stored_research"] = !!stored_research
 	if(!stored_research) //lack of a research node is all we care about.
 		return data
@@ -92,7 +92,6 @@
 	. = ..()
 	if (.)
 		return
-
 	// Check if the console is locked to block any actions occuring
 	if (locked && action != "toggleLock")
 		computer.say("Console is locked, cannot perform further actions.")
