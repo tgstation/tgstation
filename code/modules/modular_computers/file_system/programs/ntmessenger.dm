@@ -108,7 +108,6 @@
 	. = ..()
 	if(.)
 		return
-
 	switch(action)
 		if("PDA_ringSet")
 			var/new_ringtone = tgui_input_text(usr, "Enter a new ringtone", "Ringtone", ringtone, MESSENGER_RINGTONE_MAX_LENGTH)
@@ -220,7 +219,7 @@
 	return data
 
 /datum/computer_file/program/messenger/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	data["messages"] = messages
 	data["messengers"] = ScrubMessengerList()

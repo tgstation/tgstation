@@ -45,7 +45,7 @@
 	)
 
 /datum/computer_file/program/radar/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["selected"] = selected
 	data["objects"] = list()
 	data["scanning"] = (world.time < next_scan)
@@ -66,7 +66,6 @@
 	. = ..()
 	if(.)
 		return
-
 	switch(action)
 		if("selecttarget")
 			selected = params["ref"]
