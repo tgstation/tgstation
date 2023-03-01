@@ -41,6 +41,9 @@
 	if(H.stat == DEAD)
 		return
 
+	if(IS_BLOODSUCKER(H) && HAS_TRAIT(H, TRAIT_NODEATH))
+		return
+
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc

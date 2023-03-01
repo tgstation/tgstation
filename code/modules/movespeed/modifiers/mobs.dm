@@ -137,3 +137,8 @@
 
 /datum/movespeed_modifier/netherworld_enrage
 	variable = TRUE
+
+/datum/movespeed_modifier/morbin
+	multiplicative_slowdown = -0.4
+	blacklisted_movetypes = FLYING|FLOATING
+	priority = 100
