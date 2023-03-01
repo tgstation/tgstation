@@ -71,12 +71,16 @@
 	SIGNAL_HANDLER
 
 	if((!forced && blocked) || !istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
-		return
+		return FALSE
+
+	if(forced) // Skip all the other checks, we forced it
+		embed_object(weapon, victim, hit_zone, throwingdatum)
+		return TRUE
 
 	var/flying_speed = throwingdatum?.speed || weapon.throw_speed
 
-	if(!forced && (flying_speed < EMBED_THROWSPEED_THRESHOLD && !ignore_throwspeed_threshold)) // check if it's a forced embed, and if not, if it's going fast enough to proc embedding
-		return
+	if(flying_speed < EMBED_THROWSPEED_THRESHOLD && !ignore_throwspeed_threshold)
+		return FALSE
 
 	var/actual_chance = embed_chance
 	var/penetrative_behaviour = 1 //Keep this above 1, as it is a multiplier for the pen_mod for determining actual embed chance.
@@ -94,11 +98,16 @@
 			actual_chance += pen_mod // doing the armor pen as a separate calc just in case this ever gets expanded on
 			if(actual_chance <= 0)
 				victim.visible_message(span_danger("[weapon] bounces off [victim]'s armor, unable to embed!"), span_notice("[weapon] bounces off your armor, unable to embed!"), vision_distance = COMBAT_MESSAGE_RANGE)
-				return
+				return FALSE
 
 	if(!prob(actual_chance))
-		return
+		return FALSE
 
+	embed_object(weapon, victim, hit_zone, throwingdatum)
+	return TRUE
+
+/// Actually sticks the object to a victim
+/datum/element/embed/proc/embed_object(obj/item/weapon, mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum)
 	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone) || pick(victim.bodyparts)
 	victim.AddComponent(/datum/component/embedded,\
 		weapon,\
@@ -114,8 +123,6 @@
 		jostle_chance = jostle_chance,\
 		jostle_pain_mult = jostle_pain_mult,\
 		pain_stam_pct = pain_stam_pct)
-
-	return TRUE
 
 ///A different embed element has been attached, so we'll detach and let them handle things
 /datum/element/embed/proc/severancePackage(obj/weapon, datum/element/E)
