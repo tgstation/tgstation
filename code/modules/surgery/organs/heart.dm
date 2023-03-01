@@ -357,10 +357,9 @@
 	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE))
 		return // no reviving during mafia, or other inconvenient times.
 
-	victim.visible_message(
-		span_notice("Crystals start forming around [victim]."),
-		span_nicegreen("Crystals start forming around your dead body."),
-	)
+	to_chat(victim, span_nicegreen("Crystals start forming around your dead body."))
+	victim.visible_message(span_notice("Crystals start forming around [victim]."), ignored_mobs = victim)
+
 	ADD_TRAIT(victim, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 
 	crystalize_timer_id = addtimer(CALLBACK(src, PROC_REF(crystalize), victim), CRYSTALIZE_PRE_WAIT_TIME, TIMER_STOPPABLE)
@@ -492,7 +491,7 @@
 	ethereal_heart.owner.forceMove(get_turf(src))
 	REMOVE_TRAIT(ethereal_heart.owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	deltimer(crystal_heal_timer)
-	visible_message(span_notice("The crystals shatters, causing [ethereal_heart.owner] to fall out"))
+	visible_message(span_notice("The crystals shatters, causing [ethereal_heart.owner] to fall out."))
 	return ..()
 
 /obj/structure/ethereal_crystal/update_overlays()
@@ -503,13 +502,20 @@
 		. += shine
 
 /obj/structure/ethereal_crystal/proc/heal_ethereal()
-	ethereal_heart.owner.revive(HEAL_ALL)
-	to_chat(ethereal_heart.owner, span_notice("You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost."))
 	var/datum/brain_trauma/picked_trauma
 	if(prob(10)) //10% chance for a severe trauma
 		picked_trauma = pick(subtypesof(/datum/brain_trauma/severe))
 	else
 		picked_trauma = pick(subtypesof(/datum/brain_trauma/mild))
-	ethereal_heart.owner.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
-	playsound(get_turf(ethereal_heart.owner), 'sound/effects/ethereal_revive.ogg', 100)
-	qdel(src)
+
+	// revive will regenerate organs, so our heart refence is going to be null'd. Unreliable
+	var/mob/living/carbon/regenerating = ethereal_heart.owner
+
+	playsound(get_turf(regenerating), 'sound/effects/ethereal_revive.ogg', 100)
+	to_chat(regenerating, span_notice("You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost."))
+	regenerating.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
+	regenerating.revive(HEAL_ALL)
+	// revive calls fully heal -> deletes the crystal.
+	// this qdeleted check is just for sanity.
+	if(!QDELETED(src))
+		qdel(src)

@@ -14,7 +14,7 @@
 	max_integrity = 200
 
 
-	var/faction = list("ashwalker")
+	var/faction = list(FACTION_ASHWALKER)
 	var/meat_counter = 6
 	var/datum/team/ashwalkers/ashies
 	var/datum/linked_objective

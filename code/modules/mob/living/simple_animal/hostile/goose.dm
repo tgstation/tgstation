@@ -246,7 +246,7 @@
 
 /datum/action/cooldown/vomit
 	name = "Vomit"
-	check_flags = AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	button_icon_state = "vomit"
 	button_icon = 'icons/mob/simple/animal.dmi'
 	cooldown_time = 250

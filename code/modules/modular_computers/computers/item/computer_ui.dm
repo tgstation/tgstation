@@ -50,7 +50,6 @@
 
 /obj/item/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
-	data["device_theme"] = device_theme
 
 	data["login"] = list(
 		IDName = saved_identification || "Unknown",
@@ -71,7 +70,7 @@
 		data["removable_media"] += "intelliCard"
 
 	data["programs"] = list()
-	for(var/datum/computer_file/program/program as anything in stored_files)
+	for(var/datum/computer_file/program/program in stored_files)
 		data["programs"] += list(list(
 			"name" = program.filename,
 			"desc" = program.filedesc,

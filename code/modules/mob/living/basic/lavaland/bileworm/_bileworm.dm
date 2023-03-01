@@ -54,7 +54,7 @@
 	resurface.Grant(src)
 	var/datum/action/cooldown/mob_cooldown/devour/devour = new(src)
 	devour.Grant(src)
-	var/datum/action/adjust_vision/adjust_vision = new(src)
+	var/datum/action/adjust_vision/bileworm/adjust_vision = new(src)
 	adjust_vision.Grant(src)
 	ai_controller.blackboard[BB_BILEWORM_SPEW_BILE] = WEAKREF(spew_bile)
 	ai_controller.blackboard[BB_BILEWORM_RESURFACE] = WEAKREF(resurface)

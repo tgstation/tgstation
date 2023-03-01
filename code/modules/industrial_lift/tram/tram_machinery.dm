@@ -607,6 +607,8 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	var/datum/weakref/tram_ref
 	/// The last destination we were at
 	var/previous_destination
+	/// The light mask overlay we use
+	var/light_mask
 
 /obj/machinery/destination_sign/north
 	layer = BELOW_OBJ_LAYER
@@ -618,6 +620,10 @@ GLOBAL_LIST_EMPTY(tram_doors)
 /obj/machinery/destination_sign/indicator
 	icon_state = "indicator_central_idle"
 	base_icon_state = "indicator_"
+	light_power = 2
+	light_range = 1.7
+	light_color = LIGHT_COLOR_DARK_BLUE
+	light_mask = "indicator_off_e"
 
 /obj/machinery/destination_sign/Initialize(mapload)
 	. = ..()
@@ -665,6 +671,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 
 	if(!tram || !tram.is_operational)
 		icon_state = "[base_icon_state][DESTINATION_NOT_IN_SERVICE]"
+		light_mask = "[base_icon_state][DESTINATION_NOT_IN_SERVICE]_e"
 		update_appearance()
 		return PROCESS_KILL
 
@@ -673,39 +680,54 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	if(!tram.travelling)
 		if(istype(tram.from_where, /obj/effect/landmark/tram/left_part))
 			icon_state = "[base_icon_state][DESTINATION_WEST_IDLE]"
+			light_mask = "[base_icon_state][DESTINATION_WEST_IDLE]_e"
 			previous_destination = tram.from_where
 			update_appearance()
 			return PROCESS_KILL
 
 		if(istype(tram.from_where, /obj/effect/landmark/tram/middle_part))
 			icon_state = "[base_icon_state][DESTINATION_CENTRAL_IDLE]"
+			light_mask = "[base_icon_state][DESTINATION_CENTRAL_IDLE]_e"
 			previous_destination = tram.from_where
 			update_appearance()
 			return PROCESS_KILL
 
 		if(istype(tram.from_where, /obj/effect/landmark/tram/right_part))
 			icon_state = "[base_icon_state][DESTINATION_EAST_IDLE]"
+			light_mask = "[base_icon_state][DESTINATION_EAST_IDLE]_e"
 			previous_destination = tram.from_where
 			update_appearance()
 			return PROCESS_KILL
 
 	if(istype(tram.from_where, /obj/effect/landmark/tram/left_part))
 		icon_state = "[base_icon_state][DESTINATION_WEST_ACTIVE]"
+		light_mask = "[base_icon_state][DESTINATION_WEST_ACTIVE]_e"
 		update_appearance()
 		return PROCESS_KILL
 
 	if(istype(tram.from_where, /obj/effect/landmark/tram/middle_part))
 		if(istype(previous_destination, /obj/effect/landmark/tram/left_part))
 			icon_state = "[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]"
+			light_mask = "[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]_e"
 		if(istype(previous_destination, /obj/effect/landmark/tram/right_part))
 			icon_state = "[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]"
+			light_mask = "[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]_e"
 		update_appearance()
 		return PROCESS_KILL
 
 	if(istype(tram.from_where, /obj/effect/landmark/tram/right_part))
 		icon_state = "[base_icon_state][DESTINATION_EAST_ACTIVE]"
+		light_mask = "[base_icon_state][DESTINATION_EAST_ACTIVE]_e"
 		update_appearance()
 		return PROCESS_KILL
+
+/obj/machinery/destination_sign/update_overlays()
+	. = ..()
+	if(!light_mask)
+		return
+
+	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
+		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
 
 /obj/machinery/door/window/tram
 	name = "tram door"
@@ -836,6 +858,42 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	if(tram_part.travelling) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
 		return PROCESS_KILL
 
+/obj/machinery/button/tram
+	name = "tram request"
+	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
+	icon_state = "tramctrl"
+	skin = "tramctrl"
+	device_type = /obj/item/assembly/control/tram
+	req_access = list()
+	id = 1
+	light_power = 0.5
+	light_range = 1.5
+	light_color = LIGHT_COLOR_DARK_BLUE
+	/// The light mask used in the icon file for emissive layer
+	var/light_mask = "tram-light-mask"
+	/// The specific lift id of the tram we're calling.
+	var/lift_id = MAIN_STATION_TRAM
+
+/obj/machinery/button/tram/setup_device()
+	var/obj/item/assembly/control/tram/tram_device = device
+	tram_device.initial_id = id
+	tram_device.specific_lift_id = lift_id
+	return ..()
+
+/obj/machinery/button/tram/examine(mob/user)
+	. = ..()
+	. += span_notice("There's a small inscription on the button...")
+	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")
+
+/obj/machinery/button/tram/update_overlays()
+	. = ..()
+	if(!light_mask)
+		return
+
+	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
+		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/left, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/right, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/tram, 2)

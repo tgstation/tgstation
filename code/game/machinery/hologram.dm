@@ -514,8 +514,8 @@ Possible to do for anyone motivated enough:
 			are_ringing = TRUE
 
 	if(ringing != are_ringing)
-		update_appearance(UPDATE_ICON_STATE)
 		ringing = are_ringing
+		update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user

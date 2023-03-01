@@ -189,3 +189,11 @@
 	var/list/baseturfs_copy = baseturfs.Copy()
 	baseturfs_copy.Insert(level, turf_type)
 	baseturfs = baseturfs_string_list(baseturfs_copy, src)
+
+/// Places a baseturf ontop of a searched for baseturf.
+/turf/proc/stack_ontop_of_baseturf(floor, roof)
+	if (!islist(baseturfs))
+		baseturfs = list(baseturfs)
+	var/floor_position = baseturfs.Find(floor)
+	if(floor_position != 0)
+		insert_baseturf(floor_position + 1, roof)
