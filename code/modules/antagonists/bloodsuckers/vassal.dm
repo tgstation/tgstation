@@ -125,8 +125,8 @@
 	to_chat(owner, span_notice("As Blood drips over your body, you feel closer to your Master... You are now the Favorite Vassal!"))
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = master.mind.has_antag_datum(/datum/antagonist/bloodsucker)
 	if(bloodsuckerdatum.my_clan == CLAN_GANGREL)
-		var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/batform = new
-		owner.current.AddSpell(batform)
+		var/datum/action/cooldown/spell/shapeshift/bat/batform = new
+		batform.Grant(owner.current)
 
 /datum/antagonist/vassal/pre_mindshield(mob/implanter, mob/living/mob_override)
 	if(favorite_vassal)

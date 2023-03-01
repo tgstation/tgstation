@@ -94,10 +94,10 @@
 				span_notice("[user] forces [user] to drink from the [src]."),
 				span_notice("You put the [src] up to [user]'s mouth."),
 			)
-			if(!do_mob(user, user, 5 SECONDS))
+			if(!do_after(user, 5 SECONDS, src))
 				return
 		else
-			if(!do_mob(user, user, 1 SECONDS))
+			if(!do_after(user, 1 SECONDS, src))
 				return
 			user.visible_message(
 				span_notice("[user] puts the [src] up to their mouth."),

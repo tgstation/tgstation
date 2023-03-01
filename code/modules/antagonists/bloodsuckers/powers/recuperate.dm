@@ -39,7 +39,7 @@
 	user.adjustBruteLoss(-2.5)
 	user.adjustToxLoss(-2, forced = TRUE)
 	// Plasmamen won't lose blood, they don't have any, so they don't heal from Burn.
-	if(!(NOBLOOD in user.dna.species.species_traits))
+	if(!(TRAIT_NOBLOOD in user.dna.species.species_traits))
 		user.blood_volume -= bloodcost
 		user.adjustFireLoss(-1.5)
 	// Stop Bleeding

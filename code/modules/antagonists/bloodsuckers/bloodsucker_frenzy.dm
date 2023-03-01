@@ -34,6 +34,9 @@
 	/// The stored Bloodsucker antag datum
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum
 
+/datum/status_effect/frenzy/get_examine_text()
+	return "<span class='notice'>They seem... inhumane, and feral!</span>"
+
 /atom/movable/screen/alert/status_effect/frenzy
 	name = "Frenzy"
 	desc = "You are in a Frenzy! You are entirely Feral and, depending on your Clan, fighting for your life!"

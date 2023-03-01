@@ -115,17 +115,4 @@
 /datum/action/bloodsucker/veil/proc/cast_effect()
 	// Effect
 	playsound(get_turf(owner), 'sound/magic/smoke.ogg', 20, 1)
-	var/datum/effect_system/steam_spread/puff = new /datum/effect_system/steam_spread/()
-	puff.effect_type = /obj/effect/particle_effect/smoke/vampsmoke
-	puff.set_up(3, 0, get_turf(owner))
-	puff.attach(owner) //OPTIONAL
-	puff.start()
 	owner.spin(8, 1) //Spin around like a loon.
-
-/obj/effect/particle_effect/smoke/vampsmoke
-	opaque = FALSE
-	amount = 0
-	lifetime = 0
-
-/obj/effect/particle_effect/smoke/vampsmoke/fade_out(frames = 6)
-	..(frames)

@@ -95,7 +95,7 @@
 	reqs = list(
 		/obj/item/stack/sheet/iron = 3,
 		/obj/item/stack/rods = 1,
-		/obj/item/candle = 1,
+		/obj/item/flashlight/flare/candle = 1,
 	)
 	time = 10 SECONDS
 	category = CAT_STRUCTURE

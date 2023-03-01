@@ -155,7 +155,7 @@
 /datum/action/bloodsucker/proc/CheckCanDeactivate()
 	return TRUE
 
-/datum/action/cooldown/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
+/datum/action/bloodsucker/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
 	. = ..()
 	button.color = !COOLDOWN_FINISHED(src, bloodsucker_power_cooldown) ? rgb(128,0,0,128) : rgb(255,255,255,255)
 	button.aplha = !COOLDOWN_FINISHED(src, bloodsucker_power_cooldown) ? 100 : 255

@@ -146,8 +146,8 @@
 		amSilent = TRUE
 
 	// Checks: Step 2 - Is it a Mouse?
-	if(istype(feed_target, /mob/living/simple_animal/mouse))
-		var/mob/living/simple_animal/mouse_target = feed_target
+	if(istype(feed_target, /mob/living/basic/mouse))
+		var/mob/living/basic/mouse/mouse_target = feed_target
 		bloodsuckerdatum_power.AddBloodVolume(25)
 		to_chat(user, span_notice("You recoil at the taste of a lesser lifeform."))
 		user.add_mood_event("drankblood", /datum/mood_event/drankblood_bad)

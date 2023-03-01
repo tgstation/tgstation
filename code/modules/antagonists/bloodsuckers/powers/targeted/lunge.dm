@@ -6,7 +6,7 @@
 		Click any player to instantly dash at them, aggressively grabbing them.\n\
 		You cannot use the Power if you are aggressively grabbed.\n\
 		If the target is wearing riot gear or is a Monster Hunter, you will merely passively grab them.\n\
-		If grabbed from behind or from the darkness (Cloak of Darkness counts) with a power level at or above 4, will additionally knock the target down.\n\
+		If grabbed from the darkness (Cloak of Darkness counts) with a power level at or above 4, will additionally knock the target down.\n\
 		Higher levels will increase the knockdown dealt to enemies."
 	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
@@ -104,7 +104,6 @@
 			span_notice("You spin!"),
 			)
 		return
-	do_smoke(0, owner.loc, smoke_type = /obj/effect/particle_effect/smoke/transparent)
 
 /datum/action/bloodsucker/targeted/lunge/proc/lunge_end(atom/hit_atom)
 	var/mob/living/user = owner
@@ -144,7 +143,7 @@
 	target.grabbedby(owner)
 	target.grippedby(owner, instant = TRUE)
 	// Did we knock them down?
-	if(level_current >= 4 && (!is_A_facing_B(target, owner) || owner.alpha <= 40))
+	if(level_current >= 4 && (owner.alpha <= 40))
 		target.Knockdown(10 + level_current * 5)
 		target.Paralyze(0.1)
 

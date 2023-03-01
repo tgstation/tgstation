@@ -304,3 +304,12 @@
 		var/send_dir = get_dir(user, M)
 		var/turf/turf_thrown_at = get_ranged_target_turf(M, send_dir, 5)
 		M.throw_at(turf_thrown_at, 5, TRUE, user) 
+
+/datum/action/cooldown/spell/shapeshift/bat
+	name = "Bat Form"
+	desc = "Take on the shape a space bat."
+	invocation = "Squeak!"
+	invocation_type = INVOCATION_SHOUT
+	spell_requirements = NONE
+
+	possible_shapes = list(/mob/living/simple_animal/hostile/retaliate/bat)

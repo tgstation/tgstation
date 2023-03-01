@@ -127,7 +127,7 @@
 		return
 	to_chat(user, span_notice("You put all your weight into embedding the stake into [target]'s chest..."))
 	playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
-	if(!do_mob(user, target, staketime, extra_checks = CALLBACK(target, /mob/living/carbon.proc/can_be_staked))) // user / target / time / uninterruptable / show progress bar / extra checks
+	if(!do_after(user, staketime, target, extra_checks = CALLBACK(target, /mob/living/carbon.proc/can_be_staked))) // user / target / time / uninterruptable / show progress bar / extra checks
 		return
 	// Drop & Embed Stake
 	user.visible_message(
@@ -201,16 +201,13 @@
 	var/turf/current_turf = get_turf(src)
 	new /obj/item/book/kindred(current_turf)
 
-/obj/item/book/kindred
+/obj/item/kindred
 	name = "\improper Archive of the Kindred"
-	title = "the Archive of the Kindred"
-	desc = "Cryptic documents explaining hidden truths behind Undead beings. It is said only Curators can decipher what they really mean."
+	desc = "Cryptic documents explaining hidden truths behind Undead beings."
 	icon = 'icons/obj/vamp_obj.dmi'
 	lefthand_file = 'icons/mob/inhands/antag/bs_leftinhand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/bs_rightinhand.dmi'
 	icon_state = "kindred_book"
-	author = "dozens of generations of Curators"
-	unique = TRUE
 	throw_speed = 1
 	throw_range = 10
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -221,12 +218,13 @@
 	AddComponent(/datum/component/stationloving, FALSE, TRUE)
 
 // Overwriting attackby to prevent cutting the book out
-/obj/item/book/kindred/attackby(obj/item/item, mob/user, params)
+/*/obj/item/book/kindred/attackby(obj/item/item, mob/user, params)
 	// Copied from '/obj/item/book/attackby(obj/item/item, mob/user, params)'
 	if((istype(item, /obj/item/kitchen/knife) || item.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
 		to_chat(user, span_notice("You feel the gentle whispers of a Librarian telling you not to cut [title]."))
 		return
 	. = ..()
+ */
 
 /*
  *	# Attacking someone with the Book
@@ -234,8 +232,6 @@
 // target is the person being hit here
 /obj/item/book/kindred/afterattack(mob/living/target, mob/living/user, flag, params)
 	. = ..()
-	if(!user.can_read(src))
-		return
 	// Curator/Tremere using it
 	if(HAS_TRAIT(user, TRAIT_BLOODSUCKER_HUNTER))
 		if(in_use || (target == user) || !ismob(target))
@@ -268,7 +264,7 @@
 /*
  *	# Reading the Book
  */
-/obj/item/book/kindred/attack_self(mob/living/carbon/user)
+/*/obj/item/book/kindred/attack_self(mob/living/carbon/user)
 //	Don't call parent since it handles reading the book.
 //	. = ..()
 	if(!user.can_read(src))
@@ -360,3 +356,4 @@
 		<b>Weakness</b>: Unknown."
 
 	reader << browse("<meta charset=UTF-8><TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
+ */ //Я ебал в рот TGUI

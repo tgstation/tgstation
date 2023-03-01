@@ -25,11 +25,8 @@
 	ADD_TRAIT(owner.current, TRAIT_NOSOFTCRIT, BLOODSUCKER_TRAIT)
 	ADD_TRAIT(owner.current, TRAIT_NOCRITDAMAGE, BLOODSUCKER_TRAIT)
 	/// Give Monster Hunter powers
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_MHUNTER]
 	trackvamp.Grant(owner.current)
 	fortitude.Grant(owner.current)
-	hud.join_hud(owner.current)
-	set_antag_hud(owner.current, "monsterhunter")
 	if(give_objectives)
 		/// Give Hunter Objective
 		var/datum/objective/bloodsucker/monsterhunter/monsterhunter_objective = new
@@ -55,11 +52,8 @@
 	for(var/all_status_traits in owner.current.status_traits)
 		REMOVE_TRAIT(owner.current, all_status_traits, BLOODSUCKER_TRAIT)
 	/// Remove Monster Hunter powers
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_MHUNTER]
 	trackvamp.Remove(owner.current)
 	fortitude.Remove(owner.current)
-	hud.leave_hud(owner.current)
-	set_antag_hud(owner.current, null)
 	/// Remove Martial Arts
 	if(my_kungfu)
 		my_kungfu.remove(owner.current)
@@ -166,4 +160,4 @@
 	uniform = /obj/item/clothing/under/rank/medical/paramedic
 	head = /obj/item/clothing/head/soft/paramedic
 	suit =  /obj/item/clothing/suit/toggle/labcoat/paramedic
-	gloves = /obj/item/clothing/gloves/color/latex/nitrile
+	gloves = /obj/item/clothing/gloves/latex
