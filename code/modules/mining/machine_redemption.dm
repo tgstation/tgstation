@@ -213,21 +213,29 @@
 /obj/machinery/mineral/ore_redemption/ui_data(mob/user)
 	var/list/data = list()
 	data["unclaimedPoints"] = points
-
 	data["materials"] = list()
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if (mat_container)
-		for(var/mat in mat_container.materials)
-			var/datum/material/M = mat
-			var/amount = mat_container.materials[M]
-			var/sheet_amount = amount / MINERAL_MATERIAL_AMOUNT
-			var/ref = REF(M)
-			data["materials"] += list(list("name" = M.name, "id" = ref, "amount" = sheet_amount, "value" = ore_values[M.type]))
-
-		data["alloys"] = list()
+		for(var/datum/material/material as anything in mat_container.materials)
+			var/amount = mat_container.materials[material]
+			var/obj/material_display = initial(material.sheet_type)
+			data["materials"] += list(list(
+			"name" = material.name,
+			"id" = REF(material),
+			"amount" = amount,
+			"cat" = "material",
+			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(material_display.icon), icon_state = initial(material_display.icon_state)), no_anim=TRUE))
+		))
 		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = SSresearch.techweb_design_by_id(v)
-			data["alloys"] += list(list("name" = D.name, "id" = D.id, "amount" = can_smelt_alloy(D)))
+			var/datum/design/alloy = SSresearch.techweb_design_by_id(v)
+			var/obj/alloy_display = initial(alloy.build_path)
+			data["materials"] += list(list(
+			"name" = alloy.name,
+			"id" = alloy.id,
+			"cat" = "alloy",
+			"amount" = can_smelt_alloy(alloy),
+			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(alloy_display.icon), icon_state = initial(alloy_display.icon_state)), no_anim=TRUE))
+			))
 
 	if (!mat_container)
 		data["disconnected"] = "local mineral storage is unavailable"
@@ -236,7 +244,16 @@
 	else if (materials.on_hold())
 		data["disconnected"] = "mineral withdrawal is on hold"
 
+	var/obj/item/card/id/card
+	if(isliving(user))
+		var/mob/living/customer = user
+		card = customer.get_idcard(TRUE)
+	data["user"] = list()
+	if(card?.registered_account)
+		data["user"]["name"] = card.registered_account.account_holder
+		data["user"]["job"] = card.registered_account.account_job.title
 	return data
+
 
 /obj/machinery/mineral/ore_redemption/ui_act(action, params)
 	. = ..()
