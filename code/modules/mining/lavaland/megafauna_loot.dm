@@ -846,7 +846,7 @@
 	/// Whether the saw is open or not
 	var/is_open = FALSE
 	/// List of factions we deal bonus damage to
-	var/list/nemesis_factions = list("mining", "boss")
+	var/list/nemesis_factions = list(FACTION_MINING, FACTION_BOSS)
 	/// Amount of damage we deal to the above factions
 	var/faction_bonus_force = 30
 	/// Whether the cleaver is actively AoE swiping something.

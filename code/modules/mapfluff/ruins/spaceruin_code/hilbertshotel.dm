@@ -655,4 +655,4 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	desc = "A ballistic machine gun auto-turret that fires bluespace bullets."
 	lethal_projectile = /obj/projectile/magic/teleport
 	stun_projectile = /obj/projectile/magic/teleport
-	faction = list("turret")
+	faction = list(FACTION_TURRET)

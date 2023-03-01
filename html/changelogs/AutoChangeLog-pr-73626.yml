@@ -1,0 +1,7 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "The research directors monitor on tram has been correctly orientated"
+  - bugfix: "The CE on tram no longer has two engineering department monitors, one has instead been swapped out for an engine monitor."
+  - bugfix: "Tram's AI sat cameras have been re-configured to be on either the Minisat or AI core networks, this means security cannot see the entire satellite from a standard camera console."
+  - spellcheck: "Some cameras on tram have been capitalized."
