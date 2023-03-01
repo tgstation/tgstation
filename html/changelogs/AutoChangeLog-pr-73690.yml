@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Off station roles can't purge the station's records"
-  - bugfix: "Purging records is logged again"
