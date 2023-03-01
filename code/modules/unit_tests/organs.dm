@@ -47,9 +47,9 @@
 		// Ensure organ was rejected by the Corgi.
 		var/rejected_ok = !reject_organ.Insert(lab_dog, special = TRUE, drop_if_replaced = FALSE)
 		// For the Human, expects status code 1
-		TEST_ASSERT(inserted_ok, "The organ ``[test_organ.type]`` was not inserted in the mob when expected, Insert() returned falsy when TRUE was expected.")
+		TEST_ASSERT(inserted_ok, "The organ `[test_organ.type]` was not inserted in the mob when expected, Insert() returned falsy when TRUE was expected.")
 		// For the Dog, expects status code 0 or falsy value.
-		TEST_ASSERT(rejected_ok, "The ``[test_organ.type]`` was inserted into a basic mob (Corgi) when it wasn't expected.")
+		TEST_ASSERT(rejected_ok, "The `[test_organ.type]` was inserted into a basic mob (Corgi) when it wasn't expected.")
 
 		if(!inserted_ok)
 			continue
@@ -61,7 +61,7 @@
 
 		// Some vars on Human and Organ are expected to be assigned after Insert().
 		var/vars_assigned_ok = test_organ_inserted_ok(lab_rat, test_organ)
-		TEST_ASSERT(vars_assigned_ok, "The organ ``[test_organ.type]`` was not properly inserted in the mob, some variables were not assigned when expected.")
+		TEST_ASSERT(vars_assigned_ok, "The organ `[test_organ.type]` was not properly inserted in the mob, some variables were not assigned when expected.")
 
 		if(!vars_assigned_ok)
 			continue
@@ -70,7 +70,7 @@
 		test_organ.Remove(lab_rat, special = TRUE)
 
 		// Some vars on Human and Organ are expected to be deleted after Remove().
-		TEST_ASSERT(test_organ_removed_ok(lab_rat, test_organ), "The organ ``[test_organ.type]`` was not properly removed from the mob, some variables were not reset when expected.")
+		TEST_ASSERT(test_organ_removed_ok(lab_rat, test_organ), "The organ `[test_organ.type]` was not properly removed from the mob, some variables were not reset when expected.")
 
 /// Checks that all "organ_set_bonus" status effects have unique "id" vars.
 /// Required to ensure that the status effects are treated as "unique".
@@ -98,7 +98,6 @@
 	var/list/species_changing_entries = typecacheof(list(
 		/datum/infuser_entry/fly,
 	))
-
 	// Fetch the globally instantiated DNA Infuser entries.
 	for(var/datum/infuser_entry/infuser_entry as anything in GLOB.infuser_entries)
 		var/output_organs = infuser_entry.output_organs
@@ -109,7 +108,7 @@
 		for(var/obj/item/organ/organ as anything in output_organs)
 			organ = new organ()
 			var/inserted_ok = organ.Insert(lab_rat, special = TRUE, drop_if_replaced = FALSE)
-			TEST_ASSERT(inserted_ok, "The organ ``[organ.type]`` for ``[infuser_entry.type]`` was not inserted in the mob when expected, Insert() returned falsy when TRUE was expected.")
+			TEST_ASSERT(inserted_ok, "The organ `[organ.type]` for `[infuser_entry.type]` was not inserted in the mob when expected, Insert() returned falsy when TRUE was expected.")
 			if(inserted_ok)
 				inserted_organs += organ
 
@@ -128,14 +127,14 @@
 
 		// If Status Effect exists, ensure it has a matching threshold description and vice versa.
 		// Otherwise, ensure both are falsy.
-		TEST_ASSERT((added_status && has_threshold) || (!added_status && !has_threshold), "The threshold_desc variable for ``[infuser_entry.type]`` was an empty string when a description was expected.")
+		TEST_ASSERT((added_status && has_threshold) || (!added_status && !has_threshold), "The threshold_desc variable for `[infuser_entry.type]` was an empty string when a description was expected.")
 
 		if(has_threshold)
-			TEST_ASSERT(added_status, "The ``/datum/status_effect/organ_set_bonus`` for ``[infuser_entry.type]`` was not added to the mob when expected.")
-			TEST_ASSERT(total_organs_needed, "The ``needed_organs`` variable for ``[added_status.type]`` was 0 or falsy, when a positive number was expected.")
-			TEST_ASSERT(total_organs_needed <= total_organs, "The ``output_organs`` list for ``[infuser_entry.type]`` had a length of ``[length(infuser_entry.output_organs)]`` when a minimum of at least [total_organs_needed] organs was specified in ``[added_status.type]``.")
+			TEST_ASSERT(added_status, "The `/datum/status_effect/organ_set_bonus` for `[infuser_entry.type]` was not added to the mob when expected.")
+			TEST_ASSERT(total_organs_needed, "The `needed_organs` variable for `[added_status.type]` was 0 or falsy, when a positive number was expected.")
+			TEST_ASSERT(total_organs_needed <= total_organs, "The `output_organs` list for `[infuser_entry.type]` had a length of `[length(infuser_entry.output_organs)]` when a minimum of at least [total_organs_needed] organs was specified in `[added_status.type]`.")
 			if(added_status)
-				TEST_ASSERT(added_status.bonus_active, "The ``[added_status.type]`` bonus was not activated after inserting [total_inserted] of the [total_organs_needed] required organs in the mob, when it was expected.")
+				TEST_ASSERT(added_status.bonus_active, "The `[added_status.type]` bonus was not activated after inserting [total_inserted] of the [total_organs_needed] required organs in the mob, when it was expected.")
 
 		// Nothing to do.
 		if(total_inserted == 0)
@@ -153,4 +152,4 @@
 		var/removed_status = (locate(/datum/status_effect/organ_set_bonus) in lab_rat.status_effects)
 
 		// Search for added Status Effect.
-		TEST_ASSERT(!removed_status || !added_status.bonus_active, "The ``[added_status.type]`` bonus was not deactivated after removing [total_inserted] of the [total_organs_needed] required organs from the mob, when it was expected.")
+		TEST_ASSERT(!removed_status || !added_status.bonus_active, "The `[added_status.type]` bonus was not deactivated after removing [total_inserted] of the [total_organs_needed] required organs from the mob, when it was expected.")
