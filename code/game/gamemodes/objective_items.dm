@@ -96,7 +96,7 @@
 	item_owner = list(JOB_ROBOTICIST)
 	exists_on_map = TRUE
 
-/obj/item/fireaxe/add_stealing_item_objective()
+/obj/item/crowbar/mechremoval/add_stealing_item_objective()
 	ADD_STEAL_ITEM(src, /obj/item/crowbar/mechremoval)
 
 /datum/objective_item/steal/low_risk/nullrod
