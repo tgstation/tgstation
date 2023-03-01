@@ -151,7 +151,7 @@
 	desc = "What noise do rabbits even make? Contains one rabbit."
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/mob/living/basic/rabbit)
-	crate_name = "rabbit crate" //I wanted to call it the bunny box
+	crate_name = "rabbit crate"
 
 /datum/supply_pack/critter/mothroach
 	name = "Mothroach Crate"
