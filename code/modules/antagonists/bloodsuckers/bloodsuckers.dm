@@ -96,6 +96,7 @@
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_TOXIMMUNE,
 		TRAIT_HARDLY_WOUNDED,
+		TRAIT_TRUE_NIGHT_VISION,
 	)
 
 /mob/living/proc/explain_powers()
@@ -117,7 +118,7 @@
 		var/mob/living/carbon/H = owner.current
 		if(H && istype(H))
 			if(!silent)
-				H.dna.remove_mutation(CLOWNMUT)
+				H.dna.remove_mutation(/datum/mutation/human/clumsy)
 				to_chat(owner, "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
 	add_team_hud(current_mob)
 
@@ -127,7 +128,7 @@
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/H = owner.current
 		if(H && istype(H))
-			H.dna.add_mutation(CLOWNMUT)
+			H.dna.add_mutation(/datum/mutation/human/clumsy)
 
 /datum/antagonist/bloodsucker/get_admin_commands()
 	. = ..()
@@ -155,7 +156,6 @@
 		forge_bloodsucker_objectives()
 
 	. = ..()
-	update_bloodsucker_icons_added(owner.current)
 	// Assign Powers
 	AssignStarterPowersAndStats()
 
@@ -163,7 +163,6 @@
 /datum/antagonist/bloodsucker/on_removal()
 	/// End Sunlight? (if last Vamp)
 	clan.check_cancel_sunlight()
-	update_bloodsucker_icons_removed(owner.current)
 	ClearAllPowersAndStats()
 	return ..()
 
@@ -357,7 +356,7 @@
 		user_species.species_traits -= DRINKSBLOOD
 		// Clown
 		if(istype(user) && owner.assigned_role == "Clown")
-			user.dna.add_mutation(CLOWNMUT)
+			user.dna.add_mutation(/datum/mutation/human/clumsy)
 	/// Remove ALL Traits, as long as its from BLOODSUCKER_TRAIT's source. - This is because of unique cases like Nosferatu getting Ventcrawling.
 	for(var/all_status_traits in owner.current.status_traits)
 		REMOVE_TRAIT(owner.current, all_status_traits, BLOODSUCKER_TRAIT)
@@ -374,7 +373,6 @@
 		user_eyes.flash_protect += 1
 		user_eyes.sight_flags = 0
 		user_eyes.see_in_dark = 2
-		user_eyes.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	user.update_sight()
 
 /datum/antagonist/bloodsucker/proc/RankUp()
@@ -623,7 +621,6 @@
 	to_chat(owner.current, span_cultboldtalic("You have broken the Masquerade!"))
 	to_chat(owner.current, span_warning("Bloodsucker Tip: When you break the Masquerade, you become open for termination by fellow Bloodsuckers, and your Vassals are no longer completely loyal to you, as other Bloodsuckers can steal them for themselves!"))
 	broke_masquerade = TRUE
-	set_antag_hud(owner.current, "masquerade_broken")
 	for(var/datum/mind/clan_minds as anything in get_antag_minds(/datum/antagonist/bloodsucker))
 		if(owner == clan_minds)
 			continue
@@ -643,7 +640,6 @@
 		return
 	to_chat(owner.current, span_cultboldtalic("You have re-entered the Masquerade."))
 	broke_masquerade = FALSE
-	set_antag_hud(owner.current, "bloodsucker")
 
 
 /////////////////////////////////////
@@ -807,19 +803,6 @@
 	message_admins("[convertee] has become a Vassal, and is enslaved to [converter].")
 	log_admin("[convertee] has become a Vassal, and is enslaved to [converter].")
 	return TRUE
-
-/**
- * # HUD
- */
-/datum/antagonist/bloodsucker/proc/update_bloodsucker_icons_added(datum/mind/m)
-	var/datum/atom_hud/antag/vamphud = GLOB.huds[ANTAG_HUD_BLOODSUCKER]
-	vamphud.join_hud(owner.current)
-	set_antag_hud(owner.current, "bloodsucker")
-
-/datum/antagonist/bloodsucker/proc/update_bloodsucker_icons_removed(datum/mind/m)
-	var/datum/atom_hud/antag/vamphud = GLOB.huds[ANTAG_HUD_BLOODSUCKER]
-	vamphud.leave_hud(owner.current)
-	set_antag_hud(owner.current, null)
 
 /datum/outfit/bloodsucker_outfit
 	name = "Bloodsucker outfit (Preview only)"

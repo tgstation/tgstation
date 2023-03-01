@@ -66,7 +66,7 @@
 		if(displaymessage != "")
 			to_chat(src, span_warning("Without a head, you are incapable of [displaymessage]."))
 		return FALSE
-	if(!getorgan(/obj/item/organ/brain)) // NOTE: This is mostly just here so we can do one scan for all needed parts when creating a vamp. You probably won't be trying to use powers w/out a brain.
+	if(!getorgan(/obj/item/organ/internal/brain)) // NOTE: This is mostly just here so we can do one scan for all needed parts when creating a vamp. You probably won't be trying to use powers w/out a brain.
 		if(displaymessage != "")
 			to_chat(src, span_warning("Without a brain, you are incapable of [displaymessage]."))
 		return FALSE

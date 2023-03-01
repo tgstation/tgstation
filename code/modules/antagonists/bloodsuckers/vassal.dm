@@ -25,7 +25,7 @@
 
 /datum/antagonist/vassal/apply_innate_effects(mob/living/mob_override)
 	. = ..()
-	add_team_hud(current_mob)
+	add_team_hud(mob_override)
 
 /datum/antagonist/vassal/add_team_hud(mob/target)
 	QDEL_NULL(team_hud_ref)
@@ -68,7 +68,6 @@
 	/// Give Vampire Language & Hud
 	owner.current.grant_all_languages(FALSE, FALSE, TRUE)
 	owner.current.grant_language(/datum/language/vampiric)
-	update_vassal_icons_added(owner.current)
 	. = ..()
 
 /datum/antagonist/vassal/on_removal()
@@ -88,7 +87,6 @@
 		power.Remove(owner.current)
 	/// Remove Language & Hud
 	owner.current.remove_language(/datum/language/vampiric)
-	update_vassal_icons_removed(owner.current)
 	return ..()
 
 /datum/antagonist/vassal/proc/add_objective(datum/objective/added_objective)
@@ -123,7 +121,6 @@
 /datum/antagonist/vassal/proc/make_favorite(mob/living/master)
 	// Default stuff for all
 	favorite_vassal = TRUE
-	set_antag_hud(owner.current, "vassal6")
 	to_chat(master, span_danger("You have turned [owner.current] into your Favorite Vassal! They will no longer be deconverted upon Mindshielding!"))
 	to_chat(owner, span_notice("As Blood drips over your body, you feel closer to your Master... You are now the Favorite Vassal!"))
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = master.mind.has_antag_datum(/datum/antagonist/bloodsucker)
@@ -206,18 +203,3 @@
 	if(scan_target)
 		to_chat(owner, span_notice("You've lost your master's trail."))
 	return ..()
-
-/**
- * # HUD
- */
-/datum/antagonist/vassal/proc/update_vassal_icons_added(mob/living/vassal, icontype = "vassal")
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_BLOODSUCKER]
-	hud.join_hud(vassal)
-	/// Located in icons/mob/hud.dmi
-	set_antag_hud(vassal, icontype)
-	/// FULP ADDITION! Check prepare_huds in mob.dm to see why.
-
-/datum/antagonist/vassal/proc/update_vassal_icons_removed(mob/living/vassal)
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_BLOODSUCKER]
-	hud.leave_hud(vassal)
-	set_antag_hud(vassal, null)

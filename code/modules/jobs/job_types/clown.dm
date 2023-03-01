@@ -44,8 +44,8 @@
 		return
 	spawned.apply_pref_name(/datum/preference/name/clown, player_client)
 
-	if(H.mind)
-		H.mind.teach_crafting_recipe(/datum/crafting_recipe/woodenducky)
+	if(spawned.mind)
+		spawned.mind.teach_crafting_recipe(/datum/crafting_recipe/woodenducky)
 
 
 /datum/outfit/job/clown
