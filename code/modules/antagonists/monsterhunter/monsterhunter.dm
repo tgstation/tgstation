@@ -16,8 +16,8 @@
 	var/list/datum/action/powers = list()
 	var/datum/martial_art/hunterfu/my_kungfu = new
 	var/give_objectives = TRUE
-	var/datum/action/bloodsucker/trackvamp = new/datum/action/bloodsucker/trackvamp()
-	var/datum/action/bloodsucker/fortitude = new/datum/action/bloodsucker/fortitude/hunter()
+	var/datum/action/cooldown/bloodsucker/trackvamp = new/datum/action/cooldown/bloodsucker/trackvamp()
+	var/datum/action/cooldown/bloodsucker/fortitude = new/datum/action/cooldown/bloodsucker/fortitude/hunter()
 
 /datum/antagonist/monsterhunter/on_gain()
 	/// Buffs Monster Hunters

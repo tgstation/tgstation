@@ -90,5 +90,5 @@
 	DeactivatePower()
 	StartCooldown()	// Do AFTER UpdateIcon() inside of DeactivatePower. Otherwise icon just gets wiped.
 
-/datum/action/cooldown/bloodsucker/Activate(atom/target)
+/datum/action/cooldown/bloodsucker/targeted/Activate(atom/target)
 	return ClickWithPower(target)

@@ -155,7 +155,7 @@
 		var/obj/item/organ/internal/heart/vampheart/vampiric_heart = new
 		vampiric_heart.Insert(owner.current)
 		vampiric_heart.Stop()
-	var/obj/item/organ/eyes/current_eyes = bloodsuckeruser.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/current_eyes = bloodsuckeruser.getorganslot(ORGAN_SLOT_EYES)
 	if(current_eyes)
 		current_eyes.flash_protect = max(initial(current_eyes.flash_protect) - 1, - 1)
 		current_eyes.sight_flags = SEE_MOBS
@@ -229,10 +229,10 @@
 		owner.current.remove_status_effect(STATUS_EFFECT_FRENZY)
 	// BLOOD_VOLUME_BAD: [224] - Jitter
 	if(owner.current.blood_volume < BLOOD_VOLUME_BAD && prob(0.5) && !HAS_TRAIT(owner.current, TRAIT_NODEATH) && !HAS_TRAIT(owner.current, TRAIT_MASQUERADE))
-		owner.current.Jitter(3)
+		owner.current.adjust_jitter(6 SECONDS)
 	// BLOOD_VOLUME_SURVIVE: [122] - Blur Vision
 	if(owner.current.blood_volume < BLOOD_VOLUME_SURVIVE)
-		owner.current.blur_eyes(8 - 8 * (owner.current.blood_volume / BLOOD_VOLUME_BAD))
+		owner.current.adjust_eye_blur(8 SECONDS - 8 SECONDS * (owner.current.blood_volume / BLOOD_VOLUME_BAD))
 
 	// The more blood, the better the Regeneration, get too low blood, and you enter Frenzy.
 	if(owner.current.blood_volume < (FRENZY_THRESHOLD_ENTER + (humanity_lost * 10)) && !frenzied)
@@ -324,7 +324,7 @@
 	ADD_TRAIT(owner.current, TRAIT_DEATHCOMA, BLOODSUCKER_TRAIT)
 	ADD_TRAIT(owner.current, TRAIT_RESISTLOWPRESSURE, BLOODSUCKER_TRAIT)
 	//ADD_TRAIT(owner.current, TRAIT_BRUTEIMMUNE, BLOODSUCKER_TRAIT)
-	owner.current.Jitter(0)
+	owner.current.set_jitter(0)
 	/// Disable ALL Powers
 	DisableAllPowers()
 

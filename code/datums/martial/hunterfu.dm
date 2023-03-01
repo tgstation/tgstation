@@ -145,9 +145,8 @@
 		return TRUE
 	if(target.mind.has_antag_datum(/datum/antagonist/wizard) || (/datum/antagonist/wizard/apprentice))
 		to_chat(target, span_danger("The holy water seems to be muting us somehow!"))
-		var/mob/living/carbon/human/human_target = target // I guess monkey wizards aren't getting affected.
-		if(human_target.silent <= 10)
-			human_target.silent = clamp(human_target.silent + 10, 0, 10)
+		var/mob/living/carbon/human/human_target = target
+		human_target.set_silence_if_lower(10 SECONDS)
 		target.apply_damage(60, STAMINA)
 		target.Paralyze(20)
 		return TRUE

@@ -2,8 +2,7 @@
 	button_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
 	background_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
 	background_icon_state = "gangrel_power_off"
-	background_icon_state_on = "gangrel_power_on"
-	background_icon_state_off = "gangrel_power_off"
+	active_background_icon_state  = "gangrel_power_on"
 
 /datum/action/cooldown/bloodsucker/gangrel/transform
 	name = "Transform"
@@ -123,8 +122,10 @@
 			else
 				user.set_species(/datum/species/human/felinid)
 				playsound(user.loc, 'sound/effects/meow1.ogg', 50)
-			user_species.punchdamagehigh += 5.0 //stronk
-			user_species.armor += 30
+			var/mob/living/carbon/carbon_vamp = owner.current
+			for(var/obj/item/bodypart/part in carbon_vamp.bodyparts) //Hope that you aren't getting them dismembered
+				part.unarmed_damage_low += 5 
+				part.unarmed_damage_high += 5
 			to_chat(user, span_notice("You aren't strong enough to morph into something stronger! But you do certainly feel more feral and stronger than before."))
 		if(1500 to INFINITY)
 			var/mob/living/simple_animal/hostile/bloodsucker/giantbat/gb
@@ -186,8 +187,7 @@
 	button_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
 	background_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
 	button_icon_state = "power_baste"
-	background_icon_state_on = "bat_power_on"
-	background_icon_state_off = "bat_power_off"
+	active_background_icon_state = "bat_power_on"
 	power_explanation = "<b>Flying Haste</b>:\n\
 		Makes you dash into the air\n\
 		Helpful in situations where you either need to run away or engage in a crowd of people, works over tables.\n\
@@ -210,8 +210,7 @@
 	button_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
 	background_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
 	button_icon_state = "power_bolt"
-	background_icon_state_on = "bat_power_on"
-	background_icon_state_off = "bat_power_off"
+	active_background_icon_state  = "bat_power_on"
 	power_explanation = "<b>Blood Bolt</b>:\n\
 		Shoots a blood bolt that does moderate damage to your foes.\n\
 		Helpful in situations where you get outranged or just extra damage.\n\
@@ -266,8 +265,7 @@
 	name = "Wing Slam"
 	desc = "Slams all foes next to you."
 	button_icon_state = "power_wingslam"
-	background_icon_state_on = "bat_power_on"
-	background_icon_state_off = "bat_power_off"
+	active_background_icon_state = "bat_power_on"
 	power_explanation = "<b>Wing Slam</b>:\n\
 		Knocksback and immobilizes people adjacent to you.\n\
 		Has a low recharge time and may be helpful in meelee situations!\n\

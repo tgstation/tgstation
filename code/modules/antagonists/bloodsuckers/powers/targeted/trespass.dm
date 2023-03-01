@@ -72,10 +72,6 @@
 	// Effect Origin
 	var/sound_strength = max(60, 70 - level_current * 10)
 	playsound(get_turf(owner), 'sound/magic/summon_karp.ogg', sound_strength, 1)
-	var/datum/effect_system/steam_spread/puff = new /datum/effect_system/steam_spread/()
-	puff.effect_type = /obj/effect/particle_effect/smoke/vampsmoke
-	puff.set_up(3, 0, my_turf)
-	puff.start()
 
 	var/mist_delay = max(5, 20 - level_current * 2.5) // Level up and do this faster.
 
@@ -101,7 +97,3 @@
 	user.invisibility = invis_was
 	// Effect Destination
 	playsound(get_turf(owner), 'sound/magic/summon_karp.ogg', 60, 1)
-	puff = new /datum/effect_system/steam_spread/()
-	puff.effect_type = /obj/effect/particle_effect/smoke/vampsmoke
-	puff.set_up(3, 0, target_turf)
-	puff.start()

@@ -298,12 +298,12 @@
 		QDEL_NULL(bloodsucker_sunlight)
 
 /// Buying powers
-/datum/antagonist/bloodsucker/proc/BuyPower(datum/action/bloodsucker/power)
+/datum/antagonist/bloodsucker/proc/BuyPower(datum/action/cooldown/bloodsucker/power)
 	powers += power
 	power.Grant(owner.current)
 
-/datum/antagonist/bloodsucker/proc/RemovePower(datum/action/bloodsucker/power)
-	for(var/datum/action/bloodsucker/all_powers as anything in powers)
+/datum/antagonist/bloodsucker/proc/RemovePower(datum/action/cooldown/bloodsucker/power)
+	for(var/datum/action/cooldown/bloodsucker/all_powers as anything in powers)
 		if(initial(power.name) == all_powers.name)
 			power = all_powers
 			break
@@ -314,19 +314,22 @@
 
 /datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 	// Purchase Roundstart Powers
-	BuyPower(new /datum/action/bloodsucker/feed)
-	BuyPower(new /datum/action/bloodsucker/masquerade)
+	BuyPower(new /datum/action/cooldown/bloodsucker/feed)
+	BuyPower(new /datum/action/cooldown/bloodsucker/masquerade)
 	if(!IS_VASSAL(owner.current)) // Favorite Vassal gets their own.
-		BuyPower(new /datum/action/bloodsucker/veil)
+		BuyPower(new /datum/action/cooldown/bloodsucker/veil)
 	add_verb(owner.current, /mob/living/proc/explain_powers)
 	// Traits: Species
+	if(iscarbon(owner.current))
+		var/mob/living/carbon/carbon_vamp = owner.current
+		for(var/obj/item/bodypart/part in carbon_vamp.bodyparts) //Hope that you aren't getting them dismembered
+			part.unarmed_damage_low += 1 
+			part.unarmed_damage_high += 1
 	var/mob/living/carbon/human/user = owner.current
 	if(ishuman(owner.current))
 		var/datum/species/user_species = user.dna.species
 		user_species.species_traits += DRINKSBLOOD
 		user.dna?.remove_all_mutations()
-		user_species.punchdamagelow += 1 //lowest possible punch damage - 0
-		user_species.punchdamagehigh += 1 //highest possible punch damage - 9
 	/// Give Bloodsucker Traits
 	for(var/all_traits in bloodsucker_traits)
 		ADD_TRAIT(owner.current, all_traits, BLOODSUCKER_TRAIT)
@@ -345,7 +348,7 @@
 	// Powers
 	remove_verb(owner.current, /mob/living/proc/explain_powers)
 	while(powers.len)
-		var/datum/action/bloodsucker/power = pick(powers)
+		var/datum/action/cooldown/bloodsucker/power = pick(powers)
 		powers -= power
 		power.Remove(owner.current)
 		// owner.RemoveSpell(power)
@@ -368,11 +371,10 @@
 	RemoveVampOrgans()
 	/// Eyes
 	var/mob/living/carbon/user = owner.current
-	var/obj/item/organ/eyes/user_eyes = user.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/user_eyes = user.getorganslot(ORGAN_SLOT_EYES)
 	if(user_eyes)
 		user_eyes.flash_protect += 1
 		user_eyes.sight_flags = 0
-		user_eyes.see_in_dark = 2
 	user.update_sight()
 
 /datum/antagonist/bloodsucker/proc/RankUp()
@@ -392,19 +394,19 @@
 	bloodsucker_level_unspent--
 
 /datum/antagonist/bloodsucker/proc/remove_nondefault_powers()
-	for(var/datum/action/bloodsucker/power as anything in powers)
-		if(istype(power, /datum/action/bloodsucker/feed) || istype(power, /datum/action/bloodsucker/masquerade) || istype(power, /datum/action/bloodsucker/veil))
+	for(var/datum/action/cooldown/bloodsucker/power as anything in powers)
+		if(istype(power, /datum/action/cooldown/bloodsucker/feed) || istype(power, /datum/action/cooldown/bloodsucker/masquerade) || istype(power, /datum/action/cooldown/bloodsucker/veil))
 			continue
 		RemovePower(power)
 
 /datum/antagonist/bloodsucker/proc/LevelUpPowers()
-	for(var/datum/action/bloodsucker/power as anything in powers)
+	for(var/datum/action/cooldown/bloodsucker/power as anything in powers)
 		power.level_current++
 		power.UpdateDesc()
 
 ///Disables all powers, accounting for torpor
 /datum/antagonist/bloodsucker/proc/DisableAllPowers()
-	for(var/datum/action/bloodsucker/power as anything in powers)
+	for(var/datum/action/cooldown/bloodsucker/power as anything in powers)
 		if((power.check_flags & BP_CANT_USE_IN_TORPOR) && HAS_TRAIT(owner.current, TRAIT_NODEATH))
 			if(power.active)
 				power.DeactivatePower()
@@ -416,7 +418,7 @@
 		return
 	// Purchase Power Prompt
 	var/list/options = list()
-	for(var/datum/action/bloodsucker/power as anything in all_bloodsucker_powers)
+	for(var/datum/action/cooldown/bloodsucker/power as anything in all_bloodsucker_powers)
 		if(initial(power.purchase_flags) & BLOODSUCKER_CAN_BUY && !(locate(power) in powers))
 			options[initial(power.name)] = power
 
@@ -437,7 +439,7 @@
 			return
 
 		// Good to go - Buy Power!
-		var/datum/action/bloodsucker/purchased_power = options[choice]
+		var/datum/action/cooldown/bloodsucker/purchased_power = options[choice]
 		BuyPower(new purchased_power)
 		to_chat(owner.current, span_notice("You have learned how to use [choice]!"))
 
@@ -447,12 +449,11 @@
 	bloodsucker_regen_rate += 0.05
 	max_blood_volume += 100
 	// Misc. Stats Upgrades
-	if(ishuman(owner.current))
-		var/mob/living/carbon/human/user = owner.current
-		var/datum/species/user_species = user.dna.species
-		user_species.punchdamagelow += 0.5
-		// This affects the hitting power of Brawn.
-		user_species.punchdamagehigh += 0.5
+	if(iscarbon(owner.current))
+		var/mob/living/carbon/carbon_vamp = owner.current
+		for(var/obj/item/bodypart/part in carbon_vamp.bodyparts) //Hope that you aren't getting dismembered
+			part.unarmed_damage_low += 0.5
+			part.unarmed_damage_high += 0.5
 
 	// We're almost done - Spend your Rank now.
 	bloodsucker_level++
@@ -786,7 +787,6 @@
 	return FALSE
 
 /datum/antagonist/bloodsucker/proc/attempt_turn_vassal(mob/living/carbon/convertee, can_vassal_sleeping = FALSE)
-	convertee.silent = 0
 	return make_vassal(convertee, owner, can_vassal_sleeping)
 
 /datum/antagonist/bloodsucker/proc/make_vassal(mob/living/convertee, datum/mind/converter, sleeping = FALSE)

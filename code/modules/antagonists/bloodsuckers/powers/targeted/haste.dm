@@ -43,7 +43,7 @@
 	return TRUE
 
 /// Anything will do, if it's not me or my square
-/datum/action/cooldown/bFireTargetedPowerloodsucker/targeted/haste/CheckValidTarget(atom/target_atom)
+/datum/action/cooldown/bloodsucker/targeted/haste/CheckValidTarget(atom/target_atom)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -96,7 +96,7 @@
 				for(var/datum/action/cooldown/bloodsucker/power in all_targets.actions)
 					if(power.active)
 						power.DeactivatePower()
-				all_targets.set_timed_status_effect(2 SECONDS, /datum/status_effect/jitter)
-				all_targets.set_confusion(max(8, all_targets.get_confusion()))
-				all_targets.adjust_timed_status_effect(8 SECONDS, /datum/status_effect/speech/stutter)
+				all_targets.adjust_jitter(4 SECONDS)
+				all_targets.adjust_confusion(8 SECONDS)
+				all_targets.adjust_stutter(8 SECONDS)
 				all_targets.Knockdown(10 + level_current * 5) // Re-knock them down, the first one didn't work due to stunimmunity

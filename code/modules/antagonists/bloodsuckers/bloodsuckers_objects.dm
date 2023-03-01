@@ -62,7 +62,7 @@
 //////////////////////
 
 /datum/antagonist/bloodsucker/proc/RemoveVampOrgans()
-	var/obj/item/organ/heart/newheart = owner.current.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/newheart = owner.current.getorganslot(ORGAN_SLOT_HEART)
 	if(newheart)
 		qdel(newheart)
 	newheart = new()
@@ -213,7 +213,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/in_use = FALSE
 
-/obj/item/book/kindred/Initialize()
+/obj/item/kindred/Initialize()
 	. = ..()
 	AddComponent(/datum/component/stationloving, FALSE, TRUE)
 
@@ -230,7 +230,7 @@
  *	# Attacking someone with the Book
  */
 // target is the person being hit here
-/obj/item/book/kindred/afterattack(mob/living/target, mob/living/user, flag, params)
+/obj/item/kindred/afterattack(mob/living/target, mob/living/user, flag, params)
 	. = ..()
 	// Curator/Tremere using it
 	if(HAS_TRAIT(user, TRAIT_BLOODSUCKER_HUNTER))
@@ -238,7 +238,7 @@
 			return
 		user.visible_message(span_notice("[user] begins to quickly look through [src], repeatedly looking back up at [target]."))
 		in_use = TRUE
-		if(!do_mob(user, target, 3 SECONDS, NONE, TRUE))
+		if(!do_after(user, 3 SECONDS, target, NONE, TRUE))
 			to_chat(user, span_notice("You quickly close [src]."))
 			in_use = FALSE
 			return

@@ -29,7 +29,7 @@
 			* Due to growing more feral you've also strayed away from other bloodsuckers and will only be able to maintain one vassal.\n\
 			* Finally, your Favorite Vassal will gain the Minor Beast Form ability to help you in combat."))
 		AddHumanityLost(22.4)
-		BuyPower(new /datum/action/bloodsucker/gangrel/transform)
+		BuyPower(new /datum/action/cooldown/bloodsucker/gangrel/transform)
 		bloodsucker.faction |= "bloodhungry" //i love animals i love animals
 		/*if(CLAN_LASOMBRA)
 			my_clan = CLAN_LASOMBRA

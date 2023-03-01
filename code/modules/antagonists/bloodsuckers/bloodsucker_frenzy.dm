@@ -27,7 +27,6 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = -1
 	tick_interval = 10
-	examine_text = "<span class='notice'>They seem... inhumane, and feral!</span>"
 	alert_type = /atom/movable/screen/alert/status_effect/frenzy
 	/// Store whether they were an advancedtooluser, to give the trait back upon exiting.
 	var/was_tooluser = FALSE
@@ -88,7 +87,7 @@
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/morbin, TRUE)
 	bloodsuckerdatum.frenzygrab.remove(user)
 	owner.remove_client_colour(/datum/client_colour/cursed_heart_blood)
-	owner.Dizzy(3 SECONDS)
+	owner.adjust_dizzy(3 SECONDS)
 	owner.Paralyze(2 SECONDS)
 	user.physiology.stamina_mod /= 0.4
 

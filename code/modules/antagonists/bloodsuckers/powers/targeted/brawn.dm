@@ -119,7 +119,8 @@
 	if(isliving(target_atom))
 		var/mob/living/target = target_atom
 		var/mob/living/carbon/carbonuser = user
-		var/hitStrength = carbonuser.dna.species.punchdamagehigh * 1.25 + 2
+		var/obj/item/bodypart/arm = carbonuser.get_active_hand()
+		var/hitStrength = arm.unarmed_damage_high * 1.25 + 2
 		// Knockdown!
 		var/powerlevel = min(5, 1 + level_current)
 		if(rand(5 + powerlevel) >= 5)

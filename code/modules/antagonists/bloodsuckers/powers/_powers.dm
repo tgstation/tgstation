@@ -37,6 +37,7 @@
 
 // Modify description to add cost.
 /datum/action/cooldown/bloodsucker/New(Target)
+	base_background_icon_state = initial(background_icon_state)
 	. = ..()
 	cooldown_time = cooldown
 	UpdateDesc()
@@ -144,7 +145,7 @@
 	var/this_cooldown
 	if(!power_flags & BP_AM_STATIC_COOLDOWN)
 		this_cooldown = max(initial(cooldown) / 2, initial(cooldown) - (initial(cooldown) / 16 * (level_current-1)))
-
+		cooldown = this_cooldown
 	. = ..()
 
 /datum/action/cooldown/bloodsucker/proc/CheckCanDeactivate()
@@ -195,3 +196,8 @@
 /datum/action/cooldown/bloodsucker/proc/RemoveAfterUse()
 	bloodsuckerdatum_power?.powers -= src
 	Remove(owner)
+
+/datum/action/cooldown/bloodsucker/is_action_active()
+	if(active)
+		return TRUE
+	return ..()
