@@ -25,6 +25,7 @@
 	possible_items = list(
 		/datum/objective_item/steal/low_risk/bartender_shotgun,
 		/datum/objective_item/steal/low_risk/fireaxe,
+		/datum/objective_item/steal/low_risk/big_crowbar,
 		/datum/objective_item/steal/low_risk/nullrod,
 	)
 
@@ -45,6 +46,9 @@
 		var/datum/objective_item/steal/target = pick_n_take(possible_items)
 		target = new target()
 		if(!target.TargetExists())
+			qdel(target)
+			continue
+		if(!target.owner_exists())
 			qdel(target)
 			continue
 		if(role.title in target.excludefromjob)

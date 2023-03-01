@@ -34,11 +34,9 @@
 	if (!length(item_owner))
 		return TRUE
 	for (var/mob/player as anything in GLOB.player_list)
-		if (!(player.mind?.assigned_role.title in item_owner))
-			continue
-		if (is_centcom_level(player.z))
-			continue
-		return TRUE
+		if ((player.mind?.assigned_role.title in item_owner) && !is_centcom_level(player.z))
+			return TRUE
+
 	return FALSE
 
 /datum/objective_item/steal/New()
@@ -67,15 +65,39 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel/add_stealing_item_objective()
 	ADD_STEAL_ITEM(src, /obj/item/gun/ballistic/shotgun/doublebarrel)
 
+// No item owner, list would be so long as to be functionally useless and they're in two very disparate locations on most maps
 /datum/objective_item/steal/low_risk/fireaxe
 	name = "a fire axe"
 	targetitem = /obj/item/fireaxe
-	excludefromjob = list(JOB_CHIEF_ENGINEER,JOB_STATION_ENGINEER,JOB_ATMOSPHERIC_TECHNICIAN)
-	item_owner = list(JOB_CHIEF_ENGINEER,JOB_STATION_ENGINEER,JOB_ATMOSPHERIC_TECHNICIAN)
+	excludefromjob = list(
+		JOB_ATMOSPHERIC_TECHNICIAN,
+		JOB_CAPTAIN,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_QUARTERMASTER,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_STATION_ENGINEER,
+	)
 	exists_on_map = TRUE
 
 /obj/item/fireaxe/add_stealing_item_objective()
 	ADD_STEAL_ITEM(src, /obj/item/fireaxe)
+
+/datum/objective_item/steal/low_risk/big_crowbar
+	name = "a mech removal tool"
+	targetitem = /obj/item/crowbar/mechremoval
+	excludefromjob = list(
+		JOB_RESEARCH_DIRECTOR,
+		JOB_SCIENTIST,
+		JOB_ROBOTICIST,
+	)
+	item_owner = list(JOB_ROBOTICIST)
+	exists_on_map = TRUE
+
+/obj/item/fireaxe/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/crowbar/mechremoval)
 
 /datum/objective_item/steal/low_risk/nullrod
 	name = "the chaplain's null rod"
