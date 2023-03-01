@@ -1,4 +1,4 @@
-/datum/action/bloodsucker/feed
+/datum/action/cooldown/bloodsucker/feed
 	name = "Feed"
 	desc = "Draw the heartsblood of living victims in your grasp. You will break the Masquerade if seen feeding."
 	button_icon_state = "power_feed"
@@ -42,14 +42,15 @@
 	var/warning_target_bloodvol = 99999
 	var/was_alive = FALSE
 
-/datum/action/bloodsucker/feed/CheckCanUse(mob/living/carbon/user)
+/datum/action/cooldown/bloodsucker/feed/CheckCanUse(mob/living/carbon/user, silent = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE
 
 	// Wearing mask
 	if(user.is_mouth_covered())
-		to_chat(owner, span_warning("Your mouth is covered!"))
+		if(!silent)
+			to_chat(owner, span_warning("Your mouth is covered!"))
 		return FALSE
 	// Find my Target!
 	if(!find_target())
@@ -58,7 +59,7 @@
 	return TRUE
 
 /// Called twice: validating a subtle victim, or validating your grapple victim.
-/datum/action/bloodsucker/feed/proc/ValidateTarget(mob/living/target)
+/datum/action/cooldown/bloodsucker/feed/proc/ValidateTarget(mob/living/target)
 	// Must have Target.
 	if(!target)//|| !ismob(target)
 		to_chat(owner, span_warning("You must be next to or grabbing a victim to feed from them."))
@@ -90,7 +91,7 @@
 	return TRUE
 
 /// If I'm not grabbing someone, find me someone nearby.
-/datum/action/bloodsucker/feed/proc/find_target()
+/datum/action/cooldown/bloodsucker/feed/proc/find_target()
 	// Default
 	feed_target = null
 	target_grappled = FALSE
@@ -138,7 +139,7 @@
 		feed_target = pick(targets_valid)
 		return TRUE
 
-/datum/action/bloodsucker/feed/ActivatePower()
+/datum/action/cooldown/bloodsucker/feed/ActivatePower()
 	. = ..()
 	var/mob/living/user = owner
 	// Checks: Step 1 - Am I SECRET or LOUD?
@@ -206,8 +207,8 @@
 		if(watchers.client \
 				&& !watchers.has_unlimited_silicon_privilege \
 				&& watchers.stat != DEAD \
-				&& watchers.eye_blind == 0 \
-				&& watchers.eye_blurry == 0 \
+				&& !watchers.is_blind() \
+				&& !watchers.has_status_effect(/datum/status_effect/eye_blur) \
 				&& !IS_BLOODSUCKER(watchers) \
 				&& !IS_VASSAL(watchers) \
 				&& !HAS_TRAIT(watchers, TRAIT_BLOODSUCKER_HUNTER))
@@ -225,7 +226,7 @@
 	ADD_TRAIT(user, TRAIT_MUTE, BLOODSUCKER_TRAIT) // My mouth is full!
 	user.Immobilize(10 SECONDS) // Prevents spilling blood accidentally.
 
-/datum/action/bloodsucker/feed/UsePower(mob/living/user)
+/datum/action/cooldown/bloodsucker/feed/UsePower(mob/living/user)
 	if(!ContinueActive(user, feed_target))
 		if(amSilent)
 			to_chat(user, span_warning("Your feeding has been interrupted... but [feed_target.p_they()] didn't seem to notice you."))
@@ -298,14 +299,14 @@
 		feed_target.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, TRUE)
 
 /// Check if we killed our target
-/datum/action/bloodsucker/feed/proc/CheckKilledTarget(mob/living/target)
+/datum/action/cooldown/bloodsucker/feed/proc/CheckKilledTarget(mob/living/target)
 	var/mob/living/user = owner
 	if(target && target.stat >= DEAD && ishuman(target))
 		user.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
 		bloodsuckerdatum_power.AddHumanityLost(10)
 
 /// NOTE: We only care about pulling if target started off that way. Mostly only important for Aggressive feed.
-/datum/action/bloodsucker/feed/ContinueActive(mob/living/user, mob/living/target)
+/datum/action/cooldown/bloodsucker/feed/ContinueActive(mob/living/user, mob/living/target)
 	if(!target)
 		return FALSE
 	if(!user.Adjacent(target))
@@ -315,14 +316,14 @@
 	return TRUE
 
 /// Bloodsuckers not affected by "the Kiss" of another vampire
-/datum/action/bloodsucker/feed/proc/ApplyVictimEffects(mob/living/target, first_hit = FALSE)
+/datum/action/cooldown/bloodsucker/feed/proc/ApplyVictimEffects(mob/living/target, first_hit = FALSE)
 	if(IS_BLOODSUCKER(target) || IS_VASSAL(target))
 		return
 	if(first_hit)
 		target.Unconscious(5 SECONDS,0)
 	target.Paralyze(40 + 5 * level_current)
 
-/datum/action/bloodsucker/feed/DeactivatePower()
+/datum/action/cooldown/bloodsucker/feed/DeactivatePower()
 	. = ..() // activate = FALSE
 
 	if(feed_target) // Check: Otherwise it runtimes if you fail to feed on someone.

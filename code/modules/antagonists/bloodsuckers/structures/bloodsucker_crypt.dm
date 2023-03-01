@@ -137,7 +137,6 @@
 	if(bloodsuckerdatum.task_blood_drank >= suckamount || sacrifices >= heartamount)
 		task_completed = TRUE
 	if(task_completed)
-		bloodsuckerdatum.task_memory = null
 		bloodsuckerdatum.current_task = FALSE
 		bloodsuckerdatum.bloodsucker_level_unspent++
 		bloodsuckerdatum.altar_uses++
@@ -165,7 +164,6 @@
 			if(3)
 				task = "sacrifice [heartamount] hearts by using them on the altar."
 				taskheart = TRUE
-		bloodsuckerdatum.task_memory += "<B>Current Rank Up Task</B>: [task]<br>"
 		bloodsuckerdatum.current_task = TRUE
 		to_chat(user, span_boldnotice("You have gained a new Task! Your task is to [task] Remember to collect it by using the blood altar!"))
 
@@ -180,8 +178,8 @@
 	if(!IS_BLOODSUCKER(user) && !IS_VASSAL(user))
 		return ..()
 	if(taskheart)
-		if(istype(H, /obj/item/organ/heart))
-			if(istype(H, /obj/item/organ/heart/gland))
+		if(istype(H, /obj/item/organ/internal/heart))
+			if(istype(H, /obj/item/organ/internal/heart/gland))
 				to_chat(usr, span_warning("This type of organ doesn't have blood to sustain the altar!"))
 				return ..()
 			to_chat(usr, span_notice("You feed the heart to the altar!"))
@@ -268,7 +266,7 @@
 		return
 	// Good to go - Buckle them!
 	use_lock = TRUE
-	if(do_mob(user, living_target, 5 SECONDS))
+	if(do_after(user, 5 SECONDS, living_target))
 		attach_victim(living_target, user)
 	use_lock = FALSE
 
@@ -309,7 +307,7 @@
 			)
 		// Monster hunters are used to this sort of stuff, they know how they work, which includes breaking others out
 		var/breakout_timer = IS_MONSTERHUNTER(user) ? 20 SECONDS : 10 SECONDS
-		if(!do_mob(user, buckled_mob, breakout_timer))
+		if(!do_after(user, breakout_timer, buckled_mob))
 			return
 	unbuckle_mob(buckled_mob)
 	. = ..()
@@ -335,7 +333,7 @@
 		return FALSE
 	var/mob/living/carbon/buckled_carbons = pick(buckled_mobs)
 	var/mob/living/L = user
-	if(!L.istate.harm)
+	if(!L.combat_mode)
 		if(istype(bloodsuckerdatum))
 			unbuckle_mob(buckled_carbons)
 			return FALSE
@@ -406,7 +404,7 @@
 		span_notice("[user] marks a bloody smear on [target]'s forehead and puts a wrist up to [target.p_their()] mouth!"),
 		span_notice("You paint a bloody marking across [target]'s forehead, place your wrist to [target.p_their()] mouth, and subject [target.p_them()] to the Dark Communion."),
 	)
-	if(!do_mob(user, src, 5 SECONDS))
+	if(!do_after(user, 5 SECONDS, src))
 		to_chat(user, span_danger("<i>The ritual has been interrupted!</i>"))
 		use_lock = FALSE
 		return
@@ -420,7 +418,7 @@
 		user.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, TRUE)
 		target.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, TRUE)
 		target.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, TRUE)
-		target.Jitter(15)
+		owner.set_timed_status_effect(1.5 SECONDS, /datum/status_effect/jitter)
 		INVOKE_ASYNC(target, /mob.proc/emote, "laugh")
 		//remove_victim(target) // Remove on CLICK ONLY!
 	use_lock = FALSE
@@ -458,7 +456,7 @@
 	/// Minimum 5 seconds.
 	torture_time = max(5 SECONDS, torture_time SECONDS)
 	/// Now run process.
-	if(!do_mob(user, target, torture_time * mult))
+	if(!do_after(user, torture_time * mult, target))
 		return FALSE
 	/// Success?
 	if(held_item)
@@ -469,7 +467,7 @@
 		span_userdanger("[user] performs a ritual, spilling some blood from your [target_string], shaking you up!"),
 	)
 	INVOKE_ASYNC(target, /mob.proc/emote, "scream")
-	target.Jitter(5)
+	owner.set_timed_status_effect(5 SECONDS, /datum/status_effect/jitter)
 	target.apply_damages(brute = torture_dmg_brute, burn = torture_dmg_burn, def_zone = (selected_bodypart ? selected_bodypart.body_zone : null)) // take_overall_damage(6,0)
 	return TRUE
 
@@ -484,7 +482,7 @@
 			to_chat(target, span_cultlarge("THE HORRIBLE PAIN! WHEN WILL IT END?!"))
 			var/list/torture_icons = list(
 				"Accept" = image(icon = 'icons/mob/actions/actions_bloodsucker.dmi', icon_state = "power_recup"),
-				"Refuse" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "stunbaton_active")
+				"Refuse" = image(icon = 'icons/obj/weapons/items_and_weapons.dmi', icon_state = "stunbaton_active")
 				)
 			var/torture_response = show_radial_menu(target, src, torture_icons, radius = 36, require_near = TRUE)
 			switch(torture_response)
@@ -593,7 +591,7 @@
 		/// We dont want Bloodsuckers or Vassals affected by this
 		if(IS_VASSAL(nearly_people) || IS_BLOODSUCKER(nearly_people))
 			continue
-		nearly_people.hallucination += 5
+		nearly_people.adjust_hallucinations_up_to(5 SECONDS, 60 SECONDS)
 		if(nearly_people.getStaminaLoss() >= 100)
 			continue
 		if(nearly_people.getStaminaLoss() >= 60)
@@ -601,7 +599,7 @@
 			nearly_people.adjustStaminaLoss(1) // keeps the slowness by constantly updating it
 		else
 			nearly_people.adjustStaminaLoss(10)
-		SEND_SIGNAL(nearly_people, COMSIG_ADD_MOOD_EVENT, "vampcandle", /datum/mood_event/vampcandle)
+		nearly_people.add_mood_event("vampcandle", /datum/mood_event/vampcandle)
 		to_chat(nearly_people, span_warning("<i>You start to feel extremely weak and drained.</i>"))
 /*
  *	# Candelabrum Ventrue Stuff
@@ -624,14 +622,14 @@
 			toggle()
 			return
 		var/mob/living/carbon/target = pick(buckled_mobs)
-		if(target.stat >= DEAD || !user.istate.harm)
+		if(target.stat >= DEAD || !user.combat_mode)
 			unbuckle_mob(target)
 			return
 		if(user.blood_volume >= 150)
 			switch(input("Do you wish to spend 150 Blood to deactivate [target]'s mindshield?") in list("Yes", "No"))
 				if("Yes")
 					user.blood_volume -= 150
-					if(!do_mob(user, target, 60 SECONDS))
+					if(!do_after(user, 60 SECONDS, target))
 						to_chat(user, span_danger("<i>The ritual has been interrupted!</i>"))
 						return FALSE
 					remove_loyalties(target)
@@ -656,7 +654,7 @@
 	if(!HAS_TRAIT(target, TRAIT_MINDSHIELD))
 		return
 	/// Good to go - Buckle them!
-	if(do_mob(user, target, 5 SECONDS))
+	if(do_after(user, 5 SECONDS, target))
 		attach_mob(target, user)
 
 /obj/structure/bloodsucker/candelabrum/proc/attach_mob(mob/living/target, mob/living/user)
@@ -703,7 +701,7 @@
 
 // Add rotating and armrest
 /obj/structure/bloodsucker/bloodthrone/Initialize()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
+	AddComponent(/datum/component/simple_rotation)
 	armrest = GetArmrest()
 	armrest.layer = ABOVE_MOB_LAYER
 	return ..()

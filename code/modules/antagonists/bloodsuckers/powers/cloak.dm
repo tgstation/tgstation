@@ -1,4 +1,4 @@
-/datum/action/bloodsucker/cloak
+/datum/action/cooldown/bloodsucker/cloak
 	name = "Cloak of Darkness"
 	desc = "Blend into the shadows and become invisible to the untrained and Artificial eye."
 	button_icon_state = "power_cloak"
@@ -16,16 +16,17 @@
 	var/was_running
 
 /// Must have nobody around to see the cloak
-/datum/action/bloodsucker/cloak/CheckCanUse(mob/living/carbon/user)
+/datum/action/cooldown/bloodsucker/cloak/CheckCanUse(mob/living/carbon/user, silent = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE
 	for(var/mob/living/watchers in viewers(9, owner) - owner)
-		to_chat(owner, span_warning("You can only vanish unseen."))
+		if(!silent)
+			to_chat(owner, span_warning("You can only vanish unseen."))
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/cloak/ActivatePower()
+/datum/action/cooldown/bloodsucker/cloak/ActivatePower()
 	. = ..()
 	var/mob/living/user = owner
 	was_running = (user.m_intent == MOVE_INTENT_RUN)
@@ -34,7 +35,7 @@
 	user.AddElement(/datum/element/digitalcamo)
 	to_chat(user, span_notice("You put your Cloak of Darkness on."))
 
-/datum/action/bloodsucker/cloak/UsePower(mob/living/user)
+/datum/action/cooldown/bloodsucker/cloak/UsePower(mob/living/user)
 	// Checks that we can keep using this.
 	. = ..()
 	if(!.)
@@ -46,7 +47,7 @@
 		user.toggle_move_intent()
 		user.adjustBruteLoss(rand(5,15))
 
-/datum/action/bloodsucker/cloak/ContinueActive(mob/living/user, mob/living/target)
+/datum/action/cooldown/bloodsucker/cloak/ContinueActive(mob/living/user, mob/living/target)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -56,7 +57,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/cloak/DeactivatePower()
+/datum/action/cooldown/bloodsucker/cloak/DeactivatePower()
 	. = ..()
 	var/mob/living/user = owner
 	animate(user, alpha = 255, time = 1 SECONDS)

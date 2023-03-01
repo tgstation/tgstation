@@ -8,7 +8,7 @@
  * 	Level 6: Causes the target to fall asleep
  */
 
-/datum/action/bloodsucker/targeted/mesmerize
+/datum/action/cooldown/bloodsucker/targeted/mesmerize
 	name = "Mesmerize"
 	desc = "Dominate the mind of a mortal."
 	button_icon_state = "power_mez"
@@ -30,26 +30,28 @@
 	power_activates_immediately = FALSE
 	prefire_message = "Whom will you subvert to your will?"
 
-/datum/action/bloodsucker/targeted/mesmerize/CheckCanUse(mob/living/carbon/user)
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/CheckCanUse(mob/living/carbon/user, silent = FALSE)
 	. = ..()
 	if(!.) // Default checks
 		return FALSE
 	if(!user.getorganslot(ORGAN_SLOT_EYES))
-		to_chat(user, span_warning("You have no eyes with which to mesmerize."))
+		if(!silent)
+			to_chat(user, span_warning("You have no eyes with which to mesmerize."))
 		return FALSE
 	// Check: Eyes covered?
 	if(istype(user) && (user.is_eyes_covered() && level_current <= 2) || !isturf(user.loc))
-		to_chat(user, span_warning("Your eyes are concealed from sight."))
+		if(!silent)
+			to_chat(user, span_warning("Your eyes are concealed from sight."))
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/targeted/mesmerize/CheckValidTarget(atom/target_atom)
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/CheckValidTarget(atom/target_atom)
 	. = ..()
 	if(!.)
 		return FALSE
 	return isliving(target_atom)
 
-/datum/action/bloodsucker/targeted/mesmerize/CheckCanTarget(atom/target_atom)
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/CheckCanTarget(atom/target_atom)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -71,12 +73,12 @@
 		to_chat(owner, span_warning("[current_target] has no eyes."))
 		return FALSE
 	// Target blind?
-	if(current_target.eye_blind > 0)
+	if(current_target.is_blind())
 		to_chat(owner, span_warning("[current_target] is blind."))
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/targeted/mesmerize/FireTargetedPower(atom/target_atom)
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/FireTargetedPower(atom/target_atom)
 	. = ..()
 	var/mob/living/target = target_atom
 	var/mob/living/user = owner
@@ -109,7 +111,7 @@
 		mesmerized.emp_act(EMP_HEAVY)
 	DeactivatePower()
 
-/datum/action/bloodsucker/targeted/mesmerize/proc/end_mesmerize(mob/living/user, mob/living/target)
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/end_mesmerize(mob/living/user, mob/living/target)
 	target.notransform = FALSE
 	REMOVE_TRAIT(target, TRAIT_MUTE, BLOODSUCKER_TRAIT)
 	// They Woke Up! (Notice if within view)

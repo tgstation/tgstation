@@ -1,12 +1,11 @@
-/datum/action/bloodsucker
+/datum/action/cooldown/bloodsucker
 	name = "Vampiric Gift"
 	desc = "A vampiric gift."
 	//This is the FILE for the background icon
 	button_icon = 'icons/mob/actions/actions_bloodsucker.dmi'
 	//This is the ICON_STATE for the background icon
 	background_icon_state = "vamp_power_off"
-	var/background_icon_state_on = "vamp_power_on"
-	var/background_icon_state_off = "vamp_power_off"
+	active_background_icon_state = "vamp_power_on"
 	background_icon = 'icons/mob/actions/actions_bloodsucker.dmi'
 	button_icon_state = "power_feed"
 	buttontooltipstyle = "cult"
@@ -24,10 +23,6 @@
 	/// Who can purchase the Power
 	var/purchase_flags = NONE // BLOODSUCKER_CAN_BUY|TREMERE_CAN_BUY|VASSAL_CAN_BUY|HUNTER_CAN_BUY
 
-	// COOLDOWNS //
-	///Timer between Power uses.
-	COOLDOWN_DECLARE(bloodsucker_power_cooldown)
-
 	// VARS //
 	/// If the Power is currently active.
 	var/active = FALSE
@@ -41,11 +36,12 @@
 	var/constant_bloodcost = 0
 
 // Modify description to add cost.
-/datum/action/bloodsucker/New(Target)
+/datum/action/cooldown/bloodsucker/New(Target)
 	. = ..()
+	cooldown_time = cooldown
 	UpdateDesc()
 
-/datum/action/bloodsucker/proc/UpdateDesc()
+/datum/action/cooldown/bloodsucker/proc/UpdateDesc()
 	desc = initial(desc)
 	if(bloodcost > 0)
 		desc += "<br><br><b>COST:</b> [bloodcost] Blood"
@@ -56,28 +52,21 @@
 	if(level_current > 0)
 		desc += "<br><br><b>LEVEL:</b><i> [name] is currently level [level_current].</i>"
 
-/datum/action/bloodsucker/Destroy()
+/datum/action/cooldown/bloodsucker/Destroy()
 	bloodsuckerdatum_power = null
 	return ..()
 
-/datum/action/bloodsucker/IsAvailable()
+/datum/action/cooldown/bloodsucker/IsAvailable()
 	return TRUE
 
-/datum/action/bloodsucker/Grant(mob/user)
+/datum/action/cooldown/bloodsucker/Grant(mob/user)
 	. = ..()
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(owner)
 	if(bloodsuckerdatum)
 		bloodsuckerdatum_power = bloodsuckerdatum
 
-/**
- * # NOTES
- *
- * click.dm <--- Where we can take over mouse clicks
- * spells.dm  /add_ranged_ability()  <--- How we take over the mouse click to use a power on a target.
- */
-
 //This is when we CLICK on the ability Icon, not USING.
-/datum/action/bloodsucker/Trigger(trigger_flags)
+/datum/action/cooldown/bloodsucker/Trigger(trigger_flags)
 	if(active && CheckCanDeactivate()) // Active? DEACTIVATE AND END!
 		DeactivatePower()
 		return FALSE
@@ -92,11 +81,14 @@
 		StartCooldown() // Must come AFTER UpdateButtonIcon(), otherwise icon will revert!
 	return TRUE
 
-/datum/action/bloodsucker/proc/CheckCanPayCost()
+/datum/action/cooldown/bloodsucker/IsAvailable()
+	CheckCanUse(owner, TRUE)
+
+/datum/action/cooldown/bloodsucker/proc/CheckCanPayCost(silent = FALSE)
 	if(!owner || !owner.mind)
 		return FALSE
 	// Cooldown?
-	if(!COOLDOWN_FINISHED(src, bloodsucker_power_cooldown))
+	if(!next_use_time <= world.time)
 		to_chat(owner, span_warning("[src] on cooldown!"))
 		return FALSE
 	// Have enough blood? Bloodsuckers in a Frenzy don't need to pay them
@@ -109,60 +101,56 @@
 	return TRUE
 
 ///Checks if the Power is available to use.
-/datum/action/bloodsucker/proc/CheckCanUse(mob/living/carbon/user)
+/datum/action/cooldown/bloodsucker/proc/CheckCanUse(mob/living/carbon/user, silent = FALSE)
 	if(!owner)
 		return FALSE
 	if(!isliving(user))
 		return FALSE
 	// Torpor?
 	if((check_flags & BP_CANT_USE_IN_TORPOR) && HAS_TRAIT(user, TRAIT_NODEATH))
-		to_chat(user, span_warning("Not while you're in Torpor."))
+		if(!silent)
+			to_chat(user, span_warning("Not while you're in Torpor."))
 		return FALSE
 	// Frenzy?
 	if((check_flags & BP_CANT_USE_IN_FRENZY) && (bloodsuckerdatum_power?.frenzied))
-		to_chat(user, span_warning("You cannot use powers while in a Frenzy!"))
+		if(!silent)
+			to_chat(user, span_warning("You cannot use powers while in a Frenzy!"))
 		return FALSE
 	// Stake?
 	if((check_flags & BP_CANT_USE_WHILE_STAKED) && user.AmStaked())
-		to_chat(user, span_warning("You have a stake in your chest! Your powers are useless."))
+		if(!silent)
+			to_chat(user, span_warning("You have a stake in your chest! Your powers are useless."))
 		return FALSE
 	// Conscious? -- We use our own (AB_CHECK_CONSCIOUS) here so we can control it more, like the error message.
 	if((check_flags & BP_CANT_USE_WHILE_UNCONSCIOUS) && user.stat != CONSCIOUS)
-		to_chat(user, span_warning("You can't do this while you are unconcious!"))
+		if(!silent)
+			to_chat(user, span_warning("You can't do this while you are unconcious!"))
 		return FALSE
 	// Incapacitated?
 	if((check_flags & BP_CANT_USE_WHILE_INCAPACITATED) && (user.incapacitated(ignore_restraints = TRUE, ignore_grab = TRUE)))
-		to_chat(user, span_warning("Not while you're incapacitated!"))
+		if(!silent)
+			to_chat(user, span_warning("Not while you're incapacitated!"))
 		return FALSE
 	// Constant Cost (out of blood)
 	if(constant_bloodcost > 0 && user.blood_volume <= 0)
-		to_chat(user, span_warning("You don't have the blood to upkeep [src]."))
+		if(!silent)
+			to_chat(user, span_warning("You don't have the blood to upkeep [src]."))
 		return FALSE
 	return TRUE
 
 /// NOTE: With this formula, you'll hit half cooldown at level 8 for that power.
-/datum/action/bloodsucker/proc/StartCooldown()
+/datum/action/cooldown/bloodsucker/StartCooldown()
 	// Calculate Cooldown (by power's level)
 	var/this_cooldown
-	if(power_flags & BP_AM_STATIC_COOLDOWN)
-		this_cooldown = cooldown
-	else
-		this_cooldown = max(cooldown / 2, cooldown - (cooldown / 16 * (level_current-1)))
+	if(!power_flags & BP_AM_STATIC_COOLDOWN)
+		this_cooldown = max(initial(cooldown) / 2, initial(cooldown) - (initial(cooldown) / 16 * (level_current-1)))
 
-	// Wait for cooldown
-	COOLDOWN_START(src, bloodsucker_power_cooldown, this_cooldown)
+	. = ..()
 
-/datum/action/bloodsucker/proc/CheckCanDeactivate()
+/datum/action/cooldown/bloodsucker/proc/CheckCanDeactivate()
 	return TRUE
 
-/datum/action/bloodsucker/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
-	. = ..()
-	button.color = !COOLDOWN_FINISHED(src, bloodsucker_power_cooldown) ? rgb(128,0,0,128) : rgb(255,255,255,255)
-	button.aplha = !COOLDOWN_FINISHED(src, bloodsucker_power_cooldown) ? 100 : 255
-	background_icon_state = active ? background_icon_state_on : background_icon_state_off
-	build_all_button_icons()
-
-/datum/action/bloodsucker/proc/PayCost()
+/datum/action/cooldown/bloodsucker/proc/PayCost()
 	// Bloodsuckers in a Frenzy don't have enough Blood to pay it, so just don't.
 	if(bloodsuckerdatum_power?.frenzied)
 		return
@@ -170,20 +158,20 @@
 	user.blood_volume -= bloodcost
 	bloodsuckerdatum_power?.update_hud()
 
-/datum/action/bloodsucker/proc/ActivatePower()
+/datum/action/cooldown/bloodsucker/proc/ActivatePower()
 	active = TRUE
 	if(power_flags & BP_AM_TOGGLE)
 		RegisterSignal(owner, COMSIG_LIVING_BIOLOGICAL_LIFE, .proc/UsePower)
 	owner.log_message("used [src].", LOG_ATTACK, color="red")
 
-/datum/action/bloodsucker/proc/DeactivatePower()
+/datum/action/cooldown/bloodsucker/proc/DeactivatePower()
 	if(power_flags & BP_AM_TOGGLE)
 		UnregisterSignal(owner, COMSIG_LIVING_BIOLOGICAL_LIFE)
 	active = FALSE
 	StartCooldown()
 
 ///Used by powers that are continuously active (That have BP_AM_TOGGLE flag)
-/datum/action/bloodsucker/proc/UsePower(mob/living/user)
+/datum/action/cooldown/bloodsucker/proc/UsePower(mob/living/user)
 	if(!active) // Power isn't active? Then stop here, so we dont keep looping UsePower for a non existent Power.
 		return FALSE
 	if(!ContinueActive(user)) // We can't afford the Power? Deactivate it.
@@ -195,7 +183,7 @@
 	return TRUE
 
 /// Checks to make sure this power can stay active
-/datum/action/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target)
+/datum/action/cooldown/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target)
 	if(!active)
 		return FALSE
 	if(!user)
@@ -204,6 +192,6 @@
 		return TRUE
 
 /// Used to unlearn Single-Use Powers
-/datum/action/bloodsucker/proc/RemoveAfterUse()
+/datum/action/cooldown/bloodsucker/proc/RemoveAfterUse()
 	bloodsuckerdatum_power?.powers -= src
 	Remove(owner)

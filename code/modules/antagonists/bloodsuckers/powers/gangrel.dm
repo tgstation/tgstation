@@ -1,11 +1,11 @@
-/datum/action/bloodsucker/gangrel
+/datum/action/cooldown/bloodsucker/gangrel
 	button_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
 	background_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
 	background_icon_state = "gangrel_power_off"
 	background_icon_state_on = "gangrel_power_on"
 	background_icon_state_off = "gangrel_power_off"
 
-/datum/action/bloodsucker/gangrel/transform
+/datum/action/cooldown/bloodsucker/gangrel/transform
 	name = "Transform"
 	desc = "Allows you to unleash your inner form and turn into something greater."
 	button_icon_state = "power_gangrel"
@@ -108,7 +108,7 @@
 	addtimer(CALLBACK(src, .proc/gib), 20 SECONDS)
 	..()
 
-/datum/action/bloodsucker/gangrel/transform/ActivatePower()
+/datum/action/cooldown/bloodsucker/gangrel/transform/ActivatePower()
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(/datum/antagonist/bloodsucker)
 	var/mob/living/carbon/human/user = owner
 	var/datum/species/user_species = user.dna.species
@@ -133,15 +133,15 @@
 				user.forceMove(gb)
 				gb.controller = user
 				user.mind.transfer_to(gb)
-				var/list/bat_powers = list(new /datum/action/bloodsucker/gangrel/transform_back,)
-				for(var/datum/action/bloodsucker/power in bloodsuckerdatum.powers)
-					if(istype(power, /datum/action/bloodsucker/targeted/haste))
-						bat_powers += new /datum/action/bloodsucker/targeted/haste/batdash
-					if(istype(power, /datum/action/bloodsucker/targeted/mesmerize))
-						bat_powers += new /datum/action/bloodsucker/targeted/bloodbolt
-					if(istype(power, /datum/action/bloodsucker/targeted/brawn))
-						bat_powers += new /datum/action/bloodsucker/gangrel/wingslam
-				for(var/datum/action/bloodsucker/power in bat_powers) 
+				var/list/bat_powers = list(new /datum/action/cooldown/bloodsucker/gangrel/transform_back,)
+				for(var/datum/action/cooldown/bloodsucker/power in bloodsuckerdatum.powers)
+					if(istype(power, /datum/action/cooldown/bloodsucker/targeted/haste))
+						bat_powers += new /datum/action/cooldown/bloodsucker/targeted/haste/batdash
+					if(istype(power, /datum/action/cooldown/bloodsucker/targeted/mesmerize))
+						bat_powers += new /datum/action/cooldown/bloodsucker/targeted/bloodbolt
+					if(istype(power, /datum/action/cooldown/bloodsucker/targeted/brawn))
+						bat_powers += new /datum/action/cooldown/bloodsucker/gangrel/wingslam
+				for(var/datum/action/cooldown/bloodsucker/power in bat_powers) 
 					power.Grant(gb)
 				QDEL_IN(gb, 2 MINUTES)
 				playsound(gb.loc, 'sound/items/toysqueak1.ogg', 50, 1)
@@ -153,13 +153,13 @@
 				user.forceMove(ww)
 				ww.controller = user
 				user.mind.transfer_to(ww)
-				var/datum/action/bloodsucker/gangrel/transform_back/E = new
+				var/datum/action/cooldown/bloodsucker/gangrel/transform_back/E = new
 				E.Grant(ww)
 				playsound(ww.loc, 'sound/weapons/slash.ogg', 50, 1)
 			to_chat(owner, span_notice("You transform into a feral beast!"))*/
 	. = ..()
 
-/datum/action/bloodsucker/gangrel/transform_back
+/datum/action/cooldown/bloodsucker/gangrel/transform_back
 	name = "Transform"
 	desc = "Regress back into a human."
 	button_icon_state = "power_gangrel"
@@ -171,7 +171,7 @@
 	purchase_flags = NONE
 	cooldown = 10 SECONDS
 
-/datum/action/bloodsucker/gangrel/transform_back/ActivatePower()
+/datum/action/cooldown/bloodsucker/gangrel/transform_back/ActivatePower()
 	var/mob/living/user = owner
 	if(!do_after(user, 10 SECONDS, user))
 		return
@@ -180,7 +180,7 @@
 	qdel(bs)
 	. = ..()
 
-/datum/action/bloodsucker/targeted/haste/batdash
+/datum/action/cooldown/bloodsucker/targeted/haste/batdash
 	name = "Flying Haste"
 	desc = "Propulse yourself into a position of advantage."
 	button_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
@@ -198,13 +198,13 @@
 	bloodcost = 0
 	cooldown = 15 SECONDS
 
-/datum/action/bloodsucker/targeted/haste/batdash/CheckCanUse(mob/living/carbon/user)
+/datum/action/cooldown/bloodsucker/targeted/haste/batdash/CheckCanUse(mob/living/carbon/user, silent = FALSE)
 	var/mob/living/L = user
 	if(L.stat == DEAD)
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/targeted/bloodbolt
+/datum/action/cooldown/bloodsucker/targeted/bloodbolt
 	name = "Blood Bolt"
 	desc = "Shoot a blood bolt to damage your foes."
 	button_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
@@ -222,13 +222,13 @@
 	bloodcost = 0
 	cooldown = 12.5 SECONDS
 
-/datum/action/bloodsucker/targeted/bloodbolt/CheckCanUse(mob/living/carbon/user)
+/datum/action/cooldown/bloodsucker/targeted/bloodbolt/CheckCanUse(mob/living/carbon/user, silent = FALSE)
 	var/mob/living/L = user
 	if(L.stat == DEAD)
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/targeted/bloodbolt/FireTargetedPower(atom/target_atom)
+/datum/action/cooldown/bloodsucker/targeted/bloodbolt/FireTargetedPower(atom/target_atom)
 	. = ..()
 
 	var/mob/living/user = owner
@@ -251,7 +251,7 @@
 	nodamage = FALSE
 	damage = 30
 	hitsound = 'sound/weapons/barragespellhit.ogg'
-	var/datum/action/bloodsucker/targeted/bloodbolt/bloodsucker_power
+	var/datum/action/cooldown/bloodsucker/targeted/bloodbolt/bloodsucker_power
 
 /obj/projectile/magic/bloodsucker/on_hit(target)
 	if(ismob(target))
@@ -262,7 +262,7 @@
 		return BULLET_ACT_HIT
 	. = ..()
 
-/datum/action/bloodsucker/gangrel/wingslam
+/datum/action/cooldown/bloodsucker/gangrel/wingslam
 	name = "Wing Slam"
 	desc = "Slams all foes next to you."
 	button_icon_state = "power_wingslam"
@@ -278,7 +278,7 @@
 	bloodcost = 0
 	cooldown = 10 SECONDS
 
-/datum/action/bloodsucker/gangrel/wingslam/ActivatePower()
+/datum/action/cooldown/bloodsucker/gangrel/wingslam/ActivatePower()
 	var/mob/living/user = owner
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(1, user))

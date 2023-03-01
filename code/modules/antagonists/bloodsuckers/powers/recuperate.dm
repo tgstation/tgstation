@@ -1,5 +1,5 @@
 /// Used by Vassals
-/datum/action/bloodsucker/recuperate
+/datum/action/cooldown/bloodsucker/recuperate
 	name = "Sanguine Recuperation"
 	desc = "Slowly heals you overtime using your master's blood, in exchange for some of your own blood and effort."
 	button_icon_state = "power_recup"
@@ -14,20 +14,21 @@
 	bloodcost = 1.5
 	cooldown = 10 SECONDS
 
-/datum/action/bloodsucker/recuperate/CheckCanUse(mob/living/carbon/user)
+/datum/action/cooldown/bloodsucker/recuperate/CheckCanUse(mob/living/carbon/user, silent = FALSE)
 	. = ..()
 	if(!.)
 		return
 	if(user.stat >= DEAD || user.incapacitated())
-		to_chat(user, "You are incapacitated...")
+		if(!silent)
+			to_chat(user, "You are incapacitated...")
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/recuperate/ActivatePower()
+/datum/action/cooldown/bloodsucker/recuperate/ActivatePower()
 	. = ..()
 	to_chat(owner, span_notice("Your muscles clench as your master's immortal blood mixes with your own, knitting your wounds."))
 
-/datum/action/bloodsucker/recuperate/UsePower(mob/living/carbon/human/user)
+/datum/action/cooldown/bloodsucker/recuperate/UsePower(mob/living/carbon/human/user)
 	. = ..()
 	if(!.)
 		return
@@ -47,12 +48,12 @@
 		for(var/obj/item/bodypart/part in user.bodyparts)
 			part.generic_bleedstacks--
 
-/datum/action/bloodsucker/recuperate/ContinueActive(mob/living/user, mob/living/target)
+/datum/action/cooldown/bloodsucker/recuperate/ContinueActive(mob/living/user, mob/living/target)
 	if(user.stat >= DEAD)
 		return FALSE
 	if(user.incapacitated())
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/recuperate/DeactivatePower()
+/datum/action/cooldown/bloodsucker/recuperate/DeactivatePower()
 	. = ..()

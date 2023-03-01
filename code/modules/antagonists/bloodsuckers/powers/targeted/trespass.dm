@@ -1,4 +1,4 @@
-/datum/action/bloodsucker/targeted/trespass
+/datum/action/cooldown/bloodsucker/targeted/trespass
 	name = "Trespass"
 	desc = "Become mist and advance two tiles in one direction. Useful for skipping past doors and barricades."
 	button_icon_state = "power_tres"
@@ -15,7 +15,7 @@
 	//target_range = 2
 	var/turf/target_turf // We need to decide where we're going based on where we clicked. It's not actually the tile we clicked.
 
-/datum/action/bloodsucker/targeted/trespass/CheckCanUse(mob/living/carbon/user)
+/datum/action/cooldown/bloodsucker/targeted/trespass/CheckCanUse(mob/living/carbon/user)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -24,7 +24,7 @@
 	return TRUE
 
 
-/datum/action/bloodsucker/targeted/trespass/CheckValidTarget(atom/target_atom)
+/datum/action/cooldown/bloodsucker/targeted/trespass/CheckValidTarget(atom/target_atom)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -34,7 +34,7 @@
 	return TRUE // All we care about is destination. Anything you click is fine.
 
 
-/datum/action/bloodsucker/targeted/trespass/CheckCanTarget(atom/target_atom)
+/datum/action/cooldown/bloodsucker/targeted/trespass/CheckCanTarget(atom/target_atom)
 	// NOTE: Do NOT use ..()! We don't want to check distance or anything.
 
 	// Get clicked tile
@@ -58,7 +58,7 @@
 
 	return TRUE
 
-/datum/action/bloodsucker/targeted/trespass/FireTargetedPower(atom/target_atom)
+/datum/action/cooldown/bloodsucker/targeted/trespass/FireTargetedPower(atom/target_atom)
 	. = ..()
 
 	// Find target turf, at or below Atom

@@ -1,4 +1,4 @@
-/datum/action/bloodsucker/targeted/lunge
+/datum/action/cooldown/bloodsucker/targeted/lunge
 	name = "Predatory Lunge"
 	desc = "Spring at a humanoid to grapple them without warning, or tear the dead's heart out. Attacks from concealment or the rear may even knock them down if strong enough."
 	button_icon_state = "power_lunge"
@@ -22,24 +22,25 @@
  *	Level 3: Grapple 3 from Shadows
  */
 
-/datum/action/bloodsucker/targeted/lunge/CheckCanUse(mob/living/carbon/user)
+/datum/action/cooldown/bloodsucker/targeted/lunge/CheckCanUse(mob/living/carbon/user, silent = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE
 	/// Are we being grabbed?
 	if(user.pulledby && user.pulledby.grab_state >= GRAB_AGGRESSIVE)
-		to_chat(user, span_warning("You're being grabbed!"))
+		if(!silent)
+			to_chat(user, span_warning("You're being grabbed!"))
 		return FALSE
 	return TRUE
 
 /// Check: Are we lunging at a person?
-/datum/action/bloodsucker/targeted/lunge/CheckValidTarget(atom/target_atom)
+/datum/action/cooldown/bloodsucker/targeted/lunge/CheckValidTarget(atom/target_atom)
 	. = ..()
 	if(!.)
 		return FALSE
 	return isliving(target_atom)
 
-/datum/action/bloodsucker/targeted/lunge/CheckCanTarget(atom/target_atom)
+/datum/action/cooldown/bloodsucker/targeted/lunge/CheckCanTarget(atom/target_atom)
 	// Default Checks
 	. = ..()
 	if(!.)
@@ -55,7 +56,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/targeted/lunge/FireTargetedPower(atom/target_atom)
+/datum/action/cooldown/bloodsucker/targeted/lunge/FireTargetedPower(atom/target_atom)
 	. = ..()
 	var/mob/living/user = owner
 	var/mob/living/carbon/target = target_atom
@@ -76,7 +77,7 @@
 	lunge_end(target)
 	PowerActivatedSuccessfully()
 
-/datum/action/bloodsucker/targeted/lunge/proc/prepare_target_lunge(atom/target_atom)
+/datum/action/cooldown/bloodsucker/targeted/lunge/proc/prepare_target_lunge(atom/target_atom)
 	START_PROCESSING(SSprocessing, src)
 	to_chat(owner, span_notice("You prepare to lunge!"))
 	//animate them shake
@@ -96,7 +97,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 	return TRUE
 
-/datum/action/bloodsucker/targeted/lunge/process()
+/datum/action/cooldown/bloodsucker/targeted/lunge/process()
 	if(prob(75))
 		owner.spin(8, 1)
 		owner.visible_message(
@@ -105,7 +106,7 @@
 			)
 		return
 
-/datum/action/bloodsucker/targeted/lunge/proc/lunge_end(atom/hit_atom)
+/datum/action/cooldown/bloodsucker/targeted/lunge/proc/lunge_end(atom/hit_atom)
 	var/mob/living/user = owner
 	var/mob/living/carbon/target = hit_atom
 	var/turf/target_turf = get_turf(target)
@@ -147,7 +148,7 @@
 		target.Knockdown(10 + level_current * 5)
 		target.Paralyze(0.1)
 
-/datum/action/bloodsucker/targeted/lunge/DeactivatePower()
+/datum/action/cooldown/bloodsucker/targeted/lunge/DeactivatePower()
 	var/mob/living/O = owner
 	O.SetImmobilized(0)
 	return ..()

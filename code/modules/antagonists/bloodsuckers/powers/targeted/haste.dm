@@ -3,7 +3,7 @@
  * Level 3: Stun People Passed
  */
 
-/datum/action/bloodsucker/targeted/haste
+/datum/action/cooldown/bloodsucker/targeted/haste
 	name = "Immortal Haste"
 	desc = "Dash somewhere with supernatural speed. Those nearby may be knocked away, stunned, or left empty-handed."
 	button_icon_state = "power_speed"
@@ -23,31 +23,34 @@
 	/// If set, uses this speed in deciseconds instead of world.tick_lag
 	var/speed_override
 
-/datum/action/bloodsucker/targeted/haste/CheckCanUse(mob/living/carbon/user)
+/datum/action/cooldown/bloodsucker/targeted/haste/CheckCanUse(mob/living/carbon/user, silent = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE
 	// Being Grabbed
 	if(user.pulledby && user.pulledby.grab_state >= GRAB_AGGRESSIVE)
-		to_chat(user, span_warning("You're being grabbed!"))
+		if(!silent)
+			to_chat(user, span_warning("You're being grabbed!"))
 		return FALSE
 	if(!user.has_gravity(user.loc)) //We dont want people to be able to use this to fly around in space
-		to_chat(user, span_warning("You cannot dash while floating!"))
+		if(!silent)
+			to_chat(user, span_warning("You cannot dash while floating!"))
 		return FALSE
 	if(!(user.mobility_flags & MOBILITY_STAND))
-		to_chat(user, span_warning("You must be standing to tackle!"))
+		if(!silent)
+			to_chat(user, span_warning("You must be standing to tackle!"))
 		return FALSE
 	return TRUE
 
 /// Anything will do, if it's not me or my square
-/datum/action/bloodsucker/targeted/haste/CheckValidTarget(atom/target_atom)
+/datum/action/cooldown/bFireTargetedPowerloodsucker/targeted/haste/CheckValidTarget(atom/target_atom)
 	. = ..()
 	if(!.)
 		return FALSE
 	return target_atom.loc != owner.loc
 
 /// This is a non-async proc to make sure the power is "locked" until this finishes.
-/datum/action/bloodsucker/targeted/haste/FireTargetedPower(atom/target_atom)
+/datum/action/cooldown/bloodsucker/targeted/haste/FireTargetedPower(atom/target_atom)
 	. = ..()
 	hit = list()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
@@ -80,7 +83,7 @@
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 	hit = null
 
-/datum/action/bloodsucker/targeted/haste/proc/on_move()
+/datum/action/cooldown/bloodsucker/targeted/haste/proc/on_move()
 	for(var/mob/living/all_targets in dview(1, get_turf(owner)))
 		if(!hit[all_targets] && (all_targets != owner))
 			hit[all_targets] = TRUE
@@ -90,10 +93,10 @@
 			all_targets.spin(10, 1)
 			if(IS_MONSTERHUNTER(all_targets) && HAS_TRAIT(all_targets, TRAIT_STUNIMMUNE))
 				to_chat(all_targets, "Knocked down!")
-				for(var/datum/action/bloodsucker/power in all_targets.actions)
+				for(var/datum/action/cooldown/bloodsucker/power in all_targets.actions)
 					if(power.active)
 						power.DeactivatePower()
-				all_targets.Jitter(20)
+				all_targets.set_timed_status_effect(2 SECONDS, /datum/status_effect/jitter)
 				all_targets.set_confusion(max(8, all_targets.get_confusion()))
-				all_targets.stuttering = max(8, all_targets.stuttering)
+				all_targets.adjust_timed_status_effect(8 SECONDS, /datum/status_effect/speech/stutter)
 				all_targets.Knockdown(10 + level_current * 5) // Re-knock them down, the first one didn't work due to stunimmunity

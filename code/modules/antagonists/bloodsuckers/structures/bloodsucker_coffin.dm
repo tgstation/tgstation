@@ -236,7 +236,7 @@
 		user.visible_message(
 			span_notice("[user] tries to pry the lid off of [src] with [item]."),
 			span_notice("You begin prying the lid off of [src] with [item]. This should take about [DisplayTimeText(pry_time)]."))
-		if(!do_mob(user, src, pry_time))
+		if(!do_after(user, pry_time, src))
 			return
 		bust_open()
 		user.visible_message(
@@ -285,7 +285,7 @@
 			return
 		// Broken? Let's fix it.
 		to_chat(resident, span_notice("The secret latch to lock [src] from the inside is broken. You set it back into place..."))
-		if(!do_mob(resident, src, 5 SECONDS))
+		if(!do_after(resident, 5 SECONDS, src))
 			to_chat(resident, span_notice("You fail to fix [src]'s mechanism."))
 			return
 		to_chat(resident, span_notice("You fix the mechanism and lock it."))

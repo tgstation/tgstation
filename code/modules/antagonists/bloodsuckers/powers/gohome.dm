@@ -1,4 +1,4 @@
-/datum/action/bloodsucker/gohome
+/datum/action/cooldown/bloodsucker/gohome
 	name = "Vanishing Act"
 	desc = "As dawn aproaches, disperse into mist and return directly to your Lair.<br><b>WARNING:</b> You will drop <b>ALL</b> of your possessions if observed by mortals."
 	button_icon_state = "power_gohome"
@@ -16,23 +16,24 @@
 	bloodcost = 100
 	cooldown = 100 SECONDS
 
-/datum/action/bloodsucker/gohome/CheckCanUse(mob/living/carbon/user)
+/datum/action/cooldown/bloodsucker/gohome/CheckCanUse(mob/living/carbon/user, silent = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE
 	/// Have No Lair (NOTE: You only got this power if you had a lair, so this means it's destroyed)
 	if(!istype(bloodsuckerdatum_power) || !bloodsuckerdatum_power.coffin)
-		to_chat(owner, span_warning("Your coffin has been destroyed!"))
+		if(!silent)
+			to_chat(owner, span_warning("Your coffin has been destroyed!"))
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/gohome/proc/flicker_lights(flicker_range, beat_volume)
+/datum/action/cooldown/bloodsucker/gohome/proc/flicker_lights(flicker_range, beat_volume)
 	for(var/obj/machinery/light/nearby_lights in view(flicker_range, get_turf(owner)))
 		nearby_lights.flicker(5)
 	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', beat_volume, 1)
 
 /// IMPORTANT: Check for lair at every step! It might get destroyed.
-/datum/action/bloodsucker/gohome/ActivatePower()
+/datum/action/cooldown/bloodsucker/gohome/ActivatePower()
 	. = ..()
 	to_chat(owner, span_notice("You focus on separating your consciousness from your physical form..."))
 	/// STEP ONE: Flicker Lights
