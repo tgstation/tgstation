@@ -309,7 +309,7 @@
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "oL" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
