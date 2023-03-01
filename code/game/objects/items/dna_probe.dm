@@ -38,7 +38,7 @@
 	if (isitem(target))
 		. |= AFTERATTACK_PROCESSED_ITEM
 
-	if(istype(target, /obj/machinery/dna_vault) && !dna_vault_ref)
+	if(istype(target, /obj/machinery/dna_vault) && !dna_vault_ref?.resolve())
 		try_linking_vault(target, user)
 	else
 		scan_dna(target, user)
@@ -61,7 +61,7 @@
 		var/obj/machinery/hydroponics/hydro_tray = target
 		if(!hydro_tray.myseed)
 			return
-		if(our_vault?.plant_dna[hydro_tray.myseed.type])
+		if(our_vault.plant_dna[hydro_tray.myseed.type])
 			to_chat(user, span_notice("Plant data is already present in vault storage."))
 			return
 		if(stored_dna_plants[hydro_tray.myseed.type])
@@ -75,7 +75,7 @@
 		balloon_alert(user, "data added")
 	else if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if(our_vault?.human_dna[human_target.dna.unique_identity])
+		if(our_vault.human_dna[human_target.dna.unique_identity])
 			to_chat(user, span_notice("Humanoid data already present in vault storage."))
 			return
 		if(stored_dna_human[human_target.dna.unique_identity])
@@ -92,7 +92,7 @@
 		var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
 		if(isanimal_or_basicmob(target) || is_type_in_typecache(target, non_simple_animals) || ismonkey(target))
 			var/mob/living/living_target = target
-			if(our_vault?.animal_dna[living_target.type])
+			if(our_vault.animal_dna[living_target.type])
 				to_chat(user, span_notice("Animal data already present in vault storage."))
 				return
 			if(stored_dna_animal[living_target.type])

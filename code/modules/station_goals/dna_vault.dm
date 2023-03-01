@@ -139,6 +139,7 @@
 		check_goal()
 		playsound(src, 'sound/misc/compiler-stage1.ogg', 50)
 		to_chat(user, span_notice("[uploaded] new datapoints uploaded."))
+		return
 
 	return ..()
 
@@ -220,5 +221,5 @@
 		return
 	H.dna.add_mutation(associated_mutation[upgrade_type], MUT_OTHER, 0)
 	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
-	power_lottery[human_weakref] -= human_weakref
+	power_lottery[human_weakref] = 0
 	use_power(active_power_usage)
