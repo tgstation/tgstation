@@ -9,17 +9,17 @@
 */
 /datum/infuser_entry/gondola
 	name = "Gondola"
-	infuse_mob_name = "Gondola"
+	infuse_mob_name = "gondolid"
 	desc = "Gondolas, rare creatures that choose to simply observe instead of act, have quite a set of interesting qualities to take advantage of. For one, shrugging off a proper plasma fire?!"
-	threshold_desc = DNA_INFUSION_NO_THRESHOLD
+	threshold_desc = "you can shrug off most environmental conditions!"
 	qualities = list(
 		"pacify people with your hugs",
 		"enter a bliss-like state of zen",
 		"become too weak to pick up anything larger than a pen",
-		"stop caring about temperature... or pressure, or atmos...",
+		"stop caring about temperature... or pressure, or atmos... or much of anything...",
 	)
 	input_obj_or_mob = list(
-		/mob/living/basic/mothroach,
+		/mob/living/simple_animal/pet/gondola,
 	)
 	output_organs = list(
 		/obj/item/organ/internal/heart/gondola,

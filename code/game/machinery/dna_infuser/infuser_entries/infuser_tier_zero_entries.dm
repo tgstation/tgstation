@@ -48,7 +48,7 @@
 
 /datum/infuser_entry/mothroach
 	name = "Mothroach"
-	infuse_mob_name = "Mothroach"
+	infuse_mob_name = "lepi-blattidae"
 	desc = "So first they mixed moth and roach DNA to make mothroaches, and now we mix mothroach DNA with humanoids to make mothmen hybrids?"
 	threshold_desc = DNA_INFUSION_NO_THRESHOLD
 	qualities = list(

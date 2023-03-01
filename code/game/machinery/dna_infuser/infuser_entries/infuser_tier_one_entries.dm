@@ -6,9 +6,9 @@
 */
 /datum/infuser_entry/goliath
 	name = "Goliath"
-	infuse_mob_name = "Goliath"
+	infuse_mob_name = "goliath"
 	desc = "The guy who said 'Whoever fights monsters should see to it that in the process he does not become a monster' clearly didn't see what a goliath miner can do!"
-	threshold_desc = "You can walk on lava!"
+	threshold_desc = "you can walk on lava!"
 	qualities = list(
 		"can breath both the station and lavaland air but can't deal with pure O2",
 		"immune to ashstorms",

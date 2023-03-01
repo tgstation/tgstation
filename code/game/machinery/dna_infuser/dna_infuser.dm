@@ -46,15 +46,15 @@
 	. += span_notice("Subject enters the chamber, someone activates the machine. Voila! One of your organs has... changed!")
 	. += span_notice("Alt-click to eject the infusion source, if one is inside.")
 	if(max_tier_allowed < DNA_INFUSER_MAX_TIER)
-		. += span_boldnotice("Right now, the DNA Infuser can only infuse tier [max_tier_allowed] entries.")
+		. += span_boldnotice("Right now, the DNA Infuser can only infuse Tier [max_tier_allowed] entries.")
 	else
 		. += span_boldnotice("Maximum tier unlocked. All DNA entries are possible.")
 	. += span_notice("Examine further for more information.")
 
 /obj/machinery/dna_infuser/examine_more(mob/user)
 	. = ..()
-	. += span_notice("If you infuse a [DNA_MUTANT_TIER_ONE] entry until it unlocks the bonus, it will upgrade the maximum tier and allow more complicated infusions.")
-	. += span_notice("The maximum level it can reach is [DNA_INFUSER_MAX_TIER].")
+	. += span_notice("If you infuse a Tier [DNA_MUTANT_TIER_ONE] entry until it unlocks the bonus, it will upgrade the maximum tier and allow more complicated infusions.")
+	. += span_notice("The maximum level it can reach is Tier [DNA_INFUSER_MAX_TIER].")
 
 /obj/machinery/dna_infuser/interact(mob/user)
 	if(user == occupant)
