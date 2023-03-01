@@ -26,6 +26,7 @@
 		individual_entry_data["desc"] = entry.desc
 		individual_entry_data["threshold_desc"] = entry.threshold_desc
 		individual_entry_data["qualities"] = entry.qualities
+		individual_entry_data["tier"] = entry.tier
 		entry_data += list(individual_entry_data)
 	data["entries"] = entry_data
 	return data
