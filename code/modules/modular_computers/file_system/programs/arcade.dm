@@ -82,7 +82,7 @@
 	)
 
 /datum/computer_file/program/arcade/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["Hitpoints"] = boss_hp
 	data["PlayerHitpoints"] = player_hp
 	data["PlayerMP"] = player_mp
@@ -97,7 +97,6 @@
 	. = ..()
 	if(.)
 		return
-
 	usr.played_game()
 
 	var/gamerSkillLevel = 0
