@@ -1,0 +1,18 @@
+2023-03-01:
+  Jacquerel:
+  - bugfix: Opening a surprise egg with your mind will no longer teleport the contents
+  Maurukas:
+  - bugfix: A disconnected vent on the syndicate lavaland base is now connected
+  Melbert:
+  - bugfix: Off station roles can't purge the station's records
+  - bugfix: Purging records is logged again
+  - bugfix: Ninja security records hacking works
+  NamelessFairy:
+  - bugfix: You can now create wanted/missing posters using player created security
+      records. Due to a visual bug and usability issue photos above 1 by 1 meters
+      in size will no longer work for mugshots in records.
+  Remuluson2:
+  - bugfix: After pressure from Nanotrasen, Space Wizard Federation made glass and
+      bone knives non-conductive again.
+  scriptis:
+  - bugfix: removes an infinite powercell from tram maintenance

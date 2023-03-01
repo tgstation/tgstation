@@ -1,0 +1,9 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Being in an application now properly uses the tablet's battery."
+  - bugfix: "Messenger and Themify apps now close when minimized, so don't count towards the running app limit."
+  - bugfix: "Tablet UIs will now no longer spam open/close the UI when changing applications"
+  - bugfix: "Using the Eject ID button on tablets now ejects into your hand."
+  - bugfix: "Computers now have an Eject ID button"
+  - refactor: "Cut down a lot of copy paste in tablet & program code, now it's mostly done by the tablet."

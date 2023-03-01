@@ -128,7 +128,7 @@
 /obj/item/surprise_egg/attack_self(mob/user)
 	..()
 	to_chat(user, span_notice("You unwrap [src] and find a prize inside!"))
-	dispensePrize(get_turf(user))
+	dispensePrize(get_turf(src))
 	qdel(src)
 
 //Easter Recipes + food

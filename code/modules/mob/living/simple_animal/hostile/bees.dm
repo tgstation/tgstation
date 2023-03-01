@@ -34,7 +34,7 @@
 	response_harm_simple = "squash"
 	maxHealth = 10
 	health = 10
-	faction = list("hostile")
+	faction = list(FACTION_HOSTILE)
 	move_to_delay = 0
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE

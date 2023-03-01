@@ -197,9 +197,6 @@ ID_CONSOLE_JOBSLOT_DELAY 30
 ## allow players to initiate a restart vote
 #ALLOW_VOTE_RESTART
 
-## allow players to initiate a mode-change vote
-#ALLOW_VOTE_MODE
-
 ## allow players to initiate a map-change vote
 ALLOW_VOTE_MAP
 
@@ -307,6 +304,8 @@ INVOKE_YOUTUBEDL C:\Users\SpaceCarp\AppData\Local\Programs\Python\Python311\Scri
 #LOAD_JOBS_FROM_TXT
 
 ## Uncomment this to forbid admins from possessing the singularity.
+## It is intentional that Admins can edit this config, as its meant to serve as a deterrent/warning for admin abuse.
+## Add a `@` in front to lock admins from editing this.
 #FORBID_SINGULO_POSSESSION
 
 ## Uncomment to give admins the ability to send a maptext popup to players.
