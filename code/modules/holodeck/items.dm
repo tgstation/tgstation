@@ -52,7 +52,7 @@
 
 /obj/item/toy/dodgeball
 	name = "dodgeball"
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/toys/balls.dmi'
 	icon_state = "dodgeball"
 	inhand_icon_state = "dodgeball"
 	desc = "Used for playing the most violent and degrading of childhood games."
