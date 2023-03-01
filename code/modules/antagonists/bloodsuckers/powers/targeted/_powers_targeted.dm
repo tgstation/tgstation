@@ -26,7 +26,6 @@
 		return FALSE
 
 	ActivatePower()
-	UpdateButtonIcon()
 	// Create & Link Targeting Proc
 	var/mob/living/user = owner
 	if(user.ranged_ability)
@@ -41,7 +40,6 @@
 		UnregisterSignal(owner, COMSIG_LIVING_BIOLOGICAL_LIFE)
 	active = FALSE
 	DeactivateRangedAbility()
-	UpdateButtonIcon()
 //	..() // we don't want to pay cost here
 
 /// Only Turned off when CLICK is disabled...aka, when you successfully clicked

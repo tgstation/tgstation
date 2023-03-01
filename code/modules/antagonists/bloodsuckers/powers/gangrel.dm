@@ -1,6 +1,6 @@
 /datum/action/bloodsucker/gangrel
 	button_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
-	icon_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
+	background_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
 	background_icon_state = "gangrel_power_off"
 	background_icon_state_on = "gangrel_power_on"
 	background_icon_state_off = "gangrel_power_off"
@@ -113,7 +113,7 @@
 	var/mob/living/carbon/human/user = owner
 	var/datum/species/user_species = user.dna.species
 	user.Immobilize(10 SECONDS)
-	if(!do_mob(user, user, 10 SECONDS, 1))
+	if(!do_after(user, 10 SECONDS, user, TRUE))
 		return
 	switch(bloodsuckerdatum.total_blood_drank)
 		if(0 to 1500)
@@ -123,8 +123,6 @@
 			else
 				user.set_species(/datum/species/human/felinid)
 				playsound(user.loc, 'sound/effects/meow1.ogg', 50)
-				if(DIGITIGRADE in user_species.species_traits)
-					user_species.species_traits -= DIGITIGRADE
 			user_species.punchdamagehigh += 5.0 //stronk
 			user_species.armor += 30
 			to_chat(user, span_notice("You aren't strong enough to morph into something stronger! But you do certainly feel more feral and stronger than before."))
@@ -175,7 +173,7 @@
 
 /datum/action/bloodsucker/gangrel/transform_back/ActivatePower()
 	var/mob/living/user = owner
-	if(!do_mob(user, user, 10 SECONDS))
+	if(!do_after(user, 10 SECONDS, user))
 		return
 	var/mob/living/simple_animal/hostile/bloodsucker/bs
 	qdel(owner)
@@ -186,12 +184,12 @@
 	name = "Flying Haste"
 	desc = "Propulse yourself into a position of advantage."
 	button_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
-	icon_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
+	background_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
 	button_icon_state = "power_baste"
 	background_icon_state_on = "bat_power_on"
 	background_icon_state_off = "bat_power_off"
 	power_explanation = "<b>Flying Haste</b>:\n\
-		Makes you dash into the air, creating a smoke cloud at the end.\n\
+		Makes you dash into the air\n\
 		Helpful in situations where you either need to run away or engage in a crowd of people, works over tables.\n\
 		Created from your Immortal Haste ability."
 	power_flags = BP_AM_TOGGLE|BP_AM_STATIC_COOLDOWN
@@ -206,15 +204,11 @@
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/targeted/haste/batdash/FireTargetedPower(atom/target_atom)
-	. = ..()
-	do_smoke(2, owner.loc, smoke_type = /obj/effect/particle_effect/smoke/transparent) //so you can attack people after hasting
-
 /datum/action/bloodsucker/targeted/bloodbolt
 	name = "Blood Bolt"
 	desc = "Shoot a blood bolt to damage your foes."
 	button_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
-	icon_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
+	background_icon = 'icons/mob/actions/actions_gangrel_bloodsucker.dmi'
 	button_icon_state = "power_bolt"
 	background_icon_state_on = "bat_power_on"
 	background_icon_state_off = "bat_power_off"

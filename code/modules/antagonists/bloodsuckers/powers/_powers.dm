@@ -7,7 +7,7 @@
 	background_icon_state = "vamp_power_off"
 	var/background_icon_state_on = "vamp_power_on"
 	var/background_icon_state_off = "vamp_power_off"
-	icon_icon = 'icons/mob/actions/actions_bloodsucker.dmi'
+	background_icon = 'icons/mob/actions/actions_bloodsucker.dmi'
 	button_icon_state = "power_feed"
 	buttontooltipstyle = "cult"
 
@@ -142,9 +142,6 @@
 
 /// NOTE: With this formula, you'll hit half cooldown at level 8 for that power.
 /datum/action/bloodsucker/proc/StartCooldown()
-	// Alpha Out
-	button.color = rgb(128,0,0,128)
-	button.alpha = 100
 	// Calculate Cooldown (by power's level)
 	var/this_cooldown
 	if(power_flags & BP_AM_STATIC_COOLDOWN)
@@ -154,18 +151,16 @@
 
 	// Wait for cooldown
 	COOLDOWN_START(src, bloodsucker_power_cooldown, this_cooldown)
-	addtimer(CALLBACK(src, .proc/alpha_in), this_cooldown)
-
-/datum/action/bloodsucker/proc/alpha_in()
-	button.color = rgb(255,255,255,255)
-	button.alpha = 255
 
 /datum/action/bloodsucker/proc/CheckCanDeactivate()
 	return TRUE
 
-/datum/action/bloodsucker/UpdateButtonIcon(force = FALSE)
-	background_icon_state = active ? background_icon_state_on : background_icon_state_off
+/datum/action/cooldown/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
 	. = ..()
+	button.color = !COOLDOWN_FINISHED(src, bloodsucker_power_cooldown) ? rgb(128,0,0,128) : rgb(255,255,255,255)
+	button.aplha = !COOLDOWN_FINISHED(src, bloodsucker_power_cooldown) ? 100 : 255
+	background_icon_state = active ? background_icon_state_on : background_icon_state_off
+	build_all_button_icons()
 
 /datum/action/bloodsucker/proc/PayCost()
 	// Bloodsuckers in a Frenzy don't have enough Blood to pay it, so just don't.
@@ -180,13 +175,11 @@
 	if(power_flags & BP_AM_TOGGLE)
 		RegisterSignal(owner, COMSIG_LIVING_BIOLOGICAL_LIFE, .proc/UsePower)
 	owner.log_message("used [src].", LOG_ATTACK, color="red")
-	UpdateButtonIcon()
 
 /datum/action/bloodsucker/proc/DeactivatePower()
 	if(power_flags & BP_AM_TOGGLE)
 		UnregisterSignal(owner, COMSIG_LIVING_BIOLOGICAL_LIFE)
 	active = FALSE
-	UpdateButtonIcon()
 	StartCooldown()
 
 ///Used by powers that are continuously active (That have BP_AM_TOGGLE flag)

@@ -84,7 +84,7 @@
 		if(!target_user.can_inject(owner, BODY_ZONE_HEAD, 1) && target == owner.pulling && owner.grab_state < GRAB_AGGRESSIVE)
 			to_chat(owner, span_warning("Their suit is too thick to feed through."))
 			return FALSE
-		if(NOBLOOD in target_user.dna.species.species_traits)// || owner.get_blood_id() != target.get_blood_id())
+		if(TRAIT_NOBLOOD in target_user.dna.species.species_traits)// || owner.get_blood_id() != target.get_blood_id())
 			to_chat(owner, span_warning("Your victim's blood is not suitable for you to take."))
 			return FALSE
 	return TRUE
@@ -150,7 +150,7 @@
 		var/mob/living/simple_animal/mouse_target = feed_target
 		bloodsuckerdatum_power.AddBloodVolume(25)
 		to_chat(user, span_notice("You recoil at the taste of a lesser lifeform."))
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankblood", /datum/mood_event/drankblood_bad)
+		user.add_mood_event("drankblood", /datum/mood_event/drankblood_bad)
 		bloodsuckerdatum_power.AddHumanityLost(1)
 		DeactivatePower()
 		mouse_target.adjustBruteLoss(20)
@@ -177,7 +177,7 @@
 		to_chat(owner, span_notice("You pull [feed_target] close to you!"))
 
 	// Start the countdown
-	if(!do_mob(user, feed_target, feed_time, NONE, TRUE))
+	if(!do_after(user, feed_time, feed_target, NONE, TRUE))
 		DeactivatePower()
 		to_chat(owner, span_danger("Your feeding was interrupted!"))
 		return
@@ -264,11 +264,11 @@
 	// MOOD EFFECTS //
 	// Drank good blood? - GOOD
 	if(amount_taken > 5 && feed_target.stat < DEAD && ishuman(feed_target))
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankblood", /datum/mood_event/drankblood)
+		user.add_mood_event("drankblood", /datum/mood_event/drankblood)
 	// Dead Blood? - BAD
 	if(feed_target.stat >= DEAD)
 		if(ishuman(feed_target))
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankblood", /datum/mood_event/drankblood_dead)
+			user.add_mood_event("drankblood", /datum/mood_event/drankblood_dead)
 		if(!warning_target_dead)
 			to_chat(user, span_notice("Your victim is dead. [feed_target.p_their(TRUE)] blood barely nourishes you."))
 			warning_target_dead = TRUE
@@ -299,8 +299,9 @@
 
 /// Check if we killed our target
 /datum/action/bloodsucker/feed/proc/CheckKilledTarget(mob/living/target)
+	var/mob/living/user = owner
 	if(target && target.stat >= DEAD && ishuman(target))
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "drankkilled", /datum/mood_event/drankkilled)
+		user.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
 		bloodsuckerdatum_power.AddHumanityLost(10)
 
 /// NOTE: We only care about pulling if target started off that way. Mostly only important for Aggressive feed.
