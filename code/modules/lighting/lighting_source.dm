@@ -476,3 +476,364 @@
 #undef SETUP_CORNERS_REMOVAL_CACHE
 #undef SETUP_CORNERS_CACHE
 #undef GENERATE_MISSING_CORNERS
+
+#warn  a way to isolate them
+
+#warn IDEAS!
+// Half power maint lights, cull some maint lights
+// Bump up intensity of apcs
+// Bump range of screens/air alarms
+// Fix that stupid screen thing where it projects light/emissives even with nothing displayed
+
+/datum/light_source/proc/debug()
+	if(QDELETED(src) || isturf(source_atom))
+		return
+	source_atom.add_filter("debug_light", 0, outline_filter(2, COLOR_CENTCOM_BLUE))
+	var/static/uid = 0
+	if(!source_atom.render_target)
+		source_atom.render_target = "light_debug_[uid]"
+		uid++
+	var/atom/movable/render_step/color/above_light = new(null, source_atom.render_target, "#ffffff23")
+	SET_PLANE_EXPLICIT(above_light, ABOVE_LIGHTING_PLANE, source_atom)
+	source_atom.add_overlay(above_light)
+	QDEL_NULL(above_light)
+	var/atom/movable/lie_to_areas = source_atom
+	lie_to_areas.vis_contents += new /atom/movable/screen/light_button/toggle(source_atom)
+	lie_to_areas.vis_contents += new /atom/movable/screen/light_button/focus(source_atom)
+	lie_to_areas.vis_contents += new /atom/movable/screen/light_button/move(source_atom)
+
+/atom/movable/screen/light_button
+	icon = 'icons/testing/lighting_debug.dmi'
+	plane = HUD_PLANE
+	alpha = 100
+	var/datum/weakref/last_hovored_ref
+
+/atom/movable/screen/light_button/Initialize(mapload)
+	. = ..()
+	layer = loc.layer
+	RegisterSignal(loc, COMSIG_PARENT_QDELETING, PROC_REF(delete_self))
+
+/atom/movable/screen/light_button/proc/delete_self(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
+
+// Entered and Exited won't fire while you're dragging something, because you're still "holding" it
+// Very much byond logic, but I want nice for my highlighting, so we fake it with drag
+// Copypasta from action buttons
+/atom/movable/screen/light_button/MouseDrag(atom/over_object, src_location, over_location, src_control, over_control, params)
+	. = ..()
+	if(IS_WEAKREF_OF(over_object, last_hovored_ref))
+		return
+	var/atom/old_object
+	if(last_hovored_ref)
+		old_object = last_hovored_ref?.resolve()
+	else // If there's no current ref, we assume it was us. We also treat this as our "first go" location
+		old_object = src
+
+	if(old_object)
+		old_object.MouseExited(over_location, over_control, params)
+
+	last_hovored_ref = WEAKREF(over_object)
+	over_object.MouseEntered(over_location, over_control, params)
+
+/atom/movable/screen/light_button/MouseDrop(over_object)
+	. = ..()
+	last_hovored_ref = null
+
+/atom/movable/screen/light_button/MouseEntered(location, control, params)
+	. = ..()
+	animate(src, alpha = 255, time = 2)
+
+/atom/movable/screen/light_button/MouseExited(location, control, params)
+	. = ..()
+	animate(src, alpha = initial(alpha), time = 2)
+
+/atom/movable/screen/light_button/toggle
+	name = "Toggle Light"
+	desc = "Click to turn the light on/off"
+	icon_state = "light_enable"
+
+/atom/movable/screen/light_button/toggle/Initialize(mapload)
+	. = ..()
+	RegisterSignal(loc, COMSIG_ATOM_UPDATE_LIGHT_ON, PROC_REF(on_changed))
+	update_appearance()
+
+/atom/movable/screen/light_button/toggle/Click(location, control, params)
+	. = ..()
+	if(!check_rights_for(usr.client, R_DEBUG))
+		return
+	var/atom/movable/parent = loc
+	var/atom/movable/screen/light_button/focus/manager = locate(/atom/movable/screen/light_button/focus) in parent.vis_contents
+	manager.block_lights = FALSE
+	loc.set_light(l_on = !loc.light_on)
+	manager.block_lights = TRUE
+
+/atom/movable/screen/light_button/toggle/proc/on_changed()
+	SIGNAL_HANDLER
+	update_appearance()
+
+/atom/movable/screen/light_button/toggle/update_icon_state()
+	. = ..()
+	if(loc.light_on)
+		icon_state = "light_enable"
+	else
+		icon_state = "light_disable"
+
+/atom/movable/screen/light_button/focus
+	name = "Edit Light"
+	desc = "Click to open an editing menu for the light"
+	icon_state = "light_focus"
+	var/block_lights = TRUE
+
+/atom/movable/screen/light_button/focus/Initialize(mapload)
+	. = ..()
+	RegisterSignal(loc, COMSIG_ATOM_SET_LIGHT, PROC_REF(block_light))
+
+/atom/movable/screen/light_button/focus/proc/block_light(datum/source)
+	SIGNAL_HANDLER
+	if(block_lights)
+		return COMPONENT_BLOCK_LIGHT_UPDATE
+
+/atom/movable/screen/light_button/focus/Click(location, control, params)
+	. = ..()
+	ui_interact(usr)
+
+/atom/movable/screen/light_button/focus/ui_state(mob/user)
+	return GLOB.debug_state
+
+/atom/movable/screen/light_button/focus/can_interact()
+	return TRUE
+
+/atom/movable/screen/light_button/focus/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "LightController")
+		ui.open()
+
+/datum/light_template
+	/// User friendly name, to display clientside
+	var/name = ""
+	/// Description to display to the client
+	var/desc = ""
+	/// Unique id for this template
+	var/id = ""
+	/// What category to put this template in
+	var/category = "UNSORTED"
+	/// Icon to use to display this clientside
+	var/icon = ""
+	/// Icon state to display clientside
+	var/icon_state = ""
+	/// The light range we use
+	var/range = 0
+	/// The light power we use
+	var/power = 0
+	/// The light color we use
+	var/color = ""
+	/// Do not load this template if its type matches the ignore type
+	/// This lets us do subtypes more nicely
+	var/ignore_type = /datum/light_template
+
+#warn implement something to block light/lighting iconstate changes. Unsure how
+
+/datum/light_template/proc/mirror_onto(atom/light_holder)
+	light_holder.set_light(range, power, color)
+	light_holder.icon = icon
+	light_holder.icon_state = icon_state
+	RegisterSignal(light_holder, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(block_changes))
+	light_holder.cut_overlays(light_holder.managed_overlays)
+	light_holder.managed_overlays = list()
+
+/datum/light_template/proc/block_changes(datum/source)
+	SIGNAL_HANDLER
+	return COMSIG_ATOM_NO_UPDATE_NAME|COMSIG_ATOM_NO_UPDATE_DESC|COMSIG_ATOM_NO_UPDATE_ICON
+
+/atom/movable/screen/light_button/focus/ui_assets(mob/user)
+	return list(get_asset_datum(/datum/asset/spritesheet/lights))
+
+/atom/movable/screen/light_button/focus/ui_data()
+	var/list/data = list()
+
+	var/atom/parent = loc
+	var/list/light_info = list()
+	light_info["name"] = full_capitalize(parent.name)
+	light_info["on"] = parent.light_on
+	light_info["power"] = parent.light_power
+	light_info["range"] = parent.light_range
+	light_info["color"] = parent.light_color
+	data["light_info"] = light_info
+	data["on"] = parent.light_on
+
+	return data
+
+/atom/movable/screen/light_button/focus/ui_static_data(mob/user)
+	. = ..()
+	var/list/data = list()
+	data["templates"] = list()
+	data["category_ids"] = list()
+	for(var/id in GLOB.light_types)
+		var/datum/light_template/template = GLOB.light_types[id]
+		var/list/insert = list()
+		var/list/light_info = list()
+		light_info["name"] = template.name
+		light_info["power"] = template.power
+		light_info["range"] = template.range
+		light_info["color"] = template.color
+		insert["light_info"] = light_info
+		insert["description"] = template.desc
+		insert["id"] = template.id
+		insert["category"] = template.category
+		if(!data["category_ids"][template.category])
+			data["category_ids"][template.category] = list()
+		data["category_ids"][template.category] += id
+		data["templates"][template.id] = insert
+
+	var/datum/light_template/first_template = GLOB.light_types[GLOB.light_types[1]]
+	data["default_id"] = first_template.id
+	data["default_category"] = first_template.category
+	return data
+
+/atom/movable/screen/light_button/focus/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	block_lights = FALSE
+	var/atom/parent = loc
+	switch(action)
+		if("set_on")
+			parent.set_light(l_on = params["value"])
+		if("change_color")
+			var/chosen_color = input(ui.user, "Pick new color", "[parent]", parent.light_color) as color|null
+			if(chosen_color)
+				parent.set_light(l_color = chosen_color)
+		if("set_power")
+			parent.set_light(l_power = params["value"])
+		if("set_range")
+			parent.set_light(l_range = params["value"])
+		if("mirror_template")
+			var/datum/light_template/template = GLOB.light_types[params["id"]]
+			template.mirror_onto(parent)
+
+	block_lights = TRUE
+	return TRUE
+
+/atom/movable/screen/light_button/move
+	name = "Move Light"
+	desc = "Drag to move the light around"
+	icon_state = "light_move"
+	mouse_drag_pointer = 'icons/effects/mouse_pointers/light_drag.dmi'
+
+/atom/movable/screen/light_button/move/MouseDrop(over_object)
+	. = ..()
+	if(!ismovable(loc))
+		return
+	var/atom/movable/movable_owner = loc
+	movable_owner.forceMove(get_turf(over_object))
+
+/proc/debug_sources()
+	var/list/sum = list()
+	var/total = 0
+	for(var/datum/light_source/source)
+		source.debug()
+		sum[source.source_atom.type] += 1
+		total += 1
+
+	sum = sortTim(sum, /proc/cmp_numeric_asc, TRUE)
+	var/text = ""
+	for(var/type in sum)
+		text += "[type] = [sum[type]]\n"
+	text += "total iterated: [total]"
+	message_admins(text)
+	RegisterSignal(SSdcs, COMSIG_GLOB_LIGHTSOURCE_CREATED, )
+
+GLOBAL_LIST_INIT_TYPED(light_types, /datum/light_template, generate_light_types())
+
+/// Template that reads info off a light subtype
+/datum/light_template/read_light
+	ignore_type = /datum/light_template/read_light
+	/// Typepath to pull our icon/state and lighting details from
+	var/obj/machinery/light/path_to_read
+
+/datum/light_template/read_light/New()
+	. = ..()
+	desc ||= "[path_to_read]"
+	icon ||= initial(path_to_read.icon)
+	icon_state ||= initial(path_to_read.icon_state)
+	range = initial(path_to_read.brightness)
+	power = initial(path_to_read.bulb_power)
+	color = initial(path_to_read.bulb_colour)
+
+/datum/light_template/read_light/standard_bar
+	name = "Light Bar"
+	id = "light_bar"
+	category = "Bar"
+	path_to_read = /obj/machinery/light
+
+/datum/light_template/read_light/warm_bar
+	name = "Warm Bar"
+	id = "warm_bar"
+	category = "Bar"
+	path_to_read = /obj/machinery/light/warm
+
+/datum/light_template/read_light/cold_bar
+	name = "Cold Bar"
+	id = "cold_bar"
+	category = "Bar"
+	path_to_read = /obj/machinery/light/cold
+
+/datum/light_template/read_light/red_bar
+	name = "Red Bar"
+	id = "red_bar"
+	category = "Bar"
+	path_to_read = /obj/machinery/light/red
+
+/datum/light_template/read_light/blacklight_bar
+	name = "Black Bar"
+	id = "black_bar"
+	category = "Bar"
+	path_to_read = /obj/machinery/light/blacklight
+
+/datum/light_template/read_light/dim_bar
+	name = "Dim Bar"
+	id = "dim_bar"
+	category = "Bar"
+	path_to_read = /obj/machinery/light/very_dim
+
+/datum/light_template/read_light/standard_bulb
+	name = "Light Bulb"
+	id = "light_bulb"
+	category = "Bulb"
+	path_to_read = /obj/machinery/light/small
+
+/datum/light_template/read_light/red_bulb
+	name = "Red Bulb"
+	id = "red_bulb"
+	category = "Bulb"
+	path_to_read = /obj/machinery/light/small/red
+
+/datum/light_template/read_light/dimred_bulb
+	name = "Dim-Red Bulb"
+	id = "dimred_bulb"
+	category = "Bulb"
+	path_to_read = /obj/machinery/light/small/red/dim
+
+/datum/light_template/read_light/blacklight_bulb
+	name = "Black Bulb"
+	id = "black_bulb"
+	category = "Bulb"
+	path_to_read = /obj/machinery/light/small/blacklight
+
+/datum/light_template/read_light/standard_floor
+	name = "Floor Light"
+	id = "floor_light"
+	category = "Misc"
+	path_to_read = /obj/machinery/light/floor
+
+/proc/generate_light_types()
+	var/list/types = list()
+	for(var/datum/light_template/template_path as anything in typesof(/datum/light_template))
+		if(initial(template_path.ignore_type) == template_path)
+			continue
+		var/datum/light_template/template = new template_path()
+		types[template.id] = template
+	return types
