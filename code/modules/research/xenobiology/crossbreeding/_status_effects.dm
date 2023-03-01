@@ -841,7 +841,7 @@
 	var/faction_name = ""
 
 /datum/status_effect/stabilized/pink/on_apply()
-	faction_name = "pink_[REF(owner)]"
+	faction_name = FACTION_PINK_EXTRACT(owner)
 	owner.faction |= faction_name
 	to_chat(owner, span_notice("[linked_extract] pulses, generating a fragile aura of peace."))
 	return ..()
