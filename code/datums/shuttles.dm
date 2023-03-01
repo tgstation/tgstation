@@ -468,9 +468,9 @@
 
 /datum/map_template/shuttle/emergency/microwave
 	suffix = "microwave"
-	name = "MMMMMMMMMMMMMBEEPBEEPBEEP"
-	description = "Cooks food in record time! People, eh... not so much."
-	admin_notes = "Death by extreme heat... spawn at own peril."
+	name = "Donk Co. Microwave Deluxe 2000"
+	description = "Donk Co.'s brand new microwave shuttle! Cooks everything in record time! BUY NOW!!"
+	admin_notes = "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMBEEPBEEPBEEPBEEP"
 	emag_only = TRUE
 	credit_cost = EMAG_LOCKED_SHUTTLE_COST
 
