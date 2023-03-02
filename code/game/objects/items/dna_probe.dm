@@ -124,6 +124,7 @@
 		balloon_alert(user, "dna scanned")
 	else
 		return ..()
+
 /obj/item/dna_probe/carp_scanner/attack_self(mob/user, modifiers)
 	. = ..()
 	if(!is_special_character(user))
