@@ -11,7 +11,7 @@
 	purchase_flags = VASSAL_CAN_BUY
 	bloodcost = 15
 	constant_bloodcost = 0.1
-	cooldown = 10 SECONDS
+	cooldown_time = 10 SECONDS
 	// Outfit Vars
 //	var/list/original_items = list()
 	// Identity Vars

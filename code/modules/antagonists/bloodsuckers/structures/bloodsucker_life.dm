@@ -86,7 +86,7 @@
 		return
 	var/mob/living/carbon/user = owner.current
 	var/costMult = 1 // Coffin makes it cheaper
-	var/bruteheal = min(user.getBruteLoss_nonProsthetic(), actual_regen) // BRUTE: Always Heal
+	var/bruteheal = min(user.getBruteLoss(), actual_regen) // BRUTE: Always Heal
 	var/fireheal = 0 // BURN: Heal in Coffin while Fakedeath, or when damage above maxhealth (you can never fully heal fire)
 	/// Checks if you're in a coffin here, additionally checks for Torpor right below it.
 	var/amInCoffin = istype(user.loc, /obj/structure/closet/crate/coffin)
@@ -94,7 +94,7 @@
 		if(HAS_TRAIT(owner.current, TRAIT_MASQUERADE))
 			to_chat(user, span_warning("You will not heal while your Masquerade ability is active."))
 			return
-		fireheal = min(user.getFireLoss_nonProsthetic(), actual_regen)
+		fireheal = min(user.getFireLoss(), actual_regen)
 		mult *= 5 // Increase multiplier if we're sleeping in a coffin.
 		costMult /= 2 // Decrease cost if we're sleeping in a coffin.
 		user.extinguish_mob()
@@ -291,8 +291,8 @@
 		Torpor_Begin()
 		return
 	var/mob/living/carbon/user = owner.current
-	var/total_brute = user.getBruteLoss_nonProsthetic()
-	var/total_burn = user.getFireLoss_nonProsthetic()
+	var/total_brute = user.getBruteLoss()
+	var/total_burn = user.getFireLoss()
 	var/total_damage = total_brute + total_burn
 	/// Checks - Not daylight & Has more than 10 Brute/Burn & not already in Torpor
 	if(!clan.bloodsucker_sunlight.amDay && total_damage >= 10 && !HAS_TRAIT(owner.current, TRAIT_NODEATH))
@@ -300,8 +300,8 @@
 
 /datum/antagonist/bloodsucker/proc/Check_End_Torpor()
 	var/mob/living/carbon/user = owner.current
-	var/total_brute = user.getBruteLoss_nonProsthetic()
-	var/total_burn = user.getFireLoss_nonProsthetic()
+	var/total_brute = user.getBruteLoss()
+	var/total_burn = user.getFireLoss()
 	var/total_damage = total_brute + total_burn
 	// You are in a Coffin, so instead we'll check TOTAL damage, here.
 	if(istype(user.loc, /obj/structure/closet/crate/coffin))

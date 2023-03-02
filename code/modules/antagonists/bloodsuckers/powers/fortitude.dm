@@ -12,7 +12,7 @@
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY|BP_AM_COSTLESS_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
 	bloodcost = 30
-	cooldown = 8 SECONDS
+	cooldown_time = 8 SECONDS
 	constant_bloodcost = 0.2
 	var/was_running
 	var/fortitude_resist // So we can raise and lower your brute resist based on what your level_current WAS.

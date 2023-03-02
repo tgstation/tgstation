@@ -12,7 +12,7 @@
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
 	bloodcost = 10
-	cooldown = 10 SECONDS
+	cooldown_time = 10 SECONDS
 	target_range = 6
 	power_activates_immediately = FALSE
 

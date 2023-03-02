@@ -26,8 +26,6 @@
 	// VARS //
 	/// If the Power is currently active.
 	var/active = FALSE
-	/// Cooldown you'll have to wait between each use, decreases depending on level.
-	var/cooldown = 2 SECONDS
 	///Can increase to yield new abilities - Each Power ranks up each Rank
 	var/level_current = 0
 	///The cost to ACTIVATE this Power
@@ -38,7 +36,6 @@
 // Modify description to add cost.
 /datum/action/cooldown/bloodsucker/New(Target)
 	base_background_icon_state = initial(background_icon_state)
-	cooldown_time = cooldown
 	. = ..()
 	UpdateDesc()
 
@@ -141,8 +138,8 @@
 	// Calculate Cooldown (by power's level)
 	var/this_cooldown
 	if(!power_flags & BP_AM_STATIC_COOLDOWN)
-		this_cooldown = max(initial(cooldown) / 2, initial(cooldown) - (initial(cooldown) / 16 * (level_current-1)))
-		cooldown = this_cooldown
+		this_cooldown = max(initial(cooldown_time) / 2, initial(cooldown_time) - (initial(cooldown_time) / 16 * (level_current-1)))
+		cooldown_time = this_cooldown
 	. = ..()
 
 /datum/action/cooldown/bloodsucker/proc/CheckCanDeactivate()

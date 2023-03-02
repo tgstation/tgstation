@@ -25,7 +25,7 @@
 	check_flags = BP_CANT_USE_IN_FRENZY|BP_AM_COSTLESS_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY
 	bloodcost = 10
-	cooldown = 5 SECONDS
+	cooldown_time = 5 SECONDS
 	constant_bloodcost = 0.1
 
 /datum/action/cooldown/bloodsucker/masquerade/ActivatePower()

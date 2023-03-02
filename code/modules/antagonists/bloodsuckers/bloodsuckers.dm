@@ -421,6 +421,7 @@
 	// Purchase Power Prompt
 	var/list/options = list()
 	for(var/datum/action/cooldown/bloodsucker/power as anything in all_bloodsucker_powers)
+		to_chat(owner.current, "Amogus")
 		if(initial(power.purchase_flags) & BLOODSUCKER_CAN_BUY && !(locate(power) in powers))
 			options[initial(power.name)] = power
 

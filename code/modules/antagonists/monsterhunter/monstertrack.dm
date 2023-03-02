@@ -9,7 +9,7 @@
 	power_flags = NONE
 	check_flags = BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = NONE
-	cooldown = 30 SECONDS
+	cooldown_time = 30 SECONDS
 	bloodcost = 0
 	/// Removed, set to TRUE to re-add, either here to be a default function, or in-game through VV for neat Admin stuff -Willard
 	var/give_pinpointer = FALSE

@@ -12,7 +12,7 @@
 	check_flags = BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = NONE
 	bloodcost = 1.5
-	cooldown = 10 SECONDS
+	cooldown_time = 10 SECONDS
 
 /datum/action/cooldown/bloodsucker/recuperate/CheckCanUse(mob/living/carbon/user, silent = FALSE)
 	. = ..()

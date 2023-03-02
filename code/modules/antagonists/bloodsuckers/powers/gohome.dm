@@ -13,7 +13,7 @@
 	// You only get this once you've claimed a lair and Sol is near.
 	purchase_flags = NONE
 	bloodcost = 100
-	cooldown = 100 SECONDS
+	cooldown_time = 100 SECONDS
 
 /datum/action/cooldown/bloodsucker/gohome/CheckCanUse(mob/living/carbon/user, silent = FALSE)
 	. = ..()

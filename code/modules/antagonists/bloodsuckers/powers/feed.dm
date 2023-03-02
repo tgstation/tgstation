@@ -15,7 +15,7 @@
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_WHILE_STAKED|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY
 	bloodcost = 0
-	cooldown = 3 SECONDS
+	cooldown_time = 3 SECONDS
 
 	///Amount of times we were seen Feeding. If seen 3 times, we broke the Masquerade.
 	var/feeds_noticed = 0

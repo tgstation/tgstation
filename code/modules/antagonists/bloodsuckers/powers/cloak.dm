@@ -12,7 +12,7 @@
 	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
 	bloodcost = 5
 	constant_bloodcost = 0.2
-	cooldown = 5 SECONDS
+	cooldown_time = 5 SECONDS
 	var/was_running
 
 /// Must have nobody around to see the cloak

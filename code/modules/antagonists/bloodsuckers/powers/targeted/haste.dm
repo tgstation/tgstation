@@ -16,7 +16,7 @@
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
 	bloodcost = 6
-	cooldown = 12 SECONDS
+	cooldown_time = 12 SECONDS
 	target_range = 15
 	power_activates_immediately = TRUE
 	var/list/hit //current hit, set while power is in use as we can't pass the list as an extra calling argument in registersignal.

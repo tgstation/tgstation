@@ -17,7 +17,7 @@
 	check_flags = BP_AM_COSTLESS_UNCONSCIOUS
 	purchase_flags = NONE
 	bloodcost = 100
-	cooldown = 10 SECONDS
+	cooldown_time = 10 SECONDS
 
 /mob/living/simple_animal/hostile/bloodsucker
 	var/mob/living/controller
@@ -169,7 +169,7 @@
 	power_flags = BP_AM_TOGGLE|BP_AM_STATIC_COOLDOWN
 	check_flags = BP_AM_COSTLESS_UNCONSCIOUS
 	purchase_flags = NONE
-	cooldown = 10 SECONDS
+	cooldown_time = 10 SECONDS
 
 /datum/action/cooldown/bloodsucker/gangrel/transform_back/ActivatePower()
 	var/mob/living/user = owner
@@ -195,7 +195,7 @@
 	check_flags = NONE
 	purchase_flags = NONE
 	bloodcost = 0
-	cooldown = 15 SECONDS
+	cooldown_time = 15 SECONDS
 
 /datum/action/cooldown/bloodsucker/targeted/haste/batdash/CheckCanUse(mob/living/carbon/user, silent = FALSE)
 	var/mob/living/L = user
@@ -218,7 +218,7 @@
 	check_flags = NONE
 	purchase_flags = NONE
 	bloodcost = 0
-	cooldown = 12.5 SECONDS
+	cooldown_time = 12.5 SECONDS
 
 /datum/action/cooldown/bloodsucker/targeted/bloodbolt/CheckCanUse(mob/living/carbon/user, silent = FALSE)
 	var/mob/living/L = user
@@ -273,7 +273,7 @@
 	check_flags = NONE
 	purchase_flags = NONE
 	bloodcost = 0
-	cooldown = 10 SECONDS
+	cooldown_time = 10 SECONDS
 
 /datum/action/cooldown/bloodsucker/gangrel/wingslam/ActivatePower()
 	var/mob/living/user = owner

@@ -25,7 +25,7 @@
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
 	bloodcost = 30
-	cooldown = 20 SECONDS
+	cooldown_time = 20 SECONDS
 	target_range = 8
 	power_activates_immediately = FALSE
 	prefire_message = "Whom will you subvert to your will?"
