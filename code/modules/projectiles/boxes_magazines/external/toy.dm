@@ -21,7 +21,7 @@
 	name = "foam force pistol magazine"
 	icon_state = "9x19p"
 	max_ammo = 8
-	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	multiple_sprites = AMMO_BOX_MAX_AMMO_EMPTY
 
 /obj/item/ammo_box/magazine/toy/pistol/riot
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
