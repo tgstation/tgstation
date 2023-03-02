@@ -30,6 +30,7 @@
 	button_icon_state = "zap"
 	sound = 'sound/weapons/zapbang.ogg'
 	cooldown_time = 12 SECONDS
+	check_flags = AB_CHECK_CONSCIOUS
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 	antimagic_flags = NONE
