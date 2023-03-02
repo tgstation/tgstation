@@ -70,7 +70,7 @@
 	var/frenzies = 0
 
 	/// Static typecache of all bloodsucker powers.
-	var/static/list/all_bloodsucker_powers = typecacheof(/datum/action/cooldown/bloodsucker, ignore_root_path = TRUE)
+	var/static/list/all_bloodsucker_powers = subtypesof(/datum/action/cooldown/bloodsucker)
 	/// Antagonists that cannot be Vassalized no matter what
 	var/list/vassal_banned_antags = list(
 		/datum/antagonist/bloodsucker,
@@ -425,7 +425,7 @@
 			options[initial(power.name)] = power
 
 
-	if(!options)
+	if(options.len < 1)
 		to_chat(owner.current, span_notice("You grow more ancient by the night!"))
 	else
 		// Give them the UI to purchase a power.
