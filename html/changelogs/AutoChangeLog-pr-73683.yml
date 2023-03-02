@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Stabilized slime extracts will now once again work from inside modsuit storage.\nfix; Stabilized slime extracts will properly effect carp, spiders, bileworms, and other \"basic mobs\"."
