@@ -11,14 +11,14 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 4
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "aE" = (
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 5
 	},
 /obj/effect/landmark/basketball/team_spawn/home,
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "be" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -28,7 +28,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/arrow_ccw,
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "bA" = (
 /obj/structure/table/wood,
@@ -48,7 +48,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/filled/arrow_cw,
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "dr" = (
 /obj/effect/turf_decal/siding/wood/corner,
@@ -62,14 +62,13 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/filled/shrink_cw,
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "dJ" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 8
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "dM" = (
 /obj/effect/turf_decal/siding/wood{
@@ -83,7 +82,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/shrink_cw{
 	dir = 1
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "eS" = (
 /obj/effect/turf_decal/siding/wood{
@@ -96,7 +95,7 @@
 /obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
 	dir = 8
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "fi" = (
 /obj/item/kirbyplants{
@@ -130,13 +129,13 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 1
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "gk" = (
 /obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
 	dir = 4
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "gq" = (
 /obj/effect/turf_decal/stripes/white/line,
@@ -144,7 +143,7 @@
 /obj/effect/turf_decal/trimline/red/filled/shrink_ccw{
 	dir = 1
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "hf" = (
 /obj/effect/spawner/random/structure/billboard/nanotrasen,
@@ -164,7 +163,7 @@
 	dir = 9
 	},
 /obj/effect/landmark/basketball/team_spawn/away,
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "kc" = (
 /obj/effect/turf_decal/siding/wood{
@@ -176,21 +175,19 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 10
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 5
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "ku" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 5
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "kT" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -202,10 +199,7 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 8
 	},
-/turf/open/floor/noslip,
-/area/centcom/basketball)
-"lh" = (
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "ly" = (
 /obj/effect/turf_decal/siding/wood,
@@ -215,11 +209,10 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 6
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "lR" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -229,7 +222,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/dark_green/filled/warning,
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "mp" = (
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
@@ -238,7 +231,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "my" = (
 /obj/structure/table/wood,
@@ -253,7 +246,7 @@
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/turf_decal/trimline/blue/line,
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "nE" = (
 /obj/effect/turf_decal/siding/wood,
@@ -270,20 +263,19 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 4
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "oh" = (
 /obj/effect/turf_decal/stripes/white/line,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/blue/filled/warning,
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "oR" = (
 /obj/effect/turf_decal/tile/dark_green/half/contrasted,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "pu" = (
 /obj/structure/chair/plastic,
@@ -296,17 +288,16 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "rS" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "rU" = (
 /obj/effect/turf_decal/trimline/red/line{
@@ -318,19 +309,18 @@
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 1
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "sb" = (
 /obj/effect/turf_decal/stripes/white/line,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 6
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "su" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "tO" = (
 /turf/open/floor/plating,
@@ -349,17 +339,16 @@
 /obj/effect/turf_decal/trimline/red/filled/arrow_ccw{
 	dir = 1
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "uR" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 1
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "uW" = (
 /obj/effect/turf_decal/stripes/white/line,
@@ -367,7 +356,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/arrow_cw{
 	dir = 1
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "vo" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -382,7 +371,7 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 1
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "wZ" = (
 /obj/structure/table/wood,
@@ -390,11 +379,10 @@
 /turf/open/floor/wood,
 /area/centcom/basketball)
 "xP" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 4
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "zr" = (
 /obj/effect/landmark/basketball/team_spawn/referee,
@@ -410,7 +398,7 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 8
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "zZ" = (
 /obj/structure/table/wood,
@@ -443,7 +431,7 @@
 	dir = 10
 	},
 /obj/effect/landmark/basketball/team_spawn/away,
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "BJ" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -455,7 +443,7 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 1
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "Cv" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -468,7 +456,7 @@
 /obj/structure/hoop/minigame{
 	dir = 4
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "Cw" = (
 /turf/closed/indestructible/fakeglass,
@@ -502,7 +490,7 @@
 /obj/structure/hoop/minigame{
 	dir = 8
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "Ev" = (
 /mob/living/simple_animal/robot_customer,
@@ -530,11 +518,10 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 9
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "Ic" = (
 /obj/effect/turf_decal/trimline/red/line{
@@ -546,14 +533,14 @@
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 8
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "IA" = (
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 6
 	},
 /obj/effect/landmark/basketball/team_spawn/home,
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "JM" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -567,11 +554,11 @@
 /obj/effect/turf_decal/trimline/dark_green/filled/warning{
 	dir = 1
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "Lu" = (
 /obj/effect/turf_decal/tile/dark_green/anticorner/contrasted,
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "LI" = (
 /obj/structure/table/wood,
@@ -583,13 +570,12 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "LU" = (
 /obj/effect/turf_decal/stripes/white/line,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/red/filled/warning,
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "LV" = (
 /obj/structure/sign/poster/official/random/directional/west,
@@ -601,7 +587,7 @@
 	},
 /obj/effect/turf_decal/trimline/blue/corner,
 /obj/effect/turf_decal/trimline/blue/filled/corner,
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "MS" = (
 /obj/item/reagent_containers/cup/glass/trophy/silver_cup,
@@ -619,7 +605,7 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 2
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "Nt" = (
 /obj/effect/turf_decal/siding/wood{
@@ -634,11 +620,10 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 9
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "Om" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -650,7 +635,7 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 2
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "OB" = (
 /obj/structure/chair/plastic,
@@ -674,7 +659,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/shrink_ccw,
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "Qh" = (
 /obj/effect/turf_decal/siding/wood{
@@ -695,7 +680,7 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 4
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "Ql" = (
 /obj/structure/sign/poster/official/random/directional/east,
@@ -718,12 +703,11 @@
 /turf/open/floor/wood,
 /area/centcom/basketball)
 "TV" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 4
 	},
 /obj/effect/landmark/basketball/team_spawn/home,
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "Uq" = (
 /obj/machinery/vending/coffee,
@@ -731,11 +715,10 @@
 /area/centcom/basketball)
 "Uv" = (
 /obj/effect/turf_decal/stripes/white/line,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 10
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "Uy" = (
 /obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
@@ -768,7 +751,7 @@
 /obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
 	dir = 1
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "Xn" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -780,25 +763,23 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 10
 	},
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "YH" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 8
 	},
 /obj/effect/landmark/basketball/team_spawn/away,
-/turf/open/floor/noslip,
+/turf/open/floor/wood/parquet,
 /area/centcom/basketball)
 "YX" = (
 /obj/item/toy/basketball,
 /obj/effect/turf_decal/trimline/dark_green,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/noslip,
+/turf/open/floor/wood,
 /area/centcom/basketball)
 "ZM" = (
 /obj/structure/chair/plastic,
@@ -1033,11 +1014,11 @@ kc
 tX
 Cw
 dC
-lh
-lh
-lh
-lh
-lh
+tX
+tX
+tX
+tX
+tX
 gq
 Cw
 tX
@@ -1060,11 +1041,11 @@ Xn
 tX
 Cw
 dg
-lh
+tX
 Lu
 mp
 gk
-lh
+tX
 uH
 Cw
 tX
@@ -1168,11 +1149,11 @@ Vr
 tX
 Cw
 be
-lh
+tX
 eU
 qU
 Xm
-lh
+tX
 uW
 Cw
 hf
@@ -1195,11 +1176,11 @@ kc
 tX
 Cw
 Qa
-lh
-lh
-lh
-lh
-lh
+tX
+tX
+tX
+tX
+tX
 dS
 Cw
 tX
