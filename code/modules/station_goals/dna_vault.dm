@@ -221,5 +221,5 @@
 		return
 	H.dna.add_mutation(associated_mutation[upgrade_type], MUT_OTHER, 0)
 	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
-	power_lottery[human_weakref] = 0
+	power_lottery[human_weakref] = list()
 	use_power(active_power_usage)
