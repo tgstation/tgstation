@@ -191,14 +191,14 @@
 	gorilla.poll_for_gorilla()
 
 /datum/station_trait/birthday
-	name = "Crew Member Birthday"
+	name = "Employee Birthday"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 2
 	force = TRUE
 	show_in_report = TRUE
 	report_message = ""
 	trait_to_give = STATION_TRAIT_BIRTHDAY
-	var/mob/living/carbon/birthday_person
+	var/mob/living/carbon/human/birthday_person
 
 /datum/station_trait/birthday/New()
 	. = ..()
@@ -214,18 +214,40 @@
 	addtimer(CALLBACK(src, PROC_REF(announce_birthday)), 10 SECONDS)
 
 /datum/station_trait/birthday/proc/announce_birthday()
-	priority_announce("Woah its [birthday_person.name]'s birthday") // This is a temp message
+	priority_announce("Happy Birthday to [birthday_person ? birthday_person.name : "Employee Name"]! we hope you enjoy your [birthday_person ? thtotext(birthday_person.age) : "255th"] Birthday")
 	playsound(birthday_person, 'sound/items/party_horn.ogg', 50)
+	birthday_person.add_mood_event("birthday", /datum/mood_event/birthday)
 
 
 /datum/station_trait/birthday/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned_mob)
 	SIGNAL_HANDLER
 
-	var/obj/item/hat = pick(
-		/obj/item/clothing/head/costume/festive,
-		/obj/item/clothing/head/costume/festive/color,
-		/obj/item/clothing/head/cone,
-		)
+	var/obj/item/hat = pick_weight(list(
+		/obj/item/clothing/head/costume/festive = 1,
+		/obj/item/clothing/head/costume/festive/color = 6,
+		/obj/item/clothing/head/cone = 1,
+	))
 	hat = new hat(spawned_mob)
 	if(!spawned_mob.equip_to_slot_if_possible(hat, ITEM_SLOT_HEAD, disable_warning = TRUE))
 		spawned_mob.equip_to_slot_or_del(hat, ITEM_SLOT_BACKPACK)
+	var/obj/item/toy = pick_weight(list(
+		/obj/item/toy/balloon = 2,
+		/obj/item/sparkler = 2,
+		/obj/item/reagent_containers/spray/chemsprayer/party = 4,
+		/obj/item/storage/box/tail_pin = 1,
+	))
+	toy = new toy(spawned_mob)
+	spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_BACKPACK)
+	if(birthday_person) //Anyone who joins after the annoucement gets one of these.
+		var/obj/item/birthday_invite/birthday_invite = new(spawned_mob)
+		birthday_invite.setup_card(birthday_person.name)
+		spawned_mob.equip_to_slot_or_del(birthday_invite, ITEM_SLOT_HANDS)
+
+/obj/item/birthday_invite
+	name = "birthday invitation"
+	desc = "A card stating that its someone's birthday today."
+	resistance_flags = FLAMMABLE
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/birthday_invite/proc/setup_card(var/birthday_name)
+	desc = "A card stating that its [birthday_name]'s Birthday today."
