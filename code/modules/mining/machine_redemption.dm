@@ -156,6 +156,8 @@
 	else
 		return
 
+	SEND_SIGNAL(src, COMSIG_ORM_COLLECTED_ORE)
+
 	if(!console_notify_timer)
 		// gives 5 seconds for a load of ores to be sucked up by the ORM before it sends out request console notifications. This should be enough time for most deposits that people make
 		console_notify_timer = addtimer(CALLBACK(src, PROC_REF(send_console_message)), 5 SECONDS)

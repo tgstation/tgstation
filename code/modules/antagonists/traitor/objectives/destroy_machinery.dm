@@ -15,7 +15,7 @@
 	progression_maximum = 30 MINUTES
 
 	/// The possible target machinery and the jobs tied to each one.
-	applicable_jobs = list(
+	var/list/applicable_jobs = list(
 		JOB_STATION_ENGINEER = /obj/machinery/telecomms/hub,
 		JOB_SCIENTIST = /obj/machinery/rnd/server,
 	)

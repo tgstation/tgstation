@@ -18,12 +18,15 @@
 	var/maximum_allowed = 2
 	/// The possible target machinery and the jobs tied to each one.
 	var/list/applicable_jobs = list(
-		JOB_RESEARCH_DIRECTOR = /obj/machinery/rnd/production/protolathe/department/science,
-		JOB_CHIEF_MEDICAL_OFFICER = /obj/machinery/rnd/production/techfab/department/medical,
 		JOB_CHIEF_ENGINEER = /obj/machinery/rnd/production/protolathe/department/engineering,
+		JOB_CHIEF_MEDICAL_OFFICER = /obj/machinery/rnd/production/techfab/department/medical,
+		JOB_GENETICIST = /obj/machinery/computer/scan_consolenew,
 		JOB_HEAD_OF_PERSONNEL = /obj/machinery/rnd/production/techfab/department/service,
-		JOB_SHAFT_MINER = /obj/machinery/mineral/ore_redemption,
+		JOB_MEDICAL_DOCTOR = /obj/machinery/computer/operating,
 		JOB_QUARTERMASTER = /obj/machinery/rnd/production/techfab/department/cargo,
+		JOB_RESEARCH_DIRECTOR = /obj/machinery/rnd/production/protolathe/department/science,
+		JOB_ROBOTICIST = /obj/machinery/mecha_part_fabricator,
+		JOB_SHAFT_MINER = /obj/machinery/mineral/ore_redemption,
 	)
 	/// The chosen job. Used to check for duplicates
 	var/chosen_job
@@ -55,7 +58,7 @@
 		return FALSE
 
 	for(var/obj/machinery/machine as anything in possible_machines)
-		AddComponent(/datum/component/traitor_objective_register, machine, succeed_signals = list(COMSIG_PARENT_QDELETING))
+		AddComponent(/datum/component/traitor_objective_register, machine, succeed_signals = list(COMSIG_TRAITOR_MACHINE_TRAP_TRIGGERED))
 
 	replace_in_name("%JOB%", lowertext(chosen_job))
 	replace_in_name("%MACHINE%", possible_machines[1].name)
@@ -68,37 +71,78 @@
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "bug"
 
-	/// How much we explode, it only does a light explosion
+	/// Light explosion range, to hurt the person using the machine
 	var/explosion_range = 3
 	/// The type of object on which this can be planted on.
-	var/obj/structure/target_machine_path
+	var/obj/machinery/target_machine_path
+	/// Machine we are attached to
+	var/obj/machinery/planted_on
 	/// The time it takes to deploy the bomb.
 	var/deploy_time = 10 SECONDS
+	/// Beeping sound to spook people
+	var/datum/looping_sound/trapped_machine_beep/soundloop
+
+/obj/item/traitor_machine_trapper/Initialize(mapload)
+	. = ..()
+	soundloop = new(src)
+
+/obj/item/traitor_machine_trapper/Destroy(force)
+	QDEL_NULL(soundloop)
+	planted_on = null
+	return ..()
 
 /obj/item/traitor_machine_trapper/examine(mob/user)
 	. = ..()
 	if(!user.mind?.has_antag_datum(/datum/antagonist/traitor))
 		return
-	if(target_object_type)
+	if(target_machine_path)
 		. += span_notice("This device must be placed by <b>clicking on a [initial(target_machine_path.name)]</b> with it. It can be removed with a screwdriver.")
 	. += span_notice("Remember, you may leave behind fingerprints on the device. Wear <b>gloves</b> when handling it to be safe!")
 
 /obj/item/traitor_machine_trapper/afterattack(atom/movable/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!target_machine_path)
-		return
 	if(!user.Adjacent(target))
+		return
+	if(!istype(target, target_machine_path))
+		balloon_alert(user, "invalid target!")
 		return
 	. |= AFTERATTACK_PROCESSED_ITEM
 	balloon_alert(user, "planting device...")
 	if(!do_after(user, deploy_time, src))
+		balloon_alert(user, "interrupted!")
 		return
+	planted_on = target
 	forceMove(target)
-	RegisterSignal(target, COMSIG_ATOM_UI_INTERACT, PROC_REF(trigger_explosive))
+	RegisterSignals(target, list(COMSIG_ATOM_UI_INTERACT, COMSIG_ORM_COLLECTED_ORE), PROC_REF(trigger_explosive))
+	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), PROC_REF(on_screwed))
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(on_examine))
+	soundloop.start()
 
-/obj/item/traitor_machine_trapper/proc/trigger_explosive(obj/structure/attached_machine)
+/obj/item/traitor_machine_trapper/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if (!planted_on)
+		return
+	UnregisterSignal(planted_on, list(COMSIG_ATOM_UI_INTERACT, COMSIG_ORM_COLLECTED_ORE, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), COMSIG_PARENT_EXAMINE_MORE))
+	soundloop.stop()
+	planted_on = null
+
+/obj/item/traitor_machine_trapper/proc/trigger_explosive(obj/machinery/attached_machine)
+	SIGNAL_HANDLER
+	var/turf/origin_turf = get_turf(attached_machine)
+	new /obj/effect/temp_visual/explosion/fast(origin_turf)
+	explosion(origin = origin_turf, light_impact_range = explosion_range, explosion_cause = src)
+	EX_ACT(attached_machine, EXPLODE_HEAVY, attached_machine)
+	SEND_SIGNAL(attached_machine, COMSIG_TRAITOR_MACHINE_TRAP_TRIGGERED)
+	qdel(src)
+
+/obj/item/traitor_machine_trapper/proc/on_screwed(obj/machinery/attached_machine, mob/user, obj/item/tool)
+	SIGNAL_HANDLER
+	playsound(attached_machine, 'sound/effects/structure_stress/pop3.ogg', 100, vary = TRUE)
+	forceMove(get_turf(attached_machine))
+	visible_message(span_warning("A [src] falls out from the [attached_machine]!"))
+	return COMPONENT_BLOCK_TOOL_ATTACK
+
+/obj/item/traitor_machine_trapper/proc/on_examine(obj/machinery/attached_machine, mob/examiner, list/examine_list)
 	SIGNAL_HANDLER
 
-	explosion(origin = attached_machine, light_impact_range = explosion_range, explosion_cause = src)
-	SEND_SIGNAL(src, COMSIG_TRAITOR_MACHINE_TRAP_TRIGGERED, attached_machine)
-	qdel(src)
+	examine_list += span_warning("There's a light flashing red inside the maintenance panel.")
