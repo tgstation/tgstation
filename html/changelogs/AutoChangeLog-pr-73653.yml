@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Using a teleport scroll will deplete a charge regardless of whether used in-hand or by pressing the action button."

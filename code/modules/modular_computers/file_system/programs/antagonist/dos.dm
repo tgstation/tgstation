@@ -68,7 +68,7 @@
 			return TRUE
 
 /datum/computer_file/program/ntnet_dos/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	data["error"] = error
 	if(target && executed)

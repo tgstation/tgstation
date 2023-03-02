@@ -514,7 +514,7 @@
 	playsound(get_turf(regenerating), 'sound/effects/ethereal_revive.ogg', 100)
 	to_chat(regenerating, span_notice("You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost."))
 	regenerating.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
-	regenerating.revive(HEAL_ALL)
+	regenerating.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
 	// revive calls fully heal -> deletes the crystal.
 	// this qdeleted check is just for sanity.
 	if(!QDELETED(src))

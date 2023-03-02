@@ -1,4 +1,0 @@
-author: "flowercuco"
-delete-after: True
-changes:
-  - bugfix: "surplus crates and united surplus crates now properly show up as a purchase in the round end screen"

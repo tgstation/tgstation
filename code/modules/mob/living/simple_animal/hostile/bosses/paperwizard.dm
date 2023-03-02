@@ -4,7 +4,7 @@
 	desc = "A wizard with a taste for the arts."
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	boss_abilities = list(/datum/action/boss/wizard_summon_minions, /datum/action/boss/wizard_mimic)
-	faction = list("hostile","stickman")
+	faction = list(FACTION_HOSTILE,FACTION_STICKMAN)
 	del_on_death = TRUE
 	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "paperwizard"

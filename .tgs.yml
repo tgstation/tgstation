@@ -1,5 +1,5 @@
 version: 1
-byond: 514.1588
+byond: "514.1588"
 static_files:
   - name: config
     populate: true

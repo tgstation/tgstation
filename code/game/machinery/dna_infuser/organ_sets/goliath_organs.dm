@@ -124,7 +124,7 @@
 
 /obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user)
 	// Check for nemesis factions on the target.
-	if(!("mining" in target.faction) && !("boss" in target.faction))
+	if(!(FACTION_MINING in target.faction) && !(FACTION_BOSS in target.faction))
 		// Target is not a nemesis, so attack normally.
 		return ..()
 	// Apply nemesis-specific effects.
