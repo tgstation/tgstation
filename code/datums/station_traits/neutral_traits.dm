@@ -189,3 +189,36 @@
 		return
 
 	gorilla.poll_for_gorilla()
+
+/datum/station_trait/birthday
+	name = "Crew Member Birthday"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 3
+	force = TRUE
+	show_in_report = TRUE
+	report_message = ""
+	trait_to_give = STATION_TRAIT_BIRTHDAY
+	var/birthday_person
+
+/datum/station_trait/birthday/New()
+	. = ..()
+	RegisterSignals(SSdcs, list(COMSIG_GLOB_JOB_AFTER_SPAWN, COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN), PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/birthday/on_round_start()
+	. = ..()
+	var/list/birthday_options
+	for(var/mob/living/carbon/human/human in GLOB.human_list)
+		if(human.mind?.assigned_role.job_flags & JOB_CREW_MEMBER)
+			birthday_options += human
+	birthday_person = pick(birthday_options)
+	//Something Something tell the crew whos birthday it is.
+
+/datum/station_trait/birthday/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned_mob)
+	SIGNAL_HANDLER
+
+	var/obj/item/hat = pick(
+		/obj/item/clothing/head/costume/festive,
+		/obj/item/clothing/head/cone,
+		)
+	hat = new hat(spawned_mob)
+	spawned_mob.equip_to_slot_or_del(hat, ITEM_SLOT_HEAD)

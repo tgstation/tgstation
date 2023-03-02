@@ -471,6 +471,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/start/hangover/LateInitialize()
 	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
+		debris += new /obj/effect/decal/cleanable/confetti(get_turf(src)) //a birthday celebration can also be a hangover
+		var/list/bonus_confetti = GLOB.alldirs
+		for(var/confettis in bonus_confetti)
+			if(prob(50))
+				var/confetti_turf_to_spawn_on = get_step(src, confettis)
+				if(!isopenturf(confetti_turf_to_spawn_on))
+					continue
+				debris += new /obj/effect/decal/cleanable/confetti(confetti_turf_to_spawn_on)
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
 		return
 	if(prob(60))
