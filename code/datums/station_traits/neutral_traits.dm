@@ -193,16 +193,16 @@
 /datum/station_trait/birthday
 	name = "Crew Member Birthday"
 	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 3
+	weight = 2
 	force = TRUE
 	show_in_report = TRUE
 	report_message = ""
 	trait_to_give = STATION_TRAIT_BIRTHDAY
-	var/birthday_person
+	var/mob/living/carbon/birthday_person
 
 /datum/station_trait/birthday/New()
 	. = ..()
-	RegisterSignals(SSdcs, list(COMSIG_GLOB_JOB_AFTER_SPAWN, COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN), PROC_REF(on_job_after_spawn))
+	RegisterSignals(SSdcs, list(COMSIG_GLOB_JOB_AFTER_SPAWN), PROC_REF(on_job_after_spawn))
 
 /datum/station_trait/birthday/on_round_start()
 	. = ..()
@@ -211,14 +211,21 @@
 		if(human.mind?.assigned_role.job_flags & JOB_CREW_MEMBER)
 			birthday_options += human
 	birthday_person = pick(birthday_options)
-	//Something Something tell the crew whos birthday it is.
+	addtimer(CALLBACK(src, PROC_REF(announce_birthday)), 10 SECONDS)
+
+/datum/station_trait/birthday/proc/announce_birthday()
+	priority_announce("Woah its [birthday_person.name]'s birthday") // This is a temp message
+	playsound(birthday_person, 'sound/items/party_horn.ogg', 50)
+
 
 /datum/station_trait/birthday/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned_mob)
 	SIGNAL_HANDLER
 
 	var/obj/item/hat = pick(
 		/obj/item/clothing/head/costume/festive,
+		/obj/item/clothing/head/costume/festive/color,
 		/obj/item/clothing/head/cone,
 		)
 	hat = new hat(spawned_mob)
-	spawned_mob.equip_to_slot_or_del(hat, ITEM_SLOT_HEAD)
+	if(!spawned_mob.equip_to_slot_if_possible(hat, ITEM_SLOT_HEAD, disable_warning = TRUE))
+		spawned_mob.equip_to_slot_or_del(hat, ITEM_SLOT_BACKPACK)

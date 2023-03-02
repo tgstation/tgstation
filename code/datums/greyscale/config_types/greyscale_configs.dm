@@ -1010,3 +1010,13 @@
 	name = "Transmutation Rune"
 	icon_file = 'icons/effects/96x96.dmi'
 	json_config = 'code/datums/greyscale/json_configs/heretic_rune.json'
+
+/datum/greyscale_config/festive_hat
+	name = "Festive Hat"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/festive_hat.json'
+
+/datum/greyscale_config/festive_hat_worn
+	name = "Festive Hat Worn"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/festive_hat.json'

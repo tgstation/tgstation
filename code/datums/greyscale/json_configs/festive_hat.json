@@ -1,0 +1,10 @@
+{
+	"festive_hat": [
+		{
+			"type": "icon_state",
+			"icon_state": "xmashat_grey",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

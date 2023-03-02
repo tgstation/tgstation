@@ -254,3 +254,11 @@
 		/obj/item/storage/box/cups,
 		/obj/item/storage/box/condimentbottles,
 	)
+
+/obj/effect/spawner/party_food
+
+/obj/effect/spawner/party_food/Initialize(mapload)
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
+		new /obj/structure/toilet(get_turf(src))
+		//Wow nameless, you really are an idiot forgetting to actually finish this

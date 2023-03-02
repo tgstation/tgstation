@@ -741,6 +741,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/effect/spawner/party_food,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "apB" = (
