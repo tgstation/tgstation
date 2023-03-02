@@ -42,31 +42,25 @@
 
 /datum/antagonist/xeno/captive
 	name = "\improper Captive Xenomorph"
-	var/datum/team/xeno/captive/captive_team
 
 /datum/antagonist/xeno/captive/create_team(datum/team/xeno/captive/new_team)
-	if(!new_team)
-		for(var/datum/antagonist/xeno/captive/captive_xeno in GLOB.antagonists)
-			if(!captive_xeno.owner || !captive_xeno.captive_team)
-				continue
-			captive_team = captive_xeno.captive_team
-			return
-		captive_team = new
-		captive_team.progenitor = owner
-	else
-		if(!istype(new_team))
-			CRASH("Wrong xeno team type provided to create_team")
-		captive_team = new_team
+	..()
+
+	if(!new_team.progenitor)
+		new_team.progenitor = owner
+
 
 /datum/team/xeno/captive
 	name = "\improper Captive Aliens"
 	///The first member of this team, presumably the queen.
-	var/mob/living/progenitor
+	var/datum/mind/progenitor
 
-/datum/team/xeno/captive/roundend_report()
+/datum/team/xeno/captive/roundend_report() //This isn't overriding properly. Fix it please!
 	var/list/parts = list()
+	var/escape_count = 0 //counts the number of xenomorphs that were born in captivity who ended the round outside of it
+	var/captive_count = 0 //counts the number of xenomorphs born in captivity who remained there until the end of the round (losers)
 
-	parts += "<span class='header'>The first of the hive was [progenitor]!</span>"
+	parts += "<span class='header'>The Captive Xenomorphs were: </span>"
 
 	for(var/datum/mind/alien_mind in members)
 		switch(check_captivity(alien_mind.current))
@@ -74,8 +68,10 @@
 				parts += span_red("[alien_mind] died as [alien_mind.current]!")
 			if(CAPTIVE_XENO_FAIL)
 				parts += span_red("[alien_mind] remained alive and in captivity!")
+				captive_count++
 			if(CAPTIVE_XENO_PASS)
 				parts += span_nicegreen("[alien_mind] survived and managed to escape captivity!")
+				escape_count++
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
@@ -92,7 +88,7 @@
 /mob/living/carbon/alien/mind_initialize()
 	..()
 	if(!mind.has_antag_datum(/datum/antagonist/xeno))
-		if(SScommunications.xenomorph_egg_delivered && istype(get_area(src), /area/station/science/xenobiology)) //Captivity check
+		if(SScommunications.xenomorph_egg_delivered && istype(get_area(src), /area/station/science/xenobiology))
 			mind.add_antag_datum(/datum/antagonist/xeno/captive)
 		else
 			mind.add_antag_datum(/datum/antagonist/xeno)
