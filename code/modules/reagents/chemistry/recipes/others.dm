@@ -592,6 +592,12 @@
 	required_reagents = list(/datum/reagent/consumable/liquidelectricity = 1, /datum/reagent/water = 5)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
 
+//salt electrolysis
+/datum/chemical_reaction/saltelectrolysis
+	results = list(/datum/reagent/chlorine = 2, /datum/reagent/sodium = 2)
+	required_reagents = list(/datum/reagent/consumable/liquidelectricity = 1, /datum/reagent/consumable/salt = 5)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+
 //butterflium
 /datum/chemical_reaction/butterflium
 	required_reagents = list(/datum/reagent/colorful_reagent = 1, /datum/reagent/medicine/omnizine = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/consumable/nutriment = 1)
@@ -626,7 +632,7 @@
 		'sound/voice/human/malescream_6.ogg',
 		'sound/voice/human/wilhelm_scream.ogg',
 	)
-	
+
 	playsound(holder.my_atom, pick(screams), created_volume*5,TRUE)
 
 /datum/chemical_reaction/hair_dye
