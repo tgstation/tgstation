@@ -85,9 +85,6 @@ modules = ["atmosscilower_1.dmm", "atmosscilower_2.dmm", "atmosscilower_3.dmm"]
 [rooms.atmosscilower_attachment_a]
 modules = ["atmosscilower_attachment_a_1.dmm", "atmosscilower_attachment_a_2.dmm", "atmosscilower_attachment_a_3.dmm"]
 
-[rooms.atmosscilower_attachment_b]
-modules = ["atmosscilower_attachment_b_1.dmm", "atmosscilower_attachment_b_2.dmm", "atmosscilower_attachment_b_3.dmm"]
-
 [rooms.atmoscilower]
 modules = ["atmoscilower_1.dmm", "atmoscilower_2.dmm", "atmoscilower_3.dmm"]
 
