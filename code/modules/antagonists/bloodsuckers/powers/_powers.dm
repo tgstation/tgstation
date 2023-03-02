@@ -83,7 +83,7 @@
 	if(!owner || !owner.mind)
 		return FALSE
 	// Cooldown?
-	if(next_use_time <= world.time)
+	if(next_use_time >= world.time)
 		to_chat(owner, span_warning("[src] on cooldown!"))
 		return FALSE
 	// Have enough blood? Bloodsuckers in a Frenzy don't need to pay them

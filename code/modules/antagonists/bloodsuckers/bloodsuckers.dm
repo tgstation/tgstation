@@ -70,7 +70,7 @@
 	var/frenzies = 0
 
 	/// Static typecache of all bloodsucker powers.
-	var/static/list/all_bloodsucker_powers = typecacheof(/datum/action/cooldown/bloodsucker, TRUE)
+	var/static/list/all_bloodsucker_powers = typecacheof(/datum/action/cooldown/bloodsucker, ignore_root_path = TRUE)
 	/// Antagonists that cannot be Vassalized no matter what
 	var/list/vassal_banned_antags = list(
 		/datum/antagonist/bloodsucker,
@@ -115,18 +115,18 @@
 /// These handles the application of antag huds/special abilities
 /datum/antagonist/bloodsucker/apply_innate_effects(mob/living/mob_override)
 	. = ..()
-	RegisterSignal(owner.current, COMSIG_LIVING_BIOLOGICAL_LIFE, .proc/LifeTick)
+	RegisterSignal(owner.current, COMSIG_LIVING_LIFE, .proc/LifeTick)
 	if((owner.assigned_role == "Clown"))
 		var/mob/living/carbon/H = owner.current
 		if(H && istype(H))
 			if(!silent)
 				H.dna.remove_mutation(/datum/mutation/human/clumsy)
 				to_chat(owner, "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
-	add_team_hud(mob_override)
+	add_team_hud(mob_override, /datum/antagonist/bloodsucker)
 
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
 	. = ..()
-	UnregisterSignal(owner.current, COMSIG_LIVING_BIOLOGICAL_LIFE)
+	UnregisterSignal(owner.current, COMSIG_LIVING_LIFE)
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/H = owner.current
 		if(H && istype(H))
@@ -421,11 +421,11 @@
 	// Purchase Power Prompt
 	var/list/options = list()
 	for(var/datum/action/cooldown/bloodsucker/power as anything in all_bloodsucker_powers)
-		to_chat(owner.current, "Amogus")
 		if(initial(power.purchase_flags) & BLOODSUCKER_CAN_BUY && !(locate(power) in powers))
 			options[initial(power.name)] = power
 
-	if(options.len < 1)
+
+	if(!options)
 		to_chat(owner.current, span_notice("You grow more ancient by the night!"))
 	else
 		// Give them the UI to purchase a power.
