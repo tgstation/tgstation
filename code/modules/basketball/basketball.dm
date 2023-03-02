@@ -208,7 +208,7 @@
 	target.put_in_hands(src)
 
 /obj/item/toy/basketball/attack_self(mob/living/user)
-	if(can_perform_action(user, NEED_HANDS|FORBID_TELEKINESIS_REACH))
+	if(user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
 		return
 
 	// no spamming
