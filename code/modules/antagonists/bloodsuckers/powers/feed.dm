@@ -54,6 +54,8 @@
 		return FALSE
 	// Find my Target!
 	if(!find_target())
+		if(!silent)
+			to_chat(owner, span_warning("You must be next to or grabbing a victim to feed from them."))
 		return FALSE
 	// DONE!
 	return TRUE
@@ -111,7 +113,6 @@
 		seen_mobs |= watchers
 	// None Seen!
 	if(!seen_mobs.len)
-		to_chat(owner, span_warning("You must be next to or grabbing a victim to feed from them."))
 		return FALSE
 	// Check Valids...
 	var/list/targets_valid = list()
@@ -131,8 +132,6 @@
 	if(!targets_valid.len)
 		// Did I see targets? Then display at least one error
 		if(seen_mobs.len > 1)
-			to_chat(owner, span_warning("None of these are valid targets to feed from subtly."))
-		else
 			ValidateTarget(seen_mobs[1])
 		return FALSE
 	else

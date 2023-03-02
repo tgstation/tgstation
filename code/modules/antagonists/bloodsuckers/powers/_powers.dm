@@ -38,8 +38,8 @@
 // Modify description to add cost.
 /datum/action/cooldown/bloodsucker/New(Target)
 	base_background_icon_state = initial(background_icon_state)
-	. = ..()
 	cooldown_time = cooldown
+	. = ..()
 	UpdateDesc()
 
 /datum/action/cooldown/bloodsucker/proc/UpdateDesc()
@@ -56,9 +56,6 @@
 /datum/action/cooldown/bloodsucker/Destroy()
 	bloodsuckerdatum_power = null
 	return ..()
-
-/datum/action/cooldown/bloodsucker/IsAvailable()
-	return TRUE
 
 /datum/action/cooldown/bloodsucker/Grant(mob/user)
 	. = ..()
@@ -89,7 +86,7 @@
 	if(!owner || !owner.mind)
 		return FALSE
 	// Cooldown?
-	if(!next_use_time <= world.time)
+	if(next_use_time <= world.time)
 		to_chat(owner, span_warning("[src] on cooldown!"))
 		return FALSE
 	// Have enough blood? Bloodsuckers in a Frenzy don't need to pay them
