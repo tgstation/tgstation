@@ -28,15 +28,15 @@
 			var/obj/item/organ/actual_organ = dummy.getorganslot(organ_slot)
 			if(!actual_organ)
 				if(expected_type)
-					Fail("[species_type] did not update their [organ_slot] organ to [expected_type]")
+					TEST_FAIL("[species_type] did not update their [organ_slot] organ to [expected_type], no organ was found")
 					continue
 			else
 				if(!expected_type)
-					Fail("[species_type] did not remove their [organ_slot] organ")
+					TEST_FAIL("[species_type] did not remove their [organ_slot] organ")
 					continue
 
 				if(actual_organ.type != expected_type)
-					Fail("[species_type] did not update their [organ_slot] organ to [expected_type], instead it was [actual_organ.type]")
+					TEST_FAIL("[species_type] did not update their [organ_slot] organ to [expected_type], instead it was [actual_organ.type]")
 					continue
 
 /datum/unit_test/mutant_organs/proc/slot_to_species_organ_type(slot, datum/species/species)
