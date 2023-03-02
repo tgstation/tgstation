@@ -475,11 +475,20 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		debris += new /obj/effect/decal/cleanable/confetti(get_turf(src)) //a birthday celebration can also be a hangover
 		var/list/bonus_confetti = GLOB.alldirs
 		for(var/confettis in bonus_confetti)
+			var/party_turf_to_spawn_on = get_step(src, confettis)
+			if(!isopenturf(party_turf_to_spawn_on))
+				continue
+			var/dense_object = FALSE
+			for(var/atom/content in party_turf_to_spawn_on)
+				if(content.density)
+					dense_object = TRUE
+					break
+			if(dense_object)
+				continue
 			if(prob(50))
-				var/confetti_turf_to_spawn_on = get_step(src, confettis)
-				if(!isopenturf(confetti_turf_to_spawn_on))
-					continue
-				debris += new /obj/effect/decal/cleanable/confetti(confetti_turf_to_spawn_on)
+				debris += new /obj/effect/decal/cleanable/confetti(party_turf_to_spawn_on)
+			if(prob(10))
+				debris += new /obj/item/toy/balloon(party_turf_to_spawn_on)
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
 		return
 	if(prob(60))
