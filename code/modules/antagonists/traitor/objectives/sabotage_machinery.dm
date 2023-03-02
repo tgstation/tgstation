@@ -20,12 +20,9 @@
 	var/list/applicable_jobs = list(
 		JOB_CHIEF_ENGINEER = /obj/machinery/rnd/production/protolathe/department/engineering,
 		JOB_CHIEF_MEDICAL_OFFICER = /obj/machinery/rnd/production/techfab/department/medical,
-		JOB_GENETICIST = /obj/machinery/computer/scan_consolenew,
 		JOB_HEAD_OF_PERSONNEL = /obj/machinery/rnd/production/techfab/department/service,
-		JOB_MEDICAL_DOCTOR = /obj/machinery/computer/operating,
 		JOB_QUARTERMASTER = /obj/machinery/rnd/production/techfab/department/cargo,
 		JOB_RESEARCH_DIRECTOR = /obj/machinery/rnd/production/protolathe/department/science,
-		JOB_ROBOTICIST = /obj/machinery/mecha_part_fabricator,
 		JOB_SHAFT_MINER = /obj/machinery/mineral/ore_redemption,
 	)
 	/// The chosen job. Used to check for duplicates
@@ -39,15 +36,16 @@
 	return TRUE
 
 /datum/traitor_objective/sabotage_machinery/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	var/list/possible_jobs = applicable_jobs.Copy()
 	for(var/datum/traitor_objective/sabotage_machinery/objective as anything in possible_duplicates)
-		applicable_jobs -= objective.chosen_job
-	if(!length(applicable_jobs))
+		possible_jobs -= objective.chosen_job
+	if(!length(possible_jobs))
 		return FALSE
 	var/list/obj/machinery/possible_machines = list()
-	while(length(possible_machines) <= 0 && length(applicable_jobs) > 0)
-		var/target_head = pick(applicable_jobs)
-		var/obj/machinery/machine_to_find = applicable_jobs[target_head]
-		applicable_jobs -= target_head
+	while(length(possible_machines) <= 0 && length(possible_jobs) > 0)
+		var/target_head = pick(possible_jobs)
+		var/obj/machinery/machine_to_find = possible_jobs[target_head]
+		possible_jobs -= target_head
 
 		chosen_job = target_head
 		for(var/obj/machinery/machine as anything in GLOB.machines)
@@ -64,6 +62,24 @@
 	replace_in_name("%MACHINE%", possible_machines[1].name)
 	return TRUE
 
+/datum/traitor_objective/sabotage_machinery/generate_ui_buttons(mob/user)
+	var/list/buttons = list()
+	if(!tool)
+		buttons += add_ui_button("", "Pressing this will materialize an explosive trap in your hand, which you can conceal within the target machine", "wifi", "summon_gear")
+	return buttons
+
+/datum/traitor_objective/sabotage_machinery/ui_perform_action(mob/living/user, action)
+	. = ..()
+	switch(action)
+		if("summon_gear")
+			if(tool)
+				return
+			tool = new(user.drop_location())
+			user.put_in_hands(tool)
+			tool.balloon_alert(user, "a booby trap materializes in your hand")
+			tool.target_machine_path = applicable_jobs[chosen_job]
+
+
 /// Item which you use on a machine to cause it to explode next time someone interacts with it
 /obj/item/traitor_machine_trapper/
 	name = "suspicious device"
@@ -75,23 +91,8 @@
 	var/explosion_range = 3
 	/// The type of object on which this can be planted on.
 	var/obj/machinery/target_machine_path
-	/// Machine we are attached to
-	var/obj/machinery/planted_on
 	/// The time it takes to deploy the bomb.
 	var/deploy_time = 10 SECONDS
-	/// Beeping sound to spook people
-	var/datum/looping_sound/trapped_machine_beep/soundloop
-	///
-	var/explode_timer
-
-/obj/item/traitor_machine_trapper/Initialize(mapload)
-	. = ..()
-	soundloop = new(src)
-
-/obj/item/traitor_machine_trapper/Destroy(force)
-	QDEL_NULL(soundloop)
-	planted_on = null
-	return ..()
 
 /obj/item/traitor_machine_trapper/examine(mob/user)
 	. = ..()
@@ -112,46 +113,21 @@
 	balloon_alert(user, "planting device...")
 	if(!do_after(user, delay = deploy_time, target = src, interaction_key = DOAFTER_SOURCE_PLANTING_DEVICE))
 		return
-	planted_on = target
-	forceMove(target)
-	RegisterSignals(target, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ORM_COLLECTED_ORE), PROC_REF(trigger_explosive))
-	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), PROC_REF(on_screwed))
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(on_examine))
-	soundloop.start()
+	target.AddComponent(\
+		/datum/component/machine_booby_trap,\
+		additional_triggers = list(COMSIG_ORM_COLLECTED_ORE),\
+		on_triggered_callback = CALLBACK(src, PROC_REF(on_triggered)),\
+		on_defused_callback = CALLBACK(src, PROC_REF(on_defused)),\
+	)
+	RegisterSignal(target, COMSIG_PARENT_QDELETING, GLOBAL_PROC_REF(qdel), src)
+	moveToNullspace()
 
-/obj/item/traitor_machine_trapper/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	. = ..()
-	if (!planted_on)
-		return
-	UnregisterSignal(planted_on, list(COMSIG_ATOM_UI_INTERACT, COMSIG_ORM_COLLECTED_ORE, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), COMSIG_PARENT_EXAMINE_MORE))
-	soundloop.stop()
-	planted_on = null
-
-/obj/item/traitor_machine_trapper/proc/trigger_explosive(obj/machinery/attached_machine)
-	SIGNAL_HANDLER
-	if (explode_timer)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-	explode_timer = addtimer(CALLBACK(src, PROC_REF(explode), attached_machine), 0.5 SECONDS)
-	attached_machine.balloon_alert_to_viewers("beep")
-	playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
-
-/obj/item/traitor_machine_trapper/proc/explode(obj/machinery/attached_machine)
-	var/turf/origin_turf = get_turf(attached_machine)
-	new /obj/effect/temp_visual/explosion/fast(origin_turf)
-	explosion(origin = origin_turf, light_impact_range = explosion_range, explosion_cause = src)
-	EX_ACT(attached_machine, EXPLODE_HEAVY, attached_machine)
-	SEND_SIGNAL(attached_machine, COMSIG_TRAITOR_MACHINE_TRAP_TRIGGERED)
+/obj/item/traitor_machine_trapper/proc/on_triggered(atom/machine)
+	SEND_SIGNAL(machine, COMSIG_TRAITOR_MACHINE_TRAP_TRIGGERED)
 	qdel(src)
 
-/obj/item/traitor_machine_trapper/proc/on_screwed(obj/machinery/attached_machine, mob/user, obj/item/tool)
-	SIGNAL_HANDLER
-	playsound(attached_machine, 'sound/effects/structure_stress/pop3.ogg', 100, vary = TRUE)
-	forceMove(get_turf(attached_machine))
-	visible_message(span_warning("A [src] falls out from the [attached_machine]!"))
-	return COMPONENT_BLOCK_TOOL_ATTACK
-
-/obj/item/traitor_machine_trapper/proc/on_examine(obj/machinery/attached_machine, mob/examiner, list/examine_list)
-	SIGNAL_HANDLER
-
-	examine_list += span_warning("There's a light flashing red inside the maintenance panel.")
+/obj/item/traitor_machine_trapper/proc/on_defused(atom/machine, mob/defuser, obj/item/tool)
+	UnregisterSignal(machine, COMSIG_PARENT_QDELETING)
+	playsound(machine, 'sound/effects/structure_stress/pop3.ogg', 100, vary = TRUE)
+	forceMove(get_turf(machine))
+	visible_message(span_warning("A [src] falls out from the [machine]!"))

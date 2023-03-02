@@ -23,15 +23,16 @@
 	var/chosen_job
 
 /datum/traitor_objective/destroy_machinery/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	var/list/possible_jobs = applicable_jobs.Copy()
 	for(var/datum/traitor_objective/destroy_machinery/objective as anything in possible_duplicates)
-		applicable_jobs -= objective.chosen_job
-	if(!length(applicable_jobs))
+		possible_jobs -= objective.chosen_job
+	if(!length(possible_jobs))
 		return FALSE
 	var/list/obj/machinery/possible_machines = list()
-	while(length(possible_machines) <= 0 && length(applicable_jobs) > 0)
-		var/target_head = pick(applicable_jobs)
-		var/obj/machinery/machine_to_find = applicable_jobs[target_head]
-		applicable_jobs -= target_head
+	while(length(possible_machines) <= 0 && length(possible_jobs) > 0)
+		var/target_head = pick(possible_jobs)
+		var/obj/machinery/machine_to_find = possible_jobs[target_head]
+		possible_jobs -= target_head
 
 		chosen_job = target_head
 		for(var/obj/machinery/machine as anything in GLOB.machines)
