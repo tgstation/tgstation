@@ -40,7 +40,7 @@
 				messenger_app.spam_mode = !messenger_app.spam_mode
 
 /datum/computer_file/program/ntnetmonitor/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	data["ntnetstatus"] = SSmodular_computers.check_function()
 	data["ntnetrelays"] = SSmodular_computers.ntnet_relays.len

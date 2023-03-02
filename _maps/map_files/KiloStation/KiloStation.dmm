@@ -1591,6 +1591,10 @@
 /area/station/command/teleporter)
 "atu" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "qmprivacy";
+	name = "Privacy Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/qm)
 "atB" = (
@@ -9329,6 +9333,12 @@
 	},
 /obj/machinery/modular_computer/console/preset/id{
 	dir = 1
+	},
+/obj/machinery/button/door/directional/east{
+	id = "qmprivacy";
+	name = "Privacy Shutters Control";
+	req_access = list("qm");
+	pixel_y = 38
 	},
 /obj/machinery/keycard_auth/directional/east{
 	pixel_y = 26
@@ -23265,7 +23275,7 @@
 "gHI" = (
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster's Office"
 	},
 /turf/open/floor/iron/dark,
@@ -74484,7 +74494,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster's Office"
 	},
 /turf/open/floor/iron/dark,

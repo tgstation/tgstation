@@ -23,7 +23,7 @@
 	speak_emote = list("yarrs")
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate)
 	del_on_death = TRUE
-	faction = list("pirate")
+	faction = list(FACTION_PIRATE)
 	/// Path of the mob spawner we base the mob's visuals off of.
 	var/mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate
 	/// Path of the held item we give to the mob's visuals.

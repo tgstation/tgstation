@@ -887,3 +887,169 @@
       at, rather than locking you into the nearest cardinal/diagonal direction.
   - balance: You can now knock more things off a table full of stuff by tackling it
       than you could before.
+2023-02-23:
+  CesarBaylina:
+  - qol: Made associative lists more apparent in circuits.
+  Jacquerel:
+  - bugfix: Moths can eat clothes again.
+  - bugfix: The paradox clones of plasmamen now come properly dressed for the occasion.
+  Melbert:
+  - bugfix: Deconstructing (or overloading) the Master RND server with an HDD preset
+      will correctly half research rate
+  SyncIt21:
+  - qol: right clicking the seed extractor with a plant/food stores the extracted
+      seeds in the machine.
+  coiax:
+  - bugfix: When loading food into a microwave via serving tray, you can now see the
+      food inside the microwave afterwards.
+  tralezab:
+  - bugfix: fixed regal rat rummaging lines sometimes getting you muted!
+2023-02-25:
+  JohnFulpWillard:
+  - bugfix: NtOS' Arcade program works again.
+  LemonInTheDark:
+  - bugfix: The gulag shuttle's point claim console will load in again. Whooops
+  NamelessFairy:
+  - bugfix: CTF flags will no longer catch fire when placed into lava, preventing
+      one class from picking it up.
+  - code_imp: CTF flags no longer respawn when they get qdeleted, this means you can
+      now delete them when debugging/as an admin.
+  Profakos:
+  - bugfix: Honourbound can no longer be gained from neurowine or from heavy brain
+      damage, no longer causing the player to be granted a spell that does nothing
+      most of the time
+  Rhials:
+  - bugfix: The disease outbreak/heart attack event candidate list will now clear
+      itself before generating.
+  coiax:
+  - bugfix: A chef who is beheaded, and the head stitched on another body will still
+      see their food as their own.
+  kawoppi:
+  - soundadd: dismantling an unplaced wallframe will now make a wrench sound
+2023-02-26:
+  Helg2:
+  - rscadd: Adds privacy shutters for quartermaster. Shutters on Kilo/IceBox and blastdoors
+      on Meta/Delta/Tram. Also changed doors with glass to common ones.
+  Jacquerel:
+  - refactor: Changeling's Lesser Form is now one ability instead of two which keep
+      swapping, which should consistently turn you back and forth without deleting
+      itself from your action bar.
+  - bugfix: Hatching from an egg left by a Last Resort headcrab should correctly grant
+      you Lesser Form in addition to your other abilities.
+  - bugfix: Turning into a monkey while using the Changeling space suit won't leave
+      you as a monkey with a weird inflated head.
+  - qol: Using lesser form as a monkey with only one stored DNA profile will skip
+      asking which profile you want and will simply transform you immediately into
+      the only option.
+  - bugfix: Painting with the slippery spraycan will now once again correctly make
+      that tile slippery.
+  - bugfix: Spraying the ground with the hellcan will now once again correctly set
+      that tile, you, and other surrounding objects on fire.
+  Kubisopplay:
+  - bugfix: Fixes split personality kicking out the original owner of the body.
+  Melbert:
+  - bugfix: Gaining nobreath in an N2O heavy environment doesn't make you forever
+      aware of it
+  - bugfix: Premade viruses (GBS, beesease, etc) now show up in the PANDEMIC again
+  - bugfix: PANDEMICs should bluescreen less often. Maybe.
+  - bugfix: Mecha speech indicators actually go away
+  - bugfix: Scan gates correctly flick their alarm overlays, I think they already
+      looked correct but now it's more correct
+  - bugfix: If you are somehow a human without a species, the generic zap animation
+      should be more correct, even though this will probably never ever happen
+  - bugfix: Nuke Ops Leaders midround don't spawn on Arrivals Shuttle late for work
+  - bugfix: (Maybe) fixes some additional issues related to midround nukie / abductor
+      spawns
+  NamelessFairy:
+  - bugfix: The unanchored reinforced plasma-glass windows on snowdin have been anchored.
+  - bugfix: Unregistered paywall firing pins wont vanish when you try to insert them
+      into a gun
+  - bugfix: Declining to pay for a paywall firing pin will no longer brick the firing
+      pin for everyone
+  - bugfix: paywall firing pins are linked to bank accounts instead of unique users,
+      so they can't be used for overly elaborate ling checks or letting people without
+      IDs fire them for free.
+  - bugfix: Attempting to fire an empty gun with a paywall firing pin will no longer
+      charge you.
+  - bugfix: Multi-shot paywall firing pins do not charge you for agreeing to the initial
+      prompt.
+  - spellcheck: Fixes a spelling mistake in paywall firing pin prompts
+  - code_imp: The owner of a paywall firing pin is now tracked via account rather
+      than ID, this stops the pin from holding a reference to a deleted ID if the
+      ID is ever destroyed.
+  Rhials:
+  - bugfix: The radiation leak event no longer targets machinery that doesn't use
+      power.
+2023-02-27:
+  ATHATH:
+  - spellcheck: Corrects the description of the transmission 4 threshold effect of
+      the Narcolepsy symptom to more accurately reflect what the effect does.
+  Boopideedoo:
+  - bugfix: Added E.X.P.E.R.I.M.E.N.T.O.R
+  Jacquerel:
+  - bugfix: Spiders will stop being on fire marginally faster, as they used to.
+  - bugfix: Mob spawners will no longer break if instructed to spawn certain kinds
+      of basic mob, or monkeys.
+  LT3:
+  - bugfix: Disease Outbreak doesn't give up so easily when trying to start the event
+  - balance: Disease Outbreak will not spawn on positive virus mobs, but can be transmitted
+      if resistance is low
+  - bugfix: Disease Outbreak creates an entry in the virus log like it should
+  - admin: Admins can see Disease Outbreak virus stats when the event starts
+  NamelessFairy:
+  - bugfix: Any worn item that has its color changed will now have its color change
+      reflected on the item's worn icon immediately.
+  - bugfix: Cult Seek your master now has an icon.
+  - bugfix: You can no longer drive ridable vehicles without keys or in space.
+  - bugfix: Borg hypospray will correctly tell you the name of the limb that is blocked
+      when trying to inject into a blocked limb.
+  RikuTheKiller:
+  - bugfix: Nooartrium now pulls your ghost back into your body when it revives you.
+  SmoSmoSmoSmok:
+  - bugfix: the order vendors will not constantly load when trying to buy multiple
+      items
+  SuperSlayer0:
+  - bugfix: Fixes strong arm implant attacks stunlocking people
+  - bugfix: Strong arm implant attacks no longer stack with hulk attacks
+  Tattle:
+  - bugfix: removed a double monitor from Delta cargo
+  Timberpoes:
+  - bugfix: Fixes formatting for the paper containing vote box final tallies. "I love
+      democracy".
+  - bugfix: Fixes broken input fields on photocopied paper.
+  kawoppi:
+  - bugfix: filled trashcarts spawn nearby grime when initialized instead of when
+      opened for the first time
+  mc-oofert:
+  - bugfix: MMIs/Positrons dont get slept forever when the mech theyre in gets destroyed
+2023-02-28:
+  Jacquerel:
+  - bugfix: Maintenance tunnels should no longer sometimes contain airlocks with walls
+      underneath them.
+  - refactor: Migos, Creatures, and Blank Bodies use a new shared component to update
+      their stats which scales smoothly as they take damage rather than in stages.
+  - bugfix: Migos, Creatures and Blank Bodies will all update their stats when taking
+      or losing damage regardless of it was from an identifiable enemy.
+  - bugfix: Using a teleport scroll will deplete a charge regardless of whether used
+      in-hand or by pressing the action button.
+  - refactor: The actions of Statues and Creatures which can't be used while seen
+      now share logic, and will not spam chat with feedback.
+  LT3:
+  - admin: Roundstart logout report is written to the admin log
+  - admin: Roundstart report threshold is now 10 minutes
+  NamelessFairy:
+  - bugfix: Un-aimed admin rods will now actually be un-aimed instead of aimed at
+      the previous aimed rods target.
+  - admin: Admin aimed rods will now log that they're aimed randomly when not aimed.
+  flowercuco:
+  - bugfix: surplus crates and united surplus crates now properly show up as a purchase
+      in the round end screen
+  itseasytosee:
+  - bugfix: Monkeys ues the proper husk sprites.
+  - imageadd: The monkey has been moved back down to its lower, more submissive position.
+  - refactor: Your bodyparts are now dynamically rendered at a height relevant to
+      the length of your legs and torso, what does this mean for you? Not much to
+      be honest, but you might see a monkey pop up a bit if you cut its legs off.
+  - admin: The Tallboy is here
+  jlsnow301:
+  - bugfix: Fixes NTOS records program receiving bad medical disability data

@@ -531,8 +531,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, STAT_TRAIT)
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT) //Because these are normally updated using set_health() - but we don't want to adjust health, and the addition of NOHARDCRIT blocks it being added after, but doesn't remove it if it was added before
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT) //Prevents the user from being knocked out by oxyloss
-	affected_mob.set_resting(FALSE)//Please get up, no one wants a deaththrows juggernaught that lies on the floor all the time
+	affected_mob.set_resting(FALSE) //Please get up, no one wants a deaththrows juggernaught that lies on the floor all the time
 	affected_mob.SetAllImmobility(0)
+	affected_mob.grab_ghost(force = FALSE) //Shoves them back into their freshly reanimated corpse.
 	back_from_the_dead = TRUE
 	affected_mob.emote("gasp")
 	affected_mob.playsound_local(affected_mob, 'sound/health/fastbeat.ogg', 65)
@@ -652,10 +653,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!(DT_PROB(creation_purity*10, delta_time)))
 		return
 	var/traumalist = subtypesof(/datum/brain_trauma)
-	var/list/forbiddentraumas = list(/datum/brain_trauma/severe/split_personality,  // Split personality uses a ghost, I don't want to use a ghost for a temp thing
+	var/list/forbiddentraumas = list(
+		/datum/brain_trauma/severe/split_personality,  // Split personality uses a ghost, I don't want to use a ghost for a temp thing
 		/datum/brain_trauma/special/obsessed, // Obsessed sets the owner as an antag - I presume this will lead to problems, so we'll remove it
-		/datum/brain_trauma/hypnosis // Hypnosis, same reason as obsessed, plus a bug makes it remain even after the neurowhine purges and then turn into "nothing" on the med reading upon a second application
-		)
+		/datum/brain_trauma/hypnosis, // Hypnosis, same reason as obsessed, plus a bug makes it remain even after the neurowhine purges and then turn into "nothing" on the med reading upon a second application
+		/datum/brain_trauma/special/honorbound, // Designed to be chaplain exclusive
+	)
 	traumalist -= forbiddentraumas
 	var/obj/item/organ/internal/brain/brain = affected_mob.getorganslot(ORGAN_SLOT_BRAIN)
 	traumalist = shuffle(traumalist)

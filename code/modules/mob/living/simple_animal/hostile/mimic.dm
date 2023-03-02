@@ -27,7 +27,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 
-	faction = list("mimic")
+	faction = list(FACTION_MIMIC)
 	move_to_delay = 9
 	del_on_death = 1
 	///A cap for items in the mimic. Prevents the mimic from eating enough stuff to cause lag when opened.

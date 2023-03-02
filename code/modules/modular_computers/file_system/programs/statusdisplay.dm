@@ -66,7 +66,6 @@
 	. = ..()
 	if(.)
 		return
-
 	switch(action)
 		if("setStatusMessage")
 			upper_text = reject_bad_text(params["upperText"] || "", MAX_STATUS_LINE_LENGTH)
@@ -83,7 +82,7 @@
 	return data
 
 /datum/computer_file/program/status/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	data["upperText"] = upper_text
 	data["lowerText"] = lower_text

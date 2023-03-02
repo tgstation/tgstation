@@ -12,7 +12,7 @@
 	speak_emote = list("squawks", "gakkers")
 	emote_hear = list("squawk!", "gakkers!", "noots.","NOOTS!")
 	emote_see = list("shakes his beak.", "flaps his wings.","preens himself.")
-	faction = list("penguin")
+	faction = list(FACTION_PENGUIN)
 	minbodytemp = 0
 	speak_chance = 1
 	turns_per_move = 10
