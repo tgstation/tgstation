@@ -213,9 +213,19 @@ GLOBAL_VAR(basketball_game)
 
 		SEND_SOUND(baller, 'sound/misc/whistle.ogg')
 		if(is_player_referee)
-			to_chat(baller, span_danger("You are a referee. Make sure the teams play fair and call fouls appropriately."))
+			to_chat(baller, span_notice("You are a referee. Make sure the teams play fair and use your whistle to call fouls appropriately."))
 		else
-			to_chat(baller, span_danger("You are a basketball player for the [team_name]. Score as much as you can before time runs out."))
+			to_chat(baller, span_notice("You are a basketball player for the [team_name]. Score as much as you can before time runs out."))
+			to_chat(baller, span_info("Pass the ball with LMB (zero stamina cost)"))
+			to_chat(baller, span_info("Shoot the ball with RMB ([STAMINA_COST_SHOOTING] stamina cost) this goes over players heads and can be used to pass if you click on a player directly"))
+			to_chat(baller, span_info("Dunk by clicking directly on hoop ([STAMINA_COST_DUNKING] stamina cost)"))
+			to_chat(baller, span_info("Spin emote decreases stealing chance and shot accuracy ([STAMINA_COST_SPINNING] stamina cost)"))
+			to_chat(baller, span_info("Accuracy penalty when you try to pass to the hoop with LMB to score"))
+			to_chat(baller, span_info("Accuracy penalty when you don't click directly on the hoop when shooting"))
+			to_chat(baller, span_info("Not clicking directly on the player when passing has a chance to lose the ball"))
+			to_chat(baller, span_info("Getting disarmed while holding the ball drains stamina and has a chance to lose the ball"))
+			to_chat(baller, span_info("Disarms are affected by direction both players are facing. Face to face is bad... so always try to have your back facing the defender."))
+			to_chat(baller, span_info("Disarm chance is affected by the stamina of both players. If person with ball has high stamina, lower disarm chance. If stealer has high stamina, higher disarm chance."))
 
 /datum/basketball_controller/proc/victory()
 	var/is_game_draw
@@ -241,19 +251,19 @@ GLOBAL_VAR(basketball_game)
 			var/mob/living/competitor = get_mob_by_ckey(ckey)
 			var/area/mob_area = get_area(competitor)
 			if(istype(competitor) && istype(mob_area, /area/centcom/basketball))
-				to_chat(competitor, span_narsie("The game resulted in a draw!"))
+				to_chat(competitor, span_hypnophrase("The game resulted in a draw!"))
 	else
 		for(var/ckey in winner_team_ckeys)
 			var/mob/living/competitor = get_mob_by_ckey(ckey)
 			var/area/mob_area = get_area(competitor)
 			if(istype(competitor) && istype(mob_area, /area/centcom/basketball))
-				to_chat(competitor, span_narsie("[winner_team_name] team wins!"))
+				to_chat(competitor, span_hypnophrase("[winner_team_name] team wins!"))
 
 		for(var/ckey in loser_team_ckeys)
 			var/mob/living/competitor = get_mob_by_ckey(ckey)
 			var/area/mob_area = get_area(competitor)
 			if(istype(competitor) && istype(mob_area, /area/centcom/basketball))
-				to_chat(competitor, span_narsie("[winner_team_name] team wins!"))
+				to_chat(competitor, span_hypnophrase("[winner_team_name] team wins!"))
 				competitor.dust()
 
 	addtimer(CALLBACK(src, PROC_REF(end_game)), 20 SECONDS) // give winners time for a victory lap
@@ -268,7 +278,7 @@ GLOBAL_VAR(basketball_game)
 		var/mob/living/competitor = get_mob_by_ckey(ckey)
 		var/area/mob_area = get_area(competitor)
 		if(istype(competitor) && istype(mob_area, /area/centcom/basketball))
-			competitor.dust()
+			QDEL_NULL(competitor)
 
 	map_deleter.generate() //remove the map, it will be loaded at the start of the next one
 
