@@ -1,3 +1,7 @@
+#define CAPTIVE_XENO_DEAD -1
+#define CAPTIVE_XENO_FAIL 0
+#define CAPTIVE_XENO_PASS 1
+
 /datum/team/xeno
 	name = "\improper Aliens"
 
@@ -57,23 +61,32 @@
 /datum/team/xeno/captive
 	name = "\improper Captive Aliens"
 	///The first member of this team, presumably the queen.
-	var/progenitor
+	var/mob/living/progenitor
 
-//Ensures
 /datum/team/xeno/captive/roundend_report()
 	var/list/parts = list()
 
-	if(istype(get_area(progenitor), /area/station/science/xenobiology))
-		parts += span_red("")
-	else
-		parts += span_nicegreen("")
+	parts += "<span class='header'>The first of the hive was [progenitor]!</span>"
 
 	for(var/datum/mind/alien_mind in members)
-		if(istype(get_area(alien_mind.current), /area/station/science/xenobiology))
+		switch(check_captivity(alien_mind.current))
+			if(CAPTIVE_XENO_DEAD)
+				parts += span_red("[alien_mind] died as [alien_mind.current]!")
+			if(CAPTIVE_XENO_FAIL)
+				parts += span_red("[alien_mind] remained alive and in captivity!")
+			if(CAPTIVE_XENO_PASS)
+				parts += span_nicegreen("[alien_mind] survived and managed to escape captivity!")
 
-	parts += printplayerlist(members)
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
+/datum/team/xeno/captive/proc/check_captivity(mob/living/captive_alien)
+	if(!captive_alien || captive_alien.stat == DEAD)
+		return CAPTIVE_XENO_DEAD
+
+	if(istype(get_area(captive_alien), /area/station/science/xenobiology))
+		return CAPTIVE_XENO_FAIL
+
+	return CAPTIVE_XENO_PASS
 
 //XENO
 /mob/living/carbon/alien/mind_initialize()
@@ -96,3 +109,7 @@
 	mind.remove_antag_datum(/datum/antagonist/xeno)
 	mind.set_assigned_role(SSjob.GetJobType(/datum/job/unassigned))
 	mind.special_role = null
+
+#undef CAPTIVE_XENO_DEAD
+#undef CAPTIVE_XENO_FAIL
+#undef CAPTIVE_XENO_PASS
