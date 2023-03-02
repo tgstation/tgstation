@@ -37,13 +37,8 @@
 
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-
-	// test this and remove if it doesn't work
 	RegisterSignal(src, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(after_throw_reset))
 	RegisterSignal(src, COMSIG_MOVABLE_IMPACT, PROC_REF(after_throw_reset))
-
-// basketball/qdel don't forget to remove these signals
-//	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 /obj/item/toy/basketball/proc/reset_pickup_restriction()
 	pickup_restriction_ckeys = list()
@@ -52,20 +47,12 @@
 /obj/item/toy/basketball/proc/on_equip(obj/item/source, mob/living/user, slot)
 	SIGNAL_HANDLER
 
-	/*
-	if(!(source.slot_flags & slot))
-		return
-	*/
 	wielder = user
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(movement_effect))
-	//RegisterSignal(user, COMSIG_MOB_EMOTE, PROC_REF(on_spin))
 	RegisterSignal(user, COMSIG_MOB_EMOTED("spin"), PROC_REF(on_spin))
 	RegisterSignal(user, COMSIG_HUMAN_DISARM_HIT, PROC_REF(on_equipped_mob_disarm))
 	RegisterSignal(user, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(on_equipped_mob_knockdown))
 	RegisterSignal(user, COMSIG_MOB_THROW, PROC_REF(on_throw))
-
-	// use this to check shoving?
-	//RegisterSignal(parent, COMSIG_MOB_ATTACK_HAND, PROC_REF(check_shove))
 
 /obj/item/toy/basketball/proc/on_drop(obj/item/source, mob/user)
 	SIGNAL_HANDLER
@@ -89,30 +76,6 @@
 
 	pass_flags = initial(pass_flags)
 
-/**
- * Proc that triggers when the thrown boomerang hits an object.
- * * source: Datum src from original signal call.
- * * hit_atom: The atom that has been hit by the boomerang component.
- * * init_throwing_datum: The thrownthing datum that originally impacted the object, that we use to build the new throwing datum for the rebound.
-/datum/component/boomerang/proc/return_hit_throw(datum/source, atom/hit_atom, datum/thrownthing/init_throwing_datum)
-	SIGNAL_HANDLER
-	if(!COOLDOWN_FINISHED(src, last_boomerang_throw))
-		return
-	var/obj/item/true_parent = parent
-	aerodynamic_swing(init_throwing_datum, true_parent)
-
- * Proc that triggers when the thrown boomerang does not hit a target.
- * * source: Datum src from original signal call.
- * * throwing_datum: The thrownthing datum that originally impacted the object, that we use to build the new throwing datum for the rebound.
-
-/datum/component/boomerang/proc/return_missed_throw(datum/source, datum/thrownthing/throwing_datum)
-	SIGNAL_HANDLER
-	if(!COOLDOWN_FINISHED(src, last_boomerang_throw))
-		return
-	var/obj/item/true_parent = parent
-	aerodynamic_swing(throwing_datum, true_parent)
- */
-
 /obj/item/toy/basketball/attack_hand(mob/living/user, list/modifiers)
 	if(!user.can_perform_action(src, NEED_HANDS))
 		return
@@ -130,7 +93,6 @@
 	if(steps > step_delay)
 		playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
 		steps = 0
-		//wielder.adjustStaminaLoss(1) // balling drains your stamina as you move
 	else
 		steps++
 
@@ -203,7 +165,6 @@
 	if(!iscarbon(target) || user.combat_mode)
 		return ..()
 
-	//user.balloon_alert_to_viewers("passes the ball")
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
 	target.put_in_hands(src)
 
@@ -223,29 +184,15 @@
 	user.swap_hand(user.get_held_index_of_item(src))
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
 
-/**
-	M.update_held_items()
-	for(var/hand_index in user.get_empty_held_indexes())
-		if(target.can_put_in_hand(held_item, hand_index))
-			has_valid_hand = TRUE
-			break
-*/
-
 /obj/item/toy/basketball/afterattack(atom/target, mob/user)
 	. = ..()
 	user.throw_item(target)
 
-
-//	pass_flags = initial(pass_flags)
-
 /obj/item/toy/basketball/afterattack_secondary(atom/aim_target, mob/living/baller, params)
-	//attack_hand(user, modifiers, flip_card = TRUE)
-
 	// dunking negates shooting
 	if(istype(aim_target, /obj/structure/hoop) && baller.Adjacent(aim_target))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	//baller.balloon_alert_to_viewers("shooting...")
 	baller.adjustStaminaLoss(STAMINA_COST_SHOOTING)
 
 	var/dunk_dir = get_dir(baller, aim_target)
@@ -256,38 +203,11 @@
 	if(do_after(baller, 0.5 SECONDS))
 		pass_flags |= PASSMOB
 		baller.throw_item(aim_target)
-//		pass_flags = initial(pass_flags)
-		//sleep(0.5 SECONDS)
-		animate(baller, pixel_x = 0, pixel_y = 0, time = 3) // easing = BOUNCE_EASING)
+		animate(baller, pixel_x = 0, pixel_y = 0, time = 3)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-	animate(baller, pixel_x = 0, pixel_y = 0, time = 3) // easing = BOUNCE_EASING)
+	animate(baller, pixel_x = 0, pixel_y = 0, time = 3)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/**
-	if(!isliving(victim) || !IN_GIVEN_RANGE(user, victim, GUNPOINT_SHOOTER_STRAY_RANGE))
-		return ..() //if they're out of range, just shootem.
-	if(!can_hold_up)
-		return ..()
-	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
-	if (gunpoint_component)
-		if(gunpoint_component.target == victim)
-			return ..() //we're already holding them up, shoot that mans instead of complaining
-		balloon_alert(user, "already holding someone up!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if (user == victim)
-		balloon_alert(user, "can't hold yourself up!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	user.AddComponent(/datum/component/gunpoint, victim, src)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-*/
-
-//afterattack_secondary
-// if(HAS_TRAIT(src, TRAIT_WIELDED))dg
-// M.apply_damage(10, STAMINA)
-
-//obj/item/toy/basketball/pre_attack_secondary(mob/living/user, list/modifiers)
 
 /obj/item/toy/basketball/throw_impact(mob/living/carbon/target, datum/thrownthing/throwingdatum)
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
@@ -298,21 +218,6 @@
 	var/atom/movable/actual_target = throwingdatum.initial_target?.resolve()
 	if(target == actual_target || prob(50)) // 50% chance to catch the ball if you don't directly aim on target
 		target.put_in_hands(src)
-
-	// . = ..()
-
-/**
-/obj/item/toy/basketball/attack_secondary(mob/living/victim, mob/living/user, params)
-	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SECONDARY, victim, user, params)
-
-	if(signal_result & COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	if(signal_result & COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN)
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
-
-	return SECONDARY_ATTACK_CALL_NORMAL
-*/
 
 /datum/crafting_recipe/basketball_hoop
 	name = "Basketball Hoop"
@@ -387,7 +292,6 @@
 	scoreboard.pixel_y = dir_offset_y
 	SET_PLANE_EXPLICIT(scoreboard, GAME_PLANE, src)
 	. += scoreboard
-	//add_overlay(scoreboard)
 
 	var/ones = total_score % 10
 	var/mutable_appearance/ones_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[ones]", layer + 0.01)
@@ -407,7 +311,7 @@
 	scoreboard.add_overlay(emissive_tens_overlay)
 
 /obj/structure/hoop/attackby(obj/item/ball, mob/living/baller, params)
-	if(get_dist(src, baller) < 2) // TK users aren't allowed to dunk (not sure if this code even works tbh)
+	if(get_dist(src, baller) < 2) // TK users aren't allowed to dunk
 		if(baller.transferItemToLoc(ball, drop_location()))
 			var/dunk_dir = get_dir(baller, src)
 
@@ -416,7 +320,7 @@
 
 			animate(baller, pixel_x = dunk_pixel_x, pixel_y = dunk_pixel_y, time = 5, easing = BOUNCE_EASING|EASE_IN|EASE_OUT)
 			sleep(0.5 SECONDS)
-			animate(baller, pixel_x = 0, pixel_y = 0, time = 3) // easing = BOUNCE_EASING)
+			animate(baller, pixel_x = 0, pixel_y = 0, time = 3)
 
 			visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
 			score(ball, baller, 2)
@@ -452,13 +356,6 @@
 		total_score = 0
 		update_appearance()
 	return ..()
-
-/*
-/obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE)
-	if(!..())
-		return
-	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, TRUE)
-*/
 
 /obj/structure/hoop/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(isitem(AM) && !istype(AM, /obj/projectile))
@@ -501,9 +398,6 @@
 
 	if(..())
 		ball.pickup_restriction_ckeys |= team_ckeys
-
-	// RegisterSignal(ball, COMSIG_ITEM_PICKUP, TYPE_PROC_REF(/obj/item/toy/basketball, pickup_restriction), team)
-	// addtimer(CALLBACK(ball, TYPE_PROC_REF(/obj/item/toy/basketball, reset_pickup_restriction)), PICKUP_RESTRICTION_TIME)
 
 // No resetting the score for minigame hoops
 /obj/structure/hoop/minigame/CtrlClick(mob/living/user)
@@ -554,7 +448,6 @@
 
 	to_chat(target, span_bold("[caller] has given you a timeout for a foul!"))
 	to_chat(caller, span_bold("You put [target] in a timeout!"))
-	// build_all_button_icons()
 	return TRUE
 
 #undef PICKUP_RESTRICTION_TIME

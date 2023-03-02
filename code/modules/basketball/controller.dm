@@ -1,18 +1,13 @@
 ///how many people can play basketball without issues (running out of spawns, procs not expecting more than this amount of people, etc)
-#define BASKETBALL_MIN_PLAYER_COUNT 1 // should be 2
-#define BASKETBALL_MAX_PLAYER_COUNT 8 // shoould be 6
+#define BASKETBALL_MIN_PLAYER_COUNT 7 // should be 2
+#define BASKETBALL_MAX_PLAYER_COUNT 7 // shoould be 7
 
 #define BASKETBALL_TEAM_HOME "home"
 #define BASKETBALL_TEAM_AWAY "away"
 
-//#define MAFIA_PHASE_SETUP 1
-//#define MAFIA_PHASE_VICTORY_LAP 6
-///signal sent to roles when the game is confirmed ending
-//#define COMSIG_MAFIA_GAME_END "game_end"
-
-/// list of ghosts who want to play mafia, every time someone enters the list it checks to see if enough are in
+/// list of ghosts who want to play basketball, every time someone enters the list it checks to see if enough are in
 GLOBAL_LIST_EMPTY(basketball_signup)
-/// list of ghosts who want to play mafia that have since disconnected. They are kept in the lobby, but not counted for starting a game.
+/// list of ghosts who want to play basketball that have since disconnected. They are kept in the lobby, but not counted for starting a game.
 GLOBAL_LIST_EMPTY(basketball_bad_signup)
 /// the current global basketball game running.
 GLOBAL_VAR(basketball_game)
@@ -27,7 +22,7 @@ GLOBAL_VAR(basketball_game)
 	/// Map generation tool that deletes the current map after the game finishes
 	var/datum/map_generator/massdelete/map_deleter
 	/// Total amount of time basketball is played for
-	var/game_duration = 30 SECONDS // debugging for now //2 MINUTES
+	var/game_duration = 2 MINUTES
 
 	/// List of all players ckeys involved in the minigame
 	var/list/minigame_players = list()
@@ -53,8 +48,6 @@ GLOBAL_VAR(basketball_game)
 	. = ..()
 	GLOB.basketball_game = src
 	map_deleter = new
-	/// make sure to remove this later
-	//prepare_game(list("tilus"))
 
 /datum/basketball_controller/Destroy(force, ...)
 	. = ..()
@@ -113,9 +106,6 @@ GLOBAL_VAR(basketball_game)
 	for(var/obj/effect/landmark/basketball/team_spawn/referee/possible_spawn in GLOB.landmarks_list)
 		referee_landmark += possible_spawn
 
-	//var/list/home_spawnpoints = home_team_landmarks.Copy()
-	//var/list/away_spawnpoints = away_team_landmarks.Copy()
-
 	start_game(ready_players)
 
 /**
@@ -138,13 +128,7 @@ GLOBAL_VAR(basketball_game)
 		addtimer(CALLBACK(away_hoop, TYPE_PROC_REF(/atom/movable/, say), "[i] seconds left"), game_duration - (i SECONDS))
 
 /**
- * Called when the game is setting up, AFTER map is loaded but BEFORE the phase timers start. Creates and places each role's body and gives the correct player key
- *
- * Notably:
- * * Toggles godmode so the mafia players cannot kill themselves
- * * Adds signals for voting overlays, see display_votes proc
- * * gives mafia panel
- * * sends the greeting text (goals, role name, etc)
+ * Called when the game is setting up, AFTER map is loaded but BEFORE the game start. Creates and places each role's body and gives the correct player key
  */
 /datum/basketball_controller/proc/create_bodies(ready_players)
 	var/list/possible_away_teams = subtypesof(/datum/map_template/basketball) - current_map.type
@@ -171,7 +155,7 @@ GLOBAL_VAR(basketball_game)
 		player_count++
 		minigame_players |= player_key
 
-		var/is_player_referee = FALSE //(player_count == length(ready_players) && minigame_has_referee)
+		var/is_player_referee = (player_count == length(ready_players) && minigame_has_referee)
 
 		if(is_player_referee)
 			spawn_landmark = pick_n_take(referee_spawnpoint)
@@ -287,12 +271,10 @@ GLOBAL_VAR(basketball_game)
 	QDEL_LIST(away_team_landmarks)
 	QDEL_LIST(referee_landmark)
 
-//////////////////////////////////////////
-
 /**
  * Called when enough players have signed up to fill a setup. DOESN'T NECESSARILY MEAN THE GAME WILL START.
  *
- * Checks for a custom setup, if so gets the required players from that and if not it sets the player requirement to MAFIA_MAX_PLAYER_COUNT and generates one IF basic setup starts a game.
+ * Checks for a custom setup, if so gets the required players from that and if not it sets the player requirement to BASKETBALL_MAX_PLAYER_COUNT and generates one IF basic setup starts a game.
  * Checks if everyone signed up is an observer, and is still connected. If people aren't, they're removed from the list.
  * If there aren't enough players post sanity, it aborts. otherwise, it selects enough people for the game and starts preparing the game for real.
  */
@@ -314,9 +296,6 @@ GLOBAL_VAR(basketball_game)
 		return
 
 	var/req_players = length(possible_keys) >= BASKETBALL_MAX_PLAYER_COUNT ? BASKETBALL_MAX_PLAYER_COUNT : length(possible_keys)
-	// both teams need to have the same number of players, so we remove one person if it's an odd number
-//	if(req_players % 2)
-//		req_players -= 1
 
 	//if there were too many players, still start but only make filtered keys as big as it needs to be (cut excess)
 	//also removes people who do get into final player list from the signup so they have to sign up again when game ends
@@ -341,12 +320,12 @@ GLOBAL_VAR(basketball_game)
  */
 /datum/basketball_controller/proc/check_signups()
 	for(var/bad_key in GLOB.basketball_bad_signup)
-		if(GLOB.directory[bad_key])//they have reconnected if we can search their key and get a client
+		if(GLOB.directory[bad_key]) //they have reconnected if we can search their key and get a client
 			GLOB.basketball_bad_signup -= bad_key
 			GLOB.basketball_signup += bad_key
 	for(var/key in GLOB.basketball_signup)
 		var/client/signup_client = GLOB.directory[key]
-		if(!signup_client)//vice versa but in a variable we use later
+		if(!signup_client) //vice versa but in a variable we use later
 			GLOB.basketball_signup -= key
 			GLOB.basketball_bad_signup += key
 			continue
@@ -362,7 +341,7 @@ GLOBAL_VAR(basketball_game)
 /datum/basketball_controller/proc/try_autostart()
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
 		return
-	if(GLOB.basketball_signup.len >= BASKETBALL_MIN_PLAYER_COUNT)//enough people to try and make something (or debug mode)
+	if(GLOB.basketball_signup.len >= BASKETBALL_MIN_PLAYER_COUNT) //enough people to try and make something (or debug mode)
 		basic_setup()
 
 /datum/basketball_controller/ui_state(mob/user)
@@ -390,14 +369,7 @@ GLOBAL_VAR(basketball_game)
 	var/mob/user = ui.user
 
 	switch(action)
-		/**
-		if("jump")
-			var/obj/machinery/capture_the_flag/ctf_spawner = locate(params["refs"])
-			if(istype(ctf_spawner))
-				user.forceMove(get_turf(ctf_spawner))
-				return TRUE
-		**/
-		if ("vote")
+		if("vote")
 			var/client/signup_client = user.client
 			if(!SSticker.HasRoundStarted())
 				to_chat(signup_client, span_warning("Wait for the round to start."))
@@ -414,20 +386,9 @@ GLOBAL_VAR(basketball_game)
 			try_autostart()
 
 			return TRUE
-		/**
-		if ("unvote")
-			if (ctf_enabled())
-				to_chat(user, span_warning("CTF is already enabled!"))
-				return TRUE
-
-			var/datum/ctf_voting_controller/ctf_controller = get_ctf_voting_controller(CTF_GHOST_CTF_GAME_ID)
-			ctf_controller.unvote(user)
-
-			return TRUE
-		**/
 
 /**
- * Creates the global datum for playing mafia games, destroys the last if that's required and returns the new.
+ * Creates the global datum for playing basketball games, destroys the last if that's required and returns the new.
  */
 /proc/create_basketball_game()
 	if(GLOB.basketball_game)
