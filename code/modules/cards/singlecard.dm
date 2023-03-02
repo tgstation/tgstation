@@ -1,6 +1,3 @@
-#define CARD_FACEDOWN 0
-#define CARD_FACEUP 1
-
 /obj/item/toy/singlecard
 	name = "card"
 	desc = "A playing card used to play card games like poker."
