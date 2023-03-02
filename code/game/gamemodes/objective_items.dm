@@ -25,9 +25,19 @@
 /datum/objective_item/proc/check_special_completion()
 	return TRUE
 
-/// Returns true if the target item exists
-/datum/objective_item/proc/TargetExists()
+/// Takes a list of minds and returns true if this is a valid objective to give to a team of these minds
+/datum/objective_item/proc/valid_objective_for(list/potential_thieves)
+	if(!target_exists() || !owner_exists())
+		return FALSE
+	for (var/datum/mind/possible_thief in potential_thieves)
+		var/datum/job/role = possible_thief.assigned_role
+		if(role.title in excludefromjob)
+			return FALSE
 	return TRUE
+
+/// Returns true if the target item exists
+/datum/objective_item/proc/target_exists()
+	return (exists_on_map) ? length(GLOB.steal_item_handler.objectives_by_path[targetitem]) : TRUE
 
 /// Returns true if one of the item's owners exists somewhere
 /datum/objective_item/proc/owner_exists()
@@ -36,12 +46,11 @@
 	for (var/mob/player as anything in GLOB.player_list)
 		if ((player.mind?.assigned_role.title in item_owner) && !is_centcom_level(player.z))
 			return TRUE
-
 	return FALSE
 
 /datum/objective_item/steal/New()
-	..()
-	if(TargetExists())
+	. = ..()
+	if(target_exists())
 		GLOB.possible_items += src
 	else
 		qdel(src)
@@ -270,7 +279,7 @@
 	special_equipment += /obj/item/storage/box/syndie_kit/supermatter
 	..()
 
-/datum/objective_item/steal/supermatter/TargetExists()
+/datum/objective_item/steal/supermatter/target_exists()
 	return GLOB.main_supermatter_engine != null
 
 // Doesn't need item_owner = (JOB_AI) because this handily functions as a murder objective if there isn't one
