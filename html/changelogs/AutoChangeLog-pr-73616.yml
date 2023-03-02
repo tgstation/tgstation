@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Using Fleshmend while on fire gives the \"on fire\" fleshmend icon."
-  - bugfix: "Using Revival stasis more accurately updates the icon where relevant"
-  - bugfix: "Fixes a potential input stall with revival stasis"

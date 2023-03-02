@@ -1,4 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - bugfix: "You can no longer trap yourself in north public mining maintenance if you enter it without maint access."
