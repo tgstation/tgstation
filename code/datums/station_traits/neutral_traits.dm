@@ -223,9 +223,10 @@
 	SIGNAL_HANDLER
 
 	var/obj/item/hat = pick_weight(list(
-		/obj/item/clothing/head/costume/festive = 1,
-		/obj/item/clothing/head/costume/festive/color = 6,
-		/obj/item/clothing/head/cone = 1,
+		/obj/item/clothing/head/costume/festive = 2,
+		/obj/item/clothing/head/costume/party = 12,
+		/obj/item/clothing/head/costume/party/festive = 12,
+		/obj/item/clothing/head/utility/hardhat/cakehat = 1,
 	))
 	hat = new hat(spawned_mob)
 	if(!spawned_mob.equip_to_slot_if_possible(hat, ITEM_SLOT_HEAD, disable_warning = TRUE))
@@ -235,6 +236,7 @@
 		/obj/item/sparkler = 2,
 		/obj/item/reagent_containers/spray/chemsprayer/party = 4,
 		/obj/item/storage/box/tail_pin = 1,
+		/obj/item/clothing/mask/party_horn = 2,
 	))
 	toy = new toy(spawned_mob)
 	spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_BACKPACK)
@@ -249,5 +251,32 @@
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/birthday_invite/proc/setup_card(var/birthday_name)
+/obj/item/birthday_invite/proc/setup_card(birthday_name)
 	desc = "A card stating that its [birthday_name]'s Birthday today."
+
+/obj/item/clothing/head/costume/party
+	name = "party hat"
+	desc = "A crappy paper hat that you are REQUIRED to wear."
+	icon_state = "party_hat"
+	greyscale_config =  /datum/greyscale_config/party_hat
+	greyscale_config_worn = /datum/greyscale_config/party_hat_worn
+	flags_inv = 0
+	armor_type = /datum/armor/none
+	var/static/list/hat_colors = list(
+		COLOR_PRIDE_RED,
+		COLOR_PRIDE_ORANGE,
+		COLOR_PRIDE_YELLOW,
+		COLOR_PRIDE_GREEN,
+		COLOR_PRIDE_BLUE,
+		COLOR_PRIDE_PURPLE,
+	)
+
+/obj/item/clothing/head/costume/party/Initialize(mapload)
+	set_greyscale(colors = list(pick(hat_colors)))
+	return ..()
+
+/obj/item/clothing/head/costume/party/festive
+	name = "festive paper hat"
+	icon_state = "festive_hat"
+	greyscale_config = /datum/greyscale_config/festive_hat
+	greyscale_config_worn = /datum/greyscale_config/festive_hat_worn

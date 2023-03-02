@@ -362,7 +362,13 @@
 
 /obj/item/reagent_containers/spray/chemsprayer/party
 	name = "party popper"
-	desc = "temp"
+	desc = "A small device used for cellebrations and annoying the janitor."
+	icon = 'icons/obj/toys/toy.dmi'
+	icon_state = "party_popper"
+	inhand_icon_state = "party_popper"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	w_class = WEIGHT_CLASS_TINY
 	reagent_flags = NONE
 	list_reagents = list(/datum/reagent/glitter/confetti = 15)
 	volume = 15
@@ -375,7 +381,7 @@
 
 /obj/item/reagent_containers/spray/chemsprayer/party/spray(atom/A, mob/user)
 	. = ..()
-	//Change sprite to a used version here
+	icon_state = "[icon_state]_used"
 	
 
 // Plant-B-Gone
