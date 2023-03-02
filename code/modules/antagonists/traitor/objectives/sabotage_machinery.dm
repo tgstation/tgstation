@@ -81,6 +81,8 @@
 	var/deploy_time = 10 SECONDS
 	/// Beeping sound to spook people
 	var/datum/looping_sound/trapped_machine_beep/soundloop
+	///
+	var/explode_timer
 
 /obj/item/traitor_machine_trapper/Initialize(mapload)
 	. = ..()
@@ -108,12 +110,11 @@
 		return
 	. |= AFTERATTACK_PROCESSED_ITEM
 	balloon_alert(user, "planting device...")
-	if(!do_after(user, deploy_time, src))
-		balloon_alert(user, "interrupted!")
+	if(!do_after(user, delay = deploy_time, target = src, interaction_key = DOAFTER_SOURCE_PLANTING_DEVICE))
 		return
 	planted_on = target
 	forceMove(target)
-	RegisterSignals(target, list(COMSIG_ATOM_UI_INTERACT, COMSIG_ORM_COLLECTED_ORE), PROC_REF(trigger_explosive))
+	RegisterSignals(target, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ORM_COLLECTED_ORE), PROC_REF(trigger_explosive))
 	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), PROC_REF(on_screwed))
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(on_examine))
 	soundloop.start()
@@ -128,6 +129,14 @@
 
 /obj/item/traitor_machine_trapper/proc/trigger_explosive(obj/machinery/attached_machine)
 	SIGNAL_HANDLER
+	if (explode_timer)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	explode_timer = addtimer(CALLBACK(src, PROC_REF(explode), attached_machine), 0.5 SECONDS)
+	attached_machine.balloon_alert_to_viewers("beep")
+	playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/obj/item/traitor_machine_trapper/proc/explode(obj/machinery/attached_machine)
 	var/turf/origin_turf = get_turf(attached_machine)
 	new /obj/effect/temp_visual/explosion/fast(origin_turf)
 	explosion(origin = origin_turf, light_impact_range = explosion_range, explosion_cause = src)
