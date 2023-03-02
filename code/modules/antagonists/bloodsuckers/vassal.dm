@@ -10,6 +10,8 @@
 	job_rank = ROLE_BLOODSUCKER
 	show_in_roundend = FALSE
 
+	antag_hud_name = "vassal"
+
 	/// The Master Bloodsucker's antag datum.
 	var/datum/antagonist/bloodsucker/master
 	var/datum/game_mode/blooodsucker
@@ -121,6 +123,7 @@
 /datum/antagonist/vassal/proc/make_favorite(mob/living/master)
 	// Default stuff for all
 	favorite_vassal = TRUE
+	antag_hud_name = "vassal6"
 	to_chat(master, span_danger("You have turned [owner.current] into your Favorite Vassal! They will no longer be deconverted upon Mindshielding!"))
 	to_chat(owner, span_notice("As Blood drips over your body, you feel closer to your Master... You are now the Favorite Vassal!"))
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = master.mind.has_antag_datum(/datum/antagonist/bloodsucker)
