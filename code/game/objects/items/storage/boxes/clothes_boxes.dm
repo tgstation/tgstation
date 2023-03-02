@@ -27,6 +27,15 @@
 	for(var/i in 1 to 7)
 		new /obj/item/clothing/glasses/regular(src)
 
+/obj/item/storage/box/tapewizard
+	name = "Tape Wizard - Episode 23"
+	desc = "A box containing the costume used by legendary entertainment icon 'Super Tape Wizard'. It got a little stuck on its way out."
+
+/obj/item/storage/box/tapewizard/PopulateContents()
+	new /obj/item/clothing/head/wizard/tape/fake(src)
+	new /obj/item/clothing/suit/wizrobe/tape/fake(src)
+	new /obj/item/staff/tape(src)
+
 /obj/item/storage/box/fakesyndiesuit
 	name = "boxed space suit and helmet"
 	desc = "A sleek, sturdy box used to hold replica spacesuits."
@@ -72,10 +81,6 @@
 	new /obj/item/clothing/head/helmet/space/nasavoid(src)
 	new /obj/item/tank/internals/oxygen(src)
 	new /obj/item/gps(src)
-
-/obj/item/storage/box/hero/tape
-	name = "Tape Wizard - Episode 23"
-	desc = "A box containing the costume used by legendary entertainment icon 'Super Tape Wizard'. It got a little stuck on its way out."
 
 /obj/item/storage/box/hero/PopulateContents()
 	new /obj/item/clothing/head/wizard/tape/fake(src)
