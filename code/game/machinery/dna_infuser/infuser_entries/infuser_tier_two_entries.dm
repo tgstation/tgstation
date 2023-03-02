@@ -10,7 +10,7 @@
 /datum/infuser_entry/gondola
 	name = "Gondola"
 	infuse_mob_name = "gondolid"
-	desc = "Gondolas, rare creatures that choose to simply observe instead of act, have quite a set of interesting qualities to take advantage of. For one, shrugging off a proper plasma fire?!"
+	desc = "Gondolas, rare creatures that choose to simply observe instead of act have quite a set of interesting qualities to take advantage of. You know. Zen, peace, happiness... shrugging off a raging plasma fire..."
 	threshold_desc = "you can shrug off most environmental conditions!"
 	qualities = list(
 		"pacify people with your hugs",
