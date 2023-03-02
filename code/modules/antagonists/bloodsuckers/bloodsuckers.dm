@@ -8,7 +8,7 @@
 	can_coexist_with_others = FALSE
 	hijack_speed = 0.5
 
-	antag_hud_name = bloodsucker
+	antag_hud_name = "bloodsucker"
 
 	// TIMERS //
 	///Timer between alerts for Burn messages
