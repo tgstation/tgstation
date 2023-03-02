@@ -1,13 +1,13 @@
-/// No deviation at all. Flashed from the front or front-left/front-right. Alternatively, flashed in direct view.
-#define FACE_TO_BACK 0
-/// Partial deviation. Flashed from the side. Alternatively, flashed out the corner of your eyes.
-#define FACE_TO_SIDE 1
-/// Full deviation. Flashed from directly behind or behind-left/behind-rack. Not flashed at all.
-#define FACE_TO_FACE 2
-
 #define MIN_DISARM_CHANCE 25
 #define MAX_DISARM_CHANCE 75
 #define PICKUP_RESTRICTION_TIME 3 SECONDS // so other players can pickup the ball after someone scores
+
+/// You hit exhaustion when you use 100 stamina
+#define STAMINA_COST_SHOOTING 10 // shooting with RMB drains stamina (but LMB does not)
+#define STAMINA_COST_DUNKING 20 // dunking is more strenous than shooting
+#define STAMINA_COST_DUNKING_MOB 30 // dunking another person is harder
+#define STAMINA_COST_SPINNING 15 // spin emote uses stamina while holding ball
+#define STAMINA_COST_DISARMING 10 // getting shoved or disarmed while holding ball drains stamina
 
 /obj/item/toy/basketball
 	name = "basketball"
@@ -37,13 +37,10 @@
 
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-	RegisterSignal(src, COMSIG_MOVABLE_POST_THROW, PROC_REF(after_thrown))
 
 	// test this and remove if it doesn't work
-	RegisterSignal(src, COMSIG_MOVABLE_IMPACT, PROC_REF(shoot_over_mobs))
-
-	//RegisterSignal(src, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(return_missed_throw))
-	//RegisterSignal(src, COMSIG_MOVABLE_IMPACT, PROC_REF(return_hit_throw))
+	RegisterSignal(src, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(after_throw_reset))
+	RegisterSignal(src, COMSIG_MOVABLE_IMPACT, PROC_REF(after_throw_reset))
 
 // basketball/qdel don't forget to remove these signals
 //	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
@@ -84,17 +81,13 @@
 
 
 /**
- * Proc'd before the first thrown is performed in order to gather information regarding each throw as well as handle throw_mode as necessary.
- * * source: Datum src from original signal call.
- * * thrown_thing: The thrownthing datum from the parent object's latest throw. Updates thrown_boomerang.
- * * spin: Carry over from POST_THROW, the speed of rotation on the boomerang when thrown.
- */
-/obj/item/toy/basketball/proc/after_thrown(datum/source, datum/thrownthing/thrown_thing, spin)
+ * After a ball is thrown we need to reset the pass_flags since shooting lets you shoot through mobs
+ * * source: Datum src from original signal call
+**/
+/obj/item/toy/basketball/proc/after_throw_reset(datum/source) // other args are redundant
 	SIGNAL_HANDLER
 
-	// we always need to reset our pass flags since we allow shooting to go through mobs with RMB
-	//pass_flags = initial(pass_flags)
-
+	pass_flags = initial(pass_flags)
 
 /**
  * Proc that triggers when the thrown boomerang hits an object.
@@ -146,47 +139,10 @@
 
 	for(var/i in 1 to 6)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/basketball_bounce.ogg', 75, FALSE), 0.25 SECONDS * i)
-	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon/, adjustStaminaLoss), 15), 1.5 SECONDS)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon/, adjustStaminaLoss), STAMINA_COST_SPINNING), 1.5 SECONDS)
 
-/**
- * Handles the directionality of the attack
- *
- * Returns the amount of 'deviation', 0 being facing eachother, 1 being sideways, 2 being facing away from eachother.
- * Arguments:
- * * victim - Victim
- * * attacker - Attacker
- */
-/obj/item/toy/basketball/proc/calculate_deviation(mob/victim, atom/attacker)
-	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
-	// or flashing someone they're stood on the same turf as, or a borg flashing someone buckled to them.
-	if(victim.loc == attacker.loc)
-		return FACE_TO_SIDE
-
-	// If the victim was looking at the attacker, this is the direction they'd have to be facing.
-	var/victim_to_attacker = get_dir(victim, attacker)
-	// The victim's dir is necessarily a cardinal value.
-	var/victim_dir = victim.dir
-
-	// - - -
-	// - V - Victim facing south
-	// # # #
-	// Attacker within 45 degrees of where the victim is facing.
-	if(victim_dir & victim_to_attacker)
-		return FACE_TO_FACE
-
-	// # # #
-	// - V - Victim facing south
-	// - - -
-	// Attacker at 135 or more degrees of where the victim is facing.
-	if(victim_dir & REVERSE_DIR(victim_to_attacker))
-		return FACE_TO_BACK
-
-	// - - -
-	// # V # Victim facing south
-	// - - -
-	// Attacker lateral to the victim.
-	return FACE_TO_SIDE
-
+/// Used to calculate our disarm chance based on stamina, direction, and spinning
+/// Note - monkeys use attack_paw() and never trigger this signal (so they always have 100% disarm)
 /obj/item/toy/basketball/proc/on_equipped_mob_disarm(mob/living/baller, mob/living/stealer, zone)
 	SIGNAL_HANDLER
 
@@ -201,20 +157,20 @@
 	disarm_chance = clamp(disarm_chance, MIN_DISARM_CHANCE, MAX_DISARM_CHANCE)
 
 	// getting disarmed or shoved while holding the ball drains stamina
-	baller.adjustStaminaLoss(10)
+	baller.adjustStaminaLoss(STAMINA_COST_DISARMING)
 
 	if(!prob(disarm_chance))
 		return // the disarm failed
 
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
-	var/blocking_dir_bonus = calculate_deviation(baller, stealer)
+	var/blocking_dir_bonus = check_target_facings(stealer, baller)
 
 	switch(blocking_dir_bonus)
-		if(FACE_TO_FACE)
+		if(FACING_EACHOTHER)
 			stealer.balloon_alert_to_viewers("steals the ball")
 			INVOKE_ASYNC(stealer, TYPE_PROC_REF(/mob, put_in_hands), src) // put_in_hands uses sleep() so need to use ASYNCH
 			//stealer.put_in_hands(src)
-		if(FACE_TO_SIDE)
+		if(FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR)
 			if(prob(50))
 				if(!baller.dropItemToGround(src))
 					return
@@ -223,7 +179,7 @@
 				stealer.balloon_alert_to_viewers("steals the ball")
 				INVOKE_ASYNC(stealer, TYPE_PROC_REF(/mob, put_in_hands), src) // put_in_hands uses sleep() so need to use ASYNCH
 				//stealer.put_in_hands(src)
-		if(FACE_TO_BACK)
+		if(FACING_SAME_DIR)
 			if(!baller.dropItemToGround(src))
 				return
 			stealer.balloon_alert_to_viewers("bats the ball")
@@ -244,14 +200,17 @@
 	user.balloon_alert_to_viewers("fumbles the ball")
 
 /obj/item/toy/basketball/attack(mob/living/carbon/target, mob/living/user, params)
-	if(!iscarbon(target))
+	if(!iscarbon(target) || user.combat_mode)
 		return ..()
 
-	user.balloon_alert_to_viewers("passes the ball")
+	//user.balloon_alert_to_viewers("passes the ball")
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
 	target.put_in_hands(src)
 
 /obj/item/toy/basketball/attack_self(mob/living/user)
+	if(can_perform_action(user, NEED_HANDS|FORBID_TELEKINESIS_REACH))
+		return
+
 	// no spamming
 	if(last_use + use_delay > world.time)
 		return
@@ -262,7 +221,6 @@
 
 	last_use = world.time
 	user.swap_hand(user.get_held_index_of_item(src))
-	user.balloon_alert_to_viewers("dribbles the ball")
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
 
 /**
@@ -275,7 +233,7 @@
 
 /obj/item/toy/basketball/afterattack(atom/target, mob/user)
 	. = ..()
-//	user.throw_item(target)
+	user.throw_item(target)
 
 
 //	pass_flags = initial(pass_flags)
@@ -287,8 +245,8 @@
 	if(istype(aim_target, /obj/structure/hoop) && baller.Adjacent(aim_target))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	baller.balloon_alert_to_viewers("shooting...")
-	baller.adjustStaminaLoss(10)
+	//baller.balloon_alert_to_viewers("shooting...")
+	baller.adjustStaminaLoss(STAMINA_COST_SHOOTING)
 
 	var/dunk_dir = get_dir(baller, aim_target)
 	var/dunk_pixel_y = dunk_dir & SOUTH ? -16 : 16
@@ -331,24 +289,15 @@
 
 //obj/item/toy/basketball/pre_attack_secondary(mob/living/user, list/modifiers)
 
-
-/obj/item/toy/basketball/Bump(atom/obstacle)
-	if(pass_flags & PASSMOB && isliving(obstacle))
-		return
-
-	. = ..()
-
-/obj/item/toy/basketball/proc/shoot_over_mobs(obj/item/source, atom/hit_atom, datum/thrownthing/thrownthing)
-	SIGNAL_HANDLER
-
-	return COMPONENT_MOVABLE_IMPACT_NEVERMIND
-
-/obj/item/toy/basketball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/toy/basketball/throw_impact(mob/living/carbon/target, datum/thrownthing/throwingdatum)
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
 
-	//var/atom/movable/actual_target = initial_target?.resolve()
-	if(throwingdatum.initial_target == hit_atom)
-		pass_flags = initial(pass_flags)
+	if(!istype(target))
+		return ..()
+
+	var/atom/movable/actual_target = throwingdatum.initial_target?.resolve()
+	if(target == actual_target || prob(50)) // 50% chance to catch the ball if you don't directly aim on target
+		target.put_in_hands(src)
 
 	// . = ..()
 
@@ -473,7 +422,7 @@
 			score(ball, baller, 2)
 
 			if(istype(ball, /obj/item/toy/basketball))
-				baller.adjustStaminaLoss(10) // dunking is more strenous than shooting
+				baller.adjustStaminaLoss(STAMINA_COST_DUNKING)
 
 /obj/structure/hoop/attack_hand(mob/living/baller, list/modifiers)
 	. = ..()
@@ -488,7 +437,7 @@
 		loser.Paralyze(100)
 		visible_message(span_danger("[baller] dunks [loser] into \the [src]!"))
 		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
-		baller.adjustStaminaLoss(30)
+		baller.adjustStaminaLoss(STAMINA_COST_DUNKING_MOB)
 		baller.stop_pulling()
 	else
 		..()
@@ -608,7 +557,10 @@
 	// build_all_button_icons()
 	return TRUE
 
-#undef FACE_TO_BACK
-#undef FACE_TO_SIDE
-#undef FACE_TO_FACE
 #undef PICKUP_RESTRICTION_TIME
+
+#undef STAMINA_COST_SHOOTING
+#undef STAMINA_COST_DUNKING
+#undef STAMINA_COST_DUNKING_MOB
+#undef STAMINA_COST_SPINNING
+#undef STAMINA_COST_DISARMING
