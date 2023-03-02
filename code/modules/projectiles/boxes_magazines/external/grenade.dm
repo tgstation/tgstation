@@ -3,6 +3,6 @@
 	icon_state = "75"
 	ammo_type = /obj/item/ammo_casing/caseless/a75
 	caliber = CALIBER_75
-	multiple_sprites = AMMO_BOX_MAX_AMMO_EMPTY
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
 	max_ammo = 8
 

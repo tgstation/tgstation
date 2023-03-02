@@ -21,7 +21,7 @@
 	var/ammo_type = /obj/item/ammo_casing
 	///maximum amount of ammo in the magazine
 	var/max_ammo = 7
-	///Controls how sprites are updated for the ammo box; see defines in combat.dm: AMMO_BOX_ONE_SPRITE; AMMO_BOX_PER_BULLET; AMMO_BOX_MAX_AMMO_EMPTY; AMMO_BOX_FULL_EMPTY
+	///Controls how sprites are updated for the ammo box; see defines in combat.dm: AMMO_BOX_ONE_SPRITE; AMMO_BOX_PER_BULLET; AMMO_BOX_FULL_EMPTY
 	var/multiple_sprites = AMMO_BOX_ONE_SPRITE
 	///For sprite updating, do we use initial(icon_state) or base_icon_state?
 	var/multiple_sprite_use_base = FALSE
@@ -176,8 +176,6 @@
 	switch(multiple_sprites)
 		if(AMMO_BOX_PER_BULLET)
 			icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left]"
-		if(AMMO_BOX_MAX_AMMO_EMPTY)
-			icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left ? "[max_ammo]" : "0"]"
 		if(AMMO_BOX_FULL_EMPTY)
 			icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left ? "full" : "empty"]"
 	return ..()
