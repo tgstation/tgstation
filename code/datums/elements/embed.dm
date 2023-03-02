@@ -70,12 +70,12 @@
 /datum/element/embed/proc/checkEmbed(obj/item/weapon, mob/living/carbon/victim, hit_zone, blocked, datum/thrownthing/throwingdatum, forced=FALSE)
 	SIGNAL_HANDLER
 
-	if((!forced && blocked) || !istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
-		return FALSE
-
-	if(forced) // Skip all the other checks, we forced it
+	if(forced)
 		embed_object(weapon, victim, hit_zone, throwingdatum)
 		return TRUE
+
+	if(blocked || !istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
+		return FALSE
 
 	var/flying_speed = throwingdatum?.speed || weapon.throw_speed
 
