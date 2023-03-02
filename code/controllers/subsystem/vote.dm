@@ -246,19 +246,13 @@ SUBSYSTEM_DEF(vote)
 	var/is_lower_admin = !!user.client?.holder
 	var/is_upper_admin = check_rights_for(user.client, R_ADMIN)
 
-
 	data["user"] = list(
+		"ckey" = user.client?.ckey,
 		"isLowerAdmin" = is_lower_admin,
 		"isUpperAdmin" = is_upper_admin,
 		// What the current user has selected in any ongoing votes.
 		"fptpSelection" = current_vote?.choices_by_ckey[user.client?.ckey],
-	)
-
-	data["user"] = list(
-		"isLowerAdmin" = is_lower_admin,
-		"isUpperAdmin" = is_upper_admin,
-		// What the current user has selected in any ongoing votes.
-		"fptpSelection" = current_vote?.choices_by_ckey[user.client?.ckey],
+		"avSelection" = current_vote?.choices_by_ckey,
 	)
 
 	data["voting"]= is_lower_admin ? voting : list()

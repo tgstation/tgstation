@@ -26,13 +26,15 @@ type ActiveVote = {
   question: string | null;
   timeRemaining: number;
   choices: Option[];
+  countMethod: number;
 };
 
 type UserData = {
   isLowerAdmin: BooleanLike;
   isUpperAdmin: BooleanLike;
   fptpSelection: string | null;
-  avSelection: string | null;
+  avSelection: string[] | null;
+  ckey: string;
 };
 
 type Data = {
@@ -158,12 +160,12 @@ const ChoicesPanel = (props, context) => {
   return (
     <Stack.Item grow>
       <Section fill scrollable title="Active Vote">
-        {currentVote && currentVote.countMethod == 1 ? (
+        {currentVote && currentVote.countMethod === 1 ? (
           <NoticeBox success>Select one option</NoticeBox>
         ) : null}
         {currentVote &&
         currentVote.choices.length !== 0 &&
-        currentVote.countMethod == 1 ? (
+        currentVote.countMethod === 1 ? (
           <LabeledList>
             {currentVote.choices.map((choice) => (
               <Box key={choice.name}>
@@ -194,12 +196,12 @@ const ChoicesPanel = (props, context) => {
             ))}
           </LabeledList>
         ) : null}
-        {currentVote && currentVote.countMethod == 2 ? (
+        {currentVote && currentVote.countMethod === 2 ? (
           <NoticeBox success>Select any number of options</NoticeBox>
         ) : null}
         {currentVote &&
         currentVote.choices.length !== 0 &&
-        currentVote.countMethod == 2 ? (
+        currentVote.countMethod === 2 ? (
           <LabeledList>
             {currentVote.choices.map((choice) => (
               <Box key={choice.name}>
@@ -214,14 +216,14 @@ const ChoicesPanel = (props, context) => {
                       Vote
                     </Button>
                   }>
-                  {user.avSelection && choice.name === user.avSelection && (
+                  {user.avSelection[user.ckey.concat(choice.name)] === 1 ? (
                     <Icon
                       alignSelf="right"
                       mr={2}
                       color="blue"
                       name="vote-yea"
                     />
-                  )}
+                  ) : null}
                   {choice.votes} Votes
                 </LabeledList.Item>
                 <LabeledList.Divider />
