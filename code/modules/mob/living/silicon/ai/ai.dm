@@ -149,7 +149,7 @@
 	to_chat(src, "For department channels, use the following say commands:")
 	to_chat(src, ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science, :h - Holopad.")
 	show_laws()
-	to_chat(src, span_bold("These laws may be changed by other players, random events, or by you becoming malfunctioning.>"))
+	to_chat(src, span_bold("These laws may be changed by other players, random events, or by you becoming malfunctioning."))
 
 	job = "AI"
 

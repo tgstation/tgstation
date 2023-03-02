@@ -24,33 +24,34 @@
 	qdel(src)
 
 /datum/law_panel/proc/add_law_helper(mob/living/user, mob/living/silicon/borgo)
-	var/list/lawtypes = list(LAW_ZEROTH, LAW_ION, LAW_HACKED, LAW_INHERENT, LAW_SUPPLIED)
+	var/list/lawtypes = list(LAW_ZEROTH, LAW_HACKED, LAW_ION, LAW_INHERENT, LAW_SUPPLIED) // in order of priority
 	var/lawtype = tgui_input_list(user, "Select law type", "Law type", lawtypes)
 	if(isnull(lawtype))
 		return FALSE
 	var/lawtext = tgui_input_text(user, "Input law text", "Law text")
 	if(!lawtext)
 		return FALSE
-	if(lawtype == LAW_ZEROTH && (borgo.laws.zeroth || borgo.laws.zeroth_borg))
-		var/zero_override_alert = tgui_alert(user, "This silicon already has a zeroth law, \
-			this will override their existing one. Are you sure?", "Zeroth law override", list("Yes, No"))
-		if(zero_override_alert != "Yes")
-			return FALSE
-
 	if(QDELETED(src) || QDELETED(borgo))
 		return
 
 	switch(lawtype)
 		if(LAW_ZEROTH)
-			borgo.set_zeroth_law(lawtext)
+			if(borgo.laws.zeroth || borgo.laws.zeroth_borg)
+				var/zero_override_alert = tgui_alert(user, "This silicon already has a zeroth law, \
+					this will override their existing one. Are you sure?", "Zeroth law override", list("Yes", "No"))
+				if(zero_override_alert != "Yes" || QDELETED(src) || QDELETED(borgo))
+					return FALSE
+
+			borgo.laws.set_zeroth_law(lawtext)
+			borgo.laws.protected_zeroth = TRUE
 		if(LAW_ION)
-			borgo.laws.ion += lawtext
+			borgo.laws.add_ion_law(lawtext)
 		if(LAW_HACKED)
-			borgo.laws.hacked += lawtext
+			borgo.laws.add_hacked_law(lawtext)
 		if(LAW_INHERENT)
-			borgo.laws.inherent += lawtext
+			borgo.laws.add_inherent_law(lawtext)
 		if(LAW_SUPPLIED)
-			borgo.laws.supplied += lawtext
+			borgo.laws.add_supplied_law(length(borgo.laws.supplied), lawtext) // Just goes to the end of the list
 
 	return TRUE
 
@@ -95,6 +96,7 @@
 			relevant_laws = borgo.laws.ion
 		if(LAW_ZEROTH)
 			borgo.set_zeroth_law(newlaw, announce = FALSE)
+			borgo.laws.protected_zeroth = TRUE
 			return TRUE
 
 		else
@@ -125,19 +127,19 @@
 
 	// If it's far beyond any existing values, just re-add it normally
 	if(new_prio > length(borgo.laws.supplied))
-		borgo.laws.supplied[old_prio] = ""
+		borgo.laws.remove_supplied_law_by_num(old_prio)
 		borgo.laws.add_supplied_law(new_prio, law)
 		return TRUE
 
 	// Handle collisions
 	var/existing_law = borgo.laws.supplied[new_prio]
 	if(existing_law)
-		var/list/options = list("Swap", "Move up", "Move down", "Cancel")
+		var/list/options = list("Swap", "Move up", "Move down", "Replace", "Cancel")
 		if(new_prio == 1)
 			// Nowhere to go from here
 			options -= "Move down"
 
-		var/swap_or_remove = tgui_alert(user, "There's already a law there. What should be done?", "Existing law", )
+		var/swap_or_remove = tgui_alert(user, "There's already a law at that priority level. What should be done to it?", "Existing law", options)
 		if(swap_or_remove == "Cancel" || !swap_or_remove || QDELETED(src) || QDELETED(borgo))
 			return FALSE
 		// Sanity
@@ -148,11 +150,17 @@
 		if(swap_or_remove == "Swap")
 			borgo.laws.supplied.Swap(old_prio, new_prio)
 			return TRUE
+		if(swap_or_remove == "Replace")
+			borgo.laws.remove_supplied_law_by_num(new_prio, law)
+			borgo.laws.add_supplied_law(new_prio, law)
+			return TRUE
 
-		borgo.laws.supplied[old_prio] = ""
-		borgo.laws.supplied[new_prio] = ""
+		var/new_prio_for_old_law = new_prio + (swap_or_remove == "Move up" ? 1 : -1)
+
+		borgo.laws.remove_supplied_law_by_num(old_prio)
+		borgo.laws.remove_supplied_law_by_num(new_prio)
 		borgo.laws.add_supplied_law(new_prio, law)
-		borgo.laws.add_supplied_law(new_prio + (swap_or_remove == "Move up" ? 1 : -1), existing_law)
+		borgo.laws.add_supplied_law(new_prio_for_old_law, existing_law)
 		return TRUE
 
 	// Sanity
@@ -161,22 +169,23 @@
 		return FALSE
 
 	// At this point the slot is free, insert it as normal
-	borgo.laws.supplied[old_prio] = ""
+	borgo.laws.remove_supplied_law_by_num(old_prio)
 	borgo.laws.add_supplied_law(new_prio, law)
 	return TRUE
 
 /datum/law_panel/proc/remove_law_helper(mob/living/user, mob/living/silicon/borgo, lawtype, law)
 	switch(lawtype)
 		if(LAW_INHERENT)
-			borgo.laws.inherent -= law
+			borgo.laws.remove_inherent_law(law)
 		if(LAW_SUPPLIED)
-			borgo.laws.supplied -= law
+			borgo.laws.remove_supplied_law_by_law(law)
 		if(LAW_HACKED)
-			borgo.laws.hacked -= law
+			borgo.laws.remove_hacked_law(law)
 		if(LAW_ION)
-			borgo.laws.ion -= law
+			borgo.laws.remove_ion_law(law)
 		if(LAW_ZEROTH)
-			borgo.clear_zeroth_law(force = TRUE)
+			borgo.laws.clear_zeroth_law(force = TRUE)
+			borgo.laws.protected_zeroth = FALSE
 		else
 			return FALSE
 
@@ -186,6 +195,10 @@
 	. = ..()
 	if(.)
 		return
+
+	if(!check_rights(R_ADMIN))
+		qdel(src)
+		return FALSE
 
 	var/mob/living/silicon/borgo
 	if(params["ref"])
@@ -205,6 +218,10 @@
 
 		if("announce_law_changes")
 			borgo.show_laws()
+			return FALSE
+
+		if("laws_updated_alert")
+			borgo.post_lawchange()
 			return FALSE
 
 		if("give_law_datum")
@@ -227,6 +244,8 @@
 			. = edit_law_priority_helper(usr, borgo, params["law"])
 
 	if(. && !QDELETED(borgo))
+		// One of our functions successfully changed a law
+		// If it was an AI with connected borgs, we should sync
 		borgo.try_sync_laws()
 
 

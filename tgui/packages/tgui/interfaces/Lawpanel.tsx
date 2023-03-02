@@ -98,14 +98,19 @@ export const LawPrintout = (
           <LabeledList.Item
             key={index}
             label={law.num >= 0 ? `${law.num}` : '?!$'}
-            color={lawtype_to_color[law.lawtype]}
+            color={lawtype_to_color[law.lawtype] || 'pink'}
             buttons={
               <Stack>
                 <Stack.Item>
                   <Button
                     icon="question"
-                    tooltip={lawtype_to_tooltip[law.lawtype]}
-                    color={lawtype_to_color[law.lawtype]}
+                    tooltip={
+                      lawtype_to_tooltip[law.lawtype] ||
+                      `This lawtype is unrecognized for some reason,
+                        that reason probably being "a bug".
+                        Make an issue report with this please.`
+                    }
+                    color={lawtype_to_color[law.lawtype] || 'pink'}
                   />
                 </Stack.Item>
                 <Stack.Item>
@@ -148,7 +153,8 @@ export const LawPrintout = (
                           act('move_law', {
                             ref: cyborg_ref,
                             law: law.law,
-                            // may seem confusing at a glance, but pressing up = actually moving it down.
+                            // may seem confusing at a glance,
+                            // but pressing up = actually moving it down.
                             direction: 'down',
                           })
                         }
@@ -163,7 +169,8 @@ export const LawPrintout = (
                           act('move_law', {
                             ref: cyborg_ref,
                             law: law.law,
-                            // may seem confusing at a glance, but pressing down = actually moving it up.
+                            // may seem confusing at a glance,
+                            // but pressing down = actually moving it up.
                             direction: 'up',
                           })
                         }
@@ -236,6 +243,8 @@ export const SiliconReadout = (props: { cyborg: Silicon }, context) => {
                     <Button
                       icon="bullhorn"
                       content={'Force State Laws'}
+                      tooltip={`Forces the silicon to state laws.
+                        Only states inherent / core laws.`}
                       onClick={() =>
                         act('force_state_laws', { ref: cyborg.ref })
                       }
@@ -245,8 +254,23 @@ export const SiliconReadout = (props: { cyborg: Silicon }, context) => {
                     <Button
                       icon="message"
                       content={'Privately Announce Laws'}
+                      tooltip={`Displays all of the silicon's laws
+                        in their chat box. Also shows to all
+                        linked cyborgs for AIs.`}
                       onClick={() =>
                         act('announce_law_changes', { ref: cyborg.ref })
+                      }
+                    />
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      icon="bell"
+                      content={'"Laws Updated" Alert'}
+                      tooltip={`Throws a screen alert to the silicon that their
+                        laws have been updated. Also displays the laws in chat
+                        and alerts deadchat.`}
+                      onClick={() =>
+                        act('laws_updated_alert', { ref: cyborg.ref })
                       }
                     />
                   </Stack.Item>
@@ -266,10 +290,11 @@ export const Lawpanel = (props, context) => {
 
   return (
     <Window title="Law Panel" theme="admin" width="800" height="600">
-      <Window.Content scrollable>
+      <Window.Content>
         <Section
           fill
           title="All Silicon Laws"
+          scrollable
           buttons={
             <Button
               icon="robot"
