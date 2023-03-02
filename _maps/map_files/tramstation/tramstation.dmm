@@ -53720,12 +53720,6 @@
 	dir = 4
 	},
 /area/station/service/theater)
-"siX" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 5
-	},
-/turf/open/space/basic,
-/area/space)
 "sjc" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -66573,10 +66567,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
-"wTS" = (
-/obj/structure/sign/calendar/directional/south,
-/turf/open/space/openspace,
-/area/space)
 "wUv" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -129639,7 +129629,7 @@ vXM
 vXM
 vXM
 vXM
-siX
+vXM
 vXM
 vXM
 vXM
@@ -138368,7 +138358,7 @@ jhd
 jhd
 jhd
 jhd
-wTS
+jhd
 jhd
 jhd
 jhd
