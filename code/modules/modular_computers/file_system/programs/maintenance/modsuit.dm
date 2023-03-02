@@ -32,18 +32,17 @@
 	controlled_suit = null
 
 /datum/computer_file/program/maintenance/modsuit_control/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["has_suit"] = !!controlled_suit
 	if(controlled_suit)
 		data += controlled_suit.ui_data()
 	return data
 
 /datum/computer_file/program/maintenance/modsuit_control/ui_static_data(mob/user)
-	return controlled_suit.ui_static_data()
+	return controlled_suit?.ui_static_data()
 
 /datum/computer_file/program/maintenance/modsuit_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-
-	controlled_suit.ui_act(action, params, ui)
+	controlled_suit.ui_act(action, params, ui, state)

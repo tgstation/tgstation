@@ -118,7 +118,7 @@
 	return FALSE
 
 /datum/computer_file/program/ntnetdownload/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	var/list/access = computer.GetAccess()
 
 	data["downloading"] = !!downloaded_file

@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Nightmare revival acts less funky - stops it from re-creating the Light Eater."
