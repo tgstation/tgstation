@@ -73,6 +73,16 @@
 	new /obj/item/tank/internals/oxygen(src)
 	new /obj/item/gps(src)
 
+/obj/item/storage/box/hero/tape
+	name = "Tape Wizard - Episode 23"
+	desc = "A box containing the costume used by legendary entertainment icon 'Super Tape Wizard'. It got a little stuck on its way out."
+
+/obj/item/storage/box/hero/PopulateContents()
+	new /obj/item/clothing/head/wizard/tape/fake(src)
+	new /obj/item/clothing/suit/wizrobe/tape/fake(src)
+	new /obj/item/staff/tape(src)
+	new /obj/item/stack/sticky_tape(src)
+
 /obj/item/storage/box/hero/scottish
 	name = "Braveheart, the Scottish rebel - 1300's."
 	desc = "Seemingly a legendary figure in the battle for Scottish independence, this historical figure is closely associated with blue facepaint, big swords, strange man skirts, and his ever enduring catchphrase: 'FREEDOM!!'"
