@@ -70,7 +70,7 @@
 	var/frenzies = 0
 
 	/// Static typecache of all bloodsucker powers.
-	var/static/list/all_bloodsucker_powers = subtypesof(/datum/action/cooldown/bloodsucker)
+	var/static/list/all_bloodsucker_powers = subtypesof(/datum/action/bloodsucker)
 	/// Antagonists that cannot be Vassalized no matter what
 	var/list/vassal_banned_antags = list(
 		/datum/antagonist/bloodsucker,
@@ -109,7 +109,7 @@
 	var/choice = input(usr, "What Power are you looking into?", "Mentorhelp v2") in bloodsuckerdatum.powers
 	if(!choice)
 		return
-	var/datum/action/cooldown/bloodsucker/power = choice
+	var/datum/action/bloodsucker/power = choice
 	to_chat(usr, span_warning("[power.power_explanation]"))
 
 /// These handles the application of antag huds/special abilities
@@ -300,12 +300,12 @@
 		QDEL_NULL(bloodsucker_sunlight)
 
 /// Buying powers
-/datum/antagonist/bloodsucker/proc/BuyPower(datum/action/cooldown/bloodsucker/power)
+/datum/antagonist/bloodsucker/proc/BuyPower(datum/action/bloodsucker/power)
 	powers += power
 	power.Grant(owner.current)
 
-/datum/antagonist/bloodsucker/proc/RemovePower(datum/action/cooldown/bloodsucker/power)
-	for(var/datum/action/cooldown/bloodsucker/all_powers as anything in powers)
+/datum/antagonist/bloodsucker/proc/RemovePower(datum/action/bloodsucker/power)
+	for(var/datum/action/bloodsucker/all_powers as anything in powers)
 		if(initial(power.name) == all_powers.name)
 			power = all_powers
 			break
@@ -316,16 +316,16 @@
 
 /datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 	// Purchase Roundstart Powers
-	BuyPower(new /datum/action/cooldown/bloodsucker/feed)
-	BuyPower(new /datum/action/cooldown/bloodsucker/masquerade)
+	BuyPower(new /datum/action/bloodsucker/feed)
+	BuyPower(new /datum/action/bloodsucker/masquerade)
 	if(!IS_VASSAL(owner.current)) // Favorite Vassal gets their own.
-		BuyPower(new /datum/action/cooldown/bloodsucker/veil)
+		BuyPower(new /datum/action/bloodsucker/veil)
 	add_verb(owner.current, /mob/living/proc/explain_powers)
 	// Traits: Species
 	if(iscarbon(owner.current))
 		var/mob/living/carbon/carbon_vamp = owner.current
 		for(var/obj/item/bodypart/part in carbon_vamp.bodyparts) //Hope that you aren't getting them dismembered
-			part.unarmed_damage_low += 1 
+			part.unarmed_damage_low += 1
 			part.unarmed_damage_high += 1
 	var/mob/living/carbon/human/user = owner.current
 	if(ishuman(owner.current))
@@ -350,7 +350,7 @@
 	// Powers
 	remove_verb(owner.current, /mob/living/proc/explain_powers)
 	while(powers.len)
-		var/datum/action/cooldown/bloodsucker/power = pick(powers)
+		var/datum/action/bloodsucker/power = pick(powers)
 		powers -= power
 		power.Remove(owner.current)
 		// owner.RemoveSpell(power)
@@ -396,19 +396,18 @@
 	bloodsucker_level_unspent--
 
 /datum/antagonist/bloodsucker/proc/remove_nondefault_powers()
-	for(var/datum/action/cooldown/bloodsucker/power as anything in powers)
-		if(istype(power, /datum/action/cooldown/bloodsucker/feed) || istype(power, /datum/action/cooldown/bloodsucker/masquerade) || istype(power, /datum/action/cooldown/bloodsucker/veil))
+	for(var/datum/action/bloodsucker/power as anything in powers)
+		if(istype(power, /datum/action/bloodsucker/feed) || istype(power, /datum/action/bloodsucker/masquerade) || istype(power, /datum/action/bloodsucker/veil))
 			continue
 		RemovePower(power)
 
 /datum/antagonist/bloodsucker/proc/LevelUpPowers()
-	for(var/datum/action/cooldown/bloodsucker/power as anything in powers)
+	for(var/datum/action/bloodsucker/power as anything in powers)
 		power.level_current++
-		power.UpdateDesc()
 
 ///Disables all powers, accounting for torpor
 /datum/antagonist/bloodsucker/proc/DisableAllPowers()
-	for(var/datum/action/cooldown/bloodsucker/power as anything in powers)
+	for(var/datum/action/bloodsucker/power as anything in powers)
 		if((power.check_flags & BP_CANT_USE_IN_TORPOR) && HAS_TRAIT(owner.current, TRAIT_NODEATH))
 			if(power.active)
 				power.DeactivatePower()
@@ -420,16 +419,16 @@
 		return
 	// Purchase Power Prompt
 	var/list/options = list()
-	for(var/datum/action/cooldown/bloodsucker/power as anything in all_bloodsucker_powers)
+	for(var/datum/action/bloodsucker/power as anything in all_bloodsucker_powers)
 		if(initial(power.purchase_flags) & BLOODSUCKER_CAN_BUY && !(locate(power) in powers))
 			options[initial(power.name)] = power
 
 
-	if(options.len < 1)
+	if(!options)
 		to_chat(owner.current, span_notice("You grow more ancient by the night!"))
 	else
 		// Give them the UI to purchase a power.
-		var/choice = tgui_input_list(owner, "You have the opportunity to grow more ancient, increasing the level of all your powers by 1. Select a power to advance your Rank.", "Your Blood Thickens...", options)
+		var/choice = tgui_input_list(owner.current, "You have the opportunity to grow more ancient, increasing the level of all your powers by 1. Select a power to advance your Rank.", "Your Blood Thickens...", options)
 		// Prevent Bloodsuckers from closing/reopning their coffin to spam Levels.
 		if(spend_rank && bloodsucker_level_unspent <= 0)
 			return
@@ -442,7 +441,7 @@
 			return
 
 		// Good to go - Buy Power!
-		var/datum/action/cooldown/bloodsucker/purchased_power = options[choice]
+		var/datum/action/bloodsucker/purchased_power = options[choice]
 		BuyPower(new purchased_power)
 		to_chat(owner.current, span_notice("You have learned how to use [choice]!"))
 

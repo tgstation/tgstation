@@ -1,8 +1,8 @@
-/datum/action/cooldown/bloodsucker/targeted/brawn
+/datum/action/bloodsucker/targeted/brawn
 	name = "Brawn"
 	desc = "Snap restraints, break lockers and doors, or deal terrible damage with your bare hands."
 	button_icon_state = "power_strength"
-	power_explanation = "<b>Brawn</b>:\n\
+	power_explanation = "Brawn:\n\
 		Click any person to bash into them, break restraints you have or knocking a grabber down. Only one of these can be done per use.\n\
 		Punching a Cyborg will heavily EMP them in addition to deal damage.\n\
 		At level 3, you get the ability to break closets open, additionally can both break restraints AND knock a grabber down in the same use.\n\
@@ -12,12 +12,12 @@
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
 	bloodcost = 8
-	cooldown_time = 9 SECONDS
+	cooldown = 9 SECONDS
 	target_range = 1
 	power_activates_immediately = TRUE
 	prefire_message = "Select a target."
 
-/datum/action/cooldown/bloodsucker/targeted/brawn/CheckCanUse(mob/living/carbon/user, silent = FALSE)
+/datum/action/bloodsucker/targeted/brawn/CheckCanUse(mob/living/carbon/user, trigger_flags)
 	. = ..()
 	if(!.) // Default checks
 		return FALSE
@@ -34,7 +34,7 @@
 	return TRUE
 
 // Look at 'biodegrade.dm' for reference
-/datum/action/cooldown/bloodsucker/targeted/brawn/proc/CheckBreakRestraints()
+/datum/action/bloodsucker/targeted/brawn/proc/CheckBreakRestraints()
 	var/mob/living/carbon/human/user = owner
 	///Only one form of shackles removed per use
 	var/used = FALSE
@@ -49,7 +49,7 @@
 			span_warning("closet] tears apart as you bash it open from within!"),
 		)
 		to_chat(user, span_warning("We bash [closet] wide open!"))
-		addtimer(CALLBACK(src, .proc/break_closet, user, closet), 1)
+		addtimer(CALLBACK(src, PROC_REF(break_closet), user, closet), 1)
 		used = TRUE
 
 	// Remove both Handcuffs & Legcuffs
@@ -81,14 +81,14 @@
 	return used
 
 // This is its own proc because its done twice, to repeat code copypaste.
-/datum/action/cooldown/bloodsucker/targeted/brawn/proc/break_closet(mob/living/carbon/human/user, obj/structure/closet/closet)
+/datum/action/bloodsucker/targeted/brawn/proc/break_closet(mob/living/carbon/human/user, obj/structure/closet/closet)
 	if(closet)
 		closet.welded = FALSE
 		closet.locked = FALSE
 		closet.broken = TRUE
 		closet.open()
 
-/datum/action/cooldown/bloodsucker/targeted/brawn/proc/CheckEscapePuller()
+/datum/action/bloodsucker/targeted/brawn/proc/CheckEscapePuller()
 	if(!owner.pulledby) // || owner.pulledby.grab_state <= GRAB_PASSIVE)
 		return FALSE
 	var/mob/pulled_mob = owner.pulledby
@@ -112,15 +112,16 @@
 	owner.pulledby = null // It's already done, but JUST IN CASE.
 	return TRUE
 
-/datum/action/cooldown/bloodsucker/targeted/brawn/FireTargetedPower(atom/target_atom)
+/datum/action/bloodsucker/targeted/brawn/FireTargetedPower(atom/target_atom)
 	. = ..()
 	var/mob/living/user = owner
 	// Target Type: Mob
 	if(isliving(target_atom))
 		var/mob/living/target = target_atom
 		var/mob/living/carbon/carbonuser = user
-		var/obj/item/bodypart/arm = carbonuser.get_active_hand()
-		var/hitStrength = arm.unarmed_damage_high * 1.25 + 2
+		//You know what I'm just going to take the average of the user's limbs max damage instead of dealing with 2 hands
+		var/obj/item/bodypart/user_active_arm = carbonuser.get_active_hand()
+		var/hitStrength = user_active_arm.unarmed_damage_high * 1.25 + 2
 		// Knockdown!
 		var/powerlevel = min(5, 1 + level_current)
 		if(rand(5 + powerlevel) >= 5)
@@ -130,7 +131,7 @@
 			)
 			target.Knockdown(min(5, rand(10, 10 * powerlevel)))
 		// Attack!
-		to_chat(owner, span_warning("You punch [target]!"))
+		owner.balloon_alert(owner, "you punch [target]!")
 		playsound(get_turf(target), 'sound/weapons/punch4.ogg', 60, 1, -1)
 		user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(target.zone_selected))
@@ -146,18 +147,20 @@
 	// Target Type: Locker
 	else if(istype(target_atom, /obj/structure/closet) && level_current >= 3)
 		var/obj/structure/closet/target_closet = target_atom
-		to_chat(user, span_warning("You prepare to bash [target_closet] open..."))
+		user.balloon_alert(user, "you prepare to bash [target_closet] open...")
 		if(!do_after(user, 2.5 SECONDS, target_closet))
+			user.balloon_alert(user, "interrupted!")
 			return FALSE
 		target_closet.visible_message(span_danger("[target_closet] breaks open as [user] bashes it!"))
-		addtimer(CALLBACK(src, .proc/break_closet, user, target_closet), 1)
+		addtimer(CALLBACK(src, PROC_REF(break_closet), user, target_closet), 1)
 		playsound(get_turf(user), 'sound/effects/grillehit.ogg', 80, 1, -1)
 	// Target Type: Door
 	else if(istype(target_atom, /obj/machinery/door) && level_current >= 4)
 		var/obj/machinery/door/target_airlock = target_atom
 		playsound(get_turf(user), 'sound/machines/airlock_alien_prying.ogg', 40, 1, -1)
-		to_chat(owner, span_warning("You prepare to tear open [target_airlock]..."))
+		owner.balloon_alert(owner, "you prepare to tear open [target_airlock]...")
 		if(!do_after(user, 2.5 SECONDS, target_airlock))
+			user.balloon_alert(user, "interrupted!")
 			return FALSE
 		if(target_airlock.Adjacent(user))
 			target_airlock.visible_message(span_danger("[target_airlock] breaks open as [user] bashes it!"))
@@ -166,13 +169,13 @@
 			playsound(get_turf(target_airlock), 'sound/effects/bang.ogg', 30, 1, -1)
 			target_airlock.open(2) // open(2) is like a crowbar or jaws of life.
 
-/datum/action/cooldown/bloodsucker/targeted/brawn/CheckValidTarget(atom/target_atom)
+/datum/action/bloodsucker/targeted/brawn/CheckValidTarget(atom/target_atom)
 	. = ..()
 	if(!.)
 		return FALSE
 	return isliving(target_atom) || istype(target_atom, /obj/machinery/door) || istype(target_atom, /obj/structure/closet)
 
-/datum/action/cooldown/bloodsucker/targeted/brawn/CheckCanTarget(atom/target_atom)
+/datum/action/bloodsucker/targeted/brawn/CheckCanTarget(atom/target_atom)
 	// DEFAULT CHECKS (Distance)
 	. = ..()
 	if(!.) // Disable range notice for Brawn.

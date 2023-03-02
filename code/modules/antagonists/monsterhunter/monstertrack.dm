@@ -1,5 +1,5 @@
 /// From 'Cellular Emporium'... somehow?
-/datum/action/cooldown/bloodsucker/trackvamp
+/datum/action/bloodsucker/trackvamp
 	name = "Track Monster"
 	desc = "Take a moment to look for clues of any nearby monsters.<br>These creatures are slippery, and often look like the crew."
 	button_icon = 'icons/mob/actions/actions_bloodsucker.dmi'
@@ -9,12 +9,12 @@
 	power_flags = NONE
 	check_flags = BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = NONE
-	cooldown_time = 30 SECONDS
+	cooldown = 30 SECONDS
 	bloodcost = 0
 	/// Removed, set to TRUE to re-add, either here to be a default function, or in-game through VV for neat Admin stuff -Willard
 	var/give_pinpointer = FALSE
 
-/datum/action/cooldown/bloodsucker/trackvamp/ActivatePower()
+/datum/action/bloodsucker/trackvamp/ActivatePower()
 	. = ..()
 	/// Return text indicating direction
 	to_chat(owner, span_notice("You look around, scanning your environment and discerning signs of any filthy, wretched affronts to the natural order."))
@@ -25,7 +25,7 @@
 		user.apply_status_effect(STATUS_EFFECT_HUNTERPINPOINTER)
 	display_proximity()
 
-/datum/action/cooldown/bloodsucker/trackvamp/proc/display_proximity()
+/datum/action/bloodsucker/trackvamp/proc/display_proximity()
 	/// Pick target
 	var/turf/my_loc = get_turf(owner)
 	var/best_dist = 9999

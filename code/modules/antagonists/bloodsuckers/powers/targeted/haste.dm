@@ -3,11 +3,11 @@
  * Level 3: Stun People Passed
  */
 
-/datum/action/cooldown/bloodsucker/targeted/haste
+/datum/action/bloodsucker/targeted/haste
 	name = "Immortal Haste"
 	desc = "Dash somewhere with supernatural speed. Those nearby may be knocked away, stunned, or left empty-handed."
 	button_icon_state = "power_speed"
-	power_explanation = "<b>Immortal Haste</b>:\n\
+	power_explanation = "Immortal Haste:\n\
 		Click anywhere to immediately dash towards that location.\n\
 		The Power will not work if you are lying down, in no gravity, or are aggressively grabbed.\n\
 		Anyone in your way during your Haste will be knocked down and Payalyzed, moreso if they are using Flow.\n\
@@ -16,51 +16,49 @@
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
 	bloodcost = 6
-	cooldown_time = 12 SECONDS
+	cooldown = 12 SECONDS
 	target_range = 15
 	power_activates_immediately = TRUE
-	var/list/hit //current hit, set while power is in use as we can't pass the list as an extra calling argument in registersignal.
+	/// Current hit, set while power is in use as we can't pass the list as an extra calling argument in registersignal.
+	var/list/hit = list()
 	/// If set, uses this speed in deciseconds instead of world.tick_lag
 	var/speed_override
 
-/datum/action/cooldown/bloodsucker/targeted/haste/CheckCanUse(mob/living/carbon/user, silent = FALSE)
+/datum/action/bloodsucker/targeted/haste/CheckCanUse(mob/living/carbon/user, trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE
 	// Being Grabbed
 	if(user.pulledby && user.pulledby.grab_state >= GRAB_AGGRESSIVE)
-		if(!silent)
-			to_chat(user, span_warning("You're being grabbed!"))
+		user.balloon_alert(user, "you're being grabbed!")
 		return FALSE
 	if(!user.has_gravity(user.loc)) //We dont want people to be able to use this to fly around in space
-		if(!silent)
-			to_chat(user, span_warning("You cannot dash while floating!"))
+		user.balloon_alert(user, "you cannot dash while floating!")
 		return FALSE
-	if(!(user.mobility_flags & MOBILITY_STAND))
-		if(!silent)
-			to_chat(user, span_warning("You must be standing to tackle!"))
+	if(user.body_position == LYING_DOWN)
+		user.balloon_alert(user, "you must be standing to tackle!")
 		return FALSE
 	return TRUE
 
 /// Anything will do, if it's not me or my square
-/datum/action/cooldown/bloodsucker/targeted/haste/CheckValidTarget(atom/target_atom)
+/datum/action/bloodsucker/targeted/haste/CheckValidTarget(atom/target_atom)
 	. = ..()
 	if(!.)
 		return FALSE
 	return target_atom.loc != owner.loc
 
 /// This is a non-async proc to make sure the power is "locked" until this finishes.
-/datum/action/cooldown/bloodsucker/targeted/haste/FireTargetedPower(atom/target_atom)
+/datum/action/bloodsucker/targeted/haste/FireTargetedPower(atom/target_atom)
 	. = ..()
 	hit = list()
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	var/mob/living/user = owner
 	var/turf/targeted_turf = isturf(target_atom) ? target_atom : get_turf(target_atom)
 	// Pulled? Not anymore.
 	user.pulledby?.stop_pulling()
 	// Go to target turf
 	// DO NOT USE WALK TO.
-	to_chat(owner, span_notice("You dash into the air!"))
+	owner.balloon_alert(owner, "you dash into the air!")
 	playsound(get_turf(owner), 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	var/safety = get_dist(user, targeted_turf) * 3 + 1
 	var/consequetive_failures = 0
@@ -76,14 +74,14 @@
 			consequetive_failures = 0
 		if(user.resting)
 			user.setDir(turn(user.dir, 90)) //down? spin2win?
-		if(user.incapacitated(ignore_restraints = TRUE, ignore_grab = TRUE)) //actually down? stop.
+		if(user.incapacitated(IGNORE_RESTRAINTS, IGNORE_GRAB)) //actually down? stop.
 			break
 		if(success) //don't sleep if we failed to move.
 			sleep(speed)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 	hit = null
 
-/datum/action/cooldown/bloodsucker/targeted/haste/proc/on_move()
+/datum/action/bloodsucker/targeted/haste/proc/on_move()
 	for(var/mob/living/all_targets in dview(1, get_turf(owner)))
 		if(!hit[all_targets] && (all_targets != owner))
 			hit[all_targets] = TRUE
@@ -92,11 +90,11 @@
 			all_targets.Paralyze(0.1)
 			all_targets.spin(10, 1)
 			if(IS_MONSTERHUNTER(all_targets) && HAS_TRAIT(all_targets, TRAIT_STUNIMMUNE))
-				to_chat(all_targets, "Knocked down!")
-				for(var/datum/action/cooldown/bloodsucker/power in all_targets.actions)
+				all_targets.balloon_alert(all_targets, "knocked down!")
+				for(var/datum/action/bloodsucker/power in all_targets.actions)
 					if(power.active)
 						power.DeactivatePower()
-				all_targets.adjust_jitter(4 SECONDS)
-				all_targets.adjust_confusion(8 SECONDS)
-				all_targets.adjust_stutter(8 SECONDS)
+				all_targets.set_timed_status_effect(8 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+				all_targets.set_timed_status_effect(8 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
+				all_targets.adjust_timed_status_effect(8 SECONDS, /datum/status_effect/speech/stutter)
 				all_targets.Knockdown(10 + level_current * 5) // Re-knock them down, the first one didn't work due to stunimmunity

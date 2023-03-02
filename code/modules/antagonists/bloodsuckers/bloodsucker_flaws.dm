@@ -15,7 +15,7 @@
 		None - Continue living without a clan."))
 
 	var/answer = input("You have Ranked up far enough to remember your clan. Which clan are you part of?", "Our mind feels luxurious...") in options
-	if(!answer || answer == "None") 
+	if(!answer || answer == "None")
 		to_chat(owner, span_warning("You have wilingfully decided to stay ignorant."))
 		return
 	var/mob/living/carbon/human/bloodsucker = owner.current
@@ -29,7 +29,7 @@
 			* Due to growing more feral you've also strayed away from other bloodsuckers and will only be able to maintain one vassal.\n\
 			* Finally, your Favorite Vassal will gain the Minor Beast Form ability to help you in combat."))
 		AddHumanityLost(22.4)
-		BuyPower(new /datum/action/cooldown/bloodsucker/gangrel/transform)
+		BuyPower(new /datum/action/bloodsucker/gangrel/transform)
 		bloodsucker.faction |= "bloodhungry" //i love animals i love animals
 		/*if(CLAN_LASOMBRA)
 			my_clan = CLAN_LASOMBRA
@@ -50,4 +50,4 @@
 			owner.teach_crafting_recipe(/datum/crafting_recipe/meatcoffin)*/
 
 
-	owner.announce_objectives() 
+	owner.announce_objectives()

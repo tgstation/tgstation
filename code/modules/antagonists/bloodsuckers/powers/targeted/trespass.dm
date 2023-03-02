@@ -1,8 +1,8 @@
-/datum/action/cooldown/bloodsucker/targeted/trespass
+/datum/action/bloodsucker/targeted/trespass
 	name = "Trespass"
 	desc = "Become mist and advance two tiles in one direction. Useful for skipping past doors and barricades."
 	button_icon_state = "power_tres"
-	power_explanation = "<b>Trespass</b>:\n\
+	power_explanation = "Trespass:\n\
 		Click anywhere from 1-2 tiles away from you to teleport.\n\
 		This power goes through all obstacles except Walls.\n\
 		Higher levels decrease the sound played from using the Power, and increase the speed of the transition."
@@ -10,12 +10,12 @@
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
 	bloodcost = 10
-	cooldown_time = 8 SECONDS
+	cooldown = 8 SECONDS
 	prefire_message = "Select a destination."
 	//target_range = 2
 	var/turf/target_turf // We need to decide where we're going based on where we clicked. It's not actually the tile we clicked.
 
-/datum/action/cooldown/bloodsucker/targeted/trespass/CheckCanUse(mob/living/carbon/user)
+/datum/action/bloodsucker/targeted/trespass/CheckCanUse(mob/living/carbon/user, trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -24,7 +24,7 @@
 	return TRUE
 
 
-/datum/action/cooldown/bloodsucker/targeted/trespass/CheckValidTarget(atom/target_atom)
+/datum/action/bloodsucker/targeted/trespass/CheckValidTarget(atom/target_atom)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -34,7 +34,7 @@
 	return TRUE // All we care about is destination. Anything you click is fine.
 
 
-/datum/action/cooldown/bloodsucker/targeted/trespass/CheckCanTarget(atom/target_atom)
+/datum/action/bloodsucker/targeted/trespass/CheckCanTarget(atom/target_atom)
 	// NOTE: Do NOT use ..()! We don't want to check distance or anything.
 
 	// Get clicked tile
@@ -51,14 +51,14 @@
 		// ERROR! Wall!
 		if(iswallturf(from_turf))
 			var/wallwarning = (i == 1) ? "in the way" : "at your destination"
-			to_chat(owner, "There is a wall [wallwarning].")
+			owner.balloon_alert(owner, "There is a wall [wallwarning].")
 			return FALSE
 	// Done
 	target_turf = from_turf
 
 	return TRUE
 
-/datum/action/cooldown/bloodsucker/targeted/trespass/FireTargetedPower(atom/target_atom)
+/datum/action/bloodsucker/targeted/trespass/FireTargetedPower(atom/target_atom)
 	. = ..()
 
 	// Find target turf, at or below Atom
@@ -72,6 +72,9 @@
 	// Effect Origin
 	var/sound_strength = max(60, 70 - level_current * 10)
 	playsound(get_turf(owner), 'sound/magic/summon_karp.ogg', sound_strength, 1)
+	var/datum/effect_system/steam_spread/bloodsucker/puff = new /datum/effect_system/steam_spread()
+	puff.set_up(3, 0, my_turf)
+	puff.start()
 
 	var/mist_delay = max(5, 20 - level_current * 2.5) // Level up and do this faster.
 
@@ -97,3 +100,7 @@
 	user.invisibility = invis_was
 	// Effect Destination
 	playsound(get_turf(owner), 'sound/magic/summon_karp.ogg', 60, 1)
+	puff = new /datum/effect_system/steam_spread/()
+	puff.effect_type = /obj/effect/particle_effect/fluid/smoke/vampsmoke
+	puff.set_up(3, 0, target_turf)
+	puff.start()
