@@ -35,7 +35,7 @@
 	new /obj/item/clothing/head/wizard/tape/fake(src)
 	new /obj/item/clothing/suit/wizrobe/tape/fake(src)
 	new /obj/item/staff/tape(src)
-	new /obj/item/stack/sticky_tape/super(src)
+	new /obj/item/stack/sticky_tape(src)
 
 /obj/item/storage/box/fakesyndiesuit
 	name = "boxed space suit and helmet"
@@ -82,12 +82,6 @@
 	new /obj/item/clothing/head/helmet/space/nasavoid(src)
 	new /obj/item/tank/internals/oxygen(src)
 	new /obj/item/gps(src)
-
-/obj/item/storage/box/hero/PopulateContents()
-	new /obj/item/clothing/head/wizard/tape/fake(src)
-	new /obj/item/clothing/suit/wizrobe/tape/fake(src)
-	new /obj/item/staff/tape(src)
-	new /obj/item/stack/sticky_tape(src)
 
 /obj/item/storage/box/hero/scottish
 	name = "Braveheart, the Scottish rebel - 1300's."
