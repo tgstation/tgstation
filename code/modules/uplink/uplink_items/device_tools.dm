@@ -196,7 +196,6 @@
 	name = "Cryptographic Sequencer"
 	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
 			in electronic devices, subverts intended functions, and easily breaks security mechanisms. Cannot be used to open airlocks."
-	progression_minimum = 20 MINUTES
 	item = /obj/item/card/emag
 	cost = 4
 
@@ -204,7 +203,6 @@
 	name = "Stimpack"
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
 			5 minutes after injection."
-	progression_minimum = 20 MINUTES
 	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
 	cost = 5
 	surplus = 90
@@ -213,7 +211,6 @@
 	name = "Super Pointy Tape"
 	desc = "An all-purpose super pointy tape roll. The tape is built with hundreds of tiny metal needles, the roll comes with in 5 pieces. When added to items the \
 			item that was taped will embed when thrown at people. Taping people's mouthes with it will hurt them if pulled off by someone else."
-	progression_minimum = 10 MINUTES
 	item = /obj/item/stack/sticky_tape/pointy/super
 	cost = 1
 
@@ -223,21 +220,18 @@
 	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. \
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/ai_module/syndicate
 	cost = 4
 
 /datum/uplink_item/device_tools/hypnotic_flash
 	name = "Hypnotic Flash"
 	desc = "A modified flash able to hypnotize targets. If the target is not in a mentally vulnerable state, it will only confuse and pacify them temporarily."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/assembly/flash/hypnotic
 	cost = 7
 
 /datum/uplink_item/device_tools/hypnotic_grenade
 	name = "Hypnotic Grenade"
 	desc = "A modified flashbang grenade able to hypnotize targets. The sound portion of the flashbang causes hallucinations, and will allow the flash to induce a hypnotic trance to viewers."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/grenade/hypnotic
 	cost = 12
 
@@ -247,7 +241,6 @@
 			active gravitational singularities or tesla balls towards it. This will not work when the engine is still \
 			in containment. Because of its size, it cannot be carried. Ordering this \
 			sends you a small beacon that will teleport the larger beacon to your location upon activation."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop
 	cost = 10
 	surplus = 0 // not while there isnt one on any station
@@ -258,6 +251,5 @@
 	desc = "When screwed to wiring attached to a power grid and activated, this large device lights up and places excessive \
 			load on the grid, causing a station-wide blackout. The sink is large and cannot be stored in most \
 			traditional bags and boxes. Caution: Will explode if the powernet contains sufficient amounts of energy."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/powersink
 	cost = 11

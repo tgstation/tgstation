@@ -41,7 +41,6 @@
 			manufactured to pack a little bit more of a punch if your client needs some convincing."
 	item = /obj/item/storage/secure/briefcase/syndie
 	cost = 5
-	progression_minimum = 5 MINUTES
 	restricted = TRUE
 	illegal_tech = FALSE
 
@@ -51,14 +50,12 @@
 	desc = "Nothing is more terrifying than clowns with fully automatic weaponry."
 	item = /obj/item/storage/backpack/duffelbag/clown/syndie
 	purchasable_from = ALL
-	progression_minimum = 70 MINUTES
 
 /datum/uplink_item/badass/costumes/tactical_naptime
 	name = "Sleepy Time Pajama Bundle"
 	desc = "Even soldiers need to get a good nights rest. Comes with blood-red pajamas, a blankie, a hot mug of cocoa and a fuzzy friend."
 	item = /obj/item/storage/box/syndie_kit/sleepytime
 	purchasable_from = ALL
-	progression_minimum = 90 MINUTES
 	cost = 4
 	limited_stock = 1
 	cant_discount = TRUE
@@ -68,7 +65,6 @@
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! \
 			Please note that this kit did NOT pass quality control."
 	purchasable_from = ALL
-	progression_minimum = 90 MINUTES
 	item = /obj/item/storage/box/syndie_kit/chameleon/broken
 
 /datum/uplink_item/badass/costumes/centcom_official
@@ -76,5 +72,4 @@
 	desc = "Ask the crew to \"inspect\" their nuclear disk and weapons system, and then when they decline, pull out a fully automatic rifle and gun down the Captain. \
 			Radio headset does not include encryption key. No gun included."
 	purchasable_from = ALL
-	progression_minimum = 110 MINUTES
 	item = /obj/item/storage/box/syndie_kit/centcom_costume
