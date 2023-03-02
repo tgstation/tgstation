@@ -124,7 +124,7 @@
 
 /obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user)
 	// Check for nemesis factions on the target.
-	if(!("mining" in target.faction) && !("boss" in target.faction))
+	if(!(FACTION_MINING in target.faction) && !(FACTION_BOSS in target.faction))
 		// Target is not a nemesis, so attack normally.
 		return ..()
 	// Apply nemesis-specific effects.
@@ -160,6 +160,7 @@
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "skin has visible hard plates growing from within.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
+	AddElement(/datum/element/update_icon_blocker)
 
 #undef GOLIATH_ORGAN_COLOR
 #undef GOLIATH_SCLERA_COLOR

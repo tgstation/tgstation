@@ -1,0 +1,55 @@
+2023-03-01:
+  Jacquerel:
+  - bugfix: Opening a surprise egg with your mind will no longer teleport the contents
+  Maurukas:
+  - bugfix: A disconnected vent on the syndicate lavaland base is now connected
+  Melbert:
+  - bugfix: Off station roles can't purge the station's records
+  - bugfix: Purging records is logged again
+  - bugfix: Ninja security records hacking works
+  NamelessFairy:
+  - bugfix: You can now create wanted/missing posters using player created security
+      records. Due to a visual bug and usability issue photos above 1 by 1 meters
+      in size will no longer work for mugshots in records.
+  Remuluson2:
+  - bugfix: After pressure from Nanotrasen, Space Wizard Federation made glass and
+      bone knives non-conductive again.
+  scriptis:
+  - bugfix: removes an infinite powercell from tram maintenance
+2023-03-02:
+  Jacquerel:
+  - bugfix: 'Stabilized slime extracts will now once again work from inside modsuit
+      storage.
+
+      fix; Stabilized slime extracts will properly effect carp, spiders, bileworms,
+      and other "basic mobs".'
+  JohnFulpWillard:
+  - bugfix: Being in an application now properly uses the tablet's battery.
+  - bugfix: Messenger and Themify apps now close when minimized, so don't count towards
+      the running app limit.
+  - bugfix: Tablet UIs will now no longer spam open/close the UI when changing applications
+  - bugfix: Using the Eject ID button on tablets now ejects into your hand.
+  - bugfix: Computers now have an Eject ID button
+  - refactor: Cut down a lot of copy paste in tablet & program code, now it's mostly
+      done by the tablet.
+  Melbert:
+  - bugfix: Using Fleshmend while on fire gives the "on fire" fleshmend icon.
+  - bugfix: Using Revival stasis more accurately updates the icon where relevant
+  - bugfix: Fixes a potential input stall with revival stasis
+  - bugfix: Nightmare revival acts less funky - stops it from re-creating the Light
+      Eater.
+  NamelessFairy:
+  - bugfix: The research directors monitor on tram has been correctly orientated
+  - bugfix: The CE on tram no longer has two engineering department monitors, one
+      has instead been swapped out for an engine monitor.
+  - bugfix: Tram's AI sat cameras have been re-configured to be on either the Minisat
+      or AI core networks, this means security cannot see the entire satellite from
+      a standard camera console.
+  - spellcheck: Some cameras on tram have been capitalized.
+  - bugfix: You can no longer trap yourself in north public mining maintenance if
+      you enter it without maint access.
+  Profakos:
+  - bugfix: Mail addressed to tram's cargo bay disposal bin will arrive successfully,
+      and the Incoming Mail Chute will properly accept wrapped parcels.
+  RikuTheKiller:
+  - bugfix: Reagents metabolize properly when dead. (If they're supposed to.)

@@ -1181,7 +1181,9 @@
 **/
 /mob/proc/has_nightvision()
 	// Somewhat conservative, basically is your lighting plane bright enough that you the user can see stuff
-	var/light_offset = (lighting_color_cutoffs[1] + lighting_color_cutoffs[2] + lighting_color_cutoffs[3]) / 3 + lighting_cutoff
+	var/light_offset = lighting_cutoff
+	if(length(lighting_color_cutoffs) == 3)
+		light_offset += (lighting_color_cutoffs[1] + lighting_color_cutoffs[2] + lighting_color_cutoffs[3]) / 3
 	return light_offset >= LIGHTING_NIGHTVISION_THRESHOLD
 
 /// This mob is abile to read books

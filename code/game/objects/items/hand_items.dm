@@ -645,13 +645,14 @@
 	. = ..()
 	if(!IS_EDIBLE(target) || !target.reagents)
 		return
-	if(!firer || !target.Adjacent(firer))
+	if(!firer || !target.Adjacent(firer) || !ismob(firer))
 		return
+
+	var/mob/kisser = firer
 
 	// From here on, no message
 	suppressed = SUPPRESSED_VERY
-
-	if(!HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(firer)))
+	if(!(kisser.mind && HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(kisser.mind))))
 		to_chat(firer, span_warning("Wait a second, you didn't make this [target.name]. How can you claim it as your own?"))
 		return
 	if(target.reagents.has_reagent(/datum/reagent/love))

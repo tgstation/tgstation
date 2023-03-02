@@ -349,25 +349,3 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	result_path = /obj/machinery/button
 	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	pixel_shift = 24
-
-/obj/machinery/button/tram
-	name = "tram caller"
-	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
-	icon_state = "launcher"
-	skin = "launcher"
-	device_type = /obj/item/assembly/control/tram
-	req_access = list()
-	id = 1
-	/// The specific lift id of the tram we're calling.
-	var/lift_id = MAIN_STATION_TRAM
-
-/obj/machinery/button/tram/setup_device()
-	var/obj/item/assembly/control/tram/tram_device = device
-	tram_device.initial_id = id
-	tram_device.specific_lift_id = lift_id
-	return ..()
-
-/obj/machinery/button/tram/examine(mob/user)
-	. = ..()
-	. += span_notice("There's a small inscription on the button...")
-	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")

@@ -36,6 +36,7 @@
 	if(faction)
 		faction = string_list(faction)
 
+/// Creates whatever mob the spawner makes. Return FALSE if we want to exit from here without doing that, returning NULL will be logged to admins.
 /obj/effect/mob_spawn/proc/create(mob/mob_possessor, newname)
 	var/mob/living/spawned_mob = new mob_type(get_turf(src)) //living mobs only
 	name_mob(spawned_mob, newname)
@@ -145,19 +146,22 @@
 	return ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
-/obj/effect/mob_spawn/ghost_role/attack_ghost(mob/user)
+/obj/effect/mob_spawn/ghost_role/attack_ghost(mob/dead/observer/user)
 	if(!SSticker.HasRoundStarted() || !loc)
 		return
 
 	if(prompt_ghost)
-		var/ghost_role = tgui_alert(usr, "Become [prompt_name]? (Warning, You can no longer be revived!)", buttons = list("Yes", "No"), timeout = 10 SECONDS)
+		var/prompt = "Become [prompt_name]?"
+		if(user.can_reenter_corpse && user.mind)
+			prompt += " (Warning, You can no longer be revived!)"
+		var/ghost_role = tgui_alert(usr, prompt, buttons = list("Yes", "No"), timeout = 10 SECONDS)
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
 			return
 
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
 		return
-	if(!uses) //just in case
+	if(uses <= 0) //just in case
 		to_chat(user, span_warning("This spawner is out of charges!"))
 		return
 
@@ -171,10 +175,14 @@
 
 	user.log_message("became a [prompt_name].", LOG_GAME)
 	uses -= 1 // Remove a use before trying to spawn to prevent strangeness like the spawner trying to spawn more mobs than it should be able to
+	user.mind = null // dissassociate mind, don't let it follow us to the next life
 
-	if(!(create(user)))
-		message_admins("[src] didn't return anything when creating a mob, this might be broken! The use of the spawner it would have taken has been refunded.")
-		uses += 1 // Oops! We messed up and somehow the mob didn't spawn, but that's alright we can refund the use.
+	var/created = create(user)
+	if(!created)
+		if(isnull(created)) // If we explicitly return FALSE instead of just not returning a mob, we don't want to spam the admins
+			CRASH("An instance of [type] didn't return anything when creating a mob, this might be broken!")
+
+		uses += 1 // Refund use because we didn't actually spawn anything
 
 	check_uses() // Now we check if the spawner should delete itself or not
 
