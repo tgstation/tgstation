@@ -10,10 +10,10 @@ export const OreRedemptionMachine = (props, context) => {
   const [tab, setTab] = useSharedState(context, 'tab', 1);
   const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
   const search = createSearch(searchItem, (materials) => materials.name);
-  let mats =
+  const mats =
     searchItem.length > 0
       ? data.materials.filter(search)
-      : materials.filter((mat) => mat && mat.cat === tab);
+      : materials.filter((mat) => mat && mat.category === tab);
   return (
     <Window title="Ore Redemption Machine" width={435} height={725}>
       <Window.Content>
@@ -23,17 +23,24 @@ export const OreRedemptionMachine = (props, context) => {
               <Section>
                 <Stack>
                   <Stack.Item>
-                    <Icon name="id-card" size={3} mr={1} color="green" />
+                    <Icon
+                      name="id-card"
+                      size={3}
+                      mr={1}
+                      color={user ? 'green' : 'red'}
+                    />
                   </Stack.Item>
                   <Stack.Item>
-                    <LabeledList>
-                      <LabeledList.Item label="Name">
-                        {user.name || 'No name detected'}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Balance">
-                        {user.cash + ' cr' || 'No balance detected'}
-                      </LabeledList.Item>
-                    </LabeledList>
+                    {(!user && 'No user Detected') || (
+                      <LabeledList>
+                        <LabeledList.Item label="Name">
+                          {user.name || 'No name detected'}
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Balance">
+                          {user.cash + ' cr' || 'No balance detected'}
+                        </LabeledList.Item>
+                      </LabeledList>
+                    )}
                   </Stack.Item>
                 </Stack>
               </Section>
@@ -92,6 +99,7 @@ export const OreRedemptionMachine = (props, context) => {
               Alloys
             </Tabs.Tab>
             <Input
+              autofocus
               ml={22}
               mb={0.8}
               width="150px"
@@ -114,7 +122,7 @@ export const OreRedemptionMachine = (props, context) => {
                   key={material.id}
                   material={material}
                   onRelease={(amount) => {
-                    if (material.cat === 'material') {
+                    if (material.category === 'material') {
                       act('Release', {
                         id: material.id,
                         sheets: amount,
@@ -137,7 +145,16 @@ export const OreRedemptionMachine = (props, context) => {
 };
 
 const MaterialRow = (props, context) => {
+  const { data } = useBackend(context);
+  const { material_icons } = data;
   const { material, onRelease } = props;
+
+  const display = material_icons.find(
+    (mat_icon) => mat_icon.id === material.id
+  );
+
+  const print_amount = 5;
+  const max_sheets = 50;
 
   return (
     <Table.Row className="candystripe" collapsing>
@@ -145,7 +162,7 @@ const MaterialRow = (props, context) => {
         <Box
           as="img"
           m={1}
-          src={`data:image/jpeg;base64,${material.product_icon}`}
+          src={`data:image/jpeg;base64,${display.product_icon}`}
           height="32px"
           width="32px"
           style={{
@@ -156,7 +173,10 @@ const MaterialRow = (props, context) => {
       </Table.Cell>
       <Table.Cell>{toTitleCase(material.name)}</Table.Cell>
       <Table.Cell collapsing textAlign="left">
-        <Box color="label">{formatSiUnit(material.amount, 0)} sheets</Box>
+        <Box color="label">
+          {formatSiUnit(material.amount, 0)}{' '}
+          {material.amount === 1 ? 'sheet' : 'sheets'}
+        </Box>
       </Table.Cell>
       <Table.Cell collapsing textAlign="left">
         <Button
@@ -166,17 +186,21 @@ const MaterialRow = (props, context) => {
           onClick={() => onRelease(1)}
         />
         <Button
-          content="x5"
+          content={'x' + print_amount}
           color="transparent"
-          tooltip={material.value ? material.value * 5 + ' cr' : 'No cost'}
-          onClick={() => onRelease(5)}
+          tooltip={
+            material.value ? material.value * print_amount + ' cr' : 'No cost'
+          }
+          onClick={() => onRelease(print_amount)}
         />
         <Button.Input
           content={
-            '[Max: ' + (material.amount < 50 ? material.amount : 50) + ']'
+            '[Max: ' +
+            (material.amount < max_sheets ? material.amount : max_sheets) +
+            ']'
           }
           color={'transparent'}
-          maxValue={50}
+          maxValue={max_sheets}
           onCommit={(e, value) => {
             onRelease(value);
           }}

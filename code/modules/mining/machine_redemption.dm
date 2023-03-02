@@ -221,22 +221,23 @@
 			var/sheet_amount = amount / MINERAL_MATERIAL_AMOUNT
 			var/obj/material_display = initial(material.sheet_type)
 			data["materials"] += list(list(
-			"name" = material.name,
-			"id" = REF(material),
-			"amount" = sheet_amount,
-			"cat" = "material",
-			"value" = ore_values[material.type],
-			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(material_display.icon), icon_state = initial(material_display.icon_state)), no_anim=TRUE))
+				"name" = material.name,
+				"id" = REF(material),
+				"amount" = sheet_amount,
+				"category" = "material",
+				"value" = ore_values[material.type],
+				"product_icon" = icon2base64(getFlatIcon(image(icon = initial(material_display.icon), icon_state = initial(material_display.icon_state)), no_anim=TRUE)),
 		))
+
 		for(var/research in stored_research.researched_designs)
 			var/datum/design/alloy = SSresearch.techweb_design_by_id(research)
 			var/obj/alloy_display = initial(alloy.build_path)
 			data["materials"] += list(list(
-			"name" = alloy.name,
-			"id" = alloy.id,
-			"cat" = "alloy",
-			"amount" = can_smelt_alloy(alloy),
-			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(alloy_display.icon), icon_state = initial(alloy_display.icon_state)), no_anim=TRUE))
+				"name" = alloy.name,
+				"id" = alloy.id,
+				"category" = "alloy",
+				"amount" = can_smelt_alloy(alloy),
+				"product_icon" = icon2base64(getFlatIcon(image(icon = initial(alloy_display.icon), icon_state = initial(alloy_display.icon_state)), no_anim=TRUE)),
 			))
 
 	if (!mat_container)
@@ -249,11 +250,34 @@
 	var/obj/item/card/id/card
 	if(isliving(user))
 		var/mob/living/customer = user
-		card = customer.get_idcard(TRUE)
-	data["user"] = list()
-	if(card?.registered_account)
-		data["user"]["name"] = card.registered_account.account_holder
-		data["user"]["cash"] = card.registered_account.account_balance
+		card = customer.get_idcard(hand_first =TRUE)
+		if(card?.registered_account)
+			data["user"] = list(
+				"name" = card.registered_account.account_holder,
+				"cash" = card.registered_account.account_balance,
+			)
+	return data
+
+/obj/machinery/mineral/ore_redemption/ui_static_data(mob/user)
+	var/list/data = list()
+
+	var/datum/component/material_container/mat_container = materials.mat_container
+	if (mat_container)
+		for(var/datum/material/material as anything in mat_container.materials)
+			var/obj/material_display = initial(material.sheet_type)
+			data["material_icons"] += list(list(
+				"id" = REF(material),
+				"product_icon" = icon2base64(getFlatIcon(image(icon = initial(material_display.icon), icon_state = initial(material_display.icon_state)), no_anim=TRUE)),
+		))
+
+	for(var/research in stored_research.researched_designs)
+		var/datum/design/alloy = SSresearch.techweb_design_by_id(research)
+		var/obj/alloy_display = initial(alloy.build_path)
+		data["material_icons"] += list(list(
+			"id" = alloy.id,
+			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(alloy_display.icon), icon_state = initial(alloy_display.icon_state)), no_anim=TRUE)),
+			))
+
 	return data
 
 
