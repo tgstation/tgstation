@@ -93,11 +93,9 @@ SUBSYSTEM_DEF(vote)
 	if (final_winner) // if no one voted final_winner will be null
 		current_vote.finalize_vote(final_winner)
 
-/**
- * Submit a vote using the First Past The Post (FPTP) system
- * One selection per person, and the selection with the most votes wins.
- */
-/datum/controller/subsystem/vote/proc/submit_fptp_vote(mob/voter, their_vote)
+
+/// Submit a vote from a player.
+/datum/controller/subsystem/vote/proc/submit_vote(mob/voter, their_vote)
 	if(!current_vote)
 		return
 	if(!voter?.ckey)
@@ -113,33 +111,24 @@ SUBSYSTEM_DEF(vote)
 	else
 		voted += voter.ckey
 
-	current_vote.choices_by_ckey[voter.ckey] = their_vote
-	current_vote.choices[their_vote]++
-
-	return TRUE
-
-/**
- * Submit a vote using the Approval Voting (AV) system
- * Any number of selections per person, and the selection with the most votes wins.
- */
-/datum/controller/subsystem/vote/proc/submit_av_vote(mob/voter, their_vote)
-	if(!current_vote)
-		return
-	if(!voter?.ckey)
-		return
-	if(CONFIG_GET(flag/no_dead_vote) && voter.stat == DEAD && !voter.client?.holder)
-		return
-
-	else
-		voted += voter.ckey
-
-	if(current_vote.choices_by_ckey[voter.ckey + their_vote] == 1)
-		current_vote.choices_by_ckey[voter.ckey + their_vote] = 0
-		current_vote.choices[their_vote]--
-
-	else
-		current_vote.choices_by_ckey[voter.ckey + their_vote] = 1
+	// One selection per person, and the selection with the most votes wins.
+	if(current_vote.count_method == VOTE_COUNT_METHOD_FPTP)
+		current_vote.choices_by_ckey[voter.ckey] = their_vote
 		current_vote.choices[their_vote]++
+
+	// Any number of selections per person, and the selection with the most votes wins.
+	else if(current_vote.count_method == VOTE_COUNT_METHOD_AV)
+		if(current_vote.choices_by_ckey[voter.ckey + their_vote] == 1)
+			current_vote.choices_by_ckey[voter.ckey + their_vote] = 0
+			current_vote.choices[their_vote]--
+
+		else
+			current_vote.choices_by_ckey[voter.ckey + their_vote] = 1
+			current_vote.choices[their_vote]++
+
+	else
+		stack_trace("Vote system passed invalid vote count method: [current_vote.count_method]")
+		return FALSE
 
 	return TRUE
 
@@ -326,11 +315,8 @@ SUBSYSTEM_DEF(vote)
 			// meaning you can't spoof initiate a vote you're not supposed to be able to
 			return initiate_vote(selected, voter.key, voter)
 
-		if("voteFPTP")
-			return submit_fptp_vote(voter, params["voteOption"])
-
-		if("voteAV")
-			return submit_av_vote(voter, params["voteOption"])
+		if("vote")
+			return submit_vote(voter, params["voteOption"])
 
 /datum/controller/subsystem/vote/ui_close(mob/user)
 	voting -= user.client?.ckey

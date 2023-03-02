@@ -176,7 +176,7 @@ const ChoicesPanel = (props, context) => {
                     <Button
                       disabled={user.fptpSelection === choice.name}
                       onClick={() => {
-                        act('voteFPTP', { voteOption: choice.name });
+                        act('vote', { voteOption: choice.name });
                       }}>
                       Vote
                     </Button>
@@ -211,7 +211,7 @@ const ChoicesPanel = (props, context) => {
                   buttons={
                     <Button
                       onClick={() => {
-                        act('voteAV', { voteOption: choice.name });
+                        act('vote', { voteOption: choice.name });
                       }}>
                       Vote
                     </Button>
