@@ -31,7 +31,8 @@ type ActiveVote = {
 type UserData = {
   isLowerAdmin: BooleanLike;
   isUpperAdmin: BooleanLike;
-  selectedChoice: string | null;
+  fptpSelection: string | null;
+  avSelection: string | null;
 };
 
 type Data = {
@@ -156,8 +157,13 @@ const ChoicesPanel = (props, context) => {
 
   return (
     <Stack.Item grow>
-      <Section fill scrollable title="Toggle any number of options">
-        {currentVote && currentVote.choices.length !== 0 ? (
+      <Section fill scrollable title="Active Vote">
+        {currentVote && currentVote.countMethod == 1 ? (
+          <NoticeBox success>Select one option</NoticeBox>
+        ) : null}
+        {currentVote &&
+        currentVote.choices.length !== 0 &&
+        currentVote.countMethod == 1 ? (
           <LabeledList>
             {currentVote.choices.map((choice) => (
               <Box key={choice.name}>
@@ -166,33 +172,64 @@ const ChoicesPanel = (props, context) => {
                   textAlign="right"
                   buttons={
                     <Button
-                      disabled={user.selectedChoice === choice.name}
+                      disabled={user.fptpSelection === choice.name}
                       onClick={() => {
-                        act('vote', { voteOption: choice.name });
+                        act('voteFPTP', { voteOption: choice.name });
                       }}>
                       Vote
                     </Button>
                   }>
-                  {user.selectedChoice &&
-                    choice.name === user.selectedChoice && (
-                      <Icon
-                        alignSelf="right"
-                        mr={2}
-                        color="green"
-                        name="vote-yea"
-                      />
-                    )}
+                  {user.fptpSelection && choice.name === user.fptpSelection && (
+                    <Icon
+                      alignSelf="right"
+                      mr={2}
+                      color="green"
+                      name="vote-yea"
+                    />
+                  )}
                   {choice.votes} Votes
                 </LabeledList.Item>
                 <LabeledList.Divider />
               </Box>
             ))}
           </LabeledList>
-        ) : (
-          <NoticeBox>
-            {currentVote ? 'No choices available!' : 'No vote active!'}
-          </NoticeBox>
-        )}
+        ) : null}
+        {currentVote && currentVote.countMethod == 2 ? (
+          <NoticeBox success>Select any number of options</NoticeBox>
+        ) : null}
+        {currentVote &&
+        currentVote.choices.length !== 0 &&
+        currentVote.countMethod == 2 ? (
+          <LabeledList>
+            {currentVote.choices.map((choice) => (
+              <Box key={choice.name}>
+                <LabeledList.Item
+                  label={choice.name.replace(/^\w/, (c) => c.toUpperCase())}
+                  textAlign="right"
+                  buttons={
+                    <Button
+                      onClick={() => {
+                        act('voteAV', { voteOption: choice.name });
+                      }}>
+                      Vote
+                    </Button>
+                  }>
+                  {user.avSelection && choice.name === user.avSelection && (
+                    <Icon
+                      alignSelf="right"
+                      mr={2}
+                      color="blue"
+                      name="vote-yea"
+                    />
+                  )}
+                  {choice.votes} Votes
+                </LabeledList.Item>
+                <LabeledList.Divider />
+              </Box>
+            ))}
+          </LabeledList>
+        ) : null}
+        {currentVote ? null : <NoticeBox>No vote active!</NoticeBox>}
       </Section>
     </Stack.Item>
   );
