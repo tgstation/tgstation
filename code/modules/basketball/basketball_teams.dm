@@ -51,11 +51,13 @@
 	name = "Basketball Blue Team"
 	undershirt = /datum/sprite_accessory/undershirt/bluejersey
 	uniform = /obj/item/clothing/under/shorts/blue
+	neck = /obj/item/bedsheet/blue
 
 /datum/outfit/basketball/red
 	name = "Basketball Red Team"
 	undershirt = /datum/sprite_accessory/undershirt/redjersey
 	uniform = /obj/item/clothing/under/shorts/red
+	neck = /obj/item/bedsheet/red
 
 /datum/outfit/basketball/greytide_worldwide
 	name = "Basketball Greytide Worldwide"
