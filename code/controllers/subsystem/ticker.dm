@@ -224,6 +224,8 @@ SUBSYSTEM_DEF(ticker)
 	var/can_continue = 0
 	can_continue = src.mode.pre_setup() //Choose antagonists
 	CHECK_TICK
+	SSstories.execute_roundstart_story()
+	CHECK_TICK
 	can_continue = can_continue && SSjob.DivideOccupations() //Distribute jobs
 	CHECK_TICK
 

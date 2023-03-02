@@ -1,0 +1,6 @@
+/obj/item/storage/briefcase/veteran/PopulateContents()
+	..()
+	new /obj/item/gun/ballistic/automatic/pistol(src)
+	new /obj/item/ammo_box/magazine/m9mm(src)
+	new /obj/item/ammo_box/magazine/m9mm(src)
+	new /obj/item/ammo_box/magazine/m9mm(src)

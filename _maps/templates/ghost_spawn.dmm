@@ -1,0 +1,76 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/indestructible/riveted,
+/area/centcom/ghost_storage)
+"d" = (
+/obj/effect/landmark/ghost_story_participant,
+/turf/open/floor/iron{
+	dir = 10
+	},
+/area/centcom/ghost_storage)
+"u" = (
+/obj/machinery/light/floor,
+/turf/open/floor/iron{
+	dir = 4
+	},
+/area/centcom/ghost_storage)
+"G" = (
+/obj/effect/landmark/ghost_story_participant,
+/turf/open/floor/iron{
+	dir = 4
+	},
+/area/centcom/ghost_storage)
+"O" = (
+/turf/open/floor/iron{
+	dir = 4
+	},
+/area/centcom/ghost_storage)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+u
+O
+O
+u
+a
+"}
+(3,1,1) = {"
+a
+O
+G
+G
+O
+a
+"}
+(4,1,1) = {"
+a
+O
+d
+G
+O
+a
+"}
+(5,1,1) = {"
+a
+u
+O
+O
+u
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}

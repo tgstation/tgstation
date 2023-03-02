@@ -339,6 +339,7 @@
 				ROLE_MIND_TRANSFER,
 				ROLE_POSIBRAIN,
 				ROLE_SENTIENCE,
+				ROLE_STORY_PARTICIPANT,
 			),
 			"Antagonist Positions" = list(
 				ROLE_ABDUCTOR,

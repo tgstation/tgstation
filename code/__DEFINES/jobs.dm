@@ -101,6 +101,8 @@
 #define JOB_CENTCOM_RESEARCH_OFFICER "Research Officer"
 #define JOB_CENTCOM_SPECIAL_OFFICER "Special Ops Officer"
 #define JOB_CENTCOM_PRIVATE_SECURITY "Private Security Force"
+#define JOB_CENTCOM_INSPECTOR "CentCom Inspector"
+#define JOB_CENTCOM_MIDDLE_MANAGEMENT "CentCom Middle Management"
 
 
 #define JOB_DISPLAY_ORDER_ASSISTANT 1
