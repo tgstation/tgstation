@@ -85,6 +85,16 @@
 		if(is_station_level(apc.z) && prob(60))
 			apc.overload_lighting()
 
+/datum/station_trait/mice_infestation
+	name = "Mice infestation"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 10
+	show_in_report = TRUE
+	report_message = "A nest of mice has infested the maintenace areas."
+	trait_to_give = STATION_TRAIT_MICE_INFESTATION
+	// Mice spawn on roundstart
+	can_revert = FALSE
+
 /datum/station_trait/empty_maint
 	name = "Cleaned out maintenance"
 	trait_type = STATION_TRAIT_NEGATIVE
