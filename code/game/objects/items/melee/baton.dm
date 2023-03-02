@@ -660,17 +660,27 @@
 	sparkler = new (src)
 
 /obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
-	if(!istype(item, /obj/item/stack/ore/bluespace_crystal))
-		return ..()
+	. = ..()
 	if(!cell)
-		var/obj/item/stack/ore/bluespace_crystal/crystal = item
-		var/obj/item/melee/baton/security/cattleprod/teleprod/prod = new
-		remove_item_from_storage(user)
-		qdel(src)
-		crystal.use(1)
-		user.put_in_hands(prod)
-		to_chat(user, span_notice("You place the bluespace crystal firmly into the igniter."))
-	else
+		if(istype(item, /obj/item/stack/ore/bluespace_crystal))
+			var/obj/item/stack/ore/bluespace_crystal/crystal = item
+			var/obj/item/melee/baton/security/cattleprod/teleprod/prod = new
+			remove_item_from_storage(user)
+			qdel(src)
+			crystal.use(1)
+			user.put_in_hands(prod)
+			to_chat(user, span_notice("You place the bluespace crystal firmly into the igniter."))
+
+		else if(istype(item, /obj/item/stack/telecrystal))
+			var/obj/item/stack/telecrystal/crystal = item
+			var/obj/item/melee/baton/security/cattleprod/telecrystalprod/prod = new
+			remove_item_from_storage(user)
+			qdel(src)
+			crystal.use(1)
+			user.put_in_hands(prod)
+			to_chat(user, span_notice("You place the telecrystal firmly into the igniter."))
+
+	else if(istype(item, /obj/item/stack/ore/bluespace_crystal) || istype(item, /obj/item/stack/telecrystal))
 		user.visible_message(span_warning("You can't put the crystal onto the stunprod while it has a power cell installed!"))
 
 /obj/item/melee/baton/security/cattleprod/baton_effect()
@@ -731,3 +741,32 @@
 	if(!. || target.move_resist >= MOVE_FORCE_OVERPOWERING)
 		return
 	do_teleport(target, get_turf(target), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
+
+/obj/item/melee/baton/security/cattleprod/telecrystalprod
+	name = "snatcherprod"
+	desc = "A prod with a telecrystal on the end. It sparks with a desire for theft and subversion."
+	w_class = WEIGHT_CLASS_NORMAL
+	icon_state = "telecrystalprod"
+	inhand_icon_state = "telecrystalprod"
+	slot_flags = null
+	throw_stun_chance = 50 //I think it'd be funny
+
+/obj/item/melee/baton/security/cattleprod/telecrystalprod/clumsy_check(mob/living/carbon/human/user)
+	. = ..()
+	if(!.)
+		return
+	do_teleport(src, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE) //Wait, where did it go?
+
+/obj/item/melee/baton/security/cattleprod/telecrystalprod/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/stuff_in_hand = null
+	stuff_in_hand = target.get_active_held_item()
+	if(stuff_in_hand)
+		if(target.temporarilyRemoveItemFromInventory(stuff_in_hand))
+			if(user.put_in_inactive_hand(stuff_in_hand))
+				stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears in [user]'s hand!"))
+			else
+				stuff_in_hand.forceMove(user.drop_location())
+				stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears!"))
