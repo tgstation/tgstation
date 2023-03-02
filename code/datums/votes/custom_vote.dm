@@ -1,9 +1,14 @@
 /// The max amount of options someone can have in a custom vote.
 #define MAX_CUSTOM_VOTE_OPTIONS 10
 
-/datum/vote/custom_vote
-	name = "Custom"
-	message = "Click here to start a custom vote."
+/datum/vote/custom_vote/fptp
+	name = "Custom FPTP"
+	message = "Click here to start a custom FPTP vote, FPTP (one selection per voter)"
+
+/datum/vote/custom_vote/av
+	name = "Custom AV"
+	message = "Click here to start a custom AV vote (multiple selections per voter)"
+	count_method = VOTE_COUNT_METHOD_AV
 
 // Custom votes ares always accessible.
 /datum/vote/custom_vote/is_accessible_vote()

@@ -216,7 +216,8 @@ const ChoicesPanel = (props, context) => {
                       Vote
                     </Button>
                   }>
-                  {user.avSelection[user.ckey.concat(choice.name)] === 1 ? (
+                  {user.avSelection &&
+                  user.avSelection[user.ckey.concat(choice.name)] === 1 ? (
                     <Icon
                       alignSelf="right"
                       mr={2}
