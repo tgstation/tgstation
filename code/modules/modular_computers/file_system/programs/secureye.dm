@@ -72,7 +72,7 @@
 	return .
 
 /datum/computer_file/program/secureye/ui_data()
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["network"] = network
 	data["activeCamera"] = null
 	var/obj/machinery/camera/active_camera = camera_ref?.resolve()
@@ -100,7 +100,6 @@
 	. = ..()
 	if(.)
 		return
-
 	if(action == "switch_camera")
 		var/c_tag = format_text(params["name"])
 		var/list/cameras = get_available_cameras()
