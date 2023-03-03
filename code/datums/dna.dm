@@ -480,11 +480,12 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			return
 		death_sound = new_race.death_sound
 
-		if (dna.species.properly_gained)
-			dna.species.on_species_loss(src, new_race, pref_load)
-
 		var/datum/species/old_species = dna.species
 		dna.species = new_race
+
+		if (old_species.properly_gained)
+			old_species.on_species_loss(src, new_race, pref_load)
+
 		dna.species.on_species_gain(src, old_species, pref_load)
 		if(ishuman(src))
 			qdel(language_holder)
