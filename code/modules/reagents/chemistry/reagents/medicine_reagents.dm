@@ -394,7 +394,7 @@
 
 /datum/reagent/medicine/calomel
 	name = "Calomel"
-	description = "Quickly purges the body of all chemicals except itself."
+	description = "Quickly purges the body of all chemicals except itself. The more health a person has, the more toxin damage it will deal"
 	reagent_state = LIQUID
 	color = "#c85319"
 	metabolization_rate = 1 * REAGENTS_METABOLISM
@@ -421,7 +421,7 @@
 
 /datum/reagent/medicine/ammoniated_mercury
 	name = "Ammoniated Mercury"
-	description = "Quickly purges the body of toxic chemicals. Heals toxin damage when in a good condition. When hurt with brute damage, deals a great amount of toxin damage."
+	description = "Quickly purges the body of toxic chemicals. Heals toxin damage when in a good condition. When hurt with brute or fire damage, it can deal a great amount of toxin damage."
 	reagent_state = LIQUID
 	color = "#f3f1f0"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
