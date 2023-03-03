@@ -124,7 +124,7 @@
 			if(!silent)
 				H.dna.remove_mutation(/datum/mutation/human/clumsy)
 				to_chat(owner, "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
-	add_team_hud(mob_override, /datum/antagonist/bloodsucker)
+	add_team_hud(owner.current, /datum/antagonist/bloodsucker)
 
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
 	. = ..()

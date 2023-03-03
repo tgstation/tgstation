@@ -27,7 +27,8 @@
 
 /datum/antagonist/vassal/apply_innate_effects(mob/living/mob_override)
 	. = ..()
-	add_team_hud(mob_override)
+	var/mob/living/current_mob = mob_override || owner.current
+	add_team_hud(current_mob)
 
 /datum/antagonist/vassal/add_team_hud(mob/target)
 	QDEL_NULL(team_hud_ref)
