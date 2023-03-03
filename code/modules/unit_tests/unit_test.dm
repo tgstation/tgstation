@@ -77,7 +77,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	return ..()
 
 /datum/unit_test/proc/Run()
-	TEST_FAIL("Run() called parent or not implemented")
+	TEST_FAIL("[type]/Run() called parent or not implemented")
 
 /datum/unit_test/proc/Fail(reason = "No reason", file = "OUTDATED_TEST", line = 1)
 	succeeded = FALSE
@@ -149,12 +149,11 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	log_world("::[priority] file=[file],line=[line],title=[map_name]: [type]::[annotation_text]")
 
-/proc/RunUnitTest(test_path, list/test_results)
-	if (ispath(test_path, /datum/unit_test/focus_only))
+/proc/RunUnitTest(datum/unit_test/test_path as anything, list/test_results)
+	if(ispath(test_path, /datum/unit_test/focus_only))
 		return
 
-	var/datum/unit_test/test_type = test_path
-	if(initial(test_type.abstract_type) == test_path)
+	if(initial(test_path.abstract_type) == test_path)
 		return
 
 	var/datum/unit_test/test = new test_path
