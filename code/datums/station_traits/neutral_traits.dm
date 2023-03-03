@@ -103,7 +103,7 @@
 	weight = 1
 	show_in_report = TRUE
 	report_message = "Please be nice to him."
-	blacklist = list(/datum/station_trait/announcement_medbot)
+	blacklist = list(/datum/station_trait/announcement_medbot, /datum/station_trait/birthday)
 
 /datum/station_trait/announcement_intern/New()
 	. = ..()
@@ -115,7 +115,7 @@
 	weight = 1
 	show_in_report = TRUE
 	report_message = "Our announcement system is under scheduled maintanance at the moment. Thankfully, we have a backup."
-	blacklist = list(/datum/station_trait/announcement_intern)
+	blacklist = list(/datum/station_trait/announcement_intern, /datum/station_trait/birthday)
 
 /datum/station_trait/announcement_medbot/New()
 	. = ..()
@@ -194,15 +194,20 @@
 	name = "Employee Birthday"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 2
-	force = TRUE
 	show_in_report = TRUE
 	report_message = ""
 	trait_to_give = STATION_TRAIT_BIRTHDAY
+	blacklist = list(/datum/centcom_announcer/intern, /datum/station_trait/announcement_medbot)
 	var/mob/living/carbon/human/birthday_person
 
 /datum/station_trait/birthday/New()
 	. = ..()
 	RegisterSignals(SSdcs, list(COMSIG_GLOB_JOB_AFTER_SPAWN), PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/birthday/revert()
+	for (var/obj/effect/landmark/start/hangover/party_spot in GLOB.start_landmarks_list)
+		QDEL_LIST(party_spot.party_debris)
+	return ..()
 
 /datum/station_trait/birthday/on_round_start()
 	. = ..()
@@ -218,7 +223,6 @@
 	if(birthday_person)
 		playsound(birthday_person, 'sound/items/party_horn.ogg', 50)
 		birthday_person.add_mood_event("birthday", /datum/mood_event/birthday)
-
 
 /datum/station_trait/birthday/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned_mob)
 	SIGNAL_HANDLER
