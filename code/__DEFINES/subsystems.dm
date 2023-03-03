@@ -333,5 +333,7 @@
 #define SS_INIT_TIMER_KEY "ss_init"
 
 // Vote subsystem counting methods
+/// First past the post. One selection per person, and the selection with the most votes wins.
 #define VOTE_COUNT_METHOD_FPTP 1
+/// Approval voting. Any number of selections per person, and the selection with the most votes wins.
 #define VOTE_COUNT_METHOD_AV 2
