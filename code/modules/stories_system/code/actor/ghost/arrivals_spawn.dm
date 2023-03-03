@@ -186,9 +186,9 @@
 	. = ..()
 	var/list/potential_charges = list()
 	for (var/datum/mind/crewmember as anything in get_crewmember_minds())
-		if(crewmember.current?.stat == DEAD || !crewmember.current.client) // dont select someone as their charge if they're dead already or don't have a client
+		if(crewmember?.current?.stat == DEAD || !crewmember.current || !crewmember?.current?.client) // dont select someone as their charge if they're dead already or don't have a client
 			continue
-		if(crewmember.current == to_send_human) // haha, no
+		if(crewmember?.current == to_send_human) // haha, no
 			continue
 		potential_charges += crewmember.current
 	if(!length(potential_charges))

@@ -25,7 +25,7 @@
 	// Handling for reserving a new area
 	if(!landmark)
 		var/datum/map_template/actor_spawn/new_actor = new
-		var/datum/turf_reservation/reservation_area = SSmapping.RequestBlockReservation(new_actor.width, new_actor.height, SSmapping.transit.z_value, /datum/turf_reservation/transit)
+		var/datum/turf_reservation/reservation_area = SSmapping.RequestBlockReservation(new_actor.width, new_actor.height, type = /datum/turf_reservation/transit)
 		ASSERT(reservation_area, "failed to reserve an area for actor spawning")
 		var/turf/bottom_left = TURF_FROM_COORDS_LIST(reservation_area.bottom_left_coords)
 		new_actor.load(bottom_left, centered = FALSE)
@@ -62,6 +62,7 @@
 
 /// Ghost ones are delayed by a few minutes to ensure that the ghosts have time to choose a character and for crew actors to get settled a bit
 /datum/story_actor/ghost/proc/send_them_in(mob/living/carbon/human/to_send_human)
+	qdel(to_send_human.w_uniform) // remove their greysuit
 	to_send_human.equipOutfit(pick(actor_outfits))
 
 /datum/story_actor/ghost/centcom_inspector

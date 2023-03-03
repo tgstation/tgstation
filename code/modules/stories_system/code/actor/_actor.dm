@@ -100,7 +100,9 @@
 
 /datum/antagonist/story_participant/proc/make_background_story_icon(datum/outfit/story_fit)
 	var/mob/living/carbon/human/dummy/consistent/actor = new
-
+	actor.hairstyle = "CIA"
+	actor.hair_color = "#90542F"
+	actor.update_body_parts()
 	var/icon/story_icon = render_preview_outfit(story_fit, actor)
 	story_icon.ChangeOpacity(0.5)
 	qdel(actor)

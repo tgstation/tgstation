@@ -319,11 +319,11 @@
 	id = /obj/item/card/id/passport
 	id_trim = /datum/id_trim/job/assistant/tourist
 	uniform = /obj/item/clothing/under/suit/tan
-	suit = /obj/item/clothing/suit/armor
+	suit = /obj/item/clothing/suit/armor/vest
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/sunglasses
 	head = /obj/item/clothing/head/helmet
-	shoes = /obj/item/clothing/shoes
+	shoes = /obj/item/clothing/shoes/sneakers/black
 	l_hand = /obj/item/storage/briefcase/veteran
 	back = /obj/item/storage/backpack/satchel
 	backpack_contents = list(
