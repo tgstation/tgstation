@@ -250,9 +250,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
 	if(LAZYLEN(embedding))
 		updateEmbedding()
-	var/typepath = add_stealing_item_objective()
-	if(typepath != null && GLOB.steal_item_handler.generated_items)
-		GLOB.steal_item_handler.register_item(src, typepath)
 
 /obj/item/Destroy(force)
 	// This var exists as a weird proxy "owner" ref
