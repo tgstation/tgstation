@@ -443,10 +443,15 @@
 		if(charter_given || real_headrev.stat != CONSCIOUS)
 			continue
 		charter_given = TRUE
+		var/list/headrev_charter_goodies = list(
+		/obj/item/station_charter/revolution,
+		/obj/item/megaphone,
+		/obj/item/bedsheet/rev,
+		)
 		podspawn(list(
 			"target" = get_turf(real_headrev),
 			"style" = STYLE_SYNDICATE,
-			"spawn" = /obj/item/station_charter/revolution,
+			"spawn" = headrev_charter_goodies,
 		))
 		to_chat(real_headrev, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
 			\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
