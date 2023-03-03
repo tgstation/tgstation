@@ -13,26 +13,12 @@
 /obj/effect/spawner/random/engineering/canister,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
-"h" = (
-/obj/structure/rack,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/engineering/material,
-/obj/effect/spawner/random/engineering/material,
-/turf/open/floor/iron/dark,
-/area/station/maintenance/department/science)
 "i" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/mecha_wreckage/ripley/mk2,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron,
-/area/station/maintenance/department/science)
-"k" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/empty,
-/turf/open/floor/plating,
 /area/station/maintenance/department/science)
 "l" = (
 /obj/effect/decal/cleanable/dirt,
@@ -108,29 +94,11 @@
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
-"F" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/station/maintenance/department/science)
-"H" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/purple/filled/line,
-/turf/open/floor/iron,
-/area/station/maintenance/department/science)
 "L" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/structure/mecha_wreckage/odysseus,
 /obj/item/stack/cable_coil/five,
-/turf/open/floor/iron,
-/area/station/maintenance/department/science)
-"O" = (
-/obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
 "R" = (
@@ -152,6 +120,9 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high/empty,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
 "V" = (
@@ -239,7 +210,7 @@ a
 f
 D
 U
-k
+R
 "}
 (6,1,1) = {"
 a
@@ -247,7 +218,7 @@ C
 x
 z
 i
-H
+R
 "}
 (7,1,1) = {"
 a
@@ -255,7 +226,7 @@ a
 q
 T
 l
-H
+R
 "}
 (8,1,1) = {"
 a
@@ -263,7 +234,7 @@ a
 n
 e
 L
-H
+R
 "}
 (9,1,1) = {"
 a
@@ -271,7 +242,7 @@ a
 X
 t
 S
-O
+R
 "}
 (10,1,1) = {"
 a
@@ -279,7 +250,7 @@ a
 a
 v
 Y
-F
+R
 "}
 (11,1,1) = {"
 a
@@ -287,7 +258,7 @@ a
 a
 V
 Z
-h
+R
 "}
 (12,1,1) = {"
 a
