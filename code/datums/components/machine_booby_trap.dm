@@ -1,7 +1,7 @@
 /**
  * Attached to an atom, creates an explosion when it is interacted with
  */
-/datum/component/
+/datum/component/machine_booby_trap
 	/// Explosion radius of light damage
 	var/explosion_light_range
 	/// Explosion radius of heavy damage

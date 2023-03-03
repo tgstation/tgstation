@@ -1,12 +1,17 @@
+/// Marks a machine as a possible traitor sabotage target
+#define ADD_SABOTAGE_MACHINE(source, typepath) LAZYADD(GLOB.objective_machine_handler.machine_instances_by_path[typepath], source)
+
+/// Traitor objective to place a trap on a machine which causes it to detonate
 /datum/traitor_objective_category/sabotage_machinery
 	name = "Sabotage Worksite"
 	objectives = list(
-		/datum/traitor_objective/sabotage_machinery = 1,
+		/datum/traitor_objective/sabotage_machinery/trap = 1,
+		/datum/traitor_objective/sabotage_machinery/destroy = 1,
 	)
 
 /datum/traitor_objective/sabotage_machinery
 	name = "Sabotage the %MACHINE%"
-	description = "Conceal the provided explosive device within the %MACHINE% to cause disarray and disrupt the operations of the %JOB%'s department."
+	description = "Abstract objective holder which shouldn't appear in your uplink."
 
 	progression_reward = list(2 MINUTES, 8 MINUTES)
 	telecrystal_reward = list(0, 1)
@@ -14,23 +19,20 @@
 	progression_minimum = 0 MINUTES
 	progression_maximum = 10 MINUTES
 
-	/// The maximum amount of this type of objective a traitor can have.
-	var/maximum_allowed = 2
+	abstract_type = /datum/traitor_objective/sabotage_machinery
+
+	/// Signals sent by a machine which indicate that we succeeded at our sabotage.
+	var/list/success_signals = list(COMSIG_PARENT_QDELETING)
+	/// The maximum amount of this type of objective a traitor can have, set to 0 for no limit.
+	var/maximum_allowed = 0
 	/// The possible target machinery and the jobs tied to each one.
-	var/list/applicable_jobs = list(
-		JOB_CHIEF_ENGINEER = /obj/machinery/rnd/production/protolathe/department/engineering,
-		JOB_CHIEF_MEDICAL_OFFICER = /obj/machinery/rnd/production/techfab/department/medical,
-		JOB_HEAD_OF_PERSONNEL = /obj/machinery/rnd/production/techfab/department/service,
-		JOB_QUARTERMASTER = /obj/machinery/rnd/production/techfab/department/cargo,
-		JOB_RESEARCH_DIRECTOR = /obj/machinery/rnd/production/protolathe/department/science,
-		JOB_SHAFT_MINER = /obj/machinery/mineral/ore_redemption,
-	)
+	var/list/applicable_jobs = list()
 	/// The chosen job. Used to check for duplicates
 	var/chosen_job
 
-	var/obj/item/traitor_machine_trapper/tool
-
 /datum/traitor_objective/sabotage_machinery/can_generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	if(!maximum_allowed)
+		return TRUE
 	if(length(possible_duplicates) >= maximum_allowed)
 		return FALSE
 	return TRUE
@@ -39,36 +41,63 @@
 	var/list/possible_jobs = applicable_jobs.Copy()
 	for(var/datum/traitor_objective/sabotage_machinery/objective as anything in possible_duplicates)
 		possible_jobs -= objective.chosen_job
+	for(var/available_job in possible_jobs)
+		var/job_machine_path = possible_jobs[available_job]
+		if (!length(GLOB.objective_machine_handler.machine_instances_by_path[job_machine_path]))
+			possible_jobs -= available_job
 	if(!length(possible_jobs))
 		return FALSE
-	var/list/obj/machinery/possible_machines = list()
-	while(length(possible_machines) <= 0 && length(possible_jobs) > 0)
-		var/target_head = pick(possible_jobs)
-		var/obj/machinery/machine_to_find = possible_jobs[target_head]
-		possible_jobs -= target_head
 
-		chosen_job = target_head
-		for(var/obj/machinery/machine as anything in GLOB.machines)
-			if(istype(machine, machine_to_find) && is_station_level(machine.z))
-				possible_machines += machine
-
-	if(!length(possible_machines))
-		return FALSE
-
+	chosen_job = pick(possible_jobs)
+	var/list/obj/machinery/possible_machines = GLOB.objective_machine_handler.machine_instances_by_path[possible_jobs[chosen_job]]
 	for(var/obj/machinery/machine as anything in possible_machines)
-		AddComponent(/datum/component/traitor_objective_register, machine, succeed_signals = list(COMSIG_TRAITOR_MACHINE_TRAP_TRIGGERED))
+		AddComponent(/datum/component/traitor_objective_register, machine, succeed_signals = success_signals)
 
 	replace_in_name("%JOB%", lowertext(chosen_job))
 	replace_in_name("%MACHINE%", possible_machines[1].name)
 	return TRUE
 
-/datum/traitor_objective/sabotage_machinery/generate_ui_buttons(mob/user)
+/datum/traitor_objective/sabotage_machinery/destroy
+	name = "Destroy the %MACHINE%"
+	description = "Destroy the %MACHINE% to cause disarray and disrupt the operations of the %JOB%'s department."
+
+	progression_reward = list(5 MINUTES, 10 MINUTES)
+	telecrystal_reward = list(3, 4)
+
+	progression_minimum = 15 MINUTES
+	progression_maximum = 30 MINUTES
+
+	applicable_jobs = list(
+		JOB_STATION_ENGINEER = /obj/machinery/telecomms/hub,
+		JOB_SCIENTIST = /obj/machinery/rnd/server,
+	)
+
+/datum/traitor_objective/sabotage_machinery/trap
+	name = "Sabotage the %MACHINE%"
+	description = "Conceal the provided explosive device within the %MACHINE% to cause disarray and disrupt the operations of the %JOB%'s department."
+
+	maximum_allowed = 2
+	success_signals = list(COMSIG_TRAITOR_MACHINE_TRAP_TRIGGERED)
+
+	applicable_jobs = list(
+		JOB_CHIEF_ENGINEER = /obj/machinery/rnd/production/protolathe/department/engineering,
+		JOB_CHIEF_MEDICAL_OFFICER = /obj/machinery/rnd/production/techfab/department/medical,
+		JOB_HEAD_OF_PERSONNEL = /obj/machinery/rnd/production/techfab/department/service,
+		JOB_QUARTERMASTER = /obj/machinery/rnd/production/techfab/department/cargo,
+		JOB_RESEARCH_DIRECTOR = /obj/machinery/rnd/production/protolathe/department/science,
+		JOB_SHAFT_MINER = /obj/machinery/mineral/ore_redemption,
+	)
+
+	/// The trap device we give out
+	var/obj/item/traitor_machine_trapper/tool
+
+/datum/traitor_objective/sabotage_machinery/trap/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
 	if(!tool)
 		buttons += add_ui_button("", "Pressing this will materialize an explosive trap in your hand, which you can conceal within the target machine", "wifi", "summon_gear")
 	return buttons
 
-/datum/traitor_objective/sabotage_machinery/ui_perform_action(mob/living/user, action)
+/datum/traitor_objective/sabotage_machinery/trap/ui_perform_action(mob/living/user, action)
 	. = ..()
 	switch(action)
 		if("summon_gear")
@@ -81,7 +110,7 @@
 
 
 /// Item which you use on a machine to cause it to explode next time someone interacts with it
-/obj/item/traitor_machine_trapper/
+/obj/item/traitor_machine_trapper
 	name = "suspicious device"
 	desc = "It looks dangerous."
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
@@ -122,12 +151,62 @@
 	RegisterSignal(target, COMSIG_PARENT_QDELETING, GLOBAL_PROC_REF(qdel), src)
 	moveToNullspace()
 
+/// Called when applied trap is triggered, mark success
 /obj/item/traitor_machine_trapper/proc/on_triggered(atom/machine)
 	SEND_SIGNAL(machine, COMSIG_TRAITOR_MACHINE_TRAP_TRIGGERED)
 	qdel(src)
 
+/// Called when applied trap has been defused, retrieve this item from nullspace
 /obj/item/traitor_machine_trapper/proc/on_defused(atom/machine, mob/defuser, obj/item/tool)
 	UnregisterSignal(machine, COMSIG_PARENT_QDELETING)
 	playsound(machine, 'sound/effects/structure_stress/pop3.ogg', 100, vary = TRUE)
 	forceMove(get_turf(machine))
 	visible_message(span_warning("A [src] falls out from the [machine]!"))
+
+/// Datum which manages references to things we are instructed to destroy
+GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_handler, new())
+
+/// Datum which manages references to things we are instructed to destroy
+/datum/objective_target_machine_handler
+	/// Existing instances of machines organised by typepath
+	var/list/machine_instances_by_path = list()
+	/// If true, we have saved all of our mapload machines and should no longer add more to this list
+	var/targets_confirmed = FALSE
+
+/datum/objective_target_machine_handler/New()
+	. = ..()
+	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(finalise_valid_targets))
+
+/// Confirm that everything added to the list is a valid target, then prevent new targets from being added
+/datum/objective_target_machine_handler/proc/finalise_valid_targets()
+	SIGNAL_HANDLER
+	for (var/machine_type in machine_instances_by_path)
+		for (var/obj/machinery/machine as anything in machine_instances_by_path[machine_type])
+			var/turf/place = get_turf(machine)
+			if(!place || !is_station_level(place.z))
+				machine_instances_by_path[machine_type] -= machine
+				continue
+			RegisterSignal(machine, COMSIG_PARENT_QDELETING, PROC_REF(machine_destroyed))
+	targets_confirmed = TRUE
+
+/datum/objective_target_machine_handler/proc/machine_destroyed(atom/machine)
+	SIGNAL_HANDLER
+	// Sadly can't do a direct typepath association because of some map helper subtypes
+	for (var/machine_type in machine_instances_by_path)
+		machine_instances_by_path[machine_type] -= machine
+
+// Mark valid machines as targets, add a new entry here if you add a new potential target
+
+/obj/machinery/telecomms/hub/add_as_sabotage_target()
+	ADD_SABOTAGE_MACHINE(src, /obj/machinery/telecomms/hub)
+
+/obj/machinery/rnd/server/add_as_sabotage_target()
+	ADD_SABOTAGE_MACHINE(src, type)
+
+/obj/machinery/rnd/production/protolathe/department/add_as_sabotage_target()
+	ADD_SABOTAGE_MACHINE(src, type)
+
+/obj/machinery/mineral/ore_redemption/add_as_sabotage_target()
+	ADD_SABOTAGE_MACHINE(src, type)
+
+#undef ADD_SABOTAGE_MACHINE
