@@ -83,7 +83,20 @@
 
 /// Returns by how much percentage do we reduce the price of the selected item
 /datum/uplink_item/proc/get_discount()
-	return pick(4;0.25,2;0.5,1;0.75)
+
+	var/selected_discount = pick_weight(list(
+		"small_discount" = 4,
+		"average_discount" = 2,
+		"big_discount" = 1,
+	))
+
+	switch(selected_discount)
+		if("big_discount")
+			return 0.75
+		if("average_discount")
+			return 0.5
+		else
+			return 0.25
 
 /// Spawns an item and logs its purchase
 /datum/uplink_item/proc/purchase(mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
