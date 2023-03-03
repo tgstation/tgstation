@@ -226,7 +226,6 @@
 				"amount" = sheet_amount,
 				"category" = "material",
 				"value" = ore_values[material.type],
-				"product_icon" = icon2base64(getFlatIcon(image(icon = initial(material_display.icon), icon_state = initial(material_display.icon_state)), no_anim=TRUE)),
 		))
 
 		for(var/research in stored_research.researched_designs)
@@ -237,7 +236,6 @@
 				"id" = alloy.id,
 				"category" = "alloy",
 				"amount" = can_smelt_alloy(alloy),
-				"product_icon" = icon2base64(getFlatIcon(image(icon = initial(alloy_display.icon), icon_state = initial(alloy_display.icon_state)), no_anim=TRUE)),
 			))
 
 	if (!mat_container)
