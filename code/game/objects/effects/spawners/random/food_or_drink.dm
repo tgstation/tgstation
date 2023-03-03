@@ -255,10 +255,19 @@
 		/obj/item/storage/box/condimentbottles,
 	)
 
-/obj/effect/spawner/party_food
+///Used for the employee birthday station trait
+/obj/effect/spawner/random/food_or_drink/cake_ingridents
+	name = "cake ingridents spawner"
+	icon_state = "cake"
+	spawn_all_loot = TRUE
+	loot = list(
+		/obj/item/food/cakebatter,
+		/obj/item/flashlight/flare/candle,
+		/obj/item/reagent_containers/condiment/sugar,
+		/obj/item/reagent_containers/cup/bottle/caramel,
+	)
 
-/obj/effect/spawner/party_food/Initialize(mapload)
-	. = ..()
+/obj/effect/spawner/random/food_or_drink/cake_ingridents/Initialize(mapload)
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
-		new /obj/structure/toilet(get_turf(src))
-		//Wow nameless, you really are an idiot forgetting to actually finish this
+		return ..()
+

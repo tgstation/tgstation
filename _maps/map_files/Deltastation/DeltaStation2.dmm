@@ -59931,6 +59931,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "oDT" = (
@@ -98826,6 +98827,7 @@
 /obj/item/food/pie/cream,
 /obj/structure/table,
 /obj/machinery/duct,
+/obj/effect/spawner/random/food_or_drink/cake_ingridents,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "ycb" = (

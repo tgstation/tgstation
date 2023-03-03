@@ -215,28 +215,29 @@
 
 /datum/station_trait/birthday/proc/announce_birthday()
 	priority_announce("Happy Birthday to [birthday_person ? birthday_person.name : "Employee Name"]! we hope you enjoy your [birthday_person ? thtotext(birthday_person.age) : "255th"] Birthday")
-	playsound(birthday_person, 'sound/items/party_horn.ogg', 50)
-	birthday_person.add_mood_event("birthday", /datum/mood_event/birthday)
+	if(birthday_person)
+		playsound(birthday_person, 'sound/items/party_horn.ogg', 50)
+		birthday_person.add_mood_event("birthday", /datum/mood_event/birthday)
 
 
 /datum/station_trait/birthday/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned_mob)
 	SIGNAL_HANDLER
 
 	var/obj/item/hat = pick_weight(list(
-		/obj/item/clothing/head/costume/festive = 2,
-		/obj/item/clothing/head/costume/party = 12,
 		/obj/item/clothing/head/costume/party/festive = 12,
+		/obj/item/clothing/head/costume/party = 12,
+		/obj/item/clothing/head/costume/festive = 2,
 		/obj/item/clothing/head/utility/hardhat/cakehat = 1,
 	))
 	hat = new hat(spawned_mob)
 	if(!spawned_mob.equip_to_slot_if_possible(hat, ITEM_SLOT_HEAD, disable_warning = TRUE))
 		spawned_mob.equip_to_slot_or_del(hat, ITEM_SLOT_BACKPACK)
 	var/obj/item/toy = pick_weight(list(
+		/obj/item/reagent_containers/spray/chemsprayer/party = 4,
 		/obj/item/toy/balloon = 2,
 		/obj/item/sparkler = 2,
-		/obj/item/reagent_containers/spray/chemsprayer/party = 4,
-		/obj/item/storage/box/tail_pin = 1,
 		/obj/item/clothing/mask/party_horn = 2,
+		/obj/item/storage/box/tail_pin = 1,
 	))
 	toy = new toy(spawned_mob)
 	spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_BACKPACK)
@@ -253,6 +254,8 @@
 
 /obj/item/birthday_invite/proc/setup_card(birthday_name)
 	desc = "A card stating that its [birthday_name]'s Birthday today."
+	icon_state = "paperslip_words"
+	icon = 'icons/obj/bureaucracy.dmi'
 
 /obj/item/clothing/head/costume/party
 	name = "party hat"

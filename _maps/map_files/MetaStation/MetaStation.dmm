@@ -741,7 +741,6 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/effect/spawner/party_food,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "apB" = (
@@ -44808,6 +44807,7 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "pVk" = (
@@ -68774,6 +68774,7 @@
 "ykj" = (
 /obj/structure/table,
 /obj/structure/cable,
+/obj/effect/spawner/random/food_or_drink/cake_ingridents,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "ykn" = (
