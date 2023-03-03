@@ -81,3 +81,4 @@
 /obj/effect/spawner/random/bureaucracy/birthday_wrap/Initialize(mapload)
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
 		return ..()
+	qdel(src)

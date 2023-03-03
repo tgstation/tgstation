@@ -270,4 +270,5 @@
 /obj/effect/spawner/random/food_or_drink/cake_ingridents/Initialize(mapload)
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
 		return ..()
+	qdel(src)
 
