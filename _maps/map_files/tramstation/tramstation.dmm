@@ -4874,7 +4874,8 @@
 	dir = 1
 	},
 /obj/machinery/button/elevator/directional/north{
-	id = "tram_cargo_lift"
+	id = "tram_cargo_lift";
+	req_access = list("mining")
 	},
 /obj/machinery/lift_indicator/directional/north{
 	linked_elevator_id = "tram_cargo_lift"
@@ -9196,6 +9197,13 @@
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"bvc" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/machinery/door/window/left/directional/north,
+/turf/open/floor/iron/white,
+/area/station/science/research)
 "bvk" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -11151,7 +11159,8 @@
 	dir = 8
 	},
 /obj/machinery/button/elevator/directional/west{
-	id = "tram_cargo_lift"
+	id = "tram_cargo_lift";
+	req_access = list("mining")
 	},
 /obj/machinery/lift_indicator/directional/west{
 	linked_elevator_id = "tram_cargo_lift"
@@ -15079,9 +15088,8 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
-/obj/machinery/door/window/right/directional/south{
-	name = "Elevator Access"
-	},
+/obj/machinery/drone_dispenser,
+/obj/structure/window/spawner,
 /turf/open/floor/iron/dark,
 /area/station/science/lower)
 "dxC" = (
@@ -18445,7 +18453,8 @@
 	linked_elevator_id = "tram_sci_lift"
 	},
 /obj/machinery/button/elevator/directional/west{
-	id = "tram_sci_lift"
+	id = "tram_sci_lift";
+	req_access = list("science")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/lower)
@@ -19571,15 +19580,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
-"flX" = (
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 1
-	},
-/obj/machinery/door/window/right/directional/north{
-	name = "Elevator Access"
-	},
-/turf/open/floor/iron/white,
-/area/station/science/research)
 "flZ" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -26814,14 +26814,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
-"iih" = (
-/obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/structure/window/reinforced{
-	dir = 4;
-	layer = 2.9
-	},
-/turf/open/floor/iron,
-/area/station/cargo/miningdock)
 "iij" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Post - Research Division"
@@ -26915,7 +26907,8 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_cargo_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
+	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck");
+	req_access = list("mining")
 	},
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_cargo_lift"
@@ -44525,7 +44518,8 @@
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/button/elevator/directional/south{
-	id = "tram_sci_lift"
+	id = "tram_sci_lift";
+	req_access = list("science")
 	},
 /obj/machinery/lift_indicator/directional/south{
 	linked_elevator_id = "tram_sci_lift"
@@ -49202,7 +49196,8 @@
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "tram_sci_lift";
 	pixel_y = 0;
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
+	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck");
+	req_access = list("science")
 	},
 /turf/closed/wall,
 /area/station/science/lower)
@@ -49426,13 +49421,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/right)
-"qBL" = (
-/obj/machinery/door/window/brigdoor/left/directional/east{
-	req_access = list("mining");
-	name = "Mining Office"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/miningdock)
 "qBQ" = (
 /obj/effect/turf_decal/trimline/white/filled/corner{
 	dir = 8
@@ -51662,7 +51650,8 @@
 	linked_elevator_id = "tram_sci_lift";
 	pixel_y = 32;
 	pixel_x = -32;
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
+	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck");
+	req_access = list("science")
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
@@ -59542,15 +59531,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
-"umP" = (
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 1
-	},
-/obj/machinery/door/window/left/directional/north{
-	name = "Elevator Access"
-	},
-/turf/open/floor/iron/white,
-/area/station/science/research)
 "umQ" = (
 /obj/structure/flora/bush/leavy/style_random,
 /obj/structure/flora/tree/palm/style_random,
@@ -61774,7 +61754,6 @@
 "veB" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/window/spawner,
-/obj/machinery/drone_dispenser,
 /turf/open/floor/iron/dark,
 /area/station/science/lower)
 "veS" = (
@@ -68298,16 +68277,6 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
-"xJR" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4;
-	layer = 2.9
-	},
-/turf/open/floor/iron,
-/area/station/cargo/miningdock)
 "xKe" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
@@ -113591,9 +113560,9 @@ uGW
 fbH
 cZB
 uGW
-xJR
-qBL
-iih
+eyR
+kDi
+cJX
 uGW
 kot
 nmz
@@ -180713,7 +180682,7 @@ rNQ
 tPZ
 ezw
 ezw
-umP
+bmQ
 hTG
 oPT
 nZs
@@ -180970,7 +180939,7 @@ tdm
 tPZ
 ezw
 ezw
-bmQ
+bvc
 oOk
 oPT
 ixY
@@ -181227,7 +181196,7 @@ uOj
 tPZ
 ezw
 ezw
-flX
+bmQ
 hTG
 oPT
 cjE
