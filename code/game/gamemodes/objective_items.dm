@@ -107,14 +107,15 @@
 /obj/item/gun/ballistic/revolver/c38/detective/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/ballistic/revolver/c38/detective)
 
-/datum/objective_item/steal/traitor/jaws_of_life
-	name = "the chief engineer's jaws of life"
-	targetitem = /obj/item/crowbar/power
+/datum/objective_item/steal/traitor/chief_engineer_belt
+	name = "the chief engineer's belt"
+	targetitem = /obj/item/storage/belt/utility/chief
 	excludefromjob = list(JOB_CHIEF_ENGINEER)
 	exists_on_map = TRUE
 
-/obj/item/crowbar/power/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/crowbar/power)
+/obj/item/storage/belt/utility/chief/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/storage/belt/utility/chief)
+
 /datum/objective_item/steal/traitor/telebaton
 	name = "a head of staff's telescopic baton"
 	targetitem = /obj/item/melee/baton/telescopic

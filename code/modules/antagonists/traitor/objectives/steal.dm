@@ -108,7 +108,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	telecrystal_reward = 2
 
 	possible_items = list(
-		/datum/objective_item/steal/traitor/jaws_of_life
+		/datum/objective_item/steal/traitor/chief_engineer_belt
 	)
 
 /datum/traitor_objective/steal_item/very_risky
