@@ -53,7 +53,6 @@
 	icon_state = "crateopen"
 	},
 /obj/effect/spawner/random/maintenance/two,
-/obj/item/stock_parts/cell/infinite,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "dp" = (

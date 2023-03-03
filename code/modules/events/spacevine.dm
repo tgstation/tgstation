@@ -780,7 +780,7 @@
 /proc/isvineimmune(atom/target)
 	if(isliving(target))
 		var/mob/living/victim = target
-		if(("vines" in victim.faction) || ("plants" in victim.faction))
+		if((FACTION_VINES in victim.faction) || (FACTION_PLANTS in victim.faction))
 			return TRUE
 	return FALSE
 
