@@ -7,7 +7,7 @@
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION
 	description = "The crew will either pay up, or face a pirate assault."
-	admin_setup = /datum/event_admin_setup/pirates
+	admin_setup = list(/datum/event_admin_setup/pirates)
 	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event_control/pirates/preRunEvent()

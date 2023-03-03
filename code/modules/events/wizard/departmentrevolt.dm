@@ -8,7 +8,7 @@
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 	description = "A department is turned into an independent state."
-	admin_setup = /datum/event_admin_setup/department_revolt
+	admin_setup = list(/datum/event_admin_setup/department_revolt)
 
 /datum/round_event/wizard/deprevolt
 	///which department is revolting?

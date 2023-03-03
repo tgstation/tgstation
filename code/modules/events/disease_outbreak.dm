@@ -29,7 +29,7 @@
 	description = "A 'classic' virus will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
-	admin_setup = /datum/event_admin_setup/disease_outbreak
+	admin_setup = list(/datum/event_admin_setup/disease_outbreak)
 	///Disease recipient candidates
 	var/list/disease_candidates = list()
 
@@ -141,7 +141,7 @@
 	description = "An 'advanced' disease will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
-	admin_setup = /datum/event_admin_setup/disease_outbreak/advanced
+	admin_setup = list(/datum/event_admin_setup/disease_outbreak/advanced)
 
 /datum/event_admin_setup/disease_outbreak/advanced
 	///Admin selected custom severity rating for the event

@@ -9,7 +9,7 @@
 	description = "The station passes through an immovable rod."
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
-	admin_setup = /datum/event_admin_setup/immovable_rod
+	admin_setup = list(/datum/event_admin_setup/immovable_rod)
 
 /datum/round_event/immovable_rod
 	announce_when = 5

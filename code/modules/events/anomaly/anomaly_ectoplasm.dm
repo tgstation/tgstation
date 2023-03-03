@@ -12,7 +12,7 @@
 	category = EVENT_CATEGORY_ANOMALIES
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 3
-	admin_setup = /datum/event_admin_setup/anomaly/anomaly_ectoplasm
+	admin_setup = list(/datum/event_admin_setup/anomaly/anomaly_ectoplasm)
 
 /datum/round_event/anomaly/anomaly_ectoplasm
 	anomaly_path = /obj/effect/anomaly/ectoplasm

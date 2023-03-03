@@ -7,7 +7,7 @@
 	weight = 15
 	category = EVENT_CATEGORY_ANOMALIES
 	description = "This anomaly shocks and explodes. This is the base type."
-	admin_setup = /datum/event_admin_setup/anomaly
+	admin_setup = list(/datum/event_admin_setup/anomaly)
 
 /datum/round_event/anomaly
 	announce_when = 1

@@ -4,7 +4,7 @@
 	typepath = /datum/round_event/wizard/madness
 	earliest_start = 0 MINUTES
 	description = "Reveals a horrifying truth to everyone, giving them a trauma."
-	admin_setup = /datum/event_admin_setup/text_input/madness
+	admin_setup = list(/datum/event_admin_setup/text_input/madness)
 
 /datum/round_event/wizard/madness
 	/// the horrifying truth sent to the crew, can be picked by admins.
