@@ -620,7 +620,6 @@ GLOBAL_LIST_EMPTY(tram_doors)
 /obj/machinery/destination_sign/indicator
 	icon_state = "indicator_off"
 	base_icon_state = "indicator_"
-	light_power = 1
 	light_range = 1.5
 	light_color = LIGHT_COLOR_DARK_BLUE
 	light_mask = "indicator_off_e"
