@@ -2959,7 +2959,6 @@
 #include "code\modules\client\preferences\sounds.dm"
 #include "code\modules\client\preferences\species.dm"
 #include "code\modules\client\preferences\statpanel.dm"
-#include "code\modules\client\preferences\story_participant.dm"
 #include "code\modules\client\preferences\tgui.dm"
 #include "code\modules\client\preferences\tooltips.dm"
 #include "code\modules\client\preferences\ui_style.dm"

@@ -114,6 +114,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_MALF = 0,
 	ROLE_OPERATIVE = 14,
 	ROLE_REV_HEAD = 14,
+	ROLE_STORY_PARTICIPANT = 7, // we dont want Howdoi Swaphands Jr. rolling centcom inspector
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
 

@@ -208,6 +208,6 @@
 	SIGNAL_HANDLER
 	if(source.stat <= SOFT_CRIT && !is_charge_in_critical)
 		is_charge_in_critical = TRUE
-		to_chat(actor_ref.current, span_boldannounce("A terrible feeling washes over you. [charge_name] is in grave danger."))
+		to_chat(actor_ref.current, span_boldannounce("A terrible feeling washes over you. [charge_name] [source.p_are()] in grave danger."))
 	else if(source.stat == CONSCIOUS)
 		is_charge_in_critical = FALSE

@@ -121,11 +121,7 @@ export const CharacterPreferenceWindow = (props, context) => {
                   currentPage={currentPage}
                   page={Page.Jobs}
                   setPage={setCurrentPage}>
-                  {/*
-                    Fun fact: This isn't "Jobs" so that it intentionally
-                    catches your eyes, because it's really important!
-                  */}
-                  Occupations
+                  Jobs
                 </PageButton>
               </Stack.Item>
 
@@ -134,7 +130,7 @@ export const CharacterPreferenceWindow = (props, context) => {
                   currentPage={currentPage}
                   page={Page.Antags}
                   setPage={setCurrentPage}>
-                  Antagonists
+                  Roles
                 </PageButton>
               </Stack.Item>
 

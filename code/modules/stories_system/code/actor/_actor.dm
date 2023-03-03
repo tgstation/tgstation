@@ -1,3 +1,4 @@
+/// Actor datums are assigned to players in Stories.
 /datum/story_actor
 	/// Name of the actor role
 	var/name = "Actor Name"
@@ -23,8 +24,6 @@
 /datum/story_actor/Destroy(force, ...)
 	actor_ref = null
 	involved_story = null
-	if(info_button)
-		QDEL_NULL(info_button)
 	return ..()
 
 /// How to actually spawn the actor
@@ -78,3 +77,32 @@
 		return FALSE
 	return TRUE
 
+// For the purposes of the UI code for prefs, an antagonist datum must exist. We never apply this anywhere however, and shouldn't, because this breaks the concept of Actors.
+/datum/antagonist/story_participant
+	name = "\improper Story Participant"
+	roundend_category = "Story Participant"
+	job_rank = ROLE_STORY_PARTICIPANT
+	silent = TRUE //greet called by the event
+	show_in_antagpanel = FALSE
+	prevent_roundtype_conversion = FALSE
+	suicide_cry = "FOR ROLEPLAYING!!"
+	preview_outfit = /datum/outfit/centcom_inspector
+	count_against_dynamic_roll_chance = FALSE
+
+/datum/antagonist/story_participant/get_preview_icon()
+	var/icon/final_icon = render_preview_outfit(preview_outfit)
+	final_icon.Blend(make_background_story_icon(/datum/outfit/veteran), ICON_UNDERLAY, -8, 0)
+	final_icon.Blend(make_background_story_icon(/datum/outfit/middle_management), ICON_UNDERLAY, 8, 0)
+
+	final_icon.Scale(64, 64)
+
+	return finish_preview_icon(final_icon)
+
+/datum/antagonist/story_participant/proc/make_background_story_icon(datum/outfit/story_fit)
+	var/mob/living/carbon/human/dummy/consistent/actor = new
+
+	var/icon/story_icon = render_preview_outfit(story_fit, actor)
+	story_icon.ChangeOpacity(0.5)
+	qdel(actor)
+
+	return story_icon

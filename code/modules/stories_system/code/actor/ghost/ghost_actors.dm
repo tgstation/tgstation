@@ -2,6 +2,10 @@
 	ghost_actor = TRUE
 	/// Delay between getting ghosts spawned in the setup box and going in
 	var/delay_time = 1 MINUTES
+	/// Time until the actor is sent into the game world, for ghost actors.
+	var/timeout
+	/// The time when the actor starts ticking down when they're going into the game world, for ghost actors.
+	var/start_time
 
 /datum/story_actor/ghost/handle_spawning(mob/picked_spawner, datum/story_type/current_story)
 	. = ..()
@@ -22,8 +26,7 @@
 	if(!landmark)
 		var/datum/map_template/actor_spawn/new_actor = new
 		var/datum/turf_reservation/reservation_area = SSmapping.RequestBlockReservation(new_actor.width, new_actor.height, SSmapping.transit.z_value, /datum/turf_reservation/transit)
-		if(!reservation_area)
-			CRASH("failed to reserve an area for actor spawning")
+		ASSERT(reservation_area, "failed to reserve an area for actor spawning")
 		var/turf/bottom_left = TURF_FROM_COORDS_LIST(reservation_area.bottom_left_coords)
 		new_actor.load(bottom_left, centered = FALSE)
 		var/list/affected = new_actor.get_affected_turfs(bottom_left, centered=FALSE)
@@ -35,8 +38,7 @@
 				continue
 			landmark = actor_spawn
 			break
-		if(!landmark)
-			CRASH("failed to find an actor spawn ID landmark after making a template that should've assigned one!")
+		ASSERT(landmark, "failed to find an actor spawn ID landmark after making a template that should've assigned one!")
 
 	// Spawning the actor
 	var/mob/living/carbon/human/temporary_human = new(get_turf(landmark))
@@ -46,8 +48,17 @@
 	current_story.mind_actor_list[temporary_human.mind] = src
 	info_button = new(src)
 	info_button.Grant(temporary_human)
-	temporary_human.balloon_alert(temporary_human, "[delay_time / 600] minute(s) until you're sent in")
+	to_chat(temporary_human, "[DisplayTimeText(delay_time)] until you're sent in to the station!")
+	start_time = world.time
+	timeout = delay_time
+	ui_interact(temporary_human) // Show the prompt letting them see how long until they're gonna be sent ticking down.
 	addtimer(CALLBACK(src, .proc/send_them_in, temporary_human), delay_time)
+
+/datum/story_actor/ghost/ui_data(mob/user)
+	var/list/data = list()
+	if(timeout && start_time)
+		data["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
+	return data
 
 /// Ghost ones are delayed by a few minutes to ensure that the ghosts have time to choose a character and for crew actors to get settled a bit
 /datum/story_actor/ghost/proc/send_them_in(mob/living/carbon/human/to_send_human)

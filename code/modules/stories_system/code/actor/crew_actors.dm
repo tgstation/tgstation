@@ -1,3 +1,4 @@
+/// Crew actors are actors chosen from the crew, ie. existing, on-station players.
 /datum/story_actor/crew
 
 /datum/story_actor/crew/handle_spawning(mob/living/carbon/human/picked_spawner, datum/story_type/current_story)

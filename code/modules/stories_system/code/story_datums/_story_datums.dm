@@ -17,8 +17,10 @@
 	var/num_of_acts = 1
 	/// What's our current act?
 	var/current_act = 1
-	/// If we have acts, then what's the time between acts? Defaults to 45 minutes.
-	var/time_between_acts = 45 MINUTES
+	/// If we have acts, then what's the time between acts? Defaults to 15 minutes.
+	var/time_between_acts = 15 MINUTES
+	/// Should we cancel if we can't fill the roster during startup?
+	var/allow_starting_with_minimum = FALSE
 
 /datum/story_type/Destroy(force, ...)
 	return ..()
@@ -142,7 +144,7 @@
 /// A proc for getting a list of ghosts and returning an equal amount to `ghosts_involved`
 /datum/story_type/proc/get_ghosts(ghosts_to_get)
 	. = list()
-	var/list/candidates = poll_ghost_candidates("Do you want to participate in a story?", ROLE_STORY_PARTICIPANT, FALSE, 15 SECONDS, POLL_IGNORE_STORY_ROLE)
+	var/list/candidates = poll_ghost_candidates("Do you want to participate in a story?", ROLE_STORY_PARTICIPANT, ROLE_STORY_PARTICIPANT, 15 SECONDS, POLL_IGNORE_STORY_ROLE)
 
 	if(!length(candidates))
 		message_admins("Story type [src] didn't have any ghost candidates, cancelling.")
@@ -150,8 +152,12 @@
 
 	for(var/i in 1 to ghosts_to_get)
 		if(!length(candidates))
-			message_admins("Story type [src] didn't have maximum ghost candidates, executing anyway (Wanted [ghosts_to_get], got [i])")
-			break
+			if(allow_starting_with_minimum)
+				message_admins("Story type [src] didn't have maximum ghost candidates, executing anyway (Wanted [ghosts_to_get], got [i])")
+				break
+			else
+				message_admins("Story type [src] didn't have the required amount of ghost candidates, cancelling")
+				return FALSE
 		. += pick_n_take(candidates)
 
 	return .
@@ -168,21 +174,23 @@
 			continue
 		if(current_crew.stat == DEAD)
 			continue
-		if(!current_crew.client?.prefs?.read_preference(/datum/preference/toggle/story_pref))
-			continue
 		// Add smth to check if they're in a story already leter
 
 		to_ask_players += current_crew
 
-	var/list/candidates = poll_candidates("Do you want to participate in a story?", ROLE_STORY_PARTICIPANT, FALSE, 15 SECONDS, POLL_IGNORE_STORY_ROLE, FALSE, to_ask_players)
+	var/list/candidates = poll_candidates("Do you want to participate in a story?", ROLE_STORY_PARTICIPANT, ROLE_STORY_PARTICIPANT, 15 SECONDS, POLL_IGNORE_STORY_ROLE, FALSE, to_ask_players)
 	if(!length(candidates))
 		message_admins("Story type [src] didn't have any crew candidates, cancelling.")
 		return FALSE
 
 	for(var/i in 1 to players_to_get)
 		if(!length(candidates))
-			message_admins("Story type [src] didn't have maximum crew candidates, executing anyway (Wanted [players_to_get], got [i])")
-			break
+			if(allow_starting_with_minimum)
+				message_admins("Story type [src] didn't have maximum candidates, executing anyway (Wanted [players_to_get], got [i])")
+				break
+			else
+				message_admins("Story type [src] didn't have the required amount of candidates, cancelling")
+				return FALSE
 		. += pick_n_take(candidates)
 
 	return .
@@ -194,7 +202,7 @@
 	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
 		if(player.ready != PLAYER_READY_TO_PLAY)
 			continue
-		if(!player.client?.prefs?.read_preference(/datum/preference/toggle/story_pref))
+		if(!(player.client.prefs) || !(ROLE_STORY_PARTICIPANT in player.client.prefs.be_special))
 			continue
 		// Add smth to check if they're in a story already leter
 
@@ -206,8 +214,12 @@
 
 	for(var/i in 1 to players_to_get)
 		if(!length(possible_players))
-			message_admins("Roundstart story type [src] didn't have maximum candidates, executing anyway (Wanted [players_to_get], got [i])")
-			break
+			if(allow_starting_with_minimum)
+				message_admins("Roundstart story type [src] didn't have maximum candidates, executing anyway (Wanted [players_to_get], got [i])")
+				break
+			else
+				message_admins("Roundstart story type [src] didn't have the required amount of candidates, cancelling")
+				return FALSE
 		. += pick_n_take(possible_players)
 
 	return .

@@ -305,6 +305,8 @@
 	//Antagonists
 	parts += antag_report()
 
+	parts += story_report()
+
 	parts += hardcore_random_report()
 
 	CHECK_TICK
