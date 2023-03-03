@@ -19,7 +19,7 @@
 GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 /datum/objective_item_handler
-	var/list/objectives_by_path
+	var/list/list/objectives_by_path
 	var/generated_items = FALSE
 
 /datum/objective_item_handler/New()
@@ -28,10 +28,19 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	for(var/datum/objective_item/item as anything in subtypesof(/datum/objective_item))
 		objectives_by_path[initial(item.targetitem)] = list()
 	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(save_items))
+	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM, PROC_REF(new_item_created))
 
+/datum/objective_item_handler/proc/new_item_created(datum/source, obj/item/item)
+	var/typepath = item.add_stealing_item_objective()
+	if(typepath != null)
+		GLOB.steal_item_handler.register_item(src, typepath)
+
+/// Registers all items that are potentially stealable and removes ones that aren't.
+/// We still need to do things this way because on mapload, items may not be on the station until everything has finished loading.
 /datum/objective_item_handler/proc/save_items()
 	for(var/obj/item/typepath as anything in objectives_by_path)
-		for(var/obj/item/object as anything in objectives_by_path[typepath])
+		var/list/obj_by_path_cache = objectives_by_path[typepath].Copy()
+		for(var/obj/item/object as anything in obj_by_path_cache)
 			register_item(object, typepath)
 	generated_items = TRUE
 
