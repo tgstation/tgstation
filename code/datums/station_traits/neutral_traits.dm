@@ -199,7 +199,6 @@
 	trait_to_give = STATION_TRAIT_BIRTHDAY
 	blacklist = list(/datum/centcom_announcer/intern, /datum/station_trait/announcement_medbot)
 	var/mob/living/carbon/human/birthday_person
-	force = TRUE
 
 /datum/station_trait/birthday/New()
 	. = ..()
