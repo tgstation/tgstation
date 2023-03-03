@@ -43,8 +43,8 @@
 /datum/objective_item/proc/owner_exists()
 	if (!length(item_owner))
 		return TRUE
-	for (var/mob/player as anything in GLOB.player_list)
-		if ((player.mind?.assigned_role.title in item_owner) && !is_centcom_level(player.z))
+	for (var/mob/living/player as anything in GLOB.player_list)
+		if ((player.mind?.assigned_role.title in item_owner) && player.stat != DEAD && !is_centcom_level(player.z))
 			return TRUE
 	return FALSE
 
