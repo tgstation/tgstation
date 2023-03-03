@@ -158,6 +158,13 @@
 	RegisterSignal(owner, COMSIG_LIVING_IGNITED, PROC_REF(on_ignited))
 	RegisterSignal(owner, COMSIG_LIVING_EXTINGUISHED, PROC_REF(on_extinguished))
 
+/datum/status_effect/fleshmend/on_creation(mob/living/new_owner, ...)
+	. = ..()
+	if(!. || !owner || !linked_alert)
+		return
+	if(owner.on_fire)
+		linked_alert.icon_state = "fleshmend_fire"
+
 /datum/status_effect/fleshmend/on_remove()
 	UnregisterSignal(owner, list(COMSIG_LIVING_IGNITED, COMSIG_LIVING_EXTINGUISHED))
 

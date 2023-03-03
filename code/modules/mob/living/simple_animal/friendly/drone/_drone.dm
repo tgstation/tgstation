@@ -43,7 +43,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
-	faction = list(FACTION_NEUTRAL,"silicon","turret")
+	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
 	dextrous = TRUE
 	dextrous_hud_type = /datum/hud/dextrous/drone
 	// Going for a sort of pale green here
