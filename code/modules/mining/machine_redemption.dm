@@ -256,6 +256,7 @@
 			)
 	return data
 
+
 /obj/machinery/mineral/ore_redemption/ui_static_data(mob/user)
 	var/list/data = list()
 
