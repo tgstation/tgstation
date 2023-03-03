@@ -78,14 +78,14 @@ export const NtosMain = (props, context) => {
                     selected={light_on}
                     onClick={() => act('PC_toggle_light')}
                   />
-                  <Button
-                    icon="eject"
-                    content="Eject ID"
-                    disabled={!proposed_login.IDName}
-                    onClick={() => act('PC_Eject_Disk', { name: 'ID' })}
-                  />
                 </>
               )}
+              <Button
+                icon="eject"
+                content="Eject ID"
+                disabled={!proposed_login.IDName}
+                onClick={() => act('PC_Eject_Disk', { name: 'ID' })}
+              />
               {!!show_imprint && (
                 <Button
                   icon="dna"

@@ -121,13 +121,17 @@
 	new_disease.carrier = TRUE
 	illness_type = new_disease.name
 
-	var/mob/living/carbon/human/victim = pick_n_take(afflicted)
-	if(victim.ForceContractDisease(new_disease, FALSE))
-		log_game("An event has given [key_name(victim)] the [new_disease]")
-		message_admins("An event has triggered a [new_disease.name] virus outbreak on [ADMIN_LOOKUPFLW(victim)]!")
-		announce_to_ghosts(victim)
-	else
-		log_game("An event attempted to trigger a [new_disease.name] virus outbreak on [key_name(victim)], but failed.")
+	var/mob/living/carbon/human/victim
+	while(length(afflicted))
+		victim = pick_n_take(afflicted)
+		if(victim.ForceContractDisease(new_disease, FALSE))
+			message_admins("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(victim)]!")
+			log_game("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [key_name(victim)].")
+			announce_to_ghosts(victim)
+			return
+		CHECK_TICK //don't lag the server to death
+	if(isnull(victim))
+		log_game("Event Disease Outbreak: Classic attempted to start, but failed.")
 
 /datum/round_event_control/disease_outbreak/advanced
 	name = "Disease Outbreak: Advanced"
@@ -223,13 +227,18 @@
 
 	illness_type = advanced_disease.name
 
-	var/mob/living/carbon/human/victim = pick_n_take(afflicted)
-	if(victim.ForceContractDisease(advanced_disease, FALSE))
-		message_admins("An event has triggered a random advanced virus outbreak on [ADMIN_LOOKUPFLW(victim)]! It has these symptoms: [english_list(name_symptoms)]. It is transmissable via [advanced_disease.spread_text].")
-		log_game("An event has triggered a random advanced virus outbreak on [key_name(victim)]! It has these symptoms: [english_list(name_symptoms)]. It is transmissable via [advanced_disease.spread_text].")
-		announce_to_ghosts(victim)
-	else
-		log_game("An event attempted to trigger a random advanced virus outbreak on [key_name(victim)], but failed.")
+	var/mob/living/carbon/human/victim
+	while(length(afflicted))
+		victim = pick_n_take(afflicted)
+		if(victim.ForceContractDisease(advanced_disease, FALSE))
+			message_admins("Event triggered: Disease Outbreak: Advanced - starting with patient zero [key_name(victim)]! Details: [advanced_disease.admin_details()] sp:[advanced_disease.spread_flags] ([advanced_disease.spread_text])")
+			log_game("Event triggered: Disease Outbreak: Advanced - starting with patient zero [key_name(victim)]. Details: [advanced_disease.admin_details()] sp:[advanced_disease.spread_flags] ([advanced_disease.spread_text])")
+			log_virus("Disease Outbreak: Advanced has triggered a custom virus outbreak of [advanced_disease.admin_details()] in [victim]!")
+			announce_to_ghosts(victim)
+			return
+		CHECK_TICK //don't lag the server to death
+	if(isnull(victim))
+		log_game("Event Disease Outbreak: Advanced attempted to start, but failed.")
 
 /datum/disease/advance/random/event
 	name = "Event Disease"
@@ -337,6 +346,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(make_visible)), ((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS)
 
+	properties["transmittable"] = rand(4,7)
 	spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 	cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // Can be between 5 and 10
 	stage_prob = max(0.4 * properties["stage_rate"], 1)
@@ -347,6 +357,7 @@
 	if(properties["stage_rate"] >= 7)
 		name = "Advanced [name]"
 
+	//If severe enough, alert immediately on scanners
 	if(severity == "Dangerous" || severity == "BIOHAZARD")
 		visibility_flags &= ~HIDDEN_SCANNER
 		set_spread(DISEASE_SPREAD_CONTACT_SKIN)

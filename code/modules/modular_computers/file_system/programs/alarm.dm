@@ -41,7 +41,7 @@
 	return 1
 
 /datum/computer_file/program/alarm_monitor/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data += alert_control.ui_data(user)
 	return data
 

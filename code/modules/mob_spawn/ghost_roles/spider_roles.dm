@@ -43,7 +43,7 @@
 	you_are_text = "You are a spider."
 	flavour_text = "For the hive! Choose a spider and fulfill your role to take over the station... if that is within your directives, of course."
 	important_text = "Follow your directives at all costs."
-	faction = list("spiders")
+	faction = list(FACTION_SPIDER)
 	spawner_job_path = /datum/job/spider
 	role_ban = ROLE_ALIEN
 	prompt_ghost = FALSE

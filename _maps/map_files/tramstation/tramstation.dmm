@@ -5205,6 +5205,9 @@
 	supplies_requestable = 1;
 	name = "Cargo Bay Requests Console"
 	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "aAN" = (
@@ -6326,7 +6329,7 @@
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "aId" = (
-/obj/machinery/door/window/left/directional/north{
+/obj/machinery/door/window/left/directional/south{
 	name = "Containment Pen #8";
 	req_access = list("xenobiology")
 	},
@@ -6336,6 +6339,10 @@
 	name = "Xenobio Bottom Right Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/north{
+	name = "Containment Pen #8";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "aIi" = (
@@ -9438,7 +9445,7 @@
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/camera/directional/south{
 	c_tag = "Secure - AI Antechamber North";
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -9810,7 +9817,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Upper External West";
 	dir = 6;
-	network = list("aicore")
+	network = list("minisat")
 	},
 /turf/open/space/openspace,
 /area/space/nearstation)
@@ -10475,7 +10482,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Upper External South";
 	dir = 9;
-	network = list("aicore")
+	network = list("minisat")
 	},
 /obj/structure/lattice,
 /turf/open/space/openspace,
@@ -11100,7 +11107,8 @@
 /area/station/cargo/lobby)
 "cbj" = (
 /obj/machinery/door/window/left/directional/north{
-	dir = 2;
+	base_state = "right";
+	icon_state = "right";
 	name = "Containment Pen #1";
 	req_access = list("xenobiology")
 	},
@@ -11110,6 +11118,12 @@
 	name = "Xenobio Topleft Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/south{
+	base_state = "right";
+	icon_state = "right";
+	name = "Containment Pen #1";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "cbn" = (
@@ -12711,7 +12725,6 @@
 /area/station/hallway/secondary/exit)
 "cFk" = (
 /obj/machinery/door/window/left/directional/north{
-	dir = 2;
 	name = "Containment Pen #4";
 	req_access = list("xenobiology")
 	},
@@ -12721,6 +12734,10 @@
 	name = "Xenobio Top Right Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/south{
+	name = "Containment Pen #4";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "cFl" = (
@@ -16780,7 +16797,7 @@
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Secure - AI Minisat Teleporter";
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /obj/machinery/button/door/directional/south{
 	id = "teledoor";
@@ -17872,6 +17889,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "eCz" = (
@@ -20665,15 +20683,15 @@
 /obj/machinery/computer/apc_control{
 	dir = 1
 	},
-/obj/machinery/computer/security/telescreen/ce{
-	dir = 4;
-	pixel_x = -24
-	},
 /obj/machinery/requests_console/directional/south{
 	announcementConsole = 1;
 	department = "Chief Engineer's Desk";
 	supplies_requestable = 1;
 	name = "Chief Engineer's Request Console"
+	},
+/obj/machinery/computer/security/telescreen/engine{
+	dir = 4;
+	pixel_x = -24
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
@@ -21042,7 +21060,6 @@
 /area/station/security/processing)
 "fPi" = (
 /obj/machinery/door/window/left/directional/north{
-	dir = 2;
 	name = "Containment Pen #2";
 	req_access = list("xenobiology")
 	},
@@ -21052,6 +21069,10 @@
 	name = "Xenobio Topleft Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/south{
+	name = "Containment Pen #2";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "fPy" = (
@@ -22471,7 +22492,8 @@
 	dir = 4
 	},
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - AI Lower Ring Access"
+	c_tag = "Secure - AI Lower Ring Access";
+	network = list("ss13","minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -23820,7 +23842,7 @@
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Secure - AI Upper Ring North";
-	network = list("ss13","aicore")
+	network = list("aicore")
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -24128,7 +24150,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Minisat Entry";
 	dir = 10;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
@@ -27884,7 +27906,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Lower External East";
 	dir = 10;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -29588,7 +29610,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Lower External West";
 	dir = 6;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -29704,7 +29726,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "jmb" = (
-/obj/machinery/door/window/left/directional/north{
+/obj/machinery/door/window/left/directional/south{
 	base_state = "right";
 	icon_state = "right";
 	name = "Containment Pen #5";
@@ -29716,6 +29738,12 @@
 	name = "Xenobio Bottom Left Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/north{
+	base_state = "right";
+	icon_state = "right";
+	name = "Containment Pen #5";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "jmk" = (
@@ -34649,7 +34677,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Antechamber East";
 	dir = 10;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -36388,7 +36416,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "lIa" = (
-/obj/machinery/door/window/left/directional/north{
+/obj/machinery/door/window/left/directional/south{
 	name = "Containment Pen #6";
 	req_access = list("xenobiology")
 	},
@@ -36398,6 +36426,10 @@
 	name = "Xenobio Bottom Left Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/north{
+	name = "Containment Pen #6";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "lIe" = (
@@ -36676,7 +36708,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Upper Ring East";
 	dir = 10;
-	network = list("ss13","aicore")
+	network = list("aicore")
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -37026,10 +37058,9 @@
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "lSQ" = (
-/obj/structure/disposalpipe/sorting/mail/flip{
+/obj/structure/disposalpipe/sorting/wrap/flip{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/mail_sorting/supply/cargo_bay,
 /turf/closed/wall,
 /area/station/cargo/sorting)
 "lSU" = (
@@ -37467,7 +37498,7 @@
 "mbe" = (
 /obj/machinery/camera/motion/directional/south{
 	c_tag = "Secure - AI Lower External North";
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/space/basic,
 /area/space)
@@ -38413,7 +38444,8 @@
 	name = "Private Channel"
 	},
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - AI Upper Ring Access"
+	c_tag = "Secure - AI Upper Ring Access";
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -39179,7 +39211,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Antechamber West";
 	dir = 6;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -41071,7 +41103,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Antechamber South";
 	dir = 9;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /obj/structure/cable,
 /turf/open/floor/circuit,
@@ -42864,7 +42896,7 @@
 "obF" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/camera/motion/directional/west{
-	c_tag = "Secure - ai_upload"
+	c_tag = "Secure - AI Upload"
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -43776,9 +43808,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/junction/flip,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "ouF" = (
@@ -48794,7 +48826,7 @@
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "qoo" = (
-/obj/machinery/door/window/left/directional/north{
+/obj/machinery/door/window/left/directional/south{
 	base_state = "right";
 	icon_state = "right";
 	name = "Containment Pen #7";
@@ -48806,6 +48838,12 @@
 	name = "Xenobio Bottom Right Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/north{
+	base_state = "right";
+	icon_state = "right";
+	name = "Containment Pen #7";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "qoD" = (
@@ -52438,7 +52476,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Minisat Internal Power Access";
 	dir = 9;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/maint)
@@ -52813,7 +52851,8 @@
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - AI Core South"
+	c_tag = "Secure - AI Core South";
+	network = list("aicore")
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
@@ -52839,7 +52878,7 @@
 	dir = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Civilian - aux_base Construction";
+	c_tag = "Civilian - Aux Base Construction";
 	dir = 9
 	},
 /turf/open/floor/iron,
@@ -53555,7 +53594,7 @@
 	dir = 10
 	},
 /obj/machinery/camera/motion{
-	c_tag = "Secure - ai_upload Access";
+	c_tag = "Secure - AI Upload Access";
 	dir = 10;
 	network = list("ss13","aiupload")
 	},
@@ -54604,7 +54643,6 @@
 "swy" = (
 /obj/machinery/door/window/left/directional/north{
 	base_state = "right";
-	dir = 2;
 	icon_state = "right";
 	name = "Containment Pen #3";
 	req_access = list("xenobiology")
@@ -54615,6 +54653,12 @@
 	name = "Xenobio Top Right Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/south{
+	base_state = "right";
+	icon_state = "right";
+	name = "Containment Pen #3";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "swC" = (
@@ -54699,9 +54743,10 @@
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 8
 	},
-/obj/structure/disposalpipe/junction{
+/obj/structure/disposalpipe/sorting/mail{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/mail_sorting/supply/cargo_bay,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "sxT" = (
@@ -54909,7 +54954,9 @@
 "sBI" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner,
-/obj/machinery/computer/security/telescreen/rd,
+/obj/machinery/computer/security/telescreen/rd{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -55465,7 +55512,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Upper Ring South";
 	dir = 9;
-	network = list("ss13","aicore")
+	network = list("aicore")
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -55818,7 +55865,8 @@
 	pixel_y = 20
 	},
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - AI Core North"
+	c_tag = "Secure - AI Core North";
+	network = list("aicore")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
@@ -57693,7 +57741,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Upper Ring West";
 	dir = 6;
-	network = list("ss13","aicore")
+	network = list("aicore")
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -58331,7 +58379,7 @@
 "tNG" = (
 /obj/machinery/camera/motion/directional/south{
 	c_tag = "Secure - AI Upper External North";
-	network = list("aicore")
+	network = list("minisat")
 	},
 /obj/structure/cable,
 /turf/open/floor/engine/hull/reinforced,
@@ -63343,7 +63391,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Lower External South";
 	dir = 9;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -64568,7 +64616,7 @@
 /area/station/commons/lounge)
 "wdz" = (
 /obj/machinery/camera{
-	c_tag = "Secure - External ai_upload";
+	c_tag = "Secure - External AI Upload";
 	dir = 10
 	},
 /turf/open/space/openspace,
@@ -65620,7 +65668,7 @@
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Secure - AI Minisat Chargebay";
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
@@ -67854,7 +67902,8 @@
 	dir = 5
 	},
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - Upper Station Comms Relay"
+	c_tag = "Secure - Upper Station Comms Relay";
+	network = list("ss13","minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -69764,7 +69813,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Upper External East";
 	dir = 10;
-	network = list("aicore")
+	network = list("minisat")
 	},
 /turf/open/space/openspace,
 /area/space/nearstation)
