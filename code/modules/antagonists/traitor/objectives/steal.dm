@@ -31,8 +31,10 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM, PROC_REF(new_item_created))
 
 /datum/objective_item_handler/proc/new_item_created(datum/source, obj/item/item)
+	SIGNAL_HANDLER
 	if(!generated_items)
-		return item.add_stealing_item_objective()
+		item.add_stealing_item_objective()
+		return
 	var/typepath = item.add_stealing_item_objective()
 	if(typepath != null)
 		register_item(item, typepath)
