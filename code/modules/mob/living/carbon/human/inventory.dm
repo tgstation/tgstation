@@ -378,6 +378,8 @@
 		else
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
+	if(!storage.supports_smart_equip)
+		return
 	if(thing) // put thing in storage item
 		if(!equipped_item.atom_storage?.attempt_insert(thing, src))
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))

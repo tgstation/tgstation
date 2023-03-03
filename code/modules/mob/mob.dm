@@ -1407,17 +1407,6 @@
 	if(. && slowdown_edit && isnum(diff))
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/admin_varedit, multiplicative_slowdown = diff)
 
-/mob/proc/set_active_storage(new_active_storage)
-	if(active_storage)
-		UnregisterSignal(active_storage, COMSIG_PARENT_QDELETING)
-	active_storage = new_active_storage
-	if(active_storage)
-		RegisterSignal(active_storage, COMSIG_PARENT_QDELETING, PROC_REF(active_storage_deleted))
-
-/mob/proc/active_storage_deleted(datum/source)
-	SIGNAL_HANDLER
-	set_active_storage(null)
-
 /// Cleanup proc that's called when a mob loses a client, either through client destroy or logout
 /// Logout happens post client del, so we can't just copypaste this there. This keeps things clean and consistent
 /mob/proc/become_uncliented()

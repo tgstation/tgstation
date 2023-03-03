@@ -554,7 +554,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 
 	//If the item is in a storage item, take it out
-	loc.atom_storage?.attempt_remove(src, user.loc, silent = TRUE)
+	if(loc.atom_storage && !loc.atom_storage.attempt_remove(src, user.loc, silent = TRUE))
+		return
 	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
 		return
 
@@ -589,7 +590,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return
 
 	//If the item is in a storage item, take it out
-	loc.atom_storage?.attempt_remove(src, user.loc, silent = TRUE)
+	if(loc.atom_storage?.attempt_remove(src, user.loc, silent = TRUE))
+		return
 	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
 		return
 

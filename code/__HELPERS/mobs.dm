@@ -254,6 +254,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		return FALSE
 	if(!isnum(delay))
 		CRASH("do_after was passed a non-number delay: [delay || "null"].")
+
 	if(!interaction_key && target)
 		interaction_key = target //Use the direct ref to the target
 	if(interaction_key) //Do we have a interaction_key now?
