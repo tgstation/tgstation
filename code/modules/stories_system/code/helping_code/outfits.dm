@@ -1,5 +1,6 @@
 /datum/outfit/centcom_inspector
 	name = "Centcom Inspector"
+	head = /obj/item/clothing/head/hats/centhat
 	ears = /obj/item/radio/headset/headset_cent
 	uniform = /obj/item/clothing/under/rank/centcom/officer
 	suit = /obj/item/clothing/suit/armor/centcom_formal
@@ -22,6 +23,7 @@
 
 /datum/outfit/syndicate_inspector
 	name = "Syndicate Centcom Inspector"
+	head = /obj/item/clothing/head/hats/centhat
 	ears = /obj/item/radio/headset/headset_cent
 	uniform = /obj/item/clothing/under/rank/centcom/officer
 	suit = /obj/item/clothing/suit/armor/centcom_formal
