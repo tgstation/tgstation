@@ -933,3 +933,22 @@
 	if(possible_targets.len)
 		return pick(possible_targets)
 	return FALSE
+
+/// Frogression Traitor ruleset
+/datum/dynamic_ruleset/midround/from_ghosts/frogression_traitor
+	name = "Frogression Traitor"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_datum = /datum/antagonist/frogression_traitor
+	antag_flag = ROLE_FROGRESSION_TRAITOR
+	required_type = /mob/dead/observer
+	required_candidates = 1
+	weight = 3 //maintenance frog spawns are somewhat rare, keep the real frog vs frogtot distribution in mind
+	cost = 1
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/from_ghosts/frogression_traitor/generate_ruleset_body(mob/applicant)
+	var/mob/living/basic/frog/syndifrog/frogtot = new(pick(GLOB.xeno_spawn)) //TODO spawn frog at moisture trap
+	frogtot.key = applicant.key
+	message_admins("[ADMIN_LOOKUPFLW(frogtot)] has been made into a Frogression Traitor by the midround ruleset.")
+	log_game("[key_name(frogtot)] was spawned as a Frogression Traitor by the midround ruleset.")
+	return frogtot

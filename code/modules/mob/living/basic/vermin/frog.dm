@@ -101,3 +101,7 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/frog,
 	)
+
+/mob/living/basic/frog/syndifrog
+	//TODO more health and regen component
+	//TODO some way to sneak through doors
