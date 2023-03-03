@@ -67,8 +67,8 @@
 
 /// Comprehensive unit test for [/obj/item/organ/internal/lungs/proc/check_breath()]
 /// If "expect_failure" is set to TRUE, the test ensures the given Human suffocated.
-/// A "test_focus" string is required to contextualize test logs. Describe the gas you're testing.
-/datum/unit_test/proc/lungs_test_check_breath(test_focus, mob/living/carbon/human/lab_rat, obj/item/organ/internal/lungs/test_lungs, datum/gas_mixture/test_mix, expect_failure = FALSE)
+/// A "test_name" string is required to contextualize test logs. Describe the gas you're testing.
+/datum/unit_test/proc/lungs_test_check_breath(test_name, mob/living/carbon/human/lab_rat, obj/item/organ/internal/lungs/test_lungs, datum/gas_mixture/test_mix, expect_failure = FALSE)
 	// Setup a small volume of gas which represents one "breath" from test_mix.
 	var/datum/gas_mixture/test_breath
 
@@ -106,10 +106,10 @@
 	// Ensures failed_last_breath is set as we expect, and that check_breath returns a corollary status code.
 	if(expect_failure)
 		TEST_ASSERT(!status_code, "[test_lungs.type]/check_breath() returned truthy / status code 1 (success) when it wasn't expected.")
-		TEST_ASSERT(lab_rat.failed_last_breath, "[test_lungs.type]/check_breath() should suffocate from [test_focus].")
+		TEST_ASSERT(lab_rat.failed_last_breath, "[test_lungs.type]/check_breath() should suffocate from [test_name].")
 	else
 		TEST_ASSERT(status_code, "[test_lungs.type]/check_breath() returned falsy / status code 0 (failure) when it wasn't expected.")
-		TEST_ASSERT(!lab_rat.failed_last_breath, "[test_lungs.type]/check_breath() can't get a full breath from [test_focus].")
+		TEST_ASSERT(!lab_rat.failed_last_breath, "[test_lungs.type]/check_breath() can't get a full breath from [test_name].")
 
 	var/min_oxygen = test_lungs.safe_oxygen_min
 	var/min_nitro = test_lungs.safe_nitro_min
