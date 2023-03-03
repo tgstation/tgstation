@@ -1,5 +1,0 @@
-author: "Shroopy"
-delete-after: True
-changes:
-  - qol: "Added another set of windoors to the Tramstation Xenobiology pens, fully enclosing the space before them. The creatures in the main pens can now always be accessed from above."
-  - refactor: "Tramstation Xenobiology pens explicitly close to the right rather than being rotated by using dir."
