@@ -32,7 +32,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 /datum/objective_item_handler/proc/new_item_created(datum/source, obj/item/item)
 	var/typepath = item.add_stealing_item_objective()
-	if(typepath != null)
+	if(typepath != null && generated_items)
 		register_item(src, typepath)
 
 /// Registers all items that are potentially stealable and removes ones that aren't.
