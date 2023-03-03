@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - bugfix: "Mail addressed to tram's cargo bay disposal bin will arrive successfully, and the Incoming Mail Chute will properly accept wrapped parcels."
