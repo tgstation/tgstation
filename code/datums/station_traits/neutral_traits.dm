@@ -284,6 +284,6 @@
 
 /obj/item/clothing/head/costume/party/festive
 	name = "festive paper hat"
-	icon_state = "festive_hat"
+	icon_state = "xmashat_grey"
 	greyscale_config = /datum/greyscale_config/festive_hat
 	greyscale_config_worn = /datum/greyscale_config/festive_hat_worn
