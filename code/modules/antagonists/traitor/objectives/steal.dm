@@ -42,6 +42,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 /// Registers all items that are potentially stealable and removes ones that aren't.
 /// We still need to do things this way because on mapload, items may not be on the station until everything has finished loading.
 /datum/objective_item_handler/proc/save_items()
+	SIGNAL_HANDLER
 	for(var/obj/item/typepath as anything in objectives_by_path)
 		var/list/obj_by_path_cache = objectives_by_path[typepath].Copy()
 		for(var/obj/item/object as anything in obj_by_path_cache)
