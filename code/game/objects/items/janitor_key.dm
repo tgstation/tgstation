@@ -23,25 +23,13 @@ GLOBAL_LIST_EMPTY(access_keys)
 /obj/item/access_key/examine(mob/user)
 	. = ..()
 	if(department_access)
-		. += "It currently holds access to [department_access[1]]"
+		. += "It currently holds access to \the [department_access[1]] region."
 
 /obj/item/access_key/examine_more(mob/user)
 	. = ..()
 	. += span_notice("Access is given to the key through a Keycard Authentication Device.")
 	. += span_notice("This access is limited to one Department at a time.")
-/*
-/obj/item/access_key/GetAccess()
-	var/mob/user = loc
-	if(!user)
-		return
-	user.balloon_alert_to_viewers("fumbles with keys...", "finding_key...")
-	if(!do_after(user, 3 SECONDS, src))
-		return
-	var/access_list = list()
-	for(var/department_type in department_access)
-		access_list += SSid_access.accesses_by_region[department_type]
-	return access_list
-*/
+
 /**
  * Called when a keycard authenticator sends region access
  * Stores it on the key to use for access
