@@ -250,8 +250,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
 	if(LAZYLEN(embedding))
 		updateEmbedding()
-	if(mapload && !GLOB.steal_item_handler.generated_items)
-		add_stealing_item_objective()
+	var/typepath = add_stealing_item_objective()
+	if(typepath != null && GLOB.steal_item_handler.generated_items)
+		GLOB.steal_item_handler.register_item(src)
 
 /obj/item/Destroy(force)
 	// This var exists as a weird proxy "owner" ref
@@ -309,7 +310,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	LAZYREMOVE(actions, action)
 	qdel(action)
 
-/// Called if this item is supposed to be a steal objective item objective. Only done at mapload
+/// Called if this item is supposed to be a steal objective item objective.
 /obj/item/proc/add_stealing_item_objective()
 	return
 
