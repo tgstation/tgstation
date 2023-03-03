@@ -31,9 +31,11 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM, PROC_REF(new_item_created))
 
 /datum/objective_item_handler/proc/new_item_created(datum/source, obj/item/item)
+	if(!generated_items)
+		return item.add_stealing_item_objective()
 	var/typepath = item.add_stealing_item_objective()
-	if(typepath != null && generated_items)
-		register_item(src, typepath)
+	if(typepath != null)
+		register_item(item, typepath)
 
 /// Registers all items that are potentially stealable and removes ones that aren't.
 /// We still need to do things this way because on mapload, items may not be on the station until everything has finished loading.
