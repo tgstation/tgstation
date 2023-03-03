@@ -24,7 +24,7 @@
 /datum/antagonist/xeno/create_team(datum/team/xeno/new_team)
 	if(!new_team)
 		for(var/datum/antagonist/xeno/X in GLOB.antagonists)
-			if(!X.owner || !X.xeno_team)
+			if(!X.owner || !X.xeno_team || !istype(X.xeno_team, new_team)) //Istype check makes sure captive/regular xenomorphs don't get mixed up
 				continue
 			xeno_team = X.xeno_team
 			return
@@ -42,13 +42,18 @@
 
 /datum/antagonist/xeno/captive
 	name = "\improper Captive Xenomorph"
+	var/datum/team/xeno/captive/captive_team
 
 /datum/antagonist/xeno/captive/create_team(datum/team/xeno/captive/new_team)
 	..()
+	captive_team = xeno_team
+
 
 	if(!new_team.progenitor)
 		new_team.progenitor = owner
 
+/datum/antagonist/xeno/captive/get_team()
+	return captive_team
 
 /datum/team/xeno/captive
 	name = "\improper Captive Aliens"
@@ -72,6 +77,9 @@
 			if(CAPTIVE_XENO_PASS)
 				parts += span_nicegreen("[alien_mind] survived and managed to escape captivity!")
 				escape_count++
+
+
+	parts += span_alertalien("Overall, [captive_count] xenomorphs remained trapped in captivity, and [escape_count] managed to escape!")
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
