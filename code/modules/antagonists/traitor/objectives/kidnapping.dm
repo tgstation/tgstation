@@ -47,7 +47,7 @@
 /datum/traitor_objective/kidnapping/New(datum/uplink_handler/handler)
 	. = ..()
 	AddComponent(/datum/component/traitor_objective_limit_per_time, \
-		/datum/traitor_objective/assassinate, \
+		/datum/traitor_objective/kidnapping, \
 		time_period = objective_period, \
 		maximum_objectives = maximum_objectives_in_period \
 	)
