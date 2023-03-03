@@ -225,7 +225,7 @@
 				"amount" = sheet_amount,
 				"category" = "material",
 				"value" = ore_values[material.type],
-		))
+			))
 
 		for(var/research in stored_research.researched_designs)
 			var/datum/design/alloy = SSresearch.techweb_design_by_id(research)
@@ -246,7 +246,7 @@
 	var/obj/item/card/id/card
 	if(isliving(user))
 		var/mob/living/customer = user
-		card = customer.get_idcard(hand_first =TRUE)
+		card = customer.get_idcard(hand_first = TRUE)
 		if(card?.registered_account)
 			data["user"] = list(
 				"name" = card.registered_account.account_holder,
@@ -264,7 +264,7 @@
 			data["material_icons"] += list(list(
 				"id" = REF(material),
 				"product_icon" = icon2base64(getFlatIcon(image(icon = initial(material_display.icon), icon_state = initial(material_display.icon_state)), no_anim=TRUE)),
-		))
+			))
 
 	for(var/research in stored_research.researched_designs)
 		var/datum/design/alloy = SSresearch.techweb_design_by_id(research)
@@ -272,7 +272,7 @@
 		data["material_icons"] += list(list(
 			"id" = alloy.id,
 			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(alloy_display.icon), icon_state = initial(alloy_display.icon_state)), no_anim=TRUE)),
-			))
+		))
 
 	return data
 

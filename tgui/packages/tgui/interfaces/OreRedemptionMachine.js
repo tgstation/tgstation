@@ -9,13 +9,14 @@ export const OreRedemptionMachine = (props, context) => {
   const { unclaimedPoints, materials, user } = data;
   const [tab, setTab] = useSharedState(context, 'tab', 1);
   const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
+  const [compact, setCompact] = useSharedState(context, 'compact', false);
   const search = createSearch(searchItem, (materials) => materials.name);
-  const mats =
+  const material_filtered =
     searchItem.length > 0
       ? data.materials.filter(search)
-      : materials.filter((mat) => mat && mat.category === tab);
+      : materials.filter((material) => material && material.category === tab);
   return (
-    <Window title="Ore Redemption Machine" width={435} height={725}>
+    <Window title="Ore Redemption Machine" width={435} height={500}>
       <Window.Content>
         <Stack fill vertical>
           <Section>
@@ -41,6 +42,15 @@ export const OreRedemptionMachine = (props, context) => {
                         </LabeledList.Item>
                       </LabeledList>
                     )}
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      mt={0.5}
+                      textAlign="center"
+                      color={compact ? 'red' : 'green'}
+                      content="Compact"
+                      onClick={() => setCompact(!compact)}
+                    />
                   </Stack.Item>
                 </Stack>
               </Section>
@@ -100,8 +110,10 @@ export const OreRedemptionMachine = (props, context) => {
             </Tabs.Tab>
             <Input
               autofocus
-              ml={22}
-              mb={0.8}
+              position="relative"
+              left="25%"
+              bottom="5%"
+              height="20px"
               width="150px"
               placeholder="Search Material..."
               value={searchItem}
@@ -116,27 +128,29 @@ export const OreRedemptionMachine = (props, context) => {
             />
           </Tabs>
           <Stack.Item grow>
-            <Table>
-              {mats.map((material) => (
-                <MaterialRow
-                  key={material.id}
-                  material={material}
-                  onRelease={(amount) => {
-                    if (material.category === 'material') {
-                      act('Release', {
-                        id: material.id,
-                        sheets: amount,
-                      });
-                    } else {
-                      act('Smelt', {
-                        id: material.id,
-                        sheets: amount,
-                      });
-                    }
-                  }}
-                />
-              ))}
-            </Table>
+            <Section fill scrollable>
+              <Table>
+                {material_filtered.map((material) => (
+                  <MaterialRow
+                    key={material.id}
+                    material={material}
+                    onRelease={(amount) => {
+                      if (material.category === 'material') {
+                        act('Release', {
+                          id: material.id,
+                          sheets: amount,
+                        });
+                      } else {
+                        act('Smelt', {
+                          id: material.id,
+                          sheets: amount,
+                        });
+                      }
+                    }}
+                  />
+                ))}
+              </Table>
+            </Section>
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -148,6 +162,7 @@ const MaterialRow = (props, context) => {
   const { data } = useBackend(context);
   const { material_icons } = data;
   const { material, onRelease } = props;
+  const [compact, setCompact] = useLocalState(context, 'compact', false);
 
   const display = material_icons.find(
     (mat_icon) => mat_icon.id === material.id
@@ -158,19 +173,21 @@ const MaterialRow = (props, context) => {
 
   return (
     <Table.Row className="candystripe" collapsing>
-      <Table.Cell collapsing>
-        <Box
-          as="img"
-          m={1}
-          src={`data:image/jpeg;base64,${display.product_icon}`}
-          height="32px"
-          width="32px"
-          style={{
-            '-ms-interpolation-mode': 'nearest-neighbor',
-            'vertical-align': 'middle',
-          }}
-        />
-      </Table.Cell>
+      {!compact && (
+        <Table.Cell collapsing>
+          <Box
+            as="img"
+            m={1}
+            src={`data:image/jpeg;base64,${display.product_icon}`}
+            height="18px"
+            width="18px"
+            style={{
+              '-ms-interpolation-mode': 'nearest-neighbor',
+              'vertical-align': 'middle',
+            }}
+          />
+        </Table.Cell>
+      )}
       <Table.Cell>{toTitleCase(material.name)}</Table.Cell>
       <Table.Cell collapsing textAlign="left">
         <Box color="label">
