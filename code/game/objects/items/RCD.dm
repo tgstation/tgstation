@@ -961,7 +961,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 // Ranged RCD
 /obj/item/construction/rcd/arcd
 	name = "advanced rapid-construction-device (ARCD)"
-	desc = "A prototype RCD with ranged capability and extended capacity. Reload with iron, plasteel, glass or compressed matter cartridges."
+	desc = "A prototype RCD with ranged capability and infinite capacity."
 	max_matter = INFINITY
 	matter = INFINITY
 	delay_mod = 0.6
