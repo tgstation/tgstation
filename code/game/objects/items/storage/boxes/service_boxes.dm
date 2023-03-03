@@ -200,6 +200,6 @@
 	name = "box of party_poppers"
 	desc = "Turn any event into a celebration and ensure the janitor stays busy."
 
-/obj/item/storage/box/tail_pin/PopulateContents()
+/obj/item/storage/box/party_poppers/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/spray/chemsprayer/party(src)
