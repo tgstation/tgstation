@@ -29,7 +29,7 @@
 /datum/objective_item/proc/valid_objective_for(list/potential_thieves)
 	if(!target_exists() || !owner_exists())
 		return FALSE
-	for (var/datum/mind/possible_thief in potential_thieves)
+	for (var/datum/mind/possible_thief as anything in potential_thieves)
 		var/datum/job/role = possible_thief.assigned_role
 		if(role.title in excludefromjob)
 			return FALSE
