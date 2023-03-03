@@ -46,6 +46,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/list/allocated
 	var/list/fail_reasons
 
+	/// Do not instantiate if type matches this
+	var/abstract_type = /datum/unit_test
+
 	var/static/datum/space_level/reservation
 
 /proc/cmp_unit_test_priority(datum/unit_test/a, datum/unit_test/b)
@@ -148,6 +151,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 /proc/RunUnitTest(test_path, list/test_results)
 	if (ispath(test_path, /datum/unit_test/focus_only))
+		return
+
+	var/datum/unit_test/test_type = test_path
+	if(initial(test_type.abstract_type) == test_path)
 		return
 
 	var/datum/unit_test/test = new test_path
