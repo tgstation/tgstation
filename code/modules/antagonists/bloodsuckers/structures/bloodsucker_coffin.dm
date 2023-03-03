@@ -217,7 +217,7 @@
 			LockMe(user)
 		bloodsuckerdatum.SpendRank()
 		/// You're in a Coffin, everything else is done, you're likely here to heal. Let's offer them the oppertunity to do so.
-		bloodsuckerdatum.Check_Begin_Torpor()
+		bloodsuckerdatum.check_begin_torpor()
 	return TRUE
 
 /// You cannot weld or deconstruct an owned coffin. Only the owner can destroy their own coffin.
@@ -263,7 +263,7 @@
 					LockMe(user)
 				if("No")
 					return
-		else if(!resident) 
+		else if(!resident)
 			if(!bloodsuckerdatum.coffin)
 				switch(input("Do you wish to claim this as your coffin? [get_area(src)] will be your lair, and you will learn to craft new structures.","Claim Lair") in list("Yes", "No"))
 					if("Yes")
@@ -272,7 +272,7 @@
 						return
 			else
 				to_chat(user, span_warning("You already have claimed a coffin! You need to unclaim your old one in order to be able to claim a new one!"))
-		else 
+		else
 			to_chat(user, warning("[src] already belongs to another bloodsucker."))
 
 	return TRUE

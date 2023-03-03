@@ -101,6 +101,8 @@
 		TRAIT_TRUE_NIGHT_VISION,
 	)
 
+	var/dust_timer
+
 /mob/living/proc/explain_powers()
 	set name = "Bloodsucker Help"
 	set category = "Mentor"
@@ -342,7 +344,7 @@
 	owner.current.grant_all_languages(FALSE, FALSE, TRUE)
 	owner.current.grant_language(/datum/language/vampiric)
 	/// Clear Disabilities & Organs
-	HealVampireOrgans()
+	heal_vampire_organs()
 
 /datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 	/// Remove huds
