@@ -4185,7 +4185,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/ruin/syndicate_lava_base/dormitories)
 "RK" = (
@@ -4399,7 +4398,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/ruin/syndicate_lava_base/dormitories)
 "Vp" = (
