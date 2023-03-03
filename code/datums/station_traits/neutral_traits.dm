@@ -219,7 +219,7 @@
 	addtimer(CALLBACK(src, PROC_REF(announce_birthday)), 10 SECONDS)
 
 /datum/station_trait/birthday/proc/announce_birthday()
-	priority_announce("Happy Birthday to [birthday_person ? birthday_person.name : "Employee Name"]! we hope you enjoy your [birthday_person ? thtotext(birthday_person.age) : "255th"] Birthday")
+	priority_announce("Happy Birthday to [birthday_person ? birthday_person.name : "Employee Name"]! we hope you enjoy your [birthday_person ? thtotext(birthday_person.age + 1) : "255th"] Birthday")
 	if(birthday_person)
 		playsound(birthday_person, 'sound/items/party_horn.ogg', 50)
 		birthday_person.add_mood_event("birthday", /datum/mood_event/birthday)
@@ -252,12 +252,12 @@
 
 /obj/item/birthday_invite
 	name = "birthday invitation"
-	desc = "A card stating that its someone's birthday today."
+	desc = "A card stating that it's someone's birthday today."
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/birthday_invite/proc/setup_card(birthday_name)
-	desc = "A card stating that its [birthday_name]'s Birthday today."
+	desc = "A card stating that its [birthday_name]'s birthday today."
 	icon_state = "paperslip_words"
 	icon = 'icons/obj/bureaucracy.dmi'
 

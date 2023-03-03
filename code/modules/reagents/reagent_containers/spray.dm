@@ -362,7 +362,7 @@
 
 /obj/item/reagent_containers/spray/chemsprayer/party
 	name = "party popper"
-	desc = "A small device used for cellarbrations and annoying the janitor."
+	desc = "A small device used for celebrations and annoying the janitor."
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "party_popper"
 	inhand_icon_state = "party_popper"

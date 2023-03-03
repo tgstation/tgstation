@@ -205,7 +205,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 
 /obj/item/clothing/mask/party_horn
 	name = "party horn"
-	desc = "a paper tube used at parties that makes a noise when blown into."
+	desc = "A paper tube used at parties that makes a noise when blown into."
 	icon_state = "party_horn"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL

@@ -360,5 +360,5 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/birthday
-	description = "Its my Birthday!"
-	mood_change = 1
+	description = "Its my birthday!"
+	mood_change = 2
