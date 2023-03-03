@@ -25,7 +25,7 @@
 
 /datum/component/machine_booby_trap/Initialize(
 	explosion_light_range = 3,
-	explosion_heavy_range = 0,
+	explosion_heavy_range = 1, // So we destroy some machine components
 	triggered_sound = 'sound/machines/triple_beep.ogg',
 	trigger_delay = 0.5 SECONDS,
 	sound_loop_type = /datum/looping_sound/trapped_machine_beep,
@@ -84,8 +84,8 @@
 	on_triggered_callback?.Invoke(source)
 	var/turf/origin_turf = get_turf(source)
 	new /obj/effect/temp_visual/explosion/fast(origin_turf)
-	explosion(origin = origin_turf, light_impact_range = explosion_light_range, heavy_impact_range = explosion_heavy_range, explosion_cause = src)
 	EX_ACT(source, EXPLODE_HEAVY, source)
+	explosion(origin = origin_turf, light_impact_range = explosion_light_range, heavy_impact_range = explosion_heavy_range, explosion_cause = src)
 	qdel(src)
 
 /// Defuse the bomb and delete ourselves
