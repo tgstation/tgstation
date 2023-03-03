@@ -15,7 +15,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	faction = list("nether")
+	faction = list(FACTION_NETHER)
 	speak_emote = list("screams")
 	death_message = "gets his head split open."
 	unsuitable_atmos_damage = 0

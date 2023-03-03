@@ -2,7 +2,7 @@
 /mob/living/basic/mining
 
 	combat_mode = TRUE
-	faction = list("mining")
+	faction = list(FACTION_MINING)
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
