@@ -219,7 +219,6 @@
 		for(var/datum/material/material as anything in mat_container.materials)
 			var/amount = mat_container.materials[material]
 			var/sheet_amount = amount / MINERAL_MATERIAL_AMOUNT
-			var/obj/material_display = initial(material.sheet_type)
 			data["materials"] += list(list(
 				"name" = material.name,
 				"id" = REF(material),
@@ -230,7 +229,6 @@
 
 		for(var/research in stored_research.researched_designs)
 			var/datum/design/alloy = SSresearch.techweb_design_by_id(research)
-			var/obj/alloy_display = initial(alloy.build_path)
 			data["materials"] += list(list(
 				"name" = alloy.name,
 				"id" = alloy.id,
