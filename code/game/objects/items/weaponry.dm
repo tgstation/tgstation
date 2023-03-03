@@ -1114,3 +1114,19 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		balloon_alert(user, "you're too weak!")
 		return
 	return ..()
+
+/obj/item/highfrequencyblade/nukie
+	force = 6
+	throwforce = 20
+	wound_bonus = 20
+	bare_wound_bonus = 25
+	slash_color = COLOR_RED
+
+/obj/item/highfrequencyblade/nukie/attack_self(mob/user, modifiers)
+	if(!IS_NUKE_OP(user) && !user.mind?.has_antag_datum(/datum/antagonist/traitor))
+		if(prob(5))
+			to_chat(user, span_warning("You deny your weapon its purpose! It yearns to bathe in the blood of your enemies... but you hold it back!"))
+			return
+		balloon_alert(user, "skill issue!")
+		return
+	return ..()
