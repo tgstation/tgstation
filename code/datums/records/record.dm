@@ -181,10 +181,14 @@
 	if(!character_appearance)
 		return new /icon()
 
-	var/mutable_appearance/appearance = character_appearance
-	appearance.setDir(orientation)
+	var/icon/picture_image
+	if(!isicon(character_appearance))
+		var/mutable_appearance/appearance = character_appearance
+		appearance.setDir(orientation)
 
-	var/icon/picture_image = getFlatIcon(appearance)
+		picture_image = getFlatIcon(appearance)
+	else
+		picture_image = character_appearance
 
 	var/datum/picture/picture = new
 	picture.picture_name = name

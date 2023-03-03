@@ -43,8 +43,8 @@
 	SEND_SIGNAL(result, COMSIG_ITEM_MICROWAVE_COOKED, source, efficiency)
 
 	if(IS_EDIBLE(result))
-		if(microwaver)
-			ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(microwaver))
+		if(microwaver && microwaver.mind)
+			ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(microwaver.mind))
 
 		result.reagents?.multiply_reagents(efficiency * CRAFTED_FOOD_BASE_REAGENT_MODIFIER)
 		source.reagents?.trans_to(result, source.reagents.total_volume)

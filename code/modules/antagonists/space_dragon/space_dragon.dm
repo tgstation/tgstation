@@ -45,14 +45,14 @@
 	. = ..()
 	rift_ability = new
 	rift_ability.Grant(owner.current)
-	owner.current.faction |= "carp"
+	owner.current.faction |= FACTION_CARP
 	RegisterSignal(owner.current, COMSIG_LIVING_LIFE, PROC_REF(rift_checks))
 	RegisterSignal(owner.current, COMSIG_LIVING_DEATH, PROC_REF(destroy_rifts))
 
 /datum/antagonist/space_dragon/on_removal()
 	. = ..()
 	rift_ability.Remove(owner.current)
-	owner.current.faction -= "carp"
+	owner.current.faction -= FACTION_CARP
 	UnregisterSignal(owner.current, COMSIG_LIVING_LIFE)
 	UnregisterSignal(owner.current, COMSIG_LIVING_DEATH)
 	rift_list = null

@@ -64,7 +64,7 @@
 	return temp
 
 /datum/computer_file/program/revelation/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	data["armed"] = armed
 
