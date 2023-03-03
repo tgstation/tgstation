@@ -7,6 +7,10 @@
 
 /datum/antagonist/frogression_traitor/get_preview_icon()
 	var/icon/frog_icon = icon('icons/mob/simple/animal.dmi', "frog")
+
+	var/icon/logo_icon = icon('icons/misc/language.dmi', "codespeak")
+	frog_icon.Blend(logo_icon, ICON_UNDERLAY, world.icon_size / 4, world.icon_size / 3)
+
+	frog_icon.Shift(NORTH, world.icon_size / 12)
 	frog_icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
-	//TODO syndicate logo as background?
 	return frog_icon
