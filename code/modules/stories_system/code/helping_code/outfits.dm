@@ -15,6 +15,10 @@
 		/obj/item/modular_computer/pda/centcom = 1,
 	)
 
+// for the icon
+/datum/outfit/centcom_inspector/no_id
+	id = null
+	id_trim = null
 
 /datum/outfit/syndicate_inspector
 	name = "Syndicate Centcom Inspector"
@@ -175,6 +179,11 @@
 		/obj/item/pen/fountain = 1,
 	)
 
+// for the icon
+/datum/outfit/middle_management/no_id
+	id = null
+	id_trim = null
+
 /datum/outfit/middle_management/post_equip(mob/living/carbon/human/equipped_human, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
@@ -318,6 +327,11 @@
 	backpack_contents = list(
 		/obj/item/holochip/thousand = 1,
 	)
+
+// for the icon
+/datum/outfit/veteran/no_id
+	id = null
+	id_trim = null
 
 /datum/outfit/veteran/post_equip(mob/living/carbon/human/equipped_human, visualsOnly = FALSE)
 	if(visualsOnly)

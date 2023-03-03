@@ -86,13 +86,13 @@
 	show_in_antagpanel = FALSE
 	prevent_roundtype_conversion = FALSE
 	suicide_cry = "FOR ROLEPLAYING!!"
-	preview_outfit = /datum/outfit/centcom_inspector
+	preview_outfit = /datum/outfit/centcom_inspector/no_id
 	count_against_dynamic_roll_chance = FALSE
 
 /datum/antagonist/story_participant/get_preview_icon()
 	var/icon/final_icon = render_preview_outfit(preview_outfit)
-	final_icon.Blend(make_background_story_icon(/datum/outfit/veteran), ICON_UNDERLAY, -8, 0)
-	final_icon.Blend(make_background_story_icon(/datum/outfit/middle_management), ICON_UNDERLAY, 8, 0)
+	final_icon.Blend(make_background_story_icon(/datum/outfit/veteran/no_id), ICON_UNDERLAY, -8, 0)
+	final_icon.Blend(make_background_story_icon(/datum/outfit/middle_management/no_id), ICON_UNDERLAY, 8, 0)
 
 	final_icon.Scale(64, 64)
 
