@@ -5176,7 +5176,6 @@
 /area/station/hallway/secondary/entry)
 "cjR" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/iron,
 /area/station/maintenance/port/lesser)
@@ -7970,6 +7969,7 @@
 	name = "Brig Cells"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/structure/cable,
 /turf/open/floor/iron/textured_half,
 /area/station/security/brig)
 "dof" = (
@@ -8587,6 +8587,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"dAn" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/port/lesser)
 "dAr" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -10384,7 +10388,6 @@
 "ekZ" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/landmark/navigate_destination,
-/obj/structure/cable,
 /obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Security Delivery";
 	req_access = list("security")
@@ -16562,6 +16565,9 @@
 	name = "Cell 1 Locker"
 	},
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/machinery/flasher/directional/west{
+	id = "Cell 1"
+	},
 /turf/open/floor/iron/small,
 /area/station/security/brig)
 "gxi" = (
@@ -23140,6 +23146,7 @@
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "iKo" = (
@@ -28381,6 +28388,17 @@
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/command/heads_quarters/qm)
+"kFs" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/flasher/directional/east{
+	id = "brigisolation"
+	},
+/turf/open/floor/iron,
+/area/station/security/brig/entrance)
 "kFD" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/autolathe,
@@ -28584,6 +28602,7 @@
 "kIQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/small,
 /area/station/security/brig)
 "kIR" = (
@@ -30412,6 +30431,9 @@
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 3";
 	name = "Cell 3 Locker"
+	},
+/obj/machinery/flasher/directional/west{
+	id = "cell 3"
 	},
 /turf/open/floor/iron/small,
 /area/station/security/brig)
@@ -35961,6 +35983,9 @@
 	name = "Cell 4 Locker"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/flasher/directional/east{
+	id = "Cell 4"
+	},
 /turf/open/floor/iron/small,
 /area/station/security/brig)
 "nsL" = (
@@ -40531,6 +40556,12 @@
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/misc/sandy_dirt,
 /area/station/science/cytology)
+"pdN" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/station/maintenance/port/lesser)
 "pdR" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -44712,6 +44743,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/dark_red/fourcorners,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "qvL" = (
@@ -45084,6 +45116,7 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "qBT" = (
@@ -58433,6 +58466,12 @@
 	},
 /turf/open/floor/iron/textured_half,
 /area/station/commons/storage/art)
+"uSY" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/brig/entrance)
 "uTh" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green/opposingcorners,
@@ -61067,6 +61106,7 @@
 	name = "Security Desk"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/structure/cable,
 /turf/open/floor/iron/textured_half,
 /area/station/security/brig/entrance)
 "vKa" = (
@@ -61145,6 +61185,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/machinery/flasher/directional/west{
+	id = "brigentry"
+	},
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "vLi" = (
@@ -61932,6 +61975,9 @@
 	name = "Cell 2 Locker"
 	},
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/machinery/flasher/directional/east{
+	id = "Cell 2"
+	},
 /turf/open/floor/iron/small,
 /area/station/security/brig)
 "vVD" = (
@@ -66218,6 +66264,16 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/dark_red/half/contrasted,
+/obj/machinery/button/flasher{
+	id = "brigisolation";
+	pixel_x = -6;
+	pixel_y = 24
+	},
+/obj/machinery/button/flasher{
+	id = "brigentry";
+	pixel_x = 6;
+	pixel_y = 24
+	},
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "xjZ" = (
@@ -86470,8 +86526,8 @@ tuZ
 fEC
 fEC
 xpo
-vGU
-rOG
+pdN
+dAn
 cjR
 ekZ
 fLK
@@ -88261,7 +88317,7 @@ xOS
 uJD
 tJz
 tqT
-tqT
+kFs
 jsS
 iAM
 wId
@@ -89545,8 +89601,8 @@ sxw
 xGX
 nsO
 uBc
-tuZ
-tuZ
+tJz
+tJz
 uBc
 xkA
 qvG
@@ -89803,7 +89859,7 @@ xOS
 ftX
 udA
 xJX
-xJX
+uSY
 vJV
 qBN
 iKm
