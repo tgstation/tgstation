@@ -146,7 +146,7 @@
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
 	desc = "Ranged fury, Syndicate style. Guaranteed to cause shock and awe or your TC back!"
-	item = /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
+	item = /obj/item/gun/ballistic/rifle/sniper_rifle/syndicate
 	cost = 16
 	surplus = 25
 	purchasable_from = UPLINK_NUKE_OPS
@@ -297,32 +297,48 @@
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/sniper
-	cost = 4
+	cost = 3
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/sniper/basic
-	name = ".50 Magazine"
+	name = ".50 BMG Magazine"
 	desc = "An additional standard 6-round magazine for use with .50 sniper rifles."
 	item = /obj/item/ammo_box/magazine/sniper_rounds
 
+/datum/uplink_item/ammo/sniper/surplusbox
+	name = ".50 BMG Surplus Magazine Box"
+	desc = "A box full of surplus .50 BMG magazines. Not as good as high quality magazines, \
+			usually lacking the penetrative power and impact, but good enough to keep the gun firing. \
+			Useful for arming a squad."
+	item = /obj/item/storage/box/syndie_kit/surplus/sniper
+
 /datum/uplink_item/ammo/sniper/penetrator
-	name = ".50 Penetrator Magazine"
-	desc = "A 5-round magazine of penetrator ammo designed for use with .50 sniper rifles. \
+	name = ".50 BMG Penetrator Magazine"
+	desc = "A 6-round magazine of penetrator ammo designed for use with .50 sniper rifles. \
 			Can pierce walls and multiple enemies."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/penetrator
-	cost = 5
+	cost = 4
 
-/datum/uplink_item/ammo/sniper/soporific
-	name = ".50 Soporific Magazine"
-	desc = "A 3-round magazine of soporific ammo designed for use with .50 sniper rifles. Put your enemies to sleep today!"
-	item = /obj/item/ammo_box/magazine/sniper_rounds/soporific
-	cost = 6
+/datum/uplink_item/ammo/sniper/incendiary
+	name = ".50 BMG Incendiary Magazine"
+	desc = "A 6-round magazine of incendiary ammo. \
+			Sets your enemies ablaze, along with everyone else next to them!"
+	item = /obj/item/ammo_box/magazine/sniper_rounds/incediary
+	cost = 4
+
+/datum/uplink_item/ammo/sniper/disruptor
+	name = ".50 BMG Disruptor Magazine"
+	desc = "A 6-round magazine of disruptor ammo designed for use with .50 sniper rifles. \
+			Put your enemies and their alarm clock to sleep today!"
+	item = /obj/item/ammo_box/magazine/sniper_rounds/disruptor
+	cost = 4
 
 /datum/uplink_item/ammo/sniper/marksman
-	name = ".50 Marksman Magazine"
-	desc = "A 5-round magazine of marksman ammo designed for use with .50 sniper rifles. Blast your enemies with instant shots!"
+	name = ".50 BMG Marksman Magazine"
+	desc = "A 6-round magazine of marksman ammo designed for use with .50 sniper rifles. \
+			Blast your enemies with instant shots! Just watch out for the rebound..."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/marksman
-	cost = 5
+	cost = 4
 
 /datum/uplink_item/ammo/carbine
 	name = "5.56mm Toploader Magazine"

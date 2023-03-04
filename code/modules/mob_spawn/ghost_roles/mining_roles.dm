@@ -299,7 +299,7 @@
 	ears = /obj/item/radio/headset/syndicate/alt
 	shoes = /obj/item/clothing/shoes/combat
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
-	r_hand = /obj/item/gun/ballistic/automatic/sniper_rifle
+	r_hand = /obj/item/gun/ballistic/rifle/sniper_rifle
 
 	implants = list(/obj/item/implant/weapons_auth)
 
