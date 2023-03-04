@@ -94,7 +94,7 @@
 	name = "Officer Genesky"
 	desc = "A beefy variant of the standard securitron model."
 	health = 50
-	faction = list("nanotrasenprivate")
+	faction = list(FACTION_NANOTRASEN_PRIVATE)
 	bot_mode_flags = BOT_MODE_ON
 	bot_cover_flags = BOT_COVER_LOCKED | BOT_COVER_EMAGGED
 

@@ -12,7 +12,7 @@ export const MedicalRecordView = (props, context) => {
   if (!foundRecord) return <NoticeBox>No record selected.</NoticeBox>;
 
   const { act, data } = useBackend<MedicalRecordData>(context);
-  const { assigned_view } = data;
+  const { assigned_view, station_z } = data;
 
   const { min_age, max_age } = data;
 
@@ -52,6 +52,7 @@ export const MedicalRecordView = (props, context) => {
             <Button.Confirm
               content="Delete"
               icon="trash"
+              disabled={!station_z}
               onClick={() => act('expunge_record', { crew_ref: crew_ref })}
               tooltip="Expunge record data."
             />

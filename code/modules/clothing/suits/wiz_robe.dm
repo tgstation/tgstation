@@ -59,6 +59,15 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	dog_fashion = null
 
+/obj/item/clothing/head/wizard/tape
+	name = "tape hat"
+	desc = "A magically attuned hat made exclusively from duct tape. You can barely see."
+	icon_state = "tapehat"
+	inhand_icon_state = "tapehat"
+	dog_fashion = null
+	worn_y_offset = 6
+	body_parts_covered = HEAD|HAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/wizard/magus
 	name = "\improper Magus helm"
@@ -130,6 +139,12 @@
 	icon_state = "marisa"
 	inhand_icon_state = null
 
+/obj/item/clothing/suit/wizrobe/tape
+	name = "tape robe"
+	desc = "A fine robe made from magically attuned duct tape."
+	icon_state = "taperobe"
+	inhand_icon_state = "taperobe"
+
 /obj/item/clothing/suit/wizrobe/magusblue
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power."
@@ -161,11 +176,23 @@
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
 
+/obj/item/clothing/head/wizard/tape/fake
+	name = "tape hat"
+	desc = "A hat designed exclusively from duct tape. You can barely see."
+	armor_type = /datum/armor/none
+	resistance_flags = FLAMMABLE
+
 /obj/item/clothing/suit/wizrobe/marisa/fake
 	name = "witch robe"
 	desc = "Magic is all about the spell power, ZE!"
 	icon_state = "marisa"
 	inhand_icon_state = null
+	armor_type = /datum/armor/none
+	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/suit/wizrobe/tape/fake
+	name = "tape robe"
+	desc = "An outfit designed exclusively from duct tape. It was hard to put on."
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
 
