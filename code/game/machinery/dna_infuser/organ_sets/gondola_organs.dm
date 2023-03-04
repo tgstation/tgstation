@@ -112,20 +112,20 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 /obj/item/organ/internal/liver/gondola/proc/on_owner_picked_up_item(mob/living/carbon/owner, obj/item/picked_up)
 	SIGNAL_HANDLER
 	if(picked_up.w_class > WEIGHT_CLASS_TINY)
-		owner.balloon_alert(owner, "too weak to hold this!")
 		owner.dropItemToGround(picked_up)
+		picked_up.balloon_alert(owner, "too weak to hold this!")
 
 /obj/item/organ/internal/liver/gondola/proc/on_owner_try_pull(mob/living/carbon/owner, atom/movable/target, force)
 	SIGNAL_HANDLER
 	if(isliving(target))
 		var/mob/living/living_target = target
 		if(living_target.mob_size > MOB_SIZE_TINY)
-			owner.balloon_alert(owner, "too weak to pull this!")
+			living_target.balloon_alert(owner, "too weak to pull this!")
 			return COMSIG_LIVING_CANCEL_PULL
 	if(isitem(target))
 		var/obj/item/item_target = target
 		if(item_target.w_class > WEIGHT_CLASS_TINY)
-			owner.balloon_alert(owner, "too weak to pull this!")
+			item_target.balloon_alert(owner, "too weak to pull this!")
 			return COMSIG_LIVING_CANCEL_PULL
 
 #undef GONDOLA_ORGAN_COLOR
