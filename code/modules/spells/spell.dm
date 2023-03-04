@@ -137,6 +137,8 @@
 
 // Where the cast chain starts
 /datum/action/cooldown/spell/PreActivate(atom/target)
+	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
+		return FALSE
 	if(!is_valid_target(target))
 		return FALSE
 
@@ -299,21 +301,20 @@
  */
 /datum/action/cooldown/spell/proc/after_cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
-
-	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
-	if(!owner)
+	if(!owner) // Could have been destroyed by the effect of the spell
+		SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
 		return
 
-	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
-
-	// Sparks and smoke can only occur if there's an owner to source them from.
 	if(sparks_amt)
 		do_sparks(sparks_amt, FALSE, get_turf(owner))
-
 	if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
 		var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
 		smoke.set_up(smoke_amt, holder = owner, location = get_turf(owner))
 		smoke.start()
+
+	// Send signals last in case they delete the spell
+	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
+	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
 
 /// Provides feedback after a spell cast occurs, in the form of a cast sound and/or invocation
 /datum/action/cooldown/spell/proc/spell_feedback()

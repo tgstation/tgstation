@@ -95,6 +95,8 @@
 	// so that our button icon updates when relevant
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(update_status_on_signal))
+	if(check_flags & AB_CHECK_INCAPACITATED)
+		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), PROC_REF(update_status_on_signal))
 	if(check_flags & AB_CHECK_IMMOBILE)
 		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), PROC_REF(update_status_on_signal))
 	if(check_flags & AB_CHECK_HANDS_BLOCKED)
@@ -127,6 +129,7 @@
 			COMSIG_MOB_STATCHANGE,
 			SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED),
 			SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED),
+			SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED),
 		))
 
 		if(target == owner)
@@ -156,6 +159,10 @@
 	if((check_flags & AB_CHECK_IMMOBILE) && HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
 		if (feedback)
 			owner.balloon_alert(owner, "can't move!")
+		return FALSE
+	if((check_flags & AB_CHECK_INCAPACITATED) && HAS_TRAIT(owner, TRAIT_INCAPACITATED))
+		if (feedback)
+			owner.balloon_alert(owner, "incapacitated!")
 		return FALSE
 	if((check_flags & AB_CHECK_LYING) && isliving(owner))
 		var/mob/living/action_owner = owner

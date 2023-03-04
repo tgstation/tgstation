@@ -9,6 +9,6 @@
 
 /obj/item/organ/internal/heart/gland/spiderman/activate()
 	to_chat(owner, span_warning("You feel something crawling in your skin."))
-	owner.faction |= "spiders"
+	owner.faction |= FACTION_SPIDER
 	var/obj/structure/spider/spiderling/S = new(owner.drop_location())
 	S.directive = "Protect your nest inside [owner.real_name]."

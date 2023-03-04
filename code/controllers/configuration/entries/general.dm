@@ -468,6 +468,10 @@
 	default = null
 	min_val = 500
 
+/datum/config_entry/number/client_warn_build
+	default = null
+	min_val = 0
+
 /datum/config_entry/string/client_warn_message
 	default = "Your version of byond may have issues or be blocked from accessing this server in the future."
 

@@ -185,6 +185,22 @@
 /area/ruin/space/has_grav/abandonedzoo
 	name = "\improper Abandoned Zoo"
 
+//Ruin of Dangerous Research
+
+/area/ruin/space/has_grav/dangerous_research
+	name = "\improper ASRC Lobby"
+
+/area/ruin/space/has_grav/dangerous_research/medical
+	name = "\improper ASRC Medical Facilities"
+
+/area/ruin/space/has_grav/dangerous_research/dorms
+	name = "\improper ASRC Dorms"
+
+/area/ruin/space/has_grav/dangerous_research/lab
+	name = "\improper ASRC Laboratory"
+
+/area/ruin/space/has_grav/dangerous_research/maint
+	name = "\improper ASRC Maintenance"
 
 //Ruin of ancient Space Station (OldStation)
 

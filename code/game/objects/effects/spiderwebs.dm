@@ -113,7 +113,7 @@
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 	var/directive = "" //Message from the mother
-	var/list/faction = list("spiders")
+	var/list/faction = list(FACTION_SPIDER)
 
 /obj/structure/spider/spiderling/Destroy()
 	new/obj/item/food/spiderling(get_turf(src))

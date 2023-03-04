@@ -53,3 +53,4 @@
 #_maps/RandomRuins/SpaceRuins/hellfactory.dmm
 #_maps/RandomRuins/SpaceRuins/space_billboard.dmm
 #_maps/RandomRuins/SpaceRuins/spinwardsmoothies.dmm
+#_maps/RandomRuins/SpaceRuins/dangerous_research.dmm
