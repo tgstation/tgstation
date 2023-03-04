@@ -197,7 +197,7 @@
 		if(!didthegamerwin)
 			return FALSE
 		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score * 2))
-	else if(human_mob.onCentCom())
+	else if(considered_escaped(human_mob))
 		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
 
 
