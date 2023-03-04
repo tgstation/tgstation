@@ -10,7 +10,7 @@
 		Higher levels will increase the damage and knockdown when punching someone."
 	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
-	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
+	purchase_flags = BLOODSUCKER_CAN_BUY
 	bloodcost = 8
 	cooldown = 9 SECONDS
 	target_range = 1
@@ -193,3 +193,13 @@
 	else if(istype(target_atom, /obj/structure/closet))
 		return TRUE
 	return FALSE
+
+/// Vassal version
+/datum/action/bloodsucker/targeted/brawn/vassal
+	name = "Strength"
+	desc = "Snap restraints, break lockers and doors, or deal terrible damage with your bare hands."
+	button_icon_state = "power_strength"
+	bloodcost = 15
+	cooldown = 120
+
+	purchase_flags = VASSAL_CAN_BUY

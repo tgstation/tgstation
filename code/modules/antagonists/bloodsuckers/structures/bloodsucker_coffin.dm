@@ -215,6 +215,8 @@
 				if("Yes")
 					ClaimCoffin(user)
 			LockMe(user)
+		if(bloodsuckerdatum.my_clan == CLAN_VENTRUE)
+			return TRUE
 		bloodsuckerdatum.SpendRank()
 		/// You're in a Coffin, everything else is done, you're likely here to heal. Let's offer them the oppertunity to do so.
 		bloodsuckerdatum.check_begin_torpor()

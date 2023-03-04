@@ -21,6 +21,8 @@
 	var/favorite_vassal = FALSE
 	/// Bloodsucker levels, but for Vassals.
 	var/vassal_level
+	/// Tremere Vassals only - Have I been mutated?
+	var/mutilated = FALSE
 
 /datum/antagonist/vassal/antag_panel_data()
 	return "Master : [master.owner.name]"
@@ -121,19 +123,20 @@
 		to_chat(master.owner, span_cultbold("You feel the bond with your vassal [owner.current] has somehow been broken!"))
 
 /// Called when we are made into the Favorite Vassal
-/datum/antagonist/vassal/proc/make_favorite(mob/living/master)
+/datum/antagonist/vassal/proc/make_favorite(mob/living/master, silent = FALSE)
 	// Default stuff for all
 	favorite_vassal = TRUE
 	antag_hud_name = "vassal6"
-	to_chat(master, span_danger("You have turned [owner.current] into your Favorite Vassal! They will no longer be deconverted upon Mindshielding!"))
-	to_chat(owner, span_notice("As Blood drips over your body, you feel closer to your Master... You are now the Favorite Vassal!"))
+	if(!silent)
+		to_chat(master, span_danger("You have turned [owner.current] into your Favorite Vassal! They will no longer be deconverted upon Mindshielding!"))
+		to_chat(owner, span_notice("As Blood drips over your body, you feel closer to your Master... You are now the Favorite Vassal!"))
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = master.mind.has_antag_datum(/datum/antagonist/bloodsucker)
 	if(bloodsuckerdatum.my_clan == CLAN_GANGREL)
 		var/datum/action/cooldown/spell/shapeshift/bat/batform = new
 		batform.Grant(owner.current)
 
 /datum/antagonist/vassal/pre_mindshield(mob/implanter, mob/living/mob_override)
-	if(favorite_vassal)
+	if(favorite_vassal || master.my_clan == CLAN_TREMERE)
 		return COMPONENT_MINDSHIELD_RESISTED
 	return COMPONENT_MINDSHIELD_PASSED
 
@@ -207,3 +210,34 @@
 	if(scan_target)
 		to_chat(owner, span_notice("You've lost your master's trail."))
 	return ..()
+
+/datum/antagonist/vassal/proc/HandleFeeding(mob/living/carbon/target, mult=1)
+	var/blood_taken = min(15, target.blood_volume) * mult
+	target.blood_volume -= blood_taken
+	// Simple Animals lose a LOT of blood, and take damage. This is to keep cats, cows, and so forth from giving you insane amounts of blood.
+	if(!ishuman(target))
+		target.blood_volume -= (blood_taken / max(target.mob_size, 0.1)) * 3.5 // max() to prevent divide-by-zero
+		target.apply_damage_type(blood_taken / 3.5) // Don't do too much damage, or else they die and provide no blood nourishment.
+		if(target.blood_volume <= 0)
+			target.blood_volume = 0
+			target.death(0)
+	///////////
+	// Shift Body Temp (toward Target's temp, by volume taken)
+	owner.current.bodytemperature = ((owner.current.blood_volume * owner.current.bodytemperature) + (blood_taken * target.bodytemperature)) / (owner.current.blood_volume + blood_taken)
+	// our volume * temp, + their volume * temp, / total volume
+	///////////
+	// Reduce Value Quantity
+	if(target.stat == DEAD) // Penalty for Dead Blood
+		blood_taken /= 3
+	if(!ishuman(target)) // Penalty for Non-Human Blood
+		blood_taken /= 2
+	//if (!iscarbon(target)) // Penalty for Animals (they're junk food)
+	// Apply to Volume
+	AddBloodVolume(blood_taken)
+	// Reagents (NOT Blood!)
+	if(target.reagents && target.reagents.total_volume)
+		target.reagents.trans_to(owner.current, INGEST, 1) // Run transfer of 1 unit of reagent from them to me.
+	owner.current.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
+
+/datum/antagonist/vassal/proc/AddBloodVolume(value)
+	owner.current.blood_volume = clamp(owner.current.blood_volume + value, 0, 560)

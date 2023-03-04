@@ -235,6 +235,15 @@
 	/// Prevents popup spam.
 	var/disloyalty_offered = FALSE
 
+/obj/structure/bloodsucker/vassalrack/examine(mob/user)
+	. = ..()
+	if(IS_BLOODSUCKER(user))
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(/datum/antagonist/bloodsucker)
+		if(bloodsuckerdatum.my_clan == CLAN_VENTRUE)
+			. += span_cult("As part of the Ventrue Clan, you can choose a Favorite Vassal.")
+			. += span_cult("Click the Rack as a Vassal is buckled onto it to turn them into your Favorite. This can only be done once, so choose carefully!")
+			. += span_cult("This process costs 150 Blood to do, and will make your Vassal unable to be deconverted, outside of you reaching FinalDeath.")
+
 /obj/structure/bloodsucker/vassalrack/deconstruct(disassembled = TRUE)
 	. = ..()
 	new /obj/item/stack/sheet/iron(src.loc, 4)
@@ -344,6 +353,18 @@
 	var/datum/antagonist/vassal/vassaldatum = IS_VASSAL(buckled_carbons)
 	// Are they our Vassal, or Dead?
 	if(istype(vassaldatum) && vassaldatum.master == bloodsuckerdatum || buckled_carbons.stat >= DEAD)
+		/// Are we part of Tremere? They can do bonus things with their Vassals, so don't unbuckle!
+		if(bloodsuckerdatum.my_clan == CLAN_TREMERE)
+			/// Limit it to only 1 time per Vassal.
+			if(istype(vassaldatum) && vassaldatum.mutilated)
+				to_chat(user, "<span class='notice'>You've already mutated [buckled_carbons] beyond repair!</span>")
+				return
+			tremere_perform_magic(user, buckled_carbons)
+		/// Are we part of Ventrue? Can we assign a Favorite Vassal?
+		if(bloodsuckerdatum.my_clan == CLAN_VENTRUE)
+			if(istype(V) && !B.my_favorite_vassal)
+				offer_ventrue_favorites(user, buckled_carbons)
+				return
 		// Can we assign a Favorite Vassal?
 		if(istype(vassaldatum) && !bloodsuckerdatum.has_favorite_vassal)
 			if(buckled_carbons.mind.can_make_bloodsucker(buckled_carbons.mind))
@@ -530,6 +551,135 @@
 			to_chat(user, span_danger("You decide not to turn [target] into your Favorite Vassal."))
 			use_lock = FALSE
 
+/obj/structure/bloodsucker/vassalrack/proc/tremere_perform_magic(mob/living/user, mob/living/target)
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(/datum/antagonist/bloodsucker)
+	var/datum/antagonist/vassal/vassaldatum = target.mind.has_antag_datum(/datum/antagonist/vassal)
+	/// To deal with Blood
+	var/mob/living/carbon/human/C = user
+	var/mob/living/carbon/human/H = target
+
+	/// Due to the checks leding up to this, if they fail this, they're dead & Not our vassal.
+	if(!vassaldatum.master == bloodsuckerdatum)
+		to_chat(user, "<span class='notice'>Do you wish to rebuild this body? This will remove any restraints they might have, and will cost 150 Blood!</span>")
+		var/list/revive_options = list(
+			"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
+			"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
+			)
+		var/revive_response = show_radial_menu(user, src, revive_options, radius = 36, require_near = TRUE)
+		switch(revive_response)
+			if("Yes")
+				if(prob(15))
+					to_chat(user, "<span class='danger'>Something has gone terribly wrong! You have accidentally turned [target] into a High-Functioning Zombie!</span>")
+					to_chat(target, "<span class='announce'>As Blood drips over your body, your heart fails to beat... But you still wake up.</span>")
+					H.set_species(/datum/species/zombie)
+				else
+					to_chat(user, "<span class='danger'>You have brought [target] back from the Dead!</span>")
+					to_chat(target, "<span class='announce'>As Blood drips over your body, your heart begins to beat... You live again!</span>")
+				C.blood_volume -= 150
+				target.revive(full_heal = TRUE, admin_revive = TRUE)
+				return
+			else
+				to_chat(user, "<span class='danger'>You decide not to revive [target].</span>")
+				/// Unbuckle them now.
+				unbuckle_mob(C)
+				useLock = FALSE
+				return
+
+	var/static/list/races = list(
+		TREMERE_SKELETON,
+		TREMERE_ZOMBIE,
+		TREMERE_HUSK,
+		TREMERE_BAT,
+	)
+	var/list/options = list()
+	options = races
+	var/answer = tgui_input_list(user, "We have the chance to mutate our Vassal, how should we mutilate their corpse?", "What do we do with our Vassal?", options)
+	if(!do_mob(user, src, 5 SECONDS))
+		to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
+		return
+	switch(answer)
+		if(TREMERE_SKELETON)
+			to_chat(user, "<span class='notice'>You have mutated [target] into a Skeleton Pirate!</span>")
+			to_chat(target, "<span class='notice'>Your master has mutated you into a Skeleton!</span>")
+			/// Strip them naked - From gohome.dm
+			var/list/items = list()
+			items |= target.get_equipped_items()
+			for(var/I in items)
+				target.dropItemToGround(I,TRUE)
+			for(var/obj/item/I in target.held_items)
+				target.dropItemToGround(I, TRUE)
+			/// Now give them their other stuff
+			H.set_species(/datum/species/skeleton)
+			H.equipOutfit(/datum/outfit/pirate)
+			vassaldatum.mutilated = TRUE
+			return
+		if(TREMERE_ZOMBIE)
+			to_chat(user, "<span class='notice'>You have mutated [target] into a High-Functioning Zombie, fully healing them in the process!</span>")
+			to_chat(target, "<span class='notice'>Your master has mutated you into a High-Functioning Zombie!</span>")
+			target.revive(full_heal = TRUE, admin_revive = TRUE)
+			H.set_species(/datum/species/zombie)
+			vassaldatum.mutilated = TRUE
+			return
+		/// Quick Feeding
+		if(TREMERE_HUSK)
+			to_chat(user, "<span class='notice'>You suck all the blood out of [target], turning them into a Living Husk!</span>")
+			to_chat(target, "<span class='notice'>Your master has mutated you into a Living Husk!</span>")
+			/// Just take it all
+			bloodsuckerdatum.HandleFeeding(target, 200)
+			ADD_TRAIT(target, TRAIT_MUTE, BLOODSUCKER_TRAIT)
+			H.become_husk()
+			vassaldatum.mutilated = TRUE
+			return
+		/// Chance to give Bat form, or turn them into a bat.
+		if(TREMERE_BAT)
+			/// Ooh, lucky!
+			if(prob(40))
+				to_chat(user, "<span class='notice'>You have mutated [target], giving them the ability to turn into a Bat and back at will!</span>")
+				to_chat(target, "<span class='notice'>Your master has mutated you, giving you the ability to turn into a Bat and back at will!</span>")
+				var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/batform = new
+				target.AddSpell(batform)
+				vassaldatum.mutilated = TRUE
+				return
+			else
+				to_chat(user, "<span class='notice'>You have failed to mutate [target] into a Bat, forever trapping them into Bat form!</span>")
+				to_chat(target, "<span class='notice'>Your master has mutated you into a Bat!</span>")
+				var/mob/living/simple_animal/hostile/retaliate/bat/battransformation = new /mob/living/simple_animal/hostile/retaliate/bat(target.loc)
+				target.mind.transfer_to(battransformation)
+				qdel(target)
+				vassaldatum.mutilated = TRUE
+				return
+
+		else
+			to_chat(user, "<span class='notice'>You decide to leave your Vassal just the way they are.</span>")
+			return
+
+/obj/structure/bloodsucker/vassalrack/proc/offer_ventrue_favorites(mob/living/user, mob/living/target)
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(/datum/antagonist/bloodsucker)
+	var/datum/antagonist/vassal/vassaldatum = target.mind.has_antag_datum(/datum/antagonist/vassal)
+	/// To deal with Blood
+	var/mob/living/carbon/human/C = user
+
+	to_chat(user, "<span class='notice'>Would you like to turn this Vassal into your completely loyal Servant? This costs 150 Blood to do. You cannot undo this.</span>")
+	var/list/favorite_options = list(
+		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
+		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
+		)
+	var/favorite_response = show_radial_menu(user, src, favorite_options, radius = 36, require_near = TRUE)
+	switch(favorite_response)
+		if("Yes")
+			bloodsuckerdatum.my_favorite_vassal = TRUE
+			to_chat(user, "<span class='danger'>You have turned [target] into your Favorite Vassal! They will no longer be deconverted upon Mindshielding!</span>")
+			to_chat(user, "<span class='announce'>* Bloodsucker Tip: You can now upgrade your Vassal by buckling them onto a Candelabrum!</span>")
+			to_chat(target, "<span class='announce'>As Blood drips over your body, you feel closer to your Master...</span>")
+			C.blood_volume -= 150
+			vassaldatum.make_favorite(user)
+			return
+		else
+			to_chat(user, "<span class='danger'>You decide not to turn [target] into your Favorite Vassal.</span>")
+			/// Unbuckle them now.
+			unbuckle_mob(C)
+			useLock = FALSE
+			return
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -552,6 +702,15 @@
 		You can turn it on and off by clicking on it while you are next to it."
 	Hunter_desc = "This is a blue Candelabrum, which causes insanity to those near it while active."
 	var/lit = FALSE
+
+/obj/structure/bloodsucker/candelabrum/examine(mob/user)
+	. = ..()
+	if(IS_BLOODSUCKER(user))
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(/datum/antagonist/bloodsucker)
+		if(bloodsuckerdatum.my_clan == CLAN_VENTRUE)
+			. += span_cult("As part of the Ventrue Clan, you can Rank Up your Favorite Vassal.")
+			. += span_cult("Drag your Vassal's sprite onto the Candelabrum to secure them in place. From there, Clicking will Rank them up, while AltClick will unbuckle, as long as you are in reach.")
+			. += span_cult("Ranking up a Vassal will rank up what powers you currently have, and will allow you to choose what Power your Favorite Vassal will recieve.")
 
 /obj/structure/bloodsucker/candelabrum/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -625,6 +784,19 @@
 		if(target.stat >= DEAD || !user.combat_mode)
 			unbuckle_mob(target)
 			return
+		if(bloodsuckerdatum.my_clan == CLAN_VENTRUE)
+			var/datum/antagonist/vassal/vassaldatum = target.mind.has_antag_datum(/datum/antagonist/vassal)
+			if(vassaldatum && vassaldatum.favorite_vassal)
+				if(bloodsuckerdatum.bloodsucker_level_unspent <= 0)
+					to_chat(user, "<span class='danger'>You don't have any levels to upgrade [C] with.</span>")
+					return
+				/// Everything is good to go - Time to Buy our Favorite Vassal a new Power!
+				bloodsuckerdatum.SpendVassalRank(target )
+			else if(vassaldatum)
+				to_chat(user, span_warning("You can upgrade only your favorite vassal!"))
+				unbuckle_mob(target)
+				return
+
 		if(user.blood_volume >= 150)
 			switch(input("Do you wish to spend 150 Blood to deactivate [target]'s mindshield?") in list("Yes", "No"))
 				if("Yes")
@@ -651,7 +823,7 @@
 	if(!target.Adjacent(src) || target == user || !isliving(user) || has_buckled_mobs() || user.incapacitated() || target.buckled)
 		return
 	/// Are they mindshielded or a bloodsucker/vassal?
-	if(!HAS_TRAIT(target, TRAIT_MINDSHIELD))
+	if(!HAS_TRAIT(target, TRAIT_MINDSHIELD) && !target.has_antag_datum(/datum/antagonist/vassal))
 		return
 	/// Good to go - Buckle them!
 	if(do_after(user, 5 SECONDS, target))

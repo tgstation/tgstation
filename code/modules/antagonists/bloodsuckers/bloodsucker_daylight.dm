@@ -89,7 +89,7 @@
 					if(!istype(bloodsuckerdatum))
 						continue
 					if(bloodsuckerdatum.my_clan == CLAN_GANGREL)
-						give_transform_power()
+						give_transform_power(bloodsuckerdatum)
 					if(!iscarbon(bloodsucker_minds.current))
 						qdel(bloodsucker_minds.current)
 					if(bloodsuckerdatum.altar_uses > 0)
@@ -185,10 +185,6 @@
 				bloodsuckerdatum.powers -= power
 				power.Remove(bloodsucker_minds.current)
 
-/obj/effect/sunlight/proc/give_transform_power()
-	for(var/datum/mind/bloodsucker_minds as anything in get_antag_minds(/datum/antagonist/bloodsucker))
-		if(!istype(bloodsucker_minds) || !istype(bloodsucker_minds.current))
-			continue
-		var/datum/antagonist/bloodsucker/bloodsuckerdatum = bloodsucker_minds.has_antag_datum(/datum/antagonist/bloodsucker)
-		if(!(locate(/datum/action/bloodsucker/gangrel/transform) in bloodsuckerdatum.powers))
-			bloodsuckerdatum.BuyPower(new /datum/action/bloodsucker/gangrel/transform)
+/obj/effect/sunlight/proc/give_transform_power(/datum/antagonist/bloodsucker/sucker)
+	if(!(locate(/datum/action/bloodsucker/gangrel/transform) in sucker.powers))
+		bloodsuckerdatum.BuyPower(new /datum/action/bloodsucker/gangrel/transform)

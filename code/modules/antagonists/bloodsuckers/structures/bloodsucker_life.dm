@@ -26,6 +26,15 @@
 
 	INVOKE_ASYNC(src, PROC_REF(update_hud))
 
+	/// Special check, Tremere Bloodsuckers burn while in the Chapel
+	if(my_clan == CLAN_TREMERE)
+		var/area/A = get_area(owner.current)
+		if(istype(A, /area/service/chapel))
+			to_chat(owner.current, "<span class='warning'>You don't belong in holy areas!</span>")
+			owner.current.adjustFireLoss(10)
+			owner.current.adjust_fire_stacks(2)
+			owner.current.IgniteMob()
+
 /**
  * ## BLOOD STUFF
  */

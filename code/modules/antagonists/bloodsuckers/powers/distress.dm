@@ -6,7 +6,7 @@
 		Use this Power from anywhere and your Master Bloodsucker will instantly be alerted of your location."
 	power_flags = NONE
 	check_flags = NONE
-	purchase_flags = NONE
+	purchase_flags = VASSAL_CAN_BUY
 	bloodcost = 10
 	cooldown = 10 SECONDS
 

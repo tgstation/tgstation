@@ -14,7 +14,7 @@
 		Higher levels will increase the knockdown dealt to enemies."
 	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
-	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
+	purchase_flags = BLOODSUCKER_CAN_BUY
 	bloodcost = 6
 	cooldown = 12 SECONDS
 	target_range = 15
@@ -98,3 +98,12 @@
 				all_targets.set_timed_status_effect(8 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
 				all_targets.adjust_timed_status_effect(8 SECONDS, /datum/status_effect/speech/stutter)
 				all_targets.Knockdown(10 + level_current * 5) // Re-knock them down, the first one didn't work due to stunimmunity
+
+/// Vassal version
+/datum/action/bloodsucker/targeted/haste/vassal
+	name = "Speed of Sound"
+	desc = "Rely on your Master's Dashing techniques to move at supernatural speed, leaving those nearby knocked away, stunned, or left empty-handed."
+	button_icon_state = "power_speed"
+	bloodcost = 5
+	cooldown = 120
+	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY

@@ -10,7 +10,7 @@
 		Higher levels will increase Brute and Stamina resistance."
 	power_flags = BP_AM_TOGGLE|BP_AM_COSTLESS_UNCONSCIOUS
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY
-	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
+	purchase_flags = BLOODSUCKER_CAN_BUY
 	bloodcost = 30
 	cooldown = 8 SECONDS
 	constant_bloodcost = 0.2
@@ -82,3 +82,11 @@
 	name = "Flow"
 	desc = "Use the arts to Flow, giving shove and stun immunity, as well as brute, burn, dismember and pierce resistance. You cannot run while this is active."
 	purchase_flags = HUNTER_CAN_BUY
+
+/datum/action/bloodsucker/fortitude/vassal
+	name = "Force"
+	desc = "Use your Master's teachings to Force yourself to keep your guard through stuns, shovings, dismemberment and piercings. You are unable to run while this is active."
+	button_icon_state = "power_fortitude"
+	bloodcost = 0
+	cooldown = 80
+	purchase_flags = VASSAL_CAN_BUY
