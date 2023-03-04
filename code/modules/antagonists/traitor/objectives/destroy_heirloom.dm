@@ -4,7 +4,7 @@
 		list(
 			// There's about 16 jobs in common, so assistant has a 1/21 chance of getting chosen.
 			/datum/traitor_objective/destroy_heirloom/common = 20,
-			/datum/traitor_objective/destroy_heirloom/less_common = 1,
+			/datum/traitor_objective/destroy_heirloom/common/assistant = 1,
 		) = 4,
 		/datum/traitor_objective/destroy_heirloom/uncommon = 3,
 		/datum/traitor_objective/destroy_heirloom/rare = 2,
@@ -59,12 +59,7 @@
 	)
 
 /// This is only for assistants, because the syndies are a lot less likely to give a shit about what an assistant does, so they're a lot less likely to appear
-/datum/traitor_objective/destroy_heirloom/less_common
-	/// 30 minutes in, syndicate won't care about common heirlooms anymore
-	progression_minimum = 0 MINUTES
-	progression_maximum = 30 MINUTES
-	progression_reward = list(8 MINUTES, 12 MINUTES)
-	telecrystal_reward = list(1, 2)
+/datum/traitor_objective/destroy_heirloom/common/assistant
 	target_jobs = list(
 		/datum/job/assistant
 	)
