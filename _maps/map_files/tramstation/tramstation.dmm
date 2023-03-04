@@ -37649,7 +37649,7 @@
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "mdt" = (
 /obj/structure/table,
-/obj/effect/spawner/random/food_or_drink/cake_ingridents,
+/obj/effect/spawner/random/food_or_drink/cake_ingredients,
 /turf/open/floor/iron/white,
 /area/station/service/kitchen)
 "mdx" = (
