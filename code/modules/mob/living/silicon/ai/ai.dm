@@ -142,14 +142,14 @@
 	else if(target_ai.key)
 		key = target_ai.key
 
-	to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
-	to_chat(src, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
-	to_chat(src, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
+	to_chat(src, span_bold("You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras)."))
+	to_chat(src, span_bold("To look at other parts of the station, click on yourself to get a camera menu."))
+	to_chat(src, span_bold("While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc."))
 	to_chat(src, "To use something, simply click on it.")
 	to_chat(src, "For department channels, use the following say commands:")
 	to_chat(src, ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science, :h - Holopad.")
 	show_laws()
-	to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
+	to_chat(src, span_bold("These laws may be changed by other players, random events, or by you becoming malfunctioning."))
 
 	job = "AI"
 
