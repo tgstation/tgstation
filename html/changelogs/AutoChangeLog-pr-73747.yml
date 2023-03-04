@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Examine block'd out silicon \"show laws\" text."
+  - bugfix: "Re-added a missing alert icon state for AI \"laws updated\" screen alert"
+  - admin: "Adds a new verb. \"Law panel\". This panel lets you see AND EDIT all silicon laws in existence."
