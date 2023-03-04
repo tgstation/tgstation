@@ -539,17 +539,16 @@ SUBSYSTEM_DEF(spatial_grid)
 		input_cell = get_cell_of(to_remove)
 
 #ifdef UNIT_TESTS
-		var/list/containing_cells = find_hanging_cell_refs_for_movable(to_remove, FALSE)
+		var/list/containing_cells = find_hanging_cell_refs_for_movable(to_remove, FALSE, FALSE)
 
 		if(!(input_cell in containing_cells) || length(containing_cells) > 1)
 			in_multiple_cells_error(to_remove, input_cell, containing_cells)
-			find_hanging_cell_refs_for_movable(to_remove, TRUE)
+#endif
 
-#else
 		if(!input_cell)
 			find_hanging_cell_refs_for_movable(to_remove, TRUE)
 			return
-#endif
+
 
 	GRID_CELL_REMOVE(input_cell.client_contents, to_remove)
 	GRID_CELL_REMOVE(input_cell.hearing_contents, to_remove)
@@ -561,6 +560,9 @@ SUBSYSTEM_DEF(spatial_grid)
 		return
 
 	var/cell_locs = grid_cell_locations_message(to_remove, real_locations)
+
+	if(!cell_locs)
+		return
 
 	var/assumed_location_string = assumed_location?.containing_string(to_remove)
 	if(assumed_location_string == null)
@@ -583,7 +585,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	if(length(real_locations) == 1)
 		was_in = "the wrong spatial grid cell, meaning we werent able to figure out where in the grid it is based on where its located"
 
-	stack_trace("[to_remove] was in [was_in]. relevant info: location: [movable_loc_string], thought to be in cell: [assumed_location_string], was in cells: [cell_locs]. ping @KylerAce in discord if you see this error")
+	stack_trace("a [to_remove.type] was in [was_in]. relevant info: location: [movable_loc_string], thought to be in cell: [assumed_location_string], was in cells: [cell_locs]. ping @KylerAce in discord if you see this error")
 #undef LOC_AND_COORDS
 
 ///returns a string containing data for each spatial grid cell in the inputted list.
@@ -593,8 +595,14 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/all_cells = ""
 	var/number_of_cells = 0
 
-	for(var/datum/spatial_grid_cell/containing_cell in real_locations)
-		var/cell_message = containing_cell.containing_string(contained_movable)
+	for(var/datum/spatial_grid_cell/containing_cell as anything in real_locations)
+		var/cell_message = null
+		if(istype(containing_cell, /datum/spatial_grid_cell))
+			cell_message = containing_cell.containing_string(contained_movable)
+		else if(istext(containing_cell))
+			cell_message = "pre init queue: [containing_cell]"
+		else if(isnull(containing_cell))
+			continue
 
 		if(number_of_cells == 0)
 			all_cells = "[cell_message]"
@@ -606,23 +614,27 @@ SUBSYSTEM_DEF(spatial_grid)
 
 		number_of_cells += 1
 
+	if(number_of_cells == 0)
+		return null
+
 	return all_cells
 
 
 
 ///if shit goes south, this will find hanging references for qdeleting movables inside the spatial grid
-/datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, remove_from_cells = TRUE)
+/datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, remove_from_cells = TRUE, check_pre_init = TRUE)
 
-	var/list/queues_containing_movable = list()
-	for(var/queue_channel in waiting_to_add_by_type)
-		var/list/queue_list = waiting_to_add_by_type[queue_channel]
-		if(to_remove in queue_list)
-			queues_containing_movable += queue_channel//just add the associative key
-			if(remove_from_cells)
-				queue_list -= to_remove
+	if(check_pre_init == TRUE)
+		var/list/queues_containing_movable = list()
+		for(var/queue_channel in waiting_to_add_by_type)
+			var/list/queue_list = waiting_to_add_by_type[queue_channel]
+			if(to_remove in queue_list)
+				queues_containing_movable += queue_channel//just add the associative key
+				if(remove_from_cells)
+					queue_list -= to_remove
 
-	if(!initialized)
-		return queues_containing_movable
+		if(!initialized)
+			return queues_containing_movable
 
 	var/list/containing_cells = list()
 	for(var/list/z_level_grid as anything in grids_by_z_level)
