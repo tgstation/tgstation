@@ -86,3 +86,20 @@
 
 /datum/event_admin_setup/warn_admin/apply_to_event(datum/round_event/event)
 	return
+
+/datum/event_admin_setup/set_location
+	///Text shown when admins are queried about setting the target location.
+	var/input_text = "Aimed at the turf we're on?"
+	///Turf that will be passed onto the event.
+	var/atom/chosen_turf
+
+/datum/event_admin_setup/set_location/prompt_admins()
+	var/set_location = tgui_alert(usr, input_text, event_control.name, list("Yes", "No", "Cancel"))
+	switch(set_location)
+		if("Yes")
+			chosen_turf = get_turf(usr)
+		if("No")
+			chosen_turf = null
+		else
+			return ADMIN_CANCEL_EVENT
+	

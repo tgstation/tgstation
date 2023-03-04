@@ -29,7 +29,7 @@
 	description = "A 'classic' virus will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
-	admin_setup = list(/datum/event_admin_setup/disease_outbreak)
+	admin_setup = list(/datum/event_admin_setup/disease_outbreak_candidate_check, /datum/event_admin_setup/listed_options/disease_outbreak)
 	///Disease recipient candidates
 	var/list/disease_candidates = list()
 
@@ -59,28 +59,38 @@
 			continue
 		disease_candidates += candidate
 
-/datum/event_admin_setup/disease_outbreak
-	///Admin selected disease, to be passed down to the round_event
-	var/virus_type
+///Handles checking and alerting admins about the number of valid candidates
+/datum/event_admin_setup/disease_outbreak_candidate_check
 
-/// Checks for candidates. Returns false if there isn't enough
-/datum/event_admin_setup/disease_outbreak/proc/candidate_check()
-	var/datum/round_event_control/disease_outbreak/disease_control = event_control
-	disease_control.generate_candidates() //can_spawn_event() is bypassed by admin_setup, so this makes sure that the candidates are still generated
-	return length(disease_control.disease_candidates)
-
-/datum/event_admin_setup/disease_outbreak/prompt_admins()
+/datum/event_admin_setup/disease_outbreak_candidate_check/prompt_admins()
 	var/candidate_count = candidate_check()
 	if(!candidate_count)
 		tgui_alert(usr, "There are no candidates eligible to recieve a disease!", "Error")
 		return ADMIN_CANCEL_EVENT
 	tgui_alert(usr, "[candidate_count] candidates found!", "Disease Outbreak")
 
-	if(tgui_alert(usr, "Select a specific disease?", "Sickening behavior", list("Yes", "No")) == "Yes")
-		virus_type = tgui_input_list(usr, "Warning: Some of these are EXTREMELY dangerous.","Bacteria Hysteria", subtypesof(/datum/disease))
+/// Checks for candidates. Returns false if there isn't enough
+/datum/event_admin_setup/disease_outbreak_candidate_check/proc/candidate_check()
+	var/datum/round_event_control/disease_outbreak/disease_control = event_control
+	disease_control.generate_candidates() //can_spawn_event() is bypassed by admin_setup, so this makes sure that the candidates are still generated
+	return length(disease_control.disease_candidates)
 
-/datum/event_admin_setup/disease_outbreak/apply_to_event(datum/round_event/disease_outbreak/event)
-	event.virus_type = virus_type
+/datum/event_admin_setup/disease_outbreak_candidate_check/apply_to_event(datum/round_event/event)
+	return
+
+///Handles actually selecting whicch disease will spawn.
+/datum/event_admin_setup/listed_options/disease_outbreak
+	input_text = "Select a specific disease? Warning: Some are EXTREMELY dangerous."
+	normal_run_option = "Random Classic Disease (Safe)"
+	special_run_option = "Entirely Random Disease (Dangerous)"
+
+/datum/event_admin_setup/listed_options/disease_outbreak/get_list()
+	return subtypesof(/datum/disease)
+
+/datum/event_admin_setup/listed_options/disease_outbreak/apply_to_event(datum/round_event/disease_outbreak/event)
+	if(chosen == special_run_option)
+		chosen = pick(get_list())
+	event.virus_type = chosen
 
 /datum/round_event/disease_outbreak
 	announce_when = ADV_ANNOUNCE_DELAY
@@ -141,7 +151,7 @@
 	description = "An 'advanced' disease will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
-	admin_setup = list(/datum/event_admin_setup/disease_outbreak/advanced)
+	admin_setup = list(/datum/event_admin_setup/disease_outbreak_candidate_check, /datum/event_admin_setup/disease_outbreak/advanced)
 
 /datum/event_admin_setup/disease_outbreak/advanced
 	///Admin selected custom severity rating for the event
@@ -154,14 +164,28 @@
  *
  * If the admin wishes, give them the opportunity to select the severity and number of symptoms.
  */
-/datum/event_admin_setup/disease_outbreak/advanced/prompt_admins()
-	var/candidate_count = candidate_check()
-	if(!candidate_count)
-		tgui_alert(usr, "There are no candidates eligible to recieve a disease!", "Error")
-		return ADMIN_CANCEL_EVENT
-	tgui_alert(usr, "[candidate_count] candidates found!", "Disease Outbreak")
 
-	if(tgui_alert(usr,"Customize your virus?", "Glorified Debug Tool", list("Yes", "No")) == "Yes")
+/datum/event_admin_setup/listed_options/disease_outbreak_advanced
+	input_text = "Pick a severity!"
+	normal_run_option = "Random Severity"
+
+/datum/event_admin_setup/listed_options/disease_outbreak_advanced/get_list()
+	return list("Medium", "Harmful", "Dangerous")
+
+/datum/event_admin_setup/listed_options/disease_outbreak_advanced/apply_to_event(datum/round_event/disease_outbreak/advanced/event)
+	switch(chosen)
+		if("Medium")
+			event.requested_severity = ADV_DISEASE_MEDIUM
+		if("Harmful")
+			event.requested_severity = ADV_DISEASE_HARMFUL
+		if("Dangerous")
+			event.requested_severity = ADV_DISEASE_DANGEROUS
+		else
+			event.requested_severity = null
+
+//TO DO FINISH THIS
+
+/datum/event_admin_setup/disease_outbreak/advanced/prompt_admins()
 		chosen_severity = tgui_alert(usr, "Pick a severity!", "In the event of an airborne virus, try not to breathe.", list("Medium", "Harmful", "Dangerous"))
 		switch(chosen_severity)
 			if("Medium")
