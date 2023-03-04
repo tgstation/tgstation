@@ -51,6 +51,14 @@
 	contains = list(/obj/item/stack/sheet/plastic/fifty)
 	crate_name = "plastic sheets crate"
 
+/datum/supply_pack/materials/uranium20
+	name = "20 Uranium Sheets"
+	desc = "For your unethical experiments."
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/item/stack/sheet/mineral/uranium/twenty)
+	crate_name = "uranium crate"
+	contraband = TRUE
+
 /datum/supply_pack/materials/sandstone30
 	name = "30 Sandstone Blocks"
 	desc = "Neither sandy nor stoney, these thirty blocks will still get the job done."

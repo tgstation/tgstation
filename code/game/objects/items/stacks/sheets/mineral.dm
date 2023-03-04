@@ -142,6 +142,9 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 /obj/item/stack/sheet/mineral/uranium/five
 	amount = 5
 
+/obj/item/stack/sheet/mineral/uranium/twenty
+	amount = 20
+
 /*
  * Plasma
  */
