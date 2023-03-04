@@ -166,7 +166,7 @@
 	if(!do_after(user, delay = deploy_time, target = src, interaction_key = DOAFTER_SOURCE_PLANTING_DEVICE))
 		return
 	target.AddComponent(\
-		/datum/component/machine_booby_trap,\
+		/datum/component/interaction_booby_trap,\
 		additional_triggers = list(COMSIG_ORM_COLLECTED_ORE),\
 		on_triggered_callback = CALLBACK(src, PROC_REF(on_triggered)),\
 		on_defused_callback = CALLBACK(src, PROC_REF(on_defused)),\

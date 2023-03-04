@@ -1,7 +1,7 @@
 /**
  * Attached to an atom, creates an explosion when it is interacted with
  */
-/datum/component/machine_booby_trap
+/datum/component/interaction_booby_trap
 	/// Explosion radius of light damage
 	var/explosion_light_range
 	/// Explosion radius of heavy damage
@@ -23,7 +23,7 @@
 	/// Time until we explode
 	var/explode_timer
 
-/datum/component/machine_booby_trap/Initialize(
+/datum/component/interaction_booby_trap/Initialize(
 	explosion_light_range = 3,
 	explosion_heavy_range = 1, // So we destroy some machine components
 	triggered_sound = 'sound/machines/triple_beep.ogg',
@@ -56,21 +56,21 @@
 	if (length(additional_triggers))
 		RegisterSignals(parent, additional_triggers, PROC_REF(trigger_explosive))
 
-/datum/component/machine_booby_trap/Destroy(force, silent)
+/datum/component/interaction_booby_trap/Destroy(force, silent)
 	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_TOOL_ACT(defuse_tool), COMSIG_PARENT_EXAMINE_MORE) + additional_triggers)
 	QDEL_NULL(active_sound_loop)
 	QDEL_NULL(on_triggered_callback)
 	QDEL_NULL(on_defused_callback)
 	return ..()
 
-/// Called when someone touches the machine with their hands, we want to blow up
-/datum/component/machine_booby_trap/proc/on_touched(atom/source)
+/// Called when someone touches the parent atom with their hands, we want to blow up
+/datum/component/interaction_booby_trap/proc/on_touched(atom/source)
 	SIGNAL_HANDLER
 	trigger_explosive(source)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Start a countdown until destruction
-/datum/component/machine_booby_trap/proc/trigger_explosive(atom/source)
+/datum/component/interaction_booby_trap/proc/trigger_explosive(atom/source)
 	SIGNAL_HANDLER
 	if (explode_timer)
 		return
@@ -79,8 +79,8 @@
 	playsound(parent, triggered_sound, 50, FALSE)
 	return
 
-/// Blow up the machine and delete ourselves
-/datum/component/machine_booby_trap/proc/explode(atom/source)
+/// Blow up the parent atom and delete ourselves
+/datum/component/interaction_booby_trap/proc/explode(atom/source)
 	on_triggered_callback?.Invoke(source)
 	var/turf/origin_turf = get_turf(source)
 	new /obj/effect/temp_visual/explosion/fast(origin_turf)
@@ -89,14 +89,14 @@
 	qdel(src)
 
 /// Defuse the bomb and delete ourselves
-/datum/component/machine_booby_trap/proc/on_defused(atom/source, mob/user, obj/item/tool)
+/datum/component/interaction_booby_trap/proc/on_defused(atom/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
 	on_defused_callback?.Invoke(source, user, tool)
 	qdel(src)
 	return COMPONENT_BLOCK_TOOL_ATTACK
 
 /// Give people a little hint
-/datum/component/machine_booby_trap/proc/on_examine(atom/source, mob/examiner, list/examine_list)
+/datum/component/interaction_booby_trap/proc/on_examine(atom/source, mob/examiner, list/examine_list)
 	SIGNAL_HANDLER
 	var/defuse_hint = (defuse_tool) ? "Perhaps [tool_behaviour_name(defuse_tool)] could help..." : ""
 	examine_list += span_warning("There's a light flashing red inside the maintenance panel. [defuse_hint]")
