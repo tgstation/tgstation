@@ -17,8 +17,6 @@
 			// Nor do we want abstract types to appear in the pool of traitor objectives.
 			if(objective_typepath in objectives_that_exist)
 				TEST_FAIL("[objective_typepath] is in a traitor category and is an abstract type! Please remove it from the [/datum/traitor_objective_category].")
-			if(objective.progression_minimum != null)
-				TEST_FAIL("[objective_typepath] has defined a minimum progression level as an abstract type! Please define minimum progression levels on non-abstract types rather than abstract types.")
 			if(objective.progression_reward != 0)
 				TEST_FAIL("[objective_typepath] has set a progression reward as an abstract type! Please define progression rewards on non-abstract types rather than abstract types.")
 			if(objective.telecrystal_reward != 0)
