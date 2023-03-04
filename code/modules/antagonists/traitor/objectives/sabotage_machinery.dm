@@ -1,7 +1,7 @@
 /// Marks a machine as a possible traitor sabotage target
 #define ADD_SABOTAGE_MACHINE(source, typepath) LAZYADD(GLOB.objective_machine_handler.machine_instances_by_path[typepath], source)
 
-/// Traitor objective to place a trap on a machine which causes it to detonate
+/// Traitor objective to destroy a machine the crew cares about
 /datum/traitor_objective_category/sabotage_machinery
 	name = "Sabotage Worksite"
 	objectives = list(
@@ -12,13 +12,6 @@
 /datum/traitor_objective/sabotage_machinery
 	name = "Sabotage the %MACHINE%"
 	description = "Abstract objective holder which shouldn't appear in your uplink."
-
-	progression_reward = list(2 MINUTES, 8 MINUTES)
-	telecrystal_reward = list(0, 1)
-
-	progression_minimum = 0 MINUTES
-	progression_maximum = 10 MINUTES
-
 	abstract_type = /datum/traitor_objective/sabotage_machinery
 
 	/// The maximum amount of this type of objective a traitor can have, set to 0 for no limit.
@@ -59,6 +52,7 @@
 /datum/traitor_objective/sabotage_machinery/proc/prepare_machine(obj/machinery/machine)
 	AddComponent(/datum/component/traitor_objective_register, machine, succeed_signals = list(COMSIG_PARENT_QDELETING))
 
+// Destroy machines which are in annoying locations, are annoying when destroyed, and aren't directly interacted with
 /datum/traitor_objective/sabotage_machinery/destroy
 	name = "Destroy the %MACHINE%"
 	description = "Destroy the %MACHINE% to cause disarray and disrupt the operations of the %JOB%'s department."
@@ -74,9 +68,16 @@
 		JOB_SCIENTIST = /obj/machinery/rnd/server,
 	)
 
+// Rig machines which are in public locations to explode when interacted with
 /datum/traitor_objective/sabotage_machinery/trap
 	name = "Sabotage the %MACHINE%"
-	description = "Destroy the %MACHINE% to cause disarray and disrupt the operations of the %JOB%'s department. If you can have another crew member destroy the machine using the provided booby trap, you will be rewarded with an additional %PROGRESSION% reputation and %TC% telecrystal."
+	description = "Destroy the %MACHINE% to cause disarray and disrupt the operations of the %JOB%'s department. If you can get another crew member to destroy the machine using the provided booby trap, you will be rewarded with an additional %PROGRESSION% reputation and %TC% telecrystals."
+
+	progression_reward = list(2 MINUTES, 8 MINUTES)
+	telecrystal_reward = 0 // Only from completing the bonus objective
+
+	progression_minimum = 0 MINUTES
+	progression_maximum = 10 MINUTES
 
 	maximum_allowed = 2
 	applicable_jobs = list(
@@ -89,7 +90,7 @@
 	)
 
 	/// Bonus reward to grant if you booby trap successfully
-	var/bonus_tc = 1
+	var/bonus_tc = 2
 	/// Bonus reputation to grant if you booby trap successfully
 	var/bonus_rep = 2 MINUTES
 	/// The trap device we give out
@@ -130,7 +131,6 @@
 			user.put_in_hands(tool)
 			tool.balloon_alert(user, "a booby trap materializes in your hand")
 			tool.target_machine_path = applicable_jobs[chosen_job]
-
 
 /// Item which you use on a machine to cause it to explode next time someone interacts with it
 /obj/item/traitor_machine_trapper
