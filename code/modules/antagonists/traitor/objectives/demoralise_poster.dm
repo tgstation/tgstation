@@ -7,6 +7,7 @@
 		do-gooders who try to take it down a hard time!"
 
 	progression_minimum = 0 MINUTES
+	progression_maximum = 30 MINUTES
 	progression_reward = list(4 MINUTES, 8 MINUTES)
 	telecrystal_reward = list(0, 1)
 

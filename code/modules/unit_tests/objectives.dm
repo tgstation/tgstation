@@ -9,15 +9,28 @@
 			else
 				objectives_that_exist += value
 
+	SStraitor.generate_objectives = TRUE
 	for(var/datum/traitor_objective/objective_typepath as anything in subtypesof(/datum/traitor_objective))
-		if(initial(objective_typepath.abstract_type) == objective_typepath)
+		var/datum/traitor_objective/objective = allocate(objective_typepath)
+		if(objective.abstract_type == objective_typepath)
+			// In this case, we don't want abstract types to define values that should be defined on non-abstract types
+			// Nor do we want abstract types to appear in the pool of traitor objectives.
+			if(objective_typepath in objectives_that_exist)
+				TEST_FAIL("[objective_typepath] is in a traitor category and is an abstract type! Please remove it from the [/datum/traitor_objective_category].")
+			if(objective.progression_minimum != null)
+				TEST_FAIL("[objective_typepath] has defined a minimum progression level as an abstract type! Please define minimum progression levels on non-abstract types rather than abstract types.")
+			if(objective.progression_reward != 0)
+				TEST_FAIL("[objective_typepath] has set a progression reward as an abstract type! Please define progression rewards on non-abstract types rather than abstract types.")
+			if(objective.telecrystal_reward != 0)
+				TEST_FAIL("[objective_typepath] has set a telecrystal reward as an abstract type! Please define telecrystal rewards on non-abstract types rather than abstract types.")
 			continue
 		if(!(objective_typepath in objectives_that_exist))
 			TEST_FAIL("[objective_typepath] is not in a traitor category and isn't an abstract type! Place it into a [/datum/traitor_objective_category] or remove it from code.")
-		if(initial(objective_typepath.progression_minimum) == null)
+		if(objective.progression_minimum == null)
 			TEST_FAIL("[objective_typepath] has not defined a minimum progression level and isn't an abstract type! Please define the progression minimum variable on the datum")
-		if(!ispath(objective_typepath, /datum/traitor_objective/ultimate) && initial(objective_typepath.progression_reward) == 0 && initial(objective_typepath.telecrystal_reward) == 0)
+		if(!ispath(objective_typepath, /datum/traitor_objective/ultimate) && objective.progression_reward == 0 && objective.telecrystal_reward == 0)
 			TEST_FAIL("[objective_typepath] has not set either a progression reward or a telecrystal reward! Please set either a telecrystal or progression reward for this objective.")
+	SStraitor.generate_objectives = FALSE
 
 /datum/unit_test/objectives_category/proc/recursive_check_list(base_type, list/to_check, list/to_add_to)
 	for(var/value in to_check)

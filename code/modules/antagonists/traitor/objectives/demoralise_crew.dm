@@ -14,8 +14,6 @@
 	name = "Debug your code."
 	description = "If you actually get this objective someone fucked up."
 
-	progression_maximum = 30 MINUTES
-
 	abstract_type = /datum/traitor_objective/demoralise
 
 	/// How many 'mood events' are required?
