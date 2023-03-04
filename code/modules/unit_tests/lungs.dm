@@ -152,17 +152,17 @@
 
 	// Validate conversion of inhaled gas to exhaled gas.
 	if(min_oxygen)
-		TEST_ASSERT_EQUAL(GET_MOLES(test_breath, /datum/gas/oxygen), expected_oxygen, TEST_CHECK_BREATH_MESSAGE(test_lungs, "should consume all Oxygen initially present in the breath."))
-		TEST_ASSERT_EQUAL(GET_MOLES(test_breath, /datum/gas/carbon_dioxide), expected_co2, TEST_CHECK_BREATH_MESSAGE(test_lungs, "should convert Oxygen into an equivalent volume of CO2."))
+		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, /datum/gas/oxygen), expected_oxygen), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should consume all Oxygen initially present in the breath."))
+		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, /datum/gas/carbon_dioxide), expected_co2), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should convert Oxygen into an equivalent volume of CO2."))
 	if(min_nitro)
-		TEST_ASSERT_EQUAL(GET_MOLES(test_breath, /datum/gas/nitrogen), expected_nitro, TEST_CHECK_BREATH_MESSAGE(test_lungs, "should consume all Nitrogen initially present in the breath."))
-		TEST_ASSERT_EQUAL(GET_MOLES(test_breath, /datum/gas/carbon_dioxide), expected_co2, TEST_CHECK_BREATH_MESSAGE(test_lungs, "should convert Nitrogen into an equivalent volume of CO2."))
+		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, /datum/gas/nitrogen), expected_nitro), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should consume all Nitrogen initially present in the breath."))
+		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, /datum/gas/carbon_dioxide), expected_co2), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should convert Nitrogen into an equivalent volume of CO2."))
 	if(min_co2)
-		TEST_ASSERT_EQUAL(GET_MOLES(test_breath, /datum/gas/carbon_dioxide), expected_co2, TEST_CHECK_BREATH_MESSAGE(test_lungs, "should consume all CO2 initially present in the breath."))
-		TEST_ASSERT_EQUAL(GET_MOLES(test_breath, /datum/gas/oxygen), expected_oxygen, TEST_CHECK_BREATH_MESSAGE(test_lungs, "should convert CO2 into an equivalent volume of Oxygen."))
+		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, /datum/gas/carbon_dioxide), expected_co2), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should consume all CO2 initially present in the breath."))
+		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, /datum/gas/oxygen), expected_oxygen), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should convert CO2 into an equivalent volume of Oxygen."))
 	if(min_plasma)
-		TEST_ASSERT_EQUAL(GET_MOLES(test_breath, /datum/gas/plasma), expected_plasma, TEST_CHECK_BREATH_MESSAGE(test_lungs, "should consume all Plasma initially present in the breath."))
-		TEST_ASSERT_EQUAL(GET_MOLES(test_breath, /datum/gas/carbon_dioxide), expected_co2, TEST_CHECK_BREATH_MESSAGE(test_lungs, "should convert Plasma into an equivalent volume of CO2."))
+		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, /datum/gas/plasma), expected_plasma), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should consume all Plasma initially present in the breath."))
+		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, /datum/gas/carbon_dioxide), expected_co2), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should convert Plasma into an equivalent volume of CO2."))
 
 /// Tests minimum gas alerts by comparing gas pressure.
 /datum/unit_test/lungs/proc/lungs_test_alert_min(mob/living/carbon/human/lab_rat, obj/item/organ/internal/lungs/test_lungs, alert_name, min_pressure, pressure)
