@@ -4595,6 +4595,7 @@
 	req_access = list("shipping")
 	},
 /obj/item/flashlight,
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/plating,
 /area/station/cargo/office)
 "bsJ" = (

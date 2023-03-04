@@ -50826,6 +50826,7 @@
 /obj/item/storage/box,
 /obj/item/storage/box,
 /obj/effect/turf_decal/tile/brown,
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "pFl" = (
