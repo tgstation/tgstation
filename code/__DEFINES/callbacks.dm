@@ -17,7 +17,7 @@
 		ASYNC { \
 			call(proc_owner, proc_path)(##proc_arguments); \
 		}; \
-	} \
+	} 
 
 /// like CALLBACK but specifically for verb callbacks
 #define VERB_CALLBACK new /datum/callback/verb_callback
