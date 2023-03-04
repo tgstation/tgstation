@@ -149,7 +149,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	log_world("::[priority] file=[file],line=[line],title=[map_name]: [type]::[annotation_text]")
 
-/proc/RunUnitTest(datum/unit_test/test_path as anything, list/test_results)
+/proc/RunUnitTest(datum/unit_test/test_path, list/test_results)
 	if(ispath(test_path, /datum/unit_test/focus_only))
 		return
 
