@@ -851,3 +851,18 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/turf/open/floor/floor = get_turf(src)
 	floor.burn_tile()
 	qdel(src)
+
+
+///Causes a room to be trashed and graffitied if the revs won in the last round
+/obj/effect/mapping_helpers/revolution_trash
+	name = "revolution room trasher"
+	late = TRUE
+	icon_state = "revtrasher"
+
+/obj/effect/mapping_helpers/revolution_trash/LateInitialize()
+	var/area/our_area = get_area(src)
+	var/list/openturfs = list()
+
+	if(locate(/obj/structure/fireaxecabinet) in our_area) //A staple of revolutionary behavior
+		var/obj/structure/fireaxecabinet/axe_to_smash
+		axe_to_smash.take_damage(90)
