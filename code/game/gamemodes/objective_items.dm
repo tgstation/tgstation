@@ -26,8 +26,8 @@
 	return TRUE
 
 /// Takes a list of minds and returns true if this is a valid objective to give to a team of these minds
-/datum/objective_item/proc/valid_objective_for(list/potential_thieves)
-	if(!target_exists() || !owner_exists())
+/datum/objective_item/proc/valid_objective_for(list/potential_thieves, require_owner = FALSE)
+	if(!target_exists() || (require_owner && !owner_exists()))
 		return FALSE
 	for (var/datum/mind/possible_thief as anything in potential_thieves)
 		var/datum/job/role = possible_thief.assigned_role
@@ -135,11 +135,12 @@
 	ADD_STEAL_ITEM(src, /obj/item/card/id/departmental_budget/car)
 
 // High risk steal objectives
+
+// Will always generate even with no Captain due to its security and temptation to use it
 /datum/objective_item/steal/caplaser
 	name = "the captain's antique laser gun"
 	targetitem = /obj/item/gun/energy/laser/captain
 	excludefromjob = list(JOB_CAPTAIN)
-	item_owner = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
 
 /obj/item/gun/energy/laser/captain/add_stealing_item_objective()
@@ -209,7 +210,6 @@
 	name = "the nuclear authentication disk"
 	targetitem = /obj/item/disk/nuclear
 	excludefromjob = list(JOB_CAPTAIN)
-	item_owner = list(JOB_CAPTAIN)
 
 /datum/objective_item/steal/nukedisc/check_special_completion(obj/item/disk/nuclear/N)
 	return !N.fake

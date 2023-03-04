@@ -44,7 +44,7 @@
 	while(length(possible_items))
 		var/datum/objective_item/steal/target = pick_n_take(possible_items)
 		target = new target()
-		if(!target.valid_objective_for(list(generating_for)))
+		if(!target.valid_objective_for(list(generating_for), require_owner = TRUE))
 			qdel(target)
 			continue
 		target_item = target
