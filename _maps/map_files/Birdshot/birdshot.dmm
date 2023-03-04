@@ -68820,6 +68820,16 @@
 "xWn" = (
 /obj/structure/closet/secure_closet/detective,
 /obj/machinery/camera/directional/west,
+/obj/machinery/requests_console/directional/north{
+	department = "Detective's Office";
+	name = "Detective Requests Console"
+	},
+/obj/machinery/computer/security/telescreen{
+	dir = 4;
+	name = "Station Monitor";
+	network = list("ss13");
+	pixel_x = -26
+	},
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "xWq" = (
