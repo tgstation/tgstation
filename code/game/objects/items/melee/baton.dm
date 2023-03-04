@@ -761,8 +761,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/item/stuff_in_hand = null
-	stuff_in_hand = target.get_active_held_item()
+	var/obj/item/stuff_in_hand = target.get_active_held_item()
 	if(stuff_in_hand)
 		if(target.temporarilyRemoveItemFromInventory(stuff_in_hand))
 			if(user.put_in_inactive_hand(stuff_in_hand))
