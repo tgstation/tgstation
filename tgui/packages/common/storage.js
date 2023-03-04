@@ -237,14 +237,14 @@ class StorageProxy {
     return backend.get(key);
   }
 
-  async remove(key) {
-    const backend = await this.backendPromise;
-    return backend.remove(key);
-  }
-
   async set(key, value) {
     const backend = await this.backendPromise;
     return backend.set(key, value);
+  }
+
+  async remove(key) {
+    const backend = await this.backendPromise;
+    return backend.remove(key);
   }
 
   async clear() {
