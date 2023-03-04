@@ -82,6 +82,21 @@
 
 	return "CELL{[coords], [channels]}"
 
+#ifdef UNIT_TESTS
+/mob/living/carbon/human/lizard/trolls_the_maintainer
+	name = "Trolls-The-Maintainer"
+
+/mob/living/carbon/human/lizard/trolls_the_maintainer/Initialize(mapload, ...)
+	. = ..()
+	become_hearing_sensitive()
+
+	var/list/datum/spatial_grid_cell/nearby_cells = get_cells_in_range(src, rand(5, 30))
+
+	for(var/datum/spatial_grid_cell/nearby_cell in nearby_cells)
+		GRID_CELL_ADD(nearby_cell, src)
+		GRID_CELL_ADD(nearby_cell, src)
+#endif
+
 /**
  * # Spatial Grid
  *
@@ -562,7 +577,6 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	else
 		movable_loc_string = "(loc: [LOC_AND_COORDS(movable_real_loc)], get_turf: [LOC_AND_COORDS(movable_turf_loc)])"
-
 
 	var/was_in = "multiple spatial grid cells, meaning it wasnt removed from some when it should have been"
 	if(length(real_locations) == 1)
