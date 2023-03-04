@@ -51,8 +51,6 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	description = "Use the button below to materialize the bug within your hand, where you'll then be able to place it on the item. Additionally, you can keep it near you for %TIME% minutes, and you will be rewarded with %PROGRESSION% reputation and %TC% telecrystals."
 
 	progression_minimum = 20 MINUTES
-	progression_reward = 5 MINUTES
-	telecrystal_reward = 0
 
 	var/list/possible_items = list()
 	/// The current target item that we are stealing.
