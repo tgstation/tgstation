@@ -726,7 +726,12 @@
 	create_midwife_eggs(spawncount)
 	return ..()
 
-/// Revenant ruleset
+//////////////////////////////////////////////
+//                                          //
+//            REVENANT     (GHOST)          // //wow i didnt know
+//                                          //
+//////////////////////////////////////////////
+
 /datum/dynamic_ruleset/midround/from_ghosts/revenant
 	name = "Revenant"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
@@ -772,7 +777,12 @@
 	log_game("[key_name(revenant)] was spawned as a revenant by the midround ruleset.")
 	return revenant
 
-/// Sentient Disease ruleset
+//////////////////////////////////////////////
+//                                          //
+//        SENTIENT DISEASE     (GHOST)      //
+//                                          //
+//////////////////////////////////////////////
+
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease
 	name = "Sentient Disease"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
@@ -792,7 +802,12 @@
 	log_game("[key_name(virus)] was spawned as a sentient disease by the midround ruleset.")
 	return virus
 
-/// Space Pirates ruleset
+//////////////////////////////////////////////
+//                                          //
+//        SPACE PIRATES     (GHOST)         //
+//                                          //
+//////////////////////////////////////////////
+
 /datum/dynamic_ruleset/midround/pirates
 	name = "Space Pirates"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
@@ -814,7 +829,12 @@
 	send_pirate_threat()
 	return ..()
 
-/// Obsessed ruleset
+//////////////////////////////////////////////
+//                                          //
+//          OBSESSED     (MIDROUND)         //
+//                                          //
+//////////////////////////////////////////////
+
 /datum/dynamic_ruleset/midround/from_living/obsessed
 	name = "Obsessed"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
@@ -851,7 +871,12 @@
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
 	return TRUE
 
-/// Space Changeling ruleset
+//////////////////////////////////////////////
+//                                          //
+//      SPACE CHANGELING     (GHOST)        //
+//                                          //
+//////////////////////////////////////////////
+
 /datum/dynamic_ruleset/midround/from_ghosts/changeling_midround
 	name = "Space Changeling"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
@@ -872,7 +897,12 @@
 	log_dynamic("[key_name(body)] was spawned as a space changeling by the midround ruleset.")
 	return body
 
-/// Paradox Clone ruleset
+//////////////////////////////////////////////
+//                                          //
+//        PARADOX CLONE      (GHOST)        //
+//                                          //
+//////////////////////////////////////////////
+
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone
 	name = "Paradox Clone"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
