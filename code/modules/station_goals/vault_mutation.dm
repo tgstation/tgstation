@@ -131,13 +131,13 @@
 	SIGNAL_HANDLER
 
 	if(istype(old_organ, /obj/item/organ/internal/lungs))
-		apply_buff(old_organ)
+		remove_buff(old_organ)
 
 /datum/mutation/human/plasmocile/proc/reapply_modification(mob/source, obj/item/organ/new_organ)
 	SIGNAL_HANDLER
 
 	if(istype(new_organ, /obj/item/organ/internal/lungs))
-		remove_buff(new_organ)
+		apply_buff(new_organ)
 
 /datum/mutation/human/plasmocile/proc/apply_buff(obj/item/organ/internal/lungs/our_lungs)
 	our_lungs.plas_breath_dam_min *= 0
