@@ -257,7 +257,7 @@
 
 ///Used for the employee birthday station trait
 /obj/effect/spawner/random/food_or_drink/cake_ingridents
-	name = "cake ingridents spawner"
+	name = "cake ingredients spawner"
 	icon_state = "cake"
 	spawn_all_loot = TRUE
 	loot = list(
