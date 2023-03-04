@@ -323,7 +323,7 @@
 	name = ".50 BMG Incendiary Magazine"
 	desc = "A 6-round magazine of incendiary ammo. \
 			Sets your enemies ablaze, along with everyone else next to them!"
-	item = /obj/item/ammo_box/magazine/sniper_rounds/incediary
+	item = /obj/item/ammo_box/magazine/sniper_rounds/incendiary
 	cost = 4
 
 /datum/uplink_item/ammo/sniper/disruptor

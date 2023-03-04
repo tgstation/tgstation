@@ -20,7 +20,7 @@
 
 /obj/item/ammo_casing/p50/incendiary
 	name = ".50 BMG incendiary bullet casing"
-	desc = "A .50 BMG incediary bullet casing."
+	desc = "A .50 BMG incendiary bullet casing."
 	projectile_type = /obj/projectile/bullet/p50/incendiary
 
 /obj/item/ammo_casing/p50/penetrator
