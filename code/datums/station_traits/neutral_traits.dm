@@ -201,7 +201,6 @@
 	var/mob/living/carbon/human/birthday_person
 	///Variable that admins can override with a player's ckey in order to set them as the birthday person when the round starts.
 	var/birthday_override_ckey
-	force = TRUE
 
 /datum/station_trait/birthday/New()
 	. = ..()
