@@ -292,7 +292,7 @@
 		if(check_access_list(SSid_access.accesses_by_region[key.department_access]))
 			try_to_activate_door(user, access_bypass = TRUE)
 		return TRUE
-	if(!user.combat_mode && istype(weapon, /obj/item/fireaxe))
+	else if(!user.combat_mode && istype(weapon, /obj/item/fireaxe))
 		try_to_crowbar(weapon, user, FALSE)
 		return TRUE
 	else if(weapon.item_flags & NOBLUDGEON || user.combat_mode)
