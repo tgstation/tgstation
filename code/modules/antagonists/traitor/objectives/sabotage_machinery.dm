@@ -21,8 +21,6 @@
 
 	abstract_type = /datum/traitor_objective/sabotage_machinery
 
-	/// Signals sent by a machine which indicate that we succeeded at our sabotage.
-	var/list/success_signals = list(COMSIG_PARENT_QDELETING)
 	/// The maximum amount of this type of objective a traitor can have, set to 0 for no limit.
 	var/maximum_allowed = 0
 	/// The possible target machinery and the jobs tied to each one.
@@ -51,11 +49,15 @@
 	chosen_job = pick(possible_jobs)
 	var/list/obj/machinery/possible_machines = GLOB.objective_machine_handler.machine_instances_by_path[possible_jobs[chosen_job]]
 	for(var/obj/machinery/machine as anything in possible_machines)
-		AddComponent(/datum/component/traitor_objective_register, machine, succeed_signals = success_signals)
+		prepare_machine(machine)
 
 	replace_in_name("%JOB%", lowertext(chosen_job))
 	replace_in_name("%MACHINE%", possible_machines[1].name)
 	return TRUE
+
+/// Marks a given machine as our target
+/datum/traitor_objective/sabotage_machinery/proc/prepare_machine(obj/machinery/machine)
+	AddComponent(/datum/component/traitor_objective_register, machine, succeed_signals = list(COMSIG_PARENT_QDELETING))
 
 /datum/traitor_objective/sabotage_machinery/destroy
 	name = "Destroy the %MACHINE%"
@@ -74,11 +76,9 @@
 
 /datum/traitor_objective/sabotage_machinery/trap
 	name = "Sabotage the %MACHINE%"
-	description = "Conceal the provided explosive device within the %MACHINE% to cause disarray and disrupt the operations of the %JOB%'s department."
+	description = "Destroy the %MACHINE% to cause disarray and disrupt the operations of the %JOB%'s department. If you can have another crew member destroy the machine using the provided booby trap, you will be rewarded with an additional %PROGRESSION% reputation and %TC% telecrystal."
 
 	maximum_allowed = 2
-	success_signals = list(COMSIG_TRAITOR_MACHINE_TRAP_TRIGGERED)
-
 	applicable_jobs = list(
 		JOB_CHIEF_ENGINEER = /obj/machinery/rnd/production/protolathe/department/engineering,
 		JOB_CHIEF_MEDICAL_OFFICER = /obj/machinery/rnd/production/techfab/department/medical,
@@ -88,8 +88,31 @@
 		JOB_SHAFT_MINER = /obj/machinery/mineral/ore_redemption,
 	)
 
+	/// Bonus reward to grant if you booby trap successfully
+	var/bonus_tc = 1
+	/// Bonus reputation to grant if you booby trap successfully
+	var/bonus_rep = 2 MINUTES
 	/// The trap device we give out
 	var/obj/item/traitor_machine_trapper/tool
+
+/datum/traitor_objective/sabotage_machinery/trap/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	. = ..()
+	if (!.)
+		return FALSE
+
+	replace_in_name("%TC%", bonus_tc)
+	replace_in_name("%PROGRESSION%", DISPLAY_PROGRESSION(bonus_rep))
+	return TRUE
+
+/datum/traitor_objective/sabotage_machinery/trap/prepare_machine(obj/machinery/machine)
+	RegisterSignal(machine, COMSIG_TRAITOR_MACHINE_TRAP_TRIGGERED, PROC_REF(sabotage_success))
+	return ..()
+
+/// Called when you successfully proc the booby trap, gives a bonus reward
+/datum/traitor_objective/sabotage_machinery/trap/proc/sabotage_success(obj/machinery/machine)
+	progression_reward += bonus_rep
+	telecrystal_reward += bonus_tc
+	succeed_objective()
 
 /datum/traitor_objective/sabotage_machinery/trap/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
