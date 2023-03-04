@@ -3,7 +3,7 @@
 	objectives = list( //Similar weights to destroy heirloom objectives
 		list(
 			/datum/traitor_objective/kidnapping/common = 20,
-			/datum/traitor_objective/kidnapping/less_common = 1,
+			/datum/traitor_objective/kidnapping/common/assistant = 1,
 		) = 4,
 		/datum/traitor_objective/kidnapping/uncommon = 3,
 		/datum/traitor_objective/kidnapping/rare = 2,
@@ -78,11 +78,9 @@
 		/datum/job/atmospheric_technician,
 	)
 
-/datum/traitor_objective/kidnapping/less_common
+/datum/traitor_objective/kidnapping/common/assistant
 	progression_minimum = 0 MINUTES
 	progression_maximum = 15 MINUTES
-	progression_reward = list(2 MINUTES, 4 MINUTES)
-	telecrystal_reward = list(1, 2)
 	target_jobs = list(
 		/datum/job/assistant
 	)
