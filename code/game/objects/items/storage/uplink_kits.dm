@@ -607,6 +607,19 @@
 		group.register(i)
 	desc += " The implants are registered to the \"[group.name]\" group."
 
+/obj/item/storage/box/syndie_kit/c4
+
+/obj/item/storage/box/syndie_kit/c4/PopulateContents()
+	new /obj/item/grenade/c4 (src)
+	new /obj/item/grenade/c4 (src)
+	new /obj/item/grenade/c4 (src)
+
+/obj/item/storage/box/syndie_kit/syndi_keys
+
+/obj/item/storage/box/syndie_kit/syndi_keys/PopulateContents()
+	new /obj/item/encryptionkey/syndicate
+	new /obj/item/encryptionkey/syndicate
+	
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY
