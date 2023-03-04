@@ -455,7 +455,12 @@
 		))
 		to_chat(real_headrev, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
 			\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
-			<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
+			<b>You have been chosen out of your fellow provocateurs to rename the station, and recieve a gift to commemorate your success. Choose wisely.</b> \
+			Message ends.\""))
+
+	//Add new station trait to only occur on rev win
+	//use it to trigger mapping helpers placed in command rooms that make them covered in grafiti and broken up
+	//rustg_file_write(json_encode(params["station_traits"]), FUTURE_STATION_TRAITS_FILE)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_REVOLUTION_VICTORY)
 
