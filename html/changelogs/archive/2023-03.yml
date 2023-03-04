@@ -64,3 +64,8 @@
       being rotated by using dir.
   tf-4:
   - bugfix: Fixed a missing wire in the Tramstation cargo warehouse.
+2023-03-04:
+  Melbert:
+  - qol: Food over-top Drying Racks / Smartfridges will no longer decompose into ants
+  Vlada - VastKilleroOm:
+  - imageadd: added 1 hairstyle icon
