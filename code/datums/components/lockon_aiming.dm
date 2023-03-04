@@ -26,7 +26,7 @@
 	if(target_callback)
 		can_target_callback = target_callback
 	else
-		can_target_callback = CALLBACK(src, .proc/can_target)
+		can_target_callback = CALLBACK(src, PROC_REF(can_target))
 	if(range)
 		lock_cursor_range = range
 	if(typecache)

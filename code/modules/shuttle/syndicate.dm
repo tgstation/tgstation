@@ -1,4 +1,4 @@
-#define SYNDICATE_CHALLENGE_TIMER 20 MINUTES
+#define SYNDICATE_CHALLENGE_TIMER (20 MINUTES)
 
 /obj/machinery/computer/shuttle/syndicate
 	name = "syndicate shuttle terminal"
@@ -12,11 +12,6 @@
 	possible_destinations = "syndicate_away;syndicate_z5;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s;syndicate_custom"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = NODECONSTRUCT_1
-
-/obj/machinery/computer/shuttle/syndicate/allowed(mob/M)
-	if(issilicon(M) && !(ROLE_SYNDICATE in M.faction))
-		return FALSE
-	return ..()
 
 /obj/machinery/computer/shuttle/syndicate/launch_check(mob/user)
 	. = ..()
@@ -49,7 +44,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!is_centcom_level(z))
+	if(!is_reserved_level(z))
 		to_chat(user, span_warning("Pods are one way!"))
 		return FALSE
 	return TRUE

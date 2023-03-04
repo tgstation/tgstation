@@ -290,14 +290,14 @@ const TankCompressorRecords = (props, context) => {
                     }}
                   />,
                   <Button
-                    key="print"
-                    icon="print"
-                    content="Print"
+                    key="save"
+                    icon="floppy-disk"
+                    content="Save"
                     disabled={!disk}
-                    tooltip="Print the record selected. Requires a data disk."
+                    tooltip="Save the record selected to an inserted data disk."
                     tooltipPosition="bottom"
                     onClick={() => {
-                      act('print_record', {
+                      act('save_record', {
                         'ref': activeRecord.ref,
                       });
                     }}

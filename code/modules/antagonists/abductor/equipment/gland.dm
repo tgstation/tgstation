@@ -61,6 +61,7 @@
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
 		return FALSE
 	mind_control_uses--
+	owner.balloon_alert(owner, "new compulsion")
 	to_chat(owner, span_userdanger("You suddenly feel an irresistible compulsion to follow an order..."))
 	to_chat(owner, span_mind_control("[command]"))
 	active_mind_control = TRUE
@@ -69,12 +70,13 @@
 	update_gland_hud()
 	var/atom/movable/screen/alert/mind_control/mind_alert = owner.throw_alert(ALERT_MIND_CONTROL, /atom/movable/screen/alert/mind_control)
 	mind_alert.command = command
-	addtimer(CALLBACK(src, .proc/clear_mind_control), mind_control_duration)
+	addtimer(CALLBACK(src, PROC_REF(clear_mind_control)), mind_control_duration)
 	return TRUE
 
 /obj/item/organ/internal/heart/gland/proc/clear_mind_control()
 	if(!ownerCheck() || !active_mind_control)
 		return FALSE
+	owner.balloon_alert(owner, "compulsion forgotten")
 	to_chat(owner, span_userdanger("You feel the compulsion fade, and you <i>completely forget</i> about your previous orders."))
 	owner.clear_alert(ALERT_MIND_CONTROL)
 	active_mind_control = FALSE

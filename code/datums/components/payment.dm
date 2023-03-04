@@ -33,9 +33,9 @@
 	transaction_style = _style
 
 /datum/component/payment/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE, .proc/attempt_charge)
-	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE, .proc/change_cost)
-	RegisterSignal(SSdcs, COMSIG_GLOB_REVOLUTION_VICTORY, .proc/clean_up)
+	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE, PROC_REF(attempt_charge))
+	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE, PROC_REF(change_cost))
+	RegisterSignal(SSdcs, COMSIG_GLOB_REVOLUTION_VICTORY, PROC_REF(clean_up))
 
 /datum/component/payment/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_OBJ_ATTEMPT_CHARGE, COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE))
@@ -121,7 +121,7 @@
 		holochange.name = "[holochange.credits] credit holochip"
 		if(ishuman(user))
 			var/mob/living/carbon/human/paying_customer = user
-			if(!INVOKE_ASYNC(paying_customer, /mob.proc/put_in_hands, holochange))
+			if(!INVOKE_ASYNC(paying_customer, TYPE_PROC_REF(/mob, put_in_hands), holochange))
 				user.pulling = holochange
 		else
 			user.pulling = holochange
@@ -134,6 +134,8 @@
  * Attempts to charge a mob, user, an integer number of credits, total_cost, directly from an ID card/bank account.
  */
 /datum/component/payment/proc/handle_card(mob/living/user, obj/item/card/id/idcard, total_cost)
+	var/atom/atom_parent = parent
+
 	if(!idcard)
 		return FALSE
 	if(!idcard?.registered_account)
@@ -154,7 +156,7 @@
 				to_chat(user, span_warning("YOU MORON. YOU ABSOLUTE BAFOON. YOU INSUFFERABLE TOOL. YOU ARE POOR."))
 			if(PAYMENT_CLINICAL)
 				to_chat(user, span_warning("ID Card lacks funds. Aborting."))
-		user.balloon_alert(user, "Cost: [total_cost] credits.")
+		atom_parent.balloon_alert(user, "needs [total_cost] credit\s!")
 		return FALSE
 	target_acc.transfer_money(idcard.registered_account, total_cost, "Nanotrasen: Usage of Corporate Machinery")
 	log_econ("[total_cost] credits were spent on [parent] by [user] via [idcard.registered_account.account_holder]'s card.")

@@ -7,7 +7,7 @@
 /datum/anomaly_placer/proc/findValidArea()
 	if(!allowed_areas)
 		generateAllowedAreas()
-	var/list/possible_areas = typecache_filter_list(GLOB.sortedAreas,allowed_areas)
+	var/list/possible_areas = typecache_filter_list(GLOB.areas, allowed_areas)
 	if (!length(possible_areas))
 		CRASH("No valid areas for anomaly found.")
 

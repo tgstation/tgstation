@@ -26,7 +26,7 @@
 	density = TRUE
 	anchored = FALSE
 	max_integrity = 500
-	armor = list(MELEE = 45, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 0, FIRE = 30, ACID = 30)
+	armor_type = /datum/armor/machinery_roulette
 	var/static/list/numbers = list("0" = "green", "1" = "red", "3" = "red", "5" = "red", "7" = "red", "9" = "red", "12" = "red", "14" = "red", "16" = "red",\
 	"18" = "red", "19" = "red", "21" = "red", "23" = "red", "25" = "red", "27" = "red", "30" = "red", "32" = "red", "34" = "red", "36" = "red",\
 	"2" = "black", "4" = "black", "6" = "black", "8" = "black", "10" = "black", "11" = "black", "13" = "black", "15" = "black", "17" = "black", "20" = "black",\
@@ -45,6 +45,15 @@
 	var/datum/looping_sound/jackpot/jackpot_loop
 	var/on = TRUE
 	var/last_spin = 13
+
+/datum/armor/machinery_roulette
+	melee = 45
+	bullet = 30
+	laser = 30
+	energy = 30
+	bomb = 10
+	fire = 30
+	acid = 30
 
 /obj/machinery/roulette/Initialize(mapload)
 	. = ..()
@@ -175,7 +184,7 @@
 			playsound(src, 'sound/machines/piston_raise.ogg', 70)
 			playsound(src, 'sound/machines/chime.ogg', 50)
 
-			addtimer(CALLBACK(src, .proc/play, user, player_card, chosen_bet_type, chosen_bet_amount, potential_payout), 4) //Animation first
+			addtimer(CALLBACK(src, PROC_REF(play), user, player_card, chosen_bet_type, chosen_bet_amount, potential_payout), 4) //Animation first
 			return TRUE
 		else
 			var/msg = tgui_input_text(user, "Name of your roulette wheel", "Roulette Customization", "Roulette Machine", MAX_NAME_LEN)
@@ -184,7 +193,7 @@
 			name = msg
 			desc = "Owned by [player_card.registered_account.account_holder], draws directly from [user.p_their()] account."
 			my_card = player_card
-			RegisterSignal(my_card, COMSIG_PARENT_QDELETING, .proc/on_my_card_deleted)
+			RegisterSignal(my_card, COMSIG_PARENT_QDELETING, PROC_REF(on_my_card_deleted))
 			to_chat(user, span_notice("You link the wheel to your account."))
 			power_change()
 			return
@@ -214,8 +223,8 @@
 	var/rolled_number = rand(0, 36)
 
 	playsound(src, 'sound/machines/roulettewheel.ogg', 50)
-	addtimer(CALLBACK(src, .proc/finish_play, player_id, bet_type, bet_amount, payout, rolled_number), 34) //4 deciseconds more so the animation can play
-	addtimer(CALLBACK(src, .proc/finish_play_animation), 30)
+	addtimer(CALLBACK(src, PROC_REF(finish_play), player_id, bet_type, bet_amount, payout, rolled_number), 34) //4 deciseconds more so the animation can play
+	addtimer(CALLBACK(src, PROC_REF(finish_play_animation)), 30)
 
 	use_power(active_power_usage)
 
@@ -296,7 +305,7 @@
 	var/obj/item/cash = new coin_to_drop(drop_loc)
 	playsound(cash, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg')), 40, TRUE)
 
-	addtimer(CALLBACK(src, .proc/drop_coin), 3) //Recursion time
+	addtimer(CALLBACK(src, PROC_REF(drop_coin)), 3) //Recursion time
 
 
 ///Fills a list of coins that should be dropped.
@@ -439,7 +448,7 @@
 		return
 	loc.visible_message(span_warning("\The [src] begins to beep loudly!"))
 	used = TRUE
-	addtimer(CALLBACK(src, .proc/launch_payload), 40)
+	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 40)
 
 /obj/item/roulette_wheel_beacon/proc/launch_payload()
 	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()

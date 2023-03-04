@@ -131,11 +131,11 @@
 
 /obj/item/reagent_containers/cup/rag/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/cleaner, 3 SECONDS, pre_clean_callback=CALLBACK(src, .proc/should_clean))
+	AddComponent(/datum/component/cleaner, 3 SECONDS, pre_clean_callback=CALLBACK(src, PROC_REF(should_clean)))
 
-/obj/item/reagent_containers/cup/rag/suicide_act(mob/user)
+/obj/item/reagent_containers/cup/rag/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/item/reagent_containers/cup/rag/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
 	if(!proximity_flag)

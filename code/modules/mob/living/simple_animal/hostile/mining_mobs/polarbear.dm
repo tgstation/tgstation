@@ -58,7 +58,7 @@
 	pull_force = PULL_FORCE_DEFAULT
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/polarbear/revive(full_heal = FALSE, admin_revive = FALSE)
+/mob/living/simple_animal/hostile/asteroid/polarbear/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -69,7 +69,7 @@
 /mob/living/simple_animal/hostile/asteroid/polarbear/lesser
 	name = "magic polar bear"
 	desc = "It seems sentient somehow."
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 
 /obj/item/crusher_trophy/bear_paw
 	name = "polar bear paw"

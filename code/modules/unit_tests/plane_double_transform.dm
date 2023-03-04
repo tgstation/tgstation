@@ -4,7 +4,7 @@
 /datum/unit_test/plane_double_transform/Run()
 	// We're going to operate off the actual plane master setup of an actual mob
 	// It's not perfect, but it'll help things a lot
-	var/mob/living/carbon/human/judger = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/judger = allocate(/mob/living/carbon/human/consistent)
 	// Hack to account for not having an actual hud
 	var/datum/plane_master_group/hudless/our_group = allocate(/datum/plane_master_group/hudless)
 	our_group.our_mob = judger

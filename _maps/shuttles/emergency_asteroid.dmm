@@ -27,10 +27,7 @@
 	},
 /obj/docking_port/mobile/emergency{
 	dir = 2;
-	dwidth = 10;
-	height = 13;
-	name = "Asteroid emergency shuttle";
-	width = 28
+	name = "Asteroid emergency shuttle"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)

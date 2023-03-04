@@ -1,0 +1,24 @@
+# Creates an entry in html/changelogs automatically, to eventually be compiled by compile_changelogs
+name: Auto Changelog
+on:
+  pull_request_target:
+    types:
+      - closed
+    branches:
+      - master
+permissions:
+  contents: write
+jobs:
+  auto_changelog:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run auto changelog
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const { processAutoChangelog } = await import('${{ github.workspace }}/tools/pull_request_hooks/autoChangelog.js')
+          await processAutoChangelog({ github, context })
+        github-token: ${{ secrets.COMFY_ORANGE_PAT || secrets.GITHUB_TOKEN }}

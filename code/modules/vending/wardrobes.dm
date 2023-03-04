@@ -104,7 +104,7 @@
 		/obj/item/clothing/head/beret/engi = 3,
 		/obj/item/clothing/mask/bandana/striped/engineering = 3,
 		/obj/item/clothing/head/utility/hardhat = 3,
-		/obj/item/clothing/head/utility/hardhat/weldhat = 3,
+		/obj/item/clothing/head/utility/hardhat/welding = 3,
 		)
 	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
 	payment_department = ACCOUNT_ENG
@@ -127,7 +127,6 @@
 		/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos = 3,
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician = 3,
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician/skirt = 3,
-		/obj/item/clothing/head/beret/atmos = 3,
 		/obj/item/clothing/shoes/sneakers/black = 3,
 		)
 	refill_canister = /obj/item/vending_refill/wardrobe/atmos_wardrobe
@@ -206,7 +205,6 @@
 		/obj/item/storage/backpack/satchel/science = 3,
 		/obj/item/storage/backpack/duffelbag/science = 3,
 		/obj/item/clothing/head/beret/science = 3,
-		/obj/item/clothing/head/beret/science/fancy = 3,
 		/obj/item/clothing/mask/bandana/striped/science = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/science = 3,
 		/obj/item/clothing/under/rank/rnd/scientist = 3,
@@ -435,6 +433,7 @@
 		/obj/item/clothing/head/chaplain/taqiyah/red = 3,
 		/obj/item/clothing/suit/chaplainsuit/monkrobeeast = 1,
 		/obj/item/clothing/head/rasta = 1,
+		/obj/item/clothing/suit/chaplainsuit/shrinehand = 1,
 		)
 	contraband = list(
 		/obj/item/toy/plush/ratplush = 1,
@@ -543,7 +542,7 @@
 		/obj/item/clothing/suit/jacket/det_suit/noir = 1,
 		/obj/item/clothing/head/fedora = 2,
 		/obj/item/clothing/gloves/color/black = 2,
-		/obj/item/clothing/gloves/color/latex = 2,
+		/obj/item/clothing/gloves/latex = 2,
 		/obj/item/clothing/under/rank/security/detective/disco = 1,
 		/obj/item/clothing/suit/jacket/det_suit/disco = 1,
 		/obj/item/clothing/shoes/discoshoes = 1,
@@ -555,7 +554,8 @@
 		/obj/item/clothing/glasses/regular/kim = 1,
 		/obj/item/reagent_containers/cup/glass/flask/det = 2,
 		/obj/item/storage/fancy/cigarettes = 5,
-		)
+		/obj/item/storage/fancy/cigarettes/cigpack_candy = 5,
+	)
 	premium = list(
 		/obj/item/clothing/head/flatcap = 1,
 		)

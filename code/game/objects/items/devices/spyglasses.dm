@@ -14,7 +14,7 @@
 		return
 	cool_guy.setup_popup("spypopup", 3, 3, 2, "S.P.Y")
 	linked_bug.cam_screen.display_to(user)
-	RegisterSignal(cool_guy, COMSIG_POPUP_CLEARED, .proc/on_screen_clear)
+	RegisterSignal(cool_guy, COMSIG_POPUP_CLEARED, PROC_REF(on_screen_clear))
 
 	linked_bug.update_view()
 
@@ -60,7 +60,7 @@
 
 /obj/item/clothing/accessory/spy_bug/Initialize(mapload)
 	. = ..()
-	tracker = new /datum/movement_detector(src, CALLBACK(src, .proc/update_view))
+	tracker = new /datum/movement_detector(src, CALLBACK(src, PROC_REF(update_view)))
 	cam_screen = new
 	cam_screen.generate_view("spypopup_map")
 

@@ -1,11 +1,12 @@
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { GenericUplink, Item } from './GenericUplink';
-import { Component } from 'inferno';
+import { Component, Fragment } from 'inferno';
 import { fetchRetry } from '../../http';
 import { resolveAsset } from '../../assets';
 import { BooleanLike } from 'common/react';
 import { Box, Tabs, Button, Stack, Section, Tooltip } from '../../components';
+import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 import { Objective, ObjectiveMenu } from './ObjectiveMenu';
 import { calculateProgression, calculateReputationLevel, reputationDefault, reputationLevelsTooltip } from './calculateReputationLevel';
 
@@ -18,6 +19,7 @@ type UplinkItem = {
   purchasable_from: number;
   restricted: BooleanLike;
   limited_stock: number;
+  stock_key: string;
   restricted_roles: string;
   restricted_species: string;
   progression_minimum: number;
@@ -46,6 +48,10 @@ type UplinkData = {
 
   has_objectives: BooleanLike;
   has_progression: BooleanLike;
+  primary_objectives: {
+    [key: number]: string;
+  };
+  completed_final_objective: string;
   potential_objectives: Objective[];
   active_objectives: Objective[];
   maximum_active_objectives: number;
@@ -150,6 +156,8 @@ export class Uplink extends Component<{}, UplinkState> {
     const {
       telecrystals,
       progression_points,
+      primary_objectives,
+      completed_final_objective,
       active_objectives,
       potential_objectives,
       has_objectives,
@@ -180,7 +188,7 @@ export class Uplink extends Component<{}, UplinkState> {
       const hasEnoughProgression =
         progression_points >= item.progression_minimum;
 
-      let stock: number | null = current_stock[item.id];
+      let stock: number | null = current_stock[item.stock_key];
       if (item.ref) {
         stock = extra_purchasable_stock[item.ref];
       }
@@ -313,15 +321,22 @@ export class Uplink extends Component<{}, UplinkState> {
                   <Stack.Item grow={1}>
                     <Tabs fluid textAlign="center">
                       {!!has_objectives && (
-                        <Tabs.Tab
-                          selected={currentTab === 0}
-                          onClick={() => this.setState({ currentTab: 0 })}>
-                          Objectives
-                        </Tabs.Tab>
+                        <Fragment>
+                          <Tabs.Tab
+                            selected={currentTab === 0}
+                            onClick={() => this.setState({ currentTab: 0 })}>
+                            Primary Objectives
+                          </Tabs.Tab>
+                          <Tabs.Tab
+                            selected={currentTab === 1}
+                            onClick={() => this.setState({ currentTab: 1 })}>
+                            Secondary Objectives
+                          </Tabs.Tab>
+                        </Fragment>
                       )}
                       <Tabs.Tab
-                        selected={currentTab === 1 || !has_objectives}
-                        onClick={() => this.setState({ currentTab: 1 })}>
+                        selected={currentTab === 2 || !has_objectives}
+                        onClick={() => this.setState({ currentTab: 2 })}>
                         Market
                       </Tabs.Tab>
                     </Tabs>
@@ -341,53 +356,59 @@ export class Uplink extends Component<{}, UplinkState> {
             </Stack.Item>
             <Stack.Item grow>
               {(currentTab === 0 && has_objectives && (
-                <ObjectiveMenu
-                  activeObjectives={active_objectives}
-                  potentialObjectives={potential_objectives}
-                  maximumActiveObjectives={maximum_active_objectives}
-                  maximumPotentialObjectives={maximum_potential_objectives}
-                  handleObjectiveAction={(objective, action) =>
-                    act('objective_act', {
-                      check: objective.original_progression,
-                      objective_action: action,
-                      index: objective.id,
-                    })
-                  }
-                  handleStartObjective={(objective) =>
-                    act('start_objective', {
-                      check: objective.original_progression,
-                      index: objective.id,
-                    })
-                  }
-                  handleObjectiveAbort={(objective) =>
-                    act('objective_abort', {
-                      check: objective.original_progression,
-                      index: objective.id,
-                    })
-                  }
-                  handleObjectiveCompleted={(objective) =>
-                    act('finish_objective', {
-                      check: objective.original_progression,
-                      index: objective.id,
-                    })
-                  }
-                  handleRequestObjectives={() => act('regenerate_objectives')}
+                <PrimaryObjectiveMenu
+                  primary_objectives={primary_objectives}
+                  final_objective={completed_final_objective}
                 />
-              )) || (
-                <GenericUplink
-                  currency=""
-                  categories={allCategories}
-                  items={items}
-                  handleBuy={(item) => {
-                    const extraDataItem = item as Item<ItemExtraData>;
-                    if (!extraDataItem.extraData?.ref) {
-                      act('buy', { path: item.id });
-                    } else {
-                      act('buy', { ref: extraDataItem.extraData.ref });
+              )) ||
+                (currentTab === 1 && has_objectives && (
+                  <ObjectiveMenu
+                    activeObjectives={active_objectives}
+                    potentialObjectives={potential_objectives}
+                    maximumActiveObjectives={maximum_active_objectives}
+                    maximumPotentialObjectives={maximum_potential_objectives}
+                    handleObjectiveAction={(objective, action) =>
+                      act('objective_act', {
+                        check: objective.original_progression,
+                        objective_action: action,
+                        index: objective.id,
+                      })
                     }
-                  }}
-                />
-              )}
+                    handleStartObjective={(objective) =>
+                      act('start_objective', {
+                        check: objective.original_progression,
+                        index: objective.id,
+                      })
+                    }
+                    handleObjectiveAbort={(objective) =>
+                      act('objective_abort', {
+                        check: objective.original_progression,
+                        index: objective.id,
+                      })
+                    }
+                    handleObjectiveCompleted={(objective) =>
+                      act('finish_objective', {
+                        check: objective.original_progression,
+                        index: objective.id,
+                      })
+                    }
+                    handleRequestObjectives={() => act('regenerate_objectives')}
+                  />
+                )) || (
+                  <GenericUplink
+                    currency=""
+                    categories={allCategories}
+                    items={items}
+                    handleBuy={(item) => {
+                      const extraDataItem = item as Item<ItemExtraData>;
+                      if (!extraDataItem.extraData?.ref) {
+                        act('buy', { path: item.id });
+                      } else {
+                        act('buy', { ref: extraDataItem.extraData.ref });
+                      }
+                    }}
+                  />
+                )}
             </Stack.Item>
           </Stack>
         </Window.Content>

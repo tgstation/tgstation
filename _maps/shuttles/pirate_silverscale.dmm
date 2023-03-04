@@ -522,13 +522,10 @@
 	},
 /obj/docking_port/mobile/pirate{
 	dir = 4;
-	dwidth = 13;
-	height = 3;
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Silverscale Cruiser";
-	preferred_direction = 4;
-	width = 26
+	preferred_direction = 4
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4

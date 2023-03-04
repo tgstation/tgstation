@@ -38,6 +38,8 @@
 #define IGNORE_DIGITIGRADE (1<<18)
 /// Has contextual screentips when HOVERING OVER OTHER objects
 #define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
+/// No blood overlay is allowed to appear on this item, and it cannot gain blood DNA forensics 
+#define NO_BLOOD_ON_ITEM (1 << 20)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
@@ -65,6 +67,8 @@
 #define CASTING_CLOTHES (1<<19)
 ///Moths can't eat the clothing that has this flag.
 #define INEDIBLE_CLOTHING (1<<20)
+/// Headgear/helmet allows internals
+#define HEADINTERNALS (1<<21)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing

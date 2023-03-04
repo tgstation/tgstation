@@ -165,7 +165,7 @@ new /datum/disease_ability/symptom/powerful/youth
 
 /datum/action/cooldown/disease_cough
 	name = "Cough"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "cough"
 	desc = "Force the host you are following to cough with extra force, spreading your infection to those within two meters of your host even if your transmissibility is low.<br>Cooldown: 10 seconds"
 	cooldown_time = 100
@@ -204,7 +204,7 @@ new /datum/disease_ability/symptom/powerful/youth
 
 /datum/action/cooldown/disease_sneeze
 	name = "Sneeze"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "sneeze"
 	desc = "Force the host you are following to sneeze with extra force, spreading your infection to any victims in a 4 meter cone in front of your host even if your transmissibility is low.<br>Cooldown: 20 seconds"
 	cooldown_time = 200
@@ -249,7 +249,7 @@ new /datum/disease_ability/symptom/powerful/youth
 
 /datum/action/cooldown/disease_infect
 	name = "Secrete Infection"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "infect"
 	desc = "Cause the host you are following to excrete an infective substance from their pores, causing all objects touching their skin to transmit your infection to anyone who touches them for the next 30 seconds.<br>Cooldown: 40 seconds"
 	cooldown_time = 400

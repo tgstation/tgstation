@@ -297,7 +297,7 @@
 	dir = 4
 	},
 /obj/structure/barricade/wooden/crude,
-/turf/closed/mineral/random/snow,
+/turf/open/misc/snow,
 /area/ruin/bughabitat)
 "Kc" = (
 /obj/structure/table,
@@ -334,7 +334,7 @@
 	dir = 8
 	},
 /obj/item/plunger,
-/mob/living/simple_animal/mouse,
+/mob/living/basic/mouse,
 /obj/machinery/light/small/blacklight/directional/south,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)

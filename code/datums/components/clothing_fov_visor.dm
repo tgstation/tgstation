@@ -18,9 +18,9 @@
 	src.visor_up = clothing_parent.up //Initial values could vary, so we need to get it.
 
 /datum/component/clothing_fov_visor/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
-	RegisterSignal(parent, COMSIG_CLOTHING_VISOR_TOGGLE, .proc/on_visor_toggle)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+	RegisterSignal(parent, COMSIG_CLOTHING_VISOR_TOGGLE, PROC_REF(on_visor_toggle))
 
 /datum/component/clothing_fov_visor/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_CLOTHING_VISOR_TOGGLE))
@@ -53,7 +53,7 @@
 		UnregisterSignal(wearer, COMSIG_PARENT_QDELETING)
 		wearer.remove_fov_trait(src, fov_angle)
 	wearer = equipper
-	RegisterSignal(wearer, COMSIG_PARENT_QDELETING, .proc/on_wearer_deleted)
+	RegisterSignal(wearer, COMSIG_PARENT_QDELETING, PROC_REF(on_wearer_deleted))
 	if(visor_up)
 		return
 	equipper.add_fov_trait(src, fov_angle)

@@ -6,19 +6,18 @@
 /obj/machinery/atmospherics/components/binary/crystallizer
 	icon = 'icons/obj/atmospherics/components/machines.dmi'
 	icon_state = "crystallizer-off"
+	base_icon_state = "crystallizer"
 	name = "crystallizer"
 	desc = "Used to crystallize or solidify gases."
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
 	density = TRUE
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 80, ACID = 30)
+	armor_type = /datum/armor/binary_crystallizer
 	circuit = /obj/item/circuitboard/machine/crystallizer
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	vent_movement = NONE
 
-	///Base icon state for the machine to be used in update_icon()
-	var/base_icon = "crystallizer"
 	///Internal Gas mix used for processing the gases that have been put in
 	var/datum/gas_mixture/internal
 	///Var that controls how much gas gets injected in moles per tick
@@ -32,13 +31,18 @@
 	///Stores the total amount of moles needed for the current recipe
 	var/total_recipe_moles = 0
 
+/datum/armor/binary_crystallizer
+	energy = 100
+	fire = 80
+	acid = 30
+
 /obj/machinery/atmospherics/components/binary/crystallizer/Initialize(mapload)
 	. = ..()
 	internal = new
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
 	if(!on)
-		if(default_deconstruction_screwdriver(user, "[base_icon]-open", "[base_icon]-off", I))
+		if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", "[base_icon_state]-off", I))
 			return
 	if(default_change_direction_wrench(user, I))
 		return
@@ -92,11 +96,11 @@
 /obj/machinery/atmospherics/components/binary/crystallizer/update_icon_state()
 	. = ..()
 	if(panel_open)
-		icon_state = "[base_icon]-open"
+		icon_state = "[base_icon_state]-open"
 	else if(on && is_operational)
-		icon_state = "[base_icon]-on"
+		icon_state = "[base_icon_state]-on"
 	else
-		icon_state = "[base_icon]-off"
+		icon_state = "[base_icon_state]-off"
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby_secondary(obj/item/tool, mob/user, params)
 	if(!can_interact(user))

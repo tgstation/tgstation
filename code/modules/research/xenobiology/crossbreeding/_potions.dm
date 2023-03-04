@@ -14,6 +14,7 @@ Slimecrossing Potions
 /obj/item/slimepotion/extract_cloner/afterattack(obj/item/target, mob/user , proximity)
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(is_reagent_container(target))
 		return ..(target, user, proximity)
 	if(istype(target, /obj/item/slimecross))
@@ -116,12 +117,13 @@ Slimecrossing Potions
 	if(!istype(C))
 		to_chat(user, span_warning("The potion can only be used on clothing!"))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(istype(C, /obj/item/clothing/suit/space))
 		to_chat(user, span_warning("The [C] is already pressure-resistant!"))
-		return ..()
+		return . | ..()
 	if(C.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && C.clothing_flags & STOPSPRESSUREDAMAGE)
 		to_chat(user, span_warning("The [C] is already pressure-resistant!"))
-		return ..()
+		return . | ..()
 	to_chat(user, span_notice("You slather the blue gunk over the [C], making it airtight."))
 	C.name = "pressure-resistant [C.name]"
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -132,6 +134,7 @@ Slimecrossing Potions
 	uses--
 	if(!uses)
 		qdel(src)
+	return .
 
 //Enhancer potion - Charged Cerulean
 /obj/item/slimepotion/enhancer/max
@@ -159,6 +162,7 @@ Slimecrossing Potions
 	if(!istype(C))
 		to_chat(user, span_warning("You can't coat this with lavaproofing fluid!"))
 		return ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	to_chat(user, span_notice("You slather the red gunk over the [C], making it lavaproof."))
 	C.name = "lavaproof [C.name]"
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -170,6 +174,7 @@ Slimecrossing Potions
 	uses--
 	if(!uses)
 		qdel(src)
+	return .
 
 //Revival potion - Charged Grey
 /obj/item/slimepotion/slime_reviver
@@ -187,7 +192,7 @@ Slimecrossing Potions
 		return
 	if(revive_target.maxHealth <= 0)
 		to_chat(user, span_warning("The slime is too unstable to return!"))
-	revive_target.revive(full_heal = TRUE, admin_revive = FALSE)
+	revive_target.revive(HEAL_ALL)
 	revive_target.set_stat(CONSCIOUS)
 	revive_target.visible_message(span_notice("[revive_target] is filled with renewed vigor and blinks awake!"))
 	revive_target.maxHealth -= 10 //Revival isn't healthy.

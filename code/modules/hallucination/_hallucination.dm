@@ -23,7 +23,7 @@
 		return
 
 	src.hallucinator = hallucinator
-	RegisterSignal(hallucinator, COMSIG_PARENT_QDELETING, .proc/target_deleting)
+	RegisterSignal(hallucinator, COMSIG_PARENT_QDELETING, PROC_REF(target_deleting))
 	GLOB.all_ongoing_hallucinations += src
 
 /// Signal proc for [COMSIG_PARENT_QDELETING], if the mob hallucinating us is deletes, we should delete too.
@@ -121,8 +121,8 @@
 
 	who_sees_us = list()
 	for(var/mob/seer as anything in mobs_which_see_us)
-		RegisterSignal(seer, COMSIG_MOB_LOGIN, .proc/show_image_to)
-		RegisterSignal(seer, COMSIG_PARENT_QDELETING, .proc/remove_seer)
+		RegisterSignal(seer, COMSIG_MOB_LOGIN, PROC_REF(show_image_to))
+		RegisterSignal(seer, COMSIG_PARENT_QDELETING, PROC_REF(remove_seer))
 		who_sees_us += seer
 		show_image_to(seer)
 
@@ -218,7 +218,7 @@
 		stack_trace("[type] was created without a parent hallucination.")
 		return INITIALIZE_HINT_QDEL
 
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/parent_deleting)
+	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(parent_deleting))
 	src.parent = parent
 
 /obj/effect/client_image_holder/hallucination/Destroy(force)

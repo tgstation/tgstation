@@ -18,7 +18,7 @@
 
 /datum/component/cracked/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_ATOM_INTEGRITY_CHANGED, .proc/IntegrityChanged)
+	RegisterSignal(parent, COMSIG_ATOM_INTEGRITY_CHANGED, PROC_REF(IntegrityChanged))
 	var/obj/master = parent
 	var/integrity = master.get_integrity()
 	IntegrityChanged(parent, integrity, integrity)

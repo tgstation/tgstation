@@ -96,7 +96,7 @@
 /// number of FULL air controller ticks before an excited group breaks down (averages gas contents across turfs)
 #define EXCITED_GROUP_BREAKDOWN_CYCLES 5
 /// number of FULL air controller ticks before an excited group dismantles and removes its turfs from active
-#define EXCITED_GROUP_DISMANTLE_CYCLES (EXCITED_GROUP_BREAKDOWN_CYCLES * 2) + 1 //Reset after 2 breakdowns
+#define EXCITED_GROUP_DISMANTLE_CYCLES ((EXCITED_GROUP_BREAKDOWN_CYCLES * 2) + 1) //Reset after 2 breakdowns
 /// Ratio of air that must move to/from a tile to reset group processing
 #define MINIMUM_AIR_RATIO_TO_SUSPEND 0.1
 /// Minimum ratio of air that must move to/from a tile

@@ -50,7 +50,7 @@
 			detonate tablets of crewmembers who have their message feature enabled. \
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer."
 	progression_minimum = 30 MINUTES
-	item = /obj/item/computer_hardware/hard_drive/portable/virus/deto
+	item = /obj/item/computer_disk/virus/detomatix
 	cost = 6
 	restricted = TRUE
 
@@ -61,6 +61,11 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndie_kit/emp
 	cost = 2
+
+/datum/uplink_item/explosives/emp/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		cost *= 3
 
 /datum/uplink_item/explosives/pizza_bomb
 	name = "Pizza Bomb"
@@ -87,6 +92,11 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop/emp
 	cost = 7
+
+/datum/uplink_item/explosives/syndicate_bomb/emp/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		cost *= 2
 
 // High progression cost
 

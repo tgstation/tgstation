@@ -49,7 +49,7 @@
 	. = ..()
 	if(used || polling || !ishuman(usr))
 		return
-	INVOKE_ASYNC(src, .proc/poll_for_student, usr, params["school"])
+	INVOKE_ASYNC(src, PROC_REF(poll_for_student), usr, params["school"])
 	SStgui.close_uis(src)
 
 /obj/item/antag_spawner/contract/proc/poll_for_student(mob/living/carbon/human/teacher, apprentice_school)

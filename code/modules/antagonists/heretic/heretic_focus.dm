@@ -7,9 +7,9 @@
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-	RegisterSignal(target, COMSIG_ITEM_DROPPED, .proc/on_drop)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+	RegisterSignal(target, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 
 	var/obj/item/item_target = target
 	// If our loc is a mob, it's possible we already have it equippied

@@ -381,6 +381,16 @@
 	id = "comp_counter_overlay"
 	build_path = /obj/item/circuit_component/counter_overlay
 
+/datum/design/component/bci/reagent_injector
+	name = "Reagent Injector Component"
+	id = "comp_reagent_injector"
+	build_path = /obj/item/circuit_component/reagent_injector
+
+/datum/design/component/bci/install_detector
+	name = "Install Detector Component"
+	id = "comp_install_detector"
+	build_path = /obj/item/circuit_component/install_detector
+
 /datum/design/component/foreach
 	name = "For Each Component"
 	id = "comp_foreach"
@@ -425,6 +435,16 @@
 	name = "Access Checker Component"
 	id = "comp_access_checker"
 	build_path = /obj/item/circuit_component/compare/access
+
+/datum/design/component/list_pick
+	name = "List Pick Component"
+	id = "comp_list_pick"
+	build_path = /obj/item/circuit_component/list_pick
+
+/datum/design/component/list_pick_assoc
+	name = "Associative List Pick Component"
+	id = "comp_assoc_list_pick"
+	build_path = /obj/item/circuit_component/list_pick/assoc
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"

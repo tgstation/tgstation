@@ -26,13 +26,14 @@
 	/// Weakpoint where the bomb should be planted
 	var/area/weakpoint_area
 
-/datum/traitor_objective/locate_weakpoint/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+/datum/traitor_objective/locate_weakpoint/can_generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	if(handler.get_completion_progression(/datum/traitor_objective) < progression_objectives_minimum)
 		return FALSE
-
 	if(SStraitor.get_taken_count(/datum/traitor_objective/locate_weakpoint) > 0)
 		return FALSE
+	return TRUE
 
+/datum/traitor_objective/locate_weakpoint/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	scan_areas = list()
 	/// List of high-security areas that we pick required ones from
 	var/list/allowed_areas = typecacheof(list(/area/station/command,
@@ -63,7 +64,7 @@
 	var/area/scan_area2 = scan_areas[2]
 	replace_in_name("%AREA1%", initial(scan_area1.name))
 	replace_in_name("%AREA2%", initial(scan_area2.name))
-	RegisterSignal(SSdcs, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, .proc/on_global_obj_completed)
+	RegisterSignal(SSdcs, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, PROC_REF(on_global_obj_completed))
 	return TRUE
 
 /datum/traitor_objective/locate_weakpoint/ungenerate_objective()
@@ -73,7 +74,7 @@
 	. = ..()
 
 	// We don't want multiple people being able to take weakpoint objectives if they get one available at the same time
-	for(var/datum/traitor_objective/locate_weakpoint/other_objective in SStraitor.all_objectives_by_type[/datum/traitor_objective/locate_weakpoint])
+	for(var/datum/traitor_objective/locate_weakpoint/other_objective as anything in SStraitor.all_objectives_by_type[/datum/traitor_objective/locate_weakpoint])
 		if(other_objective != src)
 			other_objective.fail_objective()
 
@@ -189,7 +190,7 @@
 	for(var/mob/living/silicon/ai/ai_player in GLOB.player_list)
 		to_chat(ai_player, alertstr)
 
-	if(!do_after(user, 30 SECONDS, src, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE | IGNORE_HELD_ITEM | IGNORE_INCAPACITATED | IGNORE_SLOWDOWNS, extra_checks = CALLBACK(src, .proc/scan_checks, user, user_area, objective)))
+	if(!do_after(user, 30 SECONDS, src, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE | IGNORE_HELD_ITEM | IGNORE_INCAPACITATED | IGNORE_SLOWDOWNS, extra_checks = CALLBACK(src, PROC_REF(scan_checks), user, user_area, objective)))
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return
 

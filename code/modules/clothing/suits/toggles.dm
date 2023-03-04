@@ -36,6 +36,11 @@
 		RemoveHood()
 	return ..()
 
+/obj/item/clothing/suit/hooded/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	if(visuals_only)
+		MakeHood()
+	ToggleHood()
+
 /obj/item/clothing/suit/hooded/proc/RemoveHood()
 	src.icon_state = "[initial(icon_state)]"
 	hood_up = FALSE
@@ -51,7 +56,7 @@
 		if(alternative_mode)
 			QDEL_NULL(hood)
 
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/clothing/suit/hooded/dropped()
 	..()
@@ -78,7 +83,7 @@
 			hood_up = TRUE
 			icon_state = "[initial(icon_state)]_t"
 			H.update_worn_oversuit()
-			update_action_buttons()
+			H.update_mob_action_buttons()
 	else
 		RemoveHood()
 

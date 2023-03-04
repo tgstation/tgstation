@@ -4,6 +4,7 @@
 #define INVESTIGATE_BOTANY "botany"
 #define INVESTIGATE_CARGO "cargo"
 #define INVESTIGATE_CRAFTING "crafting"
+#define INVESTIGATE_DEATHS "deaths"
 #define INVESTIGATE_ENGINE "engine"
 #define INVESTIGATE_EXPERIMENTOR "experimentor"
 #define INVESTIGATE_GRAVITY "gravity"
@@ -52,6 +53,25 @@
 
 #define LOGSRC_CKEY "Ckey"
 #define LOGSRC_MOB "Mob"
+
+// Log header keys
+#define LOG_HEADER_CATEGORY "category"
+#define LOG_HEADER_INIT_TIMESTAMP "timestamp"
+#define LOG_HEADER_ROUND_ID "round_id"
+
+// Log data keys
+#define LOG_ENTRY_MESSAGE "message"
+#define LOG_ENTRY_TIMESTAMP "timestamp"
+#define LOG_ENTRY_DATA "data"
+
+// Log json keys
+#define LOG_JSON_CATEGORY "category"
+#define LOG_JSON_ENTRIES "entries"
+#define LOG_JSON_LOGGING_START "log_start"
+
+// Log categories
+#define LOG_CATEGORY_NOT_FOUND "invalid_category"
+#define LOG_CATEGORY_TARGET_ZONE_SWITCH "target_zone_switch"
 
 //wrapper macros for easier grepping
 #define DIRECT_OUTPUT(A, B) A << B

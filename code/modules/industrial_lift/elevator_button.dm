@@ -105,7 +105,7 @@
 		loc.balloon_alert(activator, "elevator called")
 
 	// Actually try to move the lift. This will sleep.
-	if(!lift.move_to_zlevel(loc.z, CALLBACK(src, .proc/check_button)))
+	if(!lift.move_to_zlevel(loc.z, CALLBACK(src, PROC_REF(check_button))))
 		loc.balloon_alert(activator, "elevator out of service!")
 		return FALSE
 

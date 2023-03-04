@@ -1,0 +1,148 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:color';
+@use 'sass:meta';
+//@use 'sass:map';
+
+//palette
+$cyan: #5edba5;
+$pink: #ed12f5;
+$orange: #ff9900;
+$purple: #463191;
+
+$light-gray: #c3c3c3;
+$dark-gray: #858585;
+$scrollbar-color-multiplier: 0.5;
+
+@use '../colors.scss' with (
+   $primary: black,
+   $label: rgb(255, 132, 153),
+   $good: pink,
+
+   $bad: red,
+   // $fg-map-keys: (),
+   // $bg-map-keys: (),
+ );
+
+@use '../base.scss' with (
+   $color-bg: orange,
+   $color-bg-grad-spread: 12%,
+   //$border-radius: 0,
+ );
+
+.theme-ntos_cat {
+  // Atomic classes
+  @include meta.load-css('../atomic/color.scss', $with: ());
+
+  // Components
+  @include meta.load-css(
+    '../components/Button.scss',
+    $with: (
+      'color-default': pink,
+      'color-transparent-text': rgba(227, 240, 255, 0.75),
+      'color-disabled': #363636,
+      'color-selected': #465899,
+      'color-caution': #be6209
+    )
+  );
+  @include meta.load-css(
+    '../components/ProgressBar.scss',
+    $with: ('color-default-fill': rgb(255, 132, 153, 0.75))
+  );
+  @include meta.load-css(
+    '../components/Section.scss',
+    $with: ('background-color': rgba(124, 62, 34, 0.75))
+  );
+  @include meta.load-css(
+    '../components/Tooltip.scss',
+    $with: ('background-color': rgba(255, 153, 0, 0.75))
+  );
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css(
+    '../layouts/TitleBar.scss',
+    $with: ('background-color': rgb(255, 132, 153, 0.75))
+  );
+
+  .Section {
+    color: black;
+    outline: base.em(2px) inset rgb(255, 132, 153);
+  }
+  .Button {
+    color: rgb(255, 132, 153);
+    background-color: rgb(255, 255, 255);
+  }
+
+  .ProgressBar {
+    color: black;
+  }
+
+  .Layout__content {
+    background-image: url('../../assets/bg-cat.svg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  .Layout,
+  .Layout * {
+    // Fancy scrollbar
+    scrollbar-base-color: color.scale(
+      #454255,
+      $lightness: -25% * $scrollbar-color-multiplier
+    );
+    scrollbar-face-color: color.scale(
+      #454255,
+      $lightness: 10% * $scrollbar-color-multiplier
+    );
+
+    scrollbar-3dlight-color: color.scale(
+      orange,
+      $lightness: 0% * $scrollbar-color-multiplier
+    );
+    scrollbar-highlight-color: color.scale(
+      orange,
+      $lightness: 0% * $scrollbar-color-multiplier
+    );
+    scrollbar-track-color: color.scale(
+      #ba753a,
+      $lightness: -25% * $scrollbar-color-multiplier
+    );
+    scrollbar-arrow-color: color.scale(
+      orange,
+      $lightness: 50% * $scrollbar-color-multiplier
+    );
+    scrollbar-shadow-color: color.scale(
+      #454255,
+      $lightness: 10% * $scrollbar-color-multiplier
+    );
+  }
+  .Tab {
+    color: rgb(255, 132, 153);
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  .Tab--selected {
+    color: black;
+    background-color: rgb(255, 132, 153);
+  }
+  .Box {
+    outline: base.em(3px) outset #c0c0c0;
+  }
+  .Tooltip {
+    color: black;
+  }
+  .Input {
+    background-color: white;
+    outline: base.em(2px) inset rgb(255, 132, 153);
+  }
+  .NtosWindow__header {
+    background-color: #454255;
+  }
+  .Flex {
+    color: white;
+    background-color: rgba(0, 0, 0, 0);
+  }
+}

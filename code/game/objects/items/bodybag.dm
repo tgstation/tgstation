@@ -33,7 +33,7 @@
 	moveToNullspace()
 	return item_bag
 
-/obj/item/bodybag/suicide_act(mob/user)
+/obj/item/bodybag/suicide_act(mob/living/user)
 	if(isopenturf(user.loc))
 		user.visible_message(span_suicide("[user] is crawling into [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		var/obj/structure/closet/body_bag/R = new unfoldedbag_path(user.loc)
@@ -41,8 +41,7 @@
 		qdel(src)
 		user.forceMove(R)
 		playsound(src, 'sound/items/zip.ogg', 15, TRUE, -3)
-		return (OXYLOSS)
-	..()
+		return OXYLOSS
 
 // Bluespace bodybag
 
@@ -88,7 +87,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	to_chat(user, span_notice("You claw at the fabric of [src], trying to tear it open..."))
 	to_chat(loc, span_warning("Someone starts trying to break free of [src]!"))
-	if(!do_mob(user, src, 12 SECONDS, timed_action_flags = (IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM)))
+	if(!do_after(user, 12 SECONDS, src, timed_action_flags = (IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM)))
 		return
 	// you are still in the bag? time to go unless you KO'd, honey!
 	// if they escape during this time and you rebag them the timer is still clocking down and does NOT reset so they can very easily get out.

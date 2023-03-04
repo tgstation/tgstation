@@ -21,7 +21,7 @@
 	. = ..()
 	icons = typelist("icons", icons)
 
-/turf/open/floor/mineral/setup_broken_states()
+/turf/open/floor/mineral/broken_states()
 	return list("[initial(icon_state)]_dam")
 
 /turf/open/floor/mineral/update_icon_state()
@@ -70,7 +70,7 @@
 	floor_tile = /obj/item/stack/tile/mineral/titanium
 	custom_materials = list(/datum/material/titanium = 500)
 
-/turf/open/floor/mineral/titanium/setup_broken_states()
+/turf/open/floor/mineral/titanium/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
 /turf/open/floor/mineral/titanium/rust_heretic_act()
@@ -113,7 +113,7 @@
 	icon_state = "titanium_tiled"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled
 
-/turf/open/floor/mineral/titanium/tiled/setup_broken_states()
+/turf/open/floor/mineral/titanium/tiled/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
 /turf/open/floor/mineral/titanium/tiled/airless
@@ -154,7 +154,7 @@
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium
 	custom_materials = list(/datum/material/alloy/plastitanium = 500)
 
-/turf/open/floor/mineral/plastitanium/setup_broken_states()
+/turf/open/floor/mineral/plastitanium/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
 /turf/open/floor/mineral/plastitanium/rust_heretic_act()

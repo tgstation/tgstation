@@ -14,10 +14,12 @@
 	var/order_id = 0
 	var/errors = 0
 
-/obj/item/paper/fluff/jobs/cargo/manifest/Initialize(mapload, id, cost)
+/obj/item/paper/fluff/jobs/cargo/manifest/Initialize(mapload, id, cost, manifest_can_fail = TRUE)
 	. = ..()
 	order_id = id
 	order_cost = cost
+	if(!manifest_can_fail)
+		return
 
 	if(prob(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_NAME
@@ -37,19 +39,40 @@
 
 /datum/supply_order
 	var/id
+	var/cost_type
 	var/orderer
 	var/orderer_rank
 	var/orderer_ckey
 	var/reason
 	var/discounted_pct
+	///If set to FALSE, we won't charge when the cargo shuttle arrives with this.
+	var/charge_on_purchase = TRUE
 	///area this order wants to reach, if not null then it will come with the deliver_first component set to this area
 	var/department_destination
 	var/datum/supply_pack/pack
 	var/datum/bank_account/paying_account
 	var/obj/item/coupon/applied_coupon
+	///Boolean on whether the manifest can fail or not.
+	var/manifest_can_fail = TRUE
+	///Boolean on whether the manifest can be cancelled through cargo consoles.
+	var/can_be_cancelled = TRUE
 
-/datum/supply_order/New(datum/supply_pack/pack, orderer, orderer_rank, orderer_ckey, reason, paying_account, department_destination, coupon)
+/datum/supply_order/New(
+	datum/supply_pack/pack,
+	orderer,
+	orderer_rank,
+	orderer_ckey,
+	reason,
+	paying_account,
+	department_destination,
+	coupon,
+	charge_on_purchase = TRUE,
+	manifest_can_fail = TRUE,
+	cost_type = "cr",
+	can_be_cancelled = TRUE,
+)
 	id = SSshuttle.order_number++
+	src.cost_type = cost_type
 	src.pack = pack
 	src.orderer = orderer
 	src.orderer_rank = orderer_rank
@@ -58,6 +81,18 @@
 	src.paying_account = paying_account
 	src.department_destination = department_destination
 	src.applied_coupon = coupon
+	src.charge_on_purchase = charge_on_purchase
+	src.manifest_can_fail = manifest_can_fail
+	src.can_be_cancelled = can_be_cancelled
+
+//returns the total cost of this order. Its not the total price paid by cargo but the total value of this order
+/datum/supply_order/proc/get_final_cost()
+	var/cost = pack.get_cost()
+	if(applied_coupon) //apply discount price
+		cost -= (cost * applied_coupon.discount_pct_off)
+	if(!isnull(paying_account)) //privately purchased means 1.1x the cost
+		cost *= 1.1
+	return cost
 
 /datum/supply_order/proc/generateRequisition(turf/T)
 	var/obj/item/paper/requisition_paper = new(T)
@@ -80,7 +115,7 @@
 	return requisition_paper
 
 /datum/supply_order/proc/generateManifest(obj/container, owner, packname, cost) //generates-the-manifests.
-	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest_paper = new(null, id, cost)
+	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest_paper = new(null, id, cost, manifest_can_fail)
 
 	var/station_name = (manifest_paper.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
 

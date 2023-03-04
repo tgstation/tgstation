@@ -35,7 +35,7 @@
 #define INJECT (1<<4)
 
 // How long do mime drinks silence the drinker (if they are a mime)?
-#define MIMEDRINK_SILENCE_DURATION 1 MINUTES
+#define MIMEDRINK_SILENCE_DURATION (1 MINUTES)
 ///Health threshold for synthflesh and rezadone to unhusk someone
 #define UNHUSK_DAMAGE_THRESHOLD 50
 ///Amount of synthflesh required to unhusk someone

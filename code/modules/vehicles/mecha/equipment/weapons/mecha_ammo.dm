@@ -67,25 +67,27 @@
 	rounds = 300
 	ammo_type = MECHA_AMMO_LMG
 
-/obj/item/mecha_ammo/missiles_br
-	name = "breaching missiles"
-	desc = "A box of large missiles, ready for loading into a BRM-6 exosuit missile rack."
-	icon_state = "missile_br"
-	custom_materials = list(/datum/material/iron=8000,/datum/material/gold=500)
-	rounds = 6
-	direct_load = TRUE
-	load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
-	ammo_type = MECHA_AMMO_MISSILE_HE
-
-/obj/item/mecha_ammo/missiles_he
-	name = "anti-armor missiles"
+/// Missile Ammo
+/// SRM-8 Missile type - Used by Nuclear Operatives
+/obj/item/mecha_ammo/missiles_srm
+	name = "short range missiles"
 	desc = "A box of large missiles, ready for loading into an SRM-8 exosuit missile rack."
 	icon_state = "missile_he"
 	rounds = 8
 	direct_load = TRUE
 	load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
-	ammo_type = MECHA_AMMO_MISSILE_AP
+	ammo_type = MECHA_AMMO_MISSILE_SRM
 
+/// PEP-6 Missile type - Used by Robotics
+/obj/item/mecha_ammo/missiles_pep
+	name = "precision explosive missiles"
+	desc = "A box of large missiles, ready for loading into a PEP-6 exosuit missile rack."
+	icon_state = "missile_br"
+	custom_materials = list(/datum/material/iron=8000,/datum/material/gold=500)
+	rounds = 6
+	direct_load = TRUE
+	load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
+	ammo_type = MECHA_AMMO_MISSILE_PEP
 
 /obj/item/mecha_ammo/flashbang
 	name = "launchable flashbangs"

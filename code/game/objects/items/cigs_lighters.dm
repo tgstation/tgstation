@@ -189,7 +189,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!(slot & ITEM_SLOT_MASK))
 		UnregisterSignal(equipee, COMSIG_HUMAN_FORCESAY)
 		return
-	RegisterSignal(equipee, COMSIG_HUMAN_FORCESAY, .proc/on_forcesay)
+	RegisterSignal(equipee, COMSIG_HUMAN_FORCESAY, PROC_REF(on_forcesay))
 
 /obj/item/clothing/mask/cigarette/dropped(mob/dropee)
 	. = ..()
@@ -199,7 +199,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	SIGNAL_HANDLER
 	source.apply_status_effect(/datum/status_effect/choke, src, lit, choke_forever ? -1 : rand(25 SECONDS, choke_time_max))
 
-/obj/item/clothing/mask/cigarette/suicide_act(mob/user)
+/obj/item/clothing/mask/cigarette/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer."))
 	return (TOXLOSS|OXYLOSS)
 
@@ -236,6 +236,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		to_chat(user, span_warning("[glass] is empty!"))
 	else
 		to_chat(user, span_warning("[src] is full!"))
+
+	return AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/clothing/mask/cigarette/update_icon_state()
 	. = ..()
@@ -961,7 +963,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	create_reagents(chem_volume, NO_REACT)
 	reagents.add_reagent(/datum/reagent/drug/nicotine, 50)
 
-/obj/item/clothing/mask/vape/suicide_act(mob/user)
+/obj/item/clothing/mask/vape/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!"))//it doesn't give you cancer, it is cancer
 	return (TOXLOSS|OXYLOSS)
 

@@ -15,6 +15,8 @@
 	var/flipped = FALSE
 	///Has this card been "tapped"? AKA, is it horizontal?
 	var/tapped = FALSE
+	///Cached icon used for inspecting the card
+	var/icon/cached_flat_icon
 
 /obj/item/tcgcard/Initialize(mapload, datum_series, datum_id)
 	. = ..()
@@ -61,7 +63,14 @@
 	name_chaser += "Power/Resolve: [data_holder.power]/[data_holder.resolve]"
 	if(data_holder.rules) //This can sometimes be empty
 		name_chaser += "Ruleset: [data_holder.rules]"
+	name_chaser += list("[icon2html(get_cached_flat_icon(), user, "extra_classes" = "hugeicon")]")
+
 	return name_chaser
+
+/obj/item/tcgcard/proc/get_cached_flat_icon()
+	if(!cached_flat_icon)
+		cached_flat_icon = getFlatIcon(src)
+	return cached_flat_icon
 
 GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
@@ -75,7 +84,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"Tap" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
 		"Flip" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_flip"),
 		)
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)
@@ -195,11 +204,11 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 	switch(contents.len)
 		if(1 to 10)
-			icon_state = "[icon_state]_tcg_low"
+			icon_state = "[base_icon_state]_tcg_low"
 		if(11 to 20)
-			icon_state = "[icon_state]_tcg_half"
+			icon_state = "[base_icon_state]_tcg_half"
 		if(21 to INFINITY)
-			icon_state = "[icon_state]_tcg_full"
+			icon_state = "[base_icon_state]_tcg_full"
 		else
 			icon_state = "[base_icon_state]_tcg"
 	return ..()
@@ -215,7 +224,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"Pickup" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
 		"Flip" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_flip"),
 		)
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)
@@ -309,9 +318,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	name = "Trading Card Pack: Coder"
 	desc = "Contains six complete fuckups by the coders. Report this on github please!"
 	icon = 'icons/obj/toys/tcgmisc.dmi'
-	icon_state = "cardback_nt"
+	icon_state = "error"
 	w_class = WEIGHT_CLASS_TINY
-	custom_price = PAYCHECK_CREW * 2 //Effectively expensive as long as you're not a very high paying job... in which case, why are you playing trading card games?
+	custom_price = PAYCHECK_CREW * 0.75 //Price reduced from * 2 to * 0.75, this is planned as a temporary measure until card persistance is added.
 	///The card series to look in
 	var/series = "MEME"
 	///Chance of the pack having a coin in it out of 10
@@ -334,6 +343,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"epic" = 9,
 		"rare" = 30,
 		"uncommon" = 60)
+	var/drop_all_cards = FALSE
 
 /obj/item/cardpack/series_one
 	name = "Trading Card Pack: Series 1"
@@ -363,7 +373,12 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/cardpack/attack_self(mob/user)
 	. = ..()
-	var/list/cards = buildCardListWithRarity(card_count, guaranteed_count)
+	var/list/cards
+	if(drop_all_cards)
+		cards = SStrading_card_game.cached_cards[series]["ALL"]
+	else
+		cards = buildCardListWithRarity(card_count, guaranteed_count)
+
 	for(var/template in cards)
 		//Makes a new card based of the series of the pack.
 		new /obj/item/tcgcard(get_turf(user), series, template)
@@ -383,6 +398,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	custom_materials = list(/datum/material/plastic = 400)
 	material_flags = NONE
 	sideslist = list("nanotrasen", "syndicate")
+	override_material_worth = TRUE
 
 /obj/item/storage/card_binder
 	name = "card binder"
@@ -463,6 +479,11 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	var/series = "hunter2"
 	///The rarity of this card, determines how much (or little) it shows up in packs. Rarities are common, uncommon, rare, epic, legendary and misprint.
 	var/rarity = "uber rare to the extreme"
+
+	///Icon file that summons are pulled from
+	var/summon_icon_file = "icons/obj/toys/tcgmisc.dmi"
+	///Icon state for summons to use
+	var/summon_icon_state = "template"
 
 /datum/card/New(list/data = list(), list/templates = list())
 	applyTemplates(data, templates)

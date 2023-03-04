@@ -2,7 +2,7 @@
 
 /obj/item/book/granter/action/spell/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, .proc/on_magic_charge)
+	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, PROC_REF(on_magic_charge))
 
 /**
  * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]

@@ -33,15 +33,15 @@
 	src.max_scale = max_scale
 	src.min_scale = min_scale
 
-	RegisterSignal(parent, COMSIG_ATOM_VV_MODIFY_TRANSFORM, .proc/on_modify_or_update_transform)
+	RegisterSignal(parent, COMSIG_ATOM_VV_MODIFY_TRANSFORM, PROC_REF(on_modify_or_update_transform))
 
 	var/clickbox_icon_state = icon_state
 	if(dead_state && isliving(parent))
 		var/mob/living/living_parent = parent
 		src.dead_state = dead_state
-		RegisterSignal(living_parent, COMSIG_LIVING_POST_UPDATE_TRANSFORM, .proc/on_modify_or_update_transform)
-		RegisterSignal(living_parent, COMSIG_LIVING_DEATH, .proc/on_death)
-		RegisterSignal(living_parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
+		RegisterSignal(living_parent, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(on_modify_or_update_transform))
+		RegisterSignal(living_parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+		RegisterSignal(living_parent, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
 		if(living_parent.stat == DEAD)
 			clickbox_icon_state = dead_state
 	update_underlay(clickbox_icon_state)

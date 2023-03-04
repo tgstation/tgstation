@@ -3,7 +3,7 @@
 	desc = "How someone could even fit in there is byond me."
 	icon_state = "clowncar"
 	max_integrity = 150
-	armor = list(MELEE = 70, BULLET = 40, LASER = 40, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 80, ACID = 80)
+	armor_type = /datum/armor/car_clowncar
 	enter_delay = 20
 	max_occupants = 50
 	movedelay = 0.6
@@ -22,10 +22,18 @@
 	///Current status of the cannon, alternates between CLOWN_CANNON_INACTIVE, CLOWN_CANNON_BUSY and CLOWN_CANNON_READY
 	var/cannonmode = CLOWN_CANNON_INACTIVE
 
+/datum/armor/car_clowncar
+	melee = 70
+	bullet = 40
+	laser = 40
+	bomb = 30
+	fire = 80
+	acid = 80
+
 /obj/vehicle/sealed/car/clowncar/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj,src)
-	RegisterSignal(src, COMSIG_MOVABLE_CROSS_OVER, .proc/check_crossed)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSS_OVER, PROC_REF(check_crossed))
 
 /obj/vehicle/sealed/car/clowncar/process()
 	if(light_on && (obj_flags & EMAGGED))
@@ -42,7 +50,7 @@
 		var/mob/living/carbon/human/H = M
 		if(is_clown_job(H.mind?.assigned_role)) //Ensures only clowns can drive the car. (Including more at once)
 			add_control_flags(H, VEHICLE_CONTROL_DRIVE)
-			RegisterSignal(H, COMSIG_MOB_CLICKON, .proc/fire_cannon_at)
+			RegisterSignal(H, COMSIG_MOB_CLICKON, PROC_REF(fire_cannon_at))
 			M.log_message("has entered [src] as a possible driver", LOG_GAME)
 			return
 	add_control_flags(M, VEHICLE_CONTROL_KIDNAPPED)
@@ -59,7 +67,7 @@
 				message_admins("[ADMIN_LOOKUPFLW(forced_mob)] was forced into a clown car with [reagent_amount] unit(s) of Irish Car Bomb, causing an explosion.")
 				forced_mob.log_message("was forced into a clown car with [reagent_amount] unit(s) of Irish Car Bomb, causing an explosion.", LOG_GAME)
 				audible_message(span_userdanger("You hear a rattling sound coming from the engine. That can't be good..."), null, 1)
-				addtimer(CALLBACK(src, .proc/irish_car_bomb), 5 SECONDS)
+				addtimer(CALLBACK(src, PROC_REF(irish_car_bomb)), 5 SECONDS)
 
 /obj/vehicle/sealed/car/clowncar/proc/irish_car_bomb()
 	dump_mobs()
@@ -72,7 +80,7 @@
 			voreman.client.give_award(/datum/award/achievement/misc/round_and_full, voreman)
 
 /obj/vehicle/sealed/car/clowncar/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if((user.loc != src) || user.environment_smash & (ENVIRONMENT_SMASH_WALLS|ENVIRONMENT_SMASH_RWALLS))
+	if((user.loc != src) || user.environment_smash >= ENVIRONMENT_SMASH_WALLS)
 		return ..()
 
 /obj/vehicle/sealed/car/clowncar/mob_exit(mob/M, silent = FALSE, randomstep = FALSE)
@@ -83,7 +91,11 @@
 	. = ..()
 	if(prob(33))
 		visible_message(span_danger("[src] spews out a ton of space lube!"))
-		new /obj/effect/particle_effect/fluid/foam(loc) //YEET
+		var/datum/effect_system/fluid_spread/foam/foam = new
+		var/datum/reagents/foamreagent = new /datum/reagents(25)
+		foamreagent.add_reagent(/datum/reagent/lube, 25)
+		foam.set_up(4, holder = src, location = loc, carry = foamreagent)
+		foam.start()
 
 /obj/vehicle/sealed/car/clowncar/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
@@ -96,7 +108,7 @@
 
 /obj/vehicle/sealed/car/clowncar/Bump(atom/bumped)
 	. = ..()
-	if(isliving(bumped))
+	if(isliving(bumped) && !istype(bumped, /mob/living/simple_animal/deer))
 		if(ismegafauna(bumped))
 			return
 		var/mob/living/hittarget_living = bumped
@@ -179,7 +191,7 @@
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car turns on its singularity disguise system."))
 			icon = 'icons/obj/engine/singularity.dmi'
 			icon_state = "singularity_s1"
-			addtimer(CALLBACK(src, .proc/reset_icon), 10 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(reset_icon)), 10 SECONDS)
 		if(4)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car spews out a cloud of laughing gas."))
 			var/datum/reagents/funnychems = new/datum/reagents(300)
@@ -191,15 +203,15 @@
 			smoke.start(log = TRUE)
 		if(5)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car starts dropping an oil trail."))
-			RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/cover_in_oil)
-			addtimer(CALLBACK(src, .proc/stop_dropping_oil), 3 SECONDS)
+			RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(cover_in_oil))
+			addtimer(CALLBACK(src, PROC_REF(stop_dropping_oil)), 3 SECONDS)
 		if(6)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car lets out a comedic toot."))
 			playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
 			for(var/mob/living/L in orange(loc, 6))
-				L.emote("laughs")
+				L.emote("laugh")
 			for(var/mob/living/L as anything in occupants)
-				L.emote("laughs")
+				L.emote("laugh")
 
 ///resets the icon and iconstate of the clowncar after it was set to singulo states
 /obj/vehicle/sealed/car/clowncar/proc/reset_icon()
@@ -223,7 +235,7 @@
 	if(cannonmode) //canon active, deactivate
 		flick("clowncar_fromfire", src)
 		icon_state = "clowncar"
-		addtimer(CALLBACK(src, .proc/deactivate_cannon), 2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(deactivate_cannon)), 2 SECONDS)
 		playsound(src, 'sound/vehicles/clowncar_cannonmode2.ogg', 75)
 		visible_message(span_danger("[src] starts going back into mobile mode."))
 	else
@@ -231,7 +243,7 @@
 		flick("clowncar_tofire", src)
 		icon_state = "clowncar_fire"
 		visible_message(span_danger("[src] opens up and reveals a large cannon."))
-		addtimer(CALLBACK(src, .proc/activate_cannon), 2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(activate_cannon)), 2 SECONDS)
 		playsound(src, 'sound/vehicles/clowncar_cannonmode1.ogg', 75)
 	cannonmode = CLOWN_CANNON_BUSY
 
@@ -259,7 +271,7 @@
 	if(modifiers[SHIFT_CLICK] || (ismovable(target) && !isturf(target.loc)))
 		return
 	var/mob/living/unlucky_sod = pick(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
-	mob_exit(unlucky_sod, TRUE)
+	mob_exit(unlucky_sod, silent = TRUE)
 	flick("clowncar_recoil", src)
 	playsound(src, pick('sound/vehicles/carcannon1.ogg', 'sound/vehicles/carcannon2.ogg', 'sound/vehicles/carcannon3.ogg'), 75)
 	unlucky_sod.throw_at(target, 10, 2)

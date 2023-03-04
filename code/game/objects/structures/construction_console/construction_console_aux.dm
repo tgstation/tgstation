@@ -15,10 +15,8 @@
 	structures["turrets"] = 4
 
 /obj/machinery/computer/camera_advanced/base_construction/aux/populate_actions_list()
-	actions += new /datum/action/innate/construction/switch_mode(src) //Action for switching the RCD's build modes
+	actions += new /datum/action/innate/construction/configure_mode(src) //Action for switching the RCD's build modes
 	actions += new /datum/action/innate/construction/build(src) //Action for using the RCD
-	actions += new /datum/action/innate/construction/airlock_type(src) //Action for setting the airlock type
-	actions += new /datum/action/innate/construction/window_type(src) //Action for setting the window type
 	actions += new /datum/action/innate/construction/place_structure/fan(src) //Action for spawning fans
 	actions += new /datum/action/innate/construction/place_structure/turret(src) //Action for spawning turrets
 

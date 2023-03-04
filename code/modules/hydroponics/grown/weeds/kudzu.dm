@@ -4,6 +4,7 @@
 	name = "pack of kudzu seeds"
 	desc = "These seeds grow into a weed that grows incredibly fast."
 	icon_state = "seed-kudzu"
+	plant_icon_offset = 2
 	species = "kudzu"
 	plantname = "Kudzu"
 	product = /obj/item/food/grown/kudzupod
@@ -23,10 +24,10 @@
 	S.mutations = mutations.Copy()
 	return S
 
-/obj/item/seeds/kudzu/suicide_act(mob/user)
+/obj/item/seeds/kudzu/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] swallows the pack of kudzu seeds! It looks like [user.p_theyre()] trying to commit suicide!"))
 	plant(user)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/seeds/kudzu/proc/plant(mob/user)
 	if(isspaceturf(user.loc))

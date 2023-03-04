@@ -21,12 +21,12 @@
 	scan_level = 0
 	damage_coeff = 0
 	precision_coeff = 0
-	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
-		scan_level += P.rating
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		precision_coeff = M.rating
-	for(var/obj/item/stock_parts/micro_laser/P in component_parts)
-		damage_coeff = P.rating
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		scan_level += scanning_module.tier
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		precision_coeff = matter_bin.tier
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		damage_coeff = micro_laser.tier
 
 /obj/machinery/dna_scannernew/examine(mob/user)
 	. = ..()
@@ -151,7 +151,7 @@
 		UnregisterSignal(linked_console, COMSIG_PARENT_QDELETING)
 	linked_console = new_console
 	if(linked_console)
-		RegisterSignal(linked_console, COMSIG_PARENT_QDELETING, .proc/react_to_console_del)
+		RegisterSignal(linked_console, COMSIG_PARENT_QDELETING, PROC_REF(react_to_console_del))
 
 /obj/machinery/dna_scannernew/proc/react_to_console_del(datum/source)
 	SIGNAL_HANDLER

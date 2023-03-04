@@ -15,7 +15,7 @@
 	response_disarm_simple = "bop"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
-	faction = list("gondola")
+	faction = list(FACTION_GONDOLA)
 	turns_per_move = 10
 	icon = 'icons/mob/simple/gondolas.dmi'
 	icon_state = "gondola"
@@ -62,10 +62,6 @@
 
 /mob/living/simple_animal/pet/gondola/can_speak(allow_mimes = FALSE)
 	return FALSE // Gondolas are the silent walker.
-
-/// Special handling for gondolas, as they don't use icon_states and instead rely on overlays. The parent of this proc deletes all our overlays, so we're overriding it.
-/mob/living/simple_animal/pet/gondola/regenerate_icons()
-	return
 
 #undef GONDOLA_HEIGHT
 #undef GONDOLA_COLOR

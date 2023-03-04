@@ -116,11 +116,10 @@
 	name = "Supply Shuttle Airlock"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/docking_port/mobile/supply{
-	dir = 4;
-	dwidth = 4
-	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/docking_port/mobile/supply{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/supply)
 "n" = (

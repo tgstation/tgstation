@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/transform_weapon
 	name = "Transform Weapon"
-	icon_icon = 'icons/obj/lavaland/artefacts.dmi'
+	button_icon = 'icons/obj/lavaland/artefacts.dmi'
 	button_icon_state = "cleaving_saw"
 	desc = "Transform weapon into a different state."
 	cooldown_time = 5 SECONDS
@@ -12,6 +12,7 @@
 	StartCooldown(360 SECONDS, 360 SECONDS)
 	do_transform(target_atom)
 	StartCooldown(rand(cooldown_time, max_cooldown_time), 0)
+	return TRUE
 
 /datum/action/cooldown/mob_cooldown/transform_weapon/proc/do_transform(atom/target)
 	if(!istype(owner, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner))

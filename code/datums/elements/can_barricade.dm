@@ -2,7 +2,7 @@
 
 /datum/element/can_barricade
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 /datum/element/can_barricade/Attach(atom/target)
 	. = ..()
@@ -10,11 +10,11 @@
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_PARENT_ATTACKBY, .proc/on_start_barricade)
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(target, COMSIG_PARENT_ATTACKBY, PROC_REF(on_start_barricade))
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 	target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
-	RegisterSignal(target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
+	RegisterSignal(target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
 /datum/element/can_barricade/Detach(atom/target)
 	UnregisterSignal(target, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
@@ -40,7 +40,7 @@
 
 	source.balloon_alert(user, "constructing barricade...")
 	playsound(source, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
-	INVOKE_ASYNC(src, .proc/barricade, source, plank, user, params) //signal handlers can't have do_afters inside of them
+	INVOKE_ASYNC(src, PROC_REF(barricade), source, plank, user, params) //signal handlers can't have do_afters inside of them
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// when our element gets attacked by wooden planks it creates a barricade

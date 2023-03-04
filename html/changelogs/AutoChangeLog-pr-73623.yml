@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Hijacked shuttles now count as \"escaping alive\" once agian"
+  - bugfix: "Hardcore random survival now actually checks that you've escaped alive, and not just made it to centcom"
+  - bugfix: "Intelligent zombies can now escape."
+  - bugfix: "Infectious zombies now don't count as escaped as intended."

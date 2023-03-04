@@ -58,6 +58,16 @@
 	name = "popcorn"
 	icon_state = "popcorn"
 
+/obj/item/trash/popcorn/caramel
+	name = "empty caramel popcorn"
+	desc = "Now it's not a sweet snack, but just a sticky bag..."
+	icon_state = "empty_caramel_popcorn"
+
+/obj/item/trash/popcorn/salty
+	name = "empty salty popcorn"
+	desc = "It looks like there are only a few grains of salt left at the bottom of the bag..."
+	icon_state = "empty_salty_popcorn"
+
 /obj/item/trash/sosjerky
 	name = "\improper Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
@@ -92,9 +102,14 @@
 	resistance_flags = NONE
 
 /obj/item/trash/candle
-	name = "candle"
+	name = "melted candle"
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle4"
+
+/obj/item/trash/flare
+	name = "burnt flare"
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "flare-empty"
 
 /obj/item/trash/can
 	name = "crushed can"
@@ -102,9 +117,12 @@
 	resistance_flags = NONE
 	grind_results = list(/datum/reagent/aluminium = 10)
 
+/obj/item/trash/can/food
+	icon = 'icons/obj/food/canned.dmi'
+	icon_state = "peachcan_empty"
+
 /obj/item/trash/can/food/peaches
 	name = "canned peaches"
-	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "peachcan_empty"
 
 /obj/item/trash/can/food/peaches/maint
@@ -113,7 +131,6 @@
 
 /obj/item/trash/can/food/beans
 	name = "tin of beans"
-	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "beans_empty"
 
 /obj/item/trash/can/Initialize(mapload)
@@ -132,18 +149,27 @@
 
 /obj/item/trash/can/food/envirochow
 	name = "dog eat dog envirochow"
-	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "envirochow_empty"
 
 /obj/item/trash/can/food/tomatoes
 	name = "canned San Marzano tomatoes"
-	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "tomatoescan_empty"
 
 /obj/item/trash/can/food/pine_nuts
 	name = "canned pine nuts"
-	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "pinenutscan_empty"
+
+/obj/item/trash/can/food/jellyfish
+	name = "canned gunner jellyfish"
+	icon_state = "jellyfish_empty"
+
+/obj/item/trash/can/food/desert_snails
+	name = "canned desert snails"
+	icon_state = "snails_empty"
+
+/obj/item/trash/can/food/larvae
+	name = "canned bee larva"
+	icon_state = "larvae_empty"
 
 /obj/item/trash/spacers_sidekick
 	name = "\improper Spacer's Sidekick packet"
@@ -153,3 +179,4 @@
 	name = "empty Ready-donk"
 	desc = "It's been Donk-decimated."
 	icon_state = "ready_donk"
+

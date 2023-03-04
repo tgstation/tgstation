@@ -7,15 +7,7 @@ const CLIENT_ONLINE = 2;
 const CLIENT_AWAY = 1;
 const CLIENT_OFFLINE = 0;
 
-const STATUS2TEXT = {
-  0: 'Offline',
-  1: 'Away',
-  2: 'Online',
-};
-
 const NoChannelDimmer = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { owner } = data;
   return (
     <Dimmer>
       <Stack align="baseline" vertical>
@@ -36,7 +28,8 @@ const NoChannelDimmer = (props, context) => {
           Click a channel to start chatting!
         </Stack.Item>
         <Stack.Item fontSize="15px">
-          (If you&apos;re new, you may wannaa set your name in the bottom left!)
+          (If you&apos;re new, you may want to set your name in the bottom
+          left!)
         </Stack.Item>
       </Stack>
     </Dimmer>

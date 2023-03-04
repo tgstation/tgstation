@@ -158,13 +158,16 @@
 					if (H == user)
 						to_chat(user, span_warning("You need a mirror to properly style your own facial hair!"))
 						return
-					if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+					if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 						return
 					var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
 					if(isnull(new_style))
 						return
 					if(!get_location_accessible(H, location))
 						to_chat(user, span_warning("The mask is in the way!"))
+						return
+					if(HAS_TRAIT(H, TRAIT_SHAVED))
+						to_chat(user, span_warning("[H] is just way too shaved. Like, really really shaved."))
 						return
 					user.visible_message(span_notice("[user] tries to change [H]'s facial hairstyle using [src]."), span_notice("You try to change [H]'s facial hairstyle using [src]."))
 					if(new_style && do_after(user, 60, target = H))
@@ -206,7 +209,7 @@
 				if (H == user)
 					to_chat(user, span_warning("You need a mirror to properly style your own hair!"))
 					return
-				if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+				if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 					return
 				var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
 				if(isnull(new_style))
@@ -215,7 +218,7 @@
 					to_chat(user, span_warning("The headgear is in the way!"))
 					return
 				if(HAS_TRAIT(H, TRAIT_BALD))
-					to_chat(H, span_warning("[H] is just way too bald. Like, really really bald."))
+					to_chat(user, span_warning("[H] is just way too bald. Like, really really bald."))
 					return
 				user.visible_message(span_notice("[user] tries to change [H]'s hairstyle using [src]."), span_notice("You try to change [H]'s hairstyle using [src]."))
 				if(new_style && do_after(user, 60, target = H))
