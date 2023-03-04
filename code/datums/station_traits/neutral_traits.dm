@@ -197,8 +197,10 @@
 	show_in_report = TRUE
 	report_message = "We here at Nanotrasen would all like to wish Employee Name a very happy birthday"
 	trait_to_give = STATION_TRAIT_BIRTHDAY
-	blacklist = list(/datum/station_trait/announcement_intern, /datum/station_trait/announcement_medbot)
+	blacklist = list(/datum/station_trait/announcement_intern, /datum/station_trait/announcement_medbot) //Overiding the annoucer hides the birthday person in the annoucement message.
 	var/mob/living/carbon/human/birthday_person
+	///Variable that admins can override with a player's ckey in order to set them as the birthday person when the round starts.
+	var/birthday_override_ckey
 	force = TRUE
 
 /datum/station_trait/birthday/New()
@@ -212,12 +214,32 @@
 
 /datum/station_trait/birthday/on_round_start()
 	. = ..()
-	var/list/birthday_options
-	for(var/mob/living/carbon/human/human in GLOB.human_list)
-		if(human.mind?.assigned_role.job_flags & JOB_CREW_MEMBER)
-			birthday_options += human
-	birthday_person = pick(birthday_options)
+
+	if(birthday_override_ckey)
+		if(!check_valid_override())
+			message_admins("Attempted to make [birthday_override_ckey] the birthday person but they are not a valid station role. A random birthday person has be selected instead.")		
+
+	if(!birthday_person)
+		var/list/birthday_options
+		for(var/mob/living/carbon/human/human in GLOB.human_list)
+			if(human.mind?.assigned_role.job_flags & JOB_CREW_MEMBER)
+				birthday_options += human
+		birthday_person = pick(birthday_options)
 	addtimer(CALLBACK(src, PROC_REF(announce_birthday)), 10 SECONDS)
+
+/datum/station_trait/birthday/proc/check_valid_override()
+
+	var/mob/living/carbon/human/birthday_override_mob = get_mob_by_ckey(birthday_override_ckey)
+
+	if(isnull(birthday_override_mob))
+		return FALSE
+
+	if(birthday_override_mob.mind?.assigned_role.job_flags & JOB_CREW_MEMBER)
+		birthday_person = birthday_override_mob
+		return TRUE
+	else
+		return FALSE
+
 
 /datum/station_trait/birthday/proc/announce_birthday()
 	report_message = "We here at Nanotrasen would all like to wish [birthday_person ? birthday_person.name : "Employee Name"] a very happy birthday"
