@@ -51,6 +51,37 @@
 
 	. = ..()
 
+///outputs a message of the form: "CELL{([x],[y],[z]), channels:[every contents channel contained_movable is in for this cell]}"
+/datum/spatial_grid_cell/proc/containing_string(atom/movable/contained_movable)
+
+	var/coords = "([cell_x],[cell_y],[cell_z])"
+
+	var/channels = "channels:"
+	var/number_of_channels = 0
+
+	if(contained_movable in hearing_contents)
+		channels = "[channels] hearing"
+		number_of_channels += 1
+
+	if(contained_movable in client_contents)
+		if(number_of_channels == 0)
+			channels = "[channels] clients"
+		else
+			channels = "[channels], clients"
+		number_of_channels += 1
+
+	if(contained_movable in atmos_contents)
+		if(number_of_channels == 0)
+			channels = "[channels] atmos"
+		else
+			channels = "[channels], atmos"
+		number_of_channels += 1
+
+	if(number_of_channels == 0)
+		channels = "channels: NONE"
+
+	return "CELL{[coords], [channels]}"
+
 /**
  * # Spatial Grid
  *
@@ -490,13 +521,79 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	if(!input_cell)
 		input_cell = get_cell_of(to_remove)
+
+#ifdef UNIT_TESTS
+		var/list/containing_cells = find_hanging_cell_refs_for_movable(to_remove, FALSE)
+
+		if(!(input_cell in containing_cells) || length(containing_cells) > 1)
+			in_multiple_cells_error(to_remove, input_cell, containing_cells)
+			find_hanging_cell_refs_for_movable(to_remove, TRUE)
+
+#else
 		if(!input_cell)
 			find_hanging_cell_refs_for_movable(to_remove, TRUE)
 			return
+#endif
 
 	GRID_CELL_REMOVE(input_cell.client_contents, to_remove)
 	GRID_CELL_REMOVE(input_cell.hearing_contents, to_remove)
 	GRID_CELL_REMOVE(input_cell.atmos_contents, to_remove)
+
+///we thought a movable was at assumed_location, it was actually in real_locations, output a message explaining this
+/datum/controller/subsystem/spatial_grid/proc/in_multiple_cells_error(atom/movable/to_remove, datum/spatial_grid_cell/assumed_location, list/datum/spatial_grid_cell/real_locations)
+	if(!to_remove)
+		return
+
+	var/cell_locs = grid_cell_locations_message(to_remove, real_locations)
+
+	var/assumed_location_string = assumed_location?.containing_string(to_remove)
+	if(assumed_location_string == null)
+		assumed_location_string = "null"
+
+	var/movable_loc_string = ""
+
+	var/atom/movable/movable_real_loc = to_remove.loc
+	var/turf/movable_turf_loc = get_turf(to_remove)
+
+	#define LOC_AND_COORDS(_atom) _atom ? "[_atom], ([_atom.x],[_atom.y],[_atom.z])" : "null"
+
+	if(movable_real_loc == movable_turf_loc)
+		movable_loc_string = "[LOC_AND_COORDS(movable_turf_loc)]"
+
+	else
+		movable_loc_string = "(loc: [LOC_AND_COORDS(movable_real_loc)], get_turf: [LOC_AND_COORDS(movable_turf_loc)])"
+
+
+	var/was_in = "multiple spatial grid cells, meaning it wasnt removed from some when it should have been"
+	if(length(real_locations) == 1)
+		was_in = "the wrong spatial grid cell, meaning we werent able to figure out where in the grid it is based on where its located"
+
+	stack_trace("[to_remove] was in [was_in]. relevant info: location: [movable_loc_string], thought to be in cell: [assumed_location_string], was in cells: [cell_locs]. ping @KylerAce in discord if you see this error")
+#undef LOC_AND_COORDS
+
+///returns a string containing data for each spatial grid cell in the inputted list.
+/// each grid cell gets a message of the form: "CELL{([x],[y],[z]), channels:[every contents channel contained_movable is in for that cell]}"
+/datum/controller/subsystem/spatial_grid/proc/grid_cell_locations_message(atom/movable/contained_movable, list/datum/spatial_grid_cell/real_locations)
+
+	var/all_cells = ""
+	var/number_of_cells = 0
+
+	for(var/datum/spatial_grid_cell/containing_cell in real_locations)
+		var/cell_message = containing_cell.containing_string(contained_movable)
+
+		if(number_of_cells == 0)
+			all_cells = "[cell_message]"
+		else
+			all_cells = "[all_cells] [cell_message]"
+
+		if(containing_cell != real_locations[length(real_locations)])
+			all_cells = "[all_cells],"
+
+		number_of_cells += 1
+
+	return all_cells
+
+
 
 ///if shit goes south, this will find hanging references for qdeleting movables inside the spatial grid
 /datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, remove_from_cells = TRUE)
