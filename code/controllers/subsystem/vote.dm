@@ -94,10 +94,9 @@ SUBSYSTEM_DEF(vote)
 		current_vote.finalize_vote(final_winner)
 
 /**
- * Submit a vote using the First Past The Post (FPTP) system
  * One selection per person, and the selection with the most votes wins.
  */
-/datum/controller/subsystem/vote/proc/submit_fptp_vote(mob/voter, their_vote)
+/datum/controller/subsystem/vote/proc/submit_single_vote(mob/voter, their_vote)
 	if(!current_vote)
 		return
 	if(!voter?.ckey)
@@ -119,10 +118,9 @@ SUBSYSTEM_DEF(vote)
 	return TRUE
 
 /**
- * Submit a vote using the Approval Voting (AV) system
  * Any number of selections per person, and the selection with the most votes wins.
  */
-/datum/controller/subsystem/vote/proc/submit_av_vote(mob/voter, their_vote)
+/datum/controller/subsystem/vote/proc/submit_multi_vote(mob/voter, their_vote)
 	if(!current_vote)
 		return
 	if(!voter?.ckey)
@@ -251,8 +249,8 @@ SUBSYSTEM_DEF(vote)
 		"isLowerAdmin" = is_lower_admin,
 		"isUpperAdmin" = is_upper_admin,
 		// What the current user has selected in any ongoing votes.
-		"fptpSelection" = current_vote?.choices_by_ckey[user.client?.ckey],
-		"avSelection" = current_vote?.choices_by_ckey,
+		"singleSelection" = current_vote?.choices_by_ckey[user.client?.ckey],
+		"multiSelection" = current_vote?.choices_by_ckey,
 	)
 
 	data["voting"]= is_lower_admin ? voting : list()
@@ -326,11 +324,11 @@ SUBSYSTEM_DEF(vote)
 			// meaning you can't spoof initiate a vote you're not supposed to be able to
 			return initiate_vote(selected, voter.key, voter)
 
-		if("voteFPTP")
-			return submit_fptp_vote(voter, params["voteOption"])
+		if("voteSingle")
+			return submit_single_vote(voter, params["voteOption"])
 
-		if("voteAV")
-			return submit_av_vote(voter, params["voteOption"])
+		if("voteMulti")
+			return submit_multi_vote(voter, params["voteOption"])
 
 /datum/controller/subsystem/vote/ui_close(mob/user)
 	voting -= user.client?.ckey

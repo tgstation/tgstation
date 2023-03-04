@@ -1,7 +1,7 @@
 /datum/vote/map_vote
 	name = "Map"
 	message = "Vote for next round's map!"
-	count_method = VOTE_COUNT_METHOD_AV
+	count_method = VOTE_COUNT_METHOD_MULTI
 
 /datum/vote/map_vote/New()
 	. = ..()

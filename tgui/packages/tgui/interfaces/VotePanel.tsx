@@ -32,10 +32,15 @@ type ActiveVote = {
 type UserData = {
   isLowerAdmin: BooleanLike;
   isUpperAdmin: BooleanLike;
-  fptpSelection: string | null;
-  avSelection: string[] | null;
-  ckey: string;
+  singleSelection: string | null;
+  multiSelection: string[] | null;
+  countMethod: VoteSystem;
 };
+
+enum VoteSystem {
+  VOTE_SINGLE = 1,
+  VOTE_MULTI = 2,
+}
 
 type Data = {
   currentVote: ActiveVote;
@@ -160,12 +165,12 @@ const ChoicesPanel = (props, context) => {
   return (
     <Stack.Item grow>
       <Section fill scrollable title="Active Vote">
-        {currentVote && currentVote.countMethod === 1 ? (
+        {currentVote && currentVote.countMethod === VoteSystem.VOTE_SINGLE ? (
           <NoticeBox success>Select one option</NoticeBox>
         ) : null}
         {currentVote &&
         currentVote.choices.length !== 0 &&
-        currentVote.countMethod === 1 ? (
+        currentVote.countMethod === VoteSystem.VOTE_SINGLE ? (
           <LabeledList>
             {currentVote.choices.map((choice) => (
               <Box key={choice.name}>
@@ -174,21 +179,22 @@ const ChoicesPanel = (props, context) => {
                   textAlign="right"
                   buttons={
                     <Button
-                      disabled={user.fptpSelection === choice.name}
+                      disabled={user.singleSelection === choice.name}
                       onClick={() => {
-                        act('voteFPTP', { voteOption: choice.name });
+                        act('voteSingle', { voteOption: choice.name });
                       }}>
                       Vote
                     </Button>
                   }>
-                  {user.fptpSelection && choice.name === user.fptpSelection && (
-                    <Icon
-                      alignSelf="right"
-                      mr={2}
-                      color="green"
-                      name="vote-yea"
-                    />
-                  )}
+                  {user.singleSelection &&
+                    choice.name === user.singleSelection && (
+                      <Icon
+                        alignSelf="right"
+                        mr={2}
+                        color="green"
+                        name="vote-yea"
+                      />
+                    )}
                   {choice.votes} Votes
                 </LabeledList.Item>
                 <LabeledList.Divider />
@@ -196,12 +202,12 @@ const ChoicesPanel = (props, context) => {
             ))}
           </LabeledList>
         ) : null}
-        {currentVote && currentVote.countMethod === 2 ? (
+        {currentVote && currentVote.countMethod === VoteSystem.VOTE_MULTI ? (
           <NoticeBox success>Select any number of options</NoticeBox>
         ) : null}
         {currentVote &&
         currentVote.choices.length !== 0 &&
-        currentVote.countMethod === 2 ? (
+        currentVote.countMethod === VoteSystem.VOTE_MULTI ? (
           <LabeledList>
             {currentVote.choices.map((choice) => (
               <Box key={choice.name}>
@@ -211,13 +217,13 @@ const ChoicesPanel = (props, context) => {
                   buttons={
                     <Button
                       onClick={() => {
-                        act('voteAV', { voteOption: choice.name });
+                        act('voteMulti', { voteOption: choice.name });
                       }}>
                       Vote
                     </Button>
                   }>
-                  {user.avSelection &&
-                  user.avSelection[user.ckey.concat(choice.name)] === 1 ? (
+                  {user.multiSelection &&
+                  user.multiSelection[user.ckey.concat(choice.name)] === 1 ? (
                     <Icon
                       alignSelf="right"
                       mr={2}

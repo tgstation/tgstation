@@ -29,7 +29,7 @@
 	/// The time remaining in this vote's run.
 	var/time_remaining
 	/// The counting method we use for votes.
-	var/count_method = VOTE_COUNT_METHOD_FPTP
+	var/count_method = VOTE_COUNT_METHOD_SINGLE
 
 /**
  * Used to determine if this vote is a possible
