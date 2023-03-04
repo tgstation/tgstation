@@ -68,16 +68,30 @@
 			return player_mob
 	return null
 
-///Returns true if the mob that a player is controlling is alive
+/**
+ * Checks if the passed mind has a mob that is "alive"
+ *
+ * * player_mind - who to check for alive status
+ * * enforce_human - if TRUE, the checks fails if the mind's mob is a silicon, brain, or infectious zombie.
+ *
+ * Returns TRUE if they're alive, FALSE otherwise
+ */
 /proc/considered_alive(datum/mind/player_mind, enforce_human = TRUE)
 	if(player_mind?.current)
 		if(enforce_human)
-			var/mob/living/carbon/human/player_mob
-			if(ishuman(player_mind.current))
-				player_mob = player_mind.current
-			return player_mind.current.stat != DEAD && !issilicon(player_mind.current) && !isbrain(player_mind.current) && (!player_mob || player_mob.dna.species.id != SPECIES_ZOMBIE)
+			var/mob/living/carbon/human/player_mob = player_mind.current
+
+			if(player_mob.stat == DEAD)
+				return FALSE
+			if(issilicon(player_mob) || isbrain(player_mob))
+				return FALSE
+			if(istype(player_mob) && (player_mob.dna?.species?.id == SPECIES_ZOMBIE_INFECTIOUS))
+				return FALSE
+			return TRUE
+
 		else if(isliving(player_mind.current))
-			return player_mind.current.stat != DEAD
+			return (player_mind.current.stat != DEAD)
+
 	return FALSE
 
 /**
@@ -113,7 +127,7 @@
 
 /// Like add_image_to_client, but will add the image from a list of clients
 /proc/add_image_to_clients(image/image_to_remove, list/show_to)
-	for(var/client/add_to as anything in show_to)
+	for(var/client/add_to in show_to)
 		add_to.images += image_to_remove
 
 /// Removes an image from a client's `.images`. Useful as a callback.
@@ -122,7 +136,7 @@
 
 /// Like remove_image_from_client, but will remove the image from a list of clients
 /proc/remove_image_from_clients(image/image_to_remove, list/hide_from)
-	for(var/client/remove_from as anything in hide_from)
+	for(var/client/remove_from in hide_from)
 		remove_from.images -= image_to_remove
 
 

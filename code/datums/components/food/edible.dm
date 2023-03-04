@@ -214,7 +214,8 @@ Behavior that's still missing from this component that original food items had t
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
 		examine_list += span_notice("It is [lowertext(english_list(types))].")
 
-	if(HAS_TRAIT_FROM(parent, TRAIT_FOOD_CHEF_MADE, REF(user)))
+	var/datum/mind/mind = user.mind
+	if(mind && HAS_TRAIT_FROM(parent, TRAIT_FOOD_CHEF_MADE, REF(mind)))
 		examine_list += span_green("[parent] was made by you!")
 
 	if(!(food_flags & FOOD_IN_CONTAINER))
@@ -236,6 +237,8 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/TryToEatIt(datum/source, mob/user)
 	SIGNAL_HANDLER
 
+	if (!in_range(source, user))
+		return
 	return TryToEat(user, user)
 
 ///Called when food is created through processing (Usually this means it was sliced). We use this to pass the OG items reagents.

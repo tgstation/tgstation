@@ -118,7 +118,7 @@
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
+	foldable_result = /obj/item/stack/sheet/cardboard //BubbleWrap
 	illustration = "light"
 
 /obj/item/storage/box/lights/Initialize(mapload)

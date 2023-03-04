@@ -149,6 +149,14 @@
 	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
+"pa" = (
+/obj/structure/table/wood,
+/obj/item/clothing/head/wizard/tape,
+/obj/item/clothing/suit/wizrobe/tape,
+/obj/item/staff/tape,
+/obj/item/stack/sticky_tape/super,
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
 "pq" = (
 /obj/item/soap/homemade,
 /obj/machinery/light/small/directional/west,
@@ -1346,7 +1354,7 @@ qo
 iQ
 gC
 dp
-jp
+pa
 hT
 hT
 OV

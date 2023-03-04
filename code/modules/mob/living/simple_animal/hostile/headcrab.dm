@@ -15,7 +15,7 @@
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	faction = list("creature")
+	faction = list(FACTION_CREATURE)
 	robust_searching = 1
 	stat_attack = DEAD
 	obj_damage = 0
@@ -84,8 +84,8 @@
 		if(changeling_datum.can_absorb_dna(owner))
 			changeling_datum.add_new_profile(owner)
 
-		var/datum/action/changeling/humanform/hf = new()
-		changeling_datum.purchased_powers += hf
+		var/datum/action/changeling/lesserform/transform = new()
+		changeling_datum.purchased_powers[transform.type] = transform
 		changeling_datum.regain_powers()
 	owner.investigate_log("has been gibbed by a changeling egg burst.", INVESTIGATE_DEATHS)
 	owner.gib()

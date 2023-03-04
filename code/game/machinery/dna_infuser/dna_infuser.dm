@@ -77,7 +77,7 @@
 	to_chat(human_occupant, span_danger("Little needles repeatedly prick you!"))
 	human_occupant.take_overall_damage(10)
 	human_occupant.add_mob_memory(/datum/memory/dna_infusion, protagonist = human_occupant, deuteragonist = infusing_from, mutantlike = infusing_into.infusion_desc)
-	Shake(15, 15, INFUSING_TIME)
+	Shake(duration = INFUSING_TIME)
 	addtimer(CALLBACK(human_occupant, TYPE_PROC_REF(/mob, emote), "scream"), INFUSING_TIME - 1 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(end_infuse)), INFUSING_TIME)
 	update_appearance()
