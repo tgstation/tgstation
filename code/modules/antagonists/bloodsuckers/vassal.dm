@@ -30,6 +30,12 @@
 	var/mob/living/current_mob = mob_override || owner.current
 	add_team_hud(current_mob)
 
+/datum/antagonist/vassal/on_body_transfer(mob/living/old_body, mob/living/new_body)
+	. = ..()
+	for(var/datum/action/bloodsucker/all_powers as anything in powers)
+		all_powers.Remove(old_body)
+		all_powers.Grant(new_body)
+
 /datum/antagonist/vassal/add_team_hud(mob/target)
 	QDEL_NULL(team_hud_ref)
 
