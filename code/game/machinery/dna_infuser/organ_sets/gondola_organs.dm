@@ -68,8 +68,8 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	tongue_owner.add_mood_event("gondola_zen", /datum/mood_event/gondola_serenity)
 
 /obj/item/organ/internal/tongue/gondola/Remove(mob/living/carbon/tongue_owner, special)
-	tongue_owner.add_mood_event("gondola_zen", /datum/mood_event/gondola_serenity)
-	. = ..()
+	tongue_owner.clear_mood_event("gondola_zen")
+	return ..()
 
 /// Loving arms: your hands become unable to hold much of anything but your hugs now infuse the subject with pax.
 /obj/item/organ/internal/liver/gondola
@@ -88,10 +88,6 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	AddElement(/datum/element/noticable_organ, "left arm has small needles breaching the skin all over it.", BODY_ZONE_L_ARM)
 	AddElement(/datum/element/noticable_organ, "right arm has small needles breaching the skin all over it.", BODY_ZONE_R_ARM)
 	pax_hugs = new
-
-/obj/item/organ/internal/liver/gondola/Destroy()
-	QDEL_NULL(pax_hugs)
-	. = ..()
 
 /obj/item/organ/internal/liver/gondola/Insert(mob/living/carbon/liver_owner, special, drop_if_replaced)
 	. = ..()
