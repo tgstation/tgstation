@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { PREF_CODEBASE_KEY } from '../../../config/tgui_config';
+import { PREF_CODEBASE_KEY } from '../../tgui_config/tgui_config';
 import { storage } from './storage';
 
 export const getPrefCodebaseKey = () => {
