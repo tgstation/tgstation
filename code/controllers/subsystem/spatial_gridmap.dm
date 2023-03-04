@@ -83,6 +83,7 @@
 	return "CELL{[coords], [channels]}"
 
 #ifdef UNIT_TESTS
+/// TODOKYLER: remove this after tests fail
 /mob/living/carbon/human/lizard/trolls_the_maintainer
 	name = "Trolls-The-Maintainer"
 
@@ -90,7 +91,7 @@
 	. = ..()
 	become_hearing_sensitive()
 
-	var/list/datum/spatial_grid_cell/nearby_cells = get_cells_in_range(src, rand(5, 30))
+	var/list/datum/spatial_grid_cell/nearby_cells = SSspatial_grid.get_cells_in_range(src, 30)
 
 	for(var/datum/spatial_grid_cell/nearby_cell in nearby_cells)
 		GRID_CELL_ADD(nearby_cell, src)
