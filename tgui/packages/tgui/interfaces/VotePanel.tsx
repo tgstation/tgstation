@@ -30,6 +30,7 @@ type ActiveVote = {
 };
 
 type UserData = {
+  ckey: string;
   isLowerAdmin: BooleanLike;
   isUpperAdmin: BooleanLike;
   singleSelection: string | null;
