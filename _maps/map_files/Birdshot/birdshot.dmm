@@ -59634,6 +59634,7 @@
 	network = list("prison");
 	pixel_y = 30
 	},
+/obj/machinery/computer/records/security,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "vrv" = (
@@ -63422,6 +63423,10 @@
 	dir = 4;
 	pixel_x = -5;
 	pixel_y = 3
+	},
+/obj/machinery/button/door/directional/west{
+	id = "detpriv";
+	name = "Curtains"
 	},
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
@@ -69492,6 +69497,10 @@
 /area/station/science/xenobiology)
 "yeS" = (
 /obj/effect/spawner/structure/window,
+/obj/structure/curtain/cloth/fancy/mechanical{
+	id = "detpriv";
+	name = "Curtains"
+	},
 /turf/open/floor/plating,
 /area/station/security/detectives_office)
 "yeZ" = (
