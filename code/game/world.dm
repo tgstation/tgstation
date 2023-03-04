@@ -329,13 +329,13 @@ GLOBAL_VAR(restart_counter)
 			features += "AI disabled"
 		hostedby = CONFIG_GET(string/hostedby)
 
-	if (CONFIG_GET(flag/station_name_in_hub_entry))
-		new_status += " &#8212; <b>[station_name()]</b>"
-		new_status += " ("
-		new_status += "<a href=\"https://discord.gg/KBsjSv7Kh9\">"
-		new_status += "Discord"
-		new_status += "</a>"
-		new_status += ")"
+	
+	new_status += " &#8212; <b>[station_name()]</b>"
+	new_status += " ("
+	new_status += "<a href=\"https://discord.gg/KBsjSv7Kh9\">"
+	new_status += "Discord"
+	new_status += "</a>"
+	new_status += ")"
 
 	var/players = GLOB.clients.len
 
