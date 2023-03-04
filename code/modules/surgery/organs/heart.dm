@@ -277,6 +277,34 @@
 		if(owner.reagents.get_reagent_amount(/datum/reagent/medicine/ephedrine) < 20)
 			owner.reagents.add_reagent(/datum/reagent/medicine/ephedrine, 10)
 
+/obj/item/organ/internal/heart/vampheart
+	beating = 0
+	///If a heartbeat is being faked.
+	var/fakingit = FALSE
+
+/obj/item/organ/internal/heart/vampheart/Restart()
+	beating = FALSE
+	return FALSE
+
+/obj/item/organ/internal/heart/vampheart/Stop()
+	fakingit = FALSE
+	return ..()
+
+/obj/item/organ/internal/heart/vampheart/proc/FakeStart()
+	fakingit = TRUE // We're pretending to beat, to fool people.
+
+/// Bloodsuckers don't have a heartbeat at all when stopped (default is "an unstable")
+/obj/item/organ/internal/heart/vampheart/HeartStrengthMessage()
+	if(fakingit)
+		return "a healthy"
+	return span_danger("no")
+
+/// Proc for the default (Non-Bloodsucker) Heart!
+/obj/item/organ/internal/heart/proc/HeartStrengthMessage()
+	if(beating)
+		return "a healthy"
+	return span_danger("an unstable")
+
 /obj/item/organ/internal/heart/ethereal
 	name = "crystal core"
 	icon_state = "ethereal_heart" //Welp. At least it's more unique in functionaliy.

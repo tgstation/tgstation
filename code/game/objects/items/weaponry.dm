@@ -537,6 +537,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "broom"
 	resistance_flags = FLAMMABLE
 
+/obj/item/staff/tape
+	name = "tape staff"
+	desc = "A roll of tape snugly attached to a stick."
+	icon_state = "tapestaff"
+	inhand_icon_state = "tapestaff"
+	resistance_flags = FLAMMABLE
+
 /obj/item/staff/stick
 	name = "stick"
 	desc = "A great tool to drag someone else's drinks across the bar."
@@ -1112,5 +1119,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/highfrequencyblade/wizard/attack_self(mob/user, modifiers)
 	if(!IS_WIZARD(user))
 		balloon_alert(user, "you're too weak!")
+		return
+	return ..()
+
+/obj/item/highfrequencyblade/nukie
+	force = 6
+	throwforce = 20
+	wound_bonus = 20
+	bare_wound_bonus = 25
+	slash_color = COLOR_RED
+
+/obj/item/highfrequencyblade/nukie/attack_self(mob/user, modifiers)
+	if(!IS_NUKE_OP(user) && !user.mind?.has_antag_datum(/datum/antagonist/traitor))
+		if(prob(5))
+			to_chat(user, span_warning("You deny your weapon its purpose! It yearns to bathe in the blood of your enemies... but you hold it back!"))
+			return
+		balloon_alert(user, "skill issue!")
 		return
 	return ..()
