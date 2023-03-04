@@ -71,4 +71,4 @@
 	new /obj/item/clothing/under/syndicate/sniper(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/disruptor(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/disruptor(src)
-	new /obj/item/suppressor/specialoffer(src)
+	new /obj/item/suppressor(src)
