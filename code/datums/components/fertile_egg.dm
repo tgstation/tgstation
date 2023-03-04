@@ -1,5 +1,5 @@
 /**
- * # A fertile egg component!
+ * ### A fertile egg component!
  *
  * This component tracks over time if the atom is in ideal conditions,
  * and eventually hatches into the embryonic type.
@@ -7,8 +7,6 @@
  * The initial design of this component was to make more generic the code for
  * chickens laying eggs.
  */
-
-
 /datum/component/fertile_egg
 	/// What will come out of the egg when it's done.
 	var/embryo_type
@@ -23,7 +21,7 @@
 	var/total_growth_required
 
 	/// The current amount of growth.
-	var/current_growth = 0
+	var/current_growth
 
 	/// List of locations which, if set, the egg will only develop if in those locations.
 	var/list/location_allowlist
