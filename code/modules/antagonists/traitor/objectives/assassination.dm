@@ -22,7 +22,7 @@
 	progression_minimum = 30 MINUTES
 
 	progression_reward = 2 MINUTES
-	telecrystal_reward = list(0, 1)
+	telecrystal_reward = list(1, 2)
 
 	// The code below is for limiting how often you can get this objective. You will get this objective at a maximum of maximum_objectives_in_period every objective_period
 	/// The objective period at which we consider if it is an 'objective'. Set to 0 to accept all objectives.
@@ -52,7 +52,7 @@
 
 /datum/traitor_objective/assassinate/calling_card/heads_of_staff
 	progression_reward = 4 MINUTES
-	telecrystal_reward = list(1, 2)
+	telecrystal_reward = list(3, 4)
 
 	heads_of_staff = TRUE
 
