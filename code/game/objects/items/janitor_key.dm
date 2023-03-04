@@ -23,7 +23,7 @@ GLOBAL_LIST_EMPTY(access_keys)
 /obj/item/access_key/examine(mob/user)
 	. = ..()
 	if(department_access)
-		. += "It currently holds access to \the [department_access[1]] region."
+		. += "It currently holds access to the [department_access] region."
 
 /obj/item/access_key/examine_more(mob/user)
 	. = ..()
@@ -35,9 +35,9 @@ GLOBAL_LIST_EMPTY(access_keys)
  * Stores it on the key to use for access
  * Args:
  * source - the keycard authenticator giving us the access
- * region_access - the list of access we're being sent.
+ * region_access - the list of access we're being sent, we only take the first entry in the list as there should only have one department at a time.
  */
 /obj/item/access_key/proc/department_access_given(obj/machinery/keycard_auth/source, list/region_access)
 	SIGNAL_HANDLER
-	department_access = region_access
-	say("Access granted to [region_access[1]] area.")
+	department_access = region_access[1]
+	say("Access granted to [department_access] area.")

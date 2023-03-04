@@ -287,11 +287,11 @@
 	if(istype(weapon, /obj/item/access_key))
 		user.balloon_alert_to_viewers("fumbles with keys...", "finding key...")
 		if(!do_after(user, 3 SECONDS, src))
-			return
+			return FALSE
 		var/obj/item/access_key/key = weapon
-		if(check_access_list(SSid_access.accesses_by_region[key.department_access[1]]))
+		if(check_access_list(SSid_access.accesses_by_region[key.department_access]))
 			try_to_activate_door(user, access_bypass = TRUE)
-		return
+		return TRUE
 	if(!user.combat_mode && istype(weapon, /obj/item/fireaxe))
 		try_to_crowbar(weapon, user, FALSE)
 		return TRUE
