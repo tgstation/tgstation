@@ -77,6 +77,17 @@
 
 	chassis.ui_interact(owner)
 
+/datum/action/vehicle/sealed/mecha/mech_toggle_safeties
+	name = "Toggle Equipment Safeties"
+	button_icon_state = "mech_safeties_off"
+
+/datum/action/vehicle/sealed/mecha/mech_toggle_safeties/Trigger(trigger_flags)
+	if(!owner || !chassis || !(owner in chassis.occupants))
+		return
+
+	chassis.set_safety(owner)
+	button_icon_state = "mech_safeties_[chassis.weapons_safety ? "on" : "off"]"
+	build_all_button_icons()
 
 /datum/action/vehicle/sealed/mecha/strafe
 	name = "Toggle Strafing. Disabled when Alt is held."

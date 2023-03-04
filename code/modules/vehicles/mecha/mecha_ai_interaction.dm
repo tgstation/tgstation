@@ -104,4 +104,4 @@
 	AI.remote_control = src
 	to_chat(AI, AI.can_dominate_mechs ? span_greenannounce("Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!") :\
 		span_notice("You have been uploaded to a mech's onboard computer."))
-	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to toggle equipment safety. Clicks with safety enabled will pass AI commands.</span>")
+	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse or the action button in your HUD to toggle equipment safety. Clicks with safety enabled will pass AI commands.</span>")
