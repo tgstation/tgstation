@@ -70,7 +70,7 @@
 
 /datum/callback/Destroy(force, ...)
 	object = null
-	arguments.Cut()
+	arguments?.Cut()
 	return ..()
 
 /**
