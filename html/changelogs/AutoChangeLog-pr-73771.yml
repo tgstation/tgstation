@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Fixed some issues with podpeople hair and horns not being drawn under the right circumstances all the time."

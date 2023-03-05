@@ -69,3 +69,75 @@
   - qol: Food over-top Drying Racks / Smartfridges will no longer decompose into ants
   Vlada - VastKilleroOm:
   - imageadd: added 1 hairstyle icon
+2023-03-05:
+  Chlorotrifluoride:
+  - imageadd: added prettier icons for the normal and absorbent galoshes
+  Draggeru:
+  - rscadd: Adds the tape wizard costume, both a real and fake variant
+  - rscadd: 'Adds the costume behind the autodrobe contraband wire, and the real variant
+      in the wiz den
+
+      :cl:'
+  Jacquerel:
+  - bugfix: Most spells can once again be cast even after someone stuns you with a
+      baton.
+  JohnFulpWillard:
+  - bugfix: The HoS' PDA painter can no longer paint PDAs into Lawyer ones.
+  Melbert:
+  - bugfix: Jobs get "You are the" and policy text again on spawn
+  - bugfix: Hijacked shuttles now count as "escaping alive" once agian
+  - bugfix: Hardcore random survival now actually checks that you've escaped alive,
+      and not just made it to centcom
+  - bugfix: Intelligent zombies can now escape.
+  - bugfix: Infectious zombies now don't count as escaped as intended.
+  - qol: Examine block'd out silicon "show laws" text.
+  - bugfix: Re-added a missing alert icon state for AI "laws updated" screen alert
+  - admin: Adds a new verb. "Law panel". This panel lets you see AND EDIT all silicon
+      laws in existence.
+  Paxilmaniac:
+  - balance: The pipegun's chance to misfire and shoot at you rather than the person
+      you're pointing it at has been removed
+  Profakos:
+  - bugfix: You can no longer multiply banana peels, gatfruit and more by using sliceable
+      custom food
+  Rhials:
+  - qol: Midwife Spiders can now sense how fully grown an egg cluster is by examining
+      it twice.
+  Sealed101:
+  - bugfix: fixed erroneous khinkali microwave recipe in the cooking menu. use a grill
+      like a normal chef
+  - bugfix: fixed AIs being able to recognize a spessman's identity over a holopad
+      call even if it was completely concealed, e.g. cloak of shadow, infiltrator
+      suit
+  - bugfix: undressing a hat/back item from a dog will correctly remove the item's
+      overlay
+  - bugfix: most armor vests will actually show on a dog when placed on its back
+  SyncIt21:
+  - refactor: RPED to infer icons of parts to use in `icon2html()` when displaying
+      part information
+  TheBoondock:
+  - bugfix: fixed missing inhand icon state for jaws of life
+  - refactor: refactored DNA vault. DNA probes now need to be linked with the vault
+      before scanning.
+  - qol: DNA probe can now access the dna database directly from the vault its linked
+      to, so you are always updated on the vault's database. Simply hit the vault
+      with the probe and it will link.
+  Timberpoes:
+  - bugfix: Papercode has been significantly improved and trivially filled paper forms
+      should no longer lag or crash players' game clients.
+  carshalash:
+  - rscadd: Introduces orderable rabbit crate to cargo livestock.
+  flowercuco:
+  - rscadd: add new smite that adds deadchat control component to a victim
+  rageguy505:
+  - bugfix: Removed a stray floating space calendar and decal on tramstation and it
+      makes more sense to reach the kilo spare.
+  skylord-a52:
+  - bugfix: frozen gas tanks now release their contents upon shattering
+  - bugfix: holodeck gas tanks can now be deconstructed
+  tralezab:
+  - rscadd: Added the gondola mutant, a tier two zen-like observer
+  - rscadd: Entries are now locked behind tiers, activating a bonus in someone upgrades
+      the tier!
+  - qol: DNA Infuser will now print a failure reason when you... well, don't get what
+      you want.
