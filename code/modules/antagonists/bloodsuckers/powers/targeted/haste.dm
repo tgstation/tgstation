@@ -106,4 +106,4 @@
 	button_icon_state = "power_speed"
 	bloodcost = 5
 	cooldown = 120
-	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
+	purchase_flags = VASSAL_CAN_BUY

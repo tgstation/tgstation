@@ -359,7 +359,8 @@
 			if(istype(vassaldatum) && vassaldatum.mutilated)
 				to_chat(user, "<span class='notice'>You've already mutated [buckled_carbons] beyond repair!</span>")
 				return
-			tremere_perform_magic(user, buckled_carbons)
+			if(tremere_perform_magic(user, buckled_carbons))
+				return
 		/// Are we part of Ventrue? Can we assign a Favorite Vassal?
 		if(bloodsuckerdatum.my_clan == CLAN_VENTRUE)
 			if(istype(vassaldatum) && !bloodsuckerdatum.has_favorite_vassal)
@@ -612,14 +613,14 @@
 			H.set_species(/datum/species/skeleton)
 			H.equipOutfit(/datum/outfit/pirate)
 			vassaldatum.mutilated = TRUE
-			return
+			return TRUE
 		if(TREMERE_ZOMBIE)
 			to_chat(user, "<span class='notice'>You have mutated [target] into a High-Functioning Zombie, fully healing them in the process!</span>")
 			to_chat(target, "<span class='notice'>Your master has mutated you into a High-Functioning Zombie!</span>")
 			target.revive(full_heal = TRUE, admin_revive = TRUE)
 			H.set_species(/datum/species/zombie)
 			vassaldatum.mutilated = TRUE
-			return
+			return TRUE
 		/// Quick Feeding
 		if(TREMERE_HUSK)
 			to_chat(user, "<span class='notice'>You suck all the blood out of [target], turning them into a Living Husk!</span>")
@@ -629,17 +630,17 @@
 			ADD_TRAIT(target, TRAIT_MUTE, BLOODSUCKER_TRAIT)
 			H.become_husk()
 			vassaldatum.mutilated = TRUE
-			return
+			return TRUE
 		/// Chance to give Bat form, or turn them into a bat.
 		if(TREMERE_BAT)
 			/// Ooh, lucky!
-			if(prob(40))
+			if(prob(60))
 				to_chat(user, "<span class='notice'>You have mutated [target], giving them the ability to turn into a Bat and back at will!</span>")
 				to_chat(target, "<span class='notice'>Your master has mutated you, giving you the ability to turn into a Bat and back at will!</span>")
 				var/datum/action/cooldown/spell/shapeshift/bat/batform = new
 				batform.Grant(target)
 				vassaldatum.mutilated = TRUE
-				return
+				return TRUE
 			else
 				to_chat(user, "<span class='notice'>You have failed to mutate [target] into a Bat, forever trapping them into Bat form!</span>")
 				to_chat(target, "<span class='notice'>Your master has mutated you into a Bat!</span>")
@@ -647,11 +648,11 @@
 				target.mind.transfer_to(battransformation)
 				qdel(target)
 				vassaldatum.mutilated = TRUE
-				return
+				return TRUE
 
 		else
 			to_chat(user, "<span class='notice'>You decide to leave your Vassal just the way they are.</span>")
-			return
+			return FALSE
 
 /obj/structure/bloodsucker/vassalrack/proc/offer_ventrue_favorites(mob/living/user, mob/living/target)
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(/datum/antagonist/bloodsucker)
@@ -777,7 +778,7 @@
 		return
 	// Checks: They're Buckled & Alive.
 	if(IS_BLOODSUCKER(user))
-		var/datum/antagonist/bloodsucker/bloodsuckerdatum
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(/datum/antagonist/bloodsucker)
 		if(!has_buckled_mobs())
 			toggle()
 			return
@@ -792,7 +793,7 @@
 					to_chat(user, "<span class='danger'>You don't have any levels to upgrade [target] with.</span>")
 					return
 				/// Everything is good to go - Time to Buy our Favorite Vassal a new Power!
-				bloodsuckerdatum.SpendVassalRank(target )
+				bloodsuckerdatum.SpendVassalRank(target)
 			else if(vassaldatum)
 				to_chat(user, span_warning("You can upgrade only your favorite vassal!"))
 				unbuckle_mob(target)
