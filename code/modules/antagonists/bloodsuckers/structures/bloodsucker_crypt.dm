@@ -171,7 +171,7 @@
 	. = ..()
 	if(taskheart)
 		. += span_boldnotice("It currently contains [sacrifices] hearts.")
-	else 
+	else
 		return ..()
 
 /obj/structure/bloodsucker/bloodaltar/attackby(obj/item/H, mob/user, params)
@@ -185,7 +185,7 @@
 			to_chat(usr, span_notice("You feed the heart to the altar!"))
 			qdel(H)
 			sacrifices++
-			return 
+			return
 	return ..()
 #undef ALTAR_RANKS_PER_DAY
 
@@ -362,7 +362,7 @@
 			tremere_perform_magic(user, buckled_carbons)
 		/// Are we part of Ventrue? Can we assign a Favorite Vassal?
 		if(bloodsuckerdatum.my_clan == CLAN_VENTRUE)
-			if(istype(V) && !B.my_favorite_vassal)
+			if(istype(vassaldatum) && !bloodsuckerdatum.has_favorite_vassal)
 				offer_ventrue_favorites(user, buckled_carbons)
 				return
 		// Can we assign a Favorite Vassal?
@@ -582,7 +582,7 @@
 				to_chat(user, "<span class='danger'>You decide not to revive [target].</span>")
 				/// Unbuckle them now.
 				unbuckle_mob(C)
-				useLock = FALSE
+				use_lock = FALSE
 				return
 
 	var/static/list/races = list(
@@ -594,7 +594,7 @@
 	var/list/options = list()
 	options = races
 	var/answer = tgui_input_list(user, "We have the chance to mutate our Vassal, how should we mutilate their corpse?", "What do we do with our Vassal?", options)
-	if(!do_mob(user, src, 5 SECONDS))
+	if(!do_after(user, 5 SECONDS, src))
 		to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
 		return
 	switch(answer)
@@ -625,7 +625,7 @@
 			to_chat(user, "<span class='notice'>You suck all the blood out of [target], turning them into a Living Husk!</span>")
 			to_chat(target, "<span class='notice'>Your master has mutated you into a Living Husk!</span>")
 			/// Just take it all
-			bloodsuckerdatum.HandleFeeding(target, 200)
+			bloodsuckerdatum.handle_feeding(target, 200)
 			ADD_TRAIT(target, TRAIT_MUTE, BLOODSUCKER_TRAIT)
 			H.become_husk()
 			vassaldatum.mutilated = TRUE
@@ -636,8 +636,8 @@
 			if(prob(40))
 				to_chat(user, "<span class='notice'>You have mutated [target], giving them the ability to turn into a Bat and back at will!</span>")
 				to_chat(target, "<span class='notice'>Your master has mutated you, giving you the ability to turn into a Bat and back at will!</span>")
-				var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/batform = new
-				target.AddSpell(batform)
+				var/datum/action/cooldown/spell/shapeshift/bat/batform = new
+				batform.Grant(target)
 				vassaldatum.mutilated = TRUE
 				return
 			else
@@ -667,7 +667,7 @@
 	var/favorite_response = show_radial_menu(user, src, favorite_options, radius = 36, require_near = TRUE)
 	switch(favorite_response)
 		if("Yes")
-			bloodsuckerdatum.my_favorite_vassal = TRUE
+			bloodsuckerdatum.has_favorite_vassal = TRUE
 			to_chat(user, "<span class='danger'>You have turned [target] into your Favorite Vassal! They will no longer be deconverted upon Mindshielding!</span>")
 			to_chat(user, "<span class='announce'>* Bloodsucker Tip: You can now upgrade your Vassal by buckling them onto a Candelabrum!</span>")
 			to_chat(target, "<span class='announce'>As Blood drips over your body, you feel closer to your Master...</span>")
@@ -678,7 +678,7 @@
 			to_chat(user, "<span class='danger'>You decide not to turn [target] into your Favorite Vassal.</span>")
 			/// Unbuckle them now.
 			unbuckle_mob(C)
-			useLock = FALSE
+			use_lock = FALSE
 			return
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -777,6 +777,7 @@
 		return
 	// Checks: They're Buckled & Alive.
 	if(IS_BLOODSUCKER(user))
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum
 		if(!has_buckled_mobs())
 			toggle()
 			return
@@ -788,7 +789,7 @@
 			var/datum/antagonist/vassal/vassaldatum = target.mind.has_antag_datum(/datum/antagonist/vassal)
 			if(vassaldatum && vassaldatum.favorite_vassal)
 				if(bloodsuckerdatum.bloodsucker_level_unspent <= 0)
-					to_chat(user, "<span class='danger'>You don't have any levels to upgrade [C] with.</span>")
+					to_chat(user, "<span class='danger'>You don't have any levels to upgrade [target] with.</span>")
 					return
 				/// Everything is good to go - Time to Buy our Favorite Vassal a new Power!
 				bloodsuckerdatum.SpendVassalRank(target )
@@ -823,7 +824,7 @@
 	if(!target.Adjacent(src) || target == user || !isliving(user) || has_buckled_mobs() || user.incapacitated() || target.buckled)
 		return
 	/// Are they mindshielded or a bloodsucker/vassal?
-	if(!HAS_TRAIT(target, TRAIT_MINDSHIELD) && !target.has_antag_datum(/datum/antagonist/vassal))
+	if(!HAS_TRAIT(target, TRAIT_MINDSHIELD) && !target.mind.has_antag_datum(/datum/antagonist/vassal))
 		return
 	/// Good to go - Buckle them!
 	if(do_after(user, 5 SECONDS, target))

@@ -133,15 +133,15 @@
 		target.Paralyze(20)
 		return TRUE
 	if(target.mind.has_antag_datum(/datum/antagonist/bloodsucker))
-		var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(D)
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(target)
 		if(bloodsuckerdatum.my_clan == CLAN_TREMERE)
-			to_chat(D, "<span class='cultlarge'>The holy water burns our flesh!</span>")
-			D.apply_damage(25, BURN)
-			D.adjustStaminaLoss(60)
-			D.Paralyze(20)
+			to_chat(target, "<span class='cultlarge'>The holy water burns our flesh!</span>")
+			target.apply_damage(25, BURN)
+			target.adjustStaminaLoss(60)
+			target.Paralyze(20)
 			return TRUE
 		else
-			to_chat(D, "<span class='warning'>This just seems like regular water...</span>")
+			to_chat(target, "<span class='warning'>This just seems like regular water...</span>")
 			return TRUE
 	if(target.mind.has_antag_datum(/datum/antagonist/cult))
 		for(var/datum/action/innate/cult/blood_magic/BD in target.actions)

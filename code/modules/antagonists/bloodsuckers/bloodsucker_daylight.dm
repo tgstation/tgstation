@@ -185,6 +185,6 @@
 				bloodsuckerdatum.powers -= power
 				power.Remove(bloodsucker_minds.current)
 
-/obj/effect/sunlight/proc/give_transform_power(/datum/antagonist/bloodsucker/sucker)
-	if(!(locate(/datum/action/bloodsucker/gangrel/transform) in sucker.powers))
+/obj/effect/sunlight/proc/give_transform_power(datum/antagonist/bloodsucker/bloodsuckerdatum)
+	if(!(locate(/datum/action/bloodsucker/gangrel/transform) in bloodsuckerdatum.powers))
 		bloodsuckerdatum.BuyPower(new /datum/action/bloodsucker/gangrel/transform)

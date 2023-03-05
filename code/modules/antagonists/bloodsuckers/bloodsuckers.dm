@@ -523,7 +523,6 @@
 	LevelUpPowers()
 	/// Bloodsucker-only Stat upgrades
 	bloodsucker_regen_rate += 0.05
-	feed_amount += 2
 	max_blood_volume += 100
 	/// Misc. Stats Upgrades
 	if(iscarbon(owner.current))
