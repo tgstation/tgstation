@@ -42,11 +42,9 @@
 
 	traitor_flavor = strings(IAA_FLAVOR_FILE, employer)
 
-	// External Affairs get an additional objective, done here since objectives are already assigned
 	if(employer == ROLE_EXTERNAL_AFFAIRS)
 		owner.special_role = ROLE_EXTERNAL_AFFAIRS
 		should_give_codewords = TRUE
-		objectives += forge_single_generic_objective()
 
 /datum/antagonist/traitor/internal_affairs/greet()
 	. = ..()
@@ -84,11 +82,11 @@
 
 /// We handle this in the dynamic ruleset instead.
 /datum/antagonist/traitor/internal_affairs/forge_traitor_objectives()
-	return
+	forge_ending_objective()
 
 /// All IAA's have to escape until they're the very last alive.
-/datum/antagonist/traitor/internal_affairs/forge_ending_objective()
-	ending_objective = new /datum/objective/escape
+/datum/antagonist/traitor/internal_affairs/proc/forge_ending_objective()
+	var/datum/objective/ending_objective = new /datum/objective/escape
 	ending_objective.owner = owner
 	objectives += ending_objective
 
@@ -193,7 +191,7 @@
 	name = "IAA (Preview only)"
 
 	uniform = /obj/item/clothing/under/rank/centcom/officer
-	head = /obj/item/clothing/head/centhat
+	head = /obj/item/clothing/head/beret/centcom_formal
 	glasses = /obj/item/clothing/glasses/sunglasses
 	r_hand = /obj/item/melee/energy/sword
 
