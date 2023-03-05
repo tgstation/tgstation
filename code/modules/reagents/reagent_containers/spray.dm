@@ -24,6 +24,7 @@
 	amount_per_transfer_from_this = 5
 	volume = 250
 	possible_transfer_amounts = list(5,10)
+	dispenser_transfer_amounts = list(5,10,15,20,25,30,50,75,100,125,250)
 
 /obj/item/reagent_containers/spray/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -174,6 +175,7 @@
 	list_reagents = list(/datum/reagent/space_cleaner = 100)
 	amount_per_transfer_from_this = 2
 	possible_transfer_amounts = list(2,5)
+	dispenser_transfer_amounts = list(5,10,15,20,25,30,50,75,100)
 
 /obj/item/reagent_containers/spray/cleaner/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is putting the nozzle of \the [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -193,6 +195,7 @@
 /obj/item/reagent_containers/spray/spraytan
 	name = "spray tan"
 	volume = 50
+	dispenser_transfer_amounts = list(5,10,15,20,25,30,50)
 	desc = "Gyaro brand spray tan. Do not spray near eyes or other orifices."
 	list_reagents = list(/datum/reagent/spraytan = 50)
 
@@ -207,6 +210,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	volume = 50
+	dispenser_transfer_amounts = list(5,10,15,20,25,30,50)
 	stream_range = 4
 	amount_per_transfer_from_this = 5
 	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 50)
@@ -235,6 +239,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = list(1)
+	dispenser_transfer_amounts = list(1,5,10)
 	can_toggle_range = FALSE
 	current_range = 1
 	volume = 10
@@ -369,6 +374,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
+	dispenser_transfer_amounts = list(5,10,15,20,25,30,50,75,100)
 	list_reagents = list(/datum/reagent/toxin/plantbgone = 100)
 
 /obj/item/reagent_containers/spray/syndicate
@@ -382,6 +388,7 @@
 	spray_range = 4
 	stream_range = 2
 	volume = 100
+	dispenser_transfer_amounts = list(5,10,15,20,25,30,50,75,100)
 	custom_premium_price = PAYCHECK_COMMAND * 2
 
 /obj/item/reagent_containers/spray/syndicate/Initialize(mapload)
@@ -396,6 +403,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	volume = 100
+	dispenser_transfer_amounts = list(5,10,15,20,25,30,50,75,100)
 	unique_reskin = list("Red" = "sprayer_med_red",
 						"Yellow" = "sprayer_med_yellow",
 						"Blue" = "sprayer_med_blue")
@@ -420,3 +428,4 @@
 	desc = "A medical spray bottle.This one contains hercuri, a medicine used to negate the effects of dangerous high-temperature environments. Careful not to freeze the patient!"
 	icon_state = "sprayer_large"
 	list_reagents = list(/datum/reagent/medicine/c2/hercuri = 100)
+	dispenser_transfer_amounts = list(5,10,15,20,25,30,50,75,100)
