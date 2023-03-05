@@ -888,7 +888,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/mapping_helpers/revolution_trash/LateInitialize()
-	if(!is_type_in_list(/datum/station_trait/revolutionary_trashing, SSstation.station_traits))
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_REVOLUTIONARY_TRASHING))
 		qdel(src) //We do nothing if our station trait isnt here
 		return
 
@@ -900,7 +900,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			axe_to_smash.take_damage(90)
 			continue
 
-		if(istype(current_thing, /obj/machinery/computer) && prob(60))
+		if(istype(current_thing, /obj/machinery/computer) && prob(35))
 			if(istype(current_thing, /obj/machinery/computer/communications))
 				continue //To prevent the shuttle from getting autocalled at the start of the round
 			var/obj/machinery/computer/computer_to_smash = current_thing
@@ -910,14 +910,34 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		if(isopenturf(current_thing) && prob(25))
 			var/obj/effect/decal/cleanable/crayon/created_art
 			created_art = new(get_turf(current_thing), RANDOM_COLOUR, pick(trash_talk))
-			created_art.pixel_x = rand(-6, 6)
-			created_art.pixel_y = rand(-6, 6)
+			created_art.pixel_x = rand(-10, 10)
+			created_art.pixel_y = rand(-10, 10)
+			continue
 
-			if(prob(0.01))
-				new /obj/effect/mob_spawn/corpse/human/assistant(get_turf(current_thing))
+		if(prob(0.01))
+			new /obj/effect/mob_spawn/corpse/human/assistant(get_turf(current_thing))
+			continue
 
-		if(istype(current_thing, /obj/machinery/computer) && prob(80))
+		if(istype(current_thing, /obj/structure/table) && prob(70))
 			var/obj/structure/table/table_to_smash = current_thing
 			table_to_smash.take_damage(100)
+			continue
+
+		if(istype(current_thing, /obj/structure/window))
+			var/obj/structure/window/window_to_smash = current_thing
+			window_to_smash.take_damage(rand(30, 75))
+			continue
+
+		if(istype(current_thing, /obj/machinery/vending) && prob(35))
+			var/obj/machinery/vending/vendor_to_trash = current_thing
+			if(prob(50))
+				vendor_to_trash.tilt(get_turf(vendor_to_trash))
+			else
+				vendor_to_trash.take_damage(150)
+
+		if(istype(current_thing, /obj/structure/chair))
+			var/obj/structure/chair/chair_to_smash = current_thing
+			chair_to_smash.take_damage(150)
+
 
 	qdel(src)
