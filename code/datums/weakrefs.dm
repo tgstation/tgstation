@@ -53,18 +53,15 @@
  * will always hard delete.
  */
 /datum/weakref
-	var/reference
+	VAR_PRIVATE/datum/thing
 
 /datum/weakref/New(datum/thing)
-	reference = REF(thing)
+	src.thing = thing
+	RegisterSignal(thing, COMSIG_PARENT_QDELETING, PROC_REF(on_qdeleting))
 
 /datum/weakref/Destroy(force)
 	var/datum/target = resolve()
 	qdel(target)
-
-	if(!force)
-		return QDEL_HINT_LETMELIVE //Let BYOND autoGC thiswhen nothing is using it anymore.
-	target?.weak_reference = null
 	return ..()
 
 /**
@@ -73,8 +70,7 @@
  * This will return `null` if the datum was deleted. This MUST be respected.
  */
 /datum/weakref/proc/resolve()
-	var/datum/D = locate(reference)
-	return (!QDELETED(D) && D.weak_reference == src) ? D : null
+	return (!QDELETED(thing)) ? thing : null
 
 /**
  * SERIOUSLY READ THE AUTODOC COMMENT FOR THIS PROC BEFORE EVEN THINKING ABOUT USING IT
@@ -91,8 +87,14 @@
  * just use resolve instead.
  */
 /datum/weakref/proc/hard_resolve()
-	var/datum/D = locate(reference)
-	return (D?.weak_reference == src) ? D : null
+	return thing
+
+/datum/weakref/proc/on_qdeleting()
+	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
+
+	thing.weak_reference = null
+	thing = null
 
 /datum/weakref/vv_get_dropdown()
 	. = ..()
