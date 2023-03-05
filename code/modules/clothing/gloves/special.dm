@@ -55,7 +55,7 @@
 	inhand_icon_state = null
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
-/obj/item/clothing/gloves/chameleon/Initialize(mapload)
+/obj/item/clothing/gloves/chameleon/rapid/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
 
