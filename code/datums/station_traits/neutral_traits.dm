@@ -198,6 +198,7 @@
 	report_message = "We here at Nanotrasen would all like to wish Employee Name a very happy birthday"
 	trait_to_give = STATION_TRAIT_BIRTHDAY
 	blacklist = list(/datum/station_trait/announcement_intern, /datum/station_trait/announcement_medbot) //Overiding the annoucer hides the birthday person in the annoucement message.
+	///Variable that stores a reference to the person selected to have their birthday celebrated.
 	var/mob/living/carbon/human/birthday_person
 	///Variable that admins can override with a player's ckey in order to set them as the birthday person when the round starts.
 	var/birthday_override_ckey
@@ -213,7 +214,6 @@
 
 /datum/station_trait/birthday/on_round_start()
 	. = ..()
-
 	if(birthday_override_ckey)
 		if(!check_valid_override())
 			message_admins("Attempted to make [birthday_override_ckey] the birthday person but they are not a valid station role. A random birthday person has be selected instead.")		
