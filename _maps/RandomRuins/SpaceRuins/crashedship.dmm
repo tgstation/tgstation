@@ -1047,8 +1047,8 @@
 	},
 /obj/item/screwdriver/caravan{
 	name = "Madsen's Wrath";
-	desc = "There are bits of an eyeball at the tip of this screwdriver..." ;
-	force = 10
+	desc = "There are what appears to be the crusty remains of an eyeball on the tip of this screwdriver...";
+	force = 13
 	},
 /obj/item/paper/fluff/ruins/crashedship/scribbled{
 	pixel_x = -7;

@@ -68,6 +68,10 @@
 	acid = 50
 	wound = 20
 
+/obj/item/clothing/suit/armor/vest/marine/old
+	desc = "A set of the finest mass produced, stamped plasteel armor plates, containing an environmental protection unit for all-condition door kicking. This one seems battered and scraped up, lessening its protective qualities."
+	armor_type = /datum/armor/suit_armor
+
 /obj/item/clothing/suit/armor/vest/marine/security
 	name = "large tactical armor vest"
 	icon_state = "marine_security"

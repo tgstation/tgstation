@@ -105,6 +105,10 @@
 	acid = 50
 	wound = 20
 
+/obj/item/clothing/head/helmet/marine/old
+	desc = "A tactical black helmet, sealed from outside hazards with a plate of glass and not much else. The wear and tear on this helmet is evident, though it is still quite servicable."
+	armor_type = /datum/armor/head_helmet
+
 /obj/item/clothing/head/helmet/marine/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, starting_light = new /obj/item/flashlight/seclite(src), light_icon_state = "flight")

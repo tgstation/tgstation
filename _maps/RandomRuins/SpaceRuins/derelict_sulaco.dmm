@@ -227,7 +227,7 @@
 "nR" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
-/obj/item/clothing/suit/armor/vest/marine,
+/obj/item/clothing/suit/armor/vest/marine/old,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "ob" = (
@@ -446,7 +446,7 @@
 "CG" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
-/obj/item/clothing/head/helmet/marine,
+/obj/item/clothing/head/helmet/marine/old,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "CU" = (

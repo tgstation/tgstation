@@ -703,7 +703,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/item/mod/module/anomaly_locked/teleporter/prebuilt,
+/obj/item/mod/module/anomaly_locked/kinesis/prebuilt,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "js" = (

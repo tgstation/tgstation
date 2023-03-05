@@ -662,13 +662,11 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "qI" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/mod/module/anomaly_locked/kinesis/prebuilt{
-	pixel_y = 10;
-	pixel_x = 5
+/obj/item/mod/module/anomaly_locked/teleporter/prebuilt{
+	pixel_y = -3
 	},
 /obj/item/mod/module/visor/night{
-	pixel_y = 0;
-	pixel_x = -1
+	pixel_y = 9
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
