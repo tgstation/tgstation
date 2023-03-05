@@ -290,3 +290,11 @@
 	report_message = "Due to budget cuts, we have downsized your escape pods."
 	trait_to_give = STATION_TRAIT_SMALLER_PODS
 	blacklist = list(/datum/station_trait/luxury_escape_pods)
+
+///A special trait, used only for when a revolution was won in the previous round. See /obj/effect/mapping_helpers/revolution_trash for more information.
+/datum/station_trait/revolutionary_trashing
+	name = "Post-Revolutionary Fervor"
+	show_in_report = TRUE
+	report_message = "Your station was recently reclaimed from a revolutionary commune. We aren't cleaning up after them."
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 0

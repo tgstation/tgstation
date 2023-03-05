@@ -443,7 +443,7 @@
 		if(charter_given || real_headrev.stat != CONSCIOUS)
 			continue
 		charter_given = TRUE
-		var/list/headrev_charter_goodies = list(
+		var/list/headrev_charter_goodies = list( //Test by calling save_members and then victory_effects
 		/obj/item/station_charter/revolution,
 		/obj/item/megaphone,
 		/obj/item/bedsheet/rev,
@@ -455,11 +455,11 @@
 		))
 		to_chat(real_headrev, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
 			\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
-			<b>You have been chosen out of your fellow provocateurs to rename the station, and recieve a gift to commemorate your success. Choose wisely.</b> \
+			<b>You have been chosen out of your fellow provocateurs to rename the station and recieve a gift to commemorate your success. Choose wisely.</b> \
 			Message ends.\""))
 
 	//Forces the next round to have a station trait that makes command rooms get trashed on roundstart
-	rustg_file_write(json_encode(/obj/effect/mapping_helpers/revolution_trash), FUTURE_STATION_TRAITS_FILE)
+	rustg_file_write(json_encode("/datum/station_trait/revolutionary_trashing"), FUTURE_STATION_TRAITS_FILE)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_REVOLUTION_VICTORY)
 

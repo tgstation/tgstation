@@ -888,6 +888,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/mapping_helpers/revolution_trash/LateInitialize()
+	if(!is_type_in_list(/datum/station_trait/revolutionary_trashing, SSstation.station_traits))
+		qdel(src) //We do nothing if our station trait isnt here
+		return
+
 	var/area/our_area = get_area(src)
 
 	for(var/current_thing in our_area.contents)
@@ -896,7 +900,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			axe_to_smash.take_damage(90)
 			continue
 
-		if(istype(current_thing, /obj/machinery/computer) && prob(80))
+		if(istype(current_thing, /obj/machinery/computer) && prob(60))
 			if(istype(current_thing, /obj/machinery/computer/communications))
 				continue //To prevent the shuttle from getting autocalled at the start of the round
 			var/obj/machinery/computer/computer_to_smash = current_thing
@@ -908,3 +912,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			created_art = new(get_turf(current_thing), RANDOM_COLOUR, pick(trash_talk))
 			created_art.pixel_x = rand(-6, 6)
 			created_art.pixel_y = rand(-6, 6)
+
+			if(prob(0.01))
+				new /obj/effect/mob_spawn/corpse/human/assistant(get_turf(current_thing))
+
+		if(istype(current_thing, /obj/machinery/computer) && prob(80))
+			var/obj/structure/table/table_to_smash = current_thing
+			table_to_smash.take_damage(100)
+
+	qdel(src)
