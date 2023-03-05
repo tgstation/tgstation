@@ -93,11 +93,11 @@
 	SIGNAL_HANDLER
 	PRIVATE_PROC(TRUE)
 
-	thing.weak_reference = null
-	thing = null
-
 	// Need to unregister because turfs do not clear their signals, and can be destroyed again
 	UnregisterSignal(thing, COMSIG_PARENT_QDELETING)
+
+	thing.weak_reference = null
+	thing = null
 
 /datum/weakref/vv_get_dropdown()
 	. = ..()
