@@ -8310,8 +8310,12 @@
 "dvl" = (
 /obj/structure/table,
 /obj/item/reagent_containers/condiment/enzyme{
-	pixel_x = -8;
-	pixel_y = 5
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/machinery/reagentgrinder{
+	pixel_x = -9;
+	pixel_y = 8
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
@@ -14516,6 +14520,10 @@
 	dir = 10
 	},
 /obj/structure/table/reinforced,
+/obj/item/paper_bin{
+	pixel_x = 4;
+	pixel_y = 3
+	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "fJZ" = (
@@ -15905,6 +15913,7 @@
 /area/station/engineering/atmos)
 "gkb" = (
 /obj/machinery/light/small/directional/west,
+/obj/item/kirbyplants/fullysynthetic,
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
@@ -26783,6 +26792,10 @@
 "kau" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/table/reinforced,
+/obj/machinery/reagentgrinder{
+	pixel_x = -9;
+	pixel_y = 8
+	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "kaD" = (
@@ -53196,6 +53209,10 @@
 "tff" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
+/obj/machinery/reagentgrinder{
+	pixel_x = -9;
+	pixel_y = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "tfh" = (
@@ -63168,6 +63185,8 @@
 /area/station/maintenance/starboard/fore)
 "woI" = (
 /obj/structure/rack,
+/obj/item/crowbar/large/old,
+/obj/item/wrench,
 /turf/open/floor/catwalk_floor,
 /area/station/science/xenobiology)
 "woT" = (
