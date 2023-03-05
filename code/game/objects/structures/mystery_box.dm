@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(mystery_box_guns, list(
 GLOBAL_LIST_INIT(mystery_box_extended, list(
 	/obj/item/clothing/gloves/tackler/combat,
 	/obj/item/clothing/gloves/race,
-	/obj/item/clothing/gloves/rapid,
+	/obj/item/clothing/gloves/chameleon/rapid,
 	/obj/item/shield/riot/flash,
 	/obj/item/grenade/stingbang/mega,
 	/obj/item/storage/belt/sabre,
