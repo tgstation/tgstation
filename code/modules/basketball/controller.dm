@@ -1,5 +1,5 @@
 ///how many people can play basketball without issues (running out of spawns, procs not expecting more than this amount of people, etc)
-#define BASKETBALL_MIN_PLAYER_COUNT 1
+#define BASKETBALL_MIN_PLAYER_COUNT 2
 #define BASKETBALL_MAX_PLAYER_COUNT 7
 
 #define BASKETBALL_TEAM_HOME "home"
@@ -22,7 +22,7 @@ GLOBAL_VAR(basketball_game)
 	/// Map generation tool that deletes the current map after the game finishes
 	var/datum/map_generator/massdelete/map_deleter
 	/// Total amount of time basketball is played for
-	var/game_duration = 2 MINUTES
+	var/game_duration = 3 MINUTES
 
 	/// List of all players ckeys involved in the minigame
 	var/list/minigame_players = list()
@@ -311,8 +311,6 @@ GLOBAL_VAR(basketball_game)
 
 /**
  * Filters inactive player into a different list until they reconnect, and removes players who are no longer ghosts.
- *
- * If a disconnected player gets a non-ghost mob and reconnects, they will be first put back into mafia_signup then filtered by that.
  */
 /datum/basketball_controller/proc/check_signups()
 	for(var/bad_key in GLOB.basketball_bad_signup)
