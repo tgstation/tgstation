@@ -1,0 +1,4 @@
+author: "Huz2e"
+delete-after: True
+changes:
+  - admin: "Перемещение сейлогов в отдельный файл."
