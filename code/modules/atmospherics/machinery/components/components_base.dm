@@ -97,7 +97,7 @@
 	airs[i] = null
 	return ..()
 
-/obj/machinery/atmospherics/components/on_construction()
+/obj/machinery/atmospherics/components/on_construction(mob/user)
 	. = ..()
 	update_parents()
 
