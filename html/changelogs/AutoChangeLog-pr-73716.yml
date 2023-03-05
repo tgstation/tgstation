@@ -1,4 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes:
-  - bugfix: "fixed missing inhand icon state for jaws of life"

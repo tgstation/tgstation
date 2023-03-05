@@ -1,4 +1,0 @@
-author: "flowercuco"
-delete-after: True
-changes:
-  - rscadd: "add new smite that adds deadchat control component to a victim"

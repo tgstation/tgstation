@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes:
-  - bugfix: "Papercode has been significantly improved and trivially filled paper forms should no longer lag or crash players' game clients."

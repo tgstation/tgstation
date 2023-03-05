@@ -1,5 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes:
-  - refactor: "refactored DNA vault. DNA probes now need to be linked with the vault before scanning."
-  - qol: "DNA probe can now access the dna database directly from the vault its linked to, so you are always updated on the vault's database. Simply hit the vault with the probe and it will link."
