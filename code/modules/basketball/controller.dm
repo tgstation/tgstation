@@ -1,6 +1,6 @@
 ///how many people can play basketball without issues (running out of spawns, procs not expecting more than this amount of people, etc)
-#define BASKETBALL_MIN_PLAYER_COUNT 7 // should be 2
-#define BASKETBALL_MAX_PLAYER_COUNT 7 // shoould be 7
+#define BASKETBALL_MIN_PLAYER_COUNT 2
+#define BASKETBALL_MAX_PLAYER_COUNT 7
 
 #define BASKETBALL_TEAM_HOME "home"
 #define BASKETBALL_TEAM_AWAY "away"
@@ -109,15 +109,19 @@ GLOBAL_VAR(basketball_game)
 	start_game(ready_players)
 
 /**
- * The game by this point is now all set up, and so we can put people in their bodies and start the first phase.
- *
- * Does the following:
- * * Creates bodies for all of the roles with the first proc
- * * Starts the first day manually (so no timer) with the second proc
+ * The game by this point is now all set up, and so we can put people in their bodies.
  */
 /datum/basketball_controller/proc/start_game(ready_players)
 	message_admins("The players have spoken! Voting has enabled the basketball minigame!")
-	notify_ghosts("Basketball minigame is about to start!",'sound/effects/ghost2.ogg')
+	notify_ghosts(
+		"Basketball minigame is about to start!",
+		source = home_hoop,
+		header = "Basketball Minigame",
+		ghost_sound = 'sound/effects/ghost2.ogg',
+		notify_volume = 75,
+		action = NOTIFY_ORBIT,
+	)
+
 	create_bodies(ready_players)
 	addtimer(CALLBACK(src, PROC_REF(victory)), game_duration)
 	for(var/i in 1 to 10)
@@ -195,21 +199,15 @@ GLOBAL_VAR(basketball_game)
 			player_client.prefs.safe_transfer_prefs_to(baller, is_antag = TRUE)
 		baller.key = player_key
 
-		SEND_SOUND(baller, 'sound/misc/whistle.ogg')
+		SEND_SOUND(baller, sound('sound/misc/whistle.ogg', volume=30))
 		if(is_player_referee)
 			to_chat(baller, span_notice("You are a referee. Make sure the teams play fair and use your whistle to call fouls appropriately."))
 		else
 			to_chat(baller, span_notice("You are a basketball player for the [team_name]. Score as much as you can before time runs out."))
-			to_chat(baller, span_info("Pass the ball with LMB (zero stamina cost)"))
-			to_chat(baller, span_info("Shoot the ball with RMB ([STAMINA_COST_SHOOTING] stamina cost) this goes over players heads and can be used to pass if you click on a player directly"))
-			to_chat(baller, span_info("Dunk by clicking directly on hoop ([STAMINA_COST_DUNKING] stamina cost)"))
-			to_chat(baller, span_info("Spin emote decreases stealing chance and shot accuracy ([STAMINA_COST_SPINNING] stamina cost)"))
-			to_chat(baller, span_info("Accuracy penalty when you try to pass to the hoop with LMB to score"))
-			to_chat(baller, span_info("Accuracy penalty when you don't click directly on the hoop when shooting"))
-			to_chat(baller, span_info("Not clicking directly on the player when passing has a chance to lose the ball"))
-			to_chat(baller, span_info("Getting disarmed while holding the ball drains stamina and has a chance to lose the ball"))
-			to_chat(baller, span_info("Disarms are affected by direction both players are facing. Face to face is bad... so always try to have your back facing the defender."))
-			to_chat(baller, span_info("Disarm chance is affected by the stamina of both players. If person with ball has high stamina, lower disarm chance. If stealer has high stamina, higher disarm chance."))
+			to_chat(baller, span_info("LMB to pass the ball (zero stamina cost) - accuracy penalty when scoring)"))
+			to_chat(baller, span_info("RMB to shoot the ball ([STAMINA_COST_SHOOTING] stamina cost) - this goes over players heads"))
+			to_chat(baller, span_info("Click directly on hoop while adjacent to dunk ([STAMINA_COST_DUNKING] stamina cost)"))
+			to_chat(baller, span_info("Spinning decreases other players disarm chance against you but reduces shooting accuracy ([STAMINA_COST_SPINNING] stamina cost)"))
 
 /datum/basketball_controller/proc/victory()
 	var/is_game_draw
@@ -351,41 +349,57 @@ GLOBAL_VAR(basketball_game)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "BasketballPanel")
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/basketball_controller/ui_data(mob/user)
-	var/list/data = list()
+	. = ..()
 
-	data["voters"] = GLOB.basketball_signup.len
-	data["voters_required"] = BASKETBALL_MIN_PLAYER_COUNT
-	data["voted"] = (user.ckey in GLOB.basketball_signup)
+	.["total_votes"] = GLOB.basketball_signup.len
+	.["players_min"] = BASKETBALL_MIN_PLAYER_COUNT
+	.["players_max"] = BASKETBALL_MAX_PLAYER_COUNT
 
-	return data
+	var/list/lobby_data = list()
+	for(var/key in GLOB.basketball_signup + GLOB.basketball_bad_signup)
+		var/list/lobby_member = list()
+		lobby_member["ckey"] = key
+		lobby_member["status"] = (key in GLOB.basketball_bad_signup) ? "Disconnected" : "Ready"
+		lobby_data += list(lobby_member)
+	.["lobbydata"] = lobby_data
 
 /datum/basketball_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-	var/mob/user = ui.user
+
+	var/mob/dead/observer/user = ui.user
+	if(!istype(user)) // only ghosts
+		return
+
+	var/client/ghost_client = user.client
+	if(!SSticker.HasRoundStarted())
+		to_chat(ghost_client, span_warning("Wait for the round to start."))
+		return
 
 	switch(action)
-		if("vote")
-			var/client/signup_client = user.client
-			if(!SSticker.HasRoundStarted())
-				to_chat(signup_client, span_warning("Wait for the round to start."))
-				return
-			if(GLOB.basketball_signup[signup_client.ckey])
-				GLOB.basketball_signup -= signup_client.ckey
-				to_chat(signup_client, span_notice("You unregister from basketball."))
-				return TRUE
+		if("basketball_signup")
+			if(GLOB.basketball_signup[ghost_client.ckey])
+				GLOB.basketball_signup -= ghost_client.ckey // double check this works?
+				to_chat(ghost_client, span_notice("You unregister from basketball."))
 			else
-				GLOB.basketball_signup[signup_client.ckey] = signup_client
-				to_chat(signup_client, span_notice("You sign up for basketball."))
+				GLOB.basketball_signup[ghost_client.ckey] = ghost_client
+				to_chat(ghost_client, span_notice("You sign up for basketball."))
 
 			check_signups()
-			try_autostart()
-
 			return TRUE
+		if("basketball_start")
+			if(!GLOB.basketball_signup[ghost_client.ckey])
+				to_chat(ghost_client, span_notice("You must sign up to start the game."))
+				return
+
+			try_autostart()
+			return TRUE
+
 
 /**
  * Creates the global datum for playing basketball games, destroys the last if that's required and returns the new.
