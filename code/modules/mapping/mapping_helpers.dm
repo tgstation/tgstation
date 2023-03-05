@@ -894,17 +894,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	var/area/our_area = get_area(src)
 
-	for(var/current_thing in our_area.contents)
+	for(var/atom/current_thing in our_area.contents)
 		if(istype(current_thing, /obj/structure/fireaxecabinet)) //A staple of revolutionary behavior
-			var/obj/structure/fireaxecabinet/axe_to_smash = current_thing
-			axe_to_smash.take_damage(90)
+			current_thing.take_damage(90)
 			continue
 
 		if(istype(current_thing, /obj/machinery/computer) && prob(35))
 			if(istype(current_thing, /obj/machinery/computer/communications))
 				continue //To prevent the shuttle from getting autocalled at the start of the round
-			var/obj/machinery/computer/computer_to_smash = current_thing
-			computer_to_smash.take_damage(160)
+			current_thing.take_damage(160)
 			continue
 
 		if(isopenturf(current_thing) && prob(25))
@@ -919,25 +917,22 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			continue
 
 		if(istype(current_thing, /obj/structure/table) && prob(70))
-			var/obj/structure/table/table_to_smash = current_thing
-			table_to_smash.take_damage(100)
+			current_thing.take_damage(100)
 			continue
 
 		if(istype(current_thing, /obj/structure/window))
-			var/obj/structure/window/window_to_smash = current_thing
-			window_to_smash.take_damage(rand(30, 75))
+			current_thing.take_damage(rand(30, 75))
 			continue
 
 		if(istype(current_thing, /obj/machinery/vending) && prob(35))
 			var/obj/machinery/vending/vendor_to_trash = current_thing
 			if(prob(50))
 				vendor_to_trash.tilt(get_turf(vendor_to_trash))
-			else
+
+			if(prob(50))
 				vendor_to_trash.take_damage(150)
 
 		if(istype(current_thing, /obj/structure/chair))
-			var/obj/structure/chair/chair_to_smash = current_thing
-			chair_to_smash.take_damage(150)
-
+			current_thing.take_damage(150)
 
 	qdel(src)
