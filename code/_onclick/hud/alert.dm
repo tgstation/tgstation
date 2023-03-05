@@ -736,7 +736,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Laws have potentially been uploaded to or removed from this unit. Please be aware of any changes \
 		so as to remain in compliance with the most up-to-date laws."
 	icon_state = ALERT_NEW_LAW
-	timeout = 300
+	timeout = 30 SECONDS
 
 /atom/movable/screen/alert/hackingapc
 	name = "Hacking APC"
@@ -744,7 +744,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		complete, you will have exclusive control of it, and you will gain \
 		additional processing time to unlock more malfunction abilities."
 	icon_state = ALERT_HACKING_APC
-	timeout = 600
+	timeout = 60 SECONDS
 	var/atom/target = null
 
 /atom/movable/screen/alert/hackingapc/Click()

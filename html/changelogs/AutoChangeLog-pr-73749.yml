@@ -1,0 +1,7 @@
+author: "LT3"
+delete-after: True
+changes:
+  - rscadd: "Added new multi-vote system"
+  - balance: "Map votes are now calculated using multi-vote instead of the old single-vote system"
+  - admin: "Admins can now use either multi-vote or single-vote for custom votes"
+  - code_imp: "Map choice filtering uses active player count, not all connected clients"

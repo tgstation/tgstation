@@ -46,7 +46,6 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/food/tofu(location)
-	return
 
 /datum/chemical_reaction/food/chocolatepudding
 	results = list(/datum/reagent/consumable/chocolatepudding = 20)
@@ -64,7 +63,6 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/food/chocolatebar(location)
-	return
 
 /datum/chemical_reaction/food/chocolate_bar2
 	required_reagents = list(/datum/reagent/consumable/milk/chocolate_milk = 4, /datum/reagent/consumable/sugar = 2)
@@ -75,7 +73,6 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/food/chocolatebar(location)
-	return
 
 /datum/chemical_reaction/food/chocolate_bar3
 	required_reagents = list(/datum/reagent/consumable/milk = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/sugar = 2)
@@ -85,7 +82,6 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/food/chocolatebar(location)
-	return
 
 /datum/chemical_reaction/food/soysauce
 	results = list(/datum/reagent/consumable/soysauce = 5)
