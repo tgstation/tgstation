@@ -8,7 +8,7 @@
 		Higher levels decrease the sound played from using the Power, and increase the speed of the transition."
 	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
-	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
+	purchase_flags = BLOODSUCKER_CAN_BUY
 	bloodcost = 10
 	cooldown = 8 SECONDS
 	prefire_message = "Select a destination."
@@ -104,3 +104,8 @@
 	puff.effect_type = /obj/effect/particle_effect/fluid/smoke/vampsmoke
 	puff.set_up(3, 0, target_turf)
 	puff.start()
+
+/datum/action/bloodsucker/targeted/trespass/dissapear
+	name = "Dissapear"
+	desc = "Dissapear into thin air as you transport yourself to another location."
+	purchase_flags = VASSAL_CAN_BUY

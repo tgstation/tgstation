@@ -26,6 +26,31 @@
 
 	INVOKE_ASYNC(src, PROC_REF(update_hud))
 
+	/// Special check, Tremere Bloodsuckers burn while in the Chapel
+	if(my_clan == CLAN_TREMERE)
+		var/area/A = get_area(owner.current)
+		if(istype(A, /area/station/service/chapel))
+			to_chat(owner.current, "<span class='warning'>You don't belong in holy areas!</span>")
+			owner.current.adjustFireLoss(10)
+			owner.current.adjust_fire_stacks(2)
+			owner.current.ignite_mob()
+
+	if(my_clan == CLAN_MALKAVIAN && prob(15) && !HAS_TRAIT(owner.current, TRAIT_MASQUERADE) && owner.current.stat)
+		switch(rand(0,4))
+			if(0) // 20% chance to call out a player at their location
+				for(var/mob/living/carbon/human/H in shuffle(GLOB.player_list))
+					if(!H.mind)
+						continue
+					if(!H.stat == DEAD || HAS_TRAIT(H, TRAIT_CRITICAL_CONDITION))
+						continue
+					if(!SSjob.GetJob(H.mind.assigned_role) || !is_station_level(H))
+						continue
+					var/area/A = get_area(H)
+					owner.current.say("#...oh dear... [H]... what are you doing... at [A]?")
+					break
+			else // 80% chance to say some malkavian revelation
+				owner.current.say(pick(strings("malkavian_revelations.json", "revelations")))
+
 /**
  * ## BLOOD STUFF
  */
@@ -215,7 +240,7 @@
 		owner.current.set_eye_blur_if_lower((8 - 8 * (living_owner.blood_volume / BLOOD_VOLUME_BAD))*2 SECONDS)
 
 	// The more blood, the better the Regeneration, get too low blood, and you enter Frenzy.
-	if(living_owner.blood_volume < (FRENZY_THRESHOLD_ENTER + (humanity_lost * 10)) && !frenzied)
+	if(living_owner.blood_volume < (frenzy_threshold + (humanity_lost * 10)) && !frenzied)
 		living_owner.apply_status_effect(/datum/status_effect/frenzy)
 	else if(living_owner.blood_volume < BLOOD_VOLUME_BAD)
 		additional_regen = 0.1
@@ -337,7 +362,7 @@
 		to_chat(owner.current, span_warning("You hit the maximum amount of lost Humanity, you are far from Human."))
 		return
 	humanity_lost += value
-	to_chat(owner.current, span_warning("You feel as if you lost some of your humanity, you will now enter Frenzy at [FRENZY_THRESHOLD_ENTER + (humanity_lost * 10)] Blood."))
+	to_chat(owner.current, span_warning("You feel as if you lost some of your humanity, you will now enter Frenzy at [frenzy_threshold + (humanity_lost * 10)] Blood."))
 
 // Bloodsuckers moodlets //
 /datum/mood_event/drankblood

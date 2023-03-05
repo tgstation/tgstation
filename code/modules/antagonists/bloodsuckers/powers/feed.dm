@@ -141,11 +141,18 @@
 		feed_strength_mult = 1
 	else
 		feed_strength_mult = 0.3
-	blood_taken += bloodsuckerdatum_power.handle_feeding(feed_target, feed_strength_mult, level_current)
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(user)
+	var/datum/antagonist/vassal/vassaldatum = IS_VASSAL(user)
+	if(bloodsuckerdatum)
+		blood_taken += bloodsuckerdatum.handle_feeding(feed_target, feed_strength_mult, level_current)
+	if(vassaldatum)
+		vassaldatum.HandleFeeding(feed_target, feed_strength_mult)
 
 	if(feed_strength_mult > 5 && feed_target.stat < DEAD)
 		user.add_mood_event("drankblood", /datum/mood_event/drankblood)
-	user.add_mood_event("drankblood", /datum/mood_event/drankblood_bad)
+	if(bloodsuckerdatum && !feed_target.mind && bloodsuckerdatum.my_clan == CLAN_VENTRUE)
+		user.add_mood_event("drankblood", /datum/mood_event/drankblood_bad)
+		to_chat(user, "<span class='notice'>You feel disgusted at the taste of a non-sentient creature.")
 	if(feed_target.stat >= DEAD)
 		user.add_mood_event("drankblood", /datum/mood_event/drankblood_dead)
 

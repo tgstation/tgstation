@@ -24,7 +24,7 @@
 		Higher levels will increase the time of the mesmerize's freeze."
 	power_flags = NONE
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
-	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
+	purchase_flags = BLOODSUCKER_CAN_BUY
 	bloodcost = 30
 	cooldown = 20 SECONDS
 	target_range = 8
@@ -141,3 +141,8 @@
 
 /datum/action/bloodsucker/targeted/mesmerize/ContinueActive(mob/living/user, mob/living/target)
 	return ..() && CheckCanUse(user) && CheckCanTarget(target)
+
+/datum/action/bloodsucker/targeted/mesmerize/hypnotize
+	name = "Hypnotize"
+	desc = "Stare into the eyes of someone watching you, temporarily hypnotizing them."
+	purchase_flags = VASSAL_CAN_BUY

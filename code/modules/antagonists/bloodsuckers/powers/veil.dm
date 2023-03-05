@@ -8,7 +8,6 @@
 		Clothes, gear, and Security/Medical HUD status is kept the same while this power is active."
 	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_FRENZY
-	purchase_flags = VASSAL_CAN_BUY
 	bloodcost = 15
 	constant_bloodcost = 0.1
 	cooldown = 10 SECONDS
@@ -137,3 +136,9 @@
 
 /obj/effect/particle_effect/fluid/smoke/vampsmoke/fade_out(frames = 0.8 SECONDS)
 	..(frames)
+
+//Vassal edition
+/datum/action/bloodsucker/veil/disguise
+	name = "Disguise"
+	desc = "Hide yourself as a random identity, fooling the naked eye."
+	purchase_flags = VASSAL_CAN_BUY

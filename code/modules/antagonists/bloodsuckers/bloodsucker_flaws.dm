@@ -3,51 +3,90 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 /datum/antagonist/bloodsucker/proc/AssignClanAndBane()
 	var/static/list/clans = list(
-		CLAN_GANGREL,
-		//CLAN_LASOMBRA,
+		CLAN_BRUJAH,
+		CLAN_NOSFERATU,
+		CLAN_TREMERE,
+		CLAN_VENTRUE,
+		CLAN_MALKAVIAN,
 		"None",
 	)
 	var/list/options = list()
 	options = clans
 	// Brief descriptions in case they don't read the Wiki.
-	to_chat(owner, span_announce("List of all Clans:\n\
-		Gangrel - Prone to Frenzy, special power.\n\
-		None - Continue living without a clan."))
+	to_chat(owner, span_announce("List of all Clans:<br> \
+		Brujah - Prone to Frenzy, Brawn buffed.<br> \
+		Nosferatu - Disfigured, no Masquerade, Ventcrawl.<br> \
+		Tremere - Burn in the Chapel, Vassal Mutilation.<br> \
+		Ventrue - Cant drink from mindless mobs, can't level up, raise a vassal instead.<br>\
+		Malkavian - Complete insanity.<br>"))
 
-	var/answer = input("You have Ranked up far enough to remember your clan. Which clan are you part of?", "Our mind feels luxurious...") in options
+	var/answer = tgui_input_list(owner.current, "You have Ranked up far enough to remember your clan. Which clan are you part of?", "Our mind feels luxurious...", options)
+
 	if(!answer || answer == "None")
 		to_chat(owner, span_warning("You have wilingfully decided to stay ignorant."))
 		return
 	var/mob/living/carbon/human/bloodsucker = owner.current
 	//switch(answer)
-	if(answer == CLAN_GANGREL)
-		my_clan = CLAN_GANGREL
-		to_chat(owner, span_announce("You have Ranked up enough to learn: You are part of the Gangrel Clan!\n\
-			* As part of the Gangrel Clan, your inner beast has a stronger impact in your undead life.\n\
-			* You are prone to falling into a frenzy, and will unleash a wild beast form when doing so,\n\
-			* Though once per night you are able to unleash your inner beast to help you in combat.\n\
-			* Due to growing more feral you've also strayed away from other bloodsuckers and will only be able to maintain one vassal.\n\
-			* Finally, your Favorite Vassal will gain the Minor Beast Form ability to help you in combat."))
-		AddHumanityLost(22.4)
-		BuyPower(new /datum/action/bloodsucker/gangrel/transform)
-		bloodsucker.faction |= "bloodhungry" //i love animals i love animals
-		/*if(CLAN_LASOMBRA)
-			my_clan = CLAN_LASOMBRA
-			to_chat(owner, span_announce("You have Ranked up enough to learn: You are part of the Lasombra Clan!\n\
-				* As part of the Lasombra Clan, your past teachings have taught you how to become in touch with the Abyss and practice it's prophecies.\n\
-				* It'll take long before the Abyss can break through this plane's veil, but you'll try to salvage any of the energy that comes through,\n\
-				* To harness it's energy a ritual must be done each night to gain a shadowpoint, shadowpoints let's you upgrades normal abilities into upgraded ones.\n\
-				* The Abyss has blackened your veins and made you immune to brute damage but highly receptive to burn, so you might need to be extra careful when on Torpor.\n\
-				* Finally, your Favorite Vassal will gain the Minor Glare and Shadow Walk abilities to help you in combat."))
-			ADD_TRAIT(bloodsucker, TRAIT_BRUTEIMMUNE, BLOODSUCKER_TRAIT)
-			ADD_TRAIT(bloodsucker, TRAIT_SCORCHED, BLOODSUCKER_TRAIT)
-			ADD_TRAIT(bloodsucker, CULT_EYES, BLOODSUCKER_TRAIT)
-			var/obj/item/organ/heart/nightmare/nightmarish_heart = new
-			nightmarish_heart.Insert(bloodsucker)
-			nightmarish_heart.Stop()
-			for(var/obj/item/light_eater/blade in bloodsucker.held_items)
-				QDEL_NULL(blade)
-			owner.teach_crafting_recipe(/datum/crafting_recipe/meatcoffin)*/
+	switch(answer)
+		if(CLAN_BRUJAH)
+			my_clan = CLAN_BRUJAH
+			to_chat(owner, "<span class='announce'>You have Ranked up enough to learn: You are part of the Brujah Clan!<br> \
+				* As part of the Bujah Clan, you are more prone to falling into Frenzy, though you are used to it, feel free to enter whenever you want!<br> \
+				* Additionally, Brawn and punches deal more damage than other Bloodsuckers. Use this to your advantage!</span>")
+			/// Makes their max punch, and by extension Brawn, stronger - Stolen from SpendRank()
+			if(iscarbon(owner.current))
+				for(var/obj/item/bodypart/part in bloodsucker.bodyparts) //Hope that you aren't getting dismembered
+					part.unarmed_damage_low += 1.5
+					part.unarmed_damage_high += 1.5
+			frenzy_threshold = FRENZY_THRESHOLD_HIGHER
+			return
+		if(CLAN_NOSFERATU)
+			my_clan = CLAN_NOSFERATU
+			to_chat(owner, "<span class='announce'>You have Ranked up enough to learn: You are part of the Nosferatu Clan!<br> \
+				* As part of the Nosferatu Clan, you are less interested in disguising yourself within the crew, as such you do not know how to use the Masquerade and Veil ability.<br> \
+				* Additionally, in exchange for having a bad back and not being identifiable, you can fit into vents using Alt+Click</span>")
+			for(var/datum/action/bloodsucker/power in powers)
+				if(istype(power, /datum/action/bloodsucker/masquerade))
+					powers -= power
+					power.Remove(owner.current)
+				if(istype(power, /datum/action/bloodsucker/veil))
+					powers -= power
+					power.Remove(owner.current)
+			if(!bloodsucker.has_quirk(/datum/quirk/badback))
+				bloodsucker.add_quirk(/datum/quirk/badback)
+			if(!HAS_TRAIT(bloodsucker, TRAIT_VENTCRAWLER_ALWAYS))
+				ADD_TRAIT(bloodsucker, TRAIT_VENTCRAWLER_ALWAYS, BLOODSUCKER_TRAIT)
+			if(!HAS_TRAIT(bloodsucker, TRAIT_DISFIGURED))
+				ADD_TRAIT(bloodsucker, TRAIT_DISFIGURED, BLOODSUCKER_TRAIT)
+			return
+		if(CLAN_TREMERE)
+			my_clan = CLAN_TREMERE
+			to_chat(owner, "<span class='announce'>You have Ranked up enough to learn: You are part of the Tremere Clan!<br> \
+				* As part of the Tremere Clan, you are weak to Anti-magic, and will catch fire if you enter the Chapel.<br> \
+				* Additionally, you magically protect your Vassals from being disconnected with you via Mindshielding, and can mutilate them by putting them on a persuasion rack.<br> \
+				* Finally, you can revive dead non-Vassals by using the Persuasion Rack as they lie on it.</span>")
+			return
+		if(CLAN_VENTRUE) // WILLARD TODO: Make a Ventrue-unique objective to drink X amount of Blood?
+			my_clan = CLAN_VENTRUE
+			to_chat(owner, "<span class='announce'>You have Ranked up enough to learn: You are part of the Ventrue Clan!<br> \
+				* As part of the Ventrue Clan, you are extremely snobby with your meals, and refuse to drink blood from people without a Mind.<br> \
+				* Additionally, you will no longer Rank up. You are now instead able to get a Favorite vassal, by putting a Vassal on the persuasion rack and attempting to Tortute them.<br> \
+				* Finally, you may Rank your Favorite Vassal (and your own powers) up by buckling them onto a Candelabrum and using it, this will cost a Rank or Blood to do.</span>")
+			to_chat(owner, "<span class='announce'>* Bloodsucker Tip: Examine the Persuasion Rack/Candelabrum to see how they operate!</span>")
+			return
+		if(CLAN_MALKAVIAN)
+			my_clan = CLAN_MALKAVIAN
+			to_chat(owner, "<span class='reallybig hypnophrase'>Welcome to the Malkavian...</span>")
+			to_chat(owner, "<span class='userdanger'>* Bloodsucker Malkavian: Vampire is you are completely and irrati-- unrepairably Insane...</span>")
+			// WILLARD TODO: Make Masquerade hide brain traumas? Also applies to Frenzy.
+			bloodsucker.gain_trauma(/datum/brain_trauma/mild/hallucinations, TRAUMA_RESILIENCE_ABSOLUTE)
+			bloodsucker.gain_trauma(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
+			ADD_TRAIT(bloodsucker, TRAIT_XRAY_VISION, BLOODSUCKER_TRAIT)
+			return
+
+		else
+			to_chat(owner, "<span class='warning'>You have wilingfully decided to stay ignorant.</span>")
+			return
 
 
 	owner.announce_objectives()
