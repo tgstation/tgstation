@@ -482,7 +482,7 @@
 	update_hud(owner.current)
 	owner.current.playsound_local(null, 'sound/effects/pope_entry.ogg', 25, TRUE, pressure_affected = FALSE)
 
-/datum/antagonist/bloodsucker/proc/SpendVassalRank(mob/living/target)
+/datum/antagonist/bloodsucker/proc/SpendVassalRank(mob/living/target, SpendRank = TRUE)
 	set waitfor = FALSE
 
 	var/datum/antagonist/vassal/vassaldatum = target.mind.has_antag_datum(/datum/antagonist/vassal)
@@ -497,16 +497,12 @@
 	/// No powers to purchase? Abort.
 	if(options.len >= 1)
 		/// Give them the UI to purchase a power.
-		var/choice = tgui_input_list(owner.current, "You have the opportunity to level up your Favorite Vassal at the cost of 100 Blood. Select a power you wish them to recieve.", "You feel like a Leader!", options)
-		/// Safety Check
-		if(bloodsucker_level_unspent <= 0)
-			return
+		var/choice = tgui_input_list(owner.current, "You have the opportunity to level up your Favorite Vassal. Select a power you wish them to recieve.", "You feel like a Leader!", options)
 		/// Did you choose a power? Do you already have it? - Added due to window stacking.
 		if(!choice || !options[choice] || (locate(options[choice]) in vassaldatum.powers))
 			to_chat(owner.current, "<span class='notice'>You prevent your blood from thickening just yet, but you may try again later.</span>")
 			return
 		/// Good to go - Buy Power!
-		owner.current.blood_volume -= 100
 		var/datum/action/bloodsucker/P = options[choice]
 		vassaldatum.BuyPower(new P)
 		to_chat(owner.current, "<span class='notice'>You taught [target] how to use [initial(P.name)]!</span>")
@@ -535,7 +531,8 @@
 	/// We're almost done - Spend your Rank now.
 	vassaldatum.vassal_level++
 	bloodsucker_level++
-	bloodsucker_level_unspent--
+	if(SpendRank)
+		bloodsucker_level_unspent--
 
 	/// Vassals will turn more into a 'Bloodsucker' overtime
 	if(vassaldatum.vassal_level == 2)
@@ -550,7 +547,9 @@
 		ADD_TRAIT(target, TRAIT_SLEEPIMMUNE, BLOODSUCKER_TRAIT)
 		ADD_TRAIT(target, TRAIT_VIRUSIMMUNE, BLOODSUCKER_TRAIT)
 		to_chat(target, "<span class='notice'>You feel your Master's blood begin to protect you from bacteria.</span>")
-		target.skin_tone = "albino"
+		var/mob/living/carbon/human/human_target = target
+		if(human_target)
+			human_target.skin_tone = "albino"
 	if(vassaldatum.vassal_level == 5)
 		ADD_TRAIT(target, TRAIT_NOHARDCRIT, BLOODSUCKER_TRAIT)
 		ADD_TRAIT(target, TRAIT_HARDLY_WOUNDED, BLOODSUCKER_TRAIT)
