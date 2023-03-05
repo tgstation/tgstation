@@ -5,6 +5,8 @@
 	//So it shows up in the map editor
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = "mobspawner"
+	/// Can this spawner be used up?
+	var/infinite_use = FALSE
 	///A forced name of the mob, though can be overridden if a special name is passed as an argument
 	var/mob_name
 	///the type of the mob, you best inherit this
@@ -161,7 +163,7 @@
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
 		return
-	if(uses <= 0) //just in case
+	if(uses <= 0 && !infinite_use) //just in case
 		to_chat(user, span_warning("This spawner is out of charges!"))
 		return
 

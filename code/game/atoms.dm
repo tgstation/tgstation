@@ -409,42 +409,36 @@
 	return !density
 
 /**
- * Is this atom currently located on centcom
+ * Is this atom currently located on centcom (or riding off into the sunset on a shuttle)
  *
- * Specifically, is it on the z level and within the centcom areas
- *
- * You can also be in a shuttleshuttle during endgame transit
+ * Specifically, is it on the z level and within the centcom areas.
+ * You can also be in a shuttle during endgame transit.
  *
  * Used in gamemode to identify mobs who have escaped and for some other areas of the code
  * who don't want atoms where they shouldn't be
+ *
+ * Returns TRUE if this atom is on centcom or an escape shuttle, or FALSE if not
  */
 /atom/proc/onCentCom()
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf)
 		return FALSE
 
+	// This doesn't necessarily check that we're at central command,
+	// but it checks for any shuttles which have finished are still in hyperspace
+	// (IE, stuff like the whiteship which fly off into the sunset and "escape")
 	if(is_reserved_level(current_turf.z))
-		for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile_docking_ports)
-			if(mobile_docking_port.launch_status != ENDGAME_TRANSIT)
-				continue
-			for(var/area/shuttle/shuttle_area as anything in mobile_docking_port.shuttle_areas)
-				if(current_turf in shuttle_area)
-					return TRUE
+		return on_escaped_shuttle(ENDGAME_TRANSIT)
 
-	if(!is_centcom_level(current_turf.z))//if not, don't bother
+	// From here on we only concern ourselves with people actually on the centcom Z
+	if(!is_centcom_level(current_turf.z))
 		return FALSE
 
-	//Check for centcom itself
 	if(istype(current_turf.loc, /area/centcom))
 		return TRUE
 
-	//Check for centcom shuttles
-	for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile_docking_ports)
-		if(mobile_docking_port.launch_status == ENDGAME_LAUNCHED)
-			for(var/place as anything in mobile_docking_port.shuttle_areas)
-				var/area/shuttle/shuttle_area = place
-				if(current_turf in shuttle_area)
-					return TRUE
+	// Finally, check if we're on an escaped shuttle
+	return on_escaped_shuttle()
 
 /**
  * Is the atom in any of the syndicate areas
@@ -452,17 +446,48 @@
  * Either in the syndie base, or any of their shuttles
  *
  * Also used in gamemode code for win conditions
+ *
+ * Returns TRUE if this atom is on the syndicate recon base, any of its shuttles, or an escape shuttle, or FALSE if not
  */
 /atom/proc/onSyndieBase()
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf)
 		return FALSE
 
-	if(!is_reserved_level(current_turf.z))//if not, don't bother
+	// Syndicate base is loaded in a reserved level. If not reserved, we don't care.
+	if(!is_reserved_level(current_turf.z))
 		return FALSE
 
-	if(istype(current_turf.loc, /area/shuttle/syndicate) || istype(current_turf.loc, /area/centcom/syndicate_mothership) || istype(current_turf.loc, /area/shuttle/assault_pod))
+	var/static/list/syndie_typecache = typecacheof(list(
+		/area/centcom/syndicate_mothership, // syndicate base itself
+		/area/shuttle/assault_pod, // steel rain
+		/area/shuttle/syndicate, // infiltrator
+	))
+
+	if(is_type_in_typecache(current_turf.loc, syndie_typecache))
 		return TRUE
+
+	// Finally, check if we're on an escaped shuttle
+	return on_escaped_shuttle()
+
+/**
+ * Checks that we're on a shuttle that's escaped
+ *
+ * * check_for_launch_status - What launch status do we check for? Generally the two you want to check for are ENDGAME_LAUNCHED or ENDGAME_TRANSIT
+ *
+ * Returns TRUE if this atom is on a shuttle which is escaping or has escaped, or FALSE otherwise
+ */
+/atom/proc/on_escaped_shuttle(check_for_launch_status = ENDGAME_LAUNCHED)
+	var/turf/current_turf = get_turf(src)
+	if(!current_turf)
+		return FALSE
+
+	for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile_docking_ports)
+		if(mobile_docking_port.launch_status != check_for_launch_status)
+			continue
+		for(var/area/shuttle/shuttle_area as anything in mobile_docking_port.shuttle_areas)
+			if(current_turf in shuttle_area.get_contained_turfs())
+				return TRUE
 
 	return FALSE
 
@@ -1069,6 +1094,9 @@
  */
 /atom/proc/setDir(newdir)
 	SHOULD_CALL_PARENT(TRUE)
+	if (SEND_SIGNAL(src, COMSIG_ATOM_PRE_DIR_CHANGE, dir, newdir) & COMPONENT_ATOM_BLOCK_DIR_CHANGE)
+		newdir = dir
+		return
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 

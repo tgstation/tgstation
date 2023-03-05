@@ -980,3 +980,76 @@
   Rhials:
   - bugfix: The radiation leak event no longer targets machinery that doesn't use
       power.
+2023-02-27:
+  ATHATH:
+  - spellcheck: Corrects the description of the transmission 4 threshold effect of
+      the Narcolepsy symptom to more accurately reflect what the effect does.
+  Boopideedoo:
+  - bugfix: Added E.X.P.E.R.I.M.E.N.T.O.R
+  Jacquerel:
+  - bugfix: Spiders will stop being on fire marginally faster, as they used to.
+  - bugfix: Mob spawners will no longer break if instructed to spawn certain kinds
+      of basic mob, or monkeys.
+  LT3:
+  - bugfix: Disease Outbreak doesn't give up so easily when trying to start the event
+  - balance: Disease Outbreak will not spawn on positive virus mobs, but can be transmitted
+      if resistance is low
+  - bugfix: Disease Outbreak creates an entry in the virus log like it should
+  - admin: Admins can see Disease Outbreak virus stats when the event starts
+  NamelessFairy:
+  - bugfix: Any worn item that has its color changed will now have its color change
+      reflected on the item's worn icon immediately.
+  - bugfix: Cult Seek your master now has an icon.
+  - bugfix: You can no longer drive ridable vehicles without keys or in space.
+  - bugfix: Borg hypospray will correctly tell you the name of the limb that is blocked
+      when trying to inject into a blocked limb.
+  RikuTheKiller:
+  - bugfix: Nooartrium now pulls your ghost back into your body when it revives you.
+  SmoSmoSmoSmok:
+  - bugfix: the order vendors will not constantly load when trying to buy multiple
+      items
+  SuperSlayer0:
+  - bugfix: Fixes strong arm implant attacks stunlocking people
+  - bugfix: Strong arm implant attacks no longer stack with hulk attacks
+  Tattle:
+  - bugfix: removed a double monitor from Delta cargo
+  Timberpoes:
+  - bugfix: Fixes formatting for the paper containing vote box final tallies. "I love
+      democracy".
+  - bugfix: Fixes broken input fields on photocopied paper.
+  kawoppi:
+  - bugfix: filled trashcarts spawn nearby grime when initialized instead of when
+      opened for the first time
+  mc-oofert:
+  - bugfix: MMIs/Positrons dont get slept forever when the mech theyre in gets destroyed
+2023-02-28:
+  Jacquerel:
+  - bugfix: Maintenance tunnels should no longer sometimes contain airlocks with walls
+      underneath them.
+  - refactor: Migos, Creatures, and Blank Bodies use a new shared component to update
+      their stats which scales smoothly as they take damage rather than in stages.
+  - bugfix: Migos, Creatures and Blank Bodies will all update their stats when taking
+      or losing damage regardless of it was from an identifiable enemy.
+  - bugfix: Using a teleport scroll will deplete a charge regardless of whether used
+      in-hand or by pressing the action button.
+  - refactor: The actions of Statues and Creatures which can't be used while seen
+      now share logic, and will not spam chat with feedback.
+  LT3:
+  - admin: Roundstart logout report is written to the admin log
+  - admin: Roundstart report threshold is now 10 minutes
+  NamelessFairy:
+  - bugfix: Un-aimed admin rods will now actually be un-aimed instead of aimed at
+      the previous aimed rods target.
+  - admin: Admin aimed rods will now log that they're aimed randomly when not aimed.
+  flowercuco:
+  - bugfix: surplus crates and united surplus crates now properly show up as a purchase
+      in the round end screen
+  itseasytosee:
+  - bugfix: Monkeys ues the proper husk sprites.
+  - imageadd: The monkey has been moved back down to its lower, more submissive position.
+  - refactor: Your bodyparts are now dynamically rendered at a height relevant to
+      the length of your legs and torso, what does this mean for you? Not much to
+      be honest, but you might see a monkey pop up a bit if you cut its legs off.
+  - admin: The Tallboy is here
+  jlsnow301:
+  - bugfix: Fixes NTOS records program receiving bad medical disability data
