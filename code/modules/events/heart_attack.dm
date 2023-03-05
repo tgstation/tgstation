@@ -98,7 +98,7 @@
 /datum/event_admin_setup/input_number/heart_attack/prompt_admins()
 	var/datum/round_event_control/heart_attack/heart_control = event_control
 	max_value = length(heart_control.heart_attack_candidates)
-	. = ..()
+	return ..()
 
 /datum/event_admin_setup/input_number/heart_attack/apply_to_event(datum/round_event/heart_attack/event)
 	event.quantity = chosen_value
