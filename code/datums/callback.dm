@@ -68,6 +68,11 @@
 	if(usr)
 		user = WEAKREF(usr)
 
+/datum/callback/Destroy(force, ...)
+	object = null
+	arguments.Cut()
+	return ..()
+
 /**
  * Invoke this callback
  *
