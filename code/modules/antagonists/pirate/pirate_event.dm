@@ -86,10 +86,10 @@
 	normal_run_option = "Random Pirate Gang"
 
 /datum/event_admin_setup/listed_options/pirates/get_list()
-	var/list/gang_choices = list()
-	for(var/datum/pirate_gang/possible_gang as anything in GLOB.pirate_gangs)
-		gang_choices += possible_gang
-	return gang_choices
+	return subtypesof(/datum/pirate_gang)
 
 /datum/event_admin_setup/listed_options/pirates/apply_to_event(datum/round_event/pirates/event)
-	event.chosen_gang = chosen
+	if(isnull(chosen))
+		event.chosen_gang = null
+	else
+		event.chosen_gang = new chosen
