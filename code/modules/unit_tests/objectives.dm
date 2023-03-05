@@ -9,7 +9,7 @@
 			else
 				objectives_that_exist += value
 
-	SStraitor.generate_objectives = TRUE
+	SStraitor.generate_objectives = FALSE
 	for(var/datum/traitor_objective/objective_typepath as anything in subtypesof(/datum/traitor_objective))
 		var/datum/traitor_objective/objective = allocate(objective_typepath)
 		if(objective.abstract_type == objective_typepath)
@@ -28,7 +28,11 @@
 			TEST_FAIL("[objective_typepath] has not defined a minimum progression level and isn't an abstract type! Please define the progression minimum variable on the datum")
 		if(!ispath(objective_typepath, /datum/traitor_objective/ultimate) && objective.progression_reward == 0 && objective.telecrystal_reward == 0)
 			TEST_FAIL("[objective_typepath] has not set either a progression reward or a telecrystal reward! Please set either a telecrystal or progression reward for this objective.")
-	SStraitor.generate_objectives = FALSE
+
+/datum/unit_test/objectives_category/Destroy()
+	SStraitor.generate_objectives = TRUE
+	return ..()
+
 
 /datum/unit_test/objectives_category/proc/recursive_check_list(base_type, list/to_check, list/to_add_to)
 	for(var/value in to_check)
