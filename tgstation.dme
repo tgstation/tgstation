@@ -2807,6 +2807,8 @@
 #include "code\modules\basketball\basketball_map_loading.dm"
 #include "code\modules\basketball\basketball_teams.dm"
 #include "code\modules\basketball\controller.dm"
+#include "code\modules\basketball\hoop.dm"
+#include "code\modules\basketball\referee.dm"
 #include "code\modules\buildmode\bm_mode.dm"
 #include "code\modules\buildmode\buildmode.dm"
 #include "code\modules\buildmode\buttons.dm"

@@ -1,5 +1,5 @@
 ///how many people can play basketball without issues (running out of spawns, procs not expecting more than this amount of people, etc)
-#define BASKETBALL_MIN_PLAYER_COUNT 2
+#define BASKETBALL_MIN_PLAYER_COUNT 1
 #define BASKETBALL_MAX_PLAYER_COUNT 7
 
 #define BASKETBALL_TEAM_HOME "home"
@@ -249,8 +249,6 @@ GLOBAL_VAR(basketball_game)
 				competitor.dust()
 
 	addtimer(CALLBACK(src, PROC_REF(end_game)), 20 SECONDS) // give winners time for a victory lap
-
-
 
 /**
  * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
