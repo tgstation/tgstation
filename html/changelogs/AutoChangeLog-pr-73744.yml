@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Most spells can once again be cast even after someone stuns you with a baton."
