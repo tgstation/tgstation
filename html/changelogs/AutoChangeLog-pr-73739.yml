@@ -1,5 +1,0 @@
-author: "Draggeru"
-delete-after: True
-changes:
-  - rscadd: "Adds the tape wizard costume, both a real and fake variant"
-  - rscadd: "Adds the costume behind the autodrobe contraband wire, and the real variant in the wiz den\n:cl:"

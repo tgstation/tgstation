@@ -294,7 +294,7 @@
 #define SSAIR_SUPERCONDUCTIVITY 7
 #define SSAIR_PROCESS_ATOMS 8
 
-//Pipeline rebuild helper defines, these suck but it'll do for now //Fools you actually merged it
+// Pipeline rebuild helper defines, these suck but it'll do for now //Fools you actually merged it
 #define SSAIR_REBUILD_PIPELINE 1
 #define SSAIR_REBUILD_QUEUE 2
 
@@ -307,18 +307,18 @@
 #define SSWARDROBE_STOCK 1
 #define SSWARDROBE_INSPECT 2
 
-//Wardrobe cache metadata indexes
+// Wardrobe cache metadata indexes
 #define WARDROBE_CACHE_COUNT 1
 #define WARDROBE_CACHE_LAST_INSPECT 2
 #define WARDROBE_CACHE_CALL_INSERT 3
 #define WARDROBE_CACHE_CALL_REMOVAL 4
 
-//Wardrobe preloaded stock indexes
+// Wardrobe preloaded stock indexes
 #define WARDROBE_STOCK_CONTENTS 1
 #define WARDROBE_STOCK_CALL_INSERT 2
 #define WARDROBE_STOCK_CALL_REMOVAL 3
 
-//Wardrobe callback master list indexes
+// Wardrobe callback master list indexes
 #define WARDROBE_CALLBACK_INSERT 1
 #define WARDROBE_CALLBACK_REMOVE 2
 
@@ -331,3 +331,9 @@
 
 /// The timer key used to know how long subsystem initialization takes
 #define SS_INIT_TIMER_KEY "ss_init"
+
+// Vote subsystem counting methods
+/// First past the post. One selection per person, and the selection with the most votes wins.
+#define VOTE_COUNT_METHOD_SINGLE 1
+/// Approval voting. Any number of selections per person, and the selection with the most votes wins.
+#define VOTE_COUNT_METHOD_MULTI 2
