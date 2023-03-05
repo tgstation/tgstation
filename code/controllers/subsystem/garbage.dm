@@ -173,16 +173,15 @@ SUBSYSTEM_DEF(garbage)
 			continue
 
 		var/queued_at_time = L[GC_QUEUE_ITEM_QUEUE_TIME]
-		var/GCd_at_time = L[GC_QUEUE_ITEM_GCD_DESTROYED]
 		if(queued_at_time > cut_off_time)
 			break // Everything else is newer, skip them
 		count++
 
 #ifdef EXPERIMENT_515_QDEL_HARD_REFERENCE
-		SUPPRESS_UNUSED(GCd_at_time) // This variable does not need to exist when EXPERIMENT_515_QDEL_HARD_REFERENCE is removed
-
 		var/datum/D = L[GC_QUEUE_ITEM_REF]
 #else
+		var/GCd_at_time = L[GC_QUEUE_ITEM_GCD_DESTROYED]
+
 		var/refID = L[GC_QUEUE_ITEM_REF]
 		var/datum/D
 		D = locate(refID)
