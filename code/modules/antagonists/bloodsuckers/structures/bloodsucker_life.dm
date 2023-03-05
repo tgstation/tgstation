@@ -35,6 +35,22 @@
 			owner.current.adjust_fire_stacks(2)
 			owner.current.ignite_mob()
 
+	if(my_clan == CLAN_MALKAVIAN && prob(15) && !HAS_TRAIT(onwer.current, TRAIT_MASQUERADE) && owner.current.stat)
+		switch(rand(0,4))
+			if(0) // 20% chance to call out a player at their location
+				for(var/mob/living/carbon/human/H in shuffle(GLOB.player_list))
+					if(!H.mind)
+						continue
+					if(!H.stat == DEAD || HAS_TRAIT(H, TRAIT_CRITICAL_CONDITION))
+						continue
+					if(!SSjob.GetJob(H.mind.assigned_role) || (H.mind.assigned_role in GLOB.nonhuman_positions) || !is_station_level(H))
+						continue
+					var/area/A = get_area(H)
+					owner.current.say("#...oh dear... [H]... what are you doing... at [A]?")
+					break
+			else // 80% chance to say some malkavian revelation
+				owner.current.say(pick(strings("malkavian_revelations.json", "revelations")))
+
 /**
  * ## BLOOD STUFF
  */

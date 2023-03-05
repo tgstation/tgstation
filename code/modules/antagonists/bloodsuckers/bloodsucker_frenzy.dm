@@ -51,18 +51,24 @@
 	bloodsuckerdatum = IS_BLOODSUCKER(user)
 
 	// Disable ALL Powers and notify their entry
-	bloodsuckerdatum.DisableAllPowers()
-	to_chat(owner, span_userdanger("<FONT size = 3>Blood! You need Blood, now! You enter a total Frenzy!"))
-	to_chat(owner, span_announce("* Bloodsucker Tip: While in Frenzy, you instantly Aggresively grab, have stun resistance, cannot speak, hear, or use any powers outside of Feed and Trespass (If you have it)."))
+	if(my_clan == CLAN_BRUJAH)
+		to_chat(owner.current, "<span class='announce'>You enter a Frenzy!<br> \
+		* While in Frenzy, you gain the ability to instantly aggressively grab people, move faster and have no blood cost on abilities.<br> \
+		* In exchange, you will slowly gain Burn damage, be careful of how you handle it!<br> \
+		* To leave Frenzy, simply drink enough Blood ([FRENZY_THRESHOLD_EXIT]) to exit.</span><br>")
+	else
+		to_chat(owner.current, "<span class='userdanger'><FONT size = 3>Blood! You need Blood, now! You enter a total Frenzy!</span>")
+		to_chat(owner.current, "<span class='announce'>* Bloodsucker Tip: While in Frenzy, you instantly Aggresively grab, cannot speak, hear, get stunned, or use any powers outside of Feed and Trespass (If you have it).</span><br>")
+		ADD_TRAIT(owner.current, TRAIT_STUNIMMUNE, FRENZY_TRAIT) // Brujah can control Frenzy properly, so they don't get any of the effects.
+		ADD_TRAIT(owner, TRAIT_MUTE, FRENZY_TRAIT)
+		ADD_TRAIT(owner, TRAIT_DEAF, FRENZY_TRAIT)
+		if(HAS_TRAIT_FROM(user, TRAIT_ADVANCEDTOOLUSER, SPECIES_TRAIT))
+			was_tooluser = TRUE
+			REMOVE_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER, SPECIES_TRAIT)
+		bloodsuckerdatum.DisableAllPowers()
 	// Stamina resistances
 	user.physiology.stamina_mod *= 0.4
 
-	// Give the other Frenzy effects
-	ADD_TRAIT(owner, TRAIT_MUTE, FRENZY_TRAIT)
-	ADD_TRAIT(owner, TRAIT_DEAF, FRENZY_TRAIT)
-	if(HAS_TRAIT_FROM(user, TRAIT_ADVANCEDTOOLUSER, SPECIES_TRAIT))
-		was_tooluser = TRUE
-		REMOVE_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER, SPECIES_TRAIT)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/morbin, TRUE)
 	bloodsuckerdatum.frenzygrab.teach(user, TRUE)
 	owner.add_client_colour(/datum/client_colour/cursed_heart_blood)
@@ -78,7 +84,6 @@
 
 /datum/status_effect/frenzy/on_remove()
 	var/mob/living/carbon/human/user = owner
-	to_chat(owner, span_warning("You come back to your senses."))
 	REMOVE_TRAIT(owner, TRAIT_MUTE, FRENZY_TRAIT)
 	REMOVE_TRAIT(owner, TRAIT_DEAF, FRENZY_TRAIT)
 	if(was_tooluser)
@@ -87,10 +92,13 @@
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/morbin, TRUE)
 	bloodsuckerdatum.frenzygrab.remove(user)
 	owner.remove_client_colour(/datum/client_colour/cursed_heart_blood)
-	owner.adjust_dizzy(3 SECONDS)
-	owner.Paralyze(2 SECONDS)
+	if(my_clan == CLAN_BRUJAH)
+		to_chat(owner.current, "<span class='warning'>You exit Frenzy.</span>")
+	else
+		owner.current.Dizzy(5 SECONDS)
+		owner.current.Paralyze(3 SECONDS)
+		to_chat(owner.current, "<span class='warning'>You suddenly come back to your senses...</span>")
 	user.physiology.stamina_mod /= 0.4
-
 	bloodsuckerdatum.frenzied = FALSE
 	return ..()
 

@@ -112,7 +112,7 @@
 		to_chat(user, span_warning("Not while you're in Torpor."))
 		return FALSE
 	// Frenzy?
-	if((check_flags & BP_CANT_USE_IN_FRENZY) && (bloodsuckerdatum_power?.frenzied))
+	if((check_flags & BP_CANT_USE_IN_FRENZY) && (bloodsuckerdatum_power?.frenzied) && my_clan != CLAN_BRUJAH)
 		to_chat(user, span_warning("You cannot use powers while in a Frenzy!"))
 		return FALSE
 	// Stake?

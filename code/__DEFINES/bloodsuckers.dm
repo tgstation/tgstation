@@ -17,6 +17,8 @@
 #define FRENZY_THRESHOLD_ENTER 25
 /// Once blood is this high, will exit Frenzy
 #define FRENZY_THRESHOLD_EXIT 250
+/// Higher frenzy threshold
+#define FRENZY_THRESHOLD_HIGHER 200
 /// You have special interactions with Bloodsuckers
 #define TRAIT_BLOODSUCKER_HUNTER "bloodsucker_hunter"
 

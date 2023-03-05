@@ -595,6 +595,7 @@
 	var/list/options = list()
 	options = races
 	var/answer = tgui_input_list(user, "We have the chance to mutate our Vassal, how should we mutilate their corpse?", "What do we do with our Vassal?", options)
+	var/blood_gained
 	if(!do_after(user, 5 SECONDS, src))
 		to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
 		return
@@ -626,7 +627,8 @@
 			to_chat(user, "<span class='notice'>You suck all the blood out of [target], turning them into a Living Husk!</span>")
 			to_chat(target, "<span class='notice'>Your master has mutated you into a Living Husk!</span>")
 			/// Just take it all
-			bloodsuckerdatum.handle_feeding(target, 200)
+			blood_gained = 250
+			user.blood_volume += blood_gained
 			ADD_TRAIT(target, TRAIT_MUTE, BLOODSUCKER_TRAIT)
 			H.become_husk()
 			vassaldatum.mutilated = TRUE
@@ -674,6 +676,7 @@
 			to_chat(target, "<span class='announce'>As Blood drips over your body, you feel closer to your Master...</span>")
 			C.blood_volume -= 150
 			vassaldatum.make_favorite(user)
+			vassaldatum.BuyPower(new /datum/action/bloodsucker/distress)
 			return
 		else
 			to_chat(user, "<span class='danger'>You decide not to turn [target] into your Favorite Vassal.</span>")
@@ -789,11 +792,25 @@
 		if(bloodsuckerdatum.my_clan == CLAN_VENTRUE)
 			var/datum/antagonist/vassal/vassaldatum = target.mind.has_antag_datum(/datum/antagonist/vassal)
 			if(vassaldatum && vassaldatum.favorite_vassal)
-				if(bloodsuckerdatum.bloodsucker_level_unspent <= 0)
-					to_chat(user, "<span class='danger'>You don't have any levels to upgrade [target] with.</span>")
+				if(bloodsuckerdatum.bloodsucker_level_unspent > 0)
+					bloodsuckerdatum.SpendVassalRank(target)
 					return
-				/// Everything is good to go - Time to Buy our Favorite Vassal a new Power!
-				bloodsuckerdatum.SpendVassalRank(target)
+				else if(user.blood_volume >= 550)
+					// We don't have any ranks to spare? Let them upgrade... with enough Blood.
+					to_chat(user, "<span class='warning'>Do you wish to spend 550 Blood to Rank [target] up?</span>")
+					var/list/rank_options = list(
+						"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
+						"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
+						)
+					var/rank_response = show_radial_menu(user, src, rank_options, radius = 36, require_near = TRUE)
+					switch(rank_response)
+						if("Yes")
+							user.blood_volume -= 550
+							bloodsuckerdatum.SpendVassalRank(target, FALSE)
+					return	
+				// Neither? Shame. Goodbye!
+				to_chat(user, "<span class='danger'>You don't have any levels or enough Blood to Rank [target] up with.</span>")
+				return
 			else if(vassaldatum)
 				to_chat(user, span_warning("You can upgrade only your favorite vassal!"))
 				unbuckle_mob(target)
