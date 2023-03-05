@@ -44,4 +44,3 @@
 	var/log_message = "[key_name_admin(usr)] has aimed an immovable rod [event.force_looping ? "(forced looping) " : ""]at [event.special_target ? AREACOORD(event.special_target) : "a random location"]."
 	message_admins(log_message)
 	log_admin(log_message)
-	

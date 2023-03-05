@@ -80,4 +80,3 @@
 
 /datum/event_admin_setup/listed_options/shuttle_catastrophe/apply_to_event(datum/round_event/shuttle_catastrophe/event)
 	event.new_shuttle = chosen
-	
