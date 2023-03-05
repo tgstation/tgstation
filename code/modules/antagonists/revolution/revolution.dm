@@ -455,8 +455,7 @@
 		))
 		to_chat(real_headrev, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
 			\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
-			<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> \
-			Message ends.\""))
+			<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
 
 	//Forces the next round to have a station trait that makes command rooms get trashed on roundstart
 	var/list/revolutionary_trait = list(/datum/station_trait/revolutionary_trashing) //Wrapped in a list for json encoding
