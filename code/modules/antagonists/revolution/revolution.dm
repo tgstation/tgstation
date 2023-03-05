@@ -458,9 +458,8 @@
 			<b>You have been chosen out of your fellow provocateurs to rename the station, and recieve a gift to commemorate your success. Choose wisely.</b> \
 			Message ends.\""))
 
-	//Add new station trait to only occur on rev win
-	//use it to trigger mapping helpers placed in command rooms that make them covered in grafiti and broken up
-	//rustg_file_write(json_encode(params["station_traits"]), FUTURE_STATION_TRAITS_FILE)
+	//Forces the next round to have a station trait that makes command rooms get trashed on roundstart
+	rustg_file_write(json_encode(/obj/effect/mapping_helpers/revolution_trash), FUTURE_STATION_TRAITS_FILE)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_REVOLUTION_VICTORY)
 

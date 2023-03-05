@@ -858,11 +858,53 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	name = "revolution room trasher"
 	late = TRUE
 	icon_state = "revtrasher"
+	var/static/list/trash_talk = list(
+		"amyjon",
+		"antilizard",
+		"body",
+		"cyka",
+		"danger",
+		"electricdanger",
+		"face",
+		"guy",
+		"matt",
+		"peace",
+		"poseur tag",
+		"prolizard",
+		"radiation",
+		"revolution",
+		"shotgun",
+		"skull",
+		"splatter",
+		"star",
+		"stickman",
+		"toilet",
+		"toolbox",
+		"uboa",
+	)
+
+/obj/effect/mapping_helpers/revolution_trash/Initialize(mapload)
+	.=..()
+	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/mapping_helpers/revolution_trash/LateInitialize()
 	var/area/our_area = get_area(src)
-	var/list/openturfs = list()
 
-	if(locate(/obj/structure/fireaxecabinet) in our_area) //A staple of revolutionary behavior
-		var/obj/structure/fireaxecabinet/axe_to_smash
-		axe_to_smash.take_damage(90)
+	for(var/current_thing in our_area.contents)
+		if(istype(current_thing, /obj/structure/fireaxecabinet)) //A staple of revolutionary behavior
+			var/obj/structure/fireaxecabinet/axe_to_smash = current_thing
+			axe_to_smash.take_damage(90)
+			continue
+
+		if(istype(current_thing, /obj/machinery/computer) && prob(80))
+			if(istype(current_thing, /obj/machinery/computer/communications))
+				continue //To prevent the shuttle from getting autocalled at the start of the round
+			var/obj/machinery/computer/computer_to_smash = current_thing
+			computer_to_smash.take_damage(160)
+			continue
+
+		if(isopenturf(current_thing) && prob(25))
+			var/obj/effect/decal/cleanable/crayon/created_art
+			created_art = new(get_turf(current_thing), RANDOM_COLOUR, pick(trash_talk))
+			created_art.pixel_x = rand(-6, 6)
+			created_art.pixel_y = rand(-6, 6)

@@ -22824,6 +22824,10 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
+"irj" = (
+/obj/effect/mapping_helpers/revolution_trash,
+/turf/open/floor/iron/dark,
+/area/station/command/bridge)
 "irp" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -96517,7 +96521,7 @@ aaf
 dsQ
 owv
 dUj
-gGy
+irj
 cqx
 raJ
 nEC
