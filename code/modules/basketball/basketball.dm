@@ -440,7 +440,7 @@
 
 /datum/action/innate/timeout/do_ability(mob/living/caller, mob/living/carbon/human/target)
 	caller.say("FOUL BY [target]!", forced = "whistle")
-	playsound(caller, 'sound/misc/whistle.ogg', 75, FALSE, 4)
+	playsound(caller, 'sound/misc/whistle.ogg', 30, FALSE, 4)
 
 	new /obj/effect/timestop(get_turf(target), 0, 5 SECONDS, list(caller), TRUE, TRUE)
 
