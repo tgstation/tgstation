@@ -96,6 +96,9 @@
 	thing.weak_reference = null
 	thing = null
 
+	// Need to unregister because turfs do not clear their signals, and can be destroyed again
+	UnregisterSignal(thing, COMSIG_PARENT_QDELETING)
+
 /datum/weakref/vv_get_dropdown()
 	. = ..()
 	VV_DROPDOWN_OPTION(VV_HK_WEAKREF_RESOLVE, "Go to reference")
