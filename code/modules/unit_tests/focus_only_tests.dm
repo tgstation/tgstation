@@ -6,6 +6,9 @@
 /// and you will only test the check for invalid overlays in appearance building.
 /datum/unit_test/focus_only
 
+/// Checks that every created emissive has a valid icon_state
+/datum/unit_test/focus_only/invalid_emissives
+
 /// Checks that every overlay passed into build_appearance_list exists in the icon
 /datum/unit_test/focus_only/invalid_overlays
 
