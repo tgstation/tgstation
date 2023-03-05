@@ -9,16 +9,16 @@
 	dismemberment = 50
 	catastropic_dismemberment = TRUE
 	armour_penetration = 50
-	///If TRUE, deal additional damage to objects.
-	var/breakthings = TRUE
-	///Determines how much additional damage the round does to mechs. For most rounds, needs breakthings to be TRUE.
-	var/mecha_damage = 30
+	///Determines object damage.
+	var/object_damage = 80
+	///Determines how much additional damage the round does to mechs.
+	var/mecha_damage = 10
 
 /obj/projectile/bullet/p50/on_hit(atom/target, blocked = 0)
-	if(isobj(target) && (blocked != 100) && breakthings)
+	if(isobj(target) && (blocked != 100) && object_damage)
 		var/obj/thing_to_break = target
-		var/damage_to_deal = damage * 2
-		if(ismecha(thing_to_break))
+		var/damage_to_deal = object_damage
+		if(ismecha(thing_to_break) && mecha_damage)
 			damage_to_deal += mecha_damage
 		thing_to_break.take_damage(damage_to_deal, BRUTE, BULLET, FALSE)
 	return ..()
@@ -36,8 +36,8 @@
 	paralyze = 0
 	dismemberment = 0
 	catastropic_dismemberment = FALSE
-	breakthings = FALSE
-	mecha_damage = 150 //An exception to the rule, this deals damage to mechs and silicons but not objects.
+	object_damage = 0
+	mecha_damage = 100
 	var/emp_radius = 2
 
 /obj/projectile/bullet/p50/disruptor/on_hit(atom/target, blocked = FALSE)
@@ -46,7 +46,7 @@
 		living_guy.Sleeping(40 SECONDS) //Yes, its really 40 seconds of sleep, I hope you had your morning coffee.
 	if(ismecha(target)) //especially good against mechs
 		target.take_damage(mecha_damage, BRUTE, BULLET, FALSE)
-	if(issilicon(target))
+	if(issilicon(target)) //also especially good against borgs
 		var/mob/living/silicon/borg_boy = target
 		borg_boy.apply_damage(damage, BRUTE)
 	empulse(target, emp_radius, emp_radius)
@@ -58,6 +58,8 @@
 	paralyze = 0
 	dismemberment = 0
 	catastropic_dismemberment = FALSE
+	object_damage = 30
+	mecha_damage = 0
 
 /obj/projectile/bullet/p50/incendiary/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -79,7 +81,7 @@
 	dismemberment = 0 //It goes through you cleanly.
 	catastropic_dismemberment = FALSE
 	paralyze = 0
-	breakthings = FALSE
+	object_damage = 0
 
 /obj/projectile/bullet/p50/penetrator/shuttle //Nukeop Shuttle Variety
 	name = ".50 BMG aggression dissuasion round"

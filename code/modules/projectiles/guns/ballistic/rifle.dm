@@ -255,6 +255,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	mag_display = TRUE
 	tac_reloads = TRUE
+	rack_delay = 1 SECONDS
 	can_suppress = TRUE
 	can_unsuppress = TRUE
 	suppressor_x_offset = 3
