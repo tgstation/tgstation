@@ -390,7 +390,9 @@ GLOBAL_VAR(basketball_game)
 			if(!GLOB.basketball_signup[ghost_client.ckey])
 				to_chat(ghost_client, span_notice("You must sign up to start the game."))
 				return
-
+			if(GLOB.basketball_game)
+				to_chat(ghost_client, span_notice("Wait for current basketball game to finish."))
+				return
 			try_autostart()
 			return TRUE
 
