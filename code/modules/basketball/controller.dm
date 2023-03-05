@@ -132,7 +132,7 @@ GLOBAL_VAR(basketball_game)
 		addtimer(CALLBACK(away_hoop, TYPE_PROC_REF(/atom/movable/, say), "[i] seconds left"), game_duration - (i SECONDS))
 
 /**
- * Called when the game is setting up, AFTER map is loaded but BEFORE the game start. Creates and places each role's body and gives the correct player key
+ * Called when the game is setting up, AFTER map is loaded but BEFORE the game start. Creates and places each body and gives the correct player key
  */
 /datum/basketball_controller/proc/create_bodies(ready_players)
 	var/list/possible_away_teams = subtypesof(/datum/map_template/basketball) - current_map.type
@@ -187,7 +187,6 @@ GLOBAL_VAR(basketball_game)
 		ADD_TRAIT(baller, TRAIT_CANNOT_CRYSTALIZE, BASKETBALL_MINIGAME_TRAIT)
 		// this is basketball, not a boxing match
 		ADD_TRAIT(baller, TRAIT_PACIFISM, BASKETBALL_MINIGAME_TRAIT)
-		//baller.status_flags |= GODMODE
 
 		if(!team_uniform)
 			team_uniform = prob(50) ? /datum/outfit/basketball/blue : /datum/outfit/basketball/red
@@ -307,7 +306,6 @@ GLOBAL_VAR(basketball_game)
 		to_chat(unpicked_client, span_warning("You're still signed up, getting messages from the current round, and have another chance to join when the one starting now finishes."))
 
 	prepare_game(filtered_keys)
-	//start_game()
 
 /**
  * Filters inactive player into a different list until they reconnect, and removes players who are no longer ghosts.

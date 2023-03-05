@@ -30,8 +30,6 @@
 	/// Pickup restriction cooldown
 	COOLDOWN_DECLARE(pickup_cooldown)
 
-// what about wielder.combat_mode  ???
-
 /obj/item/toy/basketball/Initialize(mapload)
 	. = ..()
 
@@ -130,8 +128,7 @@
 	switch(blocking_dir_bonus)
 		if(FACING_EACHOTHER)
 			stealer.balloon_alert_to_viewers("steals the ball")
-			INVOKE_ASYNC(stealer, TYPE_PROC_REF(/mob, put_in_hands), src) // put_in_hands uses sleep() so need to use ASYNCH
-			//stealer.put_in_hands(src)
+			INVOKE_ASYNC(stealer, TYPE_PROC_REF(/mob, put_in_hands), src)
 		if(FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR)
 			if(prob(50))
 				if(!baller.dropItemToGround(src))
@@ -139,8 +136,7 @@
 				stealer.balloon_alert_to_viewers("bats the ball")
 			else
 				stealer.balloon_alert_to_viewers("steals the ball")
-				INVOKE_ASYNC(stealer, TYPE_PROC_REF(/mob, put_in_hands), src) // put_in_hands uses sleep() so need to use ASYNCH
-				//stealer.put_in_hands(src)
+				INVOKE_ASYNC(stealer, TYPE_PROC_REF(/mob, put_in_hands), src)
 		if(FACING_SAME_DIR)
 			if(!baller.dropItemToGround(src))
 				return
