@@ -201,6 +201,11 @@ As the Warden, keep a close eye on the armory at all times, as it is a favored s
 As the Warden, you can implant criminals you suspect might re-offend with devices that will track their location and allow you to remotely inject them with disabling chemicals.
 As the Warden, you can use handcuffs on orange prisoner shoes to turn them into cuffed shoes, forcing prisoners to walk and potentially thwarting an escape.
 As the Warden, your duty is to be the watchdog of the brig and handler of prisoners when little is happening, and to hand out equipment and weapons to the security officers when a crisis strikes.
+Basketball requires focus. If you don't click on your target (player or hoop) you are more likely to miss.
+Basketball requires stamina. The more you have, the less likely your ball will be stolen and the more likely you can steal from another player.
+Basketball requires strategy. The direction both players are facing affects disarms so having your back to another player that is trying to steal is ideal.
+Basketball requires skill. Spinning drains stamina, reduces accuracy, but gives resistance from disarm. Use it to dunk!
+Basketball requires teamwork. Passing the ball with LMB is instant and costs no stamina.
 Clicking on a windoor rather then bumping into it will keep it open, you can click it again to close it.
 Different weapons have different strengths. Some weapons, such as spears, floor tiles, and throwing stars, deal more damage when thrown compared to when attacked normally.
 Don't be afraid to ask for help, whether from your peers or from admins.
