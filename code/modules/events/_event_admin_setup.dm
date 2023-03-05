@@ -103,3 +103,41 @@
 		else
 			return ADMIN_CANCEL_EVENT
 	
+/datum/event_admin_setup/input_number
+	///Text shown when admins are queried about what number to set.
+	var/input_text = ""
+	///The value the number will be set to by default
+	var/default_value
+	///The highest value setable by the admin.
+	var/max_value = 10000
+	///The lowest value setable by the admin
+	var/min_value = 0
+	///Value selected by the admin
+	var/chosen_value
+
+/datum/event_admin_setup/input_number/prompt_admins()
+	chosen_value = tgui_input_number(usr, input_text, event_control.name, default_value, max_value, min_value)
+	if(isnull(chosen_value))
+		return ADMIN_CANCEL_EVENT
+
+///For events that mandate a set number of candidates to function
+/datum/event_admin_setup/candidate_check
+	///Text shown when there are not enough candidates
+	var/output_text = "There are no candidates eligible to..."
+	///Minimum number of candidates for the event to function
+	var/min_candidates = 1
+
+/datum/event_admin_setup/candidate_check/prompt_admins()
+	var/candidate_count = candidate_check()
+	if(candidate_count < min_candidates)
+		tgui_alert(usr, output_text, "Error")
+		return ADMIN_CANCEL_EVENT
+	tgui_alert(usr, "[candidate_count] candidates found!", event_control.name)
+
+/// Checks for candidates. Should return the total number of candidates
+/datum/event_admin_setup/candidate_check/proc/candidate_check()
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("Unimplemented candidate_check() on [event_control]'s admin setup.")
+
+/datum/event_admin_setup/candidate_check/apply_to_event(datum/round_event/event)
+	return
