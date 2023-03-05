@@ -459,7 +459,9 @@
 			Message ends.\""))
 
 	//Forces the next round to have a station trait that makes command rooms get trashed on roundstart
-	rustg_file_write(json_encode("/datum/station_trait/revolutionary_trashing"), FUTURE_STATION_TRAITS_FILE)
+	var/list/revolutionary_trait = list(/datum/station_trait/revolutionary_trashing) //Wrapped in a list for json encoding
+
+	rustg_file_write(json_encode(revolutionary_trait), FUTURE_STATION_TRAITS_FILE)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_REVOLUTION_VICTORY)
 
