@@ -242,6 +242,11 @@
 	dir = 8
 	},
 /area/ruin/space/has_grav)
+"pm" = (
+/obj/structure/alien/weeds,
+/mob/living/simple_animal/hostile/alien,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
 "pv" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Captain's Quarters"
@@ -307,6 +312,11 @@
 /obj/machinery/light/red/directional/west,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"sl" = (
+/obj/structure/alien/weeds,
+/mob/living/simple_animal/hostile/alien,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "sr" = (
 /obj/structure/table/wood,
@@ -1139,7 +1149,7 @@ hi
 hi
 ZZ
 dk
-zw
+pm
 zw
 bU
 zw
@@ -1227,7 +1237,7 @@ UQ
 zw
 nd
 bI
-Oo
+sl
 Kq
 hi
 hi
