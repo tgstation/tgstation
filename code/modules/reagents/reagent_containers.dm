@@ -10,6 +10,8 @@
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
 	/// Where we are in the possible transfer amount list.
 	var/amount_list_position = 1
+	/// When set, dispensers use these amounts. Otherwise, they use normal amounts.
+	var/list/dispenser_transfer_amounts = null
 	/// The maximum amount of reagents this container can hold
 	var/volume = 30
 	/// Reagent flags, a few examples being if the container is open or not, if its transparent, if you can inject stuff in and out of the container, and so on
