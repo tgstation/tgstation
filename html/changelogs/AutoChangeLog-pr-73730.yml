@@ -1,6 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes:
-  - rscadd: "Added the gondola mutant, a tier two zen-like observer"
-  - rscadd: "Entries are now locked behind tiers, activating a bonus in someone upgrades the tier!"
-  - qol: "DNA Infuser will now print a failure reason when you... well, don't get what you want."
