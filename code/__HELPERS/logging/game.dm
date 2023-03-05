@@ -6,12 +6,12 @@
 /// Logging for emotes
 /proc/log_emote(text)
 	if (CONFIG_GET(flag/log_emote))
-		WRITE_LOG(GLOB.world_game_log, "EMOTE: [text]")
+		WRITE_LOG(GLOB.world_say_log, "EMOTE: [text]")
 
 /// Logging for emotes sent over the radio
 /proc/log_radio_emote(text)
 	if (CONFIG_GET(flag/log_emote))
-		WRITE_LOG(GLOB.world_game_log, "RADIOEMOTE: [text]")
+		WRITE_LOG(GLOB.world_telecomms_log, "RADIOEMOTE: [text]")
 
 /// Logging for messages sent in OOC
 /proc/log_ooc(text)
