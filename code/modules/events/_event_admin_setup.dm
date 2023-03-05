@@ -141,3 +141,20 @@
 
 /datum/event_admin_setup/candidate_check/apply_to_event(datum/round_event/event)
 	return
+
+///For events that require a true/false question
+/datum/event_admin_setup/question
+	///Question shown to the admin.
+	var/input_text = "Are you sure you would like to do this?"
+	///Value passed to the event.
+	var/chosen
+
+/datum/event_admin_setup/question/prompt_admins()
+	var/response = tgui_alert(usr, input_text , event_control.name , list("Yes", "No", "Cancel"))
+	switch(response)
+		if("Yes")
+			chosen = TRUE
+		if("No")
+			chosen = FALSE
+		else
+			return ADMIN_CANCEL_EVENT
