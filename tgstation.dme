@@ -63,6 +63,7 @@
 #include "code\__DEFINES\colors.dm"
 #include "code\__DEFINES\combat.dm"
 #include "code\__DEFINES\communications.dm"
+#include "code\__DEFINES\compiler.dm"
 #include "code\__DEFINES\computers.dm"
 #include "code\__DEFINES\configuration.dm"
 #include "code\__DEFINES\construction.dm"
