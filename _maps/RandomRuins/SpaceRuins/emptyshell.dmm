@@ -47,6 +47,10 @@
 /obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav)
+"Y" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
 
 (1,1,1) = {"
 a
@@ -208,7 +212,7 @@ c
 c
 d
 d
-d
+e
 g
 d
 d
@@ -244,7 +248,7 @@ d
 g
 d
 d
-d
+Y
 h
 d
 e

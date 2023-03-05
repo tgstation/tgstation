@@ -504,6 +504,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/closet/crate/secure/gear{
+	name = "contraband gear";
+	desc = "A secure contraband crate."
+	},
+/obj/item/mod/control/pre_equipped/empty/syndicate,
+/obj/effect/spawner/random/exotic/antag_gear,
+/obj/effect/spawner/random/exotic/antag_gear,
+/obj/effect/spawner/random/exotic/antag_gear,
+/obj/item/toy/plush/nukeplushie,
 /turf/open/floor/iron/airless,
 /area/shuttle/ruin/caravan/freighter3)
 "qX" = (

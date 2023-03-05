@@ -204,6 +204,11 @@
 /obj/structure/frame/machine,
 /turf/open/floor/circuit/off,
 /area/ruin/space/has_grav)
+"nd" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
 "nn" = (
 /obj/structure/alien/weeds/node,
 /obj/effect/decal/cleanable/xenoblood,
@@ -218,6 +223,12 @@
 "nJ" = (
 /obj/machinery/pdapainter,
 /turf/open/floor/wood,
+/area/ruin/space/has_grav)
+"nR" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/clothing/suit/armor/vest/marine,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "ob" = (
 /obj/structure/alien/weeds,
@@ -290,6 +301,12 @@
 	},
 /obj/effect/turf_decal/tile/red/half,
 /turf/open/floor/iron/smooth_edge,
+/area/ruin/space/has_grav)
+"si" = (
+/obj/structure/alien/weeds,
+/obj/machinery/light/red/directional/west,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "sr" = (
 /obj/structure/table/wood,
@@ -416,6 +433,12 @@
 "BQ" = (
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav)
+"CG" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/clothing/head/helmet/marine,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
 "CU" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/east,
@@ -449,6 +472,11 @@
 	name = "Bridge Maintenance"
 	},
 /turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"EG" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "EQ" = (
 /obj/effect/turf_decal/tile/red/anticorner{
@@ -661,6 +689,11 @@
 /obj/machinery/computer/terminal,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav)
+"Wd" = (
+/obj/structure/alien/weeds,
+/obj/item/toy/plush/rouny,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
 "WC" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/xenoblood/xgibs/limb,
@@ -700,6 +733,11 @@
 /obj/item/soap/deluxe,
 /obj/machinery/shower/directional/north,
 /turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav)
+"Ya" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "YA" = (
 /obj/machinery/door/window/brigdoor/left/directional/west,
@@ -1074,8 +1112,8 @@ hi
 Oo
 dk
 hT
-bO
-ib
+nR
+si
 UH
 Oo
 Oo
@@ -1130,8 +1168,8 @@ hi
 ZZ
 dk
 zw
-zw
-zw
+Wd
+EG
 bO
 WC
 hi
@@ -1159,8 +1197,8 @@ ZZ
 dk
 zw
 hT
-bO
-zw
+CG
+Ya
 WC
 ZZ
 hi
@@ -1187,7 +1225,7 @@ Oo
 dk
 UQ
 zw
-zw
+nd
 bI
 Oo
 Kq

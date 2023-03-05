@@ -1624,7 +1624,14 @@
 /obj/structure/table_frame/wood,
 /obj/item/clothing/head/helmet/chaplain{
 	armor = null;
-	desc = "The Chaplains crusader helment. It seems old and dented."
+	desc = "The Chaplain's crusader helmet. It seems old and dented.";
+	pixel_y = 7;
+	pixel_x = -7
+	},
+/obj/item/clothing/suit/chaplainsuit/armor/templar{
+	pixel_x = 6;
+	pixel_y = -5;
+	desc = "An old set of the Chaplain's holy armour. It's caked in dust."
 	},
 /turf/open/floor/wood,
 /area/ruin/space/ks13/service/chapel_office)
@@ -4198,7 +4205,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/grav_gen)
 "Fp" = (
-/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/suit/space/syndicate/black/engie,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
@@ -6148,7 +6155,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/ks13/medical/morgue)
 "PG" = (
-/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/head/helmet/space/syndicate/black/engie,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
@@ -6599,7 +6606,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/science/ordnance)
 "Sj" = (
-/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/suit/space/syndicate,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
@@ -7194,7 +7201,7 @@
 /area/ruin/space/ks13/service/bar)
 "UK" = (
 /obj/structure/cable,
-/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/head/helmet/space/syndicate,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/aft_solars_control)
 "UL" = (
@@ -7267,7 +7274,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/hallway/aft)
 "Vd" = (
-/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/head/helmet/space,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/ai/vault)
 "Ve" = (
@@ -7608,7 +7615,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
 "WX" = (
-/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/suit/space,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/vault)

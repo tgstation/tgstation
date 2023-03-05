@@ -111,10 +111,7 @@
 /turf/template_noop,
 /area/template_noop)
 "aT" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/eva,
-/obj/item/tank/internals/emergency_oxygen/double,
-/obj/item/clothing/head/helmet/space/eva,
+/obj/machinery/suit_storage_unit/medical,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "aV" = (

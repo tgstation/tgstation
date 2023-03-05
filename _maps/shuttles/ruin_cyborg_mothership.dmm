@@ -162,6 +162,7 @@
 "ks" = (
 /obj/machinery/holopad/secure,
 /obj/structure/cable,
+/mob/living/simple_animal/hostile/hivebot/strong,
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "ku" = (
@@ -411,6 +412,13 @@
 /obj/structure/cable,
 /turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
+"uS" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/hivebot,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/ruin/cyborg_mothership)
 "vy" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/cyborg_mothership{
 	dir = 1
@@ -576,6 +584,7 @@
 /obj/structure/table_frame,
 /obj/item/aicard,
 /obj/item/ai_module/core/full/overlord,
+/obj/item/surveillance_upgrade,
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "Em" = (
@@ -704,7 +713,19 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
+/obj/item/borg/upgrade/selfrepair{
+	pixel_x = 2;
+	pixel_y = -8
+	},
 /turf/open/floor/circuit/airless,
+/area/shuttle/ruin/cyborg_mothership)
+"LH" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mothership_left"
+	},
+/mob/living/simple_animal/hostile/hivebot,
+/turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "MB" = (
 /obj/machinery/computer/shuttle/cyborg_mothership{
@@ -748,6 +769,10 @@
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/effect/turf_decal/bot,
+/obj/item/borg/upgrade/hypospray/expanded{
+	pixel_x = -7;
+	pixel_y = 10
+	},
 /obj/structure/sink/directional/east,
 /obj/item/toy/figure/borg{
 	pixel_x = 7;
@@ -865,6 +890,10 @@
 "UL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/item/borg/upgrade/thrusters{
+	pixel_x = -2;
+	pixel_y = 2
+	},
 /turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "UU" = (
@@ -1105,7 +1134,7 @@ so
 hR
 hR
 az
-aB
+LH
 az
 hR
 BS
@@ -1273,7 +1302,7 @@ yF
 pY
 zZ
 Ey
-jH
+uS
 bE
 yF
 hB

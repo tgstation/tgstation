@@ -624,6 +624,16 @@
 /area/ruin/space)
 "Fy" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/syndicate{
+	name = "security closet"
+	},
+/obj/item/clothing/shoes/chameleon,
+/obj/item/clothing/suit/chameleon,
+/obj/item/clothing/gloves/chameleon,
+/obj/item/clothing/head/chameleon,
+/obj/item/clothing/under/chameleon,
+/obj/item/clothing/neck/chameleon/broken,
+/obj/item/clothing/mask/chameleon/broken,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "FV" = (

@@ -58,6 +58,13 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/powered/mechtransport)
+"o" = (
+/obj/structure/closet/crate/secure/science,
+/obj/item/mod/module/atrocinator,
+/obj/item/mod/module/stealth,
+/obj/item/mod/module/jetpack,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
 "p" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Cockpit"
@@ -157,6 +164,14 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
+"N" = (
+/obj/structure/lattice,
+/obj/structure/closet/crate/science,
+/obj/item/mod/module/storage/large_capacity,
+/obj/effect/spawner/random/exotic/technology,
+/obj/effect/spawner/random/exotic/technology,
+/turf/template_noop,
+/area/ruin/space/has_grav/powered/mechtransport)
 "O" = (
 /obj/structure/mecha_wreckage/odysseus,
 /turf/open/floor/mineral/titanium/yellow/airless,
@@ -182,6 +197,14 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "X" = (
 /obj/machinery/power/shuttle_engine/propulsion,
+/turf/template_noop,
+/area/ruin/space/has_grav/powered/mechtransport)
+"Y" = (
+/obj/structure/lattice,
+/obj/structure/closet/crate/science,
+/obj/item/mod/module/springlock,
+/obj/effect/spawner/random/exotic/technology,
+/obj/effect/spawner/random/exotic/technology,
 /turf/template_noop,
 /area/ruin/space/has_grav/powered/mechtransport)
 
@@ -232,7 +255,7 @@ w
 H
 M
 I
-I
+N
 T
 T
 "}
@@ -261,13 +284,13 @@ d
 s
 x
 w
-w
+o
 y
 K
 O
 s
 S
-I
+Y
 T
 "}
 (6,1,1) = {"

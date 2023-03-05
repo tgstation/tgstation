@@ -858,7 +858,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/suit_storage_unit/civilian,
 /turf/open/floor/engine,
 /area/awaymission/bmpship/midship)
 "EW" = (
@@ -1045,7 +1045,11 @@
 	pixel_x = 3;
 	pixel_y = 9
 	},
-/obj/item/screwdriver,
+/obj/item/screwdriver/caravan{
+	name = "Madsen's Wrath";
+	desc = "There are bits of an eyeball at the tip of this screwdriver..." ;
+	force = 10
+	},
 /obj/item/paper/fluff/ruins/crashedship/scribbled{
 	pixel_x = -7;
 	pixel_y = 2

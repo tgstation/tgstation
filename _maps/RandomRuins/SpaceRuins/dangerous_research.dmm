@@ -703,6 +703,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/item/mod/module/anomaly_locked/teleporter/prebuilt,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "js" = (
@@ -3901,6 +3902,7 @@
 "XX" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/purple,
+/obj/item/mod/module/anomaly_locked/antigrav,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "Yb" = (

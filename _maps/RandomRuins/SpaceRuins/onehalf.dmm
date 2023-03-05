@@ -798,8 +798,8 @@
 "cI" = (
 /obj/structure/safe/floor,
 /obj/item/tank/internals/oxygen/red,
-/obj/item/clothing/head/helmet/space/eva,
-/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/head/helmet/space/syndicate/black/red,
+/obj/item/clothing/suit/space/syndicate/black/red,
 /obj/item/reagent_containers/cup/glass/bottle/rum,
 /obj/item/reagent_containers/cup/glass/bottle/rum,
 /obj/item/folder/syndicate/mining,
