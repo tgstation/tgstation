@@ -948,6 +948,7 @@
 
 /datum/dynamic_ruleset/midround/bloodsucker
 	name = "Vampiric Accident"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/bloodsucker
 	antag_flag = ROLE_VAMPIRICACCIDENT
 	antag_flag_override = ROLE_BLOODSUCKER
