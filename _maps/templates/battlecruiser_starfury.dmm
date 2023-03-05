@@ -2465,16 +2465,13 @@
 	pixel_x = 2
 	},
 /obj/item/ammo_box/magazine/m10mm{
-	icon_state = "9x19p-8";
 	pixel_x = -3;
 	pixel_y = 6
 	},
 /obj/item/ammo_box/magazine/m10mm{
-	icon_state = "9x19p-8";
 	pixel_y = 3
 	},
 /obj/item/ammo_box/magazine/m10mm{
-	icon_state = "9x19p-8";
 	pixel_x = 3
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
@@ -2701,16 +2698,13 @@
 "iv" = (
 /obj/structure/table,
 /obj/item/ammo_box/magazine/m10mm{
-	icon_state = "9x19p-8";
 	pixel_x = -3;
 	pixel_y = 6
 	},
 /obj/item/ammo_box/magazine/m10mm{
-	icon_state = "9x19p-8";
 	pixel_y = 3
 	},
 /obj/item/ammo_box/magazine/m10mm{
-	icon_state = "9x19p-8";
 	pixel_x = 3
 	},
 /obj/item/assembly/flash/handheld,
