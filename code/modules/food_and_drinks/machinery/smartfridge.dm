@@ -20,7 +20,7 @@
 	/// If the machine shows an approximate number of its contents on its sprite
 	var/visible_contents = TRUE
 	/// Is this smartfridge going to have a glowing screen? (Drying Racks are not)
-	var/has_emissive
+	var/has_emissive = TRUE
 
 /obj/machinery/smartfridge/Initialize(mapload)
 	. = ..()
