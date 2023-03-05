@@ -1,7 +1,7 @@
 /obj/item/ammo_box/magazine/m10mm
 	name = "pistol magazine (10mm)"
 	desc = "A gun magazine."
-	icon_state = "9x19p-8"
+	icon_state = "9x19p-full"
 	base_icon_state = "9x19p"
 	ammo_type = /obj/item/ammo_casing/c10mm
 	caliber = CALIBER_10MM
@@ -42,7 +42,7 @@
 
 /obj/item/ammo_box/magazine/m9mm
 	name = "pistol magazine (9mm)"
-	icon_state = "9x19p-8"
+	icon_state = "9x19p-full"
 	base_icon_state = "9x19p"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = CALIBER_9MM
