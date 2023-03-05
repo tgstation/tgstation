@@ -936,6 +936,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			current_thing.take_damage(150)
 
 		if(istype(current_thing, /obj/machinery/light))
-			current_thing.take_damage(150)
+			if(prob(40))
+				var/obj/machinery/light/light_to_smash = current_thing
+				light_to_smash.break_light_tube(TRUE)
 
 	qdel(src)

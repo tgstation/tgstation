@@ -10763,6 +10763,12 @@
 	},
 /turf/open/space/openspace,
 /area/station/solars/port)
+"bWt" = (
+/obj/effect/mapping_helpers/revolution_trash,
+/turf/open/floor/iron/cafeteria{
+	dir = 5
+	},
+/area/station/command/heads_quarters/rd)
 "bWv" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
@@ -30105,6 +30111,7 @@
 /area/station/security/prison/mess)
 "jsW" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
+/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "jsX" = (
@@ -39083,6 +39090,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "mEM" = (
@@ -44353,6 +44361,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"oHO" = (
+/obj/effect/mapping_helpers/revolution_trash,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/qm)
 "oIa" = (
 /turf/closed/wall,
 /area/station/medical/morgue)
@@ -45589,6 +45601,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "phl" = (
+/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "phB" = (
@@ -46991,6 +47004,10 @@
 	},
 /turf/open/space/openspace,
 /area/space)
+"pEG" = (
+/obj/effect/mapping_helpers/revolution_trash,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/hos)
 "pEM" = (
 /obj/structure/railing{
 	dir = 6
@@ -49110,6 +49127,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
+/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "qtw" = (
@@ -53762,6 +53780,7 @@
 /area/station/security/checkpoint/medical)
 "sik" = (
 /obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "sim" = (
@@ -56772,6 +56791,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "tgK" = (
@@ -156051,7 +156071,7 @@ aaa
 rmB
 auH
 scC
-scC
+pEG
 iSo
 mAT
 auW
@@ -179217,7 +179237,7 @@ qza
 vTH
 aAJ
 riJ
-aAJ
+oHO
 qqw
 byL
 whL
@@ -180798,7 +180818,7 @@ umP
 hTG
 oPT
 nZs
-jgD
+bWt
 sBI
 gip
 hJW
