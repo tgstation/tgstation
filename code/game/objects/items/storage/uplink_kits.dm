@@ -326,6 +326,74 @@
 			<p>Good luck agent. You can burn this document with the supplied lighter.</p>"}
 	return ..()
 
+/obj/item/storage/box/syndicate/contractor_loadout/PopulateContents()
+	new /obj/item/clothing/head/helmet/space/syndicate/contract(src)
+	new /obj/item/clothing/suit/space/syndicate/contract(src)
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/clothing/mask/chameleon(src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
+	new /obj/item/card/id/advanced/chameleon(src)
+	new /obj/item/lighter(src)
+
+/obj/item/storage/box/syndicate/contract_kit/PopulateContents()
+	new /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink(src)
+	new /obj/item/storage/box/syndicate/contractor_loadout(src)
+	new /obj/item/melee/baton/telescopic/contractor_baton(src)
+
+	// All about 4 TC or less - some nukeops only items, but fit nicely to the theme.
+	var/list/item_list = list(
+		/obj/item/storage/backpack/duffelbag/syndie/x4,
+		/obj/item/storage/box/syndie_kit/throwing_weapons,
+		/obj/item/gun/syringe/syndicate,
+		/obj/item/pen/edagger,
+		/obj/item/pen/sleepy,
+		/obj/item/flashlight/emp,
+		/obj/item/reagent_containers/syringe/mulligan,
+		/obj/item/clothing/shoes/chameleon/noslip,
+		/obj/item/storage/firstaid/tactical,
+		/obj/item/encryptionkey/syndicate,
+		/obj/item/clothing/glasses/thermal/syndi,
+		/obj/item/slimepotion/slime/sentience/nuclear,
+		/obj/item/storage/box/syndie_kit/imp_radio,
+		/obj/item/storage/box/syndie_kit/imp_uplink,
+		/obj/item/clothing/gloves/krav_maga/combatglovesplus,
+		/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
+		/obj/item/reagent_containers/hypospray/medipen/stimulants,
+		/obj/item/storage/box/syndie_kit/imp_freedom,
+		/obj/item/toy/eightball/haunted
+	)
+
+	var/obj/item1 = pick_n_take(item_list)
+	var/obj/item2 = pick_n_take(item_list)
+	var/obj/item3 = pick_n_take(item_list)
+
+	// Create two, non repeat items from the list.
+	new item1(src)
+	new item2(src)
+	new item3(src)
+
+	// Paper guide
+	new /obj/item/paper/contractor_guide(src)
+
+/// Given by the syndicate as part of the contract uplink bundle - loads in the Contractor Uplink.
+/obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink/Initialize(mapload)
+	. = ..()
+	var/obj/item/computer_hardware/hard_drive/small/syndicate/hard_drive = new
+	var/datum/computer_file/program/contract_uplink/uplink = new
+
+	active_program = uplink
+	uplink.program_state = PROGRAM_STATE_ACTIVE
+	uplink.computer = src
+
+	hard_drive.store_file(uplink)
+
+	install_component(new /obj/item/computer_hardware/processor_unit/small)
+	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
+	install_component(hard_drive)
+	install_component(new /obj/item/computer_hardware/network_card)
+	install_component(new /obj/item/computer_hardware/card_slot)
+	install_component(new /obj/item/computer_hardware/printer/mini)
+
 /obj/item/storage/box/syndie_kit
 	name = "box"
 	desc = "A sleek, sturdy box."
@@ -619,7 +687,7 @@
 /obj/item/storage/box/syndie_kit/syndi_keys/PopulateContents()
 	new /obj/item/encryptionkey/syndicate
 	new /obj/item/encryptionkey/syndicate
-	
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY
