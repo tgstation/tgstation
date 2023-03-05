@@ -8523,6 +8523,7 @@
 /obj/item/organ/internal/heart,
 /obj/item/soulstone/anybody/chaplain,
 /obj/machinery/light/small/red/dim/directional/south,
+/obj/item/radio/intercom/chapel/directional/east,
 /turf/open/floor/iron/terracotta/diagonal,
 /area/station/service/chapel/office)
 "dzl" = (
@@ -11221,6 +11222,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
+"ezE" = (
+/obj/vehicle/ridden/secway,
+/turf/open/floor/plating,
+/area/station/security/tram)
 "ezM" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/wideplating/dark{
@@ -12230,9 +12235,9 @@
 /area/station/engineering/break_room)
 "eSo" = (
 /obj/structure/window/reinforced/spawner/north,
-/obj/structure/closet/secure_closet/security/cargo,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/secure_closet/security/engine,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "eSB" = (
@@ -19296,11 +19301,11 @@
 /area/station/tcommsat/server)
 "hrC" = (
 /obj/structure/cable,
-/obj/structure/closet/secure_closet/security,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/security,
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/customs)
 "hrE" = (
@@ -41156,6 +41161,10 @@
 /obj/machinery/door/window/left/directional/north{
 	name = "Security Desk"
 	},
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/textured_large,
 /area/station/security/checkpoint/escape)
 "poI" = (
@@ -42968,7 +42977,6 @@
 /obj/structure/chair/sofa/bench/right{
 	dir = 8
 	},
-/obj/item/radio/intercom/directional/east,
 /obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -47857,9 +47865,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet/security/med,
 /obj/effect/turf_decal/tile/dark_red/fourcorners,
 /obj/machinery/requests_console/directional/south,
+/obj/structure/closet/secure_closet/security,
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/escape)
 "rvE" = (
@@ -51974,7 +51982,6 @@
 	dir = 1
 	},
 /obj/structure/closet/secure_closet/security/med,
-/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/customs/auxiliary)
 "sLU" = (
@@ -59504,7 +59511,6 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden/monastery)
 "vkJ" = (
-/obj/structure/closet/secure_closet/security/science,
 /obj/item/book/manual/wiki/security_space_law{
 	pixel_x = 9;
 	pixel_y = 4
@@ -59514,6 +59520,7 @@
 	pixel_y = -3
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/secure_closet/security/science,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
 "vkN" = (
@@ -59618,6 +59625,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/cobweb,
+/obj/item/radio/intercom/chapel/directional/west,
 /turf/open/floor/iron/terracotta/diagonal,
 /area/station/service/chapel/office)
 "vmc" = (
@@ -63320,7 +63328,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/red/half/contrasted,
-/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/customs/auxiliary)
 "wsB" = (
@@ -66615,6 +66622,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/exit/departure_lounge)
 "xoS" = (
@@ -69519,6 +69527,7 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/west,
+/obj/vehicle/ridden/secway,
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/escape)
 "xZS" = (
@@ -84241,7 +84250,7 @@ vRd
 ccD
 rSS
 lzM
-aFR
+ezE
 aFR
 aFR
 aFR
