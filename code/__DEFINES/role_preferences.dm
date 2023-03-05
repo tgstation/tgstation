@@ -17,6 +17,7 @@
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
 #define ROLE_BLOODSUCKER "Bloodsucker"
+#define ROLE_INTERNAL_AFFAIRS "Internal Affairs Agent"
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
@@ -120,6 +121,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
 	ROLE_BLOODSUCKER = 0,
+	ROLE_INTERNAL_AFFAIRS = 0,
 
 	// Midround
 	ROLE_ABDUCTOR = 0,
