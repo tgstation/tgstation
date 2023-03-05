@@ -935,4 +935,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		if(istype(current_thing, /obj/structure/chair))
 			current_thing.take_damage(150)
 
+		if(istype(current_thing, /obj/machinery/light))
+			current_thing.take_damage(150)
+
 	qdel(src)

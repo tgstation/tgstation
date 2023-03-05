@@ -897,6 +897,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/computer)
+"arC" = (
+/obj/effect/mapping_helpers/revolution_trash,
+/turf/open/floor/carpet/red,
+/area/station/command/heads_quarters/qm)
 "asz" = (
 /obj/structure/table,
 /obj/item/stack/sheet/iron/fifty,
@@ -19454,6 +19458,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "hip" = (
+/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "hiu" = (
@@ -22311,6 +22316,7 @@
 /area/station/command/heads_quarters/captain/private)
 "ijZ" = (
 /obj/structure/cable,
+/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "ikb" = (
@@ -22474,6 +22480,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
 "ilT" = (
@@ -38581,6 +38588,16 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
+"nJp" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/revolution_trash,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/rd)
 "nJr" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
@@ -50948,6 +50965,7 @@
 	icon_state = "map-left-MS";
 	pixel_y = 32
 	},
+/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "rZT" = (
@@ -53856,6 +53874,11 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
+"sZk" = (
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/mapping_helpers/revolution_trash,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "sZH" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
@@ -55046,6 +55069,11 @@
 /obj/structure/table,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
+"ttp" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mapping_helpers/revolution_trash,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/ce)
 "tts" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /turf/closed/wall/r_wall,
@@ -87009,7 +87037,7 @@ wRj
 qIK
 cjJ
 cjJ
-cjJ
+arC
 cjJ
 cLc
 vkR
@@ -95972,7 +96000,7 @@ tJE
 kVU
 tJE
 kVU
-tJE
+sZk
 fzi
 wTp
 jxV
@@ -102215,7 +102243,7 @@ tYO
 wkM
 xnv
 tnw
-tnw
+nJp
 gUf
 tnw
 vQb
@@ -108335,7 +108363,7 @@ uGm
 acs
 uXd
 qJd
-nLz
+ttp
 xSA
 rSi
 pCt
