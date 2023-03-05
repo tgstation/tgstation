@@ -835,6 +835,11 @@
 /obj/structure/noticeboard/directional/east,
 /turf/open/floor/carpet/blue,
 /area/station/medical/psychology)
+"akc" = (
+/obj/effect/turf_decal/siding/dark_red,
+/obj/effect/mapping_helpers/revolution_trash,
+/turf/open/floor/iron/grimy,
+/area/station/command/heads_quarters/hos)
 "akf" = (
 /obj/structure/table/reinforced,
 /obj/item/bodypart/chest/robot,
@@ -21073,6 +21078,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"fbI" = (
+/obj/structure/cable,
+/obj/effect/mapping_helpers/revolution_trash,
+/turf/open/floor/iron/grimy,
+/area/station/command/heads_quarters/hop)
 "fbO" = (
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
@@ -24242,6 +24252,11 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit/departure_lounge)
+"fPz" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/mapping_helpers/revolution_trash,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/cmo)
 "fPA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -86198,6 +86213,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/rd)
 "uZL" = (
@@ -88427,6 +88443,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "vAu" = (
@@ -89318,6 +89335,7 @@
 /area/station/maintenance/department/crew_quarters/bar)
 "vMd" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "vMe" = (
@@ -89765,6 +89783,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
+"vST" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mapping_helpers/revolution_trash,
+/turf/open/floor/iron/dark,
+/area/station/command/bridge)
 "vSU" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/status_display/ai/directional/south,
@@ -95115,6 +95138,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"xhb" = (
+/obj/effect/mapping_helpers/revolution_trash,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/captain)
 "xhf" = (
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/funeral)
@@ -95383,6 +95410,13 @@
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
+"xkM" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/revolution_trash,
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/ce)
 "xkO" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -122052,7 +122086,7 @@ saR
 pFB
 ylf
 ylf
-ylf
+xkM
 ylf
 eDp
 oIL
@@ -135935,7 +135969,7 @@ aDZ
 ozz
 ogs
 sox
-sox
+fbI
 sox
 vJG
 sox
@@ -136753,7 +136787,7 @@ dQT
 dQT
 dQT
 qtq
-pMF
+fPz
 nti
 dcH
 loe
@@ -138234,7 +138268,7 @@ aaa
 wyH
 aod
 jgq
-cQv
+vST
 gVx
 adC
 moV
@@ -140297,7 +140331,7 @@ jlZ
 gOU
 swj
 jeI
-aby
+xhb
 igb
 gOU
 gOU
@@ -155190,7 +155224,7 @@ cLX
 kVe
 hHt
 aVo
-ida
+akc
 hMg
 bRF
 aad
