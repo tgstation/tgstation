@@ -537,6 +537,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "broom"
 	resistance_flags = FLAMMABLE
 
+/obj/item/staff/tape
+	name = "tape staff"
+	desc = "A roll of tape snugly attached to a stick."
+	icon_state = "tapestaff"
+	inhand_icon_state = "tapestaff"
+	resistance_flags = FLAMMABLE
+
 /obj/item/staff/stick
 	name = "stick"
 	desc = "A great tool to drag someone else's drinks across the bar."

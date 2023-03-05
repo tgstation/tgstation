@@ -194,7 +194,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/shuttle/escape)
 "ap" = (
@@ -958,7 +957,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/shuttle/escape)
 "cB" = (

@@ -90,6 +90,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/toggle_combo_hud, /* toggle display of the combination pizza antag and taco sci/med/eng hud */
 	/client/proc/toggle_view_range, /*changes how far we can see*/
+	/client/proc/cmd_admin_law_panel,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
