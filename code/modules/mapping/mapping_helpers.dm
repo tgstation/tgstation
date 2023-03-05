@@ -899,7 +899,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			current_thing.take_damage(90)
 			continue
 
-		if(istype(current_thing, /obj/machinery/computer) && prob(35))
+		if(istype(current_thing, /obj/machinery/computer) && prob(30))
 			if(istype(current_thing, /obj/machinery/computer/communications))
 				continue //To prevent the shuttle from getting autocalled at the start of the round
 			current_thing.take_damage(160)
@@ -912,32 +912,35 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			created_art.pixel_y = rand(-10, 10)
 			continue
 
-		if(prob(0.01))
-			new /obj/effect/mob_spawn/corpse/human/assistant(get_turf(current_thing))
-			continue
-
-		if(istype(current_thing, /obj/structure/table) && prob(70))
+		if(istype(current_thing, /obj/structure/table) && prob(40))
 			current_thing.take_damage(100)
 			continue
 
 		if(istype(current_thing, /obj/structure/window))
-			current_thing.take_damage(rand(30, 75))
+			if(prob(15))
+				current_thing.take_damage(rand(30, 90))
 			continue
 
-		if(istype(current_thing, /obj/machinery/vending) && prob(35))
+		if(istype(current_thing, /obj/machinery/vending) && prob(45))
 			var/obj/machinery/vending/vendor_to_trash = current_thing
 			if(prob(50))
 				vendor_to_trash.tilt(get_turf(vendor_to_trash))
 
 			if(prob(50))
 				vendor_to_trash.take_damage(150)
+			continue
 
-		if(istype(current_thing, /obj/structure/chair))
+		if(istype(current_thing, /obj/structure/chair) && prob(60))
 			current_thing.take_damage(150)
+			continue
 
-		if(istype(current_thing, /obj/machinery/light))
-			if(prob(40))
-				var/obj/machinery/light/light_to_smash = current_thing
-				light_to_smash.break_light_tube(TRUE)
+		if(istype(current_thing, /obj/machinery/light) && prob(40))
+			var/obj/machinery/light/light_to_smash = current_thing
+			light_to_smash.break_light_tube(TRUE)
+			continue
+
+		if(prob(0.01))
+			new /obj/effect/mob_spawn/corpse/human/assistant(get_turf(current_thing))
+			continue
 
 	qdel(src)
