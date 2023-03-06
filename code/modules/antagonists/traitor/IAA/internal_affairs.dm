@@ -195,11 +195,11 @@
 	r_hand = /obj/item/melee/energy/sword
 
 /datum/outfit/internal_affair_agent/post_equip(mob/living/carbon/human/owner, visualsOnly)
-	var/obj/item/melee/energy/sword/sword = locate() in H.held_items
+	var/obj/item/melee/energy/sword/sword = locate() in owner.held_items
 	sword.icon_state = "e_sword_on_blue"
 	sword.worn_icon_state = "e_sword_on_blue"
 
-	H.update_held_items()
+	owner.update_held_items()
 
 #undef EXTERNAL_CHANCE
 #undef ROLE_EXTERNAL_AFFAIRS
