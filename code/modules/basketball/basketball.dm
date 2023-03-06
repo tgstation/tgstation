@@ -183,9 +183,10 @@
 	user.swap_hand(user.get_held_index_of_item(src))
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
 
-/obj/item/toy/basketball/afterattack(atom/target, mob/user)
+/obj/item/toy/basketball/afterattack(atom/target, mob/living/user)
 	. = ..()
-	user.throw_item(target)
+	if(!user.combat_mode)
+		user.throw_item(target)
 
 /obj/item/toy/basketball/afterattack_secondary(atom/aim_target, mob/living/baller, params)
 	// dunking negates shooting
@@ -214,6 +215,4 @@
 	if(!istype(target))
 		return ..()
 
-	var/atom/movable/actual_target = throwingdatum.initial_target?.resolve()
-	if(target == actual_target || prob(50)) // 50% chance to catch the ball if you don't directly aim on target
-		target.put_in_hands(src)
+	target.put_in_hands(src)
