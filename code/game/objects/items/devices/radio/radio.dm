@@ -3,7 +3,7 @@
 /obj/item/radio
 	icon = 'icons/obj/radio.dmi'
 	name = "station bounced radio"
-	icon_state = "walkietalkie"
+	icon_state = "radio_generic"
 	inhand_icon_state = "radio"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
@@ -585,3 +585,77 @@
 /obj/item/radio/off/Initialize(mapload)
 	. = ..()
 	set_listening(FALSE)
+
+///////////////////////////////
+/////////New Handhelds/////////
+///////////////////////////////
+
+/obj/item/radio/cargo
+	name = "cargo station bounced radio"
+	icon_state = "radio_cargo"
+	desc = "A basic handheld radio that communicates with local cargo telecommunication networks."
+	freqlock = 1
+
+/obj/item/radio/cargo/Initialize(mapload)
+	. = ..()
+	set_frequency(FREQ_SUPPLY)
+
+/obj/item/radio/command
+	name = "command station bounced radio"
+	icon_state = "radio_command"
+	desc = "A basic handheld radio that communicates with local command telecommunication networks."
+	freqlock = 1
+
+/obj/item/radio/command/Initialize(mapload)
+	. = ..()
+	set_frequency(FREQ_COMMAND)
+
+/obj/item/radio/engineering
+	name = "engineering station bounced radio"
+	icon_state = "radio_engineering"
+	desc = "A basic handheld radio that communicates with local engineering telecommunication networks."
+	freqlock = 1
+
+/obj/item/radio/engineering/Initialize(mapload)
+	. = ..()
+	set_frequency(FREQ_ENGINEERING)
+
+/obj/item/radio/medical
+	name = "medical station bounced radio"
+	icon_state = "radio_medical"
+	desc = "A basic handheld radio that communicates with local medical telecommunication networks."
+	freqlock = 1
+
+/obj/item/radio/medical/Initialize(mapload)
+	. = ..()
+	set_frequency(FREQ_MEDICAL)
+
+/obj/item/radio/science
+	name = "science station bounced radio"
+	icon_state = "radio_science"
+	desc = "A basic handheld radio that communicates with local science telecommunication networks."
+	freqlock = 1
+
+/obj/item/radio/science/Initialize(mapload)
+	. = ..()
+	set_frequency(FREQ_SCIENCE)
+
+/obj/item/radio/security
+	name = "security station bounced radio"
+	icon_state = "radio_security"
+	desc = "A basic handheld radio that communicates with local security telecommunication networks."
+	freqlock = 1
+
+/obj/item/radio/security/Initialize(mapload)
+	. = ..()
+	set_frequency(FREQ_SECURITY)
+
+/obj/item/radio/service
+	name = "service station bounced radio"
+	icon_state = "radio_service"
+	desc = "A basic handheld radio that communicates with local service telecommunication networks."
+	freqlock = 1
+
+/obj/item/radio/service/Initialize(mapload)
+	. = ..()
+	set_frequency(FREQ_SERVICE)
