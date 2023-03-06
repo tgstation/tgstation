@@ -46,11 +46,6 @@
 	return Validated_Run(sender, params)
 
 
-
-
-
-
-
 /// Called if the sender passes validation checks or if those checks are disabled.
 /datum/tgs_chat_command/validated/proc/Validated_Run(datum/tgs_chat_user/sender, params)
 	CRASH("[type] has no implementation for Validated_Run()")
