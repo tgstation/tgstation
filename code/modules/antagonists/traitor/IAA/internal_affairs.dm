@@ -192,12 +192,16 @@
 	uniform = /obj/item/clothing/under/rank/centcom/officer
 	head = /obj/item/clothing/head/beret/centcom_formal
 	glasses = /obj/item/clothing/glasses/sunglasses
-	r_hand = /obj/item/melee/energy/sword
+	r_hand = /obj/item/melee/energy/sword/saber/green
 
 /datum/outfit/internal_affair_agent/post_equip(mob/living/carbon/human/owner, visualsOnly)
-	var/obj/item/melee/energy/sword/sword = locate() in owner.held_items
-	sword.icon_state = "e_sword_on_blue"
-	sword.worn_icon_state = "e_sword_on_blue"
+	var/obj/item/melee/energy/sword/saber/green/sword = locate() in owner.held_items
+	if(sword.flags_1 & INITIALIZED_1)
+		sword.attack_self()
+	else //Atoms aren't initialized during the screenshots unit test, so we can't call attack_self for it as the sword doesn't have the transforming weapon component to handle the icon changes. The below part is ONLY for the antag screenshots unit test.
+		sword.icon_state = "e_sword_on_green"
+		sword.inhand_icon_state = "e_sword_on_green"
+		sword.worn_icon_state = "e_sword_on_green"
 
 	owner.update_held_items()
 
