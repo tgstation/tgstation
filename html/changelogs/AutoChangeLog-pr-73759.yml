@@ -1,5 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - balance: "the syndicate realized Chief Engineer is important enough to kidnap"
-  - bugfix: "kidnap objectives will now properly be unavailable for you for 15 minutes after you take three, instead of after you take three assassinations."
