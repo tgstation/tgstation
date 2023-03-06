@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/assembly/signaler = 1,
 		/obj/item/assembly/timer = 1,
 		/obj/item/stack/package_wrap = 1,
-		/obj/item/stack/wrapping_paper = 1,
+		/obj/item/stack/package_wrap/wrapping_paper = 1,
 		) = 1,
 
 	list(//medical and chemicals

@@ -171,7 +171,7 @@
 	desc = "Want to mail your loved ones gift-wrapped chocolates, stuffed animals, the Clown's severed head? \
 		You can do all that, with this crate full of wrapping paper."
 	cost = CARGO_CRATE_VALUE * 1.8
-	contains = list(/obj/item/stack/wrapping_paper)
+	contains = list(/obj/item/stack/package_wrap/wrapping_paper)
 	crate_type = /obj/structure/closet/crate/wooden
 	crate_name = "festive wrapping paper crate"
 
