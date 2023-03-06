@@ -1,5 +1,0 @@
-author: "RikuTheKiller"
-delete-after: True
-changes:
-  - bugfix: "Atmosians have finally convinced the thermomachines to not self-destruct when built on blocked ports."
-  - bugfix: "Failing to wrench down a thermomachine no longer hits it with the wrench."

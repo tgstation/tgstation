@@ -519,6 +519,9 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	if(!is_operational)
 		return
 
+	if(!signal_direction) //Base type doesnt have directions set
+		return
+
 	var/lights_overlay = "[base_icon_state][signal_direction][signal_state]"
 
 	. += mutable_appearance(icon, lights_overlay)
