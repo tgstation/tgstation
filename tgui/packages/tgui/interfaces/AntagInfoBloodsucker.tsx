@@ -111,7 +111,8 @@ export const AntagInfoBloodsucker = (props, context) => {
   return (
     <Window
       width={620}
-      height={580}>
+      height={580}
+      theme="spookyconsole">
       <Window.Content>
         <Tabs>
           <Tabs.Tab
