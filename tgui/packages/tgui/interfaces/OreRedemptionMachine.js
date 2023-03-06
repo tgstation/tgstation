@@ -32,20 +32,17 @@ export const OreRedemptionMachine = (props, context) => {
                     />
                   </Stack.Item>
                   <Stack.Item>
-                    {(!user && 'No user Detected') || (
-                      <LabeledList>
-                        <LabeledList.Item label="Name">
-                          {user.name || 'No name detected'}
-                        </LabeledList.Item>
-                        <LabeledList.Item label="Balance">
-                          {user.cash + ' cr' || 'No balance detected'}
-                        </LabeledList.Item>
-                      </LabeledList>
-                    )}
+                    <LabeledList>
+                      <LabeledList.Item label="Name">
+                        {user?.name || 'No Name Detected'}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Balance">
+                        {user?.cash || 'No Balance Detected'}
+                      </LabeledList.Item>
+                    </LabeledList>
                   </Stack.Item>
                   <Stack.Item>
                     <Button
-                      mt={0.5}
                       textAlign="center"
                       color={compact ? 'red' : 'green'}
                       content="Compact"
