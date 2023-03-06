@@ -215,14 +215,14 @@ GLOBAL_VAR(basketball_game)
 		is_game_draw = TRUE
 		winner_team_ckeys |= home_team_players
 		winner_team_ckeys |= away_team_players
-	else if(home_hoop.total_score < away_hoop.total_score)
-		winner_team_ckeys = home_team_players
-		winner_team_name = home_hoop.name
-		loser_team_ckeys = away_team_players
 	else if(home_hoop.total_score > away_hoop.total_score)
 		winner_team_ckeys = away_team_players
 		winner_team_name = away_hoop.name
 		loser_team_ckeys = home_team_players
+	else if(home_hoop.total_score < away_hoop.total_score)
+		winner_team_ckeys = home_team_players
+		winner_team_name = home_hoop.name
+		loser_team_ckeys = away_team_players
 
 	if(is_game_draw)
 		for(var/ckey in winner_team_ckeys)

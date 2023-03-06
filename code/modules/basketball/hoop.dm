@@ -184,7 +184,7 @@
 	return
 
 /obj/structure/hoop/minigame/score(obj/item/toy/basketball/ball, mob/living/baller, points)
-	var/is_team_hoop = (baller.ckey in team_ckeys)
+	var/is_team_hoop = !(baller.ckey in team_ckeys)
 	if(is_team_hoop)
 		baller.balloon_alert_to_viewers("cant score own hoop!")
 		return
