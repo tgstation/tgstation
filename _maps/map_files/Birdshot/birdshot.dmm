@@ -51377,7 +51377,6 @@
 	pixel_y = 2
 	},
 /obj/machinery/newscaster/directional/east,
-/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
 "szP" = (
@@ -53369,7 +53368,6 @@
 "tiD" = (
 /obj/structure/chair/sofa/bench/right,
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
@@ -58220,6 +58218,10 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
+"uNW" = (
+/obj/machinery/barsign,
+/turf/closed/wall,
+/area/station/service/bar)
 "uNX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -90677,7 +90679,7 @@ hWQ
 ycS
 ycS
 vUq
-vkh
+uNW
 tiD
 tIc
 sxw
@@ -90934,7 +90936,7 @@ ree
 rFQ
 ycS
 szK
-efC
+vkh
 tiR
 tIc
 bxA
@@ -91191,7 +91193,7 @@ reW
 uAX
 vEq
 szM
-vkh
+efC
 xYj
 wYr
 tYd
