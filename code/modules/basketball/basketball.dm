@@ -34,7 +34,7 @@
 	. = ..()
 
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
-	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(remove_ball_effects))
 	RegisterSignal(src, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(after_throw_reset))
 	RegisterSignal(src, COMSIG_MOVABLE_IMPACT, PROC_REF(after_throw_reset))
 
@@ -46,30 +46,33 @@
 	SIGNAL_HANDLER
 
 	wielder = user
+
+	// the equip signal is sent AFTER the object is put in hands
+	// so we need to manually check if the held object is different
+	for(var/obj/item/toy/basketball/ball in user.held_items)
+		if(ball != src)
+			return // multiple balls in different hands so no need to setup signals again
+
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(movement_effect))
 	RegisterSignal(user, COMSIG_MOB_EMOTED("spin"), PROC_REF(on_spin))
 	RegisterSignal(user, COMSIG_HUMAN_DISARM_HIT, PROC_REF(on_equipped_mob_disarm))
 	RegisterSignal(user, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(on_equipped_mob_knockdown))
-	RegisterSignal(user, COMSIG_MOB_THROW, PROC_REF(on_throw))
 
-/obj/item/toy/basketball/proc/on_drop(obj/item/source, mob/user)
+/obj/item/toy/basketball/proc/remove_ball_effects()
 	SIGNAL_HANDLER
 
+	// unlike on_equip, this signal is triggered after the ball is removed from hands
+	// so we can just use is_holding_item_of_type() proc to check for multiple balls
+	if(!wielder.is_holding_item_of_type(/obj/item/toy/basketball))
+		UnregisterSignal(wielder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOB_THROW))
+
 	wielder = null
-	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOB_THROW))
-
-/obj/item/toy/basketball/proc/on_throw(mob/living/carbon/thrower)
-	SIGNAL_HANDLER
-
-	wielder = null
-	UnregisterSignal(thrower, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOB_THROW))
-
 
 /**
  * After a ball is thrown we need to reset the pass_flags since shooting lets you shoot through mobs
  * * source: Datum src from original signal call
 **/
-/obj/item/toy/basketball/proc/after_throw_reset(datum/source) // other args are redundant
+/obj/item/toy/basketball/proc/after_throw_reset() // don't need the args for the signal
 	SIGNAL_HANDLER
 
 	pass_flags = initial(pass_flags)
