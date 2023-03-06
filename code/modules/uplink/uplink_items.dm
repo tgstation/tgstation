@@ -1,3 +1,6 @@
+#define TRAITOR_DISCOUNT_BIG "big_discount"
+#define TRAITOR_DISCOUNT_AVERAGE "average_discount"
+#define TRAITOR_DISCOUNT_SMALL "small_discount"
 
 // TODO: Work into reworked uplinks.
 /// Selects a set number of unique items from the uplink, and deducts a percentage discount from them
@@ -84,16 +87,16 @@
 /// Returns by how much percentage do we reduce the price of the selected item
 /datum/uplink_item/proc/get_discount()
 
-	var/selected_discount = pick_weight(list(
-		"small_discount" = 4,
-		"average_discount" = 2,
-		"big_discount" = 1,
-	))
+	var/static/list/discount_types = list(
+		TRAITOR_DISCOUNT_SMALL = 4,
+		TRAITOR_DISCOUNT_AVERAGE = 2,
+		TRAITOR_DISCOUNT_BIG = 1,
+	)
 
-	switch(selected_discount)
-		if("big_discount")
+	switch(pick_weight(discount_types))
+		if(TRAITOR_DISCOUNT_BIG)
 			return 0.75
-		if("average_discount")
+		if(TRAITOR_DISCOUNT_AVERAGE)
 			return 0.5
 		else
 			return 0.25
@@ -153,3 +156,7 @@
 
 /// Code that enables the ability to have limited stock that is shared by different items
 /datum/shared_uplink_stock
+
+#undef TRAITOR_DISCOUNT_BIG
+#undef TRAITOR_DISCOUNT_AVERAGE
+#undef TRAITOR_DISCOUNT_SMALL
