@@ -880,6 +880,7 @@
 #include "code\datums\components\evolutionary_leap.dm"
 #include "code\datums\components\explodable.dm"
 #include "code\datums\components\faction_granter.dm"
+#include "code\datums\components\fertile_egg.dm"
 #include "code\datums\components\fishing_spot.dm"
 #include "code\datums\components\food_storage.dm"
 #include "code\datums\components\force_move.dm"
