@@ -1,6 +1,0 @@
-author: "OrionTheFox"
-delete-after: True
-changes:
-  - bugfix: "fixed missing emissives on the Engivend, Pwr-Game Soda, and generic Soda vendors. Also fixed the seclaptop having no valid screen icon!"
-  - bugfix: "fixed a few items trying to apply emissives when they shouldn't."
-  - code_imp: "added a stack_trace for emissives with missing icon states."
