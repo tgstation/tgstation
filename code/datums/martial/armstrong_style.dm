@@ -99,7 +99,7 @@ GLOBAL_VAR_INIT(horse_stance_effects, FALSE) // ensures the horse stance gains i
 		SloppyAnimate(A)
 		D.visible_message("<span class='danger'>[A] sloppily flails around, striking [D]!</span>", \
 									"<span class='userdanger'>[A] sends [D] flying with a rushed combo!</span>")
-		var/obj/effect/proc_holder/spell/aoe_turf/repulse/R = new(null)
+		var/datum/action/cooldown/spell/aoe/repulse/R = new(src)
 		var/list/turfs = list()
 		for(var/turf/T in range(1,A))
 			turfs.Add(T)
@@ -145,7 +145,7 @@ GLOBAL_VAR_INIT(horse_stance_effects, FALSE) // ensures the horse stance gains i
 	A.playsound_local(get_turf(A), 'sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
 	D.throw_at(throw_target, 2, 4,A)
 	D.adjust_fire_stacks(1)
-	D.IgniteMob()
+	D.ignite_mob()
 	add_exp(8, A)
 	log_combat(A, D, "fireball-one (Armstrong)")
 	return
@@ -205,7 +205,7 @@ GLOBAL_VAR_INIT(horse_stance_effects, FALSE) // ensures the horse stance gains i
 	D.throw_at(throw_target, 2, 4,A)
 	D.adjust_fire_stacks(3)
 	D.adjustFireLoss(8)
-	D.IgniteMob()
+	D.ignite_mob()
 	var/datum/effect_system/explosion/E = new
 	E.set_up(get_turf(D))
 	E.start()
@@ -248,7 +248,7 @@ GLOBAL_VAR_INIT(horse_stance_effects, FALSE) // ensures the horse stance gains i
 /datum/martial_art/armstrong/proc/Cannonball(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	D.visible_message("<span class='danger'>[A] flies into [D] like a cannonball!</span>", \
 								"<span class='userdanger'>[A] slams into [D] with the force of a cannonball!</span>")
-	var/obj/effect/proc_holder/spell/aoe_turf/repulse/R = new(null)
+	var/datum/action/cooldown/spell/aoe/repulse/R = new(src)
 	var/list/turfs = list()
 	for(var/turf/T in range(1,A))
 		turfs.Add(T)
@@ -422,7 +422,7 @@ GLOBAL_VAR_INIT(horse_stance_effects, FALSE) // ensures the horse stance gains i
 
 /obj/item/paper/armstrong_tutorial
 	name = "paper - 'HOW TO NOT SUCK'"
-	info = "<b>1: </b>Activating throw mode gives you a 75% chance to block any melee attacks coming your way. Use it to not die to stunbatons.<br> \
+	default_raw_text = "<b>1: </b>Activating throw mode gives you a 75% chance to block any melee attacks coming your way. Use it to not die to stunbatons.<br> \
 	<b>2: </b> Don't spam one attack. Use combos as much as possible to capitalize on both damage and stuns.<br> \
 	To cycle intents, push F or G. To directly select an intent, press 1, 2, 3, or 4. <br>\
 	Seriously, don't spam attacks. Combos will deal much more damage than mashing random intents.<br> \
@@ -463,7 +463,10 @@ GLOBAL_VAR_INIT(horse_stance_effects, FALSE) // ensures the horse stance gains i
 		if(8)
 			to_chat(owner, "<span class = 'notice'>You remember the Horse Stance. Use it to quickly recover health and stamina</span>")
 			owner.playsound_local(get_turf(owner), 'sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
-			owner.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/horse_stance/)
+			/*
+			var/datum/action/cooldown/spell/shapeshift/bat/batform = new /obj/effect/proc_holder/spell/targeted/horse_stance
+			batform.Grant(owner)
+			*/
 		if(10)
 			to_chat(owner, "<span class = 'notice'>You have mastered basic combos. Your attacks are more swift.</span>")
 			to_chat(owner, "<span class = 'notice'>You have also unlocked Cannonball. To use: Disarm Disarm Grab.</span>")
@@ -483,7 +486,8 @@ GLOBAL_VAR_INIT(horse_stance_effects, FALSE) // ensures the horse stance gains i
 			owner.playsound_local(get_turf(owner), 'sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
 		if(30)
 			to_chat(owner, "<span class = 'danger'><b>You can now use Fireball without needing to combo.</b></span>")
-			owner.mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
+			var/datum/action/cooldown/spell/pointed/projectile/fireball/fireball = new /datum/action/cooldown/spell/pointed/projectile/fireball
+			fireball.Grant(owner)
 			owner.playsound_local(get_turf(owner), 'sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
 	/*	if(20)
 			to_chat(owner, "<span class = 'notice'><b>You can now Headslide without needing to combo.</b></span>")
@@ -509,9 +513,9 @@ GLOBAL_VAR_INIT(horse_stance_effects, FALSE) // ensures the horse stance gains i
 /obj/item/clothing/mask/fakemoustache/italian/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
-
 //Spells and Status Effects
 //Horse Stance Spell
+/*
 /obj/effect/proc_holder/spell/targeted/horse_stance/
 	name = "Horse Stance"
 	desc = "Assumes a horse stance. Recovers health and stamina."
@@ -560,4 +564,4 @@ GLOBAL_VAR_INIT(horse_stance_effects, FALSE) // ensures the horse stance gains i
 
 /datum/status_effect/horse_stance/on_remove()
 	owner.visible_message("<span class='warning'>[owner] resumes a normal stance!</span>", "<span class='warning'>The Horse Stance ends...</span>")
-	playsound(owner, 'sound/weapons/armstrong_horse.ogg', 75, 1)
+	playsound(owner, 'sound/weapons/armstrong_horse.ogg', 75, 1)*/
