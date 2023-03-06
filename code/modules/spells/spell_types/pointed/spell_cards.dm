@@ -43,10 +43,10 @@
 	QDEL_NULL(lockon_component)
 	lockon_component = owner.AddComponent( \
 		/datum/component/lock_on_cursor, \
-		range = 5, \
-		typecache = GLOB.typecache_living, \
-		amount = 1, \
-		when_locked = CALLBACK(src, PROC_REF(on_lockon_component)))
+		lock_cursor_range = 5, \
+		target_typecache = GLOB.typecache_living, \
+		lock_amount = 1, \
+		on_lock = CALLBACK(src, PROC_REF(on_lockon_component)))
 
 /datum/action/cooldown/spell/pointed/projectile/spell_cards/proc/on_lockon_component(list/locked_weakrefs)
 	if(!length(locked_weakrefs))

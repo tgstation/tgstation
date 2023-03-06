@@ -17,11 +17,11 @@
 	var/mouse_params
 
 /// Links this up with a mob
-/atom/movable/screen/fullscreen/cursor_catcher/proc/assign_to_mob(mob/new_owner)
-	owner = new_owner
-	view_list = getviewsize(new_owner.client.view)
-	RegisterSignal(new_owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	RegisterSignal(new_owner, COMSIG_VIEWDATA_UPDATE, PROC_REF(on_viewdata_update))
+/atom/movable/screen/fullscreen/cursor_catcher/proc/assign_to_mob(mob/owner)
+	src.owner = owner
+	view_list = getviewsize(owner.client.view)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	RegisterSignal(owner, COMSIG_VIEWDATA_UPDATE, PROC_REF(on_viewdata_update))
 	calculate_params()
 
 /// Update when the mob we're assigned to has moved

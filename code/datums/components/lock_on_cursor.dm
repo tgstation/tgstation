@@ -8,7 +8,7 @@
  */
 /datum/component/lock_on_cursor
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-	// Appearance to overlay onto whatever we are targetting
+	/// Appearance to overlay onto whatever we are targetting
 	var/mutable_appearance/lock_appearance
 	/// Current images we are displaying to the client
 	var/list/image/lock_images
@@ -31,22 +31,22 @@
 	/// Ranging ID for some kind of tick check safety calculation
 	var/current_ranging_id = 0
 
-/datum/component/lock_on_cursor/Initialize(range = 5, list/typecache = list(), amount = 1, list/immune = list(), icon = 'icons/mob/silicon/cameramob.dmi', icon_state = "marker", datum/callback/when_locked, datum/callback/target_callback)
+/datum/component/lock_on_cursor/Initialize(lock_cursor_range = 5, list/target_typecache = list(), lock_amount = 1, list/immune = list(), icon = 'icons/mob/silicon/cameramob.dmi', icon_state = "marker", datum/callback/on_lock, datum/callback/can_target_callback)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
-	if (amount < 1 || range < 0)
+	if (lock_amount < 1 || lock_cursor_range < 0)
 		CRASH("Invalid range or amount argument")
-	lock_cursor_range = range
-	target_typecache = typecache
-	lock_amount = amount
+	src.lock_cursor_range = lock_cursor_range
+	src.target_typecache = target_typecache
+	src.lock_amount = lock_amount
+	src.on_lock = on_lock
+	src.can_target_callback = can_target_callback ? can_target_callback : CALLBACK(src, PROC_REF(can_target))
 	immune_weakrefs = list(WEAKREF(parent) = TRUE) //Manually take this out if you want..
 	for(var/immune_thing in immune)
 		if(isweakref(immune_thing))
 			immune_weakrefs[immune_thing] = TRUE
 		else if(isatom(immune_thing))
 			immune_weakrefs[WEAKREF(immune_thing)] = TRUE
-	on_lock = when_locked
-	can_target_callback = target_callback ? target_callback : CALLBACK(src, PROC_REF(can_target))
 	lock_appearance = mutable_appearance(icon = icon, icon_state = icon_state, layer = FLOAT_LAYER)
 	var/mob/owner = parent
 	mouse_tracker = owner.overlay_fullscreen("lock_on", /atom/movable/screen/fullscreen/cursor_catcher/lock_on, 0)
