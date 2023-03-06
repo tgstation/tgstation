@@ -64,22 +64,31 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
  * Escaped mobs are used to check certain antag objectives / results.
  *
  * Escaped includes minds with alive, non-exiled mobs generally.
+ *
+ * Returns TRUE if they're a free person, or FALSE if they failed
  */
 /proc/considered_escaped(datum/mind/escapee)
 	if(!considered_alive(escapee))
 		return FALSE
 	if(considered_exiled(escapee))
 		return FALSE
+	// "Into the sunset" force escaping for forced escape success
 	if(escapee.force_escaped)
 		return TRUE
-	if(SSticker.force_ending || GLOB.station_was_nuked) // Just let them win.
+	// Station destroying events (blob, cult, nukies)? Just let them win, even if there was no hope of escape
+	if(SSticker.force_ending || GLOB.station_was_nuked)
 		return TRUE
+	// Escape hasn't happened yet
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return FALSE
 	var/area/current_area = get_area(escapee.current)
-	if(!current_area || istype(current_area, /area/shuttle/escape/brig)) // Fails if they are in the shuttle brig
+	// In custody (shuttle brig) does not count as escaping
+	if(!current_area || istype(current_area, /area/shuttle/escape/brig))
 		return FALSE
 	var/turf/current_turf = get_turf(escapee.current)
+	if(!current_turf)
+		return FALSE
+	// Finally, if we made it to centcom (or the syndie base - got hijacked), we're home free
 	return current_turf.onCentCom() || current_turf.onSyndieBase()
 
 /datum/objective/proc/check_completion()

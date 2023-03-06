@@ -624,7 +624,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	icon_state = "narsian"
 	icon_living = "narsian"
 	icon_dead = "narsian_dead"
-	faction = list(FACTION_NEUTRAL, "cult")
+	faction = list(FACTION_NEUTRAL, FACTION_CULT)
 	gold_core_spawnable = NO_SPAWN
 	nofur = TRUE
 	unique_pet = TRUE
@@ -663,6 +663,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /mob/living/basic/pet/dog/corgi/regenerate_icons()
 	..()
+	cut_overlays() //we are redrawing the mob after all
 	if(inventory_head)
 		var/image/head_icon
 		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)

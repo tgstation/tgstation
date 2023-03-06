@@ -6,6 +6,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "pandemic0"
 	icon_keyboard = null
+	icon_screen = null
 	base_icon_state = "pandemic"
 	resistance_flags = ACID_PROOF
 	circuit = /obj/item/circuitboard/computer/pandemic

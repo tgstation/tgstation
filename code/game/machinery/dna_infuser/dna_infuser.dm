@@ -12,6 +12,8 @@
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the door is open
 	circuit = /obj/item/circuitboard/machine/dna_infuser
+	/// maximum tier this will infuse
+	var/max_tier_allowed = DNA_MUTANT_TIER_ONE
 	///currently infusing a vict- subject
 	var/infusing = FALSE
 	///what we're infusing with
@@ -43,6 +45,16 @@
 	. += span_notice("To operate: Obtain dead creature. Depending on size, drag or drop into the infuser slot.")
 	. += span_notice("Subject enters the chamber, someone activates the machine. Voila! One of your organs has... changed!")
 	. += span_notice("Alt-click to eject the infusion source, if one is inside.")
+	if(max_tier_allowed < DNA_INFUSER_MAX_TIER)
+		. += span_boldnotice("Right now, the DNA Infuser can only infuse Tier [max_tier_allowed] entries.")
+	else
+		. += span_boldnotice("Maximum tier unlocked. All DNA entries are possible.")
+	. += span_notice("Examine further for more information.")
+
+/obj/machinery/dna_infuser/examine_more(mob/user)
+	. = ..()
+	. += span_notice("If you infuse a Tier [DNA_MUTANT_TIER_ONE] entry until it unlocks the bonus, it will upgrade the maximum tier and allow more complicated infusions.")
+	. += span_notice("The maximum level it can reach is Tier [DNA_INFUSER_MAX_TIER].")
 
 /obj/machinery/dna_infuser/interact(mob/user)
 	if(user == occupant)
@@ -65,13 +77,23 @@
 	var/mob/living/carbon/human/human_occupant = occupant
 	infusing = TRUE
 	visible_message(span_notice("[src] hums to life, beginning the infusion process!"))
+	var/fail_title = ""
+	var/fail_reason = ""
 	// Replace infusing_into with a [/datum/infuser_entry]
 	for(var/datum/infuser_entry/entry as anything in GLOB.infuser_entries)
+		if(entry.tier == DNA_MUTANT_UNOBTAINABLE)
+			continue
 		if(is_type_in_list(infusing_from, entry.input_obj_or_mob))
+			if(entry.tier > max_tier_allowed)
+				fail_title = "Overcomplexity"
+				fail_reason = "DNA too complicated to infuse. The machine needs to infuse simpler DNA first."
 			infusing_into = entry
 			break
 	if(!infusing_into)
 		//no valid recipe, so you get a fly mutation
+		if(!fail_reason)
+			fail_title = "Unknown DNA"
+			fail_reason = "Unknown DNA. Consult the \"DNA infusion book\"."
 		infusing_into = GLOB.infuser_entries[1]
 	playsound(src, 'sound/machines/blender.ogg', 50, vary = TRUE)
 	to_chat(human_occupant, span_danger("Little needles repeatedly prick you!"))
@@ -79,16 +101,23 @@
 	human_occupant.add_mob_memory(/datum/memory/dna_infusion, protagonist = human_occupant, deuteragonist = infusing_from, mutantlike = infusing_into.infusion_desc)
 	Shake(duration = INFUSING_TIME)
 	addtimer(CALLBACK(human_occupant, TYPE_PROC_REF(/mob, emote), "scream"), INFUSING_TIME - 1 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(end_infuse)), INFUSING_TIME)
+	addtimer(CALLBACK(src, PROC_REF(end_infuse), fail_reason, fail_title), INFUSING_TIME)
 	update_appearance()
 
-/obj/machinery/dna_infuser/proc/end_infuse()
+/obj/machinery/dna_infuser/proc/end_infuse(fail_reason, fail_title)
 	if(infuse_organ(occupant))
 		to_chat(occupant, span_danger("You feel yourself becoming more... [infusing_into.infusion_desc]?"))
 	infusing = FALSE
 	infusing_into = null
 	QDEL_NULL(infusing_from)
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, vary = FALSE)
+	if(fail_reason)
+		playsound(src, 'sound/machines/printer.ogg', 100, TRUE)
+		visible_message(span_notice("[src] prints an error report."))
+		var/obj/item/paper/printed_paper = new /obj/item/paper(loc)
+		printed_paper.name = "error report - '[fail_title]'"
+		printed_paper.add_raw_text(fail_reason)
+		printed_paper.update_appearance()
 	toggle_open()
 	update_appearance()
 
@@ -108,6 +137,7 @@
 	if(!istype(new_organ, /obj/item/organ/internal/brain))
 		// Organ ISN'T brain, insert normally.
 		new_organ.Insert(target, special = TRUE, drop_if_replaced = FALSE)
+		check_tier_progression(target)
 		return TRUE
 	// Organ IS brain, insert via special logic:
 	var/obj/item/organ/internal/brain/old_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
@@ -116,6 +146,7 @@
 	qdel(old_brain)
 	var/obj/item/organ/internal/brain/new_brain = new_organ
 	new_brain.Insert(target, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
+	check_tier_progression(target)
 	return TRUE
 
 /// Picks a random mutated organ from the infuser entry which is also compatible with the target mob.
@@ -142,6 +173,17 @@
 	if(length(potential_new_organs))
 		return pick(potential_new_organs)
 	return FALSE
+
+/// checks to see if the machine should progress a new tier.
+/obj/machinery/dna_infuser/proc/check_tier_progression(mob/living/carbon/human/target)
+	if(
+		max_tier_allowed != DNA_INFUSER_MAX_TIER \
+		&& infusing_into.tier == max_tier_allowed \
+		&& target.has_status_effect(infusing_into.status_effect_type) \
+	)
+		max_tier_allowed++
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
+		visible_message(span_notice("[src] dings as it records the results of the full infusion."))
 
 /obj/machinery/dna_infuser/update_icon_state()
 	//out of order
@@ -270,3 +312,4 @@
 	infusing_from = null
 
 #undef INFUSING_TIME
+#undef SCREAM_TIME

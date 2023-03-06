@@ -229,14 +229,17 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
 
 /**
- * Recreates all of this mob's organs, and heals them to full.
+ * Heals all of the mob's organs, and re-adds any missing ones.
+ *
+ * * regenerate_existing - if TRUE, existing organs will be deleted and replaced with new ones
  */
-/mob/living/carbon/proc/regenerate_organs()
+/mob/living/carbon/proc/regenerate_organs(regenerate_existing = FALSE)
+
 	// Delegate to species if possible.
 	if(dna?.species)
-		dna.species.regenerate_organs(src)
-		// Species regenerate organs doesn't handling healing the organs here,
-		// it's more concerned with just putting the necessary organs back in.
+		dna.species.regenerate_organs(src, replace_current = regenerate_existing)
+
+		// Species regenerate organs doesn't ALWAYS handle healing the organs because it's dumb
 		for(var/obj/item/organ/organ as anything in internal_organs)
 			organ.setOrganDamage(0)
 		set_heartattack(FALSE)

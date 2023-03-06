@@ -141,7 +141,7 @@
 	name = "\improper Mass Driver Controller"
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
-	icon_keyboard = null
+	icon_screen = null
 	density = FALSE
 
 /obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver

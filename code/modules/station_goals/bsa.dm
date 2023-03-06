@@ -262,7 +262,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	circuit = /obj/item/circuitboard/computer/bsa_control
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"
-	icon_keyboard = ""
+	icon_keyboard = null
+	icon_screen = null
 
 	var/datum/weakref/cannon_ref
 	var/notice
