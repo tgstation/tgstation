@@ -1,6 +1,6 @@
-#define CAPTIVE_XENO_DEAD -1
-#define CAPTIVE_XENO_FAIL 0
-#define CAPTIVE_XENO_PASS 1
+#define CAPTIVE_XENO_DEAD "captive_xeno_dead"
+#define CAPTIVE_XENO_FAIL "captive_xeno_failed"
+#define CAPTIVE_XENO_PASS "captive_xeno_escaped"
 
 /datum/team/xeno
 	name = "\improper Aliens"
@@ -61,17 +61,21 @@
 /datum/antagonist/xeno/captive/get_team()
 	return captive_team
 
+/datum/antagonist/xeno/captive/forge_objectives()
+
+	return
+
 /datum/team/xeno/captive
 	name = "\improper Captive Aliens"
 	///The first member of this team, presumably the queen.
 	var/datum/mind/progenitor
 
-/datum/team/xeno/captive/roundend_report() //This isn't overriding properly. Fix it please!
+/datum/team/xeno/captive/roundend_report()
 	var/list/parts = list()
 	var/escape_count = 0 //counts the number of xenomorphs that were born in captivity who ended the round outside of it
 	var/captive_count = 0 //counts the number of xenomorphs born in captivity who remained there until the end of the round (losers)
 
-	parts += "<span class='header'>The Captive Xenomorphs were: </span>"
+	parts += "<span class='header'>The [name] were: </span>"
 
 	for(var/datum/mind/alien_mind in members)
 		switch(check_captivity(alien_mind.current))
