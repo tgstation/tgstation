@@ -58,7 +58,7 @@
 /datum/uplink_item/dangerous/rapid
 	name = "Gloves of the North Star"
 	desc = "These gloves let the user punch people very fast. Does not improve weapon attack speed or the meaty fists of a hulk."
-	item = /obj/item/clothing/gloves/rapid
+	item = /obj/item/clothing/gloves/chameleon/rapid
 	cost = 8
 
 
