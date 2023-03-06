@@ -103,7 +103,7 @@
 	weight = 1
 	show_in_report = TRUE
 	report_message = "Please be nice to him."
-	blacklist = list(/datum/station_trait/announcement_medbot)
+	blacklist = list(/datum/station_trait/announcement_medbot, /datum/station_trait/birthday)
 
 /datum/station_trait/announcement_intern/New()
 	. = ..()
@@ -115,7 +115,7 @@
 	weight = 1
 	show_in_report = TRUE
 	report_message = "Our announcement system is under scheduled maintanance at the moment. Thankfully, we have a backup."
-	blacklist = list(/datum/station_trait/announcement_intern)
+	blacklist = list(/datum/station_trait/announcement_intern, /datum/station_trait/birthday)
 
 /datum/station_trait/announcement_medbot/New()
 	. = ..()
@@ -189,3 +189,124 @@
 		return
 
 	gorilla.poll_for_gorilla()
+
+/datum/station_trait/birthday
+	name = "Employee Birthday"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 2
+	show_in_report = TRUE
+	report_message = "We here at Nanotrasen would all like to wish Employee Name a very happy birthday"
+	trait_to_give = STATION_TRAIT_BIRTHDAY
+	blacklist = list(/datum/station_trait/announcement_intern, /datum/station_trait/announcement_medbot) //Overiding the annoucer hides the birthday person in the annoucement message.
+	///Variable that stores a reference to the person selected to have their birthday celebrated.
+	var/mob/living/carbon/human/birthday_person
+	///Variable that admins can override with a player's ckey in order to set them as the birthday person when the round starts.
+	var/birthday_override_ckey
+
+/datum/station_trait/birthday/New()
+	. = ..()
+	RegisterSignals(SSdcs, list(COMSIG_GLOB_JOB_AFTER_SPAWN), PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/birthday/revert()
+	for (var/obj/effect/landmark/start/hangover/party_spot in GLOB.start_landmarks_list)
+		QDEL_LIST(party_spot.party_debris)
+	return ..()
+
+/datum/station_trait/birthday/on_round_start()
+	. = ..()
+	if(birthday_override_ckey)
+		if(!check_valid_override())
+			message_admins("Attempted to make [birthday_override_ckey] the birthday person but they are not a valid station role. A random birthday person has be selected instead.")		
+
+	if(!birthday_person)
+		var/list/birthday_options
+		for(var/mob/living/carbon/human/human in GLOB.human_list)
+			if(human.mind?.assigned_role.job_flags & JOB_CREW_MEMBER)
+				birthday_options += human
+		birthday_person = pick(birthday_options)
+	addtimer(CALLBACK(src, PROC_REF(announce_birthday)), 10 SECONDS)
+
+/datum/station_trait/birthday/proc/check_valid_override()
+
+	var/mob/living/carbon/human/birthday_override_mob = get_mob_by_ckey(birthday_override_ckey)
+
+	if(isnull(birthday_override_mob))
+		return FALSE
+
+	if(birthday_override_mob.mind?.assigned_role.job_flags & JOB_CREW_MEMBER)
+		birthday_person = birthday_override_mob
+		return TRUE
+	else
+		return FALSE
+
+
+/datum/station_trait/birthday/proc/announce_birthday()
+	report_message = "We here at Nanotrasen would all like to wish [birthday_person ? birthday_person.name : "Employee Name"] a very happy birthday"
+	priority_announce("Happy birthday to [birthday_person ? birthday_person.name : "Employee Name"]! Nanotrasen wishes you a very happy [birthday_person ? thtotext(birthday_person.age + 1) : "255th"] birthday.")
+	if(birthday_person)
+		playsound(birthday_person, 'sound/items/party_horn.ogg', 50)
+		birthday_person.add_mood_event("birthday", /datum/mood_event/birthday)
+
+/datum/station_trait/birthday/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned_mob)
+	SIGNAL_HANDLER
+
+	var/obj/item/hat = pick_weight(list(
+		/obj/item/clothing/head/costume/party/festive = 12,
+		/obj/item/clothing/head/costume/party = 12,
+		/obj/item/clothing/head/costume/festive = 2,
+		/obj/item/clothing/head/utility/hardhat/cakehat = 1,
+	))
+	hat = new hat(spawned_mob)
+	if(!spawned_mob.equip_to_slot_if_possible(hat, ITEM_SLOT_HEAD, disable_warning = TRUE))
+		spawned_mob.equip_to_slot_or_del(hat, ITEM_SLOT_BACKPACK)
+	var/obj/item/toy = pick_weight(list(
+		/obj/item/reagent_containers/spray/chemsprayer/party = 4,
+		/obj/item/toy/balloon = 2,
+		/obj/item/sparkler = 2,
+		/obj/item/clothing/mask/party_horn = 2,
+		/obj/item/storage/box/tail_pin = 1,
+	))
+	toy = new toy(spawned_mob)
+	spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_BACKPACK)
+	if(birthday_person) //Anyone who joins after the annoucement gets one of these.
+		var/obj/item/birthday_invite/birthday_invite = new(spawned_mob)
+		birthday_invite.setup_card(birthday_person.name)
+		spawned_mob.equip_to_slot_or_del(birthday_invite, ITEM_SLOT_HANDS)
+
+/obj/item/birthday_invite
+	name = "birthday invitation"
+	desc = "A card stating that it's someone's birthday today."
+	resistance_flags = FLAMMABLE
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/birthday_invite/proc/setup_card(birthday_name)
+	desc = "A card stating that its [birthday_name]'s birthday today."
+	icon_state = "paperslip_words"
+	icon = 'icons/obj/bureaucracy.dmi'
+
+/obj/item/clothing/head/costume/party
+	name = "party hat"
+	desc = "A crappy paper hat that you are REQUIRED to wear."
+	icon_state = "party_hat"
+	greyscale_config =  /datum/greyscale_config/party_hat
+	greyscale_config_worn = /datum/greyscale_config/party_hat_worn
+	flags_inv = 0
+	armor_type = /datum/armor/none
+	var/static/list/hat_colors = list(
+		COLOR_PRIDE_RED,
+		COLOR_PRIDE_ORANGE,
+		COLOR_PRIDE_YELLOW,
+		COLOR_PRIDE_GREEN,
+		COLOR_PRIDE_BLUE,
+		COLOR_PRIDE_PURPLE,
+	)
+
+/obj/item/clothing/head/costume/party/Initialize(mapload)
+	set_greyscale(colors = list(pick(hat_colors)))
+	return ..()
+
+/obj/item/clothing/head/costume/party/festive
+	name = "festive paper hat"
+	icon_state = "xmashat_grey"
+	greyscale_config = /datum/greyscale_config/festive_hat
+	greyscale_config_worn = /datum/greyscale_config/festive_hat_worn
