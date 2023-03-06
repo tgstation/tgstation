@@ -142,7 +142,7 @@
 		if(!projectil.is_hostile_projectile())
 			continue
 		usage += projectile_tick_speed_ecost * delta_time
-		usage += tracked[to_track] * projectile_damage_tick_ecost_coefficient * delta_time
+		usage += tracked[projectil] * projectile_damage_tick_ecost_coefficient * delta_time
 	energy = clamp(energy - usage, 0, maxenergy)
 	if(energy <= 0)
 		deactivate_field()
