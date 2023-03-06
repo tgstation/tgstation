@@ -99,11 +99,13 @@
 	COOLDOWN_DECLARE(next_trombone_allowed)
 
 /obj/item/melee/energy/sword/bananium/make_transformable()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		throw_speed_on = 4, \
 		attack_verb_continuous_on = list("slips"), \
 		attack_verb_simple_on = list("slip"), \
-		clumsy_check = FALSE)
+		clumsy_check = FALSE, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/melee/energy/sword/bananium/on_transform(obj/item/source, mob/user, active)
@@ -114,20 +116,20 @@
  * Adds or removes a slippery component, depending on whether the sword is active or not.
  */
 /obj/item/melee/energy/sword/bananium/proc/adjust_slipperiness()
-	if(blade_active)
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
 	else
 		qdel(GetComponent(/datum/component/slippery))
 
 /obj/item/melee/energy/sword/bananium/attack(mob/living/M, mob/living/user)
 	. = ..()
-	if(blade_active)
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 		slipper.Slip(src, M)
 
 /obj/item/melee/energy/sword/bananium/throw_impact(atom/hit_atom, throwingdatum)
 	. = ..()
-	if(blade_active)
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 		slipper.Slip(src, hit_atom)
 

@@ -82,12 +82,14 @@
 
 /obj/item/cautery/advanced/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = force, \
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
-		clumsy_check = FALSE)
+		clumsy_check = FALSE, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
@@ -316,14 +318,16 @@
 
 /obj/item/scalpel/advanced/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = force + 1, \
 		throwforce_on = throwforce, \
 		throw_speed_on = throw_speed, \
 		sharpness_on = sharpness, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
-		clumsy_check = FALSE)
+		clumsy_check = FALSE, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
@@ -363,12 +367,14 @@
 
 /obj/item/retractor/advanced/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = force, \
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
-		clumsy_check = FALSE)
+		clumsy_check = FALSE, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*

@@ -843,8 +843,6 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
-	/// Whether the saw is open or not
-	var/is_open = FALSE
 	/// List of factions we deal bonus damage to
 	var/list/nemesis_factions = list(FACTION_MINING, FACTION_BOSS)
 	/// Amount of damage we deal to the above factions
@@ -860,7 +858,8 @@
 
 /obj/item/melee/cleaving_saw/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		transform_cooldown_time = (CLICK_CD_MELEE * 0.25), \
 		force_on = open_force, \
 		throwforce_on = open_throwforce, \
@@ -868,17 +867,18 @@
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
 		attack_verb_continuous_on = list("cleaves", "swipes", "slashes", "chops"), \
-		attack_verb_simple_on = list("cleave", "swipe", "slash", "chop"))
+		attack_verb_simple_on = list("cleave", "swipe", "slash", "chop"), \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/melee/cleaving_saw/examine(mob/user)
 	. = ..()
-	. += span_notice("It is [is_open ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].")
+	. += span_notice("It is [HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].")
 	. += span_notice("Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.")
 	. += span_notice("Transforming it immediately after an attack causes the next attack to come out faster.")
 
 /obj/item/melee/cleaving_saw/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is [is_open ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is [HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	attack_self(user)
 	return BRUTELOSS
 
@@ -888,6 +888,7 @@
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
 
 /obj/item/melee/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
+	var/is_open = HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
 	if(!is_open || swiping || !target.density || get_turf(target) == get_turf(user))
 		if(!is_open)
 			faction_bonus_force = 0
@@ -938,11 +939,10 @@
 /obj/item/melee/cleaving_saw/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	is_open = active
 	user.changeNext_move(CLICK_CD_MELEE * 0.25)
-
-	balloon_alert(user, "[active ? "opened":"closed"] [src]")
-	playsound(user ? user : src, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (is_open * 30000))
+	if(user)
+		balloon_alert(user, "[active ? "opened":"closed"] [src]")
+	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (is_open * 30000))
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 //Legion: Staff of Storms

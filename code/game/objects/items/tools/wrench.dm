@@ -102,12 +102,14 @@
 
 /obj/item/wrench/combat/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = 6, \
 		throwforce_on = 8, \
 		hitsound_on = hitsound, \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
-		clumsy_check = FALSE)
+		clumsy_check = FALSE, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
@@ -118,13 +120,10 @@
 /obj/item/wrench/combat/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	if(active)
-		tool_behaviour = TOOL_WRENCH
-	else
-		tool_behaviour = initial(tool_behaviour)
-
-	balloon_alert(user, "[name] [active ? "active, woe!":"restrained"]")
-	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
+	tool_behaviour = active ? TOOL_WRENCH : initial(tool_behaviour)
+	if(user)
+		balloon_alert(user, "[name] [active ? "active, woe!":"restrained"]")
+	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/wrench/bolter
