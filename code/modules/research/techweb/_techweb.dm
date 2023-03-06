@@ -305,11 +305,12 @@
 	completed_experiments[completed_experiment.type] = completed_experiment
 
 	var/result_text = "[completed_experiment] has been completed"
-	var/refund = skipped_experiment_types[completed_experiment.type]
-	if(refund)
+	var/refund = skipped_experiment_types[completed_experiment.type] || 0
+	if(refund > 0)
 		add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = refund))
 		result_text += ", refunding [refund] points."
-		skipped_experiment_types[completed_experiment.type] = -1 // Nothing more to gain here
+		// Nothing more to gain here, but we keep it in the list to prevent double dipping
+		skipped_experiment_types[completed_experiment.type] = -1
 	else
 		result_text += "!"
 
