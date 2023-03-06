@@ -204,6 +204,7 @@
 	var/birthday_person_name = ""
 	///Variable that admins can override with a player's ckey in order to set them as the birthday person when the round starts.
 	var/birthday_override_ckey
+	force = TRUE
 
 /datum/station_trait/birthday/New()
 	. = ..()
@@ -273,11 +274,15 @@
 		/obj/item/storage/box/tail_pin = 1,
 	))
 	toy = new toy(spawned_mob)
-	spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_BACKPACK)
+	if(istype(toy, /obj/item/toy/balloon))
+		spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_HANDS) //Balloons do not fit inside of backpacks.
+	else
+		spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_BACKPACK)
 	if(birthday_person_name) //Anyone who joins after the annoucement gets one of these.
 		var/obj/item/birthday_invite/birthday_invite = new(spawned_mob)
 		birthday_invite.setup_card(birthday_person_name)
-		spawned_mob.equip_to_slot_or_del(birthday_invite, ITEM_SLOT_HANDS)
+		if(!spawned_mob.equip_to_slot_if_possible(birthday_invite, ITEM_SLOT_HANDS, disable_warning))
+			spawned_mob.equip_to_slot_or_del(birthday_invite, ITEM_SLOT_BACKPACK) //Just incase someone spawns with both hands full.
 
 /obj/item/birthday_invite
 	name = "birthday invitation"
