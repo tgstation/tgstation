@@ -515,19 +515,17 @@ GLOBAL_VAR_INIT(horse_stance_effects, FALSE) // ensures the horse stance gains i
 	ADD_TRAIT(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
 //Spells and Status Effects
 //Horse Stance Spell
-/*
-/obj/effect/proc_holder/spell/targeted/horse_stance/
+
+/datum/action/cooldown/spell/horse_stance
 	name = "Horse Stance"
 	desc = "Assumes a horse stance. Recovers health and stamina."
 	school = "transmutation"
-	charge_max = 1500 // 2 minutes 30 seconds
-	clothes_req = FALSE
+	cooldown_time = 150 SECONDS
+	spell_requirements = NONE
 	invocation = "none"
 	invocation_type = "none"
-	range = -1
-	include_user = 1
-	action_icon = 'icons/hud/actions.dmi'
-	action_icon_state = "horse_stance"
+	button_icon = 'icons/hud/actions.dmi'
+	button_icon_state = "horse_stance"
 
 //Horse Stance Status Effect
 /datum/status_effect/horse_stance
@@ -536,7 +534,8 @@ GLOBAL_VAR_INIT(horse_stance_effects, FALSE) // ensures the horse stance gains i
 	tick_interval = 10
 	alert_type = null
 
-/obj/effect/proc_holder/spell/targeted/horse_stance/cast(list/targets,mob/living/user = usr)
+/datum/action/cooldown/spell/horse_stance/cast(list/targets,mob/living/user = usr)
+	. = ..()
 	user.apply_status_effect(STATUS_EFFECT_HORSE_STANCE)
 
 /datum/status_effect/horse_stance/on_apply()
@@ -564,4 +563,4 @@ GLOBAL_VAR_INIT(horse_stance_effects, FALSE) // ensures the horse stance gains i
 
 /datum/status_effect/horse_stance/on_remove()
 	owner.visible_message("<span class='warning'>[owner] resumes a normal stance!</span>", "<span class='warning'>The Horse Stance ends...</span>")
-	playsound(owner, 'sound/weapons/armstrong_horse.ogg', 75, 1)*/
+	playsound(owner, 'sound/weapons/armstrong_horse.ogg', 75, 1)
