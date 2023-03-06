@@ -131,7 +131,7 @@
 		if(wrapping_paper.use(3))
 			user.visible_message(span_notice("[user] wraps the package in festive paper!"))
 			giftwrapped = TRUE
-			greyscale_config = text2path("/datum/greyscale_config/[icon_state]")
+			greyscale_config = text2path("/datum/greyscale_config/gift[icon_state]")
 			set_greyscale(colors = wrapping_paper.greyscale_colors)
 			update_appearance()
 		else
