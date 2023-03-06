@@ -199,7 +199,7 @@
 /obj/item/book/codex_gigas/Initialize(mapload)
 	. = ..()
 	var/turf/current_turf = get_turf(src)
-	new /obj/item/kindred(current_turf)
+	new /obj/item/book/kindred(current_turf)
 
 /obj/item/book/kindred
 	name = "\improper Archive of the Kindred"
