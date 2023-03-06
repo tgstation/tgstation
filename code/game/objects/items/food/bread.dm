@@ -23,7 +23,8 @@
 		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 		AddElement(/datum/element/processable, TOOL_SAW, slice_type, yield, 4 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
-/obj/item/food/breadslice //If you'll try to spawn it will occure in error sprite. Shouldn't do this.
+// Abstract parent object for sliced bread items. Should not be made obtainable in game.
+/obj/item/food/breadslice
 	name = "breadslice?"
 	desc = "You shouldn't see this, call the coders."
 	icon = 'icons/obj/food/burgerbread.dmi'
