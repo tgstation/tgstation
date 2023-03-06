@@ -177,7 +177,7 @@
 
 /datum/world_topic/namecheck/Run(list/input)
 	log_admin("world/Topic Name Check: [input["sender"]] on [input["namecheck"]]")
-	message_admins("Name checking [input["namecheck"]] from [input["sender"]](World topic)")
+	message_admins("Name checking [input["namecheck"]] from [input["sender"]] (World topic)")
 
 	return keywords_lookup(input["namecheck"], 1)
 

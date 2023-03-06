@@ -22,29 +22,33 @@
 
 /// called by tgs
 /datum/tgs_chat_command/validated/Run(datum/tgs_chat_user/sender, params)
-	if (CONFIG_GET(flag/secure_chat_commands) && !CONFIG_GET(flag/admin_legacy_system) && SSdbcore.Connect())
-
-		var/discord_id = SSdiscord.get_discord_id_from_mention(sender.mention) || sender.id
-		if (!discord_id)
-			return "Error: Unknown error trying to get your discord id."
-
-		var/datum/admins/linked_admin
-		var/admin_ckey = ckey(SSdiscord.lookup_ckey(discord_id))
-
-		if (admin_ckey)
-			linked_admin = GLOB.admin_datums[admin_ckey] || GLOB.deadmins[admin_ckey]
-		else
-			return "Error: Could not find a linked ckey for your discord id."
-
-		if (linked_admin)
-			if (linked_admin.check_for_rights(required_rights))
-				return Validated_Run(sender, params)
-			else
-				return "Error: Your linked ckey (`[admin_ckey]`) does not have sufficient rights to do that. You require one of the following flags: `[rights2text(required_rights," ")]`"
-		else
-			return "Error: Your linked ckey (`[admin_ckey]`) was not found in the admin list. If this is a mistake you can try `reload_admins`"
-	else
+	if (!CONFIG_GET(flag/secure_chat_commands) || CONFIG_GET(flag/admin_legacy_system) || !SSdbcore.Connect())
 		return Validated_Run(sender, params)
+
+	var/discord_id = SSdiscord.get_discord_id_from_mention(sender.mention) || sender.id
+	if (!discord_id)
+		return "Error: Unknown error trying to get your discord id."
+
+	var/datum/admins/linked_admin
+	var/admin_ckey = ckey(SSdiscord.lookup_ckey(discord_id))
+
+	if (admin_ckey)
+		linked_admin = GLOB.admin_datums[admin_ckey] || GLOB.deadmins[admin_ckey]
+	else
+		return "Error: Could not find a linked ckey for your discord id."
+
+	if (!linked_admin)
+		return "Error: Your linked ckey (`[admin_ckey]`) was not found in the admin list. If this is a mistake you can try `reload_admins`"
+
+	if (!linked_admin.check_for_rights(required_rights))
+		return "Error: Your linked ckey (`[admin_ckey]`) does not have sufficient rights to do that. You require one of the following flags: `[rights2text(required_rights," ")]`"
+
+	return Validated_Run(sender, params)
+
+
+
+
+
 
 
 /// Called if the sender passes validation checks or if those checks are disabled.
