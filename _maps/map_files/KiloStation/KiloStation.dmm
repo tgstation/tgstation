@@ -26648,11 +26648,11 @@
 /obj/item/stack/package_wrap,
 /obj/item/stack/package_wrap,
 /obj/item/stack/package_wrap,
-/obj/item/stack/package_wrap/wrapping_paper{
+/obj/item/stack/wrapping_paper{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/stack/package_wrap/wrapping_paper{
+/obj/item/stack/wrapping_paper{
 	pixel_x = -4;
 	pixel_y = 4
 	},

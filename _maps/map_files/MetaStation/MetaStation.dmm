@@ -25514,8 +25514,8 @@
 /area/station/service/hydroponics)
 "jgQ" = (
 /obj/structure/table,
-/obj/item/stack/package_wrap/wrapping_paper,
-/obj/item/stack/package_wrap/wrapping_paper{
+/obj/item/stack/wrapping_paper,
+/obj/item/stack/wrapping_paper{
 	pixel_x = -3;
 	pixel_y = 5
 	},

@@ -1001,7 +1001,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "QS" = (
 /obj/structure/rack,
-/obj/item/stack/package_wrap/wrapping_paper,
+/obj/item/stack/wrapping_paper,
 /obj/item/stack/package_wrap,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron,

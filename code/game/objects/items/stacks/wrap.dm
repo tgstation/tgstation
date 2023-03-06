@@ -1,3 +1,64 @@
+
+
+/*
+ * Wrapping Paper
+ */
+
+/obj/item/stack/wrapping_paper
+	name = "wrapping paper"
+	desc = "Wrap packages with this festive paper to make gifts."
+	icon = 'icons/obj/stack_objects.dmi'
+	icon_state = "wrap_paper"
+	inhand_icon_state = "wrap_paper"
+	greyscale_config = /datum/greyscale_config/wrap_paper
+	item_flags = NOBLUDGEON
+	amount = 25
+	max_amount = 25
+	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/wrapping_paper
+	singular_name = "wrapping paper"
+
+/obj/item/stack/wrapping_paper/Initialize(mapload)
+	. = ..()
+	if(!greyscale_colors)
+		//Generate random valid colors for paper and ribbon
+		var/generated_base_color = "#" + random_color()
+		var/generated_ribbon_color = "#" + random_color()
+		var/temp_base_hsv = RGBtoHSV(generated_base_color)
+		var/temp_ribbon_hsv = RGBtoHSV(generated_ribbon_color)
+
+		//If colors are too dark, set to original colors
+		if(ReadHSV(temp_base_hsv)[3] < ReadHSV("7F7F7F")[3])
+			generated_base_color = "#00FF00"
+		if(ReadHSV(temp_ribbon_hsv)[3] < ReadHSV("7F7F7F")[3])
+			generated_ribbon_color = "#FF0000"
+
+		//Set layers to these colors, base then ribbon
+		set_greyscale(colors = list(generated_base_color, generated_ribbon_color))
+
+/obj/item/stack/wrapping_paper/AltClick(mob/user, modifiers)
+	var/new_base = input(user, "", "Select a base color", color) as color
+	var/new_ribbon = input(user, "", "Select a ribbon color", color) as color
+	if(!user.can_perform_action(src))
+		return
+	set_greyscale(colors = list(new_base, new_ribbon))
+	return TRUE
+
+//preset wrapping paper meant to fill the original color configuration
+/obj/item/stack/wrapping_paper/xmas
+	greyscale_colors = "#00FF00#FF0000"
+
+/obj/item/stack/wrapping_paper/use(used, transfer, check = TRUE)
+	var/turf/T = get_turf(src)
+	. = ..()
+	if(QDELETED(src) && !transfer)
+		new /obj/item/c_tube(T)
+
+/obj/item/stack/wrapping_paper/small
+	desc = "Wrap packages with this festive paper to make gifts. This roll looks a bit skimpy."
+	amount = 10
+	merge_type = /obj/item/stack/wrapping_paper/small
+
 /*
  * Package Wrap
  */
@@ -127,7 +188,7 @@
 /obj/item/stack/package_wrap/small
 	desc = "You can use this to wrap items in. This roll looks a bit skimpy."
 	w_class = WEIGHT_CLASS_SMALL
-	amount = 10
+	amount = 5
 	merge_type = /obj/item/stack/package_wrap/small
 
 /obj/item/c_tube
@@ -140,51 +201,3 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 5
-
-/*
- * Wrapping Paper
- */
-
-/obj/item/stack/package_wrap/wrapping_paper
-	name = "wrapping paper"
-	desc = "Wrap packages with this festive paper to make gifts."
-	icon_state = "wrap_paper"
-	inhand_icon_state = "wrap_paper"
-	greyscale_config = /datum/greyscale_config/wrap_paper
-	merge_type = /obj/item/stack/package_wrap/wrapping_paper
-	singular_name = "wrapping paper"
-
-/obj/item/stack/package_wrap/wrapping_paper/Initialize(mapload)
-	. = ..()
-	if(!greyscale_colors)
-		//Generate random valid colors for paper and ribbon
-		var/generated_base_color = "#" + random_color()
-		var/generated_ribbon_color = "#" + random_color()
-		var/temp_base_hsv = RGBtoHSV(generated_base_color)
-		var/temp_ribbon_hsv = RGBtoHSV(generated_ribbon_color)
-
-		//If colors are too dark, set to original colors
-		if(ReadHSV(temp_base_hsv)[3] < ReadHSV("7F7F7F")[3])
-			generated_base_color = "#00FF00"
-		if(ReadHSV(temp_ribbon_hsv)[3] < ReadHSV("7F7F7F")[3])
-			generated_ribbon_color = "#FF0000"
-
-		//Set layers to these colors, base then ribbon
-		set_greyscale(colors = list(generated_base_color, generated_ribbon_color))
-
-/obj/item/stack/package_wrap/wrapping_paper/AltClick(mob/user, modifiers)
-	var/new_base = input(user, "", "Select a base color", color) as color
-	var/new_ribbon = input(user, "", "Select a ribbon color", color) as color
-	if(!user.can_perform_action(src))
-		return
-	set_greyscale(colors = list(new_base, new_ribbon))
-	return TRUE
-
-//preset wrapping paper meant to fill the original color configuration
-/obj/item/stack/package_wrap/wrapping_paper/xmas
-	greyscale_colors = "#00FF00#FF0000"
-
-/obj/item/stack/package_wrap/wrapping_paper/small
-	desc = "Wrap packages with this festive paper to make gifts. This roll looks a bit skimpy."
-	amount = 10
-	merge_type = /obj/item/stack/wrapping_paper/small
