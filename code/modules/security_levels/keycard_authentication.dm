@@ -103,7 +103,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 					continue
 				COOLDOWN_START(src, access_grant_cooldown, ACCESS_GRANTING_COOLDOWN)
 				SEND_GLOBAL_SIGNAL(COMSIG_ON_DEPARTMENT_ACCESS, info["regions"])
-				balloon_alert(usr, "key access sent.")
+				balloon_alert(usr, "key access sent")
 				return
 
 /obj/machinery/keycard_auth/update_appearance(updates)
