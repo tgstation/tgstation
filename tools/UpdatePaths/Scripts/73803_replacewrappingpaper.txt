@@ -1,0 +1,5 @@
+#comment This moves wrapping paper from its own type, to a subtype of package wrap. https://github.com/tgstation/tgstation/pull/73803
+
+/obj/item/stack/wrapping_paper : /obj/item/stack/package_wrap/wrapping_paper{@OLD}
+/obj/item/stack/wrapping_paper/small : /obj/item/stack/package_wrap/wrapping_paper/small{@OLD}
+/obj/item/stack/wrapping_paper/xmas : /obj/item/stack/package_wrap/wrapping_paper/xmas{@OLD}

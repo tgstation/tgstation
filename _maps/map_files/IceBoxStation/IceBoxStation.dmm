@@ -10824,7 +10824,7 @@
 	},
 /obj/machinery/firealarm/directional/east,
 /obj/structure/table/reinforced,
-/obj/item/stack/wrapping_paper{
+/obj/item/stack/package_wrap/wrapping_paper{
 	pixel_x = 3;
 	pixel_y = 4
 	},
