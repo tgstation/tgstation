@@ -32,6 +32,10 @@
 			to_chat(owner, span_danger("We were hailed by a man in a green uniform, promising the safe return of our goods in exchange for a favor:"))
 			to_chat(owner, span_danger("There is a local station housing fugitives that the man is after, he wants them returned; dead or alive."))
 			to_chat(owner, span_danger("We will not be able to make ends meet without our cargo, so we must do as he says and capture them."))
+		if("bounty hunters")
+			to_chat(owner, span_danger("Time to clock in. I am a bounty hunter! We should be arriving at our mark's hideout shortly."))
+			to_chat(owner, span_danger("The briefing mentioned our destination was a research station. An unusual place for a target to try and lay low."))
+			to_chat(owner, span_danger("Our client promised us big bucks, and we intend to make good on our delivery. Let's hope this is an easy paycheck..."))
 
 	to_chat(owner, span_boldannounce("You are not an antagonist in that you may kill whomever you please, but you can do anything to ensure the capture of the fugitives, even if that means going through the station."))
 	owner.announce_objectives()
