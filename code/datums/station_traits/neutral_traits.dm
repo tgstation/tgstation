@@ -224,7 +224,7 @@
 		var/list/birthday_options = list()
 		for(var/mob/living/carbon/human/human in GLOB.human_list)
 			if(human.mind?.assigned_role.job_flags & JOB_CREW_MEMBER)
-				birthday_options.Add(human)
+				birthday_options += human
 		birthday_person = pick(birthday_options)
 		birthday_person_name = birthday_person?.real_name
 	addtimer(CALLBACK(src, PROC_REF(announce_birthday)), 10 SECONDS)
