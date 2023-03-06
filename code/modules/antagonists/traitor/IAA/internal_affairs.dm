@@ -10,6 +10,7 @@
 	job_rank = ROLE_INTERNAL_AFFAIRS
 	preview_outfit = /datum/outfit/internal_affair_agent
 	should_give_codewords = FALSE
+	progressive = FALSE
 
 	///List of all targets we have stolen thus far.
 	var/list/datum/mind/targets_stolen = list()
@@ -80,7 +81,6 @@
 	to_chat(owner.current, span_userdanger("Finally, watch your back. Your target has friends in high places, and intel suggests someone may have taken out a contract of their own to protect them."))
 	owner.announce_objectives()
 
-/// We handle this in the dynamic ruleset instead.
 /datum/antagonist/traitor/internal_affairs/forge_traitor_objectives()
 	forge_ending_objective()
 
@@ -169,7 +169,6 @@
 	for(var/datum/mind/internal_minds as anything in get_antag_minds(/datum/antagonist/traitor/internal_affairs))
 		var/mob/living/carbon/agents = internal_minds.current
 		if(istype(agents) && agents.stat == DEAD)
-			agents.makeUncloneable()
 			ADD_TRAIT(agents, TRAIT_DEFIB_BLACKLISTED, REF(src))
 			agents.med_hud_set_status()
 
@@ -196,11 +195,11 @@
 	r_hand = /obj/item/melee/energy/sword
 
 /datum/outfit/internal_affair_agent/post_equip(mob/living/carbon/human/owner, visualsOnly)
-	var/obj/item/melee/energy/sword/sword = locate() in owner.held_items
+	var/obj/item/melee/energy/sword/sword = locate() in H.held_items
 	sword.icon_state = "e_sword_on_blue"
 	sword.worn_icon_state = "e_sword_on_blue"
 
-	owner.update_inv_hands()
+	H.update_held_items()
 
 #undef EXTERNAL_CHANCE
 #undef ROLE_EXTERNAL_AFFAIRS
