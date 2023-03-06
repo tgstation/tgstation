@@ -389,7 +389,8 @@
 	SIGNAL_HANDLER
 	extended = active
 	if(user)
-		balloon_alert(user, "[extended ? "extended" : "retracted"]!")
+		balloon_alert(user, "[extended ? "extended" : "retracted"]")
+	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 	if(!extended)
 		tool_behaviour = initial(tool_behaviour)
