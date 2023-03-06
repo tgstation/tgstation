@@ -7,11 +7,11 @@
 		When in a Frenzy, you get extra stun resistance, slowly gain brute damage, move faster, become mute/deaf,\n\
 		and become unable to use complicated machinery as your screen goes blood-red."
 	bloodcost = 2
-	conscious_constant_bloodcost = TRUE
 	cooldown = 100
 	amToggle = TRUE
 	cooldown_static = TRUE
-	can_use_w_stake = TRUE
+	power_flags = BP_AM_TOGGLE|BP_AM_STATIC_COOLDOWN
+	check_flags = NONE
 
 /datum/action/bloodsucker/brujah/ActivatePower(mob/living/user = owner)
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(/datum/antagonist/bloodsucker)
