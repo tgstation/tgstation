@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixed a Space Dragon related hard delete."
+  - bugfix: "Mindswapped space dragons will break less."
