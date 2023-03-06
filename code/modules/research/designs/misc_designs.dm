@@ -979,3 +979,75 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/radio_cargo
+	name = "Cargo Station Bounced Radio"
+	id = "radio_cargo"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
+	build_path = /obj/item/radio/cargo
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_TELECOMMS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/radio_engineering
+	name = "Engineering Station Bounced Radio"
+	id = "radio_engineering"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
+	build_path = /obj/item/radio/engineering
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_TELECOMMS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/radio_medical
+	name = "Medical Station Bounced Radio"
+	id = "radio_medical"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
+	build_path = /obj/item/radio/medical
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_TELECOMMS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/radio_science
+	name = "Science Station Bounced Radio"
+	id = "radio_science"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
+	build_path = /obj/item/radio/science
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_TELECOMMS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/radio_security
+	name = "Security Station Bounced Radio"
+	id = "radio_security"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
+	build_path = /obj/item/radio/security
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_TELECOMMS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/radio_service
+	name = "Service Station Bounced Radio"
+	id = "radio_service"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
+	build_path = /obj/item/radio/service
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_TELECOMMS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
