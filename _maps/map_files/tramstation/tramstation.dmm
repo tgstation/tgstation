@@ -16731,6 +16731,7 @@
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit)
 "efT" = (
@@ -33066,6 +33067,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/radio/intercom/directional/north,
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "kye" = (
@@ -37645,6 +37647,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
+"mdt" = (
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/cake_ingredients,
+/turf/open/floor/iron/white,
+/area/station/service/kitchen)
 "mdx" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
@@ -53778,12 +53785,6 @@
 	dir = 4
 	},
 /area/station/service/theater)
-"siX" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 5
-	},
-/turf/open/space/basic,
-/area/space)
 "sjc" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -66640,10 +66641,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
-"wTS" = (
-/obj/structure/sign/calendar/directional/south,
-/turf/open/space/openspace,
-/area/space)
 "wUv" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -129707,7 +129704,7 @@ vXM
 vXM
 vXM
 vXM
-siX
+vXM
 vXM
 vXM
 vXM
@@ -138436,7 +138433,7 @@ jhd
 jhd
 jhd
 jhd
-wTS
+jhd
 jhd
 jhd
 jhd
@@ -167125,7 +167122,7 @@ eSx
 qfs
 tJg
 vuD
-mdp
+mdt
 qTs
 guL
 omc

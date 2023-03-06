@@ -206,7 +206,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/centcom/tdome/observation)
 "bi" = (
@@ -658,7 +657,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/centcom/tdome/observation)
 "el" = (
@@ -4142,7 +4140,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/centcom/central_command_areas/control)
 "tN" = (
@@ -4940,7 +4937,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/centcom/central_command_areas/control)
 "xo" = (
@@ -6148,7 +6144,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/centcom/tdome/observation)
 "DF" = (
@@ -7414,7 +7409,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/centcom/tdome/observation)
 "Nn" = (
@@ -8211,7 +8205,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/centcom/tdome/observation)
 "Rj" = (
