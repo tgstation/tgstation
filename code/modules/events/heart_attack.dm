@@ -8,7 +8,7 @@
 	description = "A random crewmember's heart gives out."
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
-	admin_setup = list(/datum/event_admin_setup/candidate_check/heart_attack, /datum/event_admin_setup/input_number/heart_attack)
+	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/heart_attack, /datum/event_admin_setup/input_number/heart_attack)
 	///Candidates for recieving a healthy dose of heart disease
 	var/list/heart_attack_candidates = list()
 
@@ -81,10 +81,10 @@
 		return TRUE
 	return FALSE
 
-/datum/event_admin_setup/candidate_check/heart_attack
+/datum/event_admin_setup/minimum_candidate_requirement/heart_attack
 	output_text = "There are no candidates eligible to recieve a heart attack!"
 
-/datum/event_admin_setup/candidate_check/heart_attack/candidate_check()
+/datum/event_admin_setup/minimum_candidate_requirement/heart_attack/count_candidates()
 	var/datum/round_event_control/heart_attack/heart_control = event_control
 	heart_control.generate_candidates() //can_spawn_event() is bypassed by admin_setup, so this makes sure that the candidates are still generated
 	return length(heart_control.heart_attack_candidates)

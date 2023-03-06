@@ -121,25 +121,25 @@
 		return ADMIN_CANCEL_EVENT
 
 ///For events that mandate a set number of candidates to function
-/datum/event_admin_setup/candidate_check
+/datum/event_admin_setup/minimum_candidate_requirement
 	///Text shown when there are not enough candidates
 	var/output_text = "There are no candidates eligible to..."
 	///Minimum number of candidates for the event to function
 	var/min_candidates = 1
 
-/datum/event_admin_setup/candidate_check/prompt_admins()
-	var/candidate_count = candidate_check()
+/datum/event_admin_setup/minimum_candidate_requirement/prompt_admins()
+	var/candidate_count = count_candidates()
 	if(candidate_count < min_candidates)
 		tgui_alert(usr, output_text, "Error")
 		return ADMIN_CANCEL_EVENT
 	tgui_alert(usr, "[candidate_count] candidates found!", event_control.name)
 
 /// Checks for candidates. Should return the total number of candidates
-/datum/event_admin_setup/candidate_check/proc/candidate_check()
+/datum/event_admin_setup/minimum_candidate_requirement/proc/count_candidates()
 	SHOULD_CALL_PARENT(FALSE)
-	CRASH("Unimplemented candidate_check() on [event_control]'s admin setup.")
+	CRASH("Unimplemented count_candidates() on [event_control]'s admin setup.")
 
-/datum/event_admin_setup/candidate_check/apply_to_event(datum/round_event/event)
+/datum/event_admin_setup/minimum_candidate_requirement/apply_to_event(datum/round_event/event)
 	return
 
 ///For events that require a true/false question

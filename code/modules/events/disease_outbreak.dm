@@ -29,7 +29,7 @@
 	description = "A 'classic' virus will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
-	admin_setup = list(/datum/event_admin_setup/candidate_check/disease_outbreak, /datum/event_admin_setup/listed_options/disease_outbreak)
+	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak, /datum/event_admin_setup/listed_options/disease_outbreak)
 	///Disease recipient candidates
 	var/list/disease_candidates = list()
 
@@ -60,10 +60,10 @@
 		disease_candidates += candidate
 
 ///Handles checking and alerting admins about the number of valid candidates
-/datum/event_admin_setup/candidate_check/disease_outbreak
+/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak
 	output_text = "There are no candidates eligible to recieve a disease!"
 
-/datum/event_admin_setup/candidate_check/disease_outbreak/candidate_check()
+/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak/count_candidates()
 	var/datum/round_event_control/disease_outbreak/disease_control = event_control
 	disease_control.generate_candidates() //can_spawn_event() is bypassed by admin_setup, so this makes sure that the candidates are still generated
 	return length(disease_control.disease_candidates)
@@ -142,7 +142,7 @@
 	description = "An 'advanced' disease will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
-	admin_setup = list(/datum/event_admin_setup/candidate_check/disease_outbreak, /datum/event_admin_setup/listed_options/disease_outbreak_advanced, /datum/event_admin_setup/input_number/disease_outbreak_advanced)
+	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak, /datum/event_admin_setup/listed_options/disease_outbreak_advanced, /datum/event_admin_setup/input_number/disease_outbreak_advanced)
 
 /**
  * Admin virus customization
