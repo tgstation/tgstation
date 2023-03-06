@@ -463,10 +463,8 @@ GLOBAL_VAR_INIT(horse_stance_effects, FALSE) // ensures the horse stance gains i
 		if(8)
 			to_chat(owner, "<span class = 'notice'>You remember the Horse Stance. Use it to quickly recover health and stamina</span>")
 			owner.playsound_local(get_turf(owner), 'sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
-			/*
-			var/datum/action/cooldown/spell/shapeshift/bat/batform = new /obj/effect/proc_holder/spell/targeted/horse_stance
-			batform.Grant(owner)
-			*/
+			var/datum/action/cooldown/spell/horse_stance/horse_stance = new /datum/action/cooldown/spell/horse_stance
+			horse_stance.Grant(owner)
 		if(10)
 			to_chat(owner, "<span class = 'notice'>You have mastered basic combos. Your attacks are more swift.</span>")
 			to_chat(owner, "<span class = 'notice'>You have also unlocked Cannonball. To use: Disarm Disarm Grab.</span>")
