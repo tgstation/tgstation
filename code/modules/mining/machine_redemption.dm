@@ -256,7 +256,8 @@
 		else if(issilicon(user))
 			var/mob/living/silicon/silicon_player = user
 			data["user"] = list(
-				"name" = silicon_player.name
+				"name" = silicon_player.name,
+				"cash" = "No valid account",
 			)
 	return data
 
