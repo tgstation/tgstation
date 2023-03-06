@@ -448,7 +448,6 @@
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "hook_projectile"
 	damage = 0
-	nodamage = TRUE
 	range = 5
 	suppressed =  SUPPRESSED_VERY
 	can_hit_turfs = TRUE
@@ -530,4 +529,3 @@
 
 	var/lefthand_n_px = 13
 	var/lefthand_n_py = 15
-

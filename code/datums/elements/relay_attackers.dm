@@ -48,7 +48,7 @@
 
 /datum/element/relay_attackers/proc/on_bullet_act(atom/target, obj/projectile/hit_projectile)
 	SIGNAL_HANDLER
-	if(hit_projectile.nodamage)
+	if(!hit_projectile.is_hostile_projectile())
 		return
 	if(!ismob(hit_projectile.firer))
 		return

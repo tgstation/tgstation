@@ -81,7 +81,7 @@
 /datum/component/combustible_flooder/proc/projectile_react(datum/source, obj/projectile/shot)
 	SIGNAL_HANDLER
 
-	if(shot.damage_type == BURN && !shot.nodamage)
+	if(shot.damage_type == BURN && shot.damage > 0)
 		flood(shot.firer, 2500)
 
 /// Welder check. Here because tool_act is higher priority than attackby.

@@ -536,8 +536,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	speed = 1.6
 	damage_type = BRUTE
-	damage = 0
-	nodamage = TRUE // love can't actually hurt you
+	damage = 0 // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
@@ -546,7 +545,7 @@
 	return ..()
 
 /obj/projectile/kiss/Impact(atom/A)
-	if(!nodamage || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
+	if(damage > 0 || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
 		return ..()
 
 	harmless_on_hit(A)
@@ -608,8 +607,7 @@
 
 /obj/projectile/kiss/death
 	name = "kiss of death"
-	nodamage = FALSE // okay i kinda lied about love not being able to hurt you
-	damage = 35
+	damage = 35 // okay i kinda lied about love not being able to hurt you
 	wound_bonus = 0
 	sharpness = SHARP_POINTY
 	color = COLOR_BLACK

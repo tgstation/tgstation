@@ -488,7 +488,7 @@
 
 /obj/projectile/beam/beam_rifle/proc/handle_hit(atom/target, piercing_hit = FALSE)
 	set waitfor = FALSE
-	if(nodamage)
+	if(damage <= 0)
 		return FALSE
 	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
 	if(!do_pierce)
@@ -527,7 +527,6 @@
 	name = "aiming beam"
 	hitsound = null
 	hitsound_wall = null
-	nodamage = TRUE
 	damage = 0
 	constant_tracer = TRUE
 	hitscan_light_range = 0

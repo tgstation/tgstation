@@ -138,9 +138,8 @@
 
 /obj/item/borg/projectile_dampen/proc/process_usage(delta_time)
 	var/usage = 0
-	for(var/to_track in tracked)
-		var/obj/projectile/projectil = to_track
-		if(!projectil.stun && projectil.nodamage) //No damage
+	for(var/obj/projectile/projectil as anything in tracked)
+		if(!projectil.is_hostile_projectile())
 			continue
 		usage += projectile_tick_speed_ecost * delta_time
 		usage += tracked[to_track] * projectile_damage_tick_ecost_coefficient * delta_time

@@ -3,7 +3,6 @@
 	icon_state = "energy"
 	damage = 0
 	damage_type = TOX
-	nodamage = TRUE
 	armor_flag = ENERGY
 
 /obj/projectile/energy/floramut/on_hit(atom/target, blocked = FALSE)
@@ -33,7 +32,6 @@
 	icon_state = "energy2"
 	damage = 0
 	damage_type = TOX
-	nodamage = TRUE
 	armor_flag = ENERGY
 
 /obj/projectile/energy/florayield/on_hit(atom/target, blocked = FALSE)
@@ -48,7 +46,6 @@
 	icon_state = "energy3"
 	damage = 0
 	damage_type = TOX
-	nodamage = TRUE
 	armor_flag = ENERGY
 
 /obj/projectile/energy/florarevolution/on_hit(atom/target, blocked = FALSE)

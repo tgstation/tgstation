@@ -189,7 +189,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/bullet_act(obj/projectile/P)
 	. = ..()
-	if(P.nodamage)
+	if(P.damage > 0 && P.damage_type == BRUTE)
 		Bruise()
 
 /mob/living/simple_animal/hostile/mushroom/harvest()

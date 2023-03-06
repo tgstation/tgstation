@@ -63,7 +63,6 @@
 /obj/projectile/beam/practice
 	name = "practice laser"
 	damage = 0
-	nodamage = TRUE
 
 /obj/projectile/beam/scatter
 	name = "laser pellet"

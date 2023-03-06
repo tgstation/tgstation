@@ -57,7 +57,7 @@
 				qdel(src)
 
 /obj/item/latexballon/bullet_act(obj/projectile/P)
-	if(!P.nodamage)
+	if(P.damage > 0)
 		burst()
 	return ..()
 

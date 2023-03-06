@@ -115,7 +115,6 @@
 	icon_state = "tether_projectile"
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	damage = 0
-	nodamage = TRUE
 	range = 10
 	hitsound = 'sound/weapons/batonextend.ogg'
 	hitsound_wall = 'sound/weapons/batonextend.ogg'
