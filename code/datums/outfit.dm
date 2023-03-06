@@ -114,6 +114,9 @@
 	  */
 	var/list/skillchips = null
 
+	/// Should the toggle helmet proc be called on the helmet during equip
+	var/toggle_helmet = TRUE
+
 	///Should we preload some of this job's items?
 	var/preload = FALSE
 
@@ -249,7 +252,7 @@
 				var/obj/item/tank/internals/internals = H.is_holding_item_of_type(/obj/item/tank/internals)
 				if(internals)
 					H.open_internals(internals)
-			else 
+			else
 				H.open_internals(H.get_item_by_slot(internals_slot))
 		if(implants)
 			for(var/implant_type in implants)
@@ -270,6 +273,9 @@
 				if(activate_msg)
 					CRASH("Failed to activate [H]'s [skillchip_instance], on job [src]. Failure message: [activate_msg]")
 
+	if(!H.head && toggle_helmet && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))
+		var/obj/item/clothing/suit/space/hardsuit/HS = H.wear_suit
+		HS.ToggleHelmet()
 
 	H.update_body()
 	return TRUE
@@ -373,6 +379,7 @@
 	.["name"] = name
 	.["uniform"] = uniform
 	.["suit"] = suit
+	.["toggle_helmet"] = toggle_helmet
 	.["back"] = back
 	.["belt"] = belt
 	.["gloves"] = gloves
@@ -400,6 +407,7 @@
 	name = target.name
 	uniform = target.uniform
 	suit = target.suit
+	toggle_helmet = target.toggle_helmet
 	back = target.back
 	belt = target.belt
 	gloves = target.gloves
@@ -438,6 +446,7 @@
 	name = outfit_data["name"]
 	uniform = text2path(outfit_data["uniform"])
 	suit = text2path(outfit_data["suit"])
+	toggle_helmet = outfit_data["toggle_helmet"]
 	back = text2path(outfit_data["back"])
 	belt = text2path(outfit_data["belt"])
 	gloves = text2path(outfit_data["gloves"])
