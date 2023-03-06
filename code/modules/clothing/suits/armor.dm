@@ -34,7 +34,7 @@
 	icon_state = "armoralt"
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
-	dog_fashion = /datum/dog_fashion/back
+	dog_fashion = /datum/dog_fashion/back/armorvest
 
 /obj/item/clothing/suit/armor/vest/alt
 	desc = "A Type I armored vest that provides decent protection against most types of damage."
@@ -100,6 +100,7 @@
 	desc = "A lighter plate armor used to still keep out those pesky arrows, while retaining the ability to move."
 	icon_state = "cuirass"
 	inhand_icon_state = "armor"
+	dog_fashion = null
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
@@ -453,6 +454,7 @@
 	max_integrity = 200
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/vest_durathread
+	dog_fashion = null
 
 /datum/armor/vest_durathread
 	melee = 20
@@ -469,6 +471,7 @@
 	icon_state = "rus_armor"
 	inhand_icon_state = null
 	armor_type = /datum/armor/vest_russian
+	dog_fashion = null
 
 /datum/armor/vest_russian
 	melee = 25
@@ -488,6 +491,7 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/vest_russian_coat
+	dog_fashion = null
 
 /datum/armor/vest_russian_coat
 	melee = 25
@@ -556,3 +560,4 @@
 	icon_state = "hop_coat"
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
+	dog_fashion = null
