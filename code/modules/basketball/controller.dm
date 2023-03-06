@@ -257,6 +257,7 @@ GLOBAL_VAR(basketball_game)
 			QDEL_NULL(competitor)
 
 	map_deleter.generate() //remove the map, it will be loaded at the start of the next one
+	QDEL_NULL(current_map)
 
 	//map gen does not deal with landmarks
 	QDEL_LIST(home_team_landmarks)
