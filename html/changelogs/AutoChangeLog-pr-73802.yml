@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Luminsecent slime actions correctly update their appearance when integrating or ejecting slime cores"
