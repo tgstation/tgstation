@@ -135,6 +135,9 @@
 ///File to the malf flavor
 #define MALFUNCTION_FLAVOR_FILE "antagonist_flavor/malfunction_flavor.json"
 
+///File to the IAA flavor
+#define IAA_FLAVOR_FILE "antagonist_flavor/internalaffair_flavor.json"
+
 /// JSON string file for all of our heretic influence flavors
 #define HERETIC_INFLUENCE_FILE "antagonist_flavor/heretic_influences.json"
 
@@ -155,7 +158,6 @@ GLOBAL_LIST_INIT(nanotrasen_employers, list(
 	"Champions of Evil",
 	"Corporate Climber",
 	"Gone Postal",
-	"Internal Affairs Agent",
 	"Legal Trouble",
 ))
 
@@ -175,7 +177,6 @@ GLOBAL_LIST_INIT(normal_employers, list(
 	"Cybersun Industries",
 	"Donk Corporation",
 	"Gorlex Marauders",
-	"Internal Affairs Agent",
 	"Legal Trouble",
 	"MI13",
 	"Waffle Corporation",
