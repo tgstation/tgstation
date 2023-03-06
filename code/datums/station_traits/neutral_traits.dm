@@ -201,7 +201,7 @@
 	///Variable that stores a reference to the person selected to have their birthday celebrated.
 	var/mob/living/carbon/human/birthday_person
 	///Variable that holds the real name of the birthday person once selected, just incase the birthday person's real_name changes.
-	var/birthday_person_name
+	var/birthday_person_name = ""
 	///Variable that admins can override with a player's ckey in order to set them as the birthday person when the round starts.
 	var/birthday_override_ckey
 
@@ -225,8 +225,9 @@
 		for(var/mob/living/carbon/human/human in GLOB.human_list)
 			if(human.mind?.assigned_role.job_flags & JOB_CREW_MEMBER)
 				birthday_options += human
-		birthday_person = pick(birthday_options)
-		birthday_person_name = birthday_person?.real_name
+		if(length(birthday_options))
+			birthday_person = pick(birthday_options)
+			birthday_person_name = birthday_person.real_name
 	addtimer(CALLBACK(src, PROC_REF(announce_birthday)), 10 SECONDS)
 
 /datum/station_trait/birthday/proc/check_valid_override()
@@ -238,6 +239,7 @@
 
 	if(birthday_override_mob.mind?.assigned_role.job_flags & JOB_CREW_MEMBER)
 		birthday_person = birthday_override_mob
+		birthday_person_name = birthday_person.real_name
 		return TRUE
 	else
 		return FALSE
@@ -249,6 +251,7 @@
 	if(birthday_person)
 		playsound(birthday_person, 'sound/items/party_horn.ogg', 50)
 		birthday_person.add_mood_event("birthday", /datum/mood_event/birthday)
+		birthday_person = null
 
 /datum/station_trait/birthday/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned_mob)
 	SIGNAL_HANDLER
@@ -271,7 +274,7 @@
 	))
 	toy = new toy(spawned_mob)
 	spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_BACKPACK)
-	if(birthday_person) //Anyone who joins after the annoucement gets one of these.
+	if(birthday_person_name) //Anyone who joins after the annoucement gets one of these.
 		var/obj/item/birthday_invite/birthday_invite = new(spawned_mob)
 		birthday_invite.setup_card(birthday_person_name)
 		spawned_mob.equip_to_slot_or_del(birthday_invite, ITEM_SLOT_HANDS)
