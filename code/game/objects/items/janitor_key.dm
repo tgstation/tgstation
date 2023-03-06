@@ -27,7 +27,7 @@
 
 /obj/item/access_key/examine_more(mob/user)
 	. = ..()
-	. += span_notice("Access is given to the key through a Keycard Authentication Device.")
+	. += span_notice("Access can be granted through a Keycard Authentication Device.")
 	. += span_notice("This access is limited to one department at a time.")
 
 /**
