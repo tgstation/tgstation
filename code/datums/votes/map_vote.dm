@@ -81,10 +81,10 @@
 
 	for(var/map in choices)
 		var/datum/map_config/possible_config = config.maplist[map]
-		if(possible_config.config_min_users > 0 && active_players < possible_config.config_min_users)
+		if(possible_config.config_min_users > 0 && filter_threshold < possible_config.config_min_users)
 			choices -= map
 
-		else if(possible_config.config_max_users > 0 && active_players > possible_config.config_max_users)
+		else if(possible_config.config_max_users > 0 && filter_threshold > possible_config.config_max_users)
 			choices -= map
 
 	return choices
