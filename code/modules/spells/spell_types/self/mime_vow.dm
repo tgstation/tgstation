@@ -13,6 +13,8 @@
 
 	spell_max_level = 1
 
+	var/popup = FALSE // is the confirmation window open?
+
 /datum/action/cooldown/spell/vow_of_silence/Grant(mob/living/grant_to)
 	. = ..()
 	ADD_TRAIT(grant_to, TRAIT_MIMING, "[type]")
@@ -24,6 +26,13 @@
 
 /datum/action/cooldown/spell/vow_of_silence/cast(mob/living/carbon/human/cast_on)
 	. = ..()
+	if(popup)
+		return FALSE
+	popup = TRUE
+	var/response = tgui_alert(cast_on, "Are you sure you want to break your vow of silence? This will remove your mime abilities!", "Break Vow of Silence Confirmation", list("Yes", "No"))
+	popup = FALSE
+	if(response != "Yes")
+		return FALSE
 	var/datum/action/cooldown/spell/vow_of_silence/vow = locate() in cast_on.actions
 	vow.Remove(cast_on)
 	to_chat(cast_on, span_notice("You break your vow of silence."))
