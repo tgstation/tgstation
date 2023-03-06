@@ -29,7 +29,7 @@
 	if(popup)
 		return FALSE
 	popup = TRUE
-	var/response = tgui_alert(cast_on, "Are you sure you want to break your vow of silence? This will remove your mime abilities!", "Break Vow of Silence Confirmation", list("Yes", "No"))
+	var/response = tgui_alert(cast_on, "Are you sure you want to break your vow of silence? This will disable your mimery abilities!", "Break Vow of Silence Confirmation", list("Yes", "No"))
 	popup = FALSE
 	if(response != "Yes")
 		return FALSE
