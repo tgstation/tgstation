@@ -246,9 +246,9 @@
 	// Are we a Bloodsucker | Are we on Masquerade. If one is true, they will fail.
 	if(IS_BLOODSUCKER(target) && !HAS_TRAIT(target, TRAIT_MASQUERADE))
 		if(bloodsuckerdatum.broke_masquerade)
-			to_chat(user, span_warning("[target], also known as '[bloodsuckerdatum.return_full_name()]', is indeed a Bloodsucker, but you already knew this."))
+			to_chat(user, span_warning("[target], also known as '[bloodsuckerdatum.ReturnFullName()]', is indeed a Bloodsucker, but you already knew this."))
 			return
-		to_chat(user, span_warning("[target], also known as '[bloodsuckerdatum.return_full_name()]', [bloodsuckerdatum.my_clan ? "is part of the [bloodsuckerdatum.my_clan]!" : "is not part of a clan."] You quickly note this information down, memorizing it."))
+		to_chat(user, span_warning("[target], also known as '[bloodsuckerdatum.ReturnFullName()]', [bloodsuckerdatum.my_clan ? "is part of the [bloodsuckerdatum.my_clan]!" : "is not part of a clan."] You quickly note this information down, memorizing it."))
 		bloodsuckerdatum.break_masquerade()
 	else
 		to_chat(user, span_notice("You fail to draw any conclusions to [target] being a Bloodsucker."))
@@ -276,52 +276,52 @@
 	var/data = list()
 
 	var/clan_data = list()
-	clan_data["clan_name"] = initial(CLAN_BRUJAH)
-	clan_data["clan_desc"] = initial("This Clan has proven to be the strongest in melee combat, boasting a <b>powerful punch</b>.<br> \
+	clan_data["clan_name"] = CLAN_BRUJAH
+	clan_data["clan_desc"] = "This Clan has proven to be the strongest in melee combat, boasting a <b>powerful punch</b>.<br> \
 		They also appear to be more calm than the others, entering their 'frenzies' whenever they want, but <i>dont seem affected</i>.<br> \
 		Be wary, as they are fearsome warriors, rebels and anarchists, with an inclination towards Frenzy.<br> \
 		<b>Favorite Vassal</b>: Their favorite Vassal gains the Brawn ability. \
 		<b>Strength</b>: Frenzy will not kill them, punches deal a lot of damage.<br> \
-		<b>Weakness</b>: They have to spend Blood on powers while in Frenzy too.")
+		<b>Weakness</b>: They have to spend Blood on powers while in Frenzy too."
 	data["clans"] += list(clan_data)
 
-	clan_data["clan_name"] = initial(CLAN_TREMERE)
-	clan_data["clan_desc"] = initial("This Clan seems to hate entering the <i>Chapel</i>.<br> \
+	clan_data["clan_name"] = CLAN_TREMERE
+	clan_data["clan_desc"] = "This Clan seems to hate entering the <i>Chapel</i>.<br> \
 		They are a secluded Clan, they are Vampires who've mastered the power of blood, and seek knowledge.<br> \
 		They appear to be focused more on their Blood Magic than their other Powers, getting stronger faster the more Vassals they have.<br> \
 		They have 3 different paths they can take, from reviving people as Vassals, to stealing blood with beams made of the same essence.<br> \
 		<b>Favorite Vassal</b>: Their Favorite Vassal gains the ability to shift into a Bat at will. \
 		<b>Strength</b>: 3 different Powers that get stupidly strong overtime.<br> \
-		<b>Weakness</b>: Cannot get regular Powers, with no way to get stun resistance outside of Frenzy.")
+		<b>Weakness</b>: Cannot get regular Powers, with no way to get stun resistance outside of Frenzy."
 	data["clans"] += list(clan_data)
 
-	clan_data["clan_name"] = initial(CLAN_NOSFERATU)
-	clan_data["clan_desc"] = initial("This Clan has been the most obvious to find information about.<br> \
+	clan_data["clan_name"] = CLAN_NOSFERATU
+	clan_data["clan_desc"] = "This Clan has been the most obvious to find information about.<br> \
 		They are <i>disfigured, ghoul-like</i> vampires upon embrace by their Sire, scouts that travel through desolate paths to avoid violating the Masquerade.<br> \
 		They make <i>no attempts</i> at hiding themselves within the crew, and have a terrible taste for <i>heavy items</i>.<br> \
 		They also seem to manage to fit themsleves into small spaces such as <i>vents</i>.<br> \
 		<b>Favorite Vassal</b>: Their Favorite Vassal gains the ability to ventcrawl while naked and becomes disfigured. \
 		<b>Strength</b>: Ventcrawl.<br> \
-		<b>Weakness</b>: Can't disguise themselves, permanently pale, can easily be discovered by their DNA or Blood Level.")
+		<b>Weakness</b>: Can't disguise themselves, permanently pale, can easily be discovered by their DNA or Blood Level."
 	data["clans"] += list(clan_data)
 
-	clan_data["clan_name"] = initial(CLAN_VENTRUE)
-	clan_data["clan_desc"] = initial("This Clan seems to <i>despise</i> drinking from non sentient organics.<br> \
+	clan_data["clan_name"] = CLAN_VENTRUE
+	clan_data["clan_desc"] = "This Clan seems to <i>despise</i> drinking from non sentient organics.<br> \
 		They are Masters of manipulation, Greedy and entitled. Authority figures between the kindred society.<br> \
 		They seem to take their Vassal's lives <i>very seriously</i>, going as far as to give Vassals some of their own Blood.<br> \
 		Compared to other types, this one <i>relies</i> on their Vassals, rather than fighting for themselves.<br> \
 		<b>Favorite Vassal</b>: Their Favorite Vassal will slowly be turned into a Bloodsucker overtime. \
 		<b>Strength</b>: Slowly turns a Vassal into a Bloodsucker.<br> \
-		<b>Weakness</b>: Does not gain more abilities overtime, it is best to target the Bloodsucker over the Vassal.")
+		<b>Weakness</b>: Does not gain more abilities overtime, it is best to target the Bloodsucker over the Vassal."
 	data["clans"] += list(clan_data)
 
-	clan_data["clan_name"] = initial(CLAN_MALKAVIAN)
-	clan_data["clan_desc"] = initial("There is barely any information known about this Clan.<br> \
+	clan_data["clan_name"] = CLAN_MALKAVIAN
+	clan_data["clan_desc"] = "There is barely any information known about this Clan.<br> \
 		Members of this Clan seems to <i>mumble things to themselves</i>, unaware of their surroundings.<br> \
 		They also seem to enter and dissapear into areas randomly, <i>as if not even they know where they are</i>.<br> \
 		<b>Favorite Vassal</b>: Unknown. \
 		<b>Strength</b>: Unknown.<br> \
-		<b>Weakness</b>: Unknown.")
+		<b>Weakness</b>: Unknown."
 	data["clans"] += list(clan_data)
 
 	return data
