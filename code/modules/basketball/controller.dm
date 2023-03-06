@@ -188,9 +188,6 @@ GLOBAL_VAR(basketball_game)
 		// this is basketball, not a boxing match
 		ADD_TRAIT(baller, TRAIT_PACIFISM, BASKETBALL_MINIGAME_TRAIT)
 
-		if(!team_uniform)
-			team_uniform = prob(50) ? /datum/outfit/basketball/blue : /datum/outfit/basketball/red
-
 		baller.equipOutfit(team_uniform)
 
 		var/client/player_client = GLOB.directory[player_key]

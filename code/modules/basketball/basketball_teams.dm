@@ -47,17 +47,12 @@
 	gloves = /obj/item/clothing/gloves/latex
 	head = /obj/item/clothing/head/soft/black
 
-/datum/outfit/basketball/blue
-	name = "Basketball Blue Team"
+/datum/outfit/basketball/nanotrasen
+	name = "Basketball NT Team"
 	undershirt = /datum/sprite_accessory/undershirt/bluejersey
 	uniform = /obj/item/clothing/under/shorts/blue
-	neck = /obj/item/bedsheet/blue
-
-/datum/outfit/basketball/red
-	name = "Basketball Red Team"
-	undershirt = /datum/sprite_accessory/undershirt/redjersey
-	uniform = /obj/item/clothing/under/shorts/red
-	neck = /obj/item/bedsheet/red
+	suit = /obj/item/clothing/suit/jacket/letterman_nanotrasen
+	shoes = /obj/item/clothing/shoes/sneakers/black
 
 /datum/outfit/basketball/greytide_worldwide
 	name = "Basketball Greytide Worldwide"
