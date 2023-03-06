@@ -227,7 +227,7 @@
 	. = ..()
 	if(!user.can_read(src) || in_use || (target == user) || !ismob(target))
 		return
-	if(!HAS_TRAIT(user.mind, TRAIT_BLOODSUCKER_HUNTER))
+	if(!(HAS_TRAIT(user.mind, TRAIT_BLOODSUCKER_HUNTER) || HAS_TRAIT(user, TRAIT_BLOODSUCKER_HUNTER)))
 		if(IS_BLOODSUCKER(user))
 			to_chat(user, span_notice("[src] seems to be too complicated for you. It would be best to leave this for someone else to take."))
 			return
@@ -257,7 +257,7 @@
 	ui_interact(user)
 
 /obj/item/book/kindred/ui_interact(mob/living/user, datum/tgui/ui)
-	if(user.mind && !HAS_TRAIT(user.mind, TRAIT_BLOODSUCKER_HUNTER))
+	if(user.mind && !(HAS_TRAIT(user.mind, TRAIT_BLOODSUCKER_HUNTER) || HAS_TRAIT(user, TRAIT_BLOODSUCKER_HUNTER)))
 		if(IS_BLOODSUCKER(user))
 			to_chat(user, span_notice("[src] seems to be too complicated for you. It would be best to leave this for someone else to take."))
 			return
