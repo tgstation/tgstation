@@ -11,6 +11,9 @@
 	righthand_file = 'icons/mob/inhands/items/keys_righthand.dmi'
 	hitsound = 'sound/items/rattling_keys_attack.ogg'
 	force = 2
+	verb_say = "beeps" //it has a beeper
+	verb_ask = "questionably beeps"
+	verb_exclaim = "beeps loudly"
 	w_class = WEIGHT_CLASS_TINY
 
 	///The departmental access given to the key.
@@ -42,7 +45,7 @@
 		return
 	user.balloon_alert_to_viewers("fumbles with keys...", "finding key...")
 	user.playsound_local(src, 'sound/items/rattling_keys.ogg', 25, TRUE)
-	if(!do_after(user, 3 SECONDS, src))
+	if(!do_after(user, 3 SECONDS, airlock))
 		return FALSE
 	if(!department_access || !airlock.check_access_list(SSid_access.accesses_by_region[department_access]))
 		airlock.balloon_alert(user, "no access!")
