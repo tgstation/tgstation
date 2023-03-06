@@ -187,4 +187,4 @@
 /obj/item/stack/package_wrap/wrapping_paper/small
 	desc = "Wrap packages with this festive paper to make gifts. This roll looks a bit skimpy."
 	amount = 10
-	merge_type = /obj/item/stack/package_wrap/wrapping_paper/small
+	merge_type = /obj/item/stack/wrapping_paper/small
