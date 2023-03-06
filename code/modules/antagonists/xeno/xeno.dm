@@ -45,12 +45,18 @@
 	var/datum/team/xeno/captive/captive_team
 
 /datum/antagonist/xeno/captive/create_team(datum/team/xeno/captive/new_team)
-	..()
-	captive_team = xeno_team
-
-
-	if(!new_team.progenitor)
-		new_team.progenitor = owner
+	if(!new_team)
+		for(var/datum/antagonist/xeno/captive/captive_xeno in GLOB.antagonists)
+			if(!captive_xeno.owner || !captive_xeno.captive_team)
+				continue
+			captive_team = captive_xeno.captive_team
+			return
+		captive_team = new
+		captive_team.progenitor = owner
+	else
+		if(!istype(new_team))
+			CRASH("Wrong xeno team type provided to create_team")
+		captive_team = new_team
 
 /datum/antagonist/xeno/captive/get_team()
 	return captive_team
@@ -70,16 +76,24 @@
 	for(var/datum/mind/alien_mind in members)
 		switch(check_captivity(alien_mind.current))
 			if(CAPTIVE_XENO_DEAD)
-				parts += span_red("[alien_mind] died as [alien_mind.current]!")
+				parts += "[alien_mind] died as [alien_mind.current]!"
 			if(CAPTIVE_XENO_FAIL)
-				parts += span_red("[alien_mind] remained alive and in captivity!")
+				parts += "[alien_mind] remained alive and in captivity!"
 				captive_count++
 			if(CAPTIVE_XENO_PASS)
-				parts += span_nicegreen("[alien_mind] survived and managed to escape captivity!")
+				parts += "[alien_mind] survived and managed to escape captivity!"
 				escape_count++
 
+	parts += "Overall, [captive_count] xenomorphs remained alive and in captivity, and [escape_count] managed to escape!"
 
-	parts += span_alertalien("Overall, [captive_count] xenomorphs remained trapped in captivity, and [escape_count] managed to escape!")
+	var/thank_you_message
+
+	if(captive_count > escape_count)
+		thank_you_message = ""
+	else
+		thank_you_message = ""
+
+	parts += "Nanotrasen thanks the crew of [station_name()] for providing much needed data on [thank_you_message]"
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
