@@ -1,5 +1,6 @@
 
-/obj/item/food/bread //If you'll try to spawn it will occure in error sprite. Shouldn't do this.
+/// Abstract parent object for bread items. Should not be made obtainable in game.
+/obj/item/food/bread
 	name = "bread?"
 	desc = "You shouldn't see this, call the coders."
 	icon = 'icons/obj/food/burgerbread.dmi'
