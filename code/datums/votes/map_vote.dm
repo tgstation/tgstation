@@ -67,14 +67,17 @@
 	message = initial(message)
 	return TRUE
 
-/// Before we create a vote, remove all maps from our choices that are outside of our population range. Note that this can result in zero remaining choices for our vote, which is not ideal (but ultimately okay).
+/// Before we create a vote, remove all maps from our choices that are outside of our population range.
+/// Note that this can result in zero remaining choices for our vote, which is not ideal (but ultimately okay).
 /// Argument should_key_choices is TRUE, pass as FALSE in a context where choices are already keyed in a list.
 /datum/vote/map_vote/proc/check_population(should_key_choices = TRUE)
+	var/filter_threshold = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
 	if(should_key_choices)
 		for(var/key in default_choices)
 			choices[key] = 0
 
-	var/active_players = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
+	if(!filter_threshold) // Pre-round lobby won't have an active player count yet, so fallback.
+		filter_threshold = GLOB.clients.len
 
 	for(var/map in choices)
 		var/datum/map_config/possible_config = config.maplist[map]
