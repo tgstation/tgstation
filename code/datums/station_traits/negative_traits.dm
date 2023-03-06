@@ -330,9 +330,7 @@
 	INVOKE_ASYNC(src, PROC_REF(trash_this_place)) //Must be called asynchronously
 
 /datum/station_trait/revolutionary_trashing/proc/trash_this_place()
-	for(var/area/station/command/area_to_trash as anything in GLOB.areas)
-		if(!istype(area_to_trash, /area/station/command)) //Skip if we're not a command area
-			continue
+	for(var/area/station/command/area_to_trash in GLOB.areas)
 
 		for(var/turf/current_turf as anything in area_to_trash.get_contained_turfs())
 			if(isopenturf(current_turf) && prob(25))
