@@ -62,7 +62,7 @@
 /datum/weakref/Destroy(force)
 	var/datum/target = resolve()
 	qdel(target)
-	return ..()
+	return force ? ..() : QDEL_HINT_LETMELIVE
 
 /**
  * Retrieves the datum that this weakref is referencing.
