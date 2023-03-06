@@ -14,6 +14,7 @@
 	name = "Level 1: Dominate"
 	upgraded_power = /datum/action/bloodsucker/targeted/tremere/dominate/two
 	level_current = 1
+	tremere_level = 1
 	desc = "Mesmerize any foe who stands still long enough."
 	button_icon_state = "power_dominate"
 	power_explanation = "Level 1: Dominate:\n\
@@ -30,6 +31,7 @@
 	name = "Level 2: Dominate"
 	upgraded_power = /datum/action/bloodsucker/targeted/tremere/dominate/three
 	level_current = 2
+	tremere_level = 2
 	desc = "Mesmerize and mute any foe who stands still long enough."
 	power_explanation = "Level 2: Dominate:\n\
 		Click any person to, after a 4 second timer, Mesmerize them.\n\
@@ -41,6 +43,7 @@
 	name = "Level 3: Dominate"
 	upgraded_power = /datum/action/bloodsucker/targeted/tremere/dominate/advanced
 	level_current = 3
+	tremere_level = 3
 	desc = "Mesmerize, mute and blind any foe who stands still long enough."
 	power_explanation = "Level 3: Dominate:\n\
 		Click any person to, after a 4 second timer, Mesmerize them.\n\
@@ -68,6 +71,7 @@
 	name = "Level 4: Possession"
 	upgraded_power = /datum/action/bloodsucker/targeted/tremere/dominate/advanced/two
 	level_current = 4
+	tremere_level = 4
 	desc = "Mesmerize, mute and blind any foe who stands still long enough, or convert the damaged to temporary Vassals."
 	power_explanation = "Level 4: Possession:\n\
 		Click any person to, after a 4 second timer, Mesmerize them.\n\
@@ -85,6 +89,7 @@
 	name = "Level 5: Possession"
 	desc = "Mesmerize, mute and blind any foe who stands still long enough, or convert the damaged to temporary Vassals."
 	level_current = 5
+	tremere_level = 5
 	upgraded_power = null
 	power_explanation = "Level 5: Possession:\n\
 		Click any person to, after a 4 second timer, Mesmerize them.\n\
@@ -174,8 +179,6 @@
 	to_chat(user, span_warning("We revive [target]!"))
 	target.mind.grab_ghost()
 	target.revive(ADMIN_HEAL_ALL)
-	var/datum/antagonist/vassal/vassaldatum = target.mind.has_antag_datum(/datum/antagonist/vassal)
-	vassaldatum.special_type = TREMERE_VASSAL //don't turn them into a favorite please
 	var/living_time
 	if(level_current == 4)
 		living_time = 5 MINUTES

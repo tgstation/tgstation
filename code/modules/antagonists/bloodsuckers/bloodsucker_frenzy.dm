@@ -52,8 +52,8 @@
 
 	// Disable ALL Powers and notify their entry
 	if(bloodsuckerdatum.my_clan == CLAN_BRUJAH)
-		user.balloon_alert(parent, "you enter a frenzy!")
-		to_chat(parent, span_announce("While in Frenzy, you gain the ability to instantly aggressively grab people, move faster, get stun resistance, and have no blood cost on abilities.<br> \n\
+		user.balloon_alert(user, "you enter a frenzy!")
+		to_chat(user, span_announce("While in Frenzy, you gain the ability to instantly aggressively grab people, move faster, get stun resistance, and have no blood cost on abilities.<br> \n\
 		* In exchange, you will slowly gain Brute damage, cannot speak, hear, or use advanced machineries. Be careful of how you handle it!<br> \n\
 		* To leave Frenzy, simply drink enough Blood ([FRENZY_THRESHOLD_EXIT]) to exit.<br>"))
 	else

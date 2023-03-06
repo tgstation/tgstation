@@ -8,8 +8,6 @@
 		and become unable to use complicated machinery as your screen goes blood-red."
 	bloodcost = 2
 	cooldown = 100
-	amToggle = TRUE
-	cooldown_static = TRUE
 	power_flags = BP_AM_TOGGLE|BP_AM_STATIC_COOLDOWN
 	check_flags = NONE
 
