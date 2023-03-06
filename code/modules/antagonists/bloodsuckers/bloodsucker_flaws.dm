@@ -40,6 +40,7 @@
 					part.unarmed_damage_low += 1.5
 					part.unarmed_damage_high += 1.5
 			frenzy_threshold = FRENZY_THRESHOLD_HIGHER
+			BuyPower(new /datum/action/bloodsucker/brujah)
 			return
 		if(CLAN_NOSFERATU)
 			my_clan = CLAN_NOSFERATU
