@@ -16062,17 +16062,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"eMZ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/revolution_trash,
-/turf/open/floor/iron/showroomfloor,
-/area/station/ai_monitored/security/armory)
 "eNb" = (
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
@@ -34492,13 +34481,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/aux_base,
 /turf/open/floor/iron/dark,
 /area/station/construction/mining/aux_base)
-"jKq" = (
-/obj/effect/turf_decal/siding/blue{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/revolution_trash,
-/turf/open/floor/iron,
-/area/station/command/bridge)
 "jKt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/blue,
@@ -35995,7 +35977,6 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/cmo)
 "kho" = (
@@ -40176,7 +40157,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "lrP" = (
@@ -49635,10 +49615,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
-"oiA" = (
-/obj/effect/mapping_helpers/revolution_trash,
-/turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/hos)
 "oiJ" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -57994,10 +57970,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"qCV" = (
-/obj/effect/mapping_helpers/revolution_trash,
-/turf/open/floor/carpet/royalblue,
-/area/station/command/heads_quarters/captain)
 "qCX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -66643,7 +66615,6 @@
 /area/station/medical/medbay/central)
 "sXC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "sXE" = (
@@ -77242,7 +77213,6 @@
 /turf/closed/wall/r_wall/rust,
 /area/station/service/chapel/dock)
 "vTX" = (
-/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/rd)
 "vUi" = (
@@ -81025,7 +80995,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "wTU" = (
-/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
 "wUU" = (
@@ -104734,7 +104703,7 @@ lsb
 xSn
 pUH
 tZf
-oiA
+tZf
 wnX
 afL
 aeU
@@ -107304,7 +107273,7 @@ ctt
 ibJ
 aly
 alS
-eMZ
+ams
 hZg
 aka
 aeu
@@ -116006,7 +115975,7 @@ lEi
 yjV
 iLz
 eVT
-jKq
+qQQ
 hGf
 bXj
 fqG
@@ -118838,7 +118807,7 @@ oPr
 lrk
 cau
 otP
-qCV
+otP
 bTe
 jlh
 lme

@@ -11560,10 +11560,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
-"dtL" = (
-/obj/effect/mapping_helpers/revolution_trash,
-/turf/open/floor/iron,
-/area/station/command/heads_quarters/rd)
 "dtU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16063,7 +16059,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "ePr" = (
-/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/hos)
 "ePs" = (
@@ -16597,10 +16592,6 @@
 "eXH" = (
 /turf/closed/wall/r_wall,
 /area/station/medical/chemistry)
-"eXN" = (
-/obj/effect/mapping_helpers/revolution_trash,
-/turf/open/floor/glass/reinforced,
-/area/station/ai_monitored/security/armory/upper)
 "eXU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -24733,11 +24724,6 @@
 	dir = 4
 	},
 /area/station/science/research)
-"hAH" = (
-/obj/structure/cable,
-/obj/effect/mapping_helpers/revolution_trash,
-/turf/open/floor/carpet,
-/area/station/command/heads_quarters/hop)
 "hAO" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -26449,10 +26435,6 @@
 /obj/item/paper/guides/jobs/hydroponics,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"idy" = (
-/obj/effect/mapping_helpers/revolution_trash,
-/turf/open/floor/iron/dark,
-/area/station/command/heads_quarters/cmo)
 "idE" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -28081,10 +28063,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
-"iDN" = (
-/obj/effect/mapping_helpers/revolution_trash,
-/turf/open/floor/carpet,
-/area/station/command/heads_quarters/qm)
 "iDQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
@@ -42234,10 +42212,6 @@
 "naX" = (
 /turf/closed/wall/mineral/iron,
 /area/station/engineering/atmos/mix)
-"nbg" = (
-/obj/effect/mapping_helpers/revolution_trash,
-/turf/open/floor/iron,
-/area/station/command/bridge)
 "nbi" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -52740,11 +52714,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
-"qkv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/revolution_trash,
-/turf/open/floor/iron/dark/textured,
-/area/station/ai_monitored/security/armory)
 "qkB" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
@@ -59496,7 +59465,6 @@
 "sqU" = (
 /obj/machinery/newscaster/directional/west,
 /obj/machinery/keycard_auth/directional/south,
-/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "sqW" = (
@@ -61050,7 +61018,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "sOE" = (
-/obj/effect/mapping_helpers/revolution_trash,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "sOH" = (
@@ -170851,7 +170818,7 @@ pez
 yiL
 iCa
 cxO
-qkv
+xuA
 tvS
 evj
 yiL
@@ -231039,7 +231006,7 @@ sIM
 lAr
 tKI
 ogC
-iDN
+alT
 aZO
 kin
 dsU
@@ -236192,7 +236159,7 @@ iYb
 sbi
 jWP
 ool
-hAH
+jRC
 cgC
 jaq
 jkQ
@@ -236387,7 +236354,7 @@ hGH
 feJ
 iuS
 lyG
-eXN
+lyG
 lyG
 lyG
 ihx
@@ -238744,7 +238711,7 @@ utR
 tmQ
 lkI
 smI
-nbg
+gER
 ktl
 dEI
 uab
@@ -249809,7 +249776,7 @@ caG
 pKw
 xcu
 jQd
-idy
+jQd
 wmN
 rZR
 bCf
@@ -255223,7 +255190,7 @@ anP
 cRK
 uMK
 udQ
-dtL
+oMT
 qwJ
 jbU
 whc
