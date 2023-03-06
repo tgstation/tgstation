@@ -176,7 +176,7 @@
 		return
 
 	// need a free hand and can't be spinning
-	if(!user.put_in_inactive_hand(src) && user.flags_1 & IS_SPINNING_1)
+	if(!user.put_in_inactive_hand(src) || user.flags_1 & IS_SPINNING_1)
 		return
 
 	last_use = world.time
