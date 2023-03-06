@@ -192,7 +192,7 @@
 	uniform = /obj/item/clothing/under/rank/centcom/officer
 	head = /obj/item/clothing/head/beret/centcom_formal
 	glasses = /obj/item/clothing/glasses/sunglasses
-	r_hand = /obj/item/melee/energy/sword/saber/green
+	l_hand = /obj/item/melee/energy/sword/saber/green
 
 /datum/outfit/internal_affair_agent/post_equip(mob/living/carbon/human/owner, visualsOnly)
 	var/obj/item/melee/energy/sword/saber/green/sword = locate() in owner.held_items
