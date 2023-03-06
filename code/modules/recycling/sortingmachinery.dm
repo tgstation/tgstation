@@ -127,7 +127,7 @@
 		name = "[name] ([str])"
 
 	else if(istype(item, /obj/item/stack/package_wrap/wrapping_paper) && !giftwrapped)
-		var/obj/item/stack/wrapping_paper/wrapping_paper = item
+		var/obj/item/stack/package_wrap/wrapping_paper/wrapping_paper = item
 		if(wrapping_paper.use(3))
 			user.visible_message(span_notice("[user] wraps the package in festive paper!"))
 			giftwrapped = TRUE
