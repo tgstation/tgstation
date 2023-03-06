@@ -13,7 +13,8 @@
 
 	spell_max_level = 1
 
-	var/popup = FALSE // is the confirmation window open?
+	///is the confirmation window open?
+	var/popup = FALSE
 
 /datum/action/cooldown/spell/vow_of_silence/Grant(mob/living/grant_to)
 	. = ..()
@@ -24,17 +25,23 @@
 	. = ..()
 	REMOVE_TRAIT(remove_from, TRAIT_MIMING, "[type]")
 
-/datum/action/cooldown/spell/vow_of_silence/cast(mob/living/carbon/human/cast_on)
+/datum/action/cooldown/spell/vow_of_silence/before_cast(mob/living/carbon/human/cast_on)
 	. = ..()
+	if (. & SPELL_CANCEL_CAST)
+		return
 	if(popup)
-		return FALSE
+		return . | SPELL_CANCEL_CAST
 	popup = TRUE
 	var/response = tgui_alert(cast_on, "Are you sure you want to break your vow of silence? This will disable your mimery abilities!", "Break Vow of Silence Confirmation", list("Yes", "No"))
 	popup = FALSE
 	if(response != "Yes")
-		return FALSE
-	var/datum/action/cooldown/spell/vow_of_silence/vow = locate() in cast_on.actions
-	vow.Remove(cast_on)
+		return . | SPELL_CANCEL_CAST
+	if(QDELETED(src) || QDELETED(cast_on))
+		return
+
+/datum/action/cooldown/spell/vow_of_silence/cast(mob/living/carbon/human/cast_on)
+	. = ..()
+	qdel(src)
 	to_chat(cast_on, span_notice("You break your vow of silence."))
 	cast_on.add_mood_event("vow", /datum/mood_event/broken_vow)
 	cast_on.log_message("broke their vow of silence.", LOG_GAME)
