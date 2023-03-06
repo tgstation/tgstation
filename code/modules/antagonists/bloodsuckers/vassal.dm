@@ -137,9 +137,23 @@
 		to_chat(master, span_danger("You have turned [owner.current] into your Favorite Vassal! They will no longer be deconverted upon Mindshielding!"))
 		to_chat(owner, span_notice("As Blood drips over your body, you feel closer to your Master... You are now the Favorite Vassal!"))
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = master.mind.has_antag_datum(/datum/antagonist/bloodsucker)
-	if(bloodsuckerdatum.my_clan == CLAN_GANGREL)
-		var/datum/action/cooldown/spell/shapeshift/bat/batform = new
-		batform.Grant(owner.current)
+	if(bloodsuckerdatum.my_clan == CLAN_BRUJAH)
+		BuyPower(new /datum/action/bloodsucker/targeted/brawn/vassal)
+	if(bloodsuckerdatum.my_clan == CLAN_NOSFERATU)
+		ADD_TRAIT(owner.current, TRAIT_VENTCRAWLER_NUDE, BLOODSUCKER_TRAIT)
+		ADD_TRAIT(owner.current, TRAIT_DISFIGURED, BLOODSUCKER_TRAIT)
+		to_chat(owner, span_notice("Additionally, you can now ventcrawl while naked, and are permanently disfigured."))
+	if(bloodsuckerdatum.my_clan == CLAN_TREMERE)
+		var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/batform = new
+		owner.current.AddSpell(batform)
+	if(bloodsuckerdatum.my_clan == CLAN_VENTRUE)
+		to_chat(master, span_announce("* Bloodsucker Tip: You can now upgrade your Favorite Vassal by buckling them onto a Candelabrum!"))
+		BuyPower(new /datum/action/bloodsucker/distress)
+	if(bloodsuckerdatum.my_clan == CLAN_MALKAVIAN)
+		var/mob/living/carbon/carbonowner = owner.current
+		carbonowner.gain_trauma(/datum/brain_trauma/mild/hallucinations, TRAUMA_RESILIENCE_ABSOLUTE)
+		carbonowner.gain_trauma(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
+		to_chat(owner, span_notice("Additionally, you now suffer the same fate as your Master."))
 
 /datum/antagonist/vassal/pre_mindshield(mob/implanter, mob/living/mob_override)
 	if(favorite_vassal || master.my_clan == CLAN_TREMERE)

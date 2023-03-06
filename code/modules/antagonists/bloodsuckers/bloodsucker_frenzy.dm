@@ -52,20 +52,21 @@
 
 	// Disable ALL Powers and notify their entry
 	if(bloodsuckerdatum.my_clan == CLAN_BRUJAH)
-		to_chat(user, "<span class='announce'>You enter a Frenzy!<br> \
-		* While in Frenzy, you gain the ability to instantly aggressively grab people, move faster and have no blood cost on abilities.<br> \
-		* In exchange, you will slowly gain Burn damage, be careful of how you handle it!<br> \
-		* To leave Frenzy, simply drink enough Blood ([FRENZY_THRESHOLD_EXIT]) to exit.</span><br>")
+		user.balloon_alert(parent, "you enter a frenzy!")
+		to_chat(parent, span_announce("While in Frenzy, you gain the ability to instantly aggressively grab people, move faster, get stun resistance, and have no blood cost on abilities.<br> \n\
+		* In exchange, you will slowly gain Brute damage, cannot speak, hear, or use advanced machineries. Be careful of how you handle it!<br> \n\
+		* To leave Frenzy, simply drink enough Blood ([FRENZY_THRESHOLD_EXIT]) to exit.<br>"))
 	else
 		to_chat(user, "<span class='userdanger'><FONT size = 3>Blood! You need Blood, now! You enter a total Frenzy!</span>")
 		to_chat(user, "<span class='announce'>* Bloodsucker Tip: While in Frenzy, you instantly Aggresively grab, cannot speak, hear, get stunned, or use any powers outside of Feed and Trespass (If you have it).</span><br>")
-		ADD_TRAIT(user, TRAIT_STUNIMMUNE, FRENZY_TRAIT) // Brujah can control Frenzy properly, so they don't get any of the effects.
-		ADD_TRAIT(user, TRAIT_MUTE, FRENZY_TRAIT)
-		ADD_TRAIT(user, TRAIT_DEAF, FRENZY_TRAIT)
-		if(HAS_TRAIT_FROM(user, TRAIT_ADVANCEDTOOLUSER, SPECIES_TRAIT))
-			was_tooluser = TRUE
-			REMOVE_TRAIT(user, TRAIT_ADVANCEDTOOLUSER, SPECIES_TRAIT)
 		bloodsuckerdatum.DisableAllPowers()
+
+	ADD_TRAIT(user, TRAIT_STUNIMMUNE, FRENZY_TRAIT) // Brujah can control Frenzy properly, so they don't get any of the effects.
+	ADD_TRAIT(user, TRAIT_MUTE, FRENZY_TRAIT)
+	ADD_TRAIT(user, TRAIT_DEAF, FRENZY_TRAIT)
+	if(HAS_TRAIT_FROM(user, TRAIT_ADVANCEDTOOLUSER, SPECIES_TRAIT))
+		was_tooluser = TRUE
+		REMOVE_TRAIT(user, TRAIT_ADVANCEDTOOLUSER, SPECIES_TRAIT)
 	// Stamina resistances
 	user.physiology.stamina_mod *= 0.4
 
@@ -106,4 +107,7 @@
 	var/mob/living/carbon/human/user = owner
 	if(!bloodsuckerdatum.frenzied)
 		return
-	user.adjustFireLoss(1.5 + (bloodsuckerdatum.humanity_lost / 10))
+	if(bloodsuckerdatum.my_clan == CLAN_BRUJAH)
+		user.adjustBruteLoss(1.5 + (bloodsuckerdatum.humanity_lost / 10))
+	else
+		user.adjustFireLoss(1.5 + (bloodsuckerdatum.humanity_lost / 10))

@@ -471,11 +471,18 @@
 	// Purchase Power Prompt
 	var/list/options = list()
 	for(var/datum/action/bloodsucker/power as anything in all_bloodsucker_powers)
+		if(my_clan == CLAN_TREMERE)
+			if(LevelUpTremerePower(owner.current))
+				// Did we buy a power? Break here.
+				break
+			else
+				// Didnt buy one? Dont continue on, then.
+				return
 		if(initial(power.purchase_flags) & BLOODSUCKER_CAN_BUY && !(locate(power) in powers))
 			options[initial(power.name)] = power
 
 
-	if(!options)
+	if(!options.len)
 		to_chat(owner.current, span_notice("You grow more ancient by the night!"))
 	else
 		// Give them the UI to purchase a power.
