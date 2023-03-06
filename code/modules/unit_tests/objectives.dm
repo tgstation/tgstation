@@ -17,17 +17,23 @@
 			// Nor do we want abstract types to appear in the pool of traitor objectives.
 			if(objective_typepath in objectives_that_exist)
 				TEST_FAIL("[objective_typepath] is in a traitor category and is an abstract type! Please remove it from the [/datum/traitor_objective_category].")
-			if(objective.progression_reward != 0)
+			// Since we didn't generate the objective, the rewards are going to be in list form: (min, max)
+			if(!reward_is_zero(objective.progression_reward))
 				TEST_FAIL("[objective_typepath] has set a progression reward as an abstract type! Please define progression rewards on non-abstract types rather than abstract types.")
-			if(objective.telecrystal_reward != 0)
+			// Since we didn't generate the objective, the rewards are going to be in list form: (min, max)
+			if(!reward_is_zero(objective.telecrystal_reward))
 				TEST_FAIL("[objective_typepath] has set a telecrystal reward as an abstract type! Please define telecrystal rewards on non-abstract types rather than abstract types.")
 			continue
 		if(!(objective_typepath in objectives_that_exist))
 			TEST_FAIL("[objective_typepath] is not in a traitor category and isn't an abstract type! Place it into a [/datum/traitor_objective_category] or remove it from code.")
 		if(objective.progression_minimum == null)
 			TEST_FAIL("[objective_typepath] has not defined a minimum progression level and isn't an abstract type! Please define the progression minimum variable on the datum")
-		if(!ispath(objective_typepath, /datum/traitor_objective/ultimate) && objective.progression_reward == 0 && objective.telecrystal_reward == 0)
+		if(objective.needs_reward && reward_is_zero(objective.progression_reward) && reward_is_zero(objective.telecrystal_reward))
 			TEST_FAIL("[objective_typepath] has not set either a progression reward or a telecrystal reward! Please set either a telecrystal or progression reward for this objective.")
+
+/// Returns whether the reward specified (in format (min, max)) is zero or not.
+/datum/unit_test/objectives_category/proc/reward_is_zero(list/reward)
+	return (reward[1] == 0 && reward[2] == 0)
 
 /datum/unit_test/objectives_category/Destroy()
 	SStraitor.generate_objectives = TRUE
