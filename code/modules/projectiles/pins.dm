@@ -17,7 +17,7 @@
 	/// Can be replaced by any pin.
 	var/pin_hot_swappable = FALSE
 	///Can be removed from the gun using tools or replaced by a pin with force_replace
-	var/pin_removeable = TRUE
+	var/pin_removable = TRUE
 	var/obj/item/gun/gun
 
 /obj/item/firing_pin/New(newloc)
@@ -32,7 +32,7 @@
 			. |= AFTERATTACK_PROCESSED_ITEM
 			var/obj/item/gun/targetted_gun = target
 			var/obj/item/firing_pin/old_pin = targetted_gun.pin
-			if(old_pin?.pin_removeable && (force_replace || old_pin.pin_hot_swappable))
+			if(old_pin?.pin_removable && (force_replace || old_pin.pin_hot_swappable))
 				if(Adjacent(user))
 					user.put_in_hands(old_pin)
 				else
