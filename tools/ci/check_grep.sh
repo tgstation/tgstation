@@ -76,6 +76,12 @@ if $grep '\tarmor = list' $map_files; then
 	echo -e "${RED}ERROR: Outdated armor list in map file.${NC}"
 	st=1
 fi;
+part "empty variable values - singlelined"
+if $grep -PU '{},?\)?' $map_files; then
+	echo
+	echo -e "${RED}ERROR: Empty variable value list detected in map file. Please remove the curly brackets entirely.${NC}"
+	st=1
+fi;
 part "common spelling mistakes"
 if $grep -i 'nanotransen' $map_files; then
 	echo
@@ -205,7 +211,7 @@ fi;
 
 if [ "$pcre2_support" -eq 1 ]; then
 	section "regexes requiring PCRE2"
-	part "empty variable values"
+	part "empty variable values - multilined"
 	if $grep -PU '{\n\t},' $map_files; then
 		echo
 		echo -e "${RED}ERROR: Empty variable value list detected in map file. Please remove the curly brackets entirely.${NC}"
