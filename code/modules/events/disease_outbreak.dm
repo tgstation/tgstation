@@ -142,7 +142,11 @@
 	description = "An 'advanced' disease will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
-	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak, /datum/event_admin_setup/listed_options/disease_outbreak_advanced, /datum/event_admin_setup/input_number/disease_outbreak_advanced)
+	admin_setup = list(
+		/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak,
+		/datum/event_admin_setup/listed_options/disease_outbreak_advanced,
+		/datum/event_admin_setup/input_number/disease_outbreak_advanced
+	)
 
 /**
  * Admin virus customization
