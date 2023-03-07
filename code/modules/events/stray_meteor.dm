@@ -20,7 +20,9 @@
 
 /datum/round_event/stray_meteor/start()
 	if(chosen_meteor)
-		spawn_meteor(list(chosen_meteor = 1))
+		var/list/chosen_meteor_list = list()
+		chosen_meteor_list[chosen_meteor] = 1
+		spawn_meteor(chosen_meteor_list)
 	else
 		spawn_meteor(GLOB.meteors_stray)
 
