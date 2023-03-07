@@ -1,7 +1,6 @@
 /datum/traitor_objective_category/final_objective
 	name = "Final Objective"
 	objectives = list(
-		/datum/traitor_objective/ultimate/romerol = 1,
 		/datum/traitor_objective/ultimate/battlecruiser = 1,
 		/datum/traitor_objective/ultimate/space_dragon = 1,
 		/datum/traitor_objective/ultimate/supermatter_cascade = 1,
