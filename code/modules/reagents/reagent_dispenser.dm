@@ -235,6 +235,13 @@
 	tank_volume = 500
 	openable = TRUE
 
+/obj/structure/reagent_dispensers/kvasstank
+	name = "kvass tank"
+	desc = "Yellow barrel full of divine liquid."
+	icon_state = "kvass"
+	reagent_id = /datum/reagent/consumable/kvass
+	openable = TRUE
+
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
 	desc = "A tank full of industrial welding fuel. Do not consume."
