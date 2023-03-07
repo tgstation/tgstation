@@ -70,6 +70,12 @@ if $grep '(new|newlist|icon|matrix|sound)\(.+\)' $map_files;	then
 	echo -e "${RED}ERROR: Using unsupported procs in variables in a map file! Please remove all instances of this.${NC}"
 	st=1
 fi;
+part "empty variable values"
+if $grep '{\n\t},' $map_files; then
+	echo
+	echo -e "${RED}ERROR: Empty variable value list detected in map file. Please remove the curly brackets entirely.${NC}"
+	st=1
+fi;
 part "armor lists"
 if $grep '\tarmor = list' $map_files; then
 	echo
