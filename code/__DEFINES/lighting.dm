@@ -44,7 +44,7 @@
 #define LIGHTING_CUTOFF_FULLBRIGHT 100
 
 /// What counts as being able to see in the dark
-#define LIGHTING_NIGHTVISION_THRESHOLD 10
+#define LIGHTING_NIGHTVISION_THRESHOLD 7
 
 /// The amount of lumcount on a tile for it to be considered dark (used to determine reading and nyctophobia)
 #define LIGHTING_TILE_IS_DARK 0.2
