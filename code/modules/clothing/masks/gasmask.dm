@@ -275,7 +275,8 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		"Blanc" = image(icon = src.icon, icon_state = "mime"),
 		"Excité" = image(icon = src.icon, icon_state = "sexymime"),
 		"Triste" = image(icon = src.icon, icon_state = "sadmime"),
-		"Effrayé" = image(icon = src.icon, icon_state = "scaredmime")
+		"Effrayé" = image(icon = src.icon, icon_state = "scaredmime"),
+		"Joker" = image(icon = src.icon, icon_state = "mimejoker")
 		)
 
 /obj/item/clothing/mask/gas/mime/ui_action_click(mob/user)
@@ -287,6 +288,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	options["Triste"] = "sadmime"
 	options["Effrayé"] = "scaredmime"
 	options["Excité"] ="sexymime"
+	options["Joker"] = "mimejoker"
 
 	var/choice = show_radial_menu(user,src, mimemask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 	if(!choice)

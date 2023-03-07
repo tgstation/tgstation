@@ -541,7 +541,7 @@
 	if(is_blind()) //blind people see things differently (through touch)
 		if(!blind_examine_check(examinify))
 			return
-	else if(!examine_turf.luminosity && \
+	else if(!(examine_turf.luminosity || examine_turf.dynamic_lumcount) && \
 		get_dist(src, examine_turf) > 1 && \
 		!has_nightvision()) // If you aren't blind, it's in darkness (that you can't see) and farther then next to you
 		return

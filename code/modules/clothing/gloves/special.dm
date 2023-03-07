@@ -6,7 +6,6 @@
 	greyscale_colors = "#2f2e31"
 	equip_delay_self = 3 SECONDS
 	equip_delay_other = 4 SECONDS
-	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 	undyeable = TRUE
 	var/datum/weakref/pull_component_weakref
 
@@ -49,14 +48,14 @@
 
 	QDEL_NULL(pull_component_weakref)
 
-/obj/item/clothing/gloves/rapid
+/obj/item/clothing/gloves/chameleon/rapid
 	name = "Gloves of the North Star"
 	desc = "Just looking at these fills you with an urge to beat the shit out of people."
 	icon_state = "rapid"
 	inhand_icon_state = null
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
-/obj/item/clothing/gloves/rapid/Initialize(mapload)
+/obj/item/clothing/gloves/chameleon/rapid/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
 
@@ -141,5 +140,5 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 	siemens_coefficient = 0.3
-	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_CHUNKYFINGERS)
+	clothing_traits = list(TRAIT_QUICKER_CARRY)
 	clothing_flags = THICKMATERIAL

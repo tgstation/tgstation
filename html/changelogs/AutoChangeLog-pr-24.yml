@@ -1,0 +1,4 @@
+author: "homexp13"
+delete-after: True
+changes:
+  - balance: "change MOD_ACTIVATION_STEP_TIME to 0.4"

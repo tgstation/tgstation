@@ -56,6 +56,7 @@
 				/obj/item/clothing/under/costume/draculass = 1,
 				/obj/item/clothing/suit/costume/gothcoat = 1,
 				/obj/item/clothing/glasses/eyepatch = 1,
+				/obj/item/clothing/under/costume/gi = 1,
 			),
 		),
 		list(
@@ -204,6 +205,7 @@
 		/obj/item/clothing/head/costume/lobsterhat = 1,
 		/obj/item/clothing/under/costume/lobster = 1,
 		/obj/item/gun/magic/wand/nothing = 2,
+		/obj/item/storage/box/tape_wizard = 1,
 	)
 	premium = list(
 		/obj/item/clothing/suit/costume/pirate/captain = 2,

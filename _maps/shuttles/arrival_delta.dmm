@@ -158,7 +158,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/shuttle/arrival)
 "p" = (
@@ -186,7 +185,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/shuttle/arrival)
 "s" = (
@@ -260,7 +258,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/shuttle/arrival)
 "B" = (

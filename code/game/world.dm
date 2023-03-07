@@ -43,7 +43,7 @@ GLOBAL_VAR(restart_counter)
 
 	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
-	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = GLOB.world_econ_log = GLOB.world_shuttle_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_say_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = GLOB.world_econ_log = GLOB.world_shuttle_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 	#ifdef REFERENCE_DOING_IT_LIVE
 	GLOB.harddel_log = GLOB.world_game_log
 	#endif
@@ -165,6 +165,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_tool_log = "[GLOB.log_directory]/tools.log"
 	GLOB.world_uplink_log = "[GLOB.log_directory]/uplink.log"
 	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
+	GLOB.world_say_log = "[GLOB.log_directory]/say.log"
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = "[GLOB.log_directory]/tests.log"
@@ -189,6 +190,7 @@ GLOBAL_VAR(restart_counter)
 	start_log(GLOB.world_telecomms_log)
 	start_log(GLOB.world_uplink_log)
 	start_log(GLOB.world_pda_log)
+	start_log(GLOB.world_say_log)
 
 	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
 	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
@@ -329,13 +331,12 @@ GLOBAL_VAR(restart_counter)
 			features += "AI disabled"
 		hostedby = CONFIG_GET(string/hostedby)
 
-	if (CONFIG_GET(flag/station_name_in_hub_entry))
-		new_status += " &#8212; <b>[station_name()]</b>"
-		new_status += " ("
-		new_status += "<a href=\"https://discord.gg/KBsjSv7Kh9\">"
-		new_status += "Discord"
-		new_status += "</a>"
-		new_status += ")"
+	new_status += " &#8212; <b>[station_name()]</b>"
+	new_status += " ("
+	new_status += "<a href=\"https://discord.gg/KBsjSv7Kh9\">"
+	new_status += "Discord"
+	new_status += "</a>"
+	new_status += ")"
 
 	var/players = GLOB.clients.len
 

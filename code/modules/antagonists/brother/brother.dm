@@ -24,6 +24,7 @@
 	objectives += team.objectives
 	owner.special_role = special_role
 	finalize_brother()
+	equip_bloodbro()
 	return ..()
 
 /datum/antagonist/brother/on_removal()
@@ -84,6 +85,7 @@
 	to_chat(owner.current, span_alertsyndie("You are the [owner.special_role] of [brother_text]."))
 	to_chat(owner.current, "The Syndicate only accepts those that have proven themselves. Prove yourself and prove your [team.member_name]s by completing your objectives together!")
 	owner.announce_objectives()
+	to_chat(owner.current, "You both start with a storage implant containing one item, chosen by your employers. Use it wise!")
 	give_meeting_area()
 
 /datum/antagonist/brother/proc/finalize_brother()
@@ -170,3 +172,19 @@
 			add_objective(new /datum/objective/assassinate, needs_target = TRUE)
 	else
 		add_objective(new /datum/objective/steal, needs_target = TRUE)
+
+/datum/antagonist/brother/proc/equip_bloodbro()
+	if(!owner || !owner.current || !ishuman(owner.current))
+		return
+	var/list/possible_items = list(/obj/item/soap/syndie,/obj/item/pen/sleepy,/obj/item/pen/edagger,/obj/item/language_manual/codespeak_manual/unlimited,
+								   /obj/item/clothing/shoes/chameleon/noslip, /obj/item/storage/box/syndie_kit/c4,
+								   /obj/item/storage/box/syndie_kit/throwing_weapons, /obj/item/gun/ballistic/automatic/c20r/toy, /obj/item/storage/box/syndie_kit/emp,
+								   /obj/item/card/id/advanced/chameleon, /obj/item/multitool/ai_detect, /obj/item/storage/box/syndie_kit/chameleon,
+								   /obj/item/card/emag, /obj/item/card/emag/doorjack,/obj/item/storage/box/syndie_kit/syndi_keys, /obj/item/jammer,)
+	var/obj/item/implant/storage/S = locate(/obj/item/implant/storage) in owner.current
+	if(!S)
+		S = new(owner.current)
+		S.implant(owner.current)
+	var/I = pick(possible_items)
+	if(ispath(I))
+		I = new I(S)

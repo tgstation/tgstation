@@ -58,7 +58,7 @@
 /datum/uplink_item/dangerous/rapid
 	name = "Gloves of the North Star"
 	desc = "These gloves let the user punch people very fast. Does not improve weapon attack speed or the meaty fists of a hulk."
-	item = /obj/item/clothing/gloves/rapid
+	item = /obj/item/clothing/gloves/chameleon/rapid
 	cost = 8
 
 
@@ -93,3 +93,10 @@
 	cost = 13
 	surplus = 50
 	purchasable_from = ~UPLINK_CLOWN_OPS
+
+/datum/uplink_item/dangerous/armstrong
+	name = "Armstrong Style Kit"
+	desc = "A kit with the necessary equipment to become an excellent martial artist, and terrible parent!"
+	item = /obj/item/storage/box/syndie_kit/armstrong
+	cost = 14
+	surplus = 20 // someone who respects the eldritch god Nar-Sie a little (((too much))) complained
