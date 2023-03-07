@@ -450,6 +450,7 @@
 		var/mob/living/carbon/C = user
 		C.head_update(src, forced = 1)
 	icon_state = "hardsuit[on]-[hardsuit_type]"
+	worn_icon_state = "hardsuit[on]-[hardsuit_type]"
 	user.update_worn_head()
 	update_item_action_buttons()
 
