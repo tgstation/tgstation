@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	///%PAYOFF in the content will be replaced with the requested credits.
 	var/threat_content = "This is the %SHIPNAME. Give us %PAYOFF credits or we bug out the universe trying to spawn!"
 	///station receives this message upon the ship's spawn
-	var/arrival_announcement = "We have come for your Runtime!"
+	var/arrival_announcement = "We have come for your Bungopoints!"
 	///what the station can say in response, first item pays the pirates, second item rejects it.
 	var/list/possible_answers = list("Please, go away! We'll pay!", "I accept oblivion.")
 
@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	threat_title = "Tribute request"
 	threat_content = "This is the %SHIPNAME. The Silver Scales wish for some tribute \
 		from your plebeian lizards. %PAYOFF credits should do the trick."
-	arrival_announcement = "In a matter of moments, Your uhuuuh uhm idfk ill think this shit through later."
+	arrival_announcement = "In a matter of moments, Your vessel's to be taken by surprise. We'd suggest yielding if We were you."
 	possible_answers = list("We'll pay.","Tribute? Really? Go away.")
 
 	response_received = "A most generous donation. May the claws of Tizira reach into the furthest points of the cosmos."
@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 
 	threat_title = "Transfer of goods"
 	threat_content = "Ahoy! This be the %SHIPNAME. Cough up %PAYOFF credits or you'll walk the plank."
-	arrival_announcement = "Bone joek."
+	arrival_announcement = "Jolly Roger won't wait forever, maties; we're by the starboard ready to send you some round gifts."
 	possible_answers = list("We'll pay.","We will not be extorted.")
 
 	response_received = "Thanks for the credits, landlubbers."
@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 
 	threat_title = "Junkie tribute"
 	threat_content = "Hello, you psychically dormant pawn-pieces. It's the %SHIPNAME! Our funds are running a little low, and we're not going to be able to continue our gore-binge! %PAYOFF credits should do, wanna help us out?"
-	arrival_announcement = "We literally need a caretaker to fly the ship lmao."
+	arrival_announcement = "We didn't drug this far just to send some pitty threats. Just you wait, We'll make you cry for a mental asylum."
 	possible_answers = list("Send some funds so they go away.","We're not funding these junkies.")
 
 	response_received = "You guys aren't so bad for being dormants. Next gore-fest goes to you guys. Peace!"
