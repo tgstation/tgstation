@@ -1,0 +1,12 @@
+author: "LT3"
+delete-after: True
+changes:
+  - imageadd: "New tram and elevator sprites"
+  - code_imp: "Lighting capability for all buttons"
+  - spellcheck: "All elevator components are now 'elevator'"
+  - code_imp: "Reduced brightness on tram platform signs"
+  - bugfix: "Fixed odd wall in cargo department"
+  - bugfix: "Science elevator panel not laying on a table anymore"
+  - bugfix: "Science keycard auth can only be done from RD office"
+  - code_imp: "More Tramstation mapping helpers"
+  - bugfix: "Fixed Icebox pharmacy shutters lighting runtimes"
