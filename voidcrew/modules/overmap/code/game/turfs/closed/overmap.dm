@@ -1,7 +1,6 @@
 /turf/closed/overmap_edge
 	icon = 'voidcrew/modules/overmap/icons/turf/overmap.dmi'
 	icon_state = "overmap"
-	space_lit = TRUE
 
 /turf/closed/overmap_edge/Initialize(mapload)
 	. = ..()
@@ -17,7 +16,8 @@
 		numbers += list("[round(x/10)]","[round(x%10)]")
 
 	for(var/i = 1 to numbers.len)
-		var/image/I = image('voidcrew/modules/overmap/icons/effects/numbers.dmi', numbers[i])
+		var/mutable_appearance/I = mutable_appearance('voidcrew/modules/overmap/icons/effects/numbers.dmi', numbers[i], layer = LIGHTING_PRIMARY_LAYER)
+
 		I.pixel_x = 5*i - 2
 		I.pixel_y = world.icon_size/2 - 3
 		if(y == OVERMAP_SOUTH_SIDE_COORD)
