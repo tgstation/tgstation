@@ -1583,6 +1583,7 @@
 		"mag_oldsmg",
 		"mag_oldsmg_ap",
 		"mag_oldsmg_ic",
+		"mag_oldsmg_rub",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
