@@ -1,4 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - admin: "AB_CHECK_INCAPACITATED on an action's check_flags can now be modified by admins."

@@ -184,3 +184,41 @@
       this has been amended.
   tralezab:
   - rscadd: Updated the bus ruin
+2023-03-07:
+  Helg2:
+  - bugfix: fixed butchering bread dog spawning error bread.
+  JohnFulpWillard:
+  - bugfix: Corgis show their ID on examine.
+  - balance: Cult can no longer draw runes in survival pods.
+  Melbert:
+  - bugfix: Luminsecent slime actions correctly update their appearance when integrating
+      or ejecting slime cores
+  - bugfix: Fixed a Space Dragon related hard delete.
+  - bugfix: Mindswapped space dragons will break less.
+  NamelessFairy:
+  - admin: AB_CHECK_INCAPACITATED on an action's check_flags can now be modified by
+      admins.
+  - rscadd: New Neutral Station Trait, "Employee Birthday", its someone on the crews
+      birthday, make sure to wish them a happy birthday and perhaps get them a gift.
+  - rscadd: Two new party themed items have been added to the arcade prize pool, the
+      party horn and a box of party poppers.
+  PositiveEntropy:
+  - imageadd: Tweaked, Overhauled and Resprited a variety of garments related to the
+      security department, particularly its alternate clothes! Check it when possible!
+  Profakos:
+  - bugfix: 20+ item's discounts are properly smaller, instead of being larger
+  - bugfix: You can no longer have multiple copies of the same heirloom theft objective
+  Sealed101:
+  - spellcheck: fixed humanoid examine easter egg's pronoun usage
+  carshalash:
+  - qol: Regal Rats produce meat on butchering, reducing player confusion.
+  coiax:
+  - refactor: Refactored how eggs growing into chicks is implemented, and how the
+      number of chickens and chicks are tracked. It's now possible for admins to make
+      anything into an egg.
+  dessysalta, Cheshify:
+  - rscadd: Nanotrasen has added a martial artist gi to the AutoDrobe for those who
+      want to go even further byond.
+  - imageadd: Aforementioned gi sprites.
+  tralezab:
+  - bugfix: changed gondola mutants to require gondola meat instead
