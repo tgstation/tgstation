@@ -4595,6 +4595,7 @@
 	req_access = list("shipping")
 	},
 /obj/item/flashlight,
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/plating,
 /area/station/cargo/office)
 "bsJ" = (
@@ -18753,6 +18754,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/food_or_drink/cake_ingredients,
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen)
 "fxQ" = (
@@ -26660,6 +26662,7 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/radio/intercom/directional/north,
 /obj/item/storage/box/shipping,
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/iron/dark,
 /area/station/cargo/sorting)
 "hEw" = (

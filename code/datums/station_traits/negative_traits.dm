@@ -50,7 +50,7 @@
 
 /datum/station_trait/hangover/revert()
 	for (var/obj/effect/landmark/start/hangover/hangover_spot in GLOB.start_landmarks_list)
-		QDEL_LIST(hangover_spot.debris)
+		QDEL_LIST(hangover_spot.hangover_debris)
 
 	return ..()
 
