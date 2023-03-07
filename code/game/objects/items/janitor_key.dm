@@ -65,14 +65,14 @@
 	say("Access granted to [department_access] area.")
 	playsound(src, 'sound/machines/ding.ogg', 25, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(clear_access)), ACCESS_TIMER_LIMIT, TIMER_UNIQUE|TIMER_OVERRIDE)
-	log_game("Access to the [department_access] department was given to [src] [(ismob(loc) ? "held by [loc]" : "which is not being held")]]")
+	log_game("Access to the [department_access] department was given to [src] [(ismob(loc)) ? "held by [loc]" : "which is not being held"]")
 
 /**
  * Called when a keycard authenticator runs out of time
  * Clears the department access and alerts nearby people of such.
  */
 /obj/item/access_key/proc/clear_access()
-	log_game("Access to the [department_access] department on [src] has expired.)
+	log_game("Access to the [department_access] department on [src] has expired.")
 	department_access = null
 	say("Access revoked, time ran out.")
 	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
