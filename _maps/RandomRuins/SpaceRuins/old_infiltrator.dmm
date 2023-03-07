@@ -1,0 +1,1436 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"am" = (
+/obj/structure/frame/machine,
+/obj/item/stack/cable_coil/five,
+/turf/open/floor/circuit/red/airless,
+/area/ruin/space/unpowered)
+"ao" = (
+/obj/effect/mob_spawn/corpse/human/syndicatepilot,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"bU" = (
+/obj/machinery/door/window/brigdoor/left/directional/east{
+	name = "EVA";
+	req_access = list("syndicate")
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"cd" = (
+/obj/structure/mirror/directional/east,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"cj" = (
+/obj/machinery/door/window/brigdoor/left/directional/north{
+	name = "Bomb Storage";
+	req_access = list("syndicate")
+	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"cJ" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/external/ruin{
+	name = "Exterior Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"df" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"dJ" = (
+/turf/open/floor/circuit/red/airless,
+/area/ruin/space/unpowered)
+"ej" = (
+/obj/item/chair{
+	dir = 4
+	},
+/mob/living/basic/carp,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"en" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Cockpit"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/leader,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"fb" = (
+/obj/effect/turf_decal/syndicateemblem/top/middle,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"gr" = (
+/obj/structure/table,
+/obj/machinery/button/door{
+	name = "Cockpit View Control";
+	req_access = list("syndicate");
+	pixel_y = 6;
+	id = "ruined_infiltrator_shutters"
+	},
+/obj/item/knife/combat/survival,
+/obj/item/reagent_containers/pill/cyanide{
+	pixel_y = -2;
+	pixel_x = 6
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"gT" = (
+/mob/living/basic/carp,
+/turf/template_noop,
+/area/template_noop)
+"hx" = (
+/obj/structure/frame/machine,
+/obj/item/stock_parts/matter_bin/adv{
+	pixel_y = 3
+	},
+/turf/open/floor/circuit/red/airless,
+/area/ruin/space/unpowered)
+"ie" = (
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/area/ruin/space/unpowered)
+"iI" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"jj" = (
+/obj/structure/table,
+/obj/item/folder/red{
+	pixel_y = 6;
+	pixel_x = 5
+	},
+/obj/item/paper/crumpled/ruins{
+	default_raw_text = "The nuclear authorization code is: <b>6</b>---...";
+	name = "nuclear bomb code"
+	},
+/obj/item/pen{
+	pixel_y = 6;
+	pixel_x = -3
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"js" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/turf/open/floor/circuit/red/airless,
+/area/ruin/space/unpowered)
+"jt" = (
+/obj/effect/decal/cleanable/oil,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"ju" = (
+/obj/machinery/power/shuttle_engine/propulsion/right,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/ruin/space/unpowered)
+"kC" = (
+/obj/machinery/light/directional/east,
+/obj/structure/window/reinforced/spawner/north,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"la" = (
+/turf/template_noop,
+/area/template_noop)
+"lR" = (
+/obj/structure/table,
+/obj/item/gps/spaceruin{
+	pixel_y = 3;
+	pixel_x = -6
+	},
+/obj/item/grenade/smokebomb{
+	pixel_y = 5;
+	pixel_x = 6
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"mg" = (
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"mq" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"mr" = (
+/obj/item/grenade/smokebomb{
+	pixel_x = 5
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"ms" = (
+/obj/structure/table,
+/obj/item/restraints/handcuffs/cable/zipties,
+/obj/item/storage/fancy/cigarettes/cigpack_syndicate{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"mO" = (
+/obj/effect/turf_decal/syndicateemblem/top/right,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"nv" = (
+/obj/item/stack/sheet/mineral/plastitanium,
+/turf/template_noop,
+/area/template_noop)
+"nF" = (
+/obj/item/radio/intercom/directional/south,
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/ammo_casing/a357/match,
+/obj/item/ammo_casing/a357/match{
+	pixel_y = -4;
+	pixel_x = -7
+	},
+/obj/item/camera_bug{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"nR" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/plating/airless,
+/area/ruin/space/unpowered)
+"pi" = (
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"pl" = (
+/obj/structure/table,
+/obj/item/relic{
+	pixel_y = 5
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"qL" = (
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	req_access = list("syndicate");
+	name = "Engineering"
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"ro" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"sz" = (
+/obj/structure/frame/machine,
+/obj/item/circuitboard/machine/cyborgrecharger,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"sL" = (
+/obj/structure/table,
+/obj/effect/spawner/random/engineering/tool,
+/obj/machinery/light/directional/north,
+/obj/item/stack/cable_coil,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"tE" = (
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"ur" = (
+/obj/structure/lattice,
+/obj/machinery/status_display/ai/directional/north,
+/turf/template_noop,
+/area/template_noop)
+"us" = (
+/obj/effect/spawner/random/engineering/tool,
+/obj/machinery/light/directional/west,
+/obj/structure/window/reinforced/spawner/north,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"uv" = (
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent{
+	pixel_y = -8;
+	pixel_x = 2
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"uE" = (
+/obj/machinery/recharge_station,
+/obj/machinery/status_display/ai/directional/north,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"uP" = (
+/obj/machinery/power/shuttle_engine/propulsion/left,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/ruin/space/unpowered)
+"uS" = (
+/obj/machinery/newscaster/directional/south,
+/obj/item/ammo_casing/a357/match,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"vi" = (
+/obj/structure/frame/computer{
+	anchored = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"vw" = (
+/obj/effect/turf_decal/stripes/red/line,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/machinery/door/window/brigdoor/left/directional/north{
+	name = "Teleporter";
+	req_access = list("syndicate")
+	},
+/obj/item/stock_parts/scanning_module/adv{
+	pixel_x = 8
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"vK" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"wJ" = (
+/obj/machinery/door/poddoor{
+	id = "ruined_infiltrator";
+	name = "Exterior Blast Door"
+	},
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/machinery/button/door/directional/west{
+	id = "ruined_infiltrator"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/unpowered)
+"wU" = (
+/obj/structure/table,
+/obj/item/food/ready_donk{
+	pixel_x = -2;
+	pixel_y = 18
+	},
+/obj/item/toy/talking/ai{
+	pixel_y = 6;
+	pixel_x = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"wZ" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/ruin/space/unpowered)
+"xk" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"yL" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"zg" = (
+/obj/item/crowbar/red,
+/obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/structure/rack,
+/obj/item/book/manual/nuclear,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"Aa" = (
+/obj/structure/closet/syndicate,
+/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
+/obj/item/coin/antagtoken{
+	pixel_y = 4;
+	pixel_x = 3
+	},
+/obj/item/trench_tool,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"AX" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent{
+	pixel_y = -8;
+	pixel_x = 2
+	},
+/obj/item/ammo_casing/spent{
+	pixel_y = -6;
+	pixel_x = -4
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"Bb" = (
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/obj/machinery/newscaster/directional/east,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"BA" = (
+/obj/structure/table,
+/obj/item/storage/belt/bandolier{
+	pixel_y = 2;
+	pixel_x = 15
+	},
+/obj/item/assembly/igniter{
+	pixel_y = 4;
+	pixel_x = -1
+	},
+/obj/item/assembly/signaler{
+	pixel_y = 4;
+	pixel_x = -8
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"Cv" = (
+/obj/item/ammo_casing/a357/match,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"CC" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/ruin/space/unpowered)
+"CX" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/emergency/old{
+	pixel_y = 4;
+	pixel_x = 8
+	},
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"Da" = (
+/obj/effect/turf_decal/bot_red,
+/obj/machinery/suit_storage_unit/open,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"Dx" = (
+/obj/structure/table,
+/obj/item/radio{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/flashlight{
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"DM" = (
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"EK" = (
+/mob/living/basic/carp,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"EM" = (
+/obj/machinery/vending/assist,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"ET" = (
+/obj/structure/closet/cardboard/metal,
+/turf/open/floor/circuit/red/airless,
+/area/ruin/space/unpowered)
+"Fn" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/shield/riot{
+	pixel_y = 4;
+	pixel_x = 7
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"FW" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"GN" = (
+/obj/structure/frame/computer{
+	anchored = 1
+	},
+/obj/item/stack/cable_coil/five,
+/obj/item/stack/sheet/glass{
+	pixel_y = 3
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"GY" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	name = "Medical";
+	req_access = list("syndicate")
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"Ig" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"Ix" = (
+/obj/item/tank/internals/plasma/empty{
+	pixel_y = -13;
+	pixel_x = -12
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"Jd" = (
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/template_noop)
+"JH" = (
+/obj/structure/frame/machine,
+/turf/open/floor/circuit/red/airless,
+/area/ruin/space/unpowered)
+"JL" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/left,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"Kr" = (
+/obj/item/circuitboard/computer/security,
+/obj/structure/frame/computer{
+	anchored = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"KJ" = (
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"KM" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"Lz" = (
+/obj/structure/table,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/mask/gas,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"LF" = (
+/obj/item/rack_parts,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"LP" = (
+/obj/effect/turf_decal/bot_red,
+/obj/machinery/suit_storage_unit/open,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"Mw" = (
+/obj/machinery/status_display/ai{
+	pixel_x = 32
+	},
+/obj/machinery/light/directional/east,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"MB" = (
+/mob/living/basic/carp/mega,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"Nv" = (
+/obj/effect/turf_decal/bot_red,
+/obj/structure/sign/poster/contraband/random/directional/west,
+/obj/machinery/suit_storage_unit/open,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"NY" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/door/poddoor/shutters{
+	id = "ruined_infiltrator_shutters";
+	name = "Cockpit Shutters"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/unpowered)
+"OT" = (
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	name = "EVA";
+	req_access = list("syndicate")
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"Pe" = (
+/obj/item/flamethrower{
+	pixel_x = 9;
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"Pq" = (
+/turf/closed/wall/r_wall/syndicate,
+/area/ruin/space/unpowered)
+"PC" = (
+/obj/item/stock_parts/capacitor/adv{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"RM" = (
+/obj/item/restraints/handcuffs/cable/zipties/used{
+	pixel_y = 13
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"RP" = (
+/obj/structure/closet/crate/secure/loot,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"SE" = (
+/obj/item/ammo_casing/spent,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"SS" = (
+/obj/effect/turf_decal/stripes/red/line,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"SY" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/middle,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"Tc" = (
+/obj/item/stack/rods/two,
+/turf/template_noop,
+/area/template_noop)
+"Tx" = (
+/obj/machinery/door/window/brigdoor/right/directional/west{
+	req_access = list("syndicate");
+	name = "Engineering"
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"TY" = (
+/obj/effect/decal/cleanable/glass,
+/obj/item/shard,
+/obj/item/stack/cable_coil/five,
+/obj/item/electronics/airlock,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/unpowered)
+"Ux" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/table,
+/obj/item/stock_parts/cell/high/empty{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/item/stock_parts/cell/emproof/empty,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"UN" = (
+/obj/machinery/status_display/evac{
+	pixel_x = -32
+	},
+/obj/machinery/light/directional/west,
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/donkpockets{
+	pixel_y = 7;
+	pixel_x = 5
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"WS" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/ammo_casing/spent{
+	pixel_y = -6;
+	pixel_x = -4
+	},
+/obj/item/ammo_casing/spent,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"Xp" = (
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/obj/item/radio/intercom/directional/west,
+/obj/item/ammo_casing/spent,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"Yb" = (
+/obj/structure/chair,
+/obj/item/toy/plush/nukeplushie,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"Yj" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/unpowered)
+"YL" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate/black/red,
+/obj/item/clothing/head/helmet/space/syndicate/black/red,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"YN" = (
+/obj/structure/table,
+/obj/item/reagent_containers/pill/morphine{
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/pill/morphine{
+	pixel_x = 4
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"YT" = (
+/obj/item/shard,
+/turf/template_noop,
+/area/template_noop)
+"Zh" = (
+/obj/structure/table,
+/obj/item/storage/medkit/ancient{
+	pixel_y = 3;
+	pixel_x = 19
+	},
+/obj/item/reagent_containers/pill/stimulant{
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/pill/epinephrine{
+	pixel_y = 4;
+	pixel_x = -2
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+"ZO" = (
+/obj/effect/spawner/random/structure/tank_holder,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/unpowered)
+
+(1,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+"}
+(2,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+"}
+(3,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+"}
+(4,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+Tc
+la
+la
+la
+la
+"}
+(5,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+Jd
+la
+la
+la
+la
+la
+la
+Pq
+Pq
+Pq
+KM
+KM
+la
+la
+la
+la
+la
+"}
+(6,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+sz
+PC
+DM
+la
+KM
+la
+nv
+la
+la
+"}
+(7,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+la
+KM
+la
+Da
+LP
+Nv
+Da
+Pq
+uE
+vK
+EK
+KM
+KM
+la
+la
+YT
+la
+"}
+(8,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+nv
+KM
+KM
+DM
+SE
+DM
+DM
+Pq
+xk
+DM
+RM
+DM
+cd
+KM
+la
+la
+la
+"}
+(9,1,1) = {"
+la
+la
+Pq
+Pq
+Pq
+Pq
+Pq
+la
+la
+Pq
+DM
+Yb
+ej
+jt
+pi
+Pq
+ms
+WS
+DM
+Zh
+ie
+Pq
+Pq
+la
+la
+"}
+(10,1,1) = {"
+la
+la
+Pq
+df
+UN
+wU
+Pq
+Pq
+la
+Pq
+RP
+Lz
+pl
+DM
+DM
+Pq
+Dx
+DM
+DM
+YN
+Pq
+la
+la
+la
+la
+"}
+(11,1,1) = {"
+la
+la
+NY
+Yj
+Yj
+uS
+ie
+Pq
+Pq
+Pq
+Pq
+CC
+ie
+bU
+OT
+ie
+ie
+TY
+GY
+ie
+ie
+Pq
+Pq
+la
+la
+"}
+(12,1,1) = {"
+la
+la
+NY
+jj
+Cv
+mq
+Yj
+Pq
+LF
+ro
+SE
+Pe
+DM
+DM
+iI
+Xp
+JL
+vK
+DM
+us
+JH
+nR
+uP
+la
+la
+"}
+(13,1,1) = {"
+la
+la
+NY
+GN
+mg
+Yj
+Cv
+en
+DM
+EK
+DM
+Ix
+vK
+MB
+fb
+tE
+SY
+DM
+DM
+cj
+dJ
+nR
+wZ
+la
+la
+"}
+(14,1,1) = {"
+la
+la
+NY
+gr
+Fn
+Cv
+Cv
+Pq
+EM
+yL
+vK
+FW
+uv
+DM
+mO
+Bb
+Ig
+mr
+vK
+kC
+ET
+nR
+ju
+la
+la
+"}
+(15,1,1) = {"
+la
+la
+NY
+Kr
+ao
+nF
+ie
+Pq
+Pq
+Pq
+Pq
+Pq
+ie
+cJ
+CC
+ie
+ie
+Tx
+qL
+ie
+ie
+Pq
+Pq
+la
+la
+"}
+(16,1,1) = {"
+la
+la
+Pq
+vi
+Mw
+Aa
+Pq
+Pq
+la
+la
+la
+Pq
+ZO
+DM
+DM
+Pq
+BA
+DM
+DM
+Ux
+Pq
+la
+la
+la
+la
+"}
+(17,1,1) = {"
+la
+la
+Pq
+Pq
+Pq
+Pq
+Pq
+la
+la
+la
+la
+wJ
+vK
+DM
+pi
+Pq
+CX
+AX
+DM
+lR
+ie
+Pq
+Pq
+Pq
+la
+"}
+(18,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+Pq
+zg
+yL
+YL
+Pq
+sL
+KM
+DM
+DM
+SS
+js
+nR
+uP
+la
+"}
+(19,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+YT
+la
+la
+Pq
+Pq
+Pq
+Pq
+Pq
+KM
+la
+DM
+vK
+vw
+am
+nR
+wZ
+la
+"}
+(20,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+gT
+Jd
+la
+la
+la
+la
+la
+Pq
+ur
+Jd
+KM
+KJ
+SS
+hx
+nR
+ju
+la
+"}
+(21,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+Pq
+KM
+KM
+KM
+Pq
+Pq
+Pq
+Pq
+Pq
+la
+"}
+(22,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+nv
+la
+la
+la
+la
+la
+la
+"}
+(23,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+"}
+(24,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+"}
+(25,1,1) = {"
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+la
+"}

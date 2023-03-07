@@ -55,6 +55,10 @@
 	unit_name = "fueltank"
 	export_types = list(/obj/structure/reagent_dispensers/fueltank)
 
+/datum/export/large/reagent_dispenser/kvass
+	unit_name = "kvasstank"
+	export_types = list(/obj/structure/reagent_dispensers/kvasstank)
+
 /datum/export/large/reagent_dispenser/beer
 	unit_name = "beer keg"
 	contents_cost = CARGO_CRATE_VALUE * 3.5
