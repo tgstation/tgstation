@@ -54,7 +54,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/voidcrew/bogatyr/laboratory)
 "cx" = (
-/mob/living/simple_animal/hostile/netherworld/blankbody{
+/mob/living/basic/blankbody{
 	health = 200;
 	name = "Chief Science Officer"
 	},
@@ -658,7 +658,7 @@
 	},
 /obj/item/food/deadmouse,
 /mob/living/basic/cockroach/glockroach,
-/mob/living/simple_animal/pet/dog/corgi,
+/mob/living/basic/pet/dog/corgi,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

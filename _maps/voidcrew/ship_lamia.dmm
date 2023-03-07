@@ -368,8 +368,7 @@
 	},
 /obj/machinery/cryopod{
 	close_state = "bscanner_green";
-	icon_state = "bscanner_open";
-	open_state = "bscanner_open"
+	icon_state = "bscanner_open"
 	},
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/voidcrew/lamia/dorm)
@@ -410,20 +409,8 @@
 /obj/structure/closet/crate/miningcar{
 	name = "mining car"
 	},
-/obj/item/pickaxe/emergency{
-	attack_verb = list("hit","spelled","cantripped","ensorceled");
-	desc = "Forged by the greatest smiths of the academy, enchanted by the archmagus council, this is a TRUE boulder eradicator.";
-	icon = 'icons/obj/guns/magic.dmi';
-	icon_state = "staffofflight";
-	name = "staff of rock removal"
-	},
-/obj/item/pickaxe/emergency{
-	attack_verb = list("hit","spelled","cantripped","ensorceled");
-	desc = "Forged by the greatest smiths of the academy, enchanted by the archmagus council, this is a TRUE boulder eradicator.";
-	icon = 'icons/obj/guns/magic.dmi';
-	icon_state = "staffofflight";
-	name = "staff of rock removal"
-	},
+/obj/item/pickaxe/emergency,
+/obj/item/pickaxe/emergency,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
@@ -1287,11 +1274,6 @@
 "Ma" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/gun/energy/e_gun/mini{
-	desc = "The small and submissive wand of wizards-in-training, firing bursts of raw magical energy to disable or kill foes. Comes with built-in nightlight!";
-	gunlight_state = "nothingwand";
-	icon = 'icons/obj/weapons/guns/magic.dmi';
-	icon_state = "nothingwand";
-	name = "acolyte's training wand of duality";
 	pixel_x = -2;
 	pixel_y = 2
 	},

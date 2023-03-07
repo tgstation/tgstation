@@ -218,9 +218,7 @@
 /area/shuttle/voidcrew/high/cargo_bay)
 "eB" = (
 /obj/structure/filingcabinet,
-/obj/machinery/firealarm/directional/north{
-	dir = 1
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -1477,9 +1475,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/firealarm/directional/north{
-	dir = 1
-	},
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/carpet/neon/simple/red,
 /area/shuttle/voidcrew/high/bridge/boardroom)
 "Dn" = (
@@ -1579,9 +1575,7 @@
 /turf/open/floor/carpet/neon/simple/blue,
 /area/shuttle/voidcrew/high/bridge)
 "FY" = (
-/obj/machinery/firealarm/directional/north{
-	dir = 1
-	},
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/high/bridge/captain)
 "FZ" = (
@@ -1798,10 +1792,10 @@
 /turf/open/floor/bamboo,
 /area/shuttle/voidcrew/high/hallway)
 "Kf" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/high/engineering)
 "Kj" = (
@@ -2002,13 +1996,13 @@
 /turf/closed/wall,
 /area/shuttle/voidcrew/high/hallway)
 "MW" = (
-/obj/machinery/computer/cargo/express{
-	dir = 1
-	},
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/structure/window/reinforced/plasma/spawner/east,
+/obj/machinery/computer/voidcrew_cargo{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/high/cargo_bay)
 "Nd" = (

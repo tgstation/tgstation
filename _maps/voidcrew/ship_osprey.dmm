@@ -2186,10 +2186,10 @@
 /area/shuttle/voidcrew/osprey/hallway/aft)
 "ug" = (
 /obj/item/radio/intercom/directional/east,
-/obj/machinery/computer/cargo/express{
+/obj/structure/sign/poster/official/random/directional/south,
+/obj/machinery/computer/voidcrew_cargo{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/osprey/cargo/warehouse)
 "ui" = (
@@ -3283,7 +3283,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/osprey/medbay)
 "FA" = (
-/obj/machinery/computer/med_data/laptop{
+/obj/machinery/computer/records/medical/laptop{
 	dir = 8
 	},
 /obj/structure/table/reinforced/rglass,
@@ -4215,7 +4215,7 @@
 	pixel_x = -3;
 	pixel_y = 13
 	},
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/osprey/medbay)
 "OR" = (
@@ -5017,7 +5017,6 @@
 /area/shuttle/voidcrew/osprey/engineering)
 "XS" = (
 /obj/structure/closet/secure_closet/captains{
-	icon_state = "cap";
 	name = "\proper captain's locker"
 	},
 /obj/item/clothing/under/rank/centcom/commander,
@@ -5097,10 +5096,7 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/research/robotics)
 "YW" = (
-/obj/structure/frame/computer{
-	anchored = 1;
-	dir = 8
-	},
+/obj/structure/table,
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/osprey/cargo/warehouse)
 "Zl" = (

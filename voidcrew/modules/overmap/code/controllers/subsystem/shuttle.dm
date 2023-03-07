@@ -12,7 +12,7 @@
 
 	if(!loaded)
 		qdel(ship_to_spawn)
-		return
+		return FALSE
 
 	loaded.current_ship = ship_to_spawn
 	ship_to_spawn.name = loaded.name

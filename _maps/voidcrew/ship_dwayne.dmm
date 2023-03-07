@@ -381,7 +381,7 @@
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/suit/apron/surgical,
-/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/dwayne/medbay)

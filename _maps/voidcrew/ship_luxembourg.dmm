@@ -617,10 +617,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/computer/cargo/express,
 /obj/item/radio/intercom{
 	pixel_y = 28
 	},
+/obj/machinery/computer/voidcrew_cargo,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/voidcrew/luxembourg/bridge)
 "py" = (
@@ -924,9 +924,7 @@
 "xm" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
-/obj/machinery/firealarm/directional/north{
-	dir = 1
-	},
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/carpet/donk,
 /area/shuttle/voidcrew/luxembourg/dormitories)
 "xx" = (
@@ -1254,7 +1252,7 @@
 /obj/structure/cable,
 /obj/machinery/suit_storage_unit{
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/blue;
-	suit_type = /obj/item/clothing/suit/space/syndicate/surplus
+	suit_type = /obj/item/clothing/suit/space/syndicate/blue
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 6
@@ -1264,7 +1262,7 @@
 "LP" = (
 /obj/machinery/suit_storage_unit{
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/blue;
-	suit_type = /obj/item/clothing/suit/space/syndicate/surplus
+	suit_type = /obj/item/clothing/suit/space/syndicate/blue
 	},
 /obj/effect/turf_decal/tile/brown/anticorner,
 /turf/open/floor/iron/dark,
@@ -1282,7 +1280,7 @@
 "Mi" = (
 /obj/machinery/suit_storage_unit{
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/blue;
-	suit_type = /obj/item/clothing/suit/space/syndicate/surplus
+	suit_type = /obj/item/clothing/suit/space/syndicate/blue
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown{
@@ -1561,10 +1559,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/voidcrew/luxembourg/engineering)
 "Vo" = (
-/obj/machinery/vending/boozeomat/all_access{
-	default_price = 0;
-	extra_price = 0
-	},
+/obj/machinery/vending/boozeomat/all_access,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/voidcrew/luxembourg/bridge)
 "VF" = (

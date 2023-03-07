@@ -260,9 +260,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/vending/security{
-	all_items_free = 1
-	},
+/obj/machinery/vending/security,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/hyena/armory)
@@ -890,11 +888,11 @@
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/hyena/cargo_bay)
 "uf" = (
-/obj/machinery/firealarm/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/reinforced,
 /obj/item/paper_bin/carbon,
 /obj/item/circuitboard/machine/protolathe/department/cargo,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/hyena/bridge/foreman)
 "uk" = (
@@ -1799,9 +1797,7 @@
 /area/shuttle/voidcrew/hyena/maintenance/port)
 "OX" = (
 /obj/effect/turf_decal/bot_white,
-/obj/machinery/vending/security{
-	all_items_free = 1
-	},
+/obj/machinery/vending/security,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/hyena/armory)
 "Pw" = (
@@ -2136,11 +2132,11 @@
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/hyena/dorms)
 "Xj" = (
-/obj/machinery/computer/cargo/express{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/computer/voidcrew_cargo{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/hyena/bridge/foreman)
 "Xz" = (

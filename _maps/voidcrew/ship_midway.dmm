@@ -376,7 +376,7 @@
 "mb" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/brown,
-/obj/machinery/computer/cargo/express{
+/obj/machinery/computer/voidcrew_cargo{
 	dir = 4
 	},
 /turf/open/floor/iron,

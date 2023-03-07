@@ -16,7 +16,12 @@
 	///List of spawn points on the ship.
 	var/list/obj/machinery/cryopod/spawn_points = list()
 
+/obj/docking_port/mobile/voidcrew/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_GLOB_Z_SHIP_PROBE, PROC_REF(respond_to_z_port_probe))
+
 /obj/docking_port/mobile/voidcrew/Destroy(force)
+	UnregisterSignal(src, COMSIG_GLOB_Z_SHIP_PROBE)
 	current_ship.shuttle = null
 	current_ship = null
 	spawn_points.Cut()
@@ -40,13 +45,11 @@
 
 /// Links to the Z level to ensure that if there are more than one ships on a z level when one leaves it doesnt clear the z trait
 /obj/docking_port/mobile/voidcrew/proc/link_to_z_level()
-	unlink_from_z_level()
-	RegisterSignal(src, COMSIG_GLOB_Z_SHIP_PROBE, PROC_REF(respond_to_z_port_probe))
 	var/bottom_z = z - z_levels_below
 	var/top_z = z + z_levels_above
 	for(var/z_level in bottom_z to top_z)
-		LAZYORASSOCLIST(SSmapping.z_trait_levels, ZTRAIT_STATION, z_level)
 		GLOB.station_levels_cache[z_level] = TRUE
+		SSmapping.z_trait_levels[ZTRAIT_STATION] += list(z_level)
 	GLOB.the_station_areas |= shuttle_areas
 
 /// Unlinks from the z level
@@ -56,10 +59,9 @@
 	for(var/z_level in bottom_z to top_z)
 		if(SEND_SIGNAL(src, COMSIG_GLOB_Z_SHIP_PROBE, z_level))
 			continue
-		LAZYREMOVEASSOC(SSmapping.z_trait_levels, ZTRAIT_STATION, z_level)
 		GLOB.station_levels_cache[z_level] = FALSE
+		SSmapping.z_trait_levels[ZTRAIT_STATION] -= list(z_level)
 	GLOB.the_station_areas -= shuttle_areas
-	UnregisterSignal(src, COMSIG_GLOB_Z_SHIP_PROBE)
 
 /// Signal Handler for checking if anyone else is linked to a z level
 /obj/docking_port/mobile/voidcrew/proc/respond_to_z_port_probe(datum/source, z_level)

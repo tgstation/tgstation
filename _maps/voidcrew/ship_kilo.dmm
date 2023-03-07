@@ -54,6 +54,13 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood/old,
+/mob/living/basic/migo{
+	environment_smash = 0;
+	faction = list("neutral");
+	melee_damage_lower = 5;
+	melee_damage_upper = 10;
+	name = "maurice"
+	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/voidcrew/kilo/cargo/mining_dock)
@@ -894,7 +901,7 @@
 	pixel_y = 6
 	},
 /obj/item/paper/crumpled/bloody{
-	info = "We struck gold, literally. We found some good rocks out near Centurai-II rich with the stuff. Kae said he and Milos found something out while prospecting, some sort of glowing cube. It's jammed in there good, so we're anchoring until we sort this out...";
+	default_raw_text = "We struck gold, literally. We found some good rocks out near Centurai-II rich with the stuff. Kae said he and Milos found something out while prospecting, some sort of glowing cube. It's jammed in there good, so we're anchoring until we sort this out...";
 	pixel_x = 4;
 	pixel_y = 4
 	},

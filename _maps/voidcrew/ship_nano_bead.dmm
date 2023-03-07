@@ -437,7 +437,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/bead/bridge)
 "rV" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/dark_blue/anticorner,

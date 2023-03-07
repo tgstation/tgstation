@@ -50,11 +50,6 @@
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/dorms)
-"aW" = (
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
-/area/shuttle/voidcrew/metis/ai_core)
 "aX" = (
 /obj/structure/sign/poster/official/science,
 /turf/closed/wall/mineral/titanium,
@@ -131,14 +126,12 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/voidcrew/metis/hallway/aft)
 "cC" = (
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
-/area/shuttle/voidcrew/metis/science/robotics)
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/hallway/fore)
 "cG" = (
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "cK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -167,17 +160,17 @@
 "di" = (
 /obj/effect/decal/cleanable/food/salt,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "dm" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "dt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "dD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/electric_shock,
@@ -204,9 +197,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "dX" = (
 /turf/open/floor/mineral/titanium/tiled,
@@ -278,9 +269,7 @@
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "eO" = (
 /obj/structure/sign/warning/deathsposal,
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "eT" = (
 /obj/effect/decal/cleanable/xenoblood,
@@ -379,9 +368,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "gj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer2,
@@ -410,7 +397,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "gY" = (
 /obj/machinery/vending/wardrobe/robo_wardrobe,
 /turf/open/floor/mineral/titanium/tiled,
@@ -419,7 +406,7 @@
 /obj/structure/chair,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "hb" = (
 /obj/machinery/power/smes/engineering{
 	dir = 1
@@ -430,9 +417,7 @@
 /area/shuttle/voidcrew/metis/engineering)
 "hl" = (
 /obj/structure/sign/poster/random,
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "hp" = (
 /turf/closed/wall/mineral/titanium,
@@ -487,7 +472,7 @@
 "hP" = (
 /mob/living/simple_animal/hostile/alien/sentinel,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "hR" = (
 /obj/structure/holosign/barrier/medical,
 /obj/machinery/light/floor,
@@ -600,9 +585,8 @@
 "kj" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/light/broken,
-/obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "kn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -622,7 +606,7 @@
 /obj/item/toy/figure/rd,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "kD" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/maintenance)
@@ -715,7 +699,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "mc" = (
 /obj/machinery/holopad,
 /obj/effect/decal/cleanable/dirt,
@@ -739,10 +723,8 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "mJ" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
 /obj/item/storage/belt/utility/full,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/stack/cable_coil,
@@ -761,7 +743,7 @@
 /obj/effect/gibspawner/human,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "mT" = (
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
@@ -798,11 +780,10 @@
 /area/shuttle/voidcrew/metis/science/nanites)
 "nM" = (
 /obj/item/cigbutt,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "nR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -835,9 +816,7 @@
 /area/shuttle/voidcrew/metis/dorms)
 "ow" = (
 /obj/structure/sign/poster/contraband/lusty_xenomorph,
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "oB" = (
 /obj/machinery/camera/autoname/directional/south,
@@ -868,14 +847,14 @@
 "oV" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "px" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "foreshutter"
 	},
 /turf/open/floor/plating,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "pA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
@@ -919,17 +898,17 @@
 	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "qo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/cigbutt,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "qu" = (
 /obj/effect/mob_spawn/corpse/human/scientist,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "qL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -977,10 +956,9 @@
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "rp" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
@@ -1030,9 +1008,7 @@
 /area/shuttle/voidcrew/metis/science/nanites)
 "sd" = (
 /obj/structure/sign/poster/random,
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/ai_core)
 "sj" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -1146,9 +1122,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "uY" = (
 /obj/structure/cable,
@@ -1260,7 +1234,7 @@
 /obj/structure/table,
 /obj/item/food/cubancarp,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "wY" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/science)
@@ -1314,9 +1288,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/hallway/aft)
-"yg" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/voidcrew/metis/science/xenobiology)
 "yh" = (
 /obj/structure/closet/crate,
 /obj/item/radio,
@@ -1330,7 +1301,7 @@
 "yk" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "ym" = (
 /obj/machinery/door/airlock/command/glass,
 /obj/machinery/door/firedoor,
@@ -1347,11 +1318,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
-"yB" = (
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
-/area/shuttle/voidcrew/metis/science/nanites)
 "yD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1370,9 +1336,7 @@
 /area/shuttle/voidcrew/metis/maintenance)
 "yM" = (
 /obj/structure/sign/warning/biohazard,
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "zb" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1507,7 +1471,7 @@
 "Bg" = (
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "Bi" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1528,7 +1492,7 @@
 "BD" = (
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "BM" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
@@ -1735,15 +1699,13 @@
 /area/shuttle/voidcrew/metis/ai_core)
 "EN" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "ET" = (
 /obj/structure/table,
 /obj/item/food/soup/electron,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "Fk" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/west,
@@ -1874,7 +1836,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "HA" = (
 /mob/living/simple_animal/slime,
 /obj/machinery/conveyor{
@@ -1894,7 +1856,7 @@
 /area/shuttle/voidcrew/metis/bridge)
 "HI" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "HM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -1977,7 +1939,7 @@
 /obj/structure/table,
 /obj/item/food/burger/xeno,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "IE" = (
 /obj/structure/barricade/wooden,
 /obj/structure/disposalpipe/segment{
@@ -2005,11 +1967,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/aft)
-"IT" = (
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
-/area/shuttle/voidcrew/metis/dorms)
 "IY" = (
 /obj/item/clothing/mask/gas/welding,
 /obj/structure/cable,
@@ -2054,9 +2011,6 @@
 	},
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/dorms)
-"Jw" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/voidcrew/metis/engineering)
 "Jz" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/science/nanites)
@@ -2190,9 +2144,7 @@
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "LX" = (
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/engineering)
 "Mc" = (
 /obj/machinery/light{
@@ -2230,7 +2182,7 @@
 "MK" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "MR" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -2310,9 +2262,7 @@
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "Oo" = (
 /obj/structure/sign/poster/official/ion_rifle,
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/maintenance)
 "Ou" = (
 /obj/effect/decal/cleanable/blood,
@@ -2434,9 +2384,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/fore)
 "Qy" = (
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/hallway/aft)
 "QB" = (
 /obj/structure/sign/poster/random,
@@ -2487,7 +2435,7 @@
 /obj/effect/decal/cleanable/vomit/old,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "RQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2510,9 +2458,7 @@
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "Sa" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm/directional/north{
-	dir = 1
-	},
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/carpet/purple,
 /area/shuttle/voidcrew/metis/eepsoffice)
 "Sd" = (
@@ -2610,7 +2556,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "TE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
@@ -2693,7 +2639,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "Uv" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
@@ -2711,7 +2657,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
+/area/shuttle/voidcrew/metis/hallway/fore)
 "UD" = (
 /obj/structure/grille/broken,
 /obj/item/shard,
@@ -2744,9 +2690,6 @@
 /obj/machinery/pipedispenser/disposal,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
-"Vw" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/voidcrew/metis/hallway/aft)
 "Vx" = (
 /obj/machinery/door/airlock/science,
 /obj/machinery/door/firedoor,
@@ -2768,9 +2711,7 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/science/nanites)
 "VI" = (
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "VJ" = (
 /obj/structure/sign/warning/no_smoking,
@@ -2874,9 +2815,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "Xc" = (
 /obj/structure/table/reinforced,
@@ -2887,11 +2826,6 @@
 /obj/item/clothing/mask/gas/welding,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/science/robotics)
-"Xe" = (
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
-/area/shuttle/voidcrew/metis/maintenance)
 "Xl" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/dorms)
@@ -2954,9 +2888,7 @@
 /area/shuttle/voidcrew/metis/ai_core)
 "XI" = (
 /obj/structure/sign/poster/official/no_erp,
-/turf/closed/wall/mineral/titanium{
-	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/ai_core)
 "XN" = (
 /obj/item/aicard,
@@ -3133,25 +3065,25 @@ vo
 vo
 vo
 vo
-Xl
-yg
-yg
-yg
-yg
-yg
+cC
+VI
+VI
+VI
+VI
+VI
 fH
-yg
-yg
+VI
+VI
 fH
-yg
-yg
+VI
+VI
 fH
-yg
-yg
-yg
-yg
-yg
-yg
+VI
+VI
+VI
+VI
+VI
+VI
 vo
 vo
 "}
@@ -3160,7 +3092,7 @@ vo
 vo
 vo
 vo
-Xl
+cC
 HI
 fH
 HQ
@@ -3179,7 +3111,7 @@ Sj
 My
 Cr
 WS
-yg
+VI
 vo
 vo
 "}
@@ -3187,7 +3119,7 @@ vo
 vo
 vo
 vo
-Xl
+cC
 HI
 qe
 VI
@@ -3207,14 +3139,14 @@ OS
 bL
 au
 HA
-yg
+VI
 vo
 vo
 "}
 (4,1,1) = {"
 vo
 vo
-Xl
+cC
 Bg
 mD
 lS
@@ -3235,13 +3167,13 @@ pF
 Ww
 Ai
 Ti
-yg
+VI
 vo
 vo
 "}
 (5,1,1) = {"
 vo
-Xl
+cC
 HI
 gZ
 IB
@@ -3264,15 +3196,15 @@ fH
 Oc
 vZ
 fH
-Jw
+LX
 vo
 "}
 (6,1,1) = {"
 vo
-Xl
+cC
 cG
 oV
-ih
+EN
 qu
 yM
 LH
@@ -3288,12 +3220,12 @@ QY
 Ym
 xu
 kZ
-yg
+VI
 ml
 Iq
 FX
 RS
-Jw
+LX
 "}
 (7,1,1) = {"
 vo
@@ -3321,13 +3253,13 @@ EG
 QS
 Sg
 Sg
-Jw
+LX
 "}
 (8,1,1) = {"
 vo
 px
 yk
-ih
+EN
 mN
 wR
 VI
@@ -3349,12 +3281,12 @@ Ox
 HV
 gj
 YP
-Jw
+LX
 "}
 (9,1,1) = {"
 vo
 px
-ih
+EN
 hP
 Rx
 Hz
@@ -3377,13 +3309,13 @@ mJ
 QS
 ra
 ra
-Jw
+LX
 "}
 (10,1,1) = {"
 vo
 px
 di
-ih
+EN
 gW
 HI
 zJ
@@ -3405,7 +3337,7 @@ RS
 mT
 uP
 ij
-Jw
+LX
 "}
 (11,1,1) = {"
 vo
@@ -3414,7 +3346,7 @@ dm
 dt
 nM
 rh
-to
+Tg
 Al
 Qu
 Jq
@@ -3431,17 +3363,17 @@ De
 QM
 RS
 gH
-Jw
-Jw
-Jw
+LX
+LX
+LX
 "}
 (12,1,1) = {"
 vo
-Xl
+cC
 ET
 kj
 BD
-Xl
+cC
 rv
 to
 to
@@ -3465,24 +3397,24 @@ vh
 "}
 (13,1,1) = {"
 vo
-Xl
+cC
 EN
 kC
-Xl
+cC
 rT
 zY
 Tg
-IT
-IT
-IT
-IT
+Xl
+Xl
+Xl
+Xl
 TY
-aW
-aW
-aW
-aW
-aW
-aW
+lk
+lk
+lk
+lk
+lk
+lk
 hI
 fQ
 ms
@@ -3500,17 +3432,17 @@ rJ
 Yf
 Wi
 DO
-IT
+Xl
 Js
 ND
 Sd
-aW
+lk
 nr
 Cn
 SA
 nr
 fo
-aW
+lk
 ZH
 QM
 LX
@@ -3528,11 +3460,11 @@ oK
 rY
 qP
 HW
-IT
+Xl
 wD
 ih
 Ky
-aW
+lk
 nm
 eE
 eE
@@ -3556,17 +3488,17 @@ sj
 Qu
 Wi
 Rk
-IT
+Xl
 JD
 eo
 SN
-aW
+lk
 ZJ
 lk
 Yz
 UL
 eE
-aW
+lk
 wl
 oB
 LX
@@ -3598,9 +3530,9 @@ zx
 Dt
 vW
 RS
-Jw
-Jw
-Jw
+LX
+LX
+LX
 vo
 "}
 (18,1,1) = {"
@@ -3612,11 +3544,11 @@ UD
 QW
 Wi
 DQ
-IT
+Xl
 YO
 XB
 dX
-aW
+lk
 ja
 lk
 Pj
@@ -3628,7 +3560,7 @@ qR
 Qy
 jI
 jI
-Vw
+Qy
 vo
 "}
 (19,1,1) = {"
@@ -3640,23 +3572,23 @@ rJ
 LO
 At
 vE
-IT
+Xl
 JM
 ih
 Ky
-aW
+lk
 nm
 eE
 eE
 nm
 eE
-aW
+lk
 IY
 jH
 Qy
 Zq
 Zq
-Vw
+Qy
 vo
 "}
 (20,1,1) = {"
@@ -3668,24 +3600,24 @@ Aj
 cW
 ez
 wy
-IT
+Xl
 KK
 NW
 TH
-aW
+lk
 nr
 Cn
 QT
 nr
 fo
-aW
+lk
 Cm
 QM
 Qy
 om
 CP
 Nm
-Vw
+Qy
 "}
 (21,1,1) = {"
 vo
@@ -3696,17 +3628,17 @@ JR
 dG
 Wi
 iS
-IT
-IT
-IT
-IT
+Xl
+Xl
+Xl
+Xl
 Jn
-aW
-aW
-aW
-aW
+lk
+lk
+lk
+lk
 sd
-aW
+lk
 Gw
 De
 yc
@@ -3741,7 +3673,7 @@ Qy
 hu
 tw
 cv
-Vw
+Qy
 "}
 (23,1,1) = {"
 vo
@@ -3766,9 +3698,9 @@ uI
 fQ
 Ag
 Qy
-Vw
-Vw
-Vw
+Qy
+Qy
+Qy
 vo
 "}
 (24,1,1) = {"
@@ -3813,7 +3745,7 @@ LK
 NZ
 Ut
 XY
-cC
+hp
 dQ
 YB
 pZ
@@ -3841,7 +3773,7 @@ eI
 XF
 CK
 sG
-cC
+hp
 sk
 ut
 NP
@@ -3925,7 +3857,7 @@ ME
 xL
 vK
 XZ
-cC
+hp
 AD
 Vz
 Wo
@@ -3954,10 +3886,10 @@ uE
 Vx
 eB
 uE
-yB
-yB
+Jz
+Jz
 zG
-Xe
+kD
 Oo
 yH
 Pk

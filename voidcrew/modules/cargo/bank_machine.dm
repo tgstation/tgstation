@@ -48,7 +48,7 @@
 
 /obj/machinery/computer/bank_machine/connect_to_shuttle(mapload, obj/docking_port/mobile/voidcrew/port, obj/docking_port/stationary/dock)
 	. = ..()
-	if(istype(port) && port.current_ship.ship_account)
+	if(istype(port) && port.current_ship && port.current_ship.ship_account)
 		synced_bank_account = port.current_ship.ship_account
 
 /**

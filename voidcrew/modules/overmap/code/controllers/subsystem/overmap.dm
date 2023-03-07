@@ -28,11 +28,7 @@ SUBSYSTEM_DEF(overmap)
 	///List of all simulated ships
 	var/list/simulated_ships = list()
 
-	#ifdef UNIT_TESTS
-	var/datum/map_template/shuttle/voidcrew/initial_ship_template = /datum/map_template/shuttle/voidcrew/box
-	#else
 	var/datum/map_template/shuttle/voidcrew/initial_ship_template
-	#endif
 	var/obj/structure/overmap/ship/initial_ship
 
 /datum/controller/subsystem/overmap/Initialize(start_timeofday)
@@ -192,6 +188,15 @@ SUBSYSTEM_DEF(overmap)
  * When we find a valid template we use it to spawn a ship.
  */
 /datum/controller/subsystem/overmap/proc/spawn_initial_ship()
+	#ifdef UNIT_TESTS
+	var/list/remaining_templates = subtypesof(/datum/map_template/shuttle/voidcrew)
+	for(var/templates in remaining_templates)
+		var/datum/map_template/shuttle/voidcrew/loaded_template = SSshuttle.create_ship(templates)
+		if(!loaded_template)
+			log_mapping("[src] failed to load ship [templates].")
+		initial_ship_template = loaded_template //this will constantly be overwritten but it's fine, it's just for any future testing if needed.
+
+	#else
 	if(!initial_ship_template)
 		var/list/remaining_templates = subtypesof(/datum/map_template/shuttle/voidcrew)
 		while(!initial_ship_template && LAZYLEN(remaining_templates))
@@ -211,6 +216,8 @@ SUBSYSTEM_DEF(overmap)
 		CRASH("Failed to spawn initial ship.")
 
 	RegisterSignal(initial_ship, COMSIG_PARENT_QDELETING, PROC_REF(handle_initial_ship_deletion))
+
+	#endif
 
 /datum/controller/subsystem/overmap/proc/handle_initial_ship_deletion(datum/source)
 	SIGNAL_HANDLER

@@ -57,9 +57,8 @@
 /obj/structure/closet/crate/critter{
 	name = "DANGER: DO NOT OPEN"
 	},
-/mob/living/simple_animal/bot/secbot{
-	desc = "A little security robot.  He looks downright furious!";
-	emagged = 2;
+/mob/living/simple_animal/bot/secbot/genesky{
+	desc = "A little security robot. He looks downright furious!";
 	name = "\improper Officer Berzerksky"
 	},
 /obj/effect/decal/cleanable/oil/streak,
@@ -606,9 +605,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/voidcrew/libertatia/crew_lounge)
 "wZ" = (
-/obj/machinery/vending/boozeomat/all_access{
-	all_items_free = 1
-	},
+/obj/machinery/vending/boozeomat/all_access,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/voidcrew/libertatia/crew_lounge)
 "xv" = (

@@ -74,6 +74,7 @@
 "eC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/voidcrew/goon/commons)
 "eJ" = (
@@ -104,9 +105,11 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/goon/engineering)
 "fZ" = (
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 4;
-	piping_layer = 2
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -10;
+	pixel_y = -10
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/voidcrew/goon/engineering)
@@ -193,12 +196,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/voidcrew/goon/commons)
-"oa" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/voidcrew/goon/medbay)
 "or" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/yellow,
@@ -207,6 +204,7 @@
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/voidcrew/goon/engineering)
 "po" = (
@@ -217,9 +215,7 @@
 /area/shuttle/voidcrew/goon/commons)
 "pD" = (
 /obj/machinery/suit_storage_unit/standard_unit,
-/obj/machinery/firealarm/directional/west{
-	dir = 4
-	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/voidcrew/goon/commons)
 "pG" = (
@@ -255,6 +251,7 @@
 "ro" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/voidcrew/goon/engineering)
 "rX" = (
@@ -287,6 +284,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/voidcrew/goon/engineering)
 "vX" = (
@@ -297,6 +295,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/voidcrew/goon/engineering)
 "wf" = (
@@ -467,9 +466,12 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/voidcrew/goon/bridge)
 "Ix" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/voidcrew/goon/engineering)
+/turf/open/floor/mineral/titanium,
+/area/shuttle/voidcrew/goon/commons)
 "IN" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/goon/commons)
@@ -513,10 +515,7 @@
 	dir = 1
 	},
 /obj/structure/closet/secure_closet/engineering_personal,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/voidcrew/goon/engineering)
 "Kx" = (
@@ -542,10 +541,8 @@
 /area/shuttle/voidcrew/goon/bridge)
 "Ng" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/voidcrew/goon/engineering)
 "OQ" = (
@@ -592,6 +589,13 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/goon/medbay)
+"Sc" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/voidcrew/goon/engineering)
 "SH" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/goon/medbay)
@@ -673,20 +677,15 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/goon/engineering)
 "YI" = (
-/obj/machinery/atmospherics/components/binary/pump/layer2{
-	dir = 4
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/voidcrew/goon/engineering)
 "Zr" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/electrical{
-	pixel_x = -10;
-	pixel_y = -10
-	},
-/obj/item/storage/toolbox/mechanical,
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible,
+/obj/machinery/atmospherics/components/tank/air{
+	piping_layer = 4
+	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/voidcrew/goon/engineering)
 "Zs" = (
@@ -694,7 +693,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/voidcrew/goon/medbay)
 "ZH" = (
@@ -705,6 +703,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/voidcrew/goon/medbay)
 "ZQ" = (
@@ -759,7 +758,7 @@ Bw
 OQ
 Xh
 Zs
-Ix
+TR
 JZ
 VQ
 Ng
@@ -770,12 +769,12 @@ TR
 SH
 Uo
 Be
-oa
+Xh
 ka
 TR
 Lr
 ro
-or
+Sc
 UT
 TR
 "}
@@ -783,7 +782,7 @@ TR
 IZ
 SH
 tW
-oa
+Xh
 bd
 fU
 Xx
@@ -796,7 +795,7 @@ IZ
 IZ
 Bg
 JP
-oa
+Xh
 jL
 TR
 cR
@@ -822,7 +821,7 @@ ya
 at
 Ea
 Ea
-dI
+Ix
 aq
 wf
 ds
@@ -837,7 +836,7 @@ Ea
 Ea
 eC
 eC
-dI
+Ix
 eC
 eC
 Ea
