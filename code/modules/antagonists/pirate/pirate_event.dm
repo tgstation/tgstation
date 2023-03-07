@@ -33,7 +33,7 @@
 	var/datum/comm_message/threat = chosen_gang.generate_message(payoff)
 	//send message
 	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", SSstation.announcer.get_rand_report_sound())
-	threat.answer_callback = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pirates_answered), threat, chosen_gang, payoff, world.time)
+	threat.answer_callback = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pirates_answered), threat, chosen_gang, payoff, arrival_announcement, world.time)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(spawn_pirates), threat, chosen_gang, FALSE), RESPONSE_MAX_TIME)
 	SScommunications.send_message(threat, unique = TRUE)
 
@@ -50,7 +50,7 @@
 				priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name)
 				spawn_pirates(threat, chosen_gang, TRUE)
 
-/proc/spawn_pirates(datum/comm_message/threat, datum/pirate_gang/chosen_gang, skip_answer_check)
+/proc/spawn_pirates(datum/comm_message/threat, datum/pirate_gang/chosen_gang, skip_answer_check, arrival_announcement)
 	if(!skip_answer_check && threat?.answered == 1)
 		return
 
@@ -79,7 +79,7 @@
 			else
 				notify_ghosts("The pirate ship has an object of interest: [spawner]!", source = spawner, action = NOTIFY_ORBIT, header="Pirate Spawn Here!")
 
-	priority_announce("Unidentified armed ship detected near the station.")
+	priority_announce(arrival_announcement)
 
 /datum/event_admin_setup/pirates
 	///admin chosen pirate team
