@@ -194,7 +194,7 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/machinery/door/window/open(forced = DOOR_DEFAULT_CHECKS)
+/obj/machinery/door/window/open(forced = DEFAULT_DOOR_CHECKS)
 	if (operating) //doors can still open when emag-disabled
 		return FALSE
 
@@ -218,19 +218,19 @@
 	return TRUE
 
 /// Additional checks depending on what we want to happen to this windoor
-/obj/machinery/door/window/try_to_force_door_open(force_type = DOOR_DEFAULT_CHECKS)
+/obj/machinery/door/window/try_to_force_door_open(force_type = DEFAULT_DOOR_CHECKS)
 	switch(force_type)
-		if(DOOR_DEFAULT_CHECKS)
+		if(DEFAULT_DOOR_CHECKS)
 			if(!hasPower() || (obj_flags & EMAGGED))
 				return FALSE
 			return TRUE
 
-		if(DOOR_FORCED_CHECKS)
+		if(FORCING_DOOR_CHECKS)
 			if(obj_flags & EMAGGED)
 				return FALSE
 			return TRUE
 
-		if(DOOR_BYPASS_CHECKS) // Get it open!
+		if(BYPASS_DOOR_CHECKS) // Get it open!
 			return TRUE
 
 		else
@@ -239,7 +239,7 @@
 	// Shit's fucked, let's just check parent real fast.
 	return ..()
 
-/obj/machinery/door/window/close(forced = DOOR_DEFAULT_CHECKS)
+/obj/machinery/door/window/close(forced = DEFAULT_DOOR_CHECKS)
 	if(operating || !try_to_force_door_shut(forced))
 		return FALSE
 
@@ -256,19 +256,19 @@
 	operating = FALSE
 	return TRUE
 
-/obj/machinery/door/window/try_to_force_door_shut(force_type = DOOR_DEFAULT_CHECKS)
+/obj/machinery/door/window/try_to_force_door_shut(force_type = DEFAULT_DOOR_CHECKS)
 	switch(force_type)
-		if(DOOR_DEFAULT_CHECKS)
+		if(DEFAULT_DOOR_CHECKS)
 			if(!hasPower() || (obj_flags & EMAGGED))
 				return FALSE
 			return TRUE
 
-		if(DOOR_FORCED_CHECKS)
+		if(FORCING_DOOR_CHECKS)
 			if(obj_flags & EMAGGED)
 				return FALSE
 			return TRUE
 
-		if(DOOR_BYPASS_CHECKS) // Get it shut!
+		if(BYPASS_DOOR_CHECKS) // Get it shut!
 			return TRUE
 
 		else
@@ -317,7 +317,7 @@
 		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		sleep(0.6 SECONDS)
 		operating = FALSE
-		open(DOOR_BYPASS_CHECKS)
+		open(BYPASS_DOOR_CHECKS)
 
 /obj/machinery/door/window/examine(mob/user)
 	. = ..()
@@ -402,9 +402,9 @@
 /obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user, forced = FALSE)
 	if(!hasPower() || forced)
 		if(density)
-			open(DOOR_BYPASS_CHECKS)
+			open(BYPASS_DOOR_CHECKS)
 		else
-			close(DOOR_BYPASS_CHECKS)
+			close(BYPASS_DOOR_CHECKS)
 	else
 		to_chat(user, span_warning("The door's motors resist your efforts to force it!"))
 

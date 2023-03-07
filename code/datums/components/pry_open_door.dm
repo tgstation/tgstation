@@ -44,9 +44,9 @@
 		if(airlock_target.locked)
 			return
 		attacker.visible_message(span_warning("We force the [airlock_target] to open."))
-		airlock_target.open(DOOR_BYPASS_CHECKS)
+		airlock_target.open(BYPASS_DOOR_CHECKS)
 	else if(!airlock_target.hasPower())
 		attacker.visible_message(span_warning("We force the [airlock_target] to open."))
-		airlock_target.open(DOOR_FORCED_CHECKS)
+		airlock_target.open(FORCING_DOOR_CHECKS)
 	else
-		airlock_target.open(DOOR_DEFAULT_CHECKS)
+		airlock_target.open(DEFAULT_DOOR_CHECKS)
