@@ -7,40 +7,35 @@
 	var/weight = 0
 	///size class for visuals (ARTIFACT_SIZE_TINY,ARTIFACT_SIZE_SMALL,ARTIFACT_SIZE_LARGE)
 	var/artifact_size = ARTIFACT_SIZE_LARGE
-	///type name for displaying visually
+	///type name for displaying on analysis forms
 	var/type_name = "coderbus moment"
 	///real name of the artifact when properly analyzed
 	var/real_name
+	var/fake_name
 	///Is the artifact active?
 	var/active = FALSE
-	///Activate on start?
-	var/auto_activate = FALSE
-	///Does it need activation at all?
-	var/doesnt_need_activation = FALSE
 	///Triggers that activate the artifact
 	var/list/datum/artifact_trigger/triggers = list()
-	///minimum and maximum amount of triggers to get
-	var/min_triggers = 1
-	var/max_triggers = 1
+	var/max_triggers = 2
 	///Valid triggers to pick
 	var/list/valid_triggers = list(/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/force, /datum/artifact_trigger/heat, /datum/artifact_trigger/shock, /datum/artifact_trigger/radiation, /datum/artifact_trigger/data)
 	///origin datum
 	var/datum/artifact_origin/artifact_origin
 	///origin datums to pick
 	var/list/valid_origins = list(ORIGIN_NARSIE,ORIGIN_WIZARD,ORIGIN_SILICON)
-	///Text on activation
 	var/activation_message
-	///Text on deactivation
+	var/activation_sound
 	var/deactivation_message
-	///Text on hint
+	var/deactivation_sound
 	var/hint_text = "emits a <i>faint</i> noise.."
-	///examine hint
 	var/examine_hint
-	/// cool effect
 	var/mutable_appearance/act_effect
 	/// Potency in percentage, used for making more strong artifacts need more stimulus. (1% - 100%) 100 is strongest.
 	var/potency = 1
 	
+	///structure description from x-ray machines
+	var/xray_result = "NONE"
+
 /datum/component/artifact/Initialize(var/forced_origin = null)
 	. = ..()
 	if(!isobj(parent))
@@ -50,30 +45,31 @@
 	if(forced_origin)
 		valid_origins = list(forced_origin)
 	artifact_origin = SSartifacts.artifact_origins_by_name[pick(valid_origins)]
-	var/named = "[pick(artifact_origin.adjectives)] [pick(isitem(holder) ? artifact_origin.nouns_small : artifact_origin.nouns_large)]"
-	holder.name = named
+	fake_name = "[pick(artifact_origin.adjectives)] [pick(isitem(holder) ? artifact_origin.nouns_small : artifact_origin.nouns_large)]"
+	holder.name = fake_name
 	holder.desc = "You have absolutely no clue what this thing is or how it got here."
-	if(artifact_origin.max_icons)
-		var/dat_icon
-		var/origin_name = artifact_origin.type_name
-		switch(artifact_size)
-			if(ARTIFACT_SIZE_LARGE)
-				dat_icon = "[origin_name]-[rand(1,artifact_origin.max_icons)]"
-			if(ARTIFACT_SIZE_SMALL)
-				dat_icon = "[origin_name]-item-[rand(1,artifact_origin.max_item_icons)]"
-			if(ARTIFACT_SIZE_TINY)
-				dat_icon = "[origin_name]-item-small-[rand(1,artifact_origin.max_small_item_icons)]"
-		holder.icon_state = dat_icon
+	var/dat_icon
+	var/origin_name = artifact_origin.type_name
+	switch(artifact_size)
+		if(ARTIFACT_SIZE_LARGE)
+			dat_icon = "[origin_name]-[rand(1,artifact_origin.max_icons)]"
+		if(ARTIFACT_SIZE_SMALL)
+			dat_icon = "[origin_name]-item-[rand(1,artifact_origin.max_item_icons)]"
+		if(ARTIFACT_SIZE_TINY)
+			dat_icon = "[origin_name]-item-small-[rand(1,artifact_origin.max_item_icons)]"
+	holder.icon_state = dat_icon
 	real_name = artifact_origin.generate_name()
 	act_effect = mutable_appearance(holder.icon, holder.icon_state + "fx", LIGHTING_PLANE + 0.5)
-	if(auto_activate)
-		Activate()
-	var/trigger_amount = rand(min_triggers,max_triggers)
+	activation_sound = pick(artifact_origin.activation_sounds)
+	if(LAZYLEN(artifact_origin.deactivation_sounds))
+		deactivation_sound = pick(artifact_origin.deactivation_sounds)
+	var/trigger_amount = rand(1,max_triggers)
 	while(trigger_amount>0)
 		var/selection = pick(valid_triggers)
 		valid_triggers -= selection
 		triggers += new selection()
 		trigger_amount--
+	setup()
 //Seperate from initialize, for artifact inheritance funnies
 /datum/component/artifact/proc/setup()
 	potency = clamp(potency, 1, 100) //just incase
@@ -94,11 +90,12 @@
 /datum/component/artifact/UnregisterFromParent()
 	SSartifacts.artifacts -= parent
 	UnregisterSignal(parent, list(COMSIG_ITEM_PICKUP,COMSIG_ATOM_ATTACK_HAND,COMSIG_ATOM_DESTRUCTION,COMSIG_PARENT_EXAMINE,COMSIG_ATOM_EMP_ACT,COMSIG_ATOM_EX_ACT))
+
 /datum/component/artifact/proc/Activate(silent=FALSE)
 	if(active) //dont activate activated objects
 		return FALSE
-	if(LAZYLEN(artifact_origin.activation_sounds) && !silent)
-		playsound(holder, pick(artifact_origin.activation_sounds), 75, TRUE)
+	if(activation_sound && !silent)
+		playsound(holder, activation_sound, 75, TRUE)
 	if(activation_message && !silent)
 		holder.visible_message(span_notice("[holder] [activation_message]"))
 	active = TRUE
@@ -114,8 +111,8 @@
 /datum/component/artifact/proc/Deactivate(silent=FALSE)
 	if(!active)
 		return
-	if(LAZYLEN(artifact_origin.deactivation_sounds) && !silent)
-		playsound(holder, pick(artifact_origin.deactivation_sounds), 75, TRUE)
+	if(deactivation_sound && !silent)
+		playsound(holder, deactivation_sound, 75, TRUE)
 	if(deactivation_message && !silent)
 		holder.visible_message(span_notice("[holder] [deactivation_message]"))
 	active = FALSE
@@ -130,7 +127,7 @@
 	Deactivate(silent=TRUE)
 	if(!QDELETED(holder))
 		qdel(holder) // if it isnt already...
-///////////// Stimuli stuff
+// Stimuli stuff
 /datum/component/artifact/proc/Stimulate(var/stimuli,var/severity = 0)
 	if(!stimuli || active)
 		return
@@ -143,7 +140,7 @@
 					Activate()
 				else if(trigger.stimulus_operator == "<=" && severity <= trigger.amount)
 					Activate()
-				else if(hint_text && (severity >= trigger.amount - trigger.hint_range && severity <= trigger.amount + trigger.hint_range))
+				else if(hint_text && (abs(severity - trigger.hint_range) < trigger.hint_range))
 					if(prob(trigger.hint_prob))
 						holder.visible_message(span_notice("[holder] [hint_text]"))
 			else
@@ -163,7 +160,8 @@
 			holder.visible_message(span_notice("[user] gently pushes [user.pulling] against the [holder]"))
 			Stimulate(STIMULUS_CARBON_TOUCH)
 		return
-	user.visible_message(span_notice("[user] touches [holder]."))
+	if(artifact_size == ARTIFACT_SIZE_LARGE) //only large artifacts since the average spessman wouldnt notice)
+		user.visible_message(span_notice("[user] touches [holder]."))
 	if(ishuman(user))
 		var/mob/living/carbon/human/human = user 
 		var/obj/item/bodypart/arm = human.get_active_hand()
@@ -204,7 +202,7 @@
 			Stimulate(STIMULUS_SILICON_TOUCH)
 		else
 			Stimulate(STIMULUS_CARBON_TOUCH)
-		holder.visible_message(span_notice("[user] presses the [arm] against the artifact!")) //pressing stuff against stuff isnt very severe so
+		holder.visible_message(span_notice("[user] presses the [arm] against the artifact.")) //pressing stuff against stuff isnt very severe so
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(istype(I,/obj/item/assembly/igniter))
@@ -257,8 +255,7 @@
 	SIGNAL_HANDLER
 	Stimulate(STIMULUS_SHOCK, 800 * severity)
 	Stimulate(STIMULUS_RADIATION, 2 * severity)
-
-///////////// Effects for subtypes
+// Effects for subtypes
 /datum/component/artifact/proc/effect_activate()
 	return
 /datum/component/artifact/proc/effect_deactivate()

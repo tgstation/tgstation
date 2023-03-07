@@ -12,13 +12,13 @@ import { Window } from "../layouts";
 
 export const ArtifactXray = (props, context) => {
   const { act, data } = useBackend(context);
-  const { is_open, artifact_name, pulsing, current_strength, max_strength } =
+  const { is_open, artifact_name, pulsing, current_strength, max_strength, results } =
     data;
   return (
-    <Window width={400} height={150}>
+    <Window width={400} height={220}>
       <Window.Content>
         <Section
-          title="X-Ray status"
+          title="X-Ray Status"
           textAlign="center"
           buttons={
             <Button
@@ -53,6 +53,13 @@ export const ArtifactXray = (props, context) => {
                 onClick={() => act("pulse")}/>
             </Stack.Item>
           </Stack>
+		  <Section title={"Last Scan Results"} backgroundColor="black">
+              {results.map((result) => (
+                <Box mb={1} key={result} color="green">
+                  {result}
+                </Box>
+              ))}
+            </Section>
 		  </>
           )}
         </Section>

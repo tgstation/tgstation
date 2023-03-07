@@ -11,7 +11,10 @@
 	var/max_radiation = 3
 	///chosen radiation level
 	var/chosen_level = 1
-	var/pulse_cooldown_time = 2 SECONDS
+	var/pulse_time = 4 SECONDS
+	var/pulse_cooldown_time = 3 SECONDS
+	var/list/last_results = list("NO DATA")
+	var/pulsing = FALSE
 	COOLDOWN_DECLARE(message_cooldown)
 	COOLDOWN_DECLARE(pulse_cooldown)
 
@@ -27,8 +30,6 @@
 	for(var/obj/item/stock_parts/capacitor/capac in component_parts)
 		power_usage -= 30 * capac.rating
 	update_mode_power_usage(ACTIVE_POWER_USE, power_usage)
-	/*for(/datum/stock_part/scanning_module/scan in component_parts)
-		max_radiation = round(2.5 * scan.tier)*/
 
 /obj/machinery/artifact_xray/update_icon_state()
 	icon_state = "[base_icon_state]-[state_open]"
@@ -79,7 +80,7 @@
 	update_appearance()
 
 /obj/machinery/artifact_xray/proc/pulse()
-	if(!COOLDOWN_FINISHED(src,pulse_cooldown))
+	if(!COOLDOWN_FINISHED(src,pulse_cooldown) || pulsing)
 		return
 	if(state_open)
 		return
@@ -89,22 +90,34 @@
 				occupant.AddComponent(/datum/component/irradiated)
 		else
 			say("Cannot pulse with a living being inside!")
-		return
+			return
 	var/datum/component/artifact/component = occupant.GetComponent(/datum/component/artifact)
 	if(component)
 		component.Stimulate(STIMULUS_RADIATION, chosen_level)
+	pulsing = TRUE
 	update_use_power(ACTIVE_POWER_USE)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery,update_use_power), IDLE_POWER_USE), pulse_cooldown_time)
+	addtimer(CALLBACK(src, PROC_REF(post_pulse), component), pulse_time)
+
+/obj/machinery/artifact_xray/proc/post_pulse(datum/component/artifact/artifact)
+	update_use_power(IDLE_POWER_USE)
+	playsound(loc, 'sound/machines/chime.ogg', 30, FALSE)
 	COOLDOWN_START(src,pulse_cooldown,pulse_cooldown_time)
+	pulsing = FALSE
+	if(artifact)
+		last_results = list("STRUCTURAL ABNORMALITY ANALYSIS: [artifact.xray_result]", "SIZE: [artifact.artifact_size < ARTIFACT_SIZE_LARGE ? "SMALL" : "LARGE" ]")
+	else
+		last_results = list("INCONCLUSIVE;", "NO SPECIAL PROPERTIES DETECTED")
+
 
 /obj/machinery/artifact_xray/ui_data(mob/user)
 	. = ..()
 	.["is_open"] = state_open
 	if(occupant)
 		.["artifact_name"] = occupant.name
-	.["pulsing"] = !COOLDOWN_FINISHED(src,pulse_cooldown)
+	.["pulsing"] = pulsing
 	.["current_strength"] = chosen_level
 	.["max_strength"] = max_radiation
+	.["results"] = last_results
 	return .
 
 /obj/machinery/artifact_xray/emag_act(mob/user)

@@ -2,10 +2,11 @@
 	assoc_comp = /datum/component/artifact/injector
 /datum/component/artifact/injector
 	associated_object = /obj/structure/artifact/injector
-	weight = 550
+	weight = ARTIFACT_UNCOMMON
 	type_name = "Injector"
 	activation_message = "opens up to reveal a large needle!"
 	deactivation_message = "pulls its needle inside, closing itself up."
+	xray_result = "SEGMENTED"
 	var/max_reagents // the total amount to dose the victim with
 	var/reagent_amount
 	var/list/reagent_datums = list()

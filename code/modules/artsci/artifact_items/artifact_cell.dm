@@ -1,6 +1,4 @@
 /obj/item/stock_parts/cell/artifact
-	name = "Artifact"
-	desc = "Yell at coderbus."
 	icon = 'icons/obj/artifacts.dmi'
 	icon_state = "narnar-1"
 	resistance_flags = LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
@@ -16,7 +14,9 @@
 	associated_object = /obj/item/stock_parts/cell/artifact
 	artifact_size = ARTIFACT_SIZE_TINY
 	type_name = "Power cell"
-	valid_triggers = list(/datum/artifact_trigger/heat, /datum/artifact_trigger/cold, /datum/artifact_trigger/shock, /datum/artifact_trigger/radiation)
+	weight = ARTIFACT_UNCOMMON
+	xray_result = "SEGMENTED"
+	valid_triggers = list(/datum/artifact_trigger/heat, /datum/artifact_trigger/shock, /datum/artifact_trigger/radiation)
 
 /datum/component/artifact/cell/setup()
 	. = ..()
@@ -25,8 +25,8 @@
 	cell.maxcharge = rand(5000,80000) //2x of bluespace
 	cell.charge = cell.maxcharge / 2
 	cell.chargerate = rand(5000,round(cell.maxcharge * 0.4))
-	potency += cell.maxcharge / 6000
-	potency += cell.chargerate / 5000
+	potency += cell.maxcharge / 900
+	potency += cell.chargerate / 4000
 
 /datum/component/artifact/cell/effect_activate()
 	var/obj/item/stock_parts/cell/artifact/cell = holder

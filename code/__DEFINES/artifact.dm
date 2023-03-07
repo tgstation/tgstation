@@ -14,3 +14,9 @@
 #define ORIGIN_NARSIE "narnar"
 #define ORIGIN_SILICON "silicon"
 #define ORIGIN_WIZARD "wiznerd"
+// rarities
+#define ARTIFACT_COMMON 500
+#define ARTIFACT_UNCOMMON 400
+#define ARTIFACT_VERYUNCOMMON 300
+#define ARTIFACT_RARE 250
+#define ARTIFACT_VERYRARE 140
