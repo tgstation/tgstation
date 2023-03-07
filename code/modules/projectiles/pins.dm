@@ -44,9 +44,9 @@
 					return .
 				if(gun_insert(user, targetted_gun))
 					if(old_pin)
-						balloon_alert(user, "swapped firing pin.")
+						balloon_alert(user, "swapped firing pin")
 					else
-						balloon_alert(user, "inserted firing pin.")
+						balloon_alert(user, "inserted firing pin")
 			else
 				to_chat(user, span_notice("This firearm already has a firing pin installed."))
 
