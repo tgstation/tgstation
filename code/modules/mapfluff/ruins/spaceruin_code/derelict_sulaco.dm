@@ -12,7 +12,7 @@
 	icon_state = "photo"
 	show_written_words = FALSE
 	
-	default_raw_text = "*This looks to be a photo of the captain's birthday, held in a festivized cafeteria. The crews smiles and laughter beam through discolored film, where one staff officer has his superior enveloped in a warm hug. Everyone looks happy together. A gift is forced into the captain's hands: some silly, mischievous-looking 'runner' plushie.*"
+	default_raw_text = "*This looks to be a photo of the captain's birthday, held in a festivized cafeteria. The crew's smiles and laughter beam through discolored film, where one staff officer has his superior enveloped in a warm hug. Everyone looks happy together. A gift is being forced into the captain's hands: some silly, mischievous-looking 'runner' plushie.*"
 
 /obj/item/clothing/suit/armor/vest/marine/sulaco
 	name = "damaged tactical armor vest"
