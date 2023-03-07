@@ -30,11 +30,11 @@
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
 	on = !on
 	icon_state = "[basestate][on]-[hardsuit_type]"
-	user.update_inv_head() //so our mob-overlays update
+	user.update_worn_head() //so our mob-overlays update
 
 	set_light_on(on)
 
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/clothing/head/helmet/space/hardsuit/dropped(mob/user)
 	..()
@@ -331,7 +331,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearer = loc
 		if(wearer.head == src)
-			wearer.update_inv_head()
+			wearer.update_worn_head()
 
 /obj/item/clothing/suit/space/hardsuit/mining
 	name = "mining hardsuit"
@@ -344,7 +344,7 @@
 	armor_type = /datum/armor/hardsuit_mining
 	allowed = list(
 		/obj/item/flashlight,
-		/obj/item/gun/energy/kinetic_accelerator,
+		/obj/item/gun/energy/recharge/kinetic_accelerator,
 		/obj/item/mining_scanner,
 		/obj/item/pickaxe,
 		/obj/item/resonator,
@@ -383,7 +383,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearer = loc
 		if(wearer.wear_suit == src)
-			wearer.update_inv_wear_suit()
+			wearer.update_worn_oversuit()
 
 	//Syndicate hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi
@@ -435,8 +435,8 @@
 		var/mob/living/carbon/C = user
 		C.head_update(src, forced = 1)
 	icon_state = "hardsuit[on]-[hardsuit_type]"
-	user.update_inv_head()
-	update_action_buttons()
+	user.update_worn_head()
+	update_item_action_buttons()
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/proc/toggle_hardsuit_mode(mob/user) //Helmet Toggles Suit Mode
 	if(linkedsuit)
@@ -455,8 +455,8 @@
 
 		linkedsuit.icon_state = "hardsuit[on]-[hardsuit_type]"
 		linkedsuit.update_appearance()
-		user.update_inv_wear_suit()
-		user.update_inv_w_uniform()
+		user.update_worn_oversuit()
+		user.update_worn_undersuit()
 		user.update_equipment_speed_mods()
 
 
@@ -626,7 +626,8 @@
 	hardsuit_type = "medical"
 	flash_protect = FLASH_PROTECTION_NONE
 	armor_type = /datum/armor/hardsuit_medical
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SCAN_REAGENTS | SNUG_FIT
+	//here should be SCAN_REAGENTS, but too much work
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
 
 /obj/item/clothing/suit/space/hardsuit/medical
 	name = "medical hardsuit"
@@ -659,8 +660,10 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	armor_type = /datum/armor/hardsuit_rd
 	var/explosion_detection_dist = 21
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SCAN_REAGENTS | SNUG_FIT
-	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_research_scanner)
+	//here should be SCAN_REAGENTS, but too much work
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
+	//here should be /datum/action/item_action/toggle_research_scanner, but too much work
+	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/Initialize(mapload)
 	. = ..()
@@ -670,13 +673,13 @@
 	..()
 	if (slot == ITEM_SLOT_HEAD)
 		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
-		DHUD.add_hud_to(user)
+		DHUD.show_to(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/dropped(mob/living/carbon/human/user)
 	..()
 	if (user.head == src)
 		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
-		DHUD.remove_hud_from(user)
+		DHUD.hide_from(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/proc/sense_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range,
 		light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
@@ -859,7 +862,7 @@
 	fire = 100
 	acid = 30
 
-/obj/item/clothing/suit/space/hardsuit/clown/mob_can_equip(mob/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/obj/item/clothing/suit/space/hardsuit/clown/mob_can_equip(mob/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
 	if(!..() || !ishuman(M))
 		return FALSE
 	if(is_clown_job(M.mind.assigned_role))

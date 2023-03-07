@@ -166,7 +166,7 @@
 		if(helmet.on)
 			helmet.attack_self(H)
 		H.transferItemToLoc(helmet, src, TRUE)
-		H.update_inv_wear_suit()
+		H.update_worn_oversuit()
 		to_chat(H, span_notice("The helmet on the hardsuit disengages."))
 		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 	else
@@ -194,7 +194,7 @@
 			else if(H.equip_to_slot_if_possible(helmet,ITEM_SLOT_HEAD,0,0,1))
 				to_chat(H, span_notice("You engage the helmet on the hardsuit."))
 				helmet_on = TRUE
-				H.update_inv_wear_suit()
+				H.update_worn_oversuit()
 				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 	else
 		RemoveHelmet()
