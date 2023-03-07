@@ -218,7 +218,7 @@
 	. = ..()
 	if(birthday_override_ckey)
 		if(!check_valid_override())
-			message_admins("Attempted to make [birthday_override_ckey] the birthday person but they are not a valid station role. A random birthday person has be selected instead.")		
+			message_admins("Attempted to make [birthday_override_ckey] the birthday person but they are not a valid station role. A random birthday person has be selected instead.")
 
 	if(!birthday_person)
 		var/list/birthday_options = list()
@@ -320,3 +320,50 @@
 	icon_state = "xmashat_grey"
 	greyscale_config = /datum/greyscale_config/festive_hat
 	greyscale_config_worn = /datum/greyscale_config/festive_hat_worn
+
+#define PAX_FIELD_LENGTH_MIN (5 MINUTES)
+#define PAX_FIELD_LENGTH_MAX (15 MINUTES)
+
+/datum/station_trait/pax
+	name = "Pax Field"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 5
+	show_in_report = TRUE
+	report_message = "We are testing an amplified pacifism field during the start of your shift."
+	can_revert = TRUE
+	force = TRUE
+
+	/// List of weakreferences to mobs we made TRAIT_PACIFISTs.
+	var/list/peaceful_mob_refs = list()
+
+/datum/station_trait/pax/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/pax/on_round_start()
+	addtimer(CALLBACK(src, PROC_REF(end_of_peace)), rand(PAX_FIELD_LENGTH_MIN, PAX_FIELD_LENGTH_MAX))
+
+/datum/station_trait/pax/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+	SIGNAL_HANDLER
+
+	ADD_TRAIT(spawned, TRAIT_PACIFISM, type)
+	// I would have preferred to put the trait on the mind, rather than
+	// the body, as technically this is bypassable if you brainswap to a new mob.
+
+	// But existing pacifism checks are all on the mob only, not the mind.
+	peaceful_mob_refs += WEAKREF(spawned)
+
+/datum/station_trait/pax/revert()
+	end_of_peace()
+	..()
+
+/datum/station_trait/pax/proc/end_of_peace()
+	for(var/datum/weakref/mob_ref as anything in peaceful_mob_refs)
+		var/mob/living/mob = mob_ref.resolve()
+		if(mob)
+			REMOVE_TRAIT(mob, TRAIT_PACIFISM, type)
+
+	peaceful_mob_refs.Cut()
+
+#undef PAX_FIELD_LENGTH_MIN
+#undef PAX_FIELD_LENGTH_MAX
