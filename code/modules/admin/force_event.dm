@@ -66,7 +66,7 @@
 			"description" = event_control.description,
 			"type" = event_control.type,
 			"category" = event_control.category,
-			"has_customization" = length(event_control.admin_setup),
+			"has_customization" = !!length(event_control.admin_setup),
 		))
 	data["categories"] = categories
 	data["events"] = events

@@ -24,7 +24,7 @@
 
 /datum/event_admin_setup/listed_options/stray_cargo/apply_to_event(datum/round_event/stray_cargo/event)
 	event.admin_override_contents = chosen
-	var/log_message = "[key_name_admin(usr)] has aimed a stray cargo pod at [event.admin_override_turf ? AREACOORD(event.admin_override_turf) : "a random location"]. The pod contents are [event.admin_override_contents ? event.admin_override_contents : "random"]."
+	var/log_message = "[key_name_admin(usr)] has aimed a stray cargo pod at [event.admin_override_turf ? AREACOORD(event.admin_override_turf) : "a random location"]. The pod contents are [chosen ? chosen : "random"]."
 	message_admins(log_message)
 	log_admin(log_message)
 
@@ -168,7 +168,7 @@
 
 /datum/event_admin_setup/syndicate_cargo_pod/apply_to_event(datum/round_event/stray_cargo/syndicate/event)
 	event.admin_override_contents = pack_type_override	
-	var/log_message = "[key_name_admin(usr)] has aimed a stray syndicate cargo pod at [event.admin_override_turf ? AREACOORD(event.admin_override_turf) : "a random location"]. The pod contents are [event.admin_override_contents ? event.admin_override_contents : "random"]."
+	var/log_message = "[key_name_admin(usr)] has aimed a stray syndicate cargo pod at [event.admin_override_turf ? AREACOORD(event.admin_override_turf) : "a random location"]. The pod contents are [pack_type_override ? pack_type_override : "random"]."
 	message_admins(log_message)
 	log_admin(log_message)
 
