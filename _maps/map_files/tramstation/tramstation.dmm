@@ -11682,6 +11682,7 @@
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "ckM" = (
@@ -35725,6 +35726,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
 /obj/effect/turf_decal/trimline/white/filled/line,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "luP" = (
