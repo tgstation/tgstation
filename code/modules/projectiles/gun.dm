@@ -118,9 +118,9 @@
 		if(pin)
 			. += "It has \a [pin] installed."
 			if(pin.pin_removable)
-				. += span_info("[pin] looks like it could be removed with some <b>tools</b>.")
+				. += span_info("[pin] looks like [pin.p_they()] could be removed with some <b>tools</b>.")
 			else
-				. += span_info("[pin] looks like its firmly locked in, it looks impossible to remove.")
+				. += span_info("[pin] looks like [pin.p_theyre()] firmly locked in, [pin.p_they()] looks impossible to remove.")
 		else
 			. += "It doesn't have a <b>firing pin</b> installed, and won't fire."
 
