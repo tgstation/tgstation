@@ -501,6 +501,9 @@ MINUTE_CLICK_LIMIT 400
 ## Ping users who use the `notify` command when a new game starts.
 #CHAT_NEW_GAME_NOTIFICATIONS
 
+## Uncomment this to validate admin commands from discord by requiring they come from linked discord accounts and that those discord accounts link to a ckey with the right admin permissions.
+# SECURE_CHAT_COMMANDS
+
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
 #DEBUG_ADMIN_HREFS
 
@@ -558,22 +561,6 @@ DEFAULT_VIEW_SQUARE 15x15
 ## The URL admins will be asked to go to will be here, with %ID% being the ID
 ## of their connection attempt.
 #ADMIN_2FA_URL https://example.com/id/%ID%
-
-#### DISCORD STUFFS ####
-## MAKE SURE ALL SECTIONS OF THIS ARE FILLED OUT BEFORE ENABLING
-## Discord IDs can be obtained by following this guide: https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-
-
-## Uncomment to enable discord auto-roling when users link their BYOND and Discord accounts
-#ENABLE_DISCORD_AUTOROLE
-
-## Add your discord bot token here. Make sure it has the ability to manage roles
-#DISCORD_TOKEN someDiscordToken
-
-## Add the ID of your guild (server) here
-#DISCORD_GUILDID 000000000000000000
-
-## Add the ID of the role you want assigning here
-#DISCORD_ROLEID 000000000000000000
 
 ## How long in seconds after which a hard delete is treated as causing lag. This can be a float and supports a precision as low as nanoseconds.
 #HARD_DELETES_OVERRUN_THRESHOLD 0.5
