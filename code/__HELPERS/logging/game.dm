@@ -23,7 +23,7 @@
 	if (CONFIG_GET(flag/log_prayer))
 		WRITE_LOG(GLOB.world_game_log, "PRAY: [text]")
 
-/// Logging for changes to ID card access
+/// Logging for logging into the game, giving error messages if it fails.
 /proc/log_access(text)
 	if (CONFIG_GET(flag/log_access))
 		WRITE_LOG(GLOB.world_game_log, "ACCESS: [text]")
