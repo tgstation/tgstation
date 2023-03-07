@@ -173,24 +173,24 @@
 	if(!iscarbon(host_mob))
 		return
 	if(host_mob.client)
-		SSnanites.neural_network_count++
+		nanites.linked_techweb.neural_network_count++
 	else
-		SSnanites.neural_network_count += 0.25
+		nanites.linked_techweb.neural_network_count += 0.25
 
 /datum/nanite_program/researchplus/disable_passive_effect()
 	. = ..()
 	if(!iscarbon(host_mob))
 		return
 	if(host_mob.client)
-		SSnanites.neural_network_count--
+		nanites.linked_techweb.neural_network_count--
 	else
-		SSnanites.neural_network_count -= 0.25
+		nanites.linked_techweb.neural_network_count -= 0.25
 
 /datum/nanite_program/researchplus/active_effect()
 	if(!iscarbon(host_mob))
 		return
 	var/mob/living/carbon/C = host_mob
-	var/points = round(SSnanites.neural_network_count / 12, 0.1)
+	var/points = round(nanites.linked_techweb.neural_network_count / 12, 0.1)
 	if(!C.client) //less brainpower
 		points *= 0.25
 	nanites.linked_techweb.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points))

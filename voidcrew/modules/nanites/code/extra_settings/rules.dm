@@ -1,6 +1,7 @@
 /datum/nanite_rule
 	var/name = "Generic Condition"
 	var/desc = "When triggered, the program is active"
+	///The affected nanite program
 	var/datum/nanite_program/program
 
 /datum/nanite_rule/New(datum/nanite_program/new_program)

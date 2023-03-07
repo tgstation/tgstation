@@ -7,8 +7,8 @@
 ///The chance at a Nanite program randomly failing when it cannot sync
 #define NANITE_FAILURE_CHANCE 8
 
-#define NANITE_SHOCK_IMMUNE 1
-#define NANITE_EMP_IMMUNE 2
+#define NANITE_SHOCK_IMMUNE (1<<0)
+#define NANITE_EMP_IMMUNE (1<<1)
 
 #define NANITE_CLOUD_TOGGLE 1
 #define NANITE_CLOUD_DISABLE 2

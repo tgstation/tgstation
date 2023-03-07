@@ -64,8 +64,7 @@
 	disk = null
 
 /obj/machinery/computer/nanite_cloud_controller/proc/get_backup(cloud_id)
-	for(var/I in cloud_backups)
-		var/datum/nanite_cloud_backup/backup = I
+	for(var/datum/nanite_cloud_backup/backup as anything in cloud_backups)
 		if(backup.cloud_id == cloud_id)
 			return backup
 
@@ -178,8 +177,7 @@
 			data["cloud_programs"] = cloud_programs
 	else
 		var/list/backup_list = list()
-		for(var/X in cloud_backups)
-			var/datum/nanite_cloud_backup/backup = X
+		for(var/datum/nanite_cloud_backup/backup as anything in cloud_backups)
 			var/list/cloud_backup = list()
 			cloud_backup["cloud_id"] = backup.cloud_id
 			backup_list += list(cloud_backup)

@@ -7,18 +7,26 @@
 /obj/item/nanite_remote
 	name = "nanite remote control"
 	desc = "A device that can remotely control active nanites through wireless signals."
-	w_class = WEIGHT_CLASS_SMALL
-	req_access = list(ACCESS_ROBOTICS)
+	req_access = list(ACCESS_RESEARCH)
 	icon = 'voidcrew/modules/nanites/icons/device.dmi'
 	icon_state = "nanite_remote"
 	item_flags = NOBLUDGEON
-	var/locked = FALSE //Can be locked, so it can be given to users with a set code and mode
+	w_class = WEIGHT_CLASS_SMALL
+
+	///Boolean on whether the remote is locked
+	var/locked = FALSE
+	///The mode of the remote, mode defines: REMOTE_MODE_OFF|REMOTE_MODE_SELF|REMOTE_MODE_TARGET|REMOTE_MODE_AOE|REMOTE_MODE_RELAY
 	var/mode = REMOTE_MODE_OFF
-	var/list/saved_settings = list()
+	///Keeping track of the last used ID
 	var/last_id = 0
+	///The code set to send on the remote.
 	var/code = 0
-	var/relay_code = 0
+	var/relay_code = 0 //tbh i have no clue what the shit this is
+	///The name of the currently active program.
 	var/current_program_name = "Program"
+
+	///List of all settings (also lists) saved on the remote.
+	var/list/saved_settings = list()
 
 /obj/item/nanite_remote/examine(mob/user)
 	. = ..()
@@ -76,9 +84,8 @@
 	SEND_SIGNAL(M, COMSIG_NANITE_SIGNAL, code, source)
 
 /obj/item/nanite_remote/proc/signal_relay(code, relay_code, source)
-	for(var/X in SSnanites.nanite_relays)
-		var/datum/nanite_program/relay/N = X
-		N.relay_signal(code, relay_code, source)
+	for(var/datum/nanite_program/relay/relays as anything in SSnanites.nanite_relays)
+		relays.relay_signal(code, relay_code, source)
 
 /obj/item/nanite_remote/ui_state(mob/user)
 	return GLOB.hands_state
@@ -198,9 +205,8 @@
 	SEND_SIGNAL(M, COMSIG_NANITE_COMM_SIGNAL, code, comm_message)
 
 /obj/item/nanite_remote/comm/signal_relay(code, relay_code, source)
-	for(var/X in SSnanites.nanite_relays)
-		var/datum/nanite_program/relay/N = X
-		N.relay_comm_signal(code, relay_code, comm_message)
+	for(var/datum/nanite_program/relay/relays as anything in SSnanites.nanite_relays)
+		relays.relay_comm_signal(code, relay_code, comm_message)
 
 /obj/item/nanite_remote/comm/ui_data()
 	var/list/data = list()

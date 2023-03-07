@@ -58,10 +58,9 @@
 /datum/nanite_program/sensor/relay_repeat/send_code()
 	var/datum/nanite_extra_setting/relay = extra_settings[NES_RELAY_CHANNEL]
 	if(activated && relay.get_value())
-		for(var/X in SSnanites.nanite_relays)
-			var/datum/nanite_program/relay/N = X
+		for(var/datum/nanite_program/relay/relays as anything in SSnanites.nanite_relays)
 			var/datum/nanite_extra_setting/code = extra_settings[NES_SENT_CODE]
-			N.relay_signal(code.get_value(), relay.get_value(), "a [name] program")
+			relays.relay_signal(code.get_value(), relay.get_value(), "a [name] program")
 
 /datum/nanite_program/sensor/health
 	name = "Health Sensor"
