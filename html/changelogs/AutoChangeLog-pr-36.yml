@@ -1,0 +1,5 @@
+author: "RuByxarik"
+delete-after: True
+changes:
+  - rscadd: "Добавляет трейтору в аплинк коробку с ромеролом"
+  - balance: "Ромерол теперь стоит 30тк"
