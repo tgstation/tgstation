@@ -32,7 +32,7 @@
 			. |= AFTERATTACK_PROCESSED_ITEM
 			var/obj/item/gun/targetted_gun = target
 			var/obj/item/firing_pin/old_pin = targetted_gun.pin
-			if(old_pin && old_pin.pin_removeable && (force_replace || old_pin.pin_hot_swappable))
+			if(old_pin?.pin_removeable && (force_replace || old_pin.pin_hot_swappable))
 				if(Adjacent(user))
 					user.put_in_hands(old_pin)
 				else
