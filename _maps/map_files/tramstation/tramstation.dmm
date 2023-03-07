@@ -25499,11 +25499,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
-"hNU" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/openspace,
-/area/space/nearstation)
 "hOd" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
@@ -185474,7 +185469,7 @@ aaa
 aaS
 avE
 avE
-hNU
+avE
 avE
 avE
 avE
