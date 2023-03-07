@@ -200,6 +200,8 @@
 	blacklist = list(/datum/station_trait/announcement_intern, /datum/station_trait/announcement_medbot) //Overiding the annoucer hides the birthday person in the annoucement message.
 	///Variable that stores a reference to the person selected to have their birthday celebrated.
 	var/mob/living/carbon/human/birthday_person
+	///Variable that holds the real name of the birthday person once selected, just incase the birthday person's real_name changes.
+	var/birthday_person_name = ""
 	///Variable that admins can override with a player's ckey in order to set them as the birthday person when the round starts.
 	var/birthday_override_ckey
 
@@ -219,11 +221,13 @@
 			message_admins("Attempted to make [birthday_override_ckey] the birthday person but they are not a valid station role. A random birthday person has be selected instead.")		
 
 	if(!birthday_person)
-		var/list/birthday_options
+		var/list/birthday_options = list()
 		for(var/mob/living/carbon/human/human in GLOB.human_list)
 			if(human.mind?.assigned_role.job_flags & JOB_CREW_MEMBER)
 				birthday_options += human
-		birthday_person = pick(birthday_options)
+		if(length(birthday_options))
+			birthday_person = pick(birthday_options)
+			birthday_person_name = birthday_person.real_name
 	addtimer(CALLBACK(src, PROC_REF(announce_birthday)), 10 SECONDS)
 
 /datum/station_trait/birthday/proc/check_valid_override()
@@ -235,17 +239,19 @@
 
 	if(birthday_override_mob.mind?.assigned_role.job_flags & JOB_CREW_MEMBER)
 		birthday_person = birthday_override_mob
+		birthday_person_name = birthday_person.real_name
 		return TRUE
 	else
 		return FALSE
 
 
 /datum/station_trait/birthday/proc/announce_birthday()
-	report_message = "We here at Nanotrasen would all like to wish [birthday_person ? birthday_person.name : "Employee Name"] a very happy birthday"
-	priority_announce("Happy birthday to [birthday_person ? birthday_person.name : "Employee Name"]! Nanotrasen wishes you a very happy [birthday_person ? thtotext(birthday_person.age + 1) : "255th"] birthday.")
+	report_message = "We here at Nanotrasen would all like to wish [birthday_person ? birthday_person_name : "Employee Name"] a very happy birthday"
+	priority_announce("Happy birthday to [birthday_person ? birthday_person_name : "Employee Name"]! Nanotrasen wishes you a very happy [birthday_person ? thtotext(birthday_person.age + 1) : "255th"] birthday.")
 	if(birthday_person)
 		playsound(birthday_person, 'sound/items/party_horn.ogg', 50)
 		birthday_person.add_mood_event("birthday", /datum/mood_event/birthday)
+		birthday_person = null
 
 /datum/station_trait/birthday/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned_mob)
 	SIGNAL_HANDLER
@@ -267,11 +273,15 @@
 		/obj/item/storage/box/tail_pin = 1,
 	))
 	toy = new toy(spawned_mob)
-	spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_BACKPACK)
-	if(birthday_person) //Anyone who joins after the annoucement gets one of these.
+	if(istype(toy, /obj/item/toy/balloon))
+		spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_HANDS) //Balloons do not fit inside of backpacks.
+	else
+		spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_BACKPACK)
+	if(birthday_person_name) //Anyone who joins after the annoucement gets one of these.
 		var/obj/item/birthday_invite/birthday_invite = new(spawned_mob)
-		birthday_invite.setup_card(birthday_person.name)
-		spawned_mob.equip_to_slot_or_del(birthday_invite, ITEM_SLOT_HANDS)
+		birthday_invite.setup_card(birthday_person_name)
+		if(!spawned_mob.equip_to_slot_if_possible(birthday_invite, ITEM_SLOT_HANDS, disable_warning = TRUE))
+			spawned_mob.equip_to_slot_or_del(birthday_invite, ITEM_SLOT_BACKPACK) //Just incase someone spawns with both hands full.
 
 /obj/item/birthday_invite
 	name = "birthday invitation"
