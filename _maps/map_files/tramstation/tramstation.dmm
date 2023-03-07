@@ -19742,6 +19742,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
+"fyR" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/machinery/light/floor,
+/turf/open/floor/grass,
+/area/station/science/lower)
 "fyX" = (
 /obj/machinery/ai_slipper{
 	uses = 10
@@ -21806,7 +21811,9 @@
 /area/station/engineering/supermatter)
 "gqo" = (
 /obj/machinery/door/poddoor/lift{
-	id = "tram_cargo_lift"
+	id = "tram_cargo_lift";
+	density = 0;
+	icon_state = "open"
 	},
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
@@ -25492,6 +25499,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"hNU" = (
+/obj/structure/lattice,
+/obj/structure/lattice,
+/turf/open/space/openspace,
+/area/space/nearstation)
 "hOd" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
@@ -38442,7 +38454,9 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor/lift{
-	id = "tram_dorm_lift"
+	id = "tram_dorm_lift";
+	density = 0;
+	icon_state = "open"
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
@@ -44928,7 +44942,9 @@
 /area/station/commons/lounge)
 "pbc" = (
 /obj/machinery/door/poddoor/lift{
-	id = "tram_upper_center_lift"
+	id = "tram_upper_center_lift";
+	icon_state = "open";
+	density = 0
 	},
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
@@ -53972,7 +53988,7 @@
 	dir = 4
 	},
 /obj/machinery/button/door/directional/west{
-	id = "cytologysecure1";
+	id = "cytologysecure2";
 	name = "Secure Pen Lockdown"
 	},
 /obj/machinery/requests_console/directional/north{
@@ -54961,7 +54977,9 @@
 	},
 /obj/effect/turf_decal/caution/stand_clear/white,
 /obj/machinery/door/poddoor/lift{
-	id = "tram_sci_lift"
+	id = "tram_sci_lift";
+	icon_state = "open";
+	density = 0
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
@@ -55651,7 +55669,9 @@
 "sQj" = (
 /obj/effect/turf_decal/caution/stand_clear/white,
 /obj/machinery/door/poddoor/lift{
-	id = "tram_lower_center_lift"
+	id = "tram_lower_center_lift";
+	icon_state = "open";
+	density = 0
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
@@ -68206,6 +68226,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"xtj" = (
+/obj/machinery/light/floor,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/floor/grass,
+/area/station/science/lower)
 "xtn" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -115260,7 +115285,7 @@ vOx
 xJR
 fWT
 fip
-fng
+xtj
 fje
 bOi
 qwX
@@ -116802,7 +116827,7 @@ vOx
 rwN
 fWT
 fip
-fje
+fyR
 fje
 qwX
 fng
@@ -185449,7 +185474,7 @@ aaa
 aaS
 avE
 avE
-avE
+hNU
 avE
 avE
 avE
