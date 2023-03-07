@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - bugfix: "20+ item's discounts are properly smaller, instead of being larger"
