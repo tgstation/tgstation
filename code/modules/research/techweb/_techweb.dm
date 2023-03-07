@@ -332,9 +332,9 @@
 			return FALSE
 	var/log_message = "[id]/[organization] researched node [node.id]"
 	if(auto_adjust_cost)
-		var/node_cost = node.get_price(src)
+		var/list/node_cost = node.get_price(src)
 		remove_point_list(node_cost)
-		log_message += " at the cost of [node_cost]"
+		log_message += " at the cost of [json_encode(node_cost)]"
 
 	//Add to our researched list
 	researched_nodes[node.id] = TRUE
