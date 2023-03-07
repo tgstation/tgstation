@@ -26,7 +26,7 @@
 	. = ..()
 	if(HAS_TRAIT_FROM(cast_on, TRAIT_MIMING, "[type]"))
 		to_chat(cast_on, span_notice("You break your vow of silence."))
-		cast_on.log_message("broke their vow of silence.", LOG_GAME)
+		cast_on.log_message("broke [cast_on.p_their()] vow of silence.", LOG_GAME)
 		cast_on.add_mood_event("vow", /datum/mood_event/broken_vow)
 		REMOVE_TRAIT(cast_on, TRAIT_MIMING, "[type]")
 	else
