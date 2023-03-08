@@ -27,11 +27,7 @@
 /datum/armor/derelict_marine
 	melee = 20
 	bullet = 20
-	laser = 10
-	energy = 10
-	bomb = 35
 	bio = 100
 	fire = 40
 	acid = 50
-	wound = 10
-	
+	wound = 20
