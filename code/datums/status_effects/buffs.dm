@@ -486,3 +486,128 @@
 	name = "Nest Vitalization"
 	desc = "The resin seems to pulsate around you. It seems to be sustaining your vital functions. You feel ill..."
 	icon_state = "nest_life"
+
+/datum/status_effect/miami
+	id = "miami"
+	tick_interval = 1
+	alert_type = /atom/movable/screen/alert/status_effect/miami
+	var/atom/cached_thrown_object
+	var/atom/movable/plane_master_controller/cached_game_plane_master_controller
+
+	var/elapsed_ticks = 0
+
+/datum/status_effect/miami/on_apply()
+	. = ..()
+	RegisterSignal(owner,COMSIG_LIVING_INTERACTED_WITH_DOOR,.proc/bust_open)
+	RegisterSignal(owner,COMSIG_CARBON_THROW,.proc/throw_relay)
+	RegisterSignal(owner,COMSIG_MOB_ITEM_AFTERATTACK,.proc/basically_curbstomp)
+	RegisterSignal(owner.reagents, COMSIG_REAGENTS_ADD_REAGENT,.proc/react_to_meds)
+
+	cached_game_plane_master_controller = owner.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	cached_game_plane_master_controller.add_filter("miami_blur",2,angular_blur_filter(0,0,0.25))
+
+/datum/status_effect/miami/tick()
+	. = ..()
+	elapsed_ticks++
+	cached_game_plane_master_controller.remove_filter("miami")
+	var/list/color_matrix = list(rgb(max(sin(elapsed_ticks)*220,120),0,0) , rgb(0,max(sin(elapsed_ticks + 120)*220,120),0) , rgb(0,0,max(sin(elapsed_ticks - 120)*220,120)))
+	cached_game_plane_master_controller.add_filter("miami",1,color_matrix_filter(color_matrix))
+	//похуй
+	//owner.hallucination = min(owner.hallucination + 1 , 12)
+
+/datum/status_effect/miami/on_remove()
+	cached_game_plane_master_controller.remove_filter("miami_blur")
+	cached_game_plane_master_controller.remove_filter("miami")
+	SEND_SIGNAL(owner,COMSIG_MIAMI_CURED_DISORDER)
+	return ..()
+
+/datum/status_effect/miami/proc/bust_open(datum/source,obj/machinery/door/door,destination_state)
+	SIGNAL_HANDLER
+
+	owner.do_attack_animation(door, no_effect = TRUE)
+
+	var/direction = get_dir(owner,door)
+
+	var/turf/turf_in_direction = get_step(door,direction)
+
+	for(var/mob/living/carbon/carbie in turf_in_direction)
+		carbie.Knockdown(5 SECONDS)
+
+
+/datum/status_effect/miami/proc/throw_relay(datum/source,atom/target,atom/thrown_thing)
+	SIGNAL_HANDLER
+	cached_thrown_object = thrown_thing
+	if(isliving(thrown_thing))
+		RegisterSignal(thrown_thing,COMSIG_MOVABLE_IMPACT,.proc/mob_throw_knockdown)
+
+	if(isitem(thrown_thing))
+		RegisterSignal(thrown_thing,COMSIG_MOVABLE_IMPACT,.proc/item_throw_knockdown)
+
+/datum/status_effect/miami/proc/item_throw_knockdown(datum/source,atom/hit_atom, datum/thrownthing/throwingdatum)
+	SIGNAL_HANDLER
+	UnregisterSignal(cached_thrown_object,COMSIG_MOVABLE_THROW_LANDED)
+
+	if(!iscarbon(hit_atom))
+		return
+
+	var/obj/item/this_item = source
+
+	if(this_item.w_class < WEIGHT_CLASS_NORMAL)
+		return
+
+	var/mob/living/carbon/carbie_hit = hit_atom
+
+	carbie_hit.Knockdown(3 SECONDS)
+
+/datum/status_effect/miami/proc/mob_throw_knockdown(datum/source,atom/hit_atom, datum/thrownthing/throwingdatum)
+	SIGNAL_HANDLER
+	UnregisterSignal(cached_thrown_object,COMSIG_MOVABLE_THROW_LANDED)
+
+	if(!iscarbon(hit_atom))
+		return
+
+	var/mob/living/this_mob = source
+
+	if(this_mob.mob_size < MOB_SIZE_HUMAN)
+		return
+
+	var/mob/living/carbon/carbie_hit = hit_atom
+
+	carbie_hit.Knockdown(4 SECONDS)
+
+/datum/status_effect/miami/proc/basically_curbstomp(mob/living/source, atom/target, obj/item/weapon, proximity_flag, click_parameters)
+	SIGNAL_HANDLER
+	if(!proximity_flag)
+		return
+
+	if(!isliving(target))
+		return
+
+	var/mob/living/living_target = target
+
+	if(!living_target.IsKnockdown())
+		return
+	INVOKE_ASYNC(src,.proc/continue_with_stomping,weapon,target,click_parameters)
+	living_target.AdjustKnockdown(1 SECONDS)
+
+/datum/status_effect/miami/proc/continue_with_stomping(obj/item/weapon,atom/target,click_parameters)
+	weapon.attack(target,owner,click_parameters)
+
+
+/datum/status_effect/miami/proc/react_to_meds(datum/source,datum/reagent/reagent , amount, reagtemp, data, no_react)
+	SIGNAL_HANDLER
+
+	if(!istype(reagent,/datum/reagent/medicine/haloperidol) && !istype(reagent, /datum/reagent/medicine/psicodine))
+		return
+	//15u syringe stuns for 3 seconds, 5u pill drops you for 1 second, BS syringe will drop you for 12 seconds
+	owner.Paralyze((amount / 5) SECONDS)
+
+	owner.remove_status_effect(type)
+
+	owner.drop_all_held_items()
+
+/atom/movable/screen/alert/status_effect/miami
+	name = "THE KILLING NEVER STOPS"
+	desc = "Do you like hurting other people?"
+	icon_state = "miami"

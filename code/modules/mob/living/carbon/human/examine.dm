@@ -24,13 +24,6 @@
 
 	var/obscured = check_obscured_slots()
 
-	var/vampDesc = ReturnVampExamine(user) // Bloodsuckers edit STARTS
-	var/vassDesc = ReturnVassalExamine(user)
-	if(vampDesc != "")
-		. += vampDesc
-	if(vassDesc != "")
-		. += vassDesc // Bloodsucker edit ENDS
-
 	//uniform
 	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && !(w_uniform.item_flags & EXAMINE_SKIP))
 		//accessory

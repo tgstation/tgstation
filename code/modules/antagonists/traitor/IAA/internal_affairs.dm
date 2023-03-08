@@ -190,7 +190,7 @@
 	name = "IAA (Preview only)"
 
 	uniform = /obj/item/clothing/under/rank/centcom/officer
-	head = /obj/item/clothing/head/beret/centcom_formal
+	head = /obj/item/clothing/head/hats/centhat
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/melee/energy/sword/saber/green
 

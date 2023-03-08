@@ -13,6 +13,10 @@
 /// Called when an organ is being regenerated with a new copy in species regenerate_organs (obj/item/organ/replacement)
 #define COMSIG_ORGAN_BEING_REPLACED "organ_being_replaced"
 
+#define COMSIG_MIAMI_CURED_DISORDER "miami_cured"
+#define COMSIG_MIAMI_START_SPREE "miami_start_spree"
+#define COMSIG_MIAMI_END_SPREE "miami_end_spree"
+
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
 
@@ -83,6 +87,10 @@
 	#define COMPONENT_CANT_TRACK (1<<0)
 ///from end of fully_heal(): (heal_flags)
 #define COMSIG_LIVING_POST_FULLY_HEAL "living_post_fully_heal"
+///from somewhere in door i dunno use the fucking search function
+#define COMSIG_LIVING_INTERACTED_WITH_DOOR "living_interacted_with_door"
+	#define DOOR_CLOSE "close"
+	#define DOOR_OPEN "open"
 /// from start of /mob/living/handle_breathing(): (delta_time, times_fired)
 #define COMSIG_LIVING_HANDLE_BREATHING "living_handle_breathing"
 ///from /obj/item/hand_item/slapper/attack_atom(): (source=mob/living/slammer, obj/structure/table/slammed_table)

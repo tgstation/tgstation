@@ -222,3 +222,29 @@
   - imageadd: Aforementioned gi sprites.
   tralezab:
   - bugfix: changed gondola mutants to require gondola meat instead
+2023-03-08:
+  Jacquerel:
+  - balance: Traitor secondary objectives to steal or destroy an item are now associated
+      with a particular "owner" or "victim" and won't generate themselves if nobody
+      would actually be victimised by the crime.
+  - rscadd: Traitors can sometimes be tasked with stealing and destroying the roboticist's
+      big crowbar, if there is one
+  LT3:
+  - imageadd: New tram and elevator sprites
+  - code_imp: Lighting capability for all buttons
+  - spellcheck: All elevator components are now 'elevator'
+  - code_imp: Reduced brightness on tram platform signs
+  - bugfix: Fixed odd wall in cargo department
+  - bugfix: Science elevator panel not laying on a table anymore
+  - bugfix: Science keycard auth can only be done from RD office
+  - code_imp: More Tramstation mapping helpers
+  - bugfix: Fixed Icebox pharmacy shutters lighting runtimes
+  LemonInTheDark:
+  - bugfix: Examining in the dark is less wonk now, sorry bout that
+  Melbert:
+  - rscadd: Somewhere, in deep space, a relic to every fluked nuclear operative mission
+      drifts abandoned.
+  NamelessFairy:
+  - bugfix: The birthday station trait now actually works.
+  SmoSmoSmoSmok:
+  - qol: Borgs are now acknowledged by the orm

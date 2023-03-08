@@ -1,0 +1,5 @@
+author: "BlueMemesauce"
+delete-after: True
+changes:
+  - bugfix: "Mime finger gun icon is no longer an error"
+  - admin: "Logs when mimes break or make a vow of silence"

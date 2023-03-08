@@ -347,6 +347,14 @@
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
+/datum/design/mag_oldsmg/ic_mag
+	name = "WT-550 Auto Gun Rubber Magazine (4.6x30mm NL)"
+	desc = "A 20 round rubber bullet magazine for the out of date security WT-550 Auto Rifle"
+	id = "mag_oldsmg_rub"
+	materials = list(/datum/material/iron = 3500)
+	build_path = /obj/item/ammo_box/magazine/wt550m9/rubber
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
 /datum/design/stunshell
 	name = "Stun Shell"
 	desc = "A stunning shell for a shotgun."
