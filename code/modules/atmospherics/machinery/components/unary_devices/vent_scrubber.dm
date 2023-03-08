@@ -216,7 +216,7 @@
 	if(override_naming)
 		return
 	var/area/scrub_area = get_area(src)
-	name = "\proper [scrub_area.name] [name] [id_tag]"
+	name = "\proper [scrub_area?.name] [name] [id_tag]"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	if(welded || !is_operational)

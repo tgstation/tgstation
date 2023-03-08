@@ -195,7 +195,7 @@
 	if(override_naming)
 		return
 	var/area/vent_area = get_area(src)
-	name = "\proper [vent_area.name] [name] [id_tag]"
+	name = "\proper [vent_area?.name] [name] [id_tag]"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/welder)
 	..()
