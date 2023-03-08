@@ -1011,7 +1011,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	)
 	///will contain the original icons modified with the color choice
 	var/list/display_options = list()
-	var/color_choice = "#f3fffa"
+	var/color_choice = "#ffffff"
 
 /obj/item/construction/rld/Initialize(mapload)
 	. = ..()
