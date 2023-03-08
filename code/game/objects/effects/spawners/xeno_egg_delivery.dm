@@ -2,7 +2,7 @@
 	name = "xeno egg delivery"
 	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "egg_growing"
-	var/announcement_time = 1200
+	var/announcement_time = 120 SECONDS
 
 /obj/effect/spawner/xeno_egg_delivery/Initialize(mapload)
 	. = ..()
@@ -24,9 +24,5 @@
 
 /obj/structure/alien/egg/delivery/Initialize(mapload)
 	. = ..()
-
-	if(SScommunications.xenomorph_egg_delivered)
-		warning("Multiple xenomorph delivery eggs present in the round. Roundend tracking may be inaccurate.")
-		return
 
 	SScommunications.xenomorph_egg_delivered = TRUE

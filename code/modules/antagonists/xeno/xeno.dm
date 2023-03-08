@@ -40,6 +40,11 @@
 /datum/antagonist/xeno/get_preview_icon()
 	return finish_preview_icon(icon('icons/mob/nonhuman-player/alien.dmi', "alienh"))
 
+/datum/antagonist/xeno/forge_objectives()
+	var/datum/objective/advance_hive/objective = new
+	objective.owner = owner
+	objectives += objective
+
 /datum/antagonist/xeno/captive
 	name = "\improper Captive Xenomorph"
 	var/datum/team/xeno/captive/captive_team
@@ -62,8 +67,27 @@
 	return captive_team
 
 /datum/antagonist/xeno/captive/forge_objectives()
+	..()
+	var/datum/objective/escape_captivity/objective = new
+	objective.owner = owner
+	objectives += objective
 
-	return
+/datum/objective/escape_captivity
+
+/datum/objective/escape_captivity/New()
+	explanation_text = "Escape from captivity."
+
+/datum/objective/escape_captivity/check_completion()
+	if(!istype(get_area(owner), /area/station/science/xenobiology))
+		return TRUE
+
+/datum/objective/advance_hive
+
+/datum/objective/advance_hive/New()
+	explanation_text = "Survive and advance the Hive."
+
+/datum/objective/advance_hive/check_completion()
+	return owner.current.stat != DEAD
 
 /datum/team/xeno/captive
 	name = "\improper Captive Aliens"
