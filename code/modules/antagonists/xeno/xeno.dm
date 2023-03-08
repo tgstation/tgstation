@@ -105,20 +105,26 @@
 	var/escape_count = 0 //counts the number of xenomorphs that were born in captivity who ended the round outside of it
 	var/captive_count = 0 //counts the number of xenomorphs born in captivity who remained there until the end of the round (losers)
 
-	parts += "<span class='header'>The [name] were: </span> <br>"
+	if(check_captivity(progenitor))
+		parts += span_greentext("The progenitor of this hive was [progenitor], as [progenitor.key], who successfully escaped captivity!") + "<br>"
+	else
+		parts += span_redtext("The progenitor of this hive was [progenitor], as [progenitor.key], who failed to escape captivity") + "<br>"
 
 	for(var/datum/mind/alien_mind in members)
+		if(alien_mind == progenitor)
+			continue
+
 		switch(check_captivity(alien_mind.current))
 			if(CAPTIVE_XENO_DEAD)
-				parts += "<span class='neutraltext'>[printplayer(alien_mind, fleecheck = FALSE)] in their search for freedom.</span>!"
+				parts += "[printplayer(alien_mind, fleecheck = FALSE)] while trying to escape captivity!"
 			if(CAPTIVE_XENO_FAIL)
-				parts += "<span class='neutraltext'>[printplayer(alien_mind, fleecheck = FALSE)] <b>in captivity<b>!</span>"
+				parts += "[printplayer(alien_mind, fleecheck = FALSE)] in captivity!"
 				captive_count++
 			if(CAPTIVE_XENO_PASS)
-				parts += "<span class='greentext'>[printplayer(alien_mind, fleecheck = FALSE)] and managed to <b>escape captivity<b>!</span>"
+				parts += "[printplayer(alien_mind, fleecheck = FALSE)] and managed to [span_greentext("escape captivity!")]"
 				escape_count++
 
-	parts += "<span class='neutraltext big'> Overall, [captive_count] xenomorphs remained alive and in captivity, and [escape_count] managed to escape!</span> <br>"
+	parts += "<br> <span class='neutraltext big'> Overall, [captive_count] xenomorphs remained alive and in captivity, and [escape_count] managed to escape!</span> <br>"
 
 	var/thank_you_message
 	if(captive_count > escape_count)
@@ -126,7 +132,7 @@
 	else
 		thank_you_message = "xenofauna combat effectiveness"
 
-	parts += "<span class='neutraltext'>Nanotrasen thanks the crew of [station_name()] for providing much needed research data on [thank_you_message].</span>"
+	parts += "<span class='neutraltext'>Nanotrasen thanks the crew of [station_name()] for providing much needed research data on <b>[thank_you_message]<b>.</span>"
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div> <br>"
 
