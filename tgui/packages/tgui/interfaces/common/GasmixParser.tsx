@@ -7,16 +7,21 @@ export type Gasmix = {
   volume: number;
   pressure: number;
   total_moles: number;
+  heat_capacity: number;
+  thermal_energy: number;
   reactions: [string, string, number][]; // ID, name, and amount.
   reference: string;
 };
 
 type GasmixParserProps = {
   gasmix: Gasmix;
+  totalMolesOnClick?: () => void;
   gasesOnClick?: (gas_id: string) => void;
   temperatureOnClick?: () => void;
   volumeOnClick?: () => void;
   pressureOnClick?: () => void;
+  heatCapacityOnClick?: () => void;
+  thermalEnergyOnClick?: () => void;
   reactionOnClick?: (reaction_id: string) => void;
   // Whether we need to show the number of the reaction or not
   detailedReactions?: boolean;
@@ -25,17 +30,28 @@ type GasmixParserProps = {
 export const GasmixParser = (props: GasmixParserProps, context) => {
   const {
     gasmix,
+    totalMolesOnClick,
     gasesOnClick,
     temperatureOnClick,
     volumeOnClick,
     pressureOnClick,
+    heatCapacityOnClick,
+    thermalEnergyOnClick,
     reactionOnClick,
     detailedReactions,
     ...rest
   } = props;
 
-  const { gases, temperature, volume, pressure, total_moles, reactions } =
-    gasmix;
+  const {
+    gases,
+    temperature,
+    volume,
+    pressure,
+    total_moles,
+    heat_capacity,
+    thermal_energy,
+    reactions,
+  } = gasmix;
 
   return !total_moles ? (
     <Box nowrap italic mb="10px">
@@ -43,6 +59,19 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
     </Box>
   ) : (
     <LabeledList {...rest}>
+      <LabeledList.Item
+        label={
+          totalMolesOnClick ? (
+            <Button
+              content={'Total Moles'}
+              onClick={() => totalMolesOnClick()}
+            />
+          ) : (
+            'Total Moles'
+          )
+        }>
+        {(total_moles ? total_moles.toFixed(2) : '-') + ' mol'}
+      </LabeledList.Item>
       {gases.map((gas) => (
         <LabeledList.Item
           label={
@@ -70,7 +99,10 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
             'Temperature'
           )
         }>
-        {(total_moles ? temperature.toFixed(2) : '-') + ' K'}
+        {(total_moles ? (temperature - 273.15).toFixed(2) : '-') +
+          ' °C (' +
+          (total_moles ? temperature.toFixed(2) : '-') +
+          ' K)'}
       </LabeledList.Item>
       <LabeledList.Item
         label={
@@ -91,6 +123,32 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
           )
         }>
         {(total_moles ? pressure.toFixed(2) : '-') + ' kPa'}
+      </LabeledList.Item>
+      <LabeledList.Item
+        label={
+          heatCapacityOnClick ? (
+            <Button
+              content={'Heat Capacity'}
+              onClick={() => heatCapacityOnClick()}
+            />
+          ) : (
+            'Heat Capacity'
+          )
+        }>
+        {heat_capacity + ' / K'}
+      </LabeledList.Item>
+      <LabeledList.Item
+        label={
+          thermalEnergyOnClick ? (
+            <Button
+              content={'Thermal Energy'}
+              onClick={() => thermalEnergyOnClick()}
+            />
+          ) : (
+            'Thermal Energy'
+          )
+        }>
+        {thermal_energy}
       </LabeledList.Item>
       {detailedReactions ? (
         reactions.map((reaction) => (
