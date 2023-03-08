@@ -1,0 +1,38 @@
+"a" = (/turf/closed/mineral/random/snow,/area/icemoon/surface/outdoors/nospawn)
+"b" = (/obj/item/circuitboard/machine/space_heater,/obj/item/stack/cable_coil/five,/obj/structure/frame/machine,/obj/item/stock_parts/cell/super,/turf/open/floor/wood/cold,/area/icemoon/surface/outdoors/nospawn)
+"c" = (/obj/structure/grille,/turf/open/space/basic,/area/icemoon/surface/outdoors/nospawn)
+"i" = (/turf/open/floor/wood,/area/icemoon/surface/outdoors/nospawn)
+"k" = (/obj/structure/table/wood,/obj/item/seeds/tobacco{pixel_x = -1; pixel_y = 1},/obj/item/seeds/tobacco{pixel_x = 1; pixel_y = 1},/obj/item/seeds/tobacco/space{pixel_x = -1; pixel_y = -1},/turf/open/floor/wood/cold,/area/icemoon/surface/outdoors/nospawn)
+"n" = (/obj/structure/door_assembly/door_assembly_wood,/obj/structure/barricade/wooden/crude/snow,/turf/open/floor/wood/cold,/area/icemoon/surface/outdoors/nospawn)
+"t" = (/turf/closed/wall/mineral/wood,/area/icemoon/surface/outdoors/nospawn)
+"u" = (/turf/open/floor/wood/cold,/area/icemoon/surface/outdoors/nospawn)
+"v" = (/obj/item/stack/sheet/mineral/wood{pixel_x = 5},/turf/open/floor/wood/cold,/area/icemoon/surface/outdoors/nospawn)
+"w" = (/obj/machinery/hydroponics/soil,/turf/open/misc/snow,/area/icemoon/surface/outdoors/nospawn)
+"A" = (/obj/item/chair/wood{pixel_x = 6; pixel_y = -3},/obj/item/chair/wood{pixel_x = 6; pixel_y = -3},/turf/open/floor/wood/cold,/area/icemoon/surface/outdoors/nospawn)
+"G" = (/obj/item/stack/sheet/mineral/wood,/turf/open/floor/wood/cold,/area/icemoon/surface/outdoors/nospawn)
+"J" = (/obj/effect/decal/cleanable/glass,/obj/item/shard{pixel_x = 5; pixel_y = -3},/turf/open/floor/wood/cold,/area/icemoon/surface/outdoors/nospawn)
+"M" = (/obj/effect/decal/cleanable/glass,/turf/open/misc/snow,/area/icemoon/surface/outdoors/nospawn)
+"O" = (/obj/structure/flora/tree/pine/style_random,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface/outdoors/nospawn)
+"Q" = (/turf/open/misc/snow,/area/icemoon/surface/outdoors/nospawn)
+"T" = (/obj/structure/rack,/turf/open/floor/wood/cold,/area/icemoon/surface/outdoors/nospawn)
+"V" = (/obj/structure/fireplace,/turf/open/floor/wood/cold,/area/icemoon/surface/outdoors/nospawn)
+"X" = (/obj/effect/spawner/structure/window,/turf/open/floor/wood/cold,/area/icemoon/surface/outdoors/nospawn)
+"Z" = (/obj/structure/bed/maint,/turf/open/floor/wood/cold,/area/icemoon/surface/outdoors/nospawn)
+
+(1,1,1) = {"
+aaaQaaaQQaaaQaaaaaaaaQQQa
+aaQaaaaaaaaaaaaaaaaaaQQQa
+aQQaQQQQaaaaaaQQQaaaaaQQa
+QQOtttttttttaaQQQaaaaaQQa
+QQQtuuuVuTutttttQQQQaaQQQ
+QQQtuuuuuuutiiitQaaaaaQQQ
+QQQnuGkAuuuiiiitQaaaaaaQQ
+QQQtuvuuuuutiiitQaaaaaaaQ
+QQQtbuZuuJttttttQaaaaaaQQ
+aaQttXtttctQQQQQQaaaQaaQQ
+aaQQQwwwQMQQQQQQQaQaaaaaQ
+aaaQQQQQQQQQQQQQQQaaaaQQQ
+aaaaaQQQOQQQaaQQaQaaaQQQQ
+aaaaaaaaaaaaaaQQQQQQQQQQa
+aaaaaaaaaQQQQQQQQQQQQaaaa
+"}
