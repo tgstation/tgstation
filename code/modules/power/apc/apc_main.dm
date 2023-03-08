@@ -187,6 +187,17 @@
 
 	GLOB.apcs_list += src
 
+///called during area editing via blueprints
+/obj/machinery/power/apc/proc/assign_to_area()
+	area.apc = null
+	area = get_area(src)
+	area.apc = src
+	update_appearance(UPDATE_NAME)
+
+/obj/machinery/power/apc/update_name(updates)
+	. = ..()
+	name = "\improper [get_area_name(area, TRUE)] APC"
+
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
 

@@ -96,6 +96,15 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	GLOB.air_alarms -= src
 	return ..()
 
+///called during area editing via blueprints
+/obj/machinery/airalarm/proc/assign_to_area()
+	my_area = get_area(src)
+	update_appearance(UPDATE_NAME)
+
+/obj/machinery/airalarm/update_name(updates)
+	. = ..()
+	name = "[get_area_name(my_area)] Air Alarm"
+
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
 	switch(buildstage)

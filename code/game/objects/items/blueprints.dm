@@ -224,6 +224,7 @@
 		for(var/D in A.firedoors)
 			var/obj/machinery/door/firedoor/FD = D
 			FD.CalculateAffectingAreas()
+
 	A.update_areasize()
 	return TRUE
 
@@ -231,16 +232,18 @@
 /proc/set_area_machinery_title(area/area, title, oldtitle)
 	if(!oldtitle) // or replacetext goes to infinite loop
 		return
-	for(var/obj/machinery/airalarm/airpanel in area)
-		airpanel.name = replacetext(airpanel.name,oldtitle,title)
-	for(var/obj/machinery/power/apc/apcpanel in area)
-		apcpanel.name = replacetext(apcpanel.name,oldtitle,title)
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in area)
-		scrubber.name = replacetext(scrubber.name,oldtitle,title)
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in area)
-		vent.name = replacetext(vent.name,oldtitle,title)
-	for(var/obj/machinery/door/door in area)
-		door.name = replacetext(door.name,oldtitle,title)
-	for(var/obj/machinery/firealarm/firepanel in area)
-		firepanel.name = replacetext(firepanel.name,oldtitle,title)
+
+	//stuff tied to the area to rename
+	var/list/to_rename = list(
+		/obj/machinery/airalarm,
+		/obj/machinery/power/apc,
+		/obj/machinery/firealarm,
+		/obj/machinery/atmospherics/components/unary/vent_scrubber,
+		/obj/machinery/atmospherics/components/unary/vent_pump,
+		/obj/machinery/door,
+		/obj/machinery/light_switch
+	)
+	for(var/obj/machine as anything in area)
+		if(is_type_in_list(machine, to_rename))
+			machine.name = replacetext(machine.name, oldtitle, title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.

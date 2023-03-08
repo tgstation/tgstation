@@ -66,6 +66,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/assign_to_area()
 	var/area/area = get_area(src)
 	area?.air_scrubbers += src
+	update_appearance(UPDATE_NAME)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/disconnect_from_area()
 	var/area/area = get_area(src)

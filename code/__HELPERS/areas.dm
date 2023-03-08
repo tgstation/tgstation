@@ -120,13 +120,49 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	else
 		newA = area_choice
 
+	//we haven't done anything. let's get outta here
+	if(newA == oldA)
+		to_chat(creator, span_warning("The area remains unchanged"))
+		return
+	//when expanding one area into another we don't want to merge their apcs. Display warning to user to dismantle the old area apc inorder to proceed
+	if(!isnull(newA.apc) && !isnull(oldA.apc))
+		to_chat(creator, span_warning("Current & new area both have APCs!!. Dismantle any one apc before proceeding."))
+		return
+
+	//disconnect vents & scrubbers. have to clone the list because disconnecting removes it from the list
+	var/list/obj/machinery/atmospherics/components/unary/vent_pump/pumps = oldA.air_vents.Copy()
+	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubbers = oldA.air_scrubbers.Copy()
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/pump in pumps)
+		pump.disconnect_from_area()
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in scrubbers)
+		scrubber.disconnect_from_area()
+	//no special disconnect for these machines. we just collect & reassign their areas later on
+	var/list/obj/machinery/airalarm/air_alarms = list()
+	var/list/obj/machinery/firealarm/fire_alarms = list()
+	for(var/obj/machinery/airalarm/alarm in oldA)
+		air_alarms += alarm
+	for(var/obj/machinery/firealarm/alarm in oldA)
+		fire_alarms += alarm
+
 	for(var/i in 1 to length(turfs))
 		var/turf/thing = turfs[i]
+
 		var/area/old_area = thing.loc
 		old_area.turfs_to_uncontain += thing
 		newA.contents += thing
 		newA.contained_turfs += thing
 		thing.transfer_area_lighting(old_area, newA)
+
+	//reassign them to their new areas
+	oldA.apc?.assign_to_area()
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/pump in pumps)
+		pump.assign_to_area()
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in scrubbers)
+		scrubber.assign_to_area()
+	for(var/obj/machinery/airalarm/alarm in air_alarms)
+		alarm.assign_to_area()
+	for(var/obj/machinery/firealarm/alarm in fire_alarms)
+		alarm.assign_to_area()
 
 	newA.reg_in_areas_in_z()
 

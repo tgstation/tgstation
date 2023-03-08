@@ -96,6 +96,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/assign_to_area()
 	var/area/area = get_area(src)
 	area?.air_vents += src
+	update_appearance(UPDATE_NAME)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_from_area()
 	var/area/area = get_area(src)

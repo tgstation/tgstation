@@ -74,6 +74,15 @@
 	QDEL_NULL(soundloop)
 	return ..()
 
+///called during area editing via blueprints
+/obj/machinery/firealarm/proc/assign_to_area()
+	my_area = get_area(src)
+	update_appearance(UPDATE_NAME)
+
+/obj/machinery/firealarm/update_name(updates)
+	. = ..()
+	name = "[get_area_name(my_area)] [initial(name)]"
+
 // Area sensitivity is traditionally tied directly to power use, as an optimization
 // But since we want it for fire reacting, we disregard that
 /obj/machinery/firealarm/setup_area_power_relationship()
