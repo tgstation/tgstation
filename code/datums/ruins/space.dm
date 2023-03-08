@@ -314,6 +314,13 @@
 	name = "Syndicate Forgotten Ship"
 	description = "Seemingly abandoned ship went of course right into NT controlled space. It seems that malfunction caused most systems to turn off, except for sleepers."
 
+/datum/map_template/ruin/space/old_syndie_infiltrator
+	id = "old_infiltrator"
+	suffix = "old_infiltrator.dmm"
+	name = "Abandoned Infiltrator"
+	description = "Only one in five Gorlex Marauder strike forces return from their regular raids into Nanotrasen space. \
+		For the other four... well, their ship doesn't just disappear when their target evacuates."
+
 /datum/map_template/ruin/space/hellfactory
 	id = "hellfactory"
 	suffix = "hellfactory.dmm"

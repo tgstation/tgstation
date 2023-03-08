@@ -1114,13 +1114,6 @@
 	},
 /obj/machinery/holopad,
 /obj/effect/landmark/start/depsec/medical,
-/obj/machinery/button/door/directional/west{
-	id = "MedbayFoyer";
-	name = "Medbay Doors Control";
-	normaldoorcontrol = 1;
-	pixel_x = -35;
-	pixel_y = -56
-	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/checkpoint/medical)
 "atM" = (
@@ -10177,6 +10170,11 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/full,
+/obj/machinery/button/door/directional/south{
+	id = "MedbayFoyer";
+	name = "Medbay Doors Control";
+	normaldoorcontrol = 1
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/checkpoint/medical)
 "cZe" = (
@@ -14166,6 +14164,11 @@
 /obj/item/reagent_containers/cup/bottle/epinephrine,
 /obj/item/stack/sheet/mineral/plasma,
 /obj/machinery/light/directional/north,
+/obj/machinery/button/door/directional/north{
+	id = "pharmacy_shutters3";
+	name = "Pharmacy Shutter Controls";
+	req_access = list("pharmacy")
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "ekq" = (
@@ -27123,6 +27126,7 @@
 /obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 3
 	},
+/obj/effect/spawner/random/food_or_drink/cake_ingredients,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/station/service/kitchen)
 "iot" = (
@@ -34332,6 +34336,10 @@
 /obj/machinery/computer/records/medical,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/full,
+/obj/machinery/button/door/directional/north{
+	id = "medsecprivacy";
+	name = "Privacy Shutters Control"
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/checkpoint/medical)
 "kzr" = (
@@ -45264,6 +45272,7 @@
 	dir = 8
 	},
 /obj/structure/closet/crate,
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "nRu" = (
@@ -50443,6 +50452,16 @@
 /obj/machinery/cell_charger,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"pxV" = (
+/obj/machinery/chem_master,
+/obj/effect/turf_decal/tile/yellow/full,
+/obj/machinery/button/door/directional/north{
+	id = "pharmacy_shutters";
+	name = "Pharmacy Shutter Controls";
+	req_access = list("pharmacy")
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/station/medical/pharmacy)
 "pxX" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
@@ -50824,6 +50843,7 @@
 /obj/item/storage/box,
 /obj/item/storage/box,
 /obj/effect/turf_decal/tile/brown,
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "pFl" = (
@@ -54443,12 +54463,6 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/chemist,
-/obj/machinery/button/door/directional/north{
-	id = "pharmacy_shutters";
-	name = "Pharmacy Shutter Controls";
-	pixel_y = 55;
-	req_access = list("pharmacy")
-	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "qMz" = (
@@ -54562,12 +54576,6 @@
 	dir = 5
 	},
 /obj/effect/landmark/start/depsec/medical,
-/obj/machinery/button/door/directional/east{
-	id = "medsecprivacy";
-	name = "Privacy Shutters Control";
-	pixel_x = -32;
-	pixel_y = 56
-	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/checkpoint/medical)
 "qNE" = (
@@ -70629,16 +70637,6 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron,
 /area/station/command/gateway)
-"vPV" = (
-/obj/structure/cable,
-/obj/machinery/button/door/directional/north{
-	id = "pharmacy_shutters3";
-	name = "Pharmacy Shutter Controls";
-	pixel_y = 55;
-	req_access = list("pharmacy")
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/pharmacy)
 "vQh" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -244119,7 +244117,7 @@ dEV
 ieZ
 azw
 ekn
-vPV
+fTC
 fHk
 azw
 tJV
@@ -245917,7 +245915,7 @@ lso
 dEV
 bai
 azw
-dmI
+pxV
 qMv
 vDh
 azw
