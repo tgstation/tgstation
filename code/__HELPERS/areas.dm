@@ -117,6 +117,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		newA = new area_choice
 		newA.setup(str)
 		newA.has_gravity = oldA.has_gravity
+		require_area_resort() //new area registered. resort the names
 	else
 		newA = area_choice
 
@@ -177,6 +178,17 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	SEND_GLOBAL_SIGNAL(COMSIG_AREA_CREATED, newA, oldA, creator)
 	to_chat(creator, span_notice("You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered."))
 	creator.log_message("created a new area: [AREACOORD(creator)] (previously \"[oldA.name]\")", LOG_GAME)
+
+	/**
+	 * there are no more turfs left in this area. Time to clean up
+	 * we could have used has_contained_turfs() to determine if the old area has any turfs remaining but insead
+	 * we use cannonize_contained_turfs() because it saves memory as an added bonus
+	 */
+	oldA.cannonize_contained_turfs()
+	if(!length(oldA.contained_turfs))
+		message_admins("Area [oldA.name] has been deleted!.")
+		qdel(oldA)
+
 	return TRUE
 
 #undef BP_MAX_ROOM_SIZE
