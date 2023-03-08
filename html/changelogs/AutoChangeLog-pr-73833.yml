@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixes pirates and starfury assailants keeping minds of past lives"
