@@ -1,0 +1,8 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - refactor: "Admin event setup's have been refactored to use lists."
+  - bugfix: "When admins customize the pirate event all options will be available rather than just options that have not been randomly rolled."
+  - bugfix: "The stray meteor event no longer runtimes when customized by admins."
+  - admin: "Admins can now select the shuttle brought in by the shuttle catastrophe event."
+  - admin: "Admins can now randomize the disease outbreak classic event to roll any disease type, including transformation diseases so have fun with that."
