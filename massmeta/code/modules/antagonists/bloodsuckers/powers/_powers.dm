@@ -2,10 +2,10 @@
 	name = "Vampiric Gift"
 	desc = "A vampiric gift."
 	//This is the FILE for the background icon
-	background_icon = 'fulp_modules/features/antagonists/bloodsuckers/icons/actions_bloodsucker.dmi'
+	background_icon = 'massmeta/icons/bloodsuckers/actions_bloodsucker.dmi'
 	//This is the ICON_STATE for the background icon
 	background_icon_state = "vamp_power_off"
-	button_icon = 'fulp_modules/features/antagonists/bloodsuckers/icons/actions_bloodsucker.dmi'
+	button_icon = 'massmeta/icons/bloodsuckers/actions_bloodsucker.dmi'
 	button_icon_state = "power_feed"
 	buttontooltipstyle = "cult"
 	transparent_when_unavailable = TRUE

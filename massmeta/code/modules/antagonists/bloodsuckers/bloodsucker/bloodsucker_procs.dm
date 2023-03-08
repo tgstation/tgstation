@@ -24,7 +24,7 @@
 /datum/antagonist/bloodsucker/proc/break_masquerade()
 	if(broke_masquerade)
 		return
-	owner.current.playsound_local(null, 'fulp_modules/features/antagonists/bloodsuckers/sounds/lunge_warn.ogg', 100, FALSE, pressure_affected = FALSE)
+	owner.current.playsound_local(null, 'massmeta/sounds/bloodsuckers/lunge_warn.ogg', 100, FALSE, pressure_affected = FALSE)
 	to_chat(owner.current, span_cultboldtalic("You have broken the Masquerade!"))
 	to_chat(owner.current, span_warning("Bloodsucker Tip: When you break the Masquerade, you become open for termination by fellow Bloodsuckers, and your Vassals are no longer completely loyal to you, as other Bloodsuckers can steal them for themselves!"))
 	broke_masquerade = TRUE
@@ -129,7 +129,7 @@
 	// Viewer is Target's Vassal?
 	if(viewer.mind.has_antag_datum(/datum/antagonist/vassal) in vassals)
 		var/returnString = "\[<span class='warning'><EM>This is your Master!</EM></span>\]"
-		var/returnIcon = "[icon2html('fulp_modules/features/antagonists/bloodsuckers/icons/vampiric.dmi', world, "bloodsucker")]"
+		var/returnIcon = "[icon2html('massmeta/icons/bloodsuckers/vampiric.dmi', world, "bloodsucker")]"
 		returnString += "\n"
 		return returnIcon + returnString
 	// Viewer not a Vamp AND not the target's vassal?
@@ -138,7 +138,7 @@
 			return FALSE
 	// Default String
 	var/returnString = "\[<span class='warning'><EM>[return_full_name()]</EM></span>\]"
-	var/returnIcon = "[icon2html('fulp_modules/features/antagonists/bloodsuckers/icons/vampiric.dmi', world, "bloodsucker")]"
+	var/returnIcon = "[icon2html('massmeta/icons/bloodsuckers/vampiric.dmi', world, "bloodsucker")]"
 
 	// In Disguise (Veil)?
 	//if (name_override != null)

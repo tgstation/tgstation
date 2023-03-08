@@ -42,9 +42,9 @@
 	name = "black coffin"
 	desc = "For those departed who are not so dear."
 	icon_state = "coffin"
-	icon = 'fulp_modules/features/antagonists/bloodsuckers/icons/vamp_obj.dmi'
-	open_sound = 'fulp_modules/features/antagonists/bloodsuckers/sounds/coffin_open.ogg'
-	close_sound = 'fulp_modules/features/antagonists/bloodsuckers/sounds/coffin_close.ogg'
+	icon = 'massmeta/icons/bloodsuckers/vamp_obj.dmi'
+	open_sound = 'massmeta/sounds/bloodsuckers/coffin_open.ogg'
+	close_sound = 'massmeta/sounds/bloodsuckers/coffin_close.ogg'
 	breakout_time = 30 SECONDS
 	pry_lid_timer = 20 SECONDS
 	resistance_flags = NONE
@@ -64,9 +64,9 @@
 	name = "secure coffin"
 	desc = "For those too scared of having their place of rest disturbed."
 	icon_state = "securecoffin"
-	icon = 'fulp_modules/features/antagonists/bloodsuckers/icons/vamp_obj.dmi'
-	open_sound = 'fulp_modules/features/antagonists/bloodsuckers/sounds/coffin_open.ogg'
-	close_sound = 'fulp_modules/features/antagonists/bloodsuckers/sounds/coffin_close.ogg'
+	icon = 'massmeta/icons/bloodsuckers/vamp_obj.dmi'
+	open_sound = 'massmeta/sounds/bloodsuckers/coffin_open.ogg'
+	close_sound = 'massmeta/sounds/bloodsuckers/coffin_close.ogg'
 	breakout_time = 35 SECONDS
 	pry_lid_timer = 35 SECONDS
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF
@@ -86,7 +86,7 @@
 	name = "meat coffin"
 	desc = "When you're ready to meat your maker, the steaks can never be too high."
 	icon_state = "meatcoffin"
-	icon = 'fulp_modules/features/antagonists/bloodsuckers/icons/vamp_obj.dmi'
+	icon = 'massmeta/icons/bloodsuckers/vamp_obj.dmi'
 	resistance_flags = FIRE_PROOF
 	open_sound = 'sound/effects/footstep/slime1.ogg'
 	close_sound = 'sound/effects/footstep/slime1.ogg'
@@ -108,7 +108,7 @@
 	name = "metal coffin"
 	desc = "A big metal sardine can inside of another big metal sardine can, in space."
 	icon_state = "metalcoffin"
-	icon = 'fulp_modules/features/antagonists/bloodsuckers/icons/vamp_obj.dmi'
+	icon = 'massmeta/icons/bloodsuckers/vamp_obj.dmi'
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	open_sound = 'sound/effects/pressureplate.ogg'
 	close_sound = 'sound/effects/pressureplate.ogg'

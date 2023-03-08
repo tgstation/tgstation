@@ -10,7 +10,7 @@
 	job_rank = ROLE_BLOODSUCKER
 	antag_hud_name = "vassal"
 	show_in_roundend = FALSE
-	hud_icon = 'fulp_modules/features/antagonists/bloodsuckers/icons/bloodsucker_icons.dmi'
+	hud_icon = 'massmeta/icons/bloodsuckers/bloodsucker_icons.dmi'
 	tip_theme = "spookyconsole"
 	antag_tips = list(
 		"You are a Vassal, enslaved to your Vampiric Master, you obey their instructions above all else.",

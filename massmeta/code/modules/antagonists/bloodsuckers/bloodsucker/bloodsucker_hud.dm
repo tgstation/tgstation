@@ -11,7 +11,7 @@
 #define FORMAT_BLOODSUCKER_SUNLIGHT_TEXT(valuecolor, value) MAPTEXT("<div align='center' valign='bottom' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[value]</font></div>")
 
 /atom/movable/screen/bloodsucker
-	icon = 'fulp_modules/features/antagonists/bloodsuckers/icons/actions_bloodsucker.dmi'
+	icon = 'massmeta/icons/bloodsuckers/actions_bloodsucker.dmi'
 
 /atom/movable/screen/bloodsucker/blood_counter
 	name = "Blood Consumed"

@@ -85,9 +85,9 @@
 
 	switch(danger_level)
 		if(DANGER_LEVEL_FIRST_WARNING)
-			owner.current.playsound_local(null, 'fulp_modules/features/antagonists/bloodsuckers/sounds/griffin_3.ogg', 50, 1)
+			owner.current.playsound_local(null, 'massmeta/sounds/bloodsuckers/griffin_3.ogg', 50, 1)
 		if(DANGER_LEVEL_SECOND_WARNING)
-			owner.current.playsound_local(null, 'fulp_modules/features/antagonists/bloodsuckers/sounds/griffin_5.ogg', 50, 1)
+			owner.current.playsound_local(null, 'massmeta/sounds/bloodsuckers/griffin_5.ogg', 50, 1)
 		if(DANGER_LEVEL_THIRD_WARNING)
 			owner.current.playsound_local(null, 'sound/effects/alert.ogg', 75, 1)
 		if(DANGER_LEVEL_SOL_ROSE)
