@@ -54,7 +54,7 @@ export const ElevatorPanel = (props, context) => {
   const calculatedHeight = clamp(all_floor_data.length * 90, 400, 600);
 
   return (
-    <Window width={200} height={calculatedHeight} theme="retro">
+    <Window width={200} height={calculatedHeight}>
       <Window.Content>
         {!lift_exists && <NoLiftDimmer />}
         <Stack height="100%" vertical>
