@@ -2619,6 +2619,8 @@
 #include "code\modules\antagonists\survivalist\survivalist.dm"
 #include "code\modules\antagonists\traitor\balance_helper.dm"
 #include "code\modules\antagonists\traitor\datum_traitor.dm"
+#include "code\modules\antagonists\traitor\syndicate_contract.dm"
+#include "code\modules\antagonists\traitor\components\contractor.dm"
 #include "code\modules\antagonists\traitor\objective_category.dm"
 #include "code\modules\antagonists\traitor\traitor_objective.dm"
 #include "code\modules\antagonists\traitor\uplink_handler.dm"

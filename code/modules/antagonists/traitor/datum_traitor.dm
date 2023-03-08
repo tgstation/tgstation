@@ -269,7 +269,7 @@
 
 	var/special_role_text = lowertext(name)
 
-	if (contractor_hub)
+	if(contractor_hub)
 		result += contractor_round_end()
 
 	if(traitor_won)
