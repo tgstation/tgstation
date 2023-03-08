@@ -1037,6 +1037,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "asL" = (
@@ -6612,11 +6613,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
 	},
-/obj/item/toy/snowball{
-	pixel_x = 6;
-	pixel_y = 5
-	},
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/surface/outdoors/nospawn)
 "bXT" = (
 /obj/machinery/camera{
@@ -17771,6 +17768,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "fqH" = (
@@ -18312,6 +18310,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "fzu" = (
@@ -20723,13 +20722,6 @@
 	},
 /turf/open/floor/iron/dark/airless,
 /area/station/science/ordnance/freezerchamber)
-"gmh" = (
-/obj/item/toy/snowball{
-	pixel_x = -8;
-	pixel_y = 1
-	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "gmB" = (
 /obj/structure/stairs/south{
 	dir = 1
@@ -24567,13 +24559,6 @@
 	dir = 5
 	},
 /area/station/service/chapel)
-"hxN" = (
-/obj/item/toy/snowball{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "hxT" = (
 /obj/structure/railing{
 	dir = 9
@@ -27072,10 +27057,6 @@
 "inE" = (
 /turf/open/floor/iron/corner,
 /area/station/engineering/lobby)
-"inR" = (
-/obj/structure/flora/bush/flowers_yw/style_random,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "inZ" = (
 /obj/structure/chair/stool/directional/south,
 /obj/machinery/flasher/directional/west{
@@ -45802,6 +45783,10 @@
 /obj/item/stock_parts/subspace/amplifier,
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
+"nZG" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/station/maintenance/port/fore)
 "nZH" = (
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
@@ -45975,12 +45960,6 @@
 	},
 /turf/open/misc/asteroid/snow/coldroom,
 /area/station/service/kitchen/coldroom)
-"ocT" = (
-/obj/item/toy/snowball{
-	pixel_x = -6
-	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "ocY" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/spawner/random/engineering/tracking_beacon,
@@ -56047,6 +56026,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "rkT" = (
@@ -61190,9 +61170,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "sSA" = (
-/obj/structure/flora/grass/green/style_random,
 /obj/structure/sign/warning/secure_area/directional/south,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/surface/outdoors/nospawn)
 "sSD" = (
 /obj/effect/landmark/observer_start,
@@ -229441,16 +229420,16 @@ lJO
 lJO
 dDV
 sFN
-biY
-oSy
-oSy
-oSy
-oSy
-oSy
-oSy
-oSy
-oSy
-biY
+lJO
+nZG
+nZG
+nZG
+nZG
+nZG
+nZG
+nZG
+nZG
+lJO
 wJz
 aJA
 gpp
@@ -229699,14 +229678,14 @@ hEI
 uPS
 oaR
 oSy
-bln
-fsm
-hxN
-mQb
-stJ
-lBD
-bln
-bln
+sDl
+sDl
+sDl
+sDl
+sDl
+sDl
+sDl
+sDl
 jOt
 wRU
 auc
@@ -229956,14 +229935,14 @@ hEI
 hjI
 wPr
 oSy
-mQb
+sDl
 ybQ
 ybQ
 ybQ
 ybQ
 ybQ
 ybQ
-tLi
+sDl
 jOt
 ozw
 eRw
@@ -230220,7 +230199,7 @@ lye
 ebL
 edn
 ybQ
-gmh
+sDl
 jOt
 ozw
 aJA
@@ -230470,7 +230449,7 @@ lJO
 dNi
 wPr
 oSy
-bln
+sDl
 ybQ
 oPI
 khR
@@ -230984,7 +230963,7 @@ lJO
 dNi
 wPr
 oSy
-inR
+sDl
 ybQ
 oPI
 xWN
@@ -231248,7 +231227,7 @@ jYV
 jDW
 hPf
 ybQ
-bln
+sDl
 jOt
 ozw
 ons
@@ -231498,14 +231477,14 @@ hEI
 hjI
 wPr
 oSy
-stJ
+sDl
 ybQ
 ybQ
 ybQ
 ybQ
 ybQ
 ybQ
-stJ
+sDl
 jOt
 ozw
 ons
@@ -231755,14 +231734,14 @@ hEI
 hjI
 oaR
 oSy
-ocT
-bln
 sDl
 sDl
 sDl
 sDl
-mQb
-fsm
+sDl
+sDl
+sDl
+sDl
 jOt
 ozw
 ons
