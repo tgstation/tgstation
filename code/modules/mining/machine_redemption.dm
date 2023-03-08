@@ -252,6 +252,13 @@
 				"name" = card.registered_account.account_holder,
 				"cash" = card.registered_account.account_balance,
 			)
+
+		else if(issilicon(user))
+			var/mob/living/silicon/silicon_player = user
+			data["user"] = list(
+				"name" = silicon_player.name,
+				"cash" = "No valid account",
+			)
 	return data
 
 /obj/machinery/mineral/ore_redemption/ui_static_data(mob/user)

@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixed a eswords, some tools, and some other misc. items from being invisible while extended / active"
+  - bugfix: "Teleshields and other misc items not extending in hand when active"
+  - bugfix: "Switchblades click on extend again"
+  - bugfix: "Pendrivers click on extend"

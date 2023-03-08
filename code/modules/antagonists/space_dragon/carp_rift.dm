@@ -42,7 +42,8 @@
 	dragon.rift_list += new_rift
 	to_chat(owner, span_boldwarning("The rift has been summoned. Prevent the crew from destroying it at all costs!"))
 	notify_ghosts("The Space Dragon has opened a rift!", source = new_rift, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Rift Opened")
-	qdel(src)
+	ASSERT(dragon.rift_ability == src) // Badmin protection.
+	QDEL_NULL(dragon.rift_ability) // Deletes this action when used successfully, we re-gain a new one on success later.
 
 /**
  * # Carp Rift
@@ -188,8 +189,8 @@
 		resistance_flags = INDESTRUCTIBLE
 		dragon.rifts_charged += 1
 		if(dragon.rifts_charged != 3 && !dragon.objective_complete)
-			var/datum/action/innate/summon_rift/rift = new()
-			rift.Grant(dragon.owner.current)
+			dragon.rift_ability = new()
+			dragon.rift_ability.Grant(dragon.owner.current)
 			dragon.riftTimer = 0
 			dragon.rift_empower()
 		// Early return, nothing to do after this point.

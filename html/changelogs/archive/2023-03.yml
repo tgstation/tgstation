@@ -141,3 +141,110 @@
       the tier!
   - qol: DNA Infuser will now print a failure reason when you... well, don't get what
       you want.
+2023-03-06:
+  GoldenAlpharex:
+  - bugfix: Fixed some issues with podpeople hair and horns not being drawn under
+      the right circumstances all the time.
+  Holoo-1:
+  - bugfix: Nanotrasen has conducted high precision in-depth analysis of Deltastation
+      and its shuttles. As a result anomalous floortiles were replaced with standard
+      issued ones.
+  Iamgoofball:
+  - bugfix: You can no longer fortnite with glass sheets
+  LT3:
+  - rscadd: Added new multi-vote system
+  - balance: Map votes are now calculated using multi-vote instead of the old single-vote
+      system
+  - admin: Admins can now use either multi-vote or single-vote for custom votes
+  - code_imp: Map choice filtering uses active player count, not all connected clients
+  - bugfix: Admins can jump to/follow patient zero of a disease outbreak again
+  OrionTheFox:
+  - bugfix: fixed missing emissives on the Engivend, Pwr-Game Soda, and generic Soda
+      vendors. Also fixed the seclaptop having no valid screen icon!
+  - bugfix: fixed a few items trying to apply emissives when they shouldn't.
+  - code_imp: added a stack_trace for emissives with missing icon states.
+  Paxilmaniac:
+  - code_imp: AMMO_BOX_FULL_EMPTY now looks for -full and -empty for sprites, rather
+      than -[max ammo of that magazine] and -0
+  Profakos:
+  - balance: the syndicate realized Chief Engineer is important enough to kidnap
+  - bugfix: kidnap objectives will now properly be unavailable for you for 15 minutes
+      after you take three, instead of after you take three assassinations.
+  RikuTheKiller:
+  - bugfix: Atmosians have finally convinced the thermomachines to not self-destruct
+      when built on blocked ports.
+  - bugfix: Failing to wrench down a thermomachine no longer hits it with the wrench.
+  SmoSmoSmoSmok:
+  - qol: made ORM easier to use
+  Spookuni:
+  - balance: Latejoin dynamic rulesets have been rebalanced to reduce the frequency
+      of midround revolution spawns.
+  carshalash:
+  - bugfix: Bartender's fountain pen was omitted during the swap over to tablets,
+      this has been amended.
+  tralezab:
+  - rscadd: Updated the bus ruin
+2023-03-07:
+  Helg2:
+  - bugfix: fixed butchering bread dog spawning error bread.
+  JohnFulpWillard:
+  - bugfix: Corgis show their ID on examine.
+  - balance: Cult can no longer draw runes in survival pods.
+  Melbert:
+  - bugfix: Luminsecent slime actions correctly update their appearance when integrating
+      or ejecting slime cores
+  - bugfix: Fixed a Space Dragon related hard delete.
+  - bugfix: Mindswapped space dragons will break less.
+  NamelessFairy:
+  - admin: AB_CHECK_INCAPACITATED on an action's check_flags can now be modified by
+      admins.
+  - rscadd: New Neutral Station Trait, "Employee Birthday", its someone on the crews
+      birthday, make sure to wish them a happy birthday and perhaps get them a gift.
+  - rscadd: Two new party themed items have been added to the arcade prize pool, the
+      party horn and a box of party poppers.
+  PositiveEntropy:
+  - imageadd: Tweaked, Overhauled and Resprited a variety of garments related to the
+      security department, particularly its alternate clothes! Check it when possible!
+  Profakos:
+  - bugfix: 20+ item's discounts are properly smaller, instead of being larger
+  - bugfix: You can no longer have multiple copies of the same heirloom theft objective
+  Sealed101:
+  - spellcheck: fixed humanoid examine easter egg's pronoun usage
+  carshalash:
+  - qol: Regal Rats produce meat on butchering, reducing player confusion.
+  coiax:
+  - refactor: Refactored how eggs growing into chicks is implemented, and how the
+      number of chickens and chicks are tracked. It's now possible for admins to make
+      anything into an egg.
+  dessysalta, Cheshify:
+  - rscadd: Nanotrasen has added a martial artist gi to the AutoDrobe for those who
+      want to go even further byond.
+  - imageadd: Aforementioned gi sprites.
+  tralezab:
+  - bugfix: changed gondola mutants to require gondola meat instead
+2023-03-08:
+  Jacquerel:
+  - balance: Traitor secondary objectives to steal or destroy an item are now associated
+      with a particular "owner" or "victim" and won't generate themselves if nobody
+      would actually be victimised by the crime.
+  - rscadd: Traitors can sometimes be tasked with stealing and destroying the roboticist's
+      big crowbar, if there is one
+  LT3:
+  - imageadd: New tram and elevator sprites
+  - code_imp: Lighting capability for all buttons
+  - spellcheck: All elevator components are now 'elevator'
+  - code_imp: Reduced brightness on tram platform signs
+  - bugfix: Fixed odd wall in cargo department
+  - bugfix: Science elevator panel not laying on a table anymore
+  - bugfix: Science keycard auth can only be done from RD office
+  - code_imp: More Tramstation mapping helpers
+  - bugfix: Fixed Icebox pharmacy shutters lighting runtimes
+  LemonInTheDark:
+  - bugfix: Examining in the dark is less wonk now, sorry bout that
+  Melbert:
+  - rscadd: Somewhere, in deep space, a relic to every fluked nuclear operative mission
+      drifts abandoned.
+  NamelessFairy:
+  - bugfix: The birthday station trait now actually works.
+  SmoSmoSmoSmok:
+  - qol: Borgs are now acknowledged by the orm
