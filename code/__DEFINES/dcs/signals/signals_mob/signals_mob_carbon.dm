@@ -85,6 +85,8 @@
 #define COMSIG_CARBON_GAIN_TRAUMA "carbon_gain_trauma"
 ///Called when a carbon loses a brain trauma (source = carbon, trauma = what trauma was removed)
 #define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
+///Just like mob throw but applies to carbons and carries the information about what you just threw
+#define COMSIG_CARBON_THROW "carbon_throw"
 ///Called when a carbon's health hud is updated. (source = carbon, shown_health_amount)
 #define COMSIG_CARBON_UPDATING_HEALTH_HUD "carbon_health_hud_update"
 	/// Return if you override the carbon's health hud with something else
