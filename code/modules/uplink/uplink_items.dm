@@ -1,5 +1,9 @@
+#define TRAITOR_DISCOUNT_BIG "big_discount"
+#define TRAITOR_DISCOUNT_AVERAGE "average_discount"
+#define TRAITOR_DISCOUNT_SMALL "small_discount"
 
 // TODO: Work into reworked uplinks.
+/// Selects a set number of unique items from the uplink, and deducts a percentage discount from them
 /proc/create_uplink_sales(num, datum/uplink_category/category, limited_stock, list/sale_items)
 	var/list/sales = list()
 	var/list/sale_items_copy = sale_items.Copy()
@@ -12,7 +16,7 @@
 		if(uplink_item.cost >= 20) //Tough love for nuke ops
 			discount *= 0.5
 		uplink_item.category = category
-		uplink_item.cost = max(round(uplink_item.cost * discount),1)
+		uplink_item.cost = max(round(uplink_item.cost * (1 - discount)),1)
 		uplink_item.name += " ([round(((initial(uplink_item.cost)-uplink_item.cost)/initial(uplink_item.cost))*100)]% off!)"
 		uplink_item.desc += " Normally costs [initial(uplink_item.cost)] TC. All sales final. [pick(disclaimer)]"
 		uplink_item.item = taken_item.item
@@ -80,15 +84,31 @@
 	/// Weight of the category. Used to determine the positioning in the uplink. High weight = appears first
 	var/weight = 0
 
+/// Returns by how much percentage do we reduce the price of the selected item
 /datum/uplink_item/proc/get_discount()
-	return pick(4;0.75,2;0.5,1;0.25)
 
+	var/static/list/discount_types = list(
+		TRAITOR_DISCOUNT_SMALL = 4,
+		TRAITOR_DISCOUNT_AVERAGE = 2,
+		TRAITOR_DISCOUNT_BIG = 1,
+	)
+
+	switch(pick_weight(discount_types))
+		if(TRAITOR_DISCOUNT_BIG)
+			return 0.75
+		if(TRAITOR_DISCOUNT_AVERAGE)
+			return 0.5
+		else
+			return 0.25
+
+/// Spawns an item and logs its purchase
 /datum/uplink_item/proc/purchase(mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/atom/A = spawn_item(item, user, uplink_handler, source)
 	log_uplink("[key_name(user)] purchased [src] for [cost] telecrystals from [source]'s uplink")
 	if(purchase_log_vis && uplink_handler.purchase_log)
 		uplink_handler.purchase_log.LogPurchase(A, src, cost)
 
+/// Spawns an item in the world
 /datum/uplink_item/proc/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	if(!spawn_path)
 		return
@@ -136,3 +156,7 @@
 
 /// Code that enables the ability to have limited stock that is shared by different items
 /datum/shared_uplink_stock
+
+#undef TRAITOR_DISCOUNT_BIG
+#undef TRAITOR_DISCOUNT_AVERAGE
+#undef TRAITOR_DISCOUNT_SMALL

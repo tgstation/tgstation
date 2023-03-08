@@ -333,7 +333,9 @@
 		ovens = typecacheof(list(/obj/singularity, /obj/energy_ball, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire))
 	AddComponent(/datum/component/transforming, \
 		hitsound_on = hitsound, \
-		clumsy_check = FALSE)
+		clumsy_check = FALSE, \
+		inhand_icon_change = FALSE, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_PRE_TRANSFORM, PROC_REF(attempt_transform))
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
@@ -449,4 +451,3 @@
 	armour_penetration = 50
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")
-
