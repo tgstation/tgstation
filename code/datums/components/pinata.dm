@@ -1,7 +1,7 @@
 ///Objects or mobs with this componenet will drop items when taking damage.
 /datum/component/pinata
 	///How much damage does an attack need to do to have a chance to drop "candy"
-	var/minimum_damage = 5
+	var/minimum_damage = 10
 	///What is the likelyhood some "candy" should drop when attacked.
 	var/drop_chance = 50
 	///A list of "candy" items that can be dropped when taking damage
@@ -11,13 +11,15 @@
 	if(ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_inflicted))
 		RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(pinata_broken))
-	else
+	else if(isstructure(parent))
 		RegisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(damage_inflicted))
 		RegisterSignal(parent, COMSIG_ATOM_DESTRUCTION, PROC_REF(pinata_broken))
+	else
+		return COMPONENT_INCOMPATIBLE
 
 /datum/component/pinata/proc/damage_inflicted(obj/target, damage)
 	SIGNAL_HANDLER
-	if(damage < minimum_damage && prob(drop_chance))
+	if(damage < minimum_damage && prob(drop_chance + damage))
 		return
 	var/list/turf_options = get_adjacent_open_turfs(parent)
 	turf_options += get_turf(parent)
