@@ -203,6 +203,16 @@
 		pic.alpha = 200
 		flick_overlay_global(pic, list(viewer.client), duration)
 
+/obj/item/clothing/glasses/meson/engine/advanced //special goggles for the CE that have the abilities of the T-ray scanners and engineering scanners
+	name = "advanced engineering scanner goggles"
+	icon_state = "trayson-t-ray"
+	inhand_icon_state = "trayson-t-ray"
+	desc = "A pair of advanced goggles combining the capabilities of both the engineering scanner goggles and t-ray scanner goggles"
+	range = 3
+
+
+	modes = list(MODE_NONE = MODE_MESON, MODE_MESON = MODE_TRAY, MODE_TRAY = MODE_PIPE_CONNECTABLE, MODE_PIPE_CONNECTABLE = MODE_ATMOS_THERMAL, MODE_ATMOS_THERMAL = MODE_NONE)
+	
 
 #undef MODE_NONE
 #undef MODE_MESON
