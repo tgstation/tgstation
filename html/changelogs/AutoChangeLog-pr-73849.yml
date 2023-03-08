@@ -1,0 +1,4 @@
+author: "Moth-lantern"
+delete-after: True
+changes:
+  - rscadd: "Adds the rest of the lipsticks to the cosmetics.dm"
