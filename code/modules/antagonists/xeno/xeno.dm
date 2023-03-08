@@ -105,7 +105,7 @@
 	var/escape_count = 0 //counts the number of xenomorphs that were born in captivity who ended the round outside of it
 	var/captive_count = 0 //counts the number of xenomorphs born in captivity who remained there until the end of the round (losers)
 
-	parts += "<span class='header'>The [name] were: </span>"
+	parts += "<span class='header'>The [name] were: </span> <br>"
 
 	for(var/datum/mind/alien_mind in members)
 		switch(check_captivity(alien_mind.current))
@@ -118,7 +118,7 @@
 				parts += "<span class='greentext'>[printplayer(alien_mind, fleecheck = FALSE)] and managed to <b>escape captivity<b>!</span>"
 				escape_count++
 
-	parts += "<span class='neutraltext big'> Overall, [captive_count] xenomorphs remained alive and in captivity, and [escape_count] managed to escape!</span>"
+	parts += "<span class='neutraltext big'> Overall, [captive_count] xenomorphs remained alive and in captivity, and [escape_count] managed to escape!</span> <br>"
 
 	var/thank_you_message
 	if(captive_count > escape_count)
@@ -128,7 +128,7 @@
 
 	parts += "<span class='neutraltext'>Nanotrasen thanks the crew of [station_name()] for providing much needed research data on [thank_you_message].</span>"
 
-	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div> <br>"
 
 /datum/team/xeno/captive/proc/check_captivity(mob/living/captive_alien)
 	if(!captive_alien || captive_alien.stat == DEAD)
