@@ -87,9 +87,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "O" = (
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/item/wallframe/apc,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "Q" = (

@@ -118,7 +118,7 @@
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
+	foldable_result = /obj/item/stack/sheet/cardboard //BubbleWrap
 	illustration = "light"
 
 /obj/item/storage/box/lights/Initialize(mapload)
@@ -195,3 +195,11 @@
 	for(var/i in 1 to 3)
 		new /obj/item/poster/tail_board(src)
 		new /obj/item/tail_pin(src)
+
+/obj/item/storage/box/party_poppers
+	name = "box of party_poppers"
+	desc = "Turn any event into a celebration and ensure the janitor stays busy."
+
+/obj/item/storage/box/party_poppers/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/spray/chemsprayer/party(src)

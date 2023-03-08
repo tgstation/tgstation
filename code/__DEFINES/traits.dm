@@ -653,6 +653,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Used to prevent multiple floating blades from triggering over the same target
 #define TRAIT_BEING_BLADE_SHIELDED "being_blade_shielded"
 
+/// This mob doesn't count as looking at you if you can only act while unobserved
+#define TRAIT_UNOBSERVANT "trait_unobservant"
+
 /* Traits for ventcrawling.
  * Both give access to ventcrawling, but *_NUDE requires the user to be
  * wearing no clothes and holding no items. If both present, *_ALWAYS
@@ -932,6 +935,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_CYBERNETIC_REVOLUTION "station_trait_cybernetic_revolution"
 #define STATION_TRAIT_BIGGER_PODS "station_trait_bigger_pods"
 #define STATION_TRAIT_SMALLER_PODS "station_trait_smaller_pods"
+#define STATION_TRAIT_BIRTHDAY "station_trait_birthday"
 
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"

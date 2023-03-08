@@ -20,7 +20,7 @@
 	throw_range = 1
 	force = 200
 	armour_penetration = 1000
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
 	item_flags = SLOWS_WHILE_IN_HAND
 	var/team = WHITE_TEAM
@@ -40,7 +40,6 @@
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 		reset.flag = src
-	RegisterSignal(src, COMSIG_PARENT_PREQDELETED, PROC_REF(reset_flag)) //just in case CTF has some map hazards (read: chasms).
 
 /obj/item/ctf/process()
 	if(is_ctf_target(loc)) //pickup code calls temporary drops to test things out, we need to make sure the flag doesn't reset from
@@ -49,7 +48,6 @@
 		reset_flag()
 
 /obj/item/ctf/proc/reset_flag(capture = FALSE)
-	SIGNAL_HANDLER
 	STOP_PROCESSING(SSobj, src)
 
 	var/turf/our_turf = get_turf(src.reset)
@@ -61,7 +59,6 @@
 		if(istype(mob_area, game_area))
 			if(!capture)
 				to_chat(M, span_userdanger("[src] has been returned to the base!"))
-	return TRUE //so if called by a signal, it doesn't delete
 
 //working with attack hand feels like taking my brain and putting it through an industrial pill press so i'm gonna be a bit liberal with the comments
 /obj/item/ctf/attack_hand(mob/living/user, list/modifiers)
@@ -241,7 +238,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	density = TRUE
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/game_id = CTF_GHOST_CTF_GAME_ID
 
 	var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>"
@@ -543,7 +540,7 @@
 	name = "Spawn protection"
 	desc = "Stay outta the enemy spawn!"
 	icon_state = "trap"
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
 	anchored = TRUE
@@ -629,7 +626,7 @@
 	desc = "You should capture this."
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
 	///This is how many points are gained a second while controlling this point

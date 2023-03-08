@@ -23,7 +23,7 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 	speech_span = SPAN_ROBOT
-	faction = list(FACTION_NEUTRAL, "silicon", "turret")
+	faction = list(FACTION_NEUTRAL, FACTION_SILICON, FACTION_TURRET)
 	light_system = MOVABLE_LIGHT
 	light_range = 3
 	light_power = 0.9
@@ -350,7 +350,7 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	unlock_with_id(user)
 
@@ -946,7 +946,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	return ..()
 
 /mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return TRUE
 	// 0 for access, 1 for denied.
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
@@ -1032,7 +1032,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		ejectpai(0)
 
 /mob/living/simple_animal/bot/sentience_act()
-	faction -= "silicon"
+	faction -= FACTION_SILICON
 
 /mob/living/simple_animal/bot/proc/set_path(list/newpath)
 	path = newpath ? newpath : list()

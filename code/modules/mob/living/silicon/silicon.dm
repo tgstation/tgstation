@@ -6,13 +6,13 @@
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
 	initial_language_holder = /datum/language_holder/synthetic
-	see_in_dark = NIGHTVISION_FOV_RANGE
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
 	death_sound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
+	fire_stack_decay_rate = -0.55
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
@@ -54,7 +54,7 @@
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
 	GLOB.silicon_mobs += src
-	faction += "silicon"
+	faction += FACTION_SILICON
 	if(ispath(radio))
 		radio = new radio(src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)

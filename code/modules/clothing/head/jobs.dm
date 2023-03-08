@@ -143,7 +143,7 @@
 
 /obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
 	. = ..()
-	if(loc != user || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
+	if(loc != user || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	if(candy_cooldown < world.time)
 		var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
@@ -196,12 +196,12 @@
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#39393f#FFCE5B"
+	greyscale_colors = "#39393f#f0cc8f"
 
 /obj/item/clothing/head/hats/hos/beret/navyhos
 	name = "head of security's formal beret"
 	desc = "A special beret with the Head of Security's insignia emblazoned on it. A symbol of excellence, a badge of courage, a mark of distinction."
-	greyscale_colors = "#3C485A#FFCE5B"
+	greyscale_colors = "#638799#f0cc8f"
 
 /obj/item/clothing/head/hats/hos/beret/syndicate
 	name = "syndicate beret"
@@ -341,12 +341,12 @@
 /obj/item/clothing/head/beret/sec/navywarden
 	name = "warden's beret"
 	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
-	greyscale_colors = "#3C485A#00AEEF"
+	greyscale_colors = "#638799#ebebeb"
 	strip_delay = 60
 
 /obj/item/clothing/head/beret/sec/navyofficer
 	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
-	greyscale_colors = "#3C485A#FF0000"
+	greyscale_colors = "#638799#a52f29"
 
 //Science
 /obj/item/clothing/head/beret/science

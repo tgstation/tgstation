@@ -25,7 +25,7 @@
 	burnmod = 0.5 // = 1/2x generic burn damage
 	payday_modifier = 0.75
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	inherent_factions = list("slime")
+	inherent_factions = list(FACTION_SLIME)
 	species_language_holder = /datum/language_holder/jelly
 	ass_image = 'icons/ass/assslime.png'
 
@@ -538,7 +538,7 @@
 
 /datum/action/innate/integrate_extract/New(Target)
 	. = ..()
-	AddComponent(/datum/component/action_item_overlay, CALLBACK(src, PROC_REF(locate_extract)))
+	AddComponent(/datum/component/action_item_overlay, item_callback = CALLBACK(src, PROC_REF(locate_extract)))
 
 /// Callback for /datum/component/action_item_overlay to find the slime extract from within the species
 /datum/action/innate/integrate_extract/proc/locate_extract()
@@ -608,7 +608,7 @@
 
 /datum/action/innate/use_extract/New(Target)
 	. = ..()
-	AddComponent(/datum/component/action_item_overlay, CALLBACK(src, PROC_REF(locate_extract)))
+	AddComponent(/datum/component/action_item_overlay, item_callback = CALLBACK(src, PROC_REF(locate_extract)))
 
 /// Callback for /datum/component/action_item_overlay to find the slime extract from within the species
 /datum/action/innate/use_extract/proc/locate_extract()

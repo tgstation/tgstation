@@ -43,7 +43,7 @@
 	taste_description = "badmins"
 	chemical_flags = REAGENT_DEAD_PROCESS
 	/// Flags to fullheal every metabolism tick
-	var/full_heal_flags = ~(HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS)
+	var/full_heal_flags = ~(HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_REFRESH_ORGANS)
 
 // The best stuff there is. For testing/debugging.
 /datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -77,7 +77,7 @@
 	name = "Quantum Medicine"
 	description = "Rare and experimental particles, that apparently swap the user's body with one from an alternate dimension where it's completely healthy."
 	taste_description = "science"
-	full_heal_flags = ~(HEAL_ADMIN|HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_ALL_REAGENTS)
+	full_heal_flags = ~(HEAL_ADMIN|HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_ALL_REAGENTS|HEAL_REFRESH_ORGANS)
 
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
@@ -635,17 +635,12 @@
 	improve_eyesight(affected_mob, eyes)
 
 /datum/reagent/medicine/oculine/proc/improve_eyesight(mob/living/carbon/affected_mob, obj/item/organ/internal/eyes/eyes)
-	delta_light = creation_purity*30
-	if(eyes.lighting_alpha)
-		eyes.lighting_alpha -= delta_light
-	else
-		eyes.lighting_alpha = 255 - delta_light
-	eyes.see_in_dark += 3
+	delta_light = creation_purity*10
+	eyes.lighting_cutoff += delta_light
 	affected_mob.update_sight()
 
 /datum/reagent/medicine/oculine/proc/restore_eyesight(mob/living/carbon/affected_mob, obj/item/organ/internal/eyes/eyes)
-	eyes.lighting_alpha += delta_light
-	eyes.see_in_dark -= 3
+	eyes.lighting_cutoff -= delta_light
 	affected_mob.update_sight()
 
 /datum/reagent/medicine/oculine/proc/on_gained_organ(mob/affected_mob, obj/item/organ/organ)

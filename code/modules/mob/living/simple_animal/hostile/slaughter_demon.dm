@@ -26,7 +26,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 250 //Weak to cold
 	maxbodytemp = INFINITY
-	faction = list("hell")
+	faction = list(FACTION_HELL)
 	attack_verb_continuous = "wildly tears into"
 	attack_verb_simple = "wildly tear into"
 	maxHealth = 200
@@ -35,8 +35,10 @@
 	obj_damage = 40
 	melee_damage_lower = 10
 	melee_damage_upper = 15
-	see_in_dark = NIGHTVISION_FOV_RANGE
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// You KNOW we're doing a lightly purple red
+	lighting_cutoff_red = 30
+	lighting_cutoff_green = 10
+	lighting_cutoff_blue = 20
 	del_on_death = TRUE
 	death_message = "screams in agony as it sublimates into a sulfurous smoke."
 	death_sound = 'sound/magic/demon_dies.ogg'
@@ -235,4 +237,4 @@
 
 /mob/living/simple_animal/hostile/imp/slaughter/engine_demon
 	name = "engine demon"
-	faction = list("hell", FACTION_NEUTRAL)
+	faction = list(FACTION_HELL, FACTION_NEUTRAL)

@@ -52,10 +52,11 @@
 			. += span_notice("It has [L] inside.")
 	else
 		. += span_notice("It has nothing inside.")
-	if(user.canUseTopic(src))
-		. += span_notice("Activate it in your hand to [open ? "close" : "open"] its door. Click-drag onto floor to release its occupants.")
-		if(!open)
-			. += span_notice("Alt-click to [locked ? "unlock" : "lock"] its door.")
+
+	// At some point these need to be converted to contextual screentips
+	. += span_notice("Activate it in your hand to [open ? "close" : "open"] its door. Click-drag onto floor to release its occupants.")
+	if(!open)
+		. += span_notice("Alt-click to [locked ? "unlock" : "lock"] its door.")
 
 /obj/item/pet_carrier/attack_self(mob/living/user)
 	if(open)
@@ -72,7 +73,7 @@
 	update_appearance()
 
 /obj/item/pet_carrier/AltClick(mob/living/user)
-	if(open || !user.canUseTopic(src, be_close = TRUE))
+	if(open || !user.can_perform_action(src))
 		return
 	locked = !locked
 	to_chat(user, span_notice("You flip the lock switch [locked ? "down" : "up"]."))
@@ -157,7 +158,7 @@
 
 /obj/item/pet_carrier/MouseDrop(atom/over_atom)
 	. = ..()
-	if(isopenturf(over_atom) && usr.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(usr)) && usr.Adjacent(over_atom) && open && occupants.len)
+	if(isopenturf(over_atom) && usr.can_perform_action(src, NEED_DEXTERITY) && usr.Adjacent(over_atom) && open && occupants.len)
 		usr.visible_message(span_notice("[usr] unloads [src]."), \
 		span_notice("You unload [src] onto [over_atom]."))
 		for(var/V in occupants)

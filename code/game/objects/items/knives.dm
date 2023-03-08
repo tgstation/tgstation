@@ -148,6 +148,10 @@
 	throwforce = 15
 	custom_materials = null
 
+/obj/item/knife/combat/bone/Initialize(mapload)
+	flags_1 &= ~CONDUCT_1
+	return ..()
+
 /obj/item/knife/combat/cyborg
 	name = "cyborg knife"
 	icon = 'icons/obj/items_cyborg.dmi'
@@ -168,6 +172,10 @@
 	attack_verb_simple = list("shank", "shiv")
 	armor_type = /datum/armor/none
 	custom_materials = list(/datum/material/glass=400)
+
+/obj/item/knife/shiv/Initialize(mapload)
+	flags_1 &= ~CONDUCT_1
+	return ..()
 
 /obj/item/knife/shiv/plasma
 	name = "plasma shiv"

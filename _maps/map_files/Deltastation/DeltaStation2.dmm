@@ -210,7 +210,6 @@
 	dir = 10
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/locker)
 "act" = (
@@ -225,9 +224,9 @@
 	dir = 4
 	},
 /obj/machinery/requests_console/directional/east{
+	assistance_requestable = 1;
 	department = "Chemistry";
-	name = "Chemistry Requests Console";
-	assistance_requestable = 1
+	name = "Chemistry Requests Console"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/item/kirbyplants/random,
@@ -772,6 +771,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "aiF" = (
@@ -2049,7 +2049,6 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/locker)
 "avX" = (
@@ -2559,7 +2558,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/hallway/primary/central/aft)
 "aCS" = (
@@ -2979,7 +2977,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/command/heads_quarters/ce)
 "aHF" = (
@@ -3578,7 +3575,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/toilet/locker)
 "aPl" = (
@@ -3601,14 +3597,25 @@
 	pixel_x = 32
 	},
 /obj/item/radio/intercom/directional/east{
-	pixel_y = 3
+	pixel_y = 3;
+	pixel_x = 38
 	},
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 4
 	},
 /obj/machinery/keycard_auth/directional/east{
-	pixel_x = 25;
+	pixel_x = 40;
 	pixel_y = -8
+	},
+/obj/machinery/button/door/directional/east{
+	pixel_y = -8;
+	id = "qmspace";
+	name = "Space Shutters Control"
+	},
+/obj/machinery/button/door/directional/east{
+	pixel_y = 6;
+	id = "qmprivacy";
+	name = "Privacy Control"
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -3894,7 +3901,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "aUo" = (
@@ -5445,7 +5451,6 @@
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/security/courtroom)
 "bmt" = (
@@ -5891,7 +5896,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "brZ" = (
@@ -6173,7 +6177,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/department/science)
 "bvj" = (
@@ -6963,7 +6966,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/toilet/locker)
 "bEN" = (
@@ -6998,7 +7000,6 @@
 	dir = 9
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/locker)
 "bFb" = (
@@ -7602,7 +7603,6 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "bLo" = (
@@ -9299,7 +9299,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/locker)
 "cfu" = (
@@ -9545,9 +9544,9 @@
 /area/station/science/ordnance/freezerchamber)
 "ciK" = (
 /obj/machinery/requests_console/directional/north{
+	assistance_requestable = 1;
 	department = "Chapel";
-	name = "Chapel Requests Console";
-	assistance_requestable = 1
+	name = "Chapel Requests Console"
 	},
 /turf/open/floor/carpet/royalblack,
 /area/station/service/chapel/office)
@@ -11107,7 +11106,6 @@
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/security/courtroom)
 "cBT" = (
@@ -12850,7 +12848,6 @@
 	},
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "cYD" = (
@@ -13314,7 +13311,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster's Office"
 	},
 /turf/open/floor/iron,
@@ -13952,7 +13949,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "dnW" = (
@@ -17384,7 +17380,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/command/heads_quarters/ce)
 "egU" = (
@@ -18268,7 +18263,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/command/heads_quarters/ce)
 "erZ" = (
@@ -18726,7 +18720,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/locker)
 "exf" = (
@@ -19378,7 +19371,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/locker)
 "eHi" = (
@@ -20782,7 +20774,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "eXN" = (
@@ -21333,11 +21324,11 @@
 	},
 /obj/machinery/requests_console/directional/west{
 	announcementConsole = 1;
+	anon_tips_receiver = 1;
+	assistance_requestable = 1;
 	department = "Research Director's Desk";
 	name = "Research Director's Requests Console";
-	receive_ore_updates = 1;
-	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	receive_ore_updates = 1
 	},
 /obj/item/kirbyplants/dead,
 /obj/machinery/light/directional/west,
@@ -23857,7 +23848,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster's Office"
 	},
 /turf/open/floor/iron,
@@ -25035,10 +25026,10 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/requests_console/directional/north{
 	announcementConsole = 1;
-	department = "Head of Security's Desk";
-	name = "Head of Security's Requests Console";
+	anon_tips_receiver = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	department = "Head of Security's Desk";
+	name = "Head of Security's Requests Console"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign/nanotrasen{
@@ -25059,7 +25050,6 @@
 /obj/machinery/duct,
 /obj/structure/cable,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/department/science)
 "fZO" = (
@@ -29694,11 +29684,11 @@
 	},
 /obj/machinery/requests_console/directional/east{
 	announcementConsole = 1;
+	anon_tips_receiver = 1;
+	assistance_requestable = 1;
 	department = "Research Lab";
 	name = "Research Requests Console";
-	receive_ore_updates = 1;
-	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	receive_ore_updates = 1
 	},
 /obj/machinery/camera/directional/east{
 	c_tag = "Science - Research and Development";
@@ -30540,9 +30530,9 @@
 /obj/structure/cable,
 /obj/machinery/requests_console/directional/west{
 	announcementConsole = 1;
+	assistance_requestable = 1;
 	department = "Chief Engineer's Desk";
 	name = "Chief Engineer's Requests Console";
-	assistance_requestable = 1;
 	supplies_requestable = 1
 	},
 /obj/machinery/camera/directional/west{
@@ -30576,7 +30566,6 @@
 	},
 /area/station/science/auxlab/firing_range)
 "hrY" = (
-/obj/machinery/light/directional/north,
 /obj/item/flashlight/lamp,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/table/wood,
@@ -30917,7 +30906,6 @@
 	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/locker)
 "hwC" = (
@@ -31134,7 +31122,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/locker)
 "hzJ" = (
@@ -37214,7 +37201,6 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/locker)
 "jbG" = (
@@ -37972,7 +37958,6 @@
 "jjU" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "jjX" = (
@@ -38283,7 +38268,6 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/security/courtroom)
 "jnd" = (
@@ -39879,7 +39863,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "jFz" = (
@@ -41195,10 +41178,10 @@
 	},
 /obj/machinery/requests_console/directional/south{
 	announcementConsole = 1;
-	department = "Chief Medical Officer's Desk";
-	name = "Chief Medical Officer's Requests Console";
+	anon_tips_receiver = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	department = "Chief Medical Officer's Desk";
+	name = "Chief Medical Officer's Requests Console"
 	},
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron,
@@ -42901,6 +42884,10 @@
 /area/station/maintenance/department/crew_quarters/bar)
 "krp" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "qmprivacy";
+	name = "Privacy Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/qm)
 "krs" = (
@@ -43122,7 +43109,6 @@
 /turf/open/space/basic,
 /area/station/solars/port/aft)
 "kur" = (
-/obj/machinery/light/directional/south,
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /obj/machinery/light/directional/south,
@@ -46128,7 +46114,6 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/hallway/primary/central/aft)
 "lgg" = (
@@ -46430,6 +46415,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
+"ljS" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "qmspace";
+	name = "Privacy Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/qm)
 "ljT" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -48203,7 +48197,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "lGU" = (
@@ -49181,7 +49174,14 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
-/obj/item/radio/intercom/directional/east,
+/obj/item/radio/intercom/directional/east{
+	pixel_y = 3
+	},
+/obj/machinery/button/door/directional/east{
+	id = "qmroom";
+	pixel_y = -6;
+	name = "Privacy Control"
+	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "lSh" = (
@@ -50146,7 +50146,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/locker)
 "mgY" = (
@@ -53496,7 +53495,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/toilet/locker)
 "mWF" = (
@@ -53806,10 +53804,10 @@
 	},
 /obj/machinery/requests_console/directional/south{
 	announcementConsole = 1;
-	department = "Bridge";
-	name = "Bridge Requests Console";
+	anon_tips_receiver = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	department = "Bridge";
+	name = "Bridge Requests Console"
 	},
 /turf/open/floor/iron/grimy,
 /area/station/command/bridge)
@@ -56176,7 +56174,6 @@
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/department/science)
 "nGS" = (
@@ -56716,7 +56713,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/fore)
 "nMT" = (
@@ -57743,7 +57739,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/locker)
 "oaE" = (
@@ -58154,6 +58149,10 @@
 "ofx" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "qmroom";
+	name = "Privacy Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/qm)
 "ofE" = (
@@ -59728,7 +59727,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "oBX" = (
@@ -63601,7 +63599,6 @@
 	c_tag = "Cargo - Waiting Room";
 	name = "cargo camera"
 	},
-/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "pBB" = (
@@ -64179,7 +64176,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/duct,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/locker)
 "pIj" = (
@@ -67218,9 +67214,6 @@
 "qtq" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/structure/table,
-/obj/item/computer_disk/chemistry{
-	pixel_y = 4
-	},
 /obj/item/computer_disk/medical{
 	pixel_x = 3
 	},
@@ -69498,7 +69491,6 @@
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/toilet/locker)
 "qVJ" = (
@@ -70684,7 +70676,6 @@
 	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "rlL" = (
@@ -70876,9 +70867,9 @@
 /obj/item/paper,
 /obj/item/pen,
 /obj/machinery/requests_console/directional/east{
+	assistance_requestable = 1;
 	department = "Atmospherics";
 	name = "Atmospherics Requests Console";
-	assistance_requestable = 1;
 	supplies_requestable = 1
 	},
 /obj/machinery/light/directional/east,
@@ -71120,7 +71111,6 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/security/courtroom)
 "rrL" = (
@@ -73612,9 +73602,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/machinery/requests_console/directional/south{
+	assistance_requestable = 1;
 	department = "Janitorial";
-	name = "Janitor's Request Console";
-	assistance_requestable = 1
+	name = "Janitor's Request Console"
 	},
 /obj/item/storage/box/mousetraps{
 	pixel_x = -3;
@@ -74092,10 +74082,10 @@
 	},
 /obj/machinery/requests_console/directional/west{
 	announcementConsole = 1;
-	department = "Captain's Desk";
-	name = "Captain's Requests Console";
+	anon_tips_receiver = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	department = "Captain's Desk";
+	name = "Captain's Requests Console"
 	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
@@ -75826,7 +75816,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/hallway/primary/central/aft)
 "sAh" = (
@@ -76069,7 +76058,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/locker)
 "sDk" = (
@@ -77962,9 +77950,9 @@
 /obj/machinery/space_heater,
 /obj/effect/turf_decal/bot,
 /obj/machinery/requests_console/directional/east{
+	assistance_requestable = 1;
 	department = "Atmospherics";
 	name = "Atmospherics Requests Console";
-	assistance_requestable = 1;
 	supplies_requestable = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden,
@@ -78158,7 +78146,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/locker)
 "tcc" = (
@@ -78515,6 +78502,14 @@
 /obj/effect/mapping_helpers/mail_sorting/service/theater,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"tgX" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "qmspace";
+	name = "Privacy Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/qm)
 "thf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -82036,9 +82031,9 @@
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/requests_console/directional/south{
+	assistance_requestable = 1;
 	department = "Engineering";
 	name = "Engineering Requests Console";
-	assistance_requestable = 1;
 	supplies_requestable = 1
 	},
 /obj/structure/sign/poster/official/do_not_question{
@@ -82418,10 +82413,10 @@
 /obj/item/stamp/hop,
 /obj/machinery/requests_console/directional/north{
 	announcementConsole = 1;
-	department = "Head of Personnel's Desk";
-	name = "Head of Personnel's Requests Console";
+	anon_tips_receiver = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	department = "Head of Personnel's Desk";
+	name = "Head of Personnel's Requests Console"
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -84304,7 +84299,6 @@
 	},
 /obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "uBA" = (
@@ -85953,7 +85947,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/locker)
 "uXy" = (
@@ -86191,7 +86184,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "uZV" = (
@@ -87019,7 +87011,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "vkG" = (
@@ -87070,7 +87061,6 @@
 /obj/effect/landmark/event_spawn,
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "vkN" = (
@@ -91098,9 +91088,9 @@
 	dir = 6
 	},
 /obj/machinery/requests_console/directional/north{
+	assistance_requestable = 1;
 	department = "Medbay";
-	name = "Medbay Requests Console";
-	assistance_requestable = 1
+	name = "Medbay Requests Console"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
@@ -93656,7 +93646,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/commons/toilet/locker)
 "wMx" = (
@@ -94868,7 +94857,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/command/heads_quarters/ce)
 "xex" = (
@@ -95259,7 +95247,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/fore)
 "xjd" = (
@@ -95304,7 +95291,6 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "xjR" = (
@@ -95469,9 +95455,9 @@
 	dir = 8
 	},
 /obj/machinery/requests_console/directional/west{
+	assistance_requestable = 1;
 	department = "Security";
 	name = "Security Requests Console";
-	assistance_requestable = 1;
 	supplies_requestable = 1
 	},
 /obj/item/book/manual/wiki/security_space_law,
@@ -95924,6 +95910,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "xsr" = (
@@ -96379,7 +96366,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/command/heads_quarters/ce)
 "xyb" = (
@@ -98789,6 +98775,7 @@
 /obj/item/food/pie/cream,
 /obj/structure/table,
 /obj/machinery/duct,
+/obj/effect/spawner/random/food_or_drink/cake_ingredients,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "ycb" = (
@@ -99161,7 +99148,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
 	},
 /area/station/maintenance/port/aft)
 "yho" = (
@@ -145633,7 +145619,7 @@ aAU
 meV
 xhJ
 vMd
-krp
+tgX
 jfO
 jBM
 xVv
@@ -145884,13 +145870,13 @@ aaa
 aaa
 aaa
 aad
-ofx
+ljS
 gmo
 dfQ
 tYz
 dfQ
 cAZ
-krp
+tgX
 rWo
 rWo
 rWo
@@ -146141,13 +146127,13 @@ aaa
 aaa
 aaa
 aad
-ofx
+ljS
 aPo
 bdF
 wob
 sWD
 sNp
-krp
+tgX
 aad
 rWo
 juo

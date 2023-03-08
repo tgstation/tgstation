@@ -43,7 +43,7 @@
 	var/scramble_response = tgui_alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", list("Yes", "Cancel"))
 	if(scramble_response != "Yes")
 		return
-	if(active || !user.canUseTopic(src, be_close = TRUE))
+	if(active || !user.can_perform_action(src))
 		return
 	toggle_on(user)
 	update_appearance()
@@ -371,7 +371,7 @@
 	var/mob/living/carbon/human/H = AM
 	if(H.stat != CONSCIOUS || !H.mind) //mint condition only
 		return 0
-	else if("pirate" in H.faction) //can't ransom your fellow pirates to CentCom!
+	else if(FACTION_PIRATE in H.faction) //can't ransom your fellow pirates to CentCom!
 		return 0
 	else if(H.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 		return 3000

@@ -7,6 +7,7 @@
 	gender = PLURAL
 	living_flags = MOVES_ON_ITS_OWN
 	status_flags = CANPUSH
+	fire_stack_decay_rate = -5 // Reasonably fast as NPCs will not usually actively extinguish themselves
 
 	var/basic_mob_flags = NONE
 
@@ -97,9 +98,6 @@
 	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the basic_body_temp_sensitive element.
 	var/unsuitable_heat_damage = 1
 
-	///Whether or not this mob can catch on fire
-	var/flammable = FALSE
-
 /mob/living/basic/Initialize(mapload)
 	. = ..()
 
@@ -167,6 +165,10 @@
 		transform = transform.Turn(180)
 	if(!(basic_mob_flags & REMAIN_DENSE_WHILE_DEAD))
 		set_density(initial(density))
+
+/mob/living/basic/update_sight()
+	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
+	return ..()
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers)
 	face_atom(target)

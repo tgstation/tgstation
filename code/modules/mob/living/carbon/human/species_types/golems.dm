@@ -54,7 +54,6 @@
 	var/list/special_names = list("Tarkus")
 	var/human_surname_chance = 3
 	var/special_name_chance = 5
-	var/owner //dobby is a free golem
 
 /datum/species/golem/random_name(gender,unique,lastname)
 	var/golem_surname = pick(GLOB.golem_names)
@@ -338,7 +337,7 @@
 	special_names = list("Bark", "Willow", "Catalpa", "Woody", "Oak", "Sap", "Twig", "Branch", "Maple", "Birch", "Elm", "Basswood", "Cottonwood", "Larch", "Aspen", "Ash", "Beech", "Buckeye", "Cedar", "Chestnut", "Cypress", "Fir", "Hawthorn", "Hazel", "Hickory", "Ironwood", "Juniper", "Leaf", "Mangrove", "Palm", "Pawpaw", "Pine", "Poplar", "Redwood", "Redbud", "Sassafras", "Spruce", "Sumac", "Trunk", "Walnut", "Yew")
 	human_surname_chance = 0
 	special_name_chance = 100
-	inherent_factions = list("plants", "vines")
+	inherent_factions = list(FACTION_PLANTS, FACTION_VINES)
 	examine_limb_id = SPECIES_GOLEM
 
 /datum/species/golem/wood/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
@@ -692,7 +691,7 @@
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	prefix = "Runic"
 	special_names = null
-	inherent_factions = list("cult")
+	inherent_factions = list(FACTION_CULT)
 	species_language_holder = /datum/language_holder/golem/runic
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem/cult,
@@ -1086,10 +1085,15 @@
 				to_chat(H, span_warning("You do not have enough cardboard!"))
 				return FALSE
 			to_chat(H, span_notice("You create a new cardboard golem shell."))
-			create_brother(H.loc)
+			create_brother(H, H.loc)
 
-/datum/species/golem/cardboard/proc/create_brother(location)
-	new /obj/effect/mob_spawn/ghost_role/human/golem/servant(location, /datum/species/golem/cardboard, owner)
+/datum/species/golem/cardboard/proc/create_brother(mob/living/carbon/human/golem, atom/location)
+	var/mob/living/master = golem.mind.enslaved_to?.resolve()
+	if(master)
+		new /obj/effect/mob_spawn/ghost_role/human/golem/servant(location, /datum/species/golem/cardboard, master)
+	else
+		new /obj/effect/mob_spawn/ghost_role/human/golem(location, /datum/species/golem/cardboard)
+
 	last_creation = world.time
 
 /datum/species/golem/leather

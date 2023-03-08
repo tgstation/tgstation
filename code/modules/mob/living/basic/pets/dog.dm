@@ -26,7 +26,6 @@
 	response_harm_simple = "kick"
 	speak_emote = list("barks", "woofs")
 	faction = list(FACTION_NEUTRAL)
-	see_in_dark = 5
 	can_be_held = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/dog
 	// The dog attack pet command can raise melee attack above 0
@@ -83,6 +82,11 @@
 	var/nofur = FALSE //Corgis that have risen past the material plane of existence.
 	/// Is this corgi physically slow due to age, etc?
 	var/is_slow = FALSE
+
+/mob/living/basic/pet/dog/corgi/examine(mob/user)
+	. = ..()
+	if(access_card)
+		. += "There appears to be [icon2html(access_card, user)] \a [access_card] pinned to [p_them()]."
 
 /mob/living/basic/pet/dog/corgi/Destroy()
 	QDEL_NULL(inventory_head)
@@ -625,7 +629,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	icon_state = "narsian"
 	icon_living = "narsian"
 	icon_dead = "narsian_dead"
-	faction = list(FACTION_NEUTRAL, "cult")
+	faction = list(FACTION_NEUTRAL, FACTION_CULT)
 	gold_core_spawnable = NO_SPAWN
 	nofur = TRUE
 	unique_pet = TRUE
@@ -664,6 +668,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /mob/living/basic/pet/dog/corgi/regenerate_icons()
 	..()
+	cut_overlays() //we are redrawing the mob after all
 	if(inventory_head)
 		var/image/head_icon
 		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
@@ -793,7 +798,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	maxHealth = 50
 	gender = NEUTER
 	damage_coeff = list(BRUTE = 3, BURN = 3, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	butcher_results = list(/obj/item/organ/internal/brain = 1, /obj/item/organ/internal/heart = 1, /obj/item/food/breadslice = 3,  \
+	butcher_results = list(/obj/item/organ/internal/brain = 1, /obj/item/organ/internal/heart = 1, /obj/item/food/breadslice/plain = 3,  \
 	/obj/item/food/meat/slab = 2)
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"

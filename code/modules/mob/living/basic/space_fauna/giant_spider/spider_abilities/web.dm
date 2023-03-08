@@ -6,7 +6,7 @@
 	button_icon_state = "lay_web"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
-	check_flags = AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	cooldown_time = 0 SECONDS
 	/// How long it takes to lay a web
 	var/webbing_time = 4 SECONDS

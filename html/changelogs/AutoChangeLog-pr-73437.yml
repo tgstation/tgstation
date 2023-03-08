@@ -1,7 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Tramstation: Added missing produce order console"
-  - bugfix: "Tramstation: Removed duplicate vending machine in east wing"
-  - bugfix: "Tramstation: HoP office can now broadcast announcements"
-  - code_imp: "Tramstation: Moved information plate for symmetry"
