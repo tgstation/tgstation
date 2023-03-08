@@ -267,8 +267,11 @@
 /datum/mutation/human/uwuspeech
 	name = "uwuspeech"
 	desc = "A common genetic experiment gone wrong on felinds (Oh the horror kill whoever found this mutation)"
-	quality = MINOR_NEGATIVE
+	quality = POSITIVE
+	locked = TRUE
+	difficulty = 8
 	text_gain_indication = span_notice("<span class='notice'>You feel more uwu.</span>")
+	species_allowed = list(SPECIES_FELINE) //no talking this way for other species
 	text_lose_indication = "<span class='notice'>The feeling of uwu fades.</span>"
 /datum/mutation/human/uwuspeech/on_acquiring(mob/living/carbon/human/owner)
 	if(..())

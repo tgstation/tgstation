@@ -420,7 +420,7 @@
 	add_mutations = list(/datum/mutation/human/uwuspeech)
 
 /obj/item/dnainjector/uwuspeech
-	name = "\improper DNA injector (anti-uwuspeech)"
+	name = "\improper DNA injector (Anti-uwuspeech)"
 	remove_mutations = list(/datum/mutation/human/uwuspeech)
 
 /obj/item/dnainjector/paranoia
