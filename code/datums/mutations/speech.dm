@@ -263,3 +263,28 @@
 	var/spoken_message = speech_args[SPEECH_MESSAGE]
 	spoken_message = piglatin_sentence(spoken_message)
 	speech_args[SPEECH_MESSAGE] = spoken_message
+
+/datum/mutation/human/uwuspeech
+	name = "uwuspeech"
+	desc = "The common tounge of felinds speaking in the humans common language"
+	quality = MINOR_NEGATIVE
+	text_gain_indication = span_notice("<span class='notice'>You feel more uwu.</span>")
+	text_lose_indication = "<span class='notice'>The feeling of uwu fades.</span>"
+/datum/mutation/human/uwuspeech/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+
+/datum/mutation/human/uwuspeech/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
+/datum/mutation/human/uwuspeech/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message)
+		message = replacetext(message,"l","w")
+		message = replacetext(message,"r","w")
+		speech_args[SPEECH_MESSAGE] = trim(message)
