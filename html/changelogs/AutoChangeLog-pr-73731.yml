@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "Traitor secondary objectives to steal or destroy an item are now associated with a particular \"owner\" or \"victim\" and won't generate themselves if nobody would actually be victimised by the crime."
-  - rscadd: "Traitors can sometimes be tasked with stealing and destroying the roboticist's big crowbar, if there is one"
