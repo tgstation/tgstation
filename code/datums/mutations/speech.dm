@@ -266,7 +266,7 @@
 
 /datum/mutation/human/uwuspeech
 	name = "uwuspeech"
-	desc = "The common tounge of felinds speaking in the humans common language"
+	desc = "A common genetic experiment gone wrong on felinds (Oh the horror kill whoever found this mutation)"
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_notice("<span class='notice'>You feel more uwu.</span>")
 	text_lose_indication = "<span class='notice'>The feeling of uwu fades.</span>"

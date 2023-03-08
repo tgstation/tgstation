@@ -415,6 +415,14 @@
 	name = "\improper DNA injector (Anti-Pig Latin)"
 	remove_mutations = list(/datum/mutation/human/piglatin)
 
+/obj/item/dnainjector/uwuspeech
+	name = "\improper DNA injector (uwuspeech)"
+	add_mutations = list(/datum/mutation/human/uwuspeech)
+
+/obj/item/dnainjector/uwuspeech
+	name = "\improper DNA injector (anti-uwuspeech)"
+	remove_mutations = list(/datum/mutation/human/uwuspeech)
+
 /obj/item/dnainjector/paranoia
 	name = "\improper DNA injector (Paranoia)"
 	add_mutations = list(/datum/mutation/human/paranoia)
