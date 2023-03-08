@@ -92,7 +92,7 @@
 
 	return get_discount_value(pick_weight(discount_types))
 
-/// Retruns the actual value
+/// Receives a traitor discount type value, returns the amount by which we will reduce the price
 /datum/uplink_item/proc/get_discount_value(var/discount_type)
 	switch(discount_type)
 		if(TRAITOR_DISCOUNT_BIG)
