@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - balance: "Add lava moat to Icebox vault and fix maint area being viewable from primary hallway"
