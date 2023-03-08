@@ -916,36 +916,44 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	overlay_state = "slime"
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/medicine/pyroxadone = 5)
 
-/obj/item/lighter/badass
+/obj/item/lighter/skull
 	name = "badass zippo"
 	desc = "An absolutely badass zippo lighter. Just look at that skull!"
-	icon_state = "slighter"
-	custom_price = PAYCHECK_CREW * 4
-	overlay_state = "slime"
+	custom_price = PAYCHECK_CREW * 6
+	overlay_state = "skull"
 
 /obj/item/lighter/mime
 	name = "pale zippo"
 	desc = "In lieu of fuel, performative spirit can be used to light cigarettes."
-	icon_state = "slighter"
+	icon_state = "mlighter" //These ones don't show a flame.
 	custom_price = PAYCHECK_CREW * 4
 	heat = 0 //I swear it's a real lighter dude you just can't see the flame dude I promise
-	overlay_state = "slime"
+	overlay_state = "mime"
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/consumable/nothing = 10)
-	light_range = 0
+	light_range = 0 //This still produces light for some reason pls fix.
 	light_power = 0
+	fancy = FALSE
 
 /obj/item/lighter/mime/ignition_effect(atom/A, mob/user)
-	. = span_infoplain(span_rose("[user] lifts the [name] to the [A], which miraculously lights!"))
+	. = span_infoplain("[user] lifts the [name] to the [A], which miraculously lights!")
 
 /obj/item/lighter/bright
 	name = "illuminative zippo"
-	desc = "Sustains an incredibly bright chemical reaction. Avoid looking directly at the igniter while lighting."
+	desc = "Sustains an incredibly bright chemical reaction when you spark it. Avoid looking directly at the igniter while lighting."
 	icon_state = "slighter"
 	light_color = LIGHT_COLOR_ELECTRIC_CYAN
-	overlay_state = "slime"
+	overlay_state = "bright"
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/flash_powder = 10)
-	light_range = 7
-	light_power = 3 //Eye-searingly bright and large enough to cover a small room.
+	light_range = 8
+	light_power = 3 //Irritatingly bright and large enough to cover a small room.
+	fancy = FALSE
+
+/obj/item/lighter/bright/examine(mob/user)
+	..()
+
+	if(lit && isliving(user))
+		var/mob/living/current_viewer = user
+		current_viewer.flash_act(4)
 
 ///////////
 //ROLLING//
