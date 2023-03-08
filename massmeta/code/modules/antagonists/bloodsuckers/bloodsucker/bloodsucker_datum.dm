@@ -81,7 +81,6 @@
 		/datum/antagonist/monsterhunter,
 		/datum/antagonist/changeling,
 		/datum/antagonist/cult,
-		/datum/antagonist/ert/safety_moth,
 	)
 	///Default Bloodsucker traits
 	var/static/list/bloodsucker_traits = list(

@@ -26,7 +26,7 @@
 /datum/bloodsucker_clan/malkavian/on_favorite_vassal(datum/source, datum/antagonist/vassal/vassaldatum, mob/living/bloodsucker)
 	var/mob/living/carbon/carbonowner = vassaldatum.owner.current
 	carbonowner.gain_trauma(/datum/brain_trauma/mild/hallucinations, TRAUMA_RESILIENCE_ABSOLUTE)
-	carbonowner.gain_trauma(/datum/brain_trauma/special/bluespace_prophet/phobetor, TRAUMA_RESILIENCE_ABSOLUTE)
+	carbonowner.gain_trauma(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
 	to_chat(vassaldatum.owner.current, span_notice("Additionally, you now suffer the same fate as your Master."))
 
 /datum/bloodsucker_clan/malkavian/on_exit_torpor(atom/source, mob/living/carbon/user)
