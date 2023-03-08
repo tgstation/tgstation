@@ -21,10 +21,14 @@
 	show_to_ghosts = TRUE
 	var/datum/team/xeno/xeno_team
 
+/datum/antagonist/xeno/on_gain()
+	forge_objectives()
+	. = ..()
+
 /datum/antagonist/xeno/create_team(datum/team/xeno/new_team)
 	if(!new_team)
 		for(var/datum/antagonist/xeno/X in GLOB.antagonists)
-			if(!X.owner || !X.xeno_team || !istype(X.xeno_team, new_team)) //Istype check makes sure captive/regular xenomorphs don't get mixed up
+			if(!X.owner || !X.xeno_team || !istype(X.xeno_team, new_team)) //Make sure we don't add them to the wrong team
 				continue
 			xeno_team = X.xeno_team
 			return
@@ -67,11 +71,12 @@
 	return captive_team
 
 /datum/antagonist/xeno/captive/forge_objectives()
-	..()
 	var/datum/objective/escape_captivity/objective = new
 	objective.owner = owner
 	objectives += objective
+	..()
 
+///Xeno Objectives
 /datum/objective/escape_captivity
 
 /datum/objective/escape_captivity/New()
@@ -89,6 +94,7 @@
 /datum/objective/advance_hive/check_completion()
 	return owner.current.stat != DEAD
 
+///Captive Xenomorphs team
 /datum/team/xeno/captive
 	name = "\improper Captive Aliens"
 	///The first member of this team, presumably the queen.
@@ -104,24 +110,23 @@
 	for(var/datum/mind/alien_mind in members)
 		switch(check_captivity(alien_mind.current))
 			if(CAPTIVE_XENO_DEAD)
-				parts += "[alien_mind] died as [alien_mind.current]!"
+				parts += "<span class='neutraltext'>[alien_mind] died as [alien_mind.current]</span>!"
 			if(CAPTIVE_XENO_FAIL)
-				parts += "[alien_mind] remained alive and in captivity!"
+				parts += "<span class='neutraltext'>[alien_mind] remained alive and in captivity!</span>"
 				captive_count++
 			if(CAPTIVE_XENO_PASS)
-				parts += "[alien_mind] survived and managed to escape captivity!"
+				parts += "<span class='greentext'>[alien_mind] survived and managed to escape captivity!</span>"
 				escape_count++
 
-	parts += "Overall, [captive_count] xenomorphs remained alive and in captivity, and [escape_count] managed to escape!"
+	parts += "<span class='neutraltext big'> Overall, [captive_count] xenomorphs remained alive and in captivity, and [escape_count] managed to escape!</span>"
 
 	var/thank_you_message
-
 	if(captive_count > escape_count)
-		thank_you_message = ""
+		thank_you_message = "xenobiological containment architecture"
 	else
-		thank_you_message = ""
+		thank_you_message = "xenofauna combat effectiveness"
 
-	parts += "Nanotrasen thanks the crew of [station_name()] for providing much needed data on [thank_you_message]"
+	parts += "<span class='neutraltext'>Nanotrasen thanks the crew of [station_name()] for providing much needed research data on [thank_you_message].</span>"
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 

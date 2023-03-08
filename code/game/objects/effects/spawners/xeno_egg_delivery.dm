@@ -26,3 +26,4 @@
 	. = ..()
 
 	SScommunications.xenomorph_egg_delivered = TRUE
+	SScommunications.captivity_area = get_area(src)
