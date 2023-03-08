@@ -9,7 +9,7 @@
 	description = "Throw a random meteor somewhere near the station."
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 7
-	admin_setup = /datum/event_admin_setup/listed_options/stray_meteor
+	admin_setup = list(/datum/event_admin_setup/listed_options/stray_meteor)
 	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event/stray_meteor
@@ -20,7 +20,9 @@
 
 /datum/round_event/stray_meteor/start()
 	if(chosen_meteor)
-		spawn_meteor(list(chosen_meteor = 1))
+		var/list/chosen_meteor_list = list()
+		chosen_meteor_list[chosen_meteor] = 1
+		spawn_meteor(chosen_meteor_list)
 	else
 		spawn_meteor(GLOB.meteors_stray)
 
