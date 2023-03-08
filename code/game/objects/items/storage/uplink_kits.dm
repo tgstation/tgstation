@@ -336,7 +336,7 @@
 	new /obj/item/lighter(src)
 
 /obj/item/storage/box/syndicate/contract_kit/PopulateContents()
-	new /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink(src)
+	new /obj/item/modular_computer/pda/contract_uplink(src)
 	new /obj/item/storage/box/syndicate/contractor_loadout(src)
 	new /obj/item/melee/baton/telescopic/contractor_baton(src)
 
@@ -374,25 +374,25 @@
 	// Paper guide
 	new /obj/item/paper/contractor_guide(src)
 
-/// Given by the syndicate as part of the contract uplink bundle - loads in the Contractor Uplink.
-/obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink/Initialize(mapload)
+
+/obj/item/modular_computer/pda/contract_uplink
+	name = "nuclear pda"
+	device_theme = PDA_THEME_SYNDICATE
+	comp_light_luminosity = 6.3 //matching a flashlight
+	light_color = COLOR_RED
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#a80001#5C070F#000000"
+	long_ranged = TRUE
+	starting_programs = list(
+		/datum/computer_file/program/contract_uplink,
+	)
+
+/obj/item/modular_computer/pda/contract_uplink/Initialize(mapload)
 	. = ..()
-	var/obj/item/computer_hardware/hard_drive/small/syndicate/hard_drive = new
-	var/datum/computer_file/program/contract_uplink/uplink = new
-
-	active_program = uplink
-	uplink.program_state = PROGRAM_STATE_ACTIVE
-	uplink.computer = src
-
-	hard_drive.store_file(uplink)
-
-	install_component(new /obj/item/computer_hardware/processor_unit/small)
-	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
-	install_component(hard_drive)
-	install_component(new /obj/item/computer_hardware/network_card)
-	install_component(new /obj/item/computer_hardware/card_slot)
-	install_component(new /obj/item/computer_hardware/printer/mini)
-
+	emag_act(forced = TRUE)
+	var/datum/computer_file/program/messenger/msg = locate() in stored_files
+	if(msg)
+		msg.invisible = TRUE
 /obj/item/storage/box/syndie_kit
 	name = "box"
 	desc = "A sleek, sturdy box."

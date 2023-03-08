@@ -4226,6 +4226,7 @@
 #include "code\modules\modular_computers\file_system\programs\wirecarp.dm"
 #include "code\modules\modular_computers\file_system\programs\antagonist\dos.dm"
 #include "code\modules\modular_computers\file_system\programs\antagonist\revelation.dm"
+#include "code\modules\modular_computers\file_system\programs\antagonist\contractor_uplink"
 #include "code\modules\modular_computers\file_system\programs\maintenance\_maintenance_program.dm"
 #include "code\modules\modular_computers\file_system\programs\maintenance\camera.dm"
 #include "code\modules\modular_computers\file_system\programs\maintenance\modsuit.dm"
