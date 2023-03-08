@@ -3,6 +3,7 @@
 "c" = (/obj/structure/grille,/turf/open/space/basic,/area/icemoon/surface/outdoors/nospawn)
 "i" = (/turf/open/floor/wood,/area/icemoon/surface/outdoors/nospawn)
 "k" = (/obj/structure/table/wood,/obj/item/seeds/tobacco{pixel_x = -1; pixel_y = 1},/obj/item/seeds/tobacco{pixel_x = 1; pixel_y = 1},/obj/item/seeds/tobacco/space{pixel_x = -1; pixel_y = -1},/turf/open/floor/wood/cold,/area/icemoon/surface/outdoors/nospawn)
+"m" = (/obj/machinery/door/airlock/wood,/turf/open/floor/wood,/area/icemoon/surface/outdoors/nospawn)
 "n" = (/obj/structure/door_assembly/door_assembly_wood,/obj/structure/barricade/wooden/crude/snow,/turf/open/floor/wood/cold,/area/icemoon/surface/outdoors/nospawn)
 "t" = (/turf/closed/wall/mineral/wood,/area/icemoon/surface/outdoors/nospawn)
 "u" = (/turf/open/floor/wood/cold,/area/icemoon/surface/outdoors/nospawn)
@@ -26,7 +27,7 @@ aQQaQQQQaaaaaaQQQaaaaaQQa
 QQOtttttttttaaQQQaaaaaQQa
 QQQtuuuVuTutttttQQQQaaQQQ
 QQQtuuuuuuutiiitQaaaaaQQQ
-QQQnuGkAuuuiiiitQaaaaaaQQ
+QQQnuGkAuuumiiitQaaaaaaQQ
 QQQtuvuuuuutiiitQaaaaaaaQ
 QQQtbuZuuJttttttQaaaaaaQQ
 aaQttXtttctQQQQQQaaaQaaQQ

@@ -955,6 +955,16 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/mob/living/current_viewer = user
 		current_viewer.flash_act(4)
 
+/obj/effect/spawner/random/special_lighter
+	name = "special lighter spawner"
+	icon = 'icons/obj/cigarettes.dmi'
+	icon_state = "skull"
+	loot = list(
+		/obj/item/lighter/skull,
+		/obj/item/lighter/mime,
+		/obj/item/lighter/bright,
+	)
+
 ///////////
 //ROLLING//
 ///////////
