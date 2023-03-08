@@ -96,12 +96,9 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 /// Displays a turf from the z level below us on our level
 /datum/z_pillar/proc/display_turf(turf/to_display, turf/source)
 	var/list/sources = turf_sources[to_display]
-	if(!sources)
-		sources = list()
-		turf_sources[to_display] = sources
-	sources |= source
 
-	if(length(sources) != 1) // If we aren't the first to request this turf, return
+	if(sources) // If we aren't the first to request this turf, return
+		sources |= source
 		var/obj/effect/abstract/z_holder/holding = drawing_object[to_display]
 		if(!holding)
 			return
@@ -117,6 +114,11 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 		drawing_object -= to_display
 		visual_target.vis_contents += to_display
 		return
+
+	// Otherwise, we need to create a new set of sources. let's do that yeah?
+	sources = list()
+	turf_sources[to_display] = sources
+	sources |= source
 
 	var/turf/visual_target = to_display.above()
 	if(istransparentturf(visual_target) || isopenspaceturf(visual_target))
