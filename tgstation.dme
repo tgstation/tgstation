@@ -930,6 +930,7 @@
 #include "code\datums\components\payment.dm"
 #include "code\datums\components\pellet_cloud.dm"
 #include "code\datums\components\phylactery.dm"
+#include "code\datums\components\pinata.dm"
 #include "code\datums\components\pricetag.dm"
 #include "code\datums\components\pry_open_door.dm"
 #include "code\datums\components\punchcooldown.dm"
