@@ -105,6 +105,8 @@
 	var/escape_count = 0 //counts the number of xenomorphs that were born in captivity who ended the round outside of it
 	var/captive_count = 0 //counts the number of xenomorphs born in captivity who remained there until the end of the round (losers)
 
+	parts += "<span class='header'>The [name] were:</span>"
+
 	if(check_captivity(progenitor))
 		parts += span_greentext("The progenitor of this hive was [progenitor], as [progenitor.key], who successfully escaped captivity!") + "<br>"
 	else
