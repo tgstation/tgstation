@@ -83,7 +83,7 @@
 	explanation_text = "Escape from captivity."
 
 /datum/objective/escape_captivity/check_completion()
-	if(!istype(get_area(owner), /area/station/science/xenobiology))
+	if(!istype(get_area(owner), SScommunications.captivity_area))
 		return TRUE
 
 /datum/objective/advance_hive
@@ -110,12 +110,12 @@
 	for(var/datum/mind/alien_mind in members)
 		switch(check_captivity(alien_mind.current))
 			if(CAPTIVE_XENO_DEAD)
-				parts += "<span class='neutraltext'>[alien_mind] died as [alien_mind.current]</span>!"
+				parts += "<span class='neutraltext'>[printplayer(alien_mind, fleecheck = FALSE)] in their search for freedom.</span>!"
 			if(CAPTIVE_XENO_FAIL)
-				parts += "<span class='neutraltext'>[alien_mind] remained alive and in captivity!</span>"
+				parts += "<span class='neutraltext'>[printplayer(alien_mind, fleecheck = FALSE)] <b>in captivity<b>!</span>"
 				captive_count++
 			if(CAPTIVE_XENO_PASS)
-				parts += "<span class='greentext'>[alien_mind] survived and managed to escape captivity!</span>"
+				parts += "<span class='greentext'>[printplayer(alien_mind, fleecheck = FALSE)] and managed to <b>escape captivity<b>!</span>"
 				escape_count++
 
 	parts += "<span class='neutraltext big'> Overall, [captive_count] xenomorphs remained alive and in captivity, and [escape_count] managed to escape!</span>"
@@ -134,7 +134,7 @@
 	if(!captive_alien || captive_alien.stat == DEAD)
 		return CAPTIVE_XENO_DEAD
 
-	if(istype(get_area(captive_alien), /area/station/science/xenobiology))
+	if(istype(get_area(captive_alien), SScommunications.captivity_area))
 		return CAPTIVE_XENO_FAIL
 
 	return CAPTIVE_XENO_PASS
@@ -143,7 +143,7 @@
 /mob/living/carbon/alien/mind_initialize()
 	..()
 	if(!mind.has_antag_datum(/datum/antagonist/xeno))
-		if(SScommunications.xenomorph_egg_delivered && istype(get_area(src), /area/station/science/xenobiology))
+		if(SScommunications.xenomorph_egg_delivered && istype(get_area(src), SScommunications.captivity_area))
 			mind.add_antag_datum(/datum/antagonist/xeno/captive)
 		else
 			mind.add_antag_datum(/datum/antagonist/xeno)
