@@ -101,6 +101,7 @@
 		TRAIT_TOXIMMUNE,
 		TRAIT_HARDLY_WOUNDED,
 	)
+	//TRAIT_TRUE_NIGHT_VISION,
 
 /datum/antagonist/bloodsucker/can_be_owned(datum/mind/new_owner)
 	. = ..()

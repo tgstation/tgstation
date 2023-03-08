@@ -5148,7 +5148,7 @@
 #include "massmeta\code\modules\antagonists\bloodsuckers\powers\feed.dm"
 #include "massmeta\code\modules\antagonists\bloodsuckers\powers\fortitude.dm"
 #include "massmeta\code\modules\antagonists\bloodsuckers\powers\gohome.dm"
-#include "massmeta\code\modules\antagonists\bloodsuckers\powers\masquerade.dm.dm"
+#include "massmeta\code\modules\antagonists\bloodsuckers\powers\masquerade.dm"
 #include "massmeta\code\modules\antagonists\bloodsuckers\powers\veil.dm"
 #include "massmeta\code\modules\antagonists\bloodsuckers\powers\targeted\_powers_targeted.dm"
 #include "massmeta\code\modules\antagonists\bloodsuckers\powers\targeted\brawn.dm"
