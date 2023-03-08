@@ -5844,6 +5844,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 1
 	},
+/obj/machinery/button/tram/directional/north{
+	id = "middle_part"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "aGQ" = (
@@ -6136,9 +6139,6 @@
 /area/station/security/checkpoint/medical)
 "aII" = (
 /obj/machinery/destination_sign/indicator,
-/obj/machinery/button/tram/directional/north{
-	id = "left_part"
-	},
 /turf/closed/wall,
 /area/station/hallway/primary/tram/left)
 "aIJ" = (
@@ -6590,9 +6590,6 @@
 /obj/machinery/destination_sign/indicator{
 	dir = 1
 	},
-/obj/machinery/button/tram/directional/south{
-	id = "left_part"
-	},
 /turf/closed/wall,
 /area/station/hallway/primary/tram/left)
 "aME" = (
@@ -6614,6 +6611,10 @@
 /obj/structure/table/wood/fancy/red,
 /obj/item/ai_module/reset/purge,
 /obj/effect/spawner/random/aimodule/harmful,
+/obj/machinery/door/window/left/directional/east{
+	name = "Dangerous Modules";
+	req_access = list("captain")
+	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "aMG" = (
@@ -14126,12 +14127,12 @@
 /obj/machinery/lift_indicator/directional/west{
 	linked_elevator_id = "tram_cargo_lift";
 	pixel_x = -27;
-	pixel_y = 7
+	pixel_y = -2
 	},
 /obj/machinery/button/elevator/directional/west{
 	id = "tram_cargo_lift";
-	pixel_x = -24;
-	pixel_y = -2
+	pixel_x = -26;
+	pixel_y = -1
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -14595,9 +14596,6 @@
 /area/station/hallway/primary/tram/center)
 "dCf" = (
 /obj/machinery/destination_sign/indicator,
-/obj/machinery/button/tram/directional/north{
-	id = "right_part"
-	},
 /turf/closed/wall,
 /area/station/hallway/primary/tram/right)
 "dCq" = (
@@ -15721,6 +15719,10 @@
 /obj/structure/table/wood/fancy/blue,
 /obj/item/ai_module/supplied/freeform,
 /obj/effect/spawner/random/aimodule/neutral,
+/obj/machinery/door/window/left/directional/east{
+	name = "Neutral Modules";
+	req_access = list("captain")
+	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "dXM" = (
@@ -16978,6 +16980,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
+/obj/machinery/button/tram/directional/south{
+	id = "right_part"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "ewK" = (
@@ -17753,6 +17758,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
+"eNq" = (
+/obj/structure/flora/bush/grassy/style_random,
+/obj/machinery/light/floor,
+/turf/open/floor/grass,
+/area/station/science/lower)
 "eNx" = (
 /turf/open/floor/iron/grimy,
 /area/station/service/library/lounge)
@@ -18972,9 +18982,6 @@
 /area/station/medical/psychology)
 "fld" = (
 /obj/machinery/destination_sign/indicator,
-/obj/machinery/button/tram/directional/north{
-	id = "middle_part"
-	},
 /turf/closed/wall,
 /area/station/hallway/primary/tram/center)
 "flf" = (
@@ -21170,6 +21177,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 1
 	},
+/obj/machinery/button/tram/directional/north{
+	id = "left_part"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "gel" = (
@@ -21818,6 +21828,7 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "gqp" = (
@@ -24544,11 +24555,12 @@
 "htI" = (
 /obj/machinery/button/elevator{
 	id = "tram_upper_center_lift";
-	pixel_y = -4
+	pixel_x = 5
 	},
 /obj/machinery/lift_indicator{
 	linked_elevator_id = "tram_upper_center_lift";
-	pixel_y = 6
+	pixel_y = -2;
+	pixel_x = 4
 	},
 /turf/closed/wall,
 /area/station/hallway/primary/tram/center)
@@ -24852,11 +24864,13 @@
 "hBP" = (
 /obj/machinery/lift_indicator{
 	linked_elevator_id = "tram_lower_center_lift";
-	pixel_y = 6
+	pixel_y = -3;
+	pixel_x = -5
 	},
 /obj/machinery/button/elevator{
 	id = "tram_lower_center_lift";
-	pixel_y = -4
+	pixel_y = -1;
+	pixel_x = -7
 	},
 /turf/closed/wall,
 /area/station/maintenance/department/medical)
@@ -30425,9 +30439,6 @@
 /obj/machinery/destination_sign/indicator{
 	dir = 1
 	},
-/obj/machinery/button/tram/directional/south{
-	id = "middle_part"
-	},
 /turf/closed/wall,
 /area/station/hallway/primary/tram/center)
 "jEX" = (
@@ -34332,6 +34343,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/door/firedoor/border_only,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "kYs" = (
@@ -38453,6 +38465,7 @@
 	density = 0;
 	icon_state = "open"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "mxR" = (
@@ -40288,11 +40301,13 @@
 "nkd" = (
 /obj/machinery/lift_indicator{
 	linked_elevator_id = "tram_upper_center_lift";
-	pixel_y = 6
+	pixel_y = -2;
+	pixel_x = 4
 	},
 /obj/machinery/button/elevator{
 	id = "tram_upper_center_lift";
-	pixel_y = -4
+	pixel_y = -1;
+	pixel_x = 5
 	},
 /turf/closed/wall,
 /area/station/service/janitor)
@@ -40971,9 +40986,6 @@
 "nwQ" = (
 /obj/machinery/destination_sign/indicator{
 	dir = 1
-	},
-/obj/machinery/button/tram/directional/south{
-	id = "right_part"
 	},
 /turf/closed/wall,
 /area/station/hallway/primary/tram/right)
@@ -41928,6 +41940,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
+/obj/machinery/button/tram/directional/south{
+	id = "middle_part"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "nOI" = (
@@ -44268,6 +44283,9 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
+/obj/machinery/button/tram/directional/south{
+	id = "left_part"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "oNa" = (
@@ -44944,6 +44962,7 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "pbf" = (
@@ -50668,6 +50687,7 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/siding/thinplating,
+/obj/machinery/door/firedoor/border_only,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "raP" = (
@@ -55085,6 +55105,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 1
 	},
+/obj/machinery/button/tram/directional/north{
+	id = "right_part"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "sHh" = (
@@ -55668,6 +55691,7 @@
 	icon_state = "open";
 	density = 0
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
 "sQk" = (
@@ -62561,13 +62585,13 @@
 	},
 /obj/machinery/button/elevator/directional/west{
 	id = "tram_sci_lift";
-	pixel_x = -24;
-	pixel_y = -2
+	pixel_x = -26;
+	pixel_y = -1
 	},
 /obj/machinery/lift_indicator/directional/west{
 	linked_elevator_id = "tram_sci_lift";
 	pixel_x = -27;
-	pixel_y = 7
+	pixel_y = -2
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
@@ -118375,7 +118399,7 @@ fip
 fje
 fje
 bOi
-qwX
+eNq
 fje
 qwX
 bOi
