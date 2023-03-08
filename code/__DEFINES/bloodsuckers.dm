@@ -1,12 +1,16 @@
+#define IS_BLOODSUCKER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/bloodsucker))
+#define IS_VASSAL(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/vassal))
+#define IS_MONSTERHUNTER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/monsterhunter)) 
+
 /**
  * Bloodsucker defines
  */
 /// Determines Bloodsucker regeneration rate
 #define BS_BLOOD_VOLUME_MAX_REGEN 700
-/// Cost to torture someone, in blood
-#define TORTURE_BLOOD_COST "15"
+/// Cost to torture someone halfway, in blood. Called twice for full cost
+#define TORTURE_BLOOD_HALF_COST 8
 /// Cost to convert someone after successful torture, in blood
-#define TORTURE_CONVERSION_COST "50"
+#define TORTURE_CONVERSION_COST 50
 /// Once blood is this low, will enter Frenzy
 #define FRENZY_THRESHOLD_ENTER 25
 /// Once blood is this high, will exit Frenzy
@@ -23,6 +27,19 @@
 
 #define BLOODSUCKER_RANK_UP_NORMAL "bloodsucker_rank_up_normal"
 #define BLOODSUCKER_RANK_UP_VASSAL "bloodsucker_rank_up_vassal"
+
+///If someone passes all checks and can be vassalized
+#define VASSALIZATION_ALLOWED "allowed"
+///If someone has to accept vassalization
+#define VASSALIZATION_DISLOYAL "disloyal"
+///If someone is not allowed under any circimstances to become a Vassal
+#define VASSALIZATION_BANNED "banned"
+
+#define DANGER_LEVEL_FIRST_WARNING 1
+#define DANGER_LEVEL_SECOND_WARNING 2
+#define DANGER_LEVEL_THIRD_WARNING 3
+#define DANGER_LEVEL_SOL_ROSE 4
+#define DANGER_LEVEL_SOL_ENDED 5
 
 /**
  * Cooldown defines
@@ -44,6 +61,7 @@
 #define CLAN_GANGREL "Gangrel Clan"
 #define CLAN_VENTRUE "Ventrue Clan"
 #define CLAN_MALKAVIAN "Malkavian Clan"
+#define CLAN_TZIMISCE "Tzimisce Clan"
 
 #define TREMERE_VASSAL "tremere_vassal"
 #define FAVORITE_VASSAL "favorite_vassal"
@@ -71,8 +89,6 @@
 #define TREMERE_CAN_BUY (1<<2)
 /// This Power can be purchased by Vassals
 #define VASSAL_CAN_BUY (1<<3)
-/// This Power can be purchased by Monster Hunters
-#define HUNTER_CAN_BUY (1<<3)
 
 /// This Power is a Toggled Power
 #define BP_AM_TOGGLE (1<<0)
@@ -113,3 +129,10 @@
 #define COMSIG_SOL_RISE_TICK "comsig_sol_rise_tick"
 #define COMSIG_SOL_NEAR_START "comsig_sol_near_start"
 #define COMSIG_SOL_END "comsig_sol_end"
+///Sent when a warning for Sol is meant to go out: (danger_level, vampire_warning_message, vassal_warning_message)
+#define COMSIG_SOL_WARNING_GIVEN "comsig_sol_warning_given"
+
+//Traits
+#define BLOODSUCKER_TRAIT "bloodsucker_trait"
+#define FRENZY_TRAIT "frenzy_trait"
+#define FEED_TRAIT "feed_trait"

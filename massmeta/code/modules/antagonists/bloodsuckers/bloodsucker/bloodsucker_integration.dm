@@ -40,12 +40,12 @@
 		return 0
 	return ..()
 
-// Used when analyzing a Bloodsucker, Masquerade will hide brain traumas (Unless you're a Beefman)
+// Used when analyzing a Bloodsucker, Masquerade will hide brain traumas
 /mob/living/carbon/get_traumas()
 	if(!mind)
 		return ..()
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(src)
-	if(bloodsuckerdatum && HAS_TRAIT(src, TRAIT_MASQUERADE) && !isbeefman(src))
+	if(bloodsuckerdatum && HAS_TRAIT(src, TRAIT_MASQUERADE))
 		return
 	return ..()
 
