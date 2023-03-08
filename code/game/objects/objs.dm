@@ -336,7 +336,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	return TRUE
 
 /obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
-	if(atmos_scan(user=user, target=src, silent=FALSE))
+	if(atmos_scan(user=user, target=src, silent=FALSE, print=FALSE))
 		return TRUE
 	return ..()
 

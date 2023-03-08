@@ -23,7 +23,7 @@
 	SIGNAL_HANDLER
 	if(atmozphere_mode != ATMOZPHERE_SCAN_CLICK)
 		return
-	atmos_scan(user=user, target=get_turf(computer), silent=FALSE)
+	atmos_scan(user=user, target=get_turf(computer), silent=FALSE, print=FALSE)
 	on_analyze(source=source, target=get_turf(computer))
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -31,7 +31,7 @@
 /datum/computer_file/program/atmosscan/tap(atom/A, mob/living/user, params)
 	if(atmozphere_mode != ATMOZPHERE_SCAN_CLICK)
 		return FALSE
-	if(!atmos_scan(user=user, target=A, silent=FALSE))
+	if(!atmos_scan(user=user, target=A, silent=FALSE, print=FALSE))
 		return FALSE
 	on_analyze(source=computer, target=A)
 	return TRUE
