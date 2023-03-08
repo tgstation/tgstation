@@ -12,13 +12,6 @@
 	hud_icon = 'massmeta/icons/bloodsuckers/bloodsucker_icons.dmi'
 	ui_name = "AntagInfoBloodsucker"
 	preview_outfit = /datum/outfit/bloodsucker_outfit
-	tip_theme = "spookyconsole"
-	antag_tips = list(
-		"You are a Bloodsucker, an undead blood-seeking monster living aboard Space Station 13.",
-		"You regenerate your health slowly, you're weak to fire, and you depend on blood to survive. Don't allow your blood to run too low, or you'll enter a Frenzy!",
-		"Use your Antagonist UI page to enter a Clan and learn how your Powers work.",
-		"While not in a Clan, you will be unable to rank up, Feed, or do any other Bloodsucker activities.",
-	)
 
 	/// How much blood we have, starting off at default blood levels.
 	var/bloodsucker_blood_volume = BLOOD_VOLUME_NORMAL
