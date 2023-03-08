@@ -268,11 +268,6 @@
 	dir = 1
 	},
 /area/ruin/space/has_grav/derelictsulaco)
-"iB" = (
-/obj/structure/girder/reinforced,
-/turf/open/floor/plating/airless,
-/turf/open/floor/plating/airless,
-/area/ruin/space)
 "iF" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/frame/machine,
@@ -863,7 +858,6 @@
 /obj/machinery/power/apc/auto_name/directional/north{
 	start_charge = 0
 	},
-/turf/open/floor/plating/airless,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/derelictsulaco)
 "DJ" = (
@@ -2810,7 +2804,7 @@ lq
 tm
 Mk
 oV
-iB
+hT
 ZZ
 hi
 hi
@@ -2984,7 +2978,7 @@ WN
 hT
 WN
 WN
-iB
+hT
 ZZ
 WN
 hi
