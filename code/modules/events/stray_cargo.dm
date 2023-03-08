@@ -151,6 +151,7 @@
 		else
 			return ADMIN_CANCEL_EVENT
 
+///This proc prompts admins to set a TC value and uplink type for the crate, those values are then passed to a new syndicate pack's setup_contents() to generate the contents before spawning it.
 /datum/event_admin_setup/syndicate_cargo_pod/proc/override_contents()
 	var/datum/supply_pack/misc/syndicate/custom_value/syndicate_pack = new
 	var/pack_telecrystals = tgui_input_number(usr, "Please input crate's value in telecrystals.", "Set Telecrystals.", 30)

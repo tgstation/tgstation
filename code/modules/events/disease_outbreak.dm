@@ -79,9 +79,12 @@
 	return subtypesof(/datum/disease)
 
 /datum/event_admin_setup/listed_options/disease_outbreak/apply_to_event(datum/round_event/disease_outbreak/event)
+	var/datum/disease/virus
 	if(chosen == special_run_option)
-		chosen = pick(get_list())
-	event.virus_type = chosen
+		virus = pick(get_list())
+	else 
+		virus = chosen
+	event.virus_type = virus
 
 /datum/round_event/disease_outbreak
 	announce_when = ADV_ANNOUNCE_DELAY
