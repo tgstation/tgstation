@@ -37,6 +37,8 @@
 		"temperature" = null,
 		"volume"= null,
 		"pressure"= null,
+		"heat_capacity" = null,
+		"thermal_energy" = null,
 		"reference" = null,
 	)
 	if(!gasmix)
@@ -57,6 +59,8 @@
 	.["temperature"] = gasmix.temperature
 	.["volume"] = gasmix.volume
 	.["pressure"] = gasmix.return_pressure()
+	.["heat_capacity"] = display_joules(gasmix.heat_capacity())
+	.["thermal_energy"] = display_joules(gasmix.thermal_energy())
 	.["reference"] = REF(gasmix)
 
 GLOBAL_LIST_EMPTY(reaction_handbook)
