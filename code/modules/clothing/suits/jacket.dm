@@ -118,3 +118,24 @@
 	icon_state = "letterman_n"
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
+
+/obj/item/clothing/suit/jacket/drive_jacket
+	name = "drive jacket"
+	desc = "Great driver. Performs stunts on Hollywood film sets in daylight and plays risky games at night"
+	icon_state = "drive_jacket"
+	inhand_icon_state = null
+	species_exception = list(/datum/species/golem)
+
+/obj/item/clothing/suit/jacket/boxer_jacket
+	name = "boxer jacket"
+	desc = "Sport jacket from old time"
+	icon_state = "boxer_jacket"
+	inhand_icon_state = null
+	species_exception = list(/datum/species/golem)
+
+/obj/item/clothing/suit/jacket/violet_jacket
+	name = "violet jacket"
+	desc = "You REALLY like hurting people, dont you?"
+	icon_state = "violet_jacket"
+	inhand_icon_state = null
+	species_exception = list(/datum/species/golem)
