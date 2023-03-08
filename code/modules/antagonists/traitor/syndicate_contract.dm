@@ -18,14 +18,14 @@
 /datum/syndicate_contract/proc/generate(blacklist)
 	contract.find_target(null, blacklist)
 
-	var/datum/data/record/record
-	if (contract.target)
-		record = find_record("name", contract.target.name, GLOB.data_core.general)
+	//var/datum/data/record/record
+	//if (contract.target)
+	//	record = find_record("name", contract.target.name, GLOB.data_core.general)
 
-	if (record)
-		target_rank = record.fields["rank"]
-	else
-		target_rank = "Unknown"
+	//if (record)
+	//	target_rank = record.fields["rank"]
+	//else
+	//	target_rank = "Unknown"
 
 	if (payout_type == CONTRACT_PAYOUT_LARGE)
 		contract.payout_bonus = rand(9,13)

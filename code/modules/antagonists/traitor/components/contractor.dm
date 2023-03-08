@@ -58,8 +58,8 @@
 	)
 
 	//What the fuck
-	if(length(to_generate) > length(GLOB.data_core.locked))
-		to_generate.Cut(1, length(GLOB.data_core.locked))
+	//if(length(to_generate) > length(GLOB.data_core.locked))
+	//	to_generate.Cut(1, length(GLOB.data_core.locked))
 
 	// We don't want the sum of all the payouts to be under this amount
 	var/lowest_TC_threshold = 30
@@ -184,7 +184,7 @@
 	uniform = /obj/item/clothing/under/chameleon
 	suit = /obj/item/clothing/suit/chameleon
 	back = /obj/item/storage/backpack
-	belt = /obj/item/pda/chameleon
+	//belt = /obj/item/pda/chameleon
 	mask = /obj/item/clothing/mask/cigarette/syndicate
 	shoes = /obj/item/clothing/shoes/chameleon/noslip
 	ears = /obj/item/radio/headset/chameleon
