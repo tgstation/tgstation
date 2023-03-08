@@ -190,21 +190,23 @@
 /// Calculates the actual chance to embed based on armour penetration and throwing speed, then returns true if we pass that probability check
 /datum/element/embed/proc/roll_embed_chance(obj/item/embedding_item, mob/living/victim, hit_zone, datum/thrownthing/throwingdatum)
 	var/actual_chance = embed_chance
-	var/penetrative_behaviour = 1 //Keep this above 1, as it is a multiplier for the pen_mod for determining actual embed chance.
-	if(embedding_item.weak_against_armour)
-		penetrative_behaviour = ARMOR_WEAKENED_MULTIPLIER
 
 	if(throwingdatum?.speed > embedding_item.throw_speed)
 		actual_chance += (throwingdatum.speed - embedding_item.throw_speed) * EMBED_CHANCE_SPEED_BONUS
 
-	if(!embedding_item.isEmbedHarmless()) // all the armor in the world won't save you from a kick me sign
-		var/armor = max(victim.run_armor_check(hit_zone, BULLET, silent=TRUE), victim.run_armor_check(hit_zone, BOMB, silent=TRUE)) * 0.5 // we'll be nice and take the better of bullet and bomb armor, halved
+	if(embedding_item.isEmbedHarmless()) // all the armor in the world won't save you from a kick me sign
+		return prob(actual_chance)
 
-		if(armor) // we only care about armor penetration if there's actually armor to penetrate
-			var/pen_mod = -(armor * penetrative_behaviour) // if our shrapnel is weak into armor, then we restore our armor to the full value.
-			actual_chance += pen_mod // doing the armor pen as a separate calc just in case this ever gets expanded on
-			if(actual_chance <= 0)
-				victim.visible_message(span_danger("[embedding_item] bounces off [victim]'s armor, unable to embed!"), span_notice("[embedding_item] bounces off your armor, unable to embed!"), vision_distance = COMBAT_MESSAGE_RANGE)
-				return FALSE
+	var/armor = max(victim.run_armor_check(hit_zone, BULLET, silent=TRUE), victim.run_armor_check(hit_zone, BOMB, silent=TRUE)) * 0.5 // we'll be nice and take the better of bullet and bomb armor, halved
+	if(!armor) // we only care about armor penetration if there's actually armor to penetrate
+		return prob(actual_chance)
+
+ 	//Keep this above 1, as it is a multiplier for the pen_mod for determining actual embed chance.
+	var/penetrative_behaviour = embedding_item.weak_against_armour ? ARMOR_WEAKENED_MULTIPLIER : 1
+	var/pen_mod = -(armor * penetrative_behaviour) // if our shrapnel is weak into armor, then we restore our armor to the full value.
+	actual_chance += pen_mod // doing the armor pen as a separate calc just in case this ever gets expanded on
+	if(actual_chance <= 0)
+		victim.visible_message(span_danger("[embedding_item] bounces off [victim]'s armor, unable to embed!"), span_notice("[embedding_item] bounces off your armor, unable to embed!"), vision_distance = COMBAT_MESSAGE_RANGE)
+		return FALSE
 
 	return prob(actual_chance)
