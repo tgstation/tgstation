@@ -541,7 +541,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return
 
 /area/proc/get_original_area_name()
-    if(name == initial(name))
-        return name
-
-    return "[name] ([initial(name)])"
+	if(name == initial(name))
+		return name
+	return "[name] ([initial(name)])"
