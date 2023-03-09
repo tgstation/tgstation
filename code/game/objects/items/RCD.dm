@@ -240,7 +240,7 @@ RLD
 /obj/item/construction/proc/range_check(atom/A, mob/user)
 	if(A.z != user.z)
 		return
-	if(!(A in view(7, get_turf(user))))
+	if(!(A in dview(7, get_turf(user))))
 		to_chat(user, span_warning("The \'Out of Range\' light on [src] blinks red."))
 		return FALSE
 	else
@@ -1011,7 +1011,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	)
 	///will contain the original icons modified with the color choice
 	var/list/display_options = list()
-	var/color_choice = null
+	var/color_choice = "#ffffff"
 
 /obj/item/construction/rld/Initialize(mapload)
 	. = ..()
@@ -1126,7 +1126,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 						var/obj/machinery/light/L = new /obj/machinery/light(light)
 						L.setDir(align)
 						L.color = color_choice
-						L.set_light_color(L.color)
+						L.set_light_color(color_choice)
 						return TRUE
 				return FALSE
 
@@ -1146,7 +1146,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 						var/destination = get_turf(A)
 						var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(destination)
 						FL.color = color_choice
-						FL.set_light_color(FL.color)
+						FL.set_light_color(color_choice)
 						return TRUE
 				return FALSE
 
