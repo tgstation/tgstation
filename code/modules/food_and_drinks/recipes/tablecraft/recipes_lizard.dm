@@ -23,7 +23,7 @@
 	name = "Crispy shredded lung stirfry"
 	reqs = list(
 		/obj/item/food/grown/carrot = 1,
-		/obj/item/food/grown/chili = 1
+		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/organ/internal/lungs = 1,
 		/obj/item/reagent_containers/cup/bowl = 1,
