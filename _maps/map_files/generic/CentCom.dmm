@@ -205,8 +205,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/iron{
-	},
+/turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "bi" = (
 /turf/open/floor/iron/white,
@@ -656,8 +655,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/iron{
-	},
+/turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "el" = (
 /obj/structure/filingcabinet/medical,
@@ -4139,8 +4137,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/iron{
-	},
+/turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "tN" = (
 /obj/effect/turf_decal/tile/green{
@@ -4936,8 +4933,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/iron{
-	},
+/turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "xo" = (
 /obj/effect/turf_decal/tile/green,
@@ -6143,8 +6139,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/iron{
-	},
+/turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "DF" = (
 /obj/structure/sign/warning/no_smoking,
@@ -7408,8 +7403,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/iron{
-	},
+/turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "Nn" = (
 /obj/structure/table/reinforced,
@@ -8204,8 +8198,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/iron{
-	},
+/turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "Rj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
