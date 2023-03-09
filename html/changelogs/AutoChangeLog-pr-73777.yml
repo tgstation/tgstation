@@ -1,0 +1,5 @@
+author: "Watermelon914"
+delete-after: True
+changes:
+  - code_imp: "Abstract types don't hold telecrystal rewards or progression rewards anymore, this has been moved to the non-abstract types."
+  - balance: "Rebalances rewards from repeatable traitor objectives to be more consistent with each other."
