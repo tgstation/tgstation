@@ -36,6 +36,7 @@
 #_maps/RandomRuins/SpaceRuins/listeningstation.dmm
 #_maps/RandomRuins/SpaceRuins/mechtransport.dmm
 #_maps/RandomRuins/SpaceRuins/mrow_thats_right
+#_maps/RandomRuins/SpaceRuins/old_infiltrator.dmm
 #_maps/RandomRuins/SpaceRuins/oldAIsat.dmm
 #_maps/RandomRuins/SpaceRuins/oldstation.dmm
 #_maps/RandomRuins/SpaceRuins/oldteleporter.dmm
