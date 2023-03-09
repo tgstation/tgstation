@@ -29,14 +29,13 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	if (CONFIG_GET(flag/forbid_station_traits))
 		return
 
-	var/list/forced_traits_text_paths = list()
-
 	if (fexists(FUTURE_STATION_TRAITS_FILE))
 		var/forced_traits_contents = file2text(FUTURE_STATION_TRAITS_FILE)
 		fdel(FUTURE_STATION_TRAITS_FILE)
-		forced_traits_text_paths += json_decode(forced_traits_contents )
+		var/list/forced_traits_text_paths = json_decode(forced_traits_contents)
 
 		forced_traits_text_paths = SANITIZE_LIST(forced_traits_text_paths)
+
 		for (var/trait_text_path in forced_traits_text_paths)
 			var/station_trait_path = text2path(trait_text_path)
 			if (!ispath(station_trait_path, /datum/station_trait) || station_trait_path == /datum/station_trait)
