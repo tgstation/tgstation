@@ -88,14 +88,14 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		/area/space,
 		))
 
-	var/error = null
+	var/error = ""
 	var/list/turfs = detect_room(get_turf(creator), area_or_turf_fail_types, BP_MAX_ROOM_SIZE*2)
 	var/turf_count = length(turfs)
 	if(!turf_count)
 		error = "The new area must be completely airtight and not a part of a shuttle."
 	else if(turf_count > BP_MAX_ROOM_SIZE)
 		error = "The room you're in is too big. It is [turf_count >= BP_MAX_ROOM_SIZE *2 ? "more than 100" : ((turf_count / BP_MAX_ROOM_SIZE)-1)*100]% larger than allowed."
-	if(!isnull(error))
+	if(error)
 		to_chat(creator, span_warning(error))
 		return
 
@@ -128,8 +128,9 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 
 	//we haven't done anything. let's get outta here
 	if(newA == oldA)
-		to_chat(creator, span_warning("The area remains unchanged"))
+		creator.balloon_alert(creator, "no area change!")
 		return
+
 	//when expanding one area into another we don't want to merge their apcs. Display warning to user to dismantle an apc before proceeding
 	if(!isnull(newA.apc) && !isnull(oldA.apc))
 		creator.balloon_alert(creator, "too many conflicting APCs, remove one!")
@@ -189,9 +190,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	//check areas of turfs merged into the new area if their empty
 	for(var/area_name in collected_areas)
 		var/area/merged_area = collected_areas[area_name]
-		//no more turfs in this area. Time to clean up
-		if(!merged_area.has_contained_turfs())
-			message_admins("Area [area_name] has been deleted!.")
+		if(!merged_area.has_contained_turfs()) //no more turfs in this area. Time to clean up
 			qdel(merged_area)
 
 	return TRUE

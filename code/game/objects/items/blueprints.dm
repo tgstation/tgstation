@@ -237,13 +237,14 @@
 	//stuff tied to the area to rename
 	var/list/to_rename = list(
 		/obj/machinery/airalarm,
-		/obj/machinery/power/apc,
-		/obj/machinery/firealarm,
 		/obj/machinery/atmospherics/components/unary/vent_scrubber,
 		/obj/machinery/atmospherics/components/unary/vent_pump,
 		/obj/machinery/door,
-		/obj/machinery/light_switch
+		/obj/machinery/firealarm,
+		/obj/machinery/light_switch,
+		/obj/machinery/power/apc,
 	)
+
 	for(var/obj/machine as anything in area)
 		if(is_type_in_list(machine, to_rename))
 			machine.name = replacetext(machine.name, oldtitle, title)
