@@ -64,3 +64,229 @@
       being rotated by using dir.
   tf-4:
   - bugfix: Fixed a missing wire in the Tramstation cargo warehouse.
+2023-03-04:
+  Melbert:
+  - qol: Food over-top Drying Racks / Smartfridges will no longer decompose into ants
+  Vlada - VastKilleroOm:
+  - imageadd: added 1 hairstyle icon
+2023-03-05:
+  Chlorotrifluoride:
+  - imageadd: added prettier icons for the normal and absorbent galoshes
+  Draggeru:
+  - rscadd: Adds the tape wizard costume, both a real and fake variant
+  - rscadd: 'Adds the costume behind the autodrobe contraband wire, and the real variant
+      in the wiz den
+
+      :cl:'
+  Jacquerel:
+  - bugfix: Most spells can once again be cast even after someone stuns you with a
+      baton.
+  JohnFulpWillard:
+  - bugfix: The HoS' PDA painter can no longer paint PDAs into Lawyer ones.
+  Melbert:
+  - bugfix: Jobs get "You are the" and policy text again on spawn
+  - bugfix: Hijacked shuttles now count as "escaping alive" once agian
+  - bugfix: Hardcore random survival now actually checks that you've escaped alive,
+      and not just made it to centcom
+  - bugfix: Intelligent zombies can now escape.
+  - bugfix: Infectious zombies now don't count as escaped as intended.
+  - qol: Examine block'd out silicon "show laws" text.
+  - bugfix: Re-added a missing alert icon state for AI "laws updated" screen alert
+  - admin: Adds a new verb. "Law panel". This panel lets you see AND EDIT all silicon
+      laws in existence.
+  Paxilmaniac:
+  - balance: The pipegun's chance to misfire and shoot at you rather than the person
+      you're pointing it at has been removed
+  Profakos:
+  - bugfix: You can no longer multiply banana peels, gatfruit and more by using sliceable
+      custom food
+  Rhials:
+  - qol: Midwife Spiders can now sense how fully grown an egg cluster is by examining
+      it twice.
+  Sealed101:
+  - bugfix: fixed erroneous khinkali microwave recipe in the cooking menu. use a grill
+      like a normal chef
+  - bugfix: fixed AIs being able to recognize a spessman's identity over a holopad
+      call even if it was completely concealed, e.g. cloak of shadow, infiltrator
+      suit
+  - bugfix: undressing a hat/back item from a dog will correctly remove the item's
+      overlay
+  - bugfix: most armor vests will actually show on a dog when placed on its back
+  SyncIt21:
+  - refactor: RPED to infer icons of parts to use in `icon2html()` when displaying
+      part information
+  TheBoondock:
+  - bugfix: fixed missing inhand icon state for jaws of life
+  - refactor: refactored DNA vault. DNA probes now need to be linked with the vault
+      before scanning.
+  - qol: DNA probe can now access the dna database directly from the vault its linked
+      to, so you are always updated on the vault's database. Simply hit the vault
+      with the probe and it will link.
+  Timberpoes:
+  - bugfix: Papercode has been significantly improved and trivially filled paper forms
+      should no longer lag or crash players' game clients.
+  carshalash:
+  - rscadd: Introduces orderable rabbit crate to cargo livestock.
+  flowercuco:
+  - rscadd: add new smite that adds deadchat control component to a victim
+  rageguy505:
+  - bugfix: Removed a stray floating space calendar and decal on tramstation and it
+      makes more sense to reach the kilo spare.
+  skylord-a52:
+  - bugfix: frozen gas tanks now release their contents upon shattering
+  - bugfix: holodeck gas tanks can now be deconstructed
+  tralezab:
+  - rscadd: Added the gondola mutant, a tier two zen-like observer
+  - rscadd: Entries are now locked behind tiers, activating a bonus in someone upgrades
+      the tier!
+  - qol: DNA Infuser will now print a failure reason when you... well, don't get what
+      you want.
+2023-03-06:
+  GoldenAlpharex:
+  - bugfix: Fixed some issues with podpeople hair and horns not being drawn under
+      the right circumstances all the time.
+  Holoo-1:
+  - bugfix: Nanotrasen has conducted high precision in-depth analysis of Deltastation
+      and its shuttles. As a result anomalous floortiles were replaced with standard
+      issued ones.
+  Iamgoofball:
+  - bugfix: You can no longer fortnite with glass sheets
+  LT3:
+  - rscadd: Added new multi-vote system
+  - balance: Map votes are now calculated using multi-vote instead of the old single-vote
+      system
+  - admin: Admins can now use either multi-vote or single-vote for custom votes
+  - code_imp: Map choice filtering uses active player count, not all connected clients
+  - bugfix: Admins can jump to/follow patient zero of a disease outbreak again
+  OrionTheFox:
+  - bugfix: fixed missing emissives on the Engivend, Pwr-Game Soda, and generic Soda
+      vendors. Also fixed the seclaptop having no valid screen icon!
+  - bugfix: fixed a few items trying to apply emissives when they shouldn't.
+  - code_imp: added a stack_trace for emissives with missing icon states.
+  Paxilmaniac:
+  - code_imp: AMMO_BOX_FULL_EMPTY now looks for -full and -empty for sprites, rather
+      than -[max ammo of that magazine] and -0
+  Profakos:
+  - balance: the syndicate realized Chief Engineer is important enough to kidnap
+  - bugfix: kidnap objectives will now properly be unavailable for you for 15 minutes
+      after you take three, instead of after you take three assassinations.
+  RikuTheKiller:
+  - bugfix: Atmosians have finally convinced the thermomachines to not self-destruct
+      when built on blocked ports.
+  - bugfix: Failing to wrench down a thermomachine no longer hits it with the wrench.
+  SmoSmoSmoSmok:
+  - qol: made ORM easier to use
+  Spookuni:
+  - balance: Latejoin dynamic rulesets have been rebalanced to reduce the frequency
+      of midround revolution spawns.
+  carshalash:
+  - bugfix: Bartender's fountain pen was omitted during the swap over to tablets,
+      this has been amended.
+  tralezab:
+  - rscadd: Updated the bus ruin
+2023-03-07:
+  Helg2:
+  - bugfix: fixed butchering bread dog spawning error bread.
+  JohnFulpWillard:
+  - bugfix: Corgis show their ID on examine.
+  - balance: Cult can no longer draw runes in survival pods.
+  Melbert:
+  - bugfix: Luminsecent slime actions correctly update their appearance when integrating
+      or ejecting slime cores
+  - bugfix: Fixed a Space Dragon related hard delete.
+  - bugfix: Mindswapped space dragons will break less.
+  NamelessFairy:
+  - admin: AB_CHECK_INCAPACITATED on an action's check_flags can now be modified by
+      admins.
+  - rscadd: New Neutral Station Trait, "Employee Birthday", its someone on the crews
+      birthday, make sure to wish them a happy birthday and perhaps get them a gift.
+  - rscadd: Two new party themed items have been added to the arcade prize pool, the
+      party horn and a box of party poppers.
+  PositiveEntropy:
+  - imageadd: Tweaked, Overhauled and Resprited a variety of garments related to the
+      security department, particularly its alternate clothes! Check it when possible!
+  Profakos:
+  - bugfix: 20+ item's discounts are properly smaller, instead of being larger
+  - bugfix: You can no longer have multiple copies of the same heirloom theft objective
+  Sealed101:
+  - spellcheck: fixed humanoid examine easter egg's pronoun usage
+  carshalash:
+  - qol: Regal Rats produce meat on butchering, reducing player confusion.
+  coiax:
+  - refactor: Refactored how eggs growing into chicks is implemented, and how the
+      number of chickens and chicks are tracked. It's now possible for admins to make
+      anything into an egg.
+  dessysalta, Cheshify:
+  - rscadd: Nanotrasen has added a martial artist gi to the AutoDrobe for those who
+      want to go even further byond.
+  - imageadd: Aforementioned gi sprites.
+  tralezab:
+  - bugfix: changed gondola mutants to require gondola meat instead
+2023-03-08:
+  Jacquerel:
+  - balance: Traitor secondary objectives to steal or destroy an item are now associated
+      with a particular "owner" or "victim" and won't generate themselves if nobody
+      would actually be victimised by the crime.
+  - rscadd: Traitors can sometimes be tasked with stealing and destroying the roboticist's
+      big crowbar, if there is one
+  LT3:
+  - imageadd: New tram and elevator sprites
+  - code_imp: Lighting capability for all buttons
+  - spellcheck: All elevator components are now 'elevator'
+  - code_imp: Reduced brightness on tram platform signs
+  - bugfix: Fixed odd wall in cargo department
+  - bugfix: Science elevator panel not laying on a table anymore
+  - bugfix: Science keycard auth can only be done from RD office
+  - code_imp: More Tramstation mapping helpers
+  - bugfix: Fixed Icebox pharmacy shutters lighting runtimes
+  LemonInTheDark:
+  - bugfix: Examining in the dark is less wonk now, sorry bout that
+  Melbert:
+  - rscadd: Somewhere, in deep space, a relic to every fluked nuclear operative mission
+      drifts abandoned.
+  NamelessFairy:
+  - bugfix: The birthday station trait now actually works.
+  SmoSmoSmoSmok:
+  - qol: Borgs are now acknowledged by the orm
+2023-03-09:
+  BlueMemesauce:
+  - bugfix: Mime finger gun icon is no longer an error
+  - admin: Logs when mimes break or make a vow of silence
+  Farquaar and ArcaneDefence:
+  - rscadd: Plasmamen can scream now
+  Melbert:
+  - bugfix: Fixes pirates and starfury assailants keeping minds of past lives
+  - bugfix: Fixed a eswords, some tools, and some other misc. items from being invisible
+      while extended / active
+  - bugfix: Teleshields and other misc items not extending in hand when active
+  - bugfix: Switchblades click on extend again
+  - bugfix: Pendrivers click on extend
+  Moth-lantern:
+  - rscadd: Adds the rest of the lipsticks to the cosmetics.dm
+  NamelessFairy:
+  - bugfix: Some airlock access oversights on tramstation have been fixed. The service
+      lathe cannot be accessed by jobs that shouldn't have access via maint and robo/engi's
+      cant get into secure tech storage.
+  - bugfix: 'Rapid lighting devices can now have their color set to #ffffff and the
+      resulting lights will now function.'
+  - bugfix: Rapid lighting devices will now default its set color to white when created
+      instead of trying to produce colorless lights.
+  - bugfix: The rapid lighting device can now be used in the dark when producing glow
+      sticks or floor lights.
+  - bugfix: The party alarm now works again!
+  - refactor: Admin event setup's have been refactored to use lists.
+  - bugfix: When admins customize the pirate event all options will be available rather
+      than just options that have not been randomly rolled.
+  - bugfix: The stray meteor event no longer runtimes when customized by admins.
+  - admin: Admins can now select the shuttle brought in by the shuttle catastrophe
+      event.
+  - admin: Admins can now randomize the disease outbreak classic event to roll any
+      disease type, including transformation diseases so have fun with that.
+  Rhials:
+  - spellcheck: Fixes the Russian/Bounty Hunter fugitive hunter spawn backstory messages.
+  Sealed101:
+  - bugfix: slime processor no longer sucks in slimes that it can't reach (glass panes,
+      blocked by other machines etc)
+  timothymtorres:
+  - balance: Add lava moat to Icebox vault and fix maint area being viewable from
+      primary hallway

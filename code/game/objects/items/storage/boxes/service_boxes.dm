@@ -195,3 +195,11 @@
 	for(var/i in 1 to 3)
 		new /obj/item/poster/tail_board(src)
 		new /obj/item/tail_pin(src)
+
+/obj/item/storage/box/party_poppers
+	name = "box of party_poppers"
+	desc = "Turn any event into a celebration and ensure the janitor stays busy."
+
+/obj/item/storage/box/party_poppers/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/spray/chemsprayer/party(src)
