@@ -154,7 +154,7 @@
 		if(MOVABLE_LIGHT_DIRECTIONAL)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
 
-/atom/movable/Destroy(force)
+/atom/movable/Destroy(force, ...)
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
 

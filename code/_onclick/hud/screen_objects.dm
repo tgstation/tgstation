@@ -36,7 +36,7 @@
 	/// If FALSE, this will not be cleared when calling /client/clear_screen()
 	var/clear_with_screen = TRUE
 
-/atom/movable/screen/Destroy()
+/atom/movable/screen/Destroy(force, ...)
 	master = null
 	hud = null
 	return ..()

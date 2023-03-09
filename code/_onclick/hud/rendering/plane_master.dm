@@ -577,19 +577,20 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = GHOST_PLANE
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 
-/atom/movable/screen/plane_master/ghost/show_to(mob/mymob)
+/atom/movable/screen/plane_master/ghost/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
-	if(!.)
-		return
 
-	// if they are living listen to stat changes to determine mouse opacity
-	if(isliving(mymob))
-		RegisterSignal(mymob, COMSIG_MOB_STATCHANGE, PROC_REF(handle_stat_change))
-		handle_stat_change(mymob)
+	var/mob/hudmod = home.our_hud.mymob
+	if(isliving(hudmod))
+		// living? can't click on ghosts unless dead
+		RegisterSignal(hudmod, COMSIG_MOB_STATCHANGE, PROC_REF(handle_stat_change))
+		handle_stat_change(hudmod)
 
-/atom/movable/screen/plane_master/ghost/hide_from(mob/oldmob)
-	..()
-	UnregisterSignal(oldmob, COMSIG_MOB_STATCHANGE)
+	return .
+
+/atom/movable/screen/plane_master/ghost/Destroy(force, ...)
+	UnregisterSignal(oldmob, COMSIG_MOB_STATCHANGE) // this technically isn't needed, but it's a good idea to be explicit
+	return ..()
 
 /atom/movable/screen/plane_master/ghost/proc/handle_stat_change(mob/living/mymob)
 	SIGNAL_HANDLER
