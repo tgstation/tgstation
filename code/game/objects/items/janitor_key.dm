@@ -66,6 +66,7 @@
 	playsound(src, 'sound/machines/ding.ogg', 25, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(clear_access)), ACCESS_TIMER_LIMIT, TIMER_UNIQUE|TIMER_OVERRIDE)
 	log_game("Access to the [department_access] department was given to [src] [(ismob(loc)) ? "held by [loc]" : "which is not being held"]")
+	investigate_log("Access to the [department_access] department was given to [src] [(ismob(loc)) ? "held by [loc]" : "which is not being held"]", INVESTIGATE_ACCESSCHANGES)
 
 /**
  * Called when a keycard authenticator runs out of time
