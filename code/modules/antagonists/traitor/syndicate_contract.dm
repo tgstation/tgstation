@@ -25,7 +25,9 @@
 	//if (record)
 	//	target_rank = record.fields["rank"]
 	//else
-	//	target_rank = "Unknown"
+	//	target_rank = target_mind.assigned_role.title
+
+	target_rank = contract.target.assigned_role.title
 
 	if (payout_type == CONTRACT_PAYOUT_LARGE)
 		contract.payout_bonus = rand(9,13)
