@@ -1,6 +1,7 @@
 "a" = (/turf/closed/mineral/random/snow,/area/icemoon/surface/outdoors/nospawn)
 "b" = (/obj/item/circuitboard/machine/space_heater,/obj/item/stack/cable_coil/five,/obj/structure/frame/machine,/obj/item/stock_parts/cell/super,/turf/open/floor/wood/freezing,/area/ruin/smoking_room/house)
 "e" = (/obj/effect/spawner/random/entertainment/cigarette,/obj/item/reagent_containers/cup/bucket/wooden{pixel_x = 9; pixel_y = 7},/obj/effect/decal/cleanable/vomit/old,/turf/open/floor/carpet/blue,/area/ruin/smoking_room/room)
+"f" = (/obj/item/toy/beach_ball/baseball{pixel_x = 10; pixel_y = 7},/turf/open/floor/wood/freezing,/area/ruin/smoking_room/house)
 "h" = (/obj/effect/spawner/random/entertainment/cigarette_pack,/turf/open/floor/carpet/blue,/area/ruin/smoking_room/room)
 "i" = (/obj/effect/spawner/random/entertainment/cigarette_pack,/obj/effect/decal/cleanable/ash/large{pixel_x = 2; pixel_y = -2},/turf/open/floor/carpet/royalblue,/area/ruin/smoking_room/room)
 "j" = (/obj/structure/chair/comfy{dir = 1},/turf/open/floor/carpet/blue,/area/ruin/smoking_room/room)
@@ -19,10 +20,10 @@
 "E" = (/obj/item/trash/shrimp_chips,/obj/item/clothing/mask/cigarette/rollie/trippy{pixel_x = 3; pixel_y = -1},/obj/item/clothing/mask/cigarette/rollie/trippy{pixel_x = 3; pixel_y = 5},/obj/effect/spawner/random/trash/bin,/obj/effect/spawner/random/special_lighter,/turf/open/floor/wood/freezing,/area/ruin/smoking_room/house)
 "F" = (/obj/structure/table/wood/fancy/black,/obj/item/storage/fancy/cigarettes/cigars/cohiba,/obj/effect/spawner/random/entertainment/cigarette_pack,/obj/effect/spawner/random/special_lighter,/turf/open/floor/carpet/blue,/area/ruin/smoking_room/room)
 "G" = (/obj/item/stack/sheet/mineral/wood,/turf/open/floor/wood/freezing,/area/ruin/smoking_room/house)
-"H" = (/obj/structure/sign/warning/yes_smoking/circle/directional/east,/turf/open/floor/wood/freezing,/area/ruin/smoking_room/house)
 "I" = (/turf/closed/wall/mineral/wood,/area/ruin/smoking_room/house)
 "J" = (/obj/effect/decal/cleanable/glass,/obj/item/shard{pixel_x = 5; pixel_y = -3},/turf/open/floor/wood/freezing,/area/ruin/smoking_room/house)
 "K" = (/obj/structure/bonfire,/turf/open/floor/wood/freezing,/area/ruin/smoking_room/house)
+"L" = (/obj/structure/sign/warning/yes_smoking/circle/directional/east,/turf/open/floor/wood/freezing,/area/ruin/smoking_room/house)
 "M" = (/obj/effect/decal/cleanable/glass,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface/outdoors/nospawn)
 "O" = (/obj/structure/flora/tree/pine/style_random,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface/outdoors/nospawn)
 "Q" = (/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface/outdoors/nospawn)
@@ -34,17 +35,17 @@
 "Z" = (/obj/structure/bed/maint,/turf/open/floor/wood/freezing,/area/ruin/smoking_room/house)
 
 (1,1,1) = {"
-aaaQaaaQQaaaQaaaa
-aaQaaaaaaaaaaaaaa
-aQQaQQQQaaaaaaQQQ
-QQOIIIIIIIIIaaQQQ
-QQQIxKzVuTEtttttQ
-QQQIuuuuuuutRpetQ
-QQQnuGkAuzumCihtQ
-QQQIuvuuuzHtjFWtQ
-QQQIbuZuuJItttttQ
-aaQIIXIIIXIQQQQQQ
-aaQQQwwwQMQQQQQQQ
+aaaQaaaQQaaaQaaQQ
+aaQaaaaaaaaaaaaaQ
+aQQaQQQQaaaaaaaaa
+QQOIIIIIIIIIaaaaa
+QQQIxKzVuTEttttta
+QQQIuuuuuuutRpeta
+QQQnuGkAuzumCihta
+QQQIuvuuuzLtjFWta
+QQQIbuZufJIttttta
+aaQIIXIIIXIQQQaaa
+aaQQQwwwQMQQQQQaa
 aaaQQQQQQQQQQQQQQ
 aaaaaQQQOQQQaaQQa
 aaaaaaaaaaaaaaQQQ
