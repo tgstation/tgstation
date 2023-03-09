@@ -29,13 +29,15 @@
 	))
 
 /datum/component/scope/process(delta_time)
-	if(!tracker.owner.client)
-		stop_zooming(tracker.owner)
+	var/mob/user_mob = tracker.owner
+	var/client/user_client = user_mob.client
+	if(!user_client)
+		stop_zooming(user_mob)
 		return
 	tracker.calculate_params()
-	if(!length(tracker.owner.client.keys_held & tracker.owner.client.movement_keys))
-		tracker.owner.face_atom(tracker.given_turf)
-	animate(tracker.owner.client, world.tick_lag, pixel_x = tracker.given_x, pixel_y = tracker.given_y)
+	if(!length(user_client.keys_held & user_client.movement_keys))
+		user_mob.face_atom(tracker.given_turf)
+	animate(user_client, world.tick_lag, pixel_x = tracker.given_x, pixel_y = tracker.given_y)
 
 /datum/component/scope/proc/on_move(atom/movable/source, atom/oldloc, dir, forced)
 	SIGNAL_HANDLER

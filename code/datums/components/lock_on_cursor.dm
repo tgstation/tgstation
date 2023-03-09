@@ -31,7 +31,16 @@
 	/// Ranging ID for some kind of tick check safety calculation
 	var/current_ranging_id = 0
 
-/datum/component/lock_on_cursor/Initialize(lock_cursor_range = 5, list/target_typecache = list(), lock_amount = 1, list/immune = list(), icon = 'icons/mob/silicon/cameramob.dmi', icon_state = "marker", datum/callback/on_lock, datum/callback/can_target_callback)
+/datum/component/lock_on_cursor/Initialize(
+	lock_cursor_range = 5,
+	lock_amount = 1,
+	list/target_typecache = list(),
+	list/immune = list(),
+	icon = 'icons/mob/silicon/cameramob.dmi',
+	icon_state = "marker",
+	datum/callback/on_lock,
+	datum/callback/can_target_callback,
+)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 	if (lock_amount < 1 || lock_cursor_range < 0)
@@ -191,6 +200,7 @@
 		cd++
 		CHECK_TICK
 
+/// Tracks cursor movement and passes clicks through to the turf under the cursor
 /atom/movable/screen/fullscreen/cursor_catcher/lock_on
 
 /atom/movable/screen/fullscreen/cursor_catcher/lock_on/Click(location, control, params)

@@ -46,7 +46,8 @@
 		lock_cursor_range = 5, \
 		target_typecache = GLOB.typecache_living, \
 		lock_amount = 1, \
-		on_lock = CALLBACK(src, PROC_REF(on_lockon_component)))
+		on_lock = CALLBACK(src, PROC_REF(on_lockon_component)), \
+	)
 
 /datum/action/cooldown/spell/pointed/projectile/spell_cards/proc/on_lockon_component(list/locked_weakrefs)
 	if(!length(locked_weakrefs))
