@@ -1,4 +1,4 @@
-///global lists of all pirate gangs that can show up today. these will be taken out of the global list as spawned so dupes cannot spawn.
+///global lists of all pirate gangs that can show up today. they will be taken out of the global lists as spawned so dupes cannot spawn.
 GLOBAL_LIST_INIT(light_pirate_gangs, init_pirate_gangs(FALSE))
 GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(TRUE))
 
