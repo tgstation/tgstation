@@ -22,7 +22,7 @@
 	mutantheart = null
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
-	blood_deficiency_drain_rate = JELLY_REGEN_RATE + BLOOD_DEFICIENCY_DRAIN_MODIFIER
+	blood_deficiency_drain_rate = JELLY_REGEN_RATE + BLOOD_DEFICIENCY_MODIFIER
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	liked_food = MEAT | BUGS
 	toxic_food = NONE
