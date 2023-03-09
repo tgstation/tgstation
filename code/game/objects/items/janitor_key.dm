@@ -74,6 +74,7 @@
  */
 /obj/item/access_key/proc/clear_access()
 	log_game("Access to the [department_access] department on [src] has expired.")
+	investigate_log("Access to the [department_access] department on [src] has expired.]", INVESTIGATE_ACCESSCHANGES)
 	department_access = null
 	say("Access revoked, time ran out.")
 	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
