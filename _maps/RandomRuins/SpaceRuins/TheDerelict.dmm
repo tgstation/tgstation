@@ -443,9 +443,9 @@
 /area/ruin/space/ks13/medical/medbay)
 "fH" = (
 /obj/machinery/door/morgue{
-	name = "Chaplains Office"
+	name = "Chaplains Office";
+	req_access = list("chapel_office")
 	},
-/obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ks13/service/chapel_office)
 "fJ" = (

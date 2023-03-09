@@ -353,3 +353,10 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/gi
+	name = "Martial Artist Gi"
+	desc = "Assistant, nukie, whatever. You can beat anyone; it's called hard work!"
+	icon_state = "martial_arts_gi"
+	inhand_icon_state = null
+	female_sprite_flags = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
