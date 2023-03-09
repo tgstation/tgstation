@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "borg rcd's not displaying the correct matter units in its UI & when examined"
+  - qol: "arcd animation is smoother and makes more sense and has infinite matter"
+  - bugfix: "rcd not getting inserted into toolbelts & other storage units upon clicking"
+  - bugfix: "rld updating its icon state correctly based on the matter left"
