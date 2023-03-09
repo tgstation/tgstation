@@ -32,7 +32,7 @@
 	name = "hellfire laser"
 	wound_bonus = -5 //Yeah, fire burns flesh
 	damage = 20
-	speed = 0.6 // Fire goes brrrr
+	speed = 0.6
 
 /obj/projectile/beam/laser/hellfire/Initialize(mapload)
 	. = ..()
@@ -41,9 +41,9 @@
 /obj/projectile/beam/laser/hellfire/on_hit(atom/target, blocked)
 	. = ..()
 	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(4) //May need balancing
-		M.ignite_mob() //tried without this, ignites after two hits. (feature?)
+		var/mob/living/carbon/carbon_victim = target
+		carbon_victim.adjust_fire_stacks(4)
+		carbon_victim.ignite_mob()
 
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"

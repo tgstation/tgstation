@@ -6,7 +6,7 @@
 /obj/item/ammo_casing/energy/laser/hellfire
 	projectile_type = /obj/projectile/beam/laser/hellfire
 	e_cost = 100
-	select_name = "Ignite"
+	select_name = "ignite"
 
 /obj/item/ammo_casing/energy/laser/hellfire/antique
 	e_cost = 100
