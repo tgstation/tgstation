@@ -27,12 +27,12 @@
 		for(var/organ_slot in organs_we_care_about)
 			var/expected_type = slot_to_species_organ_type(organ_slot, species_type)
 			var/obj/item/organ/actual_organ = dummy.getorganslot(organ_slot)
-			if(!actual_organ)
-				if(expected_type)
+			if(isnull(actual_organ))
+				if(!isnull(expected_type))
 					TEST_FAIL("[species_type] did not update their [organ_slot] organ to [expected_type], no organ was found")
 					continue
 			else
-				if(!expected_type)
+				if(isnull(expected_type))
 					TEST_FAIL("[species_type] did not remove their [organ_slot] organ")
 					continue
 
