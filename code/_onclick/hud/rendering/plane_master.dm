@@ -577,16 +577,28 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = GHOST_PLANE
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 
-/atom/movable/screen/plane_master/ghost/show_to(mob/living/mymob)
+/atom/movable/screen/plane_master/ghost/show_to(mob/mymob)
 	. = ..()
 	if(!.)
 		return
 
-	var/opacity = MOUSE_OPACITY_OPAQUE
-	// If the mob is not dead, don't let them click on ghosts
-	if(istype(mymob) && mymob.stat != DEAD)
-		opacity = MOUSE_OPACITY_TRANSPARENT
-	mouse_opacity = opacity
+	// if they are living listen to stat changes to determine mouse opacity
+	if(isliving(mymob))
+		RegisterSignal(mymob, COMSIG_MOB_STATCHANGE, PROC_REF(handle_stat_change))
+		handle_stat_change(mymob)
+
+/atom/movable/screen/plane_master/ghost/hide_from(mob/oldmob)
+	..()
+	UnregisterSignal(oldmob, COMSIG_MOB_STATCHANGE)
+
+/atom/movable/screen/plane_master/ghost/proc/handle_stat_change(mob/living/mymob)
+	SIGNAL_HANDLER
+
+	switch(mymob.stat)
+		if(DEAD)
+			mouse_opacity = MOUSE_OPACITY_OPAQUE
+		else
+			mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/screen/plane_master/fullscreen
 	name = "Fullscreen"
