@@ -1,3 +1,6 @@
+#define ANALYZER_MODE_SURROUNDINGS 0
+#define ANALYZER_MODE_TARGET 1
+
 /obj/item/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels."
 	name = "gas analyzer"
@@ -21,6 +24,10 @@
 	var/cooldown_time = 250
 	var/barometer_accuracy // 0 is the best accuracy.
 	var/list/last_gasmix_data
+	var/scan_range = 1
+	var/auto_updating = TRUE
+	var/target_mode = ANALYZER_MODE_SURROUNDINGS
+	var/atom/scan_target
 
 /obj/item/analyzer/Initialize(mapload)
 	. = ..()
@@ -36,7 +43,7 @@
 
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
-	. += span_notice("Right-click [src] to open the gas reference.")
+	. += span_notice("Right-click [src] to start scanning environment with TGUI. Right-click a target to start scanning it.")
 	. += span_notice("Alt-click [src] to activate the barometer function.")
 
 /obj/item/analyzer/suicide_act(mob/living/carbon/user)
@@ -118,8 +125,22 @@
 	return return_atmos_handbooks()
 
 /obj/item/analyzer/ui_data(mob/user)
+	var/list/data = list()
+	if(auto_updating)
+		on_analyze(source=src, target=scan_target)
 	LAZYINITLIST(last_gasmix_data)
-	return list("gasmixes" = last_gasmix_data)
+	data["gasmixes"] = last_gasmix_data
+	data["autoUpdating"] = auto_updating
+	return data
+
+/obj/item/analyzer/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("autoscantoggle")
+			auto_updating = !auto_updating
+			return TRUE
 
 /obj/item/analyzer/attack_self(mob/user, modifiers)
 	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
@@ -130,19 +151,55 @@
 /obj/item/analyzer/attack_self_secondary(mob/user, modifiers)
 	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
 		return
+	target_mode = ANALYZER_MODE_SURROUNDINGS
+	atmos_scan(user=user, target=get_turf(src), silent=FALSE, print=FALSE)
+	on_analyze(source=src, target=get_turf(src))
+	ui_interact(user)
 
+/obj/item/analyzer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!can_see(user, target, scan_range))
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
+	atmos_scan(user, target=(target.return_analyzable_air() ? target : get_turf(target)))
+	on_analyze(source=src, target=(target.return_analyzable_air() ? target : get_turf(target)))
+
+/obj/item/analyzer/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!can_see(user, target, scan_range))
+		on_analyze(source=src, target=get_turf(src))
+		ui_interact(user)
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
+	target_mode = ANALYZER_MODE_TARGET
+	atmos_scan(user, target=(target.return_analyzable_air() ? target : get_turf(target)), print=FALSE)
+	on_analyze(source=src, target=(target.return_analyzable_air() ? target : get_turf(target)))
 	ui_interact(user)
 
 /// Called when our analyzer is used on something
 /obj/item/analyzer/proc/on_analyze(datum/source, atom/target)
 	SIGNAL_HANDLER
-	var/mixture = target.return_analyzable_air()
+	switch(target_mode)
+		if(ANALYZER_MODE_SURROUNDINGS)
+			scan_target = get_turf(src)
+		if(ANALYZER_MODE_TARGET)
+			scan_target = target
+			if(!can_see(src, target, scan_range))
+				target_mode = ANALYZER_MODE_SURROUNDINGS
+				scan_target = get_turf(src)
+			if(!scan_target)
+				target_mode = ANALYZER_MODE_SURROUNDINGS
+				scan_target = get_turf(src)
+
+	var/mixture = scan_target.return_analyzable_air()
 	if(!mixture)
 		return FALSE
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
 	var/list/new_gasmix_data = list()
 	for(var/datum/gas_mixture/air as anything in airs)
-		var/mix_name = capitalize(lowertext(target.name))
+		var/mix_name = capitalize(lowertext(scan_target.name))
+		if(scan_target == get_turf(src))
+			mix_name = "Location Reading"
 		if(airs.len != 1) //not a unary gas mixture
 			mix_name += " - Node [airs.Find(air)]"
 		new_gasmix_data += list(gas_mixture_parser(air, mix_name))
@@ -154,7 +211,7 @@
  * Gets called by analyzer_act, which in turn is called by tool_act.
  * Also used in other chat-based gas scans.
  */
-/proc/atmos_scan(mob/user, atom/target, silent=FALSE)
+/proc/atmos_scan(mob/user, atom/target, silent=FALSE, print=TRUE)
 	var/mixture = target.return_analyzable_air()
 	if(!mixture)
 		return FALSE
@@ -164,6 +221,9 @@
 	if(!silent && isliving(user))
 		user.visible_message(span_notice("[user] uses the analyzer on [icon2html(icon, viewers(user))] [target]."), span_notice("You use the analyzer on [icon2html(icon, user)] [target]."))
 	message += span_boldnotice("Results of analysis of [icon2html(icon, user)] [target].")
+
+	if(!print)
+		return TRUE
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
 	for(var/datum/gas_mixture/air as anything in airs)
@@ -208,10 +268,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = 100, /datum/material/glass = 20, /datum/material/gold = 300, /datum/material/bluespace=200)
 	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
+	scan_range = 15;
 
-/obj/item/analyzer/ranged/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!can_see(user, target, 15))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	atmos_scan(user, (target.return_analyzable_air() ? target : get_turf(target)))
+#undef ANALYZER_MODE_SURROUNDINGS
+#undef ANALYZER_MODE_TARGET
