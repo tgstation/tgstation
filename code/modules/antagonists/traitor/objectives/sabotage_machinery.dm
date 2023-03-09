@@ -1,5 +1,10 @@
+/// Datum which manages references to things we are instructed to destroy
+GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_handler, new())
+
 /// Marks a machine as a possible traitor sabotage target
-#define ADD_SABOTAGE_MACHINE(source, typepath) LAZYADD(GLOB.objective_machine_handler.machine_instances_by_path[typepath], source)
+/proc/add_sabotage_machine(source, typepath)
+	LAZYADD(GLOB.objective_machine_handler.machine_instances_by_path[typepath], source)
+	return typepath
 
 /// Traitor objective to destroy a machine the crew cares about
 /datum/traitor_objective_category/sabotage_machinery
@@ -73,7 +78,7 @@
 	name = "Sabotage the %MACHINE%"
 	description = "Destroy the %MACHINE% to cause disarray and disrupt the operations of the %JOB%'s department. If you can get another crew member to destroy the machine using the provided booby trap, you will be rewarded with an additional %PROGRESSION% reputation and %TC% telecrystals."
 
-	progression_reward = list(2 MINUTES, 8 MINUTES)
+	progression_reward = list(2 MINUTES, 4 MINUTES)
 	telecrystal_reward = 0 // Only from completing the bonus objective
 
 	progression_minimum = 0 MINUTES
@@ -91,8 +96,8 @@
 
 	/// Bonus reward to grant if you booby trap successfully
 	var/bonus_tc = 2
-	/// Bonus reputation to grant if you booby trap successfully
-	var/bonus_rep = 2 MINUTES
+	/// Bonus progression to grant if you booby trap successfully
+	var/bonus_progression = 5 MINUTES
 	/// The trap device we give out
 	var/obj/item/traitor_machine_trapper/tool
 
@@ -102,7 +107,7 @@
 		return FALSE
 
 	replace_in_name("%TC%", bonus_tc)
-	replace_in_name("%PROGRESSION%", DISPLAY_PROGRESSION(bonus_rep))
+	replace_in_name("%PROGRESSION%", DISPLAY_PROGRESSION(bonus_progression))
 	return TRUE
 
 /datum/traitor_objective/sabotage_machinery/trap/prepare_machine(obj/machinery/machine)
@@ -111,7 +116,7 @@
 
 /// Called when you successfully proc the booby trap, gives a bonus reward
 /datum/traitor_objective/sabotage_machinery/trap/proc/sabotage_success(obj/machinery/machine)
-	progression_reward += bonus_rep
+	progression_reward += bonus_progression
 	telecrystal_reward += bonus_tc
 	succeed_objective()
 
@@ -187,9 +192,6 @@
 	visible_message(span_warning("A [src] falls out from the [machine]!"))
 
 /// Datum which manages references to things we are instructed to destroy
-GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_handler, new())
-
-/// Datum which manages references to things we are instructed to destroy
 /datum/objective_target_machine_handler
 	/// Existing instances of machines organised by typepath
 	var/list/machine_instances_by_path = list()
@@ -198,7 +200,18 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 
 /datum/objective_target_machine_handler/New()
 	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_MACHINE, PROC_REF(on_machine_created))
 	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(finalise_valid_targets))
+
+/// Adds a newly created machine to our list of machines, if we need it
+/datum/objective_target_machine_handler/proc/on_machine_created(datum/source, obj/machinery/new_machine)
+	SIGNAL_HANDLER
+	if(!targets_confirmed)
+		new_machine.add_as_sabotage_target()
+		return
+	var/typepath = new_machine.add_as_sabotage_target()
+	if(typepath != null)
+		add_sabotage_machine(new_machine, typepath)
 
 /// Confirm that everything added to the list is a valid target, then prevent new targets from being added
 /datum/objective_target_machine_handler/proc/finalise_valid_targets()
@@ -221,15 +234,16 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 // Mark valid machines as targets, add a new entry here if you add a new potential target
 
 /obj/machinery/telecomms/hub/add_as_sabotage_target()
-	ADD_SABOTAGE_MACHINE(src, /obj/machinery/telecomms/hub)
+	return add_sabotage_machine(src, /obj/machinery/telecomms/hub) // Not always our specific type because of map helper subtypes
 
 /obj/machinery/rnd/server/add_as_sabotage_target()
-	ADD_SABOTAGE_MACHINE(src, type)
+	return add_sabotage_machine(src, type)
 
 /obj/machinery/rnd/production/protolathe/department/add_as_sabotage_target()
-	ADD_SABOTAGE_MACHINE(src, type)
+	return add_sabotage_machine(src, type)
+
+/obj/machinery/rnd/production/techfab/department/add_as_sabotage_target()
+	return add_sabotage_machine(src, type)
 
 /obj/machinery/mineral/ore_redemption/add_as_sabotage_target()
-	ADD_SABOTAGE_MACHINE(src, type)
-
-#undef ADD_SABOTAGE_MACHINE
+	return add_sabotage_machine(src, type)
