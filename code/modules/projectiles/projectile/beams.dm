@@ -30,7 +30,7 @@
 //Hellfire laser, ignites, but does less wounding
 /obj/projectile/beam/laser/hellfire
 	name = "hellfire laser"
-	wound_bonus = -35 //Fire is your wounds
+	wound_bonus = -5 //Yeah, fire burns flesh
 	damage = 20
 	speed = 0.6 // Fire goes brrrr
 
