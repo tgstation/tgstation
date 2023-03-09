@@ -20,7 +20,7 @@
 /datum/component/artifact/forcegen
 	associated_object = /obj/structure/artifact/forcegen
 	weight = ARTIFACT_UNCOMMON
-	type_name = "Forcefield generator"
+	type_name = "Forcefield Generator"
 	activation_message = "springs to life and starts emitting a forcefield!"
 	deactivation_message = "shuts down, its forcefields shutting down with it."
 	valid_triggers = list(/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/force)
@@ -34,8 +34,8 @@
 /datum/component/artifact/forcegen/setup()
 	. = ..()
 	shield_iconstate = pick("shieldsparkles","empdisable","shield2","shield-old","shield-red","shield-green","shield-yellow")
-	lower_sound = pick('sound/mecha/mech_shield_drop.ogg')
-	raise_sound = pick('sound/mecha/mech_shield_raise.ogg','sound/magic/forcewall.ogg')
+	activation_sound = pick('sound/mecha/mech_shield_drop.ogg')
+	deactivation_sound = pick('sound/mecha/mech_shield_raise.ogg','sound/magic/forcewall.ogg')
 	shield_time = rand(20,90) SECONDS
 	radius = rand(1,3)
 	cooldown_time = shield_time / 3

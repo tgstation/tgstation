@@ -43,7 +43,7 @@
 /datum/component/artifact/melee
 	associated_object = /obj/item/melee/artifact
 	artifact_size = ARTIFACT_SIZE_SMALL
-	type_name = "Melee weapon"
+	type_name = "Melee Weapon"
 	weight = ARTIFACT_VERYUNCOMMON //rare
 	xray_result = "DENSE"
 	valid_triggers = list(/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/heat, /datum/artifact_trigger/shock, /datum/artifact_trigger/radiation)

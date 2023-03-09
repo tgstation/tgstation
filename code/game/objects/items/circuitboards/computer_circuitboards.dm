@@ -596,3 +596,8 @@
 	name = "Medical Order"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/computer/department_orders/medical
+
+/obj/item/circuitboard/computer/artifact_printer
+	name = "Artifact Analysis Form Printing Console"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/computer/artifact_printer

@@ -13,7 +13,7 @@
 /datum/component/artifact/cell
 	associated_object = /obj/item/stock_parts/cell/artifact
 	artifact_size = ARTIFACT_SIZE_TINY
-	type_name = "Power cell"
+	type_name = "Power Cell"
 	weight = ARTIFACT_UNCOMMON
 	xray_result = "SEGMENTED"
 	valid_triggers = list(/datum/artifact_trigger/heat, /datum/artifact_trigger/shock, /datum/artifact_trigger/radiation)

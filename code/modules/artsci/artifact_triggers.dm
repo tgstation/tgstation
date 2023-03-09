@@ -14,8 +14,6 @@
 	var/max_amount = 0
 	///stimulus severity needed to activate, changed after setup()..
 	var/amount = 0
-	///Either "<=" or ">=", what operator to use for stimulus base_amount
-	var/stimulus_operator = ">="
 	///Probability for a hint to be shown when the stimulus is hint_range close to the needed stimuli base_amount.
 	var/hint_range = 0
 	var/hint_prob = 35
@@ -51,7 +49,7 @@
 		..()
 		base_amount = rand(320,950)
 
-/datum/artifact_trigger/cold
+/*/datum/artifact_trigger/cold
 	name = "Cold"
 	needed_stimulus = STIMULUS_HEAT
 	hint_range = 20
@@ -60,7 +58,7 @@
 
 /datum/artifact_trigger/cold/New()
 		..()
-		base_amount = rand(43,270)
+		base_amount = rand(43,270)*/
 
 /datum/artifact_trigger/shock
 	name = "Electricity"

@@ -4,7 +4,7 @@
 /datum/component/artifact/repulsor
 	associated_object = /obj/structure/artifact/repulsor
 	weight = ARTIFACT_UNCOMMON
-	type_name = "Forcefield generator"
+	type_name = "Repulsor/Impulsor"
 	activation_message = "opens up, a weird aura starts emitting from it!"
 	deactivation_message = "closes up."
 	xray_result = "SEGMENTED"

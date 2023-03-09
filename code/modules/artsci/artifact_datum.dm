@@ -136,9 +136,7 @@
 			break
 		if(trigger.needed_stimulus == stimuli)
 			if(trigger.check_amount)
-				if(trigger.stimulus_operator == ">=" && severity >= trigger.amount)
-					Activate()
-				else if(trigger.stimulus_operator == "<=" && severity <= trigger.amount)
+				if(severity >= trigger.amount)
 					Activate()
 				else if(hint_text && (abs(severity - trigger.hint_range) < trigger.hint_range))
 					if(prob(trigger.hint_prob))

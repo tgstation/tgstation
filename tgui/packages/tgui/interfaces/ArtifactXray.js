@@ -4,7 +4,6 @@ import {
   Button,
   Stack,
   NoticeBox,
-  ProgressBar,
   Section,
   Box,
 } from "../components";
@@ -50,17 +49,17 @@ export const ArtifactXray = (props, context) => {
                 content={"Pulse"}
                 disabled={is_open || pulsing}
                 color="green"
-                onClick={() => act("pulse")}/>
+                onClick={() => act("pulse")} />
             </Stack.Item>
-          </Stack>
+     </Stack>
 		  <Section title={"Last Scan Results"} backgroundColor="black">
               {results.map((result) => (
                 <Box mb={1} key={result} color="green">
                   {result}
                 </Box>
               ))}
-            </Section>
-		  </>
+    </Section>
+            </>
           )}
         </Section>
       </Window.Content>

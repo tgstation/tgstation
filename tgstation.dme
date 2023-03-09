@@ -2674,6 +2674,7 @@
 #include "code\modules\artsci\artifact_objects\artifact_injector.dm"
 #include "code\modules\artsci\artifact_objects\artifact_lamp.dm"
 #include "code\modules\artsci\artifact_objects\artifact_repulser.dm"
+#include "code\modules\artsci\testing_machines\printer.dm"
 #include "code\modules\artsci\testing_machines\xray.dm"
 #include "code\modules\assembly\assembly.dm"
 #include "code\modules\assembly\bomb.dm"

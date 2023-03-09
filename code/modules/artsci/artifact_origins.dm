@@ -15,7 +15,7 @@
 
 /datum/artifact_origin/wizard
 	type_name = ORIGIN_WIZARD
-	name = "wizard"
+	name = "Wizard"
 	activation_sounds = list('sound/effects/stealthoff.ogg')
 	adjectives = list("imposing","regal","majestic","beautiful","shiny")
 	nouns_large = list("jewel","crystal","sculpture","statue","ornament")
@@ -30,7 +30,7 @@
 
 /datum/artifact_origin/narsie
 	type_name = ORIGIN_NARSIE
-	name = "eldritch"
+	name = "Eldritch"
 	activation_sounds = list('sound/effects/curse3.ogg','sound/effects/curse1.ogg')
 	adjectives = list("imposing","sharp-edged","terrifying","jagged","dark")
 	nouns_large = list("obelisk","altar","sculpture","statue","ornament")
@@ -42,7 +42,7 @@
 
 /datum/artifact_origin/silicon
 	type_name = ORIGIN_SILICON
-	name = "ancient"
+	name = "Ancient"
 	activation_sounds = list('sound/items/modsuit/loader_charge.ogg')
 	adjectives = list("cold","smooth","humming","droning")
 	nouns_large = list("monolith","slab","obelisk","pylon")

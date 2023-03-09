@@ -133,7 +133,7 @@
 
 /datum/component/artifact/bomb/gas
 	associated_object = /obj/structure/artifact/bomb/gas
-	type_name = "Bomb (Gas)"
+	type_name = "Bomb (gas)"
 	weight = ARTIFACT_RARE
 	xray_result = "POROUS"
 	initial_warning = "begins rattling violenty!"
