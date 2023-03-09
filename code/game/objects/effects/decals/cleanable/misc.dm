@@ -253,6 +253,14 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "paper_shreds"
 
+/obj/effect/decal/cleanable/wrapping/pinata
+	name = "pinata shreads"
+	desc = "Torn pieces of paper mache, left over from a pinata"
+	icon_state = "pinata_shreads"
+
+/obj/effect/decal/cleanable/wrapping/pinata/syndie
+	icon_state = "syndie_pinata_shreads"
+
 /obj/effect/decal/cleanable/garbage
 	name = "decomposing garbage"
 	desc = "A split open garbage bag, its stinking content seems to be partially liquified. Yuck!"

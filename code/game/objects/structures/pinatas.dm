@@ -10,6 +10,8 @@
 	var/candy_options = list(/obj/item/food/candy, /obj/item/food/lollipop/cyborg, /obj/item/food/gumball, /obj/item/food/bubblegum, /obj/item/food/chocolatebar)
 	///How much candy is dropped when the pinata is destroyed
 	var/destruction_loot = 5
+	///Debris dropped when the pinata is destroyed
+	var/debris = /obj/effect/decal/cleanable/wrapping/pinata
 
 /obj/structure/pinata/Initialize(mapload)
 	. = ..()
@@ -31,6 +33,10 @@
 				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
 			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+
+/obj/structure/pinata/deconstruct(disassembled)
+	new debris(get_turf(src))
+	return ..()
 
 /obj/item/pinata
 	name = "pinata assembly kit"
@@ -56,6 +62,7 @@
 	icon_state = "pinata_syndie_placed"
 	base_icon_state = "pinata_syndie_placed"
 	destruction_loot = 2
+	debris = /obj/effect/decal/cleanable/wrapping/pinata/syndie
 	candy_options = list(
 		/obj/item/food/candy,
 		/obj/item/food/lollipop,
