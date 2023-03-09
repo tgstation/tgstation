@@ -46,11 +46,11 @@ type Silicon = {
   borg_name: string;
   borg_type: string;
   // List of our laws, this is almost never null. If it is null, that's an error.
-  laws: Law[] | null;
+  laws: null | Law[];
   // String, name of our master AI. Null means no master or we're not a borg
-  master_ai: string | null;
+  master_ai?: null | string;
   // TRUE, we're law-synced to our master AI. FALSE, we're not, null, we're not a borg
-  borg_synced: BooleanLike | null;
+  borg_synced?: null | BooleanLike;
   // REF() to our silicon
   ref: string;
 };
@@ -222,7 +222,7 @@ export const SiliconReadout = (props: { cyborg: Silicon }, context) => {
       <Flex.Item grow>
         <Collapsible title={`${cyborg.borg_type}: ${cyborg.borg_name}`}>
           <Section backgroundColor={'black'}>
-            {cyborg.master_ai && cyborg.borg_synced && (
+            {cyborg.master_ai && !!cyborg.borg_synced && (
               <SyncedBorgDimmer master={cyborg.master_ai} />
             )}
             <Stack vertical>
