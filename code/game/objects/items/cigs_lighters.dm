@@ -927,10 +927,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "In lieu of fuel, performative spirit can be used to light cigarettes."
 	icon_state = "mlighter" //These ones don't show a flame.
 	custom_price = PAYCHECK_CREW * 4
+	light_color = LIGHT_COLOR_HALOGEN
 	heat = 0 //I swear it's a real lighter dude you just can't see the flame dude I promise
 	overlay_state = "mime"
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/consumable/nothing = 10)
-	light_range = 0 //This still produces light for some reason pls fix.
+	light_range = 0
 	light_power = 0
 	fancy = FALSE
 
@@ -939,10 +940,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/lighter/bright
 	name = "illuminative zippo"
-	desc = "Sustains an incredibly bright chemical reaction when you spark it. Avoid looking directly at the igniter while lighting."
+	desc = "Sustains an incredibly bright chemical reaction when you spark it. Avoid looking directly at the igniter when lit."
 	icon_state = "slighter"
 	light_color = LIGHT_COLOR_ELECTRIC_CYAN
-	overlay_state = "bright"
+	overlay_state = "bright" //Fix the lit sprite overlay pls
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/flash_powder = 10)
 	light_range = 8
 	light_power = 3 //Irritatingly bright and large enough to cover a small room.
@@ -957,8 +958,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/effect/spawner/random/special_lighter
 	name = "special lighter spawner"
-	icon = 'icons/obj/cigarettes.dmi'
-	icon_state = "skull"
+	icon_state = "lighter"
 	loot = list(
 		/obj/item/lighter/skull,
 		/obj/item/lighter/mime,
