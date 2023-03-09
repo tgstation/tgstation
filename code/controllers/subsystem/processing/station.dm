@@ -31,11 +31,6 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 	var/list/forced_traits_text_paths = list()
 
-	if (fexists(FORCED_STATION_TRAITS_FILE))
-		var/forced_traits_contents = file2text(FORCED_STATION_TRAITS_FILE)
-		fdel(FORCED_STATION_TRAITS_FILE)
-		forced_traits_text_paths += json_decode(forced_traits_contents)
-
 	if (fexists(FUTURE_STATION_TRAITS_FILE))
 		var/future_traits_contents = file2text(FUTURE_STATION_TRAITS_FILE)
 		fdel(FUTURE_STATION_TRAITS_FILE)

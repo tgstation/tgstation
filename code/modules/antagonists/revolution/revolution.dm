@@ -455,11 +455,6 @@
 			\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
 			<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
 
-	//Forces the next round to have a station trait that makes command rooms get trashed on roundstart
-	var/list/revolutionary_trait = list(/datum/station_trait/revolutionary_trashing) //Wrapped in a list for json encoding
-
-	rustg_file_write(json_encode(revolutionary_trait), FUTURE_STATION_TRAITS_FILE)
-
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_REVOLUTION_VICTORY)
 
 	for (var/mob/living/player as anything in GLOB.player_list)

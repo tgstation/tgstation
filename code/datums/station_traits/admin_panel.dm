@@ -100,7 +100,7 @@
 			message_admins(message)
 
 			future_traits = new_future_traits
-			rustg_file_write(json_encode(params["station_traits"]), FORCED_STATION_TRAITS_FILE)
+			rustg_file_write(json_encode(params["station_traits"]), FUTURE_STATION_TRAITS_FILE)
 
 			return TRUE
 		if ("clear_future_traits")
@@ -112,7 +112,7 @@
 			log_admin(message)
 			message_admins(message)
 
-			fdel(FORCED_STATION_TRAITS_FILE)
+			fdel(FUTURE_STATION_TRAITS_FILE)
 			future_traits = null
 
 			return TRUE
