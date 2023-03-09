@@ -347,24 +347,31 @@
 	crate_name = "thermal pistol crate"
 
 /datum/supply_pack/security/armory/wt550
-	name = "Recalled Weapon Pack"
-	desc = "Contains a set of old Nanotrasen brand autorifles recalled due to choking hazard."
+	name = "WT-550 Auto Rifle Crate"
+	desc = "Contains two high-powered, semiautomatic rifles chambered in 4.6x30mm. Requires Armory access to open."
 	cost = CARGO_CRATE_VALUE * 7
-	hidden = TRUE
 	contains = list(
 		/obj/item/gun/ballistic/automatic/wt550 = 2,
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
 	)
-	crate_name = "Recalled rifle crate"
+	crate_name = "wt-550 auto rifle crate"
 
 /datum/supply_pack/security/armory/wt550ammo
-	name = "Recalled Ammo Pack"
-	desc = "Contains four 20-round magazine for the Recalled WT-550 Auto Rifle. \
-	Each magazine is designed to facilitate rapid tactical reloads. Recalled due to Security demands."
+	name = "WT-550 Standard Ammo Crate"
+	desc = "Contains four 20-round magazine for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
 	cost = CARGO_CRATE_VALUE * 4
-	hidden = TRUE
 	contains = list(
 		/obj/item/ammo_box/magazine/wt550m9 = 4,
 	)
-	crate_name = "Ammo box"
+	crate_name = "wt-550 standard ammo crate"
+
+/datum/supply_pack/security/armory/wt550rubberammo
+	name = "WT-550 Rubber Ammo Crate"
+	desc = "Contains four 20-round magazine with rubber ammo for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
+	cost = CARGO_CRATE_VALUE * 3.5
+	contains = list(
+		/obj/item/ammo_box/magazine/wt550m9/rubber = 4,
+	)
+	crate_name = "wt-550 rubber ammo crate"
+
 

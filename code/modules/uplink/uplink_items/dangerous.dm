@@ -25,7 +25,6 @@
 	name = "Makarov Pistol"
 	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
-	progression_minimum = 10 MINUTES
 	item = /obj/item/gun/ballistic/automatic/pistol
 	cost = 7
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
@@ -34,7 +33,6 @@
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
 			throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
-	progression_minimum = 10 MINUTES
 	item = /obj/item/storage/box/syndie_kit/throwing_weapons
 	cost = 3
 	illegal_tech = FALSE
@@ -43,7 +41,6 @@
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
-	progression_minimum = 20 MINUTES
 	item = /obj/item/melee/energy/sword/saber
 	cost = 8
 	purchasable_from = ~UPLINK_CLOWN_OPS
@@ -54,7 +51,6 @@
 			Upon hitting a target, the piston-ram will extend forward to make contact for some serious damage. \
 			Using a wrench on the piston valve will allow you to tweak the amount of gas used per punch to \
 			deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
-	progression_minimum = 20 MINUTES
 	item = /obj/item/melee/powerfist
 	cost = 6
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
@@ -62,8 +58,7 @@
 /datum/uplink_item/dangerous/rapid
 	name = "Gloves of the North Star"
 	desc = "These gloves let the user punch people very fast. Does not improve weapon attack speed or the meaty fists of a hulk."
-	progression_minimum = 20 MINUTES
-	item = /obj/item/clothing/gloves/rapid
+	item = /obj/item/clothing/gloves/chameleon/rapid
 	cost = 8
 
 
@@ -73,20 +68,24 @@
 	name = "Double-Bladed Energy Sword"
 	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
 			all energy projectiles, but requires two hands to wield."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/dualsaber
 
 	cost = 16
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
-/datum/uplink_item/dangerous/doublesword/get_discount()
-	return pick(4;0.8,2;0.65,1;0.5)
+/datum/uplink_item/dangerous/doublesword/get_discount_value(discount_type)
+	switch(discount_type)
+		if(TRAITOR_DISCOUNT_BIG)
+			return 0.5
+		if(TRAITOR_DISCOUNT_AVERAGE)
+			return 0.35
+		else
+			return 0.2
 
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
 			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/guardiancreator/tech/choose/traitor
 	cost = 18
 	surplus = 0
@@ -97,7 +96,13 @@
 	name = "Syndicate Revolver"
 	desc = "Waffle Co.'s modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum."
 	item = /obj/item/gun/ballistic/revolver/syndicate
-	progression_minimum = 30 MINUTES
 	cost = 13
 	surplus = 50
 	purchasable_from = ~UPLINK_CLOWN_OPS
+
+/datum/uplink_item/dangerous/armstrong
+	name = "Armstrong Style Kit"
+	desc = "A kit with the necessary equipment to become an excellent martial artist, and terrible parent!"
+	item = /obj/item/storage/box/syndie_kit/armstrong
+	cost = 14
+	surplus = 20 // someone who respects the eldritch god Nar-Sie a little (((too much))) complained

@@ -323,7 +323,7 @@
 "SL" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west,
+/obj/item/wallframe/apc,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "SQ" = (

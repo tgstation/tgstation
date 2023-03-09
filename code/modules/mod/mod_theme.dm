@@ -158,15 +158,15 @@
 	)
 
 /datum/armor/mod_theme_engineering
-	melee = 10
-	bullet = 5
-	laser = 20
-	energy = 10
-	bomb = 10
+	melee = 15
+	bullet = 7.5
+	laser = 25
+	energy = 15
+	bomb = 15
 	bio = 100
 	fire = 100
 	acid = 25
-	wound = 10
+	wound = 15
 
 /datum/mod_theme/atmospheric
 	name = "atmospheric"
@@ -218,15 +218,15 @@
 	)
 
 /datum/armor/mod_theme_atmospheric
-	melee = 10
-	bullet = 5
-	laser = 10
-	energy = 15
-	bomb = 10
+	melee = 15
+	bullet = 7.5
+	laser = 15
+	energy = 17.5
+	bomb = 15
 	bio = 100
 	fire = 100
 	acid = 75
-	wound = 10
+	wound = 15
 
 /datum/mod_theme/advanced
 	name = "advanced"
@@ -282,15 +282,15 @@
 	)
 
 /datum/armor/mod_theme_advanced
-	melee = 15
-	bullet = 5
-	laser = 20
-	energy = 15
-	bomb = 50
+	melee = 17.5
+	bullet = 7.5
+	laser = 25
+	energy = 17.5
+	bomb = 60
 	bio = 100
 	fire = 100
 	acid = 90
-	wound = 10
+	wound = 15
 
 /datum/mod_theme/mining
 	name = "mining"
@@ -383,15 +383,15 @@
 	)
 
 /datum/armor/mod_theme_mining
-	melee = 15
-	bullet = 5
-	laser = 5
-	energy = 5
-	bomb = 30
+	melee = 17.5
+	bullet = 7.5
+	laser = 7.5
+	energy = 7.5
+	bomb = 40
 	bio = 100
 	fire = 100
 	acid = 75
-	wound = 15
+	wound = 17.5
 
 /datum/mod_theme/loader
 	name = "loader"
@@ -444,15 +444,15 @@
 	)
 
 /datum/armor/mod_theme_loader
-	melee = 15
-	bullet = 5
-	laser = 5
-	energy = 5
-	bomb = 10
-	bio = 10
-	fire = 25
-	acid = 25
-	wound = 10
+	melee = 17.5
+	bullet = 7.5
+	laser = 7.5
+	energy = 7.5
+	bomb = 15
+	bio = 15
+	fire = 30
+	acid = 30
+	wound = 15
 
 /datum/mod_theme/medical
 	name = "medical"
@@ -536,15 +536,15 @@
 	)
 
 /datum/armor/mod_theme_medical
-	melee = 5
-	bullet = 5
-	laser = 5
-	energy = 5
-	bomb = 10
+	melee = 7.5
+	bullet = 7.5
+	laser = 7.5
+	energy = 7.5
+	bomb = 15
 	bio = 100
-	fire = 60
+	fire = 70
 	acid = 75
-	wound = 5
+	wound = 7.5
 
 /datum/mod_theme/rescue
 	name = "rescue"
@@ -607,15 +607,15 @@
 	)
 
 /datum/armor/mod_theme_rescue
-	melee = 10
-	bullet = 10
-	laser = 5
-	energy = 5
-	bomb = 10
+	melee = 15
+	bullet = 15
+	laser = 7.5
+	energy = 7.5
+	bomb = 15
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 5
+	wound = 7.5
 
 /datum/mod_theme/research
 	name = "research"
@@ -672,10 +672,10 @@
 	)
 
 /datum/armor/mod_theme_research
-	melee = 20
-	bullet = 15
-	laser = 5
-	energy = 5
+	melee = 25
+	bullet = 20
+	laser = 7.5
+	energy = 7.5
 	bomb = 100
 	bio = 100
 	fire = 100
@@ -734,11 +734,11 @@
 	)
 
 /datum/armor/mod_theme_security
-	melee = 15
-	bullet = 15
-	laser = 15
-	energy = 15
-	bomb = 25
+	melee = 27.5
+	bullet = 27.5
+	laser = 27.5
+	energy = 17.5
+	bomb = 27.5
 	bio = 100
 	fire = 75
 	acid = 75
@@ -795,10 +795,10 @@
 	)
 
 /datum/armor/mod_theme_safeguard
-	melee = 15
-	bullet = 15
-	laser = 15
-	energy = 15
+	melee = 20
+	bullet = 20
+	laser = 20
+	energy = 20
 	bomb = 40
 	bio = 100
 	fire = 100
@@ -862,15 +862,15 @@
 	)
 
 /datum/armor/mod_theme_magnate
-	melee = 20
-	bullet = 15
-	laser = 15
-	energy = 15
+	melee = 40
+	bullet = 30
+	laser = 30
+	energy = 40
 	bomb = 50
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 15
+	wound = 20
 
 /datum/mod_theme/cosmohonk
 	name = "cosmohonk"
@@ -921,15 +921,15 @@
 	)
 
 /datum/armor/mod_theme_cosmohonk
-	melee = 5
-	bullet = 5
+	melee = 7.5
+	bullet = 7.5
 	laser = 20
 	energy = 20
 	bomb = 10
 	bio = 100
 	fire = 60
 	acid = 30
-	wound = 5
+	wound = 7.5
 
 /datum/mod_theme/syndicate
 	name = "syndicate"

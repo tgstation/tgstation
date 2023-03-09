@@ -364,6 +364,7 @@ SUBSYSTEM_DEF(ticker)
 	)
 
 	var/captainless = TRUE
+	var/no_cyborgs = TRUE
 
 	var/highest_rank = length(SSjob.chain_of_command) + 1
 	var/list/spare_id_candidates = list()
@@ -406,6 +407,8 @@ SUBSYSTEM_DEF(ticker)
 		var/datum/job/player_assigned_role = new_player_living.mind.assigned_role
 		if(player_assigned_role.job_flags & JOB_EQUIP_RANK)
 			SSjob.EquipRank(new_player_living, player_assigned_role, new_player_mob.client)
+		if(istype(player_assigned_role, /datum/job/cyborg))
+			no_cyborgs = FALSE
 		player_assigned_role.after_roundstart_spawn(new_player_living, new_player_mob.client)
 		if(picked_spare_id_candidate == new_player_mob)
 			captainless = FALSE
@@ -424,6 +427,17 @@ SUBSYSTEM_DEF(ticker)
 			if(new_player_human)
 				to_chat(new_player_mob, span_notice("Captainship not forced on anyone."))
 			CHECK_TICK
+
+	if(no_cyborgs) //Give AI a shell if there is no roundstart cyborgs
+		var/obj/shell_spawn = null
+		for(var/obj/effect/landmark/start/cyborg/starting_location in GLOB.start_landmarks_list)
+			if(locate(/mob/living) in starting_location.loc)
+				continue
+			shell_spawn = starting_location
+			starting_location.used = TRUE
+			break
+		if(shell_spawn)
+			new /mob/living/silicon/robot/shell(get_turf(shell_spawn))
 
 
 /datum/controller/subsystem/ticker/proc/decide_security_officer_departments(

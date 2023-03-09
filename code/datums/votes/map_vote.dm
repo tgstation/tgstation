@@ -1,6 +1,7 @@
 /datum/vote/map_vote
 	name = "Map"
 	message = "Vote for next round's map!"
+	count_method = VOTE_COUNT_METHOD_MULTI
 
 /datum/vote/map_vote/New()
 	. = ..()
@@ -73,12 +74,14 @@
 		for(var/key in default_choices)
 			choices[key] = 0
 
+	var/active_players = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
+
 	for(var/map in choices)
 		var/datum/map_config/possible_config = config.maplist[map]
-		if(possible_config.config_min_users > 0 && GLOB.clients.len < possible_config.config_min_users)
+		if(possible_config.config_min_users > 0 && active_players < possible_config.config_min_users)
 			choices -= map
 
-		else if(possible_config.config_max_users > 0 && GLOB.clients.len > possible_config.config_max_users)
+		else if(possible_config.config_max_users > 0 && active_players > possible_config.config_max_users)
 			choices -= map
 
 	return choices

@@ -1678,7 +1678,7 @@
 	name = "Kvass"
 	description = "Kvaaaaaaass."
 	color = "#351300"
-	taste_description = "mmmmm kvass"
+	taste_description = "kvass mmmmm"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/glass_style/drinking_glass/kvass
@@ -1689,7 +1689,7 @@
 
 /datum/reagent/consumable/kvass/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjustToxLoss(-0.5, FALSE, required_biotype = affected_biotype)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, -0.5 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, -0.1 * REM * delta_time, required_organtype = affected_organtype)
 	for(var/datum/reagent/toxin/R in affected_mob.reagents.reagent_list)
-		affected_mob.reagents.remove_reagent(R.type, 2.5 * REM * delta_time)
+		affected_mob.reagents.remove_reagent(R.type, 0.5 * REM * delta_time)
 	..()

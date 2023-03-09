@@ -25,21 +25,21 @@
 	if(proximity_flag)
 		if(isgun(target))
 			. |= AFTERATTACK_PROCESSED_ITEM
-			var/obj/item/gun/G = target
-			var/obj/item/firing_pin/old_pin = G.pin
+			var/obj/item/gun/targetted_gun = target
+			var/obj/item/firing_pin/old_pin = targetted_gun.pin
 			if(old_pin && (force_replace || old_pin.pin_removeable))
-				to_chat(user, span_notice("You remove [old_pin] from [G]."))
+				balloon_alert(user, "firing pin removed")
 				if(Adjacent(user))
 					user.put_in_hands(old_pin)
 				else
-					old_pin.forceMove(G.drop_location())
+					old_pin.forceMove(targetted_gun.drop_location())
 				old_pin.gun_remove(user)
 
-			if(!G.pin)
+			if(!targetted_gun.pin)
 				if(!user.temporarilyRemoveItemFromInventory(src))
 					return .
-				gun_insert(user, G)
-				to_chat(user, span_notice("You insert [src] into [G]."))
+				if(gun_insert(user, targetted_gun))
+					balloon_alert(user, "firing pin inserted.")
 			else
 				to_chat(user, span_notice("This firearm already has a firing pin installed."))
 
@@ -55,7 +55,7 @@
 	gun = G
 	forceMove(gun)
 	gun.pin = src
-	return
+	return TRUE
 
 /obj/item/firing_pin/proc/gun_remove(mob/living/user)
 	gun.pin = null
@@ -215,12 +215,16 @@
 	desc = "A firing pin with a built-in configurable paywall."
 	color = "#FFD700"
 	fail_message = ""
-	var/list/gun_owners = list() //list of people who've accepted the license prompt. If this is the multi-payment pin, then this means they accepted the waiver that each shot will cost them money
-	var/payment_amount //how much gets paid out to license yourself to the gun
-	var/obj/item/card/id/pin_owner
-	var/multi_payment = FALSE //if true, user has to pay everytime they fire the gun
+	///list of account IDs which have accepted the license prompt. If this is the multi-payment pin, then this means they accepted the waiver that each shot will cost them money
+	var/list/gun_owners = list() 
+	///how much gets paid out to license yourself to the gun
+	var/payment_amount 
+	var/datum/bank_account/pin_owner
+	///if true, user has to pay everytime they fire the gun
+	var/multi_payment = FALSE 
 	var/owned = FALSE
-	var/active_prompt = FALSE //purchase prompt to prevent spamming it
+	///purchase prompt to prevent spamming it, set to the user who opens to prompt to prevent locking the gun up for other users.
+	var/active_prompt_user
 
 /obj/item/firing_pin/paywall/attack_self(mob/user)
 	multi_payment = !multi_payment
@@ -229,85 +233,95 @@
 /obj/item/firing_pin/paywall/examine(mob/user)
 	. = ..()
 	if(pin_owner)
-		. += span_notice("This firing pin is currently authorized to pay into the account of [pin_owner.registered_name].")
+		. += span_notice("This firing pin is currently authorized to pay into the account of [pin_owner.account_holder].")
 
 /obj/item/firing_pin/paywall/gun_insert(mob/living/user, obj/item/gun/G)
 	if(!pin_owner)
 		to_chat(user, span_warning("ERROR: Please swipe valid identification card before installing firing pin!"))
-		return
+		user.put_in_hands(src)
+		return FALSE
 	gun = G
 	forceMove(gun)
 	gun.pin = src
 	if(multi_payment)
 		gun.desc += span_notice(" This [gun.name] has a per-shot cost of [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""].")
-		return
+		return TRUE
 	gun.desc += span_notice(" This [gun.name] has a license permit cost of [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""].")
-	return
+	return TRUE
 
 
 /obj/item/firing_pin/paywall/gun_remove(mob/living/user)
 	gun.desc = initial(desc)
 	..()
 
-/obj/item/firing_pin/paywall/attackby(obj/item/M, mob/user, params)
+/obj/item/firing_pin/paywall/attackby(obj/item/M, mob/living/user, params)
 	if(isidcard(M))
 		var/obj/item/card/id/id = M
 		if(!id.registered_account)
 			to_chat(user, span_warning("ERROR: Identification card lacks registered bank account!"))
 			return
-		if(id != pin_owner && owned)
+		if(id.registered_account != pin_owner && owned)
 			to_chat(user, span_warning("ERROR: This firing pin has already been authorized!"))
 			return
-		if(id == pin_owner)
+		if(id.registered_account == pin_owner)
 			to_chat(user, span_notice("You unlink the card from the firing pin."))
-			gun_owners -= user
+			gun_owners -= user.get_bank_account()
 			pin_owner = null
 			owned = FALSE
 			return
 		var/transaction_amount = tgui_input_number(user, "Insert valid deposit amount for gun purchase", "Money Deposit")
 		if(!transaction_amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 			return
-		pin_owner = id
+		pin_owner = id.registered_account
 		owned = TRUE
 		payment_amount = transaction_amount
-		gun_owners += user
+		gun_owners += user.get_bank_account()
 		to_chat(user, span_notice("You link the card to the firing pin."))
 
 /obj/item/firing_pin/paywall/pin_auth(mob/living/user)
 	if(!istype(user))//nice try commie
 		return FALSE
 	var/datum/bank_account/credit_card_details = user.get_bank_account()
-	if(user in gun_owners)
+	if(credit_card_details in gun_owners)
 		if(multi_payment && credit_card_details)
+			if(!gun.can_shoot())
+				return TRUE //So you don't get charged for attempting to fire an empty gun.
 			if(credit_card_details.adjust_money(-payment_amount, "Firing Pin: Gun Rent"))
 				if(pin_owner)
-					pin_owner.registered_account.adjust_money(payment_amount, "Firing Pin: Payout For Gun Rent")
+					pin_owner.adjust_money(payment_amount, "Firing Pin: Payout For Gun Rent")
 				return TRUE
 			to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
 			return FALSE
 		return TRUE
-	if(credit_card_details && !active_prompt)
-		var/license_request = tgui_alert(user, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", list("Yes", "No"))
-		active_prompt = TRUE
-		if(!user.can_perform_action(src))
-			active_prompt = FALSE
-			return FALSE
-		switch(license_request)
-			if("Yes")
-				if(credit_card_details.adjust_money(-payment_amount, "Firing Pin: Gun License"))
-					if(pin_owner)
-						pin_owner.registered_account.adjust_money(payment_amount, "Firing Pin: Gun License Bought")
-					gun_owners += user
-					to_chat(user, span_notice("Gun license purchased, have a secure day!"))
-					active_prompt = FALSE
-					return FALSE //we return false here so you don't click initially to fire, get the prompt, accept the prompt, and THEN the gun
+	if(!credit_card_details)
+		to_chat(user, span_warning("ERROR: User has no valid bank account to subtract neccesary funds from!"))
+		return FALSE
+	if(active_prompt_user == user)
+		return FALSE
+	active_prompt_user = user
+	var/license_request = tgui_alert(user, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", list("Yes", "No"), 15 SECONDS)
+	if(!user.can_perform_action(src))
+		active_prompt_user = null
+		return FALSE
+	switch(license_request)
+		if("Yes")
+			if(multi_payment)
+				gun_owners += credit_card_details
+				to_chat(user, span_notice("Gun rental terms agreed to, have a secure day!"))
+
+			else if(credit_card_details.adjust_money(-payment_amount, "Firing Pin: Gun License"))
+				if(pin_owner)
+					pin_owner.adjust_money(payment_amount, "Firing Pin: Gun License Bought")
+				gun_owners += credit_card_details
+				to_chat(user, span_notice("Gun license purchased, have a secure day!"))
+					
+			else 
 				to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
-				return FALSE
-			if("No")
-				to_chat(user, span_warning("ERROR: User has declined to purchase gun license!"))
-				return FALSE
-	to_chat(user, span_warning("ERROR: User has no valid bank account to substract neccesary funds from!"))
-	return FALSE
+ 
+		if("No", null)
+			to_chat(user, span_warning("ERROR: User has declined to purchase gun license!"))
+	active_prompt_user = null
+	return FALSE //we return false here so you don't click initially to fire, get the prompt, accept the prompt, and THEN the gun
 
 // Explorer Firing Pin- Prevents use on station Z-Level, so it's justifiable to give Explorers guns that don't suck.
 /obj/item/firing_pin/explorer

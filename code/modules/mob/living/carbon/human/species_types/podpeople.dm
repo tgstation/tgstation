@@ -14,7 +14,7 @@
 		/obj/item/organ/external/pod_hair = "None",
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
-	inherent_factions = list("plants", "vines")
+	inherent_factions = list(FACTION_PLANTS, FACTION_VINES)
 
 	burnmod = 1.25
 	heatmod = 1.5
@@ -39,6 +39,9 @@
 
 /datum/species/pod/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.stat == DEAD)
+		return
+
+	if(IS_BLOODSUCKER(H) && HAS_TRAIT(H, TRAIT_NODEATH))
 		return
 
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing

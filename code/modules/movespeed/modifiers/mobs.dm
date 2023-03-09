@@ -135,5 +135,10 @@
 /datum/movespeed_modifier/player_spider_modifier
 	variable = TRUE
 
-/datum/movespeed_modifier/netherworld_enrage
+/datum/movespeed_modifier/health_scaling_speed_buff
 	variable = TRUE
+
+/datum/movespeed_modifier/morbin
+	multiplicative_slowdown = -0.4
+	blacklisted_movetypes = FLYING|FLOATING
+	priority = 100

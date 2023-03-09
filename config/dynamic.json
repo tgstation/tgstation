@@ -45,8 +45,8 @@
 		},
 
 		"Heretics": {
-			"weight": 3,
-			"cost": 10
+			"weight": 4,
+			"cost": 8
 		},
 
 		"Wizard": {
@@ -57,6 +57,11 @@
 		"Blood Cult": {
 			"weight": 3,
 			"cost": 20
+		},
+		
+		"Bloodsuckers": {
+			"weight": 4,
+			"cost": 10
 		},
 
 		"Nuclear Emergency": {
@@ -72,7 +77,7 @@
 
 	"Midround": {
 		"Syndicate Sleeper Agent": {
-			"weight": 35,
+			"weight": 10,
 			"cost": 3
 		},
 

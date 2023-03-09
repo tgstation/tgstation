@@ -55,12 +55,21 @@
 /datum/uplink_item/bundles_tc/bundle_a
 	name = "Syndi-kit Tactical"
 	desc = "Syndicate Bundles, also known as Syndi-Kits, are specialized groups of items that arrive in a plain box. \
-			These items are collectively worth more than 25 telecrystals, but you do not know which specialization \
+			These items are collectively worth more than 20 telecrystals, but you do not know which specialization \
 			you will receive. May contain discontinued and/or exotic items. \
 			The Syndicate will only provide one Syndi-Kit per agent."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_a
-	cost = 25
+	cost = 20
+	stock_key = UPLINK_SHARED_STOCK_KITS
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/bundles_tc/romerol
+	name = "Romerol"
+	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. \
+			On death, these nodules take control of the dead body, causing limited revivification, \
+			along with slurred speech, aggression, and the ability to infect others with this agent."
+	item = /obj/item/storage/box/syndie_kit/romerol
+	cost = 30
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
@@ -68,12 +77,18 @@
 	name = "Syndi-kit Special"
 	desc = "Syndicate Bundles, also known as Syndi-Kits, are specialized groups of items that arrive in a plain box. \
 			In Syndi-kit Special, you will receive items used by famous syndicate agents of the past. \
-			Collectively worth more than 25 telecrystals, the syndicate loves a good throwback. \
+			Collectively worth more than 20 telecrystals, the syndicate loves a good throwback. \
 			The Syndicate will only provide one Syndi-Kit per agent."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_b
-	cost = 25
+	cost = 20
 	stock_key = UPLINK_SHARED_STOCK_KITS
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/bundles_tc/miami
+	name = "Old-World Rampage Kit"
+	desc = "Blood, heat and dust. The wind howls, the russians are no more, but the ones that inherited wealth from them still stand tall. Prove yourself Operative, and make sure you don't go completely mad."
+	item = /obj/item/storage/backpack/satchel/miami/prefilled
+	cost = 17
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/bundles_tc/surplus
@@ -125,8 +140,8 @@
 		tc_budget -= uplink_item.cost
 		new uplink_item.item(surplus_crate)
 
-/// overwrites purchase for surplus items to instead spawn this crate and run the previous procs
-/datum/uplink_item/bundles_tc/surplus/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
+/// overwrites item spawning proc for surplus items to spawn an appropriate crate via a podspawn
+/datum/uplink_item/bundles_tc/surplus/spawn_item(spawn_path, mob/user, datum/uplink_handler/handler, atom/movable/source)
 	var/obj/structure/closet/crate/surplus_crate = new crate_type()
 	if(!istype(surplus_crate))
 		CRASH("crate_type is not a crate")
@@ -139,6 +154,7 @@
 		"style" = STYLE_SYNDICATE,
 		"spawn" = surplus_crate,
 	))
+	return source //For log icon
 
 /datum/uplink_item/bundles_tc/surplus/united
 	name = "United Surplus Crate"
@@ -148,7 +164,6 @@
 			The Syndicate will only provide one surplus item per agent."
 	cost = 20
 	item = /obj/structure/closet/crate/syndicrate
-	progression_minimum = 30 MINUTES
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	crate_tc_value = 80
 	crate_type = /obj/structure/closet/crate/syndicrate
@@ -172,6 +187,5 @@
 			The Syndicate will only provide one surplus item per agent."
 	cost = 20
 	item = /obj/item/syndicrate_key
-	progression_minimum = 30 MINUTES
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS

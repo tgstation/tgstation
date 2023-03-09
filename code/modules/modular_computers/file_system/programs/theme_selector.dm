@@ -15,7 +15,7 @@
 	var/list/imported_themes = list()
 
 /datum/computer_file/program/themeify/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	if(computer.obj_flags & EMAGGED)
 		data["themes"] += list(list("theme_name" = SYNDICATE_THEME_NAME, "theme_ref" = GLOB.pda_name_to_theme[SYNDICATE_THEME_NAME]))
@@ -28,7 +28,6 @@
 	. = ..()
 	if(.)
 		return
-
 	switch(action)
 		if("PRG_change_theme")
 			var/selected_theme = params["selected_theme"]

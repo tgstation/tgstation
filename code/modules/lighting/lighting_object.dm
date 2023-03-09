@@ -27,7 +27,8 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 		stack_trace("a lighting object was assigned to a turf that already had a lighting object!")
 
 	affected_turf.lighting_object = src
-	affected_turf.luminosity = 0
+	// Default to fullbright, so things can "see" if they use view() before we update
+	affected_turf.luminosity = 1
 
 	// This path is really hot. this is faster
 	// Really this should be a global var or something, but lets not think about that yes?

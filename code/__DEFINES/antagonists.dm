@@ -135,6 +135,9 @@
 ///File to the malf flavor
 #define MALFUNCTION_FLAVOR_FILE "antagonist_flavor/malfunction_flavor.json"
 
+///File to the IAA flavor
+#define IAA_FLAVOR_FILE "antagonist_flavor/internalaffair_flavor.json"
+
 /// JSON string file for all of our heretic influence flavors
 #define HERETIC_INFLUENCE_FILE "antagonist_flavor/heretic_influences.json"
 
@@ -155,7 +158,6 @@ GLOBAL_LIST_INIT(nanotrasen_employers, list(
 	"Champions of Evil",
 	"Corporate Climber",
 	"Gone Postal",
-	"Internal Affairs Agent",
 	"Legal Trouble",
 ))
 
@@ -175,7 +177,6 @@ GLOBAL_LIST_INIT(normal_employers, list(
 	"Cybersun Industries",
 	"Donk Corporation",
 	"Gorlex Marauders",
-	"Internal Affairs Agent",
 	"Legal Trouble",
 	"MI13",
 	"Waffle Corporation",
@@ -194,11 +195,6 @@ GLOBAL_LIST_INIT(ai_employers, list(
 	"SyndOS",
 	"Unshackled",
 ))
-
-///all the employers that are syndicate
-#define FACTION_SYNDICATE "syndicate"
-///all the employers that are nanotrasen
-#define FACTION_NANOTRASEN "nanotrasen"
 
 #define UPLINK_THEME_SYNDICATE "syndicate"
 
@@ -219,9 +215,6 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
 /// Checks if the given mob is either a heretic or a heretic monster.
 #define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob))
-
-/// Define for the heretic faction applied to heretics and heretic mobs.
-#define FACTION_HERETIC "heretics"
 
 /// Checks if the given mob is a wizard
 #define IS_WIZARD(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard))

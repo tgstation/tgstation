@@ -1,0 +1,5 @@
+author: "SuperSlayer0"
+delete-after: True
+changes:
+  - rscadd: "Киндред Архив теперь имеет нормальный интерфейс"
+  - rscadd: "Антаг инфо блудсакеров теперь имеет новый стиль"

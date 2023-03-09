@@ -21,7 +21,6 @@
 	. = ..()
 	if(.)
 		return
-
 	switch(action)
 		if("Transaction")
 			token = params["token"]
@@ -62,7 +61,7 @@
 
 
 /datum/computer_file/program/nt_pay/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	current_user = computer.computer_id_slot?.registered_account || null
 	if(!current_user)

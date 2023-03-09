@@ -7,7 +7,7 @@
 	icon_living = "moonicorn"
 	icon_dead = "moonicorn_dead"
 	icon_gib = null //otherwise does the regular cow gib animation
-	faction = list("hostile")
+	faction = list(FACTION_HOSTILE)
 	speed = 1
 	melee_damage_lower = 25
 	melee_damage_upper = 25

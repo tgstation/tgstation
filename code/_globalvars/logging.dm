@@ -146,3 +146,6 @@ GLOBAL_PROTECT(world_uplink_log)
 
 GLOBAL_VAR(world_virus_log)
 GLOBAL_PROTECT(world_virus_log)
+
+GLOBAL_VAR(world_say_log)
+GLOBAL_PROTECT(world_say_log)

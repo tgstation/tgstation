@@ -65,7 +65,16 @@
 /// Refreshes this lava turf's lighting
 /turf/open/lava/proc/refresh_light()
 	var/border_turf = FALSE
-	for(var/turf/around as anything in RANGE_TURFS(1, src))
+	var/list/turfs_to_check = RANGE_TURFS(1, src)
+	if(GET_LOWEST_STACK_OFFSET(z))
+		var/turf/above = SSmapping.get_turf_above(src)
+		if(above)
+			turfs_to_check += RANGE_TURFS(1, above)
+		var/turf/below = SSmapping.get_turf_below(src)
+		if(below)
+			turfs_to_check += RANGE_TURFS(1, below)
+
+	for(var/turf/around as anything in turfs_to_check)
 		if(islava(around))
 			continue
 		border_turf = TRUE
@@ -81,7 +90,15 @@
 
 	if(result && !islava(result))
 		// We have gone from a lava turf to a non lava turf, time to let them know
-		for(var/turf/open/lava/inform in RANGE_TURFS(1, result))
+		var/list/turfs_to_check = RANGE_TURFS(1, result)
+		if(GET_LOWEST_STACK_OFFSET(z))
+			var/turf/above = SSmapping.get_turf_above(result)
+			if(above)
+				turfs_to_check += RANGE_TURFS(1, above)
+			var/turf/below = SSmapping.get_turf_below(result)
+			if(below)
+				turfs_to_check += RANGE_TURFS(1, below)
+		for(var/turf/open/lava/inform in turfs_to_check)
 			inform.set_light(l_on = TRUE)
 
 	return result

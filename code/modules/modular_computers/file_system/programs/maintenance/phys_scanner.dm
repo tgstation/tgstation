@@ -20,7 +20,7 @@
 	last_record = healthscan(user, carbon, 1, tochat = FALSE)
 
 /datum/computer_file/program/maintenance/phys_scanner/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	data["last_record"] = last_record
 	return data

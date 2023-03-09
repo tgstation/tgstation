@@ -55,6 +55,15 @@
 	surplus = 30
 	purchasable_from = UPLINK_NUKE_OPS
 
+/datum/uplink_item/dangerous/highfrequencyblade
+	name = "High Frequency Blade"
+	desc = "A sword reinforced by a powerful alternating current and resonating at extremely high vibration frequencies. \
+		This oscillation weakens the molecular bonds of anything it cuts, thereby increasing its cutting ability."
+	item = /obj/item/highfrequencyblade/nukie
+	cost = 20
+	surplus = 0
+	purchasable_from = UPLINK_NUKE_OPS
+
 /datum/uplink_item/dangerous/pie_cannon
 	name = "Banana Cream Pie Cannon"
 	desc = "A special pie cannon for a special clown, this gadget can hold up to 20 pies and automatically fabricates one every two seconds!"
