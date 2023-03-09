@@ -16,7 +16,7 @@
 	preview_outfit = /datum/outfit/traitor
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
-	var/progressive = TRUE
+	var/progressive = FALSE
 	///give this traitor an uplink?
 	var/give_uplink = TRUE
 	///if TRUE, this traitor will always get hijacking as their final objective
