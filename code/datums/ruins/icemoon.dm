@@ -57,7 +57,7 @@
 
 /datum/map_template/ruin/icemoon/smoking_room
 	name = "Smoking Room"
-	id = "smokingroom"
+	id = "smoking_room"
 	description = "Here lies Richard Marlboro. He died the way he lived."
 	suffix = "icemoon_surface_smoking_room.dmm"
 	always_place = TRUE

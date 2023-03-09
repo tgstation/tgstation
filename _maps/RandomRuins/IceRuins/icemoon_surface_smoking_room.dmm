@@ -1,50 +1,49 @@
 "a" = (/turf/closed/mineral/random/snow,/area/icemoon/surface/outdoors/nospawn)
 "b" = (/obj/item/circuitboard/machine/space_heater,/obj/item/stack/cable_coil/five,/obj/structure/frame/machine,/obj/item/stock_parts/cell/super,/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
 "c" = (/obj/structure/grille,/turf/open/space/basic,/area/ruin/smoking_room/house)
-"g" = (/obj/structure/sign/warning/yes_smoking/circle/directional/north,/obj/effect/spawner/random/entertainment/cigarette,/obj/effect/spawner/random/trash/cigbutt,/obj/effect/decal/cleanable/ash/large,/turf/open/floor/wood,/area/ruin/smoking_room/room)
-"i" = (/obj/structure/table/wood/fancy/black,/obj/item/storage/fancy/cigarettes/cigars/cohiba,/obj/effect/spawner/random/entertainment/cigarette_pack,/obj/effect/spawner/random/special_lighter,/turf/open/floor/wood,/area/ruin/smoking_room/room)
+"e" = (/obj/effect/spawner/random/entertainment/cigarette,/obj/effect/spawner/random/trash/mess,/obj/item/reagent_containers/cup/bucket/wooden{pixel_x = 9; pixel_y = 7},/turf/open/floor/wood,/area/ruin/smoking_room/room)
+"h" = (/obj/effect/spawner/random/entertainment/cigarette_pack,/turf/open/floor/wood,/area/ruin/smoking_room/room)
+"i" = (/obj/effect/spawner/random/entertainment/cigarette_pack,/obj/effect/decal/cleanable/ash/large{pixel_x = 2; pixel_y = -2},/turf/open/floor/wood,/area/ruin/smoking_room/room)
+"j" = (/obj/effect/spawner/random/entertainment/cigarette_pack,/obj/effect/decal/cleanable/ash/large{pixel_x = -1; pixel_y = 5},/turf/open/floor/wood,/area/ruin/smoking_room/room)
 "k" = (/obj/structure/table/wood,/obj/item/seeds/tobacco{pixel_x = -1; pixel_y = 1},/obj/item/seeds/tobacco{pixel_x = 1; pixel_y = 1},/obj/item/seeds/tobacco/space{pixel_x = -1; pixel_y = -1},/obj/item/flashlight/flare/candle{pixel_y = 3; pixel_x = -6},/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
-"l" = (/obj/effect/spawner/random/entertainment/cigarette_pack,/obj/structure/chair/plastic{dir = 8},/obj/effect/spawner/random/entertainment/cigarette_pack,/obj/effect/decal/cleanable/ash/large,/obj/effect/decal/remains/human{pixel_y = 9; pixel_x = -3},/turf/open/floor/wood,/area/ruin/smoking_room/room)
 "m" = (/obj/machinery/door/airlock/wood,/obj/structure/barricade/wooden,/obj/structure/curtain/cloth/fancy/mechanical/start_closed,/turf/open/floor/wood,/area/ruin/smoking_room/room)
 "n" = (/obj/structure/door_assembly/door_assembly_wood,/obj/structure/barricade/wooden/crude/snow,/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
-"p" = (/obj/effect/spawner/random/trash/grime,/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
-"q" = (/obj/effect/spawner/random/entertainment/cigarette_pack,/obj/effect/decal/cleanable/ash/large{pixel_x = 2; pixel_y = -2},/turf/open/floor/wood,/area/ruin/smoking_room/room)
-"r" = (/obj/structure/chair/comfy,/turf/open/floor/wood,/area/ruin/smoking_room/room)
-"s" = (/obj/effect/spawner/random/trash/cigbutt,/obj/effect/decal/cleanable/ash,/turf/open/floor/wood,/area/ruin/smoking_room/room)
+"p" = (/obj/structure/sign/warning/yes_smoking/circle/directional/north,/obj/effect/spawner/random/entertainment/cigarette,/obj/effect/spawner/random/trash/cigbutt,/obj/effect/decal/cleanable/ash/large,/turf/open/floor/wood,/area/ruin/smoking_room/room)
 "t" = (/turf/closed/wall/mineral/wood,/area/ruin/smoking_room/room)
 "u" = (/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
 "v" = (/obj/item/stack/sheet/mineral/wood{pixel_x = 5},/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
 "w" = (/obj/machinery/hydroponics/soil,/turf/open/misc/snow,/area/icemoon/surface/outdoors/nospawn)
-"z" = (/obj/structure/chair/plastic{dir = 8},/turf/closed/mineral/random/snow,/area/icemoon/surface/outdoors/nospawn)
+"x" = (/obj/structure/chair/plastic{dir = 8},/turf/closed/mineral/random/snow,/area/icemoon/surface/outdoors/nospawn)
+"z" = (/obj/effect/spawner/random/trash/cigbutt,/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
 "A" = (/obj/item/chair/wood{pixel_x = 6; pixel_y = -3},/obj/item/chair/wood{pixel_x = 6; pixel_y = -3},/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
-"C" = (/obj/effect/spawner/random/trash/cigbutt,/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
+"C" = (/obj/effect/spawner/random/trash/cigbutt,/obj/effect/decal/cleanable/ash,/turf/open/floor/wood,/area/ruin/smoking_room/room)
+"E" = (/obj/item/trash/shrimp_chips,/obj/item/clothing/mask/cigarette/rollie/trippy{pixel_x = 3; pixel_y = -1},/obj/item/clothing/mask/cigarette/rollie/trippy{pixel_x = 3; pixel_y = 5},/obj/effect/spawner/random/trash/bin,/obj/effect/spawner/random/special_lighter,/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
+"F" = (/obj/structure/table/wood/fancy/black,/obj/item/storage/fancy/cigarettes/cigars/cohiba,/obj/effect/spawner/random/entertainment/cigarette_pack,/obj/effect/spawner/random/special_lighter,/turf/open/floor/wood,/area/ruin/smoking_room/room)
 "G" = (/obj/item/stack/sheet/mineral/wood,/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
+"I" = (/turf/closed/wall/mineral/wood,/area/ruin/smoking_room/house)
 "J" = (/obj/effect/decal/cleanable/glass,/obj/item/shard{pixel_x = 5; pixel_y = -3},/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
-"K" = (/obj/item/trash/shrimp_chips,/obj/item/clothing/mask/cigarette/rollie/trippy{pixel_x = 3; pixel_y = -1},/obj/item/clothing/mask/cigarette/rollie/trippy{pixel_x = 3; pixel_y = 5},/obj/effect/spawner/random/trash/bin,/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
+"K" = (/obj/structure/bonfire,/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
 "M" = (/obj/effect/decal/cleanable/glass,/turf/open/misc/snow,/area/icemoon/surface/outdoors/nospawn)
 "O" = (/obj/structure/flora/tree/pine/style_random,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface/outdoors/nospawn)
-"P" = (/turf/closed/wall/mineral/wood,/area/ruin/smoking_room/house)
 "Q" = (/turf/open/misc/snow,/area/icemoon/surface/outdoors/nospawn)
-"R" = (/obj/structure/bonfire,/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
-"T" = (/obj/structure/rack,/obj/item/storage/fancy/candle_box{pixel_y = 3; pixel_x = 6},/obj/item/reagent_containers/cup/bucket/wooden{pixel_x = -3},/obj/effect/spawner/random/special_lighter,/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
-"U" = (/obj/effect/spawner/random/entertainment/cigarette_pack,/obj/effect/spawner/random/trash/grime,/turf/open/floor/wood,/area/ruin/smoking_room/room)
+"R" = (/obj/structure/chair/comfy,/turf/open/floor/wood,/area/ruin/smoking_room/room)
+"T" = (/obj/structure/rack,/obj/item/storage/fancy/candle_box{pixel_y = 3; pixel_x = 6},/obj/item/reagent_containers/cup/bucket/wooden{pixel_x = -3},/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
 "V" = (/obj/structure/fireplace,/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
-"W" = (/obj/effect/spawner/random/entertainment/cigarette,/obj/effect/spawner/random/trash/mess,/obj/item/reagent_containers/cup/bucket/wooden{pixel_x = 9; pixel_y = 7},/turf/open/floor/wood,/area/ruin/smoking_room/room)
+"W" = (/obj/effect/spawner/random/entertainment/cigarette_pack,/obj/structure/chair/plastic{dir = 8},/obj/effect/spawner/random/entertainment/cigarette_pack,/obj/effect/decal/cleanable/ash/large,/obj/effect/decal/remains/human{pixel_y = 9; pixel_x = -3},/turf/open/floor/wood,/area/ruin/smoking_room/room)
 "X" = (/obj/effect/spawner/structure/window,/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
-"Y" = (/obj/effect/spawner/random/entertainment/cigarette_pack,/obj/effect/decal/cleanable/ash/large{pixel_x = -1; pixel_y = 5},/turf/open/floor/wood,/area/ruin/smoking_room/room)
 "Z" = (/obj/structure/bed/maint,/turf/open/floor/wood/cold,/area/ruin/smoking_room/house)
 
 (1,1,1) = {"
 aaaQaaaQQaaaQaaaaaaaaQQQa
 aaQaaaaaaaaaaaaaaaaaaQQQa
-aQQaQQQQaaaaaaQQQzaaaaQQa
-QQOPPPPPPPPPaaQQQaaaaaQQa
-QQQPuRCVuTKtttttQQQQaaQQQ
-QQQPuuuuuuutrgWtQaaaaaQQQ
-QQQnuGkAuCumsqUtQaaaaaaQQ
-QQQPuvupuCutYiltQaaaaaaaQ
-QQQPbuZuuJPtttttQaaaaaaQQ
-aaQPPXPPPcPQQQQQQaaaQaaQQ
+aQQaQQQQaaaaaaQQQxaaaaQQa
+QQOIIIIIIIIIaaQQQaaaaaQQa
+QQQIuKzVuTEtttttQQQQaaQQQ
+QQQIuuuuuuutRpetQaaaaaQQQ
+QQQnuGkAuzumCihtQaaaaaaQQ
+QQQIuvuuuzutjFWtQaaaaaaaQ
+QQQIbuZuuJItttttQaaaaaaQQ
+aaQIIXIIIcIQQQQQQaaaQaaQQ
 aaQQQwwwQMQQQQQQQaQaaaaaQ
 aaaQQQQQQQQQQQQQQQaaaaQQQ
 aaaaaQQQOQQQaaQQaQaaaQQQQ
