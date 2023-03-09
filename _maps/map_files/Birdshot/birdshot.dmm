@@ -495,6 +495,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=1.5-PNexus-Vault";
+	location = "1.0-Security-PNexus"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "alD" = (
@@ -3108,6 +3112,20 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /turf/open/floor/iron/small,
 /area/station/engineering/atmospherics_engine)
+"buL" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=6.2-Arrivals";
+	location = "6.1-Arrivals"
+	},
+/turf/open/floor/iron/white/corner{
+	dir = 8
+	},
+/area/station/hallway/secondary/entry)
 "buN" = (
 /obj/effect/turf_decal/arrows{
 	dir = 8
@@ -4536,6 +4554,20 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
+"bVv" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/line,
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 1
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=1.0-Security-PNexus";
+	location = "23.2-Evac-Garden"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/port)
 "bVB" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
@@ -8978,20 +9010,19 @@
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
 "dIN" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=14-Starboard-Central";
-	location = "13.3-Engineering-Central"
-	},
-/obj/effect/turf_decal/trimline/neutral/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/neutral/line{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/line,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=16.0-CentralFore-CentralPort";
+	location = "15.0-CentralStarboard-CentralFore"
+	},
 /turf/open/floor/iron,
-/area/station/hallway/primary/fore)
+/area/station/hallway/primary/central/fore)
 "dIP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -9453,10 +9484,6 @@
 "dRh" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=15-Court";
-	location = "14.9-CrewQuarters-Central"
-	},
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 4
 	},
@@ -9521,16 +9548,13 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/engine/atmos)
 "dSl" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=4-Customs";
-	location = "3-Central-Port"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
+	codes_txt = "patrol;next_patrol=13.0-DormatoryCommons-Dormatories";
+	location = "12.0-RecreationHall-DormatoryCommons"
 	},
 /turf/open/floor/iron,
-/area/station/hallway/primary/port)
+/area/station/commons)
 "dSq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -12822,6 +12846,20 @@
 	},
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
+"fdi" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 8
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=6.1-Arrivals";
+	location = "5.0-AftHall-Arrivals"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/aft)
 "fds" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance,
@@ -14483,15 +14521,15 @@
 "fHN" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=2.1-Leaving-Storage";
-	location = "1.5-Fore-Central"
-	},
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=21.0-Bar-Porthall";
+	location = "20.0-CentralPort-Bar"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
@@ -15457,6 +15495,21 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
+"fXJ" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=22.0-Porthall-Evac";
+	location = "21.0-Bar-Porthall"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "fYX" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -20762,15 +20815,15 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=8.1-Aft-to-Escape";
-	location = "8-Central-to-Aft"
-	},
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/neutral/line,
 /obj/structure/cable,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=9.0-StarboardHall-ScienceFoyer";
+	location = "8.0-Pharmacy-StarboardHall"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "hPR" = (
@@ -24167,19 +24220,16 @@
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 4
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=19.0-Engineering-CentralPort";
+	location = "18.0-ToolStorage-Engineering"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "iZU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/directional/east,
-/obj/machinery/requests_console/directional/east{
-	announcementConsole = 1;
-	anon_tips_receiver = 1;
-	assistance_requestable = 1;
-	department = "Captain's Desk";
-	name = "Captain's Requests Console"
-	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/captain)
 "jax" = (
@@ -24690,6 +24740,17 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
+"jjS" = (
+/obj/effect/turf_decal/trimline/neutral/line,
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 1
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=23.1-Evac";
+	location = "22.0-Porthall-Evac"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/port)
 "jjZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -27428,13 +27489,19 @@
 	},
 /area/station/hallway/secondary/dock)
 "kjJ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 8
+	},
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=9.4-Escape-4";
-	location = "9.3-Escape-3"
+	codes_txt = "patrol;next_patrol=15.0-CentralStarboard-CentralFore";
+	location = "14.0-Dormatories-CentralStarboard"
 	},
 /turf/open/floor/iron,
-/area/station/hallway/secondary/exit/departure_lounge)
+/area/station/hallway/primary/central/fore)
 "kjL" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/broken_floor,
@@ -28139,14 +28206,14 @@
 /area/station/security/execution/education)
 "kvT" = (
 /obj/structure/cable,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=11.1-Command-Starboard";
-	location = "11-Command-Port"
-	},
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/neutral/line,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=17.0-CentralPort-ToolStorage";
+	location = "16.0-CentralFore-CentralPort"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "kws" = (
@@ -28317,19 +28384,13 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "kAg" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=12-Central-Starboard";
-	location = "11.1-Command-Starboard"
+	codes_txt = "patrol;next_patrol=14.0-Dormatories-CentralStarboard";
+	location = "13.0-DormatoryCommons-Dormatories"
 	},
-/obj/effect/turf_decal/trimline/neutral/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/neutral/line,
 /turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/dorms)
 "kAk" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
@@ -28803,10 +28864,6 @@
 	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=3-Central-Port";
-	location = "2.1-Leaving-Storage"
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
@@ -33486,6 +33543,17 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
+"mrv" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=6.3-Arrivals";
+	location = "6.2-Arrivals"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "msg" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -34534,6 +34602,11 @@
 	location = "QM #1"
 	},
 /obj/effect/turf_decal/delivery,
+/mob/living/simple_animal/bot/mulebot{
+	beacon_freq = 1400;
+	home_destination = "QM #1";
+	suffix = "#1"
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "mKD" = (
@@ -36546,15 +36619,20 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "nyt" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 4
+	},
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=14.3-Lockers-Dorms";
-	location = "14.2-Central-CrewQuarters"
+	codes_txt = "patrol;next_patrol=20.0-CentralPort-Bar";
+	location = "19.0-Engineering-CentralPort"
 	},
 /turf/open/floor/iron,
-/area/station/commons/dorms)
+/area/station/hallway/primary/fore)
 "nyB" = (
 /obj/structure/sign/departments/xenobio/alt/directional/west,
 /turf/open/floor/iron/white/corner{
@@ -39686,11 +39764,11 @@
 "oJi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=14.8-Dorms-Lockers";
-	location = "14.5-Recreation"
-	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=12.0-RecreationHall-DormatoryCommons";
+	location = "11.0-StarboardHall-RecreationHall"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/recreation)
 "oJn" = (
@@ -40342,6 +40420,16 @@
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
+"oUx" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=23.2-Evac-Garden";
+	location = "23.4-Evac"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "oUB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -42404,12 +42492,21 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "pFI" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/line,
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=5-Customs";
-	location = "4-Customs"
+	codes_txt = "patrol;next_patrol=11.0-StarboardHall-RecreationHall";
+	location = "10.0-ScienceFoyer-StarboardHall"
 	},
 /turf/open/floor/iron,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/starboard)
 "pFQ" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -43487,6 +43584,24 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/hallway/secondary/exit/departure_lounge)
+"pWM" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=18.0-ToolStorage-Engineering";
+	location = "17.0-CentralPort-ToolStorage"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "pWQ" = (
 /obj/structure/railing{
 	dir = 8
@@ -44378,17 +44493,19 @@
 /turf/open/floor/iron,
 /area/station/science/cytology)
 "qke" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 8
+	},
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=9.3-Escape-3";
-	location = "9.2-Escape-2"
+	codes_txt = "patrol;next_patrol=5.0-AftHall-Arrivals";
+	location = "4.0-TechStorage-AftHall"
 	},
-/obj/effect/turf_decal/tile/red/opposingcorners{
-	dir = 1
-	},
-/turf/open/floor/iron/cafeteria,
-/area/station/hallway/secondary/exit/departure_lounge)
+/turf/open/floor/iron,
+/area/station/hallway/primary/aft)
 "qkp" = (
 /obj/machinery/door/airlock{
 	name = "Maintenance"
@@ -48043,6 +48160,7 @@
 /area/station/maintenance/starboard/lesser)
 "ruJ" = (
 /obj/structure/sign/warning/no_smoking/circle/directional/north,
+/obj/structure/closet/l3closet/scientist,
 /turf/open/floor/iron/white/side,
 /area/station/science/xenobiology)
 "ruO" = (
@@ -49634,6 +49752,16 @@
 	dir = 4
 	},
 /area/station/science/lobby)
+"rUV" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=7.0-Arrivals-Pharmacy";
+	location = "6.3-Arrivals"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "rVj" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/cold/directional/north,
@@ -50717,6 +50845,14 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"smh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=23.4-Evac";
+	location = "23.3-Evac"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "smk" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/thinplating_new/light,
@@ -54706,10 +54842,6 @@
 /area/station/service/hydroponics/garden/monastery)
 "tCm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=9.2-Escape-2";
-	location = "9.1-Escape-1"
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -55955,6 +56087,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=2.0-Vault-SNexus";
+	location = "1.5-PNexus-Vault"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "tYj" = (
@@ -56035,6 +56171,10 @@
 "tZG" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=3.0-StarboardHall-TechStorage";
+	location = "2.5-SNexus-StarboardHall"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "tZJ" = (
@@ -56297,10 +56437,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=10.2-Aft-Port-Corner";
-	location = "10.1-Central-from-Aft"
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -56309,6 +56445,10 @@
 	},
 /obj/effect/turf_decal/trimline/neutral/line,
 /obj/structure/cable,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=4.0-TechStorage-AftHall";
+	location = "3.0-StarboardHall-TechStorage"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "udU" = (
@@ -57381,6 +57521,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=2.5-SNexus-StarboardHall";
+	location = "2.0-Vault-SNexus"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/spacebridge)
@@ -61344,6 +61488,18 @@
 	},
 /turf/open/floor/iron/small,
 /area/station/hallway/primary/central/fore)
+"vIX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=23.3-Evac";
+	location = "23.2-Evac"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/hallway/secondary/exit/departure_lounge)
 "vIZ" = (
 /obj/structure/chair{
 	dir = 4
@@ -65286,6 +65442,10 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=23.2-Evac";
+	location = "23.1-Evac"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "wRV" = (
@@ -67413,8 +67573,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=13.3-Engineering-Central";
-	location = "13.2-Tcommstore"
+	codes_txt = "patrol;next_patrol=10.0-ScienceFoyer-StarboardHall";
+	location = "9.0-StarboardHall-ScienceFoyer"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
@@ -68325,14 +68485,19 @@
 /turf/open/floor/iron,
 /area/station/security/lockers)
 "xGX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=7-Command-Starboard";
-	location = "6-Port-Central"
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 8
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=8.0-Pharmacy-StarboardHall";
+	location = "7.0-Arrivals-Pharmacy"
+	},
 /turf/open/floor/iron,
-/area/station/hallway/primary/port)
+/area/station/hallway/primary/aft)
 "xGY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -81195,7 +81360,7 @@ peb
 whL
 pLl
 leU
-qke
+vIX
 qBG
 opv
 rxo
@@ -81209,7 +81374,7 @@ yal
 yal
 yal
 tms
-kjJ
+smh
 tms
 lxZ
 poE
@@ -81462,7 +81627,7 @@ sNg
 yaI
 wRN
 yaI
-xQy
+oUx
 yaI
 xQy
 qRN
@@ -85059,7 +85224,7 @@ vSX
 tdg
 wBm
 wXk
-xhe
+bVv
 xOS
 rQC
 von
@@ -87372,7 +87537,7 @@ cpc
 jAe
 yfC
 wWT
-glM
+jjS
 xOS
 lBN
 vOP
@@ -89941,9 +90106,9 @@ xJR
 xJR
 frI
 ldZ
-dSl
+wXk
 sxw
-xGX
+xOS
 nsO
 uBc
 tJz
@@ -90139,10 +90304,10 @@ hvh
 hHy
 hNY
 hTR
-dIN
+hNY
 xmT
 qiE
-hNY
+nyt
 hNY
 hNY
 hNY
@@ -90174,7 +90339,7 @@ jLr
 aHS
 fHN
 jpu
-qdS
+pWM
 foe
 jpu
 lKA
@@ -90193,7 +90358,7 @@ lKA
 jpu
 jpu
 fMj
-jpu
+fXJ
 jpu
 aRJ
 wRg
@@ -97369,7 +97534,7 @@ jye
 jOs
 mAv
 khS
-uFG
+dIN
 vpI
 jVM
 vMV
@@ -98397,7 +98562,7 @@ uff
 mak
 tsF
 vrn
-kAg
+uFG
 wQB
 tgl
 lut
@@ -99947,7 +100112,7 @@ xIw
 xIw
 fqL
 dRh
-xIw
+kjJ
 nNV
 uVo
 oBA
@@ -103288,7 +103453,7 @@ dCH
 mhD
 sRL
 rsv
-xIW
+kAg
 rqw
 ohT
 oGm
@@ -103545,7 +103710,7 @@ pij
 pwz
 pWX
 nfO
-nyt
+qIv
 nOf
 rsv
 oGv
@@ -103578,7 +103743,7 @@ hhL
 xJw
 fMs
 xJw
-xJw
+qke
 fwc
 xJw
 wmx
@@ -103589,7 +103754,7 @@ ezw
 jOh
 vfK
 xJw
-xJw
+xGX
 xJw
 xJw
 hhL
@@ -103601,7 +103766,7 @@ xJw
 xJw
 xJw
 xJw
-xJw
+fdi
 fwc
 xJw
 hhL
@@ -104886,7 +105051,7 @@ kMW
 pXz
 xaP
 nwN
-pFI
+ufn
 jIj
 ufn
 tbK
@@ -105146,7 +105311,7 @@ nwN
 ufn
 dMM
 nAn
-tbK
+rUV
 xqe
 whX
 knC
@@ -105855,7 +106020,7 @@ quf
 uct
 lzR
 wYC
-wXt
+dSl
 wXt
 qkF
 wXt
@@ -106904,7 +107069,7 @@ waT
 uLh
 twE
 tOs
-uiY
+pFI
 uEQ
 uwF
 vze
@@ -107460,7 +107625,7 @@ blb
 blb
 oig
 oqg
-emw
+buL
 oig
 blb
 dDB
@@ -109771,7 +109936,7 @@ wrR
 mPu
 kOc
 wrR
-wrR
+mrv
 sgX
 iTC
 vbR
