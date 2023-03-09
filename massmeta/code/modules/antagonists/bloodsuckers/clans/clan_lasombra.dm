@@ -6,7 +6,7 @@
 	join_description = "You live in shadows, light sources damage your eyes and your body, but you gain an ability to vanish in shadows.\
 		Your vassals gain nightvision, and your favorite vassal transfroms into a nightmare."
 	clan_objective = /datum/objective/bloodsucker/eyethief
-	frenzy_stun_immune = TRUE
+	frenzy_stun_immune = FALSE
 	blood_drink_type = BLOODSUCKER_DRINK_NORMAL
 	var/list/vassal_minds 
 
