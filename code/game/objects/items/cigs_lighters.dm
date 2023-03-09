@@ -943,7 +943,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "Sustains an incredibly bright chemical reaction when you spark it. Avoid looking directly at the igniter when lit."
 	icon_state = "slighter"
 	light_color = LIGHT_COLOR_ELECTRIC_CYAN
-	overlay_state = "bright" //Fix the lit sprite overlay pls
+	overlay_state = "bright"
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/flash_powder = 10)
 	light_range = 8
 	light_power = 3 //Irritatingly bright and large enough to cover a small room.
