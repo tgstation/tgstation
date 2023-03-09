@@ -101,6 +101,7 @@
 		orbiter.glide_size = movable_parent.glide_size
 
 	orbiter.abstract_move(get_turf(parent))
+	orbiter.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	to_chat(orbiter, span_notice("Now orbiting [parent]."))
 
 /datum/component/orbiter/proc/end_orbit(atom/movable/orbiter, refreshing=FALSE)
@@ -120,6 +121,7 @@
 		orbiter_mob.updating_glide_size = TRUE
 		orbiter_mob.glide_size = 8
 
+	orbiter.mouse_opacity = initial(orbiter.mouse_opacity)
 	REMOVE_TRAIT(orbiter, TRAIT_NO_FLOATING_ANIM, ORBITING_TRAIT)
 
 	if(!refreshing && !length(orbiter_list) && !QDELING(src))
