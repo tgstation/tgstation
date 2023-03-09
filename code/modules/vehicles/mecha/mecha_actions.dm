@@ -81,11 +81,21 @@
 	name = "Toggle Equipment Safeties"
 	button_icon_state = "mech_safeties_off"
 
+//to have the action register the signal for icon updates, it has to have chassis set. that var doesn't get set in New(), it's set in
+//vehicle/sealed/mecha/generate_action_type(). Grant() gets called after that
+/datum/action/vehicle/sealed/mecha/mech_toggle_safeties/Grant(mob/grant_to)
+	. = ..()
+	RegisterSignal(chassis, COMSIG_MECH_SAFETIES_TOGGLE, PROC_REF(update_action_icon))
+
 /datum/action/vehicle/sealed/mecha/mech_toggle_safeties/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 
 	chassis.set_safety(owner)
+	SEND_SIGNAL(chassis, COMSIG_MECH_SAFETIES_TOGGLE) //update action button's icon
+
+/datum/action/vehicle/sealed/mecha/mech_toggle_safeties/proc/update_action_icon()
+	SIGNAL_HANDLER
 	button_icon_state = "mech_safeties_[chassis.weapons_safety ? "on" : "off"]"
 	build_all_button_icons()
 

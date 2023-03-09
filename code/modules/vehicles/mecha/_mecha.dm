@@ -595,6 +595,7 @@
 	SIGNAL_HANDLER
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		set_safety(user)
+		SEND_SIGNAL(src, COMSIG_MECH_SAFETIES_TOGGLE) //update 'Toggle Safeties' action button's icon
 		return COMSIG_MOB_CANCEL_CLICKON
 	if(weapons_safety)
 		return

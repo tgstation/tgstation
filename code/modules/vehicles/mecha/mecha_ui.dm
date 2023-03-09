@@ -248,6 +248,7 @@
 			chassis_camera.update_c_tag(src)
 		if("toggle_safety")
 			set_safety(usr)
+			SEND_SIGNAL(src, COMSIG_MECH_SAFETIES_TOGGLE) //update 'Toggle Safeties' action button's icon
 			return
 		if("dna_lock")
 			var/mob/living/carbon/user = usr
