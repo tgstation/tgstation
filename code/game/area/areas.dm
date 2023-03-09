@@ -284,11 +284,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	//just for sanity sake cause why not
 	if(!isnull(GLOB.areas))
 		GLOB.areas -= src
-	//turf cleanup
-	contained_turfs.Cut()
-	contained_turfs = null
-	turfs_to_uncontain.Cut()
-	turfs_to_uncontain = null
 	//machinery cleanup
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(alarm_manager)
@@ -297,6 +292,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	air_vents = null
 	air_scrubbers.Cut()
 	air_scrubbers = null
+	//turf cleanup
+	contained_turfs.Cut()
+	contained_turfs = null
+	turfs_to_uncontain.Cut()
+	turfs_to_uncontain = null
 	return ..()
 
 /**
