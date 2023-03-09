@@ -607,6 +607,15 @@
 		group.register(i)
 	desc += " The implants are registered to the \"[group.name]\" group."
 
+/obj/item/storage/syndie_kit/pinata
+	name = "weapons grade pinata kit"
+	desc = "Contains a weapons grade pinata and 2 belts for carrying its contents."
+
+/obj/item/storage/syndie_kit/pinata/PopulateContents()
+	new /obj/item/pinata/syndie(src)
+	new /obj/item/storage/belt/grenade
+	new /obj/item/storage/belt/military/snack
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY

@@ -497,6 +497,15 @@
 	surplus = 35
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
+/datum/uplink_item/explosives/pinata
+	name = "Weapons Grade Pinata Kit"
+	desc = "A pinata filled with both candy and explosives as well as belts to carry them on, crack it open and see what you get!"
+	item = /obj/item/storage/syndie_kit/pinata
+	purchasable_from = UPLINK_CLOWN_OPS
+	limited_stock = 1
+	cost = 22 //This is the clown ops version of the grenadier belt.
+	surplus = 0
+
 //Support and Mechs
 /datum/uplink_category/support
 	name = "Support and Exosuits"
@@ -810,3 +819,4 @@
 	item = /obj/item/keycard/syndicate_fridge
 	cost = 5
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+
