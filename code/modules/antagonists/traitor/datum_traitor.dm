@@ -16,6 +16,7 @@
 	preview_outfit = /datum/outfit/traitor
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
+	var/progressive = FALSE
 	///give this traitor an uplink?
 	var/give_uplink = TRUE
 	///if TRUE, this traitor will always get hijacking as their final objective
@@ -55,14 +56,15 @@
 		else
 			uplink_handler = uplink.uplink_handler
 		uplink_handler.primary_objectives = objectives
-		uplink_handler.has_progression = TRUE
+		uplink_handler.has_progression = progressive
 		SStraitor.register_uplink_handler(uplink_handler)
 
-		uplink_handler.has_objectives = TRUE
-		uplink_handler.generate_objectives()
+		if(progressive)
+			uplink_handler.has_objectives = TRUE
+			uplink_handler.generate_objectives()
 
-		if(uplink_handler.progression_points < SStraitor.current_global_progression)
-			uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
+			if(uplink_handler.progression_points < SStraitor.current_global_progression)
+				uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
 
 		var/list/uplink_items = list()
 		for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
@@ -155,11 +157,13 @@
 	employer = pick(possible_employers)
 	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
 
-/datum/antagonist/traitor/proc/forge_traitor_objectives()
+/datum/antagonist/traitor/proc/forge_traitor_objectives(var/amount_override = 0, give_escape_obj = TRUE)
 	objectives.Cut()
 
 	var/list/kill_targets = list() //for blacklisting already-set targets
 	var/objective_limit = CONFIG_GET(number/traitor_objectives_amount)
+	if(amount_override)
+		objective_limit = amount_override
 	for(var/i in 1 to objective_limit)
 		var/list/ai_targets = active_ais(z = 2) //For multiZ stations, this proc will include AIs on all station levels if the provided arg is 2.
 		ai_targets -= kill_targets
@@ -179,9 +183,10 @@
 		kill_targets += task.target
 		objectives += task
 
-	var/datum/objective/escape/bye = new /datum/objective/escape()
-	objectives += bye
-	bye.owner = owner
+	if(give_escape_obj)
+		var/datum/objective/escape/bye = new /datum/objective/escape()
+		objectives += bye
+		bye.owner = owner
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()

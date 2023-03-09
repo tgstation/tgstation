@@ -1,5 +1,0 @@
-author: "skylord-a52"
-delete-after: True
-changes:
-  - bugfix: "frozen gas tanks now release their contents upon shattering"
-  - bugfix: "holodeck gas tanks can now be deconstructed"

@@ -1067,6 +1067,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(SEND_SIGNAL(target, COMSIG_CARBON_PRE_HELP, user, attacker_style) & COMPONENT_BLOCK_HELP_ACT)
 		return TRUE
 
+	if(attacker_style?.help_act(user,target) == MARTIAL_ATTACK_SUCCESS)
+		return TRUE
+
 	if(target.body_position == STANDING_UP || target.appears_alive())
 		target.help_shake_act(user)
 		if(target != user)

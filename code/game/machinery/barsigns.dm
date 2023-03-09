@@ -10,8 +10,6 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.15
 	/// Selected barsign being used
 	var/datum/barsign/chosen_sign
-	/// If barsign has a lighting mask
-	var/light_mask = FALSE
 
 /datum/armor/sign_barsign
 	melee = 20
@@ -408,6 +406,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	icon = "empty"
 	desc = "This sign doesn't seem to be on."
 	rename_area = FALSE
+	light_mask = FALSE
 
 // For other locations that aren't in the main bar
 /obj/machinery/barsign/all_access

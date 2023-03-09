@@ -58,6 +58,11 @@
 			"weight": 3,
 			"cost": 20
 		},
+		
+		"Bloodsuckers": {
+			"weight": 4,
+			"cost": 10
+		},
 
 		"Nuclear Emergency": {
 			"weight": 3,

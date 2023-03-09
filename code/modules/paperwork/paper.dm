@@ -546,7 +546,7 @@
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 
 			update_appearance()
-			update_static_data(user, ui)
+			update_static_data_for_all_viewers()
 			return TRUE
 		if("add_text")
 			var/paper_input = params["text"]
@@ -592,7 +592,7 @@
 			log_paper("[key_name(user)] wrote to [name]: \"[paper_input]\"")
 			to_chat(user, "You have added to your paper masterpiece!");
 
-			update_static_data(user, ui)
+			update_static_data_for_all_viewers()
 			update_appearance()
 			return TRUE
 		if("fill_input_field")
@@ -633,7 +633,7 @@
 				if(!add_field_input(field_key, field_text, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"], user.real_name))
 					log_paper("[key_name(user)] tried to write to field [field_key] when it already has data, with the following text: [field_text]")
 
-			update_static_data(user, ui)
+			update_static_data_for_all_viewers()
 			return TRUE
 
 /obj/item/paper/proc/get_input_field_count(raw_text)

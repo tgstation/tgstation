@@ -22,11 +22,16 @@
 /datum/crafting_recipe/food/shredded_lungs
 	name = "Crispy shredded lung stirfry"
 	reqs = list(
-		/obj/item/organ/internal/lungs = 1,
-		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/carrot = 1,
-		/obj/item/food/grown/chili = 1
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/organ/internal/lungs = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
+	blacklist = list(
+		/obj/item/organ/internal/lungs/cybernetic,
+	)
+
 	result = /obj/item/food/shredded_lungs
 	category = CAT_LIZARD
 

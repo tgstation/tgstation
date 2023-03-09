@@ -24,13 +24,6 @@
 
 	var/obscured = check_obscured_slots()
 
-	var/vampDesc = ReturnVampExamine(user) // Bloodsuckers edit STARTS
-	var/vassDesc = ReturnVassalExamine(user)
-	if(vampDesc != "")
-		. += vampDesc
-	if(vassDesc != "")
-		. += vassDesc // Bloodsucker edit ENDS
-
 	//uniform
 	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && !(w_uniform.item_flags & EXAMINE_SKIP))
 		//accessory
@@ -181,7 +174,7 @@
 	if(l_limbs_missing >= 2 && r_limbs_missing == 0)
 		msg += "[t_He] look[p_s()] all right now.\n"
 	else if(l_limbs_missing == 0 && r_limbs_missing >= 2)
-		msg += "[t_He] really keeps to the left.\n"
+		msg += "[t_He] really keep[p_s()] to the left.\n"
 	else if(l_limbs_missing >= 2 && r_limbs_missing >= 2)
 		msg += "[t_He] [p_do()]n't seem all there.\n"
 

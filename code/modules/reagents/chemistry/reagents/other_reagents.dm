@@ -2426,6 +2426,13 @@
 	glitter_type = /obj/effect/decal/cleanable/glitter/blue
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/glitter/confetti
+	name = "Confetti"
+	description = "Tiny plastic flakes that are impossible to sweep up."
+	color = "#7dd87b"
+	glitter_type = /obj/effect/decal/cleanable/confetti
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
 /datum/reagent/pax
 	name = "Pax"
 	description = "A colorless liquid that suppresses violence in its subjects."

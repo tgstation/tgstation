@@ -8,7 +8,7 @@
 	description = "This anomaly replaces the materials of the surrounding area."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 2
-	admin_setup = /datum/event_admin_setup/listed_options/anomaly_dimensional
+	admin_setup = list(/datum/event_admin_setup/set_location/anomaly, /datum/event_admin_setup/listed_options/anomaly_dimensional)
 
 /datum/round_event/anomaly/anomaly_dimensional
 	start_when = 10
@@ -28,19 +28,9 @@
 /datum/event_admin_setup/listed_options/anomaly_dimensional
 	input_text = "Select a dimensional anomaly theme?"
 	normal_run_option = "Random Theme"
-	///The admin-chosen spawn location.
-	var/turf/spawn_location
 
 /datum/event_admin_setup/listed_options/anomaly_dimensional/get_list()
 	return subtypesof(/datum/dimension_theme)
 
-/datum/event_admin_setup/listed_options/anomaly_dimensional/prompt_admins()
-	. = ..()
-	if (. == ADMIN_CANCEL_EVENT)
-		return ADMIN_CANCEL_EVENT
-	if (tgui_alert(usr, "Spawn anomaly at your current location?", "Anomaly Alert", list("Yes", "No")) == "Yes")
-		spawn_location = get_turf(usr)
-
 /datum/event_admin_setup/listed_options/anomaly_dimensional/apply_to_event(datum/round_event/anomaly/anomaly_dimensional/event)
-	event.spawn_location = spawn_location
 	event.anomaly_theme = chosen

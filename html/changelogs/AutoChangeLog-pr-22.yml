@@ -1,0 +1,5 @@
+author: "SuperSlayer0"
+delete-after: True
+changes:
+  - rscadd: "5 новых кланов для блудсакеров"
+  - rscdel: "Убран клан gangrel, так как он говнище"

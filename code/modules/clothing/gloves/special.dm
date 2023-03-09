@@ -48,14 +48,14 @@
 
 	QDEL_NULL(pull_component_weakref)
 
-/obj/item/clothing/gloves/rapid
+/obj/item/clothing/gloves/chameleon/rapid
 	name = "Gloves of the North Star"
 	desc = "Just looking at these fills you with an urge to beat the shit out of people."
 	icon_state = "rapid"
 	inhand_icon_state = null
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
-/obj/item/clothing/gloves/rapid/Initialize(mapload)
+/obj/item/clothing/gloves/chameleon/rapid/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
 

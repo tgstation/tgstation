@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "The HoS' PDA painter can no longer paint PDAs into Lawyer ones."
