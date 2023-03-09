@@ -1679,8 +1679,13 @@
 /turf/open/floor/iron/white/side,
 /area/station/science/ordnance/testlab)
 "aeh" = (
-/turf/open/space/basic,
-/area/space/nearstation)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "aei" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /turf/closed/wall/r_wall,
@@ -2970,6 +2975,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/wood/large,
 /area/station/service/library)
 "ais" = (
@@ -6215,6 +6223,7 @@
 /obj/structure/sign/painting/large/library_private{
 	dir = 1
 	},
+/obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine/cult,
 /area/station/service/library)
 "aJV" = (
@@ -10454,6 +10463,9 @@
 "can" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/engine/cult,
 /area/station/service/library)
 "car" = (
@@ -16988,6 +17000,9 @@
 "ewK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "exl" = (
@@ -19057,6 +19072,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/engine/cult,
 /area/station/service/library)
 "fmy" = (
@@ -20346,6 +20364,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "fLr" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "fLE" = (
@@ -23348,12 +23369,9 @@
 /turf/open/floor/iron,
 /area/station/maintenance/tram/left)
 "gTx" = (
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 2
-	},
-/obj/effect/mapping_helpers/mail_sorting/service/library,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/junction/flip,
 /turf/open/floor/carpet,
 /area/station/service/library)
 "gTC" = (
@@ -23898,9 +23916,12 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "hhD" = (
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/navigate_destination/library,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/mail_sorting/service/library,
 /turf/open/floor/carpet,
 /area/station/service/library)
 "hhN" = (
@@ -35585,6 +35606,9 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "lvb" = (
@@ -41172,6 +41196,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "nzL" = (
@@ -61842,6 +61867,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/engine/cult,
 /area/station/service/library)
 "uYs" = (
@@ -66453,6 +66481,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/teleporter)
+"wFq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "wFx" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -103509,7 +103545,7 @@ fjQ
 fjQ
 fjQ
 fjQ
-aeh
+vXM
 aaa
 vXM
 vXM
@@ -103766,7 +103802,7 @@ eIM
 awE
 awE
 fjQ
-aeh
+vXM
 aaa
 aaa
 vXM
@@ -104023,7 +104059,7 @@ fKg
 cyZ
 nGt
 fjQ
-aeh
+vXM
 aaa
 aaa
 aac
@@ -104280,7 +104316,7 @@ xTM
 awE
 rAf
 fjQ
-aeh
+vXM
 aac
 aaa
 aaa
@@ -104537,7 +104573,7 @@ fjQ
 fjQ
 fjQ
 fjQ
-aeh
+vXM
 aaa
 aaa
 aaa
@@ -104794,7 +104830,7 @@ mwt
 nBA
 nBA
 fjQ
-aeh
+vXM
 aaa
 aaa
 aaa
@@ -105045,13 +105081,13 @@ oaX
 fhG
 hBH
 oNq
-aeh
+vXM
 ahD
 koq
 bEi
 eOU
 fjQ
-aeh
+vXM
 aaa
 aaa
 aaa
@@ -105308,7 +105344,7 @@ ljZ
 nBA
 lrw
 fjQ
-aeh
+vXM
 aac
 aaa
 aaa
@@ -105565,7 +105601,7 @@ fjQ
 fjQ
 fjQ
 fjQ
-aeh
+vXM
 aac
 aaa
 aaa
@@ -105822,7 +105858,7 @@ eEK
 jqS
 jqS
 fjQ
-aeh
+vXM
 aac
 aac
 aac
@@ -106079,7 +106115,7 @@ gMi
 sbh
 pwv
 fjQ
-aeh
+vXM
 aac
 aaa
 aac
@@ -106336,7 +106372,7 @@ mUd
 jqS
 fHz
 fjQ
-aeh
+vXM
 aaa
 aaa
 aaa
@@ -106593,7 +106629,7 @@ fjQ
 fjQ
 fjQ
 fjQ
-aeh
+vXM
 aaa
 aaa
 aaa
@@ -106846,7 +106882,7 @@ lCk
 hZr
 pHM
 hZr
-aeh
+vXM
 mQi
 aac
 aac
@@ -107872,7 +107908,7 @@ hZr
 diq
 csN
 hZr
-aeh
+vXM
 aac
 aac
 hYn
@@ -138490,10 +138526,10 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -138747,10 +138783,10 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -139004,10 +139040,10 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -139261,10 +139297,10 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -143518,12 +143554,12 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -143775,12 +143811,12 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -144032,12 +144068,12 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -144289,12 +144325,12 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -149221,7 +149257,7 @@ ckM
 rrM
 puN
 moP
-ewK
+wFq
 sQu
 vin
 iOi
@@ -149478,7 +149514,7 @@ ckM
 aHD
 iOi
 jxM
-ewK
+aeh
 ewK
 qDu
 ild
@@ -155671,8 +155707,8 @@ vCZ
 wAA
 vCZ
 vCZ
-wIP
-wIP
+avE
+avE
 esT
 mAG
 tMW
@@ -156699,8 +156735,8 @@ aaa
 aaa
 aaa
 aai
-wIP
-wIP
+avE
+avE
 esT
 tMW
 tMW
@@ -159542,7 +159578,7 @@ jhd
 jhd
 jhd
 sdb
-vXM
+jhd
 jhd
 jhd
 jhd
@@ -190348,8 +190384,8 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
+jhd
+jhd
 jhd
 avE
 jhd
@@ -190605,8 +190641,8 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
+jhd
+jhd
 jhd
 avE
 avE
@@ -190862,8 +190898,8 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
+jhd
+jhd
 jhd
 avE
 jhd
@@ -191119,8 +191155,8 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
+jhd
+jhd
 jhd
 avE
 jhd
@@ -191376,8 +191412,8 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
+jhd
+jhd
 jhd
 avE
 jhd
@@ -191632,9 +191668,9 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
 jhd
 avE
 avE
@@ -191889,9 +191925,9 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
 jhd
 avE
 jhd
@@ -192146,9 +192182,9 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
 jhd
 avE
 jhd
@@ -192403,9 +192439,9 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
 jhd
 avE
 jhd
@@ -192660,9 +192696,9 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
 jhd
 avE
 avE
@@ -192917,9 +192953,9 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
 jhd
 avE
 jhd
@@ -193174,9 +193210,9 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
 jhd
 avE
 jhd
@@ -193431,9 +193467,9 @@ jhd
 jhd
 jhd
 jhd
-vXM
-vXM
-vXM
+jhd
+jhd
+jhd
 jhd
 avE
 jhd
