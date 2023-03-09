@@ -355,6 +355,7 @@
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
 	)
 	crate_name = "wt-550 auto rifle crate"
+	contraband = TRUE
 
 /datum/supply_pack/security/armory/wt550ammo
 	name = "WT-550 Standard Ammo Crate"
@@ -364,6 +365,7 @@
 		/obj/item/ammo_box/magazine/wt550m9 = 4,
 	)
 	crate_name = "wt-550 standard ammo crate"
+	contraband = TRUE
 
 /datum/supply_pack/security/armory/wt550rubberammo
 	name = "WT-550 Rubber Ammo Crate"
@@ -373,5 +375,4 @@
 		/obj/item/ammo_box/magazine/wt550m9/rubber = 4,
 	)
 	crate_name = "wt-550 rubber ammo crate"
-
-
+	contraband = TRUE
