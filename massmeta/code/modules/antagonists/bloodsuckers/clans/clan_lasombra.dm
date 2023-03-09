@@ -3,7 +3,7 @@
 	description = "This Clan seems to adore living in the <i>Shadows</i> and worshipping it's secrets.. \n\
 		Their vassals adapt to see in darkness, and their favorite vassal turns into a horrific shadow creature."
 	join_icon_state = "lasombra"
-	join_description = "You live in shadows, light sources damage your eyes, but gain an ability to vanish in shadows.\
+	join_description = "You live in shadows, light sources damage your eyes and your body, but gain an ability to vanish in shadows.\
 		Your vassals gain nightvision, and your favorite vassal transfroms into a nightmare."
 	frenzy_stun_immune = TRUE
 	blood_drink_type = BLOODSUCKER_DRINK_NORMAL
@@ -31,13 +31,13 @@
 	var/obj/item/organ/internal/eyes/eyes = human_owner.getorganslot(ORGAN_SLOT_EYES)
 	if(lums > 0.5)
 		affected_human.add_mood_event("too_bright", /datum/mood_event/bright_light)
-		eyes.applyOrganDamage(4)
+		eyes.applyOrganDamage(2)
+		human_owner.adjustBruteLoss(4)
 		if(prob(25))
-			user.set_eye_blur_if_lower(rand(2,4) SECONDS)
-			to_chat(human_owner, span_warning("The light burns your eyes!"))
+			to_chat(human_owner, span_warning("The light burns you!"))
 	else
 		affected_carbon.clear_mood_event("too_bright")
-		eyes.applyOrganDamage(-2)
+		eyes.applyOrganDamage(-1)
 
 /datum/bloodsucker_clan/lasombra/on_favorite_vassal(datum/source, datum/antagonist/vassal/vassaldatum, mob/living/bloodsucker)
 	var/mob/living/carbon/human/humanowner = vassaldatum.owner.current
