@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes:
-  - refactor: "Refactored how eggs growing into chicks is implemented, and how the number of chickens and chicks are tracked. It's now possible for admins to make anything into an egg."
