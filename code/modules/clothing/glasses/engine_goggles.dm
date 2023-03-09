@@ -207,10 +207,8 @@
 	name = "advanced scanner goggles"
 	icon_state = "trayson-adv"
 	inhand_icon_state = "trayson-adv"
-	desc = "A pair of advanced goggles combining the capabilities of both the engineering scanner goggles and t-ray scanner goggles"
+	desc = "A pair of advanced goggles combining the capabilities of both the engineering scanner goggles and t-ray scanner goggles."
 	range = 3
-
-
 	modes = list(MODE_NONE = MODE_MESON, MODE_MESON = MODE_TRAY, MODE_TRAY = MODE_PIPE_CONNECTABLE, MODE_PIPE_CONNECTABLE = MODE_ATMOS_THERMAL, MODE_ATMOS_THERMAL = MODE_NONE)
 	
 
