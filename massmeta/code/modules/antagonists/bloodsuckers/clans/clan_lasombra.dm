@@ -1,5 +1,5 @@
 /datum/bloodsucker_clan/lasombra
-	name = CLAN_LAZOMBRA
+	name = CLAN_LASOMBRA
 	description = "This Clan seems to adore living in the <i>Shadows</i> and worshipping it's secrets.. \n\
 		Their vassals adapt to see in darkness, and their favorite vassal turns into a horrific shadow creature."
 	join_icon_state = "lasombra"
@@ -31,13 +31,13 @@
 	var/lums = T.get_lumcount()
 	var/obj/item/organ/internal/eyes/eyes = human_owner.getorganslot(ORGAN_SLOT_EYES)
 	if(lums > 0.5)
-		affected_human.add_mood_event("too_bright", /datum/mood_event/bright_light)
+		human_owner.add_mood_event("too_bright", /datum/mood_event/bright_light)
 		eyes.applyOrganDamage(2)
 		human_owner.adjustBruteLoss(4)
 		if(prob(25))
 			to_chat(human_owner, span_warning("The light burns you!"))
 	else
-		affected_carbon.clear_mood_event("too_bright")
+		human_owner.clear_mood_event("too_bright")
 		eyes.applyOrganDamage(-1)
 
 /datum/bloodsucker_clan/lasombra/on_favorite_vassal(datum/source, datum/antagonist/vassal/vassaldatum, mob/living/bloodsucker)
@@ -54,7 +54,7 @@
 		vassal_minds += target.mind
 	ADD_TRAIT(target, TRAIT_TRUE_NIGHT_VISION, BLOODSUCKER_TRAIT)
 	target.update_sight()
-	to_chat(vassaldatum.owner.current, span_notice("You feel your eyes adapt to darkness."))
+	to_chat(target, span_notice("You feel your eyes adapt to darkness."))
 
 /datum/bloodsucker_clan/lasombra/proc/remove_night_vision(datum/mind/source)
 	SIGNAL_HANDLER
