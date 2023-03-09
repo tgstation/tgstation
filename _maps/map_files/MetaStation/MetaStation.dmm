@@ -12083,7 +12083,10 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space/basic,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "esH" = (
 /obj/structure/disposalpipe/segment{
@@ -31573,6 +31576,9 @@
 /obj/structure/table/reinforced,
 /obj/machinery/computer/security/telescreen/entertainment/directional/east{
 	pixel_y = 5
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
