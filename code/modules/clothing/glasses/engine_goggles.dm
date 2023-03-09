@@ -139,7 +139,7 @@
 	name = "optical t-ray scanner"
 	icon_state = "trayson-t-ray"
 	inhand_icon_state = "trayson-t-ray"
-	desc = "Goggles utilized by atmospheric technitians that support a suite of features"
+	desc = "Goggles utilized by atmospheric technicians that support a suite of features."
 	range = 2
 
 
