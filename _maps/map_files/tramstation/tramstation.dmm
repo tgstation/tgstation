@@ -11699,10 +11699,10 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Secure Tech Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "ckM" = (
@@ -34994,7 +34994,7 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Freezer Maintenance Hatch"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/service/general,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "lgo" = (
@@ -35654,8 +35654,8 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Secure Tech Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
 /obj/effect/turf_decal/trimline/white/filled/line,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "luP" = (
