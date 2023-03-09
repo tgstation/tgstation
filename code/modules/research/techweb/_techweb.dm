@@ -38,13 +38,13 @@
 	var/list/discovered_mutations = list()
 	/// Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on
 	var/list/tiers = list()
-	/// This is a list of all incomplete experiment datums that are accessible for scienttists to complete
+	/// This is a list of all incomplete experiment datums that are accessible for scientists to complete
 	var/list/datum/experiment/available_experiments = list()
 	/// A list of all experiment datums that have been complete
 	var/list/datum/experiment/completed_experiments = list()
 	/// Assoc list of all experiment datums that have been skipped, to tech point reward for completing them -
 	/// That is, upon researching a node without completing its associated discounts, their experiments go here.
-	/// Completing these experiements will have a refund.
+	/// Completing these experiments will have a refund.
 	var/list/datum/experiment/skipped_experiment_types = list()
 
 	/// If science researches something without completing its discount experiments,
@@ -339,7 +339,7 @@
 	//Add to our researched list
 	researched_nodes[node.id] = TRUE
 
-	// Track any experiemnts we skipped relating to this
+	// Track any experiments we skipped relating to this
 	for(var/missed_experiment in node.discount_experiments)
 		if(completed_experiments[missed_experiment] || skipped_experiment_types[missed_experiment])
 			continue
