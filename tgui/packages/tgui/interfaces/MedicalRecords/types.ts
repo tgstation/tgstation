@@ -17,6 +17,8 @@ export type MedicalRecord = {
   gender: string;
   major_disabilities: string;
   minor_disabilities: string;
+  p_stat: string;
+  m_stat: string;
   name: string;
   notes: MedicalNote[];
   quirk_notes: string;

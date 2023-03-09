@@ -24,6 +24,8 @@ export const MedicalRecordView = (props, context) => {
     gender,
     major_disabilities,
     minor_disabilities,
+    p_stat,
+    m_stat,
     name,
     quirk_notes,
     rank,
@@ -120,6 +122,20 @@ export const MedicalRecordView = (props, context) => {
               {major_disabilities_array.map((disability, index) => (
                 <Box key={index}>&#8226; {disability}</Box>
               ))}
+            </LabeledList.Item>
+            <LabeledList.Item label="Physical Status">
+              <EditableText
+                field="p_stat"
+                target_ref={crew_ref}
+                text={p_stat}
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Mental Status">
+              <EditableText
+                field="m_stat"
+                target_ref={crew_ref}
+                text={m_stat}
+              />
             </LabeledList.Item>
             <LabeledList.Item label="Quirks">
               {quirk_notes_array.map((quirk, index) => (

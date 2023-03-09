@@ -23,3 +23,17 @@ export const getMedicalRecord = (context) => {
 
   return foundRecord;
 };
+
+export enum PhysicalStatusTypes {
+  Active = 'Active',
+  PhysicallyUnfit = 'Physically Unfit',
+  Unconscious = '*Unconscious*',
+  Deceased = '*Deceased*',
+}
+
+export enum MentalStatusTypes {
+  Stable = 'Stable',
+  Watch = '*Watch*',
+  Unstable = 'Unstable',
+  Insane = '*Insane*',
+}

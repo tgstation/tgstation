@@ -58,6 +58,8 @@
 			gender = target.gender,
 			major_disabilities = target.major_disabilities_desc,
 			minor_disabilities = target.minor_disabilities_desc,
+			p_stat = target.p_stat,
+			m_stat = target.m_stat,
 			name = target.name,
 			notes = notes,
 			quirk_notes = target.quirk_notes,
@@ -126,6 +128,8 @@
 	target.medical_notes.Cut()
 	target.minor_disabilities = ""
 	target.minor_disabilities_desc = ""
+	target.p_stat = ""
+	target.m_stat = ""
 	target.name = "Unknown"
 	target.quirk_notes = ""
 	target.rank = "Unknown"
