@@ -292,7 +292,38 @@
 				return TRUE
 	return FALSE
 
+//////////////////////////////////////////////////////////////////////////////////////
 
+/// Steal some eyes - lasombra clan objective
+
+/datum/objective/bloodsucker/eyethief
+	name = "eyethief"
+
+// GENERATE!
+/datum/objective/bloodsucker/eyethief/New()
+	target_amount = rand(3,4)
+	..()
+
+// EXPLANATION
+/datum/objective/bloodsucker/eyethief/update_explanation_text()
+	. = ..()
+	explanation_text = "Steal and keep [target_amount] organic eye\s."
+
+// WIN CONDITIONS?
+/datum/objective/bloodsucker/eyethief/check_completion()
+	if(!owner.current)
+		return FALSE
+
+	var/list/all_items = owner.current.get_all_contents()
+	var/eye_count = 0
+	for(var/obj/item/organ/internal/heart/eyes in all_items)
+		if(eyes.organ_flags & ORGAN_SYNTHETIC) // No robo-hearts allowed
+			continue
+		eye_count++
+
+	if(eye_count >= target_amount)
+		return TRUE
+	return FALSE
 
 //////////////////////////////
 // MONSTERHUNTER OBJECTIVES //

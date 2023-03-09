@@ -3,8 +3,9 @@
 	description = "This Clan seems to adore living in the <i>Shadows</i> and worshipping it's secrets.. \n\
 		Their vassals adapt to see in darkness, and their favorite vassal turns into a horrific shadow creature."
 	join_icon_state = "lasombra"
-	join_description = "You live in shadows, light sources damage your eyes and your body, but gain an ability to vanish in shadows.\
+	join_description = "You live in shadows, light sources damage your eyes and your body, but you gain an ability to vanish in shadows.\
 		Your vassals gain nightvision, and your favorite vassal transfroms into a nightmare."
+	clan_objective = /datum/objective/bloodsucker/eyethief
 	frenzy_stun_immune = TRUE
 	blood_drink_type = BLOODSUCKER_DRINK_NORMAL
 	var/list/vassal_minds 
