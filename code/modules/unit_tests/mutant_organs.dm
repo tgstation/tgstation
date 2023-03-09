@@ -17,7 +17,7 @@
 		ORGAN_SLOT_LIVER,
 		ORGAN_SLOT_STOMACH,
 		ORGAN_SLOT_APPENDIX,
-		)
+	)
 
 	for(var/datum/species/species_type as anything in species)
 		// change them to the species
