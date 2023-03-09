@@ -156,7 +156,7 @@
 	name = "comfy chair"
 	desc = "It looks comfy."
 	icon_state = "comfychair"
-	color = rgb(255,255,255)
+	color = rgb(150, 150, 150)
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	buildstackamount = 2
