@@ -195,8 +195,6 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 /datum/objective_target_machine_handler
 	/// Existing instances of machines organised by typepath
 	var/list/machine_instances_by_path = list()
-	/// If true, we have saved all of our mapload machines and should no longer add more to this list
-	var/targets_confirmed = FALSE
 
 /datum/objective_target_machine_handler/New()
 	. = ..()
@@ -206,12 +204,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 /// Adds a newly created machine to our list of machines, if we need it
 /datum/objective_target_machine_handler/proc/on_machine_created(datum/source, obj/machinery/new_machine)
 	SIGNAL_HANDLER
-	if(!targets_confirmed)
-		new_machine.add_as_sabotage_target()
-		return
-	var/typepath = new_machine.add_as_sabotage_target()
-	if(typepath != null)
-		add_sabotage_machine(new_machine, typepath)
+	new_machine.add_as_sabotage_target()
 
 /// Confirm that everything added to the list is a valid target, then prevent new targets from being added
 /datum/objective_target_machine_handler/proc/finalise_valid_targets()
@@ -223,7 +216,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 				machine_instances_by_path[machine_type] -= machine
 				continue
 			RegisterSignal(machine, COMSIG_PARENT_QDELETING, PROC_REF(machine_destroyed))
-	targets_confirmed = TRUE
+	UnregisterSignal(SSdcs, COMSIG_GLOB_NEW_MACHINE)
 
 /datum/objective_target_machine_handler/proc/machine_destroyed(atom/machine)
 	SIGNAL_HANDLER
