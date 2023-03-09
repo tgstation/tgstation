@@ -64,3 +64,21 @@
 	var/mob/living/silicon/robot/R = user.mob
 	R.uneq_active()
 	return TRUE
+
+/datum/keybinding/robot/undeploy
+	hotkey_keys = list("=")
+	name = "undeploy"
+	full_name = "Undeploy from shell"
+	description = "Returns you to your AI core"
+	keybind_signal = COMSIG_KB_SILION_UNDEPLOY_DOWN
+
+/datum/keybinding/robot/undeploy/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/silicon/robot/shell/our_shell = user.mob
+	//We make sure our shell is actually a shell
+	if(our_shell.shell == null)
+		return
+	our_shell.undeploy()
+	return TRUE
