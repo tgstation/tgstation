@@ -139,7 +139,7 @@
 	name = "optical t-ray scanner"
 	icon_state = "trayson-t-ray"
 	inhand_icon_state = "trayson-t-ray"
-	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
+	desc = "Goggles utilized by atmospheric technitians that support a suite of features"
 	range = 2
 
 
@@ -204,9 +204,9 @@
 		flick_overlay_global(pic, list(viewer.client), duration)
 
 /obj/item/clothing/glasses/meson/engine/advanced //special goggles for the CE that have the abilities of the T-ray scanners and engineering scanners
-	name = "advanced engineering scanner goggles"
-	icon_state = "trayson-t-ray"
-	inhand_icon_state = "trayson-t-ray"
+	name = "advanced scanner goggles"
+	icon_state = "trayson-adv"
+	inhand_icon_state = "trayson-adv"
 	desc = "A pair of advanced goggles combining the capabilities of both the engineering scanner goggles and t-ray scanner goggles"
 	range = 3
 
