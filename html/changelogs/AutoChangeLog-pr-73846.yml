@@ -1,6 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - bugfix: "Rapid lighting devices can now have their color set to #ffffff and the resulting lights will now function."
-  - bugfix: "Rapid lighting devices will now default its set color to white when created instead of trying to produce colorless lights."
-  - bugfix: "The rapid lighting device can now be used in the dark when producing glow sticks or floor lights."

@@ -193,8 +193,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/iron{
-	},
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "ap" = (
 /obj/item/kirbyplants{
@@ -956,8 +955,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/iron{
-	},
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "cB" = (
 /obj/structure/chair/comfy/shuttle{

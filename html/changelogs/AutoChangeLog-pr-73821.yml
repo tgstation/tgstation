@@ -1,4 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - bugfix: "Some airlock access oversights on tramstation have been fixed. The service lathe cannot be accessed by jobs that shouldn't have access via maint and robo/engi's cant get into secure tech storage."

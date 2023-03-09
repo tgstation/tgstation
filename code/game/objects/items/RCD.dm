@@ -57,9 +57,13 @@ RLD
 		return silo_mats.mat_container.get_material_amount(/datum/material/iron)/500
 	return FALSE
 
+///returns local matter units available. overriden by rcd borg to return power units available
+/obj/item/construction/proc/get_matter(mob/user)
+	return matter
+
 /obj/item/construction/examine(mob/user)
 	. = ..()
-	. += "It currently holds [matter]/[max_matter] matter-units."
+	. += "It currently holds [get_matter(user)]/[max_matter] matter-units."
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
 		. += "Remote storage link state: [silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"]."
 		var/iron = get_silo_iron()
@@ -190,7 +194,7 @@ RLD
 	var/list/data = list()
 
 	//matter in the rcd
-	var/total_matter = ((upgrade & RCD_UPGRADE_SILO_LINK) && silo_link) ? get_silo_iron() : matter
+	var/total_matter = ((upgrade & RCD_UPGRADE_SILO_LINK) && silo_link) ? get_silo_iron() : get_matter(user)
 	if(!total_matter)
 		total_matter = 0
 	data["matterLeft"] = total_matter
@@ -245,12 +249,6 @@ RLD
 		return FALSE
 	else
 		return TRUE
-
-/obj/item/construction/proc/prox_check(proximity)
-	if(proximity)
-		return TRUE
-	else
-		return FALSE
 
 /**
  * Checks if we are allowed to interact with a radial menu
@@ -444,15 +442,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	return getHologramIcon(grille_icon)
 
-/obj/item/construction/rcd/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/openspace_item_click_handler)
-
-/obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
-	if(proximity_flag)
-		mode = construction_mode
-		rcd_create(target, user)
-
 /obj/item/construction/rcd/ui_action_click(mob/user, actiontype)
 	if (!COOLDOWN_FINISHED(src, destructive_scan_cooldown))
 		to_chat(user, span_warning("[src] lets out a low buzz."))
@@ -636,14 +625,24 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				balloon_alert(user, "something is on the tile!")
 				qdel(rcd_effect)
 				return FALSE
+	//beam animation for arcd
+	var/beam
+	if(ranged)
+		beam = user.Beam(A,icon_state="rped_upgrade", time = delay)
 	if(!do_after(user, delay, target = A))
 		qdel(rcd_effect)
+		if(!isnull(beam))
+			qdel(beam)
 		return FALSE
 	if(!checkResource(rcd_results["cost"], user))
 		qdel(rcd_effect)
+		if(!isnull(beam))
+			qdel(beam)
 		return FALSE
 	if(!A.rcd_act(user, src, rcd_results["mode"]))
 		qdel(rcd_effect)
+		if(!isnull(beam))
+			qdel(beam)
 		return FALSE
 	rcd_effect.end_animation()
 	useResource(rcd_results["cost"], user)
@@ -816,18 +815,28 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	. = ..()
 	ui_interact(user)
 
-/obj/item/construction/rcd/pre_attack(atom/A, mob/user, params)
+/obj/item/construction/rcd/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	mode = construction_mode
-	rcd_create(A, user)
-	return TRUE
+	//proximity check for normal rcd & range check for arcd
+	if((!proximity_flag && !ranged) || (ranged && !range_check(target, user)))
+		return FALSE
 
-/obj/item/construction/rcd/pre_attack_secondary(atom/target, mob/living/user, params)
-	. = ..()
-	mode = RCD_DECONSTRUCT
-	if(!target.rcd_vals(user, src))
-		return
+	//do the work
+	mode = construction_mode
 	rcd_create(target, user)
+
+	return . | AFTERATTACK_PROCESSED_ITEM
+
+/obj/item/construction/rcd/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	//proximity check for normal rcd & range check for arcd
+	if((!proximity_flag && !ranged) || (ranged && !range_check(target, user)))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	//do the work
+	mode = RCD_DECONSTRUCT
+	rcd_create(target, user)
+
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/construction/rcd/proc/detonate_pulse()
@@ -851,6 +860,14 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	banned_upgrades = RCD_UPGRADE_SILO_LINK
 	var/energyfactor = 72
 
+/obj/item/construction/rcd/borg/get_matter(mob/user)
+	if(!iscyborg(user))
+		return 0
+	var/mob/living/silicon/robot/borgy = user
+	if(!borgy.cell)
+		return 0
+	max_matter = borgy.cell.maxcharge
+	return borgy.cell.charge
 
 /obj/item/construction/rcd/borg/useResource(amount, mob/user)
 	if(!iscyborg(user))
@@ -944,37 +961,14 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 // Ranged RCD
 /obj/item/construction/rcd/arcd
 	name = "advanced rapid-construction-device (ARCD)"
-	desc = "A prototype RCD with ranged capability and extended capacity. Reload with iron, plasteel, glass or compressed matter cartridges."
-	max_matter = 300
-	matter = 300
+	desc = "A prototype RCD with ranged capability and infinite capacity."
+	max_matter = INFINITY
+	matter = INFINITY
 	delay_mod = 0.6
 	ranged = TRUE
 	icon_state = "arcd"
 	inhand_icon_state = "oldrcd"
 	has_ammobar = FALSE
-
-/obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)
-	. = ..()
-	if(range_check(A,user))
-		pre_attack(A, user)
-		return . | AFTERATTACK_PROCESSED_ITEM
-
-/obj/item/construction/rcd/arcd/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if(range_check(target,user))
-		pre_attack_secondary(target, user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/item/construction/rcd/arcd/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
-	if(ranged && range_check(target, user))
-		mode = construction_mode
-		rcd_create(target, user)
-
-/obj/item/construction/rcd/arcd/rcd_create(atom/A, mob/user)
-	. = ..()
-	if(.)
-		user.Beam(A,icon_state="rped_upgrade", time = 3 SECONDS)
-
-
 
 // RAPID LIGHTING DEVICE
 /obj/item/construction/rld
@@ -1018,11 +1012,16 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	for(var/option in original_options)
 		display_options[option] = icon(original_options[option])
 
+/obj/item/construction/rld/update_icon_state()
+	icon_state = "rld-[round(matter/matter_divisor)]"
+	return ..()
+
 /obj/item/construction/rld/attack_self(mob/user)
 	. = ..()
 
 	if((upgrade & RCD_UPGRADE_SILO_LINK) && display_options["Silo Link"] == null) //silo upgrade instaled but option was not updated then update it just one
 		display_options["Silo Link"] = icon(icon = 'icons/obj/mining.dmi', icon_state = "silo")
+
 	var/choice = show_radial_menu(user, src, display_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
@@ -1062,7 +1061,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	for(var/obj/machinery/light/dupe in checking)
 		if(istype(dupe, /obj/machinery/light))
 			. |= dupe
-
 
 /obj/item/construction/rld/afterattack(atom/A, mob/user)
 	. = ..()
@@ -1170,9 +1168,9 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	icon_state = "rld-5"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	matter_divisor = 20
 	matter = 100
 	max_matter = 100
-	matter_divisor = 20
 
 ///The plumbing RCD. All the blueprints are located in _globalvars > lists > construction.dm
 /obj/item/construction/plumbing
@@ -1420,7 +1418,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 /obj/item/construction/plumbing/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	if(!prox_check(proximity))
+	if(!proximity)
 		return
 	if(istype(target, /obj/machinery/plumbing))
 		var/obj/machinery/machine_target = target
