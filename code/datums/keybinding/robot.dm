@@ -66,6 +66,7 @@
 	return TRUE
 
 /datum/keybinding/robot/undeploy
+	category = CATEGORY_AI
 	hotkey_keys = list("=")
 	name = "undeploy"
 	full_name = "Undeploy from shell"
