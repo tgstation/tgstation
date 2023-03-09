@@ -130,9 +130,9 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	if(newA == oldA)
 		to_chat(creator, span_warning("The area remains unchanged"))
 		return
-	//when expanding one area into another we don't want to merge their apcs. Display warning to user to dismantle the old area apc inorder to proceed
+	//when expanding one area into another we don't want to merge their apcs. Display warning to user to dismantle an apc before proceeding
 	if(!isnull(newA.apc) && !isnull(oldA.apc))
-		to_chat(creator, span_warning("Current & new area both have APCs!!. Dismantle any one apc before proceeding."))
+		creator.balloon_alert(creator, "too many conflicting APCs, remove one!")
 		return
 
 	//disconnect vents & scrubbers. have to clone the list because disconnecting removes it from the list
@@ -184,13 +184,8 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	to_chat(creator, span_notice("You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered."))
 	creator.log_message("created a new area: [AREACOORD(creator)] (previously \"[oldA.name]\")", LOG_GAME)
 
-	/**
-	 * there are no more turfs left in this area. Time to clean up
-	 * we could have used has_contained_turfs() to determine if the old area has any turfs remaining but insead
-	 * we use cannonize_contained_turfs() because it saves memory as an added bonus
-	 */
-	oldA.cannonize_contained_turfs()
-	if(!length(oldA.contained_turfs))
+	//no more turfs in the old area. Time to clean up
+	if(!oldA.has_contained_turfs())
 		message_admins("Area [oldA.name] has been deleted!.")
 		qdel(oldA)
 
