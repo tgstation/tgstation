@@ -14,6 +14,7 @@ Format:
 endmap
 
 map metastation	
+	#default
 	votable
 endmap
 
@@ -27,7 +28,6 @@ map kilostation
 endmap
 
 map icebox
-	#default
 	votable
 endmap
 
