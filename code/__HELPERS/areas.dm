@@ -99,6 +99,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		to_chat(creator, span_warning(error))
 		return
 
+	var/list/apc_map = list()
 	var/list/areas = list("New Area" = /area)
 	for(var/i in 1 to turf_count)
 		var/area/place = get_area(turfs[i])
@@ -106,7 +107,14 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 			continue
 		if(!place.requires_power || (place.area_flags & NOTELEPORT) || (place.area_flags & HIDDEN_AREA))
 			continue // No expanding powerless rooms etc
+		if(!isnull(place.apc))
+			apc_map[place.name] = place.apc
+		//If we found just one apc we can just convert that to work for our new area. But 2 or more!! nope
+		if(apc_map.len > 1)
+			creator.balloon_alert(creator, "too many conflicting APCs, only one allowed!")
+			return
 		areas[place.name] = place
+
 	var/area_choice = tgui_input_list(creator, "Choose an area to expand or make a new area", "Area Expansion", areas)
 	if(isnull(area_choice))
 		to_chat(creator, span_warning("No choice selected. The area remains undefined."))
@@ -131,71 +139,110 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		creator.balloon_alert(creator, "no area change!")
 		return
 
-	//when expanding one area into another we don't want to merge their apcs. Display warning to user to dismantle an apc before proceeding
-	if(!isnull(newA.apc) && !isnull(oldA.apc))
-		creator.balloon_alert(creator, "too many conflicting APCs, remove one!")
-		return
-
-	//disconnect vents & scrubbers. have to clone the list because disconnecting removes it from the list
-	var/list/obj/machinery/atmospherics/components/unary/vent_pump/pumps = oldA.air_vents.Copy()
-	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubbers = oldA.air_scrubbers.Copy()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/pump in pumps)
-		pump.disconnect_from_area()
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in scrubbers)
-		scrubber.disconnect_from_area()
-	//no special disconnect for these machines. we just collect & reassign their areas later on
-	var/list/obj/machinery/airalarm/air_alarms = list()
-	var/list/obj/machinery/firealarm/fire_alarms = list()
-	for(var/obj/machinery/airalarm/alarm in oldA)
-		air_alarms += alarm
-	for(var/obj/machinery/firealarm/alarm in oldA)
-		fire_alarms += alarm
-
-	var/area/collected_areas = list("[oldA.name]" = oldA) //collect areas of these turfs as they can become empty & need to be cleaned up after the merge
-	for(var/i in 1 to length(turfs))
+	/**
+	 * A list of all machinery tied to an area along with the area itself. key=area name,value=list(area,list of machinery)
+	 * we use this to keep track of what areas are affected by the blueprints & what machinery of these areas needs to be reconfigured accordingly
+	 */
+	var/area/collected_areas = list()
+	for(var/i in 1 to turf_count)
 		var/turf/thing = turfs[i]
 		var/area/old_area = thing.loc
-		collected_areas[old_area.name] = old_area
+		if(!collected_areas[old_area.name])
+			collected_areas[old_area.name] = list("area" = old_area, "machinery" = disconnect_area_machinery(old_area))
 
 		old_area.turfs_to_uncontain += thing
 		newA.contents += thing
 		newA.contained_turfs += thing
 		thing.transfer_area_lighting(old_area, newA)
 
-	//reassign them to their new areas
-	oldA.apc?.assign_to_area()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/pump in pumps)
-		pump.assign_to_area()
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in scrubbers)
-		scrubber.assign_to_area()
-	for(var/obj/machinery/airalarm/alarm in air_alarms)
-		alarm.assign_to_area()
-	for(var/obj/machinery/firealarm/alarm in fire_alarms)
-		alarm.assign_to_area()
-
 	newA.reg_in_areas_in_z()
 
 	if(!isarea(area_choice) && newA.static_lighting)
 		newA.create_area_lighting_objects()
 
-	var/list/firedoors = oldA.firedoors
-	for(var/door in firedoors)
-		var/obj/machinery/door/firedoor/FD = door
-		FD.CalculateAffectingAreas()
+	//reconfigure machinery of affected areas
+	for(var/area_name in collected_areas)
+		var/list/area_data = collected_areas[area_name]
+		var/list/area_machinery = area_data["machinery"]
+
+		//reassign apc to its area
+		var/obj/machinery/power/apc/area_apc = area_machinery["apc"]
+		if(!isnull(area_apc))
+			area_apc.assign_to_area()
+
+		//recompute firedoor machinery
+		var/area/merged_area = area_data["area"]
+		for(var/door in merged_area.firedoors)
+			var/obj/machinery/door/firedoor/FD = door
+			FD.CalculateAffectingAreas()
+
+		//reassign pumps
+		var/list/obj/machinery/atmospherics/components/unary/vent_pump/pumps = area_machinery["pumps"]
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/pump in pumps)
+			pump.assign_to_area()
+
+		//reassign scrubbers
+		var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubbers = area_machinery["scrubbers"]
+		for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in scrubbers)
+			scrubber.assign_to_area()
+
+		//reassign air alarms
+		var/list/obj/machinery/airalarm/air_alarms = area_machinery["air_alarms"]
+		for(var/obj/machinery/airalarm/alarm in air_alarms)
+			alarm.assign_to_area()
+
+		//reassign fire alarms
+		var/list/obj/machinery/firealarm/fire_alarms = area_machinery["fire_alarms"]
+		for(var/obj/machinery/firealarm/alarm in fire_alarms)
+			alarm.assign_to_area()
 
 	SEND_GLOBAL_SIGNAL(COMSIG_AREA_CREATED, newA, oldA, creator)
 	to_chat(creator, span_notice("You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered."))
 	creator.log_message("created a new area: [AREACOORD(creator)] (previously \"[oldA.name]\")", LOG_GAME)
 
-	//check areas of turfs merged into the new area if their empty
+	//purge old areas that had all their turfs merged into the new one i.e. old empty areas
 	for(var/area_name in collected_areas)
-		var/area/merged_area = collected_areas[area_name]
+		var/list/area_data = collected_areas[area_name]
+		var/area/merged_area = area_data["area"]
 		if(!merged_area.has_contained_turfs()) //no more turfs in this area. Time to clean up
 			qdel(merged_area)
 
 	return TRUE
 
 #undef BP_MAX_ROOM_SIZE
+
+///find and disconnect all machinery that depends on the area excluding apc
+/proc/disconnect_area_machinery(area/area)
+	var/list/area_machinery = list()
+
+	//apc for the area. can be null if we just created the area
+	area_machinery["apc"] = area.apc
+
+	//disconnect vents. have to clone the list because disconnecting removes it from the list
+	var/list/obj/machinery/atmospherics/components/unary/vent_pump/pumps = area.air_vents.Copy()
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/pump in pumps)
+		pump.disconnect_from_area()
+	area_machinery["pumps"] = pumps
+
+	//disconnect scrubbers. have to clone the list because disconnecting removes it from the list
+	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubbers = area.air_scrubbers.Copy()
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in scrubbers)
+		scrubber.disconnect_from_area()
+	area_machinery["scrubbers"] = scrubbers
+
+	//collect air alarms for reassignment later on
+	var/list/obj/machinery/airalarm/air_alarms = list()
+	for(var/obj/machinery/airalarm/alarm in area)
+		air_alarms += alarm
+	area_machinery["air_alarms"] = air_alarms
+
+	//collect fire alarms for reassignment later on
+	var/list/obj/machinery/firealarm/fire_alarms = list()
+	for(var/obj/machinery/firealarm/alarm in area)
+		fire_alarms += alarm
+	area_machinery["fire_alarms"] = fire_alarms
+
+	return area_machinery
 
 /proc/require_area_resort()
 	GLOB.sortedAreas = null
