@@ -55,6 +55,13 @@
 	description = "Moffuchi's Family Pizzeria chain has a reputation for providing affordable artisanal meals of questionable edibility. This particular pizzeria seems to have been abandoned for some time."
 	suffix = "icemoon_surface_pizza.dmm"
 
+/datum/map_template/ruin/icemoon/smoking_room
+	name = "Smoking Room"
+	id = "smokingroom"
+	description = "Here lies Richard Marlboro. He died the way he lived."
+	suffix = "icemoon_surface_smoking_room.dmm"
+	always_place = TRUE
+
 // above and below ground together
 
 /datum/map_template/ruin/icemoon/mining_site
