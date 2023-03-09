@@ -10229,10 +10229,8 @@
 "dMX" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 4;
-	id = "kitchen_counter";
-	name = "Kitchen Counter Shutters"
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/open/space/basic,
 /area/station/service/kitchen)
@@ -31549,6 +31547,9 @@
 "llg" = (
 /obj/machinery/light/directional/east,
 /obj/structure/table/reinforced,
+/obj/machinery/computer/security/telescreen/entertainment/directional/east{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "llh" = (
@@ -32776,6 +32777,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/spawner/random/entertainment/lighter,
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "lIM" = (
@@ -56175,7 +56177,6 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "tLU" = (
-/obj/machinery/light_switch/directional/south,
 /obj/structure/window{
 	dir = 8
 	},
