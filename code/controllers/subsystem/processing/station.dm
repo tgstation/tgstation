@@ -32,13 +32,12 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	var/list/forced_traits_text_paths = list()
 
 	if (fexists(FUTURE_STATION_TRAITS_FILE))
-		var/future_traits_contents = file2text(FUTURE_STATION_TRAITS_FILE)
+		var/forced_traits_contents = file2text(FUTURE_STATION_TRAITS_FILE)
 		fdel(FUTURE_STATION_TRAITS_FILE)
-		forced_traits_text_paths += json_decode(future_traits_contents)
+		forced_traits_text_paths += json_decode(forced_traits_contents )
 
-	if (length(forced_traits_text_paths))
 		forced_traits_text_paths = SANITIZE_LIST(forced_traits_text_paths)
-		for (var/trait_text_path in forced_traits_text_paths) //The list now includes both future and forced events
+		for (var/trait_text_path in forced_traits_text_paths)
 			var/station_trait_path = text2path(trait_text_path)
 			if (!ispath(station_trait_path, /datum/station_trait) || station_trait_path == /datum/station_trait)
 				var/message = "Invalid station trait path [station_trait_path] was requested in the future station traits!"

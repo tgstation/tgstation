@@ -298,7 +298,7 @@
 	report_message = "Your station was recently reclaimed from a revolutionary commune. We aren't cleaning up after them."
 	trait_type = STATION_TRAIT_NEGATIVE
 	trait_to_give = STATION_TRAIT_REVOLUTIONARY_TRASHING
-	weight = 0
+	weight = 2
 	var/static/list/trash_talk = list(
 		"amyjon",
 		"antilizard",
