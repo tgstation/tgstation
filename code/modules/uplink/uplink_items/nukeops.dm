@@ -499,11 +499,11 @@
 
 /datum/uplink_item/explosives/pinata
 	name = "Weapons Grade Pinata Kit"
-	desc = "A pinata filled with both candy and explosives as well as belts to carry them on, crack it open and see what you get!"
-	item = /obj/item/storage/syndie_kit/pinata
+	desc = "A pinata filled with both candy and explosives as well as two belts to carry them on, crack it open and see what you get!"
+	item = /obj/item/storage/box/syndie_kit/pinata
 	purchasable_from = UPLINK_CLOWN_OPS
 	limited_stock = 1
-	cost = 22 //This is the clown ops version of the grenadier belt.
+	cost = 12 //This is effectively the clown ops version of the grenadier belt where you should on average get 8 explosives if you use a weapon with exactly 10 force.
 	surplus = 0
 
 //Support and Mechs
