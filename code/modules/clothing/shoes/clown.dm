@@ -61,3 +61,20 @@
 	icon_state = "ducky_shoes"
 	inhand_icon_state = "ducky_shoes"
 	squeak_sound = list('sound/effects/quack.ogg'=1) //quack quack quack quack
+
+/obj/item/clothing/shoes/clown_shoes/makasini
+	name = "makasini"
+	desc = "bilaa chto za tyagi takie barxatnie tyagi rebyata fuuuuuf"
+	icon_state = "makasini"
+	inhand_icon_state = "makasini"
+	squeak_sound = list('sound/effects/shoesqush.ogg'=1)
+
+/obj/item/clothing/shoes/clown_shoes/makasini/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_FEET)
+		if(enabled_waddle)
+			user.AddElement(/datum/element/waddling/tyagi)
+
+/obj/item/clothing/shoes/clown_shoes/makasini/dropped(mob/living/user)
+	. = ..()
+	user.RemoveElement(/datum/element/waddling/tyagi)
