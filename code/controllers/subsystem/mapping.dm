@@ -535,7 +535,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	if (change_to.config_min_users > 0 && filter_threshold != 0 && filter_threshold < change_to.config_min_users)
 		message_admins("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
 		log_game("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-	if (change_to.config_max_users > 0 && filter_threshold != 0 && filter_threshold > change_to.config_max_users)
+	if (change_to.config_max_users > 0 && filter_threshold > change_to.config_max_users)
 		message_admins("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
 		log_game("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
 
