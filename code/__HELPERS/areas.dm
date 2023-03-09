@@ -150,10 +150,12 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	for(var/obj/machinery/firealarm/alarm in oldA)
 		fire_alarms += alarm
 
+	var/area/collected_areas = list("[oldA.name]" = oldA) //collect areas of these turfs as they can become empty & need to be cleaned up after the merge
 	for(var/i in 1 to length(turfs))
 		var/turf/thing = turfs[i]
-
 		var/area/old_area = thing.loc
+		collected_areas[old_area.name] = old_area
+
 		old_area.turfs_to_uncontain += thing
 		newA.contents += thing
 		newA.contained_turfs += thing
@@ -184,10 +186,13 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	to_chat(creator, span_notice("You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered."))
 	creator.log_message("created a new area: [AREACOORD(creator)] (previously \"[oldA.name]\")", LOG_GAME)
 
-	//no more turfs in the old area. Time to clean up
-	if(!oldA.has_contained_turfs())
-		message_admins("Area [oldA.name] has been deleted!.")
-		qdel(oldA)
+	//check areas of turfs merged into the new area if their empty
+	for(var/area_name in collected_areas)
+		var/area/merged_area = collected_areas[area_name]
+		//no more turfs in this area. Time to clean up
+		if(!merged_area.has_contained_turfs())
+			message_admins("Area [area_name] has been deleted!.")
+			qdel(merged_area)
 
 	return TRUE
 
