@@ -22,9 +22,15 @@
 /datum/round_event/pirates/start()
 	send_pirate_threat(chosen_gang)
 
-/proc/send_pirate_threat(datum/pirate_gang/chosen_gang)
+/proc/send_pirate_threat(datum/pirate_gang/chosen_gang, is_heavy)
 	if(!chosen_gang)
-		chosen_gang = pick_n_take(GLOB.pirate_gangs)
+		if(!is_heavy)
+			chosen_gang = pick_n_take(GLOB.light_pirate_gangs)
+		else
+			chosen_gang = pick_n_take(GLOB.heavy_pirate_gangs)
+	///If there was nothing to pull from our requested list, stop here.
+	if(!chosen_gang)
+		return
 	//set payoff
 	var/payoff = 0
 	var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_CAR)
