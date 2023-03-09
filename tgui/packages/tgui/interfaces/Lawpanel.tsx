@@ -46,11 +46,11 @@ type Silicon = {
   borg_name: string;
   borg_type: string;
   // List of our laws, this is almost never null. If it is null, that's an error.
-  laws: null | Law[];
+  laws: Law[] | null;
   // String, name of our master AI. Null means no master or we're not a borg
-  master_ai: null | string;
+  master_ai: string | null;
   // TRUE, we're law-synced to our master AI. FALSE, we're not, null, we're not a borg
-  borg_synced: null | BooleanLike;
+  borg_synced: BooleanLike | null;
   // REF() to our silicon
   ref: string;
 };
@@ -229,8 +229,12 @@ export const SiliconReadout = (props: { cyborg: Silicon }, context) => {
               <Stack.Item>
                 {cyborg.laws === null ? (
                   <Button
-                    content={`This silicon has a null law datum. That's a problem!
-                Click this this give them one.`}
+                    fluid
+                    textAlign="center"
+                    color="danger"
+                    content={`This silicon has a null law datum. This isn't
+                      supposed to ever happen! Issue report
+                      and then click this this give them one.`}
                     onClick={() => act('give_law_datum', { ref: cyborg.ref })}
                   />
                 ) : (
