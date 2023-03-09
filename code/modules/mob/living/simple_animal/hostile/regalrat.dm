@@ -46,6 +46,11 @@
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
+	if(prob(0.01))
+		icon_state = "regalrat_queen"
+		icon_living = "regalrat_queen"
+		icon_dead = "regalrat_queen_dead"
+
 /mob/living/simple_animal/hostile/regalrat/Destroy()
 	QDEL_NULL(domain)
 	QDEL_NULL(riot)
