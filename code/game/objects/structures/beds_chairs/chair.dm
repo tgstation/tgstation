@@ -204,7 +204,7 @@
 	update_armrest()
 
 /obj/structure/chair/comfy/brown
-	color = rgb(44, 33, 24)
+	color = rgb(70, 47, 28)
 
 /obj/structure/chair/comfy/beige
 	color = rgb(240, 238, 198)
