@@ -636,7 +636,7 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 2
 	required_applicants = 2
-	weight = 2
+	weight = 4
 	cost = 7
 	minimum_players = 25
 	repeatable = TRUE
