@@ -18,8 +18,10 @@
 	pixel_y = rand(-3,3)
 	pixel_x = rand(-3,3)
 
-/obj/item/sticker/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/sticker/afterattack(atom/target, mob/living/user, prox, params)
 	. = ..()
+	if(!prox)
+		return
 	if(!isliving(target) && !isobj(target) && !isturf(target))
 		return
 	user.visible_message(span_notice("[user] sticks [src] to [target]!"),span_notice("You stick [src] to [target]!"))
