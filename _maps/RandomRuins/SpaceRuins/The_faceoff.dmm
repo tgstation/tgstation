@@ -863,7 +863,6 @@
 	pixel_y = -9
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 4
 	},
