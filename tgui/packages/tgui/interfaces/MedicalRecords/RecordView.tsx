@@ -24,8 +24,8 @@ export const MedicalRecordView = (props, context) => {
     gender,
     major_disabilities,
     minor_disabilities,
-    p_stat,
-    m_stat,
+    physical_status,
+    mental_status,
     name,
     quirk_notes,
     rank,
@@ -125,16 +125,16 @@ export const MedicalRecordView = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item label="Physical Status">
               <EditableText
-                field="p_stat"
+                field="physical_status"
                 target_ref={crew_ref}
-                text={p_stat}
+                text={physical_status}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Mental Status">
               <EditableText
-                field="m_stat"
+                field="mental_status"
                 target_ref={crew_ref}
-                text={m_stat}
+                text={mental_status}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Quirks">

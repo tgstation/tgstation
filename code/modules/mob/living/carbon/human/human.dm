@@ -173,27 +173,21 @@
 			if(!(ACCESS_MEDICAL in access))
 				to_chat(human_user, span_warning("ERROR: Invalid access"))
 				return
-			if(href_list["p_stat"])
-				var/health_status = input(human_user, "Specify a new physical status for this person.", "Medical HUD", target_record.p_stat) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
-				if(!target_record)
-					return
-				if(!human_user.canUseHUD())
-					return
-				if(!HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
+			if(href_list["physical_status"])
+				var/health_status = tgui_input_list(human_user, "Specify a new physical status for this person.", "Medical HUD", PHYSICAL_STATUSES(), target_record.physical_status)
+				if(!target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 					return
 				if(health_status && health_status != "Cancel")
-					target_record.p_stat = health_status
+					target_record.physical_status = health_status
+
 				return
-			if(href_list["m_stat"])
-				var/health_status = input(human_user, "Specify a new mental status for this person.", "Medical HUD", target_record.m_stat) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
-				if(!target_record)
-					return
-				if(!human_user.canUseHUD())
-					return
-				if(!HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
+			if(href_list["mental_status"])
+				var/health_status = tgui_input_list(human_user, "Specify a new mental status for this person.", "Medical HUD", MENTAL_STATUSES(), target_record.mental_status)
+				if(!target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 					return
 				if(health_status && health_status != "Cancel")
-					target_record.m_stat = health_status
+					target_record.mental_status = health_status
+
 				return
 			if(href_list["quirk"])
 				var/quirkstring = get_quirk_string(TRUE, CAT_QUIRK_ALL)
