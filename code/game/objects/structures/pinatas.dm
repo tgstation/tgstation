@@ -15,7 +15,7 @@
 
 /obj/structure/pinata/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/pinata, candy = candy_options, death_drop = destruction_loot)
+	AddElement(/datum/element/pinata, candy = candy_options, death_drop = destruction_loot)
 
 /obj/structure/pinata/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	. = ..()
