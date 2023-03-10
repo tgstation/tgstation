@@ -33,6 +33,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		//Both are abstract types meant to scream bloody murder if spawned in raw
 		/obj/item/organ/external,
 		/obj/item/organ/external/wings,
+		// runs logic on the mob owner, which cannot get passed
+		/atom/movable/screen/plane_master/ghost,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
