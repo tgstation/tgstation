@@ -33,7 +33,6 @@
 	var/list/parameters = params2list(params)
 	if(!LAZYACCESS(parameters, ICON_X) || !LAZYACCESS(parameters, ICON_Y))
 		return
-	user.visible_message(span_notice("[user] sticks [src] to [target]!"),span_notice("You stick [src] to [target]!"))
 	var/divided_size = world.icon_size / 2
 	var/px = text2num(LAZYACCESS(parameters, ICON_X)) - divided_size
 	var/py = text2num(LAZYACCESS(parameters, ICON_Y)) - divided_size
@@ -49,6 +48,11 @@
 	sticker_overlay.pixel_y = py
 	target.add_overlay(sticker_overlay)
 	attached = target
+	if(isliving(target) && user)
+		var/mob/living/victim = target
+		if(victim.client)
+			user.log_message("stuck [src] to [key_name(victim)]", LOG_ATTACK)
+			victim.log_message("had [src] stuck to them by [key_name(user)]", LOG_ATTACK)
 	register_signals(user)
 	moveToNullspace()
 
@@ -87,7 +91,7 @@
 	. = ..()
 	if(!. && prob(50))
 		stick(hit_atom,rand(-7,7),rand(-7,7))
-		attached.balloon_alert("the sticker lands on its sticky side!"))
+		attached.balloon_alert("the sticker lands on its sticky side!")
 
 ///Signal handler for COMSIG_TURF_EXPOSE, deletes this sticker if the temperature is above 100C and it is flammable
 /obj/item/sticker/proc/on_turf_expose(datum/source, datum/gas_mixture/air, exposed_temperature)
