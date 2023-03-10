@@ -18,7 +18,7 @@
 #define UNTIL(X) while(!(X)) stoplag()
 
 #ifdef EXPERIMENT_515_DONT_CACHE_REF
-// REMOVE this and replace with `ref` when removing EXPERIMENT_515_DONT_CACHE_REF
+/// Takes a datum as input, returns its ref string
 #define text_ref(datum) ref(datum)
 #else
 /// Takes a datum as input, returns its ref string, or a cached version of it
