@@ -293,3 +293,18 @@
 	for(var/i in 1 to 10)
 		cardpacktype = pick(subtypesof(/obj/item/cardpack))
 		new cardpacktype(C)
+
+/datum/supply_pack/costumes_toys/stickers
+	name = "Sticker Crate"
+	desc = "This crate contains a random assortment of stickers."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list()
+
+/datum/supply_pack/costumes_toys/stickers/fill(obj/structure/closet/crate/C)
+	var/list/types = subtypesof(/obj/item/sticker)
+	for(var/i in 1 to rand(4,8))
+		var/type = pick(types)
+		new type(C)
+	if(prob(40)) // a pair of googly eyes because funny
+		new /obj/item/sticker/googly(C)
+		new /obj/item/sticker/googly(C)
