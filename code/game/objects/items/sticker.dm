@@ -1,3 +1,4 @@
+/// parent type for all other stickers. do not spawn directly
 /obj/item/sticker
 	name = "sticker"
 	desc = "A sticker with some strong adhesive on the back, sticks to stuff!"
@@ -29,13 +30,16 @@
 		return
 	if(!isliving(target) && !isobj(target) && !isturf(target))
 		return
-	user.visible_message(span_notice("[user] sticks [src] to [target]!"),span_notice("You stick [src] to [target]!"))
 	var/list/parameters = params2list(params)
+	if(!LAZYACCESS(parameters, ICON_X) || !LAZYACCESS(parameters, ICON_Y))
+		return
+	user.visible_message(span_notice("[user] sticks [src] to [target]!"),span_notice("You stick [src] to [target]!"))
 	var/divided_size = world.icon_size / 2
-	var/py = text2num(parameters["icon-y"]) - divided_size
-	var/px = text2num(parameters["icon-x"]) - divided_size
+	var/px = text2num(LAZYACCESS(parameters, ICON_X)) - divided_size
+	var/py = text2num(LAZYACCESS(parameters, ICON_Y)) - divided_size
 	. |= AFTERATTACK_PROCESSED_ITEM
 	stick(target,user,px,py)
+	return .
 
 ///Sticks this sticker to the target, with the pixel offsets being px and py.
 /obj/item/sticker/proc/stick(atom/target, mob/living/user, px,py)
@@ -48,16 +52,14 @@
 	moveToNullspace()
 
 ///Makes this sticker move from nullspace and cut the overlay from the object it is attached to, silent for no visible message.
-/obj/item/sticker/proc/peel(datum/source, silent = FALSE)
+/obj/item/sticker/proc/peel(datum/source)
 	SIGNAL_HANDLER
 	if(!attached)
 		return
 	attached.cut_overlay(sticker_overlay)
 	sticker_overlay = null
 	forceMove(attached.drop_location())
-	if(!silent)
-		visible_message(span_notice("[src] falls off [attached]."))
-	pixel_y = rand(-3,3)
+	pixel_y = rand(-4,1)
 	pixel_x = rand(-3,3)
 	unregister_signals()
 	attached = null
@@ -91,7 +93,7 @@
 	SIGNAL_HANDLER
 	if(!(resistance_flags & FLAMMABLE) || exposed_temperature <= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		return
-	peel(silent=TRUE)
+	peel()
 	qdel(src)
 
 ///Signal handler for COMSIG_LIVING_IGNITED, deletes this sticker, if it is flammable
@@ -99,7 +101,7 @@
 	SIGNAL_HANDLER
 	if(!(resistance_flags & FLAMMABLE))
 		return
-	peel(silent=TRUE)
+	peel()
 	qdel(src)
 
 /// Signal handler for COMSIG_PARENT_QDELETING, deletes this sticker if the attached object is deleted
