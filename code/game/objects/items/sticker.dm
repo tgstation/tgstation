@@ -69,7 +69,8 @@
 
 /obj/item/sticker/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(!. && prob(50))
+	if(. || prob(50))
+		return
 		stick(hit_atom,rand(-7,7),rand(-7,7))
 		attached.visible_message(span_notice("[src] lands on [attached] with its sticky side!"))
 
