@@ -12,8 +12,6 @@
 	return image(icon, icon_state, layer = layer)
 
 /datum/bodypart_overlay/simple/color_image(image/overlay, layer, obj/item/bodypart/limb)
-	if(!overlay)
-		return
 
 	overlay.color = draw_color
 
