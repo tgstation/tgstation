@@ -243,12 +243,18 @@
 ///Current partner target
 #define BB_BABIES_TARGET "BB_babies_target"
 
-///Bileworm AI keys
+// Bileworm AI keys
 
 #define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"
 #define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
 #define BB_BILEWORM_DEVOUR "BB_bileworm_devour"
 
-/// Fugu AI Keys
+// Spider AI keys
+/// Key where we store a turf to put webs on
+#define BB_SPIDER_WEB_TARGET "BB_spider_web_target"
+/// Key where we store the web-spinning ability
+#define BB_SPIDER_WEB_ACTION "BB_spider_web_action"
 
+// Fugu AI keys
+/// Key where we store the inflating ability
 #define BB_FUGU_INFLATE "BB_fugu_inflate"

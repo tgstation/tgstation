@@ -1,4 +1,4 @@
-/// For now, essentially just a Simple Hostile but room for expansion
+/// Attacks people it can see, spins webs if it can't see anything to attack.
 /datum/ai_controller/basic_controller/giant_spider
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
@@ -13,6 +13,8 @@
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/insect, // Space spiders are taxonomically insects not arachnids, don't DM me
+		/datum/ai_planning_subtree/find_unwebbed_turf,
+		/datum/ai_planning_subtree/spin_web,
 	)
 
 /// Giant spider which won't attack structures
@@ -21,9 +23,11 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/insect,
+		/datum/ai_planning_subtree/find_unwebbed_turf,
+		/datum/ai_planning_subtree/spin_web,
 	)
 
-/// Used by Araneus, who only attacks those who attack first
+/// Used by Araneus, who only attacks those who attack first. He is houstrained and will not web up the HoS office.
 /datum/ai_controller/basic_controller/giant_spider/retaliate
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
@@ -36,7 +40,7 @@
 		/datum/ai_planning_subtree/random_speech/insect,
 	)
 
-/// Retaliates, hunts other maintenance creatures, and spins webs
+/// Retaliates, hunts other maintenance creatures, runs away from larger attackers, and spins webs.
 /datum/ai_controller/basic_controller/giant_spider/pest
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/ours_or_smaller(), // Hunt mobs our size
@@ -51,4 +55,6 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/insect,
+		/datum/ai_planning_subtree/find_unwebbed_turf,
+		/datum/ai_planning_subtree/spin_web,
 	)
