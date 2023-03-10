@@ -2663,9 +2663,6 @@
 /area/space/nearstation)
 "bkl" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "bku" = (
@@ -9357,11 +9354,8 @@
 /area/station/service/hydroponics)
 "dOz" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
-/area/station/hallway/primary/starboard)
+/area/station/commons/storage/tools)
 "dOP" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/tank/oxygen{
@@ -10123,9 +10117,6 @@
 /area/station/maintenance/department/engine/atmos)
 "ecL" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/structure/transit_tube/horizontal,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -12904,9 +12895,6 @@
 /area/space/nearstation)
 "fdM" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	id = "rdrnd";
@@ -16403,9 +16391,6 @@
 /area/station/construction/mining/aux_base)
 "grm" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "grn" = (
@@ -18696,9 +18681,6 @@
 "hei" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	id = "com_guest2";
@@ -19639,9 +19621,6 @@
 /area/station/maintenance/department/engine)
 "huy" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/construction)
 "huz" = (
@@ -23665,9 +23644,6 @@
 "iPF" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/aft)
 "iPU" = (
@@ -25994,9 +25970,6 @@
 /area/station/science/xenobiology)
 "jIy" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "jIB" = (
@@ -27531,9 +27504,6 @@
 "kke" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/command/teleporter)
 "kkl" = (
@@ -27761,14 +27731,13 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "kow" = (
+/obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 8
 	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/station/hallway/secondary/spacebridge)
+/area/station/tcommsat/server)
 "koz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral{
@@ -35096,9 +35065,6 @@
 /area/station/security/tram)
 "mTU" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/structure/transit_tube/horizontal,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -35874,9 +35840,6 @@
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
 	name = "Bridge Blast Door"
@@ -37237,9 +37200,6 @@
 "nJG" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
 	name = "Bridge Blast Door"
@@ -42140,9 +42100,6 @@
 "pzL" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/security/checkpoint/customs/auxiliary)
 "pzR" = (
@@ -42701,9 +42658,6 @@
 /area/station/service/chapel/storage)
 "pIS" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
 	name = "Bridge Blast Door"
@@ -44420,9 +44374,6 @@
 "qiN" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 4
 	},
@@ -44998,9 +44949,6 @@
 /area/station/command/heads_quarters/hos)
 "qtG" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/fore)
 "qtQ" = (
@@ -49420,9 +49368,6 @@
 "rOW" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/science/server)
 "rOX" = (
@@ -52358,9 +52303,6 @@
 "sLU" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "sLZ" = (
@@ -53360,9 +53302,6 @@
 /area/station/hallway/secondary/service)
 "tbu" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/science/explab)
 "tbB" = (
@@ -53385,9 +53324,6 @@
 /area/station/science/lab)
 "tbD" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/science/lab)
 "tbK" = (
@@ -54113,9 +54049,6 @@
 "tqD" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "tqF" = (
@@ -54877,9 +54810,6 @@
 /area/station/medical/medbay/aft)
 "tCD" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/science/auxlab/firing_range)
 "tCG" = (
@@ -55895,9 +55825,6 @@
 /area/station/medical/pharmacy)
 "tUD" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/tcommsat/server)
 "tUH" = (
@@ -57620,9 +57547,6 @@
 "uya" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
 "uye" = (
@@ -58816,9 +58740,6 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "uRF" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
 "uRJ" = (
@@ -60626,13 +60547,8 @@
 /area/station/engineering/storage/tech)
 "vtC" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/hallway/secondary/spacebridge)
+/area/station/hallway/secondary/entry)
 "vtL" = (
 /obj/structure/cable,
 /obj/machinery/duct,
@@ -62461,17 +62377,11 @@
 /area/station/hallway/primary/aft)
 "vVP" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/medical/virology)
 "vVQ" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/command)
 "vVS" = (
@@ -62625,9 +62535,6 @@
 "vXH" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/science/lower)
 "vXL" = (
@@ -62962,9 +62869,6 @@
 /area/station/maintenance/starboard/greater)
 "wdp" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "wdB" = (
@@ -63583,9 +63487,6 @@
 "wos" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/tcommsat/server)
 "wow" = (
@@ -64399,9 +64300,6 @@
 /area/station/maintenance/starboard/fore)
 "wBI" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/science/cytology)
 "wBO" = (
@@ -64753,13 +64651,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_white,
 /area/station/engineering/atmos)
-"wIS" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/station/hallway/secondary/spacebridge)
 "wIY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -65199,9 +65090,6 @@
 /area/station/service/abandoned_gambling_den)
 "wOs" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "wOC" = (
@@ -66389,9 +66277,6 @@
 /area/station/maintenance/starboard/fore)
 "xfc" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/science/research)
 "xff" = (
@@ -68524,9 +68409,6 @@
 "xHm" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	id = "com_guest";
@@ -70114,9 +69996,6 @@
 "ybh" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/captain)
 "ybj" = (
@@ -70515,9 +70394,6 @@
 /area/station/maintenance/starboard/fore)
 "yfQ" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "yfX" = (
@@ -89549,8 +89425,8 @@ blb
 blb
 hem
 sRg
-qOm
-qOm
+dOz
+dOz
 sRg
 trS
 qiz
@@ -94479,12 +94355,12 @@ tIL
 tYX
 dDB
 dDB
-wIS
+qtl
 jOw
 wnB
 uth
 uMW
-vtC
+uMC
 dDB
 dDB
 uXY
@@ -94736,12 +94612,12 @@ wYF
 tYX
 dDB
 dDB
-wIS
+qtl
 jSK
 qpg
 uuv
 uMX
-vtC
+uMC
 blb
 blb
 uXY
@@ -94999,8 +94875,8 @@ qBy
 uwl
 uNk
 vPC
-wIS
-wIS
+qtl
+qtl
 uXY
 iTn
 nBw
@@ -95250,7 +95126,7 @@ tJG
 xli
 blb
 jKr
-wIS
+qtl
 qTM
 vHL
 ozd
@@ -95513,8 +95389,8 @@ qSU
 uwx
 uOd
 kqo
-wIS
-wIS
+qtl
+qtl
 uXY
 ivX
 erK
@@ -95764,12 +95640,12 @@ tIL
 tYX
 dDB
 dDB
-wIS
+qtl
 jSK
 rjz
 uxi
 uMX
-kow
+vnb
 blb
 blb
 uXY
@@ -96021,12 +95897,12 @@ tIL
 tYX
 dDB
 dDB
-wIS
+qtl
 mDA
 rrx
 uyg
 uOh
-kow
+vnb
 dDB
 dDB
 uXY
@@ -105835,18 +105711,18 @@ teG
 xBx
 tuT
 tuT
-oig
-oig
+vtC
+vtC
 tuT
 tuT
-oig
-oig
+vtC
+vtC
 tuT
 tuT
 tuT
-oig
-oig
-oig
+vtC
+vtC
+vtC
 tuT
 tuT
 dDB
@@ -106604,17 +106480,17 @@ gZM
 ich
 meN
 tZJ
-oig
+vtC
 ijI
-oig
+vtC
 tuT
-oig
-oig
-oig
+vtC
+vtC
+vtC
 tuT
-oig
+vtC
 ijI
-oig
+vtC
 bvh
 meN
 rDj
@@ -106858,23 +106734,23 @@ wBh
 lcC
 qKv
 tuT
-oig
-oig
-oig
-oig
+vtC
+vtC
+vtC
+vtC
 kxL
-oig
+vtC
 blb
 dDB
 dDB
 dDB
 blb
-oig
+vtC
 kxL
-oig
-oig
-oig
-oig
+vtC
+vtC
+vtC
+vtC
 tuT
 dDB
 dDB
@@ -107118,17 +106994,17 @@ tuT
 dDB
 dDB
 blb
-oig
+vtC
 cWZ
-oig
+vtC
 blb
 dDB
 dDB
 dDB
 blb
-oig
+vtC
 cWZ
-oig
+vtC
 blb
 dDB
 dDB
@@ -107369,7 +107245,7 @@ oig
 tuT
 aNX
 idp
-oig
+vtC
 blb
 blb
 blb
@@ -107626,7 +107502,7 @@ blb
 oig
 oqg
 buL
-oig
+vtC
 blb
 dDB
 dDB
@@ -107883,7 +107759,7 @@ blb
 oig
 nJc
 emw
-oig
+vtC
 blb
 dDB
 dDB
@@ -108397,7 +108273,7 @@ blb
 oig
 sSw
 idp
-oig
+vtC
 blb
 dDB
 dDB
@@ -108614,7 +108490,7 @@ xdc
 ugj
 xQW
 uYo
-dOz
+urv
 dDB
 blb
 tjj
@@ -108654,7 +108530,7 @@ blb
 oig
 sSw
 idp
-oig
+vtC
 blb
 dDB
 dDB
@@ -108911,7 +108787,7 @@ oig
 tuT
 sir
 idp
-oig
+vtC
 blb
 blb
 blb
@@ -109174,17 +109050,17 @@ tuT
 dDB
 dDB
 blb
-oig
+vtC
 ijI
-oig
+vtC
 blb
 dDB
 dDB
 dDB
 blb
-oig
+vtC
 ijI
-oig
+vtC
 blb
 dDB
 dDB
@@ -109428,23 +109304,23 @@ qtg
 rwo
 gAp
 tuT
-oig
-oig
-oig
-oig
+vtC
+vtC
+vtC
+vtC
 kxL
-oig
+vtC
 blb
 dDB
 dDB
 dDB
 blb
-oig
+vtC
 kxL
-oig
-oig
-oig
-oig
+vtC
+vtC
+vtC
+vtC
 tuT
 dDB
 dDB
@@ -109688,17 +109564,17 @@ sqh
 bEN
 eVu
 jGA
-oig
+vtC
 cWZ
-oig
+vtC
 muj
-oig
-oig
-oig
+vtC
+vtC
+vtC
 tuT
-oig
+vtC
 cWZ
-oig
+vtC
 rzJ
 vJN
 wZI
@@ -110461,18 +110337,18 @@ tGU
 tuT
 tuT
 tuT
-oig
-oig
+vtC
+vtC
 tuT
 tuT
-oig
-oig
+vtC
+vtC
 tuT
 tuT
 tuT
-oig
-oig
-oig
+vtC
+vtC
+vtC
 tuT
 tuT
 dDB
@@ -110670,7 +110546,7 @@ tSu
 uhj
 xSZ
 uZA
-dOz
+urv
 dDB
 blb
 tjj
@@ -110713,8 +110589,8 @@ kTw
 tqX
 wkm
 svs
-oig
-oig
+vtC
+vtC
 tuT
 dDB
 dDB
@@ -117125,7 +117001,7 @@ eXo
 srH
 vqX
 gCo
-srH
+kow
 eXo
 eXo
 eXo
