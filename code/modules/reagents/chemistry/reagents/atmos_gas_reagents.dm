@@ -85,9 +85,11 @@
 /datum/reagent/nitrium_high_metabolization/on_mob_metabolize(mob/living/breather)
 	. = ..()
 	ADD_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
+	ADD_TRAIT(breather, TRAIT_STUNIMMUNE, type)
 
 /datum/reagent/nitrium_high_metabolization/on_mob_end_metabolize(mob/living/breather)
 	REMOVE_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
+	REMOVE_TRAIT(breather, TRAIT_STUNIMMUNE, type)
 	return ..()
 
 /datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, delta_time, times_fired)
