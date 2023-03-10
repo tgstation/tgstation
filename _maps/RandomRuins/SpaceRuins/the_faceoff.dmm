@@ -446,11 +446,6 @@
 /obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
-"sw" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/turf_decal/stripes/red/full,
-/turf/closed/wall/mineral/titanium,
-/area/ruin/space)
 "sZ" = (
 /obj/structure/sign/poster/contraband/random/directional/east,
 /obj/effect/turf_decal/stripes/red/full,
@@ -2108,7 +2103,7 @@ gN
 ZC
 Lg
 Ef
-sw
+sa
 xI
 sa
 Ds
