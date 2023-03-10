@@ -82,3 +82,27 @@
 
 /datum/targetting_datum/basic/ignore_faction/faction_check(mob/living/living_mob, mob/living/the_target)
 	return FALSE
+
+/// Subtype which searches for mobs of a size relative to ours
+/datum/targetting_datum/basic/of_size
+	var/find_smaller = TRUE
+	var/inclusive = TRUE
+
+/datum/targetting_datum/basic/of_size/can_attack(mob/living/owner, mob/living/target)
+	if(!istype(target))
+		return FALSE
+	. = ..()
+	if(!.)
+		return FALSE
+	if(inclusive && owner.mob_size == target.mob_size)
+		return TRUE
+	if(owner.mob_size > target.mob_size)
+		return find_smaller
+	return !find_smaller
+
+// This is just using the default values but the subtype makes it clearer
+/datum/targetting_datum/basic/of_size/ours_or_smaller
+
+/datum/targetting_datum/basic/of_size/larger
+	find_smaller = FALSE
+	inclusive = FALSE

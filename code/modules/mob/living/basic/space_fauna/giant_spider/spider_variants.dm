@@ -339,7 +339,9 @@
 	icon_state = "maint_spider"
 	icon_living = "maint_spider"
 	icon_dead = "maint_spider_dead"
+	can_be_held = TRUE
 	mob_size = MOB_SIZE_TINY
+	held_w_class = WEIGHT_CLASS_TINY
 	density = FALSE
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	maxHealth = 10
@@ -348,28 +350,18 @@
 	melee_damage_upper = 1
 	poison_per_bite = 5
 	poison_type = /datum/reagent/toxin/mindbreaker
-	speed = 1
+	speed = 0
 	player_speed_modifier = 0
+	web_speed = 0.25
 	menu_description = "Fragile spider variant which is not good for much other than laying webs."
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider/pest
-	apply_spider_antag = FALSE // TODO: replace this its stupid
-	/// List of typepaths of mobs to hunt, mostly small and defenceless ones
-	var/list/hunt_mobs = list( // TODO: Replace with behaviour that just seeks out nearby tiny mobs
-		/mob/living/basic/axolotl,
-		/mob/living/simple_animal/hostile/retaliate/bat,
-		/mob/living/simple_animal/hostile/bee,
-		/mob/living/simple_animal/butterfly,
-		/mob/living/simple_animal/chick,
-		/mob/living/basic/cockroach,
-		/mob/living/basic/frog,
-		/mob/living/basic/mouse,
-	)
+	apply_spider_antag = FALSE
 
 /mob/living/basic/giant_spider/maintenance/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/duct_spider_web)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/tiny_mob_hunter)
-	ai_controller.blackboard[BB_BASIC_FOODS] = hunt_mobs

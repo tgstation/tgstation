@@ -221,6 +221,11 @@
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
 
+///Targetting keys for something to run away from, if you need to store this separately from current target
+#define BB_BASIC_MOB_FLEE_TARGET "BB_basic_flee_target"
+#define BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION "BB_basic_flee_target_hiding_location"
+#define BB_FLEE_TARGETTING_DATUM "flee_targetting_datum"
+
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
 
