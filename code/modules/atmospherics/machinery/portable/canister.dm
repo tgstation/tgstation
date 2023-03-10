@@ -428,6 +428,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if((flags_1 & NODECONSTRUCT_1))
+		qdel(src)
 		return
 	if(!(machine_stat & BROKEN))
 		canister_break()

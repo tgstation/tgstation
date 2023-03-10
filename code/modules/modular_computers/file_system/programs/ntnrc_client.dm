@@ -52,7 +52,6 @@
 	. = ..()
 	if(.)
 		return
-
 	var/datum/ntnet_conversation/channel = SSmodular_computers.get_chat_channel_by_id(active_channel)
 	var/authed = FALSE
 	if(channel && ((channel.channel_operator == src) || netadmin_mode))
@@ -218,7 +217,7 @@
 	return data
 
 /datum/computer_file/program/chatclient/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	if(!SSmodular_computers.chat_channels)
 		return data
 

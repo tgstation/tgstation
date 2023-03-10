@@ -26,7 +26,7 @@
 	return FALSE
 
 /datum/computer_file/program/robotact/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	if(!iscyborg(user))
 		return data
 

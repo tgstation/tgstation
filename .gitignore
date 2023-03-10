@@ -203,13 +203,9 @@ Temporary Items
 !/config/title_screens/images/exclude
 
 #Linux docker
-/tools/LinuxOneShot/SetupProgram/obj/*
-/tools/LinuxOneShot/SetupProgram/bin/*
-/tools/LinuxOneShot/SetupProgram/.vs
-/tools/LinuxOneShot/Database
-/tools/LinuxOneShot/TGS_Config
-/tools/LinuxOneShot/TGS_Instances
-/tools/LinuxOneShot/TGS_Logs
+/tools/tgs_test/.vs/*
+/tools/tgs_test/bin/*
+/tools/tgs_test/obj/*
 
 # Built auxtools libraries and intermediate files
 aux*.dll

@@ -61,8 +61,7 @@
 	return FALSE
 
 /datum/computer_file/program/budgetorders/ui_data()
-	. = ..()
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["location"] = SSshuttle.supply.getStatusText()
 	data["department"] = "Cargo"
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(cargo_account)

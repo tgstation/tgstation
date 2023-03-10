@@ -18,7 +18,7 @@
 /proc/log_prayer(text)
 	logger.Log(LOG_CATEGORY_GAME_PRAYER, text)
 
-/// Logging for changes to ID card access
+/// Logging for logging in & out of the game, with error messages.
 /proc/log_access(text)
 	logger.Log(LOG_CATEGORY_GAME_ACCESS, text)
 

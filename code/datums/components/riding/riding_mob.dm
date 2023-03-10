@@ -77,17 +77,7 @@
 	if(can_be_driven)
 		//let the player take over if they should be controlling movement
 		ADD_TRAIT(ridden, TRAIT_AI_PAUSED, REF(src))
-	if(rider.pulling == ridden)
-		rider.stop_pulling()
-	RegisterSignal(rider, COMSIG_LIVING_TRY_PULL, PROC_REF(on_rider_try_pull))
 	return ..()
-
-/datum/component/riding/creature/proc/on_rider_try_pull(mob/living/rider_pulling, atom/movable/target, force)
-	SIGNAL_HANDLER
-	if(target == parent)
-		var/mob/living/ridden = parent
-		ridden.balloon_alert(rider_pulling, "not while riding it!")
-		return COMSIG_LIVING_CANCEL_PULL
 
 /datum/component/riding/creature/vehicle_mob_unbuckle(mob/living/formerly_ridden, mob/living/former_rider, force = FALSE)
 	if(istype(formerly_ridden) && istype(former_rider))
@@ -96,7 +86,6 @@
 	remove_abilities(former_rider)
 	if(!formerly_ridden.buckled_mobs.len)
 		REMOVE_TRAIT(formerly_ridden, TRAIT_AI_PAUSED, REF(src))
-	UnregisterSignal(former_rider, COMSIG_LIVING_TRY_PULL)
 	// We gotta reset those layers at some point, don't we?
 	former_rider.layer = MOB_LAYER
 	formerly_ridden.layer = MOB_LAYER

@@ -1,6 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes:
-  - bugfix: "Landing a monster tackle that applies an auto aggro-grab while stamcrit will no longer try applying an aggro-grab that leads to a permanent slowdown to the user, and will instead just knock the target down a bit harder."
-  - bugfix: "Launching dolphin and rocket glove tackles on targets at ranges shorter than their minimum distance will be more accurate at targeting where you clicked at, rather than locking you into the nearest cardinal/diagonal direction."
-  - balance: "You can now knock more things off a table full of stuff by tackling it than you could before."

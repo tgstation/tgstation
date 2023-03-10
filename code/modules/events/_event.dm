@@ -37,8 +37,8 @@
 	var/dynamic_should_hijack = FALSE
 
 	/// Datum that will handle admin options for forcing the event.
-	/// If there are no options, just leave it null.
-	var/datum/event_admin_setup/admin_setup = null
+	/// If there are no options, just leave it as an empty list.
+	var/list/datum/event_admin_setup/admin_setup = list()
 	/// Flags dictating whether this event should be run on certain kinds of map
 	var/map_flags = NONE
 
@@ -46,8 +46,12 @@
 	if(config && !wizardevent) // Magic is unaffected by configs
 		earliest_start = CEILING(earliest_start * CONFIG_GET(number/events_min_time_mul), 1)
 		min_players = CEILING(min_players * CONFIG_GET(number/events_min_players_mul), 1)
-	if(admin_setup)
-		admin_setup = new admin_setup(src)
+	if(!length(admin_setup))
+		return
+	var/list/admin_setup_types = admin_setup.Copy()
+	admin_setup.Cut()
+	for(var/admin_setup_type in admin_setup_types)
+		admin_setup += new admin_setup_type(src)
 
 /datum/round_event_control/wizard
 	category = EVENT_CATEGORY_WIZARD
@@ -139,9 +143,10 @@ Runs the event
 	*/
 	UnregisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT)
 	var/datum/round_event/round_event = new typepath(TRUE, src)
-	if(admin_forced && admin_setup)
+	if(admin_forced && length(admin_setup))
 		//not part of the signal because it's conditional and relies on usr heavily
-		admin_setup.apply_to_event(round_event)
+		for(var/datum/event_admin_setup/admin_setup_datum in admin_setup)
+			admin_setup_datum.apply_to_event(round_event)
 	SEND_SIGNAL(src, COMSIG_CREATED_ROUND_EVENT, round_event)
 	round_event.setup()
 	round_event.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)

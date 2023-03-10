@@ -84,6 +84,7 @@
 	overlay_icon_state = "bg_demon_border"
 
 	buttontooltipstyle = "cult"
+	button_icon = "icons/mob/actions/actions_cult.dmi"
 	button_icon_state = "cult_mark"
 	/// Where is nar nar? Are we even looking?
 	var/tracking = FALSE
