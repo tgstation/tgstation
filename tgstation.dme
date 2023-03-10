@@ -3609,6 +3609,7 @@
 #include "code\modules\logging\log_category.dm"
 #include "code\modules\logging\log_holder.dm"
 #include "code\modules\logging\categories\log_category_admin.dm"
+#include "code\modules\logging\categories\log_category_debug.dm"
 #include "code\modules\logging\categories\log_category_game.dm"
 #include "code\modules\logging\categories\log_category_misc.dm"
 #include "code\modules\logging\categories\log_category_pda.dm"

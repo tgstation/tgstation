@@ -73,36 +73,27 @@
 #define LOG_JSON_ENTRIES "entries"
 #define LOG_JSON_LOGGING_START "log-start"
 
-// Misc categories
+// Category for invalid/missing categories
 #define LOG_CATEGORY_NOT_FOUND "invalid-category"
-#define LOG_CATEGORY_TARGET_ZONE_SWITCH "target-zone-switch"
-#define LOG_CATEGORY_VIRUS "virus"
-#define LOG_CATEGORY_TOOL "tool"
-#define LOG_CATEGORY_MECHA "mecha"
-#define LOG_CATEGORY_SILICON "silicon"
-#define LOG_CATEGORY_MOB_TAG "mob-tag"
-#define LOG_CATEGORY_PAPER "paper"
+
+// Misc categories
 #define LOG_CATEGORY_ATTACK "attack"
-#define LOG_CATEGORY_ASSET "asset"
-#define LOG_CATEGORY_JOB_DEBUG "job-debug"
-#define LOG_CATEGORY_MAP_ERRORS "map-errors"
-#define LOG_CATEGORY_QDEL "qdel"
-#define LOG_CATEGORY_QUERY_DEBUG "query-debug"
-#define LOG_CATEGORY_RUNTIME "runtime"
-#define LOG_CATEGORY_ECONOMY "economy"
-#define LOG_CATEGORY_MANIFEST "manifest"
-#define LOG_CATEGORY_SHUTTLE "shuttle"
-#define LOG_CATEGORY_HREF "href"
-#define LOG_CATEGORY_SUSPICIOUS_LOGIN "supicious-login"
 #define LOG_CATEGORY_CONFIG "config"
-#define LOG_CATEGORY_FILTER "filter"
-#define LOG_CATEGORY_LUA "lua"
-#define LOG_CATEGORY_SIGNAL "signal"
-#define LOG_CATEGORY_SQL "sql"
 #define LOG_CATEGORY_DYNAMIC "dynamic"
-#define LOG_CATEGORY_TELECOMMS "telecomms"
+#define LOG_CATEGORY_ECONOMY "economy"
+#define LOG_CATEGORY_FILTER "filter"
+#define LOG_CATEGORY_MANIFEST "manifest"
+#define LOG_CATEGORY_MECHA "mecha"
+#define LOG_CATEGORY_PAPER "paper"
+#define LOG_CATEGORY_SHUTTLE "shuttle"
+#define LOG_CATEGORY_SILICON "silicon"
+#define LOG_CATEGORY_SIGNAL "signal"
 #define LOG_CATEGORY_SPEECH_INDICATOR "speech-indiciator"
-#define LOG_CATEGORY_TGUI "tgui"
+#define LOG_CATEGORY_SUSPICIOUS_LOGIN "supicious-login"
+#define LOG_CATEGORY_TARGET_ZONE_SWITCH "target-zone-switch"
+#define LOG_CATEGORY_TELECOMMS "telecomms"
+#define LOG_CATEGORY_TOOL "tool"
+#define LOG_CATEGORY_VIRUS "virus"
 
 // Admin categories
 #define LOG_CATEGORY_ADMIN "admin"
@@ -112,6 +103,19 @@
 // Admin private categories
 #define LOG_CATEGORY_ADMIN_PRIVATE "admin-private"
 #define LOG_CATEGORY_ADMIN_PRIVATE_ASAY "admin-asay"
+
+// Debug categories
+#define LOG_CATEGORY_DEBUG "debug"
+#define LOG_CATEGORY_DEBUG_ASSET "debug-asset"
+#define LOG_CATEGORY_DEBUG_HREF "debug-href"
+#define LOG_CATEGORY_DEBUG_JOB "debug-job"
+#define LOG_CATEGORY_DEBUG_LUA "debug-lua"
+#define LOG_CATEGORY_DEBUG_MAPPING "debug-mapping"
+#define LOG_CATEGORY_DEBUG_MOBTAG "debug-mobtag"
+#define LOG_CATEGORY_DEBUG_QDEL "debug-qdel"
+#define LOG_CATEGORY_DEBUG_RUNTIME "debug-runtime"
+#define LOG_CATEGORY_DEBUG_SQL "debug-sql"
+#define LOG_CATEGORY_DEBUG_TGUI "debug-tgui"
 
 // Game categories
 #define LOG_CATEGORY_GAME "game"

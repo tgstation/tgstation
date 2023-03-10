@@ -4,7 +4,7 @@
  * * text - text to log.
  */
 /mob/proc/log_mob_tag(text)
-	logger.Log(LOG_CATEGORY_MOB_TAG, text)
+	logger.Log(LOG_CATEGORY_DEBUG_MOBTAG, text)
 
 /proc/log_silicon(text)
 	logger.Log(LOG_CATEGORY_SILICON, text)

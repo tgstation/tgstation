@@ -1,5 +1,5 @@
 /proc/log_href(text)
-	logger.Log(LOG_CATEGORY_HREF, text)
+	logger.Log(LOG_CATEGORY_DEBUG_HREF, text)
 
 /**
  * Appends a tgui-related log entry. All arguments are optional.
@@ -31,4 +31,4 @@
 	// Insert message
 	if(message)
 		entry += "\n[message]"
-	logger.Log(LOG_CATEGORY_TGUI, entry)
+	logger.Log(LOG_CATEGORY_DEBUG_TGUI, entry)
