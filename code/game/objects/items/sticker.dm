@@ -74,7 +74,7 @@
 //Unregisters signals from the object it is attached to
 /obj/item/sticker/proc/unregister_signals(datum/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(attached,list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_IGNITED))
+	UnregisterSignal(attached, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_IGNITED))
 	if(signal_turf)
 		UnregisterSignal(signal_turf,COMSIG_TURF_EXPOSE)
 		signal_turf = null
