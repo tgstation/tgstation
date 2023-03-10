@@ -30,8 +30,8 @@
 
 /obj/projectile/beam/laser/hellfire //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 	name = "hellfire laser"
-	wound_bonus = -5
-	damage = 20
+	wound_bonus = 0
+	damage = 25
 	speed = 0.6 // higher power = faster, that's how light works right
 
 /obj/projectile/beam/laser/hellfire/Initialize(mapload)
