@@ -5175,4 +5175,5 @@
 #include "massmeta\code\modules\antagonists\bloodsuckers\vassal\vassal_procs.dm"
 #include "massmeta\code\modules\antagonists\bloodsuckers\vassal\types\favorite_vassal.dm"
 #include "massmeta\code\modules\antagonists\bloodsuckers\vassal\types\revenge_vassal.dm"
+#include "massmeta\code\modules\clothing\halal.dm"
 // END_INCLUDE
