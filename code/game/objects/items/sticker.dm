@@ -54,7 +54,7 @@
 		return
 	attached.cut_overlay(sticker_overlay)
 	sticker_overlay = null
-	forceMove(isturf(attached) ? attached : get_turf(attached.loc))
+	forceMove(attached.drop_location())
 	if(!silent)
 		visible_message(span_notice("[src] falls off [attached]."))
 	pixel_y = rand(-3,3)
