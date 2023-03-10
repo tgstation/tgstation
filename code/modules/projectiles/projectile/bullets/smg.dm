@@ -33,7 +33,7 @@
 /obj/projectile/bullet/c46x30mm/nonlethal
 	name = "4.6x30mm rubber bullet"
 	damage = 5
-	stamina = 20
+	stamina = 15
 	embedding = null
 
 /obj/projectile/bullet/incendiary/c46x30mm
