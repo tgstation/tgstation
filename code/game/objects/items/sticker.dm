@@ -7,8 +7,11 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 3
 	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
+	///The overlay we apply to things we stick to
 	var/mutable_appearance/sticker_overlay
+	///A list of icon_states to pick an icon_state on Initialize, provided it is not null.
 	var/list/icon_states
+	///The thing we are attached to
 	var/atom/attached
 
 /obj/item/sticker/Initialize(mapload)
@@ -32,6 +35,7 @@
 	. |= AFTERATTACK_PROCESSED_ITEM
 	stick(target,user,px,py)
 
+///Sticks this sticker to the target, with the pixel offsets being px and py.
 /obj/item/sticker/proc/stick(atom/target, mob/living/user, px,py)
 	sticker_overlay = mutable_appearance(icon, icon_state , layer = target.layer + 1, appearance_flags = RESET_COLOR | PIXEL_SCALE)
 	sticker_overlay.pixel_x = px
@@ -41,6 +45,7 @@
 	register_signals(user)
 	moveToNullspace()
 
+///Makes this sticker move from nullspace and cut the overlay from the object it is attached to, silent for no visible message.
 /obj/item/sticker/proc/peel(datum/source, silent=FALSE)
 	SIGNAL_HANDLER
 	if(!attached)
@@ -55,6 +60,7 @@
 	unregister_signals()
 	attached = null
 
+///Registers signals to the object it is attached to
 /obj/item/sticker/proc/register_signals(mob/living/user)
 	RegisterSignal(attached, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(peel))
 	if(isturf(attached))
@@ -63,28 +69,32 @@
 	RegisterSignal(attached, COMSIG_LIVING_IGNITED, PROC_REF(on_ignite))
 	RegisterSignal(attached, COMSIG_PARENT_QDELETING, PROC_REF(unregister_signals))
 
+//Unregisters signals from the object it is attached to
 /obj/item/sticker/proc/unregister_signals(datum/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(attached,list(COMSIG_COMPONENT_CLEAN_ACT,COMSIG_PARENT_QDELETING, COMSIG_LIVING_IGNITED, COMSIG_TURF_EXPOSE))
 
 /obj/item/sticker/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(. || prob(50))
-		return
+	if(!. && prob(50))
 		stick(hit_atom,rand(-7,7),rand(-7,7))
 		attached.visible_message(span_notice("[src] lands on [attached] with its sticky side!"))
 
+///Signal handler for COMSIG_TURF_EXPOSE, deletes this sticker if the temperature is above 100C and it is flammable
 /obj/item/sticker/proc/on_turf_expose(datum/source, datum/gas_mixture/air, exposed_temperature)
 	SIGNAL_HANDLER
-	if((resistance_flags & FLAMMABLE) && exposed_temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		peel(silent=TRUE)
-		qdel(src)
+	if(!(resistance_flags & FLAMMABLE) || exposed_temperature <= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		return
+	peel(silent=TRUE)
+	qdel(src)
 
+///Signal handler for COMSIG_LIVING_IGNITED, deletes this sticker, if it is flammable
 /obj/item/sticker/proc/on_ignite(datum/source)
 	SIGNAL_HANDLER
-	if(resistance_flags & FLAMMABLE)
-		peel(silent=TRUE)
-		qdel(src)
+	if(!(resistance_flags & FLAMMABLE))
+		return
+	peel(silent=TRUE)
+	qdel(src)
 
 /obj/item/sticker/smile
 	name = "smiley sticker"
