@@ -52,6 +52,12 @@
 /obj/item/pickaxe,
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/space)
+"aC" = (
+/obj/effect/turf_decal/stripes/red/full,
+/obj/machinery/light/small/built,
+/obj/item/light/bulb/broken,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/space)
 "bz" = (
 /turf/open/space/basic,
 /area/space)
@@ -85,6 +91,10 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark/airless,
+/area/ruin/space)
+"ch" = (
+/obj/machinery/light/small/broken,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space)
 "ck" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -309,6 +319,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
+"ll" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/dim{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space)
 "lX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -326,6 +343,10 @@
 "mC" = (
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space)
+"mG" = (
+/obj/item/wallframe/apc,
+/turf/closed/wall/mineral/plastitanium,
 /area/ruin/space)
 "nl" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst/left{
@@ -364,6 +385,12 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/asteroid/basalt/airless,
+/area/ruin/space)
+"qL" = (
+/obj/machinery/light/dim{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "qO" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -487,6 +514,9 @@
 	dir = 1
 	},
 /obj/effect/spawner/random/structure/crate_abandoned,
+/obj/machinery/light/dim{
+	dir = 1
+	},
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/space)
 "wY" = (
@@ -565,6 +595,12 @@
 	},
 /obj/effect/gibspawner/human,
 /turf/open/floor/iron/dark/textured,
+/area/ruin/space)
+"AE" = (
+/obj/machinery/light/dim{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space)
 "AV" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -768,6 +804,13 @@
 /obj/item/pickaxe,
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/space)
+"Jh" = (
+/obj/structure/cable,
+/obj/machinery/light/dim{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space)
 "Jl" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/sign/poster/contraband/random/directional/east,
@@ -821,7 +864,6 @@
 	},
 /obj/structure/cable,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east,
 /obj/machinery/power/terminal{
 	dir = 4
 	},
@@ -1019,6 +1061,7 @@
 "VQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/stack/sheet/mineral/wood/fifty,
+/obj/machinery/light/dim,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "VX" = (
@@ -1048,6 +1091,7 @@
 "YE" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/light/small/broken,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space)
 "YI" = (
@@ -1105,6 +1149,12 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/airless,
+/area/ruin/space)
+"ZZ" = (
+/obj/machinery/light/dim{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured,
 /area/ruin/space)
 
 (1,1,1) = {"
@@ -1561,7 +1611,7 @@ Er
 ED
 ED
 uq
-Tu
+ll
 BV
 Tu
 Tu
@@ -1709,7 +1759,7 @@ wW
 eH
 ii
 uq
-kC
+Jh
 wY
 zi
 CZ
@@ -1761,7 +1811,7 @@ ht
 KQ
 ck
 ZC
-ZO
+ch
 ED
 Er
 Er
@@ -1820,7 +1870,7 @@ ED
 ED
 uq
 ED
-ZC
+qL
 CT
 Tu
 pD
@@ -1912,7 +1962,7 @@ ZC
 gN
 ZC
 ZO
-Ef
+aC
 ED
 Er
 bz
@@ -1934,7 +1984,7 @@ Er
 Er
 Er
 ED
-kC
+Jh
 pl
 Vn
 GA
@@ -2008,11 +2058,11 @@ Cf
 Cf
 Er
 ED
-ED
+mG
 Rt
 ED
 zx
-ds
+ZZ
 Tp
 ds
 ZC
@@ -2127,7 +2177,7 @@ Er
 Er
 ED
 ED
-ZO
+AE
 Ef
 Ef
 YI
