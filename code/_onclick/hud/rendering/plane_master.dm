@@ -589,7 +589,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	return .
 
 /atom/movable/screen/plane_master/ghost/Destroy(force, ...)
-	UnregisterSignal(oldmob, COMSIG_MOB_STATCHANGE) // this technically isn't needed, but it's a good idea to be explicit
+	UnregisterSignal(home.our_hud.mymob, COMSIG_MOB_STATCHANGE) // this technically isn't needed, but it's a good idea to be explicit
 	return ..()
 
 /atom/movable/screen/plane_master/ghost/proc/handle_stat_change(mob/living/mymob)
