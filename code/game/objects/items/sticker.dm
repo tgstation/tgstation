@@ -16,6 +16,8 @@
 	var/atom/attached
 	///The turf our COMSIG_TURF_EXPOSE is registered to, so we can unregister it later.
 	var/turf/signal_turf
+	/// If the sticker should be disincluded from normal sticker boxes.
+	var/contraband = FALSE
 
 /obj/item/sticker/Initialize(mapload)
 	. = ..()
@@ -143,3 +145,82 @@
 	name = "googly eye sticker"
 	icon_state = "googly1"
 	icon_states = list("googly1","googly2")
+
+/obj/item/sticker/rev
+	name = "blue R sticker"
+	desc = "A sticker of FUCK THE SYSTEM, the galaxy's premiere hardcore punk band."
+	icon_state = "revhead"
+
+/obj/item/sticker/pslime
+	name = "slime plushie sticker"
+	icon_state = "pslime"
+
+/obj/item/sticker/pliz
+	name = "lizard plushie sticker"
+	icon_state = "plizard"
+
+/obj/item/sticker/pbee
+	name = "bee plushie sticker"
+	icon_state = "pbee"
+
+/obj/item/sticker/psnake
+	name = "snake plushie sticker"
+	icon_state = "psnake"
+
+/obj/item/sticker/robot
+	name = "bot sticker"
+	icon_state = "tile"
+	icon_states = list("tile","medbot","clean")
+
+/obj/item/sticker/toolbox
+	name = "toolbox sticker"
+	icon_state = "toolbox"
+
+/obj/item/sticker/clown
+	name = "clown sticker"
+	icon_state = "honkman"
+
+/obj/item/sticker/mime
+	name = "mime sticker"
+	icon_state = "silentman"
+
+/obj/item/sticker/assistant
+	name = "assistant sticker"
+	icon_state = "tider"
+
+/obj/item/sticker/syndicate
+	name = "syndicate sticker"
+	icon_state = "synd"
+	contraband = TRUE
+
+/obj/item/sticker/syndicate/c4
+	name = "c4 sticker"
+	icon_state = "c4"
+
+/obj/item/sticker/syndicate/bomb
+	name = "syndicate bomb sticker"
+	icon_state = "sbomb"
+
+/obj/item/sticker/syndicate/apc
+	name = "broken APC sticker"
+	icon_state = "milf"
+
+/obj/item/sticker/syndicate/larva
+	name = "larva sticker"
+	icon_state = "larva"
+
+/obj/item/sticker/syndicate/cult
+	name = "bloody paper sticker"
+	icon_state = "cult"
+
+/obj/item/sticker/syndicate/flash
+	name = "flash sticker"
+	icon_state = "flash"
+
+/obj/item/sticker/syndicate/op
+	name = "operative sticker"
+	icon_state = "newcop"
+
+/obj/item/sticker/syndicate/trap
+	name = "beartrap sticker"
+	icon_state = "trap"

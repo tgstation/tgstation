@@ -607,6 +607,19 @@
 		group.register(i)
 	desc += " The implants are registered to the \"[group.name]\" group."
 
+/obj/item/storage/box/syndie_kit/stickers
+	name = "sticker kit"
+
+/obj/item/storage/box/syndie_kit/stickers/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 8
+
+/obj/item/storage/box/syndie_kit/stickers/PopulateContents()
+	var/list/types = subtypesof(/obj/item/sticker/syndicate)
+	for(var/i in 1 to 8)
+		var/type = pick(types)
+		new type(src)
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY

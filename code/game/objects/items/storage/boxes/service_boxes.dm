@@ -209,9 +209,14 @@
 	desc = "A box full of random stickers. Do give to the clown."
 
 /obj/item/storage/box/stickers/PopulateContents()
-	var/list/types = subtypesof(/obj/item/sticker)
+	var/static/list/noncontraband = list()
+	if(!LAZYLEN(noncontraband))
+		for(var/stick in subtypesof(/obj/item/sticker))
+			var/obj/item/sticker/type = stick
+			if(!initial(type.contraband))
+				noncontraband += type
 	for(var/i in 1 to rand(4,8))
-		var/type = pick(types)
+		var/type = pick(noncontraband)
 		new type(src)
 
 /obj/item/storage/box/stickers/googly
