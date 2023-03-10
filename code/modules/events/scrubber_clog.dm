@@ -68,6 +68,7 @@
 				/mob/living/basic/mouse,
 				/mob/living/basic/cockroach,
 				/mob/living/simple_animal/butterfly,
+				/mob/living/basic/giant_spider/maintenance,
 	)
 	return pick(mob_list)
 
