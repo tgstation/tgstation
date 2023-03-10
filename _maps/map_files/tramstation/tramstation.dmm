@@ -4869,6 +4869,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"axg" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/obj/machinery/button/elevator/directional/north{
+	id = "tram_cargo_lift";
+	req_access = list("mining")
+	},
+/obj/machinery/lift_indicator/directional/north{
+	linked_elevator_id = "tram_cargo_lift"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningdock)
 "axp" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -5204,6 +5217,9 @@
 	assistance_requestable = 1;
 	supplies_requestable = 1;
 	name = "Cargo Bay Requests Console"
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
@@ -6098,6 +6114,10 @@
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 1
 	},
+/obj/machinery/destination_sign/indicator/directional/north,
+/obj/machinery/button/tram/directional/north{
+	id = "middle_part"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "aGQ" = (
@@ -6326,7 +6346,7 @@
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "aId" = (
-/obj/machinery/door/window/left/directional/north{
+/obj/machinery/door/window/left/directional/south{
 	name = "Containment Pen #8";
 	req_access = list("xenobiology")
 	},
@@ -6336,6 +6356,10 @@
 	name = "Xenobio Bottom Right Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/north{
+	name = "Containment Pen #8";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "aIi" = (
@@ -6397,13 +6421,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
-"aII" = (
-/obj/machinery/destination_sign/indicator,
-/obj/machinery/button/tram/directional/north{
-	id = "left_part"
-	},
-/turf/closed/wall,
-/area/station/hallway/primary/tram/left)
 "aIJ" = (
 /obj/machinery/flasher/directional/east{
 	id = "medcell"
@@ -6990,15 +7007,6 @@
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
 /turf/open/floor/iron/grimy,
 /area/station/hallway/secondary/entry)
-"aMD" = (
-/obj/machinery/destination_sign/indicator{
-	dir = 1
-	},
-/obj/machinery/button/tram/directional/south{
-	id = "left_part"
-	},
-/turf/closed/wall,
-/area/station/hallway/primary/tram/left)
 "aME" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing/corner{
@@ -9196,6 +9204,13 @@
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"bvc" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/machinery/door/window/left/directional/north,
+/turf/open/floor/iron/white,
+/area/station/science/research)
 "bvk" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -9438,7 +9453,7 @@
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/camera/directional/south{
 	c_tag = "Secure - AI Antechamber North";
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -9810,7 +9825,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Upper External West";
 	dir = 6;
-	network = list("aicore")
+	network = list("minisat")
 	},
 /turf/open/space/openspace,
 /area/space/nearstation)
@@ -10475,7 +10490,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Upper External South";
 	dir = 9;
-	network = list("aicore")
+	network = list("minisat")
 	},
 /obj/structure/lattice,
 /turf/open/space/openspace,
@@ -10894,7 +10909,15 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/east,
+/obj/machinery/keycard_auth/directional/east{
+	pixel_y = -6
+	},
+/obj/machinery/button/door/directional/east{
+	id = "qmprivacy";
+	name = "Privacy Shutters Control";
+	pixel_y = 5;
+	req_access = list("qm")
+	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -11092,7 +11115,8 @@
 /area/station/cargo/lobby)
 "cbj" = (
 /obj/machinery/door/window/left/directional/north{
-	dir = 2;
+	base_state = "right";
+	icon_state = "right";
 	name = "Containment Pen #1";
 	req_access = list("xenobiology")
 	},
@@ -11102,6 +11126,12 @@
 	name = "Xenobio Topleft Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/south{
+	base_state = "right";
+	icon_state = "right";
+	name = "Containment Pen #1";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "cbn" = (
@@ -11138,6 +11168,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
+"cbN" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/machinery/button/elevator/directional/west{
+	id = "tram_cargo_lift";
+	req_access = list("mining")
+	},
+/obj/machinery/lift_indicator/directional/west{
+	linked_elevator_id = "tram_cargo_lift"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "cch" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/lattice/catwalk,
@@ -11656,10 +11699,10 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Secure Tech Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "ckM" = (
@@ -12539,13 +12582,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/catwalk_floor,
 /area/station/command/teleporter)
-"cDa" = (
-/obj/structure/closet/secure_closet/brig/genpop,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/siding/thinplating/corner,
-/turf/open/floor/iron/dark,
-/area/station/security/execution/transfer)
 "cDd" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
@@ -12703,7 +12739,6 @@
 /area/station/hallway/secondary/exit)
 "cFk" = (
 /obj/machinery/door/window/left/directional/north{
-	dir = 2;
 	name = "Containment Pen #4";
 	req_access = list("xenobiology")
 	},
@@ -12713,6 +12748,10 @@
 	name = "Xenobio Top Right Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/south{
+	name = "Containment Pen #4";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "cFl" = (
@@ -15066,9 +15105,8 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
-/obj/machinery/door/window/right/directional/south{
-	name = "Elevator Access"
-	},
+/obj/machinery/drone_dispenser,
+/obj/structure/window/spawner,
 /turf/open/floor/iron/dark,
 /area/station/science/lower)
 "dxC" = (
@@ -15261,13 +15299,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
-"dCf" = (
-/obj/machinery/destination_sign/indicator,
-/obj/machinery/button/tram/directional/north{
-	id = "right_part"
-	},
-/turf/closed/wall,
-/area/station/hallway/primary/tram/right)
 "dCr" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/light/directional/west,
@@ -16706,6 +16737,7 @@
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit)
 "efT" = (
@@ -16772,7 +16804,7 @@
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Secure - AI Minisat Teleporter";
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /obj/machinery/button/door/directional/south{
 	id = "teledoor";
@@ -16928,6 +16960,12 @@
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
+	},
+/obj/machinery/lift_indicator/directional/west{
+	linked_elevator_id = "tram_upper_center_lift"
+	},
+/obj/machinery/button/elevator/directional/west{
+	id = "tram_upper_center_lift"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
@@ -17477,6 +17515,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
+/obj/machinery/destination_sign/indicator/directional/south,
+/obj/machinery/button/tram/directional/south{
+	id = "right_part"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "ewK" = (
@@ -17864,6 +17906,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "eCz" = (
@@ -18424,6 +18467,13 @@
 	},
 /obj/machinery/door/window/left/directional/south{
 	name = "Elevator Access"
+	},
+/obj/machinery/lift_indicator/directional/west{
+	linked_elevator_id = "tram_sci_lift"
+	},
+/obj/machinery/button/elevator/directional/west{
+	id = "tram_sci_lift";
+	req_access = list("science")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/lower)
@@ -19503,13 +19553,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
-"fld" = (
-/obj/machinery/button/tram/directional/north{
-	id = "middle_part"
-	},
-/obj/machinery/destination_sign/indicator,
-/turf/closed/wall,
-/area/station/hallway/primary/tram/center)
 "flf" = (
 /obj/machinery/door/airlock/security{
 	name = "Interrogation"
@@ -19556,15 +19599,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
-"flX" = (
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 1
-	},
-/obj/machinery/door/window/right/directional/north{
-	name = "Elevator Access"
-	},
-/turf/open/floor/iron/white,
-/area/station/science/research)
 "flZ" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -20657,15 +20691,15 @@
 /obj/machinery/computer/apc_control{
 	dir = 1
 	},
-/obj/machinery/computer/security/telescreen/ce{
-	dir = 4;
-	pixel_x = -24
-	},
 /obj/machinery/requests_console/directional/south{
 	announcementConsole = 1;
 	department = "Chief Engineer's Desk";
 	supplies_requestable = 1;
 	name = "Chief Engineer's Request Console"
+	},
+/obj/machinery/computer/security/telescreen/engine{
+	dir = 4;
+	pixel_x = -24
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
@@ -21034,7 +21068,6 @@
 /area/station/security/processing)
 "fPi" = (
 /obj/machinery/door/window/left/directional/north{
-	dir = 2;
 	name = "Containment Pen #2";
 	req_access = list("xenobiology")
 	},
@@ -21044,6 +21077,10 @@
 	name = "Xenobio Topleft Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/south{
+	name = "Containment Pen #2";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "fPy" = (
@@ -21612,7 +21649,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster's Office"
 	},
 /obj/structure/disposalpipe/segment,
@@ -21691,6 +21728,10 @@
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 1
+	},
+/obj/machinery/destination_sign/indicator/directional/north,
+/obj/machinery/button/tram/directional/north{
+	id = "left_part"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
@@ -21818,9 +21859,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/red/filled/line,
-/obj/effect/turf_decal/siding/thinplating/corner{
-	dir = 8
-	},
 /obj/machinery/button/elevator/directional/south{
 	id = "tram_perma_lift"
 	},
@@ -22463,7 +22501,8 @@
 	dir = 4
 	},
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - AI Lower Ring Access"
+	c_tag = "Secure - AI Lower Ring Access";
+	network = list("ss13","minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -22958,6 +22997,9 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"gEz" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area)
 "gEC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door_buttons/airlock_controller{
@@ -23809,7 +23851,7 @@
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Secure - AI Upper Ring North";
-	network = list("ss13","aicore")
+	network = list("aicore")
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -24117,7 +24159,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Minisat Entry";
 	dir = 10;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
@@ -24883,17 +24925,6 @@
 /obj/machinery/teleport/hub,
 /turf/open/floor/plating,
 /area/station/command/teleporter)
-"htI" = (
-/obj/machinery/button/elevator{
-	pixel_y = -4;
-	id = "tram_upper_center_lift"
-	},
-/obj/machinery/lift_indicator{
-	pixel_y = 6;
-	linked_elevator_id = "tram_upper_center_lift"
-	},
-/turf/closed/wall,
-/area/station/hallway/primary/tram/center)
 "htJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/end{
@@ -25202,17 +25233,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"hBP" = (
-/obj/machinery/lift_indicator{
-	pixel_y = 6;
-	linked_elevator_id = "tram_lower_center_lift"
-	},
-/obj/machinery/button/elevator{
-	pixel_y = -4;
-	id = "tram_lower_center_lift"
-	},
-/turf/closed/wall,
-/area/station/maintenance/department/medical)
 "hBV" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
@@ -25794,13 +25814,6 @@
 /obj/effect/turf_decal/stripes/white/full,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/lobby)
-"hNs" = (
-/obj/machinery/lift_indicator{
-	pixel_y = -4;
-	linked_elevator_id = "tram_sci_lift"
-	},
-/turf/closed/wall,
-/area/station/science/lab)
 "hNx" = (
 /obj/machinery/door/airlock/external{
 	name = "Port Docking Bay 2"
@@ -26358,16 +26371,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
-"hZZ" = (
-/obj/effect/turf_decal/trimline/red/filled/line,
-/obj/machinery/button/elevator/directional/south{
-	id = "tram_perma_lift"
-	},
-/obj/machinery/lift_indicator/directional/south{
-	linked_elevator_id = "tram_perma_lift"
-	},
-/turf/open/floor/iron,
-/area/station/security/brig)
 "iae" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -26834,10 +26837,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
-"iih" = (
-/obj/effect/turf_decal/trimline/brown/filled/line,
-/turf/closed/wall,
-/area/station/cargo/miningdock)
 "iij" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Post - Research Division"
@@ -26931,7 +26930,8 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_cargo_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
+	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck");
+	req_access = list("mining")
 	},
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_cargo_lift"
@@ -27653,9 +27653,7 @@
 	},
 /obj/machinery/light/directional/north,
 /obj/item/folder/white,
-/obj/machinery/keycard_auth{
-	pixel_y = 24
-	},
+/obj/machinery/keycard_auth/directional/north,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -27746,18 +27744,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningdock/oresilo)
-"iBa" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 1
-	},
-/obj/machinery/button/elevator/directional/north{
-	id = "tram_cargo_lift"
-	},
-/obj/machinery/lift_indicator/directional/north{
-	linked_elevator_id = "tram_cargo_lift"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/miningdock)
 "iBm" = (
 /obj/machinery/light/directional/west,
 /obj/structure/bed{
@@ -27873,7 +27859,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Lower External East";
 	dir = 10;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -29577,7 +29563,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Lower External West";
 	dir = 6;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -29693,7 +29679,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "jmb" = (
-/obj/machinery/door/window/left/directional/north{
+/obj/machinery/door/window/left/directional/south{
 	base_state = "right";
 	icon_state = "right";
 	name = "Containment Pen #5";
@@ -29705,6 +29691,12 @@
 	name = "Xenobio Bottom Left Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/north{
+	base_state = "right";
+	icon_state = "right";
+	name = "Containment Pen #5";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "jmk" = (
@@ -30725,15 +30717,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
-"jEO" = (
-/obj/machinery/destination_sign/indicator{
-	dir = 1
-	},
-/obj/machinery/button/tram/directional/south{
-	id = "middle_part"
-	},
-/turf/closed/wall,
-/area/station/hallway/primary/tram/center)
 "jEP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -31618,18 +31601,6 @@
 /obj/effect/spawner/random/bureaucracy/pen,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
-"jVY" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 1
-	},
-/obj/machinery/button/elevator/directional/north{
-	id = "tram_dorm_lift"
-	},
-/obj/machinery/lift_indicator/directional/north{
-	linked_elevator_id = "tram_dorm_lift"
-	},
-/turf/open/floor/iron,
-/area/station/commons/dorms)
 "jWb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -33027,6 +32998,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/radio/intercom/directional/north,
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "kye" = (
@@ -33161,7 +33133,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
-/obj/effect/turf_decal/siding/thinplating,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "kAX" = (
@@ -33685,6 +33657,12 @@
 /area/station/hallway/secondary/command)
 "kIM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/lift_indicator/directional/west{
+	linked_elevator_id = "tram_lower_center_lift"
+	},
+/obj/machinery/button/elevator/directional/west{
+	id = "tram_lower_center_lift"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
 "kJy" = (
@@ -34524,10 +34502,10 @@
 /area/station/hallway/primary/tram/center)
 "kYr" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
-/obj/effect/turf_decal/siding/thinplating,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/door/window/right/directional/south,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "kYs" = (
@@ -34638,7 +34616,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Antechamber East";
 	dir = 10;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -35016,7 +34994,7 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Freezer Maintenance Hatch"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/service/general,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "lgo" = (
@@ -35309,12 +35287,6 @@
 "llU" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
-	},
-/obj/machinery/button/elevator/directional/north{
-	id = "tram_lower_center_lift"
-	},
-/obj/machinery/lift_indicator/directional/north{
-	linked_elevator_id = "tram_lower_center_lift"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
@@ -35682,8 +35654,8 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Secure Tech Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
 /obj/effect/turf_decal/trimline/white/filled/line,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "luP" = (
@@ -36377,7 +36349,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "lIa" = (
-/obj/machinery/door/window/left/directional/north{
+/obj/machinery/door/window/left/directional/south{
 	name = "Containment Pen #6";
 	req_access = list("xenobiology")
 	},
@@ -36387,6 +36359,10 @@
 	name = "Xenobio Bottom Left Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/north{
+	name = "Containment Pen #6";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "lIe" = (
@@ -36665,7 +36641,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Upper Ring East";
 	dir = 10;
-	network = list("ss13","aicore")
+	network = list("aicore")
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -37015,10 +36991,9 @@
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "lSQ" = (
-/obj/structure/disposalpipe/sorting/mail/flip{
+/obj/structure/disposalpipe/sorting/wrap/flip{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/mail_sorting/supply/cargo_bay,
 /turf/closed/wall,
 /area/station/cargo/sorting)
 "lSU" = (
@@ -37456,7 +37431,7 @@
 "mbe" = (
 /obj/machinery/camera/motion/directional/south{
 	c_tag = "Secure - AI Lower External North";
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/space/basic,
 /area/space)
@@ -37603,6 +37578,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
+"mdt" = (
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/cake_ingredients,
+/turf/open/floor/iron/white,
+/area/station/service/kitchen)
 "mdx" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
@@ -38402,7 +38382,8 @@
 	name = "Private Channel"
 	},
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - AI Upper Ring Access"
+	c_tag = "Secure - AI Upper Ring Access";
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -39168,7 +39149,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Antechamber West";
 	dir = 6;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -40560,17 +40541,6 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
-"nkd" = (
-/obj/machinery/lift_indicator{
-	pixel_y = 6;
-	linked_elevator_id = "tram_upper_center_lift"
-	},
-/obj/machinery/button/elevator{
-	pixel_y = -4;
-	id = "tram_upper_center_lift"
-	},
-/turf/closed/wall,
-/area/station/service/janitor)
 "nku" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -41060,7 +41030,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Antechamber South";
 	dir = 9;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /obj/structure/cable,
 /turf/open/floor/circuit,
@@ -41233,15 +41203,6 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/misc/asteroid,
 /area/station/medical/chemistry)
-"nwQ" = (
-/obj/machinery/destination_sign/indicator{
-	dir = 1
-	},
-/obj/machinery/button/tram/directional/south{
-	id = "right_part"
-	},
-/turf/closed/wall,
-/area/station/hallway/primary/tram/right)
 "nxf" = (
 /obj/structure/industrial_lift/tram/subfloor/window,
 /obj/structure/window/reinforced/tram/front{
@@ -41305,6 +41266,18 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/security/brig)
+"nyN" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/button/elevator/directional/east{
+	id = "tram_lower_center_lift"
+	},
+/obj/machinery/lift_indicator/directional/east{
+	linked_elevator_id = "tram_lower_center_lift"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/center)
 "nyV" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 1
@@ -42071,6 +42044,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
+/obj/machinery/destination_sign/indicator/directional/south,
+/obj/machinery/button/tram/directional/south{
+	id = "middle_part"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "nOI" = (
@@ -42700,6 +42677,18 @@
 	dir = 5
 	},
 /area/station/command/heads_quarters/rd)
+"nZM" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/button/elevator/directional/north{
+	id = "tram_dorm_lift"
+	},
+/obj/machinery/lift_indicator/directional/north{
+	linked_elevator_id = "tram_dorm_lift"
+	},
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation)
 "nZP" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -42853,7 +42842,7 @@
 "obF" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/camera/motion/directional/west{
-	c_tag = "Secure - ai_upload"
+	c_tag = "Secure - AI Upload"
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -43765,9 +43754,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/junction/flip,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "ouF" = (
@@ -44495,6 +44484,10 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
+/obj/machinery/destination_sign/indicator/directional/south,
+/obj/machinery/button/tram/directional/south{
+	id = "left_part"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "oNp" = (
@@ -44564,7 +44557,11 @@
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/button/elevator/directional/south{
-	id = "tram_sci_lift"
+	id = "tram_sci_lift";
+	req_access = list("science")
+	},
+/obj/machinery/lift_indicator/directional/south{
+	linked_elevator_id = "tram_sci_lift"
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
@@ -44589,6 +44586,7 @@
 	},
 /obj/item/storage/toolbox/mechanical,
 /obj/item/stack/cable_coil,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "oPs" = (
@@ -45781,6 +45779,14 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"pli" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "qmprivacy";
+	name = "Privacy Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/cargo/office)
 "plk" = (
 /turf/closed/wall/r_wall,
 /area/station/solars/starboard/fore)
@@ -48775,7 +48781,7 @@
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "qoo" = (
-/obj/machinery/door/window/left/directional/north{
+/obj/machinery/door/window/left/directional/south{
 	base_state = "right";
 	icon_state = "right";
 	name = "Containment Pen #7";
@@ -48787,6 +48793,12 @@
 	name = "Xenobio Bottom Right Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/north{
+	base_state = "right";
+	icon_state = "right";
+	name = "Containment Pen #7";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "qoD" = (
@@ -49225,6 +49237,15 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/station/service/janitor)
+"qxg" = (
+/obj/machinery/elevator_control_panel/directional/south{
+	linked_elevator_id = "tram_sci_lift";
+	pixel_y = 0;
+	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck");
+	req_access = list("science")
+	},
+/turf/closed/wall,
+/area/station/science/lower)
 "qxm" = (
 /turf/closed/wall,
 /area/station/maintenance/starboard/central)
@@ -49445,13 +49466,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/right)
-"qBL" = (
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
-/obj/machinery/door/airlock/mining{
-	name = "Mining Office"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/miningdock)
 "qBQ" = (
 /obj/effect/turf_decal/trimline/white/filled/corner{
 	dir = 8
@@ -50401,6 +50415,18 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
+"qUs" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/button/elevator/directional/north{
+	id = "tram_dorm_lift"
+	},
+/obj/machinery/lift_indicator/directional/north{
+	linked_elevator_id = "tram_dorm_lift"
+	},
+/turf/open/floor/iron,
+/area/station/commons/dorms)
 "qUy" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Civilian - Holodeck South";
@@ -51665,6 +51691,13 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
+/obj/machinery/elevator_control_panel/directional/north{
+	linked_elevator_id = "tram_sci_lift";
+	pixel_y = 32;
+	pixel_x = -32;
+	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck");
+	req_access = list("science")
+	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "rre" = (
@@ -52419,7 +52452,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Minisat Internal Power Access";
 	dir = 9;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/maint)
@@ -52794,7 +52827,8 @@
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - AI Core South"
+	c_tag = "Secure - AI Core South";
+	network = list("aicore")
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
@@ -52820,7 +52854,7 @@
 	dir = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Civilian - aux_base Construction";
+	c_tag = "Civilian - Aux Base Construction";
 	dir = 9
 	},
 /turf/open/floor/iron,
@@ -53536,7 +53570,7 @@
 	dir = 10
 	},
 /obj/machinery/camera/motion{
-	c_tag = "Secure - ai_upload Access";
+	c_tag = "Secure - AI Upload Access";
 	dir = 10;
 	network = list("ss13","aiupload")
 	},
@@ -53720,12 +53754,6 @@
 	dir = 4
 	},
 /area/station/service/theater)
-"siX" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 5
-	},
-/turf/open/space/basic,
-/area/space)
 "sjc" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -53774,18 +53802,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
-"sjN" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 1
-	},
-/obj/machinery/lift_indicator/directional/north{
-	linked_elevator_id = "tram_dorm_lift"
-	},
-/obj/machinery/button/elevator/directional/north{
-	id = "tram_dorm_lift"
-	},
-/turf/open/floor/iron,
-/area/station/commons/fitness/recreation)
 "skb" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -54585,7 +54601,6 @@
 "swy" = (
 /obj/machinery/door/window/left/directional/north{
 	base_state = "right";
-	dir = 2;
 	icon_state = "right";
 	name = "Containment Pen #3";
 	req_access = list("xenobiology")
@@ -54596,6 +54611,12 @@
 	name = "Xenobio Top Right Pen Blast Door"
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/left/directional/south{
+	base_state = "right";
+	icon_state = "right";
+	name = "Containment Pen #3";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "swC" = (
@@ -54680,9 +54701,10 @@
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 8
 	},
-/obj/structure/disposalpipe/junction{
+/obj/structure/disposalpipe/sorting/mail{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/mail_sorting/supply/cargo_bay,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "sxT" = (
@@ -54890,7 +54912,9 @@
 "sBI" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner,
-/obj/machinery/computer/security/telescreen/rd,
+/obj/machinery/computer/security/telescreen/rd{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -55170,6 +55194,10 @@
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 1
 	},
+/obj/machinery/destination_sign/indicator/directional/north,
+/obj/machinery/button/tram/directional/north{
+	id = "right_part"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "sHh" = (
@@ -55446,7 +55474,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Upper Ring South";
 	dir = 9;
-	network = list("ss13","aicore")
+	network = list("aicore")
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -55799,7 +55827,8 @@
 	pixel_y = 20
 	},
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - AI Core North"
+	c_tag = "Secure - AI Core North";
+	network = list("aicore")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
@@ -56474,7 +56503,6 @@
 /obj/machinery/rnd/production/circuit_imprinter/department/science,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "tdu" = (
@@ -57674,7 +57702,7 @@
 /obj/machinery/camera{
 	c_tag = "Secure - AI Upper Ring West";
 	dir = 6;
-	network = list("ss13","aicore")
+	network = list("aicore")
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -58312,7 +58340,7 @@
 "tNG" = (
 /obj/machinery/camera/motion/directional/south{
 	c_tag = "Secure - AI Upper External North";
-	network = list("aicore")
+	network = list("minisat")
 	},
 /obj/structure/cable,
 /turf/open/floor/engine/hull/reinforced,
@@ -59552,15 +59580,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
-"umP" = (
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 1
-	},
-/obj/machinery/door/window/left/directional/north{
-	name = "Elevator Access"
-	},
-/turf/open/floor/iron/white,
-/area/station/science/research)
 "umQ" = (
 /obj/structure/flora/bush/leavy/style_random,
 /obj/structure/flora/tree/palm/style_random,
@@ -61738,6 +61757,16 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
+"vcV" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/machinery/button/elevator/directional/south{
+	id = "tram_perma_lift"
+	},
+/obj/machinery/lift_indicator/directional/south{
+	linked_elevator_id = "tram_perma_lift"
+	},
+/turf/open/floor/iron,
+/area/station/security/brig)
 "vde" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -61774,7 +61803,6 @@
 "veB" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/window/spawner,
-/obj/machinery/drone_dispenser,
 /turf/open/floor/iron/dark,
 /area/station/science/lower)
 "veS" = (
@@ -63324,7 +63352,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Lower External South";
 	dir = 9;
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -63960,7 +63988,7 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster's Office"
 	},
 /obj/structure/cable,
@@ -64075,14 +64103,8 @@
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/dorms)
 "vUq" = (
-/obj/structure/table,
 /obj/structure/industrial_lift/public,
 /obj/effect/turf_decal/trimline/dark_red/warning,
-/obj/machinery/elevator_control_panel{
-	linked_elevator_id = "tram_sci_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck");
-	pixel_y = 3
-	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/lower)
 "vUt" = (
@@ -64549,7 +64571,7 @@
 /area/station/commons/lounge)
 "wdz" = (
 /obj/machinery/camera{
-	c_tag = "Secure - External ai_upload";
+	c_tag = "Secure - External AI Upload";
 	dir = 10
 	},
 /turf/open/space/openspace,
@@ -65601,7 +65623,7 @@
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Secure - AI Minisat Chargebay";
-	network = list("ss13","minisat")
+	network = list("minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
@@ -66573,10 +66595,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
-"wTS" = (
-/obj/structure/sign/calendar/directional/south,
-/turf/open/space/openspace,
-/area/space)
 "wUv" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -67835,7 +67853,8 @@
 	dir = 5
 	},
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - Upper Station Comms Relay"
+	c_tag = "Secure - Upper Station Comms Relay";
+	network = list("ss13","minisat")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
@@ -67930,12 +67949,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
-	},
-/obj/machinery/button/elevator/directional/south{
-	id = "tram_sci_lift"
-	},
-/obj/machinery/lift_indicator/directional/south{
-	linked_elevator_id = "tram_sci_lift"
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lower)
@@ -68136,6 +68149,12 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
 	},
+/obj/machinery/button/elevator/directional/west{
+	id = "tram_upper_center_lift"
+	},
+/obj/machinery/lift_indicator/directional/west{
+	linked_elevator_id = "tram_upper_center_lift"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "xFf" = (
@@ -68304,12 +68323,6 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
-"xJR" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 1
-	},
-/turf/closed/wall,
-/area/station/cargo/miningdock)
 "xKe" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
@@ -68473,17 +68486,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
-"xNk" = (
-/obj/machinery/button/elevator{
-	pixel_y = -4;
-	id = "tram_cargo_lift"
-	},
-/obj/machinery/lift_indicator{
-	pixel_y = 6;
-	linked_elevator_id = "tram_cargo_lift"
-	},
-/turf/closed/wall,
-/area/station/maintenance/department/cargo)
 "xNm" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /turf/open/floor/iron,
@@ -69745,7 +69747,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Upper External East";
 	dir = 10;
-	network = list("aicore")
+	network = list("minisat")
 	},
 /turf/open/space/openspace,
 /area/space/nearstation)
@@ -85069,7 +85071,7 @@ aci
 acv
 acH
 sXc
-cDa
+msg
 jWs
 jWs
 jWs
@@ -90761,7 +90763,7 @@ ncF
 aRx
 luC
 ncF
-jVY
+qUs
 wbb
 kiS
 elr
@@ -99482,7 +99484,7 @@ ekB
 ekB
 gSQ
 ekB
-nkd
+ekB
 xWY
 pbc
 xWY
@@ -113347,7 +113349,7 @@ uGW
 ujI
 pYH
 uGW
-iBa
+axg
 kDi
 cJX
 uGW
@@ -113604,9 +113606,9 @@ uGW
 fbH
 cZB
 uGW
-xJR
-qBL
-iih
+eyR
+kDi
+cJX
 uGW
 kot
 nmz
@@ -115447,7 +115449,7 @@ uxh
 veB
 wkw
 vUq
-sPp
+qxg
 xJj
 gwS
 fCh
@@ -129639,7 +129641,7 @@ vXM
 vXM
 vXM
 vXM
-siX
+vXM
 vXM
 vXM
 vXM
@@ -138368,7 +138370,7 @@ jhd
 jhd
 jhd
 jhd
-wTS
+jhd
 jhd
 jhd
 jhd
@@ -151375,7 +151377,7 @@ lCO
 nca
 rQi
 iNc
-hZZ
+vcV
 yji
 yji
 yji
@@ -153717,13 +153719,13 @@ jfp
 lPY
 eaT
 oMZ
-aII
+yiM
 cFs
 bEt
 lkr
 rib
 cFs
-aMD
+yiM
 gek
 pyf
 aEa
@@ -156297,7 +156299,7 @@ yiM
 vcJ
 ojT
 yiM
-sjN
+nZM
 heD
 nnQ
 rgm
@@ -165022,7 +165024,7 @@ izU
 fnb
 kDN
 fnb
-htI
+izU
 izU
 dno
 ago
@@ -167057,7 +167059,7 @@ eSx
 qfs
 tJg
 vuD
-mdp
+mdt
 qTs
 guL
 omc
@@ -167338,13 +167340,13 @@ vyH
 aEj
 rOu
 nOB
-fld
+izU
 xVH
 xXU
 fBK
 ycE
 aMY
-jEO
+izU
 aGP
 agj
 bPh
@@ -169146,7 +169148,7 @@ kNT
 pUR
 rOu
 rSo
-aHA
+nyN
 fnb
 fWX
 eSz
@@ -169403,7 +169405,7 @@ kNT
 wuH
 rzZ
 whp
-hBP
+whz
 whz
 whz
 clT
@@ -174770,7 +174772,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+gEz
 aaa
 aaa
 aaa
@@ -178629,7 +178631,7 @@ cTU
 ohS
 eaI
 ohS
-xNk
+lZW
 wFz
 lZW
 lZW
@@ -178886,7 +178888,7 @@ exr
 pZA
 uax
 aZQ
-axF
+cbN
 kMn
 qza
 ePw
@@ -179919,9 +179921,9 @@ msn
 qza
 oAV
 oAV
-vYl
+pli
 vSX
-vYl
+pli
 oAV
 whL
 ged
@@ -180723,10 +180725,10 @@ doC
 aKy
 iZz
 rNQ
-hNs
+tPZ
 ezw
 ezw
-umP
+bmQ
 hTG
 oPT
 nZs
@@ -180959,13 +180961,13 @@ wgQ
 iMj
 wPN
 ewz
-dCf
+bMb
 brm
 puY
 qyI
 bTT
 brm
-nwQ
+bMb
 sGU
 uHU
 wNV
@@ -180983,7 +180985,7 @@ tdm
 tPZ
 ezw
 ezw
-bmQ
+bvc
 oOk
 oPT
 ixY
@@ -181240,7 +181242,7 @@ uOj
 tPZ
 ezw
 ezw
-flX
+bmQ
 hTG
 oPT
 cjE

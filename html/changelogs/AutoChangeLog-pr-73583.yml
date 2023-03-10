@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - bugfix: "Honourbound can no longer be gained from neurowine or from heavy brain damage, no longer causing the player to be granted a spell that does nothing most of the time"

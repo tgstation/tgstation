@@ -113,4 +113,7 @@
 	/// Only load in visual organs
 	var/visual_only_organs = FALSE
 
+	/// Stores the result of our last known top_offset generation for optimisation purposes when drawing limb icons.
+	var/last_top_offset
+
 	COOLDOWN_DECLARE(bleeding_message_cd)

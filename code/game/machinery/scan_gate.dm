@@ -196,11 +196,11 @@
 
 /obj/machinery/scanner_gate/proc/alarm_beep()
 	if(next_beep <= world.time)
-		next_beep = world.time + 20
+		next_beep = world.time + (2 SECONDS)
 		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
-	var/image/I = image(icon, src, "alarm_light", layer+1)
-	flick_overlay_view(I, src, 20)
-	set_scanline("alarm", 20)
+	var/image/alarm_image = image(icon, src, "alarm_light", layer+1)
+	flick_overlay_view(alarm_image, 2 SECONDS)
+	set_scanline("alarm", 2 SECONDS)
 
 /obj/machinery/scanner_gate/can_interact(mob/user)
 	if(locked)

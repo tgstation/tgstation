@@ -28,13 +28,7 @@
 
 	if(isbasicmob(owner))
 		var/mob/living/basic/basic_owner = owner
-		if(!basic_owner.flammable)
-			qdel(src)
-			return
-
-	if(isanimal(owner))
-		var/mob/living/simple_animal/animal_owner = owner
-		if(!animal_owner.flammable)
+		if(!(basic_owner.basic_mob_flags & FLAMMABLE_MOB))
 			qdel(src)
 			return
 
@@ -150,13 +144,7 @@
 	if(!on_fire)
 		return TRUE
 
-	if(isanimal(owner))
-		var/mob/living/simple_animal/animal_owner = owner
-		adjust_stacks(animal_owner.fire_stack_removal_speed * delta_time)
-	else if(iscyborg(owner))
-		adjust_stacks(-0.55 * delta_time)
-	else
-		adjust_stacks(-0.05 * delta_time)
+	adjust_stacks(owner.fire_stack_decay_rate * delta_time)
 
 	if(stacks <= 0)
 		qdel(src)

@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Fixed some potential future runtimes relatively to the new bodypart overlay system's coloring procs."

@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Map filter works properly in the pre-round lobby"
+  - bugfix: "Map vote doesn't log 'not enough players' if the vote starts in the pre-round lobby"

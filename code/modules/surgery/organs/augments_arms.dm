@@ -347,8 +347,8 @@
 	
 	///The amount of damage dealt by the empowered attack.
 	var/punch_damage = 13
-	///Will the punch smash people into walls?
-	var/gentle = TRUE
+	///IF true, the throw attack will not smash people into walls
+	var/non_harmful_throw = TRUE
 	///How far away your attack will throw your oponent
 	var/attack_throw_range = 1
 	///Minimum throw power of the attack
@@ -388,6 +388,9 @@
 		return
 	if(!isliving(target))
 		return
+	var/datum/dna/dna = source.has_dna()
+	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+		return
 
 	var/mob/living/living_target = target
 
@@ -419,7 +422,7 @@
 
 	if(source.body_position != LYING_DOWN) //Throw them if we are standing
 		var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
-		living_target.throw_at(throw_target, attack_throw_range, rand(throw_power_min,throw_power_max), source, gentle)
+		living_target.throw_at(throw_target, attack_throw_range, rand(throw_power_min,throw_power_max), source, gentle = non_harmful_throw)
 
 	living_target.visible_message(
 		span_danger("[source] [picked_hit_type]ed [living_target]!"), 

@@ -12,7 +12,7 @@
 	category = EVENT_CATEGORY_ANOMALIES
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 3
-	admin_setup = /datum/event_admin_setup/anomaly/anomaly_ectoplasm
+	admin_setup = list(/datum/event_admin_setup/set_location/anomaly, /datum/event_admin_setup/anomaly_ectoplasm)
 
 /datum/round_event/anomaly/anomaly_ectoplasm
 	anomaly_path = /obj/effect/anomaly/ectoplasm
@@ -41,15 +41,13 @@
 /datum/round_event/anomaly/anomaly_ectoplasm/announce(fake)
 	priority_announce("Localized ectoplasmic outburst detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
 
-/datum/event_admin_setup/anomaly/anomaly_ectoplasm
+/datum/event_admin_setup/anomaly_ectoplasm
 	///The admin-selected intensity
 	var/chosen_effect
 	///The number of ghosts the admin has selected to simulate orbiting the anomaly.
 	var/ghost_override
 
-/datum/event_admin_setup/anomaly/anomaly_ectoplasm/prompt_admins()
-	. = ..()
-
+/datum/event_admin_setup/anomaly_ectoplasm/prompt_admins()
 	if(tgui_alert(usr, "Override the anomaly effect and power?", "You'll be ruining the authenticity.", list("Yes", "No")) == "Yes")
 		var/list/power_values = list(ANOMALY_INTENSITY_MINOR, ANOMALY_INTENSITY_MODERATE, ANOMALY_INTENSITY_MAJOR)
 		chosen_effect = tgui_input_list(usr, "Provide effect override", "Criiiiinge.", power_values)
@@ -68,8 +66,7 @@
 		if(ANOMALY_INTENSITY_MAJOR)
 			chosen_effect = 50
 
-/datum/event_admin_setup/anomaly/anomaly_ectoplasm/apply_to_event(datum/round_event/anomaly/anomaly_ectoplasm/event)
-	. = ..()
+/datum/event_admin_setup/anomaly_ectoplasm/apply_to_event(datum/round_event/anomaly/anomaly_ectoplasm/event)
 	event.effect_override = chosen_effect
 	event.orbit_override = ghost_override
 

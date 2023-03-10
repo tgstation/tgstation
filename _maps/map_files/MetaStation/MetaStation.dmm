@@ -2556,6 +2556,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
 "aUk" = (
@@ -25525,6 +25526,7 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "jgT" = (
@@ -46960,6 +46962,10 @@
 /area/station/maintenance/starboard/fore)
 "qIK" = (
 /obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/preopen{
+	id = "qmprivacy";
+	name = "Privacy Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/qm)
 "qIP" = (
@@ -47650,7 +47656,6 @@
 /area/station/engineering/supermatter/room)
 "qUm" = (
 /obj/effect/spawner/random/vending/snackvend,
-/obj/machinery/light/directional/east,
 /obj/machinery/light/directional/east,
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -53795,7 +53800,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster's Office"
 	},
 /turf/open/floor/iron,
@@ -61589,7 +61594,16 @@
 /area/station/commons/fitness/recreation)
 "vHG" = (
 /obj/structure/table/wood,
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/directional/south{
+	pixel_x = -6
+	},
+/obj/machinery/button/door/directional/south{
+	id = "qmprivacy";
+	name = "Privacy Shutters Control";
+	req_access = list("qm");
+	pixel_y = -26;
+	pixel_x = 8
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "vHO" = (
@@ -68761,6 +68775,7 @@
 "ykj" = (
 /obj/structure/table,
 /obj/structure/cable,
+/obj/effect/spawner/random/food_or_drink/cake_ingredients,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "ykn" = (

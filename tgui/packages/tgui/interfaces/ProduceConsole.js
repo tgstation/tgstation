@@ -14,9 +14,14 @@ const TAB2NAME = [
   },
 ];
 
+const findAmount = (item_amts, name) => {
+  const amount = item_amts.find((item) => item.name === name);
+  return amount.amt;
+};
+
 const ShoppingTab = (props, context) => {
   const { data, act } = useBackend(context);
-  const { credit_type, order_categories, order_datums } = data;
+  const { credit_type, order_categories, order_datums, item_amts } = data;
   const [shopIndex, setShopIndex] = useLocalState(context, 'shop-index', 1);
   const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
   const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
@@ -25,6 +30,7 @@ const ShoppingTab = (props, context) => {
     searchItem.length > 0
       ? data.order_datums.filter(search)
       : order_datums.filter((item) => item && item.cat === shopIndex);
+
   return (
     <Stack fill vertical>
       <Section mb={-1}>
@@ -124,8 +130,7 @@ const ShoppingTab = (props, context) => {
                       }
                     />
                     <NumberInput
-                      animated
-                      value={item.amt || 0}
+                      value={findAmount(item_amts, item.name) || 0}
                       width="41px"
                       minValue={0}
                       maxValue={20}
@@ -157,8 +162,12 @@ const CheckoutTab = (props, context) => {
     forced_express,
     order_datums,
     total_cost,
+    item_amts,
   } = data;
-  const checkout_list = order_datums.filter((food) => food && (food.amt || 0));
+
+  const checkout_list = order_datums.filter(
+    (food) => food && (findAmount(item_amts, food.name) || 0)
+  );
   return (
     <Stack vertical fill>
       <Stack.Item grow>
@@ -195,7 +204,7 @@ const CheckoutTab = (props, context) => {
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>
                       <NumberInput
-                        value={item.amt || 0}
+                        value={findAmount(item_amts, item.name) || 0}
                         width="41px"
                         minValue={0}
                         maxValue={(item.cost > 10 && 50) || 10}

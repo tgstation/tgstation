@@ -20,7 +20,7 @@
 	severity = 4
 	var/yawning = FALSE
 	threshold_descs = list(
-		"Transmission 4" = "Causes the host to periodically emit a yawn that spreads the virus in a manner similar to that of a sneeze.",
+		"Transmission 4" = "Causes the host to periodically emit a yawn that tries to infect bystanders within 6 meters of the host.",
 		"Stage Speed 10" = "Causes narcolepsy more often, increasing the chance of the host falling asleep.",
 	)
 
