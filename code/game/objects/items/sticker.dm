@@ -38,6 +38,7 @@
 	var/px = text2num(LAZYACCESS(parameters, ICON_X)) - divided_size
 	var/py = text2num(LAZYACCESS(parameters, ICON_Y)) - divided_size
 	. |= AFTERATTACK_PROCESSED_ITEM
+	user.do_attack_animation(target)
 	stick(target,user,px,py)
 	return .
 
@@ -86,7 +87,7 @@
 	. = ..()
 	if(!. && prob(50))
 		stick(hit_atom,rand(-7,7),rand(-7,7))
-		attached.visible_message(span_notice("[src] lands on [attached] with its sticky side!"))
+		attached.balloon_alert("the sticker lands on its sticky side!"))
 
 ///Signal handler for COMSIG_TURF_EXPOSE, deletes this sticker if the temperature is above 100C and it is flammable
 /obj/item/sticker/proc/on_turf_expose(datum/source, datum/gas_mixture/air, exposed_temperature)
