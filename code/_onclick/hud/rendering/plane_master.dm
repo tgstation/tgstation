@@ -588,18 +588,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 	return .
 
-/atom/movable/screen/plane_master/ghost/Destroy(force, ...)
-	UnregisterSignal(home.our_hud.mymob, COMSIG_MOB_STATCHANGE) // this technically isn't needed, but it's a good idea to be explicit
-	return ..()
-
 /atom/movable/screen/plane_master/ghost/proc/handle_stat_change(mob/living/mymob)
 	SIGNAL_HANDLER
 
-	switch(mymob.stat)
-		if(DEAD)
-			mouse_opacity = MOUSE_OPACITY_OPAQUE
-		else
-			mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	if(mymob.stat == DEAD)
+		mouse_opacity = MOUSE_OPACITY_OPAQUE
+	else
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/screen/plane_master/fullscreen
 	name = "Fullscreen"
