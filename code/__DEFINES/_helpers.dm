@@ -28,6 +28,6 @@
 /// Wrapper around byond's ref()
 #define text_ref(datum) ref(datum)
 #endif
-if DM_VERSION >= 516
+#if DM_VERSION >= 516
 #warn remove this old 514 compatiability code (and also the old `cached_ref` datum var).
 #endif
