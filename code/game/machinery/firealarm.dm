@@ -136,8 +136,8 @@
 		. += mutable_appearance(icon, "fire_[SSsecurity_level.get_current_level_as_text()]")
 		. += emissive_appearance(icon, "fire_[SSsecurity_level.get_current_level_as_text()]", src, alpha = src.alpha)
 	else
-		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]")
-		. += emissive_appearance(icon, "fire_[SEC_LEVEL_GREEN]", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "fire_offstation")
+		. += emissive_appearance(icon, "fire_offstation", src, alpha = src.alpha)
 
 	if(!(my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
 		if(my_area?.fire_detect) //If this is false, leave the red light missing. A good hint to anyone paying attention.
