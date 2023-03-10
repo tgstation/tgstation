@@ -290,3 +290,39 @@
   timothymtorres:
   - balance: Add lava moat to Icebox vault and fix maint area being viewable from
       primary hallway
+2023-03-10:
+  IndieanaJones:
+  - balance: Abductors' midround spawn weight has been increased. Expect to see them
+      more often
+  Jacquerel:
+  - bugfix: Something which is "forced" to embed will now always actually embed. Resultingly,
+      accidentally swallowing glass or encountering it behind a poster without adequate
+      protection will now always cause it to embed into your body.
+  - balance: Thin and fingerless gloves may no longer protect you from having glass
+      in your hand after pulling down a poster
+  - bugfix: Bullets containing shrapnel now use their correct chance to embed, which
+      may cause bullet wounds to contain shrapnel more frequently.
+  Melbert:
+  - qol: Completing an experiment which discounts a researched tech node will give
+      a partial refund of the discount lost. For example, researching the industrial
+      engineering research without scanning iron toilets will refund ~5000 points
+      if you complete it afterwards. This only applies once per experiment, so experiments
+      which discount multiple nodes only refund the first researched.
+  Profakos:
+  - bugfix: the double esword sales are now smaller than regular sales
+  SyncIt21:
+  - bugfix: machine frames not spawning stack components we inserted in them when
+      pried open with a crowbar
+  - bugfix: borg rcd's not displaying the correct matter units in its UI & when examined
+  - qol: arcd animation is smoother and makes more sense and has infinite matter
+  - bugfix: rcd not getting inserted into toolbelts & other storage units upon clicking
+  - bugfix: rld updating its icon state correctly based on the matter left
+  Watermelon914:
+  - code_imp: Abstract types don't hold telecrystal rewards or progression rewards
+      anymore, this has been moved to the non-abstract types.
+  - balance: Rebalances rewards from repeatable traitor objectives to be more consistent
+      with each other.
+  coiax:
+  - bugfix: Tiziran lung stirfry now correctly uses a bowl in its construction, and
+      is left over after eating. It also can only be constructed with organic lungs,
+      because cybernetic lungs don't fry as well.
