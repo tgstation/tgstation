@@ -32,20 +32,21 @@
 	var/obj/item/organ/internal/eyes/eyes = human_owner.getorganslot(ORGAN_SLOT_EYES)
 	if(lums > 0.5)
 		human_owner.add_mood_event("too_bright", /datum/mood_event/bright_light)
-		eyes.applyOrganDamage(2)
-		human_owner.adjustBruteLoss(4)
+		eyes.applyOrganDamage(3)
 		if(prob(25))
-			to_chat(human_owner, span_warning("The light burns you!"))
+			to_chat(human_owner, span_warning("The light burns your eyes!"))
 	else
 		human_owner.clear_mood_event("too_bright")
 		eyes.applyOrganDamage(-1)
 
 /datum/bloodsucker_clan/lasombra/on_favorite_vassal(datum/source, datum/antagonist/vassal/vassaldatum, mob/living/bloodsucker)
+	var/datum/action/cooldown/spell/jaunt/shadow_walk/lasombra/shadow_walk = new()
+	shadow_walk.Grant(vassaldatum.owner.current)
 	var/mob/living/carbon/human/humanowner = vassaldatum.owner.current
 	if(!istype(humanowner)) // :(
 		return
-	humanowner.set_species(/datum/species/shadow/nightmare)
-	to_chat(vassaldatum.owner.current, span_notice("You feel your body has changed... into something greater."))
+	humanowner.set_species(/datum/species/shadow)
+	to_chat(vassaldatum.owner.current, span_notice("You feel that your body has changed... into something greater."))
 
 /datum/bloodsucker_clan/lasombra/on_vassal_made(atom/source, mob/living/user, mob/living/target)
 	. = ..()
