@@ -465,11 +465,6 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	desc = "Ah... That's not the sound I expected it to make. Sounds like a Space Autumn Bird."
 	say_mod = "chirps"
 
-/obj/item/organ/internal/tongue/monkey
-	name = "primitive tongue"
-	desc = "For aggressively chimpering. And consuming bananas."
-	say_mod = "chimpers"
-
 /obj/item/organ/internal/tongue/moth
 	name = "moth tongue"
 	desc = "Moths don't have tongues. Someone get god on the phone, tell them I'm not happy."

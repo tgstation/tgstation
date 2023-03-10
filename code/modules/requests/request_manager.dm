@@ -1,5 +1,7 @@
 /// Requests from prayers
 #define REQUEST_PRAYER "request_prayer"
+/// Requests from monkey paw
+#define REQUEST_MONKEY_PAW "request_monkey_paw"
 /// Requests for Centcom
 #define REQUEST_CENTCOM "request_centcom"
 /// Requests for the Syndicate
@@ -66,6 +68,16 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	for(var/client/admin in GLOB.admins)
 		if(is_chaplain && admin.prefs.chat_toggles & CHAT_PRAYER && admin.prefs.toggles & SOUND_PRAYERS)
 			SEND_SOUND(admin, sound('sound/effects/pray.ogg'))
+
+/**
+ * Creates a request for a monkey paw wish
+ *
+ * Arguments:
+ * * C - The client who is sending the request
+ * * message - The message
+ */
+/datum/request_manager/proc/monkey_paw_wish(client/C, message)
+	request_for_client(C, REQUEST_MONKEY_PAW, message)
 
 /**
  * Creates a request for a Centcom message
