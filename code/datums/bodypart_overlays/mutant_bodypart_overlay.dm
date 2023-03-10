@@ -41,7 +41,7 @@
 ///Get the image we need to draw on the person. Called from get_overlay() which is called from _bodyparts.dm. Limb can be null
 /datum/bodypart_overlay/mutant/get_image(image_layer, obj/item/bodypart/limb)
 	if(!sprite_datum)
-		return
+		CRASH("Trying to call get_image() on [type] while it didn't have a sprite_datum. This shouldn't happen, report it as soon as possible.")
 
 	var/gender = (limb?.limb_gender == FEMALE) ? "f" : "m"
 	var/list/icon_state_builder = list()
@@ -59,7 +59,8 @@
 
 	return appearance
 
-/datum/bodypart_overlay/mutant/color_image(image/overlay, obj/item/bodypart/limb)
+/datum/bodypart_overlay/mutant/color_image(image/overlay, layer, obj/item/bodypart/limb)
+
 	overlay.color = sprite_datum.color_src ? draw_color : null
 
 /datum/bodypart_overlay/mutant/added_to_limb(obj/item/bodypart/limb)

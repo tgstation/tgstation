@@ -50,7 +50,7 @@
 	return FALSE
 
 
-/mob/living/carbon/alien/larva/has_left_hand()
+/mob/living/carbon/alien/larva/has_left_hand(check_disabled = TRUE)
 	return TRUE
 
 
@@ -66,7 +66,7 @@
 	return FALSE
 
 
-/mob/living/carbon/alien/larva/has_right_hand()
+/mob/living/carbon/alien/larva/has_right_hand(check_disabled = TRUE)
 	return TRUE
 
 

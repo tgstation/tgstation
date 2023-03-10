@@ -1,57 +1,62 @@
-#define TGS_STATUS_THROTTLE 5
-
-/datum/tgs_chat_command/tgsstatus
-	name = "status"
-	help_text = "Gets the admincount, playercount, gamemode, and true game mode of the server"
+/// Reload admins tgs chat command. Intentionally not validated.
+/datum/tgs_chat_command/reload_admins
+	name = "reload_admins"
+	help_text = "Forces the server to reload admins."
 	admin_only = TRUE
 
-/datum/tgs_chat_command/tgsstatus/Run(datum/tgs_chat_user/sender, params)
-	var/list/adm = get_admin_counts()
-	var/list/allmins = adm["total"]
-	var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
-	status += "Players: [GLOB.clients.len] (Active: [get_active_player_count(0,1,0)]). Round has [SSticker.HasRoundStarted() ? "" : "not "]started."
-	return status
+/datum/tgs_chat_command/reload_admins/Run(datum/tgs_chat_user/sender, params)
+	ReloadAsync()
+	log_admin("[sender.friendly_name] reloaded admins via chat command.")
+	message_admins("[sender.friendly_name] reloaded admins via chat command.")
+	return "Admins reloaded."
 
-/datum/tgs_chat_command/tgscheck
-	name = "check"
-	help_text = "Gets the playercount, gamemode, and address of the server"
+/datum/tgs_chat_command/reload_admins/proc/ReloadAsync()
+	set waitfor = FALSE
+	load_admins()
 
-/datum/tgs_chat_command/tgscheck/Run(datum/tgs_chat_user/sender, params)
-	var/server = CONFIG_GET(string/server)
-	return "[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.config.map_name]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [server ? server : "[world.internet_address]:[world.port]"]"
+/// subtype tgs chat command with validated admin ranks. Only supports discord.
+/datum/tgs_chat_command/validated
+	var/required_rights = 0 //! validate discord userid is linked to a game admin with these flags.
+	admin_only = TRUE
 
-/datum/tgs_chat_command/gameversion
-	name = "gameversion"
-	help_text = "Gets the version details from the show-server-revision verb, basically"
 
-/datum/tgs_chat_command/gameversion/Run(datum/tgs_chat_user/sender, params)
-	var/list/msg = list("")
-	msg += "BYOND Server Version: [world.byond_version].[world.byond_build] (Compiled with: [DM_VERSION].[DM_BUILD])\n"
+/// called by tgs
+/datum/tgs_chat_command/validated/Run(datum/tgs_chat_user/sender, params)
+	if (!CONFIG_GET(flag/secure_chat_commands) || CONFIG_GET(flag/admin_legacy_system) || !SSdbcore.Connect())
+		return Validated_Run(sender, params)
 
-	if (!GLOB.revdata)
-		msg += "No revision information found."
+	var/discord_id = SSdiscord.get_discord_id_from_mention(sender.mention) || sender.id
+	if (!discord_id)
+		return "Error: Unknown error trying to get your discord id."
+
+	var/datum/admins/linked_admin
+	var/admin_ckey = ckey(SSdiscord.lookup_ckey(discord_id))
+
+	if (admin_ckey)
+		linked_admin = GLOB.admin_datums[admin_ckey] || GLOB.deadmins[admin_ckey]
 	else
-		msg += "Revision [copytext_char(GLOB.revdata.commit, 1, 9)]"
-		if (GLOB.revdata.date)
-			msg += " compiled on '[GLOB.revdata.date]'"
-		
-		if(GLOB.revdata.originmastercommit)
-			msg += ", from origin commit: <[CONFIG_GET(string/githuburl)]/commit/[GLOB.revdata.originmastercommit]>"
+		return "Error: Could not find a linked ckey for your discord id."
 
-		if(GLOB.revdata.testmerge.len)
-			msg += "\n"
-			for(var/datum/tgs_revision_information/test_merge/PR as anything in GLOB.revdata.testmerge)
-				msg += "PR #[PR.number] at [copytext_char(PR.head_commit, 1, 9)] [PR.title].\n"
-				if (PR.url)
-					msg += "<[PR.url]>\n"
-	return msg.Join("")
+	if (!linked_admin)
+		return "Error: Your linked ckey (`[admin_ckey]`) was not found in the admin list. If this is a mistake you can try `reload_admins`"
 
-/datum/tgs_chat_command/ahelp
+	if (!linked_admin.check_for_rights(required_rights))
+		return "Error: Your linked ckey (`[admin_ckey]`) does not have sufficient rights to do that. You require one of the following flags: `[rights2text(required_rights," ")]`"
+
+	return Validated_Run(sender, params)
+
+
+/// Called if the sender passes validation checks or if those checks are disabled.
+/datum/tgs_chat_command/validated/proc/Validated_Run(datum/tgs_chat_user/sender, params)
+	CRASH("[type] has no implementation for Validated_Run()")
+
+/datum/tgs_chat_command/validated/ahelp
 	name = "ahelp"
 	help_text = "<ckey|ticket #> <message|ticket <close|resolve|icissue|reject|reopen <ticket #>|list>>"
 	admin_only = TRUE
+	required_rights = R_ADMIN
 
-/datum/tgs_chat_command/ahelp/Run(datum/tgs_chat_user/sender, params)
+/datum/tgs_chat_command/validated/ahelp/Validated_Run(datum/tgs_chat_user/sender, params)
 	var/list/all_params = splittext(params, " ")
 	if(all_params.len < 2)
 		return "Insufficient parameters"
@@ -66,12 +71,13 @@
 			return "Ticket #[id] not found!"
 	return TgsPm(target, all_params.Join(" "), sender.friendly_name)
 
-/datum/tgs_chat_command/namecheck
+/datum/tgs_chat_command/validated/namecheck
 	name = "namecheck"
 	help_text = "Returns info on the specified target"
 	admin_only = TRUE
+	required_rights = R_ADMIN
 
-/datum/tgs_chat_command/namecheck/Run(datum/tgs_chat_user/sender, params)
+/datum/tgs_chat_command/validated/namecheck/Validated_Run(datum/tgs_chat_user/sender, params)
 	params = trim(params)
 	if(!params)
 		return "Insufficient parameters"
@@ -79,34 +85,22 @@
 	message_admins("Name checking [params] from [sender.friendly_name]")
 	return keywords_lookup(params, 1)
 
-/datum/tgs_chat_command/adminwho
+/datum/tgs_chat_command/validated/adminwho
 	name = "adminwho"
 	help_text = "Lists administrators currently on the server"
 	admin_only = TRUE
+	required_rights = 0
 
-/datum/tgs_chat_command/adminwho/Run(datum/tgs_chat_user/sender, params)
+/datum/tgs_chat_command/validated/adminwho/Validated_Run(datum/tgs_chat_user/sender, params)
 	return tgsadminwho()
 
-GLOBAL_LIST(round_end_notifiees)
-
-/datum/tgs_chat_command/endnotify
-	name = "endnotify"
-	help_text = "Pings the invoker when the round ends"
-	admin_only = TRUE
-
-/datum/tgs_chat_command/endnotify/Run(datum/tgs_chat_user/sender, params)
-	if(!SSticker.IsRoundInProgress() && SSticker.HasRoundStarted())
-		return "[sender.mention], the round has already ended!"
-	LAZYINITLIST(GLOB.round_end_notifiees)
-	GLOB.round_end_notifiees[sender.mention] = TRUE
-	return "I will notify [sender.mention] when the round ends."
-
-/datum/tgs_chat_command/sdql
+/datum/tgs_chat_command/validated/sdql
 	name = "sdql"
 	help_text = "Runs an SDQL query"
 	admin_only = TRUE
+	required_rights = R_DEBUG
 
-/datum/tgs_chat_command/sdql/Run(datum/tgs_chat_user/sender, params)
+/datum/tgs_chat_command/validated/sdql/Validated_Run(datum/tgs_chat_user/sender, params)
 	var/list/results = HandleUserlessSDQL(sender.friendly_name, params)
 	if(!results)
 		return "Query produced no output"
@@ -114,16 +108,15 @@ GLOBAL_LIST(round_end_notifiees)
 	var/list/refs = results.len > 3 ? results.Copy(4) : null
 	. = "[text_res.Join("\n")][refs ? "\nRefs: [refs.Join(" ")]" : ""]"
 
-/datum/tgs_chat_command/reload_admins
-	name = "reload_admins"
-	help_text = "Forces the server to reload admins."
+/datum/tgs_chat_command/validated/tgsstatus
+	name = "status"
+	help_text = "Gets the admincount, playercount, gamemode, and true game mode of the server"
 	admin_only = TRUE
+	required_rights = R_ADMIN
 
-/datum/tgs_chat_command/reload_admins/Run(datum/tgs_chat_user/sender, params)
-	ReloadAsync()
-	log_admin("[sender.friendly_name] reloaded admins via chat command.")
-	return "Admins reloaded."
-
-/datum/tgs_chat_command/reload_admins/proc/ReloadAsync()
-	set waitfor = FALSE
-	load_admins()
+/datum/tgs_chat_command/validated/tgsstatus/Validated_Run(datum/tgs_chat_user/sender, params)
+	var/list/adm = get_admin_counts()
+	var/list/allmins = adm["total"]
+	var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
+	status += "Players: [GLOB.clients.len] (Active: [get_active_player_count(0,1,0)]). Round has [SSticker.HasRoundStarted() ? "" : "not "]started."
+	return status

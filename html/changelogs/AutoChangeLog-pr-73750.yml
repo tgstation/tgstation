@@ -1,0 +1,5 @@
+author: "Jacquerel, sprite by J(Clearly Lying)"
+delete-after: True
+changes:
+  - balance: "Traitor objectives which ask you to destroy lathes or the ORM provide an optional bonus if you _booby trap_ the machine using a provided tool. This causes the machine to explode the next time it is interacted with."
+  - balance: "Performing the objective without rigging the machine to explode awards no TC, using it awards more TC than it did previously."
