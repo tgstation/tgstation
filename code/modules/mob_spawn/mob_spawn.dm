@@ -167,32 +167,33 @@
 			prompt += " (Warning, You can no longer be revived!)"
 		var/ghost_role = tgui_alert(usr, prompt, buttons = list("Yes", "No"), timeout = 10 SECONDS)
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
+			LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 			ckeys_trying_to_spawn -= user_ckey
 			return
 
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
-		ckeys_trying_to_spawn -= user_ckey
+		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 		return
 	if(uses <= 0) //just in case
 		to_chat(user, span_warning("This spawner is out of charges!"))
-		ckeys_trying_to_spawn -= user_ckey
+		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 		return
 
 	if(is_banned_from(user.key, role_ban))
 		to_chat(user, span_warning("You are banned from this role!"))
-		ckeys_trying_to_spawn -= user_ckey
+		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 		return
 	if(!allow_spawn(user, silent = FALSE))
-		ckeys_trying_to_spawn -= user_ckey
+		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 		return
 	if(QDELETED(src) || QDELETED(user))
-		ckeys_trying_to_spawn -= user_ckey
+		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 		return
 
 	if(uses <= 0) // Just in case something took longer than it should've and we got here after the uses went below zero.
 		to_chat(user, span_warning("This spawner is out of charges!"))
-		ckeys_trying_to_spawn -= user_ckey
+		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 		return
 
 	user.log_message("became a [prompt_name].", LOG_GAME)
@@ -200,7 +201,7 @@
 	user.mind = null // dissassociate mind, don't let it follow us to the next life
 
 	var/created = create(user)
-	ckeys_trying_to_spawn -= user_ckey // We do this AFTER the create() so that we're basically sure that the user won't be in their ghost body anymore, so they can't click on the spawner again.
+	LAZYREMOVE(ckeys_trying_to_spawn, user_ckey) // We do this AFTER the create() so that we're basically sure that the user won't be in their ghost body anymore, so they can't click on the spawner again.
 
 	if(!created)
 		uses += 1 // Refund use because we didn't actually spawn anything
