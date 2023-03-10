@@ -1,4 +1,5 @@
 #define PROB_MOUSE_SPAWN 98
+#define PROB_SPIDER_REPLACEMENT 50
 
 SUBSYSTEM_DEF(minor_mapping)
 	name = "Minor Mapping"
@@ -22,6 +23,10 @@ SUBSYSTEM_DEF(minor_mapping)
 			continue
 
 		num_mice--
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_SPIDER_INFESTATION) && prob(PROB_SPIDER_REPLACEMENT))
+			new /mob/living/basic/giant_spider/maintenance(proposed_turf)
+			return
+
 		if (prob(PROB_MOUSE_SPAWN))
 			new /mob/living/basic/mouse(proposed_turf)
 		else

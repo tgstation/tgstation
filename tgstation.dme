@@ -3798,6 +3798,7 @@
 #include "code\modules\mob\living\basic\space_fauna\carp\megacarp.dm"
 #include "code\modules\mob\living\basic\space_fauna\giant_spider\giant_spider.dm"
 #include "code\modules\mob\living\basic\space_fauna\giant_spider\giant_spider_ai.dm"
+#include "code\modules\mob\living\basic\space_fauna\giant_spider\spider_subtrees.dm"
 #include "code\modules\mob\living\basic\space_fauna\giant_spider\spider_variants.dm"
 #include "code\modules\mob\living\basic\space_fauna\giant_spider\spider_abilities\hivemind.dm"
 #include "code\modules\mob\living\basic\space_fauna\giant_spider\spider_abilities\lay_eggs.dm"
