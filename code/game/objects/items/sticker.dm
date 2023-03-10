@@ -26,8 +26,9 @@
 		return
 	user.visible_message(span_notice("[user] sticks [src] to [target]!"),span_notice("You stick [src] to [target]!"))
 	var/list/parameters = params2list(params)
-	var/py = text2num(parameters["icon-y"]) - 16
-	var/px = text2num(parameters["icon-x"]) - 16
+	var/divided_size = world.icon_size / 2
+	var/py = text2num(parameters["icon-y"]) - divided_size
+	var/px = text2num(parameters["icon-x"]) - divided_size
 	. |= AFTERATTACK_PROCESSED_ITEM
 	stick(target,user,px,py)
 
