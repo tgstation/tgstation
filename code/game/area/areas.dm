@@ -28,6 +28,8 @@
 	var/fire = FALSE
 	///A var for whether the area allows for detecting fires/etc. Disabled or enabled at a fire alarm, checked by fire locks.
 	var/fire_detect = TRUE
+	///A var if the area fire alarms have been muted at the panel.
+	var/fire_mute = FALSE
 	///A list of all fire locks in this area. Used by fire alarm panels when resetting fire locks or activating all in an area
 	var/list/firedoors
 	///A list of firelocks currently active. Used by fire alarms when setting their icons.

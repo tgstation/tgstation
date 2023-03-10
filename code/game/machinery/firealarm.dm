@@ -82,6 +82,7 @@
 		return
 	var/area/our_area = get_area(src)
 	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, PROC_REF(handle_fire))
+	set_status()
 
 /obj/machinery/firealarm/on_enter_area(datum/source, area/area_to_register)
 	..()
@@ -104,7 +105,7 @@
  * the alarm sound based on the state of an area variable.
  */
 /obj/machinery/firealarm/proc/set_status()
-	if(!(my_area.fire || LAZYLEN(my_area.active_firelocks)) || (obj_flags & EMAGGED))
+	if(!(my_area.fire || LAZYLEN(my_area.active_firelocks)) || (obj_flags & EMAGGED) || my_area?.fire_mute)
 		soundloop.stop()
 	update_appearance()
 
@@ -132,24 +133,30 @@
 
 	. += mutable_appearance(icon, "fire_overlay")
 	if(is_station_level(z))
-		. += mutable_appearance(icon, "fire_[SSsecurity_level.get_current_level_as_number()]")
-		. += emissive_appearance(icon, "fire_[SSsecurity_level.get_current_level_as_number()]", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "fire_[SSsecurity_level.get_current_level_as_text()]")
+		. += emissive_appearance(icon, "fire_[SSsecurity_level.get_current_level_as_text()]", src, alpha = src.alpha)
 	else
 		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]")
 		. += emissive_appearance(icon, "fire_[SEC_LEVEL_GREEN]", src, alpha = src.alpha)
 
 	if(!(my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
-		if(my_area?.fire_detect) //If this is false, leave the green light missing. A good hint to anyone paying attention.
-			. += mutable_appearance(icon, "fire_off")
-			. += emissive_appearance(icon, "fire_off", src, alpha = src.alpha)
+		if(my_area?.fire_detect) //If this is false, leave the red light missing. A good hint to anyone paying attention.
+			. += mutable_appearance(icon, "fire_sensing")
+			. += emissive_appearance(icon, "fire_sensing", src, alpha = src.alpha)
+		else
+			. += mutable_appearance(icon, "fire_not_sensing")
+			. += emissive_appearance(icon, "fire_not_sensing", src, alpha = src.alpha)
 	else if(obj_flags & EMAGGED)
 		. += mutable_appearance(icon, "fire_emagged")
 		. += emissive_appearance(icon, "fire_emagged", src, alpha = src.alpha)
+	else if(my_area?.fire_mute)
+		. += mutable_appearance(icon, "fire_mute")
+		. += emissive_appearance(icon, "fire_mute", src, alpha = src.alpha)
 	else
 		. += mutable_appearance(icon, "fire_on")
 		. += emissive_appearance(icon, "fire_on", src, alpha = src.alpha)
 
-	if(!panel_open && my_area?.fire_detect && my_area?.fire) //It just looks horrible with the panel open
+	if(!panel_open && my_area?.fire_detect && my_area?.fire && !my_area.fire_mute) //It just looks horrible with the panel open
 		. += mutable_appearance(icon, "fire_detected")
 		. += emissive_appearance(icon, "fire_detected", src, alpha = src.alpha) //Pain
 
@@ -221,6 +228,7 @@
 	my_area.alarm_manager.clear_alarm(ALARM_FIRE, my_area)
 	// Clears all fire doors and their effects for now
 	// They'll reclose if there's a problem
+	my_area.fire_mute = FALSE
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
 		firelock.crack_open()
 	if(user)
@@ -229,12 +237,36 @@
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_RESET)
 	update_use_power(IDLE_POWER_USE)
 
+/**
+ * Mutes all firelocks in the area.
+ *
+ * Arguments:
+ * * mob/user is the user that reset the alarm.
+ */
+/obj/machinery/firealarm/proc/mute_area(mob/user)
+	if(!is_operational)
+		return
+	my_area.fire_mute = TRUE
+	for(var/obj/machinery/door/firedoor/firedoor in my_area.firedoors)
+		firedoor.mute()
+	for(var/obj/machinery/firealarm/firealarm in my_area.firealarms)
+		firealarm.set_status()
+	if(user)
+		user.log_message("muted a fire alarm.", LOG_GAME)
+
 /obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
 	if(buildstage != 2)
 		return
 	. = ..()
 	add_fingerprint(user)
 	alarm(user)
+
+/obj/machinery/firealarm/CtrlClick(mob/user)
+	if(buildstage != 2)
+		return
+	. = ..()
+	add_fingerprint(user)
+	mute_area(user)
 
 /obj/machinery/firealarm/attack_hand_secondary(mob/user, list/modifiers)
 	if(buildstage != 2)
@@ -401,9 +433,12 @@
 	. = ..()
 	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
 		. += "The local area hazard light is flashing."
+		. += "The current alert level is [SSsecurity_level.get_current_level_as_text()]."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."
+		. += "<b>Ctrl-Click</b> to mute all firelocks in this area."
 		. += "<b>Right-Click</b> to reset firelocks in this area."
 	else
+		. += "The current alert level is [SSsecurity_level.get_current_level_as_text()]."
 		. += "The local area thermal detection light is [my_area.fire_detect ? "lit" : "unlit"]."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."
 
@@ -507,7 +542,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 	SIGNAL_HANDLER
 	is_on.set_output(0)
 	reset.set_output(COMPONENT_SIGNAL)
-
 
 /obj/item/circuit_component/firealarm/input_received(datum/port/input/port)
 	if(COMPONENT_TRIGGERED_BY(alarm_trigger, port))

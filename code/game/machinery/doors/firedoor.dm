@@ -465,9 +465,12 @@
 
 	correct_state()
 
-	if(is_playing_alarm)
+	if(is_playing_alarm && !my_area.fire_mute)
 		soundloop.start()
 
+/obj/machinery/door/firedoor/proc/mute()
+	if(is_playing_alarm)
+		soundloop.stop()
 
 /obj/machinery/door/firedoor/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
