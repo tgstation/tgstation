@@ -75,8 +75,9 @@
 /obj/item/sticker/proc/unregister_signals(datum/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(attached,list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_IGNITED))
-	UnregisterSignal(signal_turf,COMSIG_TURF_EXPOSE)
-	signal_turf = null
+	if(signal_turf)
+		UnregisterSignal(signal_turf,COMSIG_TURF_EXPOSE)
+		signal_turf = null
 
 /obj/item/sticker/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
