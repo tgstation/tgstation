@@ -3,7 +3,7 @@
 	objectives = list( //Similar weights to destroy heirloom objectives
 		list(
 			/datum/traitor_objective/kidnapping/common = 20,
-			/datum/traitor_objective/kidnapping/less_common = 1,
+			/datum/traitor_objective/kidnapping/common/assistant = 1,
 		) = 4,
 		/datum/traitor_objective/kidnapping/uncommon = 3,
 		/datum/traitor_objective/kidnapping/rare = 2,
@@ -16,10 +16,6 @@
 		You'll get additional reward if %TARGET% is delivered alive."
 
 	abstract_type = /datum/traitor_objective/kidnapping
-
-	//this is a prototype so this progression is for all basic level kill objectives
-	progression_reward = list(2 MINUTES, 4 MINUTES)
-	telecrystal_reward = list(1, 2)
 
 	/// The period of time until you can take another objective after taking 3 objectives.
 	var/objective_period = 15 MINUTES
@@ -55,6 +51,8 @@
 /datum/traitor_objective/kidnapping/common
 	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
+	progression_reward = list(2 MINUTES, 4 MINUTES)
+	telecrystal_reward = list(1, 2)
 	target_jobs = list(
 		// Cargo
 		/datum/job/cargo_technician,
@@ -80,7 +78,7 @@
 		/datum/job/mime,
 	)
 
-/datum/traitor_objective/kidnapping/less_common
+/datum/traitor_objective/kidnapping/common/assistant
 	progression_minimum = 0 MINUTES
 	progression_maximum = 15 MINUTES
 	target_jobs = list(
@@ -90,6 +88,9 @@
 /datum/traitor_objective/kidnapping/uncommon //Hard to fish out victims
 	progression_minimum = 0 MINUTES
 	progression_maximum = 45 MINUTES
+	progression_reward = list(4 MINUTES, 8 MINUTES)
+	telecrystal_reward = list(1, 2)
+
 	target_jobs = list(
 		// Cargo
 		/datum/job/shaft_miner,
@@ -100,14 +101,13 @@
 		// Service
 		/datum/job/cook,
 	)
-
-	progression_reward = list(4 MINUTES, 8 MINUTES)
-	telecrystal_reward = list(1, 2)
 	alive_bonus = 1
 
 /datum/traitor_objective/kidnapping/rare
 	progression_minimum = 15 MINUTES
 	progression_maximum = 60 MINUTES
+	progression_reward = list(8 MINUTES, 12 MINUTES)
+	telecrystal_reward = list(2, 3)
 	target_jobs = list(
 		// Heads of staff
 		/datum/job/chief_engineer,
@@ -120,20 +120,16 @@
 		/datum/job/security_officer,
 		/datum/job/warden,
 	)
-
-	progression_reward = list(8 MINUTES, 12 MINUTES)
-	telecrystal_reward = list(1, 2)
 	alive_bonus = 2
 
 /datum/traitor_objective/kidnapping/captain
 	progression_minimum = 30 MINUTES
+	progression_reward = list(12 MINUTES, 16 MINUTES)
+	telecrystal_reward = list(2, 3)
 	target_jobs = list(
 		/datum/job/captain,
 		/datum/job/head_of_security,
 	)
-
-	progression_reward = list(12 MINUTES, 16 MINUTES)
-	telecrystal_reward = list(2, 3)
 	alive_bonus = 2
 
 /datum/traitor_objective/kidnapping/generate_objective(datum/mind/generating_for, list/possible_duplicates)

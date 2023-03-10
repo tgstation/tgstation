@@ -1,0 +1,5 @@
+author: "sergeirocks100"
+delete-after: True
+changes:
+  - bugfix: "Gifts you wrap will now display their greyscale colors as they're supposed to."
+  - bugfix: "Wrapping paper color selection has been rebound to Alt+click, to fix a bug where both wrapping paper color selection, and extracting wrapping paper from a roll were both bound to right click."

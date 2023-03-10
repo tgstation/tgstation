@@ -531,10 +531,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		message_admins("Failed to set new map with next_map.json for [change_to.map_name]! Using default as backup!")
 		return
 
-	if (change_to.config_min_users > 0 && GLOB.clients.len < change_to.config_min_users)
+	var/filter_threshold = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
+	if (change_to.config_min_users > 0 && filter_threshold != 0 && filter_threshold < change_to.config_min_users)
 		message_admins("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
 		log_game("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-	if (change_to.config_max_users > 0 && GLOB.clients.len > change_to.config_max_users)
+	if (change_to.config_max_users > 0 && filter_threshold > change_to.config_max_users)
 		message_admins("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
 		log_game("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
 

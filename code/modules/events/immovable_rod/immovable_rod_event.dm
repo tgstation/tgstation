@@ -9,7 +9,7 @@
 	description = "The station passes through an immovable rod."
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
-	admin_setup = /datum/event_admin_setup/immovable_rod
+	admin_setup = list(/datum/event_admin_setup/set_location/immovable_rod, /datum/event_admin_setup/question/immovable_rod)
 
 /datum/round_event/immovable_rod
 	announce_when = 5
@@ -28,26 +28,19 @@
 	var/atom/rod = new /obj/effect/immovablerod(start_turf, end_turf, special_target, force_looping)
 	announce_to_ghosts(rod)
 
-/datum/event_admin_setup/immovable_rod
-	/// Admins can pick a spot the rod will aim for.
-	var/atom/special_target
-	/// Admins can also force it to loop around forever, or at least until the RD gets their hands on it.
-	var/force_looping = FALSE
+/// Admins can pick a spot the rod will aim for
+/datum/event_admin_setup/set_location/immovable_rod
+	input_text = "Aimed at current location?"
 
-/datum/event_admin_setup/immovable_rod/prompt_admins()
-	special_target = null
-	force_looping = FALSE
+/datum/event_admin_setup/set_location/immovable_rod/apply_to_event(datum/round_event/immovable_rod/event)
+	event.special_target = chosen_turf
 
-	var/aimed = tgui_alert(usr,"Aimed at current location?", "Sniperod", list("Yes", "No"))
-	if(aimed == "Yes")
-		special_target = get_turf(usr)
-	var/looper = tgui_alert(usr,"Would you like this rod to force-loop across space z-levels?", "Loopy McLoopface", list("Yes", "No"))
-	if(looper == "Yes")
-		force_looping = TRUE
-	var/log_message = "[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping) " : ""]at [special_target ? AREACOORD(special_target) : "a random location"]."
+/// Admins can also force it to loop around forever, or at least until the RD gets their hands on it.
+/datum/event_admin_setup/question/immovable_rod
+	input_text = "Would you like this rod to force-loop across space z-levels?"
+
+/datum/event_admin_setup/question/immovable_rod/apply_to_event(datum/round_event/immovable_rod/event)
+	event.force_looping = chosen
+	var/log_message = "[key_name_admin(usr)] has aimed an immovable rod [event.force_looping ? "(forced looping) " : ""]at [event.special_target ? AREACOORD(event.special_target) : "a random location"]."
 	message_admins(log_message)
 	log_admin(log_message)
-
-/datum/event_admin_setup/immovable_rod/apply_to_event(datum/round_event/immovable_rod/event)
-	event.special_target = special_target
-	event.force_looping = force_looping
