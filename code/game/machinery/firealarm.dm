@@ -143,9 +143,6 @@
 		if(my_area?.fire_detect) //If this is false, leave the red light missing. A good hint to anyone paying attention.
 			. += mutable_appearance(icon, "fire_sensing")
 			. += emissive_appearance(icon, "fire_sensing", src, alpha = src.alpha)
-		else
-			. += mutable_appearance(icon, "fire_not_sensing")
-			. += emissive_appearance(icon, "fire_not_sensing", src, alpha = src.alpha)
 	else if(obj_flags & EMAGGED)
 		. += mutable_appearance(icon, "fire_emagged")
 		. += emissive_appearance(icon, "fire_emagged", src, alpha = src.alpha)
@@ -175,8 +172,7 @@
 	obj_flags |= EMAGGED
 	update_appearance()
 	if(user)
-		user.visible_message(span_warning("Sparks fly out of [src]!"),
-							span_notice("You override [src], disabling the speaker."))
+		user.balloon_alert(user, "speaker disabled!")
 		user.log_message("emagged [src].", LOG_ATTACK)
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	set_status()
@@ -211,6 +207,7 @@
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
 		firelock.activate(FIRELOCK_ALARM_TYPE_GENERIC)
 	if(user)
+		user.balloon_alert(user, "alarm triggered")
 		user.log_message("triggered a fire alarm.", LOG_GAME)
 	soundloop.start() //Manually pulled fire alarms will make the sound, rather than the doors.
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_TRIGGER)
@@ -232,6 +229,7 @@
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
 		firelock.crack_open()
 	if(user)
+		user.balloon_alert(user, "alarm reset")
 		user.log_message("reset a fire alarm.", LOG_GAME)
 	soundloop.stop()
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_RESET)
@@ -252,6 +250,7 @@
 	for(var/obj/machinery/firealarm/firealarm in my_area.firealarms)
 		firealarm.set_status()
 	if(user)
+		user.balloon_alert(user, "alarm muted")
 		user.log_message("muted a fire alarm.", LOG_GAME)
 
 /obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
