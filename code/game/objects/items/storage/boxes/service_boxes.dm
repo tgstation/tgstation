@@ -203,3 +203,21 @@
 /obj/item/storage/box/party_poppers/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/spray/chemsprayer/party(src)
+
+/obj/item/storage/box/stickers
+	name = "box of stickers"
+	desc = "A box full of random stickers. Do give to the clown."
+
+/obj/item/storage/box/stickers/PopulateContents()
+	var/list/types = subtypesof(/obj/item/sticker)
+	for(var/i in 1 to rand(4,8))
+		var/type = pick(types)
+		new type(src)
+
+/obj/item/storage/box/stickers/googly
+	name = "box of googly eye stickers"
+	desc = "Turn anything and everything into something vaguely alive!"
+
+/obj/item/storage/box/stickers/googly/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/sticker/googly(src)

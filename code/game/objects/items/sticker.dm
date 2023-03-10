@@ -13,6 +13,8 @@
 	var/list/icon_states
 	///The thing we are attached to
 	var/atom/attached
+	///The turf our COMSIG_TURF_EXPOSE is registered to, so we can unregister it later.
+	var/turf/signal_turf
 
 /obj/item/sticker/Initialize(mapload)
 	. = ..()
@@ -52,9 +54,9 @@
 		return
 	attached.cut_overlay(sticker_overlay)
 	sticker_overlay = null
-	forceMove(isturf(attached) ? attached : attached.loc)
+	forceMove(isturf(attached) ? attached : get_turf(attached.loc))
 	if(!silent)
-		attached.visible_message(span_notice("[src] falls off [attached]."))
+		visible_message(span_notice("[src] falls off [attached]."))
 	pixel_y = rand(-3,3)
 	pixel_x = rand(-3,3)
 	unregister_signals()
@@ -65,14 +67,16 @@
 	RegisterSignal(attached, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(peel))
 	if(isturf(attached))
 		//register signals on the users turf instead because we can assume they are on flooring sticking it to a wall so it should burn (otherwise it would fruitlessly check wall temperature)
-		RegisterSignal((user && isclosedturf(attached)) ? get_turf(user) : attached, COMSIG_TURF_EXPOSE, PROC_REF(on_turf_expose))
+		signal_turf = (user && isclosedturf(attached)) ? get_turf(user) : attached
+		RegisterSignal(signal_turf, COMSIG_TURF_EXPOSE, PROC_REF(on_turf_expose))
 	RegisterSignal(attached, COMSIG_LIVING_IGNITED, PROC_REF(on_ignite))
-	RegisterSignal(attached, COMSIG_PARENT_QDELETING, PROC_REF(unregister_signals))
 
 //Unregisters signals from the object it is attached to
 /obj/item/sticker/proc/unregister_signals(datum/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(attached,list(COMSIG_COMPONENT_CLEAN_ACT,COMSIG_PARENT_QDELETING, COMSIG_LIVING_IGNITED, COMSIG_TURF_EXPOSE))
+	UnregisterSignal(attached,list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_IGNITED))
+	UnregisterSignal(signal_turf,COMSIG_TURF_EXPOSE)
+	signal_turf = null
 
 /obj/item/sticker/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
