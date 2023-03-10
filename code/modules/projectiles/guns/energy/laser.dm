@@ -32,9 +32,9 @@
 
 /obj/item/gun/energy/laser/hellgun
 	name ="hellfire laser gun"
-	desc = "A relic of a weapon, built before NT began installing regulators on its laser weaponry. This laser weapon has a hardlight shell around the laser bolt, igniting organics that get hit."
+	desc = "A relic of a weapon, built before NT began installing regulators on its laser weaponry. Its laser can either be overclocked to deal brutal wounds, or can ignite targets that it hits."
 	icon_state = "hellgun"
-	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire)
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire, /obj/item/ammo_casing/energy/laser/hellfire/ignite)
 
 /obj/item/gun/energy/laser/captain
 	name = "antique laser gun"

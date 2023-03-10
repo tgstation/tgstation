@@ -27,18 +27,23 @@
 	wound_bonus = -30
 	bare_wound_bonus = 40
 
-//Hellfire laser, ignites, but does less wounding
-/obj/projectile/beam/laser/hellfire
+
+/obj/projectile/beam/laser/hellfire //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 	name = "hellfire laser"
-	wound_bonus = -5 //Yeah, fire burns flesh
+	wound_bonus = -5
 	damage = 20
-	speed = 0.6
+	speed = 0.6 // higher power = faster, that's how light works right
 
 /obj/projectile/beam/laser/hellfire/Initialize(mapload)
 	. = ..()
 	transform *= 2
 
-/obj/projectile/beam/laser/hellfire/on_hit(atom/target, blocked)
+/obj/projectile/beam/laser/hellfire/ignite //Hellfire laser but ignites, but does less wounding/damage
+	name = "burn laser"
+	wound_bonus = -30 //You can ignite
+	damage = 10
+
+/obj/projectile/beam/laser/hellfire/ignite/on_hit(atom/target, blocked)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_victim = target
