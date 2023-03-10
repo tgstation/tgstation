@@ -300,8 +300,8 @@
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list()
 
-/datum/supply_pack/costumes_toys/stickers/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/costumes_toys/stickers/fill(obj/structure/closet/crate/crate)
 	for(var/i in 1 to rand(1,2))
-		new /obj/item/storage/box/stickers(C)
+		new /obj/item/storage/box/stickers(crate)
 	if(prob(30)) // a pair of googly eyes because funny
-		new /obj/item/storage/box/stickers/googly(C)
+		new /obj/item/storage/box/stickers/googly(crate)
