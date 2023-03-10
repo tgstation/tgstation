@@ -60,8 +60,6 @@
 	return appearance
 
 /datum/bodypart_overlay/mutant/color_image(image/overlay, layer, obj/item/bodypart/limb)
-	if(!overlay)
-		return
 
 	overlay.color = sprite_datum.color_src ? draw_color : null
 
