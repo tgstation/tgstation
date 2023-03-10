@@ -41,7 +41,7 @@
 /obj/projectile/beam/laser/hellfire/ignite //Hellfire laser but ignites, but does less wounding/damage
 	name = "burn laser"
 	wound_bonus = -30 //You can ignite
-	damage = 10
+	damage = 15
 
 /obj/projectile/beam/laser/hellfire/ignite/on_hit(atom/target, blocked)
 	. = ..()
