@@ -168,7 +168,6 @@
 		var/ghost_role = tgui_alert(usr, prompt, buttons = list("Yes", "No"), timeout = 10 SECONDS)
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
 			LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
-			ckeys_trying_to_spawn -= user_ckey
 			return
 
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
