@@ -31,7 +31,7 @@
 	. |= AFTERATTACK_PROCESSED_ITEM
 	stick(target,px,py)
 
-/obj/item/sticker/proc/stick(atom/target,var/px,py)
+/obj/item/sticker/proc/stick(atom/target,px,py)
 	sticker_overlay = mutable_appearance(icon, icon_state , layer = target.layer + 1, appearance_flags = RESET_COLOR | PIXEL_SCALE)
 	sticker_overlay.pixel_x = px
 	sticker_overlay.pixel_y = py
@@ -40,7 +40,7 @@
 	register_signals()
 	moveToNullspace()
 
-/obj/item/sticker/proc/peel(datum/source, var/silent=FALSE)
+/obj/item/sticker/proc/peel(datum/source, silent=FALSE)
 	SIGNAL_HANDLER
 	if(!attached)
 		return
