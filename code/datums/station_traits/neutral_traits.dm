@@ -22,7 +22,6 @@
 	weight = 5
 	report_message = "We have introduced a natural countermeasure to reduce the number of rodents on board your station."
 	trait_to_give = STATION_TRAIT_SPIDER_INFESTATION
-	force = TRUE
 
 /datum/station_trait/unique_ai
 	name = "Unique AI"
