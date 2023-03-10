@@ -29,15 +29,15 @@
 	var/py = text2num(parameters["icon-y"]) - 16
 	var/px = text2num(parameters["icon-x"]) - 16
 	. |= AFTERATTACK_PROCESSED_ITEM
-	stick(target,px,py)
+	stick(target,user,px,py)
 
-/obj/item/sticker/proc/stick(atom/target,px,py)
+/obj/item/sticker/proc/stick(atom/target, mob/living/user, px,py)
 	sticker_overlay = mutable_appearance(icon, icon_state , layer = target.layer + 1, appearance_flags = RESET_COLOR | PIXEL_SCALE)
 	sticker_overlay.pixel_x = px
 	sticker_overlay.pixel_y = py
 	target.add_overlay(sticker_overlay)
 	attached = target
-	register_signals()
+	register_signals(user)
 	moveToNullspace()
 
 /obj/item/sticker/proc/peel(datum/source, silent=FALSE)
@@ -54,10 +54,11 @@
 	unregister_signals()
 	attached = null
 
-/obj/item/sticker/proc/register_signals()
+/obj/item/sticker/proc/register_signals(mob/living/user)
 	RegisterSignal(attached, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(peel))
 	if(isturf(attached))
-		RegisterSignal(attached, COMSIG_TURF_EXPOSE, PROC_REF(on_turf_expose))
+		//register signals on the users turf instead because we can assume they are on flooring sticking it to a wall so it should burn (otherwise it would fruitlessly check wall temperature)
+		RegisterSignal((user && isclosedturf(attached)) ? get_turf(user) : attached, COMSIG_TURF_EXPOSE, PROC_REF(on_turf_expose))
 	RegisterSignal(attached, COMSIG_LIVING_IGNITED, PROC_REF(on_ignite))
 	RegisterSignal(attached, COMSIG_PARENT_QDELETING, PROC_REF(unregister_signals))
 
