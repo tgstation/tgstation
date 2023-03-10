@@ -40482,9 +40482,6 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "njx" = (
-/obj/machinery/button/door/directional/east{
-	id = "cargowarehouse"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
