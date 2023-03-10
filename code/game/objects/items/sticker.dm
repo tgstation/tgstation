@@ -91,7 +91,7 @@
 	. = ..()
 	if(!. && prob(50))
 		stick(hit_atom,rand(-7,7),rand(-7,7))
-		attached.balloon_alert("the sticker lands on its sticky side!")
+		attached.balloon_alert_to_viewers("the sticker lands on its sticky side!")
 
 ///Signal handler for COMSIG_TURF_EXPOSE, deletes this sticker if the temperature is above 100C and it is flammable
 /obj/item/sticker/proc/on_turf_expose(datum/source, datum/gas_mixture/air, exposed_temperature)
