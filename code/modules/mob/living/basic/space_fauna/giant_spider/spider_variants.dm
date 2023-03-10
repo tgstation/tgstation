@@ -346,6 +346,7 @@
 	head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 	density = FALSE
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
+	gold_core_spawnable = FRIENDLY_SPAWN
 	maxHealth = 10
 	health = 10
 	melee_damage_lower = 1
