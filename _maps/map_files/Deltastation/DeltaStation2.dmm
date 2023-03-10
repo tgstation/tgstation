@@ -6559,7 +6559,7 @@
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "bAV" = (
 /obj/structure/cable,
@@ -11876,7 +11876,7 @@
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 1
 	},
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "cMf" = (
 /obj/effect/turf_decal/tile/red{
@@ -12029,6 +12029,10 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
+"cOi" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/carpet/green,
+/area/station/command/heads_quarters/hop)
 "cOq" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
@@ -13847,7 +13851,7 @@
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 5
 	},
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "dmC" = (
 /obj/machinery/door/firedoor,
@@ -22577,7 +22581,6 @@
 /obj/structure/closet/secure_closet/hop{
 	dir = 4
 	},
-/obj/item/storage/box/silver_ids,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "ftO" = (
@@ -31581,7 +31584,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "hHv" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -33333,7 +33336,7 @@
 /area/station/engineering/atmos)
 "ida" = (
 /obj/effect/turf_decal/siding/dark_red,
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "idd" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -47602,7 +47605,11 @@
 "lAv" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /obj/structure/table/wood,
-/obj/item/storage/lockbox/loyalty,
+/obj/item/storage/lockbox/loyalty{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/storage/box/silver_ids,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/hop)
 "lAx" = (
@@ -48927,7 +48934,7 @@
 	pixel_y = -4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "lQg" = (
 /obj/structure/chair,
@@ -75429,7 +75436,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/security/checkpoint/medical/medsci)
 "swi" = (
-/turf/open/floor/carpet/red,
+/turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "swj" = (
 /obj/structure/table/wood,
@@ -79175,7 +79182,7 @@
 /obj/machinery/holopad/secure,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "trY" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -83211,7 +83218,7 @@
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 6
 	},
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "uoO" = (
 /obj/structure/cable,
@@ -90240,7 +90247,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/carpet/red,
+/turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "wak" = (
 /obj/structure/chair/stool/bar/directional/south,
@@ -95930,7 +95937,7 @@
 /obj/machinery/computer/prisoner/management{
 	dir = 8
 	},
-/turf/open/floor/carpet/red,
+/turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "xtl" = (
 /obj/effect/landmark/start/clown,
@@ -98954,7 +98961,7 @@
 /obj/machinery/computer/records/security{
 	dir = 8
 	},
-/turf/open/floor/carpet/red,
+/turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "yfR" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
@@ -135555,7 +135562,7 @@ fdQ
 feB
 xbG
 lUI
-wzM
+cOi
 lZx
 pVD
 guY
