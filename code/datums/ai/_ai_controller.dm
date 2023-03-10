@@ -106,6 +106,8 @@ multiple modular subtrees with behaviors
 	pawn = new_pawn
 	pawn.ai_controller = src
 
+	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_POSSESSED_PAWN)
+
 	if (!ismob(new_pawn))
 		set_ai_status(AI_STATUS_ON)
 	else
@@ -330,8 +332,3 @@ multiple modular subtrees with behaviors
 		if(iter_behavior.required_distance < minimum_distance)
 			minimum_distance = iter_behavior.required_distance
 	return minimum_distance
-
-/// If this controller is applied to a human subtype, this proc will be called to generate examine text
-/datum/ai_controller/proc/get_human_examine_text()
-	var/text = "[span_deadsay("[pawn.p_they(TRUE)] do[pawn.p_es()]n't appear to be [pawn.p_them()]self.")]"
-	return text

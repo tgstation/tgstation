@@ -10,6 +10,8 @@
 	var/author
 	/// Time of the crime
 	var/time
+	/// Whether the crime is active or not
+	var/valid = TRUE
 
 /datum/crime/New(name = "Crime", details = "No details provided.", author = "Anonymous")
 	src.author = author

@@ -7,8 +7,8 @@
 	icon = "users"
 	value = 0
 	mob_trait = TRAIT_EXTROVERT
-	gain_text = "<span class='notice'>You feel like hanging out with other people.</span>"
-	lose_text = "<span class='danger'>You feel like you're over the bar scene.</span>"
+	gain_text = span_notice("You feel like hanging out with other people.")
+	lose_text = span_danger("You feel like you're over the bar scene.")
 	medical_record_text = "Patient will not shut the hell up."
 	mail_goodies = list(/obj/item/reagent_containers/cup/glass/flask)
 
@@ -18,8 +18,8 @@
 	icon = "book-reader"
 	value = 0
 	mob_trait = TRAIT_INTROVERT
-	gain_text = "<span class='notice'>You feel like reading a good book quietly.</span>"
-	lose_text = "<span class='danger'>You feel like libraries are boring.</span>"
+	gain_text = span_notice("You feel like reading a good book quietly.")
+	lose_text = span_danger("You feel like libraries are boring.")
 	medical_record_text = "Patient doesn't seem to say much."
 	mail_goodies = list(/obj/item/book/random)
 
@@ -29,8 +29,8 @@
 	icon = "meh-blank"
 	value = 0
 	mob_trait = TRAIT_AGEUSIA
-	gain_text = "<span class='notice'>You can't taste anything!</span>"
-	lose_text = "<span class='notice'>You can taste again!</span>"
+	gain_text = span_notice("You can't taste anything!")
+	lose_text = span_notice("You can taste again!")
 	medical_record_text = "Patient suffers from ageusia and is incapable of tasting food or reagents."
 	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/condiment) // but can you taste the salt? CAN YOU?!
 
@@ -39,8 +39,8 @@
 	desc = "You're not from around here. You don't know Galactic Common!"
 	icon = "language"
 	value = 0
-	gain_text = "<span class='notice'>The words being spoken around you don't make any sense."
-	lose_text = "<span class='notice'>You've developed fluency in Galactic Common."
+	gain_text = span_notice("The words being spoken around you don't make any sense.")
+	lose_text = span_notice("You've developed fluency in Galactic Common.")
 	medical_record_text = "Patient does not speak Galactic Common and may require an interpreter."
 	mail_goodies = list(/obj/item/taperecorder) // for translation
 
@@ -61,8 +61,8 @@
 	desc = "You find the idea of eating meat morally and physically repulsive."
 	icon = "carrot"
 	value = 0
-	gain_text = "<span class='notice'>You feel repulsion at the idea of eating meat.</span>"
-	lose_text = "<span class='notice'>You feel like eating meat isn't that bad.</span>"
+	gain_text = span_notice("You feel repulsion at the idea of eating meat.")
+	lose_text = span_notice("You feel like eating meat isn't that bad.")
 	medical_record_text = "Patient reports a vegetarian diet."
 	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/salad)
 
@@ -93,8 +93,8 @@
 	desc = "You care about the finer things, if a room doesn't look nice its just not really worth it, is it?"
 	icon = "user-tie"
 	value = 0
-	gain_text = "<span class='notice'>You feel like you understand what things should look like.</span>"
-	lose_text = "<span class='notice'>Well who cares about deco anyways?</span>"
+	gain_text = span_notice("You feel like you understand what things should look like.")
+	lose_text = span_notice("Well who cares about deco anyways?")
 	medical_record_text = "Patient seems to be rather stuck up."
 	mob_trait = TRAIT_SNOB
 	mail_goodies = list(/obj/item/chisel, /obj/item/paint_palette)
@@ -104,8 +104,8 @@
 	desc = "You find yourself greatly enjoying fruits of the ananas genus. You can't seem to ever get enough of their sweet goodness!"
 	icon = "thumbs-up"
 	value = 0
-	gain_text = "<span class='notice'>You feel an intense craving for pineapple.</span>"
-	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
+	gain_text = span_notice("You feel an intense craving for pineapple.")
+	lose_text = span_notice("Your feelings towards pineapples seem to return to a lukewarm state.")
 	medical_record_text = "Patient demonstrates a pathological love of pineapple."
 	mail_goodies = list(/obj/item/food/pizzaslice/pineapple)
 
@@ -130,8 +130,8 @@
 	desc = "You find yourself greatly detesting fruits of the ananas genus. Serious, how the hell can anyone say these things are good? And what kind of madman would even dare putting it on a pizza!?"
 	icon = "thumbs-down"
 	value = 0
-	gain_text = "<span class='notice'>You find yourself pondering what kind of idiot actually enjoys pineapples...</span>"
-	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
+	gain_text = span_notice("You find yourself pondering what kind of idiot actually enjoys pineapples...")
+	lose_text = span_notice("Your feelings towards pineapples seem to return to a lukewarm state.")
 	medical_record_text = "Patient is correct to think that pineapple is disgusting."
 	mail_goodies = list( // basic pizza slices
 		/obj/item/food/pizzaslice/margherita,
@@ -162,8 +162,8 @@
 	desc = "You dislike food that most people enjoy, and find delicious what they don't."
 	icon = "grin-tongue-squint"
 	value = 0
-	gain_text = "<span class='notice'>You start craving something that tastes strange.</span>"
-	lose_text = "<span class='notice'>You feel like eating normal food again.</span>"
+	gain_text = span_notice("You start craving something that tastes strange.")
+	lose_text = span_notice("You feel like eating normal food again.")
 	medical_record_text = "Patient demonstrates irregular nutrition preferences."
 	mail_goodies = list(/obj/item/food/urinalcake, /obj/item/food/badrecipe) // Mhhhmmm yummy
 
@@ -303,8 +303,8 @@
 	icon = "egg"
 	value = 0
 	mob_trait = TRAIT_BALD
-	gain_text = "<span class='notice'>Your head is as smooth as can be, it's terrible.</span>"
-	lose_text = "<span class='notice'>Your head itches, could it be... growing hair?!</span>"
+	gain_text = span_notice("Your head is as smooth as can be, it's terrible.")
+	lose_text = span_notice("Your head itches, could it be... growing hair?!")
 	medical_record_text = "Patient starkly refused to take off headwear during examination."
 	mail_goodies = list(/obj/item/clothing/head/wig/random)
 	/// The user's starting hairstyle
@@ -359,8 +359,8 @@
 	icon = "camera"
 	value = 0
 	mob_trait = TRAIT_PHOTOGRAPHER
-	gain_text = "<span class='notice'>You know everything about photography.</span>"
-	lose_text = "<span class='danger'>You forget how photo cameras work.</span>"
+	gain_text = span_notice("You know everything about photography.")
+	lose_text = span_danger("You forget how photo cameras work.")
 	medical_record_text = "Patient mentions photography as a stress-relieving hobby."
 	mail_goodies = list(/obj/item/camera_film)
 
@@ -497,8 +497,8 @@
 	desc = "Show off your pride with this changing pride pin!"
 	icon = "rainbow"
 	value = 0
-	gain_text = "<span class='notice'>You feel fruity.</span>"
-	lose_text = "<span class='danger'>You feel only slightly less fruity than before.</span>"
+	gain_text = span_notice("You feel fruity.")
+	lose_text = span_danger("You feel only slightly less fruity than before.")
 	medical_record_text = "Patient appears to be fruity."
 
 /datum/quirk/item_quirk/pride_pin/add_unique(client/client_source)

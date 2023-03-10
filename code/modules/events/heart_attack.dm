@@ -6,11 +6,13 @@
 	min_players = 40 // To avoid shafting lowpop
 	category = EVENT_CATEGORY_HEALTH
 	description = "A random crewmember's heart gives out."
-	admin_setup = /datum/event_admin_setup/heart_attack
+	min_wizard_trigger_potency = 6
+	max_wizard_trigger_potency = 7
+	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/heart_attack, /datum/event_admin_setup/input_number/heart_attack)
 	///Candidates for recieving a healthy dose of heart disease
 	var/list/heart_attack_candidates = list()
 
-/datum/round_event_control/heart_attack/can_spawn_event(players_amt)
+/datum/round_event_control/heart_attack/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	if(!.)
 		return .
@@ -26,6 +28,7 @@
  * later, at the round_event level, so this proc mostly just checks users for whether or not a heart attack should be possible.
  */
 /datum/round_event_control/heart_attack/proc/generate_candidates()
+	heart_attack_candidates.Cut()
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list))
 		if(candidate.stat == DEAD || HAS_TRAIT(candidate, TRAIT_CRITICAL_CONDITION) || !candidate.can_heartattack() || (/datum/disease/heart_failure in candidate.diseases) || candidate.undergoing_cardiac_arrest())
 			continue
@@ -78,18 +81,24 @@
 		return TRUE
 	return FALSE
 
-/datum/event_admin_setup/heart_attack
-	///Number of candidates to be smote
-	var/quantity = 1
+/datum/event_admin_setup/minimum_candidate_requirement/heart_attack
+	output_text = "There are no candidates eligible to recieve a heart attack!"
 
-/datum/event_admin_setup/heart_attack/prompt_admins()
+/datum/event_admin_setup/minimum_candidate_requirement/heart_attack/count_candidates()
 	var/datum/round_event_control/heart_attack/heart_control = event_control
 	heart_control.generate_candidates() //can_spawn_event() is bypassed by admin_setup, so this makes sure that the candidates are still generated
+	return length(heart_control.heart_attack_candidates)
 
-	if(!length(heart_control.heart_attack_candidates))
-		tgui_alert(usr, "There are no candidates eligible to recieve a heart attack!", "Error")
-		return ADMIN_CANCEL_EVENT
-	quantity = tgui_input_number(usr, "There are [length(heart_control.heart_attack_candidates)] crewmembers eligible for a heart attack. Please select how many people's days you wish to ruin.", "Shia Hato Atakku!", 1, length(heart_control.heart_attack_candidates))
+/datum/event_admin_setup/input_number/heart_attack
+	input_text = "Please select how many people's days you wish to ruin."
+	default_value = 0
+	max_value = 90 //Will be overridden
+	min_value = 0
 
-/datum/event_admin_setup/heart_attack/apply_to_event(datum/round_event/heart_attack/event)
-	event.quantity = quantity
+/datum/event_admin_setup/input_number/heart_attack/prompt_admins()
+	var/datum/round_event_control/heart_attack/heart_control = event_control
+	max_value = length(heart_control.heart_attack_candidates)
+	return ..()
+
+/datum/event_admin_setup/input_number/heart_attack/apply_to_event(datum/round_event/heart_attack/event)
+	event.quantity = chosen_value

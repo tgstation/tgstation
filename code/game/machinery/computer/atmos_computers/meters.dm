@@ -3,7 +3,7 @@
 	var/chamber_id
 
 /obj/machinery/meter/monitored/Initialize(mapload, new_piping_layer)
-	id_tag = chamber_id + "_sensor"
+	id_tag = CHAMBER_SENSOR_FROM_ID(chamber_id)
 	. = ..()
 
 /obj/machinery/meter/monitored/layer2

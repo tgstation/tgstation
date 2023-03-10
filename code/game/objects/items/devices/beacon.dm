@@ -34,7 +34,7 @@
 /obj/item/beacon/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/pen)) // needed for things that use custom names like the locator
 		var/new_name = tgui_input_text(user, "What would you like the name to be?", "Beacon", max_length = MAX_NAME_LEN)
-		if(!user.canUseTopic(src, be_close = TRUE))
+		if(!user.can_perform_action(src))
 			return
 		if(new_name)
 			name = new_name

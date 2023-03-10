@@ -468,6 +468,10 @@
 	default = null
 	min_val = 500
 
+/datum/config_entry/number/client_warn_build
+	default = null
+	min_val = 0
+
 /datum/config_entry/string/client_warn_message
 	default = "Your version of byond may have issues or be blocked from accessing this server in the future."
 
@@ -525,7 +529,7 @@
 /datum/config_entry/string/chat_announce_new_game
 	deprecated_by = /datum/config_entry/string/channel_announce_new_game
 
-/datum/config_entry/flag/chat_announce_new_game/DeprecationUpdate(value)
+/datum/config_entry/string/chat_announce_new_game/DeprecationUpdate(value)
 	return "" //default broadcast
 
 /datum/config_entry/string/channel_announce_new_game
@@ -536,6 +540,10 @@
 
 /datum/config_entry/string/chat_new_game_notifications
 	default = null
+
+/// validate ownership of admin flags for chat commands
+/datum/config_entry/flag/secure_chat_commands
+	default = FALSE
 
 /datum/config_entry/flag/debug_admin_hrefs
 
@@ -659,3 +667,6 @@
 /datum/config_entry/string/morgue_cadaver_override_species
 
 /datum/config_entry/flag/toast_notification_on_init
+
+/datum/config_entry/flag/config_errors_runtime
+	default = FALSE

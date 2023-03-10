@@ -8,15 +8,29 @@
 	INVOKE_ASYNC(src, PROC_REF(_unfavorable_situation))
 
 /datum/game_mode/dynamic/proc/_unfavorable_situation()
-	var/static/list/unfavorable_random_events = list(
-		/datum/round_event_control/immovable_rod,
-		/datum/round_event_control/meteor_wave,
-		/datum/round_event_control/portal_storm_syndicate,
-	)
+	var/static/list/unfavorable_random_events = list()
+	if (!length(unfavorable_random_events))
+		unfavorable_random_events = generate_unfavourable_events()
+	var/list/possible_heavies = generate_unfavourable_heavy_rulesets()
+	if (!length(possible_heavies))
+		var/datum/round_event_control/round_event_control_type = pick(unfavorable_random_events)
+		var/delay = rand(20 SECONDS, 1 MINUTES)
+
+		log_dynamic_and_announce("An unfavorable situation was requested, but no heavy rulesets could be drafted. Spawning [initial(round_event_control_type.name)] in [DisplayTimeText(delay)] instead.")
+
+		var/datum/round_event_control/round_event_control = new round_event_control_type
+		addtimer(CALLBACK(round_event_control, TYPE_PROC_REF(/datum/round_event_control, runEvent)), delay)
+	else
+		var/datum/dynamic_ruleset/midround/heavy_ruleset = pick_weight(possible_heavies)
+		log_dynamic_and_announce("An unfavorable situation was requested, spawning [initial(heavy_ruleset.name)]")
+		picking_specific_rule(heavy_ruleset, forced = TRUE, ignore_cost = TRUE)
+
+/// Return a valid heavy dynamic ruleset, or an empty list if there's no time to run any rulesets
+/datum/game_mode/dynamic/proc/generate_unfavourable_heavy_rulesets()
+	if (EMERGENCY_PAST_POINT_OF_NO_RETURN)
+		return list()
 
 	var/list/possible_heavies = list()
-
-	// Ignored factors: threat cost, minimum round time
 	for (var/datum/dynamic_ruleset/midround/ruleset as anything in midround_rules)
 		if (ruleset.midround_ruleset_style != MIDROUND_RULESET_STYLE_HEAVY)
 			continue
@@ -43,16 +57,19 @@
 			continue
 
 		possible_heavies[ruleset] = ruleset.get_weight()
+	return possible_heavies
 
-	if (possible_heavies.len == 0)
-		var/datum/round_event_control/round_event_control_type = pick(unfavorable_random_events)
-		var/delay = rand(20 SECONDS, 1 MINUTES)
-
-		log_dynamic_and_announce("An unfavorable situation was requested, but no heavy rulesets could be drafted. Spawning [initial(round_event_control_type.name)] in [DisplayTimeText(delay)] instead.")
-
-		var/datum/round_event_control/round_event_control = new round_event_control_type
-		addtimer(CALLBACK(round_event_control, TYPE_PROC_REF(/datum/round_event_control, runEvent)), delay)
-	else
-		var/datum/dynamic_ruleset/midround/heavy_ruleset = pick_weight(possible_heavies)
-		log_dynamic_and_announce("An unfavorable situation was requested, spawning [initial(heavy_ruleset.name)]")
-		picking_specific_rule(heavy_ruleset, forced = TRUE, ignore_cost = TRUE)
+/// Filter the below list by which events can actually run on this map
+/datum/game_mode/dynamic/proc/generate_unfavourable_events()
+	var/static/list/unfavorable_random_events = list(
+		/datum/round_event_control/immovable_rod,
+		/datum/round_event_control/meteor_wave,
+		/datum/round_event_control/portal_storm_syndicate,
+	)
+	var/list/picked_events = list()
+	for(var/type in unfavorable_random_events)
+		var/datum/round_event_control/event = new type()
+		if(!event.valid_for_map())
+			continue
+		picked_events += type
+	return picked_events

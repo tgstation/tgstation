@@ -34,10 +34,10 @@
 	switch(affected_mob.stat)
 		if(CONSCIOUS) //bad
 			thou_shall_heal = death_is_coming/50
-			affected_mob.adjustOxyLoss(2 * REM * delta_time, TRUE, required_biotype = affected_biotype)
+			affected_mob.adjustOxyLoss(2 * REM * delta_time, TRUE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		if(SOFT_CRIT) //meh convert
 			thou_shall_heal = round(death_is_coming/47,0.1)
-			affected_mob.adjustOxyLoss(1 * REM * delta_time, TRUE, required_biotype = affected_biotype)
+			affected_mob.adjustOxyLoss(1 * REM * delta_time, TRUE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		else //no convert
 			thou_shall_heal = round(death_is_coming/45, 0.1)
 			good_kind_of_healing = TRUE
@@ -246,7 +246,7 @@
 	var/oxycalc = 2.5 * REM * current_cycle
 	if(!overdosed)
 		oxycalc = min(oxycalc, affected_mob.getOxyLoss() + 0.5) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
-	affected_mob.adjustOxyLoss(-oxycalc * delta_time * normalise_creation_purity(), FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(-oxycalc * delta_time * normalise_creation_purity(), FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	affected_mob.adjustToxLoss(oxycalc * delta_time / CONVERMOL_RATIO, FALSE, required_biotype = affected_biotype)
 	if(DT_PROB(current_cycle / 2, delta_time) && affected_mob.losebreath)
 		affected_mob.losebreath--
@@ -273,7 +273,7 @@
 	COOLDOWN_DECLARE(drowsycd)
 
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/affected_mob, delta_time, times_fired)
-	affected_mob.adjustOxyLoss(-3 * REM * delta_time * normalise_creation_purity(), required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(-3 * REM * delta_time * normalise_creation_purity(), required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	affected_mob.adjustStaminaLoss(2 * REM * delta_time, required_biotype = affected_biotype)
 	if(drowsycd && COOLDOWN_FINISHED(src, drowsycd))
 		affected_mob.adjust_drowsiness(20 SECONDS)
@@ -293,38 +293,39 @@
 
 /datum/reagent/medicine/c2/seiver //a bit of a gray joke
 	name = "Seiver"
-	description = "A medicine that shifts functionality based on temperature. Hotter temperatures will remove amounts of toxins, while coder temperatures will heal larger amounts of toxins only while the patient is irradiated. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
-	var/radbonustemp = (T0C - 100) //being below this number gives you 10% off rads.
+	description = "A medicine that shifts functionality based on temperature. Hotter temperatures will heal more toxicity, while colder temperatures will heal larger amounts of toxicity but only while the patient is irradiated. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
 	inverse_chem_val = 0.3
 	ph = 3.7
 	inverse_chem = /datum/reagent/inverse/technetium
 	inverse_chem_val = 0.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	/// Temperatures below this number give radiation healing.
+	var/rads_heal_threshold = 100
 
 /datum/reagent/medicine/c2/seiver/on_mob_metabolize(mob/living/carbon/human/affected_mob)
 	. = ..()
-	radbonustemp = rand(radbonustemp - 50, radbonustemp + 50) // Basically this means 50K and below will always give the percent heal, and upto 150K could. Calculated once.
+	rads_heal_threshold = rand(rads_heal_threshold - 50, rads_heal_threshold + 50) // Basically this means 50K and below will always give the radiation heal, and upto 150K could. Calculated once.
 
 /datum/reagent/medicine/c2/seiver/on_mob_life(mob/living/carbon/human/affected_mob, delta_time, times_fired)
 	var/chemtemp = min(holder.chem_temp, 1000)
-	chemtemp = chemtemp ? chemtemp : 273 //why do you have null sweaty
+	chemtemp = chemtemp ? chemtemp : T0C //why do you have null sweaty
 	var/healypoints = 0 //5 healypoints = 1 heart damage; 5 rads = 1 tox damage healed for the purpose of healypoints
 
 	//you're hot
 	var/toxcalc = min(round(5 + ((chemtemp-1000)/175), 0.1), 5) * REM * delta_time * normalise_creation_purity() //max 2.5 tox healing per second
 	if(toxcalc > 0)
-		affected_mob.adjustToxLoss(-toxcalc * delta_time * normalise_creation_purity(), required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(-toxcalc, required_biotype = affected_biotype)
 		healypoints += toxcalc
 
 	//and you're cold
 	var/radcalc = round((T0C-chemtemp) / 6, 0.1) * REM * delta_time //max ~45 rad loss unless you've hit below 0K. if so, wow.
 	if(radcalc > 0 && HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
 		radcalc *= normalise_creation_purity()
-		// no cost percent healing if you are SUPER cold (on top of cost healing)
-		if(chemtemp < radbonustemp*0.1)
-			affected_mob.adjustToxLoss(-radcalc * (0.9**(REM * delta_time)), required_biotype = affected_biotype)
-		else if(chemtemp < radbonustemp)
-			affected_mob.adjustToxLoss(-radcalc * (0.75**(REM * delta_time)), required_biotype = affected_biotype)
+		// extra rad healing if you are SUPER cold
+		if(chemtemp < rads_heal_threshold*0.1)
+			affected_mob.adjustToxLoss(-radcalc * 0.9, required_biotype = affected_biotype)
+		else if(chemtemp < rads_heal_threshold)
+			affected_mob.adjustToxLoss(-radcalc * 0.75, required_biotype = affected_biotype)
 		healypoints += (radcalc / 5)
 
 	//you're yes and... oh no!
@@ -526,7 +527,7 @@
 		H.adjustToxLoss(-2 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		H.adjustBruteLoss(-2 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		H.adjustFireLoss(-2 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
-		H.adjustOxyLoss(-6 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		H.adjustOxyLoss(-6 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 
 		H.losebreath = 0
 

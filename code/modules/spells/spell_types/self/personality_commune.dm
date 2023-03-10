@@ -43,8 +43,12 @@
 
 	var/user_message = span_boldnotice("You concentrate and send thoughts to your other self:")
 	var/user_message_body = span_notice("[to_send]")
+
 	to_chat(cast_on, "[user_message] [user_message_body]")
+
+	trauma.owner.balloon_alert(trauma.owner, "you hear a voice")
 	to_chat(trauma.owner, "[fluff_text] [user_message_body]")
+
 	log_directed_talk(cast_on, trauma.owner, to_send, LOG_SAY, "[name]")
 	for(var/dead_mob in GLOB.dead_mob_list)
 		if(!isobserver(dead_mob))

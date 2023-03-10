@@ -9,6 +9,7 @@
 	earliest_start = 25 MINUTES
 	category = EVENT_CATEGORY_SPACE
 	description = "A regular meteor wave."
+	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event/meteor_wave
 	start_when = 6

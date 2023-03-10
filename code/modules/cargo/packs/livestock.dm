@@ -146,6 +146,13 @@
 	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
 	crate_name = "goat crate"
 
+/datum/supply_pack/critter/rabbit
+	name = "Rabbit Crate"
+	desc = "What noise do rabbits even make? Contains one rabbit."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/mob/living/basic/rabbit)
+	crate_name = "rabbit crate"
+
 /datum/supply_pack/critter/mothroach
 	name = "Mothroach Crate"
 	desc = "Put the mothroach on your head and find out what true cuteness looks like. \
@@ -184,7 +191,7 @@
 /datum/supply_pack/critter/snake
 	name = "Snake Crate"
 	desc = "Tired of these MOTHER FUCKING snakes on this MOTHER FUCKING space station? \
-		Then this isn't the crate for you. Contains three poisonous snakes."
+		Then this isn't the crate for you. Contains three venomous snakes."
 	cost = CARGO_CRATE_VALUE * 6
 	access_view = ACCESS_SECURITY
 	contains = list(/mob/living/simple_animal/hostile/retaliate/snake = 3)

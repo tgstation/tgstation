@@ -54,10 +54,11 @@
 	var/mob/living/carbon/human/original_human = original_mind.current
 
 	//equip them in the original's clothes
-	clone_human.equipOutfit(original_human.mind.assigned_role.outfit)
-	if(isplasmaman(original_human))
+	if(!isplasmaman(original_human))
+		clone_human.equipOutfit(original_human.mind.assigned_role.outfit)
+	else
 		clone_human.equipOutfit(original_human.mind.assigned_role.plasmaman_outfit)
-		clone_human.internal = clone_human.get_item_for_held_index(1)
+		clone_human.internal = clone_human.get_item_for_held_index(2)
 
 	//clone doesnt show up on message lists
 	var/obj/item/modular_computer/pda/messenger = locate() in clone_human

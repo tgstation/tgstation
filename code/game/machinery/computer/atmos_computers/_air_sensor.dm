@@ -12,7 +12,7 @@
 	var/chamber_id
 
 /obj/machinery/air_sensor/Initialize(mapload)
-	id_tag = chamber_id + "_sensor"
+	id_tag = CHAMBER_SENSOR_FROM_ID(chamber_id)
 	var/static/list/multitool_tips = list(
 		TOOL_MULTITOOL = list(
 			SCREENTIP_CONTEXT_LMB = "Link logged injectors/vents",

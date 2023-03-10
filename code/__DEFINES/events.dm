@@ -35,3 +35,8 @@
 
 /// Return from admin setup to stop the event from triggering entirely.
 #define ADMIN_CANCEL_EVENT "cancel event"
+
+/// Event can only run on a map set in space
+#define EVENT_SPACE_ONLY (1 << 0)
+/// Event can only run on a map which is a planet
+#define EVENT_PLANETARY_ONLY (1 << 1)

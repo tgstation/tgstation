@@ -139,10 +139,12 @@
 	color = "90560B"
 	taste_description = "bitter"
 	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // "toxic to all living beings"
+	affected_respiration_type = ALL
 
 /datum/reagent/zauker/on_mob_life(mob/living/breather, delta_time, times_fired)
 	breather.adjustBruteLoss(6 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
-	breather.adjustOxyLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	breather.adjustOxyLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	breather.adjustFireLoss(2 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	breather.adjustToxLoss(2 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	return ..()

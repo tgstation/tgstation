@@ -52,10 +52,16 @@
 #define MOB_SPIRIT (1 << 9)
 #define MOB_PLANT (1 << 10)
 
+//Lung respiration type flags
+#define RESPIRATION_OXYGEN (1 << 0)
+#define RESPIRATION_CO2 (1 << 1)
+#define RESPIRATION_N2 (1 << 2)
+#define RESPIRATION_PLASMA (1 << 3)
 
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC 1
 #define ORGAN_ROBOTIC 2
+#define ORGAN_MINERAL 3 // Used for the plasmaman liver
 
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/species/human/bodyparts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
@@ -103,6 +109,8 @@
 #define SPECIES_LIZARD_SILVER "silverscale"
 #define SPECIES_NIGHTMARE "nightmare"
 #define SPECIES_MONKEY "monkey"
+#define SPECIES_MONKEY_FREAK "monkey_freak"
+#define SPECIES_MONKEY_HUMAN_LEGGED "monkey_human_legged"
 #define SPECIES_MOTH "moth"
 #define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
@@ -110,6 +118,7 @@
 #define SPECIES_SHADOW "shadow"
 #define SPECIES_SKELETON "skeleton"
 #define SPECIES_SNAIL "snail"
+#define SPECIES_TALLBOY "tallboy"
 #define SPECIES_VAMPIRE "vampire"
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
@@ -769,6 +778,23 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// The layer above mutant body parts
 #define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
 
+/// If gravity must be present to perform action (can't use pens without gravity)
+#define NEED_GRAVITY (1<<0)
+/// If reading is required to perform action (can't read a book if you are illiterate)
+#define NEED_LITERACY (1<<1)
+/// If lighting must be present to perform action (can't heal someone in the dark)
+#define NEED_LIGHT (1<<2)
+/// If other mobs (monkeys, aliens, etc) can perform action (can't use computers if you are a monkey)
+#define NEED_DEXTERITY (1<<3)
+/// If hands are required to perform action (can't use objects that require hands if you are a cyborg)
+#define NEED_HANDS (1<<4)
+/// If telekinesis is forbidden to perform action from a distance (ex. canisters are blacklisted from telekinesis manipulation)
+#define FORBID_TELEKINESIS_REACH (1<<5)
+/// If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
+#define ALLOW_SILICON_REACH (1<<6)
+/// If resting on the floor is allowed to perform action (pAIs can play music while resting)
+#define ALLOW_RESTING (1<<7)
+
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1
 
@@ -802,33 +828,35 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define HEAL_STAM (1<<6)
 /// Restore all limbs to their initial state.
 #define HEAL_LIMBS (1<<7)
-/// Heals all organs from failing. If done as a part of an admin heal, will instead restore all organs to their initial state.
+/// Heals all organs from failing.
 #define HEAL_ORGANS (1<<8)
+/// A "super" heal organs, this refreshes all organs entirely, deleting old and replacing them with new.
+#define HEAL_REFRESH_ORGANS (1<<9)
 /// Removes all wounds.
-#define HEAL_WOUNDS (1<<9)
+#define HEAL_WOUNDS (1<<10)
 /// Removes all brain traumas, not including permanent ones.
-#define HEAL_TRAUMAS (1<<10)
+#define HEAL_TRAUMAS (1<<11)
 /// Removes all reagents present.
-#define HEAL_ALL_REAGENTS (1<<11)
+#define HEAL_ALL_REAGENTS (1<<12)
 /// Removes all non-positive diseases.
-#define HEAL_NEGATIVE_DISEASES (1<<12)
+#define HEAL_NEGATIVE_DISEASES (1<<13)
 /// Restores body temperature back to nominal.
-#define HEAL_TEMP (1<<13)
+#define HEAL_TEMP (1<<14)
 /// Restores blood levels to normal.
-#define HEAL_BLOOD (1<<14)
+#define HEAL_BLOOD (1<<15)
 /// Removes all non-positive mutations (neutral included).
-#define HEAL_NEGATIVE_MUTATIONS (1<<15)
+#define HEAL_NEGATIVE_MUTATIONS (1<<16)
 /// Removes status effects with this flag set that also have remove_on_fullheal = TRUE.
-#define HEAL_STATUS (1<<16)
+#define HEAL_STATUS (1<<17)
 /// Same as above, removes all CC related status effects with this flag set that also have remove_on_fullheal = TRUE.
-#define HEAL_CC_STATUS (1<<17)
+#define HEAL_CC_STATUS (1<<18)
 /// Deletes any restraints on the mob (handcuffs / legcuffs)
-#define HEAL_RESTRAINTS (1<<18)
+#define HEAL_RESTRAINTS (1<<19)
 
 /// Combination flag to only heal the main damage types.
 #define HEAL_DAMAGE (HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_OXY|HEAL_CLONE|HEAL_STAM)
 /// Combination flag to only heal things messed up things about the mob's body itself.
-#define HEAL_BODY (HEAL_LIMBS|HEAL_ORGANS|HEAL_WOUNDS|HEAL_TRAUMAS|HEAL_BLOOD|HEAL_TEMP)
+#define HEAL_BODY (HEAL_LIMBS|HEAL_ORGANS|HEAL_REFRESH_ORGANS|HEAL_WOUNDS|HEAL_TRAUMAS|HEAL_BLOOD|HEAL_TEMP)
 /// Combination flag to heal negative things affecting the mob.
 #define HEAL_AFFLICTIONS (HEAL_NEGATIVE_DISEASES|HEAL_NEGATIVE_MUTATIONS|HEAL_ALL_REAGENTS|HEAL_STATUS|HEAL_CC_STATUS)
 
@@ -843,3 +871,21 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 
 /// In dynamic human icon gen we don't replace the held item.
 #define NO_REPLACE 0
+
+/// Flags for whether you can heal yourself or not or only
+#define HEALING_TOUCH_ANYONE "healing_touch_anyone"
+#define HEALING_TOUCH_NOT_SELF "healing_touch_not_self"
+#define HEALING_TOUCH_SELF_ONLY "healing_touch_self_only"
+
+/// Default minimum body temperature mobs can exist in before taking damage
+#define NPC_DEFAULT_MIN_TEMP 250
+/// Default maximum body temperature mobs can exist in before taking damage
+#define NPC_DEFAULT_MAX_TEMP 350
+
+// Flags for mobs which can't do certain things while someone is looking at them
+/// Flag which stops you from moving while observed
+#define NO_OBSERVED_MOVEMENT (1<<0)
+/// Flag which stops you from using actions while observed
+#define NO_OBSERVED_ACTIONS (1<<1)
+/// Flag which stops you from attacking while observed
+#define NO_OBSERVED_ATTACKS (1<<2)

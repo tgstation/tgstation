@@ -164,7 +164,7 @@
 	icon_state = "[base_icon_state][used ? "-used" : ""]"
 
 /obj/item/eyesnatcher/attack(mob/living/carbon/human/victim, mob/living/user, params)
-	if(!istype(victim) || !victim.Adjacent(user)) //No TK use
+	if(used || !istype(victim) || !victim.Adjacent(user)) //Works only once, no TK use
 		return ..()
 
 	var/obj/item/organ/internal/eyes/eyeballies = victim.getorganslot(ORGAN_SLOT_EYES)

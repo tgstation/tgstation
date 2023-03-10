@@ -57,6 +57,8 @@
 	min_players = 10
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Kudzu begins to overtake the station. Might spawn man-traps."
+	min_wizard_trigger_potency = 4
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/spacevine
 	fakeable = FALSE
@@ -778,7 +780,7 @@
 /proc/isvineimmune(atom/target)
 	if(isliving(target))
 		var/mob/living/victim = target
-		if(("vines" in victim.faction) || ("plants" in victim.faction))
+		if((FACTION_VINES in victim.faction) || (FACTION_PLANTS in victim.faction))
 			return TRUE
 	return FALSE
 

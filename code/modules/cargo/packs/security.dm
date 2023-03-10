@@ -343,7 +343,7 @@
 	desc = "Contains a pair of holsters each with two experimental thermal pistols, \
 		using nanites as the basis for their ammo."
 	cost = CARGO_CRATE_VALUE * 7
-	contains = list(/obj/item/storage/belt/holster/thermal = 2)
+	contains = list(/obj/item/storage/belt/holster/energy/thermal = 2)
 	crate_name = "thermal pistol crate"
 
 /datum/supply_pack/security/armory/wt550

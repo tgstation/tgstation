@@ -42,17 +42,17 @@
 
 /datum/orderable_item/milk_eggs/desert_snails
 	name = "Canned Desert Snails"
-	item_path = /obj/item/food/desert_snails
+	item_path = /obj/item/food/canned/desert_snails
 	cost_per_order = 20
 
 /datum/orderable_item/milk_eggs/canned_jellyfish
 	name = "Canned Gunner Jellyfish"
-	item_path = /obj/item/food/canned_jellyfish
+	item_path = /obj/item/food/canned/jellyfish
 	cost_per_order = 20
 
 /datum/orderable_item/milk_eggs/canned_larvae
 	name = "Canned Larvae"
-	item_path = /obj/item/food/larvae
+	item_path = /obj/item/food/canned/larvae
 	cost_per_order = 20
 
 /datum/orderable_item/milk_eggs/canned_tomatoes

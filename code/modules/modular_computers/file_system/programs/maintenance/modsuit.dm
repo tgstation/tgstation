@@ -18,7 +18,7 @@
 
 /datum/computer_file/program/maintenance/modsuit_control/application_attackby(obj/item/attacking_item, mob/living/user)
 	. = ..()
-	if(!istype(attacking_item, controlled_suit))
+	if(!istype(attacking_item, /obj/item/mod/control))
 		return FALSE
 	if(controlled_suit)
 		unsync_modsuit()
@@ -32,18 +32,17 @@
 	controlled_suit = null
 
 /datum/computer_file/program/maintenance/modsuit_control/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["has_suit"] = !!controlled_suit
 	if(controlled_suit)
 		data += controlled_suit.ui_data()
 	return data
 
 /datum/computer_file/program/maintenance/modsuit_control/ui_static_data(mob/user)
-	return controlled_suit.ui_static_data()
+	return controlled_suit?.ui_static_data()
 
 /datum/computer_file/program/maintenance/modsuit_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-
-	controlled_suit.ui_act(action, params, ui)
+	controlled_suit.ui_act(action, params, ui, state)

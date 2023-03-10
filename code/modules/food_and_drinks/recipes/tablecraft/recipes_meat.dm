@@ -183,7 +183,7 @@
 	name = "BBQ Ribs"
 	reqs = list(
 		/datum/reagent/consumable/bbqsauce = 5,
-		/obj/item/food/meat/steak/plain = 2,
+		/obj/item/food/meat/steak = 2,
 		/obj/item/stack/rods = 2
 	)
 	result = /obj/item/food/bbqribs
@@ -192,7 +192,7 @@
 /datum/crafting_recipe/food/meatclown
 	name = "Meat Clown"
 	reqs = list(
-		/obj/item/food/meat/steak/plain = 1,
+		/obj/item/food/meat/steak = 1,
 		/obj/item/food/grown/banana = 1
 	)
 	result = /obj/item/food/meatclown
@@ -237,8 +237,8 @@
 	reqs = list(
 		/datum/reagent/consumable/flour = 5,
 		/datum/reagent/consumable/milk = 5,
-		/datum/reagent/consumable/salt = 5,
-		/datum/reagent/consumable/blackpepper = 5,
+		/datum/reagent/consumable/salt = 2,
+		/datum/reagent/consumable/blackpepper = 2,
 		/obj/item/food/grown/mushroom = 2,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/tomato = 1,
@@ -288,7 +288,7 @@
 /datum/crafting_recipe/food/meatloaf
 	name = "Meatloaf"
 	reqs = list(
-		/obj/item/food/meat/slab = 3,
+		/obj/item/food/meat/slab = 2,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/garlic = 1,
 		/datum/reagent/consumable/ketchup = 10,

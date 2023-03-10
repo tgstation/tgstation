@@ -46,7 +46,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/records/medical,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "dQ" = (
@@ -142,7 +142,7 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/light/directional/north,
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "jT" = (

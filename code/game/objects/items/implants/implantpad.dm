@@ -34,7 +34,7 @@
 
 /obj/item/implantpad/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(!case)
 		to_chat(user, span_warning("There's no implant to remove from [src]."))
@@ -60,7 +60,7 @@
 		return ..()
 
 /obj/item/implantpad/ui_interact(mob/user)
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		user.unset_machine(src)
 		user << browse(null, "window=implantpad")
 		return

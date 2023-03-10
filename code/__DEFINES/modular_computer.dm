@@ -46,3 +46,51 @@
 
 /// The maximum length of the ringtone of the Messenger app.
 #define MESSENGER_RINGTONE_MAX_LENGTH 20
+
+///Default NtOS PDA theme
+#define PDA_THEME_NTOS "ntos"
+#define PDA_THEME_DARK_MODE "ntos_darkmode"
+#define PDA_THEME_RETRO "ntOS95"
+#define PDA_THEME_SYNTH "ntos_synth"
+#define PDA_THEME_TERMINAL "ntos_terminal"
+
+///Emagged/Syndicate NtOS (SyndiOS) PDA theme
+#define PDA_THEME_SYNDICATE "syndicate"
+
+//Maintenance-loot themes
+#define PDA_THEME_CAT "ntos_cat"
+#define PDA_THEME_LIGHT_MODE "ntos_lightmode"
+#define PDA_THEME_SPOOKY "ntos_spooky"
+
+//Defines for the names of all the themes
+#define PDA_THEME_NTOS_NAME "NtOS"
+#define PDA_THEME_DARK_MODE_NAME "NtOS Dark Mode"
+#define PDA_THEME_RETRO_NAME "Retro"
+#define PDA_THEME_SYNTH_NAME "Synth"
+#define PDA_THEME_TERMINAL_NAME "Terminal"
+#define SYNDICATE_THEME_NAME "Syndicate"
+#define CAT_THEME_NAME "Cat"
+#define LIGHT_THEME_NAME "NtOS Light Mode"
+#define ELDRITCH_THEME_NAME "Eldritch"
+
+///List of PDA themes that are accessible to everyone by default.
+GLOBAL_LIST_INIT(default_pda_themes, list(
+	PDA_THEME_NTOS_NAME = PDA_THEME_NTOS,
+	PDA_THEME_DARK_MODE_NAME = PDA_THEME_DARK_MODE,
+	PDA_THEME_RETRO_NAME = PDA_THEME_RETRO,
+	PDA_THEME_SYNTH_NAME = PDA_THEME_SYNTH,
+	PDA_THEME_TERMINAL_NAME = PDA_THEME_TERMINAL,
+))
+
+///List of PDA themes that are accessible to everyone by default.
+GLOBAL_LIST_INIT(pda_name_to_theme, list(
+	PDA_THEME_NTOS_NAME = PDA_THEME_NTOS,
+	PDA_THEME_DARK_MODE_NAME = PDA_THEME_DARK_MODE,
+	PDA_THEME_RETRO_NAME = PDA_THEME_RETRO,
+	PDA_THEME_SYNTH_NAME = PDA_THEME_SYNTH,
+	PDA_THEME_TERMINAL_NAME = PDA_THEME_TERMINAL,
+	SYNDICATE_THEME_NAME = PDA_THEME_SYNDICATE,
+	CAT_THEME_NAME = PDA_THEME_CAT,
+	LIGHT_THEME_NAME = PDA_THEME_LIGHT_MODE,
+	ELDRITCH_THEME_NAME = PDA_THEME_SPOOKY,
+))

@@ -17,10 +17,9 @@
 	if (!target)
 		return
 
-	var/datum/action/cooldown/using_action = controller.blackboard[BB_CARP_RIFT]
-	if (isnull(using_action))
-		return
-	if (!using_action.IsAvailable())
+	var/datum/weakref/weak_action = controller.blackboard[BB_CARP_RIFT]
+	var/datum/action/cooldown/using_action = weak_action?.resolve()
+	if (isnull(using_action) || !using_action.IsAvailable())
 		return
 
 	controller.queue_behavior(rift_behaviour, BB_CARP_RIFT, BB_BASIC_MOB_CURRENT_TARGET)
@@ -54,7 +53,8 @@
 /datum/ai_behavior/make_carp_rift
 
 /datum/ai_behavior/make_carp_rift/setup(datum/ai_controller/controller, ability_key, target_key)
-	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability = controller.blackboard[ability_key]
+	var/datum/weakref/weak_action = controller.blackboard[ability_key]
+	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability = weak_action?.resolve()
 	if (!ability)
 		return FALSE
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
@@ -63,7 +63,8 @@
 
 /datum/ai_behavior/make_carp_rift/perform(delta_time, datum/ai_controller/controller, ability_key, target_key)
 	. = ..()
-	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability = controller.blackboard[ability_key]
+	var/datum/weakref/weak_action = controller.blackboard[ability_key]
+	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability = weak_action?.resolve()
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
 

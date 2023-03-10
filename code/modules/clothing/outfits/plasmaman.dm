@@ -6,6 +6,7 @@
 	head = /obj/item/clothing/head/helmet/space/plasmaman
 	mask = /obj/item/clothing/mask/breath
 	r_hand= /obj/item/tank/internals/plasmaman/belt/full
+	internals_slot = ITEM_SLOT_HANDS
 
 /datum/outfit/plasmaman/security
 	name = "Security Plasmaman"

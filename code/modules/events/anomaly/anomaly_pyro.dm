@@ -5,6 +5,8 @@
 	max_occurrences = 5
 	weight = 20
 	description = "This anomaly sets things on fire, and creates a pyroclastic slime."
+	min_wizard_trigger_potency = 1
+	max_wizard_trigger_potency = 4
 
 /datum/round_event/anomaly/anomaly_pyro
 	start_when = 3

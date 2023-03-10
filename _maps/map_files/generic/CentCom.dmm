@@ -205,9 +205,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "bi" = (
 /turf/open/floor/iron/white,
@@ -338,7 +336,7 @@
 /area/centcom/central_command_areas/briefing)
 "bV" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/med_data/laptop,
+/obj/machinery/computer/records/medical/laptop,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
@@ -657,9 +655,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "el" = (
 /obj/structure/filingcabinet/medical,
@@ -1199,10 +1195,8 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/obj/structure/sign/barsign{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/barsign/all_access/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "hx" = (
@@ -2808,7 +2802,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "oa" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -4143,9 +4137,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "tN" = (
 /obj/effect/turf_decal/tile/green{
@@ -4941,9 +4933,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "xo" = (
 /obj/effect/turf_decal/tile/green,
@@ -5259,7 +5249,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "zb" = (
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -5441,7 +5431,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/control)
 "zK" = (
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/east,
@@ -6149,9 +6139,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "DF" = (
 /obj/structure/sign/warning/no_smoking,
@@ -7065,7 +7053,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/central_command_areas/evacuation/ship)
 "Lj" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -7415,9 +7403,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "Nn" = (
 /obj/structure/table/reinforced,
@@ -7734,7 +7720,7 @@
 	},
 /area/centcom/tdome/observation)
 "OH" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -7759,7 +7745,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "OR" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -7865,10 +7851,8 @@
 	pixel_y = 5
 	},
 /obj/structure/table/wood,
-/obj/structure/sign/barsign{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/barsign/all_access/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "Pq" = (
@@ -7983,7 +7967,7 @@
 /area/centcom/central_command_areas/admin)
 "PS" = (
 /obj/machinery/newscaster/directional/south,
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -8049,7 +8033,8 @@
 /obj/machinery/requests_console/directional/north{
 	announcementConsole = 1;
 	department = "Captain's Desk";
-	departmentType = 5
+	assistance_requestable = 1;
+	anon_tips_receiver = 1
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
@@ -8213,9 +8198,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "Rj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -8434,7 +8417,7 @@
 /area/centcom/tdome/observation)
 "So" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/med_data/laptop,
+/obj/machinery/computer/records/medical/laptop,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
@@ -8514,7 +8497,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
 "SO" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -8983,7 +8966,7 @@
 /turf/open/misc/asteroid,
 /area/centcom/tdome/administration)
 "Vm" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
@@ -9125,7 +9108,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
 "VY" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 8
 	},
 /obj/machinery/button/door/indestructible{
@@ -9261,10 +9244,8 @@
 "Wv" = (
 /obj/structure/chair,
 /obj/effect/landmark/thunderdome/observe,
-/obj/structure/sign/barsign{
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/barsign/all_access/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "Wy" = (
@@ -9896,7 +9877,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/armory)
 "Zx" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,

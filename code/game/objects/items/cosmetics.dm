@@ -44,6 +44,18 @@
 	//It's still called Jade, but theres no HTML color for jade, so we use lime.
 	name = "jade lipstick"
 	colour = "lime"
+	
+/obj/item/lipstick/blue
+	name = "blue lipstick"
+	colour = "blue"
+
+/obj/item/lipstick/green
+	name = "green lipstick"
+	colour = "green"
+
+/obj/item/lipstick/white
+	name = "white lipstick"
+	colour = "white"
 
 /obj/item/lipstick/black
 	name = "black lipstick"
@@ -158,7 +170,7 @@
 					if (H == user)
 						to_chat(user, span_warning("You need a mirror to properly style your own facial hair!"))
 						return
-					if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+					if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 						return
 					var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
 					if(isnull(new_style))
@@ -209,7 +221,7 @@
 				if (H == user)
 					to_chat(user, span_warning("You need a mirror to properly style your own hair!"))
 					return
-				if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+				if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 					return
 				var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
 				if(isnull(new_style))

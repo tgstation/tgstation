@@ -163,7 +163,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/highlander/attack(mob/living/target, mob/living/user)
 	. = ..()
-	if(!QDELETED(target) && target.stat == DEAD && target.mind && target.mind.special_role == "highlander")
+	if(!QDELETED(target) && target.stat == DEAD && target.mind?.has_antag_datum(/datum/antagonist/highlander))
 		user.fully_heal() //STEAL THE LIFE OF OUR FALLEN FOES
 		add_notch(user)
 		target.visible_message(span_warning("[target] crumbles to dust beneath [user]'s blows!"), span_userdanger("As you fall, your body crumbles to dust!"))
@@ -174,10 +174,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/closest_victim
 	var/closest_distance = 255
 	for(var/mob/living/carbon/human/scot in GLOB.player_list - user)
-		if(scot.mind.special_role == "highlander" && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
+		if(scot.mind?.has_antag_datum(/datum/antagonist/highlander) && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
 			closest_victim = scot
 	for(var/mob/living/silicon/robot/siliscot in GLOB.player_list - user)
-		if(siliscot.mind.special_role == "highlander" && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
+		if(siliscot.mind?.has_antag_datum(/datum/antagonist/highlander) && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
 			closest_victim = siliscot
 
 	if(!closest_victim)
@@ -432,7 +432,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	SIGNAL_HANDLER
 
 	tool_behaviour = (active ? TOOL_KNIFE : NONE)
-	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/switchblade/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -535,6 +534,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon_state = "broom"
 	inhand_icon_state = "broom"
+	resistance_flags = FLAMMABLE
+
+/obj/item/staff/tape
+	name = "tape staff"
+	desc = "A roll of tape snugly attached to a stick."
+	icon_state = "tapestaff"
+	inhand_icon_state = "tapestaff"
 	resistance_flags = FLAMMABLE
 
 /obj/item/staff/stick
@@ -880,7 +886,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		/obj/effect/decal/cleanable/ants,
 	))
 	strong_against = typecacheof(list(
-		/mob/living/simple_animal/hostile/giant_spider,
+		/mob/living/basic/giant_spider,
 	))
 
 

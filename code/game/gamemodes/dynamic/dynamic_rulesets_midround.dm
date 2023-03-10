@@ -377,10 +377,12 @@
 	cost = 7
 	minimum_round_time = 70 MINUTES
 	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
+	flags = HIGH_IMPACT_RULESET
+
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	/// The nuke ops team datum.
 	var/datum/team/nuclear/nuke_team
-	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
@@ -634,10 +636,12 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 2
 	required_applicants = 2
-	weight = 2
+	weight = 4
 	cost = 7
 	minimum_players = 25
 	repeatable = TRUE
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
+
 	var/datum/team/abductor_team/new_team
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
@@ -675,6 +679,8 @@
 	cost = 8
 	minimum_players = 30
 	repeatable = TRUE
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY) // I mean, no one uses the nets anymore but whateva
+
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/execute()
@@ -800,7 +806,7 @@
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat=0)
-	if (!SSmapping.empty_space)
+	if (SSmapping.is_planetary())
 		return FALSE
 	return ..()
 
@@ -844,6 +850,27 @@
 	message_admins("[ADMIN_LOOKUPFLW(obsessed)] has been made Obsessed by the midround ruleset.")
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
 	return TRUE
+
+/// Space Changeling ruleset
+/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround
+	name = "Space Changeling"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_datum = /datum/antagonist/changeling/space
+	antag_flag = ROLE_CHANGELING_MIDROUND
+	antag_flag_override = ROLE_CHANGELING
+	required_type = /mob/dead/observer
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 3
+	cost = 7
+	minimum_players = 15
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround/generate_ruleset_body(mob/applicant)
+	var/body = generate_changeling_meteor(applicant)
+	message_admins("[ADMIN_LOOKUPFLW(body)] has been made into a space changeling by the midround ruleset.")
+	log_dynamic("[key_name(body)] was spawned as a space changeling by the midround ruleset.")
+	return body
 
 /// Paradox Clone ruleset
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone

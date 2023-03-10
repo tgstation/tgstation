@@ -365,7 +365,7 @@
 		var/client/equipped_client = GLOB.directory[ckey(equipped.mind?.key)]
 
 		if(equipped_client)
-			pda.update_ringtone_pref(equipped_client)
+			pda.update_pda_prefs(equipped_client)
 
 
 /datum/outfit/job/get_chameleon_disguise_info()

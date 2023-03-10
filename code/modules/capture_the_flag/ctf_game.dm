@@ -20,7 +20,7 @@
 	throw_range = 1
 	force = 200
 	armour_penetration = 1000
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
 	item_flags = SLOWS_WHILE_IN_HAND
 	var/team = WHITE_TEAM
@@ -40,7 +40,6 @@
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 		reset.flag = src
-	RegisterSignal(src, COMSIG_PARENT_PREQDELETED, PROC_REF(reset_flag)) //just in case CTF has some map hazards (read: chasms).
 
 /obj/item/ctf/process()
 	if(is_ctf_target(loc)) //pickup code calls temporary drops to test things out, we need to make sure the flag doesn't reset from
@@ -49,7 +48,6 @@
 		reset_flag()
 
 /obj/item/ctf/proc/reset_flag(capture = FALSE)
-	SIGNAL_HANDLER
 	STOP_PROCESSING(SSobj, src)
 
 	var/turf/our_turf = get_turf(src.reset)
@@ -61,7 +59,6 @@
 		if(istype(mob_area, game_area))
 			if(!capture)
 				to_chat(M, span_userdanger("[src] has been returned to the base!"))
-	return TRUE //so if called by a signal, it doesn't delete
 
 //working with attack hand feels like taking my brain and putting it through an industrial pill press so i'm gonna be a bit liberal with the comments
 /obj/item/ctf/attack_hand(mob/living/user, list/modifiers)
@@ -240,7 +237,8 @@
 	desc = "Used for running friendly games of capture the flag."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
-	resistance_flags = INDESTRUCTIBLE
+	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/game_id = CTF_GHOST_CTF_GAME_ID
 
 	var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>"
@@ -377,7 +375,7 @@
 
 	var/client/new_team_member = user.client
 	team_members |= new_team_member.ckey
-	to_chat(user, "<span class='warning'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>")
+	to_chat(user, "<span class='userdanger'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>")
 	spawn_team_member(new_team_member)
 
 
@@ -423,7 +421,8 @@
 				   //there isn't a game going on any more, you are no longer a member of this team (perhaps a new match already started?)
 		chosen_class = ctf_gear[choice]
 
-	var/mob/living/carbon/human/M = new /mob/living/carbon/human(get_turf(src))
+	var/turf/spawn_point = pick(get_adjacent_open_turfs(get_turf(src)))
+	var/mob/living/carbon/human/M = new /mob/living/carbon/human(spawn_point)
 	new_team_member.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
 	if(M.dna.species.outfit_important_for_life)
 		M.set_species(/datum/species/human)
@@ -541,7 +540,7 @@
 	name = "Spawn protection"
 	desc = "Stay outta the enemy spawn!"
 	icon_state = "trap"
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
 	anchored = TRUE
@@ -627,7 +626,7 @@
 	desc = "You should capture this."
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
 	///This is how many points are gained a second while controlling this point
@@ -640,6 +639,15 @@
 		if(controlling.control_points >= controlling.control_points_to_win)
 			controlling.victory()
 
+	var/scores
+
+	for(var/obj/machinery/capture_the_flag/team as anything in GLOB.ctf_panel.ctf_machines)
+		if (!team.ctf_enabled)
+			continue
+		scores += UNLINT("<span style='color: [team.team]'>[team.team] - [team.control_points]/[team.control_points_to_win]</span>\n")
+
+	balloon_alert_to_viewers(scores)
+
 /obj/machinery/control_point/attackby(mob/user, params)
 	capture(user)
 
@@ -651,14 +659,14 @@
 
 /obj/machinery/control_point/proc/capture(mob/user)
 	if(do_after(user, 30, target = src))
-		for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
-			if(CTF.ctf_enabled && (user.ckey in CTF.team_members))
-				controlling = CTF
-				icon_state = "dominator-[CTF.team]"
+		for(var/obj/machinery/capture_the_flag/team as anything in GLOB.ctf_panel.ctf_machines)
+			if(team.ctf_enabled && (user.ckey in team.team_members))
+				controlling = team
+				icon_state = "dominator-[team.team]"
 				for(var/mob/M in GLOB.player_list)
 					var/area/mob_area = get_area(M)
 					if(istype(mob_area, game_area))
-						to_chat(M, span_userdanger("[user.real_name] has captured \the [src], claiming it for [CTF.team]! Go take it back!"))
+						to_chat(M, "<span class='userdanger [team.team_span]'>[user.real_name] has captured \the [src], claiming it for [team.team]! Go take it back!</span>")
 				break
 
 /proc/is_ctf_target(atom/target)

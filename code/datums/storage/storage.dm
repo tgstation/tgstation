@@ -736,6 +736,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			if(to_dump.loc != resolve_location)
 				continue
 			dest_object.atom_storage.attempt_insert(to_dump, user)
+		resolve_parent.update_appearance()
 
 		return
 

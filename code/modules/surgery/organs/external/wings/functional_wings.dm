@@ -1,7 +1,7 @@
 ///hud action for starting and stopping flight
 /datum/action/innate/flight
 	name = "Toggle Flight"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE|AB_CHECK_INCAPACITATED
 	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "flight"
 
@@ -26,12 +26,12 @@
 	///Are our wings open or closed?
 	var/wings_open = FALSE
 
-/obj/item/organ/external/wings/functional/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
+/obj/item/organ/external/wings/functional/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
 
 	if(isnull(fly))
 		fly = new
-		fly.Grant(reciever)
+		fly.Grant(receiver)
 
 /obj/item/organ/external/wings/functional/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()

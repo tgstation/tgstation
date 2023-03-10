@@ -99,3 +99,28 @@
 	attacker.visible_message(span_warning("[attacker] dispells the ghostly energy from [source]!"), span_warning("You dispel the ghostly energy from [source]!"))
 	clear_haunting()
 	return COMPONENT_NO_AFTERATTACK
+
+/**
+ * Takes a given area and chance, applying the haunted_item component to objects in the area.
+ *
+ * Takes an epicenter, and within the range around it, runs a haunt_chance percent chance of
+ * applying the haunted_item component to nearby objects.
+ *
+ * * epicenter - The center of the outburst area.
+ * * range - The range of the outburst, centered around the epicenter.
+ * * haunt_chance - The percent chance that an object caught in the epicenter will be haunted.
+ * * duration - How long the haunting will remain for.
+ */
+
+/proc/haunt_outburst(epicenter, range, haunt_chance, duration = 1 MINUTES)
+	var/effect_area = range(range, epicenter)
+	for(var/obj/item/object_to_possess in effect_area)
+		if(!prob(haunt_chance))
+			continue
+		object_to_possess.AddComponent(/datum/component/haunted_item, \
+			haunt_color = "#52336e", \
+			haunt_duration = duration, \
+			aggro_radius = range, \
+			spawn_message = span_revenwarning("[object_to_possess] slowly rises upward, hanging menacingly in the air..."), \
+			despawn_message = span_revenwarning("[object_to_possess] settles to the floor, lifeless and unmoving."), \
+		)

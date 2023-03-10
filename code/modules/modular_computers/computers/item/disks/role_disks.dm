@@ -88,11 +88,6 @@
 		/datum/computer_file/program/records/medical,
 	)
 
-/obj/item/computer_disk/chemistry
-	name = "chemistry data disk"
-	desc = "Removable disk used to download chemistry-related tablet apps."
-	icon_state = "datadisk5"
-
 /**
  * Supply
  */

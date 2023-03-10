@@ -62,34 +62,35 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /*
  * Insert the organ into the select mob.
  *
- * reciever - the mob who will get our organ
+ * receiver - the mob who will get our organ
  * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  * drop_if_replaced - if there's an organ in the slot already, whether we drop it afterwards
  */
-/obj/item/organ/proc/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
-	if(!iscarbon(reciever) || owner == reciever)
+/obj/item/organ/proc/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
+	if(!iscarbon(receiver) || owner == receiver)
 		return FALSE
 
-	var/obj/item/organ/replaced = reciever.getorganslot(slot)
+	var/obj/item/organ/replaced = receiver.getorganslot(slot)
 	if(replaced)
-		replaced.Remove(reciever, special = TRUE)
+		replaced.Remove(receiver, special = TRUE)
 		if(drop_if_replaced)
-			replaced.forceMove(get_turf(reciever))
+			replaced.forceMove(get_turf(receiver))
 		else
 			qdel(replaced)
 
-	reciever.internal_organs |= src
-	reciever.internal_organs_slot[slot] = src
+	receiver.internal_organs |= src
+	receiver.internal_organs_slot[slot] = src
+	owner = receiver
 
-	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, reciever)
-	SEND_SIGNAL(reciever, COMSIG_CARBON_GAIN_ORGAN, src, special)
-
-	owner = reciever
 	moveToNullspace()
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(on_owner_examine))
-	update_organ_traits(reciever)
+	update_organ_traits(receiver)
 	for(var/datum/action/action as anything in actions)
-		action.Grant(reciever)
+		action.Grant(receiver)
+
+	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, receiver)
+	SEND_SIGNAL(receiver, COMSIG_CARBON_GAIN_ORGAN, src, special)
+
 	return TRUE
 
 /*
@@ -100,7 +101,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  */
 /obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE)
 
-	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(organ_owner, COMSIG_PARENT_EXAMINE)
 
 	organ_owner.internal_organs -= src
 	if(organ_owner.internal_organs_slot[slot] == src)
@@ -228,14 +229,17 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
 
 /**
- * Recreates all of this mob's organs, and heals them to full.
+ * Heals all of the mob's organs, and re-adds any missing ones.
+ *
+ * * regenerate_existing - if TRUE, existing organs will be deleted and replaced with new ones
  */
-/mob/living/carbon/proc/regenerate_organs()
+/mob/living/carbon/proc/regenerate_organs(regenerate_existing = FALSE)
+
 	// Delegate to species if possible.
 	if(dna?.species)
-		dna.species.regenerate_organs(src)
-		// Species regenerate organs doesn't handling healing the organs here,
-		// it's more concerned with just putting the necessary organs back in.
+		dna.species.regenerate_organs(src, replace_current = regenerate_existing)
+
+		// Species regenerate organs doesn't ALWAYS handle healing the organs because it's dumb
 		for(var/obj/item/organ/organ as anything in internal_organs)
 			organ.setOrganDamage(0)
 		set_heartattack(FALSE)

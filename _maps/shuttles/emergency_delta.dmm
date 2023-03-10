@@ -193,9 +193,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "ap" = (
 /obj/item/kirbyplants{
@@ -297,7 +295,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "ay" = (
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -863,7 +861,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cj" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer/records/security{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
@@ -899,7 +897,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ct" = (
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -957,9 +955,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "cB" = (
 /obj/structure/chair/comfy/shuttle{

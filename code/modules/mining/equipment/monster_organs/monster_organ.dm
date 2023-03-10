@@ -143,7 +143,7 @@
 	return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/organ/internal/monster_core/attack_self(mob/user)
-	if (!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if (!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	try_apply(user, user)
 

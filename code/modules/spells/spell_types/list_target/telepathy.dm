@@ -36,16 +36,25 @@
 
 	var/formatted_message = "<span class='[telepathy_span]'>[message]</span>"
 
+	var/failure_message_for_ghosts = ""
+
 	to_chat(owner, "<span class='[bold_telepathy_span]'>You transmit to [cast_on]:</span> [formatted_message]")
 	if(!cast_on.can_block_magic(antimagic_flags, charge_cost = 0)) //hear no evil
-		to_chat(cast_on, "<span class='[bold_telepathy_span]'>You hear something behind you talking...</span> [formatted_message]")
+		cast_on.balloon_alert(cast_on, "you hear a voice")
+		to_chat(cast_on, "<span class='[bold_telepathy_span]'>You hear a voice in your head...</span> [formatted_message]")
+	else
+		owner.balloon_alert(owner, "transmission blocked!")
+		to_chat(owner, "<span class='warning'>Something has blocked your transmission!</span>")
+		failure_message_for_ghosts = "<span class='[bold_telepathy_span]'> (blocked by antimagic)</span>"
 
 	for(var/mob/dead/ghost as anything in GLOB.dead_mob_list)
 		if(!isobserver(ghost))
 			continue
 
 		var/from_link = FOLLOW_LINK(ghost, owner)
-		var/from_mob_name = "<span class='[bold_telepathy_span]'>[owner] [src]:</span>"
+		var/from_mob_name = "<span class='[bold_telepathy_span]'>[owner] [src]</span>"
+		from_mob_name += failure_message_for_ghosts
+		from_mob_name += "<span class='[bold_telepathy_span]'>:</span>"
 		var/to_link = FOLLOW_LINK(ghost, cast_on)
 		var/to_mob_name = span_name("[cast_on]")
 

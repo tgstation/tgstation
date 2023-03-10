@@ -398,6 +398,7 @@
 	if(mind)
 		if(mind.assigned_role.policy_index)
 			. += mind.assigned_role.policy_index
+		. += mind.assigned_role.title //A bit redunant, but both title and policy index are used
 		. += mind.special_role //In case there's something special leftover, try to avoid
 		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
 			. += "[antag_datum.type]"
@@ -411,10 +412,10 @@
 	return length(held_items)
 
 /// Returns this mob's default lighting alpha
-/mob/proc/default_lighting_alpha()
+/mob/proc/default_lighting_cutoff()
 	if(client?.combo_hud_enabled && client?.prefs?.toggles & COMBOHUD_LIGHTING)
-		return LIGHTING_PLANE_ALPHA_INVISIBLE
-	return initial(lighting_alpha)
+		return LIGHTING_CUTOFF_FULLBRIGHT
+	return initial(lighting_cutoff)
 
 /// Returns a generic path of the object based on the slot
 /proc/get_path_by_slot(slot_id)

@@ -6,6 +6,8 @@
 	max_occurrences = 2
 	weight = 10
 	description = "This anomaly sucks in and detonates items."
+	min_wizard_trigger_potency = 3
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/anomaly/anomaly_vortex
 	start_when = 10

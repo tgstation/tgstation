@@ -6,6 +6,8 @@
 	min_players = 25
 	category = EVENT_CATEGORY_HEALTH
 	description = "Spawns a sentient disease, who wants to infect as many people as possible."
+	min_wizard_trigger_potency = 4
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/ghost_role/sentient_disease
 	role_name = "sentient disease"

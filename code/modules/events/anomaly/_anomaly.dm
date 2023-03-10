@@ -7,7 +7,7 @@
 	weight = 15
 	category = EVENT_CATEGORY_ANOMALIES
 	description = "This anomaly shocks and explodes. This is the base type."
-	admin_setup = /datum/event_admin_setup/anomaly
+	admin_setup = list(/datum/event_admin_setup/set_location/anomaly)
 
 /datum/round_event/anomaly
 	announce_when = 1
@@ -39,15 +39,16 @@
 	if(anomaly_turf)
 		newAnomaly = new anomaly_path(anomaly_turf)
 	if (newAnomaly)
+		apply_anomaly_properties(newAnomaly)
 		announce_to_ghosts(newAnomaly)
 
-/datum/event_admin_setup/anomaly
-	///The admin-chosen spawn location.
-	var/turf/spawn_location
+/// Make any further post-creation modifications to the anomaly
+/datum/round_event/anomaly/proc/apply_anomaly_properties(obj/effect/anomaly/new_anomaly)
+	return
 
-/datum/event_admin_setup/anomaly/prompt_admins()
-	if(tgui_alert(usr, "Spawn anomaly at your current location?", "Anomaly Alert", list("Yes", "No")) == "Yes")
-		spawn_location = get_turf(usr)
+/datum/event_admin_setup/set_location/anomaly
+	input_text = "Spawn anomaly at your current location?"
 
-/datum/event_admin_setup/anomaly/apply_to_event(datum/round_event/anomaly/event)
-	event.spawn_location = spawn_location
+/datum/event_admin_setup/set_location/anomaly/apply_to_event(datum/round_event/anomaly/event)
+	event.spawn_location = chosen_turf
+	

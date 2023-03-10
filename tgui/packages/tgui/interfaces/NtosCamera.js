@@ -17,7 +17,11 @@ export const NtosCameraContent = (props, context) => {
   const { photo, paper_left } = data;
 
   if (!photo) {
-    return <NoticeBox>Phototrasen Images - Tap to snap a photo!</NoticeBox>;
+    return (
+      <NoticeBox>
+        Phototrasen Images - Tap (right-click) with your tablet to snap a photo!
+      </NoticeBox>
+    );
   }
 
   return (

@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "apc not assigning itself a name based on its area"
-  - bugfix: "newly built apc's not getting assigned area names"

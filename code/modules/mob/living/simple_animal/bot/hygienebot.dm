@@ -127,7 +127,11 @@
 				if(target.loc == loc && isturf(target.loc)) //LADIES AND GENTLEMAN WE GOTEM PREPARE TO DUMP
 					start_washing()
 					if(mad)
-						var/list/messagevoice = list("Well about fucking time you degenerate." = 'sound/voice/hygienebot/degenerate.ogg', "Fucking finally." = 'sound/voice/hygienebot/finally.ogg', "Thank god, you finally stopped." = 'sound/voice/hygienebot/thankgod.ogg')
+						var/static/list/messagevoice = list(
+							"Fucking finally." = 'sound/voice/hygienebot/finally.ogg',
+							"Thank god, you finally stopped." = 'sound/voice/hygienebot/thankgod.ogg',
+							"Well about fucking time you degenerate." = 'sound/voice/hygienebot/degenerate.ogg',
+						)
 						var/message = pick(messagevoice)
 						speak(message)
 						playsound(loc, messagevoice[message], 50)
@@ -142,7 +146,15 @@
 						return
 					SSmove_manager.move_to(src, target, 0, currentspeed)
 					if(mad && prob(min(frustration * 2, 60)))
-						var/list/messagevoice = list("Get back here you foul smelling fucker." = 'sound/voice/hygienebot/foulsmelling.ogg', "STOP RUNNING OR I WILL CUT YOUR ARTERIES!" = 'sound/voice/hygienebot/cutarteries.ogg', "Just fucking let me clean you you arsehole!" = 'sound/voice/hygienebot/letmeclean.ogg', "STOP. RUNNING." = 'sound/voice/hygienebot/stoprunning.ogg', "Either you stop running or I will fucking drag you out of an airlock." = 'sound/voice/hygienebot/dragyouout.ogg', "I just want to fucking clean you you troglodyte." = 'sound/voice/hygienebot/troglodyte.ogg', "If you don't come back here I'll put a green cloud around you cunt." = 'sound/voice/hygienebot/greencloud.ogg')
+						var/static/list/messagevoice = list(
+							"Either you stop running or I will fucking drag you out of an airlock." = 'sound/voice/hygienebot/dragyouout.ogg',
+							"Get back here you foul smelling fucker." = 'sound/voice/hygienebot/foulsmelling.ogg',
+							"I just want to fucking clean you you troglodyte." = 'sound/voice/hygienebot/troglodyte.ogg',
+							"If you don't come back here I'll put a green cloud around you cunt." = 'sound/voice/hygienebot/greencloud.ogg',
+							"Just fucking let me clean you you arsehole!" = 'sound/voice/hygienebot/letmeclean.ogg',
+							"STOP RUNNING OR I WILL CUT YOUR ARTERIES!" = 'sound/voice/hygienebot/cutarteries.ogg',
+							"STOP. RUNNING." = 'sound/voice/hygienebot/stoprunning.ogg',
+						)
 						var/message = pick(messagevoice)
 						speak(message)
 						playsound(loc, messagevoice[message], 50)

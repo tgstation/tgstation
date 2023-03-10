@@ -148,69 +148,6 @@
 	to_chat(user, span_notice("You attach [assembly] to [src]."))
 	return
 
-/obj/item/tank/proc/ignite() //This happens when a bomb is told to explode
-	START_PROCESSING(SSobj, src)
-	var/datum/gas_mixture/our_mix = return_air()
-
-	our_mix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
-	var/fuel_moles = our_mix.gases[/datum/gas/plasma][MOLES] + our_mix.gases[/datum/gas/oxygen][MOLES]/6
-	our_mix.garbage_collect()
-	var/datum/gas_mixture/bomb_mixture = our_mix.copy()
-	var/strength = 1
-
-	var/turf/ground_zero = get_turf(loc)
-
-	if(bomb_mixture.temperature > (T0C + 400))
-		strength = (fuel_moles/15)
-
-		if(strength >= 2)
-			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*3,1), flash_range = round(strength*4,1), explosion_cause = src)
-		else if(strength >= 1)
-			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
-		else if(strength >= 0.5)
-			explosion(ground_zero, heavy_impact_range = 1, light_impact_range = 2, flash_range = 4, explosion_cause = src)
-		else if(strength >= 0.2)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
-		else
-			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(1000, 125)
-
-	else if(bomb_mixture.temperature > (T0C + 250))
-		strength = (fuel_moles/20)
-
-		if(strength >= 1)
-			explosion(ground_zero, heavy_impact_range = round(strength,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
-		else if(strength >= 0.5)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
-		else
-			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(1000, 125)
-
-	else if(bomb_mixture.temperature > (T0C + 100))
-		strength = (fuel_moles/25)
-
-		if(strength >= 1)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = round(strength,1), flash_range = round(strength*3,1), explosion_cause = src)
-		else
-			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(1000, 125)
-
-	else
-		ground_zero.assume_air(bomb_mixture)
-		ground_zero.hotspot_expose(1000, 125)
-
-	if(master)
-		qdel(master)
-	qdel(src)
-
-/obj/item/tank/proc/release() //This happens when the bomb is not welded. Tank contents are just spat out.
-	var/datum/gas_mixture/our_mix = return_air()
-	var/datum/gas_mixture/removed = remove_air(our_mix.total_moles())
-	var/turf/T = get_turf(src)
-	if(!T)
-		return
-	T.assume_air(removed)
-
 /obj/item/onetankbomb/return_analyzable_air()
 	if(bombtank)
 		return bombtank.return_analyzable_air()

@@ -89,7 +89,7 @@
 	chassis.toggle_strafe()
 
 /obj/vehicle/sealed/mecha/AltClick(mob/living/user)
-	if(!(user in occupants) || !user.canUseTopic(src))
+	if(!(user in occupants) || !user.can_perform_action(src))
 		return
 	if(!(user in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE)))
 		to_chat(user, span_warning("You're in the wrong seat to control movement."))

@@ -91,19 +91,24 @@
 		if(!user.transferItemToLoc(I,src))
 			return
 		mytape = I
-		to_chat(user, span_notice("You insert [I] into [src]."))
+		balloon_alert(user, "inserted [mytape]")
 		playsound(src, 'sound/items/taperecorder/taperecorder_close.ogg', 50, FALSE)
 		update_appearance()
 
 
 /obj/item/taperecorder/proc/eject(mob/user)
-	if(mytape)
-		playsound(src, 'sound/items/taperecorder/taperecorder_open.ogg', 50, FALSE)
-		to_chat(user, span_notice("You remove [mytape] from [src]."))
-		stop()
-		user.put_in_hands(mytape)
-		mytape = null
-		update_appearance()
+	if(!mytape)
+		balloon_alert(user, "no tape!")
+		return
+	if(playing)
+		balloon_alert(user, "stop the tape first!")
+		return
+	playsound(src, 'sound/items/taperecorder/taperecorder_open.ogg', 50, FALSE)
+	balloon_alert(user, "ejected [mytape]")
+	stop()
+	user.put_in_hands(mytape)
+	mytape = null
+	update_appearance()
 
 /obj/item/taperecorder/fire_act(exposed_temperature, exposed_volume)
 	mytape.unspool() //Fires unspool the tape, which makes sense if you don't think about it
@@ -127,8 +132,10 @@
 	set category = "Object"
 
 	if(!can_use(usr))
+		balloon_alert(usr, "can't use!")
 		return
 	if(!mytape)
+		balloon_alert(usr, "no tape!")
 		return
 
 	eject(usr)
@@ -160,19 +167,23 @@
 	set category = "Object"
 
 	if(!can_use(usr))
+		balloon_alert(usr, "can't use!")
 		return
 	if(!mytape || mytape.unspooled)
+		balloon_alert(usr, "no spooled tape!")
 		return
 	if(recording)
+		balloon_alert(usr, "stop recording first!")
 		return
 	if(playing)
+		balloon_alert(usr, "already playing!")
 		return
 
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 
 	if(mytape.used_capacity < mytape.max_capacity)
 		recording = TRUE
-		say("Recording started.")
+		balloon_alert(usr, "started recording")
 		update_sound()
 		update_appearance()
 		var/used = mytape.used_capacity //to stop runtimes when you eject the tape
@@ -182,13 +193,14 @@
 			used += 1 SECONDS
 			if(max - used < time_left_warning && !time_warned)
 				time_warned = TRUE
-				say("[(max - used) / 10] seconds left!") //deciseconds / 10 = seconds
+				balloon_alert(usr, "[(max - used) / 10] second\s left")
 			sleep(1 SECONDS)
 		if(used >= max)
-			say("Tape full.")
+			balloon_alert(usr, "tape full!")
+			sleep(1 SECONDS) //prevent balloon alerts layering over the top of each other
 		stop()
 	else
-		say("The tape is full!")
+		balloon_alert(usr, "tape full!")
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 
 
@@ -197,15 +209,16 @@
 	set category = "Object"
 
 	if(!can_use(usr))
+		balloon_alert(usr, "can't use!")
 		return
 
 	if(recording)
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
-		say("Recording stopped.")
+		balloon_alert(usr, "stopped recording")
 		recording = FALSE
 	else if(playing)
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
-		say("Playback stopped.")
+		balloon_alert(usr, "stopped playing")
 		playing = FALSE
 	time_warned = FALSE
 	update_appearance()
@@ -216,18 +229,25 @@
 	set category = "Object"
 
 	if(!can_use(usr))
+		balloon_alert(usr, "can't use!")
 		return
 	if(!mytape || mytape.unspooled)
+		balloon_alert(usr, "no spooled tape!")
 		return
 	if(recording)
+		balloon_alert(usr, "stop recording first!")
 		return
 	if(playing)
+		balloon_alert(usr, "already playing!")
+		return
+	if(mytape.storedinfo?.len <= 0)
+		balloon_alert(usr, "[mytape] is empty!")
 		return
 
 	playing = TRUE
 	update_appearance()
 	update_sound()
-	say("Playback started.")
+	balloon_alert(usr, "started playing")
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 	var/used = mytape.used_capacity //to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
@@ -237,7 +257,8 @@
 		if(playing == FALSE)
 			break
 		if(mytape.storedinfo.len < i)
-			say("End of recording.")
+			balloon_alert(usr, "recording ended")
+			stoplag(1 SECONDS) //prevents multiple balloon alerts covering each other
 			break
 		say("[mytape.storedinfo[i]]", sanitize=FALSE)//We want to display this properly, don't double encode
 		if(mytape.storedinfo.len < i + 1)
@@ -256,10 +277,7 @@
 
 /obj/item/taperecorder/attack_self(mob/user)
 	if(!mytape)
-		to_chat(user, span_notice("\The [src] is empty."))
-		return
-	if(mytape.unspooled)
-		to_chat(user, span_warning("\The tape inside \the [src] is broken!"))
+		balloon_alert(user, "it's empty!")
 		return
 
 	update_available_icons()
@@ -285,15 +303,22 @@
 
 	var/list/transcribed_info = mytape.storedinfo
 	if(!length(transcribed_info))
-		return
-	if(!mytape)
+		balloon_alert(usr, "tape is empty!")
 		return
 	if(!canprint)
-		to_chat(usr, span_warning("The recorder can't print that fast!"))
-		return
-	if(recording || playing)
+		balloon_alert(usr, "can't print that fast!")
 		return
 	if(!can_use(usr))
+		balloon_alert(usr, "can't use!")
+		return
+	if(!mytape || mytape.unspooled)
+		balloon_alert(usr, "no spooled tape!")
+		return
+	if(recording)
+		balloon_alert(usr, "stop recording first!")
+		return
+	if(playing)
+		balloon_alert(usr, "already playing!")
 		return
 
 	var/transcribed_text = "<b>Transcript:</b><br><br>"
@@ -308,7 +333,7 @@
 
 		// Very unexpected. Better abort non-gracefully.
 		if(excerpt_length > MAX_PAPER_LENGTH)
-			say("Error: Data corruption detected. Cannot print.")
+			balloon_alert(usr, "data corrupted, can't print!")
 			CRASH("Transcript entry has more than [MAX_PAPER_LENGTH] chars: [excerpt_length] chars")
 
 		// If we're going to overflow the paper's length, print the current transcribed text out first and reset to prevent us
@@ -328,7 +353,7 @@
 	transcript_paper.name = "[paper_name] page [page_count]"
 	transcript_paper.update_appearance()
 
-	say("Transcript printed, [page_count] pages.")
+	balloon_alert(usr, "transcript printed\n[page_count] page\s")
 	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, FALSE)
 
 	// Can't put the entire stack into their hands if there's multple pages, but hey we can at least put one page in.
@@ -409,13 +434,13 @@
 				if(loc != user)
 					return
 				tapeflip()
-				to_chat(user, span_notice("You turn \the [src] over."))
+				balloon_alert(user, "flipped tape")
 				playsound(src, 'sound/items/taperecorder/tape_flip.ogg', 70, FALSE)
 			if("Unwind tape")
 				if(loc != user)
 					return
 				unspool()
-				to_chat(user, span_warning("You pull out all the tape!"))
+				balloon_alert(user, "unspooled tape")
 
 /obj/item/tape/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(prob(50))
@@ -454,10 +479,12 @@
 /obj/item/tape/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!unspooled)
 		return FALSE
-	to_chat(user, span_notice("You start winding the tape back in..."))
-	if(tool.use_tool(src, user, 120))
-		to_chat(user, span_notice("You wind the tape back in."))
-		respool()
+	balloon_alert(user, "respooling tape...")
+	if(!tool.use_tool(src, user, 12 SECONDS))
+		balloon_alert(user, "respooling failed!")
+		return FALSE
+	balloon_alert(user, "tape respooled")
+	respool()
 
 //Random colour tapes
 /obj/item/tape/random

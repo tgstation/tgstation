@@ -147,8 +147,8 @@
 	. = ..()
 	update_appearance()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
-	..(dir, dir)
+/obj/machinery/atmospherics/components/unary/cryo_cell/on_construction(mob/user)
+	..(user, dir, dir)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/RefreshParts()
 	. = ..()

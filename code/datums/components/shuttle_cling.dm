@@ -39,7 +39,11 @@
 
 	RegisterSignals(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNBUCKLE, COMSIG_ATOM_NO_LONGER_PULLED), PROC_REF(update_state))
 
-	hyperloop = SSmove_manager.move(moving = parent, direction = direction, delay = not_clinging_move_delay, subsystem = SShyperspace_drift, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST | MOVEMENT_LOOP_NO_DIR_UPDATE)
+	//Items have this cool thing where they're first put on the floor if you grab them from storage, and then into your hand, which isn't caught by movement signals that well
+	if(isitem(parent))
+		RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(do_remove))
+
+	hyperloop = SSmove_manager.move(moving = parent, direction = direction, delay = not_clinging_move_delay, subsystem = SShyperspace_drift, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_NO_DIR_UPDATE)
 
 	update_state(parent) //otherwise we'll get moved 1 tile before we can correct ourselves, which isnt super bad but just looks jank
 
@@ -87,7 +91,7 @@
 	var/mob/living/living = movee
 
 	//Check if we can interact with stuff (checks for alive, arms, stun, etc)
-	if(!living.canUseTopic(living, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE, need_hands = TRUE))
+	if(!living.can_perform_action(living, FORBID_TELEKINESIS_REACH|NEED_HANDS))
 		return NOT_HOLDING_ON
 
 	if(living.buckled)
@@ -145,6 +149,12 @@
 		if(blocker.density)
 			return TRUE
 	return FALSE
+
+///This is just for signals and doesn't run for most removals, so dont add behaviour here expecting it to do much
+/datum/component/shuttle_cling/proc/do_remove()
+	SIGNAL_HANDLER
+
+	qdel(src)
 
 /datum/component/shuttle_cling/Destroy(force, silent)
 	REMOVE_TRAIT(parent, TRAIT_HYPERSPACED, src)

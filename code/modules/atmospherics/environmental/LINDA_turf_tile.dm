@@ -655,8 +655,9 @@ Then we space some of our heat, and think about if we should stop conducting.
 		return FALSE
 	return ..()
 
-/turf/proc/radiate_to_spess() //Radiate excess tile heat to space
-	if(temperature <= T0C) //Considering 0 degC as te break even point for radiation in and out
+/// Radiate excess tile heat to space.
+/turf/proc/radiate_to_spess()
+	if(temperature <= T0C) // Considering 0 degC as the break even point for radiation in and out.
 		return
 	// Because we keep losing energy, makes more sense for us to be the T2 here.
 	var/delta_temperature = temperature_archived - TCMB //hardcoded space temperature

@@ -229,7 +229,7 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/tomatojuice = 10,
 		/datum/reagent/consumable/nutriment/vitamin = 4,
-		/datum/reagent/liquidgibs = 3,
+		/datum/reagent/consumable/liquidgibs = 3,
 	)
 	tastes = list("tomato" = 1, "squirming" = 1)
 	foodtypes = MEAT | GORE

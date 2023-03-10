@@ -416,7 +416,7 @@
 /area/ruin/space)
 "xh" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/machinery/computer/med_data/syndie{
+/obj/machinery/computer/records/medical/syndie{
 	dir = 2;
 	req_access = list("syndicate")
 	},

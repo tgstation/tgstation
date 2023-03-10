@@ -1,6 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - imageadd: "Hilbert Research Facility's tram controls have finally been picked up off the floor and mounted to the wall"
-  - bugfix: "Hilbert Research Facility's tram doors are no longer linked to the main station tram"
-  - code_imp: "Hilbert Research Facility now has proper tram atmos barriers installed"

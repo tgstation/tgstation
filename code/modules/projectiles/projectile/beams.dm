@@ -98,6 +98,9 @@
 	muzzle_type = /obj/effect/projectile/muzzle/disabler
 	impact_type = /obj/effect/projectile/impact/disabler
 
+/obj/projectile/beam/disabler/weak
+	damage = 15
+
 /obj/projectile/beam/pulse
 	name = "pulse"
 	icon_state = "u_laser"

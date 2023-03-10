@@ -45,8 +45,6 @@ other types of metals and chemistry for reagents).
 	var/maxstack = 1
 	/// How many times faster than normal is this to build on the protolathe
 	var/lathe_time_factor = 1
-	/// If this is [TRUE] the admins get notified whenever anyone prints this. Currently only used by the BoH.
-	var/dangerous_construction = FALSE
 	/// Bitflags indicating what departmental lathes should be allowed to process this design.
 	var/departmental_flags = ALL
 	/// What techwebs nodes unlock this design. Constructed by SSresearch

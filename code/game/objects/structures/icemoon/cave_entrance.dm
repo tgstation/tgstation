@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	desc = "A hole in the ground, filled with monsters ready to defend it."
 	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	icon_state = "hole"
-	faction = list("mining")
+	faction = list(FACTION_MINING)
 	max_mobs = 3
 	max_integrity = 250
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/wolf)

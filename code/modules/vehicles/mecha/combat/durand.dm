@@ -20,7 +20,6 @@
 	)
 	var/obj/durand_shield/shield
 
-
 /datum/armor/mecha_durand
 	melee = 40
 	bullet = 35
@@ -177,12 +176,11 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 /obj/durand_shield/Initialize(mapload, chassis, plane, layer, dir)
 	. = ..()
 	src.chassis = chassis
-	src.layer = layer
-	SET_PLANE_EXPLICIT(src, plane, src)
+	src.layer = ABOVE_MOB_LAYER
+	SET_PLANE_IMPLICIT(src, plane)
 	setDir(dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, PROC_REF(activate))
 	RegisterSignal(chassis, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(shield_glide_size_update))
-
 
 /obj/durand_shield/Destroy()
 	UnregisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER)
@@ -236,13 +234,12 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		invisibility = 0
 		flick("shield_raise", src)
 		playsound(src, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
-		set_light(l_range = MINIMUM_USEFUL_LIGHT_RANGE , l_power = 5, l_color = "#00FFFF")
 		icon_state = "shield"
+		resetdir(chassis, dir, dir) // to set the plane for the shield properly when it's turned on
 		RegisterSignal(chassis, COMSIG_ATOM_DIR_CHANGE, PROC_REF(resetdir))
 	else
 		flick("shield_drop", src)
 		playsound(src, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
-		set_light(0)
 		icon_state = "shield_null"
 		addtimer(CALLBACK(src, PROC_REF(make_invisible)), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 		UnregisterSignal(chassis, COMSIG_ATOM_DIR_CHANGE)
@@ -261,6 +258,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 
 /obj/durand_shield/proc/resetdir(datum/source, olddir, newdir)
 	SIGNAL_HANDLER
+
 	setDir(newdir)
 
 /obj/durand_shield/take_damage()

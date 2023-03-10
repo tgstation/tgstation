@@ -11,7 +11,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ac" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -111,7 +111,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ap" = (
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot_white,
@@ -417,7 +417,7 @@
 /area/shuttle/escape)
 "bd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 4
 	},
 /turf/open/floor/iron/white/side{

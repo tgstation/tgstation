@@ -19,7 +19,7 @@
 	var/networked = FALSE
 
 /datum/computer_file/program/bounty_board/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	var/list/formatted_requests = list()
 	var/list/formatted_applicants = list()
 	if(current_user)
@@ -82,7 +82,7 @@
 			for(var/datum/station_request/i in GLOB.request_list)
 				if("[i.req_number]" == "[current_user.account_id]")
 					computer.say("Account already has active bounty.")
-					return
+					return TRUE
 			var/datum/station_request/curr_request = new /datum/station_request(current_user.account_holder, bounty_value,bounty_text,current_user.account_id, current_user)
 			GLOB.request_list += list(curr_request)
 			for(var/obj/i in GLOB.allbountyboards)
@@ -126,9 +126,10 @@
 			bounty_value = text2num(params["bountyval"])
 			if(!bounty_value)
 				bounty_value = 1
+			return TRUE
 		if("bountyText")
 			bounty_text = (params["bountytext"])
-	. = TRUE
+	return TRUE
 
 /datum/computer_file/program/bounty_board/Destroy()
 	GLOB.allbountyboards -= computer
