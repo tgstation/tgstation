@@ -48,7 +48,7 @@
 	moveToNullspace()
 
 ///Makes this sticker move from nullspace and cut the overlay from the object it is attached to, silent for no visible message.
-/obj/item/sticker/proc/peel(datum/source, silent=FALSE)
+/obj/item/sticker/proc/peel(datum/source, silent = FALSE)
 	SIGNAL_HANDLER
 	if(!attached)
 		return
@@ -76,7 +76,7 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(attached, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_IGNITED))
 	if(signal_turf)
-		UnregisterSignal(signal_turf,COMSIG_TURF_EXPOSE)
+		UnregisterSignal(signal_turf, COMSIG_TURF_EXPOSE)
 		signal_turf = null
 
 /obj/item/sticker/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
