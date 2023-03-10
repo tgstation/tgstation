@@ -64,17 +64,18 @@
 
 ///Registers signals to the object it is attached to
 /obj/item/sticker/proc/register_signals(mob/living/user)
-	RegisterSignal(attached, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(peel))
 	if(isturf(attached))
 		//register signals on the users turf instead because we can assume they are on flooring sticking it to a wall so it should burn (otherwise it would fruitlessly check wall temperature)
 		signal_turf = (user && isclosedturf(attached)) ? get_turf(user) : attached
 		RegisterSignal(signal_turf, COMSIG_TURF_EXPOSE, PROC_REF(on_turf_expose))
 	RegisterSignal(attached, COMSIG_LIVING_IGNITED, PROC_REF(on_ignite))
+	RegisterSignal(attached, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(peel))
+	RegisterSignal(attached, COMSIG_PARENT_QDELETING, PROC_REF(on_attached_qdel))
 
 //Unregisters signals from the object it is attached to
 /obj/item/sticker/proc/unregister_signals(datum/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(attached, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_IGNITED))
+	UnregisterSignal(attached, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_IGNITED, COMSIG_PARENT_QDELETING))
 	if(signal_turf)
 		UnregisterSignal(signal_turf, COMSIG_TURF_EXPOSE)
 		signal_turf = null
@@ -99,6 +100,11 @@
 	if(!(resistance_flags & FLAMMABLE))
 		return
 	peel(silent=TRUE)
+	qdel(src)
+
+/// Signal handler for COMSIG_PARENT_QDELETING, deletes this sticker if the attached object is deleted
+/obj/item/sticker/proc/on_attached_qdel(datum/source)
+	SIGNAL_HANDLER
 	qdel(src)
 
 /obj/item/sticker/smile
