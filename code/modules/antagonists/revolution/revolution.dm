@@ -447,9 +447,9 @@
 			"target" = get_turf(real_headrev),
 			"style" = STYLE_SYNDICATE,
 			"spawn" = list(
-				/obj/item/station_charter/revolution,
-				/obj/item/megaphone,
 				/obj/item/bedsheet/rev,
+				/obj/item/megaphone,
+				/obj/item/station_charter/revolution,
 			)))
 		to_chat(real_headrev, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
 			\"Please stand by for a message from your benefactor. Message as follows, provocateur. \

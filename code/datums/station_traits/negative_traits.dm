@@ -295,10 +295,11 @@
 /datum/station_trait/revolutionary_trashing
 	name = "Post-Revolutionary Fervor"
 	show_in_report = TRUE
-	report_message = "Your station was recently reclaimed from a revolutionary commune. We aren't cleaning up after them."
+	report_message = "Your station was recently reclaimed from a revolutionary commune. We couldn't clean up after them in time."
 	trait_type = STATION_TRAIT_NEGATIVE
 	trait_to_give = STATION_TRAIT_REVOLUTIONARY_TRASHING
 	weight = 2
+	///The IDs of the graffiti designs that we will generate.
 	var/static/list/trash_talk = list(
 		"amyjon",
 		"antilizard",
@@ -329,11 +330,20 @@
 
 	INVOKE_ASYNC(src, PROC_REF(trash_this_place)) //Must be called asynchronously
 
+/**
+ * "Trashes" the command areas of the station.
+ *
+ * Creates random graffiti and damages certain machinery/structures in the
+ * command areas of the station.
+ */
+
 /datum/station_trait/revolutionary_trashing/proc/trash_this_place()
 	for(var/area/station/command/area_to_trash in GLOB.areas)
 
 		for(var/turf/current_turf as anything in area_to_trash.get_contained_turfs())
-			if(isopenturf(current_turf) && prob(25))
+			if(isclosedturf(current_turf))
+				continue
+			if(prob(25))
 				var/obj/effect/decal/cleanable/crayon/created_art
 				created_art = new(current_turf, RANDOM_COLOUR, pick(trash_talk))
 				created_art.pixel_x = rand(-10, 10)
@@ -344,23 +354,28 @@
 				continue
 
 			for(var/atom/current_thing as anything in current_turf.contents)
-				if(istype(current_thing, /obj/structure/fireaxecabinet)) //A staple of revolutionary behavior
-					current_thing.take_damage(90)
+				if(istype(current_thing, /obj/machinery/light) && prob(40))
+					var/obj/machinery/light/light_to_smash = current_thing
+					light_to_smash.break_light_tube(skip_sound_and_sparks = TRUE)
 					continue
 
-				if(istype(current_thing, /obj/machinery/computer) && prob(30))
-					if(istype(current_thing, /obj/machinery/computer/communications))
-						continue //To prevent the shuttle from getting autocalled at the start of the round
-					current_thing.take_damage(160)
+				if(istype(current_thing, /obj/structure/window))
+					if(prob(15))
+						current_thing.take_damage(rand(30, 90))
 					continue
 
 				if(istype(current_thing, /obj/structure/table) && prob(40))
 					current_thing.take_damage(100)
 					continue
 
-				if(istype(current_thing, /obj/structure/window))
-					if(prob(15))
-						current_thing.take_damage(rand(30, 90))
+				if(istype(current_thing, /obj/structure/chair) && prob(60))
+					current_thing.take_damage(150)
+					continue
+
+				if(istype(current_thing, /obj/machinery/computer) && prob(30))
+					if(istype(current_thing, /obj/machinery/computer/communications))
+						continue //To prevent the shuttle from getting autocalled at the start of the round
+					current_thing.take_damage(160)
 					continue
 
 				if(istype(current_thing, /obj/machinery/vending) && prob(45))
@@ -372,11 +387,8 @@
 						vendor_to_trash.take_damage(150)
 					continue
 
-				if(istype(current_thing, /obj/structure/chair) && prob(60))
-					current_thing.take_damage(150)
+				if(istype(current_thing, /obj/structure/fireaxecabinet)) //A staple of revolutionary behavior
+					current_thing.take_damage(90)
 					continue
 
-				if(istype(current_thing, /obj/machinery/light) && prob(40))
-					var/obj/machinery/light/light_to_smash = current_thing
-					light_to_smash.break_light_tube(skip_sound_and_sparks = TRUE)
-					continue
+			CHECK_TICK

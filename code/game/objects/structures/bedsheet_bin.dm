@@ -317,7 +317,15 @@ LINEN BINS
 	desc = "A bedsheet stolen from a Central Command official's bedroom, used a symbol of triumph against Nanotrasen's tyranny. The golden emblem on the front has been scribbled out."
 	icon_state = "sheetrev"
 	inhand_icon_state = "sheetrev"
-	dream_messages = list("the people", "liberation", "collaboration", "heads rolling", "so, so many baseball bats", "blinding light", "your brothers in arms")
+	dream_messages = list(
+		"the people",
+		"liberation",
+		"collaboration",
+		"heads rolling",
+		"so, so many baseball bats",
+		"blinding light",
+		"your brothers in arms"
+	)
 
 /obj/item/bedsheet/nanotrasen
 	name = "\improper Nanotrasen bedsheet"
