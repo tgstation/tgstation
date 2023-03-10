@@ -72,7 +72,7 @@
 		out += span_info("[icon2html(I, user)] It has \a [I] loaded.")
 		CHECK_TICK
 	if(tank)
-		out += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it.")
+		out += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it. It could be removed with a <b>screwdriver</b>.")
 	. += out.Join("\n")
 
 /obj/item/pneumatic_cannon/screwdriver_act(mob/living/user, obj/item/tool)
