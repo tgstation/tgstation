@@ -950,7 +950,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	fancy = FALSE
 
 /obj/item/lighter/bright/examine(mob/user)
-	..()
+	. = ..()
 
 	if(lit && isliving(user))
 		var/mob/living/current_viewer = user
