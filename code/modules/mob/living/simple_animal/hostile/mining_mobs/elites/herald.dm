@@ -238,7 +238,7 @@
 		rock_target.gets_drilled()
 
 /obj/projectile/herald/teleshot
-	name ="golden bolt"
+	name = "golden bolt"
 	damage = 0
 	color = rgb(255,255,102)
 
