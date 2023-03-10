@@ -695,7 +695,9 @@
 "DH" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/item/folder/syndicate/red,
-/obj/effect/decal/cleanable/traitor_rune,
+/obj/effect/decal/cleanable/traitor_rune{
+	icon_state = "traitor_rune_done"
+	},
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space)
 "DI" = (
