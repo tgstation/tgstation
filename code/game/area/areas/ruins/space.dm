@@ -570,3 +570,7 @@
 /area/ruin/space/has_grav/powered/clownplanet
 	name = "\improper Clown Planet"
 	ambientsounds = list('sound/ambience/clown.ogg')
+
+// The abandonded capsule 'The Travellers Rest'
+/area/ruin/space/has_grav/travellersrest
+	name = "\improper Traveller's Rest"
