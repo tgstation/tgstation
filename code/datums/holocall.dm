@@ -480,7 +480,7 @@
 /obj/item/disk/holodisk/ruin/space/travellers_rest
 	name = "Owner's memo"
 	desc = "A holodisk containing a small memo from the previous owner, addressed to someone else."
-	preset_image_type = /datum/preset_holoimage/engineer/atmos/mod
+	preset_image_type = /datum/preset_holoimage/engineer/atmos
 	preset_record_text = {"
 	NAME Space Adventurer
 	SOUND PING
