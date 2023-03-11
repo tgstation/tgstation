@@ -194,7 +194,7 @@
 	contraband = TRUE
 
 /obj/item/sticker/syndicate/c4
-	name = "c4 sticker"
+	name = "C-4 sticker"
 	icon_state = "c4"
 
 /obj/item/sticker/syndicate/bomb
@@ -222,5 +222,5 @@
 	icon_state = "newcop"
 
 /obj/item/sticker/syndicate/trap
-	name = "beartrap sticker"
+	name = "bear trap sticker"
 	icon_state = "trap"

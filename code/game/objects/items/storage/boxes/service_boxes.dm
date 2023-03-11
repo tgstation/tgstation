@@ -208,14 +208,18 @@
 	name = "box of stickers"
 	desc = "A box full of random stickers. Do give to the clown."
 
+/obj/item/storage/box/stickers/proc/generate_non_contraband_stickers_list()
+	. = list()
+	for(var/obj/item/sticker/sticker_type as anything in subtypesof(/obj/item/sticker))
+		if(!initial(sticker_type.contraband))
+			. += sticker_type
+	return .
 /obj/item/storage/box/stickers/PopulateContents()
-	var/static/list/noncontraband = list()
-	if(!LAZYLEN(noncontraband))
-		for(var/obj/item/sticker/sticker_type as anything in subtypesof(/obj/item/sticker))
-			if(!initial(type.contraband))
-				noncontraband += sticker_type
+	var/static/list/non_contraband
+	if(!non_contraband)
+		non_contraband = generate_non_contraband_stickers_list()
 	for(var/i in 1 to rand(4,8))
-		var/type = pick(noncontraband)
+		var/type = pick(non_contraband)
 		new type(src)
 
 /obj/item/storage/box/stickers/googly
