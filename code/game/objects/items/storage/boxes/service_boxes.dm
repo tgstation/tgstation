@@ -211,10 +211,9 @@
 /obj/item/storage/box/stickers/PopulateContents()
 	var/static/list/noncontraband = list()
 	if(!LAZYLEN(noncontraband))
-		for(var/stick in subtypesof(/obj/item/sticker))
-			var/obj/item/sticker/type = stick
+		for(var/obj/item/sticker/sticker_type as anything in subtypesof(/obj/item/sticker))
 			if(!initial(type.contraband))
-				noncontraband += type
+				noncontraband += sticker_type
 	for(var/i in 1 to rand(4,8))
 		var/type = pick(noncontraband)
 		new type(src)
