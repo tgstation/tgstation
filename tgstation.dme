@@ -38,6 +38,7 @@
 #include "code\__DEFINES\ai_pet_commands.dm"
 #include "code\__DEFINES\alarm.dm"
 #include "code\__DEFINES\alerts.dm"
+#include "code\__DEFINES\anomaly.dm"
 #include "code\__DEFINES\antagonists.dm"
 #include "code\__DEFINES\apc_defines.dm"
 #include "code\__DEFINES\appearance.dm"

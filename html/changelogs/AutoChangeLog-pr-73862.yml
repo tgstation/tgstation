@@ -1,0 +1,7 @@
+author: "spockye"
+delete-after: True
+changes:
+  - bugfix: "fixed missing disposal pipes (tramstation)"
+  - bugfix: "fixed missing zones (tramstation)"
+  - bugfix: "fixed wrongly placed zones (tramstation)"
+  - bugfix: "fixed wrongly placed tiles (tramstation)"
