@@ -29,3 +29,13 @@
 	var/prev_trans = matrix(target.transform)
 	animate(pixel_z = 0, transform = turn(target.transform, pick(-12, 0, 12)), time=2)
 	animate(pixel_z = 0, transform = prev_trans, time = 0)
+
+/datum/element/waddling/tyagi
+
+/datum/element/waddling/tyagi/Waddle(atom/movable/target)
+	SIGNAL_HANDLER
+
+	animate(target, pixel_z = 4, time = 0)
+	var/prev_trans = matrix(target.transform)
+	animate(pixel_z = 0, transform = turn(target.transform, pick(-36, 0, 36)), time=2)
+	animate(pixel_z = 0, transform = prev_trans, time = 0)

@@ -121,7 +121,7 @@
 /datum/species/plasmaman/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
 	if(job?.plasmaman_outfit)
 		equipping.equipOutfit(job.plasmaman_outfit, visuals_only)
-	else 
+	else
 		give_important_for_life(equipping)
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)
@@ -175,6 +175,13 @@
 			H.adjust_hallucinations(2.5 SECONDS * delta_time)
 		// Do normal metabolism
 		return FALSE
+
+/datum/species/plasmaman/get_scream_sound(mob/living/carbon/human)
+	return pick(
+		'sound/voice/plasmaman/plasmeme_scream_1.ogg',
+		'sound/voice/plasmaman/plasmeme_scream_2.ogg',
+		'sound/voice/plasmaman/plasmeme_scream_3.ogg',
+	)
 
 /datum/species/plasmaman/get_species_description()
 	return "Found on the Icemoon of Freyja, plasmamen consist of colonial \

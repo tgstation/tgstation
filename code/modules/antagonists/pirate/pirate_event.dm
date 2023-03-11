@@ -7,7 +7,7 @@
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION
 	description = "The crew will either pay up, or face a pirate assault."
-	admin_setup = /datum/event_admin_setup/pirates
+	admin_setup = list(/datum/event_admin_setup/listed_options/pirates)
 	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event_control/pirates/preRunEvent()
@@ -81,22 +81,15 @@
 
 	priority_announce("Unidentified armed ship detected near the station.")
 
-/datum/event_admin_setup/pirates
-	///admin chosen pirate team
-	var/datum/pirate_gang/chosen_gang
+/datum/event_admin_setup/listed_options/pirates
+	input_text = "Select Pirate Gang"
+	normal_run_option = "Random Pirate Gang"
 
-/datum/event_admin_setup/pirates/prompt_admins()
-	var/list/gang_choices = list("Random")
+/datum/event_admin_setup/listed_options/pirates/get_list()
+	return subtypesof(/datum/pirate_gang)
 
-	for(var/datum/pirate_gang/possible_gang as anything in GLOB.pirate_gangs)
-		gang_choices[possible_gang.name] = possible_gang
-
-	var/chosen = tgui_input_list(usr, "Select pirate gang", "TICKETS TO THE SPONGEBOB MOVIE!!", gang_choices)
-	if(!chosen)
-		return ADMIN_CANCEL_EVENT
-	if(chosen == "Random")
-		return //still do the event, but chosen_gang is still null, so it will pick from the choices
-	chosen_gang = gang_choices[chosen]
-
-/datum/event_admin_setup/pirates/apply_to_event(datum/round_event/pirates/event)
-	event.chosen_gang = chosen_gang
+/datum/event_admin_setup/listed_options/pirates/apply_to_event(datum/round_event/pirates/event)
+	if(isnull(chosen))
+		event.chosen_gang = null
+	else
+		event.chosen_gang = new chosen

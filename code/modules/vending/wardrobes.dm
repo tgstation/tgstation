@@ -434,6 +434,8 @@
 		/obj/item/clothing/suit/chaplainsuit/monkrobeeast = 1,
 		/obj/item/clothing/head/rasta = 1,
 		/obj/item/clothing/suit/chaplainsuit/shrinehand = 1,
+		/obj/item/clothing/head/hijab/white = 1,
+		/obj/item/clothing/head/hijab/turban/white = 1,
 		)
 	contraband = list(
 		/obj/item/toy/plush/ratplush = 1,
