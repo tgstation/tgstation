@@ -56,7 +56,7 @@
 	start_beam(victim, caster)
 	return TRUE
 
-/datum/action/cooldown/spell/touch/star_touch/Destroy(mob/user)
+/datum/action/cooldown/spell/touch/star_touch/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	LoseTarget()
 	return ..()
@@ -68,6 +68,7 @@
 	if(active)
 		QDEL_NULL(current_beam)
 		active = FALSE
+	if(current_target)
 		on_beam_release(current_target)
 	current_target = null
 
@@ -97,7 +98,7 @@
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	if(current_target)
-	on_beam_hit(current_target)
+		on_beam_hit(current_target)
 
 /datum/action/cooldown/spell/touch/star_touch/process()
 	if(!current_target)
