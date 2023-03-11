@@ -444,7 +444,6 @@
 	dir = 1
 	},
 /obj/item/storage/secure/safe/directional/north{
-	desc = sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss;
 	pixel_y = 45
 	},
 /obj/structure/sink/kitchen/directional/south{
