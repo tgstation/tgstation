@@ -50249,6 +50249,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/office)
+"mii" = (
+/obj/machinery/camera/autoname/directional/north,
+/turf/open/floor/carpet/green,
+/area/station/command/heads_quarters/hop)
 "min" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -91837,6 +91841,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/hop)
 "wqQ" = (
@@ -135307,7 +135312,7 @@ fdQ
 lUI
 mqr
 lZx
-wzM
+mii
 dQf
 qnQ
 pRS
