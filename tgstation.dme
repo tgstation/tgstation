@@ -2038,6 +2038,7 @@
 #include "code\game\objects\items\storage\boxes\science_boxes.dm"
 #include "code\game\objects\items\storage\boxes\security_boxes.dm"
 #include "code\game\objects\items\storage\boxes\service_boxes.dm"
+#include "code\game\objects\items\space_suit_beacon.dm"
 #include "code\game\objects\items\tanks\jetpack.dm"
 #include "code\game\objects\items\tanks\hardsuit_jetpack.dm"
 #include "code\game\objects\items\tanks\tank_types.dm"
