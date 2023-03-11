@@ -172,6 +172,8 @@
 	obj_flags |= EMAGGED
 	update_appearance()
 	if(user)
+		user.visible_message(span_warning("Sparks fly out of [src]!"),
+							span_notice("You override [src], disabling the speaker."))
 		user.balloon_alert(user, "speaker disabled!")
 		user.log_message("emagged [src].", LOG_ATTACK)
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
