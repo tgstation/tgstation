@@ -1,6 +1,7 @@
 /obj/item/choice_beacon/space_suit
 	name = "space suit delivery beacon"
 	desc = "Summon your space suit"
+	icon_state = "gangtool-suit"
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/choice_beacon/space_suit/captain
@@ -144,6 +145,7 @@
 	return syndi_suits
 
 /obj/item/choice_beacon/space_suit/clown
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/choice_beacon/space_suit/clown/generate_display_names()
 	var/static/list/clown_suits
