@@ -36,7 +36,7 @@
 		//Set layers to these colors, base then ribbon
 		set_greyscale(colors = list(generated_base_color, generated_ribbon_color))
 
-/obj/item/stack/wrapping_paper/attack_hand_secondary(mob/user, modifiers)
+/obj/item/stack/wrapping_paper/AltClick(mob/user, modifiers)
 	var/new_base = input(user, "", "Select a base color", color) as color
 	var/new_ribbon = input(user, "", "Select a ribbon color", color) as color
 	if(!user.can_perform_action(src))
