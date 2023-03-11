@@ -351,8 +351,8 @@
 	name = "Alternate Sciences Research Center"
 	description = "When you're messing with the occult, who knows what you're going to get?"
 
-/datum/map_template/ruin/space/travellers_rest
-	id = "travellers_rest"
-	suffix = "travellers_rest.dmm"
-	name = "Traveller's Rest"
+/datum/map_template/ruin/space/travelers_rest
+	id = "travelers_rest"
+	suffix = "travelers_rest.dmm"
+	name = "Traveler's Rest"
 	description = "An abandoned capsule floating through space. It seems as if somebody was in here not too long ago."

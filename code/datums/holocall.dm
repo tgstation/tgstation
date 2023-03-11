@@ -477,7 +477,7 @@
 	SAY Connection lost. Dumping audio logs to disk.
 	DELAY 50"}
 
-/obj/item/disk/holodisk/ruin/space/travellers_rest
+/obj/item/disk/holodisk/ruin/space/travelers_rest
 	name = "Owner's memo"
 	desc = "A holodisk containing a small memo from the previous owner, addressed to someone else."
 	preset_image_type = /datum/preset_holoimage/engineer/atmos
