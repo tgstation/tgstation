@@ -188,10 +188,16 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	to_chat(creator, span_notice("You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered."))
 	creator.log_message("created a new area: [AREACOORD(creator)] (previously \"[oldA.name]\")", LOG_GAME)
 
-	//purge old areas that had all their turfs merged into the new one i.e. old empty areas
+	//purge old areas that had all their turfs merged into the new one i.e. old empty areas. also recompute fire doors
 	for(var/i in 1 to length(area_list))
 		var/area/merged_area = area_list[i]
-		if(!merged_area.has_contained_turfs()) //no more turfs in this area. Time to clean up
+
+		//recompute fire doors affecting areas
+		for(var/obj/machinery/door/firedoor/FD as anything in merged_area.firedoors)
+			FD.CalculateAffectingAreas()
+
+		//no more turfs in this area. Time to clean up
+		if(!merged_area.has_contained_turfs())
 			qdel(merged_area)
 
 	return TRUE

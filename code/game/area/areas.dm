@@ -287,7 +287,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	//machinery cleanup
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(alarm_manager)
+	firedoors = null
 	//atmos cleanup
+	firealarms = null
 	air_vents = null
 	air_scrubbers = null
 	//turf cleanup
