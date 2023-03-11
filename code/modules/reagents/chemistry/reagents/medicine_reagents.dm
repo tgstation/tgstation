@@ -411,14 +411,14 @@
 	var/toxin_amount = round(affected_mob.health / 40, 0.1)
 	affected_mob.adjustToxLoss(toxin_amount * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
-	. = TRUE
+	return TRUE
 
 /datum/reagent/medicine/calomel/overdose_process(mob/living/affected_mob, delta_time, times_fired)
 	for(var/datum/reagent/medicine/calomel/target_reagent in affected_mob.reagents.reagent_list)
 		affected_mob.reagents.remove_reagent(target_reagent.type, 2 * REM * delta_time)
 	affected_mob.adjustToxLoss(2.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
-	. = TRUE
+	return TRUE
 
 /datum/reagent/medicine/ammoniated_mercury
 	name = "Ammoniated Mercury"
@@ -430,7 +430,7 @@
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	taste_description = "metalic"
 	overdose_threshold = 10
-	ph = 1
+	ph = 7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/ammoniated_mercury/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
@@ -444,12 +444,12 @@
 		for(var/datum/reagent/medicine/ammoniated_mercury/target_reagent in affected_mob.reagents.reagent_list)
 			affected_mob.reagents.remove_reagent(target_reagent.type, 1 * REM * delta_time)
 	..()
-	. = TRUE
+	return TRUE
 
 /datum/reagent/medicine/ammoniated_mercury/overdose_process(mob/living/affected_mob, delta_time, times_fired)
 	affected_mob.adjustToxLoss(3 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
-	. = TRUE
+	return TRUE
 
 /datum/reagent/medicine/potass_iodide
 	name = "Potassium Iodide"
