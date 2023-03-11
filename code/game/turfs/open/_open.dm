@@ -8,6 +8,9 @@
 	var/clawfootstep = null
 	var/heavyfootstep = null
 
+	///chance to break if somebody jumps on it
+	var/jump_fragility = 0
+
 //direction is direction of travel of A
 /turf/open/zPassIn(atom/movable/A, direction, turf/source)
 	if(direction == DOWN)

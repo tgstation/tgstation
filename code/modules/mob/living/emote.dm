@@ -209,8 +209,21 @@
 /datum/emote/living/jump
 	key = "jump"
 	key_third_person = "jumps"
-	message = "jumps!"
+	message = "jumps up and down."
 	hands_use_check = TRUE
+
+/datum/emote/living/jump/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+	var/turf/open/current = get_turf(user)
+	if(!isopenturf(current))
+		return
+	if(prob(current.jump_fragility))
+		playsound(current, SFX_SHATTER, 70, TRUE)
+		user.visible_message(
+				span_warning("[user] crashes through [current]!"),
+				span_userdanger("You crash through [current]!"),
+			)
+		current.ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 
 /datum/emote/living/kiss
 	key = "kiss"

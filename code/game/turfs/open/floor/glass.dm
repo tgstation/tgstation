@@ -14,6 +14,7 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	jump_fragility = 80
 	floor_tile = /obj/item/stack/tile/glass
 	overfloor_placed = FALSE
 	/// List of /atom/movable/render_step that are being used to make this glass floor glow
@@ -68,6 +69,7 @@
 	icon = 'icons/turf/floors/reinf_glass.dmi'
 	icon_state = "reinf_glass-0"
 	base_icon_state = "reinf_glass"
+	jump_fragility = 5
 	floor_tile = /obj/item/stack/tile/rglass
 	alpha_to_leave = 206
 
@@ -83,6 +85,7 @@
 	icon = 'icons/turf/floors/plasma_glass.dmi'
 	icon_state = "plasma_glass-0"
 	base_icon_state = "plasma_glass"
+	jump_fragility = 50
 	floor_tile = /obj/item/stack/tile/glass/plasma
 	starlight_color = COLOR_STRONG_VIOLET
 	alpha_to_leave = 255
@@ -99,6 +102,7 @@
 	icon = 'icons/turf/floors/reinf_plasma_glass.dmi'
 	icon_state = "reinf_plasma_glass-0"
 	base_icon_state = "reinf_plasma_glass"
+	jump_fragility = 3
 	floor_tile = /obj/item/stack/tile/rglass/plasma
 	starlight_color = COLOR_STRONG_VIOLET
 	alpha_to_leave = 206
