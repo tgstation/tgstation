@@ -179,3 +179,6 @@
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 	owner.update_icon(UPDATE_OVERLAYS)
 	return ..()
+
+/datum/status_effect/star_mark/extended
+	duration = 3 MINUTES

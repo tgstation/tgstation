@@ -21,8 +21,8 @@
 /datum/heretic_knowledge/curse/cosmic_trail
 	name = "Curse of The Stars"
 	desc = "Allows you to transmute a bluespace crystal, a pool of ash, and a liver to cast a Curse of The Stars on a crew member. \
-		While cursed, the victim will recieve a star mark that always lasts for 30 seconds. This star mark makes it so that the \
-		crew member cannot enter cosmic carpet fields. The victim will also recieve a cosmic carpet trail for at least 30 seconds."
+		While cursed, the victim will recieve a star mark that lasts for at least 3 minutes. This star mark makes it so that the \
+		crew member cannot enter cosmic carpet fields. The victim will also recieve a cosmic carpet trail for at least 3 minutes."
 	gain_text = "Strange stars glare through the cosmos. The stars focus their solar radiation onto their target."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/star_blast,
@@ -33,7 +33,7 @@
 		/obj/effect/decal/cleanable/ash = 1,
 		/obj/item/organ/internal/liver = 1,
 	)
-	duration = 0.5 MINUTES
+	duration = 3 MINUTES
 	duration_modifier = 2
 	curse_color = "#dcaa5b"
 	cost = 1
@@ -41,7 +41,7 @@
 
 /datum/heretic_knowledge/curse/cosmic_trail/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
 	to_chat(chosen_mob, span_danger("You feel very strange..."))
-	chosen_mob.apply_status_effect(/datum/status_effect/star_mark)
+	chosen_mob.apply_status_effect(/datum/status_effect/star_mark/extended)
 	chosen_mob.AddElement(/datum/element/cosmic_carpet_trail)
 	return ..()
 

@@ -1,6 +1,8 @@
 /datum/action/cooldown/spell/touch/star_touch
 	name = "Star Touch"
-	desc = "Marks someone with a star mark or puts someone with a star mark to sleep for 4 seconds."
+	desc = "Marks someone with a star mark or puts someone with a star mark to sleep for 4 seconds, removing the star mark. \
+		When the victim is hit it also creates a beam that deals a bit of fire damage and damages the cells. \
+		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -17,6 +19,22 @@
 	hand_path = /obj/item/melee/touch_attack/star_touch
 	/// Creates a field to stop people with a star mark.
 	var/obj/effect/cosmic_field/cosmic_field
+	/// Stores the current beam target
+	var/mob/living/current_target
+	/// Checks the time of the last check
+	var/last_check = 0
+	/// The delay of when the beam gets checked
+	var/check_delay = 10 //Check los as often as possible, max resolution is SSobj tick though
+	/// The maximum range of the beam
+	var/max_range = 8
+	/// Wether the beam is active or not
+	var/active = FALSE
+	/// The storage for the beam
+	var/datum/beam/current_beam = null
+
+/datum/action/cooldown/spell/touch/star_touch/New(Target)
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /datum/action/cooldown/spell/touch/star_touch/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
@@ -35,7 +53,123 @@
 	else
 		victim.apply_status_effect(/datum/status_effect/star_mark)
 	cosmic_field = new(get_turf(caster))
+	start_beam(victim, caster)
 	return TRUE
+
+/datum/action/cooldown/spell/touch/star_touch/Destroy(mob/user)
+	STOP_PROCESSING(SSobj, src)
+	LoseTarget()
+	return ..()
+
+/**
+ * Proc that always is called when we want to end the beam and makes sure things are cleaned up, see beam_died()
+ */
+/datum/action/cooldown/spell/touch/star_touch/proc/LoseTarget()
+	if(active)
+		QDEL_NULL(current_beam)
+		active = FALSE
+		on_beam_release(current_target)
+	current_target = null
+
+/**
+ * Proc that is only called when the beam fails due to something, so not when manually ended.
+ * manual disconnection = LoseTarget, so it can silently end
+ * automatic disconnection = beam_died, so we can give a warning message first
+ */
+/datum/action/cooldown/spell/touch/star_touch/proc/beam_died()
+	SIGNAL_HANDLER
+	current_beam = null
+	active = FALSE //skip qdelling the beam again if we're doing this proc, because
+	to_chat(owner, span_warning("You lose control of the beam!"))
+	LoseTarget()
+
+/datum/action/cooldown/spell/touch/star_touch/proc/start_beam(atom/target, mob/living/user)
+
+	if(current_target)
+		LoseTarget()
+	if(!isliving(target))
+		return
+
+	current_target = target
+	active = TRUE
+	current_beam = user.Beam(current_target, icon_state="cosmig_beam", time = 1 MINUTES, maxdistance = max_range, beam_type = /obj/effect/ebeam/cosmic)
+	RegisterSignal(current_beam, COMSIG_PARENT_QDELETING, PROC_REF(beam_died))//this is a WAY better rangecheck than what was done before (process check)
+
+	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
+	if(current_target)
+	on_beam_hit(current_target)
+
+/datum/action/cooldown/spell/touch/star_touch/process()
+	if(!current_target)
+		LoseTarget()
+		return
+
+	if(world.time <= last_check+check_delay)
+		return
+
+	last_check = world.time
+
+	if(!los_check(owner, current_target))
+		QDEL_NULL(current_beam)//this will give the target lost message
+		return
+
+	if(current_target)
+		on_beam_tick(current_target)
+
+/datum/action/cooldown/spell/touch/star_touch/proc/los_check(atom/movable/user, mob/target)
+	var/turf/user_turf = user.loc
+	if(!istype(user_turf))
+		return FALSE
+	var/obj/dummy = new(user_turf)
+	dummy.pass_flags |= PASSTABLE|PASSGLASS|PASSGRILLE //Grille/Glass so it can be used through common windows
+	var/turf/previous_step = user_turf
+	var/first_step = TRUE
+	for(var/turf/next_step as anything in (get_line(user_turf, target) - user_turf))
+		if(first_step)
+			for(var/obj/blocker in user_turf)
+				if(!blocker.density || !(blocker.flags_1 & ON_BORDER_1))
+					continue
+				if(blocker.CanPass(dummy, get_dir(user_turf, next_step)))
+					continue
+				return FALSE // Could not leave the first turf.
+			first_step = FALSE
+		if(next_step.density)
+			qdel(dummy)
+			return FALSE
+		for(var/atom/movable/movable as anything in next_step)
+			if(!movable.CanPass(dummy, get_dir(next_step, previous_step)))
+				qdel(dummy)
+				return FALSE
+		for(var/obj/effect/ebeam/cosmic/B in next_step)// Don't cross the str-beams!
+			if(QDELETED(current_beam))
+				break //We shouldn't be processing anymore.
+			if(QDELETED(B))
+				continue
+			if(!B.owner)
+				stack_trace("beam without an owner! [B]")
+				continue
+			if(B.owner.origin != current_beam.origin)
+				explosion(B.loc, heavy_impact_range = 3, light_impact_range = 5, flash_range = 8, explosion_cause = src)
+				qdel(dummy)
+				return FALSE
+		previous_step = next_step
+	qdel(dummy)
+	return TRUE
+
+/datum/action/cooldown/spell/touch/star_touch/proc/on_beam_hit(mob/living/target)
+	if(!istype(target, /mob/living/basic/star_gazer))
+		target.AddElement(/datum/element/cosmic_carpet_trail)
+	return
+
+/datum/action/cooldown/spell/touch/star_touch/proc/on_beam_tick(mob/living/target)
+	target.adjustFireLoss(2)
+	target.adjustCloneLoss(1)
+	return
+
+/datum/action/cooldown/spell/touch/star_touch/proc/on_beam_release(mob/living/target)
+	if(!istype(target, /mob/living/basic/star_gazer))
+		target.RemoveElement(/datum/element/cosmic_carpet_trail)
+	return
 
 /obj/item/melee/touch_attack/star_touch
 	name = "Star Touch"
@@ -47,3 +181,6 @@
 /obj/item/melee/touch_attack/star_touch/ignition_effect(atom/to_light, mob/user)
 	. = span_notice("[user] effortlessly snaps [user.p_their()] fingers near [to_light], igniting it with cosmic energies. Fucking badass!")
 	remove_hand_with_no_refund(user)
+
+/obj/effect/ebeam/cosmic
+	name = "cosmic beam"
