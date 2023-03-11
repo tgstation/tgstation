@@ -1,12 +1,12 @@
 /datum/action/cooldown/spell/pointed/projectile/star_blast
 	name = "Star Blast"
-	desc = "This spell fires a disk with cosmig energies at a target."
+	desc = "This spell fires a disk with cosmic energies at a target."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "star_blast"
 
-	sound = 'sound/magic/cosmig_energy.ogg'
+	sound = 'sound/magic/cosmic_energy.ogg'
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 25 SECONDS
 
@@ -15,7 +15,7 @@
 	spell_requirements = NONE
 
 	active_msg = "You prepare to cast your star blast!"
-	deactive_msg = "You stop swirling cosmig energies from the palm of your hand... for now."
+	deactive_msg = "You stop swirling cosmic energies from the palm of your hand... for now."
 	cast_range = 12
 	projectile_type = /obj/projectile/magic/star_ball
 
@@ -29,9 +29,9 @@
 	knockdown = 4 SECONDS
 	pixel_speed_multiplier = 0.2
 	/// Creates a field to stop people with a star mark.
-	var/obj/effect/cosmig_field/cosmig_field
+	var/obj/effect/cosmic_field/cosmic_field
 	/// Effect for when the ball hits something
-	var/obj/effect/explosion_effect = /obj/effect/temp_visual/cosmig_explosion
+	var/obj/effect/explosion_effect = /obj/effect/temp_visual/cosmic_explosion
 
 /obj/projectile/magic/star_ball/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()
@@ -40,7 +40,7 @@
 		living_target.apply_status_effect(/datum/status_effect/star_mark)
 
 /obj/projectile/magic/star_ball/Destroy()
-	playsound(get_turf(src), 'sound/magic/cosmig_energy.ogg', 50, FALSE)
+	playsound(get_turf(src), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
 	new explosion_effect(get_turf(src))
-	cosmig_field = new(get_turf(src))
+	cosmic_field = new(get_turf(src))
 	return ..()

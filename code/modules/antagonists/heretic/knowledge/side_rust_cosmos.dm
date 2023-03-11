@@ -8,7 +8,7 @@
 		Created by the Priest - the Liquid that both was and is not."
 	next_knowledge = list(
 		/datum/heretic_knowledge/rust_regen,
-		/datum/heretic_knowledge/spell/cosmig_runes,
+		/datum/heretic_knowledge/spell/cosmic_runes,
 		)
 	required_atoms = list(
 		/obj/structure/reagent_dispensers/watertank = 1,
@@ -59,7 +59,7 @@
 	gain_text = "I combined my knowledge of creation with my desire for corruption. The Marshal knew my name, and the Rusted Hills echoed out."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/entropic_plume,
-		/datum/heretic_knowledge/spell/cosmig_expansion,
+		/datum/heretic_knowledge/spell/cosmic_expansion,
 	)
 	required_atoms = list(
 		/obj/effect/decal/cleanable/vomit = 1,

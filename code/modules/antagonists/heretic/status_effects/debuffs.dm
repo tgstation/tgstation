@@ -145,23 +145,23 @@
 	duration = 30 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	///underlay used to indicate that someone is marked
-	var/mutable_appearance/cosmig_underlay
+	var/mutable_appearance/cosmic_underlay
 	/// icon file for the underlay
 	var/effect_icon = 'icons/effects/eldritch.dmi'
 	/// icon state for the underlay
-	var/effect_icon_state = "cosmig_ring"
+	var/effect_icon_state = "cosmic_ring"
 
 /atom/movable/screen/alert/status_effect/star_mark
 	name = "Star Mark"
-	desc = "A ring above your head marks makes it so that you cannot enter cosmig fields or teleport through cosmig runes..."
+	desc = "A ring above your head marks makes it so that you cannot enter cosmic fields or teleport through cosmic runes..."
 	icon_state = "star_mark"
 
 /datum/status_effect/star_mark/on_creation(mob/living/new_owner, ...)
-	cosmig_underlay = mutable_appearance(effect_icon, effect_icon_state, BELOW_MOB_LAYER)
+	cosmic_underlay = mutable_appearance(effect_icon, effect_icon_state, BELOW_MOB_LAYER)
 	return ..()
 
 /datum/status_effect/star_mark/Destroy()
-	QDEL_NULL(cosmig_underlay)
+	QDEL_NULL(cosmic_underlay)
 	return ..()
 
 /datum/status_effect/star_mark/on_apply()
@@ -173,7 +173,7 @@
 /datum/status_effect/star_mark/proc/update_owner_underlay(atom/source, list/overlays)
 	SIGNAL_HANDLER
 
-	overlays += cosmig_underlay
+	overlays += cosmic_underlay
 
 /datum/status_effect/star_mark/on_remove()
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)

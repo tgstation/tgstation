@@ -16,7 +16,7 @@
 
 	hand_path = /obj/item/melee/touch_attack/star_touch
 	/// Creates a field to stop people with a star mark.
-	var/obj/effect/cosmig_field/cosmig_field
+	var/obj/effect/cosmic_field/cosmic_field
 
 /datum/action/cooldown/spell/touch/star_touch/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
@@ -34,7 +34,7 @@
 		victim.remove_status_effect(/datum/status_effect/star_mark)
 	else
 		victim.apply_status_effect(/datum/status_effect/star_mark)
-	cosmig_field = new(get_turf(caster))
+	cosmic_field = new(get_turf(caster))
 	return TRUE
 
 /obj/item/melee/touch_attack/star_touch
@@ -45,5 +45,5 @@
 	inhand_icon_state = "star"
 
 /obj/item/melee/touch_attack/star_touch/ignition_effect(atom/to_light, mob/user)
-	. = span_notice("[user] effortlessly snaps [user.p_their()] fingers near [to_light], igniting it with cosmig energies. Fucking badass!")
+	. = span_notice("[user] effortlessly snaps [user.p_their()] fingers near [to_light], igniting it with cosmic energies. Fucking badass!")
 	remove_hand_with_no_refund(user)

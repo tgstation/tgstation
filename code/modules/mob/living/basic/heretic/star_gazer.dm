@@ -27,7 +27,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	speak_emote = list("growls")
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	death_sound = 'sound/magic/cosmig_expansion.ogg'
+	death_sound = 'sound/magic/cosmic_expansion.ogg'
 
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
@@ -47,11 +47,11 @@
 
 /mob/living/basic/star_gazer/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, list(/obj/effect/temp_visual/cosmig_domain))
+	AddElement(/datum/element/death_drops, list(/obj/effect/temp_visual/cosmic_domain))
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/wall_smasher, ENVIRONMENT_SMASH_RWALLS)
 	AddElement(/datum/element/simple_flying)
-	AddElement(/datum/element/cosmig_carpet_trail)
+	AddElement(/datum/element/cosmic_carpet_trail)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_LAVA_IMMUNE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, INNATE_TRAIT)

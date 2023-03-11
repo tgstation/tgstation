@@ -221,26 +221,26 @@
 	source.throw_at(further_behind_old_loc, 3, 1, gentle = TRUE) // Keeping this gentle so they don't smack into the heretic max speed
 
 // MARK OF COSMOS
-/datum/status_effect/eldritch/cosmig
+/datum/status_effect/eldritch/cosmic
 	effect_icon_state = "emark6"
 	/// For storing the location when the mark got applied.
-	var/obj/effect/cosmig_diamond/cosmig_diamond
+	var/obj/effect/cosmic_diamond/cosmic_diamond
 	/// Effect when triggering mark.
-	var/obj/effect/teleport_effect = /obj/effect/temp_visual/cosmig_cloud
+	var/obj/effect/teleport_effect = /obj/effect/temp_visual/cosmic_cloud
 
-/datum/status_effect/eldritch/cosmig/on_creation(mob/living/new_owner)
+/datum/status_effect/eldritch/cosmic/on_creation(mob/living/new_owner)
 	. = ..()
-	cosmig_diamond = new(get_turf(owner))
+	cosmic_diamond = new(get_turf(owner))
 
-/datum/status_effect/eldritch/cosmig/Destroy()
-	qdel(cosmig_diamond)
+/datum/status_effect/eldritch/cosmic/Destroy()
+	qdel(cosmic_diamond)
 	return ..()
 
-/datum/status_effect/eldritch/cosmig/on_effect()
+/datum/status_effect/eldritch/cosmic/on_effect()
 	new teleport_effect(get_turf(owner))
 	do_teleport(
 		owner,
-		get_turf(cosmig_diamond),
+		get_turf(cosmic_diamond),
 		no_effects = TRUE,
 		channel = TELEPORT_CHANNEL_MAGIC,
 	)
