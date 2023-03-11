@@ -31,7 +31,7 @@
 /area/ruin/space)
 "am" = (
 /obj/structure/sign/poster/contraband/random/directional/east,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "ap" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -238,7 +238,7 @@
 "gR" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mapping_helpers/broken_floor,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "hl" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -279,7 +279,7 @@
 "ij" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/sign/poster/contraband/syndicate_recruitment,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "ja" = (
 /obj/structure/sign/poster/contraband/random/directional/east,
@@ -346,7 +346,7 @@
 /area/ruin/space)
 "mG" = (
 /obj/item/wallframe/apc,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "nl" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst/left{
@@ -454,7 +454,7 @@
 "td" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/poster/official/moth_meth,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "tm" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -472,7 +472,7 @@
 /area/ruin/space)
 "uq" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "vl" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -527,7 +527,7 @@
 /area/ruin/space)
 "xm" = (
 /obj/structure/sign/poster/contraband/syndicate_recruitment,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "xI" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -538,7 +538,7 @@
 /area/ruin/space)
 "xT" = (
 /obj/structure/sign/poster/contraband/soviet_propaganda,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "ya" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -577,7 +577,7 @@
 /area/ruin/space)
 "zx" = (
 /obj/effect/mapping_helpers/broken_floor,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "Ax" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -626,7 +626,7 @@
 "Cp" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/poster/contraband/interdyne_gene_clinics,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "Cv" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -714,7 +714,7 @@
 /turf/closed/mineral/asteroid,
 /area/ruin/space)
 "ED" = (
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "Fk" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -768,7 +768,7 @@
 /area/ruin/space)
 "HG" = (
 /obj/structure/sign/poster/contraband/gorlex_recruitment,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "HI" = (
 /obj/structure/closet/syndicate,
@@ -911,16 +911,16 @@
 "QN" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/poster/contraband/soviet_propaganda,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "Rt" = (
 /obj/item/wallframe/firealarm,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "RC" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "SB" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -1062,7 +1062,7 @@
 /area/ruin/space)
 "VX" = (
 /obj/structure/sign/poster/contraband/bountyhunters,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "Xn" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -1621,7 +1621,7 @@ ZC
 Kp
 vA
 ED
-ED
+Er
 Er
 Er
 Er
