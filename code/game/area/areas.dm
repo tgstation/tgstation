@@ -32,7 +32,7 @@
 	var/list/firedoors
 	///A list of firelocks currently active. Used by fire alarms when setting their icons.
 	var/list/active_firelocks
-	///A list of all air alarms in this area. Used to reconfigure all airalarms quickly during area editing rather than looping through all items in the area and type checking them for air alarms.
+	///A list of all fire alarms in this area. Used by firelocks and burglar alarms to change icon state.
 	var/list/firealarms = list()
 	///Alarm type to count of sources. Not usable for ^ because we handle fires differently
 	var/list/active_alarms = list()
