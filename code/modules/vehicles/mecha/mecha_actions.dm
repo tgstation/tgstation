@@ -3,8 +3,8 @@
 /obj/vehicle/sealed/mecha/generate_action_type()
 	. = ..()
 	if(istype(., /datum/action/vehicle/sealed/mecha))
-		var/datum/action/vehicle/sealed/mecha/mecha = .
-		mecha.chassis = src
+		var/datum/action/vehicle/sealed/mecha/mecha_action = .
+		mecha_action.set_chassis(src)
 
 /datum/action/vehicle/sealed/mecha
 	button_icon = 'icons/mob/actions/actions_mecha.dmi'
@@ -13,6 +13,9 @@
 /datum/action/vehicle/sealed/mecha/Destroy()
 	chassis = null
 	return ..()
+
+/datum/action/vehicle/sealed/mecha/proc/set_chassis(passed_chassis)
+	chassis = passed_chassis
 
 /datum/action/vehicle/sealed/mecha/mech_eject
 	name = "Eject From Mech"
@@ -81,9 +84,7 @@
 	name = "Toggle Equipment Safeties"
 	button_icon_state = "mech_safeties_off"
 
-//to have the action register the signal for icon updates, it has to have chassis set. that var doesn't get set in New(), it's set in
-//vehicle/sealed/mecha/generate_action_type(). Grant() gets called after that
-/datum/action/vehicle/sealed/mecha/mech_toggle_safeties/Grant(mob/grant_to)
+/datum/action/vehicle/sealed/mecha/mech_toggle_safeties/set_chassis(passed_chassis)
 	. = ..()
 	RegisterSignal(chassis, COMSIG_MECH_SAFETIES_TOGGLE, PROC_REF(update_action_icon))
 
