@@ -144,16 +144,32 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	 * we use this to keep track of what areas are affected by the blueprints & what machinery of these areas needs to be reconfigured accordingly
 	 */
 	var/area/collected_areas = list()
+	//all stuff on the turf that need to be informed of the area change
+	var/list/atom/atoms = list()
 	for(var/i in 1 to turf_count)
 		var/turf/thing = turfs[i]
 		var/area/old_area = thing.loc
 		if(!collected_areas[old_area.name])
 			collected_areas[old_area.name] = list("area" = old_area, "machinery" = disconnect_area_machinery(old_area))
 
+		//find all stuff on this turf and signal to them their area is about to change
+		atoms.Cut()
+		for(var/atom/atom as anything in thing)
+			atoms += atom
+
+		//unregister the stuff from its old area
+		for(var/atom/stuff as anything in atoms)
+			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
+
+		//move the turf to its new area and unregister it from the old one
 		old_area.turfs_to_uncontain += thing
 		newA.contents += thing
 		newA.contained_turfs += thing
 		thing.transfer_area_lighting(old_area, newA)
+
+		//register the stuff to its new area
+		for(var/atom/stuff as anything in atoms)
+			SEND_SIGNAL(stuff, COMSIG_ENTER_AREA, newA)
 
 	newA.reg_in_areas_in_z()
 
@@ -221,7 +237,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	//disconnect vents. have to clone the list because disconnecting removes it from the list
 	var/list/obj/machinery/atmospherics/components/unary/vent_pump/pumps = area.air_vents.Copy()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/pump as anything in pumps)
-		if(!istype(pump, /obj/machinery/atmospherics/components/unary/vent_pump))
+		if(!istype(pump))
 			continue
 		pump.disconnect_from_area()
 	area_machinery["pumps"] = pumps
@@ -229,7 +245,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	//disconnect scrubbers. have to clone the list because disconnecting removes it from the list
 	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubbers = area.air_scrubbers.Copy()
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in scrubbers)
-		if(!istype(scrubber, /obj/machinery/atmospherics/components/unary/vent_scrubber))
+		if(!istype(scrubber))
 			continue
 		scrubber.disconnect_from_area()
 	area_machinery["scrubbers"] = scrubbers
@@ -237,7 +253,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	//disconnect air alarms. have to clone the list because disconnecting removes it from the list
 	var/obj/machinery/airalarm/air_alarms = area.airalarms.Copy()
 	for(var/obj/machinery/airalarm/air_alarm as anything in air_alarms)
-		if(!istype(air_alarm, /obj/machinery/airalarm))
+		if(!istype(air_alarm))
 			continue
 		air_alarm.disconnect_from_area()
 	area_machinery["air_alarms"] = air_alarms
@@ -245,7 +261,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	//disconnect fire alarms. have to clone the list because disconnecting removes it from the list
 	var/obj/machinery/firealarm/fire_alarms = area.firealarms.Copy()
 	for(var/obj/machinery/firealarm/fire_alarm as anything in fire_alarms)
-		if(!istype(fire_alarm, /obj/machinery/firealarm))
+		if(!istype(fire_alarm))
 			continue
 		fire_alarm.disconnect_from_area()
 	area_machinery["fire_alarms"] = fire_alarms
