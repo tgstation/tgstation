@@ -571,6 +571,6 @@
 	name = "\improper Clown Planet"
 	ambientsounds = list('sound/ambience/clown.ogg')
 
-// The abandonded capsule 'The Travellers Rest'
+// The abandoned capsule 'The Traveller's Rest'
 /area/ruin/space/has_grav/travellers_rest
 	name = "\improper Traveller's Rest"
