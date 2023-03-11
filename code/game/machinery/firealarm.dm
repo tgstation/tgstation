@@ -49,9 +49,7 @@
 		set_panel_open(TRUE)
 	if(name == initial(name))
 		name = "[get_area_name(src)] [initial(name)]"
-	update_appearance()
-	my_area = get_area(src)
-	LAZYADD(my_area.firealarms, src)
+	assign_to_area()
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_security_level))
@@ -67,16 +65,23 @@
 		rmb_text = "Turn off", \
 	)
 
+	update_appearance()
+
 /obj/machinery/firealarm/Destroy()
-	if(my_area)
-		LAZYREMOVE(my_area.firealarms, src)
-		my_area = null
+	disconnect_from_area()
 	QDEL_NULL(soundloop)
 	return ..()
+
+///used only during area editing
+/obj/machinery/firealarm/proc/disconnect_from_area()
+	if(my_area)
+		my_area.firealarms -= src
+		my_area = null
 
 ///called during area editing via blueprints
 /obj/machinery/firealarm/proc/assign_to_area()
 	my_area = get_area(src)
+	my_area.firealarms += src
 	update_appearance(UPDATE_NAME)
 
 /obj/machinery/firealarm/update_name(updates)

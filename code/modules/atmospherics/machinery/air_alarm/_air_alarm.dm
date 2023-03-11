@@ -73,10 +73,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		else
 			tlv_collection[gas_path] = new /datum/tlv/no_checks
 
-	my_area = get_area(src)
+	assign_to_area()
 	alarm_manager = new(src)
 	select_mode(src, /datum/air_alarm_mode/filtering)
-	update_appearance()
 
 	AddElement(/datum/element/connect_loc, atmos_connections)
 	AddComponent(/datum/component/usb_port, list(
@@ -87,18 +86,25 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	))
 
 	GLOB.air_alarms += src
+	update_appearance()
 
 /obj/machinery/airalarm/Destroy()
-	if(my_area)
-		my_area = null
+	disconnect_from_area()
 	QDEL_NULL(wires)
 	QDEL_NULL(alarm_manager)
 	GLOB.air_alarms -= src
 	return ..()
 
+//used only during area editing
+/obj/machinery/airalarm/proc/disconnect_from_area()
+	if(my_area)
+		my_area.airalarms -= src
+		my_area = null
+
 ///called during area editing via blueprints
 /obj/machinery/airalarm/proc/assign_to_area()
 	my_area = get_area(src)
+	my_area.airalarms += src
 	update_appearance(UPDATE_NAME)
 
 /obj/machinery/airalarm/update_name(updates)
