@@ -3,6 +3,7 @@ import { Stack, Section, NoticeBox, Box, LabeledList, Button, RestrictedInput } 
 import { CharacterPreview } from '../common/CharacterPreview';
 import { getMedicalRecord, getQuirkStrings } from './helpers';
 import { useBackend } from '../../backend';
+import { PHYSICALSTATUS2COLOR, PHYSICALSTATUS2DESC, MENTALSTATUS2COLOR, MENTALSTATUS2DESC } from './constants';
 import { MedicalRecordData } from './types';
 import { EditableText } from '../common/EditableText';
 
@@ -12,7 +13,7 @@ export const MedicalRecordView = (props, context) => {
   if (!foundRecord) return <NoticeBox>No record selected.</NoticeBox>;
 
   const { act, data } = useBackend<MedicalRecordData>(context);
-  const { assigned_view, station_z } = data;
+  const { assigned_view, physical_statuses, mental_statuses, station_z } = data;
 
   const { min_age, max_age } = data;
 
@@ -113,6 +114,58 @@ export const MedicalRecordView = (props, context) => {
                 text={blood_type}
               />
             </LabeledList.Item>
+            <LabeledList.Item
+              buttons={physical_statuses.map((button, index) => {
+                const isSelected = button === physical_status;
+                return (
+                  <Button
+                    color={isSelected ? PHYSICALSTATUS2COLOR[button] : 'grey'}
+                    icon={isSelected ? 'check' : ''}
+                    key={index}
+                    onClick={() =>
+                      act('set_physical_status', {
+                        crew_ref: crew_ref,
+                        physical_status: button,
+                      })
+                    }
+                    pl={!isSelected ? '1.8rem' : 1}
+                    tooltip={PHYSICALSTATUS2DESC[button] || ''}
+                    tooltipPosition="bottom-start">
+                    {button[0]}
+                  </Button>
+                );
+              })}
+              label="Physical Status">
+              <Box color={PHYSICALSTATUS2COLOR[physical_status]}>
+                {physical_status}
+              </Box>
+            </LabeledList.Item>
+            <LabeledList.Item
+              buttons={mental_statuses.map((button, index) => {
+                const isSelected = button === mental_status;
+                return (
+                  <Button
+                    color={isSelected ? MENTALSTATUS2COLOR[button] : 'grey'}
+                    icon={isSelected ? 'check' : ''}
+                    key={index}
+                    onClick={() =>
+                      act('set_mental_status', {
+                        crew_ref: crew_ref,
+                        mental_status: button,
+                      })
+                    }
+                    pl={!isSelected ? '1.8rem' : 1}
+                    tooltip={MENTALSTATUS2DESC[button] || ''}
+                    tooltipPosition="bottom-start">
+                    {button[0]}
+                  </Button>
+                );
+              })}
+              label="Mental Status">
+              <Box color={MENTALSTATUS2COLOR[mental_status]}>
+                {mental_status}
+              </Box>
+            </LabeledList.Item>
             <LabeledList.Item label="Minor Disabilities">
               {minor_disabilities_array.map((disability, index) => (
                 <Box key={index}>&#8226; {disability}</Box>
@@ -122,20 +175,6 @@ export const MedicalRecordView = (props, context) => {
               {major_disabilities_array.map((disability, index) => (
                 <Box key={index}>&#8226; {disability}</Box>
               ))}
-            </LabeledList.Item>
-            <LabeledList.Item label="Physical Status">
-              <EditableText
-                field="physical_status"
-                target_ref={crew_ref}
-                text={physical_status}
-              />
-            </LabeledList.Item>
-            <LabeledList.Item label="Mental Status">
-              <EditableText
-                field="mental_status"
-                target_ref={crew_ref}
-                text={mental_status}
-              />
             </LabeledList.Item>
             <LabeledList.Item label="Quirks">
               {quirk_notes_array.map((quirk, index) => (

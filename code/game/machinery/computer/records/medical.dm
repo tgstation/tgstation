@@ -39,6 +39,9 @@
 /obj/machinery/computer/records/medical/ui_data(mob/user)
 	var/list/data = ..()
 
+	data["physical_statuses"] = PHYSICAL_STATUSES
+	data["mental_statuses"] = MENTAL_STATUSES
+
 	var/list/records = list()
 	for(var/datum/record/crew/target in GLOB.manifest.general)
 		var/list/notes = list()
@@ -109,6 +112,24 @@
 
 			target.medical_notes -= old_note
 			qdel(old_note)
+
+			return TRUE
+
+		if("set_physical_status")
+			var/physical_status = params["physical_status"]
+			if(!physical_status || !(physical_status in PHYSICAL_STATUSES))
+				return FALSE
+
+			target.physical_status = physical_status
+
+			return TRUE
+
+		if("set_mental_status")
+			var/mental_status = params["mental_status"]
+			if(!mental_status || !(mental_status in MENTAL_STATUSES))
+				return FALSE
+
+			target.mental_status = mental_status
 
 			return TRUE
 

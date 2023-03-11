@@ -99,8 +99,8 @@
 	major_disabilities_desc = "No disabilities have been diagnosed at the moment.",
 	minor_disabilities = "None",
 	minor_disabilities_desc = "No disabilities have been diagnosed at the moment.",
-	physical_status = "Active",
-	mental_status = "Stable",
+	physical_status = PHYSICAL_ACTIVE,
+	mental_status = MENTAL_STABLE,
 	quirk_notes,
 )
 	. = ..()

@@ -4,6 +4,8 @@ export type MedicalRecordData = {
   assigned_view: string;
   authenticated: BooleanLike;
   station_z: BooleanLike;
+  physical_statuses: string[];
+  mental_statuses: string[];
   records: MedicalRecord[];
   min_age: number;
   max_age: number;
