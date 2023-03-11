@@ -46,6 +46,5 @@
 	A.infectable_biotypes |= MOB_MINERAL | MOB_ROBOTIC // Plasmamen, Golems, and Androids.
 
 /datum/symptom/inorganic_adaptation/OnRemove(datum/disease/advance/A)
-	A.infectable_biotypes &= ~MOB_MINERAL
-	A.infectable_biotypes &= ~MOB_ROBOTIC
+	A.infectable_biotypes &= ~(MOB_MINERAL | MOB_ROBOTIC)
 
