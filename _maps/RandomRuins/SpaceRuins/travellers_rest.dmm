@@ -281,9 +281,8 @@
 /turf/open/floor/iron/textured_large,
 /area/ruin/space/has_grav/travellers_rest)
 "S" = (
-/obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/travellers_rest)
 "T" = (
 /obj/structure/cable,
