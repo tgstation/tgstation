@@ -44,7 +44,9 @@
 
 /datum/symptom/inorganic_adaptation/OnAdd(datum/disease/advance/A)
 	A.infectable_biotypes |= MOB_MINERAL //Mineral covers plasmamen and golems.
+	A.infectable_biotypes |= MOB_ROBOTIC //Robotic covers androids.
 
 /datum/symptom/inorganic_adaptation/OnRemove(datum/disease/advance/A)
 	A.infectable_biotypes &= ~MOB_MINERAL
+	A.infectable_biotypes &= ~MOB_ROBOTIC
 
