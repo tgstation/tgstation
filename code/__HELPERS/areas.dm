@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 			area_apc.assign_to_area()
 
 		//recompute firedoor machinery
-		for(var/obj/machinery/door/firedoor/FD in merged_area.firedoors)
+		for(var/obj/machinery/door/firedoor/FD as anything in merged_area.firedoors)
 			FD.CalculateAffectingAreas()
 
 		//reassign pumps
