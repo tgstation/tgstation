@@ -79,7 +79,7 @@
 			else
 				notify_ghosts("The pirate ship has an object of interest: [spawner]!", source = spawner, action = NOTIFY_ORBIT, header="Pirate Spawn Here!")
 
-	priority_announce("Unidentified armed ship detected near the station.")
+	priority_announce(chosen_gang.arrival_announcement, sender_override = chosen_gang.ship_name)
 
 /datum/event_admin_setup/listed_options/pirates
 	input_text = "Select Pirate Gang"
