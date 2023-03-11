@@ -62,6 +62,8 @@
 			. += "A smell of bananas, a slippery sheen and [span_clown("honking")] when depressed, implies that this is the liver of a <em>clown</em>."
 		if(HAS_TRAIT(src, TRAIT_MEDICAL_METABOLISM))
 			. += "Marks of stress and a faint whiff of medicinal alcohol, imply that this is the liver of a <em>medical worker</em>."
+		if(HAS_TRAIT(src, TRAIT_GREYTIDE_METABOLISM))
+			. += "Greyer than most with electrical burn marks, this is the liver of an <em>assistant</em>."
 		if(HAS_TRAIT(src, TRAIT_ENGINEER_METABOLISM))
 			. += "Signs of radiation exposure and space adaption, implies that this is the liver of an <em>engineer</em>."
 
@@ -108,7 +110,7 @@
 	if(filterToxins && !HAS_TRAIT(liver_owner, TRAIT_TOXINLOVER))
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
 			if(status != toxin.affected_organtype) //this particular toxin does not affect this type of organ
-				continue 
+				continue
 			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // this is an optimization
 			if(belly)
 				amount += belly.reagents.get_reagent_amount(toxin.type)
