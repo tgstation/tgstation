@@ -123,7 +123,7 @@
 	to_chat(affected_carbon, span_warning("You feel yourself adapt to the darkness."))
 	var/mob/living/carbon/human/affected_human = affected_carbon
 
-	var/obj/item/organ/liver/empowered_liver = affected_carbon.getorgan(/obj/item/organ/liver)
+	var/obj/item/organ/internal/liver/empowered_liver = affected_human.getorgan(/obj/item/organ/internal/liver)
 	if(empowered_liver)
 		ADD_TRAIT(empowered_liver, TRAIT_GREYTIDE_METABOLISM, "maint_drug_addiction")
 
