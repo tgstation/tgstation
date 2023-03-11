@@ -31,6 +31,7 @@
 	var/throw_amount = 1 //How many items to throw per fire
 	var/fire_mode = PCANNON_FIFO
 	var/automatic = FALSE
+	var/needs_air = TRUE
 	var/clumsyCheck = TRUE
 	var/list/allowed_typecache //Leave as null to allow all.
 	var/charge_amount = 1
@@ -78,7 +79,8 @@
 		CHECK_TICK
 	if(tank)
 		out += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it. It could be removed with a <b>screwdriver</b>.")
-	. += span_notice("Use a wrench to change the pressure level. Current output at [pressureSetting].")
+	if(needs_air == TRUE)
+		. += span_notice("Use a wrench to change the pressure level. Current output at [pressureSetting].")
 	. += out.Join("\n")
 
 /obj/item/pneumatic_cannon/screwdriver_act(mob/living/user, obj/item/tool)
@@ -88,6 +90,8 @@
 	return TRUE
 
 /obj/item/pneumatic_cannon/wrench_act(mob/living/user, obj/item/tool)
+	if(needs_air == FALSE)
+		return
 	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
 	pressureSetting = pressureSetting >= HIGH_PRESSURE ? LOW_PRESSURE : pressureSetting + 1
 	balloon_alert(user, "output level set to [pressureSetting]")
@@ -97,6 +101,8 @@
 	if(user.combat_mode)
 		return ..()
 	if(istype(W, /obj/item/tank/internals))
+		if(needs_air == FALSE)
+			return
 		if(!tank)
 			var/obj/item/tank/internals/IT = W
 			if(IT.volume <= 3)
@@ -299,6 +305,7 @@
 	fire_mode = PCANNON_FIFO
 	throw_amount = 1
 	maxWeightClass = 150 //50 pies. :^)
+	needs_air = FALSE
 	clumsyCheck = FALSE
 	var/static/list/pie_typecache = typecacheof(/obj/item/food/pie)
 
