@@ -55,11 +55,21 @@
 /datum/uplink_item/bundles_tc/bundle_a
 	name = "Syndi-kit Tactical"
 	desc = "Syndicate Bundles, also known as Syndi-Kits, are specialized groups of items that arrive in a plain box. \
-			These items are collectively worth more than 25 telecrystals, but you do not know which specialization \
+			These items are collectively worth more than 20 telecrystals, but you do not know which specialization \
 			you will receive. May contain discontinued and/or exotic items. \
 			The Syndicate will only provide one Syndi-Kit per agent."
 	item = /obj/item/storage/box/syndicate/bundle_a
-	cost = 25
+	cost = 20
+	stock_key = UPLINK_SHARED_STOCK_KITS
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/bundles_tc/romerol
+	name = "Romerol"
+	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. \
+			On death, these nodules take control of the dead body, causing limited revivification, \
+			along with slurred speech, aggression, and the ability to infect others with this agent."
+	item = /obj/item/storage/box/syndie_kit/romerol
+	cost = 30
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
@@ -67,11 +77,28 @@
 	name = "Syndi-kit Special"
 	desc = "Syndicate Bundles, also known as Syndi-Kits, are specialized groups of items that arrive in a plain box. \
 			In Syndi-kit Special, you will receive items used by famous syndicate agents of the past. \
-			Collectively worth more than 25 telecrystals, the syndicate loves a good throwback. \
+			Collectively worth more than 20 telecrystals, the syndicate loves a good throwback. \
 			The Syndicate will only provide one Syndi-Kit per agent."
 	item = /obj/item/storage/box/syndicate/bundle_b
-	cost = 25
+	cost = 20
 	stock_key = UPLINK_SHARED_STOCK_KITS
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/bundles_tc/contract_kit
+	name = "Contract Kit"
+	desc = "The Syndicate have offered you the chance to become a contractor, take on kidnapping contracts for TC and cash payouts. Upon purchase, \
+			you'll be granted your own contract uplink embedded within the supplied tablet computer. Additionally, you'll be granted \
+			standard contractor gear to help with your mission - comes supplied with the tablet, specialised space suit, chameleon jumpsuit and mask, \
+			agent card, specialised contractor baton, and three randomly selected low cost items. Can include otherwise unobtainable items."
+	item = /obj/item/storage/box/syndicate/contract_kit
+	cost = 20
+  
+/datum/uplink_item/bundles_tc/miami
+	name = "Old-World Rampage Kit"
+	desc = "Blood, heat and dust. The wind howls, the russians are no more, but the ones that inherited wealth from them still stand tall. Prove yourself Operative, and make sure you don't go completely mad."
+	item = /obj/item/storage/backpack/satchel/miami/prefilled
+	cost = 17
+  
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/bundles_tc/surplus

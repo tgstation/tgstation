@@ -355,6 +355,7 @@
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
 	)
 	crate_name = "wt-550 auto rifle crate"
+	contraband = TRUE
 
 /datum/supply_pack/security/armory/wt550ammo
 	name = "WT-550 Standard Ammo Crate"
@@ -364,4 +365,14 @@
 		/obj/item/ammo_box/magazine/wt550m9 = 4,
 	)
 	crate_name = "wt-550 standard ammo crate"
+	contraband = TRUE
 
+/datum/supply_pack/security/armory/wt550rubberammo
+	name = "WT-550 Rubber Ammo Crate"
+	desc = "Contains four 20-round magazine with rubber ammo for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
+	cost = CARGO_CRATE_VALUE * 3.5
+	contains = list(
+		/obj/item/ammo_box/magazine/wt550m9/rubber = 4,
+	)
+	crate_name = "wt-550 rubber ammo crate"
+	contraband = TRUE

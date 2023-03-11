@@ -235,6 +235,13 @@
 	tank_volume = 500
 	openable = TRUE
 
+/obj/structure/reagent_dispensers/kvasstank
+	name = "kvass tank"
+	desc = "Yellow barrel full of divine liquid."
+	icon_state = "kvass"
+	reagent_id = /datum/reagent/consumable/kvass
+	openable = TRUE
+
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
 	desc = "A tank full of industrial welding fuel. Do not consume."
@@ -265,10 +272,12 @@
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/projectile/P)
 	. = ..()
-	if(!QDELETED(src)) //wasn't deleted by the projectile's effects.
-		if(!P.nodamage && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
-			log_bomber(P.firer, "detonated a", src, "via projectile")
-			boom()
+	if(QDELETED(src)) //wasn't deleted by the projectile's effects.
+		return
+
+	if(P.damage > 0 && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
+		log_bomber(P.firer, "detonated a", src, "via projectile")
+		boom()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_WELDER)

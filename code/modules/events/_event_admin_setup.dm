@@ -86,3 +86,75 @@
 
 /datum/event_admin_setup/warn_admin/apply_to_event(datum/round_event/event)
 	return
+
+/datum/event_admin_setup/set_location
+	///Text shown when admins are queried about setting the target location.
+	var/input_text = "Aimed at the turf we're on?"
+	///Turf that will be passed onto the event.
+	var/atom/chosen_turf
+
+/datum/event_admin_setup/set_location/prompt_admins()
+	var/set_location = tgui_alert(usr, input_text, event_control.name, list("Yes", "No", "Cancel"))
+	switch(set_location)
+		if("Yes")
+			chosen_turf = get_turf(usr)
+		if("No")
+			chosen_turf = null
+		else
+			return ADMIN_CANCEL_EVENT
+	
+/datum/event_admin_setup/input_number
+	///Text shown when admins are queried about what number to set.
+	var/input_text = ""
+	///The value the number will be set to by default
+	var/default_value
+	///The highest value setable by the admin.
+	var/max_value = 10000
+	///The lowest value setable by the admin
+	var/min_value = 0
+	///Value selected by the admin
+	var/chosen_value
+
+/datum/event_admin_setup/input_number/prompt_admins()
+	chosen_value = tgui_input_number(usr, input_text, event_control.name, default_value, max_value, min_value)
+	if(isnull(chosen_value))
+		return ADMIN_CANCEL_EVENT
+
+///For events that mandate a set number of candidates to function
+/datum/event_admin_setup/minimum_candidate_requirement
+	///Text shown when there are not enough candidates
+	var/output_text = "There are no candidates eligible to..."
+	///Minimum number of candidates for the event to function
+	var/min_candidates = 1
+
+/datum/event_admin_setup/minimum_candidate_requirement/prompt_admins()
+	var/candidate_count = count_candidates()
+	if(candidate_count < min_candidates)
+		tgui_alert(usr, output_text, "Error")
+		return ADMIN_CANCEL_EVENT
+	tgui_alert(usr, "[candidate_count] candidates found!", event_control.name)
+
+/// Checks for candidates. Should return the total number of candidates
+/datum/event_admin_setup/minimum_candidate_requirement/proc/count_candidates()
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("Unimplemented count_candidates() on [event_control]'s admin setup.")
+
+/datum/event_admin_setup/minimum_candidate_requirement/apply_to_event(datum/round_event/event)
+	return
+
+///For events that require a true/false question
+/datum/event_admin_setup/question
+	///Question shown to the admin.
+	var/input_text = "Are you sure you would like to do this?"
+	///Value passed to the event.
+	var/chosen
+
+/datum/event_admin_setup/question/prompt_admins()
+	var/response = tgui_alert(usr, input_text , event_control.name , list("Yes", "No", "Cancel"))
+	switch(response)
+		if("Yes")
+			chosen = TRUE
+		if("No")
+			chosen = FALSE
+		else
+			return ADMIN_CANCEL_EVENT

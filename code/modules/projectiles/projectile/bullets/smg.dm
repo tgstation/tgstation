@@ -30,6 +30,12 @@
 	armour_penetration = 40
 	embedding = null
 
+/obj/projectile/bullet/c46x30mm/nonlethal
+	name = "4.6x30mm rubber bullet"
+	damage = 5
+	stamina = 15
+	embedding = null
+
 /obj/projectile/bullet/incendiary/c46x30mm
 	name = "4.6x30mm incendiary bullet"
 	damage = 10

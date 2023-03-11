@@ -18,3 +18,11 @@
 	mid_sounds = list('sound/items/taperecorder/taperecorder_hiss_mid.ogg' = 1)
 	start_sound = list('sound/items/taperecorder/taperecorder_hiss_start.ogg' = 1)
 	volume = 10
+
+/datum/looping_sound/trapped_machine_beep
+	mid_sounds = list('sound/machines/beep.ogg' = 1)
+	mid_length = 10 SECONDS
+	mid_length_vary = 5 SECONDS
+	falloff_exponent = 10
+	falloff_distance = 1
+	volume = 5

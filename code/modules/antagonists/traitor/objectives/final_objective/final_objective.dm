@@ -1,7 +1,6 @@
 /datum/traitor_objective_category/final_objective
 	name = "Final Objective"
 	objectives = list(
-		/datum/traitor_objective/ultimate/romerol = 1,
 		/datum/traitor_objective/ultimate/battlecruiser = 1,
 		/datum/traitor_objective/ultimate/space_dragon = 1,
 		/datum/traitor_objective/ultimate/supermatter_cascade = 1,
@@ -12,6 +11,7 @@
 /datum/traitor_objective/ultimate
 	abstract_type = /datum/traitor_objective/ultimate
 	progression_minimum = 140 MINUTES
+	needs_reward = FALSE
 
 	var/progression_points_in_objectives = 20 MINUTES
 

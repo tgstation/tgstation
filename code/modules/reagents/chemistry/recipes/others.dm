@@ -637,7 +637,7 @@
 
 /datum/chemical_reaction/hair_dye
 	results = list(/datum/reagent/hair_dye = 5)
-	required_reagents = list(/datum/reagent/colorful_reagent = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/drug/space_drugs = 1)
+	required_reagents = list(/datum/reagent/colorful_reagent = 1, /datum/reagent/chlorine = 1, /datum/reagent/drug/space_drugs = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/barbers_aid

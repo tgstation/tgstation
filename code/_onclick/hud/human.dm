@@ -52,31 +52,6 @@
 	var/mob/living/carbon/carbon_user = usr
 	carbon_user.unset_sting()
 
-/atom/movable/screen/bloodsucker
-	icon = 'icons/mob/actions/actions_bloodsucker.dmi'
-	invisibility = INVISIBILITY_ABSTRACT
-
-/atom/movable/screen/bloodsucker/proc/clear()
-	invisibility = INVISIBILITY_ABSTRACT
-
-/atom/movable/screen/bloodsucker/proc/update_counter()
-	invisibility = 0
-
-/atom/movable/screen/bloodsucker/blood_counter
-	name = "Blood Consumed"
-	icon_state = "blood_display"
-	screen_loc = ui_blood_display
-
-/atom/movable/screen/bloodsucker/rank_counter
-	name = "Bloodsucker Rank"
-	icon_state = "rank"
-	screen_loc = ui_vamprank_display
-
-/atom/movable/screen/bloodsucker/sunlight_counter
-	name = "Solar Flare Timer"
-	icon_state = "sunlight_night"
-	screen_loc = ui_sunlight_display
-
 /datum/hud/human/New(mob/living/carbon/human/owner)
 	..()
 
@@ -337,14 +312,6 @@
 	pull_icon.hud = src
 	pull_icon.update_appearance()
 	static_inventory += pull_icon
-
-	//bloodsuckers
-	blood_display = new /atom/movable/screen/bloodsucker/blood_counter
-	infodisplay += blood_display
-	vamprank_display = new /atom/movable/screen/bloodsucker/rank_counter
-	infodisplay += vamprank_display
-	sunlight_display = new /atom/movable/screen/bloodsucker/sunlight_counter
-	infodisplay += sunlight_display
 
 	zone_select = new /atom/movable/screen/zone_sel()
 	zone_select.icon = ui_style
