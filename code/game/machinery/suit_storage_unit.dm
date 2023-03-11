@@ -104,7 +104,7 @@
 /obj/machinery/suit_storage_unit/mining/eva
 	suit_type = null
 	mask_type = /obj/item/clothing/mask/breath
-	mod_type = /obj/item/mod/control/pre_equipped/mining
+	mod_type = /obj/item/mod/control/pre_equipped/space_mining
 
 /obj/machinery/suit_storage_unit/medical
 	mask_type = /obj/item/clothing/mask/breath/medical

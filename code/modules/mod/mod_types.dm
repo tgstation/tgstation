@@ -113,6 +113,25 @@
 		/obj/item/mod/module/sphere_transform,
 	)
 
+/obj/item/mod/control/pre_equipped/space_mining
+	applied_skin = "asteroid"
+	theme = /datum/mod_theme/mining
+	applied_core = /obj/item/mod/core/plasma
+	applied_modules = list(
+		/obj/item/mod/module/storage,
+		/obj/item/mod/module/gps,
+		/obj/item/mod/module/orebag,
+		/obj/item/mod/module/clamp,
+		/obj/item/mod/module/drill,
+		/obj/item/mod/module/thermal_regulator,
+	)
+	default_pins = list(
+		/obj/item/mod/module/gps,
+		/obj/item/mod/module/drill,
+		/obj/item/mod/module/sphere_transform,
+		/obj/item/mod/module/thermal_regulator,
+	)
+
 /obj/item/mod/control/pre_equipped/medical
 	theme = /datum/mod_theme/medical
 	applied_modules = list(

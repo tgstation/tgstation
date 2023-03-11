@@ -75,7 +75,7 @@
 /area/ruin/unpowered/monkey_temple)
 "ej" = (
 /obj/machinery/suit_storage_unit/mining/eva,
-/turf/open/floor/iron/terracotta,
+/turf/open/floor/iron/dark/small,
 /area/shuttle/ruin/temple_mining_shuttle)
 "fm" = (
 /obj/structure/lattice,
@@ -295,6 +295,12 @@
 /obj/item/radio/headset/headset_cargo/mining,
 /turf/open/floor/iron/terracotta,
 /area/shuttle/ruin/temple_mining_shuttle)
+"tT" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/tank_dispenser/oxygen,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/ruin/temple_mining_shuttle)
 "vl" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "stern external airlock"
@@ -322,7 +328,7 @@
 /area/ruin/unpowered/monkey_temple)
 "wh" = (
 /obj/machinery/suit_storage_unit/open,
-/turf/open/floor/iron/terracotta,
+/turf/open/floor/iron/dark/small,
 /area/shuttle/ruin/temple_mining_shuttle)
 "wF" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -401,8 +407,10 @@
 /obj/structure/railing{
 	dir = 9
 	},
-/obj/structure/ore_box,
 /turf/template_noop,
+/area/shuttle/ruin/temple_mining_shuttle)
+"Ef" = (
+/turf/open/floor/iron/white/small,
 /area/shuttle/ruin/temple_mining_shuttle)
 "EM" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -426,6 +434,9 @@
 /obj/item/reagent_containers/pill/mutadone{
 	pixel_y = -9;
 	pixel_x = -13
+	},
+/obj/effect/turf_decal/trimline/dark/filled/warning{
+	dir = 4
 	},
 /turf/open/floor/iron/terracotta,
 /area/shuttle/ruin/temple_mining_shuttle)
@@ -455,6 +466,7 @@
 "Hl" = (
 /obj/structure/table,
 /obj/item/clipboard,
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav)
 "Ht" = (
@@ -489,6 +501,9 @@
 "Ls" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/filled/warning{
+	dir = 4
 	},
 /turf/open/floor/iron/terracotta,
 /area/shuttle/ruin/temple_mining_shuttle)
@@ -742,8 +757,8 @@ tM
 "}
 (5,1,1) = {"
 tM
-tM
 cn
+Xu
 Xu
 gM
 Xu
@@ -769,9 +784,9 @@ Xu
 cn
 "}
 (6,1,1) = {"
-tM
 SW
 Cg
+Ef
 Ng
 IJ
 Xu
@@ -797,9 +812,9 @@ Rx
 gM
 "}
 (7,1,1) = {"
-tM
 SW
 Cg
+Ef
 lS
 tB
 Xu
@@ -825,9 +840,9 @@ Pc
 gM
 "}
 (8,1,1) = {"
-tM
 SW
 jo
+Ls
 EX
 Ls
 kg
@@ -853,9 +868,9 @@ In
 gM
 "}
 (9,1,1) = {"
-tM
 SW
 Cg
+wh
 ej
 wh
 Xu
@@ -864,8 +879,8 @@ Xu
 pF
 pF
 EM
-EM
-EM
+rA
+tT
 Xu
 hJ
 hJ
@@ -882,8 +897,8 @@ gM
 "}
 (10,1,1) = {"
 tM
-tM
 cn
+Xu
 Xu
 gM
 Xu

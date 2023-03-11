@@ -2,10 +2,10 @@
 /obj/item/paper/crumpled/monkey_paw_discovery
 	name = "crumpled notes - \"discovery\""
 	default_raw_text = {"
-		Honestly, when the asteroid crew told me they found a man-made structure inside of a random asteroid,
-		I laughed. It's the kind of report that makes you wonder if mining asteroids is worth the space madness apparently included.<br>
+		Honestly, when a prospector told me they found a man-made structure inside of a random asteroid,
+		I laughed. It's the kind of report that makes you wonder if mining asteroids is worth the space madness apparently included with it.<br>
 		<br>
-		Well, I visited the site anyways. And I can tell you, no space madness, there is some kind of temple in there. Creepy shit, too.<br>
+		Well, I visited the 'roid anyways. And I can tell you, no space madness, there is some kind of temple in there. Creepy shit, too.<br>
 		Here's how things are going to go:<br>
 		• Most of the mining crew will be split to resume normal operations on... normal asteroids. No more weird shit, okay? You'll know if you're reassigned or not.<br>
 		• The rest will continue to excavate the temple until we can get in.<br>
@@ -16,16 +16,16 @@
 	"}
 
 /obj/item/paper/crumpled/muddy/to_samson
-	name = "crumpled notes - \"to Samson\""
+	name = "crumpled notes - \"to Sam\""
 	default_raw_text = {"
-		Samson,<br>
+		Sam,<br>
 		<br>
 		I'm incredibly happy to see you on the team. It's... kinda amazing to think we'll be working together.<br>
 		Boss made some low-hanging jokes about us being twins, but he was totally on board.<br>
 		<br>
 		...Not that I don't trust you, but let me do the chemistry-intensive side of the job until you get your bearings.
 		Everyone's been antsy since we found the ruins, so if you screw up, it's not only my ass, but I'm pretty sure
-		he won't go light on the punishment. Don't wanna lose my job because I cronyism'd you a job.
+		he won't go light on the punishment. Don't wanna lose my job because I cronyism'd you a job you then threw away.
 		<br>
 		Leon
 	"}
@@ -72,4 +72,5 @@
 
 /area/shuttle/ruin/temple_mining_shuttle
 	requires_power = TRUE
-	name = "Derelict Asteroid Mining Shuttle"
+	always_unpowered = TRUE
+	name = "Derelict Asteroid Harvester"
