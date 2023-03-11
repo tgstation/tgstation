@@ -350,7 +350,7 @@
 /datum/bodypart_overlay/mutant/pod_hair/get_global_feature_list()
 	return GLOB.pod_hair_list
 
-/datum/bodypart_overlay/mutant/pod_hair/color_image(image/overlay, draw_layer)
+/datum/bodypart_overlay/mutant/pod_hair/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
 	if(draw_layer != bitflag_to_layer(color_swapped_layer))
 		return ..()
 
