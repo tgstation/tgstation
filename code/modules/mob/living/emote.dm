@@ -218,7 +218,7 @@
 	if(!isopenturf(current))
 		return
 	if(prob(current.jump_fragility))
-		playsound(current, SFX_SHATTER, 70, TRUE)
+		playsound(current, SFX_SHATTER, 70, vary = TRUE)
 		user.visible_message(
 				span_warning("[user] crashes through [current]!"),
 				span_userdanger("You crash through [current]!"),
