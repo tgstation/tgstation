@@ -49,7 +49,8 @@
 		set_panel_open(TRUE)
 	if(name == initial(name))
 		name = "[get_area_name(src)] [initial(name)]"
-	assign_to_area()
+	my_area = get_area(src)
+	LAZYADD(my_area.firealarms, src)
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_security_level))
@@ -68,25 +69,11 @@
 	update_appearance()
 
 /obj/machinery/firealarm/Destroy()
-	disconnect_from_area()
+	if(my_area)
+		LAZYREMOVE(my_area.firealarms, src)
+		my_area = null
 	QDEL_NULL(soundloop)
 	return ..()
-
-///used only during area editing
-/obj/machinery/firealarm/proc/disconnect_from_area()
-	if(my_area)
-		my_area.firealarms -= src
-		my_area = null
-
-///called during area editing via blueprints
-/obj/machinery/firealarm/proc/assign_to_area()
-	my_area = get_area(src)
-	my_area.firealarms += src
-	update_appearance(UPDATE_NAME)
-
-/obj/machinery/firealarm/update_name(updates)
-	. = ..()
-	name = "[get_area_name(my_area)] [initial(name)]"
 
 // Area sensitivity is traditionally tied directly to power use, as an optimization
 // But since we want it for fire reacting, we disregard that
@@ -99,12 +86,20 @@
 
 /obj/machinery/firealarm/on_enter_area(datum/source, area/area_to_register)
 	..()
+	my_area = area_to_register
 	RegisterSignal(area_to_register, COMSIG_AREA_FIRE_CHANGED, PROC_REF(handle_fire))
 	handle_fire(area_to_register, area_to_register.fire)
+	update_appearance()
+
+/obj/machinery/firealarm/update_name(updates)
+	. = ..()
+	name = "[get_area_name(my_area)] [initial(name)]"
 
 /obj/machinery/firealarm/on_exit_area(datum/source, area/area_to_unregister)
 	..()
 	UnregisterSignal(area_to_unregister, COMSIG_AREA_FIRE_CHANGED)
+	if(my_area)
+		my_area = null
 
 /obj/machinery/firealarm/proc/handle_fire(area/source, new_fire)
 	SIGNAL_HANDLER

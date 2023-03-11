@@ -143,14 +143,13 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	 * A list of all machinery tied to an area along with the area itself. key=area name,value=list(area,list of machinery)
 	 * we use this to keep track of what areas are affected by the blueprints & what machinery of these areas needs to be reconfigured accordingly
 	 */
-	var/area/collected_areas = list()
+	var/area/affected_areas = list()
 	//all stuff on the turf that need to be informed of the area change
 	var/list/atom/atoms = list()
 	for(var/i in 1 to turf_count)
 		var/turf/thing = turfs[i]
 		var/area/old_area = thing.loc
-		if(!collected_areas[old_area.name])
-			collected_areas[old_area.name] = list("area" = old_area, "machinery" = disconnect_area_machinery(old_area))
+		affected_areas[old_area.name] = old_area
 
 		//find all stuff on this turf and signal to them their area is about to change
 		atoms.Cut()
@@ -169,104 +168,35 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 
 		//register the stuff to its new area
 		for(var/atom/stuff as anything in atoms)
-			SEND_SIGNAL(stuff, COMSIG_ENTER_AREA, newA)
+			//special exception for apc as its not registered to the signal by default
+			if(istype(stuff, /obj/machinery/power/apc))
+				var/obj/machinery/power/apc/area_apc = stuff
+				area_apc.assign_to_area()
+			else
+				SEND_SIGNAL(stuff, COMSIG_ENTER_AREA, newA)
 
 	newA.reg_in_areas_in_z()
 
 	if(!isarea(area_choice) && newA.static_lighting)
 		newA.create_area_lighting_objects()
 
-	//reconfigure machinery of affected areas
-	var/list/area/affected_areas = list()
-	for(var/area_name in collected_areas)
-		var/list/area_data = collected_areas[area_name]
-		var/list/area_machinery = area_data["machinery"]
-		var/area/merged_area = area_data["area"]
-		affected_areas += merged_area
-
-		//reassign apc to its area
-		var/obj/machinery/power/apc/area_apc = area_machinery["apc"]
-		if(!isnull(area_apc))
-			area_apc.assign_to_area()
-
-		//recompute firedoor machinery
-		for(var/obj/machinery/door/firedoor/FD as anything in merged_area.firedoors)
-			FD.CalculateAffectingAreas()
-
-		//reassign pumps
-		var/list/obj/machinery/atmospherics/components/unary/vent_pump/pumps = area_machinery["pumps"]
-		for(var/obj/machinery/atmospherics/components/unary/vent_pump/pump as anything in pumps)
-			pump.assign_to_area()
-
-		//reassign scrubbers
-		var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubbers = area_machinery["scrubbers"]
-		for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in scrubbers)
-			scrubber.assign_to_area()
-
-		//reassign air alarms
-		var/list/obj/machinery/airalarm/air_alarms = area_machinery["air_alarms"]
-		for(var/obj/machinery/airalarm/alarm as anything in air_alarms)
-			alarm.assign_to_area()
-
-		//reassign fire alarms
-		var/list/obj/machinery/firealarm/fire_alarms = area_machinery["fire_alarms"]
-		for(var/obj/machinery/firealarm/alarm as anything in fire_alarms)
-			alarm.assign_to_area()
-
-	SEND_GLOBAL_SIGNAL(COMSIG_AREA_CREATED, newA, affected_areas, creator)
+	//convert map to list
+	var/list/area/area_list = list()
+	for(var/area_name in affected_areas)
+		area_list += affected_areas[area_name]
+	SEND_GLOBAL_SIGNAL(COMSIG_AREA_CREATED, newA, area_list, creator)
 	to_chat(creator, span_notice("You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered."))
 	creator.log_message("created a new area: [AREACOORD(creator)] (previously \"[oldA.name]\")", LOG_GAME)
 
 	//purge old areas that had all their turfs merged into the new one i.e. old empty areas
-	for(var/i in 1 to length(affected_areas))
-		var/area/merged_area = affected_areas[i]
+	for(var/i in 1 to length(area_list))
+		var/area/merged_area = area_list[i]
 		if(!merged_area.has_contained_turfs()) //no more turfs in this area. Time to clean up
 			qdel(merged_area)
 
 	return TRUE
 
 #undef BP_MAX_ROOM_SIZE
-
-///find and disconnect all machinery that depends on the area excluding apc
-/proc/disconnect_area_machinery(area/area)
-	var/list/area_machinery = list()
-
-	//apc for the area. can be null if we just created the area
-	area_machinery["apc"] = area.apc
-
-	//disconnect vents. have to clone the list because disconnecting removes it from the list
-	var/list/obj/machinery/atmospherics/components/unary/vent_pump/pumps = area.air_vents.Copy()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/pump as anything in pumps)
-		if(!istype(pump))
-			continue
-		pump.disconnect_from_area()
-	area_machinery["pumps"] = pumps
-
-	//disconnect scrubbers. have to clone the list because disconnecting removes it from the list
-	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubbers = area.air_scrubbers.Copy()
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in scrubbers)
-		if(!istype(scrubber))
-			continue
-		scrubber.disconnect_from_area()
-	area_machinery["scrubbers"] = scrubbers
-
-	//disconnect air alarms. have to clone the list because disconnecting removes it from the list
-	var/obj/machinery/airalarm/air_alarms = area.airalarms.Copy()
-	for(var/obj/machinery/airalarm/air_alarm as anything in air_alarms)
-		if(!istype(air_alarm))
-			continue
-		air_alarm.disconnect_from_area()
-	area_machinery["air_alarms"] = air_alarms
-
-	//disconnect fire alarms. have to clone the list because disconnecting removes it from the list
-	var/obj/machinery/firealarm/fire_alarms = area.firealarms.Copy()
-	for(var/obj/machinery/firealarm/fire_alarm as anything in fire_alarms)
-		if(!istype(fire_alarm))
-			continue
-		fire_alarm.disconnect_from_area()
-	area_machinery["fire_alarms"] = fire_alarms
-
-	return area_machinery
 
 /proc/require_area_resort()
 	GLOB.sortedAreas = null

@@ -187,38 +187,6 @@
 
 	GLOB.apcs_list += src
 
-///called during area editing via blueprints
-/obj/machinery/power/apc/proc/assign_to_area()
-	var/area/current_area = get_area(src)
-	if(current_area == area)
-		return
-
-	disconnect_from_area()
-	area = current_area
-	area.power_light = TRUE
-	area.power_equip = TRUE
-	area.power_environ = TRUE
-	area.power_change()
-	area.apc = src
-
-	auto_name = TRUE
-	update_appearance(UPDATE_NAME)
-
-/obj/machinery/power/apc/update_name(updates)
-	. = ..()
-	if(auto_name)
-		name = "\improper [get_area_name(area, TRUE)] APC"
-
-///called during area editing via blueprints
-/obj/machinery/power/apc/proc/disconnect_from_area()
-	if(area)
-		area.power_light = FALSE
-		area.power_equip = FALSE
-		area.power_environ = FALSE
-		area.power_change()
-		area.apc = null
-		area = null
-
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
 
@@ -235,6 +203,35 @@
 	if(terminal)
 		disconnect_terminal()
 	. = ..()
+
+/obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
+	if(area == target_area)
+		return
+
+	disconnect_from_area()
+	area = target_area
+	area.power_light = TRUE
+	area.power_equip = TRUE
+	area.power_environ = TRUE
+	area.power_change()
+	area.apc = src
+	auto_name = TRUE
+
+	update_appearance(UPDATE_NAME)
+
+/obj/machinery/power/apc/update_name(updates)
+	. = ..()
+	if(auto_name)
+		name = "\improper [get_area_name(area, TRUE)] APC"
+
+/obj/machinery/power/apc/proc/disconnect_from_area()
+	if(area)
+		area.power_light = FALSE
+		area.power_equip = FALSE
+		area.power_environ = FALSE
+		area.power_change()
+		area.apc = null
+		area = null
 
 /obj/machinery/power/apc/handle_atom_del(atom/deleting_atom)
 	if(deleting_atom == cell)

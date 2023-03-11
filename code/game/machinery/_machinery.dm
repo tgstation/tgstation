@@ -189,7 +189,6 @@
 	power_change()
 	if(use_power == NO_POWER_USE)
 		return
-
 	update_current_power_usage()
 	setup_area_power_relationship()
 

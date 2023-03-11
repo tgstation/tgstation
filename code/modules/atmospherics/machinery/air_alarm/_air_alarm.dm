@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		else
 			tlv_collection[gas_path] = new /datum/tlv/no_checks
 
-	assign_to_area()
+	my_area = get_area(src)
 	alarm_manager = new(src)
 	select_mode(src, /datum/air_alarm_mode/filtering)
 
@@ -89,23 +89,17 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	update_appearance()
 
 /obj/machinery/airalarm/Destroy()
-	disconnect_from_area()
+	if(my_area)
+		my_area = null
 	QDEL_NULL(wires)
 	QDEL_NULL(alarm_manager)
 	GLOB.air_alarms -= src
 	return ..()
 
-//used only during area editing
-/obj/machinery/airalarm/proc/disconnect_from_area()
-	if(my_area)
-		my_area.airalarms -= src
-		my_area = null
-
-///called during area editing via blueprints
-/obj/machinery/airalarm/proc/assign_to_area()
-	my_area = get_area(src)
-	my_area.airalarms += src
-	update_appearance(UPDATE_NAME)
+/obj/machinery/airalarm/on_enter_area(datum/source, area/area_to_register)
+	my_area = area_to_register
+	. = ..()
+	update_appearance()
 
 /obj/machinery/airalarm/update_name(updates)
 	. = ..()
