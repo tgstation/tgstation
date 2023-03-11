@@ -226,20 +226,21 @@
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 
-/obj/projectile/herald/teleshot
-	name ="golden bolt"
-	damage = 0
-	color = rgb(255,255,102)
-
 /obj/projectile/herald/on_hit(atom/target, blocked = FALSE)
 	if(ismob(target) && ismob(firer))
 		var/mob/living/mob_target = target
 		if(mob_target.faction_check_mob(firer))
-			nodamage = TRUE
+			damage = 0
+
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/rock_target = target
 		rock_target.gets_drilled()
+
+/obj/projectile/herald/teleshot
+	name = "golden bolt"
+	damage = 0
+	color = rgb(255,255,102)
 
 /obj/projectile/herald/teleshot/on_hit(atom/target, blocked = FALSE)
 	. = ..()

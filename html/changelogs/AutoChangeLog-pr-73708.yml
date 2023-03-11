@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - code_imp: "Anomaly event parameters consolidated to defines"
+  - balance: "Anomaly countdown timer reduced to 75 seconds"

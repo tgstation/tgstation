@@ -1,0 +1,4 @@
+author: "Stalkeros, san7890 for the announcement texts"
+delete-after: True
+changes:
+  - code_imp: "Made pirate groups' arrival messages editable and more importantly unique for each group."
