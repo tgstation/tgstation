@@ -100,10 +100,10 @@
 		return // in blacklist, expanding a blacklisted area doesnt magically give you permission to enter
 
 	if(length(overwritten))
-		for(var/area/overwritten_area as anything in overwritten)
-			if(check_area_hazardous(overwritten.type))
+		for(var/area/overwritten_area in overwritten)
+			if(check_area_hazardous(overwritten_area.type))
 				return // Overwrote a hazardous area, still hazardous fool
-			area_created -= overwritten // While its not guaranteed to be in the area_created list it's a good idea to ensure we dont have handing refs
+			area_created -= overwritten_area // While its not guaranteed to be in the area_created list it's a good idea to ensure we dont have handing refs
 		area_created += created // Congrats, you are now allowed in this area
 		return
 
