@@ -89,6 +89,12 @@
 /obj/item/shovel,
 /turf/open/misc/asteroid/dug,
 /area/station/maintenance/starboard/lesser)
+"lG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
 "nt" = (
 /turf/open/misc/asteroid,
 /area/station/maintenance/starboard/lesser)
@@ -763,7 +769,7 @@ eO
 UB
 nt
 AY
-CI
+lG
 yY
 CX
 CX

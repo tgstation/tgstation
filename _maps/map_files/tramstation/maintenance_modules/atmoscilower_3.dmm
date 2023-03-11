@@ -106,6 +106,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "s" = (
@@ -185,6 +187,13 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "B" = (
 /obj/effect/decal/cleanable/dirt,
@@ -671,15 +680,15 @@ U
 l
 q
 b
-r
-r
-r
-r
-r
-r
-r
-r
-r
+A
+A
+A
+A
+A
+A
+A
+A
+A
 U
 U
 "}
