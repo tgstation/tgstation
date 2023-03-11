@@ -84,6 +84,8 @@
 		get_turf(linked_rune),
 		no_effects = TRUE,
 		channel = TELEPORT_CHANNEL_MAGIC,
+		asoundin = 'sound/magic/cosmig_energy.ogg',
+		asoundout = 'sound/magic/cosmig_energy.ogg',
 	)
 	new rune_effect(get_turf(linked_rune))
 
