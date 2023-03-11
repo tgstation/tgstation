@@ -449,7 +449,6 @@
 /area/shuttle/ruin/temple_mining_shuttle)
 "GT" = (
 /obj/item/card/id/advanced/biomining_engineer_two,
-/obj/item/mod/control/pre_equipped/mining,
 /obj/item/clothing/under/rank/cargo/miner,
 /obj/item/clothing/shoes/workboots,
 /obj/item/clothing/glasses/meson,
@@ -461,6 +460,7 @@
 	real_name = "Samson Hansley"
 	},
 /obj/item/radio/headset/headset_cargo/mining,
+/obj/item/mod/control/pre_equipped/space_mining,
 /turf/open/floor/stone,
 /area/ruin/unpowered/monkey_temple)
 "Hl" = (
@@ -879,7 +879,7 @@ Xu
 pF
 pF
 EM
-rA
+EM
 tT
 Xu
 hJ
