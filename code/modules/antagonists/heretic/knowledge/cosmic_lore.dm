@@ -78,7 +78,7 @@
 	)
 	spell_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 1
-	route = PATH_COSMIc
+	route = PATH_COSMIC
 
 /datum/heretic_knowledge/mark/cosmic_mark
 	name = "Mark of Cosmos"
@@ -88,7 +88,7 @@
 	gain_text = "As the guide was lost, he found a new. The energy increased as the gaze he threw. \
 		He didn't know, but with focus, the Sleepers energy began to flow."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/cosmic)
-	route = PATH_COSMIc
+	route = PATH_COSMIC
 	mark_type = /datum/status_effect/eldritch/cosmic
 
 /datum/heretic_knowledge/knowledge_ritual/cosmic
