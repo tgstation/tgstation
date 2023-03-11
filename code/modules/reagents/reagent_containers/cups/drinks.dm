@@ -32,7 +32,9 @@
 
 /obj/item/reagent_containers/cup/glass/bullet_act(obj/projectile/P)
 	. = ..()
-	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
+	if(QDELETED(src))
+		return
+	if(P.damage > 0 && P.damage_type == BRUTE)
 		var/atom/T = get_turf(src)
 		smash(T)
 

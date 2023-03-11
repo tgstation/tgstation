@@ -138,7 +138,7 @@
 				if(!user.combat_mode)
 					spawned_mob.faction |= FACTION_NEUTRAL
 				else
-					spawned_mob.faction |= "slime"
+					spawned_mob.faction |= FACTION_SLIME
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				user.visible_message(span_warning("[user] spits out [spawned_mob]!"), span_warning("You spit out [spawned_mob]!"))
 				return 600

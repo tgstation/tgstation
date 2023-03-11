@@ -355,7 +355,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		/*
 		 * There is an existing organ in this slot, what should we do with it? Probably remove it!
 		 *
-		 * We will removit if and only if:
+		 * We will remove it if (and only if):
 		 * - We should not have the organ OR replace_current is passed to force old organs to regenerate
 		 * - The replaced organ is not in an excluded zone
 		 * - The replaced organ is not unremovable or synthetic (an implant)

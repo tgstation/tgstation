@@ -12,7 +12,7 @@
 	progression_minimum = 0 MINUTES
 
 	progression_reward = list(8 MINUTES, 15 MINUTES)
-	telecrystal_reward = 0
+	telecrystal_reward = 1
 
 	var/list/limited_to = list(
 		JOB_CHIEF_MEDICAL_OFFICER,
@@ -125,9 +125,8 @@
 	target.gain_trauma(new /datum/brain_trauma/mild/phobia/conspiracies(), TRAUMA_RESILIENCE_LOBOTOMY)
 
 /datum/traitor_objective/sleeper_protocol/everybody //Much harder for non-med and non-robo
-
 	progression_minimum = 30 MINUTES
-	progression_reward = list(15 MINUTES, 20 MINUTES)
-	telecrystal_reward = list(2, 3)
+	progression_reward = list(8 MINUTES, 15 MINUTES)
+	telecrystal_reward = 1
 
 	inverted_limitation = TRUE

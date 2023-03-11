@@ -1,5 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - bugfix: "Un-aimed admin rods will now actually be un-aimed instead of aimed at the previous aimed rods target."
-  - admin: "Admin aimed rods will now log that they're aimed randomly when not aimed."

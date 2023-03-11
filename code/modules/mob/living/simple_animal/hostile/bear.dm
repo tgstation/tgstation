@@ -41,7 +41,7 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 
-	faction = list("russian")
+	faction = list(FACTION_RUSSIAN)
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
@@ -89,7 +89,7 @@
 	icon_state = "combatbear"
 	icon_living = "combatbear"
 	icon_dead = "combatbear_dead"
-	faction = list("russian")
+	faction = list(FACTION_RUSSIAN)
 	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/clothing/head/costume/bearpelt = 1, /obj/item/bear_armor = 1)
 	melee_damage_lower = 18
 	melee_damage_upper = 20
@@ -131,7 +131,7 @@
 	icon_living = "butterbear"
 	icon_dead = "butterbear_dead"
 	desc = "I can't believe its not a bear!"
-	faction = list(FACTION_NEUTRAL, "russian")
+	faction = list(FACTION_NEUTRAL, FACTION_RUSSIAN)
 	obj_damage = 11
 	melee_damage_lower = 0
 	melee_damage_upper = 0

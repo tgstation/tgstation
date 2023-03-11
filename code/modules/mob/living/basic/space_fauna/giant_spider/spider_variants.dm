@@ -314,7 +314,7 @@
 	name = "Sergeant Araneus"
 	real_name = "Sergeant Araneus"
 	desc = "A fierce companion of the Head of Security, this spider has been carefully trained by Nanotrasen specialists. Its beady, staring eyes send shivers down your spine."
-	faction = list("spiders")
+	faction = list(FACTION_SPIDER)
 	maxHealth = 250
 	health = 250
 	melee_damage_lower = 15

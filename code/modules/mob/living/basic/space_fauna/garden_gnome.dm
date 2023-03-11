@@ -24,7 +24,7 @@
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 500
 
-	faction = list("gnomes")
+	faction = list(FACTION_GNOME)
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = HOSTILE_SPAWN
 	greyscale_config = /datum/greyscale_config/garden_gnome

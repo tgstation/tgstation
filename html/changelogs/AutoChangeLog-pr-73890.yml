@@ -1,0 +1,5 @@
+author: "VladinXXV"
+delete-after: True
+changes:
+  - bugfix: "Fake nuclear authentication disks have been updated to include the holographic security sticker found on the real disk, one again making them convincingly real to the average person."
+  - code_imp: "The keep_me_secured component will now only process if it has at least one callback argument passed."

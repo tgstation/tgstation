@@ -12,6 +12,7 @@
 		reagents.handle_stasis_chems(src, delta_time, times_fired)
 	else
 		//Reagent processing needs to come before breathing, to prevent edge cases.
+		handle_dead_metabolization(delta_time, times_fired) //Dead metabolization first since it can modify life metabolization.
 		handle_organs(delta_time, times_fired)
 
 		. = ..()
@@ -523,6 +524,19 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM?.timeout)
 			dna.remove_mutation(HM.type)
+
+/**
+ * Handles calling metabolization for dead people.
+ * Due to how reagent metabolization code works this couldn't be done anywhere else.
+ * 
+ * Arguments:
+ * - delta_time: The amount of time that has elapsed since the last tick.
+ * - times_fired: The number of times SSmobs has ticked.
+ */
+/mob/living/carbon/proc/handle_dead_metabolization(delta_time, times_fired)
+	if (stat != DEAD)
+		return
+	reagents.metabolize(src, delta_time, times_fired, can_overdose = TRUE, liverless = TRUE, dead = TRUE) // Your liver doesn't work while you're dead.
 
 /// Base carbon environment handler, adds natural stabilization
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)

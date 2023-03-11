@@ -1,4 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "Fixes NTOS records program receiving bad medical disability data"

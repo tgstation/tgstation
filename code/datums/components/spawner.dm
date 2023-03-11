@@ -14,7 +14,7 @@
 	/// Time until we next spawn
 	COOLDOWN_DECLARE(spawn_delay)
 
-/datum/component/spawner/Initialize(mob_types = list(), spawn_time = 30 SECONDS, max_mobs = 5, faction = list("mining"), spawn_text = "emerges from")
+/datum/component/spawner/Initialize(mob_types = list(), spawn_time = 30 SECONDS, max_mobs = 5, faction = list(FACTION_MINING), spawn_text = "emerges from")
 	if (!length(mob_types))
 		CRASH("No types of mob to spawn specified for spawner component!")
 	src.spawn_time = spawn_time

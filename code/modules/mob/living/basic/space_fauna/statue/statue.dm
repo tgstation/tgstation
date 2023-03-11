@@ -28,7 +28,7 @@
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 
-	faction = list("statue")
+	faction = list(FACTION_STATUE)
 	speak_emote = list("screams")
 	death_message = "falls apart into a fine dust."
 	unsuitable_atmos_damage = 0

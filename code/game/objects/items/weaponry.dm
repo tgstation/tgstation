@@ -432,7 +432,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	SIGNAL_HANDLER
 
 	tool_behaviour = (active ? TOOL_KNIFE : NONE)
-	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/switchblade/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -535,6 +534,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon_state = "broom"
 	inhand_icon_state = "broom"
+	resistance_flags = FLAMMABLE
+
+/obj/item/staff/tape
+	name = "tape staff"
+	desc = "A roll of tape snugly attached to a stick."
+	icon_state = "tapestaff"
+	inhand_icon_state = "tapestaff"
 	resistance_flags = FLAMMABLE
 
 /obj/item/staff/stick
