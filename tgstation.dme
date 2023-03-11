@@ -14,6 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\RandomRuins\SpaceRuins\monkey_temple.dmm"
 #include "code\__byond_version_compat.dm"
 #include "code\_compile_options.dm"
 #include "code\_debugger.dm"
@@ -3654,6 +3655,7 @@
 #include "code\modules\mapfluff\ruins\spaceruin_code\hellfactory.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\hilbertshotel.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\listeningstation.dm"
+#include "code\modules\mapfluff\ruins\spaceruin_code\monkey_temple.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\oldstation.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\originalcontent.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\spacehotel.dm"

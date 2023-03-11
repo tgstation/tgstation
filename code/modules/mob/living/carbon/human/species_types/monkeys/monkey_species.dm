@@ -1,4 +1,5 @@
 #define MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE 25
+#define MONKEY_PAW_DROP_CHANCE 0.05
 
 /datum/species/monkey
 	name = "Monkey"
@@ -61,11 +62,11 @@
 	new_monkey.butcher_results = knife_butcher_results
 	new_monkey.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 	new_monkey.dna.activate_mutation(/datum/mutation/human/race)
-	RegisterSignal(new_monkey, COMSIG_LIVING_GIBBED, PROC_REF(spawn_monkey_paw))
+	RegisterSignal(new_monkey, COMSIG_LIVING_GIBBED, PROC_REF(try_spawn_monkey_paw))
 
-/datum/species/monkey/proc/spawn_monkey_paw(mob/living/carbon/human/source)
+/datum/species/monkey/proc/try_spawn_monkey_paw(mob/living/carbon/human/source)
 	SIGNAL_HANDLER
-	if(prob(0.06))
+	if(prob(MONKEY_PAW_DROP_CHANCE))
 		new /obj/item/monkey_paw(source.loc)
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/old_monkey)

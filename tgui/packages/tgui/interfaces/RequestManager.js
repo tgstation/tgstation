@@ -85,6 +85,7 @@ const displayTypeMap = {
   'request_syndicate': 'SYNDICATE',
   'request_nuke': 'NUKE CODE',
   'request_fax': 'FAX',
+  'request_monkey_paw': 'MONKEY PAW',
 };
 
 const RequestType = (props) => {

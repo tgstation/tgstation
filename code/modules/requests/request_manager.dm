@@ -77,6 +77,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
  * * message - The message
  */
 /datum/request_manager/proc/monkey_paw_wish(client/C, message)
+	message += " (Monkey Paw wishes should be twisted towards bad outcomes.)"
 	request_for_client(C, REQUEST_MONKEY_PAW, message)
 
 /**

@@ -345,6 +345,12 @@
 	name = "Cyborg Mothership"
 	description = "An abandoned cyborg mothership that was overtaken by space vines and hivebots. It appears that it hosted an experimental AI focused on mining before it was depowered."
 
+/datum/map_template/ruin/space/monkey_temple
+	id = "monkey_temple"
+	suffix = "monkey_temple.dmm"
+	name = "Monkey Temple"
+	description = "An odd temple built into an asteroid, filled with monkeys. Where did these monkeys come from...?"
+
 /datum/map_template/ruin/space/dangerous_research
 	id = "dangerous_research"
 	suffix = "dangerous_research.dmm"

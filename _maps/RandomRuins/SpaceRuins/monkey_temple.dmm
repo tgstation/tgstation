@@ -1,0 +1,1358 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"at" = (
+/turf/closed/mineral/random,
+/area/ruin/space)
+"aZ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/stairs{
+	icon = 'icons/obj/stairs.dmi';
+	icon_state = "stairs_stone"
+	},
+/area/ruin/unpowered/monkey_temple)
+"bh" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "stern external airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"bN" = (
+/obj/structure/cable,
+/obj/structure/mineral_door/iron,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"cn" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/ruin/temple_mining_shuttle)
+"cF" = (
+/obj/structure/foamedmetal/iron,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav)
+"cV" = (
+/turf/open/misc/asteroid/dug,
+/area/ruin/space)
+"dw" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Crew Hold Shutters";
+	id = "mtemple_crewhold"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"dG" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Crew Hold Shutters";
+	id = "mtemple_crewhold"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"dN" = (
+/obj/structure/table/reinforced,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/jetpack/carbondioxide,
+/obj/item/clothing/mask/gas/explorer,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
+"dS" = (
+/obj/item/paper/crumpled/muddy/to_samson,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"ej" = (
+/obj/machinery/suit_storage_unit/mining/eva,
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
+"fm" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/ruin/temple_mining_shuttle)
+"ft" = (
+/obj/structure/fluff/empty_sleeper{
+	dir = 4
+	},
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
+"fN" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/template_noop,
+/area/shuttle/ruin/temple_mining_shuttle)
+"fS" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/template_noop,
+/area/shuttle/ruin/temple_mining_shuttle)
+"gc" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav)
+"gh" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "bow external airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"gt" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"gM" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"gO" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Crew Hold Shutters";
+	id = "mtemple_crewhold"
+	},
+/obj/machinery/button/door/directional/north{
+	name = "Crew Hold Control"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"gV" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"hJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
+"iT" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Cargo Hold"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"jo" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/shuttle/ruin/temple_mining_shuttle)
+"jK" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/clothing/mask/gas/monkeymask,
+/obj/item/clothing/suit/costume/monkeysuit,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"jV" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/template_noop,
+/area/shuttle/ruin/temple_mining_shuttle)
+"kg" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Mining Equipment"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"kk" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Cockpit"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"lS" = (
+/obj/item/card/id/advanced/biomining_engineer_one,
+/obj/item/clothing/under/rank/cargo/miner,
+/obj/item/clothing/suit/toggle/labcoat/chemist{
+	name = "biominer labcoat"
+	},
+/obj/item/clothing/shoes/workboots,
+/obj/item/clothing/glasses/science/night,
+/obj/item/reagent_containers/cup/beaker,
+/obj/item/reagent_containers/pill/mutadone{
+	pixel_y = -13;
+	pixel_x = 9
+	},
+/mob/living/carbon/human/species/monkey/angry{
+	use_random_name = 0;
+	name = "Leon Hansley";
+	real_name = "Leon Hansley"
+	},
+/obj/item/radio/headset/headset_cargo/mining,
+/turf/open/floor/iron/white/small,
+/area/shuttle/ruin/temple_mining_shuttle)
+"oR" = (
+/obj/item/stack/ore/iron{
+	pixel_y = -6
+	},
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"pq" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/template_noop,
+/area/shuttle/ruin/temple_mining_shuttle)
+"pF" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/box,
+/obj/structure/ore_box,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/ruin/temple_mining_shuttle)
+"qr" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "starboard external airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"qN" = (
+/obj/structure/table/reinforced,
+/obj/item/folder/yellow,
+/obj/item/pen{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/paper/crumpled/monkey_paw_discovery{
+	pixel_y = -3;
+	pixel_x = -7
+	},
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
+"qS" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/stairs{
+	icon = 'icons/obj/stairs.dmi';
+	icon_state = "stairs_stone";
+	dir = 8
+	},
+/area/ruin/unpowered/monkey_temple)
+"rA" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/ruin/temple_mining_shuttle)
+"tt" = (
+/turf/closed/mineral/random,
+/area/ruin/space/has_grav)
+"tB" = (
+/obj/item/reagent_containers/pill/mutadone{
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/turf/open/floor/iron/white/small,
+/area/shuttle/ruin/temple_mining_shuttle)
+"tM" = (
+/turf/template_noop,
+/area/template_noop)
+"tO" = (
+/obj/structure/chair,
+/obj/item/clothing/under/rank/cargo/qm{
+	name = "chief prospector's jumpsuit"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/carbon/human/species/monkey/angry{
+	use_random_name = 0;
+	name = "Bill Slater";
+	real_name = "Bill Slater"
+	},
+/obj/item/clothing/shoes/workboots,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/card/id/advanced/chief_prospector,
+/obj/item/radio/headset/headset_cargo/mining,
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
+"vl" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "stern external airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"vm" = (
+/obj/structure/mineral_door/iron,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"vB" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/food/monkeycube,
+/obj/item/food/monkeycube{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/food/monkeycube{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"wh" = (
+/obj/machinery/suit_storage_unit/open,
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
+"wF" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"xC" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/template_noop,
+/area/shuttle/ruin/temple_mining_shuttle)
+"yF" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/stack/sheet/animalhide/monkey,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"yW" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "bow external airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"zw" = (
+/obj/item/stack/ore/silver{
+	pixel_x = -4
+	},
+/obj/item/stack/ore/silver{
+	pixel_y = 3;
+	pixel_x = 8
+	},
+/obj/item/stack/ore/silver{
+	pixel_y = 7;
+	pixel_x = -3
+	},
+/turf/open/misc/asteroid/dug,
+/area/ruin/space)
+"Ao" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/shuttle/ruin/temple_mining_shuttle)
+"AJ" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"BD" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "mtemple_cargohold";
+	name = "Cargo Hold Shutters"
+	},
+/obj/machinery/button/door/directional/south{
+	name = "Cargo Hold Control";
+	id = "mtemple_cargohold"
+	},
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"Cg" = (
+/obj/structure/window/reinforced,
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/ruin/temple_mining_shuttle)
+"Db" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/foamedmetal/iron,
+/turf/template_noop,
+/area/shuttle/ruin/temple_mining_shuttle)
+"Dh" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/structure/ore_box,
+/turf/template_noop,
+/area/shuttle/ruin/temple_mining_shuttle)
+"EM" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/box,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/ruin/temple_mining_shuttle)
+"EW" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "mtemple_cargohold";
+	name = "Cargo Hold Shutters"
+	},
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"EX" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/item/reagent_containers/pill/mutadone{
+	pixel_y = -9;
+	pixel_x = -13
+	},
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
+"FH" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "port external airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"GT" = (
+/obj/item/card/id/advanced/biomining_engineer_two,
+/obj/item/mod/control/pre_equipped/mining,
+/obj/item/clothing/under/rank/cargo/miner,
+/obj/item/clothing/shoes/workboots,
+/obj/item/clothing/glasses/meson,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/pickaxe,
+/mob/living/carbon/human/species/monkey/angry{
+	use_random_name = 0;
+	name = "Samson Hansley";
+	real_name = "Samson Hansley"
+	},
+/obj/item/radio/headset/headset_cargo/mining,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"Hl" = (
+/obj/structure/table,
+/obj/item/clipboard,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav)
+"Ht" = (
+/obj/item/stack/ore/iron{
+	pixel_y = 4;
+	pixel_x = 7
+	},
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"HV" = (
+/obj/machinery/power/floodlight,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"In" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/obj/item/shard,
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
+"IJ" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/open/floor/iron/white/small,
+/area/shuttle/ruin/temple_mining_shuttle)
+"Js" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"Ls" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
+"Ng" = (
+/obj/machinery/chem_dispenser,
+/turf/open/floor/iron/white/small,
+/area/shuttle/ruin/temple_mining_shuttle)
+"Nu" = (
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav)
+"Og" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/stack/sheet/animalhide/monkey,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"Ol" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/template_noop,
+/area/shuttle/ruin/temple_mining_shuttle)
+"Ox" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/spear/bonespear,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"Pc" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/obj/item/shard,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
+"PC" = (
+/obj/structure/table/wood,
+/obj/item/food/soup/monkeysdelight,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"PQ" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/unpowered/monkey_temple)
+"Qw" = (
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
+"Rx" = (
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/toy/mecha/clarke{
+	pixel_y = 10
+	},
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
+"Ry" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav)
+"RD" = (
+/obj/item/monkey_paw,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/wood,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"RZ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/radio/headset/headset_cargo/mining,
+/mob/living/carbon/human/species/monkey/angry{
+	use_random_name = 0;
+	name = "Bridget Stamos";
+	real_name = "Bridget Stamos";
+	gender = "female"
+	},
+/obj/item/clothing/under/misc/mailman{
+	name = "prospector's jumpsuit"
+	},
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/gloves/color/black,
+/obj/item/card/id/advanced/prospector,
+/obj/item/analyzer,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+"SP" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Crew Hold"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/turf/open/floor/plating,
+/area/shuttle/ruin/temple_mining_shuttle)
+"SQ" = (
+/turf/open/misc/asteroid/dug,
+/area/ruin/space/has_grav)
+"SW" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/ruin/temple_mining_shuttle)
+"TB" = (
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav)
+"UG" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/turf/template_noop,
+/area/shuttle/ruin/temple_mining_shuttle)
+"VN" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/item/storage/cans/sixbeer,
+/turf/template_noop,
+/area/shuttle/ruin/temple_mining_shuttle)
+"WP" = (
+/obj/structure/cable,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav)
+"Xu" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/ruin/temple_mining_shuttle)
+"XM" = (
+/obj/structure/table/wood,
+/obj/item/food/soup/wish,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/ruin/unpowered/monkey_temple)
+
+(1,1,1) = {"
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+at
+tM
+tM
+tM
+tM
+tM
+at
+at
+"}
+(2,1,1) = {"
+tM
+tM
+tM
+tM
+Dh
+xC
+Ao
+Ao
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+AJ
+at
+"}
+(3,1,1) = {"
+tM
+tM
+tM
+tM
+jV
+Ao
+Ao
+Ao
+fS
+fS
+fS
+fS
+fS
+fS
+Ao
+Ao
+xC
+xC
+xC
+xC
+Ao
+pq
+tM
+tM
+tM
+tM
+"}
+(4,1,1) = {"
+tM
+tM
+tM
+tM
+Ao
+Ao
+Ao
+Ao
+tM
+fm
+tM
+tM
+fm
+tM
+Ao
+Ao
+tM
+fm
+tM
+tM
+Ao
+Ao
+tM
+tM
+tM
+tM
+"}
+(5,1,1) = {"
+tM
+tM
+cn
+Xu
+gM
+Xu
+bh
+Xu
+Xu
+Xu
+gM
+gM
+Xu
+Xu
+qr
+Xu
+Xu
+Xu
+gM
+Xu
+Xu
+gh
+Xu
+Xu
+Xu
+cn
+"}
+(6,1,1) = {"
+tM
+SW
+Cg
+Ng
+IJ
+Xu
+hJ
+Qw
+Qw
+Qw
+hJ
+hJ
+hJ
+hJ
+Qw
+Xu
+ft
+ft
+ft
+ft
+Xu
+hJ
+Xu
+dN
+Rx
+gM
+"}
+(7,1,1) = {"
+tM
+SW
+Cg
+lS
+tB
+Xu
+Qw
+Xu
+EW
+BD
+Xu
+Xu
+iT
+Xu
+Qw
+SP
+Qw
+Qw
+Qw
+Qw
+Xu
+hJ
+Xu
+tO
+Pc
+gM
+"}
+(8,1,1) = {"
+tM
+SW
+jo
+EX
+Ls
+kg
+Qw
+Xu
+rA
+rA
+rA
+rA
+rA
+Xu
+hJ
+Xu
+gO
+dG
+dG
+dw
+Xu
+Qw
+kk
+Qw
+In
+gM
+"}
+(9,1,1) = {"
+tM
+SW
+Cg
+ej
+wh
+Xu
+hJ
+Xu
+pF
+pF
+EM
+EM
+EM
+Xu
+hJ
+hJ
+hJ
+Qw
+Qw
+Qw
+hJ
+Qw
+Xu
+hJ
+qN
+gM
+"}
+(10,1,1) = {"
+tM
+tM
+cn
+Xu
+gM
+Xu
+vl
+Xu
+Xu
+Xu
+Xu
+Xu
+Xu
+Xu
+FH
+Xu
+Xu
+Xu
+gM
+Xu
+Xu
+yW
+Xu
+Xu
+Xu
+cn
+"}
+(11,1,1) = {"
+tM
+tM
+tM
+tM
+Ao
+Ao
+Ao
+Ao
+tM
+fm
+tM
+tM
+fm
+tM
+Ao
+Ao
+tM
+fm
+tM
+tM
+Ao
+Ao
+tM
+tM
+tM
+tM
+"}
+(12,1,1) = {"
+tM
+tM
+tM
+tM
+jV
+Ao
+Ao
+Ao
+Ol
+Ol
+Ol
+Ol
+Ol
+Ol
+Ao
+Ao
+fS
+fS
+fS
+fS
+Db
+fN
+tM
+tM
+tM
+tM
+"}
+(13,1,1) = {"
+tM
+tM
+tM
+tM
+UG
+VN
+Ao
+Ao
+tM
+tM
+tM
+tM
+tM
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+cF
+tt
+tt
+tt
+tM
+tM
+"}
+(14,1,1) = {"
+tM
+tM
+AJ
+AJ
+tM
+tM
+tM
+tM
+tM
+tM
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+cF
+tt
+tt
+tt
+tt
+tt
+"}
+(15,1,1) = {"
+tM
+tM
+cV
+oR
+AJ
+tM
+tM
+tM
+tM
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+SQ
+cF
+cF
+cF
+tt
+tt
+tt
+tt
+"}
+(16,1,1) = {"
+tM
+tM
+at
+at
+Ht
+tM
+tM
+tM
+tM
+tt
+PQ
+PQ
+PQ
+PQ
+PQ
+PQ
+PQ
+PQ
+PQ
+Nu
+Nu
+Nu
+Nu
+tt
+tt
+tt
+"}
+(17,1,1) = {"
+tM
+tM
+tM
+at
+at
+tM
+tM
+tM
+tt
+tt
+PQ
+vB
+gt
+Og
+gt
+GT
+dS
+wF
+PQ
+TB
+Nu
+Nu
+TB
+SQ
+tt
+tt
+"}
+(18,1,1) = {"
+tM
+at
+at
+tM
+tM
+tM
+tM
+tM
+tt
+tt
+PQ
+yF
+gt
+wF
+gt
+gt
+gt
+gt
+vm
+Nu
+Nu
+Nu
+Nu
+Nu
+tt
+tt
+"}
+(19,1,1) = {"
+tM
+cV
+at
+at
+tM
+tM
+at
+tM
+tt
+tt
+PQ
+PC
+gt
+HV
+Js
+Js
+Js
+Js
+bN
+WP
+WP
+WP
+Nu
+Nu
+SQ
+tt
+"}
+(20,1,1) = {"
+tM
+cV
+zw
+gV
+tM
+tM
+tM
+tM
+tt
+tt
+PQ
+XM
+gt
+gt
+gt
+gt
+gt
+Js
+PQ
+TB
+Nu
+WP
+TB
+Nu
+SQ
+tt
+"}
+(21,1,1) = {"
+tM
+AJ
+AJ
+AJ
+AJ
+tM
+tM
+tM
+tt
+tt
+PQ
+PQ
+PQ
+qS
+qS
+PQ
+gt
+Js
+PQ
+Nu
+Hl
+gc
+Ry
+SQ
+tt
+tt
+"}
+(22,1,1) = {"
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tt
+tt
+tt
+PQ
+Ox
+gt
+gt
+aZ
+gt
+HV
+PQ
+Nu
+tt
+tt
+tt
+tt
+tt
+tt
+"}
+(23,1,1) = {"
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tt
+tt
+tt
+PQ
+gt
+RD
+wF
+aZ
+RZ
+gt
+PQ
+SQ
+tt
+tt
+tt
+tt
+tt
+tM
+"}
+(24,1,1) = {"
+at
+tM
+tM
+tM
+at
+tM
+tM
+tM
+tM
+tt
+tt
+PQ
+gt
+gt
+Ox
+PQ
+yF
+jK
+PQ
+tt
+tt
+tt
+tt
+tt
+tt
+tM
+"}
+(25,1,1) = {"
+tM
+tM
+tM
+tM
+at
+tM
+tM
+tM
+tM
+tM
+tt
+PQ
+PQ
+PQ
+PQ
+PQ
+PQ
+PQ
+PQ
+tt
+tt
+tt
+tt
+tt
+tt
+tM
+"}
+(26,1,1) = {"
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tM
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tM
+"}
