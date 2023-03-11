@@ -84,7 +84,7 @@
 	. = ..()
 	var/datum/weakref/weak_action = controller.blackboard[action_key]
 	var/datum/action/cooldown/web_action = weak_action?.resolve()
-	finish_action(controller, /* succeeded = */ web_action?.Trigger(), action_key, target_key)
+	finish_action(controller, succeeded = web_action?.Trigger(), action_key = action_key, target_key = target_key)
 
 /datum/ai_behavior/spin_web/finish_action(datum/ai_controller/controller, succeeded, action_key, target_key)
 	controller.blackboard[target_key] = null

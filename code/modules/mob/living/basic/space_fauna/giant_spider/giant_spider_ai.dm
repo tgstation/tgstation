@@ -27,7 +27,7 @@
 		/datum/ai_planning_subtree/spin_web,
 	)
 
-/// Used by Araneus, who only attacks those who attack first. He is houstrained and will not web up the HoS office.
+/// Used by Araneus, who only attacks those who attack first. He is house-trained and will not web up the HoS office.
 /datum/ai_controller/basic_controller/giant_spider/retaliate
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),

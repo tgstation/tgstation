@@ -351,8 +351,6 @@
 	health = 10
 	melee_damage_lower = 1
 	melee_damage_upper = 1
-	poison_per_bite = 5
-	poison_type = /datum/reagent/toxin/mindbreaker
 	speed = 0
 	player_speed_modifier = 0
 	web_speed = 0.25

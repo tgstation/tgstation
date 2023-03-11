@@ -85,18 +85,22 @@
 
 /// Subtype which searches for mobs of a size relative to ours
 /datum/targetting_datum/basic/of_size
+	/// If true, we will return mobs which are smaller than us. If false, larger.
 	var/find_smaller = TRUE
+	/// If true, we will return mobs which are the same size as us.
 	var/inclusive = TRUE
 
-/datum/targetting_datum/basic/of_size/can_attack(mob/living/owner, mob/living/target)
-	if(!istype(target))
+/datum/targetting_datum/basic/of_size/can_attack(mob/living/owner, atom/target)
+	if(!isliving(target))
 		return FALSE
 	. = ..()
 	if(!.)
 		return FALSE
-	if(inclusive && owner.mob_size == target.mob_size)
+
+	var/mob/living/mob_target = target
+	if(inclusive && owner.mob_size == mob_target.mob_size)
 		return TRUE
-	if(owner.mob_size > target.mob_size)
+	if(owner.mob_size > mob_target.mob_size)
 		return find_smaller
 	return !find_smaller
 
