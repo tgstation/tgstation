@@ -43,7 +43,7 @@
 	severity = 0
 
 /datum/symptom/inorganic_adaptation/OnAdd(datum/disease/advance/A)
-	A.infectable_biotypes |= MOB_MINERAL | MOB_ROBOTIC // Plasmamen, Golems, and Androids.
+	A.infectable_biotypes |= MOB_MINERAL | MOB_ROBOTIC // Plasmamen, golems, and androids.
 
 /datum/symptom/inorganic_adaptation/OnRemove(datum/disease/advance/A)
 	A.infectable_biotypes &= ~(MOB_MINERAL | MOB_ROBOTIC)
