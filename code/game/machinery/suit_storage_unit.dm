@@ -15,6 +15,7 @@
 	var/obj/item/clothing/mask/mask = null
 	var/obj/item/mod/control/mod = null
 	var/obj/item/storage = null
+	var/obj/item/choice_beacon/space_suit = null
 								// if you add more storage slots, update cook() to clear their radiation too.
 
 	/// What type of spacesuit the unit starts with when spawned.
@@ -27,6 +28,8 @@
 	var/mod_type = null
 	/// What type of additional item the unit starts with when spawned.
 	var/storage_type = null
+	/// What type of additional item the unit starts with when spawned.
+	var/space_suit_type = null
 
 	state_open = FALSE
 	/// If the SSU's doors are locked closed. Can be toggled manually via the UI, but is also locked automatically when the UV decontamination sequence is running.
@@ -67,7 +70,7 @@
 /obj/machinery/suit_storage_unit/captain
 	mask_type = /obj/item/clothing/mask/gas/atmos/captain
 	storage_type = /obj/item/tank/jetpack/oxygen/captain
-	mod_type = /obj/item/mod/control/pre_equipped/magnate
+	space_suit_type = /obj/item/choice_beacon/space_suit/captain
 
 /obj/machinery/suit_storage_unit/centcom
 	mask_type = /obj/item/clothing/mask/gas/atmos/centcom
@@ -76,26 +79,26 @@
 
 /obj/machinery/suit_storage_unit/engine
 	mask_type = /obj/item/clothing/mask/breath
-	mod_type = /obj/item/mod/control/pre_equipped/engineering
+	space_suit_type = /obj/item/choice_beacon/space_suit/engineering
 
 /obj/machinery/suit_storage_unit/atmos
 	mask_type = /obj/item/clothing/mask/gas/atmos
 	storage_type = /obj/item/watertank/atmos
-	mod_type = /obj/item/mod/control/pre_equipped/atmospheric
+	space_suit_type = /obj/item/choice_beacon/space_suit/atmos
 
 /obj/machinery/suit_storage_unit/ce
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/clothing/shoes/magboots/advance
-	mod_type = /obj/item/mod/control/pre_equipped/advanced
+	space_suit_type = /obj/item/choice_beacon/space_suit/ce
 
 /obj/machinery/suit_storage_unit/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	mod_type = /obj/item/mod/control/pre_equipped/security
+	space_suit_type = /obj/item/choice_beacon/space_suit/security
 
 /obj/machinery/suit_storage_unit/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 	storage_type = /obj/item/tank/internals/oxygen
-	mod_type = /obj/item/mod/control/pre_equipped/safeguard
+	space_suit_type = /obj/item/choice_beacon/space_suit/hos
 
 /obj/machinery/suit_storage_unit/mining
 	suit_type = /obj/item/clothing/suit/hooded/explorer
@@ -104,7 +107,7 @@
 /obj/machinery/suit_storage_unit/mining/eva
 	suit_type = null
 	mask_type = /obj/item/clothing/mask/breath
-	mod_type = /obj/item/mod/control/pre_equipped/mining
+	space_suit_type = /obj/item/choice_beacon/space_suit/mining
 
 /obj/machinery/suit_storage_unit/medical
 	mask_type = /obj/item/clothing/mask/breath/medical
@@ -114,17 +117,17 @@
 /obj/machinery/suit_storage_unit/cmo
 	mask_type = /obj/item/clothing/mask/breath/medical
 	storage_type = /obj/item/tank/internals/oxygen
-	mod_type = /obj/item/mod/control/pre_equipped/rescue
+	space_suit_type = /obj/item/choice_beacon/space_suit/cmo
 
 /obj/machinery/suit_storage_unit/rd
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/tank/internals/oxygen
-	mod_type = /obj/item/mod/control/pre_equipped/research
+	space_suit_type = /obj/item/choice_beacon/space_suit/rd
 
 /obj/machinery/suit_storage_unit/syndicate
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	storage_type = /obj/item/tank/jetpack/oxygen/harness
-	mod_type = /obj/item/mod/control/pre_equipped/nuclear
+	space_suit_type = /obj/item/choice_beacon/space_suit/syndi
 
 /obj/machinery/suit_storage_unit/void_old
 	suit_type = /obj/item/clothing/suit/space/nasavoid/old
@@ -165,6 +168,8 @@
 		mod = new mod_type(src)
 	if(storage_type)
 		storage = new storage_type(src)
+	if(space_suit_type)
+		space_suit = new space_suit_type(src)
 	update_appearance()
 
 /obj/machinery/suit_storage_unit/Destroy()
@@ -224,6 +229,7 @@
 	mask = null
 	mod = null
 	storage = null
+	space_suit = null
 	set_occupant(null)
 
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
@@ -243,6 +249,7 @@
 			"mask" = create_silhouette_of(/obj/item/clothing/mask/breath),
 			"mod" = create_silhouette_of(/obj/item/mod/control),
 			"storage" = create_silhouette_of(/obj/item/tank/internals/oxygen),
+			"space_suit" = create_silhouette_of(/obj/item/choice_beacon/space_suit),
 		)
 
 	. = ..()
@@ -295,7 +302,7 @@
 			if (occupant && safeties)
 				say("Alert: safeties triggered, occupant detected!")
 				return
-			else if (!helmet && !mask && !suit && !storage && !occupant)
+			else if (!helmet && !mask && !suit && !storage && !occupant && !space_suit)
 				to_chat(user, "There's nothing inside [src] to disinfect!")
 				return
 			else
@@ -411,6 +418,7 @@
 			QDEL_NULL(mask)
 			QDEL_NULL(mod)
 			QDEL_NULL(storage)
+			QDEL_NULL(space_suit)
 			// The wires get damaged too.
 			wires.cut_all()
 		else
@@ -436,6 +444,9 @@
 			if(storage)
 				things_to_clear += storage
 				things_to_clear += storage.get_all_contents()
+			if(space_suit)
+				things_to_clear += space_suit
+				things_to_clear += space_suit.get_all_contents()
 			if(mob_occupant)
 				things_to_clear += mob_occupant
 				things_to_clear += mob_occupant.get_all_contents()
