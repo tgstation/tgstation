@@ -107,15 +107,20 @@
 "iD" = (
 /obj/structure/cable,
 /obj/structure/table/reinforced,
-/obj/item/storage/box/drinkingglasses{
-	pixel_y = 6;
-	pixel_x = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 8
+	},
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 4;
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/machinery/reagentgrinder{
+	pixel_y = 28;
+	pixel_x = -3
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travellers_rest)
@@ -151,9 +156,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travellers_rest)
 "mg" = (
-/obj/structure/chair/stool/bar/directional/south{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/dark_green,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travellers_rest)
@@ -222,6 +224,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/blue,
 /obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/travellers_rest)
 "yo" = (
@@ -314,6 +317,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/travellers_rest)
 "HA" = (
@@ -341,14 +345,16 @@
 "KJ" = (
 /obj/structure/cable,
 /obj/structure/table/reinforced,
-/obj/machinery/reagentgrinder{
-	pixel_y = 10
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 10
+	},
+/obj/machinery/chem_dispenser/drinks{
+	dir = 4;
+	pixel_x = 3;
+	pixel_y = 2
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travellers_rest)
@@ -378,11 +384,15 @@
 /area/ruin/space/has_grav/travellers_rest)
 "LU" = (
 /obj/structure/table/reinforced,
-/obj/machinery/chem_dispenser/drinks/beer{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 6
+	},
+/obj/item/storage/box/drinkingglasses{
+	pixel_y = 9;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/rag{
+	pixel_x = -4
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travellers_rest)
@@ -424,11 +434,21 @@
 "Sw" = (
 /obj/effect/decal/cleanable/food/plant_smudge,
 /obj/effect/turf_decal/trimline/dark_green/filled/line,
+/obj/machinery/airalarm/directional/south{
+	locked = 0
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travellers_rest)
 "TX" = (
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 1
+	},
+/obj/item/storage/secure/safe/directional/north{
+	desc = sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss;
+	pixel_y = 45
+	},
+/obj/structure/sink/kitchen/directional/south{
+	pixel_y = 14
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travellers_rest)
@@ -476,7 +496,10 @@
 "Xw" = (
 /obj/structure/cable,
 /obj/structure/table/reinforced,
-/obj/machinery/microwave,
+/obj/machinery/microwave{
+	pixel_x = 2;
+	pixel_y = 21
+	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -496,6 +519,9 @@
 "YH" = (
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 10
+	},
+/obj/structure/chair/stool/bar/directional/south{
+	dir = 8
 	},
 /turf/open/floor/iron/large,
 /area/ruin/space/has_grav/travellers_rest)
