@@ -4050,6 +4050,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\ooze.dm"
 #include "code\modules\mob\living\simple_animal\hostile\pirate.dm"
 #include "code\modules\mob\living\simple_animal\hostile\regalrat.dm"
+#include "code\modules\mob\living\simple_animal\hostile\regalrat_queen.dm"
 #include "code\modules\mob\living\simple_animal\hostile\russian.dm"
 #include "code\modules\mob\living\simple_animal\hostile\skeleton.dm"
 #include "code\modules\mob\living\simple_animal\hostile\slaughter_demon.dm"
