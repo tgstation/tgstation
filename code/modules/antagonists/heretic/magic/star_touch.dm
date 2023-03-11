@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/touch/star_touch
 	name = "Star Touch"
-	desc = "Marks someone with a star mark or puts someone with a star mark to sleep for 6 seconds."
+	desc = "Marks someone with a star mark or puts someone with a star mark to sleep for 4 seconds."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -30,7 +30,7 @@
 
 /datum/action/cooldown/spell/touch/star_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/carbon/human/victim, mob/living/carbon/caster)
 	if(victim.has_status_effect(/datum/status_effect/star_mark))
-		victim.apply_effect(6 SECONDS, effecttype = EFFECT_UNCONSCIOUS)
+		victim.apply_effect(4 SECONDS, effecttype = EFFECT_UNCONSCIOUS)
 		victim.remove_status_effect(/datum/status_effect/star_mark)
 	else
 		victim.apply_status_effect(/datum/status_effect/star_mark)
@@ -40,7 +40,7 @@
 /obj/item/melee/touch_attack/star_touch
 	name = "Star Touch"
 	desc = "A sinister looking aura that distorts the flow of reality around it. \
-		Causes people with a star mark to sleep for 6 seconds, and causes people without a star mark to get one."
+		Causes people with a star mark to sleep for 4 seconds, and causes people without a star mark to get one."
 	icon_state = "star"
 	inhand_icon_state = "star"
 

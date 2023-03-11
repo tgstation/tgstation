@@ -33,7 +33,7 @@
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 
-	gold_core_spawnable = HOSTILE_SPAWN
+	gold_core_spawnable = NO_SPAWN
 	slowed_by_drag = FALSE
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING

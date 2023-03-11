@@ -99,7 +99,7 @@
 	name = "Star Touch"
 	desc = "Grants you Star Touch, a spell that will give people a star mark (cosmic ring) \
 		and create a cosmic field where you stand. People that already have a star mark \
-		will be forced to sleep for 6 seconds."
+		will be forced to sleep for 4 seconds."
 	gain_text = "He dreamed to know, how the matter from star to star traveled. \
 		He lost interest in wanting to find out."
 	next_knowledge = list(/datum/heretic_knowledge/spell/star_blast)

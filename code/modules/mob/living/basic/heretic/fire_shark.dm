@@ -1,6 +1,6 @@
 /mob/living/basic/fire_shark
 	name = "fire shark"
-	desc = "It is a eldritch drawf space shark, also known as a fire shark."
+	desc = "It is a eldritch dwarf space shark, also known as a fire shark."
 	icon = 'icons/mob/nonhuman-player/eldritch_mobs.dmi'
 	icon_state = "fire_shark"
 	icon_living = "fire_shark"
