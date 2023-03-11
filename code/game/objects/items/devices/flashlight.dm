@@ -129,7 +129,7 @@
 				var/their = M.p_their()
 
 				var/list/mouth_organs = new
-				for(var/obj/item/organ/organ as anything in M.internal_organs)
+				for(var/obj/item/organ/organ as anything in M.organs)
 					if(organ.zone == BODY_ZONE_PRECISE_MOUTH)
 						mouth_organs.Add(organ)
 				var/organ_list = ""

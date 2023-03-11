@@ -1095,7 +1095,7 @@
 	for(var/obj/item/bodypart/limb as anything in owner.bodyparts)
 		if(!IS_ORGANIC_LIMB(limb))
 			cybernetics_level++
-	for(var/obj/item/organ/organ as anything in owner.internal_organs)
+	for(var/obj/item/organ/organ as anything in owner.organs)
 		if(organ.organ_flags & ORGAN_SYNTHETIC)
 			cybernetics_level++
 	update_mood()
