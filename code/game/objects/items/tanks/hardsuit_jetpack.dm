@@ -14,6 +14,10 @@
 	var/mob/living/carbon/human/active_user = null
 	var/obj/item/clothing/suit/space/hardsuit/active_hardsuit = null
 
+/obj/item/tank/jetpack/suit/get_user()
+	if(active_user)
+		return active_user
+	return . = ..()
 
 /obj/item/tank/jetpack/suit/Initialize(mapload)
 	. = ..()
@@ -67,12 +71,12 @@
 	if(active_hardsuit)
 		UnregisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED)
 		active_hardsuit = null
+	tank = null
+	air_contents = tempair_contents
+	. = ..()
 	if(active_user)
 		UnregisterSignal(user, COMSIG_PARENT_QDELETING)
 		active_user = null
-	tank = null
-	air_contents = tempair_contents
-	return ..()
 
 
 /obj/item/tank/jetpack/suit/process()
