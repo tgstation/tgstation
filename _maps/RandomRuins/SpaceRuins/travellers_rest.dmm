@@ -1,259 +1,14 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/obj/machinery/power/solar{
-	id = "foreport";
-	name = "Fore-Port Solar Array"
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/solarpanel,
-/area/ruin/space/has_grav/travellers_rest)
-"b" = (
-/obj/machinery/power/tracker,
-/obj/structure/cable,
-/turf/open/floor/iron/recharge_floor,
-/area/ruin/space/has_grav/travellers_rest)
-"c" = (
-/obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/travellers_rest)
-"d" = (
-/turf/template_noop,
-/area/template_noop)
-"e" = (
-/obj/structure/chair/stool/bar/directional/south,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"f" = (
-/obj/structure/cable,
-/obj/structure/table/reinforced,
-/obj/machinery/microwave,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"g" = (
-/obj/machinery/light/directional/west,
-/obj/machinery/light/directional/south,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/window/brigdoor{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"h" = (
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/travellers_rest)
-"i" = (
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"j" = (
-/obj/machinery/door/airlock/external/glass,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/iron/textured_large,
-/area/ruin/space/has_grav/travellers_rest)
-"k" = (
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_y = 32;
-	pixel_x = 8
-	},
-/obj/item/pai_card{
-	pixel_y = 5;
-	pixel_x = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"l" = (
-/obj/structure/cable,
-/turf/open/floor/iron/textured_large,
-/area/ruin/space/has_grav/travellers_rest)
-"m" = (
-/obj/effect/decal/cleanable/food/plant_smudge,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"n" = (
-/obj/machinery/light/directional/east,
-/obj/machinery/light/directional/north,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/window/brigdoor,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"o" = (
-/obj/structure/cable,
-/obj/structure/table/reinforced,
-/obj/machinery/reagentgrinder{
-	pixel_y = 10
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"p" = (
-/obj/structure/cable,
-/turf/open/floor/iron/large,
-/area/ruin/space/has_grav/travellers_rest)
-"q" = (
-/obj/structure/cable,
-/obj/machinery/chem_dispenser{
-	layer = 2.7
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"r" = (
-/obj/structure/cable,
-/obj/machinery/power/solar_control{
-	id = "foreport";
-	name = "Solar Control";
-	dir = 8
-	},
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/turf/open/floor/iron/textured,
-/area/ruin/space/has_grav/travellers_rest)
-"s" = (
-/turf/open/floor/iron/textured_large,
-/area/ruin/space/has_grav/travellers_rest)
-"t" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/medkit/regular{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/item/gps/spaceruin{
-	pixel_x = -9;
-	pixel_y = 3
-	},
-/turf/open/floor/iron/textured,
-/area/ruin/space/has_grav/travellers_rest)
-"u" = (
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"v" = (
+"aq" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"w" = (
-/obj/machinery/recharge_station,
-/obj/structure/cable,
-/turf/open/floor/iron/textured,
-/area/ruin/space/has_grav/travellers_rest)
-"x" = (
-/obj/structure/cable,
-/obj/structure/table/reinforced,
-/obj/item/storage/box/drinkingglasses{
-	pixel_y = 6;
-	pixel_x = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 9
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travellers_rest)
-"y" = (
-/obj/machinery/light/directional/east,
-/obj/machinery/light/directional/south,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/window/brigdoor{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"z" = (
-/obj/structure/cable,
-/obj/machinery/chem_master,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"A" = (
-/obj/structure/table/reinforced,
-/obj/machinery/chem_dispenser/drinks/beer{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"B" = (
-/turf/open/floor/iron/textured,
-/area/ruin/space/has_grav/travellers_rest)
-"C" = (
-/obj/item/kirbyplants,
-/turf/open/floor/iron/textured,
-/area/ruin/space/has_grav/travellers_rest)
-"D" = (
-/obj/structure/chair/stool/bar/directional/south{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"F" = (
-/obj/machinery/shower/directional/east,
-/obj/structure/extinguisher_cabinet/directional/west,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"G" = (
-/obj/structure/cable,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/toilet,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"H" = (
-/obj/machinery/chem_heater/withbuffer{
-	pixel_x = 4
-	},
-/obj/structure/window/reinforced,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"I" = (
-/obj/structure/cable,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/iron/textured,
-/area/ruin/space/has_grav/travellers_rest)
-"J" = (
-/obj/structure/bed,
-/obj/item/bedsheet/blue,
-/turf/open/floor/iron/textured,
-/area/ruin/space/has_grav/travellers_rest)
-"K" = (
-/obj/structure/chair/stool/bar/directional/south{
-	dir = 8
-	},
-/turf/open/floor/iron/large,
-/area/ruin/space/has_grav/travellers_rest)
-"L" = (
-/turf/open/floor/iron/large,
-/area/ruin/space/has_grav/travellers_rest)
-"M" = (
-/obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/window/brigdoor{
-	dir = 1
-	},
-/turf/open/floor/iron/textured,
-/area/ruin/space/has_grav/travellers_rest)
-"O" = (
+"aX" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -3;
@@ -264,30 +19,340 @@
 	pixel_y = 11
 	},
 /obj/item/storage/box/donkpockets/donkpocketpizza,
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron/textured_large,
 /area/ruin/space/has_grav/travellers_rest)
-"P" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-06"
+"bq" = (
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/space/has_grav/travellers_rest)
+"bz" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/travellers_rest)
+"bA" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_y = 32;
+	pixel_x = 8
+	},
+/obj/item/pai_card{
+	pixel_y = 5;
+	pixel_x = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"bN" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 4
 	},
 /turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/travellers_rest)
-"Q" = (
+"cr" = (
+/obj/structure/cable,
+/obj/machinery/chem_master,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"gF" = (
+/obj/machinery/power/solar{
+	id = "foreport";
+	name = "Fore-Port Solar Array"
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/solarpanel,
+/area/ruin/space/has_grav/travellers_rest)
+"gN" = (
+/obj/machinery/shower/directional/east,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/end{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"hL" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east{
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0
+	},
+/obj/effect/spawner/random/engineering/toolbox,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travellers_rest)
+"iD" = (
+/obj/structure/cable,
+/obj/structure/table/reinforced,
+/obj/item/storage/box/drinkingglasses{
+	pixel_y = 6;
+	pixel_x = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"iP" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-06"
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travellers_rest)
+"iZ" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/textured_large,
+/area/ruin/space/has_grav/travellers_rest)
+"jL" = (
+/obj/structure/cable,
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/storage/box/beakers{
+	pixel_y = 1;
+	pixel_x = -5
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"mg" = (
+/obj/structure/chair/stool/bar/directional/south{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark_green,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"pk" = (
+/obj/item/kirbyplants,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travellers_rest)
+"sn" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /obj/structure/window/reinforced,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travellers_rest)
-"R" = (
-/obj/machinery/holopad,
+"sM" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/light/directional/south,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/window/brigdoor{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/brown/filled,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"uq" = (
+/obj/effect/turf_decal/trimline/brown,
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travellers_rest)
+"uS" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travellers_rest)
+"vX" = (
+/obj/structure/cable,
+/obj/machinery/power/solar_control{
+	id = "foreport";
+	name = "Solar Control";
+	dir = 8
+	},
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travellers_rest)
+"xk" = (
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/window/brigdoor{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow,
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travellers_rest)
+"xq" = (
+/obj/structure/bed,
+/obj/item/bedsheet/blue,
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travellers_rest)
+"yo" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/end{
+	dir = 8
+	},
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travellers_rest)
+"zw" = (
+/obj/machinery/power/tracker,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/neutral,
+/turf/open/floor/iron/recharge_floor,
+/area/ruin/space/has_grav/travellers_rest)
+"Dq" = (
+/obj/machinery/chem_heater/withbuffer{
+	pixel_x = 4
+	},
+/obj/structure/window/reinforced,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"Dw" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/light/directional/north,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/window/brigdoor,
+/obj/effect/turf_decal/trimline/dark_green/filled,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"Ef" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travellers_rest)
+"Ep" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travellers_rest)
+"EI" = (
+/obj/structure/chair/stool/bar/directional/south{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/end{
+	dir = 4
+	},
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travellers_rest)
+"Fa" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/end,
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travellers_rest)
+"FL" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/light/directional/north,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/window/brigdoor,
+/obj/effect/turf_decal/trimline/blue/filled,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"Gj" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/regular{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/gps/spaceruin{
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travellers_rest)
+"HA" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/light/directional/south,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/window/brigdoor{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"HC" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/blue,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"KD" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/textured_large,
 /area/ruin/space/has_grav/travellers_rest)
-"S" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/iron/dark/smooth_large,
+"KJ" = (
+/obj/structure/cable,
+/obj/structure/table/reinforced,
+/obj/machinery/reagentgrinder{
+	pixel_y = 10
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/travellers_rest)
-"T" = (
+"KL" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -300,9 +365,89 @@
 /obj/item/tank/internals/oxygen{
 	pixel_x = -4
 	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
 /turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/travellers_rest)
-"U" = (
+"LS" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/textured_large,
+/area/ruin/space/has_grav/travellers_rest)
+"LU" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"MB" = (
+/turf/template_noop,
+/area/template_noop)
+"NG" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/travellers_rest)
+"Ob" = (
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"Rp" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/toilet,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"RN" = (
+/obj/item/disk/holodisk/ruin/space/travellers_rest{
+	pixel_y = 18;
+	pixel_x = 13
+	},
+/obj/effect/turf_decal/trimline/white/filled/line,
+/obj/effect/turf_decal/trimline/neutral/end{
+	dir = 1
+	},
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travellers_rest)
+"Sw" = (
+/obj/effect/decal/cleanable/food/plant_smudge,
+/obj/effect/turf_decal/trimline/dark_green/filled/line,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"TX" = (
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"Vn" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"Vv" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travellers_rest)
+"Xo" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -313,236 +458,253 @@
 /obj/item/stock_parts/capacitor/super,
 /obj/item/storage/box/lights/tubes,
 /obj/item/clothing/glasses/night,
+/obj/item/stock_parts/capacitor/super,
+/obj/item/stock_parts/cell/high,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 6
+	},
 /turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/travellers_rest)
-"X" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+"Xu" = (
+/obj/machinery/recharge_station,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east{
-	environ = 0;
-	equipment = 0;
-	lighting = 0;
-	locked = 0
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 10
 	},
-/obj/effect/spawner/random/engineering/toolbox,
 /turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/travellers_rest)
-"Y" = (
-/obj/machinery/light/directional/west,
-/obj/machinery/light/directional/north,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/window/brigdoor,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travellers_rest)
-"Z" = (
+"Xw" = (
 /obj/structure/cable,
 /obj/structure/table/reinforced,
+/obj/machinery/microwave,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travellers_rest)
+"Yd" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/textured_large,
+/area/ruin/space/has_grav/travellers_rest)
+"YH" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travellers_rest)
+"ZE" = (
+/obj/structure/cable,
+/obj/machinery/chem_dispenser{
+	layer = 2.7
+	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/storage/box/beakers{
-	pixel_y = 1;
-	pixel_x = -5
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travellers_rest)
 
 (1,1,1) = {"
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
 "}
 (2,1,1) = {"
-d
-d
-d
-d
-a
-d
-d
-d
-a
-d
-d
-d
-d
+MB
+MB
+MB
+MB
+gF
+MB
+MB
+MB
+gF
+MB
+MB
+MB
+MB
 "}
 (3,1,1) = {"
-d
-d
-d
-a
-c
-f
-x
-o
-c
-a
-d
-d
-d
+MB
+MB
+MB
+gF
+bz
+Xw
+iD
+KJ
+bz
+gF
+MB
+MB
+MB
 "}
 (4,1,1) = {"
-d
-d
-a
-a
-h
-i
-D
-m
-h
-a
-a
-d
-d
+MB
+MB
+gF
+gF
+NG
+TX
+mg
+Sw
+NG
+gF
+gF
+MB
+MB
 "}
 (5,1,1) = {"
-d
-a
-c
-h
-Y
-e
-O
-A
-g
-h
-c
-a
-d
+MB
+gF
+bz
+NG
+Dw
+Ob
+aX
+LU
+HA
+NG
+bz
+gF
+MB
 "}
 (6,1,1) = {"
-d
-d
-z
-F
-Q
-L
-K
-L
-v
-T
-w
-S
-d
+MB
+MB
+cr
+gN
+sn
+Ef
+EI
+YH
+aq
+KL
+Xu
+bq
+MB
 "}
 (7,1,1) = {"
-d
-d
-q
-u
-l
-p
-b
-L
-s
-M
-B
-j
-d
+MB
+MB
+ZE
+HC
+KD
+Fa
+zw
+RN
+LS
+xk
+uS
+Yd
+MB
 "}
 (8,1,1) = {"
-d
-d
-Z
-k
-H
-L
-L
-L
-v
-X
-r
-S
-d
+MB
+MB
+jL
+bA
+Dq
+Vv
+yo
+Ep
+Vn
+hL
+vX
+bq
+MB
 "}
 (9,1,1) = {"
-d
-a
-c
-h
-n
-P
-R
-C
-y
-h
-c
-a
-d
+MB
+gF
+bz
+NG
+FL
+iP
+iZ
+pk
+sM
+NG
+bz
+gF
+MB
 "}
 (10,1,1) = {"
-d
-d
-a
-a
-h
-t
-B
-J
-h
-a
-a
-d
-d
+MB
+MB
+gF
+gF
+NG
+Gj
+uq
+xq
+NG
+gF
+gF
+MB
+MB
 "}
 (11,1,1) = {"
-d
-d
-d
-a
-c
-G
-I
-U
-c
-a
-d
-d
-d
+MB
+MB
+MB
+gF
+bz
+Rp
+bN
+Xo
+bz
+gF
+MB
+MB
+MB
 "}
 (12,1,1) = {"
-d
-d
-d
-d
-a
-d
-d
-d
-a
-d
-d
-d
-d
+MB
+MB
+MB
+MB
+gF
+MB
+MB
+MB
+gF
+MB
+MB
+MB
+MB
 "}
 (13,1,1) = {"
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
 "}
