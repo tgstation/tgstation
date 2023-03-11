@@ -135,3 +135,11 @@
 	smoothing_flags = NONE
 	canSmoothWith = null
 	smoothing_groups = null
+
+/turf/closed/wall/material/meat
+	name = "living wall"
+
+/turf/closed/wall/material/meat/Initialize(mapload)
+	. = ..()
+	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = MINERAL_MATERIAL_AMOUNT))
+	name = initial(name)

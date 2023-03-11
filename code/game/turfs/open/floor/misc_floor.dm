@@ -287,3 +287,11 @@
 
 /turf/open/floor/cult/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/material/meat
+	desc = "living floor"
+
+/turf/open/floor/material/Initialize(mapload)
+	. = ..()
+	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = MINERAL_MATERIAL_AMOUNT))
+	name = initial(name)
