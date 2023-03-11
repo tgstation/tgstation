@@ -553,11 +553,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		if(isliving(user))
 			var/mob/living/living_user = user
 			if(!IS_HERETIC(living_user))
-				coin_damage += 5
+				coin_damage += 4
 			if(coinflip == "heretic")
 				coin_damage -= 10
 			else
-				coin_damage += 5
+				coin_damage += 6
 			living_user.adjustBruteLoss(coin_damage)
 			living_user.adjustFireLoss(coin_damage)
 			living_user.adjustToxLoss(coin_damage)
