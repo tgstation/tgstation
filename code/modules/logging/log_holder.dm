@@ -112,14 +112,15 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	var/list/contained_categories = list()
 	for(var/datum/log_category/sub_category as anything in sub_categories)
 		sub_category = new sub_category
+		var/sub_category_actual = sub_category.category
 		sub_category.master_category = category_instance
-		log_categories[sub_category.category] = sub_category
+		log_categories[sub_category_actual] = sub_category
 
 		if(!semver_to_list(sub_category.schema_version))
-			stack_trace("log category [sub_category.category] has an invalid schema version '[sub_category.schema_version]'")
+			stack_trace("log category [sub_category_actual] has an invalid schema version '[sub_category.schema_version]'")
 			sub_category.schema_version = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET
 
-		contained_categories[sub_category.category] = sub_category.schema_version
+		contained_categories += sub_category_actual
 
 	log_categories[category_instance.category] = category_instance
 
@@ -133,7 +134,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		LOG_HEADER_INIT_TIMESTAMP = logging_start_timestamp,
 		LOG_HEADER_ROUND_ID = big_number_to_text(GLOB.round_id),
 		LOG_HEADER_SECRET = category_instance.secret,
-		LOG_HEADER_SCHEMA_LIST = contained_categories,
+		LOG_HEADER_CATEGORY_LIST = contained_categories,
 		LOG_HEADER_CATEGORY = category_instance.category,
 	)
 	rustg_file_write("[json_encode(category_header)]\n", category_instance.get_output_file(null))

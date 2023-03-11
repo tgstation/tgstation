@@ -32,6 +32,7 @@ GENERAL_PROTECT_DATUM(/datum/log_category)
 		LOG_ENTRY_TIMESTAMP = logger.human_readable_timestamp(),
 		LOG_ENTRY_CATEGORY = category,
 		LOG_ENTRY_MESSAGE = message,
+		LOG_ENTRY_SCHEMA_VERSION = schema_version,
 	)
 	if(data)
 		entry[LOG_ENTRY_DATA] = data

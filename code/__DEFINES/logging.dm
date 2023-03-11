@@ -56,7 +56,7 @@
 
 // Log header keys
 #define LOG_HEADER_CATEGORY "category"
-#define LOG_HEADER_SCHEMA_LIST "schema-list"
+#define LOG_HEADER_CATEGORY_LIST "category-list"
 #define LOG_HEADER_INIT_TIMESTAMP "timestamp"
 #define LOG_HEADER_ROUND_ID "round-id"
 #define LOG_HEADER_SECRET "secret"
@@ -66,6 +66,7 @@
 #define LOG_ENTRY_MESSAGE "message"
 #define LOG_ENTRY_TIMESTAMP "timestamp"
 #define LOG_ENTRY_DATA "data"
+#define LOG_ENTRY_SCHEMA_VERSION "schema-version"
 #define LOG_ENTRY_WORLD_DATA "world-state"
 
 // Log json keys
