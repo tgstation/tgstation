@@ -63,6 +63,10 @@
 	pixel_y = 32;
 	pixel_x = 8
 	},
+/obj/item/pai_card{
+	pixel_y = 5;
+	pixel_x = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travellers_rest)
 "l" = (
@@ -70,7 +74,6 @@
 /turf/open/floor/iron/textured_large,
 /area/ruin/space/has_grav/travellers_rest)
 "m" = (
-/obj/effect/decal/cleanable/garbage,
 /obj/effect/decal/cleanable/food/plant_smudge,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travellers_rest)
@@ -290,8 +293,12 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/obj/item/pai_card{
-	pixel_y = -1
+/obj/item/clothing/mask/breath{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/obj/item/tank/internals/oxygen{
+	pixel_x = -4
 	},
 /turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/travellers_rest)
@@ -307,21 +314,6 @@
 /obj/item/storage/box/lights/tubes,
 /obj/item/clothing/glasses/night,
 /turf/open/floor/iron/textured,
-/area/ruin/space/has_grav/travellers_rest)
-"V" = (
-/turf/template_noop,
-/area/ruin/space/has_grav/travellers_rest)
-"W" = (
-/obj/machinery/power/solar{
-	id = "foreport";
-	name = "Fore-Port Solar Array"
-	},
-/obj/machinery/power/solar{
-	id = "foreport";
-	name = "Fore-Port Solar Array"
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/solarpanel,
 /area/ruin/space/has_grav/travellers_rest)
 "X" = (
 /obj/structure/window/reinforced{
@@ -382,7 +374,7 @@ d
 a
 d
 d
-V
+d
 a
 d
 d
@@ -399,7 +391,7 @@ f
 x
 o
 c
-W
+a
 d
 d
 d
@@ -408,7 +400,7 @@ d
 d
 d
 a
-W
+a
 h
 i
 D
