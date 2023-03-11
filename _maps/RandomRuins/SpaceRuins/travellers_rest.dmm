@@ -201,12 +201,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travellers_rest)
-"E" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/grille,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/travellers_rest)
 "F" = (
 /obj/machinery/shower/directional/east,
 /obj/structure/extinguisher_cabinet/directional/west,
@@ -287,8 +281,8 @@
 /turf/open/floor/iron/textured_large,
 /area/ruin/space/has_grav/travellers_rest)
 "S" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/travellers_rest)
 "T" = (
@@ -483,7 +477,7 @@ L
 v
 X
 r
-E
+S
 d
 "}
 (9,1,1) = {"
