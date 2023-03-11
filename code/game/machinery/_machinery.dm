@@ -119,8 +119,6 @@
 	var/is_operational = TRUE
 	var/wire_compatible = FALSE
 
-	/// stack components inside this machine. Will be initialized and cached only when displaying the parts
-	var/list/cached_stack_parts = null
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
 	var/panel_open = FALSE
 	var/state_open = FALSE
