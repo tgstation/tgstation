@@ -24,7 +24,6 @@
 	icon_state = "star_ball"
 	damage = 20
 	damage_type = BURN
-	nodamage = FALSE
 	speed = 1
 	range = 100
 	knockdown = 4 SECONDS
