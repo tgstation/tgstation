@@ -407,8 +407,13 @@
 /area/ruin/space)
 "qX" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/ammo_casing/a357,
-/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357{
+	pixel_y = -3
+	},
+/obj/item/ammo_casing/a357{
+	pixel_y = 9;
+	pixel_x = -9
+	},
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space)
 "rj" = (
@@ -468,6 +473,23 @@
 /area/ruin/space)
 "tQ" = (
 /obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space)
+"tW" = (
+/obj/effect/decal/cleanable/blood/drip{
+	pixel_y = 9
+	},
+/obj/effect/decal/cleanable/blood/drip{
+	pixel_y = 11;
+	pixel_x = 16
+	},
+/obj/effect/decal/cleanable/blood/drip{
+	pixel_y = 19
+	},
+/obj/effect/decal/cleanable/blood/drip{
+	pixel_y = 12;
+	pixel_x = 7
+	},
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space)
 "uq" = (
@@ -534,6 +556,7 @@
 /obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
 /obj/effect/decal/cleanable/blood,
 /obj/item/gun/energy/e_gun/mini,
+/obj/effect/decal/cleanable/blood/gibs/limb,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space)
 "xT" = (
@@ -558,6 +581,7 @@
 /obj/item/pickaxe,
 /obj/effect/turf_decal/stripes/full,
 /obj/item/storage/belt/mining,
+/obj/effect/decal/cleanable/blood/tracks,
 /turf/open/misc/asteroid/basalt,
 /area/ruin/space)
 "yT" = (
@@ -621,6 +645,9 @@
 "Ck" = (
 /obj/effect/spawner/random/maintenance,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "Cp" = (
@@ -908,6 +935,12 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/space)
+"Qn" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/plastitanium/airless,
+/area/ruin/space)
 "QN" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/poster/contraband/soviet_propaganda,
@@ -939,6 +972,7 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood,
+/obj/effect/gibspawner,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "Tp" = (
@@ -1098,6 +1132,17 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/full,
 /turf/open/misc/asteroid/basalt,
+/area/ruin/space)
+"YU" = (
+/obj/item/ammo_casing/a40mm{
+	pixel_y = 13;
+	pixel_x = -9
+	},
+/obj/item/ammo_casing/a40mm{
+	pixel_y = -2;
+	pixel_x = 5
+	},
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "Zg" = (
 /obj/item/ammo_casing/a357{
@@ -1725,7 +1770,7 @@ cR
 Do
 gN
 de
-gN
+tW
 CY
 Dc
 mC
@@ -1762,7 +1807,7 @@ CZ
 Cz
 ZO
 ZO
-Ho
+Qn
 yd
 Uy
 aj
@@ -1840,7 +1885,7 @@ ZO
 Ax
 xi
 ht
-ZC
+YU
 ZO
 ZC
 ZO
