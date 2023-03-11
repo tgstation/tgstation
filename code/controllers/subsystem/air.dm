@@ -538,14 +538,34 @@ SUBSYSTEM_DEF(air)
 	// It defaults to 0, so we start at -1
 	var/time = -1
 
+	var/list/turf/open/difference_check = list()
 	for(var/turf/T as anything in ALL_TURFS())
 		if (!T.init_air)
 			continue
 		// We pass the tick as the current step so if we sleep the step changes
 		// This way we can make setting up adjacent turfs O(n) rather then O(n^2)
 		T.Initalize_Atmos(time)
+		// We assert that we'll only get open turfs here
+		difference_check += T
 		if(CHECK_TICK)
 			time--
+
+	// Now we're gonna compare for differences
+	// Taking advantage of current cycle being set to negative before this run to do A->B B->A prevention
+	for(var/turf/open/T as anything in difference_check)
+		T.current_cycle = 0
+		for(var/turf/open/enemy_tile as anything in T.atmos_adjacent_turfs)
+			// If it's already been processed, then it's already talked to us
+			if(enemy_tile.current_cycle == 0)
+				continue
+			// .air instead of .return_air() because we can guarentee that the proc won't do anything
+			if(T.air.compare(enemy_tile.air))
+				//testing("Active turf found. Return value of compare(): [T.air.compare(enemy_tile.air)]")
+				T.excited = TRUE
+				SSair.active_turfs += T
+				// No sense continuing to iterate
+				break
+		CHECK_TICK
 
 	if(active_turfs.len)
 		var/starting_ats = active_turfs.len
