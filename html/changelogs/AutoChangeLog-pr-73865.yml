@@ -1,4 +1,0 @@
-author: "OrionTheFox"
-delete-after: True
-changes:
-  - bugfix: "fixed Telepathy messages not having a check for being in range."
