@@ -69,7 +69,7 @@
 	icon = 'icons/turf/floors/reinf_glass.dmi'
 	icon_state = "reinf_glass-0"
 	base_icon_state = "reinf_glass"
-	jump_fragility = 5
+	jump_fragility = 0
 	floor_tile = /obj/item/stack/tile/rglass
 	alpha_to_leave = 206
 
@@ -85,7 +85,7 @@
 	icon = 'icons/turf/floors/plasma_glass.dmi'
 	icon_state = "plasma_glass-0"
 	base_icon_state = "plasma_glass"
-	jump_fragility = 50
+	jump_fragility = 0
 	floor_tile = /obj/item/stack/tile/glass/plasma
 	starlight_color = COLOR_STRONG_VIOLET
 	alpha_to_leave = 255
@@ -102,7 +102,6 @@
 	icon = 'icons/turf/floors/reinf_plasma_glass.dmi'
 	icon_state = "reinf_plasma_glass-0"
 	base_icon_state = "reinf_plasma_glass"
-	jump_fragility = 3
 	floor_tile = /obj/item/stack/tile/rglass/plasma
 	starlight_color = COLOR_STRONG_VIOLET
 	alpha_to_leave = 206
