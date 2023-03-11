@@ -110,7 +110,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		if(!isnull(place.apc))
 			apc_map[place.name] = place.apc
 		//If we found just one apc we can just convert that to work for our new area. But 2 or more!! nope
-		if(apc_map.len > 1)
+		if(length(apc_map) > 1)
 			creator.balloon_alert(creator, "too many conflicting APCs, only one allowed!")
 			return
 		areas[place.name] = place
@@ -161,9 +161,12 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		newA.create_area_lighting_objects()
 
 	//reconfigure machinery of affected areas
+	var/list/area/affected_areas = list()
 	for(var/area_name in collected_areas)
 		var/list/area_data = collected_areas[area_name]
 		var/list/area_machinery = area_data["machinery"]
+		var/area/merged_area = area_data["area"]
+		affected_areas += merged_area
 
 		//reassign apc to its area
 		var/obj/machinery/power/apc/area_apc = area_machinery["apc"]
@@ -171,8 +174,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 			area_apc.assign_to_area()
 
 		//recompute firedoor machinery
-		var/area/merged_area = area_data["area"]
-		for(var/door in merged_area.firedoors)
+		for(var/door as anything in merged_area.firedoors)
 			var/obj/machinery/door/firedoor/FD = door
 			FD.CalculateAffectingAreas()
 
@@ -196,15 +198,16 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		for(var/obj/machinery/firealarm/alarm in fire_alarms)
 			alarm.assign_to_area()
 
-	SEND_GLOBAL_SIGNAL(COMSIG_AREA_CREATED, newA, oldA, creator)
+
+	SEND_GLOBAL_SIGNAL(COMSIG_AREA_CREATED, newA, affected_areas, creator)
 	to_chat(creator, span_notice("You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered."))
 	creator.log_message("created a new area: [AREACOORD(creator)] (previously \"[oldA.name]\")", LOG_GAME)
 
 	//purge old areas that had all their turfs merged into the new one i.e. old empty areas
-	for(var/area_name in collected_areas)
-		var/list/area_data = collected_areas[area_name]
-		var/area/merged_area = area_data["area"]
+	for(var/i in 1 to length(affected_areas))
+		var/area/merged_area = affected_areas[i]
 		if(!merged_area.has_contained_turfs()) //no more turfs in this area. Time to clean up
+			message_admins("Done [merged_area.name]")
 			qdel(merged_area)
 
 	return TRUE

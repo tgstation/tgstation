@@ -7,7 +7,7 @@
 // start global signals with "!", this used to be necessary but now it's just a formatting choice
 
 
-/// called after a successful area creation by a mob: (area/created_area, area/old_area, mob/creator)
+/// called after a successful area creation by a mob: (area/created_area, list/area/old_areas, mob/creator)
 #define COMSIG_AREA_CREATED "!mob_created_area"
 ///from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
 #define COMSIG_GLOB_NEW_Z "!new_z"
