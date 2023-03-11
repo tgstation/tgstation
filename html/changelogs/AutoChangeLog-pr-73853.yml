@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "The cultist ritual site locator and Nar'Sie summon message will no longer use area names modified by the CE's blueprints."
