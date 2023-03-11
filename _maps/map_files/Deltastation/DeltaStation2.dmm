@@ -45976,6 +45976,10 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/library/artgallery)
+"leC" = (
+/obj/machinery/holopad,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/hop)
 "leE" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/storage_shared)
@@ -135563,7 +135567,7 @@ pRS
 wzM
 vJA
 fdQ
-fdQ
+leC
 feB
 xbG
 lUI
