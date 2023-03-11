@@ -110,7 +110,7 @@
 /obj/item/melee/sickly_blade/cosmig
 	name = "\improper cosmig blade"
 	desc = "A blade reflecting the cosmos, made from strange matter. \
-		Sending out cosmig radiation, deconstructing organic lifeforms to their building blocks."
+		Containing cosmig radiation, deconstructing organic lifeforms to their building blocks."
 	icon_state = "cosmig_blade"
 	inhand_icon_state = "cosmig_blade"
 	after_use_message = "The Stargazer hears your call..."

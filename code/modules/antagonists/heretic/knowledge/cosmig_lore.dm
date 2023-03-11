@@ -1,53 +1,55 @@
 /**
- * # The path of Ash.
+ * # The path of Cosmos.
  *
  * Goes as follows:
  *
- * Nightwatcher's Secret
- * Grasp of Ash
- * Ashen Passage
+ * Eternal Gate
+ * Grasp of Cosmos
+ * Cosmig Runes
  * > Sidepaths:
  *   Priest's Ritual
- *   Ashen Eyes
+ *   Fire Fish
  *
- * Mark of Ash
+ * Mark of Cosmos
  * Ritual of Knowledge
- * Fire Blast
- * Mask of Madness
+ * Star Touch
+ * Star Blast
  * > Sidepaths:
  *   Curse of Corrosion
- *   Curse of Paralysis
+ *   Curse of The Stars
  *
- * Fiery Blade
- * Nightwatcher's Rebirth
+ * Cosmig Blade
+ * Cosmig Expansion
  * > Sidepaths:
- *   Ashen Ritual
+ *   Eldritch Coin
  *   Rusted Ritual
  *
- * Ashlord's Rite
+ * Creators's Gift
  */
 /datum/heretic_knowledge/limited_amount/starting/base_cosmig
 	name = "Eternal Gate"
 	desc = "Opens up the Path of Cosmos to you. \
-		Allows you to transmute a match and a knife into an Ashen Blade. \
+		Allows you to transmute a sheet of plasma and a knife into an Cosmig Blade. \
 		You can only create two at a time."
-	gain_text = "It started with the gateway to eternity."
+	gain_text = "It looked at the stars to guide himself."
 	next_knowledge = list(/datum/heretic_knowledge/cosmig_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
-		/obj/item/stack/ore/bluespace_crystal = 1,
+		/obj/item/stack/sheet/mineral/plasma = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/cosmig)
 	route = PATH_COSMIG
 
 /datum/heretic_knowledge/cosmig_grasp
-	name = "Grasp of Ash"
-	desc = "Your Mansus Grasp will burn the eyes of the victim, causing damage and blindness."
-	gain_text = "The Nightwatcher was the first of them, his treason started it all. \
-		Their lantern, expired to ash - their watch, absent."
-	next_knowledge = list(/datum/heretic_knowledge/spell/cosmig_passage)
+	name = "Grasp of Cosmos"
+	desc = "Your Mansus Grasp will give people a star mark (cosmig ring) and create a cosmig field where you stand."
+	gain_text = "The more he looked the more everything made sense. \
+		The stars traced out the path forward to his home."
+	next_knowledge = list(/datum/heretic_knowledge/spell/cosmig_runes)
 	cost = 1
 	route = PATH_COSMIG
+	/// Creates a field to stop people with a star mark.
+	var/obj/effect/cosmig_field/cosmig_field
 
 /datum/heretic_knowledge/cosmig_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -58,135 +60,114 @@
 /datum/heretic_knowledge/cosmig_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 
-	to_chat(target, span_danger("The radiation of the green light degenerates your cells!"))
-	target.apply_damage_type(damage = 5, damagetype = CLONE)
+	to_chat(target, span_danger("A cosmig ring appeared above your head!"))
+	target.apply_status_effect(/datum/status_effect/star_mark)
+	cosmig_field = new(get_turf(source))
 
-/datum/heretic_knowledge/spell/cosmig_passage
-	name = "Ashen Passage"
-	desc = "Grants you Ashen Passage, a silent but short range jaunt."
-	gain_text = "He knew how to walk between the planes."
+/datum/heretic_knowledge/spell/cosmig_runes
+	name = "Cosmig Runes"
+	desc = "Grants you Cosmig Runes, a spell that creates two runes linked with eachother for easy teleportation. \
+		Only the entity activating the rune will get transported, and it can be used by anyone without a star mark."
+	gain_text = "When day came, the Sleeper got lost. \
+		The sun outshined the stars, so he lost his guide."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/cosmig_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/essence,
-		/datum/heretic_knowledge/medallion,
+		/datum/heretic_knowledge/summon/fire_shark,
 	)
-	spell_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
+	spell_to_add = /datum/action/cooldown/spell/cosmig_rune
 	cost = 1
 	route = PATH_COSMIG
 
 /datum/heretic_knowledge/mark/cosmig_mark
 	name = "Mark of Cosmos"
-	desc = "Your Mansus Grasp now applies the Mark of Ash. The mark is triggered from an attack with your Ashen Blade. \
-		When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to any nearby heathens. \
-		Damage dealt is decreased with each transfer."
-	gain_text = "He was a very particular man, always watching in the dead of night. \
-		But in spite of his duty, he regularly tranced through the Manse with his blazing lantern held high. \
-		He shone brightly in the darkness, until the blaze begin to die."
-	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/ash)
+	desc = "Your Mansus Grasp now applies the Mark of Cosmos. The mark is triggered from an attack with your Cosmig Blade. \
+		When triggered, the victim transport back to the Cosmig Diamond, which is the location your mark was applied to them. \
+		After getting transported they will be paralyzed for 2 seconds."
+	gain_text = "As the guide was lost, he found a new. The energy increased as the gaze he threw. \
+		He didn't know, but with focus, the Sleepers energy began to flow."
+	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/cosmig)
 	route = PATH_COSMIG
 	mark_type = /datum/status_effect/eldritch/cosmig
 
-/datum/heretic_knowledge/mark/cosmig_mark/trigger_mark(mob/living/source, mob/living/target)
-	. = ..()
-	if(!.)
-		return
-
-	// Also refunds 75% of charge!
-	var/datum/action/cooldown/spell/touch/mansus_grasp/grasp = locate() in source.actions
-	if(grasp)
-		grasp.next_use_time = min(round(grasp.next_use_time - grasp.cooldown_time * 0.75, 0), 0)
-		grasp.build_all_button_icons()
-
 /datum/heretic_knowledge/knowledge_ritual/cosmig
-	next_knowledge = list(/datum/heretic_knowledge/spell/fire_blast)
+	next_knowledge = list(/datum/heretic_knowledge/spell/star_touch)
 	route = PATH_COSMIG
 
-/datum/heretic_knowledge/spell/cosmig_blast
-	name = "Volcano Blast"
-	desc = "Grants you Volcano Blast, a spell that - after a short charge - fires off a beam of energy \
-		at a nearby enemy, setting them on fire and burning them. If they do not extinguish themselves, \
-		the beam will continue to another target."
-	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
-	next_knowledge = list(/datum/heretic_knowledge/mad_mask)
-	spell_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
+/datum/heretic_knowledge/spell/star_touch
+	name = "Star Touch"
+	desc = "Grants you Star Touch, a spell that will give people a star mark (cosmig ring) \
+		and create a cosmig field where you stand. People that already have a star mark \
+		will be forced to sleep for 6 seconds."
+	gain_text = "He dreamed to know, how the matter from star to star traveled. \
+		He lost interest in wanting to find out."
+	next_knowledge = list(/datum/heretic_knowledge/spell/star_blast)
+	spell_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 1
 	route = PATH_COSMIG
 
-
-/datum/heretic_knowledge/cosmig_mask
-	name = "Mask of Madness"
-	desc = "Allows you to transmute any mask, four candles, a stun baton, and a liver to create a Mask of Madness. \
-		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \
-		It can also be forced onto a heathen, to make them unable to take it off..."
-	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
+/datum/heretic_knowledge/spell/star_blast
+	name = "Star Blast"
+	desc = "Fires a projectile that moves very slowly and create a cosmig field on impact. \
+		Anyone hit by the projectile will recieve burn damage, a knockdown and a star mark."
+	gain_text = "He didn't try, yet felt the call of the nights Creator."
 	next_knowledge = list(
-		/datum/heretic_knowledge/blade_upgrade/ash,
+		/datum/heretic_knowledge/blade_upgrade/cosmig,
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/curse/corrosion,
-		/datum/heretic_knowledge/curse/paralysis,
+		/datum/heretic_knowledge/curse/cosmig_trail,
 	)
-	required_atoms = list(
-		/obj/item/organ/internal/liver = 1,
-		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
-		/obj/item/clothing/mask = 1,
-		/obj/item/flashlight/flare/candle = 4,
-	)
-	result_atoms = list(/obj/item/clothing/mask/madness_mask)
+	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
 	cost = 1
 	route = PATH_COSMIG
 
-/datum/heretic_knowledge/blade_upgrade/ash
-	name = "Fiery Blade"
-	desc = "Your blade now lights enemies ablaze on attack."
-	gain_text = "He returned, blade in hand, he swung and swung as the ash fell from the skies. \
-		His city, the people he swore to watch... and watch he did, as they all burnt to cinders."
-	next_knowledge = list(/datum/heretic_knowledge/spell/flame_birth)
+/datum/heretic_knowledge/blade_upgrade/cosmig
+	name = "Cosmig Blade"
+	desc = "Your blade now deals damage to peoples cells through cosmig radiation."
+	gain_text = "As he ascended to be a watcher, he needed to gather knowledge. \
+		He started to draw it at his home."
+	next_knowledge = list(/datum/heretic_knowledge/spell/cosmig_expansion)
 	route = PATH_COSMIG
 
 /datum/heretic_knowledge/blade_upgrade/cosmig/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(source == target)
 		return
 
-	target.adjust_fire_stacks(1)
-	target.ignite_mob()
+	target.apply_damage_type(damage = 5, damagetype = CLONE)
 
-/datum/heretic_knowledge/spell/cosmig_birth
-	name = "Nightwatcher's Rebirth"
-	desc = "Grants you Nightwatcher's Rebirth, a spell that extinguishes you and \
-		burns all nearby heathens who are currently on fire, healing you for every victim afflicted. \
-		If any victims afflicted are in critical condition, they will also instantly die."
-	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
-		The Nightwatcher was a particular man, always watching."
+/datum/heretic_knowledge/spell/cosmig_expansion
+	name = "Cosmig Expansion"
+	desc = "Grants you Cosmig Expansion, a spell that creates a 3x3 area of cosmig fields around you. \
+		Nearby beings will also receive a star mark."
+	gain_text = "He was well known so he had a lot of drawing to do, to gather as much of the things he forgot."
 	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/ash_final,
-		/datum/heretic_knowledge/summon/ashy,
+		/datum/heretic_knowledge/ultimate/cosmig_final,
+		/datum/heretic_knowledge/eldritch_coin,
 		/datum/heretic_knowledge/summon/rusty,
 	)
-	spell_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
+	spell_to_add = /datum/action/cooldown/spell/conjure/cosmig_expansion
 	cost = 1
 	route = PATH_COSMIG
 
 /datum/heretic_knowledge/ultimate/cosmig_final
-	name = "Ashlord's Rite"
-	desc = "The ascension ritual of the Path of Ash. \
-		Bring 3 burning or husked corpses to a transmutation rune to complete the ritual. \
-		When completed, you become a harbinger of flames, gaining two abilites. \
-		Cascade, which causes a massive, growing ring of fire around you, \
-		and Oath of Flame, causing you to passively create a ring of flames as you walk. \
-		You will also become immune to flames, space, and similar environmental hazards."
-	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \
-		for the Nightwatcher brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
-		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
+	name = "Creators's Gift"
+	desc = "The ascension ritual of the Path of Cosmos. \
+		Bring 3 corpses with bluespacedust in their body to a transmutation rune to complete the ritual. \
+		When completed, you become the owner of a Star Gazer. \
+		You will be able to command the Star Gazer with Alt+click. \
+		You can also give it commands through speech. \
+		The Star Gazer is a strong mob that can even break down reinforced walls."
+	gain_text = "The past is gone, the Star Gazer became a vessel to watch over the universe. \
+		The Creator made this his path and he forgot his purpose. \
+		THE TIME IS NOW, WITNESS MY ASCENSION, THE STAR GAZER HAS GAINED PURPOSE ONCE MORE!"
 	route = PATH_COSMIG
-	/// A static list of all traits we apply on ascension.
-	var/static/list/traits_to_apply = list(
-		TRAIT_RESISTHEAT,
-		TRAIT_NOBREATH,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_NOFIRE,
+	/// A static list of command we can use with our mob.
+	var/static/list/star_gazer_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/point_targetting/attack/star_gazer
 	)
 
 /datum/heretic_knowledge/ultimate/cosmig_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
@@ -194,28 +175,15 @@
 	if(!.)
 		return
 
-	if(sacrifice.on_fire)
-		return TRUE
-	if(HAS_TRAIT_FROM(sacrifice, TRAIT_HUSK, BURN))
+	if(sacrifice.has_reagent(/datum/reagent/bluespace))
 		return TRUE
 	return FALSE
 
 /datum/heretic_knowledge/ultimate/cosmig_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce("[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	var/mob/living/basic/star_gazer/star_gazer_mob = new /mob/living/basic/star_gazer(loc)
+	star_gazer_mob.AddComponent(/datum/component/obeys_commands, star_gazer_commands)
+	star_gazer_mob.befriend(user)
 
-	var/datum/action/cooldown/spell/fire_sworn/circle_spell = new(user.mind)
-	circle_spell.Grant(user)
-
-	var/datum/action/cooldown/spell/fire_cascade/big/screen_wide_fire_spell = new(user.mind)
-	screen_wide_fire_spell.Grant(user)
-
-	var/datum/action/cooldown/spell/charged/beam/fire_blast/existing_beam_spell = locate() in user.actions
-	if(existing_beam_spell)
-		existing_beam_spell.max_beam_bounces *= 2 // Double beams
-		existing_beam_spell.beam_duration *= 0.66 // Faster beams
-		existing_beam_spell.cooldown_time *= 0.66 // Lower cooldown
-
-	user.client?.give_award(/datum/award/achievement/misc/ash_ascension, user)
-	for(var/trait in traits_to_apply)
-		ADD_TRAIT(user, trait, MAGIC_TRAIT)
+	user.client?.give_award(/datum/award/achievement/misc/cosmig_ascension, user)

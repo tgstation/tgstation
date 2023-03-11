@@ -76,3 +76,38 @@
 	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
 	receive_ricochet_chance_mod = INFINITY //we do ricochet a lot!
 	initial_duration = 10 SECONDS
+
+/// The cosmig heretics forcefield
+/obj/effect/cosmig_field
+	name = "Cosmig Field"
+	desc = "A field that cannot be passed by people marked with a cosmig star."
+	icon = 'icons/effects/eldritch.dmi'
+	icon_state = "cosmig_carpet"
+	anchored = TRUE
+	layer = LOW_SIGIL_LAYER
+	can_atmos_pass = ATMOS_PASS_NO
+	/// If set, how long the force field lasts after it's created. Set to 0 to have infinite duration forcefields.
+	var/initial_duration = 30 SECONDS
+	/// Flags for what antimagic can just ignore our forcefields
+	var/antimagic_flags = MAGIC_RESISTANCE
+
+/obj/effect/cosmig_field/Initialize(mapload, flags = MAGIC_RESISTANCE)
+	. = ..()
+	if(initial_duration > 0 SECONDS)
+		QDEL_IN(src, initial_duration)
+	antimagic_flags = flags
+
+/obj/effect/cosmig_field/singularity_pull()
+	return
+
+/obj/effect/cosmig_field/CanAllowThrough(atom/movable/mover, border_dir)
+	if(isliving(mover))
+		var/mob/living/living_mover = mover
+		if(living_mover.can_block_magic(antimagic_flags, charge_cost = 0))
+			return TRUE
+		if(living_mover.has_status_effect(/datum/status_effect/star_mark))
+			return FALSE
+	return ..()
+
+/obj/effect/cosmig_field/fast
+	initial_duration = 5 SECONDS

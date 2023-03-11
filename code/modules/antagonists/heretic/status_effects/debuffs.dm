@@ -137,3 +137,45 @@
 			human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 190)
 		if(95 to 100)
 			human_owner.adjust_confusion_up_to(12 SECONDS, 24 SECONDS)
+
+// STAR MARK
+/datum/status_effect/star_mark
+	id = "star_mark"
+	alert_type = /atom/movable/screen/alert/status_effect/star_mark
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+	///underlay used to indicate that someone is marked
+	var/mutable_appearance/cosmig_underlay
+	/// icon file for the underlay
+	var/effect_icon = 'icons/effects/eldritch.dmi'
+	/// icon state for the underlay
+	var/effect_icon_state = "cosmig_ring"
+
+/atom/movable/screen/alert/status_effect/star_mark
+	name = "Star Mark"
+	desc = "A ring above your head marks makes it so that you cannot enter cosmig fields or teleport through cosmig runes..."
+	icon_state = "star_mark"
+
+/datum/status_effect/star_mark/on_creation(mob/living/new_owner, ...)
+	cosmig_underlay = mutable_appearance(effect_icon, effect_icon_state, BELOW_MOB_LAYER)
+	return ..()
+
+/datum/status_effect/star_mark/Destroy()
+	QDEL_NULL(cosmig_underlay)
+	return ..()
+
+/datum/status_effect/star_mark/on_apply()
+	if(owner.mob_size >= MOB_SIZE_HUMAN)
+		RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_underlay))
+		owner.update_icon(UPDATE_OVERLAYS)
+	return TRUE
+
+/datum/status_effect/star_mark/proc/update_owner_underlay(atom/source, list/overlays)
+	SIGNAL_HANDLER
+
+	overlays += cosmig_underlay
+
+/datum/status_effect/star_mark/on_remove()
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	owner.update_icon(UPDATE_OVERLAYS)
+	return ..()

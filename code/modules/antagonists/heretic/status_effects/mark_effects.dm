@@ -223,11 +223,10 @@
 // MARK OF COSMOS
 /datum/status_effect/eldritch/cosmig
 	effect_icon_state = "emark6"
-	// For storing the location when the mark got applied.
+	/// For storing the location when the mark got applied.
 	var/obj/effect/cosmig_diamond/cosmig_diamond
-	// Effect when triggering mark.
+	/// Effect when triggering mark.
 	var/obj/effect/teleport_effect = /obj/effect/temp_visual/cosmig_cloud
-
 
 /datum/status_effect/eldritch/cosmig/on_creation(mob/living/new_owner)
 	. = ..()
@@ -246,5 +245,5 @@
 		channel = TELEPORT_CHANNEL_MAGIC,
 	)
 	new teleport_effect(get_turf(owner))
-	owner.apply_effect(1.5 SECONDS, effecttype = EFFECT_STUN)
+	owner.apply_effect(2 SECONDS, effecttype = EFFECT_PARALYZE)
 	return ..()
