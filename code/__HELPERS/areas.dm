@@ -110,7 +110,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		if(!isnull(place.apc))
 			apc_map[place.name] = place.apc
 		//If we found just one apc we can just convert that to work for our new area. But 2 or more!! nope
-		if(apc_map.len > 1)
+		if(length(apc_map.len) > 1)
 			creator.balloon_alert(creator, "too many conflicting APCs, only one allowed!")
 			return
 		areas[place.name] = place
@@ -172,28 +172,28 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 
 		//recompute firedoor machinery
 		var/area/merged_area = area_data["area"]
-		for(var/door in merged_area.firedoors)
+		for(var/door as anything in merged_area.firedoors)
 			var/obj/machinery/door/firedoor/FD = door
 			FD.CalculateAffectingAreas()
 
 		//reassign pumps
 		var/list/obj/machinery/atmospherics/components/unary/vent_pump/pumps = area_machinery["pumps"]
-		for(var/obj/machinery/atmospherics/components/unary/vent_pump/pump in pumps)
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/pump as anything in pumps)
 			pump.assign_to_area()
 
 		//reassign scrubbers
 		var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubbers = area_machinery["scrubbers"]
-		for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in scrubbers)
+		for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in scrubbers)
 			scrubber.assign_to_area()
 
 		//reassign air alarms
 		var/list/obj/machinery/airalarm/air_alarms = area_machinery["air_alarms"]
-		for(var/obj/machinery/airalarm/alarm in air_alarms)
+		for(var/obj/machinery/airalarm/alarm as anything in air_alarms)
 			alarm.assign_to_area()
 
 		//reassign fire alarms
 		var/list/obj/machinery/firealarm/fire_alarms = area_machinery["fire_alarms"]
-		for(var/obj/machinery/firealarm/alarm in fire_alarms)
+		for(var/obj/machinery/firealarm/alarm as anything in fire_alarms)
 			alarm.assign_to_area()
 
 	SEND_GLOBAL_SIGNAL(COMSIG_AREA_CREATED, newA, oldA, creator)
@@ -220,25 +220,25 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 
 	//disconnect vents. have to clone the list because disconnecting removes it from the list
 	var/list/obj/machinery/atmospherics/components/unary/vent_pump/pumps = area.air_vents.Copy()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/pump in pumps)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/pump as anything in pumps)
 		pump.disconnect_from_area()
 	area_machinery["pumps"] = pumps
 
 	//disconnect scrubbers. have to clone the list because disconnecting removes it from the list
 	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubbers = area.air_scrubbers.Copy()
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in scrubbers)
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in scrubbers)
 		scrubber.disconnect_from_area()
 	area_machinery["scrubbers"] = scrubbers
 
 	//collect air alarms for reassignment later on
 	var/list/obj/machinery/airalarm/air_alarms = list()
-	for(var/obj/machinery/airalarm/alarm in area)
+	for(var/obj/machinery/airalarm/alarm as anything in area)
 		air_alarms += alarm
 	area_machinery["air_alarms"] = air_alarms
 
 	//collect fire alarms for reassignment later on
 	var/list/obj/machinery/firealarm/fire_alarms = list()
-	for(var/obj/machinery/firealarm/alarm in area)
+	for(var/obj/machinery/firealarm/alarm as anything in area)
 		fire_alarms += alarm
 	area_machinery["fire_alarms"] = fire_alarms
 
