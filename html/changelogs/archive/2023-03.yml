@@ -326,3 +326,27 @@
   - bugfix: Tiziran lung stirfry now correctly uses a bowl in its construction, and
       is left over after eating. It also can only be constructed with organic lungs,
       because cybernetic lungs don't fry as well.
+2023-03-11:
+  GoldenAlpharex:
+  - bugfix: Fixed some potential future runtimes relatively to the new bodypart overlay
+      system's coloring procs.
+  Jacquerel, sprite by J(Clearly Lying):
+  - balance: Traitor objectives which ask you to destroy lathes or the ORM provide
+      an optional bonus if you _booby trap_ the machine using a provided tool. This
+      causes the machine to explode the next time it is interacted with.
+  - balance: Performing the objective without rigging the machine to explode awards
+      no TC, using it awards more TC than it did previously.
+  LT3:
+  - bugfix: Map filter works properly in the pre-round lobby
+  - bugfix: Map vote doesn't log 'not enough players' if the vote starts in the pre-round
+      lobby
+  OrionTheFox:
+  - bugfix: fixed Telepathy messages not having a check for being in range.
+  SgtHunk:
+  - bugfix: Androids now properly have robotic wings instead of moth wings.
+  sergeirocks100:
+  - bugfix: Gifts you wrap will now display their greyscale colors as they're supposed
+      to.
+  - bugfix: Wrapping paper color selection has been rebound to Alt+click, to fix a
+      bug where both wrapping paper color selection, and extracting wrapping paper
+      from a roll were both bound to right click.

@@ -304,13 +304,6 @@
 /obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
-"aaV" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/effect/turf_decal/trimline/blue/warning{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/station/escapepodbay)
 "aaW" = (
 /obj/effect/turf_decal/tile{
 	dir = 1
@@ -397,12 +390,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/escapepodbay)
-"abh" = (
-/obj/effect/turf_decal/trimline/blue/warning{
-	dir = 8
-	},
-/turf/closed/wall,
 /area/station/escapepodbay)
 "abi" = (
 /obj/structure/cable,
@@ -32582,6 +32569,14 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
+"kpu" = (
+/obj/docking_port/stationary/random{
+	name = "lavaland";
+	shuttle_id = "pod_4_lavaland";
+	dir = 8
+	},
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
 "kpw" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -35678,6 +35673,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"lvh" = (
+/obj/docking_port/stationary/random{
+	name = "lavaland";
+	shuttle_id = "pod_3_lavaland";
+	dir = 8
+	},
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
 "lvm" = (
 /obj/machinery/computer/records/security{
 	dir = 1
@@ -36396,6 +36399,14 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/left)
+"lIX" = (
+/obj/docking_port/stationary/random{
+	name = "lavaland";
+	shuttle_id = "pod_2_lavaland";
+	dir = 8
+	},
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
 "lIZ" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible{
@@ -80728,19 +80739,19 @@ aac
 aac
 aac
 aac
-kJy
+lIX
 aac
 aac
 aac
 aac
 aac
-kJy
+lvh
 aac
 aac
 aac
 aac
 aac
-kJy
+kpu
 aac
 aac
 aac
@@ -82519,7 +82530,7 @@ aaa
 aac
 aac
 aac
-abh
+dDk
 dDk
 abx
 dDk
@@ -82774,9 +82785,9 @@ aaa
 aaa
 aaa
 dDk
-aaV
-aaV
-abh
+adV
+adV
+dDk
 abr
 abA
 abD
