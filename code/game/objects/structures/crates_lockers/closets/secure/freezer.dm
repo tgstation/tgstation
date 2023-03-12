@@ -41,7 +41,7 @@
 	. = ..()
 
 	if(!opened)
-		balloon_alert(user, span_warning("open it first!"))
+		balloon_alert(user, "open it first!")
 		return TRUE
 
 	if(!tool.use_tool(src, user, 40, volume=50))
