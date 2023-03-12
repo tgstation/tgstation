@@ -260,12 +260,6 @@
 	},
 /turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
-"qv" = (
-/obj/effect/turf_decal/tile/yellow/diagonal_edge,
-/obj/effect/turf_decal/tile/neutral/diagonal_centre,
-/obj/structure/sign/poster/contraband/andromeda_bitters,
-/turf/open/floor/iron/diagonal/lavaland,
-/area/ruin/unpowered)
 "qU" = (
 /obj/structure/table/wood/fancy/red,
 /obj/effect/decal/cleanable/dirt,
@@ -1026,7 +1020,7 @@ ad
 PV
 ad
 Nt
-qv
+dR
 dR
 Te
 xP
