@@ -48,12 +48,12 @@
 
 /obj/item/melee/powerfist/wrench_act(mob/living/user, obj/item/tool)
 	switch(fist_pressure_setting)
-		if("low")
-			fist_pressure_setting = "medium"
-		if("medium")
-			fist_pressure_setting = "high"
-		if("high")
-			fist_pressure_setting = "low"
+		if(LOW_PRESSURE)
+			fist_pressure_setting = MID_PRESSURE
+		if(MID_PRESSURE)
+			fist_pressure_setting = HIGH_PRESSURE
+		if(HIGH_PRESSURE)
+			fist_pressure_setting = LOW_PRESSURE
 	tool.play_tool_sound(src)
 	balloon_alert(user, "piston strength set to [fist_pressure_setting]")
 	return TRUE

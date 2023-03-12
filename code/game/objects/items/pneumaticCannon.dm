@@ -94,12 +94,12 @@
 		return
 	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
 	switch(pressureSetting)
-		if("low")
-			pressureSetting = "medium"
-		if("medium")
-			pressureSetting = "high"
-		if("high")
-			pressureSetting = "low"
+		if(LOW_PRESSURE)
+			pressureSetting = MID_PRESSURE
+		if(MID_PRESSURE)
+			pressureSetting = HIGH_PRESSURE
+		if(HIGH_PRESSURE)
+			pressureSetting = LOW_PRESSURE
 	balloon_alert(user, "output level set to [pressureSetting]")
 	return TRUE
 
