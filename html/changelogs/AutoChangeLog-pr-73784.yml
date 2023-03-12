@@ -1,0 +1,4 @@
+author: "CRITAWAKETS"
+delete-after: True
+changes:
+  - config: "All dynamic midround rulesets are now properly accounted for in the dynamic.json config."
