@@ -5,6 +5,8 @@
 	//So it shows up in the map editor
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = "mobspawner"
+	/// Can this spawner be used up?
+	var/infinite_use = FALSE
 	///A forced name of the mob, though can be overridden if a special name is passed as an argument
 	var/mob_name
 	///the type of the mob, you best inherit this
@@ -161,7 +163,7 @@
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
 		return
-	if(uses <= 0) //just in case
+	if(uses <= 0 && !infinite_use) //just in case
 		to_chat(user, span_warning("This spawner is out of charges!"))
 		return
 
@@ -173,6 +175,18 @@
 	if(QDELETED(src) || QDELETED(user))
 		return
 
+	create_from_ghost(user)
+
+/**
+ * Uses a use and creates a mob from a passed ghost
+ *
+ * Does NOT validate that the spawn is possible or valid - assumes this has been done already!
+ *
+ * If you are manually forcing a player into this mob spawn,
+ * you should be using this and not directly calling [proc/create].
+ */
+/obj/effect/mob_spawn/ghost_role/proc/create_from_ghost(mob/dead/user)
+	ASSERT(istype(user))
 	user.log_message("became a [prompt_name].", LOG_GAME)
 	uses -= 1 // Remove a use before trying to spawn to prevent strangeness like the spawner trying to spawn more mobs than it should be able to
 	user.mind = null // dissassociate mind, don't let it follow us to the next life

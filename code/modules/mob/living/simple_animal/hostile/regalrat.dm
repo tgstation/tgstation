@@ -14,7 +14,7 @@
 	lighting_cutoff_green = 8
 	lighting_cutoff_blue = 5
 	obj_damage = 10
-	butcher_results = list(/obj/item/clothing/head/costume/crown = 1,)
+	butcher_results = list(/obj/item/food/meat/slab/mouse = 2, /obj/item/clothing/head/costume/crown = 1)
 	response_help_continuous = "glares at"
 	response_help_simple = "glare at"
 	response_disarm_continuous = "skoffs at"
@@ -181,7 +181,7 @@
 		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, vary = TRUE)
 	if(do_after(src, time_to_open, prying_door))
 		opening_airlock = FALSE
-		if(prying_door.density && !prying_door.open(2))
+		if(prying_door.density && !prying_door.open(BYPASS_DOOR_CHECKS))
 			to_chat(src, span_warning("Despite your efforts, the airlock managed to resist your attempts to open it!"))
 			return FALSE
 		prying_door.open()

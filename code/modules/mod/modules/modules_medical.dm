@@ -164,7 +164,6 @@
 /obj/projectile/organ
 	name = "organ"
 	damage = 0
-	nodamage = TRUE
 	hitsound = 'sound/effects/attackblob.ogg'
 	hitsound_wall = 'sound/effects/attackblob.ogg'
 	/// A reference to the organ we "are".
