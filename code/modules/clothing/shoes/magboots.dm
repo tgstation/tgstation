@@ -37,10 +37,10 @@
 /obj/item/clothing/shoes/magboots/attack_self(mob/user)
 	magpulse = !magpulse
 	if(magpulse)
-		insert_clothing_traits(active_traits)
+		attach_clothing_traits(active_traits)
 		slowdown += slowdown_active
 	else
-		remove_clothing_traits(active_traits)
+		detach_clothing_traits(active_traits)
 		slowdown = max(initial(slowdown), slowdown - slowdown_active) // Juuust in case
 
 	update_appearance()

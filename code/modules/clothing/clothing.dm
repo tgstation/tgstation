@@ -258,7 +258,7 @@
  *
  * This is so you can add clothing traits without worrying about needing to equip or unequip them to gain effects
  */
-/obj/item/clothing/proc/insert_clothing_traits(trait_or_traits)
+/obj/item/clothing/proc/attach_clothing_traits(trait_or_traits)
 	if(!islist(trait_or_traits))
 		trait_or_traits = list(trait_or_traits)
 
@@ -275,7 +275,7 @@
  *
  * This is so you can add clothing traits without worrying about needing to equip or unequip them to gain effects
  */
-/obj/item/clothing/proc/remove_clothing_traits(trait_or_traits)
+/obj/item/clothing/proc/detach_clothing_traits(trait_or_traits)
 	if(!islist(trait_or_traits))
 		trait_or_traits = list(trait_or_traits)
 

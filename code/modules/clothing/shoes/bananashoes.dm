@@ -30,9 +30,9 @@
 		return
 
 	if(on)
-		insert_clothing_traits(TRAIT_NO_SLIP_WATER)
+		attach_clothing_traits(TRAIT_NO_SLIP_WATER)
 	else
-		remove_clothing_traits(TRAIT_NO_SLIP_WATER)
+		detach_clothing_traits(TRAIT_NO_SLIP_WATER)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/proc/on_step()
 	SIGNAL_HANDLER
