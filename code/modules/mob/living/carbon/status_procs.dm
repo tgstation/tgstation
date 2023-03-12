@@ -12,15 +12,15 @@
 		return
 	if(absorb_stun(0)) //continuous effect, so we don't want it to increment the stuns absorbed.
 		return
-	if(HAS_TRAIT_FROM(src, TRAIT_ENTERINGSTAMINCRIT, STAMINA)) // already going to stamin crit
+	if(HAS_TRAIT_FROM(src, TRAIT_ENTERINGSTAMCRIT, STAMINA)) // already going to stamin crit
 		return
 	to_chat(src, span_notice("You're too exhausted to keep going..."))
 
-	ADD_TRAIT(src, TRAIT_ENTERINGSTAMINCRIT, STAMINA)
+	ADD_TRAIT(src, TRAIT_ENTERINGSTAMCRIT, STAMINA)
 	addtimer(CALLBACK(src, PROC_REF(set_stamcrit), src), 0.8 SECONDS)
 
 /mob/living/carbon/proc/set_stamcrit()
-	REMOVE_TRAIT(src, TRAIT_ENTERINGSTAMINCRIT, STAMINA)
+	REMOVE_TRAIT(src, TRAIT_ENTERINGSTAMCRIT, STAMINA)
 	ADD_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
 	ADD_TRAIT(src, TRAIT_FLOORED, STAMINA)
