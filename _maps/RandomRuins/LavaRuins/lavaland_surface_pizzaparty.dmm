@@ -16,58 +16,51 @@
 /obj/structure/sink/directional/north,
 /obj/structure/mirror/directional/south,
 /obj/item/instrument/saxophone/spectral,
-/turf/open/floor/iron/freezer{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/freezer/lavaland,
 /area/ruin/unpowered)
 "aq" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "aW" = (
-/obj/item/shard,
+/obj/item/shard{
+	pixel_x = -6;
+	pixel_y = 7
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/clock/directional/south,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "bg" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/flora/ash/leaf_shroom,
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "bj" = (
 /obj/structure/chair/sofa/right/brown,
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "bz" = (
 /obj/structure/table/wood,
-/obj/item/flashlight/lamp/green,
+/obj/item/flashlight/lamp/green{
+	pixel_x = -4;
+	pixel_y = 11
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
-	pixel_x = 8
+	pixel_x = 9;
+	pixel_y = 4
 	},
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "bE" = (
 /obj/structure/sink/kitchen/directional/east,
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "cb" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -75,9 +68,7 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 10
 	},
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "cF" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -89,46 +80,44 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/effect/spawner/random/bureaucracy/pen,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "dI" = (
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/thinplating_new,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "dR" = (
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "en" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "ff" = (
-/obj/machinery/computer/security/wooden_tv,
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
+/obj/structure/fluff{
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "television";
+	name = "old tv";
+	desc = "A modern plasma display boxed in by a rustic wooden frame and mock antenna. Just like the old, old, old days."
 	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "fk" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/remains/human,
+/obj/effect/decal/remains/human{
+	pixel_x = 5;
+	pixel_y = 10
+	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/clothing/shoes/cookflops,
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "fx" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -137,9 +126,7 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 9
 	},
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "fD" = (
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
@@ -148,9 +135,7 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 1
 	},
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "gp" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -163,9 +148,7 @@
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/item/storage/box/cups,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "hQ" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -180,22 +163,15 @@
 "iB" = (
 /obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "iF" = (
-/turf/open/floor/grass{
-	icon_state = "sand";
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/grass/lavaland,
 /area/lavaland/surface/outdoors)
 "jt" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "kD" = (
 /obj/structure/chair/wood/wings,
@@ -203,18 +179,14 @@
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "lB" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/grill,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/east,
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "lE" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -222,23 +194,15 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "mc" = (
 /obj/structure/flora/tree/stump,
-/turf/open/floor/grass{
-	icon_state = "sand";
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/grass/lavaland,
 /area/lavaland/surface/outdoors)
 "my" = (
 /obj/structure/flora/grass/brown/style_random,
-/turf/open/floor/grass{
-	icon_state = "sand";
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/grass/lavaland,
 /area/lavaland/surface/outdoors)
 "nq" = (
 /obj/effect/decal/cleanable/cobweb,
@@ -246,25 +210,19 @@
 /mob/living/basic/pet/dog/bullterrier{
 	name = "Saint Nick's Helpful Associate"
 	},
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "nI" = (
 /obj/structure/mineral_door/wood,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "nQ" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "og" = (
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
@@ -272,9 +230,7 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 4
 	},
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "oO" = (
 /obj/structure/table,
@@ -285,17 +241,16 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "oS" = (
-/obj/item/chair/wood/wings,
+/obj/item/chair/wood/wings{
+	pixel_x = 12;
+	pixel_y = 6
+	},
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "pD" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -303,17 +258,22 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
+"qv" = (
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/structure/sign/poster/contraband/andromeda_bitters,
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "qU" = (
 /obj/structure/table/wood/fancy/red,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kitchen/fork,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
+/obj/item/kitchen/fork{
+	pixel_x = -5;
+	pixel_y = 8
 	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "sa" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -327,6 +287,10 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/unpowered)
+"td" = (
+/obj/item/paper/crumpled/bloody/fluff/stations/lavaland/mailroom/waiting,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "tj" = (
 /obj/structure/table/wood/fancy/red,
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
@@ -336,16 +300,12 @@
 	name = "party hat"
 	},
 /obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "tp" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/freezer{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/freezer/lavaland,
 /area/ruin/unpowered)
 "ts" = (
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
@@ -354,35 +314,32 @@
 /obj/effect/spawner/random/food_or_drink/seed_rare,
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/effect/spawner/random/trash/food_packaging,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "tx" = (
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
-/obj/item/plate,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
+/obj/item/plate{
+	pixel_x = 8
 	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "uG" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/food/cake/birthday,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/item/knife/kitchen,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
+/obj/item/knife/kitchen{
+	pixel_x = 8;
+	pixel_y = 7
 	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "uO" = (
 /obj/structure/chair/wood/wings,
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "vc" = (
 /obj/structure/chair/wood/wings{
@@ -391,24 +348,18 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "vx" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/structure/sign/clock/directional/west,
-/obj/effect/spawner/random/food_or_drink/cake_ingredients,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "wt" = (
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "wF" = (
 /obj/structure/toilet{
@@ -417,23 +368,17 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/north,
-/turf/open/floor/iron/freezer{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/freezer/lavaland,
 /area/ruin/unpowered)
 "xf" = (
 /obj/item/kirbyplants/fern,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "xj" = (
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "xm" = (
 /obj/effect/decal/cleanable/dirt,
@@ -451,6 +396,10 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/spawner/random/decoration/glowstick,
 /obj/effect/spawner/random/decoration/paint,
+/obj/machinery/power/apc/unlocked{
+	pixel_y = 25;
+	dir = 1
+	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/unpowered)
 "xP" = (
@@ -458,18 +407,14 @@
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/item/plate,
 /obj/item/food/pizzaslice/mushroom,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "yA" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/flora/ash/leaf_shroom,
 /obj/effect/turf_decal/siding/thinplating,
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "yJ" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -480,9 +425,7 @@
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/item/kitchen/fork,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "yP" = (
 /obj/structure/girder,
@@ -495,39 +438,34 @@
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/glowshroom/single,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "zf" = (
 /obj/structure/chair/sofa/left/brown,
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "zj" = (
 /obj/structure/mineral_door/wood,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
 	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "zl" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "zS" = (
 /obj/machinery/oven,
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "Ae" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -544,13 +482,13 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "Cn" = (
 /obj/structure/grille/broken,
-/obj/item/stack/rods,
+/obj/item/stack/rods{
+	pixel_x = 12
+	},
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/flora/ash/leaf_shroom,
@@ -566,9 +504,7 @@
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "Fg" = (
 /mob/living/simple_animal/hostile/asteroid/goliath/beast,
@@ -579,16 +515,17 @@
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "HZ" = (
-/obj/item/plate,
-/obj/item/kitchen/fork,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
+/obj/item/plate{
+	pixel_x = -5;
+	pixel_y = 5
 	},
+/obj/item/kitchen/fork{
+	pixel_x = 12
+	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "Jt" = (
 /obj/item/stack/sheet/iron,
@@ -599,19 +536,24 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
 /obj/item/a_gift{
-	contains_type = /obj/item/toy/plush/goatplushie
+	contains_type = /obj/item/toy/plush/goatplushie;
+	pixel_x = 7;
+	pixel_y = 6
 	},
 /obj/structure/sign/clock/directional/south,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
+/obj/item/a_gift{
+	contains_type = /obj/item/toy/plush/ratplush;
+	pixel_x = -4;
+	pixel_y = 2
 	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "Mu" = (
-/obj/item/chair/wood/wings,
-/obj/effect/decal/remains/human,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
+/obj/item/chair/wood/wings{
+	pixel_y = -9
 	},
+/obj/effect/decal/remains/human,
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "Ns" = (
 /obj/item/chair/wood/wings,
@@ -620,9 +562,7 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/light/small/broken/directional/east,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "Nt" = (
 /obj/machinery/smartfridge/food,
@@ -635,9 +575,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/beer/light,
 /obj/item/reagent_containers/cup/glass/bottle/beer/light,
 /obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "NM" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -649,36 +587,34 @@
 /obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/north,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
+/obj/structure/sign/poster/party_game{
+	pixel_y = 32
 	},
+/obj/item/tail_pin,
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "Pl" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/spawner/random/food_or_drink/pizzaparty,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "PA" = (
 /obj/structure/flora/ash/tall_shroom,
-/turf/open/floor/grass{
-	icon_state = "sand";
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/grass/lavaland,
 /area/lavaland/surface/outdoors)
 "PS" = (
-/obj/item/shard,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
+/obj/item/shard{
+	pixel_x = -2;
+	pixel_y = -11
 	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "PV" = (
 /obj/structure/mineral_door/wood,
-/turf/open/floor/iron/freezer,
+/turf/open/floor/iron/freezer/lavaland,
 /area/ruin/unpowered)
 "QP" = (
 /obj/structure/girder,
@@ -700,9 +636,7 @@
 "Sb" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "Sg" = (
 /obj/structure/girder,
@@ -718,17 +652,11 @@
 /obj/item/clothing/shoes/sneakers/orange,
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/grass{
-	icon_state = "sand";
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/grass/lavaland,
 /area/lavaland/surface/outdoors)
 "SW" = (
 /obj/structure/flora/ash/seraka,
-/turf/open/floor/grass{
-	icon_state = "sand";
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/grass/lavaland,
 /area/lavaland/surface/outdoors)
 "Te" = (
 /obj/structure/chair/wood/wings{
@@ -736,9 +664,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "Tl" = (
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
@@ -749,17 +675,13 @@
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "Uf" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/thinplating,
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "VB" = (
 /turf/open/misc/dirt{
@@ -767,12 +689,12 @@
 	},
 /area/lavaland/surface/outdoors)
 "Ww" = (
-/obj/item/chair/wood/wings,
+/obj/item/chair/wood/wings{
+	pixel_x = 16
+	},
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/carpet/blue{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "Xv" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -783,17 +705,22 @@
 "XK" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 "YA" = (
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/structure/glowshroom/single,
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"YU" = (
+/obj/item/chair/wood/wings{
+	pixel_x = -3;
+	pixel_y = -8
 	},
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "YV" = (
 /obj/structure/table,
@@ -802,14 +729,7 @@
 /obj/item/a_gift{
 	contains_type = /obj/item/toy/figure/wizard
 	},
-/obj/item/a_gift{
-	contains_type = /obj/item/toy/plush/ratplushie;
-	pixel_x = 4;
-	pixel_y = 5
-	},
-/turf/open/floor/iron/diagonal{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
 "Zy" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -818,9 +738,7 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 
 (1,1,1) = {"
@@ -1075,7 +993,7 @@ aa
 "}
 (11,1,1) = {"
 ab
-ab
+td
 Jt
 ac
 Sg
@@ -1108,7 +1026,7 @@ ad
 PV
 ad
 Nt
-dR
+qv
 dR
 Te
 xP
@@ -1233,7 +1151,7 @@ ab
 ab
 ad
 Oa
-Ww
+YU
 HZ
 Mu
 ad
