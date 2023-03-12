@@ -155,10 +155,9 @@
 	if(!SSticker.HasRoundStarted() || !loc)
 		return
 
-	if(ckeys_trying_to_spawn)
-		// We don't open the prompt more than once at a time.
-		if(user.ckey in ckeys_trying_to_spawn)
-			return
+	// We don't open the prompt more than once at a time.
+	if(LAZYFIND(ckeys_trying_to_spawn, user.ckey))
+		return
 
 	var/user_ckey = user.ckey // Just in case shenanigans happen, we always want to remove it from the list.
 	LAZYADD(ckeys_trying_to_spawn, user_ckey)
