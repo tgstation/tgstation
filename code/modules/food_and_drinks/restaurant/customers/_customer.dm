@@ -218,6 +218,8 @@
 			/datum/reagent/consumable/tea = 4,
 			/datum/reagent/consumable/cherryshake = 1,
 			/datum/reagent/consumable/ethanol/bastion_bourbon = 1,
+			/datum/reagent/consumable/ethanol/atomicbomb = 1,
+
 		),
 	)
 
