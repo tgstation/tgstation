@@ -219,8 +219,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Call to move a turf from its current area to a new one
 /turf/proc/change_area(area/old_area, area/new_area)
-	// Just in case the old area is the same as the new one, this seems to happen on occasion and I don't want to break anything
-	old_area.contents -= src
 	old_area.turfs_to_uncontain += src
 	new_area.contents += src
 	new_area.contained_turfs += src
