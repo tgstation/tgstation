@@ -103,7 +103,7 @@ SUBSYSTEM_DEF(tts)
 	var/list/unfiltered_players = listeners.Copy()
 	var/list/html_audio_players
 	for(var/client/player in unfiltered_players)
-		if(player?.prefs.read_preference(/datum/preference/toggle/sound_tts))
+		if(!player?.prefs.read_preference(/datum/preference/toggle/sound_tts))
 			listeners -= player
 			continue
 
