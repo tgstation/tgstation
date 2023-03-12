@@ -2,14 +2,14 @@
 FROM debian:bullseye-slim
 
 # install required packages
-RUN apt-get update && apt-get upgrade && apt-get install -y ffmpeg wget curl espeak build-essential &&\
+RUN apt-get update && apt-get upgrade && apt-get install -y ffmpeg wget curl espeak-ng &&\
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Anaconda
 ENV CONDA_DIR /opt/conda
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py310_22.11.1-1-Linux-x86_64.sh -O ~/miniconda.sh && \
-    /bin/bash ~/miniconda.sh -b -p /opt/conda
+     /bin/bash ~/miniconda.sh -b -p /opt/conda
 
 # Put conda in path so we can use conda
 ENV PATH=$CONDA_DIR/bin:$PATH
@@ -17,27 +17,21 @@ ENV PATH=$CONDA_DIR/bin:$PATH
 # Enable intel packages
 RUN conda config --add channels intel
 # Setup intel enhanced python environment named 'intel'.
-RUN conda create -n intel intelpython3_full python=3.8 numba=0.55.1 && conda clean --index-cache --tarballs --packages
+RUN conda create -n intel intelpython3_full python=3.9 numba=0.55.1 && conda clean --index-cache --tarballs --packages
 # Use the intel enhanced python environment from now on.
 SHELL ["conda", "run", "-n", "intel", "/bin/bash", "-c"]
 
 # Setup python requirements and install the TTS python module into the new intel anaconda environment.
 RUN pip install Flask &&\
-    pip install waitress &&\
-    pip install llvmlite --ignore-installed &&\
-    pip install torch torchaudio --extra-index-url https://download.pytorch.org/whl/cu118 &&\
-    pip cache purge
+	pip install waitress &&\
+	pip install llvmlite --ignore-installed &&\
+	pip install torch torchaudio --extra-index-url https://download.pytorch.org/whl/cu118 &&\
+	pip install TTS &&\
+	pip cache purge
 
-COPY vits/requirements.txt /root/requirements.txt
-WORKDIR /root
-RUN pip install -r requirements.txt && pip cache purge
-
-COPY vits /root
-WORKDIR /root/monotonic_align
-RUN python setup.py build_ext --inplace
-WORKDIR /root
-COPY tts-api.py /root
+COPY . /root
 RUN mkdir /tts_files
+WORKDIR /root
 
 
 # fix: `libstdc++.so.6: version `GLIBCXX_3.4.29' not found`

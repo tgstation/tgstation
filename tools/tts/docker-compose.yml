@@ -6,7 +6,7 @@ services:
     ports:
       - "5002:5002"
     volumes:
-      - "./persistent_data/tts_models:/root/pth"
+      - "./persistent_data/.local_cache:/root/.local"
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://localhost:5002/health-check"]
