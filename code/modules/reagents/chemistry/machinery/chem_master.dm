@@ -364,7 +364,7 @@
 		if(vol_each <= 0)
 			return FALSE
 		// Get item name
-		var/name = params["name"]
+		var/name = strip_html(params["name"], limit = 100)
 		var/name_has_units = item_type == "pill" || item_type == "patch"
 		if(!name)
 			var/name_default
