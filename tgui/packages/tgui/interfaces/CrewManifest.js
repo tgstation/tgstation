@@ -72,6 +72,7 @@ export const CrewManifest = (props, context) => {
                     )}
                   </Table.Cell>
                   <Table.Cell
+                    textAlign="right"
                     className={classes([
                       'CrewManifest__Cell',
                       'CrewManifest__Cell--Rank',
