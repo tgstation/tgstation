@@ -21,7 +21,9 @@
 		var/our_view = hud.mymob?.client?.view || "15x15"
 		var/atom/movable/screen/movable/action_button/button = viewers[hud]
 		var/position = screen_loc_to_offset(button.screen_loc)
-		var/list/position_list = list(1,2,3,4) //List needs to be made longer if the max number of spells is raised
+		var/list/position_list = list()
+		for(var/possible_position in 1 to MAX_BLOODCHARGE)
+			position_list += possible_position
 		for(var/datum/action/innate/cult/blood_spell/blood_spell in spells)
 			if(blood_spell.positioned)
 				position_list.Remove(blood_spell.positioned)
