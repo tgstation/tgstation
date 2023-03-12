@@ -39,5 +39,5 @@
 
 /obj/projectile/magic/star_ball/Destroy()
 	playsound(get_turf(src), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
-	new /obj/effect/cosmic_field/cosmic_field(get_turf(src))
+	new /obj/effect/forcefield/cosmic_field(get_turf(src))
 	return ..()
