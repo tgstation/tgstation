@@ -60,7 +60,7 @@
 		to_chat(user, span_notice("You slowly release [feed_target]."))
 		if(feed_target.stat == DEAD)
 			user.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
-			bloodsuckerdatum_power.AddHumanityLost(10)
+			bloodsuckerdatum_power.AddHumanityLost(5)
 
 	target_ref = null
 	warning_target_bloodvol = BLOOD_VOLUME_MAX_LETHAL
