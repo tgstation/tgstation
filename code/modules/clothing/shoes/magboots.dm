@@ -1,3 +1,6 @@
+/datum/armor/shoes_magboots
+	bio = 90
+
 /obj/item/clothing/shoes/magboots
 	name = "magboots"
 	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
@@ -21,9 +24,14 @@
 /obj/item/clothing/shoes/magboots/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, slot_flags)
+	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, PROC_REF(on_speed_potioned))
 
-/datum/armor/shoes_magboots
-	bio = 90
+/// Signal handler for [COMSIG_SPEED_POTION_APPLIED]. Speed potion removes the active slowdown
+/obj/item/clothing/shoes/magboots/proc/on_speed_potioned(datum/source)
+	SIGNAL_HANDLER
+
+	slowdown_active = 0
+	// Don't need to touch the actual slowdown here, since the speed potion does it for us
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"
@@ -41,7 +49,7 @@
 		slowdown += slowdown_active
 	else
 		detach_clothing_traits(active_traits)
-		slowdown = max(initial(slowdown), slowdown - slowdown_active) // Juuust in case
+		slowdown = max(initial(slowdown), slowdown - slowdown_active) // Just in case, for speed pot shenanigans
 
 	update_appearance()
 	balloon_alert(user, "mag-pulse [magpulse ? "enabled" : "disabled"]")
