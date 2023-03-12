@@ -13,11 +13,13 @@
 	var/sensor_enabled = TRUE
 	///List of ckeys containing players who have recently activated the device, players on this list are prohibited from activating the device untill their residue decays.
 	var/list/ectoplasmic_residues = list()
+	var/obj/item/radio/radio
 
 /obj/machinery/ecto_sniffer/Initialize(mapload)
 	. = ..()
 	wires = new/datum/wires/ecto_sniffer(src)
-
+	radio = new /obj/item/radio/headset/silicon/ai(src)
+	
 /obj/machinery/ecto_sniffer/attack_ghost(mob/user)
 	. = ..()
 	if(!is_operational || !on || !sensor_enabled)
@@ -32,7 +34,8 @@
 	flick("ecto_sniffer_flick", src)
 	playsound(loc, 'sound/machines/ectoscope_beep.ogg', 75)
 	use_power(active_power_usage)
-	say("Reporting [pick(world.file2list("strings/spook_levels.txt"))] levels of paranormal activity!")
+	var/msg = "Reporting [pick(world.file2list("strings/spook_levels.txt"))] levels of paranormal activity!"
+	radio.talk_into(src, msg, RADIO_CHANNEL_SCIENCE)
 	if(activator?.ckey)
 		ectoplasmic_residues += activator.ckey
 		addtimer(CALLBACK(src, PROC_REF(clear_residue), activator.ckey), 15 SECONDS)
@@ -72,6 +75,7 @@
 
 /obj/machinery/ecto_sniffer/Destroy()
 	ectoplasmic_residues = null
+	qdel(radio)
 	. = ..()
 
 /obj/machinery/ecto_sniffer/examine(mob/user)
