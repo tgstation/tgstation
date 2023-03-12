@@ -1,0 +1,4 @@
+author: "SuperSlayer0"
+delete-after: True
+changes:
+  - rscadd: "Добавляет обратно refresher anomalous crystal как дроп с колосса"
