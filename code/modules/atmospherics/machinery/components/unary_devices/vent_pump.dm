@@ -98,12 +98,18 @@
 	. = ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/assign_to_area(area/target_area = get_area(src))
-	target_area?.air_vents += src
+	if(isnull(target_area))
+		stack_trace("cannot register vent to null area")
+		return
+	target_area.air_vents += src
 	update_appearance(UPDATE_NAME)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_from_area()
 	var/area/area = get_area(src)
-	area?.air_vents -= src
+	if(isnull(area))
+		stack_trace("cannot unregister vent from null area")
+		return
+	area.air_vents -= src
 
 /obj/machinery/atmospherics/components/unary/vent_pump/on_exit_area(datum/source, area/area_to_unregister)
 	. = ..()

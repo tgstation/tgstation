@@ -68,13 +68,18 @@
 	. = ..()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/assign_to_area(area/target_area = get_area(src))
-	var/area/area = target_area
-	area?.air_scrubbers += src
+	if(isnull(target_area))
+		stack_trace("cannot register scrubber to null area")
+		return
+	target_area.air_scrubbers += src
 	update_appearance(UPDATE_NAME)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/disconnect_from_area()
 	var/area/area = get_area(src)
-	area?.air_scrubbers -= src
+	if(isnull(area))
+		stack_trace("cannot unregister scrubber from null area")
+		return
+	area.air_scrubbers -= src
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on_exit_area(datum/source, area/area_to_unregister)
 	. = ..()
