@@ -3379,7 +3379,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "aNq" = (
-/turf/open/floor/circuit/red,
+/turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "aNs" = (
 /obj/structure/window/reinforced{
@@ -5021,7 +5021,7 @@
 /area/station/cargo/drone_bay)
 "bil" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/circuit/red,
+/turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "bip" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5222,7 +5222,7 @@
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 4
 	},
-/turf/open/floor/circuit/red,
+/turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "bkr" = (
 /obj/structure/disposalpipe/segment{
@@ -6107,7 +6107,7 @@
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 1
 	},
-/turf/open/floor/circuit/red,
+/turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "buK" = (
 /obj/structure/table/wood/fancy,
@@ -24766,7 +24766,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/circuit/red,
+/turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "fXt" = (
 /obj/effect/decal/cleanable/dirt,
@@ -28280,7 +28280,7 @@
 "gOc" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/dark_red,
-/turf/open/floor/circuit/red,
+/turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "gOo" = (
 /obj/effect/turf_decal/tile/red{
@@ -33631,7 +33631,7 @@
 /area/station/science/explab)
 "igi" = (
 /obj/effect/turf_decal/siding/dark_red,
-/turf/open/floor/circuit/red,
+/turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "igj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -35662,7 +35662,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/circuit/red,
+/turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "iHH" = (
 /obj/machinery/holopad,
@@ -46036,7 +46036,7 @@
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 4
 	},
-/turf/open/floor/circuit/red,
+/turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "lfK" = (
 /obj/item/radio/intercom/directional/north,
@@ -64847,7 +64847,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/turf/open/floor/circuit/red,
+/turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "pQj" = (
 /obj/structure/chair/stool/bar/directional/south,
@@ -98370,7 +98370,7 @@
 	dir = 1
 	},
 /mob/living/basic/carp/pet/lia,
-/turf/open/floor/circuit/red,
+/turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "xXt" = (
 /obj/structure/closet/emcloset,
