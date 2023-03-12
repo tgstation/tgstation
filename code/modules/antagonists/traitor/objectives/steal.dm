@@ -253,8 +253,6 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "bug"
 
-	/// The area at which this bug can be planted at. Has to be a type.
-	var/area/target_area_type
 	/// The object on which this bug can be planted on. Has to be a type.
 	var/obj/target_object_type
 	/// The object this bug is currently planted on.
@@ -268,30 +266,9 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		return
 
 	if(user.mind?.has_antag_datum(/datum/antagonist/traitor))
-		if(target_area_type)
-			. += span_notice("This device must be placed by <b>using it in hand</b> inside the <b>[initial(target_area_type.name)]</b>.")
-		else if(target_object_type)
+		if(target_object_type)
 			. += span_notice("This device must be placed by <b>clicking on the [initial(target_object_type.name)]</b> with it.")
 		. += span_notice("Remember, you may leave behind fingerprints or fibers on the device. Use <b>soap</b> or similar to scrub it clean to be safe!")
-
-/obj/item/traitor_bug/interact(mob/user)
-	. = ..()
-	if(!target_area_type)
-		return
-	var/turf/location = drop_location()
-	if(!location)
-		return
-	var/area/current_area = get_area(location)
-	if(!istype(current_area, target_area_type))
-		balloon_alert(user, "you can't deploy this here!")
-		return
-	if(!do_after(user, deploy_time, src))
-		return
-	var/obj/structure/traitor_bug/new_bug = new(location)
-	transfer_fingerprints_to(new_bug)
-	transfer_fibers_to(new_bug)
-	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PLANTED_GROUND, location)
-	qdel(src)
 
 /obj/item/traitor_bug/afterattack(atom/movable/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -336,23 +313,3 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 /obj/item/traitor_bug/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	return !istype(storage_holder, target_object_type)
-
-/obj/structure/traitor_bug
-	name = "suspicious device"
-	desc = "It looks dangerous. Best you leave this alone."
-
-	anchored = TRUE
-
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
-	icon_state = "bug-animated"
-
-/obj/structure/traitor_bug/Initialize(mapload)
-	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(fade_out), 10 SECONDS), 3 MINUTES)
-
-/obj/structure/traitor_bug/proc/fade_out(seconds)
-	animate(src, alpha = 30, time = seconds)
-
-/obj/structure/traitor_bug/deconstruct(disassembled)
-	explosion(src, light_impact_range = 2, flame_range = 5, explosion_cause = src) // Pretty god damn dangerous
-	return ..()
