@@ -45,7 +45,10 @@
 	pixel_y = 3;
 	pixel_x = -8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/components/binary/pump{
+	on = 1;
+	hide = 1
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "bN" = (
@@ -66,11 +69,11 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/machinery/chem_dispenser{
 	layer = 2.7;
 	pixel_x = -4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "gF" = (
@@ -87,7 +90,7 @@
 /obj/effect/turf_decal/trimline/blue/end{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "hL" = (
@@ -152,7 +155,6 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/components/tank/air{
-	dir = 4;
 	pixel_y = -3;
 	pixel_x = 1
 	},
@@ -177,7 +179,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "sM" = (
@@ -273,7 +275,7 @@
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 9
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /turf/open/floor/iron/large,
@@ -388,8 +390,8 @@
 /area/ruin/space/has_grav/travelers_rest)
 "Lx" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /obj/machinery/power/solar,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2,
 /turf/open/floor/iron/solarpanel,
 /area/ruin/space/has_grav/travelers_rest)
 "LS" = (
@@ -427,7 +429,7 @@
 /area/ruin/space/has_grav/travelers_rest)
 "Px" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/travelers_rest)
 "Rp" = (
