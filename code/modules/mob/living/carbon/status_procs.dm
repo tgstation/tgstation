@@ -6,6 +6,7 @@
 	return ..() || (include_stamcrit && HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
 
 /mob/living/carbon/proc/enter_stamcrit()
+	REMOVE_TRAIT(src, TRAIT_ENTERINGSTAMINCRIT, STAMINA)
 	if(!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE))
 		return
 	if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)) //Already in stamcrit
