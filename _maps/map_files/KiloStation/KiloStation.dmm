@@ -4561,10 +4561,10 @@
 	},
 /obj/machinery/requests_console/directional/west{
 	announcementConsole = 1;
-	department = "Telecomms Admin";
-	name = "Telecomms Requests Console";
+	anon_tips_receiver = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	department = "Telecomms Admin";
+	name = "Telecomms Requests Console"
 	},
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
@@ -8255,10 +8255,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
-"cvV" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/port/fore)
 "cwj" = (
 /obj/machinery/modular_computer/console/preset/id,
 /obj/effect/turf_decal/bot,
@@ -8471,9 +8467,9 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/computer/security/labor,
 /obj/machinery/requests_console/directional/north{
+	assistance_requestable = 1;
 	department = "Security";
 	name = "Security Requests Console";
-	assistance_requestable = 1;
 	supplies_requestable = 1
 	},
 /obj/machinery/light/directional/west,
@@ -9338,8 +9334,8 @@
 /obj/machinery/button/door/directional/east{
 	id = "qmprivacy";
 	name = "Privacy Shutters Control";
-	req_access = list("qm");
-	pixel_y = 38
+	pixel_y = 38;
+	req_access = list("qm")
 	},
 /obj/machinery/keycard_auth/directional/east{
 	pixel_y = 26
@@ -10290,11 +10286,11 @@
 	},
 /obj/machinery/requests_console/directional/east{
 	announcementConsole = 1;
+	anon_tips_receiver = 1;
+	assistance_requestable = 1;
 	department = "Research Lab";
 	name = "Research Requests Console";
-	receive_ore_updates = 1;
-	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	receive_ore_updates = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
@@ -10844,10 +10840,10 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/requests_console/directional/south{
 	announcementConsole = 1;
-	department = "Captain's Desk";
-	name = "Captain's Requests Console";
+	anon_tips_receiver = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	department = "Captain's Desk";
+	name = "Captain's Requests Console"
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
@@ -28149,9 +28145,9 @@
 	dir = 8
 	},
 /obj/machinery/requests_console/directional/east{
+	assistance_requestable = 1;
 	department = "Atmospherics";
 	name = "Atmospherics Requests Console";
-	assistance_requestable = 1;
 	supplies_requestable = 1
 	},
 /turf/open/floor/iron/dark,
@@ -30073,9 +30069,9 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/west,
 /obj/machinery/requests_console/directional/west{
+	anon_tips_receiver = 1;
 	department = "Engineering";
-	name = "Engineering Requests Console";
-	anon_tips_receiver = 1
+	name = "Engineering Requests Console"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -32175,10 +32171,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
-"iZa" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/starboard)
 "iZm" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
@@ -37265,9 +37257,9 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/requests_console/directional/west{
 	announcementConsole = 1;
+	assistance_requestable = 1;
 	department = "Chief Engineer's Desk";
 	name = "Chief Engineer's Requests Console";
-	assistance_requestable = 1;
 	supplies_requestable = 1
 	},
 /obj/machinery/button/door/directional/north{
@@ -41388,9 +41380,9 @@
 /area/station/service/hydroponics)
 "lJL" = (
 /obj/machinery/requests_console/directional/north{
+	assistance_requestable = 1;
 	department = "Security";
 	name = "Security Requests Console";
-	assistance_requestable = 1;
 	supplies_requestable = 1
 	},
 /obj/effect/turf_decal/tile/red{
@@ -41766,10 +41758,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table,
 /obj/machinery/requests_console/directional/west{
-	department = "Security";
-	name = "Security Requests Console";
+	anon_tips_receiver = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	department = "Security";
+	name = "Security Requests Console"
 	},
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/computer/security/telescreen/engine,
@@ -46579,10 +46571,10 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/requests_console/directional/east{
 	announcementConsole = 1;
-	department = "Research Director's Desk";
-	name = "Research Director's Requests Console";
+	anon_tips_receiver = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	department = "Research Director's Desk";
+	name = "Research Director's Requests Console"
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
@@ -48348,10 +48340,10 @@
 	dir = 1
 	},
 /obj/machinery/requests_console/directional/south{
-	department = "Security";
-	name = "Security Requests Console";
+	anon_tips_receiver = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	department = "Security";
+	name = "Security Requests Console"
 	},
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/bot,
@@ -50840,9 +50832,9 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/light/directional/south,
 /obj/machinery/requests_console/directional/south{
+	assistance_requestable = 1;
 	department = "Janitorial";
-	name = "Janitorial Requests Console";
-	assistance_requestable = 1
+	name = "Janitorial Requests Console"
 	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/cable,
@@ -52532,12 +52524,6 @@
 /obj/machinery/telecomms/server/presets/command,
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
-"paf" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "plating"
-	},
-/turf/closed/mineral/random/labormineral,
-/area/space/nearstation)
 "pah" = (
 /obj/structure/table/wood/fancy/blue,
 /obj/effect/turf_decal/siding/wood{
@@ -54233,10 +54219,10 @@
 	},
 /obj/machinery/requests_console/directional/west{
 	announcementConsole = 1;
-	department = "Head of Security's Desk";
-	name = "Head of Security's Requests Console";
+	anon_tips_receiver = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	department = "Head of Security's Desk";
+	name = "Head of Security's Requests Console"
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
@@ -60661,10 +60647,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
-"rrl" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall/rust,
-/area/station/maintenance/starboard)
 "rrm" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -64450,10 +64432,10 @@
 	dir = 4
 	},
 /obj/machinery/requests_console/directional/west{
-	department = "Security";
-	name = "Security Requests Console";
+	anon_tips_receiver = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	department = "Security";
+	name = "Security Requests Console"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -65291,10 +65273,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/engineering/atmos/pumproom)
-"sGW" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/starboard/aft)
 "sHf" = (
 /obj/structure/bed/dogbed/renault,
 /obj/machinery/button/door/directional/south{
@@ -66350,10 +66328,6 @@
 "sSZ" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
-"sTv" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/port/greater)
 "sTy" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
@@ -68776,9 +68750,9 @@
 	dir = 8
 	},
 /obj/machinery/requests_console/directional/north{
+	assistance_requestable = 1;
 	department = "Medbay";
-	name = "Medbay Requests Console";
-	assistance_requestable = 1
+	name = "Medbay Requests Console"
 	},
 /obj/structure/table/optable,
 /obj/effect/turf_decal/bot,
@@ -73889,10 +73863,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
-"vbc" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/fore)
 "vbd" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -79462,10 +79432,10 @@
 	},
 /obj/machinery/requests_console/directional/west{
 	announcementConsole = 1;
-	department = "Head of Personnel's Desk";
-	name = "Head of Personnel's Requests Console";
+	anon_tips_receiver = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	department = "Head of Personnel's Desk";
+	name = "Head of Personnel's Requests Console"
 	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/carpet/blue,
@@ -80869,10 +80839,10 @@
 	},
 /obj/machinery/requests_console/directional/east{
 	announcementConsole = 1;
-	department = "Bridge";
-	name = "Bridge Requests Console";
+	anon_tips_receiver = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	department = "Bridge";
+	name = "Bridge Requests Console"
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -80938,10 +80908,10 @@
 	},
 /obj/machinery/requests_console/directional/north{
 	announcementConsole = 1;
-	department = "Chief Medical Officer's Desk";
-	name = "Chief Medical Officer's Requests Console";
+	anon_tips_receiver = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	department = "Chief Medical Officer's Desk";
+	name = "Chief Medical Officer's Requests Console"
 	},
 /obj/machinery/fax{
 	fax_name = "Chief Medical Officer's Office";
@@ -85599,11 +85569,11 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/requests_console/directional/west{
+	anon_tips_receiver = 1;
+	assistance_requestable = 1;
 	department = "Security";
 	name = "Security Requests Console";
-	pixel_y = -32;
-	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	pixel_y = -32
 	},
 /obj/machinery/button/door/directional/west{
 	id = "brigcelldoor";
@@ -99270,7 +99240,7 @@ pue
 kHh
 vjh
 vjh
-sTv
+vjh
 vBi
 vmu
 keO
@@ -107462,7 +107432,7 @@ oaO
 bod
 xBI
 xBI
-cvV
+pVz
 pVz
 pVz
 uRf
@@ -109766,7 +109736,7 @@ aaa
 aeu
 aeu
 aeu
-paf
+aeu
 efG
 qKE
 aUU
@@ -111577,7 +111547,7 @@ vlv
 qlC
 sEK
 qlC
-vbc
+efG
 efG
 vrd
 dfD
@@ -123459,11 +123429,11 @@ mFb
 qeX
 cXQ
 cAq
-sGW
+cuV
 fuB
 cuV
 cuV
-sGW
+cuV
 aAU
 oQk
 xBz
@@ -128303,7 +128273,7 @@ tkP
 aMb
 fqb
 lDu
-iZa
+lDu
 mrt
 sJS
 aaQ
@@ -128549,11 +128519,11 @@ xZL
 tQp
 gmJ
 ued
-iZa
 lDu
-iZa
+lDu
+lDu
 hBV
-rrl
+oLH
 wIY
 lkB
 rdl
@@ -128816,7 +128786,7 @@ ocL
 rdl
 wYb
 oPX
-iZa
+lDu
 wCY
 rZV
 rZV
@@ -129067,7 +129037,7 @@ hHj
 dhD
 vOX
 mtc
-rrl
+oLH
 urW
 sFr
 hnU
