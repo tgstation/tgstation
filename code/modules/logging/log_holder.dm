@@ -128,7 +128,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		stack_trace("log category [category_instance.category] has an invalid schema version '[category_instance.schema_version]'")
 		category_instance.schema_version = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET
 
-	contained_categories[category_instance.category] = category_instance.schema_version
+	contained_categories += category_instance.category
 
 	var/list/category_header = list(
 		LOG_HEADER_INIT_TIMESTAMP = logging_start_timestamp,
