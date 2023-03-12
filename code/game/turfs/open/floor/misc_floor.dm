@@ -37,7 +37,7 @@
 	icon_state = on ? (LAZYLEN(SSmapping.nuke_threats) ? "rcircuitanim" : icon_normal) : "[icon_normal]off"
 	return ..()
 
-/turf/open/floor/circuit/change_area(area/old_area, area/new_area)
+/turf/open/floor/circuit/on_change_area(area/old_area, area/new_area)
 	. = ..()
 	UnregisterSignal(old_area, COMSIG_AREA_POWER_CHANGE)
 	RegisterSignal(new_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(handle_powerchange))
