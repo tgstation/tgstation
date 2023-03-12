@@ -85,7 +85,7 @@
 		open_status = FANCY_CONTAINER_OPEN
 	update_appearance()
 
-#define DONUT_INBOX_SPRITE_WIDTH 3
+#define DONUT_INBOX_SPRITE_WIDTH 4
 
 /*
  * Donut Box
