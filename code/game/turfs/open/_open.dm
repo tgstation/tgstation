@@ -269,8 +269,9 @@
 	var/olddir = slipper.dir
 	slipper.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
 	if(lube & SLIDE_ICE)
-		// They need to be kept upright to maintain the combo effect
-		slipper.Stun(1 SECONDS)
+		// They need to be kept upright to maintain the combo effect (So don't knockdown)
+		slipper.Immobilize(1 SECONDS)
+		slipper.incapacitate(1 SECONDS)
 	else
 		slipper.Knockdown(knockdown_amount)
 		slipper.Paralyze(paralyze_amount)
