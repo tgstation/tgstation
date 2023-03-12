@@ -33,18 +33,19 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/travelers_rest)
 "bA" = (
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_y = 32;
-	pixel_x = 8
-	},
-/obj/item/pai_card{
-	pixel_y = 5;
-	pixel_x = 4
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
+/obj/structure/table/reinforced,
+/obj/item/storage/box/beakers{
+	pixel_y = -1;
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_y = 3;
+	pixel_x = -8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "bN" = (
@@ -59,12 +60,16 @@
 /area/ruin/space/has_grav/travelers_rest)
 "cr" = (
 /obj/structure/cable,
-/obj/machinery/chem_master,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/machinery/chem_dispenser{
+	layer = 2.7;
+	pixel_x = -4
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
@@ -85,6 +90,7 @@
 /obj/effect/turf_decal/trimline/blue/end{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "hL" = (
@@ -142,16 +148,16 @@
 /area/ruin/space/has_grav/travelers_rest)
 "jL" = (
 /obj/structure/cable,
-/obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/storage/box/beakers{
-	pixel_y = 1;
-	pixel_x = -5
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
+	},
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 4;
+	pixel_y = -3;
+	pixel_x = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
@@ -174,6 +180,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "sM" = (
@@ -243,13 +250,16 @@
 /turf/open/floor/iron/recharge_floor,
 /area/ruin/space/has_grav/travelers_rest)
 "Dq" = (
-/obj/machinery/chem_heater/withbuffer{
-	pixel_x = 4
-	},
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
+/obj/structure/table/reinforced,
+/obj/item/pai_card{
+	pixel_y = 5;
+	pixel_x = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "Dw" = (
@@ -265,6 +275,9 @@
 "Ef" = (
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 9
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/iron/large,
 /area/ruin/space/has_grav/travelers_rest)
@@ -376,6 +389,15 @@
 	},
 /turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/travelers_rest)
+"Lx" = (
+/obj/machinery/power/solar{
+	id = "foreport";
+	name = "Fore-Port Solar Array"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/outlet_injector/on,
+/turf/open/floor/iron/solarpanel,
+/area/ruin/space/has_grav/travelers_rest)
 "LS" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -408,6 +430,11 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"Px" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/travelers_rest)
 "Rp" = (
 /obj/structure/cable,
@@ -463,6 +490,9 @@
 "Vv" = (
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 5
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/iron/large,
 /area/ruin/space/has_grav/travelers_rest)
@@ -526,14 +556,19 @@
 /area/ruin/space/has_grav/travelers_rest)
 "ZE" = (
 /obj/structure/cable,
-/obj/machinery/chem_dispenser{
-	layer = 2.7
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
+	},
+/obj/machinery/chem_master{
+	pixel_x = -11;
+	pixel_y = -1
+	},
+/obj/machinery/chem_heater/withbuffer{
+	pixel_x = 12;
+	pixel_y = -2
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
@@ -600,8 +635,8 @@ MB
 "}
 (5,1,1) = {"
 MB
-gF
-bz
+Lx
+Px
 NG
 Dw
 Ob
