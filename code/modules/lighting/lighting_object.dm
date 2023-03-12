@@ -28,6 +28,7 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 
 	affected_turf.lighting_object = src
 	// Default to fullbright, so things can "see" if they use view() before we update
+	ASSERT(affected_turf.luminosity == 1)
 	affected_turf.luminosity = 1
 
 	// This path is really hot. this is faster
