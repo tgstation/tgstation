@@ -191,6 +191,8 @@
 #define LIGHT_COLOR_ELECTRIC_GREEN "#00FF00"
 /// Cold, diluted blue. rgb(100, 150, 250)
 #define LIGHT_COLOR_BLUE "#6496FA"
+/// Faint white blue. rgb(222, 239, 255)
+#define LIGHT_COLOR_FAINT_BLUE "#DEEFFF"
 /// Light blueish green. rgb(125, 225, 175)
 #define LIGHT_COLOR_BLUEGREEN "#7DE1AF"
 /// Diluted cyan. rgb(125, 225, 225)
@@ -206,7 +208,9 @@
 /// Diluted, mid-warmth pink. rgb(225, 125, 225)
 #define LIGHT_COLOR_PINK "#E17DE1"
 /// Dimmed yellow, leaning kaki. rgb(225, 225, 125)
-#define LIGHT_COLOR_YELLOW "#E1E17D"
+#define LIGHT_COLOR_DIM_YELLOW "#E1E17D"
+/// Bright yellow. rgb(255, 255, 150)
+#define LIGHT_COLOR_BRIGHT_YELLOW "#FFFF99"
 /// Clear brown, mostly dim. rgb(150, 100, 50)
 #define LIGHT_COLOR_BROWN "#966432"
 /// Mostly pure orange. rgb(250, 150, 50)
@@ -231,8 +235,8 @@
 #define LIGHT_COLOR_INTENSE_RED "#C81919"
 /// Weird color, between yellow and green, very slimy. rgb(175, 200, 75)
 #define LIGHT_COLOR_SLIME_LAMP "#AFC84B"
-/// Extremely diluted yellow, close to skin color (for some reason). rgb(250, 225, 175)
-#define LIGHT_COLOR_TUNGSTEN "#FAE1AF"
+/// Extremely diluted yellow, close to skin color (for some reason). rgb(255, 214, 170)
+#define LIGHT_COLOR_TUNGSTEN "#FFD6AA"
 /// Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
 #define LIGHT_COLOR_HALOGEN "#F0FAFA"
 
