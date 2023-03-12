@@ -62,6 +62,8 @@
 		source.removeStaticPower(CIRCUIT_FLOOR_POWERUSE, AREA_USAGE_STATIC_LIGHT)
 	update_appearance()
 
+#undef CIRCUIT_FLOOR_POWERUSE
+
 /turf/open/floor/circuit/off
 	icon_state = "bcircuitoff"
 	always_off = TRUE
