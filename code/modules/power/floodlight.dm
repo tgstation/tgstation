@@ -13,6 +13,44 @@
 	density = TRUE
 	var/state = FLOODLIGHT_NEEDS_WIRES
 
+/obj/structure/floodlight_frame/screwdriver_act(mob/living/user, obj/item/O)
+	. = ..()
+	if(state == FLOODLIGHT_NEEDS_SECURING)
+		to_chat(user, span_notice("You fasten the wiring and electronics in [src]."))
+		name = "secured [name]"
+		desc = "A bare metal frame that looks like a floodlight. Requires a light tube to complete."
+		icon_state = "floodlight_c3"
+		state = FLOODLIGHT_NEEDS_LIGHTS
+		return TRUE
+	else if(state == FLOODLIGHT_NEEDS_LIGHTS)
+		to_chat(user, span_notice("You unfasten the wiring and electronics in [src]."))
+		name = "wired [name]"
+		desc = "A bare metal frame looking vaguely like a floodlight. Requires securing with a screwdriver."
+		icon_state = "floodlight_c2"
+		state = FLOODLIGHT_NEEDS_SECURING
+		return TRUE
+	return FALSE
+
+/obj/structure/floodlight_frame/wrench_act(mob/living/user, obj/item/tool)
+	if(state == FLOODLIGHT_NEEDS_WIRES)
+		if(!tool.use_tool(src, user, 30, volume=50))
+			return TRUE
+		new /obj/item/stack/sheet/iron(loc, 5)
+		qdel(src)
+		return TRUE
+	return FALSE
+
+/obj/structure/floodlight_frame/wirecutter_act(mob/living/user, obj/item/tool)
+	if(state == FLOODLIGHT_NEEDS_SECURING)
+		to_chat(user, span_notice("You cut the wire from [src]."))
+		name = "floodlight frame"
+		desc = "A bare metal frame looking vaguely like a floodlight. Requires wiring."
+		icon_state = "floodlight_c1"
+		state = FLOODLIGHT_NEEDS_WIRES
+		new /obj/item/stack/cable_coil(loc, 5)
+		return TRUE
+	return FALSE
+
 /obj/structure/floodlight_frame/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/stack/cable_coil) && state == FLOODLIGHT_NEEDS_WIRES)
 		var/obj/item/stack/S = O
@@ -26,13 +64,7 @@
 		else
 			to_chat(user, "You need 5 cables to wire [src].")
 			return
-	if(O.tool_behaviour == TOOL_SCREWDRIVER && state == FLOODLIGHT_NEEDS_SECURING)
-		to_chat(user, span_notice("You fasten the wiring and electronics in [src]."))
-		name = "secured [name]"
-		desc = "A bare metal frame that looks like a floodlight. Requires a light tube to complete."
-		icon_state = "floodlight_c3"
-		state = FLOODLIGHT_NEEDS_LIGHTS
-		return
+
 	if(istype(O, /obj/item/light/tube))
 		var/obj/item/light/tube/L = O
 		if(state == FLOODLIGHT_NEEDS_LIGHTS && L.status != 2) //Ready for a light tube, and not broken.
@@ -120,10 +152,24 @@
 		disconnect_from_network()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/power/floodlight/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	change_setting(FLOODLIGHT_OFF)
+	panel_open = TRUE
+	to_chat(user, span_notice("You open the flood lights maintainence panel."))
+	return TRUE
+
 /obj/machinery/power/floodlight/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
+	if(panel_open)
+		var/obj/structure/floodlight_frame/F = new(loc)
+		F.state = FLOODLIGHT_NEEDS_LIGHTS
+		var/obj/item/light/tube/light_tube = new /obj/item/light/tube(loc)
+		user.put_in_active_hand(light_tube)
+		qdel(src)
+
 	var/current = setting
 	if(current == FLOODLIGHT_OFF)
 		current = light_setting_list.len

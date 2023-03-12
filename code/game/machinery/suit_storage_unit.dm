@@ -9,6 +9,7 @@
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the unit is open
 	max_integrity = 250
+	circuit = /obj/item/circuitboard/machine/suit_storage_unit
 
 	var/obj/item/clothing/suit/space/suit = null
 	var/obj/item/clothing/head/helmet/space/helmet = null
@@ -230,8 +231,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		open_machine()
 		dump_inventory_contents()
-		new /obj/item/stack/sheet/iron(loc, 2)
-	qdel(src)
+	return ..()
 
 /obj/machinery/suit_storage_unit/interact(mob/living/user)
 	var/static/list/items
@@ -551,9 +551,13 @@
 		update_appearance()
 		return
 
-	if(panel_open && is_wire_tool(I))
-		wires.interact(user)
-		return
+	if(panel_open)
+		if(is_wire_tool(I))
+			wires.interact(user)
+			return
+		else if(I.tool_behaviour == TOOL_CROWBAR)
+			default_deconstruction_crowbar(I)
+			return
 	if(!state_open)
 		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", I))	//Set to base_icon_state because the panels for this are overlays
 			update_appearance()
