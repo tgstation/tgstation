@@ -407,3 +407,4 @@
 	)
 	result = /obj/item/storage/fancy/pickles_jar
 	category = CAT_MISCFOOD
+	delete_contents = FALSE

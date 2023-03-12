@@ -80,7 +80,8 @@
 //maximum amount of cable in a coil
 #define MAXCOIL 30
 
-//tablecrafting defines
+//food/drink crafting defines
+//When adding new defines, please make sure to also add them to the encompassing list
 #define CAT_FOOD "Foods"
 #define CAT_BREAD "Breads"
 #define CAT_BURGER "Burgers"
@@ -126,6 +127,7 @@ GLOBAL_LIST_INIT(crafting_category_food, list(
 ))
 
 //crafting defines
+//When adding new defines, please make sure to also add them to the encompassing list
 #define CAT_WEAPON_RANGED "Weapons Ranged"
 #define CAT_WEAPON_MELEE "Weapons Melee"
 #define CAT_WEAPON_AMMO "Weapon Ammo"
