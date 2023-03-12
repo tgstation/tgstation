@@ -354,11 +354,18 @@
 #define ENVIRONMENT_SMASH_WALLS 2 //walls
 #define ENVIRONMENT_SMASH_RWALLS 3 //rwalls
 
+// Slip flags, also known as lube flags
+/// The mob will not slip if they're walking intent
 #define NO_SLIP_WHEN_WALKING (1<<0)
+/// Slipping on this will send them sliding a few tiles down
 #define SLIDE (1<<1)
-#define GALOSHES_DONT_HELP (1<<2)
-#define SLIDE_ICE (1<<3)
-#define SLIP_WHEN_CRAWLING (1<<4) //clown planet ruin
+/// Ice slides only go one tile and don't knock you over, they're intended to cause a "slip chain"
+/// where you slip on ice until you reach a non-slippable tile (ice puzzles)
+#define SLIDE_ICE (1<<2)
+/// [TRAIT_NO_SLIP_WATER] does not work on this slip. ONLY [TRAIT_NO_SLIP_ALL] will
+#define GALOSHES_DONT_HELP (1<<3)
+/// Slip works even if you're already on the ground
+#define SLIP_WHEN_CRAWLING (1<<4)
 
 #define MAX_CHICKENS 50
 

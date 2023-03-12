@@ -58,9 +58,8 @@
 	if(!.)
 		return
 	ADD_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
-	ADD_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, MOD_TRAIT)
 	mod.slowdown += slowdown_active
-	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	mod.wearer.update_equipment_speed_mods()
 
 /obj/item/mod/module/magboot/on_deactivation(display_message = TRUE, deleting = FALSE)
@@ -68,9 +67,8 @@
 	if(!.)
 		return
 	REMOVE_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, MOD_TRAIT)
 	mod.slowdown -= slowdown_active
-	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	mod.wearer.update_equipment_speed_mods()
 
 /obj/item/mod/module/magboot/advanced

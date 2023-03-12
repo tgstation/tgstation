@@ -26,7 +26,7 @@
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."
-	clothing_flags = NOSLIP
+	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	armor_type = /datum/armor/combat_swat
 
 /datum/armor/combat_swat
@@ -89,7 +89,7 @@
 	desc = "A pair of winter boots with special grips on the bottom, designed to prevent slipping on frozen surfaces."
 	icon_state = "iceboots"
 	inhand_icon_state = null
-	clothing_flags = NOSLIP_ICE
+	clothing_traits = list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE)
 
 // A pair of ice boots intended for general crew EVA use - see EVA winter coat for comparison.
 /obj/item/clothing/shoes/winterboots/ice_boots/eva
@@ -101,7 +101,7 @@
 	armor_type = /datum/armor/ice_boots_eva
 	strip_delay = 4 SECONDS
 	equip_delay_other = 4 SECONDS
-	clothing_flags = NOSLIP_ICE|THICKMATERIAL
+	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
 
 /datum/armor/ice_boots_eva

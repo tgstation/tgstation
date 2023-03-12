@@ -15,7 +15,7 @@
 /obj/item/clothing/shoes/clown_shoes/combat
 	name = "combat clown shoes"
 	desc = "advanced clown shoes that protect the wearer and render them nearly immune to slipping on their own peels. They also squeak at 100% capacity."
-	clothing_flags = NOSLIP
+	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	slowdown = SHOES_SLOWDOWN
 	armor_type = /datum/armor/clown_shoes_combat
 	strip_delay = 70

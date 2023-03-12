@@ -710,7 +710,7 @@
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/shoes/chameleon/noslip
-	clothing_flags = NOSLIP
+	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	can_be_bloody = FALSE
 
 /obj/item/clothing/shoes/chameleon/noslip/broken/Initialize(mapload)
