@@ -554,7 +554,7 @@ SUBSYSTEM_DEF(air)
 	// Taking advantage of current cycle being set to negative before this run to do A->B B->A prevention
 	for(var/turf/open/potential_diff as anything in difference_check)
 		potential_diff.current_cycle = 0
-		for(var/turf/open/enemy_tile as anything in T.atmos_adjacent_turfs)
+		for(var/turf/open/enemy_tile as anything in potential_diff.atmos_adjacent_turfs)
 			// If it's already been processed, then it's already talked to us
 			if(enemy_tile.current_cycle == 0)
 				continue
