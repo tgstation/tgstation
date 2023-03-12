@@ -629,7 +629,7 @@
 	id = "suit_storage_unit"
 	build_path = /obj/item/circuitboard/machine/suit_storage_unit
 	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ROBOTICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
