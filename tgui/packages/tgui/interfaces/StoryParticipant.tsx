@@ -13,7 +13,7 @@ export const StoryParticipant = (props, context) => {
   const { data } = useBackend<Info>(context);
   const { name, goal, timeout } = data;
   return (
-    <Window width={620} height={620}>
+    <Window width={620} height={400}>
       <Window.Content>
         <Section scrollable fill>
           <Stack vertical>

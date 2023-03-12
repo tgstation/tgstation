@@ -12,4 +12,4 @@
 /datum/config_entry/number/roundstart_story_chance
 	min_val = 0
 	max_val = 100
-	default = 20
+	default = 100

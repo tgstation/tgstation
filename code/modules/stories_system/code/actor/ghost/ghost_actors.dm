@@ -57,13 +57,14 @@
 /datum/story_actor/ghost/ui_data(mob/user)
 	var/list/data = list()
 	if(timeout && start_time)
-		data["timeout"] = DisplayTimeText(CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)))
+		data["timeout"] = DisplayTimeText(timeout - (world.time - start_time))
 	return data
 
 /// Ghost ones are delayed by a few minutes to ensure that the ghosts have time to choose a character and for crew actors to get settled a bit
 /datum/story_actor/ghost/proc/send_them_in(mob/living/carbon/human/to_send_human)
 	qdel(to_send_human.w_uniform) // remove their greysuit
 	to_send_human.equipOutfit(pick(actor_outfits))
+	timeout = null
 
 /datum/story_actor/ghost/centcom_inspector
 	name = "Central Command Inspector"

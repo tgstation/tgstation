@@ -20,7 +20,7 @@
 	/// If we have acts, then what's the time between acts? Defaults to 15 minutes.
 	var/time_between_acts = 15 MINUTES
 	/// Should we cancel if we can't fill the roster during startup?
-	var/allow_starting_with_minimum = FALSE
+	var/allow_starting_with_minimum = TRUE
 
 /datum/story_type/Destroy(force, ...)
 	return ..()
