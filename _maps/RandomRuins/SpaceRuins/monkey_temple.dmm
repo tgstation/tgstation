@@ -548,6 +548,12 @@
 "Qw" = (
 /turf/open/floor/iron/terracotta,
 /area/shuttle/ruin/temple_mining_shuttle)
+"QC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/dim/directional/east,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
 "Rx" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -884,7 +890,7 @@ Qw
 PF
 Qw
 Xu
-PF
+QC
 qN
 gM
 "}

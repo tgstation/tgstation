@@ -14,7 +14,6 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
-#include "_maps\RandomRuins\SpaceRuins\monkey_temple.dmm"
 #include "code\__byond_version_compat.dm"
 #include "code\_compile_options.dm"
 #include "code\_debugger.dm"
