@@ -1,7 +1,7 @@
 ///Defines for the pressure strength of the fist
-#define LOW_PRESSURE "low"
-#define MID_PRESSURE "medium"
-#define HIGH_PRESSURE "high"
+#define LOW_PRESSURE 1
+#define MID_PRESSURE 2
+#define HIGH_PRESSURE 3
 ///Defines for the tank change action
 #define TANK_INSERTING 0
 #define TANK_REMOVING 1
@@ -47,13 +47,7 @@
 	. += span_notice("Use a <b>wrench</b> to change the valve strength. Current strength is at <b>[fist_pressure_setting]</b> level.")
 
 /obj/item/melee/powerfist/wrench_act(mob/living/user, obj/item/tool)
-	switch(fist_pressure_setting)
-		if(LOW_PRESSURE)
-			fist_pressure_setting = MID_PRESSURE
-		if(MID_PRESSURE)
-			fist_pressure_setting = HIGH_PRESSURE
-		if(HIGH_PRESSURE)
-			fist_pressure_setting = LOW_PRESSURE
+	fist_pressure_setting = fist_pressure_setting >= HIGH_PRESSURE ? LOW_PRESSURE : fist_pressure_setting + 1
 	tool.play_tool_sound(src)
 	balloon_alert(user, "piston strength set to [fist_pressure_setting]")
 	return TRUE
