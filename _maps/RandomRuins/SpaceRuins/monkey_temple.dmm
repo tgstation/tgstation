@@ -85,7 +85,8 @@
 /obj/structure/fluff/empty_sleeper{
 	dir = 4
 	},
-/turf/open/floor/iron/terracotta,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white/small,
 /area/shuttle/ruin/temple_mining_shuttle)
 "fN" = (
 /obj/structure/lattice/catwalk,
@@ -205,12 +206,8 @@
 	pixel_y = -13;
 	pixel_x = 9
 	},
-/mob/living/carbon/human/species/monkey/angry{
-	use_random_name = 0;
-	name = "Leon Hansley";
-	real_name = "Leon Hansley"
-	},
 /obj/item/radio/headset/headset_cargo/mining,
+/mob/living/carbon/human/species/monkey/leon,
 /turf/open/floor/iron/white/small,
 /area/shuttle/ruin/temple_mining_shuttle)
 "oR" = (
@@ -284,15 +281,11 @@
 	name = "chief prospector's jumpsuit"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/carbon/human/species/monkey/angry{
-	use_random_name = 0;
-	name = "Bill Slater";
-	real_name = "Bill Slater"
-	},
 /obj/item/clothing/shoes/workboots,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/card/id/advanced/chief_prospector,
 /obj/item/radio/headset/headset_cargo/mining,
+/mob/living/carbon/human/species/monkey/bill,
 /turf/open/floor/iron/terracotta,
 /area/shuttle/ruin/temple_mining_shuttle)
 "tT" = (
@@ -410,6 +403,7 @@
 /turf/template_noop,
 /area/shuttle/ruin/temple_mining_shuttle)
 "Ef" = (
+/obj/machinery/chem_heater,
 /turf/open/floor/iron/white/small,
 /area/shuttle/ruin/temple_mining_shuttle)
 "EM" = (
@@ -447,6 +441,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /turf/open/floor/plating,
 /area/shuttle/ruin/temple_mining_shuttle)
+"FZ" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/beaker/large,
+/turf/open/floor/iron/white/small,
+/area/shuttle/ruin/temple_mining_shuttle)
 "GT" = (
 /obj/item/card/id/advanced/biomining_engineer_two,
 /obj/item/clothing/under/rank/cargo/miner,
@@ -454,13 +453,9 @@
 /obj/item/clothing/glasses/meson,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/pickaxe,
-/mob/living/carbon/human/species/monkey/angry{
-	use_random_name = 0;
-	name = "Samson Hansley";
-	real_name = "Samson Hansley"
-	},
 /obj/item/radio/headset/headset_cargo/mining,
 /obj/item/mod/control/pre_equipped/space_mining,
+/mob/living/carbon/human/species/monkey/samson,
 /turf/open/floor/stone,
 /area/ruin/unpowered/monkey_temple)
 "Hl" = (
@@ -575,12 +570,6 @@
 "RZ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/radio/headset/headset_cargo/mining,
-/mob/living/carbon/human/species/monkey/angry{
-	use_random_name = 0;
-	name = "Bridget Stamos";
-	real_name = "Bridget Stamos";
-	gender = "female"
-	},
 /obj/item/clothing/under/misc/mailman{
 	name = "prospector's jumpsuit"
 	},
@@ -589,6 +578,7 @@
 /obj/item/clothing/gloves/color/black,
 /obj/item/card/id/advanced/prospector,
 /obj/item/analyzer,
+/mob/living/carbon/human/species/monkey/bridget,
 /turf/open/floor/stone,
 /area/ruin/unpowered/monkey_temple)
 "SP" = (
@@ -611,6 +601,10 @@
 /obj/item/flashlight/flare/torch,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav)
+"Ut" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white/small,
+/area/shuttle/ruin/temple_mining_shuttle)
 "UG" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -814,7 +808,7 @@ gM
 (7,1,1) = {"
 SW
 Cg
-Ef
+FZ
 lS
 tB
 Xu
@@ -828,10 +822,10 @@ iT
 Xu
 Qw
 SP
-Qw
-Qw
-Qw
-Qw
+Ut
+Ut
+Ut
+Ut
 Xu
 hJ
 Xu
@@ -1340,7 +1334,7 @@ tt
 tt
 tt
 tt
-tt
+tM
 tM
 "}
 (26,1,1) = {"
@@ -1364,10 +1358,10 @@ tt
 tt
 tt
 tt
-tt
-tt
-tt
-tt
-tt
+tM
+tM
+tM
+tM
+tM
 tM
 "}

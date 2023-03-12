@@ -12,7 +12,10 @@
 				to_chat(spawner, span_warning("Bluespace harmonics prevent the spawning of more than [cap] monkeys on the station at one time!"))
 			return INITIALIZE_HINT_QDEL
 		SSmobs.cubemonkeys += src
-	return ..()
+	var/saved_original_name = name
+	. = ..()
+	if(saved_original_name != "Unknown")
+		fully_replace_character_name(real_name, saved_original_name)
 
 /mob/living/carbon/human/species/monkey/Destroy()
 	SSmobs.cubemonkeys -= src

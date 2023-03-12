@@ -64,7 +64,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
  * * is_chaplain - Boolean operator describing if the prayer is from a chaplain
  */
 /datum/request_manager/proc/pray(client/C, message, is_chaplain)
-	request_for_client(C, REQUEST_PRAYER, message)
+	request_for_client(C, REQUEST_PRAYER, message, can_reply = FALSE)
 	for(var/client/admin in GLOB.admins)
 		if(is_chaplain && admin.prefs.chat_toggles & CHAT_PRAYER && admin.prefs.toggles & SOUND_PRAYERS)
 			SEND_SOUND(admin, sound('sound/effects/pray.ogg'))
@@ -78,7 +78,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
  */
 /datum/request_manager/proc/monkey_paw_wish(client/C, message)
 	message += " (Monkey Paw wishes should be twisted towards bad outcomes.)"
-	request_for_client(C, REQUEST_MONKEY_PAW, message)
+	request_for_client(C, REQUEST_MONKEY_PAW, message, can_reply = FALSE)
 
 /**
  * Creates a request for a Centcom message
@@ -127,9 +127,10 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
  * * C - The client who is sending the request
  * * type - The type of request, see defines
  * * message - The message
+ * * can_reply - Whether the admin can reply via headset.
  */
-/datum/request_manager/proc/request_for_client(client/C, type, message, additional_info)
-	var/datum/request/request = new(C, type, message, additional_info)
+/datum/request_manager/proc/request_for_client(client/C, type, message, additional_info, can_reply = TRUE)
+	var/datum/request/request = new(C, type, message, additional_info, can_reply)
 	if (!requests[C.ckey])
 		requests[C.ckey] = list()
 	requests[C.ckey] += request
@@ -212,8 +213,8 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			usr.client.smite(H)
 			return TRUE
 		if ("rply")
-			if (request.req_type == REQUEST_PRAYER)
-				to_chat(usr, "Cannot reply to a prayer", confidential = TRUE)
+			if (!request.can_reply)
+				to_chat(usr, "Cannot reply to this request", confidential = TRUE)
 				return TRUE
 			var/mob/M = request.owner?.mob
 			usr.client.admin_headset_message(M, request.req_type == REQUEST_SYNDICATE ? RADIO_CHANNEL_SYNDICATE : RADIO_CHANNEL_CENTCOM)
@@ -250,11 +251,13 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				"message" = request.message,
 				"additional_info" = request.additional_information,
 				"timestamp" = request.timestamp,
-				"timestamp_str" = gameTimestamp(wtime = request.timestamp)
+				"timestamp_str" = gameTimestamp(wtime = request.timestamp),
+				"can_reply" = request.can_reply,
 			)
 			.["requests"] += list(data)
 
 #undef REQUEST_PRAYER
+#undef REQUEST_MONKEY_PAW
 #undef REQUEST_CENTCOM
 #undef REQUEST_SYNDICATE
 #undef REQUEST_NUKE

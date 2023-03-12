@@ -24,7 +24,7 @@
 		Boss made some low-hanging jokes about us being twins, but he was totally on board.<br>
 		<br>
 		...Not that I don't trust you, but let me do the chemistry-intensive side of the job until you get your bearings.
-		Everyone's been antsy since we found the ruins, so if you screw up, it's not only my ass, but I'm pretty sure
+		Everyone's been antsy since Bridget found the ruins, so if you screw up, it's not only my ass, but I'm pretty sure
 		he won't go light on the punishment. Don't wanna lose my job because I cronyism'd you a job you then threw away.
 		<br>
 		Leon
@@ -74,3 +74,25 @@
 	requires_power = TRUE
 	always_unpowered = TRUE
 	name = "Derelict Asteroid Harvester"
+
+// RIP those guys *laugh track*
+
+/mob/living/carbon/human/species/monkey/bill
+	name = "Bill Slater"
+	unique_name = FALSE
+	use_random_name = FALSE
+
+/mob/living/carbon/human/species/monkey/samson
+	name = "Samson Hansley"
+	unique_name = FALSE
+	use_random_name = FALSE
+
+/mob/living/carbon/human/species/monkey/leon
+	name = "Leon Hansley"
+	unique_name = FALSE
+	use_random_name = FALSE
+
+/mob/living/carbon/human/species/monkey/bridget
+	name = "Bridget Stamos"
+	unique_name = FALSE
+	use_random_name = FALSE

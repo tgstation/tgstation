@@ -111,7 +111,7 @@ const RequestControls = (props, context) => {
       <Button onClick={() => act('tp', { id: request.id })}>TP</Button>
       <Button onClick={() => act('logs', { id: request.id })}>LOGS</Button>
       <Button onClick={() => act('smite', { id: request.id })}>SMITE</Button>
-      {request.req_type !== 'request_prayer' && (
+      {request.can_reply && (
         <Button onClick={() => act('rply', { id: request.id })}>RPLY</Button>
       )}
       {request.req_type === 'request_nuke' && (

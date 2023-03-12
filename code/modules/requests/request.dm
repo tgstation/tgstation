@@ -22,8 +22,10 @@
 	var/additional_information
 	/// When the request was created
 	var/timestamp
+	/// Whether you can reply to this request
+	var/can_reply = TRUE
 
-/datum/request/New(client/requestee, type, request, additional_info)
+/datum/request/New(client/requestee, type, request, additional_info, can_reply = TRUE)
 	if (!requestee)
 		qdel(src)
 		return
@@ -35,3 +37,4 @@
 	additional_information = additional_info
 	timestamp = world.time
 	owner_name = key_name(requestee, FALSE)
+	src.can_reply = can_reply
