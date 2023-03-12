@@ -15,22 +15,15 @@
 #define REQUEST_INDEX 4
 #define MESSAGE_INDEX 5
 #define EXTRA_TARGETS_INDEX 6
-#define LANGUAGE_INDEX 7
-
-#define CACHE_PENDING "pending"
 
 SUBSYSTEM_DEF(tts)
 	name = "Text To Speech"
-	// Basically every tick
-	wait = 0.05 SECONDS
+	wait = 0.1 SECONDS
 	init_order = INIT_ORDER_TTS
 	priority = FIRE_PRIORITY_TTS
 
 	/// Queued HTTP requests that have yet to be sent
 	var/list/queued_tts_messages = list()
-
-	/// Queued HTTP requests that have yet to be sent. Takes priority over queued_tts_messages
-	var/list/priority_queued_tts_messages = list()
 
 	/// HTTP requests currently in progress but not being processed yet
 	var/list/in_process_tts_messages = list()
@@ -96,47 +89,37 @@ SUBSYSTEM_DEF(tts)
 	UNTIL(request.is_complete())
 	var/datum/http_response/response = request.into_response()
 	if(response.errored || response.status_code != 200)
-		return SS_INIT_NO_NEED
+		return SS_INIT_FAILURE
 	available_speakers = json_decode(response.body)
 	available_speakers -= "ED\n" // TODO: properly fix this
 	tts_enabled = TRUE
 	rustg_file_write(json_encode(available_speakers), "data/cached_tts_voices.json")
+	rustg_file_write("rustg HTTP requests can't write to folders that don't exist, so we need to make it exist.", "tmp/tts/init.txt")
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/tts/proc/play_tts(target, sound, datum/language/language, text_url = null, identifier)
-	var/turf/turf_source = get_turf(target)
+/datum/controller/subsystem/tts/proc/play_tts(identifier, filepath, list/listeners)
+	var/has_html_audio = istype(SSassets.transport, /datum/asset_transport/webroot)
 
-	if (!turf_source)
-		return
+	var/list/unfiltered_players = listeners.Copy()
+	var/list/html_audio_players
+	for(var/client/player in unfiltered_players)
+		if(player?.prefs.read_preference(/datum/preference/toggle/sound_tts))
+			listeners -= player
+			continue
 
-	//allocate a channel if necessary now so its the same for everyone
-	var/channel = SSsounds.random_available_channel()
-	var/listeners = get_hearers_in_view(SOUND_RANGE, turf_source)
+		if(has_html_audio && player?.prefs.read_preference(/datum/preference/toggle/sound_tts_use_html_audio))
+			html_audio_players += player
+			listeners -= player
 
-	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[turf_source.z])//observers always hear through walls
-		var/datum/language_holder/holder = listening_mob.get_language_holder()
-		if(!istype(SSassets.transport, /datum/asset_transport/webroot)) // set up a CDN
-			SSassets.transport.send_assets(listening_mob, list(identifier))
-		if(!listening_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_tts_use_html_audio)) // If they're using HTML audio, that subsystem handles hearing it.
-			if(get_dist(listening_mob, turf_source) <= SOUND_RANGE && listening_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_tts) && holder.has_language(language, spoken = FALSE))
-				listening_mob.playsound_local(
-					turf_source,
-					sound,
-					vol = listening_mob == target? 60 : 85,
-					falloff_exponent = SOUND_FALLOFF_EXPONENT,
-					channel = channel,
-					pressure_affected = TRUE,
-					sound_to_use = sound,
-					max_distance = SOUND_RANGE,
-					falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE,
-					distance_multiplier = 1,
-					use_reverb = TRUE
-				)
-
-	if(text_url)
-		if(!SShtml_audio.channel_assignment.Find(target))
-			SShtml_audio.register_player(target, TRUE) // we require LOS for speakers on TTS
-		SShtml_audio.play_audio(target, text_url)
+	if(has_html_audio)
+		var/datum/asset_cache_item/cached_mp3 = new(identifier, filepath)
+		cached_mp3.namespace = "text_to_speech"
+		SSassets.transport.register_asset(identifier, cached_mp3)
+		var/current_text_url = SSassets.transport.get_asset_url(null, cached_mp3)
+		SShtml_audio.play_audio(current_text_url, html_audio_players)
+	var/sound/sound_to_play = sound(file(filepath))
+	for(var/client/player in listeners)
+		SEND_SOUND(player, sound_to_play)
 
 /datum/controller/subsystem/tts/proc/handle_request(list/entry)
 	var/time_left = entry[TIMEOUT_INDEX]
@@ -154,13 +137,8 @@ SUBSYSTEM_DEF(tts)
 		return
 
 	if(!resumed)
-		var/list/priority_list = priority_queued_tts_messages
-		while(length(in_process_tts_messages) < max_concurrent_requests && priority_list.len > 0)
-			var/list/entry = popleft(priority_list)
-			handle_request(entry)
-		var/list/less_priority_list = queued_tts_messages
-		while(length(in_process_tts_messages) < max_concurrent_requests && less_priority_list.len > 0)
-			var/list/entry = popleft(less_priority_list)
+		while(length(in_process_tts_messages) < max_concurrent_requests && queued_tts_messages.len > 0)
+			var/list/entry = popleft(queued_tts_messages)
 			handle_request(entry)
 		current_processing_tts_messages = in_process_tts_messages.Copy()
 
@@ -183,23 +161,18 @@ SUBSYSTEM_DEF(tts)
 		if(response.errored)
 			cached_voices -= current_message[IDENTIFIER_INDEX]
 			continue
-		var/datum/asset_transport/asset_transport = SSassets.transport
 		var/identifier = current_message[IDENTIFIER_INDEX]
-		var/sound/new_sound = new("tmp/[identifier].mp3")
-		var/datum/asset_cache_item/cached_mp3 = new(identifier, "tmp/[identifier].mp3")
-		cached_mp3.namespace = "text_to_speech"
-		asset_transport.register_asset(identifier, cached_mp3)
-		var/current_text_url = asset_transport.get_asset_url(null, cached_mp3)
-		play_tts(current_message[TARGET_INDEX], new_sound, current_message[LANGUAGE_INDEX], current_text_url, identifier)
-		for(var/atom/movable/target in current_message[EXTRA_TARGETS_INDEX])
-			play_tts(target, new_sound, current_message[LANGUAGE_INDEX], current_text_url, identifier)
+		var/list/tts_targets = current_message[TARGET_INDEX]
+		for(var/list/targets in current_message[EXTRA_TARGETS_INDEX])
+			tts_targets |= targets
+		play_tts(identifier, "tmp/tts/[identifier].mp3", tts_targets)
 		cached_voices -= identifier
 		var/time_taken = (message_timeout - (current_message[TIMEOUT_INDEX] - world.time)) / 10
 		rtf = time_taken / estimate_word_processing_length(current_message[MESSAGE_INDEX], 1)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/tts/proc/queue_tts_message(target, message, datum/language/language, speaker, filter, high_priority = FALSE)
+/datum/controller/subsystem/tts/proc/queue_tts_message(message, speaker, list/targets, filter)
 	if(!tts_enabled)
 		return
 
@@ -214,12 +187,10 @@ SUBSYSTEM_DEF(tts)
 	var/identifier = sha1(speaker + shell_scrubbed_input + filter)
 	var/cached_voice = cached_voices[identifier]
 	if(islist(cached_voice))
-		cached_voice[EXTRA_TARGETS_INDEX] += target
+		cached_voice[EXTRA_TARGETS_INDEX] += list(targets)
 		return
-	else if(fexists("tmp/[identifier].mp3"))
-		var/sound/new_sound = new("tmp/[identifier].mp3")
-		var/current_text_url = SSassets.transport.get_asset_url(identifier)
-		play_tts(target, new_sound, language, current_text_url, identifier)
+	else if(fexists("tmp/tts/[identifier].mp3"))
+		play_tts(identifier, "tmp/tts/[identifier].mp3", targets)
 		return
 	if(!(speaker in available_speakers))
 		return
@@ -228,16 +199,14 @@ SUBSYSTEM_DEF(tts)
 	var/list/headers = list()
 	headers["Content-Type"] = "application/json"
 	var/datum/http_request/request = new()
-	var/file_name = "tmp/[identifier].mp3"
+	var/file_name = "tmp/tts/[identifier].mp3"
 	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
 	var/list/waiting_list = queued_tts_messages
 	if(length(in_process_tts_messages) < max_concurrent_requests)
 		request.begin_async()
 		waiting_list = in_process_tts_messages
-	else if(high_priority)
-		waiting_list = priority_queued_tts_messages
 
-	var/list/data = list(target, identifier, world.time + message_timeout, request, shell_scrubbed_input, list(), language)
+	var/list/data = list(targets, identifier, world.time + message_timeout, request, shell_scrubbed_input, list())
 	cached_voices[identifier] = data
 	waiting_list += list(data)
 	sortTim(waiting_list, GLOBAL_PROC_REF(cmp_word_length_asc))
@@ -248,4 +217,3 @@ SUBSYSTEM_DEF(tts)
 #undef REQUEST_INDEX
 #undef MESSAGE_INDEX
 #undef EXTRA_TARGETS_INDEX
-#undef LANGUAGE_INDEX

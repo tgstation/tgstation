@@ -17,6 +17,10 @@ SUBSYSTEM_DEF(communications)
 	var/list/command_report_footnotes = list()
 	/// A counter of conditions that are blocking the command report from printing. Counter incremements up for every blocking condition, and de-incrememnts when it is complete.
 	var/block_command_report = 0
+	/// Filters to apply to the TTS voice when the captain does an announcement.
+	var/captain_announcement_tts_filter = "aderivative,aecho=1.0:0.7:20:0.5,volume=2"
+	/// Filters to apply to the TTS voice when a silicon does an announcement.
+	var/silicon_announcement_tts_filter = "aderivative,aecho=1.0:0.7:20:0.5,volume=2.0,rubberband=pitch=0.8"
 
 /datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
 	if(is_silicon && COOLDOWN_FINISHED(src, silicon_message_cooldown))
@@ -30,11 +34,11 @@ SUBSYSTEM_DEF(communications)
 	if(!can_announce(user, is_silicon))
 		return FALSE
 	if(is_silicon)
-		minor_announce(html_decode(input),"[user.name] Announces:", players = players)
+		minor_announce(html_decode(input),"[user.name] Announces:", players = players, tts_voice = user.voice, tts_filter = silicon_announcement_tts_filter)
 		COOLDOWN_START(src, silicon_message_cooldown, COMMUNICATION_COOLDOWN_AI)
 	else
 		var/list/message_data = user.treat_message(input)
-		priority_announce(html_decode(message_data["message"]), null, 'sound/misc/announce.ogg', "[syndicate? "Syndicate " : ""]Captain", has_important_message = TRUE, players = players)
+		priority_announce(html_decode(message_data["message"]), null, 'sound/misc/announce.ogg', "[syndicate? "Syndicate " : ""]Captain", has_important_message = TRUE, players = players, tts_voice = user.voice, tts_filter = captain_announcement_tts_filter)
 		COOLDOWN_START(src, nonsilicon_message_cooldown, COMMUNICATION_COOLDOWN)
 	user.log_talk(input, LOG_SAY, tag="priority announcement")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has made a priority announcement.")

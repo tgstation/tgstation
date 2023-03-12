@@ -97,8 +97,6 @@
 	/// The voice that this movable makes when speaking
 	var/voice
 
-	var/voice_filter = ""
-
 /mutable_appearance/emissive_blocker
 
 /mutable_appearance/emissive_blocker/New()

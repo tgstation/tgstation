@@ -188,9 +188,6 @@
 	/// used for narcing on underages
 	var/obj/item/radio/sec_radio
 
-	voice_filter = "aderivative"
-
-
 /**
  * Initialize the vending machine
  *

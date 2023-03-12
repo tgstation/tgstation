@@ -173,11 +173,12 @@ export const StandardizedDropdown = (props: {
   );
 };
 
-export const FeatureDropdownInput = (
-  props: FeatureValueProps<string, string, FeatureChoicedServerData> & {
-    disabled?: boolean;
-  }
-) => {
+interface FeatureDropdownInputProps
+  extends FeatureValueProps<string, string, FeatureChoicedServerData> {
+  disabled?: boolean;
+}
+
+export const FeatureDropdownInput = (props: FeatureDropdownInputProps) => {
   const serverData = props.serverData;
   if (!serverData) {
     return null;
@@ -366,14 +367,22 @@ export const FeatureShortTextInput = (
   );
 };
 
-export const FeatureTTSTestInput = (props: FeatureValueProps<string>) => {
+export const FeatureTTSDropdownInput = (props: FeatureDropdownInputProps) => {
   return (
-    <Button
-      width="100%"
-      onClick={() => {
-        props.act('test_tts');
-      }}>
-      Test TTS 3 Second Cooldown
-    </Button>
+    <Stack>
+      <Stack.Item grow>
+        <FeatureDropdownInput {...props} />
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          onClick={() => {
+            props.act('test_tts');
+          }}
+          icon="play"
+          width="100%"
+          height="100%"
+        />
+      </Stack.Item>
+    </Stack>
   );
 };

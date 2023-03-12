@@ -277,10 +277,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(!COOLDOWN_FINISHED(src, tts_test_cooldown))
 				to_chat(usr, "TTS preview on cooldown.")
 				return
-			COOLDOWN_START(src, tts_test_cooldown, 3 SECONDS)
-			// TODO: TEST TTS HERE, SEND TO USR
-			var/test_string = "This is a test of the Text to Speech system."
-			usr.playsound_local(usr, 'sound/effects/gong.ogg', 100, TRUE)
+			var/speaker = read_preference(/datum/preference/choiced/voice)
+			COOLDOWN_START(src, tts_test_cooldown, 0.5 SECONDS)
+			SStts.queue_tts_message("Hello, this is my voice.", speaker, list(usr.client))
 			return FALSE
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)

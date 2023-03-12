@@ -4,7 +4,6 @@
 	remove_on_fullheal = TRUE
 
 	var/make_tts_message_original = FALSE
-	var/tts_filter = ""
 
 /datum/status_effect/speech/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
@@ -29,11 +28,6 @@
 	var/phrase = html_decode(message_args[TREAT_MESSAGE_ARG])
 	if(!length(phrase))
 		return
-
-	if(length(tts_filter) > 0)
-		message_args[TREAT_TTS_FILTER_ARG] += tts_filter
-	if(make_tts_message_original)
-		message_args[TREAT_TTS_MESSAGE_ARG] = message_args[TREAT_MESSAGE_ARG]
 
 	var/final_phrase = ""
 	var/original_char = ""
@@ -63,7 +57,6 @@
 	var/static/regex/no_stutter
 
 	make_tts_message_original = TRUE
-	tts_filter = "tremolo=f=10:d=0.8,rubberband=tempo=0.5"
 
 /datum/status_effect/speech/stutter/on_creation(mob/living/new_owner, ...)
 	. = ..()
@@ -217,8 +210,6 @@
 	replacement_prob = 33
 	doubletext_prob = 0
 	text_modification_file = "slurring_cult_text.json"
-
-	tts_filter = "rubberband=pitch=0.5,vibrato=5"
 
 /datum/status_effect/speech/slurring/heretic
 	id = "heretic_slurring"
