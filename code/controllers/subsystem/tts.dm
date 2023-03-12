@@ -39,12 +39,12 @@ SUBSYSTEM_DEF(tts)
 	/// Whether TTS is enabled or not
 	var/tts_enabled = FALSE
 
-	var/message_timeout = 5 SECONDS
+	var/message_timeout = 7 SECONDS
 
 	/// Messages can be timed out earlier if the algorithm thinks that
 	/// it's going to take too long for their message to be processed.
 	/// This'll determine the minimum extent of how late it is allowed to begin timing messages out
-	var/message_timeout_early_minimum = 3 SECONDS
+	var/message_timeout_early_minimum = 5 SECONDS
 
 	var/max_concurrent_requests = 5
 
