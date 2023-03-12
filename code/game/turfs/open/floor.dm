@@ -27,37 +27,39 @@
 	var/burnt = FALSE
 	/// Path of the tile that this floor drops
 	var/floor_tile = null
-	var/list/broken_states
-	var/list/burnt_states
 	/// Determines if you can deconstruct this with a RCD
 	var/rcd_proof = FALSE
 
 /turf/open/floor/Initialize(mapload)
 	. = ..()
-	if (broken_states)
-		stack_trace("broken_states defined at the object level for [type], move it to setup_broken_states()")
-	else
-		broken_states = string_list(setup_broken_states())
-	if (burnt_states)
-		stack_trace("burnt_states defined at the object level for [type], move it to setup_burnt_states()")
-	else
-		var/list/new_burnt_states = setup_burnt_states()
-		if(new_burnt_states)
-			burnt_states = string_list(new_burnt_states)
-	if(!broken && broken_states && (icon_state in broken_states))
-		broken = TRUE
-	if(!burnt && burnt_states && (icon_state in burnt_states))
-		burnt = TRUE
+
+	if (PERFORM_ALL_TESTS(focus_only/valid_turf_states))
+		var/static/list/previous_errors = list()
+
+		if (!(type in previous_errors))
+			if (broken != (icon_state in broken_states()))
+				stack_trace("[icon_state] (from [type]), which should be [broken ? "NOT broken, IS" : "broken, IS NOT"]")
+				previous_errors[type] = TRUE
+
+			if (burnt != (icon_state in burnt_states()))
+				stack_trace("[icon_state] (from [type]), which should be [burnt ? "NOT burnt, IS" : "burnt, IS NOT"]")
+				previous_errors[type] = TRUE
+
 	if(mapload && prob(33))
 		MakeDirty()
+
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 
-/turf/open/floor/proc/setup_broken_states()
+/// Returns a list of every turf state considered "broken".
+/// Will be randomly chosen if a turf breaks at runtime.
+/turf/open/floor/proc/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
-/turf/open/floor/proc/setup_burnt_states()
-	return
+/// Returns a list of every turf state considered "burnt".
+/// Will be randomly chosen if a turf is burnt at runtime.
+/turf/open/floor/proc/burnt_states()
+	return list()
 
 /turf/open/floor/Destroy()
 	if(is_station_level(z))
@@ -82,9 +84,8 @@
 		if(EXPLODE_HEAVY)
 			switch(rand(1, 3))
 				if(1)
-					if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
-						ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-						ReplaceWithLattice()
+					if (!ispath(baseturf_at_depth(2), /turf/open/floor))
+						attempt_lattice_replacement()
 					else
 						ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 					if(prob(33))
@@ -142,12 +143,13 @@
 /turf/open/floor/update_overlays()
 	. = ..()
 	if(broken)
-		. += mutable_appearance(damaged_dmi, pick(broken_states))
+		. += mutable_appearance(damaged_dmi, pick(broken_states()))
 	else if(burnt)
-		if(LAZYLEN(burnt_states))
+		var/list/burnt_states = burnt_states()
+		if(burnt_states.len)
 			. += mutable_appearance(damaged_dmi, pick(burnt_states))
 		else
-			. += mutable_appearance(damaged_dmi, pick(broken_states))
+			. += mutable_appearance(damaged_dmi, pick(broken_states()))
 
 /// Things seem to rely on this actually returning plating. Override it if you have other baseturfs.
 /turf/open/floor/proc/make_plating(force = FALSE)
@@ -235,8 +237,6 @@
 		if(STAGE_FIVE to INFINITY)
 			if(prob(70))
 				sheer = TRUE
-			else if(prob(50) && (/turf/open/space in baseturfs))
-				ReplaceWithLattice()
 	if(sheer)
 		if(has_tile())
 			remove_tile(null, TRUE, TRUE, TRUE)
@@ -260,6 +260,8 @@
 				list("mode" = RCD_FLOORWALL, "delay" = 2 SECONDS, "cost" = 16),
 				src, RCD_MEMORY_WALL,
 			)
+		if(RCD_REFLECTOR)
+			return list("mode" = RCD_REFLECTOR, "delay" = 20, "cost" = 30)
 		if(RCD_AIRLOCK)
 			if(the_rcd.airlock_glass)
 				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 20)
@@ -276,6 +278,8 @@
 			return list("mode" = RCD_MACHINE, "delay" = 20, "cost" = 25)
 		if(RCD_COMPUTER)
 			return list("mode" = RCD_COMPUTER, "delay" = 20, "cost" = 25)
+		if(RCD_FLOODLIGHT)
+			return list("mode" = RCD_FLOODLIGHT, "delay" = 30, "cost" = 35)
 		if(RCD_FURNISHING)
 			return list("mode" = RCD_FURNISHING, "delay" = the_rcd.furnish_delay, "cost" = the_rcd.furnish_cost)
 	return FALSE
@@ -290,13 +294,22 @@
 			to_chat(user, span_notice("You build a wall."))
 			PlaceOnTop(/turf/closed/wall)
 			return TRUE
-		if(RCD_AIRLOCK)
-			for(var/obj/machinery/door/door in src)
-				if(door.sub_door)
-					continue
-				to_chat(user, span_notice("There is another door here!"))
+		if(RCD_REFLECTOR)
+			if(locate(/obj/structure/reflector) in src)
 				return FALSE
+			var/obj/structure/reflector/reflector_base = new(src)
+			reflector_base.set_anchored(TRUE)
+			return TRUE
+		if(RCD_AIRLOCK)
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
+				if(!valid_window_location(src, user.dir, is_fulltile = FALSE))
+					balloon_alert(user, "there's already a windoor!")
+					return FALSE
+				for(var/obj/machinery/door/door in src)
+					if(istype(door, /obj/machinery/door/window))
+						continue
+					balloon_alert(user, "there's already a door!")
+					return FALSE
 				to_chat(user, span_notice("You build a windoor."))
 				var/obj/machinery/door/window/new_window = new the_rcd.airlock_type(src, user.dir, the_rcd.airlock_electronics?.unres_sides)
 				if(the_rcd.airlock_electronics)
@@ -308,7 +321,12 @@
 				new_window.autoclose = TRUE
 				new_window.update_appearance()
 				return TRUE
-			to_chat(user, span_notice("You build an airlock."))
+
+			for(var/obj/machinery/door/door in src)
+				if(door.sub_door)
+					continue
+				balloon_alert(user, "there's already a door!")
+				return FALSE
 			var/obj/machinery/door/airlock/new_airlock = new the_rcd.airlock_type(src)
 			new_airlock.electronics = new /obj/item/electronics/airlock(new_airlock)
 			if(the_rcd.airlock_electronics)
@@ -365,6 +383,15 @@
 			new_computer.set_anchored(TRUE)
 			new_computer.state = 1
 			new_computer.setDir(the_rcd.computer_dir)
+			return TRUE
+		if(RCD_FLOODLIGHT)
+			if(locate(/obj/structure/floodlight_frame) in src)
+				return FALSE
+			var/obj/structure/floodlight_frame/new_floodlight = new(src)
+			new_floodlight.name = "secured [new_floodlight.name]"
+			new_floodlight.desc = "A bare metal frame that looks like a floodlight. Requires a light tube to complete."
+			new_floodlight.icon_state = "floodlight_c3"
+			new_floodlight.state = FLOODLIGHT_NEEDS_LIGHTS
 			return TRUE
 		if(RCD_FURNISHING)
 			if(locate(the_rcd.furnish_type) in src)

@@ -34,6 +34,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!beacon)
 		to_chat(user, span_warning("[src] is not linked to a beacon, and cannot be used!"))
 		return
@@ -107,7 +108,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			if(ishuman(A))
 				var/mob/living/carbon/human/L = A
 				L.SetUnconscious(0)
-				L.set_drowsyness(0)
+				L.remove_status_effect(/datum/status_effect/drowsiness)
 				L.SetSleeping(0)
 			sleep(3 SECONDS)
 			var/list/flooring_near_beacon = list()

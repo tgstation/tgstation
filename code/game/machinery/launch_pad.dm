@@ -26,8 +26,8 @@
 /obj/machinery/launchpad/RefreshParts()
 	. = ..()
 	var/max_range_multiplier = 0
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		max_range_multiplier += M.rating
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		max_range_multiplier += manipulator.tier
 	range = initial(range)
 	range *= max_range_multiplier
 
@@ -287,7 +287,7 @@
 /obj/machinery/launchpad/briefcase/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr)
-		if(!briefcase || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
+		if(!briefcase || !usr.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 			return
 		usr.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
 		if(do_after(usr, 30, target = usr))

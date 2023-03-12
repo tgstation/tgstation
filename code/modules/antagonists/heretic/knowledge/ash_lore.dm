@@ -66,7 +66,7 @@
 
 	to_chat(target, span_danger("A bright green light burns your eyes horrifically!"))
 	target.adjustOrganLoss(ORGAN_SLOT_EYES, 15)
-	target.blur_eyes(10)
+	target.set_eye_blur_if_lower(20 SECONDS)
 
 /datum/heretic_knowledge/spell/ash_passage
 	name = "Ashen Passage"
@@ -137,7 +137,7 @@
 		/obj/item/organ/internal/liver = 1,
 		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
 		/obj/item/clothing/mask = 1,
-		/obj/item/candle = 4,
+		/obj/item/flashlight/flare/candle = 4,
 	)
 	result_atoms = list(/obj/item/clothing/mask/madness_mask)
 	cost = 1
@@ -177,7 +177,7 @@
 /datum/heretic_knowledge/ultimate/ash_final
 	name = "Ashlord's Rite"
 	desc = "The ascension ritual of the Path of Ash. \
-		Bring 3 burning or husked corpses to a transumation rune to complete the ritual. \
+		Bring 3 burning or husked corpses to a transmutation rune to complete the ritual. \
 		When completed, you become a harbinger of flames, gaining two abilites. \
 		Cascade, which causes a massive, growing ring of fire around you, \
 		and Oath of Flame, causing you to passively create a ring of flames as you walk. \

@@ -35,11 +35,11 @@
 /obj/machinery/light/red/dim
 	brightness = 4
 	bulb_power = 0.7
+	fire_brightness = 2
 
 /obj/machinery/light/blacklight
 	bulb_colour = "#A700FF"
 	nightshift_allowed = FALSE
-	brightness = 8
 
 /obj/machinery/light/dim
 	nightshift_allowed = FALSE
@@ -54,7 +54,9 @@
 	fitting = "bulb"
 	brightness = 4
 	nightshift_brightness = 4
+	fire_brightness = 3
 	bulb_colour = "#FFD6AA"
+	fire_colour = "#bd3f46"
 	desc = "A small lighting fixture."
 	light_type = /obj/item/light/bulb
 
@@ -75,15 +77,19 @@
 	bulb_colour = "#FF3232"
 	no_low_power = TRUE
 	nightshift_allowed = FALSE
+	fire_colour = "#ff1100"
 
 /obj/machinery/light/small/red/dim
 	brightness = 2
 	bulb_power = 0.8
+	fire_brightness = 2
 
 /obj/machinery/light/small/blacklight
 	bulb_colour = "#A700FF"
 	nightshift_allowed = FALSE
 	brightness = 4
+	fire_brightness = 3
+	fire_colour = "#d400ff"
 
 // -------- Directional presets
 // The directions are backwards on the lights we have now

@@ -91,7 +91,7 @@
 /obj/structure/rack{
 	resistance_flags = 64
 	},
-/obj/item/clothing/head/helmet/space/beret{
+/obj/item/clothing/head/beret/sec{
 	name = "red beret"
 	},
 /turf/open/floor/carpet/red,
@@ -2024,7 +2024,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Pb" = (
-/obj/structure/sign/barsign{
+/obj/machinery/barsign/all_access{
 	resistance_flags = 64
 	},
 /turf/closed/wall/mineral/iron,

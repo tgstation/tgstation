@@ -100,7 +100,7 @@
 	result = /obj/item/pen/charcoal
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 1, /datum/reagent/ash = 30)
 	time = 3 SECONDS
-	category = CAT_PRIMAL
+	category = CAT_TOOLS
 
 /obj/item/pen/fountain/captain
 	name = "captain's fountain pen"
@@ -142,7 +142,7 @@
 		to_chat(user, span_warning("You must be holding the pen to continue!"))
 		return
 	var/deg = tgui_input_number(user, "What angle would you like to rotate the pen head to? (0-360)", "Rotate Pen Head", max_value = 360)
-	if(isnull(deg) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
+	if(isnull(deg) || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 		return
 	degrees = deg
 	to_chat(user, span_notice("You rotate the top of the pen to [deg] degrees."))
@@ -160,15 +160,21 @@
 
 /obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
 	. = ..()
+
+	if (!proximity)
+		return .
+
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
-	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
+	if(isobj(O) && (O.obj_flags & UNIQUE_RENAME))
 		var/penchoice = tgui_input_list(user, "What would you like to edit?", "Pen Setting", list("Rename", "Description", "Reset"))
-		if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
+		if(QDELETED(O) || !user.can_perform_action(O))
 			return
 		if(penchoice == "Rename")
 			var/input = tgui_input_text(user, "What do you want to name [O]?", "Object Name", "[O.name]", MAX_NAME_LEN)
 			var/oldname = O.name
-			if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
+			if(QDELETED(O) || !user.can_perform_action(O))
 				return
 			if(input == oldname || !input)
 				to_chat(user, span_notice("You changed [O] to... well... [O]."))
@@ -184,7 +190,7 @@
 		if(penchoice == "Description")
 			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 140)
 			var/olddesc = O.desc
-			if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
+			if(QDELETED(O) || !user.can_perform_action(O))
 				return
 			if(input == olddesc || !input)
 				to_chat(user, span_notice("You decide against changing [O]'s description."))
@@ -194,7 +200,7 @@
 				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Reset")
-			if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
+			if(QDELETED(O) || !user.can_perform_action(O))
 				return
 
 			qdel(O.GetComponent(/datum/component/rename))
@@ -247,6 +253,7 @@
 	sharpness = SHARP_POINTY
 	armour_penetration = 20
 	bare_wound_bonus = 10
+	item_flags = NO_BLOOD_ON_ITEM
 	light_system = MOVABLE_LIGHT
 	light_range = 1.5
 	light_power = 0.75
@@ -272,7 +279,9 @@
 		throwforce_on = 35, \
 		throw_speed_on = 4, \
 		sharpness_on = SHARP_EDGED, \
-		w_class_on = WEIGHT_CLASS_NORMAL)
+		w_class_on = WEIGHT_CLASS_NORMAL, \
+		inhand_icon_change = FALSE, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 	RegisterSignal(src, COMSIG_DETECTIVE_SCANNED, PROC_REF(on_scan))
 
@@ -359,7 +368,9 @@
 	AddComponent(/datum/component/transforming, \
 		throwforce_on = 5, \
 		w_class_on = WEIGHT_CLASS_SMALL, \
-		sharpness_on = TRUE)
+		sharpness_on = TRUE, \
+		inhand_icon_change = FALSE, \
+	)
 
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(toggle_screwdriver))
 	AddElement(/datum/element/update_icon_updates_onmob)
@@ -378,7 +389,8 @@
 	SIGNAL_HANDLER
 	extended = active
 	if(user)
-		balloon_alert(user, "[extended ? "extended" : "retracted"]!")
+		balloon_alert(user, "[extended ? "extended" : "retracted"]")
+	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 	if(!extended)
 		tool_behaviour = initial(tool_behaviour)

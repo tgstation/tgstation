@@ -29,6 +29,7 @@ type PaperContext = {
   default_pen_font: string;
   default_pen_color: string;
   signature_font: string;
+  sanitize_text: boolean;
 
   // ui_data
   held_item_details?: WritingImplement;
@@ -39,6 +40,7 @@ type PaperInput = {
   font?: string;
   color?: string;
   bold?: boolean;
+  advanced_html?: boolean;
 };
 
 type StampInput = {
@@ -426,9 +428,82 @@ export class PreviewView extends Component<PreviewViewProps> {
   // Array containing cache of HTMLInputElements that are enabled.
   enabledInputFieldCache: { [key: string]: HTMLInputElement } = {};
 
+  // State checking variables. Used to determine whether or not to use cache.
+  lastReadOnly: boolean = true;
+  lastDMInputCount: number = 0;
+  lastFieldCount: number = 0;
+  lastFieldInputCount: number = 0;
+
+  // Cache variables for fully parsed text. Workaround for marked.js not being
+  // super fast on the BYOND/IE js engine.
+  parsedDMCache: string = '';
+  parsedTextBoxCache: string = '';
+
   constructor(props, context) {
     super(props, context);
+    this.configureMarked();
   }
+
+  configureMarked = (): void => {
+    // This is an extension for marked defining a complete custom tokenizer.
+    // This tokenizer should run before the the non-custom ones, and gives us
+    // the ability to handle [_____] fields before the em/strong tokenizers
+    // mangle them, since underscores are used for italic/bold.
+    // This massively improves the order of operations, allowing us to run
+    // marked, THEN sanitise the output (much safer) and finally insert fields
+    // manually afterwards.
+    const inputField = {
+      name: 'inputField',
+      level: 'inline',
+
+      start(src) {
+        return src.match(/\[/)?.index;
+      },
+
+      tokenizer(src: string) {
+        const rule = /^\[_+\]/;
+        const match = src.match(rule);
+        if (match) {
+          const token = {
+            type: 'inputField',
+            raw: match[0],
+          };
+          return token;
+        }
+      },
+
+      renderer(token) {
+        return `${token.raw}`;
+      },
+    };
+
+    // Override function, any links and images should
+    // kill any other marked tokens we don't want here
+    const walkTokens = (token) => {
+      switch (token.type) {
+        case 'url':
+        case 'autolink':
+        case 'reflink':
+        case 'link':
+        case 'image':
+          token.type = 'text';
+          // Once asset system is up change to some default image
+          // or rewrite for icon images
+          token.href = '';
+          break;
+      }
+    };
+
+    marked.use({
+      extensions: [inputField],
+      breaks: true,
+      gfm: true,
+      smartypants: true,
+      walkTokens: walkTokens,
+      // Once assets are fixed might need to change this for them
+      baseUrl: 'thisshouldbreakhttp',
+    });
+  };
 
   // Extracts the paper field "counter" from a full ID.
   getHeaderID = (header: string): string => {
@@ -451,8 +526,10 @@ export class PreviewView extends Component<PreviewViewProps> {
   onInputHandler = (ev: Event): void => {
     const input = ev.target as HTMLInputElement;
 
-    // Skip text area input.
+    // We don't care about text area input, but this is a good place to
+    // clear the text box cache if we've had new input.
     if (input.nodeName !== 'INPUT') {
+      this.parsedTextBoxCache = '';
       return;
     }
 
@@ -490,6 +567,7 @@ export class PreviewView extends Component<PreviewViewProps> {
   createPreviewFromDM = (): { text: string; newFieldCount: number } => {
     const { data } = useBackend<PaperContext>(this.context);
     const {
+      raw_field_input,
       raw_text_input,
       default_pen_font,
       default_pen_color,
@@ -502,6 +580,19 @@ export class PreviewView extends Component<PreviewViewProps> {
 
     const readOnly = !canEdit(held_item_details);
 
+    // If readonly is the same (input field writiability state hasn't changed)
+    // And the input stats are the same (no new text inputs since last time)
+    // Then use any cached values.
+    if (
+      this.lastReadOnly === readOnly &&
+      this.lastDMInputCount === raw_text_input?.length &&
+      this.lastFieldInputCount === raw_field_input?.length
+    ) {
+      return { text: this.parsedDMCache, newFieldCount: this.lastFieldCount };
+    }
+
+    this.lastReadOnly = readOnly;
+
     raw_text_input?.forEach((value) => {
       let rawText = value.raw_text.trim();
       if (!rawText.length) {
@@ -511,6 +602,7 @@ export class PreviewView extends Component<PreviewViewProps> {
       const fontColor = value.color || default_pen_color;
       const fontFace = value.font || default_pen_font;
       const fontBold = value.bold || false;
+      const advancedHtml = value.advanced_html || false;
 
       let processingOutput = this.formatAndProcessRawText(
         rawText,
@@ -519,13 +611,19 @@ export class PreviewView extends Component<PreviewViewProps> {
         paper_color,
         fontBold,
         fieldCount,
-        readOnly
+        readOnly,
+        advancedHtml
       );
 
       output += processingOutput.text;
 
       fieldCount = processingOutput.nextCounter;
     });
+
+    this.lastDMInputCount = raw_text_input?.length || 0;
+    this.lastFieldInputCount = raw_field_input?.length || 0;
+    this.lastFieldCount = fieldCount;
+    this.parsedDMCache = output;
 
     return { text: output, newFieldCount: fieldCount };
   };
@@ -542,6 +640,11 @@ export class PreviewView extends Component<PreviewViewProps> {
     } = data;
     const { textArea } = this.props;
 
+    // Use the cache if one exists.
+    if (this.parsedTextBoxCache) {
+      return this.parsedTextBoxCache;
+    }
+
     const readOnly = true;
 
     const fontColor = held_item_details?.color || default_pen_color;
@@ -557,6 +660,8 @@ export class PreviewView extends Component<PreviewViewProps> {
       fieldCount,
       readOnly
     );
+
+    this.parsedTextBoxCache = processingOutput.text;
 
     return processingOutput.text;
   };
@@ -624,17 +729,7 @@ export class PreviewView extends Component<PreviewViewProps> {
       },
     };
 
-    // marked.use({ tokenizer });
-    marked.use({ extensions: [inputField] });
-
-    return marked.parse(rawText, {
-      breaks: true,
-      smartypants: true,
-      smartLists: true,
-      walkTokens,
-      // Once assets are fixed might need to change this for them
-      baseUrl: 'thisshouldbreakhttp',
-    });
+    return marked.parse(rawText);
   };
 
   // Fully formats, sanitises and parses the provided raw text and wraps it
@@ -646,16 +741,18 @@ export class PreviewView extends Component<PreviewViewProps> {
     paperColor: string,
     bold: boolean,
     fieldCounter: number = 0,
-    forceReadonlyFields: boolean = false
+    forceReadonlyFields: boolean = false,
+    advanced_html: boolean = false
   ): FieldCreationReturn => {
     // First lets make sure it ends in a new line
+    const { data } = useBackend<PaperContext>(this.context);
     rawText += rawText[rawText.length] === '\n' ? '\n' : '\n\n';
 
     // Second, parse the text using markup
     const parsedText = this.runMarkedDefault(rawText);
 
     // Third, we sanitize the text of html
-    const sanitizedText = sanitizeText(parsedText);
+    const sanitizedText = sanitizeText(parsedText, advanced_html);
 
     // Fourth we replace the [__] with fields
     const fieldedText = this.createFields(

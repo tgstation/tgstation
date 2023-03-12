@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes:
-  - bugfix: "Pillow smothering now checks to see if the SMOTHEREE has a head, not the SMOTHERER."

@@ -11,9 +11,9 @@
 	// We need to face our guy explicitly, because mechs have directional armor
 	demo_mech.setDir(EAST)
 
-	var/expected_melee_armor = demo_mech.armor.getRating(MELEE)
-	var/expected_laser_armor = demo_mech.armor.getRating(LASER)
-	var/expected_bullet_armor = demo_mech.armor.getRating(BULLET)
+	var/expected_melee_armor = demo_mech.get_armor_rating(MELEE)
+	var/expected_laser_armor = demo_mech.get_armor_rating(LASER)
+	var/expected_bullet_armor = demo_mech.get_armor_rating(BULLET)
 
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 	dummy.forceMove(locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
@@ -25,7 +25,7 @@
 	// Get a sample "melee" weapon.
 	// The energy axe is chosen here due to having a high base force, to make sure we get over the equipment DT.
 	var/obj/item/dummy_melee = allocate(/obj/item/melee/energy/axe)
-	var/expected_melee_damage = round(dummy_melee.force * (1 - expected_melee_armor / 100), DAMAGE_PRECISION)
+	var/expected_melee_damage = round(dummy_melee.force * (1 - expected_melee_armor / 100) * dummy_melee.demolition_mod, DAMAGE_PRECISION)
 
 	// Get a sample laser weapon.
 	// The captain's laser gun here is chosen primarily because it deals more damage than normal lasers.

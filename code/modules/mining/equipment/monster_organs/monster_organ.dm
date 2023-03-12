@@ -12,17 +12,20 @@
 	. = ..()
 	if (!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	var/obj/item/organ/internal/monster_core/target_core = target_organ
 	if (!istype(target_core, /obj/item/organ/internal/monster_core))
 		balloon_alert(user, "invalid target!")
-		return
+		return .
 
 	if (!target_core.preserve())
 		balloon_alert(user, "organ decayed!")
-		return
+		return .
 
 	balloon_alert(user, "organ stabilized")
 	qdel(src)
+	return .
 
 /**
  * Useful organs which drop as loot from a mining creature.
@@ -137,9 +140,10 @@
 	if (!proximity_flag)
 		return
 	try_apply(target, user)
+	return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/organ/internal/monster_core/attack_self(mob/user)
-	if (!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if (!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	try_apply(user, user)
 

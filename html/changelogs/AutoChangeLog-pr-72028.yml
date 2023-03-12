@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - admin: "The \"Reset Thunderdome\" option in the Secrets Menu now respects you closing out of the confirmation screen as a way of cancelling your potential thunderdome reset, rather than proceeding immediately. It should also be easier to comprehend as well."

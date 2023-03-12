@@ -98,10 +98,14 @@
  */
 /datum/component/experiment_handler/proc/ignored_handheld_experiment_attempt(datum/source, atom/target, mob/user, proximity_flag, params)
 	SIGNAL_HANDLER
-	if (!proximity_flag || (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)))
+	if (!proximity_flag)
 		return
+	. |= COMPONENT_AFTERATTACK_PROCESSED_ITEM
+	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
+		return .
 	playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
 	to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
+	return .
 
 /**
  * Checks that an experiment can be run using the provided target, used for preventing the cancellation of the attack chain inappropriately
@@ -297,12 +301,13 @@
 	if (!turf_source)
 		turf_source = get_turf(parent)
 	var/list/local_servers = list()
-	for (var/obj/machinery/rnd/server/server as anything in SSresearch.servers)
-		var/turf/turf_server = get_turf(server)
-		if (!turf_source || !turf_server)
-			break
-		if(is_valid_z_level(turf_source, turf_server))
-			local_servers += server
+	for (var/datum/techweb/techwebs as anything in SSresearch.techwebs)
+		for (var/obj/machinery/rnd/server/server as anything in techwebs.techweb_servers)
+			var/turf/turf_server = get_turf(server)
+			if (!turf_source || !turf_server)
+				break
+			if(is_valid_z_level(turf_source, turf_server))
+				local_servers += server
 	return local_servers
 
 /**

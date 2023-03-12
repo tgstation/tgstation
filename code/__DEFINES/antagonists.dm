@@ -118,6 +118,12 @@
 	WIZARD_LOADOUT_WIZARMY, \
 	WIZARD_LOADOUT_SOULTAP, \
 )
+/// Number of times you need to perform the grand ritual to complete it
+#define GRAND_RITUAL_FINALE_COUNT 7
+/// The crew will start being warned every time a rune is created after this many invocations.
+#define GRAND_RITUAL_RUNES_WARNING_POTENCY 3
+/// The crew will get a louder warning when this level of rune is created, and the next one will be special
+#define GRAND_RITUAL_IMMINENT_FINALE_POTENCY 6
 
 /// Used in logging spells for roundend results
 #define LOG_SPELL_TYPE "type"
@@ -189,11 +195,6 @@ GLOBAL_LIST_INIT(ai_employers, list(
 	"Unshackled",
 ))
 
-///all the employers that are syndicate
-#define FACTION_SYNDICATE "syndicate"
-///all the employers that are nanotrasen
-#define FACTION_NANOTRASEN "nanotrasen"
-
 #define UPLINK_THEME_SYNDICATE "syndicate"
 
 #define UPLINK_THEME_UNDERWORLD_MARKET "neutral"
@@ -214,9 +215,6 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is either a heretic or a heretic monster.
 #define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob))
 
-/// Define for the heretic faction applied to heretics and heretic mobs.
-#define FACTION_HERETIC "heretics"
-
 /// Checks if the given mob is a wizard
 #define IS_WIZARD(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard))
 
@@ -228,6 +226,20 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 /// Checks if the given mob is a malf ai.
 #define IS_MALF_AI(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/malf_ai))
+
+/// List of human antagonist types which don't spawn directly on the space station
+GLOBAL_LIST_INIT(human_invader_antagonists, list(
+	/datum/antagonist/abductor,
+	/datum/antagonist/fugitive,
+	/datum/antagonist/fugitive_hunter,
+	/datum/antagonist/ninja,
+	/datum/antagonist/nukeop,
+	/datum/antagonist/pirate,
+	/datum/antagonist/wizard,
+))
+
+/// Returns true if the given mob has an antag datum which is assigned to a human antagonist who doesn't spawn on the space station
+#define IS_HUMAN_INVADER(mob) (mob?.mind?.has_antag_datum_in_list(GLOB.human_invader_antagonists))
 
 /// The dimensions of the antagonist preview icon. Will be scaled to this size.
 #define ANTAGONIST_PREVIEW_ICON_SIZE 96
@@ -275,3 +287,20 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define OBJECTIVE_WEIGHT_HUGE 20
 
 #define REVENANT_NAME_FILE "revenant_names.json"
+
+/// Antag panel groups
+#define ANTAG_GROUP_ABDUCTORS "Abductors"
+#define ANTAG_GROUP_ABOMINATIONS "Extradimensional Abominations"
+#define ANTAG_GROUP_ARACHNIDS "Arachnid Infestation"
+#define ANTAG_GROUP_ASHWALKERS "Ash Walkers"
+#define ANTAG_GROUP_BIOHAZARDS "Biohazards"
+#define ANTAG_GROUP_CLOWNOPS "Clown Operatives"
+#define ANTAG_GROUP_ERT "Emergency Response Team"
+#define ANTAG_GROUP_HORRORS "Eldritch Horrors"
+#define ANTAG_GROUP_LEVIATHANS "Spaceborne Leviathans"
+#define ANTAG_GROUP_NINJAS "Ninja Clan"
+#define ANTAG_GROUP_OVERGROWTH "Invasive Overgrowth"
+#define ANTAG_GROUP_PIRATES "Pirate Crew"
+#define ANTAG_GROUP_SYNDICATE "Syndicate"
+#define ANTAG_GROUP_WIZARDS "Wizard Federation"
+#define ANTAG_GROUP_XENOS "Xenomorph Infestation"

@@ -20,6 +20,7 @@
 	opacity = FALSE
 	canSmoothWith = null
 	smoothing_flags = NONE
+	density = FALSE
 	/// The amount of time it takes to create a venus human trap.
 	var/growth_time = 120 SECONDS
 	var/growth_icon = 0
@@ -58,6 +59,15 @@
 	if((trait_flags & SPACEVINE_HEAT_RESISTANT) && damage_type == BURN)
 		damage_amount = 0
 	. = ..()
+
+/obj/structure/alien/resin/flower_bud/attacked_by(obj/item/item, mob/living/user)
+	var/damage_dealt = item.force
+	if(item.damtype == BURN)
+		damage_dealt *= 4
+	if(item.get_sharpness())
+		damage_dealt *= 16 // alien resin applies 75% reduction to brute damage so this actually x4 damage
+
+	take_damage(damage_dealt, item.damtype, MELEE, 1)
 
 /obj/structure/alien/resin/flower_bud/Destroy()
 	QDEL_LIST(vines)
@@ -146,8 +156,11 @@
 	unsuitable_atmos_damage = 0
 	/// copied over from the code from eyeballs (the mob) to make it easier for venus human traps to see in kudzu that doesn't have the transparency mutation
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	faction = list("hostile","vines","plants")
+	// Real green, cause of course
+	lighting_cutoff_red = 10
+	lighting_cutoff_green = 35
+	lighting_cutoff_blue = 20
+	faction = list(FACTION_HOSTILE,FACTION_VINES,FACTION_PLANTS)
 	initial_language_holder = /datum/language_holder/venus
 	unique_name = TRUE
 	/// A list of all the plant's vines

@@ -9,7 +9,7 @@
 
 /datum/action/changeling/regenerate/sting_action(mob/living/user)
 	if(!iscarbon(user))
-		to_chat(user, span_notice("You have nothing to regenerate in this state!"))
+		user.balloon_alert(user, "nothing missing!")
 		return FALSE
 
 	..()

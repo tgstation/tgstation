@@ -110,12 +110,12 @@
 	. = ..()
 	malfunction_probability_coeff = malfunction_probability_coeff_modifier
 	resetTime = initial(resetTime)
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		resetTime = max(1, resetTime - M.rating)
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		resetTime = max(1, resetTime - manipulator.tier)
 	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
 		malfunction_probability_coeff += scanning_module.tier * 2
-	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
-		malfunction_probability_coeff += M.rating
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		malfunction_probability_coeff += micro_laser.tier
 
 /obj/machinery/rnd/experimentor/examine(mob/user)
 	. = ..()
@@ -650,7 +650,7 @@
 		/mob/living/basic/mouse,
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/bee,
-		/mob/living/simple_animal/hostile/carp,
+		/mob/living/basic/carp,
 	)
 	for(var/counter in 1 to rand(1, 25))
 		var/mobType = pick(valid_animals)

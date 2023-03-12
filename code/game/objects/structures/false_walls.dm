@@ -113,9 +113,9 @@
 
 /obj/structure/falsewall/attackby(obj/item/W, mob/user, params)
 	if(!opening)
-		to_chat(user, span_warning("You must wait until the door has stopped moving!"))
-		return
-	return ..()
+		return ..()
+	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
+	return
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
 	user.visible_message(span_notice("[user] dismantles the false wall."), span_notice("You dismantle the false wall."))

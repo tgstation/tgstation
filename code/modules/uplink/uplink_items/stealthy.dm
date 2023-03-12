@@ -67,12 +67,11 @@
 	name = "Boxed Origami Kit"
 	desc = "This box contains a guide on how to craft masterful works of origami, allowing you to transform normal pieces of paper into \
 			perfectly aerodynamic (and potentially lethal) paper airplanes."
-	progression_minimum = 15 MINUTES
 	item = /obj/item/storage/box/syndie_kit/origami_bundle
-	cost = 14
+	progression_minimum = 10 MINUTES
+	cost = 4
 	surplus = 0
 	purchasable_from = ~UPLINK_NUKE_OPS //clown ops intentionally left in, because that seems like some s-tier shenanigans.
-
 
 // Medium progression cost
 

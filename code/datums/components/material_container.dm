@@ -265,7 +265,7 @@
 /datum/component/material_container/proc/transer_amt_to(datum/component/material_container/T, amt, datum/material/mat)
 	if(!istype(mat))
 		mat = GET_MATERIAL_REF(mat)
-	if((amt==0)||(!T)||(!mat))
+	if((amt == 0) || (!T) || (!mat))
 		return FALSE
 	if(amt<0)
 		return T.transer_amt_to(src, -amt, mat)

@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - spellcheck: "Fixed the thermomachine stating \"You set the color\" for everyone that could see it."

@@ -90,7 +90,7 @@
 				if(can_control(usr, R) && !..())
 					if(isAI(usr) && (R.ai_lockdown && R.lockcharge || !R.lockcharge) || !isAI(usr))
 						R.ai_lockdown = FALSE
-						if(isAI(usr)&&!R.lockcharge)
+						if(isAI(usr) && !R.lockcharge)
 							R.ai_lockdown = TRUE
 						message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] [!R.lockcharge ? "locked down" : "released"] [ADMIN_LOOKUPFLW(R)]!"))
 						log_silicon("[key_name(usr)] [!R.lockcharge ? "locked down" : "released"] [key_name(R)]!")

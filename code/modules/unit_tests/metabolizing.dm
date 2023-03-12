@@ -51,15 +51,15 @@
 	var/mob/living/carbon/human/syringe_user = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/pill_syringe_user = allocate(/mob/living/carbon/human/consistent)
 
-	var/datum/mind/pill_mind = new /datum/mind("Mothcocks")
+	var/datum/mind/pill_mind = new /datum/mind(null)
 	pill_mind.active = TRUE
 	pill_mind.transfer_to(pill_user)
 
-	var/datum/mind/syringe_mind = new /datum/mind("Mothcocks")
+	var/datum/mind/syringe_mind = new /datum/mind(null)
 	syringe_mind.active = TRUE
 	syringe_mind.transfer_to(syringe_user)
 
-	var/datum/mind/pill_syringe_mind = new /datum/mind("Mothcocks")
+	var/datum/mind/pill_syringe_mind = new /datum/mind(null)
 	pill_syringe_mind.active = TRUE
 	pill_syringe_mind.transfer_to(pill_syringe_user)
 

@@ -17,6 +17,46 @@
 	///Rate of operation of the device
 	var/volume_rate = 50
 
+	///id of air sensor its connected to
+	var/chamber_id
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/Initialize(mapload)
+	. = ..()
+	var/static/list/tool_screentips = list(
+		TOOL_MULTITOOL = list(
+			SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
+		)
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_screentips)
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/examine(mob/user)
+	. = ..()
+	. += span_notice("You can link it with an air sensor using a multitool.")
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
+	. = ..()
+	if (!istype(multi_tool))
+		return .
+
+	balloon_alert(user, "saved in buffer")
+	multi_tool.buffer = src
+	return TRUE
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		disconnect_chamber()
+
+///called when its either unwrenched or destroyed
+/obj/machinery/atmospherics/components/unary/outlet_injector/proc/disconnect_chamber()
+	if(chamber_id != null)
+		GLOB.objects_by_id_tag -= CHAMBER_INPUT_FROM_ID(chamber_id)
+		chamber_id = null
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
+	disconnect_chamber()
+	return ..()
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
 	if(can_interact(user))
 		on = !on

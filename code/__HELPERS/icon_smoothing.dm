@@ -416,7 +416,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 //Icon smoothing helpers
 /proc/smooth_zlevel(zlevel, now = FALSE)
-	var/list/away_turfs = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
+	var/list/away_turfs = Z_TURFS(zlevel)
 	for(var/turf/turf_to_smooth as anything in away_turfs)
 		if(turf_to_smooth.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 			if(now)

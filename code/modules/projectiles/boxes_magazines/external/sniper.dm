@@ -13,19 +13,20 @@
 /obj/item/ammo_box/magazine/sniper_rounds/soporific
 	name = "sniper rounds (Zzzzz)"
 	desc = "Soporific sniper rounds, designed for happy days and dead quiet nights..."
-	icon_state = "soporific"
+	base_icon_state = "soporific"
 	ammo_type = /obj/item/ammo_casing/p50/soporific
 	max_ammo = 3
-	caliber = CALIBER_50
 
 /obj/item/ammo_box/magazine/sniper_rounds/penetrator
 	name = "sniper rounds (penetrator)"
 	desc = "An extremely powerful round capable of passing straight through cover and anyone unfortunate enough to be behind it."
+	base_icon_state = "penetrator"
 	ammo_type = /obj/item/ammo_casing/p50/penetrator
 	max_ammo = 5
 
 /obj/item/ammo_box/magazine/sniper_rounds/marksman
 	name = "sniper rounds (marksman)"
 	desc = "An extremely fast sniper round able to pretty much instantly shoot through something."
+	base_icon_state = "marksman"
 	ammo_type = /obj/item/ammo_casing/p50/marksman
 	max_ammo = 5

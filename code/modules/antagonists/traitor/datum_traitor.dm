@@ -1,3 +1,8 @@
+///all the employers that are syndicate
+#define FLAVOR_FACTION_SYNDICATE "syndicate"
+///all the employers that are nanotrasen
+#define FLAVOR_FACTION_NANOTRASEN "nanotrasen"
+
 /datum/antagonist/traitor
 	name = "\improper Traitor"
 	roundend_category = "traitors"
@@ -66,7 +71,7 @@
 				if((uplink_handler.assigned_role in item.restricted_roles) || (uplink_handler.assigned_species in item.restricted_species))
 					uplink_items += item
 					continue
-		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, -1, uplink_items)
+		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, 1, uplink_items)
 
 	if(give_objectives)
 		forge_traitor_objectives()
@@ -135,15 +140,15 @@
 	return ..()
 
 /datum/antagonist/traitor/proc/pick_employer()
-	var/faction = prob(75) ? FACTION_SYNDICATE : FACTION_NANOTRASEN
+	var/faction = prob(75) ? FLAVOR_FACTION_SYNDICATE : FLAVOR_FACTION_NANOTRASEN
 	var/list/possible_employers = list()
 
 	possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
 
 	switch(faction)
-		if(FACTION_SYNDICATE)
+		if(FLAVOR_FACTION_SYNDICATE)
 			possible_employers -= GLOB.nanotrasen_employers
-		if(FACTION_NANOTRASEN)
+		if(FLAVOR_FACTION_NANOTRASEN)
 			possible_employers -= GLOB.syndicate_employers
 	employer = pick(possible_employers)
 	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
@@ -300,3 +305,5 @@
 
 		H.update_held_items()
 
+#undef FLAVOR_FACTION_SYNDICATE
+#undef FLAVOR_FACTION_NANOTRASEN

@@ -72,3 +72,63 @@
 			found += single_locate
 	if(found.len)
 		return pick(found)
+
+/**
+ * Variant of find and set which returns an object which can be animated with a staff of change
+ */
+/datum/ai_behavior/find_and_set/animatable
+
+/datum/ai_behavior/find_and_set/animatable/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	var/mob/living/living_pawn = controller.pawn
+
+	var/list/nearby_items = list()
+	for (var/obj/new_friend as anything in oview(search_range, controller.pawn))
+		if (!isitem(new_friend) && !isstructure(new_friend))
+			continue
+		if (is_type_in_list(new_friend, GLOB.animatable_blacklist))
+			continue
+		if (living_pawn.see_invisible < new_friend.invisibility)
+			continue
+		nearby_items += new_friend
+
+	if(nearby_items.len)
+		return pick(nearby_items)
+
+/**
+ * Variant of find and set which returns the nearest wall which isn't invulnerable
+ */
+/datum/ai_behavior/find_and_set/nearest_wall
+
+/datum/ai_behavior/find_and_set/nearest_wall/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	var/mob/living/living_pawn = controller.pawn
+
+	var/list/nearby_walls = list()
+	for (var/turf/closed/new_wall in oview(search_range, controller.pawn))
+		if (isindestructiblewall(new_wall))
+			continue
+		nearby_walls += new_wall
+
+	if(nearby_walls.len)
+		return get_closest_atom(/turf/closed/, nearby_walls, living_pawn)
+
+/**
+ * Variant of find and set which returns corpses who share your faction
+ */
+/datum/ai_behavior/find_and_set/friendly_corpses
+
+/datum/ai_behavior/find_and_set/friendly_corpses/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	var/mob/living/living_pawn = controller.pawn
+	var/list/nearby_bodies = list()
+	for (var/mob/living/dead_pal in oview(search_range, controller.pawn))
+		if (!isturf(dead_pal.loc))
+			continue
+		if (!dead_pal.stat || dead_pal.health > 0)
+			continue
+		if (living_pawn.see_invisible < dead_pal.invisibility)
+			continue
+		if (!living_pawn.faction_check_mob(dead_pal))
+			continue
+		nearby_bodies += dead_pal
+
+	if (nearby_bodies.len)
+		return pick(nearby_bodies)

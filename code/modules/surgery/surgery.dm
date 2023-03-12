@@ -137,15 +137,7 @@
 
 /datum/surgery/proc/complete(mob/surgeon)
 	SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
-	surgeon.mind.add_memory(
-		MEMORY_SUCCESSFUL_SURGERY,
-		list(
-			DETAIL_PROTAGONIST = surgeon,
-			DETAIL_DEUTERAGONIST = target,
-			DETAIL_SURGERY_TYPE = src,
-		),
-		story_value = STORY_VALUE_OKAY
-	)
+	surgeon.add_mob_memory(/datum/memory/surgery, deuteragonist = surgeon, surgery_type = name)
 	qdel(src)
 
 /// Returns a nearby operating computer linked to an operating table

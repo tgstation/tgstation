@@ -68,7 +68,7 @@ export const PrimaryObjectiveMenu = (
                 telecrystalPenalty={0}
                 progressionReward={0}
                 originalProgression={0}
-                hideTcRep={1}
+                hideTcRep
                 canAbort={false}
                 grow={false}
                 finalObjective={false}

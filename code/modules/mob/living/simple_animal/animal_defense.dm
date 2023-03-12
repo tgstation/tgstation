@@ -92,12 +92,6 @@
 		if(.)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 
-/mob/living/simple_animal/attack_basic_mob(mob/living/basic/user, list/modifiers)
-	. = ..()
-	if(.)
-		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		return attack_threshold_check(damage, user.melee_damage_type)
-
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -197,7 +191,7 @@
 			if (EMP_LIGHT)
 				visible_message(span_danger("[src] shakes violently, its parts coming loose!"))
 				apply_damage(maxHealth * 0.6)
-				Shake(5, 5, 1 SECONDS)
+				Shake(duration = 1 SECONDS)
 			if (EMP_HEAVY)
 				visible_message(span_danger("[src] suddenly bursts apart!"))
 				apply_damage(maxHealth)

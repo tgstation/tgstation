@@ -4,7 +4,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "plasticflaps"
-	armor = list(MELEE = 100, BULLET = 80, LASER = 80, ENERGY = 100, BOMB = 50, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/structure_plasticflaps
 	density = FALSE
 	anchored = TRUE
 	can_atmos_pass = ATMOS_PASS_NO
@@ -12,6 +12,15 @@
 
 /obj/structure/plasticflaps/opaque
 	opacity = TRUE
+
+/datum/armor/structure_plasticflaps
+	melee = 100
+	bullet = 80
+	laser = 80
+	energy = 100
+	bomb = 50
+	fire = 50
+	acid = 50
 
 /obj/structure/plasticflaps/Initialize(mapload)
 	. = ..()

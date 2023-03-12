@@ -634,7 +634,7 @@ SUBSYSTEM_DEF(spatial_grid)
 			turfs = GLOB.station_turfs
 
 		else
-			turfs = block(locate(1,1,z), locate(world.maxx, world.maxy, z))
+			turfs = Z_TURFS(z)
 
 		for(var/client_to_insert in 0 to insert_clients)
 			var/turf/random_turf = pick(turfs)

@@ -7,7 +7,7 @@
 	category = EVENT_CATEGORY_FRIENDLY
 	description = "A colourful display can be seen through select windows. And the kitchen."
 
-/datum/round_event_control/aurora_caelus/can_spawn_event(players)
+/datum/round_event_control/aurora_caelus/can_spawn_event(players, allow_magic = FALSE)
 	if(!CONFIG_GET(flag/starlight) && !(SSmapping.empty_space))
 		return FALSE
 	return ..()

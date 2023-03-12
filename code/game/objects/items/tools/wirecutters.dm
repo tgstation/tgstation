@@ -28,7 +28,7 @@
 	pickup_sound = 'sound/items/handling/wirecutter_pickup.ogg'
 	tool_behaviour = TOOL_WIRECUTTER
 	toolspeed = 1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/item_wirecutters
 	/// If the item should be assigned a random color
 	var/random_color = TRUE
 	/// List of possible random colors
@@ -41,6 +41,10 @@
 		COLOR_TOOL_CYAN,
 		COLOR_TOOL_YELLOW,
 	)
+
+/datum/armor/item_wirecutters
+	fire = 50
+	acid = 30
 
 /obj/item/wirecutters/Initialize(mapload)
 	if(random_color)

@@ -181,6 +181,9 @@
 
 /obj/machinery/computer/emergency_shuttle/proc/increase_hijack_stage()
 	var/obj/docking_port/mobile/emergency/shuttle = SSshuttle.emergency
+	// Begin loading this early, prevents a delay when the shuttle goes to land
+	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, lazy_load_template), LAZY_TEMPLATE_KEY_NUKIEBASE)
+
 	shuttle.hijack_status++
 	if(hijack_announce)
 		announce_hijack_stage()
@@ -537,14 +540,15 @@
 
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock
-				for(var/A in SSshuttle.mobile_docking_ports)
-					var/obj/docking_port/mobile/M = A
-					M.on_emergency_dock()
+				for(var/obj/docking_port/mobile/port as anything in SSshuttle.mobile_docking_ports)
+					port.on_emergency_dock()
 
 				// now move the actual emergency shuttle to centcom
 				// unless the shuttle is "hijacked"
 				var/destination_dock = "emergency_away"
 				if(is_hijacked() || elimination_hijack())
+					// just double check
+					SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 					destination_dock = "emergency_syndicate"
 					minor_announce("Corruption detected in \
 						shuttle navigation protocols. Please contact your \
@@ -589,6 +593,7 @@
 	possible_destinations = "pod_asteroid"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
+	circuit = /obj/item/circuitboard/computer/emergency_pod
 	light_color = LIGHT_COLOR_BLUE
 	density = FALSE
 
@@ -607,7 +612,20 @@
 /obj/machinery/computer/shuttle/pod/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
 	if(port)
-		possible_destinations += ";[port.shuttle_id]_lavaland"
+		//Checks if the computer has already added the shuttle destination with the initial id
+		//This has to be done because connect_to_shuttle is called again after its ID is updated
+		//due to conflicting id names
+		var/base_shuttle_destination = ";[initial(port.shuttle_id)]_lavaland"
+		var/shuttle_destination = ";[port.shuttle_id]_lavaland"
+
+		var/position = findtext(possible_destinations, base_shuttle_destination)
+		if(position)
+			if(base_shuttle_destination == shuttle_destination)
+				return
+			possible_destinations = splicetext(possible_destinations, position, position + length(base_shuttle_destination), shuttle_destination)
+			return
+
+		possible_destinations += shuttle_destination
 
 /**
  * Signal handler for checking if we should lock or unlock escape pods accordingly to a newly set security level
@@ -627,9 +645,11 @@
 	name = "escape pod"
 	shuttle_id = "pod"
 	hidden = TRUE
+	override_can_dock_checks = TRUE
+	/// The area the pod tries to land at
 	var/target_area = /area/lavaland/surface/outdoors
+	/// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 	var/edge_distance = 16
-	// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 
 /obj/docking_port/stationary/random/Initialize(mapload)
 	. = ..()
@@ -639,11 +659,11 @@
 	var/list/turfs = get_area_turfs(target_area)
 	var/original_len = turfs.len
 	while(turfs.len)
-		var/turf/T = pick(turfs)
-		if(T.x<edge_distance || T.y<edge_distance || (world.maxx+1-T.x)<edge_distance || (world.maxy+1-T.y)<edge_distance)
-			turfs -= T
+		var/turf/picked_turf = pick(turfs)
+		if(picked_turf.x<edge_distance || picked_turf.y<edge_distance || (world.maxx+1-picked_turf.x)<edge_distance || (world.maxy+1-picked_turf.y)<edge_distance)
+			turfs -= picked_turf
 		else
-			forceMove(T)
+			forceMove(picked_turf)
 			return
 
 	// Fallback: couldn't find anything

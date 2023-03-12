@@ -134,6 +134,10 @@
 						/obj/item/radio/headset/headset_cargo)
 		ears = new headset(src)
 
+/mob/living/simple_animal/parrot/Destroy()
+	QDEL_NULL(ears)
+	return ..()
+
 /mob/living/simple_animal/parrot/examine(mob/user)
 	. = ..()
 	if(stat)

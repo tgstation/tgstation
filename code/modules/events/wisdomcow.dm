@@ -13,4 +13,5 @@
 	var/turf/targetloc = get_safe_random_station_turf()
 	var/mob/living/basic/cow/wisdom/wise = new (targetloc)
 	do_smoke(1, holder = wise, location = targetloc)
+	announce_to_ghosts(wise)
 

@@ -105,6 +105,7 @@
 	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
 		transfer_identity(C)
 	C.update_body_parts()
+	C.clear_mood_event("brain_damage")
 
 /obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s [initial(name)]"
@@ -476,6 +477,15 @@
 		qdel(X)
 		amount_cured++
 	return amount_cured
+
+/obj/item/organ/internal/brain/applyOrganDamage(damage_amount, maximum, required_organtype)
+	. = ..()
+	if(!owner)
+		return
+	if(damage >= 60)
+		owner.add_mood_event("brain_damage", /datum/mood_event/brain_damage)
+	else
+		owner.clear_mood_event("brain_damage")
 
 /// This proc lets the mob's brain decide what bodypart to attack with in an unarmed strike.
 /obj/item/organ/internal/brain/proc/get_attacking_limb(mob/living/carbon/human/target)

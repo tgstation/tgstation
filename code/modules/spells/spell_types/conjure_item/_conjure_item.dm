@@ -44,3 +44,7 @@
 	var/obj/item/made_item = new item_type()
 	LAZYADD(item_refs, WEAKREF(made_item))
 	return made_item
+
+/// Called after item has been handed to the caster, for any additional presentation
+/datum/action/cooldown/spell/conjure_item/proc/post_created(atom/cast_on, atom/created)
+	return

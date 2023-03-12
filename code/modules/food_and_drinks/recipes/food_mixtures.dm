@@ -1,11 +1,16 @@
 /datum/crafting_recipe/food
 	var/real_parts
-	category = CAT_FOOD
+	var/total_nutriment_factor
 
 /datum/crafting_recipe/food/on_craft_completion(mob/user, atom/result)
-	ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(user))
+	if(user.mind)
+		ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
 
 /datum/crafting_recipe/food/New()
+	if(ispath(result, /obj/item/food))
+		var/obj/item/food/result_food = new result
+		for(var/datum/reagent/consumable/nutriment as anything in result_food.food_reagents)
+			total_nutriment_factor += initial(nutriment.nutriment_factor) * result_food.food_reagents[nutriment]
 	real_parts = parts.Copy()
 	parts |= reqs
 
@@ -41,7 +46,6 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/food/tofu(location)
-	return
 
 /datum/chemical_reaction/food/chocolatepudding
 	results = list(/datum/reagent/consumable/chocolatepudding = 20)
@@ -59,7 +63,6 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/food/chocolatebar(location)
-	return
 
 /datum/chemical_reaction/food/chocolate_bar2
 	required_reagents = list(/datum/reagent/consumable/milk/chocolate_milk = 4, /datum/reagent/consumable/sugar = 2)
@@ -70,7 +73,6 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/food/chocolatebar(location)
-	return
 
 /datum/chemical_reaction/food/chocolate_bar3
 	required_reagents = list(/datum/reagent/consumable/milk = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/sugar = 2)
@@ -80,7 +82,6 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/food/chocolatebar(location)
-	return
 
 /datum/chemical_reaction/food/soysauce
 	results = list(/datum/reagent/consumable/soysauce = 5)

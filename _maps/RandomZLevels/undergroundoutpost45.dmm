@@ -3602,7 +3602,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "iL" = (
 /obj/machinery/light/small/directional/north,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -4256,7 +4256,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "kd" = (
 /obj/item/storage/backpack/satchel/science,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/toggle/labcoat/science,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet{

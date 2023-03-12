@@ -20,13 +20,13 @@
 	. = ..()
 	if(.)
 		var/obj/item/modular_computer/pda/silicon/tablet = computer
-		if(tablet.device_theme == "syndicate")
+		if(tablet.device_theme == PDA_THEME_SYNDICATE)
 			program_icon_state = "command-syndicate"
 		return TRUE
 	return FALSE
 
 /datum/computer_file/program/robotact/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	if(!iscyborg(user))
 		return data
 

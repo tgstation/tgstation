@@ -23,7 +23,17 @@
 	allowed = list(/obj/item/melee/sickly_blade)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	// Slightly better than normal cult robes
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50,ENERGY = 50, BOMB = 35, BIO = 20, FIRE = 20, ACID = 20)
+	armor_type = /datum/armor/cultrobes_eldritch
+
+/datum/armor/cultrobes_eldritch
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 35
+	bio = 20
+	fire = 20
+	acid = 20
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/examine(mob/user)
 	. = ..()
@@ -46,7 +56,14 @@
 	flags_inv = NONE
 	flags_cover = NONE
 	item_flags = EXAMINE_SKIP
-	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/cult_hoodie_void
+
+/datum/armor/cult_hoodie_void
+	melee = 30
+	bullet = 30
+	laser = 30
+	energy = 30
+	bomb = 15
 
 /obj/item/clothing/head/hooded/cult_hoodie/void/Initialize(mapload)
 	. = ..()
@@ -63,8 +80,15 @@
 	flags_inv = NONE
 	body_parts_covered = CHEST|GROIN|ARMS
 	// slightly worse than normal cult robes
-	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/cultrobes_void
 	alternative_mode = TRUE
+
+/datum/armor/cultrobes_void
+	melee = 30
+	bullet = 30
+	laser = 30
+	energy = 30
+	bomb = 15
 
 /obj/item/clothing/suit/hooded/cultrobes/void/Initialize(mapload)
 	. = ..()

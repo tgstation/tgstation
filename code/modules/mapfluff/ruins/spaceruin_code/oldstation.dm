@@ -247,7 +247,7 @@
 		/datum/reagent/yuck = 5,
 		/datum/reagent/consumable/vitfro = 5,
 		// Supplementary for CELL_LINE_TABLE_GRAPE
-		/datum/reagent/liquidgibs = 5
+		/datum/reagent/consumable/liquidgibs = 5
 	)
 
 /obj/machinery/computer/old

@@ -18,6 +18,7 @@
 	throwforce = 15
 	demolition_mod = 0.25
 	inhand_icon_state = "beer" //Generic held-item sprite until unique ones are made.
+	var/broken_inhand_icon_state = "broken_beer"
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	drink_type = ALCOHOL
@@ -40,6 +41,7 @@
 	if(!ranged && thrower)
 		thrower.put_in_hands(B)
 	B.mimic_broken(src, target, break_top)
+	B.inhand_icon_state = broken_inhand_icon_state
 
 	qdel(src)
 	target.Bumped(B)
@@ -71,7 +73,7 @@
 
 		//If they have a hat/helmet and the user is targeting their head.
 		if(istype(H.head, /obj/item/clothing/head) && affecting == BODY_ZONE_HEAD)
-			headarmor = (H.head.armor.melee) || 0
+			headarmor = H.head.get_armor_rating(MELEE)
 		//Calculate the knockdown duration for the target.
 		armor_duration = (bottle_knockdown_duration - headarmor) + force
 
@@ -304,6 +306,8 @@
 	desc = "A flask of the chaplain's holy water."
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "holyflask"
+	inhand_icon_state = "holyflask"
+	broken_inhand_icon_state = "broken_holyflask"
 	list_reagents = list(/datum/reagent/water/holywater = 100)
 	drink_type = NONE
 

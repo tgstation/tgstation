@@ -126,7 +126,7 @@
 
 /datum/chemical_reaction/slime/slimemobspawn/spider/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message(span_danger("The slime extract begins to vibrate crikey-ingly!"))
-	addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 3, "Traitor Spider Slime", /mob/living/simple_animal/hostile/giant_spider/midwife, FACTION_NEUTRAL, FALSE), 50)
+	addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 3, "Traitor Spider Slime", /mob/living/basic/giant_spider/midwife, FACTION_NEUTRAL, FALSE), 50)
 
 
 //Silver
@@ -149,9 +149,9 @@
 		var/obj/item/food_item = new chosen(T)
 		ADD_TRAIT(food_item, TRAIT_FOOD_SILVER, INNATE_TRAIT)
 		if(prob(5))//Fry it!
-			AddElement(/datum/element/fried_item, rand(15, 60))
+			food_item.AddElement(/datum/element/fried_item, rand(15, 60))
 		if(prob(5))//Grill it!
-			AddElement(/datum/element/grilled_item, rand(30, 100))
+			food_item.AddElement(/datum/element/grilled_item, rand(30, 100))
 		if(prob(50))
 			for(var/j in 1 to rand(1, 3))
 				step(food_item, pick(NORTH,SOUTH,EAST,WEST))

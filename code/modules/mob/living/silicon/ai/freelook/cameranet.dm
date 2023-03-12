@@ -42,8 +42,11 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 /datum/cameranet/proc/chunkGenerated(x, y, z)
 	x = GET_CHUNK_COORD(x)
 	y = GET_CHUNK_COORD(y)
-	var/turf/lowest = get_lowest_turf(locate(x, y, z))
-	return chunks["[x],[y],[lowest.z]"]
+	if(GET_LOWEST_STACK_OFFSET(z) != 0)
+		var/turf/lowest = get_lowest_turf(locate(x, y, z))
+		return chunks["[x],[y],[lowest.z]"]
+
+	return chunks["[x],[y],[z]"]
 
 // Returns the chunk in the x, y, z.
 // If there is no chunk, it creates a new chunk and returns that.
@@ -149,6 +152,18 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 						// You can't have the same camera in the list twice.
 						chunk.cameras["[T.z]"] |= c
 					chunk.hasChanged(update_delay_buffer = update_delay_buffer)
+
+/// A faster, turf only version of [/datum/cameranet/proc/majorChunkChange]
+/// For use in sensitive code, be careful with it
+/datum/cameranet/proc/bareMajorChunkChange(turf/changed)
+	var/x1 = max(1, changed.x - (CHUNK_SIZE / 2))
+	var/y1 = max(1, changed.y - (CHUNK_SIZE / 2))
+	var/x2 = min(world.maxx, changed.x + (CHUNK_SIZE / 2))
+	var/y2 = min(world.maxy, changed.y + (CHUNK_SIZE / 2))
+	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
+		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
+			var/datum/camerachunk/chunk = chunkGenerated(x, y, changed.z)
+			chunk?.hasChanged()
 
 /// Will check if a mob is on a viewable turf. Returns 1 if it is, otherwise returns 0.
 /datum/cameranet/proc/checkCameraVis(mob/living/target)

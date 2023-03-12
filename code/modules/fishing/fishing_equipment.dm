@@ -48,7 +48,7 @@
 	result = /obj/item/fishing_line/sinew
 	reqs = list(/obj/item/stack/sheet/sinew = 2)
 	time = 2 SECONDS
-	category = CAT_PRIMAL
+	category = CAT_TOOLS
 
 // Hooks
 
@@ -158,7 +158,7 @@
 	result = /obj/item/fishing_hook/bone
 	reqs = list(/obj/item/stack/sheet/bone = 1)
 	time = 2 SECONDS
-	category = CAT_PRIMAL
+	category = CAT_TOOLS
 
 /obj/item/storage/toolbox/fishing
 	name = "fishing toolbox"

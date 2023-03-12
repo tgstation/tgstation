@@ -64,16 +64,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/list/waste_multiplier_factors
 
 	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_WARNING]
-	var/warning_point = 50
+	var/warning_point = 5
 	var/warning_channel = RADIO_CHANNEL_ENGINEERING
 	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_DANGER]
 	///Spawns anomalies when more damaged than this too.
-	var/danger_point = 550
+	var/danger_point = 60
 	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_EMERGENCY]
-	var/emergency_point = 675
+	var/emergency_point = 75
 	var/emergency_channel = null // Need null to actually broadcast, lol.
-	///The point at which we delam [SUPERMATTER_STATUS_DELAMINATING]
-	var/explosion_point = 900
+	///The point at which we delam [SUPERMATTER_STATUS_DELAMINATING].
+	var/explosion_point = 100
 	///Are we exploding?
 	var/final_countdown = FALSE
 	///A scaling value that affects the severity of explosions.
@@ -118,8 +118,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///The key our internal radio uses
 	var/radio_key = /obj/item/encryptionkey/headset_eng
 
-	///Boolean used for logging if we've been powered
-	var/has_been_powered = FALSE
+	///Boolean used to log the first activation of the SM.
+	var/activation_logged = FALSE
 
 	///An effect we show to admins and ghosts the percentage of delam we're at
 	var/obj/effect/countdown/supermatter/countdown
@@ -263,8 +263,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	internal_energy_factors = calculate_internal_energy()
 	zap_factors = calculate_zap_multiplier()
 	if(internal_energy && (last_power_zap + 4 SECONDS - (internal_energy * 0.001)) < world.time)
-		if(!has_been_powered)
-			log_activation()
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 		hue_angle_shift = clamp(903 * log(10, (internal_energy + 8000)) - 3590, -50, 240)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
@@ -281,6 +279,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	// PART 4: DAMAGE PROCESSING
 	temp_limit_factors = calculate_temp_limit()
+	damage_archived = damage
 	damage_factors = calculate_damage()
 	if(damage == 0) // Clear any in game forced delams if on full health.
 		set_delam(SM_DELAM_PRIO_IN_GAME, SM_DELAM_STRATEGY_PURGE)
@@ -420,9 +419,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return SUPERMATTER_NORMAL
 	return SUPERMATTER_INACTIVE
 
+/// Returns the integrity percent of the Supermatter. No rounding made yet, round it yourself.
 /obj/machinery/power/supermatter_crystal/proc/get_integrity_percent()
 	var/integrity = damage / explosion_point
-	integrity = round(100 - integrity * 100, 0.01)
+	integrity = 100 - integrity * 100
 	integrity = integrity < 0 ? 0 : integrity
 	return integrity
 
@@ -566,6 +566,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	additive_power[SM_POWER_EXTERNAL_IMMEDIATE] = external_power_immediate
 	external_power_immediate = 0
 	additive_power[SM_POWER_HEAT] = gas_heat_power_generation * absorbed_gasmix.temperature / 6
+	additive_power[SM_POWER_HEAT] && log_activation(who = "environmental factors")
 
 	// I'm sorry for this, but we need to calculate power lost immediately after power gain.
 	// Helps us prevent cases when someone dumps superhothotgas into the SM and shoots the power to the moon for one tick.
@@ -584,7 +585,32 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for(var/powergain_types in additive_power)
 		internal_energy += additive_power[powergain_types]
 	internal_energy = max(internal_energy, 0)
+	if(internal_energy && !activation_logged)
+		stack_trace("Supermatter powered for the first time without being logged. Internal energy factors: [json_encode(internal_energy_factors)]")
+		activation_logged = TRUE // so we dont spam the log.
 	return additive_power
+
+/** Log when the supermatter is activated for the first time.
+ * Everything that can increase [/obj/machinery/power/supermatter_crystal/var/internal_energy]
+ * either directly or indirectly MUST call this.
+ *
+ * Arguments:
+ * * who - Either a string or a datum. Whatever gave power to the SM. Mandatory.
+ * * how - A datum. How they powered it. Optional.
+ */
+/obj/machinery/power/supermatter_crystal/proc/log_activation(who, how)
+	if(activation_logged || disable_power_change)
+		return
+	if(!who)
+		CRASH("Supermatter activated by an unknown source")
+
+	if(istext(who))
+		investigate_log("has been powered for the first time by [who][how ? " with [how]" : ""].", INVESTIGATE_ENGINE)
+		message_admins("[src] [ADMIN_JMP(src)] has been powered for the first time by [who][how ? " with [how]" : ""].")
+	else
+		investigate_log("has been powered for the first time by [key_name(who)][how ? " with [how]" : ""].", INVESTIGATE_ENGINE)
+		message_admins("[src] [ADMIN_JMP(src)] has been powered for the first time by [ADMIN_FULLMONTY(who)][how ? " with [how]" : ""].")
+	activation_logged = TRUE
 
 /**
  * Perform calculation for the main zap power multiplier.
@@ -679,26 +705,25 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	additive_damage[SM_DAMAGE_EXTERNAL] = external_damage_immediate * clamp((emergency_point - damage) / emergency_point, 0, 1)
 	external_damage_immediate = 0
 
-	additive_damage[SM_DAMAGE_HEAT] = clamp((absorbed_gasmix.temperature - temp_limit) / 2400, 0, 1.5)
-	additive_damage[SM_DAMAGE_POWER] = clamp((internal_energy - POWER_PENALTY_THRESHOLD) / 4000, 0, 1)
-	additive_damage[SM_DAMAGE_MOLES] = clamp((total_moles - MOLE_PENALTY_THRESHOLD) / 320, 0, 1)
+	additive_damage[SM_DAMAGE_HEAT] = clamp((absorbed_gasmix.temperature - temp_limit) / 24000, 0, 0.15)
+	additive_damage[SM_DAMAGE_POWER] = clamp((internal_energy - POWER_PENALTY_THRESHOLD) / 40000, 0, 0.1)
+	additive_damage[SM_DAMAGE_MOLES] = clamp((total_moles - MOLE_PENALTY_THRESHOLD) / 3200, 0, 0.1)
 
 	var/is_spaced = FALSE
 	if(isturf(src.loc))
 		var/turf/local_turf = src.loc
 		for (var/turf/open/space/turf in ((local_turf.atmos_adjacent_turfs || list()) + local_turf))
-			additive_damage[SM_DAMAGE_SPACED] = clamp(internal_energy * 0.00125, 0, 10)
+			additive_damage[SM_DAMAGE_SPACED] = clamp(internal_energy * 0.000125, 0, 1)
 			is_spaced = TRUE
 			break
 
 	if(total_moles > 0 && !is_spaced)
-		additive_damage[SM_DAMAGE_HEAL_HEAT] = clamp((absorbed_gasmix.temperature - temp_limit) / 600, -1, 0)
+		additive_damage[SM_DAMAGE_HEAL_HEAT] = clamp((absorbed_gasmix.temperature - temp_limit) / 6000, -0.1, 0)
 
 	var/total_damage = 0
 	for (var/damage_type in additive_damage)
 		total_damage += additive_damage[damage_type]
 
-	damage_archived = damage
 	damage += total_damage
 	damage = max(damage, 0)
 	return additive_damage

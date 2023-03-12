@@ -7,7 +7,6 @@
 	total_positions = 5
 	spawn_positions = 3
 	supervisors = SUPERVISOR_CMO
-	selection_color = "#ffeef0"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "MEDICAL_DOCTOR"
 

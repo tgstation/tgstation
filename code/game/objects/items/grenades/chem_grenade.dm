@@ -99,9 +99,9 @@
 /obj/item/grenade/chem_grenade/screwdriver_act(mob/living/user, obj/item/tool)
 	. = TRUE
 	if(dud_flags & GRENADE_USED)
-		balloon_alert(user, span_notice("resetting trigger..."))
+		balloon_alert(user, "resetting trigger...")
 		if (do_after(user, 2 SECONDS, src))
-			balloon_alert(user, span_notice("trigger reset"))
+			balloon_alert(user, "trigger reset")
 			dud_flags &= ~GRENADE_USED
 		return
 
@@ -355,7 +355,7 @@
 	if (active)
 		return
 	var/newspread = tgui_input_number(user, "Please enter a new spread amount", "Grenade Spread", 5, 100, 5)
-	if(!newspread || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!newspread || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	unit_spread = newspread
 	to_chat(user, span_notice("You set the time release to [unit_spread] units per detonation."))

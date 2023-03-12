@@ -133,6 +133,9 @@
 	button_icon_state = linked_module.icon_state
 	..()
 	module = linked_module
+	if(linked_module.allow_flags & MODULE_ALLOW_INCAPACITATED)
+		// clears check hands and check conscious
+		check_flags = NONE
 	name = "Activate [capitalize(linked_module.name)]"
 	desc = "Quickly activate [linked_module]."
 	RegisterSignals(linked_module, list(COMSIG_MODULE_ACTIVATED, COMSIG_MODULE_DEACTIVATED, COMSIG_MODULE_USED), PROC_REF(module_interacted_with))

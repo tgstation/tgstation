@@ -164,7 +164,7 @@
 	icon_state = "[base_icon_state][used ? "-used" : ""]"
 
 /obj/item/eyesnatcher/attack(mob/living/carbon/human/victim, mob/living/user, params)
-	if(!istype(victim) || !victim.Adjacent(user)) //No TK use
+	if(used || !istype(victim) || !victim.Adjacent(user)) //Works only once, no TK use
 		return ..()
 
 	var/obj/item/organ/internal/eyes/eyeballies = victim.getorganslot(ORGAN_SLOT_EYES)
@@ -201,7 +201,7 @@
 	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, victim)))
 		return
 
-	if(!HAS_TRAIT(victim, TRAIT_BLIND))
+	if(!victim.is_blind())
 		to_chat(victim, span_userdanger("You suddenly go blind!"))
 	if(prob(1))
 		to_chat(victim, span_notice("At least you got a new pirate-y look out of it..."))

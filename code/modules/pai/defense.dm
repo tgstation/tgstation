@@ -61,7 +61,7 @@
 		src.visible_message(span_warning("The electrically-charged projectile disrupts [src]'s holomatrix, forcing [src] to fold in!"))
 	. = ..(Proj)
 
-/mob/living/silicon/pai/ignite_mob()
+/mob/living/silicon/pai/ignite_mob(silent)
 	return FALSE
 
 /mob/living/silicon/pai/proc/take_holo_damage(amount)

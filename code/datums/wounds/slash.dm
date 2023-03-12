@@ -38,7 +38,7 @@
 			old_wound.clear_highest_scar()
 	else
 		set_blood_flow(initial_flow)
-		if(attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
+		if(!no_bleeding && attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
 			victim.spray_blood(attack_direction, severity)
 
 	if(!highest_scar)
@@ -98,6 +98,9 @@
 	return bleed_amt
 
 /datum/wound/slash/get_bleed_rate_of_change()
+	//basically if a species doesn't bleed, the wound is stagnant and will not heal on it's own (nor get worse)
+	if(no_bleeding)
+		return BLOOD_FLOW_STEADY
 	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
 		return BLOOD_FLOW_INCREASING
 	if(limb.current_gauze || clot_rate > 0)
@@ -106,26 +109,30 @@
 		return BLOOD_FLOW_INCREASING
 
 /datum/wound/slash/handle_process(delta_time, times_fired)
-	if(victim.stat == DEAD)
-		adjust_blood_flow(-max(clot_rate, WOUND_SLASH_DEAD_CLOT_MIN) * delta_time)
-		if(blood_flow < minimum_flow)
-			if(demotes_to)
-				replace_wound(demotes_to)
+	// in case the victim has the NOBLOOD trait, the wound will simply not clot on it's own
+	if(!no_bleeding)
+		if(victim.stat == DEAD)
+			adjust_blood_flow(-max(clot_rate, WOUND_SLASH_DEAD_CLOT_MIN) * delta_time)
+			if(blood_flow < minimum_flow)
+				if(demotes_to)
+					replace_wound(demotes_to)
+					return
+				qdel(src)
 				return
-			qdel(src)
-			return
 
-	set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
+		set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
 
-	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
-		adjust_blood_flow(0.25) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
+		if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+			adjust_blood_flow(0.25) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
+	//gauze always reduces blood flow, even for non bleeders
 	if(limb.current_gauze)
 		if(clot_rate > 0)
 			adjust_blood_flow(-clot_rate * delta_time)
 		adjust_blood_flow(-limb.current_gauze.absorption_rate * delta_time)
 		limb.seep_gauze(limb.current_gauze.absorption_rate * delta_time)
-	else
+	//otherwise, only clot if it's a bleeder
+	else if(!no_bleeding)
 		adjust_blood_flow(-clot_rate * delta_time)
 
 	if(blood_flow > highest_flow)
@@ -135,9 +142,8 @@
 		if(demotes_to)
 			replace_wound(demotes_to)
 		else
-			to_chat(victim, span_green("The cut on your [limb.plaintext_zone] has stopped bleeding!"))
+			to_chat(victim, span_green("The cut on your [limb.plaintext_zone] has [no_bleeding ? "healed up" : "stopped bleeding"]!"))
 			qdel(src)
-
 
 /datum/wound/slash/on_stasis(delta_time, times_fired)
 	if(blood_flow >= minimum_flow)
@@ -233,8 +239,8 @@
 	user.visible_message(span_danger("[user] begins cauterizing [victim]'s [limb.plaintext_zone] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
 	if(!do_after(user, base_treat_time * self_penalty_mult * improv_penalty_mult, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
-
-	user.visible_message(span_green("[user] cauterizes some of the bleeding on [victim]."), span_green("You cauterize some of the bleeding on [victim]."))
+	var/bleeding_wording = (no_bleeding ? "cuts" : "bleeding")
+	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
 	limb.receive_damage(burn = 2 + severity, wound_bonus = CANT_WOUND)
 	if(prob(30))
 		victim.emote("scream")
@@ -253,8 +259,8 @@
 
 	if(!do_after(user, base_treat_time * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
-
-	user.visible_message(span_green("[user] stitches up some of the bleeding on [victim]."), span_green("You stitch up some of the bleeding on [user == victim ? "yourself" : "[victim]"]."))
+	var/bleeding_wording = (no_bleeding ? "cuts" : "bleeding")
+	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
 	adjust_blood_flow(-blood_sutured)
 	limb.heal_damage(I.heal_brute, I.heal_burn)
@@ -264,7 +270,6 @@
 		try_treating(I, user)
 	else if(demotes_to)
 		to_chat(user, span_green("You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts."))
-
 
 /datum/wound/slash/moderate
 	name = "Rough Abrasion"
@@ -281,6 +286,10 @@
 	threshold_penalty = 10
 	status_effect_type = /datum/status_effect/wound/slash/moderate
 	scar_keyword = "slashmoderate"
+
+/datum/wound/slash/moderate/update_descriptions()
+	if(no_bleeding)
+		occur_text = "is cut open"
 
 /datum/wound/slash/severe
 	name = "Open Laceration"
@@ -299,12 +308,18 @@
 	status_effect_type = /datum/status_effect/wound/slash/severe
 	scar_keyword = "slashsevere"
 
+/datum/wound/slash/severe/update_descriptions()
+	if(no_bleeding)
+		occur_text = "is ripped open"
+
 /datum/wound/slash/critical
 	name = "Weeping Avulsion"
 	desc = "Patient's skin is completely torn open, along with significant loss of tissue. Extreme blood loss will lead to quick death without intervention."
 	treat_text = "Immediate bandaging and either suturing or cauterization, followed by supervised resanguination."
 	examine_desc = "is carved down to the bone, spraying blood wildly"
+	examine_desc = "is carved down to the bone"
 	occur_text = "is torn open, spraying blood wildly"
+	occur_text = "is torn open"
 	sound_effect = 'sound/effects/wounds/blood3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
 	initial_flow = 4
@@ -328,3 +343,7 @@
 	name = "Burning Avulsion"
 	examine_desc = "is ruptured, spraying blood wildly"
 	clot_rate = 0.01
+
+/datum/wound/slash/critical/cleave/update_descriptions()
+	if(no_bleeding)
+		occur_text = "is ruptured"

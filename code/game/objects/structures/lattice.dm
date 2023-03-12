@@ -6,7 +6,7 @@
 	base_icon_state = "lattice"
 	density = FALSE
 	anchored = TRUE
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 50)
+	armor_type = /datum/armor/structure_lattice
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
@@ -17,6 +17,11 @@
 	var/number_of_mats = 1
 	var/build_material = /obj/item/stack/rods
 
+
+/datum/armor/structure_lattice
+	melee = 50
+	fire = 80
+	acid = 50
 
 /obj/structure/lattice/examine(mob/user)
 	. = ..()
@@ -54,6 +59,8 @@
 /obj/structure/lattice/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_FLOORWALL)
 		return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 2)
+	if(the_rcd.mode == RCD_CATWALK)
+		return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 1)
 
 /obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	if(passed_mode == RCD_FLOORWALL)
@@ -63,6 +70,12 @@
 			T.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			qdel(src)
 			return TRUE
+	if(passed_mode == RCD_CATWALK)
+		to_chat(user, span_notice("You build a catwalk."))
+		var/turf/turf = loc
+		qdel(src)
+		new /obj/structure/lattice/catwalk(turf)
+		return TRUE
 	return FALSE
 
 /obj/structure/lattice/singularity_pull(S, current_size)
@@ -95,6 +108,19 @@
 	for(var/obj/structure/cable/C in T)
 		C.deconstruct()
 	..()
+
+/obj/structure/lattice/catwalk/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(the_rcd.mode == RCD_DECONSTRUCT)
+		return list("mode" = RCD_DECONSTRUCT, "delay" = 10, "cost" = 5)
+	return FALSE
+
+/obj/structure/lattice/catwalk/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	if(passed_mode == RCD_DECONSTRUCT)
+		var/turf/turf = loc
+		for(var/obj/structure/cable/cable_coil in turf)
+			cable_coil.deconstruct()
+		qdel(src)
+		return TRUE
 
 /obj/structure/lattice/catwalk/mining
 	name = "reinforced catwalk"

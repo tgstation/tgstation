@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - rscadd: "Add space vines prevent solar panels from working (except ones with the transparent mutation)"
-  - rscadd: "Add new space ruin - Cyborg Mothership. All hail the master race!"

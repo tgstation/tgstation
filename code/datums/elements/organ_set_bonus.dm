@@ -6,17 +6,15 @@
 /datum/element/organ_set_bonus
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	///status effect type to apply/update!
-	var/bonus_type
+	/// Status Effect typepath to instantiate and apply to the mob.
+	var/datum/status_effect/organ_set_bonus/bonus_type
 
 /datum/element/organ_set_bonus/Attach(datum/target, bonus_type)
 	. = ..()
 
 	if(!isorgan(target))
 		return ELEMENT_INCOMPATIBLE
-
 	src.bonus_type = bonus_type
-
 	RegisterSignal(target, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_implanted))
 	RegisterSignal(target, COMSIG_ORGAN_REMOVED, PROC_REF(on_removed))
 
@@ -50,11 +48,15 @@
 	///how many organs the carbon with this has in the set
 	var/organs = 0
 	///how many organs in the set you need to enable the bonus
-	var/organs_needed = 5
+	var/organs_needed = 0
 	///if the bonus is active
 	var/bonus_active = FALSE
 	var/bonus_activate_text = span_notice("??? DNA is deeply infused with you! You've learned how to make error reports!")
 	var/bonus_deactivate_text = span_notice("Your DNA is no longer majority ???. You did make an issue report, right?")
+	/// Required mob bio-type. Also checks DNA validity it's set to MOB_ORGANIC.
+	var/required_biotype = MOB_ORGANIC
+	/// A Trait or list of Traits added to the mob upon bonus activation.
+	var/bonus_traits
 
 /datum/status_effect/organ_set_bonus/proc/set_organs(new_value)
 	organs = new_value
@@ -62,18 +64,36 @@
 		qdel(src)
 	if(organs >= organs_needed)
 		if(!bonus_active)
-			enable_bonus()
+			INVOKE_ASYNC(src, PROC_REF(enable_bonus))
 	else if(bonus_active)
-		disable_bonus()
+		INVOKE_ASYNC(src, PROC_REF(disable_bonus))
 
 /datum/status_effect/organ_set_bonus/proc/enable_bonus()
 	SHOULD_CALL_PARENT(TRUE)
+	if(required_biotype)
+		if(!(owner.mob_biotypes & required_biotype))
+			return FALSE
+		if((required_biotype == MOB_ORGANIC) && !owner.can_mutate())
+			return FALSE
 	bonus_active = TRUE
+	if(bonus_traits)
+		if(islist(bonus_traits))
+			for(var/trait in bonus_traits)
+				ADD_TRAIT(owner, trait, REF(src))
+		else
+			ADD_TRAIT(owner, bonus_traits, REF(src))
 	if(bonus_activate_text)
 		to_chat(owner, bonus_activate_text)
+	return TRUE
 
 /datum/status_effect/organ_set_bonus/proc/disable_bonus()
 	SHOULD_CALL_PARENT(TRUE)
 	bonus_active = FALSE
+	if(bonus_traits)
+		if(islist(bonus_traits))
+			for(var/trait in bonus_traits)
+				REMOVE_TRAIT(owner, trait, REF(src))
+		else
+			REMOVE_TRAIT(owner, bonus_traits, REF(src))
 	if(bonus_deactivate_text)
 		to_chat(owner, bonus_deactivate_text)

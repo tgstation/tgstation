@@ -5,7 +5,7 @@
 	inhand_icon_state = "wizshoe"
 	strip_delay = 100
 	equip_delay_other = 100
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/shoes_roman
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/griffin
@@ -14,6 +14,9 @@
 	icon_state = "griffinboots"
 	inhand_icon_state = null
 	lace_time = 8 SECONDS
+
+/datum/armor/shoes_roman
+	bio = 10
 
 /obj/item/clothing/shoes/griffin/Initialize(mapload)
 	. = ..()
