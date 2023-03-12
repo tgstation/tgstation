@@ -17,8 +17,6 @@
 	antimagic_flags = MAGIC_RESISTANCE
 
 	hand_path = /obj/item/melee/touch_attack/star_touch
-	/// Creates a field to stop people with a star mark.
-	var/obj/effect/cosmic_field/cosmic_field
 	/// Stores the current beam target
 	var/mob/living/current_target
 	/// Checks the time of the last check
@@ -52,19 +50,19 @@
 		victim.remove_status_effect(/datum/status_effect/star_mark)
 	else
 		victim.apply_status_effect(/datum/status_effect/star_mark)
-	cosmic_field = new(get_turf(caster))
+	new /obj/effect/cosmic_field/cosmic_field(get_turf(src))
 	start_beam(victim, caster)
 	return TRUE
 
 /datum/action/cooldown/spell/touch/star_touch/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	LoseTarget()
+	lose_target()
 	return ..()
 
 /**
  * Proc that always is called when we want to end the beam and makes sure things are cleaned up, see beam_died()
  */
-/datum/action/cooldown/spell/touch/star_touch/proc/LoseTarget()
+/datum/action/cooldown/spell/touch/star_touch/proc/lose_target()
 	if(active)
 		QDEL_NULL(current_beam)
 		active = FALSE
@@ -74,7 +72,7 @@
 
 /**
  * Proc that is only called when the beam fails due to something, so not when manually ended.
- * manual disconnection = LoseTarget, so it can silently end
+ * manual disconnection = lose_target, so it can silently end
  * automatic disconnection = beam_died, so we can give a warning message first
  */
 /datum/action/cooldown/spell/touch/star_touch/proc/beam_died()
@@ -82,12 +80,12 @@
 	current_beam = null
 	active = FALSE //skip qdelling the beam again if we're doing this proc, because
 	to_chat(owner, span_warning("You lose control of the beam!"))
-	LoseTarget()
+	lose_target()
 
 /datum/action/cooldown/spell/touch/star_touch/proc/start_beam(atom/target, mob/living/user)
 
 	if(current_target)
-		LoseTarget()
+		lose_target()
 	if(!isliving(target))
 		return
 
@@ -102,7 +100,7 @@
 
 /datum/action/cooldown/spell/touch/star_touch/process()
 	if(!current_target)
-		LoseTarget()
+		lose_target()
 		return
 
 	if(world.time <= last_check+check_delay)

@@ -16,7 +16,7 @@
 
 	summon_amount = 9
 	summon_radius = 1
-	summon_type = list(/obj/effect/cosmic_field)
+	summon_type = list(/obj/effect/forcefield/cosmic_field)
 	/// The range at which people will get marked with a star mark.
 	var/star_mark_range = 7
 	/// Effect for when the spell triggers

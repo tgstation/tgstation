@@ -55,7 +55,7 @@
 
 /datum/heretic_knowledge/eldritch_coin
 	name = "Eldritch Coin"
-	desc = "Allows you to transmute a sheet of plasma, a diamond mask and eyes to create an Eldritch Coin. \
+	desc = "Allows you to transmute a sheet of plasma, a diamond and eyes to create an Eldritch Coin. \
 		The coin will heals when landing on heads and damages when landing on tails. \
 		The coin will heal for more, but only for heretics."
 	gain_text = "It tossed the coin and won its bet, now it gains..."

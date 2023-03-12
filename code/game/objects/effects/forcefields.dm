@@ -78,7 +78,7 @@
 	initial_duration = 10 SECONDS
 
 /// The cosmic heretics forcefield
-/obj/effect/cosmic_field
+/obj/effect/forcefield/cosmic_field
 	name = "Cosmic Field"
 	desc = "A field that cannot be passed by people marked with a cosmic star."
 	icon = 'icons/effects/eldritch.dmi'
@@ -86,21 +86,15 @@
 	anchored = TRUE
 	layer = LOW_SIGIL_LAYER
 	can_atmos_pass = ATMOS_PASS_NO
-	/// If set, how long the force field lasts after it's created. Set to 0 to have infinite duration forcefields.
-	var/initial_duration = 30 SECONDS
+	initial_duration = 30 SECONDS
 	/// Flags for what antimagic can just ignore our forcefields
 	var/antimagic_flags = MAGIC_RESISTANCE
 
-/obj/effect/cosmic_field/Initialize(mapload, flags = MAGIC_RESISTANCE)
+/obj/effect/forcefield/cosmic_field/Initialize(mapload, flags = MAGIC_RESISTANCE)
 	. = ..()
-	if(initial_duration > 0 SECONDS)
-		QDEL_IN(src, initial_duration)
 	antimagic_flags = flags
 
-/obj/effect/cosmic_field/singularity_pull()
-	return
-
-/obj/effect/cosmic_field/CanAllowThrough(atom/movable/mover, border_dir)
+/obj/effect/forcefield/cosmic_field/CanAllowThrough(atom/movable/mover, border_dir)
 	if(isliving(mover))
 		var/mob/living/living_mover = mover
 		if(living_mover.can_block_magic(antimagic_flags, charge_cost = 0))
@@ -109,5 +103,5 @@
 			return FALSE
 	return ..()
 
-/obj/effect/cosmic_field/fast
+/obj/effect/forcefield/cosmic_field/fast
 	initial_duration = 5 SECONDS

@@ -233,7 +233,7 @@
 	cosmic_diamond = new(get_turf(owner))
 
 /datum/status_effect/eldritch/cosmic/Destroy()
-	qdel(cosmic_diamond)
+	QDEL_NULL(cosmic_diamond)
 	return ..()
 
 /datum/status_effect/eldritch/cosmic/on_effect()
@@ -245,5 +245,5 @@
 		channel = TELEPORT_CHANNEL_MAGIC,
 	)
 	new teleport_effect(get_turf(owner))
-	owner.apply_effect(2 SECONDS, effecttype = EFFECT_PARALYZE)
+	owner.Paralyze(2 SECONDS)
 	return ..()

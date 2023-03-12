@@ -144,11 +144,11 @@
 	alert_type = /atom/movable/screen/alert/status_effect/star_mark
 	duration = 30 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
-	///underlay used to indicate that someone is marked
-	var/mutable_appearance/cosmic_underlay
-	/// icon file for the underlay
+	///overlay used to indicate that someone is marked
+	var/mutable_appearance/cosmic_overlay
+	/// icon file for the overlay
 	var/effect_icon = 'icons/effects/eldritch.dmi'
-	/// icon state for the underlay
+	/// icon state for the overlay
 	var/effect_icon_state = "cosmic_ring"
 
 /atom/movable/screen/alert/status_effect/star_mark
@@ -157,27 +157,27 @@
 	icon_state = "star_mark"
 
 /datum/status_effect/star_mark/on_creation(mob/living/new_owner, ...)
-	cosmic_underlay = mutable_appearance(effect_icon, effect_icon_state, BELOW_MOB_LAYER)
+	cosmic_overlay = mutable_appearance(effect_icon, effect_icon_state, BELOW_MOB_LAYER)
 	return ..()
 
 /datum/status_effect/star_mark/Destroy()
-	QDEL_NULL(cosmic_underlay)
+	QDEL_NULL(cosmic_overlay)
 	return ..()
 
 /datum/status_effect/star_mark/on_apply()
 	if(owner.mob_size >= MOB_SIZE_HUMAN)
-		RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_underlay))
-		owner.update_icon(UPDATE_OVERLAYS)
+		RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
+		owner.update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
-/datum/status_effect/star_mark/proc/update_owner_underlay(atom/source, list/overlays)
+/datum/status_effect/star_mark/proc/update_owner_overlay(atom/source, list/overlays)
 	SIGNAL_HANDLER
 
-	overlays += cosmic_underlay
+	overlays += cosmic_overlay
 
 /datum/status_effect/star_mark/on_remove()
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
-	owner.update_icon(UPDATE_OVERLAYS)
+	owner.update_appearance(UPDATE_OVERLAYS)
 	return ..()
 
 /datum/status_effect/star_mark/extended

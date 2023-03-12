@@ -28,8 +28,6 @@
 	range = 100
 	knockdown = 4 SECONDS
 	pixel_speed_multiplier = 0.2
-	/// Creates a field to stop people with a star mark.
-	var/obj/effect/cosmic_field/cosmic_field
 	/// Effect for when the ball hits something
 	var/obj/effect/explosion_effect = /obj/effect/temp_visual/cosmic_explosion
 
@@ -41,6 +39,5 @@
 
 /obj/projectile/magic/star_ball/Destroy()
 	playsound(get_turf(src), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
-	new explosion_effect(get_turf(src))
-	cosmic_field = new(get_turf(src))
+	new /obj/effect/cosmic_field/cosmic_field(get_turf(src))
 	return ..()

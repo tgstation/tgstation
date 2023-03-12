@@ -49,7 +49,7 @@
 	cost = 1
 	route = PATH_COSMIC
 	/// Creates a field to stop people with a star mark.
-	var/obj/effect/cosmic_field/cosmic_field
+	var/obj/effect/forcefield/cosmic_field/cosmic_field
 
 /datum/heretic_knowledge/cosmic_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
