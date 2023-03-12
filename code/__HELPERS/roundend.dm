@@ -235,7 +235,7 @@
 	//Set news report and mode result
 	mode.set_round_result()
 
-	to_chat(world, "<span class='infoplain'><BR><BR><BR><span class='big bold'>The round has ended.</span></span>")
+	to_chat(world, span_infoplain(span_big(span_bold("<BR><BR><BR>The round has ended."))))
 	log_game("The round has ended.")
 	send2chat("[GLOB.round_id ? "Round [GLOB.round_id]" : "The round has"] just ended.", CONFIG_GET(string/channel_announce_end_game))
 	send2adminchat("Server", "Round just ended.")
