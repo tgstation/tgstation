@@ -342,3 +342,12 @@
 	report_message = "Due to good performance, we've provided your station with luxury escape pods."
 	trait_to_give = STATION_TRAIT_BIGGER_PODS
 	blacklist = list(/datum/station_trait/cramped_escape_pods)
+
+/datum/station_trait/expanded_access
+	name = "Expanded Access"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 5
+	show_in_report = TRUE
+	report_message = "We accidentally issued the crew with cards which may have more access than what their jobs strictly require."
+	trait_to_give = STATION_TRAIT_EXPANDED_ACCESS
+	can_revert = FALSE

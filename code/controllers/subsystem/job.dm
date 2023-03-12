@@ -372,12 +372,17 @@ SUBSYSTEM_DEF(job)
 	setup_officer_positions()
 
 	//Jobs will have fewer access permissions if the number of players exceeds the threshold defined in game_options.txt
-	var/mat = CONFIG_GET(number/minimal_access_threshold)
-	if(mat)
-		if(mat > unassigned.len)
-			CONFIG_SET(flag/jobs_have_minimal_access, FALSE)
-		else
-			CONFIG_SET(flag/jobs_have_minimal_access, TRUE)
+	//Alternatively, a station trait may force jobs to have more than minimal access.
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_EXPANDED_ACCESS))
+		CONFIG_SET(flag/jobs_have_minimal_access, FALSE)
+
+	else
+		var/threshold = CONFIG_GET(number/minimal_access_threshold)
+		if(threshold)
+			if(unassigned.len >= threshold)
+				CONFIG_SET(flag/jobs_have_minimal_access, TRUE)
+			else
+				CONFIG_SET(flag/jobs_have_minimal_access, FALSE)
 
 	//Shuffle players and jobs
 	unassigned = shuffle(unassigned)
@@ -542,10 +547,20 @@ SUBSYSTEM_DEF(job)
 		if(job.req_admin_notify)
 			to_chat(player_client, span_infoplain("<b>You are playing a job that is important for Game Progression. \
 				If you have to disconnect, please notify the admins via adminhelp.</b>"))
-		if(CONFIG_GET(number/minimal_access_threshold))
-			to_chat(player_client, span_boldnotice("As this station was initially staffed with a \
-				[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
-				have been added to your ID card."))
+
+		var/reason
+		var/access_desc
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_EXPANDED_ACCESS))
+			reason = "a clerical error"
+			access_desc = "additional access may"
+		else if(CONFIG_GET(flag/jobs_have_minimal_access))
+			reason = "the station being initially staffed with a skeleton crew"
+			access_desc = "additional access may"
+		else
+			reason = "the station being initially staffed with a full crew"
+			access_desc = "only your job's necessities"
+
+		to_chat(player_client, span_boldnotice("Due to [reason], [access_desc] have been added to your ID card."))
 
 	if(ishuman(equipping))
 		var/mob/living/carbon/human/wageslave = equipping
