@@ -10,11 +10,11 @@
 	},
 /area/ruin/unpowered/monkey_temple)
 "bh" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "stern external airlock"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/airlock/external/glass{
+	name = "Asteroid Harvester"
+	},
 /turf/open/floor/plating,
 /area/shuttle/ruin/temple_mining_shuttle)
 "bN" = (
@@ -110,14 +110,6 @@
 /obj/structure/cable,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav)
-"gh" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "bow external airlock"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
-/area/shuttle/ruin/temple_mining_shuttle)
 "gt" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone,
@@ -229,14 +221,6 @@
 /obj/structure/ore_box,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/ruin/temple_mining_shuttle)
-"qr" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "starboard external airlock"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
-/area/shuttle/ruin/temple_mining_shuttle)
 "qN" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
@@ -295,10 +279,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/ruin/temple_mining_shuttle)
 "vl" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "stern external airlock"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/machinery/door/airlock/external/glass{
+	name = "Asteroid Harvester"
+	},
 /turf/open/floor/plating,
 /area/shuttle/ruin/temple_mining_shuttle)
 "vm" = (
@@ -341,13 +325,6 @@
 /obj/item/stack/sheet/animalhide/monkey,
 /turf/open/floor/stone,
 /area/ruin/unpowered/monkey_temple)
-"yW" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "bow external airlock"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
-/turf/open/floor/plating,
-/area/shuttle/ruin/temple_mining_shuttle)
 "zw" = (
 /obj/item/stack/ore/silver{
 	pixel_x = -4
@@ -433,13 +410,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron/terracotta,
-/area/shuttle/ruin/temple_mining_shuttle)
-"FH" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "port external airlock"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
-/turf/open/floor/plating,
 /area/shuttle/ruin/temple_mining_shuttle)
 "FZ" = (
 /obj/structure/table/reinforced,
@@ -764,14 +734,14 @@ gM
 gM
 Xu
 Xu
-qr
+bh
 Xu
 Xu
 Xu
 gM
 Xu
 Xu
-gh
+bh
 Xu
 Xu
 Xu
@@ -904,14 +874,14 @@ Xu
 Xu
 Xu
 Xu
-FH
+vl
 Xu
 Xu
 Xu
 gM
 Xu
 Xu
-yW
+vl
 Xu
 Xu
 Xu
