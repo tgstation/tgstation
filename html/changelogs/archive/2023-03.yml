@@ -326,3 +326,68 @@
   - bugfix: Tiziran lung stirfry now correctly uses a bowl in its construction, and
       is left over after eating. It also can only be constructed with organic lungs,
       because cybernetic lungs don't fry as well.
+2023-03-11:
+  GoldenAlpharex:
+  - bugfix: Fixed some potential future runtimes relatively to the new bodypart overlay
+      system's coloring procs.
+  Jacquerel, sprite by J(Clearly Lying):
+  - balance: Traitor objectives which ask you to destroy lathes or the ORM provide
+      an optional bonus if you _booby trap_ the machine using a provided tool. This
+      causes the machine to explode the next time it is interacted with.
+  - balance: Performing the objective without rigging the machine to explode awards
+      no TC, using it awards more TC than it did previously.
+  LT3:
+  - bugfix: Map filter works properly in the pre-round lobby
+  - bugfix: Map vote doesn't log 'not enough players' if the vote starts in the pre-round
+      lobby
+  OrionTheFox:
+  - bugfix: fixed Telepathy messages not having a check for being in range.
+  SgtHunk:
+  - bugfix: Androids now properly have robotic wings instead of moth wings.
+  sergeirocks100:
+  - bugfix: Gifts you wrap will now display their greyscale colors as they're supposed
+      to.
+  - bugfix: Wrapping paper color selection has been rebound to Alt+click, to fix a
+      bug where both wrapping paper color selection, and extracting wrapping paper
+      from a roll were both bound to right click.
+2023-03-12:
+  Helg2:
+  - bugfix: Changed Quantum Hair Dye recipe from colourful reagent, space drugs and
+      radium to colourful reagent, space drugs and chlorine. So you can make it normally.
+  Jacquerel:
+  - bugfix: Spell Cards from the Wizard spell will now home in somewhat on the target
+      nearest to your cursor.
+  - bugfix: The Spell Cards spell now displays the correct icon instead of a big red
+      "error" text.
+  LT3:
+  - code_imp: Anomaly event parameters consolidated to defines
+  - balance: Anomaly countdown timer reduced to 75 seconds
+  Melbert:
+  - bugfix: Fixes Juggernaut / Rust Walker projectiles doing zero damage
+  - bugfix: Fixes Juggernaut projectiles not doing bonus damage to nearby structures
+  - code_imp: Removed projectile nodamage var, replaces it with just checking for
+      damage
+  NamelessFairy:
+  - bugfix: Firing pin swapping's 2 balloon alerts have been replaced with a single
+      more readable one.
+  - admin: Admins can now edit a pin_removable var on firing pins to render them unremovable
+      from the weapons they're installed in.
+  Profakos:
+  - bugfix: Pods on Tramstation can be properly launched early
+  Rhials:
+  - bugfix: The cultist ritual site locator and Nar'Sie summon message will no longer
+      use area names modified by the CE's blueprints.
+  Stalkeros, san7890 for the announcement texts:
+  - code_imp: Made pirate groups' arrival messages editable and more importantly unique
+      for each group.
+  VladinXXV:
+  - bugfix: Fake nuclear authentication disks have been updated to include the holographic
+      security sticker found on the real disk, one again making them convincingly
+      real to the average person.
+  - code_imp: The keep_me_secured component will now only process if it has at least
+      one callback argument passed.
+  spockye:
+  - bugfix: fixed missing disposal pipes (tramstation)
+  - bugfix: fixed missing zones (tramstation)
+  - bugfix: fixed wrongly placed zones (tramstation)
+  - bugfix: fixed wrongly placed tiles (tramstation)

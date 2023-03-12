@@ -3,7 +3,6 @@
 	desc = "I hope you're wearing eye protection."
 	damage = 0 // It's a damn toy.
 	damage_type = OXY
-	nodamage = TRUE
 	icon = 'icons/obj/weapons/guns/toy.dmi'
 	icon_state = "foamdart_proj"
 	base_icon_state = "foamdart_proj"
@@ -27,7 +26,6 @@
 		pen.forceMove(newdart)
 		pen = null
 		newdart.damage = 5
-		newdart.nodamage = FALSE
 	newdart.update_appearance()
 
 
@@ -40,5 +38,4 @@
 	icon_state = "foamdart_riot_proj"
 	base_icon_state = "foamdart_riot_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
-	nodamage = FALSE
 	stamina = 25
