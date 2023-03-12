@@ -33484,6 +33484,17 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
+"kKZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/button/door/directional/north{
+	id = "midtunnelleft";
+	name = "Tunnel Access Shutters Toggle"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/tram/mid)
 "kLz" = (
 /turf/closed/wall/r_wall,
 /area/station/security/prison/work)
@@ -41833,6 +41844,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/button/door/directional/north{
+	id = "righttunnel";
+	name = "Tunnel Access Shutters Toggle"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/tram/right)
 "nMd" = (
@@ -47339,7 +47354,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/airalarm/directional/north,
 /obj/machinery/camera/directional/north{
 	network = list("ss13","rd");
 	c_tag = "Science - Lower Hall North"
@@ -55297,6 +55311,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/button/door/directional/north{
+	id = "midtunnelleft";
+	name = "Tunnel Access Shutters Toggle"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/tram/left)
 "sJi" = (
@@ -66332,6 +66350,17 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"wBp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/button/door/directional/north{
+	id = "midtunnelright";
+	name = "Tunnel Access Shutters Toggle"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/tram/mid)
 "wBw" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -100464,7 +100493,7 @@ mxR
 qjU
 qjU
 qjU
-tqp
+kKZ
 ugp
 ycV
 kFp
@@ -104576,7 +104605,7 @@ aPM
 qjU
 qjU
 qjU
-tqp
+wBp
 ugp
 ycV
 kFp
