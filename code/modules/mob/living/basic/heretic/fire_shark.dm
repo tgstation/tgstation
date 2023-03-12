@@ -12,16 +12,16 @@
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 	speed = -0.5
-	health = 20
-	maxHealth = 20
-	melee_damage_lower = 10
-	melee_damage_upper = 10
+	health = 15
+	maxHealth = 15
+	melee_damage_lower = 8
+	melee_damage_upper = 8
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 0.2, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	faction = list(FACTION_HERETIC)
 	mob_size = MOB_SIZE_TINY
 	speak_emote = list("screams")
@@ -34,6 +34,7 @@
 	AddElement(/datum/element/death_drops, list(/obj/effect/gibspawner/human))
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
+	AddComponent(/datum/component/regenerator, regeneration_delay = 2 SECONDS, outline_colour = COLOR_DARK_RED)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 

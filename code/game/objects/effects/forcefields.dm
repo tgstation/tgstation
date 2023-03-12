@@ -85,6 +85,7 @@
 	icon_state = "cosmic_carpet"
 	anchored = TRUE
 	layer = LOW_SIGIL_LAYER
+	density = FALSE
 	can_atmos_pass = ATMOS_PASS_NO
 	initial_duration = 30 SECONDS
 	/// Flags for what antimagic can just ignore our forcefields
@@ -95,12 +96,13 @@
 	antimagic_flags = flags
 
 /obj/effect/forcefield/cosmic_field/CanAllowThrough(atom/movable/mover, border_dir)
-	if(isliving(mover))
-		var/mob/living/living_mover = mover
-		if(living_mover.can_block_magic(antimagic_flags, charge_cost = 0))
-			return TRUE
-		if(living_mover.has_status_effect(/datum/status_effect/star_mark))
-			return FALSE
+	if(!isliving(mover))
+		return ..()
+	var/mob/living/living_mover = mover
+	if(living_mover.can_block_magic(antimagic_flags, charge_cost = 0))
+		return ..()
+	if(living_mover.has_status_effect(/datum/status_effect/star_mark))
+		return FALSE
 	return ..()
 
 /obj/effect/forcefield/cosmic_field/fast

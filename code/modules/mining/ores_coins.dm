@@ -530,37 +530,36 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	custom_materials = list(/datum/material/diamond = 1000, /datum/material/plasma = 1000)
 	sideslist = list("heretic", "blade")
 	material_flags = NONE
-	/// Amount of damage that will be recieved
-	var/coin_damage = 0
 
 /obj/item/coin/eldritch/attack_self(mob/user)
-	if(cooldown < world.time)
-		if(string_attached)
-			to_chat(user, span_warning("The coin won't flip very well with something attached!") )
-			return FALSE
-		cooldown = world.time + 15
-		flick("coin_[coinflip]_flip", src)
-		coinflip = pick(sideslist)
-		icon_state = "coin_[coinflip]"
-		playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
-		var/oldloc = loc
-		sleep(1.5 SECONDS)
-		if(loc == oldloc && user && !user.incapacitated())
-			user.visible_message(span_notice("[user] flips [src]. It lands on [coinflip]."), \
-				span_notice("You flip [src]. It lands on [coinflip]."), \
-				span_hear("You hear the clattering of loose change."))
-		coin_damage = 0
-		if(isliving(user))
-			var/mob/living/living_user = user
-			if(!IS_HERETIC(living_user))
-				coin_damage += 4
-			if(coinflip == "heretic")
-				coin_damage -= 10
-			else
-				coin_damage += 6
-			living_user.adjustBruteLoss(coin_damage)
-			living_user.adjustFireLoss(coin_damage)
-			living_user.adjustToxLoss(coin_damage)
+	if(cooldown >= world.time)
+		return TRUE
+	if(string_attached)
+		to_chat(user, span_warning("The coin won't flip very well with something attached!") )
+		return FALSE
+	cooldown = world.time + 1.5 SECONDS
+	flick("coin_[coinflip]_flip", src)
+	coinflip = pick(sideslist)
+	icon_state = "coin_[coinflip]"
+	playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
+	var/oldloc = loc
+	sleep(1.5 SECONDS)
+	if(loc == oldloc && user && !user.incapacitated())
+		user.visible_message(span_notice("[user] flips [src]. It lands on [coinflip]."), \
+			span_notice("You flip [src]. It lands on [coinflip]."), \
+			span_hear("You hear the clattering of loose change."))
+	var/coin_damage = 0
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if(!IS_HERETIC(living_user))
+			coin_damage += 4
+		if(coinflip == "heretic")
+			coin_damage -= 10
+		else
+			coin_damage += 6
+		living_user.adjustBruteLoss(coin_damage)
+		living_user.adjustFireLoss(coin_damage)
+		living_user.adjustToxLoss(coin_damage)
 	return TRUE
 
 #undef ORESTACK_OVERLAYS_MAX

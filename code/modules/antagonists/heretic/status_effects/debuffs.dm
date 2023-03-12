@@ -138,7 +138,6 @@
 		if(95 to 100)
 			human_owner.adjust_confusion_up_to(12 SECONDS, 24 SECONDS)
 
-// STAR MARK
 /datum/status_effect/star_mark
 	id = "star_mark"
 	alert_type = /atom/movable/screen/alert/status_effect/star_mark
@@ -153,7 +152,7 @@
 
 /atom/movable/screen/alert/status_effect/star_mark
 	name = "Star Mark"
-	desc = "A ring above your head marks makes it so that you cannot enter cosmic fields or teleport through cosmic runes..."
+	desc = "A ring above your head prevents you from entering cosmic fields or teleporting through cosmic runes..."
 	icon_state = "star_mark"
 
 /datum/status_effect/star_mark/on_creation(mob/living/new_owner, ...)
@@ -165,11 +164,11 @@
 	return ..()
 
 /datum/status_effect/star_mark/on_apply()
-	if(owner.mob_size >= MOB_SIZE_HUMAN)
-		RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
-		owner.update_appearance(UPDATE_OVERLAYS)
+	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
+	owner.update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
+/// Updates the overlay of the owner
 /datum/status_effect/star_mark/proc/update_owner_overlay(atom/source, list/overlays)
 	SIGNAL_HANDLER
 

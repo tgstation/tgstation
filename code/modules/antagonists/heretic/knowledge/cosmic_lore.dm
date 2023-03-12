@@ -8,7 +8,7 @@
  * Cosmic Runes
  * > Sidepaths:
  *   Priest's Ritual
- *   Fire Fish
+ *   Scorching Shark
  *
  * Mark of Cosmos
  * Ritual of Knowledge
@@ -48,8 +48,6 @@
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_runes)
 	cost = 1
 	route = PATH_COSMIC
-	/// Creates a field to stop people with a star mark.
-	var/obj/effect/forcefield/cosmic_field/cosmic_field
 
 /datum/heretic_knowledge/cosmic_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -57,19 +55,20 @@
 /datum/heretic_knowledge/cosmic_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
+/// Aplies the effect of the mansus grasp when it hits a target.
 /datum/heretic_knowledge/cosmic_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 
 	to_chat(target, span_danger("A cosmic ring appeared above your head!"))
 	target.apply_status_effect(/datum/status_effect/star_mark)
-	cosmic_field = new(get_turf(source))
+	new /obj/effect/forcefield/cosmic_field(get_turf(source))
 
 /datum/heretic_knowledge/spell/cosmic_runes
 	name = "Cosmic Runes"
 	desc = "Grants you Cosmic Runes, a spell that creates two runes linked with eachother for easy teleportation. \
 		Only the entity activating the rune will get transported, and it can be used by anyone without a star mark."
 	gain_text = "When day came, the Sleeper got lost. \
-		The sun outshined the stars, so he lost his guide."
+		The sun outshone the stars, so he lost his guide."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/cosmic_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
@@ -83,9 +82,9 @@
 /datum/heretic_knowledge/mark/cosmic_mark
 	name = "Mark of Cosmos"
 	desc = "Your Mansus Grasp now applies the Mark of Cosmos. The mark is triggered from an attack with your Cosmic Blade. \
-		When triggered, the victim transport back to the Cosmic Diamond, which is the location your mark was applied to them. \
-		After getting transported they will be paralyzed for 2 seconds."
-	gain_text = "As the guide was lost, he found a new. The energy increased as the gaze he threw. \
+		When triggered, the victim is returned to the location where the mark was originally applied to them. \
+		They will then be paralyzed for 2 seconds."
+	gain_text = "As the guide was lost he found a new. The energy increased as the gaze he threw. \
 		He didn't know, but with focus, the Sleepers energy began to flow."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/cosmic)
 	route = PATH_COSMIC
@@ -97,12 +96,12 @@
 
 /datum/heretic_knowledge/spell/star_touch
 	name = "Star Touch"
-	desc = "Grants you Star Touch, a spell that will give people a star mark (cosmic ring) \
-		and create a cosmic field where you stand. People that already have a star mark \
+	desc = "Grants you Star Touch, a spell which places a star mark upon your target \
+		and creates a cosmic field at your feet. Targets which already have a star mark \
 		will be forced to sleep for 4 seconds. When the victim is hit it also creates a beam that \
 		deals a bit of fire damage and damages the cells. \
 		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
-	gain_text = "He dreamed to know, how the matter from star to star traveled. \
+	gain_text = "He dreamed to know how the matter travelled from star to star. \
 		He lost interest in wanting to find out."
 	next_knowledge = list(/datum/heretic_knowledge/spell/star_blast)
 	spell_to_add = /datum/action/cooldown/spell/touch/star_touch
@@ -112,8 +111,8 @@
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"
 	desc = "Fires a projectile that moves very slowly and create a cosmic field on impact. \
-		Anyone hit by the projectile will recieve burn damage, a knockdown and a star mark."
-	gain_text = "He didn't try, yet felt the call of the nights Creator."
+		Anyone hit by the projectile will recieve burn damage, a knockdown, and a star mark."
+	gain_text = "He didn't try, yet felt the call of the night's Creator."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/cosmic,
 		/datum/heretic_knowledge/reroll_targets,
@@ -126,7 +125,7 @@
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
-	desc = "Your blade now deals damage to peoples cells through cosmic radiation."
+	desc = "Your blade now deals damage to people's cells through cosmic radiation."
 	gain_text = "As he ascended to be a watcher, he needed to gather knowledge. \
 		He started to draw it at his home."
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_expansion)
@@ -142,7 +141,7 @@
 	name = "Cosmic Expansion"
 	desc = "Grants you Cosmic Expansion, a spell that creates a 3x3 area of cosmic fields around you. \
 		Nearby beings will also receive a star mark."
-	gain_text = "He was well known so he had a lot of drawing to do, to gather as much of the things he forgot."
+	gain_text = "He was well known, so he had a lot of drawing to do to gather as much of the things he forgot."
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/cosmic_final,
 		/datum/heretic_knowledge/eldritch_coin,
@@ -155,11 +154,11 @@
 /datum/heretic_knowledge/ultimate/cosmic_final
 	name = "Creators's Gift"
 	desc = "The ascension ritual of the Path of Cosmos. \
-		Bring 3 corpses with bluespacedust in their body to a transmutation rune to complete the ritual. \
+		Bring 3 corpses with bluespace dust in their body to a transmutation rune to complete the ritual. \
 		When completed, you become the owner of a Star Gazer. \
 		You will be able to command the Star Gazer with Alt+click. \
 		You can also give it commands through speech. \
-		The Star Gazer is a strong mob that can even break down reinforced walls."
+		The Star Gazer is a strong ally who can even break down reinforced walls."
 	gain_text = "The past is gone, the Star Gazer became a vessel to watch over the universe. \
 		The Creator made this his path and he forgot his purpose. \
 		THE TIME IS NOW, WITNESS MY ASCENSION, THE STAR GAZER HAS GAINED PURPOSE ONCE MORE!"
@@ -175,11 +174,9 @@
 /datum/heretic_knowledge/ultimate/cosmic_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
 	. = ..()
 	if(!.)
-		return
+		return FALSE
 
-	if(sacrifice.has_reagent(/datum/reagent/bluespace))
-		return TRUE
-	return FALSE
+	return sacrifice.has_reagent(/datum/reagent/bluespace)
 
 /datum/heretic_knowledge/ultimate/cosmic_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()

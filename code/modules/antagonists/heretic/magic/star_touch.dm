@@ -82,6 +82,7 @@
 	to_chat(owner, span_warning("You lose control of the beam!"))
 	lose_target()
 
+/// Used for starting the beam when a target has been acquired
 /datum/action/cooldown/spell/touch/star_touch/proc/start_beam(atom/target, mob/living/user)
 
 	if(current_target)
@@ -99,6 +100,10 @@
 		on_beam_hit(current_target)
 
 /datum/action/cooldown/spell/touch/star_touch/process()
+	if(!owner || (next_use_time - world.time) <= 0)
+		STOP_PROCESSING(SSfastprocess, src)
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
 	if(!current_target)
 		lose_target()
 		return
@@ -115,6 +120,7 @@
 	if(current_target)
 		on_beam_tick(current_target)
 
+/// Checks if the beam is going through an invalid turf
 /datum/action/cooldown/spell/touch/star_touch/proc/los_check(atom/movable/user, mob/target)
 	var/turf/user_turf = user.loc
 	if(!istype(user_turf))
@@ -139,35 +145,26 @@
 			if(!movable.CanPass(dummy, get_dir(next_step, previous_step)))
 				qdel(dummy)
 				return FALSE
-		for(var/obj/effect/ebeam/cosmic/B in next_step)// Don't cross the str-beams!
-			if(QDELETED(current_beam))
-				break //We shouldn't be processing anymore.
-			if(QDELETED(B))
-				continue
-			if(!B.owner)
-				stack_trace("beam without an owner! [B]")
-				continue
-			if(B.owner.origin != current_beam.origin)
-				explosion(B.loc, heavy_impact_range = 3, light_impact_range = 5, flash_range = 8, explosion_cause = src)
-				qdel(dummy)
-				return FALSE
 		previous_step = next_step
 	qdel(dummy)
 	return TRUE
 
+/// What to add when the beam connects to a target
 /datum/action/cooldown/spell/touch/star_touch/proc/on_beam_hit(mob/living/target)
 	if(!istype(target, /mob/living/basic/star_gazer))
-		target.AddElement(/datum/element/cosmic_carpet_trail)
+		target.AddElement(/datum/element/effect_trail/cosmig_trail)
 	return
 
+/// What to process when the beam is connected to a target
 /datum/action/cooldown/spell/touch/star_touch/proc/on_beam_tick(mob/living/target)
 	target.adjustFireLoss(2)
 	target.adjustCloneLoss(1)
 	return
 
+/// What to remove when the beam disconnects from a target
 /datum/action/cooldown/spell/touch/star_touch/proc/on_beam_release(mob/living/target)
 	if(!istype(target, /mob/living/basic/star_gazer))
-		target.RemoveElement(/datum/element/cosmic_carpet_trail)
+		target.RemoveElement(/datum/element/effect_trail/cosmig_trail)
 	return
 
 /obj/item/melee/touch_attack/star_touch

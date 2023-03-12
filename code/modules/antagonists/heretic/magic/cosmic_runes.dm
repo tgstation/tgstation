@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/cosmic_rune
 	name = "Cosmic Rune"
-	desc = "Create a cosmic rune for teleportation. If there are already two cosmic runes, it destroys the oldest rune."
+	desc = "Creates a cosmic rune at your position, only two can exist at a time. Invoking one rune transports you to the other."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -8,41 +8,47 @@
 
 	sound = 'sound/magic/forcewall.ogg'
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 40 SECONDS
+	cooldown_time = 15 SECONDS
 
 	invocation = "ST'R R'N'"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
 	/// Storage for the first rune.
-	var/obj/effect/cosmic_rune/first_rune
+	var/datum/weakref/first_rune
 	/// Storage for the second rune.
-	var/obj/effect/cosmic_rune/second_rune
+	var/datum/weakref/second_rune
 	/// Rune removal effect.
 	var/obj/effect/rune_remove_effect = /obj/effect/temp_visual/cosmic_rune_fade
 
 /datum/action/cooldown/spell/cosmic_rune/cast(atom/cast_on)
 	. = ..()
 	if(first_rune && second_rune)
+		var/obj/effect/cosmic_rune/first_rune_resolved = first_rune.resolve()
+		var/obj/effect/cosmic_rune/second_rune_resolved = second_rune.resolve()
 		var/obj/effect/cosmic_rune/new_rune = new /obj/effect/cosmic_rune(get_turf(cast_on))
-		new rune_remove_effect(get_turf(first_rune))
-		QDEL_NULL(first_rune)
-		first_rune = second_rune
-		second_rune = new_rune
-		first_rune.link_rune(null)
-		first_rune.link_rune(second_rune)
-		second_rune.link_rune(first_rune)
+		new rune_remove_effect(get_turf(first_rune_resolved))
+		QDEL_NULL(first_rune_resolved)
+		first_rune = WEAKREF(second_rune_resolved)
+		second_rune = WEAKREF(new_rune)
+		second_rune_resolved.link_rune(new_rune)
+		new_rune.link_rune(second_rune_resolved)
 	if(!first_rune)
-		first_rune = new /obj/effect/cosmic_rune(get_turf(cast_on))
+		var/obj/effect/cosmic_rune/new_rune = new /obj/effect/cosmic_rune(get_turf(cast_on))
+		first_rune = WEAKREF(new_rune)
 		if(second_rune)
-			first_rune.link_rune(second_rune)
-			second_rune.link_rune(first_rune)
+			var/obj/effect/cosmic_rune/second_rune_resolved = second_rune.resolve()
+			new_rune.link_rune(second_rune_resolved)
+			second_rune_resolved.link_rune(new_rune)
 	else if(!second_rune)
-		second_rune = new /obj/effect/cosmic_rune(get_turf(cast_on))
+		var/obj/effect/cosmic_rune/new_rune = new /obj/effect/cosmic_rune(get_turf(cast_on))
+		second_rune = WEAKREF(new_rune)
 		if(first_rune)
-			first_rune.link_rune(second_rune)
-			second_rune.link_rune(first_rune)
+			var/obj/effect/cosmic_rune/first_rune_resolved = first_rune.resolve()
+			first_rune_resolved.link_rune(new_rune)
+			new_rune.link_rune(first_rune_resolved)
 
+/// A rune that allows you to teleport to the location of a linked rune.
 /obj/effect/cosmic_rune
 	name = "cosmic rune"
 	desc = "A strange rune, that can instantly transport people to another location."
@@ -52,7 +58,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = SIGIL_LAYER
 	/// The other rune this rune is linked with
-	var/obj/effect/cosmic_rune/linked_rune
+	var/datum/weakref/linked_rune
 	/// Effect for when someone teleports
 	var/obj/effect/rune_effect = /obj/effect/temp_visual/rune_light
 
@@ -64,31 +70,34 @@
 	if(.)
 		return
 	if(!linked_rune)
-		to_chat(user, "There must be a second [src] for it to work!")
+		balloon_alert(user, "no linked rune!")
 		fail_invoke()
 		return
 	if(!(user in get_turf(src)))
-		to_chat(user, "You must be standing on [src]!")
+		balloon_alert(user, "not close enough!")
 		fail_invoke()
 		return
 	if(user.has_status_effect(/datum/status_effect/star_mark))
-		to_chat(user, "You cannot use [src] while having a star mark!")
+		balloon_alert(user, "blocked by star mark!")
 		fail_invoke()
 		return
 	invoke(user)
 
+/// For invoking the rune
 /obj/effect/cosmic_rune/proc/invoke(mob/living/user)
+	var/obj/effect/cosmic_rune/linked_rune_resolved = linked_rune.resolve()
 	new rune_effect(get_turf(src))
 	do_teleport(
 		user,
-		get_turf(linked_rune),
+		get_turf(linked_rune_resolved),
 		no_effects = TRUE,
 		channel = TELEPORT_CHANNEL_MAGIC,
 		asoundin = 'sound/magic/cosmic_energy.ogg',
 		asoundout = 'sound/magic/cosmic_energy.ogg',
 	)
-	new rune_effect(get_turf(linked_rune))
+	new rune_effect(get_turf(linked_rune_resolved))
 
+/// For if someone failed to invoke the rune
 /obj/effect/cosmic_rune/proc/fail_invoke()
 	visible_message(span_warning("The rune pulses with a small flash of purple light, then returns to normal."))
 	var/oldcolor = rgb(255, 255, 255)
@@ -96,8 +105,18 @@
 	animate(src, color = oldcolor, time = 5)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 5)
 
-/obj/effect/cosmic_rune/proc/link_rune(obj/effect/cosmic_rune/new_rune)
-	linked_rune = new_rune
+/// For linking a new rune
+/obj/effect/cosmic_rune/proc/link_rune(datum/weakref/new_rune)
+	linked_rune = WEAKREF(new_rune)
+
+/obj/effect/cosmic_rune/Destroy()
+	var/obj/effect/cosmic_rune/linked_rune_resolved = linked_rune.resolve()
+	linked_rune_resolved.unlink_rune()
+	. = ..()
+
+/// Used for unlinking the other rune if this rune gets destroyed
+/obj/effect/cosmic_rune/proc/unlink_rune()
+	linked_rune = null
 
 /obj/effect/temp_visual/cosmic_rune_fade
 	name = "cosmic rune"

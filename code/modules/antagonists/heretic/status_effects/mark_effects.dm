@@ -220,7 +220,6 @@
 	source.Stun(1 SECONDS)
 	source.throw_at(further_behind_old_loc, 3, 1, gentle = TRUE) // Keeping this gentle so they don't smack into the heretic max speed
 
-// MARK OF COSMOS
 /datum/status_effect/eldritch/cosmic
 	effect_icon_state = "emark6"
 	/// For storing the location when the mark got applied.

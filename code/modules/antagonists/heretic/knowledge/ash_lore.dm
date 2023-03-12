@@ -7,7 +7,7 @@
  * Grasp of Ash
  * Ashen Passage
  * > Sidepaths:
- *   Fire Fish
+ *   Scorching Shark
  *   Ashen Eyes
  *
  * Mark of Ash

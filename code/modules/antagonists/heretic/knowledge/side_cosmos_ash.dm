@@ -1,9 +1,9 @@
 // Sidepaths for knowledge between Cosmos and Ash.
 
 /datum/heretic_knowledge/summon/fire_shark
-	name = "Fire Fish"
-	desc = "Allows you to transmute a pool of ash, eyes, and a sheet of plasma into a Fire Shark. \
-		Fire Sharks are fast and strong in groups, but are bad at combat."
+	name = "Scorching Shark"
+	desc = "Allows you to transmute a pool of ash, a paper, and a sheet of plasma into a Fire Shark. \
+		Fire Sharks are fast and strong in groups, but die quickly. They are also highly resistant against fire attacks."
 	gain_text = "My knowledge of the universe with the energy of remains, constructed it. It gave the Fire Shark life."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/cosmic_runes,
@@ -11,7 +11,7 @@
 	)
 	required_atoms = list(
 		/obj/effect/decal/cleanable/ash = 1,
-		/obj/item/organ/internal/eyes = 1,
+		/obj/effect/decal/cleanable/food/salt = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
 	)
 	mob_to_summon = /mob/living/basic/fire_shark
@@ -21,8 +21,8 @@
 /datum/heretic_knowledge/curse/cosmic_trail
 	name = "Curse of The Stars"
 	desc = "Allows you to transmute a bluespace crystal, a pool of ash, and a liver to cast a Curse of The Stars on a crew member. \
-		While cursed, the victim will recieve a star mark that lasts for at least 3 minutes. This star mark makes it so that the \
-		crew member cannot enter cosmic carpet fields. The victim will also recieve a cosmic carpet trail for at least 3 minutes."
+		The victim will recieve a star mark for 3 minutes, preventing them from entering cosmic fields. \
+		Additionally they will leave a trail of cosmic fields wherever they move."
 	gain_text = "Strange stars glare through the cosmos. The stars focus their solar radiation onto their target."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/star_blast,
@@ -40,24 +40,24 @@
 	route = PATH_SIDE
 
 /datum/heretic_knowledge/curse/cosmic_trail/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
-	to_chat(chosen_mob, span_danger("You feel very strange..."))
+	to_chat(chosen_mob, span_danger("A cosmic energy starts flowing through you."))
 	chosen_mob.apply_status_effect(/datum/status_effect/star_mark/extended)
-	chosen_mob.AddElement(/datum/element/cosmic_carpet_trail)
+	chosen_mob.AddElement(/datum/element/effect_trail/cosmig_trail)
 	return ..()
 
 /datum/heretic_knowledge/curse/cosmic_trail/uncurse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
 	if(QDELETED(chosen_mob))
 		return
 
-	chosen_mob.RemoveElement(/datum/element/cosmic_carpet_trail)
-	to_chat(chosen_mob, span_green("You start to feel better."))
+	chosen_mob.RemoveElement(/datum/element/effect_trail/cosmig_trail)
+	to_chat(chosen_mob, span_green("The cosmic energy leaves your body."))
 	return ..()
 
 /datum/heretic_knowledge/eldritch_coin
 	name = "Eldritch Coin"
 	desc = "Allows you to transmute a sheet of plasma, a diamond and eyes to create an Eldritch Coin. \
-		The coin will heals when landing on heads and damages when landing on tails. \
-		The coin will heal for more, but only for heretics."
+		The coin will heal when landing on heads and harm when landing on tails. \
+		The coin's healing is increased when used by Heretics."
 	gain_text = "It tossed the coin and won its bet, now it gains..."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/cosmic_expansion,

@@ -1,6 +1,7 @@
 /datum/action/cooldown/spell/conjure/cosmic_expansion
 	name = "Cosmic Expansion"
-	desc = "This spell generates a 3x3 domain of cosmic fields, neaby mobs from 7 tiles away will also get a star mark status effect."
+	desc = "This spell generates a 3x3 domain of cosmic fields. \
+		Neaby mobs from 7 tiles away will also get a star mark status effect."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -8,7 +9,7 @@
 
 	sound = 'sound/magic/cosmic_expansion.ogg'
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 80 SECONDS
+	cooldown_time = 60 SECONDS
 
 	invocation = "C'SM'S 'XP'ND"
 	invocation_type = INVOCATION_SHOUT
@@ -25,7 +26,6 @@
 /datum/action/cooldown/spell/conjure/cosmic_expansion/cast(atom/cast_on)
 	new expansion_effect(get_turf(cast_on))
 	for(var/mob/living/nearby_mob in range(star_mark_range, cast_on))
-		if(!(owner == nearby_mob))
-			if(!(FACTION_HERETIC in nearby_mob.faction))
-				nearby_mob.apply_status_effect(/datum/status_effect/star_mark)
+		if(!(FACTION_HERETIC in nearby_mob.faction))
+			nearby_mob.apply_status_effect(/datum/status_effect/star_mark)
 	return ..()
