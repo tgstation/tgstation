@@ -206,6 +206,11 @@
 	if(length(wounds))
 		stack_trace("[type] qdeleted with [length(wounds)] uncleared wounds")
 		wounds.Cut()
+
+	if(length(external_organs))
+		for(var/obj/item/organ/external/external_organ as anything in external_organs)
+			qdel(external_organ) // It handles removing its references to this limb, and getting out of external_organs from there on its own.
+
 	return ..()
 
 /obj/item/bodypart/forceMove(atom/destination) //Please. Never forcemove a limb if its's actually in use. This is only for borgs.
