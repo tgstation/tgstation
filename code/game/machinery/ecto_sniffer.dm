@@ -14,16 +14,12 @@
 	///List of ckeys containing players who have recently activated the device, players on this list are prohibited from activating the device untill their residue decays.
 	var/list/ectoplasmic_residues = list()
 	var/obj/item/radio/radio
-	radio = new(src)
-	radio.keyslot = new /obj/item/encryptionkey/headset_sci
-	radio.subspace_transmission = TRUE
-	radio.canhear_range = 0
-	radio.recalculateChannels()
 
 /obj/machinery/ecto_sniffer/Initialize(mapload)
 	. = ..()
 	wires = new/datum/wires/ecto_sniffer(src)
-
+	radio = new /obj/item/radio/headset/silicon/ai(src)
+	
 /obj/machinery/ecto_sniffer/attack_ghost(mob/user)
 	. = ..()
 	if(!is_operational || !on || !sensor_enabled)
