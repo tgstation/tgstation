@@ -66,7 +66,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aI" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/med_data/laptop{
+/obj/machinery/computer/records/medical/laptop{
 	dir = 8;
 	pixel_y = 1
 	},
@@ -471,7 +471,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "Ig" = (
 /obj/machinery/light/directional/north,
-/mob/living/simple_animal/hostile/carp,
+/mob/living/basic/carp,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "LD" = (

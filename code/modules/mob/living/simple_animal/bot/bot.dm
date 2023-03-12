@@ -23,7 +23,7 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 	speech_span = SPAN_ROBOT
-	faction = list("neutral", "silicon", "turret")
+	faction = list(FACTION_NEUTRAL, FACTION_SILICON, FACTION_TURRET)
 	light_system = MOVABLE_LIGHT
 	light_range = 3
 	light_power = 0.9
@@ -91,8 +91,6 @@
 	var/destination
 	///The next destination in the patrol route
 	var/next_destination
-	///If we should shuffle our adjacency checking
-	var/shuffle = FALSE
 
 	/// the nearest beacon's tag
 	var/nearest_beacon
@@ -215,6 +213,8 @@
 		return TRUE
 	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
 		return TRUE
+	if(!istype(user)) // Non-living mobs shouldn't be manipulating bots (like observes using the botkeeper UI).
+		return FALSE
 
 	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
 
@@ -350,7 +350,7 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	unlock_with_id(user)
 
@@ -431,6 +431,11 @@
 		paicard.emp_act(severity)
 		src.visible_message(span_notice("[paicard] is flies out of [initial(src.name)]!"), span_warning("You are forcefully ejected from [initial(src.name)]!"))
 		ejectpai(0)
+
+	if(prob(70/severity))
+		var/datum/language_holder/bot_languages = get_language_holder()
+		bot_languages.selected_language = bot_languages.get_random_spoken_language()
+
 	if(bot_mode_flags & BOT_MODE_ON)
 		turn_off()
 	addtimer(CALLBACK(src, PROC_REF(emp_reset), was_on), severity * 30 SECONDS)
@@ -487,6 +492,7 @@
 
 //Generalized behavior code, override where needed!
 
+GLOBAL_LIST_EMPTY(scan_typecaches)
 /**
  * Attempt to scan tiles near [src], first by checking adjacent, then if a target is still not found, nearby.
  *
@@ -495,31 +501,48 @@
  * scan_range - how far away from [src] will be scanned, if nothing is found directly adjacent.
  */
 /mob/living/simple_animal/bot/proc/scan(list/scan_types, old_target, scan_range = DEFAULT_SCAN_RANGE)
-	var/list/adjacent = shuffle(view(1, src))
-	for(var/turf/scan as anything in adjacent) //Let's see if there's something right next to us first!
-		if(check_bot(scan)) //Is there another bot there? Then let's just skip it
-			continue
-		var/final_result = checkscan(scan, scan_types, old_target)
-		if(final_result)
-			return final_result
+	var/key = scan_types.Join(",")
+	var/list/scan_cache = GLOB.scan_typecaches[key]
+	if(!scan_cache)
+		scan_cache = typecacheof(scan_types)
+		GLOB.scan_typecaches[key] = scan_cache
+	if(!get_turf(src))
+		return
+	// Nicer behavior, ensures we don't conflict with other bots quite so often
+	var/list/adjacent = list()
+	for(var/turf/to_walk in view(1, src))
+		adjacent += to_walk
 
-	for(var/turf/scanned_turfs as anything in view(scan_range, src) - adjacent) //Search for something in range, minus what we already checked.
-		if(check_bot(scanned_turfs)) //Is there another bot there? Then let's just skip it
-			continue
-		var/final_result = checkscan(scanned_turfs, scan_types, old_target)
-		if(final_result)
-			return final_result
+	adjacent = shuffle(adjacent)
 
-/mob/living/simple_animal/bot/proc/checkscan(atom/scan, list/scan_types, old_target)
-	for(var/scan_type in scan_types)
-		if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
-			continue //If not, keep searching!
-		if((REF(scan) in ignore_list) || (scan == old_target)) //Filter for blacklisted elements, usually unreachable or previously processed oness
+	var/list/turfs_to_walk = list()
+	for(var/turf/victim in view(scan_range, src))
+		turfs_to_walk += victim
+
+	turfs_to_walk = turfs_to_walk - adjacent
+	// Now we prepend adjacent since we want to run those first
+	turfs_to_walk = adjacent + turfs_to_walk
+
+	for(var/turf/scanned as anything in turfs_to_walk)
+		// Check bot is inlined here to save cpu time
+		//Is there another bot there? Then let's just skip it so we dont all atack on top of eachother.
+		var/bot_found = FALSE
+		for(var/mob/living/simple_animal/bot/buddy in scanned.contents)
+			if(istype(buddy, type) && (buddy != src))
+				bot_found = TRUE
+				break
+		if(bot_found)
 			continue
 
-		var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
-		if(!isnull(scan_result))
-			return scan_result
+		for(var/atom/thing as anything in scanned)
+			if(!scan_cache[thing.type]) //Check that the thing we found is the type we want!
+				continue //If not, keep searching!
+			if(thing == old_target || (REF(thing) in ignore_list)) //Filter for blacklisted elements, usually unreachable or previously processed oness
+				continue
+
+			var/scan_result = process_scan(thing) //Some bots may require additional processing when a result is selected.
+			if(!isnull(scan_result))
+				return scan_result
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
 /mob/living/simple_animal/bot/proc/process_scan(scan_target)
@@ -529,10 +552,9 @@
 	var/turf/target_turf = get_turf(targ)
 	if(!target_turf)
 		return FALSE
-	for(var/turf_contents in target_turf.contents)
-		//Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
-		if(istype(turf_contents, type) && (turf_contents != src))
-			return TRUE //Let's abort if we find a bot so we dont have to keep rechecking
+	for(var/mob/living/simple_animal/bot/buddy in target_turf.contents)
+		if(istype(buddy, type) && (buddy != src))
+			return TRUE
 	return FALSE
 
 /mob/living/simple_animal/bot/proc/add_to_ignore(subject)
@@ -813,10 +835,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/calc_summon_path(turf/avoid)
 	check_bot_access()
-	INVOKE_ASYNC(src, PROC_REF(do_calc_summon_path), avoid)
+	var/datum/callback/path_complete = CALLBACK(src, PROC_REF(on_summon_path_finish))
+	SSpathfinder.pathfind(src, summon_target, max_distance=150, id=access_card, exclude=avoid, on_finish = path_complete)
 
-/mob/living/simple_animal/bot/proc/do_calc_summon_path(turf/avoid)
-	set_path(get_path_to(src, summon_target, max_distance=150, id=access_card, exclude=avoid))
+/mob/living/simple_animal/bot/proc/on_summon_path_finish(list/path)
+	set_path(path)
 	if(!length(path)) //Cannot reach target. Give up and announce the issue.
 		speak("Summon command failed, destination unreachable.",radio_channel)
 		bot_reset()
@@ -919,11 +942,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 				ejectpai(usr)
 
 /mob/living/simple_animal/bot/update_icon_state()
-	icon_state = "[initial(icon_state)][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
+	icon_state = "[isnull(base_icon_state) ? initial(icon_state) : base_icon_state][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
 	return ..()
 
 /mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return TRUE
 	// 0 for access, 1 for denied.
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
@@ -995,10 +1018,12 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	bot_reset()
 
-/mob/living/simple_animal/bot/revive(full_heal = FALSE, admin_revive = FALSE)
-	if(..())
-		update_appearance()
-		. = TRUE
+/mob/living/simple_animal/bot/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+	. = ..()
+	if(!.)
+		return
+
+	update_appearance()
 
 /mob/living/simple_animal/bot/ghost()
 	if(stat != DEAD) // Only ghost if we're doing this while alive, the pAI probably isn't dead yet.
@@ -1007,7 +1032,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		ejectpai(0)
 
 /mob/living/simple_animal/bot/sentience_act()
-	faction -= "silicon"
+	faction -= FACTION_SILICON
 
 /mob/living/simple_animal/bot/proc/set_path(list/newpath)
 	path = newpath ? newpath : list()
@@ -1021,7 +1046,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
 	QDEL_LIST(path_images)
-	if(newpath)
+	if(length(newpath))
+		var/mutable_appearance/path_image = new /mutable_appearance()
+		path_image.icon = path_image_icon
+		path_image.icon_state = path_image_icon_state
+		path_image.layer = BOT_PATH_LAYER
+		path_image.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+		path_image.color = path_image_color
 		for(var/i in 1 to newpath.len)
 			var/turf/T = newpath[i]
 			if(T == loc) //don't bother putting an image if it's where we already exist.
@@ -1031,7 +1062,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				var/turf/prevT = path[i - 1]
 				var/image/prevI = path[prevT]
 				direction = get_dir(prevT, T)
-				if(i > 2)
+				if(i > 2 && prevI) // make sure we actually have an image to manipulate at index > 2
 					var/turf/prevprevT = path[i - 2]
 					var/prevDir = get_dir(prevprevT, prevT)
 					var/mixDir = direction|prevDir
@@ -1045,16 +1076,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 							else
 								ntransform.Scale(1, -1)
 							prevI.transform = ntransform
-			var/mutable_appearance/MA = new /mutable_appearance()
-			MA.icon = path_image_icon
-			MA.icon_state = path_image_icon_state
-			MA.layer = ABOVE_OPEN_TURF_LAYER
-			SET_PLANE(MA, GAME_PLANE, T)
-			MA.appearance_flags = RESET_COLOR|RESET_TRANSFORM
-			MA.color = path_image_color
-			MA.dir = direction
+
+			SET_PLANE(path_image, GAME_PLANE, T)
+			path_image.dir = direction
 			var/image/I = image(loc = T)
-			I.appearance = MA
+			I.appearance = path_image
 			path[T] = I
 			path_images += I
 
@@ -1074,22 +1100,3 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/rust_heretic_act()
 	adjustBruteLoss(400)
-
-/**
- * Randomizes our bot's language if:
- * - They are on the setation Z level
- * OR
- * - They are on the escape shuttle
- */
-/mob/living/simple_animal/bot/proc/randomize_language_if_on_station()
-	var/turf/bot_turf = get_turf(src)
-	var/area/bot_area = get_area(src)
-	if(!is_station_level(bot_turf.z) && !istype(bot_area, /area/shuttle/escape))
-		// Why snowflake check for escape shuttle? Well, a lot of shuttles spawn with bots
-		// but docked at centcom, and I wanted those bots to also speak funny languages
-		return FALSE
-
-	/// The bot's language holder - so we can randomize and change their language
-	var/datum/language_holder/bot_languages = get_language_holder()
-	bot_languages.selected_language = bot_languages.get_random_spoken_uncommon_language()
-	return TRUE

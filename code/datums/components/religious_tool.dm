@@ -122,7 +122,7 @@
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='warning'>You are not the high priest, and therefore cannot select a religious sect.")
 		return
-	if(!user.canUseTopic(parent, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH))
 		to_chat(user,span_warning("You cannot select a sect at this time."))
 		return
 	if(GLOB.religious_sect)
@@ -152,7 +152,7 @@
 	if(performing_rite)
 		to_chat(user, "<span class='notice'>There is a rite currently being performed here already.")
 		return
-	if(!user.canUseTopic(parent, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH))
 		to_chat(user,span_warning("You are not close enough to perform the rite."))
 		return
 	performing_rite = new path(parent)
@@ -171,13 +171,7 @@
  */
 /datum/component/religious_tool/proc/generate_available_sects(mob/user)
 	var/list/sects_to_pick = list()
-	var/human_highpriest = ishuman(user)
-	var/mob/living/carbon/human/highpriest = user
 	for(var/path in subtypesof(/datum/religion_sect))
-		if(human_highpriest && initial(easy_access_sect.invalidating_qualities))
-			var/datum/species/highpriest_species = highpriest.dna.species
-			if(initial(easy_access_sect.invalidating_qualities) in highpriest_species.inherent_traits)
-				continue
 		var/list/sect = list()
 		var/datum/religion_sect/not_a_real_instance_rs = path
 		sect["name"] = initial(not_a_real_instance_rs.name)

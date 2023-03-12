@@ -412,7 +412,7 @@
  * * close: boolean, the state you want the curtains in.
  */
 /datum/mafia_controller/proc/toggle_night_curtains(close)
-	for(var/obj/machinery/door/poddoor/D in GLOB.machines) //I really dislike pathing of these
+	for(var/obj/machinery/door/poddoor/D in GLOB.airlocks) //I really dislike pathing of these
 		if(D.id != "mafia") //so as to not trigger shutters on station, lol
 			continue
 		if(close)
@@ -967,7 +967,7 @@
 /datum/action/innate/mafia_panel
 	name = "Mafia Panel"
 	desc = "Use this to play."
-	icon_icon = 'icons/obj/mafia.dmi'
+	button_icon = 'icons/obj/mafia.dmi'
 	button_icon_state = "board"
 	var/datum/mafia_controller/parent
 

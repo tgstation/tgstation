@@ -144,7 +144,7 @@ The console is located at computer/gulag_teleporter.dm
 				else
 					W.forceMove(src)
 
-/obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/data/record/R)
+/obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/record/crew/target)
 	if(!ishuman(occupant))
 		return
 	strip_occupant()
@@ -158,8 +158,8 @@ The console is located at computer/gulag_teleporter.dm
 		prisoner.equip_to_appropriate_slot(new shoes_type, qdel_on_fail = TRUE)
 	if(id)
 		prisoner.equip_to_appropriate_slot(id, qdel_on_fail = TRUE)
-	if(R)
-		R.fields["criminal"] = "Incarcerated"
+	if(target)
+		target.wanted_status = WANTED_PRISONER
 
 	use_power(active_power_usage)
 
@@ -167,9 +167,10 @@ The console is located at computer/gulag_teleporter.dm
 	name = "labor camp teleporter (Machine Board)"
 	build_path = /obj/machinery/gulag_teleporter
 	req_components = list(
-							/obj/item/stack/ore/bluespace_crystal = 2,
-							/obj/item/stock_parts/scanning_module,
-							/obj/item/stock_parts/manipulator)
+		/obj/item/stack/ore/bluespace_crystal = 2,
+		/datum/stock_part/scanning_module = 1,
+		/obj/item/stock_parts/manipulator = 1,
+	)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /*  beacon that receives the teleported prisoner */

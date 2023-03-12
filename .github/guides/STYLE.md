@@ -280,6 +280,26 @@ for (var/month in 1 to 12)
 for (var/i in reagents)
 ```
 
+### Don't abuse the increment/decrement operators
+`x++` and `++x` both will increment x, but the former will return x *before* it was incremented, while the latter will return x *after* it was incremented. Great if you want to be clever, or if you were a C programmer in the 70s, but it hurts the readability of code to anyone who isn't familiar with this. The convenience is not nearly good enough to justify this burden.
+
+```dm
+// Bad
+world.log << "You now have [++apples] apples."
+
+// Good
+apples++
+// apples += 1 - Allowed
+world.log << "You now have [apples] apples."
+
+// Bad
+world.log << "[apples--] apples left, taking one."
+
+// Good
+world.log << "[apples] apples left, taking one."
+apples--
+```
+
 ## Procs
 
 ### Getters and setters
@@ -399,6 +419,62 @@ turn_on(power_usage = 30) // Fine!
 
 set_invincible(FALSE) // Fine! Boolean parameters don't always need to be named. In this case, it is obvious what it means.
 ```
+
+## Multi-lining
+
+Whether it's a very long proc call, a long list people will be adding to, or something else entirely, there may be times where splitting code across multiple lines is the most readable. When you have to is up to maintainer discretion, but if you do, follow this consistent style.
+
+```dm
+proc_call_on_one_line(
+	arg1, // Only indent once! Remember to not align tabs.
+	arg2,
+	arg3, // End with a trailing comma
+) // The parenthesis should be on the same indentation level as the proc call
+```
+
+For example:
+```dm
+/area/town
+	var/list/places_to_visit = list(
+		"Coffee Shop",
+		"Dance Club",
+		"Gift Shop",
+	)
+```
+
+This is not a strict rule and there may be times where you can place the lines in a more sensible spot. For example:
+
+```dm
+act(list(
+	// Fine!
+))
+
+act(
+	list(
+		// Fine, though verbose
+	)
+)
+
+act(x, list(
+	// Also fine!
+))
+
+act(x, list(
+
+), y) // Getting clunky, might want to split this up!
+```
+
+Occasionally, you will need to use backslashes to multiline. This happens when you are calling a macro. This comes up often with `AddComponent`. For example,
+
+```dm
+AddComponent( \
+	/datum/component/makes_sound, \
+	"chirp", \
+	volume = 10, \
+)
+```
+
+Backslashes should only be used when necessary, and they are only necessary for macros.
 
 ## Macros
 

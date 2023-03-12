@@ -29,7 +29,7 @@ Regenerative extracts:
 		user.visible_message(span_notice("[user] crushes [src] over [user.p_them()]self, the milky goo quickly regenerating all of [user.p_their()] injuries!"),
 			span_notice("You squeeze [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries!"))
 	core_effect_before(H, user)
-	H.revive(full_heal = TRUE, admin_revive = FALSE)
+	H.revive(HEAL_ALL)
 	core_effect(H, user)
 	playsound(target, 'sound/effects/splat.ogg', 40, TRUE)
 	qdel(src)
@@ -156,7 +156,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/sepia
 	colour = "sepia"
-	effect_desc = "Fully heals the target and stops time."
+	effect_desc = "Fully heals the target. After 10 seconds, relocate the target to the initial position the core was used with their previous health status."
 
 /obj/item/slimecross/regenerative/sepia/core_effect_before(mob/living/target, mob/user)
 	to_chat(target, span_notice("You try to forget how you feel."))
@@ -262,7 +262,7 @@ Regenerative extracts:
 	if(target == user)
 		return
 	var/mob/living/U = user
-	U.revive(full_heal = TRUE, admin_revive = FALSE)
+	U.revive(HEAL_ALL)
 	to_chat(U, span_notice("Some of the milky goo sprays onto you, as well!"))
 
 /obj/item/slimecross/regenerative/adamantine

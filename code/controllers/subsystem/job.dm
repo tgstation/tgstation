@@ -521,10 +521,7 @@ SUBSYSTEM_DEF(job)
 
 	SEND_SIGNAL(equipping, COMSIG_JOB_RECEIVED, job)
 
-	equipping.mind?.set_assigned_role(job)
-
-	if(player_client)
-		to_chat(player_client, "<span class='infoplain'><b>You are the [job.title].</b></span>")
+	equipping.mind?.set_assigned_role_with_greeting(job, player_client)
 
 	equipping.on_job_equipping(job)
 
@@ -543,17 +540,16 @@ SUBSYSTEM_DEF(job)
 
 	if(player_client)
 		if(job.req_admin_notify)
-			to_chat(player_client, "<span class='infoplain'><b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b></span>")
+			to_chat(player_client, span_infoplain("<b>You are playing a job that is important for Game Progression. \
+				If you have to disconnect, please notify the admins via adminhelp.</b>"))
 		if(CONFIG_GET(number/minimal_access_threshold))
-			to_chat(player_client, span_notice("<B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B>"))
-
-		var/related_policy = get_policy(job.title)
-		if(related_policy)
-			to_chat(player_client, related_policy)
+			to_chat(player_client, span_boldnotice("As this station was initially staffed with a \
+				[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
+				have been added to your ID card."))
 
 	if(ishuman(equipping))
 		var/mob/living/carbon/human/wageslave = equipping
-		wageslave.mind.add_memory(MEMORY_ACCOUNT, list(DETAIL_ACCOUNT_ID = wageslave.account_id), story_value = STORY_VALUE_SHIT, memory_flags = MEMORY_FLAG_NOLOCATION)
+		wageslave.add_mob_memory(/datum/memory/key/account, remembered_id = wageslave.account_id)
 
 
 	job.after_spawn(equipping, player_client)
@@ -941,42 +937,39 @@ SUBSYSTEM_DEF(job)
 		living_mob.forceMove(toLaunch)
 		new /obj/effect/pod_landingzone(spawn_turf, toLaunch)
 
-///////////////////////////////////
-//Keeps track of all living heads//
-///////////////////////////////////
+/// Returns a list of minds of all heads of staff who are alive
 /datum/controller/subsystem/job/proc/get_living_heads()
 	. = list()
-	for(var/mob/living/carbon/human/player as anything in GLOB.human_list)
-		if(player.stat != DEAD && (player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
-			. += player.mind
+	for(var/datum/mind/head as anything in get_crewmember_minds())
+		if(!(head.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+			continue
+		if(isnull(head.current) || head.current.stat == DEAD)
+			continue
+		. += head
 
-
-////////////////////////////
-//Keeps track of all heads//
-////////////////////////////
+/// Returns a list of minds of all heads of staff
 /datum/controller/subsystem/job/proc/get_all_heads()
 	. = list()
-	for(var/mob/living/carbon/human/player as anything in GLOB.human_list)
-		if(player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-			. += player.mind
+	for(var/datum/mind/head as anything in get_crewmember_minds())
+		if(head.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+			. += head
 
-//////////////////////////////////////////////
-//Keeps track of all living security members//
-//////////////////////////////////////////////
+/// Returns a list of minds of all security members who are alive
 /datum/controller/subsystem/job/proc/get_living_sec()
 	. = list()
-	for(var/mob/living/carbon/human/player as anything in GLOB.human_list)
-		if(player.stat != DEAD && (player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY))
-			. += player.mind
+	for(var/datum/mind/sec as anything in get_crewmember_minds())
+		if(!(sec.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY))
+			continue
+		if(isnull(sec.current) || sec.current.stat == DEAD)
+			continue
+		. += sec
 
-////////////////////////////////////////
-//Keeps track of all  security members//
-////////////////////////////////////////
+/// Returns a list of minds of all security members
 /datum/controller/subsystem/job/proc/get_all_sec()
 	. = list()
-	for(var/mob/living/carbon/human/player as anything in GLOB.human_list)
-		if(player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
-			. += player.mind
+	for(var/datum/mind/sec as anything in get_crewmember_minds())
+		if(sec.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
+			. += sec
 
 /datum/controller/subsystem/job/proc/JobDebug(message)
 	log_job_debug(message)
@@ -1026,6 +1019,7 @@ SUBSYSTEM_DEF(job)
 		to_chat(new_captain, span_notice("Due to your position in the chain of command, you have been promoted to Acting Captain. You can find in important note about this [where]."))
 	else
 		to_chat(new_captain, span_notice("You can find the code to obtain your spare ID from the secure safe on the Bridge [where]."))
+		new_captain.add_mob_memory(/datum/memory/key/captains_spare_code, safe_code = SSid_access.spare_id_safe_code)
 
 	// Force-give their ID card bridge access.
 	var/obj/item/id_slot = new_captain.get_item_by_slot(ITEM_SLOT_ID)

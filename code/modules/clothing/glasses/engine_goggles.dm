@@ -21,8 +21,7 @@
 	gender = PLURAL
 
 	vision_flags = NONE
-	darkness_view = 2
-	invis_view = SEE_INVISIBLE_LIVING
+	color_cutoffs = null
 
 	var/list/modes = list(MODE_NONE = MODE_MESON, MODE_MESON = MODE_TRAY, MODE_TRAY = MODE_NONE)
 	var/mode = MODE_NONE
@@ -47,14 +46,12 @@
 	switch(mode)
 		if(MODE_MESON)
 			vision_flags = SEE_TURFS
-			darkness_view = 1
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+			color_cutoffs = list(15, 12, 0)
 			change_glass_color(user, /datum/client_colour/glass_colour/yellow)
 
 		if(MODE_TRAY) //undoes the last mode, meson
 			vision_flags = NONE
-			darkness_view = 2
-			lighting_alpha = null
+			color_cutoffs = list()
 			change_glass_color(user, /datum/client_colour/glass_colour/lightblue)
 
 		if(MODE_PIPE_CONNECTABLE)
@@ -72,7 +69,7 @@
 			H.update_sight()
 
 	update_appearance()
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/clothing/glasses/meson/engine/attack_self(mob/user)
 	toggle_mode(user, TRUE)
@@ -108,7 +105,7 @@
 				pic = new('icons/turf/overlays.dmi', place, "greenOverlay", AREA_LAYER)
 			else
 				pic = new('icons/turf/overlays.dmi', place, "redOverlay", AREA_LAYER)
-			flick_overlay(pic, list(user.client), 8)
+			flick_overlay_global(pic, list(user.client), 8)
 
 /obj/item/clothing/glasses/meson/engine/proc/show_connections()
 	var/mob/living/carbon/human/user = loc
@@ -132,7 +129,7 @@
 				PIPING_LAYER_DOUBLE_SHIFT(arrow, smart.piping_layer)
 				connection_images[smart][dir2text(direction)] = arrow
 			if(connection_images.len)
-				flick_overlay(connection_images[smart][dir2text(direction)], list(user.client), 1.5 SECONDS)
+				flick_overlay_global(connection_images[smart][dir2text(direction)], list(user.client), 1.5 SECONDS)
 
 /obj/item/clothing/glasses/meson/engine/update_icon_state()
 	icon_state = inhand_icon_state = "trayson-[mode]"
@@ -204,7 +201,7 @@
 				pic.color = COLOR_RED
 		pic.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		pic.alpha = 200
-		flick_overlay(pic, list(viewer.client), duration)
+		flick_overlay_global(pic, list(viewer.client), duration)
 
 
 #undef MODE_NONE

@@ -5,7 +5,7 @@
 		/obj/item/food/grown/herbs = 4
 	)
 	result = /obj/item/food/herby_cheese
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/mothic_salad
 	name = "Mothic salad"
@@ -15,7 +15,7 @@
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/mothic_salad
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/toasted_seeds
 	name = "Toasted seeds"
@@ -26,7 +26,7 @@
 		/datum/reagent/consumable/quality_oil = 2
 	)
 	result = /obj/item/food/toasted_seeds
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/engine_fodder
 	name = "Engine fodder"
@@ -38,20 +38,21 @@
 		/obj/item/food/chips = 1
 	)
 	result = /obj/item/food/engine_fodder
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/squeaking_stir_fry
 	name = "Skeklitmischtpoppl (Squeaking stir fry)"
 	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/cheese/cheese_curds = 1,
 		/obj/item/food/tofu = 1,
 		/obj/item/food/grown/chili = 1,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/onion_slice = 1
 	)
 	result = /obj/item/food/squeaking_stir_fry
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/sweet_chili_cabbage_wrap
 	name = "Sweet chili cabbage wrap"
@@ -63,7 +64,7 @@
 		/datum/reagent/consumable/honey = 5
 	)
 	result = /obj/item/food/sweet_chili_cabbage_wrap
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/loaded_curds
 	name = "Ozlsettitæloskekllön ede pommes (Loaded curds and fries)"
@@ -75,7 +76,7 @@
 		/obj/item/food/fries = 1
 	)
 	result = /obj/item/food/loaded_curds
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/baked_cheese_platter
 	name = "Stanntkraktælo (Baked cheese platter)"
@@ -84,10 +85,9 @@
 		/obj/item/food/griddle_toast = 3
 	)
 	result = /obj/item/food/baked_cheese_platter
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/raw_green_lasagne
-	name = "Green lasagne al forno"
 	reqs = list(
 		/obj/item/food/pesto = 1,
 		/obj/item/food/spaghetti/boiledspaghetti = 2,
@@ -95,19 +95,18 @@
 		/obj/item/food/cheese/firm_cheese_slice = 1
 	)
 	result = /obj/item/food/raw_green_lasagne
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/raw_baked_rice
-	name = "Big baked rice"
 	reqs = list(
-		/obj/item/food/salad/boiledrice = 2,
+		/obj/item/food/boiledrice = 2,
 		/obj/item/food/soup/vegetable = 1,
 		/obj/item/food/grown/potato = 2,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/herbs = 1
 	)
 	result = /obj/item/food/raw_baked_rice
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/buttered_baked_corn
 	name = "Buttered baked corn"
@@ -116,7 +115,7 @@
 		/obj/item/food/butter = 1
 	)
 	result = /obj/item/food/buttered_baked_corn
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/fiesta_corn_skillet
 	name = "Fiesta corn skillet"
@@ -129,10 +128,9 @@
 		/obj/item/food/cheese/wedge = 1
 	)
 	result = /obj/item/food/fiesta_corn_skillet
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/ratatouille
-	name = "Ratatouille"
 	reqs = list(
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/grown/onion/red = 1,
@@ -140,7 +138,7 @@
 		/obj/item/food/roasted_bell_pepper = 1
 	)
 	result = /obj/item/food/raw_ratatouille
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/mozzarella_sticks
 	name = "Mozzarella sticks"
@@ -150,7 +148,7 @@
 		/obj/item/food/tomato_sauce = 1
 	)
 	result = /obj/item/food/mozzarella_sticks
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/raw_stuffed_peppers
 	name = "Voltölpapriken (Stuffed peppers)"
@@ -160,7 +158,7 @@
 		/obj/item/food/onion_slice = 2
 	)
 	result = /obj/item/food/raw_stuffed_peppers
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/fueljacks_lunch
 	name = "Fueljack's lunch"
@@ -172,7 +170,7 @@
 		/obj/item/food/cheese/firm_cheese_slice = 1
 	)
 	result = /obj/item/food/fueljacks_lunch
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/mac_balls
 	name = "Macheronirölen (Mac balls)"
@@ -182,7 +180,7 @@
 		/datum/reagent/consumable/cornmeal_batter = 5
 	)
 	result = /obj/item/food/mac_balls
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/moth_cotton_soup
 	name = "Flöfrölenmæsch (Cottonball soup)"
@@ -196,7 +194,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1
 	)
 	result = /obj/item/food/soup/moth_cotton_soup
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/moth_cheese_soup
 	name = "Ælosterrmæsch (Cheese soup)"
@@ -209,7 +207,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1
 	)
 	result = /obj/item/food/soup/moth_cheese_soup
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/moth_seed_soup
 	name = "Misklmæsch (Seed soup)"
@@ -222,7 +220,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1
 	)
 	result = /obj/item/food/soup/moth_seed_soup
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/moth_bean_stew
 	name = "Prickeldröndolhaskl (Spicy bean stew)"
@@ -237,7 +235,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1
 	)
 	result = /obj/item/food/soup/moth_bean_stew
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/moth_oat_stew
 	name = "Häfmisklhaskl (Oat stew)"
@@ -250,7 +248,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1
 	)
 	result = /obj/item/food/soup/moth_oat_stew
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/moth_fire_soup
 	name = "Tömpröttkrakklmæsch (Heartburn soup)"
@@ -262,17 +260,18 @@
 		/obj/item/reagent_containers/cup/bowl = 1
 	)
 	result = /obj/item/food/soup/moth_fire_soup
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/rice_porridge
 	name = "Rice porridge"
 	reqs = list(
-		/obj/item/food/salad/ricebowl = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/boiledrice = 1,
 		/datum/reagent/water = 10,
 		/datum/reagent/consumable/salt = 2
 	)
 	result = /obj/item/food/soup/rice_porridge
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/hua_mulan_congee
 	name = "Hua Mulan congee"
@@ -282,7 +281,7 @@
 		/obj/item/food/friedegg = 2
 	)
 	result = /obj/item/food/soup/hua_mulan_congee
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/toechtauese_rice_porridge
 	name = "Töchtaüse rice porridge"
@@ -292,7 +291,7 @@
 		/datum/reagent/consumable/toechtauese_syrup = 5
 	)
 	result = /obj/item/food/soup/toechtauese_rice_porridge
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/cornmeal_porridge
 	name = "Cornmeal porridge"
@@ -302,7 +301,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1
 	)
 	result = /obj/item/food/soup/cornmeal_porridge
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/cheesy_porridge
 	name = "Cheesy porridge"
@@ -314,7 +313,7 @@
 		/obj/item/food/butter = 1
 	)
 	result = /obj/item/food/soup/cheesy_porridge
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/fried_eggplant_polenta
 	name = "Fried eggplant and polenta"
@@ -326,7 +325,7 @@
 		/obj/item/food/cheese/mozzarella = 1
 	)
 	result = /obj/item/food/soup/fried_eggplant_polenta
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/caprese_salad
 	name = "Caprese salad"
@@ -338,7 +337,7 @@
 		/datum/reagent/consumable/vinegar = 2
 	)
 	result = /obj/item/food/caprese_salad
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/fleet_salad
 	name = "Lörtonknusksolt (Fleet salad)"
@@ -351,7 +350,7 @@
 		/datum/reagent/consumable/vinegar = 2
 	)
 	result = /obj/item/food/salad/fleet_salad
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/cotton_salad
 	name = "Flöfrölenknusksolt (Cotton salad)"
@@ -363,7 +362,7 @@
 		/datum/reagent/consumable/vinegar = 2
 	)
 	result = /obj/item/food/salad/fleet_salad
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/moth_kachumbari
 	name = "Kæniatknusksolt (Kenyan salad)"
@@ -376,10 +375,9 @@
 		/datum/reagent/consumable/limejuice = 2
 	)
 	result = /obj/item/food/salad/moth_kachumbari
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/raw_mothic_margherita
-	name = "Mothic margherita pizza"
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/tomato_sauce = 1,
@@ -388,10 +386,9 @@
 		/obj/item/food/grown/herbs = 1
 	)
 	result = /obj/item/food/raw_mothic_margherita
-	subcategory = CAT_MOTH
+	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/raw_mothic_firecracker
-	name = "Mothic firecracker pizza"
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/datum/reagent/consumable/bbqsauce = 10,
@@ -400,10 +397,9 @@
 		/obj/item/food/grown/ghost_chili = 1
 	)
 	result = /obj/item/food/raw_mothic_firecracker
-	subcategory = CAT_MOTH
+	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/raw_mothic_five_cheese
-	name = "Mothic five cheese pizza"
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/tomato_sauce = 1,
@@ -414,10 +410,9 @@
 		/obj/item/food/cheese/cheese_curds = 1
 	)
 	result = /obj/item/food/raw_mothic_five_cheese
-	subcategory = CAT_MOTH
+	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/raw_mothic_white_pie
-	name = "Mothic white pie pizza"
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/bechamel_sauce = 1,
@@ -427,10 +422,9 @@
 		/obj/item/food/grown/herbs = 1
 	)
 	result = /obj/item/food/raw_mothic_white_pie
-	subcategory = CAT_MOTH
+	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/raw_mothic_pesto
-	name = "Mothic pesto pizza"
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/pesto = 1,
@@ -438,10 +432,9 @@
 		/obj/item/food/cheese/mozzarella = 1
 	)
 	result = /obj/item/food/raw_mothic_pesto
-	subcategory = CAT_MOTH
+	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/raw_mothic_garlic
-	name = "Mothic garlic pizzabread"
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/butter = 1,
@@ -449,7 +442,7 @@
 		/obj/item/food/grown/herbs = 1
 	)
 	result = /obj/item/food/raw_mothic_garlic
-	subcategory = CAT_MOTH
+	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/moth_cheese_cakes
 	name = "Ælorölen (Cheesecake balls)"
@@ -461,7 +454,7 @@
 		/datum/reagent/consumable/honey = 5
 	)
 	result = /obj/item/food/moth_cheese_cakes
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/mothmallow
 	name = "Mothmallows"
@@ -472,7 +465,7 @@
 		/datum/reagent/consumable/ethanol/rum = 5
 	)
 	result = /obj/item/food/cake/mothmallow
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/red_porridge
 	name = "Eltsløsk ül a priktæolk (Red Porridge and Yoghurt)"
@@ -483,7 +476,7 @@
 		/datum/reagent/consumable/sugar = 5
 	)
 	result = /obj/item/food/soup/red_porridge
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/chili_sin_carne
 	name = "Chili sin carne (vegetarian chili)"
@@ -495,7 +488,7 @@
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/soup/vegetarian_chili
-	subcategory = CAT_MOTH
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/moffin
 	name = "Moffin"
@@ -505,4 +498,4 @@
 		/obj/item/stack/sheet/cloth = 1,
 	)
 	result = /obj/item/food/muffin/moffin
-	subcategory = CAT_MOTH
+	category = CAT_MOTH

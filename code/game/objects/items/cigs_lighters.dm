@@ -237,6 +237,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		to_chat(user, span_warning("[src] is full!"))
 
+	return AFTERATTACK_PROCESSED_ITEM
+
 /obj/item/clothing/mask/cigarette/update_icon_state()
 	. = ..()
 	if(lit)

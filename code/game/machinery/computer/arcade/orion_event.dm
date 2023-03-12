@@ -438,7 +438,7 @@
 		game.say("A miniature black hole suddenly appears in front of [game], devouring [gamer] alive!")
 		gamer.Stun(200, ignore_canstun = TRUE) //you can't run :^)
 		var/black_hole = new /obj/singularity/orion(gamer.loc)
-		addtimer(CALLBACK(game, /atom/movable/proc/say, "[black_hole] winks out, just as suddenly as it appeared."), 50)
+		addtimer(CALLBACK(game, TYPE_PROC_REF(/atom/movable, say), "[black_hole] winks out, just as suddenly as it appeared."), 50)
 		QDEL_IN(black_hole, 5 SECONDS)
 
 #define BUTTON_DOCK "Dock"
@@ -525,7 +525,7 @@
 				game.say("WEEWOO! WEEWOO! Spaceport security en route!")
 				playsound(game, 'sound/items/weeoo1.ogg', 100, FALSE)
 				for(var/i in 1 to 3)
-					var/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion/spaceport_security = new(get_turf(game))
-					spaceport_security.GiveTarget(usr)
+					var/mob/living/basic/syndicate/ranged/smg/orion/spaceport_security = new(get_turf(game))
+					spaceport_security.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = REF(usr)
 	game.fuel += fuel
 	game.food += food

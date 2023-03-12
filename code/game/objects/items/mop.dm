@@ -20,6 +20,10 @@
 	var/mopspeed = 1.5 SECONDS
 	force_string = "robust... against germs"
 	var/insertable = TRUE
+	var/static/list/clean_blacklist = typecacheof(list(
+		/obj/item/reagent_containers/cup/bucket,
+		/obj/structure/mop_bucket,
+	))
 
 /obj/item/mop/Initialize(mapload)
 	. = ..()
@@ -33,7 +37,7 @@
 
 ///Checks whether or not we should clean.
 /obj/item/mop/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
-	if(istype(atom_to_clean, /obj/item/reagent_containers/cup/bucket) || istype(atom_to_clean, /obj/structure/janitorialcart))
+	if(clean_blacklist[atom_to_clean.type])
 		return DO_NOT_CLEAN
 	if(reagents.total_volume < 0.1)
 		to_chat(cleaner, span_warning("Your mop is dry!"))
@@ -64,6 +68,7 @@
 	name = "advanced mop"
 	max_reagent_volume = 10
 	icon_state = "advmop"
+	inhand_icon_state = "advmop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	force = 12

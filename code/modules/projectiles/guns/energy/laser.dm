@@ -46,6 +46,7 @@
 	ammo_x_offset = 3
 	selfcharge = 1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire/antique)
 
 /obj/item/gun/energy/laser/captain/scattershot
@@ -194,3 +195,14 @@
 	desc = "A modified handcannon with a self-replicating reserve of decommissioned weaponized nanites. Spit shards of frozen angry robots into the bad guys. While it doesn't manipulate temperature in of itself, it does cause an internal explosion in anyone who is severely hot."
 	icon_state = "cryopistol"
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)
+
+// luxury shuttle funnies
+/obj/item/firing_pin/paywall/luxury
+	multi_payment = TRUE
+	owned = TRUE
+	payment_amount = 20
+
+/obj/item/gun/energy/laser/luxurypaywall
+	name = "luxurious laser gun"
+	desc = "A laser gun modified to cost 20 credits to fire. Point towards poor people."
+	pin = /obj/item/firing_pin/paywall/luxury

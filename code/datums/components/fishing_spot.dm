@@ -41,7 +41,7 @@
 	if(HAS_TRAIT(user,TRAIT_GONE_FISHING) || rod.currently_hooked_item)
 		user.balloon_alert(user, "already fishing")
 		return COMPONENT_NO_AFTERATTACK
-	var/denial_reason = fish_source.can_fish(rod, user)
+	var/denial_reason = fish_source.reason_we_cant_fish(rod, user)
 	if(denial_reason)
 		to_chat(user, span_warning(denial_reason))
 		return COMPONENT_NO_AFTERATTACK
@@ -59,4 +59,6 @@
 
 /datum/component/fishing_spot/proc/fishing_completed(datum/fishing_challenge/source, mob/user, success, perfect)
 	if(success)
+		var/obj/item/fish/caught = source.reward_path
+		user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = initial(caught.name))
 		fish_source.dispense_reward(source.reward_path, user)

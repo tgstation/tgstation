@@ -1,0 +1,94 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/freezer,
+/obj/effect/spawner/random/medical/memeorgans,
+/obj/effect/spawner/random/medical/memeorgans,
+/turf/open/floor/iron/freezer,
+/area/station/maintenance/department/medical)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/table,
+/obj/effect/spawner/random/medical/surgery_tool,
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/iron/freezer,
+/area/station/maintenance/department/medical)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/freezer/blood,
+/turf/open/floor/iron/freezer,
+/area/station/maintenance/department/medical)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/medical/minor_healing,
+/obj/effect/spawner/random/medical/supplies,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/medical)
+"u" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/door/window/left/directional/east{
+	req_access = list("medical");
+	name = "Cold Storage"
+	},
+/turf/open/floor/iron/freezer,
+/area/station/maintenance/department/medical)
+"v" = (
+/turf/template_noop,
+/area/template_noop)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Freezer Maintenance"
+	},
+/obj/modular_map_connector,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/medical)
+"M" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/freezer,
+/area/station/maintenance/department/medical)
+"N" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron/freezer,
+/area/station/maintenance/department/medical)
+"X" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/medical)
+
+(1,1,1) = {"
+g
+a
+"}
+(2,1,1) = {"
+M
+N
+"}
+(3,1,1) = {"
+e
+u
+"}
+(4,1,1) = {"
+p
+X
+"}
+(5,1,1) = {"
+X
+X
+"}
+(6,1,1) = {"
+x
+v
+"}

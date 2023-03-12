@@ -1,0 +1,3 @@
+/obj/structure/lattice:
+  banned_neighbors:
+  - /obj/structure/lattice

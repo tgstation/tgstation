@@ -28,6 +28,8 @@
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 	desc = "Checked out books MUST be returned on time."
+	// This fixes consoles to be ON the tables, rather than their keyboards floating a bit
+	pixel_y = 8
 	///The current title we're searching for
 	var/title = ""
 	///The category we're searching for
@@ -245,7 +247,8 @@
 	var/checkout
 	var/duedate
 
-#define PRINTER_COOLDOWN 6 SECONDS
+#define PRINTER_COOLDOWN (6 SECONDS)
+#define NEWSCASTER_COOLDOWN (10 SECONDS)
 #define LIBRARY_NEWSFEED "Nanotrasen Book Club"
 //The different states the computer can be in, only send the info we need yeah?
 #define LIBRARY_INVENTORY 1
@@ -305,6 +308,8 @@
 	var/datum/weakref/scanner
 	///Our cooldown on using the printer
 	COOLDOWN_DECLARE(printer_cooldown)
+	///Our cooldown on publishing books to the newscaster's "book club" channel
+	COOLDOWN_DECLARE(newscaster_cooldown)
 
 /obj/machinery/computer/libraryconsole/bookmanagement/Initialize(mapload)
 	. = ..()
@@ -372,6 +377,10 @@
 			var/obj/machinery/libraryscanner/scan = get_scanner()
 			data["has_scanner"] = !!(scan)
 			data["has_cache"] = !!(scan?.cache)
+
+			data["cooldown_string"] = "[DisplayTimeText(COOLDOWN_TIMELEFT(src, newscaster_cooldown))]"
+			data["active_newscaster_cooldown"] = COOLDOWN_FINISHED(src, newscaster_cooldown)
+
 			if(scan?.cache)
 				data["cache_title"] = scan.cache.get_title()
 				data["cache_author"] = scan.cache.get_author()
@@ -478,6 +487,10 @@
 			INVOKE_ASYNC(src, PROC_REF(upload_from_scanner), upload_category)
 			return TRUE
 		if("news_post")
+			// We grey out the button UI-side, but let's just be safe to guard against spammy spammers.
+			if(!COOLDOWN_FINISHED(src, newscaster_cooldown))
+				say("Not enough time has passed since the last news post. Please wait.")
+				return
 			if(!GLOB.news_network)
 				say("No news network found on station. Aborting.")
 			var/channelexists = FALSE
@@ -494,6 +507,7 @@
 				return
 			GLOB.news_network.submit_article(scan.cache.content, "[scan.cache.author]: [scan.cache.title]", LIBRARY_NEWSFEED, null)
 			say("Upload complete. Your uploaded title is now available on station newscasters.")
+			COOLDOWN_START(src, newscaster_cooldown, NEWSCASTER_COOLDOWN)
 			return TRUE
 		if("print_book")
 			var/id = params["book_id"]

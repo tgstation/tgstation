@@ -231,7 +231,7 @@
 	if(prob(min(num_sheets_dispensed * 2, 30)))
 		if(crisp_paper in mod.wearer.held_items)
 			mod.wearer.dropItemToGround(crisp_paper, force = TRUE)
-		crisp_paper.balloon_alert(mod.wearer, "PC LOAD LETTER!")
+		crisp_paper.balloon_alert(mod.wearer, UNLINT("PC LOAD LETTER!"))
 		crisp_paper.visible_message(span_warning("[crisp_paper] bursts into flames, it's too crisp!"))
 		crisp_paper.fire_act(1000, 100)
 
@@ -324,7 +324,7 @@
 		playsound(current_turf, 'sound/items/modsuit/atrocinator_step.ogg', 50)
 	step_count++
 
-#define FLY_TIME 5 SECONDS
+#define FLY_TIME (5 SECONDS)
 
 /obj/item/mod/module/atrocinator/proc/fly_away()
 	you_fucked_up = TRUE

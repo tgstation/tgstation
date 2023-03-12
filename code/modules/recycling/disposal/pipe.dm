@@ -9,7 +9,8 @@
 	obj_flags = CAN_BE_HIT
 	dir = NONE // dir will contain dominant direction for junction pipes
 	max_integrity = 200
-	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 90, ACID = 30)
+	armor_type = /datum/armor/structure_disposalpipe
+	plane = FLOOR_PLANE
 	layer = DISPOSAL_PIPE_LAYER // slightly lower than wires and other pipes
 	damage_deflection = 10
 	var/dpdir = NONE // bitmask of pipe directions
@@ -17,6 +18,14 @@
 	var/flip_type // If set, the pipe is flippable and becomes this type when flipped
 	var/obj/structure/disposalconstruct/stored
 
+
+/datum/armor/structure_disposalpipe
+	melee = 25
+	bullet = 10
+	laser = 10
+	energy = 100
+	fire = 90
+	acid = 30
 
 /obj/structure/disposalpipe/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
@@ -48,10 +57,6 @@
 
 /obj/structure/disposalpipe/Destroy()
 	qdel(stored)
-	return ..()
-
-/obj/structure/disposalpipe/deconstruct()
-	spew_forth()
 	return ..()
 
 /**
@@ -167,15 +172,13 @@
 				transfer_fingerprints_to(stored)
 				stored.setDir(dir)
 				stored = null
-			if (contents.len > 1) // if there is actually something in the pipe
-				var/obj/structure/disposalholder/holder = locate() in src
-				expel(holder, loc, dir)
 		else
 			var/turf/T = get_turf(src)
 			for(var/D in GLOB.cardinals)
 				if(D & dpdir)
 					var/obj/structure/disposalpipe/broken/P = new(T)
 					P.setDir(D)
+	spew_forth()
 	qdel(src)
 
 

@@ -154,7 +154,7 @@
 
 	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
 	message_admins("Receiving a message from [input["sender_ckey"]] at [input["source"]]")
-	for(var/obj/machinery/computer/communications/communications_console in GLOB.machines)
+	for(var/obj/machinery/computer/communications/communications_console in GLOB.shuttle_caller_list)
 		communications_console.override_cooldown()
 
 /datum/world_topic/news_report
@@ -176,12 +176,10 @@
 	require_comms_key = TRUE
 
 /datum/world_topic/namecheck/Run(list/input)
-	//Oh this is a hack, someone refactor the functionality out of the chat command PLS
-	var/datum/tgs_chat_command/namecheck/NC = new
-	var/datum/tgs_chat_user/user = new
-	user.friendly_name = input["sender"]
-	user.mention = user.friendly_name
-	return NC.Run(user, input["namecheck"])
+	log_admin("world/Topic Name Check: [input["sender"]] on [input["namecheck"]]")
+	message_admins("Name checking [input["namecheck"]] from [input["sender"]] (World topic)")
+
+	return keywords_lookup(input["namecheck"], 1)
 
 /datum/world_topic/adminwho
 	keyword = "adminwho"

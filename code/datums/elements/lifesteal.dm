@@ -4,7 +4,7 @@
  */
 /datum/element/lifesteal
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY|ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// heals a constant amount every time a hit occurs
 	var/flat_heal
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
@@ -32,6 +32,7 @@
 	if(!proximity_flag)
 		return
 	do_lifesteal(user, target)
+	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
 /datum/element/lifesteal/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
 	SIGNAL_HANDLER

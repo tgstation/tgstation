@@ -182,7 +182,7 @@
 		var/choice = tgui_input_text(user, "Enter a new turret name", "Turret Classification", finish_name, MAX_NAME_LEN)
 		if(!choice)
 			return
-		if(!user.canUseTopic(src, be_close = TRUE))
+		if(!user.can_perform_action(src))
 			return
 
 		finish_name = choice

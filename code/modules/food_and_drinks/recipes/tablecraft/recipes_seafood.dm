@@ -6,7 +6,7 @@
 		/obj/item/food/fishmeat/carp = 1
 	)
 	result = /obj/item/food/cubancarp
-	subcategory = CAT_SEAFOOD
+	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/fishandchips
 	name = "Fish and chips"
@@ -15,7 +15,7 @@
 		/obj/item/food/fishmeat = 1
 	)
 	result = /obj/item/food/fishandchips
-	subcategory = CAT_SEAFOOD
+	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/fishfingers
 	name = "Fish fingers"
@@ -25,7 +25,7 @@
 		/obj/item/food/fishmeat = 1
 	)
 	result = /obj/item/food/fishfingers
-	subcategory = CAT_SEAFOOD
+	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/fishfry
 	name = "Fish fry"
@@ -35,7 +35,7 @@
 		/obj/item/food/fishmeat = 1
 	)
 	result = /obj/item/food/fishfry
-	subcategory = CAT_SEAFOOD
+	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/sashimi
 	name = "Sashimi"
@@ -45,7 +45,7 @@
 		/obj/item/food/fishmeat = 1
 	)
 	result = /obj/item/food/sashimi
-	subcategory = CAT_SEAFOOD
+	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/fishtaco
 	name ="Fish taco"
@@ -55,48 +55,49 @@
 		/obj/item/food/fishmeat = 1,
 		/obj/item/food/grown/cabbage = 1
 	)
-	result = /obj/item/food/fishtaco
-	subcategory = CAT_SEAFOOD
+	result = /obj/item/food/taco/fish
+	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/vegetariansushiroll
 	name ="Vegetarian sushi roll"
 	reqs = list(
 		/obj/item/food/seaweedsheet = 1,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/grown/potato = 1
 	)
 	result = /obj/item/food/vegetariansushiroll
-	subcategory = CAT_SEAFOOD
+	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/spicyfiletroll
 	name ="Spicy filet sushi roll"
 	reqs = list(
 		/obj/item/food/seaweedsheet = 1,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/fishmeat = 1,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/onion = 1
 	)
 	result = /obj/item/food/spicyfiletsushiroll
-	subcategory = CAT_SEAFOOD
+	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/nigiri_sushi
 	name ="Nigiri sushi"
 	reqs = list(
 		/obj/item/food/seaweedsheet = 1,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/fishmeat = 1,
 		/datum/reagent/consumable/soysauce = 2
 	)
 	result = /obj/item/food/nigiri_sushi
-	subcategory = CAT_SEAFOOD
+	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/meat_poke
 	name ="Meat poke"
 	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/seaweedsheet = 1,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/meat/cutlet = 3,
 		/obj/item/food/grown/cabbage = 1,
 		/obj/item/food/tofu = 1,
@@ -104,13 +105,14 @@
 		/obj/item/food/grown/cucumber = 1,
 	)
 	result = /obj/item/food/meat_poke
-	subcategory = CAT_SEAFOOD
+	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/fish_poke
 	name ="Fish poke"
 	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/seaweedsheet = 1,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/fishmeat = 1,
 		/obj/item/food/grown/cabbage = 1,
 		/obj/item/food/tofu = 1,
@@ -118,4 +120,4 @@
 		/obj/item/food/grown/cucumber = 1,
 	)
 	result = /obj/item/food/fish_poke
-	subcategory = CAT_SEAFOOD
+	category = CAT_SEAFOOD

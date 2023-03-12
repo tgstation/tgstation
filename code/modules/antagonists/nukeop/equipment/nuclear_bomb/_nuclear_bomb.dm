@@ -450,6 +450,7 @@ GLOBAL_VAR(station_nuke_source)
 	var/turf/our_turf = get_turf(src)
 	message_admins("\The [src] was armed at [ADMIN_VERBOSEJMP(our_turf)] by [armer ? ADMIN_LOOKUPFLW(armer) : "an unknown user"].")
 	armer.log_message("armed \the [src].", LOG_GAME)
+	armer.add_mob_memory(/datum/memory/bomb_planted/nuke, antagonist = src)
 
 	previous_level = SSsecurity_level.get_current_level_as_number()
 	detonation_timer = world.time + (timer_set * 10)
@@ -466,7 +467,8 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/proc/disarm_nuke(mob/disarmer)
 	var/turf/our_turf = get_turf(src)
 	message_admins("\The [src] at [ADMIN_VERBOSEJMP(our_turf)] was disarmed by [disarmer ? ADMIN_LOOKUPFLW(disarmer) : "an unknown user"].")
-	disarmer.log_message("disarmed \the [src].", LOG_GAME)
+	if(disarmer)
+		disarmer.log_message("disarmed [src].", LOG_GAME)
 
 	detonation_timer = null
 	SSsecurity_level.set_level(previous_level)
@@ -559,11 +561,6 @@ GLOBAL_VAR(station_nuke_source)
 	else
 		detonation_status = DETONATION_MISSED_STATION
 
-	// Missing the station will register a hostile environment, until it actually explodes
-	if(detonation_status == DETONATION_MISSED_STATION)
-		SSshuttle.registerHostileEnvironment(src)
-		SSshuttle.lockdown = TRUE
-
 	// Now go play the cinematic
 	GLOB.station_nuke_source = detonation_status
 	really_actually_explode(detonation_status)
@@ -572,7 +569,7 @@ GLOBAL_VAR(station_nuke_source)
 	return detonation_status
 
 /obj/machinery/nuclearbomb/proc/really_actually_explode(detonation_status)
-	play_cinematic(get_cinematic_type(detonation_status), world, CALLBACK(SSticker, /datum/controller/subsystem/ticker/proc/station_explosion_detonation, src))
+	play_cinematic(get_cinematic_type(detonation_status), world, CALLBACK(SSticker, TYPE_PROC_REF(/datum/controller/subsystem/ticker, station_explosion_detonation), src))
 
 	var/turf/bomb_location = get_turf(src)
 	var/list/z_levels_to_blow = list()

@@ -12,8 +12,6 @@
 	throw_range = 2 //No head bowling
 	px_x = 0
 	px_y = -8
-	stam_damage_coeff = 1
-	max_stamina_damage = 100
 	wound_resistance = 5
 	disabled_wound_penalty = 25
 	scars_covered_by_clothes = FALSE
@@ -78,10 +76,6 @@
 	var/mutable_appearance/facial_overlay
 	///The image for facial hair gradient
 	var/mutable_appearance/facial_gradient_overlay
-
-	var/is_blushing = FALSE
-	var/face_offset_x = 0
-	var/face_offset_y = 0
 
 
 /obj/item/bodypart/head/Destroy()
@@ -176,8 +170,6 @@
 
 	return ..()
 
-#define OFFSET_X 1
-#define OFFSET_Y 2
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()
 
@@ -190,28 +182,11 @@
 		stored_lipstick_trait = null
 	update_hair_and_lips()
 
-	if(OFFSET_FACE in owner.dna?.species.offset_features)
-		var/offset = owner.dna.species.offset_features[OFFSET_FACE]
-		face_offset_x = offset[OFFSET_X]
-		face_offset_y = offset[OFFSET_Y]
-
-	is_blushing = HAS_TRAIT(owner, TRAIT_BLUSHING) // Caused by either the *blush emote or the "drunk" mood event
-
-#undef OFFSET_X
-#undef OFFSET_Y
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/item/bodypart/head/get_limb_icon(dropped, draw_external_organs)
 	cut_overlays()
 	. = ..()
-
-	// Blush emote overlay
-	if (is_blushing)
-		var/mutable_appearance/blush_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "blush", -BODY_ADJ_LAYER) // Should appear behind the eyes
-		blush_overlay.color = COLOR_BLUSH_PINK
-		blush_overlay.pixel_x += face_offset_x
-		blush_overlay.pixel_y += face_offset_y
-		. += blush_overlay
 
 	if(dropped) //certain overlays only appear when the limb is being detached from its owner.
 
@@ -237,7 +212,7 @@
 				else if(bodytype & BODYTYPE_LARVA_PLACEHOLDER)
 					debrain_overlay.icon = 'icons/mob/species/alien/bodyparts.dmi'
 					debrain_overlay.icon_state = "debrained_larva"
-				else if(!(NOBLOOD in species_flags_list))
+				else if(!(TRAIT_NOBLOOD in species_flags_list))
 					debrain_overlay.icon = 'icons/mob/species/human/human_face.dmi'
 					debrain_overlay.icon_state = "debrained"
 				. += debrain_overlay
@@ -321,6 +296,9 @@
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	husk_type = "monkey"
 	icon_state = "default_monkey_head"
 	limb_id = SPECIES_MONKEY
 	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
@@ -337,7 +315,7 @@
 	should_draw_greyscale = FALSE
 	px_x = 0
 	px_y = 0
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 500
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
 
@@ -350,6 +328,6 @@
 	should_draw_greyscale = FALSE
 	px_x = 0
 	px_y = 0
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 50
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC

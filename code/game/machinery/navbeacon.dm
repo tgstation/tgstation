@@ -10,7 +10,7 @@
 	desc = "A radio beacon used for bot navigation."
 	layer = LOW_OBJ_LAYER
 	max_integrity = 500
-	armor = list(MELEE = 70, BULLET = 70, LASER = 70, ENERGY = 70, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
+	armor_type = /datum/armor/machinery_navbeacon
 
 	var/open = FALSE // true if cover is open
 	var/locked = TRUE // true if controls are locked
@@ -20,6 +20,14 @@
 	var/codes_txt = "" // codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 
 	req_one_access = list(ACCESS_ENGINEERING, ACCESS_ROBOTICS)
+
+/datum/armor/machinery_navbeacon
+	melee = 70
+	bullet = 70
+	laser = 70
+	energy = 70
+	fire = 80
+	acid = 80
 
 /obj/machinery/navbeacon/Initialize(mapload)
 	. = ..()
@@ -96,18 +104,19 @@
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
 
-	else if (isidcard(I) || istype(I, /obj/item/modular_computer/tablet))
+	if (isidcard(I) || istype(I, /obj/item/modular_computer/pda))
 		if(open)
-			if (src.allowed(user))
-				src.locked = !src.locked
-				to_chat(user, span_notice("Controls are now [src.locked ? "locked" : "unlocked"]."))
+			if (allowed(user))
+				locked = !locked
+				to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
 			else
 				to_chat(user, span_danger("Access denied."))
 			updateDialog()
 		else
 			to_chat(user, span_warning("You must open the cover first!"))
-	else
-		return ..()
+		return
+
+	return ..()
 
 /obj/machinery/navbeacon/attack_ai(mob/user)
 	interact(user, 1)

@@ -1,5 +1,5 @@
-#define ENGINE_COOLDOWN 5 SECONDS
-#define DASH_COOLDOWN 2.5 SECONDS
+#define ENGINE_COOLDOWN (5 SECONDS)
+#define DASH_COOLDOWN (2.5 SECONDS)
 #define HOUSE_EDGE_ICONS_MAX 3
 #define HOUSE_EDGE_ICONS_MIN 0
 
@@ -24,7 +24,7 @@
 	if (!COOLDOWN_FINISHED(src, engine_sound_cooldown))
 		return
 	playsound(src, 'sound/items/car_engine_start.ogg', vol = 75, vary = FALSE, extrarange = 3)
-	Shake(7, 7, ENGINE_COOLDOWN)
+	Shake(duration = ENGINE_COOLDOWN)
 	to_chat(user, span_notice("Darn thing... it's too old to keep on without retrofitting it! Without modifications, it works like it's junk."))
 	COOLDOWN_START(src, engine_sound_cooldown, ENGINE_COOLDOWN)
 
@@ -69,7 +69,7 @@
 /obj/item/house_edge/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded = 12, force_wielded = 22, attacksound = active_hitsound)
-	RegisterSignal(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), PROC_REF(reset_charges))
+	RegisterSignals(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), PROC_REF(reset_charges))
 
 /obj/item/house_edge/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()

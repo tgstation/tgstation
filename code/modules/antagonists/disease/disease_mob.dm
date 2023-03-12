@@ -1,4 +1,4 @@
-#define FREEMOVE_TIME 2 MINUTES
+#define FREEMOVE_TIME (2 MINUTES)
 
 /*
 A mob of type /mob/camera/disease is an overmind coordinating at least one instance of /datum/disease/advance/sentient_disease
@@ -15,12 +15,14 @@ the new instance inside the host to be updated to the template's stats.
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_on_shuttle = FALSE
-	see_in_dark = NIGHTVISION_FOV_RANGE
 	invisibility = INVISIBILITY_OBSERVER
 	see_invisible = SEE_INVISIBLE_LIVING
 	layer = BELOW_MOB_LAYER
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	sight = SEE_SELF|SEE_THRU|SEE_BLACKNESS
+	// Pale green, bright enough to have good vision
+	lighting_cutoff_red = 5
+	lighting_cutoff_green = 35
+	lighting_cutoff_blue = 20
+	sight = SEE_SELF|SEE_THRU
 	initial_language_holder = /datum/language_holder/universal
 
 	var/freemove = TRUE
@@ -139,7 +141,7 @@ the new instance inside the host to be updated to the template's stats.
 		return ..()
 	return FALSE
 
-/mob/camera/disease/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+/mob/camera/disease/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	var/atom/movable/to_follow = speaker
 	if(radio_freq)
@@ -426,7 +428,7 @@ the new instance inside the host to be updated to the template's stats.
 
 /datum/action/innate/disease_adapt
 	name = "Adaptation Menu"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "disease_menu"
 
 /datum/action/innate/disease_adapt/Activate()

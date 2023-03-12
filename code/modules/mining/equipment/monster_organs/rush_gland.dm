@@ -21,7 +21,7 @@
 	if (owner.health <= HEALTH_DANGER_ZONE)
 		trigger_organ_action()
 
-/obj/item/organ/internal/monster_core/rush_gland/trigger_organ_action()
+/obj/item/organ/internal/monster_core/rush_gland/on_triggered_internal()
 	owner.apply_status_effect(/datum/status_effect/lobster_rush/extended)
 
 /**
@@ -93,6 +93,6 @@
 	desc = "Pump your rush gland to give yourself a boost of speed. \
 		Impacts with objects can be dangerous under atmospheric pressure."
 	button_icon_state = "lobster_gland_stable"
-	cooldown_time = 3 MINUTES
+	cooldown_time = 90 SECONDS
 
 #undef HEALTH_DANGER_ZONE

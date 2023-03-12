@@ -106,7 +106,7 @@
 	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/holster)
 	cooldown_time = 0.5 SECONDS
-	allowed_inactive = TRUE
+	allow_flags = MODULE_ALLOW_INACTIVE
 	/// Gun we have holstered.
 	var/obj/item/gun/holstered
 

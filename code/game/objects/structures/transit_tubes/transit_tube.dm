@@ -18,7 +18,7 @@
 	if(newdirection)
 		setDir(newdirection)
 	init_tube_dirs()
-	generate_tube_overlays()
+	update_appearance()
 	AddElement(/datum/element/climbable)
 
 /obj/structure/transit_tube/Destroy()
@@ -123,24 +123,24 @@
 		if(WEST)
 			tube_dirs = list(EAST, WEST)
 
-
-/obj/structure/transit_tube/proc/generate_tube_overlays()
+/obj/structure/transit_tube/update_overlays()
+	. = ..()
 	for(var/direction in tube_dirs)
-		if(ISDIAGONALDIR(direction))
-			if(direction & NORTH)
-				create_tube_overlay(direction ^ 3, NORTH)
+		if(!ISDIAGONALDIR(direction))
+			. += create_tube_overlay(direction)
+			continue
+		if(!(direction & NORTH))
+			continue
 
-				if(direction & EAST)
-					create_tube_overlay(direction ^ 12, EAST)
-
-				else
-					create_tube_overlay(direction ^ 12, WEST)
+		. += create_tube_overlay(direction ^ 3, NORTH)
+		if(direction & EAST)
+			. += create_tube_overlay(direction ^ 12, EAST)
 		else
-			create_tube_overlay(direction)
-
+			. += create_tube_overlay(direction ^ 12, WEST)
 
 /obj/structure/transit_tube/proc/create_tube_overlay(direction, shift_dir)
-	var/image/tube_overlay = new(dir = direction)
+	// We use image() because a mutable appearance will have its dir mirror the parent which sort of fucks up what we're doing here
+	var/image/tube_overlay = image(icon, dir = direction)
 	if(shift_dir)
 		tube_overlay.icon_state = "decorative_diag"
 		switch(shift_dir)
@@ -154,10 +154,9 @@
 				tube_overlay.pixel_x = -32
 	else
 		tube_overlay.icon_state = "decorative"
-	add_overlay(tube_overlay)
 
-
-
+	tube_overlay.overlays += emissive_blocker(icon, tube_overlay.icon_state, src)
+	return tube_overlay
 
 //Some of these are mostly for mapping use
 /obj/structure/transit_tube/horizontal

@@ -61,7 +61,7 @@
 		one dog from the millions of Ian's noble bloodline. Comes with a cute collar!"
 	cost = CARGO_CRATE_VALUE * 10
 	access_view = ACCESS_HOP
-	contains = list(/mob/living/simple_animal/pet/dog/corgi,
+	contains = list(/mob/living/basic/pet/dog/corgi,
 					/obj/item/clothing/neck/petcollar,
 				)
 	crate_name = "corgi crate"
@@ -69,10 +69,10 @@
 /datum/supply_pack/critter/corgi/generate()
 	. = ..()
 	if(prob(50))
-		var/mob/living/simple_animal/pet/dog/corgi/D = locate() in .
+		var/mob/living/basic/pet/dog/corgi/D = locate() in .
 		if(D.gender == FEMALE)
 			qdel(D)
-			new /mob/living/simple_animal/pet/dog/corgi/lisa(.)
+			new /mob/living/basic/pet/dog/corgi/lisa(.)
 
 /datum/supply_pack/critter/cow
 	name = "Cow Crate"
@@ -123,7 +123,7 @@
 	desc = "Corgi fit for a king, this corgi comes in a unique color to signify their superiority. \
 		Comes with a cute collar!"
 	cost = CARGO_CRATE_VALUE * 11
-	contains = list(/mob/living/simple_animal/pet/dog/corgi/exoticcorgi,
+	contains = list(/mob/living/basic/pet/dog/corgi/exoticcorgi,
 					/obj/item/clothing/neck/petcollar,
 				)
 	crate_name = "exotic corgi crate"
@@ -146,6 +146,13 @@
 	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
 	crate_name = "goat crate"
 
+/datum/supply_pack/critter/rabbit
+	name = "Rabbit Crate"
+	desc = "What noise do rabbits even make? Contains one rabbit."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/mob/living/basic/rabbit)
+	crate_name = "rabbit crate"
+
 /datum/supply_pack/critter/mothroach
 	name = "Mothroach Crate"
 	desc = "Put the mothroach on your head and find out what true cuteness looks like. \
@@ -166,7 +173,7 @@
 	name = "Pug Crate"
 	desc = "Like a normal dog, but... squished. Contains one pug. Comes with a nice collar!"
 	cost = CARGO_CRATE_VALUE * 10
-	contains = list(/mob/living/simple_animal/pet/dog/pug,
+	contains = list(/mob/living/basic/pet/dog/pug,
 					/obj/item/clothing/neck/petcollar,
 				)
 	crate_name = "pug crate"
@@ -176,7 +183,7 @@
 	desc = "Like a normal dog, but with a head the shape of an egg. Contains one bull terrier. \
 		Comes with a nice collar!"
 	cost = CARGO_CRATE_VALUE * 10
-	contains = list(/mob/living/simple_animal/pet/dog/bullterrier,
+	contains = list(/mob/living/basic/pet/dog/bullterrier,
 					/obj/item/clothing/neck/petcollar,
 				)
 	crate_name = "bull terrier crate"
@@ -184,11 +191,22 @@
 /datum/supply_pack/critter/snake
 	name = "Snake Crate"
 	desc = "Tired of these MOTHER FUCKING snakes on this MOTHER FUCKING space station? \
-		Then this isn't the crate for you. Contains three poisonous snakes."
+		Then this isn't the crate for you. Contains three venomous snakes."
 	cost = CARGO_CRATE_VALUE * 6
 	access_view = ACCESS_SECURITY
 	contains = list(/mob/living/simple_animal/hostile/retaliate/snake = 3)
 	crate_name = "snake crate"
+
+/datum/supply_pack/critter/amphibians
+	name = "Amphibian Friends Crate"
+	desc = "Two disgustingly cute slimey friends. Cytologists love them! \
+		Contains one frog and one axolotl. Warning: Frog may have hallucinogenic properties."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(
+		/mob/living/basic/axolotl,
+		/mob/living/basic/frog,
+	)
+	crate_name = "amphibian crate"
 
 /datum/supply_pack/critter/lizard
 	name = "Lizard Crate"
@@ -197,3 +215,16 @@
 	access_view = ACCESS_JANITOR
 	contains = list(/mob/living/simple_animal/hostile/lizard)
 	crate_name = "lizard crate"
+
+/datum/supply_pack/critter/garden_gnome
+	name = "Garden Gnome Crate"
+	desc = "Collect them all for your garden. Comes with three!"
+	hidden = TRUE
+	cost = CARGO_CRATE_VALUE * 20
+	contains = list(/mob/living/basic/garden_gnome)
+	crate_name = "garden gnome crate"
+
+/datum/supply_pack/critter/garden_gnome/generate()
+	. = ..()
+	for(var/i in 1 to 2)
+		new /mob/living/basic/garden_gnome(.)

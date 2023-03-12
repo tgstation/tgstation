@@ -1,5 +1,6 @@
 /obj/structure/frame/computer
 	name = "computer frame"
+	desc = "A frame for constructing your own computer. Or console. Whichever name you prefer."
 	icon_state = "0"
 	state = 0
 
@@ -157,7 +158,7 @@
 						new_computer.component_parts += movable_part
 
 					new_computer.RefreshParts()
-					new_computer.on_construction()
+					new_computer.on_construction(user)
 
 				qdel(src)
 				return

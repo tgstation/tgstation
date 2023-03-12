@@ -38,6 +38,8 @@
 #define IGNORE_DIGITIGRADE (1<<18)
 /// Has contextual screentips when HOVERING OVER OTHER objects
 #define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
+/// No blood overlay is allowed to appear on this item, and it cannot gain blood DNA forensics 
+#define NO_BLOOD_ON_ITEM (1 << 20)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

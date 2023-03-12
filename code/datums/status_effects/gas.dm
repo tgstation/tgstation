@@ -33,7 +33,7 @@
 
 /datum/status_effect/freon/proc/do_resist()
 	to_chat(owner, span_notice("You start breaking out of the ice cube..."))
-	if(do_mob(owner, owner, 40))
+	if(do_after(owner, owner, 4 SECONDS))
 		if(!QDELETED(src))
 			to_chat(owner, span_notice("You break out of the ice cube!"))
 			owner.remove_status_effect(/datum/status_effect/freon)
@@ -51,6 +51,10 @@
 /datum/status_effect/freon/watcher
 	duration = 8
 	can_melt = FALSE
+
+/datum/status_effect/freon/lasting
+	id = "lasting_frozen"
+	duration = -1
 
 /datum/status_effect/hypernob_protection
 	id = "hypernob_protection"
@@ -80,4 +84,3 @@
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/hypernoblium)
 	REMOVE_TRAIT(human_owner, TRAIT_NOFIRE, type)
-

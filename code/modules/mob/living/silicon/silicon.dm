@@ -6,13 +6,13 @@
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
 	initial_language_holder = /datum/language_holder/synthetic
-	see_in_dark = NIGHTVISION_FOV_RANGE
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
 	death_sound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
+	fire_stack_decay_rate = -0.55
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
@@ -24,8 +24,8 @@
 
 	var/obj/item/radio/borg/radio = null  ///If this is a path, this gets created as an object in Initialize.
 
-	var/list/alarm_types_show = list(ALARM_ATMOS = 0, ALARM_FIRE = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
-	var/list/alarm_types_clear = list(ALARM_ATMOS = 0, ALARM_FIRE = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
+	var/list/alarm_types_show = list(ALARM_ATMOS = 0, ALARM_ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
+	var/list/alarm_types_clear = list(ALARM_ATMOS = 0, ALARM_ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
 
 	//These lists will contain each law that should be announced / set to yes in the state laws menu.
 	///List keeping track of which laws to announce
@@ -49,12 +49,12 @@
 	var/hack_software = FALSE //Will be able to use hacking actions
 	interaction_range = 7 //wireless control range
 
-	var/obj/item/modular_computer/tablet/integrated/modularInterface
+	var/obj/item/modular_computer/pda/silicon/modularInterface
 
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
 	GLOB.silicon_mobs += src
-	faction += "silicon"
+	faction += FACTION_SILICON
 	if(ispath(radio))
 		radio = new radio(src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -76,12 +76,13 @@
 	QDEL_NULL(builtInCamera)
 	laws?.owner = null //Laws will refuse to die otherwise.
 	QDEL_NULL(laws)
+	QDEL_NULL(modularInterface)
 	GLOB.silicon_mobs -= src
 	return ..()
 
 /mob/living/silicon/proc/create_modularInterface()
 	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/tablet/integrated(src)
+		modularInterface = new /obj/item/modular_computer/pda/silicon(src)
 	if(isAI(src))
 		modularInterface.saved_job = "AI"
 	if(ispAI(src))
@@ -93,13 +94,13 @@
 
 /mob/living/silicon/robot/create_modularInterface()
 	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/tablet/integrated/cyborg(src)
+		modularInterface = new /obj/item/modular_computer/pda/silicon/cyborg(src)
 		modularInterface.saved_job = "Cyborg"
 	return ..()
 
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/tablet/integrated/syndicate(src)
+		modularInterface = new /obj/item/modular_computer/pda/silicon/cyborg/syndicate(src)
 		modularInterface.saved_job = "Cyborg"
 	return ..()
 

@@ -53,6 +53,7 @@
 		/obj/item/clothing/gloves,
 		/obj/item/construction/rcd,
 		/obj/item/construction/rld,
+		/obj/item/construction/rtd,
 		/obj/item/crowbar,
 		/obj/item/extinguisher/mini,
 		/obj/item/flashlight,
@@ -417,13 +418,22 @@
 		))
 
 
-/obj/item/storage/belt/mining/vendor
-	contents = newlist(/obj/item/survivalcapsule)
+/obj/item/storage/belt/mining/vendor/PopulateContents()
+	new /obj/item/survivalcapsule(src)
 
 /obj/item/storage/belt/mining/alt
 	icon_state = "explorer2"
 	inhand_icon_state = "explorer2"
 	worn_icon_state = "explorer2"
+
+/obj/item/storage/belt/mining/healing/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/hypospray/medipen/survival/luxury(src)
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/hypospray/medipen/survival(src)
+	for(var/i in 1 to 2)
+		var/obj/item/organ/internal/monster_core/core = new /obj/item/organ/internal/monster_core/regenerative_core/legion(src)
+		core.preserve()
 
 /obj/item/storage/belt/mining/primitive
 	name = "hunter's belt"
@@ -472,13 +482,6 @@
 	atom_storage.set_holdable(list(
 		/obj/item/clothing/mask/luchador
 		))
-
-/obj/item/storage/belt/cummerbund
-	name = "cummerbund"
-	desc = "A pleated sash that pairs well with a suit jacket."
-	icon_state = "cummerbund"
-	inhand_icon_state = null
-	worn_icon_state = "cummerbund"
 
 /obj/item/storage/belt/military
 	name = "chest rig"
@@ -761,6 +764,13 @@
 	icon_state = "fannypack_yellow"
 	worn_icon_state = "fannypack_yellow"
 
+/obj/item/storage/belt/fannypack/cummerbund
+	name = "cummerbund"
+	desc = "A pleated sash that pairs well with a suit jacket."
+	icon_state = "cummerbund"
+	inhand_icon_state = null
+	worn_icon_state = "cummerbund"
+
 /obj/item/storage/belt/sabre
 	name = "sabre sheath"
 	desc = "An ornate sheath designed to hold an officer's blade."
@@ -788,7 +798,7 @@
 		. += span_notice("Alt-click it to quickly draw the blade.")
 
 /obj/item/storage/belt/sabre/AltClick(mob/user)
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	if(length(contents))
 		var/obj/item/I = contents[1]

@@ -9,7 +9,7 @@
 		victim_hiddenprints = list()
 
 	var/list/hiddenprints = flatten_list(victim_hiddenprints)
-	remove_nulls_from_list(hiddenprints)
+	list_clear_nulls(hiddenprints)
 
 	if(!length(hiddenprints))
 		hiddenprints = list("Nobody has touched this yet!")

@@ -2,7 +2,7 @@
 /// a balloon alert when it tries to.
 /datum/element/prevent_attacking_of_types
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 	/// The typecache of things this hostile can't attack
 	var/list/typecache
@@ -13,7 +13,7 @@
 /datum/element/prevent_attacking_of_types/Attach(datum/target, list/typecache, alert_message)
 	. = ..()
 
-	if (!ishostile(target))
+	if (!isanimal_or_basicmob(target))
 		return ELEMENT_INCOMPATIBLE
 
 	src.alert_message = alert_message

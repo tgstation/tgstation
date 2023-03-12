@@ -23,7 +23,7 @@
 	/// List of valid exit points
 	var/list/exit_point_list
 
-/datum/action/cooldown/spell/jaunt/ethereal_jaunt/enter_jaunt(mob/living/jaunter)
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/enter_jaunt(mob/living/jaunter, turf/loc_override)
 	. = ..()
 	if(!.)
 		return
@@ -207,7 +207,9 @@
 	name = "Phase Shift"
 	desc = "This spell allows you to pass through walls."
 	background_icon_state = "bg_demon"
-	icon_icon = 'icons/mob/actions/actions_cult.dmi'
+	overlay_icon_state = "bg_demon_border"
+
+	button_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "phaseshift"
 
 	cooldown_time = 25 SECONDS

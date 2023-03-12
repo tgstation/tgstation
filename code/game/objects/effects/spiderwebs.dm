@@ -43,8 +43,9 @@
 		return
 	if(!HAS_TRAIT(user,TRAIT_WEB_WEAVER))
 		return
-	user.visible_message(span_notice("[user] begins weaving [src] into cloth."), span_notice("You begin weaving [src] into cloth."))
+	user.balloon_alert_to_viewers("weaving...")
 	if(!do_after(user, 2 SECONDS))
+		user.balloon_alert(user, "interrupted!")
 		return
 	qdel(src)
 	var/obj/item/stack/sheet/cloth/woven_cloth = new /obj/item/stack/sheet/cloth
@@ -64,10 +65,10 @@
 	if(isspider(mover))
 		return TRUE
 	else if(isliving(mover))
-		if(istype(mover.pulledby, /mob/living/simple_animal/hostile/giant_spider))
+		if(istype(mover.pulledby, /mob/living/basic/giant_spider))
 			return TRUE
 		if(prob(50))
-			to_chat(mover, span_danger("You get stuck in \the [src] for a moment."))
+			balloon_alert(mover, "stuck in web!")
 			return FALSE
 	else if(isprojectile(mover))
 		return prob(30)
@@ -95,7 +96,7 @@
 		if(mover.pulledby == allowed_mob)
 			return TRUE
 		if(prob(50))
-			to_chat(mover, span_danger("You get stuck in \the [src] for a moment."))
+			balloon_alert(mover, "stuck in web!")
 			return FALSE
 	else if(isprojectile(mover))
 		return prob(30)
@@ -112,7 +113,7 @@
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 	var/directive = "" //Message from the mother
-	var/list/faction = list("spiders")
+	var/list/faction = list(FACTION_SPIDER)
 
 /obj/structure/spider/spiderling/Destroy()
 	new/obj/item/food/spiderling(get_turf(src))
@@ -126,19 +127,19 @@
 	AddComponent(/datum/component/swarming)
 
 /obj/structure/spider/spiderling/hunter
-	grow_as = /mob/living/simple_animal/hostile/giant_spider/hunter
+	grow_as = /mob/living/basic/giant_spider/hunter
 
 /obj/structure/spider/spiderling/nurse
-	grow_as = /mob/living/simple_animal/hostile/giant_spider/nurse
+	grow_as = /mob/living/basic/giant_spider/nurse
 
 /obj/structure/spider/spiderling/midwife
-	grow_as = /mob/living/simple_animal/hostile/giant_spider/midwife
+	grow_as = /mob/living/basic/giant_spider/midwife
 
 /obj/structure/spider/spiderling/viper
-	grow_as = /mob/living/simple_animal/hostile/giant_spider/viper
+	grow_as = /mob/living/basic/giant_spider/viper
 
 /obj/structure/spider/spiderling/tarantula
-	grow_as = /mob/living/simple_animal/hostile/giant_spider/tarantula
+	grow_as = /mob/living/basic/giant_spider/tarantula
 
 /obj/structure/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
@@ -218,10 +219,10 @@
 		if(amount_grown >= 100)
 			if(!grow_as)
 				if(prob(3))
-					grow_as = pick(/mob/living/simple_animal/hostile/giant_spider/tarantula, /mob/living/simple_animal/hostile/giant_spider/viper, /mob/living/simple_animal/hostile/giant_spider/midwife)
+					grow_as = pick(/mob/living/basic/giant_spider/tarantula, /mob/living/basic/giant_spider/viper, /mob/living/basic/giant_spider/midwife)
 				else
-					grow_as = pick(/mob/living/simple_animal/hostile/giant_spider, /mob/living/simple_animal/hostile/giant_spider/hunter, /mob/living/simple_animal/hostile/giant_spider/nurse)
-			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(src.loc)
+					grow_as = pick(/mob/living/basic/giant_spider, /mob/living/basic/giant_spider/hunter, /mob/living/basic/giant_spider/nurse)
+			var/mob/living/basic/giant_spider/S = new grow_as(src.loc)
 			S.faction = faction.Copy()
 			S.directive = directive
 			qdel(src)

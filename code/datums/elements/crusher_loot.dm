@@ -5,7 +5,7 @@
  */
 /datum/element/crusher_loot
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// Path of the trophy dropped
 	var/trophy_type
 	/// chance to drop the trophy, lowered by the mob only taking partial crusher damage instead of full

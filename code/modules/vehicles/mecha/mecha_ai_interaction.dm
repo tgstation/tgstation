@@ -71,7 +71,7 @@
 				to_chat(AI, span_warning("Occupants detected! Forced ejection initiated!"))
 				to_chat(occupants, span_danger("You have been forcibly ejected!"))
 				for(var/ejectee in occupants)
-					mob_exit(ejectee, TRUE, TRUE) //IT IS MINE, NOW. SUCK IT, RD!
+					mob_exit(ejectee, silent = TRUE, randomstep = TRUE, forced = TRUE) //IT IS MINE, NOW. SUCK IT, RD!
 				AI.can_shunt = FALSE //ONE AI ENTERS. NO AI LEAVES.
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to a mech.
@@ -99,29 +99,9 @@
 	mecha_flags |= SILICON_PILOT
 	moved_inside(AI)
 	AI.eyeobj?.forceMove(src)
-	AI.eyeobj?.RegisterSignal(src, COMSIG_MOVABLE_MOVED, /mob/camera/ai_eye/proc/update_visibility)
+	AI.eyeobj?.RegisterSignal(src, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/mob/camera/ai_eye, update_visibility))
 	AI.controlled_equipment = src
 	AI.remote_control = src
 	to_chat(AI, AI.can_dominate_mechs ? span_greenannounce("Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!") :\
 		span_notice("You have been uploaded to a mech's onboard computer."))
 	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to toggle equipment safety. Clicks with safety enabled will pass AI commands.</span>")
-
-
-///Handles an actual AI (simple_animal mecha pilot) entering the mech
-/obj/vehicle/sealed/mecha/proc/aimob_enter_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
-	if(!pilot_mob?.Adjacent(src))
-		return
-	if(LAZYLEN(occupants))
-		return
-	LAZYSET(occupants, pilot_mob, NONE)
-	pilot_mob.mecha = src
-	pilot_mob.forceMove(src)
-	update_appearance()
-
-///Handles an actual AI (simple_animal mecha pilot) exiting the mech
-/obj/vehicle/sealed/mecha/proc/aimob_exit_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
-	LAZYREMOVE(occupants, pilot_mob)
-	if(pilot_mob.mecha == src)
-		pilot_mob.mecha = null
-	pilot_mob.forceMove(get_turf(src))
-	update_appearance()

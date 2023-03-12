@@ -93,9 +93,9 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 /datum/gas_recipe/crystallizer/shard
 	id = "crystal_shard"
 	name = "Supermatter crystal shard"
-	min_temp = TCMB
-	max_temp = 5
-	energy_release = 150000000
+	min_temp = 10
+	max_temp = 20
+	energy_release = 3500000
 	dangerous = TRUE
 	requirements = list(/datum/gas/hypernoblium = 250, /datum/gas/antinoblium = 250, /datum/gas/bz = 200, /datum/gas/plasma = 5000, /datum/gas/oxygen = 4500)
 	products = list(/obj/machinery/power/supermatter_crystal/shard = 1)

@@ -295,10 +295,9 @@
 		if(target && path.len == 0 && (get_dist(src,target) > 1))
 			path = get_path_to(src, target, max_distance=30, mintargetdist=1, id=access_card)
 			mode = BOT_MOVING
-			if(!path.len)
+			if(length(path) == 0)
 				add_to_ignore(target)
 				target = null
-				path = list()
 
 		if(path.len > 0 && target)
 			if(!bot_move(path[path.len]))
@@ -426,7 +425,7 @@
 /mob/living/simple_animal/bot/cleanbot/ui_data(mob/user)
 	var/list/data = ..()
 
-	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user)|| isAdminGhostAI(user))
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		data["custom_controls"]["clean_blood"] = janitor_mode_flags & CLEANBOT_CLEAN_BLOOD
 		data["custom_controls"]["clean_trash"] = janitor_mode_flags & CLEANBOT_CLEAN_TRASH
 		data["custom_controls"]["clean_graffiti"] = janitor_mode_flags & CLEANBOT_CLEAN_DRAWINGS

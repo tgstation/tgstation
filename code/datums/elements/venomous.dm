@@ -5,7 +5,7 @@
  */
 /datum/element/venomous
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	///Path of the reagent added
 	var/poison_type
 	///How much of the reagent added. if it's a list, it'll pick a range with the range being list(lower_value, upper_value)
@@ -41,6 +41,7 @@
 	if(!proximity_flag)
 		return
 	add_reagent(target)
+	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
 /datum/element/venomous/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
 	SIGNAL_HANDLER

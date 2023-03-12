@@ -12,6 +12,7 @@
  *
  * Mark of Void
  * Ritual of Knowledge
+ * Cone of Cold
  * Void Phase
  * > Sidepaths:
  *   Carving Knife
@@ -27,20 +28,15 @@
  */
 /datum/heretic_knowledge/limited_amount/starting/base_void
 	name = "Glimmer of Winter"
-	desc = "Opens up the path of void to you. \
+	desc = "Opens up the Path of Void to you. \
 		Allows you to transmute a knife in sub-zero temperatures into a Void Blade. \
 		You can only create two at a time."
 	gain_text = "I feel a shimmer in the air, the air around me gets colder. \
-		I start to realize the emptiness of existance. Something's watching me."
+		I start to realize the emptiness of existence. Something's watching me."
 	next_knowledge = list(/datum/heretic_knowledge/void_grasp)
 	required_atoms = list(/obj/item/knife = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
 	route = PATH_VOID
-
-/datum/heretic_knowledge/limited_amount/starting/base_void/on_research(mob/user)
-	. = ..()
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic.heretic_path = route
 
 /datum/heretic_knowledge/limited_amount/starting/base_void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(!isopenturf(loc))
@@ -63,10 +59,10 @@
 	cost = 1
 	route = PATH_VOID
 
-/datum/heretic_knowledge/void_grasp/on_gain(mob/user)
+/datum/heretic_knowledge/void_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
-/datum/heretic_knowledge/void_grasp/on_lose(mob/user)
+/datum/heretic_knowledge/void_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/void_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -81,8 +77,8 @@
 
 /datum/heretic_knowledge/cold_snap
 	name = "Aristocrat's Way"
-	desc = "Grants you immunity to cold temperatures, and removing your need breathe. \
-		You can still take damage due to lack of pressure."
+	desc = "Grants you immunity to cold temperatures, and removes your need breathe. \
+		You can still take damage due to a lack of pressure."
 	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. \
 		Translucent and white, a depiction of a nobleman stood before me."
 	next_knowledge = list(
@@ -94,11 +90,11 @@
 	cost = 1
 	route = PATH_VOID
 
-/datum/heretic_knowledge/cold_snap/on_gain(mob/user)
+/datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	ADD_TRAIT(user, TRAIT_RESISTCOLD, type)
 	ADD_TRAIT(user, TRAIT_NOBREATH, type)
 
-/datum/heretic_knowledge/cold_snap/on_lose(mob/user)
+/datum/heretic_knowledge/cold_snap/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	REMOVE_TRAIT(user, TRAIT_RESISTCOLD, type)
 	REMOVE_TRAIT(user, TRAIT_NOBREATH, type)
 
@@ -113,15 +109,26 @@
 	mark_type = /datum/status_effect/eldritch/void
 
 /datum/heretic_knowledge/knowledge_ritual/void
+	next_knowledge = list(/datum/heretic_knowledge/spell/void_cone)
+	route = PATH_VOID
+
+/datum/heretic_knowledge/spell/void_cone
+	name = "Void Blast"
+	desc = "Grants you Void Blast, a spell that shoots out a freezing blast in a cone in front of you, \
+		freezing the ground and any victims within."
+	gain_text = "Every door I open racks my body. I am afraid of what is behind them. Someone is expecting me, \
+		and my legs start to drag. Is that... snow?"
 	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase)
+	spell_to_add = /datum/action/cooldown/spell/cone/staggered/cone_of_cold/void
+	cost = 1
 	route = PATH_VOID
 
 /datum/heretic_knowledge/spell/void_phase
 	name = "Void Phase"
 	desc = "Grants you Void Phase, a long range targeted teleport spell. \
 		Additionally causes damage to heathens around your original and target destination."
-	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like\
-		nothing leaving a harsh, cold breeze in their wake. They disappear, and I am left in the snow."
+	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like \
+		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the blizzard."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/void,
 		/datum/heretic_knowledge/reroll_targets,
@@ -155,7 +162,7 @@
 	name = "Void Pull"
 	desc = "Grants you Void Pull, a spell that pulls all nearby heathens towards you, stunning them briefly."
 	gain_text = "All is fleeting, but what else stays? I'm close to ending what was started. \
-		The Aristocrat reveals themself to me again. They tell me I am late. Their pull is immense, I cannot turn back."
+		The Aristocrat reveals themselves to me again. They tell me I am late. Their pull is immense, I cannot turn back."
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/void_final,
 		/datum/heretic_knowledge/spell/cleave,
@@ -168,7 +175,7 @@
 /datum/heretic_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"
 	desc = "The ascension ritual of the Path of Void. \
-		Bring 3 corpses to a transumation rune in sub-zero temperatures to complete the ritual. \
+		Bring 3 corpses to a transmutation rune in sub-zero temperatures to complete the ritual. \
 		When completed, causes a violent storm of void snow \
 		to assault the station, freezing and damaging heathens. Those nearby will be silenced and frozen even quicker. \
 		Additionally, you will become immune to the effects of space."
@@ -204,9 +211,9 @@
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	RegisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
-/datum/heretic_knowledge/ultimate/void_final/on_lose(mob/user)
+/datum/heretic_knowledge/ultimate/void_final/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	on_death() // Losing is pretty much dying. I think
-	RegisterSignal(user, list(COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH))
+	RegisterSignals(user, list(COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH))
 
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].
@@ -243,7 +250,7 @@
  *
  * Stop the storm when the heretic passes away.
  */
-/datum/heretic_knowledge/ultimate/void_final/proc/on_death()
+/datum/heretic_knowledge/ultimate/void_final/proc/on_death(datum/source)
 	SIGNAL_HANDLER
 
 	if(sound_loop)

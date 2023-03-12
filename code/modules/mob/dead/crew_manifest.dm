@@ -33,6 +33,6 @@
 		positions[department.department_name] = list("exceptions" = exceptions, "open" = open)
 
 	return list(
-		"manifest" = GLOB.data_core.get_manifest(),
+		"manifest" = GLOB.manifest.get_manifest(),
 		"positions" = positions
 	)

@@ -65,6 +65,8 @@
 		return FALSE
 	if((used_capacity + file.size) > max_capacity)
 		return FALSE
+	if(!file.can_store_file(src))
+		return FALSE
 
 	return TRUE
 

@@ -316,7 +316,7 @@ world
 	if(text2ascii(rgb) == 35) ++start // skip opening #
 	var/ch,which=0,r=0,g=0,b=0,alpha=0,usealpha
 	var/digits=0
-	for(i=start, i<=length(rgb), ++i)
+	for(i=start, i <= length(rgb), ++i)
 		ch = text2ascii(rgb, i)
 		if(ch < 48 || (ch > 57 && ch < 65) || (ch > 70 && ch < 97) || ch > 102)
 			break
@@ -381,7 +381,7 @@ world
 		++start // skip opening #
 	var/ch,which=0,hue=0,sat=0,val=0,alpha=0,usealpha
 	var/digits=0
-	for(i=start, i<=length(hsv), ++i)
+	for(i=start, i <= length(hsv), ++i)
 		ch = text2ascii(hsv, i)
 		if(ch < 48 || (ch > 57 && ch < 65) || (ch > 70 && ch < 97) || ch > 102)
 			break
@@ -701,7 +701,7 @@ world
 	var/lo3 = text2ascii(hex, 7) // B
 	var/hi4 = text2ascii(hex, 8) // A
 	var/lo4 = text2ascii(hex, 9) // A
-	return list(((hi1>= 65 ? hi1-55 : hi1-48)<<4) | (lo1 >= 65 ? lo1-55 : lo1-48),
+	return list(((hi1 >= 65 ? hi1-55 : hi1-48)<<4) | (lo1 >= 65 ? lo1-55 : lo1-48),
 		((hi2 >= 65 ? hi2-55 : hi2-48)<<4) | (lo2 >= 65 ? lo2-55 : lo2-48),
 		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48),
 		((hi4 >= 65 ? hi4-55 : hi4-48)<<4) | (lo4 >= 65 ? lo4-55 : lo4-48))
@@ -1358,7 +1358,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
  * time - Animation duration
  * transform_overlay - Appearance/atom/image of effect that moves along the animation - should be horizonatally centered
  */
-/atom/movable/proc/transformation_animation(result_appearance,time = 3 SECONDS,transform_overlay)
+/atom/movable/proc/transformation_animation(result_appearance, time = 3 SECONDS, transform_appearance)
 	var/list/transformation_objects = GLOB.transformation_animation_objects[src] || list()
 	//Disappearing part
 	var/top_part_filter = filter(type="alpha",icon=icon('icons/effects/alphacolors.dmi',"white"),y=0)
@@ -1373,10 +1373,10 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	appearing_part.filters = filter(type="alpha",icon=icon('icons/effects/alphacolors.dmi',"white"),y=0,flags=MASK_INVERSE)
 	animate(appearing_part.filters[1],y=-32,time=time)
 	transformation_objects += appearing_part
-	//Transform effect thing - todo make appearance passed in
-	if(transform_overlay)
+	//Transform effect thing
+	if(transform_appearance)
 		var/obj/transform_effect = new
-		transform_effect.appearance = transform_overlay
+		transform_effect.appearance = transform_appearance
 		transform_effect.vis_flags = VIS_INHERIT_ID
 		transform_effect.pixel_y = 16
 		transform_effect.alpha = 255
@@ -1439,23 +1439,22 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	return image_to_center
 
 ///Flickers an overlay on an atom
-/proc/flick_overlay_static(overlay_image, atom/source, duration)
+/atom/proc/flick_overlay_static(overlay_image, duration)
 	set waitfor = FALSE
-	if(!source || !overlay_image)
+	if(!overlay_image)
 		return
-	source.add_overlay(overlay_image)
+	add_overlay(overlay_image)
 	sleep(duration)
-	source.cut_overlay(overlay_image)
+	cut_overlay(overlay_image)
 
-///Perform a shake on an atom, resets its position afterwards
-/atom/proc/Shake(pixelshiftx = 15, pixelshifty = 15, duration = 250)
+/// Perform a shake on an atom, resets its position afterwards
+/atom/proc/Shake(pixelshiftx = 2, pixelshifty = 2, duration = 2.5 SECONDS, shake_interval = 0.02 SECONDS)
 	var/initialpixelx = pixel_x
 	var/initialpixely = pixel_y
-	var/shiftx = rand(-pixelshiftx,pixelshiftx)
-	var/shifty = rand(-pixelshifty,pixelshifty)
-	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
-	pixel_x = initialpixelx
-	pixel_y = initialpixely
+	animate(src, pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixelx + rand(-pixelshifty,pixelshifty), time = shake_interval, flags = ANIMATION_PARALLEL)
+	for (var/i in 3 to ((duration / shake_interval))) // Start at 3 because we already applied one, and need another to reset
+		animate(pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixely + rand(-pixelshifty,pixelshifty), time = shake_interval)
+	animate(pixel_x = initialpixelx, pixel_y = initialpixely, time = shake_interval)
 
 ///Checks if the given iconstate exists in the given file, caching the result. Setting scream to TRUE will print a stack trace ONCE.
 /proc/icon_exists(file, state, scream)

@@ -35,3 +35,5 @@ eject.ogg is by magedu, adapted from https://freesound.org/people/magedu/sounds/
 alien_explode.ogg is adapted from zimbot's Frozen Lettuce upload https://freesound.org/people/zimbot/sounds/89378/ and little_dog4000's balloon pop https://freesound.org/people/little_dog4000/sounds/478764/
 
 alien_organ_cut.ogg is adapted from some CC 0 flesh sound, lesaucisson's swoosh https://freesound.org/people/lesaucisson/sounds/585256/, and a snippet of EminYILDIRIM's tree cutting clip https://freesound.org/people/EminYILDIRIM/sounds/608343/
+
+standard_stamp.ogg is adapted from tom_woysky's "Stamp.wav" https://freesound.org/people/tom_woysky/sounds/348316/

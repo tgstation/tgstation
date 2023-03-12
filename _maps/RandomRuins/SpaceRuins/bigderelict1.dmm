@@ -137,7 +137,7 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "aC" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "aD" = (
 /obj/machinery/door/poddoor{
 	id = "bigderelictship"
@@ -617,7 +617,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "cC" = (
 /obj/structure/alien/weeds/creature,
-/mob/living/simple_animal/hostile/netherworld{
+/mob/living/basic/creature{
 	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
 	health = 25;
 	maxHealth = 25;
@@ -633,7 +633,7 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/mob/living/simple_animal/hostile/netherworld{
+/mob/living/basic/creature{
 	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
 	health = 25;
 	maxHealth = 25;
@@ -654,7 +654,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cI" = (
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -822,7 +822,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "dl" = (
 /obj/structure/alien/weeds/creature,
-/mob/living/simple_animal/hostile/netherworld{
+/mob/living/basic/creature{
 	name = "Miss Tiggles"
 	},
 /turf/open/floor/iron,
@@ -1128,7 +1128,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eC" = (
 /obj/structure/closet/crate,
-/obj/item/modular_computer/tablet/pda/clear,
+/obj/item/modular_computer/pda/clear,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -1265,7 +1265,7 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "tu" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "tE" = (
 /obj/effect/decal/cleanable/blood/old{
 	dir = 4;
@@ -1476,7 +1476,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "RH" = (
 /obj/structure/alien/weeds/creature,
-/mob/living/simple_animal/hostile/netherworld{
+/mob/living/basic/creature{
 	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
 	health = 25;
 	maxHealth = 25;

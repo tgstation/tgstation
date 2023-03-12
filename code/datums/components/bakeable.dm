@@ -11,7 +11,7 @@
 	///Time spent baking so far
 	var/current_bake_time = 0
 
-	/// REF() to the mob which placed us in an oven
+	/// REF() to the mind which placed us in an oven
 	var/who_baked_us
 
 /datum/component/bakeable/Initialize(bake_result, required_bake_time, positive_result, use_large_steam_sprite)
@@ -46,8 +46,8 @@
 /datum/component/bakeable/proc/on_baking_start(datum/source, atom/used_oven, mob/baker)
 	SIGNAL_HANDLER
 
-	if(baker)
-		who_baked_us = REF(baker)
+	if(baker && baker.mind)
+		who_baked_us = REF(baker.mind)
 
 ///Ran every time an item is baked by something
 /datum/component/bakeable/proc/on_bake(datum/source, atom/used_oven, delta_time = 1)
@@ -64,7 +64,6 @@
 
 ///Ran when an object finished baking
 /datum/component/bakeable/proc/finish_baking(atom/used_oven)
-
 	var/atom/original_object = parent
 	var/obj/item/plate/oven_tray/used_tray = original_object.loc
 	var/atom/baked_result = new bake_result(used_tray)
@@ -81,6 +80,7 @@
 
 	if(positive_result)
 		used_oven.visible_message(span_notice("You smell something great coming from [used_oven]."), blind_message = span_notice("You smell something great..."))
+		BLACKBOX_LOG_FOOD_MADE(baked_result.type)
 	else
 		used_oven.visible_message(span_warning("You smell a burnt smell coming from [used_oven]."), blind_message = span_warning("You smell a burnt smell..."))
 	SEND_SIGNAL(parent, COMSIG_ITEM_BAKED, baked_result)

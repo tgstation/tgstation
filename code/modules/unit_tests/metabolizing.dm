@@ -2,7 +2,7 @@
 	// Pause natural mob life so it can be handled entirely by the test
 	SSmobs.pause()
 
-	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 	var/list/blacklisted_reagents = list(
 		/datum/reagent/eigenstate, //Creates clones after a delay which get into other tests
 	)
@@ -22,7 +22,7 @@
 /datum/unit_test/on_mob_end_metabolize/Run()
 	SSmobs.pause()
 
-	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/reagent_containers/pill/pill = allocate(/obj/item/reagent_containers/pill)
 	var/datum/reagent/drug/methamphetamine/meth = /datum/reagent/drug/methamphetamine
 
@@ -47,19 +47,19 @@
 /datum/unit_test/addictions/Run()
 	SSmobs.pause()
 
-	var/mob/living/carbon/human/pill_user = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/syringe_user = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/pill_syringe_user = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/pill_user = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/syringe_user = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/pill_syringe_user = allocate(/mob/living/carbon/human/consistent)
 
-	var/datum/mind/pill_mind = new /datum/mind("Mothcocks")
+	var/datum/mind/pill_mind = new /datum/mind(null)
 	pill_mind.active = TRUE
 	pill_mind.transfer_to(pill_user)
 
-	var/datum/mind/syringe_mind = new /datum/mind("Mothcocks")
+	var/datum/mind/syringe_mind = new /datum/mind(null)
 	syringe_mind.active = TRUE
 	syringe_mind.transfer_to(syringe_user)
 
-	var/datum/mind/pill_syringe_mind = new /datum/mind("Mothcocks")
+	var/datum/mind/pill_syringe_mind = new /datum/mind(null)
 	pill_syringe_mind.active = TRUE
 	pill_syringe_mind.transfer_to(pill_syringe_user)
 

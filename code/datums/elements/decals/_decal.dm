@@ -1,6 +1,6 @@
 /datum/element/decal
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// Whether this decal can be cleaned.
 	var/cleanable
 	/// A description this decal appends to the target's examine message.
@@ -43,7 +43,7 @@
 		decal.Detach(source)
 
 	for(var/result in resulting_decals_params)
-		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], result["plane"], result["layer"], result["alpha"], result["color"], result["smoothing"], result["cleanable"], result["desc"])
+		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], PLANE_TO_TRUE(result["plane"]), result["layer"], result["alpha"], result["color"], result["smoothing"], result["cleanable"], result["desc"])
 
 
 /datum/element/decal/proc/get_rotated_parameters(old_dir,new_dir)
@@ -88,7 +88,7 @@
 	if(isitem(target))
 		INVOKE_ASYNC(target, TYPE_PROC_REF(/obj/item/, update_slot_icon), TRUE)
 	if(_dir)
-		SSdcs.RegisterSignal(target,COMSIG_ATOM_DIR_CHANGE, /datum/controller/subsystem/processing/dcs/proc/rotate_decals, TRUE)
+		SSdcs.RegisterSignal(target,COMSIG_ATOM_DIR_CHANGE, TYPE_PROC_REF(/datum/controller/subsystem/processing/dcs, rotate_decals), TRUE)
 	if(!isnull(_smoothing))
 		RegisterSignal(target, COMSIG_ATOM_SMOOTHED_ICON, PROC_REF(smooth_react), TRUE)
 	if(_cleanable)
@@ -111,7 +111,8 @@
 		return FALSE
 	var/temp_image = image(_icon, null, isnull(_smoothing) ? _icon_state : "[_icon_state]-[_smoothing]", _layer, _dir)
 	pic = new(temp_image)
-	pic.plane = _plane
+	var/atom/atom_source = source
+	SET_PLANE_EXPLICIT(pic, _plane, atom_source)
 	pic.color = _color
 	pic.alpha = _alpha
 	return TRUE
@@ -128,10 +129,10 @@
 /datum/element/decal/proc/late_update_icon(atom/source)
 	SIGNAL_HANDLER
 
-	if(source && istype(source))
+	if(istype(source) && !(source.flags_1 & DECAL_INIT_UPDATE_EXPERIENCED_1))
+		source.flags_1 |= DECAL_INIT_UPDATE_EXPERIENCED_1 // I am so sorry, but it saves like 80ms I gotta
 		source.update_appearance(UPDATE_OVERLAYS)
 		UnregisterSignal(source, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
-
 
 /datum/element/decal/proc/apply_overlay(atom/source, list/overlay_list)
 	SIGNAL_HANDLER
@@ -172,5 +173,5 @@
 		return NONE
 
 	Detach(source)
-	source.AddElement(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, smoothing_junction, cleanable, description)
+	source.AddElement(type, pic.icon, base_icon_state, directional, PLANE_TO_TRUE(pic.plane), pic.layer, pic.alpha, pic.color, smoothing_junction, cleanable, description)
 	return NONE

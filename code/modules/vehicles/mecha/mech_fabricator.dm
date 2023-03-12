@@ -53,17 +53,30 @@
 	var/list/datum/design/cached_designs
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
-	stored_research = SSresearch.science_tech
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
+		connect_techweb(SSresearch.science_tech)
 	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init, mat_container_flags=BREAKDOWN_FLAGS_LATHE)
 	cached_designs = list()
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
-	update_menu_tech()
-	RegisterSignal(
+	if(stored_research)
+		update_menu_tech()
+	return ..()
+
+/obj/machinery/mecha_part_fabricator/proc/connect_techweb(datum/techweb/new_techweb)
+	if(stored_research)
+		UnregisterSignal(stored_research, list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN))
+
+	stored_research = new_techweb
+	RegisterSignals(
 		stored_research,
 		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
 		PROC_REF(on_techweb_update)
 	)
-	return ..()
+
+/obj/machinery/mecha_part_fabricator/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		connect_techweb(tool.buffer)
+	return TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/on_techweb_update()
 	SIGNAL_HANDLER
@@ -77,20 +90,20 @@
 	var/T = 0
 
 	//maximum stocking amount (default 300000, 600000 at T4)
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		T += M.rating
-	rmat.set_local_size((200000 + (T*50000)))
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		T += matter_bin.tier
+	rmat.set_local_size((200000 + (T * 50000)))
 
 	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
 	T = 1.15
-	for(var/obj/item/stock_parts/micro_laser/Ma in component_parts)
-		T -= Ma.rating*0.15
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		T -= micro_laser.tier * 0.15
 	component_coeff = T
 
 	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
 	T = -1
-	for(var/obj/item/stock_parts/manipulator/Ml in component_parts)
-		T += Ml.rating
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		T += manipulator.tier
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
 	// Adjust the build time of any item currently being built.
@@ -112,7 +125,7 @@
 
 /obj/machinery/mecha_part_fabricator/AltClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.can_perform_action(src))
 		return
 	if(panel_open)
 		dir = turn(dir, -90)
@@ -126,7 +139,6 @@
 	var/previous_design_count = cached_designs.len
 
 	cached_designs.Cut()
-
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/design = SSresearch.techweb_design_by_id(v)
 
@@ -508,7 +520,7 @@
 /obj/machinery/mecha_part_fabricator/proc/AfterMaterialInsert(item_inserted, id_inserted, amount_inserted)
 	var/datum/material/M = id_inserted
 	add_overlay("fab-load-[M.name]")
-	addtimer(CALLBACK(src, /atom/proc/cut_overlay, "fab-load-[M.name]"), 10)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), "fab-load-[M.name]"), 10)
 
 /obj/machinery/mecha_part_fabricator/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())

@@ -94,6 +94,9 @@
 	if(going_up ? !up : !down)
 		balloon_alert(user, "can't go any further [going_up ? "up" : "down"]")
 		return
+	if(user.buckled && user.buckled.anchored)
+		balloon_alert(user, "buckled to something anchored!")
+		return
 	if(travel_time)
 		INVOKE_ASYNC(src, PROC_REF(start_travelling), user, going_up)
 	else
@@ -157,7 +160,7 @@
 			going_up = TRUE
 		if("Down")
 			going_up = FALSE
-		if("Cancel")
+		else
 			return
 
 	if(is_ghost || !travel_time)
@@ -251,7 +254,18 @@
 /obj/structure/ladder/attack_robot_secondary(mob/living/silicon/robot/user)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !user.Adjacent(src))
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+		return
+	use(user, going_up = FALSE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/structure/ladder/attack_pai(mob/user, list/modifiers)
+	use(user)
+	return TRUE
+
+/obj/structure/ladder/attack_pai_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	use(user, going_up = FALSE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

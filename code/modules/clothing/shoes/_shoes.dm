@@ -9,7 +9,7 @@
 	body_parts_covered = FEET
 	slot_flags = ITEM_SLOT_FEET
 
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/clothing_shoes
 	slowdown = SHOES_SLOWDOWN
 	strip_delay = 1 SECONDS
 	var/offset = 0
@@ -22,6 +22,9 @@
 	var/lace_time = 5 SECONDS
 	///An active alert
 	var/datum/weakref/our_alert_ref
+
+/datum/armor/clothing_shoes
+	bio = 50
 
 /obj/item/clothing/shoes/suicide_act(mob/living/carbon/user)
 	if(prob(50))
@@ -197,7 +200,8 @@
 			if(istype(L))
 				var/obj/item/bodypart/ouchie = L.get_bodypart(pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 				if(ouchie)
-					ouchie.receive_damage(brute = 10, stamina = 40)
+					ouchie.receive_damage(brute = 10)
+				L.adjustStaminaLoss(40)
 				L.Paralyze(10)
 
 ///checking to make sure we're still on the person we're supposed to be, for lacing do_after's
@@ -242,7 +246,7 @@
 				to_chat(our_guy, span_danger("You stumble a bit on your untied shoelaces!"))
 				if(!our_guy.has_movespeed_modifier(/datum/movespeed_modifier/shove))
 					our_guy.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-					addtimer(CALLBACK(our_guy, /mob/living/carbon/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
+					addtimer(CALLBACK(our_guy, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
 
 			if(26 to 1000)
 				wiser = FALSE

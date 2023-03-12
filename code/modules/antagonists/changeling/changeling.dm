@@ -1,5 +1,5 @@
 /// The duration of the fakedeath coma.
-#define LING_FAKEDEATH_TIME 40 SECONDS
+#define LING_FAKEDEATH_TIME (40 SECONDS)
 /// The number of recent spoken lines to gain on absorbing a mob
 #define LING_ABSORB_RECENT_SPEECH 8
 
@@ -129,7 +129,7 @@
 	if(give_objectives)
 		forge_objectives()
 	owner.current.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue. We are able to transform our body after all.
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_alert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	return ..()
 
 /datum/antagonist/changeling/apply_innate_effects(mob/living/mob_override)
@@ -141,7 +141,9 @@
 	handle_clown_mutation(living_mob, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 	RegisterSignal(living_mob, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 	RegisterSignal(living_mob, COMSIG_LIVING_LIFE, PROC_REF(on_life))
-	RegisterSignal(living_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), PROC_REF(on_click_sting))
+	RegisterSignal(living_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_fullhealed))
+	RegisterSignal(living_mob, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+	RegisterSignals(living_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), PROC_REF(on_click_sting))
 
 	if(living_mob.hud_used)
 		var/datum/hud/hud_used = living_mob.hud_used
@@ -198,7 +200,7 @@
 /datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/living_mob = mob_override || owner.current
 	handle_clown_mutation(living_mob, removing = FALSE)
-	UnregisterSignal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_LIVING_LIFE, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
+	UnregisterSignal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_LIVING_LIFE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
 
 	if(living_mob.hud_used)
 		var/datum/hud/hud_used = living_mob.hud_used
@@ -258,7 +260,7 @@
 
 	regain_powers()
 
-/*
+/**
  * Signal proc for [COMSIG_LIVING_LIFE].
  * Handles regenerating chemicals on life ticks.
  */
@@ -272,6 +274,15 @@
 	// If we're not dead - we go up to the full chem cap.
 	else
 		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time)
+
+/**
+ * Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], getting admin-healed restores our chemicals.
+ */
+/datum/antagonist/changeling/proc/on_fullhealed(datum/source, heal_flags)
+	SIGNAL_HANDLER
+
+	if(heal_flags & HEAL_ADMIN)
+		adjust_chemicals(INFINITY)
 
 /**
  * Signal proc for [COMSIG_MOB_MIDDLECLICKON] and [COMSIG_MOB_ALTCLICKON].
@@ -295,6 +306,11 @@
 
 	return COMSIG_MOB_CANCEL_CLICKON
 
+/datum/antagonist/changeling/proc/get_status_tab_item(mob/living/source, list/items)
+	SIGNAL_HANDLER
+	items += "Chemical Storage: [chem_charges]/[total_chem_storage]"
+	items += "Absorbed DNA: [absorbed_count]"
+
 /*
  * Adjust the chem charges of the ling by [amount]
  * and clamp it between 0 and override_cap (if supplied) or total_chem_storage (if no override supplied)
@@ -305,7 +321,7 @@
 	var/cap_to = isnum(override_cap) ? override_cap : total_chem_storage
 	chem_charges = clamp(chem_charges + amount, 0, cap_to)
 
-	lingchemdisplay.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
+	lingchemdisplay?.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
 
 /*
  * Remove changeling powers from the current Changeling's purchased_powers list.
@@ -376,16 +392,32 @@
 		to_chat(owner.current, span_warning("We lack the energy to evolve new abilities right now!"))
 		return FALSE
 
-	var/datum/action/changeling/new_action = new sting_path()
+	var/success = give_power(sting_path)
+	if(success)
+		genetic_points -= initial(sting_path.dna_cost)
+	return success
+
+/**
+ * Gives a passed changeling power datum to the player
+ *
+ * Is passed a path to a changeling power, and applies it to the user.
+ * If successful, we return TRUE, otherwise not.
+ *
+ * Arguments:
+ * * power_path - The path of the power we will be giving to our attached player.
+ */
+
+/datum/antagonist/changeling/proc/give_power(power_path)
+	var/datum/action/changeling/new_action = new power_path()
 
 	if(!new_action)
 		to_chat(owner.current, "This is awkward. Changeling power purchase failed, please report this bug to a coder!")
-		CRASH("Changeling purchase_power was unable to create a new changeling action for path [sting_path]!")
+		CRASH("Changeling give_power was unable to grant a new changeling action for path [power_path]!")
 
-	genetic_points -= new_action.dna_cost
-	purchased_powers[sting_path] = new_action
+	purchased_powers[power_path] = new_action
 	new_action.on_purchase(owner.current) // Grant() is ran in this proc, see changeling_powers.dm.
 	log_changeling_power("[key_name(owner)] adapted the [new_action] power")
+
 	return TRUE
 
 /*
@@ -617,9 +649,7 @@
 
 	add_new_profile(owner.current)
 
-
-/// Generate objectives for our changeling.
-/datum/antagonist/changeling/proc/forge_objectives()
+/datum/antagonist/changeling/forge_objectives()
 	//OBJECTIVES - random traitor objectives. Unique objectives "steal brain" and "identity theft".
 	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
 	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
@@ -990,15 +1020,30 @@
 	total_chem_storage = 50
 
 /datum/antagonist/changeling/headslug/greet()
-	to_chat(owner, span_boldannounce("You are a fresh changeling birthed from a headslug! You aren't as strong as a normal changeling, as you are newly born."))
+	to_chat(owner, span_boldannounce("You are a fresh changeling birthed from a headslug! \
+		You aren't as strong as a normal changeling, as you are newly born."))
 
-	var/policy = get_policy(ROLE_HEADSLUG_CHANGELING)
-	if(policy)
-		to_chat(owner, policy)
+
+/datum/antagonist/changeling/space
+	name = "\improper Space Changeling"
+
+/datum/antagonist/changeling/space/get_preview_icon()
+	var/icon/final_icon = render_preview_outfit(/datum/outfit/changeling_space)
+	return finish_preview_icon(final_icon)
+
+/datum/antagonist/changeling/space/greet()
+	to_chat(src, span_changeling("Our mind stirs to life, from the depths of an endless slumber..."))
 
 /datum/outfit/changeling
 	name = "Changeling"
 
 	head = /obj/item/clothing/head/helmet/changeling
 	suit = /obj/item/clothing/suit/armor/changeling
+	l_hand = /obj/item/melee/arm_blade
+
+/datum/outfit/changeling_space
+	name = "Changeling (Space)"
+
+	head = /obj/item/clothing/head/helmet/space/changeling
+	suit = /obj/item/clothing/suit/space/changeling
 	l_hand = /obj/item/melee/arm_blade

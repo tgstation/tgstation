@@ -2,23 +2,28 @@
 	name = "\improper Plasmaman"
 	plural_form = "Plasmamen"
 	id = SPECIES_PLASMAMAN
-	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	species_traits = list(NOBLOOD, NOTRANSSTING, HAS_BONE, NOAPPENDIX)
+	species_traits = list(
+		NOTRANSSTING,
+	)
 	// plasmemes get hard to wound since they only need a severe bone wound to dismember, but unlike skellies, they can't pop their bones back into place
 	inherent_traits = list(
 		TRAIT_GENELESS,
 		TRAIT_HARDLY_WOUNDED,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
+		TRAIT_NOBLOOD,
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
+	inherent_respiration_type = RESPIRATION_PLASMA
 	mutantlungs = /obj/item/organ/internal/lungs/plasmaman
 	mutanttongue = /obj/item/organ/internal/tongue/bone/plasmaman
 	mutantliver = /obj/item/organ/internal/liver/plasmaman
 	mutantstomach = /obj/item/organ/internal/stomach/bone/plasmaman
+	mutantappendix = null
+	mutantheart = null
 	burnmod = 1.5
 	heatmod = 1.5
 	brutemod = 1.5
@@ -69,7 +74,7 @@
 
 	var/flammable_limb = FALSE
 	for(var/obj/item/bodypart/found_bodypart as anything in H.bodyparts)//If any plasma based limb is found the plasmaman will attempt to autoignite
-		if(IS_ORGANIC_LIMB(found_bodypart) && (found_bodypart.limb_id == SPECIES_PLASMAMAN || HAS_TRAIT(found_bodypart, TRAIT_PLASMABURNT))) //Allows for "donated" limbs and augmented limbs to prevent autoignition
+		if(IS_ORGANIC_LIMB(found_bodypart) && found_bodypart.limb_id == SPECIES_PLASMAMAN) //Allows for "donated" limbs and augmented limbs to prevent autoignition
 			flammable_limb = TRUE
 			break
 
@@ -114,9 +119,10 @@
 	. = ..()
 
 /datum/species/plasmaman/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
-	if(job.plasmaman_outfit)
+	if(job?.plasmaman_outfit)
 		equipping.equipOutfit(job.plasmaman_outfit, visuals_only)
-	equipping.open_internals(equipping.get_item_for_held_index(2))
+	else
+		give_important_for_life(equipping)
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)
 	if(unique)
@@ -131,12 +137,11 @@
 
 /datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	. = ..()
-	if(istype(chem, /datum/reagent/toxin/plasma))
-		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * delta_time)
+	if(istype(chem, /datum/reagent/toxin/plasma) || istype(chem, /datum/reagent/toxin/hot_ice))
 		for(var/i in H.all_wounds)
 			var/datum/wound/iter_wound = i
 			iter_wound.on_xadone(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time) // plasmamen use plasma to reform their bones or whatever
-		return TRUE
+		return FALSE // do normal metabolism
 
 	if(istype(chem, /datum/reagent/toxin/bonehurtingjuice))
 		H.adjustStaminaLoss(7.5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
@@ -170,6 +175,13 @@
 			H.adjust_hallucinations(2.5 SECONDS * delta_time)
 		// Do normal metabolism
 		return FALSE
+
+/datum/species/plasmaman/get_scream_sound(mob/living/carbon/human)
+	return pick(
+		'sound/voice/plasmaman/plasmeme_scream_1.ogg',
+		'sound/voice/plasmaman/plasmeme_scream_2.ogg',
+		'sound/voice/plasmaman/plasmeme_scream_3.ogg',
+	)
 
 /datum/species/plasmaman/get_species_description()
 	return "Found on the Icemoon of Freyja, plasmamen consist of colonial \

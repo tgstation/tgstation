@@ -2,7 +2,7 @@
 
 /obj/item/storage/box/donkpockets
 	name = "box of donk-pockets"
-	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will stay perpetually warmed with cutting edge Donk Co. technology.</I>"
+	desc = "Instructions: Heat in microwave. Product will stay perpetually warmed with cutting edge Donk Co. technology."
 	icon_state = "donkpocketbox"
 	illustration = null
 	/// What type of donk pocket are we gonna cram into this box?
@@ -49,11 +49,12 @@
 /obj/item/storage/box/papersack
 	name = "paper sack"
 	desc = "A sack neatly crafted out of paper."
+	icon = 'icons/obj/storage/paperbag.dmi'
 	icon_state = "paperbag_None"
 	inhand_icon_state = null
 	illustration = null
 	resistance_flags = FLAMMABLE
-	foldable = null
+	foldable_result = null
 	/// A list of all available papersack reskins
 	var/list/papersack_designs = list()
 	///What design from papersack_designs we are currently using.
@@ -312,18 +313,19 @@
 	desc = "This box should not exist, contact the proper authorities."
 
 /obj/item/storage/box/ingredients/random/Initialize(mapload)
-	.=..()
+	. = ..()
 	var/chosen_box = pick(subtypesof(/obj/item/storage/box/ingredients) - /obj/item/storage/box/ingredients/random)
 	new chosen_box(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/item/storage/box/gum
 	name = "bubblegum packet"
-	desc = "The packaging is entirely in japanese, apparently. You can't make out a single word of it."
+	desc = "The packaging is entirely in Japanese, apparently. You can't make out a single word of it."
+	icon = 'icons/obj/storage/gum.dmi'
 	icon_state = "bubblegum_generic"
 	w_class = WEIGHT_CLASS_TINY
 	illustration = null
-	foldable = null
+	foldable_result = null
 	custom_price = PAYCHECK_CREW
 
 /obj/item/storage/box/gum/Initialize(mapload)
@@ -419,9 +421,9 @@
 /obj/item/storage/box/tiziran_cans/PopulateContents()
 	for(var/i in 1 to 8)
 		var/random_food = pick_weight(list(
-			/obj/item/food/canned_jellyfish = 5,
-			/obj/item/food/desert_snails = 5,
-			/obj/item/food/larvae = 5,
+			/obj/item/food/canned/jellyfish = 5,
+			/obj/item/food/canned/desert_snails = 5,
+			/obj/item/food/canned/larvae = 5,
 			))
 		new random_food(src)
 
@@ -487,3 +489,29 @@
 /obj/item/storage/box/condimentbottles/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/reagent_containers/condiment(src)
+
+
+/obj/item/storage/box/coffeepack
+	icon_state = "arabica_beans"
+	name = "arabica beans"
+	desc = "A bag containing fresh, dry coffee arabica beans. Ethically sourced and packaged by Waffle Corp."
+	illustration = null
+	icon = 'icons/obj/food/containers.dmi'
+	var/beantype = /obj/item/food/grown/coffee
+
+/obj/item/storage/box/coffeepack/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(list(/obj/item/food/grown/coffee))
+
+/obj/item/storage/box/coffeepack/PopulateContents()
+	atom_storage.max_slots = 5
+	for(var/i in 1 to 5)
+		var/obj/item/food/grown/coffee/bean = new beantype(src)
+		ADD_TRAIT(bean, TRAIT_DRIED, ELEMENT_TRAIT(type))
+		bean.add_atom_colour(COLOR_DRIED_TAN, FIXED_COLOUR_PRIORITY) //give them the tan just like from the drying rack
+
+/obj/item/storage/box/coffeepack/robusta
+	icon_state = "robusta_beans"
+	name = "robusta beans"
+	desc = "A bag containing fresh, dry coffee robusta beans. Ethically sourced and packaged by Waffle Corp."
+	beantype = /obj/item/food/grown/coffee/robusta

@@ -187,7 +187,7 @@
 
 /obj/machinery/shieldgen/screwdriver_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 100)
-	panel_open = !panel_open
+	toggle_panel_open()
 	if(panel_open)
 		to_chat(user, span_notice("You open the panel and expose the wiring."))
 	else

@@ -2,6 +2,7 @@
 	name = "\improper Space Pirate"
 	job_rank = ROLE_TRAITOR
 	roundend_category = "space pirates"
+	antagpanel_category = ANTAG_GROUP_PIRATES
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
 	suicide_cry = "FOR ME MATEYS!!"
@@ -88,7 +89,8 @@
 	var/count = 0
 	var/list/loot_texts = list()
 	for(var/datum/export/E in cargo_hold.total_report.total_value)
-		if(++count > 5)
+		count++
+		if(count > 5)
 			break
 		loot_texts += E.total_printout(cargo_hold.total_report,notes = FALSE)
 	return loot_texts.Join(", ")

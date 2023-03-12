@@ -336,11 +336,12 @@
 	cost = 10
 	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
 	flags = HIGH_IMPACT_RULESET
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
-	if (!check_candidates())
+	if(!check_candidates())
 		return FALSE
-	if(GLOB.wizardstart.len == 0)
+	if(!length(GLOB.wizardstart))
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		return FALSE
@@ -376,10 +377,12 @@
 	cost = 7
 	minimum_round_time = 70 MINUTES
 	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
+	flags = HIGH_IMPACT_RULESET
+
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	/// The nuke ops team datum.
 	var/datum/team/nuclear/nuke_team
-	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
@@ -633,10 +636,12 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 2
 	required_applicants = 2
-	weight = 2
+	weight = 4
 	cost = 7
 	minimum_players = 25
 	repeatable = TRUE
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
+
 	var/datum/team/abductor_team/new_team
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
@@ -674,6 +679,8 @@
 	cost = 8
 	minimum_players = 30
 	repeatable = TRUE
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY) // I mean, no one uses the nets anymore but whateva
+
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/execute()
@@ -780,7 +787,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
 	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
 	virus.key = applicant.key
-	INVOKE_ASYNC(virus, /mob/camera/disease/proc/pick_name)
+	INVOKE_ASYNC(virus, TYPE_PROC_REF(/mob/camera/disease, pick_name))
 	message_admins("[ADMIN_LOOKUPFLW(virus)] has been made into a sentient disease by the midround ruleset.")
 	log_game("[key_name(virus)] was spawned as a sentient disease by the midround ruleset.")
 	return virus
@@ -799,7 +806,7 @@
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat=0)
-	if (!SSmapping.empty_space)
+	if (SSmapping.is_planetary())
 		return FALSE
 	return ..()
 
@@ -843,3 +850,92 @@
 	message_admins("[ADMIN_LOOKUPFLW(obsessed)] has been made Obsessed by the midround ruleset.")
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
 	return TRUE
+
+/// Space Changeling ruleset
+/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround
+	name = "Space Changeling"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_datum = /datum/antagonist/changeling/space
+	antag_flag = ROLE_CHANGELING_MIDROUND
+	antag_flag_override = ROLE_CHANGELING
+	required_type = /mob/dead/observer
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 3
+	cost = 7
+	minimum_players = 15
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround/generate_ruleset_body(mob/applicant)
+	var/body = generate_changeling_meteor(applicant)
+	message_admins("[ADMIN_LOOKUPFLW(body)] has been made into a space changeling by the midround ruleset.")
+	log_dynamic("[key_name(body)] was spawned as a space changeling by the midround ruleset.")
+	return body
+
+/// Paradox Clone ruleset
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone
+	name = "Paradox Clone"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_datum = /datum/antagonist/paradox_clone
+	antag_flag = ROLE_PARADOX_CLONE
+	enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
+	required_enemies = list(2, 2, 1, 1, 1, 1, 1, 0, 0, 0)
+	required_candidates = 1
+	weight = 4
+	cost = 3
+	repeatable = TRUE
+	var/list/possible_spawns = list() ///places the antag can spawn
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
+	for(var/turf/warp_point in GLOB.xeno_spawn)
+		if(istype(warp_point.loc, /area/station/maintenance))
+			possible_spawns += warp_point
+	if(!possible_spawns.len)
+		message_admins("No valid spawn locations found for Paradox Clone event, aborting...")
+		return MAP_ERROR
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/generate_ruleset_body(mob/applicant)
+	var/datum/mind/player_mind = new /datum/mind(applicant.key)
+	player_mind.active = TRUE
+
+	var/mob/living/carbon/human/clone_victim = find_original()
+	var/mob/living/carbon/human/clone = duplicate_object(clone_victim, pick(possible_spawns))
+
+	player_mind.transfer_to(clone)
+	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
+
+	var/datum/antagonist/paradox_clone/new_datum = player_mind.add_antag_datum(/datum/antagonist/paradox_clone)
+	new_datum.original_ref = WEAKREF(clone_victim.mind)
+	new_datum.setup_clone()
+
+	playsound(clone, 'sound/weapons/zapbang.ogg', 30, TRUE)
+	new /obj/item/storage/toolbox/mechanical(clone.loc) //so they dont get stuck in maints
+
+	message_admins("[ADMIN_LOOKUPFLW(clone)] has been made into a Paradox Clone by the midround ruleset.")
+	clone.log_message("was spawned as a Paradox Clone of [key_name(clone)] by the midround ruleset.", LOG_GAME)
+
+	return clone
+
+/**
+ * Trims through GLOB.player_list and finds a target
+ * Returns a single human victim, if none is possible then returns null.
+ */
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/proc/find_original()
+	var/list/possible_targets = list()
+
+	for(var/mob/living/carbon/human/player in GLOB.player_list)
+		if(!player.client || !player.mind || player.stat)
+			continue
+		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
+			continue
+		possible_targets += player
+
+	if(possible_targets.len)
+		return pick(possible_targets)
+	return FALSE

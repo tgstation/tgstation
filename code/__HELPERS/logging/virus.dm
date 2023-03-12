@@ -12,4 +12,4 @@
 	var/list/name_symptoms = list()
 	for(var/datum/symptom/S in symptoms)
 		name_symptoms += S.name
-	return "[name] sym:[english_list(name_symptoms)] r:[totalResistance()] s:[totalStealth()] ss:[totalStageSpeed()] t:[totalTransmittable()]"
+	return "[name] - sym: [english_list(name_symptoms)] re:[totalResistance()] st:[totalStealth()] ss:[totalStageSpeed()] tr:[totalTransmittable()]"

@@ -220,6 +220,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
+	///Which species the resurected humanoid will be
+	var/applied_species = /datum/species/skeleton
 
 /obj/item/necromantic_stone/unlimited
 	unlimited = 1
@@ -228,7 +230,7 @@
 	if(!istype(M))
 		return ..()
 
-	if(!istype(user) || !user.canUseTopic(M, be_close = TRUE))
+	if(!istype(user) || !user.can_perform_action(M))
 		return
 
 	if(M.stat != DEAD)
@@ -249,8 +251,8 @@
 		to_chat(user, span_warning("This artifact can only affect three undead at a time!"))
 		return
 
-	M.set_species(/datum/species/skeleton, icon_update=0)
-	M.revive(full_heal = TRUE, admin_revive = TRUE)
+	M.set_species(applied_species, icon_update=0)
+	M.revive(ADMIN_HEAL_ALL)
 	spooky_scaries |= M
 	to_chat(M, "[span_userdanger("You have been revived by ")]<B>[user.real_name]!</B>")
 	to_chat(M, span_userdanger("[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!"))
@@ -288,7 +290,7 @@
 	H.equip_to_slot_or_del(new hat(H), ITEM_SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/roman(H), ITEM_SLOT_ICLOTHING)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), ITEM_SLOT_FEET)
-	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
+	H.put_in_hands(new /obj/item/shield/roman(H), TRUE)
 	H.put_in_hands(new /obj/item/claymore(H), TRUE)
 	H.equip_to_slot_or_del(new /obj/item/spear(H), ITEM_SLOT_BACK)
 

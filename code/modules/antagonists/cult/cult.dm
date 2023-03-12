@@ -135,7 +135,7 @@
 	if(mob_override)
 		current = mob_override
 	handle_clown_mutation(current, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-	current.faction |= "cult"
+	current.faction |= FACTION_CULT
 	current.grant_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
 	if(!cult_team.cult_master)
 		vote.Grant(current)
@@ -156,7 +156,7 @@
 	if(mob_override)
 		current = mob_override
 	handle_clown_mutation(current, removing = FALSE)
-	current.faction -= "cult"
+	current.faction -= FACTION_CULT
 	current.remove_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
 	vote.Remove(current)
 	communion.Remove(current)
@@ -229,7 +229,7 @@
 		reckoning.Grant(current)
 	bloodmark.Grant(current)
 	throwing.Grant(current)
-	current.update_action_buttons_icon()
+	current.update_mob_action_buttons()
 	current.apply_status_effect(/datum/status_effect/cult_master)
 	if(cult_team.cult_risen)
 		current.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS)
@@ -245,7 +245,7 @@
 	reckoning.Remove(current)
 	bloodmark.Remove(current)
 	throwing.Remove(current)
-	current.update_action_buttons_icon()
+	current.update_mob_action_buttons()
 	current.remove_status_effect(/datum/status_effect/cult_master)
 
 /datum/team/cult
@@ -271,6 +271,8 @@
 
 	///Has narsie been summoned yet?
 	var/narsie_summoned = FALSE
+	///How large were we at max size.
+	var/size_at_maximum = 0
 
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
@@ -305,6 +307,13 @@
 		cult_ascendent = TRUE
 		log_game("The blood cult has ascended with [cultplayers] players.")
 
+/datum/team/cult/add_member(datum/mind/new_member)
+	. = ..()
+	// A little hacky, but this checks that cult ghosts don't contribute to the size at maximum value.
+	if(is_unassigned_job(new_member.assigned_role))
+		return
+	size_at_maximum++
+
 /datum/team/cult/proc/make_image(datum/objective/sacrifice/sac_objective)
 	var/datum/job/job_of_sacrifice = sac_objective.target.assigned_role
 	var/datum/preferences/prefs_of_sacrifice = sac_objective.target.current.client.prefs
@@ -338,7 +347,7 @@
 		UnregisterSignal(target.current, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
 	target = null
 
-/datum/objective/sacrifice/find_target(dupe_search_range)
+/datum/objective/sacrifice/find_target(dupe_search_range, list/blacklist)
 	clear_sacrifice()
 	if(!istype(team, /datum/team/cult))
 		return
@@ -480,7 +489,8 @@
 			return FALSE
 		if(specific_cult?.is_sacrifice_target(target.mind))
 			return FALSE
-		if(target.mind.enslaved_to && !IS_CULTIST(target.mind.enslaved_to))
+		var/mob/living/master = target.mind.enslaved_to?.resolve()
+		if(master && !IS_CULTIST(master))
 			return FALSE
 		if(target.mind.unconvertable)
 			return FALSE
@@ -562,7 +572,3 @@
 	equipped.eye_color_left = BLOODCULT_EYE
 	equipped.eye_color_right = BLOODCULT_EYE
 	equipped.update_body()
-
-	var/obj/item/clothing/suit/hooded/hooded = locate() in equipped
-	hooded.MakeHood() // This is usually created on Initialize, but we run before atoms
-	hooded.ToggleHood()

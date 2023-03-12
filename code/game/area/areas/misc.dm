@@ -7,6 +7,7 @@
 	static_lighting = FALSE
 
 	base_lighting_alpha = 255
+	base_lighting_color = COLOR_STARLIGHT
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
@@ -32,5 +33,8 @@
 /area/misc/testroom
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
+	// Mobs should be able to see inside the testroom
+	static_lighting = FALSE
+	base_lighting_alpha = 255
 	name = "Test Room"
 	icon_state = "test_room"

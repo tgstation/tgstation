@@ -5,7 +5,7 @@
 
 /datum/element/easily_fragmented
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 	var/break_chance
 
@@ -30,3 +30,5 @@
 	if(prob(break_chance))
 		user.visible_message(span_danger("[user]'s [item.name] snap[item.p_s()] into tiny pieces in [user.p_their()] hand."))
 		item.deconstruct(disassembled = FALSE)
+
+	return COMPONENT_AFTERATTACK_PROCESSED_ITEM

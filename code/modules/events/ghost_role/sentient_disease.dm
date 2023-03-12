@@ -6,6 +6,8 @@
 	min_players = 25
 	category = EVENT_CATEGORY_HEALTH
 	description = "Spawns a sentient disease, who wants to infect as many people as possible."
+	min_wizard_trigger_potency = 4
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/ghost_role/sentient_disease
 	role_name = "sentient disease"
@@ -19,7 +21,7 @@
 
 	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
 	virus.key = selected.key
-	INVOKE_ASYNC(virus, /mob/camera/disease/proc/pick_name)
+	INVOKE_ASYNC(virus, TYPE_PROC_REF(/mob/camera/disease, pick_name))
 	message_admins("[ADMIN_LOOKUPFLW(virus)] has been made into a sentient disease by an event.")
 	virus.log_message("was spawned as a sentient disease by an event.", LOG_GAME)
 	spawned_mobs += virus

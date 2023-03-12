@@ -6,6 +6,8 @@
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"
 /// From base of [atom/proc/attacby_secondary()]: (/obj/item/weapon, /mob/user, params)
 #define COMSIG_PARENT_ATTACKBY_SECONDARY "atom_attackby_secondary"
+///from [/item/afterattack()], sent by an atom which was just attacked by an item: (/obj/item/weapon, /mob/user, proximity_flag, click_parameters)
+#define COMSIG_ATOM_AFTER_ATTACKEDBY "atom_after_attackby"
 /// From base of [/atom/proc/attack_hand_secondary]: (mob/user, list/modifiers) - Called when the atom receives a secondary unarmed attack.
 #define COMSIG_ATOM_ATTACK_HAND_SECONDARY "atom_attack_hand_secondary"
 ///Return this in response if you don't want afterattack to be called
@@ -40,3 +42,7 @@
 #define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"
 ///from base of atom/attack_paw(): (mob/user)
 #define COMSIG_ATOM_ATTACK_PAW "atom_attack_paw"
+///from base of atom/mech_melee_attack(): (obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+#define COMSIG_ATOM_ATTACK_MECH "atom_attack_mech"
+///from relay_attackers element: (atom/attacker)
+#define COMSIG_ATOM_WAS_ATTACKED "atom_was_attacked"

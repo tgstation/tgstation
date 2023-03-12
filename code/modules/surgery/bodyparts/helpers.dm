@@ -50,7 +50,7 @@
 	return FALSE
 
 
-/mob/living/carbon/alien/larva/has_left_hand()
+/mob/living/carbon/alien/larva/has_left_hand(check_disabled = TRUE)
 	return TRUE
 
 
@@ -66,14 +66,11 @@
 	return FALSE
 
 
-/mob/living/carbon/alien/larva/has_right_hand()
+/mob/living/carbon/alien/larva/has_right_hand(check_disabled = TRUE)
 	return TRUE
 
 
-/mob/living/proc/get_missing_limbs()
-	return list()
-
-/mob/living/carbon/get_missing_limbs()
+/mob/living/carbon/proc/get_missing_limbs()
 	RETURN_TYPE(/list)
 	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 	for(var/zone in full)

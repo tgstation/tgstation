@@ -160,14 +160,14 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	l_pocket = /obj/item/pen
-	r_pocket = /obj/item/modular_computer/tablet/pda/heads
+	r_pocket = /obj/item/modular_computer/pda/heads
 	l_hand = /obj/item/clipboard
 
 /datum/outfit/centcom/centcom_official/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/obj/item/modular_computer/tablet/pda/heads/pda = H.r_store
+	var/obj/item/modular_computer/pda/heads/pda = H.r_store
 	pda.saved_identification = H.real_name
 	pda.saved_job = "CentCom Official"
 
@@ -391,7 +391,7 @@
 		/obj/item/stack/sheet/iron/fifty = 1,
 		/obj/item/stack/sheet/plasteel/twenty = 1,
 	)
-	head = /obj/item/clothing/head/utility/hardhat/weldhat
+	head = /obj/item/clothing/head/utility/hardhat/welding
 	mask = /obj/item/clothing/mask/gas/atmos
 	l_hand = /obj/item/areaeditor/blueprints
 

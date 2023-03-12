@@ -1,4 +1,4 @@
-#define PKBORG_DAMPEN_CYCLE_DELAY 2 SECONDS
+#define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
 
 /obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
 	name = "plating repair tool"
@@ -16,7 +16,8 @@
 	name = "\improper Hyperkinetic Dampening projector"
 	desc = "A device that projects a dampening field that weakens kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second while active, that will weaken and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "shield"
+	icon_state = "shield0"
+	base_icon_state = "shield"
 	/// Max energy this dampener can hold
 	var/maxenergy = 1500
 	/// Current energy level
@@ -57,7 +58,6 @@
 /obj/item/borg/projectile_dampen/Initialize(mapload)
 	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
 	tracked = list()
-	icon_state = "shield0"
 	START_PROCESSING(SSfastprocess, src)
 	host = loc
 	RegisterSignal(host, COMSIG_LIVING_DEATH, PROC_REF(on_death))
@@ -88,7 +88,7 @@
 	to_chat(user, span_boldnotice("You [active ? "activate":"deactivate"] [src]."))
 
 /obj/item/borg/projectile_dampen/update_icon_state()
-	icon_state = "[initial(icon_state)][active]"
+	icon_state = "[base_icon_state][active]"
 	return ..()
 
 /obj/item/borg/projectile_dampen/proc/activate_field()
@@ -138,12 +138,11 @@
 
 /obj/item/borg/projectile_dampen/proc/process_usage(delta_time)
 	var/usage = 0
-	for(var/to_track in tracked)
-		var/obj/projectile/projectil = to_track
-		if(!projectil.stun && projectil.nodamage) //No damage
+	for(var/obj/projectile/inner_projectile as anything in tracked)
+		if(!inner_projectile.is_hostile_projectile())
 			continue
 		usage += projectile_tick_speed_ecost * delta_time
-		usage += tracked[to_track] * projectile_damage_tick_ecost_coefficient * delta_time
+		usage += tracked[inner_projectile] * projectile_damage_tick_ecost_coefficient * delta_time
 	energy = clamp(energy - usage, 0, maxenergy)
 	if(energy <= 0)
 		deactivate_field()

@@ -5,7 +5,6 @@
 		/datum/traitor_objective/sleeper_protocol/everybody = 1,
 	)
 
-
 /datum/traitor_objective/sleeper_protocol
 	name = "Perform the sleeper protocol on a crewmember"
 	description = "Use the button below to materialize a surgery disk in your hand, where you'll then be able to perform the sleeper protocol on a crewmember. If the disk gets destroyed, the objective will fail. This will only work on living and sentient crewmembers."
@@ -13,7 +12,7 @@
 	progression_minimum = 0 MINUTES
 
 	progression_reward = list(8 MINUTES, 15 MINUTES)
-	telecrystal_reward = 0
+	telecrystal_reward = 1
 
 	var/list/limited_to = list(
 		JOB_CHIEF_MEDICAL_OFFICER,
@@ -43,7 +42,7 @@
 			disk = new(user.drop_location())
 			user.put_in_hands(disk)
 			AddComponent(/datum/component/traitor_objective_register, disk, \
-				fail_signals = COMSIG_PARENT_QDELETING)
+				fail_signals = list(COMSIG_PARENT_QDELETING))
 
 /datum/traitor_objective/sleeper_protocol/proc/on_surgery_success(datum/source, datum/surgery_step/step, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	SIGNAL_HANDLER
@@ -75,19 +74,19 @@
 /datum/surgery/advanced/brainwashing_sleeper
 	name = "Sleeper Agent Surgery"
 	desc = "A surgical procedure which implants the sleeper protocol into the patient's brain, making it their absolute priority. It can be cleared using a mindshield implant."
-	steps = list(
-	/datum/surgery_step/incise,
-	/datum/surgery_step/retract_skin,
-	/datum/surgery_step/saw,
-	/datum/surgery_step/clamp_bleeders,
-	/datum/surgery_step/brainwash/sleeper_agent,
-	/datum/surgery_step/close)
-
-	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_HEAD)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/brainwash/sleeper_agent,
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/advanced/brainwashing_sleeper/can_start(mob/user, mob/living/carbon/target)
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
 	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!target_brain)
@@ -107,9 +106,13 @@
 
 /datum/surgery_step/brainwash/sleeper_agent/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	objective = pick(possible_objectives)
-	display_results(user, target, span_notice("You begin to brainwash [target]..."),
+	display_results(
+		user,
+		target,
+		span_notice("You begin to brainwash [target]..."),
 		span_notice("[user] begins to fix [target]'s brain."),
-		span_notice("[user] begins to perform surgery on [target]'s brain."))
+		span_notice("[user] begins to perform surgery on [target]'s brain."),
+	)
 	display_pain(target, "Your head pounds with unimaginable pain!") // Same message as other brain surgeries
 
 /datum/surgery_step/brainwash/sleeper_agent/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
@@ -122,9 +125,8 @@
 	target.gain_trauma(new /datum/brain_trauma/mild/phobia/conspiracies(), TRAUMA_RESILIENCE_LOBOTOMY)
 
 /datum/traitor_objective/sleeper_protocol/everybody //Much harder for non-med and non-robo
-
 	progression_minimum = 30 MINUTES
-	progression_reward = list(15 MINUTES, 20 MINUTES)
-	telecrystal_reward = list(2, 3)
+	progression_reward = list(8 MINUTES, 15 MINUTES)
+	telecrystal_reward = 1
 
 	inverted_limitation = TRUE

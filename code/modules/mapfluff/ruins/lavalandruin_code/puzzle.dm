@@ -296,7 +296,16 @@
 
 //Some armor so it's harder to kill someone by mistake.
 /obj/structure/puzzle_element/prison
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/puzzle_element_prison
+
+/datum/armor/puzzle_element_prison
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 50
+	fire = 50
+	acid = 50
 
 /obj/structure/puzzle_element/prison/relaymove(mob/living/user, direction)
 	return
@@ -313,7 +322,7 @@
 		return
 	var/mob/living/victim = target
 	var/mob/living/carbon/carbon_victim = victim
-	//Handcuffed or unconcious
+	//Handcuffed or unconscious
 	if(istype(carbon_victim) && carbon_victim.handcuffed || victim.stat != CONSCIOUS)
 		if(!puzzle_imprison(target))
 			to_chat(user,span_warning("[src] does nothing."))
@@ -321,7 +330,7 @@
 		to_chat(user,span_warning("You trap [victim] in the prison cube!"))
 		qdel(src)
 	else
-		to_chat(user,span_notice("[src] only accepts restrained or unconcious prisoners."))
+		to_chat(user,span_notice("[src] only accepts restrained or unconscious prisoners."))
 
 /proc/puzzle_imprison(mob/living/prisoner)
 	var/turf/T = get_turf(prisoner)

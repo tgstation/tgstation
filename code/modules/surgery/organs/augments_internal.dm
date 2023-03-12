@@ -120,7 +120,7 @@
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/Insert(special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
-	RegisterSignal(owner, signalCache, PROC_REF(on_signal))
+	RegisterSignals(owner, signalCache, PROC_REF(on_signal))
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/on_signal(datum/source, amount)
 	SIGNAL_HANDLER

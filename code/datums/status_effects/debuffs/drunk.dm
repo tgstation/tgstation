@@ -14,19 +14,13 @@
 	id = "drunk"
 	tick_interval = 2 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
+	remove_on_fullheal = TRUE
 	/// The level of drunkness we are currently at.
 	var/drunk_value = 0
 
 /datum/status_effect/inebriated/on_creation(mob/living/new_owner, drunk_value = 0)
 	. = ..()
 	set_drunk_value(drunk_value)
-
-/datum/status_effect/inebriated/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(clear_drunkenness))
-	return TRUE
-
-/datum/status_effect/inebriated/on_remove()
-	UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
 
 /datum/status_effect/inebriated/get_examine_text()
 	// Dead people don't look drunk
@@ -58,12 +52,6 @@
 
 	return null
 
-/// Removes all of our drunkenness (self-deletes) on signal.
-/datum/status_effect/inebriated/proc/clear_drunkenness(mob/living/source)
-	SIGNAL_HANDLER
-
-	qdel(src)
-
 /// Sets the drunk value to set_to, deleting if the value drops to 0 or lower
 /datum/status_effect/inebriated/proc/set_drunk_value(set_to)
 	if(!isnum(set_to))
@@ -74,8 +62,8 @@
 		qdel(src)
 
 /datum/status_effect/inebriated/tick()
-	// Drunk value does not decrease while dead
-	if(owner.stat == DEAD)
+	// Drunk value does not decrease while dead or in stasis
+	if(owner.stat == DEAD || IS_IN_STASIS(owner))
 		return
 
 	// Every tick, the drunk value decrases by
@@ -148,7 +136,8 @@
 	// Handle the Ballmer Peak.
 	// If our owner is a scientist (has the trait "TRAIT_BALLMER_SCIENTIST"), there's a 5% chance
 	// that they'll say one of the special "ballmer message" lines, depending their drunk-ness level.
-	if(HAS_TRAIT(owner, TRAIT_BALLMER_SCIENTIST) && prob(5))
+	var/obj/item/organ/internal/liver/liver_organ = owner.getorganslot(ORGAN_SLOT_LIVER)
+	if(liver_organ && HAS_TRAIT(liver_organ, TRAIT_BALLMER_SCIENTIST) && prob(5))
 		if(drunk_value >= BALLMER_PEAK_LOW_END && drunk_value <= BALLMER_PEAK_HIGH_END)
 			owner.say(pick_list_replacements(VISTA_FILE, "ballmer_good_msg"), forced = "ballmer")
 
@@ -184,7 +173,7 @@
 
 	// Over 71, we will constantly have blurry eyes
 	if(drunk_value >= 71)
-		owner.blur_eyes(drunk_value - 70)
+		owner.set_eye_blur_if_lower((drunk_value * 2 SECONDS) - 140 SECONDS)
 
 	// Over 81, we will gain constant toxloss
 	if(drunk_value >= 81)

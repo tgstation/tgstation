@@ -22,8 +22,8 @@ created from them: make sure you handle that list correctly! Either copy them by
 and clear when youre done! if you dont i will use :newspaper2: on you
 */
 
-#define HOLODECK_CD 2 SECONDS
-#define HOLODECK_DMG_CD 5 SECONDS
+#define HOLODECK_CD (2 SECONDS)
+#define HOLODECK_DMG_CD (5 SECONDS)
 
 /// typecache for turfs that should be considered ok during floorchecks.
 /// A linked turf being anything not in this typecache will cause the holodeck to perform an emergency shutdown.
@@ -247,7 +247,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	clear_projection()
 
 	template = SSmapping.holodeck_templates[offline_program]
-	INVOKE_ASYNC(template, /datum/map_template/proc/load, bottom_left) //this is what actually loads the holodeck simulation into the map
+	INVOKE_ASYNC(template, TYPE_PROC_REF(/datum/map_template, load), bottom_left) //this is what actually loads the holodeck simulation into the map
 
 /obj/machinery/computer/holodeck/proc/clear_projection()
 	//clear the items from the previous program
@@ -261,10 +261,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	//makes sure that any time a holoturf is inside a baseturf list (e.g. if someone put a wall over it) its set to the OFFLINE turf
 	//so that you cant bring turfs from previous programs into other ones (like putting the plasma burn turf into lounge for example)
 	for(var/turf/closed/holo_turf in linked)
-		for(var/baseturf in holo_turf.baseturfs)
-			if(ispath(baseturf, /turf/open/floor/holofloor))
-				holo_turf.baseturfs -= baseturf
-				holo_turf.baseturfs += /turf/open/floor/holofloor/plating
+		holo_turf.replace_baseturf(/turf/open/floor/holofloor, /turf/open/floor/holofloor/plating)
 
 ///finalizes objects in the spawned list
 /obj/machinery/computer/holodeck/proc/finish_spawn()

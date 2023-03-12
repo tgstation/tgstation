@@ -3,7 +3,7 @@
 	desc = "How someone could even fit in there is byond me."
 	icon_state = "clowncar"
 	max_integrity = 150
-	armor = list(MELEE = 70, BULLET = 40, LASER = 40, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 80, ACID = 80)
+	armor_type = /datum/armor/car_clowncar
 	enter_delay = 20
 	max_occupants = 50
 	movedelay = 0.6
@@ -21,6 +21,14 @@
 	var/thankscount = 0
 	///Current status of the cannon, alternates between CLOWN_CANNON_INACTIVE, CLOWN_CANNON_BUSY and CLOWN_CANNON_READY
 	var/cannonmode = CLOWN_CANNON_INACTIVE
+
+/datum/armor/car_clowncar
+	melee = 70
+	bullet = 40
+	laser = 40
+	bomb = 30
+	fire = 80
+	acid = 80
 
 /obj/vehicle/sealed/car/clowncar/Initialize(mapload)
 	. = ..()
@@ -72,7 +80,7 @@
 			voreman.client.give_award(/datum/award/achievement/misc/round_and_full, voreman)
 
 /obj/vehicle/sealed/car/clowncar/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if((user.loc != src) || user.environment_smash & (ENVIRONMENT_SMASH_WALLS|ENVIRONMENT_SMASH_RWALLS))
+	if((user.loc != src) || user.environment_smash >= ENVIRONMENT_SMASH_WALLS)
 		return ..()
 
 /obj/vehicle/sealed/car/clowncar/mob_exit(mob/M, silent = FALSE, randomstep = FALSE)
@@ -100,7 +108,7 @@
 
 /obj/vehicle/sealed/car/clowncar/Bump(atom/bumped)
 	. = ..()
-	if(isliving(bumped))
+	if(isliving(bumped) && !istype(bumped, /mob/living/simple_animal/deer))
 		if(ismegafauna(bumped))
 			return
 		var/mob/living/hittarget_living = bumped
@@ -201,9 +209,9 @@
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car lets out a comedic toot."))
 			playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
 			for(var/mob/living/L in orange(loc, 6))
-				L.emote("laughs")
+				L.emote("laugh")
 			for(var/mob/living/L as anything in occupants)
-				L.emote("laughs")
+				L.emote("laugh")
 
 ///resets the icon and iconstate of the clowncar after it was set to singulo states
 /obj/vehicle/sealed/car/clowncar/proc/reset_icon()
@@ -263,7 +271,7 @@
 	if(modifiers[SHIFT_CLICK] || (ismovable(target) && !isturf(target.loc)))
 		return
 	var/mob/living/unlucky_sod = pick(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
-	mob_exit(unlucky_sod, TRUE)
+	mob_exit(unlucky_sod, silent = TRUE)
 	flick("clowncar_recoil", src)
 	playsound(src, pick('sound/vehicles/carcannon1.ogg', 'sound/vehicles/carcannon2.ogg', 'sound/vehicles/carcannon3.ogg'), 75)
 	unlucky_sod.throw_at(target, 10, 2)
