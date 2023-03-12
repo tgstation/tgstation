@@ -1,26 +1,25 @@
 import { useBackend } from '../backend';
-import { Section, Stack, TimeDisplay } from '../components';
+import { Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Info = {
   name: string;
   info: string;
   goal: string;
-  timeout: number;
+  timeout: string;
 };
 
 export const StoryParticipant = (props, context) => {
   const { data } = useBackend<Info>(context);
   const { name, goal, timeout } = data;
   return (
-    <Window width={620} height={250}>
+    <Window width={620} height={620}>
       <Window.Content>
         <Section scrollable fill>
           <Stack vertical>
             {timeout ? (
-              <Stack.Item>
-                Time until you are sent to the station:
-                <TimeDisplay auto="down" value={timeout} />
+              <Stack.Item textColor="blue" fontSize="20px">
+                Time until you are sent to the station: {timeout}
               </Stack.Item>
             ) : (
               <Stack.Item />

@@ -347,7 +347,7 @@
 	name = "Real Guard"
 
 	id = /obj/item/card/id
-	id_trim = /datum/id_trim/real_guard
+	id_trim = /datum/id_trim/job/assistant
 	uniform = /obj/item/clothing/under/shorts/red
 
 /datum/outfit/worldjumper

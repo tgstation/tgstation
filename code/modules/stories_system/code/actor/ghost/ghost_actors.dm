@@ -57,7 +57,7 @@
 /datum/story_actor/ghost/ui_data(mob/user)
 	var/list/data = list()
 	if(timeout && start_time)
-		data["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
+		data["timeout"] = DisplayTimeText(CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)))
 	return data
 
 /// Ghost ones are delayed by a few minutes to ensure that the ghosts have time to choose a character and for crew actors to get settled a bit

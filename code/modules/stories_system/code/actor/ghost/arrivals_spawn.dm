@@ -78,7 +78,7 @@
 	actor_goal = "Go to and be annoying middle management in %DEPARTMENT%. Hold meetings. Drink coffee. Assign people to tasks. \
 	Deploy management philsophies to develop client-centric solutions. Run the department like a business, to turn a profit. \
 	Talk like an annoying management person all the time. Circle back with employees. Touch bases with problem team members. \
-	Identify actionable success metrics, and action on them.\n\n\
+	Identify actionable success metrics, and action on them.<br><br>\
 	NOTE: Think about some of the worst managers you've ever had in your jobs over the years. Be like them."
 	var/department = "Debug Department, File A Bug Report If You See This"
 
@@ -125,9 +125,9 @@
 	actor_outfits = list(
 		/datum/outfit/story_agent,
 	)
-	actor_info = "Honestly you've probably screwed the captain's cat on this one.\n\n\
+	actor_info = "Honestly you've probably screwed the captain's cat on this one.<br><br>\
 	In an effort to boost your client's sales, you figured a book tour was in order. A visit to inhabitable worlds (and even some inhospitable ones too) didn't do much for royalties,\
-	and getting robbed by the space mafia didn't help either. So you signed both your souls away to NanoTrasen in hopes of tapping into the corporate market…\n\n\
+	and getting robbed by the space mafia didn't help either. So you signed both your souls away to NanoTrasen in hopes of tapping into the corporate market…<br><br>\
 	Shame that also means you're working for them now."
 	actor_goal = "Survive the shift. Help your client sell their book. Collect your 10% at all costs."
 
@@ -169,10 +169,10 @@
 	actor_outfits = list(
 		/datum/outfit/veteran,
 	)
-	actor_info = "It's been a long and bloodied life…\n\n\
+	actor_info = "It's been a long and bloodied life…<br><br>\
 	Broken bones. Bullets rending flesh. Explosions shattering apart everything you've ever known. You put all of that behind you, for a time. \
 	You found work on vessels drifting into the darkest depths, seeking to distance yourself from those you served. Oh certainly there were those who questioned your origins. \
-	Syndicate? Merc? Gunner for the Black Hole Barons? You glared them all off…\n\n\
+	Syndicate? Merc? Gunner for the Black Hole Barons? You glared them all off…<br><br>\
 	And now you find yourself here. Something stirs within you as you gaze upon them. An echo of your old life. One that must be preserved at all costs."
 	actor_goal = "Ensure your charge survives the shift. Only harm those who are hostile to your charge."
 	/// Stores their charge reference
