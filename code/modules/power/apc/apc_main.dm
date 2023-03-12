@@ -225,8 +225,9 @@
 		name = "\improper [get_area_name(area, TRUE)] APC"
 
 /obj/machinery/power/apc/proc/disconnect_from_area()
-	if(!area)
+	if(isnull(area))
 		return
+
 	area.power_light = FALSE
 	area.power_equip = FALSE
 	area.power_environ = FALSE
