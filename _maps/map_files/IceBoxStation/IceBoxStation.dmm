@@ -45784,9 +45784,8 @@
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
 "nZG" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/maintenance/port/fore)
+/turf/open/space/basic,
+/area/icemoon/underground/unexplored/rivers/deep/shoreline)
 "nZH" = (
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
@@ -163891,7 +163890,7 @@ gjq
 gjq
 gjq
 udC
-udC
+nZG
 udC
 udC
 udC
@@ -229421,14 +229420,14 @@ lJO
 dDV
 sFN
 lJO
-nZG
-nZG
-nZG
-nZG
-nZG
-nZG
-nZG
-nZG
+lJO
+lJO
+lJO
+lJO
+lJO
+lJO
+lJO
+lJO
 lJO
 wJz
 aJA
