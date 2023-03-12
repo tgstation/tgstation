@@ -1,0 +1,5 @@
+author: "carshalash"
+delete-after: True
+changes:
+  - qol: "Minor changes to Mexican tourist bot name generation"
+  - qol: "Japanese tourist bots will no longer request atomic bombs."
