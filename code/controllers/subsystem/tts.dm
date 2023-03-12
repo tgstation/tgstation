@@ -183,7 +183,7 @@ SUBSYSTEM_DEF(tts)
 		return
 
 	var/shell_scrubbed_input = tts_alphanumeric_filter(message)
-	shell_scrubbed_input = copytext(shell_scrubbed_input, 1, 100)
+	shell_scrubbed_input = copytext(shell_scrubbed_input, 1, 300)
 	var/identifier = sha1(speaker + shell_scrubbed_input + filter)
 	var/cached_voice = cached_voices[identifier]
 	if(islist(cached_voice))
