@@ -3,9 +3,9 @@
 #define PCANNON_FILO 2
 #define PCANNON_FIFO 3
 ///Defines for the pressure strength of the cannon
-#define LOW_PRESSURE 1
-#define MID_PRESSURE 2
-#define HIGH_PRESSURE 3
+#define LOW_PRESSURE "low"
+#define MID_PRESSURE "medium"
+#define HIGH_PRESSURE "high"
 
 /obj/item/pneumatic_cannon
 	name = "pneumatic cannon"
@@ -80,7 +80,7 @@
 	if(tank)
 		out += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it. It could be removed with a <b>screwdriver</b>.")
 	if(needs_air == TRUE)
-		. += span_notice("Use a wrench to change the pressure level. Current output at [pressureSetting].")
+		. += span_notice("Use a <b>wrench</b> to change the pressure level. Current output level is <b>[pressureSetting]</b>.")
 	. += out.Join("\n")
 
 /obj/item/pneumatic_cannon/screwdriver_act(mob/living/user, obj/item/tool)
@@ -93,7 +93,13 @@
 	if(needs_air == FALSE)
 		return
 	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
-	pressureSetting = pressureSetting >= HIGH_PRESSURE ? LOW_PRESSURE : pressureSetting + 1
+	switch(pressureSetting)
+		if("low")
+			pressureSetting = "medium"
+		if("medium")
+			pressureSetting = "high"
+		if("high")
+			pressureSetting = "low"
 	balloon_alert(user, "output level set to [pressureSetting]")
 	return TRUE
 

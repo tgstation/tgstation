@@ -1,7 +1,7 @@
 ///Defines for the pressure strength of the fist
-#define LOW_PRESSURE 1
-#define MID_PRESSURE 2
-#define HIGH_PRESSURE 3
+#define LOW_PRESSURE "low"
+#define MID_PRESSURE "medium"
+#define HIGH_PRESSURE "high"
 ///Defines for the tank change action
 #define TANK_INSERTING 0
 #define TANK_REMOVING 1
@@ -42,12 +42,18 @@
 		return
 	if(tank)
 		. += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it.")
-		. += span_notice("Can be removed with a screwdriver.")
+		. += span_notice("Can be removed with a <b>screwdriver</b>.")
 
-	. += span_notice("Use a wrench to change the valve strength. Current strength at [fist_pressure_setting].")
+	. += span_notice("Use a <b>wrench</b> to change the valve strength. Current strength is at <b>[fist_pressure_setting]</b> level.")
 
 /obj/item/melee/powerfist/wrench_act(mob/living/user, obj/item/tool)
-	fist_pressure_setting = fist_pressure_setting >= HIGH_PRESSURE ? LOW_PRESSURE : fist_pressure_setting + 1
+	switch(fist_pressure_setting)
+		if("low")
+			fist_pressure_setting = "medium"
+		if("medium")
+			fist_pressure_setting = "high"
+		if("high")
+			fist_pressure_setting = "low"
 	tool.play_tool_sound(src)
 	balloon_alert(user, "piston strength set to [fist_pressure_setting]")
 	return TRUE
