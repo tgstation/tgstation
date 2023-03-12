@@ -52,13 +52,15 @@
 	cooldown_time = 0.5 SECONDS
 	/// Slowdown added onto the suit.
 	var/slowdown_active = 0.5
+	/// A list of traits to add to the wearer when we're active (see: Magboots)
+	var/list/active_traits = list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NEGATES_GRAVITY)
 
 /obj/item/mod/module/magboot/on_activation()
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
-	ADD_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, MOD_TRAIT)
+	for(var/new_trait in active_traits)
+		ADD_TRAIT(mod.wearer, new_trait, MOD_TRAIT)
 	mod.slowdown += slowdown_active
 	mod.wearer.update_equipment_speed_mods()
 
@@ -66,8 +68,8 @@
 	. = ..()
 	if(!.)
 		return
-	REMOVE_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
-	REMOVE_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, MOD_TRAIT)
+	for(var/old_trait in active_traits)
+		REMOVE_TRAIT(mod.wearer, old_trait, MOD_TRAIT)
 	mod.slowdown -= slowdown_active
 	mod.wearer.update_equipment_speed_mods()
 
