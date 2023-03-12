@@ -94,5 +94,6 @@
 
 /mob/living/carbon/human/species/monkey/bridget
 	name = "Bridget Stamos"
+	gender = FEMALE
 	unique_name = FALSE
 	use_random_name = FALSE

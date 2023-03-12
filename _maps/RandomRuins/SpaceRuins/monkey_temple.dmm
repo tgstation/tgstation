@@ -246,6 +246,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/ruin/temple_mining_shuttle)
+"sG" = (
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
 "tt" = (
 /turf/closed/mineral/random,
 /area/ruin/space/has_grav)
@@ -254,6 +258,7 @@
 	pixel_y = 8;
 	pixel_x = 6
 	},
+/obj/machinery/light/dim/directional/south,
 /turf/open/floor/iron/white/small,
 /area/shuttle/ruin/temple_mining_shuttle)
 "tM" = (
@@ -367,6 +372,14 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/temple_mining_shuttle)
+"CH" = (
+/obj/structure/fluff/empty_sleeper{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/white/small,
+/area/shuttle/ruin/temple_mining_shuttle)
 "Db" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/foamedmetal/iron,
@@ -409,6 +422,11 @@
 /obj/effect/turf_decal/trimline/dark/filled/warning{
 	dir = 4
 	},
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
+"FY" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/dim/directional/west,
 /turf/open/floor/iron/terracotta,
 /area/shuttle/ruin/temple_mining_shuttle)
 "FZ" = (
@@ -507,12 +525,23 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/terracotta,
 /area/shuttle/ruin/temple_mining_shuttle)
+"Px" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/box,
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/ruin/temple_mining_shuttle)
 "PC" = (
 /obj/structure/table/wood,
 /obj/item/food/soup/monkeysdelight,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone,
 /area/ruin/unpowered/monkey_temple)
+"PF" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/terracotta,
+/area/shuttle/ruin/temple_mining_shuttle)
 "PQ" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/unpowered/monkey_temple)
@@ -755,17 +784,17 @@ Ng
 IJ
 Xu
 hJ
+sG
 Qw
 Qw
-Qw
 hJ
 hJ
 hJ
-hJ
+FY
 Qw
 Xu
 ft
-ft
+CH
 ft
 ft
 Xu
@@ -842,7 +871,7 @@ hJ
 Xu
 pF
 pF
-EM
+Px
 EM
 tT
 Xu
@@ -852,10 +881,10 @@ hJ
 Qw
 Qw
 Qw
-hJ
+PF
 Qw
 Xu
-hJ
+PF
 qN
 gM
 "}
