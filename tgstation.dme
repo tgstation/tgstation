@@ -3802,6 +3802,8 @@
 #include "code\modules\mob\living\basic\space_fauna\giant_spider\spider_abilities\lay_eggs.dm"
 #include "code\modules\mob\living\basic\space_fauna\giant_spider\spider_abilities\web.dm"
 #include "code\modules\mob\living\basic\space_fauna\giant_spider\spider_abilities\wrap.dm"
+#include "code\modules\mob\living\basic\space_fauna\meteor_heart\meteor_heart.dm"
+#include "code\modules\mob\living\basic\space_fauna\meteor_heart\spike_chaser.dm"
 #include "code\modules\mob\living\basic\space_fauna\netherworld\blankbody.dm"
 #include "code\modules\mob\living\basic\space_fauna\netherworld\creature.dm"
 #include "code\modules\mob\living\basic\space_fauna\netherworld\migo.dm"

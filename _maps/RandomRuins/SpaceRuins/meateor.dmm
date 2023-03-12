@@ -15,6 +15,10 @@
 "T" = (
 /turf/open/floor/material/meat,
 /area/ruin/space/has_grav/powered)
+"X" = (
+/obj/item/chair,
+/turf/open/floor/material/meat,
+/area/ruin/space/has_grav/powered)
 
 (1,1,1) = {"
 a
@@ -246,7 +250,7 @@ T
 T
 T
 T
-T
+v
 T
 T
 T
@@ -306,7 +310,7 @@ T
 T
 T
 T
-T
+X
 T
 T
 T
@@ -340,7 +344,7 @@ T
 T
 T
 T
-v
+T
 T
 T
 T
@@ -402,7 +406,7 @@ T
 T
 T
 T
-T
+v
 T
 T
 A
