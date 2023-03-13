@@ -88,7 +88,11 @@
 	SIGNAL_HANDLER
 	PRIVATE_PROC(TRUE)
 
-	user.UnarmedAttack(parent, proximity_flag = TRUE, modifiers = modifiers)
+	var/atom/movable/movable_parent = parent
+	if (!movable_parent.can_interact(user))
+		return NONE
+
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, UnarmedAttack), parent, proximity_flag = TRUE, modifiers = modifiers)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -96,7 +100,7 @@
 	datum/source,
 	list/context,
 	obj/item/held_item,
-	mob/user
+	mob/user,
 )
 	PRIVATE_PROC(TRUE)
 	SIGNAL_HANDLER
