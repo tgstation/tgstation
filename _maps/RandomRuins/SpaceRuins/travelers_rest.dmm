@@ -47,10 +47,6 @@
 	pixel_y = 8;
 	pixel_x = 8
 	},
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_y = -1;
-	pixel_x = 6
-	},
 /obj/machinery/atmospherics/components/binary/pump{
 	on = 1;
 	hide = 1
@@ -134,7 +130,7 @@
 	},
 /obj/item/reagent_containers/cup/rag{
 	pixel_x = 6;
-	pixel_y = 28
+	pixel_y = 26
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
@@ -163,8 +159,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/components/tank/air{
-	pixel_y = -3;
-	pixel_x = 1
+	pixel_y = -3
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
@@ -325,13 +320,13 @@
 /area/ruin/space/has_grav/travelers_rest)
 "Gj" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/medkit/regular{
-	pixel_x = 8;
-	pixel_y = 8
-	},
 /obj/item/gps/spaceruin{
 	pixel_x = -9;
 	pixel_y = 3
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = 8;
+	pixel_y = 8
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
@@ -441,6 +436,10 @@
 	dir = 4
 	},
 /obj/structure/toilet,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_y = -9;
+	pixel_x = -10
+	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
