@@ -43,31 +43,46 @@
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
+/// SUIT and HEAD items which stop lava from hurting the wearer
 #define LAVAPROTECT (1<<0)
-#define STOPSPRESSUREDAMAGE (1<<1) //SUIT and HEAD items which stop pressure damage. To stop you taking all pressure damage you must have both a suit and head item with this flag.
-#define BLOCK_GAS_SMOKE_EFFECT (1<<2) // blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!
-#define MASKINTERNALS (1<<3) // mask allows internals
-#define GAS_FILTERING (1<<4) //mask filters toxins and other harmful gases
-#define NOSLIP (1<<5) //prevents from slipping on wet floors, in space etc
-#define THICKMATERIAL (1<<6) //prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
-#define VOICEBOX_TOGGLABLE (1<<7) // The voicebox in this clothing can be toggled.
-#define VOICEBOX_DISABLED (1<<8) // The voicebox is currently turned off.
-#define BLOCKS_SHOVE_KNOCKDOWN (1<<9) // Prevents shovies against a dense object from knocking the wearer down.
-#define SNUG_FIT (1<<10) //Prevents knock-off from things like hat-throwing.
-#define ANTI_TINFOIL_MANEUVER (1<<11) //Hats with negative effects when worn (i.e the tinfoil hat).
-#define DANGEROUS_OBJECT (1<<12) //Clothes that cause a larger notification when placed on a person.
-#define LARGE_WORN_ICON (1<<13) //Clothes that use large icons, for applying the proper overlays like blood
+/// SUIT and HEAD items which stop pressure damage.
+/// To stop you taking all pressure damage you must have both a suit and head item with this flag.
+#define STOPSPRESSUREDAMAGE (1<<1)
+/// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!
+#define BLOCK_GAS_SMOKE_EFFECT (1<<2)
+/// mask allows internals
+#define MASKINTERNALS (1<<3)
+/// mask filters toxins and other harmful gases
+#define GAS_FILTERING (1<<4)
+/// prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag.
+/// Example: space suits, biosuit, bombsuits, thick suits that cover your body.
+#define THICKMATERIAL (1<<5)
+/// The voicebox in this clothing can be toggled.
+#define VOICEBOX_TOGGLABLE (1<<6)
+/// The voicebox is currently turned off.
+#define VOICEBOX_DISABLED (1<<7)
+/// Prevents shovies against a dense object from knocking the wearer down.
+#define BLOCKS_SHOVE_KNOCKDOWN (1<<8)
+/// Prevents knock-off from things like hat-throwing.
+#define SNUG_FIT (1<<9)
+/// Hats with negative effects when worn (i.e the tinfoil hat).
+#define ANTI_TINFOIL_MANEUVER (1<<10)
+/// Clothes that cause a larger notification when placed on a person.
+#define DANGEROUS_OBJECT (1<<11)
+/// Clothes that use large icons, for applying the proper overlays like blood
+#define LARGE_WORN_ICON (1<<12)
 /// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
-#define BLOCKS_SPEECH (1<<14)
-#define PLASMAMAN_HELMET_EXEMPT (1<<15) //prevents from placing on plasmaman helmet
+#define BLOCKS_SPEECH (1<<13)
+/// prevents from placing on plasmaman helmet
+#define PLASMAMAN_HELMET_EXEMPT (1<<14)
 /// Prevents plasmamen from igniting when wearing this
-#define PLASMAMAN_PREVENT_IGNITION (1<<16)
+#define PLASMAMAN_PREVENT_IGNITION (1<<15)
 /// Usable as casting clothes by wizards (only matters for suits and headwear)
-#define CASTING_CLOTHES (1<<17)
+#define CASTING_CLOTHES (1<<16)
 ///Moths can't eat the clothing that has this flag.
-#define INEDIBLE_CLOTHING (1<<18)
+#define INEDIBLE_CLOTHING (1<<17)
 /// Headgear/helmet allows internals
-#define HEADINTERNALS (1<<19)
+#define HEADINTERNALS (1<<18)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing
