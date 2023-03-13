@@ -18,14 +18,20 @@
 	pixel_x = 3;
 	pixel_y = 11
 	},
-/obj/item/storage/box/donkpockets/donkpocketpizza,
+/obj/item/storage/box/donkpockets/donkpocketpizza{
+	pixel_x = 8
+	},
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 4
+	},
+/obj/item/storage/box/drinkingglasses{
+	pixel_x = -8
 	},
 /turf/open/floor/iron/textured_large,
 /area/ruin/space/has_grav/travelers_rest)
 "bq" = (
 /obj/structure/window/reinforced/fulltile,
+/obj/structure/grille,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/travelers_rest)
 "bz" = (
@@ -38,16 +44,20 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/storage/box/beakers{
-	pixel_y = -1;
-	pixel_x = 5
+	pixel_y = 8;
+	pixel_x = 8
 	},
 /obj/item/reagent_containers/spray/cleaner{
-	pixel_y = 3;
-	pixel_x = -8
+	pixel_y = -1;
+	pixel_x = 6
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	on = 1;
 	hide = 1
+	},
+/obj/item/pai_card{
+	pixel_x = -8;
+	pixel_y = 2
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
@@ -70,8 +80,7 @@
 	dir = 9
 	},
 /obj/machinery/chem_dispenser{
-	layer = 2.7;
-	pixel_x = -4
+	layer = 2.7
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -121,12 +130,11 @@
 	},
 /obj/machinery/chem_dispenser/drinks/beer{
 	dir = 4;
-	pixel_x = 3;
-	pixel_y = -2
+	pixel_y = 0
 	},
-/obj/machinery/reagentgrinder{
-	pixel_y = 28;
-	pixel_x = -3
+/obj/item/reagent_containers/cup/rag{
+	pixel_x = 9;
+	pixel_y = 18
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
@@ -253,12 +261,11 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
-/obj/structure/table/reinforced,
-/obj/item/pai_card{
-	pixel_y = 5;
-	pixel_x = 5
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/chem_heater/withbuffer{
+	pixel_x = 1;
+	pixel_y = 2
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "Dw" = (
@@ -365,8 +372,7 @@
 	},
 /obj/machinery/chem_dispenser/drinks{
 	dir = 4;
-	pixel_x = 3;
-	pixel_y = 2
+	pixel_y = 0
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
@@ -405,12 +411,9 @@
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 6
 	},
-/obj/item/storage/box/drinkingglasses{
-	pixel_y = 9;
-	pixel_x = 6
-	},
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = -4
+/obj/machinery/reagentgrinder{
+	pixel_y = 8;
+	pixel_x = -6
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
@@ -521,10 +524,7 @@
 "Xw" = (
 /obj/structure/cable,
 /obj/structure/table/reinforced,
-/obj/machinery/microwave{
-	pixel_x = 2;
-	pixel_y = 21
-	},
+/obj/machinery/microwave,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -558,14 +558,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/chem_master{
-	pixel_x = -11;
-	pixel_y = -1
-	},
-/obj/machinery/chem_heater/withbuffer{
-	pixel_x = 12;
-	pixel_y = -2
-	},
+/obj/machinery/chem_master,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 
