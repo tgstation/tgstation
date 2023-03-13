@@ -1200,6 +1200,7 @@
 	worn_icon_state = "hardsuit-inq"
 	inhand_icon_state = "hardsuit-inq"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/inquisitor
+	slowdown = 0.4
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/inquisitor
 	name = "inquisitor's helmet"
@@ -1207,7 +1208,7 @@
 	worn_icon_state = "hardsuit-inq"
 	inhand_icon_state = "hardsuit0-inq"
 	hardsuit_type = "inq"
-	slowdown = 0.4
+	
 
 //Carpsuit, bestsuit, lovesuit
 /obj/item/clothing/head/helmet/space/hardsuit/carp
