@@ -58,7 +58,7 @@
 	var/turf/player_turf = get_turf(user)
 	if(player_turf?.is_blocked_turf(TRUE))
 		return FALSE
-	user.visible_message(span_info("[user] begins to set up \the [src]..."))
+	balloon_alert_to_viewers("setting up pinata...")
 	if(!do_after(user, 4 SECONDS, target = get_turf(user), progress = TRUE))
 		balloon_alert(user, "cancelled!")
 	new pinata_type(get_turf(user))
