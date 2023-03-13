@@ -492,7 +492,7 @@
 		"surgery_wing_reconstruction",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list( /datum/experiment/scanning/points/people/wounds/all_wounds= 3000)
+	discount_experiments = list(/datum/experiment/scanning/points/people/wounds/all_wounds = 3000)
 
 /datum/techweb_node/exp_surgery
 	id = "exp_surgery"

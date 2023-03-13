@@ -35,7 +35,7 @@
 	name = "Alien Dissection Experiment"
 	description = "The dissector becomes the dissected. Splice open a grey man to see why they want to do it to us so much. "
 
-/datum/experiment/dissection/nonhuman/is_valid_dissection(mob/target)
+/datum/experiment/dissection/ayyylien/is_valid_dissection(mob/target)
 	return isabductor(target)
 
 /datum/experiment/dissection/xenomorph

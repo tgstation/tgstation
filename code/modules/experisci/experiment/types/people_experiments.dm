@@ -79,7 +79,8 @@
 /datum/experiment/scanning/points/people/brain_traumas/random/New()
 	// Pick a random assortment of common or uncommon traumas
 	var/possible_traumas = subtypesof(/datum/brain_trauma/mild) + subtypesof(/datum/brain_trauma/severe)
-	for(var/i in 1 to required_points * 2)
+	var/cap = round(required_points * 2)
+	while(length(required_trauma_type) < cap && length(possible_traumas))
 		var/datum/brain_trauma/picked = pick_n_take(possible_traumas)
 		if(!initial(picked.random_gain))
 			continue
