@@ -156,7 +156,7 @@
 	. = ..()
 	change_setting(FLOODLIGHT_OFF)
 	panel_open = TRUE
-	to_chat(user, span_notice("You open the flood lights maintainence panel."))
+	balloon_alert(user, "opened panel")
 	return TRUE
 
 /obj/machinery/power/floodlight/attack_hand(mob/user, list/modifiers)
