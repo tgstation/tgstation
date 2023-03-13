@@ -35,6 +35,15 @@
 	src.target = WEAKREF(target)
 	movement = SSmove_manager.move_towards(src, chasing = target, delay = move_speed, home = TRUE, timeout = duration, flags = MOVEMENT_LOOP_START_FAST)
 
+	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(on_target_invalid))
+	if (isliving(target))
+		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_target_invalid))
+
+/// Destroy ourselves if the target is no longer valid
+/obj/effect/temp_visual/spike_chaser/proc/on_target_invalid
+	SIGNAL_HANDLER
+	qdel(src)
+
 /obj/effect/temp_visual/spike_chaser/Destroy()
 	QDEL_NULL(movement)
 	return ..()
@@ -56,6 +65,12 @@
 	var/list/damage_blacklist_typecache = list(
 		/mob/living/basic/meteor_heart,
 	)
+	/// Weighted list of body zones to target while standing
+	var/static/list/standing_damage_zones = list(
+		BODY_ZONE_CHEST = 1,
+		BODY_ZONE_R_LEG = 3,
+		BODY_ZONE_L_LEG = 3,
+	)
 
 /obj/effect/temp_visual/emerging_ground_spike/Initialize(mapload)
 	. = ..()
@@ -71,5 +86,5 @@
 	for(var/mob/living/attacked_living in loc)
 		if (is_type_in_typecache(attacked_living, damage_blacklist_typecache))
 			continue
-		var/target_zone = attacked_living.resting ? BODY_ZONE_CHEST : pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+		var/target_zone = attacked_living.resting ? BODY_ZONE_CHEST : pick_weight(standing_damage_zones)
 		attacked_living.apply_damage(impale_damage, damagetype = BRUTE, def_zone = target_zone, sharpness = SHARP_POINTY)
