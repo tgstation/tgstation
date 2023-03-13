@@ -62,7 +62,10 @@
 
 	// Otherwise, we're gonna dump into the dest object
 	var/turf/dump_onto = get_turf(dest_object)
-	user.visible_message("[user] dumps the contents of [src] all out on \the [dump_onto]", "The remaining trash in \the [src] falls out onto \the [dump_onto]")
+	user.visible_message(
+		"[user] dumps the contents of [src] all out on \the [dump_onto]",
+		"The remaining trash in \the [src] falls out onto \the [dump_onto]",
+	)
 	source.remove_all(dump_onto)
 
 /obj/item/storage/bag/trash/suicide_act(mob/living/user)
