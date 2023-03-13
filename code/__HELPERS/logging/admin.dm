@@ -7,30 +7,30 @@
 /proc/log_admin(text)
 	GLOB.admin_log.Add(text)
 	logger.Log(LOG_CATEGORY_ADMIN, text)
-	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMIN - [text]")
+	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMIN: [text]")
 
 /// Logging for admin actions on or with circuits
 /proc/log_admin_circuit(text)
 	GLOB.admin_log.Add(text)
 	logger.Log(LOG_CATEGORY_ADMIN_CIRCUIT, text)
-	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMIN - CIRCUIT - [text]")
+	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMIN: CIRCUIT: [text]")
 
 /// General logging for admin actions
 /proc/log_admin_private(text)
 	GLOB.admin_log.Add(text)
 	logger.Log(LOG_CATEGORY_ADMIN_PRIVATE, text)
-	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMINPRIVATE - [text]")
+	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMINPRIVATE: [text]")
 
 /// Logging for AdminSay (ASAY) messages
 /proc/log_adminsay(text)
 	GLOB.admin_log.Add(text)
 	logger.Log(LOG_CATEGORY_ADMIN_PRIVATE_ASAY, text)
-	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMINPRIVATE - ASAY - [text]")
+	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMINPRIVATE: ASAY: [text]")
 
 /// Logging for DeachatSay (DSAY) messages
 /proc/log_dsay(text)
 	logger.Log(LOG_CATEGORY_ADMIN_DSAY, text)
-	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMIN - DSAY - [text]")
+	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMIN: DSAY: [text]")
 
 /**
  * Writes to a special log file if the log_suspicious_login config flag is set,
