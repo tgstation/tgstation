@@ -13,8 +13,8 @@
 		minimum_damage = 10,
 		drop_chance = 40,
 		candy = list(/obj/item/food/candy, /obj/item/food/lollipop/cyborg, /obj/item/food/gumball, /obj/item/food/bubblegum, /obj/item/food/chocolatebar),
-		death_drop = 5
-	)
+		death_drop = 5,
+)
 
 	src.minimum_damage = minimum_damage
 	src.drop_chance = drop_chance

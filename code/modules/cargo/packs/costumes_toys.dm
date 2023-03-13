@@ -301,7 +301,7 @@
 	contains = list(
 		/obj/item/pinata,
 		/obj/item/melee/baseball_bat,
-		/obj/item/clothing/glasses/blindfold
+		/obj/item/clothing/glasses/blindfold,
 	)
 	crate_name = "corgi pinata kit"
 	crate_type = /obj/structure/closet/crate/wooden
