@@ -201,21 +201,14 @@ Medical HUD! Basic mode needs suit sensors on.
 	var/icon/I = icon(icon, icon_state, dir)
 	var/virus_threat = check_virus()
 	holder.pixel_y = I.Height() - world.icon_size
+	
+	// Priority for health states is:
+	// Xeno warning > Virus levels > Dead and unrevivable > A changeling pretending to be the latter > Dead and revivable 
+	holder.icon_state = "huddefib"
 	if(HAS_TRAIT(src, TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
-	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-		if((key || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES))
-			if(ishuman(src))
-				var/mob/living/carbon/human/potential_changeling = src
-				if(!potential_changeling.getorgan(/obj/item/organ/internal/brain) && potential_changeling.mind.has_antag_datum(/datum/antagonist/changeling))
-					holder.icon_state = "huddead" // Prevents metagaming changelings by debraining them and seeing that they're still revivable somnehow.
-				else
-					holder.icon_state = "huddefib"
-			else
-				holder.icon_state = "huddefib"
-		else
-			holder.icon_state = "huddead"
-	else
+		return
+	if(stat != DEAD && (!HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		switch(virus_threat)
 			if(DISEASE_SEVERITY_BIOHAZARD)
 				holder.icon_state = "hudill5"
@@ -233,6 +226,15 @@ Medical HUD! Basic mode needs suit sensors on.
 				holder.icon_state = "hudbuff"
 			if(null)
 				holder.icon_state = "hudhealthy"
+		return
+	if((!key && !get_ghost(FALSE, TRUE)) || !(can_defib() & DEFIB_REVIVABLE_STATES))
+		holder.icon_state = "huddead"
+		return
+	if(ishuman(src))
+		var/mob/living/carbon/human/potential_changeling = src
+		if(!potential_changeling.getorgan(/obj/item/organ/internal/brain) && potential_changeling.mind.has_antag_datum(/datum/antagonist/changeling))
+			holder.icon_state = "huddead" // Prevents metagaming changelings by debraining them and seeing that they're still revivable somnehow.
+			return
 
 
 /***********************************************
