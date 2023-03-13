@@ -478,6 +478,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			. = "incoherently signs"
 		else
 			. = "gibbers"
+	else if(HAS_TRAIT(src, TRAIT_SNOB))
+		. = "drawls"
 	else
 		. = ..()
 
