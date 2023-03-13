@@ -45,6 +45,8 @@
 	AddComponent(/datum/component/payment, active_price, SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
 	scanner_wand = new/obj/item/scanner_wand(src)
 
+	register_context()
+
 /obj/machinery/medical_kiosk/proc/inuse()  //Verifies that the user can use the interface, followed by showing medical information.
 	var/mob/living/carbon/human/paying = paying_ref?.resolve()
 	if(!paying)
@@ -105,23 +107,27 @@
 		var/obj/item/scanner_wand/W = O
 		if(scanner_wand)
 			to_chat(user, span_warning("There's already a scanner wand in [src]!"))
-			return
+			return TRUE
 		if(HAS_TRAIT(O, TRAIT_NODROP) || !user.transferItemToLoc(O, src))
 			to_chat(user, span_warning("[O] is stuck to your hand!"))
-			return
-		user.visible_message(span_notice("[user] snaps [O] onto [src]!"), \
-		span_notice("You press [O] into the side of [src], clicking into place."))
+			return TRUE
+		user.visible_message(
+			span_notice("[user] snaps [O] onto [src]!"),
+			span_notice("You press [O] into the side of [src], clicking into place."),
+		)
 		//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
-		if(W.selected_target)
-			var/datum/weakref/target_ref = WEAKREF(W.return_patient())
+		var/datum/weakref/target_ref = W.return_patient()
+		var/mob/living/target_real = target_ref?.resolve()
+		if(target_real)
 			if(patient_ref != target_ref)
 				clearScans()
 			patient_ref = target_ref
-			user.visible_message(span_notice("[W.return_patient()] has been set as the current patient."))
-			W.selected_target = null
+			visible_message(span_notice("[target_real] has been set as the current patient."))
+		W.selected_target = null
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		scanner_wand = O
-		return
+		return TRUE
+
 	return ..()
 
 /obj/machinery/medical_kiosk/AltClick(mob/living/carbon/user)
@@ -140,8 +146,17 @@
 	scanner_wand = null
 
 /obj/machinery/medical_kiosk/Destroy()
-	qdel(scanner_wand)
+	QDEL_NULL(scanner_wand)
 	return ..()
+
+/obj/machinery/medical_kiosk/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(scanner_wand)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove scanner"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/scanner_wand))
+		context[SCREENTIP_CONTEXT_LMB] = "Attach scanner"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
 /obj/machinery/medical_kiosk/emag_act(mob/user)
 	..()

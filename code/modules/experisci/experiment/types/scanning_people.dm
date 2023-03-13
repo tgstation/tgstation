@@ -4,9 +4,10 @@
  * Scan members of the crew for research and profit.
  */
 /datum/experiment/scanning/points/people
-	name = "Crewmember Scanning Experiment"
+	name = "Human Field Research Experiment"
 	exp_tag = "Scan"
 	// It'd be fun if the emagged Destructive Scanner could contribute to this but maybe later
+	allowed_experimentors = list(/obj/item/experi_scanner, /obj/item/scanner_wand)
 	required_atoms = list(/mob/living/carbon/human = 1)
 
 	/**
@@ -45,7 +46,7 @@
 
 /// A people scanning experiment that require you scan certain species IDs
 /datum/experiment/scanning/points/people/species
-	name = "Crewmember Species Scanning Experiment"
+	name = "Human Field Research Experiment: Species"
 	/// Assoc list of [species ids] to [points awarded for scanning them]
 	var/list/required_species_ids = list()
 	/// If FALSE, we can scan multiple of the same species (but not the same mob)
@@ -83,7 +84,7 @@
 
 /// A people scanning experiment that require you scan people with wounds
 /datum/experiment/scanning/points/people/wounds
-	name = "Crewmember Wound Scanning Experiment"
+	name = "Human Field Research Experiment: Wounds"
 	/**
 	 * Assoc list of [wound typepaths] to [points awarded for the wound]
 	 *
@@ -116,7 +117,7 @@
 
 /// A people scanning experiment that require you scan certain mutations in people
 /datum/experiment/scanning/points/people/mutations
-	name = "Crewmember Mutation Scanning Experiment"
+	name = "Human Field Research Experiment: Mutations"
 	// Does not require crewmember scanning, as geneticists more often than not test on monkeys
 	// and it'd be confusing as to why their prime test subject does not contribute to the experimetn
 	mind_required = FALSE
@@ -152,7 +153,7 @@
 
 /// A people scanning experiment that require you scan people for organs or bodyparts (or both)
 /datum/experiment/scanning/points/people/organs_or_bodyparts
-	name = "Crewmember Body Scanning Experiment"
+	name = "Human Field Research Experiment: Body"
 	/**
 	 * Assoc list of [organ OR bodypart typepaths] to [points awarded for having it]
 	 *
@@ -211,7 +212,7 @@
 
 /// A people scanning experiment that require you find certain brain traumas
 /datum/experiment/scanning/points/people/brain_traumas
-	name = "Crewmember Trauma Scanning Experiment"
+	name = "Human Field Research Experiment: Traumas"
 	/**
 	 * Assoc list of [trauma typepaths] to [points awarded for having it]
 	 */

@@ -16,6 +16,8 @@
 	var/list/blacklisted_experiments
 	/// A set of optional experiment traits (see defines) that are disallowed for any experiments
 	var/disallowed_traits
+	/// How do we get into the UI for the handler
+	var/config_mode
 	/// Additional configuration flags for how the experiment_handler operates
 	var/config_flags
 	/// Callback that, when supplied, can be called from the UI
@@ -46,9 +48,14 @@
 	src.allowed_experiments = allowed_experiments
 	src.blacklisted_experiments = blacklisted_experiments
 	src.disallowed_traits = disallowed_traits
+	src.config_mode = config_mode
 	src.config_flags = config_flags
 	src.start_experiment_callback = start_experiment_callback
 
+	var/atom/movable/movable_parent = parent
+	movable_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(request_context))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(try_run_handheld_experiment))
 		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(ignored_handheld_experiment_attempt))
@@ -72,7 +79,7 @@
 	// Note this won't work at the moment for non-machines that have been included
 	// on the map as the servers aren't initialized when the non-machines are initializing
 	if (!(config_flags & EXPERIMENT_CONFIG_NO_AUTOCONNECT))
-		var/list/found_servers = get_available_servers(parent)
+		var/list/found_servers = get_available_servers()
 		var/obj/machinery/rnd/server/selected_server = length(found_servers) ? found_servers[1] : null
 		if (selected_server)
 			link_techweb(selected_server.stored_research)
@@ -82,6 +89,57 @@
 /datum/component/experiment_handler/Destroy(force, silent)
 	. = ..()
 	GLOB.experiment_handlers -= src
+
+/// Adds an examine to let people know this thing can do certain experiments.
+/datum/component/experiment_handler/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	var/config_verb = ""
+	switch(config_mode)
+		if(EXPERIMENT_CONFIG_ATTACKSELF)
+			config_verb = "Use it in hand"
+		if(EXPERIMENT_CONFIG_ALTCLICK)
+			config_verb = "Alt-click it"
+		if(EXPERIMENT_CONFIG_CLICK)
+			config_verb = "Click it"
+		if(EXPERIMENT_CONFIG_UI)
+			config_verb = "Open its interface by clicking it"
+		else
+			return
+
+	examine_list += span_notice("This can complete experiments for Science. <b>[config_verb]</b> to see potential experiments.")
+
+	var/list/allowed_names = list()
+	for(var/datum/experiment/experiment_type as anything in allowed_experiments)
+		var/test_name = initial(experiment_type.name)
+		if(!test_name || test_name == "Experiment")
+			continue
+		allowed_names += test_name
+
+	if(length(allowed_names))
+		examine_list += span_notice("The following experiments can be completed: [english_list(allowed_names, and_text = " or ")].")
+
+/// Adds a screentip to explain how to get into the ui.
+/datum/component/experiment_handler/proc/request_context(datum/source, list/context, obj/item/held_item, mob/user)
+	SIGNAL_HANDLER
+
+	if(!isnull(held_item) && held_item != parent)
+		return NONE
+
+	switch(config_mode)
+		if(EXPERIMENT_CONFIG_ATTACKSELF)
+			// No attack self screen tip (yet), so we'll just suggest clicking in hand
+			if(held_item != parent)
+				return NONE
+			context[SCREENTIP_CONTEXT_LMB] = "Open Experiments"
+		if(EXPERIMENT_CONFIG_CLICK, EXPERIMENT_CONFIG_UI)
+			context[SCREENTIP_CONTEXT_LMB] = "Open Experiments"
+		if(EXPERIMENT_CONFIG_ALTCLICK)
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Open Experiments"
+		else
+			return NONE
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /**
  * Hooks on attack to try and run an experiment (When using a handheld handler)
