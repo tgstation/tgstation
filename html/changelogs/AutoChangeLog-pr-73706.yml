@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Spell Cards from the Wizard spell will now home in somewhat on the target nearest to your cursor."
-  - bugfix: "The Spell Cards spell now displays the correct icon instead of a big red \"error\" text."

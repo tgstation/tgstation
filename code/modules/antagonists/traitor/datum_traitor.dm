@@ -16,7 +16,6 @@
 	preview_outfit = /datum/outfit/traitor
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
-	var/progressive = FALSE
 	///give this traitor an uplink?
 	var/give_uplink = TRUE
 	///if TRUE, this traitor will always get hijacking as their final objective
@@ -34,9 +33,10 @@
 	/// The uplink handler that this traitor belongs to.
 	var/datum/uplink_handler/uplink_handler
 
-	var/datum/contractor_hub/contractor_hub
-
 	var/uplink_sale_count = 3
+
+	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
+	var/datum/objective/ending_objective
 
 /datum/antagonist/traitor/New(give_objectives = TRUE)
 	. = ..()
@@ -56,15 +56,14 @@
 		else
 			uplink_handler = uplink.uplink_handler
 		uplink_handler.primary_objectives = objectives
-		uplink_handler.has_progression = progressive
+		uplink_handler.has_progression = TRUE
 		SStraitor.register_uplink_handler(uplink_handler)
 
-		if(progressive)
-			uplink_handler.has_objectives = TRUE
-			uplink_handler.generate_objectives()
+		uplink_handler.has_objectives = TRUE
+		uplink_handler.generate_objectives()
 
-			if(uplink_handler.progression_points < SStraitor.current_global_progression)
-				uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
+		if(uplink_handler.progression_points < SStraitor.current_global_progression)
+			uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
 
 		var/list/uplink_items = list()
 		for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
@@ -79,6 +78,7 @@
 
 	if(give_objectives)
 		forge_traitor_objectives()
+		forge_ending_objective()
 
 	pick_employer()
 
@@ -149,6 +149,11 @@
 
 	possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
 
+	if(istype(ending_objective, /datum/objective/hijack))
+		possible_employers -= GLOB.normal_employers
+	else //escape or martyrdom
+		possible_employers -= GLOB.hijack_employers
+
 	switch(faction)
 		if(FLAVOR_FACTION_SYNDICATE)
 			possible_employers -= GLOB.nanotrasen_employers
@@ -157,36 +162,74 @@
 	employer = pick(possible_employers)
 	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
 
-/datum/antagonist/traitor/proc/forge_traitor_objectives(var/amount_override = 0, give_escape_obj = TRUE)
+/// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
+/datum/antagonist/traitor/proc/forge_traitor_objectives()
 	objectives.Cut()
+	var/objective_count = 0
 
-	var/list/kill_targets = list() //for blacklisting already-set targets
+	if((GLOB.joined_player_list.len >= HIJACK_MIN_PLAYERS) && prob(HIJACK_PROB))
+		is_hijacker = TRUE
+		objective_count++
+
 	var/objective_limit = CONFIG_GET(number/traitor_objectives_amount)
-	if(amount_override)
-		objective_limit = amount_override
-	for(var/i in 1 to objective_limit)
-		var/list/ai_targets = active_ais(z = 2) //For multiZ stations, this proc will include AIs on all station levels if the provided arg is 2.
-		ai_targets -= kill_targets
-		if(ai_targets.len)
-			var/diceroll = rand(1, (living_player_count() - 1)) //AI kill and crew kill objectives are different, but I want a rough equal chance for AIs to be targets. Maybe I'll refractor this someday
-			if(diceroll <= ai_targets.len)
-				var/datum/objective/task = new /datum/objective/destroy()
-				task.owner = owner
-				task.find_target(blacklist = kill_targets)
-				kill_targets += task.target
-				objectives += task
-				continue
 
-		var/datum/objective/task = new /datum/objective/assassinate()
-		task.owner = owner
-		task.find_target(blacklist = kill_targets)
-		kill_targets += task.target
-		objectives += task
+	// for(in...to) loops iterate inclusively, so to reach objective_limit we need to loop to objective_limit - 1
+	// This does not give them 1 fewer objectives than intended.
+	for(var/i in objective_count to objective_limit - 1)
+		objectives += forge_single_generic_objective()
 
-	if(give_escape_obj)
-		var/datum/objective/escape/bye = new /datum/objective/escape()
-		objectives += bye
-		bye.owner = owner
+/**
+ * ## forge_ending_objective
+ *
+ * Forges the endgame objective and adds it to this datum's objective list.
+ */
+/datum/antagonist/traitor/proc/forge_ending_objective()
+	if(is_hijacker)
+		ending_objective = new /datum/objective/hijack
+		ending_objective.owner = owner
+		return
+
+	var/martyr_compatibility = TRUE
+
+	for(var/datum/objective/traitor_objective in objectives)
+		if(!traitor_objective.martyr_compatible)
+			martyr_compatibility = FALSE
+			break
+
+	if(martyr_compatibility && prob(MARTYR_PROB))
+		ending_objective = new /datum/objective/martyr
+		ending_objective.owner = owner
+		objectives += ending_objective
+		return
+
+	ending_objective = new /datum/objective/escape
+	ending_objective.owner = owner
+	objectives += ending_objective
+
+/datum/antagonist/traitor/proc/forge_single_generic_objective()
+	if(prob(KILL_PROB))
+		var/list/active_ais = active_ais()
+		if(active_ais.len && prob(DESTROY_AI_PROB(GLOB.joined_player_list.len)))
+			var/datum/objective/destroy/destroy_objective = new()
+			destroy_objective.owner = owner
+			destroy_objective.find_target()
+			return destroy_objective
+
+		if(prob(MAROON_PROB))
+			var/datum/objective/maroon/maroon_objective = new()
+			maroon_objective.owner = owner
+			maroon_objective.find_target()
+			return maroon_objective
+
+		var/datum/objective/assassinate/kill_objective = new()
+		kill_objective.owner = owner
+		kill_objective.find_target()
+		return kill_objective
+
+	var/datum/objective/steal/steal_objective = new()
+	steal_objective.owner = owner
+	steal_objective.find_target()
+	return steal_objective
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -274,9 +317,6 @@
 
 	var/special_role_text = lowertext(name)
 
-	if(contractor_hub)
-		result += contractor_round_end()
-
 	if(traitor_won)
 		result += span_greentext("The [special_role_text] was successful!")
 	else
@@ -284,42 +324,6 @@
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
 
 	return result.Join("<br>")
-
-/// Proc detailing contract kit buys/completed contracts/additional info
-/datum/antagonist/traitor/proc/contractor_round_end()
-	var/result = ""
-	var/total_spent_rep = 0
-
-	var/completed_contracts = contractor_hub.contracts_completed
-	var/tc_total = contractor_hub.contract_TC_payed_out + contractor_hub.contract_TC_to_redeem
-
-	var/contractor_item_icons = "" // Icons of purchases
-	var/contractor_support_unit = "" // Set if they had a support unit - and shows appended to their contracts completed
-
-	/// Get all the icons/total cost for all our items bought
-	for (var/datum/contractor_item/contractor_purchase in contractor_hub.purchased_items)
-		contractor_item_icons += "<span class='tooltip_container'>\[ <i class=\"fas [contractor_purchase.item_icon]\"></i><span class='tooltip_hover'><b>[contractor_purchase.name] - [contractor_purchase.cost] Rep</b><br><br>[contractor_purchase.desc]</span> \]</span>"
-
-		total_spent_rep += contractor_purchase.cost
-
-		/// Special case for reinforcements, we want to show their ckey and name on round end.
-		if (istype(contractor_purchase, /datum/contractor_item/contractor_partner))
-			var/datum/contractor_item/contractor_partner/partner = contractor_purchase
-			contractor_support_unit += "<br><b>[partner.partner_mind.key]</b> played <b>[partner.partner_mind.current.name]</b>, their contractor support unit."
-
-	if (contractor_hub.purchased_items.len)
-		result += "<br>(used [total_spent_rep] Rep) "
-		result += contractor_item_icons
-	result += "<br>"
-	if (completed_contracts > 0)
-		var/pluralCheck = "contract"
-		if (completed_contracts > 1)
-			pluralCheck = "contracts"
-
-		result += "Completed [span_greentext("[completed_contracts]")] [pluralCheck] for a total of \
-					[span_greentext("[tc_total] TC")]![contractor_support_unit]<br>"
-
-	return result
 
 /datum/antagonist/traitor/roundend_report_footer()
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
