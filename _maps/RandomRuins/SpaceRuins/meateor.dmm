@@ -16,7 +16,7 @@
 /turf/open/floor/material/meat,
 /area/ruin/space/has_grav/powered)
 "X" = (
-/obj/item/chair,
+/mob/living/basic/meteor_heart,
 /turf/open/floor/material/meat,
 /area/ruin/space/has_grav/powered)
 
@@ -463,7 +463,7 @@ A
 A
 A
 A
-T
+A
 A
 A
 A

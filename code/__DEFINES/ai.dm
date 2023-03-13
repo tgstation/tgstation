@@ -247,6 +247,7 @@
 /// Meteor Heart AI keys
 
 #define BB_METEOR_HEART_GROUND_SPIKES "BB_meteor_ground_spikes"
+#define BB_METEOR_HEART_SPINE_TRAPS "BB_meteor_spine_traps"
 
 /// Fugu AI Keys
 

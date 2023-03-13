@@ -1,14 +1,15 @@
 /// An ability which makes spikes come out of the ground towards your target
-/datum/action/cooldown/ground_spikes
-	name = "ground spikes"
+/datum/action/cooldown/chasing_spikes
+	name = "impaling tendril"
 	desc = "Send a spiked subterranean tendril chasing after your target."
-	button_icon = 'icons/obj/weapons/guns/projectiles.dmi'
-	button_icon_state = "arcane_barrage"
+	button_icon = 'icons/mob/simple/meteor_heart.dmi'
+	button_icon_state = "spike"
 	cooldown_time = 10 SECONDS
 	click_to_activate = TRUE
 
-/datum/action/cooldown/ground_spikes/Activate(atom/target)
+/datum/action/cooldown/chasing_spikes/Activate(atom/target)
 	. = ..()
+	playsound(owner, 'sound/magic/demon_attack1.ogg', vary = TRUE)
 	new /obj/effect/temp_visual/spike_chaser(get_turf(owner), target)
 
 /// An invisible effect which chases a target, spawning spikes every so often.
@@ -20,7 +21,7 @@
 	duration = 15 SECONDS
 	invisibility = INVISIBILITY_ABSTRACT
 	/// Speed at which we chase target
-	var/move_speed = 2
+	var/move_speed = 3
 	/// What are we chasing?
 	var/datum/weakref/target
 	/// Handles chasing the target
@@ -31,6 +32,7 @@
 		return INITIALIZE_HINT_QDEL
 
 	. = ..()
+	AddElement(/datum/element/floor_loving)
 	AddComponent(/datum/component/spawner, spawn_types = list(/obj/effect/temp_visual/emerging_ground_spike), spawn_time = 0.5 SECONDS)
 	src.target = WEAKREF(target)
 	movement = SSmove_manager.move_towards(src, chasing = target, delay = move_speed, home = TRUE, timeout = duration, flags = MOVEMENT_LOOP_START_FAST)
@@ -40,7 +42,7 @@
 		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_target_invalid))
 
 /// Destroy ourselves if the target is no longer valid
-/obj/effect/temp_visual/spike_chaser/proc/on_target_invalid
+/obj/effect/temp_visual/spike_chaser/proc/on_target_invalid()
 	SIGNAL_HANDLER
 	qdel(src)
 
@@ -58,7 +60,7 @@
 	/// Time until we hurt people stood on us
 	var/harm_delay = 0.3 SECONDS
 	/// Amount by which to vary our position on spawn
-	var/position_variance = 6
+	var/position_variance = 8
 	/// Damage to deal on impale
 	var/impale_damage = 15
 	/// Typecache of types of mobs not to damage
@@ -83,8 +85,8 @@
 /obj/effect/temp_visual/emerging_ground_spike/proc/impale()
 	if (!isturf(loc))
 		return
-	for(var/mob/living/attacked_living in loc)
-		if (is_type_in_typecache(attacked_living, damage_blacklist_typecache))
+	for(var/mob/living/victim in loc)
+		if (is_type_in_typecache(victim, damage_blacklist_typecache))
 			continue
-		var/target_zone = attacked_living.resting ? BODY_ZONE_CHEST : pick_weight(standing_damage_zones)
-		attacked_living.apply_damage(impale_damage, damagetype = BRUTE, def_zone = target_zone, sharpness = SHARP_POINTY)
+		var/target_zone = victim.resting ? BODY_ZONE_CHEST : pick_weight(standing_damage_zones)
+		victim.apply_damage(impale_damage, damagetype = BRUTE, def_zone = target_zone, sharpness = SHARP_POINTY)

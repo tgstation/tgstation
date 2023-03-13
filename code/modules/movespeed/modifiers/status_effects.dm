@@ -31,3 +31,6 @@
 
 /datum/movespeed_modifier/status_effect/inflated
 	multiplicative_slowdown = 3.5
+
+/datum/movespeed_modifier/status_effect/spine_hobbled
+	multiplicative_slowdown = 1
