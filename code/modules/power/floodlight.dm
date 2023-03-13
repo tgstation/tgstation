@@ -42,7 +42,7 @@
 
 /obj/structure/floodlight_frame/wirecutter_act(mob/living/user, obj/item/tool)
 	if(state == FLOODLIGHT_NEEDS_SECURING)
-		to_chat(user, span_notice("You cut the wire from [src]."))
+		balloon_alert(user, "cut wire")
 		name = "floodlight frame"
 		desc = "A bare metal frame looking vaguely like a floodlight. Requires wiring."
 		icon_state = "floodlight_c1"
