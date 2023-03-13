@@ -62,7 +62,7 @@
 	if(!do_after(user, 4 SECONDS, target = get_turf(user), progress = TRUE))
 		balloon_alert(user, "cancelled!")
 	new pinata_type(get_turf(user))
-	balloon_alert("set up pinata!")
+	balloon_alert(user, "set up pinata!")
 	qdel(src)
 
 /obj/structure/pinata/syndie
