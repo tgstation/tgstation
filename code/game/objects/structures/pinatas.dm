@@ -59,10 +59,11 @@
 	if(player_turf?.is_blocked_turf(TRUE))
 		return FALSE
 	user.visible_message(span_info("[user] begins to set up \the [src]..."))
-	if(do_after(user, 4 SECONDS, target = get_turf(user), progress = TRUE))
-		new pinata_type(get_turf(user))
-		to_chat(user, span_notice("You set up \the [src]."))
-		qdel(src)
+	if(!do_after(user, 4 SECONDS, target = get_turf(user), progress = TRUE))
+		balloon_alert(user, "cancelled!")
+	new pinata_type(get_turf(user))
+	balloon_alert("set up pinata!")
+	qdel(src)
 
 /obj/structure/pinata/syndie
 	name = "syndicate corgi pinata"
