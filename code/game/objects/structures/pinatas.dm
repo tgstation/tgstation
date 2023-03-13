@@ -8,7 +8,13 @@
 	max_integrity = 300 //20 hits from a baseball bat
 	anchored = TRUE
 	///What sort of candy the pinata will contain
-	var/candy_options = list(/obj/item/food/candy, /obj/item/food/lollipop/cyborg, /obj/item/food/gumball, /obj/item/food/bubblegum, /obj/item/food/chocolatebar)
+	var/candy_options = list(
+		/obj/item/food/bubblegum,
+		/obj/item/food/candy,
+		/obj/item/food/chocolatebar,
+		/obj/item/food/gumball,
+		/obj/item/food/lollipop/cyborg,
+	)
 	///How much candy is dropped when the pinata is destroyed
 	var/destruction_loot = 5
 	///Debris dropped when the pinata is destroyed
@@ -66,17 +72,17 @@
 	destruction_loot = 2
 	debris = /obj/effect/decal/cleanable/wrapping/pinata/syndie
 	candy_options = list(
-		/obj/item/food/candy,
-		/obj/item/food/lollipop,
-		/obj/item/food/gumball,
 		/obj/item/food/bubblegum,
+		/obj/item/food/candy,
 		/obj/item/food/chocolatebar,
+		/obj/item/food/gumball,
+		/obj/item/food/lollipop,
 		/obj/item/grenade/c4,
 		/obj/item/grenade/clusterbuster/soap,
 		/obj/item/grenade/empgrenade,
+		/obj/item/grenade/frag,
 		/obj/item/grenade/syndieminibomb,
-		/obj/item/grenade/frag
-		)
+	)
 
 /obj/item/pinata/syndie
 	name = "weapons grade pinata assembly kit"
