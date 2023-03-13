@@ -171,7 +171,7 @@
 "eH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/fuel_pool,
-/turf/open/floor/iron/dark/airless,
+/turf/open/floor/iron/dark/textured_large,
 /area/ruin/space)
 "eI" = (
 /obj/item/ammo_casing/a357,
@@ -209,11 +209,6 @@
 	},
 /obj/effect/mob_spawn/corpse/human/pirate/melee/space,
 /turf/open/floor/iron/dark/textured,
-/area/ruin/space)
-"gf" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "gh" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -255,6 +250,11 @@
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/effect/turf_decal/stripes/red/full,
 /turf/open/floor/iron/dark/smooth_large,
+/area/ruin/space)
+"hR" = (
+/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/herringbone,
 /area/ruin/space)
 "hS" = (
 /obj/item/ammo_casing/shotgun/buckshot,
@@ -329,7 +329,11 @@
 "lX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate/engineering,
+/obj/structure/table/rolling,
+/obj/structure/showcase/machinery/microwave{
+	pixel_y = 11
+	},
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "mn" = (
@@ -338,6 +342,11 @@
 /obj/item/storage/fancy/cigarettes/cigpack_syndicate{
 	pixel_y = 7
 	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space)
+"my" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "mC" = (
@@ -427,10 +436,10 @@
 "sk" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
 /obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/space)
 "so" = (
@@ -771,6 +780,12 @@
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/flashlight/lantern,
+/obj/item/storage/toolbox/syndicate,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space)
+"Gy" = (
+/obj/structure/closet/crate/engineering,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "GA" = (
@@ -808,6 +823,7 @@
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/flashlight/lantern,
+/obj/item/stack/sheet/mineral/plasma,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "IF" = (
@@ -949,11 +965,6 @@
 /area/ruin/space)
 "Rt" = (
 /obj/item/wallframe/firealarm,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/space)
-"RC" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "SB" = (
@@ -1106,14 +1117,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark/airless,
-/area/ruin/space)
-"XC" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/obj/effect/spawner/random/structure/crate_empty,
-/turf/open/misc/asteroid/basalt/airless,
 /area/ruin/space)
 "XJ" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -1429,7 +1432,7 @@ Cf
 Cf
 Cf
 Cf
-Cf
+Er
 Cf
 Cf
 Cf
@@ -1466,8 +1469,8 @@ Cf
 Cf
 Cf
 Cf
-Cf
-Cf
+Er
+Er
 Cf
 Er
 Er
@@ -1502,9 +1505,9 @@ Cf
 Cf
 Cf
 Cf
-Cf
-Cf
-Cf
+Er
+Er
+Er
 Er
 Er
 Er
@@ -1539,8 +1542,8 @@ Cf
 Cf
 Cf
 Cf
-Cf
-Cf
+Er
+Er
 Er
 ED
 Er
@@ -1574,10 +1577,10 @@ bz
 bz
 Cf
 Cf
-Cf
-Cf
 Er
 Er
+ED
+ED
 Er
 xT
 ZS
@@ -1610,11 +1613,11 @@ bz
 bz
 bz
 Cf
-Cf
-Cf
 Er
 Er
 ED
+ED
+Gy
 ED
 VX
 Df
@@ -1648,10 +1651,10 @@ bz
 bz
 Cf
 Er
-Er
-Er
 ED
 ED
+my
+Pi
 uq
 ll
 BV
@@ -1685,9 +1688,9 @@ bz
 bz
 Er
 Er
-Er
-Er
-RC
+ED
+hR
+Df
 lX
 xm
 ZC
@@ -1724,8 +1727,8 @@ Er
 Er
 Ph
 sk
-XC
-gf
+Pi
+Tu
 ED
 de
 zi
