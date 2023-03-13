@@ -52,7 +52,8 @@
 	build_path = /obj/machinery/suit_storage_unit
 	req_components = list(
 		/obj/item/stack/sheet/glass = 2,
-		/obj/item/stack/cable_coil = 5)
+		/obj/item/stack/cable_coil = 5,
+	)
 
 /obj/item/circuitboard/machine/autolathe
 	name = "Autolathe"
