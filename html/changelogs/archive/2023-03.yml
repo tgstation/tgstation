@@ -350,3 +350,64 @@
   - bugfix: Wrapping paper color selection has been rebound to Alt+click, to fix a
       bug where both wrapping paper color selection, and extracting wrapping paper
       from a roll were both bound to right click.
+2023-03-12:
+  Helg2:
+  - bugfix: Changed Quantum Hair Dye recipe from colourful reagent, space drugs and
+      radium to colourful reagent, space drugs and chlorine. So you can make it normally.
+  Jacquerel:
+  - bugfix: Spell Cards from the Wizard spell will now home in somewhat on the target
+      nearest to your cursor.
+  - bugfix: The Spell Cards spell now displays the correct icon instead of a big red
+      "error" text.
+  LT3:
+  - code_imp: Anomaly event parameters consolidated to defines
+  - balance: Anomaly countdown timer reduced to 75 seconds
+  Melbert:
+  - bugfix: Fixes Juggernaut / Rust Walker projectiles doing zero damage
+  - bugfix: Fixes Juggernaut projectiles not doing bonus damage to nearby structures
+  - code_imp: Removed projectile nodamage var, replaces it with just checking for
+      damage
+  NamelessFairy:
+  - bugfix: Firing pin swapping's 2 balloon alerts have been replaced with a single
+      more readable one.
+  - admin: Admins can now edit a pin_removable var on firing pins to render them unremovable
+      from the weapons they're installed in.
+  Profakos:
+  - bugfix: Pods on Tramstation can be properly launched early
+  Rhials:
+  - bugfix: The cultist ritual site locator and Nar'Sie summon message will no longer
+      use area names modified by the CE's blueprints.
+  Stalkeros, san7890 for the announcement texts:
+  - code_imp: Made pirate groups' arrival messages editable and more importantly unique
+      for each group.
+  VladinXXV:
+  - bugfix: Fake nuclear authentication disks have been updated to include the holographic
+      security sticker found on the real disk, one again making them convincingly
+      real to the average person.
+  - code_imp: The keep_me_secured component will now only process if it has at least
+      one callback argument passed.
+  spockye:
+  - bugfix: fixed missing disposal pipes (tramstation)
+  - bugfix: fixed missing zones (tramstation)
+  - bugfix: fixed wrongly placed zones (tramstation)
+  - bugfix: fixed wrongly placed tiles (tramstation)
+2023-03-13:
+  CRITAWAKETS:
+  - config: All dynamic midround rulesets are now properly accounted for in the dynamic.json
+      config.
+  MMMiracles (tramstation):
+  - rscadd: Tramstation's Science department has received a substantial remodel! Please
+      consult your local tour guide for more information.
+  - rscadd: The Vacant Commissary office has been moved to the top floor near Departures,
+      with a new Barber shop taking its place on the lower floor.
+  Nabski:
+  - imageadd: Renault has a dopey walk animation now, god bless.
+  Thunder12345:
+  - spellcheck: The birthday moodlet's description is now gramatically correct.
+  carshalash:
+  - qol: Minor changes to Mexican tourist bot name generation
+  - qol: Japanese tourist bots will no longer request atomic bombs.
+  kinneb:
+  - imageadd: Changed sprites for wooden chairs, comfy chairs, electric chairs, folding
+      chair and shuttle seats!
+  - imageadd: Resprites Donut Box, and all sprites for donuts in it.

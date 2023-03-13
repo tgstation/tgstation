@@ -258,7 +258,6 @@
 			/datum/reagent/consumable/cafe_latte = 3,
 			/datum/reagent/consumable/coffee = 3,
 			/datum/reagent/consumable/soy_latte = 3,
-			/datum/reagent/consumable/ethanol/atomicbomb = 1,
 		),
 	)
 

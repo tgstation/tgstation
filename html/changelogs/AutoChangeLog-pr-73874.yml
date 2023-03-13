@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - code_imp: "The Server ending announcement is now sent to players once the game has properly ended."
