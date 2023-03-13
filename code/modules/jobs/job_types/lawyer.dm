@@ -29,6 +29,9 @@
 
 	job_tone = "objection"
 
+// Because we love our firebird-correct lawyer references, every other
+// lawyer will be dressed in purple, rather than blue.
+GLOBAL_VAR_INIT(lawyers_equipped, 0)
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"
@@ -51,12 +54,12 @@
 	if(visualsOnly)
 		return ..()
 
-	var/static/use_purple_suit = FALSE //If there is one lawyer, they get the default blue suit. If another lawyer joins the round, they start with a purple suit.
-	if(use_purple_suit)
+	if(GLOB.lawyers_equipped % 2 == 1)
 		uniform = /obj/item/clothing/under/rank/civilian/lawyer/purpsuit
 		suit = /obj/item/clothing/suit/toggle/lawyer/purple
-	else
-		use_purple_suit = TRUE
+
+	GLOB.lawyers_equipped++
+
 	..()
 
 /datum/outfit/job/lawyer/get_types_to_preload()
