@@ -140,7 +140,9 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_logging_prefix = "O_[override_dir]_"
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
+	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
 	logger.init_logging()
+	start_log(GLOB.world_runtime_log)
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = "[GLOB.log_directory]/tests.log"

@@ -41,6 +41,7 @@
 /* Log to the logfile only. */
 /proc/log_runtime(text)
 	logger.Log(LOG_CATEGORY_DEBUG_RUNTIME, text)
+	WRITE_LOG(GLOB.world_runtime_log, text)
 
 /proc/log_signal(text)
 	logger.Log(LOG_CATEGORY_SIGNAL, text)

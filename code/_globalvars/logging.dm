@@ -45,3 +45,6 @@ GLOBAL_PROTECT(picture_logging_prefix)
 
 GLOBAL_VAR(round_id)
 GLOBAL_PROTECT(round_id)
+
+GLOBAL_VAR(world_runtime_log)
+GLOBAL_PROTECT(world_runtime_log)
