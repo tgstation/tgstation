@@ -244,6 +244,10 @@
 #define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
 #define BB_BILEWORM_DEVOUR "BB_bileworm_devour"
 
+/// Meteor Heart AI keys
+
+#define BB_METEOR_HEART_GROUND_SPIKES "BB_meteor_ground_spikes"
+
 /// Fugu AI Keys
 
 #define BB_FUGU_INFLATE "BB_fugu_inflate"
