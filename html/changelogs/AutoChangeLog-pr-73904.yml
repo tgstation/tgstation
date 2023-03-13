@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes:
+  - bugfix: "Fixed playmins having access to admin functions within normal integrated circuits."
