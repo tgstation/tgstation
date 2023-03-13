@@ -289,7 +289,6 @@
 	armor_type = /datum/armor/hardsuit_engine_elite
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	slowdown = 0.4
 
 /obj/item/clothing/suit/space/hardsuit/engine/elite
 	icon_state = "hardsuit-white"
@@ -303,6 +302,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
 	jetpack = /obj/item/tank/jetpack/suit
 	cell = /obj/item/stock_parts/cell/super
+	slowdown = 0.4
 
 /datum/armor/hardsuit_engine_elite
 	melee = 40
