@@ -111,7 +111,8 @@
 
 /obj/effect/cosmic_rune/Destroy()
 	var/obj/effect/cosmic_rune/linked_rune_resolved = linked_rune.resolve()
-	linked_rune_resolved.unlink_rune()
+	if(linked_rune_resolved)
+		linked_rune_resolved.unlink_rune()
 	. = ..()
 
 /// Used for unlinking the other rune if this rune gets destroyed
