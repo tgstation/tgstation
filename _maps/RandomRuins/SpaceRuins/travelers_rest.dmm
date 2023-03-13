@@ -444,7 +444,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/travelers_rest)
 "RN" = (
 /obj/effect/turf_decal/trimline/white/filled/line,
