@@ -25,14 +25,14 @@
 	dir = 4
 	},
 /obj/item/storage/box/drinkingglasses{
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 1
 	},
 /turf/open/floor/iron/textured_large,
 /area/ruin/space/has_grav/travelers_rest)
 "bq" = (
-/obj/structure/window/reinforced/fulltile,
-/obj/structure/grille,
-/turf/open/floor/iron/dark/smooth_large,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/travelers_rest)
 "bz" = (
 /obj/structure/cable,
@@ -133,8 +133,8 @@
 	pixel_y = 0
 	},
 /obj/item/reagent_containers/cup/rag{
-	pixel_x = 9;
-	pixel_y = 18
+	pixel_x = 6;
+	pixel_y = 28
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
