@@ -2,7 +2,8 @@
 	name = "Star Touch"
 	desc = "Marks someone with a star mark or puts someone with a star mark to sleep for 4 seconds, removing the star mark. \
 		When the victim is hit it also creates a beam that deals a bit of fire damage and damages the cells. \
-		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
+		The beam lasts a minute, until the beam is obstructed or until a new target has been found. \
+		Star Touch can remove cosmic runes or teleport you to your Star Gazer when you have one."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -17,6 +18,8 @@
 	antimagic_flags = MAGIC_RESISTANCE
 
 	hand_path = /obj/item/melee/touch_attack/star_touch
+	/// Stores the weakref for the Star Gazer after ascending
+	var/datum/weakref/star_gazer
 	/// Stores the current beam target
 	var/mob/living/current_target
 	/// Checks the time of the last check
@@ -167,6 +170,17 @@
 		target.RemoveElement(/datum/element/effect_trail/cosmig_trail)
 	return
 
+/// To set the star gazer
+/datum/action/cooldown/spell/touch/star_touch/proc/set_star_gazer(mob/living/basic/star_gazer/star_gazer_mob)
+	star_gazer = WEAKREF(star_gazer_mob)
+
+/// To obtain the star gazer if there is one
+/datum/action/cooldown/spell/touch/star_touch/proc/get_star_gazer()
+	var/mob/living/basic/star_gazer/star_gazer_resolved = star_gazer?.resolve()
+	if(star_gazer_resolved)
+		return star_gazer_resolved
+	return FALSE
+
 /obj/item/melee/touch_attack/star_touch
 	name = "Star Touch"
 	desc = "A sinister looking aura that distorts the flow of reality around it. \
@@ -174,8 +188,42 @@
 	icon_state = "star"
 	inhand_icon_state = "star"
 
+/obj/item/melee/touch_attack/star_touch/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/effect_remover, \
+		success_feedback = "You remove %THEEFFECT.", \
+		tip_text = "Clear rune", \
+		on_clear_callback = CALLBACK(src, PROC_REF(after_clear_rune)), \
+		effects_we_clear = list(/obj/effect/cosmic_rune))
+
+/*
+ * Callback for effect_remover component.
+ */
+/obj/item/melee/touch_attack/star_touch/proc/after_clear_rune(obj/effect/target, mob/living/user)
+	new /obj/effect/temp_visual/cosmic_rune_fade(get_turf(target))
+	var/datum/action/cooldown/spell/touch/star_touch/star_touch_spell = spell_which_made_us?.resolve()
+	star_touch_spell?.spell_feedback()
+	remove_hand_with_no_refund(user)
+
 /obj/item/melee/touch_attack/star_touch/ignition_effect(atom/to_light, mob/user)
 	. = span_notice("[user] effortlessly snaps [user.p_their()] fingers near [to_light], igniting it with cosmic energies. Fucking badass!")
+	remove_hand_with_no_refund(user)
+
+/obj/item/melee/touch_attack/star_touch/attack_self(mob/living/user)
+	var/datum/action/cooldown/spell/touch/star_touch/star_touch_spell = spell_which_made_us?.resolve()
+	var/mob/living/basic/star_gazer/star_gazer_mob = star_touch_spell?.get_star_gazer()
+	if(!star_gazer_mob)
+		balloon_alert(user, "no linked star gazer!")
+		return ..()
+	new /obj/effect/temp_visual/cosmic_explosion(get_turf(user))
+	do_teleport(
+		user,
+		get_turf(star_gazer_mob),
+		no_effects = TRUE,
+		channel = TELEPORT_CHANNEL_MAGIC,
+		asoundin = 'sound/magic/cosmic_energy.ogg',
+		asoundout = 'sound/magic/cosmic_energy.ogg',
+	)
 	remove_hand_with_no_refund(user)
 
 /obj/effect/ebeam/cosmic

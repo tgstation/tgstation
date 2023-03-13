@@ -158,7 +158,8 @@
 		When completed, you become the owner of a Star Gazer. \
 		You will be able to command the Star Gazer with Alt+click. \
 		You can also give it commands through speech. \
-		The Star Gazer is a strong ally who can even break down reinforced walls."
+		The Star Gazer is a strong ally who can even break down reinforced walls. \
+		Star Touch can now teleport you to the Star Gazer when activated in your hand."
 	gain_text = "The past is gone, the Star Gazer became a vessel to watch over the universe. \
 		The Creator made this his path and he forgot his purpose. \
 		THE TIME IS NOW, WITNESS MY ASCENSION, THE STAR GAZER HAS GAINED PURPOSE ONCE MORE!"
@@ -184,5 +185,8 @@
 	var/mob/living/basic/star_gazer/star_gazer_mob = new /mob/living/basic/star_gazer(loc)
 	star_gazer_mob.AddComponent(/datum/component/obeys_commands, star_gazer_commands)
 	star_gazer_mob.befriend(user)
+	var/datum/action/cooldown/spell/touch/star_touch/star_touch_spell = locate() in user.actions
+	if(star_touch_spell)
+		star_touch_spell.set_star_gazer(star_gazer_mob)
 
 	user.client?.give_award(/datum/award/achievement/misc/cosmic_ascension, user)

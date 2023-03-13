@@ -23,9 +23,9 @@
 
 /datum/action/cooldown/spell/cosmic_rune/cast(atom/cast_on)
 	. = ..()
-	if(first_rune && second_rune)
-		var/obj/effect/cosmic_rune/first_rune_resolved = first_rune.resolve()
-		var/obj/effect/cosmic_rune/second_rune_resolved = second_rune.resolve()
+	var/obj/effect/cosmic_rune/first_rune_resolved = first_rune?.resolve()
+	var/obj/effect/cosmic_rune/second_rune_resolved = second_rune?.resolve()
+	if(first_rune_resolved && second_rune_resolved)
 		var/obj/effect/cosmic_rune/new_rune = new /obj/effect/cosmic_rune(get_turf(cast_on))
 		new rune_remove_effect(get_turf(first_rune_resolved))
 		QDEL_NULL(first_rune_resolved)
@@ -33,18 +33,16 @@
 		second_rune = WEAKREF(new_rune)
 		second_rune_resolved.link_rune(new_rune)
 		new_rune.link_rune(second_rune_resolved)
-	if(!first_rune)
+	if(!first_rune_resolved)
 		var/obj/effect/cosmic_rune/new_rune = new /obj/effect/cosmic_rune(get_turf(cast_on))
 		first_rune = WEAKREF(new_rune)
-		if(second_rune)
-			var/obj/effect/cosmic_rune/second_rune_resolved = second_rune.resolve()
+		if(second_rune_resolved)
 			new_rune.link_rune(second_rune_resolved)
 			second_rune_resolved.link_rune(new_rune)
-	else if(!second_rune)
+	else if(!second_rune_resolved)
 		var/obj/effect/cosmic_rune/new_rune = new /obj/effect/cosmic_rune(get_turf(cast_on))
 		second_rune = WEAKREF(new_rune)
-		if(first_rune)
-			var/obj/effect/cosmic_rune/first_rune_resolved = first_rune.resolve()
+		if(first_rune_resolved)
 			first_rune_resolved.link_rune(new_rune)
 			new_rune.link_rune(first_rune_resolved)
 
@@ -85,7 +83,7 @@
 
 /// For invoking the rune
 /obj/effect/cosmic_rune/proc/invoke(mob/living/user)
-	var/obj/effect/cosmic_rune/linked_rune_resolved = linked_rune.resolve()
+	var/obj/effect/cosmic_rune/linked_rune_resolved = linked_rune?.resolve()
 	new rune_effect(get_turf(src))
 	do_teleport(
 		user,
@@ -110,7 +108,7 @@
 	linked_rune = WEAKREF(new_rune)
 
 /obj/effect/cosmic_rune/Destroy()
-	var/obj/effect/cosmic_rune/linked_rune_resolved = linked_rune.resolve()
+	var/obj/effect/cosmic_rune/linked_rune_resolved = linked_rune?.resolve()
 	if(linked_rune_resolved)
 		linked_rune_resolved.unlink_rune()
 	. = ..()

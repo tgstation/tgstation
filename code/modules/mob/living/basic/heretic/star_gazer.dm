@@ -1,4 +1,3 @@
-
 /mob/living/basic/star_gazer
 	name = "Star Gazer"
 	desc = "A creature that has been tasked to watch over the stars."
