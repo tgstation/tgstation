@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "A station trait which sometimes populates maintenance with small spiders. You can wear them as a hat if you wanted to have a spider on your head for some reason."
+  - rscadd: "Spider mobs will automatically start webbing up their environment."
