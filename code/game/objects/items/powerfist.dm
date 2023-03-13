@@ -35,6 +35,15 @@
 	fire = 100
 	acid = 40
 
+/obj/item/melee/powerfist/proc/fist_pressure_setting_to_text(fist_pressure_setting)
+	switch(fist_pressure_setting)
+		if(LOW_PRESSURE)
+			. = "low"
+		if(MID_PRESSURE)
+			. = "medium"
+		if(HIGH_PRESSURE)
+			. = "high"
+
 /obj/item/melee/powerfist/examine(mob/user)
 	. = ..()
 	if(!in_range(user, src))
@@ -44,7 +53,7 @@
 		. += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it.")
 		. += span_notice("Can be removed with a <b>screwdriver</b>.")
 
-	. += span_notice("Use a <b>wrench</b> to change the valve strength. Current strength is at <b>[fist_pressure_setting]</b> level.")
+	. += span_notice("Use a <b>wrench</b> to change the valve strength. Current strength is at <b>[fist_pressure_setting_to_text(fist_pressure_setting)]</b> level.")
 
 /obj/item/melee/powerfist/wrench_act(mob/living/user, obj/item/tool)
 	fist_pressure_setting = fist_pressure_setting >= HIGH_PRESSURE ? LOW_PRESSURE : fist_pressure_setting + 1
