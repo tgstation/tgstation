@@ -53,8 +53,10 @@
 	qdel(src)
 
 /datum/component/pinata/Destroy(force, silent)
-	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
-	UnregisterSignal(parent, COMSIG_LIVING_DEATH)
-	UnregisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE)
-	UnregisterSignal(parent, COMSIG_ATOM_DESTRUCTION)
+	UnregisterSignal(parent, list(
+		COMSIG_MOB_APPLY_DAMAGE,
+		COMSIG_LIVING_DEATH,
+		COMSIG_ATOM_TAKE_DAMAGE,
+		COMSIG_ATOM_DESTRUCTION,
+	))
 	return ..()
