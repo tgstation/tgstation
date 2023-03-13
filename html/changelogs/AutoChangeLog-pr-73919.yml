@@ -1,0 +1,4 @@
+author: "Vect0r2"
+delete-after: True
+changes:
+  - bugfix: "Ethereal discharge no longer alerts you twice that you did it."

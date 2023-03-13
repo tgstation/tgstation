@@ -45783,10 +45783,6 @@
 /obj/item/stock_parts/subspace/amplifier,
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
-"nZG" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/maintenance/port/fore)
 "nZH" = (
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
@@ -229421,14 +229417,14 @@ lJO
 dDV
 sFN
 lJO
-nZG
-nZG
-nZG
-nZG
-nZG
-nZG
-nZG
-nZG
+lJO
+lJO
+lJO
+lJO
+lJO
+lJO
+lJO
+lJO
 lJO
 wJz
 aJA

@@ -8,16 +8,15 @@
 		/datum/traitor_objective/steal_item/somewhat_risky = 1,
 		list(
 			/datum/traitor_objective/destroy_item/very_risky = 1,
-			/datum/traitor_objective/steal_item/risky = 1,
+			/datum/traitor_objective/steal_item/very_risky = 1,
 		) = 1,
-		/datum/traitor_objective/steal_item/very_risky = 1,
 		/datum/traitor_objective/steal_item/most_risky = 1
 	)
 
 GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 /datum/objective_item_handler
-	var/list/objectives_by_path
+	var/list/list/objectives_by_path
 	var/generated_items = FALSE
 
 /datum/objective_item_handler/New()
@@ -26,16 +25,33 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	for(var/datum/objective_item/item as anything in subtypesof(/datum/objective_item))
 		objectives_by_path[initial(item.targetitem)] = list()
 	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(save_items))
+	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM, PROC_REF(new_item_created))
 
+/datum/objective_item_handler/proc/new_item_created(datum/source, obj/item/item)
+	SIGNAL_HANDLER
+	if(!generated_items)
+		item.add_stealing_item_objective()
+		return
+	var/typepath = item.add_stealing_item_objective()
+	if(typepath != null)
+		register_item(item, typepath)
+
+/// Registers all items that are potentially stealable and removes ones that aren't.
+/// We still need to do things this way because on mapload, items may not be on the station until everything has finished loading.
 /datum/objective_item_handler/proc/save_items()
+	SIGNAL_HANDLER
 	for(var/obj/item/typepath as anything in objectives_by_path)
-		for(var/obj/item/object as anything in objectives_by_path[typepath])
-			var/turf/place = get_turf(object)
-			if(!place || !is_station_level(place.z))
-				objectives_by_path[typepath] -= object
-				continue
-			RegisterSignal(object, COMSIG_PARENT_QDELETING, PROC_REF(remove_item))
+		var/list/obj_by_path_cache = objectives_by_path[typepath].Copy()
+		for(var/obj/item/object as anything in obj_by_path_cache)
+			register_item(object, typepath)
 	generated_items = TRUE
+
+/datum/objective_item_handler/proc/register_item(atom/object, typepath)
+	var/turf/place = get_turf(object)
+	if(!place || !is_station_level(place.z))
+		objectives_by_path[typepath] -= object
+		return
+	RegisterSignal(object, COMSIG_PARENT_QDELETING, PROC_REF(remove_item))
 
 /datum/objective_item_handler/proc/remove_item(atom/source)
 	SIGNAL_HANDLER
@@ -43,8 +59,8 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		objectives_by_path[typepath] -= source
 
 /datum/traitor_objective/steal_item
-	name = "Steal %ITEM% and place a bug on it."
-	description = "Use the button below to materialize the bug within your hand, where you'll then be able to place it on the item. Additionally, you can keep it near you for %TIME% minutes, and you will be rewarded with %PROGRESSION% reputation and %TC% telecrystals."
+	name = "Steal %ITEM% and place a schematics scanner on it."
+	description = "Use the button below to materialize the schematic scanner within your hand, where you'll then be able to place it on the item. Additionally, you can keep it near you and let it scan for %TIME% minutes, and you will be rewarded with %PROGRESSION% reputation and %TC% telecrystals."
 
 	progression_minimum = 20 MINUTES
 
@@ -79,54 +95,37 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	minutes_per_telecrystal = 6
 
 	possible_items = list(
-		/datum/objective_item/steal/low_risk/cargo_budget,
-		/datum/objective_item/steal/low_risk/clown_shoes,
+		/datum/objective_item/steal/traitor/cargo_budget,
+		/datum/objective_item/steal/traitor/clown_shoes,
 	)
 
 /datum/traitor_objective/steal_item/somewhat_risky
 	progression_minimum = 20 MINUTES
-	progression_reward = 5 MINUTES
-	telecrystal_reward = 1
-
-	possible_items = list(
-		/datum/objective_item/steal/magboots,
-		/datum/objective_item/steal/hypo,
-		/datum/objective_item/steal/reactive,
-		/datum/objective_item/steal/handtele,
-		/datum/objective_item/steal/blueprints,
-	)
-
-/datum/traitor_objective/steal_item/risky
-	progression_minimum = 30 MINUTES
-	progression_reward = 13 MINUTES
+	progression_maximum = 50 MINUTES
+	progression_reward = 10 MINUTES
 	telecrystal_reward = 2
 
 	possible_items = list(
-		/datum/objective_item/steal/reflector,
-		/datum/objective_item/steal/capmedal,
-		/datum/objective_item/steal/hdd_extraction,
-		/datum/objective_item/steal/documents,
+		/datum/objective_item/steal/traitor/chief_engineer_belt
 	)
 
 /datum/traitor_objective/steal_item/very_risky
-	progression_minimum = 40 MINUTES
-	progression_reward = 17 MINUTES
+	progression_minimum = 30 MINUTES
+	progression_reward = 15 MINUTES
 	telecrystal_reward = 3
 
 	possible_items = list(
-		/datum/objective_item/steal/hoslaser,
-		/datum/objective_item/steal/caplaser,
-		/datum/objective_item/steal/nuke_core,
-		/datum/objective_item/steal/supermatter,
+		/datum/objective_item/steal/traitor/det_revolver,
 	)
 
 /datum/traitor_objective/steal_item/most_risky
 	progression_minimum = 50 MINUTES
-	progression_reward = 25 MINUTES
+	progression_reward = 20 MINUTES
 	telecrystal_reward = 5
 
 	possible_items = list(
-		/datum/objective_item/steal/nukedisc,
+		/datum/objective_item/steal/traitor/captain_modsuit,
+		/datum/objective_item/steal/traitor/captain_spare,
 	)
 
 /datum/traitor_objective/steal_item/most_risky/generate_objective(datum/mind/generating_for, list/possible_duplicates)
@@ -169,9 +168,9 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	if(special_equipment)
 		buttons += add_ui_button("", "Pressing this will summon any extra special equipment you may need for the mission.", "tools", "summon_gear")
 	if(!bug)
-		buttons += add_ui_button("", "Pressing this will materialize a bug in your hand, which you can place on the target item", "wifi", "summon_bug")
+		buttons += add_ui_button("", "Pressing this will materialize a scanner in your hand, which you can place on the target item", "wifi", "summon_bug")
 	else if(bug.planted_on)
-		buttons += add_ui_button("[DisplayTimeText(time_fulfilled)]", "This tells you how much time you have spent around the target item after the bug has been planted.", "clock", "none")
+		buttons += add_ui_button("[DisplayTimeText(time_fulfilled)]", "This tells you how much time you have spent around the target item after the scanner has been planted.", "clock", "none")
 		buttons += add_ui_button("Skip Time", "Pressing this will succeed the mission. You will not get the extra TC and progression.", "forward", "cash_out")
 	return buttons
 
@@ -183,7 +182,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 				return
 			bug = new(user.drop_location())
 			user.put_in_hands(bug)
-			bug.balloon_alert(user, "the bug materializes in your hand")
+			bug.balloon_alert(user, "the scanner materializes in your hand")
 			bug.target_object_type = target_item.targetitem
 			AddComponent(/datum/component/traitor_objective_register, bug, \
 				fail_signals = list(COMSIG_PARENT_QDELETING), \
@@ -245,3 +244,72 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	SIGNAL_HANDLER
 	if(objective_state == OBJECTIVE_STATE_ACTIVE)
 		START_PROCESSING(SSprocessing, src)
+
+/obj/item/traitor_bug
+	name = "suspicious device"
+	desc = "It looks dangerous."
+	item_flags = EXAMINE_SKIP
+
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon_state = "bug"
+
+	/// The object on which this bug can be planted on. Has to be a type.
+	var/obj/target_object_type
+	/// The object this bug is currently planted on.
+	var/obj/planted_on
+	/// The time it takes to place this bug.
+	var/deploy_time = 10 SECONDS
+
+/obj/item/traitor_bug/examine(mob/user)
+	. = ..()
+	if(planted_on)
+		return
+
+	if(user.mind?.has_antag_datum(/datum/antagonist/traitor))
+		if(target_object_type)
+			. += span_notice("This device must be placed by <b>clicking on the [initial(target_object_type.name)]</b> with it.")
+		. += span_notice("Remember, you may leave behind fingerprints or fibers on the device. Use <b>soap</b> or similar to scrub it clean to be safe!")
+
+/obj/item/traitor_bug/afterattack(atom/movable/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!target_object_type)
+		return
+	if(!user.Adjacent(target))
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
+	var/result = SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT, target)
+	if(!(result & COMPONENT_FORCE_PLACEMENT))
+		if(result & COMPONENT_FORCE_FAIL_PLACEMENT || !istype(target, target_object_type))
+			balloon_alert(user, "you can't attach this onto here!")
+			return
+	if(!do_after(user, deploy_time, src))
+		return
+	if(planted_on)
+		return
+	forceMove(target)
+	target.vis_contents += src
+	vis_flags |= VIS_INHERIT_PLANE
+	planted_on = target
+	RegisterSignal(planted_on, COMSIG_PARENT_QDELETING, PROC_REF(handle_planted_on_deletion))
+	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PLANTED_OBJECT, target)
+
+/obj/item/traitor_bug/proc/handle_planted_on_deletion()
+	planted_on = null
+
+/obj/item/traitor_bug/Destroy()
+	if(planted_on)
+		vis_flags &= ~VIS_INHERIT_PLANE
+		planted_on.vis_contents -= src
+	return ..()
+
+/obj/item/traitor_bug/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	if(planted_on)
+		vis_flags &= ~VIS_INHERIT_PLANE
+		planted_on.vis_contents -= src
+		anchored = FALSE
+		UnregisterSignal(planted_on, COMSIG_PARENT_QDELETING)
+		planted_on = null
+
+/obj/item/traitor_bug/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+	return !istype(storage_holder, target_object_type)
