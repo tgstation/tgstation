@@ -391,3 +391,23 @@
   - bugfix: fixed missing zones (tramstation)
   - bugfix: fixed wrongly placed zones (tramstation)
   - bugfix: fixed wrongly placed tiles (tramstation)
+2023-03-13:
+  CRITAWAKETS:
+  - config: All dynamic midround rulesets are now properly accounted for in the dynamic.json
+      config.
+  MMMiracles (tramstation):
+  - rscadd: Tramstation's Science department has received a substantial remodel! Please
+      consult your local tour guide for more information.
+  - rscadd: The Vacant Commissary office has been moved to the top floor near Departures,
+      with a new Barber shop taking its place on the lower floor.
+  Nabski:
+  - imageadd: Renault has a dopey walk animation now, god bless.
+  Thunder12345:
+  - spellcheck: The birthday moodlet's description is now gramatically correct.
+  carshalash:
+  - qol: Minor changes to Mexican tourist bot name generation
+  - qol: Japanese tourist bots will no longer request atomic bombs.
+  kinneb:
+  - imageadd: Changed sprites for wooden chairs, comfy chairs, electric chairs, folding
+      chair and shuttle seats!
+  - imageadd: Resprites Donut Box, and all sprites for donuts in it.
