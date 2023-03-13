@@ -23,7 +23,7 @@
 		state = FLOODLIGHT_NEEDS_LIGHTS
 		return TRUE
 	else if(state == FLOODLIGHT_NEEDS_LIGHTS)
-		to_chat(user, span_notice("You unfasten the wiring and electronics in [src]."))
+		balloon_alert("unfastened electronics")
 		name = "wired [name]"
 		desc = "A bare metal frame looking vaguely like a floodlight. Requires securing with a screwdriver."
 		icon_state = "floodlight_c2"
