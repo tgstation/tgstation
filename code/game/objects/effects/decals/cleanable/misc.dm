@@ -255,7 +255,7 @@
 
 /obj/effect/decal/cleanable/wrapping/pinata
 	name = "pinata shreads"
-	desc = "Torn pieces of paper mache, left over from a pinata"
+	desc = "Torn pieces of papier-mâché, left over from a pinata"
 	icon_state = "pinata_shreads"
 
 /obj/effect/decal/cleanable/wrapping/pinata/syndie

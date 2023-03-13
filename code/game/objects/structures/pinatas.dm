@@ -1,6 +1,7 @@
+///A pinata that has a chance to drop candy items when struck with a melee weapon that deals at least 10 damage
 /obj/structure/pinata
 	name = "corgi pinata"
-	desc = "A paper mache representation of a corgi that contains all sorts of sugary treats."
+	desc = "A papier-mâché representation of a corgi that contains all sorts of sugary treats."
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "pinata_placed"
 	base_icon_state = "pinata_placed"
@@ -38,9 +39,10 @@
 	new debris(get_turf(src))
 	return ..()
 
+///An item that when used inhand spawns an immovable pinata
 /obj/item/pinata
 	name = "pinata assembly kit"
-	desc = "a paper mache corgi that contains various candy, must be set up before you can smash it."
+	desc = "a papier-mâché corgi that contains various candy, must be set up before you can smash it."
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "pinata"
 	///The pinata that is created when this is placed.
@@ -58,7 +60,7 @@
 
 /obj/structure/pinata/syndie
 	name = "syndicate corgi pinata"
-	desc = "A paper mache representation of a corgi that contains all sorts of bombastic treats."
+	desc = "A papier-mâché representation of a corgi that contains all sorts of bombastic treats."
 	icon_state = "pinata_syndie_placed"
 	base_icon_state = "pinata_syndie_placed"
 	destruction_loot = 2
@@ -78,6 +80,6 @@
 
 /obj/item/pinata/syndie
 	name = "weapons grade pinata assembly kit"
-	desc = "a paper mache corgi that contains various candy and explosives, must be set up before you can smash it."
+	desc = "a papier-mâché corgi that contains various candy and explosives, must be set up before you can smash it."
 	icon_state = "pinata_syndie"
 	pinata_type = /obj/structure/pinata/syndie
