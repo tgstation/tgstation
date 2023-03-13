@@ -235,14 +235,7 @@
 		var/list/trauma_text = list()
 		for(var/t in patient.get_traumas())
 			var/datum/brain_trauma/trauma = t
-			var/trauma_desc = ""
-			switch(trauma.resilience)
-				if(TRAUMA_RESILIENCE_SURGERY)
-					trauma_desc += "severe "
-				if(TRAUMA_RESILIENCE_LOBOTOMY)
-					trauma_desc += "deep-rooted "
-				if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
-					trauma_desc += "permanent "
+			var/trauma_desc = RESILIENCE_TO_ADJECTIVE[trauma.resilience]
 			trauma_desc += trauma.scan_desc
 			trauma_text += trauma_desc
 		trauma_status = "Cerebral traumas detected: patient appears to be suffering from [english_list(trauma_text)]."

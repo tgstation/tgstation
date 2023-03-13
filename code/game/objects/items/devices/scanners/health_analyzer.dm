@@ -167,16 +167,7 @@
 		if(LAZYLEN(carbontarget.get_traumas()))
 			var/list/trauma_text = list()
 			for(var/datum/brain_trauma/trauma in carbontarget.get_traumas())
-				var/trauma_desc = ""
-				switch(trauma.resilience)
-					if(TRAUMA_RESILIENCE_SURGERY)
-						trauma_desc += "severe "
-					if(TRAUMA_RESILIENCE_LOBOTOMY)
-						trauma_desc += "deep-rooted "
-					if(TRAUMA_RESILIENCE_WOUND)
-						trauma_desc += "fracture-derived "
-					if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
-						trauma_desc += "permanent "
+				var/trauma_desc = RESILIENCE_TO_ADJECTIVE[trauma.resilience]
 				trauma_desc += trauma.scan_desc
 				trauma_text += trauma_desc
 			render_list += "<span class='alert ml-1'>Cerebral traumas detected: subject appears to be suffering from [english_list(trauma_text)].</span>\n"

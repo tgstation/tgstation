@@ -440,8 +440,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 6500)
 	discount_experiments = list(
-		/datum/experiment/scanning/random/cytology/easy = 1000,
-		/datum/experiment/scanning/points/slime/hard = 5000,
+		/datum/experiment/scanning/points/people/species/standard_crew_species = 5000,
 		/datum/experiment/dissection/xenomorph = 5000,
 	)
 
@@ -492,7 +491,8 @@
 		"surgery_lobotomy",
 		"surgery_wing_reconstruction",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list( /datum/experiment/scanning/points/people/wounds/all_wounds= 3000)
 
 /datum/techweb_node/exp_surgery
 	id = "exp_surgery"
@@ -513,7 +513,10 @@
 		"surgery_viral_bond",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
-	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 4500)
+	discount_experiments = list(
+		/datum/experiment/scanning/points/people/brain_traumas/random = 5000,
+		/datum/experiment/scanning/random/plants/traits = 2500,
+	)
 
 /datum/techweb_node/alien_surgery
 	id = "alien_surgery"
@@ -526,6 +529,7 @@
 		"surgery_zombie",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	discount_experiments = list(/datum/experiment/dissection/ayyylien = 5000)
 
 /////////////////////////data theory tech/////////////////////////
 
@@ -1233,7 +1237,8 @@
 		"dnascanner",
 		"scan_console",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
+	discount_experiments = list(/datum/experiment/scanning/points/people/mutations/combination = 2000)
 
 /datum/techweb_node/cryotech
 	id = "cryotech"
@@ -2106,7 +2111,10 @@
 	)
 
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
-	discount_experiments = list(/datum/experiment/scanning/points/slime/hard = 10000)
+	discount_experiments = list(
+		/datum/experiment/scanning/points/people/species/ayyyys = 10000,
+		/datum/experiment/scanning/points/people/species/slime_species = 7500,
+	)
 	hidden = TRUE
 
 /datum/techweb_node/alien_engi

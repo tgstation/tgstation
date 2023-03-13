@@ -185,12 +185,30 @@
 #define BRAIN_TRAUMA_SPECIAL /datum/brain_trauma/special
 #define BRAIN_TRAUMA_MAGIC /datum/brain_trauma/magic
 
-#define TRAUMA_RESILIENCE_BASIC 1 //Curable with chems
-#define TRAUMA_RESILIENCE_SURGERY 2 //Curable with brain surgery
-#define TRAUMA_RESILIENCE_LOBOTOMY 3 //Curable with lobotomy
-#define TRAUMA_RESILIENCE_WOUND 4 //Curable by healing the head wound
-#define TRAUMA_RESILIENCE_MAGIC 5 //Curable only with magic
-#define TRAUMA_RESILIENCE_ABSOLUTE 6 //This is here to stay
+/// Curable with chems, all traumas are this by default
+#define TRAUMA_RESILIENCE_BASIC 1
+/// Curable with brain surgery
+#define TRAUMA_RESILIENCE_SURGERY 2
+/// Curable with lobotomy
+#define TRAUMA_RESILIENCE_LOBOTOMY 3
+/// Curable by healing the head wound
+#define TRAUMA_RESILIENCE_WOUND 4
+/// Curable only with magic (effectively permanent)
+#define TRAUMA_RESILIENCE_MAGIC 5
+/// Completely permanent, even though aheals. This is here to stay
+#define TRAUMA_RESILIENCE_ABSOLUTE 6
+
+/// A defined list of resiliences to adjectives used when describing them
+/// Funnily enough since resiliences are integers this is non-associative,
+/// so be wary of that if that ever changes in the future
+#define RESILIENCE_TO_ADJECTIVE list( \
+	TRAUMA_RESILIENCE_BASIC = "", \
+	TRAUMA_RESILIENCE_SURGERY = "severe ", \
+	TRAUMA_RESILIENCE_LOBOTOMY = "deep-rooted ", \
+	TRAUMA_RESILIENCE_WOUND = "fracture-derived ", \
+	TRAUMA_RESILIENCE_MAGIC = "permanent ", \
+	TRAUMA_RESILIENCE_ABSOLUTE = "permanent ", \
+)
 
 //Limit of traumas for each resilience tier
 #define TRAUMA_LIMIT_BASIC 3

@@ -31,6 +31,13 @@
 /datum/experiment/dissection/nonhuman/is_valid_dissection(mob/target)
 	return ishuman(target) && !ishumanbasic(target)
 
+/datum/experiment/dissection/ayyylien
+	name = "Alien Dissection Experiment"
+	description = "The dissector becomes the dissected. Splice open a grey man to see why they want to do it to us so much. "
+
+/datum/experiment/dissection/nonhuman/is_valid_dissection(mob/target)
+	return isabductor(target)
+
 /datum/experiment/dissection/xenomorph
 	name = "Xenomorph Dissection Experiment"
 	description = "Our understanding of the xenomorph only scratches the surface. Send us research from dissecting a xenomorph."

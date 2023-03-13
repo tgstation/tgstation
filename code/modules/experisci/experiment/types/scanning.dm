@@ -13,10 +13,16 @@
 	allowed_experimentors = list(/obj/item/experi_scanner, /obj/machinery/destructive_scanner)
 	performance_hint = "Perform scanning experiments using a handheld experi-scanner, or the stationary experimental destructive scanner. \
 						Destructive scans can only be performed with the experimental destructive scanner."
-	/// The typepaths and number of atoms that must be scanned
+
+	/**
+	 * Assoc list of [typepath] to [number of atoms that must be scanned].
+	 *
+	 * For point scanning experiments, this behaves differently:
+	 * Assoc list of [typepath] to [points awarded for scanning].
+	 */
 	var/list/required_atoms = list()
 	/// The list of atoms with sub-lists of atom references for scanned atoms contributing to the experiment (Or a count of atoms destoryed for destructive expiriments)
-	var/list/scanned = list()
+	VAR_FINAL/list/scanned = list()
 
 /**
  * Initializes the scanned atoms lists
