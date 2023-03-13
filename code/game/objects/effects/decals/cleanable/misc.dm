@@ -254,12 +254,12 @@
 	icon_state = "paper_shreds"
 
 /obj/effect/decal/cleanable/wrapping/pinata
-	name = "pinata shreads"
+	name = "pinata shreds"
 	desc = "Torn pieces of papier-mâché, left over from a pinata"
-	icon_state = "pinata_shreads"
+	icon_state = "pinata_shreds"
 
 /obj/effect/decal/cleanable/wrapping/pinata/syndie
-	icon_state = "syndie_pinata_shreads"
+	icon_state = "syndie_pinata_shreds"
 
 /obj/effect/decal/cleanable/garbage
 	name = "decomposing garbage"

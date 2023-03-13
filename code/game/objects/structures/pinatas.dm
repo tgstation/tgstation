@@ -48,7 +48,7 @@
 ///An item that when used inhand spawns an immovable pinata
 /obj/item/pinata
 	name = "pinata assembly kit"
-	desc = "a papier-mâché corgi that contains various candy, must be set up before you can smash it."
+	desc = "A papier-mâché corgi that contains various candy, must be set up before you can smash it."
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "pinata"
 	///The pinata that is created when this is placed.
@@ -62,7 +62,7 @@
 	if(!do_after(user, 4 SECONDS, target = get_turf(user), progress = TRUE))
 		balloon_alert(user, "cancelled!")
 	new pinata_type(get_turf(user))
-	balloon_alert(user, "set up pinata!")
+	balloon_alert(user, "pinata setup")
 	qdel(src)
 
 /obj/structure/pinata/syndie
@@ -72,7 +72,7 @@
 	base_icon_state = "pinata_syndie_placed"
 	destruction_loot = 2
 	debris = /obj/effect/decal/cleanable/wrapping/pinata/syndie
-	candy_options = list(
+	candy_options = list( 
 		/obj/item/food/bubblegum,
 		/obj/item/food/candy,
 		/obj/item/food/chocolatebar,
@@ -83,10 +83,10 @@
 		/obj/item/grenade/empgrenade,
 		/obj/item/grenade/frag,
 		/obj/item/grenade/syndieminibomb,
-	)
+	) //Candy items at the top, explosives at the bottom to be easier to read instead of fully alphabetized.
 
 /obj/item/pinata/syndie
 	name = "weapons grade pinata assembly kit"
-	desc = "a papier-mâché corgi that contains various candy and explosives, must be set up before you can smash it."
+	desc = "A papier-mâché corgi that contains various candy and explosives, must be set up before you can smash it."
 	icon_state = "pinata_syndie"
 	pinata_type = /obj/structure/pinata/syndie
