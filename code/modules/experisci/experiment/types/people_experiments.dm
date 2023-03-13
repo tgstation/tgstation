@@ -21,7 +21,7 @@
 	description = "Scan the scanners and probe the probers. Scan an Abductor so we can get some insight into their ... existence."
 	required_points = 2
 	required_species_ids = list(SPECIES_ABDUCTOR = 1)
-	must_be_on_manifest = FALSE // Generally only from midrounds
+	mind_required = FALSE // Dead aliens may apply
 
 /datum/experiment/scanning/points/people/species/slime_species
 	name = "Human Field Research: Slime-Human Hybrids"
@@ -81,5 +81,7 @@
 	var/possible_traumas = subtypesof(/datum/brain_trauma/mild) + subtypesof(/datum/brain_trauma/severe)
 	for(var/i in 1 to required_points * 2)
 		var/datum/brain_trauma/picked = pick_n_take(possible_traumas)
+		if(!initial(picked.random_gain))
+			continue
 		required_trauma_type[picked] = initial(picked.resilience)
 	return ..()
