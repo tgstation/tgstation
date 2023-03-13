@@ -406,8 +406,9 @@
 
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	for(var/datum/reagent/target_reagent in affected_mob.reagents.reagent_list)
-		if(!istype(target_reagent, /datum/reagent/medicine/calomel))
-			affected_mob.reagents.remove_reagent(target_reagent.type, 3 * REM * delta_time)
+		if(istype(target_reagent, /datum/reagent/medicine/calomel))
+			continue
+		affected_mob.reagents.remove_reagent(target_reagent.type, 3 * REM * delta_time)
 	var/toxin_amount = round(affected_mob.health / 40, 0.1)
 	affected_mob.adjustToxLoss(toxin_amount * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
@@ -428,7 +429,7 @@
 	reagent_state = LIQUID
 	color = "#f3f1f0"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
-	taste_description = "metalic"
+	taste_description = "metallic"
 	overdose_threshold = 10
 	ph = 7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
