@@ -16,7 +16,7 @@
 /obj/structure/floodlight_frame/screwdriver_act(mob/living/user, obj/item/O)
 	. = ..()
 	if(state == FLOODLIGHT_NEEDS_SECURING)
-		to_chat(user, span_notice("You fasten the wiring and electronics in [src]."))
+		balloon_alert(user, "fastened electronics")
 		name = "secured [name]"
 		desc = "A bare metal frame that looks like a floodlight. Requires a light tube to complete."
 		icon_state = "floodlight_c3"
