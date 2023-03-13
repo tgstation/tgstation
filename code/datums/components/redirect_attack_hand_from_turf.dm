@@ -66,6 +66,8 @@
 	RegisterSignals(current_turf, list(
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_HAND_SECONDARY,
+		COMSIG_ATOM_ATTACK_ROBOT,
+		COMSIG_ATOM_ATTACK_ROBOT_SECONDARY,
 	), PROC_REF(on_attack_hand))
 
 	if (!isnull(screentip_texts))
