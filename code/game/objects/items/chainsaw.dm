@@ -23,6 +23,8 @@
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1.5 //Turn it on first you dork
 	var/on = FALSE
+	///The looping sound for our chainsaw when running
+	var/datum/looping_sound/chainsaw/chainsaw_loop
 
 /obj/item/chainsaw/Initialize(mapload)
 	. = ..()
@@ -34,6 +36,7 @@
 		disabled = TRUE, \
 	)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+	chainsaw_loop = new(src)
 
 /obj/item/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
@@ -58,8 +61,10 @@
 
 	if(on)
 		hitsound = 'sound/weapons/chainsawhit.ogg'
+		chainsaw_loop.start()
 	else
 		hitsound = SFX_SWING_HIT
+		chainsaw_loop.stop()
 
 	toolspeed = on ? 0.5 : initial(toolspeed) //Turning it on halves the speed
 	if(src == user.get_active_held_item()) //update inhands

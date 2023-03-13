@@ -26,3 +26,12 @@
 	falloff_exponent = 10
 	falloff_distance = 1
 	volume = 5
+
+/datum/looping_sound/chainsaw
+	start_sound = list('sound/items/taperecorder/taperecorder_hiss_start.ogg' = 1)
+	start_length = 5 SECONDS
+	mid_sounds = list('sound/weapons/chainsaw_loop.ogg' = 1)
+	mid_length = 5 SECONDS
+	volume = 55
+	extra_range = 15
+	ignore_walls = FALSE
