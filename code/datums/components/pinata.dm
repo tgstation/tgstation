@@ -24,15 +24,14 @@
 	if(ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_inflicted))
 		RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(pinata_broken))
-	else if(isobj(parent))
+		return
+	if(isobj(parent))
 		var/obj/parent_integrity_test = parent
 		if(parent_integrity_test.uses_integrity)
 			RegisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(damage_inflicted))
 			RegisterSignal(parent, COMSIG_ATOM_DESTRUCTION, PROC_REF(pinata_broken))
-		else
-			return COMPONENT_INCOMPATIBLE
-	else
-		return COMPONENT_INCOMPATIBLE
+			return
+	return COMPONENT_INCOMPATIBLE
 
 /datum/component/pinata/proc/damage_inflicted(obj/target, damage, damage_type)
 	SIGNAL_HANDLER
