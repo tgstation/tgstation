@@ -118,6 +118,9 @@
 #define LOG_CATEGORY_DEBUG_SQL "debug-sql"
 #define LOG_CATEGORY_DEBUG_TGUI "debug-tgui"
 
+// Compatibility categories, for when stuff is changed and you need existing functionality to work
+#define LOG_CATEGORY_COMPAT_GAME "game-compat"
+
 // Game categories
 #define LOG_CATEGORY_GAME "game"
 #define LOG_CATEGORY_GAME_ACCESS "game-access"
