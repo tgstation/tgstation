@@ -145,7 +145,7 @@
 
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
-	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
+
 	///Defines what armor to use when it hits things.  Must be set to bullet, laser, energy, or bomb
 	var/armor_flag = BULLET
 	///How much armor this projectile pierces.
@@ -264,7 +264,7 @@
 		hitx = target.pixel_x + rand(-8, 8)
 		hity = target.pixel_y + rand(-8, 8)
 
-	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
+	if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
 		var/turf/closed/wall/W = target_loca
 		if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
@@ -1074,3 +1074,20 @@
 		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT),\
 		projectile_payload = shrapnel_type)
 	return TRUE
+
+/**
+ * Is this projectile considered "hostile"?
+ *
+ * By default all projectiles which deal damage or impart crowd control effects (including stamina) are hostile
+ *
+ * This is NOT used for pacifist checks, that's handled by [/obj/item/ammo_casing/var/harmful]
+ * This is used in places such as AI responses to determine if they're being threatened or not (among other places)
+ */
+/obj/projectile/proc/is_hostile_projectile()
+	if(damage > 0 || stamina > 0)
+		return TRUE
+
+	if(paralyze + stun + immobilize + knockdown > 0 SECONDS)
+		return TRUE
+
+	return FALSE
