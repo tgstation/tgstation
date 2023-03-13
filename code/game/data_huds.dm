@@ -205,7 +205,14 @@ Medical HUD! Basic mode needs suit sensors on.
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		if((key || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES))
-			holder.icon_state = "huddefib"
+			if(ishuman(src))
+				var/mob/living/carbon/human/potential_changeling = src
+				if(!potential_changeling.getorgan(/obj/item/organ/internal/brain) && potential_changeling.mind.has_antag_datum(/datum/antagonist/changeling))
+					holder.icon_state = "huddead" // Prevents metagaming changelings by debraining them and seeing that they're still revivable somnehow.
+				else
+					holder.icon_state = "huddefib"
+			else
+				holder.icon_state = "huddefib"
 		else
 			holder.icon_state = "huddead"
 	else
