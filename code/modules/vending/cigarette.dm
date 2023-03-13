@@ -18,6 +18,7 @@
 	)
 	contraband = list(
 		/obj/item/clothing/mask/vape = 5,
+		/obj/item/storage/fancy/cigarettes/cigpack_cannabis = 2,
 	)
 	premium = list(
 		/obj/item/storage/fancy/cigarettes/cigpack_robustgold = 3,
