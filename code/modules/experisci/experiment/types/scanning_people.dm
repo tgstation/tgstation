@@ -13,7 +13,7 @@
 	 * Does this experiment require you scan someone with a mind?
 	 *
 	 * By default these explicity require you scan mobs with minds rather than scanning monkeys / hu-monkeys.
- 	 * This is intended so that scientists may go out and engage more with the crew,
+	 * This is intended so that scientists may go out and engage more with the crew,
 	 * or so that medical doctors can do some scans for science while in downtime by scanning patients.
 	 * Possibly also opens up some antag shenanigans ("Hey, wanna get your leg broken so I can scan you? It's for science!")
 	 */
