@@ -1,14 +1,13 @@
 /// Physical statuses
 #define PHYSICAL_ACTIVE "Active"
-#define PHYSICAL_PHYSICALLY_UNFIT "Physically Unfit"
+#define PHYSICAL_DEBILITATED "Debilitated"
 #define PHYSICAL_UNCONSCIOUS "Unconscious"
 #define PHYSICAL_DECEASED "Deceased"
-#define PHYSICAL_CANCEL "Cancel"
 
 /// List of available physical statuses
 #define PHYSICAL_STATUSES list(\
 	PHYSICAL_ACTIVE, \
-	PHYSICAL_PHYSICALLY_UNFIT, \
+	PHYSICAL_DEBILITATED, \
 	PHYSICAL_UNCONSCIOUS, \
 	PHYSICAL_DECEASED, \
 )

@@ -176,18 +176,18 @@
 
 			if(href_list["physical_status"])
 				var/health_status = tgui_input_list(human_user, "Specify a new physical status for this person.", "Medical HUD", PHYSICAL_STATUSES, target_record.physical_status)
-				if(!target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
+				if(!health_status || !target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 					return
-				if(health_status)
-					target_record.physical_status = health_status
+
+				target_record.physical_status = health_status
 				return
 
 			if(href_list["mental_status"])
 				var/health_status = tgui_input_list(human_user, "Specify a new mental status for this person.", "Medical HUD", MENTAL_STATUSES, target_record.mental_status)
-				if(!target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
+				if(!health_status || !target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 					return
-				if(health_status)
-					target_record.mental_status = health_status
+
+				target_record.mental_status = health_status
 				return
 
 			if(href_list["quirk"])

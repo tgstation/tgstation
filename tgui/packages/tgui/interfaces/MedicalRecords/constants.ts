@@ -1,23 +1,22 @@
 export const PHYSICALSTATUS2COLOR = {
-  Active: 'good',
-  'Physically Unfit': 'purple',
-  Unconscious: 'average',
-  Deceased: 'bad',
+  Active: 'green',
+  Debilitated: 'purple',
+  Unconscious: 'orange',
+  Deceased: 'red',
 } as const;
 
 export const PHYSICALSTATUS2DESC = {
   Active: 'Active. Individual is conscious and healthy.',
-  'Physically Unfit':
-    'Physically Unfit. Individual is conscious, but unhealthy.',
+  Debilitated: 'Debilitated. Individual is conscious, but unhealthy.',
   Unconscious: 'Unconscious. Individual may require medical attention.',
   Deceased: 'Deceased. Individual has died and begun to decay.',
 } as const;
 
 export const MENTALSTATUS2COLOR = {
-  Stable: 'good',
+  Stable: 'green',
   Watch: 'purple',
-  Unstable: 'average',
-  Insane: 'bad',
+  Unstable: 'orange',
+  Insane: 'red',
 } as const;
 
 export const MENTALSTATUS2DESC = {

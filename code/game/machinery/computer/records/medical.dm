@@ -39,9 +39,6 @@
 /obj/machinery/computer/records/medical/ui_data(mob/user)
 	var/list/data = ..()
 
-	data["physical_statuses"] = PHYSICAL_STATUSES
-	data["mental_statuses"] = MENTAL_STATUSES
-
 	var/list/records = list()
 	for(var/datum/record/crew/target in GLOB.manifest.general)
 		var/list/notes = list()
@@ -78,6 +75,8 @@
 	var/list/data = list()
 	data["min_age"] = AGE_MIN
 	data["max_age"] = AGE_MAX
+	data["physical_statuses"] = PHYSICAL_STATUSES
+	data["mental_statuses"] = MENTAL_STATUSES
 	return data
 
 /obj/machinery/computer/records/medical/ui_act(action, list/params, datum/tgui/ui)

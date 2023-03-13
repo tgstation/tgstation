@@ -128,7 +128,7 @@ export const MedicalRecordView = (props, context) => {
                         physical_status: button,
                       })
                     }
-                    pl={!isSelected ? '1.8rem' : 1}
+                    width={!isSelected ? '3.0rem' : 3.0}
                     tooltip={PHYSICALSTATUS2DESC[button] || ''}
                     tooltipPosition="bottom-start">
                     {button[0]}
@@ -154,7 +154,7 @@ export const MedicalRecordView = (props, context) => {
                         mental_status: button,
                       })
                     }
-                    pl={!isSelected ? '1.8rem' : 1}
+                    width={!isSelected ? '3.0rem' : 3.0}
                     tooltip={MENTALSTATUS2DESC[button] || ''}
                     tooltipPosition="bottom-start">
                     {button[0]}
