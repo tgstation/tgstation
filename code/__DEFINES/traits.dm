@@ -936,6 +936,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_BIGGER_PODS "station_trait_bigger_pods"
 #define STATION_TRAIT_SMALLER_PODS "station_trait_smaller_pods"
 #define STATION_TRAIT_BIRTHDAY "station_trait_birthday"
+#define STATION_TRAIT_SPIDER_INFESTATION "station_trait_spider_infestation"
 
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
