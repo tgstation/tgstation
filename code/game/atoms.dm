@@ -811,7 +811,7 @@
 
 		var/list/new_overlays = update_overlays(updates)
 		if (managed_overlays)
-			if (overlays.len == (islist(managed_overlays) ? managed_overlays.len : 1))
+			if (length(overlays) == (islist(managed_overlays) ? length(managed_overlays) : 1))
 				overlays = null
 				POST_OVERLAY_CHANGE(src)
 			else
