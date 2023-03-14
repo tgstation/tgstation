@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "When learning new cult spells their buttons will no longer stack on top of one another."
