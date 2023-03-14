@@ -39755,6 +39755,7 @@
 "mXo" = (
 /obj/structure/kitchenspike,
 /obj/effect/turf_decal/weather/snow,
+/obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/iron/kitchen_coldroom,
 /area/station/service/kitchen/coldroom)
 "mXD" = (
@@ -58195,6 +58196,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"tFy" = (
+/obj/structure/closet/mini_fridge{
+	name = "mini-fridge";
+	anchored = 1
+	},
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "tFB" = (
 /obj/structure/cable,
 /turf/open/floor/iron/white,
@@ -62259,7 +62267,8 @@
 "vbb" = (
 /obj/structure/table,
 /obj/structure/closet/mini_fridge{
-	name = "mini-fridge"
+	name = "mini-fridge";
+	anchored = 1
 	},
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/cup/soda_cans/cola,
@@ -66528,6 +66537,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics_engine)
+"wBU" = (
+/obj/structure/closet/mini_fridge{
+	name = "mini-fridge";
+	anchored = 1
+	},
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
 "wBV" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance)
@@ -163319,7 +163335,7 @@ dtA
 omm
 abM
 abM
-abM
+tFy
 abM
 aaa
 aaa
@@ -166409,7 +166425,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+wBU
 aaa
 aaa
 aaa
