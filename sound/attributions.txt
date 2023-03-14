@@ -38,11 +38,11 @@ alien_organ_cut.ogg is adapted from some CC 0 flesh sound, lesaucisson's swoosh 
 
 standard_stamp.ogg is adapted from tom_woysky's "Stamp.wav" https://freesound.org/people/tom_woysky/sounds/348316/
 
-chainsaw_loop is adapted from Audionautics "Chainsaw Idle Loops"
+chainsaw_loop.ogg is adapted from Audionautics "Chainsaw Idle Loops"
 https://freesound.org/people/Audionautics/sounds/171652/
-chainsaw_start is adapted from 8 Chainsaw Pulls.wav by Stefan021
+chainsaw_start.ogg is adapted from 8 Chainsaw Pulls.wav by Stefan021
 https://freesound.org/s/431740/
-chainsaw_stop is adapted from kyles "chainsaw sawing short cuts +stop.flac"
+chainsaw_stop.ogg is adapted from kyles "chainsaw sawing short cuts +stop.flac"
 https://freesound.org/people/kyles/sounds/453256/
 
 

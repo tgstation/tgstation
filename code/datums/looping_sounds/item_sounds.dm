@@ -33,7 +33,6 @@
 	mid_sounds = list('sound/weapons/chainsaw_loop.ogg' = 1)
 	mid_length = 0.85 SECONDS
 	end_sound = list('sound/weapons/chainsaw_stop.ogg' = 1)
-	end_volume = 15
+	end_volume = 35
 	volume = 40
-	extra_range = 3
 	ignore_walls = FALSE
