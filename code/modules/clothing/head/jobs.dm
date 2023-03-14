@@ -20,7 +20,7 @@
 /obj/item/clothing/head/utility/chefhat/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/chefhat)
+	create_storage(storage_type = /datum/storage/pockets/chefhat)
 
 /obj/item/clothing/head/utility/chefhat/i_am_assuming_direct_control
 	desc = "The commander in chef's head wear. Upon closer inspection, there seem to be dozens of tiny levers, buttons, dials, and screens inside of this hat. What the hell...?"
@@ -133,7 +133,7 @@
 /obj/item/clothing/head/fedora/det_hat/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/small/fedora/detective)
+	create_storage(storage_type = /datum/storage/pockets/small/fedora/detective)
 
 	new flask_path(src)
 

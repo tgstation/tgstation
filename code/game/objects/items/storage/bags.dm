@@ -39,6 +39,7 @@
 	inhand_icon_state = "trashbag"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
+	storage_type = /datum/storage/trash
 	///If true, can be inserted into the janitor cart
 	var/insertable = TRUE
 
@@ -49,8 +50,6 @@
 	atom_storage.max_slots = 30
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/disk/nuclear))
 	atom_storage.supports_smart_equip = FALSE
-	atom_storage.display_contents = FALSE
-	atom_storage.attack_hand_interact = FALSE
 	RegisterSignal(atom_storage, COMSIG_STORAGE_DUMP_POST_TRANSFER, PROC_REF(post_insertion))
 
 /// If you dump a trash bag into something, anything that doesn't get inserted will spill out onto your feet

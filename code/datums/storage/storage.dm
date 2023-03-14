@@ -477,6 +477,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /**
  * Attempts to remove an item from the storage
+ * Ignores removal do_afters. Only use this if you're doing it as part of a dumping action
  *
  * @param obj/item/thing the object we're removing
  * @param atom/newLoc where we're placing the item
@@ -535,6 +536,20 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		thing.pixel_x = thing.base_pixel_x + rand(-8, 8)
 		thing.pixel_y = thing.base_pixel_y + rand(-8, 8)
 
+
+/**
+ * Allows a mob to attempt to remove a single item from the storage
+ * Allows for hooks into things like removal delays
+ *
+ * @param mob/removing the mob doing the removing
+ * @param obj/item/thing the object we're removing
+ * @param atom/newLoc where we're placing the item
+ * @param silent if TRUE, we won't play any exit sounds
+ */
+/datum/storage/proc/remove_single(mob/removing, obj/item/thing, atom/newLoc, silent = FALSE)
+	if(!attempt_remove(thing, newLoc, silent))
+		return FALSE
+	return TRUE
 
 /**
  * Removes only a specific type of item from our storage
@@ -965,7 +980,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(!to_remove)
 			return TRUE
 
-		attempt_remove(to_remove)
+		remove_single(to_show, to_remove)
 		INVOKE_ASYNC(src, PROC_REF(put_in_hands_async), to_show, to_remove)
 		if(!silent)
 			to_show.visible_message(span_warning("[to_show] draws [to_remove] from [resolve_parent]!"), span_notice("You draw [to_remove] from [resolve_parent]."))
