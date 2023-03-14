@@ -5,12 +5,20 @@
 "g" = (
 /turf/closed/mineral/random,
 /area/ruin/space/has_grav/powered)
+"j" = (
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/turf/open/floor/material/meat,
+/area/ruin/space/has_grav/powered)
 "v" = (
 /obj/machinery/light/floor,
 /turf/open/floor/material/meat,
 /area/ruin/space/has_grav/powered)
 "A" = (
 /turf/closed/wall/material/meat,
+/area/ruin/space/has_grav/powered)
+"C" = (
+/obj/effect/mob_spawn/corpse/human/miner,
+/turf/open/floor/material/meat,
 /area/ruin/space/has_grav/powered)
 "T" = (
 /turf/open/floor/material/meat,
@@ -495,7 +503,7 @@ A
 A
 T
 T
-T
+C
 T
 T
 T
@@ -525,7 +533,7 @@ A
 A
 T
 T
-T
+j
 T
 T
 T

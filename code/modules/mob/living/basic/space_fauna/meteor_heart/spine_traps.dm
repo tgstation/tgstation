@@ -1,7 +1,7 @@
 /// Marks several areas with thrusting spines which damage and slow people
 /datum/action/cooldown/spine_traps
 	name = "thrusting spines"
-	desc = "Mark several nearby areas with thrusting spines, which damage and slow people who enter."
+	desc = "Mark several nearby areas with thrusting spines, which will spring up when disturbed."
 	button_icon = 'icons/mob/simple/meteor_heart.dmi'
 	button_icon_state = "spikes_stabbing"
 	cooldown_time = 15 SECONDS
@@ -15,7 +15,7 @@
 /datum/action/cooldown/spine_traps/Activate(atom/target)
 	. = ..()
 
-	playsound(owner, 'sound/magic/demon_consume.ogg', vary = TRUE)
+	playsound(owner, 'sound/magic/demon_consume.ogg', vol = 100, extrarange = 3, falloff_exponent = 2, vary = TRUE)
 	var/list/valid_turfs = list()
 	var/turf/our_turf = get_turf(owner)
 	for (var/turf/zone_turf in orange(range, our_turf))
@@ -90,22 +90,8 @@
 		return
 
 	COOLDOWN_START(src, thrust_delay, 0.7 SECONDS)
+	playsound(src, 'sound/weapons/pierce.ogg', vol = 50, vary = TRUE)
 	var/mob/living/victim = arrived
 	flick("spikes_stabbing", src)
 	var/target_zone = victim.resting ? BODY_ZONE_CHEST : pick_weight(standing_damage_zones)
 	victim.apply_damage(impale_damage, damagetype = BRUTE, def_zone = target_zone, sharpness = SHARP_POINTY)
-	victim.apply_status_effect(/datum/status_effect/spine_hobbled)
-
-/// Slowed from being stabbed by a spike trap
-/datum/status_effect/spine_hobbled
-	id = "spine_hobbled"
-	duration = 6 SECONDS
-	status_type = STATUS_EFFECT_REFRESH
-
-/datum/status_effect/spine_hobbled/on_apply()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/spine_hobbled)
-	return ..()
-
-/datum/status_effect/spine_hobbled/on_remove()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/spine_hobbled)
-	return ..()

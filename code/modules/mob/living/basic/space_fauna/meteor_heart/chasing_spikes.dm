@@ -9,7 +9,7 @@
 
 /datum/action/cooldown/chasing_spikes/Activate(atom/target)
 	. = ..()
-	playsound(owner, 'sound/magic/demon_attack1.ogg', vary = TRUE)
+	playsound(owner, 'sound/magic/demon_attack1.ogg', vol = 100, extrarange = 3, vary = TRUE)
 	new /obj/effect/temp_visual/spike_chaser(get_turf(owner), target)
 
 /// An invisible effect which chases a target, spawning spikes every so often.
@@ -79,14 +79,20 @@
 	damage_blacklist_typecache = typecacheof(damage_blacklist_typecache)
 	pixel_x += rand(-position_variance, position_variance)
 	pixel_y += rand(-position_variance, position_variance)
-	addtimer(CALLBACK(src, PROC_REF(impale), harm_delay, TIMER_DELETE_ME))
+	addtimer(CALLBACK(src, PROC_REF(impale)), harm_delay, TIMER_DELETE_ME)
 
 /// Stab people who are stood on us after a delay in the shins
 /obj/effect/temp_visual/emerging_ground_spike/proc/impale()
 	if (!isturf(loc))
 		return
+	var/hit_someone = FALSE
 	for(var/mob/living/victim in loc)
 		if (is_type_in_typecache(victim, damage_blacklist_typecache))
 			continue
+		hit_someone = TRUE
 		var/target_zone = victim.resting ? BODY_ZONE_CHEST : pick_weight(standing_damage_zones)
 		victim.apply_damage(impale_damage, damagetype = BRUTE, def_zone = target_zone, sharpness = SHARP_POINTY)
+	if (hit_someone)
+		playsound(src, 'sound/weapons/slice.ogg', vol = 75, vary = TRUE)
+	else
+		playsound(src, 'sound/misc/splort.ogg', vol = 25, vary = TRUE)
