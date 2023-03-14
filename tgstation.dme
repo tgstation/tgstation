@@ -5188,4 +5188,5 @@
 #include "massmeta\code\modules\antagonists\monsterhunter\wonderland.dm"
 #include "massmeta\code\modules\antagonists\monsterhunter\wonderland_apocalypse.dm"
 #include "massmeta\code\modules\clothing\halal.dm"
+#include "massmeta\code\modules\dynamic_rulesets\monsterhunter_ruleset.dm"
 // END_INCLUDE
