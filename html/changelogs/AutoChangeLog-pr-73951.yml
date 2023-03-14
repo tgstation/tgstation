@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Fixes limbs not properly storing their external organs, resulting in issues when calculating the bodytypes."
