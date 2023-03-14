@@ -4687,6 +4687,7 @@
 /obj/machinery/light/directional/south,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
@@ -12091,6 +12092,7 @@
 /obj/machinery/light/directional/north,
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/effect/turf_decal/bot_white,
+/obj/item/reagent_containers/condiment/rice,
 /turf/open/floor/iron/white/side,
 /area/station/service/kitchen)
 "cFn" = (
@@ -18983,7 +18985,7 @@
 /area/station/medical/chemistry)
 "fkU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "fkZ" = (
@@ -19330,7 +19332,10 @@
 	c_tag = "Service - Kitchen West"
 	},
 /obj/machinery/grill,
-/obj/structure/sign/poster/random/directional/west,
+/obj/structure/sign/poster/official/work_for_a_future{
+	pixel_x = -31;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -21503,6 +21508,7 @@
 /area/space/nearstation)
 "gjW" = (
 /obj/structure/table/wood/poker,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
 /area/station/commons/lounge)
 "gki" = (
@@ -30483,6 +30489,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
+"jEL" = (
+/obj/structure/chair/stool/directional/north,
+/obj/effect/turf_decal/trimline/dark_blue/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_blue/corner{
+	dir = 4
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron/dark,
+/area/station/commons/lounge)
 "jEO" = (
 /obj/machinery/destination_sign/indicator{
 	dir = 1
@@ -35178,6 +35195,7 @@
 /area/station/security/prison/mess)
 "llj" = (
 /obj/structure/sink/kitchen/directional/south,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -36408,6 +36426,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
+"lJA" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/cafeteria,
+/area/station/service/kitchen)
 "lJS" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -39159,6 +39181,14 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/catwalk_floor,
 /area/station/solars/starboard/fore)
+"mJG" = (
+/obj/structure/chair/stool/bar/directional/north,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 1
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron/checker,
+/area/station/commons/lounge)
 "mKe" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance"
@@ -58800,7 +58830,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/tram/right)
 "tSc" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "tSg" = (
@@ -62174,6 +62204,7 @@
 /area/station/hallway/secondary/command)
 "vaq" = (
 /obj/structure/ladder,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "vav" = (
@@ -62732,6 +62763,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
@@ -70301,7 +70333,7 @@
 /area/station/commons/toilet)
 "yfd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "yfj" = (
@@ -165608,7 +165640,7 @@ abM
 abM
 omm
 diN
-lsx
+jEL
 hht
 nTz
 rQl
@@ -167659,7 +167691,7 @@ shV
 omc
 mUL
 fhg
-vJt
+mJG
 mHc
 hkB
 fwd
@@ -168426,7 +168458,7 @@ tqV
 sfv
 guL
 tJg
-guL
+lJA
 mdp
 mUL
 fhg
