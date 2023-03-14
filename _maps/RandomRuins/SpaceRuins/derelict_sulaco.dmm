@@ -69,7 +69,9 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner/east,
 /obj/item/circuitboard/machine/telecomms/relay,
-/obj/structure/frame/machine,
+/obj/structure/frame/machine{
+	anchored = 1
+	},
 /turf/open/floor/circuit/off,
 /area/ruin/space/has_grav/derelictsulaco)
 "cW" = (
@@ -171,12 +173,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
-"fP" = (
-/obj/item/clothing/under/rank/centcom/military{
-	desc = "A dark colored uniform worn by TerraGov's marine forces."
-	},
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/derelictsulaco)
 "gg" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -198,8 +194,9 @@
 "gD" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/west,
-/obj/machinery/computer/terminal{
-	dir = 1
+/obj/structure/frame/computer{
+	dir = 1;
+	anchored = 1
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/smooth_edge,
@@ -270,8 +267,9 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "iF" = (
 /obj/structure/window/reinforced/spawner/east,
-/obj/structure/frame/machine,
-/obj/item/paper/ruins/derelict_sulaco/birthday,
+/obj/structure/frame/machine{
+	anchored = 1
+	},
 /turf/open/floor/circuit/off,
 /area/ruin/space/has_grav/derelictsulaco)
 "jn" = (
@@ -285,11 +283,11 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/derelictsulaco)
 "jq" = (
-/obj/structure/frame/computer{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 8
+	},
+/obj/machinery/computer/station_alert{
+	dir = 1
 	},
 /turf/open/floor/iron/smooth_corner{
 	dir = 4
@@ -359,7 +357,9 @@
 "ln" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/north,
-/obj/machinery/computer/terminal,
+/obj/structure/frame/computer{
+	anchored = 1
+	},
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
@@ -372,7 +372,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "lr" = (
 /obj/structure/window/reinforced/spawner/west,
-/obj/machinery/computer/terminal{
+/obj/machinery/computer/terminal/sulaco/helm{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red/half{
@@ -443,7 +443,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "na" = (
 /obj/structure/window/reinforced/spawner/north,
-/obj/machinery/computer/terminal,
+/obj/machinery/computer/terminal/sulaco/map,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/pod/light,
@@ -510,7 +510,9 @@
 "qY" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/north,
-/obj/machinery/computer/terminal,
+/obj/structure/frame/computer{
+	anchored = 1
+	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
@@ -637,7 +639,7 @@
 "uS" = (
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner/east,
-/obj/machinery/computer/terminal,
+/obj/machinery/computer/terminal/sulaco/overwatch,
 /obj/effect/turf_decal/tile/red/half{
 	dir = 1
 	},
@@ -811,7 +813,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "zZ" = (
 /obj/structure/window/reinforced/spawner/west,
-/obj/machinery/computer/terminal{
+/obj/machinery/computer/terminal/sulaco/overwatch/main{
 	dir = 4
 	},
 /turf/open/floor/pod/light,
@@ -856,7 +858,11 @@
 "CV" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
+	start_charge = 25;
+	locked = 0;
+	equipment = 0;
+	environ = 0;
+	lighting = 0
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/derelictsulaco)
@@ -900,7 +906,9 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner/west,
 /obj/item/circuitboard/machine/telecomms/hub,
-/obj/structure/frame/machine,
+/obj/structure/frame/machine{
+	anchored = 1
+	},
 /turf/open/floor/circuit/off,
 /area/ruin/space/has_grav/derelictsulaco)
 "FA" = (
@@ -1140,12 +1148,6 @@
 /obj/structure/bed,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/derelictsulaco)
-"LS" = (
-/obj/item/clothing/under/rank/centcom/military{
-	desc = "A dark colored uniform worn by TerraGov's marine forces."
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space)
 "LW" = (
 /obj/structure/cable,
 /turf/open/floor/iron/tgmcemblem/center{
@@ -1169,8 +1171,9 @@
 "Mi" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/east,
-/obj/machinery/computer/terminal{
-	dir = 1
+/obj/structure/frame/computer{
+	dir = 1;
+	anchored = 1
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/smooth_edge,
@@ -1263,6 +1266,9 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/xenoblood/xgibs/down,
+/obj/machinery/computer/monitor{
+	dir = 1
+	},
 /turf/open/floor/iron/smooth_corner{
 	dir = 4
 	},
@@ -1581,7 +1587,7 @@
 "Yk" = (
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner/east,
-/obj/machinery/computer/terminal,
+/obj/machinery/computer/terminal/sulaco/map,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
@@ -1672,9 +1678,7 @@
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "ZX" = (
-/obj/structure/frame/computer{
-	anchored = 1
-	},
+/obj/machinery/computer/crew,
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
@@ -2764,7 +2768,7 @@ Cs
 Nu
 lX
 jA
-fP
+VT
 Yu
 Kq
 VT
@@ -2958,7 +2962,7 @@ KI
 ZZ
 WN
 WN
-LS
+oV
 ZZ
 CU
 PA
