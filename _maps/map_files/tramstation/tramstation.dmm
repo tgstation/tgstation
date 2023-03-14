@@ -5300,6 +5300,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
 	},
+/obj/machinery/smartfridge/petri/preloaded,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "aDu" = (
@@ -6226,6 +6227,10 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine/cult,
 /area/station/service/library)
+"aJT" = (
+/mob/living/simple_animal/slime,
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "aJV" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -18899,7 +18904,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/tram/left)
 "fjA" = (
-/obj/structure/ladder,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -26913,6 +26917,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
 	},
+/obj/machinery/smartfridge/organ,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "iqH" = (
@@ -41810,10 +41815,10 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/ladder,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
+/obj/machinery/smartfridge/extract/preloaded,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "nLK" = (
@@ -67368,7 +67373,6 @@
 /turf/open/floor/glass/reinforced,
 /area/station/science/research)
 "wXi" = (
-/obj/machinery/smartfridge/petri/preloaded,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
 	},
@@ -114666,7 +114670,7 @@ dUT
 gdC
 qVr
 ayN
-bfH
+aJT
 ahk
 hdA
 mBm
@@ -114678,7 +114682,7 @@ hik
 sml
 bfH
 bfH
-bfH
+aJT
 jkd
 qVr
 aaa
@@ -117750,7 +117754,7 @@ hFH
 tYB
 qVr
 wsT
-bfH
+aJT
 bfH
 bfH
 nbI
@@ -117762,7 +117766,7 @@ rbU
 uAF
 ahk
 hdA
-bfH
+aJT
 dgR
 qVr
 aaa
