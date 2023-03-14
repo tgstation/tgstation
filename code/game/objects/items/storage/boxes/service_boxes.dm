@@ -197,7 +197,7 @@
 		new /obj/item/tail_pin(src)
 
 /obj/item/storage/box/party_poppers
-	name = "box of party_poppers"
+	name = "box of party poppers"
 	desc = "Turn any event into a celebration and ensure the janitor stays busy."
 
 /obj/item/storage/box/party_poppers/PopulateContents()
