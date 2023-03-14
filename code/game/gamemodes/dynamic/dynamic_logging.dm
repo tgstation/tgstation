@@ -1,5 +1,5 @@
 /// A "snapshot" of dynamic at an important point in time.
-/// Exported to JSON in the dynamic_gamemode.json log file.
+/// Exported to JSON in the dynamic.json log file.
 /datum/dynamic_snapshot
 	/// The remaining midround threat
 	var/remaining_threat
@@ -81,7 +81,7 @@
 		serialized_snapshots += list(snapshot.to_list())
 	serialized["snapshots"] = serialized_snapshots
 
-	rustg_file_write(json_encode(serialized), "[GLOB.log_directory]/dynamic_gamemode.json")
+	rustg_file_write(json_encode(serialized), "[GLOB.log_directory]/dynamic.json")
 
 /// Creates a new snapshot with the given rulesets chosen, and writes to the JSON output.
 /datum/game_mode/dynamic/proc/new_snapshot(datum/dynamic_ruleset/ruleset_chosen)

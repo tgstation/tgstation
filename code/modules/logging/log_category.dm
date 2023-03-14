@@ -47,8 +47,8 @@ GENERAL_PROTECT_DATUM(/datum/log_category)
 	if(master_category)
 		return master_category.get_output_file(entry)
 	if(secret)
-		return "[GLOB.log_directory]/secret/[category].json"
-	return "[GLOB.log_directory]/[category].json"
+		return "[GLOB.log_directory]/secret/[category].log.json"
+	return "[GLOB.log_directory]/[category].log.json"
 
 /// Writes an entry to the output file for the category
 /datum/log_category/proc/write_entry(list/entry)
