@@ -54,6 +54,18 @@ Map files for away missions are located in the `_maps/RandomZLevels` directory. 
 
 To enable an away mission open `config/awaymissionconfig.txt` and uncomment one of the .dmm lines by removing the #. If more than one away mission is uncommented then the away mission loader will randomly select one of the enabled ones to load. We also support functionality for config-only away missions, which can be set up using the `config/away_missions` folder.
 
+## RUINS
+
+All ruins must be placed in their corresponding configuration folder to allow server operators to enable/disable the ruin for any reason they desire. Follow the chart below to see where you should add your new ruin.
+
+| Type of Ruin | Associated File |
+| ----------- | ----------- |
+| Space Ruins | [config/spaceruinblacklist.txt](https://github.com/tgstation/tgstation/blob/master/config/spaceruinblacklist.txt) |
+| Lavaland Ruins | [config/lavaruinblacklist.txt](https://github.com/tgstation/tgstation/blob/master/config/lavaruinblacklist.txt) 
+| Icemoon Ruins | [config/iceruinblacklist.txt](https://github.com/tgstation/tgstation/blob/master/config/iceruinblacklist.txt) |
+
+Each .txt file will have instructions on how to appropriately add your map to the file.
+
 ## MAP DEPOT
 
 For sentimental purposes, /tg/station hosts a [Map Depot](https://github.com/tgstation/map_depot) for any unused maps since retired from active use in the codebase. A lot of maps present in said depot do get severely outdated within weeks of their initial uploading, so do keep in mind that a bit of setup is required since active maintenance is not enforced there the same way as this repository.
