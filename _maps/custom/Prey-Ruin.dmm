@@ -51,7 +51,7 @@
 /area/ruin/space/has_grav)
 "Q" = (
 /obj/effect/mob_spawn/corpse/human{
-	husk = true;
+	husk = 1;
 	outfit = /obj/item/clothing/under/rank/rnd/roboticist
 	},
 /turf/open/floor/mineral/titanium/white/airless,
