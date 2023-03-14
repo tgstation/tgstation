@@ -430,3 +430,37 @@
 			gourmand_objective.owner = owner
 			gourmand_objective.objective_name = "Optional Objective"
 			objectives += gourmand_objective
+
+/datum/antagonist/bloodsucker/roundend_report()
+	// Get the default Objectives
+	var/list/report = list()
+	// Vamp name
+	report += "<br><span class='header'><b>\[[return_full_name()]\]</b></span>"
+	report += printplayer(owner)
+	// Clan name
+	if(my_clan)
+		report += "They were part of the <b>[my_clan.name]</b>!"
+
+	// Default Report
+	var/objectives_complete = TRUE
+	if(objectives.len)
+		report += printobjectives(objectives)
+		for(var/datum/objective/objective in objectives)
+			if(!objective.check_completion())
+				objectives_complete = FALSE
+				break
+
+	// Now list their vassals
+	if(vassals.len > 0)
+		report += "<span class='header'>Their Vassals were...</span>"
+		for(var/datum/antagonist/vassal/all_vassals in vassals)
+			if(all_vassals.owner)
+				var/jobname = all_vassals.owner.assigned_role ? "the [all_vassals.owner.assigned_role.title]" : ""
+				report += "<b>[all_vassals.owner.name]</b> [jobname] was a [all_vassals.name]"
+
+	if(objectives.len == 0 || objectives_complete)
+		report += "<span class='greentext big'>The [name] was successful!</span>"
+	else
+		report += "<span class='redtext big'>The [name] has failed!</span>"
+
+	return report
