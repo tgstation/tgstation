@@ -90,6 +90,7 @@
 	log_combat(user, target, "attacked", "[item.name]", "(Combat mode: [user.combat_mode ? "On" : "Off"])")
 
 	BB_LOG( \
+		BB_COMBAT, \
 		"{user} stabbed {target} in the eyes with {with}", \
 		user = user, \
 		target = target, \

@@ -52,6 +52,7 @@
 	log_combat(A, D, "punched (boxing) ")
 
 	BB_LOG( \
+		BB_COMBAT, \
 		"{user} punched ({martial_art}) {target}", \
 		user = A, \
 		target = D, \
