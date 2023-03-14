@@ -177,7 +177,7 @@
 /obj/item/organ/external/wings/functional/robotic
 	name = "robotic wings"
 	desc = "Using microscopic hover-engines, or \"microwings,\" as they're known in the trade, these tiny devices are able to lift a few grams at a time. Gathering enough of them, and you can lift impressively large things."
-	sprite_accessory_override = /datum/sprite_accessory/wings/megamoth
+	sprite_accessory_override = /datum/sprite_accessory/wings/robotic
 
 ///skeletal wings, which relate to skeletal races.
 /obj/item/organ/external/wings/functional/skeleton

@@ -45783,10 +45783,6 @@
 /obj/item/stock_parts/subspace/amplifier,
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
-"nZG" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/maintenance/port/fore)
 "nZH" = (
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
@@ -53277,7 +53273,7 @@
 "qtS" = (
 /obj/machinery/light/directional/north,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/mine/storage)
+/area/icemoon/underground/explored)
 "qtT" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Dock"
@@ -77326,7 +77322,7 @@
 "xPu" = (
 /obj/machinery/light/directional/east,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/mine/storage)
+/area/icemoon/underground/explored)
 "xPv" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -77401,7 +77397,7 @@
 "xQu" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/mine/storage)
+/area/icemoon/underground/explored)
 "xQB" = (
 /obj/effect/spawner/random/clothing/costume,
 /obj/structure/rack,
@@ -229421,14 +229417,14 @@ lJO
 dDV
 sFN
 lJO
-nZG
-nZG
-nZG
-nZG
-nZG
-nZG
-nZG
-nZG
+lJO
+lJO
+lJO
+lJO
+lJO
+lJO
+lJO
+lJO
 lJO
 wJz
 aJA
