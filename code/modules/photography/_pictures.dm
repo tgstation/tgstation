@@ -58,8 +58,9 @@
 	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 	picture_icon = ic
 
-/datum/picture/serialize_list(list/options)
+/datum/picture/serialize_list(list/options, list/semvers)
 	. = ..()
+
 	.["id"] = id
 	.["desc"] = picture_desc
 	.["name"] = picture_name
@@ -68,7 +69,8 @@
 	.["pixel_size_y"] = psize_y
 	.["blueprints"] = has_blueprints
 	.["logpath"] = logpath
-	options[SCHEMA_VERSION] = "1.0.0"
+
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
 	return .
 
 /datum/picture/deserialize_list(list/input, list/options)

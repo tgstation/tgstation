@@ -184,41 +184,46 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	if(!log_category)
 		Log(LOG_CATEGORY_NOT_FOUND, message, data)
 		CRASH("Attempted to log to a category that doesn't exist! [category]")
-	log_category.add_entry(message, recursive_jsonify(data))
+
+	var/list/semver_list = list()
+	var/list/final_data = recursive_jsonify(data, semver_list)
+	final_data[LOG_ENTRY_SEMVER_STORE] = semver_list
+	log_category.add_entry(message, final_data)
 
 /// Recursively converts an associative list of datums into their jsonified(list) form
-/datum/log_holder/proc/recursive_jsonify(list/data_list)
+/datum/log_holder/proc/recursive_jsonify(list/data_list, list/semvers)
 	if(!data_list)
 		return null
 
 	var/list/jsonified_list = list()
 	for(var/key in data_list)
 		var/datum/data = data_list[key]
+
 		if(isnull(data))
-			stack_trace("recursive_jsonify called with a null value in the list")
-			continue
+			// do nothing - nulls are allowed
 
 		if(islist(data))
-			data = recursive_jsonify(data)
+			data = recursive_jsonify(data, semvers)
 
 		else if(isdatum(data))
 			var/list/options_list = list(
 				SCHEMA_VERSION = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET,
 			)
-			var/list/serialization_data = data.serialize_list(options_list)
-			if(!semver_to_list(options_list[SCHEMA_VERSION]))
+
+			var/list/serialization_data = data.serialize_list(options_list, semvers)
+			var/current_semver = semvers[data.type]
+			if(!semver_to_list(current_semver))
 				stack_trace("serialization of data had an invalid semver")
-				options_list[SCHEMA_VERSION] = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET
+				semvers[data.type] = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET
 
 			if(!length(serialization_data)) // serialize_list wasn't implemented, and errored
 				stack_trace("serialization data was empty")
 				continue
 
-			serialization_data[SCHEMA_VERSION] = options_list[SCHEMA_VERSION]
-			data = recursive_jsonify(serialization_data)
+			data = recursive_jsonify(serialization_data, semvers)
 
-		if(isnull(data) || (islist(data) && !length(data)))
-			stack_trace("recursive_jsonify got a null value after serialization")
+		if(islist(data) && !length(data))
+			stack_trace("recursive_jsonify got an empty list after serialization")
 			continue
 
 		jsonified_list[key] = data

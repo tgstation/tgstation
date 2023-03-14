@@ -122,30 +122,24 @@
 	set_current(null)
 	return ..()
 
-/datum/mind/serialize_list(list/options)
+/datum/mind/serialize_list(list/options, list/semvers)
 	. = ..()
+
 	.["key"] = key
-	if(name)
-		.["name"] = name
-	if(ghostname)
-		.["ghostname"] = ghostname
-	if(length(memories))
-		.["memories"] = memories
-	if(martial_art)
-		.["martial_art"] = martial_art
-	if(length(antag_datums))
-		.["antag_datums"] = antag_datums
+	.["name"] = name
+	.["ghostname"] = ghostname
+	.["memories"] = memories
+	.["martial_art"] = martial_art
+	.["antag_datums"] = antag_datums
 	.["holy_role"] = holy_role
+	.["special_role"] = special_role
+	.["assigned_role"] = assigned_role.title
+	.["current"] = current
+
 	var/mob/enslaved_to = src.enslaved_to?.resolve()
-	if(enslaved_to)
-		.["enslaved_to"] = enslaved_to.key
-	if(special_role)
-		.["special_role"] = special_role
-	if(assigned_role)
-		.["assigned_role"] = assigned_role.title
-	if(current)
-		.["current"] = current
-	options[SCHEMA_VERSION] = "1.0.0"
+	.["enslaved_to"] = enslaved_to
+
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
 	return .
 
 /datum/mind/vv_edit_var(var_name, var_value)

@@ -109,17 +109,15 @@
 	. = ..()
 	tag = "mob_[next_mob_id++]"
 
-/mob/serialize_list(list/options)
+/mob/serialize_list(list/options, list/semvers)
 	. = ..()
-	if(tag)
-		.["tag"] = tag
-	if(name)
-		.["name"] = name
-	if(ckey)
-		.["ckey"] = ckey
-	if(key)
-		.["key"] = key
-	options[SCHEMA_VERSION] = "1.0.0"
+
+	.["tag"] = tag
+	.["name"] = name
+	.["ckey"] = ckey
+	.["key"] = key
+
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
 	return .
 
 /**

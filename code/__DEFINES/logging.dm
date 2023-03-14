@@ -68,6 +68,7 @@
 #define LOG_ENTRY_DATA "data"
 #define LOG_ENTRY_SCHEMA_VERSION "schema-version"
 #define LOG_ENTRY_WORLD_DATA "world-state"
+#define LOG_ENTRY_SEMVER_STORE "semver-store"
 
 // Log json keys
 #define LOG_JSON_CATEGORY "category"

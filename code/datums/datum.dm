@@ -181,10 +181,15 @@
 	to_chat(target, txt_changed_vars())
 #endif
 
-///Return a LIST for serialize_datum to encode! Not the actual json!
-/datum/proc/serialize_list(list/options)
+/// Return a list of data which can be used to investigate the datum, also ensure that you set the semver in the options list
+/datum/proc/serialize_list(list/options, list/semvers)
 	SHOULD_CALL_PARENT(TRUE)
-	return list()
+
+	. = list()
+	.["tag"] = tag
+
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
+	return .
 
 ///Accepts a LIST from deserialize_datum. Should return whether or not the deserialization was successful.
 /datum/proc/deserialize_list(json, list/options)

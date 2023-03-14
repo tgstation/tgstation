@@ -10,6 +10,31 @@
 	msg = "## NOTICE: [msg]"
 	log_world(msg)
 
+#define SET_SERIALIZATION_SEMVER(semver_list, semver) semver_list[type] = semver
+#define CHECK_SERIALIZATION_SEMVER(wanted, actual) (__check_serialization_semver(wanted, actual))
+
+/// Checks if the actual semver is equal or later than the wanted semver
+/// Must be passed as TEXT
+/proc/__check_serialization_semver(wanted, actual)
+	if(wanted == actual)
+		return TRUE
+
+	var/list/wanted_versions = semver_to_list(wanted)
+	var/list/actual_versions = semver_to_list(actual)
+
+	if(!wanted_versions || !actual_versions)
+		stack_trace("Invalid semver string(s) passed to __check_serialization_semver: '[wanted]' and '[actual]'")
+		return FALSE
+
+	if(wanted_versions[1] != actual_versions[1])
+		return FALSE // major must always
+
+	if(wanted_versions[2] > actual_versions[2])
+		return FALSE // actual must be later than wanted
+
+	// patch is not checked
+	return TRUE
+
 //print a testing-mode debug message to world.log and world
 #ifdef TESTING
 #define testing(msg) log_world("## TESTING: [msg]"); to_chat(world, "## TESTING: [msg]")
