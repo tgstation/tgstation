@@ -293,3 +293,15 @@
 	for(var/i in 1 to 10)
 		cardpacktype = pick(subtypesof(/obj/item/cardpack))
 		new cardpacktype(C)
+
+/datum/supply_pack/constumes_toys/pinata
+	name = "Corgi Pinata Kit"
+	desc = "This crate contains a pinata full of candy, a blindfold and a bat for smashing it."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(
+		/obj/item/pinata,
+		/obj/item/melee/baseball_bat,
+		/obj/item/clothing/glasses/blindfold,
+	)
+	crate_name = "corgi pinata kit"
+	crate_type = /obj/structure/closet/crate/wooden
