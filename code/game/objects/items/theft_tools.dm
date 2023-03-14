@@ -197,6 +197,14 @@
 		log_combat(throwingdatum?.thrower, hit_atom, "consumed", src)
 		message_admins("[src] has consumed [key_name_admin(victim)] [ADMIN_JMP(src)], thrown by [key_name_admin(user)].")
 		investigate_log("has consumed [key_name(victim)], thrown by [key_name(user)]", INVESTIGATE_ENGINE)
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} threw supermatter sliver {supermatter_sliver} into {hit_atom}, reducing it to atoms", \
+			user = user, \
+			supermatter_sliver = src, \
+			hit_atom = hit_atom \
+		)
 	else
 		message_admins("[src] has consumed [key_name_admin(victim)] [ADMIN_JMP(src)] via throw impact.")
 		investigate_log("has consumed [key_name(victim)] via throw impact.", INVESTIGATE_ENGINE)
@@ -333,6 +341,15 @@
 		qdel(AM)
 	if (user)
 		log_combat(user, AM, "consumed", sliver, "via [src]")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} foolishly attempted to touch {supermatter_crystal} with {tongs}, and was reduced to atoms", \
+			user = user, \
+			supermatter_crystal = AM, \
+			tongs = src \
+		)
+
 		user.visible_message(span_danger("As [user] touches [AM] with \the [src], both flash into dust and silence fills the room..."),\
 			span_userdanger("You touch [AM] with [src], and everything suddenly goes silent.\n[AM] and [sliver] flash into dust, and soon as you can register this, you do as well."),\
 			span_hear("Everything suddenly goes silent."))

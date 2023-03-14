@@ -70,6 +70,15 @@
 				to_chat(C, span_userdanger("As you feel someone grab your wrists, [src] start digging into your skin!"))
 			playsound(loc, cuffsound, 30, TRUE, -2)
 			log_combat(user, C, "attempted to handcuff")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} started handcuffing {target} with {with}", \
+				user = user, \
+				target = C, \
+				with = src \
+			)
+
 			if(do_after(user, 3 SECONDS, C, timed_action_flags = IGNORE_SLOWDOWNS) && C.canBeHandcuffed())
 				if(iscyborg(user))
 					apply_cuffs(C, user, TRUE)
@@ -80,9 +89,25 @@
 				SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
 				log_combat(user, C, "handcuffed")
+
+				BB_LOG( \
+					BB_COMBAT, \
+					"{user} started handcuffed {target} with {with}", \
+					user = user, \
+					target = C, \
+					with = src \
+				)
 			else
 				to_chat(user, span_warning("You fail to handcuff [C]!"))
 				log_combat(user, C, "failed to handcuff")
+
+				BB_LOG( \
+					BB_COMBAT, \
+					"{user} failed to handcuff {target} with {with}", \
+					user = user, \
+					target = C, \
+					with = src \
+				)
 		else
 			to_chat(user, span_warning("[C] doesn't have two hands..."))
 

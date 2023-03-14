@@ -56,6 +56,12 @@
 	if(iscyborg(target))
 		var/mob/living/silicon/silicon = target
 		log_combat(shell, silicon, "shone in the sensors", src)
+		BB_LOG( \
+			BB_COMBAT, \
+			"{laser_pointer} blinded {target}, a cyborg", \
+			laser_pointer = src, \
+			target = silicon \
+		)
 		silicon.flash_act(affect_silicon = TRUE) /// no stunning, just a blind
 		to_chat(silicon, span_danger("Your sensors were overloaded by a weakened laser shone by [shell]!"))
 

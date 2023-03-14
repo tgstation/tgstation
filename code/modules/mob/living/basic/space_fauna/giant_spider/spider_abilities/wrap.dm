@@ -102,6 +102,14 @@
 			living_wrapped.investigate_log("has been killed by being wrapped in a cocoon.", INVESTIGATE_DEATHS)
 			living_wrapped.death() //you just ate them, they're dead.
 			log_combat(owner, living_wrapped, "spider cocooned")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} wrapped {target} in {cocoon}", \
+				user = owner, \
+				target = living_wrapped, \
+				cocoon = casing \
+			)
 		else
 			to_chat(owner, span_warning("[living_wrapped] is not edible!"))
 

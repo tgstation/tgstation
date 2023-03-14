@@ -150,6 +150,14 @@
 								span_notice("[user] places [pushed_mob] onto [src]."))
 	log_combat(user, pushed_mob, "places", null, "onto [src]")
 
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} placed {target} onto {table}", \
+		user = user, \
+		target = pushed_mob, \
+		table = src \
+	)
+
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_danger("Throwing [pushed_mob] onto the table might hurt them!"))
@@ -175,6 +183,15 @@
 	pushed_mob.visible_message(span_danger("[user] slams [pushed_mob] onto \the [src]!"), \
 								span_userdanger("[user] slams you onto \the [src]!"))
 	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} slammed (tabling) {target} onto {table}", \
+		user = user, \
+		target = pushed_mob, \
+		target = src, \
+	)
+
 	pushed_mob.add_mood_event("table", /datum/mood_event/table)
 
 /obj/structure/table/proc/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
@@ -192,6 +209,16 @@
 	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.plaintext_zone] against \the [src]!"),
 								span_userdanger("[user] smashes your [banged_limb.plaintext_zone] against \the [src]"))
 	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} slammed (table limb smash) {target}'s {limb} onto {table}", \
+		user = user, \
+		target = pushed_mob, \
+		limb = banged_limb, \
+		table = src \
+	)
+
 	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
 
 /obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
@@ -324,6 +351,15 @@
 	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
 	target.throw_at(src, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
 	log_combat(src, target, "shoved", "onto [src] (table)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} shoved {target} onto {table}", \
+		user = shover, \
+		taget = target, \
+		table = src \
+	)
+
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /obj/structure/table/greyscale

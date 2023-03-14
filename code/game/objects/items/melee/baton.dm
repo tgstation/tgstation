@@ -185,6 +185,14 @@
 		target.LAssailant = WEAKREF(user)
 		if(log_stun_attack)
 			log_combat(user, target, "stun attacked", src)
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} stun attacked {target} with {with}", \
+				user = user, \
+				target = target, \
+				with = src \
+			)
 	if(baton_effect(target, user, modifiers) && user)
 		set_batoned(target, user, cooldown)
 
@@ -273,6 +281,14 @@
 	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
 
 	log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} stunned themselves with {with} due to clumsiness", \
+		user = user, \
+		with = src \
+	)
+
 	if(stun_animation)
 		user.do_attack_animation(user)
 	return

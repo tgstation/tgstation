@@ -219,6 +219,14 @@
 	if(user != teleporting && success)
 		log_combat(user, teleporting, "teleported", null, "from [AREACOORD(source)]")
 
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} teleported to {target_turf} using {hierophant_club}", \
+			user = user, \
+			target_turf = turf_to_teleport_to, \
+			hierophant_club = src \
+		)
+
 /obj/item/hierophant_club/pickup(mob/living/user)
 	. = ..()
 	blink.Grant(user, src)

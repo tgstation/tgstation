@@ -79,6 +79,14 @@
 			return
 	log_combat(user, target, "attempted to inject", src)
 
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} attempted to inject {target} with {dna_injector}", \
+		user = user, \
+		target = target, \
+		dna_injector = src \
+	)
+
 	if(target != user)
 		target.visible_message(span_danger("[user] is trying to inject [target] with [src]!"), \
 			span_userdanger("[user] is trying to inject you with [src]!"))
@@ -94,6 +102,22 @@
 
 	if(!inject(target, user)) //Now we actually do the heavy lifting.
 		to_chat(user, span_notice("It appears that [target] does not have compatible DNA."))
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} failed to inject {target} with {dna_injector} due to incompatible DNA", \
+			user = user, \
+			target = target, \
+			dna_injector = src \
+		)
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} successfully injected {target} with {dna_injector}", \
+		user = user, \
+		target = target, \
+		dna_injector = src \
+	)
 
 	used = TRUE
 	update_appearance()
@@ -184,7 +208,18 @@
 			for(var/datum/symptom/symp in disease.symptoms)
 				if((symp.type == /datum/symptom/genetic_mutation) || (symp.type == /datum/symptom/viralevolution))
 					crispr_charge = TRUE
+
 		log_combat(user, target, "[!doitanyway ? "failed to inject" : "injected"]", "[src] ([mutation])[crispr_charge ? " with CRISPR charge" : ""]")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} activated {mutation} in {target} with {dna_injector}", \
+			user = user, \
+			mutation = mutation, \
+			target = target, \
+			dna_injector = src \
+		)
+
 	return TRUE
 
 /// DNA INJECTORS

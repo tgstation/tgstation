@@ -38,6 +38,13 @@
 	if(units)
 		injected.set_output(COMPONENT_SIGNAL)
 		log_combat(bci.owner, bci.owner, "injected", bci, "which had [contained]")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{bci} injected {reagents} into {owner}", \
+			bci = bci, \
+			reagents = bci.reagents, \
+			owner = bci.owner \
+		)
 
 /obj/item/circuit_component/reagent_injector/register_shell(atom/movable/shell)
 	. = ..()

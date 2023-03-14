@@ -324,6 +324,15 @@
 
 	if(ismob(firer))
 		log_combat(firer, L, "shot", src, reagent_note)
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} shot {projectile} at {target}", \
+			user = firer, \
+			projectile = src, \
+			target = L \
+		)
+
 		return BULLET_ACT_HIT
 
 	if(isvehicle(firer))
@@ -334,6 +343,15 @@
 			logging_mobs = firing_vehicle.return_drivers()
 		for(var/mob/logged_mob as anything in logging_mobs)
 			log_combat(logged_mob, L, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} shot {projectile} from inside {vehicle} at {target}", \
+				user = logged_mob, \
+				projectile = src, \
+				vehicle = firing_vehicle, \
+				target = L \
+			)
 		return BULLET_ACT_HIT
 
 	L.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_ATTACK, color="orange")
@@ -709,6 +727,13 @@
 		AddElement(/datum/element/embed, projectile_payload = shrapnel_type)
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} fired {projectile} at {target}", \
+			user = firer, \
+			projectile = src, \
+			target = original \
+		)
 			//note: mecha projectile logging is handled in /obj/item/mecha_parts/mecha_equipment/weapon/action(). try to keep these messages roughly the sameish just for consistency's sake.
 	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1)) // point blank shots
 		process_hit(get_turf(direct_target), direct_target)

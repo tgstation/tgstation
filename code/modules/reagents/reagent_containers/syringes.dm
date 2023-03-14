@@ -49,6 +49,14 @@
 
 	var/contained = reagents.get_reagent_log_string()
 	log_combat(user, target, "attempted to inject", src, addition="which had [contained]")
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} attempted to inject {target} with {syringe} containing {reagents}", \
+		user = user, \
+		target = target, \
+		syringe = src, \
+		reagents = reagents \
+	)
 
 	if(!reagents.total_volume)
 		to_chat(user, span_warning("[src] is empty! Right-click to draw."))
@@ -81,7 +89,15 @@
 		if (living_target == user)
 			living_target.log_message("injected themselves ([contained]) with [name]", LOG_ATTACK, color="orange")
 		else
-			log_combat(user, living_target, "injected", src, addition="which had [contained]")
+			log_combat(user, living_target, "injected", src, addition="which had [contained]", reagents_datum = reagents)
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} injected {target} with {syringe} containing {reagents}", \
+				user = user, \
+				target = living_target, \
+				syringe = src, \
+				reagents = reagents \
+			)
 	reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
 	to_chat(user, span_notice("You inject [amount_per_transfer_from_this] units of the solution. The syringe now contains [reagents.total_volume] units."))
 	target.update_appearance()

@@ -323,6 +323,12 @@
 		threat = current_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, PROC_REF(check_for_weapons)))
 
 	log_combat(src, current_target, "stunned")
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} stunned (secbot) {target}", \
+		user = src, \
+		target = current_target \
+	)
 	if(security_mode_flags & SECBOT_DECLARE_ARRESTS)
 		var/area/location = get_area(src)
 		speak("[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arresting" : "Detaining"] level [threat] scumbag <b>[current_target]</b> in [location].", radio_channel)

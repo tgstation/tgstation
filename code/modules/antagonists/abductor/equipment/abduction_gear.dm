@@ -569,6 +569,14 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		span_userdanger("You suddenly feel very drowsy!"))
 		L.Sleeping(sleep_time)
 		log_combat(user, L, "put to sleep")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} put {target} to sleep with {baton}", \
+			user = user, \
+			target = L, \
+			baton = src \
+		)
 	else
 		if(L.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 			to_chat(user, span_warning("The specimen has some kind of mental protection that is completely blocking our sleep inducement methods! It seems you've been foiled."))
@@ -595,6 +603,14 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 					C.update_handcuffed()
 					to_chat(user, span_notice("You restrain [C]."))
 					log_combat(user, C, "handcuffed")
+
+					BB_LOG( \
+						BB_COMBAT, \
+						"{user} handcuffed {target} with {baton}", \
+						user = user, \
+						target = C, \
+						baton = src \
+					)
 			else
 				to_chat(user, span_warning("You fail to restrain [C]."))
 		else

@@ -202,6 +202,15 @@
 		log_message("Injecting [patient] with [to_inject] units of [R.name].", LOG_MECHA)
 		for(var/driver in chassis.return_drivers())
 			log_combat(driver, patient, "injected", "[name] ([R] - [to_inject] units)")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} injected {target} with {units}u of {reagent}", \
+				user = driver, \
+				target = patient, \
+				units = to_inject, \
+				reagent = R \
+			)
 		SG.reagents.trans_id_to(patient,R.type,to_inject)
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/container_resist_act(mob/living/user)

@@ -567,9 +567,23 @@
 						patient.reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 5)
 						patient.apply_damage_type((healies*1),treatment_method)
 						log_combat(src, patient, "pretended to tend wounds on", "internal tools", "([uppertext(treatment_method)]) (EMAGGED)")
+						BB_LOG( \
+							BB_COMBAT, \
+							"{user} (emagged) pretended to tend wounds ({damtype}) on {target}", \
+							user = src, \
+							damtype = treatment_method, \
+							target = patient \
+						)
 					else
 						patient.apply_damage_type((healies*-1),treatment_method) //don't need to check treatment_method since we know by this point that they were actually damaged.
 						log_combat(src, patient, "tended the wounds of", "internal tools", "([uppertext(treatment_method)])")
+						BB_LOG( \
+							BB_COMBAT, \
+							"{user} tended the wounds ({damtype}) of {target}", \
+							user = src, \
+							damtype = treatment_method, \
+							target = patient \
+						)
 					C.visible_message(span_notice("[src] tends the wounds of [patient]!"), \
 						"<span class='infoplain'>[span_green("[src] tends your wounds!")]</span>")
 					ADD_TRAIT(patient,TRAIT_MEDIBOTCOMINGTHROUGH,tag)

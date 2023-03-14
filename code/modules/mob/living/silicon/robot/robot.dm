@@ -393,6 +393,12 @@
 	usr.log_message("detonated [key_name(src)]!", LOG_ATTACK)
 	log_message("was detonated by [key_name(usr)]!", LOG_ATTACK, log_globally = FALSE)
 
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} detonated {target}, a cyborg", \
+		user = usr, \
+		target = src \
+	)
 	log_combat(usr, src, "detonated cyborg")
 	log_silicon("CYBORG: [key_name(src)] has been detonated by [key_name(usr)].")
 	if(connected_ai)

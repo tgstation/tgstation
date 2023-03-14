@@ -89,6 +89,13 @@
 
 	log_combat(user, target, "attacked", "[item.name]", "(Combat mode: [user.combat_mode ? "On" : "Off"])")
 
+	BB_LOG( \
+		"{user} stabbed {target} in the eyes with {with}", \
+		user = user, \
+		target = target, \
+		with = item, \
+	)
+
 	var/obj/item/organ/internal/eyes/eyes = target.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return

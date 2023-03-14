@@ -53,6 +53,16 @@
 		if(!stream)
 			reagents.expose(turf_atom, VAPOR)
 			log_combat(user, turf_atom, "sprayed", sprayer, addition="which had [puff_reagents_string]")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} sprayed {turf_atom} with {sprayer} containing {reagents}", \
+				user = user, \
+				turf_atom = turf_atom, \
+				sprayer = sprayer, \
+				reagents = reagents \
+			)
+
 			if(ismob(turf_atom))
 				lifetime -= 1
 			continue
@@ -67,16 +77,46 @@
 
 			reagents.expose(turf_mob, VAPOR)
 			log_combat(user, turf_mob, "sprayed", sprayer, addition="which had [puff_reagents_string]")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} sprayed {target} with {sprayer} containing {reagents}", \
+				user = user, \
+				target = turf_mob, \
+				sprayer = sprayer, \
+				reagents = reagents \
+			)
+
 			lifetime -= 1
 
 		else if(travelled_max_distance)
 			reagents.expose(turf_atom, VAPOR)
 			log_combat(user, turf_atom, "sprayed", sprayer, addition="which had [puff_reagents_string]")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} sprayed {turf_atom} with {sprayer} containing {reagents}", \
+				user = user, \
+				turf_atom = turf_atom, \
+				sprayer = sprayer, \
+				reagents = reagents \
+			)
+
 			lifetime -= 1
 
 	if(lifetime >= 0 && (!stream || travelled_max_distance))
 		reagents.expose(our_turf, VAPOR)
 		log_combat(user, our_turf, "sprayed", sprayer, addition="which had [puff_reagents_string]")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} sprayed {turf_atom} with {sprayer} containing {reagents}", \
+			user = user, \
+			turf_atom = our_turf, \
+			sprayer = sprayer, \
+			reagents = reagents \
+		)
+
 		lifetime -= 1
 
 	// Did we use up all the puff early?

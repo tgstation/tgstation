@@ -89,6 +89,13 @@
 		)
 		display_pain(target, "Your [parse_zone(target_zone)] comes awash with synthetic sensation!", mechanical_surgery = TRUE)
 		log_combat(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] COMBAT MODE: [uppertext(user.combat_mode)]")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} augmented {target} with a new {thing}", \
+			user = user, \
+			target = target, \
+			thing = tool \
+		)
 	else
 		to_chat(user, span_warning("[target] has no organic [parse_zone(target_zone)] there!"))
 	return ..()

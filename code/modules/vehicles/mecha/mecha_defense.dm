@@ -89,6 +89,12 @@
 			animal_damage = user.obj_damage
 		animal_damage = min(animal_damage, 20*user.environment_smash)
 		log_combat(user, src, "attacked")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} attacked {target}", \
+			user = user, \
+			target = src \
+		)
 		attack_generic(user, animal_damage, user.melee_damage_type, MELEE, play_soundeffect)
 		return 1
 
@@ -101,6 +107,13 @@
 	if(.)
 		log_message("Attack by hulk. Attacker - [user].", LOG_MECHA, color="red")
 		log_combat(user, src, "punched", "hulk powers")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} punched ({martial_art}) {target}", \
+			user = user, \
+			martial_art = BB_HULK, \
+			target = src \
+		)
 
 /obj/vehicle/sealed/mecha/blob_act(obj/structure/blob/B)
 	log_message("Attack by blob. Attacker - [B].", LOG_MECHA, color="red")
@@ -293,6 +306,12 @@
 	)
 
 	log_combat(user, src, "attacked", attacking_item)
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} attacked {target}", \
+		user = user, \
+		target = src \
+	)
 	log_message("Attacked by [user]. Item - [attacking_item], Damage - [damage_taken]", LOG_MECHA)
 
 /obj/vehicle/sealed/mecha/attack_generic(mob/user, damage_amount, damage_type, damage_flag, effects, armor_penetration)

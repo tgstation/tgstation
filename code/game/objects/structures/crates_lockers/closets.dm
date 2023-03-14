@@ -563,6 +563,14 @@
 				O.forceMove(T)
 				close()
 			log_combat(user, O, "stuffed", addition = "inside of [src]")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} stuffed {target} into {closet}", \
+				user = user, \
+				target = O, \
+				closet = src \
+			)
 	else
 		O.forceMove(T)
 	return 1
@@ -775,6 +783,15 @@
 			span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
 		to_chat(src, span_danger("You shove [target.name] into [src]!"))
 	log_combat(shover, target, "shoved", "into [src] (locker/crate)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} shoved {target} into {locker}", \
+		user = shover, \
+		target = target, \
+		locker = src \
+	)
+
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Unlock and open up when we get knock casted.

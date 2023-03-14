@@ -131,7 +131,16 @@
 
 		target.throw_at(throw_target, 5 * fist_pressure_setting, 0.5 + (fist_pressure_setting / 2))
 
-	log_combat(user, target, "power fisted", src)
+		log_combat(user, target, "power fisted", src)
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} attacked {target} with a power fist {power_fist}, launching them towards {target_atom}", \
+			user = user, \
+			target = target, \
+			power_fish = src, \
+			target_atom = throw_target \
+		)
 
 	user.changeNext_move(CLICK_CD_MELEE * click_delay)
 

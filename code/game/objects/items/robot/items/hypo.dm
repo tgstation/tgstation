@@ -177,6 +177,15 @@
 			hypospray_injector.trans_to(injectee, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
 			balloon_alert(user, "[amount_per_transfer_from_this] unit\s injected")
 			log_combat(user, injectee, "injected", src, "(CHEMICALS: [selected_reagent])")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} injected {target} with {with} containing {reagent}", \
+				user = user, \
+				target = injectee, \
+				with = src, \
+				reagent = selected_reagent \
+			)
 	else
 		balloon_alert(user, "[parse_zone(user.zone_selected)] is blocked!")
 

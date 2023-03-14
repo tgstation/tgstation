@@ -146,8 +146,24 @@
 	return 60
 
 /obj/structure/grille/attack_hulk(mob/living/carbon/human/user)
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} smacked grille ({martial_art}) {target} with their hulk hands", \
+		user = user, \
+		martial_art = BB_HULK, \
+		target = src, \
+	)
+
 	if(shock(user, 70))
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} was shocked by {target} for foolishly not bringing insulated gloves", \
+			user = user, \
+			target = src, \
+		)
+
 		return
+
 	. = ..()
 
 /obj/structure/grille/attack_hand(mob/living/user, list/modifiers)
@@ -158,15 +174,45 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message(span_warning("[user] hits [src]."), null, null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "hit")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} smacked {target} with their hands", \
+		user = user, \
+		target = src, \
+	)
+
 	if(!shock(user, 70))
 		take_damage(rand(5,10), BRUTE, MELEE, 1)
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} was shocked by {target} for foolishly not bringing insulated gloves", \
+			user = user, \
+			target = src, \
+		)
 
 /obj/structure/grille/attack_alien(mob/living/user, list/modifiers)
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_warning("[user] mangles [src]."), null, null, COMBAT_MESSAGE_RANGE)
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} smacked {target} with their alien hands", \
+		user = user, \
+		target = src, \
+	)
+
 	if(!shock(user, 70))
 		take_damage(20, BRUTE, MELEE, 1)
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} was shocked by {target} because we don't manfacture insulated gloves for aliens", \
+			user = user, \
+			target = src, \
+		)
 
 /obj/structure/grille/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -181,6 +227,14 @@
 /obj/structure/grille/wirecutter_act(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
 	if(shock(user, 100))
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} attempted to cut {target} with {wirecutters} and received a shock for their hubris", \
+			user = user, \
+			target = src, \
+			wirecutters = tool \
+		)
+
 		return
 	tool.play_tool_sound(src, 100)
 	deconstruct()
@@ -191,6 +245,14 @@
 		return FALSE
 	add_fingerprint(user)
 	if(shock(user, 90))
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} attempted to poke {target} with {screwdriver} and was electrocuted", \
+			user = user, \
+			target = src, \
+			screwdriver = tool \
+		)
+
 		return FALSE
 	if(!tool.use_tool(src, user, 0, volume=100))
 		return FALSE
@@ -203,6 +265,13 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/stack/rods) && broken && do_after(user, 1 SECONDS, target = src))
 		if(shock(user, 90))
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} attempted to repair {target} with {rods} but was electrocuted", \
+				user = user, \
+				target = src, \
+				rods = W \
+			)
 			return
 		var/obj/item/stack/rods/R = W
 		user.visible_message(span_notice("[user] rebuilds the broken grille."), \
@@ -259,6 +328,13 @@
 //window placing end
 
 	else if((W.flags_1 & CONDUCT_1) && shock(user, 70))
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} attacked {target} with a conductive {with} and was promptly electrocuted", \
+			user = user, \
+			target = src, \
+			with = W \
+		)
 		return
 
 	return ..()

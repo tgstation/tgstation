@@ -237,6 +237,13 @@
 	sac_target.do_jitter_animation()
 	log_combat(heretic_mind.current, sac_target, "sacrificed")
 
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} sacrificed (heretic ritual) {target}", \
+		user = heretic_mind.current, \
+		target = sac_target \
+	)
+
 	addtimer(CALLBACK(sac_target, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation)), SACRIFICE_SLEEP_DURATION * (1/3))
 	addtimer(CALLBACK(sac_target, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation)), SACRIFICE_SLEEP_DURATION * (2/3))
 
@@ -482,6 +489,20 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/disembowel_target(mob/living/carbon/human/sac_target)
 	if(heretic_mind)
 		log_combat(heretic_mind.current, sac_target, "disemboweled via sacrifice")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{target} was disemboweled via a heretic sacrifice carried out by {user}", \
+			user = heretic_mind.current, \
+			target = sac_target \
+		)
+	else
+		BB_LOG( \
+			BB_COMBAT, \
+			"{target} was disemboweled via a heretic sacrifice with no associated mind", \
+			target = sac_target \
+		)
+
 	sac_target.spill_organs()
 	sac_target.apply_damage(250, BRUTE)
 	if(sac_target.stat != DEAD)

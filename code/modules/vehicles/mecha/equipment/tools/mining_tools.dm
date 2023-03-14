@@ -116,8 +116,22 @@
 	target.visible_message(span_danger("[chassis] is drilling [target] with [src]!"), \
 						span_userdanger("[chassis] is drilling you with [src]!"))
 	log_combat(user, target, "drilled", "[name]", "Combat mode: [user.combat_mode ? "On" : "Off"])(DAMTYPE: [uppertext(damtype)])")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} drilled {target}", \
+		user = user, \
+		target = target \
+	)
+
 	if(target.stat == DEAD && target.getBruteLoss() >= (target.maxHealth * 2))
 		log_combat(user, target, "gibbed", name)
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} gibbed {target} from drilling", \
+			user = user, \
+			target = target \
+		)
 		if(LAZYLEN(target.butcher_results) || LAZYLEN(target.guaranteed_butcher_results))
 			SEND_SIGNAL(src, COMSIG_MECHA_DRILL_MOB, chassis, target)
 		else

@@ -20,6 +20,14 @@
 	D.Paralyze(2 SECONDS)
 	if(atk_verb)
 		log_combat(A, D, "[atk_verb] (Mushroom Punch)")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} punched ({martial_art}) {target}", \
+			user = A, \
+			target = D, \
+			martial_art = BB_MUSHROOM_PUNCH \
+		)
 	return TRUE
 
 /obj/item/mushpunch

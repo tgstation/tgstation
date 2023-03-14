@@ -212,6 +212,16 @@
 	target_mob.attacked_by(src, user)
 
 	log_combat(user, target_mob, "attacked", src.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(damtype)])")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} attacked {target} with {with} ({damtype})", \
+		user = user, \
+		target = target_mob, \
+		with = src, \
+		damtype = damtype \
+	)
+
 	add_fingerprint(user)
 
 /// The equivalent of [/obj/item/proc/attack] but for alternate attacks, AKA right clicking
@@ -248,7 +258,16 @@
 	//only witnesses close by and the victim see a hit message.
 	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
 		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
+
 	log_combat(user, src, "attacked", attacking_item)
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} attacked {target} with {with}", \
+		user = user, \
+		target = attacking_item, \
+		with = src \
+	)
 
 /area/attacked_by(obj/item/attacking_item, mob/living/user)
 	CRASH("areas are NOT supposed to have attacked_by() called on them!")

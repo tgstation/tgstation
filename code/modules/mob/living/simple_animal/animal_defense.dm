@@ -11,11 +11,23 @@
 		var/shove_dir = get_dir(user, src)
 		if(!Move(get_step(src, shove_dir), shove_dir))
 			log_combat(user, src, "shoved", "failing to move it")
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} shoved {target}, failing to move them", \
+				user = user, \
+				target = src \
+			)
 			user.visible_message(span_danger("[user.name] shoves [src]!"),
 				span_danger("You shove [src]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, list(src))
 			to_chat(src, span_userdanger("You're shoved by [user.name]!"))
 			return TRUE
 		log_combat(user, src, "shoved", "pushing it")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} shoved {target}", \
+			user = user, \
+			target = src \
+		)
 		user.visible_message(span_danger("[user.name] shoves [src], pushing [p_them()]!"),
 			span_danger("You shove [src], pushing [p_them()]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, list(src))
 		to_chat(src, span_userdanger("You're pushed by [user.name]!"))
@@ -39,6 +51,12 @@
 		playsound(loc, attacked_sound, 25, TRUE, -1)
 		attack_threshold_check(harm_intent_damage)
 		log_combat(user, src, "attacked")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} attacked {target}", \
+			user = user, \
+			target = src \
+		)
 		updatehealth()
 		return TRUE
 
@@ -74,6 +92,12 @@
 							span_userdanger("[user] [response_disarm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_danger("You [response_disarm_simple] [name]!"))
 			log_combat(user, src, "disarmed")
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} disarmed {target}", \
+				user = user, \
+				target = src \
+			)
 		else
 			var/damage = rand(15, 30)
 			visible_message(span_danger("[user] slashes at [src]!"), \
@@ -82,6 +106,12 @@
 			playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 			attack_threshold_check(damage)
 			log_combat(user, src, "attacked")
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} attacked {target}", \
+				user = user, \
+				target = src \
+			)
 		return 1
 
 /mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)

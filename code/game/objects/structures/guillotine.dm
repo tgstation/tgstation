@@ -154,6 +154,15 @@
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 			head.dismember()
 			log_combat(user, H, "beheaded", src)
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} beheaded {target} with {guillotine}", \
+				user = user, \
+				target = H, \
+				guillotine = src \
+			)
+
 			H.regenerate_icons()
 			unbuckle_all_mobs()
 			kill_count += 1
@@ -180,6 +189,15 @@
 		else
 			H.apply_damage(15 * blade_sharpness, BRUTE, head)
 			log_combat(user, H, "dropped the blade on", src, " non-fatally")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} dropped the blade of {guillotine} on {target}, but the blade was too dull to behead them", \
+				user = user, \
+				guillotine = src, \
+				target = H \
+			)
+
 			H.emote("scream")
 
 		if (blade_sharpness > 1)

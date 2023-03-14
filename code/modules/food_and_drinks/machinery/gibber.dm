@@ -204,6 +204,15 @@
 		skin = new typeofskin
 
 	log_combat(user, occupant, "gibbed")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} gibbed {target} with {gibber}", \
+		user = user, \
+		target = occupant, \
+		gibber = src \
+	)
+
 	mob_occupant.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 	mob_occupant.death(TRUE)
 	mob_occupant.ghostize()

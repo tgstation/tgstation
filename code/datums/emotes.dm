@@ -96,6 +96,14 @@
 		return
 
 	user.log_message(msg, LOG_EMOTE)
+
+	BB_LOG( \
+		BB_EMOTE, \
+		"{source} {emote}", \
+		source = user, \
+		emote = msg \
+	)
+
 	var/dchatmsg = "<b>[user]</b> [msg]"
 
 	var/tmp_sound = get_sound(user)

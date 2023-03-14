@@ -77,6 +77,14 @@
 		target_mob.visible_message(span_danger("[user] feeds [target_mob] something from [src]."), \
 					span_userdanger("[user] feeds you something from [src]."))
 		log_combat(user, target_mob, "fed", reagents.get_reagent_log_string())
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} fed {target} with {cup} containing {reagents}", \
+			user = user, \
+			target = target_mob, \
+			cup = src, \
+			reagents = reagents \
+		)
 	else
 		to_chat(user, span_notice("You swallow a gulp of [src]."))
 

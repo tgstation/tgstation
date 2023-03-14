@@ -302,6 +302,15 @@
 							span_danger("[src] pulls you from [AM.pulledby]'s grip."), null, null, src)
 			to_chat(src, span_notice("You pull [AM] from [AM.pulledby]'s grip!"))
 		log_combat(AM, AM.pulledby, "pulled from", src)
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} pulled {pulled_thing} from {originally_pulling}", \
+			user = src, \
+			pulled_hting = AM, \
+			target = AM.pulledby \
+		)
+
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
 	pulling = AM
@@ -324,6 +333,14 @@
 		var/mob/M = AM
 
 		log_combat(src, M, "grabbed", addition="passive grab")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} passively grabbed {target}", \
+			user = src, \
+			target = M \
+		)
+
 		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
 			if(ishuman(M))
 				var/mob/living/carbon/human/grabbed_human = M
@@ -432,6 +449,13 @@
 		return FALSE
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
+
+	BB_LOG( \
+		BB_POINT, \
+		"{source} points at {target}", \
+		source = src, \
+		target = pointing_at \
+	)
 
 /mob/living/verb/succumb(whispered as null)
 	set hidden = TRUE
@@ -767,6 +791,11 @@
 		if(excess_healing)
 			INVOKE_ASYNC(src, PROC_REF(emote), "gasp")
 			log_combat(src, src, "revived")
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} was revived", \
+				user = src \
+			)
 
 	else if(full_heal_flags & HEAL_ADMIN)
 		updatehealth()
@@ -1049,6 +1078,14 @@
 	//resisting grabs (as if it helps anyone...)
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED) && pulledby)
 		log_combat(src, pulledby, "resisted grab")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} resisted out of a grab from {target}", \
+			user = src, \
+			target = pulledby \
+		)
+
 		resist_grab()
 		return
 
@@ -1082,6 +1119,12 @@
 							span_danger("You break free of [pulledby]'s grip!"), null, null, pulledby)
 			to_chat(pulledby, span_warning("[src] breaks free of your grip!"))
 			log_combat(pulledby, src, "broke grab")
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} broke out of a grab from {target}", \
+				user = src, \
+				target = pulledby \
+			)
 			pulledby.stop_pulling()
 			return FALSE
 		else

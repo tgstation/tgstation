@@ -42,6 +42,14 @@
 			to_chat(target, span_revennotice("You feel as if you are being watched."))
 		return
 	log_combat(src, target, "started to harvest")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} started to harvest the soul of {target}", \
+		user = src, \
+		target = target \
+	)
+
 	face_atom(target)
 	draining = TRUE
 	essence_drained += rand(15, 20)
@@ -105,6 +113,13 @@
 					drained_mobs += REF(target)
 					if(target.stat != DEAD)
 						target.investigate_log("has died from revenant harvest.", INVESTIGATE_DEATHS)
+
+						BB_LOG( \
+							BB_COMBAT, \
+							"{user} harvested the soul of {target}, killing them", \
+							user = src, \
+							target = target \
+						)
 					target.death(FALSE)
 				else
 					to_chat(src, span_revenwarning("[target ? "[target] has":"[target.p_theyve(TRUE)]"] been drawn out of your grasp. The link has been broken."))

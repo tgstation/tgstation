@@ -223,6 +223,13 @@
 		return
 
 	log_combat(caster, victim, "cast the touch spell [name] on", hand)
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} casted [name] on {target} using {hand}", \
+		user = caster, \
+		target = victim, \
+		hand = hand \
+	)
 	spell_feedback()
 	remove_hand(caster)
 
@@ -240,6 +247,13 @@
 		// Continue will remove the hand here and stop
 		if(SECONDARY_ATTACK_CONTINUE_CHAIN)
 			log_combat(caster, victim, "cast the touch spell [name] on", hand, "(secondary / alt cast)")
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} casted touch (secondary) on {target} using {hand}", \
+				user = caster, \
+				target = victim, \
+				hand = hand \
+			)
 			spell_feedback()
 			remove_hand(caster)
 

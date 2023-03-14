@@ -298,6 +298,16 @@
 	usr.visible_message(span_warning("[usr] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
 	var/datum/reagents/container = get_reagents()
 	log_combat(usr, target, "attached", src, "containing: ([container.get_reagent_log_string()])")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} attached {iv_drip} to {target} with {reagents}", \
+		user = usr, \
+		target = target, \
+		iv_drip = src, \
+		reagents = container \
+	)
+
 	add_fingerprint(usr)
 	attached = target
 	START_PROCESSING(SSmachines, src)

@@ -27,6 +27,14 @@
 						span_danger("You avoid [A]'s [atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, span_warning("Your [atk_verb] misses [D]!"))
 		log_combat(A, D, "attempted to hit", atk_verb)
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} attempted to hit ({martial_art}) {target}", \
+			user = A, \
+			target = D, \
+			martial_art = BB_BOXING \
+		)
 		return FALSE
 
 
@@ -40,7 +48,16 @@
 	to_chat(A, span_danger("You [atk_verb]ed [D]!"))
 
 	D.apply_damage(damage, STAMINA, affecting, armor_block)
+
 	log_combat(A, D, "punched (boxing) ")
+
+	BB_LOG( \
+		"{user} punched ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_BOXING \
+	)
+
 	if(D.getStaminaLoss() > 50 && istype(D.mind?.martial_art, /datum/martial_art/boxing))
 		var/knockout_prob = D.getStaminaLoss() + rand(-15,15)
 		if((D.stat != DEAD) && prob(knockout_prob))
@@ -50,6 +67,13 @@
 			D.apply_effect(20 SECONDS,EFFECT_KNOCKDOWN,armor_block)
 			D.SetSleeping(10 SECONDS)
 			log_combat(A, D, "knocked out (boxing) ")
+
+			BB_LOG( \
+				"{user} knocked out ({martial_art}) {target}", \
+				user = A, \
+				target = D, \
+				martial_art = BB_BOXING \
+			)
 	return TRUE
 
 /datum/martial_art/boxing/can_use(mob/living/owner)

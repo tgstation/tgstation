@@ -165,8 +165,18 @@
 		if(belly)
 			holy_to_unholy += belly.reagents.get_reagent_amount(/datum/reagent/water/holywater)
 			belly.reagents.del_reagent(/datum/reagent/water/holywater)
+
 	target.reagents.add_reagent(/datum/reagent/fuel/unholywater, holy_to_unholy)
+
 	log_combat(cultist, target, "smacked", parent, " removing the holy water from them")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} smacked {target} with {with}, purging holy water from them", \
+		user = cultist, \
+		target = target, \
+		with = parent \
+	)
 
 /*
  * Destoys the target cult girder [cult_girder], acted upon by [cultist].

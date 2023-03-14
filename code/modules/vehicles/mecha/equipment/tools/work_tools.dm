@@ -116,6 +116,12 @@
 			target.visible_message(span_danger("[chassis] rips [target]'s arms off!"), \
 						span_userdanger("[chassis] rips your arms off!"))
 			log_combat(source, M, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} kill clamped {target}, ripping off their arms", \
+				user = source, \
+				target = M \
+			)
 			return ..()
 
 		M.take_overall_damage(clamp_damage)
@@ -127,6 +133,12 @@
 							span_userdanger("[chassis] squeezes you!"),\
 							span_hear("You hear something crack."))
 		log_combat(source, M, "attacked", "[name]", "(Combat mode: [source.combat_mode ? "On" : "Off"]) (DAMTYPE: [uppertext(damtype)])")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} clamped {target}", \
+			user = source, \
+			target = M \
+		)
 	return ..()
 
 

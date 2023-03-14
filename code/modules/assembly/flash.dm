@@ -148,8 +148,40 @@
 		return
 	if(user)
 		log_combat(user, flashed, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
+
+		if(targeted)
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} flashed {target} with {with}", \
+				user = user, \
+				target = flashed, \
+				with = src \
+			)
+		else
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} flashed (AOE) {target} with {with}", \
+				user = user, \
+				target = flashed, \
+				with = src \
+			)
 	else //caused by emp/remote signal
 		flashed.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]", LOG_ATTACK)
+
+		if(targeted)
+			BB_LOG( \
+				BB_COMBAT, \
+				"{target} was flashed by {with}", \
+				target = flashed, \
+				with = src \
+			)
+		else
+			BB_LOG( \
+				BB_COMBAT, \
+				"{target} was flashed by {with} (AOE)", \
+				target = flashed, \
+				with = src \
+			)
 
 	if(generic_message && flashed != user)
 		to_chat(flashed, span_danger("[src] emits a blinding light!"))
@@ -247,10 +279,29 @@
 	if(issilicon(M))
 		var/mob/living/silicon/robot/flashed_borgo = M
 		log_combat(user, flashed_borgo, "flashed", src)
+
 		update_icon(ALL, TRUE)
 		if(!flashed_borgo.flash_act(affect_silicon = TRUE))
 			user.visible_message(span_warning("[user] fails to blind [flashed_borgo] with the flash!"), span_warning("You fail to blind [flashed_borgo] with the flash!"))
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} attempted to flash {target}, a cyborg, with {with}, but failed", \
+				user = user, \
+				target = M, \
+				with = src \
+			)
+
 			return
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} flashed {target}, a cyborg, with {with}, paralyzing them", \
+			user = user, \
+			target = M, \
+			with = src \
+		)
+
 		flashed_borgo.Paralyze(rand(80,120))
 		flashed_borgo.set_confusion_if_lower(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER)
 		user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors with the flash!"), span_danger("You overload [flashed_borgo]'s sensors with the flash!"))
@@ -381,8 +432,41 @@
 		return
 	if(user)
 		log_combat(user, M, "[targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]", src)
+
+		if(targeted)
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} hypno-flashed {target} with {with}", \
+				user = user, \
+				target = M, \
+				with = src \
+			)
+		else
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} hypno-flashed (AOE) {target} with {with}", \
+				user = user, \
+				target = M, \
+				with = src \
+			)
 	else //caused by emp/remote signal
 		M.log_message("was [targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]", LOG_ATTACK)
+
+		if(targeted)
+			BB_LOG( \
+				BB_COMBAT, \
+				"{target} was hypno-flashed by {with}", \
+				target = M, \
+				with = src \
+			)
+		else
+			BB_LOG( \
+				BB_COMBAT, \
+				"{target} was hypno-flashed by {with} (AOE)", \
+				target = M, \
+				with = src \
+			)
+
 	if(generic_message && M != user)
 		to_chat(M, span_notice("[src] emits a soothing light..."))
 	if(targeted)

@@ -163,6 +163,14 @@
 				message_admins("[ADMIN_LOOKUPFLW(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_VERBOSEJMP(src)].")
 				usr.log_message("activated a smoke machine that contains [english_list(reagents.reagent_list)]", LOG_GAME)
 				log_combat(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
+
+				BB_LOG( \
+					BB_COMBAT, \
+					"{user} turned on {smoke_machine} with {reagents}", \
+					user = usr, \
+					smoke_machine = src, \
+					reagents = reagents \
+				)
 		if("goScreen")
 			screen = params["screen"]
 			. = TRUE

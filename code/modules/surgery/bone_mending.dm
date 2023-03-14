@@ -94,6 +94,12 @@
 			span_notice("[user] successfully repairs the fracture in [target]'s [parse_zone(target_zone)]!"),
 		)
 		log_combat(user, target, "repaired a hairline fracture in", addition="COMBAT_MODE: [uppertext(user.combat_mode)]")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} repaired a hairline fracture in {target}", \
+			user = user, \
+			target = target \
+		)
 		qdel(surgery.operated_wound)
 	else
 		to_chat(user, span_warning("[target] has no hairline fracture there!"))
@@ -143,6 +149,12 @@
 			span_notice("[user] successfully resets the bone in [target]'s [parse_zone(target_zone)]!"),
 		)
 		log_combat(user, target, "reset a compound fracture in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} reset a compound fracture in {target}", \
+			user = user, \
+			target = target \
+		)
 	else
 		to_chat(user, span_warning("[target] has no compound fracture there!"))
 	return ..()
@@ -190,6 +202,12 @@
 			span_notice("[user] successfully repairs the fracture in [target]'s [parse_zone(target_zone)]!"),
 		)
 		log_combat(user, target, "repaired a compound fracture in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} repaired a compound fracture in {target}", \
+			user = user, \
+			target = target \
+		)
 		qdel(surgery.operated_wound)
 	else
 		to_chat(user, span_warning("[target] has no compound fracture there!"))

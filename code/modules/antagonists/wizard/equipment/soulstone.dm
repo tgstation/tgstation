@@ -194,6 +194,15 @@
 		to_chat(user, span_warning("This body does not possess a soul to capture."))
 		return
 	log_combat(user, M, "captured [M.name]'s soul", src)
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} captured the soul of {target} using {soulstone}", \
+		user = user, \
+		target = M, \
+		soulstone = src \
+	)
+
 	capture_soul(M, user)
 
 ///////////////////Options for using captured souls///////////////////////////////////////

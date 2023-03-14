@@ -669,12 +669,24 @@
 			visible_message(span_danger("[src] bumps into [L]!"))
 		else if(L.Knockdown(8 SECONDS))
 			log_combat(src, L, "knocked down")
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} bumped into {target}, knocking them down", \
+				user = src, \
+				target = L \
+			)
 			visible_message(span_danger("[src] knocks over [L]!"))
 	return ..()
 
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/run_over(mob/living/carbon/human/crushed)
 	log_combat(src, crushed, "run over", addition = "(DAMTYPE: [uppertext(BRUTE)])")
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} ran over {target}", \
+		user = src, \
+		target = crushed \
+	)
 	crushed.visible_message(
 		span_danger("[src] drives over [crushed]!"),
 		span_userdanger("[src] drives over you!"),

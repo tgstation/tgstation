@@ -411,6 +411,13 @@ GLOBAL_LIST_EMPTY(lifts)
 				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 14)
 				log_combat(src, collided, "collided with")
 
+				BB_LOG( \
+					BB_COMBAT, \
+					"{industrial_lift} rammed into {target}", \
+					industrial_lift = src, \
+					target = collided \
+				)
+
 				if(QDELETED(collided)) //in case it was a mob that dels on death
 					continue
 				if(!throw_target)

@@ -457,6 +457,13 @@
 		add_mood_event("saved_life", /datum/mood_event/saved_life)
 		log_combat(src, target, "CPRed")
 
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} performed CPR on {target}", \
+			user = src, \
+			target = target \
+		)
+
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))
 			to_chat(target, span_unconscious("You feel a breath of fresh air... which is a sensation you don't recognise..."))
 		else if (!target.getorganslot(ORGAN_SLOT_LUNGS))

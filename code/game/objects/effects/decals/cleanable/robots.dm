@@ -87,13 +87,23 @@
 	if(attacked_by_hot_thing)
 		user.visible_message(span_warning("[user] tries to ignite [src] with [I]!"), span_warning("You try to ignite [src] with [I]."))
 		log_combat(user, src, (attacked_by_hot_thing < 480) ? "tried to ignite" : "ignited", I)
-		fire_act(attacked_by_hot_thing)
+
+		fire_act(attacked_by_hot_thing, user)
 		return
 	return ..()
 
-/obj/effect/decal/cleanable/oil/fire_act(exposed_temperature, exposed_volume)
+/obj/effect/decal/cleanable/oil/fire_act(exposed_temperature, exposed_volume, mob/living/igniter = null)
 	if(exposed_temperature < 480)
 		return
+
+	if(igniter)
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} ignited {oil_puddle}", \
+			user = igniter, \
+			oil_puddle = src, \
+		)
+
 	visible_message(span_danger("[src] catches fire!"))
 	var/turf/T = get_turf(src)
 	qdel(src)

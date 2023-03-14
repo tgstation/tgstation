@@ -105,6 +105,13 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		span_danger("You [damage_verb] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "attacked", attacking_item)
 
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} attacked {object}", \
+		user = user, \
+		object = src, \
+	)
+
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
 		return loc.assume_air(giver)

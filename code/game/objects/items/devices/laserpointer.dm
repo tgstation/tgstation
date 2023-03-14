@@ -111,14 +111,40 @@
 			if(prob(effectchance * diode.rating) && C.flash_act(severity))
 				outmsg = span_notice("You blind [C] by shining [src] in [C.p_their()] eyes.")
 				log_combat(user, C, "blinded with a laser pointer",src)
+
+				BB_LOG( \
+					BB_COMBAT, \
+					"{user} blinded {target} with {with}", \
+					user = user, \
+					target = C, \
+					with = src \
+				)
+
 			else
 				outmsg = span_warning("You fail to blind [C] by shining [src] at [C.p_their()] eyes!")
 				log_combat(user, C, "attempted to blind with a laser pointer",src)
+
+				BB_LOG( \
+					BB_COMBAT, \
+					"{user} failed to blind {target} with {with}", \
+					user = user, \
+					target = C, \
+					with = src \
+				)
 
 	//robots
 	else if(iscyborg(target))
 		var/mob/living/silicon/S = target
 		log_combat(user, S, "shone in the sensors", src)
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} stunned cyborg {target} with {with}", \
+			user = user, \
+			target = S, \
+			with = src \
+		)
+
 		//chance to actually hit the eyes depends on internal component
 		if(prob(effectchance * diode.rating))
 			S.flash_act(affect_silicon = 1)
@@ -135,6 +161,14 @@
 			C.emp_act(EMP_HEAVY)
 			outmsg = span_notice("You hit the lens of [C] with [src], temporarily disabling the camera!")
 			log_combat(user, C, "EMPed", src)
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} stunned camera {target} with {with}", \
+				user = user, \
+				target = C, \
+				with = src \
+			)
 		else
 			outmsg = span_warning("You miss the lens of [C] with [src]!")
 
@@ -148,6 +182,15 @@
 				H.visible_message(span_warning("[H] makes a grab for the light!"),span_userdanger("LIGHT!"))
 				H.Move(targloc)
 				log_combat(user, H, "moved with a laser pointer",src)
+
+				BB_LOG( \
+					BB_COMBAT, \
+					"{user} made {target} (a felinid) jump towards {target_turf} with {with}", \
+					user = user, \
+					target = H, \
+					target_turf = targloc, \
+					with = src \
+				)
 			else
 				H.visible_message(span_notice("[H] looks briefly distracted by the light."), span_warning("You're briefly tempted by the shiny light..."))
 		else

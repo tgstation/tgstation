@@ -70,6 +70,13 @@
 		if(user.client)
 			log_combat(user, src, "attacked")
 
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} attacked {simple_animal}", \
+				user = user, \
+				simple_animal = src, \
+			)
+
 /obj/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return TRUE
 
@@ -86,6 +93,13 @@
 		return
 	if(attack_generic(user, rand(10, 15), BRUTE, MELEE, 1))
 		log_combat(user, src, "attacked")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} attacked {slime}", \
+			user = user, \
+			slime = src, \
+		)
 
 /obj/singularity_act()
 	SSexplosions.high_mov_atom += src

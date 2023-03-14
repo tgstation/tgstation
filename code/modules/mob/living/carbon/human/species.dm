@@ -1071,6 +1071,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		target.help_shake_act(user)
 		if(target != user)
 			log_combat(user, target, "shaken")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} shook {target}", \
+				user = user, \
+				target = target \
+			)
 		return TRUE
 
 	user.do_cpr(target)
@@ -1134,6 +1141,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 							span_danger("You avoid [user]'s [atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning("Your [atk_verb] misses [target]!"))
 			log_combat(user, target, "attempted to punch")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} tried to punch {target}, but whiffed it", \
+				user = user, \
+				target = target \
+			)
+
 			return FALSE
 
 		var/armor_block = target.run_armor_check(affecting, MELEE)
@@ -1157,6 +1172,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(damage >= 9)
 				target.force_say()
 			log_combat(user, target, "kicked")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} kicked {target}", \
+				user = user, \
+				target = target \
+			)
+
 			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
 		else//other attacks deal full raw damage + 1.5x in stamina damage
 			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
@@ -1165,6 +1188,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				target.force_say()
 			log_combat(user, target, "punched")
 
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} punched {target}", \
+				user = user, \
+				target = target \
+			)
+
 		if((target.stat != DEAD) && damage >= attacking_bodypart.unarmed_stun_threshold)
 			target.visible_message(span_danger("[user] knocks [target] down!"), \
 							span_userdanger("You're knocked down by [user]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
@@ -1172,6 +1202,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/knockdown_duration = 40 + (target.getStaminaLoss() + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 40 base stun + 40 stun modifier = 80 stun duration, which is the old base duration
 			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
 			log_combat(user, target, "got a stun punch with their previous punch")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user}'s punch on {target} knocked them down", \
+				user = user, \
+				target = target \
+			)
 
 /datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return
@@ -1208,6 +1245,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		attacker_style = owner.mind.martial_art
 	if((owner != target) && owner.combat_mode && target.check_shields(owner, 0, owner.name, attack_type = UNARMED_ATTACK))
 		log_combat(owner, target, "attempted to touch")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} attempted to touch {target}", \
+			user = owner, \
+			target = target \
+		)
 		target.visible_message(span_warning("[owner] attempts to touch [target]!"), \
 						span_danger("[owner] attempts to touch you!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, owner)
 		to_chat(owner, span_warning("You attempt to touch [target]!"))

@@ -86,6 +86,15 @@
 		if(target_turf)
 			var/turflist = get_line(user, target_turf)
 			log_combat(user, target, "flamethrowered", src)
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} fired a flamethrower ({flamethrower}) towards {target}", \
+				user = user, \
+				flamethrower = src, \
+				target = target \
+			)
+
 			flame_turf(turflist)
 
 /obj/item/flamethrower/wrench_act(mob/living/user, obj/item/tool)

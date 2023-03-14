@@ -542,6 +542,15 @@
 	if(HAS_TRAIT(M,MOB_ORGANIC))
 		M.emote("gasp")
 	log_combat(user, M, "zapped", src)
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} zapped {target} with {defibrilator}", \
+		user = user, \
+		target = M, \
+		defibrilator = src \
+	)
+
 	do_success()
 
 /obj/item/shockpaddles/proc/do_harm(mob/living/carbon/H, mob/living/user)
@@ -581,6 +590,15 @@
 				H.set_heartattack(TRUE)
 			H.apply_damage(50, BURN, BODY_ZONE_CHEST)
 			log_combat(user, H, "overloaded the heart of", defib)
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} overloaded the heart of {target} with {defibrilator}", \
+				user = user, \
+				target = H, \
+				defibrilator = src \
+			)
+
 			H.Paralyze(100)
 			H.set_jitter_if_lower(200 SECONDS)
 			do_success()
@@ -661,6 +679,15 @@
 					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
 					user.add_mood_event("saved_life", /datum/mood_event/saved_life)
 					log_combat(user, H, "revived", defib)
+
+					BB_LOG( \
+						BB_COMBAT, \
+						"{user} revived {target} with {defibrilator}", \
+						user = user, \
+						target = H, \
+						defibrilator = src \
+					)
+
 				do_success()
 				return
 			else if (!H.getorgan(/obj/item/organ/internal/heart))

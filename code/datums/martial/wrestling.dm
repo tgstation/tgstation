@@ -125,6 +125,15 @@ If you make a derivative work from this code, you must include this notification
 	if(check_streak(A,D))
 		return 1
 	log_combat(A, D, "punched with wrestling")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} punched ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_WRESTLING \
+	)
+
 	..()
 
 /datum/martial_art/wrestling/proc/throw_wrassle(mob/living/A, mob/living/D)
@@ -201,6 +210,15 @@ If you make a derivative work from this code, you must include this notification
 				D.emote("scream")
 			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, TYPE_PROC_REF(/mob/living, Paralyze), 20))
 	log_combat(A, D, "has thrown with wrestling")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} threw ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_WRESTLING \
+	)
+
 	return
 
 /datum/martial_art/wrestling/proc/FlipAnimation(mob/living/D)
@@ -321,6 +339,15 @@ If you make a derivative work from this code, you must include this notification
 
 
 	log_combat(A, D, "body-slammed")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} body-slammed ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_WRESTLING \
+	)
+
 	return
 
 /datum/martial_art/wrestling/proc/CheckStrikeTurf(mob/living/A, turf/T)
@@ -344,7 +371,16 @@ If you make a derivative work from this code, you must include this notification
 		D.adjustBruteLoss(rand(10,20))
 		playsound(A.loc, SFX_SWING_HIT, 50, TRUE)
 		D.Unconscious(2 SECONDS)
+
 	log_combat(A, D, "headbutted")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} headbutted ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_WRESTLING \
+	)
 
 /datum/martial_art/wrestling/proc/kick(mob/living/A, mob/living/D)
 	if(!D)
@@ -364,6 +400,14 @@ If you make a derivative work from this code, you must include this notification
 		D.Paralyze(2 SECONDS)
 		D.throw_at(T, 3, 2)
 	log_combat(A, D, "roundhouse-kicked")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} round-house kicked ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_WRESTLING \
+	)
 
 /datum/martial_art/wrestling/proc/drop(mob/living/A, mob/living/D)
 	if(!D)
@@ -441,12 +485,30 @@ If you make a derivative work from this code, you must include this notification
 		if (A)
 			A.pixel_y = A.base_pixel_y
 	log_combat(A, D, "leg-dropped")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} leg-dropped ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_WRESTLING \
+	)
+
 	return
 
 /datum/martial_art/wrestling/disarm_act(mob/living/A, mob/living/D)
 	if(check_streak(A,D))
 		return 1
 	log_combat(A, D, "wrestling-disarmed")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} disarmed ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_WRESTLING \
+	)
+
 	..()
 
 /datum/martial_art/wrestling/grab_act(mob/living/A, mob/living/D)
@@ -460,6 +522,13 @@ If you make a derivative work from this code, you must include this notification
 	to_chat(A, span_danger("You get [D] in a cinch!"))
 	D.Stun(rand(6 SECONDS, 10 SECONDS))
 	log_combat(A, D, "cinched")
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} cinched ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_WRESTLING \
+	)
 	return 1
 
 /obj/item/storage/belt/champion/wrestling

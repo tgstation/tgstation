@@ -264,6 +264,13 @@
 			living_mob.visible_message(span_danger("[living_mob] is nailed by a sharp thorn!"), \
 			span_userdanger("You are nailed by a sharp thorn!"))
 			log_combat(vine, living_mob, "aggressively pierced") //"Aggressively" for easy ctrl+F'ing in the attack logs.
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{space_vine} aggressively pierced {target}", \
+				space_vine = vine, \
+				target = living_mob \
+			)
 		else
 			if(prob(80) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 				victim.apply_damage(60, BRUTE, def_zone = limb, blocked = armor, wound_bonus = rand(-20,10), sharpness = SHARP_EDGED)
@@ -272,6 +279,13 @@
 				living_mob.visible_message(span_danger("[living_mob] is lacerated by an outburst of vines!"), \
 				span_userdanger("You are lacerated by an outburst of vines!"))
 				log_combat(vine, living_mob, "aggressively lacerated")
+
+				BB_LOG( \
+					BB_COMBAT, \
+					"{space_vine} aggressively lacerated {target}", \
+					space_vine = vine, \
+					target = living_mob \
+				)
 			else
 				victim.apply_damage(60, BRUTE, def_zone = limb, blocked = armor, wound_bonus = rand(-20,10), sharpness = NONE)
 				victim.Knockdown(3 SECONDS)
@@ -281,12 +295,26 @@
 				living_mob.visible_message(span_danger("[living_mob] is smashed by a large vine!"), \
 				span_userdanger("You are smashed by a large vine!"))
 				log_combat(vine, living_mob, "aggressively smashed")
+
+				BB_LOG( \
+					BB_COMBAT, \
+					"{space_vine} aggressively smashed {target}", \
+					space_vine = vine, \
+					target = living_mob \
+				)
 	else //Living but not a carbon? Maybe a silicon? Can't be wounded so have a big chunk of simple bruteloss with no special effects. They can be entangled.
 		living_mob.adjustBruteLoss(75)
 		playsound(living_mob, 'sound/weapons/whip.ogg', 50, TRUE, -1)
 		living_mob.visible_message(span_danger("[living_mob] is brutally threshed by [vine]!"), \
 		span_userdanger("You are brutally threshed by [vine]!"))
 		log_combat(vine, living_mob, "aggressively spread into") //You aren't being attacked by the vines. You just happen to stand in their way.
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{space_vine} brutally threshed {target}", \
+			space_vine = vine, \
+			target = living_mob \
+		)
 
 /datum/spacevine_mutation/transparency
 	name = "transparent"

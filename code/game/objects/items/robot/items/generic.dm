@@ -40,6 +40,14 @@
 
 	log_combat(user, attacked_mob, "stunned", src, "(Combat mode: [user.combat_mode ? "On" : "Off"])")
 
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} stunned {target} with {with}", \
+		user = user, \
+		target = attacked_mob, \
+		with = src \
+	)
+
 /obj/item/borg/cyborghug
 	name = "hugging module"
 	icon_state = "hugmodule"

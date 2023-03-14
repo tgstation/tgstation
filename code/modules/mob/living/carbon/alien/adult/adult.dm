@@ -149,5 +149,13 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	lucky_winner.visible_message(span_danger("[src] devours [lucky_winner]!"), \
 			span_userdanger("[lucky_winner] devours you!"))
 	log_combat(src, lucky_winner, "devoured")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} devoured {target} (gross)", \
+		user = src, \
+		target = lucky_winner \
+	)
+
 	melting_pot.consume_thing(lucky_winner)
 	return TRUE

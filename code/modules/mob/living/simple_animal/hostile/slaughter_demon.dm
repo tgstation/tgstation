@@ -121,6 +121,12 @@
 	victim.throw_at(yeet_target, 10, 5, src)
 	slam_cooldown = world.time
 	log_combat(src, victim, "slaughter slammed")
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} slaughter slammed {target}", \
+		user = src, \
+		target = victim \
+	)
 
 /mob/living/simple_animal/hostile/imp/slaughter/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))

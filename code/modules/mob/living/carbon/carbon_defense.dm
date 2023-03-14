@@ -294,6 +294,13 @@
 		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
 		log_combat(src, target, "kicks", "onto their side (paralyzing)")
 
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} kicked {target} while they were down, paralyzing them", \
+			user = src, \
+			target = target \
+		)
+
 	var/directional_blocked = FALSE
 	var/can_hit_something = (!target.is_shove_knockdown_blocked() && !target.buckled)
 
@@ -319,6 +326,14 @@
 			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
 				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} shoved {target} into something, knocking them down", \
+				user = src, \
+				target = target \
+			)
+
 			log_combat(src, target, "shoved", "knocking them down")
 			return
 
@@ -345,6 +360,13 @@
 		append_message = "causing [target.p_them()] to drop [target_held_item]"
 		target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),
 			span_warning("You drop \the [target_held_item]!"), null, COMBAT_MESSAGE_RANGE)
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} shoved {target}", \
+		user = src, \
+		target = target \
+	)
 
 	log_combat(src, target, "shoved", append_message)
 

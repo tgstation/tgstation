@@ -1389,6 +1389,15 @@
 				message = "temp shocked for [secondsElectrified] seconds"
 		LAZYADD(shockedby, text("\[[time_stamp()]\] [key_name(user)] - ([uppertext(message)])"))
 		log_combat(user, src, message)
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} {action} {airlock}", \
+			user = user, \
+			action = message, \
+			airlock = src \
+		)
+
 		add_hiddenprint(user)
 
 /obj/machinery/door/airlock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
@@ -1615,9 +1624,23 @@
 		else
 			unbolt()
 			log_combat(user, src, "unbolted")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} unbolted {airlock}", \
+				user = user, \
+				airlock = src, \
+			)
 	else
 		bolt()
 		log_combat(user, src, "bolted")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} bolted {airlock}", \
+			user = user, \
+			airlock = src, \
+		)
 
 /obj/machinery/door/airlock/proc/toggle_emergency(mob/user)
 	if(!user_allowed(user))

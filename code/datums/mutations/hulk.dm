@@ -41,6 +41,13 @@
 			last_scream = world.time
 			INVOKE_ASYNC(src, PROC_REF(scream_attack), source)
 		log_combat(source, target, "punched", "hulk powers")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} punched ({martial_art}) {target}", \
+			user = source, \
+			target = target, \
+			martial_art = BB_HULK \
+		)
 		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 		source.changeNext_move(CLICK_CD_MELEE)
 
@@ -137,6 +144,15 @@
 	yeeted_person.setDir(get_dir(yeeted_person, the_hulk))
 
 	log_combat(the_hulk, yeeted_person, "has started swinging by tail")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} started swinging ({martial_art}) {target} by the tail", \
+		user = the_hulk, \
+		target = yeeted_person, \
+		martial_art = BB_HULK \
+	)
+
 	yeeted_person.Stun(2 SECONDS)
 	yeeted_person.visible_message(span_danger("[the_hulk] starts grasping [yeeted_person] by the tail..."), \
 					span_userdanger("[the_hulk] begins grasping your tail!"), span_hear("You hear aggressive shuffling!"), null, the_hulk)
@@ -210,6 +226,15 @@
 		log_combat(the_hulk, collateral_mob, "has smacked with tail swing victim")
 		log_combat(the_hulk, yeeted_person, "has smacked this person into someone while tail swinging") // i have no idea how to better word this
 
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} ({martial_art}) smacked {target} with {thrown_person}, launched from a tail swing", \
+			user = the_hulk, \
+			target = collateral_mob, \
+			thrown_person = yeeted_person, \
+			martial_art = BB_HULK \
+		)
+
 		if(collateral_mob == the_hulk) // if the hulk moves wrong and crosses himself
 			the_hulk.visible_message(span_warning("[the_hulk] smacks [the_hulk.p_them()]self with [yeeted_person]!"), span_userdanger("You end up smacking [yeeted_person] into yourself!"), ignored_mobs = yeeted_person)
 			to_chat(yeeted_person, span_userdanger("[the_hulk] smacks you into [the_hulk.p_them()]self, turning you free!"))
@@ -255,5 +280,13 @@
 		yeeted_person.emote("scream")
 	yeeted_person.throw_at(T, 10, 6, the_hulk, TRUE, TRUE)
 	log_combat(the_hulk, yeeted_person, "has thrown by tail")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} threw ({martial_art}) {target} by the tail", \
+		user = the_hulk, \
+		target = yeeted_person, \
+		martial_art = BB_HULK \
+	)
 
 #undef HULK_TAILTHROW_STEPS

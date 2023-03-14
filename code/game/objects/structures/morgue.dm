@@ -276,6 +276,14 @@ GLOBAL_LIST_EMPTY(crematoriums)
 				M.emote("scream")
 			if(user)
 				log_combat(user, M, "cremated")
+
+				BB_LOG( \
+					BB_COMBAT, \
+					"{user} cremated {target} via {crematorium}", \
+					user = user, \
+					target = M, \
+					crematorium = src \
+				)
 			else
 				M.log_message("was cremated", LOG_ATTACK)
 

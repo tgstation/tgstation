@@ -77,6 +77,15 @@
 		D.apply_damage(10, BRUTE)
 		D.Paralyze(12 SECONDS)
 		log_combat(A, D, "slammed (CQC)")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} slammed ({martial_art}) {target}", \
+			user = A, \
+			target = D, \
+			martial_art = BB_CQC \
+		)
+
 		return TRUE
 
 /datum/martial_art/cqc/proc/Kick(mob/living/A, mob/living/D)
@@ -91,9 +100,27 @@
 		D.throw_at(throw_target, 1, 14, A)
 		D.apply_damage(10, A.get_attack_type())
 		log_combat(A, D, "kicked (CQC)")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} kicked ({martial_art}) {target}", \
+			user = A, \
+			target = D, \
+			martial_art = BB_CQC \
+		)
+
 		. = TRUE
 	if(D.IsParalyzed() && !D.stat)
 		log_combat(A, D, "knocked out (Head kick)(CQC)")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} knocked out ({martial_art}) {target}", \
+			user = A, \
+			target = D, \
+			martial_art = BB_CQC \
+		)
+
 		D.visible_message(span_danger("[A] kicks [D]'s head, knocking [D.p_them()] out!"), \
 						span_userdanger("You're knocked unconscious by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, A)
 		to_chat(A, span_danger("You kick [D]'s head, knocking [D.p_them()] out!"))
@@ -106,6 +133,15 @@
 	if(!can_use(A))
 		return FALSE
 	log_combat(A, D, "pressured (CQC)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} pressured ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_CQC \
+	)
+
 	D.visible_message(span_danger("[A] punches [D]'s neck!"), \
 					span_userdanger("Your neck is punched by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
 	to_chat(A, span_danger("You punch [D]'s neck!"))
@@ -120,6 +156,15 @@
 		return FALSE
 	if(!D.stat)
 		log_combat(A, D, "restrained (CQC)")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} restrained ({martial_art}) {target}", \
+			user = A, \
+			target = D, \
+			martial_art = BB_CQC \
+		)
+
 		D.visible_message(span_warning("[A] locks [D] into a restraining position!"), \
 						span_userdanger("You're locked into a restraining position by [A]!"), span_hear("You hear shuffling and a muffled groan!"), null, A)
 		to_chat(A, span_danger("You lock [D] into a restraining position!"))
@@ -134,6 +179,15 @@
 		return FALSE
 	if(!D.stat)
 		log_combat(A, D, "consecutive CQC'd (CQC)")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} consecutive CQC'd ({martial_art}) {target}", \
+			user = A, \
+			target = D, \
+			martial_art = BB_CQC \
+		)
+
 		D.visible_message(span_danger("[A] strikes [D]'s abdomen, neck and back consecutively"), \
 						span_userdanger("Your abdomen, neck and back are struck consecutively by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, span_danger("You strike [D]'s abdomen, neck and back consecutively!"))
@@ -156,6 +210,15 @@
 			D.drop_all_held_items()
 			A.setGrabState(GRAB_AGGRESSIVE) //Instant aggressive grab if on grab intent
 			log_combat(A, D, "grabbed", addition="aggressively")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} grabbed ({martial_art}) {target}", \
+				user = A, \
+				target = D, \
+				martial_art = BB_CQC \
+			)
+
 			D.visible_message(span_warning("[A] violently grabs [D]!"), \
 							span_userdanger("You're grabbed violently by [A]!"), span_hear("You hear sounds of aggressive fondling!"), COMBAT_MESSAGE_RANGE, A)
 			to_chat(A, span_danger("You violently grab [D]!"))
@@ -170,6 +233,15 @@
 	if(check_streak(A,D))
 		return TRUE
 	log_combat(A, D, "attacked (CQC)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} attacked ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_CQC \
+	)
+
 	A.do_attack_animation(D)
 	var/picked_hit_type = pick("CQC", "Big Boss")
 	var/bonus_damage = 13
@@ -193,6 +265,14 @@
 		D.apply_damage(10, BRUTE)
 		D.Paralyze(6 SECONDS)
 		log_combat(A, D, "sweeped (CQC)")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} leg sweeped ({martial_art}) {target}", \
+			user = A, \
+			target = D, \
+			martial_art = BB_CQC \
+		)
 	return TRUE
 
 /datum/martial_art/cqc/disarm_act(mob/living/A, mob/living/D)
@@ -203,8 +283,26 @@
 	if(check_streak(A,D))
 		return TRUE
 	log_combat(A, D, "disarmed (CQC)", "[I ? " grabbing \the [I]" : ""]")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} disarmed ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_CQC \
+	)
+
 	if(restraining_mob && A.pulling == restraining_mob)
 		log_combat(A, D, "knocked out (Chokehold)(CQC)")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} knocked out ({martial_art}) {target}", \
+			user = A, \
+			target = D, \
+			martial_art = BB_CQC \
+		)
+
 		D.visible_message(span_danger("[A] puts [D] into a chokehold!"), \
 						span_userdanger("You're put into a chokehold by [A]!"), span_hear("You hear shuffling and a muffled groan!"), null, A)
 		to_chat(A, span_danger("You put [D] into a chokehold!"))

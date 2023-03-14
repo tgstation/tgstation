@@ -129,6 +129,14 @@
 		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
 		log_combat(src, victim, "crashed into")
 
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} crashed into {target} {how_hard}", \
+			user = src, \
+			target = victim, \
+			how_hard = extra_speed ? "really hard" : "" \
+		)
+
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
 	if(stat)
@@ -187,6 +195,14 @@
 		var/turf/end_T = get_turf(target)
 		if(start_T && end_T)
 			log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} threw {target} towards {target_turf}", \
+				user = src, \
+				target = thrown_thing, \
+				target_turf = end_T \
+			)
 	var/power_throw = 0
 	if(HAS_TRAIT(src, TRAIT_HULK))
 		power_throw++
@@ -1355,6 +1371,15 @@
 		span_userdanger("You're shoved into [name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name] into [name]!"))
 	log_combat(shover, target, "shoved", addition = "into [name]")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} shoved {third_party} into {target}", \
+		user = shover, \
+		third_party = target, \
+		target = src \
+	)
+
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /**

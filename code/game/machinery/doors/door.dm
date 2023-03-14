@@ -447,9 +447,23 @@
 		//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
 		L.add_splatter_floor(location)
 		log_combat(src, L, "crushed")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{airlock} crushed mob {target}", \
+			target = L, \
+			airlock = src, \
+		)
 	for(var/obj/vehicle/sealed/mecha/M in get_turf(src))
 		M.take_damage(DOOR_CRUSH_DAMAGE)
 		log_combat(src, M, "crushed")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{airlock} crushed mech {mech}", \
+			airlock = src, \
+			mech = M, \
+		)
 
 /obj/machinery/door/proc/autoclose()
 	if(!QDELETED(src) && !density && !operating && !locked && !welded && autoclose)

@@ -198,8 +198,24 @@
 	playsound(victim, "sound/effects/wounds/crackandbleed.ogg", 100)
 	log_combat(user, victim, "cracked the skull of (eye snatching)", src)
 
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} cracked the skull of {target} with {snatcher} to snatch their eyes", \
+		user = user, \
+		target = victim, \
+		snatcher = src \
+	)
+
 	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, victim)))
 		return
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} snatched the eyes of {target} using {snatcher}", \
+		user = user, \
+		target = victim, \
+		snatcher = src \
+	)
 
 	if(!victim.is_blind())
 		to_chat(victim, span_userdanger("You suddenly go blind!"))

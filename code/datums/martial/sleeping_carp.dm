@@ -53,6 +53,15 @@
 	to_chat(A, span_danger("You [atk_verb] [D]!"))
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(A, D, "strong punched (Sleeping Carp)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} strong punched ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_SLEEPING_CARP \
+	)
+
 	D.apply_damage(20, A.get_attack_type(), affecting)
 	return
 
@@ -66,6 +75,15 @@
 	D.throw_at(throw_target, 7, 4, A)
 	D.apply_damage(15, A.get_attack_type(), BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
 	log_combat(A, D, "launchkicked (Sleeping Carp)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} launch-kicked ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_SLEEPING_CARP \
+	)
+
 	return
 
 ///Keelhaul: Harm Grab combo, knocks people down, deals stamina damage while they're on the floor
@@ -85,6 +103,15 @@
 		D.visible_message(span_warning("[A] kicks [D] in the head!"), \
 					span_userdanger("You are kicked in the head by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
 	log_combat(A, D, "dropkicked (Sleeping Carp)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} drop-kicked ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_SLEEPING_CARP \
+	)
+
 	return
 
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/A, mob/living/D)
@@ -92,6 +119,15 @@
 	if(check_streak(A,D))
 		return TRUE
 	log_combat(A, D, "grabbed (Sleeping Carp)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} grabbed ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_SLEEPING_CARP \
+	)
+
 	return ..()
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/A, mob/living/D)
@@ -107,6 +143,15 @@
 	D.apply_damage(rand(10,15), BRUTE, affecting, wound_bonus = CANT_WOUND)
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(A, D, "punched (Sleeping Carp)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} punched ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_SLEEPING_CARP \
+	)
+
 	return TRUE
 
 /datum/martial_art/the_sleeping_carp/disarm_act(mob/living/A, mob/living/D)
@@ -114,6 +159,15 @@
 	if(check_streak(A,D))
 		return TRUE
 	log_combat(A, D, "disarmed (Sleeping Carp)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} disarmed ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_SLEEPING_CARP \
+	)
+
 	return ..()
 
 /datum/martial_art/the_sleeping_carp/proc/can_deflect(mob/living/carp_user)

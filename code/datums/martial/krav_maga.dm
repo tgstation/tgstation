@@ -93,6 +93,15 @@
 	defender.apply_damage(5, BRUTE, BODY_ZONE_CHEST)
 	defender.Knockdown(6 SECONDS)
 	log_combat(attacker, defender, "leg sweeped")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} leg sweeped ({martial_art}) {target}", \
+		user = attacker, \
+		target = defender, \
+		martial_art = "krav maga" \
+	)
+
 	return TRUE
 
 /datum/martial_art/krav_maga/proc/quick_choke(mob/living/attacker, mob/living/defender)//is actually lung punch
@@ -104,6 +113,15 @@
 		defender.losebreath = clamp(defender.losebreath + 5, 0, 10)
 	defender.adjustOxyLoss(10)
 	log_combat(attacker, defender, "quickchoked")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} lung punched ({martial_art}) {target}", \
+		user = attacker, \
+		target = defender, \
+		martial_art = "krav maga" \
+	)
+
 	return TRUE
 
 /datum/martial_art/krav_maga/proc/neck_chop(mob/living/attacker, mob/living/defender)
@@ -114,18 +132,45 @@
 	defender.apply_damage(10, attacker.get_attack_type(), BODY_ZONE_HEAD)
 	defender.adjust_silence_up_to(20 SECONDS, 20 SECONDS)
 	log_combat(attacker, defender, "neck chopped")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} neck chopped ({martial_art}) {target}, rendering them mute", \
+		user = attacker, \
+		target = defender, \
+		martial_art = "krav maga" \
+	)
+
 	return TRUE
 
 /datum/martial_art/krav_maga/grab_act(mob/living/attacker, mob/living/defender)
 	if(check_streak(attacker, defender))
 		return TRUE
 	log_combat(attacker, defender, "grabbed (Krav Maga)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} grabbed ({martial_art}) {target}", \
+		user = attacker, \
+		target = defender, \
+		martial_art = "krav maga" \
+	)
+
 	..()
 
 /datum/martial_art/krav_maga/harm_act(mob/living/attacker, mob/living/defender)
 	if(check_streak(attacker, defender))
 		return TRUE
 	log_combat(attacker, defender, "punched")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} punched ({martial_art}) {target}", \
+		user = attacker, \
+		target = defender, \
+		martial_art = "krav maga" \
+	)
+
 	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
 	var/picked_hit_type = pick("punch", "kick")
 	var/bonus_damage = 0
@@ -157,7 +202,27 @@
 				"<span class='userdanger'>You're disarmed by [attacker]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, attacker)
 			to_chat(attacker, "<span class='danger'>You disarm [defender]!</span>")
 			playsound(defender, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+
 	log_combat(attacker, defender, "shoved (Krav Maga)", "[stuff_in_hand ? " removing \the [stuff_in_hand]" : ""]")
+
+	if(isnull(stuff_in_hand))
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} shoved ({martial_art}) {target}, causing them to steal {stuff_in_hand}", \
+			user = attacker, \
+			target = defender, \
+			martial_art = "krav maga", \
+			stuff_in_hand = stuff_in_hand \
+		)
+	else
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} shoved ({martial_art}) {target}", \
+			user = attacker, \
+			target = defender, \
+			martial_art = "krav maga" \
+		)
+
 	return FALSE
 
 //Krav Maga Gloves

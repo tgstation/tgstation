@@ -11,10 +11,26 @@
 		var/shove_dir = get_dir(user, src)
 		if(!Move(get_step(src, shove_dir), shove_dir))
 			log_combat(user, src, "shoved", "failing to move it")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} shoved {target}, but failed to move them", \
+				user = user, \
+				target = src \
+			)
+
 			user.visible_message(span_danger("[user.name] shoves [src]!"),
 				span_danger("You shove [src]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, list(src))
 			to_chat(src, span_userdanger("You're shoved by [user.name]!"))
 			return TRUE
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} shoved {target}, pushing them", \
+			user = user, \
+			target = src \
+		)
+
 		log_combat(user, src, "shoved", "pushing it")
 		user.visible_message(span_danger("[user.name] shoves [src], pushing [p_them()]!"),
 			span_danger("You shove [src], pushing [p_them()]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, list(src))
@@ -41,6 +57,14 @@
 		var/damage = rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
 
 		attack_threshold_check(damage)
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} attacked {target} with their hands", \
+			user = user, \
+			target = src \
+		)
+
 		log_combat(user, src, "attacked")
 		updatehealth()
 		return TRUE
@@ -78,6 +102,14 @@
 		visible_message(span_danger("[user] [response_disarm_continuous] [name]!"), \
 			span_userdanger("[user] [response_disarm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You [response_disarm_simple] [name]!"))
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} disarmed {target}", \
+			user = user, \
+			target = src \
+		)
+
 		log_combat(user, src, "disarmed")
 		return
 	var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
@@ -86,6 +118,14 @@
 	to_chat(user, span_danger("You slash at [src]!"))
 	playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 	attack_threshold_check(damage)
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} attacked {target}", \
+		user = user, \
+		target = src \
+	)
+
 	log_combat(user, src, "attacked")
 
 /mob/living/basic/attack_larva(mob/living/carbon/alien/larva/attacking_larva, list/modifiers)

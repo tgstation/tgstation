@@ -464,6 +464,15 @@
 
 	if(pulled_atom.pulledby)
 		log_combat(pulled_atom, pulled_atom.pulledby, "pulled from", src)
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{pulled_atom} was pulled from {pulled_by} by {taker}", \
+			pulled_atom = pulled_atom, \
+			pulled_by = pulled_atom.pulledby, \
+			taker = src \
+		)
+
 		pulled_atom.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	pulling = pulled_atom
 	pulled_atom.set_pulledby(src)
@@ -472,6 +481,14 @@
 	if(ismob(pulled_atom))
 		var/mob/pulled_mob = pulled_atom
 		log_combat(src, pulled_mob, "grabbed", addition="passive grab")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} passively grabbed {target}", \
+			user = src, \
+			target = pulled_mob, \
+		)
+
 		if(!supress_message)
 			pulled_mob.visible_message(span_warning("[src] grabs [pulled_mob] passively."), \
 				span_danger("[src] grabs you passively."))

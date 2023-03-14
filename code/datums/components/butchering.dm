@@ -76,6 +76,14 @@
 					span_userdanger("Something is cutting into your neck!"), NONE)
 	log_combat(user, H, "attempted throat slitting", source)
 
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} attempted to slit the throat of {target} with {with}", \
+		user = user, \
+		target = H, \
+		with = source \
+	)
+
 	playsound(H.loc, butcher_sound, 50, TRUE, -1)
 	if(do_after(user, clamp(500 / source.force, 30, 100), H) && H.Adjacent(source))
 		if(H.has_status_effect(/datum/status_effect/neck_slice))
@@ -85,7 +93,17 @@
 
 		H.visible_message(span_danger("[user] slits [H]'s throat!"), \
 					span_userdanger("[user] slits your throat..."))
+
 		log_combat(user, H, "wounded via throat slitting", source)
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} wounded {target} via throat slitting with {with}", \
+			user = user, \
+			target = H, \
+			with = source \
+		)
+
 		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND) // easy tiger, we'll get to that in a sec
 		var/obj/item/bodypart/slit_throat = H.get_bodypart(BODY_ZONE_HEAD)
 		if(slit_throat)

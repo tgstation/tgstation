@@ -48,8 +48,23 @@ effective or pretty fucking useless.
 			M.Paralyze(rand(200,400))
 			to_chat(M, span_userdanger("You feel a tremendous, paralyzing wave flood your mind."))
 
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} stunned {target} with {with}", \
+				user = user, \
+				target = M, \
+				with = src \
+			)
 		else
 			to_chat(M, span_userdanger("You feel a sudden, electric jolt travel through your head."))
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} failed to stun {target} with {with}", \
+				user = user, \
+				target = M, \
+				with = src \
+			)
 
 	playsound(src.loc, 'sound/misc/interference.ogg', 50, TRUE)
 	to_chat(user, span_notice("You trigger [src]."))
@@ -90,6 +105,15 @@ effective or pretty fucking useless.
 
 	if(!used)
 		log_combat(user, M, "irradiated", src)
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} irradiated {target} with {with}", \
+			user = user, \
+			target = M, \
+			with = src \
+		)
+
 		var/cooldown = get_cooldown()
 		used = TRUE
 		icon_state = "health1"

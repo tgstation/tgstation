@@ -330,6 +330,14 @@
 
 	log_combat(user, target, "operated on", null, "(OPERATION TYPE: [procedure.name]) (TARGET AREA: [selected_zone])")
 
+	BB_LOG( \
+		BB_SURGERY, \
+		"{user} started surgery {surgery} on {target}", \
+		user = user, \
+		target = target, \
+		surgery = procedure \
+	)
+
 /datum/component/surgery_initiator/proc/surgery_needs_exposure(datum/surgery/surgery, mob/living/target)
 	var/mob/living/user = last_user_ref?.resolve()
 	if (isnull(user))

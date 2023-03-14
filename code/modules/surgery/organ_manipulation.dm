@@ -223,6 +223,13 @@
 			)
 			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain, you can't feel your [target_organ] anymore!")
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} surgically removed the {organ} from {target}", \
+				user = user, \
+				organ = target_organ, \
+				target = target \
+			)
 			target_organ.Remove(target)
 			target_organ.forceMove(get_turf(target))
 		else

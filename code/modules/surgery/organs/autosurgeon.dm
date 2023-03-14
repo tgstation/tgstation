@@ -80,9 +80,24 @@
 
 	if(target != user)
 		log_combat(user, target, "autosurgeon implanted [stored_organ] into", "[src]", "in [AREACOORD(target)]")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} implanted {organ} into {target} with {autosurgeon}", \
+			user = user, \
+			organ = stored_organ, \
+			target = target, \
+			autosurgeon = src \
+		)
 		user.visible_message(span_notice("[user] presses a button on [src] as it plunges into [target]'s body."), span_notice("You press a button on [src] as it plunges into [target]'s body."))
 	else
 		user.visible_message(span_notice("[user] pressses a button on [src] as it plunges into [user.p_their()] body."), "You press a button on [src] as it plunges into your body.")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} implanted {organ} into themselves with {autosurgeon}", \
+			user = user, \
+			organ = stored_organ, \
+			autosurgeon = src \
+		)
 
 	stored_organ.Insert(target)//insert stored organ into the user
 	stored_organ = null

@@ -97,9 +97,24 @@
 	if(target != user)
 		target.visible_message(span_danger("[user] hits [target][head_attack_message] with a bottle of [src.name]!"), \
 				span_userdanger("[user] hits you [head_attack_message] with a bottle of [src.name]!"))
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} smashed {bottle} on {target}", \
+			user = user, \
+			target = target, \
+			bottle = src \
+		)
 	else
 		target.visible_message(span_danger("[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!"), \
 				span_userdanger("You hit yourself with a bottle of [src.name][head_attack_message]!"))
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} smashed {bottle} on themselves", \
+		user = user, \
+		bottle = src \
+	)
 
 	//Attack logs
 	log_combat(user, target, "attacked", src)

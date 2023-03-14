@@ -462,6 +462,15 @@
 		return TRUE
 
 	log_combat(user, to_curse, "cursed via heretic ritual", addition = "([boosted ? "Boosted" : ""] [name])")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} cursed (heretic ritual) {target} with {heretic_ritual}", \
+		user = user, \
+		target = to_curse, \
+		heretic_ritual = src \
+	)
+
 	curse(to_curse, boosted)
 	to_chat(user, span_hierophant("You cast a[boosted ? "n empowered":""] [name] upon [to_curse.real_name]."))
 

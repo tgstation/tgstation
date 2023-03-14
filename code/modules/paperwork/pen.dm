@@ -156,6 +156,13 @@
 	to_chat(user, span_warning("You stab [M] with the pen."))
 	to_chat(M, span_danger("You feel a tiny prick!"))
 	log_combat(user, M, "stabbed", src)
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} stabbed {target} with {pen}", \
+		user = user, \
+		target = M, \
+		pen = src \
+	)
 	return TRUE
 
 /obj/item/pen/afterattack(obj/O, mob/living/user, proximity)

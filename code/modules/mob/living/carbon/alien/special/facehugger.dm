@@ -170,6 +170,14 @@
 	if(!target.equip_to_slot_if_possible(src, ITEM_SLOT_MASK, 0, 1, 1))
 		return FALSE
 	log_combat(target, src, "was facehugged by")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} was facehugged by {free_hugs}", \
+		user = target, \
+		free_hugs = src \
+	)
+
 	return TRUE // time for a smoke
 
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)

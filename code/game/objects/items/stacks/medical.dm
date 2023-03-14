@@ -53,6 +53,23 @@
 
 	if(heal(patient, user))
 		log_combat(user, patient, "healed", src.name)
+
+		if(user == patient)
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} healed themselves with {with}", \
+				user = user, \
+				with = src \
+			)
+		else
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} healed {target} with {with}", \
+				user = user, \
+				target = patient, \
+				with = src \
+			)
+
 		use(1)
 		if(repeating && amount > 0)
 			try_heal(patient, user, TRUE)

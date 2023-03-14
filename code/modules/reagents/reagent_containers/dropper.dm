@@ -64,6 +64,14 @@
 					R += "[A] ([num2text(A.volume)]),"
 
 			log_combat(user, M, "squirted", R)
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} squired {reagents} from {dropper} into {target}'s eyes", \
+				user = user, \
+				reagents = src.reagents, \
+				droppper = src, \
+				target = M \
+			)
 
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))

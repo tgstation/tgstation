@@ -33,6 +33,16 @@
 		target.transfer_ai(AI_TRANS_FROM_CARD, user, AI, src)
 		if(!AI)
 			log_combat(user, our_ai, "uploaded", src, "to [target].")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} uploaded {ai} to {target} from {card}", \
+				user = user, \
+				ai = our_ai, \
+				target = target, \
+				card = src \
+			)
+
 			update_appearance()
 			return TRUE
 	else //No AI on the card, therefore the user wants to download one.

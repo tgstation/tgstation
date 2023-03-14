@@ -196,6 +196,13 @@
 		else
 			target.visible_message(span_danger("[user] places [target] in [src]."), span_userdanger("[user] places you in [src]."))
 			log_combat(user, target, "stuffed", addition="into [src]")
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} stuffed {target} into {bin}", \
+				user = user, \
+				target = target, \
+				bin = src \
+			)
 			target.LAssailant = WEAKREF(user)
 			. = TRUE
 		update_appearance()
@@ -562,4 +569,11 @@
 		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
 	log_combat(src, target, "shoved", "into [src] (disposal bin)")
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} shoved {target} into {bin}", \
+		user = shover, \
+		target = target, \
+		bin = src \
+	)
 	return COMSIG_CARBON_SHOVE_HANDLED

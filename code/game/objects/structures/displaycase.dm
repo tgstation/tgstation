@@ -205,6 +205,14 @@
 	if (showpiece && (broken || open))
 		to_chat(user, span_notice("You deactivate the hover field built into the case."))
 		log_combat(user, src, "deactivates the hover field of")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} deactivated the hover field of {target}", \
+			user = user, \
+			target = src \
+		)
+
 		dump()
 		add_fingerprint(user)
 		return
@@ -220,6 +228,14 @@
 			return
 		user.visible_message(span_danger("[user] kicks the display case."), null, null, COMBAT_MESSAGE_RANGE)
 		log_combat(user, src, "kicks")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} kicked {target}", \
+			user = user, \
+			target = src \
+		)
+
 		user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 		take_damage(2)
 

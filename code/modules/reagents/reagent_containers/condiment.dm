@@ -62,6 +62,13 @@
 		M.visible_message(span_warning("[user] fed [M] from [src]."), \
 			span_warning("[user] fed you from [src]."))
 		log_combat(user, M, "fed", reagents.get_reagent_log_string())
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} fed {condiments} to {target}", \
+			user = user, \
+			container = src, \
+			target = M \
+		)
 	reagents.trans_to(M, 10, transfered_by = user, methods = INGEST)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	return TRUE

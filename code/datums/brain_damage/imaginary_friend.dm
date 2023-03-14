@@ -287,9 +287,17 @@
 
 // We have to create our own since we can only show emotes to ourselves and our owner
 /datum/emote/imaginary_friend/run_emote(mob/user, params, type_override, intentional = FALSE)
-	user.log_talk(message, LOG_EMOTE)
 	if(!can_run_emote(user, FALSE, intentional))
 		return FALSE
+
+	user.log_talk(message, LOG_EMOTE)
+
+	BB_LOG( \
+		BB_EMOTE, \
+		"{source} {emote}", \
+		source = user, \
+		emote = message \
+	)
 
 	var/msg = select_message_type(user, message, intentional)
 	if(params && message_param)

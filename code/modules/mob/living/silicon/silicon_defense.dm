@@ -10,6 +10,12 @@
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		if (prob(90))
 			log_combat(user, src, "attacked")
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} attacked {target}", \
+				user = user, \
+				target = src \
+			)
 			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
 			visible_message(span_danger("[user] slashes at [src]!"), \
 							span_userdanger("[user] slashes at you!"), null, null, user)
@@ -17,6 +23,12 @@
 			if(prob(8))
 				flash_act(affect_silicon = 1)
 			log_combat(user, src, "attacked")
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} attacked {target}, stunning them", \
+				user = user, \
+				target = src \
+			)
 			adjustBruteLoss(damage)
 			updatehealth()
 		else

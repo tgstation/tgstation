@@ -445,3 +445,11 @@
 		chaser.monster_damage_boost = FALSE // Weaker cuz no cooldown
 		chaser.damage = 20
 		log_combat(user, target, "fired a chaser at", src)
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} fired at chaser at {target} using {vortex_talisman}", \
+			user = user, \
+			target = target, \
+			vortex_talisman = src \
+		)

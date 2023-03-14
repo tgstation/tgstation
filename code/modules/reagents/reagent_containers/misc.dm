@@ -149,11 +149,27 @@
 		reagents.trans_to(carbon_target, reagents.total_volume, transfered_by = user, methods = INGEST)
 		carbon_target.visible_message(span_danger("[user] smothers \the [carbon_target] with \the [src]!"), span_userdanger("[user] smothers you with \the [src]!"), span_hear("You hear some struggling and muffled cries of surprise."))
 		log_combat(user, carbon_target, "smothered", src, log_object)
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} smothered {target} with {rag} containing {reagents}", \
+			user = user, \
+			target = carbon_target, \
+			rag = src, \
+			reagents = reagents \
+		)
 	else
 		reagents.expose(carbon_target, TOUCH)
 		reagents.clear_reagents()
 		carbon_target.visible_message(span_notice("[user] touches \the [carbon_target] with \the [src]."))
 		log_combat(user, carbon_target, "touched", src, log_object)
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} touched {target} with {rag} containing {reagents}", \
+			user = user, \
+			target = carbon_target, \
+			rag = src, \
+			reagents = reagents \
+		)
 
 ///Checks whether or not we should clean.
 /obj/item/reagent_containers/cup/rag/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)

@@ -77,6 +77,13 @@
 	var/turf/src_turf = get_turf(src)
 
 	log_combat(user, src_turf, "fired a puff of reagents from", src, addition="with a range of \[[range]\], containing [puff_reagent_string].")
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} fired a puff of reagents from {sprayer} containing {reagents}", \
+		user = user, \
+		sprayer = src, \
+		reagents = reagent_puff.reagents \
+	)
 	user.log_message("fired a puff of reagents from \a [src] with a range of \[[range]\] and containing [puff_reagent_string].", LOG_ATTACK)
 
 	// do_spray includes a series of step_towards and sleeps. As a result, it will handle deletion of the chempuff.
@@ -144,6 +151,14 @@
 		to_chat(usr, span_notice("You empty \the [src] onto the floor."))
 		reagents.expose(usr.loc)
 		log_combat(usr, usr.loc, "emptied onto", src, addition="which had [reagents.get_reagent_log_string()]")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} emptied {sprayer} containing {reagents} onto {target_turf}", \
+			user = usr, \
+			sprayer = src, \
+			reagents = reagents, \
+			target_turf = usr.loc \
+		)
 		src.reagents.clear_reagents()
 
 /// Handles updating the spray distance when the reagents change.
@@ -383,7 +398,7 @@
 /obj/item/reagent_containers/spray/chemsprayer/party/spray(atom/A, mob/user)
 	. = ..()
 	icon_state = "[icon_state]_used"
-	
+
 
 // Plant-B-Gone
 /obj/item/reagent_containers/spray/plantbgone // -- Skie

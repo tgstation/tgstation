@@ -410,6 +410,12 @@
 		shock_damage = cell_damage
 	var/drained_hp = victim.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
 	log_combat(source, victim, "electrocuted")
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} was electrocuted by {target}", \
+		user = victim, \
+		target = source \
+	)
 
 	var/drained_energy = drained_hp*20
 

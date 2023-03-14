@@ -370,6 +370,15 @@
 		qdel(src)
 		return
 	log_combat(user, M, "used a cult spell on", source.name, "")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} used a cult spell {cult_spell} on {target}", \
+		user = user, \
+		cult_spell = source, \
+		target = M \
+	)
+
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
 
@@ -509,6 +518,14 @@
 				C.adjust_silence(10 SECONDS)
 				to_chat(user, span_notice("You shackle [C]."))
 				log_combat(user, C, "shackled")
+
+				BB_LOG( \
+					BB_COMBAT, \
+					"{user} shadow shackled (cult) {target}", \
+					user = user, \
+					target = C \
+				)
+
 				uses--
 			else
 				to_chat(user, span_warning("[C] is already bound."))

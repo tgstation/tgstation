@@ -96,6 +96,14 @@
 	return TRUE
 
 /datum/action/changeling/sting/transformation/sting_action(mob/user, mob/target)
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} used a transformation sting on {target}, applying {new_dna}", \
+		user = user, \
+		target = target, \
+		new_dna = selected_dna.dna \
+	)
+
 	log_combat(user, target, "stung", "transformation sting", " new identity is '[selected_dna.dna.real_name]'")
 	var/datum/dna/NewDNA = selected_dna.dna
 
@@ -132,6 +140,13 @@
 
 /datum/action/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
 	log_combat(user, target, "stung", object="false armblade sting")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} used an armblade sting on {target}", \
+		user = user, \
+		target = target \
+	)
 
 	var/obj/item/held = target.get_active_held_item()
 	if(held && !target.dropItemToGround(held))
@@ -174,6 +189,14 @@
 
 /datum/action/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	log_combat(user, target, "stung", "extraction sting")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} used an extraction sting on {target}", \
+		user = user, \
+		target = target \
+	)
+
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!changeling.has_profile_with_dna(target.dna))
 		changeling.add_new_profile(target)
@@ -189,6 +212,14 @@
 
 /datum/action/changeling/sting/mute/sting_action(mob/user, mob/living/carbon/target)
 	log_combat(user, target, "stung", "mute sting")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} used a mute sting on {target}", \
+		user = user, \
+		target = target \
+	)
+
 	target.adjust_silence(1 MINUTES)
 	return TRUE
 
@@ -207,6 +238,14 @@
 		return FALSE
 
 	log_combat(user, target, "stung", "blind sting")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} used blind sting on {target}", \
+		user = user, \
+		target = target \
+	)
+
 	to_chat(target, span_danger("Your eyes burn horrifically!"))
 	eyes.applyOrganDamage(eyes.maxHealth * 0.8)
 	target.adjust_temp_blindness(40 SECONDS)
@@ -223,6 +262,14 @@
 
 /datum/action/changeling/sting/lsd/sting_action(mob/user, mob/living/carbon/target)
 	log_combat(user, target, "stung", "LSD sting")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} used an LSD sting on {target}", \
+		user = user, \
+		target = target \
+	)
+
 	addtimer(CALLBACK(src, PROC_REF(hallucination_time), target), rand(30 SECONDS, 60 SECONDS))
 	return TRUE
 
@@ -241,6 +288,14 @@
 
 /datum/action/changeling/sting/cryo/sting_action(mob/user, mob/target)
 	log_combat(user, target, "stung", "cryo sting")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} used a cryo sting on {target}", \
+		user = user, \
+		target = target \
+	)
+
 	if(target.reagents)
 		target.reagents.add_reagent(/datum/reagent/consumable/frostoil, 30)
 	return TRUE

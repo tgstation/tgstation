@@ -718,6 +718,14 @@ Difficulty: Hard
 			L.adjustBruteLoss(damage)
 		if(caster)
 			log_combat(caster, L, "struck with a [name]")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} struck {target} with {projectile}", \
+				user = caster, \
+				target = L, \
+				projectile = src \
+			)
 	for(var/obj/vehicle/sealed/mecha/M in T.contents - hit_things) //also damage mechs.
 		hit_things += M
 		for(var/O in M.occupants)

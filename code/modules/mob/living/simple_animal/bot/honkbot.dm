@@ -86,6 +86,12 @@
 	addtimer(CALLBACK(src, PROC_REF(limiting_spam_false)), cooldowntime)
 
 	log_combat(src, current_target, "honked")
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} honked (honkbot) {target}, paralyzing them", \
+		user = src, \
+		target = current_target \
+	)
 
 	current_target.visible_message(
 		span_danger("[src] honks [current_target]!"), \

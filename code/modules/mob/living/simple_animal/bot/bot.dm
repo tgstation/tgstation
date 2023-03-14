@@ -256,6 +256,13 @@
 		to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
 		if(user)
 			log_combat(user, src, "emagged")
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} emagged {target} with {with}", \
+				user = user, \
+				target = src, \
+				with = emag_card \
+			)
 		return
 	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver (or through the UI) yet.
 		to_chat(user, span_warning("You need to open maintenance panel first!"))
@@ -978,6 +985,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 	name = paicard.pai.name
 	faction = user.faction.Copy()
 	log_combat(user, paicard.pai, "uploaded to [initial(src.name)],")
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} uploaded {target} into {bot} on {card}", \
+		user = user, \
+		target = paicard.pai, \
+		bot = src, \
+		card = paicard \
+	)
 	return TRUE
 
 /mob/living/simple_animal/bot/proc/ejectpai(mob/user = null, announce = TRUE)
@@ -992,8 +1007,23 @@ Pass a positive integer as an argument to override a bot's default speed.
 		paicard.forceMove(loc)
 		if(user)
 			log_combat(user, paicard.pai, "ejected from [initial(src.name)],")
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} ejected {target} from {bot} on {card}", \
+				user = user, \
+				target = paicard.pai, \
+				bot = src, \
+				card = paicard \
+			)
 		else
 			log_combat(src, paicard.pai, "ejected")
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} ejected themselves from {bot} on {card}", \
+				user = paicard.pai, \
+				target = src, \
+				card = paicard \
+			)
 		if(announce)
 			to_chat(paicard.pai, span_notice("You feel your control fade as [paicard] ejects from [initial(src.name)]."))
 		paicard = null

@@ -23,6 +23,14 @@
 				Unconscious(40)
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 				log_combat(user, src, "pushed")
+
+				BB_LOG( \
+					BB_COMBAT, \
+					"{user} pushed {target}, knocking them down", \
+					user = user, \
+					target = src \
+				)
+
 				visible_message(span_danger("[user] pushes [src] down!"), \
 								span_userdanger("[user] pushes you down!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), null, user)
 				to_chat(user, span_danger("You push [src] down!"))
@@ -41,6 +49,14 @@
 		var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(user.zone_selected))
 		apply_damage(damage, BRUTE, affecting)
 		log_combat(user, src, "attacked")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} attacked {target}", \
+			user = user, \
+			target = src \
+		)
+
 	else
 		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 		visible_message(span_danger("[user]'s punch misses [src]!"), \

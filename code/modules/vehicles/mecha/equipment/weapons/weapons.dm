@@ -68,6 +68,15 @@
 		playsound(chassis, fire_sound, 50, TRUE)
 
 		log_combat(source, target, "fired [projectile_obj] at", src, "from [chassis] at [get_area_name(src, TRUE)]")
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} fired {projectile} at {target} using {weapon} from {mech}", \
+			user = source, \
+			projectile = projectile_obj, \
+			target = target, \
+			weapon = src, \
+			mech = chassis \
+		)
 
 		sleep(max(0, projectile_delay))
 

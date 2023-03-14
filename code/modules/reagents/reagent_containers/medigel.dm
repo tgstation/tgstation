@@ -52,6 +52,14 @@
 
 	else
 		log_combat(user, M, "attempted to apply", src, reagents.get_reagent_log_string())
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} attempted to apply {reagents} onto {target} using {medigel}", \
+			user = user, \
+			reagents = reagents, \
+			target = M, \
+			medigel = src \
+		)
 		M.visible_message(span_danger("[user] attempts to [apply_method] [src] on [M]."), \
 							span_userdanger("[user] attempts to [apply_method] [src] on you."))
 		if(!do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), M))
@@ -66,6 +74,14 @@
 
 	else
 		log_combat(user, M, "applied", src, reagents.get_reagent_log_string())
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} applied {reagents} onto {target} using {medigel}", \
+			user = user, \
+			reagents = reagents, \
+			target = M, \
+			medigel = src \
+		)
 		playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
 		reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user, methods = apply_type)
 	return

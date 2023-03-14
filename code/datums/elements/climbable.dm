@@ -75,7 +75,16 @@
 		if(do_climb(climbed_thing, user, params))
 			user.visible_message(span_warning("[user] climbs onto [climbed_thing]."), \
 								span_notice("You climb onto [climbed_thing]."))
+
 			log_combat(user, climbed_thing, "climbed onto")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} climbed onto {target}", \
+				user = user, \
+				target = climbed_thing \
+			)
+
 			if(adjusted_climb_stun)
 				user.Stun(adjusted_climb_stun)
 		else

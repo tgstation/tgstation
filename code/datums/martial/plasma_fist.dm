@@ -43,6 +43,15 @@
 	qdel(tornado_spell)
 
 	log_combat(A, D, "tornado sweeped(Plasma Fist)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} tornado sweeped ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_PLASMA_FIST \
+	)
+
 	return
 
 /datum/martial_art/plasma_fist/proc/Throwback(mob/living/A, mob/living/D)
@@ -54,6 +63,15 @@
 	D.throw_at(throw_target, 200, 4,A)
 	A.say("HYAH!", forced="plasma fist")
 	log_combat(A, D, "threw back (Plasma Fist)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} threw back ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_PLASMA_FIST \
+	)
+
 	return
 
 /datum/martial_art/plasma_fist/proc/Plasma(mob/living/A, mob/living/D)
@@ -66,6 +84,15 @@
 					span_userdanger("You're suddenly hit with THE PLASMA FIST TECHNIQUE by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, A)
 	to_chat(A, span_danger("You hit [D] with THE PLASMA FIST TECHNIQUE!"))
 	log_combat(A, D, "gibbed (Plasma Fist)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} gibbed ({martial_art}) {target}", \
+		user = A, \
+		target = D, \
+		martial_art = BB_PLASMA_FIST \
+	)
+
 	var/turf/Dturf = get_turf(D)
 	D.investigate_log("has been gibbed by plasma fist.", INVESTIGATE_DEATHS)
 	D.gib()
@@ -105,6 +132,13 @@
 	//before ghosting to prevent issues
 	log_combat(user, user, "triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4] (Plasma Fist)")
 	message_admins("[key_name_admin(user)] triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4].")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} triggered a final plasma explosion ({martial_art})", \
+		user = user, \
+		martial_art = BB_PLASMA_FIST \
+	)
 
 	to_chat(user, span_userdanger("The explosion knocks your soul out of your body!"))
 	user.ghostize(FALSE) //prevents... horrible memes just believe me

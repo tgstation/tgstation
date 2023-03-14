@@ -101,6 +101,14 @@
 	if(user)
 		log_combat(user, target, "implanted", "\a [name]")
 
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} implaned {target} with {with}", \
+			user = user, \
+			target = target, \
+			with = src \
+		)
+
 	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, target, user, silent, force)
 	return TRUE
 

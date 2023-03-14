@@ -213,6 +213,15 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 			return
 		var/mob/living/carbon/dunking_target = user.pulling
 		log_combat(user, dunking_target, "dunked", null, "into [src]")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} dunked {target} into {deep_fryer}", \
+			user = user, \
+			target = dunking_target, \
+			deep_fryer = src \
+		)
+
 		user.visible_message(span_danger("[user] dunks [dunking_target]'s face in [src]!"))
 		reagents.expose(dunking_target, TOUCH)
 		var/bio_multiplier = dunking_target.getarmor(BODY_ZONE_HEAD, BIO) * 0.01
@@ -223,6 +232,15 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 			dunking_target.investigate_log("has been gibbed by entropic difference (being dunked into [src]).", INVESTIGATE_DEATHS)
 			dunking_target.gib()
 			log_combat(user, dunking_target, "blew up", null, "by dunking them into [src]")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} dunked {target} into {deep_fryer}, who promptly exploded due to entropic difference", \
+				user = user, \
+				target = dunking_target, \
+				deep_fryer = src \
+			)
+
 			return
 
 		else if(target_temp < T0C)

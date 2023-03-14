@@ -62,6 +62,14 @@
 	owner.visible_message(span_danger("[owner] shamefully bops [owner.p_them()]self with [owner.p_their()] [src.name]."), span_userdanger("You shamefully bop yourself with your [src.name]."), \
 		span_hear("You hear a dull thud!"))
 	log_combat(owner, owner, "bopped", src.name, "(self)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} shamefully bopped themselves with {circlegame}, what a loser", \
+		user = owner, \
+		circlegame = src \
+	)
+
 	owner.do_attack_animation(owner)
 	owner.apply_damage(100, STAMINA)
 	owner.Knockdown(10)
@@ -97,13 +105,33 @@
 		sucker.apply_damage(50, STAMINA)
 		sucker.Knockdown(50)
 		log_combat(owner, sucker, "bopped", src.name, "(setup- Hulk)")
+
 		var/atom/throw_target = get_edge_target_turf(sucker, owner.dir)
 		sucker.throw_at(throw_target, 6, 3, owner)
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} bopped ({martial_art}) {target} with {with}, sending them flying towards {destination}", \
+			user = owner, \
+			martial_art = BB_HULK, \
+			target = sucker, \
+			with = src, \
+			destination = throw_target \
+		)
 	else
 		owner.visible_message(span_danger("[owner] bops [sucker] with [owner.p_their()] [src.name]!"), span_danger("You bop [sucker] with your [src.name]!"), \
 			span_hear("You hear a dull thud!"), ignored_mobs=list(sucker))
 		sucker.apply_damage(15, STAMINA)
 		log_combat(owner, sucker, "bopped", src.name, "(setup)")
+
+		BB_LOG( \
+			BB_COMBAT, \
+			"{user} bopped {target} with {with}", \
+			user = owner, \
+			with = src, \
+			target = sucker \
+		)
+
 		to_chat(sucker, span_userdanger("[owner] bops you with [owner.p_their()] [src.name]!"))
 	qdel(src)
 
@@ -184,6 +212,15 @@
 		target.emote("scream")
 
 	log_combat(user, target, "given a noogie to", addition = "([damage] brute before armor)")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} noogied {target}, dealing {damage} brute damage", \
+		user = user, \
+		target = target, \
+		damage = damage \
+	)
+
 	target.apply_damage(damage, BRUTE, BODY_ZONE_HEAD)
 	user.adjustStaminaLoss(iteration + 5)
 	playsound(get_turf(user), pick('sound/effects/rustle1.ogg','sound/effects/rustle2.ogg','sound/effects/rustle3.ogg','sound/effects/rustle4.ogg','sound/effects/rustle5.ogg'), 50)

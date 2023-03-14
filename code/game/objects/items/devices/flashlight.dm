@@ -533,6 +533,15 @@
 		if(ismob(A))
 			var/mob/M = A
 			log_combat(user, M, "attacked", "EMP-light")
+
+			BB_LOG( \
+				BB_COMBAT, \
+				"{user} EMPed {target} with {with}", \
+				user = user, \
+				target = M, \
+				with = src \
+			)
+
 			M.visible_message(span_danger("[user] blinks \the [src] at \the [A]."), \
 								span_userdanger("[user] blinks \the [src] at you."))
 		else

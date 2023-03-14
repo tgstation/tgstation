@@ -231,6 +231,16 @@
 		loadedWeightClass--
 	AM.forceMove(get_turf(src))
 	AM.throw_at(target, pressureSetting * 10 * range_multiplier, pressureSetting * 2, user, spin_item)
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} fired {item} from a pneumatic cannon {pneumatic_cannon} at {target_turf}", \
+		user = user, \
+		item = AM, \
+		pneumatic_cannon = src, \
+		target_turf = target \
+	)
+
 	return TRUE
 
 /obj/item/pneumatic_cannon/proc/get_target(turf/target, turf/starting)

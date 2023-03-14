@@ -712,6 +712,15 @@ DEFINE_BITFIELD(turret_flags, list(
 		remove_control()
 		return FALSE
 	log_combat(caller,A,"fired with manual turret control at")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{turret} was fired by {user} at {target}", \
+		turret = src, \
+		user = caller, \
+		target = A \
+	)
+
 	target(A)
 	return TRUE
 
@@ -1020,18 +1029,45 @@ DEFINE_BITFIELD(turret_flags, list(
 	lethal = !lethal
 	add_hiddenprint(user)
 	log_combat(user, src, "[lethal ? "enabled" : "disabled"] lethals on")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} set {turretid} to {mode}", \
+		user = user, \
+		turretid = src, \
+		mode = lethal ? "lethal" : "stun" \
+	)
+
 	updateTurrets()
 
 /obj/machinery/turretid/proc/toggle_on(mob/user)
 	enabled = !enabled
 	add_hiddenprint(user)
 	log_combat(user, src, "[enabled ? "enabled" : "disabled"]")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} turned {turretid} {state}", \
+		user = user, \
+		turretid = src, \
+		state = enabled ? "on" : "off" \
+	)
+
 	updateTurrets()
 
 /obj/machinery/turretid/proc/shoot_silicons(mob/user)
 	shoot_cyborgs = !shoot_cyborgs
 	add_hiddenprint(user)
 	log_combat(user, src, "[shoot_cyborgs ? "Shooting Borgs" : "Not Shooting Borgs"]")
+
+	BB_LOG( \
+		BB_COMBAT, \
+		"{user} configured {turretid} {to_do}", \
+		user = user, \
+		turretid = src, \
+		to_do = shoot_cyborgs ? "shoot cyborgs" : "not shoot cyborgs" \
+	)
+
 	updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()
