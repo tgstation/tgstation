@@ -157,14 +157,22 @@
 			auto_updating = FALSE
 			if(history_gasmix_index - 1 > 0)
 				history_gasmix_index--
-				last_gasmix_data = history_gasmix_data[history_gasmix_index]
+				if(history_gasmix_index <= length(history_gasmix_data))
+					last_gasmix_data = history_gasmix_data[history_gasmix_index]
 			return TRUE
 		if("input")
+			if(!length(history_gasmix_data))
+				return TRUE
 			var/target = params["target"]
 			auto_updating = FALSE
 			history_gasmix_index = target
 			last_gasmix_data = history_gasmix_data[history_gasmix_index]
 			return TRUE
+		if("clearhistory")
+			history_gasmix_index = 1
+			history_gasmix_data = list()
+			return TRUE
+
 
 /obj/item/analyzer/attack_self(mob/user, modifiers)
 	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())

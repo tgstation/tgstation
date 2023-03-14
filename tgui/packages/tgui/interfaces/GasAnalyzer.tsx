@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { GasmixParser } from './common/GasmixParser';
 import type { Gasmix } from './common/GasmixParser';
-import { Box, Button, LabeledList, Section, Flex, Slider } from '../components';
+import { Button, LabeledList, Section, Flex, Slider } from '../components';
 import { AtmosHandbookContent, atmosHandbookHooks } from './common/AtmosHandbook';
 import { Window } from '../layouts';
 
@@ -38,50 +38,58 @@ export const GasAnalyzer = (props, context) => {
   return (
     <Window width={500} height={450}>
       <Window.Content scrollable>
-        <Button
-          icon={autoUpdating ? 'sync-alt' : 'times'}
-          content={
-            autoUpdating
-              ? 'Auto-updating is enabled. Click to switch.'
-              : 'Auto-updating is disabled. Click to switch.'
-          }
-          onClick={() => act('autoscantoggle')}
-          fluid
-          textAlign="center"
-          selected={autoUpdating}
-        />
-        <Box color="bad" />
+        <LabeledList.Item label="Auto-Scanning">
+          <Button
+            icon={autoUpdating ? 'sync-alt' : 'times'}
+            content={autoUpdating ? 'Enabled.' : 'Disabled.'}
+            onClick={() => act('autoscantoggle')}
+            fluid
+            textAlign="center"
+            selected={autoUpdating}
+          />
+        </LabeledList.Item>
         <LabeledList.Item label="Scan History">
           <Flex inline width="100%">
+            <Flex.Item>
+              <Button
+                icon={'sync'}
+                content={'Clear'}
+                onClick={() => act('clearhistory')}
+                textAlign="center"
+                disabled={historyLength === 0}
+              />
+            </Flex.Item>
             <Flex.Item>
               <Button
                 icon={'backward'}
                 content={'Previous'}
                 onClick={() => act('historybackwards')}
                 textAlign="center"
-                disabled={historyIndex === historyLength}
+                disabled={historyLength === 0 || historyIndex === historyLength}
               />
-              <Flex.Item grow={1} mx={1}>
-                <Slider
-                  value={historyIndex}
-                  fillValue={historyIndex}
-                  minValue={1}
-                  maxValue={historyLength}
-                  step={1}
-                  stepPixelSize={4}
-                  onDrag={(e, value) =>
-                    act('input', {
-                      target: value,
-                    })
-                  }
-                />
-              </Flex.Item>
+            </Flex.Item>
+            <Flex.Item grow={1} mx={1}>
+              <Slider
+                value={historyIndex}
+                fillValue={historyIndex}
+                minValue={1}
+                maxValue={historyLength}
+                step={1}
+                stepPixelSize={12}
+                onDrag={(e, value) =>
+                  act('input', {
+                    target: value,
+                  })
+                }
+              />
+            </Flex.Item>
+            <Flex.Item>
               <Button
                 icon={'forward'}
                 content={'Next'}
                 onClick={() => act('historyforward')}
                 textAlign="center"
-                disabled={historyIndex === 1}
+                disabled={historyLength === 0 || historyIndex === 1}
               />
             </Flex.Item>
           </Flex>
