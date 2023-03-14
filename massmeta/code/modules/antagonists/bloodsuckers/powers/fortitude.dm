@@ -77,8 +77,3 @@
 		bloodsucker_user.toggle_move_intent()
 	owner.balloon_alert(owner, "fortitude turned off.")
 	return ..()
-
-/datum/action/bloodsucker/fortitude/hunter
-	name = "Flow"
-	desc = "Use the arts to Flow, giving shove and stun immunity, as well as brute, burn, dismember and pierce resistance. You cannot run while this is active."
-	purchase_flags = NONE

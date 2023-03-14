@@ -316,6 +316,8 @@
 		/mob/living/simple_animal/sloth/citrus,
 		/mob/living/simple_animal/sloth/paperwork,
 		/mob/living/simple_animal/soulscythe,
+		/mob/living/simple_animal/hostile/red_rabbit, //Massmeta edit :trollface:
+		/mob/living/simple_animal/hostile/killer_rabbit, //Massmeta edit
 		// DO NOT ADD NEW ENTRIES TO THIS LIST
 		// READ THE COMMENT ABOVE
 	)
