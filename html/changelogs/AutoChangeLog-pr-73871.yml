@@ -1,0 +1,4 @@
+author: "Jackraxxus"
+delete-after: True
+changes:
+  - qol: "The AI now has hotkeys for its shells, make sure to bind them to your preferred keys in your keybindings menu, under game preferences."
