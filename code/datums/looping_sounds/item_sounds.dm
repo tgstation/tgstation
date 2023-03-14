@@ -28,10 +28,12 @@
 	volume = 5
 
 /datum/looping_sound/chainsaw
-	start_sound = list('sound/items/taperecorder/taperecorder_hiss_start.ogg' = 1)
-	start_length = 5 SECONDS
+	start_sound = list('sound/weapons/chainsaw_start.ogg' = 1)
+	start_length = 1 SECONDS
 	mid_sounds = list('sound/weapons/chainsaw_loop.ogg' = 1)
-	mid_length = 5 SECONDS
-	volume = 55
-	extra_range = 15
+	mid_length = 0.85 SECONDS
+	end_sound = list('sound/weapons/chainsaw_stop.ogg' = 1)
+	end_volume = 110
+	volume = 80 //made quieter solely to make it less annoying.
+	extra_range = 3
 	ignore_walls = FALSE
