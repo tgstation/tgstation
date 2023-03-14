@@ -36,6 +36,13 @@
 	cost = 8
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //you can't buy it in nuke, because the elite modsuit costs the same while being better
 
+/datum/uplink_item/suits/hardsuit/traitor
+	name = "Blood-red hardsuit"
+	desc = "A dual-mode advanced hardsuit designed for work in special operations."
+	item = /obj/item/clothing/suit/space/hardsuit/syndi
+	cost = 8
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
 /datum/uplink_item/suits/thermal
 	name = "MODsuit Thermal Visor Module"
 	desc = "A visor for a MODsuit. Lets you see living beings through walls."
@@ -78,3 +85,10 @@
 	// This one costs more than the nuke op counterpart
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	cost = 16
+
+/datum/uplink_item/suits/hardsuit/elite_traitor
+	name = "Elite Syndicate hardsuit"
+	desc = "An elite version of the syndicate hardsuit, with improved armour and fireproofing."
+	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	cost = 16
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
