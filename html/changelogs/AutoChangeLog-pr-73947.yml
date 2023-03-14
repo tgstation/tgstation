@@ -1,0 +1,4 @@
+author: "Zytolg"
+delete-after: True
+changes:
+  - bugfix: "Clears out decals from under rocks on Tramstation"
