@@ -1248,6 +1248,7 @@
 #include "code\datums\keybinding\_defines.dm"
 #include "code\datums\keybinding\_keybindings.dm"
 #include "code\datums\keybinding\admin.dm"
+#include "code\datums\keybinding\artificial_intelligence.dm"
 #include "code\datums\keybinding\carbon.dm"
 #include "code\datums\keybinding\client.dm"
 #include "code\datums\keybinding\communication.dm"
