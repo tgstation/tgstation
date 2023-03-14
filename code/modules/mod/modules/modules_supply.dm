@@ -560,7 +560,6 @@
 	icon_state = "mine_bomb"
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	damage = 0
-	nodamage = TRUE
 	range = 6
 	suppressed = SUPPRESSED_VERY
 	armor_flag = BOMB

@@ -30,6 +30,8 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	///%SHIPNAME in the content will be replaced with the pirate ship's name
 	///%PAYOFF in the content will be replaced with the requested credits.
 	var/threat_content = "This is the %SHIPNAME. Give us %PAYOFF credits or we bug out the universe trying to spawn!"
+	///station receives this message upon the ship's spawn
+	var/arrival_announcement = "We have come for your Bungopoints!"
 	///what the station can say in response, first item pays the pirates, second item rejects it.
 	var/list/possible_answers = list("Please, go away! We'll pay!", "I accept oblivion.")
 
@@ -67,6 +69,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 		and crazy shuttle there with NO INSURANCE! Crazy. What if something happened to it, huh?! We've \
 		done a quick evaluation on your rates in this sector and we're offering %PAYOFF to cover for your \
 		shuttle in case of any disaster."
+	arrival_announcement = "Do you want to reconsider our offer? Unfortunately, the time for negotiations has passed. Open up, we're coming aboard soon."
 	possible_answers = list("Purchase Insurance.","Reject Offer.")
 
 	response_received = "Sweet, free cash. Let's get outta here, boys."
@@ -83,6 +86,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	threat_title = "Tribute request"
 	threat_content = "This is the %SHIPNAME. The Silver Scales wish for some tribute \
 		from your plebeian lizards. %PAYOFF credits should do the trick."
+	arrival_announcement = "Certainly, you don't deserve all of that aboard your vessel. It's going to fit us so much better."
 	possible_answers = list("We'll pay.","Tribute? Really? Go away.")
 
 	response_received = "A most generous donation. May the claws of Tizira reach into the furthest points of the cosmos."
@@ -98,6 +102,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 
 	threat_title = "Transfer of goods"
 	threat_content = "Ahoy! This be the %SHIPNAME. Cough up %PAYOFF credits or you'll walk the plank."
+	arrival_announcement = "The Jolly Roger won't wait forever, maties; we're laying alongside ready to send you some gifts."
 	possible_answers = list("We'll pay.","We will not be extorted.")
 
 	response_received = "Thanks for the credits, landlubbers."
@@ -113,6 +118,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 
 	threat_title = "Junkie tribute"
 	threat_content = "Hello, you psychically dormant pawn-pieces. It's the %SHIPNAME! Our funds are running a little low, and we're not going to be able to continue our gore-binge! %PAYOFF credits should do, wanna help us out?"
+	arrival_announcement = "We didn't blaze this far just to send some idle threats. Just you wait, we'll make you wish you were in a mental asylum."
 	possible_answers = list("Send some funds so they go away.","We're not funding these junkies.")
 
 	response_received = "You guys aren't so bad for being dormants. Next gore-fest goes to you guys. Peace!"

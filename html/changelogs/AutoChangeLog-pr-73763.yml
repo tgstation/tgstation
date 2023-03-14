@@ -1,0 +1,5 @@
+author: "Watermelon914"
+delete-after: True
+changes:
+  - balance: "Removed a lot of item targets from the temporary steal traitor objectives and replaced them with more useful items that don't intersect with the list of items that a traitor can be tasked with stealing for their permanent steal objective."
+  - rscadd: "Re-added permanent steal traitor objectives and maroon/hijack/die a glorious death objectives."
