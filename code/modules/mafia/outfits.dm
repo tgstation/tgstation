@@ -2,7 +2,7 @@
 //what people wear unrevealed
 
 /datum/outfit/mafia
-	name = "Mafia Game Outfit"
+	name = "Mafia Default Game Outfit"
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
@@ -152,22 +152,23 @@
 
 /datum/outfit/mafia/lavaland
 	name = "Mafia Wastelander"
-	uniform = /obj/item/clothing/under/rank/cargo/miner
 	mask = /obj/item/clothing/mask/breath
 	shoes = /obj/item/clothing/shoes/sneakers/black
+	suit = /obj/item/clothing/suit/hooded/cloak/goliath
+	uniform = /obj/item/clothing/under/rank/cargo/miner
 
 /datum/outfit/mafia/ninja
 	name = "Mafia Ninja"
-	uniform = /obj/item/clothing/under/misc/pj
-	shoes = /obj/item/clothing/shoes/sneakers/white
+	glasses = /obj/item/clothing/glasses/sunglasses
 	suit = /obj/item/clothing/suit/costume/ianshirt
+	uniform = /obj/item/clothing/under/pants/jeans
 
 /datum/outfit/mafia/snowy
 	name = "Mafia Outwear"
-	uniform = /obj/item/clothing/under/rank/civilian/curator/treasure_hunter
+	gloves = /obj/item/clothing/gloves/color/black
 	suit = /obj/item/clothing/suit/hooded/wintercoat
 	shoes = /obj/item/clothing/shoes/winterboots
-	gloves = /obj/item/clothing/gloves/color/black
+	uniform = /obj/item/clothing/under/rank/civilian/curator/treasure_hunter
 
 /datum/outfit/mafia/gothic
 	name = "Mafia Castlegoer"
