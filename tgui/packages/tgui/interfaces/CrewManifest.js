@@ -35,9 +35,8 @@ export const CrewManifest = (props, context) => {
                 <Table.Row key={crewIndex}>
                   <Table.Cell
                     className={'CrewManifest__Cell'}
-                    maxWidth="150px"
+                    maxWidth="140px"
                     overflow="hidden"
-                    textOverflow="ellipsis"
                     width="50%">
                     {crewMember.name}
                   </Table.Cell>
@@ -82,9 +81,8 @@ export const CrewManifest = (props, context) => {
                       'CrewManifest__Cell--Rank',
                     ])}
                     collapsing
-                    maxWidth="150px"
+                    maxWidth="140px"
                     overflow="hidden"
-                    textOverflow="ellipsis"
                     width="50%">
                     {crewMember.rank}
                   </Table.Cell>
