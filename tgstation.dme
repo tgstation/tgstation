@@ -131,6 +131,7 @@
 #include "code\__DEFINES\matrices.dm"
 #include "code\__DEFINES\MC.dm"
 #include "code\__DEFINES\mecha.dm"
+#include "code\__DEFINES\medical.dm"
 #include "code\__DEFINES\melee.dm"
 #include "code\__DEFINES\memory_defines.dm"
 #include "code\__DEFINES\mergers.dm"
