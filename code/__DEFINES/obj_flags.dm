@@ -38,7 +38,7 @@
 #define IGNORE_DIGITIGRADE (1<<18)
 /// Has contextual screentips when HOVERING OVER OTHER objects
 #define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
-/// No blood overlay is allowed to appear on this item, and it cannot gain blood DNA forensics 
+/// No blood overlay is allowed to appear on this item, and it cannot gain blood DNA forensics
 #define NO_BLOOD_ON_ITEM (1 << 20)
 
 // Flags for the clothing_flags var on /obj/item/clothing
@@ -56,19 +56,18 @@
 #define BLOCKS_SHOVE_KNOCKDOWN (1<<11) // Prevents shovies against a dense object from knocking the wearer down.
 #define SNUG_FIT (1<<12) //Prevents knock-off from things like hat-throwing.
 #define ANTI_TINFOIL_MANEUVER (1<<13) //Hats with negative effects when worn (i.e the tinfoil hat).
-#define DANGEROUS_OBJECT (1<<14) //Clothes that cause a larger notification when placed on a person.
-#define LARGE_WORN_ICON (1<<15) //Clothes that use large icons, for applying the proper overlays like blood
+#define LARGE_WORN_ICON (1<<14) //Clothes that use large icons, for applying the proper overlays like blood
 /// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
-#define BLOCKS_SPEECH (1<<16)
-#define PLASMAMAN_HELMET_EXEMPT (1<<17) //prevents from placing on plasmaman helmet
+#define BLOCKS_SPEECH (1<<15)
+#define PLASMAMAN_HELMET_EXEMPT (1<<16) //prevents from placing on plasmaman helmet
 /// Prevents plasmamen from igniting when wearing this
-#define PLASMAMAN_PREVENT_IGNITION (1<<18)
+#define PLASMAMAN_PREVENT_IGNITION (1<<17)
 /// Usable as casting clothes by wizards (only matters for suits and headwear)
-#define CASTING_CLOTHES (1<<19)
+#define CASTING_CLOTHES (1<<18)
 ///Moths can't eat the clothing that has this flag.
-#define INEDIBLE_CLOTHING (1<<20)
+#define INEDIBLE_CLOTHING (1<<19)
 /// Headgear/helmet allows internals
-#define HEADINTERNALS (1<<21)
+#define HEADINTERNALS (1<<20)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing
