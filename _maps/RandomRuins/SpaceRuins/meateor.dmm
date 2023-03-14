@@ -56,13 +56,15 @@
 /area/ruin/space/meateor)
 "z" = (
 /obj/effect/mob_spawn/corpse/human/tigercultist/perforated,
+/obj/item/storage/organbox,
 /turf/open/floor/material/meat,
 /area/ruin/space/meateor)
 "A" = (
 /turf/closed/wall/material/meat,
 /area/ruin/space/meateor)
 "B" = (
-/obj/effect/spawner/random/trash/hobo_squat,
+/obj/item/paper/fluff/ruins/meateor/letter,
+/obj/structure/bed/maint,
 /turf/open/floor/material/meat,
 /area/ruin/space/meateor)
 "C" = (
@@ -350,7 +352,7 @@ a
 g
 A
 A
-O
+L
 O
 O
 O
