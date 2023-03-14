@@ -201,7 +201,7 @@
 	id = "brother_pinpointer"
 	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer/brother
 	var/datum/mind/set_target
-	var/datum/mind/list/allowed_targets
+	var/list/datum/mind/allowed_targets
 
 	range_fuzz_factor = 0
 
