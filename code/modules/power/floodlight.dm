@@ -30,19 +30,19 @@
 	var/message = null
 	if(state == FLOODLIGHT_NEEDS_WIRES)
 		if(istype(held_item, /obj/item/stack/cable_coil))
-			message = "Add Cable"
+			message = "Add cable"
 		else if(held_item.tool_behaviour == TOOL_WRENCH)
-			message = "Dismantle Frame"
+			message = "Dismantle frame"
 
 	else if(state == FLOODLIGHT_NEEDS_SECURING)
 		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-			message = "Secure Cable"
+			message = "Secure cable"
 		else if(held_item.tool_behaviour == TOOL_WIRECUTTER)
-			message = "Cut Cable"
+			message = "Cut cable"
 
 	else if(state == FLOODLIGHT_NEEDS_LIGHTS)
 		if(istype(held_item, /obj/item/light/tube))
-			message = "Add Light"
+			message = "Add light"
 		else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 			message = "Unscrew cable"
 
@@ -166,7 +166,7 @@
 	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 		message = "Open Panel"
 	else if(held_item.tool_behaviour == TOOL_WRENCH)
-		message = anchored ? "Unsecure Light" : "Secure Light"
+		message = anchored ? "Unsecure light" : "Secure light"
 
 	if(isnull(message))
 		return NONE
