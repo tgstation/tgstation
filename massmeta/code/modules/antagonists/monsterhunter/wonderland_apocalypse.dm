@@ -74,7 +74,7 @@
 	desc = "A door leading to a magical beautiful land."
 	armor = list(MELEE = 100, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 100, BIO = 0, FIRE = 100, ACID = 100)
 	max_integrity = 300
-	icon = 'fulp_modules/features/antagonists/infiltrators/icons/infils.dmi'
+	icon = 'massmeta/icons/monster_hunter/wonderland_rift.dmi'
 	icon_state = "cyborg_rift"
 	anchored = TRUE
 	density = FALSE
