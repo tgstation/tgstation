@@ -63,7 +63,6 @@
 /obj/projectile/beam/practice
 	name = "practice laser"
 	damage = 0
-	nodamage = TRUE
 
 /obj/projectile/beam/scatter
 	name = "laser pellet"
@@ -220,3 +219,6 @@
 	if(isopenturf(target) || isindestructiblewall(target))//shrunk floors wouldnt do anything except look weird, i-walls shouldn't be bypassable
 		return
 	target.AddComponent(/datum/component/shrink, shrink_time)
+
+/obj/projectile/beam/shrink/is_hostile_projectile()
+	return TRUE

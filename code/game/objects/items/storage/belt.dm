@@ -273,7 +273,7 @@
 	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
 	SSwardrobe.provide_type(/obj/item/stack/sticky_tape/surgical, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
-	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/calomel, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/ammoniated_mercury, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/formaldehyde, src)
 	update_appearance()
 
@@ -284,7 +284,7 @@
 	to_preload += /obj/item/stack/medical/bone_gel
 	to_preload += /obj/item/stack/sticky_tape/surgical
 	to_preload += /obj/item/reagent_containers/syringe
-	to_preload += /obj/item/reagent_containers/cup/bottle/calomel
+	to_preload += /obj/item/reagent_containers/cup/bottle/ammoniated_mercury
 	to_preload += /obj/item/reagent_containers/cup/bottle/formaldehyde
 	return to_preload
 
@@ -502,9 +502,6 @@
 	. = ..()
 	var/sponsor = pick("Donk Co.", "Waffle Co.", "Roffle Co.", "Gorlax Marauders", "Tiger Cooperative")
 	desc = "A set of snack-tical webbing worn by athletes of the [sponsor] VR sports division."
-
-/obj/item/storage/belt/military/snack/Initialize(mapload)
-	. = ..()
 	atom_storage.max_slots = 6
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.set_holdable(list(
@@ -512,6 +509,10 @@
 		/obj/item/reagent_containers/cup/glass
 		))
 
+/obj/item/storage/belt/military/snack/full
+
+/obj/item/storage/belt/military/snack/full/Initialize(mapload)
+	. = ..()
 	var/amount = 5
 	var/rig_snacks
 	while(contents.len <= amount)
