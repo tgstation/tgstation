@@ -40876,14 +40876,9 @@
 /area/station/medical/treatment_center)
 "nrV" = (
 /obj/structure/rack,
-/obj/item/book/manual/chef_recipes{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/condiment/enzyme{
-	pixel_x = -8
-	},
+/obj/item/book/manual/chef_recipes,
 /obj/item/holosign_creator/robot_seat/restaurant,
+/obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -44048,6 +44043,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"oCx" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron/checker,
+/area/station/service/kitchen)
 "oCH" = (
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 5
@@ -45781,6 +45786,7 @@
 	},
 /obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
@@ -62253,10 +62259,10 @@
 "vbb" = (
 /obj/structure/table,
 /obj/structure/closet/mini_fridge{
-	pixel_y = 4;
-	pixel_x = -1
+	name = "mini-fridge"
 	},
 /obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/cup/soda_cans/cola,
 /turf/open/floor/iron/white,
 /area/station/service/kitchen)
 "vbg" = (
@@ -168461,7 +168467,7 @@ tJg
 lJA
 mdp
 mUL
-fhg
+oCx
 vJt
 mHc
 wwK
