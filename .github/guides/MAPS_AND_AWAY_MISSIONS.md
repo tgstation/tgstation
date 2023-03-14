@@ -62,7 +62,7 @@ A majority of maps (outlined below) must be placed in their corresponding config
 | ----------- | ----------- |
 | Station Maps | [`config/maps.txt`](https://github.com/tgstation/tgstation/blob/master/config/maps.txt) |
 | Space Ruins | [`config/spaceruinblacklist.txt`](https://github.com/tgstation/tgstation/blob/master/config/spaceruinblacklist.txt) |
-| Lavaland Ruins | [`config/lavaruinblacklist.txt`](https://github.com/tgstation/tgstation/blob/master/config/lavaruinblacklist.txt) 
+| Lavaland Ruins | [`config/lavaruinblacklist.txt`](https://github.com/tgstation/tgstation/blob/master/config/lavaruinblacklist.txt) |
 | Icemoon Ruins | [`config/iceruinblacklist.txt`](https://github.com/tgstation/tgstation/blob/master/config/iceruinblacklist.txt) |
 | Escape Shuttles |  [`config/unbuyableshuttles.txt`](https://github.com/tgstation/tgstation/blob/master/config/unbuyableshuttles.txt) |
 | Away Missions | [`config/awaymissionconfig.txt`](https://github.com/tgstation/tgstation/blob/master/config/awaymissionconfig.txt) |
