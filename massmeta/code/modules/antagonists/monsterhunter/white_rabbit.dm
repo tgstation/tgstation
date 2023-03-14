@@ -1,7 +1,7 @@
 /obj/effect/client_image_holder/white_rabbit
 	name = "white rabbit"
 	desc = "FEED YOUR HEAD."
-	image_icon = 'fulp_modules/features/antagonists/monster_hunter/icons/rabbit.dmi'
+	image_icon = 'massmeta/icons/monster_hunter/rabbit.dmi'
 	image_state = "white_rabbit"
 	image_layer = ABOVE_LIGHTING_PLANE
 	image_layer = ABOVE_MOB_LAYER

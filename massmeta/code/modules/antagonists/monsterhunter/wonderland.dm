@@ -38,7 +38,7 @@ GLOBAL_LIST_EMPTY(wonderland_marks)
 /obj/structure/chess/redqueen
 	name = "\improper Red Queen"
 	desc = "What is this doing here?"
-	icon = 'fulp_modules/features/antagonists/monster_hunter/icons/rabbit.dmi'
+	icon = 'massmeta/icons/monster_hunter/rabbit.dmi'
 	icon_state = "red_queen"
 
 /area/ruin/space/has_grav/wonderland

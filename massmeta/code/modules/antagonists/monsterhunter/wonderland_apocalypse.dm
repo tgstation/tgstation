@@ -25,7 +25,7 @@
 
 /datum/round_event/wonderlandapocalypse/announce(fake)
 
-	priority_announce("What the heELl is going on?! WEeE have detected  massive up-spikes in ##@^^?? coming fr*m yoOourr st!*i@n! GeEeEEET out of THERE NOW!!","?????????", 'fulp_modules/features/antagonists/monster_hunter/sounds/monsterhunterintro.ogg')
+	priority_announce("What the heELl is going on?! WEeE have detected  massive up-spikes in ##@^^?? coming fr*m yoOourr st!*i@n! GeEeEEET out of THERE NOW!!","?????????", 'massmeta/sounds/monster_hunter/monsterhunterintro.ogg')
 
 /datum/round_event/wonderlandapocalypse/start()
 	for(var/i = 1, i < 16, i++)

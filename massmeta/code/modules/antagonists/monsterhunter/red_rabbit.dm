@@ -3,7 +3,7 @@
 	desc = "Servant of the moon."
 	health = 500
 	maxHealth = 500
-	icon = 'fulp_modules/features/antagonists/monster_hunter/icons/red_rabbit.dmi'
+	icon = 'massmeta/icons/monster_hunter/red_rabbit.dmi'
 	icon_state = "red_rabbit"
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
@@ -62,7 +62,7 @@
 	button_icon_state = "killer_rabbit"
 	desc = "Give birth to a bunch of cute bunnies eager to suicide bomb the nearest enemy!"
 	cooldown_time = 3 SECONDS
-	button_icon = 'fulp_modules/features/antagonists/monster_hunter/icons/rabbit.dmi'
+	button_icon = 'massmeta/icons/monster_hunter/rabbit.dmi'
 	button_icon_state = "killer_rabbit"
 	spell_requirements = NONE
 
@@ -81,7 +81,7 @@
 /mob/living/simple_animal/hostile/killer_rabbit
 	name = "killer baby rabbit"
 	desc = "A cute little rabbit, surely its harmless... right?"
-	icon = 'fulp_modules/features/antagonists/monster_hunter/icons/rabbit.dmi'
+	icon = 'massmeta/icons/monster_hunter/rabbit.dmi'
 	icon_state = "killer_rabbit"
 	maxHealth = 5
 	melee_damage_lower = 5
@@ -103,14 +103,14 @@
 	button_icon_state = "hole_effect_button"
 	cooldown_time = 3 SECONDS
 	desc = "Trip down enemies through the rabbit holes!"
-	button_icon = 'fulp_modules/features/antagonists/monster_hunter/icons/rabbit.dmi'
+	button_icon = 'massmeta/icons/monster_hunter/rabbit.dmi'
 	button_icon_state = "hole_effect_button"
 	spell_requirements = NONE
 
 
 /obj/effect/rabbit_hole
 	name = "Rabbit Hole"
-	icon = 'fulp_modules/features/antagonists/monster_hunter/icons/rabbit.dmi'
+	icon = 'massmeta/icons/monster_hunter/rabbit.dmi'
 	icon_state = "hole_effect"
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
@@ -151,7 +151,7 @@
 
 /obj/projectile/red_rabbit
 	name = "Red Queen"
-	icon = 'fulp_modules/features/antagonists/monster_hunter/icons/weapons.dmi'
+	icon = 'massmeta/icons/monster_hunter/weapons.dmi'
 	icon_state = "locator"
 	damage = 20
 	armour_penetration = 100

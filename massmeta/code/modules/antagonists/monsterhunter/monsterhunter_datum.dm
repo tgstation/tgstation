@@ -88,8 +88,8 @@
 
 /datum/antagonist/monsterhunter/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/hunter = new
-	var/icon/white_rabbit = icon('fulp_modules/features/antagonists/monster_hunter/icons/rabbit.dmi', "white_rabbit")
-	var/icon/red_rabbit = icon('fulp_modules/features/antagonists/monster_hunter/icons/rabbit.dmi', "killer_rabbit")
+	var/icon/white_rabbit = icon('massmeta/icons/monster_hunter/rabbit.dmi', "white_rabbit")
+	var/icon/red_rabbit = icon('massmeta/icons/monster_hunter/rabbit.dmi', "killer_rabbit")
 	var/icon/hunter_icon = render_preview_outfit(/datum/outfit/monsterhunter, hunter)
 
 	var/icon/final_icon = hunter_icon
@@ -156,7 +156,7 @@
 	to_chat(owner.current, span_announce("While we can kill anyone in our way to destroy the monsters lurking around, <b>causing property damage is unacceptable</b>."))
 	to_chat(owner.current, span_announce("However, security WILL detain us if they discover our mission."))
 	to_chat(owner.current, span_announce("In exchange for our services, it shouldn't matter if a few items are gone missing for our... personal collection."))
-	owner.current.playsound_local(null, 'fulp_modules/features/antagonists/monster_hunter/sounds/monsterhunterintro.ogg', 100, FALSE, pressure_affected = FALSE)
+	owner.current.playsound_local(null, 'massmeta/sounds/monster_hunter/monsterhunterintro.ogg', 100, FALSE, pressure_affected = FALSE)
 	owner.announce_objectives()
 
 //////////////////////////////////////////////////////////////////////////
@@ -259,5 +259,5 @@
 
 /obj/item/clothing/mask/monster_preview_mask
 	name = "Monster Preview Mask"
-	worn_icon = 'fulp_modules/features/antagonists/monster_hunter/icons/worn_mask.dmi'
+	worn_icon = 'massmeta/icons/monster_hunter/worn_mask.dmi'
 	worn_icon_state = "monoclerabbit"

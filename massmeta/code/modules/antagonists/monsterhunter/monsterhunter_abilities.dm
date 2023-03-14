@@ -35,7 +35,7 @@
 	owner.forceMove(land_mark) ///the user remains safe in the wonderland
 	var/mob/living/master = owner
 	owner.mind.transfer_to(bunny)
-	playsound(bunny, 'fulp_modules/features/antagonists/monster_hunter/sounds/paradoxskip.ogg',100)
+	playsound(bunny, 'massmeta/sounds/monster_hunter/paradoxskip.ogg',100)
 	addtimer(CALLBACK(src,PROC_REF(return_to_station), master, bunny, theplace), 5 SECONDS)
 	StartCooldown()
 
@@ -45,7 +45,7 @@
 	var/turf/new_location = locate((original_loc.x + new_x) , (original_loc.y + new_y) , original_loc.z)
 	user.forceMove(new_location)
 	bunny.mind.transfer_to(user)
-	playsound(user, 'fulp_modules/features/antagonists/monster_hunter/sounds/paradoxskip.ogg',100)
+	playsound(user, 'massmeta/sounds/monster_hunter/paradoxskip.ogg',100)
 	rabbit = null
 	original_loc = null
 	qdel(bunny)
@@ -53,7 +53,7 @@
 
 /datum/action/cooldown/wonderland_drop
 	name = "To Wonderland"
-	button_icon = 'fulp_modules/features/antagonists/monster_hunter/icons/rabbit.dmi'
+	button_icon = 'massmeta/icons/monster_hunter/rabbit.dmi'
 	button_icon_state = "killer_rabbit"
 	cooldown_time = 5 MINUTES
 	///where we will be teleporting the user too
@@ -78,7 +78,7 @@
 	sleeper.Sleeping(2 SECONDS)
 	sleep(3 SECONDS)
 	to_chat(owner, span_warning("You wake up in the Wonderland"))
-	playsound(owner, 'fulp_modules/features/antagonists/monster_hunter/sounds/wonderlandmusic.ogg',30)
+	playsound(owner, 'massmeta/sounds/monster_hunter/wonderlandmusic.ogg',30)
 	addtimer(CALLBACK(src, PROC_REF(return_to_station), owner), 1 MINUTES)
 	StartCooldown()
 
@@ -92,7 +92,7 @@
 /datum/action/cooldown/spell/conjure_item/blood_silver
 	name = "Create bloodsilver bullet"
 	desc = "Wield your blood and mold it into a bloodsilver bullet"
-	button_icon = 'fulp_modules/features/antagonists/monster_hunter/icons/weapons.dmi'
+	button_icon = 'massmeta/icons/monster_hunter/weapons.dmi'
 	button_icon_state = "bloodsilver"
 	cooldown_time = 2 MINUTES
 	item_type = /obj/item/ammo_casing/silver
