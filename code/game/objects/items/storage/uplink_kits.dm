@@ -620,6 +620,15 @@
 		var/type = pick(types)
 		new type(src)
 
+/obj/item/storage/box/syndie_kit/pinata
+	name = "weapons grade pinata kit"
+	desc = "Contains a weapons grade pinata and 2 belts for carrying its contents."
+
+/obj/item/storage/box/syndie_kit/pinata/PopulateContents()
+	new /obj/item/pinata/syndie(src)
+	new /obj/item/storage/belt/grenade(src)
+	new /obj/item/storage/belt/military/snack(src)
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY
