@@ -5128,6 +5128,7 @@
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
+#include "massmeta\code\modules\_defines\massmeta_defines.dm"
 #include "massmeta\code\modules\antagonists\bloodsuckers\assets\bloodsucker_assets.dm"
 #include "massmeta\code\modules\antagonists\bloodsuckers\bloodsucker\bloodsucker_conversion.dm"
 #include "massmeta\code\modules\antagonists\bloodsuckers\bloodsucker\bloodsucker_datum.dm"
