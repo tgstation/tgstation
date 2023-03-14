@@ -1,6 +1,0 @@
-author: "Mey-Ha-Zah & NamelessFairy"
-delete-after: True
-changes:
-  - rscadd: "Added pinata crates to cargo, they contain various candy items. Fun at parties."
-  - rscadd: "Clown operatives can now purchase a weapons grade pinata, this contains both candy and explosives. Still fun at parties."
-  - admin: "Admins can now turn players, mobs and objects into pinata's with the new pinata component."
