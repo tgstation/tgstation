@@ -446,8 +446,11 @@
 		podspawn(list(
 			"target" = get_turf(real_headrev),
 			"style" = STYLE_SYNDICATE,
-			"spawn" = /obj/item/station_charter/revolution,
-		))
+			"spawn" = list(
+				/obj/item/bedsheet/rev,
+				/obj/item/megaphone,
+				/obj/item/station_charter/revolution,
+			)))
 		to_chat(real_headrev, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
 			\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
 			<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
