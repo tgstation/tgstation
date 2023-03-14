@@ -14,6 +14,8 @@
 	chassis = null
 	return ..()
 
+///Sets the chassis var of our mecha action to the referenced mecha. Used during actions generation in
+///generate_action_type() chain.
 /datum/action/vehicle/sealed/mecha/proc/set_chassis(passed_chassis)
 	chassis = passed_chassis
 
