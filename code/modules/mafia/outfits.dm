@@ -136,3 +136,43 @@
 
 	uniform = null
 	shoes = null
+
+/// Map Custom Outfits
+
+/datum/outfit/mafia/abductee
+	name = "Mafia Abductee"
+	uniform = /obj/item/clothing/under/abductor
+	shoes = /obj/item/clothing/shoes/combat
+
+/datum/outfit/mafia/syndie
+	name = "Mafia Syndicate"
+	uniform = /obj/item/clothing/under/syndicate
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/color/black
+
+/datum/outfit/mafia/lavaland
+	name = "Mafia Wastelander"
+	uniform = /obj/item/clothing/under/rank/cargo/miner
+	mask = /obj/item/clothing/mask/breath
+	shoes = /obj/item/clothing/shoes/sneakers/black
+
+/datum/outfit/mafia/ninja
+	name = "Mafia Ninja"
+	uniform = /obj/item/clothing/under/misc/pj
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	suit = /obj/item/clothing/suit/costume/ianshirt
+
+/datum/outfit/mafia/snowy
+	name = "Mafia Outwear"
+	uniform = /obj/item/clothing/under/rank/civilian/curator/treasure_hunter
+	suit = /obj/item/clothing/suit/hooded/wintercoat
+	shoes = /obj/item/clothing/shoes/winterboots
+	gloves = /obj/item/clothing/gloves/color/black
+
+/datum/outfit/mafia/gothic
+	name = "Mafia Castlegoer"
+	glasses = /obj/item/clothing/glasses/monocle
+	shoes = /obj/item/clothing/shoes/laceup
+	suit = /obj/item/clothing/suit/costume/gothcoat
+	uniform = /obj/item/clothing/under/suit
+
