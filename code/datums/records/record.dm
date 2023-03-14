@@ -70,6 +70,10 @@
 	var/minor_disabilities
 	/// Fancy description of minor disabilities
 	var/minor_disabilities_desc
+	/// Physical status of this person in medical records.
+	var/physical_status
+	/// Mental status of this person in medical records.
+	var/mental_status
 	/// Positive and neutral quirk strings
 	var/quirk_notes
 	/// Security note
@@ -95,6 +99,8 @@
 	major_disabilities_desc = "No disabilities have been diagnosed at the moment.",
 	minor_disabilities = "None",
 	minor_disabilities_desc = "No disabilities have been diagnosed at the moment.",
+	physical_status = PHYSICAL_ACTIVE,
+	mental_status = MENTAL_STABLE,
 	quirk_notes,
 )
 	. = ..()
@@ -103,6 +109,8 @@
 	src.major_disabilities_desc = major_disabilities_desc
 	src.minor_disabilities = minor_disabilities
 	src.minor_disabilities_desc = minor_disabilities_desc
+	src.physical_status = physical_status
+	src.mental_status = mental_status
 	src.quirk_notes = quirk_notes
 
 	GLOB.manifest.general += src
