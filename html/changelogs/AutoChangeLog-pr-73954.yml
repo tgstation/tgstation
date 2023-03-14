@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes:
+  - rscadd: "Chefs can sometimes get ketchup bottles in the mail."
+  - bugfix: "Ketchup in the crafting menu is now represented as the bottle, rather than an empty condiment pack."

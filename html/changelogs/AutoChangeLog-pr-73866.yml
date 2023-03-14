@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "slimepeople and vampires are now affected by the blood deficiency quirk"

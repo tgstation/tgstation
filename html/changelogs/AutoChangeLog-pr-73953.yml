@@ -1,0 +1,4 @@
+author: "Zytolg"
+delete-after: True
+changes:
+  - bugfix: "Icebox Station has been cleansed from nasty effect decals hiding underneath walls"

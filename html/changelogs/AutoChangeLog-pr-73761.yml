@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - balance: "The janitor's trashbag now fits on his belt. In exchange, taking something out of it sends a visible message, and has a delay."

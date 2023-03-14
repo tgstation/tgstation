@@ -1,0 +1,4 @@
+author: "TheSmallBlue"
+delete-after: True
+changes:
+  - qol: "Bluespace Launchpads will now use the fail trigger if your circuit destination is out of range."
