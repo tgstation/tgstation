@@ -48252,7 +48252,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "qfs" = (
-/obj/structure/sign/poster/random/directional/north,
+/obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/glass,
 /area/station/service/kitchen)
 "qfv" = (
