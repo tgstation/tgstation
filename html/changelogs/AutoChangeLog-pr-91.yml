@@ -1,0 +1,4 @@
+author: "homexp13"
+delete-after: True
+changes:
+  - rscadd: "Baseball bats can now hit away items in the other user's hand or the ground."
