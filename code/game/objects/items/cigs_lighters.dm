@@ -919,14 +919,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/lighter/skull
 	name = "badass zippo"
 	desc = "An absolutely badass zippo lighter. Just look at that skull!"
-	custom_price = PAYCHECK_CREW * 6
 	overlay_state = "skull"
 
 /obj/item/lighter/mime
 	name = "pale zippo"
 	desc = "In lieu of fuel, performative spirit can be used to light cigarettes."
 	icon_state = "mlighter" //These ones don't show a flame.
-	custom_price = PAYCHECK_CREW * 4
 	light_color = LIGHT_COLOR_HALOGEN
 	heat = 0 //I swear it's a real lighter dude you just can't see the flame dude I promise
 	overlay_state = "mime"
