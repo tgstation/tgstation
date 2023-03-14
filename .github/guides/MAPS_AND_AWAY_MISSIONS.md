@@ -58,7 +58,7 @@ Away missions are _disabled_ by default. Go to the file denoted in the [Configur
 
 A majority of maps must be placed in their corresponding configuration file to allow server operators to enable/disable the ruin for any reason they desire. Follow the chart below to see where you should add your new ruin.
 
-| Type of Map | Associated File |
+| Type of Map | Associated File with Link |
 | ----------- | ----------- |
 | Station Maps | [`config/maps.txt`](https://github.com/tgstation/tgstation/blob/master/config/maps.txt) |
 | Space Ruins | [`config/spaceruinblacklist.txt`](https://github.com/tgstation/tgstation/blob/master/config/spaceruinblacklist.txt) |
