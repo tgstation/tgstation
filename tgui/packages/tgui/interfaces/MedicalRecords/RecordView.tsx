@@ -3,7 +3,7 @@ import { Stack, Section, NoticeBox, Box, LabeledList, Button, RestrictedInput } 
 import { CharacterPreview } from '../common/CharacterPreview';
 import { getMedicalRecord, getQuirkStrings } from './helpers';
 import { useBackend } from '../../backend';
-import { PHYSICALSTATUS2COLOR, PHYSICALSTATUS2DESC, MENTALSTATUS2COLOR, MENTALSTATUS2DESC } from './constants';
+import { PHYSICALSTATUS2COLOR, PHYSICALSTATUS2DESC, PHYSICALSTATUS2ICON, MENTALSTATUS2COLOR, MENTALSTATUS2DESC, MENTALSTATUS2ICON } from './constants';
 import { MedicalRecordData } from './types';
 import { EditableText } from '../common/EditableText';
 
@@ -120,7 +120,8 @@ export const MedicalRecordView = (props, context) => {
                 return (
                   <Button
                     color={isSelected ? PHYSICALSTATUS2COLOR[button] : 'grey'}
-                    icon={isSelected ? 'check' : ''}
+                    height={'1.75rem'}
+                    icon={PHYSICALSTATUS2ICON[button]}
                     key={index}
                     onClick={() =>
                       act('set_physical_status', {
@@ -128,9 +129,10 @@ export const MedicalRecordView = (props, context) => {
                         physical_status: button,
                       })
                     }
-                    width={!isSelected ? '3.0rem' : 3.0}
+                    textAlign="center"
                     tooltip={PHYSICALSTATUS2DESC[button] || ''}
-                    tooltipPosition="bottom-start">
+                    tooltipPosition="bottom-start"
+                    width={!isSelected ? '3.0rem' : 3.0}>
                     {button[0]}
                   </Button>
                 );
@@ -146,7 +148,8 @@ export const MedicalRecordView = (props, context) => {
                 return (
                   <Button
                     color={isSelected ? MENTALSTATUS2COLOR[button] : 'grey'}
-                    icon={isSelected ? 'check' : ''}
+                    height={'1.75rem'}
+                    icon={MENTALSTATUS2ICON[button]}
                     key={index}
                     onClick={() =>
                       act('set_mental_status', {
@@ -154,9 +157,10 @@ export const MedicalRecordView = (props, context) => {
                         mental_status: button,
                       })
                     }
-                    width={!isSelected ? '3.0rem' : 3.0}
+                    textAlign="center"
                     tooltip={MENTALSTATUS2DESC[button] || ''}
-                    tooltipPosition="bottom-start">
+                    tooltipPosition="bottom-start"
+                    width={!isSelected ? '3.0rem' : 3.0}>
                     {button[0]}
                   </Button>
                 );

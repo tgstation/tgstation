@@ -1,3 +1,10 @@
+export const PHYSICALSTATUS2ICON = {
+  Active: 'person-running',
+  Debilitated: 'crutch',
+  Unconscious: 'moon-o',
+  Deceased: 'skull',
+};
+
 export const PHYSICALSTATUS2COLOR = {
   Active: 'green',
   Debilitated: 'purple',
@@ -11,6 +18,13 @@ export const PHYSICALSTATUS2DESC = {
   Unconscious: 'Unconscious. Individual may require medical attention.',
   Deceased: 'Deceased. Individual has died and begun to decay.',
 } as const;
+
+export const MENTALSTATUS2ICON = {
+  Stable: 'face-smile-o',
+  Watch: 'eye-o',
+  Unstable: 'scale-unbalanced-flip',
+  Insane: 'head-side-virus',
+};
 
 export const MENTALSTATUS2COLOR = {
   Stable: 'green',
