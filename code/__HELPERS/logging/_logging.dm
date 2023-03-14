@@ -14,7 +14,7 @@
 #define CHECK_SERIALIZATION_SEMVER(wanted, actual) (__check_serialization_semver(wanted, actual))
 
 /// Checks if the actual semver is equal or later than the wanted semver
-/// Must be passed as TEXT
+/// Must be passed as TEXT; you're probably looking for CHECK_SERIALIZATION_SEMVER, look right above
 /proc/__check_serialization_semver(wanted, actual)
 	if(wanted == actual)
 		return TRUE
