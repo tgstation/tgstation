@@ -1,14 +1,15 @@
 import { useBackend } from '../backend';
 import { GasmixParser } from './common/GasmixParser';
 import type { Gasmix } from './common/GasmixParser';
-import { Box, Button } from '../components';
+import { Box, Button, LabeledList, Section, Flex, Slider } from '../components';
 import { AtmosHandbookContent, atmosHandbookHooks } from './common/AtmosHandbook';
 import { Window } from '../layouts';
-import { Section } from '../components';
 
 export type GasAnalyzerData = {
   gasmixes: Gasmix[];
   autoUpdating: boolean;
+  historyLength: number;
+  historyIndex: number;
 };
 
 export const GasAnalyzerContent = (props, context) => {
@@ -33,7 +34,7 @@ export const GasAnalyzerContent = (props, context) => {
 
 export const GasAnalyzer = (props, context) => {
   const { act, data } = useBackend<GasAnalyzerData>(context);
-  const { autoUpdating } = data;
+  const { autoUpdating, historyLength, historyIndex } = data;
   return (
     <Window width={500} height={450}>
       <Window.Content scrollable>
@@ -50,6 +51,41 @@ export const GasAnalyzer = (props, context) => {
           selected={autoUpdating}
         />
         <Box color="bad" />
+        <LabeledList.Item label="Scan History">
+          <Flex inline width="100%">
+            <Flex.Item>
+              <Button
+                icon={'backward'}
+                content={'Previous'}
+                onClick={() => act('historybackwards')}
+                textAlign="center"
+                disabled={historyIndex === historyLength}
+              />
+              <Flex.Item grow={1} mx={1}>
+                <Slider
+                  value={historyIndex}
+                  fillValue={historyIndex}
+                  minValue={1}
+                  maxValue={historyLength}
+                  step={1}
+                  stepPixelSize={4}
+                  onDrag={(e, value) =>
+                    act('input', {
+                      target: value,
+                    })
+                  }
+                />
+              </Flex.Item>
+              <Button
+                icon={'forward'}
+                content={'Next'}
+                onClick={() => act('historyforward')}
+                textAlign="center"
+                disabled={historyIndex === 1}
+              />
+            </Flex.Item>
+          </Flex>
+        </LabeledList.Item>
         <GasAnalyzerContent />
       </Window.Content>
     </Window>

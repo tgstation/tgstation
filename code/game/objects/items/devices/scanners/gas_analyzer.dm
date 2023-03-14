@@ -1,5 +1,6 @@
 #define ANALYZER_MODE_SURROUNDINGS 0
 #define ANALYZER_MODE_TARGET 1
+#define ANALYZER_HISTORY_SIZE 30
 
 /obj/item/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels."
@@ -24,6 +25,8 @@
 	var/cooldown_time = 250
 	var/barometer_accuracy // 0 is the best accuracy.
 	var/list/last_gasmix_data
+	var/list/history_gasmix_data
+	var/history_gasmix_index = 1
 	var/scan_range = 1
 	var/auto_updating = TRUE
 	var/target_mode = ANALYZER_MODE_SURROUNDINGS
@@ -129,8 +132,11 @@
 	if(auto_updating)
 		on_analyze(source=src, target=scan_target)
 	LAZYINITLIST(last_gasmix_data)
+	LAZYINITLIST(history_gasmix_data)
 	data["gasmixes"] = last_gasmix_data
 	data["autoUpdating"] = auto_updating
+	data["historyLength"] = length(history_gasmix_data)
+	data["historyIndex"] = history_gasmix_index
 	return data
 
 /obj/item/analyzer/ui_act(action, list/params)
@@ -140,6 +146,24 @@
 	switch(action)
 		if("autoscantoggle")
 			auto_updating = !auto_updating
+			return TRUE
+		if("historybackwards")
+			auto_updating = FALSE
+			if(history_gasmix_index < length(history_gasmix_data))
+				history_gasmix_index++
+				last_gasmix_data = history_gasmix_data[history_gasmix_index]
+			return TRUE
+		if("historyforward")
+			auto_updating = FALSE
+			if(history_gasmix_index - 1 > 0)
+				history_gasmix_index--
+				last_gasmix_data = history_gasmix_data[history_gasmix_index]
+			return TRUE
+		if("input")
+			var/target = params["target"]
+			auto_updating = FALSE
+			history_gasmix_index = target
+			last_gasmix_data = history_gasmix_data[history_gasmix_index]
 			return TRUE
 
 /obj/item/analyzer/attack_self(mob/user, modifiers)
@@ -179,6 +203,7 @@
 /// Called when our analyzer is used on something
 /obj/item/analyzer/proc/on_analyze(datum/source, atom/target)
 	SIGNAL_HANDLER
+	LAZYINITLIST(history_gasmix_data)
 	switch(target_mode)
 		if(ANALYZER_MODE_SURROUNDINGS)
 			scan_target = get_turf(src)
@@ -204,6 +229,11 @@
 			mix_name += " - Node [airs.Find(air)]"
 		new_gasmix_data += list(gas_mixture_parser(air, mix_name))
 	last_gasmix_data = new_gasmix_data
+	if(length(history_gasmix_data) >= ANALYZER_HISTORY_SIZE)
+		history_gasmix_data.Cut(ANALYZER_HISTORY_SIZE, length(history_gasmix_data) + 1)
+	history_gasmix_data.Insert(1, list(new_gasmix_data))
+	history_gasmix_index = 1
+
 
 /**
  * Outputs a message to the user describing the target's gasmixes.
@@ -272,3 +302,4 @@
 
 #undef ANALYZER_MODE_SURROUNDINGS
 #undef ANALYZER_MODE_TARGET
+#undef ANALYZER_HISTORY_SIZE
