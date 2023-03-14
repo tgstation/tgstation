@@ -175,4 +175,3 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	suit = /obj/item/clothing/suit/costume/gothcoat
 	uniform = /obj/item/clothing/under/suit/black
-
