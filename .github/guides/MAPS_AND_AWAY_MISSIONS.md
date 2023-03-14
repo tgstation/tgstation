@@ -52,17 +52,20 @@ For a much more comprehensive guide on UpdatePaths, please see the documentation
 
 Map files for away missions are located in the `_maps/RandomZLevels` directory. Each away mission includes it's own code definitions located in `/code/modules/awaymissions/mission_code`. These files must be included and compiled with the server beforehand otherwise the server will crash upon trying to load away missions that lack their code.
 
-To enable an away mission open `config/awaymissionconfig.txt` and uncomment one of the .dmm lines by removing the #. If more than one away mission is uncommented then the away mission loader will randomly select one of the enabled ones to load. We also support functionality for config-only away missions, which can be set up using the `config/away_missions` folder.
+Away missions are _disabled_ by default. Go to the file denoted in the [Configuration](#configuration) section and "untick" (remove the #) in order to enable it for loading. If more than one away mission is uncommented, the away mission loader will randomly select one of the enabled ones to load. We also support functionality for config-only away missions, which can be set up using the `config/away_missions` folder.
 
-## RUINS
+## CONFIGURATION
 
-All ruins must be placed in their corresponding configuration folder to allow server operators to enable/disable the ruin for any reason they desire. Follow the chart below to see where you should add your new ruin.
+A majority of maps must be placed in their corresponding configuration file to allow server operators to enable/disable the ruin for any reason they desire. Follow the chart below to see where you should add your new ruin.
 
-| Type of Ruin | Associated File |
+| Type of Map | Associated File |
 | ----------- | ----------- |
-| Space Ruins | [config/spaceruinblacklist.txt](https://github.com/tgstation/tgstation/blob/master/config/spaceruinblacklist.txt) |
-| Lavaland Ruins | [config/lavaruinblacklist.txt](https://github.com/tgstation/tgstation/blob/master/config/lavaruinblacklist.txt) 
-| Icemoon Ruins | [config/iceruinblacklist.txt](https://github.com/tgstation/tgstation/blob/master/config/iceruinblacklist.txt) |
+| Station Maps | [`config/maps.txt`](https://github.com/tgstation/tgstation/blob/master/config/maps.txt) |
+| Space Ruins | [`config/spaceruinblacklist.txt`](https://github.com/tgstation/tgstation/blob/master/config/spaceruinblacklist.txt) |
+| Lavaland Ruins | [`config/lavaruinblacklist.txt`](https://github.com/tgstation/tgstation/blob/master/config/lavaruinblacklist.txt) 
+| Icemoon Ruins | [`config/iceruinblacklist.txt`](https://github.com/tgstation/tgstation/blob/master/config/iceruinblacklist.txt) |
+| Escape Shuttles |  [`config/unbuyableshuttles.txt`](https://github.com/tgstation/tgstation/blob/master/config/unbuyableshuttles.txt) |
+| Away Missions | [`config/awaymissionconfig.txt`](https://github.com/tgstation/tgstation/blob/master/config/awaymissionconfig.txt) |
 
 Each .txt file will have instructions on how to appropriately add your map to the file.
 
