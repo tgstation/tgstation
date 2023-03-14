@@ -589,6 +589,8 @@
 #define AI_EMOTION_BLUE_GLOW "Blue Glow"
 #define AI_EMOTION_RED_GLOW "Red Glow"
 
+/// Icon state to use for ai displays that just turns them off
+#define AI_DISPLAY_DONT_GLOW "ai_off"
 /// Throw modes, defines whether or not to turn off throw mode after
 #define THROW_MODE_DISABLED 0
 #define THROW_MODE_TOGGLE 1

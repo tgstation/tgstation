@@ -88,7 +88,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	. = ..()
 
 	if(event_source && !(machine_stat & (NOPOWER|BROKEN)))
-		set_light(1.4, 0.7, "#5668E1")
+		set_light(2, 1, "#5668E1")
 	else
 		set_light(0)
 
