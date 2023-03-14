@@ -210,6 +210,7 @@
 	armor_type = /datum/armor/hardsuit_engine
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine
 	resistance_flags = FIRE_PROOF
+	slowdown = 0.5
 
 /datum/armor/hardsuit_engine
 	melee = 30
@@ -256,6 +257,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS //Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/atmos
+	slowdown = 0.5
 
 /datum/armor/hardsuit_atmos
 	melee = 30
@@ -300,6 +302,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
 	jetpack = /obj/item/tank/jetpack/suit
 	cell = /obj/item/stock_parts/cell/super
+	slowdown = 0.4
 
 /datum/armor/hardsuit_engine_elite
 	melee = 40
@@ -368,6 +371,7 @@
 
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	slowdown = 0.4
 
 /datum/armor/hardsuit_mining
 	melee = 30
@@ -662,7 +666,7 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/medkit, /obj/item/healthanalyzer, /obj/item/stack/medical)
 	armor_type = /datum/armor/hardsuit_medical
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
-	slowdown = 0.5
+	slowdown = 0.25
 
 /datum/armor/hardsuit_medical
 	melee = 30
@@ -731,6 +735,7 @@
 	armor_type = /datum/armor/hardsuit_rd
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/rd
 	cell = /obj/item/stock_parts/cell/super
+	slowdown = 0.75
 
 /datum/armor/hardsuit_rd
 	melee = 30
@@ -762,6 +767,7 @@
 	inhand_icon_state = "sec_hardsuit"
 	armor_type = /datum/armor/hardsuit_security
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security
+	slowdown = 0.5
 
 /datum/armor/hardsuit_security
 	melee = 35
@@ -797,6 +803,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
 	jetpack = /obj/item/tank/jetpack/suit
 	cell = /obj/item/stock_parts/cell/super
+	slowdown = 0.4
 
 /datum/armor/hardsuit_security_hos
 	melee = 45
@@ -836,6 +843,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT //this needed to be added a long fucking time ago
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/swat
+	slowdown = 0.5
 
 /datum/armor/hardsuit_swat
 	melee = 40
@@ -869,6 +877,7 @@
 	inhand_icon_state = "capspacesuit"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/swat/captain
 	cell = /obj/item/stock_parts/cell/super
+	slowdown = 0.4
 
 	//Clown
 /obj/item/clothing/head/helmet/space/hardsuit/clown
@@ -888,6 +897,7 @@
 	inhand_icon_state = "clown_hardsuit"
 	armor_type = /datum/armor/hardsuit_clown
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/clown
+	slowdown = 0.5
 
 /datum/armor/hardsuit_clown
 	melee = 30
@@ -924,7 +934,7 @@
 	worn_icon_state = "hardsuit-ancient"
 	inhand_icon_state = "anc_hardsuit"
 	armor_type = /datum/armor/hardsuit_ancient
-	slowdown = 3
+	slowdown = 2
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ancient
 	resistance_flags = FIRE_PROOF
 	var/footstep = 1
@@ -1003,6 +1013,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
 	dog_fashion = /datum/dog_fashion/back/deathsquad
 	cell = /obj/item/stock_parts/cell/bluespace
+	slowdown = 0.5
 
 /datum/armor/hardsuit_deathsquad
 	melee = 80
@@ -1079,6 +1090,7 @@
 	worn_icon_state = "ert_security"
 	inhand_icon_state = "ert_security"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
+	slowdown = 0.5
 
 	//ERT Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
@@ -1096,6 +1108,7 @@
 	worn_icon_state = "ert_engineer"
 	inhand_icon_state = "ert_engineer"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
+	slowdown = 0.5
 
 	//ERT Medical
 /obj/item/clothing/head/helmet/space/hardsuit/ert/med
@@ -1113,6 +1126,7 @@
 	worn_icon_state = "ert_engineer"
 	inhand_icon_state = "ert_medical"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
+	slowdown = 0.25
 
 	//ERT Janitor
 /obj/item/clothing/head/helmet/space/hardsuit/ert/jani
@@ -1131,6 +1145,7 @@
 	inhand_icon_state = "ert_janitor"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/jani
 	allowed = list(/obj/item/tank/internals, /obj/item/storage/bag/trash, /obj/item/melee/flyswatter, /obj/item/mop, /obj/item/holosign_creator, /obj/item/reagent_containers/cup/bucket, /obj/item/reagent_containers/spray/chemsprayer/janitor)
+	slowdown = 0.5
 
 	//ERT Clown
 /obj/item/clothing/head/helmet/space/hardsuit/ert/clown
@@ -1149,6 +1164,7 @@
 	inhand_icon_state = "ert_clown"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/clown
 	allowed = list(/obj/item/tank/internals, /obj/item/bikehorn, /obj/item/instrument, /obj/item/food/grown/banana, /obj/item/grown/bananapeel)
+	slowdown = 0.5
 
 	//Paranormal ERT
 /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
@@ -1171,6 +1187,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
+	slowdown = 0.5
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize(mapload)
 	. = ..()
@@ -1183,6 +1200,7 @@
 	worn_icon_state = "hardsuit-inq"
 	inhand_icon_state = "hardsuit-inq"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/inquisitor
+	slowdown = 0.4
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/inquisitor
 	name = "inquisitor's helmet"
@@ -1190,6 +1208,7 @@
 	worn_icon_state = "hardsuit-inq"
 	inhand_icon_state = "hardsuit0-inq"
 	hardsuit_type = "inq"
+	
 
 //Carpsuit, bestsuit, lovesuit
 /obj/item/clothing/head/helmet/space/hardsuit/carp
@@ -1263,6 +1282,7 @@
 	armor_type = /datum/armor/hardsuit_combatmedic
 	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/circular_saw, /obj/item/tank/internals, /obj/item/storage/box/pillbottles,\
 	/obj/item/storage/medkit, /obj/item/stack/medical/gauze, /obj/item/stack/medical/suture, /obj/item/stack/medical/mesh, /obj/item/storage/bag/chemistry)
+	slowdown = 0.5
 
 /datum/armor/hardsuit_combatmedic
 	melee = 35
@@ -1353,6 +1373,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/swat
 	dog_fashion = /datum/dog_fashion/back/deathsquad
+	slowdown = 0.5
 
 /obj/item/clothing/suit/space/hardsuit/shielded/swat/setup_shielding()
 	AddComponent(/datum/component/shielded, max_charges = 4, recharge_start_delay = 1.5 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, shield_icon = "shield-old")
