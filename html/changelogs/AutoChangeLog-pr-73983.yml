@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "If you are handcuffed, you can't instantly resist out of an unlocked labor camp teleporter (however, resist time is halved)."
