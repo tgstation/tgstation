@@ -6,7 +6,7 @@
 
 /obj/structure/floodlight_frame
 	name = "floodlight frame"
-	desc = "A metal frame that requires wiring & a light tube to become a flood light"
+	desc = "A metal frame that requires wiring and a light tube to become a flood light."
 	max_integrity = 100
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floodlight_c1"
