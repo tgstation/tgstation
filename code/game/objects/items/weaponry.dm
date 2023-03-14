@@ -731,6 +731,31 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	/// List of all thrown datums we sent.
 	var/list/thrown_datums = list()
 
+/obj/item/melee/baseball_bat/on_thrown(mob/living/carbon/user, atom/target)
+	var/obj/item/I = user.get_inactive_held_item()
+	if(istype(I) && I != src)
+		hit_away(I, user, target)
+		return FALSE
+	else if(isturf(target.loc) && user.Adjacent(target))
+		hit_away(target, user)
+		return FALSE
+	. = ..(user, target)
+
+/obj/item/melee/baseball_bat/proc/hit_away(obj/item/I, mob/living/carbon/human/user, atom/target)
+	if(istype(user) && istype(I) && !istype(I,/obj/item/offhand))
+		if(HAS_TRAIT(I, TRAIT_NODROP) && I.loc == user)
+			to_chat(user, "<span class='warning'>You can't hit away an item stuck to your hand!</span>")
+			return FALSE
+		visible_message("<span class='borange'>[user] hits \the [I] away with \the [src]!</span>")
+		playsound(user, 'sound/items/baseballhit.ogg', 75, 1)
+		user.dropItemToGround(I, silent = TRUE)
+		var/throw_mult = 2/(2**(I.w_class-1)) //multiplier of 2, 1, 0.5, 0.25 and 0.125 for each increasing w_class
+		if(!target)
+			var/ourdir = get_dir(user,I) || user.dir
+			target = get_ranged_target_turf(get_turf(I), ourdir, I.throw_range*throw_mult)
+		I.throw_at(target, I.throw_range*throw_mult, I.throw_speed*throw_mult)
+		return TRUE
+
 /obj/item/melee/baseball_bat/Initialize(mapload)
 	. = ..()
 	if(prob(1))
