@@ -24,20 +24,19 @@
 
 /datum/bloodsucker_clan/lasombra/handle_clan_life(atom/source, datum/antagonist/bloodsucker/bloodsuckerdatum)
 	. = ..()
-	if(!ishuman(bloodsuckerdatum.owner.current) || bloodsuckerdatum.owner.current.stat != CONSCIOUS || HAS_TRAIT(bloodsuckerdatum.owner.current, TRAIT_MASQUERADE))
+	if(bloodsuckerdatum.owner.current.stat != CONSCIOUS || HAS_TRAIT(bloodsuckerdatum.owner.current, TRAIT_MASQUERADE))
 		return
-	var/mob/living/carbon/human/human_owner = bloodsuckerdatum.owner.current
-	var/turf/T = get_turf(human_owner)
+	var/mob/living/owner = bloodsuckerdatum.owner.current
+	var/turf/T = get_turf(owner)
 	var/lums = T.get_lumcount()
-	var/obj/item/organ/internal/eyes/eyes = human_owner.getorganslot(ORGAN_SLOT_EYES)
 	if(lums > 0.5)
-		human_owner.add_mood_event("too_bright", /datum/mood_event/bright_light)
-		eyes.applyOrganDamage(3)
+		owner.add_mood_event("too_bright", /datum/mood_event/bright_light)
+		owner.adjustBruteLoss(4) //Society
 		if(prob(25))
-			to_chat(human_owner, span_warning("The light burns your eyes!"))
+			to_chat(owner, span_warning("The light burns you!"))
 	else
-		human_owner.clear_mood_event("too_bright")
-		eyes.applyOrganDamage(-1)
+		owner.clear_mood_event("too_bright")
+		owner.adjustBruteLoss(-1)
 
 /datum/bloodsucker_clan/lasombra/on_favorite_vassal(datum/source, datum/antagonist/vassal/vassaldatum, mob/living/bloodsucker)
 	var/datum/action/cooldown/spell/jaunt/shadow_walk/lasombra/shadow_walk = new()
