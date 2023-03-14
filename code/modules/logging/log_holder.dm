@@ -185,14 +185,16 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		Log(LOG_CATEGORY_NOT_FOUND, message, data)
 		CRASH("Attempted to log to a category that doesn't exist! [category]")
 
-	var/list/semver_list = list()
-	var/list/final_data = recursive_jsonify(data, semver_list)
-	final_data[LOG_ENTRY_SEMVER_STORE] = semver_list
+	var/list/final_data
+	if(!isnull(data))
+		var/list/semver_list = list()
+		final_data = recursive_jsonify(data, semver_list)
+		final_data[LOG_ENTRY_SEMVER_STORE] = semver_list
 	log_category.add_entry(message, final_data)
 
 /// Recursively converts an associative list of datums into their jsonified(list) form
 /datum/log_holder/proc/recursive_jsonify(list/data_list, list/semvers)
-	if(!data_list)
+	if(isnull(data_list))
 		return null
 
 	var/list/jsonified_list = list()
