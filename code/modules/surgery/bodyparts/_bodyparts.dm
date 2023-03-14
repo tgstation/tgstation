@@ -209,7 +209,10 @@
 
 	if(length(external_organs))
 		for(var/obj/item/organ/external/external_organ as anything in external_organs)
-			qdel(external_organ) // It handles removing its references to this limb, and getting out of external_organs from there on its own.
+			external_organs -= external_organ
+			qdel(external_organ) // It handles removing its references to this limb on its own.
+
+		external_organs = list()
 
 	return ..()
 
