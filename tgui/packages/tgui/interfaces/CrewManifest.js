@@ -33,7 +33,12 @@ export const CrewManifest = (props, context) => {
             <Table>
               {Object.entries(crew).map(([crewIndex, crewMember]) => (
                 <Table.Row key={crewIndex}>
-                  <Table.Cell className={'CrewManifest__Cell'}>
+                  <Table.Cell
+                    className={'CrewManifest__Cell'}
+                    maxWidth="150px"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                    width="50%">
                     {crewMember.name}
                   </Table.Cell>
                   <Table.Cell
@@ -72,12 +77,15 @@ export const CrewManifest = (props, context) => {
                     )}
                   </Table.Cell>
                   <Table.Cell
-                    textAlign="right"
                     className={classes([
                       'CrewManifest__Cell',
                       'CrewManifest__Cell--Rank',
                     ])}
-                    collapsing>
+                    collapsing
+                    maxWidth="150px"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                    width="50%">
                     {crewMember.rank}
                   </Table.Cell>
                 </Table.Row>
