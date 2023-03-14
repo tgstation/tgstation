@@ -7,20 +7,27 @@
  *
  **/
 
-//Init the debugger datum first so we can debug Master
-//You might wonder why not just create the debugger datum global in its own file, since its loaded way earlier than this DM file
-//Well for whatever reason then the Master gets created first and then the debugger when doing that
-//So thats why this code lives here now, until someone finds out how Byond inits globals
+// Did you know that Byond initializes global variables in reverse order from how they are declared?
+// This means that globals in files which are earlier in the dme are initialized after later files.
+// The trick here is that global initialization respects line order correctly!
+
+// Due to the inherently asinine logic of this, nothing should be raw globals unless absolutely needed.
+// If you need something to be a raw global, reconsider what you are doing.
+
+// Nothing else should be initialized like this, and if it is needed must be explained for future reference.
+
+// Must be created before Master so that we can debug in Master
 GLOBAL_REAL(Debugger, /datum/debugger) = new
-//This is the ABSOLUTE ONLY THING that should init globally like this
-//2019 update: the failsafe,config and Global controllers also do it
-//2023 update: the logger also does it
+
+
 // This is created before master because Master creates the Config controller which logs
 GLOBAL_REAL(logger, /datum/log_holder) = new
+
+// Master is what controls how we schedule and control tick flow, and obviously cannot exist until created initially
 GLOBAL_REAL(Master, /datum/controller/master) = new
 
 //THIS IS THE INIT ORDER
-//Master -> SSPreInit -> GLOB -> world -> config -> SSInit -> Failsafe
+// Debugger -> logger-> Master -> SSPreInit -> GLOB -> world -> config -> SSInit -> Failsafe
 //GOT IT MEMORIZED?
 
 /datum/controller/master
