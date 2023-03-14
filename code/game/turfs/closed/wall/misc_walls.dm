@@ -138,6 +138,7 @@
 
 /turf/closed/wall/material/meat
 	name = "living wall"
+	baseturfs = /turf/open/floor/material/meat
 
 /turf/closed/wall/material/meat/Initialize(mapload)
 	. = ..()

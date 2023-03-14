@@ -43,3 +43,9 @@
 	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "goliath_dead_helper"
+
+/// Dead headcrab for changeling-themed ruins
+/obj/effect/mob_spawn/corpse/headcrab
+	mob_type = /mob/living/simple_animal/hostile/headcrab
+	icon = 'icons/mob/simple/animal.dmi'
+	icon_state = "headcrab_dead"

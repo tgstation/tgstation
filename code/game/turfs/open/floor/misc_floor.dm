@@ -290,6 +290,9 @@
 
 /turf/open/floor/material/meat
 	desc = "living floor"
+	icon_state = "grey"
+	initial_gas_mix = AIRLESS_ATMOS
+	baseturfs = /turf/open/misc/asteroid/airless
 
 /turf/open/floor/material/Initialize(mapload)
 	. = ..()
