@@ -1393,6 +1393,7 @@
 #include "code\datums\storage\subtypes\organ_box.dm"
 #include "code\datums\storage\subtypes\pockets.dm"
 #include "code\datums\storage\subtypes\rped.dm"
+#include "code\datums\storage\subtypes\trash.dm"
 #include "code\datums\votes\_vote_datum.dm"
 #include "code\datums\votes\custom_vote.dm"
 #include "code\datums\votes\map_vote.dm"
