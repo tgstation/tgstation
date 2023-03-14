@@ -56,7 +56,7 @@ Away missions are _disabled_ by default. Go to the file denoted in the [Configur
 
 ## CONFIGURATION
 
-A majority of maps must be placed in their corresponding configuration file to allow server operators to enable/disable the ruin for any reason they desire. Follow the chart below to see where you should add your new ruin.
+A majority of maps (outlined below) must be placed in their corresponding configuration file to allow server operators to enable/disable the map for any reason they desire. Follow the chart to see where you should add your new map.
 
 | Type of Map | Associated File with Link |
 | ----------- | ----------- |
@@ -67,7 +67,7 @@ A majority of maps must be placed in their corresponding configuration file to a
 | Escape Shuttles |  [`config/unbuyableshuttles.txt`](https://github.com/tgstation/tgstation/blob/master/config/unbuyableshuttles.txt) |
 | Away Missions | [`config/awaymissionconfig.txt`](https://github.com/tgstation/tgstation/blob/master/config/awaymissionconfig.txt) |
 
-Each .txt file will have instructions on how to appropriately add your map to the file.
+Each .txt file will have instructions on how to appropriately add your map to the file. If you're unsure about certain values, ask for help during the PR process (or beforehand).
 
 ## MAP DEPOT
 
