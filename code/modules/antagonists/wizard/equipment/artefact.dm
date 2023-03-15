@@ -222,6 +222,8 @@
 	var/unlimited = 0
 	///Which species the resurected humanoid will be
 	var/applied_species = /datum/species/skeleton
+	///The outfit the resurected humanoid will wear
+	var/applied_outfit = /datum/outfit/roman
 
 /obj/item/necromantic_stone/unlimited
 	unlimited = 1
@@ -282,17 +284,24 @@
 	list_clear_nulls(spooky_scaries)
 
 //Funny gimmick, skeletons always seem to wear roman/ancient armour
-/obj/item/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)
-	for(var/obj/item/I in H)
-		H.dropItemToGround(I)
+/obj/item/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/human)
+	for(var/obj/item/I in human)
+		human.dropItemToGround(I)
 
-	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionnaire)
-	H.equip_to_slot_or_del(new hat(H), ITEM_SLOT_HEAD)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/roman(H), ITEM_SLOT_ICLOTHING)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), ITEM_SLOT_FEET)
-	H.put_in_hands(new /obj/item/shield/roman(H), TRUE)
-	H.put_in_hands(new /obj/item/claymore(H), TRUE)
-	H.equip_to_slot_or_del(new /obj/item/spear(H), ITEM_SLOT_BACK)
+	human.equipOutfit(applied_outfit)
+
+/datum/outfit/roman
+	name = "Roman"
+	head = /obj/item/clothing/head/helmet/roman
+	uniform = /obj/item/clothing/under/costume/roman
+	shoes = /obj/item/clothing/shoes/roman
+	back = /obj/item/spear
+	r_hand = /obj/item/claymore
+	l_hand = /obj/item/shield/roman
+
+/datum/outfit/skeleton/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	head = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionnaire)
 
 //Provides a decent heal, need to pump every 6 seconds
 /obj/item/organ/internal/heart/cursed/wizard
