@@ -215,5 +215,6 @@
 		/mob/living/simple_animal/pet/gondola,
 		/mob/living/simple_animal/hostile/mushroom,
 		/mob/living/simple_animal/hostile/lightgeist,
+		/mob/living/basic/pig,
 	)
 	return pick(mob_list)
