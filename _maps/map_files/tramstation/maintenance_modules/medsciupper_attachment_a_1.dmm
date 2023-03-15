@@ -1,135 +1,131 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
+/turf/template_noop,
+/area/template_noop)
+"e" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/engineering/canister,
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/item/wrench,
+/turf/open/floor/plating,
 /area/station/maintenance/department/science)
 "f" = (
-/obj/structure/table,
-/obj/structure/window/reinforced/spawner/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/engineering/tool,
-/obj/effect/spawner/random/engineering/tool,
-/turf/open/floor/iron/dark,
+/obj/effect/spawner/random/engineering/canister,
+/turf/open/floor/plating,
 /area/station/maintenance/department/science)
 "i" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/modular_map_connector,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Robotics Maintenance Hatch"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/science/robotics,
-/turf/open/floor/iron,
-/area/station/maintenance/department/science)
-"k" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/structure/mecha_wreckage/ripley/mk2,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
 "l" = (
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/template_noop)
-"m" = (
-/obj/effect/spawner/random/mod/maint,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 5
-	},
-/obj/structure/closet/crate/science,
-/obj/item/stack/cable_coil,
-/turf/open/floor/iron,
-/area/station/maintenance/department/science)
-"q" = (
-/turf/closed/wall,
-/area/station/maintenance/department/science)
-"s" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/item/clothing/head/utility/welding,
 /obj/item/weldingtool/empty{
 	pixel_y = 8;
 	pixel_x = -10
 	},
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/iron,
+/obj/item/clothing/head/utility/welding,
+/turf/open/floor/plating,
 /area/station/maintenance/department/science)
-"v" = (
+"n" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
-"w" = (
+"p" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/obj/item/flashlight,
+/turf/open/floor/iron,
+/area/station/maintenance/department/science)
+"t" = (
+/obj/structure/closet/crate/science,
+/obj/effect/spawner/random/mod/maint,
+/obj/item/stack/cable_coil,
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
-"y" = (
-/turf/template_noop,
-/area/template_noop)
-"E" = (
+"v" = (
+/obj/structure/table,
+/obj/structure/window/reinforced/spawner/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/iron/dark,
+/area/station/maintenance/department/science)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/station/maintenance/department/science)
+"C" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Robotics Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/science/robotics,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"D" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
+/obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
-"H" = (
-/obj/structure/window/reinforced/spawner/west,
+"L" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/station/maintenance/department/science)
-"K" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/engineering/atmospherics_portable,
-/turf/open/floor/plating,
-/area/station/maintenance/department/science)
-"M" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/mecha_wreckage/ripley/mk2,
-/obj/effect/decal/cleanable/oil/slippery,
-/turf/open/floor/plating,
-/area/station/maintenance/department/science)
-"O" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/station/maintenance/department/science)
-"Q" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/purple/filled/corner{
-	dir = 4
-	},
-/obj/structure/closet/crate/science,
-/obj/effect/spawner/random/mod/maint,
-/obj/item/stack/cable_coil,
+/obj/effect/turf_decal/bot,
+/obj/structure/mecha_wreckage/odysseus,
+/obj/item/stack/cable_coil/five,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
 "R" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/blobstart,
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/iron/dark,
+/turf/closed/wall,
 /area/station/maintenance/department/science)
-"V" = (
+"S" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/maintenance/department/science)
+"T" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/maintenance/department/science)
+"U" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/build{
-	pixel_y = 32
-	},
-/turf/open/floor/iron/dark,
+/obj/item/stock_parts/cell/high/empty,
+/turf/open/floor/iron,
 /area/station/maintenance/department/science)
-"W" = (
+"V" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
@@ -149,197 +145,134 @@
 	pixel_x = -6;
 	pixel_y = 2
 	},
+/obj/structure/sign/poster/official/build{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/science)
-"Y" = (
-/obj/structure/rack,
+"X" = (
+/obj/effect/spawner/random/mod/maint,
+/obj/structure/closet/crate/science,
+/obj/item/stack/cable_coil,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/engineering/material,
-/obj/effect/spawner/random/engineering/material,
+/turf/open/floor/iron,
+/area/station/maintenance/department/science)
+"Y" = (
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/science)
 "Z" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/obj/effect/landmark/blobstart,
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/department/science)
 
 (1,1,1) = {"
-y
-y
-y
-y
-y
-y
-y
-y
-y
-y
-l
-l
-l
+a
+a
+a
+a
+a
+a
 "}
 (2,1,1) = {"
-y
-y
-l
-l
-l
-l
-l
-l
-l
-l
-l
-l
-l
+a
+p
+p
+p
+p
+p
 "}
 (3,1,1) = {"
-y
-y
-l
-l
-l
-l
-l
-l
-l
-l
-l
-l
-l
+a
+p
+p
+p
+p
+p
 "}
 (4,1,1) = {"
-y
-q
-q
-q
-q
-q
-q
-l
-l
-l
-l
-l
-l
+a
+R
+R
+R
+R
+R
 "}
 (5,1,1) = {"
-y
-y
-K
 a
-E
-M
-q
-l
-l
-l
-l
-l
-l
+a
+f
+D
+U
+R
 "}
 (6,1,1) = {"
-y
+a
+C
+x
+z
 i
-Z
-w
-w
-s
-q
-l
-l
-l
-l
-l
-l
+R
 "}
 (7,1,1) = {"
-y
-y
-m
-Q
-v
-k
+a
+a
 q
+T
 l
-l
-l
-l
-l
-l
+R
 "}
 (8,1,1) = {"
-y
-y
-y
-f
-O
-H
-q
-l
-l
-l
-l
-l
-l
+a
+a
+n
+e
+L
+R
 "}
 (9,1,1) = {"
-y
-y
-y
-W
+a
+a
+X
+t
+S
 R
-O
-q
-l
-l
-l
-l
-l
-l
 "}
 (10,1,1) = {"
-y
-y
-y
-V
-O
+a
+a
+a
+v
 Y
-q
-l
-l
-l
-l
-l
-l
+R
 "}
 (11,1,1) = {"
-y
-y
-y
-y
-y
-y
-y
-y
-l
-l
-l
-l
-l
+a
+a
+a
+V
+Z
+R
 "}
 (12,1,1) = {"
-y
-y
-y
-y
-y
-y
-y
-y
-y
-l
-l
-l
-l
+a
+a
+a
+R
+R
+R
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
 "}

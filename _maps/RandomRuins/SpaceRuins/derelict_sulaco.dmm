@@ -48,7 +48,7 @@
 "eU" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/item/rack_parts,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav)
 "fd" = (
 /obj/structure/frame/machine,
@@ -145,7 +145,7 @@
 /obj/structure/window/reinforced/spawner,
 /obj/item/circuitboard/machine/telecomms/processor,
 /obj/item/rack_parts,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav)
 "jI" = (
 /obj/machinery/door/window/brigdoor/left/directional/south,
@@ -155,7 +155,7 @@
 /obj/structure/window/reinforced/spawner,
 /obj/item/stack/cable_coil/cut,
 /obj/structure/frame/machine,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav)
 "lq" = (
 /obj/machinery/door/airlock/maintenance/external{
@@ -202,7 +202,7 @@
 /obj/structure/window/reinforced/spawner/east,
 /obj/item/stack/cable_coil/cut,
 /obj/structure/frame/machine,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav)
 "nn" = (
 /obj/structure/alien/weeds/node,
@@ -360,7 +360,7 @@
 /area/ruin/space/has_grav)
 "yt" = (
 /obj/item/circuitboard/machine/telecomms/processor,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav)
 "yS" = (
 /obj/structure/window/reinforced/spawner,
@@ -542,16 +542,16 @@
 /obj/item/circuitboard/machine/telecomms/hub,
 /obj/item/stack/cable_coil/cut,
 /obj/structure/frame/machine,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav)
 "Lm" = (
 /obj/item/stack/cable_coil/cut,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav)
 "Lr" = (
 /obj/structure/window/reinforced/spawner/north,
 /obj/item/stack/cable_coil/cut,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav)
 "LS" = (
 /turf/open/floor/plating,
@@ -565,7 +565,7 @@
 /obj/structure/window/reinforced/spawner/east,
 /obj/item/circuitboard/machine/telecomms/relay,
 /obj/structure/frame/machine,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav)
 "MG" = (
 /obj/structure/frame/machine,
@@ -591,7 +591,7 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/item/circuitboard/machine/telecomms/bus,
 /obj/item/rack_parts,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav)
 "RH" = (
 /obj/structure/frame/computer,
@@ -704,7 +704,7 @@
 "YA" = (
 /obj/machinery/door/window/brigdoor/left/directional/west,
 /obj/item/stack/cable_coil/cut,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav)
 "YO" = (
 /obj/structure/toilet{
@@ -716,7 +716,7 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner,
 /obj/item/circuitboard/machine/teleporter_hub,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav)
 "ZL" = (
 /obj/structure/window/reinforced/spawner/west,

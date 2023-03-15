@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Completing an experiment which discounts a researched tech node will give a partial refund of the discount lost. For example, researching the industrial engineering research without scanning iron toilets will refund ~5000 points if you complete it afterwards. This only applies once per experiment, so experiments which discount multiple nodes only refund the first researched."

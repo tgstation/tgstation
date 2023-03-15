@@ -456,7 +456,7 @@
 	if(stat == DEAD)
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane)) // No organ decay if the body contains formaldehyde.
 			return
-		for(var/obj/item/organ/internal/organ in internal_organs)
+		for(var/obj/item/organ/internal/organ in organs)
 			// On-death is where organ decay is handled
 			organ?.on_death(delta_time, times_fired) // organ can be null due to reagent metabolization causing organ shuffling
 			// We need to re-check the stat every organ, as one of our others may have revived us
@@ -464,11 +464,11 @@
 				break
 		return
 
-	// NOTE: internal_organs_slot is sorted by GLOB.organ_process_order on insertion
-	for(var/slot in internal_organs_slot)
+	// NOTE: organs_slot is sorted by GLOB.organ_process_order on insertion
+	for(var/slot in organs_slot)
 		// We don't use getorganslot here because we know we have the organ we want, since we're iterating the list containing em already
 		// This code is hot enough that it's just not worth the time
-		var/obj/item/organ/internal/organ = internal_organs_slot[slot]
+		var/obj/item/organ/internal/organ = organs_slot[slot]
 		if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
 			organ.on_life(delta_time, times_fired)
 
@@ -528,7 +528,7 @@
 /**
  * Handles calling metabolization for dead people.
  * Due to how reagent metabolization code works this couldn't be done anywhere else.
- * 
+ *
  * Arguments:
  * - delta_time: The amount of time that has elapsed since the last tick.
  * - times_fired: The number of times SSmobs has ticked.
