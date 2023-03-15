@@ -189,6 +189,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/obj/item/organ/internal/stomach/mutantstomach = /obj/item/organ/internal/stomach
 	///Replaces default appendix with a different organ.
 	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
+	///Replaces default butt with a different organ
+	var/obj/item/organ/internal/butt/mutantbutt = obj/item/organ/internal/butt
 
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
@@ -338,6 +340,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		ORGAN_SLOT_TONGUE = mutanttongue,
 		ORGAN_SLOT_LIVER = mutantliver,
 		ORGAN_SLOT_STOMACH = mutantstomach,
+		ORGAN_SLOT_BUTT = mutantbutt,
 	)
 
 	for(var/slot in assoc_to_keys(slot_mutantorgans))
@@ -1792,6 +1795,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	to_store += mutantliver
 	to_store += mutantstomach
 	to_store += mutantappendix
+	to_store += mutantbutt
 	//We don't cache mutant hands because it's not constrained enough, too high a potential for failure
 	return to_store
 

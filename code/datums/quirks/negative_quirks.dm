@@ -1140,3 +1140,9 @@
 
 /datum/quirk/cursed/add(client/client_source)
 	quirk_holder.AddComponent(/datum/component/omen/quirk)
+
+/datum/quirk/unstable_ass
+	name = "Unstable Rear"
+	desc = "For reasons unknown, your posterior is unstable and will fall off more often."
+	value = -1
+	//All effects are handled directly in butts.dm

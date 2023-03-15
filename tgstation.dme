@@ -5126,4 +5126,5 @@
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\oozeling.dm"
+#include "monkestation\code\modules\surgery\organs\internal\butts.dm"
 // END_INCLUDE
