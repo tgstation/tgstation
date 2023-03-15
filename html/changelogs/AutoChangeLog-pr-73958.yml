@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes:
-  - bugfix: "Bolter wrench's protolathe design is correctly at the advanced engineering tab now, instead of being under janitorial."
