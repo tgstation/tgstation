@@ -17748,13 +17748,10 @@
 "fth" = (
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/smartfridge/organ,
-/obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/fore)
 "fti" = (
@@ -20294,16 +20291,13 @@
 "gbd" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/west,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/fore)
 "gbf" = (
@@ -24200,13 +24194,6 @@
 	name = "medical camera";
 	network = list("ss13","medical")
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
 /obj/structure/table,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
@@ -24215,6 +24202,10 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/fore)
 "hjj" = (
@@ -46034,14 +46025,11 @@
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "nBZ" = (
-/obj/effect/turf_decal/tile/neutral,
 /obj/machinery/newscaster/directional/west,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/fore)
 "nCc" = (
@@ -46287,11 +46275,11 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "nFb" = (
+/obj/effect/turf_decal/tile/purple,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
 	},
@@ -48706,15 +48694,12 @@
 	},
 /obj/machinery/light/directional/south,
 /obj/machinery/light_switch/directional/south,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
 /obj/structure/closet/crate/freezer/blood,
 /obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/fore)
 "ouE" = (
@@ -49831,15 +49816,14 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /obj/machinery/button/door/directional/north{
 	id = "emmd";
 	name = "Medical Lockdown Toggle"
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/fore)
 "oKV" = (
@@ -60554,17 +60538,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/dark,
 /area/station/security/processing)
-"rRe" = (
-/obj/effect/turf_decal/tile/purple,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/siding/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/station/science/lab)
 "rRm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/crate,
@@ -66555,10 +66528,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "tBh" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/machinery/requests_console/directional/north{
 	assistance_requestable = 1;
 	department = "Medbay";
@@ -66566,6 +66535,7 @@
 	},
 /obj/structure/table/optable,
 /obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/fore)
 "tBj" = (
@@ -76198,13 +76168,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/west,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -76213,6 +76176,9 @@
 /obj/item/razor,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/fore)
 "woG" = (
@@ -78418,12 +78384,9 @@
 /turf/open/floor/iron,
 /area/station/command/teleporter)
 "wVD" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/machinery/computer/operating,
 /obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/fore)
 "wVE" = (
@@ -81858,6 +81821,17 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance)
+"xWg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/station/science/lab)
 "xWh" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral{
@@ -120631,8 +120605,8 @@ rhK
 uAh
 iQd
 mfY
-rRe
 nFb
+xWg
 lWw
 qwR
 dzp
