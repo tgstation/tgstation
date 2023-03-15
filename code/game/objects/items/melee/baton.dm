@@ -335,7 +335,7 @@
 	if (QDELETED(human_user))
 		return
 	if(!QDELETED(our_brain))
-		human_user.internal_organs -= our_brain
+		human_user.organs -= our_brain
 		qdel(our_brain)
 	new /obj/effect/gibspawner/generic(human_user.drop_location(), human_user)
 	return BRUTELOSS

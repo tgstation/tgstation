@@ -81,6 +81,7 @@ SUBSYSTEM_DEF(overlays)
 		return
 	STAT_START_STOPWATCH
 	overlays += build_appearance_list(add_overlays)
+	VALIDATE_OVERLAY_LIMIT(src)
 	POST_OVERLAY_CHANGE(src)
 	STAT_STOP_STOPWATCH
 	STAT_LOG_ENTRY(SSoverlays.stats, type)
@@ -98,11 +99,13 @@ SUBSYSTEM_DEF(overlays)
 			overlays = cached_other
 		else
 			overlays = null
+		VALIDATE_OVERLAY_LIMIT(src)
 		POST_OVERLAY_CHANGE(src)
 		STAT_STOP_STOPWATCH
 		STAT_LOG_ENTRY(SSoverlays.stats, type)
 	else if(cached_other)
 		overlays += cached_other
+		VALIDATE_OVERLAY_LIMIT(src)
 		POST_OVERLAY_CHANGE(src)
 		STAT_STOP_STOPWATCH
 		STAT_LOG_ENTRY(SSoverlays.stats, type)

@@ -3053,9 +3053,9 @@
 	pixel_y = 2
 	},
 /obj/item/reagent_containers/cup/bottle{
+	desc = "A small bottle of Barber's Aid.";
 	list_reagents = list(/datum/reagent/barbers_aid=30);
 	name = "Barber's Aid bottle";
-	desc = "A small bottle of Barber's Aid.";
 	pixel_x = -2;
 	pixel_y = 10
 	},
@@ -4965,8 +4965,8 @@
 /area/station/cargo/sorting)
 "aBl" = (
 /obj/machinery/camera/directional/north{
-	network = list("ss13","rd");
-	c_tag = "Science - Monkey Pit"
+	c_tag = "Science - Monkey Pit";
+	network = list("ss13","rd")
 	},
 /turf/open/misc/dirt/jungle,
 /area/station/science/explab)
@@ -6010,8 +6010,8 @@
 	dir = 8
 	},
 /obj/structure/sign/departments/science{
-	pixel_y = -32;
-	pixel_x = -32
+	pixel_x = -32;
+	pixel_y = -32
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -8362,8 +8362,8 @@
 	req_access = list("xenobiology")
 	},
 /obj/machinery/door/window/left/directional/north{
-	req_access = list("xenobiology");
-	name = "Containment Pen #4"
+	name = "Containment Pen #4";
+	req_access = list("xenobiology")
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "containdeez4";
@@ -10508,8 +10508,8 @@
 	},
 /obj/effect/landmark/start/assistant,
 /obj/machinery/camera/directional/south{
-	network = list("ss13","rd");
-	c_tag = "Science - Front Lobby"
+	c_tag = "Science - Front Lobby";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
@@ -11596,8 +11596,8 @@
 /area/station/cargo/office)
 "cwU" = (
 /obj/machinery/door/window/right/directional/north{
-	req_access = list("science");
-	name = "The Monkey Pit"
+	name = "The Monkey Pit";
+	req_access = list("science")
 	},
 /turf/open/misc/grass/jungle,
 /area/station/science/explab)
@@ -11608,8 +11608,8 @@
 	},
 /obj/structure/closet/secure_closet/research_director,
 /obj/machinery/camera/directional/south{
-	network = list("ss13","rd");
-	c_tag = "Science - Research Director's Office"
+	c_tag = "Science - Research Director's Office";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/rd)
@@ -12356,8 +12356,8 @@
 "cJP" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/left/directional/north{
-	req_access = list("xenobiology");
-	name = "Containment Pen #7"
+	name = "Containment Pen #7";
+	req_access = list("xenobiology")
 	},
 /obj/machinery/door/window/left/directional/south{
 	name = "Containment Pen #7";
@@ -12837,8 +12837,8 @@
 	dir = 10
 	},
 /obj/machinery/door/window/left/directional/east{
-	req_access = list("xenobiology");
-	name = "Containment Pen #1"
+	name = "Containment Pen #1";
+	req_access = list("xenobiology")
 	},
 /obj/machinery/door/window/left/directional/west{
 	name = "Containment Pen #1";
@@ -15214,8 +15214,8 @@
 	pixel_y = 10
 	},
 /obj/item/stack/sheet/mineral/plasma{
-	pixel_y = 2;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 2
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -15685,8 +15685,8 @@
 	dir = 8
 	},
 /obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver{
-	pixel_y = 5;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 5
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
@@ -17334,8 +17334,8 @@
 	dir = 6
 	},
 /obj/machinery/camera/directional/north{
-	network = list("ss13","rd");
-	c_tag = "Science - Lower Hall West"
+	c_tag = "Science - Lower Hall West";
+	network = list("ss13","rd")
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/white,
@@ -18436,8 +18436,8 @@
 	dir = 1
 	},
 /obj/machinery/camera/directional/north{
-	network = list("ss13","rd");
-	c_tag = "Science - Research & Development"
+	c_tag = "Science - Research & Development";
+	network = list("ss13","rd")
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -18599,8 +18599,8 @@
 	dir = 5
 	},
 /obj/machinery/camera/directional/north{
-	network = list("ss13","rd");
-	c_tag = "Science - Lower Hall East"
+	c_tag = "Science - Lower Hall East";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lower)
@@ -20055,8 +20055,8 @@
 "fFu" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/left/directional/east{
-	req_access = list("xenobiology");
-	name = "Containment Pen #2"
+	name = "Containment Pen #2";
+	req_access = list("xenobiology")
 	},
 /obj/machinery/door/window/left/directional/west{
 	name = "Containment Pen #2";
@@ -20604,8 +20604,8 @@
 "fPv" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/left/directional/north{
-	req_access = list("xenobiology");
-	name = "Containment Pen #1"
+	name = "Containment Pen #1";
+	req_access = list("xenobiology")
 	},
 /obj/machinery/door/window/left/directional/south{
 	name = "Containment Pen #1";
@@ -20643,8 +20643,8 @@
 "fQo" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/left/directional/north{
-	req_access = list("xenobiology");
-	name = "Containment Pen #5"
+	name = "Containment Pen #5";
+	req_access = list("xenobiology")
 	},
 /obj/machinery/door/window/left/directional/south{
 	name = "Containment Pen #5";
@@ -21236,8 +21236,8 @@
 	dir = 5
 	},
 /obj/machinery/camera/directional/north{
-	network = list("ss13","rd");
-	c_tag = "Science - Firing Range"
+	c_tag = "Science - Firing Range";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/engine,
 /area/station/science/auxlab/firing_range)
@@ -21863,9 +21863,9 @@
 /area/station/engineering/supermatter)
 "gqo" = (
 /obj/machinery/door/poddoor/lift{
-	id = "tram_cargo_lift";
 	density = 0;
-	icon_state = "open"
+	icon_state = "open";
+	id = "tram_cargo_lift"
 	},
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
@@ -22385,8 +22385,8 @@
 /area/station/commons/dorms)
 "gBr" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	piping_layer = 2;
-	dir = 8
+	dir = 8;
+	piping_layer = 2
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
@@ -24606,8 +24606,8 @@
 	},
 /obj/machinery/lift_indicator{
 	linked_elevator_id = "tram_upper_center_lift";
-	pixel_y = -2;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = -2
 	},
 /turf/closed/wall,
 /area/station/hallway/primary/tram/center)
@@ -24796,8 +24796,8 @@
 	dir = 2
 	},
 /obj/machinery/camera/directional/north{
-	network = list("ss13","rd");
-	c_tag = "Science - Mech Bay"
+	c_tag = "Science - Mech Bay";
+	network = list("ss13","rd")
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/plating,
@@ -24911,13 +24911,13 @@
 "hBP" = (
 /obj/machinery/lift_indicator{
 	linked_elevator_id = "tram_lower_center_lift";
-	pixel_y = -3;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = -3
 	},
 /obj/machinery/button/elevator{
 	id = "tram_lower_center_lift";
-	pixel_y = -1;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = -1
 	},
 /turf/closed/wall,
 /area/station/maintenance/department/medical)
@@ -25393,8 +25393,8 @@
 /obj/item/wrench,
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/camera/directional/south{
-	network = list("ss13","rd");
-	c_tag = "Science - Server Room"
+	c_tag = "Science - Server Room";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/server)
@@ -25663,9 +25663,9 @@
 "hQg" = (
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel{
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck");
 	linked_elevator_id = "tram_xeno_lift";
-	pixel_y = 2
+	pixel_y = 2;
+	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/dark_red/warning{
@@ -26568,8 +26568,8 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/storage/toolbox/electrical{
-	pixel_y = 9;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 9
 	},
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/iron/dark,
@@ -26922,8 +26922,8 @@
 	pixel_y = -2
 	},
 /obj/machinery/camera/directional/south{
-	network = list("ss13","rd");
-	c_tag = "Science - Testing Lab"
+	c_tag = "Science - Testing Lab";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
 /area/station/science/explab)
@@ -26962,8 +26962,8 @@
 "iqZ" = (
 /obj/structure/railing,
 /obj/machinery/door/window/right/directional/north{
-	req_access = list("genetics");
-	name = "The Monkey Pit"
+	name = "The Monkey Pit";
+	req_access = list("genetics")
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/science/genetics)
@@ -27355,8 +27355,8 @@
 	},
 /obj/structure/noticeboard/directional/north,
 /obj/machinery/camera/directional/north{
-	network = list("ss13","rd");
-	c_tag = "Science - Robotics"
+	c_tag = "Science - Robotics";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
@@ -28128,9 +28128,9 @@
 /area/station/command/heads_quarters/hop)
 "iOo" = (
 /obj/docking_port/stationary/random{
+	dir = 8;
 	name = "lavaland";
-	shuttle_id = "pod_lavaland";
-	dir = 8
+	shuttle_id = "pod_lavaland"
 	},
 /turf/open/misc/asteroid/airless,
 /area/station/asteroid)
@@ -30424,8 +30424,8 @@
 "jDF" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/left/directional/east{
-	req_access = list("xenobiology");
-	name = "Containment Pen #5"
+	name = "Containment Pen #5";
+	req_access = list("xenobiology")
 	},
 /obj/machinery/door/window/left/directional/west{
 	name = "Containment Pen #5";
@@ -32160,8 +32160,8 @@
 	},
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/camera/directional/north{
-	network = list("ss13","rd");
-	c_tag = "Science - Xenobiology North"
+	c_tag = "Science - Xenobiology North";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -33458,9 +33458,9 @@
 /area/station/hallway/secondary/construction/engineering)
 "kJy" = (
 /obj/docking_port/stationary/random{
+	dir = 8;
 	name = "lavaland";
-	shuttle_id = "pod_2_lavaland";
-	dir = 8
+	shuttle_id = "pod_2_lavaland"
 	},
 /turf/open/misc/asteroid/airless,
 /area/station/asteroid)
@@ -34403,12 +34403,12 @@
 	pixel_y = 3
 	},
 /obj/item/grenade/chem_grenade{
-	pixel_y = 7;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 7
 	},
 /obj/item/grenade/chem_grenade{
-	pixel_y = 1;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
@@ -34818,8 +34818,8 @@
 	pixel_y = -5
 	},
 /obj/machinery/light_switch/directional/west{
-	pixel_y = 9;
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 9
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/cafeteria,
@@ -35007,8 +35007,8 @@
 "lhS" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/left/directional/north{
-	req_access = list("xenobiology");
-	name = "Containment Pen #3"
+	name = "Containment Pen #3";
+	req_access = list("xenobiology")
 	},
 /obj/machinery/door/window/left/directional/south{
 	name = "Containment Pen #3";
@@ -36168,8 +36168,8 @@
 /area/station/engineering/atmos)
 "lEt" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/oxygen_output{
-	dir = 8;
-	chamber_id = "o2ordance"
+	chamber_id = "o2ordance";
+	dir = 8
 	},
 /turf/open/floor/engine/o2,
 /area/station/science/ordnance/storage)
@@ -38405,8 +38405,8 @@
 "muf" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/left/directional/east{
-	req_access = list("xenobiology");
-	name = "Containment Pen #3"
+	name = "Containment Pen #3";
+	req_access = list("xenobiology")
 	},
 /obj/machinery/door/window/left/directional/west{
 	name = "Containment Pen #3";
@@ -38568,9 +38568,9 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor/lift{
-	id = "tram_dorm_lift";
 	density = 0;
-	icon_state = "open"
+	icon_state = "open";
+	id = "tram_dorm_lift"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
@@ -39168,10 +39168,6 @@
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
-"mJv" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/department/cargo)
 "mJw" = (
 /obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/bot,
@@ -39933,8 +39929,8 @@
 	pixel_y = 4
 	},
 /obj/machinery/light_switch/directional/east{
-	pixel_y = -10;
-	pixel_x = 22
+	pixel_x = 22;
+	pixel_y = -10
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
@@ -39979,16 +39975,16 @@
 /area/station/science/xenobiology)
 "nbK" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	piping_layer = 2;
-	dir = 8
+	dir = 8;
+	piping_layer = 2
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/camera/directional/south{
-	network = list("ss13","rd");
-	c_tag = "Science - Mixing Lab"
+	c_tag = "Science - Mixing Lab";
+	network = list("ss13","rd")
 	},
 /obj/machinery/airalarm/mixingchamber{
 	pixel_y = -24
@@ -40419,13 +40415,13 @@
 "nkd" = (
 /obj/machinery/lift_indicator{
 	linked_elevator_id = "tram_upper_center_lift";
-	pixel_y = -2;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = -2
 	},
 /obj/machinery/button/elevator{
 	id = "tram_upper_center_lift";
-	pixel_y = -1;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = -1
 	},
 /turf/closed/wall,
 /area/station/service/janitor)
@@ -40911,8 +40907,8 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "nsv" = (
 /obj/machinery/camera/directional/north{
-	network = list("test","rd");
-	c_tag = "Science - Testing Chamber"
+	c_tag = "Science - Testing Chamber";
+	network = list("test","rd")
 	},
 /turf/open/floor/engine,
 /area/station/science/explab)
@@ -43062,8 +43058,8 @@
 	pixel_y = 7
 	},
 /obj/item/clothing/ears/earmuffs{
-	pixel_y = 3;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/white,
@@ -43220,8 +43216,8 @@
 	},
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/camera/directional/south{
-	network = list("ss13","rd");
-	c_tag = "Science - Break Room"
+	c_tag = "Science - Break Room";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
@@ -43944,8 +43940,8 @@
 	dir = 4
 	},
 /obj/machinery/airlock_sensor/incinerator_ordmix{
-	pixel_y = 1;
-	pixel_x = 23
+	pixel_x = 23;
+	pixel_y = 1
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1
@@ -45100,9 +45096,9 @@
 /area/station/commons/lounge)
 "pbc" = (
 /obj/machinery/door/poddoor/lift{
-	id = "tram_upper_center_lift";
+	density = 0;
 	icon_state = "open";
-	density = 0
+	id = "tram_upper_center_lift"
 	},
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
@@ -46142,12 +46138,12 @@
 	pixel_x = -8
 	},
 /obj/machinery/requests_console/directional/west{
+	announcementConsole = 1;
+	anon_tips_receiver = 1;
+	assistance_requestable = 1;
 	department = "Head of Personnel's Desk";
 	name = "Head of Personnel's Requests Console";
-	assistance_requestable = 1;
-	anon_tips_receiver = 1;
-	supplies_requestable = 1;
-	announcementConsole = 1
+	supplies_requestable = 1
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -46854,7 +46850,7 @@
 /obj/docking_port/stationary{
 	dir = 2;
 	dwidth = 11;
-	height = 22;
+	height = 24;
 	name = "SS13: Auxiliary Dock, Station-Port";
 	shuttle_id = "whiteship_home";
 	width = 35
@@ -47443,8 +47439,8 @@
 	dir = 1
 	},
 /obj/machinery/camera/directional/north{
-	network = list("ss13","rd");
-	c_tag = "Science - Lower Hall North"
+	c_tag = "Science - Lower Hall North";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lower)
@@ -49018,8 +49014,8 @@
 	dir = 1
 	},
 /obj/structure/sign/departments/cargo{
-	pixel_y = 32;
-	pixel_x = -32
+	pixel_x = -32;
+	pixel_y = 32
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
@@ -51654,8 +51650,8 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/camera/directional/south{
-	network = list("ss13","rd");
-	c_tag = "Science - Xenobiology South"
+	c_tag = "Science - Xenobiology South";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -53287,9 +53283,9 @@
 /area/station/command/meeting_room)
 "rYO" = (
 /obj/docking_port/stationary/random{
+	dir = 8;
 	name = "lavaland";
-	shuttle_id = "pod_4_lavaland";
-	dir = 8
+	shuttle_id = "pod_4_lavaland"
 	},
 /turf/open/misc/asteroid/airless,
 /area/station/asteroid)
@@ -54173,9 +54169,9 @@
 	},
 /obj/machinery/requests_console/directional/north{
 	department = "Cytology";
-	supplies_requestable = 1;
+	name = "Cytology Requests Console";
 	receive_ore_updates = 1;
-	name = "Cytology Requests Console"
+	supplies_requestable = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/cytology)
@@ -54622,8 +54618,8 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/east{
-	req_access = list("science");
-	name = "Research Lab Desk"
+	name = "Research Lab Desk";
+	req_access = list("science")
 	},
 /turf/open/floor/iron/white/side{
 	dir = 4
@@ -54890,8 +54886,8 @@
 	id = "rdoffice";
 	name = "Privacy Shutter Control";
 	pixel_x = -7;
-	req_access = list("research");
-	pixel_y = -2
+	pixel_y = -2;
+	req_access = list("research")
 	},
 /obj/item/folder/white{
 	pixel_x = 5
@@ -55157,9 +55153,9 @@
 	},
 /obj/effect/turf_decal/caution/stand_clear/white,
 /obj/machinery/door/poddoor/lift{
-	id = "tram_sci_lift";
+	density = 0;
 	icon_state = "open";
-	density = 0
+	id = "tram_sci_lift"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
@@ -55321,9 +55317,9 @@
 	pixel_y = 15
 	},
 /obj/item/reagent_containers/cup/bottle{
+	desc = "A small bottle of Barber's Aid.";
 	list_reagents = list(/datum/reagent/barbers_aid=30);
 	name = "Barber's Aid bottle";
-	desc = "A small bottle of Barber's Aid.";
 	pixel_x = 10;
 	pixel_y = 3
 	},
@@ -55432,10 +55428,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"sJz" = (
-/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/station/asteroid)
 "sJQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -55692,9 +55684,9 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
 	id = "mixingastew";
-	name = "Mixing Site Shutters";
-	dir = 4
+	name = "Mixing Site Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/science/ordnance)
@@ -55856,9 +55848,9 @@
 "sQj" = (
 /obj/effect/turf_decal/caution/stand_clear/white,
 /obj/machinery/door/poddoor/lift{
-	id = "tram_lower_center_lift";
+	density = 0;
 	icon_state = "open";
-	density = 0
+	id = "tram_lower_center_lift"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
@@ -57145,9 +57137,9 @@
 	},
 /obj/machinery/requests_console/directional/north{
 	department = "Xenobiology";
-	supplies_requestable = 1;
+	name = "Xenobiology Requests Console";
 	receive_ore_updates = 1;
-	name = "Xenobiology Requests Console"
+	supplies_requestable = 1
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -57253,9 +57245,9 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
 	id = "ordnancestorage";
-	name = "Ordnance Storage Shutters";
-	dir = 4
+	name = "Ordnance Storage Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/science/ordnance/office)
@@ -57804,8 +57796,8 @@
 /area/station/science/research)
 "txW" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/oxygen_input{
-	dir = 4;
-	chamber_id = "o2ordance"
+	chamber_id = "o2ordance";
+	dir = 4
 	},
 /turf/open/floor/engine/o2,
 /area/station/science/ordnance/storage)
@@ -58140,8 +58132,8 @@
 /area/station/service/chapel/office)
 "tEx" = (
 /obj/machinery/camera/directional/north{
-	network = list("ss13","rd","xeno");
-	c_tag = "Science - Xenobiology Lower Containment Chamber"
+	c_tag = "Science - Xenobiology Lower Containment Chamber";
+	network = list("ss13","rd","xeno")
 	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
@@ -59179,8 +59171,8 @@
 "tXW" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/left/directional/east{
-	req_access = list("xenobiology");
-	name = "Containment Pen #6"
+	name = "Containment Pen #6";
+	req_access = list("xenobiology")
 	},
 /obj/machinery/door/window/left/directional/west{
 	name = "Containment Pen #6";
@@ -59856,8 +59848,8 @@
 /obj/item/surgical_drapes,
 /obj/item/cautery,
 /obj/machinery/camera/directional/south{
-	network = list("ss13","rd");
-	c_tag = "Science - Robotics Surgery"
+	c_tag = "Science - Robotics Surgery";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
@@ -59908,8 +59900,8 @@
 	dir = 1
 	},
 /obj/machinery/camera/directional/north{
-	network = list("ss13","rd");
-	c_tag = "Science - Ordnance Lab"
+	c_tag = "Science - Ordnance Lab";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
@@ -60475,8 +60467,8 @@
 /area/station/hallway/primary/tram/center)
 "uvU" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
-	name = "server vent";
-	dir = 4
+	dir = 4;
+	name = "server vent"
 	},
 /turf/open/floor/circuit/telecomms/server,
 /area/station/science/server)
@@ -61453,8 +61445,8 @@
 "uLX" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/left/directional/east{
-	req_access = list("xenobiology");
-	name = "Containment Pen #7"
+	name = "Containment Pen #7";
+	req_access = list("xenobiology")
 	},
 /obj/machinery/door/window/left/directional/west{
 	name = "Containment Pen #7";
@@ -61949,9 +61941,9 @@
 "uWn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
 	id = "greedygrinnersden";
-	name = "Quartermaster's Privacy Shutters";
-	dir = 8
+	name = "Quartermaster's Privacy Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/cargo/office)
@@ -63763,10 +63755,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/electric_shock/directional/east,
 /obj/item/storage/toolbox/mechanical{
-	inhand_icon_state = "toolbox_syndi";
+	desc = "Danger. Kinda robust.";
 	icon_state = "syndicate";
-	name = "moderately suspicious looking toolbox";
-	desc = "Danger. Kinda robust."
+	inhand_icon_state = "toolbox_syndi";
+	name = "moderately suspicious looking toolbox"
 	},
 /turf/open/floor/plating,
 /area/station/commons/vacant_room)
@@ -65156,8 +65148,8 @@
 	dir = 10
 	},
 /obj/machinery/camera/directional/south{
-	network = list("ss13","rd");
-	c_tag = "Science - Lower Hall South"
+	c_tag = "Science - Lower Hall South";
+	network = list("ss13","rd")
 	},
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/white,
@@ -65378,9 +65370,9 @@
 /area/station/cargo/lobby)
 "wgR" = (
 /obj/docking_port/stationary/random{
+	dir = 8;
 	name = "lavaland";
-	shuttle_id = "pod_3_lavaland";
-	dir = 8
+	shuttle_id = "pod_3_lavaland"
 	},
 /turf/open/misc/asteroid/airless,
 /area/station/asteroid)
@@ -65603,8 +65595,8 @@
 /area/station/security/checkpoint/supply)
 "wkQ" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Vacant Commissary";
-	id_tag = "vacant_space"
+	id_tag = "vacant_space";
+	name = "Vacant Commissary"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -70381,8 +70373,8 @@
 "yfU" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/camera/directional/south{
-	network = list("ss13","rd");
-	c_tag = "Science - Ordnance Storage"
+	c_tag = "Science - Ordnance Storage";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance/storage)
@@ -74520,7 +74512,7 @@ vXM
 vXM
 aaa
 aaa
-sJz
+aaa
 aaa
 aaa
 aaa
@@ -178774,10 +178766,10 @@ abM
 abM
 abM
 abM
-mJv
-mJv
-mJv
-mJv
+usY
+usY
+usY
+usY
 abM
 lZW
 bMb
