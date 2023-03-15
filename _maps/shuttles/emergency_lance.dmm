@@ -224,11 +224,15 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "ji" = (
-/obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
 	},
-/turf/open/floor/iron,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
 /area/shuttle/escape)
 "jo" = (
 /obj/machinery/door/airlock/external/ruin{
@@ -292,10 +296,11 @@
 	dir = 8
 	},
 /obj/item/borg/upgrade/defib,
-/obj/item/defibrillator,
 /obj/structure/closet/crate/medical{
 	anchored = 1
 	},
+/obj/item/defibrillator/loaded,
+/obj/item/defibrillator/loaded,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -358,6 +363,14 @@
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/east,
 /turf/open/floor/iron/dark/textured,
+/area/shuttle/escape)
+"mc" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/item/borg_restart_board,
+/turf/open/floor/iron/dark/side,
 /area/shuttle/escape)
 "mk" = (
 /obj/machinery/porta_turret/syndicate/energy/raven{
@@ -501,10 +514,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "qx" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
 /obj/machinery/light/small/directional/north,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "qH" = (
@@ -859,11 +870,9 @@
 /area/shuttle/escape)
 "FA" = (
 /obj/structure/window/reinforced/survival_pod/spawner,
-/obj/structure/table/reinforced,
-/obj/item/restraints/handcuffs{
-	pixel_y = 3
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
 	},
-/obj/item/restraints/handcuffs,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "FX" = (
@@ -912,6 +921,7 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Gw" = (
@@ -966,8 +976,6 @@
 /obj/machinery/recharger{
 	pixel_x = 5
 	},
-/obj/item/assembly/flash,
-/obj/item/wrench,
 /obj/machinery/light/directional/north,
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark/textured,
@@ -1024,6 +1032,7 @@
 	},
 /obj/item/toy/nuke,
 /obj/machinery/light/small/directional/south,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "Ke" = (
@@ -1143,6 +1152,7 @@
 /area/shuttle/escape)
 "MZ" = (
 /obj/structure/rack,
+/obj/item/storage/medkit/advanced,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "Nx" = (
@@ -1193,6 +1203,10 @@
 /obj/structure/table/reinforced,
 /obj/item/toy/redbutton,
 /obj/machinery/light/small/directional/north,
+/obj/item/restraints/handcuffs{
+	pixel_y = 3
+	},
+/obj/item/restraints/handcuffs,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "OE" = (
@@ -1387,6 +1401,8 @@
 /area/shuttle/escape)
 "UG" = (
 /obj/structure/table/reinforced,
+/obj/item/wrench,
+/obj/item/assembly/flash,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "UR" = (
@@ -1460,6 +1476,10 @@
 	dir = 1
 	},
 /area/shuttle/escape)
+"Xr" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape)
 "XA" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -1486,12 +1506,29 @@
 /area/shuttle/escape)
 "YM" = (
 /obj/structure/window/reinforced/survival_pod/spawner/north,
-/obj/structure/table/reinforced,
-/obj/item/storage/medkit/regular,
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "YN" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/item/gun/energy/e_gun/mini{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/gun/energy/e_gun/mini,
+/obj/item/gun/energy/e_gun/mini{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/machinery/door/window/survival_pod{
+	dir = 4;
+	name = "emergency weapons";
+	req_access = list("command")
+	},
 /obj/structure/rack,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
@@ -1806,7 +1843,7 @@ WQ
 WQ
 WQ
 An
-aV
+WQ
 aV
 uX
 uX
@@ -1859,7 +1896,7 @@ WQ
 sn
 JN
 Hu
-aV
+WQ
 qH
 qH
 WQ
@@ -1887,7 +1924,7 @@ uX
 uX
 uX
 uX
-Lg
+uX
 zU
 WQ
 WQ
@@ -1913,7 +1950,7 @@ Hd
 mb
 WQ
 qx
-So
+Xr
 WQ
 BL
 WI
@@ -2085,7 +2122,7 @@ vy
 GA
 GA
 ao
-HJ
+mc
 gI
 pK
 pK
@@ -2095,7 +2132,7 @@ pK
 uX
 uX
 uX
-Lg
+uX
 mk
 WQ
 WQ
@@ -2171,7 +2208,7 @@ WQ
 BL
 Hd
 Hu
-aV
+WQ
 qH
 qH
 WQ
@@ -2222,7 +2259,7 @@ WQ
 WQ
 WQ
 An
-aV
+WQ
 aV
 uX
 uX
