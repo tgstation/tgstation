@@ -52,7 +52,7 @@ For a much more comprehensive guide on UpdatePaths, please see the documentation
 
 Map files for away missions are located in the `_maps/RandomZLevels` directory. Each away mission includes it's own code definitions located in `/code/modules/awaymissions/mission_code`. These files must be included and compiled with the server beforehand otherwise the server will crash upon trying to load away missions that lack their code.
 
-Away missions are _disabled_ by default. Go to the file denoted in the [Configuration](#configuration) section and "untick" (remove the #) in order to enable it for loading. If more than one away mission is uncommented, the away mission loader will randomly select one of the enabled ones to load. We also support functionality for config-only away missions, which can be set up using the `config/away_missions` folder.
+<ins>Away missions are _disabled_ by default.</ins> Go to the file denoted in the [Configuration](#configuration) section and "untick" (remove the #) in order to enable it for loading. If more than one away mission is uncommented, the away mission loader will randomly select one of the enabled ones to load. We also support functionality for config-only away missions, which can be set up using the `config/away_missions` folder.
 
 ## CONFIGURATION
 
