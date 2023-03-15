@@ -11502,6 +11502,7 @@
 	name = "MiniSat Antechamber"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/ai_monitored/turret_protected/aisat/equipment)
 "eDN" = (
@@ -13729,6 +13730,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "sci-maint-passthrough"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
 "fuo" = (
@@ -14600,6 +14602,7 @@
 	name = "MiniSat Antechamber"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/ai_monitored/turret_protected/aisat/teleporter)
 "fJK" = (
@@ -14607,9 +14610,11 @@
 	dir = 10
 	},
 /obj/structure/table/reinforced,
-/obj/item/paper_bin{
-	pixel_x = 4;
-	pixel_y = 3
+/obj/item/reagent_containers/dropper{
+	pixel_y = -3
+	},
+/obj/item/stack/sheet/mineral/plasma/thirty{
+	pixel_y = 4
 	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
@@ -15233,6 +15238,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/layer3,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "fTb" = (
@@ -27008,8 +27014,12 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/table/reinforced,
 /obj/machinery/reagentgrinder{
-	pixel_x = -9;
+	pixel_x = -11;
 	pixel_y = 8
+	},
+/obj/item/paper_bin{
+	pixel_x = 5;
+	pixel_y = 4
 	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
