@@ -55,7 +55,7 @@
 /// A strippable item for a hand
 /datum/strippable_item/hand
 	// Putting dangerous clothing in our hand is fine.
-	warn_dangerous_clothing = FALSE
+	show_visible_message = FALSE
 
 	/// Which hand?
 	var/hand_index
