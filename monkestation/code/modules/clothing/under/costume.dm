@@ -1,0 +1,16 @@
+/obj/item/clothing/under/costume/villain
+	alternative_screams = list(	'monkestation/sound/misc/robbie/robbie1.ogg',
+								'monkestation/sound/misc/robbie/robbie2.ogg',
+								'monkestation/sound/misc/robbie/robbie3.ogg',
+								'monkestation/sound/misc/robbie/robbie4.ogg',
+								'monkestation/sound/misc/robbie/robbie5.ogg',
+								'monkestation/sound/misc/robbie/robbie6.ogg',
+								'monkestation/sound/misc/robbie/robbie7.ogg',
+								'monkestation/sound/misc/robbie/robbie8.ogg',
+								'monkestation/sound/misc/robbie/robbie9.ogg',
+								'monkestation/sound/misc/robbie/robbie10.ogg',
+								'monkestation/sound/misc/robbie/robbie11.ogg',
+								'monkestation/sound/misc/robbie/robbie12.ogg',
+								'monkestation/sound/misc/robbie/robbie13.ogg',
+								'monkestation/sound/misc/robbie/robbie14.ogg',
+								'monkestation/sound/misc/robbie/robbie15.ogg')
