@@ -15766,7 +15766,6 @@
 /turf/closed/wall/r_wall,
 /area/station/hallway/secondary/command)
 "gfv" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/closed/wall,
 /area/station/command/heads_quarters/rd)
