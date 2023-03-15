@@ -1,9 +1,4 @@
 /obj/vehicle/sealed/mecha/mob_try_enter(mob/M)
-	if(!ishuman(M)) // no silicons or drones in mechas.
-		return
-	if(HAS_TRAIT(M, TRAIT_PRIMITIVE)) //no lavalizards either.
-		to_chat(M, span_warning("The knowledge to use this device eludes you!"))
-		return
 	log_message("[M] tried to move into [src].", LOG_MECHA)
 	if(dna_lock && M.has_dna())
 		var/mob/living/carbon/entering_carbon = M
