@@ -16,8 +16,8 @@
 	/// Whether or not this log should not be publically visible
 	var/secret = FALSE
 
-	/// List of all entries, in chronological order of when they were added
-	var/list/entries = list()
+	/// List of all entries for this category, in chronological order of when they were added
+	var/list/datum/log_entry/entries = list()
 
 GENERAL_PROTECT_DATUM(/datum/log_category)
 
@@ -26,30 +26,32 @@ GENERAL_PROTECT_DATUM(/datum/log_category)
 	category = LOG_CATEGORY_NOT_FOUND
 
 /// Add an entry to this category. It is very important that any data you provide doesn't hold references to anything!
-/datum/log_category/proc/add_entry(message, list/data)
-	// Entries that are added first will be at the front of the log entry
-	var/list/entry = list(
-		LOG_ENTRY_TIMESTAMP = logger.human_readable_timestamp(),
-		LOG_ENTRY_CATEGORY = category,
-		LOG_ENTRY_MESSAGE = message,
-		LOG_ENTRY_SCHEMA_VERSION = schema_version,
+/datum/log_category/proc/create_entry(message, list/data, list/semver_store)
+	var/datum/log_entry/entry = new(
+		// world state contains raw timestamp
+		timestamp = logger.human_readable_timestamp(),
+		category = category,
+		message = message,
+		data = data,
+		semver_store = semver_store,
 	)
-	if(data)
-		entry[LOG_ENTRY_DATA] = data
-	entry[LOG_ENTRY_WORLD_DATA] = world.get_world_state_for_logging()
 
 	entries += list(entry)
 	write_entry(entry)
 
 /// Allows for category specific file splitting. Needs to accept a null entry for the default file.
 /// If master_category it will always return the output of master_category.get_output_file(entry)
-/datum/log_category/proc/get_output_file(list/entry)
+/datum/log_category/proc/get_output_file(list/entry, extension = "log.json")
 	if(master_category)
-		return master_category.get_output_file(entry)
+		return master_category.get_output_file(entry, extension)
 	if(secret)
-		return "[GLOB.log_directory]/secret/[category].log.json"
-	return "[GLOB.log_directory]/[category].log.json"
+		return "[GLOB.log_directory]/secret/[category].[extension]"
+	return "[GLOB.log_directory]/[category].[extension]"
 
-/// Writes an entry to the output file for the category
-/datum/log_category/proc/write_entry(list/entry)
-	rustg_file_append("[json_encode(entry)]\n", get_output_file(entry))
+/// Writes an entry to the output file(s) for the category
+/datum/log_category/proc/write_entry(datum/log_entry/entry)
+	// config isn't loaded? assume we want human readable logs
+	if(isnull(config) || CONFIG_GET(flag/log_as_human_readable))
+		entry.write_readable_entry_to_file(get_output_file(entry, "log"))
+
+	entry.write_entry_to_file(get_output_file(entry))

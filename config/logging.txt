@@ -3,6 +3,9 @@
 ## Whether or not admin/adminprivate logging is also sent to LOG_CATEGORY_GAME for legacy log parsers
 LOGGING_COMPAT_ADMINPRIVATE
 
+## Should we also log entries as human readable
+LOG_AS_HUMAN_READABLE
+
 ### Actual logging flags
 
 ## log client access (logon/logoff)

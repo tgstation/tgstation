@@ -3619,6 +3619,7 @@
 #include "code\modules\lighting\lighting_turf.dm"
 #include "code\modules\lighting\static_lighting_area.dm"
 #include "code\modules\logging\log_category.dm"
+#include "code\modules\logging\log_entry.dm"
 #include "code\modules\logging\log_holder.dm"
 #include "code\modules\logging\categories\log_category_admin.dm"
 #include "code\modules\logging\categories\log_category_compats.dm"

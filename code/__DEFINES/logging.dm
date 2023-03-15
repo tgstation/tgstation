@@ -61,15 +61,6 @@
 #define LOG_HEADER_ROUND_ID "round-id"
 #define LOG_HEADER_SECRET "secret"
 
-// Log data keys
-#define LOG_ENTRY_CATEGORY "category"
-#define LOG_ENTRY_MESSAGE "message"
-#define LOG_ENTRY_TIMESTAMP "timestamp"
-#define LOG_ENTRY_DATA "data"
-#define LOG_ENTRY_SCHEMA_VERSION "schema-version"
-#define LOG_ENTRY_WORLD_DATA "world-state"
-#define LOG_ENTRY_SEMVER_STORE "semver-store"
-
 // Log json keys
 #define LOG_JSON_CATEGORY "category"
 #define LOG_JSON_ENTRIES "entries"

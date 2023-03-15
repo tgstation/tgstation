@@ -17,6 +17,9 @@
 	/// list of Log args waiting for processing pending log initialization
 	var/list/waiting_log_calls
 
+	/// Whether or not logging as human readable text is enabled
+	var/human_readable_enabled = FALSE
+
 	var/initialized = FALSE
 	var/shutdown = FALSE
 
@@ -31,6 +34,8 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	logging_start_timestamp = unix_timestamp_string()
 	log_categories = list()
 	disabled_categories = list()
+
+	human_readable_enabled = CONFIG_GET(flag/log_as_human_readable)
 
 	category_group_tree = assemble_log_category_tree()
 	var/config_flag
@@ -137,7 +142,10 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		LOG_HEADER_CATEGORY_LIST = contained_categories,
 		LOG_HEADER_CATEGORY = category_instance.category,
 	)
+
 	rustg_file_write("[json_encode(category_header)]\n", category_instance.get_output_file(null))
+	if(human_readable_enabled)
+		rustg_file_write("\[[human_readable_timestamp()]\] Starting up round ID [round_id].\n - -------------------------\n", category_instance.get_output_file(null, "log"))
 
 /datum/log_holder/proc/unix_timestamp_string() // pending change to rust-g
 	return RUSTG_CALL(RUST_G, "unix_timestamp")()
@@ -185,12 +193,11 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		Log(LOG_CATEGORY_NOT_FOUND, message, data)
 		CRASH("Attempted to log to a category that doesn't exist! [category]")
 
-	var/list/final_data
-	if(!isnull(data))
-		var/list/semver_list = list()
-		final_data = recursive_jsonify(data, semver_list)
-		final_data[LOG_ENTRY_SEMVER_STORE] = semver_list
-	log_category.add_entry(message, final_data)
+	var/list/semver_store = null
+	if(length(data))
+		semver_store = list()
+		data = recursive_jsonify(data, semver_store)
+	log_category.create_entry(message, data, semver_store)
 
 /// Recursively converts an associative list of datums into their jsonified(list) form
 /datum/log_holder/proc/recursive_jsonify(list/data_list, list/semvers)
