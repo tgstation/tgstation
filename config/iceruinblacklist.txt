@@ -17,6 +17,7 @@
 #_maps/RandomRuins/IceRuins/icemoon_surface_asteroid.dmm
 #_maps/RandomRuins/IceRuins/icemoon_surface_engioutpost.dmm
 #_maps/RandomRuins/IceRuins/icemoon_surface_pizza.dmm
+#_maps/RandomRuins/IceRuins/icemoon_surface_smoking_room.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_puzzle.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_abandoned_village.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_library.dmm
