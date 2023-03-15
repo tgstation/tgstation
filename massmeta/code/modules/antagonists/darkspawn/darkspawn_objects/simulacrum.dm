@@ -5,7 +5,6 @@
 	icon_state = "static"
 	density = TRUE
 	atom_integrity = 25
-	dense = FALSE
 	var/mob/living/mimicking
 
 /obj/effect/simulacrum/Initialize()
