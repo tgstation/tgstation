@@ -248,13 +248,9 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		if (sensor_mode >= SENSOR_LIVING)
 			entry["life_status"] = (tracked_living_mob.stat != DEAD)
 
-		// Whether the mob has mind or not
+		// Not revivable if blacklisted or committed suicide
 		if (sensor_mode >= SENSOR_LIVING)
-			var/mob/dead/observer/ghost = tracked_living_mob.get_ghost(TRUE, TRUE)
-			if (tracked_living_mob.key || !tracked_living_mob.getorgan(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse)
-				entry["is_revivable"] = TRUE
-			else
-				entry["is_revivable"] = FALSE
+			entry["is_revivable"] = !(tracked_living_mob.get_ghost.can_defib() == DEFIB_FAIL_BLACKLISTED || tracked_living_mob.get_ghost.can_defib() == DEFIB_FAIL_SUICIDE || tracked_living_mob.get_ghost.can_defib() == DEFIB_FAIL_NO_INTELLIGENCE)
 
 		// Damage
 		if (sensor_mode >= SENSOR_VITALS)
