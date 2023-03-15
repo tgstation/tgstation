@@ -3,7 +3,9 @@
 /turf/template_noop,
 /area/template_noop)
 "c" = (
-/obj/item/gun/ballistic/shotgun/toy/crossbow,
+/obj/item/gun/ballistic/shotgun/toy/crossbow{
+	name = "huntress boltcaster"
+	},
 /turf/open/floor/mineral/titanium/white/airless,
 /area/ruin/space/has_grav)
 "h" = (
