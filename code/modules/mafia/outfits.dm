@@ -31,6 +31,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	suit = /obj/item/clothing/suit/costume/ianshirt
 	uniform = /obj/item/clothing/under/pants/jeans
+	shoes = /obj/item/clothing/shoes/sandal
 
 /datum/outfit/mafia/snowy
 	name = "Mafia Outwear"
@@ -42,6 +43,7 @@
 /datum/outfit/mafia/gothic
 	name = "Mafia Castlegoer"
 	glasses = /obj/item/clothing/glasses/monocle
+	gloves = /obj/item/clothing/gloves/color/white
 	shoes = /obj/item/clothing/shoes/laceup
 	suit = /obj/item/clothing/suit/costume/gothcoat
 	uniform = /obj/item/clothing/under/suit/black
