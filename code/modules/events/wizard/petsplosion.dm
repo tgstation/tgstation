@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(petsplosion_candidates, typecacheof(list(
 /// Makes a duplicate of a valid mob and increments our "too many mobs" counter
 /datum/round_event/wizard/petsplosion/proc/duplicate_mob(mob/living/dupe_animal)
 	if(!is_type_in_typecache(dupe_animal, GLOB.petsplosion_candidates) || !is_station_level(dupe_animal.z))
-		continue
+		return
 	new dupe_animal.type(dupe_animal.loc)
 	mobs_duped++
 	if(mobs_duped > 400)
