@@ -1,0 +1,1410 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"aG" = (
+/obj/machinery/door/window/southright,
+/obj/structure/fans/tiny,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"aV" = (
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"aX" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"ba" = (
+/obj/machinery/door/window/southleft,
+/obj/structure/fans/tiny,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"bn" = (
+/obj/structure/table,
+/obj/item/storage/box/donkpockets/donkpocketpizza,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"bE" = (
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"cd" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"ce" = (
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/structure/closet/crate{
+	name = "lifejackets"
+	},
+/obj/structure/window/reinforced/spawner/east,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"cn" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/table,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"cZ" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"dV" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/storage/box/donkpockets/donkpocketteriyaki,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"eh" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"gr" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"gT" = (
+/obj/machinery/stasis,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"gZ" = (
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -1
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"hl" = (
+/obj/machinery/computer/communications{
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"hp" = (
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"hq" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"hz" = (
+/turf/template_noop,
+/area/shuttle/escape)
+"iG" = (
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"iH" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/recharge_station,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"jG" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"kf" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/table,
+/obj/item/storage/firstaid/o2{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/firstaid/toxin,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"kZ" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/computer/security,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"lD" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"mH" = (
+/obj/machinery/door/window/westleft{
+	name = "Bridge Deliveries";
+	req_access_txt = "19"
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"nz" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/table,
+/obj/item/hand_labeler_refill,
+/obj/item/pen,
+/obj/item/folder/yellow,
+/obj/item/clipboard,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"nG" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/table,
+/obj/machinery/recharger{
+	active_power_usage = 0;
+	idle_power_usage = 0;
+	use_power = 0
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"ou" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"pb" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/stasis,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"pj" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/table,
+/obj/item/storage/box/donkpockets/donkpocketspicy,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"qp" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"qw" = (
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"qY" = (
+/obj/machinery/door/window/westleft,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"rv" = (
+/obj/machinery/computer/warrant{
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"rF" = (
+/obj/structure/table,
+/obj/item/folder/blue,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"tB" = (
+/obj/structure/tank_dispenser/oxygen{
+	layer = 2.7;
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"uV" = (
+/obj/machinery/door/window/northleft{
+	name = "Reception Window"
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"vQ" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/rack,
+/obj/item/clothing/head/hardhat/red,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/suit/fire/firefighter,
+/obj/item/tank/internals/oxygen/red,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"wa" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/table,
+/obj/item/restraints/handcuffs{
+	pixel_y = 3
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"wz" = (
+/obj/structure/table,
+/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/bruise_pack,
+/obj/item/stack/medical/ointment,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"wD" = (
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/stack/cable_coil,
+/obj/item/wirecutters,
+/obj/item/weldingtool,
+/obj/item/wrench,
+/obj/item/crowbar,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"wH" = (
+/obj/structure/chair/office,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"wJ" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"xS" = (
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"xU" = (
+/obj/machinery/door/window/westleft{
+	dir = 1;
+	name = "Bridge Deliveries";
+	req_access_txt = "19"
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"yr" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"yL" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/closet/crate{
+	name = "emergency supplies crate"
+	},
+/obj/item/radio,
+/obj/item/wrench,
+/obj/item/crowbar,
+/obj/item/flashlight/flare{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/flashlight/flare{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/toolbox/emergency,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"zv" = (
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"zy" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Ae" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"An" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/folder/red{
+	pixel_x = 3
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"BF" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"BU" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/sink,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"CI" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"CX" = (
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Dj" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/emergency{
+	pixel_y = 3
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Eh" = (
+/obj/machinery/holopad,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"El" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/table,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/storage/firstaid/fire,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"EW" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/reagent_dispensers/foamtank,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Fn" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Fu" = (
+/obj/item/etherealballdeployer,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Fz" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Gb" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Gg" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/recharge_station,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"GB" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"GN" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"ID" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"IZ" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Jo" = (
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/cautery,
+/obj/item/surgicaldrill,
+/obj/item/clothing/mask/surgical,
+/obj/item/clothing/gloves/color/latex,
+/obj/item/retractor{
+	pixel_x = 4
+	},
+/obj/item/hemostat{
+	pixel_x = -4
+	},
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/obj/item/circular_saw,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Ka" = (
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"KC" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/closet/crate/medical{
+	name = "medical crate"
+	},
+/mob/living/simple_animal/bot/medbot{
+	name = "\improper emergency medibot";
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/lazarus_injector,
+/obj/item/healthanalyzer{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/firstaid/toxin{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/item/storage/firstaid/o2{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Lj" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/computer/crew,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Lv" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"LA" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"LH" = (
+/obj/machinery/door/window/northright,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"MN" = (
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = 7
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"MP" = (
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/glass/bottle/charcoal{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/glass/bottle/charcoal{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = 4;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"MX" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/table,
+/obj/item/storage/box/handcuffs{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Nn" = (
+/obj/machinery/door/window/eastright{
+	base_state = "left";
+	dir = 1;
+	icon_state = "left";
+	name = "Security Delivery";
+	req_access_txt = "1"
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Np" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"NE" = (
+/obj/machinery/door/window/northleft{
+	name = "Reception Window";
+	dir = 8
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Oi" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Rn" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Rs" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/shower{
+	pixel_y = -8
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Rw" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Su" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/table,
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Td" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Tf" = (
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/obj/machinery/space_heater,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Tu" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"TQ" = (
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"TY" = (
+/obj/structure/table,
+/obj/machinery/recharger{
+	active_power_usage = 0;
+	idle_power_usage = 0;
+	pixel_y = 4;
+	use_power = 0
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"UB" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/defibrillator/loaded,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Vi" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/closet/emcloset,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Vz" = (
+/obj/structure/table,
+/obj/item/restraints/handcuffs{
+	pixel_y = 3
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Wj" = (
+/obj/machinery/door/window/northleft{
+	name = "Reception Window"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Wp" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/north{
+	dir = 2
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"WS" = (
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/table,
+/obj/item/phone{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/cigbutt/cigarbutt{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"WT" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"WV" = (
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/structure/closet/crate{
+	name = "lifejackets"
+	},
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Xl" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Xy" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"XV" = (
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/structure/table/optable,
+/obj/item/surgical_drapes,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"YD" = (
+/obj/structure/window/reinforced/spawner/east{
+	dir = 8
+	},
+/obj/structure/table/optable,
+/obj/item/surgical_drapes,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Zb" = (
+/obj/machinery/door/window/northleft{
+	name = "Reception Window"
+	},
+/obj/docking_port/mobile/emergency{
+	dir = 2;
+	dwidth = 5;
+	height = 14;
+	name = "Meta emergency shuttle";
+	width = 25
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+hz
+hz
+lD
+lD
+lD
+qw
+lD
+lD
+qw
+lD
+lD
+lD
+hz
+hz
+"}
+(2,1,1) = {"
+hz
+Ka
+WT
+WT
+WT
+TQ
+WT
+WT
+TQ
+WT
+WT
+WT
+Ka
+hz
+"}
+(3,1,1) = {"
+WS
+iG
+hl
+LA
+aV
+rv
+Dj
+TY
+Xy
+Rw
+Rw
+Rw
+qw
+CI
+"}
+(4,1,1) = {"
+xS
+qw
+wH
+ID
+ID
+wJ
+qw
+bn
+xS
+qw
+qw
+qw
+qw
+Fz
+"}
+(5,1,1) = {"
+Lj
+qw
+qw
+qw
+qw
+qw
+qw
+zv
+xS
+qw
+qw
+qw
+qw
+ba
+"}
+(6,1,1) = {"
+kZ
+wJ
+qw
+qw
+qw
+qw
+wH
+rF
+Tu
+qY
+yr
+qw
+qw
+aG
+"}
+(7,1,1) = {"
+Su
+Vz
+cZ
+Fu
+qw
+Fu
+cZ
+qw
+xU
+jG
+xS
+aX
+aX
+Fz
+"}
+(8,1,1) = {"
+Tu
+bE
+MN
+bE
+mH
+bE
+MN
+bE
+Tu
+CX
+CX
+CX
+CX
+An
+"}
+(9,1,1) = {"
+Vi
+qw
+Rw
+Rw
+Rw
+Rw
+qw
+ou
+xS
+qw
+qw
+qw
+qw
+wa
+"}
+(10,1,1) = {"
+xS
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+Nn
+qw
+qw
+qw
+qw
+nG
+"}
+(11,1,1) = {"
+GN
+qw
+qw
+Xl
+aj
+gr
+qw
+Xl
+xS
+qw
+qw
+qw
+qw
+MX
+"}
+(12,1,1) = {"
+Wj
+qw
+qw
+Xl
+Wp
+gr
+qw
+Xl
+xS
+Np
+Np
+Np
+Np
+pj
+"}
+(13,1,1) = {"
+Rn
+qw
+qw
+Xl
+Wp
+gr
+qw
+Fn
+UB
+MP
+XV
+YD
+Jo
+dV
+"}
+(14,1,1) = {"
+Wj
+qw
+qw
+Xl
+Wp
+gr
+qw
+Xl
+xS
+qw
+qw
+qw
+qw
+cn
+"}
+(15,1,1) = {"
+GN
+qw
+qw
+Xl
+IZ
+gr
+qw
+Xl
+Rs
+qw
+qw
+qw
+qw
+BU
+"}
+(16,1,1) = {"
+GN
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+uV
+qw
+qw
+qw
+qw
+El
+"}
+(17,1,1) = {"
+GN
+qw
+qw
+Xl
+qp
+gr
+qw
+Xl
+pb
+qw
+gT
+qw
+qw
+kf
+"}
+(18,1,1) = {"
+GN
+qw
+qw
+Xl
+eh
+gr
+qw
+Xl
+Lv
+wD
+gZ
+NE
+hp
+Oi
+"}
+(19,1,1) = {"
+Rn
+qw
+qw
+Xl
+eh
+gr
+qw
+Fn
+EW
+qw
+qw
+qw
+qw
+vQ
+"}
+(20,1,1) = {"
+Zb
+qw
+qw
+Xl
+eh
+gr
+qw
+Xl
+GB
+qw
+qw
+qw
+qw
+Tf
+"}
+(21,1,1) = {"
+GN
+qw
+qw
+Xl
+Td
+gr
+qw
+Xl
+Ae
+qw
+qw
+qw
+qw
+yL
+"}
+(22,1,1) = {"
+Wj
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+uV
+qw
+qw
+qw
+qw
+KC
+"}
+(23,1,1) = {"
+GN
+qw
+Np
+Np
+Np
+Np
+qw
+qw
+LH
+qw
+qw
+qw
+qw
+cd
+"}
+(24,1,1) = {"
+GN
+qw
+qw
+qw
+qw
+Eh
+qw
+wz
+Gg
+qw
+qw
+qw
+qw
+nz
+"}
+(25,1,1) = {"
+Gb
+ce
+tB
+WV
+TQ
+TQ
+TQ
+zy
+iH
+BF
+BF
+BF
+BF
+hq
+"}

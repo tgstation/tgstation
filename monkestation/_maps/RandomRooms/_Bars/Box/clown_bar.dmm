@@ -1,0 +1,708 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aK" = (
+/obj/structure/table/wood/bar,
+/obj/item/bikehorn{
+	pixel_y = 9
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"bG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 9
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/crew_quarters/bar)
+"bI" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"bV" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/disposaloutlet,
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"dY" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/glass/rag,
+/obj/machinery/chem_dispenser/drinks/beer{
+	pixel_y = 11
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"ee" = (
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/crew_quarters/bar)
+"fP" = (
+/obj/structure/table/wood,
+/obj/item/clothing/mask/gas/clown_hat,
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"gG" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/floorpill{
+	pixel_x = 1
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"hD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/obj/structure/chair/comfy/brown,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/crew_quarters/bar)
+"io" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/closed/wall/mineral/bananium/zero_return,
+/area/crew_quarters/bar)
+"iD" = (
+/obj/structure/chair/comfy/lime{
+	dir = 4
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"iE" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/mob/living/carbon/monkey/punpun,
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"iT" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/crew_quarters/bar)
+"jd" = (
+/obj/structure/table/wood,
+/obj/item/toy/crayon/spraycan{
+	pixel_y = 11
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"jx" = (
+/obj/structure/chair/old{
+	dir = 1
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/crew_quarters/bar)
+"lb" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"mh" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/obj/structure/chair/sofa/left,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/crew_quarters/bar)
+"mn" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/crew_quarters/bar)
+"nl" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/crew_quarters/bar)
+"nu" = (
+/obj/effect/landmark/event_spawn,
+/obj/effect/spawner/xmastree,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 5
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"oi" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/deliveryChute{
+	dir = 8
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/crew_quarters/bar)
+"qE" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/deliveryChute{
+	dir = 4
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/crew_quarters/bar)
+"sj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"sT" = (
+/obj/structure/table/wood,
+/obj/item/book/manual/wiki/barman_recipes{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"tk" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal/deliveryChute,
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"tC" = (
+/obj/effect/landmark/start/bartender,
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"uK" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 2
+	},
+/obj/structure/disposaloutlet{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"wb" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"xs" = (
+/turf/closed/wall/mineral/bananium/zero_return,
+/area/crew_quarters/bar)
+"xT" = (
+/obj/structure/table/wood/bar,
+/obj/item/storage/box/drinkingglasses{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"zf" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/preopen{
+	id = "barShutters";
+	name = "privacy shutters"
+	},
+/obj/machinery/door/airlock/bananium/glass,
+/obj/machinery/door/airlock/bananium/glass/no_return,
+/obj/item/grown/bananapeel,
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
+"zh" = (
+/obj/structure/table/wood,
+/obj/item/bikehorn/airhorn{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"zC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/crew_quarters/bar)
+"zH" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/happiness,
+/obj/item/storage/pill_bottle/happiness{
+	pixel_y = 6;
+	pixel_x = 7
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"Ch" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"CW" = (
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/crew_quarters/bar)
+"DW" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_y = 17
+	},
+/obj/item/reagent_containers/food/condiment/saltshaker,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = 9
+	},
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -9
+	},
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_y = 17;
+	pixel_x = 9
+	},
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_y = 17;
+	pixel_x = -9
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"Et" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 6
+	},
+/obj/structure/chair/sofa/right,
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/crew_quarters/bar)
+"Ew" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/deliveryChute{
+	dir = 8
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/crew_quarters/bar)
+"Fc" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/crew_quarters/bar)
+"Fd" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"Gk" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -1
+	},
+/turf/closed/wall/mineral/bananium/zero_return,
+/area/crew_quarters/bar)
+"Gt" = (
+/obj/structure/chair/old,
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"Hs" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 2
+	},
+/obj/machinery/disposal/deliveryChute{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"HD" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/crew_quarters/bar)
+"II" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/deliveryChute{
+	dir = 4
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/crew_quarters/bar)
+"KO" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/preopen{
+	id = "barShutters";
+	name = "privacy shutters"
+	},
+/obj/machinery/door/airlock/bananium/glass/no_return,
+/obj/item/grown/bananapeel,
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
+"LM" = (
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/crew_quarters/bar)
+"Mk" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"Mv" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/structure/table/wood,
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"MA" = (
+/obj/structure/table/wood,
+/obj/item/food/pie/cream{
+	pixel_x = 1;
+	pixel_y = 7
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"MB" = (
+/obj/structure/sign/plaques/deempisi{
+	pixel_x = -28;
+	pixel_y = -4
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/crew_quarters/bar)
+"NI" = (
+/obj/structure/table/wood/bar,
+/obj/machinery/button/door{
+	id = "barShutters";
+	name = "bar shutters"
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"NM" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"NX" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/crew_quarters/bar)
+"On" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"PY" = (
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"Qg" = (
+/obj/structure/chair/comfy/teal{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"Qp" = (
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"Qy" = (
+/turf/open/floor/fakepit,
+/area/crew_quarters/bar)
+"RQ" = (
+/obj/machinery/vending/boozeomat,
+/turf/closed/wall/mineral/bananium,
+/area/crew_quarters/bar)
+"Sg" = (
+/obj/structure/table/wood,
+/obj/item/clothing/mask/gas/sexyclown,
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"SA" = (
+/obj/structure/table/wood/bar,
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"SW" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"Tz" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"UI" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks{
+	pixel_y = 12
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"VK" = (
+/obj/structure/chair/comfy/beige{
+	dir = 1
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/crew_quarters/bar)
+"WE" = (
+/obj/structure/sign/barsign,
+/turf/closed/wall/mineral/bananium/zero_return,
+/area/crew_quarters/bar)
+"Xf" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_y = 6
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"Xr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"Yo" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/chair/comfy,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/crew_quarters/bar)
+"ZI" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "barShutters";
+	name = "privacy shutters"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/crew_quarters/bar)
+"ZK" = (
+/obj/structure/table/wood,
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+"ZU" = (
+/obj/structure/table/wood/bar,
+/obj/item/toy/crayon/spraycan{
+	pixel_x = 2;
+	pixel_y = 11
+	},
+/turf/open/floor/mineral/bananium/no_return,
+/area/crew_quarters/bar)
+
+(1,1,1) = {"
+xs
+xs
+ZI
+Gk
+zf
+xs
+ZI
+xs
+xs
+"}
+(2,1,1) = {"
+Tz
+bV
+Qp
+NM
+Qp
+Hs
+bV
+Qy
+xs
+"}
+(3,1,1) = {"
+HD
+LM
+Qp
+iD
+Qp
+Qp
+ee
+CW
+xs
+"}
+(4,1,1) = {"
+II
+LM
+ZK
+Xf
+NI
+jd
+ee
+oi
+xs
+"}
+(5,1,1) = {"
+SW
+Gt
+zh
+Xr
+tC
+gG
+PY
+wb
+xs
+"}
+(6,1,1) = {"
+Fc
+Et
+Mv
+nu
+Qp
+Xf
+LM
+LM
+KO
+"}
+(7,1,1) = {"
+qE
+mh
+SA
+Fd
+Qp
+fP
+jx
+Ew
+ZI
+"}
+(8,1,1) = {"
+Qp
+On
+zH
+dY
+Qp
+sT
+Qp
+wb
+xs
+"}
+(9,1,1) = {"
+LM
+hD
+ZK
+UI
+tC
+xT
+VK
+ee
+WE
+"}
+(10,1,1) = {"
+nl
+bG
+ZK
+RQ
+Qp
+MA
+ee
+oi
+xs
+"}
+(11,1,1) = {"
+io
+sj
+Sg
+NM
+Qp
+ZK
+Qg
+wb
+xs
+"}
+(12,1,1) = {"
+MB
+Yo
+ZU
+Qp
+Qp
+aK
+NX
+LM
+xs
+"}
+(13,1,1) = {"
+iT
+zC
+ZK
+DW
+Qp
+ZK
+mn
+Ew
+xs
+"}
+(14,1,1) = {"
+bI
+lb
+tk
+Ch
+Qp
+uK
+Mk
+bI
+xs
+"}
+(15,1,1) = {"
+Qp
+Qp
+Qp
+iE
+Qp
+Qp
+Qp
+Qp
+xs
+"}

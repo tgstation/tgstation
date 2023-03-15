@@ -1,0 +1,92 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/turf/closed/wall/mineral/titanium/survival,
+/area/shuttle/mining)
+"b" = (
+/obj/docking_port/mobile{
+	dwidth = 1;
+	height = 4;
+	id = "mining";
+	name = "mining shuttle";
+	port_direction = 2;
+	width = 3
+	},
+/obj/machinery/door/airlock/survival_pod/glass,
+/obj/structure/fans/tiny,
+/turf/open/floor/pod,
+/area/shuttle/mining)
+"k" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/west,
+/turf/open/floor/pod,
+/area/shuttle/mining)
+"n" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/west,
+/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 9
+	},
+/turf/open/floor/pod,
+/area/shuttle/mining)
+"o" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/east,
+/turf/open/floor/pod,
+/area/shuttle/mining)
+"u" = (
+/obj/machinery/light/small,
+/obj/structure/ore_box,
+/obj/structure/window/reinforced/survival_pod/spawner/east,
+/turf/open/floor/pod,
+/area/shuttle/mining)
+"w" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/east,
+/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 5
+	},
+/turf/open/floor/pod,
+/area/shuttle/mining)
+"N" = (
+/turf/open/floor/pod,
+/area/shuttle/mining)
+"W" = (
+/obj/structure/closet/crate,
+/obj/structure/window/reinforced/survival_pod/spawner/west,
+/turf/open/floor/pod,
+/area/shuttle/mining)
+"Y" = (
+/obj/machinery/computer/shuttle_flight/mining,
+/obj/structure/window/reinforced/survival_pod/spawner/north,
+/turf/open/floor/pod,
+/area/shuttle/mining)
+
+(1,1,1) = {"
+n
+k
+W
+a
+"}
+(2,1,1) = {"
+Y
+N
+N
+b
+"}
+(3,1,1) = {"
+w
+o
+u
+a
+"}

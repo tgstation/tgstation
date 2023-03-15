@@ -1,0 +1,510 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"cl" = (
+/obj/item/trash/candle,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"ct" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"dk" = (
+/obj/effect/spawner/lootdrop,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"ea" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"eh" = (
+/obj/item/trash/syndi_cakes,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"gf" = (
+/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"gQ" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/template_noop)
+"ht" = (
+/obj/machinery/power/terminal,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"iK" = (
+/obj/item/trash/candle,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"iT" = (
+/obj/item/trash/candle,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/plating,
+/area/template_noop)
+"jJ" = (
+/turf/closed/wall,
+/area/template_noop)
+"ku" = (
+/obj/item/trash/waffles,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"kD" = (
+/obj/item/trash/syndi_cakes,
+/obj/item/trash/candle,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"lq" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"mV" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"mZ" = (
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"nq" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"nF" = (
+/obj/effect/spawner/lootdrop/ruinloot/science,
+/turf/open/floor/plating,
+/area/template_noop)
+"oe" = (
+/obj/effect/spawner/lootdrop,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"ok" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"pl" = (
+/obj/item/trash/pistachios,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"pD" = (
+/obj/structure/bonfire/prelit,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"qj" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"qv" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"rc" = (
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/turf/open/floor/plating,
+/area/template_noop)
+"rQ" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"si" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"ty" = (
+/obj/effect/spawner/lootdrop/ruinloot/science,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"vV" = (
+/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"wl" = (
+/obj/item/trash/energybar,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"wW" = (
+/obj/effect/spawner/lootdrop,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"xe" = (
+/obj/item/trash/candle,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"xn" = (
+/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/item/trash/candle,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"yv" = (
+/obj/effect/spawner/lootdrop/ruinloot/important,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"yI" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"zj" = (
+/obj/effect/spawner/lootdrop,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"zq" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"AE" = (
+/obj/item/trash/candle,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"CL" = (
+/obj/machinery/power/smes,
+/turf/open/floor/plating,
+/area/template_noop)
+"DI" = (
+/obj/effect/spawner/lootdrop/clowntrap,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/template_noop)
+"EY" = (
+/obj/structure/bonfire/prelit,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"Fm" = (
+/obj/effect/spawner/lootdrop/ruinloot/science,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"HA" = (
+/obj/effect/spawner/lootdrop/clowntrap,
+/turf/open/floor/plating,
+/area/template_noop)
+"Ij" = (
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/turf/open/floor/plating,
+/area/template_noop)
+"Ks" = (
+/obj/item/trash/candle,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"KD" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"KL" = (
+/obj/item/trash/candy,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"KZ" = (
+/obj/effect/spawner/lootdrop/ruinloot/science,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"Lc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"LE" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"LT" = (
+/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"MN" = (
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"MV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"Pl" = (
+/obj/effect/spawner/lootdrop/ruinloot/important,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"PO" = (
+/obj/item/trash/pistachios,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"QD" = (
+/obj/item/trash/tray,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"Rg" = (
+/obj/effect/spawner/lootdrop,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"Ro" = (
+/obj/item/trash/candy,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"RL" = (
+/obj/effect/spawner/lootdrop,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"Sk" = (
+/obj/item/trash/syndi_cakes,
+/obj/item/trash/candle,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"SM" = (
+/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/item/trash/candle,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"Uu" = (
+/obj/item/trash/candle,
+/turf/open/floor/plating,
+/area/template_noop)
+"VL" = (
+/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"We" = (
+/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"WH" = (
+/obj/effect/spawner/lootdrop/clowntrap,
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"XF" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"XK" = (
+/obj/item/trash/popcorn,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"Yt" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"YO" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/template_noop)
+"YY" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/plating,
+/area/template_noop)
+"ZA" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/plating,
+/area/template_noop)
+"ZG" = (
+/obj/item/trash/candle,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+si
+nF
+PO
+YY
+gf
+rQ
+YO
+gQ
+mV
+MN
+"}
+(2,1,1) = {"
+Yt
+wW
+Pl
+ea
+dk
+Fm
+zq
+RL
+qv
+XF
+"}
+(3,1,1) = {"
+KZ
+vV
+EY
+SM
+AE
+Sk
+kD
+xn
+nq
+VL
+"}
+(4,1,1) = {"
+LE
+qv
+QD
+AE
+jJ
+jJ
+jJ
+AE
+XK
+XF
+"}
+(5,1,1) = {"
+oe
+wl
+ht
+CL
+jJ
+rc
+Ij
+cl
+pD
+Lc
+"}
+(6,1,1) = {"
+lq
+Ro
+ok
+Ks
+jJ
+jJ
+jJ
+iK
+wW
+YY
+"}
+(7,1,1) = {"
+ok
+zj
+Fm
+xe
+iT
+ZG
+Uu
+xe
+ty
+mV
+"}
+(8,1,1) = {"
+qj
+ZA
+ku
+Rg
+We
+yI
+LT
+HA
+KL
+gQ
+"}
+(9,1,1) = {"
+ok
+DI
+rQ
+zq
+XF
+eh
+ct
+XF
+yv
+KD
+"}
+(10,1,1) = {"
+pl
+pD
+LT
+MV
+WH
+mZ
+zj
+si
+mZ
+Yt
+"}

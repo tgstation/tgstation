@@ -1,0 +1,106 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/mask/gas/clown_hat,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/open/floor/plasteel,
+/area/template_noop)
+"c" = (
+/obj/effect/spawner/lootdrop,
+/turf/open/floor/plasteel,
+/area/template_noop)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop,
+/turf/open/floor/plasteel,
+/area/template_noop)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/mask/gas/mime,
+/turf/open/floor/plasteel,
+/area/template_noop)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/mask/frog/cursed,
+/turf/open/floor/plasteel,
+/area/template_noop)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop/minor/twentyfive_percent_cyborg_mask,
+/turf/open/floor/plating,
+/area/template_noop)
+"h" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/template_noop)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/mask/gas/space_ninja,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/open/floor/plating,
+/area/template_noop)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/crate_spawner,
+/turf/open/floor/plating,
+/area/template_noop)
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/mask/gas/tiki_mask,
+/turf/open/floor/plating,
+/area/template_noop)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/mask/bandana/blue,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/open/floor/plating,
+/area/template_noop)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop,
+/turf/open/floor/plasteel,
+/area/template_noop)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/mask/joy,
+/turf/open/floor/plasteel,
+/area/template_noop)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/mask/gas/cyborg,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+j
+d
+g
+A
+C
+"}
+(2,1,1) = {"
+b
+e
+h
+j
+w
+"}
+(3,1,1) = {"
+c
+f
+i
+k
+z
+"}

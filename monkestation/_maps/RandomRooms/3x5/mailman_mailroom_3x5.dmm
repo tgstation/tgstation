@@ -1,0 +1,149 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/bedsheet/random,
+/obj/structure/bed,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+	pixel_x = -3;
+	pixel_y = 19
+	},
+/obj/item/storage/pill_bottle/zoom{
+	pixel_y = 6;
+	desc = "This can't be good for me, but I feel great!""This can't be good for me, but I feel great!";
+	name = "Health Pills"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_y = 20;
+	pixel_x = 7
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/carpet/grimy,
+/area/template_noop)
+"e" = (
+/obj/structure/table/wood,
+/obj/item/stack/packageWrap{
+	pixel_y = 6
+	},
+/obj/item/stack/packageWrap{
+	pixel_y = 14
+	},
+/obj/item/wirecutters,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/template_noop)
+"i" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/grimy,
+/area/template_noop)
+"k" = (
+/obj/structure/table/wood,
+/obj/item/mail/junkmail{
+	pixel_x = 4
+	},
+/obj/item/mail/junkmail{
+	pixel_x = 1;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/flashlight/lamp,
+/turf/open/floor/wood,
+/area/template_noop)
+"p" = (
+/obj/structure/chair/wood{
+	dir = 1;
+	pixel_x = 1;
+	pixel_y = 16
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/pistachios{
+	pixel_y = -6;
+	pixel_x = 17
+	},
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/wood,
+/area/template_noop)
+"u" = (
+/obj/structure/table/wood,
+/obj/item/mail/junkmail{
+	pixel_y = 8
+	},
+/obj/item/mail/junkmail,
+/obj/item/shovel{
+	pixel_x = 2;
+	pixel_y = -11
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/wood,
+/area/template_noop)
+"v" = (
+/turf/closed/wall,
+/area/template_noop)
+"D" = (
+/obj/effect/landmark/start/randommaint/mailman,
+/obj/item/food/pizzaslice/meat{
+	pixel_x = 11;
+	pixel_y = 14;
+	desc = "Magically cures light wounds when eaten""Magically cures light wounds when eaten""Magically cures light wounds when eaten"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/broken{
+	dir = 1
+	},
+/obj/item/trash/cheesie,
+/turf/open/floor/carpet/grimy,
+/area/template_noop)
+"F" = (
+/obj/structure/table/wood,
+/obj/item/hand_labeler{
+	pixel_x = 10;
+	pixel_y = 12
+	},
+/obj/item/storage/bag/mail{
+	pixel_y = 1;
+	pixel_x = -5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood,
+/area/template_noop)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/grimy,
+/area/template_noop)
+"T" = (
+/obj/structure/table/wood,
+/obj/item/mail/junkmail{
+	pixel_x = -3
+	},
+/obj/item/mail/junkmail{
+	pixel_y = 7
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/wood,
+/area/template_noop)
+
+(1,1,1) = {"
+k
+e
+R
+v
+a
+"}
+(2,1,1) = {"
+T
+p
+R
+v
+D
+"}
+(3,1,1) = {"
+u
+F
+R
+i
+R
+"}

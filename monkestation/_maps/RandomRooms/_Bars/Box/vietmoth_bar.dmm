@@ -1,0 +1,647 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aV" = (
+/obj/structure/flora/rock/pile/largejungle,
+/obj/structure/flora/tree/jungle,
+/turf/open/floor/plating/dirt/jungle,
+/area/crew_quarters/bar)
+"bG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 9
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"bI" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"bS" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/water/jungle,
+/area/crew_quarters/bar)
+"cQ" = (
+/obj/structure/flora/junglebush,
+/turf/open/floor/plating/dirt/jungle,
+/area/crew_quarters/bar)
+"do" = (
+/obj/structure/flora/grass/jungle/b,
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"fM" = (
+/obj/machinery/door/airlock/wood/glass{
+	req_access_txt = "25"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Bar Security Shutters";
+	desc = "Stay off my FUCKING counter.";
+	id = "barsec"
+	},
+/turf/open/floor/plating/dirt/jungle/dark,
+/area/crew_quarters/bar)
+"fP" = (
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"gd" = (
+/obj/effect/decal/cleanable/generic,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/machinery/light,
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"hv" = (
+/obj/structure/railing/corner,
+/turf/open/water/jungle,
+/area/crew_quarters/bar)
+"hG" = (
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating/dirt/jungle/wasteland,
+/area/crew_quarters/bar)
+"if" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/water/jungle,
+/area/crew_quarters/bar)
+"io" = (
+/obj/structure/flora/grass/jungle,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/structure/punji_sticks,
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"it" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"iB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"iP" = (
+/obj/effect/mine/sound/bwoink,
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"iT" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"jq" = (
+/obj/structure/railing,
+/turf/open/floor/plating/dirt/jungle/dark,
+/area/crew_quarters/bar)
+"kX" = (
+/obj/effect/landmark/start/bartender,
+/turf/open/floor/plating/dirt/jungle/dark,
+/area/crew_quarters/bar)
+"lR" = (
+/obj/structure/sign/poster/official/moth7,
+/turf/closed/wall/mineral/wood,
+/area/crew_quarters/bar)
+"mf" = (
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating/dirt/jungle,
+/area/crew_quarters/bar)
+"mh" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/turf/open/water/jungle,
+/area/crew_quarters/bar)
+"mn" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"mU" = (
+/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/junglebush/b,
+/turf/open/floor/plating/dirt/jungle,
+/area/crew_quarters/bar)
+"nl" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 9
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"nu" = (
+/obj/effect/landmark/event_spawn,
+/obj/effect/spawner/xmastree,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 9
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"nU" = (
+/obj/structure/bonfire/prelit,
+/turf/open/floor/plating/dirt/jungle/dark,
+/area/crew_quarters/bar)
+"on" = (
+/obj/structure/flora/grass/jungle/b,
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"pG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"qa" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/obj/structure/flora/junglebush/large,
+/obj/item/toy/plush/moth,
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"qp" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"qL" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"uJ" = (
+/obj/effect/mine/sound/bwoink,
+/obj/item/spear,
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"vp" = (
+/obj/structure/sign/poster/official/moth1,
+/turf/closed/wall/mineral/wood,
+/area/crew_quarters/bar)
+"xF" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/wood,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/dirt/jungle,
+/area/crew_quarters/bar)
+"yk" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"yM" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"zf" = (
+/turf/closed/wall/mineral/wood,
+/area/crew_quarters/bar)
+"zR" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/plating/dirt/jungle/dark,
+/area/crew_quarters/bar)
+"AB" = (
+/obj/structure/sign/plaques/deempisi{
+	pixel_x = -28;
+	pixel_y = -4
+	},
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 1
+	},
+/turf/open/floor/plating/dirt/jungle/dark,
+/area/crew_quarters/bar)
+"Cg" = (
+/obj/effect/landmark/start/assistant,
+/obj/structure/chair/stool/bar,
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"DW" = (
+/obj/effect/landmark/start/assistant,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/dirt/jungle/dark,
+/area/crew_quarters/bar)
+"Et" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 6
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"Ew" = (
+/obj/structure/chair/stool/bar,
+/obj/effect/decal/cleanable/ash{
+	pixel_y = 6;
+	pixel_x = 10
+	},
+/obj/item/trash/can{
+	pixel_y = -5;
+	pixel_x = 21
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"EL" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/glass/rag{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/machinery/light/small/broken{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Bar Security Shutters";
+	desc = "Stay off my FUCKING counter.";
+	id = "barsec"
+	},
+/turf/open/floor/plating/dirt/jungle,
+/area/crew_quarters/bar)
+"Fd" = (
+/turf/open/water/jungle,
+/area/crew_quarters/bar)
+"Fx" = (
+/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/junglebush,
+/turf/open/floor/plating/dirt/jungle,
+/area/crew_quarters/bar)
+"Ge" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/turf/open/water/jungle,
+/area/crew_quarters/bar)
+"GO" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Bar Security Shutters";
+	desc = "Stay off my FUCKING counter.";
+	id = "barsec"
+	},
+/turf/open/floor/plating/dirt/jungle/dark,
+/area/crew_quarters/bar)
+"GR" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/item/melee/roastingstick,
+/obj/item/food/sausage,
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"Hh" = (
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/dirt/jungle,
+/area/crew_quarters/bar)
+"IE" = (
+/obj/effect/landmark/start/assistant,
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/dirt/jungle/dark,
+/area/crew_quarters/bar)
+"IH" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 1
+	},
+/turf/open/floor/plating/dirt/jungle/dark,
+/area/crew_quarters/bar)
+"LE" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_y = 9
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Bar Security Shutters";
+	desc = "Stay off my FUCKING counter.";
+	id = "barsec"
+	},
+/turf/open/floor/plating/dirt/jungle/dark,
+/area/crew_quarters/bar)
+"LM" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/water/jungle,
+/area/crew_quarters/bar)
+"MB" = (
+/obj/structure/sign/poster/contraband/syndiemoth,
+/turf/closed/wall/mineral/wood,
+/area/crew_quarters/bar)
+"Nq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"Ns" = (
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"NX" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"Pc" = (
+/obj/structure/pool_ladder{
+	pixel_y = 4
+	},
+/turf/open/floor/fakepit,
+/area/crew_quarters/bar)
+"Pv" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/plating/dirt/jungle/dark,
+/area/crew_quarters/bar)
+"Qs" = (
+/obj/machinery/firealarm{
+	dir = 8
+	},
+/turf/closed/wall/mineral/wood,
+/area/crew_quarters/bar)
+"SM" = (
+/obj/structure/railing,
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"Ur" = (
+/obj/structure/table/wood,
+/obj/item/storage/box/drinkingglasses,
+/obj/machinery/button/door{
+	id = "barsec";
+	name = "Bar Security Shutters";
+	pixel_x = 24;
+	pixel_y = 6;
+	req_access_txt = "25";
+	desc = "Stay off my FUCKING counter."
+	},
+/turf/open/floor/plating/dirt/jungle,
+/area/crew_quarters/bar)
+"Va" = (
+/obj/structure/sign/poster/official/moth8,
+/turf/closed/wall/mineral/wood,
+/area/crew_quarters/bar)
+"Wf" = (
+/obj/machinery/computer/arcade/orion_trail{
+	dir = 4;
+	pixel_y = 1;
+	pixel_x = -3
+	},
+/obj/item/coin/arcade_token{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"WE" = (
+/obj/structure/sign/barsign,
+/turf/closed/wall/mineral/wood,
+/area/crew_quarters/bar)
+"WV" = (
+/turf/open/floor/plating/dirt/jungle,
+/area/crew_quarters/bar)
+"Xk" = (
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Bar Security Shutters";
+	desc = "Stay off my FUCKING counter.";
+	id = "barsec"
+	},
+/turf/open/floor/plating/dirt/jungle,
+/area/crew_quarters/bar)
+"Xr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"Yz" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/crew_quarters/bar)
+"YB" = (
+/obj/effect/landmark/start/bartender,
+/turf/open/floor/plating/dirt/jungle,
+/area/crew_quarters/bar)
+"ZI" = (
+/obj/machinery/door/airlock/wood,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating/dirt/jungle,
+/area/crew_quarters/bar)
+
+(1,1,1) = {"
+zf
+zf
+ZI
+MB
+mf
+zf
+Xk
+zf
+zf
+"}
+(2,1,1) = {"
+fP
+Wf
+fP
+Ns
+yM
+LE
+YB
+AB
+zf
+"}
+(3,1,1) = {"
+fP
+uJ
+mU
+fP
+Cg
+GO
+WV
+Pv
+zf
+"}
+(4,1,1) = {"
+fP
+fP
+fP
+yk
+Ew
+EL
+kX
+IH
+zf
+"}
+(5,1,1) = {"
+Ns
+cQ
+Nq
+Xr
+Yz
+lR
+WV
+Ur
+zf
+"}
+(6,1,1) = {"
+iB
+Et
+nl
+nu
+gd
+Qs
+fM
+zf
+zf
+"}
+(7,1,1) = {"
+Ge
+mh
+LM
+Fd
+Fd
+Fd
+Fd
+Fd
+Hh
+"}
+(8,1,1) = {"
+Ge
+mh
+hv
+if
+bS
+Fd
+LM
+Fd
+xF
+"}
+(9,1,1) = {"
+iT
+qa
+SM
+nU
+GR
+fP
+fP
+Ns
+WE
+"}
+(10,1,1) = {"
+pG
+bG
+do
+it
+qp
+iP
+Fx
+fP
+zf
+"}
+(11,1,1) = {"
+io
+zf
+zR
+zf
+zf
+fP
+fP
+yk
+zf
+"}
+(12,1,1) = {"
+iT
+Va
+jq
+Pc
+hG
+qL
+NX
+fP
+zf
+"}
+(13,1,1) = {"
+iT
+zf
+IE
+DW
+zf
+fP
+mn
+fP
+vp
+"}
+(14,1,1) = {"
+bI
+zf
+zf
+zf
+zf
+fP
+aV
+on
+zf
+"}
+(15,1,1) = {"
+fP
+Ns
+fP
+fP
+fP
+fP
+fP
+fP
+zf
+"}

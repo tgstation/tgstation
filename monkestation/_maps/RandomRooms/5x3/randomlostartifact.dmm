@@ -1,0 +1,73 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"g" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating,
+/area/template_noop)
+"k" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"q" = (
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance/four,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"s" = (
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop,
+/obj/effect/spawner/lootdrop/maintenance/four,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"x" = (
+/obj/item/alienartifact/objective,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"A" = (
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop,
+/obj/effect/spawner/lootdrop,
+/obj/effect/spawner/lootdrop/maintenance/four,
+/turf/open/floor/plating,
+/area/template_noop)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"R" = (
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+O
+k
+R
+"}
+(2,1,1) = {"
+R
+x
+q
+"}
+(3,1,1) = {"
+r
+O
+O
+"}
+(4,1,1) = {"
+A
+R
+g
+"}
+(5,1,1) = {"
+s
+O
+O
+"}

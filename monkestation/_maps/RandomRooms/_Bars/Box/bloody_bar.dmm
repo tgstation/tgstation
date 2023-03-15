@@ -1,0 +1,521 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aP" = (
+/obj/effect/landmark/event_spawn,
+/obj/structure/table/wood/bar,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"bc" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"bF" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"dQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 9
+	},
+/obj/item/clothing/suit/cultrobes,
+/obj/structure/table/wood/bar,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"ji" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"jv" = (
+/turf/closed/wall/mineral/cult/artificer,
+/area/crew_quarters/bar)
+"jF" = (
+/obj/effect/decal/cleanable/blood,
+/mob/living/carbon/monkey/punpun,
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"jV" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/remains/human,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"kL" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"kM" = (
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
+/obj/structure/table/wood/bar,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"mX" = (
+/obj/machinery/door/airlock/cult/unruned/glass/friendly{
+	name = "Bar Access";
+	req_access_txt = "25"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "barShutters";
+	name = "privacy shutters"
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"nY" = (
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"pI" = (
+/obj/effect/spawner/structure/window/reinforced{
+	color = "#4d2b2b"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "barShutters";
+	name = "privacy shutters"
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"sn" = (
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
+/obj/structure/table/wood/bar,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"sM" = (
+/obj/item/paper/crumpled/bloody,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 4
+	},
+/obj/structure/table/wood/bar,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"sU" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"vH" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"vY" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"wn" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"xm" = (
+/obj/machinery/door/airlock/cult/unruned/glass/friendly{
+	name = "Bar"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "barShutters";
+	name = "privacy shutters"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"xP" = (
+/obj/structure/table/wood/bar,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"BE" = (
+/obj/machinery/vending/boozeomat,
+/turf/closed/wall/mineral/cult/artificer,
+/area/crew_quarters/bar)
+"Dw" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/spawner/xmastree,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Ez" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 1
+	},
+/obj/structure/chair/wood,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Fa" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/remains/human,
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Fo" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Gj" = (
+/obj/machinery/light,
+/obj/machinery/firealarm{
+	pixel_y = -30
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"HB" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Jy" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"KF" = (
+/obj/effect/landmark/start/bartender,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Ln" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Lq" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/obj/item/toy/plush/moth/tyriaplush,
+/obj/structure/table/wood/bar,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Mh" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Ml" = (
+/obj/structure/chair/wood,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Nf" = (
+/obj/item/reagent_containers/glass/rag{
+	pixel_x = 4;
+	pixel_y = 14
+	},
+/obj/item/book/manual/wiki/barman_recipes,
+/obj/structure/table/wood/bar,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Ot" = (
+/obj/structure/sink/kitchen{
+	dir = 4;
+	pixel_x = -11
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"OJ" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Pq" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"PK" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/chair/wood,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Qv" = (
+/obj/machinery/computer/arcade{
+	dir = 4;
+	pixel_x = 4
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"RU" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"SC" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 9
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"SI" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Ty" = (
+/obj/structure/destructible/cult/tome/library,
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/door/poddoor/preopen{
+	id = "barShutters";
+	name = "privacy shutters"
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Ua" = (
+/obj/machinery/light/floor,
+/obj/structure/table/wood/bar,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Uc" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Ul" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"UN" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/bin,
+/obj/machinery/button/door{
+	id = "barShutters";
+	name = "bar shutters";
+	pixel_x = 4;
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"UT" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 6
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"WG" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/item/toy/plush/narplush,
+/obj/structure/table/wood/bar,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Xx" = (
+/obj/structure/sign/barsign,
+/turf/closed/wall/mineral/cult/artificer,
+/area/crew_quarters/bar)
+"Yg" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Zw" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "barShutters";
+	name = "privacy shutters"
+	},
+/obj/structure/table/wood/bar,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+
+(1,1,1) = {"
+jv
+jv
+pI
+jv
+xm
+jv
+pI
+jv
+jv
+"}
+(2,1,1) = {"
+nY
+jV
+bF
+HB
+OJ
+Jy
+Mh
+Qv
+jv
+"}
+(3,1,1) = {"
+nY
+nY
+nY
+Pq
+bc
+nY
+kL
+Fo
+jv
+"}
+(4,1,1) = {"
+nY
+nY
+Ml
+aP
+xP
+SI
+nY
+nY
+jv
+"}
+(5,1,1) = {"
+nY
+kL
+Ml
+sM
+xP
+SI
+nY
+Gj
+jv
+"}
+(6,1,1) = {"
+nY
+UT
+Ez
+dQ
+WG
+jF
+Dw
+sU
+xm
+"}
+(7,1,1) = {"
+nY
+ji
+PK
+Lq
+xP
+SI
+nY
+Fa
+pI
+"}
+(8,1,1) = {"
+nY
+wn
+Ml
+Ua
+xP
+SI
+nY
+nY
+xm
+"}
+(9,1,1) = {"
+nY
+ji
+nY
+vH
+vH
+nY
+kL
+Yg
+Xx
+"}
+(10,1,1) = {"
+Ln
+SC
+nY
+nY
+nY
+kL
+nY
+nY
+jv
+"}
+(11,1,1) = {"
+Pq
+Pq
+Uc
+Pq
+Mh
+nY
+nY
+nY
+jv
+"}
+(12,1,1) = {"
+Zw
+Zw
+Zw
+Zw
+jv
+mX
+jv
+Ty
+jv
+"}
+(13,1,1) = {"
+UN
+nY
+nY
+nY
+Ot
+nY
+BE
+KF
+jv
+"}
+(14,1,1) = {"
+vY
+nY
+nY
+nY
+nY
+RU
+nY
+Yg
+jv
+"}
+(15,1,1) = {"
+Ul
+Nf
+nY
+nY
+nY
+nY
+kM
+sn
+jv
+"}

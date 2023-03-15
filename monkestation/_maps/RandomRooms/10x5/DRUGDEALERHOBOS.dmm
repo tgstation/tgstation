@@ -1,0 +1,224 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"b" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/bottle/hooch{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/bottle/clownstears{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/glass/waterbottle/relic{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit,
+/turf/open/floor/plating,
+/area/template_noop)
+"e" = (
+/obj/structure/bonfire/prelit,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/broken{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/template_noop)
+"n" = (
+/obj/item/reagent_containers/glass/waterbottle/relic,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"o" = (
+/obj/effect/decal/cleanable/vomit,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"p" = (
+/obj/item/reagent_containers/glass/waterbottle/relic,
+/turf/open/floor/plating,
+/area/template_noop)
+"r" = (
+/obj/machinery/chem_dispenser,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"u" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/bottle/ale{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/beaker/slime{
+	pixel_x = -5;
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/glass/bottle/mutagen{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/bottle/necropolis_seed{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"v" = (
+/obj/machinery/chem_master,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"y" = (
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"z" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"D" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"F" = (
+/obj/machinery/chem_heater,
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/wall,
+/area/template_noop)
+"L" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/bottle/virusfood{
+	pixel_x = -11;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/bottle/mercury{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"M" = (
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/plating,
+/area/template_noop)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"Y" = (
+/obj/structure/table,
+/obj/item/reagent_containers/glass/waterbottle/relic{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"Z" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/oil,
+/obj/item/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/waterbottle/relic{
+	pixel_x = 10;
+	pixel_y = 6
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+D
+E
+o
+E
+E
+"}
+(2,1,1) = {"
+c
+v
+R
+e
+y
+"}
+(3,1,1) = {"
+E
+u
+D
+a
+E
+"}
+(4,1,1) = {"
+z
+Y
+y
+E
+D
+"}
+(5,1,1) = {"
+E
+Z
+p
+R
+o
+"}
+(6,1,1) = {"
+M
+b
+p
+f
+E
+"}
+(7,1,1) = {"
+o
+L
+n
+F
+z
+"}
+(8,1,1) = {"
+D
+r
+j
+a
+D
+"}
+(9,1,1) = {"
+y
+E
+E
+o
+E
+"}
+(10,1,1) = {"
+D
+y
+E
+o
+E
+"}

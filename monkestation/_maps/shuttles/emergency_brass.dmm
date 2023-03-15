@@ -1,0 +1,71 @@
+"a" = (/turf/closed/wall/mineral/bronze,/area/shuttle/escape)
+"b" = (/obj/structure/table/brass,/obj/item/toy/plush/plushvar,/obj/machinery/light/floor,/turf/open/floor/bronze,/area/shuttle/escape)
+"c" = (/obj/structure/table/brass,/obj/item/restraints/handcuffs/clockwork,/turf/open/floor/bronze,/area/shuttle/escape)
+"d" = (/obj/structure/table/brass,/obj/item/storage/firstaid/regular,/turf/open/floor/bronze,/area/shuttle/escape)
+"e" = (/obj/structure/shuttle/engine/heater{dir = 8},/obj/structure/window/bronze{dir = 4},/turf/open/floor/plating/airless,/area/shuttle/escape)
+"f" = (/obj/machinery/light/floor,/turf/open/floor/bronze,/area/shuttle/escape)
+"g" = (/obj/effect/fun_balloon/sentience/emergency_shuttle{effect_range = 5; group_name = "defenders of Rebe"},/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato,/obj/machinery/light/floor{brightness = 10},/obj/machinery/light/floor{brightness = 10},/turf/open/floor/bronze,/area/shuttle/escape)
+"h" = (/obj/structure/window/reinforced/clockwork/fulltile,/obj/structure/grille/ratvar,/obj/effect/clockwork/servant_blocker,/turf/open/floor/bronze,/area/shuttle/escape)
+"i" = (/obj/machinery/door/airlock/clockwork,/turf/open/floor/bronze,/area/shuttle/escape)
+"j" = (/obj/item/clockwork/weapon/brass_sword,/obj/effect/mob_spawn/drone/cogscarab,/turf/open/floor/bronze,/area/shuttle/escape)
+"k" = (/obj/effect/clockwork/servant_blocker,/turf/closed/wall/mineral/bronze,/area/shuttle/escape)
+"l" = (/obj/machinery/sleeper/clockwork{dir = 4},/obj/machinery/light/floor{brightness = 10},/obj/machinery/power/apc{pixel_y = -24},/turf/open/floor/bronze,/area/shuttle/escape)
+"m" = (/mob/living/simple_animal/hostile/clockwork_marauder,/turf/open/floor/bronze,/area/shuttle/escape)
+"n" = (/obj/item/clockwork/weapon/brass_battlehammer,/obj/effect/mob_spawn/drone/cogscarab,/turf/open/floor/bronze,/area/shuttle/escape)
+"o" = (/obj/structure/chair/brass{dir = 4},/turf/open/floor/bronze,/area/shuttle/escape)
+"p" = (/obj/structure/table/brass,/obj/item/clockwork/clockwork_slab,/turf/open/floor/bronze,/area/shuttle/escape)
+"q" = (/obj/machinery/light/floor{brightness = 10},/turf/open/floor/bronze,/area/shuttle/escape)
+"r" = (/obj/effect/clockwork/servant_blocker,/turf/open/floor/bronze,/area/shuttle/escape)
+"s" = (/obj/machinery/door/airlock/bronze/seethru,/turf/open/floor/bronze,/area/shuttle/escape)
+"t" = (/obj/machinery/light/floor{brightness = 10},/obj/structure/chair/brass{dir = 4},/turf/open/floor/bronze,/area/shuttle/escape)
+"u" = (/obj/structure/table/brass,/obj/item/storage/firstaid/regular,/obj/machinery/power/apc{pixel_y = -24},/turf/open/floor/bronze,/area/shuttle/escape)
+"v" = (/obj/machinery/power/apc{pixel_y = -24},/turf/open/floor/bronze,/area/shuttle/escape)
+"w" = (/obj/machinery/computer/camera_advanced/ratvar{dir = 4},/turf/open/floor/bronze,/area/shuttle/escape)
+"x" = (/obj/structure/chair/brass{dir = 1},/obj/machinery/power/apc{pixel_y = -24},/turf/open/floor/bronze,/area/shuttle/escape)
+"y" = (/obj/structure/shuttle/engine/propulsion{dir = 8},/turf/open/floor/plating/airless,/area/shuttle/escape)
+"z" = (/obj/structure/table/brass,/obj/item/storage/firstaid/toxin,/obj/item/storage/firstaid/toxin{pixel_x = -4; pixel_y = 3},/obj/item/storage/firstaid/o2{pixel_x = 3; pixel_y = 3},/obj/machinery/light/floor{brightness = 10},/turf/open/floor/bronze,/area/shuttle/escape)
+"A" = (/obj/structure/table/brass,/obj/item/storage/firstaid/fire,/turf/open/floor/bronze,/area/shuttle/escape)
+"B" = (/obj/machinery/door/window/clockwork{dir = 4},/obj/structure/destructible/clockwork/sigil/vitality,/turf/open/floor/bronze,/area/shuttle/escape)
+"C" = (/obj/structure/chair/brass{dir = 8},/turf/open/floor/bronze,/area/shuttle/escape)
+"D" = (/turf/template_noop,/area/shuttle/escape)
+"E" = (/obj/structure/chair/brass{dir = 1},/turf/open/floor/bronze,/area/shuttle/escape)
+"F" = (/obj/machinery/computer/emergency_shuttle{dir = 8},/turf/open/floor/bronze,/area/shuttle/escape)
+"G" = (/obj/machinery/door/airlock/clockwork/glass,/turf/open/floor/bronze,/area/shuttle/escape)
+"H" = (/obj/structure/chair/brass{dir = 1},/obj/machinery/light/floor{brightness = 10},/obj/machinery/power/apc{pixel_y = -24},/turf/open/floor/bronze,/area/shuttle/escape)
+"J" = (/turf/open/floor/bronze,/area/shuttle/escape)
+"K" = (/obj/machinery/light/floor{brightness = 10},/obj/machinery/light/floor{brightness = 10},/turf/open/floor/bronze,/area/shuttle/escape)
+"N" = (/obj/item/toy/plush/moth/tyriaplush,/turf/open/floor/bronze,/area/shuttle/escape)
+"O" = (/obj/machinery/door/airlock/bronze,/obj/docking_port/mobile/emergency{name = "Ratvarian emergency shuttle"},/turf/open/floor/bronze,/area/shuttle/escape)
+"P" = (/obj/item/toy/plush/moth/ookplush,/turf/open/floor/bronze,/area/shuttle/escape)
+"Q" = (/obj/structure/window/bronze{dir = 8},/obj/structure/chair/brass{dir = 4},/turf/open/floor/bronze,/area/shuttle/escape)
+"R" = (/obj/structure/table/brass,/obj/item/restraints/handcuffs/clockwork,/obj/machinery/light/floor{brightness = 10},/turf/open/floor/bronze,/area/shuttle/escape)
+"S" = (/obj/structure/table/brass,/obj/item/storage/firstaid/brute,/turf/open/floor/bronze,/area/shuttle/escape)
+"T" = (/obj/machinery/door/airlock/bronze,/turf/open/floor/bronze,/area/shuttle/escape)
+"V" = (/obj/structure/window/bronze{dir = 8},/turf/open/floor/bronze,/area/shuttle/escape)
+"W" = (/obj/machinery/sleeper/clockwork{dir = 4},/turf/open/floor/bronze,/area/shuttle/escape)
+"X" = (/obj/structure/table/brass,/obj/item/clockwork/replica_fabricator,/turf/open/floor/bronze,/area/shuttle/escape)
+"Y" = (/obj/item/clockwork/weapon/brass_spear,/obj/effect/mob_spawn/drone/cogscarab,/turf/open/floor/bronze,/area/shuttle/escape)
+
+(1,1,1) = {"
+aaaaakkkkkkkkkkkDDDDDDDDD
+yeQooraJJJJJJaPkDDDDDDDDD
+yeQooraJJJJJJaakkkkDDDDDD
+aaaJJraJJJJJJadASzkDDDDDD
+yeQotraJJKJJJsJJJSkDDDDDD
+yeQooraJJJJJJaWJJAkDDDDDD
+aaaaJraJJJJJJalJJukDDDDDD
+TJJaJraJJJJJJaaaGakhhhhhk
+afJiJraJJJJJJaJJJJanJJJJh
+OJJaJraJJJJJJaJpCJamJJJJh
+aaaaqrBJJKJJJGJbCJGjJgJFh
+yeQooraJJJJJJaJXCJamJJJJh
+yeQooraJJJJJJavJJvaYJJJJh
+yeQooraJJJJJJaaaGakhhhhhk
+aaaaJraJJJJJJawJJRkDDDDDD
+TJJaJraJJJJJJawJJckDDDDDD
+afJaqraJJKJJJsJJJJkDDDDDD
+TJJiJraJJJJJJaHEExkDDDDDD
+aaJaJraJJJJJJaakkkkDDDDDD
+yeVaJraJJJJJJaNkDDDDDDDDD
+aaaaakkkkkkkkkkkDDDDDDDDD
+"}

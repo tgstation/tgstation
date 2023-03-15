@@ -1,0 +1,176 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/mob/living/simple_animal/slime,
+/turf/open/floor/plating,
+/area/template_noop)
+"d" = (
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/open/floor/plasteel,
+/area/template_noop)
+"e" = (
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/open/floor/plating,
+/area/template_noop)
+"h" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/plasteel,
+/area/template_noop)
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/template_noop)
+"l" = (
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance/six,
+/turf/open/floor/plating,
+/area/template_noop)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/plating,
+/area/template_noop)
+"n" = (
+/obj/effect/mob_spawn/human/clown/corpse,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plasteel,
+/area/template_noop)
+"o" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plasteel,
+/area/template_noop)
+"q" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/template_noop)
+"t" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/plating,
+/area/template_noop)
+"u" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/glass/bottle/mutagen{
+	pixel_x = 11
+	},
+/turf/open/floor/plasteel,
+/area/template_noop)
+"v" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"w" = (
+/turf/open/floor/plasteel,
+/area/template_noop)
+"x" = (
+/turf/open/floor/plating/rust,
+/area/template_noop)
+"y" = (
+/mob/living/carbon/monkey,
+/turf/open/floor/plating,
+/area/template_noop)
+"B" = (
+/obj/effect/spawner/lootdrop/crate_spawner{
+	ricochet_chance_mod = 50
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/template_noop)
+"D" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"S" = (
+/mob/living/carbon/monkey,
+/turf/open/floor/plasteel,
+/area/template_noop)
+"U" = (
+/obj/effect/decal/cleanable/blood/gibs/limb{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/template_noop)
+"W" = (
+/obj/item/reagent_containers/glass/bottle/mutagen{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/turf/open/floor/plasteel,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+v
+y
+v
+v
+"}
+(2,1,1) = {"
+D
+D
+v
+x
+y
+"}
+(3,1,1) = {"
+D
+l
+w
+v
+w
+"}
+(4,1,1) = {"
+d
+k
+S
+k
+x
+"}
+(5,1,1) = {"
+e
+k
+C
+v
+y
+"}
+(6,1,1) = {"
+v
+v
+D
+y
+k
+"}
+(7,1,1) = {"
+t
+m
+D
+t
+B
+"}
+(8,1,1) = {"
+q
+n
+q
+u
+D
+"}
+(9,1,1) = {"
+h
+o
+U
+h
+D
+"}
+(10,1,1) = {"
+v
+t
+W
+v
+B
+"}

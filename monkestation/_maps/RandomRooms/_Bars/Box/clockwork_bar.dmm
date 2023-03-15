@@ -1,0 +1,477 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"cf" = (
+/obj/item/clockwork/alloy_shards/small,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"eR" = (
+/obj/structure/sink/kitchen{
+	dir = 8;
+	pixel_x = 11
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"in" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/shoes/bronze,
+/obj/item/clothing/suit/bronze,
+/obj/item/clothing/head/bronze,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"jx" = (
+/obj/item/clockwork/alloy_shards,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"jX" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/shoes/bronze,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"kl" = (
+/obj/effect/spawner/xmastree,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"lb" = (
+/obj/machinery/computer/arcade{
+	dir = 8;
+	pixel_x = 4
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"oa" = (
+/obj/item/clockwork/alloy_shards/medium,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"oL" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"qs" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/head/bronze,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"sj" = (
+/obj/structure/table/bronze,
+/obj/item/toy/plush/plushvar,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"sq" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 6
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"sV" = (
+/obj/effect/landmark/start/assistant,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"uP" = (
+/obj/item/clockwork/alloy_shards,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"uX" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"vs" = (
+/obj/item/clockwork/alloy_shards/clockgolem_remains,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"vF" = (
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"wg" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/head/bronze,
+/obj/machinery/light/floor,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"xb" = (
+/obj/structure/chair/bronze{
+	dir = 8
+	},
+/obj/item/clockwork/alloy_shards,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"xd" = (
+/obj/structure/table/bronze,
+/obj/machinery/door/poddoor/preopen{
+	id = "barShutters";
+	name = "privacy shutters"
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"zQ" = (
+/obj/effect/landmark/start/bartender,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"Ao" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"Cz" = (
+/obj/structure/table/bronze,
+/obj/item/stack/tile/bronze/thirty,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"Dw" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"DE" = (
+/obj/item/clockwork/alloy_shards/large,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"DF" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 9
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"DL" = (
+/obj/machinery/door/airlock/bronze/seethru{
+	name = "Bar Access";
+	req_access_txt = "25"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "barShutters";
+	name = "privacy shutters"
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"Ft" = (
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"Fy" = (
+/obj/structure/sign/barsign,
+/turf/closed/wall/mineral/bronze,
+/area/crew_quarters/bar)
+"Gx" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 9
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"Jg" = (
+/obj/structure/table/bronze,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"Jx" = (
+/obj/structure/table/bronze,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"Kf" = (
+/obj/structure/window/bronze/fulltile,
+/obj/machinery/door/poddoor/preopen{
+	id = "barShutters";
+	name = "privacy shutters"
+	},
+/obj/structure/grille/ratvar,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"KH" = (
+/obj/machinery/light,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"LY" = (
+/turf/closed/wall/mineral/bronze,
+/area/crew_quarters/bar)
+"My" = (
+/obj/item/toy/plush/moth/ookplush,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"Ng" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 1
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"Ns" = (
+/obj/structure/table/bronze,
+/obj/item/reagent_containers/glass/rag{
+	pixel_x = 4;
+	pixel_y = 14
+	},
+/obj/item/book/manual/wiki/barman_recipes,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -26
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"NB" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/suit/bronze,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"Pv" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"PS" = (
+/obj/structure/chair/bronze{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"QU" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"Re" = (
+/mob/living/carbon/monkey/punpun,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"Rn" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/bin,
+/obj/machinery/button/door{
+	id = "barShutters";
+	name = "bar shutters";
+	pixel_x = 4;
+	pixel_y = 28
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"TC" = (
+/obj/machinery/firealarm{
+	pixel_y = -30
+	},
+/obj/machinery/light,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"Yb" = (
+/obj/machinery/vending/boozeomat,
+/turf/closed/wall/mineral/bronze,
+/area/crew_quarters/bar)
+"Yl" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+"ZD" = (
+/obj/machinery/door/airlock/bronze/seethru,
+/obj/machinery/door/poddoor/preopen{
+	id = "barShutters";
+	name = "privacy shutters"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/bronze,
+/area/crew_quarters/bar)
+
+(1,1,1) = {"
+LY
+LY
+Kf
+LY
+ZD
+LY
+Kf
+LY
+LY
+"}
+(2,1,1) = {"
+Ft
+Ft
+Ft
+Yl
+Ft
+Yl
+Ft
+My
+LY
+"}
+(3,1,1) = {"
+Ft
+vF
+uX
+uX
+uX
+uX
+Re
+cf
+LY
+"}
+(4,1,1) = {"
+Ft
+DE
+sj
+wg
+NB
+jX
+Ft
+Ft
+LY
+"}
+(5,1,1) = {"
+Ft
+Ft
+PS
+xb
+PS
+PS
+kl
+TC
+LY
+"}
+(6,1,1) = {"
+Ft
+sq
+Ng
+DF
+Ft
+Ft
+jx
+Ft
+ZD
+"}
+(7,1,1) = {"
+Ft
+uP
+uX
+Pv
+uX
+uX
+Dw
+Ft
+Kf
+"}
+(8,1,1) = {"
+Ft
+Ao
+Cz
+qs
+NB
+jX
+Ft
+Ft
+ZD
+"}
+(9,1,1) = {"
+Ft
+sV
+PS
+PS
+PS
+PS
+oa
+KH
+Fy
+"}
+(10,1,1) = {"
+Ng
+Gx
+Ft
+Ft
+Ft
+Ft
+Ft
+vs
+LY
+"}
+(11,1,1) = {"
+uX
+uX
+uX
+uX
+Ft
+Ft
+Ft
+lb
+LY
+"}
+(12,1,1) = {"
+xd
+xd
+xd
+xd
+LY
+DL
+LY
+LY
+LY
+"}
+(13,1,1) = {"
+Rn
+Ft
+zQ
+Ft
+Jx
+Ft
+Jg
+Ns
+LY
+"}
+(14,1,1) = {"
+QU
+Ft
+Ft
+Ft
+Ft
+Dw
+Ft
+KH
+LY
+"}
+(15,1,1) = {"
+oL
+eR
+Ft
+Ft
+Ft
+Ft
+in
+Yb
+LY
+"}

@@ -1,0 +1,357 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/uranium{
+	rad_flags = 0
+	},
+/area/crew_quarters/bar)
+"b" = (
+/obj/structure/table/wood/fancy,
+/obj/structure/displaycase/forsale/kitchen{
+	pixel_y = 9
+	},
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/bar)
+"c" = (
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = 31
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"d" = (
+/obj/machinery/disposal/bin,
+/obj/machinery/light_switch{
+	pixel_x = 25
+	},
+/obj/machinery/light_switch{
+	pixel_x = 25
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"e" = (
+/obj/structure/chair/wood/wings,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"f" = (
+/obj/structure/table/wood/poker,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 4;
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"g" = (
+/obj/machinery/vending/boozeomat,
+/turf/closed/wall/mineral/uranium{
+	rad_flags = 0
+	},
+/area/crew_quarters/bar)
+"h" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Bar"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"i" = (
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"k" = (
+/obj/structure/table/wood/poker,
+/obj/item/food/burger/spell,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
+/turf/open/floor/carpet,
+/area/crew_quarters/bar)
+"n" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/figure/wizard,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"q" = (
+/obj/machinery/newscaster{
+	pixel_x = 32;
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"r" = (
+/obj/structure/table/wood/poker,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"s" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Personal Quarters";
+	req_access_txt = "25"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"t" = (
+/obj/structure/chair/wood/wings,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"u" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"v" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
+/turf/open/floor/carpet,
+/area/crew_quarters/bar)
+"w" = (
+/obj/structure/table/wood/poker,
+/obj/item/storage/pill_bottle/dice{
+	icon_state = "magicdicebag"
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"x" = (
+/obj/structure/table/wood/poker,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 4;
+	pixel_x = -5
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"z" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"A" = (
+/obj/structure/table/wood/poker,
+/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/item/lighter{
+	pixel_x = 8
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"B" = (
+/obj/structure/table/wood/poker,
+/obj/item/book/manual/wiki/barman_recipes,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"D" = (
+/obj/structure/chair/wood/wings,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"F" = (
+/obj/structure/table/wood/fancy,
+/obj/item/clothing/head/hardhat/cakehat,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/bar)
+"G" = (
+/obj/effect/spawner/structure/window/reinforced{
+	color = "#008000"
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"H" = (
+/mob/living/carbon/monkey/punpun,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"I" = (
+/obj/structure/table/wood/poker,
+/obj/item/reagent_containers/glass/rag,
+/obj/item/flashlight/lamp{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"K" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Bar"
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"M" = (
+/obj/machinery/smartfridge/drinks{
+	icon_state = "boozeomat"
+	},
+/turf/closed/wall/mineral/uranium{
+	rad_flags = 0
+	},
+/area/crew_quarters/bar)
+"P" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"Q" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"S" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"V" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Bar Access";
+	req_access_txt = "25"
+	},
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"W" = (
+/obj/effect/landmark/start/bartender,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+"X" = (
+/obj/structure/table/wood/poker,
+/obj/item/clothing/head/wizard,
+/turf/open/floor/plasteel/cult,
+/area/crew_quarters/bar)
+
+(1,1,1) = {"
+a
+a
+a
+a
+G
+K
+h
+G
+a
+"}
+(2,1,1) = {"
+A
+x
+f
+n
+i
+i
+Q
+i
+b
+"}
+(3,1,1) = {"
+B
+i
+i
+r
+P
+i
+Q
+i
+e
+"}
+(4,1,1) = {"
+I
+i
+W
+r
+z
+D
+v
+u
+i
+"}
+(5,1,1) = {"
+g
+i
+H
+X
+P
+i
+Q
+i
+e
+"}
+(6,1,1) = {"
+a
+c
+W
+r
+i
+t
+k
+P
+i
+"}
+(7,1,1) = {"
+s
+S
+i
+r
+P
+i
+Q
+i
+e
+"}
+(8,1,1) = {"
+a
+d
+z
+w
+q
+i
+Q
+i
+F
+"}
+(9,1,1) = {"
+a
+a
+V
+M
+a
+K
+h
+a
+a
+"}
