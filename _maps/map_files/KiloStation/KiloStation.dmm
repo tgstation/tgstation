@@ -16801,21 +16801,15 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/bridge)
 "fiH" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/structure/table,
 /obj/item/wallframe/airalarm,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron/showroomfloor,
 /area/station/maintenance/port/lesser)
 "fiQ" = (
@@ -31042,21 +31036,6 @@
 "jbt" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/station/maintenance/starboard)
-"jbE" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/turf_decal/siding/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/station/science/research)
 "jbP" = (
 /obj/structure/flora/rock/pile/style_random,
 /obj/effect/turf_decal/stripes/line{
@@ -38131,15 +38110,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "llI" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset/anchored,
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/lesser)
 "llY" = (
@@ -58501,13 +58477,10 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "ruW" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset/anchored,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/lesser)
 "rvj" = (
@@ -64238,6 +64211,21 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/dock)
+"tdb" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/station/science/research)
 "tdf" = (
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark,
@@ -69373,16 +69361,6 @@
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "uEi" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
@@ -69391,6 +69369,10 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron/showroomfloor,
 /area/station/maintenance/port/lesser)
 "uEs" = (
@@ -75221,16 +75203,6 @@
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "wlP" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
@@ -75240,6 +75212,10 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron/showroomfloor,
 /area/station/maintenance/port/lesser)
 "wlS" = (
@@ -120111,7 +120087,7 @@ eHI
 eHI
 rPy
 fsj
-jbE
+tdb
 aYz
 lZn
 gwO
