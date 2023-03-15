@@ -1025,7 +1025,12 @@
 	if(QDELETED(familiar))
 		familiar = new linked.mob_type(get_turf(owner.loc))
 		familiar.name = linked.mob_name
-		familiar.del_on_death = TRUE
+		if(isanimal(familiar))
+			familiar.del_on_death = TRUE
+		else //we are a basicmob otherwise
+			var/mob/living/basic/basic_familiar = familiar
+			basic_familiar.basic_mob_flags |= DEL_ON_DEATH
+		familiar.befriend(owner)
 		familiar.copy_languages(owner, LANGUAGE_MASTER)
 		if(linked.saved_mind)
 			linked.saved_mind.transfer_to(familiar)
