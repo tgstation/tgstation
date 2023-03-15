@@ -97,13 +97,25 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	return ..()
 
 /obj/machinery/airalarm/on_enter_area(datum/source, area/area_to_register)
-	my_area = area_to_register
+	//were already registered to an area. exit from here first before entering into an new area
+	if(!isnull(my_area))
+		return
 	. = ..()
+
+	my_area = area_to_register
 	update_appearance()
 
 /obj/machinery/airalarm/update_name(updates)
 	. = ..()
 	name = "[get_area_name(my_area)] Air Alarm"
+
+/obj/machinery/airalarm/on_exit_area(datum/source, area/area_to_unregister)
+	//we cannot unregister from an area we never registered to in the first place
+	if(my_area != area_to_unregister)
+		return
+	. = ..()
+
+	my_area = null
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()

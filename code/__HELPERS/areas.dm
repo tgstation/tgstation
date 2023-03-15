@@ -144,34 +144,14 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	 * we use this to keep track of what areas are affected by the blueprints & what machinery of these areas needs to be reconfigured accordingly
 	 */
 	var/area/affected_areas = list()
-	//all stuff on the turf that need to be informed of the area change
-	var/list/atom/atoms = list()
-	for(var/i in 1 to turf_count)
-		var/turf/thing = turfs[i]
-		var/area/old_area = thing.loc
+	for(var/turf/the_turf as anything in turfs)
+		var/area/old_area = the_turf.loc
+
+		//keep rack of all areas affected by turf changes
 		affected_areas[old_area.name] = old_area
 
-		//find all stuff on this turf and signal to them their area is about to change
-		atoms.Cut()
-		for(var/atom/atom as anything in thing)
-			atoms += atom
-
-		//unregister the stuff from its old area
-		for(var/atom/stuff as anything in atoms)
-			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
-
 		//move the turf to its new area and unregister it from the old one
-		for(var/turf/thing as anything in turfs)
-			thing.change_area(thing.loc, newA)
-
-		//register the stuff to its new area
-		for(var/atom/stuff as anything in atoms)
-			//special exception for apc as its not registered to the signal by default
-			if(istype(stuff, /obj/machinery/power/apc))
-				var/obj/machinery/power/apc/area_apc = stuff
-				area_apc.assign_to_area()
-			else
-				SEND_SIGNAL(stuff, COMSIG_ENTER_AREA, newA)
+		the_turf.change_area(old_area, newA)
 
 	newA.reg_in_areas_in_z()
 

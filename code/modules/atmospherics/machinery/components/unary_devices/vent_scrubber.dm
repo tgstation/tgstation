@@ -72,13 +72,12 @@
 		target_area.air_scrubbers += src
 		update_appearance(UPDATE_NAME)
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/disconnect_from_area()
-	var/area/area = get_area(src)
-	area?.air_scrubbers -= src
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/disconnect_from_area(area/target_area = get_area(src))
+	target_area?.air_scrubbers -= src
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on_exit_area(datum/source, area/area_to_unregister)
 	. = ..()
-	disconnect_from_area()
+	disconnect_from_area(area_to_unregister)
 
 ///adds a gas or list of gases to our filter_types. used so that the scrubber can check if its supposed to be processing after each change
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/add_filters(filter_or_filters)

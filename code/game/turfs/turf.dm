@@ -219,14 +219,33 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Call to move a turf from its current area to a new one
 /turf/proc/change_area(area/old_area, area/new_area)
+	//dont waste our time
+	if(old_area == new_area)
+		return
+
+	//move the turf
 	old_area.turfs_to_uncontain += src
 	new_area.contents += src
 	new_area.contained_turfs += src
+
+	//changes to make after turf has moved
 	on_change_area(old_area, new_area)
 
 /// Allows for reactions to an area change without inherently requiring change_area() be called (I hate maploading)
 /turf/proc/on_change_area(area/old_area, area/new_area)
 	transfer_area_lighting(old_area, new_area)
+
+	//inform atoms on the turf that their area has changed
+	for(var/atom/stuff as anything in src)
+		//unregister the stuff from its old area
+		SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
+
+		//register the stuff to its new area. special exception for apc as its not registered to this signal
+		if(istype(stuff, /obj/machinery/power/apc))
+			var/obj/machinery/power/apc/area_apc = stuff
+			area_apc.assign_to_area()
+		else
+			SEND_SIGNAL(stuff, COMSIG_ENTER_AREA, new_area)
 
 /turf/proc/multiz_turf_del(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_DEL, T, dir)

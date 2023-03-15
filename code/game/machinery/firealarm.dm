@@ -93,8 +93,14 @@
 	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, PROC_REF(handle_fire))
 
 /obj/machinery/firealarm/on_enter_area(datum/source, area/area_to_register)
-	..()
+	//were already registered to an area. exit from here first before entering into an new area
+	if(!isnull(my_area))
+		return
+	. = ..()
+
 	my_area = area_to_register
+	LAZYADD(my_area.firealarms, src)
+
 	RegisterSignal(area_to_register, COMSIG_AREA_FIRE_CHANGED, PROC_REF(handle_fire))
 	handle_fire(area_to_register, area_to_register.fire)
 	update_appearance()
@@ -104,10 +110,14 @@
 	name = "[get_area_name(my_area)] [initial(name)]"
 
 /obj/machinery/firealarm/on_exit_area(datum/source, area/area_to_unregister)
-	..()
+	//we cannot unregister from an area we never registered to in the first place
+	if(my_area != area_to_unregister)
+		return
+	. = ..()
+
 	UnregisterSignal(area_to_unregister, COMSIG_AREA_FIRE_CHANGED)
-	if(my_area)
-		my_area = null
+	LAZYREMOVE(my_area.firealarms, src)
+	my_area = null
 
 /obj/machinery/firealarm/proc/handle_fire(area/source, new_fire)
 	SIGNAL_HANDLER
