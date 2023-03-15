@@ -120,7 +120,7 @@
 	if(examinable_countdown)
 		. += span_notice("A digital display on it reads \"[seconds_remaining()]\".")
 	else
-		. +={"The digital display on it is inactive."}
+		. += span_notice({"The digital display on it is inactive."})
 
 /obj/machinery/syndicatebomb/update_icon_state()
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
