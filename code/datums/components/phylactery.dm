@@ -199,7 +199,7 @@
 
 		if(iscarbon(corpse))
 			var/mob/living/carbon/carbon_body = corpse
-			for(var/obj/item/organ/to_drop as anything in carbon_body.internal_organs)
+			for(var/obj/item/organ/to_drop as anything in carbon_body.organs)
 				// Skip the brain - it can disappear, we don't need it anymore
 				if(istype(to_drop, /obj/item/organ/internal/brain))
 					continue
