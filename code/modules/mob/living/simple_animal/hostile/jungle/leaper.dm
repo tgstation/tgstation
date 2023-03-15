@@ -48,8 +48,12 @@
 	if(iscarbon(target))
 		bubbled.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
 		return
-	if(isanimal_or_basicmob(target))
-		bubbled.adjustHealth(25)
+	if(isanimal(target))
+		var/mob/living/simple_animal/bubbled_animal = bubbled
+		bubbled_animal.adjustHealth(25)
+		return
+	if (isbasicmob(target))
+		bubbled.adjustBruteLoss(25)
 
 /obj/projectile/leaper/on_range()
 	var/turf/T = get_turf(src)
@@ -112,8 +116,11 @@
 	bubbled_mob.Paralyze(50)
 	if(iscarbon(bubbled_mob))
 		bubbled_mob.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
-	else if(isanimal_or_basicmob(bubbled_mob))
-		bubbled_mob.adjustHealth(25)
+	else if(isanimal(bubbled_mob))
+		var/mob/living/simple_animal/bubbled_animal = bubbled_mob
+		bubbled_animal.adjustHealth(25)
+	else if(isbasicmob(bubbled_mob))
+		bubbled_mob.adjustBruteLoss(25)
 	qdel(src)
 
 /datum/reagent/toxin/leaper_venom

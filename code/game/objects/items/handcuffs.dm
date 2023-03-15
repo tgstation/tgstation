@@ -419,11 +419,11 @@
 	update_appearance()
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
-/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(datum/source, atom/movable/AM, thrown_at = FALSE)
+/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(datum/source, atom/movable/target, thrown_at = FALSE)
 	SIGNAL_HANDLER
-	if(!armed || !isturf(loc) || !isliving(AM))
+	if(!armed || !isturf(loc) || !isliving(target))
 		return
-	var/mob/living/victim = AM
+	var/mob/living/victim = target
 	if(istype(victim.buckled, /obj/vehicle))
 		var/obj/vehicle/ridden_vehicle = victim.buckled
 		if(!ridden_vehicle.are_legs_exposed) //close the trap without injuring/trapping the rider if their legs are inside the vehicle at all times.
@@ -432,7 +432,7 @@
 			return
 
 	//don't close the trap if they're as small as a mouse, or not touching the ground
-	if(mob_size <= MOB_SIZE_TINY || (!thrown_at && victim.movement_type & (FLYING|FLOATING)))
+	if(victim.mob_size <= MOB_SIZE_TINY || (!thrown_at && victim.movement_type & (FLYING|FLOATING)))
 		return
 
 	close_trap()

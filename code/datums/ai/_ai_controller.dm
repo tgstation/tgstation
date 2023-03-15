@@ -114,20 +114,24 @@ multiple modular subtrees with behaviors
 
 /// Sets the AI on or off based on current conditions, call to reset after you've manually disabled it somewhere
 /datum/ai_controller/proc/reset_ai_status()
+	set_ai_status(get_expected_ai_status())
+
+/// Returns what the AI status should be based on current conditions.
+/datum/ai_controller/proc/get_expected_ai_status()
 	var/final_status = AI_STATUS_ON
 
-	if (!ismob(controller.pawn))
+	if (!ismob(pawn))
 		return final_status
 
-	var/mob/living/pawn = controller.pawn
+	var/mob/living/mob_pawn = pawn
 
-	if(!continue_processing_when_client && pawn.client)
+	if(!continue_processing_when_client && mob_pawn.client)
 		final_status = AI_STATUS_OFF
 
 	if(ai_traits & CAN_ACT_WHILE_DEAD)
 		return final_status
 
-	if(pawn.stat == DEAD)
+	if(mob_pawn.stat == DEAD)
 		final_status = AI_STATUS_OFF
 
 	return final_status
@@ -303,8 +307,7 @@ multiple modular subtrees with behaviors
 /// Turn the controller on or off based on if you're alive, we only register to this if the flag is present so don't need to check again
 /datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
-	var/new_ai_status = get_setup_mob_ai_status(source)
-	set_ai_status(new_ai_status)
+	reset_ai_status()
 
 /datum/ai_controller/proc/on_sentience_gained()
 	SIGNAL_HANDLER

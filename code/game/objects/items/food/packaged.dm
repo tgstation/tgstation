@@ -118,7 +118,7 @@
 
 ///This proc checks if the mob is able to recieve the buff.
 /obj/item/food/canned/envirochow/proc/check_buffability(mob/living/hungry_pet)
-	if(!isanimal_or_basicmob(target)) // Not a pet
+	if(!isanimal_or_basicmob(hungry_pet)) // Not a pet
 		return FALSE
 	if(!is_drainable()) // Can is not open
 		return FALSE
