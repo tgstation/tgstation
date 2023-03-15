@@ -568,8 +568,11 @@
  * * sends the greeting text (goals, role name, etc)
  */
 /datum/mafia_controller/proc/create_bodies()
+	var/outfit_to_distribute
 	if(current_map.custom_outfit) //If our map has a cool custom outfit override, we use that.
-		player_outfit = current_map.custom_outfit
+		outfit_to_distribute = current_map.custom_outfit
+	else
+		outfit_to_distribute = player_outfit
 
 	for(var/datum/mafia_role/role in all_roles)
 		var/mob/living/carbon/human/H = new(get_turf(role.assigned_landmark))
