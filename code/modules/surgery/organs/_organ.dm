@@ -11,7 +11,7 @@
 	var/zone = BODY_ZONE_CHEST
 	///The organ slot this organ is supposed to inhabit. This should be unique by type. (Lungs, Appendix, Stomach, etc)
 	var/slot
-	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
+	// DO NOT add slots with matching names to different zones - it will break organs_slot list!
 	var/organ_flags = ORGAN_EDIBLE
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
 	/// Total damage this organ has sustained
@@ -78,8 +78,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		else
 			qdel(replaced)
 
-	receiver.internal_organs |= src
-	receiver.internal_organs_slot[slot] = src
+	receiver.organs |= src
+	receiver.organs_slot[slot] = src
 	owner = receiver
 
 	moveToNullspace()
@@ -103,9 +103,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	UnregisterSignal(organ_owner, COMSIG_PARENT_EXAMINE)
 
-	organ_owner.internal_organs -= src
-	if(organ_owner.internal_organs_slot[slot] == src)
-		organ_owner.internal_organs_slot.Remove(slot)
+	organ_owner.organs -= src
+	if(organ_owner.organs_slot[slot] == src)
+		organ_owner.organs_slot.Remove(slot)
 
 	owner = null
 	for(var/datum/action/action as anything in actions)
@@ -240,7 +240,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		dna.species.regenerate_organs(src, replace_current = regenerate_existing)
 
 		// Species regenerate organs doesn't ALWAYS handle healing the organs because it's dumb
-		for(var/obj/item/organ/organ as anything in internal_organs)
+		for(var/obj/item/organ/organ as anything in organs)
 			organ.setOrganDamage(0)
 		set_heartattack(FALSE)
 		return
