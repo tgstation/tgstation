@@ -335,11 +335,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return FALSE
 	return TRUE
 
-/obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
-	if(atmos_scan(user=user, target=src, silent=FALSE))
-		return TRUE
-	return ..()
-
 /obj/proc/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	return
 

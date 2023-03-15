@@ -174,29 +174,11 @@
 	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
 		return
 	target_mode = ANALYZER_MODE_SURROUNDINGS
-	atmos_scan(user=user, target=get_turf(src), silent=FALSE)
-	on_analyze(source=src, target=get_turf(src), save_data=!auto_updating)
-
-/obj/item/analyzer/attack_self_secondary(mob/user, modifiers)
-	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
-		return
-	target_mode = ANALYZER_MODE_SURROUNDINGS
 	atmos_scan(user=user, target=get_turf(src), silent=FALSE, print=FALSE)
 	on_analyze(source=src, target=get_turf(src), save_data=!auto_updating)
 	ui_interact(user)
 
 /obj/item/analyzer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!can_see(user, target, scan_range))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	target_mode = ANALYZER_MODE_TARGET
-	if(target == user || target == user.loc)
-		target_mode = ANALYZER_MODE_SURROUNDINGS
-	atmos_scan(user, target=(target.return_analyzable_air() ? target : get_turf(target)))
-	on_analyze(source=src, target=(target.return_analyzable_air() ? target : get_turf(target)), save_data=!auto_updating)
-
-/obj/item/analyzer/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!can_see(user, target, scan_range))
 		on_analyze(source=src, target=get_turf(src))
