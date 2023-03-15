@@ -38,7 +38,7 @@
 	return ..()
 
 /mob/living/carbon/alien/larva/create_internal_organs()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small/tiny
+	organs += new /obj/item/organ/internal/alien/plasmavessel/small/tiny
 	..()
 
 //This needs to be fixed

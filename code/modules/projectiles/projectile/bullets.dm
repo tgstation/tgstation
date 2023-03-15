@@ -3,7 +3,6 @@
 	icon_state = "bullet"
 	damage = 60
 	damage_type = BRUTE
-	nodamage = FALSE
 	armor_flag = BULLET
 	hitsound_wall = SFX_RICOCHET
 	sharpness = SHARP_POINTY

@@ -154,7 +154,7 @@
 		var/obj/item/paper/med_record_paper = new /obj/item/paper(src)
 		var/med_record_text = "<CENTER><B>Medical Record</B></CENTER><BR>"
 		med_record_text += "Name: [record.name] Rank: [record.rank]<BR>\nGender: [record.gender]<BR>\nAge: [record.age]<BR>"
-		med_record_text += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [record.blood_type]<BR>\nDNA: [record.dna_string]<BR>\n<BR>\nMinor Disabilities: [record.minor_disabilities]<BR>\nDetails: [record.minor_disabilities_desc]<BR>\n<BR>\nMajor Disabilities: [record.major_disabilities]<BR>\nDetails: [record.major_disabilities_desc]<BR>\n<BR>\nImportant Notes:<BR>\n\t[record.medical_notes]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+		med_record_text += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [record.blood_type]<BR>\nDNA: [record.dna_string]<BR>\n<BR>\nPhysical Status: [record.physical_status]<BR>\nMental Status: [record.mental_status]<BR>\nMinor Disabilities: [record.minor_disabilities]<BR>\nDetails: [record.minor_disabilities_desc]<BR>\n<BR>\nMajor Disabilities: [record.major_disabilities]<BR>\nDetails: [record.major_disabilities_desc]<BR>\n<BR>\nImportant Notes:<BR>\n\t[record.medical_notes]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 		med_record_text += "</TT>"
 		med_record_paper.add_raw_text(med_record_text)
 		med_record_paper.name = "paper - '[record.name]'"
