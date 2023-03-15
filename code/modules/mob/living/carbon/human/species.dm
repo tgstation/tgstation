@@ -1826,20 +1826,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return "No species description set, file a bug report!"
 
 /**
- * Gets the lore behind the type of species. Can be long.
- * Used in the preference menu.
- *
- * Returns a list of strings.
- * Between each entry in the list, a newline will be inserted, for formatting.
- */
-/datum/species/proc/get_species_lore()
-	SHOULD_CALL_PARENT(FALSE)
-	RETURN_TYPE(/list)
-
-	stack_trace("Species [name] ([type]) did not have lore set, and is a selectable roundstart race! Override get_species_lore.")
-	return list("No species lore set, file a bug report!")
-
-/**
  * Translate the species liked foods from bitfields into strings
  * and returns it in the form of an associated list.
  *

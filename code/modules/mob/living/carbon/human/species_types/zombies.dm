@@ -65,9 +65,6 @@
 /datum/species/zombie/get_species_description()
 	return "A rotting zombie! They descend upon Space Station Thirteen Every year to spook the crew! \"Sincerely, the Zombies!\""
 
-/datum/species/zombie/get_species_lore()
-	return list("Zombies have long lasting beef with Botanists. Their last incident involving a lawn with defensive plants has left them very unhinged.")
-
 // Override for the default temperature perks, so we can establish that they don't care about temperature very much
 /datum/species/zombie/create_pref_temperature_perks()
 	var/list/to_add = list()

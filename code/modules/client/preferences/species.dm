@@ -39,7 +39,6 @@
 		data[species_id] = list()
 		data[species_id]["name"] = species.name
 		data[species_id]["desc"] = species.get_species_description()
-		data[species_id]["lore"] = species.get_species_lore()
 		data[species_id]["icon"] = sanitize_css_class_name(species.name)
 		data[species_id]["use_skintones"] = species.use_skintones
 		data[species_id]["sexes"] = species.sexes

@@ -40,7 +40,6 @@ export type Name = {
 export type Species = {
   name: string;
   desc: string;
-  lore: string[];
   icon: string;
 
   use_skintones: BooleanLike;

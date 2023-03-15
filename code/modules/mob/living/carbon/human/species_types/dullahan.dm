@@ -125,13 +125,6 @@
 		unfinished business. Or that's what the books say. They're quite nice \
 		when you get to know them."
 
-/datum/species/dullahan/get_species_lore()
-	return list(
-		"\"No wonder they're all so grumpy! Their hands are always full! I used to think, \
-		\"Wouldn't this be cool?\" but after watching these creatures suffer from their head \
-		getting dunked down disposals for the nth time, I think I'm good.\" - Captain Larry Dodd"
-	)
-
 /datum/species/dullahan/create_pref_unique_perks()
 	var/list/to_add = list()
 

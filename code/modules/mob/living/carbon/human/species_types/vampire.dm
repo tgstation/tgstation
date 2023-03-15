@@ -74,13 +74,6 @@
 /datum/species/vampire/get_species_description()
 	return "A classy Vampire! They descend upon Space Station Thirteen Every year to spook the crew! \"Bleeg!!\""
 
-/datum/species/vampire/get_species_lore()
-	return list(
-		"Vampires are unholy beings blessed and cursed with The Thirst. \
-		The Thirst requires them to feast on blood to stay alive, and in return it gives them many bonuses. \
-		Because of this, Vampires have split into two clans, one that embraces their powers as a blessing and one that rejects it.",
-	)
-
 /datum/species/vampire/create_pref_unique_perks()
 	var/list/to_add = list()
 
