@@ -112,7 +112,7 @@ const CrewTableEntry = (props, context) => {
     assignment,
     ijob,
     life_status,
-    has_mind,
+    is_revivable,
     oxydam,
     toxdam,
     burndam,
@@ -128,7 +128,7 @@ const CrewTableEntry = (props, context) => {
         {assignment !== undefined ? ` (${assignment})` : ''}
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
-        {!life_status && !has_mind ? (
+        {!life_status && !is_revivable ? (
           <Icon name="ban" color="#801308" size={1} />
         ) : oxydam !== undefined ? (
           <Icon
@@ -167,7 +167,7 @@ const CrewTableEntry = (props, context) => {
           </Box>
         ) : life_status ? (
           'Alive'
-        ) : !has_mind ? (
+        ) : !is_revivable ? (
           'Dead (DNR)'
         ) : (
           'Dead'
@@ -180,7 +180,7 @@ const CrewTableEntry = (props, context) => {
           <Icon name="question" color="#ffffff" size={1} />
         )}
       </Table.Cell>
-      {link_allowed && (
+      {!!link_allowed && (
         <Table.Cell collapsing>
           <Button
             content="Track"
