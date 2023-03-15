@@ -1145,4 +1145,5 @@
 	name = "Unstable Rear"
 	desc = "For reasons unknown, your posterior is unstable and will fall off more often."
 	value = -1
+	icon = "cloud-showers-heavy"
 	//All effects are handled directly in butts.dm
