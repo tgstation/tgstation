@@ -5,19 +5,19 @@
 /// Logging for config errors
 /// Rarely gets called; just here in case the config breaks.
 /proc/log_config(text, list/data)
-	logger.Log(LOG_CATEGORY_CONFIG, text, data))
+	logger.Log(LOG_CATEGORY_CONFIG, text, data)
 	SEND_TEXT(world.log, text)
 
 /proc/log_filter_raw(text, list/data)
-	logger.Log(LOG_CATEGORY_FILTER, text, data))
+	logger.Log(LOG_CATEGORY_FILTER, text, data)
 
 /// Logging for job slot changes
 /proc/log_job_debug(text, list/data)
-	logger.Log(LOG_CATEGORY_DEBUG_JOB, text, data))
+	logger.Log(LOG_CATEGORY_DEBUG_JOB, text, data)
 
 /// Logging for lua scripting
 /proc/log_lua(text, list/data)
-	logger.Log(LOG_CATEGORY_DEBUG_LUA, text, data))
+	logger.Log(LOG_CATEGORY_DEBUG_LUA, text, data)
 
 /// Logging for mapping errors
 /proc/log_mapping(text, skip_world_log)
