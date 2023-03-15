@@ -1,23 +1,23 @@
 /// Logging for loading and caching assets
-/proc/log_asset(text)
-	logger.Log(LOG_CATEGORY_DEBUG_ASSET, text)
+/proc/log_asset(text, list/data)
+	logger.Log(LOG_CATEGORY_DEBUG_ASSET, text, data)
 
 /// Logging for config errors
 /// Rarely gets called; just here in case the config breaks.
-/proc/log_config(text)
-	logger.Log(LOG_CATEGORY_CONFIG, text)
+/proc/log_config(text, list/data)
+	logger.Log(LOG_CATEGORY_CONFIG, text, data))
 	SEND_TEXT(world.log, text)
 
-/proc/log_filter_raw(text)
-	logger.Log(LOG_CATEGORY_FILTER, text)
+/proc/log_filter_raw(text, list/data)
+	logger.Log(LOG_CATEGORY_FILTER, text, data))
 
 /// Logging for job slot changes
-/proc/log_job_debug(text)
-	logger.Log(LOG_CATEGORY_DEBUG_JOB, text)
+/proc/log_job_debug(text, list/data)
+	logger.Log(LOG_CATEGORY_DEBUG_JOB, text, data))
 
 /// Logging for lua scripting
-/proc/log_lua(text)
-	logger.Log(LOG_CATEGORY_DEBUG_LUA, text)
+/proc/log_lua(text, list/data)
+	logger.Log(LOG_CATEGORY_DEBUG_LUA, text, data))
 
 /// Logging for mapping errors
 /proc/log_mapping(text, skip_world_log)
@@ -35,28 +35,28 @@
 	WRITE_LOG_NO_FORMAT(GLOB.perf_log, .)
 
 /// Logging for hard deletes
-/proc/log_qdel(text)
-	logger.Log(LOG_CATEGORY_DEBUG_QDEL, text)
+/proc/log_qdel(text, list/data)
+	logger.Log(LOG_CATEGORY_DEBUG_QDEL, text, data)
 
 /* Log to the logfile only. */
-/proc/log_runtime(text)
-	logger.Log(LOG_CATEGORY_DEBUG_RUNTIME, text)
+/proc/log_runtime(text, list/data)
+	logger.Log(LOG_CATEGORY_DEBUG_RUNTIME, text, data)
 	WRITE_LOG(GLOB.world_runtime_log, text)
 
-/proc/log_signal(text)
-	logger.Log(LOG_CATEGORY_SIGNAL, text)
+/proc/log_signal(text, list/data)
+	logger.Log(LOG_CATEGORY_SIGNAL, text, data)
 
 /// Logging for DB errors
-/proc/log_sql(text)
-	logger.Log(LOG_CATEGORY_DEBUG_SQL, text)
+/proc/log_sql(text, list/data)
+	logger.Log(LOG_CATEGORY_DEBUG_SQL, text, data)
 
 /// Logging for world/Topic
-/proc/log_topic(text)
-	logger.Log(LOG_CATEGORY_GAME_TOPIC, text)
+/proc/log_topic(text, list/data)
+	logger.Log(LOG_CATEGORY_GAME_TOPIC, text, data)
 
 /// Log to both DD and the logfile.
-/proc/log_world(text)
+/proc/log_world(text, list/data)
 #ifdef USE_CUSTOM_ERROR_HANDLER
-	logger.Log(LOG_CATEGORY_DEBUG_RUNTIME, text)
+	logger.Log(LOG_CATEGORY_DEBUG_RUNTIME, text, data)
 #endif
 	SEND_TEXT(world.log, text)

@@ -17,12 +17,12 @@
 	log_message("[prefix][custom_say_emote ? "*[custom_say_emote]*, " : ""]\"[message]\"[suffix]", message_type, log_globally = log_globally)
 
 /// Logging for generic spoken messages
-/proc/log_say(text)
-	logger.Log(LOG_CATEGORY_GAME_SAY, text)
+/proc/log_say(text, list/data)
+	logger.Log(LOG_CATEGORY_GAME_SAY, text, data)
 
 /// Logging for whispered messages
-/proc/log_whisper(text)
-	logger.Log(LOG_CATEGORY_GAME_WHISPER, text)
+/proc/log_whisper(text, list/data)
+	logger.Log(LOG_CATEGORY_GAME_WHISPER, text, data)
 
 /// Helper for logging of messages with only one sender and receiver (i.e. mind links)
 /proc/log_directed_talk(atom/source, atom/target, message, message_type, tag)
@@ -35,9 +35,9 @@
 		target.log_talk(message, LOG_VICTIM, tag = "[tag] from [key_name(source)]", log_globally = FALSE)
 
 /// Logging for speech taking place over comms, as well as tcomms equipment
-/proc/log_telecomms(text)
-	logger.Log(LOG_CATEGORY_TELECOMMS, text)
+/proc/log_telecomms(text, list/data)
+	logger.Log(LOG_CATEGORY_TELECOMMS, text, data)
 
 /// Logging for speech indicators.
-/proc/log_speech_indicators(text)
-	logger.Log(LOG_CATEGORY_SPEECH_INDICATOR, text)
+/proc/log_speech_indicators(text, list/data)
+	logger.Log(LOG_CATEGORY_SPEECH_INDICATOR, text, data)
