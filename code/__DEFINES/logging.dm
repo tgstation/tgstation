@@ -55,14 +55,14 @@
 #define LOGSRC_MOB "Mob"
 
 // Log header keys
-#define LOG_HEADER_CATEGORY "category"
-#define LOG_HEADER_CATEGORY_LIST "category-list"
-#define LOG_HEADER_INIT_TIMESTAMP "timestamp"
+#define LOG_HEADER_CATEGORY "cat"
+#define LOG_HEADER_CATEGORY_LIST "cat-list"
+#define LOG_HEADER_INIT_TIMESTAMP "ts"
 #define LOG_HEADER_ROUND_ID "round-id"
 #define LOG_HEADER_SECRET "secret"
 
 // Log json keys
-#define LOG_JSON_CATEGORY "category"
+#define LOG_JSON_CATEGORY "cat"
 #define LOG_JSON_ENTRIES "entries"
 #define LOG_JSON_LOGGING_START "log-start"
 
@@ -141,7 +141,7 @@
 #define SCHEMA_VERSION "schema-version"
 
 // Default log schema version
-#define LOG_CATEGORY_SCHEMA_VERSION_NOT_SET "0.0.0"
+#define LOG_CATEGORY_SCHEMA_VERSION_NOT_SET "0.0.1"
 
 //wrapper macros for easier grepping
 #define DIRECT_OUTPUT(A, B) A << B
