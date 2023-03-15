@@ -15,6 +15,7 @@
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/beer
 	fallback_icon = 'icons/obj/drinks/bottles.dmi'
 	fallback_icon_state = "beer"
+	liquid_fire_power = 10
 	/**
 	 * Boozepwr Chart
 	 *

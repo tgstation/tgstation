@@ -65,6 +65,7 @@
 	else
 		holder.maximum_volume = original_max_volume
 
+	epicenter.add_liquid_from_reagents(holder)
 	return TRUE
 
 

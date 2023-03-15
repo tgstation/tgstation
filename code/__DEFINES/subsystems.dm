@@ -318,3 +318,11 @@
 #define VOTE_COUNT_METHOD_SINGLE 1
 /// Approval voting. Any number of selections per person, and the selection with the most votes wins.
 #define VOTE_COUNT_METHOD_MULTI 2
+
+///liquid defines
+#define SSLIQUIDS_RUN_TYPE_TURFS 1
+#define SSLIQUIDS_RUN_TYPE_GROUPS 2
+#define SSLIQUIDS_RUN_TYPE_IMMUTABLES 3
+#define SSLIQUIDS_RUN_TYPE_EVAPORATION 4
+#define SSLIQUIDS_RUN_TYPE_FIRE 5
+#define SSLIQUIDS_RUN_TYPE_OCEAN 6

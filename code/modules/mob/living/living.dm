@@ -49,6 +49,7 @@
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
+	SEND_SIGNAL(T, COMSIG_TURF_MOB_FALL, src)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_Z_IMPACT, levels, T) & NO_Z_IMPACT_DAMAGE)
 		return
 	visible_message(span_danger("[src] crashes into [T] with a sickening noise!"), \

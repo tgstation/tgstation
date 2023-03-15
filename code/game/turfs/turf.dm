@@ -203,6 +203,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	if (length(vis_contents))
 		vis_contents.Cut()
+	SEND_SIGNAL(src, COMSIG_TURF_DESTROY)
 
 /// WARNING WARNING
 /// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS
