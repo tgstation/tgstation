@@ -4474,10 +4474,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "bsc" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/multitool,
@@ -4492,6 +4488,9 @@
 	assistance_requestable = 1;
 	department = "Telecomms Admin";
 	name = "Telecomms Requests Console"
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
@@ -16055,14 +16054,11 @@
 "eQG" = (
 /obj/machinery/announcement_system,
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/machinery/firealarm/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "eQO" = (
@@ -19895,6 +19891,12 @@
 	dir = 4
 	},
 /area/station/hallway/primary/fore)
+"fPj" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/turf/open/floor/iron/dark/corner,
+/area/station/hallway/primary/central/fore)
 "fPp" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -22648,13 +22650,6 @@
 /obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
-"gFA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
 "gFD" = (
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/neutral{
@@ -45958,6 +45953,11 @@
 	luminosity = 2
 	},
 /area/station/science/robotics/mechbay)
+"npo" = (
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "npr" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -63734,11 +63734,8 @@
 "szg" = (
 /obj/machinery/computer/telecomms/monitor,
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "szK" = (
@@ -64594,12 +64591,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/theater)
-"sLb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/turf/open/floor/iron/dark/corner,
-/area/station/hallway/primary/central/fore)
 "sLf" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -67891,6 +67882,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
+"tEE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "tEX" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -70795,11 +70793,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"uxw" = (
-/obj/effect/landmark/start/hangover,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
 "uxz" = (
 /obj/structure/chair,
 /obj/effect/landmark/start/hangover,
@@ -81903,15 +81896,14 @@
 /area/station/engineering/lobby)
 "xDm" = (
 /obj/machinery/light_switch/directional/west,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/effect/turf_decal/bot,
 /obj/structure/filingcabinet,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "xDE" = (
@@ -82038,11 +82030,8 @@
 "xGh" = (
 /obj/machinery/computer/telecomms/server,
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/machinery/status_display/ai/directional/west,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "xGw" = (
@@ -109313,7 +109302,7 @@ rEV
 ugp
 nIx
 pqB
-sLb
+fPj
 igl
 cyv
 oCI
@@ -109570,7 +109559,7 @@ ovv
 jtk
 nIx
 maW
-sLb
+fPj
 lbO
 jcN
 oKV
@@ -109827,7 +109816,7 @@ rEV
 jiJ
 nIx
 pxu
-sLb
+fPj
 cml
 mgx
 vCA
@@ -110598,7 +110587,7 @@ efG
 efG
 wkC
 pxu
-sLb
+fPj
 lxP
 vJT
 dZe
@@ -111881,7 +111870,7 @@ hjE
 uCR
 hJy
 cyp
-gFA
+tEE
 kbY
 lAA
 dBw
@@ -112912,7 +112901,7 @@ sne
 tUe
 pzC
 rOR
-gFA
+tEE
 mfJ
 bqd
 sHm
@@ -113427,7 +113416,7 @@ vqw
 vqw
 aOc
 laB
-uxw
+npo
 uke
 qTC
 kNw
@@ -115225,7 +115214,7 @@ mfU
 vqw
 vqw
 imo
-gFA
+tEE
 fzL
 nTG
 ijQ
@@ -115994,7 +115983,7 @@ kRd
 uBO
 kwe
 kxS
-uxw
+npo
 cDf
 bpj
 jds
