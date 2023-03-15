@@ -3201,9 +3201,6 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "Pc" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "Pk" = (
