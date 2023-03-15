@@ -49,7 +49,7 @@
 
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
-	. += span_notice("Right-click [src] to start scanning environment with TGUI. Right-click a target to start scanning it.")
+	. += span_notice("To scan an environment, activate it or use it on your location.")
 	. += span_notice("Alt-click [src] to activate the barometer function.")
 
 /obj/item/analyzer/suicide_act(mob/living/carbon/user)
@@ -173,15 +173,16 @@
 /obj/item/analyzer/attack_self(mob/user, modifiers)
 	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
 		return
+	target_mode = ANALYZER_MODE_SURROUNDINGS
 	atmos_scan(user=user, target=get_turf(src), silent=FALSE)
-	on_analyze(source=src, target=get_turf(src))
+	on_analyze(source=src, target=get_turf(src), save_data=!auto_updating)
 
 /obj/item/analyzer/attack_self_secondary(mob/user, modifiers)
 	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
 		return
 	target_mode = ANALYZER_MODE_SURROUNDINGS
 	atmos_scan(user=user, target=get_turf(src), silent=FALSE, print=FALSE)
-	on_analyze(source=src, target=get_turf(src))
+	on_analyze(source=src, target=get_turf(src), save_data=!auto_updating)
 	ui_interact(user)
 
 /obj/item/analyzer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -189,8 +190,11 @@
 	if(!can_see(user, target, scan_range))
 		return
 	. |= AFTERATTACK_PROCESSED_ITEM
+	target_mode = ANALYZER_MODE_TARGET
+	if(target == user || target == user.loc)
+		target_mode = ANALYZER_MODE_SURROUNDINGS
 	atmos_scan(user, target=(target.return_analyzable_air() ? target : get_turf(target)))
-	on_analyze(source=src, target=(target.return_analyzable_air() ? target : get_turf(target)))
+	on_analyze(source=src, target=(target.return_analyzable_air() ? target : get_turf(target)), save_data=!auto_updating)
 
 /obj/item/analyzer/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -200,12 +204,14 @@
 		return
 	. |= AFTERATTACK_PROCESSED_ITEM
 	target_mode = ANALYZER_MODE_TARGET
+	if(target == user || target == user.loc)
+		target_mode = ANALYZER_MODE_SURROUNDINGS
 	atmos_scan(user, target=(target.return_analyzable_air() ? target : get_turf(target)), print=FALSE)
-	on_analyze(source=src, target=(target.return_analyzable_air() ? target : get_turf(target)))
+	on_analyze(source=src, target=(target.return_analyzable_air() ? target : get_turf(target)), save_data=!auto_updating)
 	ui_interact(user)
 
 /// Called when our analyzer is used on something
-/obj/item/analyzer/proc/on_analyze(datum/source, atom/target)
+/obj/item/analyzer/proc/on_analyze(datum/source, atom/target, save_data=TRUE)
 	SIGNAL_HANDLER
 	LAZYINITLIST(history_gasmix_data)
 	switch(target_mode)
@@ -233,10 +239,11 @@
 			mix_name += " - Node [airs.Find(air)]"
 		new_gasmix_data += list(gas_mixture_parser(air, mix_name))
 	last_gasmix_data = new_gasmix_data
-	if(length(history_gasmix_data) >= ANALYZER_HISTORY_SIZE)
-		history_gasmix_data.Cut(ANALYZER_HISTORY_SIZE, length(history_gasmix_data) + 1)
-	history_gasmix_data.Insert(1, list(new_gasmix_data))
 	history_gasmix_index = 0
+	if(save_data)
+		if(length(history_gasmix_data) >= ANALYZER_HISTORY_SIZE)
+			history_gasmix_data.Cut(ANALYZER_HISTORY_SIZE, length(history_gasmix_data) + 1)
+		history_gasmix_data.Insert(1, list(new_gasmix_data))
 
 /**
  * Outputs a message to the user describing the target's gasmixes.
