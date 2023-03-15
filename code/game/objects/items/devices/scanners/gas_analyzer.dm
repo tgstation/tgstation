@@ -1,6 +1,8 @@
 #define ANALYZER_MODE_SURROUNDINGS 0
 #define ANALYZER_MODE_TARGET 1
 #define ANALYZER_HISTORY_SIZE 30
+#define ANALYZER_HISTORY_MODE_KPA "kpa"
+#define ANALYZER_HISTORY_MODE_MOL "mol"
 
 /obj/item/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels."
@@ -26,7 +28,8 @@
 	var/barometer_accuracy // 0 is the best accuracy.
 	var/list/last_gasmix_data
 	var/list/history_gasmix_data
-	var/history_gasmix_index = 1
+	var/history_gasmix_index = 0
+	var/history_view_mode = ANALYZER_HISTORY_MODE_KPA
 	var/scan_range = 1
 	var/auto_updating = TRUE
 	var/target_mode = ANALYZER_MODE_SURROUNDINGS
@@ -135,7 +138,8 @@
 	LAZYINITLIST(history_gasmix_data)
 	data["gasmixes"] = last_gasmix_data
 	data["autoUpdating"] = auto_updating
-	data["historyLength"] = length(history_gasmix_data)
+	data["historyGasmixes"] = history_gasmix_data
+	data["historyViewMode"] = history_view_mode
 	data["historyIndex"] = history_gasmix_index
 	return data
 
@@ -147,30 +151,22 @@
 		if("autoscantoggle")
 			auto_updating = !auto_updating
 			return TRUE
-		if("historybackwards")
-			auto_updating = FALSE
-			if(history_gasmix_index < length(history_gasmix_data))
-				history_gasmix_index++
-				last_gasmix_data = history_gasmix_data[history_gasmix_index]
-			return TRUE
-		if("historyforward")
-			auto_updating = FALSE
-			if(history_gasmix_index - 1 > 0)
-				history_gasmix_index--
-				if(history_gasmix_index <= length(history_gasmix_data))
-					last_gasmix_data = history_gasmix_data[history_gasmix_index]
-			return TRUE
 		if("input")
 			if(!length(history_gasmix_data))
 				return TRUE
 			var/target = params["target"]
 			auto_updating = FALSE
+			last_gasmix_data = history_gasmix_data[target]
 			history_gasmix_index = target
-			last_gasmix_data = history_gasmix_data[history_gasmix_index]
 			return TRUE
 		if("clearhistory")
-			history_gasmix_index = 1
 			history_gasmix_data = list()
+			return TRUE
+		if("modekpa")
+			history_view_mode = ANALYZER_HISTORY_MODE_KPA
+			return TRUE
+		if("modemol")
+			history_view_mode = ANALYZER_HISTORY_MODE_MOL
 			return TRUE
 
 
@@ -240,8 +236,7 @@
 	if(length(history_gasmix_data) >= ANALYZER_HISTORY_SIZE)
 		history_gasmix_data.Cut(ANALYZER_HISTORY_SIZE, length(history_gasmix_data) + 1)
 	history_gasmix_data.Insert(1, list(new_gasmix_data))
-	history_gasmix_index = 1
-
+	history_gasmix_index = 0
 
 /**
  * Outputs a message to the user describing the target's gasmixes.
@@ -311,3 +306,5 @@
 #undef ANALYZER_MODE_SURROUNDINGS
 #undef ANALYZER_MODE_TARGET
 #undef ANALYZER_HISTORY_SIZE
+#undef ANALYZER_HISTORY_MODE_KPA
+#undef ANALYZER_HISTORY_MODE_MOL

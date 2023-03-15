@@ -1,25 +1,44 @@
 import { useBackend } from '../backend';
 import { GasmixParser } from './common/GasmixParser';
 import type { Gasmix } from './common/GasmixParser';
-import { Button, LabeledList, Section, Flex, Slider } from '../components';
+import { Button, Flex, LabeledList, Section, Stack, Box } from '../components';
 import { AtmosHandbookContent, atmosHandbookHooks } from './common/AtmosHandbook';
 import { Window } from '../layouts';
+
+type GasmixHistory = {
+  allGasmixes: Gasmix[];
+};
 
 export type GasAnalyzerData = {
   gasmixes: Gasmix[];
   autoUpdating: boolean;
-  historyLength: number;
+  historyGasmixes: GasmixHistory[];
+  historyViewMode: string;
   historyIndex: number;
 };
 
 export const GasAnalyzerContent = (props, context) => {
   const { act, data } = useBackend<GasAnalyzerData>(context);
-  const { gasmixes } = data;
+  const { gasmixes, autoUpdating } = data;
   const [setActiveGasId, setActiveReactionId] = atmosHandbookHooks(context);
   return (
     <>
       {gasmixes.map((gasmix) => (
-        <Section title={gasmix.name} key={gasmix.reference}>
+        <Section
+          title={gasmix.name}
+          key={gasmix.reference}
+          buttons={
+            <Button
+              icon={autoUpdating ? 'sync-alt' : 'lock'}
+              onClick={() => act('autoscantoggle')}
+              tooltip={
+                autoUpdating ? 'Auto-Update Enabled' : 'Auto-Update Disabled'
+              }
+              fluid
+              textAlign="center"
+              selected={autoUpdating}
+            />
+          }>
           <GasmixParser
             gasmix={gasmix}
             gasesOnClick={setActiveGasId}
@@ -34,67 +53,73 @@ export const GasAnalyzerContent = (props, context) => {
 
 export const GasAnalyzer = (props, context) => {
   const { act, data } = useBackend<GasAnalyzerData>(context);
-  const { autoUpdating, historyLength, historyIndex } = data;
+  const { autoUpdating, historyGasmixes, historyViewMode, historyIndex } = data;
   return (
     <Window width={500} height={450}>
       <Window.Content scrollable>
-        <LabeledList.Item label="Auto-Scanning">
-          <Button
-            icon={autoUpdating ? 'sync-alt' : 'times'}
-            content={autoUpdating ? 'Enabled.' : 'Disabled.'}
-            onClick={() => act('autoscantoggle')}
-            fluid
-            textAlign="center"
-            selected={autoUpdating}
-          />
-        </LabeledList.Item>
-        <LabeledList.Item label="Scan History">
-          <Flex inline width="100%">
-            <Flex.Item>
-              <Button
-                icon={'sync'}
-                content={'Clear'}
-                onClick={() => act('clearhistory')}
-                textAlign="center"
-                disabled={historyLength === 0}
-              />
-            </Flex.Item>
-            <Flex.Item>
-              <Button
-                icon={'backward'}
-                content={'Previous'}
-                onClick={() => act('historybackwards')}
-                textAlign="center"
-                disabled={historyLength === 0 || historyIndex === historyLength}
-              />
-            </Flex.Item>
-            <Flex.Item grow={1} mx={1}>
-              <Slider
-                value={historyIndex}
-                fillValue={historyIndex}
-                minValue={1}
-                maxValue={historyLength}
-                step={1}
-                stepPixelSize={12}
-                onDrag={(e, value) =>
-                  act('input', {
-                    target: value,
-                  })
-                }
-              />
-            </Flex.Item>
-            <Flex.Item>
-              <Button
-                icon={'forward'}
-                content={'Next'}
-                onClick={() => act('historyforward')}
-                textAlign="center"
-                disabled={historyLength === 0 || historyIndex === 1}
-              />
-            </Flex.Item>
-          </Flex>
-        </LabeledList.Item>
-        <GasAnalyzerContent />
+        <Stack>
+          {/* Left Column */}
+          <Stack.Item grow>
+            <GasAnalyzerContent />
+          </Stack.Item>
+          {/* Right Column */}
+          <Stack.Item width={'150px'}>
+            <Section
+              fill
+              title="Scan History"
+              buttons={
+                <Button
+                  icon={'trash'}
+                  tooltip="Clear History"
+                  onClick={() => act('clearhistory')}
+                  textAlign="center"
+                  disabled={historyGasmixes.length === 0}
+                />
+              }>
+              <LabeledList.Item label="Mode">
+                <Flex inline width="50%">
+                  <Flex.Item>
+                    <Button
+                      content={'kPa'}
+                      onClick={() => act('modekpa')}
+                      textAlign="center"
+                      selected={historyViewMode === 'kpa'}
+                    />
+                  </Flex.Item>
+                  <Flex.Item>
+                    <Button
+                      content={'mol'}
+                      onClick={() => act('modemol')}
+                      textAlign="center"
+                      selected={historyViewMode === 'mol'}
+                    />
+                  </Flex.Item>
+                </Flex>
+              </LabeledList.Item>
+              <LabeledList>
+                {historyGasmixes.map((allGasmixes, index) => (
+                  <Box key={allGasmixes[0]}>
+                    <Button
+                      content={
+                        index +
+                        1 +
+                        '. ' +
+                        (historyViewMode === 'mol'
+                          ? allGasmixes[0].total_moles
+                          : allGasmixes[0].pressure
+                        ).toFixed(2)
+                      }
+                      onClick={() => act('input', { target: index + 1 })}
+                      textAlign="left"
+                      selected={index + 1 === historyIndex}
+                      fluid
+                    />
+                  </Box>
+                ))}
+              </LabeledList>
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
