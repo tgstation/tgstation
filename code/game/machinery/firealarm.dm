@@ -73,8 +73,8 @@
 			rmb_text = "Turn off alarm", \
 		), \
 	)
-  
-  update_appearance()
+
+	update_appearance()
 
 /obj/machinery/firealarm/Destroy()
 	if(my_area)
