@@ -4815,6 +4815,7 @@
 #include "code\modules\surgery\bodyparts\species_parts\lizard_bodyparts.dm"
 #include "code\modules\surgery\bodyparts\species_parts\misc_bodyparts.dm"
 #include "code\modules\surgery\bodyparts\species_parts\moth_bodyparts.dm"
+#include "code\modules\surgery\bodyparts\species_parts\oozeling_bodyparts.dm"
 #include "code\modules\surgery\bodyparts\species_parts\plasmaman_bodyparts.dm"
 #include "code\modules\surgery\organs\_organ.dm"
 #include "code\modules\surgery\organs\appendix.dm"
@@ -5124,4 +5125,5 @@
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
+#include "monkestation\code\modules\mob\living\carbon\human\species_type\oozeling.dm"
 // END_INCLUDE

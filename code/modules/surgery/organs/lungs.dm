@@ -6,7 +6,7 @@
 	slot = ORGAN_SLOT_LUNGS
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_SMALL
-	
+
 	var/respiration_type = NONE // The type(s) of gas this lung needs for respiration
 
 	healing_factor = STANDARD_ORGAN_HEALING
@@ -92,10 +92,10 @@
 // assign the respiration_type
 /obj/item/organ/internal/lungs/Initialize(mapload)
 	. = ..()
-	
+
 	if(safe_co2_min)
 		respiration_type |= RESPIRATION_CO2
-	if(safe_nitro_min) 
+	if(safe_nitro_min)
 		respiration_type |= RESPIRATION_N2
 	if(safe_oxygen_min)
 		respiration_type |= RESPIRATION_OXYGEN
@@ -833,3 +833,7 @@
 	breath_gases[/datum/gas/oxygen][MOLES] += gas_breathed
 	breath_gases[/datum/gas/hydrogen][MOLES] += gas_breathed*2
 	breath_gases[/datum/gas/water_vapor][MOLES] -= gas_breathed
+
+/obj/item/organ/internal/lungs/oozeling
+	name = "oozeling vacuole"
+	desc = "A large organelle designed to store oxygen and filter toxins."
