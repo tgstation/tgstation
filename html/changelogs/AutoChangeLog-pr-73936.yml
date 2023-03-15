@@ -1,7 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - rscadd: "I made circuit floors brighter and more vivid."
-  - rscadd: "Made air alarms, vending machines, newscasters, request consoles, status displays and keycard machines slightly \"brighter\" (larger light range, tho I did make air alarms a bit brighter too)"
-  - rscadd: "Tweaked desklamps. Lower range, and each type gets its own coloring instead of just fullwhite."
-  - bugfix: "AI displays are no longer always emissive, they'll stop doing it if they aren't displaying anything. Hopefully this'll look nicer"

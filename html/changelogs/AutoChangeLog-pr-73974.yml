@@ -1,5 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - bugfix: "The metallic hydrogen axe is no longer silent when using it as a crowbar."
-  - bugfix: "You are now capable of hitting standard windows with a crowbar when they're fully constructed."
