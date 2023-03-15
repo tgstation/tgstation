@@ -16,8 +16,10 @@
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
+//Massmeta edit - start
 #define ROLE_BLOODSUCKER "Bloodsucker"
 #define ROLE_INTERNAL_AFFAIRS "Internal Affairs Agent"
+#define ROLE_DARKSPAWN "darkspawn" //Massmeta edit end
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
@@ -120,8 +122,9 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_REV_HEAD = 14,
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
-	ROLE_BLOODSUCKER = 0,
-	ROLE_INTERNAL_AFFAIRS = 0,
+	ROLE_BLOODSUCKER = 14, //Massmeta edit
+	ROLE_INTERNAL_AFFAIRS = 0, //Massmeta edit
+	ROLE_DARKSPAWN = 14, //Massmeta edit
 
 	// Midround
 	ROLE_ABDUCTOR = 0,
