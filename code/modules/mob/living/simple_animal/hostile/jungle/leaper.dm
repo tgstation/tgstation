@@ -42,13 +42,14 @@
 
 /obj/projectile/leaper/on_hit(atom/target, blocked = FALSE)
 	..()
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		C.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
+	if (!isliving(target))
 		return
-	if(isanimal(target))
-		var/mob/living/simple_animal/L = target
-		L.adjustHealth(25)
+	var/mob/living/bubbled = target
+	if(iscarbon(target))
+		bubbled.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
+		return
+	if(isanimal_or_basicmob(target))
+		bubbled.adjustHealth(25)
 
 /obj/projectile/leaper/on_range()
 	var/turf/T = get_turf(src)
@@ -101,20 +102,19 @@
 	playsound(src,'sound/effects/snap.ogg',50, TRUE, -1)
 	return ..()
 
-/obj/structure/leaper_bubble/proc/on_entered(datum/source, atom/movable/AM)
+/obj/structure/leaper_bubble/proc/on_entered(datum/source, atom/movable/bubbled)
 	SIGNAL_HANDLER
-	if(isliving(AM))
-		var/mob/living/L = AM
-		if(!istype(L, /mob/living/simple_animal/hostile/jungle/leaper))
-			playsound(src,'sound/effects/snap.ogg',50, TRUE, -1)
-			L.Paralyze(50)
-			if(iscarbon(L))
-				var/mob/living/carbon/C = L
-				C.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
-			if(isanimal(L))
-				var/mob/living/simple_animal/A = L
-				A.adjustHealth(25)
-			qdel(src)
+	if(!isliving(bubbled) || istype(bubbled, /mob/living/simple_animal/hostile/jungle/leaper))
+		return
+	var/mob/living/bubbled_mob = bubbled
+
+	playsound(src,'sound/effects/snap.ogg',50, TRUE, -1)
+	bubbled_mob.Paralyze(50)
+	if(iscarbon(bubbled_mob))
+		bubbled_mob.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
+	else if(isanimal_or_basicmob(bubbled_mob))
+		bubbled_mob.adjustHealth(25)
+	qdel(src)
 
 /datum/reagent/toxin/leaper_venom
 	name = "Leaper venom"

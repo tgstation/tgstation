@@ -577,7 +577,7 @@
 
 /obj/structure/closet/stasis/Initialize(mapload)
 	. = ..()
-	if(isanimal(loc))
+	if(isanimal_or_basicmob(loc))
 		holder_animal = loc
 	START_PROCESSING(SSobj, src)
 
@@ -601,7 +601,7 @@
 		if(holder_animal)
 			holder_animal.mind.transfer_to(L)
 			holder_animal.gib()
-		if(kill || !isanimal(loc))
+		if(kill || !isanimal_or_basicmob(loc))
 			L.investigate_log("has died from [src].", INVESTIGATE_DEATHS)
 			L.death(FALSE)
 	..()

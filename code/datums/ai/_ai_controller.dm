@@ -108,25 +108,26 @@ multiple modular subtrees with behaviors
 
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_POSSESSED_PAWN)
 
-	if (!ismob(new_pawn))
-		set_ai_status(AI_STATUS_ON)
-	else
-		set_ai_status(get_setup_mob_ai_status(new_pawn))
-		RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
-
+	reset_ai_status()
+	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
-/// Mobs have more complicated factors about whether their AI should be on or not
-/datum/ai_controller/proc/get_setup_mob_ai_status(mob/mob_pawn)
+/// Sets the AI on or off based on current conditions, call to reset after you've manually disabled it somewhere
+/datum/ai_controller/proc/reset_ai_status()
 	var/final_status = AI_STATUS_ON
 
-	if(!continue_processing_when_client && mob_pawn.client)
+	if (!ismob(controller.pawn))
+		return final_status
+
+	var/mob/living/pawn = controller.pawn
+
+	if(!continue_processing_when_client && pawn.client)
 		final_status = AI_STATUS_OFF
 
 	if(ai_traits & CAN_ACT_WHILE_DEAD)
 		return final_status
 
-	if(mob_pawn.stat == DEAD)
+	if(pawn.stat == DEAD)
 		final_status = AI_STATUS_OFF
 
 	return final_status

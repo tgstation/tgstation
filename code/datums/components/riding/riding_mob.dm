@@ -111,9 +111,6 @@
 	var/atom/movable/movable_parent = parent
 	movable_parent.unbuckle_mob(rider)
 
-	if(!isanimal(movable_parent) && !iscyborg(movable_parent))
-		return
-
 	var/turf/target = get_edge_target_turf(movable_parent, movable_parent.dir)
 	var/turf/targetm = get_step(get_turf(movable_parent), movable_parent.dir)
 	rider.Move(targetm)
@@ -130,7 +127,7 @@
 /// If we're a cyborg or animal and we spin, we yeet whoever's on us off us
 /datum/component/riding/creature/proc/check_emote(mob/living/user, datum/emote/emote)
 	SIGNAL_HANDLER
-	if((!iscyborg(user) && !isanimal(user)) || !istype(emote, /datum/emote/spin))
+	if((!iscyborg(user) && !isanimal_or_basicmob(user)) || !istype(emote, /datum/emote/spin))
 		return
 
 	for(var/mob/yeet_mob in user.buckled_mobs)

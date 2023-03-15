@@ -303,7 +303,7 @@
 
 /datum/emote/living/scream/select_message_type(mob/user, intentional)
 	. = ..()
-	if(!intentional && isanimal(user))
+	if(!intentional && isanimal_or_basicmob(user))
 		return "makes a loud and pained whimper."
 
 /datum/emote/living/scowl
