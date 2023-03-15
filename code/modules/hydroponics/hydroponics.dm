@@ -184,7 +184,6 @@
 
 	// Constructible trays will always show that you can activate auto-grow with ctrl+click
 	. = ..()
-	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Activate auto-grow"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/hydroponics/Destroy()
@@ -357,7 +356,7 @@
 				adjust_plant_health(-rand(1,5) / rating)
 
 			// Harvest code
-			if(age > myseed.production && (age - lastproduce) > myseed.production && !(plant_status & HYDROTRAY_PLANT_DEAD|HYDROTRAY_PLANT_HARVESTABLE))
+			if(age > myseed.production && (age - lastproduce) > myseed.production && (plant_status != HYDROTRAY_PLANT_DEAD || plant_status != HYDROTRAY_PLANT_HARVESTABLE))
 				nutrimentMutation()
 				if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
 					set_plant_status(HYDROTRAY_PLANT_HARVESTABLE)
@@ -1027,7 +1026,7 @@
  * * adjustamt - Determines how much the plant_health will be adjusted upwards or downwards.
  */
 /obj/machinery/hydroponics/proc/adjustHealth(adjustamt)
-	if(myseed && !(plant_status & HYDROTRAY_PLANT_DEAD))
+	if(myseed && !plant_status != HYDROTRAY_PLANT_DEAD)
 		plant_health = clamp(plant_health + adjustamt, 0, myseed.endurance)
 
 /**
