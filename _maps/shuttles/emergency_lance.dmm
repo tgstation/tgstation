@@ -1526,7 +1526,7 @@
 /obj/structure/window/reinforced/survival_pod/spawner,
 /obj/machinery/door/window/survival_pod{
 	dir = 4;
-	name = "emergency weapons";
+	name = "Emergency Weapons";
 	req_access = list("command")
 	},
 /obj/structure/rack,
