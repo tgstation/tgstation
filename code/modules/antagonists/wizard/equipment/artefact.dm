@@ -252,8 +252,8 @@
 	if(spooky_scaries.len >= 3 && !unlimited)
 		to_chat(user, span_warning("This artifact can only affect three undead at a time!"))
 		return
-
-	M.set_species(applied_species, icon_update=0)
+	if(applied_species)
+		M.set_species(applied_species, icon_update=0)
 	M.revive(ADMIN_HEAL_ALL)
 	spooky_scaries |= M
 	to_chat(M, "[span_userdanger("You have been revived by ")]<B>[user.real_name]!</B>")
@@ -264,7 +264,8 @@
 			antag_datum.create_wiz_team()
 		M.mind.add_antag_datum(/datum/antagonist/wizard_minion, antag_datum.wiz_team)
 
-	equip_roman_skeleton(M)
+	if(applied_outfit)
+		equip_roman_skeleton(M)
 
 	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
 
