@@ -262,25 +262,28 @@
 
 	//Begin checks
 	//Calculate DeltapH (Deviation of pH from optimal)
-	//Within mid range
-	if (cached_ph >= reaction.optimal_ph_min  && cached_ph <= reaction.optimal_ph_max)
-		delta_ph = 1 //100% purity for this step
-	//Lower range
-	else if (cached_ph < reaction.optimal_ph_min) //If we're outside of the optimal lower bound
-		if (cached_ph < (reaction.optimal_ph_min - reaction.determin_ph_range)) //If we're outside of the deterministic bound
-			delta_ph = 0 //0% purity
-		else //We're in the deterministic phase
-			delta_ph = (((cached_ph - (reaction.optimal_ph_min - reaction.determin_ph_range))**reaction.ph_exponent_factor)/((reaction.determin_ph_range**reaction.ph_exponent_factor))) //main pH calculation
-	//Upper range
-	else if (cached_ph > reaction.optimal_ph_max) //If we're above of the optimal lower bound
-		if (cached_ph > (reaction.optimal_ph_max + reaction.determin_ph_range))  //If we're outside of the deterministic bound
-			delta_ph = 0 //0% purity
-		else  //We're in the deterministic phase
-			delta_ph = (((- cached_ph + (reaction.optimal_ph_max + reaction.determin_ph_range))**reaction.ph_exponent_factor)/(reaction.determin_ph_range**reaction.ph_exponent_factor))//Reverse - to + to prevent math operation failures.
+	if(reaction.reaction_flags & REACTION_USES_PURITY)
+		//Within mid range
+		if (cached_ph >= reaction.optimal_ph_min  && cached_ph <= reaction.optimal_ph_max)
+			delta_ph = 1 //100% purity for this step
+		//Lower range
+		else if (cached_ph < reaction.optimal_ph_min) //If we're outside of the optimal lower bound
+			if (cached_ph < (reaction.optimal_ph_min - reaction.determin_ph_range)) //If we're outside of the deterministic bound
+				delta_ph = 0 //0% purity
+			else //We're in the deterministic phase
+				delta_ph = (((cached_ph - (reaction.optimal_ph_min - reaction.determin_ph_range))**reaction.ph_exponent_factor)/((reaction.determin_ph_range**reaction.ph_exponent_factor))) //main pH calculation
+		//Upper range
+		else if (cached_ph > reaction.optimal_ph_max) //If we're above of the optimal lower bound
+			if (cached_ph > (reaction.optimal_ph_max + reaction.determin_ph_range))  //If we're outside of the deterministic bound
+				delta_ph = 0 //0% purity
+			else  //We're in the deterministic phase
+				delta_ph = (((- cached_ph + (reaction.optimal_ph_max + reaction.determin_ph_range))**reaction.ph_exponent_factor)/(reaction.determin_ph_range**reaction.ph_exponent_factor))//Reverse - to + to prevent math operation failures.
 
-	//This should never proc, but it's a catch incase someone puts in incorrect values
+		//This should never proc, but it's a catch incase someone puts in incorrect values
+		else
+			stack_trace("[holder.my_atom] attempted to determine FermiChem pH for '[reaction.type]' which had an invalid pH of [cached_ph] for set recipie pH vars. It's likely the recipe vars are wrong.")
 	else
-		stack_trace("[holder.my_atom] attempted to determine FermiChem pH for '[reaction.type]' which had an invalid pH of [cached_ph] for set recipie pH vars. It's likely the recipe vars are wrong.")
+		delta_ph = 1
 
 	//Calculate DeltaT (Deviation of T from optimal)
 	if(!reaction.is_cold_recipe)
@@ -379,7 +382,10 @@
 			playsound(get_turf(holder.my_atom), reaction.mix_sound, 80, TRUE)
 
 	//Used for UI output
-	reaction_quality = purity
+	if(reaction.reaction_flags & REACTION_USES_PURITY)
+		reaction_quality = purity
+	else
+		reaction_quality = 1
 
 	//post reaction checks
 	if(!(check_fail_states(total_step_added)))

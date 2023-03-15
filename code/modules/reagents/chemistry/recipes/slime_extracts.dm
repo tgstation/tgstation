@@ -1,7 +1,7 @@
 
 /datum/chemical_reaction/slime
 	var/deletes_extract = TRUE
-	reaction_flags = REACTION_INSTANT
+
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_SLIME
 
 /datum/chemical_reaction/slime/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)

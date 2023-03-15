@@ -915,7 +915,7 @@
 			var/meets_temp_requirement = FALSE
 			var/meets_ph_requirement = FALSE
 			var/granularity = 1
-			if(!(reaction.reaction_flags & REACTION_INSTANT))
+			if((reaction.reaction_flags & REACTION_NON_INSTANT))
 				granularity = CHEMICAL_VOLUME_MINIMUM
 
 			for(var/req_reagent in cached_required_reagents)
@@ -951,7 +951,10 @@
 			if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
 				meets_temp_requirement = TRUE
 
-			if(((ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
+			if(reaction.reaction_flags & REACTION_USES_PURITY)
+				if(((ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
+					meets_ph_requirement = TRUE
+			else
 				meets_ph_requirement = TRUE
 
 			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
@@ -963,7 +966,7 @@
 	update_previous_reagent_list()
 	//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
 	for(var/datum/chemical_reaction/selected_reaction as anything in possible_reactions)
-		if((selected_reaction.reaction_flags & REACTION_INSTANT) || (flags & REAGENT_HOLDER_INSTANT_REACT)) //If we have instant reactions, we process them here
+		if(!(selected_reaction.reaction_flags & REACTION_NON_INSTANT) || (flags & REAGENT_HOLDER_INSTANT_REACT)) //If we have instant reactions, we process them here
 			instant_react(selected_reaction)
 			.++
 			update_total()
@@ -1162,8 +1165,12 @@
 		else
 			if(reaction.required_temp < chem_temp)
 				return TRUE
-		if(((ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
+		if(reaction.reaction_flags & REACTION_USES_PURITY)
+			if(((ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
+				return TRUE
+		else
 			return TRUE
+
 	return FALSE
 
 /datum/reagents/proc/update_previous_reagent_list()
