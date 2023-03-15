@@ -48,34 +48,36 @@
 		. += span_notice("Alt-click to rotate the input and output direction.")
 
 /// Turns ore into its refined type, and sends it to its material container
-/obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
-	if(QDELETED(O))
+/obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/gathered_ore)
+	if(QDELETED(gathered_ore))
 		return
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if (!mat_container)
 		return
 
-	if(O.refined_type == null)
+	if(gathered_ore.refined_type == null)
 		return
 
-	if(O?.refined_type)
-		points += O.points * point_upgrade * O.amount
+	if(gathered_ore?.refined_type)
+		points += gathered_ore.points * point_upgrade * gathered_ore.amount
 
-	var/material_amount = mat_container.get_item_material_amount(O, BREAKDOWN_FLAGS_ORM)
+	var/material_amount = mat_container.get_item_material_amount(gathered_ore, BREAKDOWN_FLAGS_ORM)
 
 	if(!material_amount)
-		qdel(O) //no materials, incinerate it
+		qdel(gathered_ore) //no materials, incinerate it
 
-	else if(!mat_container.has_space(material_amount * O.amount)) //if there is no space, eject it
-		unload_mineral(O)
+	else if(!mat_container.has_space(material_amount * gathered_ore.amount)) //if there is no space, eject it
+		unload_mineral(gathered_ore)
 
 	else
-		var/list/stack_mats = O.get_material_composition(BREAKDOWN_FLAGS_ORM)
+		var/list/stack_mats = gathered_ore.get_material_composition(BREAKDOWN_FLAGS_ORM)
 		var/mats = stack_mats & mat_container.materials
-		var/amount = O.amount
-		mat_container.insert_item(O, ore_multiplier, breakdown_flags=BREAKDOWN_FLAGS_ORM) //insert it
+		var/amount = gathered_ore.amount
+		mat_container.insert_item(gathered_ore, ore_multiplier, breakdown_flags=BREAKDOWN_FLAGS_ORM) //insert it
 		materials.silo_log(src, "smelted", amount, "someone", mats)
-		qdel(O)
+		qdel(gathered_ore)
+
+	SEND_SIGNAL(src, COMSIG_ORM_COLLECTED_ORE)
 
 /// Returns the amount of a specific alloy design, based on the accessible materials
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)

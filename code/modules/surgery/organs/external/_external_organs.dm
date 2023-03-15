@@ -112,11 +112,13 @@
 		add_to_limb(bodypart)
 
 /obj/item/organ/external/add_to_limb(obj/item/bodypart/bodypart)
+	bodypart.external_organs += src
 	ownerlimb = bodypart
 	ownerlimb.add_bodypart_overlay(bodypart_overlay)
 	return ..()
 
 /obj/item/organ/external/remove_from_limb()
+	ownerlimb.external_organs -= src
 	ownerlimb.remove_bodypart_overlay(bodypart_overlay)
 	if(ownerlimb.owner && external_bodytypes)
 		ownerlimb.synchronize_bodytypes(ownerlimb.owner)
@@ -350,7 +352,7 @@
 /datum/bodypart_overlay/mutant/pod_hair/get_global_feature_list()
 	return GLOB.pod_hair_list
 
-/datum/bodypart_overlay/mutant/pod_hair/color_image(image/overlay, draw_layer)
+/datum/bodypart_overlay/mutant/pod_hair/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
 	if(draw_layer != bitflag_to_layer(color_swapped_layer))
 		return ..()
 

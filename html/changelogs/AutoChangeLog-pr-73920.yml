@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes:
+  - qol: "Clicking on the turf of a fire alarm/light switch with your hand will activate it."

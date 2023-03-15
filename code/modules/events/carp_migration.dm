@@ -9,7 +9,7 @@
 	description = "Summons a school of space carp."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 3
-	admin_setup = /datum/event_admin_setup/carp_migration
+	admin_setup = list(/datum/event_admin_setup/carp_migration)
 
 /datum/round_event_control/carp_migration/New()
 	. = ..()
