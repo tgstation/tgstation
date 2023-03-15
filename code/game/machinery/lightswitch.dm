@@ -17,6 +17,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 
 /obj/machinery/light_switch/Initialize(mapload)
 	. = ..()
+
+	AddComponent(/datum/component/redirect_attack_hand_from_turf)
+
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/light_switch,
 	))

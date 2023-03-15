@@ -11,7 +11,7 @@
 	var/obj/item/assembly/signaler/anomaly/aSignal = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
 
-	var/lifespan = 99 SECONDS
+	var/lifespan = ANOMALY_COUNTDOWN_TIMER
 	var/death_time
 
 	var/countdown_colour

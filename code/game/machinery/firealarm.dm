@@ -66,7 +66,15 @@
 		rmb_text = "Turn off", \
 	)
 
-	update_appearance()
+	AddComponent( \
+		/datum/component/redirect_attack_hand_from_turf, \
+		screentip_texts = list( \
+			lmb_text = "Turn on alarm", \
+			rmb_text = "Turn off alarm", \
+		), \
+	)
+  
+  update_appearance()
 
 /obj/machinery/firealarm/Destroy()
 	if(my_area)

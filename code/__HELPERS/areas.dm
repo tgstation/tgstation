@@ -161,10 +161,8 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
 
 		//move the turf to its new area and unregister it from the old one
-		old_area.turfs_to_uncontain += thing
-		newA.contents += thing
-		newA.contained_turfs += thing
-		thing.transfer_area_lighting(old_area, newA)
+	for(var/turf/thing as anything in turfs)
+		thing.change_area(thing.loc, newA)
 
 		//register the stuff to its new area
 		for(var/atom/stuff as anything in atoms)
