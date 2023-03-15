@@ -49,6 +49,7 @@
 
 /obj/item/ammo_box/magazine/m9mm
 	name = "pistol magazine (9mm)"
+	icon_state = "9x19p"
 	base_icon_state = "9x19p"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = CALIBER_9MM
