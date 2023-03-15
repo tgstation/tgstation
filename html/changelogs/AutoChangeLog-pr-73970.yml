@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Malf AI's xray camera upgrade no longer shows on station security camera consoles"
