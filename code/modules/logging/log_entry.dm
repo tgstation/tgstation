@@ -67,41 +67,31 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 /// Converts the log entry to a JSON string.
 /datum/log_entry/proc/to_json_text()
 	// I do not trust byond's json encoder, so we're doing it manually
-	var/json_out = "\["
+	var/list/json_strings = list()
 
-	// Timestamp
-	json_out += "\"[timestamp]\","
+	json_strings += json_encode(timestamp)
 
-	// Category
-	json_out += "\"[category]\","
+	json_strings += json_encode(category)
 
-	// Message
-	json_out += "\"[message]\","
+	json_strings += json_encode(message)
 
-	// Data?
 	if(length(data))
-		json_out += "[json_encode(data)],"
+		json_strings += json_encode(data)
 	else
-		json_out += "\[\],"
+		json_strings += "null"
 
-	// World state
-	json_out += "[json_encode(world.get_world_state_for_logging())],"
+	json_strings += json_encode(world.get_world_state_for_logging())
 
-	// Semver store
 	if(length(semver_store))
-		json_out += "[json_encode(semver_store)],"
+		json_strings += json_encode(semver_store)
 	else
-		json_out += "\[\],"
+		json_strings += "null"
 
-	// ID
-	json_out += "[id],"
+	json_strings += "[id]"
 
-	// Schema version
-	json_out += "\"[schema_version]\""
+	json_strings += json_encode(schema_version)
 
-	// End of array
-	json_out += "\]"
-	return json_out
+	return "\[[json_strings.Join(",")]\]"
 
 /// Writes the log entry to a file.
 /datum/log_entry/proc/write_entry_to_file(file)
