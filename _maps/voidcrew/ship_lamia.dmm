@@ -590,14 +590,9 @@
 "ch" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/lamia/engines)
 "cj" = (
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 1;
-	piping_layer = 4
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -815,7 +810,6 @@
 /area/shuttle/voidcrew/lamia/cargo/mining_dock)
 "oE" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/lamia/engines)
 "pf" = (
@@ -1031,6 +1025,15 @@
 	},
 /turf/open/floor/bronze,
 /area/shuttle/voidcrew/lamia/cargo/mining_dock)
+"AM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 1;
+	piping_layer = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/lamia/engines)
 "Ba" = (
 /turf/closed/wall/mineral/iron,
 /area/shuttle/voidcrew/lamia/cargo/mining_dock)
@@ -1171,7 +1174,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/lamia/engines)
@@ -1963,7 +1965,7 @@ bF
 bM
 JP
 HD
-oE
+AM
 gL
 ch
 Db

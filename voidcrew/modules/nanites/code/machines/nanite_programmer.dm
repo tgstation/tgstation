@@ -39,7 +39,7 @@
 	program = null
 
 /obj/machinery/nanite_programmer/AltClick(mob/user)
-	if(disk && user.canUseTopic(src, !issilicon(user)))
+	if(disk && user.can_perform_action(src, ALLOW_SILICON_REACH))
 		to_chat(user, span_notice("You take out [disk] from [src]."))
 		eject(user)
 	return

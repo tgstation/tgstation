@@ -413,8 +413,9 @@
 /turf/closed/wall,
 /area/shuttle/voidcrew/bogardee/service/entrance)
 "kr" = (
-/obj/structure/sign/warning/chem_diamond,
-/turf/closed/wall,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
 "kM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -539,9 +540,9 @@
 /area/shuttle/voidcrew/bogardee/service/entrance)
 "mH" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable,
 /obj/effect/turf_decal/box,
 /obj/item/stack/sheet/mineral/plasma/five,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
 "mR" = (
@@ -662,6 +663,8 @@
 /area/shuttle/voidcrew/bogardee/service/janitor)
 "pN" = (
 /obj/machinery/atmospherics/components/binary/valve/digital,
+/obj/structure/reagent_dispensers/cooking_oil,
+/obj/machinery/light_switch/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
@@ -726,7 +729,6 @@
 /area/shuttle/voidcrew/bogardee/service/quarters)
 "rH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
 "sa" = (
@@ -1063,13 +1065,13 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/bogardee/service/entrance)
 "Ax" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_pump/layer2{
 	dir = 4
 	},
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
 "AA" = (
@@ -1170,11 +1172,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/bogardee/service/coldroom)
 "CV" = (
-/obj/structure/reagent_dispensers/watertank/high,
-/obj/item/reagent_containers/cup/bucket,
-/obj/item/reagent_containers/cup/bucket,
-/obj/item/mop,
 /obj/effect/turf_decal/box,
+/obj/machinery/autolathe,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
 "Dd" = (
@@ -1288,6 +1287,9 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/service/entrance)
+"ED" = (
+/turf/closed/wall/r_wall,
+/area/template_noop)
 "EF" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1311,8 +1313,6 @@
 /area/shuttle/voidcrew/bogardee/service/hydroponics)
 "Fm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/autolathe,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
 "Fp" = (
@@ -1336,10 +1336,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light_switch{
-	pixel_x = 24;
-	pixel_y = -24
-	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
@@ -1347,9 +1343,7 @@
 /turf/closed/wall,
 /area/shuttle/voidcrew/bogardee/cargo)
 "FU" = (
-/obj/machinery/power/smes/engineering,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
@@ -1393,11 +1387,11 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/voidcrew/bogardee/service/coldroom)
 "GZ" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
@@ -1540,10 +1534,8 @@
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/bogardee/service/kitchen)
 "KN" = (
-/obj/machinery/power/smes/engineering,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
 /obj/machinery/light,
-/obj/structure/cable,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
@@ -1572,10 +1564,9 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/service/bar)
 "Mj" = (
-/obj/structure/cable,
-/obj/item/radio/intercom{
-	pixel_x = 27
-	},
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/mop,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
 "Mm" = (
@@ -1667,7 +1658,6 @@
 	dir = 8;
 	name = "engine fuel pump"
 	},
-/obj/structure/cable,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
@@ -1782,7 +1772,6 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/bogardee/service/entrance)
 "Qu" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/binary/pump/on/layer4{
 	name = "Air to Distro"
 	},
@@ -1817,6 +1806,7 @@
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
 /obj/item/multitool,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
 "Ro" = (
@@ -1840,8 +1830,9 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/bogardee/service/entrance)
 "Si" = (
-/obj/structure/reagent_dispensers/cooking_oil,
+/obj/machinery/power/smes/engineering,
 /obj/structure/cable,
+/obj/structure/sign/warning/chem_diamond/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
 "Sj" = (
@@ -1867,22 +1858,16 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/bogardee/service/entrance)
 "SB" = (
-/obj/machinery/firealarm/directional/north{
-	dir = 1
-	},
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/bogardee/cargo)
 "SQ" = (
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/bogardee/service/hydroponics)
 "Tc" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
 "Tl" = (
@@ -2015,11 +2000,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
+"VM" = (
+/obj/machinery/vending/wardrobe/jani_wardrobe,
+/turf/open/floor/iron,
+/area/shuttle/voidcrew/bogardee/service/janitor)
 "VO" = (
 /obj/machinery/atmospherics/components/tank/air{
 	piping_layer = 2
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
@@ -2097,10 +2085,6 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/service/janitor)
 "Yd" = (
-/obj/machinery/vending/wardrobe/jani_wardrobe{
-	density = 0;
-	pixel_y = 29
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
@@ -2254,7 +2238,7 @@ vf
 HD
 HD
 Vo
-Vo
+kr
 dH
 ly
 dH
@@ -2358,7 +2342,7 @@ yB
 dV
 dV
 dV
-kr
+dV
 Tl
 dV
 DG
@@ -2744,8 +2728,8 @@ lI
 vZ
 "}
 (28,1,1) = {"
-vZ
-gt
+ED
+VM
 Yd
 Of
 Ap
@@ -2765,7 +2749,7 @@ lI
 vZ
 "}
 (29,1,1) = {"
-vZ
+ED
 gt
 XV
 XV

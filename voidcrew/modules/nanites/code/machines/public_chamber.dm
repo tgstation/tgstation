@@ -222,7 +222,7 @@
 	toggle_open(user)
 
 /obj/machinery/public_nanite_chamber/MouseDrop_T(mob/target, mob/user)
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || !Adjacent(target) || !user.Adjacent(target) || !iscarbon(target))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || !Adjacent(target) || !user.Adjacent(target))
 		return
 	if(close_machine(target, user))
 		log_combat(user, target, "inserted", null, "into [src].")

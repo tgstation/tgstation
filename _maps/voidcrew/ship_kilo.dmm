@@ -114,7 +114,7 @@
 "aS" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/tank/air{
-	piping_layer = 2
+	piping_layer = 4
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes{
@@ -242,7 +242,6 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/cargo)
 "bM" = (
@@ -865,7 +864,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/voidcrew/kilo/cargo)
 "ko" = (
@@ -910,9 +908,7 @@
 	pixel_x = -9;
 	pixel_y = 4
 	},
-/obj/machinery/firealarm/directional/north{
-	dir = 1
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/item/areaeditor,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/voidcrew/kilo/bridge)
@@ -926,7 +922,6 @@
 /area/shuttle/voidcrew/kilo/bridge)
 "ox" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/voidcrew/kilo/cargo)
 "oP" = (

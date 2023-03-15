@@ -103,10 +103,8 @@
 /area/shuttle/voidcrew/meta/cargo)
 "at" = (
 /obj/structure/sign/warning/vacuum/external/directional/west,
-/obj/machinery/light/small/built{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/meta/dorms)
 "au" = (
@@ -159,7 +157,7 @@
 	dir = 4;
 	name = "Engine Access"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/shuttle/voidcrew/meta/engineering)
 "az" = (
 /obj/effect/turf_decal/stripes{
@@ -182,11 +180,9 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/meta/engineering)
 "aB" = (
-/obj/structure/closet/firecloset/full{
-	anchored = 1
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/meta/engineering)
 "aC" = (
@@ -296,9 +292,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/meta/engineering)
@@ -550,9 +543,6 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/meta/engineering)
 "bz" = (
-/obj/machinery/firealarm/directional/east{
-	dir = 8
-	},
 /obj/structure/closet/crate/internals,
 /obj/item/tank/internals/oxygen{
 	pixel_x = -3;
@@ -631,6 +621,9 @@
 	},
 /obj/item/radio/off,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/firealarm/directional/east{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/meta/engineering)
 "bL" = (
@@ -701,9 +694,6 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/meta/cafeteria)
 "bP" = (
-/obj/machinery/light/small/built{
-	dir = 4
-	},
 /obj/machinery/vending/coffee,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
@@ -719,19 +709,16 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/meta/cafeteria)
 "bS" = (
-/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/firealarm/directional/east{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/white,
-/area/shuttle/voidcrew/meta/engineering)
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/meta/cargo)
 "bT" = (
 /obj/structure/table,
 /obj/item/stack/sheet/iron/twenty,
@@ -740,7 +727,6 @@
 	},
 /obj/item/stack/rods/twentyfive,
 /obj/item/wrench,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/meta/engineering)
@@ -793,9 +779,6 @@
 /area/shuttle/voidcrew/meta/cafeteria)
 "cd" = (
 /obj/structure/table,
-/obj/machinery/light/small/built{
-	dir = 8
-	},
 /obj/item/paper_bin{
 	pixel_x = -4
 	},
@@ -812,6 +795,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/meta/bridge)
 "ce" = (
@@ -857,18 +841,15 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/meta/engineering)
 "ci" = (
 /obj/structure/sign/warning/vacuum/external/directional/north,
-/obj/structure/cable,
 /obj/machinery/light/small/built{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/vent_pump/layer4{
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -878,7 +859,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -887,10 +867,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/meta/engineering)
 "cl" = (
@@ -898,7 +876,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/meta/engineering)
@@ -1027,7 +1004,6 @@
 	pixel_y = 6
 	},
 /obj/item/stock_parts/cell/high,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/meta/engineering)
@@ -1059,9 +1035,6 @@
 /area/shuttle/voidcrew/meta/cafeteria)
 "cD" = (
 /obj/structure/table,
-/obj/machinery/light/small/built{
-	dir = 8
-	},
 /obj/item/gps{
 	gpstag = "NTREC1";
 	pixel_x = -9;
@@ -1079,6 +1052,7 @@
 	pixel_y = -29
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/meta/bridge)
 "cE" = (
@@ -1145,6 +1119,9 @@
 /obj/structure/closet/emcloset/anchored,
 /obj/item/pai_card,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/meta/engineering)
 "cI" = (
@@ -1225,9 +1202,6 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/meta/cafeteria)
 "cO" = (
-/obj/machinery/light/small/built{
-	dir = 4
-	},
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
@@ -1243,6 +1217,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/meta/cafeteria)
 "cP" = (
@@ -1553,10 +1528,10 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/meta/engineering)
 "dI" = (
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/meta/engineering)
 "dJ" = (
@@ -1578,6 +1553,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/meta/engineering)
 "dL" = (
@@ -1782,7 +1758,7 @@
 	name = "Engine Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/shuttle/voidcrew/meta/engineering)
 "fX" = (
 /obj/structure/cable,
@@ -1839,13 +1815,11 @@
 /area/shuttle/voidcrew/meta/cargo)
 "pI" = (
 /obj/structure/sign/warning/vacuum/external/directional/west,
-/obj/machinery/light/small/built{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/vent_pump/layer4{
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/meta/kitchen)
 "pQ" = (
@@ -2023,7 +1997,6 @@
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/meta/kitchen)
 "JR" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2178,7 +2151,7 @@ aO
 aO
 by
 bI
-bS
+bI
 ck
 cw
 bI
@@ -2310,7 +2283,7 @@ ap
 aR
 bo
 bC
-ap
+bS
 bX
 cm
 bo

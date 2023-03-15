@@ -26,11 +26,11 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/dwayne/cargo_bay)
 "aS" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/layer2{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes{
 	dir = 10
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer2{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/engineering)
@@ -96,10 +96,9 @@
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/dwayne/medbay)
 "dL" = (
-/obj/machinery/computer/monitor{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/engineering)
 "dS" = (
@@ -124,11 +123,11 @@
 /obj/item/radio/intercom{
 	pixel_y = -28
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/crew)
 "eH" = (
 /obj/effect/landmark/start/shaft_miner,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/dwayne/cargo_bay)
 "eM" = (
@@ -161,11 +160,9 @@
 "fY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/voidcrew/dwayne/engineering)
 "gf" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor,
@@ -185,6 +182,7 @@
 "gs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/dwayne/medbay)
 "gu" = (
@@ -215,6 +213,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/shuttle/voidcrew/dwayne/engineering)
 "hp" = (
@@ -327,7 +326,6 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/bridge)
 "iZ" = (
-/obj/structure/cable,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/crew)
@@ -369,7 +367,7 @@
 /obj/item/radio/intercom{
 	pixel_x = 27
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/engineering)
 "jP" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
@@ -386,7 +384,6 @@
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/dwayne/medbay)
 "kf" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/caution/stand_clear{
@@ -409,7 +406,7 @@
 /obj/machinery/atmospherics/components/tank/plasma{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/engineering)
 "lg" = (
 /obj/machinery/power/tracker,
@@ -470,12 +467,43 @@
 /turf/closed/wall,
 /area/shuttle/voidcrew/dwayne/engineering)
 "nf" = (
+/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/item/clothing/head/utility/hardhat/welding/orange,
+/obj/item/clothing/head/utility/hardhat/welding/orange,
+/obj/item/clothing/head/utility/hardhat/welding/orange,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/obj/item/pickaxe/silver,
+/obj/item/pickaxe/silver,
+/obj/item/t_scanner/adv_mining_scanner/lesser,
+/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/meson,
+/obj/item/gps/mining,
+/obj/item/gps/mining,
+/obj/item/gps/mining,
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket";
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket";
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /obj/effect/turf_decal/tile/yellow/half,
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/dwayne/cargo_bay)
 "nr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/voidcrew/dwayne/engineering)
 "nu" = (
@@ -511,7 +539,6 @@
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/dwayne/medbay)
 "oa" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -530,6 +557,7 @@
 /area/shuttle/voidcrew/dwayne/crew)
 "oB" = (
 /obj/effect/decal/cleanable/oil,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/dwayne/cargo_bay)
 "oC" = (
@@ -643,10 +671,10 @@
 /area/shuttle/voidcrew/dwayne/bridge)
 "rU" = (
 /obj/structure/table/wood,
-/obj/item/flashlight/lamp/green,
 /obj/item/radio/intercom{
 	pixel_y = -28
 	},
+/obj/machinery/microwave,
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/dwayne/crew)
 "sg" = (
@@ -656,7 +684,6 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/crew)
 "sD" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/crew)
@@ -671,39 +698,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/dwayne/medbay)
-"tG" = (
-/obj/item/clothing/suit/hazardvest{
-	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
-	name = "emergency lifejacket";
-	pixel_x = -4;
-	pixel_y = -4
-	},
-/obj/item/clothing/suit/hazardvest{
-	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
-	name = "emergency lifejacket"
-	},
-/obj/item/clothing/suit/hazardvest{
-	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
-	name = "emergency lifejacket";
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/gps/mining,
-/obj/item/gps/mining,
-/obj/item/gps/mining,
-/obj/item/clothing/glasses/meson,
-/obj/item/clothing/glasses/meson,
-/obj/item/t_scanner/adv_mining_scanner/lesser,
-/obj/item/gun/energy/recharge/kinetic_accelerator,
-/obj/item/pickaxe/silver,
-/obj/item/pickaxe/silver,
-/obj/item/storage/bag/ore,
-/obj/item/storage/bag/ore,
-/obj/item/clothing/head/utility/hardhat/weldhat/orange,
-/obj/item/clothing/head/utility/hardhat/weldhat/orange,
-/obj/item/clothing/head/utility/hardhat/weldhat/orange,
-/turf/closed/wall/r_wall,
-/area/shuttle/voidcrew/dwayne/cargo_bay)
 "tH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -779,7 +773,6 @@
 /area/shuttle/voidcrew/dwayne/cargo_bay)
 "wA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/external,
 /turf/open/floor/iron/dark,
@@ -804,10 +797,12 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/machinery/power/port_gen/pacman,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/engineering)
 "xz" = (
-/obj/structure/cable,
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -821,7 +816,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/crew)
 "yx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -830,7 +825,6 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/voidcrew/dwayne/crew)
 "yH" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -838,7 +832,6 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/crew)
 "yJ" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -936,8 +929,8 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/voidcrew/dwayne/crew)
 "AE" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/machinery/airalarm/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/engineering)
 "AQ" = (
@@ -951,6 +944,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/crew)
 "Cp" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/dwayne/cargo_bay)
 "Cw" = (
@@ -989,7 +984,6 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/dwayne/cargo_bay)
 "DJ" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/blue{
 	dir = 5
@@ -997,16 +991,6 @@
 /turf/open/floor/iron/white{
 	dir = 1
 	},
-/area/shuttle/voidcrew/dwayne/crew)
-"DX" = (
-/obj/docking_port/stationary{
-	dir = 2;
-	dwidth = 3;
-	height = 5;
-	name = "Mining Ship: Common Mining Dock";
-	width = 7
-	},
-/turf/open/floor/plating/airless,
 /area/shuttle/voidcrew/dwayne/crew)
 "Ex" = (
 /obj/machinery/door/firedoor,
@@ -1017,7 +1001,6 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/dwayne/cargo_bay)
 "EA" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light_switch{
 	pixel_x = 24;
@@ -1054,13 +1037,11 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/dwayne/cargo_bay)
 "Gv" = (
-/obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering,
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/dwayne/engineering)
 "Gx" = (
-/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/shuttle/voidcrew/dwayne/crew)
 "GU" = (
@@ -1080,7 +1061,6 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/bridge)
 "Hf" = (
-/obj/structure/cable,
 /obj/machinery/light,
 /obj/machinery/button/door{
 	id = "mining_ship_starboard";
@@ -1090,9 +1070,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/crew)
 "HI" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
@@ -1129,15 +1107,12 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/voidcrew/dwayne/engineering)
 "IF" = (
-/obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
-/obj/item/stack/sheet/mineral/plasma/five,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/engineering)
 "IJ" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical,
@@ -1153,6 +1128,7 @@
 /area/shuttle/voidcrew/dwayne/crew)
 "Jg" = (
 /obj/effect/landmark/start/quartermaster,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/dwayne/cargo_bay)
 "JB" = (
@@ -1174,7 +1150,7 @@
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 1
 	},
-/obj/item/clothing/head/utility/hardhat/weldhat/orange{
+/obj/item/clothing/head/utility/hardhat/welding/orange{
 	pixel_y = 7;
 	pixel_x = -5
 	},
@@ -1199,11 +1175,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/crew)
 "LK" = (
-/obj/machinery/power/solar_control{
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/computer/monitor{
 	dir = 8
 	},
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/engineering)
 "LZ" = (
@@ -1221,10 +1197,8 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/dwayne/cargo_bay)
 "Mk" = (
-/obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
-/obj/item/stack/sheet/mineral/plasma/five,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/engineering)
@@ -1271,7 +1245,7 @@
 	name = "Air to Distro";
 	target_pressure = 500
 	},
-/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/circuit,
 /area/shuttle/voidcrew/dwayne/engineering)
 "Nw" = (
@@ -1292,7 +1266,6 @@
 /obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/effect/turf_decal/box,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/dwayne/cargo_bay)
@@ -1301,7 +1274,6 @@
 	icon_state = "crateopen"
 	},
 /obj/effect/turf_decal/box,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/item/kinetic_crusher,
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/dwayne/cargo_bay)
@@ -1336,11 +1308,11 @@
 /area/shuttle/voidcrew/dwayne/medbay)
 "Px" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/dwayne/medbay)
 "Qe" = (
@@ -1385,11 +1357,6 @@
 "Sg" = (
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/crew)
-"SQ" = (
-/obj/machinery/door/airlock/external,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/shuttle/voidcrew/dwayne/engineering)
 "Tl" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
@@ -1416,11 +1383,12 @@
 /area/shuttle/voidcrew/dwayne/medbay)
 "Um" = (
 /obj/structure/table/wood,
-/obj/machinery/microwave,
+/obj/item/flashlight/lamp/green,
 /turf/open/floor/iron/grimy,
 /area/shuttle/voidcrew/dwayne/crew)
 "Un" = (
 /obj/effect/turf_decal/box,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/dwayne/cargo_bay)
 "Ut" = (
@@ -1467,10 +1435,9 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/dwayne/cargo_bay)
 "VP" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 8
-	},
-/obj/structure/closet/emcloset/anchored,
+/obj/machinery/power/port_gen/pacman,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/engineering)
 "WE" = (
@@ -1535,7 +1502,6 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/dwayne/medbay)
 "Yf" = (
-/obj/structure/cable,
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/yellow/anticorner,
 /turf/open/floor/iron/dark,
@@ -1563,7 +1529,6 @@
 /area/shuttle/voidcrew/dwayne/crew)
 "ZL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/engineering)
@@ -1577,7 +1542,7 @@ OJ
 fy
 mF
 mF
-SQ
+CP
 mF
 mF
 fy
@@ -1808,7 +1773,7 @@ wW
 nJ
 sg
 ef
-DX
+FC
 FC
 FC
 FC
@@ -1841,7 +1806,7 @@ FP
 nL
 jh
 YJ
-tG
+YJ
 IZ
 bv
 xz

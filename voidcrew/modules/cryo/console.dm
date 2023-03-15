@@ -6,8 +6,9 @@
 	name = "cryogenic oversight console"
 	desc = "An interface between crew and the cryogenic storage oversight systems."
 	icon = 'voidcrew/modules/cryo/icons/cryogenic.dmi'
-	icon_keyboard = null
 	icon_state = "cellconsole_1"
+	icon_keyboard = null
+	icon_screen = null
 	density = FALSE
 	resistance_flags = INDESTRUCTIBLE|LAVA_PROOF|FIRE_PROOF|UNACIDABLE|ACID_PROOF
 

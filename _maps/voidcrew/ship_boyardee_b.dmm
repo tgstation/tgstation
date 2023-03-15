@@ -521,6 +521,9 @@
 "nF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "nN" = (
@@ -588,6 +591,7 @@
 "pN" = (
 /obj/machinery/atmospherics/components/binary/valve/digital,
 /obj/structure/cable,
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "pR" = (
@@ -669,7 +673,6 @@
 /area/shuttle/voidcrew/bogardee_b/service/quarters)
 "rH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "sg" = (
@@ -739,9 +742,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/hydroponics/constructable{
-	anchored = 0
-	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "vh" = (
@@ -897,13 +897,13 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/bogardee_b/service/entrance)
 "Ax" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_pump/layer2{
 	dir = 4
 	},
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "AT" = (
@@ -1059,8 +1059,9 @@
 /area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "Fm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/autolathe,
+/obj/machinery/hydroponics/constructable{
+	anchored = 0
+	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "FA" = (
@@ -1079,17 +1080,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light_switch{
-	pixel_x = 24;
-	pixel_y = -24
-	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "FU" = (
-/obj/machinery/power/smes/engineering,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
@@ -1125,12 +1120,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "GZ" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "Hb" = (
@@ -1259,10 +1250,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "KN" = (
-/obj/machinery/power/smes/engineering,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
 /obj/machinery/light,
-/obj/structure/cable,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
@@ -1286,10 +1275,8 @@
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/bogardee_b/medbay)
 "Mj" = (
+/obj/machinery/power/smes/engineering,
 /obj/structure/cable,
-/obj/item/radio/intercom{
-	pixel_x = 27
-	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "Mp" = (
@@ -1336,7 +1323,6 @@
 	dir = 8;
 	name = "engine fuel pump"
 	},
-/obj/structure/cable,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
@@ -1424,7 +1410,6 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/voidcrew/bogardee_b/service/entrance)
 "Qu" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/binary/pump/on/layer4{
 	name = "Air to Distro"
 	},
@@ -1464,6 +1449,7 @@
 /obj/item/storage/toolbox/syndicate,
 /obj/item/storage/toolbox/syndicate,
 /obj/item/storage/bag/plants/portaseeder,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "Rf" = (
@@ -1505,6 +1491,7 @@
 /area/shuttle/voidcrew/bogardee_b/medbay)
 "Si" = (
 /obj/structure/cable,
+/obj/structure/sign/warning/chem_diamond/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "Sj" = (
@@ -1519,9 +1506,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/voidcrew/bogardee_b/service/entrance)
 "SB" = (
-/obj/machinery/firealarm/directional/north{
-	dir = 1
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/effect/turf_decal/stripes{
 	dir = 9
 	},
@@ -1541,17 +1526,14 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/bogardee_b/service/bar)
 "SW" = (
-/obj/structure/sign/warning/chem_diamond,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "Tc" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "Tl" = (
@@ -1632,13 +1614,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "Ut" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin,
-/obj/item/pen/fountain,
-/obj/item/megaphone{
-	pixel_x = 3;
-	pixel_y = 1
-	},
+/obj/machinery/autolathe,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/voidcrew/bogardee_b/service/quarters)
 "UC" = (
@@ -1702,13 +1678,12 @@
 /obj/machinery/atmospherics/components/tank/air{
 	piping_layer = 2
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "Wt" = (
 /obj/structure/bed/dogbed/cayenne,
-/mob/living/simple_animal/hostile/carp/cayenne,
+/mob/living/basic/carp/pet/cayenne,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "Wv" = (
@@ -1923,7 +1898,7 @@ vf
 HD
 HD
 qU
-qU
+SW
 ch
 ly
 ch
@@ -2027,7 +2002,7 @@ iX
 uM
 uM
 uM
-SW
+uM
 Tl
 uM
 Yj
