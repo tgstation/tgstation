@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Replaces default appendix with a different organ.
 	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
 	///Replaces default butt with a different organ
-	var/obj/item/organ/internal/butt/mutantbutt = obj/item/organ/internal/butt
+	var/obj/item/organ/internal/butt/mutantbutt = /obj/item/organ/internal/butt
 
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
