@@ -7,40 +7,26 @@
 	earliest_start = 10 MINUTES
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "A pod containing a random supply crate lands on the station."
-	admin_setup = /datum/event_admin_setup/stray_cargo
+	admin_setup = list(/datum/event_admin_setup/set_location/stray_cargo, /datum/event_admin_setup/listed_options/stray_cargo)
 
-/datum/event_admin_setup/stray_cargo
-	///Admin setable override that is used instead of selecting a random location
-	var/atom/landing_turf_override
-	///Admin setable override to spawn a specific cargo pack type
-	var/pack_type_override
+/datum/event_admin_setup/set_location/stray_cargo
+	input_text = "Aim pod at turf we're on?"
 
-/datum/event_admin_setup/stray_cargo/prompt_admins()
-	var/admin_targeted = tgui_alert(usr,"Aimed at turf we're on?", "Pod Targetting", list("Yes", "No", "Cancel"))
-	switch(admin_targeted)
-		if("Yes")
-			landing_turf_override = get_turf(usr)
-		if("No")
-			landing_turf_override = null
-		else
-			return ADMIN_CANCEL_EVENT
-	var/admin_selected_pack = tgui_alert(usr,"Select pod contents?", "Pod Contents", list("Yes", "No", "Cancel"))
-	switch(admin_selected_pack)
-		if("Yes")
-			override_contents()
-		if("No")
-			pack_type_override = null
-		else
-			return ADMIN_CANCEL_EVENT
-	message_admins("[key_name_admin(usr)] has aimed a stray cargo pod at [landing_turf_override ? AREACOORD(landing_turf_override) : "a random location"]. The pod contents are [pack_type_override ? pack_type_override : "random"].")
-	log_admin("[key_name_admin(usr)] has aimed a stray cargo pod at [landing_turf_override ? AREACOORD(landing_turf_override) : "a random location"]. The pod contents are [pack_type_override ? pack_type_override : "random"].")
+/datum/event_admin_setup/set_location/stray_cargo/apply_to_event(datum/round_event/stray_cargo/event)
+	event.admin_override_turf = chosen_turf
 
-/datum/event_admin_setup/stray_cargo/proc/override_contents()
-	pack_type_override = tgui_input_list(usr, "Choose a cargo crate to drop.", "Choose pod contents.", sort_list(subtypesof(/datum/supply_pack), /proc/cmp_typepaths_asc))
+/datum/event_admin_setup/listed_options/stray_cargo
+	input_text = "Choose a cargo crate to drop."
+	normal_run_option = "Random Crate"
 
-/datum/event_admin_setup/stray_cargo/apply_to_event(datum/round_event/stray_cargo/event)
-	event.admin_override_turf = landing_turf_override
-	event.admin_override_contents = pack_type_override
+/datum/event_admin_setup/listed_options/stray_cargo/get_list()
+	return sort_list(subtypesof(/datum/supply_pack), /proc/cmp_typepaths_asc)
+
+/datum/event_admin_setup/listed_options/stray_cargo/apply_to_event(datum/round_event/stray_cargo/event)
+	event.admin_override_contents = chosen
+	var/log_message = "[key_name_admin(usr)] has aimed a stray cargo pod at [event.admin_override_turf ? AREACOORD(event.admin_override_turf) : "a random location"]. The pod contents are [chosen ? chosen : "random"]."
+	message_admins(log_message)
+	log_admin(log_message)
 
 ///Spawns a cargo pod containing a random cargo supply pack on a random area of the station
 /datum/round_event/stray_cargo
@@ -149,11 +135,24 @@
 	description = "A pod containing syndicate gear lands on the station."
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 6
-	admin_setup = /datum/event_admin_setup/stray_cargo/syndicate
+	admin_setup = list(/datum/event_admin_setup/set_location/stray_cargo, /datum/event_admin_setup/syndicate_cargo_pod)
 
-/datum/event_admin_setup/stray_cargo/syndicate
+/datum/event_admin_setup/syndicate_cargo_pod
+	///Admin setable override to spawn a specific cargo pack type
+	var/pack_type_override
 
-/datum/event_admin_setup/stray_cargo/syndicate/override_contents()
+/datum/event_admin_setup/syndicate_cargo_pod/prompt_admins()
+	var/admin_selected_pack = tgui_alert(usr,"Customize Pod contents?", "Pod Contents", list("Yes", "No", "Cancel"))
+	switch(admin_selected_pack)
+		if("Yes")
+			override_contents()
+		if("No")
+			pack_type_override = null
+		else
+			return ADMIN_CANCEL_EVENT
+
+///This proc prompts admins to set a TC value and uplink type for the crate, those values are then passed to a new syndicate pack's setup_contents() to generate the contents before spawning it.
+/datum/event_admin_setup/syndicate_cargo_pod/proc/override_contents()
 	var/datum/supply_pack/misc/syndicate/custom_value/syndicate_pack = new
 	var/pack_telecrystals = tgui_input_number(usr, "Please input crate's value in telecrystals.", "Set Telecrystals.", 30)
 	if(isnull(pack_telecrystals))
@@ -167,6 +166,12 @@
 		return ADMIN_CANCEL_EVENT
 	syndicate_pack.setup_contents(pack_telecrystals, selection)
 	pack_type_override = syndicate_pack
+
+/datum/event_admin_setup/syndicate_cargo_pod/apply_to_event(datum/round_event/stray_cargo/syndicate/event)
+	event.admin_override_contents = pack_type_override	
+	var/log_message = "[key_name_admin(usr)] has aimed a stray syndicate cargo pod at [event.admin_override_turf ? AREACOORD(event.admin_override_turf) : "a random location"]. The pod contents are [pack_type_override ? pack_type_override : "random"]."
+	message_admins(log_message)
+	log_admin(log_message)
 
 /datum/round_event/stray_cargo/syndicate
 	possible_pack_types = list(/datum/supply_pack/misc/syndicate)

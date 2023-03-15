@@ -300,7 +300,7 @@
 		return TRUE
 
 /obj/item/clothing/suit/armor/vest/det_suit
-	name = "detective's armor vest"
+	name = "detective's flak vest"
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"
 	resistance_flags = FLAMMABLE

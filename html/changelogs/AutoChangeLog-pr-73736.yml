@@ -1,4 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes:
-  - code_imp: "AMMO_BOX_FULL_EMPTY now looks for -full and -empty for sprites, rather than -[max ammo of that magazine] and -0"
