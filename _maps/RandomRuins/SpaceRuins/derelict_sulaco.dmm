@@ -72,7 +72,7 @@
 /obj/structure/frame/machine{
 	anchored = 1
 	},
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "cW" = (
 /obj/effect/turf_decal/tile/red/half,
@@ -161,7 +161,7 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner,
 /obj/item/circuitboard/machine/teleporter_hub,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "fI" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -270,7 +270,7 @@
 /obj/structure/frame/machine{
 	anchored = 1
 	},
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "jn" = (
 /turf/open/floor/pod/light,
@@ -427,7 +427,7 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/item/circuitboard/machine/telecomms/bus,
 /obj/item/rack_parts,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "mC" = (
 /obj/item/stack/tile/iron/smooth_corner,
@@ -477,7 +477,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "ol" = (
 /obj/structure/window/reinforced/spawner/north,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "oV" = (
 /turf/open/floor/plating/airless,
@@ -525,7 +525,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "ri" = (
 /obj/item/circuitboard/machine/telecomms/processor,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "rA" = (
 /obj/machinery/fax,
@@ -693,7 +693,7 @@
 "vW" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/item/rack_parts,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "wb" = (
 /obj/structure/frame/machine{
@@ -723,7 +723,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "xA" = (
 /obj/machinery/door/window/brigdoor/left/directional/west,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "xL" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -762,7 +762,7 @@
 /obj/structure/window/reinforced/spawner,
 /obj/item/circuitboard/machine/telecomms/processor,
 /obj/item/rack_parts,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "yU" = (
 /obj/machinery/door/window/brigdoor/left/directional/north,
@@ -909,7 +909,7 @@
 /obj/structure/frame/machine{
 	anchored = 1
 	},
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "FA" = (
 /obj/structure/alien/weeds,
@@ -1131,7 +1131,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "Lm" = (
 /obj/item/gps/spaceruin,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "Lr" = (
 /obj/structure/table/wood,
@@ -1474,7 +1474,7 @@
 "UP" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/frame/machine,
-/turf/open/floor/circuit/off,
+/turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "UQ" = (
 /obj/item/rack_parts,
