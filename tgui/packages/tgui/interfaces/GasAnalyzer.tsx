@@ -4,6 +4,7 @@ import type { Gasmix } from './common/GasmixParser';
 import { Button, Flex, LabeledList, Section, Stack, Box } from '../components';
 import { AtmosHandbookContent, atmosHandbookHooks } from './common/AtmosHandbook';
 import { Window } from '../layouts';
+import { BooleanLike } from '../../common/react';
 
 type GasmixHistory = {
   allGasmixes: Gasmix[];
@@ -12,9 +13,13 @@ type GasmixHistory = {
 export type GasAnalyzerData = {
   gasmixes: Gasmix[];
   autoUpdating: boolean;
+};
+
+export type GasAnalyzerHistoryData = {
   historyGasmixes: GasmixHistory[];
   historyViewMode: string;
   historyIndex: number;
+  targetMode: BooleanLike;
 };
 
 export const GasAnalyzerContent = (props, context) => {
@@ -51,9 +56,68 @@ export const GasAnalyzerContent = (props, context) => {
   );
 };
 
+export const GasAnalyzerHistory = (props, context) => {
+  const { act, data } = useBackend<GasAnalyzerHistoryData>(context);
+  const { historyGasmixes, historyViewMode, historyIndex } = data;
+  return (
+    <Section
+      fill
+      title="Scan History"
+      buttons={
+        <Button
+          icon={'trash'}
+          tooltip="Clear History"
+          onClick={() => act('clearhistory')}
+          textAlign="center"
+          disabled={historyGasmixes.length === 0}
+        />
+      }>
+      <LabeledList.Item label="Mode">
+        <Flex inline width="50%">
+          <Flex.Item>
+            <Button
+              content={'kPa'}
+              onClick={() => act('modekpa')}
+              textAlign="center"
+              selected={historyViewMode === 'kpa'}
+            />
+          </Flex.Item>
+          <Flex.Item>
+            <Button
+              content={'mol'}
+              onClick={() => act('modemol')}
+              textAlign="center"
+              selected={historyViewMode === 'mol'}
+            />
+          </Flex.Item>
+        </Flex>
+      </LabeledList.Item>
+      <LabeledList>
+        {historyGasmixes.map((allGasmixes, index) => (
+          <Box key={allGasmixes[0]}>
+            <Button
+              content={
+                index +
+                1 +
+                '. ' +
+                (historyViewMode === 'mol'
+                  ? allGasmixes[0].total_moles
+                  : allGasmixes[0].pressure
+                ).toFixed(2)
+              }
+              onClick={() => act('input', { target: index + 1 })}
+              textAlign="left"
+              selected={index + 1 === historyIndex}
+              fluid
+            />
+          </Box>
+        ))}
+      </LabeledList>
+    </Section>
+  );
+};
+
 export const GasAnalyzer = (props, context) => {
-  const { act, data } = useBackend<GasAnalyzerData>(context);
-  const { autoUpdating, historyGasmixes, historyViewMode, historyIndex } = data;
   return (
     <Window width={500} height={450}>
       <Window.Content scrollable>
@@ -64,60 +128,7 @@ export const GasAnalyzer = (props, context) => {
           </Stack.Item>
           {/* Right Column */}
           <Stack.Item width={'150px'}>
-            <Section
-              fill
-              title="Scan History"
-              buttons={
-                <Button
-                  icon={'trash'}
-                  tooltip="Clear History"
-                  onClick={() => act('clearhistory')}
-                  textAlign="center"
-                  disabled={historyGasmixes.length === 0}
-                />
-              }>
-              <LabeledList.Item label="Mode">
-                <Flex inline width="50%">
-                  <Flex.Item>
-                    <Button
-                      content={'kPa'}
-                      onClick={() => act('modekpa')}
-                      textAlign="center"
-                      selected={historyViewMode === 'kpa'}
-                    />
-                  </Flex.Item>
-                  <Flex.Item>
-                    <Button
-                      content={'mol'}
-                      onClick={() => act('modemol')}
-                      textAlign="center"
-                      selected={historyViewMode === 'mol'}
-                    />
-                  </Flex.Item>
-                </Flex>
-              </LabeledList.Item>
-              <LabeledList>
-                {historyGasmixes.map((allGasmixes, index) => (
-                  <Box key={allGasmixes[0]}>
-                    <Button
-                      content={
-                        index +
-                        1 +
-                        '. ' +
-                        (historyViewMode === 'mol'
-                          ? allGasmixes[0].total_moles
-                          : allGasmixes[0].pressure
-                        ).toFixed(2)
-                      }
-                      onClick={() => act('input', { target: index + 1 })}
-                      textAlign="left"
-                      selected={index + 1 === historyIndex}
-                      fluid
-                    />
-                  </Box>
-                ))}
-              </LabeledList>
-            </Section>
+            <GasAnalyzerHistory />
           </Stack.Item>
         </Stack>
       </Window.Content>
