@@ -942,6 +942,7 @@
 #include "code\datums\components\radiation_countdown.dm"
 #include "code\datums\components\radioactive_emitter.dm"
 #include "code\datums\components\reagent_refiller.dm"
+#include "code\datums\components\redirect_attack_hand_from_turf.dm"
 #include "code\datums\components\regenerator.dm"
 #include "code\datums\components\religious_tool.dm"
 #include "code\datums\components\remote_materials.dm"

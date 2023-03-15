@@ -98,7 +98,7 @@
 	hud_possible = list(DIAG_AIRLOCK_HUD)
 	smoothing_groups = SMOOTH_GROUP_AIRLOCK
 
-	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_OPEN
 	blocks_emissive = NONE // Custom emissive blocker. We don't want the normal behavior.
 
 	///The type of door frame to drop during deconstruction
@@ -174,10 +174,7 @@
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
 
 	// Click on the floor to close airlocks
-	var/static/list/connections = list(
-		COMSIG_ATOM_ATTACK_HAND = PROC_REF(on_attack_hand)
-	)
-	AddElement(/datum/element/connect_loc, connections)
+	AddComponent(/datum/component/redirect_attack_hand_from_turf)
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -698,11 +695,6 @@
 
 /obj/machinery/door/airlock/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
-
-/obj/machinery/door/airlock/proc/on_attack_hand(atom/source, mob/user, list/modifiers)
-	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, attack_hand), user, modifiers)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/door/airlock/attack_hand(mob/user, list/modifiers)
 	. = ..()
