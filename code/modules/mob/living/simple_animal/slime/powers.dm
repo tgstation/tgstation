@@ -77,12 +77,13 @@
 	else if(isbasicmob(meal))
 		var/mob/living/basic/basic_meal = meal
 		if(basic_meal.damage_coeff[TOX] <= 0 && basic_meal.damage_coeff[CLONE] <= 0)
+			if (silent)
+				return FALSE
+			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
+				"This subject does not have life energy", "This subject is empty", \
+				"I am not satisified", "I can not feed from this subject", \
+				"I do not feel nourished", "This subject is not food")]!</span>")
 			return FALSE
-		to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
-			"This subject does not have life energy", "This subject is empty", \
-			"I am not satisified", "I can not feed from this subject", \
-			"I do not feel nourished", "This subject is not food")]!</span>")
-		return FALSE
 
 	if(isslime(meal))
 		if(silent)
