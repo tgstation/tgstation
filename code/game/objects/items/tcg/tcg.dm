@@ -195,7 +195,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcgcard_deck/Initialize(mapload)
 	. = ..()
-	create_storage(type = /datum/storage/tcg)
+	create_storage(storage_type = /datum/storage/tcg)
 
 /obj/item/tcgcard_deck/update_icon_state()
 	if(!flipped)

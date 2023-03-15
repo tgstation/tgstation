@@ -488,7 +488,7 @@
 
 /obj/projectile/beam/beam_rifle/proc/handle_hit(atom/target, piercing_hit = FALSE)
 	set waitfor = FALSE
-	if(nodamage)
+	if(!is_hostile_projectile())
 		return FALSE
 	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
 	if(!do_pierce)
@@ -499,6 +499,9 @@
 /obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE, piercing_hit = FALSE)
 	handle_hit(target, piercing_hit)
 	return ..()
+
+/obj/projectile/beam/beam_rifle/is_hostile_projectile()
+	return TRUE // on hit = boom fire
 
 /obj/projectile/beam/beam_rifle/hitscan
 	icon_state = ""
@@ -527,13 +530,15 @@
 	name = "aiming beam"
 	hitsound = null
 	hitsound_wall = null
-	nodamage = TRUE
 	damage = 0
 	constant_tracer = TRUE
 	hitscan_light_range = 0
 	hitscan_light_intensity = 0
 	hitscan_light_color_override = "#99ff99"
 	reflectable = REFLECT_FAKEPROJECTILE
+
+/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/is_hostile_projectile()
+	return FALSE // just an aiming reticle
 
 /obj/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit_pierce(atom/target)
 	return PROJECTILE_DELETE_WITHOUT_HITTING

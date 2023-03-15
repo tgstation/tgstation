@@ -12,6 +12,7 @@
 /datum/traitor_objective/ultimate
 	abstract_type = /datum/traitor_objective/ultimate
 	progression_minimum = 140 MINUTES
+	needs_reward = FALSE
 
 	var/progression_points_in_objectives = 20 MINUTES
 

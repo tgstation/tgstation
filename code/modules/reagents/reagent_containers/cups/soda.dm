@@ -73,7 +73,9 @@
 
 /obj/item/reagent_containers/cup/soda_cans/bullet_act(obj/projectile/P)
 	. = ..()
-	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
+	if(QDELETED(src))
+		return
+	if(P.damage > 0 && P.damage_type == BRUTE)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
 		crushed_can.icon_state = icon_state
 		var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))

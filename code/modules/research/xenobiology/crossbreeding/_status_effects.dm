@@ -258,7 +258,7 @@
 	duration = 100
 
 /datum/status_effect/watercookie/on_apply()
-	ADD_TRAIT(owner, TRAIT_NOSLIPWATER,"watercookie")
+	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER,"watercookie")
 	return ..()
 
 /datum/status_effect/watercookie/tick()
@@ -266,7 +266,7 @@
 		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 
 /datum/status_effect/watercookie/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER,"watercookie")
+	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER,"watercookie")
 
 /datum/status_effect/metalcookie
 	id = "metalcookie"
@@ -527,11 +527,11 @@
 	colour = "blue"
 
 /datum/status_effect/stabilized/blue/on_apply()
-	ADD_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
+	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, "slimestatus")
 	return ..()
 
 /datum/status_effect/stabilized/blue/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
+	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, "slimestatus")
 
 /datum/status_effect/stabilized/metal
 	id = "stabilizedmetal"

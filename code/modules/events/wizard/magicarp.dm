@@ -7,7 +7,7 @@
 	description = "Summons a school of carps with magic projectiles."
 	min_wizard_trigger_potency = 4
 	max_wizard_trigger_potency = 6
-	admin_setup = /datum/event_admin_setup/carp_migration
+	admin_setup = list(/datum/event_admin_setup/carp_migration)
 
 /datum/round_event/carp_migration/wizard
 	carp_type = /mob/living/basic/carp/magic

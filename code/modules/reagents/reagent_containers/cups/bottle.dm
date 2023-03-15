@@ -65,10 +65,12 @@
 	volume = 50
 	list_reagents = list(/datum/reagent/phlogiston = 30)
 
-/obj/item/reagent_containers/cup/bottle/calomel
-	name = "calomel bottle"
-	desc = "A small bottle of calomel, which quickly purges all chemicals from the patient. Causes toxin damage if the patient is not heavily injured."
-	list_reagents = list(/datum/reagent/medicine/calomel = 30)
+/obj/item/reagent_containers/cup/bottle/ammoniated_mercury
+	name = "ammoniated mercury bottle"
+	desc = "Quickly purges the body of toxic chemicals. Heals toxin damage when in a good condition someone has \
+		no brute and fire damage. When hurt with brute or fire damage, it can deal a great amount of toxin damage. \
+		When there are no toxins present, it starts slowly purging itself."
+	list_reagents = list(/datum/reagent/medicine/ammoniated_mercury = 30)
 
 /obj/item/reagent_containers/cup/bottle/syriniver
 	name = "syriniver bottle"
