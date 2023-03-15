@@ -153,6 +153,18 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		//move the turf to its new area and unregister it from the old one
 		the_turf.change_area(old_area, newA)
 
+		//inform atoms on the turf that their area has changed
+		for(var/atom/stuff as anything in the_turf)
+			//unregister the stuff from its old area
+			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, oldA)
+
+			//register the stuff to its new area. special exception for apc as its not registered to this signal
+			if(istype(stuff, /obj/machinery/power/apc))
+				var/obj/machinery/power/apc/area_apc = stuff
+				area_apc.assign_to_area()
+			else
+				SEND_SIGNAL(stuff, COMSIG_ENTER_AREA, newA)
+
 	newA.reg_in_areas_in_z()
 
 	if(!isarea(area_choice) && newA.static_lighting)

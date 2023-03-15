@@ -235,18 +235,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/on_change_area(area/old_area, area/new_area)
 	transfer_area_lighting(old_area, new_area)
 
-	//inform atoms on the turf that their area has changed
-	for(var/atom/stuff as anything in src)
-		//unregister the stuff from its old area
-		SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
-
-		//register the stuff to its new area. special exception for apc as its not registered to this signal
-		if(istype(stuff, /obj/machinery/power/apc))
-			var/obj/machinery/power/apc/area_apc = stuff
-			area_apc.assign_to_area()
-		else
-			SEND_SIGNAL(stuff, COMSIG_ENTER_AREA, new_area)
-
 /turf/proc/multiz_turf_del(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_DEL, T, dir)
 
