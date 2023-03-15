@@ -45,6 +45,7 @@
 		"name",
 		"job",
 		"life_status",
+		"has_mind",
 		"suffocation",
 		"toxin",
 		"burn",
@@ -65,6 +66,7 @@
 		entry["name"] = player_record["name"]
 		entry["job"] = player_record["assignment"]
 		entry["life_status"] = player_record["life_status"]
+		entry["has_mind"] = player_record["has_mind"]
 		entry["suffocation"] = player_record["oxydam"]
 		entry["toxin"] = player_record["toxdam"]
 		entry["burn"] = player_record["burndam"]
@@ -245,6 +247,14 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		// Binary living/dead status
 		if (sensor_mode >= SENSOR_LIVING)
 			entry["life_status"] = (tracked_living_mob.stat != DEAD)
+
+		// Whether the mob has mind or not
+		if (sensor_mode >= SENSOR_LIVING)
+			var/mob/dead/observer/ghost = tracked_living_mob.get_ghost(TRUE, TRUE)
+			if (tracked_living_mob.key || !tracked_living_mob.getorgan(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse)
+				entry["has_mind"] = TRUE
+			else
+				entry["has_mind"] = FALSE
 
 		// Damage
 		if (sensor_mode >= SENSOR_VITALS)
