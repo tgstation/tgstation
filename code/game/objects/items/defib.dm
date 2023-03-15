@@ -190,10 +190,6 @@
 	if (. & EMP_PROTECT_SELF)
 		return
 
-	if(combat) // Elite agents do not subscribe to your notion of "Safety"
-		visible_message(span_notice("[src] beeps: Safety protocols nonexistent!"))
-		playsound(src, 'sound/machines/defib_saftyOff.ogg', 50, FALSE)
-
 	update_power()
 
 /obj/item/defibrillator/proc/toggle_paddles()
