@@ -228,23 +228,23 @@
 /obj/item/necromantic_stone/unlimited
 	unlimited = 1
 
-/obj/item/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
-	if(!istype(M))
+/obj/item/necromantic_stone/attack(mob/living/carbon/human/target, mob/living/carbon/human/user)
+	if(!istype(target))
 		return ..()
 
-	if(!istype(user) || !user.can_perform_action(M))
+	if(!istype(user) || !user.can_perform_action(target))
 		return
 
-	if(M.stat != DEAD)
+	if(target.stat != DEAD)
 		to_chat(user, span_warning("This artifact can only affect the dead!"))
 		return
 
 	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
-		if(ghost.mind && ghost.mind.current == M && ghost.client)  //the dead mobs list can contain clientless mobs
+		if(ghost.mind && ghost.mind.current == target && ghost.client)  //the dead mobs list can contain clientless mobs
 			ghost.reenter_corpse()
 			break
 
-	if(!M.mind || !M.client)
+	if(!target.mind || !target.client)
 		to_chat(user, span_warning("There is no soul connected to this body..."))
 		return
 
@@ -253,19 +253,19 @@
 		to_chat(user, span_warning("This artifact can only affect three undead at a time!"))
 		return
 	if(applied_species)
-		M.set_species(applied_species, icon_update=0)
-	M.revive(ADMIN_HEAL_ALL)
-	spooky_scaries |= M
-	to_chat(M, "[span_userdanger("You have been revived by ")]<B>[user.real_name]!</B>")
-	to_chat(M, span_userdanger("[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!"))
+		target.set_species(applied_species, icon_update=0)
+	target.revive(ADMIN_HEAL_ALL)
+	spooky_scaries |= target
+	to_chat(target, "[span_userdanger("You have been revived by ")]<B>[user.real_name]!</B>")
+	to_chat(target, span_userdanger("[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!"))
 	var/datum/antagonist/wizard/antag_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
 	if(antag_datum)
 		if(!antag_datum.wiz_team)
 			antag_datum.create_wiz_team()
-		M.mind.add_antag_datum(/datum/antagonist/wizard_minion, antag_datum.wiz_team)
+		target.mind.add_antag_datum(/datum/antagonist/wizard_minion, antag_datum.wiz_team)
 
 	if(applied_outfit)
-		equip_roman_skeleton(M)
+		equip_roman_skeleton(target)
 
 	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
 
