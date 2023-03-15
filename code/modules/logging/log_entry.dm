@@ -70,13 +70,13 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 	var/json_out = "\["
 
 	// Timestamp
-	json_out += "[timestamp],"
+	json_out += "\"[timestamp]\","
 
 	// Category
-	json_out += "[category],"
+	json_out += "\"[category]\","
 
 	// Message
-	json_out += "[message],"
+	json_out += "\"[message]\","
 
 	// Data?
 	if(length(data))
@@ -97,7 +97,7 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 	json_out += "[id],"
 
 	// Schema version
-	json_out += "[schema_version]"
+	json_out += "\"[schema_version]\""
 
 	// End of array
 	json_out += "\]"
