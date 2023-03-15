@@ -268,7 +268,7 @@
 
 /obj/item/clothing/glasses/regular/atom_destruction(damage_flag)
 	. = ..()
-	clothing_traits -= TRAIT_NEARSIGHTED_CORRECTED
+	detach_clothing_traits(TRAIT_NEARSIGHTED_CORRECTED)
 
 /obj/item/clothing/glasses/regular/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -284,7 +284,7 @@
 
 /obj/item/clothing/glasses/regular/repair()
 	. = ..()
-	clothing_traits |= TRAIT_NEARSIGHTED_CORRECTED
+	attach_clothing_traits(TRAIT_NEARSIGHTED_CORRECTED)
 
 /obj/item/clothing/glasses/regular/thin
 	name = "thin prescription glasses"
