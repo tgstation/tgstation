@@ -1433,6 +1433,7 @@
 		"portaseeder",
 		"seed_extractor",
 		"adv_watering_can",
+		"plantgenes",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	required_experiments = list(/datum/experiment/scanning/random/plants/wild)

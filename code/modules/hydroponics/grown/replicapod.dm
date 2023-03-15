@@ -41,7 +41,6 @@
 	maturation = 10
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
-	instability = 15 //allows it to gain reagent genes from nearby plants
 	potency = 30
 	var/volume = 5
 	var/ckey

@@ -157,7 +157,6 @@
 /obj/machinery/hydroponics/constructable/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
-	AddComponent(/datum/component/plumbing/hydroponics)
 	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/hydroponics))
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
@@ -358,7 +357,7 @@
 				adjust_plant_health(-rand(1,5) / rating)
 
 			// Harvest code
-			if(age > myseed.production && (age - lastproduce) > myseed.production && (!harvest && !dead))
+			if(age > myseed.production && (age - lastproduce) > myseed.production && !(plant_status & HYDROTRAY_PLANT_DEAD|HYDROTRAY_PLANT_HARVESTABLE))
 				nutrimentMutation()
 				if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
 					set_plant_status(HYDROTRAY_PLANT_HARVESTABLE)
@@ -1028,7 +1027,7 @@
  * * adjustamt - Determines how much the plant_health will be adjusted upwards or downwards.
  */
 /obj/machinery/hydroponics/proc/adjustHealth(adjustamt)
-	if(myseed && !dead)
+	if(myseed && !(plant_status & HYDROTRAY_PLANT_DEAD))
 		plant_health = clamp(plant_health + adjustamt, 0, myseed.endurance)
 
 /**

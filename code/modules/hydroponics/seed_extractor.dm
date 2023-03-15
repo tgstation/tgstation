@@ -164,7 +164,7 @@
  * Arguments:
  * * O - seed to generate the string from
  */
-/obj/machinery/seed_extractor/proc/generate_seed_string(obj/item/seeds/O)
+/obj/machinery/seed_extractor/proc/generate_seed_hash(obj/item/seeds/O)
 	return "name=[O.name];lifespan=[O.lifespan];endurance=[O.endurance];maturation=[O.maturation];production=[O.production];yield=[O.yield];potency=[O.potency]"
 
 
@@ -201,7 +201,6 @@
 		seed_data["production"] = to_add.production
 		seed_data["yield"] = to_add.yield
 		seed_data["potency"] = to_add.potency
-		seed_data["instability"] = to_add.instability
 		seed_data["refs"] = list(WEAKREF(to_add))
 		seed_data["traits"] = list()
 		for(var/datum/plant_gene/trait/trait in to_add.genes)

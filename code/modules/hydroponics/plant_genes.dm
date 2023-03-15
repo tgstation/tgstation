@@ -34,6 +34,17 @@
 /datum/plant_gene/proc/apply_vars(obj/item/seeds/S) // I weep
 	return
 
+/datum/plant_gene/proc/on_removed(obj/item/seeds/old_seed)
+	return // Not implemented
+
+/*
+ * on_new_seed is called when seed genes are initialized on the /obj/seed.
+ *
+ * new_seed - the seed being created
+ */
+/datum/plant_gene/proc/on_new_seed(obj/item/seeds/new_seed)
+	return // Not implemented
+
 /// Core plant genes. Stores the main variables: lifespan, endurance, production, yield, potency, weed rate/chance
 /datum/plant_gene/core
 	/// The number value of our core gene.

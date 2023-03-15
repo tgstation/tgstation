@@ -58,7 +58,6 @@
 	species = "greenbean"
 	plantname = "Green Bean Plants"
 	product = /obj/item/food/grown/greenbeans
-	instability = 0
 	maturation = 4
 	production = 3
 	potency = 10
@@ -88,7 +87,6 @@
 	plantname = "Jumping Bean Plants"
 	product = /obj/item/food/grown/jumpingbeans
 	yield = 2
-	instability = 18
 	maturation = 8
 	production = 4
 	potency = 20

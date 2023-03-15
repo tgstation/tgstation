@@ -110,7 +110,7 @@
 	if(data["blood_DNA"])
 		bloodsplatter.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
-/datum/reagent/liquidgibs
+/datum/reagent/consumable/liquidgibs
 	name = "Liquid gibs"
 	color = "#CC4633"
 	description = "You don't even want to think about what's in here."
@@ -297,7 +297,6 @@
 
 	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type)))
 	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
-	myseed?.adjust_instability(round(chems.get_reagent_amount(type) * 0.15))
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/affected_mob)
 	..()
