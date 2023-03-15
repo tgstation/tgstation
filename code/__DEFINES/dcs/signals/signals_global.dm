@@ -51,6 +51,8 @@
 	#define LINKED_UP (1<<0)
 /// an obj/item is created! (obj/item/created_item)
 #define COMSIG_GLOB_NEW_ITEM "!new_item"
+/// an obj/machinery is created! (obj/machinery/created_machine)
+#define COMSIG_GLOB_NEW_MACHINE "!new_machine"
 /// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
 #define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
 /// a weather event of some kind occured

@@ -9,9 +9,9 @@
 	max_wizard_trigger_potency = 2
 
 /datum/round_event/anomaly/anomaly_bluespace
-	start_when = 3
-	announce_when = 10
+	start_when = ANOMALY_START_MEDIUM_TIME
+	announce_when = ANOMALY_ANNOUNCE_MEDIUM_TIME
 	anomaly_path = /obj/effect/anomaly/bluespace
 
 /datum/round_event/anomaly/anomaly_bluespace/announce(fake)
-	priority_announce("Unstable bluespace anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
+	priority_announce("Bluespace instability detected on [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.name].", "Anomaly Alert")

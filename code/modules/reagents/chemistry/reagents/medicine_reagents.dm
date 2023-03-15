@@ -394,21 +394,63 @@
 
 /datum/reagent/medicine/calomel
 	name = "Calomel"
-	description = "Quickly purges the body of toxic chemicals. Toxin damage is dealt if the patient is in good condition."
+	description = "Quickly purges the body of all chemicals except itself. The more health a person has, \
+		the more toxin damage it will deal. It can heal toxin damage when people have low enough health."
 	reagent_state = LIQUID
-	color = "#19C832"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	color = "#c85319"
+	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "acid"
+	overdose_threshold = 20
 	ph = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	for(var/datum/reagent/toxin/R in affected_mob.reagents.reagent_list)
-		affected_mob.reagents.remove_reagent(R.type, 3 * REM * delta_time)
-	if(affected_mob.health > 20)
-		affected_mob.adjustToxLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-		. = TRUE
+	for(var/datum/reagent/target_reagent in affected_mob.reagents.reagent_list)
+		if(istype(target_reagent, /datum/reagent/medicine/calomel))
+			continue
+		affected_mob.reagents.remove_reagent(target_reagent.type, 3 * REM * delta_time)
+	var/toxin_amount = round(affected_mob.health / 40, 0.1)
+	affected_mob.adjustToxLoss(toxin_amount * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
+	return TRUE
+
+/datum/reagent/medicine/calomel/overdose_process(mob/living/affected_mob, delta_time, times_fired)
+	for(var/datum/reagent/medicine/calomel/target_reagent in affected_mob.reagents.reagent_list)
+		affected_mob.reagents.remove_reagent(target_reagent.type, 2 * REM * delta_time)
+	affected_mob.adjustToxLoss(2.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	..()
+	return TRUE
+
+/datum/reagent/medicine/ammoniated_mercury
+	name = "Ammoniated Mercury"
+	description = "Quickly purges the body of toxic chemicals. Heals toxin damage when in a good condition someone has \
+		no brute and fire damage. When hurt with brute or fire damage, it can deal a great amount of toxin damage. \
+		When there are no toxins present, it starts slowly purging itself."
+	reagent_state = LIQUID
+	color = "#f3f1f0"
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+	taste_description = "metallic"
+	overdose_threshold = 10
+	ph = 7
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/medicine/ammoniated_mercury/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	var/toxin_chem_amount = 0
+	for(var/datum/reagent/toxin/target_reagent in affected_mob.reagents.reagent_list)
+		toxin_chem_amount += 1
+		affected_mob.reagents.remove_reagent(target_reagent.type, 5 * REM * delta_time)
+	var/toxin_amount = round(affected_mob.getBruteLoss() / 15, 0.1) + round(affected_mob.getFireLoss() / 30, 0.1) - 3
+	affected_mob.adjustToxLoss(toxin_amount * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	if(toxin_chem_amount == 0)
+		for(var/datum/reagent/medicine/ammoniated_mercury/target_reagent in affected_mob.reagents.reagent_list)
+			affected_mob.reagents.remove_reagent(target_reagent.type, 1 * REM * delta_time)
+	..()
+	return TRUE
+
+/datum/reagent/medicine/ammoniated_mercury/overdose_process(mob/living/affected_mob, delta_time, times_fired)
+	affected_mob.adjustToxLoss(3 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	..()
+	return TRUE
 
 /datum/reagent/medicine/potass_iodide
 	name = "Potassium Iodide"

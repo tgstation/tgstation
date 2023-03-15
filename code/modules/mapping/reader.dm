@@ -847,7 +847,8 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			world.preloader_load(instance)
 	// If this isn't template work, we didn't change our turf and we changed area, then we've gotta handle area lighting transfer
 	else if(!no_changeturf && old_area)
-		crds.transfer_area_lighting(old_area, crds.loc)
+		// Don't do contain/uncontain stuff, this happens a few lines up when the area actally changes
+		crds.on_change_area(old_area, crds.loc)
 	MAPLOADING_CHECK_TICK
 
 	//finally instance all remainings objects/mobs
