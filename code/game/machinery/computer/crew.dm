@@ -250,6 +250,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 		// Not revivable if no key, no brain, or DNR
 		if (sensor_mode >= SENSOR_LIVING)
+			var/mob/dead/observer/ghost = tracked_living_mob.get_ghost(TRUE, TRUE)
 			if (tracked_living_mob.key || !tracked_living_mob.getorgan(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse)
 				entry["has_mind"] = TRUE
 			else
