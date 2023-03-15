@@ -1,0 +1,5 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - qol: "medical cyborg's surgical processor now tells the user on examine that it needs to be equipped in an active module to access downloaded surgeries"
+  - qol: "medical cyborg's surgical processor now lists downloaded surgeries on examine"
