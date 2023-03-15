@@ -5182,13 +5182,10 @@
 /turf/open/floor/plating/rust,
 /area/station/maintenance/department/crew_quarters/bar)
 "bEv" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /obj/machinery/light/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "bFm" = (
@@ -10888,11 +10885,8 @@
 /obj/item/storage/bag/tray/cafeteria,
 /obj/item/storage/bag/tray/cafeteria,
 /obj/item/storage/box/drinkingglasses,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "dsc" = (
@@ -10925,10 +10919,6 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/greater)
 "dsn" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /obj/structure/table,
 /obj/item/reagent_containers/condiment/enzyme{
 	pixel_x = 9;
@@ -10936,6 +10926,7 @@
 	},
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/item/radio/intercom/prison/directional/north,
+/obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "dsw" = (
@@ -14372,6 +14363,17 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"eww" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/station/science/lab)
 "ewC" = (
 /obj/structure/chair/pew/left{
 	dir = 8
@@ -15831,10 +15833,7 @@
 	pixel_y = 2
 	},
 /obj/item/book/manual/chef_recipes,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "eUk" = (
@@ -22113,10 +22112,7 @@
 /obj/item/storage/fancy/egg_box,
 /obj/item/reagent_containers/condiment/flour,
 /obj/item/reagent_containers/condiment/rice,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "gFO" = (
@@ -22732,10 +22728,7 @@
 /obj/item/food/grown/onion,
 /obj/item/food/grown/onion,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "gPa" = (
@@ -49766,12 +49759,9 @@
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "oSG" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "oSI" = (
@@ -51695,15 +51685,12 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "ptQ" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/garden)
@@ -57311,13 +57298,10 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "rec" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/garden)
 "rel" = (
@@ -59071,18 +59055,15 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/medical)
 "rEs" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/machinery/washing_machine,
 /obj/machinery/light/directional/north,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/garden)
 "rEE" = (
@@ -61680,16 +61661,20 @@
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "srg" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/siding/purple{
-	dir = 4
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
 	},
-/obj/effect/turf_decal/tile/purple,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
 /obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/station/science/lab)
+/area/station/science/research)
 "srk" = (
 /obj/machinery/deepfryer,
 /obj/effect/turf_decal/tile/neutral{
@@ -63930,14 +63915,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "sYe" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /obj/structure/bedsheetbin,
 /obj/structure/table,
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/garden)
 "sYn" = (
@@ -64211,21 +64193,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/dock)
-"tdb" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/turf_decal/siding/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/station/science/research)
 "tdf" = (
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark,
@@ -64288,15 +64255,12 @@
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
 "tdY" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /obj/machinery/washing_machine,
 /obj/structure/cable,
 /obj/effect/spawner/random/contraband/prison,
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/garden)
 "teb" = (
@@ -64503,18 +64467,15 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "tgh" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
 /obj/structure/closet/crate/trashcart/laundry,
 /obj/effect/spawner/random/contraband/prison,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner/skirt,
 /obj/item/clothing/under/rank/prisoner/skirt,
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/garden)
 "tgp" = (
@@ -75701,12 +75662,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "wre" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /obj/structure/table,
 /obj/machinery/microwave,
+/obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "wrp" = (
@@ -80145,14 +80103,11 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "xIJ" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "xIM" = (
@@ -119837,7 +119792,7 @@ uAh
 iQd
 mfY
 nFb
-srg
+eww
 lWw
 qwR
 dzp
@@ -120087,7 +120042,7 @@ eHI
 eHI
 rPy
 fsj
-tdb
+srg
 aYz
 lZn
 gwO
