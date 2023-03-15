@@ -1,6 +1,7 @@
 /obj/item/ammo_box/magazine/m10mm
 	name = "pistol magazine (10mm)"
 	desc = "A gun magazine."
+	icon_state = "9x19p"
 	base_icon_state = "9x19p"
 	ammo_type = /obj/item/ammo_casing/c10mm
 	caliber = CALIBER_10MM
@@ -10,24 +11,28 @@
 
 /obj/item/ammo_box/magazine/m10mm/surplus
 	name = "pistol magazine (10mm Surplus)"
+	icon_state = "9x19pSur"
 	base_icon_state = "9x19pSur"
 	desc = "A 10mm pistol magazine. This one has seen better days"
 	ammo_type = /obj/item/ammo_casing/c10mm/surplus
 
 /obj/item/ammo_box/magazine/m10mm/fire
 	name = "pistol magazine (10mm incendiary)"
+	icon_state = "9x19pI"
 	base_icon_state = "9x19pI"
 	desc = "A 10mm pistol magazine. Loaded with rounds which ignite the target."
 	ammo_type = /obj/item/ammo_casing/c10mm/fire
 
 /obj/item/ammo_box/magazine/m10mm/hp
 	name = "pistol magazine (10mm HP)"
+	icon_state = "9x19pH"
 	base_icon_state = "9x19pH"
 	desc= "A 10mm pistol magazine. Loaded with hollow-point rounds, extremely effective against unarmored targets, but nearly useless against protective clothing."
 	ammo_type = /obj/item/ammo_casing/c10mm/hp
 
 /obj/item/ammo_box/magazine/m10mm/ap
 	name = "pistol magazine (10mm AP)"
+	icon_state = "9x19pA"
 	base_icon_state = "9x19pA"
 	desc= "A 10mm pistol magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets."
 	ammo_type = /obj/item/ammo_casing/c10mm/ap
@@ -53,18 +58,21 @@
 
 /obj/item/ammo_box/magazine/m9mm/fire
 	name = "pistol magazine (9mm incendiary)"
+	icon_state = "9x19pI"
 	base_icon_state = "9x19pI"
 	desc = "A gun magazine. Loaded with rounds which ignite the target."
 	ammo_type = /obj/item/ammo_casing/c9mm/fire
 
 /obj/item/ammo_box/magazine/m9mm/hp
 	name = "pistol magazine (9mm HP)"
+	icon_state = "9x19pH"
 	base_icon_state = "9x19pH"
 	desc= "A gun magazine. Loaded with hollow-point rounds, extremely effective against unarmored targets, but nearly useless against protective clothing."
 	ammo_type = /obj/item/ammo_casing/c9mm/hp
 
 /obj/item/ammo_box/magazine/m9mm/ap
 	name = "pistol magazine (9mm AP)"
+	icon_state = "9x19pA"
 	base_icon_state = "9x19pA"
 	desc= "A gun magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets."
 	ammo_type = /obj/item/ammo_casing/c9mm/ap
