@@ -355,3 +355,4 @@
 	suffix = prey_pod
 	name = "Crashed Mimic Escape Pod"
 	description = "A pod with a person who has died to a mimic."
+	
