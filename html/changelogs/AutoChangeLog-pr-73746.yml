@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscadd: "Adds the Snatcherprod. Like a teleprod, but it steals stuff from peoples hands instead. Made using a telecrystal, rather than a bluespace crystal."
