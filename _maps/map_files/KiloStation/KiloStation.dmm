@@ -41763,14 +41763,6 @@
 /obj/structure/sign/warning/fire/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/fore)
-"maW" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
 "maX" = (
 /obj/machinery/computer/order_console/cook{
 	dir = 8
@@ -50584,6 +50576,14 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
+"oJk" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "oJm" = (
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
@@ -53305,14 +53305,6 @@
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
-"pxu" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
 "pxE" = (
 /obj/structure/sign/warning/electric_shock,
 /turf/closed/wall/r_wall,
@@ -57844,6 +57836,15 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
+"qQj" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/south,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
+/area/station/hallway/primary/central/fore)
 "qQq" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance"
@@ -60253,10 +60254,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "rxu" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -65541,15 +65539,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
-"sXl" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/firealarm/directional/south,
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/turf/open/floor/iron/dark/corner{
-	dir = 8
-	},
-/area/station/hallway/primary/central/fore)
 "sXB" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -72878,6 +72867,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
+"veW" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "veZ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
@@ -108338,8 +108335,8 @@ vxb
 dUa
 nkQ
 fPp
-pxu
-sXl
+veW
+qQj
 lbO
 cml
 lbO
@@ -109623,7 +109620,7 @@ slh
 ovv
 jtk
 nIx
-maW
+oJk
 sLb
 lbO
 jcN
@@ -109880,7 +109877,7 @@ dmU
 rEV
 jiJ
 nIx
-pxu
+veW
 sLb
 cml
 mgx
@@ -110137,7 +110134,7 @@ ciW
 dSB
 mlC
 ffi
-pxu
+veW
 baE
 lbO
 wwf
@@ -110394,7 +110391,7 @@ waI
 rEV
 eBx
 nIx
-pxu
+veW
 oCJ
 cml
 lbO
@@ -110651,7 +110648,7 @@ efG
 efG
 efG
 wkC
-pxu
+veW
 sLb
 lxP
 vJT
@@ -112193,7 +112190,7 @@ qXc
 itn
 cXH
 gIz
-pxu
+veW
 pji
 hRf
 dBw
@@ -112452,7 +112449,7 @@ qNr
 vbd
 cuW
 phK
-sXl
+qQj
 jlw
 dBw
 jlw
@@ -112708,7 +112705,7 @@ qNr
 beN
 hdy
 vuj
-maW
+oJk
 wjD
 fNT
 ijQ
@@ -115792,7 +115789,7 @@ siF
 lac
 gba
 cDH
-maW
+oJk
 cWl
 dqa
 dCM
