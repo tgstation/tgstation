@@ -184,7 +184,7 @@ export class Changelog extends Component {
         </p>
         <p>
           {'Current project maintainers can be found '}
-          <a href="https://github.com/tgstation?tab=members">here</a>
+          <a href="https://github.com/orgs/tgstation/people">here</a>
           {', recent GitHub contributors can be found '}
           <a href="https://github.com/tgstation/tgstation/pulse/monthly">
             here
