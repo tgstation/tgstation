@@ -15115,16 +15115,10 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/silvercrate,
 /obj/machinery/light/small/directional/east,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/item/screwdriver/power,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/item/screwdriver/power,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "eCd" = (
@@ -19910,12 +19904,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/fore)
-"fPj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/turf/open/floor/iron/dark/corner,
-/area/station/hallway/primary/central/fore)
 "fPp" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -24713,8 +24701,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/box,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -28303,11 +28290,10 @@
 	},
 /obj/item/stack/spacecash/c1000,
 /obj/item/gun/ballistic/automatic/pistol/deagle/gold,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/machinery/status_display/ai/directional/north,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "ifv" = (
@@ -34461,13 +34447,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/ore_silo,
 /obj/machinery/airalarm/directional/north,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "jRR" = (
@@ -45995,6 +45977,11 @@
 	luminosity = 2
 	},
 /area/station/science/robotics/mechbay)
+"npo" = (
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "npr" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -47920,8 +47907,7 @@
 /obj/structure/closet/crate/goldcrate,
 /obj/machinery/firealarm/directional/west,
 /obj/item/crowbar/power,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -57858,15 +57844,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
-"qQj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/firealarm/directional/south,
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/turf/open/floor/iron/dark/corner{
-	dir = 8
-	},
-/area/station/hallway/primary/central/fore)
 "qQq" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance"
@@ -64666,6 +64643,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/theater)
+"sLb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/turf/open/floor/iron/dark/corner,
+/area/station/hallway/primary/central/fore)
 "sLf" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -65558,6 +65541,15 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
+"sXl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/south,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
+/area/station/hallway/primary/central/fore)
 "sXB" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -70852,11 +70844,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"uxw" = (
-/obj/effect/landmark/start/hangover,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
 "uxz" = (
 /obj/structure/chair,
 /obj/effect/landmark/start/hangover,
@@ -108352,7 +108339,7 @@ dUa
 nkQ
 fPp
 pxu
-qQj
+sXl
 lbO
 cml
 lbO
@@ -109380,7 +109367,7 @@ rEV
 ugp
 nIx
 pqB
-fPj
+sLb
 igl
 cyv
 oCI
@@ -109637,7 +109624,7 @@ ovv
 jtk
 nIx
 maW
-fPj
+sLb
 lbO
 jcN
 oKV
@@ -109894,7 +109881,7 @@ rEV
 jiJ
 nIx
 pxu
-fPj
+sLb
 cml
 mgx
 vCA
@@ -110665,7 +110652,7 @@ efG
 efG
 wkC
 pxu
-fPj
+sLb
 lxP
 vJT
 dZe
@@ -112465,7 +112452,7 @@ qNr
 vbd
 cuW
 phK
-qQj
+sXl
 jlw
 dBw
 jlw
@@ -113494,7 +113481,7 @@ vqw
 vqw
 aOc
 laB
-uxw
+npo
 uke
 qTC
 kNw
@@ -116061,7 +116048,7 @@ kRd
 uBO
 kwe
 kxS
-uxw
+npo
 cDf
 bpj
 jds
