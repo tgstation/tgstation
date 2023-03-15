@@ -111,7 +111,7 @@
 	var/atom/movable/movable_parent = parent
 	movable_parent.unbuckle_mob(rider)
 
-	if(!iscyborg(rider) && !isanimal_or_basicmob(rider))
+	if(!iscyborg(movable_parent) && !isanimal_or_basicmob(movable_parent))
 		return
 
 	var/turf/target = get_edge_target_turf(movable_parent, movable_parent.dir)

@@ -108,6 +108,11 @@
 		return ..()
 	apply_buff(user)
 
+/obj/item/food/canned/envirochow/attack_basic_mob(mob/living/basic/user, list/modifiers)
+	if(!check_buffability(user))
+		return ..()
+	apply_buff(user)
+
 /obj/item/food/canned/envirochow/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(!proximity_flag)

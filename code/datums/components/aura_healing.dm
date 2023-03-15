@@ -133,6 +133,9 @@
 		else if (isanimal(candidate))
 			var/mob/living/simple_animal/animal_candidate = candidate
 			animal_candidate.adjustHealth(-simple_heal * delta_time, updating_health = FALSE)
+		else if (isbasicmob(candidate))
+			var/mob/living/basic/basic_candidate = candidate
+			basic_candidate.adjust_health(-simple_heal * delta_time, updating_health = FALSE)
 
 		if (candidate.blood_volume < BLOOD_VOLUME_NORMAL)
 			candidate.blood_volume += blood_heal * delta_time

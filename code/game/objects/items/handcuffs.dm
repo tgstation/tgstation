@@ -443,7 +443,7 @@
 		victim.visible_message(span_danger("[victim] triggers \the [src]."), \
 				span_userdanger("You trigger \the [src]!"))
 	var/def_zone = BODY_ZONE_CHEST
-	if(iscarbon(victim) && victim.body_position != STANDING_UP)
+	if(iscarbon(victim) && victim.body_position == STANDING_UP)
 		var/mob/living/carbon/carbon_victim = victim
 		def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		if(!carbon_victim.legcuffed && carbon_victim.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
