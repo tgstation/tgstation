@@ -9,9 +9,8 @@
 
 /mob/living/basic/cow/wisdom/Initialize(mapload, granted_wisdom)
 	. = ..()
-	if(granted_wisdom)
-		src.granted_wisdom = granted_wisdom
-	else
+	src.granted_wisdom = granted_wisdom
+	if(!granted_wisdom)
 		src.granted_wisdom = pick(GLOB.skill_types)
 
 /mob/living/basic/cow/wisdom/setup_eating()
