@@ -90,7 +90,8 @@
 /mob/living/simple_animal/hostile/regalrat/CanAttack(atom/the_target)
 	if(isliving(the_target))
 		var/mob/living/living_target = the_target
-		return !living_target.faction_check_mob(src, exact_match = TRUE)
+		if (living_target.stat != DEAD)
+			return !living_target.faction_check_mob(src, exact_match = TRUE)
 
 	return ..()
 
@@ -122,7 +123,7 @@
 	if(istype(target, /obj/machinery/door/airlock) && !opening_airlock)
 		pry_door(target)
 		return
-	if (target.reagents && target.is_injectable(src, allowmobs = TRUE) && !istype(target, /obj/item/food/cheese) && !src.combat_mode)
+	if (target.reagents && target.is_injectable(src, allowmobs = TRUE) && !istype(target, /obj/item/food/cheese) && !src.combat_mode && src.mind)
 		src.visible_message(span_warning("[src] starts licking [target] passionately!"),span_notice("You start licking [target]..."))
 		if (do_after(src, 2 SECONDS, target, interaction_key = REGALRAT_INTERACTION))
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
