@@ -16,7 +16,7 @@
 		reject_implant(implant)
 		return
 
-	for(var/organ in owner.internal_organs)
+	for(var/organ in owner.organs)
 		if(istype(organ, /obj/item/organ/internal/cyberimp))
 			reject_cyberimp(organ)
 			return

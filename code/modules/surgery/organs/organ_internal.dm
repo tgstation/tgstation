@@ -19,9 +19,9 @@
 	if(!. || !owner)
 		return
 
-	// internal_organs_slot must ALWAYS be ordered in the same way as organ_process_order
+	// organs_slot must ALWAYS be ordered in the same way as organ_process_order
 	// Otherwise life processing breaks down
-	sortTim(owner.internal_organs_slot, GLOBAL_PROC_REF(cmp_organ_slot_asc))
+	sortTim(owner.organs_slot, GLOBAL_PROC_REF(cmp_organ_slot_asc))
 
 	STOP_PROCESSING(SSobj, src)
 

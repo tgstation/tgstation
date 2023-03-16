@@ -67,6 +67,14 @@
 		rmb_text = "Turn off", \
 	)
 
+	AddComponent( \
+		/datum/component/redirect_attack_hand_from_turf, \
+		screentip_texts = list( \
+			lmb_text = "Turn on alarm", \
+			rmb_text = "Turn off alarm", \
+		), \
+	)
+
 /obj/machinery/firealarm/Destroy()
 	if(my_area)
 		LAZYREMOVE(my_area.firealarms, src)
