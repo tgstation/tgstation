@@ -119,6 +119,8 @@
 		. += "A small window reveals some information about the payload: [payload.desc]."
 	if(examinable_countdown)
 		. += span_notice("A digital display on it reads \"[seconds_remaining()]\".")
+		if(active)
+			balloon_alert(user, "[seconds_remaining()]")
 	else
 		. += span_notice({"The digital display on it is inactive."})
 
