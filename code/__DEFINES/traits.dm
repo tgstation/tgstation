@@ -114,30 +114,6 @@
 #define HAS_TRAIT_FROM_ONLY(target, trait, source) (target.status_traits?[trait] && (source in target.status_traits[trait]) && (length(target.status_traits[trait]) == 1))
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits?[trait] && (length(target.status_traits[trait] - source) > 0))
 
-/// Define for adding multiple traits to a target via a list. Must have a common source and target.
-#define ADD_TRAITS(target, list_of_traits, source) \
-	do { \
-		if (!islist(list_of_traits)) { \
-			stack_trace("Invalid arguments passed to ADD_TRAITS! Invoked on [target] with [list_of_traits], source being [source]."); \
-			return; \
-		} \
-		for (var/trait in list_of_traits) { \
-			ADD_TRAIT(target, trait, source); \
-		} \
-	} while (0)
-
-/// Define for removing multiple traits from a target via a list. Must have a common source and target.
-#define REMOVE_TRAITS(target, list_of_traits, source) \
-	do { \
-		if (!islist(list_of_traits)) { \
-			stack_trace("Invalid arguments passed to REMOVE_TRAITS! Invoked on [target] with [list_of_traits], source being [source]."); \
-			return; \
-		} \
-		for (var/trait in list_of_traits) { \
-			REMOVE_TRAIT(target, trait, source); \
-		} \
-	} while (0)
-
 /*
 Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
 */
