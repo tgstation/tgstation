@@ -456,7 +456,9 @@ DEFINE_BITFIELD(turret_flags, list(
 				var/mob/living/silicon/robot/sillyconerobot = A
 				if(sillyconerobot.stat != CONSCIOUS)
 					continue
-				if(in_faction(sillyconerobot))
+				if(in_faction(sillyconerobot)) // borgs in faction are friendly
+					continue
+				if((ROLE_SYNDICATE in faction) && sillyconerobot.emagged) // special case: emagged station borgs are friendly to syndicate turrets
 					continue
 
 				targets += sillyconerobot
