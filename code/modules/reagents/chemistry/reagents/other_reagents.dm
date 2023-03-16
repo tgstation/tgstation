@@ -243,9 +243,9 @@
  */
 /datum/reagent/water/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)//Splashing people with water can help put them out!
 	. = ..()
-	if(isoozeling(M))
-		M.blood_volume = max(M.blood_volume - 30, 0)
-		to_chat(M, "<span class='warning'>The water causes you to melt away!</span>")
+	if(isoozeling(exposed_mob))
+		exposed_mob.blood_volume = max(exposed_mob.blood_volume - 30, 0)
+		to_chat(exposed_mob, span_warning("The water causes you to melt away!"))
 		return
 	if(methods & TOUCH)
 		exposed_mob.extinguish_mob() // extinguish removes all fire stacks

@@ -56,7 +56,6 @@
 		//We evaporate. bye bye
 		if(initial(R.evaporates))
 			var/remove_amount = min((initial(R.evaporation_rate)), R.volume, (liquid_group.reagents_per_turf / liquid_group.reagents.reagent_list.len))
-			passthrough_evaporation_reaction(R, remove_amount)
 			liquid_group.remove_specific(src, remove_amount, R)
 			any_change = TRUE
 
@@ -67,11 +66,6 @@
 /obj/effect/abstract/liquid_turf/forceMove(atom/destination, no_tp=FALSE, harderforce = FALSE)
 	if(harderforce)
 		. = ..()
-
-/obj/effect/abstract/liquid_turf/proc/passthrough_evaporation_reaction(datum/reagent/reagent, reac_volume)
-	var/datum/reagent/evaporated_reagent = GLOB.chemical_reagents_list[reagent.type]
-	var/turf/open/evaporated_turf = get_turf(src)
-	//evaporated_reagent.reaction_evaporation(evaporated_turf, reac_volume)
 
 /obj/effect/abstract/liquid_turf/proc/set_new_liquid_state(new_state)
 	if(no_effects)

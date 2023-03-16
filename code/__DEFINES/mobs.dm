@@ -94,6 +94,10 @@
 ///The limb is from a xenomorph.
 #define BODYTYPE_ALIEN (1<<7)
 
+//Species gib types
+#define GIB_TYPE_HUMAN "human"
+#define GIB_TYPE_ROBOTIC "robotic"
+
 // Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
 #define SPECIES_ABDUCTOR "abductor"
 #define SPECIES_ANDROID "android"
@@ -126,6 +130,8 @@
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 #define SPECIES_OOZELING "oozeling"
+#define SPECIES_IPC "ipc"
+#define SPECIES_SIMIAN "simian"
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
 #define BODYPART_ID_ROBOTIC "robotic"

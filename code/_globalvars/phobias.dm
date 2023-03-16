@@ -510,6 +510,7 @@ GLOBAL_LIST_INIT(phobia_species, list(
 		/datum/species/jelly,
 		/datum/species/pod,
 		/datum/species/shadow,
+		/datum/species/oozeling,
 	)),
 	"anime" = typecacheof(list(/datum/species/human/felinid)),
 	"conspiracies" = typecacheof(list(

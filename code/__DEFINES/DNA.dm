@@ -88,6 +88,10 @@
 ///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
 #define BLOOD_CLANS 18
 
+#define REVIVESBYHEALING 19
+#define NOHUSK 20
+#define NOMOUTH 21
+
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
 #define ORGAN_SLOT_APPENDIX "appendix"
