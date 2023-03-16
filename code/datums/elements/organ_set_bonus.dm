@@ -78,8 +78,7 @@
 	bonus_active = TRUE
 	if(bonus_traits)
 		if(islist(bonus_traits))
-			for(var/trait in bonus_traits)
-				ADD_TRAIT(owner, trait, REF(src))
+			ADD_TRAIT_LIST(owner, bonus_traits, REF(src))
 		else
 			ADD_TRAIT(owner, bonus_traits, REF(src))
 	if(bonus_activate_text)
