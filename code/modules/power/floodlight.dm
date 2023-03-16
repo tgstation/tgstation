@@ -115,7 +115,7 @@
 			qdel(O)
 			return
 		else //A minute of silence for all the accidentally broken light tubes.
-			balloon_alert(user, "light tube is broken")
+			balloon_alert(user, "light tube is broken!")
 			return
 	if(istype(O, /obj/item/lightreplacer))
 		var/obj/item/lightreplacer/L = O
