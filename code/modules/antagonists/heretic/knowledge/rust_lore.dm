@@ -213,20 +213,20 @@
 	var/area/ritual_location = /area/station/command/bridge
 	/// A static list of traits we give to the heretic when on rust.
 	var/static/list/conditional_immunities = list(
-		TRAIT_STUNIMMUNE,
-		TRAIT_SLEEPIMMUNE,
-		TRAIT_PUSHIMMUNE,
-		TRAIT_SHOCKIMMUNE,
+		TRAIT_BOMBIMMUNE,
 		TRAIT_NO_SLIP_ALL,
+		TRAIT_NOBREATH,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_PUSHIMMUNE,
 		TRAIT_RADIMMUNE,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHEAT,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_BOMBIMMUNE,
-		TRAIT_NOBREATH,
-		)
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_SHOCKIMMUNE,
+		TRAIT_SLEEPIMMUNE,
+		TRAIT_STUNIMMUNE,
+	)
 
 /datum/heretic_knowledge/ultimate/rust_final/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
