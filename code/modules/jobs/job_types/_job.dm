@@ -148,13 +148,12 @@
 /datum/job/proc/after_spawn(mob/living/spawned, client/player_client)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
-	for(var/trait in mind_traits)
-		ADD_TRAIT(spawned.mind, trait, JOB_TRAIT)
+	if(length(mind_traits))
+		ADD_TRAIT_LIST(spawned.mind, mind_traits, JOB_TRAIT)
 
 	var/obj/item/organ/internal/liver/liver = spawned.getorganslot(ORGAN_SLOT_LIVER)
-	if(liver)
-		for(var/trait in liver_traits)
-			ADD_TRAIT(liver, trait, JOB_TRAIT)
+	if(liver && length(liver_traits))
+		ADD_TRAIT_LIST(liver, liver_traits, JOB_TRAIT)
 
 	if(!ishuman(spawned))
 		return
