@@ -43,8 +43,7 @@ SUBSYSTEM_DEF(artifacts)
 		artifact_origins_names += origin.name
 		artifact_origins_by_name[origin.type_name] = origin
 		artifact_rarities[origin.type_name] = list()
-	for (var/type in subtypesof(/datum/component/artifact))
-		var/datum/component/artifact/artifact_type = type
+	for (var/datum/component/artifact/artifact_type as anything in subtypesof(/datum/component/artifact))
 		var/weight = initial(artifact_type.weight)
 		if(!weight)
 			continue
@@ -56,6 +55,5 @@ SUBSYSTEM_DEF(artifacts)
 		for (var/origin in artifact_rarities)
 			if(origin in initial(artifact_type.valid_origins))
 				artifact_rarities[origin][artifact_type] = weight
-	for (var/type in subtypesof(/datum/artifact_trigger))
-		var/datum/artifact_trigger/trigger_type = type
+	for (var/datum/artifact_trigger/trigger_type as anything in subtypesof(/datum/artifact_trigger))
 		artifact_trigger_names += initial(trigger_type.name)
