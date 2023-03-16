@@ -56,8 +56,6 @@
 #define MODE_VOCALCORDS "cords"
 #define MODE_KEY_VOCALCORDS "x"
 
-#define MODE_MONKEY "monkeyhive"
-
 #define MODE_MAFIA "mafia"
 
 #define MODE_SING "sing"
