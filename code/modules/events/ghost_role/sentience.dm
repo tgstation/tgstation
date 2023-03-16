@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 		if (isanimal(selected))
 			var/mob/living/simple_animal/animal_selected = selected
 			animal_selected.sentience_act()
-			selected.del_on_death = FALSE
+			animal_selected.del_on_death = FALSE
 		else if	(isbasicmob(selected))
 			var/mob/living/basic/animal_selected = selected
 			animal_selected.basic_mob_flags &= ~DEL_ON_DEATH
