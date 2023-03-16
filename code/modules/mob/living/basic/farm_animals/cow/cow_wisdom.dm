@@ -4,6 +4,15 @@
 	desc = "Known for its wisdom, shares it with all."
 	gold_core_spawnable = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/cow/wisdom
+	///The type of wisdom this cow will grant
+	var/granted_wisdom
+
+/mob/living/basic/cow/wisdom/Initialize(mapload, wisdom_override)
+	. = ..()
+	if(wisdom_override)
+		granted_wisdom = wisdom_override
+	else
+		granted_wisdom = pick(GLOB.skill_types)
 
 /mob/living/basic/cow/wisdom/setup_eating()
 	return //cannot tame me! and I don't care about eatin' nothing, neither!
@@ -24,7 +33,7 @@
 /mob/living/basic/cow/wisdom/attack_hand(mob/living/carbon/user, list/modifiers)
 	if(!stat && !user.combat_mode)
 		to_chat(user, span_nicegreen("[src] whispers you some intense wisdoms and then disappears!"))
-		user.mind?.adjust_experience(pick(GLOB.skill_types), 500)
+		user.mind?.adjust_experience(granted_wisdom, 500)
 		do_smoke(1, holder = src, location = get_turf(src))
 		qdel(src)
 		return
