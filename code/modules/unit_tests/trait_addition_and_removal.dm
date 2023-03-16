@@ -1,8 +1,6 @@
 /// Simple Unit Test to ensure multiple methods of adding/removing a trait work as intended.
 /datum/unit_test/trait_addition_and_removal
 
-TEST_FOCUS(/datum/unit_test/trait_addition_and_removal)
-
 #define TRAIT_UNIT_TEST_MAIN "trait_main"
 #define TRAIT_UNIT_TEST_ALT "trait_alternate"
 #define TRAIT_UNIT_TEST_A "trait_a"
