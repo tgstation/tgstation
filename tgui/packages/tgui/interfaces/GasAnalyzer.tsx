@@ -32,7 +32,7 @@ export const GasAnalyzerContent = (props, context) => {
           key={gasmix.reference}
           buttons={
             <Button
-              icon={autoUpdating ? 'sync-alt' : 'lock'}
+              icon={autoUpdating ? 'unlock' : 'lock'}
               onClick={() => act('autoscantoggle')}
               tooltip={
                 autoUpdating ? 'Auto-Update Enabled' : 'Auto-Update Disabled'
