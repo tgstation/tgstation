@@ -1005,6 +1005,19 @@
 	charges = -1
 	desc = "Now with 30% more bluespace technology."
 
+/obj/item/toy/crayon/acme
+	name = "acme crayon"
+	desc = "A crayon that can draw fake airlocks on walls. Beep beep!"
+
+/obj/item/toy/crayon/acme/use_on(atom/target, mob/user)
+	if(!istype(target, /turf/closed/wall))
+		return
+	if(!use_charges(user))
+		return
+	var/turf/closed/wall/wall = target
+	wall.AddComponent(/datum/component/acme_wall, mutable_appearance('icons/obj/doors/airlocks/hatch/maintenance.dmi', "closed"))
+	user.balloon_alert_to_viewers("[user] draws a stunning picture on [wall]!")
+
 #undef RANDOM_GRAFFITI
 #undef RANDOM_LETTER
 #undef RANDOM_PUNCTUATION
