@@ -676,10 +676,6 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
-"Gt" = (
-/obj/structure/cable,
-/turf/closed/wall/mineral/wood/nonmetal,
-/area/shuttle/pirate/flying_dutchman)
 "Hh" = (
 /obj/machinery/computer/piratepad_control{
 	dir = 4
@@ -773,7 +769,7 @@
 /obj/docking_port/mobile/pirate{
 	dir = 8;
 	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "Pirate Ship";
 	port_direction = 4;
 	preferred_direction = 8
@@ -1138,7 +1134,7 @@ af
 af
 af
 ny
-Gt
+WR
 pG
 SV
 WR
@@ -1146,7 +1142,7 @@ Fz
 vw
 WR
 WR
-Gt
+WR
 WR
 WR
 af
@@ -1354,7 +1350,7 @@ af
 af
 af
 ny
-Gt
+WR
 pG
 uw
 WR
@@ -1362,7 +1358,7 @@ fH
 Pm
 WR
 WR
-Gt
+WR
 WR
 WR
 af

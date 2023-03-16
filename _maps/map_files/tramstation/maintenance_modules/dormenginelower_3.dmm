@@ -169,13 +169,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
-"ny" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/department/crew_quarters/dorms)
 "oP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing,
@@ -306,13 +299,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
-"wM" = (
-/obj/machinery/duct,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall,
-/area/station/maintenance/department/crew_quarters/dorms)
 "wQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/wardrobe/mixed,
@@ -516,21 +502,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
-"Kx" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/effect/turf_decal/trimline/white/warning{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/white/warning{
-	dir = 8
-	},
-/obj/structure/window/reinforced/spawner/west,
-/obj/machinery/duct,
-/turf/open/floor/plating,
-/area/station/maintenance/department/crew_quarters/dorms)
 "Lh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -682,7 +653,6 @@
 	initialized_button = "trammaintlmaobro";
 	name = "Glass Walkway Emergency Seal Toggle"
 	},
-/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "UJ" = (
@@ -968,14 +938,14 @@ vM
 vM
 vM
 vM
-Kx
-Kx
-Kx
-Kx
-Kx
-Kx
+vM
+vM
+vM
+vM
+vM
+vM
 Ul
-IN
+Jw
 NT
 gs
 gs
@@ -1004,14 +974,14 @@ AN
 AN
 AN
 AN
-wM
+NT
 AN
 AN
 AN
 AN
 AN
 AN
-IN
+Jw
 NT
 gs
 gs
@@ -1047,7 +1017,7 @@ AN
 AN
 AN
 AN
-IN
+Jw
 NT
 gs
 gs
@@ -1083,7 +1053,7 @@ AN
 AN
 AN
 AN
-IN
+Jw
 NT
 gs
 gs
@@ -1119,7 +1089,7 @@ AN
 AN
 AN
 AN
-IN
+Jw
 NT
 gs
 gs
@@ -1155,7 +1125,7 @@ AN
 AN
 AN
 AN
-IN
+Jw
 NT
 gs
 gs
@@ -1191,7 +1161,7 @@ AN
 AN
 AN
 AN
-IN
+Jw
 NT
 gs
 gs
@@ -1227,7 +1197,7 @@ AN
 AN
 AN
 AN
-IN
+Jw
 NT
 gs
 gs
@@ -1263,7 +1233,7 @@ AN
 AN
 wQ
 DP
-IN
+Jw
 NT
 gs
 gs
@@ -1299,7 +1269,7 @@ AN
 AN
 YG
 DP
-IN
+Jw
 OF
 gs
 gs
@@ -1335,7 +1305,7 @@ AN
 AN
 kY
 DP
-IN
+Jw
 NT
 gs
 gs
@@ -1371,7 +1341,7 @@ AN
 AN
 zr
 DP
-IN
+Jw
 NT
 NT
 NT
@@ -1407,9 +1377,9 @@ AN
 AN
 Hw
 DP
-IN
-IN
-IN
+Jw
+Jw
+Jw
 NT
 NT
 NT
@@ -1445,11 +1415,11 @@ AN
 AN
 AN
 AN
-IN
-IN
-IN
-IN
-IN
+Jw
+Jw
+Jw
+Jw
+Jw
 NT
 "}
 (20,1,1) = {"
@@ -1485,7 +1455,7 @@ AN
 AN
 AN
 AN
-IN
+Jw
 NT
 "}
 (21,1,1) = {"
@@ -1521,7 +1491,7 @@ AN
 AN
 AN
 AN
-IN
+Jw
 NT
 "}
 (22,1,1) = {"
@@ -1557,7 +1527,7 @@ AN
 AN
 AN
 AN
-IN
+Jw
 NT
 "}
 (23,1,1) = {"
@@ -1593,7 +1563,7 @@ AN
 AN
 AN
 AN
-IN
+Jw
 NT
 "}
 (24,1,1) = {"
@@ -1629,7 +1599,7 @@ AN
 AN
 AN
 AN
-IN
+Jw
 NT
 "}
 (25,1,1) = {"
@@ -1662,10 +1632,10 @@ AN
 AN
 AN
 AN
-ny
+Qz
 IN
-IN
-IN
+Jw
+Jw
 NT
 "}
 (26,1,1) = {"

@@ -237,6 +237,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "oa" = (
@@ -463,7 +464,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/spawner/random/trash/food_packaging,
-/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Ad" = (
@@ -718,11 +718,7 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Restroom Maintenance Access"
 	},
-/obj/machinery/duct,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Qc" = (
@@ -1066,13 +1062,13 @@ Jw
 Jw
 Jw
 zQ
-Mr
-Mr
-Mr
-Mr
-Mr
-Mr
-Mr
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
 NT
 gs
 gs
@@ -1108,7 +1104,7 @@ AN
 AN
 AN
 AN
-Mr
+Jw
 NT
 gs
 gs
@@ -1144,7 +1140,7 @@ AN
 AN
 AN
 AN
-Mr
+Jw
 NT
 gs
 gs
@@ -1180,7 +1176,7 @@ AN
 AN
 AN
 AN
-Mr
+Jw
 NT
 gs
 gs
@@ -1216,7 +1212,7 @@ AN
 AN
 AN
 AN
-Mr
+Jw
 NT
 gs
 gs
@@ -1252,7 +1248,7 @@ AN
 AN
 AN
 AN
-Mr
+Jw
 NT
 gs
 gs
@@ -1288,7 +1284,7 @@ AN
 AN
 AN
 AN
-Mr
+Jw
 NT
 gs
 gs
@@ -1324,7 +1320,7 @@ AN
 AN
 AN
 AN
-Mr
+Jw
 NT
 gs
 gs
@@ -1360,7 +1356,7 @@ AN
 AN
 dj
 DP
-Mr
+Jw
 NT
 gs
 gs
@@ -1396,7 +1392,7 @@ AN
 AN
 Ej
 DP
-Mr
+Jw
 OF
 gs
 gs
@@ -1468,7 +1464,7 @@ AN
 AN
 iO
 DP
-Mr
+Jw
 NT
 NT
 NT
@@ -1504,9 +1500,9 @@ AN
 AN
 uc
 DP
-Mr
-Mr
-Mr
+Jw
+Jw
+Jw
 NT
 NT
 NT
@@ -1542,11 +1538,11 @@ AN
 AN
 AN
 AN
-Mr
-Mr
-Mr
-Mr
-Mr
+Jw
+Jw
+Jw
+Jw
+Jw
 NT
 "}
 (20,1,1) = {"
@@ -1582,7 +1578,7 @@ AN
 AN
 AN
 AN
-Mr
+Jw
 NT
 "}
 (21,1,1) = {"
@@ -1618,7 +1614,7 @@ AN
 AN
 AN
 AN
-Mr
+Jw
 NT
 "}
 (22,1,1) = {"
@@ -1654,7 +1650,7 @@ AN
 AN
 AN
 AN
-Mr
+Jw
 NT
 "}
 (23,1,1) = {"
@@ -1690,7 +1686,7 @@ AN
 AN
 AN
 AN
-Mr
+Jw
 NT
 "}
 (24,1,1) = {"
@@ -1726,7 +1722,7 @@ AN
 AN
 AN
 AN
-Mr
+Jw
 NT
 "}
 (25,1,1) = {"
@@ -1760,9 +1756,9 @@ AN
 AN
 AN
 ny
-Jw
-rg
 Mr
+rg
+Jw
 NT
 "}
 (26,1,1) = {"

@@ -2339,11 +2339,13 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/turf/closed/wall/ice,
+/obj/effect/spawner/structure/window/ice,
+/turf/open/space/basic,
 /area/awaymission/snowdin/post/garage)
 "gP" = (
 /obj/machinery/power/terminal,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
 "gS" = (
@@ -2802,8 +2804,10 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/hydro)
 "ic" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/closed/wall/ice,
+/turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
 "id" = (
 /turf/closed/wall/rust,
@@ -2814,6 +2818,7 @@
 "if" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
 "ih" = (
@@ -5500,7 +5505,8 @@
 "oX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
-/turf/closed/wall/ice,
+/obj/effect/spawner/structure/window/ice,
+/turf/open/floor/plating,
 /area/awaymission/snowdin/post/engineering)
 "pa" = (
 /turf/closed/wall/ice,
@@ -12146,6 +12152,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
 "Rm" = (
@@ -12756,6 +12763,7 @@
 "Ux" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
 "Uy" = (
@@ -31173,8 +31181,8 @@ Zy
 Zy
 fX
 gO
-ic
-ic
+fY
+fY
 iN
 jE
 kh
@@ -31944,7 +31952,7 @@ Zy
 Zy
 fY
 Rj
-Oe
+ic
 if
 iQ
 jG

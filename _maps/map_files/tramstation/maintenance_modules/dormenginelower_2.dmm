@@ -32,7 +32,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "ct" = (
@@ -208,7 +207,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "kt" = (
@@ -273,15 +271,11 @@
 	name = "Restroom Maintenance Access"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/airlock_note_placer{
 	note_name = "breach notice";
 	note_info = "Due to recent hull damage suffered to this section of the station, the maintenance hall has been deemed unsafe for crew travel and has been blocked off until further notice for station repairs."
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/duct,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "mV" = (
@@ -311,13 +305,6 @@
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
-"ny" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/department/crew_quarters/dorms)
 "nT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
@@ -419,7 +406,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/item/stack/ore/gold,
-/obj/machinery/duct,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "sC" = (
@@ -465,7 +451,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/item/stack/ore/iron,
-/obj/machinery/duct,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "vf" = (
@@ -570,7 +555,6 @@
 /obj/structure/cable,
 /obj/item/stack/ore/iron,
 /obj/item/stack/ore/glass,
-/obj/machinery/duct,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "BN" = (
@@ -721,7 +705,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "JW" = (
@@ -852,7 +835,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "RF" = (
@@ -875,15 +857,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
-"Sj" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/item/stack/ore/glass,
-/obj/machinery/duct,
-/turf/open/floor/plating/airless,
-/area/station/maintenance/department/crew_quarters/dorms)
 "SP" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -931,15 +904,6 @@
 /obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
-"Vt" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/holosign/barrier/engineering,
-/obj/machinery/duct,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/department/crew_quarters/dorms)
 "Wp" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/closet/wardrobe/miner,
@@ -982,14 +946,6 @@
 /obj/structure/ore_box,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
-"XX" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/duct,
-/turf/open/floor/plating/airless,
-/area/station/maintenance/department/crew_quarters/dorms)
 "Yr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot{
@@ -1004,7 +960,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Zc" = (
@@ -1240,13 +1195,13 @@ na
 na
 hS
 ud
-Sj
+SP
 Rn
-XX
-XX
-XX
+na
+na
+na
 JJ
-XX
+na
 WC
 IK
 IK
@@ -1318,7 +1273,7 @@ AN
 AN
 AN
 AN
-XX
+na
 LQ
 IK
 IK
@@ -1354,7 +1309,7 @@ AN
 AN
 AN
 AN
-XX
+na
 NT
 IK
 IK
@@ -1498,7 +1453,7 @@ AN
 AN
 AN
 AN
-XX
+na
 NT
 KB
 NZ
@@ -1534,7 +1489,7 @@ AN
 AN
 kt
 Qo
-XX
+na
 Oj
 MA
 gx
@@ -1570,7 +1525,7 @@ AN
 AN
 XM
 OF
-XX
+na
 OF
 zR
 WC
@@ -1678,9 +1633,9 @@ AN
 AN
 BN
 Qo
-XX
-XX
-XX
+na
+na
+na
 OF
 ct
 NT
@@ -1716,9 +1671,9 @@ AN
 AN
 AN
 AN
-Sj
+SP
 sk
-Sj
+SP
 jX
 YW
 NT
@@ -1756,7 +1711,7 @@ AN
 AN
 AN
 AN
-MR
+Jw
 NT
 "}
 (21,1,1) = {"
@@ -1792,7 +1747,7 @@ AN
 AN
 AN
 AN
-Vt
+gO
 NT
 "}
 (22,1,1) = {"
@@ -1828,7 +1783,7 @@ AN
 AN
 AN
 AN
-MR
+Jw
 NT
 "}
 (23,1,1) = {"
@@ -1864,7 +1819,7 @@ AN
 AN
 AN
 AN
-MR
+Jw
 NT
 "}
 (24,1,1) = {"
@@ -1900,7 +1855,7 @@ AN
 AN
 AN
 AN
-MR
+Jw
 NT
 "}
 (25,1,1) = {"
@@ -1933,10 +1888,10 @@ AN
 AN
 AN
 AN
-ny
+ab
 MR
-MR
-MR
+Jw
+Jw
 NT
 "}
 (26,1,1) = {"

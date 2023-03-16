@@ -2079,7 +2079,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
@@ -2281,7 +2280,6 @@
 "nd" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "no" = (
@@ -2347,7 +2345,6 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/glass/incinerator/syndicatelava_interior,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/engineering)
 "nE" = (
@@ -2449,7 +2446,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/binary/pump/off/general/visible,
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron,
@@ -2566,13 +2562,13 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "qa" = (
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_syndicatelava{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/airlock_sensor/incinerator_syndicatelava{
 	pixel_x = 22
 	},
@@ -2714,9 +2710,11 @@
 	},
 /area/ruin/syndicate_lava_base/chemistry)
 "rO" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "sc" = (
 /turf/open/floor/engine/o2,
@@ -3351,6 +3349,7 @@
 	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "CR" = (
@@ -3390,6 +3389,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "Dx" = (
@@ -3464,6 +3464,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/orange/visible{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "EV" = (
@@ -3810,7 +3811,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/engineering)
 "KI" = (
@@ -3986,6 +3986,7 @@
 "OG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "OI" = (
@@ -4094,7 +4095,6 @@
 /area/ruin/syndicate_lava_base/engineering)
 "Qb" = (
 /obj/machinery/portable_atmospherics/scrubber,
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
 	},
@@ -4520,6 +4520,7 @@
 /obj/machinery/atmospherics/pipe/color_adapter/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "XR" = (
@@ -4632,7 +4633,6 @@
 "Za" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
@@ -6542,7 +6542,7 @@ kW
 lq
 lM
 Qb
-mG
+sl
 nd
 nD
 qa
@@ -6589,14 +6589,14 @@ Kf
 bM
 wX
 wv
-wv
+rO
 Rh
 Vp
 Xr
 yh
 nE
 PZ
-rO
+nE
 AB
 ju
 ju
@@ -6639,7 +6639,7 @@ ju
 ju
 JQ
 RK
-sl
+mG
 XP
 ET
 OG

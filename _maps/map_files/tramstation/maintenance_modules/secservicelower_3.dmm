@@ -195,10 +195,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
-"pN" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/maintenance/central/greater)
 "pW" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -2241,7 +2237,7 @@ VY
 VY
 "}
 (34,1,1) = {"
-pN
+KU
 Ue
 Ue
 Ue

@@ -2219,7 +2219,6 @@
 "aLS" = (
 /obj/machinery/modular_computer/console/preset/engineering,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "aLV" = (
@@ -6237,6 +6236,7 @@
 /area/station/hallway/primary/central)
 "bRb" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/cable,
 /turf/open/floor/grass,
 /area/station/security/prison/safe)
 "bRd" = (
@@ -10741,7 +10741,6 @@
 	network = list("ss13","prison");
 	view_range = 5
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/security/execution/transfer)
 "dhU" = (
@@ -12016,13 +12015,6 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage/gas)
-"dBQ" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "MiniSat AI Chamber South";
-	network = list("aicore")
-	},
-/turf/open/floor/circuit,
-/area/station/ai_monitored/turret_protected/ai)
 "dBY" = (
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
@@ -26650,6 +26642,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/security/execution/transfer)
 "ihG" = (
@@ -34129,6 +34122,7 @@
 	name = "Isolation Cell"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/security/prison/safe)
 "kvE" = (
@@ -37197,7 +37191,11 @@
 /area/station/maintenance/starboard/lesser)
 "lqz" = (
 /obj/structure/cable,
-/turf/closed/wall,
+/obj/machinery/camera/directional/north{
+	c_tag = "MiniSat AI Chamber South";
+	network = list("aicore")
+	},
+/turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "lqA" = (
 /obj/effect/decal/cleanable/dirt,
@@ -48937,7 +48935,6 @@
 "par" = (
 /obj/structure/toilet/greyscale,
 /obj/machinery/airalarm/directional/east,
-/obj/structure/cable,
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
@@ -51449,9 +51446,12 @@
 	},
 /area/station/science/lab)
 "pOk" = (
-/obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/station/security/prison/safe)
+/obj/machinery/camera/directional/north{
+	c_tag = "MiniSat AI Chamber South";
+	network = list("aicore")
+	},
+/turf/open/genturf,
+/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "pOo" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/closet/secure_closet/personal/cabinet,
@@ -56384,7 +56384,6 @@
 	desc = "What is this? Is this a dog?";
 	name = "Therapy Dog"
 	},
-/obj/structure/cable,
 /obj/machinery/camera/directional/east{
 	c_tag = "Security - Isolation Cell";
 	network = list("ss13","prison","Isolation");
@@ -59482,9 +59481,10 @@
 /turf/open/floor/glass/reinforced,
 /area/station/medical/treatment_center)
 "sro" = (
+/obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/port/aft)
+/turf/open/floor/grass,
+/area/station/security/prison/safe)
 "srE" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -172329,7 +172329,7 @@ hBg
 ufF
 iSE
 bRb
-aaK
+sro
 xby
 gjq
 gjq
@@ -172584,7 +172584,7 @@ ddp
 hBg
 hBg
 dhT
-pOk
+xhK
 par
 rsM
 xby
@@ -238465,7 +238465,7 @@ qbO
 lAy
 pRj
 eAj
-sro
+mNY
 aLS
 qkT
 kzA
@@ -248034,7 +248034,7 @@ cZM
 uBi
 uBi
 lqz
-dBQ
+iJO
 eAx
 iHp
 iHp
@@ -248547,7 +248547,7 @@ ruZ
 pmC
 uBi
 uBi
-uBi
+iJO
 deg
 mYh
 iHp
@@ -257521,7 +257521,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+pOk
 wNO
 wNO
 wNO

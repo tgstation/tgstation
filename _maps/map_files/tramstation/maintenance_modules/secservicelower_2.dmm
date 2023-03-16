@@ -670,10 +670,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/asteroid)
-"SR" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/maintenance/central/greater)
 "SS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -2432,7 +2428,7 @@ zz
 zz
 "}
 (34,1,1) = {"
-SR
+ne
 cA
 cA
 cA

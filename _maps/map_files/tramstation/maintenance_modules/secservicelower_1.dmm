@@ -128,10 +128,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
-"jf" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/maintenance/central/greater)
 "kv" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2462,7 +2458,7 @@ nk
 nk
 "}
 (34,1,1) = {"
-jf
+TQ
 vR
 vR
 vR
