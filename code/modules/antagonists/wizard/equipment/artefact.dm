@@ -286,8 +286,8 @@
 
 //Funny gimmick, skeletons always seem to wear roman/ancient armour
 /obj/item/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/human)
-	for(var/obj/item/I in human)
-		human.dropItemToGround(I)
+	for(var/obj/item/worn_item in human)
+		human.dropItemToGround(worn_item)
 
 	human.equipOutfit(applied_outfit)
 
