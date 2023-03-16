@@ -1006,7 +1006,7 @@
 	desc = "Now with 30% more bluespace technology."
 
 /obj/item/toy/crayon/acme
-	name = "acme crayon"
+	name = "red acme crayon"
 	desc = "A crayon that can draw fake airlocks on walls. Beep beep!"
 
 /obj/item/toy/crayon/acme/use_on(atom/target, mob/user)
