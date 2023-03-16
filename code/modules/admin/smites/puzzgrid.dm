@@ -54,8 +54,7 @@
 
 	name = "[victim]'s fiendish curse"
 
-	ADD_TRAIT(victim, TRAIT_HANDS_BLOCKED, "[type]")
-	ADD_TRAIT(victim, TRAIT_IMMOBILIZED, "[type]")
+	ADD_TRAIT_LIST(victim, list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
 
 	add_puzzgrid_component(puzzgrid)
 
@@ -114,5 +113,4 @@
 	addtimer(CALLBACK(src, PROC_REF(add_puzzgrid_component), puzzgrid), 0)
 
 /obj/structure/puzzgrid_effect/proc/remove_traits()
-	REMOVE_TRAIT(victim, TRAIT_HANDS_BLOCKED, "[type]")
-	REMOVE_TRAIT(victim, TRAIT_IMMOBILIZED, "[type]")
+	REMOVE_TRAIT_LIST(victim, list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
