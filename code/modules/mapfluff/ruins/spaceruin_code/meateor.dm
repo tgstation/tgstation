@@ -15,15 +15,23 @@
 	var/datum/wound/pierce/critical/exit_hole = new()
 	exit_hole.apply_wound(spawned_human.get_bodypart(BODY_ZONE_CHEST))
 
-/// A fun drink enjoyed by the tiger cooperative
+/// A fun drink enjoyed by the tiger cooperative, might corrode your brain if you drink the whole bottle
 /obj/item/reagent_containers/cup/glass/bottle/ritual_wine
 	name = "ritual wine"
-	desc = "A bottle filled with liquids of a dubious nature."
+	desc = "A bottle filled with liquids of a dubious nature, often enjoyed by members of the Tiger Cooperative."
 	icon_state = "winebottle"
 	list_reagents = list(
-		/datum/reagent/blood = 10,
-		/datum/reagent/medicine/changelinghaste = 20,
-		/datum/reagent/toxin/mindbreaker = 20,
+		/datum/reagent/blood = 5,
+		/datum/reagent/drug/bath_salts = 5,
+		/datum/reagent/drug/cannabis = 10,
+		/datum/reagent/medicine/changelinghaste = 30,
+		/datum/reagent/toxin/heparin = 10,
+		/datum/reagent/toxin/leadacetate = 5,
+		/datum/reagent/toxin/mindbreaker = 10,
+		/datum/reagent/medicine/omnizine = 10,
+		/datum/reagent/medicine/c2/penthrite = 10,
+		/datum/reagent/toxin/rotatium = 10,
+		/datum/reagent/consumable/vinegar = 5,
 	)
 	drink_type = NONE
 	age_restricted = FALSE

@@ -65,6 +65,9 @@
 "B" = (
 /obj/item/paper/fluff/ruins/meateor/letter,
 /obj/structure/bed/maint,
+/obj/item/reagent_containers/cup/glass/bottle/ritual_wine{
+	pixel_x = -10
+	},
 /turf/open/floor/material/meat,
 /area/ruin/space/meateor)
 "C" = (
