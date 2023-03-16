@@ -35,3 +35,31 @@
 	)
 	drink_type = NONE
 	age_restricted = FALSE
+
+/// Abstract holder object for shared behaviour
+/obj/structure/meateor_fluff
+	icon = 'icons/mob/simple/meteor_heart.dmi'
+	anchored = TRUE
+	density = TRUE
+
+/obj/structure/meateor_fluff/play_attack_sound(damage_amount, damage_type, damage_flag)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src.loc, 'sound/effects/attackblob.ogg', 50, TRUE)
+			else
+				playsound(src, 'sound/effects/meatslap.ogg', 50, TRUE)
+		if(BURN)
+			playsound(src.loc, 'sound/effects/wounds/sizzle1.ogg', 100, TRUE)
+
+/// A sort of loot box for organs, cut it open and find a prize
+/obj/structure/meateor_fluff/flesh_pod
+	icon_state = "flesh_pod"
+	desc = "A quivering pod of living meat. Something is pulsing inside."
+	max_integrity = 60
+
+/// Decorative fluff egg object
+/obj/structure/meateor_fluff/abandoned_headcrab_egg
+	icon_state = "eggs"
+	desc = "A mass of fleshy, egg-shaped nodes."
+	max_integrity = 15
