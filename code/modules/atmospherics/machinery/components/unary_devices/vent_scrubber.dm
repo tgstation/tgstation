@@ -60,8 +60,8 @@
 	if (old_area == new_area)
 		return
 
-	disconnect_from_area()
-	assign_to_area()
+	disconnect_from_area(old_area)
+	assign_to_area(new_area)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on_enter_area(datum/source, area/area_to_register)
 	assign_to_area(area_to_register)
