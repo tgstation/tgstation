@@ -4,7 +4,6 @@ import type { Gasmix } from './common/GasmixParser';
 import { Button, Flex, LabeledList, Section, Stack, Box } from '../components';
 import { AtmosHandbookContent, atmosHandbookHooks } from './common/AtmosHandbook';
 import { Window } from '../layouts';
-import { BooleanLike } from '../../common/react';
 
 type GasmixHistory = {
   allGasmixes: Gasmix[];
@@ -19,7 +18,6 @@ export type GasAnalyzerHistoryData = {
   historyGasmixes: GasmixHistory[];
   historyViewMode: string;
   historyIndex: number;
-  targetMode: BooleanLike;
 };
 
 export const GasAnalyzerContent = (props, context) => {
