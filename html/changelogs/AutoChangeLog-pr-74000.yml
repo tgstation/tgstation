@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - admin: "Logs when forced events trigger"
