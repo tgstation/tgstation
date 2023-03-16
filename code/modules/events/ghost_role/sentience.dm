@@ -109,7 +109,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	return SUCCESSFUL_SPAWN
 
 /// Adds a mob to either the high or low priority event list
-/datum/round_event/ghost_role/sentience/proc/set_mob_priority(var/mob/living/checked_mob, list/high, list/low)
+/datum/round_event/ghost_role/sentience/proc/set_mob_priority(mob/living/checked_mob, list/high, list/low)
 	var/turf/mob_turf = get_turf(checked_mob)
 	if(!mob_turf || !is_station_level(mob_turf.z))
 		return
