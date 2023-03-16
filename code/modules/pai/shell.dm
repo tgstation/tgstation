@@ -92,7 +92,7 @@
 	var/turf/target = drop_location()
 	card.forceMove(target)
 	forceMove(card)
-	ADD_TRAIT_LIST(src, list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), PAI_FOLDED)
+	ADD_TRAITS(src, list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), PAI_FOLDED)
 	set_density(FALSE)
 	set_light_on(FALSE)
 	holoform = FALSE

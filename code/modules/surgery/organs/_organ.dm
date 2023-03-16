@@ -111,7 +111,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	for(var/datum/action/action as anything in actions)
 		action.Remove(organ_owner)
 	if(length(organ_traits))
-		REMOVE_TRAIT_LIST(organ_owner, organ_traits, REF(src))
+		REMOVE_TRAITS(organ_owner, organ_traits, REF(src))
 
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
@@ -119,7 +119,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /// Updates the traits of the organ on the specific organ it is called on. Should be called anytime an organ is given a trait while it is already in a body.
 /obj/item/organ/proc/update_organ_traits()
 	if(length(organ_traits))
-		ADD_TRAIT_LIST(owner, organ_traits, REF(src))
+		ADD_TRAITS(owner, organ_traits, REF(src))
 
 /// Add a trait to an organ that it will give its owner.
 /obj/item/organ/proc/add_organ_trait(trait)

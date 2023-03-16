@@ -141,7 +141,7 @@
 	animate(cloak_image, alpha = 255, 0.2 SECONDS)
 	owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, id, cloak_image)
 	// Add the relevant traits and modifiers
-	ADD_TRAIT_LIST(owner, list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
+	ADD_TRAITS(owner, list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak)
 	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/shadow_cloak)
 	// Register signals to cause effects
@@ -157,7 +157,7 @@
 	owner.remove_alt_appearance(id)
 	QDEL_NULL(cloak_image)
 	// Remove traits and modifiers
-	REMOVE_TRAIT_LIST(owner, list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
+	REMOVE_TRAITS(owner, list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/shadow_cloak)
 	// Clear signals

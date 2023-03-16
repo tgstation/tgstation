@@ -149,11 +149,11 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 	if(length(mind_traits))
-		ADD_TRAIT_LIST(spawned.mind, mind_traits, JOB_TRAIT)
+		ADD_TRAITS(spawned.mind, mind_traits, JOB_TRAIT)
 
 	var/obj/item/organ/internal/liver/liver = spawned.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver && length(liver_traits))
-		ADD_TRAIT_LIST(liver, liver_traits, JOB_TRAIT)
+		ADD_TRAITS(liver, liver_traits, JOB_TRAIT)
 
 	if(!ishuman(spawned))
 		return

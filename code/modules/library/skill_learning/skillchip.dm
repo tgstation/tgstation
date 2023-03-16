@@ -150,7 +150,7 @@
 		to_chat(user, activate_message)
 
 	if(length(auto_traits))
-		ADD_TRAIT_LIST(user, auto_traits, SKILLCHIP_TRAIT)
+		ADD_TRAITS(user, auto_traits, SKILLCHIP_TRAIT)
 
 	active = TRUE
 
@@ -184,7 +184,7 @@
 		to_chat(user, deactivate_message)
 
 	if(length(auto_traits))
-		REMOVE_TRAIT_LIST(user, auto_traits, SKILLCHIP_TRAIT)
+		REMOVE_TRAITS(user, auto_traits, SKILLCHIP_TRAIT)
 
 	active = FALSE
 

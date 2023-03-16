@@ -59,7 +59,7 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT_LIST(mod.wearer, active_traits, MOD_TRAIT)
+	ADD_TRAITS(mod.wearer, active_traits, MOD_TRAIT)
 	mod.slowdown += slowdown_active
 	mod.wearer.update_equipment_speed_mods()
 
@@ -67,7 +67,7 @@
 	. = ..()
 	if(!.)
 		return
-	REMOVE_TRAIT_LIST(mod.wearer, active_traits, MOD_TRAIT)
+	REMOVE_TRAITS(mod.wearer, active_traits, MOD_TRAIT)
 	mod.slowdown -= slowdown_active
 	mod.wearer.update_equipment_speed_mods()
 

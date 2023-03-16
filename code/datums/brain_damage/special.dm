@@ -262,11 +262,11 @@
 	lose_text = span_warning("You realize you can feel pain again.")
 
 /datum/brain_trauma/special/tenacity/on_gain()
-	ADD_TRAIT_LIST(owner, list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), TRAUMA_TRAIT)
+	ADD_TRAITS(owner, list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/tenacity/on_lose()
-	REMOVE_TRAIT_LIST(owner, list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), TRAUMA_TRAIT)
+	REMOVE_TRAITS(owner, list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/death_whispers

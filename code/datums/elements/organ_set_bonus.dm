@@ -78,7 +78,7 @@
 	bonus_active = TRUE
 	if(bonus_traits)
 		if(islist(bonus_traits))
-			ADD_TRAIT_LIST(owner, bonus_traits, REF(src))
+			ADD_TRAITS(owner, bonus_traits, REF(src))
 		else
 			ADD_TRAIT(owner, bonus_traits, REF(src))
 	if(bonus_activate_text)
@@ -90,7 +90,7 @@
 	bonus_active = FALSE
 	if(bonus_traits)
 		if(islist(bonus_traits))
-			REMOVE_TRAIT_LIST(owner, bonus_traits, REF(src))
+			REMOVE_TRAITS(owner, bonus_traits, REF(src))
 		else
 			REMOVE_TRAIT(owner, bonus_traits, REF(src))
 	if(bonus_deactivate_text)

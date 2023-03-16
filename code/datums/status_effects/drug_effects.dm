@@ -78,7 +78,7 @@
 	human_owner.eye_color_left = BLOODCULT_EYE //makes cult eyes less obvious
 	human_owner.eye_color_right = BLOODCULT_EYE //makes cult eyes less obvious
 	human_owner.update_body() //updates eye color
-	ADD_TRAIT_LIST(human_owner, list(TRAIT_CLUMSY, TRAIT_BLOODSHOT_EYES), type) // impairs motor coordination and dilates blood vessels in eyes
+	ADD_TRAITS(human_owner, list(TRAIT_CLUMSY, TRAIT_BLOODSHOT_EYES), type) // impairs motor coordination and dilates blood vessels in eyes
 	human_owner.add_mood_event("stoned", /datum/mood_event/stoned) //improves mood
 	human_owner.sound_environment_override = SOUND_ENVIRONMENT_DRUGGED //not realistic but very immersive
 	return TRUE
@@ -91,7 +91,7 @@
 	human_owner.eye_color_left = original_eye_color_left
 	human_owner.eye_color_right = original_eye_color_right
 	human_owner.update_body()
-	REMOVE_TRAIT_LIST(human_owner, list(TRAIT_CLUMSY, TRAIT_BLOODSHOT_EYES), type)
+	REMOVE_TRAITS(human_owner, list(TRAIT_CLUMSY, TRAIT_BLOODSHOT_EYES), type)
 	human_owner.clear_mood_event("stoned")
 	human_owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
 

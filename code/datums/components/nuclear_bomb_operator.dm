@@ -34,7 +34,7 @@
 	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(owner_attacked_atom)) // This only works for players, but I am not sure this should have AI anyway
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(atom_exited_owner))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
-	ADD_TRAIT_LIST(parent, list(TRAIT_DISK_VERIFIER, TRAIT_CAN_STRIP, TRAIT_CAN_USE_NUKE), NUKE_OP_MINION_TRAIT)
+	ADD_TRAITS(parent, list(TRAIT_DISK_VERIFIER, TRAIT_CAN_STRIP, TRAIT_CAN_USE_NUKE), NUKE_OP_MINION_TRAIT)
 
 /datum/component/nuclear_bomb_operator/UnregisterFromParent()
 	. = ..()
@@ -46,7 +46,7 @@
 		COMSIG_ATOM_EXITED,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 	))
-	REMOVE_TRAIT_LIST(parent, list(TRAIT_DISK_VERIFIER, TRAIT_CAN_STRIP, TRAIT_CAN_USE_NUKE), NUKE_OP_MINION_TRAIT)
+	REMOVE_TRAITS(parent, list(TRAIT_DISK_VERIFIER, TRAIT_CAN_STRIP, TRAIT_CAN_USE_NUKE), NUKE_OP_MINION_TRAIT)
 
 /datum/component/nuclear_bomb_operator/Destroy(force, silent)
 	QDEL_NULL(disky)

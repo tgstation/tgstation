@@ -241,10 +241,10 @@
 	RegisterSignal(new_value, COMSIG_PARENT_QDELETING, PROC_REF(source_died))
 	if(. && disabling)
 		var/obj/item/bodypart/old_limb = .
-		REMOVE_TRAIT_LIST(old_limb, list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
+		REMOVE_TRAITS(old_limb, list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 	if(limb)
 		if(disabling)
-			ADD_TRAIT_LIST(limb, list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
+			ADD_TRAITS(limb, list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 
 
 /// Proc called to change the variable `disabling` and react to the event.
@@ -255,9 +255,9 @@
 	disabling = new_value
 	if(disabling)
 		if(!. && limb) //Gained disabling.
-			ADD_TRAIT_LIST(limb, list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
+			ADD_TRAITS(limb, list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 	else if(. && limb) //Lost disabling.
-		REMOVE_TRAIT_LIST(limb, list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
+		REMOVE_TRAITS(limb, list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 	if(limb?.can_be_disabled)
 		limb.update_disabled()
 
