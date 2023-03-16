@@ -96,7 +96,6 @@
 		REMOVE_TRAIT(owner, TRAIT_STUNIMMUNE, FRENZY_TRAIT)
 	else
 		owner.set_timed_status_effect(3 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
-		owner.Paralyze(2 SECONDS)
 		user.physiology.stamina_mod /= 0.4
 
 	bloodsuckerdatum.frenzied = FALSE

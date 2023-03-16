@@ -72,7 +72,7 @@
 	power_explanation = "Level 4: Possession:\n\
 		Click any person to, after a 4 second timer, Mesmerize them.\n\
 		This will completely immobilize, mute, and blind them for the next 13.5 seconds.\n\
-		However, while adjacent to the target, if your target is in critical condition or dead, they will instead be turned into a temporary Vassal.\n\
+		However, while adjacent to the target, if your target is dead, they will instead be turned into a temporary Vassal.\n\
 		If you use this on a currently dead normal Vassal, you will instead revive them normally.\n\
 		Despite being Mute and Deaf, they will still have complete loyalty to you, until their death in 5 minutes upon use."
 	background_icon_state = "tremere_power_gold_off"
@@ -89,7 +89,7 @@
 	power_explanation = "Level 5: Possession:\n\
 		Click any person to, after a 4 second timer, Mesmerize them.\n\
 		This will completely immobilize, mute, and blind them for the next 13.5 seconds.\n\
-		However, while adjacent to the target, if your target is in critical condition or dead, they will instead be turned into a temporary Vassal.\n\
+		However, while adjacent to the target, if your target is dead, they will instead be turned into a temporary Vassal.\n\
 		If you use this on a currently dead normal Vassal, you will instead revive them normally.\n\
 		They will have complete loyalty to you, until their death in 8 minutes upon use."
 	bloodcost = 100
@@ -110,7 +110,7 @@
 	. = ..()
 	var/mob/living/target = target_atom
 	var/mob/living/user = owner
-	if(target.stat >= SOFT_CRIT && user.Adjacent(target) && level_current >= 4)
+	if(target.stat == DEAD && user.Adjacent(target) && level_current >= 4)
 		attempt_vassalize(target, user)
 		return
 	else if(IS_VASSAL(target))

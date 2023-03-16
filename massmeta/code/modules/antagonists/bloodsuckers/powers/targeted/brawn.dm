@@ -187,9 +187,9 @@
 	if(isliving(target_atom))
 		return TRUE
 	// Target Type: Door
-	else if(istype(target_atom, /obj/machinery/door))
+	else if(istype(target_atom, /obj/machinery/door) && level_current >= 4)
 		return TRUE
 	// Target Type: Locker
-	else if(istype(target_atom, /obj/structure/closet))
+	else if(istype(target_atom, /obj/structure/closet) && level_current >= 3)
 		return TRUE
 	return FALSE

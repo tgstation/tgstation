@@ -895,9 +895,10 @@
 	antag_flag_override = ROLE_BLOODSUCKER
 	protected_roles = list(
 		JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY,
-		JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_CURATOR
+		JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE,
+		JOB_CURATOR,
 	)
-	restricted_roles = list(JOB_AI, JOB_CYBORG)
+	restricted_roles = list(JOB_AI, JOB_CYBORG, "Positronic Brain")
 	required_candidates = 1
 	weight = 5
 	cost = 10
@@ -907,24 +908,27 @@
 /datum/dynamic_ruleset/midround/bloodsucker/trim_candidates()
 	. = ..()
 	for(var/mob/living/player in living_players)
-		if(issilicon(player)) // Your assigned role doesn't change when you are turned into a silicon.
+		// Your assigned role doesn't change when you are turned into a silicon.
+		if(issilicon(player))
 			living_players -= player
-		else if(is_centcom_level(player.z))
-			living_players -= player // We don't allow people in CentCom
-		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
-			living_players -= player // We don't allow people with roles already
+		// Only people on-station are allowed
+		else if(!is_station_level(player.z) || !is_mining_level(player.z))
+			living_players -= player
+		// We don't allow people with roles already
+		else if(player.mind.special_role || player.mind.antag_datums.len)
+			living_players -= player
 
 /datum/dynamic_ruleset/midround/bloodsucker/execute()
 	var/mob/selected_mobs = pick(living_players)
-	assigned += selected_mobs
+	assigned += selected_mobs.mind
 	living_players -= selected_mobs
-	var/datum/mind/bloodsuckermind = selected_mobs
-	var/datum/antagonist/bloodsucker/sucker = new
-	if(!bloodsuckermind.make_bloodsucker(selected_mobs))
-		assigned -= selected_mobs
+	var/datum/mind/candidate_mind = selected_mobs.mind
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = candidate_mind.make_bloodsucker()
+	if(!bloodsuckerdatum)
+		assigned -= selected_mobs.mind
 		message_admins("[ADMIN_LOOKUPFLW(selected_mobs)] was selected by the [name] ruleset, but couldn't be made into a Bloodsucker.")
 		return FALSE
-	sucker.bloodsucker_level_unspent = rand(2,3)
+	bloodsuckerdatum.bloodsucker_level_unspent = rand(2,3)
 	message_admins("[ADMIN_LOOKUPFLW(selected_mobs)] was selected by the [name] ruleset and has been made into a midround Bloodsucker.")
 	log_game("DYNAMIC: [key_name(selected_mobs)] was selected by the [name] ruleset and has been made into a midround Bloodsucker.")
 	return TRUE

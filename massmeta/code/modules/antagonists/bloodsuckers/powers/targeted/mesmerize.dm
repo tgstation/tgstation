@@ -4,7 +4,6 @@
  *
  * 	Level 2: Additionally mutes
  * 	Level 3: Can be used through face protection
- * 	Level 5: Doesn't need to be facing you anymore
  * 	Level 6: Causes the target to fall asleep
  */
 
@@ -14,7 +13,7 @@
 	button_icon_state = "power_mez"
 	power_explanation = "Mesmerize:\n\
 		Click any player to attempt to mesmerize them.\n\
-		You cannot wear anything covering your face, and both parties must be facing eachother. Obviously, both parties need to not be blind. \n\
+		You cannot wear anything covering your face, and  both parties need to not be blind. \n\
 		If your target is already mesmerized or a Monster Hunter, the Power will fail.\n\
 		Once mesmerized, the target will be unable to move for a certain amount of time, scaling with level.\n\
 		At level 2, your target will additionally be muted.\n\
@@ -77,14 +76,6 @@
 	// Target blind?
 	if(current_target.is_blind() && !issilicon(current_target))
 		owner.balloon_alert(owner, "[current_target] is blind.")
-		return FALSE
-	// Facing target?
-	if(!is_source_facing_target(owner, current_target)) // in unsorted.dm
-		owner.balloon_alert(owner, "you must be facing [current_target].")
-		return FALSE
-	// Target facing me? (On the floor, they're facing everyone)
-	if(((current_target.mobility_flags & MOBILITY_STAND) && !is_source_facing_target(current_target, owner) && level_current <= 4))
-		owner.balloon_alert(owner, "[current_target] must be facing you.")
 		return FALSE
 
 	// Gone through our checks, let's mark our guy.

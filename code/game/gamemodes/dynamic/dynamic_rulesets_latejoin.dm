@@ -230,7 +230,8 @@
 	antag_flag_override = ROLE_BLOODSUCKER
 	protected_roles = list(
 		JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY,
-		JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_CURATOR
+		JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE,
+		JOB_CURATOR,
 	)
 	restricted_roles = list(JOB_AI, JOB_CYBORG)
 	required_candidates = 1
@@ -243,14 +244,13 @@
 	var/mob/latejoiner = pick(candidates) // This should contain a single player, but in case.
 	assigned += latejoiner.mind
 
-	for(var/selected_player in assigned)
-		var/datum/mind/bloodsuckermind = selected_player
-		var/datum/antagonist/bloodsucker/sucker = new
-		if(!bloodsuckermind.make_bloodsucker(selected_player))
-			assigned -= selected_player
-			message_admins("[ADMIN_LOOKUPFLW(selected_player)] was selected by the [name] ruleset, but couldn't be made into a Bloodsucker.")
-			return FALSE
-		sucker.bloodsucker_level_unspent = rand(2,3)
-		message_admins("[ADMIN_LOOKUPFLW(selected_player)] was selected by the [name] ruleset and has been made into a midround Bloodsucker.")
-		log_game("DYNAMIC: [key_name(selected_player)] was selected by the [name] ruleset and has been made into a midround Bloodsucker.")
+	for(var/datum/mind/candidate_mind as anything in assigned)
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = candidate_mind.make_bloodsucker()
+		if(!bloodsuckerdatum)
+			assigned -= candidate_mind
+			message_admins("[ADMIN_LOOKUPFLW(candidate_mind)] was selected by the [name] ruleset, but couldn't be made into a Bloodsucker.")
+			continue
+		bloodsuckerdatum.bloodsucker_level_unspent = rand(2,3)
+		message_admins("[ADMIN_LOOKUPFLW(candidate_mind)] was selected by the [name] ruleset and has been made into a midround Bloodsucker.")
+		log_game("DYNAMIC: [key_name(candidate_mind)] was selected by the [name] ruleset and has been made into a midround Bloodsucker.")
 	return TRUE
