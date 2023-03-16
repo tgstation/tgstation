@@ -487,6 +487,10 @@
 		if(verbose)
 			to_chat(user, span_warning("We already have this DNA in storage!"))
 		return FALSE
+	if(NO_DNA_COPY in target.dna.species?.species_traits)
+		if(verbose)
+			to_chat(user, span_warning("[target] is not compatible with our biology."))
+		return FALSE
 	if(HAS_TRAIT(target, TRAIT_BADDNA))
 		if(verbose)
 			to_chat(user, span_warning("[target]'s DNA is ruined beyond usability!"))
