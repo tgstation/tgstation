@@ -86,7 +86,7 @@
 	if(hand)
 		UnregisterSignal(hand, COMSIG_ITEM_ATTACK_SELF)
 		UnregisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN)
-	..()
+	return ..()
 
 /obj/item/organ/internal/cyberimp/arm/proc/on_item_attack_self()
 	SIGNAL_HANDLER
