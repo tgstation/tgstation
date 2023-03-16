@@ -46,11 +46,11 @@
 	owner.teach_crafting_recipe(/datum/crafting_recipe/hardened_stake)
 	owner.teach_crafting_recipe(/datum/crafting_recipe/silver_stake)
 	var/mob/living/carbon/criminal = owner.current
-	var/obj/item/rabbit_locator/card = new(criminal,src)
+	var/obj/item/rabbit_locator/card = new(get_turf(criminal), src)
 	var/list/slots = list ("backpack" = ITEM_SLOT_BACKPACK, "left pocket" = ITEM_SLOT_LPOCKET, "right pocket" = ITEM_SLOT_RPOCKET)
-	criminal.equip_in_one_of_slots(card, slots)
-	var/obj/item/hunting_contract/contract = new(criminal,src)
-	criminal.equip_in_one_of_slots(contract, slots)
+	criminal.equip_in_one_of_slots(card, slots, qdel_on_fail = FALSE)
+	var/obj/item/hunting_contract/contract = new(get_turf(criminal), src)
+	criminal.equip_in_one_of_slots(contract, slots, qdel_on_fail = FALSE)
 	RegisterSignal(src, COMSIG_GAIN_INSIGHT, .proc/insight_gained)
 	RegisterSignal(src, COMSIG_BEASTIFY, .proc/turn_beast)
 	for(var/i in 1 to 5 )
@@ -232,11 +232,12 @@
 	for(var/datum/antagonist/victim in GLOB.antagonists)
 		if(!victim.owner)
 			continue
+		if(!victim.owner.current)
+			continue
 		if(victim.owner.current.stat == DEAD || victim.owner == owner)
 			continue
-		if(victim.owner.has_antag_datum(/datum/antagonist/changeling) || IS_BLOODSUCKER(victim.owner.current) || IS_HERETIC(victim.owner.current))
+		if(istype(victim, /datum/antagonist/changeling) || istype(victim, /datum/antagonist/heretic) || istype(victim, /datum/antagonist/bloodsucker))
 			possible_targets += victim.owner
-
 	for(var/i in 1 to 3) //we get 3 targets
 		if(!(possible_targets.len))
 			break

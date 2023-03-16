@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile/red_rabbit
 	name = "jabberwocky"
 	desc = "Servant of the moon."
+	faction = list("rabbit")
 	health = 500
 	maxHealth = 500
 	icon = 'massmeta/icons/monster_hunter/red_rabbit.dmi'
@@ -83,6 +84,7 @@
 	desc = "A cute little rabbit, surely its harmless... right?"
 	icon = 'massmeta/icons/monster_hunter/rabbit.dmi'
 	icon_state = "killer_rabbit"
+	faction = list("rabbit")
 	maxHealth = 5
 	melee_damage_lower = 5
 	melee_damage_upper = 5

@@ -52,7 +52,7 @@
 /turf/open/floor/black,
 /area/ruin/space/has_grav/wonderland)
 "eu" = (
-/obj/structure/table/weaponsmith,
+/obj/structure/rack/weaponsmith,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/wonderland)
 "fb" = (

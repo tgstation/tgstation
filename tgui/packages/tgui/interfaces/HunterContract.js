@@ -89,8 +89,8 @@ export const HunterContract = (props, context) => {
                         {number_of_rabbits === 1 ? 'RABBIT' : 'RABBITS'}{' '}
                       </span>
                       Only once the contract is fullfilled and the rabbits are
-                      found will you be able to ascend to your true
-                      <span className={'color-green'}> Divine form </span>!
+                      found will you be able to bring upon the
+                      <span className={'color-red'}> APOCALYPSE </span>!
                     </span>
                     <br />
                   </Stack.Item>
