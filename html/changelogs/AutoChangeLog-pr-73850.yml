@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "area machinery from breaking after creating & modifying areas via the station blueprints."
+  - refactor: "turfs are cannonized from areas during creation/editing operations & empty areas are deleted"
+  - refactor: "removed duplicate Initialize() from light switch"
+  - refactor: "arcd has all upgrades installed"
