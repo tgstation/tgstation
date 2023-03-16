@@ -40,19 +40,20 @@
 
 	mutant_organs = list(
 		/obj/item/organ/internal/cyberimp/arm/power_cord,
-		/obj/item/organ/external/antennae/ipc = "Tesla")
+		)
+	external_organs = list(
+		/obj/item/organ/external/antennae/ipc = "None"
+	)
 
-	mutant_bodyparts = list("ipc_screen", "ipc_antenna", "ipc_chassis")
+	mutant_bodyparts = list("ipc_screen", "ipc_chassis")
 	meat = /obj/item/stack/sheet/plasteel{amount = 5}
 	skinned_type = /obj/item/stack/sheet/iron{amount = 10}
 	exotic_blood = /datum/reagent/fuel/oil
-	mutant_bodyparts = list("ipc_screen", "ipc_antenna", "ipc_chassis")
 	burnmod = 1.5	//Default was 2 //Monkestation Edit
 	heatmod = 1.5
 	brutemod = 1
 	stunmod = 0.8
 	siemens_coeff = 1.5
-	//blood_color = "#000000"
 	species_gibs = GIB_TYPE_ROBOTIC
 	//attack_sound = 'sound/items/trayhit1.ogg'
 	//deathsound = "sound/voice/borg_deathsound.ogg"
@@ -142,8 +143,6 @@
 		return
 	var/mob/living/carbon/human/H = owner
 	H.dna.features["ipc_screen"] = screen_choice
-	H.eye_color_left = sanitize_hexcolor(color_choice)
-	H.eye_color_right = sanitize_hexcolor(color_choice)
 	H.update_body()
 
 /obj/item/apc_powercord

@@ -726,6 +726,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					accessory = GLOB.legs_list[source.dna.features["legs"]]
 				if("caps")
 					accessory = GLOB.caps_list[source.dna.features["caps"]]
+				if("ipc_screen")
+					accessory = GLOB.ipc_screens_list[source.dna.features["ipc_screen"]]
 
 			if(!accessory || accessory.icon_state == "none")
 				continue
