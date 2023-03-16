@@ -477,7 +477,7 @@
 		if(!recently_examined && !prob(YAWN_PROPAGATE_CHANCE_BASE - (YAWN_PROPAGATE_CHANCE_DECAY * dist_between)))
 			continue
 
-		var/yawn_delay = rand(0.25 SECONDS, 0.75 SECONDS) * dist_between
+		var/yawn_delay = rand(0.2 SECONDS, 0.7 SECONDS) * dist_between
 		addtimer(CALLBACK(src, PROC_REF(propagate_yawn), iter_living), yawn_delay)
 
 /// This yawn has been triggered by someone else yawning specifically, likely after a delay. Check again if they don't have the yawned recently trait

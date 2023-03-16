@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Magboots will now protect you from sliding on ice. It will not stop the slip, though."
-  - bugfix: "\"Ice sliding\" (from patches of permafrost ice) will now correctly slide you until you reach a non-ice patch."
-  - bugfix: "Speed potioned magboots maintain their speed booster after toggling them"
-  - refactor: "Refactored magboots."
-  - refactor: "Refactored noslip mechanics."

@@ -1,0 +1,4 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - bugfix: "Your species will no longer get deleted if a changeling  who copied you is deleted from existence"

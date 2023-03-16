@@ -1,0 +1,4 @@
+author: "ZephyrTFA"
+delete-after: True
+changes:
+  - bugfix: "Stabilized Orange extracts are no longer able to cool you from any temperature instantly"

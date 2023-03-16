@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(new_dna.holder)
 		new_dna.holder.set_species(species.type, icon_update = 0)
 	else
-		new_dna.species = species
+		new_dna.species = new species.type
 	new_dna.real_name = real_name
 	// Mutations aren't gc managed, but they still aren't templates
 	// Let's do a proper copy

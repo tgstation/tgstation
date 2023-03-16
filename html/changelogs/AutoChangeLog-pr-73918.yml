@@ -1,5 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - bugfix: "fixes deadly harvesting just taking harmless extorgans"
-  - code_imp: "renames internal_organs to organs now that it can also contain external_organs"
