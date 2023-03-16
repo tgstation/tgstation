@@ -59,6 +59,7 @@ export const GasAnalyzerHistory = (props, context) => {
   const { historyGasmixes, historyViewMode, historyIndex } = data;
   return (
     <Section
+      scrollable
       fill
       title="Scan History"
       buttons={
@@ -120,15 +121,15 @@ export const GasAnalyzerHistory = (props, context) => {
 
 export const GasAnalyzer = (props, context) => {
   return (
-    <Window width={500} height={450}>
-      <Window.Content scrollable>
+    <Window width={500} height={500}>
+      <Window.Content>
         <Stack>
           {/* Left Column */}
           <Stack.Item grow>
             <GasAnalyzerContent />
           </Stack.Item>
           {/* Right Column */}
-          <Stack.Item width={'150px'}>
+          <Stack.Item width={'160px'}>
             <GasAnalyzerHistory />
           </Stack.Item>
         </Stack>
