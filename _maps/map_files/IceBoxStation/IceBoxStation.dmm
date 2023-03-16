@@ -10535,7 +10535,7 @@
 /turf/open/floor/iron/large,
 /area/station/service/hydroponics/garden)
 "deg" = (
-/obj/structure/cable/layer3,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "det" = (
@@ -31579,7 +31579,7 @@
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
-/obj/structure/cable/multilayer/connected,
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "jJa" = (

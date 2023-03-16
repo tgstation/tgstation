@@ -8849,7 +8849,6 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/office)
 "cIC" = (
-/obj/structure/cable,
 /obj/machinery/duct,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
@@ -39597,7 +39596,6 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "ljA" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{

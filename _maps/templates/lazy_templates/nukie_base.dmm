@@ -383,6 +383,20 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership/control)
+"eA" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/obj/machinery/door/airlock/highsecurity{
+	name = "Sky Bridge"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/structure/cable,
+/turf/open/floor/iron/textured_large,
+/area/centcom/syndicate_mothership/control)
 "eF" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -655,6 +669,20 @@
 	dir = 10
 	},
 /turf/open/lava/plasma/ice_moon,
+/area/centcom/syndicate_mothership/control)
+"hx" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/obj/machinery/door/airlock/public/glass{
+	name = "War Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/structure/cable,
+/turf/open/floor/iron/textured_large,
 /area/centcom/syndicate_mothership/control)
 "hA" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -1904,18 +1932,10 @@
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
 "tL" = (
-/obj/effect/turf_decal/siding/wideplating/dark{
+/obj/structure/cable,
+/turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 4
-	},
-/obj/machinery/door/airlock/public/glass{
-	name = "War Room"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/structure/cable,
-/turf/open/floor/iron/textured_large,
 /area/centcom/syndicate_mothership/control)
 "tO" = (
 /turf/closed/indestructible/opsglass,
@@ -2180,10 +2200,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"xO" = (
-/obj/structure/cable,
-/turf/open/floor/mineral/titanium,
-/area/centcom/syndicate_mothership/control)
 "xU" = (
 /obj/structure/sign/poster/contraband/moffuchis_pizza{
 	pixel_x = -32
@@ -2717,6 +2733,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/control)
 "EH" = (
@@ -2791,6 +2808,12 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
+"FH" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 8
+	},
+/area/centcom/syndicate_mothership/control)
 "FM" = (
 /turf/closed/indestructible/opsglass,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
@@ -3160,20 +3183,6 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
-"Jm" = (
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 4
-	},
-/obj/machinery/door/airlock/highsecurity{
-	name = "Sky Bridge"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/structure/cable,
-/turf/open/floor/iron/textured_large,
-/area/centcom/syndicate_mothership/control)
 "Jq" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
@@ -3215,6 +3224,20 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
+/area/centcom/syndicate_mothership/control)
+"Kl" = (
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating,
+/obj/machinery/door/airlock/public/glass{
+	name = "Cafeteria"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth_half{
+	dir = 4
+	},
 /area/centcom/syndicate_mothership/control)
 "Kq" = (
 /turf/closed/indestructible/syndicate,
@@ -3558,9 +3581,7 @@
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "Oi" = (
 /obj/structure/cable,
-/turf/open/floor/iron/dark/textured_half{
-	dir = 8
-	},
+/turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
 "Om" = (
 /obj/structure/table/reinforced/plasmarglass,
@@ -3985,7 +4006,6 @@
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
 "SM" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
@@ -6977,8 +6997,8 @@ uK
 ld
 ld
 ld
-ld
-KH
+tL
+Kl
 Ez
 Jz
 px
@@ -7695,7 +7715,7 @@ VK
 DZ
 qp
 NY
-Jm
+eA
 DZ
 DZ
 DZ
@@ -7797,7 +7817,7 @@ gD
 VK
 qp
 wO
-Oi
+FH
 DZ
 VK
 DJ
@@ -7899,7 +7919,7 @@ uT
 VK
 SR
 wO
-Oi
+FH
 Xb
 VK
 DJ
@@ -8001,7 +8021,7 @@ GA
 VK
 SR
 wO
-Oi
+FH
 Xb
 VK
 DJ
@@ -8307,7 +8327,7 @@ uT
 VK
 SR
 wO
-Oi
+FH
 Xb
 VK
 DJ
@@ -8409,7 +8429,7 @@ uT
 VK
 SR
 wO
-Oi
+FH
 Xb
 VK
 DJ
@@ -8715,7 +8735,7 @@ uT
 VK
 SR
 wO
-Oi
+FH
 Xb
 VK
 DJ
@@ -8817,7 +8837,7 @@ td
 VK
 SR
 wO
-Oi
+FH
 Xb
 VK
 DJ
@@ -8919,7 +8939,7 @@ gD
 VK
 qp
 wO
-Oi
+FH
 DZ
 VK
 DJ
@@ -9836,7 +9856,7 @@ DZ
 DZ
 qp
 DZ
-tL
+hx
 gB
 DZ
 mz
@@ -9938,7 +9958,7 @@ DZ
 pK
 EJ
 VK
-xO
+Oi
 ZZ
 dn
 qN
@@ -10040,7 +10060,7 @@ DZ
 NA
 FN
 VK
-xO
+Oi
 ZZ
 IV
 tv
@@ -10244,7 +10264,7 @@ VK
 ZZ
 ZZ
 Me
-xO
+Oi
 ZZ
 IV
 rb
