@@ -4489,7 +4489,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/camera/directional/south{
-	c_tag = "tech_storage";
+	c_tag = "Tech storage";
 	name = "engineering camera";
 	network = list("ss13","engine")
 	},

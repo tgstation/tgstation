@@ -13,6 +13,8 @@
 	///Range of the light emitted when powered, but off
 	var/light_on_range = 1
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
+
 /obj/machinery/light_switch/Initialize(mapload)
 	. = ..()
 
@@ -21,18 +23,12 @@
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/light_switch,
 	))
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
-
-/obj/machinery/light_switch/Initialize(mapload)
-	. = ..()
 	if(istext(area))
 		area = text2path(area)
 	if(ispath(area))
 		area = GLOB.areas_by_type[area]
 	if(!area)
 		area = get_area(src)
-
 	if(!name)
 		name = "light switch ([area.name])"
 

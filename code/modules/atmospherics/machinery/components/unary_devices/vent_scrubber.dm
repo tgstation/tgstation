@@ -63,13 +63,21 @@
 	disconnect_from_area()
 	assign_to_area()
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/assign_to_area()
-	var/area/area = get_area(src)
-	area?.air_scrubbers += src
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on_enter_area(datum/source, area/area_to_register)
+	assign_to_area(area_to_register)
+	. = ..()
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/disconnect_from_area()
-	var/area/area = get_area(src)
-	area?.air_scrubbers -= src
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/assign_to_area(area/target_area = get_area(src))
+	if(!isnull(target_area))
+		target_area.air_scrubbers += src
+		update_appearance(UPDATE_NAME)
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/disconnect_from_area(area/target_area = get_area(src))
+	target_area?.air_scrubbers -= src
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on_exit_area(datum/source, area/area_to_unregister)
+	. = ..()
+	disconnect_from_area(area_to_unregister)
 
 ///adds a gas or list of gases to our filter_types. used so that the scrubber can check if its supposed to be processing after each change
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/add_filters(filter_or_filters)
@@ -216,8 +224,7 @@
 	. = ..()
 	if(override_naming)
 		return
-	var/area/scrub_area = get_area(src)
-	name = "\proper [scrub_area.name] [name] [id_tag]"
+	name = "\proper [get_area_name(src)] [name] [id_tag]"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	if(welded || !is_operational)
