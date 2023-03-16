@@ -103,7 +103,7 @@
 	throw_speed = 0
 	toolspeed = 1
 
-/obj/item/mounted_chainsaw/Initialize(mapload)
+/obj/item/chainsaw/mounted_chainsaw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
