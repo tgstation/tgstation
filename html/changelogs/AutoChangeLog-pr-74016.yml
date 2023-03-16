@@ -1,0 +1,5 @@
+author: "Jolly"
+delete-after: True
+changes:
+  - bugfix: "The directional states for the toppled wooden chair sprites are now consistent. You really can't tell visually, but its been fixed."
+  - imageadd: "Using the new wooden chair sprites, there's now new toppled wooden chair sprites. Go wild. Have a ballroom brawl or something."
