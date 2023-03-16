@@ -43,7 +43,7 @@
 /obj/item/organ/internal/zombie_infection/process(delta_time, times_fired)
 	if(!owner)
 		return
-	if(!(src in owner.internal_organs))
+	if(!(src in owner.organs))
 		Remove(owner)
 	if(owner.mob_biotypes & MOB_MINERAL)//does not process in inorganic things
 		return
