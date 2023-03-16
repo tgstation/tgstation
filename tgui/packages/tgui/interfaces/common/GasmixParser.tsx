@@ -70,7 +70,12 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
             'Total Moles'
           )
         }>
-        {(total_moles ? total_moles.toFixed(2) : '-') + ' mol'}
+        {(total_moles
+          ? total_moles.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+          : '-') + ' mol'}
       </LabeledList.Item>
       {gases.map((gas) => (
         <LabeledList.Item
@@ -82,9 +87,15 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
             )
           }
           key={gas[1]}>
-          {gas[2].toFixed(2) +
+          {gas[2].toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }) +
             ' mol (' +
-            ((gas[2] / total_moles) * 100).toFixed(2) +
+            ((gas[2] / total_moles) * 100).toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }) +
             ' %)'}
         </LabeledList.Item>
       ))}
@@ -99,9 +110,19 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
             'Temperature'
           )
         }>
-        {(total_moles ? (temperature - 273.15).toFixed(2) : '-') +
+        {(total_moles
+          ? (temperature - 273.15).toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+          : '-') +
           ' °C (' +
-          (total_moles ? temperature.toFixed(2) : '-') +
+          (total_moles
+            ? temperature.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+            : '-') +
           ' K)'}
       </LabeledList.Item>
       <LabeledList.Item
@@ -112,7 +133,12 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
             'Volume'
           )
         }>
-        {(total_moles ? volume.toFixed(2) : '-') + ' L'}
+        {(total_moles
+          ? volume.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+          : '-') + ' L'}
       </LabeledList.Item>
       <LabeledList.Item
         label={
@@ -122,7 +148,12 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
             'Pressure'
           )
         }>
-        {(total_moles ? pressure.toFixed(2) : '-') + ' kPa'}
+        {(total_moles
+          ? pressure.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+          : '-') + ' kPa'}
       </LabeledList.Item>
       <LabeledList.Item
         label={

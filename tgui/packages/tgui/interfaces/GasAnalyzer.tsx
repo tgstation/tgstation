@@ -103,7 +103,10 @@ export const GasAnalyzerHistory = (props, context) => {
                 (historyViewMode === 'mol'
                   ? allGasmixes[0].total_moles
                   : allGasmixes[0].pressure
-                ).toFixed(2)
+                ).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })
               }
               onClick={() => act('input', { target: index + 1 })}
               textAlign="left"
