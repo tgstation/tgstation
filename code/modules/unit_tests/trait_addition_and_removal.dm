@@ -47,7 +47,7 @@ TEST_FOCUS(/datum/unit_test/trait_addition_and_removal)
 	// Test adding multiple traits from the same source
 	ADD_TRAIT(trait_target, TRAIT_UNIT_TEST_A, UNIT_TEST_SOURCE_MAIN)
 	ADD_TRAIT(trait_target, TRAIT_UNIT_TEST_B, UNIT_TEST_SOURCE_MAIN)
-	TEST_ASSERT(HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_B, UNIT_TEST_SOURCE_MAIN), "Failed to add [TRAIT_UNIT_TEST_B] with common source [UNIT_TEST_SOURCE_MAIN]!")
+	TEST_ASSERT(HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_B), "Failed to add [TRAIT_UNIT_TEST_B] with common source [UNIT_TEST_SOURCE_MAIN]!")
 
 	ADD_TRAIT(trait_target, TRAIT_UNIT_TEST_C, UNIT_TEST_SOURCE_ALT)
 	REMOVE_TRAITS_NOT_IN(trait_target, UNIT_TEST_SOURCE_MAIN)
@@ -83,6 +83,7 @@ TEST_FOCUS(/datum/unit_test/trait_addition_and_removal)
 	TEST_ASSERT(HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_C), "[TRAIT_UNIT_TEST_C] was unexpectedly removed when using REMOVE_TRAIT() using [UNIT_TEST_SOURCE_MAIN] (was added using ADD_TRAITS())!")
 	REMOVE_TRAIT(trait_target, TRAIT_UNIT_TEST_C, UNIT_TEST_SOURCE_MAIN) //just for cleanliness+completeness
 
+	TEST_ASSERT(!length(trait_target.status_traits), "Failed to clean up all status traits at the end of the unit test!")
 
 #undef TRAIT_UNIT_TEST_MAIN
 #undef TRAIT_UNIT_TEST_ALT
