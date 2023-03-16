@@ -627,15 +627,15 @@
 		return
 	src.darkspawn = darkspawn
 
-/datum/status_effect/creep/process()
+/datum/status_effect/creep/tick()
 	if(!darkspawn)
 		qdel(src)
 		return
-	if(!darkspawn.has_psi(1)) //ticks 5 times per second, 5 Psi lost per second
+	if(!darkspawn.has_psi(5))
 		to_chat(owner, "<span class='warning'>Without the Psi to maintain it, your protective aura vanishes!</span>")
 		qdel(src)
 		return
-	darkspawn.use_psi(1)
+	darkspawn.use_psi(5)
 
 /obj/screen/alert/status_effect/creep
 	name = "Creep"

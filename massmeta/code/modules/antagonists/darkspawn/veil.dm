@@ -12,6 +12,10 @@
 	owner.special_role = "veil"
 	message_admins("[key_name_admin(owner.current)] was veiled by a darkspawn!")
 	log_game("[key_name(owner.current)] was veiled by a darkspawn!")
+	var/datum/objective/veil/O = new
+	objectives += O
+	O.update_explanation_text()
+	owner.announce_objectives()
 
 /datum/antagonist/veil/on_removal()
 	message_admins("[key_name_admin(owner.current)] was deveiled!")
@@ -96,3 +100,11 @@
 	if(!istype(mind))
 		return FALSE
 	return mind.remove_antag_datum(/datum/antagonist/veil)
+
+/datum/objective/veil
+	explanation_text = "Help your masters, Darkspawns, to complete The Sacrament."
+
+/datum/objective/veil/check_completion()
+	if(..())
+		return TRUE
+	return (GLOB.sacrament_done)

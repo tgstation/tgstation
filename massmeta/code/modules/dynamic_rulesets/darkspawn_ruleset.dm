@@ -12,7 +12,7 @@
 	protected_roles = list(JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_DETECTIVE, JOB_HEAD_OF_SECURITY, JOB_CAPTAIN)
 	restricted_roles = list(JOB_AI, JOB_CYBORG)
 	required_candidates = 3
-	weight = 0 //W.I.P.
+	weight = 3
 	cost = 20
 	scaling_cost = 20
 	antag_cap = list(3,3,3,3,3,3,3,3,3,3)
