@@ -11,12 +11,20 @@
 	instability = 40
 	var/scream_delay = 50
 	var/last_scream = 0
+	/// List of traits to add/remove when someone gets this mutation.
+	var/static/list/mutation_traits = list(
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_HULK,
+		TRAIT_IGNOREDAMAGESLOWDOWN,
+		TRAIT_PUSHIMMUNE,
+		TRAIT_STUNIMMUNE,
+	)
 
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	ADD_TRAIT_LIST(owner, list(TRAIT_STUNIMMUNE, TRAIT_PUSHIMMUNE, TRAIT_CHUNKYFINGERS, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_HULK), GENETIC_MUTATION)
+	ADD_TRAIT_LIST(owner, mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
 		part.variable_color = "#00aa00"
 	owner.update_body_parts()
@@ -71,7 +79,7 @@
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT_LIST(owner, list(TRAIT_STUNIMMUNE, TRAIT_PUSHIMMUNE, TRAIT_CHUNKYFINGERS, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_HULK), GENETIC_MUTATION)
+	REMOVE_TRAIT_LIST(owner, mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
 		part.variable_color = null
 	owner.update_body_parts()
