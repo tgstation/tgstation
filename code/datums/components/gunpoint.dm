@@ -48,6 +48,7 @@
 		span_danger("You aim [weapon] [distance_description]at [target]!"), ignored_mobs = target)
 	to_chat(target, span_userdanger("[shooter] aims [weapon] [distance_description]at you!"))
 
+	shooter.adjustStaminaLoss(20)
 	shooter.Immobilize(0.75 SECONDS / distance)
 	target.Immobilize(0.75 SECONDS / distance)
 	target.emote("gaspshock", intentional = FALSE)
