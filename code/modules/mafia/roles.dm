@@ -95,9 +95,9 @@
 		return
 	if(verbose)
 		game.send_message("<span class='big bold notice'>It is revealed that the true role of [body] [game_status == MAFIA_ALIVE ? "is" : "was"] [name]!</span>")
-	//var/list/oldoutfit = body.get_equipped_items()
-	//for(var/thing in oldoutfit)
-	//	qdel(thing)
+	var/list/oldoutfit = body.get_equipped_items()
+	for(var/thing in oldoutfit)
+		qdel(thing)
 	special_reveal_equip(game)
 	body.equipOutfit(revealed_outfit)
 	role_flags |= ROLE_REVEALED
