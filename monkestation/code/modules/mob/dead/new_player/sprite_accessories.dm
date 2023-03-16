@@ -182,51 +182,50 @@
 /datum/sprite_accessory/ipc_chassis // Used for changing limb icons, doesn't need to hold the actual icon. That's handled in ipc.dm
 	icon = null
 	icon_state = "blegh" // In order to pull the chassis correctly, we need AN icon_state(see line 36-39). It doesn't have to be useful, because it isn't used.
-	color_src = 0
+	color_src = FALSE
 
 /datum/sprite_accessory/ipc_chassis/mcgreyscale
 	name = "Morpheus Cyberkinetics (Custom)"
-	limbs_id = "mcgipc"
 	color_src = MUTCOLORS
+	icon_state = "mcgipc"
 
 /datum/sprite_accessory/ipc_chassis/bishop_cyberkinetics
 	name = "Bishop Cyberkinetics"
-	limbs_id = "bshipc"
+	icon_state = "bshipc"
 
 /datum/sprite_accessory/ipc_chassis/bishop_cyberkinetics_2
 	name = "Bishop Cyberkinetics 2.0"
-	limbs_id = "bs2ipc"
+	icon_state = "bs2ipc"
 
 /datum/sprite_accessory/ipc_chassis/hephaestuss_industries
 	name = "Hephaestus Industries"
-	limbs_id = "hsiipc"
+	icon_state = "hsiipc"
 
 /datum/sprite_accessory/ipc_chassis/hephaestuss_industries_2
 	name = "Hephaestus Industries 2.0"
-	limbs_id = "hi2ipc"
+	icon_state = "hi2ipc"
 
 /datum/sprite_accessory/ipc_chassis/shellguard_munitions
 	name = "Shellguard Munitions Standard Series"
-	limbs_id = "sgmipc"
+	icon_state = "sgmipc"
 
 /datum/sprite_accessory/ipc_chassis/ward_takahashi_manufacturing
 	name = "Ward-Takahashi Manufacturing"
-	limbs_id = "wtmipc"
+	icon_state = "wtmipc"
 
 /datum/sprite_accessory/ipc_chassis/xion_manufacturing_group
 	name = "Xion Manufacturing Group"
-	limbs_id = "xmgipc"
+	icon_state = "xmgipc"
 
 /datum/sprite_accessory/ipc_chassis/xion_manufacturing_group_2
 	name = "Xion Manufacturing Group 2.0"
-	limbs_id = "xm2ipc"
+	icon_state = "zhpipc"
 
 /datum/sprite_accessory/ipc_chassis/zeng_hu_pharmaceuticals
 	name = "Zeng-Hu Pharmaceuticals"
-	limbs_id = "zhpipc"
+	icon_state = "zhpipc"
 
 // MONKESTATION CHANGE: Adds staripc chassis by MilkForever
 /datum/sprite_accessory/ipc_chassis/star_industrial
 	name = "Star Industrial"
-	limbs_id = "staripc"
-// MONKESTATION CHANGE END
+	icon_state = "staripc"

@@ -75,8 +75,6 @@
 	var/dimension_y = 32
 	/// Should this sprite block emissives?
 	var/em_block = FALSE
-	/// The limbs id supplied for full-body replacing features.
-	var/limbs_id
 
 /datum/sprite_accessory/blank
 	name = "None"

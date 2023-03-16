@@ -35,6 +35,8 @@
 		if(2)
 			to_chat(owner, "<span class='warning'>Alert: EMP Detected. Cycling battery.</span>")
 
+	adjust_charge(-100*severity)
+
 /obj/item/organ/internal/brain/positron
 	name = "ipc positronic brain"
 	slot = ORGAN_SLOT_BRAIN

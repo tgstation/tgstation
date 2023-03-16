@@ -271,6 +271,6 @@
 		C.dna.features["ipc_chassis"] = pick(GLOB.ipc_chassis_list)
 
 	for(var/obj/item/bodypart/BP as() in C.bodyparts) //Override bodypart data as necessary
-		BP.limb_id = chassis_of_choice.limbs_id
+		BP.limb_id = chassis_of_choice.icon_state
 		BP.name = "\improper[chassis_of_choice.name] [parse_zone(BP.body_zone)]"
 		BP.update_limb()
