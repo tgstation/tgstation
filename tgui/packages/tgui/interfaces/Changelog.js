@@ -183,7 +183,7 @@ export class Changelog extends Component {
           have contributed to the game, issue tracker or wiki over the years.
         </p>
         <p>
-          {'Current project maintainers can be found '}
+          {'Current organization members can be found '}
           <a href="https://github.com/orgs/tgstation/people">here</a>
           {', recent GitHub contributors can be found '}
           <a href="https://github.com/tgstation/tgstation/pulse/monthly">
