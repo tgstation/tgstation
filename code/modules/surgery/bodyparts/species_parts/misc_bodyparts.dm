@@ -284,6 +284,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	icon_static = 'icons/mob/species/darkspawn/darkspawn_parts.dmi'
+	bodypart_traits = list(TRAIT_NO_JUMPSUIT)
 
 /obj/item/bodypart/arm/left/darkspawn
 	biological_state = BIO_INORGANIC
