@@ -58847,7 +58847,7 @@
 /area/station/ai_monitored/command/nuke_storage)
 "tVf" = (
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/engine/hull/reinforced,
 /area/space/nearstation)
