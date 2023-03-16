@@ -90,8 +90,7 @@
 	bonus_active = FALSE
 	if(bonus_traits)
 		if(islist(bonus_traits))
-			for(var/trait in bonus_traits)
-				REMOVE_TRAIT(owner, trait, REF(src))
+			REMOVE_TRAIT_LIST(owner, bonus_traits, REF(src))
 		else
 			REMOVE_TRAIT(owner, bonus_traits, REF(src))
 	if(bonus_deactivate_text)

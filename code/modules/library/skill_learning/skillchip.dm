@@ -149,8 +149,8 @@
 	if(!silent && activate_message)
 		to_chat(user, activate_message)
 
-	for(var/trait in auto_traits)
-		ADD_TRAIT(user, trait, SKILLCHIP_TRAIT)
+	if(length(auto_traits))
+		ADD_TRAIT_LIST(user, auto_traits, SKILLCHIP_TRAIT)
 
 	active = TRUE
 
@@ -183,8 +183,8 @@
 	if(!silent && deactivate_message)
 		to_chat(user, deactivate_message)
 
-	for(var/trait in auto_traits)
-		REMOVE_TRAIT(user, trait, SKILLCHIP_TRAIT)
+	if(length(auto_traits))
+		REMOVE_TRAIT_LIST(user, auto_traits, SKILLCHIP_TRAIT)
 
 	active = FALSE
 
