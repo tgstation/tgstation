@@ -30,8 +30,8 @@
 		var/light_amount = spawn_turf.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD && is_safe_turf(spawn_turf))
 			spawn_locs += spawn_turf
-	if(spawn_locs.len < amount)
-		message_admins("Not enough valid spawn locations found in GLOB.xeno_spawn, aborting spider spawning...")
+	if(!spawn_locs)
+		message_admins("No valid spawn locations found in GLOB.xeno_spawn, aborting spider spawning...")
 		return MAP_ERROR
 	while(amount > 0)
 		var/turf/spawn_loc = pick_n_take(spawn_locs)
