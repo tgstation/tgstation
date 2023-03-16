@@ -1,0 +1,4 @@
+author: "DAKKA-WAAAGH"
+delete-after: True
+changes:
+  - bugfix: "Removes duplicate decals and replaces them with new ones that are more efficient"
