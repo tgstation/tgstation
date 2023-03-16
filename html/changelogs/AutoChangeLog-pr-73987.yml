@@ -1,5 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes:
-  - bugfix: "A bunch of invisible magazine sprites are visible now"
-  - imageadd: "Bullpup shotgun magazines for buckshot and slugs are now indicated with a red or white dot, respectively."
