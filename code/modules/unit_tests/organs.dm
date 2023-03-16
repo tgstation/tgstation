@@ -49,17 +49,17 @@
 		return
 
 	TEST_ASSERT(test_organ.owner == lab_rat, TEST_ORGAN_INSERT_MESSAGE(test_organ, "should assign the human to the organ's `owner` var."))
-	TEST_ASSERT(test_organ in lab_rat.internal_organs, TEST_ORGAN_INSERT_MESSAGE(test_organ, "should insert the organ into the human's `internal_organs` list."))
+	TEST_ASSERT(test_organ in lab_rat.organs, TEST_ORGAN_INSERT_MESSAGE(test_organ, "should insert the organ into the human's `internal_organs` list."))
 	if(test_organ.slot)
-		TEST_ASSERT(lab_rat.internal_organs_slot[test_organ.slot] == test_organ, TEST_ORGAN_INSERT_MESSAGE(test_organ, "should add the organ to the human's `internal_organs_slot` list."))
+		TEST_ASSERT(lab_rat.organs_slot[test_organ.slot] == test_organ, TEST_ORGAN_INSERT_MESSAGE(test_organ, "should add the organ to the human's `internal_organs_slot` list."))
 		TEST_ASSERT(lab_rat.getorganslot(test_organ.slot) == test_organ, TEST_ORGAN_INSERT_MESSAGE(test_organ, "should make the organ available via human's `getorganslot()` proc."))
 
 	test_organ.Remove(lab_rat, special = TRUE)
 
 	TEST_ASSERT(test_organ.owner == null, TEST_ORGAN_REMOVE_MESSAGE(test_organ, "should assign the organ's `owner` var to null."))
-	TEST_ASSERT(!(test_organ in lab_rat.internal_organs), TEST_ORGAN_REMOVE_MESSAGE(test_organ, "should remove the organ from the human's `internal_organs` list."))
+	TEST_ASSERT(!(test_organ in lab_rat.organs), TEST_ORGAN_REMOVE_MESSAGE(test_organ, "should remove the organ from the human's `internal_organs` list."))
 	if(test_organ.slot)
-		TEST_ASSERT(lab_rat.internal_organs_slot[test_organ.slot] != test_organ, TEST_ORGAN_REMOVE_MESSAGE(test_organ, "should remove the organ from the human's `internal_organs_slot` list."))
+		TEST_ASSERT(lab_rat.organs_slot[test_organ.slot] != test_organ, TEST_ORGAN_REMOVE_MESSAGE(test_organ, "should remove the organ from the human's `internal_organs_slot` list."))
 		TEST_ASSERT(lab_rat.getorganslot(test_organ.slot) != test_organ, TEST_ORGAN_REMOVE_MESSAGE(test_organ, "should remove the organ from the human's `getorganslot()` proc."))
 
 	return
