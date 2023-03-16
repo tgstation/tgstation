@@ -104,7 +104,7 @@
 			state = FLOODLIGHT_NEEDS_SECURING
 			return
 		else
-			balloon_alert(user, "need 5 cable pieces")
+			balloon_alert(user, "need 5 cable pieces!")
 			return
 
 	if(istype(O, /obj/item/light/tube))
