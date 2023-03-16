@@ -69,3 +69,4 @@
 	balloon_alert(user, "cut fingertips off")
 	qdel(src)
 	user.put_in_hands(new cut_type)
+	return TRUE
