@@ -7,12 +7,12 @@
 	///The type of wisdom this cow will grant
 	var/granted_wisdom
 
-/mob/living/basic/cow/wisdom/Initialize(mapload, wisdom_override)
+/mob/living/basic/cow/wisdom/Initialize(mapload, granted_wisdom)
 	. = ..()
-	if(wisdom_override)
-		granted_wisdom = wisdom_override
+	if(granted_wisdom)
+		src.granted_wisdom = granted_wisdom
 	else
-		granted_wisdom = pick(GLOB.skill_types)
+		src.granted_wisdom = pick(GLOB.skill_types)
 
 /mob/living/basic/cow/wisdom/setup_eating()
 	return //cannot tame me! and I don't care about eatin' nothing, neither!
