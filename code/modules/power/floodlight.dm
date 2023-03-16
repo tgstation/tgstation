@@ -248,7 +248,7 @@
 		var/obj/structure/floodlight_frame/floodlight_frame = new(loc)
 		floodlight_frame.state = FLOODLIGHT_NEEDS_LIGHTS
 
-		var/obj/item/light/tube/light_tube = new /obj/item/light/tube(loc)
+		var/obj/item/light/tube/light_tube = new(loc)
 		user.put_in_active_hand(light_tube)
 
 		qdel(src)
