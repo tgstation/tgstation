@@ -188,7 +188,7 @@
 	heretic_datum.remove_sacrifice_target(sacrifice)
 
 
-	var/feedback = "Your patrons accepts your offer"
+	var/feedback = "Your patrons accept your offer"
 	var/sac_department_flag = sacrifice.mind?.assigned_role?.departments_bitflags | sacrifice.last_mind?.assigned_role?.departments_bitflags
 	if(sac_department_flag & DEPARTMENT_BITFLAG_COMMAND)
 		heretic_datum.knowledge_points++
