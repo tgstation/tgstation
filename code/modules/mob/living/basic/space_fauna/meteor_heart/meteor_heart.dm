@@ -54,9 +54,10 @@
 	for (var/obj/structure/meateor_fluff/body_part in view(5, src))
 		RegisterSignal(body_part, COMSIG_ATOM_DESTRUCTION, PROC_REF(aggro))
 
-	soundloop = new(src, start_immediately = TRUE)
-	soundloop.set_mid_length(HEARTBEAT_NORMAL)
+	soundloop = new(src, start_immediately = FALSE)
+	soundloop.mid_length = HEARTBEAT_NORMAL
 	soundloop.pressure_affected = FALSE
+	soundloop.start()
 
 /// Called when we get mad at something, either for attacking us or attacking the nearby area
 /mob/living/basic/meteor_heart/proc/aggro()
@@ -103,8 +104,8 @@
 	Shake(2, 0, 3 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(gib)), duration - 1, TIMER_DELETE_ME)
 	soundloop = new(src, start_immediately = FALSE)
-	soundloop.pressure_affected = FALSE
 	soundloop.mid_length = HEARTBEAT_FRANTIC
+	soundloop.pressure_affected = FALSE
 	soundloop.start()
 
 /obj/effect/temp_visual/meteor_heart_death/Destroy()
