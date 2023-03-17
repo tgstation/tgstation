@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "All CTF windows are now indestructible, fixes breaking into space during CTF."
