@@ -308,7 +308,7 @@
 				insert = vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
 				if(!insert["class"])
 					break
-				value += list(insert["value"])
+				value += LIST_VALUE_WRAP_LISTS(insert["value"])
 
 
 			.["value"] = value
