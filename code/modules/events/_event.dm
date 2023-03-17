@@ -164,8 +164,7 @@ Runs the event
 		return round_event
 
 	triggering = FALSE
-	if(random)
-		log_game("Random Event triggering: [name] ([typepath]).")
+	log_game("[random ? "Random" : "Forced"] Event triggering: [name] ([typepath]).")
 
 	if(alert_observers)
 		round_event.announce_deadchat(random)

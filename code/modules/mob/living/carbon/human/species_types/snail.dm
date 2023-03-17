@@ -6,7 +6,7 @@
 		NO_UNDERWEAR,
 	)
 	inherent_traits = list(
-		TRAIT_NOSLIPALL,
+		TRAIT_NO_SLIP_ALL,
 	)
 
 	coldmod = 0.5 //snails only come out when its cold and wet

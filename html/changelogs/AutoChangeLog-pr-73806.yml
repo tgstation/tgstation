@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixes Juggernaut / Rust Walker projectiles doing zero damage"
-  - bugfix: "Fixes Juggernaut projectiles not doing bonus damage to nearby structures"
-  - code_imp: "Removed projectile nodamage var, replaces it with just checking for damage"

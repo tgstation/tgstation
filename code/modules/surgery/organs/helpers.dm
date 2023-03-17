@@ -27,11 +27,11 @@
 	return
 
 /mob/living/carbon/getorgan(typepath)
-	return (locate(typepath) in internal_organs)
+	return (locate(typepath) in organs)
 
 /mob/living/carbon/getorganszone(zone, include_children = FALSE)
 	var/valid_organs = list()
-	for(var/obj/item/organ/organ as anything in internal_organs)
+	for(var/obj/item/organ/organ as anything in organs)
 		if(zone == organ.zone)
 			valid_organs += organ
 		else if(include_children && zone == deprecise_zone(organ.zone))
@@ -39,5 +39,5 @@
 	return valid_organs
 
 /mob/living/carbon/getorganslot(slot)
-	. = internal_organs_slot[slot]
+	. = organs_slot[slot]
 
