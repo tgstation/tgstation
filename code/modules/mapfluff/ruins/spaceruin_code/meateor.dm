@@ -40,7 +40,6 @@
 /obj/structure/meateor_fluff
 	icon = 'icons/mob/simple/meteor_heart.dmi'
 	anchored = TRUE
-	density = TRUE
 
 /obj/structure/meateor_fluff/play_attack_sound(damage_amount, damage_type, damage_flag)
 	switch(damage_type)
@@ -54,9 +53,11 @@
 
 /// A sort of loot box for organs, cut it open and find a prize
 /obj/structure/meateor_fluff/flesh_pod
-	icon_state = "flesh_pod"
+	name = "flesh pod"
 	desc = "A quivering pod of living meat. Something is pulsing inside."
-	max_integrity = 60
+	icon_state = "flesh_pod"
+	max_integrity = 120
+	density = TRUE
 	/// Typepath of the organ to spawn when this is destroyed
 	var/stored_organ
 	/// Types of organ we can spawn
@@ -106,9 +107,10 @@
 	return ..()
 
 /obj/structure/meateor_fluff/flesh_pod_open
-	icon_state = "flesh_pod_open"
+	name = "flesh pod"
 	desc = "A pod of living meat, this one has been hollowed out."
-	max_integrity = 30
+	icon_state = "flesh_pod_open"
+	max_integrity = 60
 
 /obj/structure/meateor_fluff/flesh_pod_open/atom_destruction(damage_flag)
 	new /obj/effect/gibspawner/human(loc)
@@ -116,8 +118,9 @@
 
 /// Decorative fluff egg object
 /obj/structure/meateor_fluff/abandoned_headcrab_egg
-	icon_state = "eggs"
+	name = "meaty eggs"
 	desc = "A mass of fleshy, egg-shaped nodes."
+	icon_state = "eggs"
 	max_integrity = 15
 
 /obj/structure/meateor_fluff/abandoned_headcrab_egg/atom_destruction(damage_flag)

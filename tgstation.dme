@@ -3805,6 +3805,7 @@
 #include "code\modules\mob\living\basic\space_fauna\giant_spider\spider_abilities\web.dm"
 #include "code\modules\mob\living\basic\space_fauna\giant_spider\spider_abilities\wrap.dm"
 #include "code\modules\mob\living\basic\space_fauna\meteor_heart\chasing_spikes.dm"
+#include "code\modules\mob\living\basic\space_fauna\meteor_heart\meteor_eyeball.dm"
 #include "code\modules\mob\living\basic\space_fauna\meteor_heart\meteor_heart.dm"
 #include "code\modules\mob\living\basic\space_fauna\meteor_heart\meteor_heart_ai.dm"
 #include "code\modules\mob\living\basic\space_fauna\meteor_heart\spine_traps.dm"

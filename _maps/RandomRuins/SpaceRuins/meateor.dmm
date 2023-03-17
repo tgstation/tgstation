@@ -51,12 +51,15 @@
 /turf/open/floor/material/meat,
 /area/ruin/space/meateor)
 "v" = (
-/obj/machinery/light/floor,
+/obj/structure/meateor_fluff/eyeball,
 /turf/open/floor/material/meat,
 /area/ruin/space/meateor)
 "z" = (
 /obj/effect/mob_spawn/corpse/human/tigercultist/perforated,
-/obj/item/storage/organbox,
+/obj/item/storage/organbox{
+	desc = "Often used, but not often cleaned.";
+	name = "abandoned lunchbox"
+	},
 /turf/open/floor/material/meat,
 /area/ruin/space/meateor)
 "A" = (
@@ -332,7 +335,7 @@ a
 g
 A
 A
-O
+L
 G
 O
 O
@@ -363,7 +366,7 @@ a
 g
 A
 A
-L
+O
 O
 O
 O
@@ -551,7 +554,7 @@ A
 A
 A
 A
-A
+q
 A
 A
 A
@@ -582,7 +585,7 @@ A
 A
 A
 D
-q
+k
 C
 D
 O
@@ -614,7 +617,7 @@ A
 R
 O
 j
-k
+O
 O
 q
 v

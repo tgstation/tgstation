@@ -6,11 +6,29 @@
 	button_icon_state = "spike"
 	cooldown_time = 10 SECONDS
 	click_to_activate = TRUE
+	/// Lazy list of references to spike trails
+	var/list/active_chasers
 
 /datum/action/cooldown/chasing_spikes/Activate(atom/target)
 	. = ..()
-	playsound(owner, 'sound/magic/demon_attack1.ogg', vol = 100, extrarange = 3, vary = TRUE, pressure_affected = FALSE)
-	new /obj/effect/temp_visual/spike_chaser(get_turf(owner), target)
+	playsound(owner, 'sound/magic/demon_attack1.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
+	var/obj/effect/temp_visual/spike_chaser/chaser = new(get_turf(owner), target)
+	LAZYADD(active_chasers, WEAKREF(chaser))
+	RegisterSignal(chaser, COMSIG_PARENT_QDELETING, PROC_REF(on_chaser_destroyed))
+
+/// Remove a spike trail from our list of active trails
+/datum/action/cooldown/chasing_spikes/proc/on_chaser_destroyed(atom/chaser)
+	SIGNAL_HANDLER
+	LAZYREMOVE(active_chasers, WEAKREF(chaser))
+
+// Clean up after ourselves
+/datum/action/cooldown/chasing_spikes/Remove(mob/removed_from)
+	if (!length(active_chasers))
+		return ..()
+	for (var/datum/weakref/weak_chaser as anything in active_chasers)
+		var/atom/chaser = weak_chaser?.resolve()
+		qdel(chaser)
+	return ..()
 
 /// An invisible effect which chases a target, spawning spikes every so often.
 /obj/effect/temp_visual/spike_chaser
