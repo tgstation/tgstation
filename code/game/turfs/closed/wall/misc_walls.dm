@@ -139,6 +139,7 @@
 /turf/closed/wall/material/meat
 	name = "living wall"
 	baseturfs = /turf/open/floor/material/meat
+	girder_type = null
 
 /turf/closed/wall/material/meat/Initialize(mapload)
 	. = ..()

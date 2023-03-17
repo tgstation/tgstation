@@ -1,5 +1,6 @@
 /area/ruin/space/meateor
-	name = "organic asteroid"
+	name = "\improper Organic Asteroid"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /obj/item/paper/fluff/ruins/meateor/letter
 	name = "letter"
@@ -7,7 +8,7 @@
 	<br> While you are walking in the footsteps of the divine, don't forget about the rest of us back at the farm!
 	<br> <This letter has been signed by 15 people.>"}
 
-/// Give it an exit wound
+/// Tiger cultist corpse but with an exit wound
 /obj/effect/mob_spawn/corpse/human/tigercultist/perforated
 
 /obj/effect/mob_spawn/corpse/human/tigercultist/perforated/special(mob/living/carbon/human/spawned_human)
@@ -64,6 +65,7 @@
 	var/static/list/allowed_organs = list(
 		/obj/item/organ/internal/heart/gland/egg = 7,
 		/obj/item/organ/internal/heart/gland/plasma = 7,
+		/obj/item/organ/internal/alien/plasmavessel = 5,
 		/obj/item/organ/internal/heart/gland/chem = 5,
 		/obj/item/organ/internal/heart/gland/mindshock = 5,
 		/obj/item/organ/internal/heart/gland/spiderman = 5,
@@ -77,6 +79,8 @@
 		/obj/item/organ/internal/monster_core/regenerative_core = 3,
 		/obj/item/organ/internal/monster_core/rush_gland = 3,
 		/obj/item/organ/internal/tongue/carp = 3,
+		/obj/item/organ/internal/alien/acid = 2,
+		/obj/item/organ/internal/alien/resinspinner = 2,
 		/obj/item/organ/internal/eyes/night_vision/goliath = 2,
 		/obj/item/organ/internal/eyes/night_vision/rat = 2,
 		/obj/item/organ/internal/heart/gland/ventcrawling = 1,

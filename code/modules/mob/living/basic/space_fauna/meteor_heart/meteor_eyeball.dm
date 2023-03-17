@@ -1,5 +1,5 @@
-#define EYEBALL_BLINK_INTERVAL_MIN 30 SECONDS
-#define EYEBALL_BLINK_INTERVAL_MAX 2 MINUTES
+#define EYEBALL_BLINK_INTERVAL_MIN 10 SECONDS
+#define EYEBALL_BLINK_INTERVAL_MAX 30 SECONDS
 
 /// List of all the meteor eyeballs so we can gib them upon meteor death
 GLOBAL_LIST_EMPTY(meteor_eyeballs)
