@@ -1067,8 +1067,8 @@
 	},
 /obj/structure/sign/departments/cargo/directional/north,
 /obj/machinery/button/tram{
-	id = "middle_part_hilbert";
-	pixel_y = 4;
+	id = 12;
+	pixel_y = 9;
 	lift_id = "tram_hilbert"
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -1383,9 +1383,9 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Fo" = (
 /obj/machinery/button/tram{
-	id = "left_part_hilbert";
-	pixel_y = 4;
-	lift_id = "tram_hilbert"
+	pixel_y = 9;
+	lift_id = "tram_hilbert";
+	id = 11
 	},
 /obj/structure/table/reinforced/rglass,
 /obj/effect/turf_decal/stripes/red/line{
@@ -1435,8 +1435,8 @@
 	},
 /obj/structure/table/reinforced/rglass,
 /obj/machinery/button/tram{
-	id = "right_part_hilbert";
-	pixel_y = 4;
+	id = 13;
+	pixel_y = 9;
 	lift_id = "tram_hilbert"
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
