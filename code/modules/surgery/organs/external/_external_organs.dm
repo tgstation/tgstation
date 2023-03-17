@@ -158,7 +158,7 @@
 	//Build the mob sprite and use it as our overlay
 	for(var/external_layer in bodypart_overlay.all_layers)
 		if(bodypart_overlay.layers & external_layer)
-			. += bodypart_overlay.get_overlay(external_layer, limb = null)
+			. += bodypart_overlay.get_overlay(external_layer, ownerlimb)
 
 ///The horns of a lizard!
 /obj/item/organ/external/horns
