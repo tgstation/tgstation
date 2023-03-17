@@ -632,6 +632,13 @@
 	race = /datum/species/jelly/slime
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/mutationtoxin/beefman
+	name = "Beefman Mutation Toxin"
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/beefman
+	taste_description = "many sleepless nights"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+
 /datum/reagent/mutationtoxin/felinid
 	name = "Felinid Mutation Toxin"
 	color = "#5EFF3B" //RGB: 94, 255, 59

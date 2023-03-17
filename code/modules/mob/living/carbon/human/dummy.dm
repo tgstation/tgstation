@@ -86,6 +86,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.initialize_dna(skip_index = TRUE)
 	target.dna.features["body_markings"] = "None"
 	target.dna.features["ears"] = "None"
+	target.dna.features["beef_color"] = "#e73f4e"
+	target.dna.features["beef_eyes"] = BEEF_EYES_OLIVES
+	target.dna.features["beef_mouth"] = BEEF_MOUTH_SMILE
 	target.dna.features["ethcolor"] = COLOR_WHITE
 	target.dna.features["frills"] = "None"
 	target.dna.features["horns"] = "None"

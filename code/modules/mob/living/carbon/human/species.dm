@@ -711,6 +711,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					accessory = GLOB.legs_list[source.dna.features["legs"]]
 				if("caps")
 					accessory = GLOB.caps_list[source.dna.features["caps"]]
+				if("beef_eyes")
+					if(source.getorganslot(ORGAN_SLOT_EYES)) // Only draw eyes if we got em
+						accessory = GLOB.eyes_beefman[source.dna.features["beef_eyes"]]
+				if("beef_mouth")
+					accessory = GLOB.mouths_beefman[source.dna.features["beef_mouth"]]
 
 			if(!accessory || accessory.icon_state == "none")
 				continue

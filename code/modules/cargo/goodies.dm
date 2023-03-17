@@ -244,6 +244,12 @@
 	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/encryptionkey/felinid)
 
+/datum/supply_pack/goody/russian_encryption_key
+	name = "Russian radio encryption key"
+	desc = "A hi-tech radio encryption key that allows the wearer to understand russian when the radio is worn."
+	cost = PAYCHECK_CREW * 12
+	contains = list(/obj/item/encryptionkey/russian)
+
 /datum/supply_pack/goody/fishing_toolbox
 	name = "Fishing toolbox"
 	desc = "Complete toolbox set for your fishing adventure. Advanced hooks and lines sold separetely."

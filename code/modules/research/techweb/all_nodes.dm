@@ -433,6 +433,7 @@
 	description = "Plasmaman, Ethereals, Lizardpeople... What makes our non-human crewmembers tick?"
 	prereq_ids = list("adv_biotech")
 	design_ids = list(
+		"limbdesign_beefman",
 		"limbdesign_ethereal",
 		"limbdesign_felinid",
 		"limbdesign_lizard",

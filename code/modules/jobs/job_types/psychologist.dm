@@ -12,6 +12,7 @@
 
 	outfit = /datum/outfit/job/psychologist
 	plasmaman_outfit = /datum/outfit/plasmaman/psychologist
+	beefman_outfit = /datum/outfit/beefman/psychologist
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV

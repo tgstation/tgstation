@@ -19,6 +19,7 @@
 
 	outfit = /datum/outfit/job/hos
 	plasmaman_outfit = /datum/outfit/plasmaman/head_of_security
+	beefman_outfit = /datum/outfit/beefman/head_of_security
 	departments_list = list(
 		/datum/job_department/security,
 		/datum/job_department/command,

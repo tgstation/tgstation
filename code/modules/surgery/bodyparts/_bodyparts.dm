@@ -1124,3 +1124,63 @@
 		owner.update_body_parts()
 	else
 		update_icon_dropped()
+
+
+/**
+ * When giving someone a slab of meat
+ *
+ * Transfers over damage/reagents from the meat (through bite marks) onto the new bodypart.
+ */
+/obj/item/bodypart/proc/give_meat(mob/living/carbon/human/beefboy, obj/item/food/meat/slab/given_meat)
+	var/amount_original
+	for(var/reagents in given_meat.food_reagents)
+		amount_original += given_meat.food_reagents[reagents]
+
+	//All (current) default reagents
+	var/amount_current
+	for(var/datum/reagent/extra_reagents as anything in given_meat.reagents.reagent_list)
+		if(!(locate(extra_reagents.type) in given_meat.food_reagents))
+			continue
+		amount_current += extra_reagents.volume
+		given_meat.reagents.remove_reagent(extra_reagents.type, extra_reagents.volume)
+
+	given_meat.reagents.update_total()
+
+	var/damaged_limb_percent = 1 - amount_current / amount_original
+	receive_damage(brute = max_damage * damaged_limb_percent)
+	if(damaged_limb_percent >= 0.9)
+		to_chat(owner, span_alert("It's almost completely useless. That [given_meat.name] was no good!"))
+	else if(damaged_limb_percent > 0.5)
+		to_chat(owner, span_alert("\the [given_meat.name] is riddled with bite marks..."))
+	else if(damaged_limb_percent > 0)
+		to_chat(owner, span_alert("\the [given_meat.name] looks a little eaten away, but it'll do."))
+
+	// Apply meat's Reagents to user
+	if(given_meat.reagents && given_meat.reagents.total_volume)
+		given_meat.reagents.trans_to(owner, given_meat.reagents.total_volume)
+
+
+/**
+ * Drops a limb into meat
+ *
+ * Transfers reagents and damage over to the new slab of meat.
+ */
+/obj/item/bodypart/proc/drop_meat(mob/lost_owner, dismembered = FALSE)
+	// Not Organic? ABORT! Robotic stays robotic, desnt delete and turn to meat.
+	if(!IS_ORGANIC_LIMB(src))
+		return FALSE
+	// If not 0% health, let's do it!
+	var/percentHealth = 1 - (brute_dam + burn_dam) / max_damage
+	if(percentHealth <= 0 && !dismembered)
+		return
+
+	// Create Meat
+	var/obj/item/food/meat/slab/new_meat = new(lost_owner.loc)
+	// Adjust Reagents by Health Percent
+	for(var/datum/reagent/reagents in new_meat.reagents.reagent_list)
+		reagents.volume *= percentHealth
+	new_meat.reagents.update_total()
+	// Apply my Reagents to Meat
+	if(lost_owner.reagents && lost_owner.reagents.total_volume)
+		lost_owner.reagents.trans_to(new_meat, 20)	// Run transfer of 1 unit of reagent from them to me.
+	return new_meat

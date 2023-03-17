@@ -12,6 +12,7 @@
 
 	outfit = /datum/outfit/job/prisoner
 	plasmaman_outfit = /datum/outfit/plasmaman/prisoner
+	beefman_outfit = /datum/outfit/beefman/prisoner
 
 	display_order = JOB_DISPLAY_ORDER_PRISONER
 	department_for_prefs = /datum/job_department/security

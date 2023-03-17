@@ -48,6 +48,8 @@
 
 	/// The job's outfit that will be assigned for plasmamen.
 	var/plasmaman_outfit = null
+	/// The job's outfit that will be assigned for beefmen.
+	var/beefman_outfit
 
 	/// Minutes of experience-time required to play in this job. The type is determined by [exp_required_type] and [exp_required_type_department] depending on configs.
 	var/exp_requirements = 0

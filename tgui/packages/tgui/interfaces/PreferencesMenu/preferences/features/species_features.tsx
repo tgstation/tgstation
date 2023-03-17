@@ -45,6 +45,11 @@ export const feature_human_tail: FeatureChoiced = {
   component: FeatureDropdownInput,
 };
 
+export const feature_beef_trauma: Feature<string> = {
+  name: 'Beefman Trauma',
+  component: FeatureDropdownInput,
+};
+
 export const feature_lizard_legs: FeatureChoiced = {
   name: 'Legs',
   component: FeatureDropdownInput,

@@ -16,6 +16,7 @@
 
 	outfit = /datum/outfit/job/quartermaster
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo
+	beefman_outfit = /datum/outfit/beefman/quartermaster
 
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_CAR

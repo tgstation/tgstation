@@ -64,6 +64,7 @@
 		/datum/language/codespeak,
 		/datum/language/monkey,
 		/datum/language/narsie,
+		/datum/language/russian,
 		/datum/language/beachbum,
 		/datum/language/aphasia,
 		/datum/language/piratespeak,
@@ -361,6 +362,14 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 		return
 
 	playsound(owner, SFX_HISS, 25, TRUE, TRUE)
+
+/obj/item/organ/internal/tongue/beefman
+	name = "meaty tongue"
+	desc = "A meaty and thick muscle typically found in Beefmen."
+	icon_state = "beef_tongue"
+	say_mod = "gurgles"
+	taste_sensitivity = 15
+	languages_native = list(/datum/language/russian)
 
 /obj/item/organ/internal/tongue/bone
 	name = "bone \"tongue\""

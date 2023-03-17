@@ -14,6 +14,7 @@
 
 	outfit = /datum/outfit/job/chemist
 	plasmaman_outfit = /datum/outfit/plasmaman/chemist
+	beefman_outfit = /datum/outfit/beefman/chemist
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_MED

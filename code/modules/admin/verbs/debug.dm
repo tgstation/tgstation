@@ -445,7 +445,7 @@
 
 /client/proc/robust_dress_shop()
 
-	var/list/baseoutfits = list("Naked","Custom","As Job...", "As Plasmaman...")
+	var/list/baseoutfits = list("Naked","Custom","As Job...", "As Plasmaman...", "As Beefman...")
 	var/list/outfits = list()
 	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman)
 
@@ -481,6 +481,17 @@
 
 		dresscode = input("Select plasmeme equipment", "Robust quick dress shop") as null|anything in sort_list(plasmaman_outfits)
 		dresscode = plasmaman_outfits[dresscode]
+		if(isnull(dresscode))
+			return
+
+	if(dresscode == "As Beefman...")
+		var/list/beefmen_paths = typesof(/datum/outfit/beefman)
+		var/list/beefmen_outfits = list()
+		for(var/datum/outfit/path as anything in beefmen_paths)
+			beefmen_outfits[initial(path.name)] = path
+
+		dresscode = input("Select beefman equipment", "Robust quick dress shop") as null|anything in sort_list(beefmen_outfits)
+		dresscode = beefmen_outfits[dresscode]
 		if(isnull(dresscode))
 			return
 
