@@ -264,8 +264,7 @@
 			antag_datum.create_wiz_team()
 		target.mind.add_antag_datum(/datum/antagonist/wizard_minion, antag_datum.wiz_team)
 
-	if(applied_outfit)
-		equip_revived_servant(target)
+	equip_revived_servant(target)
 
 	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
 
@@ -285,6 +284,8 @@
 	list_clear_nulls(spooky_scaries)
 
 /obj/item/necromantic_stone/proc/equip_revived_servant(mob/living/carbon/human/human)
+	if(!istype(applied_outfit, /datum/outfit))
+		return
 	for(var/obj/item/worn_item in human)
 		human.dropItemToGround(worn_item)
 
