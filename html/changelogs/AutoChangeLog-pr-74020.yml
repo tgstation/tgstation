@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "Stabilized gold extracts can now spawn basicmobs"

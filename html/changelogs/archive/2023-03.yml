@@ -561,3 +561,53 @@
   necromanceranne:
   - rscadd: Adds the Snatcherprod. Like a teleprod, but it steals stuff from peoples
       hands instead. Made using a telecrystal, rather than a bluespace crystal.
+2023-03-17:
+  DAKKA-WAAAGH:
+  - bugfix: Removes duplicate decals and replaces them with new ones that are more
+      efficient
+  Jolly:
+  - bugfix: Light office chairs and Dark office chair colors are, now actually reflective
+      of the name.
+  - bugfix: Left/Right office chairs should be symmetrical and no longer be one pixel
+      off when flipped.
+  - bugfix: The directional states for the toppled wooden chair sprites are now consistent.
+      You really can't tell visually, but its been fixed.
+  - imageadd: Using the new wooden chair sprites, there's now new toppled wooden chair
+      sprites. Go wild. Have a ballroom brawl or something.
+  LT3:
+  - bugfix: Tramstation xenobio now has slimes
+  Melbert:
+  - bugfix: Lead batteries now start partially drained as intended.
+  Profakos:
+  - bugfix: Your species will no longer get deleted if a changeling  who copied you
+      is deleted from existence
+  SyncIt21:
+  - rscadd: suit storage unit circuit boards to engineering & science department circuit
+      printers.
+  - rscadd: freezer cabinet as a craftable & destructible item.
+  - qol: flood light can now be deconstructed rather than destroyed/thrown away.
+  - bugfix: area machinery from breaking after creating & modifying areas via the
+      station blueprints.
+  - refactor: turfs are cannonized from areas during creation/editing operations &
+      empty areas are deleted
+  - refactor: removed duplicate Initialize() from light switch
+  - refactor: arcd has all upgrades installed
+  ZephyrTFA:
+  - bugfix: airlocks will no longer shock you when using the rust mansus grip to destroy
+      them
+  - bugfix: Stabilized Orange extracts are no longer able to cool you from any temperature
+      instantly
+  - bugfix: Changelog link for org members works again
+  atosti:
+  - bugfix: the jobs columns in the View Crew Manifest window are now uniformly aligned
+      across department headers
+  - bugfix: extremely long crewmember names are now truncated in the default view
+      for the Crew Manifest window
+  mc-oofert:
+  - bugfix: Borg synthesizers will no longer remain on the status panel if a borg
+      changes modules
+  - bugfix: Stabilized gold extracts can now spawn basicmobs
+  - bugfix: All CTF windows are now indestructible, fixes breaking into space during
+      CTF.
+  - bugfix: Turrets will now shoot basicmobs such as carp
+  - bugfix: Explosive holoparasites no longer runtime if they plant bombs

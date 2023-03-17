@@ -1,0 +1,4 @@
+author: "Jolly"
+delete-after: True
+changes:
+  - rscadd: "CTF has a \"new\" map: ctf_turbine! I hope you like 24/7 TDM where the objective is secondary."

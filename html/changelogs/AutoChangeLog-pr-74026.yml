@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - bugfix: "airlocks will no longer shock you when using the rust mansus grip to destroy them"

@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - rscadd: "suit storage unit circuit boards to engineering & science department circuit printers."
-  - rscadd: "freezer cabinet as a craftable & destructible item."
-  - qol: "flood light can now be deconstructed rather than destroyed/thrown away."
