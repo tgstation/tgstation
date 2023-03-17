@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Heretic sacrificing now checks both the last mind to inhabit the body as well as the current mind when checking for high value targets"
