@@ -356,8 +356,11 @@
 	if(draw_layer != bitflag_to_layer(color_swapped_layer))
 		return ..()
 
-	var/list/rgb_list = rgb2num(draw_color)
-	overlay.color = rgb(color_inverse_base - rgb_list[1], color_inverse_base - rgb_list[2], color_inverse_base - rgb_list[3]) //inversa da color
+	if(!isnull(draw_color))
+		var/list/rgb_list = rgb2num(draw_color)
+		overlay.color = rgb(color_inverse_base - rgb_list[1], color_inverse_base - rgb_list[2], color_inverse_base - rgb_list[3]) //inversa da color
+	else
+		overlay.color = null
 
 /datum/bodypart_overlay/mutant/pod_hair/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))

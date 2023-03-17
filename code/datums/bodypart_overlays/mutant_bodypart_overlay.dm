@@ -94,8 +94,13 @@
 
 ///Give the organ its color. Force will override the existing one.
 /datum/bodypart_overlay/mutant/proc/inherit_color(obj/item/bodypart/ownerlimb, force)
-	if(draw_color && !force)
-		return
+	if(isnull(ownerlimb))
+		draw_color = null
+		return TRUE
+
+	if(!isnull(draw_color) && !force)
+		return FALSE
+
 	switch(color_source)
 		if(ORGAN_COLOR_OVERRIDE)
 			draw_color = override_color(ownerlimb.draw_color)
@@ -106,6 +111,7 @@
 				return
 			var/mob/living/carbon/human/human_owner = ownerlimb.owner
 			draw_color = human_owner.hair_color
+
 	return TRUE
 
 ///Sprite accessories are singletons, stored list("Big Snout" = instance of /datum/sprite_accessory/snout/big), so here we get that singleton
