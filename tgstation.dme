@@ -5128,6 +5128,7 @@
 #include "monkestation\code\__HELPERS\mobs.dm"
 #include "monkestation\code\modules\client\preferences\species_features\ipc.dm"
 #include "monkestation\code\modules\client\preferences\species_features\simians.dm"
+#include "monkestation\code\modules\clothing\head\misc.dm"
 #include "monkestation\code\modules\clothing\spacesuits\hardsuits\_armor.dm"
 #include "monkestation\code\modules\clothing\spacesuits\hardsuits\_hardsuit.dm"
 #include "monkestation\code\modules\clothing\spacesuits\hardsuits\_helmet.dm"
