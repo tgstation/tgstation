@@ -7920,15 +7920,12 @@
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "crQ" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "crS" = (
@@ -16353,10 +16350,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"eVv" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron,
-/area/station/commons/locker)
 "eVy" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
@@ -31015,6 +31008,10 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/maintenance/port/fore)
+"jBJ" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/station/commons/locker)
 "jBR" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/heater{
 	dir = 8
@@ -226305,9 +226302,9 @@ oRM
 oel
 qnj
 tTT
-eVv
-eVv
-eVv
+jBJ
+jBJ
+jBJ
 cBh
 tOw
 iKX
@@ -226562,8 +226559,8 @@ oRM
 qYR
 qnj
 iOU
-eVv
-eVv
+jBJ
+jBJ
 xcj
 oYv
 tOw
@@ -226819,8 +226816,8 @@ aJA
 kHu
 qnj
 xZQ
-eVv
-eVv
+jBJ
+jBJ
 dVj
 siX
 wpc
@@ -227076,7 +227073,7 @@ aJA
 svP
 qnj
 oOh
-eVv
+jBJ
 xcj
 ubH
 swz
