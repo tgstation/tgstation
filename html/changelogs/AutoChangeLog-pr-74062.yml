@@ -1,0 +1,4 @@
+author: "DAKKA-WAAAGH"
+delete-after: True
+changes:
+  - bugfix: "Fixed duplicate tile decals and made tile decal shapes more efficient"
