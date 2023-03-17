@@ -9,7 +9,7 @@
 	antag_flag = ROLE_DARKSPAWN
 	antag_datum = /datum/antagonist/darkspawn
 	minimum_required_age = 20
-	protected_roles = list(JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_DETECTIVE, JOB_HEAD_OF_SECURITY, JOB_CAPTAIN)
+	protected_roles = list(JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_DETECTIVE, JOB_HEAD_OF_SECURITY, JOB_CAPTAIN, JOB_PRISONER)
 	restricted_roles = list(JOB_AI, JOB_CYBORG)
 	required_candidates = 3
 	weight = 3
