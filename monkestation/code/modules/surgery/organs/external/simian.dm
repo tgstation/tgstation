@@ -1,7 +1,7 @@
 /obj/item/organ/external/tail/simian
 	name = "simian tail"
 	desc = "A severed simian tail. Somewhere, no doubt, a simian hater is very pleased with themselves."
-	preference = "feature_monkey_tail"
+	preference = "feature_tail_monkey"
 	icon_state = "tail"
 
 
