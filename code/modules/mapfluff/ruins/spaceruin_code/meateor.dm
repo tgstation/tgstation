@@ -97,7 +97,7 @@
 	balloon_alert(user, "slicing...")
 	if (!do_after(user, 3 SECONDS, target = src))
 		return
-	take_damage(max_integrity, BRUTE)
+	take_damage(max_integrity)
 
 /obj/structure/meateor_fluff/flesh_pod/atom_destruction(damage_flag)
 	new stored_organ(loc)
