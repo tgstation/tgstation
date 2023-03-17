@@ -98,7 +98,7 @@
 		draw_color = null
 		return TRUE
 
-	if(!isnull(draw_color) && !force)
+	if(!draw_color && !force)
 		return FALSE
 
 	switch(color_source)
