@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	AddElement(/datum/element/strippable, GLOB.strippable_alien_humanoid_items)
 
 /mob/living/carbon/alien/adult/create_internal_organs()
-	internal_organs += new /obj/item/organ/internal/stomach/alien()
+	organs += new /obj/item/organ/internal/stomach/alien()
 	return ..()
 
 /mob/living/carbon/alien/adult/cuff_resist(obj/item/I)

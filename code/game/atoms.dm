@@ -346,13 +346,13 @@
 	attack_hand_interact = TRUE,
 	list/canhold,
 	list/canthold,
-	type = /datum/storage,
+	storage_type = /datum/storage,
 )
 
 	if(atom_storage)
 		QDEL_NULL(atom_storage)
 
-	atom_storage = new type(src, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, collection_mode, attack_hand_interact)
+	atom_storage = new storage_type(src, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, collection_mode, attack_hand_interact)
 
 	if(canhold || canthold)
 		atom_storage.set_holdable(canhold, canthold)
@@ -810,9 +810,13 @@
 			SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 
 		var/list/new_overlays = update_overlays(updates)
-		if(managed_overlays)
-			cut_overlay(managed_overlays)
-			managed_overlays = null
+		if (managed_overlays)
+			if (length(overlays) == (islist(managed_overlays) ? length(managed_overlays) : 1))
+				overlays = null
+				POST_OVERLAY_CHANGE(src)
+			else
+				cut_overlay(managed_overlays)
+				managed_overlays = null
 		if(length(new_overlays))
 			if (length(new_overlays) == 1)
 				managed_overlays = new_overlays[1]

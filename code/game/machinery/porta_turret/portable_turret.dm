@@ -435,11 +435,11 @@ DEFINE_BITFIELD(turret_flags, list(
 			continue
 
 		if(turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS)//if it's set to check for simple animals
-			if(isanimal(A))
-				var/mob/living/simple_animal/SA = A
-				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
+			if(isanimal_or_basicmob(A))
+				var/mob/living/animal = A
+				if(animal.stat || in_faction(animal)) //don't target if dead or in faction
 					continue
-				targets += SA
+				targets += animal
 				continue
 
 		if(issilicon(A))

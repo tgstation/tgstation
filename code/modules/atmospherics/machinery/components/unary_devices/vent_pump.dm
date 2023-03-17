@@ -93,13 +93,21 @@
 	disconnect_from_area()
 	assign_to_area()
 
-/obj/machinery/atmospherics/components/unary/vent_pump/proc/assign_to_area()
-	var/area/area = get_area(src)
-	area?.air_vents += src
+/obj/machinery/atmospherics/components/unary/vent_pump/on_enter_area(datum/source, area/area_to_register)
+	assign_to_area(area_to_register)
+	. = ..()
 
-/obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_from_area()
-	var/area/area = get_area(src)
-	area?.air_vents -= src
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/assign_to_area(area/target_area = get_area(src))
+	if(!isnull(target_area))
+		target_area.air_vents += src
+		update_appearance(UPDATE_NAME)
+
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_from_area(area/target_area = get_area(src))
+	target_area?.air_vents -= src
+
+/obj/machinery/atmospherics/components/unary/vent_pump/on_exit_area(datum/source, area/area_to_unregister)
+	. = ..()
+	disconnect_from_area(area_to_unregister)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
 	cut_overlays()
@@ -193,8 +201,7 @@
 	. = ..()
 	if(override_naming)
 		return
-	var/area/vent_area = get_area(src)
-	name = "\proper [vent_area.name] [name] [id_tag]"
+	name = "\proper [get_area_name(src)] [name] [id_tag]"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/welder)
 	..()

@@ -1,0 +1,6 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - qol: "added tooltips for pneumatic cannon. Also changed powerfist's tooltips slightly."
+  - bugfix: "fixed that you can't put wrench in pneumatic cannon."
+  - bugfix: "fixed that you can manipulate with pie gun as if it's a normal pneumatic cannon (adjust air tank, wrench it's output level's and etc.)"

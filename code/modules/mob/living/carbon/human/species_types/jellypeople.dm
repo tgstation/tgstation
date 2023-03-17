@@ -1,3 +1,8 @@
+///The rate at which slimes regenerate their jelly normally
+#define JELLY_REGEN_RATE 1.5
+///The rate at which slimes regenerate their jelly when they completely run out of it and start taking damage, usually after having cannibalized all their limbs already
+#define JELLY_REGEN_RATE_EMPTY 2.5
+
 /datum/species/jelly
 	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
 	name = "\improper Jellyperson"
@@ -17,6 +22,7 @@
 	mutantheart = null
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
+	blood_deficiency_drain_rate = JELLY_REGEN_RATE + BLOOD_DEFICIENCY_MODIFIER
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	liked_food = MEAT | BUGS
 	toxic_food = NONE
@@ -56,13 +62,13 @@
 		return
 
 	if(!H.blood_volume)
-		H.blood_volume += 2.5 * delta_time
+		H.blood_volume += JELLY_REGEN_RATE_EMPTY * delta_time
 		H.adjustBruteLoss(2.5 * delta_time)
 		to_chat(H, span_danger("You feel empty!"))
 
 	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-			H.blood_volume += 1.5 * delta_time
+			H.blood_volume += JELLY_REGEN_RATE * delta_time
 			H.adjust_nutrition(-1.25 * delta_time)
 
 	if(H.blood_volume < BLOOD_VOLUME_OKAY)
@@ -788,3 +794,6 @@
 		return FALSE
 
 	return TRUE
+	
+#undef JELLY_REGEN_RATE
+#undef JELLY_REGEN_RATE_EMPTY

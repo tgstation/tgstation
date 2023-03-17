@@ -32,8 +32,8 @@
 	var/list/firedoors
 	///A list of firelocks currently active. Used by fire alarms when setting their icons.
 	var/list/active_firelocks
-	///A list of all fire alarms in this area. Used by fire locks and burglar alarms to tell the fire alarm to change its icon.
-	var/list/firealarms
+	///A list of all fire alarms in this area. Used by firelocks and burglar alarms to change icon state.
+	var/list/firealarms = list()
 	///Alarm type to count of sources. Not usable for ^ because we handle fires differently
 	var/list/active_alarms = list()
 	///List of all lights in our area
@@ -278,11 +278,24 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/Destroy()
 	if(GLOB.areas_by_type[type] == src)
 		GLOB.areas_by_type[type] = null
-	GLOB.sortedAreas -= src
-	GLOB.areas -= src
+	//this is not initialized until get_sorted_areas() is called so we have to do a null check
+	if(!isnull(GLOB.sortedAreas))
+		GLOB.sortedAreas -= src
+	//just for sanity sake cause why not
+	if(!isnull(GLOB.areas))
+		GLOB.areas -= src
+	//machinery cleanup
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(alarm_manager)
+	firedoors = null
+	//atmos cleanup
+	firealarms = null
 	air_vents = null
+	air_scrubbers = null
+	//turf cleanup
+	contained_turfs = null
+	turfs_to_uncontain = null
+	//parent cleanup
 	return ..()
 
 /**
@@ -539,3 +552,15 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /// Called when a living mob that spawned here, joining the round, receives the player client.
 /area/proc/on_joining_game(mob/living/boarder)
 	return
+
+/**
+ * Returns the name of an area, with the original name if the area name has been changed.
+ *
+ * If an area has not been renamed, returns the area name. If it has been modified (by blueprints or other means)
+ * returns the current name, as well as the initial value, in the format of [Current Location Name (Original Name)]
+ */
+
+/area/proc/get_original_area_name()
+	if(name == initial(name))
+		return name
+	return "[name] ([initial(name)])"

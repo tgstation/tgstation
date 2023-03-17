@@ -119,8 +119,6 @@
 	var/is_operational = TRUE
 	var/wire_compatible = FALSE
 
-	/// stack components inside this machine. Will be initialized and cached only when displaying the parts
-	var/list/cached_stack_parts = null
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
 	var/panel_open = FALSE
 	var/state_open = FALSE
@@ -183,6 +181,7 @@
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
 		randomize_language_if_on_station()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_MACHINE, src)
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -191,7 +190,6 @@
 	power_change()
 	if(use_power == NO_POWER_USE)
 		return
-
 	update_current_power_usage()
 	setup_area_power_relationship()
 
@@ -1199,3 +1197,7 @@
 	if(isliving(user))
 		last_used_time = world.time
 		last_user_mobtype = user.type
+
+/// Called if this machine is supposed to be a sabotage machine objective.
+/obj/machinery/proc/add_as_sabotage_target()
+	return
