@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes:
+  - balance: "The inorganic biology symptom now adds both MOB_MINERAL and MOB_ROBOTIC to a virus's list of infectable biotypes instead of only MOB_MINERAL. Currently, androids are the only species this change affects."
