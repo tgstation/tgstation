@@ -130,11 +130,12 @@ Stabilized extracts:
 /obj/item/slimecross/stabilized/gold/proc/generate_mobtype()
 	var/static/list/mob_spawn_pets = list()
 	if(!length(mob_spawn_pets))
-		for(var/T in typesof(/mob/living/simple_animal))
-			var/mob/living/simple_animal/SA = T
-			switch(initial(SA.gold_core_spawnable))
-				if(FRIENDLY_SPAWN)
-					mob_spawn_pets += T
+		for(var/mob/living/simple_animal/animal as anything in subtypesof(/mob/living/simple_animal))
+			if(initial(animal.gold_core_spawnable) == FRIENDLY_SPAWN)
+				mob_spawn_pets += animal
+		for(var/mob/living/basic/basicanimal as anything in subtypesof(/mob/living/basic))
+			if(initial(basicanimal.gold_core_spawnable) == FRIENDLY_SPAWN)
+				mob_spawn_pets += basicanimal
 	mob_type = pick(mob_spawn_pets)
 
 /obj/item/slimecross/stabilized/gold/Initialize(mapload)

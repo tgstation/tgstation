@@ -40,11 +40,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "bI" = (
-/obj/structure/window/reinforced/fulltile{
-	max_integrity = 5000;
-	name = "hardened window";
-	atom_integrity = 5000
-	},
+/obj/effect/spawner/structure/window/reinforced/indestructible,
 /turf/open/floor/plating,
 /area/centcom/ctf)
 "cj" = (
