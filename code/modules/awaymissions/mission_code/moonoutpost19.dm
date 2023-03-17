@@ -1,5 +1,12 @@
 // moonoutpost19
 
+/obj/structure/fluff/minepost
+	name = "wooden post"
+	desc = "A sturdy space-wood post, capable of holding up a mineshaft."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "minepost"
+	density = FALSE
+
 //Areas
 /area/awaymission/moonoutpost19
 	name = "space"

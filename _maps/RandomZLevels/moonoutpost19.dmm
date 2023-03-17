@@ -34,20 +34,6 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
-"ao" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/power/shuttle_engine/propulsion/burst/right{
-	dir = 4
-	},
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
 "ar" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/tile/dark/opposingcorners{
@@ -1520,15 +1506,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
-"fe" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/mineral/processing_unit_console,
-/turf/open/misc/asteroid/basalt,
-/area/awaymission/moonoutpost19/main)
 "ff" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
@@ -3544,26 +3521,6 @@
 	dir = 5
 	},
 /area/awaymission/moonoutpost19/research)
-"or" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/closet/secure_closet/freezer{
-	locked = 0;
-	name = "refrigerator";
-	req_access = list("away_maintenance")
-	},
-/obj/item/reagent_containers/condiment/milk,
-/obj/item/reagent_containers/condiment/milk,
-/obj/item/reagent_containers/condiment/milk,
-/obj/item/storage/fancy/egg_box,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "ot" = (
 /obj/item/stack/ore/iron{
 	pixel_x = -3;
@@ -3633,27 +3590,6 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/main)
-"pb" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
-	id = "Awaybiohazard";
-	layer = 2.9;
-	name = "Acid-Proof Biohazard Containment Door"
-	},
-/obj/effect/turf_decal/delivery,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/power/shuttle_engine/propulsion/burst/left{
-	dir = 4
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
 "pc" = (
 /turf/open/floor/carpet/orange,
 /area/awaymission/moonoutpost19/arrivals)
@@ -3687,26 +3623,6 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
-"pq" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/reagent_containers/condiment/peppermill{
-	pixel_x = 3
-	},
-/obj/item/reagent_containers/condiment/saltshaker{
-	pixel_x = -3
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = "awaykitchen";
-	name = "Serving Hatch"
-	},
-/turf/closed/mineral/random,
-/area/awaymission/moonoutpost19/main)
 "pr" = (
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/moonoutpost19/main)
@@ -3734,21 +3650,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"pF" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/computer/monitor{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "pH" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -4004,21 +3905,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"sL" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/airalarm/directional/east{
-	pixel_x = 23;
-	req_access = list("syndicate")
-	},
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "sN" = (
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien/drone{
@@ -4101,20 +3987,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"ts" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/closed/wall,
-/area/awaymission/moonoutpost19/research)
 "tv" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -4272,26 +4144,6 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"ul" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/reagent_containers/cup/rag{
-	pixel_y = 5
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = "awaykitchen";
-	name = "Serving Hatch"
-	},
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "un" = (
 /obj/machinery/door/airlock/medical{
 	name = "Research Division";
@@ -4443,22 +4295,6 @@
 	},
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/freezer{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
-"vD" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
@@ -5019,21 +4855,6 @@
 	dir = 5
 	},
 /area/awaymission/moonoutpost19/research)
-"zL" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/table,
-/obj/item/computer_disk/ordnance,
-/obj/item/computer_disk/ordnance,
-/obj/machinery/firealarm/directional/north,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "zN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/ash,
@@ -5189,29 +5010,6 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
-"Bh" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/table,
-/obj/item/reagent_containers/cup/glass/bottle/whiskey{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass{
-	pixel_x = 6;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass{
-	pixel_x = 3
-	},
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "Bk" = (
 /obj/machinery/power/shieldwallgen/unlocked,
 /obj/structure/cable,
@@ -5631,31 +5429,6 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
-"Eo" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/research{
-	density = 0;
-	icon_state = "open";
-	name = "Xenobiology Lab";
-	opacity = 0
-	},
-/obj/effect/mapping_helpers/atom_injector/obj_flag{
-	inject_flags = 1;
-	target_type = /obj/machinery/door/airlock
-	},
-/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
-/obj/structure/cable,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "Eq" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -5667,53 +5440,6 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"Es" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/power/apc/highcap/ten_k/directional/south{
-	locked = 0;
-	name = "Worn Out APC";
-	start_charge = 100
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
-"Ew" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external/ruin{
-	density = 0;
-	icon_state = "open";
-	opacity = 0
-	},
-/obj/effect/mapping_helpers/atom_injector/obj_flag{
-	inject_flags = 1;
-	target_type = /obj/machinery/door/airlock
-	},
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/effect/turf_decal/sand/plating,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "EB" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/stripes/line,
@@ -5781,23 +5507,6 @@
 /obj/effect/turf_decal/lunar_sand/plating,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/main)
-"Fc" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/airalarm/unlocked{
-	dir = 1;
-	pixel_y = 23;
-	req_access = list("syndicate")
-	},
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
 "Ff" = (
@@ -5940,14 +5649,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/power/shuttle_engine/propulsion/burst/right{
-	dir = 4
 	},
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
@@ -6212,29 +5913,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/closed/wall/r_wall,
 /area/awaymission/moonoutpost19/research)
-"HL" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/command{
-	density = 0;
-	icon_state = "open";
-	name = "Research Director's Office";
-	opacity = 0
-	},
-/obj/effect/mapping_helpers/atom_injector/obj_flag{
-	inject_flags = 1;
-	target_type = /obj/machinery/door/airlock
-	},
-/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
 "HO" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/chair/wood,
@@ -6381,96 +6059,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
-"Jx" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external/ruin{
-	density = 0;
-	icon_state = "open";
-	opacity = 0
-	},
-/obj/effect/mapping_helpers/atom_injector/obj_flag{
-	inject_flags = 1;
-	target_type = /obj/machinery/door/airlock
-	},
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
-"JJ" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/closet/secure_closet{
-	icon_state = "sec";
-	name = "security officer's locker";
-	req_access = list("away_maintenance")
-	},
-/obj/item/clothing/suit/armor/vest,
-/obj/item/reagent_containers/spray/pepper,
-/obj/item/grenade/flashbang,
-/obj/item/storage/belt/security,
-/obj/item/reagent_containers/cup/glass/bottle/beer{
-	pixel_x = -3;
-	pixel_y = -2
-	},
-/obj/machinery/airalarm/unlocked{
-	dir = 1;
-	pixel_y = 23;
-	req_access = null
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
-"JR" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/machinery/airalarm/directional/north{
-	pixel_y = 23;
-	req_access = list("syndicate")
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/closed/mineral/random,
-/area/awaymission/moonoutpost19/main)
-"JW" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/table,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/clothing/suit/apron/surgical,
-/obj/structure/alien/weeds,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "Kc" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /turf/open/floor/iron{
@@ -6555,19 +6143,6 @@
 	},
 /turf/open/floor/carpet/royalblue,
 /area/awaymission/moonoutpost19/arrivals)
-"KM" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/closet/crate/bin,
-/obj/item/clothing/gloves/latex,
-/obj/item/trash/chips,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/broken/directional/north,
-/turf/closed/wall/r_wall,
-/area/awaymission/moonoutpost19/research)
 "KU" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
@@ -6725,15 +6300,6 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/hive)
-"LM" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/mineral/stacking_unit_console,
-/turf/open/misc/asteroid/basalt,
-/area/awaymission/moonoutpost19/main)
 "LZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/ammo_casing/a357{
@@ -6748,36 +6314,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"Ma" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/chair/wood,
-/obj/machinery/airalarm/directional/west{
-	pixel_x = -23;
-	req_access = list("syndicate")
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
-"Mf" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/computer/monitor,
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/obj/structure/cable,
-/turf/closed/mineral/random,
-/area/awaymission/moonoutpost19/main)
 "Ml" = (
 /obj/structure/alien/weeds,
 /obj/structure/flora/lunar_plant,
@@ -6807,32 +6343,6 @@
 	},
 /turf/open/floor/carpet/red,
 /area/awaymission/moonoutpost19/arrivals)
-"Mw" = (
-/obj/structure/lattice/catwalk,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/public/glass{
-	density = 0;
-	icon_state = "open";
-	name = "Dormitories"
-	},
-/obj/effect/mapping_helpers/atom_injector/obj_flag{
-	inject_flags = 1;
-	target_type = /obj/machinery/door/airlock
-	},
-/obj/item/stack/rods,
-/obj/item/shard{
-	icon_state = "small"
-	},
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "MG" = (
 /obj/structure/grille/broken,
 /obj/item/stack/rods{
@@ -6851,30 +6361,6 @@
 	},
 /turf/open/misc/asteroid/moon/dug,
 /area/awaymission/moonoutpost19/main)
-"MK" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
-	id = "Awaybiohazard";
-	layer = 2.9;
-	name = "Acid-Proof Biohazard Containment Door"
-	},
-/obj/effect/turf_decal/delivery,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
 "MN" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -6997,23 +6483,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
-"Nu" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/power/apc/highcap/ten_k/directional/north{
-	locked = 0;
-	name = "Worn Out APC";
-	start_charge = 100
-	},
-/obj/structure/cable,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "Nz" = (
 /obj/effect/baseturf_helper/asteroid/moon,
 /turf/open/misc/asteroid/moon{
@@ -7074,26 +6543,6 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
-"NY" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/closet/secure_closet{
-	locked = 0;
-	name = "kitchen Cabinet";
-	req_access = list("away_maintenance")
-	},
-/obj/item/reagent_containers/condiment/flour,
-/obj/item/reagent_containers/condiment/flour,
-/obj/item/reagent_containers/condiment/sugar,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "Od" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -7381,31 +6830,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/plastic,
 /area/awaymission/moonoutpost19/arrivals)
-"PL" = (
-/obj/structure/cable,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock{
-	density = 0;
-	icon_state = "open";
-	id_tag = "awaydorm4";
-	name = "Dorm 1";
-	opacity = 0
-	},
-/obj/effect/mapping_helpers/atom_injector/obj_flag{
-	inject_flags = 1;
-	target_type = /obj/machinery/door/airlock
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "PR" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -7435,23 +6859,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
-"PY" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/light/directional/east,
-/obj/machinery/airalarm/directional/east{
-	pixel_x = 23;
-	req_access = list("syndicate")
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "Qc" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "awaymission19atvs"
@@ -8272,64 +7679,9 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
-"VX" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/airalarm/directional/north{
-	pixel_y = 23;
-	req_access = list("syndicate")
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
-"Wb" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/airalarm/directional/east{
-	pixel_x = 23;
-	req_access = list("syndicate")
-	},
-/obj/machinery/light/broken/directional/east,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "Wh" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /turf/open/floor/pod/light,
-/area/awaymission/moonoutpost19/main)
-"Wm" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/table,
-/obj/item/book/manual/wiki/barman_recipes{
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/cup/glass/shaker,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
 /area/awaymission/moonoutpost19/main)
 "Wn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -8346,24 +7698,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"Wr" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/power/apc/highcap/ten_k/directional/east{
-	locked = 0;
-	name = "Worn Out APC";
-	start_charge = 100
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "Ww" = (
 /obj/structure/sign/departments/science{
 	pixel_y = 32
@@ -8371,17 +7705,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple/anticorner{
 	dir = 1
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -8436,24 +7759,6 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/main)
-"WL" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/closet/secure_closet{
-	icon_state = "rd";
-	name = "research director's locker";
-	req_access = list("away_maintenance")
-	},
-/obj/item/storage/backpack/satchel/science,
-/obj/item/clothing/gloves/latex,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "WM" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/turf_decal/siding/purple{
@@ -8502,26 +7807,6 @@
 "Xr" = (
 /obj/machinery/power/shieldwallgen/unlocked,
 /obj/structure/cable,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/robot_debris,
-/obj/effect/decal/cleanable/oil,
-/obj/item/storage/medkit/regular{
-	empty = 1;
-	name = "First-Aid (empty)"
-	},
-/obj/item/healthanalyzer{
-	pixel_x = 6;
-	pixel_y = -5
-	},
-/obj/item/assembly/prox_sensor{
-	pixel_x = -5;
-	pixel_y = -2
-	},
-/obj/item/bodypart/arm/left/robot,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -8844,14 +8129,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/power/shuttle_engine/propulsion/burst/left{
-	dir = 4
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -36045,7 +35322,7 @@ px
 px
 px
 px
-WL
+px
 px
 eI
 Os
@@ -36298,11 +35575,11 @@ px
 px
 px
 px
-pF
 px
 px
 px
-zL
+px
+px
 px
 eJ
 fa
@@ -37074,7 +36351,7 @@ px
 px
 Ll
 ee
-HL
+eu
 eK
 fd
 fv
@@ -37085,12 +36362,12 @@ gR
 gR
 gR
 fk
-vD
-MK
+hj
+hN
 ea
 HD
 yR
-ts
+eI
 Ww
 jZ
 ky
@@ -37342,8 +36619,8 @@ gS
 hj
 hj
 hj
-ao
-pb
+hF
+hN
 un
 gp
 hz
@@ -37581,7 +36858,7 @@ px
 px
 px
 px
-JJ
+px
 px
 px
 px
@@ -38611,7 +37888,7 @@ px
 px
 px
 px
-Wr
+px
 px
 px
 dZ
@@ -38865,7 +38142,7 @@ px
 px
 px
 px
-Eo
+px
 px
 px
 px
@@ -39642,7 +38919,7 @@ px
 px
 px
 px
-KM
+ea
 ej
 ey
 Um
@@ -39897,7 +39174,7 @@ px
 px
 px
 px
-JW
+px
 px
 dZ
 Xr
@@ -41921,10 +41198,10 @@ px
 pr
 pr
 pr
-fe
 pr
 pr
-LM
+pr
+pr
 pr
 pr
 px
@@ -42440,10 +41717,10 @@ OZ
 OZ
 pr
 px
-Jx
+px
 px
 OZ
-Ew
+px
 Pr
 Pr
 px
@@ -42686,14 +41963,14 @@ px
 px
 dz
 qY
-VX
+px
 px
 px
 px
 px
 px
 OZ
-Wb
+px
 OZ
 px
 px
@@ -42948,7 +42225,7 @@ OZ
 OZ
 OZ
 OZ
-Mw
+OZ
 OZ
 OZ
 OZ
@@ -43248,7 +42525,7 @@ px
 px
 px
 px
-Nu
+px
 px
 px
 px
@@ -43461,12 +42738,12 @@ px
 Pr
 Pr
 px
-Fc
 px
 px
 px
 px
-Ma
+px
+px
 px
 Pr
 Pr
@@ -43721,7 +42998,7 @@ dz
 Pr
 Pr
 Pr
-PL
+Pr
 Pr
 Pr
 Pr
@@ -43977,7 +43254,7 @@ px
 px
 px
 px
-Es
+px
 px
 px
 px
@@ -44486,7 +43763,6 @@ px
 px
 px
 px
-PY
 px
 px
 px
@@ -44494,7 +43770,8 @@ px
 px
 px
 px
-sL
+px
+px
 px
 px
 px
@@ -45259,7 +44536,7 @@ px
 dA
 dA
 dA
-Mf
+dA
 dA
 dA
 dA
@@ -45773,7 +45050,7 @@ px
 px
 dA
 dA
-JR
+dA
 dA
 Rb
 dA
@@ -46331,9 +45608,9 @@ dA
 dA
 dA
 dA
-pq
+dA
 px
-ul
+px
 px
 px
 px
@@ -46846,14 +46123,14 @@ Bb
 px
 px
 px
-Wm
 px
 px
 px
 px
 px
 px
-Bh
+px
+px
 px
 px
 px
@@ -47880,7 +47157,7 @@ px
 px
 px
 px
-NY
+px
 px
 px
 px
@@ -48394,7 +47671,7 @@ px
 px
 px
 px
-or
+px
 px
 px
 px
