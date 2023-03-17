@@ -356,7 +356,7 @@
 	if(draw_layer != bitflag_to_layer(color_swapped_layer))
 		return ..()
 
-	if(!isnull(draw_color))
+	if(draw_color) // can someone explain to me why draw_color is allowed to EVER BE AN EMPTY STRING
 		var/list/rgb_list = rgb2num(draw_color)
 		overlay.color = rgb(color_inverse_base - rgb_list[1], color_inverse_base - rgb_list[2], color_inverse_base - rgb_list[3]) //inversa da color
 	else
