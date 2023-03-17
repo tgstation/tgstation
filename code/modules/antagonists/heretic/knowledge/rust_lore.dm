@@ -67,6 +67,12 @@
 /datum/heretic_knowledge/rust_fist/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
 	SIGNAL_HANDLER
 
+	// Rusting an airlock causes it to lose power, mostly to prevent the airlock from shocking you.
+	// This is a bit of a hack, but fixing this would require the enture wire cut/pulse system to be reworked.
+	if(istype(target, /obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/airlock = target
+		airlock.loseMainPower()
+
 	target.rust_heretic_act()
 	return COMPONENT_USE_HAND
 
