@@ -260,7 +260,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	icon_state = "moon"
 	base_icon_state = "moon"
 	floor_variance = 40
-	digResult = /obj/item/stack/ore/glass/basalt
+	dig_result = /obj/item/stack/ore/glass/basalt
 	broken_state = "moon_dug"
 
 /turf/open/misc/asteroid/moon/dug //When you want one of these to be already dug.

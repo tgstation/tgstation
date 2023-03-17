@@ -471,7 +471,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bS" = (
-/obj/machinery/computer/monitor/secret,
+/obj/machinery/computer/monitor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -693,7 +693,7 @@
 	density = 0;
 	icon_state = "open";
 	name = "Dormitories";
-	set_obj_flags = "EMAGGED"
+	!INVALID_VAR! = "EMAGGED"
 	},
 /obj/item/stack/rods,
 /obj/item/shard{
@@ -794,7 +794,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "cD" = (
 /obj/machinery/mineral/processing_unit_console{
-	machinedir = 8
+	!INVALID_VAR! = 8
 	},
 /turf/closed/wall,
 /area/awaymission/moonoutpost19/syndicate)
@@ -947,7 +947,7 @@
 	id_tag = "awaydorm4";
 	name = "Dorm 1";
 	opacity = 0;
-	set_obj_flags = "EMAGGED"
+	!INVALID_VAR! = "EMAGGED"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
@@ -1034,7 +1034,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "df" = (
 /obj/machinery/mineral/stacking_unit_console{
-	machinedir = 8
+	!INVALID_VAR! = 8
 	},
 /turf/closed/wall,
 /area/awaymission/moonoutpost19/syndicate)
@@ -1961,7 +1961,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gA" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -2099,7 +2099,7 @@
 /area/awaymission/moonoutpost19/research)
 "gV" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/suit/apron/surgical,
 /obj/structure/alien/weeds,
@@ -2182,7 +2182,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "hn" = (
 /obj/structure/closet/crate/bin,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/trash/chips,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/north,
@@ -2496,10 +2496,10 @@
 "jm" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 3
 	},
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -3
 	},
 /obj/machinery/door/poddoor/shutters{
@@ -2744,7 +2744,7 @@
 "kn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/glass/rag{
+/obj/item/reagent_containers/cup/rag{
 	pixel_y = 5
 	},
 /obj/machinery/door/poddoor/shutters{
@@ -2989,7 +2989,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "lD" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -3090,7 +3090,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
 "lY" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	desc = "Someone's last meal. He went out with a bang.";
 	pixel_x = 16;
 	pixel_y = -10
@@ -3239,15 +3239,15 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mE" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 3
 	},
 /turf/open/floor/iron/dark,
@@ -3542,13 +3542,13 @@
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
 	name = "security officer's locker";
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/item/clothing/suit/armor/vest,
 /obj/item/reagent_containers/spray/pepper,
 /obj/item/grenade/flashbang,
 /obj/item/storage/belt/security,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = -3;
 	pixel_y = -2
 	},
@@ -3745,7 +3745,7 @@
 "ri" = (
 /obj/machinery/door/airlock{
 	name = "Kitchen Cold Room";
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -3766,7 +3766,7 @@
 "rn" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/item/clothing/under/suit/navy,
 /turf/open/floor/carpet/orange,
@@ -3861,7 +3861,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "sk" = (
-/obj/item/reagent_containers/food/drinks/trophy/gold_cup{
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
 	desc = "For continued excellence in the field of archaeology.";
 	name = "first place trophy"
 	},
@@ -3891,7 +3891,7 @@
 	icon_state = "science";
 	locked = 0;
 	name = "scientist's locker";
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/item/clothing/suit/toggle/labcoat,
 /turf/open/floor/iron{
@@ -4089,7 +4089,7 @@
 /obj/machinery/power/apc/highcap/ten_k{
 	name = "Worn-out APC";
 	pixel_y = -25;
-	req_access_txt = "150";
+	!INVALID_VAR! = "150";
 	start_charge = 0
 	},
 /obj/effect/turf_decal/tile/red,
@@ -4108,7 +4108,7 @@
 	desc = "A display case for prized possessions. It hasn't been cleaned in a while.";
 	name = "award display case"
 	},
-/obj/item/reagent_containers/food/drinks/trophy/silver_cup{
+/obj/item/reagent_containers/cup/glass/trophy/silver_cup{
 	desc = "Second place prize for excellence in archaeology. Wonder who got first place?";
 	name = "silver trophy (second place)"
 	},
@@ -4147,7 +4147,7 @@
 "un" = (
 /obj/machinery/door/airlock/medical{
 	name = "Research Division";
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/white{
@@ -4235,7 +4235,7 @@
 /area/awaymission/moonoutpost19/research)
 "uV" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
-	req_access_txt = "150"
+	!INVALID_VAR! = "150"
 	},
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/m9mm,
@@ -4322,7 +4322,7 @@
 /obj/structure/closet/secure_closet/freezer{
 	locked = 0;
 	name = "meat fridge";
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/item/food/meat/slab/monkey,
 /obj/item/food/meat/slab/monkey,
@@ -4366,8 +4366,8 @@
 	icon_state = "open";
 	name = "Research Director's Office";
 	opacity = 0;
-	req_access_txt = "201";
-	set_obj_flags = "EMAGGED"
+	!INVALID_VAR! = "201";
+	!INVALID_VAR! = "EMAGGED"
 	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -4425,8 +4425,8 @@
 /area/awaymission/moonoutpost19/research)
 "wN" = (
 /obj/structure/table,
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
-/obj/item/computer_hardware/hard_drive/portable/ordnance{
+/obj/item/computer_disk/ordnance,
+/obj/item/computer_disk/ordnance{
 	pixel_x = -4;
 	pixel_y = 2
 	},
@@ -4532,7 +4532,7 @@
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/research)
 "xR" = (
-/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/cup/bowl,
 /turf/open/misc/asteroid/moon{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -4562,7 +4562,7 @@
 "yj" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Power Maintenance";
-	req_access_txt = "150"
+	!INVALID_VAR! = "150"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating{
@@ -4804,13 +4804,13 @@
 /obj/structure/closet/secure_closet/freezer{
 	locked = 0;
 	name = "refrigerator";
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
-/obj/item/reagent_containers/food/condiment/milk{
+/obj/item/reagent_containers/condiment/milk{
 	pixel_x = 4
 	},
-/obj/item/reagent_containers/food/condiment/milk,
-/obj/item/reagent_containers/food/condiment/milk{
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/milk{
 	pixel_x = -3
 	},
 /obj/item/storage/fancy/egg_box,
@@ -4951,7 +4951,7 @@
 /obj/structure/closet/secure_closet{
 	icon_state = "science";
 	name = "scientist's locker";
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/item/clothing/suit/toggle/labcoat,
 /obj/item/tank/internals/oxygen,
@@ -4975,7 +4975,7 @@
 /obj/item/book/manual/wiki/barman_recipes{
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/drinks/shaker{
+/obj/item/reagent_containers/cup/glass/shaker{
 	pixel_x = 13
 	},
 /turf/open/floor/iron/cafeteria{
@@ -4997,8 +4997,8 @@
 	density = 0;
 	icon_state = "open";
 	opacity = 0;
-	req_access_txt = "150";
-	set_obj_flags = "EMAGGED"
+	!INVALID_VAR! = "150";
+	!INVALID_VAR! = "EMAGGED"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -5086,7 +5086,7 @@
 "BS" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	req_access_txt = "150"
+	!INVALID_VAR! = "150"
 	},
 /obj/item/stack/spacecash/c50,
 /turf/open/floor/wood{
@@ -5195,7 +5195,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/research)
 "CQ" = (
-/obj/structure/shuttle/engine/propulsion/burst/right{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 4
 	},
 /turf/open/misc/asteroid/moon{
@@ -5297,7 +5297,7 @@
 "Dq" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research Storage";
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
@@ -5308,7 +5308,7 @@
 /obj/machinery/airalarm/directional/north{
 	pixel_y = 23;
 	req_access = null;
-	req_access_txt = "150"
+	!INVALID_VAR! = "150"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -5387,7 +5387,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "Ec" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/machinery/duct,
 /turf/open/floor/plating{
@@ -5619,7 +5619,7 @@
 	pixel_x = -5;
 	pixel_y = -2
 	},
-/obj/item/bodypart/l_arm/robot,
+/obj/item/bodypart/arm/left/robot,
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
@@ -5645,7 +5645,7 @@
 "FT" = (
 /obj/machinery/door/airlock/medical{
 	name = "Research Division";
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -5659,7 +5659,7 @@
 /obj/machinery/airalarm/directional/west{
 	pixel_x = -23;
 	req_access = null;
-	req_access_txt = "150"
+	!INVALID_VAR! = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
@@ -5767,7 +5767,7 @@
 /obj/machinery/button/door/directional/west{
 	id = "Awaybiohazard";
 	name = "Biohazard Shutter Control";
-	req_access_txt = "101"
+	!INVALID_VAR! = "101"
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -5867,7 +5867,7 @@
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
 	req_access = null;
-	req_access_txt = "150"
+	!INVALID_VAR! = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron{
@@ -5896,10 +5896,10 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "HH" = (
+/obj/structure/alien/weeds/node,
 /mob/living/simple_animal/hostile/alien/drone{
 	plants_off = 1
 	},
-/obj/structure/alien/weeds/node,
 /turf/open/misc/asteroid/moon{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -5960,7 +5960,7 @@
 "Ig" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/item/clothing/under/misc/assistantformal,
 /turf/open/floor/carpet/red,
@@ -6249,7 +6249,7 @@
 /obj/machinery/door/window{
 	dir = 1;
 	name = "Gateway Access";
-	req_access_txt = "150"
+	!INVALID_VAR! = "150"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -6270,7 +6270,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "LF" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
@@ -6396,7 +6396,7 @@
 "MR" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/item/clothing/under/suit/burgundy,
 /turf/open/floor/carpet/royalblue,
@@ -6477,7 +6477,7 @@
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
 	req_access = null;
-	req_access_txt = "150"
+	!INVALID_VAR! = "150"
 	},
 /turf/open/floor/wood{
 	heat_capacity = 1e+006
@@ -6530,7 +6530,7 @@
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
 	req_access = null;
-	req_access_txt = "150"
+	!INVALID_VAR! = "150"
 	},
 /obj/machinery/light/broken/directional/east,
 /obj/effect/turf_decal/tile/red,
@@ -6614,10 +6614,10 @@
 /obj/structure/closet/secure_closet{
 	icon_state = "rd";
 	name = "research director's locker";
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/item/storage/backpack/satchel/science,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/effect/turf_decal/siding/purple{
 	dir = 9
 	},
@@ -6651,13 +6651,13 @@
 	id = "Awaybiohazard";
 	name = "Biohazard Shutter Control";
 	pixel_y = 8;
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/machinery/button/door{
 	id = "AwayRD";
 	name = "Privacy Shutter Control";
 	pixel_y = -2;
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/effect/turf_decal/tile/dark/opposingcorners{
 	dir = 1
@@ -6684,18 +6684,18 @@
 /area/awaymission/moonoutpost19/arrivals)
 "OV" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty{
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
 	pixel_x = -5;
 	pixel_y = 15
 	},
-/obj/item/reagent_containers/food/drinks/colocup{
+/obj/item/reagent_containers/cup/glass/colocup{
 	pixel_x = -9
 	},
 /obj/machinery/button/door{
 	id = "awaymission19atvs";
 	name = "Biohazard Shutter Control";
 	pixel_y = 8;
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /turf/open/floor/plastic,
 /area/awaymission/moonoutpost19/arrivals)
@@ -6727,7 +6727,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	name = "Gateway";
-	req_access_txt = "150"
+	!INVALID_VAR! = "150"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron{
@@ -6739,7 +6739,7 @@
 	dir = 1;
 	pixel_y = 23;
 	req_access = null;
-	req_access_txt = "150"
+	!INVALID_VAR! = "150"
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006;
@@ -7128,7 +7128,7 @@
 /obj/machinery/airalarm/directional/north{
 	pixel_y = 23;
 	req_access = null;
-	req_access_txt = "150"
+	!INVALID_VAR! = "150"
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -7207,8 +7207,8 @@
 	density = 0;
 	icon_state = "open";
 	opacity = 0;
-	req_access_txt = "150";
-	set_obj_flags = "EMAGGED"
+	!INVALID_VAR! = "150";
+	!INVALID_VAR! = "EMAGGED"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating{
@@ -7451,7 +7451,7 @@
 	name = "Containment Chamber Blast Doors";
 	pixel_x = 4;
 	pixel_y = -2;
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/machinery/button/ignition{
 	id = "awayxenobio";
@@ -7543,7 +7543,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "UU" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 4
 	},
 /turf/open/misc/asteroid/moon{
@@ -7605,7 +7605,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
 	name = "Kitchen";
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/iron/dark,
@@ -7843,7 +7843,7 @@
 "Xw" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Post";
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
@@ -7861,14 +7861,14 @@
 /obj/structure/closet/secure_closet{
 	locked = 0;
 	name = "kitchen Cabinet";
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
-/obj/item/reagent_containers/food/condiment/flour{
+/obj/item/reagent_containers/condiment/flour{
 	pixel_x = -4;
 	pixel_y = -4
 	},
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/condiment/sugar{
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/sugar{
 	pixel_x = 4;
 	pixel_y = 4
 	},
@@ -8064,7 +8064,7 @@
 /area/awaymission/moonoutpost19/main)
 "YU" = (
 /obj/machinery/vending/medical{
-	req_access_txt = "201"
+	!INVALID_VAR! = "201"
 	},
 /turf/open/floor/iron/white/side{
 	heat_capacity = 1e+006
@@ -8191,8 +8191,8 @@
 	icon_state = "open";
 	name = "Xenobiology Lab";
 	opacity = 0;
-	req_access_txt = "201";
-	set_obj_flags = "EMAGGED"
+	!INVALID_VAR! = "201";
+	!INVALID_VAR! = "EMAGGED"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron{
