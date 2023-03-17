@@ -242,18 +242,18 @@
 		to_chat(user, span_warning("This artifact can only affect the dead!"))
 		return
 
-///	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
-///		if(ghost.mind && ghost.mind.current == target && ghost.client)  //the dead mobs list can contain clientless mobs
-///			ghost.reenter_corpse()
-///			break
+	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
+		if(ghost.mind && ghost.mind.current == target && ghost.client)  //the dead mobs list can contain clientless mobs
+			ghost.reenter_corpse()
+			break
 
-///	if(!target.mind || !target.client)
-///		to_chat(user, span_warning("There is no soul connected to this body..."))
-///		return //REMEMBER TO UNCOMMENT
+	if(!target.mind || !target.client)
+		to_chat(user, span_warning("There is no soul connected to this body..."))
+		return
 
 	check_spooky()//clean out/refresh the list
 	if(spooky_scaries.len >= max_thralls && !unlimited)
-		to_chat(user, span_warning("This artifact can only affect [int_to_words(max_thralls)] thralls at a time!"))
+		to_chat(user, span_warning("This artifact can only affect [convert_integer_to_words(max_thralls)] thralls at a time!"))
 		return
 	if(applied_species)
 		target.set_species(applied_species, icon_update=0)
@@ -268,8 +268,6 @@
 		target.mind.add_antag_datum(/datum/antagonist/wizard_minion, antag_datum.wiz_team)
 
 	equip_revived_servant(target)
-
-//	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/[max_thralls] active thralls."]"
 
 /obj/item/necromantic_stone/examine(mob/user)
 	. = ..()
