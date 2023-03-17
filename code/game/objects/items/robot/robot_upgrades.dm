@@ -508,18 +508,11 @@
 		R.model.basic_modules += SP
 		R.model.add_module(SP, FALSE, TRUE)
 
-		for(var/obj/item/surgical_drapes/drapes in R.model.modules)
-			R.model.remove_module(drapes, TRUE)
-
 /obj/item/borg/upgrade/processor/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
 		var/obj/item/surgical_processor/SP = locate() in R.model
 		R.model.remove_module(SP, TRUE)
-
-		var/obj/item/surgical_drapes/drapes = new(R.model)
-		R.model.basic_modules += drapes
-		R.model.add_module(drapes, FALSE, TRUE)
 
 /obj/item/borg/upgrade/ai
 	name = "B.O.R.I.S. module"
