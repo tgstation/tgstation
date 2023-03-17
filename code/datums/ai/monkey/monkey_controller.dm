@@ -146,7 +146,19 @@ have ways of interacting with a specific mob and control it.
 ///Reactive events to being hit
 /datum/ai_controller/monkey/proc/retaliate(mob/living/L)
 	var/list/enemies = blackboard[BB_MONKEY_ENEMIES]
+	if(HAS_TRAIT(L, TRAIT_MONKEYFRIEND))
+		REMOVE_TRAIT(L, TRAIT_MONKEYFRIEND, SPECIES_TRAIT)
+		addtimer(CALLBACK(GLOBAL_PROC, /proc/monkeyfriend_check, L), 60 SECONDS)
 	enemies[WEAKREF(L)] += MONKEY_HATRED_AMOUNT
+
+/proc/monkeyfriend_check(mob/living/user)
+	var/obj/item/clothing/suit/costume/monkeysuit/S
+	var/obj/item/clothing/mask/gas/monkeymask/M
+	var/list/equipped = user.get_equipped_items(FALSE)
+	if(issimian(user))
+		ADD_TRAIT(user, TRAIT_MONKEYFRIEND, SPECIES_TRAIT)
+	if(((M in equipped) && (S in equipped)))
+		ADD_TRAIT(user, TRAIT_MONKEYFRIEND, CLOTHING_TRAIT)
 
 /datum/ai_controller/monkey/proc/on_attacked(datum/source, mob/attacker)
 	SIGNAL_HANDLER

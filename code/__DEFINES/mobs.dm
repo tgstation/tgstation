@@ -93,6 +93,8 @@
 #define BODYTYPE_LARVA_PLACEHOLDER (1<<6)
 ///The limb is from a xenomorph.
 #define BODYTYPE_ALIEN (1<<7)
+///The limb fits a modular custom shape
+#define BODYTYPE_CUSTOM (1<<8)
 
 //Species gib types
 #define GIB_TYPE_HUMAN "human"
@@ -431,6 +433,7 @@
 #define OFFSET_BACK "back"
 #define OFFSET_SUIT "suit"
 #define OFFSET_NECK "neck"
+#define OFFSET_ACCESSORY "accessory"
 
 //MINOR TWEAKS/MISC
 #define AGE_MIN 17 //youngest a character can be

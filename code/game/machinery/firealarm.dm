@@ -234,6 +234,9 @@
 		return
 	. = ..()
 	add_fingerprint(user)
+	if(my_area.fire)
+		reset(user)
+		return
 	alarm(user)
 
 /obj/machinery/firealarm/attack_hand_secondary(mob/user, list/modifiers)

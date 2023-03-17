@@ -189,3 +189,19 @@
 			. = "#fff4e6"
 		if("orange")
 			. = "#ffc905"
+
+		///simian tones
+		if("ffffff")
+			. = "#ffffff"
+		if("ffb089")
+			. = "#ffb089"
+		if("aeafb3")
+			. = "#aeafb3"
+		if("bfd0ca")
+			. = "#bfd0ca"
+		if("ce7d54")
+			. = "#ce7d54"
+		if("c47373")
+			. = "#c47373"
+		if("f4e2d5")
+			. = "#f4e2d5"

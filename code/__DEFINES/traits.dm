@@ -300,6 +300,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_STRONG_GRABBER "strong_grabber"
 #define TRAIT_SOOTHED_THROAT "soothed-throat"
 #define TRAIT_BOOZE_SLIDER "booze-slider"
+#define TRAIT_MONKEYFRIEND 	"monkeyfriend"
 /// We place people into a fireman carry quicker than standard
 #define TRAIT_QUICK_CARRY "quick-carry"
 /// We place people into a fireman carry especially quickly compared to quick_carry
@@ -647,6 +648,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LOUD_ASS			"loud_ass"
 #define TRAIT_UNSTABLE_ASS		"unstable_ass"
 #define TRAIT_STABLE_ASS		"stable_ass"
+#define TRAIT_KLEPTOMANIAC		"kleptomaniac"
 
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
@@ -864,6 +866,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define BUSY_FLOORBOT_TRAIT "busy-floorbot"
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
 #define LOCKED_BORG_TRAIT "locked-borg"
+#define TRAIT_VAULTING "vaulting" //simian trait
 /// trait associated to not having locomotion appendages nor the ability to fly or float
 #define LACKING_LOCOMOTION_APPENDAGES_TRAIT "lacking-locomotion-appengades"
 #define CRYO_TRAIT "cryo"

@@ -95,7 +95,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/ipc_antennas, GLOB.ipc_antennas_list)
 	if(!GLOB.ipc_chassis_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/ipc_chassis, GLOB.ipc_chassis_list)
-
+	if(!GLOB.tails_list_monkey.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, GLOB.tails_list_monkey)
 	//For now we will always return none for tail_human and ears. | "For now" he says.
 	return(list(
 		"mcolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
@@ -117,7 +118,7 @@
 		"ipc_screen" = pick(GLOB.ipc_screens_list),
 		"ipc_antenna" = pick(GLOB.ipc_antennas_list),
 		"ipc_chassis" = pick(GLOB.ipc_chassis_list),
-		"tail_monkey" = "None",
+		"tail_monkey" = "Chimp",
 		"pod_hair" = pick(GLOB.pod_hair_list),
 	))
 
@@ -155,6 +156,10 @@
 
 		if(!findname(.))
 			break
+
+/proc/random_unique_simian_name(gender, attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = capitalize(simian_name(gender))
 
 /proc/random_unique_plasmaman_name(attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)

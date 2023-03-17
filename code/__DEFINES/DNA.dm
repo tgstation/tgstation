@@ -73,6 +73,7 @@
 #define NO_UNDERWEAR 9
 #define NO_DNA_COPY 10
 #define DRINKSBLOOD 11
+#define SKINTONES 12
 
 /// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
 #define DYNCOLORS 12

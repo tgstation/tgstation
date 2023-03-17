@@ -228,6 +228,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Was on_species_gain ever actually called?
 	/// Species code is really odd...
 	var/properly_gained = FALSE
+	///are we furry little creatures
+	var/use_fur = FALSE
+	///health mod of a species
+	var/maxhealthmod = 1
+	///Path to BODYTYPE_CUSTOM species worn icons. An assoc list of ITEM_SLOT_X => /icon
+	var/list/custom_worn_icons = list()
+	///Override of the eyes icon file, used for Vox and maybe more in the future - The future is now, with Teshari using it too
+	var/eyes_icon
 
 ///////////
 // PROCS //
@@ -500,6 +508,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			C.faction += i //Using +=/-= for this in case you also gain the faction from a different source.
 
 	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, multiplicative_slowdown=speedmod)
+	C.maxHealth = C.maxHealth * maxhealthmod
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
@@ -545,6 +554,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	clear_tail_moodlets(C)
 
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
+	C.maxHealth = C.maxHealth / maxhealthmod
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
@@ -748,6 +758,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(!(HAS_TRAIT(source, TRAIT_HUSK)))
 				if(!forced_colour)
 					switch(accessory.color_src)
+						if(SKINTONES)
+							accessory_overlay.color = skintone2hex(source.skin_tone)
 						if(MUTCOLORS)
 							if(fixed_mut_color)
 								accessory_overlay.color = fixed_mut_color
@@ -997,6 +1009,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	H.visible_message(span_notice("[H] start putting on [I]..."), span_notice("You start putting on [I]..."))
 	return do_after(H, I.equip_delay_self, target = H)
 
+
+/datum/species/proc/after_equip_job(datum/job/J, mob/living/carbon/human/human_host, client/preference_source = null)
+	human_host.update_mutant_bodyparts()
 
 /// Equips the necessary species-relevant gear before putting on the rest of the uniform.
 /datum/species/proc/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
