@@ -25,5 +25,5 @@
 
 /datum/component/soulstoned/UnregisterFromParent()
 	var/mob/living/stoned = parent
-	S.status_flags &= ~GODMODE
-	S.RemoveTraits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), SOULSTONE_TRAIT)
+	stoned.status_flags &= ~GODMODE
+	stoned.RemoveTraits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), SOULSTONE_TRAIT)
