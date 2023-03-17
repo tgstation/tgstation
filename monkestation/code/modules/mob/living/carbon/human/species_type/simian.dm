@@ -39,24 +39,16 @@
 	custom_worn_icons = list(
 		LOADOUT_ITEM_SUIT = SIMIAN_SUIT_ICON,
 		LOADOUT_ITEM_UNIFORM = SIMIAN_UNIFORM_ICON,
+		LOADOUT_ITEM_GLASSES = SIMIAN_GLASSES_ICON,
+		LOADOUT_ITEM_GLOVES = SIMIAN_GLOVES_ICON,
+		LOADOUT_ITEM_NECK = SIMIAN_NECK_ICON,
+		LOADOUT_ITEM_SHOES = SIMIAN_SHOES_ICON,
+		LOADOUT_ITEM_BELT = SIMIAN_BELT_ICON,
+		LOADOUT_ITEM_MISC = SIMIAN_BACK_ICON,
 	)
 	offset_features = list(
-		OFFSET_UNIFORM = list(0,0),
-		OFFSET_ID = list(0,3),
-		OFFSET_GLOVES = list(0,0),
-		OFFSET_GLASSES = list(0,0),
-		OFFSET_EARS = list(0,2),
-		OFFSET_SHOES = list(0,0),
-		OFFSET_S_STORE = list(0,0),
-		OFFSET_FACEMASK = list(0,0),
-		OFFSET_HEAD = list(0,0),
-		OFFSET_FACE = list(0,0),
-		OFFSET_BELT = list(0,0),
-		OFFSET_BACK = list(0,0),
-		OFFSET_SUIT = list(0,0),
-		OFFSET_NECK = list(0,0),
-		OFFSET_RIGHT_HAND = list(0,3),
-		OFFSET_LEFT_HAND = list(0,3))
+		OFFSET_HANDS = list(0,3),
+		)
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/simian,
@@ -70,6 +62,9 @@
 	external_organs = list(
 		/obj/item/organ/external/tail/simian = "Chimp"
 	)
+
+/datum/species/simian/get_species_description()
+	return "Monke."
 
 /datum/species/simian/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
@@ -148,3 +143,20 @@
 	obj_flags |= EMAGGED
 	icon_state = "translator_emag"
 	playsound(src, "sparks", 100, 1)
+
+/datum/species/simian/get_custom_worn_config_fallback(item_slot, obj/item/item)
+	// skirt support
+	if(istype(item, /obj/item/clothing/under) && !(item.body_parts_covered & LEGS))
+		return item.greyscale_config_worn_simian_fallback_skirt
+
+	return item.greyscale_config_worn_simian_fallback
+
+/datum/species/teshari/generate_custom_worn_icon(item_slot, obj/item/item)
+	. = ..()
+	if(.)
+		return
+
+	// Use the fancy fallback sprites.
+	. = generate_custom_worn_icon_fallback(item_slot, item)
+	if(.)
+		return

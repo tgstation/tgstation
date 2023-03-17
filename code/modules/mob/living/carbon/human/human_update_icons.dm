@@ -199,7 +199,7 @@ There are several things that need to be remembered:
 				mutant_override = TRUE
 
 		var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
-		if(OFFSET_GLOVES in dna.species.offset_features)
+		if(!mutant_override &&(OFFSET_GLOVES in dna.species.offset_features))
 			gloves_overlay.pixel_x += dna.species.offset_features[OFFSET_GLOVES][1]
 			gloves_overlay.pixel_y += dna.species.offset_features[OFFSET_GLOVES][2]
 		overlays_standing[GLOVES_LAYER] = gloves_overlay
@@ -233,7 +233,7 @@ There are several things that need to be remembered:
 				mutant_override = TRUE
 
 		var/mutable_appearance/glasses_overlay = glasses.build_worn_icon(default_layer = GLASSES_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
-		if(OFFSET_GLASSES in dna.species.offset_features)
+		if(!mutant_override &&(OFFSET_GLASSES in dna.species.offset_features))
 			glasses_overlay.pixel_x += dna.species.offset_features[OFFSET_GLASSES][1]
 			glasses_overlay.pixel_y += dna.species.offset_features[OFFSET_GLASSES][2]
 		overlays_standing[GLASSES_LAYER] = glasses_overlay
@@ -267,7 +267,7 @@ There are several things that need to be remembered:
 				mutant_override = TRUE
 
 		var/mutable_appearance/ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
-		if(OFFSET_EARS in dna.species.offset_features)
+		if(!mutant_override &&(OFFSET_EARS in dna.species.offset_features))
 			ears_overlay.pixel_x += dna.species.offset_features[OFFSET_EARS][1]
 			ears_overlay.pixel_y += dna.species.offset_features[OFFSET_EARS][2]
 		overlays_standing[EARS_LAYER] = ears_overlay
@@ -297,7 +297,7 @@ There are several things that need to be remembered:
 				mutant_override = TRUE
 
 		var/mutable_appearance/neck_overlay = worn_item.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
-		if(OFFSET_NECK in dna.species.offset_features)
+		if(!mutant_override &&(OFFSET_NECK in dna.species.offset_features))
 			neck_overlay.pixel_x += dna.species.offset_features[OFFSET_NECK][1]
 			neck_overlay.pixel_y += dna.species.offset_features[OFFSET_NECK][2]
 		overlays_standing[NECK_LAYER] = neck_overlay
@@ -333,7 +333,7 @@ There are several things that need to be remembered:
 		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
 		if(!shoes_overlay)
 			return
-		if(OFFSET_SHOES in dna.species.offset_features)
+		if(!mutant_override && (OFFSET_SHOES in dna.species.offset_features))
 			shoes_overlay.pixel_x += dna.species.offset_features[OFFSET_SHOES][1]
 			shoes_overlay.pixel_y += dna.species.offset_features[OFFSET_SHOES][2]
 		overlays_standing[SHOES_LAYER] = shoes_overlay
@@ -387,7 +387,7 @@ There are several things that need to be remembered:
 				mutant_override = TRUE
 
 		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
-		if(OFFSET_HEAD in dna.species.offset_features)
+		if(!mutant_override &&(OFFSET_HEAD in dna.species.offset_features))
 			head_overlay.pixel_x += dna.species.offset_features[OFFSET_HEAD][1]
 			head_overlay.pixel_y += dna.species.offset_features[OFFSET_HEAD][2]
 		overlays_standing[HEAD_LAYER] = head_overlay
@@ -419,7 +419,7 @@ There are several things that need to be remembered:
 				mutant_override = TRUE
 
 		var/mutable_appearance/belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
-		if(OFFSET_BELT in dna.species.offset_features)
+		if(!mutant_override &&(OFFSET_BELT in dna.species.offset_features))
 			belt_overlay.pixel_x += dna.species.offset_features[OFFSET_BELT][1]
 			belt_overlay.pixel_y += dna.species.offset_features[OFFSET_BELT][2]
 		overlays_standing[BELT_LAYER] = belt_overlay
@@ -504,7 +504,7 @@ There are several things that need to be remembered:
 				mutant_override = TRUE
 
 		var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
-		if(OFFSET_FACEMASK in dna.species.offset_features)
+		if(!mutant_override &&(OFFSET_FACEMASK in dna.species.offset_features))
 			mask_overlay.pixel_x += dna.species.offset_features[OFFSET_FACEMASK][1]
 			mask_overlay.pixel_y += dna.species.offset_features[OFFSET_FACEMASK][2]
 		overlays_standing[FACEMASK_LAYER] = mask_overlay
@@ -536,7 +536,7 @@ There are several things that need to be remembered:
 
 		if(!back_overlay)
 			return
-		if(OFFSET_BACK in dna.species.offset_features)
+		if(!mutant_override &&(OFFSET_BACK in dna.species.offset_features))
 			back_overlay.pixel_x += dna.species.offset_features[OFFSET_BACK][1]
 			back_overlay.pixel_y += dna.species.offset_features[OFFSET_BACK][2]
 		overlays_standing[BACK_LAYER] = back_overlay
@@ -584,7 +584,13 @@ There are several things that need to be remembered:
 		else
 			hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
 
+		if(OFFSET_HANDS in dna.species.offset_features)
+			hand_overlay.pixel_x += dna.species.offset_features[OFFSET_HANDS][1]
+			hand_overlay.pixel_y += dna.species.offset_features[OFFSET_HANDS][2]
+
 		hands += hand_overlay
+
+
 	overlays_standing[HANDS_LAYER] = hands
 	apply_overlay(HANDS_LAYER)
 

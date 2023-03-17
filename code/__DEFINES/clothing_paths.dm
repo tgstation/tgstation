@@ -1,6 +1,11 @@
 #define SIMIAN_UNIFORM_ICON 'monkestation/icons/mob/clothing/species/simian/uniform.dmi'
 #define SIMIAN_SUIT_ICON 'monkestation/icons/mob/clothing/species/simian/suit.dmi'
-
+#define SIMIAN_BACK_ICON 'monkestation/icons/mob/clothing/species/simian/back.dmi'
+#define SIMIAN_BELT_ICON 'monkestation/icons/mob/clothing/species/simian/belts.dmi'
+#define SIMIAN_GLASSES_ICON 'monkestation/icons/mob/clothing/species/simian/glasses.dmi'
+#define SIMIAN_GLOVES_ICON 'monkestation/icons/mob/clothing/species/simian/gloves.dmi'
+#define SIMIAN_NECK_ICON 'monkestation/icons/mob/clothing/species/simian/neck.dmi'
+#define SIMIAN_SHOES_ICON 'monkestation/icons/mob/clothing/species/simian/shoes.dmi'
 
 
 

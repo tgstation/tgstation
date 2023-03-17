@@ -1,0 +1,22 @@
+{
+	"": [
+		{
+			"type": "icon_state",
+			"icon_state": "under_skirt0",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "under_skirt1",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "under_skirt2",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}
