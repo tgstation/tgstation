@@ -74,11 +74,11 @@
 			return
 
 		if(HAS_TRAIT(user, TRAIT_VAULTING) && user.m_intent == MOVE_INTENT_RUN)//monkestation edit: simians can fling themselves off climbable structures
-			vault_over_object(user, src)
+			vault_over_object(user, climbed_thing)
 			if(climb_stun)
 				user.Stun(climb_stun)
 				user.visible_message("<span class='warning'>[user] flips over [src]!</span>", \
-									"<span class='notice'>You flip over [src]!</span>")
+									"<span class='notice'>You flip over [climbed_thing]!</span>")
 
 		else if(do_climb(climbed_thing, user, params))
 			user.visible_message(span_warning("[user] climbs onto [climbed_thing]."), \
