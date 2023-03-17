@@ -27,7 +27,11 @@
 	mob/user,
 )
 
-	if(!isnull(held_item) && can_add_ingredient(held_item))
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_RMB] = "Remove ingredient"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	else if(can_add_ingredient(held_item))
 		context[SCREENTIP_CONTEXT_RMB] = "Add ingredient"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -40,14 +44,30 @@
 /obj/item/reagent_containers/cup/soup_pot/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(!can_add_ingredient(weapon))
 		return SECONDARY_ATTACK_CALL_NORMAL
-
+	// Too many ingredients
+	if(LAZYLEN(added_ingredients) >= max_ingredients)
+		balloon_alert(user, "too many ingredients!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!user.transferItemToLoc(weapon, src))
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+		balloon_alert(user, "can't add that!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	balloon_alert(user, "ingredient added")
+	var/atom/balloon_loc = ismachinery(loc) ? loc : src
+	balloon_loc.balloon_alert(user, "ingredient added")
 	LAZYADD(added_ingredients, weapon)
 	update_appearance(UPDATE_OVERLAYS)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/reagent_containers/cup/soup_pot/attack_hand_secondary(mob/user, list/modifiers)
+	if(!LAZYLEN(added_ingredients))
+		return
+
+	var/obj/item/removed = added_ingredients[1]
+	LAZYADD(added_ingredients, removed)
+	removed.forceMove(get_turf(src))
+	user.put_in_hands(removed)
+	var/atom/balloon_loc = ismachinery(loc) ? loc : src
+	balloon_loc.balloon_alert(user, "ingredient removed")
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/reagent_containers/cup/soup_pot/proc/can_add_ingredient(obj/item/ingredient)
 	// Let default reagent handling take this
@@ -56,9 +76,7 @@
 	// To big for the pot
 	if(ingredient.w_class >= WEIGHT_CLASS_BULKY)
 		return FALSE
-	// Too many ingredients
-	if(LAZYLEN(added_ingredients) >= max_ingredients)
-		return FALSE
+
 	return TRUE
 
 /obj/item/reagent_containers/cup/soup_pot/proc/on_reagents_cleared(datum/source, datum/reagent/changed)

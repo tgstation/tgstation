@@ -10,7 +10,10 @@
 	/// Whether we're currently cooking
 	var/on = FALSE
 	/// A reference to the current soup pot overtop
-	var/obj/item/soup_pot
+	var/obj/item/container
+
+	var/container_x = 0
+	var/container_y = 8
 
 /datum/component/stove/Initialize()
 	if(!ismachinery(parent))
@@ -42,7 +45,7 @@
 		turn_off()
 		return
 
-	soup_pot?.reagents.expose_temperature(600, 0.1)
+	container?.reagents.expose_temperature(600, 0.1)
 	real_parent.use_power(real_parent.active_power_usage)
 
 /datum/component/stove/proc/turn_on()
@@ -68,11 +71,11 @@
 /datum/component/stove/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user, params)
 	SIGNAL_HANDLER
 
-	if(!istype(attacking_item, /obj/item/reagent_containers/cup/soup_pot))
+	if(!attacking_item.is_open_container())
 		return
 
 	if(user.transferItemToLoc(attacking_item, parent))
-		add_soup_pot(attacking_item, user)
+		add_container(attacking_item, user)
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/stove/proc/on_exited(datum/source, atom/movable/gone, direction)
@@ -95,29 +98,29 @@
 	SIGNAL_HANDLER
 
 	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_RMB] = "Turn [on ? "off":"on"] stove"
+		context[SCREENTIP_CONTEXT_RMB] = "Turn [on ? "off":"on"] burner"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, /obj/item/reagent_containers/cup/soup_pot))
-		context[SCREENTIP_CONTEXT_LMB] = "Set pot"
+	if(held_item.is_open_container())
+		context[SCREENTIP_CONTEXT_LMB] = "Place container"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/datum/component/stove/proc/add_soup_pot(obj/item/reagent_containers/cup/soup_pot/pot, mob/user)
+/datum/component/stove/proc/add_container(obj/item/new_container, mob/user)
 	var/obj/real_parent = parent
-	real_parent.vis_contents += pot
+	real_parent.vis_contents += new_container
 
-	pot.flags_1 |= IS_ONTOP_1
-	pot.vis_flags |= VIS_INHERIT_PLANE
+	new_container.flags_1 |= IS_ONTOP_1
+	new_container.vis_flags |= VIS_INHERIT_PLANE
 
-	soup_pot = pot
-	soup_pot.pixel_x = 0
-	soup_pot.pixel_y = 8
+	container = new_container
+	container.pixel_x = container_x
+	container.pixel_y = container_y
 
-/datum/component/stove/proc/remove_soup_pot()
+/datum/component/stove/proc/container()
 	var/obj/real_parent = parent
-	soup_pot.flags_1 &= ~IS_ONTOP_1
-	soup_pot.vis_flags &= ~VIS_INHERIT_PLANE
-	real_parent.vis_contents -= soup_pot
-	soup_pot.pixel_x = soup_pot.base_pixel_x
-	soup_pot.pixel_y = soup_pot.base_pixel_y
-	soup_pot = null
+	container.flags_1 &= ~IS_ONTOP_1
+	container.vis_flags &= ~VIS_INHERIT_PLANE
+	real_parent.vis_contents -= container
+	container.pixel_x = container.base_pixel_x
+	container.pixel_y = container.base_pixel_y
+	container = null
