@@ -470,7 +470,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			new_organ.Insert(human, special=TRUE, drop_if_replaced=FALSE)
 
 	if(length(inherent_traits))
-		AddTraits(C, inherent_traits, SPECIES_TRAIT)
+		C.AddTraits(inherent_traits, SPECIES_TRAIT)
 
 	if(TRAIT_VIRUSIMMUNE in inherent_traits)
 		for(var/datum/disease/A in C.diseases)

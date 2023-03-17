@@ -500,7 +500,7 @@
 	mod.wearer.base_pixel_y -= 4
 	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y, flags = ANIMATION_PARALLEL)
 	mod.wearer.SpinAnimation(1.5)
-	AddTraits(mod.wearer, user_traits, MOD_TRAIT)
+	mod.wearer.AddTraits(user_traits, MOD_TRAIT)
 	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
@@ -515,7 +515,7 @@
 	mod.wearer.base_pixel_y += 4
 	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y)
 	addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/datum, remove_filter), list("mod_ball", "mod_blur", "mod_outline")), animate_time)
-	RemoveTraits(mod.wearer, user_traits, MOD_TRAIT)
+	mod.wearer.RemoveTraits(user_traits, MOD_TRAIT)
 	mod.wearer.remove_movespeed_mod_immunities(MOD_TRAIT, /datum/movespeed_modifier/damage_slowdown)
 	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)

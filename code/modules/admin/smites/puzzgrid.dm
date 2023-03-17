@@ -79,7 +79,7 @@
 		span_notice("You are unshackled from your fiendish prison!"),
 	)
 
-	RemoveTraits()
+	victim.RemoveTraits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
 
 	victim = null
 
@@ -102,7 +102,7 @@
 		victim.forceMove(loc)
 		victim.Paralyze(5 SECONDS)
 		victim.visible_message(span_bolddanger("Despite completely failing the puzzle, through unbelievable luck, [victim] manages to break out anyway!"))
-		RemoveTraits()
+		victim.RemoveTraits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
 		qdel(src)
 		victim = null
 		return
@@ -111,6 +111,3 @@
 
 	// Defer until after the fail proc finishes, since that will qdel the component.
 	addtimer(CALLBACK(src, PROC_REF(add_puzzgrid_component), puzzgrid), 0)
-
-/obj/structure/puzzgrid_effect/proc/RemoveTraits()
-	victim.RemoveTraits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")

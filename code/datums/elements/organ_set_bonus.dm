@@ -78,7 +78,7 @@
 	bonus_active = TRUE
 	if(bonus_traits)
 		if(islist(bonus_traits))
-			AddTraits(owner, bonus_traits, REF(src))
+			owner.AddTraits(bonus_traits, REF(src))
 		else
 			ADD_TRAIT(owner, bonus_traits, REF(src))
 	if(bonus_activate_text)
@@ -90,7 +90,7 @@
 	bonus_active = FALSE
 	if(bonus_traits)
 		if(islist(bonus_traits))
-			RemoveTraits(owner, bonus_traits, REF(src))
+			owner.RemoveTraits(bonus_traits, REF(src))
 		else
 			REMOVE_TRAIT(owner, bonus_traits, REF(src))
 	if(bonus_deactivate_text)
