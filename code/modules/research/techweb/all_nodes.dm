@@ -434,7 +434,6 @@
 	prereq_ids = list("adv_biotech")
 	design_ids = list(
 		"limbdesign_ethereal",
-		"limbdesign_felinid",
 		"limbdesign_lizard",
 		"limbdesign_plasmaman",
 	)

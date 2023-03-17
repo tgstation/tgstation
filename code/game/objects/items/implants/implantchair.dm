@@ -171,7 +171,6 @@
 	if(!istype(H))
 		return FALSE
 	H.set_species(/datum/species/human, 1)//lizards go home
-	purrbation_remove(H)//remove cats
 	H.dna.remove_all_mutations()//hulks out
 	return TRUE
 
