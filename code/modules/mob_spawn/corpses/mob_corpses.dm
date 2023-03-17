@@ -87,10 +87,11 @@
 	id_trim = /datum/id_trim/chameleon/operative
 
 /obj/effect/mob_spawn/corpse/human/tigercultist
-	name = "Tiger Cooperative Corpse"
+	name = "Tiger Cooperative Cultist"
 	outfit = /datum/outfit/tigercultcorpse
 
 /datum/outfit/tigercultcorpse
+	name = "Tiger Cooperative Corpse"
 	uniform = /obj/item/clothing/under/rank/civilian/chaplain
 	suit = /obj/item/clothing/suit/hooded/chaplain_hoodie
 	shoes = /obj/item/clothing/shoes/laceup
