@@ -24,7 +24,7 @@
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.AddTraits(mutation_traits, GENETIC_MUTATION)
+	owner.add_traits(mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
 		part.variable_color = "#00aa00"
 	owner.update_body_parts()
@@ -79,7 +79,7 @@
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.RemoveTraits(mutation_traits, GENETIC_MUTATION)
+	owner.remove_traits(mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
 		part.variable_color = null
 	owner.update_body_parts()

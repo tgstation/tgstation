@@ -17,13 +17,13 @@
 
 /obj/item/organ/internal/body_egg/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	..()
-	owner.AddTraits(list(TRAIT_XENO_HOST, TRAIT_XENO_IMMUNE), ORGAN_TRAIT)
+	owner.add_traits(list(TRAIT_XENO_HOST, TRAIT_XENO_IMMUNE), ORGAN_TRAIT)
 	owner.med_hud_set_status()
 	INVOKE_ASYNC(src, PROC_REF(AddInfectionImages), owner)
 
 /obj/item/organ/internal/body_egg/Remove(mob/living/carbon/M, special = FALSE)
 	if(owner)
-		owner.RemoveTraits(list(TRAIT_XENO_HOST, TRAIT_XENO_IMMUNE), ORGAN_TRAIT)
+		owner.remove_traits(list(TRAIT_XENO_HOST, TRAIT_XENO_IMMUNE), ORGAN_TRAIT)
 		owner.med_hud_set_status()
 		INVOKE_ASYNC(src, PROC_REF(RemoveInfectionImages), owner)
 	..()

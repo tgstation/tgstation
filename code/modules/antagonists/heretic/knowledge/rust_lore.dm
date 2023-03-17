@@ -270,13 +270,13 @@
 	var/turf/our_turf = get_turf(source)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		if(!immunities_active)
-			source.AddTraits(conditional_immunities, type)
+			source.add_traits(conditional_immunities, type)
 			immunities_active = TRUE
 
 	// If we're not on a rust turf, and we have given out our traits, nerf our guy
 	else
 		if(immunities_active)
-			source.RemoveTraits(conditional_immunities, type)
+			source.remove_traits(conditional_immunities, type)
 			immunities_active = FALSE
 
 /**

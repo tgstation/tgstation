@@ -54,7 +54,7 @@
 
 	name = "[victim]'s fiendish curse"
 
-	victim.AddTraits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
+	victim.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
 
 	add_puzzgrid_component(puzzgrid)
 
@@ -79,7 +79,7 @@
 		span_notice("You are unshackled from your fiendish prison!"),
 	)
 
-	victim.RemoveTraits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
+	victim.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
 
 	victim = null
 
@@ -102,7 +102,7 @@
 		victim.forceMove(loc)
 		victim.Paralyze(5 SECONDS)
 		victim.visible_message(span_bolddanger("Despite completely failing the puzzle, through unbelievable luck, [victim] manages to break out anyway!"))
-		victim.RemoveTraits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
+		victim.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
 		qdel(src)
 		victim = null
 		return

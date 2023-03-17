@@ -59,7 +59,7 @@
 	. = ..()
 	if(!.)
 		return
-	mod.wearer.AddTraits(active_traits, MOD_TRAIT)
+	mod.wearer.add_traits(active_traits, MOD_TRAIT)
 	mod.slowdown += slowdown_active
 	mod.wearer.update_equipment_speed_mods()
 
@@ -67,7 +67,7 @@
 	. = ..()
 	if(!.)
 		return
-	mod.wearer.RemoveTraits(active_traits, MOD_TRAIT)
+	mod.wearer.remove_traits(active_traits, MOD_TRAIT)
 	mod.slowdown -= slowdown_active
 	mod.wearer.update_equipment_speed_mods()
 

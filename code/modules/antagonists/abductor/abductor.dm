@@ -108,11 +108,11 @@
 			break
 
 /datum/antagonist/abductor/scientist/on_gain()
-	owner.AddTraits(list(TRAIT_ABDUCTOR_SCIENTIST_TRAINING, TRAIT_SURGEON), ABDUCTOR_ANTAGONIST)
+	owner.add_traits(list(TRAIT_ABDUCTOR_SCIENTIST_TRAINING, TRAIT_SURGEON), ABDUCTOR_ANTAGONIST)
 	return ..()
 
 /datum/antagonist/abductor/scientist/on_removal()
-	owner.RemoveTraits(list(TRAIT_ABDUCTOR_SCIENTIST_TRAINING, TRAIT_SURGEON), ABDUCTOR_ANTAGONIST)
+	owner.remove_traits(list(TRAIT_ABDUCTOR_SCIENTIST_TRAINING, TRAIT_SURGEON), ABDUCTOR_ANTAGONIST)
 	return ..()
 
 /datum/antagonist/abductor/admin_add(datum/mind/new_owner,mob/admin)

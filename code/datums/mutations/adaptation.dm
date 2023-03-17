@@ -18,12 +18,12 @@
 /datum/mutation/human/temperature_adaptation/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.AddTraits(list(TRAIT_RESISTCOLD, TRAIT_RESISTHEAT), GENETIC_MUTATION)
+	owner.add_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTHEAT), GENETIC_MUTATION)
 
 /datum/mutation/human/temperature_adaptation/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.RemoveTraits(list(TRAIT_RESISTCOLD, TRAIT_RESISTHEAT), GENETIC_MUTATION)
+	owner.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTHEAT), GENETIC_MUTATION)
 
 /datum/mutation/human/pressure_adaptation
 	name = "Pressure Adaptation"
@@ -45,9 +45,9 @@
 /datum/mutation/human/pressure_adaptation/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.AddTraits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE), GENETIC_MUTATION)
+	owner.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE), GENETIC_MUTATION)
 
 /datum/mutation/human/pressure_adaptation/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.RemoveTraits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE), GENETIC_MUTATION)
+	owner.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE), GENETIC_MUTATION)

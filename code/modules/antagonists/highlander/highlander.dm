@@ -17,12 +17,12 @@
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/subject = owner.current || mob_override
-	subject.AddTraits(applicable_traits, HIGHLANDER_TRAIT)
+	subject.add_traits(applicable_traits, HIGHLANDER_TRAIT)
 	REMOVE_TRAIT(subject, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/subject = owner.current || mob_override
-	subject.RemoveTraits(applicable_traits, HIGHLANDER_TRAIT)
+	subject.remove_traits(applicable_traits, HIGHLANDER_TRAIT)
 	if(subject.has_quirk(/datum/quirk/nonviolent))
 		ADD_TRAIT(subject, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 

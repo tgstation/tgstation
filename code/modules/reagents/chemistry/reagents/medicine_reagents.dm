@@ -1325,12 +1325,12 @@
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/affected_mob)
 	..()
-	affected_mob.AddTraits(list(TRAIT_SLEEPIMMUNE, TRAIT_BATON_RESISTANCE), type)
+	affected_mob.add_traits(list(TRAIT_SLEEPIMMUNE, TRAIT_BATON_RESISTANCE), type)
 	affected_mob.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/affected_mob)
 	..()
-	affected_mob.RemoveTraits(list(TRAIT_SLEEPIMMUNE, TRAIT_BATON_RESISTANCE), type)
+	affected_mob.remove_traits(list(TRAIT_SLEEPIMMUNE, TRAIT_BATON_RESISTANCE), type)
 	affected_mob.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	affected_mob.remove_status_effect(/datum/status_effect/dizziness)
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
@@ -1384,11 +1384,11 @@
 
 /datum/reagent/medicine/cordiolis_hepatico/on_mob_add(mob/living/affected_mob)
 	..()
-	affected_mob.AddTraits(list(TRAIT_STABLELIVER, TRAIT_STABLEHEART), type)
+	affected_mob.add_traits(list(TRAIT_STABLELIVER, TRAIT_STABLEHEART), type)
 
 /datum/reagent/medicine/cordiolis_hepatico/on_mob_end_metabolize(mob/living/affected_mob)
 	..()
-	affected_mob.RemoveTraits(list(TRAIT_STABLELIVER, TRAIT_STABLEHEART), type)
+	affected_mob.remove_traits(list(TRAIT_STABLELIVER, TRAIT_STABLEHEART), type)
 
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"

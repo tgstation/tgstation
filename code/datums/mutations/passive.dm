@@ -23,9 +23,9 @@
 /datum/mutation/human/clever/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.AddTraits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE), GENETIC_MUTATION)
+	owner.add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE), GENETIC_MUTATION)
 
 /datum/mutation/human/clever/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.RemoveTraits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE), GENETIC_MUTATION)
+	owner.remove_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE), GENETIC_MUTATION)

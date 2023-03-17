@@ -131,7 +131,7 @@
 			organ.transfer_to_limb(src, phantom_owner)
 
 	if(length(bodypart_traits))
-		phantom_owner.RemoveTraits(bodypart_traits, bodypart_trait_source)
+		phantom_owner.remove_traits(bodypart_traits, bodypart_trait_source)
 
 	update_icon_dropped()
 	synchronize_bodytypes(phantom_owner)
@@ -356,7 +356,7 @@
 		update_disabled()
 
 	if(length(bodypart_traits))
-		owner.AddTraits(bodypart_traits, bodypart_trait_source)
+		owner.add_traits(bodypart_traits, bodypart_trait_source)
 
 	// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
 	// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.

@@ -755,7 +755,7 @@
 
 	REMOVE_TRAITS_IN(src, MODEL_TRAIT)
 	if(length(model.model_traits))
-		AddTraits(model.model_traits, MODEL_TRAIT)
+		add_traits(model.model_traits, MODEL_TRAIT)
 
 	hat_offset = model.hat_offset
 

@@ -528,7 +528,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		return ..()
 	metabolization_rate = 0.2 * REM
-	affected_mob.AddTraits(trait_buffs, type)
+	affected_mob.add_traits(trait_buffs, type)
 	affected_mob.set_stat(CONSCIOUS) //This doesn't touch knocked out
 	affected_mob.updatehealth()
 	affected_mob.update_sight()
@@ -585,7 +585,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	return..()
 
 /datum/reagent/inverse/penthrite/proc/remove_buffs(mob/living/carbon/affected_mob)
-	affected_mob.RemoveTraits(trait_buffs, type)
+	affected_mob.remove_traits(trait_buffs, type)
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	affected_mob.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
 	affected_mob.update_sight()
