@@ -91,7 +91,6 @@
 		return
 	if(target.mob_size > max_occupant_weight)
 		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
 			to_chat(user, span_warning("Humans, generally, do not fit into pet carriers."))
 		else
 			to_chat(user, span_warning("You get the feeling [target] isn't meant for a [name]."))
