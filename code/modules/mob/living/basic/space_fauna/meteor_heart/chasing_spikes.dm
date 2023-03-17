@@ -23,11 +23,7 @@
 
 // Clean up after ourselves
 /datum/action/cooldown/chasing_spikes/Remove(mob/removed_from)
-	if (!length(active_chasers))
-		return ..()
-	for (var/datum/weakref/weak_chaser as anything in active_chasers)
-		var/atom/chaser = weak_chaser?.resolve()
-		qdel(chaser)
+	QDEL_LIST(active_chasers)
 	return ..()
 
 /// An invisible effect which chases a target, spawning spikes every so often.
