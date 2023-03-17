@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "the 'target cyborgs' option for syndicate turrets is now functional again, and enabled by default. Station borgs will still be shot at on sight unless a syndicate crew member deliberately configures the turrets otherwise."

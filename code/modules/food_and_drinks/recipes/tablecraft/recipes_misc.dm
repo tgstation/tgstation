@@ -291,22 +291,6 @@
 	result = /obj/item/food/pacoca
 	category = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/pickles_jar
-	name = "Jar of pickles"
-	reqs = list(
-		/obj/item/reagent_containers/cup/beaker/large = 1,
-		/obj/item/food/grown/cucumber = 10,
-		/datum/reagent/water = 10,
-		/datum/reagent/consumable/salt = 10,
-	)
-	result = /obj/item/storage/fancy/pickles_jar
-	category = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/pickles_jar/on_craft_completion(mob/user, atom/result)
-	. = ..()
-	var/obj/item/storage/fancy/pickles_jar/jar = result
-	qdel(locate(/obj/item/reagent_containers/cup/beaker/large) in jar.contents)
-
 /datum/crafting_recipe/food/springroll
 	name = "Spring roll"
 	reqs = list(
@@ -412,3 +396,15 @@
 	)
 	result = /obj/item/food/bonbon/peanut_butter_cup
 	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/pickles_jar
+	name = "Jar of pickles"
+	reqs = list(
+		/obj/item/reagent_containers/cup/beaker/large = 1,
+		/obj/item/food/grown/cucumber = 10,
+		/datum/reagent/water = 10,
+		/datum/reagent/consumable/salt = 10,
+	)
+	result = /obj/item/storage/fancy/pickles_jar
+	category = CAT_MISCFOOD
+	delete_contents = FALSE

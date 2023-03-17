@@ -60,11 +60,8 @@
 /turf/open/floor/carpet/blue,
 /area/centcom/ctf)
 "ef" = (
-/obj/structure/window/reinforced/fulltile{
-	color = "#008000";
-	max_integrity = 5000;
-	name = "hardened window";
-	atom_integrity = 5000
+/obj/structure/window/reinforced/fulltile/indestructible{
+	color = "#008000"
 	},
 /turf/open/floor/plating,
 /area/centcom/ctf)
