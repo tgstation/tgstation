@@ -31,13 +31,13 @@
 
 
 /// Proc that handles adding multiple traits to a target via a list. Must have a common source and target.
-/proc/AddTraits(list/list_of_traits, source)
+/datum/proc/AddTraits(list/list_of_traits, source)
 	ASSERT(islist(list_of_traits), "Invalid arguments passed to AddTraits! Invoked on [src] with [list_of_traits], source being [source].")
 	for(var/trait in list_of_traits)
 		ADD_TRAIT(src, trait, source)
 
 /// Proc that handles removing multiple traits from a target via a list. Must have a common source and target.
-/proc/RemoveTraits(list/list_of_traits, source)
+/datum/proc/RemoveTraits(list/list_of_traits, source)
 	ASSERT(islist(list_of_traits), "Invalid arguments passed to RemoveTraits! Invoked on [src] with [list_of_traits], source being [source].")
 	for(var/trait in list_of_traits)
 		REMOVE_TRAIT(src, trait, source)
