@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "Borg synthesizers will no longer remain on the status panel if a borg changes modules"
