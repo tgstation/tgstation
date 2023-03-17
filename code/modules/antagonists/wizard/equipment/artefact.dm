@@ -256,7 +256,7 @@
 		target.set_species(applied_species, icon_update=0)
 	target.revive(ADMIN_HEAL_ALL)
 	spooky_scaries |= target
-	to_chat(target, "[span_userdanger("You have been revived by ")]<B>[user.real_name]!</B>")
+	to_chat(target, span_userdanger("You have been revived by <B>[user.real_name]</B>!"))
 	to_chat(target, span_userdanger("[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!"))
 	var/datum/antagonist/wizard/antag_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
 	if(antag_datum)
@@ -265,7 +265,7 @@
 		target.mind.add_antag_datum(/datum/antagonist/wizard_minion, antag_datum.wiz_team)
 
 	if(applied_outfit)
-		equip_roman_skeleton(target)
+		equip_revived_servant(target)
 
 	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
 
@@ -284,13 +284,13 @@
 			continue
 	list_clear_nulls(spooky_scaries)
 
-//Funny gimmick, skeletons always seem to wear roman/ancient armour
-/obj/item/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/human)
+/obj/item/necromantic_stone/proc/equip_revived_servant(mob/living/carbon/human/human)
 	for(var/obj/item/worn_item in human)
 		human.dropItemToGround(worn_item)
 
 	human.equipOutfit(applied_outfit)
 
+//Funny gimmick, skeletons always seem to wear roman/ancient armour
 /datum/outfit/roman
 	name = "Roman"
 	head = /obj/item/clothing/head/helmet/roman
