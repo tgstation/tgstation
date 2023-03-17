@@ -999,6 +999,14 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
+"cZ" = (
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/obj/structure/flora/lunar_plant,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "da" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
@@ -2962,6 +2970,10 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"kW" = (
+/obj/item/stack/ore/titanium,
+/turf/open/misc/asteroid/moon/dug,
+/area/awaymission/moonoutpost19/main)
 "lb" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/camera/directional/east{
@@ -3284,6 +3296,13 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"mB" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/limb,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "mC" = (
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/poster/contraband/smoke{
@@ -3699,6 +3718,13 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
+"pz" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/larva/body,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "pA" = (
 /obj/vehicle/ridden/atv{
 	dir = 4
@@ -3933,6 +3959,15 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"sf" = (
+/mob/living/simple_animal/hostile/alien/drone{
+	plants_off = 1
+	},
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "sg" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/blood/gibs/up,
@@ -4600,10 +4635,7 @@
 /area/awaymission/moonoutpost19/research)
 "xy" = (
 /obj/item/stack/ore/diamond,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
+/turf/open/misc/asteroid/moon/dug,
 /area/awaymission/moonoutpost19/main)
 "xB" = (
 /mob/living/simple_animal/pet/cat/space{
@@ -5889,10 +5921,7 @@
 /obj/effect/spawner/random/medical/surgery_tool_advanced,
 /obj/effect/spawner/random/medical/surgery_tool,
 /obj/effect/spawner/random/medical/surgery_tool,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
+/turf/open/misc/asteroid/moon/dug,
 /area/awaymission/moonoutpost19/main)
 "Gt" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5979,6 +6008,13 @@
 /area/awaymission/moonoutpost19/arrivals)
 "GN" = (
 /turf/open/floor/pod/light,
+/area/awaymission/moonoutpost19/main)
+"GT" = (
+/obj/effect/decal/cleanable/xenoblood/xsplatter,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
 /area/awaymission/moonoutpost19/main)
 "Hk" = (
 /obj/item/trash/raisins,
@@ -6540,10 +6576,7 @@
 /obj/item/stack/ore/gold{
 	amount = 7
 	},
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
+/turf/open/misc/asteroid/moon/dug,
 /area/awaymission/moonoutpost19/main)
 "MG" = (
 /obj/structure/grille/broken,
@@ -7326,6 +7359,10 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"Sa" = (
+/obj/item/stack/ore/iron,
+/turf/open/misc/asteroid/moon/dug,
+/area/awaymission/moonoutpost19/main)
 "Se" = (
 /obj/machinery/airalarm/directional/north{
 	pixel_y = 23;
@@ -7884,10 +7921,7 @@
 /obj/item/stack/ore/silver{
 	amount = 11
 	},
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
+/turf/open/misc/asteroid/moon/dug,
 /area/awaymission/moonoutpost19/main)
 "Wh" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -16218,7 +16252,7 @@ dA
 hR
 px
 px
-ah
+kW
 px
 px
 dA
@@ -16985,14 +17019,14 @@ dA
 dA
 dA
 dA
-JE
+Sa
 dA
 dA
 qP
 dA
 dA
 dA
-hR
+cZ
 px
 px
 px
@@ -19057,7 +19091,7 @@ dA
 BA
 lg
 px
-px
+wD
 lg
 BA
 px
@@ -19557,7 +19591,7 @@ rg
 rg
 rg
 rg
-JE
+Sa
 px
 px
 dA
@@ -20844,7 +20878,7 @@ dA
 dA
 dA
 Bb
-JE
+Sa
 dA
 dA
 dA
@@ -21106,10 +21140,10 @@ px
 px
 px
 px
-JE
+Sa
+qP
 px
-px
-px
+qP
 Bb
 dA
 dA
@@ -21594,7 +21628,7 @@ dA
 dA
 dA
 dA
-ah
+kW
 dA
 dA
 dA
@@ -22136,7 +22170,7 @@ dA
 dA
 dA
 dA
-JE
+Sa
 dA
 rg
 rg
@@ -22364,7 +22398,7 @@ dA
 dA
 dA
 dA
-ah
+kW
 dA
 dA
 qP
@@ -23421,7 +23455,7 @@ dA
 dA
 dA
 px
-ah
+kW
 rg
 dA
 rg
@@ -24446,7 +24480,7 @@ dA
 dA
 dA
 dA
-ah
+kW
 px
 px
 px
@@ -25224,7 +25258,7 @@ dA
 dA
 dA
 Yh
-ah
+kW
 dA
 dA
 rg
@@ -25471,7 +25505,7 @@ dA
 dA
 dA
 dA
-JE
+Sa
 px
 qP
 dA
@@ -26494,7 +26528,7 @@ dA
 dA
 dA
 dA
-ah
+kW
 px
 dA
 dA
@@ -30604,7 +30638,7 @@ ae
 ae
 ae
 Bb
-JE
+Sa
 ae
 ae
 ae
@@ -31095,7 +31129,7 @@ px
 px
 px
 px
-px
+sf
 px
 px
 px
@@ -32112,7 +32146,7 @@ ac
 dA
 dA
 px
-px
+sf
 Bb
 px
 px
@@ -32144,7 +32178,7 @@ dA
 dA
 dA
 dA
-JE
+Sa
 px
 dA
 dA
@@ -32894,7 +32928,7 @@ px
 px
 px
 px
-px
+sf
 px
 px
 px
@@ -34433,7 +34467,7 @@ px
 px
 px
 px
-px
+sf
 px
 px
 px
@@ -34683,16 +34717,7 @@ Oi
 px
 px
 px
-px
-px
-px
-px
-px
-px
-px
-px
-Bb
-px
+sf
 px
 px
 px
@@ -34709,6 +34734,15 @@ px
 px
 px
 px
+Bb
+px
+px
+px
+px
+px
+px
+px
+wD
 dA
 dA
 ae
@@ -34962,11 +34996,11 @@ px
 px
 px
 px
+pz
+mB
 px
 px
-px
-px
-px
+GT
 AJ
 lA
 ae
@@ -35477,7 +35511,7 @@ px
 px
 px
 px
-px
+wD
 px
 px
 px
@@ -35972,7 +36006,7 @@ px
 px
 px
 px
-px
+sf
 px
 px
 px
@@ -37250,7 +37284,7 @@ px
 px
 px
 px
-px
+sf
 Bb
 px
 px
@@ -38793,7 +38827,7 @@ px
 px
 px
 px
-px
+sf
 px
 px
 px
@@ -39578,7 +39612,7 @@ px
 px
 px
 px
-px
+ro
 px
 px
 px
@@ -41388,7 +41422,7 @@ rg
 dA
 Bb
 px
-px
+sf
 dA
 ae
 ae
@@ -48333,7 +48367,7 @@ px
 px
 px
 px
-px
+ro
 px
 dA
 ae
@@ -48588,10 +48622,10 @@ px
 px
 px
 px
+ro
 px
 px
-px
-px
+ro
 dA
 ae
 ae
@@ -48846,7 +48880,7 @@ Bb
 dA
 dA
 dA
-px
+ro
 px
 px
 px
@@ -49621,7 +49655,7 @@ dA
 DZ
 px
 px
-px
+DZ
 dA
 ae
 ae
@@ -50910,7 +50944,7 @@ DZ
 px
 px
 px
-px
+DZ
 dA
 ae
 ae
@@ -52200,7 +52234,7 @@ DZ
 px
 px
 px
-px
+DZ
 dA
 ae
 ae
@@ -53745,7 +53779,7 @@ dA
 px
 Bb
 px
-px
+DZ
 dA
 dA
 dA
@@ -54779,7 +54813,7 @@ px
 px
 px
 px
-px
+DZ
 dA
 dA
 Uc
@@ -55037,7 +55071,7 @@ Bb
 px
 px
 px
-px
+Bb
 dA
 dA
 VQ
@@ -58121,7 +58155,7 @@ px
 px
 dA
 dA
-px
+qP
 px
 px
 px
@@ -58637,7 +58671,7 @@ dA
 DZ
 px
 px
-px
+wD
 px
 dA
 DZ
@@ -58891,10 +58925,10 @@ px
 dA
 dA
 dA
+wD
 px
 px
-px
-px
+Bb
 px
 dA
 px
@@ -59918,7 +59952,7 @@ px
 dA
 dA
 dA
-px
+qP
 px
 px
 px
@@ -60179,7 +60213,7 @@ px
 px
 px
 px
-px
+wD
 dA
 px
 px
@@ -60432,10 +60466,10 @@ px
 dA
 dA
 dA
+wD
+Bb
 px
-px
-px
-px
+Bb
 dA
 dA
 px
