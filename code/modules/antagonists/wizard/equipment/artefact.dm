@@ -219,11 +219,14 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
-	var/unlimited = 0
-	///Which species the resurected humanoid will be
+	///Allow for unlimited thralls to be produced.
+	var/unlimited = FALSE
+	///Which species the resurected humanoid will be.
 	var/applied_species = /datum/species/skeleton
-	///The outfit the resurected humanoid will wear
+	///The outfit the resurected humanoid will wear.
 	var/applied_outfit = /datum/outfit/roman
+	///Maximum number of thralls that can be created.
+	var/max_thralls = 3
 
 /obj/item/necromantic_stone/unlimited
 	unlimited = 1
@@ -239,18 +242,18 @@
 		to_chat(user, span_warning("This artifact can only affect the dead!"))
 		return
 
-	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
-		if(ghost.mind && ghost.mind.current == target && ghost.client)  //the dead mobs list can contain clientless mobs
-			ghost.reenter_corpse()
-			break
+///	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
+///		if(ghost.mind && ghost.mind.current == target && ghost.client)  //the dead mobs list can contain clientless mobs
+///			ghost.reenter_corpse()
+///			break
 
-	if(!target.mind || !target.client)
-		to_chat(user, span_warning("There is no soul connected to this body..."))
-		return
+///	if(!target.mind || !target.client)
+///		to_chat(user, span_warning("There is no soul connected to this body..."))
+///		return //REMEMBER TO UNCOMMENT
 
 	check_spooky()//clean out/refresh the list
-	if(spooky_scaries.len >= 3 && !unlimited)
-		to_chat(user, span_warning("This artifact can only affect three undead at a time!"))
+	if(spooky_scaries.len >= max_thralls && !unlimited)
+		to_chat(user, span_warning("This artifact can only affect [int_to_words(max_thralls)] thralls at a time!"))
 		return
 	if(applied_species)
 		target.set_species(applied_species, icon_update=0)
@@ -266,7 +269,12 @@
 
 	equip_revived_servant(target)
 
-	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
+//	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/[max_thralls] active thralls."]"
+
+/obj/item/necromantic_stone/examine(mob/user)
+	. = ..()
+	if(!unlimited)
+		. += span_notice("[spooky_scaries.len]/[max_thralls] active thralls.")
 
 /obj/item/necromantic_stone/proc/check_spooky()
 	if(unlimited) //no point, the list isn't used.
@@ -284,7 +292,7 @@
 	list_clear_nulls(spooky_scaries)
 
 /obj/item/necromantic_stone/proc/equip_revived_servant(mob/living/carbon/human/human)
-	if(!istype(applied_outfit, /datum/outfit))
+	if(isnull(applied_outfit))
 		return
 	for(var/obj/item/worn_item in human)
 		human.dropItemToGround(worn_item)
