@@ -522,7 +522,7 @@
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()
 	user.throw_alert("penthrite", /atom/movable/screen/alert/penthrite)
-	ADD_TRAITS(user, subject_traits, type)
+	AddTraits(user, subject_traits, type)
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H, delta_time, times_fired)
 	H.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.25 * REM * delta_time, required_organtype = affected_organtype)
@@ -553,7 +553,7 @@
 
 /datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/user)
 	user.clear_alert("penthrite")
-	REMOVE_TRAITS(user, subject_traits, type)
+	RemoveTraits(user, subject_traits, type)
 	. = ..()
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/H, delta_time, times_fired)

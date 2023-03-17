@@ -753,9 +753,9 @@
 	if(hands)
 		hands.icon_state = model.model_select_icon
 
-	REMOVE_TRAITS_IN(src, MODEL_TRAIT)
+	RemoveTraits_IN(src, MODEL_TRAIT)
 	if(length(model.model_traits))
-		ADD_TRAITS(src, model.model_traits, MODEL_TRAIT)
+		AddTraits(src, model.model_traits, MODEL_TRAIT)
 
 	hat_offset = model.hat_offset
 

@@ -529,7 +529,7 @@
 	update_body()
 
 	var/obj/item/bodypart/head/hopefully_a_head = get_bodypart(BODY_ZONE_HEAD)
-	REMOVE_TRAITS_IN(src, LIPSTICK_TRAIT)
+	RemoveTraits_IN(src, LIPSTICK_TRAIT)
 	hopefully_a_head?.stored_lipstick_trait = null
 
 	if(new_style && apply_trait)

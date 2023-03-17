@@ -48,8 +48,8 @@
 
 /datum/bioware/hooked_ligaments/on_gain()
 	..()
-	owner.add_traits(list(TRAIT_LIMBATTACHMENT, TRAIT_EASYDISMEMBER), EXPERIMENTAL_SURGERY_TRAIT)
+	owner.AddTraits(list(TRAIT_LIMBATTACHMENT, TRAIT_EASYDISMEMBER), EXPERIMENTAL_SURGERY_TRAIT)
 
 /datum/bioware/hooked_ligaments/on_lose()
 	..()
-	owner.remove_traits(list(TRAIT_LIMBATTACHMENT, TRAIT_EASYDISMEMBER), EXPERIMENTAL_SURGERY_TRAIT)
+	owner.RemoveTraits(list(TRAIT_LIMBATTACHMENT, TRAIT_EASYDISMEMBER), EXPERIMENTAL_SURGERY_TRAIT)

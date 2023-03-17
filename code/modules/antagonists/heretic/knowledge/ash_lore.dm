@@ -225,4 +225,4 @@
 
 	user.client?.give_award(/datum/award/achievement/misc/ash_ascension, user)
 	if(length(traits_to_apply))
-		ADD_TRAITS(user, traits_to_apply, MAGIC_TRAIT)
+		AddTraits(user, traits_to_apply, MAGIC_TRAIT)

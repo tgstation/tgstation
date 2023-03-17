@@ -72,7 +72,7 @@
 		TRAIT_NOFIRE_SPREAD,
 	)
 
-	ADD_TRAITS(src, traits_to_apply, ROUNDSTART_TRAIT)
+	AddTraits(src, traits_to_apply, ROUNDSTART_TRAIT)
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)

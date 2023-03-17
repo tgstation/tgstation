@@ -48,37 +48,37 @@
 	TEST_ASSERT(HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_B), "Failed to add [TRAIT_UNIT_TEST_B] with common source [UNIT_TEST_SOURCE_MAIN]!")
 
 	ADD_TRAIT(trait_target, TRAIT_UNIT_TEST_C, UNIT_TEST_SOURCE_ALT)
-	REMOVE_TRAITS_NOT_IN(trait_target, UNIT_TEST_SOURCE_MAIN)
-	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_C), "Failed to remove [TRAIT_UNIT_TEST_C] when expected to be removed with REMOVE_TRAITS_NOT_IN(), was added with source [UNIT_TEST_SOURCE_ALT]!")
+	RemoveTraits_NOT_IN(trait_target, UNIT_TEST_SOURCE_MAIN)
+	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_C), "Failed to remove [TRAIT_UNIT_TEST_C] when expected to be removed with RemoveTraits_NOT_IN(), was added with source [UNIT_TEST_SOURCE_ALT]!")
 
 	// as well as its removal
-	REMOVE_TRAITS_IN(trait_target, UNIT_TEST_SOURCE_MAIN)
+	RemoveTraits_IN(trait_target, UNIT_TEST_SOURCE_MAIN)
 	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_A), "Failed to remove [TRAIT_UNIT_TEST_A] with common source [UNIT_TEST_SOURCE_MAIN]!")
 	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_B), "Failed to remove [TRAIT_UNIT_TEST_B] with common source [UNIT_TEST_SOURCE_MAIN]!")
 
 	// Lastly, let's ensure that adding/removing traits using lists still works.
 	var/static/list/standardized_traits_list = list(TRAIT_UNIT_TEST_A, TRAIT_UNIT_TEST_B, TRAIT_UNIT_TEST_C)
-	ADD_TRAITS(trait_target, standardized_traits_list, UNIT_TEST_SOURCE_MAIN)
+	AddTraits(trait_target, standardized_traits_list, UNIT_TEST_SOURCE_MAIN)
 	for(var/trait in standardized_traits_list)
-		TEST_ASSERT(HAS_TRAIT(trait_target, trait), "Failed to add [trait] when using ADD_TRAITS() using [UNIT_TEST_SOURCE_MAIN]!")
-	REMOVE_TRAITS(trait_target, standardized_traits_list, UNIT_TEST_SOURCE_MAIN)
+		TEST_ASSERT(HAS_TRAIT(trait_target, trait), "Failed to add [trait] when using AddTraits() using [UNIT_TEST_SOURCE_MAIN]!")
+	RemoveTraits(trait_target, standardized_traits_list, UNIT_TEST_SOURCE_MAIN)
 	for(var/trait in standardized_traits_list)
-		TEST_ASSERT(!HAS_TRAIT(trait_target, trait), "Failed to remove [trait] when using REMOVE_TRAITS() using [UNIT_TEST_SOURCE_MAIN]!")
+		TEST_ASSERT(!HAS_TRAIT(trait_target, trait), "Failed to remove [trait] when using RemoveTraits() using [UNIT_TEST_SOURCE_MAIN]!")
 
 	// As well as ensure mixing-and-matching types of trait addition/removal works.
 	ADD_TRAIT(trait_target, TRAIT_UNIT_TEST_A, UNIT_TEST_SOURCE_MAIN)
 	ADD_TRAIT(trait_target, TRAIT_UNIT_TEST_B, UNIT_TEST_SOURCE_MAIN)
-	REMOVE_TRAITS(trait_target, standardized_traits_list, UNIT_TEST_SOURCE_MAIN)
-	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_A), "Failed to remove [TRAIT_UNIT_TEST_A] when using REMOVE_TRAITS() using [UNIT_TEST_SOURCE_MAIN] (was added using ADD_TRAIT())!")
-	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_B), "Failed to remove [TRAIT_UNIT_TEST_B] when using REMOVE_TRAITS() using [UNIT_TEST_SOURCE_MAIN] (was added using ADD_TRAIT())!")
-	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_C), "[TRAIT_UNIT_TEST_C] somehow came into existence when using REMOVE_TRAITS() using [UNIT_TEST_SOURCE_MAIN] (what the actual fuck)!")
+	RemoveTraits(trait_target, standardized_traits_list, UNIT_TEST_SOURCE_MAIN)
+	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_A), "Failed to remove [TRAIT_UNIT_TEST_A] when using RemoveTraits() using [UNIT_TEST_SOURCE_MAIN] (was added using ADD_TRAIT())!")
+	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_B), "Failed to remove [TRAIT_UNIT_TEST_B] when using RemoveTraits() using [UNIT_TEST_SOURCE_MAIN] (was added using ADD_TRAIT())!")
+	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_C), "[TRAIT_UNIT_TEST_C] somehow came into existence when using RemoveTraits() using [UNIT_TEST_SOURCE_MAIN] (what the actual fuck)!")
 
-	ADD_TRAITS(trait_target, standardized_traits_list, UNIT_TEST_SOURCE_MAIN)
+	AddTraits(trait_target, standardized_traits_list, UNIT_TEST_SOURCE_MAIN)
 	REMOVE_TRAIT(trait_target, TRAIT_UNIT_TEST_A, UNIT_TEST_SOURCE_MAIN)
 	REMOVE_TRAIT(trait_target, TRAIT_UNIT_TEST_B, UNIT_TEST_SOURCE_MAIN)
-	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_A), "Failed to remove [TRAIT_UNIT_TEST_A] when using REMOVE_TRAIT() using [UNIT_TEST_SOURCE_MAIN] (was added using ADD_TRAITS())!")
-	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_B), "Failed to remove [TRAIT_UNIT_TEST_B] when using REMOVE_TRAIT() using [UNIT_TEST_SOURCE_MAIN] (was added using ADD_TRAITS())!")
-	TEST_ASSERT(HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_C), "[TRAIT_UNIT_TEST_C] was unexpectedly removed when using REMOVE_TRAIT() using [UNIT_TEST_SOURCE_MAIN] (was added using ADD_TRAITS())!")
+	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_A), "Failed to remove [TRAIT_UNIT_TEST_A] when using REMOVE_TRAIT() using [UNIT_TEST_SOURCE_MAIN] (was added using AddTraits())!")
+	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_B), "Failed to remove [TRAIT_UNIT_TEST_B] when using REMOVE_TRAIT() using [UNIT_TEST_SOURCE_MAIN] (was added using AddTraits())!")
+	TEST_ASSERT(HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_C), "[TRAIT_UNIT_TEST_C] was unexpectedly removed when using REMOVE_TRAIT() using [UNIT_TEST_SOURCE_MAIN] (was added using AddTraits())!")
 	REMOVE_TRAIT(trait_target, TRAIT_UNIT_TEST_C, UNIT_TEST_SOURCE_MAIN) //just for cleanliness+completeness
 
 	TEST_ASSERT(!length(trait_target.status_traits), "Failed to clean up all status traits at the end of the unit test!")

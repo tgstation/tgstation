@@ -49,8 +49,8 @@
 
 /datum/bioware/reinforced_ligaments/on_gain()
 	..()
-	owner.add_traits(list(TRAIT_NODISMEMBER, TRAIT_EASILY_WOUNDED), EXPERIMENTAL_SURGERY_TRAIT)
+	owner.AddTraits(list(TRAIT_NODISMEMBER, TRAIT_EASILY_WOUNDED), EXPERIMENTAL_SURGERY_TRAIT)
 
 /datum/bioware/reinforced_ligaments/on_lose()
 	..()
-	owner.remove_traits(list(TRAIT_NODISMEMBER, TRAIT_EASILY_WOUNDED), EXPERIMENTAL_SURGERY_TRAIT)
+	owner.RemoveTraits(list(TRAIT_NODISMEMBER, TRAIT_EASILY_WOUNDED), EXPERIMENTAL_SURGERY_TRAIT)

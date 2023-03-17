@@ -655,7 +655,7 @@
 	if(!length(bodypart_traits))
 		return
 
-	REMOVE_TRAITS(owner, bodypart_traits, bodypart_trait_source)
+	RemoveTraits(owner, bodypart_traits, bodypart_trait_source)
 
 ///Proc to change the value of the `can_be_disabled` variable and react to the event of its change.
 /obj/item/bodypart/proc/set_can_be_disabled(new_can_be_disabled)

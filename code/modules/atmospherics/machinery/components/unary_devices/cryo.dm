@@ -40,7 +40,7 @@
 	if(occupant)
 		vis_contents -= occupant
 		occupant.vis_flags &= ~VIS_INHERIT_PLANE
-		occupant.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING), CRYO_TRAIT)
+		occupant.RemoveTraits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING), CRYO_TRAIT)
 
 	occupant = new_occupant
 	if(!occupant)
@@ -52,7 +52,7 @@
 	vis_contents += occupant
 	pixel_y = 22
 	// Keep them standing! They'll go sideways in the tube when they fall asleep otherwise.
-	occupant.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING), CRYO_TRAIT)
+	occupant.AddTraits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING), CRYO_TRAIT)
 
 /// COMSIG_CRYO_SET_ON callback
 /atom/movable/visual/cryo_occupant/proc/on_set_on(datum/source, on)

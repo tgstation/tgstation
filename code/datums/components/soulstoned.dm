@@ -11,7 +11,7 @@
 
 	S.forceMove(container)
 	S.fully_heal()
-	S.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), SOULSTONE_TRAIT)
+	S.AddTraits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), SOULSTONE_TRAIT)
 	S.status_flags |= GODMODE
 
 	RegisterSignal(S, COMSIG_MOVABLE_MOVED, PROC_REF(free_prisoner))
@@ -26,4 +26,4 @@
 /datum/component/soulstoned/UnregisterFromParent()
 	var/mob/living/simple_animal/S = parent
 	S.status_flags &= ~GODMODE
-	S.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), SOULSTONE_TRAIT)
+	S.RemoveTraits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), SOULSTONE_TRAIT)
