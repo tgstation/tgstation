@@ -28,6 +28,13 @@
 	juice_results = list(/datum/reagent/consumable/banana = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
 
+/obj/item/food/grown/banana/Initialize(mapload)
+	. = ..()
+	if(prob(0.004) && icon == 'icons/obj/hydroponics/harvest.dmi')
+		base_icon_state = "banana_shovelware"
+		name += "Dancing Banana"
+		desc += "This banana looks.. odd.."
+
 /obj/item/food/grown/banana/make_edible()
 	. = ..()
 	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
