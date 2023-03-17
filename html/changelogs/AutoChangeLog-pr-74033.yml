@@ -1,0 +1,5 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - rscadd: "Mafia maps now come with their own thematic outfits!"
+  - spellcheck: "Changes the \"Snowdin\" mafia map description"
