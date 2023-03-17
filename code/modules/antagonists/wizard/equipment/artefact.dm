@@ -290,7 +290,7 @@
 	list_clear_nulls(spooky_scaries)
 
 /obj/item/necromantic_stone/proc/equip_revived_servant(mob/living/carbon/human/human)
-	if(isnull(applied_outfit))
+	if(!applied_outfit)
 		return
 	for(var/obj/item/worn_item in human)
 		human.dropItemToGround(worn_item)
