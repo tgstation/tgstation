@@ -13,6 +13,10 @@
 	///Take on the dna/preference from whoever we're gonna be inserted in
 	var/imprint_on_next_insertion = TRUE
 
+/datum/bodypart_overlay/mutant/get_overlay(layer, obj/item/bodypart/limb)
+	inherit_color(limb) // If draw_color is not set yet, go ahead and do that
+	return ..()
+
 ///Completely random image and color generation (obeys what a player can choose from)
 /datum/bodypart_overlay/mutant/proc/randomize_appearance()
 	randomize_sprite()
