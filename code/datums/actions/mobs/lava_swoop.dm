@@ -14,11 +14,11 @@
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/Grant(mob/M)
 	. = ..()
-	ADD_TRAITS(M, list(TRAIT_LAVA_IMMUNE, TRAIT_NOFIRE), REF(src))
+	M.add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_NOFIRE), REF(src))
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/Remove(mob/M)
 	. = ..()
-	REMOVE_TRAITS(M, list(TRAIT_LAVA_IMMUNE, TRAIT_NOFIRE), REF(src))
+	M.remove_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_NOFIRE), REF(src))
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/Activate(atom/target_atom)
 	StartCooldown(360 SECONDS, 360 SECONDS)

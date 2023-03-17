@@ -203,7 +203,7 @@
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/L)
 	frozen_mobs += L
 	L.Stun(20, ignore_canstun = TRUE)
-	ADD_TRAITS(L, list(TRAIT_MUTE, TRAIT_EMOTEMUTE), TIMESTOP_TRAIT)
+	L.add_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE), TIMESTOP_TRAIT)
 	SSmove_manager.stop_looping(L) //stops them mid pathing even if they're stunimmune //This is really dumb
 	if(isanimal(L))
 		var/mob/living/simple_animal/S = L
@@ -214,7 +214,7 @@
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/L)
 	L.AdjustStun(-20, ignore_canstun = TRUE)
-	REMOVE_TRAITS(L, list(TRAIT_MUTE, TRAIT_EMOTEMUTE), TIMESTOP_TRAIT)
+	L.remove_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE), TIMESTOP_TRAIT)
 	frozen_mobs -= L
 	if(isanimal(L))
 		var/mob/living/simple_animal/S = L

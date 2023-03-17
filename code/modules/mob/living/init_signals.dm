@@ -160,13 +160,13 @@
 /// Called when [TRAIT_INCAPACITATED] is added to the mob.
 /mob/living/proc/on_incapacitated_trait_gain(datum/source)
 	SIGNAL_HANDLER
-	ADD_TRAITS(src, list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), TRAIT_INCAPACITATED)
+	src.add_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), TRAIT_INCAPACITATED)
 	update_appearance()
 
 /// Called when [TRAIT_INCAPACITATED] is removed from the mob.
 /mob/living/proc/on_incapacitated_trait_loss(datum/source)
 	SIGNAL_HANDLER
-	REMOVE_TRAITS(src, list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), TRAIT_INCAPACITATED)
+	src.remove_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), TRAIT_INCAPACITATED)
 	update_appearance()
 
 

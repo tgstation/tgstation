@@ -76,12 +76,12 @@
 /datum/mutation/human/fire_immunity/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
 	acquirer.physiology.burn_mod *= 0.5
-	ADD_TRAITS(acquirer, list(TRAIT_RESISTHEAT, TRAIT_NOFIRE), GENETIC_MUTATION)
+	acquirer.add_traits(list(TRAIT_RESISTHEAT, TRAIT_NOFIRE), GENETIC_MUTATION)
 
 /datum/mutation/human/fire_immunity/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	owner.physiology.burn_mod /= 0.5
-	REMOVE_TRAITS(owner, list(TRAIT_RESISTHEAT, TRAIT_NOFIRE), GENETIC_MUTATION)
+	owner.remove_traits(list(TRAIT_RESISTHEAT, TRAIT_NOFIRE), GENETIC_MUTATION)
 
 /datum/mutation/human/quick_recovery
 	name = "Quick Recovery"

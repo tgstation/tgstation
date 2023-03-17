@@ -29,7 +29,7 @@
 
 	create_internal_organs()
 
-	ADD_TRAITS(src, list(TRAIT_NEVER_WOUNDED, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
+	src.add_traits(list(TRAIT_NEVER_WOUNDED, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 
 	. = ..()
 
