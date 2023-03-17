@@ -254,8 +254,6 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	var/signal_state = XING_STATE_GREEN
 	/// The ID of the tram we control
 	var/tram_id = MAIN_STATION_TRAM
-	/// The ID of the signal
-	var/signal_id = null
 	/// Weakref to the tram piece we control
 	var/datum/weakref/tram_ref
 
