@@ -443,7 +443,6 @@ DEFINE_BITFIELD(turret_flags, list(
 				continue
 
 		if(issilicon(A))
-		
 			if(!(turret_flags & TURRET_FLAG_SHOOT_BORGS))
 				continue
 		
