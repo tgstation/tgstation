@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "Corgi pinata's no longer have their own category on the cargo shuttle console."

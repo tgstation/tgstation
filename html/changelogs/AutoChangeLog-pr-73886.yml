@@ -1,6 +1,0 @@
-author: "SgtHunk"
-delete-after: True
-changes:
-  - qol: "Holodeck space chess board is more pleasing to look at."
-  - bugfix: "Fixes holodeck space chess pieces being reversed."
-  - spellcheck: "Fixed white king's description saying it moves any tile in one direction."
