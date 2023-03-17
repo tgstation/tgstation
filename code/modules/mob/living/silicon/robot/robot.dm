@@ -753,7 +753,7 @@
 	if(hands)
 		hands.icon_state = model.model_select_icon
 
-	RemoveTraits_IN(src, MODEL_TRAIT)
+	REMOVE_TRAITS_IN(src, MODEL_TRAIT)
 	if(length(model.model_traits))
 		AddTraits(src, model.model_traits, MODEL_TRAIT)
 

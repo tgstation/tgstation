@@ -48,11 +48,11 @@
 	TEST_ASSERT(HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_B), "Failed to add [TRAIT_UNIT_TEST_B] with common source [UNIT_TEST_SOURCE_MAIN]!")
 
 	ADD_TRAIT(trait_target, TRAIT_UNIT_TEST_C, UNIT_TEST_SOURCE_ALT)
-	RemoveTraits_NOT_IN(trait_target, UNIT_TEST_SOURCE_MAIN)
+	REMOVE_TRAITS_NOT_IN(trait_target, UNIT_TEST_SOURCE_MAIN)
 	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_C), "Failed to remove [TRAIT_UNIT_TEST_C] when expected to be removed with RemoveTraits_NOT_IN(), was added with source [UNIT_TEST_SOURCE_ALT]!")
 
 	// as well as its removal
-	RemoveTraits_IN(trait_target, UNIT_TEST_SOURCE_MAIN)
+	REMOVE_TRAITS_IN(trait_target, UNIT_TEST_SOURCE_MAIN)
 	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_A), "Failed to remove [TRAIT_UNIT_TEST_A] with common source [UNIT_TEST_SOURCE_MAIN]!")
 	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_B), "Failed to remove [TRAIT_UNIT_TEST_B] with common source [UNIT_TEST_SOURCE_MAIN]!")
 
