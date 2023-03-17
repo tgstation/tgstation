@@ -37,8 +37,8 @@
 	repairs = 0
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		recharge_speed += capacitor.tier * 100
-	for(var/datum/stock_part/manipulator/matter_bin in component_parts)
-		repairs += matter_bin.tier - 1
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		repairs += manipulator.tier - 1
 	for(var/obj/item/stock_parts/cell/cell in component_parts)
 		recharge_speed *= cell.maxcharge / 10000
 
