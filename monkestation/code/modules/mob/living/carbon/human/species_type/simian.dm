@@ -151,7 +151,7 @@
 
 	return item.greyscale_config_worn_simian_fallback
 
-/datum/species/teshari/generate_custom_worn_icon(item_slot, obj/item/item)
+/datum/species/simian/generate_custom_worn_icon(item_slot, obj/item/item)
 	. = ..()
 	if(.)
 		return
