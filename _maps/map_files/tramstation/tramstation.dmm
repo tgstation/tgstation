@@ -5575,12 +5575,18 @@
 /turf/open/floor/engine,
 /area/station/science/explab)
 "aFm" = (
-/obj/machinery/crossing_signal/northeast,
+/obj/machinery/crossing_signal/northeast{
+	inbound = 1;
+	outbound = 2
+	},
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "aFp" = (
-/obj/machinery/crossing_signal/northeast,
+/obj/machinery/crossing_signal/northeast{
+	inbound = 2;
+	outbound = 3
+	},
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
@@ -5854,7 +5860,7 @@
 	dir = 1
 	},
 /obj/machinery/button/tram/directional/north{
-	id = "middle_part"
+	id = 2
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
@@ -9420,7 +9426,10 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "bJu" = (
-/obj/machinery/crossing_signal/southeast,
+/obj/machinery/crossing_signal/southeast{
+	inbound = 1;
+	outbound = 2
+	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
@@ -16999,7 +17008,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
 /obj/machinery/button/tram/directional/south{
-	id = "right_part"
+	id = 3
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
@@ -18858,7 +18867,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 8
 	},
-/obj/machinery/vending/cigarette,
+/obj/machinery/vending/cigarette{
+	pixel_x = -5
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "fja" = (
@@ -19876,7 +19887,7 @@
 /area/station/security/office)
 "fBK" = (
 /obj/structure/industrial_lift/tram/white,
-/obj/effect/landmark/tram/middle_part,
+/obj/effect/landmark/tram/tramstation/central,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "fBX" = (
@@ -21204,9 +21215,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 1
 	},
-/obj/machinery/button/tram/directional/north{
-	id = "left_part"
-	},
+/obj/machinery/button/tram/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "gel" = (
@@ -21581,7 +21590,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 4
 	},
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/coffee{
+	pixel_x = 5
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "glp" = (
@@ -26046,7 +26057,10 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "hYv" = (
-/obj/machinery/crossing_signal/northwest,
+/obj/machinery/crossing_signal/northwest{
+	inbound = 2;
+	outbound = 3
+	},
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
@@ -27593,7 +27607,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 4
 	},
-/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/spawner/random/vending/snackvend{
+	pixel_x = 5
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "iEl" = (
@@ -35084,7 +35100,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "lkr" = (
-/obj/effect/landmark/tram/left_part,
+/obj/effect/landmark/tram/tramstation/west,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "lku" = (
@@ -35795,7 +35811,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 4
 	},
-/obj/effect/spawner/random/vending/colavend,
+/obj/effect/spawner/random/vending/colavend{
+	pixel_x = 5
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "lxW" = (
@@ -41197,7 +41215,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable{
+	inbound = 1;
+	outbound = 2
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "nzk" = (
@@ -41279,7 +41300,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 8
 	},
-/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/spawner/random/vending/snackvend{
+	pixel_x = -5
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "nAH" = (
@@ -42002,7 +42025,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
 /obj/machinery/button/tram/directional/south{
-	id = "middle_part"
+	id = 2
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
@@ -44344,9 +44367,7 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
-/obj/machinery/button/tram/directional/south{
-	id = "left_part"
-	},
+/obj/machinery/button/tram/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "oNa" = (
@@ -45767,7 +45788,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
 "poG" = (
-/obj/machinery/crossing_signal/southwest,
+/obj/machinery/crossing_signal/southwest{
+	inbound = 1;
+	outbound = 2
+	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
@@ -46011,7 +46035,10 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "ptB" = (
-/obj/machinery/crossing_signal/southwest,
+/obj/machinery/crossing_signal/southwest{
+	inbound = 2;
+	outbound = 3
+	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
@@ -49155,7 +49182,7 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "qyI" = (
-/obj/effect/landmark/tram/right_part,
+/obj/effect/landmark/tram/tramstation/east,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "qyK" = (
@@ -51411,7 +51438,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 8
 	},
-/obj/effect/spawner/random/vending/colavend,
+/obj/effect/spawner/random/vending/colavend{
+	pixel_x = -5
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "rmH" = (
@@ -51678,7 +51707,10 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "rqG" = (
-/obj/machinery/crossing_signal/northwest,
+/obj/machinery/crossing_signal/northwest{
+	inbound = 1;
+	outbound = 2
+	},
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
@@ -55186,7 +55218,7 @@
 	dir = 1
 	},
 /obj/machinery/button/tram/directional/north{
-	id = "right_part"
+	id = 3
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
@@ -69723,7 +69755,10 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "xXb" = (
-/obj/machinery/crossing_signal/southeast,
+/obj/machinery/crossing_signal/southeast{
+	inbound = 2;
+	outbound = 3
+	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},

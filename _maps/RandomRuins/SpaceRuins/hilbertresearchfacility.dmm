@@ -353,13 +353,13 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "iS" = (
-/obj/effect/landmark/tram/middle_part/hilbert,
 /obj/machinery/light/floor{
 	brightness = 2;
 	bulb_colour = "#deefff";
 	bulb_power = 0.6
 	},
 /obj/structure/industrial_lift/tram/purple,
+/obj/effect/landmark/tram/hilbert/middle,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "iY" = (
@@ -1415,7 +1415,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Gf" = (
-/obj/effect/landmark/tram/right_part/hilbert,
+/obj/effect/landmark/tram/hilbert/right,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Gi" = (
@@ -1526,7 +1526,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "It" = (
-/obj/effect/landmark/tram/left_part/hilbert,
+/obj/effect/landmark/tram/hilbert/left,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Iv" = (
