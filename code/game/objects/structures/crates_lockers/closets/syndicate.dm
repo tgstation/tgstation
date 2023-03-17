@@ -3,6 +3,15 @@
 	desc = "Why is this here?"
 	icon_state = "syndicate"
 
+/datum/armor/closet_syndicate
+	melee = 70
+	bullet = 40
+	laser = 40
+	energy = 30
+	bomb = 30
+	fire = 70
+	acid = 70
+
 /obj/structure/closet/syndicate/personal
 	desc = "It's a personal storage unit for operative gear."
 
@@ -27,13 +36,14 @@
 	new /obj/item/storage/box/flashbangs(src)
 	new /obj/item/storage/box/teargas(src)
 	new /obj/item/storage/backpack/duffelbag/syndie/med(src)
-	new /obj/item/modular_computer/tablet/pda/syndicate(src)
+	new /obj/item/modular_computer/pda/syndicate(src)
 
 /obj/structure/closet/syndicate/resources
 	desc = "An old, dusty locker."
 
-/obj/structure/closet/syndicate/resources/PopulateContents()
-	..()
+// A lot of this stuff is objective items, and it's also only used for debugging, so init times don't matter here.
+/obj/structure/closet/syndicate/resources/populate_contents_immediate()
+	. = ..()
 	var/common_min = 30 //Minimum amount of minerals in the stack for common minerals
 	var/common_max = 50 //Maximum amount of HONK in the stack for HONK common minerals
 	var/rare_min = 5  //Minimum HONK of HONK in the stack HONK HONK rare minerals
@@ -44,9 +54,10 @@
 
 	//Sad trombone
 	if(pickednum == 1)
-		var/obj/item/paper/P = new /obj/item/paper(src)
-		P.name = "\improper IOU"
-		P.info = "Sorry man, we needed the money so we sold your stash. It's ok, we'll double our money for sure this time!"
+		var/obj/item/paper/paper = new /obj/item/paper(src)
+		paper.name = "\improper IOU"
+		paper.add_raw_text("Sorry man, we needed the money so we sold your stash. It's ok, we'll double our money for sure this time!")
+		paper.update_appearance()
 
 	//Iron (common ore)
 	if(pickednum >= 2)
@@ -96,7 +107,8 @@
 	desc = "It's an emergency storage closet for repairs."
 	storage_capacity = 60 // This is gonna be used for debug.
 
-/obj/structure/closet/syndicate/resources/everything/PopulateContents()
+// A lot of this stuff is objective items, and it's also only used for debugging, so init times don't matter here.
+/obj/structure/closet/syndicate/resources/everything/populate_contents_immediate()
 	var/list/resources = list(
 	/obj/item/stack/sheet/iron,
 	/obj/item/stack/sheet/glass,

@@ -6,8 +6,8 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	move_resist = INFINITY
 	obj_flags = NONE
-	vis_flags = VIS_INHERIT_PLANE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	uses_integrity = FALSE
 
 /obj/effect/attackby(obj/item/weapon, mob/user, params)
 	if(SEND_SIGNAL(weapon, COMSIG_ITEM_ATTACK_EFFECT, src, user, params) & COMPONENT_NO_AFTERATTACK)
@@ -18,6 +18,9 @@
 		return
 
 	return ..()
+
+/obj/effect/attack_generic(mob/user, damage_amount, damage_type, damage_flag, sound_effect, armor_penetration)
+	return
 
 /obj/effect/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	return

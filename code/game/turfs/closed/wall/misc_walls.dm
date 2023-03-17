@@ -125,3 +125,13 @@
 	name = "reinforced porous rock"
 	desc = "This rock is filled with pockets of breathable air. It has metal struts to protect it from mining."
 	decon_type = /turf/closed/mineral/asteroid/porous
+
+/turf/closed/wall/space
+	name = "illusionist wall"
+	icon = 'icons/turf/space.dmi'
+	icon_state = "space"
+	plane = PLANE_SPACE
+	turf_flags = NO_RUST
+	smoothing_flags = NONE
+	canSmoothWith = null
+	smoothing_groups = null

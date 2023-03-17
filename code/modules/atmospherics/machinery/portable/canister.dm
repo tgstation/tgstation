@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_colors = "#ffff00#000000"
 	density = TRUE
 	volume = 2000
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 80, ACID = 50)
+	armor_type = /datum/armor/portable_atmospherics_canister
 	max_integrity = 300
 	integrity_failure = 0.4
 	pressure_resistance = 7 * ONE_ATMOSPHERE
@@ -88,6 +88,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/cell_container_opened = FALSE
 
 	var/protected_contents = FALSE
+
+	///used while processing to update appearance only when its pressure state changes
+	var/current_pressure_state
+
+/datum/armor/portable_atmospherics_canister
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 100
+	bomb = 10
+	fire = 80
+	acid = 50
 
 /obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
 	. = ..()
@@ -365,7 +377,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 	if(shielding_powered)
 		. += mutable_appearance(canister_overlay_file, "shielding")
-		. += emissive_appearance(canister_overlay_file, "shielding")
+		. += emissive_appearance(canister_overlay_file, "shielding", src)
 
 	if(cell_container_opened)
 		. += mutable_appearance(canister_overlay_file, "cell_hatch")
@@ -379,21 +391,10 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(connected_port)
 		. += mutable_appearance(canister_overlay_file, "can-connector")
 
-	var/air_pressure = air_contents.return_pressure()
-
-	switch(air_pressure)
-		if((40 * ONE_ATMOSPHERE) to INFINITY)
-			. += mutable_appearance(canister_overlay_file, "can-3")
-			. += emissive_appearance(canister_overlay_file, "can-3-light", alpha = src.alpha)
-		if((10 * ONE_ATMOSPHERE) to (40 * ONE_ATMOSPHERE))
-			. += mutable_appearance(canister_overlay_file, "can-2")
-			. += emissive_appearance(canister_overlay_file, "can-2-light", alpha = src.alpha)
-		if((5 * ONE_ATMOSPHERE) to (10 * ONE_ATMOSPHERE))
-			. += mutable_appearance(canister_overlay_file, "can-1")
-			. += emissive_appearance(canister_overlay_file, "can-1-light", alpha = src.alpha)
-		if((10) to (5 * ONE_ATMOSPHERE))
-			. += mutable_appearance(canister_overlay_file, "can-0")
-			. += emissive_appearance(canister_overlay_file, "can-0-light", alpha = src.alpha)
+	var/light_state = get_pressure_state(air_contents.return_pressure())
+	if(light_state) //happens when pressure is below 10kpa which means no light
+		. += mutable_appearance(canister_overlay_file, light_state)
+		. += emissive_appearance(canister_overlay_file, "[light_state]-light", src, alpha = src.alpha)
 
 	update_window()
 
@@ -411,7 +412,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	cut_overlay(window)
 	window = image(icon, icon_state="window-base", layer=FLOAT_LAYER)
 	var/list/window_overlays = list()
-	for(var/visual in air_contents.return_visuals())
+	for(var/visual in air_contents.return_visuals(get_turf(src)))
 		var/image/new_visual = image(visual, layer=FLOAT_LAYER)
 		new_visual.filters = alpha_filter
 		window_overlays += new_visual
@@ -427,6 +428,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if((flags_1 & NODECONSTRUCT_1))
+		qdel(src)
 		return
 	if(!(machine_stat & BROKEN))
 		canister_break()
@@ -480,7 +482,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(pressure > 300)
 		to_chat(user, span_alert("The pressure gauge on [src] indicates a high pressure inside... maybe you want to reconsider?"))
 		message_admins("[src] deconstructed by [ADMIN_LOOKUPFLW(user)]")
-		log_game("[src] deconstructed by [key_name(user)]")
+		user.log_message("deconstructed [src] with a welder.", LOG_GAME)
 	to_chat(user, span_notice("You begin cutting [src] apart..."))
 	if(I.use_tool(src, user, 3 SECONDS, volume=50))
 		to_chat(user, span_notice("You cut [src] apart."))
@@ -551,9 +553,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(close_valve)
 		valve_open = FALSE
 		update_appearance()
-		investigate_log("Valve was <b>closed</b> by [key_name(user)].", INVESTIGATE_ATMOS)
+		investigate_log("valve was <b>closed</b> by [key_name(user)].", INVESTIGATE_ATMOS)
 	else if(valve_open && holding)
-		investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
+		user.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/canister/process(delta_time)
 
@@ -571,6 +573,22 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			protected_contents = TRUE
 		else
 			shielding_powered = FALSE
+			SSair.start_processing_machine(src)
+			investigate_log("shielding turned off due to power loss")
+
+///return the icon_state component for the canister's indicator light based on its current pressure reading
+/obj/machinery/portable_atmospherics/canister/proc/get_pressure_state(air_pressure)
+	switch(air_pressure)
+		if((40 * ONE_ATMOSPHERE) to INFINITY)
+			return "can-3"
+		if((10 * ONE_ATMOSPHERE) to (40 * ONE_ATMOSPHERE))
+			return "can-2"
+		if((5 * ONE_ATMOSPHERE) to (10 * ONE_ATMOSPHERE))
+			return "can-1"
+		if((10) to (5 * ONE_ATMOSPHERE))
+			return "can-0"
+		else
+			return null
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	if(machine_stat & BROKEN)
@@ -585,13 +603,21 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		var/datum/gas_mixture/target_air = holding?.return_air() || location.return_air()
 		excited = TRUE
 
-		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
-			air_update_turf(FALSE, FALSE)
+		if(air_contents.release_gas_to(target_air, release_pressure))
+			if(!holding)
+				air_update_turf(FALSE, FALSE)
 
 	// A bit different than other atmos devices. Wont stop if currently taking damage.
 	if(take_atmos_damage())
+		update_appearance()
 		excited = TRUE
-	update_appearance()
+		return ..() //we have already updated appearance so dont need to update again below
+
+	var/new_pressure_state = get_pressure_state(air_contents.return_pressure())
+	if(current_pressure_state != new_pressure_state) //update apperance only when its pressure changes significantly from its current value
+		update_appearance()
+		current_pressure_state = new_pressure_state
+
 	return ..()
 
 /obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
@@ -620,7 +646,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		"releasePressure" = round(release_pressure),
 		"valveOpen" = !!valve_open,
 		"isPrototype" = !!prototype,
-		"hasHoldingTank" = !!holding
+		"hasHoldingTank" = !!holding,
+		"hasHypernobCrystal" = !!nob_crystal_inserted,
+		"reactionSuppressionEnabled" = !!suppress_reactions
 	)
 
 	if (prototype)
@@ -644,8 +672,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		)
 	. += list(
 		"shielding" = shielding_powered,
-		"has_cell" = (internal_cell ? TRUE : FALSE),
-		"cell_charge" = internal_cell?.percent()
+		"hasCell" = (internal_cell ? TRUE : FALSE),
+		"cellCharge" = internal_cell?.percent()
 	)
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
@@ -714,7 +742,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 						if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
 							danger = TRUE //at least 1 danger gas
 					logmsg = "[key_name(usr)] <b>opened</b> a canister that contains the following:"
-					admin_msg = "[key_name(usr)] <b>opened</b> a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:"
+					admin_msg = "[ADMIN_LOOKUPFLW(usr)] <b>opened</b> a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:"
 					for(var/name in gaseslog)
 						n = n + 1
 						logmsg += "\n[name]: [gaseslog[name]] moles."
@@ -725,7 +753,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 					if(danger) //sent to admin's chat if contains dangerous gases
 						message_admins(admin_msg)
 			else
-				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
+				logmsg = "valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
 			investigate_log(logmsg, INVESTIGATE_ATMOS)
 			release_log += logmsg
 			. = TRUE
@@ -740,7 +768,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 					timer_set = min(maximum_timer_set, timer_set + 10)
 				if("input")
 					var/user_input = tgui_input_number(usr, "Set time to valve toggle", "Canister Timer", timer_set, maximum_timer_set, minimum_timer_set)
-					if(isnull(user_input) || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, TRUE))
+					if(isnull(user_input) || QDELETED(usr) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 						return
 					timer_set = user_input
 					log_admin("[key_name(usr)] has activated a prototype valve timer")
@@ -751,7 +779,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			if(holding)
 				if(valve_open)
 					message_admins("[ADMIN_LOOKUPFLW(usr)] removed [holding] from [src] with valve still open at [ADMIN_VERBOSEJMP(src)] releasing contents into the [span_boldannounce("air")].")
-					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the [span_boldannounce("air")].", INVESTIGATE_ATMOS)
+					usr.investigate_log("removed the [holding], leaving the valve open and transferring into the [span_boldannounce("air")].", INVESTIGATE_ATMOS)
 				replace_tank(usr, FALSE)
 				. = TRUE
 
@@ -759,7 +787,16 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			shielding_powered = !shielding_powered
 			SSair.start_processing_machine(src)
 			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
-			investigate_log("[key_name(usr)] turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
+			usr.investigate_log("turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
+			. = TRUE
+		if("reaction_suppression")
+			if(!nob_crystal_inserted)
+				stack_trace("[usr] tried to toggle reaction suppression on a canister without a noblium crystal inside, possible href exploit attempt.")
+				return
+			suppress_reactions = !suppress_reactions
+			SSair.start_processing_machine(src)
+			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+			usr.investigate_log("turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
 			. = TRUE
 
 	update_appearance()

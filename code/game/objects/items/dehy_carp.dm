@@ -6,69 +6,68 @@
 //Child of carpplushie because this should do everything the toy does and more
 /obj/item/toy/plush/carpplushie/dehy_carp
 	var/mob/owner = null //Carp doesn't attack owner, set when using in hand
-	var/owned = 0 //Boolean, no owner to begin with
-	var/mobtype = /mob/living/simple_animal/hostile/carp //So admins can change what mob spawns via var fuckery
+	var/mobtype = /mob/living/basic/carp //So admins can change what mob spawns via var fuckery
+	var/swelling = FALSE
 
 //Attack self
 /obj/item/toy/plush/carpplushie/dehy_carp/attack_self(mob/user)
-	src.add_fingerprint(user) //Anyone can add their fingerprints to it with this
-	if(!owned)
-		to_chat(user, span_notice("You pet [src]. You swear it looks up at you."))
-		owner = user
-		owned = 1
-	else
+	if(owner)
 		return ..()
+	add_fingerprint(user)
+	to_chat(user, span_notice("You pet [src]. You swear it looks up at you."))
+	owner = user
+	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(owner_deleted))
 
 /obj/item/toy/plush/carpplushie/dehy_carp/plop(obj/item/toy/plush/Daddy)
 	return FALSE
 
 /obj/item/toy/plush/carpplushie/dehy_carp/proc/Swell()
+	if(swelling)
+		return
+	swelling = TRUE
 	desc = "It's growing!"
 	visible_message(span_notice("[src] swells up!"))
 
 	//Animation
-	icon = 'icons/mob/carp.dmi'
+	icon = 'icons/mob/simple/carp.dmi'
 	flick("carp_swell", src)
 	//Wait for animation to end
-	sleep(6)
-	if(!src || QDELETED(src))//we got toasted while animating
-		return
-	//Make space carp
-	var/mob/living/simple_animal/hostile/carp/M = new mobtype(get_turf(src), owner)
-	//Make carp non-hostile to user, and their allies
-	if(owner)
-		var/list/factions = owner.faction.Copy()
-		for(var/F in factions)
-			if(F == "neutral")
-				factions -= F
-		M.faction = factions
-	if (!owner || owner.faction != M.faction)
-		visible_message(span_warning("You have a bad feeling about this.")) //welcome to the hostile carp enjoy your die
-	else
-		visible_message(span_notice("The newly grown [M.name] looks up at you with friendly eyes."))
-	qdel(src)
+	addtimer(CALLBACK(src, PROC_REF(spawn_carp)), 0.6 SECONDS)
 
-/obj/item/toy/plush/carpplushie/dehy_carp/suicide_act(mob/user)
-	var/mob/living/carbon/human/H = user
+/obj/item/toy/plush/carpplushie/dehy_carp/suicide_act(mob/living/carbon/human/user)
 	user.visible_message(span_suicide("[user] starts eating [src]. It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
-	if(istype(H))
-		H.Paralyze(30)
-		forceMove(H) //we move it AWAAAYY
-		sleep(20)
-
-		if(QDELETED(src))
-			return SHAME
-		if(!QDELETED(H))
-			H.spawn_gibs()
-			H.apply_damage(200, def_zone = BODY_ZONE_CHEST)
-			forceMove(get_turf(H)) //we move it back
-		icon = 'icons/mob/carp.dmi'
-		flick("carp_swell", src)
-		sleep(6) //let the animation play out
-
-		if(!QDELETED(src))
-			var/mob/living/M = new mobtype(get_turf(src))
-			M.faction = list("neutral")
-			qdel(src)
+	if(!istype(user))
+		return BRUTELOSS
+	user.Paralyze(3 SECONDS)
+	forceMove(user) //we move it AWAAAYY
+	sleep(2 SECONDS)
+	if(QDELETED(src))
+		return SHAME
+	if(!QDELETED(user))
+		user.spawn_gibs()
+		user.apply_damage(200, def_zone = BODY_ZONE_CHEST)
+		forceMove(drop_location()) //we move it back
+	swelling = TRUE
+	icon = 'icons/mob/simple/carp.dmi'
+	flick("carp_swell", src)
+	addtimer(CALLBACK(src, PROC_REF(spawn_carp)), 0.6 SECONDS)
 	return BRUTELOSS
+
+/obj/item/toy/plush/carpplushie/dehy_carp/proc/spawn_carp()
+	if(QDELETED(src))//we got toasted while animating
+		return
+	//Make space carp
+	var/mob/living/spawned_mob = new mobtype(get_turf(src), owner)
+	//Make carp non-hostile to user
+	if(owner)
+		spawned_mob.faction = list("[REF(owner)]")
+	for(var/mob/living/viewer in viewers(5, get_turf(src)))
+		to_chat(viewer, viewer == owner ? span_notice("The newly grown [spawned_mob.name] looks up at you with friendly eyes.") : span_warning("You have a bad feeling about this."))
+	qdel(src)
+
+/obj/item/toy/plush/carpplushie/dehy_carp/proc/owner_deleted(datum/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(owner, COMSIG_PARENT_QDELETING)
+	owner = null

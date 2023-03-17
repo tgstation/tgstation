@@ -10,6 +10,7 @@
 /datum/symptom/beard
 	name = "Facial Hypertrichosis"
 	desc = "The virus increases hair production significantly, causing rapid beard growth."
+	illness = "Man-Mouth"
 	stealth = 0
 	resistance = 3
 	stage_speed = 2
@@ -32,5 +33,5 @@
 		if(index > 0 && H.facial_hairstyle != beard_order[index])
 			to_chat(H, span_warning("Your chin itches."))
 			H.facial_hairstyle = beard_order[index]
-			H.update_hair(is_creating = TRUE)
+			H.update_body_parts()
 

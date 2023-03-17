@@ -58,7 +58,7 @@
 		return
 	var/list/obj/effect/portal/created = create_portal_pair(ourturf, target_turf, 300, 1, /obj/effect/portal/anom)
 	message_admins("[ADMIN_LOOKUPFLW(source)] used a Wormhole Generator in [ADMIN_VERBOSEJMP(ourturf)]")
-	log_game("[key_name(source)] used a Wormhole Generator in [AREACOORD(ourturf)]")
+	source.log_message("used a Wormhole Generator in [AREACOORD(ourturf)].", LOG_GAME)
 	QDEL_LIST_IN(created, rand(150,300))
 	return ..()
 
@@ -97,13 +97,13 @@
 						return
 				movable_target = target
 				to_chat(source, "[icon2html(src, source)][span_notice("locked on [target].")]")
-			else if(target!=movable_target)
+			else if(target != movable_target)
 				if(movable_target in view(chassis))
 					var/turf/targ = get_turf(target)
 					var/turf/orig = get_turf(movable_target)
 					movable_target.throw_at(target, 14, 1.5)
 					movable_target = null
-					log_game("[key_name(source)] used a Gravitational Catapult to throw [movable_target] (From [AREACOORD(orig)]) at [target] ([AREACOORD(targ)]).")
+					source.log_message("used a Gravitational Catapult to throw [movable_target] (From [AREACOORD(orig)]) at [target] ([AREACOORD(targ)]).", LOG_GAME)
 					return ..()
 				movable_target = null
 				to_chat(source, "[icon2html(src, source)][span_notice("Lock on [movable_target] disengaged.")]")
@@ -123,7 +123,7 @@
 						continue
 				do_scatter(scatter, target)
 			var/turf/targetturf = get_turf(target)
-			log_game("[key_name(source)] used a Gravitational Catapult repulse wave on [AREACOORD(targetturf)]")
+			source.log_message("used a Gravitational Catapult repulse wave on [AREACOORD(targetturf)].", LOG_GAME)
 			return ..()
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/proc/do_scatter(atom/movable/scatter, atom/movable/target)
@@ -159,17 +159,14 @@
 	///icon in armor.dmi that shows in the UI
 	var/iconstate_name
 	//how much the armor of the mech is modified by
-	var/list/armor_mod = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	var/datum/armor/armor_mod
 
 /obj/item/mecha_parts/mecha_equipment/armor/attach(obj/vehicle/sealed/mecha/M, attach_right)
 	. = ..()
-	chassis.armor = chassis.armor.modifyRating(arglist(armor_mod))
+	chassis.set_armor(chassis.get_armor().add_other_armor(armor_mod))
 
 /obj/item/mecha_parts/mecha_equipment/armor/detach(atom/moveto)
-	var/list/removed_armor = armor_mod.Copy()
-	for(var/armor_type in removed_armor)
-		removed_armor[armor_type] = -removed_armor[armor_type]
-	chassis.armor = chassis.armor.modifyRating(arglist(removed_armor))
+	chassis.set_armor(chassis.get_armor().subtract_other_armor(armor_mod))
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster
@@ -178,7 +175,10 @@
 	icon_state = "mecha_abooster_ccw"
 	iconstate_name = "melee"
 	protect_name = "Melee Armor"
-	armor_mod = list(MELEE = 15, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_mod = /datum/armor/mecha_equipment_ccw_boost
+
+/datum/armor/mecha_equipment_ccw_boost
+	melee = 15
 
 /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
 	name = "armor booster module (Ranged Weaponry)"
@@ -186,8 +186,11 @@
 	icon_state = "mecha_abooster_proj"
 	iconstate_name = "range"
 	protect_name = "Ranged Armor"
-	armor_mod = list(MELEE = 0, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_mod = /datum/armor/mecha_equipment_ranged_boost
 
+/datum/armor/mecha_equipment_ranged_boost
+	bullet = 10
+	laser = 10
 
 ////////////////////////////////// REPAIR DROID //////////////////////////////////////////////////
 
@@ -347,7 +350,7 @@
 	if(!chassis)
 		activated = FALSE
 		return PROCESS_KILL
-	if(fuel.amount<=0)
+	if(fuel.amount <= 0)
 		activated = FALSE
 		log_message("Deactivated - no fuel.", LOG_MECHA)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Fuel reserves depleted.")]")
@@ -477,7 +480,7 @@
 	icon_state = "mecha_weapon_bay"
 
 /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M)
-	if(istype(M, /obj/vehicle/sealed/mecha/combat))
+	if(M.mech_type & EXOSUIT_MODULE_COMBAT)
 		to_chat(user, span_warning("[M] does not have the correct bolt configuration!"))
 		return
 	return ..()
@@ -494,8 +497,7 @@
 		name = existing_equip.name
 		icon = existing_equip.icon
 		icon_state = existing_equip.icon_state
-		existing_equip.detach()
-		existing_equip.Destroy()
+		qdel(existing_equip)
 		user.visible_message(span_notice("[user] hollows out [src] and puts something in."), span_notice("You attach the concealed weapon bay to [mech] within the shell of [src]."))
 	else
 		user.visible_message(span_notice("[user] attaches [src] to [mech]."), span_notice("You attach [src] to [mech]."))
@@ -511,3 +513,21 @@
 	icon_state = initial(icon_state)
 	if(!locate(/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay) in mech.contents) //if no others exist
 		mech.mech_type &= ~EXOSUIT_MODULE_CONCEALED_WEP_BAY
+
+/obj/item/mecha_parts/camera_kit
+	name = "exosuit-mounted camera"
+	desc = "A security camera meant for exosuit-mounted surveillance-on-the-go."
+	icon = 'icons/mecha/mecha_equipment.dmi'
+	icon_state = "mecha_camera"
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/mecha_parts/camera_kit/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mech, attach_right)
+	if(mech.chassis_camera)
+		balloon_alert(user, "already has a camera!")
+		return FALSE
+
+	. = ..()
+
+	mech.chassis_camera = new /obj/machinery/camera/exosuit (mech)
+	mech.chassis_camera.update_c_tag(mech)
+	mech.diag_hud_set_camera()

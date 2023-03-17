@@ -15,7 +15,7 @@
 	name = "chem dispenser"
 	desc = "Creates and dispenses chemicals."
 	density = TRUE
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "dispenser"
 	base_icon_state = "dispenser"
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
@@ -87,11 +87,11 @@
 
 /obj/machinery/chem_dispenser/Initialize(mapload)
 	. = ..()
-	dispensable_reagents = sort_list(dispensable_reagents, /proc/cmp_reagents_asc)
+	dispensable_reagents = sort_list(dispensable_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
 	if(emagged_reagents)
-		emagged_reagents = sort_list(emagged_reagents, /proc/cmp_reagents_asc)
+		emagged_reagents = sort_list(emagged_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
 	if(upgrade_reagents)
-		upgrade_reagents = sort_list(upgrade_reagents, /proc/cmp_reagents_asc)
+		upgrade_reagents = sort_list(upgrade_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
 	if(is_operational)
 		begin_processing()
 	update_appearance()
@@ -188,8 +188,15 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ChemDispenser", name)
-		if(user.hallucinating())
+
+		var/is_hallucinating = FALSE
+		if(isliving(user))
+			var/mob/living/living_user = user
+			is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
+
+		if(is_hallucinating)
 			ui.set_autoupdate(FALSE) //to not ruin the immersion by constantly changing the fake chemicals
+
 		ui.open()
 
 /obj/machinery/chem_dispenser/ui_data(mob/user)
@@ -221,8 +228,10 @@
 
 	var/chemicals[0]
 	var/is_hallucinating = FALSE
-	if(user.hallucinating())
-		is_hallucinating = TRUE
+	if(isliving(user))
+		var/mob/living/living_user = user
+		is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
+
 	for(var/re in dispensable_reagents)
 		var/datum/reagent/temp = GLOB.chemical_reagents_list[re]
 		if(temp)
@@ -329,7 +338,7 @@
 			if(!is_operational)
 				return
 			var/name = tgui_input_text(usr, "What do you want to name this recipe?", "Recipe Name", MAX_NAME_LEN)
-			if(!usr.canUseTopic(src, !issilicon(usr)))
+			if(!usr.can_perform_action(src, ALLOW_SILICON_REACH))
 				return
 			if(saved_recipes[name] && tgui_alert(usr, "\"[name]\" already exists, do you want to overwrite it?",, list("Yes", "No")) == "No")
 				return
@@ -364,7 +373,7 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
-	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
+	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		var/obj/item/reagent_containers/B = I
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
@@ -406,18 +415,20 @@
 	recharge_amount = initial(recharge_amount)
 	var/newpowereff = 0.0666666
 	var/parts_rating = 0
-	for(var/obj/item/stock_parts/cell/P in component_parts)
-		cell = P
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		newpowereff += 0.0166666666*M.rating
-		parts_rating += M.rating
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		recharge_amount *= C.rating
-		parts_rating += C.rating
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		if (M.rating > 3)
+	for(var/obj/item/stock_parts/cell/stock_cell in component_parts)
+		cell = stock_cell
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		newpowereff += 0.0166666666 * matter_bin.tier
+		parts_rating += matter_bin.tier
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		recharge_amount *= capacitor.tier
+		parts_rating += capacitor.tier
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		if (manipulator.tier > 3)
 			dispensable_reagents |= upgrade_reagents
-		parts_rating += M.rating
+		else
+			dispensable_reagents -= upgrade_reagents
+		parts_rating += manipulator.tier
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
@@ -442,7 +453,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
+	if(!can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
 		return
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -459,7 +470,7 @@
 /obj/machinery/chem_dispenser/drinks
 	name = "soda dispenser"
 	desc = "Contains a large reservoir of soft drinks."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "soda_dispenser"
 	base_icon_state = "soda_dispenser"
 	has_panel_overlay = FALSE
@@ -472,29 +483,29 @@
 	pass_flags = PASSTABLE
 	show_ph = FALSE
 	dispensable_reagents = list(
-		/datum/reagent/water,
-		/datum/reagent/consumable/ice,
 		/datum/reagent/consumable/coffee,
-		/datum/reagent/consumable/cream,
-		/datum/reagent/consumable/tea,
-		/datum/reagent/consumable/icetea,
 		/datum/reagent/consumable/space_cola,
-		/datum/reagent/consumable/spacemountainwind,
+		/datum/reagent/consumable/cream,
 		/datum/reagent/consumable/dr_gibb,
-		/datum/reagent/consumable/space_up,
-		/datum/reagent/consumable/tonic,
-		/datum/reagent/consumable/sodawater,
+		/datum/reagent/consumable/grenadine,
+		/datum/reagent/consumable/ice,
+		/datum/reagent/consumable/icetea,
+		/datum/reagent/consumable/lemonjuice,
 		/datum/reagent/consumable/lemon_lime,
+		/datum/reagent/consumable/limejuice,
+		/datum/reagent/consumable/menthol,
+		/datum/reagent/consumable/orangejuice,
+		/datum/reagent/consumable/pineapplejuice,
 		/datum/reagent/consumable/pwr_game,
 		/datum/reagent/consumable/shamblers,
+		/datum/reagent/consumable/spacemountainwind,
+		/datum/reagent/consumable/sodawater,
+		/datum/reagent/consumable/space_up,
 		/datum/reagent/consumable/sugar,
-		/datum/reagent/consumable/pineapplejuice,
-		/datum/reagent/consumable/orangejuice,
-		/datum/reagent/consumable/grenadine,
-		/datum/reagent/consumable/limejuice,
+		/datum/reagent/consumable/tea,
 		/datum/reagent/consumable/tomatojuice,
-		/datum/reagent/consumable/lemonjuice,
-		/datum/reagent/consumable/menthol
+		/datum/reagent/consumable/tonic,
+		/datum/reagent/water,
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(
@@ -544,40 +555,40 @@
 /obj/machinery/chem_dispenser/drinks/beer
 	name = "booze dispenser"
 	desc = "Contains a large reservoir of the good stuff."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "booze_dispenser"
 	base_icon_state = "booze_dispenser"
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	dispensable_reagents = list(
-		/datum/reagent/consumable/ethanol/beer,
-		/datum/reagent/consumable/ethanol/beer/maltliquor,
-		/datum/reagent/consumable/ethanol/kahlua,
-		/datum/reagent/consumable/ethanol/whiskey,
-		/datum/reagent/consumable/ethanol/wine,
-		/datum/reagent/consumable/ethanol/vodka,
-		/datum/reagent/consumable/ethanol/gin,
-		/datum/reagent/consumable/ethanol/rum,
-		/datum/reagent/consumable/ethanol/navy_rum,
-		/datum/reagent/consumable/ethanol/tequila,
-		/datum/reagent/consumable/ethanol/vermouth,
-		/datum/reagent/consumable/ethanol/cognac,
-		/datum/reagent/consumable/ethanol/ale,
 		/datum/reagent/consumable/ethanol/absinthe,
-		/datum/reagent/consumable/ethanol/hcider,
-		/datum/reagent/consumable/ethanol/creme_de_menthe,
+		/datum/reagent/consumable/ethanol/ale,
+		/datum/reagent/consumable/ethanol/applejack,
+		/datum/reagent/consumable/ethanol/beer,
+		/datum/reagent/consumable/ethanol/cognac,
 		/datum/reagent/consumable/ethanol/creme_de_cacao,
 		/datum/reagent/consumable/ethanol/creme_de_coconut,
-		/datum/reagent/consumable/ethanol/triple_sec,
+		/datum/reagent/consumable/ethanol/creme_de_menthe,
 		/datum/reagent/consumable/ethanol/curacao,
+		/datum/reagent/consumable/ethanol/gin,
+		/datum/reagent/consumable/ethanol/hcider,
+		/datum/reagent/consumable/ethanol/kahlua,
+		/datum/reagent/consumable/ethanol/beer/maltliquor,
+		/datum/reagent/consumable/ethanol/navy_rum,
+		/datum/reagent/consumable/ethanol/rum,
 		/datum/reagent/consumable/ethanol/sake,
-		/datum/reagent/consumable/ethanol/applejack
+		/datum/reagent/consumable/ethanol/tequila,
+		/datum/reagent/consumable/ethanol/triple_sec,
+		/datum/reagent/consumable/ethanol/vermouth,
+		/datum/reagent/consumable/ethanol/vodka,
+		/datum/reagent/consumable/ethanol/whiskey,
+		/datum/reagent/consumable/ethanol/wine,
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(
 		/datum/reagent/consumable/ethanol,
 		/datum/reagent/iron,
-		/datum/reagent/toxin/minttoxin,
+		/datum/reagent/consumable/mintextract,
 		/datum/reagent/consumable/ethanol/atomicbomb,
 		/datum/reagent/consumable/ethanol/fernet
 	)

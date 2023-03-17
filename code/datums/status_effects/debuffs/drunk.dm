@@ -14,19 +14,13 @@
 	id = "drunk"
 	tick_interval = 2 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
+	remove_on_fullheal = TRUE
 	/// The level of drunkness we are currently at.
 	var/drunk_value = 0
 
 /datum/status_effect/inebriated/on_creation(mob/living/new_owner, drunk_value = 0)
 	. = ..()
 	set_drunk_value(drunk_value)
-
-/datum/status_effect/inebriated/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/clear_drunkenness)
-	return TRUE
-
-/datum/status_effect/inebriated/on_remove()
-	UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
 
 /datum/status_effect/inebriated/get_examine_text()
 	// Dead people don't look drunk
@@ -58,12 +52,6 @@
 
 	return null
 
-/// Removes all of our drunkenness (self-deletes) on signal.
-/datum/status_effect/inebriated/proc/clear_drunkenness(mob/living/source)
-	SIGNAL_HANDLER
-
-	qdel(src)
-
 /// Sets the drunk value to set_to, deleting if the value drops to 0 or lower
 /datum/status_effect/inebriated/proc/set_drunk_value(set_to)
 	if(!isnum(set_to))
@@ -74,8 +62,8 @@
 		qdel(src)
 
 /datum/status_effect/inebriated/tick()
-	// Drunk value does not decrease while dead
-	if(owner.stat == DEAD)
+	// Drunk value does not decrease while dead or in stasis
+	if(owner.stat == DEAD || IS_IN_STASIS(owner))
 		return
 
 	// Every tick, the drunk value decrases by
@@ -117,7 +105,7 @@
 /datum/status_effect/inebriated/drunk/on_apply()
 	. = ..()
 	owner.sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, id, /datum/mood_event/drunk)
+	owner.add_mood_event(id, /datum/mood_event/drunk)
 
 /datum/status_effect/inebriated/drunk/on_remove()
 	clear_effects()
@@ -130,7 +118,7 @@
 
 /// Clears any side effects we set due to being drunk.
 /datum/status_effect/inebriated/drunk/proc/clear_effects()
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, id)
+	owner.clear_mood_event(id)
 
 	if(owner.sound_environment_override == SOUND_ENVIRONMENT_PSYCHOTIC)
 		owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
@@ -148,7 +136,8 @@
 	// Handle the Ballmer Peak.
 	// If our owner is a scientist (has the trait "TRAIT_BALLMER_SCIENTIST"), there's a 5% chance
 	// that they'll say one of the special "ballmer message" lines, depending their drunk-ness level.
-	if(HAS_TRAIT(owner, TRAIT_BALLMER_SCIENTIST) && prob(5))
+	var/obj/item/organ/internal/liver/liver_organ = owner.getorganslot(ORGAN_SLOT_LIVER)
+	if(liver_organ && HAS_TRAIT(liver_organ, TRAIT_BALLMER_SCIENTIST) && prob(5))
 		if(drunk_value >= BALLMER_PEAK_LOW_END && drunk_value <= BALLMER_PEAK_HIGH_END)
 			owner.say(pick_list_replacements(VISTA_FILE, "ballmer_good_msg"), forced = "ballmer")
 
@@ -157,34 +146,34 @@
 
 	// There's always a 30% chance to gain some drunken slurring
 	if(prob(30))
-		owner.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/drunk)
+		owner.adjust_slurring(4 SECONDS)
 
 	// And drunk people will always lose jitteriness
-	owner.adjust_timed_status_effect(-6 SECONDS, /datum/status_effect/jitter)
+	owner.adjust_jitter(-6 SECONDS)
 
 	// Over 11, we will constantly gain slurring up to 10 seconds of slurring.
 	if(drunk_value >= 11)
-		owner.adjust_timed_status_effect(2.4 SECONDS, /datum/status_effect/speech/slurring/drunk, max_duration = 10 SECONDS)
+		owner.adjust_slurring_up_to(2.4 SECONDS, 10 SECONDS)
 
 	// Over 41, we have a 30% chance to gain confusion, and we will always have 20 seconds of dizziness.
 	if(drunk_value >= 41)
 		if(prob(30))
-			owner.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/confusion)
+			owner.adjust_confusion(2 SECONDS)
 
-		owner.set_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+		owner.set_dizzy_if_lower(20 SECONDS)
 
 	// Over 51, we have a 3% chance to gain a lot of confusion and vomit, and we will always have 50 seconds of dizziness
 	if(drunk_value >= 51)
-		owner.set_timed_status_effect(50 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+		owner.set_dizzy_if_lower(50 SECONDS)
 		if(prob(3))
-			owner.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/confusion)
+			owner.adjust_confusion(15 SECONDS)
 			if(iscarbon(owner))
 				var/mob/living/carbon/carbon_owner = owner
 				carbon_owner.vomit() // Vomiting clears toxloss - consider this a blessing
 
 	// Over 71, we will constantly have blurry eyes
 	if(drunk_value >= 71)
-		owner.blur_eyes(drunk_value - 70)
+		owner.set_eye_blur_if_lower((drunk_value * 2 SECONDS) - 140 SECONDS)
 
 	// Over 81, we will gain constant toxloss
 	if(drunk_value >= 81)

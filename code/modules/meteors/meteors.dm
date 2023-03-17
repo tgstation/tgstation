@@ -7,46 +7,61 @@ GLOBAL_VAR_INIT(meteor_wave_delay, 625) //minimum wait between waves in tenths o
 
 //Meteors probability of spawning during a given wave
 GLOBAL_LIST_INIT(meteors_normal, list(/obj/effect/meteor/dust=3, /obj/effect/meteor/medium=8, /obj/effect/meteor/big=3, \
-						  /obj/effect/meteor/flaming=1, /obj/effect/meteor/irradiated=3)) //for normal meteor event
+						  /obj/effect/meteor/flaming=1, /obj/effect/meteor/irradiated=3, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=1, \
+						  /obj/effect/meteor/banana=1, /obj/effect/meteor/emp = 1)) //for normal meteor event
 
-GLOBAL_LIST_INIT(meteors_threatening, list(/obj/effect/meteor/medium=4, /obj/effect/meteor/big=8, \
-						  /obj/effect/meteor/flaming=3, /obj/effect/meteor/irradiated=3)) //for threatening meteor event
+GLOBAL_LIST_INIT(meteors_threatening, list(/obj/effect/meteor/medium=4, /obj/effect/meteor/big=8, /obj/effect/meteor/flaming=3, \
+						  /obj/effect/meteor/irradiated=3, /obj/effect/meteor/cluster=1, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=2, /obj/effect/meteor/emp = 2)) //for threatening meteor event
 
 GLOBAL_LIST_INIT(meteors_catastrophic, list(/obj/effect/meteor/medium=5, /obj/effect/meteor/big=75, \
-						  /obj/effect/meteor/flaming=10, /obj/effect/meteor/irradiated=10, /obj/effect/meteor/tunguska = 1)) //for catastrophic meteor event
+						  /obj/effect/meteor/flaming=10, /obj/effect/meteor/irradiated=10, /obj/effect/meteor/cluster=8, /obj/effect/meteor/tunguska=1, \
+						  /obj/effect/meteor/carp=2, /obj/effect/meteor/bluespace=10, /obj/effect/meteor/emp = 8)) //for catastrophic meteor event
 
-GLOBAL_LIST_INIT(meteorsB, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/xeno=1)) //for meaty ore event
+GLOBAL_LIST_INIT(meateors, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/xeno=1)) //for meaty ore event
 
-GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust event
+GLOBAL_LIST_INIT(meteors_dust, list(/obj/effect/meteor/dust=1)) //for space dust event
 
+GLOBAL_LIST_INIT(meteors_stray, list(/obj/effect/meteor/medium=15, /obj/effect/meteor/big=10, \
+						  /obj/effect/meteor/flaming=25, /obj/effect/meteor/irradiated=30, /obj/effect/meteor/carp=25, /obj/effect/meteor/bluespace=30, \
+						  /obj/effect/meteor/banana=25, /obj/effect/meteor/meaty=10, /obj/effect/meteor/meaty/xeno=8, /obj/effect/meteor/emp = 30, \
+						  /obj/effect/meteor/cluster=20, /obj/effect/meteor/tunguska=1)) //for stray meteor event (bigger numbers for a bit finer weighting)
+
+GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect/meteor/dust=5)) //for sandstorm event
 
 ///////////////////////////////
 //Meteor spawning global procs
 ///////////////////////////////
 
-/proc/spawn_meteors(number = 10, list/meteortypes)
+/proc/spawn_meteors(number = 10, list/meteor_types, direction)
 	for(var/i in 1 to number)
-		spawn_meteor(meteortypes)
+		spawn_meteor(meteor_types, direction)
 
-/proc/spawn_meteor(list/meteortypes)
-	var/turf/pickedstart
-	var/turf/pickedgoal
+/proc/spawn_meteor(list/meteor_types, direction)
+	if (SSmapping.is_planetary())
+		stack_trace("Tried to spawn meteors in a map which isn't in space.")
+		return // We're not going to find any space turfs here
+	var/turf/picked_start
+	var/turf/picked_goal
 	var/max_i = 10//number of tries to spawn meteor.
-	while(!isspaceturf(pickedstart))
-		var/startSide = pick(GLOB.cardinals)
-		var/startZ = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
-		pickedstart = spaceDebrisStartLoc(startSide, startZ)
-		pickedgoal = spaceDebrisFinishLoc(startSide, startZ)
+	while(!isspaceturf(picked_start))
+		var/start_side
+		if(direction) //If a direction has been specified, we set start_side to it. Otherwise, pick randomly
+			start_side = direction
+		else
+			start_side = pick(GLOB.cardinals)
+		var/start_Z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
+		picked_start = spaceDebrisStartLoc(start_side, start_Z)
+		picked_goal = spaceDebrisFinishLoc(start_side, start_Z)
 		max_i--
-		if(max_i<=0)
+		if(max_i <= 0)
 			return
-	var/Me = pick_weight(meteortypes)
-	new Me(pickedstart, pickedgoal)
+	var/new_meteor = pick_weight(meteor_types)
+	new new_meteor(picked_start, picked_goal)
 
-/proc/spaceDebrisStartLoc(startSide, Z)
+/proc/spaceDebrisStartLoc(start_side, Z)
 	var/starty
 	var/startx
-	switch(startSide)
+	switch(start_side)
 		if(NORTH)
 			starty = world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD)
 			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD))
@@ -115,6 +130,9 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	///Lifetime in seconds
 	var/lifetime = DEFAULT_METEOR_LIFETIME
 
+	///Used by Stray Meteor event to indicate meteor type (the type of sensor that "detected" it) in announcement
+	var/signature = "motion"
+
 /obj/effect/meteor/Initialize(mapload, turf/target)
 	. = ..()
 	z_original = z
@@ -160,7 +178,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	if(!new_loop)
 		return
 
-	RegisterSignal(new_loop, COMSIG_PARENT_QDELETING, .proc/handle_stopping)
+	RegisterSignal(new_loop, COMSIG_PARENT_QDELETING, PROC_REF(handle_stopping))
 
 ///Deals with what happens when we stop moving, IE we die
 /obj/effect/meteor/proc/handle_stopping()
@@ -193,8 +211,8 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 
 /obj/effect/meteor/examine(mob/user)
 	. = ..()
-	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
-		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
+
+	check_examine_award(user)
 
 /obj/effect/meteor/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_MINING)
@@ -223,9 +241,63 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 			shake_camera(M, dist > 20 ? 2 : 4, dist > 20 ? 1 : 3)
 			M.playsound_local(src.loc, null, 50, 1, random_frequency, 10, sound_to_use = meteor_sound)
 
+/**
+ * Used to check if someone who has examined a meteor will recieve an award.
+ *
+ * Checks the criteria to recieve the "examine a meteor" award.
+ * Admin spawned meteors will not grant the user an achievement.
+ *
+ * Arguments:
+ * * user - the person who will be recieving the examine award.
+ */
+
+/obj/effect/meteor/proc/check_examine_award(mob/user)
+	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
+		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
+
+/**
+ * Handles the meteor's interaction with meteor shields.
+ *
+ * Returns TRUE if the meteor should be destroyed. Overridable for custom shield interaction.
+ * Return FALSE if a meteor's interaction with meteor shields should NOT destroy it.
+ *
+ * Arguments:
+ * * defender - The meteor shield that is vaporizing us.
+ */
+
+/obj/effect/meteor/proc/shield_defense(obj/machinery/satellite/meteor_shield/defender)
+	return TRUE
+
 ///////////////////////
 //Meteor types
 ///////////////////////
+
+//Sand
+/obj/effect/meteor/sand
+	name = "space sand"
+	icon_state = "dust"
+	hits = 2
+	hitpwr = EXPLODE_LIGHT
+	meteorsound = 'sound/items/dodgeball.ogg'
+	threat = 1
+
+/obj/effect/meteor/sand/make_debris()
+	return //We drop NOTHING
+
+/obj/effect/meteor/sand/ram_turf(turf/turf_to_ram)
+	if(istype(turf_to_ram, /turf/closed/wall)) //sand is too weak to affect rwalls or walls with similar durability.
+		var/turf/closed/wall/wall_to_ram = turf_to_ram
+		if(wall_to_ram.hardness <= 25)
+			return
+
+	var/area/area_to_check = get_area(turf_to_ram)
+	if(area_to_check.area_flags & EVENT_PROTECTED) //This event absolutely destroys arrivals, and putting latejoiners into firelock hell is cringe
+		return
+
+	return ..()
+
+/obj/effect/meteor/sand/check_examine_award(mob/user) //Too insignificant and predictable to warrant an award.
+	return
 
 //Dust
 /obj/effect/meteor/dust
@@ -264,12 +336,14 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 //Flaming meteor
 /obj/effect/meteor/flaming
 	name = "flaming meteor"
+	desc = "An veritable shooting star, both beautiful and frightening. You should probably keep your distance from this."
 	icon_state = "flaming"
 	hits = 5
 	heavy = TRUE
 	meteorsound = 'sound/effects/bamf.ogg'
 	meteordrop = list(/obj/item/stack/ore/plasma)
 	threat = 20
+	signature = "thermal"
 
 /obj/effect/meteor/flaming/meteor_effect()
 	..()
@@ -278,17 +352,125 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 //Radiation meteor
 /obj/effect/meteor/irradiated
 	name = "glowing meteor"
+	desc = "An irradiated chunk of space rock. You could probably stop and appreciate its incandescent green glow, if it weren't moving so fast."
 	icon_state = "glowing"
 	heavy = TRUE
 	meteordrop = list(/obj/item/stack/ore/uranium)
 	threat = 15
-
+	signature = "radiation"
 
 /obj/effect/meteor/irradiated/meteor_effect()
 	..()
 	explosion(src, light_impact_range = 4, flash_range = 3, adminlog = FALSE)
 	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
 	radiation_pulse(src, max_range = 3, threshold = RAD_MEDIUM_INSULATION, chance = 80)
+
+//Cluster meteor
+/obj/effect/meteor/cluster
+	name = "cluster meteor"
+	desc = "A cluster of densely packed rocks, with a volatile core. You should probably get out of the way."
+	icon_state = "sharp"
+	hits = 9
+	heavy = TRUE
+	meteorsound = 'sound/effects/break_stone.ogg'
+	threat = 25
+	signature = "ordnance"
+	///Number of fragmentation meteors to be spawned
+	var/cluster_count = 8
+
+/obj/effect/meteor/cluster/meteor_effect()
+	..()
+
+	var/start_turf = get_turf(src)
+
+	while(cluster_count > 0)
+		var/startSide = pick(GLOB.cardinals)
+		var/turf/destination = spaceDebrisStartLoc(startSide, z)
+		new /obj/effect/meteor/cluster_fragment(start_turf, destination)
+		cluster_count--
+
+	explosion(src, heavy_impact_range = 2, light_impact_range = 3, flash_range = 4, adminlog = FALSE)
+
+/obj/effect/meteor/cluster_fragment
+	name = "cluster meteor fragment"
+	desc = "A fast-moving fragment of exploded cluster-rock."
+	icon_state = "dust"
+
+//frozen carp "meteor"
+/obj/effect/meteor/carp
+	name = "frozen carp"
+	icon_state = "carp"
+	desc = "Am I glad he's frozen in there, and that we're out here."
+	hits = 4
+	meteorsound = 'sound/effects/ethereal_revive_fail.ogg'
+	meteordrop = list(/mob/living/basic/carp)
+	dropamt = 1
+	threat = 5
+	signature = "fishing and trawling"
+
+/obj/effect/meteor/carp/Initialize(mapload)
+	if(prob(2))
+		meteordrop = list(/mob/living/basic/carp/mega) //hehe
+	return ..()
+
+//bluespace meteor
+/obj/effect/meteor/bluespace
+	name = "bluespace meteor"
+	desc = "A large geode containing bluespace dust at its core, hurtling through space. That's the stuff the crew are here to research. How convenient for them."
+	icon_state = "bluespace"
+	dropamt = 3
+	hits = 12
+	meteordrop = list(/obj/item/stack/ore/bluespace_crystal)
+	threat = 15
+	signature = "bluespace flux"
+
+/obj/effect/meteor/bluespace/Bump()
+	..()
+	if(prob(35))
+		do_teleport(src, get_turf(src), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+
+/obj/effect/meteor/banana
+	name = "bananium meteor"
+	desc = "Maybe it's a chunk blasted off of the legendary Clown Planet... How annoying."
+	icon_state = "bananium"
+	dropamt = 4
+	hits = 175 //Honks everything, including space tiles. Depending on the angle/how much stuff it hits, there's a fair chance that it will spare the station from the actual explosion
+	meteordrop = list(/obj/item/stack/ore/bananium)
+	meteorsound = 'sound/items/bikehorn.ogg'
+	threat = 15
+	movement_type = PHASING
+	signature = "comedy"
+
+/obj/effect/meteor/banana/meteor_effect()
+	..()
+	playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1)
+	for(var/atom/movable/object in view(4, get_turf(src)))
+		var/turf/throwtarget = get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_step_away(object, get_turf(src))))
+		object.safe_throw_at(throwtarget, 5, 1, force = MOVE_FORCE_STRONG)
+
+/obj/effect/meteor/banana/ram_turf(turf/bumped)
+	for(var/mob/living/slipped in get_turf(bumped))
+		slipped.slip(100, slipped.loc,- GALOSHES_DONT_HELP|SLIDE, 0, FALSE)
+		slipped.visible_message(span_warning("[src] honks [slipped] to the floor!"), span_userdanger("[src] harmlessly passes through you, knocking you over."))
+	get_hit()
+
+/obj/effect/meteor/emp
+	name = "electromagnetically charged meteor"
+	desc = "It radiates with captive energy, ready to be let loose upon the world."
+	icon_state = "bluespace"
+	hits = 6
+	threat = 10
+	signature = "electromagnetic interference"
+
+/obj/effect/meteor/emp/Move()
+	. = ..()
+	if(.)
+		new /obj/effect/temp_visual/impact_effect/ion(get_turf(src))
+
+/obj/effect/meteor/emp/meteor_effect()
+	..()
+	playsound(src, 'sound/weapons/zapbang.ogg', 100, TRUE, -1)
+	empulse(src, 3, 8)
 
 //Meaty Ore
 /obj/effect/meteor/meaty
@@ -301,6 +483,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/internal/heart, /obj/item/organ/internal/lungs, /obj/item/organ/internal/tongue, /obj/item/organ/internal/appendix/)
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2
+	signature = "culinary material"
 
 /obj/effect/meteor/meaty/Initialize(mapload)
 	for(var/path in meteordrop)
@@ -332,6 +515,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	color = "#5EFF00"
 	meteordrop = list(/obj/item/food/meat/slab/xeno, /obj/item/organ/internal/tongue/alien)
 	meteorgibs = /obj/effect/gibspawner/xeno
+	signature = "exotic culinary material"
 
 /obj/effect/meteor/meaty/xeno/Initialize(mapload)
 	meteordrop += subtypesof(/obj/item/organ/internal/alien)
@@ -352,6 +536,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	meteorsound = 'sound/effects/bamf.ogg'
 	meteordrop = list(/obj/item/stack/ore/plasma)
 	threat = 50
+	signature = "armageddon"
 
 /obj/effect/meteor/tunguska/Move()
 	. = ..()
@@ -381,7 +566,7 @@ GLOBAL_LIST_INIT(meteorsSPOOKY, list(/obj/effect/meteor/pumpkin))
 	hits = 10
 	heavy = TRUE
 	dropamt = 1
-	meteordrop = list(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/food/grown/pumpkin)
+	meteordrop = list(/obj/item/clothing/head/utility/hardhat/pumpkinhead, /obj/item/food/grown/pumpkin)
 	threat = 100
 
 /obj/effect/meteor/pumpkin/Initialize(mapload)

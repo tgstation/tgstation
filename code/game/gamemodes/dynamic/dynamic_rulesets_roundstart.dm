@@ -221,9 +221,9 @@
 	)
 	required_candidates = 1
 	weight = 3
-	cost = 15
+	cost = 10
 	scaling_cost = 9
-	requirements = list(101,101,101,40,35,20,20,15,10,10)
+	requirements = list(101,101,60,30,30,25,20,15,10,10)
 	antag_cap = list("denominator" = 24)
 
 
@@ -273,14 +273,29 @@
 	weight = 2
 	cost = 20
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
-	var/list/roundstart_wizards = list()
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
 
-/datum/dynamic_ruleset/roundstart/wizard/acceptable(population=0, threat=0)
-	if(GLOB.wizardstart.len == 0)
+/datum/dynamic_ruleset/roundstart/wizard/ready(forced = FALSE)
+	if(!check_candidates())
+		return FALSE
+	if(!length(GLOB.wizardstart))
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		return FALSE
 	return ..()
+
+/datum/dynamic_ruleset/roundstart/wizard/round_result()
+	for(var/datum/antagonist/wizard/wiz in GLOB.antagonists)
+		var/mob/living/real_wiz = wiz.owner?.current
+		if(isnull(real_wiz))
+			continue
+
+		var/turf/wiz_location = get_turf(real_wiz)
+		// If this wiz is alive AND not in an away level, then we know not all wizards are dead and can leave entirely
+		if(considered_alive(wiz.owner) && wiz_location && !is_away_level(wiz_location.z))
+			return
+
+	SSticker.news_report = WIZARD_KILLED
 
 /datum/dynamic_ruleset/roundstart/wizard/pre_execute()
 	. = ..()
@@ -360,13 +375,25 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/bloodcult/round_result()
-	..()
 	if(main_cult.check_cult_victory())
 		SSticker.mode_result = "win - cult win"
 		SSticker.news_report = CULT_SUMMON
-	else
-		SSticker.mode_result = "loss - staff stopped the cult"
-		SSticker.news_report = CULT_FAILURE
+		return
+
+	SSticker.mode_result = "loss - staff stopped the cult"
+
+	if(main_cult.size_at_maximum == 0)
+		CRASH("Cult team existed with a size_at_maximum of 0 at round end!")
+
+	// If more than a certain ratio of our cultists have escaped, give the "cult escape" resport.
+	// Otherwise, give the "cult failure" report.
+	var/ratio_to_be_considered_escaped = 0.5
+	var/escaped_cultists = 0
+	for(var/datum/mind/escapee as anything in main_cult.members)
+		if(considered_escaped(escapee))
+			escaped_cultists++
+
+	SSticker.news_report = (escaped_cultists / main_cult.size_at_maximum) >= ratio_to_be_considered_escaped ? CULT_ESCAPE : CULT_FAILURE
 
 //////////////////////////////////////////////
 //                                          //
@@ -390,6 +417,7 @@
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	flags = HIGH_IMPACT_RULESET
 	antag_cap = list("denominator" = 18, "offset" = 1)
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	var/required_role = ROLE_NUCLEAR_OPERATIVE
 	var/datum/team/nuclear/nuke_team
 
@@ -411,16 +439,16 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
-	var/most_experienced = get_most_experienced(assigned, required_role)
+	var/datum/mind/most_experienced = get_most_experienced(assigned, required_role)
 	if(!most_experienced)
 		most_experienced = assigned[1]
+	var/datum/antagonist/nukeop/leader/leader = most_experienced.add_antag_datum(antag_leader_datum)
+	nuke_team = leader.nuke_team
 	for(var/datum/mind/assigned_player in assigned)
 		if(assigned_player == most_experienced)
-			var/datum/antagonist/nukeop/leader/new_op = assigned_player.add_antag_datum(antag_leader_datum)
-			nuke_team = new_op.nuke_team
-		else
-			var/datum/antagonist/nukeop/new_op = new antag_datum()
-			assigned_player.add_antag_datum(new_op)
+			continue
+		var/datum/antagonist/nukeop/new_op = new antag_datum()
+		assigned_player.add_antag_datum(new_op)
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/round_result()
@@ -431,10 +459,10 @@
 			SSticker.news_report = NUKE_SYNDICATE_BASE
 		if(NUKE_RESULT_NUKE_WIN)
 			SSticker.mode_result = "win - syndicate nuke"
-			SSticker.news_report = STATION_NUKED
+			SSticker.news_report = STATION_DESTROYED_NUKE
 		if(NUKE_RESULT_NOSURVIVORS)
 			SSticker.mode_result = "halfwin - syndicate nuke - did not evacuate in time"
-			SSticker.news_report = STATION_NUKED
+			SSticker.news_report = STATION_DESTROYED_NUKE
 		if(NUKE_RESULT_WRONG_STATION)
 			SSticker.mode_result = "halfwin - blew wrong station"
 			SSticker.news_report = NUKE_MISS
@@ -495,8 +523,6 @@
 	blocking_rules = list(/datum/dynamic_ruleset/latejoin/provocateur)
 	// I give up, just there should be enough heads with 35 players...
 	minimum_players = 35
-	/// How much threat should be injected when the revolution wins?
-	var/revs_win_threat_injection = 20
 	var/datum/team/revolution/revolution
 	var/finished = FALSE
 
@@ -539,7 +565,7 @@
 	..()
 
 /datum/dynamic_ruleset/roundstart/revs/rule_process()
-	var/winner = revolution.process_victory(revs_win_threat_injection)
+	var/winner = revolution.process_victory()
 	if (isnull(winner))
 		return
 
@@ -646,51 +672,6 @@
 	var/ramp_up_final = clamp(round(meteorminutes/rampupdelta), 1, 10)
 
 	spawn_meteors(ramp_up_final, wavetype)
-
-/// Ruleset for thieves
-/datum/dynamic_ruleset/roundstart/thieves
-	name = "Thieves"
-	antag_flag = ROLE_THIEF
-	antag_datum = /datum/antagonist/thief
-	protected_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_PRISONER,
-		JOB_SECURITY_OFFICER,
-		JOB_WARDEN,
-	)
-	restricted_roles = list(
-		JOB_AI,
-		JOB_CYBORG,
-	)
-	required_candidates = 1
-	weight = 3
-	cost = 4 //very cheap cost for the round
-	scaling_cost = 0
-	requirements = list(8,8,8,8,8,8,8,8,8,8)
-	antag_cap = list("denominator" = 24, "offset" = 2)
-	flags = LONE_RULESET
-
-/datum/dynamic_ruleset/roundstart/thieves/pre_execute(population)
-	. = ..()
-	var/num_thieves = get_antag_cap(population) * (scaled_times + 1)
-	for (var/i = 1 to num_thieves)
-		if(candidates.len <= 0)
-			break
-		var/mob/chosen_mind = pick_n_take(candidates)
-		assigned += chosen_mind.mind
-		chosen_mind.mind.restricted_roles = restricted_roles
-		chosen_mind.mind.special_role = ROLE_THIEF
-		GLOB.pre_setup_antags += chosen_mind.mind
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/thieves/execute()
-	for(var/datum/mind/chosen_mind as anything in assigned)
-		var/datum/antagonist/thief/new_antag = new antag_datum
-		chosen_mind.add_antag_datum(new_antag)
-		GLOB.pre_setup_antags -= chosen_mind
-	return TRUE
 
 /// Ruleset for Nations
 /datum/dynamic_ruleset/roundstart/nations

@@ -21,9 +21,6 @@
 
 	progression_minimum = 30 MINUTES
 
-	progression_reward = 2 MINUTES
-	telecrystal_reward = list(1, 2)
-
 	// The code below is for limiting how often you can get this objective. You will get this objective at a maximum of maximum_objectives_in_period every objective_period
 	/// The objective period at which we consider if it is an 'objective'. Set to 0 to accept all objectives.
 	var/objective_period = 15 MINUTES
@@ -47,18 +44,22 @@
 /datum/traitor_objective/assassinate/calling_card
 	name = "Assassinate %TARGET% the %JOB TITLE%, and plant a calling card"
 	description = "Kill your target and plant a calling card in the pockets of your victim. If your calling card gets destroyed before you are able to plant it, this objective will fail."
+	progression_reward = 2 MINUTES
+	telecrystal_reward = list(1, 2)
 
 	var/obj/item/paper/calling_card/card
 
 /datum/traitor_objective/assassinate/calling_card/heads_of_staff
 	progression_reward = 4 MINUTES
-	telecrystal_reward = list(3, 4)
+	telecrystal_reward = list(2, 3)
 
 	heads_of_staff = TRUE
 
 /datum/traitor_objective/assassinate/behead
 	name = "Behead %TARGET%, the %JOB TITLE%"
 	description = "Behead and hold %TARGET%'s head to succeed this objective. If the head gets destroyed before you can do this, you will fail this objective."
+	progression_reward = 2 MINUTES
+	telecrystal_reward = list(1, 2)
 
 	///the body who needs to hold the head
 	var/mob/living/needs_to_hold_head
@@ -67,7 +68,7 @@
 
 /datum/traitor_objective/assassinate/behead/heads_of_staff
 	progression_reward = 4 MINUTES
-	telecrystal_reward = list(3, 4)
+	telecrystal_reward = list(2, 3)
 
 	heads_of_staff = TRUE
 
@@ -87,10 +88,10 @@
 			card = new(user.drop_location())
 			user.put_in_hands(card)
 			card.balloon_alert(user, "the card materializes in your hand")
-			RegisterSignal(card, COMSIG_ITEM_EQUIPPED, .proc/on_card_planted)
+			RegisterSignal(card, COMSIG_ITEM_EQUIPPED, PROC_REF(on_card_planted))
 			AddComponent(/datum/component/traitor_objective_register, card, \
 				succeed_signals = null, \
-				fail_signals = COMSIG_PARENT_QDELETING, \
+				fail_signals = list(COMSIG_PARENT_QDELETING), \
 				penalty = TRUE)
 
 /datum/traitor_objective/assassinate/calling_card/proc/on_card_planted(datum/source, mob/living/equipper, slot)
@@ -99,7 +100,7 @@
 		return //your target please
 	if(equipper.stat != DEAD)
 		return //kill them please
-	if(slot != ITEM_SLOT_LPOCKET && slot != ITEM_SLOT_RPOCKET)
+	if(!(slot & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET)))
 		return //in their pockets please
 	succeed_objective()
 
@@ -107,7 +108,7 @@
 	. = ..()
 	if(!.) //didn't generate
 		return FALSE
-	RegisterSignal(kill_target, COMSIG_PARENT_QDELETING, .proc/on_target_qdeleted)
+	RegisterSignal(kill_target, COMSIG_PARENT_QDELETING, PROC_REF(on_target_qdeleted))
 
 /datum/traitor_objective/assassinate/calling_card/ungenerate_objective()
 	UnregisterSignal(kill_target, COMSIG_PARENT_QDELETING)
@@ -131,8 +132,8 @@
 	. = ..()
 	if(!.) //didn't generate
 		return FALSE
-	AddComponent(/datum/component/traitor_objective_register, behead_goal, fail_signals = COMSIG_PARENT_QDELETING)
-	RegisterSignal(kill_target, COMSIG_CARBON_REMOVE_LIMB, .proc/on_target_dismembered)
+	AddComponent(/datum/component/traitor_objective_register, behead_goal, fail_signals = list(COMSIG_PARENT_QDELETING))
+	RegisterSignal(kill_target, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(on_target_dismembered))
 
 /datum/traitor_objective/assassinate/behead/ungenerate_objective()
 	UnregisterSignal(kill_target, COMSIG_CARBON_REMOVE_LIMB)
@@ -159,7 +160,7 @@
 		fail_objective()
 	else
 		behead_goal = lost_head
-		RegisterSignal(behead_goal, COMSIG_ITEM_PICKUP, .proc/on_head_pickup)
+		RegisterSignal(behead_goal, COMSIG_ITEM_PICKUP, PROC_REF(on_head_pickup))
 
 /datum/traitor_objective/assassinate/New(datum/uplink_handler/handler)
 	. = ..()
@@ -170,6 +171,12 @@
 	)
 
 /datum/traitor_objective/assassinate/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+
+	var/list/already_targeting = list() //List of minds we're already targeting. The possible_duplicates is a list of objectives, so let's not mix things
+	for(var/datum/objective/task as anything in handler.primary_objectives)
+		if(!istype(task.target, /datum/mind))
+			continue
+		already_targeting += task.target //Removing primary objective kill targets from the list
 
 	var/parent_type = type2parent(type)
 	//don't roll head of staff types if you haven't completed the normal version
@@ -182,6 +189,8 @@
 	if(generating_for.late_joiner)
 		try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target as anything in get_crewmember_minds())
+		if(possible_target in already_targeting)
+			continue
 		var/target_area = get_area(possible_target.current)
 		if(possible_target == generating_for)
 			continue
@@ -219,16 +228,12 @@
 	kill_target = kill_target_mind.current
 	replace_in_name("%TARGET%", kill_target.real_name)
 	replace_in_name("%JOB TITLE%", kill_target_mind.assigned_role.title)
-	RegisterSignal(kill_target, COMSIG_LIVING_DEATH, .proc/on_target_death)
+	RegisterSignal(kill_target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death))
 	return TRUE
 
 /datum/traitor_objective/assassinate/ungenerate_objective()
 	UnregisterSignal(kill_target, COMSIG_LIVING_DEATH)
 	kill_target = null
-
-/datum/traitor_objective/assassinate/is_duplicate(datum/traitor_objective/assassinate/objective_to_compare)
-	. = ..()
-	return kill_target == objective_to_compare.kill_target
 
 ///proc for checking for special states that invalidate a target
 /datum/traitor_objective/assassinate/proc/special_target_filter(list/possible_targets)
@@ -251,7 +256,7 @@
 	icon_state = "syndicate_calling_card"
 	color = "#ff5050"
 	show_written_words = FALSE
-	info = {"
+	default_raw_text = {"
 	<b>**Death to Nanotrasen.**</b><br><br>
 
 	Only through the inviolable cooperation of corporations known as The Syndicate, can Nanotrasen and its autocratic tyrants be silenced.

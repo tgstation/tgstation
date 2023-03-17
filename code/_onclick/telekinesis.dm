@@ -127,7 +127,7 @@
 //stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_HANDS)
+	if(slot & ITEM_SLOT_HANDS)
 		return
 	qdel(src)
 
@@ -179,9 +179,11 @@
 				focus.do_attack_animation(target, null, focus)
 		else if(isgun(I)) //I've only tested this with guns, and it took some doing to make it work
 			. = I.afterattack(target, tk_user, 0, params)
+		. |= AFTERATTACK_PROCESSED_ITEM
 
 	user.changeNext_move(CLICK_CD_MELEE)
 	update_appearance()
+	return .
 
 /obj/item/tk_grab/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -238,7 +240,7 @@
 	focus.throw_at(target, focus.tk_throw_range, 1,user)
 	var/turf/start_turf = get_turf(focus)
 	var/turf/end_turf = get_turf(target)
-	user.log_message("has thrown [focus] from [AREACOORD(start_turf)] towards [AREACOORD(end_turf)] using Telekinesis", LOG_ATTACK)
+	user.log_message("has thrown [focus] from [AREACOORD(start_turf)] towards [AREACOORD(end_turf)] using Telekinesis.", LOG_ATTACK)
 	user.changeNext_move(CLICK_CD_MELEE)
 	update_appearance()
 
@@ -282,12 +284,11 @@
 
 	var/mutable_appearance/focus_overlay = new(focus)
 	focus_overlay.layer = layer + 0.01
-	focus_overlay.plane = ABOVE_HUD_PLANE
+	SET_PLANE_EXPLICIT(focus_overlay, ABOVE_HUD_PLANE, focus)
 	. += focus_overlay
 
-/obj/item/tk_grab/suicide_act(mob/user)
+/obj/item/tk_grab/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is using [user.p_their()] telekinesis to choke [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (OXYLOSS)
-
+	return OXYLOSS
 
 #undef TK_MAXRANGE

@@ -1,5 +1,5 @@
 /obj/item/organ/internal/alien
-	icon_state = "xgibmid2"
+	icon_state = "acid"
 	visual = FALSE
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
 
@@ -72,12 +72,18 @@
 	if(isalien(organ_owner))
 		var/mob/living/carbon/alien/target_alien = organ_owner
 		target_alien.updatePlasmaDisplay()
+	RegisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
-/obj/item/organ/internal/alien/plasmavessel/Remove(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/alien/plasmavessel/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	..()
 	if(isalien(organ_owner))
 		var/mob/living/carbon/alien/organ_owner_alien = organ_owner
 		organ_owner_alien.updatePlasmaDisplay()
+	UnregisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+
+/obj/item/organ/internal/alien/plasmavessel/proc/get_status_tab_item(mob/living/carbon/source, list/items)
+	SIGNAL_HANDLER
+	items += "Plasma Stored: [stored_plasma]/[max_plasma]"
 
 #define QUEEN_DEATH_DEBUFF_DURATION 2400
 
@@ -96,14 +102,14 @@
 	organ_owner.faction |= ROLE_ALIEN
 	ADD_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 
-/obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	organ_owner.faction -= ROLE_ALIEN
 	REMOVE_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 	..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
 /obj/item/organ/internal/alien/hivenode/proc/queen_death()
-	if(!owner|| owner.stat == DEAD)
+	if(!owner || owner.stat == DEAD)
 		return
 	if(isalien(owner)) //Different effects for aliens than humans
 		to_chat(owner, span_userdanger("Your Queen has been struck down!"))
@@ -116,13 +122,13 @@
 		owner.emote("scream")
 		owner.Paralyze(100)
 
-	owner.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/jitter)
-	owner.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/confusion)
-	owner.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/speech/stutter)
+	owner.adjust_jitter(1 MINUTES)
+	owner.adjust_confusion(30 SECONDS)
+	owner.adjust_stutter(1 MINUTES)
 
 	recent_queen_death = TRUE
 	owner.throw_alert(ALERT_XENO_NOQUEEN, /atom/movable/screen/alert/alien_vulnerable)
-	addtimer(CALLBACK(src, .proc/clear_queen_death), QUEEN_DEATH_DEBUFF_DURATION)
+	addtimer(CALLBACK(src, PROC_REF(clear_queen_death)), QUEEN_DEATH_DEBUFF_DURATION)
 
 
 /obj/item/organ/internal/alien/hivenode/proc/clear_queen_death()
@@ -198,9 +204,14 @@
 			qdel(thing)
 
 /obj/item/organ/internal/stomach/alien/proc/consume_thing(atom/movable/thing)
-	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, .proc/content_moved)
+	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(content_moved))
+	RegisterSignal(thing, COMSIG_PARENT_QDELETING, PROC_REF(content_deleted))
 	if(isliving(thing))
-		RegisterSignal(thing, COMSIG_LIVING_DEATH, .proc/content_died)
+		var/mob/living/lad = thing
+		RegisterSignal(thing, COMSIG_LIVING_DEATH, PROC_REF(content_died))
+		if(lad.stat == DEAD)
+			qdel(lad)
+			return
 	stomach_contents += thing
 	thing.forceMove(owner || src) // We assert that if we have no owner, we will not be nullspaced
 
@@ -208,18 +219,22 @@
 	SIGNAL_HANDLER
 	qdel(source)
 
+/obj/item/organ/internal/stomach/alien/proc/content_deleted(atom/movable/source)
+	SIGNAL_HANDLER
+	stomach_contents -= source
+
 /obj/item/organ/internal/stomach/alien/proc/content_moved(atom/movable/source)
 	SIGNAL_HANDLER
 	if(source.loc == src || source.loc == owner) // not in us? out da list then
 		return
 	stomach_contents -= source
-	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH))
+	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
 
 /obj/item/organ/internal/stomach/alien/Insert(mob/living/carbon/stomach_owner, special = FALSE, drop_if_replaced = TRUE)
-	RegisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE, .proc/something_moved)
+	RegisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE, PROC_REF(something_moved))
 	return ..()
 
-/obj/item/organ/internal/stomach/alien/Remove(mob/living/carbon/stomach_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/stomach/alien/Remove(mob/living/carbon/stomach_owner, special = FALSE)
 	UnregisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE)
 	return ..()
 
@@ -305,7 +320,7 @@
 			shake_camera(owner, 0.3 SECONDS, 1.5)
 		return
 	// Failure condition
-	if(isalienhumanoid(user))
+	if(isalienadult(user))
 		play_from.visible_message(span_danger("[user] blows a hole in [stomach_text] and escapes!"), \
 			span_userdanger("As your hive's food bursts out of your stomach, one thought fills your mind. \"Oh, so this is how the other side feels\""))
 	else // Just to be safe ya know?
@@ -317,12 +332,13 @@
 	shake_camera(user, 1 SECONDS, 3)
 	if(owner)
 		shake_camera(owner, 2, 5)
+		owner.investigate_log("has been gibbed by something inside [owner.p_their()] stomach.", INVESTIGATE_DEATHS)
 		owner.gib()
 	qdel(src)
 
 /obj/item/organ/internal/stomach/alien/proc/eject_stomach(list/turf/targets, spit_range, content_speed, particle_delay, particle_count=4)
 	var/atom/spit_as = owner || src
-	/// Throw out the stuff in our stomach
+	// Throw out the stuff in our stomach
 	for(var/atom/movable/thing as anything in stomach_contents)
 		thing.forceMove(spit_as.drop_location())
 		if(length(targets))

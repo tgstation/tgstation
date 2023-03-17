@@ -38,17 +38,14 @@
 /obj/item/toy/waterballoon
 	name = "water balloon"
 	desc = "A translucent balloon. There's nothing in it."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "waterballoon-e"
 	inhand_icon_state = "balloon-empty"
 
 /obj/item/toy/waterballoon/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
 	create_reagents(10)
-
-/obj/item/toy/waterballoon/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/toy/waterballoon/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -70,7 +67,7 @@
 			update_appearance()
 
 /obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/glass))
+	if(istype(I, /obj/item/reagent_containers/cup))
 		if(I.reagents)
 			if(I.reagents.total_volume <= 0)
 				to_chat(user, span_warning("[I] is empty."))
@@ -118,11 +115,11 @@
 /obj/item/toy/balloon
 	name = "balloon"
 	desc = "No birthday is complete without it."
-	icon = 'icons/obj/balloons.dmi'
+	icon = 'icons/obj/toys/balloons.dmi'
 	icon_state = "balloon"
 	inhand_icon_state = "balloon"
-	lefthand_file = 'icons/mob/inhands/balloons_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/balloons_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/balloons_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/balloons_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 0
 	throw_speed = 3
@@ -176,20 +173,20 @@
 	inhand_icon_state = "syndballoon"
 	random_color = FALSE
 
-/obj/item/toy/balloon/syndicate/pickup(mob/user)
+/obj/item/toy/balloon/syndicate/pickup(mob/living/user)
 	. = ..()
 	if(user && user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE))
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+		user.add_mood_event("badass_antag", /datum/mood_event/badass_antag)
 
-/obj/item/toy/balloon/syndicate/dropped(mob/user)
+/obj/item/toy/balloon/syndicate/dropped(mob/living/user)
 	if(user)
-		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+		user.clear_mood_event("badass_antag")
 	. = ..()
 
 /obj/item/toy/balloon/syndicate/Destroy()
 	if(ismob(loc))
-		var/mob/M = loc
-		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+		var/mob/living/M = loc
+		M.clear_mood_event("badass_antag")
 	. = ..()
 
 /obj/item/toy/balloon/arrest
@@ -209,8 +206,10 @@
 /obj/item/toy/captainsaid
 	name = "\improper Captain's Aid"
 	desc = "Every captain's greatest ally when exploring the vast emptiness of space, now with a color display!"
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "captainsaid_off"
+	custom_price = PAYCHECK_COMMAND * 1.25
+
 	/// List of modes it can cycle through
 	var/list/modes = list(
 		"off",
@@ -249,7 +248,7 @@
 /obj/item/toy/spinningtoy
 	name = "gravitational singularity"
 	desc = "\"Singulo\" brand spinning toy."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "singularity_s1"
 	item_flags = NO_PIXEL_RANDOM_DROP
 
@@ -261,7 +260,7 @@
 	user.visible_message(span_suicide("[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(user, 'sound/items/eatfood.ogg', 50, TRUE)
 	user.adjust_nutrition(50) // mmmm delicious
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), (3SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), (3SECONDS))
 	return MANUAL_SUICIDE
 
 /**
@@ -302,7 +301,7 @@
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps."
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "revolver"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
@@ -363,7 +362,7 @@
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
 	desc = "Make sure to recyle the box in an autolathe when it gets empty."
-	icon = 'icons/obj/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
@@ -384,7 +383,8 @@
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
 	icon_state = "e_sword"
-	icon = 'icons/obj/transforming_energy.dmi'
+	inhand_icon_state = "e_sword"
+	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -400,8 +400,18 @@
 	AddComponent(/datum/component/transforming, \
 		throw_speed_on = throw_speed, \
 		hitsound_on = hitsound, \
-		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+		clumsy_check = FALSE, \
+		inhand_icon_change = FALSE, \
+	)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+	var/static/list/tool_behaviors = list(
+		TOOL_SCREWDRIVER = list(
+			SCREENTIP_CONTEXT_LMB = "Change blade color"
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -410,13 +420,53 @@
  */
 /obj/item/toy/sword/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
-
-	if(active)
-		icon_state = "[icon_state]_[saber_color]"
-
 	balloon_alert(user, "[active ? "flicked out":"pushed in"] [src]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE)
+	update_appearance(UPDATE_ICON)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/toy/sword/examine(mob/user)
+	. = ..()
+	. += span_notice("It has a lighting dial currently set to [saber_color] which looks like it can be turned with a <b>screwdriver</b>.")
+
+/obj/item/toy/sword/screwdriver_act(mob/living/user, obj/item/tool)
+	switch(saber_color)
+		if("red")
+			saber_color = "blue"
+		if("blue")
+			saber_color = "green"
+		if("green")
+			saber_color = "purple"
+		if("purple")
+			saber_color = "red"
+		else
+			return TOOL_ACT_TOOLTYPE_SUCCESS
+	balloon_alert(user, "changed to [saber_color]")
+	update_appearance(UPDATE_ICON)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/item/toy/sword/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, saber_color))
+		update_appearance(UPDATE_ICON)
+
+/obj/item/toy/sword/update_icon_state()
+	. = ..()
+	var/datum/component/transforming/transforming_comp = GetComponent(/datum/component/transforming)
+	var/active = transforming_comp?.active
+	var/last_part = active ? "_on[saber_color ? "_[saber_color]" : null]" : null
+	icon_state = "[initial(icon_state)][last_part]"
+	inhand_icon_state = "[initial(inhand_icon_state)][last_part]"
+
+/obj/item/toy/sword/multitool_act(mob/living/user, obj/item/tool)
+	if(hacked)
+		to_chat(user, span_warning("It's already fabulous!"))
+		return
+	hacked = TRUE
+	saber_color = "rainbow"
+	to_chat(user, span_warning("RNBW_ENGAGE"))
+	update_appearance(UPDATE_ICON)
+
 
 // Copied from /obj/item/melee/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/weapon, mob/living/user, params)
@@ -437,13 +487,6 @@
 			qdel(weapon)
 			qdel(src)
 			user.put_in_hands(new_saber)
-	else if(weapon.tool_behaviour == TOOL_MULTITOOL)
-		if(hacked)
-			to_chat(user, span_warning("It's already fabulous!"))
-		else
-			hacked = TRUE
-			saber_color = "rainbow"
-			to_chat(user, span_warning("RNBW_ENGAGE"))
 	else
 		return ..()
 
@@ -453,7 +496,7 @@
 /obj/item/toy/foamblade
 	name = "foam armblade"
 	desc = "It says \"Sternside Changs #1 fan\" on it."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "foamblade"
 	inhand_icon_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
@@ -466,7 +509,7 @@
 /obj/item/toy/windup_toolbox
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/toolbox.dmi'
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
@@ -496,7 +539,7 @@
 		update_appearance()
 		playsound(src, 'sound/effects/pope_entry.ogg', 100)
 		Rumble()
-		addtimer(CALLBACK(src, .proc/stopRumble), 600)
+		addtimer(CALLBACK(src, PROC_REF(stopRumble)), 600)
 	else
 		to_chat(user, span_warning("[src] is already active!"))
 
@@ -551,7 +594,7 @@
 /obj/item/toy/katana
 	name = "replica katana"
 	desc = "Woefully underpowered in D20."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "katana"
 	inhand_icon_state = "katana"
 	worn_icon_state = "katana"
@@ -572,7 +615,7 @@
 /obj/item/toy/snappop
 	name = "snap pop"
 	desc = "Wow!"
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "snappop"
 	w_class = WEIGHT_CLASS_TINY
 	var/ash_type = /obj/effect/decal/cleanable/ash
@@ -597,7 +640,7 @@
 /obj/item/toy/snappop/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -619,7 +662,7 @@
 
 /obj/effect/decal/cleanable/ash/snappop_phoenix/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/respawn), respawn_time)
+	addtimer(CALLBACK(src, PROC_REF(respawn)), respawn_time)
 
 /obj/effect/decal/cleanable/ash/snappop_phoenix/proc/respawn()
 	new /obj/item/toy/snappop/phoenix(get_turf(src))
@@ -628,7 +671,7 @@
 /obj/item/toy/talking
 	name = "talking action figure"
 	desc = "A generic action figure modeled after nothing in particular."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "owlprize"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = FALSE
@@ -648,7 +691,7 @@
 		activation_message(user)
 		playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
 
-		INVOKE_ASYNC(src, .proc/do_toy_talk, user)
+		INVOKE_ASYNC(src, PROC_REF(do_toy_talk), user)
 
 		cooldown = TRUE
 		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), recharge_time)
@@ -667,7 +710,7 @@
 /obj/item/toy/talking/proc/do_toy_talk(mob/user)
 	for(var/message in generate_messages())
 		toy_talk(user, message)
-		sleep(10)
+		sleep(1 SECONDS)
 
 /obj/item/toy/talking/proc/toy_talk(mob/user, message)
 	say(message, spans = list(span))
@@ -691,8 +734,8 @@
 	desc = "A tool to help you write fictional devils!"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "demonomicon"
-	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	messages = list("You must challenge the devil to a dance-off!", "The devils true name is Ian", "The devil hates salt!", "Would you like infinite power?", "Would you like infinite  wisdom?", " Would you like infinite healing?")
 	w_class = WEIGHT_CLASS_SMALL
 	recharge_time = 60
@@ -727,7 +770,7 @@
 /obj/item/toy/nuke
 	name = "\improper Nuclear Fission Explosive toy"
 	desc = "A plastic model of a Nuclear Fission Explosive."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "nuketoyidle"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
@@ -736,26 +779,26 @@
 	if (obj_flags & EMAGGED && cooldown < world.time)
 		cooldown = world.time + 600
 		user.visible_message(span_hear("You hear the click of a button."), span_notice("You activate [src], it plays a loud noise!"))
-		sleep(5)
+		sleep(0.5 SECONDS)
 		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
-		sleep(140)
+		sleep(14 SECONDS)
 		user.visible_message(span_alert("[src] violently explodes!"))
 		explosion(src, light_impact_range = 1)
 		qdel(src)
 	else if (cooldown < world.time)
 		cooldown = world.time + 600 //1 minute
 		user.visible_message(span_warning("[user] presses a button on [src]."), span_notice("You activate [src], it plays a loud noise!"), span_hear("You hear the click of a button."))
-		sleep(5)
+		sleep(0.5 SECONDS)
 		icon_state = "nuketoy"
 		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
-		sleep(135)
+		sleep(13.5 SECONDS)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
 		icon_state = "nuketoyidle"
 	else
 		var/timeleft = (cooldown - world.time)
 		to_chat(user, span_alert("Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on the small display."))
-		sleep(5)
+		sleep(0.5 SECONDS)
 
 /obj/item/toy/nuke/emag_act(mob/user)
 	if (obj_flags & EMAGGED)
@@ -769,8 +812,9 @@
 /obj/item/toy/minimeteor
 	name = "\improper Mini-Meteor"
 	desc = "Relive the excitement of a meteor shower! SweetMeat-eor Co. is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "minimeteor"
+	inhand_icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/minimeteor/emag_act(mob/user)
@@ -798,7 +842,7 @@
 /obj/item/toy/redbutton
 	name = "big red button"
 	desc = "A big, plastic red button. Reads 'From HonkCo Pranks!' on the back."
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	icon_state = "bigred"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
@@ -812,7 +856,7 @@
 			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
 				// Short delay to match up with the explosion sound
 				// Shakes player camera 2 squares for 1 second.
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/shake_camera, M, 2, 1), 0.8 SECONDS)
+				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(shake_camera), M, 2, 1), 0.8 SECONDS)
 
 	else
 		to_chat(user, span_alert("Nothing happens."))
@@ -823,13 +867,14 @@
 /obj/item/toy/snowball
 	name = "snowball"
 	desc = "A compact ball of snow. Good for throwing at people."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "snowball"
 	throwforce = 20 //the same damage as a disabler shot
 	damtype = STAMINA //maybe someday we can add stuffing rocks (or perhaps ore?) into snowballs to make them deal brute damage
 
 /obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(user.dropItemToGround(src))
 		throw_at(target, throw_range, throw_speed)
 
@@ -856,7 +901,7 @@
 /obj/item/toy/beach_ball/baseball
 	name = "baseball"
 	desc = "Enter the world of concussions and become who you were destined to be."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "baseball"
 	inhand_icon_state = "baseball"
 	throw_range = 9
@@ -868,7 +913,7 @@
 /obj/item/toy/clockwork_watch
 	name = "steampunk watch"
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "dread_ipad"
 	worn_icon_state = "dread_ipad"
 	slot_flags = ITEM_SLOT_BELT
@@ -904,11 +949,12 @@
  * Xenomorph action figure
  */
 /obj/item/toy/toy_xeno
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "toy_xeno"
 	name = "xenomorph action figure"
 	desc = "MEGA presents the new Xenos Isolated action figure! Comes complete with realistic sounds! Pull back string to use."
 	w_class = WEIGHT_CLASS_SMALL
+	item_flags = XENOMORPH_HOLDABLE
 	var/cooldown = 0
 
 /obj/item/toy/toy_xeno/attack_self(mob/user)
@@ -916,7 +962,7 @@
 		cooldown = (world.time + 50) //5 second cooldown
 		user.visible_message(span_notice("[user] pulls back the string on [src]."))
 		icon_state = "[initial(icon_state)]_used"
-		sleep(5)
+		sleep(0.5 SECONDS)
 		audible_message(span_danger("[icon2html(src, viewers(src))] Hiss!"))
 		var/list/possible_sounds = list('sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg', 'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg')
 		var/chosen_sound = pick(possible_sounds)
@@ -930,7 +976,7 @@
 /obj/item/toy/cattoy
 	name = "toy mouse"
 	desc = "A colorful toy mouse!"
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "toy_mouse"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
@@ -942,7 +988,7 @@
  */
 /obj/item/toy/figure
 	name = "\improper Non-Specific Action Figure action figure"
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "nuketoy"
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
@@ -1165,7 +1211,7 @@
 /obj/item/toy/dummy
 	name = "ventriloquist dummy"
 	desc = "It's a dummy, dummy."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "puppet"
 	inhand_icon_state = "puppet"
 	var/doll_name = "Dummy"
@@ -1208,7 +1254,7 @@
 /obj/item/toy/brokenradio
 	name = "broken radio"
 	desc = "An old radio that produces nothing but static when turned on."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "broken_radio"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
@@ -1217,7 +1263,7 @@
 	if(cooldown <= world.time)
 		cooldown = (world.time + 300)
 		user.visible_message(span_notice("[user] adjusts the dial on [src]."))
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/items/radiostatic.ogg', 50, FALSE), 0.5 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/radiostatic.ogg', 50, FALSE), 0.5 SECONDS)
 	else
 		to_chat(user, span_warning("The dial on [src] jams up"))
 		return
@@ -1225,14 +1271,14 @@
 /obj/item/toy/braintoy
 	name = "squeaky brain"
 	desc = "A Mr. Monstrous brand toy made to imitate a human brain in smell and texture."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-old"
 	var/cooldown = 0
 
 /obj/item/toy/braintoy/attack_self(mob/user)
 	if(cooldown <= world.time)
 		cooldown = (world.time + 10)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/blobattack.ogg', 50, FALSE), 0.5 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/effects/blobattack.ogg', 50, FALSE), 0.5 SECONDS)
 
 /*
  * Eldritch Toys
@@ -1277,7 +1323,7 @@
 /obj/item/toy/foamfinger
 	name = "foam finger"
 	desc = "root for the home team! wait, does this station even have a sports team?"
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "foamfinger"
 	inhand_icon_state = "foamfinger_inhand"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -1325,15 +1371,17 @@ GLOBAL_LIST_EMPTY(intento_players)
 #define STATE_END_OF_GAME "end_of_game"
 #define STATE_RETALIATION "retaliation"
 
-#define TIME_TO_BEGIN 1.6 SECONDS
-#define TIME_PER_DEMO_STEP 0.6 SECONDS
-#define TIME_TO_RESET_ICON 0.5 SECONDS
+#define TIME_TO_BEGIN (1.6 SECONDS)
+#define TIME_PER_DEMO_STEP (0.6 SECONDS)
+#define TIME_TO_RESET_ICON (0.5 SECONDS)
 
 /obj/item/toy/intento
 	name = "\improper Intento"
 	desc = "Fundamentally useless for all intentsive purposes."
-	icon = 'icons/obj/intents.dmi'
+	icon = 'icons/obj/toys/intents.dmi'
 	icon_state = "blank"
+	custom_price = PAYCHECK_COMMAND * 1.25
+
 	/// Current sequence of intents
 	var/list/current_sequence = list()
 	/// Sequence player inputs
@@ -1370,8 +1418,8 @@ GLOBAL_LIST_EMPTY(intento_players)
 		return
 
 	var/input
-	var/icon_x = text2num(modifiers["icon-x"])
-	var/icon_y = text2num(modifiers["icon-y"])
+	var/icon_x = text2num(modifiers[ICON_X])
+	var/icon_y = text2num(modifiers[ICON_Y])
 	if(icon_x > ICON_SPLIT && icon_y > ICON_SPLIT)
 		input = DISARM
 	if(icon_x < ICON_SPLIT && icon_y > ICON_SPLIT)
@@ -1487,7 +1535,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 	switch(intent)
 		if(HELP)
 			to_chat(victim, span_danger("[src] hugs you to make you feel better!"))
-			SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
+			victim.add_mood_event("hug", /datum/mood_event/hug)
 		if(DISARM)
 			to_chat(victim, span_danger("You're knocked down from a shove by [src]!"))
 			victim.Knockdown(2 SECONDS)

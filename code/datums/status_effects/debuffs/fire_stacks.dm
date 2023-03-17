@@ -26,9 +26,11 @@
 /datum/status_effect/fire_handler/on_creation(mob/living/new_owner, new_stacks, forced = FALSE)
 	. = ..()
 
-	if(isanimal(owner))
-		qdel(src)
-		return
+	if(isbasicmob(owner))
+		var/mob/living/basic/basic_owner = owner
+		if(!(basic_owner.basic_mob_flags & FLAMMABLE_MOB))
+			qdel(src)
+			return
 
 	owner = new_owner
 	set_stacks(new_stacks)
@@ -41,8 +43,8 @@
 				continue
 
 			var/cur_stacks = stacks
-			adjust_stacks(-enemy_effect.stacks * enemy_effect.stack_modifier / stack_modifier)
-			enemy_effect.adjust_stacks(-cur_stacks * stack_modifier / enemy_effect.stack_modifier)
+			adjust_stacks(-abs(enemy_effect.stacks * enemy_effect.stack_modifier / stack_modifier))
+			enemy_effect.adjust_stacks(-abs(cur_stacks * stack_modifier / enemy_effect.stack_modifier))
 			if(enemy_effect.stacks <= 0)
 				qdel(enemy_effect)
 
@@ -120,6 +122,7 @@
 
 /datum/status_effect/fire_handler/fire_stacks
 	id = "fire_stacks" //fire_stacks and wet_stacks should have different IDs or else has_status_effect won't work
+	remove_on_fullheal = TRUE
 
 	enemy_types = list(/datum/status_effect/fire_handler/wet_stacks)
 	stack_modifier = 1
@@ -138,13 +141,10 @@
 		qdel(src)
 		return TRUE
 
-	if(!on_fire || isanimal(owner))
+	if(!on_fire)
 		return TRUE
 
-	if(iscyborg(owner))
-		adjust_stacks(-0.55 * delta_time)
-	else
-		adjust_stacks(-0.05 * delta_time)
+	adjust_stacks(owner.fire_stack_decay_rate * delta_time)
 
 	if(stacks <= 0)
 		qdel(src)
@@ -195,8 +195,8 @@
 		return
 
 	victim.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * delta_time)
-	SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
-	victim.mind?.add_memory(MEMORY_FIRE, list(DETAIL_PROTAGONIST = victim), story_value = STORY_VALUE_OKAY)
+	victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
+	victim.add_mob_memory(/datum/memory/was_burning)
 
 /**
  * Handles mob ignition, should be the only way to set on_fire to TRUE
@@ -231,7 +231,7 @@
 		qdel(firelight_ref)
 
 	on_fire = FALSE
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
+	owner.clear_mood_event("on_fire")
 	SEND_SIGNAL(owner, COMSIG_LIVING_EXTINGUISHED, owner)
 	cache_stacks()
 	update_overlay()

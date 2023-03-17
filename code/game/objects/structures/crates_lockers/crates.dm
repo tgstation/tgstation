@@ -1,7 +1,7 @@
 /obj/structure/closet/crate
 	name = "crate"
 	desc = "A rectangular steel crate."
-	icon = 'icons/obj/crates.dmi'
+	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "crate"
 	req_access = null
 	can_weld_shut = FALSE
@@ -113,12 +113,23 @@
 
 /obj/structure/closet/crate/maint/Initialize(mapload)
 	..()
+
+	var/static/list/possible_crates = RANDOM_CRATE_LOOT
+
+	var/crate_path = pick_weight(possible_crates)
+
+	var/obj/structure/closet/crate = new crate_path(loc)
+	crate.RegisterSignal(crate, COMSIG_CLOSET_POPULATE_CONTENTS, TYPE_PROC_REF(/obj/structure/closet/, populate_with_random_maint_loot))
+	if (prob(50))
+		crate.opened = TRUE
+		crate.update_appearance()
+
 	return INITIALIZE_HINT_QDEL
 
-/obj/structure/closet/crate/maint/PopulateContents()
-	. = ..()
-	new /obj/effect/spawner/random/structure/crate_empty(loc)
-	for(var/i in 1 to rand(2,6))
+/obj/structure/closet/proc/populate_with_random_maint_loot()
+	SIGNAL_HANDLER
+
+	for (var/i in 1 to rand(2,6))
 		new /obj/effect/spawner/random/maintenance(src)
 
 /obj/structure/closet/crate/trashcart/Initialize(mapload)
@@ -127,13 +138,17 @@
 
 /obj/structure/closet/crate/trashcart/filled
 
+/obj/structure/closet/crate/trashcart/filled/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		new /obj/effect/spawner/random/trash/grime(loc) //needs to be done before the trashcart is opened because it spawns things in a range outside of the trashcart
+
 /obj/structure/closet/crate/trashcart/filled/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(7,15))
 		new /obj/effect/spawner/random/trash/garbage(src)
 		if(prob(12))
 			new /obj/item/storage/bag/trash/filled(src)
-	new /obj/effect/spawner/random/trash/grime(loc)
 
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
@@ -170,22 +185,20 @@
 //Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
 
 /obj/structure/closet/crate/freezer/open(mob/living/user, force = FALSE)
-	recursive_organ_check(src)
+	toggle_organ_decay(src)
 	..()
 
 /obj/structure/closet/crate/freezer/close()
 	..()
-	recursive_organ_check(src)
+	toggle_organ_decay(src)
 
 /obj/structure/closet/crate/freezer/Destroy()
-	recursive_organ_check(src)
+	toggle_organ_decay(src)
 	return ..()
 
 /obj/structure/closet/crate/freezer/Initialize(mapload)
 	. = ..()
-	recursive_organ_check(src)
-
-
+	toggle_organ_decay(src)
 
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"
@@ -211,14 +224,14 @@
 
 /obj/structure/closet/crate/freezer/surplus_limbs/PopulateContents()
 	. = ..()
-	new /obj/item/bodypart/l_arm/robot/surplus(src)
-	new /obj/item/bodypart/l_arm/robot/surplus(src)
-	new /obj/item/bodypart/r_arm/robot/surplus(src)
-	new /obj/item/bodypart/r_arm/robot/surplus(src)
-	new /obj/item/bodypart/l_leg/robot/surplus(src)
-	new /obj/item/bodypart/l_leg/robot/surplus(src)
-	new /obj/item/bodypart/r_leg/robot/surplus(src)
-	new /obj/item/bodypart/r_leg/robot/surplus(src)
+	new /obj/item/bodypart/arm/left/robot/surplus(src)
+	new /obj/item/bodypart/arm/left/robot/surplus(src)
+	new /obj/item/bodypart/arm/right/robot/surplus(src)
+	new /obj/item/bodypart/arm/right/robot/surplus(src)
+	new /obj/item/bodypart/leg/left/robot/surplus(src)
+	new /obj/item/bodypart/leg/left/robot/surplus(src)
+	new /obj/item/bodypart/leg/right/robot/surplus(src)
+	new /obj/item/bodypart/leg/right/robot/surplus(src)
 
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
@@ -270,9 +283,13 @@
 
 /obj/structure/closet/crate/goldcrate/PopulateContents()
 	..()
+	new /obj/item/storage/belt/champion(src)
+
+/obj/structure/closet/crate/goldcrate/populate_contents_immediate()
+	. = ..()
+
 	for(var/i in 1 to 3)
 		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
-	new /obj/item/storage/belt/champion(src)
 
 /obj/structure/closet/crate/silvercrate
 	name = "silver crate"

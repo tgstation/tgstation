@@ -107,13 +107,13 @@
 
 						var id = span.getAttribute("id");
 
-						if(!id || !(id.indexOf("item")==0))
+						if(!id || !(id.indexOf("item") == 0))
 							continue;
 
 						var pass = 1;
 
 						for(var j = 0; j < locked_tabs.length; j++){
-							if(locked_tabs\[j\]==id){
+							if(locked_tabs\[j\] == id){
 								pass = 0;
 								break;
 							}
@@ -142,7 +142,7 @@
 
 					var pass = 1;
 					for(var j = 0; j < locked_tabs.length; j++){
-						if(locked_tabs\[j\]==id){
+						if(locked_tabs\[j\] == id){
 							pass = 0;
 							break;
 						}
@@ -163,7 +163,7 @@
 					var index = 0;
 					var pass = 0;
 					for(var j = 0; j < locked_tabs.length; j++){
-						if(locked_tabs\[j\]==id){
+						if(locked_tabs\[j\] == id){
 							pass = 1;
 							index = j;
 							break;

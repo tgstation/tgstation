@@ -12,7 +12,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	///Currently active announcer. Starts as a type but gets initialized after traits are selected
 	var/datum/centcom_announcer/announcer = /datum/centcom_announcer/default
 
-/datum/controller/subsystem/processing/station/Initialize(timeofday)
+/datum/controller/subsystem/processing/station/Initialize()
 
 	//If doing unit tests we don't do none of that trait shit ya know?
 	// Autowiki also wants consistent outputs, for example making sure the vending machine page always reports the normal products
@@ -22,10 +22,13 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 	announcer = new announcer() //Initialize the station's announcer datum
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()
+	if (CONFIG_GET(flag/forbid_station_traits))
+		return
+
 	if (fexists(FUTURE_STATION_TRAITS_FILE))
 		var/forced_traits_contents = file2text(FUTURE_STATION_TRAITS_FILE)
 		fdel(FUTURE_STATION_TRAITS_FILE)
@@ -65,12 +68,14 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	pick_traits(STATION_TRAIT_NEUTRAL, neutral_trait_count)
 	pick_traits(STATION_TRAIT_NEGATIVE, negative_trait_count)
 
-///Picks traits of a specific category (e.g. bad or good) and a specified amount, then initializes them and adds them to the list of traits.
+///Picks traits of a specific category (e.g. bad or good) and a specified amount, then initializes them, adds them to the list of traits,
+///then removes them from possible traits as to not roll twice.
 /datum/controller/subsystem/processing/station/proc/pick_traits(trait_sign, amount)
 	if(!amount)
 		return
 	for(var/iterator in 1 to amount)
 		var/datum/station_trait/trait_type = pick_weight(selectable_traits_by_types[trait_sign]) //Rolls from the table for the specific trait type
+		selectable_traits_by_types[trait_sign] -= trait_type
 		setup_trait(trait_type)
 
 ///Creates a given trait of a specific type, while also removing any blacklisted ones from the future pool.

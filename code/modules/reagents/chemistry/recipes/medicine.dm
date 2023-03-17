@@ -64,9 +64,9 @@
 	overheat_temp = 500
 	optimal_ph_min = 5
 	optimal_ph_max = 10
-	determin_ph_range = 10
+	determin_ph_range = 4
 	temp_exponent_factor = 0.35
-	ph_exponent_factor = 0.5
+	ph_exponent_factor = 1
 	thermic_constant = 20
 	H_ion_release = 1.5
 	rate_up_lim = 3
@@ -125,6 +125,11 @@
 	results = list(/datum/reagent/medicine/calomel = 2)
 	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/chlorine = 1)
 	required_temp = 374
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/medicine/ammoniated_mercury
+	results = list(/datum/reagent/medicine/ammoniated_mercury = 3)
+	required_reagents = list(/datum/reagent/medicine/calomel = 1, /datum/reagent/ammonia = 2)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/medicine/potass_iodide

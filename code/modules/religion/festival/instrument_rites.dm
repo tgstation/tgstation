@@ -58,7 +58,7 @@
 	GLOB.religious_sect.adjust_favor(0.2)
 
 /datum/religion_rites/song_tuner/evangelism/finish_effect(mob/living/carbon/human/listener, atom/song_source)
-	SEND_SIGNAL(listener, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+	listener.add_mood_event("blessing", /datum/mood_event/blessing)
 
 /datum/religion_rites/song_tuner/nullwave
 	name = "Nullwave Vibrato"
@@ -121,7 +121,7 @@
 	if(prob(20))
 		to_chat(listener, span_warning(pick(sleepy_messages)))
 		listener.emote("yawn")
-	listener.blur_eyes(2)
+	listener.set_eye_blur_if_lower(4 SECONDS)
 
 /datum/religion_rites/song_tuner/lullaby/finish_effect(mob/living/carbon/human/listener, atom/song_source)
 	to_chat(listener, span_danger("Wow, the ending of that song was... pretty..."))

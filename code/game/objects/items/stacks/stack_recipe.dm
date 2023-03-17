@@ -18,7 +18,7 @@
 	/// If only one of the resulting atom is allowed per turf
 	var/one_per_turf = FALSE
 	/// If the atom requires a floor below
-	var/on_floor = FALSE
+	var/on_solid_ground = FALSE
 	/// If the atom requires a tram floor below
 	var/on_tram = FALSE
 	/// Bitflag of additional placement checks required to place. (STACK_CHECK_CARDINALS|STACK_CHECK_ADJACENT)
@@ -29,6 +29,8 @@
 	var/trait_booster
 	/// How much the trait above, if supplied, boosts the construct speed of this item
 	var/trait_modifier = 1
+	/// Category for general crafting menu
+	var/category
 
 /datum/stack_recipe/New(
 	title,
@@ -38,13 +40,14 @@
 	max_res_amount = 1,
 	time = 0,
 	one_per_turf = FALSE,
-	on_floor = FALSE,
+	on_solid_ground = FALSE,
 	on_tram = FALSE,
 	window_checks = FALSE,
 	placement_checks = NONE,
 	applies_mats = FALSE,
 	trait_booster,
 	trait_modifier = 1,
+	category,
 )
 
 	src.title = title
@@ -54,12 +57,13 @@
 	src.max_res_amount = max_res_amount
 	src.time = time
 	src.one_per_turf = one_per_turf
-	src.on_floor = on_floor
+	src.on_solid_ground = on_solid_ground
 	src.on_tram = on_tram
 	src.placement_checks = placement_checks
 	src.applies_mats = applies_mats
 	src.trait_booster = trait_booster
 	src.trait_modifier = trait_modifier
+	src.category = src.category || category || CAT_MISC
 
 /datum/stack_recipe/radial
 	/// Optional info to be shown on the radial option for this item
@@ -73,7 +77,7 @@
 	max_res_amount = 1,
 	time = 0,
 	one_per_turf = FALSE,
-	on_floor = FALSE,
+	on_solid_ground = FALSE,
 	on_tram = FALSE,
 	window_checks = FALSE,
 	placement_checks = NONE,
@@ -82,8 +86,10 @@
 	trait_modifier = 1,
 	desc,
 	required_noun,
+	category,
 )
-
+	if(category)
+		src.category = category
 	if(desc)
 		src.desc = desc
 	if(required_noun)

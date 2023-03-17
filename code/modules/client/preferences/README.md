@@ -248,7 +248,7 @@ For example, `/datum/preference/numeric/age` contains:
 
 If your preference is `PREFERENCE_CHARACTER`, it MUST override `apply_to_human`, even if just to immediately `return`.
 
-You can also read preferences directly with `preferences.read_preference(/datum/preference/type/here)`, which will return the stored value.
+You can also read preferences directly with `prefs.read_preference(/datum/preference/type/here)`, which will return the stored value.
 
 ## Categories
 Every preference needs to be in a `category`. These can be found in `code/__DEFINES/preferences.dm`.
@@ -350,7 +350,7 @@ Middleware can hijack actions by specifying `action_delegations`:
 ```dm
 /datum/preference_middleware/congratulations
 	action_delegations = list(
-		"congratulate_me" = .proc/congratulate_me,
+		"congratulate_me" = PROC_REF(congratulate_me),
 	)
 
 /datum/preference_middleware/congratulations/proc/congratulate_me(list/params, mob/user)

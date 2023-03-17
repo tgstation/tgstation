@@ -2,7 +2,6 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 ///simple element to handle frozen obj's
 /datum/element/frozen
-	element_flags = ELEMENT_DETACH
 
 /datum/element/frozen/Attach(datum/target)
 	. = ..()
@@ -21,13 +20,15 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	target_obj.add_atom_colour(GLOB.freon_color_matrix, TEMPORARY_COLOUR_PRIORITY)
 	target_obj.alpha -= 25
 
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(target, COMSIG_MOVABLE_POST_THROW, .proc/shatter_on_throw)
-	RegisterSignal(target, COMSIG_OBJ_UNFREEZE, .proc/on_unfreeze)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(target, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(shatter_on_throw))
+	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(shatter_on_throw))
+	RegisterSignal(target, COMSIG_OBJ_UNFREEZE, PROC_REF(on_unfreeze))
 
 /datum/element/frozen/Detach(datum/source, ...)
 	var/obj/obj_source = source
 	REMOVE_TRAIT(obj_source, TRAIT_FROZEN, ELEMENT_TRAIT(type))
+	UnregisterSignal(obj_source, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_THROW_LANDED, COMSIG_MOVABLE_IMPACT, COMSIG_OBJ_UNFREEZE))
 	obj_source.name = replacetext(obj_source.name, "frozen ", "")
 	obj_source.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, GLOB.freon_color_matrix)
 	obj_source.alpha += 25
@@ -43,16 +44,21 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	SIGNAL_HANDLER
 	var/obj/obj_target = target
 	obj_target.visible_message(span_danger("[obj_target] shatters into a million pieces!"))
-	qdel(obj_target)
+	obj_target.flags_1 |= NODECONSTRUCT_1	// disable item spawning
+	obj_target.deconstruct(FALSE)			// call pre-deletion specialized code -- internals release gas etc
 
 /// signal handler for COMSIG_MOVABLE_MOVED that unfreezes our target if it moves onto an open turf thats hotter than
 /// our melting temperature.
 /datum/element/frozen/proc/on_moved(datum/target)
 	SIGNAL_HANDLER
-	var/obj/obj_target = target
-	if(!isopenturf(obj_target.loc))
+	var/atom/movable/movable_target = target
+
+	if(movable_target.throwing)
 		return
 
-	var/turf/open/turf_loc = obj_target.loc
+	if(!isopenturf(movable_target.loc))
+		return
+
+	var/turf/open/turf_loc = movable_target.loc
 	if(turf_loc.air?.temperature >= T0C)//unfreezes target
 		Detach(target)

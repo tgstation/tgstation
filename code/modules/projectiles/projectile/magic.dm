@@ -1,9 +1,8 @@
 /obj/projectile/magic
 	name = "bolt"
 	icon_state = "energy"
-	damage = 0
+	damage = 0 // MOST magic projectiles pass the "not a hostile projectile" test, despite many having negative effects
 	damage_type = OXY
-	nodamage = TRUE
 	armour_penetration = 100
 	armor_flag = NONE
 	/// determines what type of antimagic can block the spell projectile
@@ -38,12 +37,13 @@
 	if(isliving(target))
 		var/mob/living/victim = target
 		if(victim.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-			if(victim.revive(full_heal = TRUE, admin_revive = TRUE))
-				victim.grab_ghost(force = TRUE) // even suicides
+			if(victim.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)) // This heals suicides
+				victim.grab_ghost(force = TRUE)
 				to_chat(victim, span_notice("You rise with a start, you're undead!!!"))
 			else if(victim.stat != DEAD)
 				to_chat(victim, span_notice("You feel great!"))
 			return
+		victim.investigate_log("has been killed by a bolt of death.", INVESTIGATE_DEATHS)
 		victim.death()
 
 	if(istype(target, /obj/machinery/hydroponics))
@@ -56,9 +56,6 @@
 /obj/projectile/magic/resurrection
 	name = "bolt of resurrection"
 	icon_state = "ion"
-	damage = 0
-	damage_type = OXY
-	nodamage = TRUE
 
 /obj/projectile/magic/resurrection/on_hit(atom/target)
 	. = ..()
@@ -67,11 +64,11 @@
 		var/mob/living/victim = target
 
 		if(victim.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
+			victim.investigate_log("has been killed by a bolt of life.", INVESTIGATE_DEATHS)
 			victim.death()
 			return
 
-		if(victim.revive(full_heal = TRUE, admin_revive = TRUE))
-			victim.grab_ghost(force = TRUE) // even suicides
+		if(victim.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)) // This heals suicides
 			to_chat(victim, span_notice("You rise with a start, you're alive!!!"))
 		else if(victim.stat != DEAD)
 			to_chat(victim, span_notice("You feel great!"))
@@ -85,9 +82,6 @@
 /obj/projectile/magic/teleport
 	name = "bolt of teleportation"
 	icon_state = "bluespace"
-	damage = 0
-	damage_type = OXY
-	nodamage = TRUE
 	var/inner_tele_radius = 0
 	var/outer_tele_radius = 6
 
@@ -109,9 +103,6 @@
 /obj/projectile/magic/safety
 	name = "bolt of safety"
 	icon_state = "bluespace"
-	damage = 0
-	damage_type = OXY
-	nodamage = TRUE
 
 /obj/projectile/magic/safety/on_hit(atom/target)
 	. = ..()
@@ -130,9 +121,6 @@
 /obj/projectile/magic/door
 	name = "bolt of door creation"
 	icon_state = "energy"
-	damage = 0
-	damage_type = OXY
-	nodamage = TRUE
 	var/list/door_types = list(/obj/structure/mineral_door/wood, /obj/structure/mineral_door/iron, /obj/structure/mineral_door/silver, /obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium, /obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/plasma, /obj/structure/mineral_door/transparent/diamond)
 
 /obj/projectile/magic/door/on_hit(atom/target)
@@ -159,16 +147,18 @@
 /obj/projectile/magic/change
 	name = "bolt of change"
 	icon_state = "ice_1"
-	damage = 0
 	damage_type = BURN
-	nodamage = TRUE
+	/// If set, this projectile will only do a certain wabbajack effect
+	var/set_wabbajack_effect
+	/// If set, this projectile will only pass certain changeflags to wabbajack
+	var/set_wabbajack_changeflags
 
 /obj/projectile/magic/change/on_hit(atom/target)
 	. = ..()
 
 	if(isliving(target))
 		var/mob/living/victim = target
-		victim.wabbajack()
+		victim.wabbajack(set_wabbajack_effect, set_wabbajack_changeflags)
 
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/plant_tray = target
@@ -179,21 +169,19 @@
 /obj/projectile/magic/animate
 	name = "bolt of animation"
 	icon_state = "red_1"
-	damage = 0
 	damage_type = BURN
-	nodamage = TRUE
 
 /obj/projectile/magic/animate/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	target.animate_atom_living(firer)
 
 /atom/proc/animate_atom_living(mob/living/owner = null)
-	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.mimic_blacklist))
+	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.animatable_blacklist))
 		if(istype(src, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)
 				var/mob/living/L = P.petrified_mob
-				var/mob/living/simple_animal/hostile/netherworld/statue/S = new(P.loc, owner)
+				var/mob/living/basic/statue/S = new(P.loc, owner)
 				S.name = "statue of [L.name]"
 				if(owner)
 					S.faction = list("[REF(owner)]")
@@ -210,7 +198,7 @@
 				return
 		else
 			var/obj/O = src
-			if(istype(O, /obj/item/gun))
+			if(isgun(O))
 				new /mob/living/simple_animal/hostile/mimic/copy/ranged(drop_location(), src, owner)
 			else
 				new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
@@ -227,20 +215,17 @@
 	damage = 15
 	damage_type = BURN
 	dismemberment = 50
-	nodamage = FALSE
 
 /obj/projectile/magic/arcane_barrage
 	name = "arcane bolt"
 	icon_state = "arcane_barrage"
 	damage = 20
 	damage_type = BURN
-	nodamage = FALSE
 	hitsound = 'sound/weapons/barragespellhit.ogg'
 
 /obj/projectile/magic/locker
 	name = "locker bolt"
 	icon_state = "locker"
-	nodamage = TRUE
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
 	var/locker_suck = TRUE
@@ -297,7 +282,7 @@
 /obj/structure/closet/decay/Initialize(mapload)
 	. = ..()
 	if(auto_destroy)
-		addtimer(CALLBACK(src, .proc/bust_open), 5 MINUTES)
+		addtimer(CALLBACK(src, PROC_REF(bust_open)), 5 MINUTES)
 
 /obj/structure/closet/decay/after_weld(weld_state)
 	if(weld_state)
@@ -313,12 +298,12 @@
 	icon_state = weakened_icon
 	update_appearance()
 
-	addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(decay)), 15 SECONDS)
 
 ///Fade away into nothing
 /obj/structure/closet/decay/proc/decay()
 	animate(src, alpha = 0, time = 3 SECONDS)
-	addtimer(CALLBACK(src, .proc/decay_finished), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(decay_finished)), 3 SECONDS)
 
 /obj/structure/closet/decay/proc/decay_finished()
 	dump_contents()
@@ -362,14 +347,15 @@
 		var/atom/throw_target = get_edge_target_turf(target, get_dir(target, firer))
 		target.throw_at(throw_target, 200, 4)
 
-/obj/projectile/magic/sapping
-	name = "bolt of sapping"
-	icon_state = "sapping"
+/obj/projectile/magic/babel
+	name = "bolt of babel"
+	icon_state = "babel"
 
-/obj/projectile/magic/sapping/on_hit(mob/living/target)
+/obj/projectile/magic/babel/on_hit(mob/living/carbon/target)
 	. = ..()
-	if(isliving(target))
-		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, REF(src), /datum/mood_event/sapped)
+	if(iscarbon(target))
+		if(curse_of_babel(target))
+			target.add_mood_event("curse_of_babel", /datum/mood_event/tower_of_babel)
 
 /obj/projectile/magic/necropotence
 	name = "bolt of necropotence"
@@ -492,7 +478,6 @@
 	icon_state = "tesla_projectile" //Better sprites are REALLY needed and appreciated!~
 	damage = 15
 	damage_type = BURN
-	nodamage = FALSE
 	speed = 0.3
 
 	/// The power of the zap itself when it electrocutes someone
@@ -527,7 +512,6 @@
 	icon_state = "fireball"
 	damage = 10
 	damage_type = BRUTE
-	nodamage = FALSE
 
 	/// Heavy explosion range of the fireball
 	var/exp_heavy = 0
@@ -562,11 +546,11 @@
 /obj/projectile/magic/aoe/magic_missile
 	name = "magic missile"
 	icon_state = "magicm"
-	range = 20
-	speed = 5
+	range = 100
+	speed = 1
+	pixel_speed_multiplier = 0.2
 	trigger_range = 0
 	can_only_hit_target = TRUE
-	nodamage = FALSE
 	paralyze = 6 SECONDS
 	hitsound = 'sound/magic/mm_hit.ogg'
 
@@ -588,11 +572,12 @@
 	hitsound = 'sound/weapons/punch3.ogg'
 	trigger_range = 0
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
-	ignored_factions = list("cult")
-	range = 15
-	speed = 7
+	ignored_factions = list(FACTION_CULT)
+	range = 105
+	speed = 1
+	pixel_speed_multiplier = 1/7
 
-/obj/projectile/magic/spell/juggernaut/on_hit(atom/target, blocked)
+/obj/projectile/magic/aoe/juggernaut/on_hit(atom/target, blocked)
 	. = ..()
 	var/turf/target_turf = get_turf(src)
 	playsound(target_turf, 'sound/weapons/resonator_blast.ogg', 100, FALSE)
@@ -611,9 +596,7 @@
 /obj/projectile/temp/chill
 	name = "bolt of chills"
 	icon_state = "ice_2"
-	damage = 0
 	damage_type = BURN
-	nodamage = FALSE
 	armour_penetration = 100
 	temperature = -200 // Cools you down greatly per hit
 
@@ -626,5 +609,4 @@
 	icon_state = "spellcard"
 	damage_type = BURN
 	damage = 2
-	nodamage = FALSE
 	antimagic_charge_cost = 0 // since the cards gets spammed like a shotgun

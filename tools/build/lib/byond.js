@@ -8,7 +8,11 @@ import { regQuery } from './winreg.js';
  */
 let dmPath;
 
-const getDmPath = async () => {
+const getDmPath = async (namedVersion) => {
+  // Use specific named version
+  if(namedVersion) {
+    return getNamedByondVersionPath(namedVersion);
+  }
   if (dmPath) {
     return dmPath;
   }
@@ -16,6 +20,7 @@ const getDmPath = async () => {
     // Search in array of paths
     const paths = [
       ...((process.env.DM_EXE && process.env.DM_EXE.split(',')) || []),
+      ...getDefaultNamedByondVersionPath(),
       'C:\\Program Files\\BYOND\\bin\\dm.exe',
       'C:\\Program Files (x86)\\BYOND\\bin\\dm.exe',
       ['reg', 'HKLM\\Software\\Dantom\\BYOND', 'installpath'],
@@ -58,15 +63,69 @@ const getDmPath = async () => {
   return dmPath;
 };
 
+
+
+const getNamedByondVersionPath = (namedVersion) =>{
+  const all_entries = getAllNamedDmVersions(true)
+  const map_entry = all_entries.find(x => x.name === namedVersion);
+  if(map_entry === undefined){
+    Juke.logger.error(`No named byond version with name "${namedVersion}" found.`);
+    throw new Juke.ExitCode(1);
+  }
+  return map_entry.path;
+}
+
+const getDefaultNamedByondVersionPath = () =>{
+  const all_entries = getAllNamedDmVersions(false)
+  const map_entry = all_entries.find(x => x.default == true);
+  if(map_entry === undefined)
+    return []
+  return [map_entry.path];
+}
+
+
+/** @type {[{ name, path, default }]} */
+let namedDmVersionList;
+export const NamedVersionFile = "tools/build/dm_versions.json"
+
+const getAllNamedDmVersions = (throw_on_fail) => {
+  if(!namedDmVersionList){
+    if(!fs.existsSync(NamedVersionFile)){
+      if(throw_on_fail){
+        Juke.logger.error(`No byond version map file found.`);
+        throw new Juke.ExitCode(1);
+      }
+      namedDmVersionList = []
+      return namedDmVersionList;
+    }
+    try{
+      namedDmVersionList = JSON.parse(fs.readFileSync(NamedVersionFile));
+    }
+    catch(err){
+      if(throw_on_fail){
+        Juke.logger.error(`Failed to parse byond version map file. ${err}`);
+        throw new Juke.ExitCode(1);
+      }
+      namedDmVersionList = []
+      return namedDmVersionList;
+    }
+  }
+  return namedDmVersionList;
+}
+
 /**
  * @param {string} dmeFile
  * @param {{
  *   defines?: string[];
  *   warningsAsErrors?: boolean;
+ *   namedDmVersion?: string;
  * }} options
  */
 export const DreamMaker = async (dmeFile, options = {}) => {
-  const dmPath = await getDmPath();
+  if(options.namedDmVersion !== null){
+    Juke.logger.info('Using named byond version:', options.namedDmVersion);
+  }
+  const dmPath = await getDmPath(options.namedDmVersion);
   // Get project basename
   const dmeBaseName = dmeFile.replace(/\.dme$/, '');
   // Make sure output files are writable
@@ -120,10 +179,17 @@ export const DreamMaker = async (dmeFile, options = {}) => {
   }
 };
 
-export const DreamDaemon = async (dmbFile, ...args) => {
-  const dmPath = await getDmPath();
+
+/**
+* @param {{
+*   dmbFile: string;
+*   namedDmVersion?: string;
+* }} options
+*/
+export const DreamDaemon = async (options, ...args) => {
+  const dmPath = await getDmPath(options.namedDmVersion);
   const baseDir = path.dirname(dmPath);
   const ddExeName = process.platform === 'win32' ? 'dreamdaemon.exe' : 'DreamDaemon';
   const ddExePath = baseDir === '.' ? ddExeName : path.join(baseDir, ddExeName);
-  return Juke.exec(ddExePath, [dmbFile, ...args]);
+  return Juke.exec(ddExePath, [options.dmbFile, ...args]);
 };

@@ -9,12 +9,15 @@
 		return
 	message_admins("Polling [number_to_ask] players for commendations.")
 
-	for(var/i in GLOB.joined_player_list)
+	// We need the list to be random, otherwise we'll end up always asking the same people to give out commendations.
+	var/list/eligible_player_list = shuffle(GLOB.joined_player_list)
+
+	for(var/i in eligible_player_list)
 		var/mob/check_mob = get_mob_by_ckey(i)
 		if(!check_mob?.mind || !check_mob.client)
 			continue
 		// maybe some other filters like bans or whatever
-		INVOKE_ASYNC(check_mob, /mob.proc/query_heart, 1)
+		INVOKE_ASYNC(check_mob, TYPE_PROC_REF(/mob, query_heart), 1)
 		number_to_ask--
 		if(number_to_ask <= 0)
 			break
@@ -29,7 +32,7 @@
 		if(!hearted_mob?.client)
 			continue
 		hearted_mob.client.adjust_heart()
-		message += "[hearted_ckey][i==hearts.len ? "" : ", "]"
+		message += "[hearted_ckey][i == hearts.len ? "" : ", "]"
 	message_admins(message.Join())
 
 /// Ask someone if they'd like to award a commendation for the round, 3 tries to get the name they want before we give up

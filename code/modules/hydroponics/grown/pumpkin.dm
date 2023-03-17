@@ -3,6 +3,7 @@
 	name = "pack of pumpkin seeds"
 	desc = "These seeds grow into pumpkin vines."
 	icon_state = "seed-pumpkin"
+	plant_icon_offset = 4
 	species = "pumpkin"
 	plantname = "Pumpkin Vines"
 	product = /obj/item/food/grown/pumpkin
@@ -26,7 +27,7 @@
 	juice_results = list(/datum/reagent/consumable/pumpkinjuice = 0)
 	wine_power = 20
 	///Which type of lantern this gourd produces when carved.
-	var/carved_type = /obj/item/clothing/head/hardhat/pumpkinhead
+	var/carved_type = /obj/item/clothing/head/utility/hardhat/pumpkinhead
 
 /obj/item/food/grown/pumpkin/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(W.get_sharpness())
@@ -58,4 +59,4 @@
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/blumpkinjuice = 0)
 	wine_power = 50
-	carved_type = /obj/item/clothing/head/hardhat/pumpkinhead/blumpkin
+	carved_type = /obj/item/clothing/head/utility/hardhat/pumpkinhead/blumpkin

@@ -1,5 +1,5 @@
 /obj/structure/closet/secure_closet/captains
-	name = "\proper captain's locker"
+	name = "captain's locker"
 	req_access = list(ACCESS_CAPTAIN)
 	icon_state = "cap"
 
@@ -12,7 +12,7 @@
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
 	new /obj/item/storage/bag/garment/captain(src)
-	new /obj/item/computer_hardware/hard_drive/portable/command/captain(src)
+	new /obj/item/computer_disk/command/captain(src)
 	new /obj/item/storage/box/silver_ids(src)
 	new /obj/item/radio/headset/heads/captain/alt(src)
 	new /obj/item/radio/headset/heads/captain(src)
@@ -22,15 +22,16 @@
 	new /obj/item/storage/photo_album/captain(src)
 
 /obj/structure/closet/secure_closet/hop
-	name = "\proper head of personnel's locker"
+	name = "head of personnel's locker"
 	req_access = list(ACCESS_HOP)
 	icon_state = "hop"
 
 /obj/structure/closet/secure_closet/hop/PopulateContents()
 	..()
+	new /obj/item/dog_bone(src)
 	new /obj/item/storage/bag/garment/hop(src)
 	new /obj/item/storage/lockbox/medal/service(src)
-	new /obj/item/computer_hardware/hard_drive/portable/command/hop(src)
+	new /obj/item/computer_disk/command/hop(src)
 	new /obj/item/radio/headset/heads/hop(src)
 	new /obj/item/storage/box/ids(src)
 	new /obj/item/storage/box/ids(src)
@@ -45,14 +46,14 @@
 	new /obj/item/storage/lockbox/medal/hop(src)
 
 /obj/structure/closet/secure_closet/hos
-	name = "\proper head of security's locker"
+	name = "head of security's locker"
 	req_access = list(ACCESS_HOS)
 	icon_state = "hos"
 
 /obj/structure/closet/secure_closet/hos/PopulateContents()
 	..()
 
-	new /obj/item/computer_hardware/hard_drive/portable/command/hos(src)
+	new /obj/item/computer_disk/command/hos(src)
 	new /obj/item/radio/headset/heads/hos(src)
 	new /obj/item/storage/bag/garment/hos(src)
 	new /obj/item/storage/lockbox/medal/sec(src)
@@ -62,23 +63,28 @@
 	new /obj/item/storage/box/flashbangs(src)
 	new /obj/item/shield/riot/tele(src)
 	new /obj/item/storage/belt/security/full(src)
-	new /obj/item/gun/energy/e_gun/hos(src)
-	new /obj/item/pinpointer/nuke(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/hos(src)
 
+/obj/structure/closet/secure_closet/hos/populate_contents_immediate()
+	. = ..()
+
+	// Traitor steal objectives
+	new /obj/item/gun/energy/e_gun/hos(src)
+	new /obj/item/pinpointer/nuke(src)
 
 /obj/structure/closet/secure_closet/warden
-	name = "\proper warden's locker"
+	name = "warden's locker"
 	req_access = list(ACCESS_ARMORY)
 	icon_state = "warden"
 
 /obj/structure/closet/secure_closet/warden/PopulateContents()
 	..()
+	new /obj/item/dog_bone(src)
 	new /obj/item/radio/headset/headset_sec(src)
 	new /obj/item/clothing/suit/armor/vest/warden(src)
-	new /obj/item/clothing/head/warden(src)
-	new /obj/item/clothing/head/warden/drill(src)
+	new /obj/item/clothing/head/hats/warden(src)
+	new /obj/item/clothing/head/hats/warden/drill(src)
 	new /obj/item/clothing/head/beret/sec/navywarden(src)
 	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
 	new /obj/item/clothing/under/rank/security/warden/formal(src)
@@ -101,6 +107,7 @@
 /obj/structure/closet/secure_closet/security/PopulateContents()
 	..()
 	new /obj/item/clothing/suit/armor/vest(src)
+	new /obj/item/clothing/suit/armor/vest/alt/sec(src)
 	new /obj/item/clothing/head/helmet/sec(src)
 	new /obj/item/radio/headset/headset_sec(src)
 	new /obj/item/radio/headset/headset_sec/alt(src)
@@ -166,7 +173,7 @@
 	new /obj/item/storage/box/rxglasses/spyglasskit(src)
 
 /obj/structure/closet/secure_closet/injection
-	name = "lethal injections"
+	name = "lethal injections locker"
 	req_access = list(ACCESS_HOS)
 
 /obj/structure/closet/secure_closet/injection/PopulateContents()
@@ -227,7 +234,7 @@
 
 /obj/structure/closet/secure_closet/evidence
 	anchored = TRUE
-	name = "Secure Evidence Closet"
+	name = "secure evidence closet"
 	req_one_access = list("armory","detective")
 
 /obj/structure/closet/secure_closet/brig/PopulateContents()
@@ -247,17 +254,17 @@
 		new /obj/item/paper/fluff/jobs/security/court_judgement (src)
 	new /obj/item/pen (src)
 	new /obj/item/clothing/suit/costume/judgerobe (src)
-	new /obj/item/clothing/head/powdered_wig (src)
+	new /obj/item/clothing/head/costume/powdered_wig (src)
 	new /obj/item/storage/briefcase(src)
 
 /obj/structure/closet/secure_closet/contraband/armory
 	anchored = TRUE
-	name = "Contraband Locker"
+	name = "contraband locker"
 	req_access = list(ACCESS_ARMORY)
 
 /obj/structure/closet/secure_closet/contraband/heads
 	anchored = TRUE
-	name = "Contraband Locker"
+	name = "contraband locker"
 	req_access = list(ACCESS_COMMAND)
 
 /obj/structure/closet/secure_closet/armory1
@@ -267,13 +274,18 @@
 
 /obj/structure/closet/secure_closet/armory1/PopulateContents()
 	..()
-	new /obj/item/clothing/suit/hooded/ablative(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/armor/riot(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/head/helmet/riot(src)
+		new /obj/item/clothing/head/helmet/toggleable/riot(src)
 	for(var/i in 1 to 3)
 		new /obj/item/shield/riot(src)
+
+/obj/structure/closet/secure_closet/armory1/populate_contents_immediate()
+	. = ..()
+
+	// Traitor steal objective
+	new /obj/item/clothing/suit/hooded/ablative(src)
 
 /obj/structure/closet/secure_closet/armory2
 	name = "armory ballistics locker"

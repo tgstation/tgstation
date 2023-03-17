@@ -20,7 +20,7 @@
 	response_disarm_simple = "shoo"
 	response_harm_continuous = "steps on"
 	response_harm_simple = "step on"
-	faction = list("hostile")
+	faction = list(FACTION_HOSTILE)
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
@@ -47,7 +47,7 @@
 	var/list/mice = list()
 	for (var/HM in .)
 		//Yum a tasty mouse
-		if(istype(HM, /mob/living/simple_animal/mouse))
+		if(ismouse(HM))
 			mice += HM
 		if(isliving(HM))
 			living_mobs += HM
@@ -68,7 +68,7 @@
 	return  living_mobs & actual_enemies
 
 /mob/living/simple_animal/hostile/retaliate/snake/AttackingTarget()
-	if(istype(target, /mob/living/simple_animal/mouse))
+	if(ismouse(target))
 		visible_message(span_notice("[name] consumes [target] in a single gulp!"), span_notice("You consume [target] in a single gulp!"))
 		QDEL_NULL(target)
 		adjustBruteLoss(-2)

@@ -7,8 +7,8 @@
 	name = "broken tile"
 	singular_name = "broken tile"
 	desc = "A broken tile. This should not exist."
-	lefthand_file = 'icons/mob/inhands/misc/tiles_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/tiles_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/tiles_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/tiles_righthand.dmi'
 	icon = 'icons/obj/tiles.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 1
@@ -90,8 +90,6 @@
 		to_chat(user, span_notice("You cannot place this tile here directly!"))
 		return
 	to_chat(user, span_notice("You begin replacing the floor with the tile..."))
-	if(!do_after(user, 3 SECONDS, target_plating))
-		return
 	if(!istype(target_plating))
 		return
 	if(!use(1))
@@ -119,7 +117,6 @@
 	singular_name = "fairygrass floor tile"
 	desc = "A patch of odd, glowing blue grass."
 	icon_state = "tile_fairygrass"
-	inhand_icon_state = "tile-fairygrass"
 	turf_type = /turf/open/floor/grass/fairy
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/fairygrass
@@ -168,10 +165,38 @@
 	singular_name = "bamboo mat piece"
 	desc = "A piece of a bamboo mat with a decorative trim."
 	icon_state = "tile_bamboo"
+	inhand_icon_state = "tile-bamboo"
 	turf_type = /turf/open/floor/bamboo
 	merge_type = /obj/item/stack/tile/bamboo
 	resistance_flags = FLAMMABLE
+	tile_reskin_types = list(
+		/obj/item/stack/tile/bamboo,
+		/obj/item/stack/tile/bamboo/tatami,
+		/obj/item/stack/tile/bamboo/tatami/purple,
+		/obj/item/stack/tile/bamboo/tatami/black,
+	)
 
+/obj/item/stack/tile/bamboo/tatami
+	name = "Tatami with green rim"
+	singular_name = "green tatami floor tile"
+	icon_state = "tile_tatami_green"
+	turf_type = /turf/open/floor/bamboo/tatami
+	merge_type = /obj/item/stack/tile/bamboo/tatami
+	tile_rotate_dirs = list(NORTH, EAST, SOUTH, WEST)
+
+/obj/item/stack/tile/bamboo/tatami/purple
+	name = "Tatami with purple rim"
+	singular_name = "purple tatami floor tile"
+	icon_state = "tile_tatami_purple"
+	turf_type = /turf/open/floor/bamboo/tatami/purple
+	merge_type = /obj/item/stack/tile/bamboo/tatami/purple
+
+/obj/item/stack/tile/bamboo/tatami/black
+	name = "Tatami with black rim"
+	singular_name = "black tatami floor tile"
+	icon_state = "tile_tatami_black"
+	turf_type = /turf/open/floor/bamboo/tatami/black
+	merge_type = /obj/item/stack/tile/bamboo/tatami/black
 
 //Basalt
 /obj/item/stack/tile/basalt
@@ -374,7 +399,7 @@
 	var/mutable_appearance/neon_overlay = mutable_appearance(neon_icon || icon, neon_icon_state || icon_state, alpha = alpha)
 	neon_overlay.color = neon_color
 	. += neon_overlay
-	. += emissive_appearance(neon_icon || icon, neon_icon_state || icon_state, alpha = emissive_alpha)
+	. += emissive_appearance(neon_icon || icon, neon_icon_state || icon_state, src, alpha = emissive_alpha)
 
 /obj/item/stack/tile/carpet/neon/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -384,7 +409,7 @@
 	var/mutable_appearance/neon_overlay = mutable_appearance(icon_file, neon_inhand_icon_state)
 	neon_overlay.color = neon_color
 	. += neon_overlay
-	. += emissive_appearance(icon_file, neon_inhand_icon_state, alpha = emissive_alpha)
+	. += emissive_appearance(icon_file, neon_inhand_icon_state, src, alpha = emissive_alpha)
 
 /obj/item/stack/tile/carpet/neon/simple
 	name = "simple neon carpet"
@@ -1157,11 +1182,11 @@
 
 /obj/item/stack/tile/emissive_test/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, icon_state, alpha = alpha)
+	. += emissive_appearance(icon, icon_state, src, alpha = alpha)
 
 /obj/item/stack/tile/emissive_test/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
-	. += emissive_appearance(standing.icon, standing.icon_state, alpha = standing.alpha)
+	. += emissive_appearance(standing.icon, standing.icon_state, src, alpha = standing.alpha)
 
 /obj/item/stack/tile/emissive_test/sixty
 	amount = 60

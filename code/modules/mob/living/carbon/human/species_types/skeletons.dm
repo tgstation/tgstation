@@ -2,22 +2,22 @@
 	// 2spooky
 	name = "Spooky Scary Skeleton"
 	id = SPECIES_SKELETON
-	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/skeleton
-	species_traits = list(NOBLOOD, HAS_BONE, NOTRANSSTING, NOEYESPRITES, NO_DNA_COPY)
+	species_traits = list(
+		NOTRANSSTING,
+		NOEYESPRITES,
+		NO_DNA_COPY,
+		NO_UNDERWEAR,
+	)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
 		TRAIT_GENELESS,
 		TRAIT_LIMBATTACHMENT,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NOCLONELOSS,
-		TRAIT_NOHUNGER,
 		TRAIT_NOMETABOLISM,
 		TRAIT_RADIMMUNE,
 		TRAIT_PIERCEIMMUNE,
@@ -27,25 +27,29 @@
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
 		TRAIT_XENO_IMMUNE,
+		TRAIT_NOBLOOD,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/internal/tongue/bone
 	mutantstomach = /obj/item/organ/internal/stomach/bone
-	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
+	mutantappendix = null
+	mutantheart = null
+	mutantliver = null
+	mutantlungs = null
 	disliked_food = NONE
-	liked_food = GROSS | MEAT | RAW
-	wings_icons = list("Skeleton")
+	liked_food = GROSS | MEAT | RAW | GORE
+	wing_types = list(/obj/item/organ/external/wings/functional/skeleton)
 	//They can technically be in an ERT
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
-	species_cookie = /obj/item/reagent_containers/food/condiment/milk
+	species_cookie = /obj/item/reagent_containers/condiment/milk
 	species_language_holder = /datum/language_holder/skeleton
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/skeleton,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/skeleton,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/skeleton,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/skeleton,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/skeleton,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/skeleton,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/skeleton,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/skeleton,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/skeleton,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/skeleton,
 	)
 
@@ -54,7 +58,7 @@
 	C.set_safe_hunger_level()
 
 /datum/species/skeleton/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
 

@@ -16,7 +16,7 @@
 /area/template_noop)
 "aL" = (
 /obj/structure/table/glass,
-/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
 /obj/structure/window{
@@ -587,9 +587,9 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/reagent_containers/glass/beaker,
-/obj/item/reagent_containers/glass/beaker,
-/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/cup/beaker,
+/obj/item/reagent_containers/cup/beaker,
+/obj/item/reagent_containers/cup/beaker,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -722,7 +722,7 @@
 /obj/structure/window{
 	dir = 8
 	},
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/records/medical{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -743,7 +743,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},

@@ -1,7 +1,7 @@
 //Used by spraybottles.
 /obj/effect/decal/chempuff
 	name = "chemicals"
-	icon = 'icons/obj/chempuff.dmi'
+	icon = 'icons/obj/medical/chempuff.dmi'
 	pass_flags = PASSTABLE | PASSGRILLE
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -32,10 +32,10 @@
 		return
 	end_life(source)
 
-/obj/effect/decal/chempuff/proc/check_move(datum/move_loop/source, succeeded)
+/obj/effect/decal/chempuff/proc/check_move(datum/move_loop/source, result)
 	if(QDELETED(src)) //Reasons PLEASE WORK I SWEAR TO GOD
 		return
-	if(!succeeded) //If we hit something
+	if(result == MOVELOOP_FAILURE) //If we hit something
 		end_life(source)
 		return
 

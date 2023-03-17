@@ -5,7 +5,7 @@
 	static_lighting = TRUE
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 	flags_1 = CAN_BE_DIRTY_1
 
 //Survival Capsule
@@ -43,7 +43,7 @@
 	if(!used)
 		loc.visible_message(span_warning("\The [src] begins to shake. Stand back!"))
 		used = TRUE
-		sleep(50)
+		sleep(5 SECONDS)
 		var/turf/deploy_location = get_turf(src)
 		var/status = template.check_deploy(deploy_location)
 		switch(status)
@@ -88,22 +88,22 @@
 	icon_state = "pod_window-0"
 	base_icon_state = "pod_window"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_SURVIVAL_TITANIUM_POD)
-	canSmoothWith = list(SMOOTH_GROUP_SURVIVAL_TITANIUM_POD)
-
-/obj/structure/window/reinforced/shuttle/survival_pod/spawner/north
-	dir = NORTH
-
-/obj/structure/window/reinforced/shuttle/survival_pod/spawner/east
-	dir = EAST
-
-/obj/structure/window/reinforced/shuttle/survival_pod/spawner/west
-	dir = WEST
+	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
 
 /obj/structure/window/reinforced/survival_pod
 	name = "pod window"
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "pwindow"
+
+/obj/structure/window/reinforced/survival_pod/spawner/north
+	dir = NORTH
+
+/obj/structure/window/reinforced/survival_pod/spawner/east
+	dir = EAST
+
+/obj/structure/window/reinforced/survival_pod/spawner/west
+	dir = WEST
 
 //Door
 /obj/machinery/door/airlock/survival_pod
@@ -111,7 +111,7 @@
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
-	smoothing_groups = list(SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SURVIVAL_TITANIUM_POD)
+	smoothing_groups = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
 
 /obj/machinery/door/airlock/survival_pod/glass
 	opacity = FALSE
@@ -205,9 +205,9 @@
 	pixel_y = -4
 	flags_1 = NODECONSTRUCT_1
 
-/obj/machinery/smartfridge/survival_pod/ComponentInitialize()
-	. = ..()
+/obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/machinery/smartfridge/survival_pod/preloaded/Initialize(mapload)
 	. = ..()

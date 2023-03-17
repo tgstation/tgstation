@@ -35,7 +35,7 @@
 		if(stand.summoner && HAS_TRAIT(stand.summoner, TRAIT_TIME_STOP_IMMUNE)) //It would only make sense that a person's stand would also be immune.
 			immune[stand] = TRUE
 	if(start)
-		INVOKE_ASYNC(src, .proc/timestop)
+		INVOKE_ASYNC(src, PROC_REF(timestop))
 
 /obj/effect/timestop/Destroy()
 	QDEL_NULL(chronofield)
@@ -58,6 +58,7 @@
 	channelled = TRUE
 
 /datum/proximity_monitor/advanced/timestop
+	edge_is_a_field = TRUE
 	var/list/immune = list()
 	var/list/frozen_things = list()
 	var/list/frozen_mobs = list() //cached separately for processing
@@ -93,7 +94,7 @@
 		return FALSE
 	if(immune[A]) //a little special logic but yes immune things don't freeze
 		if(channelled)
-			RegisterSignal(A, COMSIG_MOVABLE_MOVED, .proc/atom_broke_channel, override = TRUE)
+			RegisterSignal(A, COMSIG_MOVABLE_MOVED, PROC_REF(atom_broke_channel), override = TRUE)
 		return FALSE
 	if(ismob(A))
 		var/mob/M = A
@@ -103,9 +104,9 @@
 	var/frozen = TRUE
 	if(isliving(A))
 		freeze_mob(A)
-	else if(istype(A, /obj/projectile))
+	else if(isprojectile(A))
 		freeze_projectile(A)
-	else if(istype(A, /obj/vehicle/sealed/mecha))
+	else if(ismecha(A))
 		freeze_mecha(A)
 	else if((ismachinery(A) && !istype(A, /obj/machinery/light)) || isstructure(A)) //Special exception for light fixtures since recoloring causes them to change light
 		freeze_structure(A)
@@ -121,8 +122,8 @@
 	A.move_resist = INFINITY
 	global_frozen_atoms[A] = src
 	into_the_negative_zone(A)
-	RegisterSignal(A, COMSIG_MOVABLE_PRE_MOVE, .proc/unfreeze_atom)
-	RegisterSignal(A, COMSIG_ITEM_PICKUP, .proc/unfreeze_atom)
+	RegisterSignal(A, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(unfreeze_atom))
+	RegisterSignal(A, COMSIG_ITEM_PICKUP, PROC_REF(unfreeze_atom))
 
 	return TRUE
 
@@ -139,9 +140,9 @@
 		unfreeze_throwing(A)
 	if(isliving(A))
 		unfreeze_mob(A)
-	else if(istype(A, /obj/projectile))
+	else if(isprojectile(A))
 		unfreeze_projectile(A)
-	else if(istype(A, /obj/vehicle/sealed/mecha))
+	else if(ismecha(A))
 		unfreeze_mecha(A)
 
 	UnregisterSignal(A, COMSIG_MOVABLE_PRE_MOVE)
@@ -187,12 +188,11 @@
 		var/mob/living/m = i
 		m.Stun(20, ignore_canstun = TRUE)
 
-/datum/proximity_monitor/advanced/timestop/setup_field_turf(turf/T)
+/datum/proximity_monitor/advanced/timestop/setup_field_turf(turf/target)
 	. = ..()
-	for(var/i in T.contents)
+	for(var/i in target.contents)
 		freeze_atom(i)
-	freeze_turf(T)
-
+	freeze_turf(target)
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_projectile(obj/projectile/P)
 	P.paused = TRUE
@@ -204,7 +204,8 @@
 	frozen_mobs += L
 	L.Stun(20, ignore_canstun = TRUE)
 	ADD_TRAIT(L, TRAIT_MUTE, TIMESTOP_TRAIT)
-	SSmove_manager.stop_looping(src) //stops them mid pathing even if they're stunimmune //This is really dumb
+	ADD_TRAIT(L, TRAIT_EMOTEMUTE, TIMESTOP_TRAIT)
+	SSmove_manager.stop_looping(L) //stops them mid pathing even if they're stunimmune //This is really dumb
 	if(isanimal(L))
 		var/mob/living/simple_animal/S = L
 		S.toggle_ai(AI_OFF)
@@ -215,6 +216,7 @@
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/L)
 	L.AdjustStun(-20, ignore_canstun = TRUE)
 	REMOVE_TRAIT(L, TRAIT_MUTE, TIMESTOP_TRAIT)
+	REMOVE_TRAIT(L, TRAIT_EMOTEMUTE, TIMESTOP_TRAIT)
 	frozen_mobs -= L
 	if(isanimal(L))
 		var/mob/living/simple_animal/S = L

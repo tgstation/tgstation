@@ -31,6 +31,11 @@ const ritualstyle = {
   color: 'violet',
 };
 
+const grandritualstyle = {
+  fontWeight: 'bold',
+  color: '#bd54e0',
+};
+
 type Objective = {
   count: number;
   name: string;
@@ -40,13 +45,19 @@ type Objective = {
   reward: number;
 };
 
+type GrandRitual = {
+  remaining: number;
+  next_area: string;
+};
+
 type Info = {
   objectives: Objective[];
+  ritual: GrandRitual;
 };
 
 export const AntagInfoWizard = (props, context) => {
   return (
-    <Window width={620} height={580} theme="wizard">
+    <Window width={620} height={620} theme="wizard">
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
@@ -134,7 +145,7 @@ export const AntagInfoWizard = (props, context) => {
 
 const ObjectivePrintout = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const { objectives } = data;
+  const { objectives, ritual } = data;
   return (
     <Stack vertical>
       <Stack.Item bold>
@@ -147,6 +158,17 @@ const ObjectivePrintout = (props, context) => {
               #{objective.count}: {objective.explanation}
             </Stack.Item>
           ))}
+      </Stack.Item>
+      <Stack.Item>
+        Alternately, complete the{' '}
+        <span style={grandritualstyle}>Grand Ritual </span>
+        by invoking a ritual circle at several nexuses of power.
+        <br />
+        You must complete the ritual
+        <span style={grandritualstyle}> {ritual.remaining}</span> more times.
+        <br />
+        Your next ritual location is the
+        <span style={grandritualstyle}> {ritual.next_area}</span>.
       </Stack.Item>
     </Stack>
   );

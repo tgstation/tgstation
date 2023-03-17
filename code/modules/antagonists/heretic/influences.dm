@@ -1,6 +1,6 @@
 
 /// The number of influences spawned per heretic
-#define NUM_INFLUENCES_PER_HERETIC 4
+#define NUM_INFLUENCES_PER_HERETIC 5
 
 /**
  * #Reality smash tracker
@@ -65,10 +65,6 @@
  * and the number of minds we're tracking.
  */
 /datum/reality_smash_tracker/proc/generate_new_influences()
-	// 1 heretic = 4 influences
-	// 2 heretics = 7 influences
-	// 3 heretics = 9 influences
-	// 4 heretics = 10 influences, +1 for each onwards.
 	var/how_many_can_we_make = 0
 	for(var/heretic_number in 1 to length(tracked_heretics))
 		how_many_can_we_make += max(NUM_INFLUENCES_PER_HERETIC - heretic_number + 1, 1)
@@ -125,7 +121,7 @@
 
 /obj/effect/visible_heretic_influence/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/show_presence), 15 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(show_presence)), 15 SECONDS)
 
 	var/image/silicon_image = image('icons/effects/eldritch.dmi', src, null, OBJ_LAYER)
 	silicon_image.override = TRUE
@@ -179,7 +175,7 @@
 		qdel(head)
 	else
 		human_user.gib()
-
+	human_user.investigate_log("has died from using telekinesis on a heretic influence.", INVESTIGATE_DEATHS)
 	var/datum/effect_system/reagents_explosion/explosion = new()
 	explosion.set_up(1, get_turf(human_user), TRUE, 0)
 	explosion.start(src)
@@ -192,7 +188,7 @@
 	var/mob/living/carbon/human/human_user = user
 	to_chat(human_user, span_userdanger("Your mind burns as you stare at the tear!"))
 	human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
-	SEND_SIGNAL(human_user, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
+	human_user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/effect/heretic_influence
 	name = "reality smash"
@@ -231,7 +227,7 @@
 	if(being_drained)
 		balloon_alert(user, "already being drained!")
 	else
-		INVOKE_ASYNC(src, .proc/drain_influence, user, 1)
+		INVOKE_ASYNC(src, PROC_REF(drain_influence), user, 1)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -244,7 +240,7 @@
 	if(!being_drained && istype(weapon, /obj/item/codex_cicatrix))
 		var/obj/item/codex_cicatrix/codex = weapon
 		codex.open_animation()
-		INVOKE_ASYNC(src, .proc/drain_influence, user, 2)
+		INVOKE_ASYNC(src, PROC_REF(drain_influence), user, 2)
 		return TRUE
 
 
@@ -258,7 +254,7 @@
 
 	being_drained = TRUE
 	balloon_alert(user, "draining influence...")
-	RegisterSignal(user, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(user, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 	if(!do_after(user, 10 SECONDS, src))
 		being_drained = FALSE

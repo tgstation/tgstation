@@ -78,7 +78,7 @@
 	if(active)
 		. += active_overlay
 		if(emissive)
-			. += emissive_appearance(icon, active_overlay)
+			. += emissive_appearance(icon, active_overlay, src)
 	else
 		. += off_overlay
 
@@ -95,13 +95,12 @@
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	tool.play_tool_sound(src, 50)
-	panel_open = !panel_open
+	toggle_panel_open()
 	if(panel_open)
 		disable_parts(user)
 	else
 		enable_parts(user)
-	var/descriptor = panel_open ? "open" : "close"
-	balloon_alert(user, "you [descriptor] the maintenance hatch of [src]")
+	balloon_alert(user, "you [panel_open ? "open" : "close"] the maintenance hatch of [src]")
 	update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
@@ -565,12 +564,13 @@
 	var/output_mix_heat_capacity = output_mix.heat_capacity()
 	if(!output_mix_heat_capacity)
 		return 0
-	output_mix.temperature = max((output_mix.temperature * output_mix_heat_capacity + work_done * output_mix.total_moles() * TURBINE_HEAT_CONVERSION_MULTIPLIER) / output_mix_heat_capacity, TCMB)
+	work_done = min(work_done, (output_mix_heat_capacity * output_mix.temperature - output_mix_heat_capacity * TCMB) / TURBINE_HEAT_CONVERSION_MULTIPLIER)
+	output_mix.temperature = max((output_mix.temperature * output_mix_heat_capacity + work_done * TURBINE_HEAT_CONVERSION_MULTIPLIER) / output_mix_heat_capacity, TCMB)
 	return work_done
 
 /obj/item/paper/guides/jobs/atmos/turbine
 	name = "paper- 'Quick guide on the new and improved turbine!'"
-	info = "<B>How to operate the turbine</B><BR>\
+	default_raw_text = "<B>How to operate the turbine</B><BR>\
 	-The new turbine is not much different from the old one, just put gases in the chamber, light them up and activate the machine from the nearby computer.\
 	-There is a new parameter that's visible within the turbine computer's UI, damage. The turbine will be damaged when the heat gets too high, according to the tiers of the parts used. Make sure it doesn't get too hot!<BR>\
 	-You can avoid the turbine critically failing by upgrading the parts of the machine, but not with stock parts as you might be used to. There are 3 all-new parts, one for each section of the turbine.<BR>\

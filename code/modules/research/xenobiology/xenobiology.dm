@@ -3,7 +3,7 @@
 /obj/item/slime_extract
 	name = "slime extract"
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
-	icon = 'icons/mob/slimes.dmi'
+	icon = 'icons/mob/simple/slimes.dmi'
 	icon_state = "grey slime extract"
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -126,7 +126,7 @@
 			user.visible_message(span_warning("[user] starts shaking!"),span_notice("Your [name] starts pulsing gently..."))
 			if(do_after(user, 40, target = user))
 				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), FRIENDLY_SPAWN)
-				spawned_mob.faction |= "neutral"
+				spawned_mob.faction |= FACTION_NEUTRAL
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				user.visible_message(span_warning("[user] spits out [spawned_mob]!"), span_notice("You spit out [spawned_mob]!"))
 				return 300
@@ -136,9 +136,9 @@
 			if(do_after(user, 50, target = user))
 				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
 				if(!user.combat_mode)
-					spawned_mob.faction |= "neutral"
+					spawned_mob.faction |= FACTION_NEUTRAL
 				else
-					spawned_mob.faction |= "slime"
+					spawned_mob.faction |= FACTION_SLIME
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				user.visible_message(span_warning("[user] spits out [spawned_mob]!"), span_warning("You spit out [spawned_mob]!"))
 				return 600
@@ -156,7 +156,7 @@
 		if(SLIME_ACTIVATE_MINOR)
 			var/food_type = get_random_food()
 			var/obj/item/food/food_item = new food_type
-			food_item.mark_silver_slime_reaction()
+			ADD_TRAIT(food_item, TRAIT_FOOD_SILVER, INNATE_TRAIT)
 			if(!user.put_in_active_hand(food_item))
 				food_item.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
@@ -270,7 +270,7 @@
 				to_chat(user, span_warning("Your glow is already enhanced!"))
 				return
 			species.update_glow(user, 5)
-			addtimer(CALLBACK(species, /datum/species/jelly/luminescent.proc/update_glow, user, LUMINESCENT_DEFAULT_GLOW), 600)
+			addtimer(CALLBACK(species, TYPE_PROC_REF(/datum/species/jelly/luminescent, update_glow), user, LUMINESCENT_DEFAULT_GLOW), 600)
 			to_chat(user, span_notice("You start glowing brighter."))
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -459,6 +459,7 @@
 			if(do_after(user, 60, target = user))
 				to_chat(user, span_userdanger("You explode!"))
 				explosion(user, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6, explosion_cause = src)
+				user.investigate_log("has been gibbed by an oil slime extract explosion.", INVESTIGATE_DEATHS)
 				user.gib()
 				return
 			to_chat(user, span_notice("You stop feeding [src], and the feeling passes."))
@@ -477,7 +478,7 @@
 				return
 			to_chat(user, span_notice("You feel your skin harden and become more resistant."))
 			species.armor += 25
-			addtimer(CALLBACK(src, .proc/reset_armor, species), 1200)
+			addtimer(CALLBACK(src, PROC_REF(reset_armor), species), 1200)
 			return 450
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -650,7 +651,7 @@
 /obj/item/slimepotion/slime/docility
 	name = "docility potion"
 	desc = "A potent chemical mix that nullifies a slime's hunger, causing it to become docile and tame."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potsilver"
 
 /obj/item/slimepotion/slime/docility/attack(mob/living/simple_animal/slime/M, mob/user)
@@ -681,57 +682,45 @@
 /obj/item/slimepotion/slime/sentience
 	name = "intelligence potion"
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potpink"
 	var/list/not_interested = list()
 	var/being_used = FALSE
 	var/sentience_type = SENTIENCE_ORGANIC
 
 /obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/user)
-	if(being_used || !ismob(dumb_mob))
+	if(being_used || !isliving(dumb_mob))
 		return
-	if((!isanimal(dumb_mob) && !isbasicmob(dumb_mob)) || dumb_mob.ckey) //only works on animals that aren't player controlled
-		to_chat(user, span_warning("[dumb_mob] is already too intelligent for this to work!"))
+	if(dumb_mob.ckey) //only works on animals that aren't player controlled
+		balloon_alert(user, "already sentient!")
 		return
 	if(dumb_mob.stat)
-		to_chat(user, span_warning("[dumb_mob] is dead!"))
+		balloon_alert(user, "it's dead!")
 		return
-	if(isanimal(dumb_mob))
-		var/mob/living/simple_animal/dumb_animal = dumb_mob
-		if(dumb_animal.sentience_type != sentience_type)
-			to_chat(user, span_warning("[src] won't work on [dumb_animal]."))
-			return
-	else if(isbasicmob(dumb_mob)) //duplicate shit code until all simple animasls are made into basic mobs. sentience_type is not on living, but it duplicated  on basic and animal
-		var/mob/living/basic/basic_dumb_bitch = dumb_mob
-		if(basic_dumb_bitch.sentience_type != sentience_type)
-			to_chat(user, span_warning("[src] won't work on [basic_dumb_bitch]."))
-			return
+	if(!dumb_mob.compare_sentience_type(sentience_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
+		balloon_alert(user, "invalid creature!")
+		return
 
-	to_chat(user, span_notice("You offer [src] to [dumb_mob]..."))
+	balloon_alert(user, "offering...")
 	being_used = TRUE
 
 	var/list/candidates = poll_candidates_for_mob("Do you want to play as [dumb_mob.name]?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, dumb_mob, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		dumb_mob.key = C.key
-		dumb_mob.mind.enslave_mind_to_creator(user)
-		SEND_SIGNAL(dumb_mob, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
-		if(isanimal(dumb_mob))
-			var/mob/living/simple_animal/smart_animal = dumb_mob
-			smart_animal.sentience_act()
-		to_chat(dumb_mob, span_warning("All at once it makes sense: you know what you are and who you are! Self awareness is yours!"))
-		to_chat(dumb_mob, span_userdanger("You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost."))
-		if(dumb_mob.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
-			to_chat(dumb_mob, span_userdanger("You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck."))
-		to_chat(user, span_notice("[dumb_mob] accepts [src] and suddenly becomes attentive and aware. It worked!"))
-		dumb_mob.copy_languages(user, LANGUAGE_MASTER)
-		dumb_mob.update_atom_languages()
-		after_success(user, dumb_mob)
-		qdel(src)
-	else
-		to_chat(user, span_notice("[dumb_mob] looks interested for a moment, but then looks back down. Maybe you should try again later."))
+	if(!LAZYLEN(candidates))
+		balloon_alert(user, "try again later!")
 		being_used = FALSE
-		..()
+		return ..()
+
+	var/mob/dead/observer/C = pick(candidates)
+	dumb_mob.key = C.key
+	dumb_mob.mind.enslave_mind_to_creator(user)
+	SEND_SIGNAL(dumb_mob, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
+	if(isanimal(dumb_mob))
+		var/mob/living/simple_animal/smart_animal = dumb_mob
+		smart_animal.sentience_act()
+	dumb_mob.mind.add_antag_datum(/datum/antagonist/sentient_creature)
+	balloon_alert(user, "success")
+	after_success(user, dumb_mob)
+	qdel(src)
 
 /obj/item/slimepotion/slime/sentience/proc/after_success(mob/living/user, mob/living/smart_mob)
 	return
@@ -748,7 +737,7 @@
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"
 	desc = "A strange slime-based chemical that, when used, allows the user to transfer their consciousness to a lesser being."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potorange"
 	var/prompted = 0
 	var/animal_type = SENTIENCE_ORGANIC
@@ -756,41 +745,35 @@
 /obj/item/slimepotion/transference/afterattack(mob/living/switchy_mob, mob/living/user, proximity)
 	if(!proximity)
 		return
-	if(prompted || !ismob(switchy_mob))
+	if(prompted || !isliving(switchy_mob))
 		return
-	if(!(isanimal(switchy_mob) || isbasicmob(switchy_mob))|| switchy_mob.ckey) //much like sentience, these will not work on something that is already player controlled
-		to_chat(user, span_warning("[switchy_mob] already has a higher consciousness!"))
+	if(switchy_mob.ckey) //much like sentience, these will not work on something that is already player controlled
+		balloon_alert(user, "already sentient!")
 		return ..()
 	if(switchy_mob.stat)
-		to_chat(user, span_warning("[switchy_mob] is dead!"))
+		balloon_alert(user, "it's dead!")
 		return ..()
-	if(isanimal(switchy_mob))
-		var/mob/living/simple_animal/switchy_animal= switchy_mob
-		if(switchy_animal.sentience_type != animal_type)
-			to_chat(user, span_warning("You cannot transfer your consciousness to [switchy_animal].") )
-			return ..()
-	else	//ugly code duplication, but necccesary as sentience_type is implemented twice.
-		var/mob/living/basic/basic_mob = switchy_mob
-		if(basic_mob.sentience_type != animal_type)
-			to_chat(user, span_warning("You cannot transfer your consciousness to [basic_mob].") )
-			return ..()
+	if(!switchy_mob.compare_sentience_type(animal_type))
+		balloon_alert(user, "invalid creature!")
+		return ..()
 
 	var/job_banned = is_banned_from(user.ckey, ROLE_MIND_TRANSFER)
 	if(QDELETED(src) || QDELETED(switchy_mob) || QDELETED(user))
 		return
 
 	if(job_banned)
-		to_chat(user, span_warning("Your mind goes blank as you attempt to use the potion."))
+		balloon_alert(user, "you're banned!")
 		return
 
 	prompted = 1
-	if(tgui_alert(usr,"This will permanently transfer your consciousness to [switchy_mob]. Are you sure you want to do this?",,list("Yes","No"))=="No")
+	if(tgui_alert(usr,"This will permanently transfer your consciousness to [switchy_mob]. Are you sure you want to do this?",,list("Yes","No")) == "No")
 		prompted = 0
 		return
 
 	to_chat(user, span_notice("You drink the potion then place your hands on [switchy_mob]..."))
 
 	user.mind.transfer_to(switchy_mob)
+	SEND_SIGNAL(switchy_mob, COMSIG_SIMPLEMOB_TRANSFERPOTION, user)
 	switchy_mob.faction = user.faction.Copy()
 	switchy_mob.copy_languages(user, LANGUAGE_MIND)
 	switchy_mob.update_atom_languages()
@@ -806,7 +789,7 @@
 /obj/item/slimepotion/slime/steroid
 	name = "slime steroid"
 	desc = "A potent chemical mix that will cause a baby slime to generate more extract."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potred"
 
 /obj/item/slimepotion/slime/steroid/attack(mob/living/simple_animal/slime/M, mob/user)
@@ -830,13 +813,13 @@
 /obj/item/slimepotion/enhancer
 	name = "extract enhancer"
 	desc = "A potent chemical mix that will give a slime extract an additional use."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potpurple"
 
 /obj/item/slimepotion/slime/stabilizer
 	name = "slime stabilizer"
 	desc = "A potent chemical mix that will reduce the chance of a slime mutating."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potcyan"
 
 /obj/item/slimepotion/slime/stabilizer/attack(mob/living/simple_animal/slime/M, mob/user)
@@ -857,7 +840,7 @@
 /obj/item/slimepotion/slime/mutator
 	name = "slime mutator"
 	desc = "A potent chemical mix that will increase the chance of a slime mutating."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potgreen"
 
 /obj/item/slimepotion/slime/mutator/attack(mob/living/simple_animal/slime/M, mob/user)
@@ -882,7 +865,7 @@
 /obj/item/slimepotion/speed
 	name = "slime speed potion"
 	desc = "A potent chemical mix that will remove the slowdown from any item."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potyellow"
 
 /obj/item/slimepotion/speed/afterattack(obj/C, mob/user, proximity)
@@ -892,6 +875,7 @@
 	if(!istype(C))
 		to_chat(user, span_warning("The potion can only be used on objects!"))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(SEND_SIGNAL(C, COMSIG_SPEED_POTION_APPLIED, src, user) & SPEED_POTION_STOP)
 		return
 	if(isitem(C))
@@ -918,31 +902,32 @@
 /obj/item/slimepotion/fireproof
 	name = "slime chill potion"
 	desc = "A potent chemical mix that will fireproof any article of clothing. Has three uses."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potblue"
 	resistance_flags = FIRE_PROOF
 	var/uses = 3
 
-/obj/item/slimepotion/fireproof/afterattack(obj/item/clothing/C, mob/user, proximity)
+/obj/item/slimepotion/fireproof/afterattack(obj/item/clothing/clothing, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
 	if(!uses)
 		qdel(src)
 		return
-	if(!istype(C))
+	. |= AFTERATTACK_PROCESSED_ITEM
+	if(!istype(clothing))
 		to_chat(user, span_warning("The potion can only be used on clothing!"))
 		return
-	if(C.max_heat_protection_temperature >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
-		to_chat(user, span_warning("The [C] is already fireproof!"))
+	if(clothing.max_heat_protection_temperature >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
+		to_chat(user, span_warning("The [clothing] is already fireproof!"))
 		return
-	to_chat(user, span_notice("You slather the blue gunk over the [C], fireproofing it."))
-	C.name = "fireproofed [C.name]"
-	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	C.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
-	C.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	C.heat_protection = C.body_parts_covered
-	C.resistance_flags |= FIRE_PROOF
+	to_chat(user, span_notice("You slather the blue gunk over the [clothing], fireproofing it."))
+	clothing.name = "fireproofed [clothing.name]"
+	clothing.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	clothing.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
+	clothing.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	clothing.heat_protection = clothing.body_parts_covered
+	clothing.resistance_flags |= FIRE_PROOF
 	uses --
 	if(!uses)
 		qdel(src)
@@ -950,7 +935,7 @@
 /obj/item/slimepotion/genderchange
 	name = "gender change potion"
 	desc = "An interesting chemical mix that changes the biological gender of what its applied to. Cannot be used on things that lack gender entirely."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potlightpink"
 
 /obj/item/slimepotion/genderchange/attack(mob/living/L, mob/user)
@@ -974,7 +959,7 @@
 /obj/item/slimepotion/slime/renaming
 	name = "renaming potion"
 	desc = "A potion that allows a self-aware being to change what name it subconciously presents to the world."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potgreen"
 
 	var/being_used = FALSE
@@ -998,7 +983,7 @@
 
 	M.visible_message(span_notice("[span_name("[M]")] has a new name, [span_name("[new_name]")]."), span_notice("Your old name of [span_name("[M.real_name]")] fades away, and your new name [span_name("[new_name]")] anchors itself in your mind."))
 	message_admins("[ADMIN_LOOKUPFLW(user)] used [src] on [ADMIN_LOOKUPFLW(M)], letting them rename themselves into [new_name].")
-	log_game("[key_name(user)] used [src] on [key_name(M)], letting them rename themselves into [new_name].")
+	user.log_message("used [src] on [key_name(M)], letting them rename themselves into [new_name].", LOG_GAME)
 
 	// pass null as first arg to not update records or ID/PDA
 	M.fully_replace_character_name(null, new_name)
@@ -1008,7 +993,7 @@
 /obj/item/slimepotion/slime/slimeradio
 	name = "bluespace radio potion"
 	desc = "A strange chemical that grants those who ingest it the ability to broadcast and receive subscape radio waves."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potgrey"
 
 /obj/item/slimepotion/slime/slimeradio/attack(mob/living/M, mob/user)

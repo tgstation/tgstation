@@ -18,6 +18,7 @@
 	if(usr)
 		if (usr.client)
 			if(usr.client.holder)
+				M.balloon_alert(M, "you hear a voice")
 				to_chat(M, "<i>You hear a voice in your head... <b>[msg]</i></b>", confidential = TRUE)
 
 	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
@@ -58,6 +59,7 @@
 
 	log_directed_talk(mob, H, input, LOG_ADMIN, "reply")
 	message_admins("[key_name_admin(src)] replied to [key_name_admin(H)]'s [sender] message with: \"[input]\"")
+	H.balloon_alert(H, "you hear a voice")
 	to_chat(H, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \"Please stand by for a message from [sender == "Syndicate" ? "your benefactor" : "Central Command"]. Message as follows[sender == "Syndicate" ? ", agent." : ":"] <b>[input].</b> Message ends.\""), confidential = TRUE)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Headset Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -142,7 +144,7 @@
 	var/announce_ion_laws = (show_log == "Yes" ? 100 : 0)
 
 	var/datum/round_event/ion_storm/add_law_only/ion = new()
-	ion.announceChance = announce_ion_laws
+	ion.announce_chance = announce_ion_laws
 	ion.ionMessage = input
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Custom AI Law") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -241,6 +243,31 @@
 	SSshuttle.emergency.setTimer(SSshuttle.last_call_time)
 	priority_announce("Warning: Emergency Shuttle uplink reestablished, shuttle enabled.", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
 
+/client/proc/admin_hostile_environment()
+	set category = "Admin.Events"
+	set name = "Hostile Environment"
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	switch(tgui_alert(usr, "Select an Option", "Hostile Environment Manager", list("Enable", "Disable", "Clear All")))
+		if("Enable")
+			if (SSshuttle.hostile_environments["Admin"] == TRUE)
+				to_chat(usr, span_warning("Error, admin hostile environment already enabled."))
+			else
+				message_admins(span_adminnotice("[key_name_admin(usr)] Enabled an admin hostile environment"))
+				SSshuttle.registerHostileEnvironment("Admin")
+		if("Disable")
+			if (!SSshuttle.hostile_environments["Admin"])
+				to_chat(usr, span_warning("Error, no admin hostile environment found."))
+			else
+				message_admins(span_adminnotice("[key_name_admin(usr)] Disabled the admin hostile environment"))
+				SSshuttle.clearHostileEnvironment("Admin")
+		if("Clear All")
+			message_admins(span_adminnotice("[key_name_admin(usr)] Disabled all current hostile environment sources"))
+			SSshuttle.hostile_environments.Cut()
+			SSshuttle.checkHostileEnvironment()
+
 /client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in GLOB.nuke_list)
 	set category = "Admin.Events"
 	set name = "Toggle Nuke"
@@ -287,7 +314,7 @@
 	if(!holder)
 		return
 
-	var/weather_type = input("Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/weather), /proc/cmp_typepaths_asc)
+	var/weather_type = input("Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/weather), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	if(!weather_type)
 		return
 
@@ -316,7 +343,7 @@
 
 	var/mob/living/marked_mob = holder.marked_datum
 
-	var/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), /proc/cmp_typepaths_asc)
+	var/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), GLOBAL_PROC_REF(cmp_typepaths_asc))
 
 	var/ability_type = tgui_input_list(usr, "Choose an ability", "Ability", all_mob_actions)
 
@@ -386,3 +413,47 @@
 	log_admin("[key_name(usr)] removed mob ability [ability_name] from mob [marked_mob].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Mob Ability") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/command_report_footnote()
+	set category = "Admin.Events"
+	set name = "Command Report Footnote"
+	set desc = "Adds a footnote to the roundstart command report."
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
+	SScommunications.block_command_report++ //Add a blocking condition to the counter until the inputs are done.
+
+	command_report_footnote.message = tgui_input_text(usr, "This message will be attached to the bottom of the roundstart threat report. Be sure to delay the roundstart report if you need extra time.", "P.S.")
+
+	if(!command_report_footnote.message)
+		return
+
+	command_report_footnote.signature = tgui_input_text(usr, "Whose signature will appear on this footnote?", "Also sign here, here, aaand here.")
+
+	if(!command_report_footnote.signature)
+		command_report_footnote.signature = "Classified"
+
+	SScommunications.command_report_footnotes += command_report_footnote
+	SScommunications.block_command_report--
+
+	message_admins("[usr] has added a footnote to the command report: [command_report_footnote.message], signed [command_report_footnote.signature]")
+
+/datum/command_footnote
+	var/message
+	var/signature
+
+/client/proc/delay_command_report()
+	set category = "Admin.Events"
+	set name = "Delay Command Report"
+	set desc = "Prevents the roundstart command report from being sent until toggled."
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	if(SScommunications.block_command_report) //If it's anything other than 0, decrease. If 0, increase.
+		SScommunications.block_command_report--
+		message_admins("[usr] has enabled the roundstart command report.")
+	else
+		SScommunications.block_command_report++
+		message_admins("[usr] has delayed the roundstart command report.")

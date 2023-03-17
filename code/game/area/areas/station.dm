@@ -1,6 +1,6 @@
 // Station areas and shuttles
 
-/area/station/
+/area/station
 	name = "Station Areas"
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "station"
@@ -340,6 +340,7 @@
 /area/station/hallway/secondary/entry
 	name = "\improper Arrival Shuttle Hallway"
 	icon_state = "entry"
+	area_flags = UNIQUE_AREA | EVENT_PROTECTED
 
 /area/station/hallway/secondary/service
 	name = "\improper Service Hallway"
@@ -518,7 +519,7 @@
 
 //Commons - Storage
 /area/station/commons/storage
-	sound_environment = SOUND_AREA_STANDARD_STATION
+	name = "\improper Commons Storage"
 
 /area/station/commons/storage/tools
 	name = "\improper Auxiliary Tool Storage"
@@ -1001,6 +1002,7 @@
 /area/station/medical/virology
 	name = "Virology"
 	icon_state = "virology"
+	ambience_index = AMBIENCE_VIROLOGY
 
 /area/station/medical/morgue
 	name = "\improper Morgue"
@@ -1084,10 +1086,17 @@
 	name = "\improper Brig Overlook"
 	icon_state = "upperbrig"
 
+/area/station/security/brig/entrance
+	name = "\improper Brig Entrance"
+	icon_state = "brigentry"
+
 /area/station/security/courtroom
 	name = "\improper Courtroom"
 	icon_state = "courtroom"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+
+/area/station/security/courtroom/holding
+	name = "\improper Courtroom Prisoner Holding Room"
 
 /area/station/security/prison
 	name = "\improper Prison Wing"
@@ -1155,6 +1164,11 @@
 	icon_state = "warden"
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
+/area/station/security/evidence
+	name = "Evidence Storage"
+	icon_state = "evidence"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
 /area/station/security/detectives_office
 	name = "\improper Detective's Office"
 	icon_state = "detective"
@@ -1183,11 +1197,13 @@
 	name = "\improper Security Checkpoint"
 	icon_state = "checkpoint"
 
-/area/station/security/checkpoint/auxiliary
-	icon_state = "checkpoint_aux"
-
 /area/station/security/checkpoint/escape
+	name = "\improper Departures Security Checkpoint"
 	icon_state = "checkpoint_esc"
+
+/area/station/security/checkpoint/arrivals
+	name = "\improper Arrivals Security Checkpoint"
+	icon_state = "checkpoint_arr"
 
 /area/station/security/checkpoint/supply
 	name = "Security Post - Cargo Bay"
@@ -1239,7 +1255,6 @@
 /area/station/cargo/sorting
 	name = "\improper Delivery Office"
 	icon_state = "cargo_delivery"
-	sound_environment = SOUND_AREA_STANDARD_STATION
 
 /area/station/cargo/warehouse
 	name = "\improper Warehouse"
@@ -1350,6 +1365,7 @@
 /area/station/science/ordnance/bomb
 	name = "\improper Ordnance Bomb Site"
 	icon_state = "ord_boom"
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 /area/station/science/genetics
 	name = "\improper Genetics Lab"
@@ -1369,7 +1385,7 @@
 
 // Useless room
 /area/station/science/auxlab
-	name = "\improper Auxillary Lab"
+	name = "\improper Auxiliary Lab"
 	icon_state = "aux_lab"
 
 /area/station/science/auxlab/firing_range
@@ -1395,6 +1411,20 @@
 	name = "\improper Abandoned Research Lab"
 	icon_state = "abandoned_sci"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/station/escapepodbay
+	name = "\improper Pod Bay"
+	icon_state = "podbay"
+
+/area/station/asteroid
+	name = "\improper Station Asteroid"
+	icon_state = "station_asteroid"
+	always_unpowered = TRUE
+	power_environ = FALSE
+	power_equip = FALSE
+	power_light = FALSE
+	requires_power = TRUE
+	ambience_index = AMBIENCE_MINING
 
 // Telecommunications Satellite
 
@@ -1442,3 +1472,19 @@
 
 /area/station/maintenance/external/port/bow
 	name = "\improper Port Bow External Hull Access"
+
+//Tramstation - External
+/area/misc/asteroid
+	name = "\improper Asteroid"
+	icon = 'icons/area/areas_station.dmi'
+	icon_state = "asteroid"
+	has_gravity = STANDARD_GRAVITY
+	sound_environment = SOUND_AREA_ASTEROID
+	ambient_buzz = 'sound/ambience/ambiatmos.ogg'
+	outdoors = TRUE
+	always_unpowered = TRUE
+	power_environ = FALSE
+	power_equip = FALSE
+	power_light = FALSE
+	requires_power = TRUE
+	ambience_index = AMBIENCE_MINING

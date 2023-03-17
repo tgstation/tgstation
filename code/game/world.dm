@@ -34,6 +34,10 @@ GLOBAL_VAR(restart_counter)
  * All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
+#ifdef USE_BYOND_TRACY
+	#warn USE_BYOND_TRACY is enabled
+	init_byond_tracy()
+#endif
 
 	log_world("World loaded at [time_stamp()]!")
 
@@ -100,11 +104,11 @@ GLOBAL_VAR(restart_counter)
 	CONFIG_SET(number/round_end_countdown, 0)
 	var/datum/callback/cb
 #ifdef UNIT_TESTS
-	cb = CALLBACK(GLOBAL_PROC, /proc/RunUnitTests)
+	cb = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(RunUnitTests))
 #else
 	cb = VARSET_CALLBACK(SSticker, force_ending, TRUE)
 #endif
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/_addtimer, cb, 10 SECONDS))
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
 
 
 /world/proc/SetupLogs()
@@ -129,11 +133,14 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_logging_prefix = "O_[override_dir]_"
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
+	GLOB.logger.init_logging()
 	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
 	GLOB.dynamic_log = "[GLOB.log_directory]/dynamic.log"
 	GLOB.filter_log = "[GLOB.log_directory]/filters.log"
-	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
+	GLOB.lua_log = "[GLOB.log_directory]/lua.log"
 	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
+	GLOB.signals_log = "[GLOB.log_directory]/signals.log"
+	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
 	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
 	GLOB.world_asset_log = "[GLOB.log_directory]/asset.log"
 	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
@@ -158,8 +165,6 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_tool_log = "[GLOB.log_directory]/tools.log"
 	GLOB.world_uplink_log = "[GLOB.log_directory]/uplink.log"
 	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
-
-	GLOB.lua_log = "[GLOB.log_directory]/lua.log"
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = "[GLOB.log_directory]/tests.log"
@@ -302,7 +307,7 @@ GLOBAL_VAR(restart_counter)
 	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
-		call(debug_server, "auxtools_shutdown")()
+		LIBCALL(debug_server, "auxtools_shutdown")()
 	. = ..()
 
 /world/proc/update_status()
@@ -355,11 +360,37 @@ GLOBAL_VAR(restart_counter)
 	else
 		hub_password = "SORRYNOPASSWORD"
 
+// If this is called as a part of maploading you cannot call it on the newly loaded map zs, because those get handled later on in the pipeline
+/world/proc/increaseMaxX(new_maxx, max_zs_to_load = maxz)
+	if(new_maxx <= maxx)
+		return
+	var/old_max = world.maxx
+	maxx = new_maxx
+	if(!max_zs_to_load)
+		return
+	var/area/global_area = GLOB.areas_by_type[world.area] // We're guaranteed to be touching the global area, so we'll just do this
+	var/list/to_add = block(
+		locate(old_max + 1, 1, 1),
+		locate(maxx, maxy, max_zs_to_load))
+	global_area.contained_turfs += to_add
+
+/world/proc/increaseMaxY(new_maxy, max_zs_to_load = maxz)
+	if(new_maxy <= maxy)
+		return
+	var/old_maxy = maxy
+	maxy = new_maxy
+	if(!max_zs_to_load)
+		return
+	var/area/global_area = GLOB.areas_by_type[world.area] // We're guarenteed to be touching the global area, so we'll just do this
+	var/list/to_add = block(
+		locate(1, old_maxy + 1, 1),
+		locate(maxx, maxy, max_zs_to_load))
+	global_area.contained_turfs += to_add
+
 /world/proc/incrementMaxZ()
 	maxz++
 	SSmobs.MaxZChanged()
 	SSidlenpcpool.MaxZChanged()
-
 
 /world/proc/change_fps(new_value = 20)
 	if(new_value <= 0)
@@ -383,6 +414,22 @@ GLOBAL_VAR(restart_counter)
 
 /world/proc/on_tickrate_change()
 	SStimer?.reset_buckets()
+
+/world/proc/init_byond_tracy()
+	var/library
+
+	switch (system_type)
+		if (MS_WINDOWS)
+			library = "prof.dll"
+		if (UNIX)
+			library = "libprof.so"
+		else
+			CRASH("Unsupported platform: [system_type]")
+
+	var/init_result = LIBCALL(library, "init")()
+	if (init_result != "0")
+		CRASH("Error initializing byond-tracy: [init_result]")
+
 
 /world/Profile(command, type, format)
 	if((command & PROFILE_STOP) || !global.config?.loaded || !CONFIG_GET(flag/forbid_all_profiling))

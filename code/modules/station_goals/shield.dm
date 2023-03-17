@@ -4,13 +4,15 @@
 /datum/station_goal/station_shield
 	name = "Station Shield"
 	var/coverage_goal = 500
+	requires_space = TRUE
 
 /datum/station_goal/station_shield/get_report()
-	return {"The station is located in a zone full of space debris.
-		We have a prototype shielding system you must deploy to reduce collision-related accidents.
-
-		You can order the satellites and control systems at cargo.
-		"}
+	return list(
+		"<blockquote>The station is located in a zone full of space debris.",
+		"We have a prototype shielding system you must deploy to reduce collision-related accidents.",
+		"",
+		"You can order the satellites and control systems at cargo.</blockquote>",
+	).Join("\n")
 
 
 /datum/station_goal/station_shield/on_report()
@@ -60,8 +62,9 @@
 			. = TRUE
 
 /obj/machinery/computer/sat_control/proc/toggle(id)
+	var/turf/current_turf = get_turf(src)
 	for(var/obj/machinery/satellite/S in GLOB.machines)
-		if(S.id == id && S.z == z)
+		if(S.id == id && is_valid_z_level(get_turf(S), current_turf))
 			S.toggle()
 
 /obj/machinery/computer/sat_control/ui_data()
@@ -155,14 +158,15 @@
 /obj/machinery/satellite/meteor_shield/process()
 	if(!active)
 		return
-	for(var/obj/effect/meteor/M in GLOB.meteor_list)
-		if(M.z != z)
+	for(var/obj/effect/meteor/meteor_to_destroy in GLOB.meteor_list)
+		if(meteor_to_destroy.z != z)
 			continue
-		if(get_dist(M,src) > kill_range)
+		if(get_dist(meteor_to_destroy, src) > kill_range)
 			continue
-		if(!(obj_flags & EMAGGED) && space_los(M))
-			Beam(get_turf(M),icon_state="sat_beam", time = 5)
-			qdel(M)
+		if(!(obj_flags & EMAGGED) && space_los(meteor_to_destroy))
+			Beam(get_turf(meteor_to_destroy), icon_state="sat_beam", time = 5)
+			if(meteor_to_destroy.shield_defense(src))
+				qdel(meteor_to_destroy)
 
 /obj/machinery/satellite/meteor_shield/toggle(user)
 	if(!..(user))
@@ -177,6 +181,8 @@
 	// Update the weight of all meteor events
 	for(var/datum/round_event_control/meteor_wave/meteors in SSevents.control)
 		meteors.weight *= mod
+	for(var/datum/round_event_control/stray_meteor/stray_meteor in SSevents.control)
+		stray_meteor.weight *= mod
 
 /obj/machinery/satellite/meteor_shield/Destroy()
 	. = ..()

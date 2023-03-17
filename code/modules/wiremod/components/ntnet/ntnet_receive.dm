@@ -10,8 +10,6 @@
 
 	circuit_flags = CIRCUIT_FLAG_OUTPUT_SIGNAL //trigger_output
 
-	network_id = __NETWORK_CIRCUITS
-
 	/// The list type
 	var/datum/port/input/option/list_options
 
@@ -21,13 +19,17 @@
 	/// Encryption key
 	var/datum/port/input/enc_key
 
+/obj/item/circuit_component/ntnet_receive/Initialize(mapload)
+	. = ..()
+	init_network_id(__NETWORK_CIRCUITS)
+
 /obj/item/circuit_component/ntnet_receive/populate_options()
 	list_options = add_option_port("List Type", GLOB.wiremod_basic_types)
 
 /obj/item/circuit_component/ntnet_receive/populate_ports()
 	data_package = add_output_port("Data Package", PORT_TYPE_LIST(PORT_TYPE_ANY))
 	enc_key = add_input_port("Encryption Key", PORT_TYPE_STRING)
-	RegisterSignal(src, COMSIG_COMPONENT_NTNET_RECEIVE, .proc/ntnet_receive)
+	RegisterSignal(src, COMSIG_COMPONENT_NTNET_RECEIVE, PROC_REF(ntnet_receive))
 
 /obj/item/circuit_component/ntnet_receive/pre_input_received(datum/port/input/port)
 	if(port == list_options)

@@ -1,8 +1,11 @@
 // Symptoms are the effects that engineered advanced diseases do.
 
 /datum/symptom
-	var/name = ""
-	var/desc = "If you see this something went very wrong." //Basic symptom description
+	var/name = "8-bitten bugs"
+	///Basic symptom description
+	var/desc = "If you see this something went very wrong."
+	///Potential illness name caused by the symptom
+	var/illness = "Unidentified"
 	///Descriptions of threshold effects
 	var/threshold_descs = list()
 	///How the symptom affects the disease's stealth stat, positive values make it less noticeable
@@ -86,3 +89,22 @@
 ///Overload for running after processing.
 /datum/symptom/proc/OnRemove(datum/disease/advance/A)
 	return
+
+/**
+ * Returns a list for all of the traits of this symptom.
+ *
+ *
+ * @returns {list} symptom - The desired symptoms as a list.
+ */
+/datum/symptom/proc/get_symptom_data()
+	var/list/data = list()
+	data["name"] = name
+	data["desc"] = desc
+	data["stealth"] = stealth
+	data["resistance"] = resistance
+	data["stage_speed"] = stage_speed
+	data["transmission"] = transmittable
+	data["level"] = level
+	data["neutered"] = neutered
+	data["threshold_desc"] = threshold_descs
+	return data

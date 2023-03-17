@@ -25,7 +25,7 @@
 
 /obj/item/ammo_box/c38/trac
 	name = "speed loader (.38 TRAC)"
-	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body."
+	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body. The implant's signal is incompatible with teleporters."
 	ammo_type = /obj/item/ammo_casing/c38/trac
 
 /obj/item/ammo_box/c38/match
@@ -95,7 +95,7 @@
 
 /obj/item/ammo_box/foambox
 	name = "ammo box (Foam Darts)"
-	icon = 'icons/obj/guns/toy.dmi'
+	icon = 'icons/obj/weapons/guns/toy.dmi'
 	icon_state = "foambox"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	max_ammo = 40

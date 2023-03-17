@@ -1,7 +1,5 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
-	sight = 0
-	see_in_dark = 2
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	pressure_resistance = 10
 
@@ -18,6 +16,11 @@
 	/// The mob's current health.
 	var/health = MAX_LIVING_HEALTH
 
+	/// The max amount of stamina damage we can have at once (Does NOT effect stamcrit thresholds. See crit_threshold)
+	var/max_stamina = 120
+	///Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
+	var/staminaloss = 0
+
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
 	///Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
 	var/bruteloss = 0
@@ -29,8 +32,10 @@
 	var/fireloss = 0
 	///Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
 	var/cloneloss = 0
-	///Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
-	var/staminaloss = 0
+
+	/// Rate at which fire stacks should decay from this mob
+	var/fire_stack_decay_rate = -0.05
+
 	/// when the mob goes from "normal" to crit
 	var/crit_threshold = HEALTH_THRESHOLD_CRIT
 	///When the mob enters hard critical state and is fully incapacitated.
@@ -56,11 +61,15 @@
 	VAR_PROTECTED/lying_angle = 0
 	/// Value of lying lying_angle before last change. TODO: Remove the need for this.
 	var/lying_prev = 0
-	///Directly affects how long a mob will hallucinate for
-	var/hallucination = 0
 	///Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 	var/last_special = 0
 	var/timeofdeath = 0
+
+	///A message sent when the mob dies, with the *deathgasp emote
+	var/death_message = ""
+	///A sound sent when the mob dies, with the *deathgasp emote
+	var/death_sound
+
 
 	/// Helper vars for quick access to firestacks, these should be updated every time firestacks are adjusted
 	var/on_fire = FALSE
@@ -92,7 +101,10 @@
 	var/limb_destroyer = 0
 
 	var/mob_size = MOB_SIZE_HUMAN
+	/// List of biotypes the mob belongs to. Used by diseases and reagents mainly.
 	var/mob_biotypes = MOB_ORGANIC
+	/// The type of respiration the mob is capable of doing. Used by adjustOxyLoss.
+	var/mob_respiration_type = RESPIRATION_OXYGEN
 	///more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 	var/metabolism_efficiency = 1
 	///does the mob have distinct limbs?(arms,legs, chest,head)
@@ -179,11 +191,11 @@
 
 	//this stuff is here to make it simple for admins to mess with custom held sprites
 	///left hand icon for holding mobs
-	var/icon/held_lh = 'icons/mob/pets_held_lh.dmi'
+	var/icon/held_lh = 'icons/mob/inhands/pets_held_lh.dmi'
 	///right hand icon for holding mobs
-	var/icon/held_rh = 'icons/mob/pets_held_rh.dmi'
+	var/icon/held_rh = 'icons/mob/inhands/pets_held_rh.dmi'
 	///what it looks like when the mob is held on your head
-	var/icon/head_icon = 'icons/mob/pets_held.dmi'
+	var/icon/head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 	/// icon_state for holding mobs.
 	var/held_state = ""
 
@@ -200,9 +212,14 @@
 
 	/// FOV view that is applied from either nativeness or traits
 	var/fov_view
-	/// Native FOV that will be applied if a config is enabled
-	var/native_fov = FOV_90_DEGREES
 	/// Lazy list of FOV traits that will apply a FOV view when handled.
 	var/list/fov_traits
 	///what multiplicative slowdown we get from turfs currently.
 	var/current_turf_slowdown = 0
+
+	/// Living mob's mood datum
+	var/datum/mood/mob_mood
+
+	// Multiple imaginary friends!
+	/// Contains the owner and all imaginary friend mobs if they exist, otherwise null
+	var/list/imaginary_group = null

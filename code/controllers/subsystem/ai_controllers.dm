@@ -12,9 +12,9 @@ SUBSYSTEM_DEF(ai_controllers)
 	///List of all ai controllers currently running
 	var/list/active_ai_controllers = list()
 
-/datum/controller/subsystem/ai_controllers/Initialize(timeofday)
+/datum/controller/subsystem/ai_controllers/Initialize()
 	setup_subtrees()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ai_controllers/proc/setup_subtrees()
 	ai_subtrees = list()
@@ -27,7 +27,8 @@ SUBSYSTEM_DEF(ai_controllers)
 		if(!COOLDOWN_FINISHED(ai_controller, failed_planning_cooldown))
 			continue
 
-		if(!LAZYLEN(ai_controller.current_behaviors))
-			ai_controller.SelectBehaviors(wait * 0.1)
-			if(!LAZYLEN(ai_controller.current_behaviors)) //Still no plan
-				COOLDOWN_START(ai_controller, failed_planning_cooldown, AI_FAILED_PLANNING_COOLDOWN)
+		if(!ai_controller.able_to_plan())
+			continue
+		ai_controller.SelectBehaviors(wait * 0.1)
+		if(!LAZYLEN(ai_controller.current_behaviors)) //Still no plan
+			COOLDOWN_START(ai_controller, failed_planning_cooldown, AI_FAILED_PLANNING_COOLDOWN)

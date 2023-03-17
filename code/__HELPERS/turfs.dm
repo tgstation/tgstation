@@ -84,7 +84,9 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/turf/center = locate((destination.x + xoffset), (destination.y + yoffset), location.z)//So now, find the new center.
 
 	//Now to find a box from center location and make that our destination.
-	for(var/turf/current_turf in block(locate(center.x + b1xerror, center.y + b1yerror, location.z), locate(center.x + b2xerror, center.y + b2yerror, location.z)))
+	var/width = b2xerror - b1xerror
+	var/height = b2yerror - b1yerror
+	for(var/turf/current_turf as anything in CORNER_BLOCK_OFFSET(center, width, height, b1xerror, b1yerror))
 		if(density_check && current_turf.density)
 			continue//If density was specified.
 		if(closed_turf_check && isclosedturf(current_turf))
@@ -211,6 +213,11 @@ Turf and target are separate in case you want to teleport some distance from a t
 	if(!istype(checked_atom))
 		return
 
+	//Find coordinates
+	var/turf/atom_turf = get_turf(checked_atom) //use checked_atom's turfs, as it's coords are the same as checked_atom's AND checked_atom's coords are lost if it is inside another atom
+	if(!atom_turf)
+		return null
+
 	//Find checked_atom's matrix so we can use it's X/Y pixel shifts
 	var/matrix/atom_matrix = matrix(checked_atom.transform)
 
@@ -229,10 +236,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/rough_x = round(round(pixel_x_offset, world.icon_size) / world.icon_size)
 	var/rough_y = round(round(pixel_y_offset, world.icon_size) / world.icon_size)
 
-	//Find coordinates
-	var/turf/atom_turf = get_turf(checked_atom) //use checked_atom's turfs, as it's coords are the same as checked_atom's AND checked_atom's coords are lost if it is inside another atom
-	if(!atom_turf)
-		return null
 	var/final_x = clamp(atom_turf.x + rough_x, 1, world.maxx)
 	var/final_y = clamp(atom_turf.y + rough_y, 1, world.maxy)
 

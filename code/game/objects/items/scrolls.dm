@@ -17,13 +17,24 @@
 	. = ..()
 	// In the future, this can be generalized into just "magic scrolls that give you a specific spell".
 	var/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll/teleport = locate() in actions
-	if(teleport)
-		teleport.name = name
-		teleport.icon_icon = icon
-		teleport.button_icon_state = icon_state
+	if(!teleport)
+		return
+	teleport.name = name
+	teleport.button_icon = icon
+	teleport.button_icon_state = icon_state
+	RegisterSignal(teleport, COMSIG_SPELL_AFTER_CAST, PROC_REF(on_spell_cast))
+
+/// Deplete charges if spell is cast successfully
+/obj/item/teleportation_scroll/proc/on_spell_cast(datum/action/cooldown/spell/cast_spell, mob/living/cast_on)
+	SIGNAL_HANDLER
+	uses--
+	if(uses > 0)
+		return
+	to_chat(cast_on, span_warning("[src] runs out of uses and crumbles to dust!"))
+	qdel(src)
 
 /obj/item/teleportation_scroll/item_action_slot_check(slot, mob/user)
-	return (slot == ITEM_SLOT_HANDS)
+	return (slot & ITEM_SLOT_HANDS)
 
 /obj/item/teleportation_scroll/apprentice
 	name = "lesser scroll of teleportation"
@@ -52,7 +63,4 @@
 		return
 	if(!teleport.Activate(user))
 		return
-	if(--uses <= 0)
-		to_chat(user, span_warning("[src] runs out of uses and crumbles to dust!"))
-		qdel(src)
 	return TRUE

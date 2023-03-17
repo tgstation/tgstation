@@ -20,17 +20,17 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 					/obj/item/healthanalyzer = 4,
 					/obj/item/reagent_containers/pill/patch/libital = 5,
 					/obj/item/reagent_containers/pill/patch/aiuri = 5,
-					/obj/item/reagent_containers/glass/bottle/multiver = 1,
-					/obj/item/reagent_containers/glass/bottle/syriniver = 1,
-					/obj/item/reagent_containers/glass/bottle/epinephrine = 3,
-					/obj/item/reagent_containers/glass/bottle/morphine = 3,
-					/obj/item/reagent_containers/glass/bottle/potass_iodide = 1,
-					/obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
+					/obj/item/reagent_containers/cup/bottle/multiver = 1,
+					/obj/item/reagent_containers/cup/bottle/syriniver = 1,
+					/obj/item/reagent_containers/cup/bottle/epinephrine = 3,
+					/obj/item/reagent_containers/cup/bottle/morphine = 3,
+					/obj/item/reagent_containers/cup/bottle/potass_iodide = 1,
+					/obj/item/reagent_containers/cup/bottle/salglu_solution = 3,
 					/obj/item/reagent_containers/syringe/antiviral = 5,
 					/obj/item/reagent_containers/medigel/libital = 2,
 					/obj/item/reagent_containers/medigel/aiuri = 2,
 					/obj/item/reagent_containers/medigel/sterilizine = 1)
-	contraband = list(/obj/item/reagent_containers/glass/bottle/cold = 2,
+	contraband = list(/obj/item/reagent_containers/cup/bottle/cold = 2,
 					/obj/item/restraints/handcuffs = 4,
 					/obj/item/storage/backpack/duffelbag/syndie/surgery = 1,
 					/obj/item/storage/medkit/tactical = 1)
@@ -55,18 +55,18 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	name = "Old pamphlet"
 
 /obj/item/paper/fluff/ruins/forgottenship/password/Initialize(mapload)
-	. = ..()
-	info = "Welcome to most advanced cruiser owned by Cyber Sun Industries!<br>You might notice, that this cruiser is equipped with 12 prototype laser turrets making any hostile boarding attempts futile.<br>Other facilities built on the ship are: Simple atmospheric system, Camera system with built-in X-ray visors and Safety module, enabling emergency engines in case of... you know, emergency.<br>Emergency system will bring you to nearest syndicate pod containing everything needed for human life.<br><br><b>In case of emergency, you must remember the pod-door activation code - [GLOB.fscpassword]</b><br><br>Cyber Sun Industries (C) 2484."
+	default_raw_text = "Welcome to most advanced cruiser owned by Cyber Sun Industries!<br>You might notice, that this cruiser is equipped with 12 prototype laser turrets making any hostile boarding attempts futile.<br>Other facilities built on the ship are: Simple atmospheric system, Camera system with built-in X-ray visors and Safety module, enabling emergency engines in case of... you know, emergency.<br>Emergency system will bring you to nearest syndicate pod containing everything needed for human life.<br><br><b>In case of emergency, you must remember the pod-door activation code - [GLOB.fscpassword]</b><br><br>Cyber Sun Industries (C) 2484."
 	icon_state = "paper_words"
 	inhand_icon_state = "paper"
+	return ..()
 
 /obj/item/paper/fluff/ruins/forgottenship/powerissues
 	name = "Power issues"
-	info = "Welcome to battle cruiser SCSBC-12!<br>Our most advanced systems allow you to fly in space and never worry about power issues!<br>However, emergencies occur, and in case of power loss, <b>you must</b> enable emergency generator using uranium as fuel and enable turrets in bridge afterwards.<br><br><b>REMEMBER! CYBERSUN INDUSTRIES ARE NOT RESPONSIBLE FOR YOUR DEATH OR SHIP LOSS WHEN TURRETS ARE DISABLED!</b><br><br>Cyber Sun Industries (C) 2484."
+	default_raw_text = "Welcome to battle cruiser SCSBC-12!<br>Our most advanced systems allow you to fly in space and never worry about power issues!<br>However, emergencies occur, and in case of power loss, <b>you must</b> enable emergency generator using uranium as fuel and enable turrets in bridge afterwards.<br><br><b>REMEMBER! CYBERSUN INDUSTRIES ARE NOT RESPONSIBLE FOR YOUR DEATH OR SHIP LOSS WHEN TURRETS ARE DISABLED!</b><br><br>Cyber Sun Industries (C) 2484."
 
 /obj/item/paper/fluff/ruins/forgottenship/missionobj
 	name = "Mission objectives"
-	info = "Greetings, operatives. You are assigned to SCSBC-12(Syndicate Cyber Sun Battle Cruiser 12) to protect our high-ranking officer while he is on his way to next outpost. While you are travelling, he is the captain of this ship and <b>you must</b> obey his orders.<br><br>Remember, disobeying high-ranking officer orders is a reason for termination."
+	default_raw_text = "Greetings, operatives. You are assigned to SCSBC-12(Syndicate Cyber Sun Battle Cruiser 12) to protect our high-ranking officer while he is on his way to next outpost. While you are travelling, he is the captain of this ship and <b>you must</b> obey his orders.<br><br>Remember, disobeying high-ranking officer orders is a reason for termination."
 
 /////////// forgottenship items
 
@@ -80,7 +80,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	deconstructible = FALSE
 
-/obj/structure/fluff/empty_sleeper/syndicate/captain/ComponentInitialize()
+/obj/structure/fluff/empty_sleeper/syndicate/captain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Old Encrypted Signal")
 
@@ -130,25 +130,21 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 /mob/living/simple_animal/hostile/nanotrasen/ranged/assault
 	name = "Nanotrasen Assault Officer"
 	desc = "Nanotrasen Assault Officer. Contact CentCom if you saw him on your station. Prepare to die, if you've been found near Syndicate property."
-	icon_state = "nanotrasenrangedassault"
-	icon_living = "nanotrasenrangedassault"
-	icon_dead = null
-	icon_gib = "syndicate_gib"
 	ranged = TRUE
 	rapid = 4
 	rapid_fire_delay = 1
 	rapid_melee = 1
 	retreat_distance = 2
 	minimum_distance = 4
-	casingtype = /obj/item/ammo_casing/c46x30mm
-	projectilesound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	casingtype = /obj/item/ammo_casing/a556/weak
+	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
 	loot = list(/obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier)
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier
+	held_item = /obj/item/gun/ballistic/automatic/ar
 
 /mob/living/simple_animal/hostile/nanotrasen/elite
 	name = "Nanotrasen Elite Assault Officer"
 	desc = "Pray for your life, syndicate. Run while you can."
-	icon_state = "nanotrasen_ert"
-	icon_living = "nanotrasen_ert"
 	maxHealth = 150
 	health = 150
 	melee_damage_lower = 13
@@ -165,3 +161,5 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	projectilesound = 'sound/weapons/laser.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 	faction = list(ROLE_DEATHSQUAD)
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasenelitesoldier
+	held_item = /obj/item/gun/energy/pulse/carbine/lethal

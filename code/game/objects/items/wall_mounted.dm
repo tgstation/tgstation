@@ -55,8 +55,8 @@
 
 	qdel(src)
 
-/obj/item/wallframe/proc/after_attach(obj/O)
-	transfer_fingerprints_to(O)
+/obj/item/wallframe/proc/after_attach(obj/attached_to)
+	transfer_fingerprints_to(attached_to)
 
 /obj/item/wallframe/screwdriver_act(mob/living/user, obj/item/tool)
 	// For camera-building borgs
@@ -72,6 +72,7 @@
 	if(!metal_amt && !glass_amt)
 		return FALSE
 	to_chat(user, span_notice("You dismantle [src]."))
+	tool.play_tool_sound(src)
 	if(metal_amt)
 		new /obj/item/stack/sheet/iron(get_turf(src), metal_amt)
 	if(glass_amt)
@@ -84,8 +85,8 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "door_electronics"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)

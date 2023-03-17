@@ -46,15 +46,15 @@
 	update_appearance(UPDATE_ICON)
 	req_one_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION, REGION_CENTCOM))
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/recycler/RefreshParts()
 	. = ..()
 	var/amt_made = 0
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		amt_made = 12.5 * M.rating //% of materials salvaged
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		amt_made = 12.5 * manipulator.tier //% of materials salvaged
 	amount_produced = min(50, amt_made) + 50
 	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering/recycler)
 	butchering.effectiveness = amount_produced
@@ -109,19 +109,21 @@
 
 /obj/machinery/recycler/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/eat, AM)
+	INVOKE_ASYNC(src, PROC_REF(eat), AM)
 
-/obj/machinery/recycler/proc/eat(atom/movable/AM0, sound=TRUE)
+/obj/machinery/recycler/proc/eat(atom/movable/morsel, sound=TRUE)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	if(safety_mode)
 		return
-	if(iseffect(AM0))
+	if(iseffect(morsel))
 		return
-	if(!isturf(AM0.loc))
+	if(!isturf(morsel.loc))
 		return //I don't know how you called Crossed() but stop it.
+	if(morsel.resistance_flags & INDESTRUCTIBLE)
+		return
 
-	var/list/to_eat = AM0.get_all_contents()
+	var/list/to_eat = morsel.get_all_contents()
 
 	var/living_detected = FALSE //technically includes silicons as well but eh
 	var/list/nom = list()
@@ -129,7 +131,7 @@
 
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
-		if(istype(AM, /obj/item))
+		if(isitem(AM))
 			var/obj/item/bodypart/head/as_head = AM
 			var/obj/item/mmi/as_mmi = AM
 			if(istype(AM, /obj/item/organ/internal/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay))
@@ -156,12 +158,11 @@
 		playsound(src, item_recycle_sound, (50 + nom.len*5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
 	if(not_eaten)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten*5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
-	if(!ismob(AM0))
-		qdel(AM0)
+	if(!ismob(morsel))
+		qdel(morsel)
 	else // Lets not qdel a mob, yes?
-		for(var/i in AM0.contents)
-			var/atom/movable/content = i
-			content.moveToNullspace()
+		for(var/iterable in morsel.contents)
+			var/atom/movable/content = iterable
 			qdel(content)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
@@ -185,7 +186,7 @@
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 	safety_mode = TRUE
 	update_appearance()
-	addtimer(CALLBACK(src, .proc/reboot), SAFETY_COOLDOWN)
+	addtimer(CALLBACK(src, PROC_REF(reboot)), SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()
 	playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
@@ -225,6 +226,6 @@
 
 /obj/item/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"
-	info = "<h2>New Assignment</h2> You have been assigned to collect garbage from trash bins, located around the station. The crewmembers will put their trash into it and you will collect said trash.<br><br>There is a recycling machine near your closet, inside maintenance; use it to recycle the trash for a small chance to get useful minerals. Then, deliver these minerals to cargo or engineering. You are our last hope for a clean station. Do not screw this up!"
+	default_raw_text = "<h2>New Assignment</h2> You have been assigned to collect garbage from trash bins, located around the station. The crewmembers will put their trash into it and you will collect said trash.<br><br>There is a recycling machine near your closet, inside maintenance; use it to recycle the trash for a small chance to get useful minerals. Then, deliver these minerals to cargo or engineering. You are our last hope for a clean station. Do not screw this up!"
 
 #undef SAFETY_COOLDOWN

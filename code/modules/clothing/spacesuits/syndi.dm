@@ -2,9 +2,19 @@
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
 	icon_state = "syndicate"
-	inhand_icon_state = "syndicate"
+	inhand_icon_state = "space_syndicate"
 	desc = "Has a tag on it: Totally not property of an enemy corporation, honest!"
-	armor = list(MELEE = 40, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 80, ACID = 85)
+	armor_type = /datum/armor/space_syndicate
+
+/datum/armor/space_syndicate
+	melee = 40
+	bullet = 50
+	laser = 30
+	energy = 40
+	bomb = 30
+	bio = 30
+	fire = 80
+	acid = 85
 
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
@@ -13,14 +23,14 @@
 	desc = "Has a tag on it: Totally not property of an enemy corporation, honest!"
 	w_class = WEIGHT_CLASS_NORMAL
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
-	armor = list(MELEE = 40, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 80, ACID = 85)
+	armor_type = /datum/armor/space_syndicate
 	cell = /obj/item/stock_parts/cell/hyper
 
 //Green syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/green
 	name = "green space helmet"
 	icon_state = "syndicate-helm-green"
-	inhand_icon_state = "syndicate-helm-green"
+	inhand_icon_state = "space_helmet_syndicate"
 
 /obj/item/clothing/suit/space/syndicate/green
 	name = "green space suit"
@@ -140,7 +150,7 @@
 	desc = "A specialised black and gold helmet that's more compact than its standard Syndicate counterpart. Can be ultra-compressed into even the tightest of spaces."
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "syndicate-contract-helm"
-	inhand_icon_state = "syndicate-contract-helm"
+	inhand_icon_state = "contractor_helmet"
 
 /obj/item/clothing/suit/space/syndicate/contract
 	name = "contractor space suit"
@@ -148,7 +158,7 @@
 	slowdown = 1
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "syndicate-contract"
-	inhand_icon_state = "syndicate-contract"
+	inhand_icon_state = null
 
 //Black with yellow/red engineering syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/engie

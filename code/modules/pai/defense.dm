@@ -14,13 +14,13 @@
 	//Ask and you shall receive
 	switch(rand(1, 3))
 		if(1)
-			adjust_timed_status_effect(1 MINUTES / severity, /datum/status_effect/speech/stutter)
+			adjust_stutter(1 MINUTES / severity)
 			to_chat(src, span_danger("Warning: Feedback loop detected in speech module."))
 		if(2)
-			adjust_timed_status_effect(INFINITY, /datum/status_effect/speech/slurring/drunk)
+			adjust_slurring(INFINITY)
 			to_chat(src, span_danger("Warning: Audio synthesizer CPU stuck."))
 		if(3)
-			adjust_timed_status_effect(INFINITY, /datum/status_effect/speech/stutter/derpspeech)
+			set_derpspeech(INFINITY)
 			to_chat(src, span_danger("Warning: Vocabulary databank corrupted."))
 	if(prob(40))
 		mind.language_holder.selected_language = get_random_spoken_language()
@@ -49,7 +49,7 @@
 		take_holo_damage(2)
 		return
 	visible_message(span_notice("Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence."))
-	if(!do_after(user, 1 SECONDS, TRUE, src))
+	if(!do_after(user, 1 SECONDS, src))
 		return
 	fold_in()
 	if(user.put_in_hands(card))
@@ -61,7 +61,7 @@
 		src.visible_message(span_warning("The electrically-charged projectile disrupts [src]'s holomatrix, forcing [src] to fold in!"))
 	. = ..(Proj)
 
-/mob/living/silicon/pai/ignite_mob()
+/mob/living/silicon/pai/ignite_mob(silent)
 	return FALSE
 
 /mob/living/silicon/pai/proc/take_holo_damage(amount)
@@ -72,13 +72,13 @@
 		to_chat(src, span_userdanger("The impact degrades your holochassis!"))
 	return amount
 
-/mob/living/silicon/pai/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/silicon/pai/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	return take_holo_damage(amount)
 
-/mob/living/silicon/pai/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/silicon/pai/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	return take_holo_damage(amount)
 
-/mob/living/silicon/pai/adjustStaminaLoss(amount, updating_health, forced = FALSE)
+/mob/living/silicon/pai/adjustStaminaLoss(amount, updating_stamina, forced = FALSE, required_biotype)
 	if(forced)
 		take_holo_damage(amount)
 	else

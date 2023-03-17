@@ -9,6 +9,7 @@
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
+	antagpanel_category = ANTAG_GROUP_ERT
 	suicide_cry = "FOR NANOTRASEN!!"
 	count_against_dynamic_roll_chance = FALSE
 	var/datum/team/ert/ert_team
@@ -222,7 +223,7 @@
 	role = "Synthetic Bounty Hunter"
 	outfit = /datum/outfit/bountysynth/ert
 
-/datum/antagonist/ert/proc/forge_objectives()
+/datum/antagonist/ert/forge_objectives()
 	if(ert_team)
 		objectives |= ert_team.objectives
 
@@ -232,7 +233,7 @@
 		return
 	if(isplasmaman(H))
 		H.equipOutfit(plasmaman_outfit)
-		H.internal = H.get_item_for_held_index(2)
+		H.open_internals(H.get_item_for_held_index(2))
 	H.equipOutfit(outfit)
 
 

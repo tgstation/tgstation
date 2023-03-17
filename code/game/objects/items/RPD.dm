@@ -44,6 +44,33 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/pipe("4-Way Manifold", /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w, FALSE),
 		new /datum/pipe_info/pipe("Junction", /obj/machinery/atmospherics/pipe/heat_exchanging/junction, FALSE),
 		new /datum/pipe_info/pipe("Heat Exchanger", /obj/machinery/atmospherics/components/unary/heat_exchanger, FALSE),
+	),
+	"Air Sensors" = list(
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/plasma_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/oxygen_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/nitrogen_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/mix_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/nitrous_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/air_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/carbon_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/bz_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/freon_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/halon_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/healium_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/hydrogen_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/hypernoblium_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/miasma_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/nitrium_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/pluoxium_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/proto_nitrate_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/tritium_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/water_vapor_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/zauker_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/helium_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/antinoblium_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/incinerator_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/ordnance_burn_chamber),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/ordnance_freezer_chamber),
 	)
 ))
 
@@ -112,20 +139,33 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			dirs = list("[NORTH]" = "North", "[EAST]" = "East", "[SOUTH]" = "South", "[WEST]" = "West",
 						"[NORTHEAST]" = "North Flipped", "[SOUTHEAST]" = "East Flipped", "[SOUTHWEST]" = "South Flipped", "[NORTHWEST]" = "West Flipped")
 
-
 	var/list/rows = list()
 	var/list/row = list("previews" = list())
 	var/i = 0
 	for(var/dir in dirs)
 		var/numdir = text2num(dir)
 		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE)) && (ISDIAGONALDIR(numdir))
-		row["previews"] += list(list("selected" = (numdir == selected_dir), "dir" = dir2text(numdir), "dir_name" = dirs[dir], "icon_state" = icon_state, "flipped" = flipped))
+		row["previews"] += list(list(
+			"selected" = dirtype == PIPE_ONEDIR ? TRUE : (numdir == selected_dir),
+			"dir" = dir2text(numdir), 
+			"dir_name" = dirs[dir],
+			"icon_state" = icon_state,
+			"flipped" = flipped,
+		))
 		if(i++ || dirtype == PIPE_ONEDIR)
 			rows += list(row)
 			row = list("previews" = list())
 			i = 0
 
 	return rows
+
+/datum/pipe_info/sensor
+	dirtype = PIPE_ONEDIR
+
+/datum/pipe_info/sensor/New(obj/machinery/air_sensor/sensor)
+	id = sensor
+	name = capitalize(replacetext(initial(sensor.name), "gas sensor", ""))
+	icon_state = "gsensor1"
 
 /datum/pipe_info/pipe/New(label, obj/machinery/atmospherics/path, use_five_layers)
 	name = label
@@ -185,7 +225,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=75000, /datum/material/glass=37500)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
+	armor_type = /datum/armor/item_pipe_dispenser
 	resistance_flags = FIRE_PROOF
 	///Sparks system used when changing device in the UI
 	var/datum/effect_system/spark_spread/spark_system
@@ -226,6 +266,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	/// Bitflags for upgrades
 	var/upgrade_flags
 
+/datum/armor/item_pipe_dispenser
+	fire = 100
+	acid = 50
+
 /obj/item/pipe_dispenser/Initialize(mapload)
 	. = ..()
 	spark_system = new
@@ -252,8 +296,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot == ITEM_SLOT_HANDS)
-		RegisterSignal(user, COMSIG_MOUSE_SCROLL_ON, .proc/mouse_wheeled)
+	if(slot & ITEM_SLOT_HANDS)
+		RegisterSignal(user, COMSIG_MOUSE_SCROLL_ON, PROC_REF(mouse_wheeled))
 	else
 		UnregisterSignal(user,COMSIG_MOUSE_SCROLL_ON)
 
@@ -275,6 +319,12 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	return ..()
 
 /obj/item/pipe_dispenser/pre_attack_secondary(obj/machinery/atmospherics/target, mob/user, params)
+	if(istype(target, /obj/machinery/air_sensor))
+		if(!do_after(user, destroy_speed, target))
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		qdel(target)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	if(!istype(target, /obj/machinery/atmospherics))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target.pipe_color && target.piping_layer)
@@ -305,11 +355,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(rpd_up)
 
-/obj/item/pipe_dispenser/suicide_act(mob/user)
+/obj/item/pipe_dispenser/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide..."))
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
 	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, TRUE)
-	return(BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/pipe_dispenser/ui_assets(mob/user)
 	return list(
@@ -333,8 +383,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		"ducting_layer" = ducting_layer,
 		"preview_rows" = recipe.get_preview(p_dir),
 		"categories" = list(),
+		"selected_recipe" = recipe.name,
 		"selected_color" = paint_color,
-		"mode" = mode
+		"mode" = mode,
 	)
 
 	var/list/recipes
@@ -350,7 +401,19 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		var/list/r = list()
 		for(var/i in 1 to cat.len)
 			var/datum/pipe_info/info = cat[i]
-			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe), "all_layers" = info.all_layers))
+
+			//skip sensors which are already in the world so we dont create duplicate ones
+			if(info.type == /datum/pipe_info/sensor)
+				var/datum/pipe_info/sensor/sensor_info = info
+				var/obj/machinery/air_sensor/sensor = sensor_info.id
+				if(GLOB.objects_by_id_tag[CHAMBER_SENSOR_FROM_ID(initial(sensor.chamber_id))] != null)
+					continue
+
+			r += list(list("pipe_name" = info.name, "pipe_index" = i))
+			if(info == recipe)
+				data["selected_category"] = c
+		if(r.len == 0) //when all air sensors are installed this list will become empty
+			continue
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
 	var/list/init_directions = list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE)
@@ -365,8 +428,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(.)
 		return
 
-	if(!usr.canUseTopic(src, BE_CLOSE))
-		return
 	var/playeffect = TRUE
 	switch(action)
 		if("color")
@@ -536,6 +597,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						PM.setAttachLayer(piping_layer)
 						if(mode & WRENCH_MODE)
 							PM.wrench_act(user, src)
+				else if(recipe.type == /datum/pipe_info/sensor)
+					balloon_alert(user, "building air sensor...")
+					if(do_after(user, atmos_build_speed, target = attack_target))
+						activate()
+						var/datum/pipe_info/sensor/sensor_recipe = recipe
+						var/obj/machinery/air_sensor/sensor_blueprint = sensor_recipe.id
+						new sensor_blueprint(get_turf(attack_target))
+						//change the recipe as the current one becomes unavailable
+						recipe = first_atmos
 				else
 					if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))
 						to_chat(user, span_notice("You can't build this object on the layer..."))
@@ -621,8 +691,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						tube.setDir(queued_p_dir)
 
 						if(queued_p_flipped)
-							tube.setDir(turn(queued_p_dir, 45))
-							tube.SimpleRotateFlip()
+							tube.setDir(turn(queued_p_dir, 45 + ROTATION_FLIP))
+							tube.AfterRotation(user, ROTATION_FLIP)
 
 						tube.add_fingerprint(usr)
 						if(mode & WRENCH_MODE)

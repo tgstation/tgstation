@@ -94,8 +94,10 @@
 #define VV_HK_TRIGGER_EXPLOSION "explode"
 #define VV_HK_AUTO_RENAME "auto_rename"
 #define VV_HK_EDIT_FILTERS "edit_filters"
+#define VV_HK_EDIT_PARTICLES "edit_particles"
 #define VV_HK_EDIT_COLOR_MATRIX "edit_color_matrix"
 #define VV_HK_ADD_AI "add_ai"
+#define VV_HK_ARMOR_MOD "mod_obj_armor"
 
 // /atom/movable
 #define VV_HK_DEADCHAT_PLAYS "deadchat_plays"
@@ -103,7 +105,6 @@
 // /obj
 #define VV_HK_OSAY "osay"
 #define VV_HK_MASS_DEL_TYPE "mass_delete_type"
-#define VV_HK_ARMOR_MOD "mod_obj_armor"
 
 // /obj/item
 #define VV_HK_ADD_FANTASY_AFFIX "add_fantasy_affix"
@@ -121,15 +122,20 @@
 #define VV_HK_DIRECT_CONTROL "direct_control"
 #define VV_HK_GIVE_DIRECT_CONTROL "give_direct_control"
 #define VV_HK_OFFER_GHOSTS "offer_ghosts"
+#define VV_HK_VIEW_PLANES "view_planes"
 
 // /mob/living
 #define VV_HK_GIVE_SPEECH_IMPEDIMENT "impede_speech"
+#define VV_HK_ADD_MOOD "addmood"
+#define VV_HK_REMOVE_MOOD "removemood"
+#define VV_HK_GIVE_HALLUCINATION "give_hallucination"
+#define VV_HK_GIVE_DELUSION_HALLUCINATION "give_hallucination_delusion"
+#define VV_HK_GIVE_GUARDIAN_SPIRIT "give_guardian_spirit"
 
 // /mob/living/carbon
 #define VV_HK_MAKE_AI "aiify"
 #define VV_HK_MODIFY_BODYPART "mod_bodypart"
 #define VV_HK_MODIFY_ORGANS "organs_modify"
-#define VV_HK_HALLUCINATION "force_hallucinate"
 #define VV_HK_MARTIAL_ART "give_martial_art"
 #define VV_HK_GIVE_TRAUMA "give_trauma"
 #define VV_HK_CURE_TRAUMA "cure_trauma"

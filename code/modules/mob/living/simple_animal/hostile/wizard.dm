@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/wizard
 	name = "Space Wizard"
 	desc = "EI NATH?"
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "wizard"
 	icon_living = "wizard"
 	icon_dead = "wizard_dead"
@@ -40,6 +40,7 @@
 
 /mob/living/simple_animal/hostile/wizard/Initialize(mapload)
 	. = ..()
+	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/wizard, r_hand = /obj/item/staff)
 	var/obj/item/implant/exile/exiled = new /obj/item/implant/exile(src)
 	exiled.implant(src)
 

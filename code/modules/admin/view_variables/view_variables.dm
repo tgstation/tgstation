@@ -81,7 +81,7 @@
 	if(!islist)
 		for(var/V in D.vars)
 			names += V
-	sleep(1)
+	sleep(1 TICKS)
 
 	var/list/variable_html = list()
 	if(islist)
@@ -123,8 +123,8 @@
 				var ca = document.cookie.split(';');
 				for(var i=0; i<ca.length; i++) {
 					var c = ca\[i];
-					while (c.charAt(0)==' ') c = c.substring(1,c.length);
-					if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+					while (c.charAt(0) == ' ') c = c.substring(1,c.length);
+					if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
 				}
 				return "";
 			}

@@ -34,12 +34,56 @@
  * probability controls the chance it chooses the passed in zone, or another random zone
  * defaults to 80
  */
-/proc/ran_zone(zone, probability = 80)
+/proc/ran_zone(zone, probability = 80, list/weighted_list)
 	if(prob(probability))
 		zone = check_zone(zone)
 	else
-		zone = pick_weight(list(BODY_ZONE_HEAD = 1, BODY_ZONE_CHEST = 1, BODY_ZONE_L_ARM = 4, BODY_ZONE_R_ARM = 4, BODY_ZONE_L_LEG = 4, BODY_ZONE_R_LEG = 4))
+		zone = pick_weight(weighted_list ? weighted_list : list(BODY_ZONE_HEAD = 1, BODY_ZONE_CHEST = 1, BODY_ZONE_L_ARM = 4, BODY_ZONE_R_ARM = 4, BODY_ZONE_L_LEG = 4, BODY_ZONE_R_LEG = 4))
 	return zone
+
+
+/**
+ * More or less ran_zone, but only returns bodyzones that the mob /actually/ has.
+ *
+ * * blacklisted_parts - allows you to specify zones that will not be chosen. eg: list(BODY_ZONE_CHEST, BODY_ZONE_R_LEG)
+ * * * !!!! blacklisting BODY_ZONE_CHEST is really risky since it's the only bodypart guarunteed to ALWAYS exists  !!!!
+ * * * !!!! Only do that if you're REALLY CERTAIN they have limbs, otherwise we'll CRASH() !!!!
+ *
+ * * ran_zone has a base prob(80) to return the base_zone (or if null, BODY_ZONE_CHEST) vs something in our generated list of limbs.
+ * * this probability is overriden when either blacklisted_parts contains BODY_ZONE_CHEST and we aren't passed a base_zone (since the default fallback for ran_zone would be the chest in that scenario), or if even_weights is enabled.
+ * * you can also manually adjust this probability by altering base_probability
+ *
+ * * even_weights - ran_zone has a 40% chance (after the prob(80) mentioned above) of picking a limb, vs the torso & head which have an additional 10% chance.
+ * * Setting even_weight to TRUE will make it just a straight up pick() between all possible bodyparts.
+ *
+ */
+/mob/proc/get_random_valid_zone(base_zone, base_probability = 80, list/blacklisted_parts, even_weights, bypass_warning)
+	return BODY_ZONE_CHEST //even though they don't really have a chest, let's just pass the default of check_zone to be safe.
+
+/mob/living/carbon/get_random_valid_zone(base_zone, base_probability = 80, list/blacklisted_parts, even_weights, bypass_warning)
+	var/list/limbs = list()
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		var/limb_zone = part.body_zone //cache the zone since we're gonna check it a ton.
+		if(limb_zone in blacklisted_parts)
+			continue
+		if(even_weights)
+			limbs[limb_zone] = 1
+			continue
+		if(limb_zone == BODY_ZONE_CHEST || limb_zone == BODY_ZONE_HEAD)
+			limbs[limb_zone] = 1
+		else
+			limbs[limb_zone] = 4
+
+	if(base_zone && !(check_zone(base_zone) in limbs))
+		base_zone = null //check if the passed zone is infact valid
+
+	var/chest_blacklisted
+	if((BODY_ZONE_CHEST in blacklisted_parts))
+		chest_blacklisted = TRUE
+		if(bypass_warning && !limbs.len)
+			CRASH("limbs is empty and the chest is blacklisted. this may not be intended!")
+	return (((chest_blacklisted && !base_zone) || even_weights) ? pick_weight(limbs) : ran_zone(base_zone, base_probability, limbs))
+
 
 ///Would this zone be above the neck
 /proc/above_neck(zone)
@@ -162,16 +206,6 @@
 		return " \[[real_name]\]"
 	return ""
 
-///Checks if the mob is able to see or not. eye_blind is temporary blindness, the trait is if they're permanently blind.
-/mob/proc/is_blind()
-	SHOULD_BE_PURE(TRUE)
-	return eye_blind ? TRUE : HAS_TRAIT(src, TRAIT_BLIND)
-
-///Is the mob hallucinating?
-/mob/proc/hallucinating()
-	return FALSE
-
-
 // moved out of admins.dm because things other than admin procs were calling this.
 /// Returns TRUE if the game has started and we're either an AI with a 0th law, or we're someone with a special role/antag datum
 /proc/is_special_character(mob/M)
@@ -268,10 +302,10 @@
 		return FALSE
 	var/brute_damage = brute_heal > burn_heal //changes repair text based on how much brute/burn was supplied
 	if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
-		if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYTYPE_ROBOTIC))
+		if(affecting.heal_damage(brute_heal, burn_heal, BODYTYPE_ROBOTIC))
 			human.update_damage_overlays()
 		user.visible_message(span_notice("[user] fixes some of the [brute_damage ? "dents on" : "burnt wires in"] [human]'s [affecting.name]."), \
-			span_notice("You fix some of the [brute_damage ? "dents on" : "burnt wires in"] [human == user ? "your" : "[human]'s"]	[affecting.name]."))
+			span_notice("You fix some of the [brute_damage ? "dents on" : "burnt wires in"] [human == user ? "your" : "[human]'s"] [affecting.name]."))
 		return TRUE //successful heal
 
 
@@ -320,7 +354,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
-		M.ghostize(0)
+		M.ghostize(FALSE)
 		M.key = C.key
 		M.client?.init_verbs()
 		return TRUE
@@ -333,7 +367,7 @@
 /mob/proc/click_random_mob()
 	var/list/nearby_mobs = list()
 	for(var/mob/living/L in range(1, src))
-		if(L!=src)
+		if(L != src)
 			nearby_mobs |= L
 	if(nearby_mobs.len)
 		var/mob/living/T = pick(nearby_mobs)
@@ -364,6 +398,7 @@
 	if(mind)
 		if(mind.assigned_role.policy_index)
 			. += mind.assigned_role.policy_index
+		. += mind.assigned_role.title //A bit redunant, but both title and policy index are used
 		. += mind.special_role //In case there's something special leftover, try to avoid
 		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
 			. += "[antag_datum.type]"
@@ -377,10 +412,10 @@
 	return length(held_items)
 
 /// Returns this mob's default lighting alpha
-/mob/proc/default_lighting_alpha()
+/mob/proc/default_lighting_cutoff()
 	if(client?.combo_hud_enabled && client?.prefs?.toggles & COMBOHUD_LIGHTING)
-		return LIGHTING_PLANE_ALPHA_INVISIBLE
-	return initial(lighting_alpha)
+		return LIGHTING_CUTOFF_FULLBRIGHT
+	return initial(lighting_cutoff)
 
 /// Returns a generic path of the object based on the slot
 /proc/get_path_by_slot(slot_id)
@@ -432,3 +467,54 @@
 	if(!istype(player, /client))
 		return
 	return player
+
+/proc/health_percentage(mob/living/mob)
+	var/divided_health = mob.health / mob.maxHealth
+	if(iscyborg(mob) || islarva(mob))
+		divided_health = (mob.health + mob.maxHealth) / (mob.maxHealth * 2)
+	else if(iscarbon(mob) || isAI(mob) || isbrain(mob))
+		divided_health = abs(HEALTH_THRESHOLD_DEAD - mob.health) / abs(HEALTH_THRESHOLD_DEAD - mob.maxHealth)
+	return divided_health * 100
+
+/**
+ * Generates a log message when a user manually changes their targeted zone.
+ * Only need to one of new_target or old_target, and the other will be auto populated with the current selected zone.
+ */
+/mob/proc/log_manual_zone_selected_update(source, new_target, old_target)
+	if(!new_target && !old_target)
+		CRASH("Called log_manual_zone_selected_update without specifying a new or old target")
+
+	old_target ||= zone_selected
+	new_target ||= zone_selected
+	if(old_target == new_target)
+		return
+
+	var/list/data = list(
+		"new_target" = new_target,
+		"old_target" = old_target,
+	)
+
+	if(mind?.assigned_role)
+		data["assigned_role"] = mind.assigned_role.title
+	if(job)
+		data["assigned_job"] = job
+
+	var/atom/handitem = get_active_held_item()
+	if(handitem)
+		data["active_item"] = list(
+			"type" = handitem.type,
+			"name" = handitem.name,
+		)
+
+	var/atom/offhand = get_inactive_held_item()
+	if(offhand)
+		data["offhand_item"] = list(
+			"type" = offhand.type,
+			"name" = offhand.name,
+		)
+
+	GLOB.logger.Log(
+		LOG_CATEGORY_TARGET_ZONE_SWITCH,
+		"[key_name(src)] manually changed selected zone",
+		data,
+	)

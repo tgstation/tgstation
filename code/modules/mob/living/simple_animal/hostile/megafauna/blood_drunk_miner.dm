@@ -25,7 +25,7 @@ Difficulty: Medium
 	maxHealth = 900
 	icon_state = "miner"
 	icon_living = "miner"
-	icon = 'icons/mob/broadMobs.dmi'
+	icon = 'icons/mob/simple/broadMobs.dmi'
 	health_doll_icon = "miner"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	light_color = COLOR_LIGHT_GRAYISH_RED
@@ -48,8 +48,8 @@ Difficulty: Medium
 	score_achievement_type = /datum/award/score/blood_miner_score
 	var/obj/item/melee/cleaving_saw/miner/miner_saw
 	var/guidance = FALSE
-	deathmessage = "falls to the ground, decaying into glowing particles."
-	deathsound = SFX_BODYFALL
+	death_message = "falls to the ground, decaying into glowing particles."
+	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
 	/// Dash ability
@@ -142,6 +142,7 @@ Difficulty: Medium
 					adjustHealth(-L.maxHealth)
 				else
 					adjustHealth(-(L.maxHealth * 0.5))
+			L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			L.gib()
 			return TRUE
 	changeNext_move(CLICK_CD_MELEE)
@@ -167,7 +168,7 @@ Difficulty: Medium
 
 /obj/effect/temp_visual/dir_setting/miner_death/Initialize(mapload, set_dir)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/fade_out)
+	INVOKE_ASYNC(src, PROC_REF(fade_out))
 
 /obj/effect/temp_visual/dir_setting/miner_death/proc/fade_out()
 	var/matrix/M = new
@@ -177,9 +178,9 @@ Difficulty: Medium
 		final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
 	animate(src, transform = M, pixel_y = -6, dir = final_dir, time = 2, easing = EASE_IN|EASE_OUT)
-	sleep(5)
+	sleep(0.5 SECONDS)
 	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 10, easing = EASE_IN, flags = ANIMATION_PARALLEL)
-	sleep(4)
+	sleep(0.4 SECONDS)
 	animate(src, alpha = 0, time = 6, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance
@@ -188,7 +189,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter/AttackingTarget()
 	. = ..()
 	if(. && prob(12))
-		INVOKE_ASYNC(dash, /datum/action/proc/Trigger, target)
+		INVOKE_ASYNC(dash, TYPE_PROC_REF(/datum/action, Trigger), target)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom
 	name = "hostile-environment miner"

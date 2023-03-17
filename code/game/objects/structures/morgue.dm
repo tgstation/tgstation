@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 400
-
+	pass_flags_self = LETPASSTHROW | PASSSTRUCTURE
 	var/obj/structure/tray/connected = null
 	var/locked = FALSE
 	dir = SOUTH
@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 /obj/structure/bodycontainer/Initialize(mapload)
 	. = ..()
 	GLOB.bodycontainers += src
-	recursive_organ_check(src)
+	toggle_organ_decay(src)
 
 /obj/structure/bodycontainer/Destroy()
 	GLOB.bodycontainers -= src
@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		var/t = tgui_input_text(user, "What would you like the label to be?", text("[]", name), null)
 		if (user.get_active_held_item() != P)
 			return
-		if(!user.canUseTopic(src, BE_CLOSE))
+		if(!user.can_perform_action(src))
 			return
 		if (t)
 			name = text("[]- '[]'", initial(name), t)
@@ -102,7 +102,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 /obj/structure/bodycontainer/deconstruct(disassembled = TRUE)
 	if (!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/iron (loc, 5)
-	recursive_organ_check(src)
+	toggle_organ_decay(src)
 	qdel(src)
 
 /obj/structure/bodycontainer/container_resist_act(mob/living/user)
@@ -122,7 +122,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		open()
 
 /obj/structure/bodycontainer/proc/open()
-	recursive_organ_check(src)
+	toggle_organ_decay(src)
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/roll.ogg', 5, TRUE)
 	var/turf/T = get_step(src, dir)
@@ -146,7 +146,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 			else if(istype(AM, /obj/effect/dummy/phased_mob))
 				continue
 			AM.forceMove(src)
-	recursive_organ_check(src)
+	toggle_organ_decay(src)
 	update_appearance()
 
 /obj/structure/bodycontainer/get_remote_view_fullscreens(mob/user)
@@ -178,7 +178,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/morgue/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	beeper = !beeper
 	to_chat(user, span_notice("You turn the speaker function [beeper ? "on" : "off"]."))
@@ -212,7 +212,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/item/paper/guides/jobs/medical/morgue
 	name = "morgue memo"
-	info = "<font size='2'>Since this station's medbay never seems to fail to be staffed by the mindless monkeys meant for genetics experiments, I'm leaving a reminder here for anyone handling the pile of cadavers the quacks are sure to leave.</font><BR><BR><font size='4'><font color=red>Red lights mean there's a plain ol' dead body inside.</font><BR><BR><font color=orange>Yellow lights mean there's non-body objects inside.</font><BR><font size='2'>Probably stuff pried off a corpse someone grabbed, or if you're lucky it's stashed booze.</font><BR><BR><font color=green>Green lights mean the morgue system detects the body may be able to be brought back to life.</font></font><BR><font size='2'>I don't know how that works, but keep it away from the kitchen and go yell at the geneticists.</font><BR><BR>- CentCom medical inspector"
+	default_raw_text = "<font size='2'>Since this station's medbay never seems to fail to be staffed by the mindless monkeys meant for genetics experiments, I'm leaving a reminder here for anyone handling the pile of cadavers the quacks are sure to leave.</font><BR><BR><font size='4'><font color=red>Red lights mean there's a plain ol' dead body inside.</font><BR><BR><font color=orange>Yellow lights mean there's non-body objects inside.</font><BR><font size='2'>Probably stuff pried off a corpse someone grabbed, or if you're lucky it's stashed booze.</font><BR><BR><font color=green>Green lights mean the morgue system detects the body may be able to be brought back to life.</font></font><BR><font size='2'>I don't know how that works, but keep it away from the kitchen and go yell at the geneticists.</font><BR><BR>- CentCom medical inspector"
 
 /*
  * Crematorium
@@ -240,8 +240,8 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	GLOB.crematoriums -= src
 	return ..()
 
-/obj/structure/bodycontainer/crematorium/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	id = "[port.id]_[id]"
+/obj/structure/bodycontainer/crematorium/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.shuttle_id]_[id]"
 
 /obj/structure/bodycontainer/crematorium/update_icon_state()
 	if(!connected || connected.loc != src)
@@ -279,7 +279,9 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			else
 				M.log_message("was cremated", LOG_ATTACK)
 
-			M.death(1)
+			if(user.stat != DEAD)
+				user.investigate_log("has died from being cremated.", INVESTIGATE_DEATHS)
+			M.death(TRUE)
 			if(M) //some animals get automatically deleted on death.
 				M.ghostize()
 				qdel(M)
@@ -292,7 +294,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		if(!locate(/obj/effect/decal/cleanable/ash) in get_step(src, dir))//prevent pile-up
 			new/obj/effect/decal/cleanable/ash/crematorium(src)
 
-		sleep(30)
+		sleep(3 SECONDS)
 
 		if(!QDELETED(src))
 			locked = FALSE
@@ -322,7 +324,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	density = TRUE
 	var/obj/structure/bodycontainer/connected = null
 	anchored = TRUE
-	pass_flags_self = LETPASSTHROW
+	pass_flags_self = PASSTABLE | LETPASSTHROW
 	max_integrity = 350
 
 /obj/structure/tray/Destroy()
@@ -399,7 +401,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	name = "morgue tray"
 	desc = "Apply corpse before closing."
 	icon_state = "morguet"
-	pass_flags_self = PASSTABLE
+	pass_flags_self = PASSTABLE | LETPASSTHROW
 
 /obj/structure/tray/m_tray/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()

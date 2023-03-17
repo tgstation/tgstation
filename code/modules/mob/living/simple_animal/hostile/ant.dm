@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/ant
 	name = "giant ant"
 	desc = "A writhing mass of ants, glued together to make an adorable pet!"
-	icon = 'icons/mob/pets.dmi'
+	icon = 'icons/mob/simple/pets.dmi'
 	icon_state = "ant"
 	icon_living = "ant"
 	icon_dead = "ant_dead"
@@ -11,7 +11,6 @@
 	emote_see = list("shakes their head.", "twitches their antennae.")
 	speak_chance = 1
 	turns_per_move = 5
-	see_in_dark = 6
 	gender = PLURAL // We are Ven-ant
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
@@ -21,7 +20,7 @@
 	harm_intent_damage = 4
 	obj_damage = 5
 	melee_damage_lower = 5
-	melee_damage_upper = 10 // Higher health than a base carp, so much lower damage. 
+	melee_damage_upper = 10 // Higher health than a base carp, so much lower damage.
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
@@ -34,7 +33,7 @@
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
 	gold_core_spawnable = FRIENDLY_SPAWN
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 	can_be_held = FALSE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	health = 100

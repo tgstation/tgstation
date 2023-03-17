@@ -4,10 +4,10 @@
 
 #define MACHINE_OPERATION 100000
 #define MACHINE_OVERLOAD 500000
-#define MAJOR_THRESHOLD 6*CARGO_CRATE_VALUE
-#define MINOR_THRESHOLD 4*CARGO_CRATE_VALUE
-#define STANDARD_DEVIATION 2*CARGO_CRATE_VALUE
-#define PART_CASH_OFFSET_AMOUNT 0.5*CARGO_CRATE_VALUE
+#define MAJOR_THRESHOLD (6*CARGO_CRATE_VALUE)
+#define MINOR_THRESHOLD (4*CARGO_CRATE_VALUE)
+#define STANDARD_DEVIATION (2*CARGO_CRATE_VALUE)
+#define PART_CASH_OFFSET_AMOUNT (0.5*CARGO_CRATE_VALUE)
 
 /obj/machinery/rnd/bepis
 	name = "\improper B.E.P.I.S. Chamber"
@@ -68,7 +68,7 @@
 		say("Deposited [deposit_value] credits into storage.")
 		update_appearance()
 		return
-	if(istype(O, /obj/item/card/id))
+	if(isidcard(O))
 		var/obj/item/card/id/Card = O
 		if(Card.registered_account)
 			account = Card.registered_account
@@ -91,17 +91,17 @@
 	var/M = 0
 	var/L = 0
 	var/S = 0
-	for(var/obj/item/stock_parts/capacitor/Cap in component_parts)
-		C += ((Cap.rating - 1) * 0.1)
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		C += ((capacitor.tier - 1) * 0.1)
 	power_saver = 1 - C
-	for(var/obj/item/stock_parts/manipulator/Manip in component_parts)
-		M += ((Manip.rating - 1) * PART_CASH_OFFSET_AMOUNT)
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		M += ((manipulator.tier - 1) * PART_CASH_OFFSET_AMOUNT)
 	positive_cash_offset = M
-	for(var/obj/item/stock_parts/micro_laser/Laser in component_parts)
-		L += ((Laser.rating - 1) * PART_CASH_OFFSET_AMOUNT)
+	for(var/datum/stock_part/micro_laser/Laser in component_parts)
+		L += ((Laser.tier - 1) * PART_CASH_OFFSET_AMOUNT)
 	negative_cash_offset = L
-	for(var/obj/item/stock_parts/scanning_module/Scan in component_parts)
-		S += ((Scan.rating - 1) * 0.25)
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		S += ((scanning_module.tier - 1) * 0.25)
 	inaccuracy_percentage = (1.5 - S)
 
 /obj/machinery/rnd/bepis/update_icon_state()
@@ -227,7 +227,7 @@
 	if(!account.has_money(deposit_value))
 		say("You do not possess enough credits.")
 		return
-	account.adjust_money(-deposit_value) //The money vanishes, not paid to any accounts.
+	account.adjust_money(-deposit_value, "Vending: B.E.P.I.S. Chamber") //The money vanishes, not paid to any accounts.
 	SSblackbox.record_feedback("amount", "BEPIS_credits_spent", deposit_value)
 	log_econ("[deposit_value] credits were inserted into [src] by [account.account_holder]")
 	banked_cash += deposit_value
@@ -245,7 +245,9 @@
 	var/gauss_major = 0
 	var/gauss_minor = 0
 	var/gauss_real = 0
-	var/list/turfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z)) //NO MORE DISCS IN WINDOWS
+
+	var/turf/my_turf = get_turf(src)
+	var/list/turfs = TURF_NEIGHBORS(my_turf) //NO MORE DISCS IN WINDOWS
 	while(length(turfs))
 		var/turf/T = pick_n_take(turfs)
 		if(T.is_blocked_turf(TRUE))
@@ -253,6 +255,7 @@
 		else
 			dropturf = T
 			break
+
 	if (!dropturf)
 		dropturf = drop_location()
 	gauss_major = (gaussian(major_threshold, std) - negative_cash_offset) //This is the randomized profit value that this experiment has to surpass to unlock a tech.

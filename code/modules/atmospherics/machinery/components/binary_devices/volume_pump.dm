@@ -23,12 +23,6 @@
 	var/transfer_rate = MAX_TRANSFER_RATE
 	///Check if the component has been overclocked
 	var/overclocked = FALSE
-	///Frequency for radio signaling
-	var/frequency = 0
-	///ID for radio signaling
-	var/id = null
-	///Connection to the radio processing
-	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Initialize(mapload)
 	. = ..()
@@ -51,10 +45,6 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/volume_pump/Destroy()
-	SSradio.remove_object(src,frequency)
-	return ..()
-
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
 	icon_state = on && is_operational ? "volpump_on-[set_overlay_offset(piping_layer)]" : "volpump_off-[set_overlay_offset(piping_layer)]"
 
@@ -70,7 +60,7 @@
 	var/input_starting_pressure = air1.return_pressure()
 	var/output_starting_pressure = air2.return_pressure()
 
-	if((input_starting_pressure < 0.01) || ((output_starting_pressure > 9000))&&!overclocked)
+	if((input_starting_pressure < 0.01) || ((output_starting_pressure > 9000)) && !overclocked)
 		return
 
 	if(overclocked && (output_starting_pressure-input_starting_pressure > 1000))//Overclocked pumps can only force gas a certain amount.
@@ -99,33 +89,6 @@
 	if(overclocked)
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
 
-/**
- * Called in atmos_init(), used to change or remove the radio frequency from the component
- * Arguments:
- * * -new_frequency: the frequency that should be used for the radio to attach to the component, use 0 to remove the radio
- */
-/obj/machinery/atmospherics/components/binary/volume_pump/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
-
-/**
- * Called in atmos_init(), send the component status to the radio device connected
- */
-/obj/machinery/atmospherics/components/binary/volume_pump/proc/broadcast_status()
-	if(!radio_connection)
-		return
-
-	var/datum/signal/signal = new(list(
-		"tag" = id,
-		"device" = "APV",
-		"power" = on,
-		"transfer_rate" = transfer_rate,
-		"sigtype" = "status"
-	))
-	radio_connection.post_signal(src, signal)
-
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -138,11 +101,6 @@
 	data["rate"] = round(transfer_rate)
 	data["max_rate"] = round(MAX_TRANSFER_RATE)
 	return data
-
-/obj/machinery/atmospherics/components/binary/volume_pump/atmos_init()
-	. = ..()
-
-	set_frequency(frequency)
 
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_act(action, params)
 	. = ..()
@@ -166,32 +124,6 @@
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_appearance()
 
-/obj/machinery/atmospherics/components/binary/volume_pump/receive_signal(datum/signal/signal)
-	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return
-
-	var/old_on = on //for logging
-
-	if("power" in signal.data)
-		set_on(text2num(signal.data["power"]))
-
-	if("power_toggle" in signal.data)
-		set_on(!on)
-
-	if("set_transfer_rate" in signal.data)
-		var/datum/gas_mixture/air1 = airs[1]
-		transfer_rate = clamp(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
-
-	if(on != old_on)
-		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
-
-	if("status" in signal.data)
-		broadcast_status()
-		return //do not update_appearance
-
-	broadcast_status()
-	update_appearance()
-
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
 	. = ..()
 	if(. && on && is_operational)
@@ -213,13 +145,13 @@
 	piping_layer = 2
 	icon_state = "volpump_map-2"
 
-/obj/machinery/atmospherics/components/binary/volume_pump/layer2
-	piping_layer = 2
-	icon_state = "volpump_map-2"
+/obj/machinery/atmospherics/components/binary/volume_pump/layer4
+	piping_layer = 4
+	icon_state = "volpump_map-4"
 
 /obj/machinery/atmospherics/components/binary/volume_pump/on
 	on = TRUE
-	icon_state = "volpump_on_map"
+	icon_state = "volpump_on_map-3"
 
 /obj/machinery/atmospherics/components/binary/volume_pump/on/layer2
 	piping_layer = 2
@@ -262,10 +194,10 @@
 	var/obj/machinery/atmospherics/components/binary/volume_pump/connected_pump
 
 /obj/item/circuit_component/atmos_volume_pump/populate_ports()
-	transfer_rate = add_input_port("New Transfer Rate", PORT_TYPE_NUMBER, trigger = .proc/set_transfer_rate)
-	on = add_input_port("Turn On", PORT_TYPE_SIGNAL, trigger = .proc/set_pump_on)
-	off = add_input_port("Turn Off", PORT_TYPE_SIGNAL, trigger = .proc/set_pump_off)
-	request_data = add_input_port("Request Port Data", PORT_TYPE_SIGNAL, trigger = .proc/request_pump_data)
+	transfer_rate = add_input_port("New Transfer Rate", PORT_TYPE_NUMBER, trigger = PROC_REF(set_transfer_rate))
+	on = add_input_port("Turn On", PORT_TYPE_SIGNAL, trigger = PROC_REF(set_pump_on))
+	off = add_input_port("Turn Off", PORT_TYPE_SIGNAL, trigger = PROC_REF(set_pump_off))
+	request_data = add_input_port("Request Port Data", PORT_TYPE_SIGNAL, trigger = PROC_REF(request_pump_data))
 
 	input_pressure = add_output_port("Input Pressure", PORT_TYPE_NUMBER)
 	output_pressure = add_output_port("Output Pressure", PORT_TYPE_NUMBER)
@@ -280,7 +212,7 @@
 	. = ..()
 	if(istype(shell, /obj/machinery/atmospherics/components/binary/volume_pump))
 		connected_pump = shell
-		RegisterSignal(connected_pump, COMSIG_ATMOS_MACHINE_SET_ON, .proc/handle_pump_activation)
+		RegisterSignal(connected_pump, COMSIG_ATMOS_MACHINE_SET_ON, PROC_REF(handle_pump_activation))
 
 /obj/item/circuit_component/atmos_volume_pump/unregister_usb_parent(atom/movable/shell)
 	UnregisterSignal(connected_pump, COMSIG_ATMOS_MACHINE_SET_ON)

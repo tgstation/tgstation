@@ -7,6 +7,13 @@
 	canhear_range = 2
 	dog_fashion = null
 	unscrewed = FALSE
+	item_flags = NO_BLOOD_ON_ITEM
+
+	overlay_speaker_idle = "intercom_s"
+	overlay_speaker_active = "intercom_recieve"
+
+	overlay_mic_idle = "intercom_m"
+	overlay_mic_active = null
 
 /obj/item/radio/intercom/unscrewed
 	unscrewed = TRUE
@@ -14,14 +21,17 @@
 /obj/item/radio/intercom/prison
 	name = "prison intercom"
 	desc = "A station intercom. It looks like it has been modified to not broadcast."
-	prison_radio = TRUE
+
+/obj/item/radio/intercom/prison/Initialize(mapload, ndir, building)
+	. = ..()
+	wires?.cut(WIRE_TX)
 
 /obj/item/radio/intercom/Initialize(mapload, ndir, building)
 	. = ..()
 	var/area/current_area = get_area(src)
 	if(!current_area)
 		return
-	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, .proc/AreaPowerCheck)
+	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(AreaPowerCheck))
 	GLOB.intercoms_list += src
 
 /obj/item/radio/intercom/Destroy()
@@ -35,6 +45,15 @@
 		. += span_notice("It's <b>screwed</b> and secured to the wall.")
 	else
 		. += span_notice("It's <i>unscrewed</i> from the wall, and can be <b>detached</b>.")
+
+	if(anonymize)
+		. += span_notice("Speaking through this intercom will anonymize your voice.")
+
+	if(freqlock == RADIO_FREQENCY_UNLOCKED)
+		if(obj_flags & EMAGGED)
+			. += span_warning("Its frequency lock has been shorted...")
+	else
+		. += span_notice("It has a frequency lock set to [frequency/10].")
 
 /obj/item/radio/intercom/screwdriver_act(mob/living/user, obj/item/tool)
 	if(unscrewed)
@@ -96,7 +115,7 @@
 
 	return TRUE
 
-/obj/item/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, list/message_mods = list())
+/obj/item/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	if(message_mods[RADIO_EXTENSION] == MODE_INTERCOM)
 		return  // Avoid hearing the same thing twice
 	return ..()
@@ -108,6 +127,29 @@
 /obj/item/radio/intercom/end_emp_effect(curremp)
 	. = ..()
 	AreaPowerCheck() // Make sure the area/local APC is powered first before we actually turn back on.
+
+/obj/item/radio/intercom/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return
+
+	switch(freqlock)
+		// Emagging an intercom with an emaggable lock will remove the lock
+		if(RADIO_FREQENCY_EMAGGABLE_LOCK)
+			balloon_alert(user, "frequency lock cleared")
+			playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+			freqlock = RADIO_FREQENCY_UNLOCKED
+			obj_flags |= EMAGGED
+
+		// A fully locked one will do nothing, as locked is intended to be used for stuff that should never be changed
+		if(RADIO_FREQENCY_LOCKED)
+			balloon_alert(user, "can't override frequency lock!")
+			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
+
+		// Emagging an unlocked one will do nothing, for now
+		else
+			return
+
+	return ..()
 
 /obj/item/radio/intercom/update_icon_state()
 	icon_state = on ? initial(icon_state) : "intercom-p"
@@ -129,9 +171,6 @@
 		set_on(current_area.powered(AREA_USAGE_EQUIP)) // set "on" to the equipment power status of our area.
 	update_appearance()
 
-/obj/item/radio/intercom/add_blood_DNA(list/blood_dna)
-	return FALSE
-
 //Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom
 	name = "intercom frame"
@@ -145,12 +184,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 
 /obj/item/radio/intercom/chapel
 	name = "Confessional intercom"
+	desc = "Talk through this... to confess your many sins. Conceals your voice, to keep them secret."
 	anonymize = TRUE
+	freqlock = RADIO_FREQENCY_EMAGGABLE_LOCK
 
 /obj/item/radio/intercom/chapel/Initialize(mapload, ndir, building)
 	. = ..()
 	set_frequency(1481)
 	set_broadcasting(TRUE)
 
+/obj/item/radio/intercom/command
+	name = "command intercom"
+	desc = "The command team's special extended-frequency intercom. Mostly just used for eavesdropping, gossiping about subordinates, and complaining about the higher-ups."
+	icon_state = "intercom_command"
+	freerange = TRUE
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 26)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 26)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 26)

@@ -3,13 +3,13 @@
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
-	icon = 'icons/obj/closet.dmi'
+	icon = 'icons/obj/storage/closet.dmi'
 	icon_state = "generic"
 	density = TRUE
 	drag_slowdown = 1.5 // Same as a prone mob
 	max_integrity = 200
 	integrity_failure = 0.25
-	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 70, ACID = 60)
+	armor_type = /datum/armor/structure_closet
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
 	/// The overlay for the closet's door
@@ -68,22 +68,43 @@
 	var/obj/item/electronics/airlock/electronics
 	var/can_install_electronics = TRUE
 
+	var/contents_initialized = FALSE
+
+/datum/armor/structure_closet
+	melee = 20
+	bullet = 10
+	laser = 10
+	bomb = 10
+	fire = 70
+	acid = 60
+
 /obj/structure/closet/Initialize(mapload)
-	if(mapload && !opened) // if closed, any item at the crate's loc is put in the contents
-		addtimer(CALLBACK(src, .proc/take_contents, TRUE), 0)
 	. = ..()
+
+	// if closed, any item at the crate's loc is put in the contents
+	if (mapload && !opened)
+		. = INITIALIZE_HINT_LATELOAD
+
 	update_appearance()
-	PopulateContents()
-	if(QDELETED(src)) //It turns out populate contents has a 1 in 100 chance of qdeling src on /obj/structure/closet/emcloset
-		return //Why
+	populate_contents_immediate()
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_COLLIDE = .proc/locker_carbon,
-		COMSIG_ATOM_MAGICALLY_UNLOCKED = .proc/on_magic_unlock,
+		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(locker_carbon),
+		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+/obj/structure/closet/LateInitialize()
+	. = ..()
+
+	take_contents()
+
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
+	SEND_SIGNAL(src, COMSIG_CLOSET_POPULATE_CONTENTS)
+
+/// Populate the closet with stuff that needs to be added before it is opened.
+/// This is useful for things like traitor objectives.
+/obj/structure/closet/proc/populate_contents_immediate()
 	return
 
 /obj/structure/closet/Destroy()
@@ -100,7 +121,7 @@
 
 /obj/structure/closet/update_icon()
 	. = ..()
-	if(istype(src, /obj/structure/closet/supplypod))
+	if(issupplypod(src))
 		return
 
 	layer = opened ? BELOW_OBJ_LAYER : OBJ_LAYER
@@ -115,7 +136,7 @@
 		if(opened && has_opened_overlay)
 			var/mutable_appearance/door_overlay = mutable_appearance(icon, "[icon_state]_open", alpha = src.alpha)
 			. += door_overlay
-			door_overlay.overlays += emissive_blocker(door_overlay.icon, door_overlay.icon_state, alpha = door_overlay.alpha) // If we don't do this the door doesn't block emissives and it looks weird.
+			door_overlay.overlays += emissive_blocker(door_overlay.icon, door_overlay.icon_state, src, alpha = door_overlay.alpha) // If we don't do this the door doesn't block emissives and it looks weird.
 		else if(has_closed_overlay)
 			. += "[icon_door || icon_state]_door"
 
@@ -128,8 +149,28 @@
 	if(broken || !secure)
 		return
 	//Overlay is similar enough for both that we can use the same mask for both
-	. += emissive_appearance(icon, "locked", alpha = src.alpha)
+	. += emissive_appearance(icon, "locked", src, alpha = src.alpha)
 	. += locked ? "locked" : "unlocked"
+
+/obj/structure/closet/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, opened))
+		if(vval == opened)
+			return FALSE
+		if(vval && !opened && open(null, TRUE))
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		else if(!vval && opened && close(null))
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		return FALSE
+	. = ..()
+	if(vname == NAMEOF(src, welded) && welded && !can_weld_shut)
+		can_weld_shut = TRUE
+	else if(vname == NAMEOF(src, can_weld_shut) && !can_weld_shut && welded)
+		welded = FALSE
+		update_appearance()
+	if(vname in list(NAMEOF(src, locked), NAMEOF(src, welded), NAMEOF(src, secure), NAMEOF(src, icon_welded), NAMEOF(src, delivery_icon)))
+		update_appearance()
 
 /// Animates the closet door opening and closing
 /obj/structure/closet/proc/animate_door(closing = FALSE)
@@ -165,7 +206,7 @@
 			animate(door_obj, transform = door_transform, icon_state = door_state, layer = door_layer, time = world.tick_lag, flags = ANIMATION_END_NOW)
 		else
 			animate(transform = door_transform, icon_state = door_state, layer = door_layer, time = world.tick_lag)
-	addtimer(CALLBACK(src, .proc/end_door_animation), door_anim_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_CLIENT_TIME)
+	addtimer(CALLBACK(src, PROC_REF(end_door_animation)), door_anim_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_CLIENT_TIME)
 
 /// Ends the door animation and removes the animated overlay
 /obj/structure/closet/proc/end_door_animation()
@@ -220,6 +261,8 @@
 	var/turf/T = get_turf(src)
 	for(var/obj/structure/closet/closet in T)
 		if(closet != src && !closet.wall_mounted)
+			if(user)
+				balloon_alert(user, "[closet.name] is in the way!")
 			return FALSE
 	for(var/mob/living/L in T)
 		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
@@ -229,6 +272,10 @@
 	return TRUE
 
 /obj/structure/closet/dump_contents()
+	if (!contents_initialized)
+		contents_initialized = TRUE
+		PopulateContents()
+
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(L)
@@ -302,14 +349,15 @@
 				return FALSE
 			var/mobs_stored = 0
 			for(var/mob/living/M in contents)
-				if(++mobs_stored >= mob_storage_capacity)
+				mobs_stored++
+				if(mobs_stored >= mob_storage_capacity)
 					return FALSE
 		L.stop_pulling()
 
 	else if(istype(AM, /obj/structure/closet))
 		return FALSE
 	else if(isobj(AM))
-		if((!allow_dense && AM.density) || AM.anchored || AM.has_buckled_mobs())
+		if((!allow_dense && AM.density) || AM.anchored || AM.has_buckled_mobs() || ismecha(AM))
 			return FALSE
 		else if(isitem(AM) && !HAS_TRAIT(AM, TRAIT_NODROP))
 			return TRUE
@@ -408,7 +456,7 @@
 			user.visible_message(span_notice("[user] [welded ? "welds shut" : "unwelded"] \the [src]."),
 							span_notice("You [welded ? "weld" : "unwelded"] \the [src] with \the [W]."),
 							span_hear("You hear welding."))
-			log_game("[key_name(user)] [welded ? "welded":"unwelded"] closet [src] with [W] at [AREACOORD(src)]")
+			user.log_message("[welded ? "welded":"unwelded"] closet [src] with [W]", LOG_GAME)
 			update_appearance()
 	else if (can_install_electronics && istype(W, /obj/item/electronics/airlock)\
 			&& !secure && !electronics && !locked && (welded || !can_weld_shut) && !broken)
@@ -442,7 +490,6 @@
 		var/obj/item/electronics/airlock/electronics_ref
 		if (!electronics)
 			electronics_ref = new /obj/item/electronics/airlock(loc)
-			gen_access()
 			if (req_one_access.len)
 				electronics_ref.one_access = 1
 				electronics_ref.accesses = req_one_access
@@ -458,7 +505,7 @@
 		var/item_is_id = W.GetID()
 		if(!item_is_id)
 			return FALSE
-		if(item_is_id || !toggle(user))
+		if((item_is_id || !toggle(user)) && !opened)
 			togglelock(user)
 	else
 		return FALSE
@@ -498,13 +545,12 @@
 	else if(!isitem(O))
 		return
 	var/turf/T = get_turf(src)
-	var/list/targets = list(O, src)
 	add_fingerprint(user)
 	user.visible_message(span_warning("[user] [actuallyismob ? "tries to ":""]stuff [O] into [src]."), \
 		span_warning("You [actuallyismob ? "try to ":""]stuff [O] into [src]."), \
 		span_hear("You hear clanging."))
 	if(actuallyismob)
-		if(do_after_mob(user, targets, 40))
+		if(do_after(user, 4 SECONDS, O))
 			user.visible_message(span_notice("[user] stuffs [O] into [src]."), \
 				span_notice("You stuff [O] into [src]."), \
 				span_hear("You hear a loud metal bang."))
@@ -516,6 +562,7 @@
 			else
 				O.forceMove(T)
 				close()
+			log_combat(user, O, "stuffed", addition = "inside of [src]")
 	else
 		O.forceMove(T)
 	return 1
@@ -538,9 +585,11 @@
 	if(user.body_position == LYING_DOWN && get_dist(src, user) > 0)
 		return
 
-	if(!toggle(user))
-		togglelock(user)
+	if(toggle(user))
+		return
 
+	if(!opened)
+		togglelock(user)
 
 /obj/structure/closet/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -565,7 +614,7 @@
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.canUseTopic(src, BE_CLOSE) || !isturf(loc))
+	if(!usr.can_perform_action(src) || !isturf(loc))
 		return
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
@@ -628,7 +677,7 @@
 /obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
 
-	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
+	if(!user.can_perform_action(src) || !isturf(loc))
 		return
 
 	if(!opened && secure)
@@ -715,10 +764,17 @@
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	update_icon()
-	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
-		span_userdanger("You're shoved into \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
-	log_combat(src, target, "shoved", "into [src] (locker/crate)")
+	if(target == shover)
+		target.visible_message(span_danger("[target.name] shoves [target.p_them()]self into [src]!"),
+			null,
+			span_hear("You hear shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
+		to_chat(shover, span_notice("You shove yourself into [src]!"))
+	else
+		target.visible_message(span_danger("[shover.name] shoves [target.name] into [src]!"),
+			span_userdanger("You're shoved into [src] by [shover.name]!"),
+			span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
+		to_chat(src, span_danger("You shove [target.name] into [src]!"))
+	log_combat(shover, target, "shoved", "into [src] (locker/crate)")
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Unlock and open up when we get knock casted.
@@ -726,6 +782,6 @@
 	SIGNAL_HANDLER
 
 	locked = FALSE
-	INVOKE_ASYNC(src, .proc/open)
+	INVOKE_ASYNC(src, PROC_REF(open))
 
 #undef LOCKER_FULL

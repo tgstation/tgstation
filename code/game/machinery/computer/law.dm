@@ -3,11 +3,14 @@
 /obj/machinery/computer/upload
 	var/mob/living/silicon/current = null //The target of future law uploads
 	icon_screen = "command"
-	time_to_screwdrive = 60
+	time_to_unscrew = 6 SECONDS
 
 /obj/machinery/computer/upload/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Encrypted Upload")
+	if(!mapload)
+		log_silicon("\A [name] was created at [loc_name(src)].")
+		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/ai_module))
@@ -21,8 +24,7 @@
 			to_chat(user, span_alert("Upload failed! Check to make sure [current.name] is functioning properly."))
 			current = null
 			return
-		var/turf/currentloc = get_turf(current)
-		if(currentloc && user.z != currentloc.z)
+		if(!is_valid_z_level(get_turf(current), get_turf(user)))
 			to_chat(user, span_alert("Upload failed! Unable to establish a connection to [current.name]. You're too far away!"))
 			current = null
 			return

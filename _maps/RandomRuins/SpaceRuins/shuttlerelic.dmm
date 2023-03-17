@@ -6,30 +6,30 @@
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 8
 	},
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "c" = (
 /turf/closed/indestructible/oldshuttle,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "d" = (
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/oldshuttle,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "e" = (
 /turf/closed/indestructible/oldshuttle/corner,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "f" = (
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 1
 	},
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "g" = (
 /turf/open/floor/oldshuttle,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "h" = (
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 4
 	},
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "i" = (
 /obj/structure/closet{
 	icon_state = "oldcloset";
@@ -37,62 +37,62 @@
 	enable_door_overlay = 0
 	},
 /turf/open/floor/oldshuttle,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "j" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 1
 	},
 /turf/template_noop,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "k" = (
 /mob/living/simple_animal/hostile/retaliate/spaceman,
 /turf/open/floor/oldshuttle,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "l" = (
 /turf/closed/indestructible/oldshuttle{
 	icon_state = "orange"
 	},
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "m" = (
 /obj/structure/chair/old{
 	dir = 1
 	},
 /turf/open/floor/oldshuttle,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "n" = (
 /obj/structure/chair/old{
 	dir = 1
 	},
 /obj/item/crowbar/large/heavy,
 /turf/open/floor/oldshuttle,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "o" = (
 /obj/structure/chair/old{
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/retaliate/spaceman,
 /turf/open/floor/oldshuttle,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "t" = (
 /obj/machinery/power/generator,
 /turf/open/floor/oldshuttle,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "u" = (
 /obj/machinery/power/smes,
 /turf/open/floor/oldshuttle,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "v" = (
-/obj/structure/shuttle/engine/propulsion/burst/left,
+/obj/machinery/power/shuttle_engine/propulsion/burst/left,
 /turf/template_noop,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "w" = (
-/obj/structure/shuttle/engine/propulsion/burst/right,
+/obj/machinery/power/shuttle_engine/propulsion/burst/right,
 /turf/template_noop,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 "x" = (
-/obj/structure/shuttle/engine/propulsion/burst,
+/obj/machinery/power/shuttle_engine/propulsion/burst,
 /turf/template_noop,
-/area/ruin/powered)
+/area/ruin/space/has_grav/powered)
 
 (1,1,1) = {"
 a

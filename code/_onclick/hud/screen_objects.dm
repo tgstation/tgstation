@@ -9,10 +9,11 @@
 /atom/movable/screen
 	name = ""
 	icon = 'icons/hud/screen_gen.dmi'
+	// NOTE: screen objects do NOT change their plane to match the z layer of their owner
+	// You shouldn't need this, but if you ever do and it's widespread, reconsider what you're doing.
 	plane = HUD_PLANE
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
-	vis_flags = VIS_INHERIT_PLANE
 	appearance_flags = APPEARANCE_UI
 	/// A reference to the object in the slot. Grabs or items, generally.
 	var/obj/master = null
@@ -31,6 +32,9 @@
 	 * But for now, this works.
 	 */
 	var/del_on_map_removal = TRUE
+
+	/// If FALSE, this will not be cleared when calling /client/clear_screen()
+	var/clear_with_screen = TRUE
 
 /atom/movable/screen/Destroy()
 	master = null
@@ -144,7 +148,7 @@
 			return inv_item.Click(location, control, params)
 
 	if(usr.attack_ui(slot_id, params))
-		usr.update_inv_hands()
+		usr.update_held_items()
 	return TRUE
 
 /atom/movable/screen/inventory/MouseEntered(location, control, params)
@@ -160,9 +164,8 @@
 	if(!icon_empty)
 		icon_empty = icon_state
 
-	if(!hud?.mymob || !slot_id || !icon_full)
-		return ..()
-	icon_state = hud.mymob.get_item_by_slot(slot_id) ? icon_full : icon_empty
+	if(hud?.mymob && slot_id && icon_full)
+		icon_state = hud.mymob.get_item_by_slot(slot_id) ? icon_full : icon_empty
 	return ..()
 
 /atom/movable/screen/inventory/proc/add_overlays()
@@ -179,7 +182,7 @@
 	var/image/item_overlay = image(holding)
 	item_overlay.alpha = 92
 
-	if(!user.can_equip(holding, slot_id, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
+	if(!holding.mob_can_equip(user, slot_id, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
 		item_overlay.color = "#FF0000"
 	else
 		item_overlay.color = "#00ff00"
@@ -213,8 +216,7 @@
 				. += blocked_overlay
 
 	if(held_index == hud.mymob.active_hand_index)
-		. += "hand_active"
-
+		. += (held_index % 2) ? "lhandactive" : "rhandactive"
 
 /atom/movable/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -389,16 +391,21 @@
 	master = new_master
 
 /atom/movable/screen/storage/Click(location, control, params)
+	var/datum/storage/storage_master = master
+	if(!istype(storage_master))
+		return FALSE
+
 	if(world.time <= usr.next_move)
 		return TRUE
 	if(usr.incapacitated())
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
-	if(master)
-		var/obj/item/I = usr.get_active_held_item()
-		if(I)
-			master.attackby(null, I, usr, params)
+
+	var/obj/item/inserted = usr.get_active_held_item()
+	if(inserted)
+		storage_master.attempt_insert(inserted, usr)
+
 	return TRUE
 
 /atom/movable/screen/throw_catch
@@ -450,6 +457,7 @@
 	vis_contents -= hover_overlays_cache[hovering]
 	hovering = choice
 
+	// Don't need to account for turf cause we're on the hud babyyy
 	var/obj/effect/overlay/zone_sel/overlay_object = hover_overlays_cache[choice]
 	if(!overlay_object)
 		overlay_object = new
@@ -507,11 +515,13 @@
 							return BODY_ZONE_PRECISE_EYES
 				return BODY_ZONE_HEAD
 
-/atom/movable/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
+/atom/movable/screen/zone_sel/proc/set_selected_zone(choice, mob/user, should_log = TRUE)
 	if(user != hud?.mymob)
 		return
 
 	if(choice != hud.mymob.zone_selected)
+		if(should_log)
+			hud.mymob.log_manual_zone_selected_update("screen_hud", new_target = choice)
 		hud.mymob.zone_selected = choice
 		update_appearance()
 		SEND_SIGNAL(user, COMSIG_MOB_SELECTED_ZONE_SET, choice)
@@ -576,7 +586,7 @@
 
 /atom/movable/screen/healths/guardian
 	name = "summoner health"
-	icon = 'icons/mob/guardian.dmi'
+	icon = 'icons/hud/guardian.dmi'
 	icon_state = "base"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
@@ -675,7 +685,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 
 /atom/movable/screen/combo/proc/clear_streak()
 	animate(src, alpha = 0, 2 SECONDS, SINE_EASING)
-	timerid = addtimer(CALLBACK(src, .proc/reset_icons), 2 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
+	timerid = addtimer(CALLBACK(src, PROC_REF(reset_icons)), 2 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 
 /atom/movable/screen/combo/proc/reset_icons()
 	cut_overlays()
@@ -688,7 +698,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	alpha = 255
 	if(!streak)
 		return ..()
-	timerid = addtimer(CALLBACK(src, .proc/clear_streak), time, TIMER_UNIQUE | TIMER_STOPPABLE)
+	timerid = addtimer(CALLBACK(src, PROC_REF(clear_streak)), time, TIMER_UNIQUE | TIMER_STOPPABLE)
 	icon_state = "combo"
 	for(var/i = 1; i <= length(streak); ++i)
 		var/intent_text = copytext(streak, i, i + 1)

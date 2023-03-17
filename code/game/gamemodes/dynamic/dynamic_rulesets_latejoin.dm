@@ -68,7 +68,7 @@
 		JOB_CYBORG,
 	)
 	required_candidates = 1
-	weight = 7
+	weight = 11
 	cost = 5
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	repeatable = TRUE
@@ -111,7 +111,7 @@
 	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
-	weight = 2
+	weight = 1
 	delay = 1 MINUTES // Prevents rule start while head is offstation.
 	cost = 10
 	requirements = list(101,101,70,40,30,20,20,20,20,20)
@@ -119,8 +119,6 @@
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
 	var/required_heads_of_staff = 3
 	var/finished = FALSE
-	/// How much threat should be injected when the revolution wins?
-	var/revs_win_threat_injection = 20
 	var/datum/team/revolution/revolution
 
 /datum/dynamic_ruleset/latejoin/provocateur/ready(forced=FALSE)
@@ -155,7 +153,7 @@
 		return FALSE
 
 /datum/dynamic_ruleset/latejoin/provocateur/rule_process()
-	var/winner = revolution.process_victory(revs_win_threat_injection)
+	var/winner = revolution.process_victory()
 	if (isnull(winner))
 		return
 
@@ -197,9 +195,9 @@
 		JOB_CYBORG,
 	)
 	required_candidates = 1
-	weight = 4
-	cost = 7
-	requirements = list(101,101,101,10,10,10,10,10,10,10)
+	weight = 8
+	cost = 6
+	requirements = list(101,101,50,10,10,10,10,10,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/latejoin/heretic_smuggler/execute()

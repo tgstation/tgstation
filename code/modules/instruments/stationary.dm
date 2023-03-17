@@ -20,7 +20,9 @@
 	if(!(anchored || can_play_unanchored) || !ismob(music_player))
 		return STOP_PLAYING
 	var/mob/user = music_player
-	if(!user.canUseTopic(src, FALSE, TRUE, FALSE, FALSE)) //can play with TK and while resting because fun.
+
+	if(!ISADVANCEDTOOLUSER(user))
+		to_chat(src, span_warning("You don't have the dexterity to do this!"))
 		return STOP_PLAYING
 
 /obj/structure/musician/ui_interact(mob/user)
@@ -35,11 +37,15 @@
 /obj/structure/musician/piano
 	name = "space piano"
 	desc = "This is a space piano, like a regular piano, but always in tune! Even if the musician isn't."
-	icon = 'icons/obj/musician.dmi'
+	icon = 'icons/obj/art/musician.dmi'
 	icon_state = "piano"
 	anchored = TRUE
 	density = TRUE
 	var/broken_icon_state = "pianobroken"
+
+/obj/structure/musician/piano/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/falling_hazard, damage = 60, wound_bonus = 10, hardhat_safety = FALSE, crushes = TRUE, impact_sound = 'sound/effects/piano_hit.ogg')
 
 /obj/structure/musician/piano/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

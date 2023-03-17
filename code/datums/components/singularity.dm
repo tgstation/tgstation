@@ -49,7 +49,7 @@
 /datum/component/singularity/Initialize(
 	bsa_targetable = TRUE,
 	consume_range = 0,
-	consume_callback = CALLBACK(src, .proc/default_singularity_act),
+	consume_callback = CALLBACK(src, PROC_REF(default_singularity_act)),
 	disregard_failed_movements = FALSE,
 	grav_pull = 4,
 	notify_admins = TRUE,
@@ -75,25 +75,25 @@
 	parent.AddElement(/datum/element/forced_gravity, FALSE)
 
 	parent.AddElement(/datum/element/bsa_blocker)
-	RegisterSignal(parent, COMSIG_ATOM_BSA_BEAM, .proc/bluespace_reaction)
+	RegisterSignal(parent, COMSIG_ATOM_BSA_BEAM, PROC_REF(bluespace_reaction))
 
-	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, .proc/block_blob)
+	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, PROC_REF(block_blob))
 
-	RegisterSignal(parent, list(
+	RegisterSignals(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_PAW,
-	), .proc/consume_attack)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/consume_attackby)
+	), PROC_REF(consume_attack))
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(consume_attackby))
 
-	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, .proc/moved)
-	RegisterSignal(parent, COMSIG_ATOM_BUMPED, .proc/consume)
+	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(moved))
+	RegisterSignal(parent, COMSIG_ATOM_BUMPED, PROC_REF(consume))
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
-	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, .proc/consume_bullets)
+	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, PROC_REF(consume_bullets))
 
 	if (notify_admins)
 		admin_investigate_setup()
@@ -323,7 +323,7 @@
 	var/turf/spawned_turf = get_turf(parent)
 	message_admins("A singulo has been created at [ADMIN_VERBOSEJMP(spawned_turf)].")
 	var/atom/atom_parent = parent
-	atom_parent.investigate_log("was made a singularity at [AREACOORD(spawned_turf)].", INVESTIGATE_ENGINE)
+	atom_parent.investigate_log("was made into a singularity at [AREACOORD(spawned_turf)].", INVESTIGATE_ENGINE)
 
 /// Fired when the singularity is fired at with the BSA and deletes it
 /datum/component/singularity/proc/bluespace_reaction()

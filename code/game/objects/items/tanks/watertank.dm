@@ -12,17 +12,21 @@
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
+	armor_type = /datum/armor/item_watertank
 	resistance_flags = FIRE_PROOF
 
 	var/obj/item/noz
 	var/volume = 500
 
+/datum/armor/item_watertank
+	fire = 100
+	acid = 30
+
 /obj/item/watertank/Initialize(mapload)
 	. = ..()
 	create_reagents(volume, OPENCONTAINER)
 	noz = make_noz()
-	RegisterSignal(noz, COMSIG_MOVABLE_MOVED, .proc/noz_move)
+	RegisterSignal(noz, COMSIG_MOVABLE_MOVED, PROC_REF(noz_move))
 
 /obj/item/watertank/Destroy()
 	QDEL_NULL(noz)
@@ -33,7 +37,7 @@
 	toggle_mister(user)
 
 /obj/item/watertank/item_action_slot_check(slot, mob/user)
-	if(slot == user.getBackSlot())
+	if(slot & user.getBackSlot())
 		return 1
 
 /obj/item/watertank/proc/toggle_mister(mob/living/user)
@@ -47,7 +51,7 @@
 
 	if(QDELETED(noz))
 		noz = make_noz()
-		RegisterSignal(noz, COMSIG_MOVABLE_MOVED, .proc/noz_move)
+		RegisterSignal(noz, COMSIG_MOVABLE_MOVED, PROC_REF(noz_move))
 	if(noz in src)
 		//Detach the nozzle into the user's hands
 		if(!user.put_in_hands(noz))
@@ -73,7 +77,7 @@
 
 /obj/item/watertank/equipped(mob/user, slot)
 	..()
-	if(slot != ITEM_SLOT_BACK)
+	if(!(slot & ITEM_SLOT_BACK))
 		remove_noz()
 
 /obj/item/watertank/proc/remove_noz()
@@ -127,19 +131,16 @@
 	item_flags = NOBLUDGEON | ABSTRACT  // don't put in storage
 	slot_flags = NONE
 
-	var/obj/item/watertank/tank
-
 /obj/item/reagent_containers/spray/mister/Initialize(mapload)
 	. = ..()
-	tank = loc
-	if(!tank?.reagents)
+	if(!loc?.reagents)
 		return INITIALIZE_HINT_QDEL
-	reagents = tank.reagents //This mister is really just a proxy for the tank's reagents
+	reagents = loc.reagents //This mister is really just a proxy for the tank's reagents
 
 /obj/item/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
 		return
-	..()
+	return ..()
 
 //Janitor tank
 /obj/item/watertank/janitor
@@ -295,8 +296,7 @@
 	if(AttemptRefill(target, user))
 		return
 	if(nozzle_mode == EXTINGUISHER)
-		..()
-		return
+		return ..()
 	var/Adj = user.Adjacent(target)
 	if(nozzle_mode == RESIN_LAUNCHER)
 		if(Adj)
@@ -311,16 +311,16 @@
 		COOLDOWN_START(src, resin_cooldown, 10 SECONDS)
 		R.remove_any(100)
 		var/obj/effect/resin_container/resin = new (get_turf(src))
-		log_game("[key_name(user)] used Resin Launcher at [AREACOORD(user)].")
+		user.log_message("used Resin Launcher", LOG_GAME)
 		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
 		var/delay = 2
 		var/datum/move_loop/loop = SSmove_manager.move_towards(resin, target, delay, timeout = delay * 5, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
-		RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/resin_stop_check)
-		RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/resin_landed)
+		RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(resin_stop_check))
+		RegisterSignal(loop, COMSIG_PARENT_QDELETING, PROC_REF(resin_landed))
 		return
 
 	if(nozzle_mode == RESIN_FOAM)
-		if(!Adj|| !isturf(target))
+		if(!Adj || !isturf(target))
 			balloon_alert(user, "too far!")
 			return
 		for(var/S in target)
@@ -331,14 +331,14 @@
 			var/obj/effect/particle_effect/fluid/foam/metal/resin/foam = new (get_turf(target))
 			foam.group.target_size = 0
 			metal_synthesis_cooldown++
-			addtimer(CALLBACK(src, .proc/reduce_metal_synth_cooldown), 10 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(reduce_metal_synth_cooldown)), 10 SECONDS)
 		else
 			balloon_alert(user, "still being synthesized!")
 			return
 
-/obj/item/extinguisher/mini/nozzle/proc/resin_stop_check(datum/move_loop/source, succeeded)
+/obj/item/extinguisher/mini/nozzle/proc/resin_stop_check(datum/move_loop/source, result)
 	SIGNAL_HANDLER
-	if(succeeded)
+	if(result == MOVELOOP_SUCCESS)
 		return
 	resin_landed(source)
 	qdel(source)
@@ -406,7 +406,7 @@
 	toggle_injection()
 
 /obj/item/reagent_containers/chemtank/item_action_slot_check(slot, mob/user)
-	if(slot == ITEM_SLOT_BACK)
+	if(slot & ITEM_SLOT_BACK)
 		return 1
 
 /obj/item/reagent_containers/chemtank/proc/toggle_injection()
@@ -469,7 +469,7 @@
 	var/used_amount = inj_am / usage_ratio
 	reagents.trans_to(user, used_amount, multiplier=usage_ratio, methods = INJECT)
 	update_appearance()
-	user.update_inv_back() //for overlays update
+	user.update_worn_back() //for overlays update
 
 /datum/action/item_action/activate_injector
 	name = "Activate Injector"

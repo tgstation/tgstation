@@ -93,7 +93,7 @@
 
 /datum/reagent/eigenstate/overdose_start(mob/living/living_mob) //Overdose, makes you teleport randomly
 	to_chat(living_mob, span_userdanger("You feel like your perspective is being ripped apart as you begin flitting in and out of reality!"))
-	living_mob.set_timed_status_effect(40 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+	living_mob.set_jitter_if_lower(40 SECONDS)
 	metabolization_rate += 0.5 //So you're not stuck forever teleporting.
 	if(iscarbon(living_mob))
 		var/mob/living/carbon/carbon_mob = living_mob

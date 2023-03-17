@@ -5,7 +5,7 @@
 /datum/bounty/item/mech/ship(obj/O)
 	if(!applies_to(O))
 		return
-	if(istype(O, /obj/vehicle/sealed/mecha))
+	if(ismecha(O))
 		var/obj/vehicle/sealed/mecha/M = O
 		M.wreckage = null // So the mech doesn't explode.
 	..()
@@ -23,14 +23,14 @@
 /datum/bounty/item/mech/odysseus
 	name = "Odysseus"
 	reward = CARGO_CRATE_VALUE * 22
-	wanted_types = list(/obj/vehicle/sealed/mecha/medical/odysseus = TRUE)
+	wanted_types = list(/obj/vehicle/sealed/mecha/odysseus = TRUE)
 
 /datum/bounty/item/mech/gygax
 	name = "Gygax"
 	reward = CARGO_CRATE_VALUE * 56
-	wanted_types = list(/obj/vehicle/sealed/mecha/combat/gygax = TRUE)
+	wanted_types = list(/obj/vehicle/sealed/mecha/gygax = TRUE)
 
 /datum/bounty/item/mech/durand
 	name = "Durand"
 	reward = CARGO_CRATE_VALUE * 40
-	wanted_types = list(/obj/vehicle/sealed/mecha/combat/durand = TRUE)
+	wanted_types = list(/obj/vehicle/sealed/mecha/durand = TRUE)

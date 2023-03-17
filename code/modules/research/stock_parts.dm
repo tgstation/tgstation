@@ -7,25 +7,31 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "RPED"
 	inhand_icon_state = "RPED"
 	worn_icon_state = "RPED"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	var/works_from_distance = FALSE
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
 
-/obj/item/storage/part_replacer/Initialize()
+/obj/item/storage/part_replacer/Initialize(mapload)
 	. = ..()
-	create_storage(type = /datum/storage/rped)
+	create_storage(storage_type = /datum/storage/rped)
+
+// check to see if this rped have atleast one circuitboard
+/obj/item/storage/part_replacer/proc/has_an_circuitboard()
+	for(var/obj/item/circuitboard/machine/board in contents)
+		return TRUE
+	return FALSE
 
 /obj/item/storage/part_replacer/pre_attack(obj/attacked_object, mob/living/user, params)
-	if(!istype(attacked_object, /obj/machinery) && !istype(attacked_object, /obj/structure/frame/machine))
+	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine))
 		return ..()
 
 	if(!user.Adjacent(attacked_object)) // no TK upgrading.
 		return ..()
 
-	if(istype(attacked_object, /obj/machinery))
+	if(ismachinery(attacked_object))
 		var/obj/machinery/attacked_machinery = attacked_object
 
 		if(!attacked_machinery.component_parts)
@@ -37,23 +43,19 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		return TRUE
 
 	var/obj/structure/frame/machine/attacked_frame = attacked_object
-
-	if(!attacked_frame.components)
-		return ..()
-
+	// no point attacking the frame with the rped if the frame doesn't have wiring or it doesn't have components & rped has no circuitboard to offer as an component.
+	if(attacked_frame.state == 1 || (!attacked_frame.components && !has_an_circuitboard()))
+		return TRUE
+	attacked_frame.attackby(src, user)
 	if(works_from_distance)
 		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
-	attacked_frame.attackby(src, user)
 	return TRUE
 
 /obj/item/storage/part_replacer/afterattack(obj/attacked_object, mob/living/user, adjacent, params)
-	if(!istype(attacked_object, /obj/machinery) && !istype(attacked_object, /obj/structure/frame/machine))
+	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine))
 		return ..()
 
-	if(adjacent)
-		return ..()
-
-	if(istype(attacked_object, /obj/machinery))
+	if(ismachinery(attacked_object))
 		var/obj/machinery/attacked_machinery = attacked_object
 
 		if(!attacked_machinery.component_parts)
@@ -65,13 +67,14 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		return
 
 	var/obj/structure/frame/machine/attacked_frame = attacked_object
-
-	if(!attacked_frame.components)
-		return ..()
-
+	if(!adjacent && !works_from_distance)
+		return
+	// no point attacking the frame with the rped if the frame doesn't have wiring or it doesn't have components & rped has no circuitboard to offer as an component.
+	if(attacked_frame.state == 1 || (!attacked_frame.components && !has_an_circuitboard()))
+		return
+	attacked_frame.attackby(src, user)
 	if(works_from_distance)
 		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
-	attacked_frame.attackby(src, user)
 
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
@@ -97,8 +100,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	atom_storage.max_total_storage = 800
 	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
 
-	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/on_part_entered)
-	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_part_exited)
+	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(on_part_entered))
+	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_part_exited))
 
 /**
  * Signal handler for when a part has been inserted into the BRPED.
@@ -115,7 +118,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		if(length(inserted_component.reagents.reagent_list))
 			inserted_component.reagents.clear_reagents()
 			to_chat(usr, span_notice("[src] churns as [inserted_component] has its reagents emptied into bluespace."))
-		RegisterSignal(inserted_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT, .proc/on_insered_component_reagent_pre_add)
+		RegisterSignal(inserted_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT, PROC_REF(on_insered_component_reagent_pre_add))
 
 
 	if(!istype(inserted_component, /obj/item/stock_parts/cell))
@@ -125,7 +128,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 	if(inserted_cell.rigged || inserted_cell.corrupted)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
-		log_game("[key_name(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
+		usr.log_message("has inserted rigged/corrupted [inserted_cell] into [src].", LOG_GAME)
 		usr.log_message("inserted rigged/corrupted [inserted_cell] into [src]", LOG_ATTACK)
 
 /**
@@ -213,11 +216,26 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "borgrped"
 	inhand_icon_state = "RPED"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 
-/proc/cmp_rped_sort(obj/item/A, obj/item/B)
-	return B.get_part_rating() - A.get_part_rating()
+/obj/item/storage/part_replacer/proc/get_sorted_parts(ignore_stacks = FALSE)
+	var/list/part_list = list()
+	//Assemble a list of current parts, then sort them by their rating!
+	for(var/obj/item/component_part in contents)
+		//No need to put circuit boards in this list or stacks when exchanging parts
+		if(istype(component_part, /obj/item/circuitboard) || (ignore_stacks && istype(component_part, /obj/item/stack)))
+			continue
+		part_list += component_part
+		//Sort the parts. This ensures that higher tier items are applied first.
+	part_list = sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
+	return part_list
+
+/proc/cmp_rped_sort(obj/item/first_item, obj/item/second_item)
+	/**
+	 * even though stacks aren't stock parts, get_part_rating() is defined on the item level (see /obj/item/proc/get_part_rating()) and defaults to returning 0.
+	 */
+	return second_item.get_part_rating() - first_item.get_part_rating()
 
 /obj/item/stock_parts
 	name = "stock part"

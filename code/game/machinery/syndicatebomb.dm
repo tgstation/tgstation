@@ -2,7 +2,7 @@
 #define BUTTON_DELAY 50 //five seconds
 
 /obj/machinery/syndicatebomb
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	name = "syndicate bomb"
 	icon_state = "syndicate-bomb"
 	desc = "A large and menacing device. Can be bolted down with a wrench."
@@ -13,27 +13,39 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	processing_flags = START_PROCESSING_MANUALLY
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
-
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
-
 	use_power = NO_POWER_USE
-	var/minimum_timer = 90
-	var/timer_set = 90
-	var/maximum_timer = 60000
 
+	/// What is the lowest amount of time we can set the timer to?
+	var/minimum_timer = SYNDIEBOMB_MIN_TIMER_SECONDS
+	/// What is the highest amount of time we can set the timer to?
+	var/maximum_timer = 100 MINUTES
+	/// What is the default amount of time we set the timer to?
+	var/timer_set = SYNDIEBOMB_MIN_TIMER_SECONDS
+	/// Can we be unanchored?
 	var/can_unanchor = TRUE
-
-	var/open_panel = FALSE //are the wires exposed?
-	var/active = FALSE //is the bomb counting down?
-	var/obj/item/bombcore/payload = /obj/item/bombcore
+	/// Are the wires exposed?
+	var/open_panel = FALSE
+	/// Is the bomb counting down?
+	var/active = FALSE
+	/// What sound do we make as we beep down the timer?
 	var/beepsound = 'sound/items/timer.ogg'
-	var/delayedbig = FALSE //delay wire pulsed?
-	var/delayedlittle = FALSE //activation wire pulsed?
-	var/obj/effect/countdown/syndicatebomb/countdown
-
-	var/next_beep
-	var/detonation_timer
+	/// Is the delay wire pulsed?
+	var/delayedbig = FALSE
+	/// Is the activation wire pulsed?
+	var/delayedlittle = FALSE
+	/// Should we just tell the payload to explode now? Usually triggered by an event (like cutting the wrong wire)
 	var/explode_now = FALSE
+	/// The timer for the bomb.
+	var/detonation_timer
+	/// When do we beep next?
+	var/next_beep
+	/// Reference to the bomb core inside the bomb, which is the part that actually explodes.
+	var/obj/item/bombcore/payload = /obj/item/bombcore/syndicate
+	/// The countdown that'll show up to ghosts regarding the bomb's timer.
+	var/obj/effect/countdown/syndicatebomb/countdown
+	/// Whether the countdown is visible on examine
+	var/examinable_countdown = TRUE
 
 /obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
 	. = (payload in src) && (active || ignore_active)
@@ -47,6 +59,9 @@
 /obj/machinery/syndicatebomb/atom_destruction()
 	if(!try_detonate())
 		..()
+
+/obj/machinery/syndicatebomb/ex_act(severity, target)
+	return
 
 /obj/machinery/syndicatebomb/process()
 	if(!active)
@@ -99,7 +114,13 @@
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	. = ..()
-	. += {"A digital display on it reads "[seconds_remaining()]"."}
+	. += "The patented external shell design is resistant to \"probably all\" forms of external explosive compression, protecting the electronically-trigged bomb core from accidental early detonation."
+	if(istype(payload))
+		. += "A small window reveals some information about the payload: [payload.desc]."
+	if(examinable_countdown)
+		. += "A digital display on it reads \"[seconds_remaining()]\"."
+	else
+		. +={"The digital display on it is inactive."}
 
 /obj/machinery/syndicatebomb/update_icon_state()
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
@@ -108,6 +129,7 @@
 /obj/machinery/syndicatebomb/proc/seconds_remaining()
 	if(active)
 		. = max(0, round((detonation_timer - world.time) / 10))
+
 	else
 		. = timer_set
 
@@ -204,32 +226,34 @@
 	next_beep = world.time + 10
 	detonation_timer = world.time + (timer_set * 10)
 	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
-	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bomb Planted")
+	update_appearance()
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
 		return
 	var/new_timer = tgui_input_number(user, "Set the timer", "Countdown", timer_set, maximum_timer, minimum_timer)
-	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	timer_set = new_timer
 	loc.visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
 	var/choice = tgui_alert(user, "Would you like to start the countdown now?", "Bomb Timer", list("Yes","No"))
 	if(choice != "Yes")
 		return
-	if(!user.canUseTopic(src, !issilicon(user)))
-		return
 	if(active)
 		to_chat(user, span_warning("The bomb is already active!"))
 		return
 	visible_message(span_danger("[icon2html(src, viewers(loc))] [timer_set] seconds until detonation, please clear the area."))
 	activate()
-	user.mind?.add_memory(MEMORY_BOMB_PRIMED, list(DETAIL_BOMB_TYPE = src), story_value = STORY_VALUE_AMAZING)
-	update_appearance()
 	add_fingerprint(user)
-	if(payload && !istype(payload, /obj/item/bombcore/training))
-		log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
-		payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
+	// We don't really concern ourselves with duds or fakes after this
+	if(isnull(payload) || istype(payload, /obj/machinery/syndicatebomb/training))
+		return
+
+	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bomb Planted")
+	user.add_mob_memory(/datum/memory/bomb_planted/syndicate, antagonist = src)
+	log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
+	payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
+	user.log_message("primed the [src]. (Payload: [payload.name])", LOG_GAME, log_globally = FALSE)
 
 ///Bomb Subtypes///
 
@@ -271,7 +295,7 @@
 /obj/machinery/syndicatebomb/self_destruct
 	name = "self-destruct device"
 	desc = "Do not taunt. Warranty invalid if exposed to high temperature. Not suitable for agents under 3 years of age."
-	payload = /obj/item/bombcore/large
+	payload = /obj/item/bombcore/syndicate/large
 	can_unanchor = FALSE
 
 ///Bomb Cores///
@@ -279,9 +303,9 @@
 /obj/item/bombcore
 	name = "bomb payload"
 	desc = "A powerful secondary explosive of syndicate design and unknown composition, it should be stable under normal conditions..."
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	icon_state = "bombcore"
-	inhand_icon_state = "eshield0"
+	inhand_icon_state = "eshield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
@@ -295,7 +319,6 @@
 
 /obj/item/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
 	detonate()
-
 
 /obj/item/bombcore/burn()
 	detonate()
@@ -314,6 +337,24 @@
 //Note: the machine's defusal is mostly done from the wires code, this is here if you want the core itself to do anything.
 
 ///Bomb Core Subtypes///
+
+/// Subtype for the bomb cores found inside syndicate bombs, which will not detonate due to explosion/burning.
+/obj/item/bombcore/syndicate
+	name = "Donk Co. Super-Stable Bomb Payload"
+	desc = "After a string of unwanted detonations, this payload has been specifically redesigned to not explode unless triggered electronically by a bomb shell."
+
+/obj/item/bombcore/syndicate/ex_act(severity, target)
+	return
+
+/obj/item/bombcore/syndicate/burn()
+	return ..()
+
+/obj/item/bombcore/syndicate/large
+	name = "Donk Co. Super-Stable Bomb Payload XL"
+	range_heavy = 5
+	range_medium = 10
+	range_light = 20
+	range_flame = 20
 
 /obj/item/bombcore/training
 	name = "dummy payload"
@@ -348,7 +389,7 @@
 		attempts++
 		defusals++
 		holder.loc.visible_message(span_notice("[icon2html(holder, viewers(holder))] Alert: Bomb has been defused. Your score is now [defusals] for [attempts]! Resetting wires in 5 seconds..."))
-		sleep(50) //Just in case someone is trying to remove the bomb core this gives them a little window to crowbar it out
+		sleep(5 SECONDS) //Just in case someone is trying to remove the bomb core this gives them a little window to crowbar it out
 		if(istype(holder))
 			reset()
 
@@ -436,18 +477,18 @@
 		chem_splash(get_turf(src), reagents, spread_range, list(reactants), temp_boost)
 
 		// Detonate it again in one second, until it's out of juice.
-		addtimer(CALLBACK(src, .proc/detonate), 10)
+		addtimer(CALLBACK(src, PROC_REF(detonate)), 10)
 
 	// If it's not a time release bomb, do normal explosion
 
 	var/list/reactants = list()
 
-	for(var/obj/item/reagent_containers/glass/G in beakers)
+	for(var/obj/item/reagent_containers/cup/G in beakers)
 		reactants += G.reagents
 
 	for(var/obj/item/slime_extract/S in beakers)
 		if(S.Uses)
-			for(var/obj/item/reagent_containers/glass/G in beakers)
+			for(var/obj/item/reagent_containers/cup/G in beakers)
 				G.reagents.trans_to(S, G.reagents.total_volume)
 
 			if(S && S.reagents && S.reagents.total_volume)
@@ -470,7 +511,7 @@
 			B.forceMove(drop_location())
 			beakers -= B
 		return
-	else if(istype(I, /obj/item/reagent_containers/glass/beaker) || istype(I, /obj/item/reagent_containers/glass/bottle))
+	else if(istype(I, /obj/item/reagent_containers/cup/beaker) || istype(I, /obj/item/reagent_containers/cup/bottle))
 		if(beakers.len < max_beakers)
 			if(!user.transferItemToLoc(I, src))
 				return
@@ -512,7 +553,7 @@
 		if(istype(G, /obj/item/grenade/chem_grenade/adv_release))
 			time_release += 50 // A typical bomb, using basic beakers, will explode over 2-4 seconds. Using two will make the reaction last for less time, but it will be more dangerous overall.
 
-		for(var/obj/item/reagent_containers/glass/B in G)
+		for(var/obj/item/reagent_containers/cup/B in G)
 			if(beakers.len < max_beakers)
 				beakers += B
 				B.forceMove(src)
@@ -541,11 +582,11 @@
 /obj/item/syndicatedetonator
 	name = "big red button"
 	desc = "Your standard issue bomb synchronizing button. Five second safety delay to prevent 'accidents'."
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	icon_state = "bigred"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	var/timer = 0
 	var/detonated = 0

@@ -3,9 +3,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/item/storage/pod{
-	pixel_x = -24
-	},
+/obj/item/storage/pod/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "r" = (
@@ -61,10 +59,7 @@
 	name = "Shuttle Airlock"
 	},
 /obj/docking_port/mobile/pod{
-	dwidth = 2;
-	height = 6;
-	port_direction = 2;
-	width = 5
+	port_direction = 2
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
@@ -72,7 +67,7 @@
 /turf/template_noop,
 /area/template_noop)
 "Z" = (
-/obj/structure/shuttle/engine/propulsion/burst,
+/obj/machinery/power/shuttle_engine/propulsion/burst,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
 

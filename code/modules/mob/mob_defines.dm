@@ -7,7 +7,6 @@
  * Has a lot of the creature game world logic, such as health etc
  */
 /mob
-	datum_flags = DF_USE_TAG
 	density = TRUE
 	layer = MOB_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN
@@ -18,6 +17,9 @@
 	throwforce = 10
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	pass_flags_self = PASSMOB
+	// we never want to hide a turf because it's not lit
+	// We can rely on the lighting plane to handle that for us
+	see_in_dark = 1e6
 	/// The current client inhabiting this mob. Managed by login/logout
 	/// This exists so we can do cleanup in logout for occasions where a client was transfere rather then destroyed
 	/// We need to do this because the mob on logout never actually has a reference to client
@@ -27,10 +29,19 @@
 
 	var/shift_to_open_context_menu = TRUE
 
-	///when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
-	vis_flags = VIS_INHERIT_PLANE
-
-	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+	/// Percentage of how much rgb to max the lighting plane at
+	/// This lets us brighten it without washing out color
+	/// Scale from 0-100, reset off update_sight()
+	var/lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
+	// Individual color max for red, we can use this to color darkness without tinting the light
+	var/lighting_cutoff_red = 0
+	// Individual color max for green, we can use this to color darkness without tinting the light
+	var/lighting_cutoff_green = 0
+	// Individual color max for blue, we can use this to color darkness without tinting the light
+	var/lighting_cutoff_blue = 0
+	/// A list of red, green and blue cutoffs
+	/// This is what actually gets applied to the mob, it's modified by things like glasses
+	var/list/lighting_color_cutoffs = null
 	var/datum/mind/mind
 	var/static/next_mob_id = 0
 
@@ -87,10 +98,6 @@
 	  */
 	var/notransform = null //Carbon
 
-	/// Is the mob blind
-	var/eye_blind = 0 //Carbon
-	/// Does the mob have blurry sight
-	var/eye_blurry = 0 //Carbon
 	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null
 
@@ -107,8 +114,7 @@
 	var/bodytemperature = BODYTEMP_NORMAL //310.15K / 98.6F
 	/// Our body temperatue as of the last process, prevents pointless work when handling alerts
 	var/old_bodytemperature = 0
-	/// Drowsyness level of the mob
-	var/drowsyness = 0//Carbon
+
 	/// Hunger level of the mob
 	var/nutrition = NUTRITION_LEVEL_START_MIN // randomised in Initialize
 	/// Satiation level of the mob
@@ -156,7 +162,7 @@
 	var/job = null//Living
 
 	/// A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
-	var/list/faction = list("neutral")
+	var/list/faction = list(FACTION_NEUTRAL)
 
 	/// Can this mob enter shuttles
 	var/move_on_shuttle = 1
@@ -175,13 +181,6 @@
 
 	///Calls relay_move() to whatever this is set to when the mob tries to move
 	var/atom/movable/remote_control
-
-	/**
-	  * The sound made on death
-	  *
-	  * leave null for no sound. used for *deathgasp
-	  */
-	var/deathsound
 
 	///the current turf being examined in the stat panel
 	var/turf/listed_turf = null

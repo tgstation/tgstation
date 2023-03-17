@@ -1,8 +1,9 @@
 ///Delete one of every type, sleep a while, then check to see if anything has gone fucky
 /datum/unit_test/create_and_destroy
 	//You absolutely must run last
-	priority = TEST_DEL_WORLD
+	priority = TEST_CREATE_AND_DESTROY
 
+GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 /datum/unit_test/create_and_destroy/Run()
 	//We'll spawn everything here
 	var/turf/spawn_at = run_loc_floor_bottom_left
@@ -27,6 +28,11 @@
 		/obj/item/bodypart,
 		//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
 		/obj/merge_conflict_marker,
+		//briefcase launchpads erroring
+		/obj/machinery/launchpad/briefcase,
+		//Both are abstract types meant to scream bloody murder if spawned in raw
+		/obj/item/organ/external,
+		/obj/item/organ/external/wings,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
@@ -34,17 +40,18 @@
 	ignore += typesof(/turf/baseturf_skipover)
 	ignore += typesof(/turf/baseturf_bottom)
 	//This demands a borg, so we'll let if off easy
-	ignore += typesof(/obj/item/modular_computer/tablet/integrated)
+	ignore += typesof(/obj/item/modular_computer/pda/silicon)
 	//This one demands a computer, ditto
 	ignore += typesof(/obj/item/modular_computer/processor)
 	//Very finiky, blacklisting to make things easier
 	ignore += typesof(/obj/item/poster/wanted)
 	//This expects a seed, we can't pass it
 	ignore += typesof(/obj/item/food/grown)
-	//Nothing to hallucinate if there's nothing to hallicinate
-	ignore += typesof(/obj/effect/hallucination)
-	//These want fried food to take on the shape of, we can't pass that in
-	ignore += typesof(/obj/item/food/deepfryholder)
+	//Needs clients / mobs to observe it to exist. Also includes hallucinations.
+	ignore += typesof(/obj/effect/client_image_holder)
+	//Same to above. Needs a client / mob / hallucination to observe it to exist.
+	ignore += typesof(/obj/projectile/hallucination)
+	ignore += typesof(/obj/item/hallucinated)
 	//Can't pass in a thing to glow
 	ignore += typesof(/obj/effect/abstract/eye_lighting)
 	//We don't have a pod
@@ -52,8 +59,6 @@
 	ignore += typesof(/obj/effect/pod_landingzone)
 	//We have a baseturf limit of 10, adding more than 10 baseturf helpers will kill CI, so here's a future edge case to fix.
 	ignore += typesof(/obj/effect/baseturf_helper)
-	//There's no shapeshift to hold
-	ignore += typesof(/obj/shapeshift_holder)
 	//No tauma to pass in
 	ignore += typesof(/mob/camera/imaginary_friend)
 	//No pod to gondola
@@ -94,18 +99,27 @@
 	ignore += typesof(/obj/machinery/computer/holodeck)
 	//runtimes if not paired with a landmark
 	ignore += typesof(/obj/structure/industrial_lift)
+	// Runtimes if the associated machinery does not exist, but not the base type
+	ignore += subtypesof(/obj/machinery/airlock_controller)
+	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
+	ignore += subtypesof(/atom/movable/screen/escape_menu)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
-	var/baseturf_count = length(spawn_at.baseturfs)
+	var/original_turf_type = spawn_at.type
+	var/original_baseturfs = islist(spawn_at.baseturfs) ? spawn_at.baseturfs.Copy() : spawn_at.baseturfs
+	var/original_baseturf_count = length(original_baseturfs)
 
+	GLOB.running_create_and_destroy = TRUE
 	for(var/type_path in typesof(/atom/movable, /turf) - ignore) //No areas please
 		if(ispath(type_path, /turf))
-			spawn_at.ChangeTurf(type_path, /turf/baseturf_skipover)
-			//We change it back to prevent pain, please don't ask
-			spawn_at.ChangeTurf(/turf/open/floor/wood, /turf/baseturf_skipover)
-			if(baseturf_count != length(spawn_at.baseturfs))
-				TEST_FAIL("[type_path] changed the amount of baseturfs we have [baseturf_count] -> [length(spawn_at.baseturfs)]")
-				baseturf_count = length(spawn_at.baseturfs)
+			spawn_at.ChangeTurf(type_path)
+			//We change it back to prevent baseturfs stacking and hitting the limit
+			spawn_at.ChangeTurf(original_turf_type, original_baseturfs)
+			if(original_baseturf_count != length(spawn_at.baseturfs))
+				TEST_FAIL("[type_path] changed the amount of baseturfs from [original_baseturf_count] to [length(spawn_at.baseturfs)]; [english_list(original_baseturfs)] to [islist(spawn_at.baseturfs) ? english_list(spawn_at.baseturfs) : spawn_at.baseturfs]")
+				//Warn if it changes again
+				original_baseturfs = islist(spawn_at.baseturfs) ? spawn_at.baseturfs.Copy() : spawn_at.baseturfs
+				original_baseturf_count = length(original_baseturfs)
 		else
 			var/atom/creation = new type_path(spawn_at)
 			if(QDELETED(creation))
@@ -122,6 +136,7 @@
 			for(var/atom/to_kill in to_del)
 				qdel(to_kill)
 
+	GLOB.running_create_and_destroy = FALSE
 	//Hell code, we're bound to have ended the round somehow so let's stop if from ending while we work
 	SSticker.delay_end = TRUE
 	//Prevent the garbage subsystem from harddeling anything, if only to save time

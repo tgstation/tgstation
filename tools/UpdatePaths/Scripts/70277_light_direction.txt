@@ -1,0 +1,98 @@
+
+/obj/machinery/light{dir = @UNSET} : /obj/machinery/light/directional/south
+/obj/machinery/light{dir = 1} : /obj/machinery/light/directional/north
+/obj/machinery/light{dir = 2} : /obj/machinery/light/directional/south
+/obj/machinery/light{dir = 4} : /obj/machinery/light/directional/east
+/obj/machinery/light{dir = 8} : /obj/machinery/light/directional/west
+
+/obj/machinery/light/broken{dir = @UNSET} : /obj/machinery/light/broken/directional/south
+/obj/machinery/light/broken{dir = 1} : /obj/machinery/light/broken/directional/north
+/obj/machinery/light/broken{dir = 2} : /obj/machinery/light/broken/directional/south
+/obj/machinery/light/broken{dir = 4} : /obj/machinery/light/broken/directional/east
+/obj/machinery/light/broken{dir = 8} : /obj/machinery/light/broken/directional/west
+
+/obj/machinery/light/built{dir = @UNSET} : /obj/machinery/light/built/directional/south
+/obj/machinery/light/built{dir = 1} : /obj/machinery/light/built/directional/north
+/obj/machinery/light/built{dir = 2} : /obj/machinery/light/built/directional/south
+/obj/machinery/light/built{dir = 4} : /obj/machinery/light/built/directional/east
+/obj/machinery/light/built{dir = 8} : /obj/machinery/light/built/directional/west
+
+/obj/machinery/light/warm{dir = @UNSET} : /obj/machinery/light/warm/directional/south
+/obj/machinery/light/warm{dir = 1} : /obj/machinery/light/warm/directional/north
+/obj/machinery/light/warm{dir = 2} : /obj/machinery/light/warm/directional/south
+/obj/machinery/light/warm{dir = 4} : /obj/machinery/light/warm/directional/east
+/obj/machinery/light/warm{dir = 8} : /obj/machinery/light/warm/directional/west
+
+/obj/machinery/light/cold{dir = @UNSET} : /obj/machinery/light/cold/directional/south
+/obj/machinery/light/cold{dir = 1} : /obj/machinery/light/cold/directional/north
+/obj/machinery/light/cold{dir = 2} : /obj/machinery/light/cold/directional/south
+/obj/machinery/light/cold{dir = 4} : /obj/machinery/light/cold/directional/east
+/obj/machinery/light/cold{dir = 8} : /obj/machinery/light/cold/directional/west
+
+/obj/machinery/light/cold/no_nightlight{dir = @UNSET} : /obj/machinery/light/cold/no_nightlight/directional/south
+/obj/machinery/light/cold/no_nightlight{dir = 1} : /obj/machinery/light/cold/no_nightlight/directional/north
+/obj/machinery/light/cold/no_nightlight{dir = 2} : /obj/machinery/light/cold/no_nightlight/directional/south
+/obj/machinery/light/cold/no_nightlight{dir = 4} : /obj/machinery/light/cold/no_nightlight/directional/east
+/obj/machinery/light/cold/no_nightlight{dir = 8} : /obj/machinery/light/cold/no_nightlight/directional/west
+
+/obj/machinery/light/red{dir = @UNSET} : /obj/machinery/light/red/directional/south
+/obj/machinery/light/red{dir = 1} : /obj/machinery/light/red/directional/north
+/obj/machinery/light/red{dir = 2} : /obj/machinery/light/red/directional/south
+/obj/machinery/light/red{dir = 4} : /obj/machinery/light/red/directional/east
+/obj/machinery/light/red{dir = 8} : /obj/machinery/light/red/directional/west
+
+/obj/machinery/light/red/dim{dir = @UNSET} : /obj/machinery/light/red/dim/directional/south
+/obj/machinery/light/red/dim{dir = 1} : /obj/machinery/light/red/dim/directional/north
+/obj/machinery/light/red/dim{dir = 2} : /obj/machinery/light/red/dim/directional/south
+/obj/machinery/light/red/dim{dir = 4} : /obj/machinery/light/red/dim/directional/east
+/obj/machinery/light/red/dim{dir = 8} : /obj/machinery/light/red/dim/directional/west
+
+/obj/machinery/light/blacklight{dir = @UNSET} : /obj/machinery/light/blacklight/directional/south
+/obj/machinery/light/blacklight{dir = 1} : /obj/machinery/light/blacklight/directional/north
+/obj/machinery/light/blacklight{dir = 2} : /obj/machinery/light/blacklight/directional/south
+/obj/machinery/light/blacklight{dir = 4} : /obj/machinery/light/blacklight/directional/east
+/obj/machinery/light/blacklight{dir = 8} : /obj/machinery/light/blacklight/directional/west
+
+/obj/machinery/light/dim{dir = @UNSET} : /obj/machinery/light/dim/directional/south
+/obj/machinery/light/dim{dir = 1} : /obj/machinery/light/dim/directional/north
+/obj/machinery/light/dim{dir = 2} : /obj/machinery/light/dim/directional/south
+/obj/machinery/light/dim{dir = 4} : /obj/machinery/light/dim/directional/east
+/obj/machinery/light/dim{dir = 8} : /obj/machinery/light/dim/directional/west
+
+# small lights
+
+/obj/machinery/light/small{dir = @UNSET} : /obj/machinery/light/small/directional/south
+/obj/machinery/light/small{dir = 1} : /obj/machinery/light/small/directional/north
+/obj/machinery/light/small{dir = 2} : /obj/machinery/light/small/directional/south
+/obj/machinery/light/small{dir = 4} : /obj/machinery/light/small/directional/east
+/obj/machinery/light/small{dir = 8} : /obj/machinery/light/small/directional/west
+
+/obj/machinery/light/small/broken{dir = @UNSET} : /obj/machinery/light/small/broken/directional/south
+/obj/machinery/light/small/broken{dir = 1} : /obj/machinery/light/small/broken/directional/north
+/obj/machinery/light/small/broken{dir = 2} : /obj/machinery/light/small/broken/directional/south
+/obj/machinery/light/small/broken{dir = 4} : /obj/machinery/light/small/broken/directional/east
+/obj/machinery/light/small/broken{dir = 8} : /obj/machinery/light/small/broken/directional/west
+
+/obj/machinery/light/small/built{dir = @UNSET} : /obj/machinery/light/small/built/directional/south
+/obj/machinery/light/small/built{dir = 1} : /obj/machinery/light/small/built/directional/north
+/obj/machinery/light/small/built{dir = 2} : /obj/machinery/light/small/built/directional/south
+/obj/machinery/light/small/built{dir = 4} : /obj/machinery/light/small/built/directional/east
+/obj/machinery/light/small/built{dir = 8} : /obj/machinery/light/small/built/directional/west
+
+/obj/machinery/light/small/red{dir = @UNSET} : /obj/machinery/light/small/red/directional/south
+/obj/machinery/light/small/red{dir = 1} : /obj/machinery/light/small/red/directional/north
+/obj/machinery/light/small/red{dir = 2} : /obj/machinery/light/small/red/directional/south
+/obj/machinery/light/small/red{dir = 4} : /obj/machinery/light/small/red/directional/east
+/obj/machinery/light/small/red{dir = 8} : /obj/machinery/light/small/red/directional/west
+
+/obj/machinery/light/small/red/dim{dir = @UNSET} : /obj/machinery/light/small/red/dim/directional/south
+/obj/machinery/light/small/red/dim{dir = 1} : /obj/machinery/light/small/red/dim/directional/north
+/obj/machinery/light/small/red/dim{dir = 2} : /obj/machinery/light/small/red/dim/directional/south
+/obj/machinery/light/small/red/dim{dir = 4} : /obj/machinery/light/small/red/dim/directional/east
+/obj/machinery/light/small/red/dim{dir = 8} : /obj/machinery/light/small/red/dim/directional/west
+
+/obj/machinery/light/small/blacklight{dir = @UNSET} : /obj/machinery/light/small/blacklight/directional/south
+/obj/machinery/light/small/blacklight{dir = 1} : /obj/machinery/light/small/blacklight/directional/north
+/obj/machinery/light/small/blacklight{dir = 2} : /obj/machinery/light/small/blacklight/directional/south
+/obj/machinery/light/small/blacklight{dir = 4} : /obj/machinery/light/small/blacklight/directional/east
+/obj/machinery/light/small/blacklight{dir = 8} : /obj/machinery/light/small/blacklight/directional/west

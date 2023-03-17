@@ -5,6 +5,7 @@ SUBSYSTEM_DEF(vote)
 	name = "Vote"
 	wait = 1 SECONDS
 	flags = SS_KEEP_TIMING
+	init_order = INIT_ORDER_VOTE
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	/// A list of all generated action buttons
@@ -18,7 +19,7 @@ SUBSYSTEM_DEF(vote)
 	/// A list of all ckeys currently voting for the current vote.
 	var/list/voting = list()
 
-/datum/controller/subsystem/vote/Initialize(start_timeofday)
+/datum/controller/subsystem/vote/Initialize()
 	for(var/vote_type in subtypesof(/datum/vote))
 		var/datum/vote/vote = new vote_type()
 		if(!vote.is_accessible_vote())
@@ -27,7 +28,7 @@ SUBSYSTEM_DEF(vote)
 
 		possible_votes[vote.name] = vote
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 
 // Called by master_controller
@@ -48,12 +49,7 @@ SUBSYSTEM_DEF(vote)
 	current_vote?.reset()
 	current_vote = null
 
-	for(var/datum/action/vote/voting_action as anything in generated_actions)
-		if(QDELETED(voting_action))
-			continue
-		voting_action.Remove(voting_action.owner)
-
-	generated_actions.Cut()
+	QDEL_LIST(generated_actions)
 
 	SStgui.update_uis(src)
 
@@ -94,9 +90,13 @@ SUBSYSTEM_DEF(vote)
 	to_chat(world, span_infoplain(vote_font("\n[to_display]")))
 
 	// Finally, doing any effects on vote completion
-	current_vote.finalize_vote(final_winner)
+	if (final_winner) // if no one voted final_winner will be null
+		current_vote.finalize_vote(final_winner)
 
-/datum/controller/subsystem/vote/proc/submit_vote(mob/voter, their_vote)
+/**
+ * One selection per person, and the selection with the most votes wins.
+ */
+/datum/controller/subsystem/vote/proc/submit_single_vote(mob/voter, their_vote)
 	if(!current_vote)
 		return
 	if(!voter?.ckey)
@@ -114,6 +114,31 @@ SUBSYSTEM_DEF(vote)
 
 	current_vote.choices_by_ckey[voter.ckey] = their_vote
 	current_vote.choices[their_vote]++
+
+	return TRUE
+
+/**
+ * Any number of selections per person, and the selection with the most votes wins.
+ */
+/datum/controller/subsystem/vote/proc/submit_multi_vote(mob/voter, their_vote)
+	if(!current_vote)
+		return
+	if(!voter?.ckey)
+		return
+	if(CONFIG_GET(flag/no_dead_vote) && voter.stat == DEAD && !voter.client?.holder)
+		return
+
+	else
+		voted += voter.ckey
+
+	if(current_vote.choices_by_ckey[voter.ckey + their_vote] == 1)
+		current_vote.choices_by_ckey[voter.ckey + their_vote] = 0
+		current_vote.choices[their_vote]--
+
+	else
+		current_vote.choices_by_ckey[voter.ckey + their_vote] = 1
+		current_vote.choices[their_vote]++
+
 	return TRUE
 
 /**
@@ -197,7 +222,7 @@ SUBSYSTEM_DEF(vote)
 		new_voter.player_details.player_actions += voting_action
 		generated_actions += voting_action
 
-		if(current_vote.vote_sound && (new_voter.prefs.toggles & SOUND_ANNOUNCEMENTS))
+		if(current_vote.vote_sound && (new_voter.prefs.read_preference(/datum/preference/toggle/sound_announcements)))
 			SEND_SOUND(new_voter, sound(current_vote.vote_sound))
 
 	return TRUE
@@ -220,10 +245,12 @@ SUBSYSTEM_DEF(vote)
 	var/is_upper_admin = check_rights_for(user.client, R_ADMIN)
 
 	data["user"] = list(
+		"ckey" = user.client?.ckey,
 		"isLowerAdmin" = is_lower_admin,
 		"isUpperAdmin" = is_upper_admin,
 		// What the current user has selected in any ongoing votes.
-		"selectedChoice" = current_vote?.choices_by_ckey[user.client?.ckey],
+		"singleSelection" = current_vote?.choices_by_ckey[user.client?.ckey],
+		"multiSelection" = current_vote?.choices_by_ckey,
 	)
 
 	data["voting"]= is_lower_admin ? voting : list()
@@ -238,6 +265,7 @@ SUBSYSTEM_DEF(vote)
 			"name" = vote_name,
 			"canBeInitiated" = vote.can_be_initiated(forced = is_lower_admin),
 			"config" = vote.is_config_enabled(),
+			"message" = vote.message,
 		)
 
 		if(vote == current_vote)
@@ -252,6 +280,7 @@ SUBSYSTEM_DEF(vote)
 				"name" = current_vote.name,
 				"question" = current_vote.override_question,
 				"timeRemaining" = current_vote.time_remaining,
+				"countMethod" = current_vote.count_method,
 				"choices" = choices,
 				"vote" = vote_data,
 			)
@@ -274,7 +303,7 @@ SUBSYSTEM_DEF(vote)
 			if(!voter.client?.holder)
 				return
 
-			voter.log_message("[key_name_admin(voter)] cancelled a vote.", LOG_ADMIN)
+			voter.log_message("cancelled a vote.", LOG_ADMIN)
 			message_admins("[key_name_admin(voter)] has cancelled the current vote.")
 			reset()
 			return TRUE
@@ -295,8 +324,11 @@ SUBSYSTEM_DEF(vote)
 			// meaning you can't spoof initiate a vote you're not supposed to be able to
 			return initiate_vote(selected, voter.key, voter)
 
-		if("vote")
-			return submit_vote(voter, params["voteOption"])
+		if("voteSingle")
+			return submit_single_vote(voter, params["voteOption"])
+
+		if("voteMulti")
+			return submit_multi_vote(voter, params["voteOption"])
 
 /datum/controller/subsystem/vote/ui_close(mob/user)
 	voting -= user.client?.ckey
@@ -312,8 +344,9 @@ SUBSYSTEM_DEF(vote)
 /datum/action/vote
 	name = "Vote!"
 	button_icon_state = "vote"
+	show_to_observers = FALSE
 
-/datum/action/vote/IsAvailable()
+/datum/action/vote/IsAvailable(feedback = FALSE)
 	return TRUE // Democracy is always available to the free people
 
 /datum/action/vote/Trigger(trigger_flags)

@@ -21,7 +21,7 @@
 	message = "claps."
 	muzzle_ignore = TRUE
 	hands_use_check = TRUE
-	emote_type = EMOTE_AUDIBLE
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	audio_cooldown = 5 SECONDS
 	vary = TRUE
 
@@ -66,7 +66,7 @@
 	key_third_person = "moans"
 	message = "moans!"
 	message_mime = "appears to moan!"
-	emote_type = EMOTE_AUDIBLE
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/noogie
 	key = "noogie"
@@ -133,6 +133,57 @@
 	else
 		qdel(N)
 		to_chat(user, span_warning("You're incapable of slapping in your current state."))
+
+
+/datum/emote/living/carbon/hand
+	key = "hand"
+	key_third_person = "hands"
+	hands_use_check = TRUE
+
+
+/datum/emote/living/carbon/hand/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+
+	var/obj/item/hand_item/hand/hand = new(user)
+	if(user.put_in_hands(hand))
+		to_chat(user, span_notice("You ready your hand."))
+	else
+		qdel(hand)
+		to_chat(user, span_warning("You're incapable of using your hand in your current state."))
+
+
+/datum/emote/living/carbon/snap
+	key = "snap"
+	key_third_person = "snaps"
+	message = "snaps their fingers."
+	message_param = "snaps their fingers at %t."
+	emote_type = EMOTE_AUDIBLE
+	hands_use_check = TRUE
+	muzzle_ignore = TRUE
+
+/datum/emote/living/carbon/snap/get_sound(mob/living/user)
+	if(ishuman(user))
+		return pick('sound/misc/fingersnap1.ogg', 'sound/misc/fingersnap2.ogg')
+	return null
+
+/datum/emote/living/carbon/shoesteal
+	key = "shoesteal"
+	key_third_person = "shoesteals"
+	hands_use_check = TRUE
+	cooldown = 3 SECONDS
+
+/datum/emote/living/carbon/shoesteal/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if (!.)
+		return
+	var/obj/item/hand_item/stealer/stealing_hand = new(user)
+	if (user.put_in_hands(stealing_hand))
+		user.balloon_alert(user, "preparing to steal shoes...")
+	else
+		qdel(stealing_hand)
+		user.balloon_alert(user, "you can't steal shoes!")
 
 /datum/emote/living/carbon/tail
 	key = "tail"

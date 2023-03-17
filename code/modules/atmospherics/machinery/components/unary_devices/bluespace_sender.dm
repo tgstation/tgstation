@@ -1,20 +1,19 @@
 /obj/machinery/atmospherics/components/unary/bluespace_sender
 	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_sender_off"
+	base_icon_state = "bluespace_sender"
 	name = "Bluespace Gas Sender"
 	desc = "Sends gases to the bluespace network to be shared with the connected vendors, who knows what's beyond!"
 
 	density = TRUE
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 80, ACID = 30)
+	armor_type = /datum/armor/unary_bluespace_sender
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/bluespace_sender
 	move_resist = MOVE_RESIST_DEFAULT
 	set_dir_on_move = FALSE
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
-	///Base icon name for updating the appearance
-	var/base_icon = "bluespace_sender"
 	///Gas mixture containing the inserted gases and that is connected to the vendors
 	var/datum/gas_mixture/bluespace_network
 	///Rate of gas transfer inside the network (from 0 to 1)
@@ -26,6 +25,14 @@
 	///Amount of credits gained from each vendor
 	var/credits_gained = 0
 
+/// All bluespace gas senders
+GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/components/unary/bluespace_sender)
+
+/datum/armor/unary_bluespace_sender
+	energy = 100
+	fire = 80
+	acid = 30
+
 /obj/machinery/atmospherics/components/unary/bluespace_sender/Initialize(mapload)
 	. = ..()
 	initialize_directions = dir
@@ -36,22 +43,27 @@
 		var/datum/gas/gas = gas_id
 		base_prices[gas_id] = initial(gas.base_value)
 
+	GLOB.bluespace_senders += src
+
 	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/Destroy()
 	if(bluespace_network.total_moles())
 		var/turf/local_turf = get_turf(src)
 		local_turf.assume_air(bluespace_network)
+
+	GLOB.bluespace_senders -= src
+
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_icon_state()
 	if(panel_open)
-		icon_state = "[base_icon]_open"
+		icon_state = "[base_icon_state]_open"
 		return ..()
 	if(on && is_operational)
-		icon_state = "[base_icon]_on"
+		icon_state = "[base_icon_state]_on"
 		return ..()
-	icon_state = "[base_icon]_off"
+	icon_state = "[base_icon_state]_off"
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_overlays()
@@ -77,7 +89,7 @@
 	if(!anchored)
 		to_chat(user, span_notice("Anchor [src] first!"))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
-	if(default_deconstruction_screwdriver(user, "[base_icon]_open", "[base_icon]", tool))
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]", tool))
 		change_pipe_connection(panel_open)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 

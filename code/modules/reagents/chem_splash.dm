@@ -75,51 +75,40 @@
  * Arguments:
  * - [source][/datum/reagents]: The reagents to spread around.
  * - [epicenter][/atom]: The epicenter/source location of the reagent spread.
- * - spread_range: The range in which to spread the reagents.
+ * - spread_range: The range in which to spread the reagents. Will not go over 20
  */
 /proc/spread_reagents(datum/reagents/source, atom/epicenter, spread_range)
+	spread_range = min(spread_range, 20) // Fuck off with trying to do more then this
 	var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
 	steam.set_up(10, 0, epicenter)
 	steam.attach(epicenter)
 	steam.start()
 
-
-	var/list/viewable = view(spread_range, epicenter)
-	var/list/accessible = list(epicenter)
-	for(var/i in 1 to spread_range)
-		var/list/turflist = list()
-		for(var/turf/T in (orange(i, epicenter) - orange(i-1, epicenter)))
-			turflist |= T
-		for(var/turf/T in turflist)
-			if(!(get_dir(T,epicenter) in GLOB.cardinals) && (abs(T.x - epicenter.x) == abs(T.y - epicenter.y) ))
-				turflist.Remove(T)
-				turflist.Add(T) // we move the purely diagonal turfs to the end of the list.
-		for(var/turf/T in turflist)
-			if(accessible[T])
-				continue
-			for(var/thing in T.get_atmos_adjacent_turfs(alldir = TRUE))
-				var/turf/NT = thing
-				if(!(NT in accessible))
-					continue
-				if(!(get_dir(T,NT) in GLOB.cardinals))
-					continue
-				accessible[T] = 1
-				break
-
+	// This is a basic floodfill algorithm of atmos connected tiles
+	// Turfs will be stored in the form turf -> TRUE
 	var/chem_temp = source.chem_temp
-	var/list/reactable = accessible
-	for(var/turf/T in accessible)
-		reactable += T
-		for(var/atom/A in T.get_all_contents())
-			if(!(A in viewable))
+	var/hot_chem = chem_temp >= 300
+	var/list/turflist = list()
+	var/list/reactable = list()
+	turflist[epicenter] = TRUE
+	for(var/i = 1; i <= length(turflist); i++)
+		var/turf/valid_step = turflist[i]
+		if(get_dist(valid_step, epicenter) > spread_range) // We are over threshold, don't add anything new and just keep goin
+			turflist.Cut(i, i+1)
+			i--
+			continue
+
+		for(var/turf/lad as anything in valid_step.atmos_adjacent_turfs)
+			if(turflist[lad])
 				continue
-			reactable |= A
-		if(chem_temp >= 300)
-			T.hotspot_expose(chem_temp*2, 5)
-	if(!reactable.len) //Nothing to react with. Probably means we're in nullspace.
-		return
-	for(var/thing in reactable)
-		var/atom/A = thing
-		var/distance = max(1, get_dist(A, epicenter))
+			turflist[lad] = TRUE
+
+		reactable += valid_step.get_all_contents() // Yes this means multitile objects double react. I don't care. skill issue
+		if(hot_chem)
+			valid_step.hotspot_expose(chem_temp*2, 5)
+
+	// Remove anything we can't see
+	for(var/atom/thing as anything in (dview(spread_range, epicenter) & reactable))
+		var/distance = max(1, get_dist(thing, epicenter))
 		var/fraction = 0.5 / (2 ** distance) //50/25/12/6... for a 200u splash, 25/12/6/3... for a 100u, 12/6/3/1 for a 50u
-		source.expose(A, TOUCH, fraction)
+		source.expose(thing, TOUCH, fraction)

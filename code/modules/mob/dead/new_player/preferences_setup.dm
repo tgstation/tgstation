@@ -26,6 +26,9 @@
 	var/next_hardcore_score = select_hardcore_quirks()
 	character.hardcore_survival_score = next_hardcore_score ** 1.2  //30 points would be about 60 score
 
+	//Add a sixpack because honestly
+	var/obj/item/bodypart/chest/chest = character.get_bodypart(BODY_ZONE_CHEST)
+	chest.add_bodypart_overlay(new /datum/bodypart_overlay/simple/sixpack() )
 
 /**
  * Goes through all quirks that can be used in hardcore mode and select some based on a random budget.
@@ -67,7 +70,7 @@
 			available_hardcore_quirks -= picked_quirk
 			continue
 
-		if(initial(picked_quirk.mood_quirk) && CONFIG_GET(flag/disable_human_mood)) //check for moodlet quirks
+		if((initial(picked_quirk.quirk_flags) & QUIRK_MOODLET_BASED) && CONFIG_GET(flag/disable_human_mood)) //check for moodlet quirks
 			available_hardcore_quirks -= picked_quirk
 			continue
 
@@ -94,9 +97,9 @@
 	if(preview_job)
 		// Silicons only need a very basic preview since there is no customization for them.
 		if (istype(preview_job,/datum/job/ai))
-			return image('icons/mob/ai.dmi', icon_state = resolve_ai_icon(read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
+			return image('icons/mob/silicon/ai.dmi', icon_state = resolve_ai_icon(read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
 		if (istype(preview_job,/datum/job/cyborg))
-			return image('icons/mob/robots.dmi', icon_state = "robot", dir = SOUTH)
+			return image('icons/mob/silicon/robots.dmi', icon_state = "robot", dir = SOUTH)
 
 	// Set up the dummy for its photoshoot
 	apply_prefs_to(mannequin, TRUE)
@@ -105,5 +108,15 @@
 		mannequin.job = preview_job.title
 		mannequin.dress_up_as_job(preview_job, TRUE)
 
-	COMPILE_OVERLAYS(mannequin)
+	// Apply visual quirks
+	// Yes we do it every time because it needs to be done after job gear
+	if(SSquirks?.initialized)
+		// And yes we need to clean all the quirk datums every time
+		mannequin.cleanse_quirk_datums()
+		for(var/quirk_name as anything in all_quirks)
+			var/datum/quirk/quirk_type = SSquirks.quirks[quirk_name]
+			if(!(initial(quirk_type.quirk_flags) & QUIRK_CHANGES_APPEARANCE))
+				continue
+			mannequin.add_quirk(quirk_type, parent)
+
 	return mannequin.appearance

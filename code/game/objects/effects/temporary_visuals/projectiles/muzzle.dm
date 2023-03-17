@@ -1,12 +1,12 @@
 /obj/effect/projectile/muzzle
 	name = "muzzle flash"
-	icon = 'icons/obj/guns/projectiles_muzzle.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles_muzzle.dmi'
 
 /obj/effect/projectile/muzzle/laser
 	icon_state = "muzzle_laser"
 
 /obj/effect/projectile/muzzle/laser/blue
-	icon_state = "muzzle_laser_blue"
+	icon_state = "muzzle_blue"
 
 /obj/effect/projectile/muzzle/disabler
 	icon_state = "muzzle_omni"
@@ -38,3 +38,6 @@
 
 /obj/effect/projectile/muzzle/sniper
 	icon_state = "sniper"
+
+/obj/effect/projectile/muzzle/bullet
+	icon_state = "muzzle_bullet"

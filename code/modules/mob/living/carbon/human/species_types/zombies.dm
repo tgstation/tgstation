@@ -4,18 +4,19 @@
 	// 1spooky
 	name = "High-Functioning Zombie"
 	id = SPECIES_ZOMBIE
-	say_mod = "moans"
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/zombie
-	species_traits = list(NOBLOOD,NOZOMBIE,NOTRANSSTING, HAS_FLESH, HAS_BONE)
+	mutanttongue = /obj/item/organ/internal/tongue/zombie
+	species_traits = list(
+		NOZOMBIE,
+		NOTRANSSTING,
+	)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
+		// SHARED WITH ALL ZOMBIES
 		TRAIT_EASILY_WOUNDED,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
 		TRAIT_LIMBATTACHMENT,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NOCLONELOSS,
 		TRAIT_NODEATH,
@@ -26,12 +27,18 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
+		// HIGH FUNCTIONING UNIQUE
+		TRAIT_NOBLOOD,
+		TRAIT_SUCCUMB_OVERRIDE,
 	)
+	mutantstomach = null
+	mutantheart = null
+	mutantliver = null
+	mutantlungs = null
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutanttongue = /obj/item/organ/internal/tongue/zombie
 	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
 	disliked_food = NONE
-	liked_food = GROSS | MEAT | RAW
+	liked_food = GROSS | MEAT | RAW | GORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | ERT_SPAWN
 	bodytemp_normal = T0C // They have no natural body heat, the environment regulates body temp
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST // Take damage at fire temp
@@ -40,10 +47,10 @@
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/zombie,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/zombie,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/zombie,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/zombie,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/zombie,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/zombie
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/zombie,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/zombie,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/zombie,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie
 	)
 
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
@@ -51,7 +58,7 @@
 	return
 
 /datum/species/zombie/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
 
@@ -81,15 +88,45 @@
 	name = "Infectious Zombie"
 	id = SPECIES_ZOMBIE_INFECTIOUS
 	examine_limb_id = SPECIES_ZOMBIE
-	mutanthands = /obj/item/zombie_hand
 	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 1.6
-	mutanteyes = /obj/item/organ/internal/eyes/night_vision/zombie
+	mutanteyes = /obj/item/organ/internal/eyes/zombie
+	mutantbrain = /obj/item/organ/internal/brain/zombie
+	mutanttongue = /obj/item/organ/internal/tongue/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 	/// The rate the zombies regenerate at
 	var/heal_rate = 0.5
 	/// The cooldown before the zombie can start regenerating
 	COOLDOWN_DECLARE(regen_cooldown)
+
+	inherent_traits = list(
+		// SHARED WITH ALL ZOMBIES
+		TRAIT_EASILY_WOUNDED,
+		TRAIT_EASYDISMEMBER,
+		TRAIT_FAKEDEATH,
+		TRAIT_LIMBATTACHMENT,
+		TRAIT_NOBREATH,
+		TRAIT_NOCLONELOSS,
+		TRAIT_NODEATH,
+		TRAIT_NOHUNGER,
+		TRAIT_NOMETABOLISM,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_TOXIMMUNE,
+		// INFECTIOUS UNIQUE
+		TRAIT_STABLEHEART, // Replacement for noblood. Infectious zombies can bleed but don't need their heart.
+		TRAIT_STABLELIVER, // Not necessary but for consistency with above
+	)
+
+/datum/species/zombie/infectious/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/zombie)
+
+/datum/species/zombie/infectious/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	. = ..()
+	qdel(C.GetComponent(/datum/component/mutant_hands))
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
@@ -133,8 +170,8 @@
 	. = ..()
 
 	// Deal with the source of this zombie corruption
-	//  Infection organ needs to be handled separately from mutant_organs
-	//  because it persists through species transitions
+	// Infection organ needs to be handled separately from mutant_organs
+	// because it persists through species transitions
 	var/obj/item/organ/internal/zombie_infection/infection
 	infection = C.getorganslot(ORGAN_SLOT_ZOMBIE)
 	if(!infection)
@@ -147,16 +184,15 @@
 	id = SPECIES_ZOMBIE_KROKODIL
 	examine_limb_id = SPECIES_HUMAN
 	sexes = 0
-	mutanttongue = /obj/item/organ/internal/tongue/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/zombie,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/zombie,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/zombie,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/zombie,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/zombie,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/zombie
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/zombie,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/zombie,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/zombie,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie
 	)
 
 

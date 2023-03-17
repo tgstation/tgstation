@@ -9,7 +9,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_EPIC
 	obj_damage = 400
 	light_range = 3
-	faction = list("mining", "boss")
+	faction = list(FACTION_MINING, FACTION_BOSS)
 	weather_immunities = list(TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE)
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
@@ -46,8 +46,6 @@
 	var/recovery_time = 0
 	/// If this is a megafauna that is real (has achievements, gps signal)
 	var/true_spawn = TRUE
-	/// Range the megafauna can move from their nest (if they have one
-	var/nest_range = 10
 	/// The chosen attack by the megafauna
 	var/chosen_attack = 1
 	/// Attack actions, sets chosen_attack to the number in the action
@@ -74,23 +72,18 @@
 	//Safety check
 	if(!loc)
 		return ..()
-	if(nest && nest.parent && get_dist(nest.parent, src) > nest_range)
-		var/turf/closest = get_turf(nest.parent)
-		for(var/i = 1 to nest_range)
-			closest = get_step(closest, get_dir(closest, src))
-		forceMove(closest) // someone teleported out probably and the megafauna kept chasing them
-		LoseTarget()
-		return
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed, list/force_grant)
 	if(health > 0)
 		return
 	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(/datum/status_effect/crusher_damage)
+	///Whether we killed the megafauna with primarily crusher damage or not
 	var/crusher_kill = FALSE
-	if(crusher_dmg && crusher_loot && crusher_dmg.total_damage >= maxHealth * 0.6)
-		spawn_crusher_loot()
+	if(crusher_dmg && crusher_dmg.total_damage >= maxHealth * 0.6)
 		crusher_kill = TRUE
+		if(crusher_loot) // spawn crusher loot, if any
+			spawn_crusher_loot()
 	if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1))
 		var/tab = "megafauna_kills"
 		if(crusher_kill)
@@ -140,6 +133,7 @@
 		span_userdanger("You feast on [L], restoring your health!"))
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
+	L.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
 	L.gib()
 	return TRUE
 
@@ -178,7 +172,7 @@
 	for(var/mob/living/L in grant_achievement)
 		if(L.stat || !L.client)
 			continue
-		L?.mind.add_memory(MEMORY_MEGAFAUNA_KILL, list(DETAIL_PROTAGONIST = L, DETAIL_DEUTERAGONIST = src), STORY_VALUE_LEGENDARY, memory_flags = MEMORY_CHECK_BLIND_AND_DEAF)
+		L.add_mob_memory(/datum/memory/megafauna_slayer, antagonist = src)
 		L.client.give_award(/datum/award/achievement/boss/boss_killer, L)
 		L.client.give_award(achievement_type, L)
 		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/kinetic_crusher))
@@ -189,7 +183,7 @@
 
 /datum/action/innate/megafauna_attack
 	name = "Megafauna Attack"
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = ""
 	var/chosen_message
 	var/chosen_attack_num = 0

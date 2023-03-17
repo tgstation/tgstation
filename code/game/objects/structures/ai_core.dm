@@ -4,7 +4,7 @@
 	density = TRUE
 	anchored = FALSE
 	name = "\improper AI core"
-	icon = 'icons/mob/ai.dmi'
+	icon = 'icons/mob/silicon/ai.dmi'
 	icon_state = "0"
 	desc = "The framework for an artificial intelligence core."
 	max_integrity = 500
@@ -122,7 +122,7 @@
 		return FALSE
 	if(!SSmapping.level_trait(T.z,ZTRAIT_STATION))
 		return FALSE
-	if(!istype(T, /turf/open/floor))
+	if(!isfloorturf(T))
 		return FALSE
 	return TRUE
 
@@ -352,6 +352,10 @@
 		ai_mob = new /mob/living/silicon/ai(loc, laws, the_brainmob)
 		laws = null //we're giving the new AI this datum, so let's not delete it when we qdel(src) 5 lines from now
 
+	var/datum/antagonist/malf_ai/malf_datum = IS_MALF_AI(ai_mob)
+	if(malf_datum)
+		malf_datum.add_law_zero()
+
 	if(core_mmi.force_replace_ai_name)
 		ai_mob.fully_replace_character_name(ai_mob.name, core_mmi.replacement_ai_name())
 	if(core_mmi.braintype == "Android")
@@ -424,7 +428,7 @@ That prevents a few funky behaviors.
 		to_chat(user, "[span_boldnotice("Transfer successful")]: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
 		AI.battery = circuit.battery
-		if(core_mmi.braintype == "Android")
+		if(core_mmi && core_mmi.braintype == "Android")
 			AI.posibrain_inside = TRUE
 		else
 			AI.posibrain_inside = FALSE

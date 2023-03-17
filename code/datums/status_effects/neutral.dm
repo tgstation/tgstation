@@ -171,21 +171,22 @@
 	if(give_alert_override)
 		give_alert_type = give_alert_override
 
-	if(offered && owner.CanReach(offered) && !IS_DEAD_OR_INCAP(offered) && offered.can_hold_items())
+	if(offered && is_taker_elligible(offered))
 		register_candidate(offered)
 	else
 		for(var/mob/living/carbon/possible_taker in orange(1, owner))
-			if(!owner.CanReach(possible_taker) || IS_DEAD_OR_INCAP(possible_taker) || !possible_taker.can_hold_items())
+			if(!is_taker_elligible(possible_taker))
 				continue
+
 			register_candidate(possible_taker)
 
 	if(!possible_takers) // no one around
 		qdel(src)
 		return
 
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/check_owner_in_range)
-	RegisterSignal(offered_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/dropped_item)
-	//RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_owner_in_range))
+	RegisterSignals(offered_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(dropped_item))
+	//RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(check_fake_out))
 
 /datum/status_effect/offering/Destroy()
 	for(var/i in possible_takers)
@@ -200,7 +201,7 @@
 	if(!G)
 		return
 	LAZYADD(possible_takers, possible_candidate)
-	RegisterSignal(possible_candidate, COMSIG_MOVABLE_MOVED, .proc/check_taker_in_range)
+	RegisterSignal(possible_candidate, COMSIG_MOVABLE_MOVED, PROC_REF(check_taker_in_range))
 	G.setup(possible_candidate, owner, offered_item)
 
 /// Remove the alert and signals for the specified carbon mob. Automatically removes the status effect when we lost the last taker
@@ -233,6 +234,87 @@
 /datum/status_effect/offering/proc/dropped_item(obj/item/source)
 	SIGNAL_HANDLER
 	qdel(src)
+
+/**
+ * Is our taker valid as a target for the offering? Meant to be used when registering
+ * takers in `on_creation()`. You should override `additional_taker_check()` instead of this.
+ *
+ * Returns `TRUE` if the taker is valid as a target for the offering.
+ */
+/datum/status_effect/offering/proc/is_taker_elligible(mob/living/carbon/taker)
+	return owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker) && additional_taker_check(taker)
+
+
+/**
+ * Additional checks added to `CanReach()` and `IS_DEAD_OR_INCAP()` in `is_taker_elligible()`.
+ * Should be what you override instead of `is_taker_elligible()`. By default, checks if the
+ * taker can hold items.
+ *
+ * Returns `TRUE` if the taker is valid as a target for the offering based on these
+ * additional checks.
+ */
+/datum/status_effect/offering/proc/additional_taker_check(mob/living/carbon/taker)
+	return taker.can_hold_items()
+
+
+/**
+ * This status effect is meant only for items that you don't actually receive
+ * when offered, mostly useful for `/obj/item/hand_item` subtypes.
+ */
+/datum/status_effect/offering/no_item_received
+
+
+/datum/status_effect/offering/no_item_received/additional_taker_check(mob/living/carbon/taker)
+	return TRUE
+
+
+/**
+ * This status effect is meant only to be used for offerings that require the target to
+ * be resting (like when you're trying to give them a hand to help them up).
+ * Also doesn't require them to have their hands free (since you're not giving them
+ * anything).
+ */
+/datum/status_effect/offering/no_item_received/needs_resting
+
+
+/datum/status_effect/offering/no_item_received/needs_resting/additional_taker_check(mob/living/carbon/taker)
+	return taker.body_position == LYING_DOWN
+
+
+/datum/status_effect/offering/no_item_received/needs_resting/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override, mob/living/carbon/offered)
+	. = ..()
+	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_owner_standing))
+
+
+/datum/status_effect/offering/no_item_received/needs_resting/register_candidate(mob/living/carbon/possible_candidate)
+	. = ..()
+	RegisterSignal(possible_candidate, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_candidate_resting))
+
+
+/datum/status_effect/offering/no_item_received/needs_resting/remove_candidate(mob/living/carbon/removed_candidate)
+	UnregisterSignal(removed_candidate, COMSIG_LIVING_SET_BODY_POSITION)
+	return ..()
+
+
+/// Simple signal handler that ensures that, if the owner stops standing, the offer no longer stands either!
+/datum/status_effect/offering/no_item_received/needs_resting/proc/check_owner_standing(mob/living/carbon/owner)
+	if(src.owner.body_position == STANDING_UP)
+		return
+
+	// This doesn't work anymore if the owner is no longer standing up, sorry!
+	qdel(src)
+
+
+/// Simple signal handler that ensures that, should a candidate now be standing up, the offer won't be standing for them anymore!
+/datum/status_effect/offering/no_item_received/needs_resting/proc/check_candidate_resting(mob/living/carbon/candidate)
+	SIGNAL_HANDLER
+
+	if(candidate.body_position == LYING_DOWN)
+		return
+
+	// No longer lying down? You're no longer eligible to take the offer, sorry!
+	remove_candidate(candidate)
+
 
 /datum/status_effect/offering/secret_handshake
 	id = "secret_handshake"
@@ -342,14 +424,14 @@
 
 		//phase 1
 		if(1 to EIGENSTASIUM_PHASE_1_END)
-			owner.set_timed_status_effect(4 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			owner.set_jitter_if_lower(4 SECONDS)
 			owner.adjust_nutrition(-4)
 
 		//phase 2
 		if(EIGENSTASIUM_PHASE_1_END to EIGENSTASIUM_PHASE_2_END)
 			if(current_cycle == 51)
 				to_chat(owner, span_userdanger("You start to convlse violently as you feel your consciousness merges across realities, your possessions flying wildy off your body!"))
-				owner.set_timed_status_effect(400 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+				owner.set_jitter_if_lower(400 SECONDS)
 				owner.Knockdown(10)
 
 			var/list/items = list()
@@ -377,14 +459,14 @@
 			//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
 			switch(phase_3_cycle) //Loops 0 -> 1 -> 2 -> 1 -> 2 -> 1 ...ect.
 				if(0)
-					owner.set_timed_status_effect(200 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+					owner.set_jitter_if_lower(200 SECONDS)
 					to_chat(owner, span_userdanger("Your eigenstate starts to rip apart, drawing in alternative reality versions of yourself!"))
 				if(1)
 					var/typepath = owner.type
 					alt_clone = new typepath(owner.loc)
 					alt_clone.appearance = owner.appearance
 					alt_clone.real_name = owner.real_name
-					RegisterSignal(alt_clone, COMSIG_PARENT_QDELETING, .proc/remove_clone_from_var)
+					RegisterSignal(alt_clone, COMSIG_PARENT_QDELETING, PROC_REF(remove_clone_from_var))
 					owner.visible_message("[owner] splits into seemingly two versions of themselves!")
 					do_teleport(alt_clone, get_turf(alt_clone), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 					do_sparks(5,FALSE,alt_clone)
@@ -406,17 +488,16 @@
 			do_teleport(owner, get_turf(owner), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 			do_sparks(5, FALSE, owner)
 			owner.Sleeping(100)
-			owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			owner.set_jitter_if_lower(100 SECONDS)
 			to_chat(owner, span_userdanger("You feel your eigenstate settle, as \"you\" become an alternative version of yourself!"))
 			owner.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
-			log_game("FERMICHEM: [owner] ckey: [owner.key] has become an alternative universe version of themselves.")
+			owner.log_message("has become an alternative universe version of themselves via EIGENSTASIUM.", LOG_GAME)
 			//new you new stuff
 			SSquirks.randomise_quirks(owner)
 			owner.reagents.remove_all(1000)
-			var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
-			mood.remove_temp_moods() //New you, new moods.
+			owner.mob_mood.remove_temp_moods() //New you, new moods.
 			var/mob/living/carbon/human/human_mob = owner
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip)
+			owner.add_mood_event("Eigentrip", /datum/mood_event/eigentrip)
 			if(QDELETED(human_mob))
 				return
 			if(prob(1))//low chance of the alternative reality returning to monkey
@@ -424,7 +505,7 @@
 				monkey_tail.Insert(human_mob, drop_if_replaced = FALSE)
 			var/datum/species/human_species = human_mob.dna?.species
 			if(human_species)
-				human_species.randomize_main_appearance_element(human_mob)
+				human_species.randomize_features(human_mob)
 				human_species.randomize_active_underwear(human_mob)
 
 			owner.remove_status_effect(/datum/status_effect/eigenstasium)

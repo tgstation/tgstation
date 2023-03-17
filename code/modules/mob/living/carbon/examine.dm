@@ -6,7 +6,7 @@
 	var/t_has = p_have()
 	var/t_is = p_are()
 
-	. = list("<span class='info'>This is [icon2html(src, user)] \a <EM>[src]</EM>!>")
+	. = list("<span class='info'>This is [icon2html(src, user)] \a <EM>[src]</EM>!")
 	var/obscured = check_obscured_slots()
 
 	if (handcuffed)
@@ -18,9 +18,10 @@
 	if(wear_neck && !(obscured & ITEM_SLOT_NECK))
 		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck."
 
-	for(var/obj/item/I in held_items)
-		if(!(I.item_flags & ABSTRACT))
-			. += "[t_He] [t_is] holding [I.get_examine_string(user)] in [t_his] [get_held_index_name(get_held_index_of_item(I))]."
+	for(var/obj/item/held_thing in held_items)
+		if(held_thing.item_flags & (ABSTRACT|EXAMINE_SKIP|HAND_ITEM))
+			continue
+		. += "[t_He] [t_is] holding [held_thing.get_examine_string(user)] in [t_his] [get_held_index_name(get_held_index_of_item(held_thing))]."
 
 	if (back)
 		. += "[t_He] [t_has] [back.get_examine_string(user)] on [t_his] back."
@@ -52,21 +53,18 @@
 	for(var/X in disabled)
 		var/obj/item/bodypart/BP = X
 		var/damage_text
-		if(!(BP.get_damage(include_stamina = FALSE) >= BP.max_damage)) //Stamina is disabling the limb
-			damage_text = "limp and lifeless"
-		else
-			damage_text = (BP.brute_dam >= BP.burn_dam) ? BP.heavy_brute_msg : BP.heavy_burn_msg
+		damage_text = (BP.brute_dam >= BP.burn_dam) ? BP.heavy_brute_msg : BP.heavy_burn_msg
 		msg += "<B>[capitalize(t_his)] [BP.name] is [damage_text]!</B>\n"
 
 	for(var/t in missing)
-		if(t==BODY_ZONE_HEAD)
+		if(t == BODY_ZONE_HEAD)
 			msg += "[span_deadsay("<B>[t_His] [parse_zone(t)] is missing!</B>")]\n"
 			continue
 		msg += "[span_warning("<B>[t_His] [parse_zone(t)] is missing!</B>")]\n"
 
 
 	var/temp = getBruteLoss()
-	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
+	if(!(user == src && has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))) //fake healthy
 		if(temp)
 			if (temp < 25)
 				msg += "[t_He] [t_has] minor bruising.\n"
@@ -135,20 +133,19 @@
 	if (!isnull(trait_exam))
 		. += trait_exam
 
-	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
-	if(mood)
-		switch(mood.shown_mood)
-			if(-INFINITY to MOOD_LEVEL_SAD4)
+	if(mob_mood)
+		switch(mob_mood.shown_mood)
+			if(-INFINITY to MOOD_SAD4)
 				. += "[t_He] look[p_s()] depressed."
-			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
+			if(MOOD_SAD4 to MOOD_SAD3)
 				. += "[t_He] look[p_s()] very sad."
-			if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
+			if(MOOD_SAD3 to MOOD_SAD2)
 				. += "[t_He] look[p_s()] a bit down."
-			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
+			if(MOOD_HAPPY2 to MOOD_HAPPY3)
 				. += "[t_He] look[p_s()] quite happy."
-			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
+			if(MOOD_HAPPY3 to MOOD_HAPPY4)
 				. += "[t_He] look[p_s()] very happy."
-			if(MOOD_LEVEL_HAPPY4 to INFINITY)
+			if(MOOD_HAPPY4 to INFINITY)
 				. += "[t_He] look[p_s()] ecstatic."
 	. += "</span>"
 
@@ -158,13 +155,14 @@
 	. = ..()
 	. += span_notice("<i>You examine [src] closer, and note the following...</i>")
 
-	//On closer inspection, this man isnt a man at all!
-	var/list/covered_zones = get_covered_body_zones()
-	for(var/obj/item/bodypart/part as anything in bodyparts)
-		if(part.body_zone in covered_zones)
-			continue
-		if(part.limb_id != (dna.species.examine_limb_id ? dna.species.examine_limb_id : dna.species.id))
-			. += "[span_info("[p_they(TRUE)] [p_have()] \an [part.name].")]"
+	if(dna) //not all carbons have it. eg - xenos
+		//On closer inspection, this man isnt a man at all!
+		var/list/covered_zones = get_covered_body_zones()
+		for(var/obj/item/bodypart/part as anything in bodyparts)
+			if(part.body_zone in covered_zones)
+				continue
+			if(part.limb_id != (dna.species.examine_limb_id ? dna.species.examine_limb_id : dna.species.id))
+				. += "[span_info("[p_they(TRUE)] [p_have()] \an [part.name].")]"
 
 	var/list/visible_scars
 	for(var/i in all_scars)

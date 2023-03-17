@@ -10,18 +10,41 @@
 	power_coeff = 1
 
 /datum/mutation/human/epilepsy/on_life(delta_time, times_fired)
-	if(DT_PROB(0.5 * GET_MUTATION_SYNCHRONIZER(src), delta_time) && owner.stat == CONSCIOUS)
-		owner.visible_message(span_danger("[owner] starts having a seizure!"), span_userdanger("You have a seizure!"))
-		owner.Unconscious(200 * GET_MUTATION_POWER(src))
-		owner.set_timed_status_effect(2000 SECONDS * GET_MUTATION_POWER(src), /datum/status_effect/jitter)
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "epilepsy", /datum/mood_event/epilepsy)
-		addtimer(CALLBACK(src, .proc/jitter_less), 90)
+	if(DT_PROB(0.5 * GET_MUTATION_SYNCHRONIZER(src), delta_time))
+		trigger_seizure()
+
+/datum/mutation/human/epilepsy/proc/trigger_seizure()
+	if(owner.stat != CONSCIOUS)
+		return
+	owner.visible_message(span_danger("[owner] starts having a seizure!"), span_userdanger("You have a seizure!"))
+	owner.Unconscious(200 * GET_MUTATION_POWER(src))
+	owner.set_jitter(2000 SECONDS * GET_MUTATION_POWER(src)) //yes this number looks crazy but the jitter animations are amplified based on the duration.
+	owner.add_mood_event("epilepsy", /datum/mood_event/epilepsy)
+	addtimer(CALLBACK(src, PROC_REF(jitter_less)), 90)
 
 /datum/mutation/human/epilepsy/proc/jitter_less()
 	if(QDELETED(owner))
 		return
 
-	owner.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter)
+	owner.set_jitter(20 SECONDS)
+
+/datum/mutation/human/epilepsy/on_acquiring(mob/living/carbon/human/acquirer)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_FLASHED, PROC_REF(get_flashed_nerd))
+
+/datum/mutation/human/epilepsy/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_FLASHED)
+
+/datum/mutation/human/epilepsy/proc/get_flashed_nerd()
+	SIGNAL_HANDLER
+
+	if(!prob(30))
+		return
+	trigger_seizure()
+
 
 //Unstable DNA induces random mutations!
 /datum/mutation/human/bad_dna
@@ -81,7 +104,7 @@
 	if(DT_PROB(2.5, delta_time) && owner.stat == CONSCIOUS)
 		owner.emote("scream")
 		if(prob(25))
-			owner.hallucination += 20
+			owner.adjust_hallucinations(40 SECONDS)
 
 //Dwarfism shrinks your body and lets you pass tables.
 /datum/mutation/human/dwarfism
@@ -91,26 +114,18 @@
 	difficulty = 16
 	instability = 5
 	conflicts = list(/datum/mutation/human/gigantism)
-	locked = TRUE    // Default intert species for now, so locked from regular pool.
+	locked = TRUE // Default intert species for now, so locked from regular pool.
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	var/matrix/new_transform = matrix()
-	new_transform.Scale(1, 0.8)
-	owner.transform = new_transform.Multiply(owner.transform)
-	passtable_on(owner, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	var/matrix/new_transform = matrix()
-	new_transform.Scale(1, 1.25)
-	owner.transform = new_transform.Multiply(owner.transform)
-	passtable_off(owner, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
 
 //Clumsiness has a very large amount of small drawbacks depending on item.
@@ -407,7 +422,7 @@
 	. = ..()
 	if(.)
 		return
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
 /datum/mutation/human/extrastun/on_losing()
 	. = ..()
@@ -438,7 +453,7 @@
 	. = ..()
 	if(.)
 		return TRUE
-	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/bloody_shower)
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(bloody_shower))
 
 /datum/mutation/human/martyrdom/on_losing()
 	. = ..()
@@ -451,25 +466,26 @@
 
 	if(new_stat != HARD_CRIT)
 		return
-	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, 1)
+	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, TRUE)
 
 	for(var/obj/item/organ/I in organs)
 		qdel(I)
 
 	explosion(owner, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
-	for(var/mob/living/carbon/human/H in view(2,owner))
-		var/obj/item/organ/internal/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+	for(var/mob/living/carbon/human/splashed in view(2, owner))
+		var/obj/item/organ/internal/eyes/eyes = splashed.getorganslot(ORGAN_SLOT_EYES)
 		if(eyes)
-			to_chat(H, span_userdanger("You are blinded by a shower of blood!"))
+			to_chat(splashed, span_userdanger("You are blinded by a shower of blood!"))
+			eyes.applyOrganDamage(5)
 		else
-			to_chat(H, span_userdanger("You are knocked down by a wave of... blood?!"))
-		H.Stun(20)
-		H.blur_eyes(20)
-		eyes?.applyOrganDamage(5)
-		H.adjust_timed_status_effect(3 SECONDS, /datum/status_effect/confusion)
-	for(var/mob/living/silicon/S in view(2,owner))
-		to_chat(S, span_userdanger("Your sensors are disabled by a shower of blood!"))
-		S.Paralyze(60)
+			to_chat(splashed, span_userdanger("You are knocked down by a wave of... blood?!"))
+		splashed.Stun(2 SECONDS)
+		splashed.set_eye_blur_if_lower(40 SECONDS)
+		splashed.adjust_confusion(3 SECONDS)
+	for(var/mob/living/silicon/borgo in view(2, owner))
+		to_chat(borgo, span_userdanger("Your sensors are disabled by a shower of blood!"))
+		borgo.Paralyze(6 SECONDS)
+	owner.investigate_log("has been gibbed by the martyrdom mutation.", INVESTIGATE_DEATHS)
 	owner.gib()
 
 /datum/mutation/human/headless
@@ -495,7 +511,7 @@
 		head.drop_organs()
 		qdel(head)
 		owner.regenerate_icons()
-	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, .proc/abortattachment)
+	RegisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, PROC_REF(abortattachment))
 
 /datum/mutation/human/headless/on_losing()
 	. = ..()
@@ -504,7 +520,7 @@
 	var/obj/item/organ/internal/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
 	if(brain) //so this doesn't instantly kill you. we could delete the brain, but it lets people cure brain issues they /really/ shouldn't be
 		brain.zone = BODY_ZONE_HEAD
-	UnregisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB)
+	UnregisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB)
 	var/successful = owner.regenerate_limb(BODY_ZONE_HEAD)
 	if(!successful)
 		stack_trace("HARS mutation head regeneration failed! (usually caused by headless syndrome having a head)")

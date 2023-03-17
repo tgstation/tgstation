@@ -78,7 +78,7 @@
 /obj/item/reagent_containers/borghypo
 	name = "cyborg hypospray"
 	desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment."
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/medical/syringe.dmi'
 	inhand_icon_state = "hypo"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -178,7 +178,7 @@
 			balloon_alert(user, "[amount_per_transfer_from_this] unit\s injected")
 			log_combat(user, injectee, "injected", src, "(CHEMICALS: [selected_reagent])")
 	else
-		balloon_alert(user, "[user.zone_selected] is blocked!")
+		balloon_alert(user, "[parse_zone(user.zone_selected)] is blocked!")
 
 /obj/item/reagent_containers/borghypo/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -215,9 +215,12 @@
 		if(reagent.name == action)
 			selected_reagent = reagent
 			. = TRUE
-			playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
 
-			var/mob/living/silicon/robot/cyborg = src.loc
+			var/mob/living/silicon/robot/cyborg = loc
+			if(istype(loc, /obj/item/robot_model))
+				var/obj/item/robot_model/container_model = loc
+				cyborg = container_model.robot
+			playsound(cyborg, 'sound/effects/pop.ogg', 50, FALSE)
 			balloon_alert(cyborg, "dispensing [selected_reagent.name]")
 			break
 
@@ -299,7 +302,7 @@
 /obj/item/reagent_containers/borghypo/borgshaker
 	name = "cyborg shaker"
 	desc = "An advanced drink synthesizer and mixer."
-	icon = 'icons/obj/drinks.dmi'
+	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "shaker"
 	possible_transfer_amounts = list(5,10,20)
 	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
@@ -345,17 +348,18 @@
 /obj/item/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)
-		return
+		return .
 	if(!selected_reagent)
 		balloon_alert(user, "no reagent selected!")
-		return
+		return .
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(target.is_refillable())
 		if(!stored_reagents.has_reagent(selected_reagent.type, amount_per_transfer_from_this))
 			balloon_alert(user, "not enough [selected_reagent.name]!")
-			return
+			return .
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			balloon_alert(user, "[target] is full!")
-			return
+			return .
 
 		// This is the in-between where we're storing the reagent we're going to pour into the container
 		// because we cannot specify a singular reagent to transfer in trans_to
@@ -365,11 +369,13 @@
 
 		shaker.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
+	return .
 
 /obj/item/reagent_containers/borghypo/borgshaker/hacked
 	name = "cyborg shaker"
 	desc = "Will mix drinks that knock them dead."
 	icon_state = "threemileislandglass"
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	tgui_theme = "syndicate"
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	default_reagent_types = HACKED_SERVICE_REAGENTS

@@ -7,8 +7,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
@@ -40,6 +40,7 @@
 	. = ..()
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!check_sprite(target))
 		return
 	if(active_dummy)//I now present you the blackli(f)st
@@ -59,10 +60,10 @@
 			return
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, TRUE, -6)
 	to_chat(user, span_notice("Scanned [target]."))
-	var/obj/temp = new/obj()
+	var/obj/temp = new /obj()
 	temp.appearance = target.appearance
 	temp.layer = initial(target.layer) // scanning things in your inventory
-	temp.plane = initial(target.plane)
+	SET_PLANE_EXPLICIT(temp, initial(plane), src)
 	saved_appearance = temp.appearance
 
 /obj/item/chameleon/proc/check_sprite(atom/target)
@@ -168,7 +169,7 @@
 				amount = 25
 
 		can_move = world.time + amount
-		step(src, direction)
+		try_step_multiz(direction)
 	return
 
 /obj/effect/dummy/chameleon/Destroy()

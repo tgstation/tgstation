@@ -8,6 +8,8 @@
 	anchored = FALSE
 	density = TRUE
 	use_power = NO_POWER_USE
+	///category for plumbing RCD
+	category="Synthesizers"
 
 	///units we pump per second
 	var/pump_power = 1

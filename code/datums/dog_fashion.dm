@@ -17,19 +17,21 @@
 	name = replacetext(name, "REAL_NAME", M.real_name)
 	desc = replacetext(desc, "NAME", name)
 
-/datum/dog_fashion/proc/apply(mob/living/simple_animal/pet/dog/D)
+/datum/dog_fashion/proc/apply(mob/living/basic/pet/dog/D)
 	if(name)
 		D.name = name
 	if(desc)
 		D.desc = desc
-	if(emote_see)
-		D.emote_see = string_list(emote_see)
-	if(emote_hear)
-		D.emote_hear = string_list(emote_hear)
-	if(speak)
-		D.speak = string_list(speak)
 	if(speak_emote)
 		D.speak_emote = string_list(speak_emote)
+
+/datum/dog_fashion/proc/apply_to_speech(datum/ai_planning_subtree/random_speech/speech)
+	if(emote_see)
+		speech.emote_see = string_list(emote_see)
+	if(emote_hear)
+		speech.emote_hear = string_list(emote_hear)
+	if(speak)
+		speech.speak = string_list(speak)
 
 /datum/dog_fashion/proc/get_overlay(dir)
 	if(icon_file && obj_icon_state)
@@ -40,10 +42,17 @@
 
 
 /datum/dog_fashion/head
-	icon_file = 'icons/mob/corgi_head.dmi'
+	icon_file = 'icons/mob/simple/corgi_head.dmi'
 
 /datum/dog_fashion/back
-	icon_file = 'icons/mob/corgi_back.dmi'
+	icon_file = 'icons/mob/simple/corgi_back.dmi'
+
+/datum/dog_fashion/back/armorvest
+	obj_icon_state = "armor"
+
+/datum/dog_fashion/back/deathsquad
+	name = "Trooper REAL_NAME"
+	desc = "That's not red paint. That's real corgi blood."
 
 /datum/dog_fashion/head/helmet
 	name = "Sergeant REAL_NAME"
@@ -175,10 +184,6 @@
 	desc = "Honkman's best friend."
 	speak = list("HONK!", "Honk!")
 	emote_see = list("plays tricks.", "slips.")
-
-/datum/dog_fashion/back/deathsquad
-	name = "Trooper REAL_NAME"
-	desc = "That's not red paint. That's real corgi blood."
 
 /datum/dog_fashion/head/festive
 	name = "Festive REAL_NAME"

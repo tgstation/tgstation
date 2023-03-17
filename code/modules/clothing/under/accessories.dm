@@ -36,13 +36,7 @@
 		pixel_y -= 8
 	U.add_overlay(src)
 
-	if (islist(U.armor) || isnull(U.armor)) // This proc can run before /obj/Initialize has run for U and src,
-		U.armor = getArmor(arglist(U.armor)) // we have to check that the armor list has been transformed into a datum before we try to call a proc on it
-																					// This is safe to do as /obj/Initialize only handles setting up the datum if actually needed.
-	if (islist(armor) || isnull(armor))
-		armor = getArmor(arglist(armor))
-
-	U.armor = U.armor.attachArmor(armor)
+	U.set_armor(U.get_armor().add_other_armor(get_armor()))
 
 	if(isliving(user))
 		on_uniform_equip(U, user)
@@ -53,7 +47,7 @@
 	if(U.atom_storage && U.atom_storage.real_location?.resolve() == src)
 		QDEL_NULL(U.atom_storage)
 
-	U.armor = U.armor.detachArmor(armor)
+	U.set_armor(U.get_armor().subtract_other_armor(get_armor()))
 
 	if(isliving(user))
 		on_uniform_dropped(U, user)
@@ -63,7 +57,7 @@
 		pixel_x -= 8
 		pixel_y += 8
 	layer = initial(layer)
-	plane = initial(plane)
+	SET_PLANE_IMPLICIT(src, initial(plane))
 	U.cut_overlays()
 	U.attached_accessory = null
 	U.accessory_overlay = null
@@ -76,7 +70,7 @@
 	return
 
 /obj/item/clothing/accessory/attack_self_secondary(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	if(user.can_perform_action(src, NEED_DEXTERITY))
 		above_suit = !above_suit
 		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
 		return
@@ -92,14 +86,22 @@
 	name = "waistcoat"
 	desc = "For some classy, murderous fun."
 	icon_state = "waistcoat"
-	inhand_icon_state = "waistcoat"
+	inhand_icon_state = "wcoat"
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	minimize_when_attached = FALSE
 	attachment_slot = null
+	greyscale_config = /datum/greyscale_config/waistcoat
+	greyscale_config_worn = /datum/greyscale_config/waistcoat_worn
+	greyscale_colors = "#414344"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/accessory/vest_sheriff
 	name = "sheriff vest"
 	desc = "Now you just have to pick your favourite deputy."
 	icon_state = "vest_sheriff"
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	inhand_icon_state = "vest_sheriff"
 	minimize_when_attached = TRUE
 	attachment_slot = null
@@ -109,6 +111,8 @@
 	desc = "The final touch that holds it all together."
 	icon_state = "maidcorset"
 	inhand_icon_state = "maidapron"
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	minimize_when_attached = FALSE
 	attachment_slot = null
 
@@ -117,6 +121,8 @@
 	desc = "The best part of a maid costume."
 	icon_state = "maidapron"
 	inhand_icon_state = "maidapron"
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	minimize_when_attached = FALSE
 	attachment_slot = null
 
@@ -165,9 +171,9 @@
 							GLOB.commendations += "[user.real_name] awarded <b>[M.real_name]</b> the <span class='medaltext'>[name]</span>! \n- [input]"
 							commended = TRUE
 							desc += "<br>The inscription reads: [input] - [user.real_name]"
-							log_game("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
+							M.log_message("was given the following commendation by <b>[key_name(user)]</b>: [input]", LOG_GAME, color = "green")
 							message_admins("<b>[key_name_admin(M)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
-							add_memory_in_range(M, 7, MEMORY_RECEIVED_MEDAL, list(DETAIL_PROTAGONIST = M, DETAIL_MEDAL_TYPE = src, DETAIL_DEUTERAGONIST = user, DETAIL_MEDAL_REASON = input), STORY_VALUE_AMAZING)
+							add_memory_in_range(M, 7, /datum/memory/received_medal, protagonist = M, deuteragonist =  user, medal_type = src, medal_text = input)
 
 		else
 			to_chat(user, span_warning("Medals can only be pinned on jumpsuits!"))
@@ -246,8 +252,11 @@
 	desc = "An eccentric medal made of plasma."
 	icon_state = "plasma"
 	medaltype = "medal-plasma"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = -10, ACID = 0) //It's made of plasma. Of course it's flammable.
+	armor_type = /datum/armor/medal_plasma
 	custom_materials = list(/datum/material/plasma=1000)
+
+/datum/armor/medal_plasma
+	fire = -10
 
 /obj/item/clothing/accessory/medal/plasma/Initialize(mapload)
 	. = ..()
@@ -326,7 +335,7 @@
 	user.visible_message(span_notice("[user] shows [user.p_their()] attorney's badge."), span_notice("You show your attorney's badge."))
 
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, mob/living/user)
-	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
+	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, PROC_REF(table_slam))
 	user.bubble_icon = "lawyer"
 
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_dropped(obj/item/clothing/under/U, mob/living/user)
@@ -335,7 +344,7 @@
 
 /obj/item/clothing/accessory/lawyers_badge/proc/table_slam(mob/living/source, obj/structure/table/the_table)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/handle_table_slam, source)
+	INVOKE_ASYNC(src, PROC_REF(handle_table_slam), source)
 
 /obj/item/clothing/accessory/lawyers_badge/proc/handle_table_slam(mob/living/user)
 	user.say("Objection!!", spans = list(SPAN_YELL), forced=TRUE)
@@ -348,10 +357,13 @@
 	desc = "Can protect your clothing from ink stains, but you'll look like a nerd if you're using one."
 	icon_state = "pocketprotector"
 
-/obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
+/obj/item/clothing/accessory/pocketprotector/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/pocketprotector)
+	create_storage(storage_type = /datum/storage/pockets/pocketprotector)
+
+/obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
+	. = ..()
 
 	new /obj/item/pen/red(src)
 	new /obj/item/pen(src)
@@ -374,12 +386,12 @@
 /obj/item/clothing/accessory/clown_enjoyer_pin/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(HAS_TRAIT(L, TRAIT_CLOWN_ENJOYER))
-		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "clown_enjoyer_pin", /datum/mood_event/clown_enjoyer_pin)
+		L.add_mood_event("clown_enjoyer_pin", /datum/mood_event/clown_enjoyer_pin)
 
 /obj/item/clothing/accessory/clown_enjoyer_pin/on_uniform_dropped(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(HAS_TRAIT(L, TRAIT_CLOWN_ENJOYER))
-		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "clown_enjoyer_pin")
+		L.clear_mood_event("clown_enjoyer_pin")
 
 /obj/item/clothing/accessory/mime_fan_pin
 	name = "\improper Mime Pin"
@@ -389,12 +401,12 @@
 /obj/item/clothing/accessory/mime_fan_pin/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(HAS_TRAIT(L, TRAIT_MIME_FAN))
-		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "mime_fan_pin", /datum/mood_event/mime_fan_pin)
+		L.add_mood_event("mime_fan_pin", /datum/mood_event/mime_fan_pin)
 
 /obj/item/clothing/accessory/mime_fan_pin/on_uniform_dropped(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(HAS_TRAIT(L, TRAIT_MIME_FAN))
-		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "mime_fan_pin")
+		L.clear_mood_event("mime_fan_pin")
 
 ////////////////
 //OONGA BOONGA//
@@ -404,23 +416,50 @@
 	name = "bone talisman"
 	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
 	icon_state = "talisman"
-	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 20, BIO = 20, FIRE = 0, ACID = 25)
+	armor_type = /datum/armor/accessory_talisman
 	attachment_slot = null
+
+/datum/armor/accessory_talisman
+	melee = 5
+	bullet = 5
+	laser = 5
+	energy = 5
+	bomb = 20
+	bio = 20
+	acid = 25
 
 /obj/item/clothing/accessory/skullcodpiece
 	name = "skull codpiece"
 	desc = "A skull shaped ornament, intended to protect the important things in life."
 	icon_state = "skull"
-	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 20, BIO = 20, FIRE = 0, ACID = 25)
+	armor_type = /datum/armor/accessory_skullcodpiece
 	attachment_slot = GROIN
+
+/datum/armor/accessory_skullcodpiece
+	melee = 5
+	bullet = 5
+	laser = 5
+	energy = 5
+	bomb = 20
+	bio = 20
+	acid = 25
 
 /obj/item/clothing/accessory/skilt
 	name = "Sinew Skirt"
 	desc = "For the last time. IT'S A KILT not a skirt."
 	icon_state = "skilt"
 	minimize_when_attached = FALSE
-	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 20, BIO = 20, FIRE = 0, ACID = 25)
+	armor_type = /datum/armor/accessory_skilt
 	attachment_slot = GROIN
+
+/datum/armor/accessory_skilt
+	melee = 5
+	bullet = 5
+	laser = 5
+	energy = 5
+	bomb = 20
+	bio = 20
+	acid = 25
 
 /obj/item/clothing/accessory/allergy_dogtag
 	name = "Allergy dogtag"
@@ -437,7 +476,7 @@
 
 /obj/item/clothing/accessory/allergy_dogtag/on_uniform_equip(obj/item/clothing/under/U, user)
 	. = ..()
-	RegisterSignal(U,COMSIG_PARENT_EXAMINE,.proc/on_examine)
+	RegisterSignal(U,COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /obj/item/clothing/accessory/allergy_dogtag/on_uniform_dropped(obj/item/clothing/under/U, user)
 	. = ..()
@@ -448,17 +487,31 @@
 	SIGNAL_HANDLER
 	examine_list += "The dogtag has a listing of allergies : [display]"
 
+
+/// Reskins for the pride pin accessory, mapped by display name to icon state
+GLOBAL_LIST_INIT(pride_pin_reskins, list(
+	"Rainbow Pride" = "pride",
+	"Bisexual Pride" = "pride_bi",
+	"Pansexual Pride" = "pride_pan",
+	"Asexual Pride" = "pride_ace",
+	"Non-binary Pride" = "pride_enby",
+	"Transgender Pride" = "pride_trans",
+	"Intersex Pride" = "pride_intersex",
+	"Lesbian Pride" = "pride_lesbian",
+))
+
 /obj/item/clothing/accessory/pride
 	name = "pride pin"
-	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your sexuality, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
+	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your pride, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
 	icon_state = "pride"
 	obj_flags = UNIQUE_RENAME
-	unique_reskin = list("Rainbow Pride" = "pride",
-						"Bisexual Pride" = "pride_bi",
-						"Pansexual Pride" = "pride_pan",
-						"Asexual Pride" = "pride_ace",
-						"Non-binary Pride" = "pride_enby",
-						"Transgender Pride" = "pride_trans",
-						"Intersex Pride" = "pride_intersex",
-						"Lesbian Pride" = "pride_lesbian",
-						)
+	infinite_reskin = TRUE
+
+/obj/item/clothing/accessory/pride/Initialize(mapload)
+	. = ..()
+	unique_reskin = GLOB.pride_pin_reskins
+
+/obj/item/clothing/accessory/deaf_pin
+	name = "deaf personnel pin"
+	desc = "Indicates that the wearer is deaf."
+	icon_state = "deaf_pin"

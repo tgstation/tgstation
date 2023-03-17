@@ -1,7 +1,7 @@
 /obj/item/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/toolbox.dmi'
 	icon_state = "toolbox_default"
 	inhand_icon_state = "toolbox_default"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
@@ -26,6 +26,7 @@
 
 /obj/item/storage/toolbox/Initialize(mapload)
 	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	if(has_latches)
 		if(prob(10))
 			latches = "double_latch"
@@ -33,18 +34,16 @@
 				latches = "triple_latch"
 	update_appearance()
 
+	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
+
 /obj/item/storage/toolbox/update_overlays()
 	. = ..()
 	if(has_latches)
 		. += latches
 
-/obj/item/storage/toolbox/Initialize()
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-
-/obj/item/storage/toolbox/suicide_act(mob/user)
+/obj/item/storage/toolbox/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/storage/toolbox/emergency
 	name = "emergency toolbox"
@@ -67,7 +66,6 @@
 
 /obj/item/storage/toolbox/emergency/old
 	name = "rusty red toolbox"
-	icon = 'icons/obj/storage.dmi'
 	icon_state = "toolbox_red_old"
 	has_latches = FALSE
 	material_flags = NONE
@@ -90,7 +88,6 @@
 
 /obj/item/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
-	icon = 'icons/obj/storage.dmi'
 	icon_state = "toolbox_blue_old"
 	has_latches = FALSE
 	has_soul = TRUE
@@ -101,7 +98,7 @@
 	force = 5
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/storage/toolbox/mechanical/old/heirloom/Initialize()
+/obj/item/storage/toolbox/mechanical/old/heirloom/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 
@@ -148,17 +145,20 @@
 	material_flags = NONE
 
 /obj/item/storage/toolbox/electrical/PopulateContents()
-	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	var/pickedcolor = pick(GLOB.cable_colors)
 	new /obj/item/screwdriver(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/t_scanner(src)
 	new /obj/item/crowbar(src)
-	new /obj/item/stack/cable_coil(src,MAXCOIL,pickedcolor)
-	new /obj/item/stack/cable_coil(src,MAXCOIL,pickedcolor)
+	var/obj/item/stack/cable_coil/new_cable_one = new(src, MAXCOIL)
+	new_cable_one.set_cable_color(pickedcolor)
+	var/obj/item/stack/cable_coil/new_cable_two = new(src, MAXCOIL)
+	new_cable_two.set_cable_color(pickedcolor)
 	if(prob(5))
 		new /obj/item/clothing/gloves/color/yellow(src)
 	else
-		new /obj/item/stack/cable_coil(src,MAXCOIL,pickedcolor)
+		var/obj/item/stack/cable_coil/new_cable_three = new(src, MAXCOIL)
+		new_cable_three.set_cable_color(pickedcolor)
 
 /obj/item/storage/toolbox/syndicate
 	name = "suspicious looking toolbox"
@@ -168,7 +168,7 @@
 	throwforce = 18
 	material_flags = NONE
 
-/obj/item/storage/toolbox/syndicate/Initialize()
+/obj/item/storage/toolbox/syndicate/Initialize(mapload)
 	. = ..()
 	atom_storage.silent = TRUE
 
@@ -205,10 +205,10 @@
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
 	material_flags = NONE
 
-/obj/item/storage/toolbox/artistic/Initialize()
+/obj/item/storage/toolbox/artistic/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 20
-	atom_storage.max_slots = 10
+	atom_storage.max_slots = 11
 
 /obj/item/storage/toolbox/artistic/PopulateContents()
 	new /obj/item/storage/crayons(src)
@@ -221,10 +221,10 @@
 	new /obj/item/stack/pipe_cleaner_coil/orange(src)
 	new /obj/item/stack/pipe_cleaner_coil/cyan(src)
 	new /obj/item/stack/pipe_cleaner_coil/white(src)
+	new /obj/item/stack/pipe_cleaner_coil/brown(src)
 
 /obj/item/storage/toolbox/ammo
 	name = "ammo box"
-	icon = 'icons/obj/storage.dmi'
 	desc = "It contains a few clips."
 	icon_state = "ammobox"
 	inhand_icon_state = "ammobox"
@@ -245,7 +245,6 @@
 
 /obj/item/storage/toolbox/maint_kit
 	name = "gun maintenance kit"
-	icon = 'icons/obj/storage.dmi'
 	desc = "It contains some gun maintenance supplies"
 	icon_state = "maint_kit"
 	inhand_icon_state = "ammobox"
@@ -257,44 +256,6 @@
 	new /obj/item/gun_maintenance_supplies(src)
 	new /obj/item/gun_maintenance_supplies(src)
 	new /obj/item/gun_maintenance_supplies(src)
-
-/obj/item/storage/toolbox/infiltrator
-	name = "insidious case"
-	icon = 'icons/obj/storage.dmi'
-	desc = "Bearing the emblem of the Syndicate, this case contains a full infiltrator stealth suit, and has enough room to fit weaponry if necessary."
-	icon_state = "infiltrator_case"
-	inhand_icon_state = "infiltrator_case"
-	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
-	force = 15
-	throwforce = 18
-	w_class = WEIGHT_CLASS_NORMAL
-	has_latches = FALSE
-
-/obj/item/storage/toolbox/infiltrator/Initialize()
-	. = ..()
-	atom_storage.max_slots = 10
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 24
-	atom_storage.set_holdable(list(
-		/obj/item/clothing/head/helmet/infiltrator,
-		/obj/item/clothing/suit/armor/vest/infiltrator,
-		/obj/item/clothing/under/syndicate/bloodred,
-		/obj/item/clothing/gloves/color/infiltrator,
-		/obj/item/clothing/mask/infiltrator,
-		/obj/item/clothing/shoes/combat/sneakboots,
-		/obj/item/gun/ballistic/automatic/pistol,
-		/obj/item/gun/ballistic/revolver,
-		/obj/item/ammo_box
-		))
-
-/obj/item/storage/toolbox/infiltrator/PopulateContents()
-	new /obj/item/clothing/head/helmet/infiltrator(src)
-	new /obj/item/clothing/suit/armor/vest/infiltrator(src)
-	new /obj/item/clothing/under/syndicate/bloodred(src)
-	new /obj/item/clothing/gloves/color/infiltrator(src)
-	new /obj/item/clothing/mask/infiltrator(src)
-	new /obj/item/clothing/shoes/combat/sneakboots(src)
 
 //floorbot assembly
 /obj/item/storage/toolbox/attackby(obj/item/stack/tile/iron/T, mob/user, params)
@@ -310,7 +271,7 @@
 	if(!is_type_in_list(src, allowed_toolbox) && (type != /obj/item/storage/toolbox))
 		return
 	if(contents.len >= 1)
-		to_chat(user, span_warning("They won't fit in, as there is already stuff inside!"))
+		balloon_alert(user, "not empty!")
 		return
 	if(T.use(10))
 		var/obj/item/bot_assembly/floorbot/B = new
@@ -328,16 +289,13 @@
 				B.toolbox_color = "s"
 		user.put_in_hands(B)
 		B.update_appearance()
-		to_chat(user, span_notice("You add the tiles into the empty [name]. They protrude from the top."))
+		B.balloon_alert(user, "tiles added")
 		qdel(src)
 	else
-		to_chat(user, span_warning("You need 10 floor tiles to start building a floorbot!"))
+		balloon_alert(user, "needs 10 tiles!")
 		return
 
 
 /obj/item/storage/toolbox/haunted
 	name = "old toolbox"
 	custom_materials = list(/datum/material/hauntium = 500)
-
-
-
