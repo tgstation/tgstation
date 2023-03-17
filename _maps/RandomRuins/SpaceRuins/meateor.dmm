@@ -81,11 +81,19 @@
 	},
 /turf/open/floor/material/meat,
 /area/ruin/space/meateor)
+"G" = (
+/obj/structure/meateor_fluff/flesh_pod,
+/turf/open/floor/material/meat,
+/area/ruin/space/meateor)
 "L" = (
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/material/meat,
 /area/ruin/space/meateor)
 "O" = (
+/turf/open/floor/material/meat,
+/area/ruin/space/meateor)
+"R" = (
+/obj/structure/meateor_fluff/abandoned_headcrab_egg,
 /turf/open/floor/material/meat,
 /area/ruin/space/meateor)
 "S" = (
@@ -234,9 +242,9 @@ A
 A
 A
 L
-O
+G
 S
-O
+G
 A
 A
 A
@@ -270,7 +278,7 @@ O
 O
 O
 O
-O
+G
 A
 g
 g
@@ -301,7 +309,7 @@ O
 O
 v
 D
-O
+R
 A
 A
 g
@@ -325,6 +333,7 @@ g
 A
 A
 O
+G
 O
 O
 O
@@ -332,8 +341,7 @@ O
 O
 O
 O
-O
-O
+R
 A
 A
 g
@@ -364,7 +372,7 @@ O
 O
 O
 O
-O
+G
 A
 A
 g
@@ -385,7 +393,7 @@ a
 g
 g
 A
-O
+G
 O
 v
 O
@@ -447,7 +455,7 @@ g
 g
 A
 A
-O
+G
 O
 S
 O
@@ -455,7 +463,7 @@ O
 O
 O
 O
-O
+R
 O
 O
 O
@@ -478,7 +486,7 @@ g
 g
 A
 A
-O
+R
 O
 p
 O
@@ -488,7 +496,7 @@ O
 O
 p
 O
-O
+G
 A
 A
 g
@@ -518,7 +526,7 @@ O
 O
 O
 O
-O
+R
 A
 A
 A
@@ -578,7 +586,7 @@ q
 C
 D
 O
-O
+R
 D
 A
 A
@@ -603,7 +611,7 @@ g
 g
 A
 A
-O
+R
 O
 j
 k
@@ -611,7 +619,7 @@ O
 q
 v
 O
-O
+R
 A
 A
 g
@@ -665,7 +673,7 @@ g
 g
 g
 A
-O
+R
 O
 v
 O
@@ -673,7 +681,7 @@ O
 O
 O
 O
-O
+G
 A
 A
 A
@@ -698,7 +706,7 @@ g
 A
 A
 p
-O
+R
 O
 p
 O

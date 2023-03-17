@@ -9,7 +9,7 @@
 
 /datum/action/cooldown/chasing_spikes/Activate(atom/target)
 	. = ..()
-	playsound(owner, 'sound/magic/demon_attack1.ogg', vol = 100, extrarange = 3, vary = TRUE)
+	playsound(owner, 'sound/magic/demon_attack1.ogg', vol = 100, extrarange = 3, vary = TRUE, pressure_affected = FALSE)
 	new /obj/effect/temp_visual/spike_chaser(get_turf(owner), target)
 
 /// An invisible effect which chases a target, spawning spikes every so often.
@@ -93,6 +93,6 @@
 		var/target_zone = victim.resting ? BODY_ZONE_CHEST : pick_weight(standing_damage_zones)
 		victim.apply_damage(impale_damage, damagetype = BRUTE, def_zone = target_zone, sharpness = SHARP_POINTY)
 	if (hit_someone)
-		playsound(src, 'sound/weapons/slice.ogg', vol = 75, vary = TRUE)
+		playsound(src, 'sound/weapons/slice.ogg', vol = 75, vary = TRUE, pressure_affected = FALSE)
 	else
-		playsound(src, 'sound/misc/splort.ogg', vol = 25, vary = TRUE)
+		playsound(src, 'sound/misc/splort.ogg', vol = 25, vary = TRUE, pressure_affected = FALSE)

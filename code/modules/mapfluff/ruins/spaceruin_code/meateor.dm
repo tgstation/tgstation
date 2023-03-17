@@ -46,20 +46,81 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/effects/attackblob.ogg', 50, TRUE)
+				playsound(loc, 'sound/effects/attackblob.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
 			else
-				playsound(src, 'sound/effects/meatslap.ogg', 50, TRUE)
+				playsound(loc, 'sound/effects/meatslap.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
 		if(BURN)
-			playsound(src.loc, 'sound/effects/wounds/sizzle1.ogg', 100, TRUE)
+			playsound(loc, 'sound/effects/wounds/sizzle1.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
 
 /// A sort of loot box for organs, cut it open and find a prize
 /obj/structure/meateor_fluff/flesh_pod
 	icon_state = "flesh_pod"
 	desc = "A quivering pod of living meat. Something is pulsing inside."
 	max_integrity = 60
+	/// Typepath of the organ to spawn when this is destroyed
+	var/stored_organ
+	/// Types of organ we can spawn
+	var/static/list/allowed_organs = list(
+		/obj/item/organ/internal/heart/gland/egg = 7,
+		/obj/item/organ/internal/heart/gland/plasma = 7,
+		/obj/item/organ/internal/heart/gland/chem = 5,
+		/obj/item/organ/internal/heart/gland/mindshock = 5,
+		/obj/item/organ/internal/heart/gland/spiderman = 5,
+		/obj/item/organ/internal/heart/gland/transform = 5,
+		/obj/item/organ/internal/heart/gland/slime = 4,
+		/obj/item/organ/internal/heart/gland/trauma = 4,
+		/obj/item/organ/internal/heart/carp = 3,
+		/obj/item/organ/internal/heart/rat = 3,
+		/obj/item/organ/internal/heart/gland/electric = 3,
+		/obj/item/organ/internal/monster_core/brimdust_sac = 3,
+		/obj/item/organ/internal/monster_core/regenerative_core = 3,
+		/obj/item/organ/internal/monster_core/rush_gland = 3,
+		/obj/item/organ/internal/tongue/carp = 3,
+		/obj/item/organ/internal/eyes/night_vision/goliath = 2,
+		/obj/item/organ/internal/eyes/night_vision/rat = 2,
+		/obj/item/organ/internal/heart/gland/ventcrawling = 1,
+	)
+
+/obj/structure/meateor_fluff/flesh_pod/Initialize(mapload)
+	. = ..()
+	stored_organ = pick_weight(allowed_organs)
+
+/obj/structure/meateor_fluff/flesh_pod/attackby(obj/item/attacking_item, mob/user, params)
+	if (attacking_item.sharpness & SHARP_EDGED)
+		cut_open(user)
+		return
+	return ..()
+
+/// Cut the pod open and destroy it
+/obj/structure/meateor_fluff/flesh_pod/proc/cut_open(mob/user)
+	balloon_alert(user, "slicing...")
+	if (!do_after(user, 3 SECONDS, target = src))
+		return
+	take_damage(max_integrity, BRUTE)
+
+/obj/structure/meateor_fluff/flesh_pod/atom_destruction(damage_flag)
+	new stored_organ(loc)
+	new /obj/effect/decal/cleanable/blood(loc)
+	new /obj/structure/meateor_fluff/flesh_pod_open(loc)
+	playsound(loc, 'sound/effects/wounds/blood3.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
+	return ..()
+
+/obj/structure/meateor_fluff/flesh_pod_open
+	icon_state = "flesh_pod_open"
+	desc = "A pod of living meat, this one has been hollowed out."
+	max_integrity = 30
+
+/obj/structure/meateor_fluff/flesh_pod_open/atom_destruction(damage_flag)
+	new /obj/effect/gibspawner/human(loc)
+	return ..()
 
 /// Decorative fluff egg object
 /obj/structure/meateor_fluff/abandoned_headcrab_egg
 	icon_state = "eggs"
 	desc = "A mass of fleshy, egg-shaped nodes."
 	max_integrity = 15
+
+/obj/structure/meateor_fluff/abandoned_headcrab_egg/atom_destruction(damage_flag)
+	new /obj/effect/decal/cleanable/xenoblood(loc)
+	playsound(loc, 'sound/effects/gib_step.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
+	return ..()
