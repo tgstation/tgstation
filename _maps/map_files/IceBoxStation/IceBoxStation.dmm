@@ -9243,10 +9243,6 @@
 /obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"cKW" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/station/science/ordnance/testlab)
 "cLo" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/iron,
@@ -23635,11 +23631,11 @@
 /area/station/maintenance/aft/greater)
 "hiq" = (
 /obj/machinery/requests_console/directional/north{
+	anon_tips_receiver = 1;
+	assistance_requestable = 1;
 	department = "Robotics";
 	name = "Robotics Requests Console";
-	receive_ore_updates = 1;
-	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	receive_ore_updates = 1
 	},
 /obj/machinery/light/directional/north,
 /obj/machinery/rnd/production/circuit_imprinter/department/science,
@@ -29311,9 +29307,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/requests_console/directional/north{
+	anon_tips_receiver = 1;
 	department = "Engineering";
-	name = "Engineering Requests Console";
-	anon_tips_receiver = 1
+	name = "Engineering Requests Console"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -34048,10 +34044,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
-"ktS" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall,
-/area/station/maintenance/port/aft)
 "ktU" = (
 /turf/open/floor/carpet,
 /area/station/command/meeting_room)
@@ -44869,14 +44861,14 @@
 	},
 /obj/item/folder/yellow,
 /obj/machinery/keycard_auth/directional/west{
-	pixel_y = -5;
-	pixel_x = -25
+	pixel_x = -25;
+	pixel_y = -5
 	},
 /obj/machinery/button/door/directional/west{
 	id = "qmprivacy";
 	name = "Privacy Shutters Control";
-	req_access = list("qm");
-	pixel_y = 5
+	pixel_y = 5;
+	req_access = list("qm")
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -58276,21 +58268,21 @@
 	dir = 8
 	},
 /obj/machinery/button/flasher{
-	pixel_y = -32;
 	id = "hopflash";
-	pixel_x = 8
-	},
-/obj/machinery/button/door/directional/south{
-	pixel_x = -8;
-	req_access = list("hop");
-	id = "hopqueue";
-	name = "Queue Shutters Control"
-	},
-/obj/machinery/button/door/directional/south{
 	pixel_x = 8;
+	pixel_y = -32
+	},
+/obj/machinery/button/door/directional/south{
+	id = "hopqueue";
+	name = "Queue Shutters Control";
+	pixel_x = -8;
+	req_access = list("hop")
+	},
+/obj/machinery/button/door/directional/south{
+	id = "hop";
 	name = "Privacy Shutters Control";
-	req_access = list("hop");
-	id = "hop"
+	pixel_x = 8;
+	req_access = list("hop")
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
@@ -67021,10 +67013,6 @@
 "uJt" = (
 /turf/open/floor/carpet,
 /area/station/service/chapel)
-"uJC" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/starboard/aft)
 "uJX" = (
 /obj/effect/turf_decal/tile/red/half,
 /obj/structure/closet/firecloset,
@@ -72019,10 +72007,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"wkF" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall,
-/area/station/maintenance/starboard/fore)
 "wkR" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/purple{
@@ -228713,7 +228697,7 @@ dMO
 uVa
 dcQ
 wAW
-ktS
+pRj
 nxm
 ifA
 rbb
@@ -254687,7 +254671,7 @@ bln
 bln
 vzD
 oIR
-uJC
+vzD
 jCl
 kir
 sEB
@@ -256139,7 +256123,7 @@ fOz
 oXm
 kKL
 kKL
-wkF
+kKL
 kKL
 rGw
 fUc
@@ -261332,7 +261316,7 @@ bln
 bln
 bln
 bln
-cKW
+hyV
 fiU
 bgx
 bln
