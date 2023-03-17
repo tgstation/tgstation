@@ -200,27 +200,33 @@
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_projectile(obj/projectile/P)
 	P.paused = FALSE
 
-/datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/L)
-	frozen_mobs += L
-	L.Stun(20, ignore_canstun = TRUE)
-	ADD_TRAIT(L, TRAIT_MUTE, TIMESTOP_TRAIT)
-	ADD_TRAIT(L, TRAIT_EMOTEMUTE, TIMESTOP_TRAIT)
-	SSmove_manager.stop_looping(L) //stops them mid pathing even if they're stunimmune //This is really dumb
-	if(isanimal(L))
-		var/mob/living/simple_animal/S = L
-		S.toggle_ai(AI_OFF)
-	if(ishostile(L))
-		var/mob/living/simple_animal/hostile/H = L
-		H.LoseTarget()
+/datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/victim)
+	frozen_mobs += victim
+	victim.Stun(20, ignore_canstun = TRUE)
+	ADD_TRAIT(victim, TRAIT_MUTE, TIMESTOP_TRAIT)
+	ADD_TRAIT(victim, TRAIT_EMOTEMUTE, TIMESTOP_TRAIT)
+	SSmove_manager.stop_looping(victim) //stops them mid pathing even if they're stunimmune //This is really dumb
+	if(isanimal(victim))
+		var/mob/living/simple_animal/animal_victim = victim
+		animal_victim.toggle_ai(AI_OFF)
+		if(ishostile(victim))
+			var/mob/living/simple_animal/hostile/hostile_victim = victim
+			hostile_victim.LoseTarget()
+	else if(isbasicmob(victim))
+		var/mob/living/basic/basic_victim = victim
+		basic_victim.ai_controller?.set_ai_status(AI_STATUS_OFF)
 
-/datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/L)
-	L.AdjustStun(-20, ignore_canstun = TRUE)
-	REMOVE_TRAIT(L, TRAIT_MUTE, TIMESTOP_TRAIT)
-	REMOVE_TRAIT(L, TRAIT_EMOTEMUTE, TIMESTOP_TRAIT)
-	frozen_mobs -= L
-	if(isanimal(L))
-		var/mob/living/simple_animal/S = L
-		S.toggle_ai(initial(S.AIStatus))
+/datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/victim)
+	victim.AdjustStun(-20, ignore_canstun = TRUE)
+	REMOVE_TRAIT(victim, TRAIT_MUTE, TIMESTOP_TRAIT)
+	REMOVE_TRAIT(victim, TRAIT_EMOTEMUTE, TIMESTOP_TRAIT)
+	frozen_mobs -= victim
+	if(isanimal(victim))
+		var/mob/living/simple_animal/animal_victim = victim
+		animal_victim.toggle_ai(initial(animal_victim.AIStatus))
+	else if(isbasicmob(victim))
+		var/mob/living/basic/basic_victim = victim
+		basic_victim.ai_controller?.reset_ai_status()
 
 //you don't look quite right, is something the matter?
 /datum/proximity_monitor/advanced/timestop/proc/into_the_negative_zone(atom/A)
