@@ -205,6 +205,9 @@ GLOBAL_VAR(basketball_game)
 			to_chat(baller, span_info("Click directly on hoop while adjacent to dunk ([STAMINA_COST_DUNKING] stamina cost)"))
 			to_chat(baller, span_info("Spinning decreases other players disarm chance against you but reduces shooting accuracy ([STAMINA_COST_SPINNING] stamina cost)"))
 
+/**
+ * Called after the game is finished. Sends end game notifications to teams and dusts the losers.
+ */
 /datum/basketball_controller/proc/victory()
 	var/is_game_draw
 	var/list/winner_team_ckeys = list()
