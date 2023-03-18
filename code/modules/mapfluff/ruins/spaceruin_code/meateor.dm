@@ -22,14 +22,14 @@
 	desc = "A bottle filled with liquids of a dubious nature, often enjoyed by members of the Tiger Cooperative."
 	icon_state = "winebottle"
 	list_reagents = list(
-		/datum/reagent/blood = 5,
-		/datum/reagent/drug/bath_salts = 5,
-		/datum/reagent/medicine/changelinghaste = 20, // This metabolises very fast
-		/datum/reagent/toxin/leadacetate = 5,
 		/datum/reagent/drug/mushroomhallucinogen = 25,
+		/datum/reagent/consumable/ethanol/ritual_wine = 25,
+		/datum/reagent/medicine/changelinghaste = 20, // This metabolises very fast
+		/datum/reagent/drug/bath_salts = 5,
+		/datum/reagent/blood = 5,
+		/datum/reagent/toxin/leadacetate = 5,
 		/datum/reagent/medicine/omnizine = 5,
 		/datum/reagent/medicine/c2/penthrite = 5,
-		/datum/reagent/consumable/ethanol/ritual_wine = 25,
 		/datum/reagent/consumable/vinegar = 5,
 	)
 	drink_type = NONE

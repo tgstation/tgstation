@@ -145,3 +145,6 @@
 	. = ..()
 	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = MINERAL_MATERIAL_AMOUNT))
 	name = initial(name)
+
+/turf/closed/wall/material/meat/airless
+	baseturfs = /turf/open/floor/material/meat/airless

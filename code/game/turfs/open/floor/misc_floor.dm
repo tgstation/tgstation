@@ -326,10 +326,13 @@
 /turf/open/floor/material/meat
 	desc = "living floor"
 	icon_state = "grey"
-	initial_gas_mix = AIRLESS_ATMOS
-	baseturfs = /turf/open/misc/asteroid/airless
+	baseturfs = /turf/open/misc/asteroid
 
-/turf/open/floor/material/Initialize(mapload)
+/turf/open/floor/material/meat/Initialize(mapload)
 	. = ..()
 	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = MINERAL_MATERIAL_AMOUNT))
 	name = initial(name)
+
+/turf/open/floor/material/meat/airless
+	initial_gas_mix = AIRLESS_ATMOS
+	baseturfs = /turf/open/misc/asteroid/airless
