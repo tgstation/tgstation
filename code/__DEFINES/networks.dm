@@ -14,7 +14,7 @@
 #define NETWORK_NAME_COMBINE(L,R) ((L) + "." + (R))
 
 /// Station network names.  Used as the root networks for main parts of the station
-#define HOLODECK_NETWORK_ROOT "Holodeck"
+#define HOLODECK_NETWORK_ROOT "HOLODECK"
 #define STATION_NETWORK_ROOT "SS13"
 #define CENTCOM_NETWORK_ROOT "CENTCOM"
 #define SYNDICATE_NETWORK_ROOT "SYNDI"
