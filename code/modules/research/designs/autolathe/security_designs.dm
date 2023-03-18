@@ -10,7 +10,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
-/datum/design/beanbag_slug
+/datum/design/buckshot
 	name = "Buckshot"
 	id = "buckshot"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
