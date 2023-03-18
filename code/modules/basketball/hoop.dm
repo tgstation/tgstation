@@ -106,7 +106,7 @@
 	var/dunk_pixel_y = dunk_dir & SOUTH ? -16 : 16
 	var/dunk_pixel_x = dunk_dir & EAST && 16 || dunk_dir & WEST && -16 || 0
 
-	INVOKE_ASYNC(src, PROC_REF(dunk_animation), baller, dunk_pixel_y, dunk_pixel_x)
+	INVOKE_ASYNC(src, PROC_REF(dunk_animation, baller, dunk_pixel_y, dunk_pixel_x))
 	visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
 	score(ball, baller, 2)
 
