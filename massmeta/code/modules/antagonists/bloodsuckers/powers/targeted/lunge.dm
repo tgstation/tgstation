@@ -150,7 +150,7 @@
 			span_warning("[owner] tears into [target]'s chest!"),
 			span_warning("You tear into [target]'s chest!"))
 
-		var/obj/item/organ/internal/heart/myheart_now = locate() in target.internal_organs
+		var/obj/item/organ/internal/heart/myheart_now = locate() in target.organs
 		if(myheart_now)
 			myheart_now.Remove(target)
 			user.put_in_hands(myheart_now)
