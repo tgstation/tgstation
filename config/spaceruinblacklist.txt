@@ -55,3 +55,4 @@
 #_maps/RandomRuins/SpaceRuins/space_billboard.dmm
 #_maps/RandomRuins/SpaceRuins/spinwardsmoothies.dmm
 #_maps/RandomRuins/SpaceRuins/dangerous_research.dmm
+#_maps/RandomRuins/SpaceRuins/the_faceoff.dmm

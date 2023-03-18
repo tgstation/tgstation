@@ -95,6 +95,7 @@
 	. = ..()
 	if(!.)
 		return
+  
 	if(special != 2 && uses) // Special 2 means abductor surgery
 		Start()
 	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]

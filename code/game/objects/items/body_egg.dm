@@ -19,15 +19,13 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(egg_owner, TRAIT_XENO_HOST, ORGAN_TRAIT)
-	ADD_TRAIT(egg_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+	egg_owner.add_traits(list(TRAIT_XENO_HOST, TRAIT_XENO_IMMUNE), ORGAN_TRAIT)
 	egg_owner.med_hud_set_status()
 	INVOKE_ASYNC(src, PROC_REF(AddInfectionImages), egg_owner)
 
 /obj/item/organ/internal/body_egg/Remove(mob/living/carbon/egg_owner, special = FALSE)
-	. = ..()
-	REMOVE_TRAIT(egg_owner, TRAIT_XENO_HOST, ORGAN_TRAIT)
-	REMOVE_TRAIT(egg_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+  . = ..()
+	egg_owner.remove_traits(list(TRAIT_XENO_HOST, TRAIT_XENO_IMMUNE), ORGAN_TRAIT)
 	egg_owner.med_hud_set_status()
 	INVOKE_ASYNC(src, PROC_REF(RemoveInfectionImages), egg_owner)
 

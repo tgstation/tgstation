@@ -544,18 +544,33 @@
 	use_time = 1 SECONDS
 
 /obj/machinery/anomalous_crystal/possessor/ActivationReaction(mob/user, method)
-	if(..())
-		if(ishuman(user))
-			var/mobcheck = FALSE
-			for(var/mob/living/simple_animal/A in range(1, src))
-				if(A.melee_damage_upper > 5 || A.mob_size >= MOB_SIZE_LARGE || A.ckey || A.stat)
-					break
-				var/obj/structure/closet/stasis/S = new /obj/structure/closet/stasis(A)
-				user.forceMove(S)
-				mobcheck = TRUE
-				break
-			if(!mobcheck)
-				new /mob/living/basic/cockroach(get_step(src,dir)) //Just in case there aren't any animals on the station, this will leave you with a terrible option to possess if you feel like it //i found it funny that in the file for a giant angel beast theres a cockroach
+	. = ..()
+	if (!. || !ishuman(user))
+		return FALSE
+
+	var/list/valid_mobs = list()
+	var/list/nearby_things = range(1, src)
+	for(var/mob/living/basic/possible_mob in nearby_things)
+		if (!is_valid_animal(possible_mob))
+			continue
+		valid_mobs += possible_mob
+	for(var/mob/living/simple_animal/possible_mob in nearby_things)
+		if (!is_valid_animal(possible_mob))
+			continue
+		valid_mobs += possible_mob
+
+	if (!length(valid_mobs)) //Just in case there aren't any animals on the station, this will leave you with a terrible option to possess if you feel like it //i found it funny that in the file for a giant angel beast theres a cockroach
+		new /mob/living/basic/cockroach(get_step(src,dir))
+		return
+
+	var/mob/living/picked_mob = pick(valid_mobs)
+	var/obj/structure/closet/stasis/possessor_container = new /obj/structure/closet/stasis(picked_mob)
+	user.forceMove(possessor_container)
+
+/// Returns true if this is a mob you're allowed to possess
+/obj/machinery/anomalous_crystal/possessor/proc/is_valid_animal(mob/living/check_mob)
+	return check_mob.stat != DEAD && !check_mob.ckey && check_mob.mob_size < MOB_SIZE_LARGE && check_mob.melee_damage_upper <= 5
+
 
 /obj/structure/closet/stasis
 	name = "quantum entanglement stasis warp field"
@@ -577,7 +592,7 @@
 
 /obj/structure/closet/stasis/Initialize(mapload)
 	. = ..()
-	if(isanimal(loc))
+	if(isanimal_or_basicmob(loc))
 		holder_animal = loc
 	START_PROCESSING(SSobj, src)
 
@@ -594,17 +609,20 @@
 
 /obj/structure/closet/stasis/dump_contents(kill = TRUE)
 	STOP_PROCESSING(SSobj, src)
-	for(var/mob/living/L in src)
-		REMOVE_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
-		L.status_flags &= ~GODMODE
-		L.notransform = 0
+	for(var/mob/living/possessor in src)
+		REMOVE_TRAIT(possessor, TRAIT_MUTE, STASIS_MUTE)
+		possessor.status_flags &= ~GODMODE
+		possessor.notransform = FALSE
+		if(kill || !isanimal_or_basicmob(loc))
+			possessor.investigate_log("has died from [src].", INVESTIGATE_DEATHS)
+			possessor.death(FALSE)
 		if(holder_animal)
-			holder_animal.mind.transfer_to(L)
+			possessor.forceMove(get_turf(holder_animal))
+			holder_animal.mind.transfer_to(possessor)
+			possessor.mind.grab_ghost(force = TRUE)
 			holder_animal.gib()
-		if(kill || !isanimal(loc))
-			L.investigate_log("has died from [src].", INVESTIGATE_DEATHS)
-			L.death(FALSE)
-	..()
+			return ..()
+	return ..()
 
 /obj/structure/closet/stasis/emp_act()
 	return

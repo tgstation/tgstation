@@ -391,7 +391,7 @@
 			if(player.stat != DEAD)
 				if(issilicon(player) && filter_by_human) //Borgs are technically dead anyways
 					continue
-				if(isanimal(player) && filter_by_human) //animals don't count
+				if(isanimal_or_basicmob(player) && filter_by_human) //animals don't count
 					continue
 				if(isbrain(player)) //also technically dead
 					continue
@@ -567,6 +567,15 @@
 	setTimer(SSshuttle.emergency_escape_time)
 	priority_announce("The Emergency Shuttle is preparing for direct jump. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 
+/obj/docking_port/mobile/monastery
+	name = "monastery pod"
+	shuttle_id = "mining_common" //set so mining can call it down
+	launch_status = UNLAUNCHED //required for it to launch as a pod.
+
+/obj/docking_port/mobile/monastery/on_emergency_dock()
+	if(launch_status == ENDGAME_LAUNCHED)
+		initiate_docking(SSshuttle.getDock("pod_away")) //docks our shuttle as any pod would
+		mode = SHUTTLE_ENDGAME
 
 /obj/docking_port/mobile/pod
 	name = "escape pod"

@@ -325,6 +325,7 @@
 	return
 
 /obj/item/organ/internal/eyes/robotic/flashlight/on_insert(mob/living/carbon/victim)
+	. = ..()
 	if(!eye)
 		eye = new /obj/item/flashlight/eyelight()
 	eye.on = TRUE
@@ -334,6 +335,7 @@
 
 
 /obj/item/organ/internal/eyes/robotic/flashlight/on_remove(mob/living/carbon/victim)
+  . = ..()
 	eye.on = FALSE
 	eye.update_brightness(victim)
 	eye.forceMove(src)

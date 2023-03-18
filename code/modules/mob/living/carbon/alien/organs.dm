@@ -68,12 +68,14 @@
 		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
 
 /obj/item/organ/internal/alien/plasmavessel/on_insert(mob/living/carbon/organ_owner)
+  . = ..()
 	if(isalien(organ_owner))
 		var/mob/living/carbon/alien/target_alien = organ_owner
 		target_alien.updatePlasmaDisplay()
 	RegisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 /obj/item/organ/internal/alien/plasmavessel/on_remove(mob/living/carbon/organ_owner)
+  . = ..()
 	if(isalien(organ_owner))
 		var/mob/living/carbon/alien/organ_owner_alien = organ_owner
 		organ_owner_alien.updatePlasmaDisplay()
@@ -96,13 +98,14 @@
 	var/recent_queen_death = FALSE
 
 /obj/item/organ/internal/alien/hivenode/on_insert(mob/living/carbon/organ_owner)
+	. = ..()
 	organ_owner.faction |= ROLE_ALIEN
 	ADD_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 
 /obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	organ_owner.faction -= ROLE_ALIEN
 	REMOVE_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
-	..()
+	return ..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
 /obj/item/organ/internal/alien/hivenode/proc/queen_death()

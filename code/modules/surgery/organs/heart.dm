@@ -168,13 +168,10 @@
 		accursed.add_client_colour(/datum/client_colour/cursed_heart_blood) //bloody screen so real
 		add_colour = FALSE
 
-/obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/accursed, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/heart/cursed/on_insert(mob/living/carbon/accursed)
 	. = ..()
-	if(!.)
-		return
 	last_pump = world.time // give them time to react
-	if(owner)
-		to_chat(owner, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
+	to_chat(accursed, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
 
 /obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed, special = FALSE)
 	. = ..()
