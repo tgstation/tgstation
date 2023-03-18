@@ -36,7 +36,7 @@
 /area/ruin/space/has_grav/travelers_rest)
 "bz" = (
 /obj/structure/cable,
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/ruin/space/has_grav/travelers_rest)
 "bA" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -416,7 +416,7 @@
 /turf/template_noop,
 /area/template_noop)
 "NG" = (
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/ruin/space/has_grav/travelers_rest)
 "Ob" = (
 /obj/structure/chair/stool/bar/directional/south,
@@ -428,7 +428,7 @@
 "Px" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/ruin/space/has_grav/travelers_rest)
 "Rp" = (
 /obj/structure/cable,
