@@ -14,10 +14,12 @@
 	handle_charge(owner, delta_time, times_fired)
 
 /obj/item/organ/internal/stomach/ethereal/on_insert(mob/living/carbon/stomach_owner)
+	. = ..()
 	RegisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
 	RegisterSignal(stomach_owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
 
 /obj/item/organ/internal/stomach/ethereal/on_remove(mob/living/carbon/stomach_owner)
+	. = ..()
 	UnregisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	UnregisterSignal(stomach_owner, COMSIG_LIVING_ELECTROCUTE_ACT)
 	stomach_owner.clear_mood_event("charge")

@@ -49,6 +49,7 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 
 /obj/item/organ/internal/tongue/carp/on_insert(mob/living/carbon/tongue_owner)
+	. = ..()
 	if(!ishuman(tongue_owner))
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
@@ -62,6 +63,7 @@
 	head.unarmed_stun_threshold = 15
 
 /obj/item/organ/internal/tongue/carp/on_remove(mob/living/carbon/tongue_owner)
+	. = ..()
 	if(!ishuman(tongue_owner))
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
@@ -109,11 +111,13 @@
 	AddElement(/datum/element/noticable_organ, "seem%PRONOUN_S unable to stay still.")
 
 /obj/item/organ/internal/brain/carp/on_insert(mob/living/carbon/brain_owner)
+	. = ..()
 	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE|TIMER_UNIQUE)
 	RegisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(satisfied_nomad))
 
 //technically you could get around the mood issue by extracting and reimplanting the brain but it will be far easier to just go one z there and back
 /obj/item/organ/internal/brain/carp/on_remove(mob/living/carbon/brain_owner)
+	. = ..()
 	UnregisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED)
 	deltimer(cooldown_timer)
 

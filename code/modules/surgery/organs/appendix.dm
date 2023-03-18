@@ -73,10 +73,12 @@
 	return owner_species.mutantappendix
 
 /obj/item/organ/internal/appendix/on_remove(mob/living/carbon/organ_owner)
+	. = ..()
 	REMOVE_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 	organ_owner.med_hud_set_status()
 
 /obj/item/organ/internal/appendix/on_insert(mob/living/carbon/organ_owner)
+	. = ..()
 	if(inflamation_stage)
 		ADD_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 		organ_owner.med_hud_set_status()

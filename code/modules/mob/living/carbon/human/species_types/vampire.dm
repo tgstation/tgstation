@@ -197,9 +197,11 @@
 	color = "#1C1C1C"
 
 /obj/item/organ/internal/heart/vampire/on_insert(mob/living/carbon/receiver)
+	. = ..()
 	RegisterSignal(receiver, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 /obj/item/organ/internal/heart/vampire/on_remove(mob/living/carbon/heartless)
+	. = ..()
 	UnregisterSignal(heartless, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
 
 /obj/item/organ/internal/heart/vampire/proc/get_status_tab_item(mob/living/carbon/source, list/items)

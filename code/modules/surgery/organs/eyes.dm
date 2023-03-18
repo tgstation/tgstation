@@ -295,9 +295,11 @@
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
 
 /obj/item/organ/internal/eyes/robotic/xray/on_insert(mob/living/carbon/eye_owner)
+	. = ..()
 	ADD_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
 
 /obj/item/organ/internal/eyes/robotic/xray/on_remove(mob/living/carbon/eye_owner)
+	. = ..()
 	REMOVE_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
 
 /obj/item/organ/internal/eyes/robotic/thermals
@@ -439,9 +441,11 @@
 	deactivate(silent = TRUE)
 
 /obj/item/organ/internal/eyes/robotic/glow/on_insert(mob/living/carbon/eye_owner)
+	. = ..()
 	RegisterSignal(eye_owner, COMSIG_ATOM_DIR_CHANGE, PROC_REF(update_visuals))
 
 /obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/eye_owner)
+	. = ..()
 	UnregisterSignal(eye_owner, COMSIG_ATOM_DIR_CHANGE)
 
 /obj/item/organ/internal/eyes/robotic/glow/Destroy()
@@ -581,6 +585,7 @@
 	var/obj/item/flashlight/eyelight/adapted/adapt_light
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_insert(mob/living/carbon/eye_owner)
+	. = ..()
 	//add lighting
 	if(!adapt_light)
 		adapt_light = new /obj/item/flashlight/eyelight/adapted()

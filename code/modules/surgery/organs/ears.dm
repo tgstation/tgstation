@@ -69,6 +69,7 @@
 	damage_multiplier = 2
 
 /obj/item/organ/internal/ears/cat/on_insert(mob/living/carbon/human/ear_owner)
+	. = ..()
 	if(istype(ear_owner) && ear_owner.dna)
 		color = ear_owner.hair_color
 		ear_owner.dna.features["ears"] = ear_owner.dna.species.mutant_bodyparts["ears"] = "Cat"
@@ -76,6 +77,7 @@
 		ear_owner.update_body()
 
 /obj/item/organ/internal/ears/cat/on_remove(mob/living/carbon/human/ear_owner)
+	. = ..()
 	if(istype(ear_owner) && ear_owner.dna)
 		color = ear_owner.hair_color
 		ear_owner.dna.species.mutant_bodyparts -= "ears"
@@ -86,11 +88,13 @@
 	desc = "The source of a penguin's happy feet."
 
 /obj/item/organ/internal/ears/penguin/on_insert(mob/living/carbon/human/ear_owner)
+	. = ..()
 	if(istype(ear_owner))
 		to_chat(ear_owner, span_notice("You suddenly feel like you've lost your balance."))
 		ear_owner.AddElement(/datum/element/waddling)
 
 /obj/item/organ/internal/ears/penguin/on_remove(mob/living/carbon/human/ear_owner)
+	. = ..()
 	if(istype(ear_owner))
 		to_chat(ear_owner, span_notice("Your sense of balance comes back to you."))
 		ear_owner.RemoveElement(/datum/element/waddling)

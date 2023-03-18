@@ -74,6 +74,7 @@
 	update_appearance()
 
 /obj/item/organ/internal/cyberimp/arm/on_insert(mob/living/carbon/arm_owner)
+	. = ..()
 	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
 	hand = arm_owner.hand_bodyparts[side]
 	if(hand)

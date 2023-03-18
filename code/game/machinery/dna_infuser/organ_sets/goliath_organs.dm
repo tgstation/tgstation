@@ -67,6 +67,7 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
 /obj/item/organ/internal/brain/goliath/on_insert(mob/living/carbon/brain_owner)
+	. = ..()
 	if(!ishuman(brain_owner))
 		return
 	var/mob/living/carbon/human/human_receiver = brain_owner
@@ -78,6 +79,7 @@
 	brain_owner.put_in_hands(hammer)
 
 /obj/item/organ/internal/brain/goliath/on_remove(mob/living/carbon/brain_owner)
+	. = ..()
 	UnregisterSignal(brain_owner)
 	if(!ishuman(brain_owner))
 		return

@@ -51,6 +51,7 @@
 	AddElement(/datum/element/noticable_organ, "mouth is drooling excessively.", BODY_ZONE_PRECISE_MOUTH)
 
 /obj/item/organ/internal/stomach/rat/on_insert(mob/living/carbon/receiver)
+	. = ..()
 	if(!ishuman(receiver))
 		return
 	var/mob/living/carbon/human/human_holder = receiver
@@ -73,6 +74,7 @@
 	new_species.toxic_food = NONE
 
 /obj/item/organ/internal/stomach/rat/on_remove(mob/living/carbon/stomach_owner)
+	. = ..()
 	if(!ishuman(stomach_owner))
 		return
 	var/mob/living/carbon/human/human_holder = stomach_owner
@@ -102,6 +104,7 @@
 	AddElement(/datum/element/noticable_organ, "hunch%PRONOUN_ES over unnaturally!")
 
 /obj/item/organ/internal/heart/rat/on_insert(mob/living/carbon/receiver)
+	. = ..()
 	if(!. || !ishuman(receiver))
 		return
 	var/mob/living/carbon/human/human_receiver = receiver
@@ -113,6 +116,7 @@
 		human_receiver.physiology.damage_resistance -= 50
 
 /obj/item/organ/internal/heart/rat/on_remove(mob/living/carbon/heartless, special)
+	. = ..()
 	if(!ishuman(heartless))
 		return
 	var/mob/living/carbon/human/human_heartless = heartless
@@ -148,9 +152,11 @@
 		speech_args[SPEECH_MESSAGE] = "Um... cheesed to meet you?"
 
 /obj/item/organ/internal/tongue/rat/on_insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
+	. = ..()
 	RegisterSignal(tongue_owner, COMSIG_CARBON_ITEM_GIVEN, PROC_REF(its_on_the_mouse))
 
 /obj/item/organ/internal/tongue/rat/on_remove(mob/living/carbon/tongue_owner)
+	. = ..()
 	UnregisterSignal(tongue_owner, COMSIG_CARBON_ITEM_GIVEN)
 
 /obj/item/organ/internal/tongue/rat/proc/on_item_given(mob/living/carbon/offerer, mob/living/taker, obj/item/given)
