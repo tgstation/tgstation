@@ -391,7 +391,7 @@
 			if(player.stat != DEAD)
 				if(issilicon(player) && filter_by_human) //Borgs are technically dead anyways
 					continue
-				if(isanimal(player) && filter_by_human) //animals don't count
+				if(isanimal_or_basicmob(player) && filter_by_human) //animals don't count
 					continue
 				if(isbrain(player)) //also technically dead
 					continue

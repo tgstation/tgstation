@@ -89,10 +89,10 @@
 	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
 	hud.remove_atom_from_hud(owner)
 	clear_mind_control()
-	..()
+	return ..()
 
 /obj/item/organ/internal/heart/gland/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
-	..()
+	. = ..()
 	if(special != 2 && uses) // Special 2 means abductor surgery
 		Start()
 	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
