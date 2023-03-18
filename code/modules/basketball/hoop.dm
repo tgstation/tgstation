@@ -20,8 +20,6 @@
 	/// Keeps track of the total points scored
 	var/total_score = 0
 	/// The chance to score a ball into the hoop based on distance
-	/// ex. a distance of two tiles away, throw_range_success[2], results in 80% chance to score
-	/// if someone shoots 3 tiles away (65% chance) or more, it scores 3 points
 	var/static/list/throw_range_success = list(95, 80, 65, 50, 35, 20)
 
 /obj/structure/hoop/Initialize(mapload)
