@@ -1,9 +1,9 @@
 /datum/action/cooldown/spell/touch/star_touch
 	name = "Star Touch"
 	desc = "Marks someone with a star mark or puts someone with a star mark to sleep for 4 seconds, removing the star mark. \
-		When the victim is hit it also creates a beam that deals a bit of fire damage and damages the cells. \
-		The beam lasts a minute, until the beam is obstructed or until a new target has been found. \
-		Star Touch can remove cosmic runes or teleport you to your Star Gazer when you have one."
+		You and your target are linked with a cosmic ray, burning them for up to a minute, or \
+		until they can escape your sight. Star Touch can also remove Cosmic Runes, or teleport you \
+		to your Star Gazer when used on yourself."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -95,8 +95,8 @@
 
 	current_target = target
 	active = TRUE
-	current_beam = user.Beam(current_target, icon_state="cosmig_beam", time = 1 MINUTES, maxdistance = max_range, beam_type = /obj/effect/ebeam/cosmic)
-	RegisterSignal(current_beam, COMSIG_PARENT_QDELETING, PROC_REF(beam_died))//this is a WAY better rangecheck than what was done before (process check)
+	current_beam = user.Beam(current_target, icon_state="cosmic_beam", time = 1 MINUTES, maxdistance = max_range, beam_type = /obj/effect/ebeam/cosmic)
+	RegisterSignal(current_beam, COMSIG_PARENT_QDELETING, PROC_REF(beam_died))
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	if(current_target)
@@ -155,7 +155,7 @@
 /// What to add when the beam connects to a target
 /datum/action/cooldown/spell/touch/star_touch/proc/on_beam_hit(mob/living/target)
 	if(!istype(target, /mob/living/basic/star_gazer))
-		target.AddElement(/datum/element/effect_trail/cosmig_trail)
+		target.AddElement(/datum/element/effect_trail/cosmic_trail)
 	return
 
 /// What to process when the beam is connected to a target
@@ -167,7 +167,7 @@
 /// What to remove when the beam disconnects from a target
 /datum/action/cooldown/spell/touch/star_touch/proc/on_beam_release(mob/living/target)
 	if(!istype(target, /mob/living/basic/star_gazer))
-		target.RemoveElement(/datum/element/effect_trail/cosmig_trail)
+		target.RemoveElement(/datum/element/effect_trail/cosmic_trail)
 	return
 
 /// To set the star gazer

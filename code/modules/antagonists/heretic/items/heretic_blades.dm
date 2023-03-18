@@ -109,8 +109,8 @@
 // Path of Cosmos's blade
 /obj/item/melee/sickly_blade/cosmic
 	name = "\improper cosmic blade"
-	desc = "A blade reflecting the cosmos, made from strange matter. \
-		Containing cosmic radiation, deconstructing organic lifeforms to their building blocks."
+	desc = "A mote of celestial resonance, shaped into a star-woven blade. \
+		An iridescent exile, carving radiant trails, desperately seeking unification."
 	icon_state = "cosmic_blade"
 	inhand_icon_state = "cosmic_blade"
 	after_use_message = "The Stargazer hears your call..."

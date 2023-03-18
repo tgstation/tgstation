@@ -1,3 +1,7 @@
+/*
+ * An element used for making a trail of effects appear behind a movable atom when it moves.
+ */
+
 /datum/element/effect_trail
 	var/obj/effect/chosen_effect
 
@@ -11,7 +15,7 @@
 	. = ..()
 	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 
-/// Generates a trail of cosmig fields
+/// Generates a trail of cosmic fields
 /datum/element/effect_trail/proc/generate_carpet(atom/movable/target_object)
 	SIGNAL_HANDLER
 
@@ -19,5 +23,5 @@
 	if(istype(open_turf))
 		new chosen_effect(open_turf)
 
-/datum/element/effect_trail/cosmig_trail
+/datum/element/effect_trail/cosmic_trail
 	chosen_effect = /obj/effect/forcefield/cosmic_field/fast

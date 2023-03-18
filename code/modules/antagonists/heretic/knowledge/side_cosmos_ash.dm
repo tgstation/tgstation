@@ -42,14 +42,14 @@
 /datum/heretic_knowledge/curse/cosmic_trail/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
 	to_chat(chosen_mob, span_danger("A cosmic energy starts flowing through you."))
 	chosen_mob.apply_status_effect(/datum/status_effect/star_mark/extended)
-	chosen_mob.AddElement(/datum/element/effect_trail/cosmig_trail)
+	chosen_mob.AddElement(/datum/element/effect_trail/cosmic_trail)
 	return ..()
 
 /datum/heretic_knowledge/curse/cosmic_trail/uncurse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
 	if(QDELETED(chosen_mob))
 		return
 
-	chosen_mob.RemoveElement(/datum/element/effect_trail/cosmig_trail)
+	chosen_mob.RemoveElement(/datum/element/effect_trail/cosmic_trail)
 	to_chat(chosen_mob, span_green("The cosmic energy leaves your body."))
 	return ..()
 

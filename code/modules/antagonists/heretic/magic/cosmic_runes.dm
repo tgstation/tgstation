@@ -33,13 +33,15 @@
 		second_rune = WEAKREF(new_rune)
 		second_rune_resolved.link_rune(new_rune)
 		new_rune.link_rune(second_rune_resolved)
+		return
 	if(!first_rune_resolved)
 		var/obj/effect/cosmic_rune/new_rune = new /obj/effect/cosmic_rune(get_turf(cast_on))
 		first_rune = WEAKREF(new_rune)
 		if(second_rune_resolved)
 			new_rune.link_rune(second_rune_resolved)
 			second_rune_resolved.link_rune(new_rune)
-	else if(!second_rune_resolved)
+		return
+	if(!second_rune_resolved)
 		var/obj/effect/cosmic_rune/new_rune = new /obj/effect/cosmic_rune(get_turf(cast_on))
 		second_rune = WEAKREF(new_rune)
 		if(first_rune_resolved)
