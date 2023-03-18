@@ -11,6 +11,7 @@
 	no_equip_flags = ITEM_SLOT_HEAD | ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE
 	species_traits = list(NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYESPRITES)
 	inherent_traits = list(
+		TRAIT_GENELESS,
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_RESISTCOLD,
@@ -50,7 +51,7 @@
 /datum/species/darkspawn/spec_life(mob/living/carbon/human/H)
 	handle_upgrades(H)
 	var/turf/T = H.loc
-	if(istype(T))
+	if(istype(T) && H.stat != DEAD)
 		var/light_amount = T.get_lumcount()
 		if(light_amount < DARKSPAWN_DIM_LIGHT) //rapid healing and stun reduction in the darkness
 			var/healing_amount = DARKSPAWN_DARK_HEAL
