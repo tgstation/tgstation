@@ -97,7 +97,7 @@
 /obj/structure/hoop/attackby(obj/item/ball, mob/living/baller, params)
 	if(!baller.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
 		return // TK users aren't allowed to dunk
-		
+
 	if(!baller.transferItemToLoc(ball, drop_location()))
 		return
 
@@ -106,7 +106,7 @@
 	var/dunk_pixel_y = dunk_dir & SOUTH ? -16 : 16
 	var/dunk_pixel_x = dunk_dir & EAST && 16 || dunk_dir & WEST && -16 || 0
 
-	INVOKE_ASYNC(src, PROC_REF(dunk_animation, baller, dunk_pixel_y, dunk_pixel_x))
+	INVOKE_ASYNC(src, PROC_REF(dunk_animation), baller, dunk_pixel_y, dunk_pixel_x)
 	visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
 	score(ball, baller, 2)
 
@@ -114,7 +114,7 @@
 		baller.adjustStaminaLoss(STAMINA_COST_DUNKING)
 
 /// This bobs the mob in the hoop direction for the dunk animation
-/mob/living/proc/dunk_animation(mob/living/baller, dunk_pixel_y, dunk_pixel_x)
+/obj/structure/hoop/proc/dunk_animation(mob/living/baller, dunk_pixel_y, dunk_pixel_x)
 	animate(baller, pixel_x = dunk_pixel_x, pixel_y = dunk_pixel_y, time = 5, easing = BOUNCE_EASING|EASE_IN|EASE_OUT)
 	sleep(0.5 SECONDS)
 	animate(baller, pixel_x = 0, pixel_y = 0, time = 3)
