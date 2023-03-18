@@ -268,6 +268,7 @@
 		/obj/item/clothing/glasses/regular = 2,
 		/obj/item/clothing/glasses/regular/jamjar = 1,
 		/obj/item/storage/bag/books = 1.
+		/obj/item/radio/headset/headset_srv = 2,
 		)
 	refill_canister = /obj/item/vending_refill/wardrobe/curator_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -404,6 +405,7 @@
 		/obj/item/clothing/under/rank/civilian/lawyer/black/skirt = 1,
 		/obj/item/clothing/shoes/laceup = 2,
 		/obj/item/clothing/accessory/lawyers_badge = 2,
+		/obj/item/radio/headset/headset_srv = 2,
 		)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -435,6 +437,7 @@
 		/obj/item/clothing/suit/chaplainsuit/monkrobeeast = 1,
 		/obj/item/clothing/head/rasta = 1,
 		/obj/item/clothing/suit/chaplainsuit/shrinehand = 1,
+		/obj/item/radio/headset/headset_srv = 2,
 		)
 	contraband = list(
 		/obj/item/toy/plush/ratplush = 1,
