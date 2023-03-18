@@ -916,6 +916,58 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	overlay_state = "slime"
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/medicine/pyroxadone = 5)
 
+/obj/item/lighter/skull
+	name = "badass zippo"
+	desc = "An absolutely badass zippo lighter. Just look at that skull!"
+	overlay_state = "skull"
+
+/obj/item/lighter/mime
+	name = "pale zippo"
+	desc = "In lieu of fuel, performative spirit can be used to light cigarettes."
+	icon_state = "mlighter" //These ones don't show a flame.
+	light_color = LIGHT_COLOR_HALOGEN
+	heat = 0 //I swear it's a real lighter dude you just can't see the flame dude I promise
+	overlay_state = "mime"
+	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/consumable/nothing = 10)
+	light_range = 0
+	light_power = 0
+	fancy = FALSE
+
+/obj/item/lighter/mime/ignition_effect(atom/A, mob/user)
+	. = span_infoplain("[user] lifts the [name] to the [A], which miraculously lights!")
+
+/obj/item/lighter/bright
+	name = "illuminative zippo"
+	desc = "Sustains an incredibly bright chemical reaction when you spark it. Avoid looking directly at the igniter when lit."
+	icon_state = "slighter"
+	light_color = LIGHT_COLOR_ELECTRIC_CYAN
+	overlay_state = "bright"
+	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/flash_powder = 10)
+	light_range = 8
+	light_power = 3 //Irritatingly bright and large enough to cover a small room.
+	fancy = FALSE
+
+/obj/item/lighter/bright/examine(mob/user)
+	. = ..()
+
+	if(lit && isliving(user))
+		var/mob/living/current_viewer = user
+		current_viewer.flash_act(4)
+
+/obj/item/lighter/bright/ignition_effect(atom/A, mob/user)
+	if(get_temperature())
+		. = span_infoplain(span_rose("[user] lifts the [src] to the [A], igniting it with a brilliant flash of light!"))
+		var/mob/living/current_viewer = user
+		current_viewer.flash_act(4)
+
+/obj/effect/spawner/random/special_lighter
+	name = "special lighter spawner"
+	icon_state = "lighter"
+	loot = list(
+		/obj/item/lighter/skull,
+		/obj/item/lighter/mime,
+		/obj/item/lighter/bright,
+	)
 
 ///////////
 //ROLLING//

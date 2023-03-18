@@ -13,7 +13,7 @@
 /obj/item/clothing/shoes/cowboy/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/shoes)
+	create_storage(storage_type = /datum/storage/pockets/shoes)
 
 	if(prob(2))
 		//There's a snake in my boot

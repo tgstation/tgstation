@@ -9,7 +9,7 @@
 	organs_needed = 4
 	bonus_activate_text = span_notice("Rodent DNA is deeply infused with you! You've learned how to traverse ventilation!")
 	bonus_deactivate_text = span_notice("Your DNA is no longer majority rat, and so fades your ventilation skills...")
-	bonus_traits = TRAIT_VENTCRAWLER_NUDE
+	bonus_traits = list(TRAIT_VENTCRAWLER_NUDE)
 
 ///way better night vision, super sensitive. lotta things work like this, huh?
 /obj/item/organ/internal/eyes/night_vision/rat

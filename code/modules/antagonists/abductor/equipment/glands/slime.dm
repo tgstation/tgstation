@@ -8,14 +8,14 @@
 	mind_control_duration = 2400
 
 /obj/item/organ/internal/heart/gland/slime/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
-	..()
+	. = ..()
 	owner.faction |= FACTION_SLIME
 	owner.grant_language(/datum/language/slime, TRUE, TRUE, LANGUAGE_GLAND)
 
 /obj/item/organ/internal/heart/gland/slime/Remove(mob/living/carbon/M, special = FALSE)
 	owner.faction -= FACTION_SLIME
 	owner.remove_language(/datum/language/slime, TRUE, TRUE, LANGUAGE_GLAND)
-	..()
+	return ..()
 
 /obj/item/organ/internal/heart/gland/slime/activate()
 	to_chat(owner, span_warning("You feel nauseated!"))

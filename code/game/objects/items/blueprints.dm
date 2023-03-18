@@ -220,6 +220,8 @@
 	var/prevname = "[A.name]"
 	set_area_machinery_title(A, new_name, prevname)
 	A.name = new_name
+	require_area_resort() //area renamed so resort the names
+
 	if(A.firedoors)
 		for(var/D in A.firedoors)
 			var/obj/machinery/door/firedoor/FD = D
@@ -231,16 +233,19 @@
 /proc/set_area_machinery_title(area/area, title, oldtitle)
 	if(!oldtitle) // or replacetext goes to infinite loop
 		return
-	for(var/obj/machinery/airalarm/airpanel in area)
-		airpanel.name = replacetext(airpanel.name,oldtitle,title)
-	for(var/obj/machinery/power/apc/apcpanel in area)
-		apcpanel.name = replacetext(apcpanel.name,oldtitle,title)
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in area)
-		scrubber.name = replacetext(scrubber.name,oldtitle,title)
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in area)
-		vent.name = replacetext(vent.name,oldtitle,title)
-	for(var/obj/machinery/door/door in area)
-		door.name = replacetext(door.name,oldtitle,title)
-	for(var/obj/machinery/firealarm/firepanel in area)
-		firepanel.name = replacetext(firepanel.name,oldtitle,title)
+
+	//stuff tied to the area to rename
+	var/list/to_rename = list(
+		/obj/machinery/airalarm,
+		/obj/machinery/atmospherics/components/unary/vent_scrubber,
+		/obj/machinery/atmospherics/components/unary/vent_pump,
+		/obj/machinery/door,
+		/obj/machinery/firealarm,
+		/obj/machinery/light_switch,
+		/obj/machinery/power/apc,
+	)
+
+	for(var/obj/machine as anything in area)
+		if(is_type_in_list(machine, to_rename))
+			machine.name = replacetext(machine.name, oldtitle, title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.

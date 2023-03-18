@@ -567,7 +567,7 @@
 /obj/item/storage/organbox/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/organ_box, max_specific_storage = WEIGHT_CLASS_BULKY, max_total_storage = 21)
+	create_storage(storage_type = /datum/storage/organ_box, max_specific_storage = WEIGHT_CLASS_BULKY, max_total_storage = 21)
 	atom_storage.set_holdable(list(
 		/obj/item/organ,
 		/obj/item/bodypart,

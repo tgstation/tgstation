@@ -59,13 +59,13 @@
 	impact_effect_type = null
 	hitscan_light_intensity = 3
 	hitscan_light_range = 0.75
-	hitscan_light_color_override = LIGHT_COLOR_YELLOW
+	hitscan_light_color_override = LIGHT_COLOR_DIM_YELLOW
 	muzzle_flash_intensity = 5
 	muzzle_flash_range = 1
-	muzzle_flash_color_override = LIGHT_COLOR_YELLOW
+	muzzle_flash_color_override = LIGHT_COLOR_DIM_YELLOW
 	impact_light_intensity = 5
 	impact_light_range = 1
-	impact_light_color_override = LIGHT_COLOR_YELLOW
+	impact_light_color_override = LIGHT_COLOR_DIM_YELLOW
 	ricochets_max = 1
 	ricochet_chance = 100
 	ricochet_auto_aim_angle = 45

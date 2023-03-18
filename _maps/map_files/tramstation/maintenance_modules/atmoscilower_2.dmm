@@ -1,55 +1,138 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"bE" = (
+"bG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"ce" = (
+/obj/structure/girder,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"cq" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid/dug,
+/area/station/maintenance/starboard/lesser)
+"dH" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"dK" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/ladder,
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"dU" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"dY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/junction{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"eO" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"hk" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"hP" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/dug,
+/area/station/maintenance/starboard/lesser)
+"jx" = (
+/turf/closed/wall/rock/porous,
+/area/station/maintenance/starboard/lesser)
+"ku" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/tile/catwalk_tile{
+	amount = 15
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"kI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/junction{
+	dir = 8
+	},
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"lw" = (
+/obj/item/shovel,
+/turf/open/misc/asteroid/dug,
+/area/station/maintenance/starboard/lesser)
+"lG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"nt" = (
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"oU" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"oV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"qG" = (
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/door/airlock/external{
-	name = "External Access"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
-"bF" = (
+"rj" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"cv" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/girder,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"cw" = (
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/turf/open/misc/asteroid/dug,
-/area/station/asteroid)
-"cV" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/lesser)
-"dE" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/lesser)
-"dJ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
-"gr" = (
+"sa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -65,137 +148,116 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/asteroid)
-"hn" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/steam_vent,
-/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
-"iq" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/girder,
-/turf/open/floor/plating,
-/area/station/asteroid)
-"iu" = (
-/obj/structure/railing/corner,
-/turf/open/misc/asteroid,
-/area/station/asteroid)
-"iA" = (
-/obj/item/stack/ore/glass,
-/turf/open/misc/asteroid/dug,
-/area/station/asteroid)
-"jr" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/junction{
-	dir = 8
-	},
+"sx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/lesser)
-"ku" = (
-/obj/structure/ore_box,
-/turf/open/misc/asteroid,
-/area/station/asteroid)
-"kN" = (
-/obj/structure/railing/corner{
-	dir = 1
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
 	},
-/turf/open/misc/asteroid,
-/area/station/asteroid)
-"kP" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/lesser)
-"le" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"lk" = (
-/obj/structure/railing/corner{
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
-/turf/open/misc/asteroid,
-/area/station/asteroid)
-"lp" = (
-/obj/modular_map_root/tramstation{
-	key = "atmoscilower_attachment_b";
-	name = "atmoscilower_attachment_b"
+/obj/item/stack/sheet/iron{
+	amount = 2
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"lB" = (
-/obj/item/stack/ore/iron,
-/turf/open/misc/asteroid,
-/area/station/asteroid)
-"lF" = (
-/obj/structure/railing{
-	dir = 10
+"sJ" = (
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2{
+	dir = 4
 	},
-/turf/open/misc/asteroid/dug,
-/area/station/asteroid)
-"mP" = (
-/turf/closed/wall/rock/porous,
-/area/station/maintenance/starboard/lesser)
-"na" = (
-/obj/structure/cable/multilayer/multiz,
+/obj/machinery/atmospherics/pipe/multiz/supply/hidden/layer4{
+	dir = 4
+	},
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/box,
 /turf/open/floor/plating,
-/area/station/asteroid)
-"nM" = (
-/turf/open/misc/asteroid,
-/area/station/asteroid)
-"pa" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/item/extinguisher,
-/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
-"ps" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
+"uF" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 4
-	},
+/obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/plating,
-/area/station/asteroid)
-"qB" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/area/station/maintenance/starboard/lesser)
+"xD" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"yl" = (
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
-"tS" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/lesser)
-"vq" = (
+"yY" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/smooth,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
-"wc" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/lesser)
-"xq" = (
-/obj/structure/railing{
-	dir = 4
+"zB" = (
+/obj/structure/railing/corner{
+	dir = 8
 	},
 /turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"Ar" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid,
 /area/station/asteroid)
-"xI" = (
+"AA" = (
+/obj/modular_map_root/tramstation{
+	key = "atmoscilower_attachment_a";
+	name = "atmoscilower_attachment_a"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"AY" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"Cj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/door/airlock/external{
+	name = "External Access"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"CI" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"CX" = (
+/turf/template_noop,
+/area/template_noop)
+"Dw" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"DJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/modular_map_connector,
+/obj/structure/holosign/barrier/engineering,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"EA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -206,36 +268,76 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
-"yr" = (
-/obj/structure/railing{
+"EY" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"Fh" = (
+/obj/item/stack/ore/iron,
 /turf/open/misc/asteroid,
 /area/station/asteroid)
-"yD" = (
-/turf/open/misc/asteroid/dug,
+"Gc" = (
+/obj/structure/cable/multilayer/multiz,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/box,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"Gr" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"GQ" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"GW" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/tile/iron/smooth{
+	amount = 15
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"Hn" = (
+/obj/structure/rack,
+/obj/item/shovel{
+	pixel_x = -5
+	},
+/obj/item/pickaxe{
+	pixel_x = 5
+	},
+/obj/item/storage/bag/ore,
+/turf/open/misc/asteroid,
 /area/station/asteroid)
-"zs" = (
+"Hz" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/misc/asteroid/dug,
+/area/station/maintenance/starboard/lesser)
+"HJ" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/maintenance/starboard/lesser)
+"KP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Xenobiology Maintnenace"
+/obj/structure/disposalpipe/segment{
+	dir = 5
 	},
-/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
-"zV" = (
-/obj/structure/railing{
-	dir = 6
-	},
-/turf/open/misc/asteroid,
-/area/station/asteroid)
-"AU" = (
-/turf/closed/wall/r_wall,
-/area/station/maintenance/starboard/lesser)
-"CD" = (
+"Lu" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -248,15 +350,35 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/asteroid)
-"Dk" = (
+/area/station/maintenance/starboard/lesser)
+"LS" = (
+/obj/structure/girder,
 /obj/effect/turf_decal/sand/plating,
-/obj/item/stack/tile/iron/smooth{
-	amount = 15
+/obj/item/stack/sheet/iron{
+	amount = 2
 	},
 /turf/open/floor/plating,
-/area/station/asteroid)
-"Dx" = (
+/area/station/maintenance/starboard/lesser)
+"MO" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/lesser)
+"Ni" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"OK" = (
+/turf/open/misc/asteroid/dug,
+/area/station/maintenance/starboard/lesser)
+"Qz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -266,1954 +388,709 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
-"DB" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/engineering/atmospherics_portable,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"FE" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/foamtank,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"Gn" = (
+"Rw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
-	dir = 5
+	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/airlock/external{
+	name = "External Access"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"SB" = (
+/obj/structure/railing/corner,
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"UB" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"VC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/holosign/barrier/engineering,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"VX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/airlock/external{
+	name = "External Access"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"Ys" = (
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/lesser)
-"Go" = (
-/obj/modular_map_root/tramstation{
-	key = "atmoscilower_attachment_a";
-	name = "atmoscilower_attachment_a"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/lesser)
-"Gx" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/lesser)
-"IN" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/effect/spawner/random/engineering/flashlight,
-/obj/effect/spawner/random/engineering/material_cheap,
-/obj/effect/spawner/random/maintenance/two,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"JG" = (
-/obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/multiz/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/asteroid/box,
-/turf/open/floor/plating,
-/area/station/asteroid)
-"JU" = (
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/station/asteroid)
-"Ki" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/ladder,
-/obj/machinery/light/small/directional/south,
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/asteroid/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/asteroid/corner{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/station/asteroid)
-"KC" = (
-/turf/template_noop,
-/area/template_noop)
-"LB" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating,
-/area/station/asteroid)
-"LY" = (
-/obj/structure/girder,
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating,
-/area/station/asteroid)
-"Mt" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/lesser)
-"My" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/lesser)
-"NF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/door/airlock/external{
-	name = "External Access"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/lesser)
-"NH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/lesser)
-"NY" = (
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/turf/open/misc/asteroid,
-/area/station/asteroid)
-"Oh" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/door/airlock/external{
-	name = "External Access"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/lesser)
-"Ou" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/misc/asteroid,
-/area/station/asteroid)
-"Pi" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"Pk" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 4
-	},
-/obj/item/stack/sheet/iron{
-	amount = 2
-	},
-/turf/open/floor/plating,
-/area/station/asteroid)
-"Pt" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/item/stack/tile/catwalk_tile{
-	amount = 15
-	},
-/turf/open/floor/plating,
-/area/station/asteroid)
-"Sw" = (
-/obj/structure/rack,
-/obj/item/shovel{
-	pixel_x = -5
-	},
-/obj/item/pickaxe{
-	pixel_x = 5
-	},
-/obj/item/storage/bag/ore,
-/turf/open/misc/asteroid,
-/area/station/asteroid)
-"To" = (
-/turf/closed/wall,
-/area/station/maintenance/starboard/lesser)
-"Ub" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/modular_map_connector,
-/obj/structure/holosign/barrier/engineering,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/lesser)
-"Ux" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"UY" = (
-/turf/closed/wall,
-/area/station/asteroid)
-"Vi" = (
-/obj/item/shovel,
-/turf/open/misc/asteroid/dug,
-/area/station/asteroid)
-"Vp" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/spawner/random/engineering/tool,
-/turf/open/floor/plating,
-/area/station/asteroid)
-"WY" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/asteroid)
-"Xa" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/holosign/barrier/engineering,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/lesser)
-"XC" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/lesser)
-"Yi" = (
-/obj/structure/girder,
-/obj/effect/turf_decal/sand/plating,
-/obj/item/stack/sheet/iron{
-	amount = 2
-	},
-/turf/open/floor/plating,
-/area/station/asteroid)
-"YF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
-/obj/effect/spawner/random/maintenance/six,
-/obj/effect/spawner/random/engineering/material_cheap,
-/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 
 (1,1,1) = {"
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-XC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+CX
+CX
+CX
+CX
+CX
+CX
+qG
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
 "}
 (2,1,1) = {"
-JU
-JU
-JU
-JU
-KC
-KC
-To
-To
-Oh
-To
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+CX
+CX
+CX
+CX
+MO
+MO
+VX
+MO
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
 "}
 (3,1,1) = {"
-JU
-JU
-JU
-JU
-KC
-KC
-To
-cV
-XC
-To
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+CX
+CX
+CX
+CX
+MO
+bG
+qG
+MO
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
 "}
 (4,1,1) = {"
-JU
-JU
-JU
-JU
-KC
-KC
-To
-tS
-Ub
-To
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+CX
+CX
+CX
+CX
+MO
+GQ
+DJ
+MO
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
 "}
 (5,1,1) = {"
-JU
-JU
-JU
-JU
-JU
-JU
-To
-dE
-bE
-To
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+CX
+CX
+CX
+CX
+MO
+AY
+Cj
+MO
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
 "}
 (6,1,1) = {"
-JU
-JU
-JU
-JU
-JU
-JU
-UY
-LB
-CD
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+Dw
+Dw
+Dw
+Dw
+MO
+GQ
+Lu
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
 "}
 (7,1,1) = {"
-JU
-JU
-JU
-lB
-JU
-nM
-UY
-LB
-CD
-nM
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+Dw
+Fh
+Dw
+hk
+MO
+GQ
+Lu
+nt
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
 "}
 (8,1,1) = {"
-JU
-JU
-nM
-nM
-nM
-nM
-LB
-nM
-CD
-iA
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+hk
+hk
+hk
+hk
+GQ
+nt
+Lu
+cq
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
 "}
 (9,1,1) = {"
-JU
-JU
-nM
-nM
-nM
-nM
-Yi
-yD
-CD
-nM
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+hk
+hk
+hk
+hk
+LS
+OK
+Lu
+nt
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
 "}
 (10,1,1) = {"
-JU
-JU
-nM
-nM
-nM
-nM
-yD
-iA
-CD
-yD
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+hk
+hk
+hk
+hk
+OK
+cq
+Lu
+OK
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
 "}
 (11,1,1) = {"
-JU
-JU
-JU
-Sw
-nM
-nM
-yD
-nM
-CD
-yD
-nM
-nM
-JU
-JU
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+Dw
+Hn
+hk
+hk
+OK
+nt
+Lu
+OK
+nt
+nt
+HJ
+HJ
+HJ
+Dw
+Dw
+Dw
+CX
+CX
 "}
 (12,1,1) = {"
-JU
-JU
-JU
-ku
-nM
-nM
-LY
-Vp
-CD
-Vi
-nM
-iu
-xq
-lk
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+Dw
+Ar
+hk
+hk
+ce
+uF
+Lu
+lw
+nt
+SB
+dH
+oU
+HJ
+HJ
+HJ
+Dw
+CX
+CX
 "}
 (13,1,1) = {"
-JU
-JU
-JU
-ku
-nM
-nM
-LY
-LB
-CD
-nM
-iu
-zV
-JG
-Ou
-nM
-nM
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+Dw
+Ar
+hk
+hk
+ce
+GQ
+Lu
+nt
+SB
+dU
+sJ
+xD
+nt
+nt
+HJ
+Dw
+CX
+CX
 "}
 (14,1,1) = {"
-JU
-JU
-JU
-JU
-nM
-nM
-iq
-nM
-gr
-WY
-WY
-WY
-Ki
-mP
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+Dw
+Dw
+hk
+hk
+Gr
+nt
+sa
+EY
+EY
+EY
+dK
+jx
+HJ
+HJ
+HJ
+Dw
+CX
+CX
 "}
 (15,1,1) = {"
-JU
-JU
-JU
-JU
-JU
-nM
-yD
-yD
-CD
-yD
-cw
-lF
-na
-Ou
-JU
-To
-To
-To
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+Dw
+Dw
+Dw
+hk
+OK
+OK
+Lu
+OK
+hP
+Hz
+Gc
+xD
+HJ
+MO
+MO
+MO
+CX
+CX
 "}
 (16,1,1) = {"
-JU
-JU
-JU
-JU
-nM
-nM
-yD
-iA
-CD
-nM
-nM
-NY
-yr
-kN
-nM
-dE
-wc
-My
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+Dw
+Dw
+hk
+hk
+OK
+cq
+Lu
+nt
+nt
+zB
+eO
+UB
+nt
+AY
+lG
+yY
+CX
+CX
 "}
 (17,1,1) = {"
-JU
-JU
-JU
-nM
-nM
-nM
-yD
-Vp
-gr
-ps
-ps
-Pk
-ps
-ps
-ps
-xI
-My
-My
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+Dw
+hk
+hk
+hk
+OK
+uF
+sa
+Ni
+Ni
+sx
+Ni
+Ni
+Ni
+EA
+yY
+yY
+CX
+CX
 "}
 (18,1,1) = {"
-JU
-JU
-lB
-nM
-nM
-nM
-UY
-Dk
-CD
-UY
-UY
-iq
-nM
-nM
-LB
-To
-To
-To
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+Fh
+hk
+hk
+hk
+MO
+GW
+Lu
+MO
+MO
+Gr
+nt
+nt
+GQ
+MO
+MO
+MO
+CX
+CX
 "}
 (19,1,1) = {"
-JU
-JU
-lB
-nM
-nM
-nM
-UY
-Pt
-CD
-UY
-JU
-JU
-JU
-JU
-nM
-nM
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
+Fh
+hk
+hk
+hk
+MO
+ku
+Lu
+MO
+HJ
+HJ
+HJ
+HJ
+nt
+nt
+HJ
+Dw
+Dw
+Dw
 "}
 (20,1,1) = {"
-JU
-JU
-JU
-nM
-nM
-nM
-To
-dE
-Oh
-To
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
+Dw
+hk
+hk
+hk
+MO
+AY
+VX
+MO
+Dw
+Dw
+Dw
+HJ
+HJ
+HJ
+HJ
+Dw
+Dw
+Dw
 "}
 (21,1,1) = {"
-JU
-JU
-JU
-JU
-JU
-JU
-To
-wc
-Xa
-To
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
+Dw
+Dw
+Dw
+Dw
+MO
+CI
+VC
+MO
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
 "}
 (22,1,1) = {"
-JU
-JU
-JU
-JU
-JU
-JU
-To
-wc
-XC
-To
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
+CX
+CX
+CX
+CX
+MO
+CI
+qG
+MO
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
 "}
 (23,1,1) = {"
-JU
-JU
-JU
-JU
-JU
-JU
-To
-To
-NF
-To
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
+CX
+CX
+CX
+CX
+MO
+MO
+Rw
+MO
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
 "}
 (24,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-To
-Dx
-To
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
+CX
+CX
+CX
+CX
+CX
+MO
+Qz
+MO
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
 "}
 (25,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-jr
-Go
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
+CX
+CX
+CX
+CX
+CX
+MO
+dY
+AA
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
 "}
 (26,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-To
-Dx
-To
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
+CX
+CX
+CX
+CX
+CX
+MO
+Qz
+MO
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
 "}
 (27,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-kP
-Dx
-To
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
+CX
+CX
+CX
+CX
+CX
+MO
+Qz
+MO
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
 "}
 (28,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-vq
-Dx
-To
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
+CX
+CX
+CX
+CX
+CX
+yl
+kI
+MO
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
 "}
 (29,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-Dx
-To
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
+CX
+CX
+CX
+CX
+CX
+MO
+oV
+MO
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
+Dw
 "}
 (30,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-Dx
-To
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
+CX
+CX
+CX
+CX
+CX
+MO
+oV
+MO
+MO
+MO
+MO
+MO
+MO
+MO
+MO
+Dw
+Dw
+Dw
 "}
 (31,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-Dx
-To
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+CX
+CX
+CX
+CX
+CX
+MO
+Ys
+rj
+rj
+rj
+rj
+rj
+rj
+KP
+MO
+Dw
+Dw
+Dw
 "}
 (32,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-Dx
-To
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(33,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-vq
-Dx
-To
-To
-To
-To
-JU
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(34,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-vq
-Gx
-dJ
-dJ
-Gn
-To
-JU
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(35,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-Dx
-To
-JU
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(36,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-Dx
-To
-JU
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(37,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-Dx
-To
-JU
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(38,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-Dx
-To
-JU
-JU
-JU
-AU
-AU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(39,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-Dx
-To
-To
-To
-To
-AU
-le
-vq
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(40,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-Mt
-NH
-NH
-NH
-NH
-zs
-NH
-NH
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(41,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-NH
-To
-To
-To
-To
-AU
-pa
-Pi
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(42,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-NH
-YF
-bF
-To
-JU
-AU
-AU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(43,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-NH
-vq
-vq
-To
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(44,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-qB
-NH
-NH
-To
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(45,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-NH
-To
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(46,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-NH
-To
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(47,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-NH
-To
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(48,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-NH
-To
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(49,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-NH
-To
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(50,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-NH
-To
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(51,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-NH
-To
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(52,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-NH
-To
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(53,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-NH
-To
-lp
-To
-To
-To
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(54,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-NH
-NH
-NH
-NH
-NH
-NH
-NH
-NH
-NH
-NH
-vq
-AU
-"}
-(55,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-FE
-IN
-Ux
-cv
-DB
-DB
-hn
-To
-To
-To
-To
-AU
-"}
-(56,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-JU
-JU
-To
-To
-To
-To
-To
-To
-To
-To
-To
-JU
-JU
-JU
-JU
-"}
-(57,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-"}
-(58,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-"}
-(59,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(60,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(61,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-"}
-(62,1,1) = {"
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-JU
-JU
-JU
-JU
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
-KC
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+CX
+yl
+CX
+CX
+CX
+CX
 "}

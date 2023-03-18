@@ -89,3 +89,8 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 	name = "Crusier"
 	description = "A CTF map that takes place across multiple space ships, one carrying a powerful device that can accelerate those who obtain it"
 	mappath = "_maps/map_files/CTF/cruiser.dmm"
+
+/datum/map_template/ctf/turbine
+	name = "Turbine"
+	description = "A CTF map that takes place in a familiar facility. Don't try to hold out mid- Theres no sentries in this version."
+	mappath = "_maps/map_files/CTF/turbine.dmm"

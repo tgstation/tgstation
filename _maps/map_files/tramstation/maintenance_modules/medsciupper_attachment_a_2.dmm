@@ -1,25 +1,65 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/random/stationside/asteroid/porus,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/science)
+"b" = (
+/turf/template_noop,
 /area/template_noop)
-"c" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/wrench,
-/turf/open/floor/iron/white,
+"i" = (
+/obj/effect/landmark/xeno_spawn,
+/turf/open/misc/asteroid,
 /area/station/maintenance/department/science)
 "j" = (
+/obj/effect/landmark/blobstart,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/science)
+"k" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
-"k" = (
+"l" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"m" = (
+/mob/living/simple_animal/crab{
+	name = "la creatura";
+	desc = "ay dios mios..."
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/science)
+"s" = (
+/turf/closed/wall/r_wall,
+/area/station/maintenance/department/science)
+"t" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"u" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
-"m" = (
-/turf/template_noop,
-/area/template_noop)
-"t" = (
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/wrench,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"B" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/maintenance/department/science)
+"K" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/door/window/left/directional/north{
@@ -33,11 +73,19 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
-"w" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/misc/asteroid,
+"L" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Creature Containment Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/science)
-"z" = (
+"N" = (
+/turf/closed/wall/rock/porous,
+/area/station/maintenance/department/science)
+"P" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
@@ -45,244 +93,197 @@
 /obj/item/assembly/signaler,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/science)
-"A" = (
+"T" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"W" = (
 /obj/structure/cable,
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
-"C" = (
-/obj/effect/landmark/blobstart,
-/turf/open/misc/asteroid,
-/area/station/maintenance/department/science)
-"F" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/extinguisher_cabinet/directional/east,
-/turf/open/floor/iron/white,
-/area/station/maintenance/department/science)
-"G" = (
-/turf/closed/wall/r_wall,
-/area/station/maintenance/department/science)
-"H" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/white,
-/area/station/maintenance/department/science)
-"L" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/maintenance/department/science)
-"M" = (
-/mob/living/simple_animal/crab{
-	name = "la creatura";
-	desc = "ay dios mios..."
-	},
-/turf/open/misc/asteroid,
-/area/station/maintenance/department/science)
-"O" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/modular_map_connector,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Creature Containment Maintenance Hatch"
-	},
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/department/science)
-"Q" = (
-/turf/open/misc/asteroid,
-/area/station/maintenance/department/science)
-"R" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/white,
-/area/station/maintenance/department/science)
-"X" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/plating,
-/area/station/maintenance/department/science)
-"Y" = (
-/turf/closed/wall/rock/porous,
-/area/station/maintenance/department/science)
 
 (1,1,1) = {"
-m
-m
-m
-m
-m
-m
-m
-m
-m
-m
-a
-a
-a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
 "}
 (2,1,1) = {"
-m
-m
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
 "}
 (3,1,1) = {"
-m
-G
-G
-G
-G
-G
-a
-Y
-a
-a
-a
-a
-a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
 "}
 (4,1,1) = {"
-m
-G
-z
-R
-A
-G
-k
-k
-Q
-a
-a
-a
-a
+b
+s
+s
+s
+s
+s
+N
+B
+B
+b
+b
+b
 "}
 (5,1,1) = {"
-m
-m
-R
-c
-L
-k
-Q
-Q
-w
-Q
-Q
+b
+s
+P
+l
+W
+s
+u
 a
-a
+B
+B
+b
+b
 "}
 (6,1,1) = {"
-m
-O
-H
-j
+b
+L
+x
+y
 t
-k
-Q
-M
-Q
-Q
-X
-Y
+u
 a
+i
+a
+B
+b
+b
 "}
 (7,1,1) = {"
-m
-m
-R
-R
-L
+b
+s
 k
-Q
 k
-C
-Q
+K
+u
+m
 a
-a
-a
+T
+N
+b
+b
 "}
 (8,1,1) = {"
-m
-m
-m
-F
-A
-G
-Q
-Q
-k
-a
-a
-a
-a
+b
+s
+l
+l
+t
+u
+u
+j
+B
+B
+b
+b
 "}
 (9,1,1) = {"
-m
-m
-m
-G
-G
-G
+b
+s
+l
+v
+W
+s
 a
-Q
-Y
-a
-a
-a
-a
+u
+B
+b
+b
+b
 "}
 (10,1,1) = {"
-m
-m
-m
+b
+s
+s
+s
+s
+s
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+N
+B
+b
+b
+b
 "}
 (11,1,1) = {"
-m
-m
-m
-m
-m
-m
-m
-m
-a
-a
-a
-a
-a
+b
+b
+b
+b
+b
+b
+B
+b
+b
+b
+b
+b
 "}
 (12,1,1) = {"
-m
-m
-m
-m
-m
-m
-m
-m
-m
-a
-a
-a
-a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(13,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
 "}

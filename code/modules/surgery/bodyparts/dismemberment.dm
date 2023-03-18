@@ -61,7 +61,7 @@
 	if(isturf(chest_owner.loc))
 		chest_owner.add_splatter_floor(chest_owner.loc)
 	playsound(get_turf(chest_owner), 'sound/misc/splort.ogg', 80, TRUE)
-	for(var/obj/item/organ/organ as anything in chest_owner.internal_organs)
+	for(var/obj/item/organ/organ as anything in chest_owner.organs)
 		var/org_zone = check_zone(organ.zone)
 		if(org_zone != BODY_ZONE_CHEST)
 			continue
@@ -124,14 +124,14 @@
 					to_chat(phantom_owner, span_warning("You feel your [mutation] deactivating from the loss of your [body_zone]!"))
 					phantom_owner.dna.force_lose(mutation)
 
-		for(var/obj/item/organ/organ as anything in phantom_owner.internal_organs) //internal organs inside the dismembered limb are dropped.
+		for(var/obj/item/organ/organ as anything in phantom_owner.organs) //internal organs inside the dismembered limb are dropped.
 			var/org_zone = check_zone(organ.zone)
 			if(org_zone != body_zone)
 				continue
 			organ.transfer_to_limb(src, phantom_owner)
 
-	for(var/trait in bodypart_traits)
-		REMOVE_TRAIT(phantom_owner, trait, bodypart_trait_source)
+	if(length(bodypart_traits))
+		phantom_owner.remove_traits(bodypart_traits, bodypart_trait_source)
 
 	update_icon_dropped()
 	synchronize_bodytypes(phantom_owner)
@@ -355,8 +355,8 @@
 	if(can_be_disabled)
 		update_disabled()
 
-	for(var/trait in bodypart_traits)
-		ADD_TRAIT(owner, trait, bodypart_trait_source)
+	if(length(bodypart_traits))
+		owner.add_traits(bodypart_traits, bodypart_trait_source)
 
 	// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
 	// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
