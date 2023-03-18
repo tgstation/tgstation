@@ -69,13 +69,13 @@
 	if((dos_overload > dos_capacity) && !dos_failure)
 		set_dos_failure(TRUE)
 		update_appearance()
-		SSnetworks.add_log("Quantum relay switched from normal operation mode to overload recovery mode.")
+		SSmodular_computers.add_log("Quantum relay switched from normal operation mode to overload recovery mode.")
 	// If the DoS buffer reaches 0 again, restart.
 	if((dos_overload == 0) && dos_failure)
 		set_dos_failure(FALSE)
 		update_appearance()
-		SSnetworks.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
-	..()
+		SSmodular_computers.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
+	return ..()
 
 /obj/machinery/ntnet_relay/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -100,11 +100,11 @@
 			dos_overload = 0
 			set_dos_failure(FALSE)
 			update_appearance()
-			SSnetworks.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
+			SSmodular_computers.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
 			return TRUE
 		if("toggle")
 			set_relay_enabled(!relay_enabled)
-			SSnetworks.add_log("Quantum relay manually [relay_enabled ? "enabled" : "disabled"].")
+			SSmodular_computers.add_log("Quantum relay manually [relay_enabled ? "enabled" : "disabled"].")
 			update_appearance()
 			return TRUE
 
@@ -113,12 +113,12 @@
 	component_parts = list()
 
 	SSmodular_computers.ntnet_relays.Add(src)
-	SSnetworks.add_log("New quantum relay activated. Current amount of linked relays: [SSmodular_computers.ntnet_relays.len]")
+	SSmodular_computers.add_log("New quantum relay activated. Current amount of linked relays: [SSmodular_computers.ntnet_relays.len]")
 	return ..()
 
 /obj/machinery/ntnet_relay/Destroy()
 	SSmodular_computers.ntnet_relays.Remove(src)
-	SSnetworks.add_log("Quantum relay connection severed. Current amount of linked relays: [SSmodular_computers.ntnet_relays.len]")
+	SSmodular_computers.add_log("Quantum relay connection severed. Current amount of linked relays: [SSmodular_computers.ntnet_relays.len]")
 
 	for(var/datum/computer_file/program/ntnet_dos/D in dos_sources)
 		D.target = null

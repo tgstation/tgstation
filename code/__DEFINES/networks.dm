@@ -1,5 +1,3 @@
-#define HID_RESTRICTED_END 101 //the first nonrestricted ID, automatically assigned on connection creation.
-
 #define NETWORK_BROADCAST_ID "ALL"
 
 /// To debug networks use this to check
@@ -9,25 +7,6 @@
 /// We do some macro magic to make sure the strings are created at compile time rather than runtime
 /// We do it this way so that if someone changes any of the names of networks we don't have to hunt down
 /// all the constants though all the files for them.  hurrah!
-
-/// Ugh, couldn't get recursive stringafy to work in byond for some reason
-#define NETWORK_NAME_COMBINE(L,R) ((L) + "." + (R))
-
-/// Station network names.  Used as the root networks for main parts of the station
-#define HOLODECK_NETWORK_ROOT "Holodeck"
-#define STATION_NETWORK_ROOT "SS13"
-#define CENTCOM_NETWORK_ROOT "CENTCOM"
-#define SYNDICATE_NETWORK_ROOT "SYNDI"
-#define LIMBO_NETWORK_ROOT "LIMBO" // Limbo is a dead network
-
-
-/// various sub networks pieces
-#define __NETWORK_CARGO "CARGO"
-#define __NETWORK_BOTS "BOTS"
-#define __NETWORK_CIRCUITS "CIRCUITS"
-
-/// Various combined subnetworks
-#define NETWORK_BOTS_CARGO NETWORK_NAME_COMBINE(__NETWORK_CARGO, __NETWORK_BOTS)
 
 /// Network name should be all caps and no punctuation except for _ and . between domains
 /// This does a quick an dirty fix to a network name to make sure it works

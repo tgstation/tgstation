@@ -63,7 +63,7 @@
 				executed = TRUE
 				target.dos_sources.Add(src)
 				if(SSmodular_computers.intrusion_detection_enabled)
-					SSnetworks.add_log("IDS WARNING - Excess traffic flood targeting relay [target.uid] detected from device: [computer.name]")
+					SSmodular_computers.add_log("IDS WARNING - Excess traffic flood targeting relay [target.uid] detected from device: [computer.name]")
 					SSmodular_computers.intrusion_detection_alarm = TRUE
 			return TRUE
 

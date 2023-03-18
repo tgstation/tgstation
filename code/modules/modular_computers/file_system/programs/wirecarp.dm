@@ -29,11 +29,7 @@
 			target_relay.set_relay_enabled(!target_relay.relay_enabled)
 			return TRUE
 		if("purgelogs")
-			SSnetworks.purge_logs()
-			return TRUE
-		if("updatemaxlogs")
-			var/logcount = params["new_number"]
-			SSnetworks.update_max_log_count(logcount)
+			SSmodular_computers.purge_logs()
 			return TRUE
 		if("toggle_mass_pda")
 			var/obj/item/modular_computer/target_tablet = locate(params["ref"]) in GLOB.TabletMessengers
@@ -59,9 +55,8 @@
 	data["idsalarm"] = SSmodular_computers.intrusion_detection_alarm
 
 	data["ntnetlogs"] = list()
-	for(var/i in SSnetworks.logs)
+	for(var/i in SSmodular_computers.logs)
 		data["ntnetlogs"] += list(list("entry" = i))
-	data["ntnetmaxlogs"] = SSnetworks.setting_maxlogcount
 
 	data["tablets"] = list()
 	for(var/obj/item/modular_computer/messenger as anything in GetViewableDevices())
@@ -75,10 +70,4 @@
 
 		data["tablets"] += list(tablet_data)
 
-	return data
-
-/datum/computer_file/program/ntnetmonitor/ui_static_data(mob/user)
-	var/list/data = ..()
-	data["minlogs"] = MIN_NTNET_LOGS
-	data["maxlogs"] = MAX_NTNET_LOGS
 	return data
