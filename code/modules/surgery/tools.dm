@@ -248,7 +248,6 @@
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator)
 
-
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
 	name = "surgical processor"
 	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
@@ -256,6 +255,10 @@
 	icon_state = "spectrometer"
 	item_flags = NOBLUDGEON
 	var/list/loaded_surgeries = list()
+
+/obj/item/surgical_processor/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/surgery_initiator)
 
 /obj/item/surgical_processor/examine(mob/user)
 	. = ..()

@@ -16,7 +16,7 @@
 		Insert(loc)
 
 /obj/item/organ/internal/body_egg/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
-	..()
+	. = ..()
 	owner.add_traits(list(TRAIT_XENO_HOST, TRAIT_XENO_IMMUNE), ORGAN_TRAIT)
 	owner.med_hud_set_status()
 	INVOKE_ASYNC(src, PROC_REF(AddInfectionImages), owner)
@@ -26,7 +26,7 @@
 		owner.remove_traits(list(TRAIT_XENO_HOST, TRAIT_XENO_IMMUNE), ORGAN_TRAIT)
 		owner.med_hud_set_status()
 		INVOKE_ASYNC(src, PROC_REF(RemoveInfectionImages), owner)
-	..()
+	return ..()
 
 /obj/item/organ/internal/body_egg/on_death(delta_time, times_fired)
 	. = ..()
