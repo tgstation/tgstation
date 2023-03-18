@@ -8,12 +8,12 @@
 	mind_control_duration = 900
 
 /obj/item/organ/internal/heart/gland/electric/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
-	..()
+	. = ..()
 	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, "abductor_gland")
 
 /obj/item/organ/internal/heart/gland/electric/Remove(mob/living/carbon/M, special = FALSE)
 	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "abductor_gland")
-	..()
+	return ..()
 
 /obj/item/organ/internal/heart/gland/electric/activate()
 	owner.visible_message(span_danger("[owner]'s skin starts emitting electric arcs!"),\
