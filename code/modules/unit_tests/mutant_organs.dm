@@ -5,8 +5,10 @@
 
 /datum/unit_test/mutant_organs/Run()
 	var/mob/living/carbon/human/consistent/dummy = allocate(/mob/living/carbon/human/consistent)
-	var/list/species = subtypesof(/datum/species)
-	species -= /datum/species/dullahan // the head is detached from the body
+	var/list/ignore = list(
+		/datum/species/dullahan,
+	)
+	var/list/species = subtypesof(/datum/species) - ignore
 	var/static/list/organs_we_care_about = list(
 		ORGAN_SLOT_BRAIN,
 		ORGAN_SLOT_HEART,
