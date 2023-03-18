@@ -43,6 +43,8 @@
 		var/atom/as_atom = parent
 		as_atom.balloon_alert_to_viewers("the sticker lands on its sticky side!")
 
+// The attached sticker
+
 /datum/component/attached_sticker
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	///The overlay we apply to things we stick to
