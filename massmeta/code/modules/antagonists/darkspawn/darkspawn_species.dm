@@ -34,7 +34,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/darkspawn,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/darkspawn,
 	)
-	mutanteyes = /obj/item/organ/internal/eyes/shadow
+	mutanteyes = /obj/item/organ/internal/eyes/shadow/darkspawn
 	var/list/upgrades = list()
 
 /datum/species/darkspawn/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -90,6 +90,9 @@
 		darkspawn = H.mind.has_antag_datum(/datum/antagonist/darkspawn)
 		if(darkspawn)
 			upgrades = darkspawn.upgrades
+
+/obj/item/organ/internal/eyes/shadow/darkspawn
+	sight_flags = SEE_MOBS
 
 /mob/living/carbon/human/species/darkspawn
 	race = /datum/species/darkspawn //God knows why would you need it but ok
