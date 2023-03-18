@@ -366,7 +366,7 @@
 		/obj/item/storage/belt/janitor = 2,
 		/obj/item/plunger = 2,
 		/obj/item/radio/headset/headset_srv = 2,
-	)
+		)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
 	default_price = PAYCHECK_CREW
 	extra_price = PAYCHECK_COMMAND * 0.8
