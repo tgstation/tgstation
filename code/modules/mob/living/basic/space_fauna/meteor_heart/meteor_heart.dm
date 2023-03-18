@@ -63,7 +63,7 @@
 /mob/living/basic/meteor_heart/proc/aggro()
 	if (ai_controller.ai_status == AI_STATUS_ON)
 		return
-	ai_controller.set_ai_status(ai_controller.get_setup_mob_ai_status(src))
+	ai_controller.reset_ai_status()
 	if (!ai_controller.ai_status == AI_STATUS_ON)
 		return
 	icon_state = "heart_aggro"
