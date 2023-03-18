@@ -2644,6 +2644,9 @@
 "agM" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/status_display/ai/directional/south,
+/obj/machinery/computer/records/security{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/arrivals)
 "agN" = (
