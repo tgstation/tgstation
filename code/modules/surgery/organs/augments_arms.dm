@@ -81,7 +81,7 @@
 		RegisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(dropkey)) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
 
 /obj/item/organ/internal/cyberimp/arm/on_remove(mob/living/carbon/arm_owner)
-  . == ..()
+	. = ..()
 	Retract()
 	if(hand)
 		UnregisterSignal(hand, COMSIG_ITEM_ATTACK_SELF)

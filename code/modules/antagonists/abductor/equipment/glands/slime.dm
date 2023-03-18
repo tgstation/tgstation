@@ -8,12 +8,12 @@
 	mind_control_duration = 2400
 
 /obj/item/organ/internal/heart/gland/slime/on_insert(mob/living/carbon/gland_owner)
-  . = ..()
+	. = ..()
 	gland_owner.faction |= FACTION_SLIME
 	gland_owner.grant_language(/datum/language/slime, TRUE, TRUE, LANGUAGE_GLAND)
 
 /obj/item/organ/internal/heart/gland/slime/on_remove(mob/living/carbon/gland_owner)
-  . = ..()
+	. = ..()
 	gland_owner.faction -= FACTION_SLIME
 	gland_owner.remove_language(/datum/language/slime, TRUE, TRUE, LANGUAGE_GLAND)
 

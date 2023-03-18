@@ -335,7 +335,7 @@
 
 
 /obj/item/organ/internal/eyes/robotic/flashlight/on_remove(mob/living/carbon/victim)
-  . = ..()
+	. = ..()
 	eye.on = FALSE
 	eye.update_brightness(victim)
 	eye.forceMove(src)
