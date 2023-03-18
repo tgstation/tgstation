@@ -49,7 +49,7 @@
 	event.selected_wisdom = chosen
 
 /datum/event_admin_setup/input_number/wisdom_cow
-	input_text = "How much experience should this cow grant."
+	input_text = "How much experience should this cow grant?"
 	default_value = 500
 	max_value = 2500
 	min_value = -2500
