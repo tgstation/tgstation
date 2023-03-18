@@ -36,7 +36,8 @@
 		},
 
 		"Blood Brothers": {
-			"weight": 0
+			"weight": 4,
+			"cost": 8
 		},
 
 		"Changelings": {
@@ -134,7 +135,6 @@
 		"Spiders": {
 			"weight": 3,
 			"cost": 8
-			"weight": 0
 		},
 
 		"Revenant": {
