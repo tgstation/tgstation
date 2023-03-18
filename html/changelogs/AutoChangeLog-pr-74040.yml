@@ -1,5 +1,0 @@
-author: "atosti"
-delete-after: True
-changes:
-  - bugfix: "Player-controlled Regal Rats now lick or claw based on their combat mode."
-  - bugfix: "NPC Regal rats now properly claw at enemies, moving on to new targets after completing kills."

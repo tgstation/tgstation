@@ -1,5 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - rscadd: "Surgical Processor upgrade for medical cyborgs can now be used to start surgeries."
-  - balance: "You no longer need to use two module slots for starting surgeries with the surgical processor."
