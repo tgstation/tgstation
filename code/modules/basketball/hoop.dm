@@ -95,22 +95,26 @@
 	scoreboard.add_overlay(emissive_tens_overlay)
 
 /obj/structure/hoop/attackby(obj/item/ball, mob/living/baller, params)
-	if(get_dist(src, baller) < 2) // TK users aren't allowed to dunk
-		if(baller.transferItemToLoc(ball, drop_location()))
-			var/dunk_dir = get_dir(baller, src)
+	if(!baller.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
+		return // TK users aren't allowed to dunk
+		
+	if(!baller.transferItemToLoc(ball, drop_location()))
+		return
 
-			var/dunk_pixel_y = dunk_dir & SOUTH ? -16 : 16
-			var/dunk_pixel_x = dunk_dir & EAST && 16 || dunk_dir & WEST && -16 || 0
+	var/dunk_dir = get_dir(baller, src)
 
-			animate(baller, pixel_x = dunk_pixel_x, pixel_y = dunk_pixel_y, time = 5, easing = BOUNCE_EASING|EASE_IN|EASE_OUT)
-			sleep(0.5 SECONDS)
-			animate(baller, pixel_x = 0, pixel_y = 0, time = 3)
+	var/dunk_pixel_y = dunk_dir & SOUTH ? -16 : 16
+	var/dunk_pixel_x = dunk_dir & EAST && 16 || dunk_dir & WEST && -16 || 0
 
-			visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
-			score(ball, baller, 2)
+	animate(baller, pixel_x = dunk_pixel_x, pixel_y = dunk_pixel_y, time = 5, easing = BOUNCE_EASING|EASE_IN|EASE_OUT)
+	sleep(0.5 SECONDS)
+	animate(baller, pixel_x = 0, pixel_y = 0, time = 3)
 
-			if(istype(ball, /obj/item/toy/basketball))
-				baller.adjustStaminaLoss(STAMINA_COST_DUNKING)
+	visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
+	score(ball, baller, 2)
+
+	if(istype(ball, /obj/item/toy/basketball))
+		baller.adjustStaminaLoss(STAMINA_COST_DUNKING)
 
 /obj/structure/hoop/attack_hand(mob/living/baller, list/modifiers)
 	. = ..()
