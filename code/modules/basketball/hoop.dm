@@ -106,15 +106,18 @@
 	var/dunk_pixel_y = dunk_dir & SOUTH ? -16 : 16
 	var/dunk_pixel_x = dunk_dir & EAST && 16 || dunk_dir & WEST && -16 || 0
 
-	animate(baller, pixel_x = dunk_pixel_x, pixel_y = dunk_pixel_y, time = 5, easing = BOUNCE_EASING|EASE_IN|EASE_OUT)
-	sleep(0.5 SECONDS)
-	animate(baller, pixel_x = 0, pixel_y = 0, time = 3)
-
+	INVOKE_ASYNC(src, PROC_REF(dunk_animation), baller, dunk_pixel_y, dunk_pixel_x)
 	visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
 	score(ball, baller, 2)
 
 	if(istype(ball, /obj/item/toy/basketball))
 		baller.adjustStaminaLoss(STAMINA_COST_DUNKING)
+
+/// This bobs the mob in the hoop direction for the dunk animation
+/mob/living/proc/dunk_animation(mob/living/baller, dunk_pixel_y, dunk_pixel_x)
+	animate(baller, pixel_x = dunk_pixel_x, pixel_y = dunk_pixel_y, time = 5, easing = BOUNCE_EASING|EASE_IN|EASE_OUT)
+	sleep(0.5 SECONDS)
+	animate(baller, pixel_x = 0, pixel_y = 0, time = 3)
 
 /obj/structure/hoop/attack_hand(mob/living/baller, list/modifiers)
 	. = ..()
