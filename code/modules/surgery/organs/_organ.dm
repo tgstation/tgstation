@@ -42,9 +42,9 @@
 	///Do we effect the appearance of our mob. Used to save time in preference code
 	var/visual = TRUE
 	/// Traits that are given to the holder of the organ. If you want an effect that changes this, don't add directly to this. Use the add_organ_trait() proc
-	var/list/organ_traits = list()
+	var/list/organ_traits
 	/// Status Effects that are given to the holder of the organ.
-	var/list/organ_effects = list()
+	var/list/organ_effects
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.
@@ -153,28 +153,28 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /// Add a Trait to an organ that it will give its owner.
 /obj/item/organ/proc/add_organ_trait(trait)
-	organ_traits += trait
+	LAZYADD(organ_traits, trait)
 	if(isnull(owner))
 		return
 	ADD_TRAIT(owner, trait, REF(src))
 
 /// Removes a Trait from an organ, and by extension, its owner.
 /obj/item/organ/proc/remove_organ_trait(trait)
-	organ_traits -= trait
+	LAZYREMOVE(organ_traits, trait)
 	if(isnull(owner))
 		return
 	REMOVE_TRAIT(owner, trait, REF(src))
 
 /// Add a Status Effect to an organ that it will give its owner.
 /obj/item/organ/proc/add_organ_status(status)
-	organ_effects += status
+	LAZYADD(organ_effects, status)
 	if(isnull(owner))
 		return
 	owner.apply_status_effect(status, type)
 
 /// Removes a Status Effect from an organ, and by extension, its owner.
 /obj/item/organ/proc/remove_organ_status(status)
-	organ_traits -= status
+	LAZYREMOVE(organ_effects, status)
 	if(isnull(owner))
 		return
 	owner.remove_status_effect(status, type)
