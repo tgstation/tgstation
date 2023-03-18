@@ -136,7 +136,7 @@
 	use_power(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(harvest)), interval)
 
-/obj/machinery/harvester/proc/end_harvesting(var/success = TRUE)
+/obj/machinery/harvester/proc/end_harvesting(success = TRUE)
 	warming_up = FALSE
 	harvesting = FALSE
 	open_machine()
