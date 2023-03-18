@@ -1,0 +1,5 @@
+author: "SuperSlayer0"
+delete-after: True
+changes:
+  - bugfix: "Даркспауны теперь не получают урон от света пока мертвы"
+  - bugfix: "У даркспаунов теперь нету генов"
