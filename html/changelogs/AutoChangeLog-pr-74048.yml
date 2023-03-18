@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes gloves not sending the COMSIG_PARENT_ATTACKBY signal"
