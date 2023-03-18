@@ -27,6 +27,11 @@
 /datum/bodypart_overlay/simple/emote/removed_from_limb(obj/item/bodypart/limb)
 	attached_bodypart = null
 
+/datum/bodypart_overlay/simple/emote/generate_icon_cache()
+	. = ..()
+	. += "[offset_x]"
+	. += "[offset_y]"
+
 ///Removes the overlay from the attached bodypart and updates the necessary sprites
 /datum/bodypart_overlay/simple/emote/Destroy()
 	var/obj/item/bodypart/referenced_bodypart = attached_bodypart.resolve()
