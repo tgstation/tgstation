@@ -145,7 +145,7 @@
 	bloodsuckeruser.regenerate_organs()
 
 	// Step 2 NOTE: Giving passive organ regeneration will cause Torpor to spam /datum/client_colour/monochrome at the Bloodsucker, permanently making them colorblind!
-	for(var/all_organs in bloodsuckeruser.internal_organs)
+	for(var/all_organs in bloodsuckeruser.organs)
 		var/obj/item/organ/organ = all_organs
 		organ.setOrganDamage(0)
 	var/obj/item/organ/internal/heart/current_heart = bloodsuckeruser.getorganslot(ORGAN_SLOT_HEART)
