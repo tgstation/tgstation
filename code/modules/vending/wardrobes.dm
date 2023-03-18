@@ -267,7 +267,7 @@
 		/obj/item/storage/backpack/satchel/explorer = 1,
 		/obj/item/clothing/glasses/regular = 2,
 		/obj/item/clothing/glasses/regular/jamjar = 1,
-		/obj/item/storage/bag/books = 1.
+		/obj/item/storage/bag/books = 1,
 		/obj/item/radio/headset/headset_srv = 2,
 		)
 	refill_canister = /obj/item/vending_refill/wardrobe/curator_wardrobe
