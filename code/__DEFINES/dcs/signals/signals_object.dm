@@ -419,3 +419,5 @@
 
 /// from /obj/machinery/mineral/ore_redemption/pickup_item when it successfully picks something up
 #define COMSIG_ORM_COLLECTED_ORE "orm_collected_ore"
+
+#define COMSIG_RADIATION_RECIEVED "radiation_recieved"

@@ -77,13 +77,13 @@
 			current_hat++
 			add_overlay(hat_adding)
 
-		add_verb(src, /obj/item/clothing/head/verb/detach_stacked_hat) //Verb for removing hats.
+		add_verb(user, /obj/item/clothing/head/verb/detach_stacked_hat) //Verb for removing hats.
 
 		switch(contents.len) //Section for naming/description
 			if(0)
 				name = initial(name)
 				desc = initial(desc)
-				remove_verb(src, /obj/item/clothing/head/verb/detach_stacked_hat)
+				remove_verb(user, /obj/item/clothing/head/verb/detach_stacked_hat)
 			if (1,2)
 				name = "Pile of Hats"
 				desc = "A meagre pile of hats"

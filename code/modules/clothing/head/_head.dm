@@ -7,10 +7,6 @@
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_HEAD
 
-/obj/item/clothing/head/Initialize(mapload)
-	. = ..()
-	remove_verb(src, /obj/item/clothing/head/verb/detach_stacked_hat)
-
 ///Special throw_impact for hats to frisbee hats at people to place them on their heads/attempt to de-hat them.
 /obj/item/clothing/head/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
 	. = ..()
