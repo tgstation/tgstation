@@ -5,7 +5,7 @@
 
 /datum/component/sticker/Initialize(sticker_type)
 	. = ..()
-	if(!isatom(parent))
+	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(sticker_type)
 		stick_type = sticker_type
