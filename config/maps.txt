@@ -29,12 +29,10 @@ endmap
 
 map icebox
 	votable
+	disabled
 endmap
 
-map tramstation
-	minplayers 5
-	disabled
-	votable
+map tramstation	
 endmap
 
 map runtimestation

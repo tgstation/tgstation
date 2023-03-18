@@ -16,6 +16,7 @@
 	preview_outfit = /datum/outfit/traitor
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
+	var/progressive = FALSE
 	///give this traitor an uplink?
 	var/give_uplink = TRUE
 	///if TRUE, this traitor will always get hijacking as their final objective
@@ -56,7 +57,7 @@
 		else
 			uplink_handler = uplink.uplink_handler
 		uplink_handler.primary_objectives = objectives
-		uplink_handler.has_progression = TRUE
+		uplink_handler.has_progression = progressive
 		SStraitor.register_uplink_handler(uplink_handler)
 
 		uplink_handler.has_objectives = TRUE
