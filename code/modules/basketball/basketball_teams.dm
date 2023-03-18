@@ -62,7 +62,6 @@
 	gloves = /obj/item/clothing/gloves/color/fyellow
 	belt = /obj/item/storage/belt/utility
 	// assistants should be random unknowns so no id card
-	id = null
 	has_card = FALSE
 
 // No slowdown for these uniforms
