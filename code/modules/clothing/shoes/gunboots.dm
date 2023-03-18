@@ -11,7 +11,7 @@
 /obj/item/clothing/shoes/gunboots/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/shoes)
+	create_storage(storage_type = /datum/storage/pockets/shoes)
 
 	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_step))
 

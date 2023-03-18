@@ -17,10 +17,10 @@
 	return ..()
 
 /mob/living/carbon/alien/adult/royal/praetorian/create_internal_organs()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/large
-	internal_organs += new /obj/item/organ/internal/alien/resinspinner
-	internal_organs += new /obj/item/organ/internal/alien/acid
-	internal_organs += new /obj/item/organ/internal/alien/neurotoxin
+	organs += new /obj/item/organ/internal/alien/plasmavessel/large
+	organs += new /obj/item/organ/internal/alien/resinspinner
+	organs += new /obj/item/organ/internal/alien/acid
+	organs += new /obj/item/organ/internal/alien/neurotoxin
 	return ..()
 
 /datum/action/cooldown/alien/evolve_to_queen

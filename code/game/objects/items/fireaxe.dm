@@ -86,3 +86,5 @@
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
 	wound_bonus = 0
+	usesound = 'sound/items/crowbar.ogg'
+

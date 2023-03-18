@@ -28,7 +28,7 @@
 	return ..()
 
 /obj/item/organ/internal/heart/Remove(mob/living/carbon/heartless, special = 0)
-	..()
+	. = ..()
 	if(!special)
 		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 120)
 
@@ -169,13 +169,13 @@
 		add_colour = FALSE
 
 /obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/accursed, special = FALSE, drop_if_replaced = TRUE)
-	..()
+	. = ..()
 	last_pump = world.time // give them time to react
 	if(owner)
 		to_chat(owner, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
 
 /obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed, special = FALSE)
-	..()
+	. = ..()
 	accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 
 /datum/action/item_action/organ_action/cursed_heart

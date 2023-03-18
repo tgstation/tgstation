@@ -589,6 +589,7 @@
 		"solarcontrol",
 		"stack_console",
 		"stack_machine",
+		"suit_storage_unit",
 		"tank_compressor",
 		"tesla_coil",
 		"thermomachine",

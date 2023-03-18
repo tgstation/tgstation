@@ -3585,8 +3585,8 @@
 	pixel_x = 32
 	},
 /obj/item/radio/intercom/directional/east{
-	pixel_y = 3;
-	pixel_x = 38
+	pixel_x = 38;
+	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 4
@@ -3596,14 +3596,14 @@
 	pixel_y = -8
 	},
 /obj/machinery/button/door/directional/east{
-	pixel_y = -8;
 	id = "qmspace";
-	name = "Space Shutters Control"
+	name = "Space Shutters Control";
+	pixel_y = -8
 	},
 /obj/machinery/button/door/directional/east{
-	pixel_y = 6;
 	id = "qmprivacy";
-	name = "Privacy Control"
+	name = "Privacy Control";
+	pixel_y = 6
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -3850,10 +3850,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
-"aTv" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/port)
 "aTz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -9228,10 +9224,6 @@
 "ceF" = (
 /turf/closed/wall,
 /area/station/science/genetics)
-"ceG" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/starboard/aft)
 "ceV" = (
 /obj/structure/sign/warning/radiation,
 /turf/closed/wall,
@@ -42569,11 +42561,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"kmy" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/station/science/xenobiology)
 "kmE" = (
 /obj/machinery/door/poddoor/incinerator_atmos_aux,
 /turf/open/floor/engine,
@@ -49129,8 +49116,8 @@
 	},
 /obj/machinery/button/door/directional/east{
 	id = "qmroom";
-	pixel_y = -6;
-	name = "Privacy Control"
+	name = "Privacy Control";
+	pixel_y = -6
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -92960,11 +92947,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical/medsci)
-"wDJ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/station/security/checkpoint/medical/medsci)
 "wDQ" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -120408,8 +120390,8 @@ dDk
 uhb
 uhb
 uhb
-kmy
-kmy
+uhb
+uhb
 mAt
 qCs
 blc
@@ -127592,7 +127574,7 @@ vcB
 vcB
 jto
 rrU
-aTv
+vcB
 uNQ
 lUN
 vcB
@@ -137890,7 +137872,7 @@ qfi
 lKz
 qfi
 dQT
-wDJ
+dQT
 nGk
 acn
 nGk
@@ -152274,7 +152256,7 @@ nXH
 qPE
 jBm
 wpH
-ceG
+nXH
 bBd
 nXH
 nXH

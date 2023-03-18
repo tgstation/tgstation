@@ -173,6 +173,23 @@
 			if(!(ACCESS_MEDICAL in access))
 				to_chat(human_user, span_warning("ERROR: Invalid access"))
 				return
+
+			if(href_list["physical_status"])
+				var/health_status = tgui_input_list(human_user, "Specify a new physical status for this person.", "Medical HUD", PHYSICAL_STATUSES, target_record.physical_status)
+				if(!health_status || !target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
+					return
+
+				target_record.physical_status = health_status
+				return
+
+			if(href_list["mental_status"])
+				var/health_status = tgui_input_list(human_user, "Specify a new mental status for this person.", "Medical HUD", MENTAL_STATUSES, target_record.mental_status)
+				if(!health_status || !target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
+					return
+
+				target_record.mental_status = health_status
+				return
+
 			if(href_list["quirk"])
 				var/quirkstring = get_quirk_string(TRUE, CAT_QUIRK_ALL)
 				if(quirkstring)

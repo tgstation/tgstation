@@ -267,6 +267,8 @@
 			if(tool.use_tool(src, user, 5 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 				state = WINDOW_SCREWED_TO_FRAME
 				to_chat(user, span_notice("You pry the window back into the frame."))
+		else
+			return FALSE
 
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
@@ -784,6 +786,14 @@
 /obj/structure/window/reinforced/shuttle/unanchored
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
+
+/obj/structure/window/reinforced/shuttle/indestructible
+	name = "hardened shuttle window"
+	flags_1 = PREVENT_CLICK_UNDER_1 | NODECONSTRUCT_1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/window/reinforced/shuttle/indestructible/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	return FALSE
 
 /obj/structure/window/reinforced/plasma/plastitanium
 	name = "plastitanium window"
