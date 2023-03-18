@@ -69,7 +69,7 @@
 			On death, these nodules take control of the dead body, causing limited revivification, \
 			along with slurred speech, aggression, and the ability to infect others with this agent."
 	item = /obj/item/storage/box/syndie_kit/romerol
-	cost = 30
+	cost = 25
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
@@ -83,13 +83,13 @@
 	cost = 20
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-  
+
 /datum/uplink_item/bundles_tc/miami
 	name = "Old-World Rampage Kit"
 	desc = "Blood, heat and dust. The wind howls, the russians are no more, but the ones that inherited wealth from them still stand tall. Prove yourself Operative, and make sure you don't go completely mad."
 	item = /obj/item/storage/backpack/satchel/miami/prefilled
 	cost = 17
-  
+
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/bundles_tc/surplus
