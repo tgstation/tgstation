@@ -82,6 +82,6 @@
     )
   );
 
-  // Goonchat styles
-  @include meta.load-css('../goon/chat-light.scss');
+  // tgchat styles
+  @include meta.load-css('../tgchat/chat-light.scss');
 }

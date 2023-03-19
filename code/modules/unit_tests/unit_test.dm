@@ -46,6 +46,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/list/allocated
 	var/list/fail_reasons
 
+	/// Do not instantiate if type matches this
+	var/abstract_type = /datum/unit_test
+
 	var/static/datum/space_level/reservation
 
 /proc/cmp_unit_test_priority(datum/unit_test/a, datum/unit_test/b)
@@ -74,7 +77,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	return ..()
 
 /datum/unit_test/proc/Run()
-	TEST_FAIL("Run() called parent or not implemented")
+	TEST_FAIL("[type]/Run() called parent or not implemented")
 
 /datum/unit_test/proc/Fail(reason = "No reason", file = "OUTDATED_TEST", line = 1)
 	succeeded = FALSE
@@ -146,8 +149,11 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	log_world("::[priority] file=[file],line=[line],title=[map_name]: [type]::[annotation_text]")
 
-/proc/RunUnitTest(test_path, list/test_results)
-	if (ispath(test_path, /datum/unit_test/focus_only))
+/proc/RunUnitTest(datum/unit_test/test_path, list/test_results)
+	if(ispath(test_path, /datum/unit_test/focus_only))
+		return
+
+	if(initial(test_path.abstract_type) == test_path)
 		return
 
 	var/datum/unit_test/test = new test_path
