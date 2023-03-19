@@ -76,7 +76,6 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	my_area = get_area(src)
 	alarm_manager = new(src)
 	select_mode(src, /datum/air_alarm_mode/filtering)
-	update_appearance()
 
 	AddElement(/datum/element/connect_loc, atmos_connections)
 	AddComponent(/datum/component/usb_port, list(
@@ -87,6 +86,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	))
 
 	GLOB.air_alarms += src
+	update_appearance()
 
 /obj/machinery/airalarm/Destroy()
 	if(my_area)
@@ -95,6 +95,27 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	QDEL_NULL(alarm_manager)
 	GLOB.air_alarms -= src
 	return ..()
+
+/obj/machinery/airalarm/on_enter_area(datum/source, area/area_to_register)
+	//were already registered to an area. exit from here first before entering into an new area
+	if(!isnull(my_area))
+		return
+	. = ..()
+
+	my_area = area_to_register
+	update_appearance()
+
+/obj/machinery/airalarm/update_name(updates)
+	. = ..()
+	name = "[get_area_name(my_area)] Air Alarm"
+
+/obj/machinery/airalarm/on_exit_area(datum/source, area/area_to_unregister)
+	//we cannot unregister from an area we never registered to in the first place
+	if(my_area != area_to_unregister)
+		return
+	. = ..()
+
+	my_area = null
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()

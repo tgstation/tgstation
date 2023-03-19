@@ -1249,11 +1249,7 @@
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "Am" = (
-/obj/structure/window/reinforced/fulltile{
-	atom_integrity = 5000;
-	max_integrity = 5000;
-	name = "hardened window"
-	},
+/obj/effect/spawner/structure/window/reinforced/indestructible,
 /turf/open/floor/plating,
 /area/centcom/ctf)
 "Ao" = (

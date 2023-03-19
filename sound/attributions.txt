@@ -37,3 +37,12 @@ alien_explode.ogg is adapted from zimbot's Frozen Lettuce upload https://freesou
 alien_organ_cut.ogg is adapted from some CC 0 flesh sound, lesaucisson's swoosh https://freesound.org/people/lesaucisson/sounds/585256/, and a snippet of EminYILDIRIM's tree cutting clip https://freesound.org/people/EminYILDIRIM/sounds/608343/
 
 standard_stamp.ogg is adapted from tom_woysky's "Stamp.wav" https://freesound.org/people/tom_woysky/sounds/348316/
+
+chainsaw_loop.ogg is adapted from Audionautics "Chainsaw Idle Loops", which is licensed under CC Attribution 3.0
+https://freesound.org/people/Audionautics/sounds/171652/
+chainsaw_start.ogg is adapted from 8 Chainsaw Pulls.wav by Stefan021
+https://freesound.org/s/431740/ (CC 0)
+chainsaw_stop.ogg is adapted from kyles "chainsaw sawing short cuts +stop.flac" (CC 0)
+https://freesound.org/people/kyles/sounds/453256/
+
+

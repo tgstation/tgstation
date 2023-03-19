@@ -525,3 +525,218 @@
   - rscadd: Added stickers, purchasable from cargo
   vinylspiders:
   - bugfix: slimepeople and vampires are now affected by the blood deficiency quirk
+2023-03-16:
+  ArcaneDefence:
+  - bugfix: A bunch of invisible magazine sprites are visible now
+  - imageadd: Bullpup shotgun magazines for buckshot and slugs are now indicated with
+      a red or white dot, respectively.
+  - balance: Putting a non-clothing item onto someone else creates a visible message
+      the same way a clothing item would.
+  Helg2:
+  - spellcheck: fixed a box of party_poppers and camera tag "tech_storage"
+  MMMiracles:
+  - bugfix: White ships can now dock with Tramstation properly again.
+  Melbert:
+  - admin: Logs when forced events trigger
+  - bugfix: Paradox Clones now know that their target knows.
+  - balance: Magboots will now protect you from sliding on ice. It will not stop the
+      slip, though.
+  - bugfix: '"Ice sliding" (from patches of permafrost ice) will now correctly slide
+      you until you reach a non-ice patch.'
+  - bugfix: Speed potioned magboots maintain their speed booster after toggling them
+  - refactor: Refactored magboots.
+  - refactor: Refactored noslip mechanics.
+  Mothblocks:
+  - qol: Clicking on the turf of a fire alarm/light switch with your hand will activate
+      it.
+  Rhials:
+  - rscadd: Adds the Smoking Room icebox ruin, found on the station level!
+  Sealed101:
+  - qol: medical cyborg's surgical processor now tells the user on examine that it
+      needs to be equipped in an active module to access downloaded surgeries
+  - qol: medical cyborg's surgical processor now lists downloaded surgeries on examine
+  Time-Green:
+  - bugfix: fixes deadly harvesting just taking harmless extorgans
+  - code_imp: renames internal_organs to organs now that it can also contain external_organs
+  necromanceranne:
+  - rscadd: Adds the Snatcherprod. Like a teleprod, but it steals stuff from peoples
+      hands instead. Made using a telecrystal, rather than a bluespace crystal.
+2023-03-17:
+  DAKKA-WAAAGH:
+  - bugfix: Removes duplicate decals and replaces them with new ones that are more
+      efficient
+  Jolly:
+  - bugfix: Light office chairs and Dark office chair colors are, now actually reflective
+      of the name.
+  - bugfix: Left/Right office chairs should be symmetrical and no longer be one pixel
+      off when flipped.
+  - bugfix: The directional states for the toppled wooden chair sprites are now consistent.
+      You really can't tell visually, but its been fixed.
+  - imageadd: Using the new wooden chair sprites, there's now new toppled wooden chair
+      sprites. Go wild. Have a ballroom brawl or something.
+  LT3:
+  - bugfix: Tramstation xenobio now has slimes
+  Melbert:
+  - bugfix: Lead batteries now start partially drained as intended.
+  Profakos:
+  - bugfix: Your species will no longer get deleted if a changeling  who copied you
+      is deleted from existence
+  SyncIt21:
+  - rscadd: suit storage unit circuit boards to engineering & science department circuit
+      printers.
+  - rscadd: freezer cabinet as a craftable & destructible item.
+  - qol: flood light can now be deconstructed rather than destroyed/thrown away.
+  - bugfix: area machinery from breaking after creating & modifying areas via the
+      station blueprints.
+  - refactor: turfs are cannonized from areas during creation/editing operations &
+      empty areas are deleted
+  - refactor: removed duplicate Initialize() from light switch
+  - refactor: arcd has all upgrades installed
+  ZephyrTFA:
+  - bugfix: airlocks will no longer shock you when using the rust mansus grip to destroy
+      them
+  - bugfix: Stabilized Orange extracts are no longer able to cool you from any temperature
+      instantly
+  - bugfix: Changelog link for org members works again
+  atosti:
+  - bugfix: the jobs columns in the View Crew Manifest window are now uniformly aligned
+      across department headers
+  - bugfix: extremely long crewmember names are now truncated in the default view
+      for the Crew Manifest window
+  mc-oofert:
+  - bugfix: Borg synthesizers will no longer remain on the status panel if a borg
+      changes modules
+  - bugfix: Stabilized gold extracts can now spawn basicmobs
+  - bugfix: All CTF windows are now indestructible, fixes breaking into space during
+      CTF.
+  - bugfix: Turrets will now shoot basicmobs such as carp
+  - bugfix: Explosive holoparasites no longer runtime if they plant bombs
+2023-03-18:
+  ATHATH:
+  - balance: The inorganic biology symptom now adds both MOB_MINERAL and MOB_ROBOTIC
+      to a virus's list of infectable biotypes instead of only MOB_MINERAL. Currently,
+      androids are the only species this change affects.
+  DAKKA-WAAAGH:
+  - bugfix: Fixed duplicate tile decals and made tile decal shapes more efficient
+  Helg2:
+  - balance: Syndicate briefcase full of cash is now worth of 3 tc instead of 5. Better
+      than nothing
+  - qol: added tooltips for pneumatic cannon. Also changed powerfist's tooltips slightly.
+  - bugfix: fixed that you can't put wrench in pneumatic cannon.
+  - bugfix: fixed that you can manipulate with pie gun as if it's a normal pneumatic
+      cannon (adjust air tank, wrench it's output level's and etc.)
+  Jacquerel:
+  - bugfix: Carp will once again be healed from being near carp rifts
+  - bugfix: Sepia slime cores and the rewind camera now work on Ian
+  - bugfix: Sapient ridden carp (or cows) can throw off their riders by shoving them,
+      or by performing the spin emote.
+  - bugfix: Giant Spider AI will be disabled by the timestop spell
+  - bugfix: Ian can eat envirochow
+  - bugfix: Mice, Frogs, and Cockroaches will no longer set off bear traps
+  - bugfix: You can put a macrobomb implant into Cayenne (or Ian)
+  - bugfix: Ian will now recognise that being squeezed by a cyborg is a nice hug
+  - bugfix: The player panel will tell admins if you're currently a corgi
+  - bugfix: The staff of storms deals massive damage to Bileworms and Giant Spiders
+  - bugfix: Ian will whimper if forced to scream
+  - bugfix: Slimes can consume space carp
+  - bugfix: Mice can be captured in xenoballs
+  - bugfix: You can use pacifying potions on Giant Spiders
+  - bugfix: Sgt Araneus can be fitted with a xenobiological radio implant
+  - bugfix: Sapient corgis no longer count as living players for the purpose of highlander
+      escape objectives
+  - bugfix: The random sentience event can now target corgis and sergeant araneus
+  - rscadd: The random sentience event can target a wider array of farm animals
+  - bugfix: Petsplosion wizard event can target corgis
+  - rscadd: Petsplosion wizard event will now target farm animals and mothroaches
+  - bugfix: The colossus possession crystal can now actually possess the cockroach
+      it spawns, does not kill you instantly upon ending possession
+  Jolly:
+  - rscadd: 'CTF has a "new" map: ctf_turbine! I hope you like 24/7 TDM where the
+      objective is secondary.'
+  MMMiracles:
+  - bugfix: Xenobiology on Tramstation can now use their consoles to see the upper
+      floor.
+  Melbert:
+  - bugfix: Heretic sacrificing now checks both the last mind to inhabit the body
+      as well as the current mind when checking for high value targets
+  NamelessFairy:
+  - bugfix: Corgi pinata's no longer have their own category on the cargo shuttle
+      console.
+  Rex9001:
+  - rscadd: Adds 2 new iron/dark/airless subtypes, textured and smooth_large
+  - rscadd: Adds the_faceoff.dmm Ruin
+  Rhials:
+  - rscadd: Mafia maps now come with their own thematic outfits!
+  - spellcheck: Changes the "Snowdin" mafia map description
+  SyncIt21:
+  - bugfix: vents & scrubbers getting assigned twice to an area when it's merged with
+      another area via station blueprints
+  - refactor: merged` Initialize()` & `New()` of vents & scrubbers into just `Initialize()`
+  ZephyrTFA:
+  - rscadd: Surgical Processor upgrade for medical cyborgs can now be used to start
+      surgeries.
+  - balance: You no longer need to use two module slots for starting surgeries with
+      the surgical processor.
+  atosti:
+  - balance: Bone gel now spawns in stacks of 4 in Paramedic and Medical ERT belts
+  - bugfix: Player-controlled Regal Rats now lick or claw based on their combat mode.
+  - bugfix: NPC Regal rats now properly claw at enemies, moving on to new targets
+      after completing kills.
+  mc-oofert:
+  - bugfix: You can no longer bypass recyclers indestructibility check by just putting
+      it into something
+  - bugfix: Recyclers can no longer recycle the insides of cyborgs
+  - balance: You can no longer EMP defibrillators to make them combat-usable
+  vinylspiders:
+  - bugfix: the 'target cyborgs' option for syndicate turrets is now functional again,
+      and enabled by default. Station borgs will still be shot at on sight unless
+      a syndicate crew member deliberately configures the turrets otherwise.
+  - bugfix: fixes gloves not sending the COMSIG_PARENT_ATTACKBY signal
+2023-03-19:
+  A.C.M.O.:
+  - bugfix: Fixed lungs gas exchange implementation, so you always inhale and exhale
+      the correct gases.
+  - bugfix: Fixed a large quantity of hard-deletes which were being caused by organs
+      and cybernetic organs.
+  - bugfix: Fixed many organs which were applying side-effects regardless of whether
+      or not the insertion failed.
+  - code_imp: Added unit tests for Organs.
+  - code_imp: Added unit tests for Lungs.
+  - code_imp: Improved unit tests for breathing.
+  - code_imp: Improved unit tests for DNA Infuser organs.
+  DATA-xPUNGED:
+  - qol: Tramstation's kitchen has been completely refurbished!
+  JohnFulpWillard:
+  - bugfix: Pubbystation, if run, will now have a working monastery pod shuttle again.
+  Jolly:
+  - bugfix: All the newly resprited chairs Left and Right facing sprites should be
+      symmetrical now.
+  LemonInTheDark:
+  - admin: You can now optionally populate new lists created via vv. hit cancel to
+      stop filling them up
+  NamelessFairy:
+  - admin: Admins can now customize the outfit necrostone victims are equiped with.
+  - admin: Admins can now customize the maximum number of thralls that can be created
+      by a necrostone
+  - qol: The necrostone's thrall counter is now a shown as a separate colored line
+      of text when examining the stone rather than part of its description.
+  - qol: When inspecting syndicate bombs the text that tells you how long is on the
+      timer stands out more.
+  - qol: Inspecting an active syndicate bomb will give you a balloon alert on the
+      bomb itself when inspected.
+  - qol: Abductors chat and Lings/Xenomorphs hivemind chat type has been moved from
+      unsorted to radio.
+  - admin: Admins can now customize the wisdom cow event.
+  Rhials:
+  - soundadd: The chainsaw now has SFX for starting, stopping, and idling.
+  Sealed101:
+  - bugfix: fixed a few internal organs acting wonky on inserting/removing (some xenomorph
+      organs, abductor glands, flashlight eyes, demon/cursed hearts)
+  Vile Beggar:
+  - rscadd: The Derelict Sulaco ruin was spruced up with a new look and some neat
+      little goodies (free rouny plush).
+  ZephyrTFA:
+  - bugfix: Plasmamen don't have hearts, again
+  atosti:
+  - bugfix: Material tile floors now make noise when walked on by bare/claw/heavy
+      feet

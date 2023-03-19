@@ -51,11 +51,7 @@
 /turf/open/floor/circuit/green/off,
 /area/centcom/ctf)
 "ev" = (
-/obj/structure/window/reinforced/fulltile{
-	max_integrity = 5000;
-	name = "hardened window";
-	atom_integrity = 5000
-	},
+/obj/structure/window/reinforced/fulltile/indestructible,
 /turf/open/floor/plating,
 /area/centcom/ctf)
 "eW" = (
