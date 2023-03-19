@@ -29,8 +29,8 @@
 	anomaly.stabilize(anchor = anchor_anomaly, has_core = FALSE)
 
 /obj/effect/spawner/random/environmentally_safe_anomaly/immobile
-	name = "stationairy safe anomaly spawner"
-	icon_state = "anomaly_stationairy"
+	name = "stationary safe anomaly spawner"
+	icon_state = "anomaly_stationary"
 	anchor_anomaly = TRUE
 
 /obj/item/paper/fluff/ruins/anomaly_research/intro
@@ -56,8 +56,8 @@
 /obj/item/paper/fluff/ruins/anomaly_research/mega_anomally
 	name = "mega anomally"
 	default_raw_text = {"It only took every single one of my anomalies and nearly my entire supply of stabilizers, but I did it.
-	<br> I CREATED THE ULTIMATE SUPER ANOMALY!! I modified a modsuit with the nullfuid, which should allow me to enter it!
-	<br> I dropped Moffie of at my moms, in-case I can't get back. If you're reading this, SUCK IT I'M IN THE ANOMALY UNIVERSE (or dead) HAHAHAHHA!!
+	<br> I CREATED THE ULTIMATE SUPER ANOMALY!! I modified a modsuit with the nullfluid, which should allow me to enter it!
+	<br> I dropped off Moffie at my mom's, in case I can't get back. If you're reading this, SUCK IT I'M IN THE ANOMALY UNIVERSE (or dead) HAHAHAHHA!!
 	<br> Dr Anna Nomally, signing out.
 	"}
 
