@@ -127,7 +127,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ax" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "ay" = (
 /obj/machinery/door/airlock/titanium{
@@ -584,7 +584,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bv" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
@@ -594,47 +594,47 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bx" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "by" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bz" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs,
 /obj/item/melee/baton/security,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bA" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bB" = (
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bC" = (
 /obj/structure/window/reinforced{
 	dir = 8;
 	layer = 2.9
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bD" = (
 /obj/structure/bed,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bE" = (
 /obj/machinery/power/shuttle_engine/heater,
@@ -650,11 +650,11 @@
 /area/shuttle/escape)
 "bH" = (
 /obj/machinery/light/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bI" = (
 /obj/machinery/light/directional/south,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bK" = (
 /obj/machinery/door/airlock/public/glass{
@@ -713,7 +713,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 
 (1,1,1) = {"

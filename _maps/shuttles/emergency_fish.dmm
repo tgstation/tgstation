@@ -74,7 +74,7 @@
 /obj/effect/turf_decal/stripes,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/bed/dogbed/mcgriff,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "ec" = (
 /obj/structure/chair/pew{
@@ -117,7 +117,7 @@
 /obj/item/stack/sheet/mineral/sandbags{
 	amount = 5
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "gd" = (
 /obj/item/fishing_hook/magnet,
@@ -169,7 +169,7 @@
 	pixel_x = 7;
 	pixel_y = 6
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "gY" = (
 /obj/structure/chair/pew/right,
@@ -196,7 +196,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/effect/turf_decal/tile/dark/fourcorners,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "jL" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -413,7 +413,7 @@
 /obj/machinery/computer/security/wooden_tv{
 	pixel_y = 3
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "tR" = (
 /obj/machinery/light/directional/west,
@@ -451,12 +451,12 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/machinery/flasher/portable,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "xA" = (
 /obj/effect/turf_decal/stripes,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "xH" = (
 /obj/structure/sign/warning/yes_smoking/circle/directional/south,
@@ -492,7 +492,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "AV" = (
 /obj/effect/turf_decal/tile/dark/half/contrasted{
@@ -554,7 +554,7 @@
 	pixel_y = 4
 	},
 /obj/item/restraints/handcuffs,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "DB" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -661,7 +661,7 @@
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Id" = (
 /obj/effect/turf_decal/tile/dark/half/contrasted{
@@ -711,7 +711,7 @@
 /obj/item/storage/lockbox/loyalty{
 	pixel_y = 3
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Ju" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
@@ -720,7 +720,7 @@
 	pixel_y = 3;
 	pixel_x = -1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Kg" = (
 /obj/machinery/power/shuttle_engine/propulsion,
@@ -733,7 +733,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "KJ" = (
 /obj/structure/table/wood,
@@ -801,7 +801,7 @@
 /obj/effect/turf_decal/tile/dark{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "NM" = (
 /obj/effect/turf_decal/tile/dark/half/contrasted{
@@ -852,7 +852,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "PQ" = (
 /obj/effect/turf_decal/tile/dark/half/contrasted,
@@ -929,7 +929,7 @@
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "TN" = (
 /obj/structure/sign/calendar/directional/east,
@@ -1030,7 +1030,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Xx" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
@@ -1038,7 +1038,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "XZ" = (
 /obj/machinery/door/airlock/mining/glass,
@@ -1062,7 +1062,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 
 (1,1,1) = {"

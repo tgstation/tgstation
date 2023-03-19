@@ -22,9 +22,9 @@
 /area/shuttle/escape)
 "bF" = (
 /obj/structure/chair{
+	desc = "Do keep in mind, we will assess your account 2000 credits for sitting in this chair upon arrival.";
 	dir = 1;
-	name = "Ringside Seat";
-	desc = "Do keep in mind, we will assess your account 2000 credits for sitting in this chair upon arrival."
+	name = "Ringside Seat"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -33,10 +33,10 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/chair/stool/directional/south{
 	can_buckle = 1;
-	name = "FOOLS-SIT-DOWNER";
-	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER."
+	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER.";
+	name = "FOOLS-SIT-DOWNER"
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "cD" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -50,18 +50,18 @@
 /area/shuttle/escape)
 "df" = (
 /obj/structure/chair{
+	desc = "Do keep in mind, we will assess your account 2000 credits for sitting in this chair upon arrival.";
 	dir = 8;
-	name = "Ringside Seat";
-	desc = "Do keep in mind, we will assess your account 2000 credits for sitting in this chair upon arrival."
+	name = "Ringside Seat"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ea" = (
 /obj/machinery/light/cold/directional/south,
 /obj/structure/chair{
+	desc = "Do keep in mind, we will assess your account 2000 credits for sitting in this chair upon arrival.";
 	dir = 1;
-	name = "Ringside Seat";
-	desc = "Do keep in mind, we will assess your account 2000 credits for sitting in this chair upon arrival."
+	name = "Ringside Seat"
 	},
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/mineral/titanium,
@@ -95,7 +95,7 @@
 /area/shuttle/escape)
 "gl" = (
 /obj/machinery/light/small/red/directional/east,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "go" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -286,8 +286,8 @@
 "rb" = (
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/reagent_dispensers/watertank{
-	name = "HATERADE";
-	desc = "Use this to water down those salty haters."
+	desc = "Use this to water down those salty haters.";
+	name = "HATERADE"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -315,27 +315,27 @@
 /area/shuttle/escape)
 "su" = (
 /obj/machinery/light/cold/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "sQ" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "TIMEOUT BOX"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "td" = (
 /obj/structure/window/reinforced/spawner,
 /obj/item/restraints/handcuffs{
-	pixel_y = -7;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = -7
 	},
 /obj/structure/chair/stool/directional/south{
 	can_buckle = 1;
-	name = "FOOLS-SIT-DOWNER";
-	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER."
+	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER.";
+	name = "FOOLS-SIT-DOWNER"
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "tQ" = (
 /obj/machinery/light/small/directional/east,
@@ -370,9 +370,9 @@
 /area/shuttle/escape)
 "vz" = (
 /obj/structure/chair{
+	desc = "Do keep in mind, we will assess your account 2000 credits for sitting in this chair upon arrival.";
 	dir = 4;
-	name = "Ringside Seat";
-	desc = "Do keep in mind, we will assess your account 2000 credits for sitting in this chair upon arrival."
+	name = "Ringside Seat"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -380,18 +380,18 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/chair/stool/directional/south{
 	can_buckle = 1;
-	name = "FOOLS-SIT-DOWNER";
-	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER."
+	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER.";
+	name = "FOOLS-SIT-DOWNER"
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "xA" = (
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/table,
 /obj/item/tank/internals/anesthetic,
 /obj/item/clothing/mask/breath/medical{
-	pixel_y = 2;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 2
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -421,7 +421,7 @@
 	pixel_x = -26;
 	pixel_y = -8
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "zB" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -455,8 +455,8 @@
 /obj/structure/table,
 /obj/machinery/light/small/directional/west,
 /obj/item/storage/medkit/fire{
-	pixel_y = 3;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 3
 	},
 /obj/item/storage/medkit/regular{
 	pixel_x = 3;
@@ -494,9 +494,7 @@
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/red/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/trimline/red/line,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "BO" = (
@@ -512,14 +510,14 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/effect/decal/cleanable/oil/slippery,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Ce" = (
 /obj/machinery/light/cold/directional/south,
 /obj/structure/chair{
+	desc = "Do keep in mind, we will assess your account 2000 credits for sitting in this chair upon arrival.";
 	dir = 1;
-	name = "Ringside Seat";
-	desc = "Do keep in mind, we will assess your account 2000 credits for sitting in this chair upon arrival."
+	name = "Ringside Seat"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -694,7 +692,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "KW" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "MD" = (
 /obj/machinery/light/cold/directional/east,
@@ -780,9 +778,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
-	pixel_x = 0
-	},
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup,
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "Sd" = (
@@ -818,34 +814,34 @@
 "Tg" = (
 /obj/structure/table,
 /obj/item/clothing/head/utility/hardhat/dblue{
+	name = "Hopping Jezzerton's Helmet";
 	pixel_x = 8;
-	pixel_y = -5;
-	name = "Hopping Jezzerton's Helmet"
+	pixel_y = -5
 	},
 /obj/item/clothing/head/utility/hardhat/dblue{
+	name = "Hopping Jezzerton's Helmet";
 	pixel_x = 8;
-	pixel_y = 1;
-	name = "Hopping Jezzerton's Helmet"
+	pixel_y = 1
 	},
 /obj/item/clothing/head/utility/hardhat/dblue{
+	name = "Hopping Jezzerton's Helmet";
 	pixel_x = 8;
-	pixel_y = 9;
-	name = "Hopping Jezzerton's Helmet"
+	pixel_y = 9
 	},
 /obj/item/clothing/head/utility/hardhat/dblue{
+	name = "Hopping Jezzerton's Helmet";
 	pixel_x = -7;
-	pixel_y = -5;
-	name = "Hopping Jezzerton's Helmet"
+	pixel_y = -5
 	},
 /obj/item/clothing/head/utility/hardhat/dblue{
+	name = "Hopping Jezzerton's Helmet";
 	pixel_x = -7;
-	pixel_y = 1;
-	name = "Hopping Jezzerton's Helmet"
+	pixel_y = 1
 	},
 /obj/item/clothing/head/utility/hardhat/dblue{
+	name = "Hopping Jezzerton's Helmet";
 	pixel_x = -7;
-	pixel_y = 9;
-	name = "Hopping Jezzerton's Helmet"
+	pixel_y = 9
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -916,7 +912,7 @@
 /area/shuttle/escape)
 "YB" = (
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "YF" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -936,10 +932,10 @@
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/chair/stool/directional/south{
 	can_buckle = 1;
-	name = "FOOLS-SIT-DOWNER";
-	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER."
+	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER.";
+	name = "FOOLS-SIT-DOWNER"
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 
 (1,1,1) = {"
