@@ -20,10 +20,10 @@
 	time = 12.8 SECONDS
 	repeatable = TRUE
 	var/detection_prob = list(
-		"" = 5, // empty string is no tool, so hand.
+		/obj/item/t_scanner = 20,
 		/obj/item/healthanalyzer/advanced = 15,
 		/obj/item/healthanalyzer = 10,
-		/obj/item/t_scanner = 20,
+		"" = 5, // empty string is no tool, so hand.
 	)
 
 /datum/surgery_step/search_for_implants/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
