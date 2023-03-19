@@ -348,6 +348,19 @@
 	// If we haven't returned yet then this shouldn't be allowed
 	return FALSE
 
+/**
+ * Goes through a techweb's servers and finds one on the same z-level
+ * If one exists, returns it
+ * Args:
+ * - checking_web - The techweb we're checking the servers of.
+ */
+/datum/component/experiment_handler/proc/find_valid_server(datum/techweb/checking_web)
+	for(var/obj/machinery/rnd/server/server as anything in checking_web.techweb_servers)
+		if(!is_valid_z_level(get_turf(server), get_turf(parent)))
+			continue
+		return server
+	return null
+
 /datum/component/experiment_handler/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
@@ -366,7 +379,7 @@
 			if(techwebs == linked_web) //disconnect if OUR techweb lost their servers.
 				unlink_techweb()
 			continue
-		if(!is_valid_z_level(get_turf(techwebs.techweb_servers[1]), get_turf(parent)))
+		if(!find_valid_server(techwebs))
 			continue
 		var/list/data = list(
 			web_id = techwebs.id,
