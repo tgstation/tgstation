@@ -9,12 +9,12 @@
 
 /datum/action/bloodsucker/targeted/mesmerize
 	name = "Mesmerize"
-	desc = "Dominate the mind of a mortal who can see your eyes."
+	desc = "Dominate the mind of a mortal who can see your eyes and doesn't have a mindshield implant."
 	button_icon_state = "power_mez"
 	power_explanation = "Mesmerize:\n\
 		Click any player to attempt to mesmerize them.\n\
 		You cannot wear anything covering your face, and  both parties need to not be blind. \n\
-		If your target is already mesmerized or a Monster Hunter, the Power will fail.\n\
+		If your target is already mesmerized, is a Monster Hunter, or has a mindshield implant, the Power will fail.\n\
 		Once mesmerized, the target will be unable to move for a certain amount of time, scaling with level.\n\
 		At level 2, your target will additionally be muted.\n\
 		At level 3, you will be able to use the power through items covering your face.\n\
@@ -64,6 +64,9 @@
 	// Bloodsucker
 	if(IS_BLOODSUCKER(current_target))
 		owner.balloon_alert(owner, "bloodsuckers are immune to [src].")
+		return FALSE
+	if(HAS_TRAIT(current_target, TRAIT_MINDSHIELD))
+		owner.balloon_alert(owner, "[current_target] is mindshielded.")
 		return FALSE
 	// Dead/Unconscious
 	if(current_target.stat > CONSCIOUS)
