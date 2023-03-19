@@ -337,8 +337,6 @@
 	initial_gas_mix = AIRLESS_ATMOS
 	baseturfs = /turf/open/misc/asteroid/airless
 
-/// TGMC EMBLEM ///
-
 /turf/open/floor/iron/tgmcemblem
 	name = "TGMC Emblem"
 	desc = "The symbol of the Terran Goverment."
