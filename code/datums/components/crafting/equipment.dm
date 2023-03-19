@@ -57,7 +57,7 @@
 	time = 20 SECONDS
 	category = CAT_EQUIPMENT
 
-/datum/crafting_recipe/freezer_cabinat
+/datum/crafting_recipe/secured_freezer_cabinet
 	name = "Secure Freezer Cabinet"
 	result = /obj/structure/closet/secure_closet/freezer/empty/custom
 	reqs = list(
