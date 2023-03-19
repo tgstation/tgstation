@@ -160,7 +160,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 /obj/machinery/airalarm/setDir(newdir)
 	. = ..()
-	switch(dir)
+	switch(newdir)
 		if(NORTH)
 			pixel_x = 0
 			pixel_y = 0
