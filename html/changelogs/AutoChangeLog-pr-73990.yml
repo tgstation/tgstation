@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Pubbystation, if run, will now have a working monastery pod shuttle again."
