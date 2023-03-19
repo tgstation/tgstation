@@ -16,7 +16,7 @@
 
 /obj/item/crowbar/sledgehammer/Initialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=14, force_wielded=25, block_power_wielded=20, icon_wielded="sledgehammer1")
+	AddComponent(/datum/component/two_handed, force_unwielded=14, force_wielded=20, block_power_wielded=15, icon_wielded="sledgehammer1")
 
 /obj/item/crowbar/sledgehammer/attack(mob/living/target, mob/living/user)
 	. = ..()
