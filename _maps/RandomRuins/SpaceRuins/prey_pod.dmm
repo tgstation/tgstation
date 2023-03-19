@@ -6,6 +6,7 @@
 /obj/item/gun/ballistic/shotgun/toy/crossbow{
 	name = "huntress boltcaster"
 	},
+/obj/effect/baseturf_helper/asteroid/airless,
 /turf/open/floor/mineral/titanium/white/airless,
 /area/ruin/space/has_grav)
 "h" = (
