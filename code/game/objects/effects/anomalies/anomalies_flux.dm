@@ -79,3 +79,10 @@
 	. = ..()
 
 	tesla_zap(src, zap_range, zap_power, zap_flags)
+
+/obj/effect/anomaly/flux/big/Bumped(atom/movable/bumpee)
+	. = ..()
+
+	if(isliving(bumpee))
+		var/mob/living/living = bumpee
+		living.dust()
