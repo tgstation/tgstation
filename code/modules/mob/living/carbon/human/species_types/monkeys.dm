@@ -232,13 +232,13 @@
 	build_all_button_icons()
 
 
-/obj/item/organ/internal/brain/primate/Insert(mob/living/carbon/primate, special = FALSE, drop_if_replaced = FALSE, no_id_transfer = FALSE)
+/obj/item/organ/internal/brain/primate/on_insert(mob/living/carbon/primate)
 	. = ..()
 	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed), TRUE)
 
-/obj/item/organ/internal/brain/primate/Remove(mob/living/carbon/primate, special = FALSE, no_id_transfer = FALSE)
+/obj/item/organ/internal/brain/primate/on_remove(mob/living/carbon/primate)
+	. = ..()
 	UnregisterSignal(primate, COMSIG_MOVABLE_CROSS)
-	return ..()
 
 /obj/item/organ/internal/brain/primate/proc/on_crossed(datum/source, atom/movable/crossed)
 	SIGNAL_HANDLER
