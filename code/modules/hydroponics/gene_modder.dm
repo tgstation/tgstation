@@ -25,7 +25,7 @@
 
 /obj/machinery/plantgenes/RefreshParts() // Comments represent the max you can set per tier, respectively. seeds.dm [219] clamps these for us but we don't want to mislead the viewer.
 	.=..()
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+	for(var/datum/stock_part/manipulator/M in component_parts)
 		if(M.rating > 3)
 			max_potency = 95
 		else
@@ -33,7 +33,7 @@
 
 		max_yield = initial(max_yield) + (M.rating*2) // 4,6,8,10 	Clamps at 10
 
-	for(var/obj/item/stock_parts/scanning_module/SM in component_parts)
+	for(var/datum/stock_part/scanning_module/SM in component_parts)
 		if(SM.rating > 3) //If you create t5 parts I'm a step ahead mwahahaha!
 			min_production = 1
 		else
@@ -41,7 +41,7 @@
 
 		max_endurance = initial(max_endurance) + (SM.rating * 25) // 35,60,85,100	Clamps at 10min 100max
 
-	for(var/obj/item/stock_parts/micro_laser/ML in component_parts)
+	for(var/datum/stock_part/micro_laser/ML in component_parts)
 		var/wratemod = ML.rating * 2.5
 		min_wrate = FLOOR(10-wratemod,1) // 7,5,2,0	Clamps at 0 and 10	You want this low
 		min_wchance = 67-(ML.rating*16) // 48,35,19,3 	Clamps at 0 and 67	You want this low
@@ -416,7 +416,7 @@
 	var/read_only = 0 //Well, it's still a floppy disk
 	obj_flags = UNIQUE_RENAME
 
-/obj/item/disk/plantgene/Initialize()
+/obj/item/disk/plantgene/Initialize(mapload)
 	. = ..()
 	add_overlay("datadisk_gene")
 	src.pixel_x = rand(-5, 5)

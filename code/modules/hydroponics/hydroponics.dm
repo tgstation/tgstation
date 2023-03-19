@@ -57,7 +57,7 @@
 	///The icon state for the overlay used to represent that this tray is self-sustaining.
 	var/self_sustaining_overlay_icon_state = "gaia_blessing"
 
-/obj/machinery/hydroponics/Initialize()
+/obj/machinery/hydroponics/Initialize(mapload)
 	create_reagents(20)
 	reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 10) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
 	. = ..()
