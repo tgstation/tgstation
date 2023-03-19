@@ -6,7 +6,7 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE
 	siemens_coeff = 0
 	brutemod = 0.6
-	burnmod = 0.9
+	burnmod = 0.8
 	heatmod = 1.5
 	no_equip_flags = ITEM_SLOT_HEAD | ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE
 	species_traits = list(NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYESPRITES)
