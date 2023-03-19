@@ -301,9 +301,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
-"mh" = (
-/turf/closed/mineral/snowmountain/cavern,
-/area/space)
 "mk" = (
 /obj/structure/table/wood,
 /obj/item/paper/fluff/ruins/anomaly_research/intro,
@@ -349,9 +346,8 @@
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "no" = (
-/obj/machinery/door/airlock/external,
-/turf/open/floor/engine,
-/area/misc/anomaly_research)
+/turf/closed/mineral/snowmountain/cavern,
+/area/space)
 "nA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -470,9 +466,9 @@
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
 "sp" = (
-/obj/structure/lattice/catwalk,
-/turf/open/lava/plasma/ice_moon,
-/area/space)
+/obj/machinery/light/broken/directional/north,
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
 "st" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -724,10 +720,6 @@
 /obj/machinery/light/floor,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/misc/anomaly_research)
-"Ca" = (
-/obj/structure/lattice,
-/turf/closed/mineral/snowmountain/cavern,
-/area/misc/anomaly_research)
 "Cc" = (
 /obj/machinery/duct,
 /obj/structure/rack,
@@ -791,10 +783,6 @@
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 8
 	},
-/turf/open/floor/iron/white,
-/area/misc/anomaly_research)
-"Fb" = (
-/obj/machinery/light/broken/directional/north,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "Fg" = (
@@ -910,7 +898,6 @@
 "Ia" = (
 /obj/effect/turf_decal/siding/purple,
 /obj/structure/table/reinforced,
-/obj/structure/table/reinforced,
 /obj/item/anomaly_releaser,
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
@@ -925,7 +912,7 @@
 /area/misc/anomaly_research)
 "IC" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/template_noop,
+/turf/open/floor/iron/dark/textured,
 /area/misc/anomaly_research)
 "IH" = (
 /obj/effect/spawner/random/big_anomaly,
@@ -1132,7 +1119,7 @@
 "Ss" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/template_noop,
+/turf/open/floor/iron/dark/textured,
 /area/misc/anomaly_research)
 "SQ" = (
 /obj/structure/table/reinforced,
@@ -1556,7 +1543,7 @@ Gj
 tD
 Zh
 Zh
-no
+iC
 Ud
 Ud
 Ud
@@ -1631,7 +1618,7 @@ AV
 xE
 xE
 gs
-sp
+Ud
 cr
 xE
 xE
@@ -1640,7 +1627,7 @@ Ya
 RT
 "}
 (11,1,1) = {"
-mh
+no
 Ya
 Ya
 xE
@@ -2191,7 +2178,7 @@ ya
 xo
 xo
 xo
-Fb
+sp
 Fg
 Cl
 xE
@@ -2404,7 +2391,7 @@ Ya
 Ya
 Ek
 Ud
-Ca
+Ya
 Ya
 Ya
 Mt
@@ -2462,7 +2449,7 @@ AV
 Lc
 WD
 AV
-Fb
+sp
 Fg
 Fg
 Fg
