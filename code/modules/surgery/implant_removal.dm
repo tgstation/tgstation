@@ -20,7 +20,9 @@
 	time = 12.8 SECONDS
 	repeatable = TRUE
 	var/detection_prob = list(
-		"" = 10, // empty string is no tool, so hand.
+		"" = 5, // empty string is no tool, so hand.
+		/obj/item/healthanalyzer/advanced = 15,
+		/obj/item/healthanalyzer = 10,
 		/obj/item/t_scanner = 20,
 	)
 
