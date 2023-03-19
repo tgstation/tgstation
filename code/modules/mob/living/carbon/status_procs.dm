@@ -13,9 +13,7 @@
 	if(absorb_stun(0)) //continuous effect, so we don't want it to increment the stuns absorbed.
 		return
 	to_chat(src, span_notice("You're too exhausted to keep going..."))
-	ADD_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
-	ADD_TRAIT(src, TRAIT_FLOORED, STAMINA)
+	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_FLOORED), STAMINA)
 	if(getStaminaLoss() < 120) // Puts you a little further into the initial stamcrit, makes stamcrit harder to outright counter with chems.
 		adjustStaminaLoss(30, FALSE)
 

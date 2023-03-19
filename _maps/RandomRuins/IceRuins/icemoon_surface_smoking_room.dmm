@@ -1,0 +1,592 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"b" = (
+/obj/item/circuitboard/machine/space_heater,
+/obj/item/stack/cable_coil/five,
+/obj/structure/frame/machine,
+/obj/item/stock_parts/cell/super,
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"d" = (
+/obj/item/chair/wood{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"e" = (
+/obj/effect/spawner/random/entertainment/cigarette,
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/carpet/blue,
+/area/ruin/smoking_room/room)
+"f" = (
+/obj/item/toy/beach_ball/baseball{
+	pixel_x = 10;
+	pixel_y = 7
+	},
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"g" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/stone,
+/area/ruin/smoking_room/house)
+"h" = (
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/turf/open/floor/carpet/blue,
+/area/ruin/smoking_room/room)
+"i" = (
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/decal/cleanable/ash/large{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/turf/open/floor/carpet/blue,
+/area/ruin/smoking_room/room)
+"j" = (
+/obj/structure/chair/comfy{
+	dir = 1
+	},
+/turf/open/floor/carpet/blue,
+/area/ruin/smoking_room/room)
+"k" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/smoking_room/house)
+"l" = (
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"m" = (
+/obj/structure/barricade/wooden,
+/obj/machinery/door/airlock/wood,
+/obj/structure/curtain/cloth/fancy{
+	open = 0
+	},
+/turf/open/floor/carpet/blue,
+/area/ruin/smoking_room/room)
+"n" = (
+/obj/machinery/door/airlock/wood,
+/obj/structure/barricade/wooden/crude/snow,
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"p" = (
+/obj/effect/spawner/random/entertainment/cigarette,
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/effect/decal/cleanable/ash/large,
+/turf/open/floor/carpet/blue,
+/area/ruin/smoking_room/room)
+"q" = (
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"r" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/smoking_room/house)
+"t" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/smoking_room/room)
+"u" = (
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"v" = (
+/obj/structure/bed/maint,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"w" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"x" = (
+/obj/item/chair/wood{
+	pixel_x = -3;
+	pixel_y = -1;
+	dir = 1
+	},
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = 5
+	},
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"y" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/smoking_room/house)
+"z" = (
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/smoking_room/house)
+"A" = (
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/stone,
+/area/ruin/smoking_room/house)
+"B" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/smoking_room/house)
+"C" = (
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/carpet/blue,
+/area/ruin/smoking_room/room)
+"E" = (
+/obj/item/trash/shrimp_chips,
+/obj/item/clothing/mask/cigarette/rollie/trippy{
+	pixel_x = 3;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/cigarette/rollie/trippy{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/effect/spawner/random/trash/bin,
+/obj/effect/spawner/random/special_lighter,
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"F" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/spawner/random/special_lighter,
+/turf/open/floor/carpet/blue,
+/area/ruin/smoking_room/room)
+"G" = (
+/obj/structure/table/wood,
+/obj/item/seeds/tobacco{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/seeds/tobacco{
+	pixel_x = 1;
+	pixel_y = 1
+	},
+/obj/item/seeds/tobacco/space{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/flashlight/flare/candle{
+	pixel_y = 3;
+	pixel_x = 6
+	},
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"I" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/smoking_room/house)
+"J" = (
+/obj/effect/decal/cleanable/glass,
+/obj/item/shard{
+	pixel_x = 5;
+	pixel_y = -3
+	},
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"K" = (
+/obj/structure/bonfire,
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"L" = (
+/obj/structure/sign/warning/yes_smoking/circle/directional/east,
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"M" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"O" = (
+/obj/structure/flora/tree/pine/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"P" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"Q" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"R" = (
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/decal/cleanable/ash/large{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/structure/showcase/machinery/tv/broken,
+/turf/open/floor/carpet/blue,
+/area/ruin/smoking_room/room)
+"S" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/smoking_room/house)
+"T" = (
+/obj/structure/rack,
+/obj/item/storage/fancy/candle_box{
+	pixel_y = 3;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_x = -3
+	},
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"V" = (
+/obj/structure/fireplace,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/stone,
+/area/ruin/smoking_room/house)
+"W" = (
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/decal/cleanable/ash/large,
+/obj/structure/sign/calendar/directional/east,
+/obj/effect/decal/remains/human/smokey{
+	pixel_x = -3;
+	pixel_y = 9
+	},
+/turf/open/floor/carpet/blue,
+/area/ruin/smoking_room/room)
+"X" = (
+/obj/effect/spawner/structure/window/reinforced/damaged,
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+"Z" = (
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/wood,
+/area/ruin/smoking_room/house)
+
+(1,1,1) = {"
+a
+a
+a
+Q
+Q
+Q
+Q
+Q
+Q
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+Q
+Q
+O
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+Q
+a
+a
+I
+I
+I
+n
+I
+I
+I
+Q
+Q
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+Q
+I
+x
+B
+r
+S
+b
+I
+Q
+Q
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+Q
+I
+K
+l
+k
+u
+v
+P
+w
+Q
+Q
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+Q
+I
+A
+u
+k
+q
+Z
+I
+w
+Q
+Q
+a
+a
+"}
+(8,1,1) = {"
+Q
+a
+Q
+I
+V
+u
+k
+G
+u
+I
+w
+Q
+Q
+a
+a
+"}
+(9,1,1) = {"
+Q
+a
+a
+I
+g
+u
+k
+d
+f
+I
+Q
+Q
+O
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+I
+T
+u
+z
+Z
+J
+X
+M
+Q
+Q
+a
+Q
+"}
+(11,1,1) = {"
+a
+a
+a
+I
+E
+u
+y
+L
+I
+I
+Q
+Q
+Q
+a
+Q
+"}
+(12,1,1) = {"
+a
+a
+a
+I
+t
+t
+m
+t
+t
+Q
+Q
+Q
+Q
+a
+Q
+"}
+(13,1,1) = {"
+Q
+a
+a
+a
+t
+R
+C
+j
+t
+Q
+Q
+Q
+a
+a
+Q
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+t
+p
+i
+F
+t
+Q
+Q
+Q
+a
+a
+Q
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+t
+e
+h
+W
+t
+a
+Q
+Q
+Q
+Q
+Q
+"}
+(16,1,1) = {"
+Q
+a
+a
+a
+t
+t
+t
+t
+t
+a
+a
+Q
+Q
+Q
+Q
+"}
+(17,1,1) = {"
+Q
+Q
+a
+a
+a
+a
+a
+a
+a
+a
+a
+Q
+a
+Q
+Q
+"}

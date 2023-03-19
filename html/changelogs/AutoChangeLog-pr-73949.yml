@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes:
-  - bugfix: "In order to make lörtonknusksolt, flöfrölenknusksolt and kæniatknusksolt, bowls are required, to match the bowls in their sprites and left behind after eating."
-  - bugfix: "Crafting flöfrölenknusksolt will no longer create a lörtonknusksolt instead."
