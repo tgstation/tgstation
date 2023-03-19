@@ -28,10 +28,13 @@
 	// ATMOS_INTERNAL_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
 
-	///id of air sensor its connected to
+	/// id of air sensor its connected to
 	var/chamber_id
 
-/obj/machinery/atmospherics/components/unary/vent_pump/New()
+	///area this vent is assigned to
+	var/area/assigned_area
+
+/obj/machinery/atmospherics/components/unary/vent_pump/Initialize(mapload)
 	if(!id_tag)
 		id_tag = SSnetworks.assign_random_name()
 		var/static/list/tool_screentips = list(
@@ -40,9 +43,6 @@
 			)
 		)
 		AddElement(/datum/element/contextual_screentip_tools, tool_screentips)
-	. = ..()
-
-/obj/machinery/atmospherics/components/unary/vent_pump/Initialize(mapload)
 	. = ..()
 	assign_to_area()
 
@@ -90,20 +90,27 @@
 	if (old_area == new_area)
 		return
 
-	disconnect_from_area()
-	assign_to_area()
+	disconnect_from_area(old_area)
+	assign_to_area(new_area)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/on_enter_area(datum/source, area/area_to_register)
 	assign_to_area(area_to_register)
 	. = ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/assign_to_area(area/target_area = get_area(src))
-	if(!isnull(target_area))
-		target_area.air_vents += src
-		update_appearance(UPDATE_NAME)
+	//this vent is already assigned to an area. Unassign it from here first before reassigning it to an new area
+	if(isnull(target_area) || !isnull(assigned_area))
+		return
+	assigned_area = target_area
+	assigned_area.air_vents += src
+	update_appearance(UPDATE_NAME)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_from_area(area/target_area = get_area(src))
-	target_area?.air_vents -= src
+	//you cannot unassign from an area we never were assigned to
+	if(isnull(target_area) || assigned_area != target_area)
+		return
+	assigned_area.air_vents -= src
+	assigned_area = null
 
 /obj/machinery/atmospherics/components/unary/vent_pump/on_exit_area(datum/source, area/area_to_unregister)
 	. = ..()

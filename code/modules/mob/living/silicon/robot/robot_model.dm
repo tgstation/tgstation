@@ -896,6 +896,13 @@
 	if(model)
 		model.storages |= src
 		RegisterSignal(model.robot, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+		RegisterSignal(model, COMSIG_PARENT_QDELETING, PROC_REF(unregister_from_model))
+
+/datum/robot_energy_storage/proc/unregister_from_model(obj/item/robot_model/model)
+	SIGNAL_HANDLER
+	if(model)
+		model.storages -= src
+		UnregisterSignal(model.robot, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
 
 /datum/robot_energy_storage/proc/get_status_tab_item(mob/living/silicon/robot/source, list/items)
 	SIGNAL_HANDLER

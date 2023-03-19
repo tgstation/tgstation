@@ -306,7 +306,7 @@
 	if(prob(30)) // a pair of googly eyes because funny
 		new /obj/item/storage/box/stickers/googly(crate)
 
-/datum/supply_pack/constumes_toys/pinata
+/datum/supply_pack/costumes_toys/pinata
 	name = "Corgi Pinata Kit"
 	desc = "This crate contains a pinata full of candy, a blindfold and a bat for smashing it."
 	cost = CARGO_CRATE_VALUE * 4

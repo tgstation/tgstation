@@ -1,5 +1,0 @@
-author: "atosti"
-delete-after: True
-changes:
-  - bugfix: "the jobs columns in the View Crew Manifest window are now uniformly aligned across department headers"
-  - bugfix: "extremely long crewmember names are now truncated in the default view for the Crew Manifest window"

@@ -190,8 +190,7 @@
 	if (notransform)
 		return
 	notransform = TRUE
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
-	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_GENERIC)
+	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_GENERIC)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
@@ -222,8 +221,7 @@
 	if (notransform)
 		return
 	notransform = TRUE
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
-	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_GENERIC)
+	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_GENERIC)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()

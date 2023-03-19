@@ -85,6 +85,8 @@
 
 /obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
+	if(!.)
+		return
 	ADD_TRAIT(tongue_owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
 	if (modifies_speech)
 		RegisterSignal(tongue_owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
