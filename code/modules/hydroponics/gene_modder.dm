@@ -26,25 +26,25 @@
 /obj/machinery/plantgenes/RefreshParts() // Comments represent the max you can set per tier, respectively. seeds.dm [219] clamps these for us but we don't want to mislead the viewer.
 	.=..()
 	for(var/datum/stock_part/manipulator/M in component_parts)
-		if(M.rating > 3)
+		if(M.tier > 3)
 			max_potency = 95
 		else
-			max_potency = initial(max_potency) + (M.rating**3) // 53,59,77,95 	 Clamps at 100
+			max_potency = initial(max_potency) + (M.tier**3) // 53,59,77,95 	 Clamps at 100
 
-		max_yield = initial(max_yield) + (M.rating*2) // 4,6,8,10 	Clamps at 10
+		max_yield = initial(max_yield) + (M.tier*2) // 4,6,8,10 	Clamps at 10
 
 	for(var/datum/stock_part/scanning_module/SM in component_parts)
-		if(SM.rating > 3) //If you create t5 parts I'm a step ahead mwahahaha!
+		if(SM.tier > 3) //If you create t5 parts I'm a step ahead mwahahaha!
 			min_production = 1
 		else
-			min_production = 12 - (SM.rating * 3) //9,6,3,1. Requires if to avoid going below clamp [1]
+			min_production = 12 - (SM.tier * 3) //9,6,3,1. Requires if to avoid going below clamp [1]
 
-		max_endurance = initial(max_endurance) + (SM.rating * 25) // 35,60,85,100	Clamps at 10min 100max
+		max_endurance = initial(max_endurance) + (SM.tier * 25) // 35,60,85,100	Clamps at 10min 100max
 
 	for(var/datum/stock_part/micro_laser/ML in component_parts)
-		var/wratemod = ML.rating * 2.5
+		var/wratemod = ML.tier * 2.5
 		min_wrate = FLOOR(10-wratemod,1) // 7,5,2,0	Clamps at 0 and 10	You want this low
-		min_wchance = 67-(ML.rating*16) // 48,35,19,3 	Clamps at 0 and 67	You want this low
+		min_wchance = 67-(ML.tier*16) // 48,35,19,3 	Clamps at 0 and 67	You want this low
 
 /obj/machinery/plantgenes/update_icon()
 	..()

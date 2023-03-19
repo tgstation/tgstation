@@ -358,7 +358,7 @@
 
 /datum/quirk/dummy_thick/post_add()
 	. = ..()
-	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_mob_move))
 	var/obj/item/organ/internal/butt/booty = quirk_holder.getorgan(/obj/item/organ/internal/butt)
 	var/matrix/thick = new
 	thick.Scale(1.5)
