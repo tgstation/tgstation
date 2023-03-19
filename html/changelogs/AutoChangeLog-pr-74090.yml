@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Ghost role spawners that are set to have infinite uses no longer run out of uses."
