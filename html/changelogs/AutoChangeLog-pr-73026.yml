@@ -1,0 +1,10 @@
+author: "A.C.M.O."
+delete-after: True
+changes:
+  - bugfix: "Fixed lungs gas exchange implementation, so you always inhale and exhale the correct gases."
+  - bugfix: "Fixed a large quantity of hard-deletes which were being caused by organs and cybernetic organs."
+  - bugfix: "Fixed many organs which were applying side-effects regardless of whether or not the insertion failed."
+  - code_imp: "Added unit tests for Organs."
+  - code_imp: "Added unit tests for Lungs."
+  - code_imp: "Improved unit tests for breathing."
+  - code_imp: "Improved unit tests for DNA Infuser organs."
