@@ -350,3 +350,9 @@
 	suffix = "dangerous_research.dmm"
 	name = "Alternate Sciences Research Center"
 	description = "When you're messing with the occult, who knows what you're going to get?"
+
+/datum/map_template/ruin/space/anomaly_research
+	id = "anomaly_research"
+	suffix = "anomaly_research.dmm"
+	name = "Anomaly Research"
+	description = "A secret research lab embedded in arctic rock, belonging to a Dr Anna Mally. What could she have been researching?"
