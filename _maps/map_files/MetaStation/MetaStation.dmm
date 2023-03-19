@@ -9172,10 +9172,6 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
-/obj/item/toy/figure/chemist{
-	pixel_x = 5;
-	pixel_y = 16
-	},
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "dsb" = (
@@ -16381,10 +16377,6 @@
 	pixel_x = 6;
 	req_access = list("kitchen")
 	},
-/obj/item/toy/figure/chef{
-	pixel_x = -6;
-	pixel_y = 16
-	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "gbG" = (
@@ -16786,9 +16778,6 @@
 /area/station/science/xenobiology)
 "gjF" = (
 /obj/machinery/vending/wardrobe/jani_wardrobe,
-/obj/item/toy/figure/janitor{
-	pixel_y = 16
-	},
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "gjH" = (
@@ -20071,10 +20060,6 @@
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/item/radio/intercom/directional/west,
-/obj/item/toy/figure/bartender{
-	pixel_x = 9;
-	pixel_y = 17
-	},
 /turf/open/floor/iron,
 /area/station/service/bar)
 "hsp" = (
@@ -31672,10 +31657,6 @@
 	pixel_y = -34;
 	req_access = list("hop")
 	},
-/obj/item/toy/figure/hop{
-	pixel_y = 4;
-	pixel_x = 9
-	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "llW" = (
@@ -32901,9 +32882,6 @@
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/structure/filingcabinet/chestdrawer{
 	pixel_y = 2
-	},
-/obj/item/toy/figure/ian{
-	pixel_y = 12
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -37572,9 +37550,6 @@
 /obj/vehicle/ridden/secway,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
-/obj/item/toy/figure/warden{
-	pixel_y = 3
-	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "nnD" = (
@@ -40428,10 +40403,6 @@
 /area/station/science/xenobiology/hallway)
 "ooG" = (
 /obj/structure/table,
-/obj/item/toy/figure/secofficer{
-	pixel_x = -8;
-	pixel_y = 3
-	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "ooN" = (
@@ -44490,10 +44461,6 @@
 /obj/machinery/cell_charger,
 /obj/machinery/firealarm/directional/north,
 /obj/item/radio/intercom/directional/west,
-/obj/item/toy/figure/paramedic{
-	pixel_x = 4;
-	pixel_y = 9
-	},
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "pMy" = (
@@ -47525,7 +47492,6 @@
 /obj/effect/spawner/random/entertainment/deck{
 	pixel_x = -6
 	},
-/obj/item/toy/figure/md,
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
 "qOW" = (
@@ -49397,9 +49363,6 @@
 /obj/structure/bookcase/random/reference,
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
-	},
-/obj/item/toy/figure/psychologist{
-	pixel_y = 17
 	},
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
@@ -63616,10 +63579,6 @@
 	},
 /obj/machinery/light/small/directional/north,
 /obj/structure/sign/poster/official/random/directional/east,
-/obj/item/toy/figure/botanist{
-	pixel_x = 4;
-	pixel_y = 16
-	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "woc" = (
@@ -69146,10 +69105,6 @@
 "ylU" = (
 /obj/structure/filingcabinet/employment,
 /obj/machinery/airalarm/directional/east,
-/obj/item/toy/figure/lawyer{
-	pixel_x = 1;
-	pixel_y = 17
-	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "ylZ" = (
