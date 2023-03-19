@@ -1246,7 +1246,7 @@
 	color = "#30f0f8" // rgb: 48,240,248
 	boozepwr = 35
 	quality = DRINK_NICE
-	taste_description = "Jack Frost's piss"
+	taste_description = "icecream in winter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/glass_style/drinking_glass/antifreeze
