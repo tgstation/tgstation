@@ -692,3 +692,51 @@
       and enabled by default. Station borgs will still be shot at on sight unless
       a syndicate crew member deliberately configures the turrets otherwise.
   - bugfix: fixes gloves not sending the COMSIG_PARENT_ATTACKBY signal
+2023-03-19:
+  A.C.M.O.:
+  - bugfix: Fixed lungs gas exchange implementation, so you always inhale and exhale
+      the correct gases.
+  - bugfix: Fixed a large quantity of hard-deletes which were being caused by organs
+      and cybernetic organs.
+  - bugfix: Fixed many organs which were applying side-effects regardless of whether
+      or not the insertion failed.
+  - code_imp: Added unit tests for Organs.
+  - code_imp: Added unit tests for Lungs.
+  - code_imp: Improved unit tests for breathing.
+  - code_imp: Improved unit tests for DNA Infuser organs.
+  DATA-xPUNGED:
+  - qol: Tramstation's kitchen has been completely refurbished!
+  JohnFulpWillard:
+  - bugfix: Pubbystation, if run, will now have a working monastery pod shuttle again.
+  Jolly:
+  - bugfix: All the newly resprited chairs Left and Right facing sprites should be
+      symmetrical now.
+  LemonInTheDark:
+  - admin: You can now optionally populate new lists created via vv. hit cancel to
+      stop filling them up
+  NamelessFairy:
+  - admin: Admins can now customize the outfit necrostone victims are equiped with.
+  - admin: Admins can now customize the maximum number of thralls that can be created
+      by a necrostone
+  - qol: The necrostone's thrall counter is now a shown as a separate colored line
+      of text when examining the stone rather than part of its description.
+  - qol: When inspecting syndicate bombs the text that tells you how long is on the
+      timer stands out more.
+  - qol: Inspecting an active syndicate bomb will give you a balloon alert on the
+      bomb itself when inspected.
+  - qol: Abductors chat and Lings/Xenomorphs hivemind chat type has been moved from
+      unsorted to radio.
+  - admin: Admins can now customize the wisdom cow event.
+  Rhials:
+  - soundadd: The chainsaw now has SFX for starting, stopping, and idling.
+  Sealed101:
+  - bugfix: fixed a few internal organs acting wonky on inserting/removing (some xenomorph
+      organs, abductor glands, flashlight eyes, demon/cursed hearts)
+  Vile Beggar:
+  - rscadd: The Derelict Sulaco ruin was spruced up with a new look and some neat
+      little goodies (free rouny plush).
+  ZephyrTFA:
+  - bugfix: Plasmamen don't have hearts, again
+  atosti:
+  - bugfix: Material tile floors now make noise when walked on by bare/claw/heavy
+      feet
