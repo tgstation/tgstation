@@ -35,18 +35,18 @@
 		new_rune.link_rune(second_rune_resolved)
 		return
 	if(!first_rune_resolved)
-		var/obj/effect/cosmic_rune/new_rune = new /obj/effect/cosmic_rune(get_turf(cast_on))
-		first_rune = WEAKREF(new_rune)
-		if(second_rune_resolved)
-			new_rune.link_rune(second_rune_resolved)
-			second_rune_resolved.link_rune(new_rune)
+		first_rune = make_new_rune(get_turf(cast_on), second_rune_resolved)
 		return
 	if(!second_rune_resolved)
-		var/obj/effect/cosmic_rune/new_rune = new /obj/effect/cosmic_rune(get_turf(cast_on))
-		second_rune = WEAKREF(new_rune)
-		if(first_rune_resolved)
-			first_rune_resolved.link_rune(new_rune)
-			new_rune.link_rune(first_rune_resolved)
+		second_rune = make_new_rune(get_turf(cast_on), first_rune_resolved)
+
+/// Returns a weak reference to a new rune, linked to an existing rune if provided
+/datum/action/cooldown/spell/cosmic_rune/proc/make_new_rune(turf/target_turf, obj/effect/cosmic_rune/other_rune)
+	var/obj/effect/cosmic_rune/new_rune = new /obj/effect/cosmic_rune(target_turf)
+	if(other_rune)
+		other_rune.link_rune(new_rune)
+		new_rune.link_rune(other_rune)
+	return WEAKREF(new_rune)
 
 /// A rune that allows you to teleport to the location of a linked rune.
 /obj/effect/cosmic_rune
