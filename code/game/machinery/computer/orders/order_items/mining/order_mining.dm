@@ -22,6 +22,11 @@
 	desc = "A mining-themed MODsuit that works best when in a mining environment."
 	cost_per_order = 3000
 
+/datum/orderable_item/mining/mining_hardsuit
+	item_path = /obj/item/clothing/suit/space/hardsuit/mining
+	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters."
+	cost_per_order = 3000
+
 /datum/orderable_item/mining/mining_belt
 	item_path = /obj/item/storage/belt/mining
 	cost_per_order = 500

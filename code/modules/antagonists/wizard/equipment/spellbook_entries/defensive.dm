@@ -141,6 +141,13 @@
 		return
 	mod.quick_activation()
 
+/datum/spellbook_entry/item/hardsuit
+	name = "Gem-encrusted hardsuit"
+	desc = "A bizarre gem-encrusted suit that radiates magical energies.\
+		Allows you to cast spells and provides some armor. Spaceproof."
+	item_path = /obj/item/clothing/suit/space/hardsuit/wizard
+	category = "Defensive"
+
 /datum/spellbook_entry/item/battlemage_charge
 	name = "Battlemage Armour Charges"
 	desc = "A powerful defensive rune, it will grant eight additional charges to a battlemage shield."

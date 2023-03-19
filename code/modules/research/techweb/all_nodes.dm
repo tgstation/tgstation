@@ -403,7 +403,6 @@
 		"soda_dispenser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	required_experiments = list(/datum/experiment/dissection/human)
 
 /datum/techweb_node/adv_biotech
 	id = "adv_biotech"
@@ -424,8 +423,6 @@
 		"smoke_machine",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	required_experiments = list(/datum/experiment/dissection/nonhuman)
-	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 4000)
 
 /datum/techweb_node/xenoorgan_biotech
 	id = "xenoorgan_bio"
@@ -439,12 +436,7 @@
 		"limbdesign_lizard",
 		"limbdesign_plasmaman",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 6500)
-	discount_experiments = list(
-		/datum/experiment/scanning/random/cytology/easy = 1000,
-		/datum/experiment/scanning/points/slime/hard = 5000,
-		/datum/experiment/dissection/xenomorph = 5000,
-	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /datum/techweb_node/bio_process
 	id = "bio_process"
@@ -464,8 +456,7 @@
 		"reagentgrinder",
 		"smartfridge",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
-	discount_experiments = list(/datum/experiment/scanning/random/cytology = 3000) //Big discount to reinforce doing it.
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
 /////////////////////////Advanced Surgery/////////////////////////
 
@@ -513,8 +504,7 @@
 		"surgery_vein_thread",
 		"surgery_viral_bond",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
-	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 4500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
 /datum/techweb_node/alien_surgery
 	id = "alien_surgery"
@@ -526,7 +516,7 @@
 		"surgery_heal_combo_upgrade_femto",
 		"surgery_zombie",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
 /////////////////////////data theory tech/////////////////////////
 
@@ -596,8 +586,7 @@
 		"w-recycler",
 		"welding_goggles",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
-	discount_experiments = list(/datum/experiment/scanning/random/material/easy = 7500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
 /datum/techweb_node/adv_engi
 	id = "adv_engi"
@@ -622,11 +611,7 @@
 		"weldingmask",
 		"bolter_wrench",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
-	discount_experiments = list(
-		/datum/experiment/scanning/random/material/medium/one = 4000,
-		/datum/experiment/ordnance/gaseous/bz = 10000,
-	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
 /datum/techweb_node/anomaly
 	id = "anomaly_research"
@@ -648,8 +633,7 @@
 		"pico_mani",
 		"super_matter_bin",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier2_lathes = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /datum/techweb_node/adv_power
 	id = "adv_power"
@@ -666,8 +650,7 @@
 		"turbine_rotor",
 		"turbine_stator",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /////////////////////////Bluespace tech/////////////////////////
 /datum/techweb_node/bluespace_basic //Bluespace-memery
@@ -681,7 +664,7 @@
 		"telesci_gps",
 		"xenobioconsole",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
 /datum/techweb_node/bluespace_travel
 	id = "bluespace_travel"
@@ -697,8 +680,8 @@
 		"tele_station",
 		"teleconsole",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_bluespacemachines = 4000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
+
 
 /datum/techweb_node/micro_bluespace
 	id = "micro_bluespace"
@@ -714,9 +697,7 @@
 		"triphasic_scanning",
 		"wormholeprojector",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_variety = 5000)
-		/* /datum/experiment/exploration_scan/random/condition) this should have a point cost but im not even sure the experiment works properly lmao*/
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 
 /datum/techweb_node/advanced_bluespace
 	id = "bluespace_storage"
@@ -745,7 +726,6 @@
 		"roastingstick",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_scanmodules = 3500)
 
 /datum/techweb_node/bluespace_power
 	id = "bluespace_power"
@@ -756,8 +736,7 @@
 		"bluespace_cell",
 		"quadratic_capacitor",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_cells = 3000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /datum/techweb_node/regulated_bluespace
 	id = "regulated_bluespace"
@@ -767,7 +746,7 @@
 	design_ids = list(
 		"spaceship_navigation_beacon",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
 /datum/techweb_node/unregulated_bluespace
 	id = "unregulated_bluespace"
@@ -1066,7 +1045,6 @@
 		"ultra_micro_laser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_microlaser = 1500)
 
 /datum/techweb_node/emp_super
 	id = "emp_super"
@@ -1076,11 +1054,7 @@
 	design_ids = list(
 		"quadultra_micro_laser",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
-	discount_experiments = list(
-		/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser = 4000,
-		/datum/experiment/ordnance/gaseous/noblium = 10000,
-	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 
 /////////////////////////Clown tech/////////////////////////
 /datum/techweb_node/clown
@@ -1151,8 +1125,7 @@
 		"arcade_orion",
 		"slotmachine",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3250)
-	discount_experiments = list(/datum/experiment/physical/arcade_winner = 3000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /datum/techweb_node/comp_recordkeeping
 	id = "comp_recordkeeping"
@@ -1399,8 +1372,7 @@
 		"jackhammer",
 		"plasmacutter_adv",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
-	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 
 /datum/techweb_node/janitor
 	id = "janitor"
@@ -1418,8 +1390,7 @@
 		"paint_remover",
 		"spraybottle",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
-	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = 3000) //75% discount for scanning some trash, seems fair right?
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /datum/techweb_node/botany
 	id = "botany"
@@ -1435,9 +1406,8 @@
 		"seed_extractor",
 		"adv_watering_can",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
-	required_experiments = list(/datum/experiment/scanning/random/plants/wild)
-	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 3000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+
 
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
@@ -1455,7 +1425,6 @@
 		"adv_fire_extinguisher",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
-	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = 5000)
 
 /datum/techweb_node/sec_basic
 	id = "sec_basic"
@@ -1496,8 +1465,7 @@
 		"bluespace_travel",
 		"rcd_upgrade",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	discount_experiments = list(/datum/experiment/scanning/random/material/hard/two = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 
 /////////////////////////weaponry tech/////////////////////////
 /datum/techweb_node/weaponry
@@ -1509,8 +1477,7 @@
 		"pin_testing",
 		"tele_shield",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 20000)
-	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = 10000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 
 /datum/techweb_node/adv_weaponry
 	id = "adv_weaponry"
@@ -1520,7 +1487,7 @@
 	design_ids = list(
 		"pin_loyalty",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
 /datum/techweb_node/electric_weapons
 	id = "electronic_weapons"
@@ -1749,8 +1716,8 @@
 	design_ids = list(
 		"mech_repair_droid",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
-	discount_experiments = list(/datum/experiment/scanning/random/material/medium/three = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+
 
 /datum/techweb_node/odysseus
 	id = "mecha_odysseus"
@@ -1805,7 +1772,6 @@
 		"gygax_torso",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 5000)
 
 /datum/techweb_node/durand
 	id = "mech_durand"
@@ -1826,7 +1792,6 @@
 		"durand_torso",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 3500)
 
 /datum/techweb_node/phazon
 	id = "mecha_phazon"
@@ -1847,7 +1812,6 @@
 		"phazon_torso",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 2500)
 
 /datum/techweb_node/savannah_ivanov
 	id = "mecha_savannah_ivanov"
@@ -1868,7 +1832,6 @@
 		"savannah_ivanov_torso",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 3000)
 
 /datum/techweb_node/adv_mecha_tools
 	id = "adv_mecha_tools"
@@ -1902,8 +1865,6 @@
 		"mech_ccw_armor",
 		"mech_proj_armor",
 	)
-	required_experiments = list(/datum/experiment/scanning/random/mecha_damage_scan)
-	discount_experiments = list(/datum/experiment/scanning/random/mecha_destroyed_scan = 5000)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 
 /datum/techweb_node/mech_scattershot
@@ -2120,8 +2081,7 @@
 		/obj/item/wrench/abductor,
 	)
 
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
-	discount_experiments = list(/datum/experiment/scanning/points/slime/hard = 10000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	hidden = TRUE
 
 /datum/techweb_node/alien_engi
