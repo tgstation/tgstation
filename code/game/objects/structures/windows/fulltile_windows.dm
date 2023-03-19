@@ -150,9 +150,9 @@
 /obj/structure/window/paperframe
 	name = "paper frame"
 	desc = "A fragile separator made of thin wood and paper."
-	icon = 'icons/turf/walls/low_walls/low_wall_paperframe.dmi'
-	icon_state = "low_wall_paperframe-0"
-	base_icon_state = "low_wall_paperframe"
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_paperframe.dmi'
+	icon_state = "window_frame_paperframe-0"
+	base_icon_state = "window_frame_paperframe"
 	opacity = TRUE
 	max_integrity = 15
 	fulltile = TRUE
