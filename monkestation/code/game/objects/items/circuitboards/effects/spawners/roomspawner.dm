@@ -15,7 +15,6 @@
 		SSmapping.random_room_spawners += src
 
 /obj/effect/spawner/room/Initialize(mapload)
-	..()
 	if(!length(SSmapping.random_room_templates))
 		message_admins("Room spawner created with no templates available. This shouldn't happen.")
 		return INITIALIZE_HINT_QDEL
@@ -29,7 +28,7 @@
 			continue
 		possibletemplates[candidate] = candidate.weight
 	if(possibletemplates.len)
-		var/datum/map_template/random_room/template = pickweight(possibletemplates)
+		var/datum/map_template/random_room/template = pick_weight(possibletemplates)
 		template.stock --
 		template.weight = (template.weight / 2)
 		if(template.stock <= 0)

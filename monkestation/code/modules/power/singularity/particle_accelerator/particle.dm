@@ -48,7 +48,6 @@
 			movement_range = 0
 
 /obj/effect/accelerated_particle/proc/on_entered(datum/source, atom/movable/A, atom/old_loc, list/atom/old_locs)
-	. = ..()
 	if(isliving(A))
 		toxmob(A)
 
