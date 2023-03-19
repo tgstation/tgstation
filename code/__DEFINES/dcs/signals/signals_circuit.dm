@@ -72,3 +72,6 @@
 
 /// Called when a ui action is sent for the circuit component
 #define COMSIG_CIRCUIT_COMPONENT_PERFORM_ACTION "circuit_component_perform_action"
+
+///Called when an Ntnet sender is sending Ntnet data
+#define COMSIG_COMPONENT_NTNET_DATA_SENT "component_ntnet_data_sent"
