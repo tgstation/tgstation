@@ -1,3 +1,7 @@
+#define PERSONAL 1
+#define DEPARTMENTAL 2
+#define FREE_ACCESS 3
+
 // SUIT STORAGE UNIT /////////////////
 /obj/machinery/suit_storage_unit
 	name = "suit storage unit"
@@ -9,6 +13,9 @@
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the unit is open
 	max_integrity = 250
+	req_access = null
+	state_open = FALSE
+	panel_open = FALSE
 	circuit = /obj/item/circuitboard/machine/suit_storage_unit
 
 	var/obj/item/clothing/suit/space/suit = null
@@ -29,10 +36,10 @@
 	/// What type of additional item the unit starts with when spawned.
 	var/storage_type = null
 
-	state_open = FALSE
+
 	/// If the SSU's doors are locked closed. Can be toggled manually via the UI, but is also locked automatically when the UV decontamination sequence is running.
 	var/locked = FALSE
-	panel_open = FALSE
+
 	/// If the safety wire is cut/pulsed, the SSU can run the decontamination sequence while occupied by a mob. The mob will be burned during every cycle of cook().
 	var/safeties = TRUE
 
@@ -53,9 +60,16 @@
 	var/breakout_time = 300
 	/// Power contributed by this machine to charge the mod suits cell without any capacitors
 	var/base_charge_rate = 200
-	// Final charge rate which is base_charge_rate + contribution by capacitors
+	/// Final charge rate which is base_charge_rate + contribution by capacitors
 	var/final_charge_rate = 250
-
+	/// is the card reader installed in this machine
+	var/card_reader_installed = FALSE
+	/// access type selected
+	var/access_type = FREE_ACCESS
+	/// physical reference of the players id card to check for PERSONAL access level
+	var/obj/item/card/id/id_card = null
+	/// should we prevent furthur access change
+	var/access_locked = FALSE
 
 /obj/machinery/suit_storage_unit/standard_unit
 	suit_type = /obj/item/clothing/suit/space/eva
@@ -213,6 +227,14 @@
 		else
 			. += "[base_icon_state]_ready"
 
+/obj/machinery/suit_storage_unit/examine(mob/user)
+	. = ..()
+	if(!card_reader_installed)
+		. += span_notice("A card reader can be installed to control access.")
+	else
+		. += span_notice("It has a card reader installed.")
+		. += span_notice("swipe your pda to change access levels.")
+
 /obj/machinery/suit_storage_unit/RefreshParts()
 	. = ..()
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
@@ -238,6 +260,8 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		open_machine()
 		dump_inventory_contents()
+		if(card_reader_installed)
+			new /obj/item/stock_parts/card_reader(loc)
 	return ..()
 
 /obj/machinery/suit_storage_unit/interact(mob/living/user)
@@ -311,6 +335,15 @@
 					to_chat(mob_occupant, span_userdanger("[src]'s confines grow warm, then hot, then scorching. You're being burned [!mob_occupant.stat ? "alive" : "away"]!"))
 				cook()
 		if ("lock", "unlock")
+			//access checks when card reader is installed
+			if(card_reader_installed)
+				if(access_type == PERSONAL && (user.get_idcard() != id_card)) //physical id references don't match up
+					balloon_alert(user, "not your unit!")
+					return
+				else if(!allowed(user)) //general access check
+					balloon_alert(user, "access denied!")
+					return
+
 			if (!state_open)
 				locked = !locked
 				update_icon()
@@ -516,7 +549,112 @@
 			span_notice("You escape the cramped confines of [src]!"))
 		open_machine()
 
+/obj/machinery/suit_storage_unit/multitool_act(mob/living/user, obj/item/tool)
+	if(locked)
+		balloon_alert(user, "unlock it first")
+		return TRUE
+
+	access_locked = !access_locked
+	balloon_alert(user, "access panel [access_locked ? "locked" : "unlocked"]")
+	return TRUE
+
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
+	if(panel_open && is_operational && istype(I, /obj/item/stock_parts/card_reader))
+		//you need to unlock to perform the operation else anyone can change access on a locked unit
+		if(locked)
+			balloon_alert(user, "unlock first")
+			return
+
+		if(card_reader_installed)
+			balloon_alert(user, "already installed")
+			return
+
+		card_reader_installed = TRUE
+		balloon_alert(user, "card reader installed")
+
+		I.moveToNullspace()
+		qdel(I)
+
+		return TRUE
+
+	if(is_operational && istype(I, /obj/item/modular_computer/pda))
+		//you need to unlock to perform the operation else anyone can change access on a locked closet
+		if(locked)
+			balloon_alert(user, "unlock it first")
+			return TRUE
+
+		if(!card_reader_installed)
+			balloon_alert(user, "requires card reader for task")
+			return
+
+		if(access_locked)
+			balloon_alert(user, "access panel locked")
+			return TRUE
+
+		//no id card inside the pda to change access. time to bail
+		var/obj/item/modular_computer/pda/pda = I
+		if(isnull(pda.computer_id_slot))
+			balloon_alert(user, "no card to modify access")
+			return TRUE
+		var/obj/item/card/id/id = pda.computer_id_slot
+
+		//change the access type
+		var/static/list/choices = list(
+			"Personel" = PERSONAL,
+			"Departmental" = DEPARTMENTAL,
+			"None" = FREE_ACCESS
+		)
+		var/choice = tgui_input_list(user, "Set Access Type", "Access Type", choices)
+		if(isnull(choice))
+			return
+		access_type = choices[choice]
+
+		id_card = null
+		switch(access_type)
+			if(PERSONAL) //only the player who swiped their pda has access.
+				id_card = id
+			if(DEPARTMENTAL) //anyone who has the same access permissions as this id has access
+				req_access = id.GetAccess()
+			if(FREE_ACCESS) //free for all
+				req_access = null
+		balloon_alert(user, "access is now [choice]")
+
+		return TRUE
+
+	if(istype(I, /obj/item/pen))
+		//you need to unlock to perform the operation else anyone can change name & description on a locked closet
+		if(locked)
+			balloon_alert(user, "unlock it first")
+			return TRUE
+
+		//you cant rename departmental lockers cause thats vandalism
+		if(access_type != PERSONAL)
+			balloon_alert(user, "not yours to rename")
+			return TRUE
+
+		var/name_set = FALSE
+		var/desc_set = FALSE
+
+		var/str = tgui_input_text(user, "Personal Locker Name", "Locker Name")
+		if(!isnull(str))
+			name = str
+			name_set = TRUE
+
+		str = tgui_input_text(user, "Personal Locker Description", "Locker Description")
+		if(!isnull(str))
+			desc = str
+			desc_set = TRUE
+
+		var/bit_flag = NONE
+		if(name_set)
+			bit_flag |= UPDATE_NAME
+		if(desc_set)
+			bit_flag |= UPDATE_DESC
+		if(bit_flag != NONE)
+			update_appearance(bit_flag)
+
+		return TRUE
+
 	if(state_open && is_operational)
 		if(istype(I, /obj/item/clothing/suit))
 			if(suit)
@@ -592,3 +730,12 @@
 		I.play_tool_sound(src, 50)
 		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open \the [src]."))
 		open_machine()
+
+/obj/machinery/suit_storage_unit/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
+	. = (!locked && panel_open && !(flags_1 & NODECONSTRUCT_1) && crowbar.tool_behaviour == TOOL_CROWBAR)
+	if(.)
+		return ..()
+
+#undef PERSONAL
+#undef DEPARTMENTAL
+#undef FREE_ACCESS

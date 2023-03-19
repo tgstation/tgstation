@@ -58,11 +58,22 @@
 	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/freezer_cabinat
-	name = "Freezer Cabinet"
-	result = /obj/structure/closet/secure_closet/freezer/empty
+	name = "Secure Freezer Cabinet"
+	result = /obj/structure/closet/secure_closet/freezer/empty/custom
 	reqs = list(
 		/obj/item/stack/sheet/iron = 2,
 		/obj/item/assembly/igniter/condenser = 1,
+		/obj/item/stock_parts/card_reader = 1,
+	)
+	time = 5 SECONDS
+	category = CAT_EQUIPMENT
+
+/datum/crafting_recipe/secure_closet
+	name = "Secure Closet"
+	result = /obj/structure/closet/secure_closet/custom
+	reqs = list(
+		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stock_parts/card_reader = 1,
 	)
 	time = 5 SECONDS
 	category = CAT_EQUIPMENT
