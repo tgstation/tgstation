@@ -85,10 +85,7 @@
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_NO_FLOATING_ANIM, TRAIT_HEALS_FROM_CARP_RIFTS), INNATE_TRAIT)
 	AddElement(/datum/element/content_barfer)
 	small_sprite = new
 	small_sprite.Grant(src)

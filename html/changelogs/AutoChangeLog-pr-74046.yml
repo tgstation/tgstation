@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "vents & scrubbers getting assigned twice to an area when it's merged with another area via station blueprints"
-  - refactor: "merged` Initialize()` & `New()` of vents & scrubbers into just `Initialize()`"
