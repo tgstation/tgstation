@@ -35,7 +35,8 @@
 	// we call lose_blood() here rather than quirk/process() to make sure that the blood loss happens in sync with life()
 	if(HAS_TRAIT(src, TRAIT_BLOOD_DEFICIENCY))
 		var/datum/quirk/blooddeficiency/blooddeficiency = get_quirk(/datum/quirk/blooddeficiency)
-		blooddeficiency.lose_blood(delta_time)
+		if(!isnull(blooddeficiency))
+			blooddeficiency.lose_blood(delta_time)
 
 	//Effects of bloodloss
 	var/word = pick("dizzy","woozy","faint")

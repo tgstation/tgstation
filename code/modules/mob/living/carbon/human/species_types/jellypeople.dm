@@ -77,7 +77,8 @@
 	// we call lose_blood() here rather than quirk/process() to make sure that the blood loss happens in sync with life()
 	if(HAS_TRAIT(H, TRAIT_BLOOD_DEFICIENCY))
 		var/datum/quirk/blooddeficiency/blooddeficiency = H.get_quirk(/datum/quirk/blooddeficiency)
-		blooddeficiency.lose_blood(delta_time)
+		if(!isnull(blooddeficiency))
+			blooddeficiency.lose_blood(delta_time)
 
 	if(H.blood_volume < BLOOD_VOLUME_OKAY)
 		if(DT_PROB(2.5, delta_time))
