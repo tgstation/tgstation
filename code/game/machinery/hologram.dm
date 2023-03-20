@@ -245,8 +245,7 @@ Possible to do for anyone motivated enough:
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
 		return
 
-	if(default_pry_open(P, remain_open = FALSE))
-		set_density(FALSE) // Hacky fix to keep non-density before/after prying
+	if(default_pry_open(P, remain_open = FALSE, density = FALSE))
 		return
 
 	if(default_deconstruction_crowbar(P))

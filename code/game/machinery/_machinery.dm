@@ -327,12 +327,12 @@
  * Arguments:
  * * drop - Boolean. Whether to drop any stored items in the machine. Does not include components.
  */
-/obj/machinery/proc/open_machine(drop = TRUE, remain_open = TRUE)
+/obj/machinery/proc/open_machine(drop = TRUE, remain_open = TRUE, density = FALSE)
 	state_open = TRUE
 	if (remain_open)
-		set_density(FALSE)
+		set_density(density)
 	else
-		close_machine()
+		close_machine(density = density)
 	if(drop)
 		dump_inventory_contents()
 	update_appearance()
@@ -397,9 +397,9 @@
 /obj/machinery/proc/can_be_occupant(atom/movable/occupant_atom)
 	return occupant_typecache ? is_type_in_typecache(occupant_atom, occupant_typecache) : isliving(occupant_atom)
 
-/obj/machinery/proc/close_machine(atom/movable/target)
+/obj/machinery/proc/close_machine(atom/movable/target, density = TRUE)
 	state_open = FALSE
-	set_density(TRUE)
+	set_density(density)
 	if(!target)
 		for(var/atom in loc)
 			if (!(can_be_occupant(atom)))
@@ -783,13 +783,13 @@
 	active_power_usage = initial(active_power_usage) * (1 + parts_energy_rating)
 	update_current_power_usage()
 
-/obj/machinery/proc/default_pry_open(obj/item/crowbar, remain_open = TRUE)
+/obj/machinery/proc/default_pry_open(obj/item/crowbar, remain_open = TRUE, density = FALSE)
 	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(!.)
 		return
 	crowbar.play_tool_sound(src, 50)
 	visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open \the [src]."))
-	open_machine(remain_open = remain_open)
+	open_machine(remain_open = remain_open, density = density)
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
 	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && crowbar.tool_behaviour == TOOL_CROWBAR
