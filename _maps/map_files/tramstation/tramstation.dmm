@@ -2644,6 +2644,9 @@
 "agM" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/status_display/ai/directional/south,
+/obj/machinery/computer/records/security{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/arrivals)
 "agN" = (
@@ -7837,6 +7840,9 @@
 	dir = 10
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/computer/records/security{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "beG" = (
@@ -17411,6 +17417,7 @@
 /area/station/hallway/secondary/exit)
 "eCp" = (
 /obj/structure/sign/clock/directional/north,
+/obj/machinery/computer/records/security,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "eCu" = (
@@ -19764,6 +19771,9 @@
 "fxM" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/computer/records/medical/laptop{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "fxP" = (
@@ -20388,6 +20398,9 @@
 "fLb" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
+	},
+/obj/machinery/computer/records/security{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
@@ -32313,6 +32326,9 @@
 "kmP" = (
 /obj/structure/window/reinforced/spawner,
 /obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/machinery/computer/records/medical{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "kmX" = (
@@ -33864,6 +33880,7 @@
 	c_tag = "Departures - Security Outpost";
 	network = list("ss13","Security")
 	},
+/obj/machinery/computer/records/security,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
 "kPo" = (
@@ -35731,6 +35748,9 @@
 /area/station/security/brig)
 "lvm" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/machinery/computer/records/security{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "lvo" = (
@@ -39633,6 +39653,9 @@
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/machinery/light/directional/south,
+/obj/machinery/computer/records/security{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "mTR" = (
@@ -47892,6 +47915,9 @@
 	dir = 8
 	},
 /obj/structure/reagent_dispensers/wall/peppertank/directional/west,
+/obj/machinery/computer/records/security{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "pXk" = (
@@ -56448,6 +56474,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
+/obj/machinery/computer/records/medical/laptop,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "sZH" = (
@@ -59575,6 +59602,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"ufp" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/machinery/computer/records/medical,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/central)
 "ufK" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -60127,6 +60161,9 @@
 "upx" = (
 /obj/structure/table/wood,
 /obj/structure/noticeboard/directional/south,
+/obj/machinery/computer/records/medical/laptop{
+	dir = 1
+	},
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "upA" = (
@@ -63934,6 +63971,9 @@
 "vDG" = (
 /obj/structure/window/reinforced/spawner,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
+/obj/machinery/computer/records/security{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "vDH" = (
@@ -65073,6 +65113,10 @@
 "waj" = (
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/turret_protected/aisat/maint)
+"waE" = (
+/obj/machinery/computer/records/medical,
+/turf/open/floor/iron/grimy,
+/area/station/security/detectives_office)
 "wbb" = (
 /turf/open/floor/iron,
 /area/station/commons/dorms)
@@ -65117,6 +65161,9 @@
 /area/station/commons/dorms)
 "wbT" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/computer/records/medical{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "wbW" = (
@@ -157452,7 +157499,7 @@ ktl
 mjd
 mjI
 xEo
-hBf
+waE
 hBf
 pkk
 sDe
@@ -169810,7 +169857,7 @@ eSz
 eSz
 eSz
 qNI
-dyI
+ufp
 jVw
 qPd
 jVw
