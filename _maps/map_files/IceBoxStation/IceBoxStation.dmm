@@ -17495,18 +17495,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "fzo" = (
-/obj/machinery/button/door/directional/south{
-	id = "surgery";
-	name = "Surgery Shutter Control";
-	pixel_x = -24;
-	pixel_y = 0
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "fzu" = (
@@ -18199,6 +18194,10 @@
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
+	},
+/obj/machinery/button/door/directional/north{
+	id = "surgery";
+	name = "Surgery Shutter Control"
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
@@ -35222,10 +35221,6 @@
 "liz" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/medical_doctor,
-/obj/machinery/firealarm/directional/south{
-	pixel_x = 28;
-	pixel_y = -58
-	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "liI" = (
@@ -50730,11 +50725,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "qaU" = (
-/obj/machinery/light_switch/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "qbb" = (
@@ -51038,10 +51033,6 @@
 "qgu" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/medical_doctor,
-/obj/machinery/firealarm/directional/north{
-	pixel_x = 28;
-	pixel_y = 57
-	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "qgM" = (
@@ -58968,12 +58959,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "sHf" = (
-/obj/machinery/button/door/directional/south{
-	id = "surgery";
-	name = "Surgery Shutter Control";
-	pixel_x = -24;
-	pixel_y = 0
-	},
 /obj/machinery/disposal/bin{
 	desc = "A pneumatic waste disposal unit. This one leads to the morgue.";
 	name = "corpse disposal"
@@ -58985,6 +58970,7 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "sHh" = (
@@ -67744,6 +67730,10 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/machinery/button/door/directional/south{
+	id = "surgery";
+	name = "Surgery Shutter Control"
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "vzS" = (
