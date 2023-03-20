@@ -19,7 +19,7 @@
 		icon_state = pick(icon_states)
 	pixel_y = rand(-3,3)
 	pixel_x = rand(-3,3)
-	AddComponent(/datum/component/sticker)
+	AddElement(/datum/element/sticker)
 
 /obj/item/sticker/smile
 	name = "smiley sticker"
