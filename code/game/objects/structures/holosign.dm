@@ -7,8 +7,6 @@
 	anchored = TRUE
 	max_integrity = 1
 	armor_type = /datum/armor/structure_holosign
-	// How can you freeze a trick of the light?
-	resistance_flags = FREEZE_PROOF
 	var/obj/item/holosign_creator/projector
 	var/use_vis_overlay = TRUE
 
@@ -107,7 +105,7 @@
 	can_atmos_pass = ATMOS_PASS_NO
 	alpha = 150
 	rad_insulation = RAD_LIGHT_INSULATION
-	resistance_flags = FIRE_PROOF | FREEZE_PROOF
+	resistance_flags = FIRE_PROOF
 
 /obj/structure/holosign/barrier/atmos/sturdy
 	name = "sturdy holofirelock"

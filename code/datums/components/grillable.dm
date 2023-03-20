@@ -99,10 +99,7 @@
 
 	if(!current_cook_time) //Not grilled yet
 		if(positive_result)
-			if(initial(cook_result.name) == PLURAL)
-				examine_list += span_notice("[parent] can be [span_bold("grilled")] into some [initial(cook_result.name)].")
-			else
-				examine_list += span_notice("[parent] can be [span_bold("grilled")] into \a [initial(cook_result.name)].")
+			examine_list += span_notice("[parent] can be <b>grilled</b> into \a [initial(cook_result.name)].")
 		return
 
 	if(positive_result)

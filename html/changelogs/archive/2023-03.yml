@@ -740,16 +740,3 @@
   atosti:
   - bugfix: Material tile floors now make noise when walked on by bare/claw/heavy
       feet
-2023-03-20:
-  Cheshify:
-  - bugfix: removed two decals from a space ruin.
-  GoldenAlpharex:
-  - bugfix: Ghost role spawners that are set to have infinite uses no longer run out
-      of uses.
-  Jacquerel:
-  - bugfix: Plasmamen and golems (and androids, if you ever find one) can be implanted
-      again.
-  Melbert:
-  - bugfix: Fixes rare human arm melting condition
-  timothymtorres:
-  - bugfix: Fix not being able to read in full bright areas

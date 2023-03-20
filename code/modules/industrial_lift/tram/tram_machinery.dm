@@ -69,7 +69,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	var/list/data = list()
 	data["moving"] = tram_lift?.travelling
 	data["broken"] = tram_lift ? FALSE : TRUE
-	var/obj/effect/landmark/tram/current_loc = tram_lift?.idle_platform
+	var/obj/effect/landmark/tram/current_loc = tram_lift?.from_where
 	if(current_loc)
 		data["tram_location"] = current_loc.name
 	return data
@@ -92,7 +92,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		var/list/this_destination = list()
 		this_destination["name"] = destination.name
 		this_destination["dest_icons"] = destination.tgui_icons
-		this_destination["id"] = destination.platform_code
+		this_destination["id"] = destination.destination_id
 		. += list(this_destination)
 
 /obj/machinery/computer/tram_controls/ui_act(action, params)
@@ -102,36 +102,36 @@ GLOBAL_LIST_EMPTY(tram_doors)
 
 	switch (action)
 		if ("send")
-			var/obj/effect/landmark/tram/destination_platform
+			var/obj/effect/landmark/tram/to_where
 			for (var/obj/effect/landmark/tram/destination as anything in GLOB.tram_landmarks[specific_lift_id])
-				if(destination.platform_code == params["destination"])
-					destination_platform = destination
+				if(destination.destination_id == params["destination"])
+					to_where = destination
 					break
 
-			if (!destination_platform)
+			if (!to_where)
 				return FALSE
 
-			return try_send_tram(destination_platform)
+			return try_send_tram(to_where)
 
 /// Attempts to sends the tram to the given destination
-/obj/machinery/computer/tram_controls/proc/try_send_tram(obj/effect/landmark/tram/destination_platform)
+/obj/machinery/computer/tram_controls/proc/try_send_tram(obj/effect/landmark/tram/to_where)
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(!tram_part)
 		return FALSE
 	if(tram_part.controls_locked || tram_part.travelling) // someone else started already
 		return FALSE
-	tram_part.tram_travel(destination_platform)
-	say("The next station is: [destination_platform.name]")
+	tram_part.tram_travel(to_where)
+	say("The next station is: [to_where.name]")
 	update_appearance()
 	return TRUE
 
-/obj/machinery/computer/tram_controls/proc/update_tram_display(obj/effect/landmark/tram/idle_platform, travelling)
+/obj/machinery/computer/tram_controls/proc/update_tram_display(obj/effect/landmark/tram/from_where, travelling)
 	SIGNAL_HANDLER
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(travelling)
-		icon_screen = "[base_icon_state][tram_part.idle_platform.name]_active"
+		icon_screen = "[base_icon_state][tram_part.from_where.name]_active"
 	else
-		icon_screen = "[base_icon_state][tram_part.idle_platform.name]_idle"
+		icon_screen = "[base_icon_state][tram_part.from_where.name]_idle"
 	update_appearance(UPDATE_ICON)
 	return PROCESS_KILL
 
@@ -226,9 +226,9 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	SIGNAL_HANDLER
 	travelling_output.set_output(travelling)
 
-/obj/item/circuit_component/tram_controls/proc/on_tram_travel(datum/source, obj/effect/landmark/tram/idle_platform, obj/effect/landmark/tram/destination_platform)
+/obj/item/circuit_component/tram_controls/proc/on_tram_travel(datum/source, obj/effect/landmark/tram/from_where, obj/effect/landmark/tram/to_where)
 	SIGNAL_HANDLER
-	location.set_output(destination_platform.name)
+	location.set_output(to_where.name)
 
 /// Pedestrian crossing signal for tram
 /obj/machinery/crossing_signal
@@ -271,10 +271,6 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	var/red_distance_threshold = XING_DISTANCE_RED
 	/// If the signal is facing east or west
 	var/signal_direction
-	/// Inbound station
-	var/inbound
-	/// Outbound station
-	var/outbound
 	/// Is the signal malfunctioning?
 	var/malfunctioning = FALSE
 
@@ -284,28 +280,33 @@ GLOBAL_LIST_EMPTY(tram_doors)
  *  The distance is calculated from the bottom left corner of the tram,
  *  so signals on the east side have their distance reduced by the tram length, in this case 10 for Tramstation.
 */
-/obj/machinery/crossing_signal/northwest
-	icon_state = "crossing-base-right"
-	signal_direction = XING_SIGNAL_DIRECTION_WEST
-	pixel_x = -32
-	pixel_y = -1
 
-/obj/machinery/crossing_signal/northeast
+/obj/machinery/crossing_signal/tramstation/northeast
 	icon_state = "crossing-base-left"
 	signal_direction = XING_SIGNAL_DIRECTION_EAST
+	amber_distance_threshold = XING_DISTANCE_AMBER - 10
+	red_distance_threshold = XING_DISTANCE_RED - 10
 	pixel_x = -2
 	pixel_y = -1
 
-/obj/machinery/crossing_signal/southwest
+/obj/machinery/crossing_signal/tramstation/northwest
 	icon_state = "crossing-base-right"
 	signal_direction = XING_SIGNAL_DIRECTION_WEST
 	pixel_x = -32
+	pixel_y = -1
+
+/obj/machinery/crossing_signal/tramstation/southeast
+	icon_state = "crossing-base-left"
+	signal_direction = XING_SIGNAL_DIRECTION_EAST
+	amber_distance_threshold = XING_DISTANCE_AMBER - 10
+	red_distance_threshold = XING_DISTANCE_RED - 10
+	pixel_x = -2
 	pixel_y = 20
 
-/obj/machinery/crossing_signal/southeast
-	icon_state = "crossing-base-left"
-	signal_direction = XING_SIGNAL_DIRECTION_EAST
-	pixel_x = -2
+/obj/machinery/crossing_signal/tramstation/southwest
+	icon_state = "crossing-base-right"
+	signal_direction = XING_SIGNAL_DIRECTION_WEST
+	pixel_x = -32
 	pixel_y = 20
 
 /obj/machinery/static_signal
@@ -325,26 +326,6 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	light_power = 3
 	light_color = COLOR_VIBRANT_LIME
 	luminosity = 1
-
-/obj/machinery/static_signal/northwest
-	icon_state = "static-right-on"
-	base_icon_state = "static-right-"
-	pixel_x = -32
-	pixel_y = -1
-
-/obj/machinery/static_signal/northeast
-	pixel_x = -2
-	pixel_y = -1
-
-/obj/machinery/static_signal/southwest
-	icon_state = "static-right-on"
-	base_icon_state = "static-right-"
-	pixel_x = -32
-	pixel_y = 20
-
-/obj/machinery/static_signal/southeast
-	pixel_x = -2
-	pixel_y = 20
 
 /obj/machinery/crossing_signal/Initialize(mapload)
 	. = ..()
@@ -439,9 +420,9 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	var/datum/lift_master/tram/tram = tram_ref?.resolve()
 
 	// Check for stopped states.
-	if(!tram || !is_operational || !tram.is_operational || !inbound || !outbound)
-		// Tram missing, we lost power, or something isn't right
-		// Throw the error message (blue)
+	if(!tram || !is_operational || !tram.is_operational)
+		// Tram missing, or we lost power.
+		// Tram missing throw the error message (blue)
 		set_signal_state(XING_STATE_MALF, force = !is_operational)
 		return PROCESS_KILL
 
@@ -468,11 +449,18 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
 
 	// How far away are we? negative if already passed.
-	var/approach_distance = tram_velocity_sign * (signal_pos - (tram_pos + 5))
+	var/approach_distance = tram_velocity_sign * (signal_pos - tram_pos)
 
 	// Check for stopped state.
 	// Will kill the process since tram starting up will restart process.
 	if(!tram.travelling)
+		// If super close, show red anyway since tram could suddenly start moving. If the tram could be approaching, show amber.
+		if(abs(approach_distance) < red_distance_threshold)
+			set_signal_state(XING_STATE_RED)
+			return PROCESS_KILL
+		if(abs(approach_distance) < amber_distance_threshold)
+			set_signal_state(XING_STATE_AMBER)
+			return PROCESS_KILL
 		set_signal_state(XING_STATE_GREEN)
 		return PROCESS_KILL
 
@@ -482,17 +470,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		set_signal_state(XING_STATE_GREEN)
 		return PROCESS_KILL
 
-	// Check the tram's terminus station.
-	// INBOUND 1 < 2 < 3
-	// OUTBOUND 1 > 2 > 3
-	if(tram.travel_direction & WEST && inbound < tram.idle_platform.platform_code)
-		set_signal_state(XING_STATE_GREEN)
-		return PROCESS_KILL
-	if(tram.travel_direction & EAST && outbound > tram.idle_platform.platform_code)
-		set_signal_state(XING_STATE_GREEN)
-		return PROCESS_KILL
-
-	// Finally the interesting part where it's ACTUALLY approaching
+	// OK so finally the interesting part where it's ACTUALLY approaching
 	if(approach_distance <= red_distance_threshold)
 		set_signal_state(XING_STATE_RED)
 		return
@@ -558,6 +536,61 @@ GLOBAL_LIST_EMPTY(tram_doors)
 
 	icon_state = "[base_icon_state]on"
 	set_light(l_on = TRUE)
+
+/// Shifted to NE corner for east side of northern passage.
+/obj/machinery/crossing_signal/northeast
+	icon_state = "crossing-base-left"
+	signal_direction = XING_SIGNAL_DIRECTION_EAST
+	amber_distance_threshold = 35
+	pixel_x = -2
+	pixel_y = -1
+
+/// Shifted to NW corner for west side of northern passage.
+/obj/machinery/crossing_signal/northwest
+	icon_state = "crossing-base-right"
+	signal_direction = XING_SIGNAL_DIRECTION_WEST
+	pixel_x = -32
+	pixel_y = -1
+
+/// Shifted to SE corner for east side of northern passage.
+/obj/machinery/crossing_signal/southeast
+	icon_state = "crossing-base-left"
+	signal_direction = XING_SIGNAL_DIRECTION_EAST
+	amber_distance_threshold = 35
+	pixel_x = -2
+	pixel_y = 20
+
+/// Shifted to SW corner for west side of northern passage.
+/obj/machinery/crossing_signal/southwest
+	icon_state = "crossing-base-right"
+	signal_direction = XING_SIGNAL_DIRECTION_WEST
+	pixel_x = -32
+	pixel_y = 20
+
+/obj/machinery/static_signal/northeast
+	icon_state = "static-left-on"
+	pixel_x = -2
+	pixel_y = -1
+
+/// Shifted to NW corner for west side of northern passage.
+/obj/machinery/static_signal/northwest
+	icon_state = "static-right-on"
+	base_icon_state = "static-right-"
+	pixel_x = -32
+	pixel_y = -1
+
+/// Shifted to SE corner for east side of northern passage.
+/obj/machinery/static_signal/southeast
+	icon_state = "static-left-on"
+	pixel_x = -2
+	pixel_y = 20
+
+/// Shifted to SW corner for west side of northern passage.
+/obj/machinery/static_signal/southwest
+	icon_state = "static-right-on"
+	base_icon_state = "static-right-"
+	pixel_x = -32
+	pixel_y = 20
 
 /obj/machinery/destination_sign
 	name = "destination sign"
@@ -647,44 +680,44 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	use_power(active_power_usage)
 
 	if(!tram.travelling)
-		if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/west))
+		if(istype(tram.from_where, /obj/effect/landmark/tram/left_part))
 			icon_state = "[base_icon_state][DESTINATION_WEST_IDLE]"
 			light_mask = "[base_icon_state][DESTINATION_WEST_IDLE]_e"
-			previous_destination = tram.idle_platform
+			previous_destination = tram.from_where
 			update_appearance()
 			return PROCESS_KILL
 
-		if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/central))
+		if(istype(tram.from_where, /obj/effect/landmark/tram/middle_part))
 			icon_state = "[base_icon_state][DESTINATION_CENTRAL_IDLE]"
 			light_mask = "[base_icon_state][DESTINATION_CENTRAL_IDLE]_e"
-			previous_destination = tram.idle_platform
+			previous_destination = tram.from_where
 			update_appearance()
 			return PROCESS_KILL
 
-		if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/east))
+		if(istype(tram.from_where, /obj/effect/landmark/tram/right_part))
 			icon_state = "[base_icon_state][DESTINATION_EAST_IDLE]"
 			light_mask = "[base_icon_state][DESTINATION_EAST_IDLE]_e"
-			previous_destination = tram.idle_platform
+			previous_destination = tram.from_where
 			update_appearance()
 			return PROCESS_KILL
 
-	if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/west))
+	if(istype(tram.from_where, /obj/effect/landmark/tram/left_part))
 		icon_state = "[base_icon_state][DESTINATION_WEST_ACTIVE]"
 		light_mask = "[base_icon_state][DESTINATION_WEST_ACTIVE]_e"
 		update_appearance()
 		return PROCESS_KILL
 
-	if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/central))
-		if(istype(previous_destination, /obj/effect/landmark/tram/tramstation/west))
+	if(istype(tram.from_where, /obj/effect/landmark/tram/middle_part))
+		if(istype(previous_destination, /obj/effect/landmark/tram/left_part))
 			icon_state = "[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]"
 			light_mask = "[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]_e"
-		if(istype(previous_destination, /obj/effect/landmark/tram/tramstation/east))
+		if(istype(previous_destination, /obj/effect/landmark/tram/right_part))
 			icon_state = "[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]"
 			light_mask = "[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]_e"
 		update_appearance()
 		return PROCESS_KILL
 
-	if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/east))
+	if(istype(tram.from_where, /obj/effect/landmark/tram/right_part))
 		icon_state = "[base_icon_state][DESTINATION_EAST_ACTIVE]"
 		light_mask = "[base_icon_state][DESTINATION_EAST_ACTIVE]_e"
 		update_appearance()

@@ -1232,15 +1232,7 @@
 **/
 /mob/proc/has_light_nearby(light_amount = LIGHTING_TILE_IS_DARK)
 	var/turf/mob_location = get_turf(src)
-	var/area/mob_area = get_area(src)
-
-	if(mob_location.get_lumcount() > light_amount)
-		return TRUE
-	else if(!mob_area.static_lighting)
-		return TRUE
-
-	return FALSE
-
+	return mob_location.get_lumcount() > light_amount
 
 
 /// Can this mob read
