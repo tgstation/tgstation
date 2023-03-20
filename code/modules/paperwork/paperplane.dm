@@ -61,12 +61,16 @@
 		. += "paperplane_[stamp]"
 
 /obj/item/paperplane/attack_self(mob/user)
-	to_chat(user, span_notice("You unfold [src]."))
-	// We don't have to qdel the paperplane here; it shall be done once the internal paper object is moved out of src anyway.
-	if(user.Adjacent(internalPaper))
-		user.put_in_hands(internalPaper)
-	else
-		internalPaper.forceMove(loc)
+	balloon_alert(user, "unfolded")
+
+	var/atom/location = drop_location()
+	// Need to keep a reference to the internal paper
+	// when we move it out of the plane, our ref gets set to null
+	var/obj/item/paper/internal_paper = internalPaper
+	internal_paper.forceMove(location)
+	// This will as a side effect, qdel the paper plane, making the user's hands empty
+
+	user.put_in_hands(internal_paper)
 
 /obj/item/paperplane/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	if(burn_paper_product_attackby_check(P, user))
@@ -136,7 +140,7 @@
  * * obj/item/paperplane/plane_type - what it will be folded into (path)
  */
 /obj/item/paper/proc/make_plane(mob/living/user, obj/item/I, obj/item/paperplane/plane_type = /obj/item/paperplane)
-	to_chat(user, span_notice("You fold [src] into the shape of a plane!"))
+	balloon_alert(user, "folded into a plane")
 	user.temporarilyRemoveItemFromInventory(src)
 	I = new plane_type(loc, src)
 	if(user.Adjacent(I))

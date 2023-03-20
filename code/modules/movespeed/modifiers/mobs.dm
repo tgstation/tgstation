@@ -97,6 +97,9 @@
 /datum/movespeed_modifier/tarantula_web
 	multiplicative_slowdown = 5
 
+/datum/movespeed_modifier/duct_spider_web
+	multiplicative_slowdown = 1
+
 /datum/movespeed_modifier/gravity
 	blacklisted_movetypes = FLOATING
 	variable = TRUE
@@ -135,5 +138,5 @@
 /datum/movespeed_modifier/player_spider_modifier
 	variable = TRUE
 
-/datum/movespeed_modifier/netherworld_enrage
+/datum/movespeed_modifier/health_scaling_speed_buff
 	variable = TRUE

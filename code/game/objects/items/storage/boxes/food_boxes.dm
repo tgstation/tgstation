@@ -54,7 +54,7 @@
 	inhand_icon_state = null
 	illustration = null
 	resistance_flags = FLAMMABLE
-	foldable = null
+	foldable_result = null
 	/// A list of all available papersack reskins
 	var/list/papersack_designs = list()
 	///What design from papersack_designs we are currently using.
@@ -325,7 +325,7 @@
 	icon_state = "bubblegum_generic"
 	w_class = WEIGHT_CLASS_TINY
 	illustration = null
-	foldable = null
+	foldable_result = null
 	custom_price = PAYCHECK_CREW
 
 /obj/item/storage/box/gum/Initialize(mapload)

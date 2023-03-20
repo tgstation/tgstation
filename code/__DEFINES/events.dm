@@ -40,3 +40,5 @@
 #define EVENT_SPACE_ONLY (1 << 0)
 /// Event can only run on a map which is a planet
 #define EVENT_PLANETARY_ONLY (1 << 1)
+/// Event timer in seconds
+#define EVENT_SECONDS *0.5

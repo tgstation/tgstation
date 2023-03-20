@@ -79,8 +79,14 @@
 	cost = 16
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
-/datum/uplink_item/dangerous/doublesword/get_discount()
-	return pick(4;0.8,2;0.65,1;0.5)
+/datum/uplink_item/dangerous/doublesword/get_discount_value(discount_type)
+	switch(discount_type)
+		if(TRAITOR_DISCOUNT_BIG)
+			return 0.5
+		if(TRAITOR_DISCOUNT_AVERAGE)
+			return 0.35
+		else
+			return 0.2
 
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"

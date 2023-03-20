@@ -1,3 +1,8 @@
+///The rate at which slimes regenerate their jelly normally
+#define JELLY_REGEN_RATE 1.5
+///The rate at which slimes regenerate their jelly when they completely run out of it and start taking damage, usually after having cannibalized all their limbs already
+#define JELLY_REGEN_RATE_EMPTY 2.5
+
 /datum/species/jelly
 	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
 	name = "\improper Jellyperson"
@@ -17,6 +22,7 @@
 	mutantheart = null
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
+	blood_deficiency_drain_rate = JELLY_REGEN_RATE + BLOOD_DEFICIENCY_MODIFIER
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	liked_food = MEAT | BUGS
 	toxic_food = NONE
@@ -25,7 +31,7 @@
 	burnmod = 0.5 // = 1/2x generic burn damage
 	payday_modifier = 0.75
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	inherent_factions = list("slime")
+	inherent_factions = list(FACTION_SLIME)
 	species_language_holder = /datum/language_holder/jelly
 	ass_image = 'icons/ass/assslime.png'
 
@@ -56,13 +62,13 @@
 		return
 
 	if(!H.blood_volume)
-		H.blood_volume += 2.5 * delta_time
+		H.blood_volume += JELLY_REGEN_RATE_EMPTY * delta_time
 		H.adjustBruteLoss(2.5 * delta_time)
 		to_chat(H, span_danger("You feel empty!"))
 
 	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-			H.blood_volume += 1.5 * delta_time
+			H.blood_volume += JELLY_REGEN_RATE * delta_time
 			H.adjust_nutrition(-1.25 * delta_time)
 
 	if(H.blood_volume < BLOOD_VOLUME_OKAY)
@@ -538,7 +544,7 @@
 
 /datum/action/innate/integrate_extract/New(Target)
 	. = ..()
-	AddComponent(/datum/component/action_item_overlay, CALLBACK(src, PROC_REF(locate_extract)))
+	AddComponent(/datum/component/action_item_overlay, item_callback = CALLBACK(src, PROC_REF(locate_extract)))
 
 /// Callback for /datum/component/action_item_overlay to find the slime extract from within the species
 /datum/action/innate/integrate_extract/proc/locate_extract()
@@ -608,7 +614,7 @@
 
 /datum/action/innate/use_extract/New(Target)
 	. = ..()
-	AddComponent(/datum/component/action_item_overlay, CALLBACK(src, PROC_REF(locate_extract)))
+	AddComponent(/datum/component/action_item_overlay, item_callback = CALLBACK(src, PROC_REF(locate_extract)))
 
 /// Callback for /datum/component/action_item_overlay to find the slime extract from within the species
 /datum/action/innate/use_extract/proc/locate_extract()
@@ -788,3 +794,6 @@
 		return FALSE
 
 	return TRUE
+	
+#undef JELLY_REGEN_RATE
+#undef JELLY_REGEN_RATE_EMPTY

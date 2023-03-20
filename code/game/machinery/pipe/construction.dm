@@ -229,7 +229,7 @@ Buildable meters
 
 	var/obj/machinery/atmospherics/built_machine = new pipe_type(loc, , , p_init_dir)
 	build_pipe(built_machine)
-	built_machine.on_construction(pipe_color, piping_layer)
+	built_machine.on_construction(user, pipe_color, piping_layer)
 	transfer_fingerprints_to(built_machine)
 
 	wrench.play_tool_sound(src)

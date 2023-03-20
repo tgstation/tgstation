@@ -1,10 +1,52 @@
 
-//what people wear unrevealed
+//The default outfit for during play
 
 /datum/outfit/mafia
-	name = "Mafia Game Outfit"
+	name = "Mafia Default Outfit"
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/sneakers/black
+
+///Map-specific custom outfits
+
+/datum/outfit/mafia/abductee
+	name = "Mafia Abductee"
+	uniform = /obj/item/clothing/under/abductor
+	shoes = /obj/item/clothing/shoes/combat
+
+/datum/outfit/mafia/syndie
+	name = "Mafia Syndicate"
+	uniform = /obj/item/clothing/under/syndicate
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/color/black
+
+/datum/outfit/mafia/lavaland
+	name = "Mafia Wastelander"
+	mask = /obj/item/clothing/mask/breath
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	suit = /obj/item/clothing/suit/hooded/cloak/goliath
+	uniform = /obj/item/clothing/under/rank/cargo/miner
+
+/datum/outfit/mafia/ninja
+	name = "Mafia Ninja"
+	glasses = /obj/item/clothing/glasses/sunglasses
+	suit = /obj/item/clothing/suit/costume/ianshirt
+	uniform = /obj/item/clothing/under/pants/jeans
+	shoes = /obj/item/clothing/shoes/sandal
+
+/datum/outfit/mafia/snowy
+	name = "Mafia Outwear"
+	gloves = /obj/item/clothing/gloves/color/black
+	suit = /obj/item/clothing/suit/hooded/wintercoat
+	shoes = /obj/item/clothing/shoes/winterboots
+	uniform = /obj/item/clothing/under/rank/civilian/curator/treasure_hunter
+
+/datum/outfit/mafia/gothic
+	name = "Mafia Castlegoer"
+	glasses = /obj/item/clothing/glasses/monocle
+	gloves = /obj/item/clothing/gloves/color/white
+	shoes = /obj/item/clothing/shoes/laceup
+	suit = /obj/item/clothing/suit/costume/gothcoat
+	uniform = /obj/item/clothing/under/suit/black
 
 //town
 

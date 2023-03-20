@@ -488,7 +488,7 @@
 	icon_state = "coffee_cartrack4"
 	base_icon_state = "coffee_cartrack"
 	contents_tag = "coffee cartridge"
-	is_open = TRUE
+	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	spawn_type = /obj/item/coffee_cartridge
 
 /obj/item/storage/fancy/coffee_cart_rack/Initialize(mapload)

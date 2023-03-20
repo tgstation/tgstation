@@ -81,6 +81,13 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
 	if(id_card)
 		data["points"] = id_card.registered_account?.account_balance
+	for(var/datum/orderable_item/item as anything in GLOB.order_console_products)
+		if(!(item.category_index in order_categories))
+			continue
+		data["item_amts"] += list(list(
+			"name" = item.name,
+			"amt" = grocery_list[item],
+		))
 
 	return data
 
@@ -101,7 +108,6 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			"cat" = item.category_index,
 			"ref" = REF(item),
 			"cost" = item.cost_per_order,
-			"amt" = grocery_list[item],
 			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(item.item_path.icon), icon_state = initial(item.item_path.icon_state)), no_anim=TRUE))
 		))
 	return data
@@ -117,7 +123,6 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		if("add_one")
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
 			grocery_list[wanted_item] += 1
-			update_static_data(living_user)
 		if("remove_one")
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
 			if(!grocery_list[wanted_item])
@@ -125,14 +130,12 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			grocery_list[wanted_item] -= 1
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
-			update_static_data(living_user)
 		if("cart_set")
 			//this is null if the action doesn't need it (purchase, quickpurchase)
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
 			grocery_list[wanted_item] = clamp(params["amt"], 0, 20)
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
-			update_static_data(living_user)
 		if("purchase", "ltsrbt_deliver")
 			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
@@ -164,7 +167,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 				return
 			var/say_message = "Thank you for your purchase!"
 			if(express_cost_multiplier > 1)
-				say_message += "Please note: The charge of this purchase and machine cooldown has been multiplied by [express_cost_multiplier]!"
+				say_message += " Please note: The charge of this purchase and machine cooldown has been multiplied by [express_cost_multiplier]!"
 			COOLDOWN_START(src, order_cooldown, cooldown_time * express_cost_multiplier)
 			say(say_message)
 			if(blackbox_key)
@@ -198,7 +201,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	var/failure_message = "Sorry, but you do not have enough money."
 	if(express)
 		final_cost *= express_cost_multiplier
-		failure_message += "Remember, Express upcharges the cost!"
+		failure_message += " Remember, Express upcharges the cost!"
 	if(card.registered_account.adjust_money(-final_cost, "[name]: Purchase"))
 		return TRUE
 	say(failure_message)

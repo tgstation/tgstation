@@ -54,7 +54,7 @@
 	return return_atmos_handbooks()
 
 /datum/computer_file/program/atmosscan/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	var/turf/turf = get_turf(computer)
 	data["atmozphereMode"] = atmozphere_mode
 	data["clickAtmozphereCompatible"] = (computer.hardware_flag & PROGRAM_TABLET)

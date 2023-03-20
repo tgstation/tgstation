@@ -342,12 +342,13 @@
 /datum/crafting_recipe/food/fleet_salad
 	name = "Lörtonknusksolt (Fleet salad)"
 	reqs = list(
-		/obj/item/food/mothic_salad = 1,
-		/obj/item/food/grilled_cheese = 1,
-		/obj/item/food/breadslice/plain = 1,
-		/obj/item/food/grown/carrot = 1,
 		/datum/reagent/consumable/quality_oil = 2,
-		/datum/reagent/consumable/vinegar = 2
+		/datum/reagent/consumable/vinegar = 2,
+		/obj/item/food/breadslice/plain = 1,
+		/obj/item/food/grilled_cheese = 1,
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/mothic_salad = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/fleet_salad
 	category = CAT_MOTH
@@ -355,24 +356,26 @@
 /datum/crafting_recipe/food/cotton_salad
 	name = "Flöfrölenknusksolt (Cotton salad)"
 	reqs = list(
+		/datum/reagent/consumable/quality_oil = 2,
+		/datum/reagent/consumable/vinegar = 2,
+		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/mothic_salad = 1,
 		/obj/item/grown/cotton = 2,
-		/obj/item/food/grown/carrot = 1,
-		/datum/reagent/consumable/quality_oil = 2,
-		/datum/reagent/consumable/vinegar = 2
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
-	result = /obj/item/food/salad/fleet_salad
+	result = /obj/item/food/salad/cotton_salad
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/moth_kachumbari
 	name = "Kæniatknusksolt (Kenyan salad)"
 	reqs = list(
-		/obj/item/food/oven_baked_corn = 1,
+		/datum/reagent/consumable/limejuice = 2,
 		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/herbs = 1,
 		/obj/item/food/grown/onion/red = 1,
 		/obj/item/food/grown/tomato = 1,
-		/obj/item/food/grown/herbs = 1,
-		/datum/reagent/consumable/limejuice = 2
+		/obj/item/food/oven_baked_corn = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/moth_kachumbari
 	category = CAT_MOTH

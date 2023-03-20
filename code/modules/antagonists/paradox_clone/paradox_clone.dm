@@ -54,10 +54,11 @@
 	var/mob/living/carbon/human/original_human = original_mind.current
 
 	//equip them in the original's clothes
-	clone_human.equipOutfit(original_human.mind.assigned_role.outfit)
-	if(isplasmaman(original_human))
+	if(!isplasmaman(original_human))
+		clone_human.equipOutfit(original_human.mind.assigned_role.outfit)
+	else
 		clone_human.equipOutfit(original_human.mind.assigned_role.plasmaman_outfit)
-		clone_human.internal = clone_human.get_item_for_held_index(1)
+		clone_human.internal = clone_human.get_item_for_held_index(2)
 
 	//clone doesnt show up on message lists
 	var/obj/item/modular_computer/pda/messenger = locate() in clone_human
@@ -71,6 +72,10 @@
 	if(sensor_clothes)
 		sensor_clothes.sensor_mode = SENSOR_OFF
 		clone_human.update_suit_sensors()
+
+	// Perform a quick copy of existing memories.
+	// This may result in some minutely imperfect memories, but it'll do
+	original_mind.quick_copy_all_memories(owner)
 
 /datum/antagonist/paradox_clone/roundend_report_header()
 	return "<span class='header'>A paradox clone appeared on the station!</span><br>"

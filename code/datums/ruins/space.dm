@@ -314,6 +314,13 @@
 	name = "Syndicate Forgotten Ship"
 	description = "Seemingly abandoned ship went of course right into NT controlled space. It seems that malfunction caused most systems to turn off, except for sleepers."
 
+/datum/map_template/ruin/space/old_syndie_infiltrator
+	id = "old_infiltrator"
+	suffix = "old_infiltrator.dmm"
+	name = "Abandoned Infiltrator"
+	description = "Only one in five Gorlex Marauder strike forces return from their regular raids into Nanotrasen space. \
+		For the other four... well, their ship doesn't just disappear when their target evacuates."
+
 /datum/map_template/ruin/space/hellfactory
 	id = "hellfactory"
 	suffix = "hellfactory.dmm"
@@ -337,3 +344,15 @@
 	suffix = "cyborg_mothership.dmm"
 	name = "Cyborg Mothership"
 	description = "An abandoned cyborg mothership that was overtaken by space vines and hivebots. It appears that it hosted an experimental AI focused on mining before it was depowered."
+
+/datum/map_template/ruin/space/dangerous_research
+	id = "dangerous_research"
+	suffix = "dangerous_research.dmm"
+	name = "Alternate Sciences Research Center"
+	description = "When you're messing with the occult, who knows what you're going to get?"
+
+/datum/map_template/ruin/space/the_faceoff
+	id = "the_faceoff"
+	suffix = "the_faceoff.dmm"
+	name = "The Faceoff"
+	description = "What do you get when a meeting of the enemy corporations get crashed?"
