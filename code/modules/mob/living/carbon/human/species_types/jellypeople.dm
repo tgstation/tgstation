@@ -235,7 +235,8 @@
 
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
 		H.blood_volume += 1.5 * delta_time
-		H.adjust_nutrition(-1.25 * delta_time)
+		if(H.blood_volume >= BLOOD_VOLUME_LOSE_NUTRITION)
+			H.adjust_nutrition(-1.25 * delta_time)
 
 	..()
 
