@@ -1,0 +1,5 @@
+author: "JohnFulpWillard, sprites by BalkyGoat"
+delete-after: True
+changes:
+  - rscadd: " The Janitor Access key: Janitors can now be given departmental AA (one at a time) using the Keycard authentication device in Command offices. Use it if you need cleaning!"
+  - bugfix: "HoP's trim is no longer set to edit Supply access."
