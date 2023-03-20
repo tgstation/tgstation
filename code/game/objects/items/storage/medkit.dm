@@ -581,7 +581,7 @@
 /obj/item/storage/organbox/process(delta_time)
 	///if there is enough coolant var
 	var/using_coolant = coolant_to_spend()
-	if (!using_coolant)
+	if (isnull(using_coolant))
 		if (cooling)
 			cooling = FALSE
 			update_appearance()

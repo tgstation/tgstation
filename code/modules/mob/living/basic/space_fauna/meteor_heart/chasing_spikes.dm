@@ -42,10 +42,10 @@
 	var/datum/move_loop/movement
 
 /obj/effect/temp_visual/spike_chaser/Initialize(mapload, atom/target)
+	. = ..()
 	if (!target)
 		return INITIALIZE_HINT_QDEL
 
-	. = ..()
 	AddElement(/datum/element/floor_loving)
 	AddComponent(/datum/component/spawner, spawn_types = list(/obj/effect/temp_visual/emerging_ground_spike), spawn_time = 0.5 SECONDS)
 	src.target = WEAKREF(target)
