@@ -46,7 +46,7 @@
 		return
 	switch(action)
 		if("PRG_target_relay")
-			for(var/obj/machinery/ntnet_relay/relays as anything in SSmodular_computers.ntnet_relays)
+			for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)
 				if(relays.uid == params["targid"])
 					target = relays
 					break
@@ -80,7 +80,7 @@
 	else
 		data["target"] = FALSE
 		data["relays"] = list()
-		for(var/obj/machinery/ntnet_relay/relays as anything in SSmodular_computers.ntnet_relays)
+		for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)
 			data["relays"] += list(list("id" = relays.uid))
 		data["focus"] = target ? target.uid : null
 

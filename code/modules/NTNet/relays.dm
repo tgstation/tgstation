@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(ntnet_relays)
+
 // Relays don't handle any actual communication. Global NTNet datum does that, relays only tell the datum if it should or shouldn't work.
 /obj/machinery/ntnet_relay
 	name = "NTNet Quantum Relay"
@@ -112,13 +114,13 @@
 	uid = gl_uid++
 	component_parts = list()
 
-	SSmodular_computers.ntnet_relays.Add(src)
-	SSmodular_computers.add_log("New quantum relay activated. Current amount of linked relays: [SSmodular_computers.ntnet_relays.len]")
+	GLOB.ntnet_relays += src
+	SSmodular_computers.add_log("New quantum relay activated. Current amount of linked relays: [GLOB.ntnet_relays.len]")
 	return ..()
 
 /obj/machinery/ntnet_relay/Destroy()
-	SSmodular_computers.ntnet_relays.Remove(src)
-	SSmodular_computers.add_log("Quantum relay connection severed. Current amount of linked relays: [SSmodular_computers.ntnet_relays.len]")
+	GLOB.ntnet_relays -= src
+	SSmodular_computers.add_log("Quantum relay connection severed. Current amount of linked relays: [GLOB.ntnet_relays.len]")
 
 	for(var/datum/computer_file/program/ntnet_dos/D in dos_sources)
 		D.target = null
