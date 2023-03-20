@@ -1,4 +1,0 @@
-author: "MMMiracles"
-delete-after: True
-changes:
-  - bugfix: "White ships can now dock with Tramstation properly again."

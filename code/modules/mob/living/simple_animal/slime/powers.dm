@@ -53,29 +53,39 @@
 	var/mob/living/simple_animal/slime/S = owner
 	S.Feed()
 
-/mob/living/simple_animal/slime/proc/CanFeedon(mob/living/M, silent = FALSE)
-	if(!Adjacent(M))
+/mob/living/simple_animal/slime/proc/CanFeedon(mob/living/meal, silent = FALSE)
+	if(!Adjacent(meal))
 		return FALSE
 
 	if(buckled)
 		Feedstop()
 		return FALSE
 
-	if(issilicon(M) || M.mob_biotypes & MOB_ROBOTIC)
+	if(issilicon(meal) || meal.mob_biotypes & MOB_ROBOTIC)
 		return FALSE
 
-	if(isanimal(M))
-		var/mob/living/simple_animal/S = M
-		if(S.damage_coeff[TOX] <= 0 && S.damage_coeff[CLONE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
+	if(isanimal(meal))
+		var/mob/living/simple_animal/simple_meal = meal
+		if(simple_meal.damage_coeff[TOX] <= 0 && simple_meal.damage_coeff[CLONE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
 			if(silent)
 				return FALSE
 			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
-			"This subject does not have life energy", "This subject is empty", \
-			"I am not satisified", "I can not feed from this subject", \
-			"I do not feel nourished", "This subject is not food")]!</span>")
+				"This subject does not have life energy", "This subject is empty", \
+				"I am not satisified", "I can not feed from this subject", \
+				"I do not feel nourished", "This subject is not food")]!</span>")
+			return FALSE
+	else if(isbasicmob(meal))
+		var/mob/living/basic/basic_meal = meal
+		if(basic_meal.damage_coeff[TOX] <= 0 && basic_meal.damage_coeff[CLONE] <= 0)
+			if (silent)
+				return FALSE
+			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
+				"This subject does not have life energy", "This subject is empty", \
+				"I am not satisified", "I can not feed from this subject", \
+				"I do not feel nourished", "This subject is not food")]!</span>")
 			return FALSE
 
-	if(isslime(M))
+	if(isslime(meal))
 		if(silent)
 			return FALSE
 		to_chat(src, span_warning("<i>I can't latch onto another slime...</i>"))
@@ -93,13 +103,13 @@
 		to_chat(src, span_warning("<i>I must be conscious to do this...</i>"))
 		return FALSE
 
-	if(M.stat == DEAD)
+	if(meal.stat == DEAD)
 		if(silent)
 			return FALSE
 		to_chat(src, span_warning("<i>This subject does not have a strong enough life energy...</i>"))
 		return FALSE
 
-	if(locate(/mob/living/simple_animal/slime) in M.buckled_mobs)
+	if(locate(/mob/living/simple_animal/slime) in meal.buckled_mobs)
 		if(silent)
 			return FALSE
 		to_chat(src, span_warning("<i>Another slime is already feeding on this subject...</i>"))
