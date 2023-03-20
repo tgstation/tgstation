@@ -355,7 +355,7 @@
 	id = "anomaly_research"
 	suffix = "anomaly_research.dmm"
 	name = "Anomaly Research"
-	description = "A secret research lab embedded in arctic rock, belonging to a Dr Anna Mally. What could she have been researching?"
+	description = "A secret research lab embedded in arctic rock, belonging to a Dr Anna Molly. What could she have been researching?"
 
 /datum/map_template/ruin/space/the_faceoff
 	id = "the_faceoff"

@@ -59,7 +59,7 @@
 	default_raw_text = {"It only took every single one of my anomalies and nearly my entire supply of stabilizers, but I did it.
 	<br> I CREATED THE ULTIMATE SUPER ANOMALY!! I modified a modsuit with the nullfluid, which should allow me to enter it!
 	<br> I dropped off Moffie at my mom's, in case I can't get back. If you're reading this, SUCK IT I'M IN THE ANOMALY UNIVERSE (or dead) HAHAHAHHA!!
-	<br> Dr Anna Nomally, signing out.
+	<br> Dr Anna Molly, signing out.
 	"}
 
 /area/misc/anomaly_research
