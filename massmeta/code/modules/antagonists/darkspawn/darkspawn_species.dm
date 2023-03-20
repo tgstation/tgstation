@@ -81,6 +81,16 @@
 				H.playsound_local(H, 'sound/weapons/sear.ogg', max(30, 50 * light_amount), TRUE)
 				H.adjustFireLoss(DARKSPAWN_LIGHT_BURN * 0.5)
 
+/datum/species/darkspawn/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
+	var/turf/T = H.loc
+	if(istype(T))
+		var/light_amount = T.get_lumcount()
+		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD && H.has_status_effect(/datum/status_effect/shadow_dance))
+			H.visible_message(span_danger("[H] dances in the shadows, evading [P]!"))
+			playsound(T, SFX_BULLET_MISS, 75, TRUE)
+			return BULLET_ACT_FORCE_PIERCE
+	return ..()
+
 /datum/species/darkspawn/spec_death(gibbed, mob/living/carbon/human/H)
 	playsound(H, 'massmeta/sounds/creatures/darkspawn_death.ogg', 50, FALSE)
 

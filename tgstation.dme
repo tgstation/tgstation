@@ -5220,6 +5220,7 @@
 #include "massmeta\code\modules\antagonists\darkspawn\darkspawn_abilities\creep.dm"
 #include "massmeta\code\modules\antagonists\darkspawn\darkspawn_abilities\demented_outburst.dm"
 #include "massmeta\code\modules\antagonists\darkspawn\darkspawn_abilities\devour_will.dm"
+#include "massmeta\code\modules\antagonists\darkspawn\darkspawn_abilities\shadow_dance.dm"
 #include "massmeta\code\modules\antagonists\darkspawn\darkspawn_abilities\pass.dm"
 #include "massmeta\code\modules\antagonists\darkspawn\darkspawn_abilities\silver_tongue.dm"
 #include "massmeta\code\modules\antagonists\darkspawn\darkspawn_abilities\simulacrum.dm"
