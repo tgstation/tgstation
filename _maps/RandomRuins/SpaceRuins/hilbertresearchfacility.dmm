@@ -1067,7 +1067,7 @@
 	},
 /obj/structure/sign/departments/cargo/directional/north,
 /obj/machinery/button/tram{
-	id = 12;
+	id = 2;
 	pixel_y = 9;
 	lift_id = "tram_hilbert"
 	},
@@ -1384,8 +1384,7 @@
 "Fo" = (
 /obj/machinery/button/tram{
 	pixel_y = 9;
-	lift_id = "tram_hilbert";
-	id = 11
+	lift_id = "tram_hilbert"
 	},
 /obj/structure/table/reinforced/rglass,
 /obj/effect/turf_decal/stripes/red/line{
@@ -1435,7 +1434,7 @@
 	},
 /obj/structure/table/reinforced/rglass,
 /obj/machinery/button/tram{
-	id = 13;
+	id = 3;
 	pixel_y = 9;
 	lift_id = "tram_hilbert"
 	},

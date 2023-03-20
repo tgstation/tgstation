@@ -22,17 +22,17 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 
 /obj/effect/landmark/tram/tramstation/west
 	name = "West Wing"
-	platform_code = 1
+	platform_code = TRAMSTATION_WEST
 	tgui_icons = list("Arrivals" = "plane-arrival", "Command" = "bullhorn", "Security" = "gavel")
 
 /obj/effect/landmark/tram/tramstation/central
 	name = "Central Wing"
-	platform_code = 2
+	platform_code = TRAMSTATION_CENTRAL
 	tgui_icons = list("Service" = "cocktail", "Medical" = "plus", "Engineering" = "wrench")
 
 /obj/effect/landmark/tram/tramstation/east
 	name = "East Wing"
-	platform_code = 3
+	platform_code = TRAMSTATION_EAST
 	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
 
 /**

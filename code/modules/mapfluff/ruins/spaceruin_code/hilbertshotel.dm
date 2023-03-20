@@ -503,19 +503,19 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/effect/landmark/tram/hilbert/left
 	name = "Port"
 	specific_lift_id = HILBERT_TRAM
-	platform_code = 11
+	platform_code = HILBERT_PORT
 	tgui_icons = list("Reception" = "briefcase", "Botany" = "leaf", "Chemistry" = "flask")
 
 /obj/effect/landmark/tram/hilbert/middle
 	name = "Central"
 	specific_lift_id = HILBERT_TRAM
-	platform_code = 12
+	platform_code = HILBERT_CENTRAL
 	tgui_icons = list("Processing" = "cogs", "Xenobiology" = "paw")
 
 /obj/effect/landmark/tram/hilbert/right
 	name = "Starboard"
 	specific_lift_id = HILBERT_TRAM
-	platform_code = 13
+	platform_code = HILBERT_STARBOARD
 	tgui_icons = list("Ordnance" = "bullseye", "Office" = "user", "Dormitories" = "bed")
 
 /obj/item/keycard/hilbert
