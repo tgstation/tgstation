@@ -1,0 +1,4 @@
+author: "atosti"
+delete-after: True
+changes:
+  - bugfix: "Organ harvesters now open and abort harvesting when losing power"

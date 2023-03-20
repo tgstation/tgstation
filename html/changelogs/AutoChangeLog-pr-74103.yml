@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes:
+  - bugfix: "Holosigns, like the atmos holofan, can no longer be frozen by low temperature water vapour."
