@@ -1,6 +1,6 @@
 ///global lists of all pirate gangs that can show up today. they will be taken out of the global lists as spawned so dupes cannot spawn.
-GLOBAL_LIST_INIT(light_pirate_gangs, init_pirate_gangs(FALSE))
-GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(TRUE))
+GLOBAL_LIST_INIT(light_pirate_gangs, init_pirate_gangs(is_heavy = FALSE))
+GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 ///initializes the pirate gangs glob list, adding all subtypes that can roll today.
 /proc/init_pirate_gangs(is_heavy)

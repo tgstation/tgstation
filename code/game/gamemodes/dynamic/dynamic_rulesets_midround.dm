@@ -811,7 +811,7 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/pirates/execute()
-	send_pirate_threat(null, FALSE)
+	send_pirate_threat(GLOB.light_pirate_gangs)
 	return ..()
 
 /// Dangerous Space Pirates ruleset
@@ -833,7 +833,7 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/dangerous_pirates/execute()
-	send_pirate_threat(null, TRUE)
+	send_pirate_threat(GLOB.heavy_pirate_gangs)
 	return ..()
 
 /// Obsessed ruleset
