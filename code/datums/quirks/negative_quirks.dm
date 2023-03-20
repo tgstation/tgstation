@@ -56,6 +56,7 @@
 	desc = "Your body can't produce enough blood to sustain itself."
 	icon = "tint"
 	value = -8
+	mob_trait = TRAIT_BLOOD_DEFICIENCY
 	gain_text = span_danger("You feel your vigor slowly fading away.")
 	lose_text = span_notice("You feel vigorous again.")
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."

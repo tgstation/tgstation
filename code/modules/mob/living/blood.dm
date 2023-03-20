@@ -33,8 +33,8 @@
 		blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * delta_time), BLOOD_VOLUME_NORMAL)
 		
 	// we call lose_blood() here rather than quirk/process() to make sure that the blood loss happens in sync with life()
-	var/datum/quirk/blooddeficiency/blooddeficiency = get_quirk(/datum/quirk/blooddeficiency)
-	if(!isnull(blooddeficiency))
+	if(HAS_TRAIT(src, TRAIT_BLOOD_DEFICIENCY))
+		var/datum/quirk/blooddeficiency/blooddeficiency = get_quirk(/datum/quirk/blooddeficiency)
 		blooddeficiency.lose_blood(delta_time)
 
 	//Effects of bloodloss
