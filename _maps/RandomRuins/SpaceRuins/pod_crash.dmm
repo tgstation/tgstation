@@ -87,7 +87,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "A" = (
-/obj/structure/girder,
+/obj/structure/girder/displaced,
 /turf/open/space/basic,
 /area/ruin/space)
 "C" = (
