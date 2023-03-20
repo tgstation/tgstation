@@ -1,0 +1,600 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/space/basic,
+/area)
+"b" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/computer/old{
+	dir = 8
+	},
+/turf/open/floor/iron/checker/airless,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"c" = (
+/turf/closed/mineral,
+/turf/closed/mineral,
+/area/ruin)
+"d" = (
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"e" = (
+/turf/closed/mineral,
+/area/ruin)
+"f" = (
+/obj/item/clothing/suit/space/eva{
+	pixel_y = 8;
+	pixel_x = -7
+	},
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"g" = (
+/obj/machinery/light/small/broken/directional/east,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"h" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"i" = (
+/turf/closed/mineral,
+/turf/template_noop,
+/area/ruin)
+"j" = (
+/obj/effect/decal/cleanable/shreds,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"k" = (
+/obj/structure/table,
+/obj/item/stamp/mime,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"l" = (
+/obj/structure/door_assembly,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"m" = (
+/obj/item/paper{
+	name = "A MESSAGE TO THE CLOWNS"
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"n" = (
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 4
+	},
+/obj/item/ammo_casing/energy/c3dbullet{
+	pixel_y = 10;
+	pixel_x = 115;
+	dir = 9
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"o" = (
+/obj/machinery/computer/old{
+	dir = 4
+	},
+/obj/machinery/light/broken/directional/west,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"p" = (
+/obj/machinery/light/broken/directional/north,
+/obj/item/ammo_casing/energy/c3dbullet,
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"q" = (
+/obj/item/grown/bananapeel/bombanana,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"r" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"t" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/airless,
+/area/ruin)
+"u" = (
+/obj/item/ammo_casing/energy/c3dbullet{
+	dir = 5;
+	pixel_x = 59;
+	pixel_y = 6
+	},
+/obj/item/clothing/mask/gas/clown_hat{
+	pixel_y = 39
+	},
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"v" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plating/airless,
+/area/ruin)
+"w" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"x" = (
+/obj/item/grown/bananapeel/bombanana,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"y" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/obj/item/ammo_casing/energy/c3dbullet,
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/plating/airless,
+/area/ruin)
+"z" = (
+/obj/structure/door_assembly/door_assembly_ext,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"A" = (
+/obj/structure/table,
+/obj/item/clothing/mask/gas/mime,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"B" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/item/ammo_casing/energy/c3dbullet,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/airless,
+/area/ruin)
+"C" = (
+/obj/structure/table,
+/turf/open/floor/iron/checker/airless,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"E" = (
+/turf/open/floor/plating/airless,
+/area/ruin)
+"F" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"H" = (
+/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced/damaged,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/template_noop,
+/area/ruin)
+"J" = (
+/obj/structure/door_assembly/door_assembly_grunge,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"K" = (
+/obj/machinery/door/airlock/external/ruin,
+/turf/open/floor/plating/airless,
+/area/ruin)
+"L" = (
+/obj/machinery/computer/old{
+	dir = 8
+	},
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"M" = (
+/obj/machinery/light/broken/directional/north,
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron/checker/airless,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"N" = (
+/obj/structure/bed{
+	pixel_y = 12
+	},
+/obj/item/bedsheet/mime{
+	pixel_y = 12
+	},
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"O" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"Q" = (
+/obj/machinery/computer/old,
+/obj/machinery/light/broken/directional/north,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"R" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/tank_dispenser,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"S" = (
+/obj/effect/mob_spawn/corpse/human/clown,
+/turf/open/floor/plating/airless,
+/area/ruin)
+"T" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"U" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"V" = (
+/obj/machinery/light/small/broken/directional/north,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"W" = (
+/obj/machinery/door/airlock/glass,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plating/airless,
+/area/ruin)
+"X" = (
+/obj/item/ammo_casing/energy/c3dbullet,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/item/gps/spaceruin{
+	gpstag = "FUCK YOU"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin)
+"Y" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"Z" = (
+/turf/open/floor/iron/checker/airless,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+i
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+i
+a
+a
+a
+a
+a
+a
+i
+i
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+i
+c
+c
+c
+c
+c
+c
+c
+c
+i
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+e
+i
+e
+e
+e
+e
+e
+e
+T
+d
+i
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+e
+i
+C
+k
+e
+e
+A
+o
+e
+Q
+d
+i
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+e
+i
+M
+Y
+h
+l
+r
+n
+l
+S
+h
+H
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+e
+i
+Z
+m
+x
+v
+y
+u
+W
+E
+h
+i
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+e
+i
+b
+L
+e
+e
+V
+O
+e
+e
+w
+e
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+e
+c
+e
+e
+e
+J
+X
+e
+N
+d
+e
+e
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+c
+e
+e
+R
+h
+d
+e
+N
+g
+i
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+i
+c
+e
+p
+t
+q
+U
+e
+e
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+e
+i
+e
+j
+t
+f
+d
+i
+i
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+e
+i
+c
+c
+e
+z
+B
+i
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+i
+e
+a
+e
+d
+F
+e
+a
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+e
+K
+z
+e
+a
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
