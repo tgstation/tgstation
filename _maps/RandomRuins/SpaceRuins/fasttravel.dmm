@@ -21,6 +21,10 @@
 	},
 /turf/open/floor/engine/airless,
 /area/ruin/space/massdriverhub)
+"o" = (
+/obj/item/gps/spaceruin,
+/turf/open/floor/iron/airless,
+/area/ruin/space/massdriverhub)
 "p" = (
 /obj/machinery/mass_driver{
 	id = "ft-2";
@@ -108,7 +112,7 @@ a
 D
 d
 d
-t
+o
 W
 a
 "}
