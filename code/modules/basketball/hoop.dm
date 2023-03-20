@@ -123,19 +123,21 @@
 	. = ..()
 	if(.)
 		return
-	if(baller.pulling && isliving(baller.pulling))
-		var/mob/living/loser = baller.pulling
-		if(baller.grab_state < GRAB_AGGRESSIVE)
-			to_chat(baller, span_warning("You need a better grip to do that!"))
-			return
-		loser.forceMove(loc)
-		loser.Paralyze(100)
-		visible_message(span_danger("[baller] dunks [loser] into \the [src]!"))
-		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
-		baller.adjustStaminaLoss(STAMINA_COST_DUNKING_MOB)
-		baller.stop_pulling()
-	else
-		..()
+
+	if(!(baller.pulling && isliving(baller.pulling)))
+		return ..()
+
+	var/mob/living/loser = baller.pulling
+	if(baller.grab_state < GRAB_AGGRESSIVE)
+		to_chat(baller, span_warning("You need a better grip to do that!"))
+		return
+	loser.forceMove(loc)
+	loser.Paralyze(100)
+	visible_message(span_danger("[baller] dunks [loser] into \the [src]!"))
+	playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
+	baller.adjustStaminaLoss(STAMINA_COST_DUNKING_MOB)
+	baller.stop_pulling()
+
 
 /obj/structure/hoop/CtrlClick(mob/living/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|NEED_HANDS))
@@ -149,32 +151,32 @@
 	return ..()
 
 /obj/structure/hoop/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if(isitem(AM) && !istype(AM, /obj/projectile))
-		var/distance = clamp(throwingdatum.dist_travelled + 1, 1, throw_range_success.len)
-		var/score_chance = throw_range_success[distance]
-		var/obj/structure/hoop/backboard = throwingdatum.initial_target?.resolve()
-		var/click_on_hoop = TRUE
-		var/mob/living/thrower = throwingdatum.thrower
+	if(!isitem(AM))
+		return ..()
 
-		// aim penalty for not clicking directly on the hoop when shooting
-		if(!istype(backboard) || backboard != src)
-			click_on_hoop = FALSE
-			score_chance *= 0.5
+	var/distance = clamp(throwingdatum.dist_travelled + 1, 1, throw_range_success.len)
+	var/score_chance = throw_range_success[distance]
+	var/obj/structure/hoop/backboard = throwingdatum.initial_target?.resolve()
+	var/click_on_hoop = TRUE
+	var/mob/living/thrower = throwingdatum.thrower
 
-		// aim penalty for spinning while shooting
-		if(istype(thrower) && thrower.flags_1 & IS_SPINNING_1)
-			score_chance *= 0.5
+	// aim penalty for not clicking directly on the hoop when shooting
+	if(!istype(backboard) || backboard != src)
+		click_on_hoop = FALSE
+		score_chance *= 0.5
 
-		if(prob(score_chance))
-			AM.forceMove(get_turf(src))
-			// is it a 3 pointer shot
-			var/points = (distance > 2) ? 3 : 2
-			score(AM, thrower, points)
-			visible_message(span_warning("[click_on_hoop ? "Swish!" : ""] [AM] lands in [src]."))
-		else
-			visible_message(span_danger("[AM] bounces off of [src]'s [click_on_hoop ? "rim" : "backboard"]!"))
+	// aim penalty for spinning while shooting
+	if(istype(thrower) && thrower.flags_1 & IS_SPINNING_1)
+		score_chance *= 0.5
 
-	return ..()
+	if(prob(score_chance))
+		AM.forceMove(get_turf(src))
+		// is it a 3 pointer shot
+		var/points = (distance > 2) ? 3 : 2
+		score(AM, thrower, points)
+		visible_message(span_warning("[click_on_hoop ? "Swish!" : ""] [AM] lands in [src]."))
+	else
+		visible_message(span_danger("[AM] bounces off of [src]'s [click_on_hoop ? "rim" : "backboard"]!"))
 
 // Special hoops for the minigame
 /obj/structure/hoop/minigame
