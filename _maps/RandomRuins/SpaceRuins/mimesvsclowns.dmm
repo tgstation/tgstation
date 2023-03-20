@@ -29,6 +29,14 @@
 /area/ruin)
 "g" = (
 /obj/machinery/light/small/broken/directional/east,
+/obj/structure/closet,
+/obj/item/clothing/mask/gas/mime,
+/obj/item/clothing/mask/gas/mime,
+/obj/item/clothing/under/rank/civilian/mime,
+/obj/item/clothing/under/rank/civilian/mime,
+/obj/item/clothing/head/frenchberet,
+/obj/item/clothing/head/frenchberet,
+/obj/item/storage/backpack/mime,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "h" = (
@@ -47,6 +55,10 @@
 "k" = (
 /obj/structure/table,
 /obj/item/stamp/mime,
+/obj/item/toy/figure/mime{
+	pixel_y = 10;
+	pixel_x = 6
+	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "l" = (
@@ -87,10 +99,6 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
-"q" = (
-/obj/item/grown/bananapeel/bombanana,
-/turf/open/floor/iron/checker/airless,
-/area/ruin)
 "r" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/open/floor/iron/checker/airless,
@@ -116,12 +124,12 @@
 /turf/open/floor/plating/airless,
 /area/ruin)
 "w" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/grunge,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "x" = (
-/obj/item/grown/bananapeel/bombanana,
 /obj/effect/decal/cleanable/blood/tracks,
+/obj/item/grown/bananapeel,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "y" = (
@@ -136,7 +144,7 @@
 /area/ruin)
 "A" = (
 /obj/structure/table,
-/obj/item/clothing/mask/gas/mime,
+/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "B" = (
@@ -149,7 +157,25 @@
 /area/ruin)
 "C" = (
 /obj/structure/table,
+/obj/item/seeds/banana/mime{
+	pixel_x = 46;
+	pixel_y = -27
+	},
+/obj/item/seeds/banana/mime{
+	pixel_x = 7;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/checker/airless,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"D" = (
+/obj/structure/bed{
+	pixel_y = 12
+	},
+/obj/item/bedsheet/mime{
+	pixel_y = 12
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "E" = (
@@ -162,11 +188,18 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
+"G" = (
+/obj/structure/sign/poster/contraband,
+/turf/closed/wall,
+/area/ruin)
 "H" = (
 /obj/structure/grille,
 /obj/effect/spawner/structure/window/reinforced/damaged,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /turf/template_noop,
+/area/ruin)
+"I" = (
+/turf/closed/wall,
 /area/ruin)
 "J" = (
 /obj/structure/door_assembly/door_assembly_grunge,
@@ -205,6 +238,10 @@
 	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
+"P" = (
+/obj/item/grown/bananapeel,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
 "Q" = (
 /obj/machinery/computer/old,
 /obj/machinery/light/broken/directional/north,
@@ -217,6 +254,11 @@
 /area/ruin)
 "S" = (
 /obj/effect/mob_spawn/corpse/human/clown,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/item/food/burger/mime,
+/obj/item/food/burger/mime,
+/obj/item/food/pie/mimetart,
+/obj/item/food/pie/mimetart,
 /turf/open/floor/plating/airless,
 /area/ruin)
 "T" = (
@@ -242,9 +284,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
-/obj/item/gps/spaceruin{
-	gpstag = "FUCK YOU"
-	},
+/obj/item/gps/spaceruin,
 /turf/open/floor/plating/airless,
 /area/ruin)
 "Y" = (
@@ -343,13 +383,13 @@ a
 a
 a
 e
-i
+I
+I
 e
 e
-e
-e
-e
-e
+I
+I
+I
 T
 d
 i
@@ -365,11 +405,11 @@ e
 i
 C
 k
-e
-e
+I
+I
 A
 o
-e
+G
 Q
 d
 i
@@ -389,7 +429,7 @@ h
 l
 r
 n
-l
+I
 S
 h
 H
@@ -425,12 +465,12 @@ e
 i
 b
 L
-e
-e
+I
+G
 V
 O
-e
-e
+I
+I
 w
 e
 a
@@ -443,13 +483,13 @@ a
 a
 a
 e
-c
-e
-e
-e
+I
+I
+I
+I
 J
 X
-e
+I
 N
 d
 e
@@ -465,12 +505,12 @@ a
 a
 c
 e
-e
+I
 R
 h
-d
-e
-N
+P
+G
+D
 g
 i
 a
@@ -485,10 +525,10 @@ a
 a
 i
 c
-e
+I
 p
 t
-q
+d
 U
 e
 e
@@ -505,7 +545,7 @@ a
 a
 e
 i
-e
+G
 j
 t
 f
@@ -525,7 +565,7 @@ a
 a
 e
 i
-c
+I
 c
 e
 z
