@@ -468,7 +468,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
 
 	// How far away are we? negative if already passed.
-	var/approach_distance = tram_velocity_sign * (signal_pos - (tram_pos + 5))
+	var/approach_distance = tram_velocity_sign * (signal_pos - (tram_pos + (XING_DEFAULT_TRAM_LENGTH * 0.5)))
 
 	// Check for stopped state.
 	// Will kill the process since tram starting up will restart process.
