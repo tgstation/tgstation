@@ -1,0 +1,4 @@
+author: "OneAsianTortoise"
+delete-after: True
+changes:
+  - qol: "adds service radio to jani/curator/chaplain/lawyer vendor"

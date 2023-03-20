@@ -1,4 +1,0 @@
-author: "atosti"
-delete-after: True
-changes:
-  - bugfix: "Material tile floors now make noise when walked on by bare/claw/heavy feet"

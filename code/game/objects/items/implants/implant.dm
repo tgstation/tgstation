@@ -37,10 +37,10 @@
 	if(isslime(target))
 		return TRUE
 
-	if((target.mob_biotypes & (MOB_ROBOTIC|MOB_MINERAL|MOB_SPIRIT)))
-		return FALSE
+	if(!isanimal_or_basicmob(target))
+		return TRUE
 
-	return TRUE
+	return !(target.mob_biotypes & (MOB_ROBOTIC|MOB_MINERAL|MOB_SPIRIT))
 
 /**
  * What does the implant do upon injection?

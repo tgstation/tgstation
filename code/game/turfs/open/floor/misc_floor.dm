@@ -322,3 +322,13 @@
 
 /turf/open/floor/cult/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/// TGMC EMBLEM ///
+
+/turf/open/floor/iron/tgmcemblem
+	name = "TGMC Emblem"
+	desc = "The symbol of the Terran Goverment."
+	icon_state = "tgmc_emblem"
+
+/turf/open/floor/iron/tgmcemblem/center
+	icon_state = "tgmc_center"
