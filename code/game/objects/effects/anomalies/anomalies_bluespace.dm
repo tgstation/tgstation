@@ -88,9 +88,9 @@
 		var/mob/living/carbon/carbon = bumpee
 		carbon.reagents?.add_reagent(/datum/reagent/bluespace, 20)
 
-	if(isliving(bumpee))
-		var/mob/living/living = bumpee
-		living.apply_status_effect(/datum/status_effect/teleport_madness)
-	else
-		..()
+	if(!isliving(bumpee))
+		return ..()
+
+	var/mob/living/living = bumpee
+	living.apply_status_effect(/datum/status_effect/teleport_madness)
 

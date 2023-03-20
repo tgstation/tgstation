@@ -269,11 +269,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/misc/anomaly_research)
-"lp" = (
-/obj/effect/turf_decal/trimline/purple/line,
-/obj/item/bag_of_holding_inert,
-/turf/open/floor/iron/white,
-/area/misc/anomaly_research)
 "lL" = (
 /obj/machinery/research/anomaly_refinery,
 /obj/effect/turf_decal/stripes/white/line,
@@ -345,9 +340,6 @@
 /obj/item/clothing/glasses/science,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
-"no" = (
-/turf/closed/mineral/snowmountain/cavern,
-/area/space)
 "nA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -426,11 +418,6 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/raw_anomaly_core/random,
-/obj/item/raw_anomaly_core/random{
-	pixel_x = -5;
-	pixel_y = 7
-	},
 /obj/item/raw_anomaly_core/random{
 	pixel_x = -7
 	},
@@ -1123,15 +1110,8 @@
 /area/misc/anomaly_research)
 "SQ" = (
 /obj/structure/table/reinforced,
-/obj/item/raw_anomaly_core/random,
-/obj/item/raw_anomaly_core/random{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/raw_anomaly_core/random{
-	pixel_x = -7
-	},
 /obj/effect/turf_decal/stripes/white/line,
+/obj/item/bag_of_holding_inert,
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
 "SS" = (
@@ -1627,7 +1607,7 @@ Ya
 RT
 "}
 (11,1,1) = {"
-no
+Ya
 Ya
 Ya
 xE
@@ -2522,7 +2502,7 @@ ip
 ii
 Fg
 Fg
-lp
+ZQ
 YA
 AV
 Qz

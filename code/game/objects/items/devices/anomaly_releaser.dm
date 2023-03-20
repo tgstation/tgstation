@@ -22,21 +22,25 @@
 /obj/item/anomaly_releaser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 
-	if(!used && proximity_flag && istype(target, /obj/item/assembly/signaler/anomaly))
-		if(do_after(user, 3 SECONDS, target))
-			var/obj/item/assembly/signaler/anomaly/core = target
+	if(used || !proximity_flag || !istype(target, /obj/item/assembly/signaler/anomaly))
+		return
 
-			if(!core.anomaly_type)
-				return
+	if(!do_after(user, 3 SECONDS, target))
+		return
 
-			var/obj/effect/anomaly/anomaly = new core.anomaly_type(get_turf(core))
-			anomaly.stabilize()
+	var/obj/item/assembly/signaler/anomaly/core = target
 
-			if(infinite)
-				return
+	if(!core.anomaly_type)
+		return
 
-			icon_state = used_icon_state
-			used = TRUE
-			name = "used " + name
+	var/obj/effect/anomaly/anomaly = new core.anomaly_type(get_turf(core))
+	anomaly.stabilize()
 
-			qdel(core)
+	if(infinite)
+		return
+
+	icon_state = used_icon_state
+	used = TRUE
+	name = "used " + name
+
+	qdel(core)

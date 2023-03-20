@@ -20,6 +20,7 @@
 		/obj/effect/anomaly/bioscrambler
 	)
 
+	///Do we anchor the anomaly? Set to true if you don't want anomalies drifting away (like if theyre in space or something)
 	var/anchor_anomaly = FALSE
 
 /obj/effect/spawner/random/environmentally_safe_anomaly/make_item(spawn_loc, type_path_to_make)

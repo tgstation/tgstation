@@ -71,5 +71,5 @@
 		return
 
 	var/turf/turf = get_turf(src)
-	if(!isspaceturf(turf))
+	if(!isgroundlessturf(turf))
 		turf.TerraformTurf(/turf/open/lava/smooth/weak, flags = CHANGETURF_INHERIT_AIR)
