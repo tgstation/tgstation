@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	///the id of the tram we're linked to.
 	var/specific_lift_id = MAIN_STATION_TRAM
 	/// The ID of that particular destination.
-	var/destination_id
+	var/platform_code = null
 	/// Icons for the tgui console to list out for what is at this location
 	var/list/tgui_icons = list()
 
@@ -20,19 +20,19 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	return ..()
 
 
-/obj/effect/landmark/tram/left_part
+/obj/effect/landmark/tram/tramstation/west
 	name = "West Wing"
-	destination_id = "left_part"
+	platform_code = TRAMSTATION_WEST
 	tgui_icons = list("Arrivals" = "plane-arrival", "Command" = "bullhorn", "Security" = "gavel")
 
-/obj/effect/landmark/tram/middle_part
+/obj/effect/landmark/tram/tramstation/central
 	name = "Central Wing"
-	destination_id = "middle_part"
+	platform_code = TRAMSTATION_CENTRAL
 	tgui_icons = list("Service" = "cocktail", "Medical" = "plus", "Engineering" = "wrench")
 
-/obj/effect/landmark/tram/right_part
+/obj/effect/landmark/tram/tramstation/east
 	name = "East Wing"
-	destination_id = "right_part"
+	platform_code = TRAMSTATION_EAST
 	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
 
 /**
