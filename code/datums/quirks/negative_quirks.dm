@@ -1153,6 +1153,7 @@
 	desc = "The station's just full of free stuff!  Nobody would notice if you just... took it, right?"
 	mob_trait = TRAIT_KLEPTOMANIAC
 	value = -2
+	icon = "cloud-showers-heavy"
 
 /datum/quirk/kleptomaniac/add()
 	var/datum/brain_trauma/mild/kleptomania/T = new()
