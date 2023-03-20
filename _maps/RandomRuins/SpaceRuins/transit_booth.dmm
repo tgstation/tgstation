@@ -1,0 +1,657 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/space/basic,
+/area/template_noop)
+"b" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"c" = (
+/obj/machinery/light/small/directional/north,
+/obj/structure/sign/warning/vacuum/external/directional/north,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"d" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"e" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"f" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/mass_driver{
+	id = "south"
+	},
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	pixel_y = -5;
+	pixel_x = 25;
+	id = "south";
+	time = 0
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"g" = (
+/obj/machinery/door/airlock/external{
+	name = "Transit Booth Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"h" = (
+/obj/effect/turf_decal/stripes/red/line,
+/obj/machinery/door/window/right/directional/west{
+	name = "Eastbound"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "transitbooth"
+	})
+"i" = (
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"j" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/ruin/space/has_grav)
+"k" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"l" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"n" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/obj/structure/sign/poster/official/cohiba_robusto_ad{
+	pixel_y = 35
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"o" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"p" = (
+/obj/machinery/door/airlock/external{
+	name = "Transit Booth Airlock"
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"q" = (
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"s" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 4
+	},
+/obj/item/reagent_containers/cup/glass/bottle/maltliquor{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/cup/glass/bottle/grenadine{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/glass/bottle/grenadine{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"t" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/obj/structure/rack,
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/cup/glass/bottle/cognac{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"u" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"v" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav)
+"w" = (
+/obj/machinery/door/airlock/external{
+	name = "Transit Booth Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"x" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 9
+	},
+/obj/structure/sign/calendar/directional/north,
+/obj/effect/turf_decal/siding/dark/corner,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"y" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 6
+	},
+/obj/structure/sign/clock/directional/south,
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"z" = (
+/obj/machinery/door/poddoor{
+	id = "east"
+	},
+/obj/effect/turf_decal/loading_area/red{
+	dir = 4
+	},
+/obj/structure/sign/warning/directional/south,
+/obj/structure/table/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"B" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/space/basic,
+/area/ruin/space/has_grav)
+"C" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/ruin/space/has_grav)
+"D" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/mass_driver{
+	dir = 8;
+	id = "west"
+	},
+/obj/machinery/light/small/directional/north,
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	pixel_y = 25;
+	pixel_x = -5;
+	id = "west";
+	time = 0
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"E" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"F" = (
+/obj/structure/window/reinforced{
+	layer = 2.9
+	},
+/obj/structure/rack,
+/obj/item/reagent_containers/cup/glass/bottle/absinthe/premium{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/glass/bottle/tequila{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"G" = (
+/obj/structure/window/reinforced{
+	layer = 2.9
+	},
+/obj/machinery/mass_driver{
+	dir = 1;
+	id = "north"
+	},
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	pixel_y = 5;
+	pixel_x = -25;
+	id = "north";
+	time = 0
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"H" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 4
+	},
+/obj/item/reagent_containers/cup/glass/bottle/goldschlager{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/glass/bottle/curacao{
+	pixel_x = -6
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"I" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 8
+	},
+/obj/item/book/random{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/book/random{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"J" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"K" = (
+/obj/machinery/door/poddoor{
+	id = "south"
+	},
+/obj/effect/turf_decal/loading_area/red,
+/obj/structure/sign/warning/directional/east,
+/obj/structure/table/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"L" = (
+/obj/structure/table,
+/obj/item/storage/fancy/cigarettes/cigars{
+	pixel_y = 11;
+	pixel_x = 3
+	},
+/obj/item/lighter{
+	pixel_x = -8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"M" = (
+/obj/machinery/door/poddoor{
+	id = "north"
+	},
+/obj/effect/turf_decal/loading_area/red{
+	dir = 1
+	},
+/obj/structure/sign/warning/directional/west,
+/obj/structure/table/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"N" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/machinery/door/window/right/directional/south{
+	name = "Northbound"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"O" = (
+/obj/machinery/door/window/left/directional/north{
+	name = "Southbound"
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"P" = (
+/obj/machinery/door/poddoor{
+	id = "west"
+	},
+/obj/effect/turf_decal/loading_area/red{
+	dir = 8
+	},
+/obj/structure/sign/warning/directional/north,
+/obj/structure/table/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"Q" = (
+/obj/structure/rack,
+/obj/item/book/random{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/book/random{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"R" = (
+/obj/machinery/door/airlock/external{
+	name = "Transit Booth Airlock"
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"S" = (
+/obj/machinery/light/small/directional/south,
+/obj/structure/sign/warning/vacuum/external/directional/south,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"T" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav{
+	name = "transitbooth"
+	})
+"U" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"V" = (
+/obj/structure/window/reinforced{
+	layer = 2.9
+	},
+/obj/structure/rack,
+/obj/item/book/random{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/book/random{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"W" = (
+/obj/structure/window/reinforced{
+	dir = 8;
+	layer = 2.9
+	},
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "east"
+	},
+/obj/machinery/light/small/directional/south,
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	pixel_y = -25;
+	pixel_x = 5;
+	id = "east";
+	time = 0
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"X" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/machinery/door/window/right/directional/east{
+	name = "Westbound"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"Y" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/obj/structure/sign/poster/official/high_class_martini{
+	pixel_y = -28
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav)
+"Z" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+
+(1,1,1) = {"
+B
+j
+j
+C
+j
+j
+j
+j
+j
+a
+a
+a
+"}
+(2,1,1) = {"
+j
+a
+v
+w
+v
+a
+v
+P
+l
+l
+a
+a
+"}
+(3,1,1) = {"
+j
+a
+v
+c
+v
+l
+v
+D
+X
+l
+a
+a
+"}
+(4,1,1) = {"
+j
+a
+v
+R
+v
+n
+L
+u
+q
+l
+l
+a
+"}
+(5,1,1) = {"
+j
+a
+v
+x
+o
+b
+b
+b
+E
+O
+l
+j
+"}
+(6,1,1) = {"
+j
+v
+v
+k
+Q
+I
+I
+V
+i
+f
+K
+j
+"}
+(7,1,1) = {"
+j
+M
+G
+k
+t
+s
+H
+F
+i
+v
+v
+j
+"}
+(8,1,1) = {"
+j
+l
+N
+Z
+U
+U
+U
+d
+y
+v
+a
+j
+"}
+(9,1,1) = {"
+a
+l
+l
+q
+e
+J
+Y
+v
+p
+v
+a
+j
+"}
+(10,1,1) = {"
+a
+a
+l
+h
+W
+v
+l
+v
+S
+v
+a
+j
+"}
+(11,1,1) = {"
+a
+a
+l
+l
+z
+T
+a
+v
+g
+v
+a
+j
+"}
+(12,1,1) = {"
+a
+a
+a
+j
+j
+j
+j
+j
+C
+j
+j
+B
+"}
