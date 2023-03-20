@@ -233,7 +233,7 @@
 		. += span_notice("A card reader can be installed to control access.")
 	else
 		. += span_notice("It has a card reader installed.")
-		. += span_notice("swipe your pda to change access levels.")
+		. += span_notice("Swipe your PDA with an ID card to change access levels.")
 
 /obj/machinery/suit_storage_unit/RefreshParts()
 	. = ..()
@@ -551,7 +551,7 @@
 
 /obj/machinery/suit_storage_unit/multitool_act(mob/living/user, obj/item/tool)
 	if(locked)
-		balloon_alert(user, "unlock it first")
+		balloon_alert(user, "unlock first!")
 		return TRUE
 
 	access_locked = !access_locked
@@ -562,11 +562,11 @@
 	if(panel_open && is_operational && istype(I, /obj/item/stock_parts/card_reader))
 		//you need to unlock to perform the operation else anyone can change access on a locked unit
 		if(locked)
-			balloon_alert(user, "unlock first")
+			balloon_alert(user, "unlock first!")
 			return
 
 		if(card_reader_installed)
-			balloon_alert(user, "already installed")
+			balloon_alert(user, "already installed!")
 			return
 
 		card_reader_installed = TRUE
@@ -580,15 +580,15 @@
 	if(is_operational && istype(I, /obj/item/modular_computer/pda))
 		//you need to unlock to perform the operation else anyone can change access on a locked closet
 		if(locked)
-			balloon_alert(user, "unlock it first")
+			balloon_alert(user, "unlock first!")
 			return TRUE
 
 		if(!card_reader_installed)
-			balloon_alert(user, "requires card reader for task")
+			balloon_alert(user, "needs card reader!")
 			return
 
 		if(access_locked)
-			balloon_alert(user, "access panel locked")
+			balloon_alert(user, "access panel locked!")
 			return TRUE
 
 		//no id card inside the pda to change access. time to bail

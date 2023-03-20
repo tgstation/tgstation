@@ -98,12 +98,12 @@
 	else if(!broken && istype(attacking_item, /obj/item/pen))
 		//you need to unlock to perform the operation else anyone can change name & description on a locked closet
 		if(locked)
-			balloon_alert(user, "unlock it first")
+			balloon_alert(user, "unlock first!")
 			return TRUE
 
 		//you cant rename departmental lockers cause thats vandalism
 		if(access_type != PERSONAL)
-			balloon_alert(user, "not yours to rename")
+			balloon_alert(user, "not yours to rename!")
 			return TRUE
 
 		var/name_set = FALSE
