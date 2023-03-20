@@ -74,7 +74,7 @@
 			if(H.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
 				H.adjust_nutrition(-1.25 * delta_time)
 
-	// we call lose_blood() here rather than quirk/process() to make sure that the blooddeficiency is in sync with life()
+	// we call lose_blood() here rather than quirk/process() to make sure that the blood loss happens in sync with life()
 	var/datum/quirk/blooddeficiency/blooddeficiency = H.get_quirk(/datum/quirk/blooddeficiency)
 	if(!isnull(blooddeficiency))
 		blooddeficiency.lose_blood(delta_time)
