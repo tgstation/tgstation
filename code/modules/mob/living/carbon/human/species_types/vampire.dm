@@ -196,11 +196,11 @@
 	name = "vampire heart"
 	color = "#1C1C1C"
 
-/obj/item/organ/internal/heart/vampire/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/internal/heart/vampire/on_insert(mob/living/carbon/receiver)
 	. = ..()
 	RegisterSignal(receiver, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
-/obj/item/organ/internal/heart/vampire/Remove(mob/living/carbon/heartless, special)
+/obj/item/organ/internal/heart/vampire/on_remove(mob/living/carbon/heartless)
 	. = ..()
 	UnregisterSignal(heartless, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
 
