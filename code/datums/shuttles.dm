@@ -524,6 +524,11 @@
 	name = "NT Construction Vessel"
 	description = "A small cargo vessel with open interiors. Starts with a 25% chance to spawn a functional RIPLEY, and has infinite power."
 
+/datum/map_template/shuttle/whiteship/birdshot
+	suffix = "birdshot"
+	name = "NT Patrol Bee"
+	description = "A small patrol vessel with a central corridor connecting all rooms. Features 2 small cargo bays and a brig. Spawns with an agressive and deadly Gelatinous Cube"
+
 /datum/map_template/shuttle/whiteship/kilo
 	suffix = "kilo"
 	name = "NT Mining Shuttle"
