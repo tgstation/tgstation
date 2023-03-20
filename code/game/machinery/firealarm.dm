@@ -139,20 +139,20 @@
 	if(machine_stat & NOPOWER)
 		return
 
-	if(panel_open && buildstage != 2)
+	if(panel_open)
 		return
 
 	if(obj_flags & EMAGGED)
-		. += mutable_appearance(icon, "fire_emag[panel_open ? "_o" : "_c"]")
-		. += emissive_appearance(icon, "fire_emag_e[panel_open ? "_o" : "_c"]", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "fire_emag")
+		. += emissive_appearance(icon, "fire_emag_e", src, alpha = src.alpha)
 		set_light(l_color = LIGHT_COLOR_BLUE)
 
 	else if(!(my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
 		if(my_area?.fire_detect) //If this is false, someone disabled it. Leave the light missing, a good hint to anyone paying attention.
 			if(is_station_level(z))
 				var/current_level = SSsecurity_level.get_current_level_as_number()
-				. += mutable_appearance(icon, "fire_[current_level][panel_open ? "_o" : "_c"]")
-				. += emissive_appearance(icon, "fire_level_e[panel_open ? "_o" : "_c"]", src, alpha = src.alpha)
+				. += mutable_appearance(icon, "fire_[current_level]")
+				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
 				switch(current_level)
 					if(SEC_LEVEL_GREEN)
 						set_light(l_color = LIGHT_COLOR_BLUEGREEN)
@@ -163,21 +163,21 @@
 					if(SEC_LEVEL_DELTA)
 						set_light(l_color = COLOR_VIVID_YELLOW)
 			else
-				. += mutable_appearance(icon, "fire_offstation[panel_open ? "_o" : "_c"]")
-				. += emissive_appearance(icon, "fire_level_e[panel_open ? "_o" : "_c"]", src, alpha = src.alpha)
+				. += mutable_appearance(icon, "fire_offstation")
+				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
 				set_light(l_color = LIGHT_COLOR_FAINT_BLUE)
 		else
-			. += mutable_appearance(icon, "fire_disabled[panel_open ? "_o" : "_c"]")
-			. += emissive_appearance(icon, "fire_level_e[panel_open ? "_o" : "_c"]", src, alpha = src.alpha)
+			. += mutable_appearance(icon, "fire_disabled")
+			. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
 			set_light(l_color = COLOR_WHITE)
 
 	else if(my_area?.fire_detect && my_area?.fire)
-		. += mutable_appearance(icon, "fire_alerting[panel_open ? "_o" : "_c"]")
-		. += emissive_appearance(icon, "fire_alerting_e[panel_open ? "_o" : "_c"]", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "fire_alerting")
+		. += emissive_appearance(icon, "fire_alerting_e", src, alpha = src.alpha)
 		set_light(l_color = LIGHT_COLOR_INTENSE_RED)
 	else
-		. += mutable_appearance(icon, "fire_alerting[panel_open ? "_o" : "_c"]")
-		. += emissive_appearance(icon, "fire_alerting_e[panel_open ? "_o" : "_c"]", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "fire_alerting")
+		. += emissive_appearance(icon, "fire_alerting_e", src, alpha = src.alpha)
 		set_light(l_color = LIGHT_COLOR_INTENSE_RED)
 
 /obj/machinery/firealarm/emp_act(severity)
