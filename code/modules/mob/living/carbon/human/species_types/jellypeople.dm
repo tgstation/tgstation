@@ -71,7 +71,7 @@
 	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
 			H.blood_volume += JELLY_REGEN_RATE * delta_time
-			if(H.blood_volume >= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
+			if(H.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
 				H.adjust_nutrition(-1.25 * delta_time)
 
 	// we call lose_blood() here rather than quirk/process() to make sure that the blooddeficiency is in sync with life()
@@ -235,7 +235,7 @@
 
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
 		H.blood_volume += 1.5 * delta_time
-		if(H.blood_volume >= BLOOD_VOLUME_LOSE_NUTRITION)
+		if(H.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION)
 			H.adjust_nutrition(-1.25 * delta_time)
 
 	..()
