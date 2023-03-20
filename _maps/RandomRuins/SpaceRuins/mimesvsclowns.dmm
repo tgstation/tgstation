@@ -29,7 +29,9 @@
 /area/ruin)
 "g" = (
 /obj/machinery/light/small/broken/directional/east,
-/obj/structure/closet,
+/obj/structure/closet{
+	opened = 1
+	},
 /obj/item/clothing/mask/gas/mime,
 /obj/item/clothing/mask/gas/mime,
 /obj/item/clothing/under/rank/civilian/mime,
@@ -254,7 +256,9 @@
 /area/ruin)
 "S" = (
 /obj/effect/mob_spawn/corpse/human/clown,
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/closet/secure_closet/freezer/fridge/open{
+	opened = 1
+	},
 /obj/item/food/burger/mime,
 /obj/item/food/burger/mime,
 /obj/item/food/pie/mimetart,
