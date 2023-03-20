@@ -91,12 +91,10 @@
 	route = PATH_VOID
 
 /datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	ADD_TRAIT(user, TRAIT_RESISTCOLD, type)
-	ADD_TRAIT(user, TRAIT_NOBREATH, type)
+	user.add_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD), type)
 
 /datum/heretic_knowledge/cold_snap/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	REMOVE_TRAIT(user, TRAIT_RESISTCOLD, type)
-	REMOVE_TRAIT(user, TRAIT_NOBREATH, type)
+	user.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_NOBREATH), type)
 
 /datum/heretic_knowledge/mark/void_mark
 	name = "Mark of Void"
