@@ -2,7 +2,7 @@
 	icon_suffix = "wiznerd"
 
 	maxHealth = 150
-	melee_damage = 7
+	harm_intent_damage = 7
 	obj_damage = 5
 	ai_controller = /datum/ai_controller/chicken/retaliate
 
