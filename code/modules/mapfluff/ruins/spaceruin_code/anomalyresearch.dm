@@ -42,7 +42,7 @@
 	<br> A fucking hallucination anomaly? Ghost anomaly??? Some of these don't make any sense at all. What are they hiding from us???????
 	<br>
 	<br> I took 20 of their anomaly cores, they weren't going to use them anyway. I law 2'd a cyborg to make me a space lab, my perfect empire. The poor borg.
-	<br> I, DR ANNA NOMALLY, WILL REVEAL THE TRUTH!!
+	<br> I, DR ANNA MOLLY, WILL REVEAL THE TRUTH!!
 	"}
 
 /obj/item/paper/fluff/ruins/anomaly_research/stabilizer
