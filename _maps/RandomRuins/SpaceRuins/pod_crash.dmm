@@ -46,9 +46,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/light/small/red/dim/directional/south{
-	dir = 1
-	},
+/obj/machinery/light/small/red/dim/directional/south,
 /turf/open/floor/mineral/titanium/tiled/blue/airless,
 /area/ruin/space)
 "l" = (
@@ -88,6 +86,10 @@
 /obj/item/storage/toolbox/electrical,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
+"A" = (
+/obj/structure/girder,
+/turf/open/space/basic,
+/area/ruin/space)
 "C" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/space)
@@ -98,6 +100,10 @@
 "L" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/closed/wall/mineral/titanium,
+/area/ruin/space)
+"O" = (
+/obj/structure/grille/broken,
+/turf/open/space/basic,
 /area/ruin/space)
 "P" = (
 /obj/machinery/power/shuttle_engine/propulsion/right{
@@ -198,7 +204,7 @@ R
 R
 s
 a
-a
+e
 a
 a
 a
@@ -218,7 +224,7 @@ R
 R
 R
 R
-s
+l
 a
 a
 a
@@ -240,8 +246,8 @@ R
 s
 s
 s
-l
-C
+s
+a
 a
 a
 a
@@ -287,11 +293,11 @@ a
 a
 a
 a
+L
+Y
+S
+P
 a
-a
-a
-a
-s
 s
 s
 a
@@ -306,15 +312,15 @@ a
 a
 a
 a
-e
-a
-L
-Y
-S
-P
 a
 a
-L
+a
+a
+O
+h
+A
+a
+a
 a
 a
 n
@@ -332,9 +338,9 @@ a
 a
 a
 a
-h
-a
-a
+A
+i
+C
 a
 a
 a
@@ -354,9 +360,9 @@ a
 a
 a
 a
-i
-C
 a
+g
+L
 a
 a
 s
@@ -374,10 +380,10 @@ a
 a
 a
 a
-C
+L
 d
-g
-C
+A
+a
 a
 a
 a
@@ -394,9 +400,9 @@ R
 s
 a
 a
-L
+A
 a
-C
+O
 k
 X
 a
@@ -422,7 +428,7 @@ q
 S
 p
 a
-C
+a
 a
 a
 s
