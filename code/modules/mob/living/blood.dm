@@ -31,6 +31,11 @@
 			nutrition_ratio *= 1.25
 		adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * delta_time)
 		blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * delta_time), BLOOD_VOLUME_NORMAL)
+		
+		// we call lose_blood() here rather than quirk/process() to make sure that the blooddeficiency is in sync with life()
+		var/datum/quirk/blooddeficiency/blooddeficiency = get_quirk(/datum/quirk/blooddeficiency)
+		if(!isnull(blooddeficiency))
+			blooddeficiency.lose_blood(delta_time)
 
 	//Effects of bloodloss
 	var/word = pick("dizzy","woozy","faint")

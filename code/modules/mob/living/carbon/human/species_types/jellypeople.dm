@@ -2,6 +2,8 @@
 #define JELLY_REGEN_RATE 1.5
 ///The rate at which slimes regenerate their jelly when they completely run out of it and start taking damage, usually after having cannibalized all their limbs already
 #define JELLY_REGEN_RATE_EMPTY 2.5
+///The blood volume at which slimes begin to start losing nutrition -- so that IV drips can work for blood deficient slimes
+#define BLOOD_VOLUME_LOSE_NUTRITION 550
 
 /datum/species/jelly
 	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
@@ -69,7 +71,13 @@
 	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
 			H.blood_volume += JELLY_REGEN_RATE * delta_time
-			H.adjust_nutrition(-1.25 * delta_time)
+			if(H.blood_volume >= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
+				H.adjust_nutrition(-1.25 * delta_time)
+
+	// we call lose_blood() here rather than quirk/process() to make sure that the blooddeficiency is in sync with life()
+	var/datum/quirk/blooddeficiency/blooddeficiency = H.get_quirk(/datum/quirk/blooddeficiency)
+	if(!isnull(blooddeficiency))
+		blooddeficiency.lose_blood(delta_time)
 
 	if(H.blood_volume < BLOOD_VOLUME_OKAY)
 		if(DT_PROB(2.5, delta_time))
@@ -797,3 +805,4 @@
 	
 #undef JELLY_REGEN_RATE
 #undef JELLY_REGEN_RATE_EMPTY
+#undef BLOOD_VOLUME_LOSE_NUTRITION

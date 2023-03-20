@@ -517,6 +517,12 @@
 			return TRUE
 	return FALSE
 
+/mob/living/proc/get_quirk(quirktype)
+	for(var/datum/quirk/quirk in quirks)
+		if(quirk.type == quirktype)
+			return quirk
+	return null
+
 /mob/living/proc/cure_husk(source)
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)
 	if(!HAS_TRAIT(src, TRAIT_HUSK))
