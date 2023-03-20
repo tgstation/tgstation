@@ -357,7 +357,7 @@
 	name = "The Faceoff"
 	description = "What do you get when a meeting of the enemy corporations get crashed?"
 
-/datum/map_template/ruin/space/the_faceoff
+/datum/map_template/ruin/space/massdriverrouter
 	id = "fasttravel"
 	suffix = "fasttravel.dmm"
 	name = "Mass driver Router"
