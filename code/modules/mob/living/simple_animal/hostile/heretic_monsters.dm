@@ -321,17 +321,16 @@
 
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
-		if(HAS_TRAIT(carbon_target, TRAIT_NODISMEMBER))
-			return
-		var/list/parts_to_remove = list()
-		for(var/obj/item/bodypart/bodypart in carbon_target.bodyparts)
-			if(bodypart.body_part != HEAD && bodypart.body_part != CHEST && bodypart.body_part != LEG_LEFT && bodypart.body_part != LEG_RIGHT)
-				if(bodypart.dismemberable)
-					parts_to_remove += bodypart
+		if(!HAS_TRAIT(carbon_target, TRAIT_NODISMEMBER))
+			var/list/parts_to_remove = list()
+			for(var/obj/item/bodypart/bodypart in carbon_target.bodyparts)
+				if(bodypart.body_part != HEAD && bodypart.body_part != CHEST && bodypart.body_part != LEG_LEFT && bodypart.body_part != LEG_RIGHT)
+					if(bodypart.dismemberable)
+						parts_to_remove += bodypart
 
-		if(parts_to_remove.len && prob(10))
-			var/obj/item/bodypart/lost_arm = pick(parts_to_remove)
-			lost_arm.dismember()
+			if(parts_to_remove.len && prob(10))
+				var/obj/item/bodypart/lost_arm = pick(parts_to_remove)
+				lost_arm.dismember()
 
 	return ..()
 
