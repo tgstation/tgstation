@@ -136,7 +136,7 @@
 	if(affected_mob.bodytemperature >= T0C)
 		..()
 		return
-	var/power = (-0.00004 * (affected_mob.bodytemperature ** 2) + 3) * normalise_creation_purity() * HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT) ? 1 : 0.75
+	var/power = (-0.00003 * (affected_mob.bodytemperature ** 2) + 3) * normalise_creation_purity() * HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT) ? 1 : 0.75
 	affected_mob.adjustOxyLoss(-3 * power * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	affected_mob.adjustBruteLoss(-power * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustFireLoss(-power * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
