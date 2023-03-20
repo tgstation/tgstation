@@ -74,4 +74,4 @@
 #define COMSIG_CIRCUIT_COMPONENT_PERFORM_ACTION "circuit_component_perform_action"
 
 ///Called when an Ntnet sender is sending Ntnet data
-#define COMSIG_COMPONENT_NTNET_DATA_SENT "component_ntnet_data_sent"
+#define COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT "!circuit_ntnet_data_sent"

@@ -35,4 +35,4 @@
 /obj/item/circuit_component/ntnet_send/input_received(datum/port/input/port)
 	if(!SSmodular_computers.check_function())
 		return
-	SEND_GLOBAL_SIGNAL(COMSIG_COMPONENT_NTNET_DATA_SENT, src, list("data" = data_package.value, "enc_key" = enc_key.value, "port" = WEAKREF(data_package)))
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT, src, list("data" = data_package.value, "enc_key" = enc_key.value, "port" = WEAKREF(data_package)))

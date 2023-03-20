@@ -25,7 +25,7 @@
 /obj/item/circuit_component/ntnet_receive/populate_ports()
 	data_package = add_output_port("Data Package", PORT_TYPE_LIST(PORT_TYPE_ANY))
 	enc_key = add_input_port("Encryption Key", PORT_TYPE_STRING)
-	RegisterSignal(src, COMSIG_COMPONENT_NTNET_DATA_SENT, PROC_REF(ntnet_receive))
+	RegisterSignal(SSdcs, COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT, PROC_REF(ntnet_receive))
 
 /obj/item/circuit_component/ntnet_receive/pre_input_received(datum/port/input/port)
 	if(port == list_options)

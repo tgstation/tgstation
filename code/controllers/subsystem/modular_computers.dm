@@ -40,9 +40,6 @@ SUBSYSTEM_DEF(modular_computers)
 
 ///Checks whether NTNet is available for a specific function, checking NTNet relays and shutdowns. If none is passed, none is needed.
 /datum/controller/subsystem/modular_computers/proc/check_function()
-	// No relays found. NTNet is down
-	if(!length(GLOB.ntnet_relays))
-		return FALSE
 	// Check all relays. If we have at least one working relay, ntos is up.
 	for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)
 		if(!relays.is_operational)
