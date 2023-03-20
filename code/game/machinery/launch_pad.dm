@@ -505,7 +505,7 @@
 		y_pos.set_value(attached_launchpad.y_offset)
 		return
 
-	if(attached_launchpad.range > x_pos || attached_launchpad.range > y_pos)
+	if(abs(x_pos.value) >= attached_launchpad.range || abs(y_pos.value) >= attached_launchpad.range)
 		why_fail.set_output("Out of range!")
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
