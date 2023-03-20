@@ -594,13 +594,13 @@
 		//no id card inside the pda to change access. time to bail
 		var/obj/item/modular_computer/pda/pda = I
 		if(isnull(pda.computer_id_slot))
-			balloon_alert(user, "no card to modify access")
+			balloon_alert(user, "no card to modify access!")
 			return TRUE
 		var/obj/item/card/id/id = pda.computer_id_slot
 
 		//change the access type
 		var/static/list/choices = list(
-			"Personel" = PERSONAL,
+			"Personal" = PERSONAL,
 			"Departmental" = DEPARTMENTAL,
 			"None" = FREE_ACCESS
 		)

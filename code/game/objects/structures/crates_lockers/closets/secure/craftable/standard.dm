@@ -4,7 +4,7 @@
 
 ///Secure closets that can be hand crafted and have their access requirments modified
 /obj/structure/closet/secure_closet/custom
-	desc = "Secured closed with modifiable access"
+	desc = "Secured closet"
 	req_access = null
 	material_drop = /obj/item/stack/sheet/iron
 	material_drop_amount = 2

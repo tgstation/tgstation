@@ -5,7 +5,7 @@
 ///Secure closets that can be hand crafted and have their access requirments modified
 /obj/structure/closet/secure_closet/freezer/empty/custom
 	name = "Secured Freezer Unit"
-	desc = "Card locked freezer with modifiable access"
+	desc = "Card locked freezer with modifiable access."
 	req_access = null
 	material_drop = /obj/item/stack/sheet/iron
 	material_drop_amount = 2
@@ -25,7 +25,7 @@
 
 /obj/structure/closet/secure_closet/freezer/empty/custom/multitool_act(mob/living/user, obj/item/tool)
 	if(locked)
-		balloon_alert(user, "unlock it first")
+		balloon_alert(user, "unlock it first!")
 		return TRUE
 
 	access_locked = !access_locked
@@ -36,23 +36,23 @@
 	if(istype(attacking_item, /obj/item/modular_computer/pda))
 		//you need to unlock to perform the operation else anyone can change access on a locked closet
 		if(locked)
-			balloon_alert(user, "unlock it first")
+			balloon_alert(user, "unlock first!")
 			return TRUE
 
 		if(access_locked)
-			balloon_alert(user, "access panel locked")
+			balloon_alert(user, "access panel locked!")
 			return TRUE
 
 		//no id card inside the pda to change access. time to bail
 		var/obj/item/modular_computer/pda/pda = attacking_item
 		if(isnull(pda.computer_id_slot))
-			balloon_alert(user, "no card to modify access")
+			balloon_alert(user, "no card to modify access!")
 			return TRUE
 		var/obj/item/card/id/id = pda.computer_id_slot
 
 		//change the access type
 		var/static/list/choices = list(
-			"Personel" = PERSONAL,
+			"Personal" = PERSONAL,
 			"Departmental" = DEPARTMENTAL,
 			"None" = FREE_ACCESS
 		)
@@ -75,12 +75,12 @@
 	else if(istype(attacking_item, /obj/item/pen))
 		//you need to unlock to perform the operation else anyone can change name & description on a locked closet
 		if(locked)
-			balloon_alert(user, "unlock it first")
+			balloon_alert(user, "unlock first!")
 			return TRUE
 
 		//you cant rename departmental lockers cause thats vandalism
 		if(access_type != PERSONAL)
-			balloon_alert(user, "not yours to rename")
+			balloon_alert(user, "not yours to rename!")
 			return TRUE
 
 		var/name_set = FALSE
