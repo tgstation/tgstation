@@ -88,7 +88,7 @@
 		SStgui.update_uis(src)
 		return
 
-	if(default_pry_open(O))
+	if(default_pry_open(O, remain_open = FALSE))
 		return
 
 	if(default_deconstruction_crowbar(O))

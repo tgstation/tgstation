@@ -48,7 +48,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
 		return
 
-	if(default_pry_open(O))
+	if(default_pry_open(O, remain_open = FALSE))
 		return
 
 	if(default_deconstruction_crowbar(O))
