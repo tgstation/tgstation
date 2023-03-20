@@ -32,7 +32,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 
 /obj/item/food/egg/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_FOOD_EATEN, .proc/consumed_egg)
+	RegisterSignal(src, COMSIG_FOOD_EATEN, PROC_REF(consumed_egg))
 
 /obj/item/food/egg/proc/consumed_egg(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
