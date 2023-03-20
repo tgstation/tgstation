@@ -111,11 +111,9 @@
 /area/ruin)
 "xg" = (
 /obj/structure/bed{
-	pixel_y = 12
+	dir = 8
 	},
-/obj/item/bedsheet/mime{
-	pixel_y = 12
-	},
+/obj/item/bedsheet/mime,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "xo" = (
@@ -304,12 +302,8 @@
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "YF" = (
-/obj/structure/bed{
-	pixel_y = 12
-	},
-/obj/item/bedsheet/mime{
-	pixel_y = 12
-	},
+/obj/structure/bed,
+/obj/item/bedsheet/mime,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
