@@ -15,7 +15,6 @@
 		SSmapping.random_room_spawners += src
 
 /obj/effect/spawner/room/Initialize(mapload)
-	SHOULD_NOT_SLEEP(FALSE)
 	if(!length(SSmapping.random_room_templates))
 		message_admins("Room spawner created with no templates available. This shouldn't happen.")
 		return INITIALIZE_HINT_QDEL

@@ -239,6 +239,11 @@
 		mytray.adjustPests(rand(1,2))
 		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 0.1))
 
+
+/datum/reagent/consumable/sugar/feed_interaction(mob/living/simple_animal/chicken/target, volume)
+	.=..()
+	target.adjust_happiness(0.1*volume)
+
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You go into hyperglycaemic shock! Lay off the twinkies!"))
 	M.AdjustSleeping(600)

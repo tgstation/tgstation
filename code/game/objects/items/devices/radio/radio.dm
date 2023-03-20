@@ -91,6 +91,9 @@
 	/// If TRUE, will set the icon in initializations.
 	VAR_PRIVATE/should_update_icon = FALSE
 
+	///Range that they can listen from different than canhear_range
+	var/listening_range
+
 /obj/item/radio/Initialize(mapload)
 	wires = new /datum/wires/radio(src)
 	secure_radio_connections = list()
@@ -348,7 +351,13 @@
 
 /obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
-	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
+	if(radio_freq || !broadcasting)
+		return
+
+	if(!listening_range &&  get_dist(src, speaker) > canhear_range)
+		return
+
+	if(listening_range && get_dist(src, speaker) > listening_range)
 		return
 	var/filtered_mods = list()
 	if (message_mods[MODE_CUSTOM_SAY_EMOTE])

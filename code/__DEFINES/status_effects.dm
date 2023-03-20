@@ -154,3 +154,27 @@
 #define adjust_temp_blindness_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/temporary_blindness, up_to)
 #define set_temp_blindness(duration) set_timed_status_effect(duration, /datum/status_effect/temporary_blindness)
 #define set_temp_blindness_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/temporary_blindness, TRUE)
+
+
+///makes you run foward and bounce of walls
+#define SUGAR_RUSH /datum/status_effect/ranching/sugar_rush
+///the less powerful version of SUGAR_RUSH used by the chicken randomly
+#define HEN_RUSH /datum/status_effect/ranching/hen_rush
+///makes you blue and you leave an ice trail behind you
+#define SNOWY_EGG /datum/status_effect/ranching/snowy
+///lets you hear over the pigeon channel without an egg
+#define PIGEON /datum/status_effect/ranching/pigeon
+///fake death into a full heal
+#define DREAM_STATE /datum/status_effect/ranching/dream_state
+///gives you magic missle spell for the duration
+#define WIZNERD_EGG /datum/status_effect/ranching/wiznerd
+///makes you more resistant for the duration
+#define ARMORED_EGG /datum/status_effect/ranching/sword_chicken
+///gives you a sparkling effect for the duration
+#define GOLD_SPARKLE /datum/status_effect/ranching/gold_egg
+///used by sad clowns to speed towards their target ignoring obstacles
+#define ANGRY_HONK_SPEED /datum/status_effect/ranching/angry_honk
+///gives a petrification spit attack for the duration
+#define PETRIFICATION_SPIT /datum/status_effect/ranching/cockatrice_eaten
+///makes you a mime and gives you the wall ability for the duration
+#define MIME_EGG /datum/status_effect/ranching/mime

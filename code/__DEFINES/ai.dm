@@ -79,6 +79,23 @@
 #define BB_MONKEY_DISPOSING "BB_monkey_disposing"
 #define BB_MONKEY_RECRUIT_COOLDOWN "BB_monkey_recruit_cooldown"
 
+
+#define BB_CHICKEN_AGGRESSIVE "BB_chicken_aggressive"
+#define BB_CHICKEN_RETALIATE "BB_chicken_retaliate"
+#define BB_CHICKEN_SHITLIST "BB_chicken_shitlist"
+#define BB_CHICKEN_RECRUIT_COOLDOWN "BB_chicken_cooldown"
+#define BB_CHICKEN_CURRENT_ATTACK_TARGET "BB_chicken_target"
+#define BB_CHICKEN_ABILITY "BB_chicken_ability"
+#define BB_CHICKEN_PROJECTILE "BB_chicken_projectile"
+#define BB_CHICKEN_COMBAT_ABILITY "BB_chicken_combat_ability"
+#define BB_CHICKEN_ABILITY_COOLDOWN "BB_chicken_ability_cooldown"
+#define BB_CHICKEN_SHOOT_PROB "BB_chicken_shoot_prob"
+#define BB_CHICKEN_HONKS_SORROW "BB_chicken_honks_sorrow"
+#define BB_CHICKEN_SPECALITY_ABILITY "BB_chicken_special_ability"
+#define BB_CHICKEN_CURRENT_LEADER "BB_chicken_leader"
+#define BB_CHICKEN_READY_LAY "BB_chicken_ready_lay"
+#define BB_CHICKEN_ATTEMPT_TRACKING "BB_chicken_attempt_tracking"
+
 ///Haunted item controller defines
 
 ///Chance for haunted item to haunt someone

@@ -334,3 +334,6 @@ Primarily used in reagents/reaction_agents
 			reagent_strings += "[capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
 
 	return reagent_strings.Join(join_text)
+
+/datum/reagent/proc/feed_interaction(mob/living/simple_animal/chicken/target, volume)
+	return
