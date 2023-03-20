@@ -232,6 +232,10 @@
 		. += span_notice("The parts are <b>welded</b> together.")
 	else if(secure && !opened)
 		. += span_notice("Right-click to [locked ? "unlock" : "lock"].")
+	if(electronics)
+		. += span_notice("Its airlock electronics are [EXAMINE_HINT("screwed")] in place.")
+	else
+		. += span_notice("You can install airlock electronics for access control.")
 
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")

@@ -63,7 +63,10 @@
 	reqs = list(
 		/obj/item/stack/sheet/iron = 2,
 		/obj/item/assembly/igniter/condenser = 1,
-		/obj/item/stock_parts/card_reader = 1,
+		/obj/item/electronics/airlock = 1,
+	)
+	parts = list(
+		/obj/item/electronics/airlock = 1,
 	)
 	time = 5 SECONDS
 	category = CAT_EQUIPMENT
@@ -73,7 +76,10 @@
 	result = /obj/structure/closet/secure_closet/custom
 	reqs = list(
 		/obj/item/stack/sheet/iron = 2,
-		/obj/item/stock_parts/card_reader = 1,
+		/obj/item/electronics/airlock = 1,
+	)
+	parts = list(
+		/obj/item/electronics/airlock = 1,
 	)
 	time = 5 SECONDS
 	category = CAT_EQUIPMENT

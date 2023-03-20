@@ -19,13 +19,42 @@
 	/// should we prevent furthur access change
 	var/access_locked = FALSE
 
+	/// is the card reader installed in this machine
+	var/card_reader_installed = FALSE
+
 /obj/structure/closet/secure_closet/freezer/empty/custom/Destroy()
 	. = ..()
 	id_card = null
 
+/obj/structure/closet/secure_closet/freezer/empty/custom/examine(mob/user)
+	. = ..()
+	. += "You can change its name & description with a pen"
+	if(card_reader_installed)
+		. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
+	else
+		. += span_notice("A card reader can be installed for further access control.")
+
+/obj/structure/closet/secure_closet/freezer/empty/custom/CheckParts(list/parts_list)
+	for(var/obj/item/electronics/airlock/access_control in parts_list)
+		electronics = access_control
+		set_access()
+		electronics.moveToNullspace()
+		break
+
+/// copy over access of electronics
+/obj/structure/closet/secure_closet/freezer/empty/custom/proc/set_access()
+	if (electronics.one_access)
+		req_one_access = electronics.accesses
+	else
+		req_access = electronics.accesses
+
 /obj/structure/closet/secure_closet/freezer/empty/custom/multitool_act(mob/living/user, obj/item/tool)
 	if(locked)
 		balloon_alert(user, "unlock it first!")
+		return TRUE
+
+	if(!card_reader_installed)
+		balloon_alert(user, "requires card reader!")
 		return TRUE
 
 	access_locked = !access_locked
@@ -33,43 +62,17 @@
 	return TRUE
 
 /obj/structure/closet/secure_closet/freezer/empty/custom/attackby(obj/item/attacking_item, mob/living/user)
-	if(istype(attacking_item, /obj/item/modular_computer/pda))
-		//you need to unlock to perform the operation else anyone can change access on a locked closet
-		if(locked)
-			balloon_alert(user, "unlock first!")
+	if(!broken && welded && istype(attacking_item, /obj/item/stock_parts/card_reader))
+		//you need to unlock to perform the operation else anyone can change access on a locked unit
+		if(card_reader_installed)
+			balloon_alert(user, "already installed!")
 			return TRUE
 
-		if(access_locked)
-			balloon_alert(user, "access panel locked!")
-			return TRUE
-
-		//no id card inside the pda to change access. time to bail
-		var/obj/item/modular_computer/pda/pda = attacking_item
-		if(isnull(pda.computer_id_slot))
-			balloon_alert(user, "no card to modify access!")
-			return TRUE
-		var/obj/item/card/id/id = pda.computer_id_slot
-
-		//change the access type
-		var/static/list/choices = list(
-			"Personal" = PERSONAL,
-			"Departmental" = DEPARTMENTAL,
-			"None" = FREE_ACCESS
-		)
-		var/choice = tgui_input_list(user, "Set Access Type", "Access Type", choices)
-		if(isnull(choice))
-			return
-		access_type = choices[choice]
-
-		id_card = null
-		switch(access_type)
-			if(PERSONAL) //only the player who swiped their pda has access.
-				id_card = id
-			if(DEPARTMENTAL) //anyone who has the same access permissions as this id has access
-				req_access = id.GetAccess()
-			if(FREE_ACCESS) //free for all
-				req_access = null
-		balloon_alert(user, "access is now [choice]")
+		if(do_after(user, 4 SECONDS))
+			card_reader_installed = TRUE
+			attacking_item.moveToNullspace()
+			qdel(attacking_item)
+			balloon_alert(user, "card reader installed")
 
 		return TRUE
 	else if(istype(attacking_item, /obj/item/pen))
@@ -105,6 +108,63 @@
 			update_appearance(bit_flag)
 
 		return TRUE
+	else if(card_reader_installed)
+		if(attacking_item.tool_behaviour == TOOL_CROWBAR)
+			if(!attacking_item.use_tool(src, user, 4 SECONDS))
+				return TRUE
+
+			new /obj/item/stock_parts/card_reader(drop_location())
+			card_reader_installed = FALSE
+			return TRUE
+
+		if(broken)
+			balloon_alert("its broken!")
+			return TRUE
+		var/obj/item/card/id/id = null
+		if(istype(attacking_item, /obj/item/card/id))
+			id = attacking_item
+		else if(istype(attacking_item, /obj/item/modular_computer/pda))
+			var/obj/item/modular_computer/pda/pda = attacking_item
+			id = pda.computer_id_slot
+		if(isnull(id))
+			return ..()
+		else if(isnull(electronics))
+			balloon_alert("missing electronics!")
+			return TRUE
+
+		//you need to unlock to perform the operation else anyone can change access on a locked closet
+		if(locked)
+			balloon_alert(user, "unlock first!")
+			return TRUE
+
+		if(access_locked)
+			balloon_alert(user, "access panel locked!")
+			return TRUE
+
+		//change the access type
+		var/static/list/choices = list(
+			"Personal" = PERSONAL,
+			"Departmental" = DEPARTMENTAL,
+			"None" = FREE_ACCESS
+		)
+		var/choice = tgui_input_list(user, "Set Access Type", "Access Type", choices)
+		if(isnull(choice))
+			return
+		access_type = choices[choice]
+
+		id_card = null
+		switch(access_type)
+			if(PERSONAL) //only the player who swiped their pda has access.
+				id_card = id
+			if(DEPARTMENTAL) //anyone who has the same access permissions as this id has access
+				electronics.accesses = id.GetAccess()
+				set_access()
+			if(FREE_ACCESS) //free for all
+				electronics.accesses = list()
+				set_access()
+		balloon_alert(user, "access is now [choice]")
+
+		return TRUE
 
 	return ..()
 
@@ -130,11 +190,12 @@
 		return ..()
 
 /obj/structure/closet/secure_closet/freezer/empty/custom/atom_destruction(damage_flag)
-	new /obj/item/stock_parts/card_reader(drop_location())
+	if(card_reader_installed)
+		new /obj/item/stock_parts/card_reader(drop_location())
 	. = ..()
 
 /obj/structure/closet/secure_closet/freezer/empty/custom/deconstruct(disassembled)
-	if (!(flags_1 & NODECONSTRUCT_1))
+	if (!(flags_1 & NODECONSTRUCT_1) && card_reader_installed)
 		new /obj/item/stock_parts/card_reader(drop_location())
 	. = ..()
 
