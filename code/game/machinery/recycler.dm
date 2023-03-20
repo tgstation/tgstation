@@ -123,23 +123,27 @@
 	if(morsel.resistance_flags & INDESTRUCTIBLE)
 		return
 
-	var/list/to_eat = morsel.get_all_contents()
+	var/list/to_eat = (issilicon(morsel) ? list(morsel) : morsel.get_all_contents()) //eating borg contents leads to many bad things
 
 	var/living_detected = FALSE //technically includes silicons as well but eh
 	var/list/nom = list()
 	var/list/crunchy_nom = list() //Mobs have to be handled differently so they get a different list instead of checking them multiple times.
 
-	for(var/i in to_eat)
-		var/atom/movable/AM = i
-		if(isitem(AM))
-			var/obj/item/bodypart/head/as_head = AM
-			var/obj/item/mmi/as_mmi = AM
-			if(istype(AM, /obj/item/organ/internal/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay))
+	for(var/thing in to_eat)
+		var/obj/as_object = thing
+		if(istype(as_object))
+			if(as_object.resistance_flags & INDESTRUCTIBLE)
+				if(!isturf(as_object.loc) && !isliving(as_object.loc))
+					as_object.forceMove(loc) // so you still cant shove it in a locker
+				continue
+			var/obj/item/bodypart/head/as_head = thing
+			var/obj/item/mmi/as_mmi = thing
+			if(istype(thing, /obj/item/organ/internal/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(thing, /obj/item/dullahan_relay))
 				living_detected = TRUE
-			nom += AM
-		else if(isliving(AM))
+			nom += thing
+		else if(isliving(thing))
 			living_detected = TRUE
-			crunchy_nom += AM
+			crunchy_nom += thing
 
 	var/not_eaten = to_eat.len - nom.len - crunchy_nom.len
 	if(living_detected) // First, check if we have any living beings detected.
@@ -160,10 +164,6 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten*5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
 	if(!ismob(morsel))
 		qdel(morsel)
-	else // Lets not qdel a mob, yes?
-		for(var/iterable in morsel.contents)
-			var/atom/movable/content = iterable
-			qdel(content)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
 	var/obj/item/grown/log/L = I
@@ -172,15 +172,13 @@
 		if(L.seed)
 			seed_modifier = round(L.seed.potency / 25)
 		new L.plank_type(loc, 1 + seed_modifier)
-		qdel(I)
 	else
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		var/material_amount = materials.get_item_material_amount(I, BREAKDOWN_FLAGS_RECYCLER)
-		if(!material_amount)
-			return
-		materials.insert_item(I, material_amount, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
-		qdel(I)
-		materials.retrieve_all()
+		if(material_amount)
+			materials.insert_item(I, material_amount, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
+			materials.retrieve_all()
+	qdel(I)
 
 /obj/machinery/recycler/proc/emergency_stop()
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)

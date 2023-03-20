@@ -57,7 +57,7 @@
 						mob_data["module"] = "pAI"
 					else if(iscyborg(L))
 						var/mob/living/silicon/robot/R = L
-						mob_data["module"] = R.model.name
+						mob_data["module"] = (R.model ? R.model.name : "Null Model")
 				else
 					category = "others"
 					mob_data["typepath"] = M.type
