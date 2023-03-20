@@ -22,7 +22,7 @@
 /datum/round_event/pirates/start()
 	send_pirate_threat(gang_list)
 
-/proc/send_pirate_threat(var/list/pirate_selection)
+/proc/send_pirate_threat(list/pirate_selection)
 	var/datum/pirate_gang/chosen_gang = pick_n_take(pirate_selection)
 	///If there was nothing to pull from our requested list, stop here.
 	if(!chosen_gang)
