@@ -118,7 +118,7 @@
 			return TRUE
 
 		if(broken)
-			balloon_alert("its broken!")
+			balloon_alert(user, "its broken!")
 			return TRUE
 		var/obj/item/card/id/id = null
 		if(istype(attacking_item, /obj/item/card/id))
@@ -129,7 +129,7 @@
 		if(isnull(id))
 			return ..()
 		else if(isnull(electronics))
-			balloon_alert("missing electronics!")
+			balloon_alert(user, "missing electronics!")
 			return TRUE
 
 		//you need to unlock to perform the operation else anyone can change access on a locked closet
