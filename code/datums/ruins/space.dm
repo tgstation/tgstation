@@ -356,3 +356,9 @@
 	suffix = "the_faceoff.dmm"
 	name = "The Faceoff"
 	description = "What do you get when a meeting of the enemy corporations get crashed?"
+
+/datum/map_template/ruin/space/pod_crash
+	id = "pod_crash"
+	suffix = "pod_crash.dmm"
+	name = "Pod Crash"
+	description = "A tragic display of what happens when you pda and pod."
