@@ -77,19 +77,19 @@
 	var/msg = "It is [anchored ? "wrenched to the floor." : "unsecured. A wrench should fix that."]<br/>"
 
 	if (blade_status == GUILLOTINE_BLADE_RAISED)
-		msg += "The blade is raised, ready to fall, and"
+		msg += span_notice("The blade is raised, ready to fall, and")
 
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP)
-			msg += " looks sharp enough to decapitate without any resistance."
+			msg += span_notice(" looks sharp enough to decapitate without any resistance.")
 		else
-			msg += " doesn't look particularly sharp. Perhaps a whetstone can be used to sharpen it."
+			msg += span_notice(" doesn't look particularly sharp. Perhaps a whetstone can be used to sharpen it.")
 	else
-		msg += "The blade is hidden inside the stocks."
+		msg += span_notice("The blade is hidden inside the stocks.")
 
 	. += msg
 
 	if (LAZYLEN(buckled_mobs))
-		. += "Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine."
+		. += span_notice("Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine.")
 
 /obj/structure/guillotine/attack_hand(mob/living/user, list/modifiers)
 	add_fingerprint(user)
@@ -155,7 +155,6 @@
 			head.dismember()
 			log_combat(user, H, "beheaded", src)
 			H.regenerate_icons()
-			unbuckle_all_mobs()
 			kill_count += 1
 
 			var/blood_overlay = "bloody"
