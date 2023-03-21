@@ -1,0 +1,4 @@
+# moves arm-mounted abstract chainsaw to a chainsaw subtype
+
+/obj/item/disk/design_disk/adv : /obj/item/disk/design_disk{@OLD}
+/obj/item/disk/design_disk/adv/@SUBTPYES : /obj/item/disk/design_disk/@SUBTYPES{@OLD}
