@@ -2055,13 +2055,13 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "custard and alcohol"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	foodtypes = MEAT
 
-/datum/glass_style/drinking_glass/eggnog
+/datum/glass_style/has_foodtype/drinking_glass/eggnog
 	required_drink_type = /datum/reagent/consumable/ethanol/eggnog
 	name = "eggnog"
 	desc = "For enjoying the most wonderful time of the year."
 	icon_state = "glass_yellow"
+	drink_type = FRUIT
 
 /datum/glass_style/has_foodtype/juicebox/eggnog
 	required_drink_type = /datum/reagent/consumable/ethanol/eggnog

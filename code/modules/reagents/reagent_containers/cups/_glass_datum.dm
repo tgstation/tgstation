@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
 /datum/glass_style
 	/// Required - What EXACT type of reagent is needed for this style to be used
 	/// If not supplied, will be assumed to be an abstract type and will not be instantiated
-	var/required_drink_type
+	var/datum/reagent/required_drink_type
 	/// Required - What EXACT type of atom is needed for this style to be used
 	/// If not supplied, will be assumed to be an abstract type and will not be instantiated
 	var/required_container_type
@@ -76,6 +76,10 @@ GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
 	/// This style changes the "drink type" of the container it's placed it as well, it's like food types
 	var/drink_type = NONE
 
+/datum/glass_style/has_foodtype/drinking_glass
+	required_container_type = /obj/item/reagent_containers/cup/glass/drinkingglass
+	icon = 'icons/obj/drinks/drinks.dmi'
+
 /datum/glass_style/has_foodtype/juicebox
 	required_container_type = /obj/item/reagent_containers/cup/glass/sillycup/smallcarton
 	icon = 'icons/obj/drinks/boxes.dmi'
@@ -83,3 +87,11 @@ GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
 /datum/glass_style/has_foodtype/soup
 	required_container_type = /obj/item/reagent_containers/cup/bowl
 	icon = 'icons/obj/food/soupsalad.dmi'
+
+/datum/glass_style/has_foodtype/soup/New()
+	. = ..()
+	// By default: If name or description is unset, it will inherent from the soup reagent
+	if(!name)
+		name = initial(required_drink_type.name)
+	if(!desc)
+		desc = initial(required_drink_type.description)

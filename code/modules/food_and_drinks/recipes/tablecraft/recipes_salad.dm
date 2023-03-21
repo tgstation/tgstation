@@ -34,6 +34,7 @@
 	result = /obj/item/food/salad/validsalad
 	subcategory = CAT_SALAD
 
+/*
 /datum/crafting_recipe/food/monkeysdelight
 	name = "Monkeys delight"
 	reqs = list(
@@ -46,6 +47,7 @@
 	)
 	result = /obj/item/food/soup/monkeysdelight
 	subcategory = CAT_SALAD
+*/
 
 /datum/crafting_recipe/food/melonfruitbowl
 	name ="Melon fruit bowl"

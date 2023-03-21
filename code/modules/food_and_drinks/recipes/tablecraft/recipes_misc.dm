@@ -342,3 +342,12 @@
 	)
 	result = /obj/item/food/popcorn/salty
 	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/wishsoup
+	name = "Wish soup"
+	reqs = list(
+		/datum/reagent/water = 20,
+		/obj/item/reagent_containers/cup/bowl = 1
+	)
+	result= /obj/item/food/wish_soup
+	category = CAT_MISCFOOD

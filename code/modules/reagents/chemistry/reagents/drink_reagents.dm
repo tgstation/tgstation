@@ -11,15 +11,15 @@
 	taste_description = "oranges"
 	ph = 3.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	foodtypes = FRUIT|BREAKFAST
 
-/datum/glass_style/drinking_glass/orangejuice
+/datum/glass_style/has_foodtype/drinking_glass/orangejuice
 	required_drink_type = /datum/reagent/consumable/orangejuice
 	name = "glass of orange juice"
 	desc = "Vitamins! Yay!"
 	icon_state = "glass_orange"
+	drink_type = FRUIT | BREAKFAST
 
-/datum/glass_style/juicebox/orangejuice
+/datum/glass_style/has_foodtype/juicebox/orangejuice
 	required_drink_type = /datum/reagent/consumable/orangejuice
 	name = "orange juice box"
 	desc = "A great source of vitamins. Stay healthy!"
@@ -117,9 +117,8 @@
 	color = "#ECFF56" // rgb: 236, 255, 86
 	taste_description = "apples"
 	ph = 3.2 // ~ 2.7 -> 3.7
-	foodtypes = FRUIT
 
-/datum/glass_style/juicebox/applejuice
+/datum/glass_style/has_foodtype/juicebox/applejuice
 	required_drink_type = /datum/reagent/consumable/applejuice
 	name = "apple juice box"
 	desc = "Sweet apple juice. Don't be late for school!"
@@ -262,14 +261,13 @@
 	color = "#290029" // dark purple
 	taste_description = "grape soda"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	foodtypes = FRUIT
 
-/datum/glass_style/juicebox/grapejuice
+/datum/glass_style/has_foodtype/juicebox/grapejuice
 	required_drink_type = /datum/reagent/consumable/grapejuice
 	name = "grape juice box"
-	desc = "For enjoying the most wonderful time of the year."
-	icon_state = "nog2"
-	drink_type = MEAT
+	desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
+	icon_state = "grapebox"
+	drink_type = FRUIT
 
 /datum/reagent/consumable/plumjuice
 	name = "Plum Juice"
@@ -277,13 +275,13 @@
 	color = "#b6062c"
 	taste_description = "plums"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	foodtypes = FRUIT
 
-/datum/glass_style/drinking_glass/plumjuice
+/datum/glass_style/has_foodtype/drinking_glass/plumjuice
 	required_drink_type = /datum/reagent/consumable/plumjuice
 	name = "glass of plum juice"
 	desc = "Noice."
 	icon_state = "plumjuiceglass"
+	drink_type = FRUIT
 
 /datum/reagent/consumable/milk
 	name = "Milk"
@@ -292,15 +290,15 @@
 	taste_description = "milk"
 	ph = 6.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	foodtypes = DAIRY|BREAKFAST
 
-/datum/glass_style/drinking_glass/milk
+/datum/glass_style/has_foodtype/drinking_glass/milk
 	required_drink_type = /datum/reagent/consumable/milk
 	name = "glass of milk"
 	desc = "White and nutritious goodness!"
 	icon_state = "glass_white"
+	drink_type = DAIRY | BREAKFAST
 
-/datum/glass_style/juicebox/milk
+/datum/glass_style/has_foodtype/juicebox/milk
 	required_drink_type = /datum/reagent/consumable/milk
 	name = "carton of milk"
 	desc = "An excellent source of calcium for growing space explorers."
@@ -1192,9 +1190,8 @@
 	quality = DRINK_NICE
 	taste_description = "chocolate milk"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	foodtypes = DAIRY|SUGAR
 
-/datum/glass_style/juicebox/chocolate_milk
+/datum/glass_style/has_foodtype/juicebox/chocolate_milk
 	required_drink_type = /datum/reagent/consumable/milk/chocolate_milk
 	name = "carton of chocolate milk"
 	desc = "Milk for cool kids!"
@@ -1208,13 +1205,13 @@
 	color = "#403010" // rgb: 64, 48, 16
 	taste_description = "creamy chocolate"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	foodtypes = DAIRY|SUGAR
 
-/datum/glass_style/drinking_glass/hot_coco
+/datum/glass_style/has_foodtype/drinking_glass/hot_coco
 	required_drink_type = /datum/reagent/consumable/hot_coco
 	name = "glass of hot coco"
 	desc = "A favorite winter drink to warm you up."
 	icon_state = "chocolateglass"
+	drink_type = SUGAR | DAIRY
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, affected_mob.get_body_temp_normal())
@@ -1280,11 +1277,11 @@
 	color = "#FFA500"
 	taste_description = "parsnip"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	foodtypes = FRUIT
 
-/datum/glass_style/drinking_glass/parsnipjuice
+/datum/glass_style/has_foodtype/drinking_glass/parsnipjuice
 	required_drink_type = /datum/reagent/consumable/parsnipjuice
 	name = "glass of parsnip juice"
+	drink_type = FRUIT
 
 /datum/reagent/consumable/pineapplejuice
 	name = "Pineapple Juice"
@@ -1292,14 +1289,14 @@
 	color = "#F7D435"
 	taste_description = "pineapple"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	foodtypes = FRUIT|PINEAPPLE
 
-/datum/glass_style/drinking_glass/pineapplejuice
+/datum/glass_style/has_foodtype/drinking_glass/pineapplejuice
 	required_drink_type = /datum/reagent/consumable/pineapplejuice
 	name = "glass of pineapple juice"
 	desc = "Tart, tropical, and hotly debated."
+	drink_type = FRUIT | PINEAPPLE
 
-/datum/glass_style/juicebox/pineapplejuice
+/datum/glass_style/has_foodtype/juicebox/pineapplejuice
 	required_drink_type = /datum/reagent/consumable/pineapplejuice
 	name = "pineapple juice box"
 	desc = "Why would you even want this?"
@@ -1312,11 +1309,11 @@
 	color = "#E78108"
 	taste_description = "peaches"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	foodtypes = FRUIT
 
-/datum/glass_style/drinking_glass/peachjuice
+/datum/glass_style/has_foodtype/drinking_glass/peachjuice
 	required_drink_type = /datum/reagent/consumable/peachjuice
 	name = "glass of peach juice"
+	drink_type = FRUIT
 
 /datum/reagent/consumable/cream_soda
 	name = "Cream Soda"

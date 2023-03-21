@@ -15,9 +15,12 @@
 	var/container_x = 0
 	var/container_y = 8
 
-/datum/component/stove/Initialize()
+/datum/component/stove/Initialize(container_x = 0, container_y = 8)
 	if(!ismachinery(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	src.container_x = container_x
+	src.container_y = container_y
 
 /datum/component/stove/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
@@ -26,10 +29,13 @@
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_overlay_update))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context))
 
-	var/obj/real_parent = parent
+	var/obj/machinery/real_parent = parent
 	real_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 /datum/component/stove/UnregisterFromParent()
+	var/obj/machinery/real_parent = parent
+	container.forceMove(real_parent.drop_location())
+
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_HAND_SECONDARY,
 		COMSIG_ATOM_EXITED,
@@ -37,10 +43,9 @@
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_PARENT_ATTACKBY,
 	))
-	soup_pot = null
 
 /datum/component/stove/process(delta_time)
-	var/obj/item/machinery/real_parent = parent
+	var/obj/machinery/real_parent = parent
 	if(real_parent.machine_stat & NOPOWER)
 		turn_off()
 		return
@@ -49,12 +54,10 @@
 	real_parent.use_power(real_parent.active_power_usage)
 
 /datum/component/stove/proc/turn_on()
-	var/obj/item/machinery/real_parent = parent
 	START_PROCESSING(SSmachines, src)
 	on = TRUE
 
 /datum/component/stove/proc/turn_off()
-	var/obj/item/machinery/real_parent = parent
 	STOP_PROCESSING(SSmachines, src)
 	on = FALSE
 
@@ -81,8 +84,8 @@
 /datum/component/stove/proc/on_exited(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 
-	if(gone == soup_pot)
-		remove_soup_pot()
+	if(gone == container)
+		remove_container()
 
 /datum/component/stove/proc/on_overlay_update(datum/source, list/overlays)
 	SIGNAL_HANDLER
@@ -116,7 +119,7 @@
 	container.pixel_x = container_x
 	container.pixel_y = container_y
 
-/datum/component/stove/proc/container()
+/datum/component/stove/proc/remove_container()
 	var/obj/real_parent = parent
 	container.flags_1 &= ~IS_ONTOP_1
 	container.vis_flags &= ~VIS_INHERIT_PLANE

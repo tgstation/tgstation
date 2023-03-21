@@ -439,3 +439,11 @@
 		potential_tinder.extinguish_mob()
 	for(var/obj/item/potential_tinder in location)
 		potential_tinder.extinguish()
+
+/datum/effect_system/fluid_spread/foam/dirty
+	effect_type = /obj/effect/particle_effect/fluid/foam/dirty
+
+/obj/effect/particle_effect/fluid/foam/dirty
+	name = "dirty foam"
+	allow_duplicate_results = FALSE
+	result_type = /obj/effect/decal/cleanable/dirt
