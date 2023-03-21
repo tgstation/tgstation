@@ -5243,6 +5243,7 @@
 #include "monkestation\code\modules\ranching\mutations\tier1.dm"
 #include "monkestation\code\modules\ranching\mutations\tier2.dm"
 #include "monkestation\code\modules\ranching\mutations\tier3.dm"
+#include "monkestation\code\modules\store\admin\admin_coin_modification.dm"
 #include "monkestation\code\modules\store\store_items\_store_items.dm"
 #include "monkestation\code\modules\store\store_items\store.dm"
 #include "monkestation\code\modules\store\store_items\toys.dm"

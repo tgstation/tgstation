@@ -128,7 +128,7 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 	data["preivew_options"] = list(PREVIEW_PREF_JOB, PREVIEW_PREF_LOADOUT, PREVIEW_PREF_NAKED)
 	data["preview_selection"] = PREVIEW_PREF_JOB
 
-	data["total_coins"] = user.prefs.metacoins
+	data["total_coins"] = user.client.prefs.metacoins
 
 	return data
 
