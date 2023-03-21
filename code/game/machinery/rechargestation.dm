@@ -80,7 +80,7 @@
 		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
 			return
 
-	if(default_pry_open(P))
+	if(default_pry_open(P, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
 		return
 
 	if(default_deconstruction_crowbar(P))
@@ -97,7 +97,7 @@
 	else
 		open_machine()
 
-/obj/machinery/recharge_station/open_machine()
+/obj/machinery/recharge_station/open_machine(drop = TRUE, density = FALSE)
 	. = ..()
 	update_use_power(IDLE_POWER_USE)
 

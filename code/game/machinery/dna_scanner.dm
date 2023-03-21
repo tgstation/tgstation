@@ -129,7 +129,7 @@
 		update_appearance()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
-	if(default_pry_open(I))
+	if(default_pry_open(I, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
 		return
 
 	if(default_deconstruction_crowbar(I))

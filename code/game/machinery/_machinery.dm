@@ -326,13 +326,11 @@
  * Will update the machine icon and any user interfaces currently open.
  * Arguments:
  * * drop - Boolean. Whether to drop any stored items in the machine. Does not include components.
+ * * density - Boolean. Whether to make the object dense when it's open.
  */
-/obj/machinery/proc/open_machine(drop = TRUE, remain_open = TRUE, density = FALSE)
+/obj/machinery/proc/open_machine(drop = TRUE, density = FALSE)
 	state_open = TRUE
-	if (remain_open)
-		set_density(density)
-	else
-		close_machine(density = density)
+	set_density(density)
 	if(drop)
 		dump_inventory_contents()
 	update_appearance()
@@ -783,13 +781,15 @@
 	active_power_usage = initial(active_power_usage) * (1 + parts_energy_rating)
 	update_current_power_usage()
 
-/obj/machinery/proc/default_pry_open(obj/item/crowbar, remain_open = TRUE, density = FALSE)
+/obj/machinery/proc/default_pry_open(obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE)
 	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(!.)
 		return
 	crowbar.play_tool_sound(src, 50)
 	visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open \the [src]."))
-	open_machine(remain_open = remain_open, density = density)
+	open_machine(density = open_density)
+	if (close_after_pry) //Should it immediately close after prying? (If not, it must be closed elsewhere)
+		close_machine(density = closed_density)
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
 	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && crowbar.tool_behaviour == TOOL_CROWBAR
