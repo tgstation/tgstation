@@ -554,7 +554,7 @@
 		if(affecting?.receive_damage( 0, 5 )) // 5 burn damage
 			user.update_damage_overlays()
 		if(HAS_TRAIT(user, TRAIT_LIGHTBULB_REMOVER))
-			to_chat(user, span_notice("You feel your [affecting] burning, and the light tube beginning to budge."))
+			to_chat(user, span_notice("You feel your [affecting] burning, and the light beginning to budge."))
 			if(!do_after(user, 5 SECONDS, target = src))
 				return
 			if(affecting?.receive_damage( 0, 10 )) // 10 more burn damage
