@@ -180,7 +180,7 @@
 					if(SEC_LEVEL_RED)
 						set_light(l_color = LIGHT_COLOR_FLARE)
 					if(SEC_LEVEL_DELTA)
-						set_light(l_color = COLOR_VIVID_YELLOW)
+						set_light(l_color = LIGHT_COLOR_INTENSE_RED)
 			else
 				. += mutable_appearance(icon, "fire_offstation")
 				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
