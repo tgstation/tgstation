@@ -28,7 +28,7 @@
 		return
 	close_machine(target)
 
-/obj/machinery/abductor/experiment/open_machine()
+/obj/machinery/abductor/experiment/open_machine(density = FALSE)
 	if(!state_open && !panel_open)
 		..()
 

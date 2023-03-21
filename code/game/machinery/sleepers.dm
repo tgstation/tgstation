@@ -94,7 +94,7 @@
 	if (!state_open)
 		container_resist_act(user)
 
-/obj/machinery/sleeper/open_machine()
+/obj/machinery/sleeper/open_machine(density = FALSE)
 	if(!state_open && !panel_open)
 		flick("[initial(icon_state)]-anim", src)
 	return ..()

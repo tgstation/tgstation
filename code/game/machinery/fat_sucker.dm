@@ -65,7 +65,7 @@
 		addtimer(CALLBACK(src, PROC_REF(start_extracting)), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
 		update_appearance()
 
-/obj/machinery/fat_sucker/open_machine(mob/user)
+/obj/machinery/fat_sucker/open_machine(mob/user, density = FALSE)
 	make_meat()
 	playsound(src, 'sound/machines/click.ogg', 50)
 	if(processing)

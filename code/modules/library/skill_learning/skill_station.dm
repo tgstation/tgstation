@@ -48,7 +48,7 @@
 /obj/machinery/skill_station/relaymove(mob/living/user, direction)
 	open_machine()
 
-/obj/machinery/skill_station/open_machine()
+/obj/machinery/skill_station/open_machine(density = FALSE)
 	. = ..()
 	interrupt_operation()
 
