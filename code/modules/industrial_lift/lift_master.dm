@@ -497,7 +497,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		on_z_level = list(on_z_level)
 
 	var/played_ding = FALSE
-	for(var/obj/machinery/door/poddoor/elevator_door in GLOB.machines)
+	for(var/obj/machinery/door/window/elevator/elevator_door in GLOB.elevator_doors)
 		if(elevator_door.id != specific_lift_id)
 			continue
 		if(on_z_level && !(elevator_door.z in on_z_level))
@@ -505,11 +505,9 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 		switch(action)
 			if(OPEN_DOORS)
-				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
-
+				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door/window/elevator, cycle_doors), OPEN_DOORS)
 			if(CLOSE_DOORS)
-				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
-
+				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door/window/elevator, cycle_doors), CLOSE_DOORS)
 			else
 				stack_trace("Elevator lift update_lift_doors called with an improper action ([action]).")
 

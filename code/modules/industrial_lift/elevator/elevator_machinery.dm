@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(elevator_doors)
+
 /**
  * # Elevator control panel
  *
@@ -106,6 +108,12 @@
 		lift_platform.warns_on_down_movement = FALSE
 		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed) * 0.5
 
+	for(var/obj/machinery/door/window/elevator/elevator_door in GLOB.elevator_doors)
+		if(elevator_door.id != linked_elevator_id)
+			continue
+		elevator_door.open
+		elevator_door.obj_flags |= EMAGGED
+
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(user, "safeties overridden")
 	obj_flags |= EMAGGED
@@ -130,6 +138,11 @@
 			lift_platform.violent_landing = initial(lift_platform.violent_landing)
 			lift_platform.warns_on_down_movement = initial(lift_platform.warns_on_down_movement)
 			lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed)
+
+		for(var/obj/machinery/door/window/elevator/elevator_door in GLOB.elevator_doors)
+			if(elevator_door.id != linked_elevator_id)
+				continue
+			elevator_door.obj_flags &= ~EMAGGED
 
 		obj_flags &= ~EMAGGED
 
@@ -373,3 +386,396 @@
 		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/elevator_control_panel, 31)
+
+/obj/item/assembly/control/elevator
+	name = "elevator controller"
+	desc = "A small device used to call elevators to the current floor."
+	/// A weakref to the lift_master datum we control
+	var/datum/weakref/lift_weakref
+
+/obj/item/assembly/control/elevator/Initialize(mapload)
+	. = ..()
+
+	if(mapload)
+		return INITIALIZE_HINT_LATELOAD
+
+	var/datum/lift_master/lift = get_lift()
+	if(!lift)
+		return
+
+	lift_weakref = WEAKREF(lift)
+
+/obj/item/assembly/control/elevator/LateInitialize()
+	var/datum/lift_master/lift = get_lift()
+	if(!lift)
+		log_mapping("Elevator call button at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")
+		return
+
+	lift_weakref = WEAKREF(lift)
+
+// Emagging elevator buttons will disable safeties
+/obj/item/assembly/control/elevator/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return
+
+	var/datum/lift_master/lift = lift_weakref?.resolve()
+	if(!lift)
+		return
+
+	for(var/obj/structure/industrial_lift/lift_platform as anything in lift.lift_platforms)
+		lift_platform.violent_landing = TRUE
+		lift_platform.warns_on_down_movement = FALSE
+		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed) * 0.5
+
+	// Note that we can either be emagged by having the button we are inside swiped,
+	// or by someone emagging the assembly directly after removing it (to be cheeky)
+	var/atom/balloon_alert_loc = get(src, /obj/machinery/button) || src
+	balloon_alert_loc.balloon_alert(user, "safeties overridden")
+	obj_flags |= EMAGGED
+	return TRUE
+
+// Multitooling emagged elevator buttons will fix the safeties
+/obj/item/assembly/control/elevator/multitool_act(mob/living/user)
+	if(!(obj_flags & EMAGGED))
+		return ..()
+
+	var/datum/lift_master/lift = lift_weakref?.resolve()
+	if(!lift)
+		return ..()
+
+	for(var/obj/structure/industrial_lift/lift_platform as anything in lift.lift_platforms)
+		lift_platform.violent_landing = initial(lift_platform.violent_landing)
+		lift_platform.warns_on_down_movement = initial(lift_platform.warns_on_down_movement)
+		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed)
+
+	// We can only be multitooled directly so just throw up the balloon alert
+	balloon_alert(user, "safeties reset")
+	obj_flags &= ~EMAGGED
+	return TRUE
+
+/obj/item/assembly/control/elevator/activate(mob/activator)
+	if(cooldown)
+		return
+
+	cooldown = TRUE
+	// Actually try to call the elevator - this sleeps.
+	// If we failed to call it, play a buzz sound.
+	if(!call_elevator(activator))
+		playsound(loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
+
+	// Finally, give people a chance to get off after it's done before going back off cooldown
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
+
+/// Actually calls the elevator.
+/// Returns FALSE if we failed to setup the move.
+/// Returns TRUE if the move setup was a success, EVEN IF the move itself fails afterwards
+/obj/item/assembly/control/elevator/proc/call_elevator(mob/activator)
+	// We can't call an elevator that doesn't exist
+	var/datum/lift_master/lift = lift_weakref?.resolve()
+	if(!lift)
+		loc.balloon_alert(activator, "no elevator connected!")
+		return FALSE
+
+	// We can't call an elevator that's moving. You may say "you totally can do that", but that's not modelled
+	if(lift.controls_locked == LIFT_PLATFORM_LOCKED)
+		loc.balloon_alert(activator, "elevator is moving!")
+		return FALSE
+
+	// If the elevator is already here, open the doors.
+	var/obj/structure/industrial_lift/prime_lift = lift.return_closest_platform_to_z(loc.z)
+	if(prime_lift.z == loc.z)
+		INVOKE_ASYNC(lift, TYPE_PROC_REF(/datum/lift_master, open_lift_doors_callback))
+		loc.balloon_alert(activator, "elevator is here!")
+		return TRUE
+
+	// At this point, we can start moving.
+
+	// Give the user, if supplied, a balloon alert.
+	if(activator)
+		loc.balloon_alert(activator, "elevator called")
+
+	// Actually try to move the lift. This will sleep.
+	if(!lift.move_to_zlevel(loc.z, CALLBACK(src, PROC_REF(check_button))))
+		loc.balloon_alert(activator, "elevator out of service!")
+		return FALSE
+
+	// From here on all returns are TRUE, as we successfully moved the lift, even if we maybe didn't reach our floor
+
+	// Our button was destroyed mid transit.
+	if(!check_button())
+		return TRUE
+
+	// Our lift platform survived, but it didn't reach our landing z.
+	if(!QDELETED(prime_lift) && prime_lift.z != loc.z)
+		if(!QDELETED(activator))
+			loc.balloon_alert(activator, "elevator out of service!")
+		playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+		return TRUE
+
+	// Everything went according to plan
+	playsound(loc, 'sound/machines/ping.ogg', 50, TRUE)
+	if(!QDELETED(activator))
+		loc.balloon_alert(activator, "elevator arrived")
+
+	return TRUE
+
+/// Callback for move_to_zlevel / general proc to check if we're still in a button
+/obj/item/assembly/control/elevator/proc/check_button()
+	if(QDELETED(src))
+		return FALSE
+	if(!istype(loc, /obj/machinery/button))
+		return FALSE
+	return TRUE
+
+/// Gets the lift associated with our assembly / button
+/obj/item/assembly/control/elevator/proc/get_lift()
+	for(var/datum/lift_master/possible_match as anything in GLOB.active_lifts_by_type[BASIC_LIFT_ID])
+		if(possible_match.specific_lift_id != id)
+			continue
+
+		return possible_match
+
+	return null
+
+/obj/machinery/button/elevator
+	name = "elevator button"
+	desc = "Go back. Go back. Go back. Can you operate the elevator."
+	icon_state = "hallctrl"
+	skin = "hallctrl"
+	device_type = /obj/item/assembly/control/elevator
+	req_access = list()
+	id = 1
+	light_mask = "hall-light-mask"
+
+/obj/machinery/button/elevator/Initialize(mapload, ndir, built)
+	. = ..()
+	// Kind of a cop-out
+	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Call Elevator")
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
+
+
+/**
+ * A lift indicator aka an elevator hall lantern w/ floor number
+ */
+/obj/machinery/lift_indicator
+	name = "elevator indicator"
+	desc = "Indicates what floor the elevator is at and which way it's going."
+	icon = 'icons/obj/machines/lift_indicator.dmi'
+	icon_state = "lift_indo-base"
+	base_icon_state = "lift_indo-"
+	max_integrity = 500
+	integrity_failure = 0.25
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
+	anchored = TRUE
+	density = FALSE
+
+	light_range = 1
+	light_power = 1
+	light_color = LIGHT_COLOR_DARK_BLUE
+	luminosity = 1
+
+	maptext_x = 17
+	maptext_y = 21
+	maptext_width = 4
+	maptext_height = 8
+
+	/// What specific_lift_id do we link with?
+	var/linked_elevator_id
+
+	// = (real lowest floor's z-level) - (what we want to display)
+	var/lowest_floor_offset = 1
+
+	/// Weakref to the lift.
+	var/datum/weakref/lift_ref
+	/// The lowest floor number. Determined by lift init.
+	var/lowest_floor_num = 1
+	/// Positive for going up, negative going down, 0 for stopped
+	var/current_lift_direction = 0
+	/// The lift's current floor relative to its lowest floor being 1
+	var/current_lift_floor = 1
+
+/obj/machinery/lift_indicator/Initialize(mapload)
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/lift_indicator/LateInitialize()
+	. = ..()
+
+	for(var/datum/lift_master/possible_match as anything in GLOB.active_lifts_by_type[BASIC_LIFT_ID])
+		if(possible_match.specific_lift_id != linked_elevator_id)
+			continue
+
+		lift_ref = WEAKREF(possible_match)
+		RegisterSignal(possible_match, COMSIG_LIFT_SET_DIRECTION, PROC_REF(on_lift_direction))
+
+/obj/machinery/lift_indicator/examine(mob/user)
+	. = ..()
+
+	if(!is_operational)
+		. += span_notice("The display is dark.")
+		return
+
+	var/dirtext
+	switch(current_lift_direction)
+		if(UP)
+			dirtext = "travelling upwards"
+		if(DOWN)
+			dirtext = "travelling downwards"
+		else
+			dirtext = "stopped"
+
+	. += span_notice("The elevator is at floor [current_lift_floor], [dirtext].")
+
+/**
+ * Update state, and only process if lift is moving.
+ */
+/obj/machinery/lift_indicator/proc/on_lift_direction(datum/source, direction)
+	SIGNAL_HANDLER
+
+	var/datum/lift_master/lift = lift_ref?.resolve()
+	if(!lift)
+		return
+
+	set_lift_state(direction, current_lift_floor)
+	update_operating()
+
+/obj/machinery/lift_indicator/on_set_is_operational()
+	. = ..()
+
+	update_operating()
+
+/**
+ * Update processing state.
+ *
+ * Returns whether we are still processing.
+ */
+/obj/machinery/lift_indicator/proc/update_operating()
+	// Let process() figure it out to have the logic in one place.
+	var/should_process = process() != PROCESS_KILL
+	if(should_process)
+		begin_processing()
+		return
+	end_processing()
+
+/obj/machinery/lift_indicator/process()
+	var/datum/lift_master/lift = lift_ref?.resolve()
+
+	// Check for stopped states.
+	if(!lift || !is_operational)
+		// Lift missing, or we lost power.
+		set_lift_state(0, 0, force = !is_operational)
+		return PROCESS_KILL
+
+	use_power(active_power_usage)
+
+	var/obj/structure/industrial_lift/lift_part = lift.lift_platforms[1]
+
+	if(QDELETED(lift_part))
+		set_lift_state(0, 0, force = !is_operational)
+		return PROCESS_KILL
+
+	// Update
+	set_lift_state(current_lift_direction, lift.lift_platforms[1].z - lowest_floor_offset)
+
+	// Lift's not moving, we're done; we just had to update the floor number one last time.
+	if(!current_lift_direction)
+		return PROCESS_KILL
+
+/**
+ * Set the state and update appearance.
+ *
+ * Arguments:
+ * new_direction - new arrow state: UP, DOWN, or 0
+ * new_floor - set the floor number, eg. 1, 2, 3
+ * force_update - force appearance to update even if state didn't change.
+ */
+/obj/machinery/lift_indicator/proc/set_lift_state(new_direction, new_floor, force = FALSE)
+	if(new_direction == current_lift_direction && new_floor == current_lift_floor && !force)
+		return
+
+	current_lift_direction = new_direction
+	current_lift_floor = new_floor
+	update_appearance()
+
+/obj/machinery/lift_indicator/update_appearance(updates)
+	. = ..()
+
+	if(!is_operational)
+		set_light(l_on = FALSE)
+		maptext = ""
+		return
+
+	set_light(l_on = TRUE)
+	maptext = {"<div style="font:5pt 'Small Fonts';color:[LIGHT_COLOR_DARK_BLUE]">[current_lift_floor]</div>"}
+
+/obj/machinery/lift_indicator/update_overlays()
+	. = ..()
+
+	if(!is_operational)
+		return
+
+	. += emissive_appearance(icon, "[base_icon_state]e", offset_spokesman = src, alpha = src.alpha)
+
+	if(!current_lift_direction)
+		return
+
+	var/arrow_icon_state = "[base_icon_state][current_lift_direction == UP ? "up" : "down"]"
+
+	. += mutable_appearance(icon, arrow_icon_state)
+	. += emissive_appearance(icon, "[arrow_icon_state]e", offset_spokesman = src, alpha = src.alpha)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/lift_indicator, 32)
+
+/obj/machinery/door/window/elevator
+	name = "elevator door"
+	desc = "Keeps idiots like you from walking into an open elevator shaft."
+	can_atmos_pass = ATMOS_PASS_DENSITY // elevator shaft is airtight when closed
+	var/id = null
+	var/safety_enabled = TRUE
+
+/obj/machinery/door/window/elevator/Initialize(mapload, set_dir, unres_sides)
+	. = ..()
+	RemoveElement(/datum/element/atmos_sensitive, mapload)
+	INVOKE_ASYNC(src, PROC_REF(open))
+	GLOB.elevator_doors += src
+
+/obj/machinery/door/window/elevator/Destroy()
+	GLOB.elevator_doors -= src
+	return ..()
+
+/obj/machinery/door/window/elevator/bumpopen(mob/user)
+	if(operating || !density)
+		return
+	add_fingerprint(user)
+	if(!requiresID())
+		user = null
+	if(!safety_enabled)
+		open_and_close()
+	else if(allowed(user))
+		open()
+	else
+		do_animate("deny")
+	return
+
+/obj/machinery/door/window/elevator/proc/cycle_doors(command)
+	switch(command)
+		if(OPEN_DOORS)
+			if(!obj_flags & EMAGGED)
+				safety_enabled = TRUE
+			open_and_close()
+		if(CLOSE_DOORS)
+			if(!density)
+				if(!close())
+					return FALSE
+			if(!obj_flags & EMAGGED)
+				safety_enabled = TRUE
+
+/obj/machinery/door/window/elevator/open_and_close()
+	if(!open())
+		return
+	autoclose = TRUE
+	sleep(7 SECONDS)
+	if(!density && autoclose) // in case something happened
+		close()
