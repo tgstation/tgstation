@@ -119,6 +119,10 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
+/obj/item/goliath_infuser_hammer/examine(mob/user)
+	. = ..()
+	. += "You can use your tendril hammer arm to deliver a devastating blow against mining fauna by <b>right-clicking</b> them with the arm."
+
 /obj/item/goliath_infuser_hammer/afterattack_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!proximity_flag)
