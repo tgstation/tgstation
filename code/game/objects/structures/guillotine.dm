@@ -151,9 +151,6 @@
 			return
 
 		playsound(src, drop_sound, 100, TRUE)
-		if(!head)
-			return GUILLOTINE_BLADE_RAISED
-
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 			head.dismember()
 			log_combat(user, H, "beheaded", src)
