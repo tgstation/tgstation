@@ -116,10 +116,6 @@
 /obj/item/bedsheet/mime,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
-"xo" = (
-/turf/open/floor/iron/checker/airless,
-/turf/open/floor/iron/checker/airless,
-/area/ruin)
 "yY" = (
 /obj/structure/table,
 /obj/item/seeds/banana/mime{
@@ -130,7 +126,6 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/turf/open/floor/iron/checker/airless,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "Ar" = (
@@ -160,10 +155,6 @@
 	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
-"Er" = (
-/turf/closed/mineral,
-/turf/template_noop,
-/area/ruin)
 "ED" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 10
@@ -179,8 +170,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin)
 "Fx" = (
-/turf/open/space/basic,
-/area)
+/turf/template_noop,
+/area/template_noop)
 "Gv" = (
 /obj/machinery/light/small/broken/directional/north,
 /turf/open/floor/iron/checker/airless,
@@ -233,7 +224,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron/checker/airless,
-/turf/open/floor/iron/checker/airless,
 /area/ruin)
 "Kx" = (
 /obj/machinery/computer/old{
@@ -284,10 +274,6 @@
 /obj/effect/spawner/structure/window/reinforced/damaged,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /turf/template_noop,
-/area/ruin)
-"Wc" = (
-/turf/closed/mineral,
-/turf/closed/mineral,
 /area/ruin)
 "WY" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
@@ -340,7 +326,7 @@ Fx
 Fx
 Fx
 Fx
-Er
+gZ
 Fx
 Fx
 Fx
@@ -353,15 +339,15 @@ Fx
 Fx
 Fx
 Fx
-Er
+gZ
 Fx
 Fx
 Fx
 Fx
 Fx
 Fx
-Er
-Er
+gZ
+gZ
 Fx
 Fx
 Fx
@@ -373,16 +359,16 @@ Fx
 Fx
 Fx
 Fx
-Er
-Wc
-Wc
-Wc
-Wc
-Wc
-Wc
-Wc
-Wc
-Er
+gZ
+gZ
+gZ
+gZ
+gZ
+gZ
+gZ
+gZ
+gZ
+gZ
 Fx
 Fx
 Fx
@@ -402,7 +388,7 @@ Jz
 Jz
 BU
 gV
-Er
+gZ
 Fx
 Fx
 Fx
@@ -412,7 +398,7 @@ Fx
 Fx
 Fx
 gZ
-Er
+gZ
 yY
 GF
 Jz
@@ -422,7 +408,7 @@ Kx
 Jz
 Qh
 gV
-Er
+gZ
 Fx
 Fx
 Fx
@@ -432,7 +418,7 @@ Fx
 Fx
 Fx
 gZ
-Er
+gZ
 Kh
 ED
 iP
@@ -452,8 +438,8 @@ Fx
 Fx
 Fx
 gZ
-Er
-xo
+gZ
+gV
 wo
 ef
 JW
@@ -462,7 +448,7 @@ Ar
 Ij
 AK
 iP
-Er
+gZ
 Fx
 Fx
 Fx
@@ -472,7 +458,7 @@ Fx
 Fx
 Fx
 gZ
-Er
+gZ
 Kr
 rn
 Jz
@@ -513,7 +499,7 @@ Fx
 Fx
 Fx
 Fx
-Wc
+gZ
 gZ
 Jz
 hT
@@ -522,7 +508,7 @@ dI
 Jz
 YF
 ox
-Er
+gZ
 Fx
 Fx
 Fx
@@ -533,8 +519,8 @@ Fx
 Fx
 Fx
 Fx
-Er
-Wc
+gZ
+gZ
 Qb
 Pq
 mB
@@ -554,14 +540,14 @@ Fx
 Fx
 Fx
 gZ
-Er
+gZ
 Jz
 dq
 mB
 CZ
 of
-Er
-Er
+gZ
+gZ
 Fx
 Fx
 Fx
@@ -574,13 +560,13 @@ Fx
 Fx
 Fx
 gZ
-Er
+gZ
 Jz
-Wc
+gZ
 gZ
 EY
 KV
-Er
+gZ
 Fx
 Fx
 Fx
@@ -594,7 +580,7 @@ Fx
 Fx
 Fx
 Fx
-Er
+gZ
 gZ
 Fx
 gZ
