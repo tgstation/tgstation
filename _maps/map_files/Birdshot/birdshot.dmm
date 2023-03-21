@@ -1640,6 +1640,7 @@
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/cobweb,
+/obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/storage)
 "aNB" = (
@@ -8837,6 +8838,13 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/science/lab)
+"dDG" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/steam_vent,
+/turf/open/floor/plating,
+/area/station/ai_monitored/turret_protected/aisat/maint)
 "dDN" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/white/line{
@@ -9974,6 +9982,8 @@
 /obj/item/hemostat,
 /obj/item/cautery,
 /obj/machinery/camera/autoname/directional/north,
+/obj/structure/sign/poster/official/random/directional/north,
+/obj/machinery/status_display/ai/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/theatre)
 "dZd" = (
@@ -13184,8 +13194,8 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/item/mod/module/plasma_stabilizer,
 /obj/item/mod/module/thermal_regulator,
-/obj/machinery/camera/autoname/directional/west,
 /obj/effect/turf_decal/bot_white,
+/obj/machinery/status_display/ai/directional/south,
 /turf/open/floor/iron/small,
 /area/station/medical/storage)
 "fkt" = (
@@ -16478,6 +16488,8 @@
 /obj/machinery/vending/wardrobe/medi_wardrobe,
 /obj/structure/window/reinforced/spawner/west,
 /obj/effect/turf_decal/bot_white,
+/obj/machinery/camera/autoname/directional/south,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/small,
 /area/station/medical/storage)
 "grD" = (
@@ -16773,6 +16785,7 @@
 	pixel_x = -1;
 	pixel_y = 4
 	},
+/obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/theatre)
 "gxg" = (
@@ -21276,6 +21289,8 @@
 	name = "Hull Breach Emergency Storage"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/eva,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/catwalk_floor/iron,
 /area/station/commons/storage/tools)
 "hXh" = (
@@ -23420,6 +23435,7 @@
 	pixel_y = 16
 	},
 /obj/machinery/camera/directional/north,
+/obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "iJF" = (
@@ -26802,6 +26818,7 @@
 /obj/machinery/light/cold/directional/west,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/pdapainter/security,
+/obj/machinery/status_display/ai/directional/south,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
 "jWd" = (
@@ -28886,6 +28903,8 @@
 	pixel_x = 3;
 	pixel_y = 6
 	},
+/obj/machinery/camera/autoname/directional/north,
+/obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/iron/white/small,
 /area/station/medical/storage)
 "kIe" = (
@@ -30406,6 +30425,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/white/small,
 /area/station/medical/storage)
 "lhI" = (
@@ -35427,6 +35447,7 @@
 "mXt" = (
 /obj/machinery/rnd/production/techfab/department/medical,
 /obj/effect/turf_decal/stripes/box,
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/storage)
 "mXT" = (
@@ -70217,6 +70238,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/cmo,
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
 "xXJ" = (
@@ -95032,7 +95054,7 @@ dDB
 dDB
 blb
 blb
-blb
+wen
 wen
 vxt
 cpA
@@ -95294,7 +95316,7 @@ wBf
 wpa
 cpP
 csl
-csl
+dDG
 csl
 vfg
 vfg
