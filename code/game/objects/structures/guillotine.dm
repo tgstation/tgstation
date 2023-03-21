@@ -137,7 +137,7 @@
 	blade_status = GUILLOTINE_BLADE_RAISED
 	icon_state = "guillotine_raised"
 
-/// Drops the guillotine blade, potentially beheading or harbing the buckled mob
+/// Drops the guillotine blade, potentially beheading or harming the buckled mob
 /obj/structure/guillotine/proc/drop_blade(mob/user)
 	if (has_buckled_mobs() && blade_sharpness)
 		var/mob/living/carbon/human/H = buckled_mobs[1]
@@ -149,6 +149,9 @@
 
 		if (QDELETED(head))
 			return
+
+		if(!head)
+			return GUILLOTINE_BLADE_RAISED
 
 		playsound(src, drop_sound, 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
