@@ -32,7 +32,7 @@
 	if(!state_open && !panel_open)
 		..()
 
-/obj/machinery/abductor/experiment/close_machine(mob/target)
+/obj/machinery/abductor/experiment/close_machine(mob/target, density = TRUE)
 	for(var/A in loc)
 		if(isabductor(A))
 			return

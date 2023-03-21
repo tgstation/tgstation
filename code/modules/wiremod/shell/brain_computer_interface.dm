@@ -460,7 +460,7 @@
 
 	return TRUE
 
-/obj/machinery/bci_implanter/close_machine(mob/living/carbon/user)
+/obj/machinery/bci_implanter/close_machine(mob/living/carbon/user, density = TRUE)
 	if(!state_open)
 		return FALSE
 

@@ -99,7 +99,7 @@
 		flick("[initial(icon_state)]-anim", src)
 	return ..()
 
-/obj/machinery/sleeper/close_machine(mob/user)
+/obj/machinery/sleeper/close_machine(mob/user, density = TRUE)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("[initial(icon_state)]-anim", src)
 		..()

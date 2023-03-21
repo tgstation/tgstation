@@ -365,7 +365,7 @@
 	flick("pod-open-anim", src)
 	..()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user, density = TRUE)
 	treating_wounds = FALSE
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("pod-close-anim", src)

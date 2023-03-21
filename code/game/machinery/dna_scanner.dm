@@ -91,7 +91,7 @@
 			return C
 	return null
 
-/obj/machinery/dna_scannernew/close_machine(mob/living/carbon/user)
+/obj/machinery/dna_scannernew/close_machine(mob/living/carbon/user, density = TRUE)
 	if(!state_open)
 		return FALSE
 

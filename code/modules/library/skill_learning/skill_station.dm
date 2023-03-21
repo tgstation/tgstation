@@ -63,7 +63,7 @@
 	if(working)
 		interrupt_operation()
 
-/obj/machinery/skill_station/close_machine(atom/movable/target)
+/obj/machinery/skill_station/close_machine(atom/movable/target, density = TRUE)
 	. = ..()
 	if(occupant)
 		ui_interact(occupant)

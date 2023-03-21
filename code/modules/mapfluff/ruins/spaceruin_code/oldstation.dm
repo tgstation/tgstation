@@ -179,7 +179,7 @@
 	..()
 	return TRUE
 
-/obj/machinery/mod_installer/close_machine(mob/living/carbon/user)
+/obj/machinery/mod_installer/close_machine(mob/living/carbon/user, density = TRUE)
 	if(!state_open)
 		return FALSE
 	..()

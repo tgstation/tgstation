@@ -50,7 +50,7 @@
 				[span_notice("Removing [bite_size] nutritional units per operation.")]
 				[span_notice("Requires [nutrient_to_meat] nutritional units per meat slab.")]"}
 
-/obj/machinery/fat_sucker/close_machine(mob/user)
+/obj/machinery/fat_sucker/close_machine(mob/user, density = TRUE)
 	if(panel_open)
 		to_chat(user, span_warning("You need to close the maintenance hatch first!"))
 		return

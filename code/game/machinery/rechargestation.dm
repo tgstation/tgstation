@@ -93,7 +93,7 @@
 
 /obj/machinery/recharge_station/proc/toggle_open()
 	if(state_open)
-		close_machine()
+		close_machine(density = TRUE)
 	else
 		open_machine()
 
@@ -101,7 +101,7 @@
 	. = ..()
 	update_use_power(IDLE_POWER_USE)
 
-/obj/machinery/recharge_station/close_machine()
+/obj/machinery/recharge_station/close_machine(density = TRUE)
 	. = ..()
 	if(occupant)
 		update_use_power(ACTIVE_POWER_USE) //It always tries to charge, even if it can't.
