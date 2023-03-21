@@ -102,6 +102,9 @@
 	},
 /turf/open/floor/engine/air,
 /area/ruin/space/has_grav)
+"gU" = (
+/turf/template_noop,
+/area/template_noop)
 "hB" = (
 /obj/effect/turf_decal/tile/yellow/full,
 /obj/machinery/portable_atmospherics/scrubber/huge/movable,
@@ -716,45 +719,45 @@ uz
 "}
 (2,1,1) = {"
 uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
+gU
+gU
+gU
+gU
+gU
+gU
+gU
+gU
+gU
+gU
+gU
+gU
+gU
+gU
 Dy
 hD
 Dy
-uz
-uz
-uz
-uz
-uz
-uz
+gU
+gU
+gU
+gU
+gU
+gU
 uz
 "}
 (3,1,1) = {"
 uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
+gU
+gU
+gU
+gU
+gU
+gU
+gU
+gU
+gU
+gU
+gU
+gU
 Kj
 Kj
 Dy
@@ -762,22 +765,22 @@ zL
 Dy
 Kj
 Er
-uz
-uz
-uz
-uz
+gU
+gU
+gU
+gU
 uz
 "}
 (4,1,1) = {"
 uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
-uz
+gU
+gU
+gU
+gU
+gU
+gU
+gU
+gU
 Kj
 Kj
 Kj
@@ -791,15 +794,15 @@ Kj
 Kj
 Kj
 Kj
-uz
-uz
+gU
+gU
 uz
 "}
 (5,1,1) = {"
 uz
-uz
-uz
-uz
+gU
+gU
+gU
 Er
 Er
 Er
@@ -819,13 +822,13 @@ Dy
 Dy
 Kj
 Kj
-uz
+gU
 uz
 "}
 (6,1,1) = {"
 uz
-uz
-uz
+gU
+gU
 Er
 Er
 Er
@@ -851,7 +854,7 @@ uz
 "}
 (7,1,1) = {"
 uz
-uz
+gU
 Er
 Er
 Er
@@ -878,7 +881,7 @@ uz
 "}
 (8,1,1) = {"
 uz
-uz
+gU
 Er
 Er
 Kj
@@ -905,7 +908,7 @@ uz
 "}
 (9,1,1) = {"
 uz
-uz
+gU
 Kj
 Kj
 Kj
@@ -1121,7 +1124,7 @@ uz
 "}
 (17,1,1) = {"
 uz
-uz
+gU
 Kj
 Kj
 Kj
@@ -1148,7 +1151,7 @@ uz
 "}
 (18,1,1) = {"
 uz
-uz
+gU
 Kj
 Kj
 Kj
@@ -1175,7 +1178,7 @@ uz
 "}
 (19,1,1) = {"
 uz
-uz
+gU
 Kj
 Kj
 Kj
@@ -1202,8 +1205,8 @@ uz
 "}
 (20,1,1) = {"
 uz
-uz
-uz
+gU
+gU
 Kj
 Kj
 Er
@@ -1229,8 +1232,8 @@ uz
 "}
 (21,1,1) = {"
 uz
-uz
-uz
+gU
+gU
 Kj
 Er
 Er
@@ -1256,9 +1259,9 @@ uz
 "}
 (22,1,1) = {"
 uz
-uz
-uz
-uz
+gU
+gU
+gU
 Er
 Er
 Er
@@ -1283,10 +1286,10 @@ uz
 "}
 (23,1,1) = {"
 uz
-uz
-uz
-uz
-uz
+gU
+gU
+gU
+gU
 Er
 Kj
 Kj
@@ -1305,17 +1308,17 @@ Kj
 Kj
 SW
 SW
-uz
+gU
 uz
 "}
 (24,1,1) = {"
 uz
-uz
-uz
-uz
-uz
-uz
-uz
+gU
+gU
+gU
+gU
+gU
+gU
 Kj
 Kj
 Kj
@@ -1326,13 +1329,13 @@ Kj
 Kj
 Kj
 Kj
-uz
-uz
-uz
-uz
-uz
-uz
-uz
+gU
+gU
+gU
+gU
+gU
+gU
+gU
 uz
 "}
 (25,1,1) = {"
