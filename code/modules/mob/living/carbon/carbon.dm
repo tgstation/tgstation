@@ -949,7 +949,7 @@
 	if (current_brain.organ_flags & ORGAN_FAILING)
 		return DEFIB_FAIL_FAILING_BRAIN
 
-	if (current_brain.suicided || HAS_TRAIT(current_brain.brainmob, TRAIT_SUICIDED))
+	if (current_brain.suicided || (current_brain.brainmob && HAS_TRAIT(current_brain.brainmob, TRAIT_SUICIDED)))
 		return DEFIB_FAIL_NO_INTELLIGENCE
 
 	if(key && key[1] == "@") // Adminghosts
