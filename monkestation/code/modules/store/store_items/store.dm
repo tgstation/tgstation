@@ -144,6 +144,8 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 
 	var/list/loadout_tabs = list()
 	loadout_tabs += list(list("name" = "Toys", "title" = "Toys!", "contents" = list_to_data(GLOB.store_toys)))
+	loadout_tabs += list(list("name" = "Shoes", "title" = "Shoes!", "contents" = list_to_data(GLOB.store_shoes)))
+	loadout_tabs += list(list("name" = "Suits", "title" = "Suits!", "contents" = list_to_data(GLOB.store_suits)))
 
 	data["loadout_tabs"] = loadout_tabs
 
