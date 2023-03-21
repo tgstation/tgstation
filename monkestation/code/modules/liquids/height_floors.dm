@@ -2,6 +2,7 @@
 	name = "elevated floor tile"
 	singular_name = "elevated floor tile"
 	turf_type = /turf/open/floor/elevated
+	merge_type = /obj/item/stack/tile/elevated
 	icon = 'monkestation/icons/obj/items/tiles.dmi'
 	icon_state = "elevated"
 
@@ -9,6 +10,15 @@
 	name = "lowered floor tile"
 	singular_name = "lowered floor tile"
 	turf_type = /turf/open/floor/lowered
+	merge_type = /obj/item/stack/tile/lowered
+	icon = 'monkestation/icons/obj/items/tiles.dmi'
+	icon_state = "lowered"
+
+/obj/item/stack/tile/lowered/iron
+	name = "lowered floor tile"
+	singular_name = "lowered floor tile"
+	turf_type = /turf/open/floor/lowered
+	merge_type = /obj/item/stack/tile/lowered
 	icon = 'monkestation/icons/obj/items/tiles.dmi'
 	icon_state = "lowered"
 
@@ -16,6 +26,7 @@
 	name = "pool floor tile"
 	singular_name = "pool floor tile"
 	turf_type = /turf/open/floor/lowered/iron/pool
+	merge_type = /obj/item/stack/tile/lowered/iron/pool
 	icon = 'monkestation/icons/obj/items/tiles.dmi'
 	icon_state = "pool"
 

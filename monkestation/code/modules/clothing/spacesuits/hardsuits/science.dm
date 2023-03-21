@@ -42,7 +42,6 @@
 	name = "prototype hardsuit"
 	desc = "A prototype suit that protects against hazardous, low pressure environments. Fitted with extensive plating for handling explosives and dangerous research materials."
 	icon_state = "hardsuit-toxins"
-	inhand_icon_state = "hardsuit-toxins"
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT //Same as an emergency firesuit. Not ideal for extended exposure.
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/gun/energy/wormhole_projector,

@@ -4,7 +4,6 @@
 	icon = 'monkestation/icons/obj/clothing/hardsuits/helmet.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/hardsuit/hardsuit_helm.dmi'
 	icon_state = "hardsuit0-engineering"
-	inhand_icon_state = "eng_helm"
 	max_integrity = 300
 	armor_type = /datum/armor/hardsuit
 	light_system = MOVABLE_LIGHT_DIRECTIONAL

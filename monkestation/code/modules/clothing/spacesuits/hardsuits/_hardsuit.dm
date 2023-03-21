@@ -7,7 +7,6 @@
 	icon = 'monkestation/icons/obj/clothing/hardsuits/suit.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/hardsuit/hardsuit_body.dmi'
 	icon_state = "hardsuit-engineering"
-	inhand_icon_state = "eng_hardsuit"
 	max_integrity = 300
 	armor_type = /datum/armor/hardsuit
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser)

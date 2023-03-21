@@ -3,7 +3,6 @@
 	name = "medical hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Built with lightweight materials for extra comfort, but does not protect the eyes from intense light."
 	icon_state = "hardsuit0-medical"
-	inhand_icon_state = "medical_helm"
 	hardsuit_type = "medical"
 	flash_protect = FLASH_PROTECTION_NONE
 	armor_type = /datum/armor/hardsuit/medical
@@ -14,7 +13,6 @@
 	name = "medical hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement."
 	icon_state = "hardsuit-medical"
-	inhand_icon_state = "medical_hardsuit"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/medkit, /obj/item/healthanalyzer, /obj/item/stack/medical)
 	armor_type = /datum/armor/hardsuit/medical
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
