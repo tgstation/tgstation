@@ -8,10 +8,13 @@
 	var/turf/signal_turf
 	///Our physical sticker to drop
 	var/obj/item/sticker
+	///Can we be washed off?
+	var/washable = TRUE
 
-/datum/component/attached_sticker/Initialize(px, py, obj/stick, mob/living/user)
+/datum/component/attached_sticker/Initialize(px, py, obj/stick, mob/living/user, cleanable=TRUE)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
+	washable = cleanable
 	var/atom/atom_parent = parent
 	sticker = stick
 	sticker_overlay = mutable_appearance(stick.icon, stick.icon_state , layer = atom_parent.layer + 1, appearance_flags = RESET_COLOR | PIXEL_SCALE)
@@ -46,14 +49,17 @@
 
 /datum/component/attached_sticker/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_LIVING_IGNITED, PROC_REF(on_ignite))
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(peel))
+	if(washable)
+		RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(peel))
 	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_attached_qdel))
 
 /datum/component/attached_sticker/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_IGNITED, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(parent, list(COMSIG_LIVING_IGNITED, COMSIG_PARENT_QDELETING))
 	if(signal_turf)
 		UnregisterSignal(signal_turf, COMSIG_TURF_EXPOSE)
 		signal_turf = null
+	if(washable)
+		UnregisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT)
 
 ///Signal handler for COMSIG_TURF_EXPOSE, deletes this sticker if the temperature is above 100C and it is flammable
 /datum/component/attached_sticker/proc/on_turf_expose(datum/source, datum/gas_mixture/air, exposed_temperature)

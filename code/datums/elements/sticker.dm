@@ -1,8 +1,10 @@
 /datum/element/sticker
 	///The typepath for our attached sticker component
 	var/stick_type = /datum/component/attached_sticker
+	///If TRUE, our attached_sticker can be washed off
+	var/washable = TRUE
 
-/datum/element/sticker/Attach(datum/target, sticker_type)
+/datum/element/sticker/Attach(datum/target, sticker_type, cleanable=TRUE)
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
@@ -10,6 +12,7 @@
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))	
 	if(sticker_type)
 		stick_type = sticker_type
+	washable = cleanable
 
 /datum/element/sticker/Detach(datum/source)
 	. = ..()
@@ -33,7 +36,7 @@
 
 ///Add our stick_type to the target with px and py as pixel x and pixel y respectively
 /datum/element/sticker/proc/do_stick(obj/item/source, atom/target, mob/living/user, px, py)
-	target.AddComponent(stick_type, px, py, source, user)
+	target.AddComponent(stick_type, px, py, source, user, washable)
 
 /datum/element/sticker/proc/on_throw_impact(obj/item/source, atom/hit_atom, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
