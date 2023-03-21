@@ -180,7 +180,7 @@
 /area/space/nearstation)
 "IE" = (
 /obj/machinery/door/airlock/maintenance_hatch,
-/turf/closed/wall,
+/turf/open/floor/carpet/donk,
 /area/ruin/space/space_ghost_restaurant)
 "IH" = (
 /obj/machinery/door/airlock/maintenance_hatch,
