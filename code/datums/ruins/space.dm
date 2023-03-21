@@ -356,3 +356,9 @@
 	suffix = "the_faceoff.dmm"
 	name = "The Faceoff"
 	description = "What do you get when a meeting of the enemy corporations get crashed?"
+
+/datum/map_template/ruin/space/atmosastroidruin
+	id = "atmosastroidruin"
+	suffix = "atmosastroidruin.dmm"
+	name = "Atmos Astroid"
+	description = "A dead atmos tech in a continuously presurizing ruin"
