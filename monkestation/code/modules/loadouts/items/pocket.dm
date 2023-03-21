@@ -56,6 +56,7 @@ GLOBAL_LIST_INIT(loadout_pocket_items, generate_loadout_items(/datum/loadout_ite
 /datum/loadout_item/pocket_items/gum_pack
 	name = "Pack of Gum"
 	item_path = /obj/item/storage/box/gum
+	requires_purchase = FALSE
 
 /datum/loadout_item/pocket_items/gum_pack_nicotine
 	name = "Pack of Nicotine Gum"

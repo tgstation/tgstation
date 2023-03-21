@@ -28,6 +28,7 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 /datum/loadout_item/shoes/jackboots
 	name = "Jackboots"
 	item_path = /obj/item/clothing/shoes/jackboots
+	requires_purchase = FALSE
 
 /*
 *	MISC BOOTS

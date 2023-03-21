@@ -55,7 +55,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	/// Whether the item requires a specific season in order to be available
 	var/required_season = null
 	///does this item require being bought to show up?
-	var/requires_purchase = FALSE
+	var/requires_purchase = TRUE
 
 /*
  * Place our [var/item_path] into [outfit].

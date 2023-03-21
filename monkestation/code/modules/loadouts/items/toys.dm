@@ -76,6 +76,7 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 /datum/loadout_item/toys/card_binder
 	name = "Card Binder"
 	item_path = /obj/item/storage/card_binder
+	requires_purchase = FALSE
 
 /datum/loadout_item/toys/card_deck
 	name = "Playing Card Deck"
@@ -84,6 +85,7 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 /datum/loadout_item/toys/kotahi_deck
 	name = "Kotahi Deck"
 	item_path = /obj/item/toy/cards/deck/kotahi
+	requires_purchase = FALSE
 
 /datum/loadout_item/toys/wizoff_deck
 	name = "Wizoff Deck"
@@ -173,4 +175,3 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 /datum/loadout_item/toys/foam_sword
 	name = "Foam Sword"
 	item_path = /obj/item/toy/sword
-	requires_purchase = TRUE
