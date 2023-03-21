@@ -219,9 +219,6 @@ export const SeedExtractor = (props, context) => {
                     <Level value={item.yield} max={10} />
                   </Table.Cell>
                   <Table.Cell py={0.5} px={1} collapsing>
-                    <Level value={item.instability} max={100} reverse />
-                  </Table.Cell>
-                  <Table.Cell py={0.5} px={1} collapsing>
                     <Level value={item.endurance} max={100} />
                   </Table.Cell>
                   <Table.Cell py={0.5} px={1} collapsing>

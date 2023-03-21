@@ -4,7 +4,7 @@ import { Window } from '../layouts';
 
 export const StoreManager = (props, context) => {
   const { act, data } = useBackend(context);
-  const { loadout_tabs } = data;
+  const { loadout_tabs, total_coins } = data;
 
   const [selectedTabName, setSelectedTab] = useSharedState(
     context,
@@ -25,10 +25,10 @@ export const StoreManager = (props, context) => {
               align="center"
               buttons={
                 <Button
-                  icon="info"
+                  icon="coin"
                   align="center"
-                  content="Tutorial"
-                  onClick={() => act('toggle_tutorial')}
+                  content="Monkecoins"
+                  tooltip={total_coins}
                 />
               }>
               <Dropdown
