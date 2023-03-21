@@ -9,11 +9,6 @@ SUBSYSTEM_DEF(modular_computers)
 	///List of all chat channels created by Chat Client.
 	var/list/chat_channels = list()
 
-	///Boolean on whether downloading software works.
-	var/setting_softwaredownload = TRUE
-	///Boolean on whether downloading communication apps like the Chat client works.
-	var/setting_communication = TRUE
-
 	///Boolean on whether the IDS warning system is enabled
 	var/intrusion_detection_enabled = TRUE
 	///Boolean to show a message warning if there's an active intrusion for Wirecarp users.
@@ -47,34 +42,6 @@ SUBSYSTEM_DEF(modular_computers)
 			continue
 		return TRUE
 	return FALSE
-
-/datum/controller/subsystem/modular_computers/proc/toggle_function(function)
-	if(!function)
-		return
-	function = text2num(function)
-	switch(function)
-		if(NTNET_SOFTWAREDOWNLOAD)
-			setting_softwaredownload = !setting_softwaredownload
-			SSnetworks.add_log("Configuration Updated. Wireless network firewall now [setting_softwaredownload ? "allows" : "disallows"] connection to software repositories.")
-		if(NTNET_COMMUNICATION)
-			setting_communication = !setting_communication
-			SSnetworks.add_log("Configuration Updated. Wireless network firewall now [setting_communication ? "allows" : "disallows"] instant messaging and similar communication services.")
-
-///Checks whether NTNet is available for a specific function, checking NTNet relays and shutdowns. If none is passed, none is needed.
-/datum/controller/subsystem/modular_computers/proc/check_function(specific_action = NONE)
-	// No relays found. NTNet is down
-	if(!length(ntnet_relays))
-		return FALSE
-	// Check all relays. If we have at least one working relay, network is up.
-	if(!check_relay_operation())
-		return FALSE
-
-	switch(specific_action)
-		if(NTNET_SOFTWAREDOWNLOAD)
-			return setting_softwaredownload
-		if(NTNET_COMMUNICATION)
-			return setting_communication
-	return TRUE
 
 ///Attempts to find a new file through searching the available stores with its name.
 /datum/controller/subsystem/modular_computers/proc/find_ntnet_file_by_name(filename)
