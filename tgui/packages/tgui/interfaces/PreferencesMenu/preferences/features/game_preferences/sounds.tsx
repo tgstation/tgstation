@@ -37,7 +37,7 @@ export const sound_instruments: FeatureToggle = {
 export const sound_tts: FeatureToggle = {
   name: 'Enable TTS',
   category: 'SOUND',
-  description: 'When enabled, be able hear Text To Speech sounds in game.',
+  description: 'When enabled, be able to hear text-to-speech sounds in game.',
   component: CheckboxInput,
 };
 
