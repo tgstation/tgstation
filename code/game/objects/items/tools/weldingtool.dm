@@ -25,7 +25,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
+	armor_type = /datum/armor/item_weldingtool
 	resistance_flags = FIRE_PROOF
 	heat = 3800
 	tool_behaviour = TOOL_WELDER
@@ -50,6 +50,10 @@
 
 	var/activation_sound = 'sound/items/welderactivate.ogg'
 	var/deactivation_sound = 'sound/items/welderdeactivate.ogg'
+
+/datum/armor/item_weldingtool
+	fire = 100
+	acid = 30
 
 /obj/item/weldingtool/Initialize(mapload)
 	. = ..()
@@ -141,7 +145,7 @@
 			if(user == attacked_humanoid)
 				user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid]'s [affecting.name]."),
 					span_notice("You start fixing some of the dents on [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
-				if(!do_mob(user, attacked_humanoid, 50))
+				if(!do_after(user, 5 SECONDS, attacked_humanoid))
 					return
 			item_heal_robotic(attacked_humanoid, user, 15, 0)
 	else
@@ -152,17 +156,22 @@
 	if(!proximity)
 		return
 
-	if(isOn() && !QDELETED(attacked_atom) && isliving(attacked_atom)) // can't ignite something that doesn't exist
-		handle_fuel_and_temps(1, user)
-		var/mob/living/attacked_mob = attacked_atom
-		if(attacked_mob.ignite_mob())
-			message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
-			user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)
+	if(isOn())
+		. |= AFTERATTACK_PROCESSED_ITEM
+		if (!QDELETED(attacked_atom) && isliving(attacked_atom)) // can't ignite something that doesn't exist
+			handle_fuel_and_temps(1, user)
+			var/mob/living/attacked_mob = attacked_atom
+			if(attacked_mob.ignite_mob())
+				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
+				user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)
 
 	if(!status && attacked_atom.is_refillable())
+		. |= AFTERATTACK_PROCESSED_ITEM
 		reagents.trans_to(attacked_atom, reagents.total_volume, transfered_by = user)
 		to_chat(user, span_notice("You empty [src]'s fuel tank into [attacked_atom]."))
 		update_appearance()
+
+	return .
 
 /obj/item/weldingtool/attack_qdeleted(atom/attacked_atom, mob/user, proximity)
 	. = ..()
@@ -306,7 +315,7 @@
 		var/obj/item/stack/rods/used_rods = tool
 		if (used_rods.use(1))
 			var/obj/item/flamethrower/flamethrower_frame = new /obj/item/flamethrower(user.loc)
-			if(!remove_item_from_storage(flamethrower_frame))
+			if(!remove_item_from_storage(flamethrower_frame, user))
 				user.transferItemToLoc(src, flamethrower_frame, TRUE)
 			flamethrower_frame.weldtool = src
 			add_fingerprint(user)

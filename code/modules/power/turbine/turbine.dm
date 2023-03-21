@@ -95,13 +95,12 @@
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	tool.play_tool_sound(src, 50)
-	panel_open = !panel_open
+	toggle_panel_open()
 	if(panel_open)
 		disable_parts(user)
 	else
 		enable_parts(user)
-	var/descriptor = panel_open ? "open" : "close"
-	balloon_alert(user, "you [descriptor] the maintenance hatch of [src]")
+	balloon_alert(user, "you [panel_open ? "open" : "close"] the maintenance hatch of [src]")
 	update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

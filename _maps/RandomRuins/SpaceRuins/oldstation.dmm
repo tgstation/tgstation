@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/mob/living/simple_animal/hostile/carp,
+/mob/living/basic/carp,
 /turf/template_noop,
 /area/template_noop)
 "ad" = (
@@ -1192,7 +1192,7 @@
 /obj/item/t_scanner,
 /obj/item/screwdriver/power,
 /obj/item/storage/belt/utility,
-/obj/item/clothing/head/utility/hardhat/weldhat,
+/obj/item/clothing/head/utility/hardhat/welding,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/supermatter)
 "ec" = (

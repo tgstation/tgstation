@@ -6,7 +6,7 @@
 		if(DETONATION_HIT_STATION)
 			// And it was detonated by nuke ops
 			if(length(get_antag_minds(/datum/antagonist/nukeop)))
-				if(is_infiltrator_docked_at_centcom())
+				if(is_infiltrator_docked_at_syndiebase())
 					// And the ops escaped, they won!
 					return /datum/cinematic/nuke/ops_victory
 				else

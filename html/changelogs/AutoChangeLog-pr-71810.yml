@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored how bar drinks set their icons. Juice boxes now use the same system."

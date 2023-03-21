@@ -6,6 +6,7 @@
 	earliest_start = 30 MINUTES //deadchat sink, lets not even consider it early on.
 	category = EVENT_CATEGORY_INVASION
 	description = "Fugitives will hide on the station, followed by hunters."
+	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event/ghost_role/fugitives
 	minimum_required = 1
@@ -55,7 +56,7 @@
 	if(!isnull(leader))
 		gear_fugitive_leader(leader, landing_turf, backstory)
 
-//after spawning
+	//after spawning
 	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE)
 	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
 	addtimer(CALLBACK(src, PROC_REF(spawn_hunters)), 10 MINUTES)

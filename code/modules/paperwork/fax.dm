@@ -1,3 +1,5 @@
+GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department", "NT Complaint Department", "NT Customer Relations", "Nanotrasen Tech Support", "NT Internal Affairs Dept"))
+
 /obj/machinery/fax
 	name = "Fax Machine"
 	desc = "Bluespace technologies on the application of bureaucracy."
@@ -48,8 +50,8 @@
 	)
 	/// List with a fake-networks(not a fax actually), for request manager.
 	var/list/special_networks = list(
-		list(fax_name = "Central Command", fax_id = "central_command", color = "teal", emag_needed = FALSE),
-		list(fax_name = "Sabotage Department", fax_id = "syndicate", color = "red", emag_needed = TRUE),
+		nanotrasen = list(fax_name = "NT HR Department", fax_id = "central_command", color = "teal", emag_needed = FALSE),
+		syndicate = list(fax_name = "Sabotage Department", fax_id = "syndicate", color = "red", emag_needed = TRUE),
 	)
 
 /obj/machinery/fax/Initialize(mapload)
@@ -60,6 +62,7 @@
 		fax_name = "Unregistered fax " + fax_id
 	wires = new /datum/wires/fax(src)
 	register_context()
+	special_networks["nanotrasen"]["fax_name"] = GLOB.nt_fax_department
 
 /obj/machinery/fax/Destroy()
 	QDEL_NULL(loaded_item_ref)
@@ -234,7 +237,10 @@
 	data["syndicate_network"] = (syndicate_network || (obj_flags & EMAGGED))
 	data["has_paper"] = !!loaded_item_ref?.resolve()
 	data["fax_history"] = fax_history
-	data["special_faxes"] = special_networks
+	var/list/special_networks_data = list()
+	for(var/key in special_networks)
+		special_networks_data += list(special_networks[key])
+	data["special_faxes"] = special_networks_data
 	return data
 
 /obj/machinery/fax/ui_act(action, list/params)
@@ -281,6 +287,9 @@
 
 			GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [params["name"]]", fax_paper)
 			to_chat(GLOB.admins, span_adminnotice("[icon2html(src.icon, GLOB.admins)]<b><font color=green>FAX REQUEST: </font>[ADMIN_FULLMONTY(usr)]:</b> [span_linkify("sent a fax message from [fax_name]/[fax_id][ADMIN_FLW(src)] to [html_encode(params["name"])]")] [ADMIN_SHOW_PAPER(fax_paper)]"), confidential = TRUE)
+			for(var/client/staff as anything in GLOB.admins)
+				if(staff?.prefs.read_preference(/datum/preference/toggle/comms_notification))
+					SEND_SOUND(staff, sound('sound/misc/server-ready.ogg'))
 			log_fax(fax_paper, params["id"], params["name"])
 			loaded_item_ref = null
 			update_appearance()

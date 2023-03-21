@@ -102,7 +102,7 @@
 	DropFuel()
 	return ..()
 
-/obj/machinery/power/port_gen/pacman/on_construction()
+/obj/machinery/power/port_gen/pacman/on_construction(mob/user)
 	var/obj/item/circuitboard/machine/pacman/our_board = circuit
 	if(our_board.high_production_profile)
 		icon_state = "portgen1_0"
@@ -198,7 +198,7 @@
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			return
 		else if(O.tool_behaviour == TOOL_SCREWDRIVER)
-			panel_open = !panel_open
+			toggle_panel_open()
 			O.play_tool_sound(src)
 			if(panel_open)
 				to_chat(user, span_notice("You open the access panel."))

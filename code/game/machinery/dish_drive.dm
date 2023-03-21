@@ -69,8 +69,8 @@
 /obj/machinery/dish_drive/RefreshParts()
 	. = ..()
 	var/total_rating = 0
-	for(var/obj/item/stock_parts/S in component_parts)
-		total_rating += S.rating
+	for(var/datum/stock_part/stock_part in component_parts)
+		total_rating += stock_part.tier
 	if(total_rating >= 9)
 		update_mode_power_usage(ACTIVE_POWER_USE, 0)
 	else
@@ -104,7 +104,7 @@
 	do_the_dishes(TRUE)
 
 /obj/machinery/dish_drive/AltClick(mob/living/user)
-	if(user.canUseTopic(src, !issilicon(user)))
+	if(user.can_perform_action(src, ALLOW_SILICON_REACH))
 		do_the_dishes(TRUE)
 
 /obj/machinery/dish_drive/proc/do_the_dishes(manual)

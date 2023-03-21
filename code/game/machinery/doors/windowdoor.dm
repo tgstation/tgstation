@@ -9,7 +9,7 @@
 	var/base_state = "left"
 	max_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ max_integrity at the bottom of this .dm file
 	integrity_failure = 0
-	armor = list(MELEE = 20, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 0, FIRE = 70, ACID = 100)
+	armor_type = /datum/armor/door_window
 	visible = FALSE
 	flags_1 = ON_BORDER_1
 	opacity = FALSE
@@ -24,6 +24,15 @@
 	var/rods = 2
 	var/cable = 1
 	var/list/debris = list()
+
+/datum/armor/door_window
+	melee = 20
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 10
+	fire = 70
+	acid = 100
 
 /obj/machinery/door/window/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
@@ -185,17 +194,16 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/machinery/door/window/open(forced=FALSE)
+/obj/machinery/door/window/open(forced = DEFAULT_DOOR_CHECKS)
 	if (operating) //doors can still open when emag-disabled
-		return 0
-	if(!forced)
-		if(!hasPower())
-			return 0
-	if(forced < 2)
-		if(obj_flags & EMAGGED)
-			return 0
+		return FALSE
+
+	if(!try_to_force_door_open(forced))
+		return FALSE
+
 	if(!operating) //in case of emag
 		operating = TRUE
+
 	do_animate("opening")
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
 	icon_state ="[base_state]open"
@@ -206,17 +214,35 @@
 
 	if(operating == 1) //emag again
 		operating = FALSE
-	return 1
 
-/obj/machinery/door/window/close(forced=FALSE)
-	if (operating)
-		return 0
-	if(!forced)
-		if(!hasPower())
-			return 0
-	if(forced < 2)
-		if(obj_flags & EMAGGED)
-			return 0
+	return TRUE
+
+/// Additional checks depending on what we want to happen to this windoor
+/obj/machinery/door/window/try_to_force_door_open(force_type = DEFAULT_DOOR_CHECKS)
+	switch(force_type)
+		if(DEFAULT_DOOR_CHECKS)
+			if(!hasPower() || (obj_flags & EMAGGED))
+				return FALSE
+			return TRUE
+
+		if(FORCING_DOOR_CHECKS)
+			if(obj_flags & EMAGGED)
+				return FALSE
+			return TRUE
+
+		if(BYPASS_DOOR_CHECKS) // Get it open!
+			return TRUE
+
+		else
+			stack_trace("Invalid forced argument '[force_type]' passed to open() on this airlock.")
+
+	// Shit's fucked, let's just check parent real fast.
+	return ..()
+
+/obj/machinery/door/window/close(forced = DEFAULT_DOOR_CHECKS)
+	if(operating || !try_to_force_door_shut(forced))
+		return FALSE
+
 	operating = TRUE
 	do_animate("closing")
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
@@ -228,14 +254,28 @@
 	sleep(1 SECONDS)
 
 	operating = FALSE
-	return 1
+	return TRUE
 
-///When the tram is in station, the doors are locked to engineering only.
-/obj/machinery/door/window/lock()
-	req_access = list("engineering")
+/obj/machinery/door/window/try_to_force_door_shut(force_type = DEFAULT_DOOR_CHECKS)
+	switch(force_type)
+		if(DEFAULT_DOOR_CHECKS)
+			if(!hasPower() || (obj_flags & EMAGGED))
+				return FALSE
+			return TRUE
 
-/obj/machinery/door/window/unlock()
-	req_access = null
+		if(FORCING_DOOR_CHECKS)
+			if(obj_flags & EMAGGED)
+				return FALSE
+			return TRUE
+
+		if(BYPASS_DOOR_CHECKS) // Get it shut!
+			return TRUE
+
+		else
+			stack_trace("Invalid forced argument '[force_type]' passed to close() on this airlock.")
+
+	// If we got here, shit's fucked, but let's presume parent can bail us out somehow.
+	return ..()
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -277,8 +317,12 @@
 		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		sleep(0.6 SECONDS)
 		operating = FALSE
-		desc += "<BR>[span_warning("Its access panel is smoking slightly.")]"
-		open(2)
+		open(BYPASS_DOOR_CHECKS)
+
+/obj/machinery/door/window/examine(mob/user)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		. += span_warning("Its access panel is smoking slightly.")
 
 /obj/machinery/door/window/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -289,7 +333,7 @@
 		return
 	add_fingerprint(user)
 	tool.play_tool_sound(src)
-	panel_open = !panel_open
+	toggle_panel_open()
 	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance panel."))
 	return TRUE
 
@@ -358,9 +402,9 @@
 /obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user, forced = FALSE)
 	if(!hasPower() || forced)
 		if(density)
-			open(2)
+			open(BYPASS_DOOR_CHECKS)
 		else
-			close(2)
+			close(BYPASS_DOOR_CHECKS)
 	else
 		to_chat(user, span_warning("The door's motors resist your efforts to force it!"))
 

@@ -166,10 +166,8 @@
 	to_chat(user, span_warning("You feel your life being drained by the pendant..."))
 	if(do_after(user, 40, target = user))
 		to_chat(user, span_notice("Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die."))
-		ADD_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
-		ADD_TRAIT(user, TRAIT_NOHARDCRIT, CLOTHING_TRAIT)
-		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, CLOTHING_TRAIT)
-		RegisterSignal(user, COMSIG_CARBON_HEALTH_UPDATE, PROC_REF(check_health))
+		user.add_traits(list(TRAIT_NODEATH, TRAIT_NOHARDCRIT, TRAIT_NOCRITDAMAGE), CLOTHING_TRAIT)
+		RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_health))
 		icon_state = "memento_mori_active"
 		active_owner = user
 
@@ -177,7 +175,7 @@
 	icon_state = "memento_mori"
 	if(!active_owner)
 		return
-	UnregisterSignal(active_owner, COMSIG_CARBON_HEALTH_UPDATE)
+	UnregisterSignal(active_owner, COMSIG_LIVING_HEALTH_UPDATE)
 	var/mob/living/carbon/human/H = active_owner //to avoid infinite looping when dust unequips the pendant
 	active_owner = null
 	to_chat(H, span_userdanger("You feel your life rapidly slipping away from you!"))
@@ -209,7 +207,7 @@
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/regurgitate_guardian(mob/living/simple_animal/hostile/guardian/guardian)
 	guardian.locked = FALSE
-	guardian.Recall(TRUE)
+	guardian.recall(forced = TRUE)
 	to_chat(guardian, span_notice("You have been returned back from your summoner's pendant!"))
 	guardian.playsound_local(get_turf(guardian), 'sound/magic/repulse.ogg', 50, TRUE)
 
@@ -277,7 +275,7 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	var/sight_flags = SEE_MOBS
-	var/lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	var/list/color_cutoffs = list(10, 25, 25)
 
 /obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 	. = ..()
@@ -296,8 +294,8 @@
 /obj/effect/wisp/proc/update_user_sight(mob/user)
 	SIGNAL_HANDLER
 	user.add_sight(sight_flags)
-	if(!isnull(lighting_alpha))
-		user.lighting_alpha = min(user.lighting_alpha, lighting_alpha)
+	if(!isnull(color_cutoffs))
+		user.lighting_color_cutoffs = blend_cutoff_colors(user.lighting_color_cutoffs, color_cutoffs)
 
 //Red/Blue Cubes
 /obj/item/warp_cube
@@ -561,7 +559,8 @@
 	var/list/radial_wings = list()
 	var/list/name2type = list()
 	for(var/obj/item/organ/external/wings/functional/possible_type as anything in wing_types)
-		var/datum/sprite_accessory/accessory = GLOB.wings_list[possible_type.name] //Gets the datum for every wing this species has, then prompts user with a radial menu
+		var/datum/sprite_accessory/accessory = initial(possible_type.sprite_accessory_override) //get the type
+		accessory = GLOB.wings_list[initial(accessory.name)] //get the singleton instance
 		var/image/img = image(icon = accessory.icon, icon_state = "m_wingsopen_[accessory.icon_state]_BEHIND") //Process the HUD elements
 		img.transform *= 0.5
 		img.pixel_x = -32
@@ -614,7 +613,16 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = LAVA_PROOF | FIRE_PROOF //they are from lavaland after all
-	armor = list(MELEE = 15, BULLET = 25, LASER = 15, ENERGY = 15, BOMB = 100, BIO = 0, FIRE = 100, ACID = 30) //mostly bone bracer armor
+	armor_type = /datum/armor/gloves_gauntlets
+
+/datum/armor/gloves_gauntlets
+	melee = 15
+	bullet = 25
+	laser = 15
+	energy = 15
+	bomb = 100
+	fire = 100
+	acid = 30
 
 /obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
 	. = ..()
@@ -648,7 +656,7 @@
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/berserker
-	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/hooded_berserker
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -668,6 +676,15 @@
 		/obj/item/melee/cleaving_saw,
 	)
 
+/datum/armor/hooded_berserker
+	melee = 30
+	bullet = 30
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
+
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, ALL, inventory_flags = ITEM_SLOT_OCLOTHING)
@@ -685,7 +702,7 @@
 	icon_state = "berserker"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
-	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/hooded_berserker
 	actions_types = list(/datum/action/item_action/berserk_mode)
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -737,7 +754,7 @@
 	to_chat(user, span_warning("You enter berserk mode."))
 	playsound(user, 'sound/magic/staff_healing.ogg', 50)
 	user.add_movespeed_modifier(/datum/movespeed_modifier/berserk)
-	user.physiology.armor.melee += BERSERK_MELEE_ARMOR_ADDED
+	user.physiology.armor = user.physiology.armor.generate_new_with_modifiers(list(MELEE = BERSERK_MELEE_ARMOR_ADDED))
 	user.next_move_modifier *= BERSERK_ATTACK_SPEED_MODIFIER
 	user.add_atom_colour(COLOR_BUBBLEGUM_RED, TEMPORARY_COLOUR_PRIORITY)
 	ADD_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
@@ -755,7 +772,7 @@
 	to_chat(user, span_warning("You exit berserk mode."))
 	playsound(user, 'sound/magic/summonitems_generic.ogg', 50)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/berserk)
-	user.physiology.armor.melee -= BERSERK_MELEE_ARMOR_ADDED
+	user.physiology.armor = user.physiology.armor.generate_new_with_modifiers(list(MELEE = -BERSERK_MELEE_ARMOR_ADDED))
 	user.next_move_modifier /= BERSERK_ATTACK_SPEED_MODIFIER
 	user.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BUBBLEGUM_RED)
 	REMOVE_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
@@ -775,8 +792,8 @@
 	icon_state = "godeye"
 	inhand_icon_state = null
 	vision_flags = SEE_TURFS
-	darkness_view = 8
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Blue, light blue
+	color_cutoffs = list(15, 30, 40)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	custom_materials = null
 	var/datum/action/cooldown/scan/scan_ability
@@ -843,7 +860,7 @@
 	living_scanned.set_jitter_if_lower(100 SECONDS)
 	to_chat(living_scanned, span_warning("You've been staggered!"))
 	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
-	addtimer(CALLBACK(living_scanned, TYPE_PROC_REF(/atom/, remove_filter), "scan"), 30 SECONDS)
+	addtimer(CALLBACK(living_scanned, TYPE_PROC_REF(/datum, remove_filter), "scan"), 30 SECONDS)
 
 	owner.playsound_local(get_turf(owner), 'sound/magic/smoke.ogg', 50, TRUE)
 	owner.balloon_alert(owner, "[living_scanned] scanned")

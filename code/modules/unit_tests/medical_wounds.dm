@@ -50,7 +50,7 @@
 
 	var/i = 1
 	var/list/iter_test_wound_list
-	victim.dna.species.species_traits &= HAS_FLESH // take away the base human's flesh (ouchie!) ((not actually ouchie, this just affects their wounds and dismemberment handling))
+	tested_part.biological_state &= ~BIO_FLESH // take away the base limb's flesh (ouchie!) ((not actually ouchie, this just affects their wounds and dismemberment handling))
 
 	for(iter_test_wound_list in list(list(/datum/wound/blunt/moderate, /datum/wound/blunt/severe, /datum/wound/blunt/critical),\
 										list(/datum/wound/slash/moderate, /datum/wound/slash/severe, /datum/wound/slash/critical),\
@@ -75,7 +75,7 @@
 				else // we have to check that it's actually a bone wound and not the intended wound type
 					TEST_ASSERT_EQUAL(length(victim.all_wounds), 1, "Patient has more than one wound when only one is expected. Severity: [initial(iter_test_wound.severity)]")
 					var/datum/wound/actual_wound = victim.all_wounds[1]
-					TEST_ASSERT((actual_wound.wound_flags & ~FLESH_WOUND), "Patient has flesh wound despite no HAS_FLESH flag, expected either no wound or bone wound. Offending wound: [actual_wound]")
+					TEST_ASSERT((actual_wound.wound_flags & ~FLESH_WOUND), "Limb has flesh wound despite no BIO_FLESH biological_state, expected either no wound or bone wound. Offending wound: [actual_wound]")
 					threshold_penalty = actual_wound.threshold_penalty
 			else // otherwise if it's a bone wound, check that we have it per usual
 				TEST_ASSERT(length(victim.all_wounds), "Patient has no wounds when one wound is expected. Severity: [initial(iter_test_wound.severity)]")

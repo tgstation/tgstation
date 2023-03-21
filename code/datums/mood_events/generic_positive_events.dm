@@ -211,6 +211,20 @@
 	mood_change = 2
 	timeout = 45 SECONDS
 
+/datum/mood_event/helped_up
+	description = "Helping them up felt good!"
+	mood_change = 2
+	timeout = 45 SECONDS
+
+/datum/mood_event/helped_up/add_effects(mob/other_person, helper)
+	if(!other_person)
+		return
+
+	if(helper)
+		description = "Helping [other_person] up felt good!"
+	else
+		description = "[other_person] helped me up, how nice of [other_person.p_them()]!"
+
 /datum/mood_event/high_ten
 	description = "AMAZING! A HIGH-TEN!"
 	mood_change = 3
@@ -340,7 +354,8 @@
 	mood_change = 1
 	timeout = 2 MINUTES
 
-/datum/mood_event/it_was_on_the_mouse
-	description = "Heh heh. \"It's on the mouse\". What a play on words."
-	mood_change = 1
-	timeout = 2 MINUTES
+/datum/mood_event/birthday
+	description = "It's my birthday!"
+	mood_change = 2
+	special_screen_obj = "birthday"
+	special_screen_replace = FALSE

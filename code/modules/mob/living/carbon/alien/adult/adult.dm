@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	AddElement(/datum/element/strippable, GLOB.strippable_alien_humanoid_items)
 
 /mob/living/carbon/alien/adult/create_internal_organs()
-	internal_organs += new /obj/item/organ/internal/stomach/alien()
+	organs += new /obj/item/organ/internal/stomach/alien()
 	return ..()
 
 /mob/living/carbon/alien/adult/cuff_resist(obj/item/I)
@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 			span_userdanger("[src] is attempting to devour you!"))
 
 	playsound(lucky_winner, 'sound/creatures/alien_eat.ogg', 100)
-	if(!do_mob(src, lucky_winner, devour_time, extra_checks = CALLBACK(src, PROC_REF(can_consume), lucky_winner)))
+	if(!do_after(src, devour_time, lucky_winner, extra_checks = CALLBACK(src, PROC_REF(can_consume), lucky_winner)))
 		return TRUE
 	if(!can_consume(lucky_winner))
 		return TRUE

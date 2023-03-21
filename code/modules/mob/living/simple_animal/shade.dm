@@ -28,7 +28,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	speed = -1 //they don't have to lug a body made of runed metal around
 	stop_automated_movement = 1
-	faction = list("cult")
+	faction = list(FACTION_CULT)
 	status_flags = CANPUSH
 	loot = list(/obj/item/ectoplasm)
 	del_on_death = TRUE
@@ -37,16 +37,14 @@
 /mob/living/simple_animal/shade/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	ADD_TRAIT(src, TRAIT_HEALS_FROM_CULT_PYLONS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	add_traits(list(TRAIT_HEALS_FROM_CULT_PYLONS, TRAIT_SPACEWALK, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 
 /mob/living/simple_animal/shade/death()
 	if(death_message == initial(death_message))
 		death_message = "lets out a contented sigh as [p_their()] form unwinds."
 	..()
 
-/mob/living/simple_animal/shade/canSuicide()
+/mob/living/simple_animal/shade/can_suicide()
 	if(istype(loc, /obj/item/soulstone)) //do not suicide inside the soulstone
 		return FALSE
 	return ..()

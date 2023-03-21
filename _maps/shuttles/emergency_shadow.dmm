@@ -415,7 +415,7 @@
 /area/shuttle/escape/brig)
 "sE" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/records/security,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
 "uF" = (
@@ -922,7 +922,7 @@
 /obj/machinery/light/directional/north,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
-/obj/item/clothing/gloves/color/latex/nitrile{
+/obj/item/clothing/gloves/latex/nitrile{
 	pixel_y = 4
 	},
 /turf/open/floor/iron/dark,

@@ -109,7 +109,7 @@
 	var/obj/machinery/power/supermatter_crystal/S = attached_to
 	if(!istype(S))
 		return
-	return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[round(S.get_integrity_percent(), 1)]%</div>"
+	return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[round(S.get_integrity_percent())]%</div>"
 
 /obj/effect/countdown/transformer
 	name = "transformer countdown"

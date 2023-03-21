@@ -9,7 +9,7 @@
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/machinery_newscaster
 	max_integrity = 200
 	integrity_failure = 0.25
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_LITERACY
@@ -54,6 +54,11 @@
 	///Text of the currently written bounty
 	var/bounty_text = ""
 
+/datum/armor/machinery_newscaster
+	melee = 50
+	fire = 50
+	acid = 30
+
 /obj/machinery/newscaster/pai/ui_state(mob/user)
 	return GLOB.reverse_contained_state
 
@@ -80,7 +85,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(machine_stat & (NOPOWER|BROKEN))
 		set_light(0)
 		return
-	set_light(1.4,0.7,"#34D352") // green light
+	set_light(1.5, 0.7, "#34D352") // green light
 
 /obj/machinery/newscaster/update_overlays()
 	. = ..()

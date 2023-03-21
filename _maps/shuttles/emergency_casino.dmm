@@ -761,7 +761,7 @@
 /obj/item/hemostat{
 	pixel_x = -4
 	},
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/surgicaldrill,
 /obj/item/cautery,
@@ -1565,7 +1565,7 @@
 /area/shuttle/escape)
 "YN" = (
 /obj/structure/table/wood,
-/obj/item/candle,
+/obj/item/flashlight/flare/candle,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "YS" = (

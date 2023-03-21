@@ -17,6 +17,8 @@
 	var/category = PROGRAM_CATEGORY_MISC
 	/// Program-specific screen icon state
 	var/program_icon_state = null
+	///Boolean on whether the program will appear at the top on PDA menus, or in the app list with everything else.
+	var/header_program = FALSE
 	/// Set to 1 for program to require nonstop NTNet connection to run. If NTNet connection is lost program crashes.
 	var/requires_ntnet = FALSE
 	/// Optional, if above is set to 1 checks for specific function of NTNet (currently NTNET_SOFTWAREDOWNLOAD and NTNET_COMMUNICATION)
@@ -31,7 +33,7 @@
 	var/available_on_syndinet = FALSE
 	/// Name of the tgui interface
 	var/tgui_id
-	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
+	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images must also be inserted into /datum/asset/simple/headers.
 	var/ui_header = null
 	/// Font Awesome icon to use as this program's icon in the modular computer main menu. Defaults to a basic program maximize window icon if not overridden.
 	var/program_icon = "window-maximize-o"
@@ -77,7 +79,7 @@
  *user is the person making the attack action
  *params is anything the pre_attack() proc had in the same-named variable.
 */
-/datum/computer_file/program/proc/tap(atom/A, mob/living/user, params)
+/datum/computer_file/program/proc/tap(atom/tapped_atom, mob/living/user, params)
 	return FALSE
 
 ///Makes sure a program can run on this hardware (for apps limited to tablets/computers/laptops)
@@ -142,17 +144,6 @@
 	return FALSE
 
 /**
- * This attempts to retrieve header data for UIs.
- *
- * If implementing completely new device of different type than existing ones
- * always include the device here in this proc. This proc basically relays the request to whatever is running the program.
- **/
-/datum/computer_file/program/proc/get_header_data()
-	if(computer)
-		return computer.get_header_data()
-	return list()
-
-/**
  * Called on program startup.
  *
  * May be overridden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
@@ -171,20 +162,6 @@
 	return FALSE
 
 /**
- *
- *Called by the device when it is emagged.
- *
- *Emagging the device allows certain programs to unlock new functions. However, the program will
- *need to be downloaded first, and then handle the unlock on their own in their run_emag() proc.
- *The device will allow an emag to be run multiple times, so the user can re-emag to run the
- *override again, should they download something new. The run_emag() proc should return TRUE if
- *the emagging affected anything, and FALSE if no change was made (already emagged, or has no
- *emag functions).
-**/
-/datum/computer_file/program/proc/run_emag()
-	return FALSE
-
-/**
  * Kills the running program
  *
  * Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
@@ -200,56 +177,3 @@
 		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
 		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
 	return TRUE
-
-/datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui && tgui_id)
-		ui = new(user, src, tgui_id, filedesc)
-		if(ui.open())
-			ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
-
-// CONVENTIONS, READ THIS WHEN CREATING NEW PROGRAM AND OVERRIDING THIS PROC:
-// Topic calls are automagically forwarded from NanoModule this program contains.
-// Calls beginning with "PRG_" are reserved for programs handling.
-// Calls beginning with "PC_" are reserved for computer handling (by whatever runs the program)
-// ALWAYS INCLUDE PARENT CALL ..() OR DIE IN FIRE.
-/datum/computer_file/program/ui_act(action,list/params,datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
-
-	if(computer)
-		switch(action)
-			if("PC_exit")
-				computer.kill_program()
-				ui.close()
-				return TRUE
-			if("PC_shutdown")
-				computer.shutdown_computer()
-				ui.close()
-				return TRUE
-			if("PC_minimize")
-				var/mob/user = usr
-				if(!computer.active_program)
-					return
-
-				computer.idle_threads.Add(computer.active_program)
-				program_state = PROGRAM_STATE_BACKGROUND // Should close any existing UIs
-
-				computer.active_program = null
-				computer.update_appearance()
-				ui.close()
-
-				if(user && istype(user))
-					computer.ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
-
-/datum/computer_file/program/ui_host()
-	if(computer.physical)
-		return computer.physical
-	else
-		return computer
-
-/datum/computer_file/program/ui_status(mob/user)
-	if(program_state != PROGRAM_STATE_ACTIVE) // Our program was closed. Close the ui if it exists.
-		return UI_CLOSE
-	return ..()

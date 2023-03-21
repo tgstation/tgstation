@@ -66,8 +66,8 @@
 	icon_state = "dirt"
 	base_icon_state = "dirt"
 	smoothing_flags = NONE
-	smoothing_groups = list(SMOOTH_GROUP_CLEANABLE_DIRT)
-	canSmoothWith = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_CLEANABLE_DIRT)
+	smoothing_groups = SMOOTH_GROUP_CLEANABLE_DIRT
+	canSmoothWith = SMOOTH_GROUP_CLEANABLE_DIRT + SMOOTH_GROUP_WALLS
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	beauty = -75
 
@@ -252,6 +252,14 @@
 	desc = "Torn pieces of cardboard and paper, left over from a package."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "paper_shreds"
+
+/obj/effect/decal/cleanable/wrapping/pinata
+	name = "pinata shreds"
+	desc = "Torn pieces of papier-mâché, left over from a pinata"
+	icon_state = "pinata_shreds"
+
+/obj/effect/decal/cleanable/wrapping/pinata/syndie
+	icon_state = "syndie_pinata_shreds"
 
 /obj/effect/decal/cleanable/garbage
 	name = "decomposing garbage"

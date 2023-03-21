@@ -204,7 +204,7 @@
 	tgui_icon = "fire-alt"
 	alignment = ALIGNMENT_NEUT
 	max_favor = 10000
-	desired_items = list(/obj/item/candle = "already lit")
+	desired_items = list(/obj/item/flashlight/flare/candle = "already lit")
 	rites_list = list(/datum/religion_rites/fireproof, /datum/religion_rites/burning_sacrifice, /datum/religion_rites/infinite_candle)
 	altar_icon_state = "convertaltar-red"
 
@@ -212,10 +212,10 @@
 /datum/religion_sect/pyre/sect_bless(mob/living/target, mob/living/chap)
 	return TRUE
 
-/datum/religion_sect/pyre/on_sacrifice(obj/item/candle/offering, mob/living/user)
+/datum/religion_sect/pyre/on_sacrifice(obj/item/flashlight/flare/candle/offering, mob/living/user)
 	if(!istype(offering))
 		return
-	if(!offering.lit)
+	if(!offering.on)
 		to_chat(user, span_notice("The candle needs to be lit to be offered!"))
 		return
 	to_chat(user, span_notice("[GLOB.deity] is pleased with your sacrifice."))

@@ -951,7 +951,72 @@
 		/datum/reagent/water = 6,
 	)
 
+// Chicken Noodle Soup
+/datum/reagent/consumable/nutriment/soup/chicken_noodle_soup
+	name = "chicken noodle soup"
+	desc = "A hearty bowl of chicken noodle soup, perfect for when you're stuck at home and sick."
+	data = list("broth" = 1, "chicken" = 1, "noodles" = 1, "carrots" = 1)
+
+/datum/glass_style/has_foodtype/soup/chicken_noodle_soup
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/chicken_noodle_soup
+	icon_state = "chicken_noodle_soup"
+	drink_type = VEGETABLES | MEAT | GRAIN
+
+/datum/chemical_reaction/food/soup/chicken_noodle_soup
+	required_reagents = list(/datum/reagent/water = 30)
+	required_ingredients = list(
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/meat/slab/chicken = 1,
+		/obj/item/food/spaghetti/boiledspaghetti = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/chicken_noodle_soup = 30,
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+		/datum/reagent/consumable/nutriment/protein = 5,
+	)
+
+// Corn Cowder
+/datum/reagent/consumable/nutriment/soup/corn_chowder
+	name = "corn chowder"
+	desc = "A creamy bowl of corn chowder, with bacon bits and mixed vegetables. One bowl is never enough."
+	data = list("creamy broth" = 1, "bacon" = 1, "mixed vegetables" = 1)
+
+/datum/glass_style/has_foodtype/soup/corn_chowder
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/corn_chowder
+	icon_state = "corn_chowder"
+	drink_type = VEGETABLES | MEAT
+
+/datum/chemical_reaction/food/soup/corn_chowder
+	required_reagents = list(
+		/datum/reagent/water = 40,
+		/datum/reagent/consumable/cream = 5,
+	)
+	required_ingredients = list(
+		/obj/item/food/grown/corn = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/meat/bacon = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/corn_chowder = 30,
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment = 2,
+	)
+
 // Lizard stuff
+
+// Atrakor Dumpling soup
+/datum/reagent/consumable/nutriment/soup/atrakor_dumplings
+	name = "\improper Atrakor dumpling soup"
+	desc = "A bowl of rich, meaty dumpling soup, traditionally served during the festival of Atrakor's Might on Tizira. The dumplings are shaped like the Night Sky Lord himself."
+	data = list("bone broth" = 1, "onion" = 1, "potato" = 1)
+
+/datum/glass_style/has_foodtype/soup/atrakor_dumplings
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/atrakor_dumplings
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "atrakor_dumplings"
+	drink_type = MEAT | VEGETABLES | NUTS
 
 /datum/chemical_reaction/food/soup/atrakor_dumplings
 	required_reagents = list(
@@ -963,6 +1028,23 @@
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/lizard_dumplings = 1,
 	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/atrakor_dumplings = 30,
+		/datum/reagent/water = 10,
+	)
+	percentage_of_nutriment_converted = 0.75
+
+// Meatball Soup, but lizard-like
+/datum/reagent/consumable/nutriment/soup/meatball_noodles
+	name = "meatball noodle soup"
+	desc = "A hearty noodle soup made from meatballs and nizaya in a rich broth. Commonly topped with a handful of chopped nuts."
+	data = list("bone broth" = 1, "meat" = 1, "gnocchi" = 1, "peanuts" = 1)
+
+/datum/glass_style/has_foodtype/soup/meatball_noodles
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/meatball_noodles
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "meatball_noodles"
+	drink_type = MEAT | VEGETABLES | NUTS
 
 /datum/chemical_reaction/food/soup/meatball_noodles
 	required_reagents = list(/datum/reagent/water = 50)
@@ -973,6 +1055,22 @@
 		/obj/item/food/meatball = 2,
 		/obj/item/food/grown/peanut = 1
 	)
+	results = list(
+		/datum/glass_style/has_foodtype/soup/meatball_noodles = 30,
+		/datum/reagent/water = 10,
+	)
+
+// Black Broth
+/datum/reagent/consumable/nutriment/soup/black_broth
+	name = "\improper Tiziran black broth"
+	desc = "A bowl of sausage, onion, blood and vinegar, served ice cold. Every bit as rough as it sounds."
+	data = list("vinegar" = 1, "iron" = 1)
+
+/datum/glass_style/has_foodtype/soup/black_broth
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/black_broth
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "black_broth"
+	drink_type = MEAT | VEGETABLES | GORE
 
 /datum/chemical_reaction/food/soup/black_broth
 	required_reagents = list(
@@ -985,6 +1083,24 @@
 		/obj/item/food/tiziran_sausage = 1,
 		/obj/item/food/grown/onion = 1,
 	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/black_broth = 30,
+		/datum/reagent/blood = 8,
+		/datum/reagent/consumable/liquidgibs = 7,
+		/datum/reagent/consumable/vinegar = 5,
+	)
+
+// Jellyfish Stew
+/datum/reagent/consumable/nutriment/soup/jellyfish
+	name = "jellyfish stew"
+	desc = "A slimy bowl of jellyfish stew. It jiggles if you shake it."
+	data = list("slime" = 1)
+
+/datum/glass_style/has_foodtype/soup/jellyfish
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/jellyfish
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "jellyfish_stew"
+	drink_type = MEAT | VEGETABLES | GORE
 
 /datum/chemical_reaction/food/soup/jellyfish_stew
 	required_reagents = list(/datum/reagent/water = 50)
@@ -994,6 +1110,22 @@
 		/obj/item/food/grown/redbeet = 1,
 		/obj/item/food/grown/potato = 1
 	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/jellyfish = 30,
+		/datum/reagent/water = 5,
+	)
+
+// Rootbread Soup
+/datum/reagent/consumable/nutriment/soup/rootbread
+	name = "rootbread soup"
+	desc = "A big bowl of spicy, savoury soup made with rootbread. Heavily seasoned, and very tasty."
+	data = list("bread" = 1, "egg" = 1, "chili" = 1, "garlic" = 1)
+
+/datum/glass_style/has_foodtype/soup/rootbread
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/rootbread
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "rootbread_soup"
+	drink_type = MEAT | VEGETABLES
 
 /datum/chemical_reaction/food/soup/rootbread_soup
 	required_reagents = list(/datum/reagent/water = 50)
@@ -1003,3 +1135,8 @@
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/egg = 1
 	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/rootbread = 30,
+		/datum/reagent/consumable/nutriment/protein = 8,
+	)
+	percentage_of_nutriment_converted = 0.5

@@ -19,7 +19,7 @@
 	. = ..()
 
 	QDEL_LIST(hand_bodyparts)
-	QDEL_LIST(internal_organs)
+	QDEL_LIST(organs)
 	QDEL_LIST(bodyparts)
 	QDEL_LIST(implants)
 	for(var/wound in all_wounds) // these LAZYREMOVE themselves when deleted so no need to remove the list here
@@ -30,7 +30,7 @@
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/swap_hand(held_index)
+/mob/living/carbon/perform_hand_swap(held_index)
 	. = ..()
 	if(!.)
 		return
@@ -40,7 +40,7 @@
 
 	if(!isnum(held_index))
 		CRASH("You passed [held_index] into swap_hand instead of a number. WTF man")
-		
+
 	var/oindex = active_hand_index
 	active_hand_index = held_index
 	if(hud_used)
@@ -198,9 +198,10 @@
 		power_throw++
 	visible_message(span_danger("[src] throws [thrown_thing][power_throw ? " really hard!" : "."]"), \
 					span_danger("You throw [thrown_thing][power_throw ? " really hard!" : "."]"))
-	log_message("has thrown [thrown_thing] [power_throw ? "really hard" : ""]", LOG_ATTACK)
+	log_message("has thrown [thrown_thing] [power_throw > 0 ? "really hard" : ""]", LOG_ATTACK)
+	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
 	newtonian_move(get_dir(target, src))
-	thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed + power_throw, src, null, null, null, move_force)
+	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return FALSE
@@ -213,7 +214,7 @@
 
 /mob/living/carbon/Topic(href, href_list)
 	..()
-	if(href_list["embedded_object"] && usr.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE))
+	if(href_list["embedded_object"] && usr.can_perform_action(src, NEED_DEXTERITY))
 		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
 		if(!L)
 			return
@@ -406,17 +407,6 @@
 			var/turf/target = get_turf(loc)
 			I.safe_throw_at(target,I.throw_range,I.throw_speed,src, force = move_force)
 
-/mob/living/carbon/get_status_tab_items()
-	. = ..()
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
-	if(vessel)
-		. += "Plasma Stored: [vessel.stored_plasma]/[vessel.max_plasma]"
-	var/obj/item/organ/internal/heart/vampire/darkheart = getorgan(/obj/item/organ/internal/heart/vampire)
-	if(darkheart)
-		. += "Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM]."
-	if(locate(/obj/item/assembly/health) in src)
-		. += "Health: [health]"
-
 /mob/living/carbon/attack_ui(slot, params)
 	if(!has_hand_for_held_index(active_hand_index))
 		return 0
@@ -491,9 +481,9 @@
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
 	for(var/i in 1 to amt)
-		if(!internal_organs.len)
+		if(!organs.len)
 			break //Guess we're out of organs!
-		var/obj/item/organ/guts = pick(internal_organs)
+		var/obj/item/organ/guts = pick(organs)
 		var/turf/T = get_turf(src)
 		guts.Remove(src)
 		guts.forceMove(T)
@@ -529,6 +519,7 @@
 		total_burn += (BP.burn_dam * BP.body_damage_coeff)
 	set_health(round(maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute, DAMAGE_PRECISION))
 	update_stat()
+	update_stamina()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD*2) && stat == DEAD )
 		become_husk(BURN)
 	med_hud_set_health()
@@ -536,7 +527,7 @@
 		add_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
-	SEND_SIGNAL(src, COMSIG_CARBON_HEALTH_UPDATE)
+	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()
@@ -561,21 +552,21 @@
 			set_sight(initial(sight))
 		else
 			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		set_see_in_dark(8)
 		set_invis_see(SEE_INVISIBLE_OBSERVER)
 		return
 
 	var/new_sight = initial(sight)
-	lighting_alpha = initial(lighting_alpha)
-	var/obj/item/organ/internal/eyes/E = getorganslot(ORGAN_SLOT_EYES)
-	if(!E)
-		update_tint()
-	else
-		set_invis_see(E.see_invisible)
-		set_see_in_dark(E.see_in_dark)
-		new_sight |= E.sight_flags
-		if(!isnull(E.lighting_alpha))
-			lighting_alpha = E.lighting_alpha
+	lighting_cutoff = initial(lighting_cutoff)
+	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
+
+	var/obj/item/organ/internal/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
+	if(eyes)
+		set_invis_see(eyes.see_invisible)
+		new_sight |= eyes.sight_flags
+		if(!isnull(eyes.lighting_cutoff))
+			lighting_cutoff = eyes.lighting_cutoff
+		if(!isnull(eyes.color_cutoffs))
+			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, eyes.color_cutoffs)
 
 	if(client.eye && client.eye != src)
 		var/atom/A = client.eye
@@ -583,31 +574,30 @@
 			return
 
 	if(glasses)
-		var/obj/item/clothing/glasses/G = glasses
-		new_sight |= G.vision_flags
-		set_see_in_dark(max(G.darkness_view, see_in_dark))
-		if(G.invis_override)
-			set_invis_see(G.invis_override)
+		new_sight |= glasses.vision_flags
+		if(glasses.invis_override)
+			set_invis_see(glasses.invis_override)
 		else
-			set_invis_see(min(G.invis_view, see_invisible))
-		if(!isnull(G.lighting_alpha))
-			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
+			set_invis_see(min(glasses.invis_view, see_invisible))
+		if(!isnull(glasses.lighting_cutoff))
+			lighting_cutoff = max(lighting_cutoff, glasses.lighting_cutoff)
+		if(!isnull(glasses.color_cutoffs))
+			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, glasses.color_cutoffs)
+
 
 	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
-		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-		set_see_in_dark(max(see_in_dark, 8))
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_HIGH)
 
 	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
 		new_sight |= SEE_TURFS
-		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
 
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
 		new_sight |= SEE_MOBS
-		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
 		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-		set_see_in_dark(max(see_in_dark, 8))
 
 	if(see_override)
 		set_invis_see(see_override)
@@ -618,34 +608,34 @@
 	set_sight(new_sight)
 	return ..()
 
-
-//to recalculate and update the mob's total tint from tinted equipment it's wearing.
+/**
+ * Calculates how visually impaired the mob is by their equipment and other factors
+ *
+ * This is where clothing adds its various vision limiting effects, such as welding helmets
+ */
 /mob/living/carbon/proc/update_tint()
-	if(!GLOB.tinted_weldhelh)
-		return
-	tinttotal = get_total_tint()
-	if(tinttotal >= TINT_BLIND)
+	var/tint = 0
+	if(isclothing(head))
+		tint += head.tint
+	if(isclothing(wear_mask))
+		tint += wear_mask.tint
+	if(isclothing(glasses))
+		tint += glasses.tint
+
+	var/obj/item/organ/internal/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
+	if(eyes)
+		tint += eyes.tint
+
+	if(tint >= TINT_BLIND)
 		become_blind(EYES_COVERED)
-	else if(tinttotal >= TINT_DARKENED)
+
+	else if(tint >= TINT_DARKENED)
 		cure_blind(EYES_COVERED)
 		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2)
+
 	else
 		cure_blind(EYES_COVERED)
-		clear_fullscreen("tint", 0)
-
-/mob/living/carbon/proc/get_total_tint()
-	. = 0
-	if(isclothing(head))
-		. += head.tint
-	if(isclothing(wear_mask))
-		. += wear_mask.tint
-
-	var/obj/item/organ/internal/eyes/E = getorganslot(ORGAN_SLOT_EYES)
-	if(E)
-		. += E.tint
-
-	else
-		. += INFINITY
+		clear_fullscreen("tint", 0 SECONDS)
 
 //this handles hud updates
 /mob/living/carbon/update_damage_hud()
@@ -862,10 +852,10 @@
 
 /mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(excess_healing)
-		if(dna && !(NOBLOOD in dna.species.species_traits))
+		if(dna && !HAS_TRAIT(src, TRAIT_NOBLOOD))
 			blood_volume += (excess_healing * 2) //1 excess = 10 blood
 
-		for(var/obj/item/organ/organ as anything in internal_organs)
+		for(var/obj/item/organ/organ as anything in organs)
 			if(organ.organ_flags & ORGAN_SYNTHETIC)
 				continue
 			organ.applyOrganDamage(excess_healing * -1) //1 excess = 5 organ damage healed
@@ -878,11 +868,11 @@
 		return FALSE
 
 	// We can't heal them if they're missing their lungs
-	if(!HAS_TRAIT(src, TRAIT_NOBREATH) && !getorganslot(ORGAN_SLOT_LUNGS))
+	if(!HAS_TRAIT(src, TRAIT_NOBREATH) && !isnull(dna?.species.mutantlungs) && !getorganslot(ORGAN_SLOT_LUNGS))
 		return FALSE
 
 	// And we can't heal them if they're missing their liver
-	if(!HAS_TRAIT(src, TRAIT_NOMETABOLISM) && !getorganslot(ORGAN_SLOT_LIVER))
+	if(!HAS_TRAIT(src, TRAIT_NOMETABOLISM) && !isnull(dna?.species.mutantliver) && !getorganslot(ORGAN_SLOT_LIVER))
 		return FALSE
 
 	return ..()
@@ -905,8 +895,8 @@
 	if(heal_flags & HEAL_LIMBS)
 		regenerate_limbs()
 
-	if(heal_flags & HEAL_ORGANS)
-		regenerate_organs()
+	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ORGANS))
+		regenerate_organs(regenerate_existing = (heal_flags & HEAL_REFRESH_ORGANS))
 
 	if(heal_flags & HEAL_TRAUMAS)
 		cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
@@ -973,11 +963,11 @@
 	if(QDELETED(src))
 		return
 	var/organs_amt = 0
-	for(var/obj/item/organ/internal_organ as anything in internal_organs)
+	for(var/obj/item/organ/organ as anything in organs)
 		if(prob(50))
 			organs_amt++
-			internal_organ.Remove(src)
-			internal_organ.forceMove(drop_location())
+			organ.Remove(src)
+			organ.forceMove(drop_location())
 	if(organs_amt)
 		to_chat(user, span_notice("You retrieve some of [src]\'s internal organs!"))
 	remove_all_embedded_objects()
@@ -1039,7 +1029,7 @@
 
 
 /mob/living/carbon/proc/create_internal_organs()
-	for(var/obj/item/organ/internal/internal_organ in internal_organs)
+	for(var/obj/item/organ/internal/internal_organ in organs)
 		internal_organ.Insert(src)
 
 /proc/cmp_organ_slot_asc(slot_a, slot_b)
@@ -1090,7 +1080,7 @@
 			switch(edit_action)
 				if("remove")
 					if(BP)
-						BP.drop_limb(special = TRUE)
+						BP.drop_limb()
 						admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [parse_zone(BP.body_zone)]")
 					else
 						to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
@@ -1167,7 +1157,7 @@
 		return FALSE
 	if(has_status_effect(/datum/status_effect/hallucination))
 		return TRUE
-	if(IsSleeping())
+	if(IsSleeping() || IsUnconscious())
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		return TRUE
@@ -1194,7 +1184,7 @@
 	var/obscured = check_obscured_slots()
 
 	// If the eyes are covered by anything but glasses, that thing will be covering any potential glasses as well.
-	if(glasses && is_eyes_covered(FALSE, TRUE, TRUE) && glasses.wash(clean_types))
+	if(glasses && is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
 		update_worn_glasses()
 		. = TRUE
 
@@ -1262,14 +1252,6 @@
 
 /mob/living/carbon/is_face_visible()
 	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)
-
-/**
- * get_biological_state is a helper used to see what kind of wounds we roll for. By default we just assume carbons (read:monkeys) are flesh and bone, but humans rely on their species datums
- *
- * go look at the species def for more info [/datum/species/proc/get_biological_state]
- */
-/mob/living/carbon/proc/get_biological_state()
-	return BIO_FLESH_BONE
 
 /// Returns whether or not the carbon should be able to be shocked
 /mob/living/carbon/proc/should_electrocute(power_source)

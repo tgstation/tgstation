@@ -32,7 +32,6 @@
 	ricochets_max = 0
 	ricochet_chance = 0
 	damage = 0
-	nodamage = TRUE
 	projectile_type = /obj/projectile/hallucination
 	log_override = TRUE
 	/// Our parent hallucination that's created us
@@ -218,7 +217,7 @@
 
 /obj/projectile/hallucination/laser/apply_effect_to_hallucinator(mob/living/afflicted)
 	afflicted.adjustStaminaLoss(20)
-	afflicted.blur_eyes(2)
+	afflicted.adjust_eye_blur(4 SECONDS)
 
 /obj/projectile/hallucination/taser
 	name = "electrode"
@@ -279,7 +278,7 @@
 	afflicted.adjust_slurring(10 SECONDS)
 	afflicted.Knockdown(1 SECONDS)
 	afflicted.adjustStaminaLoss(75) // 60 stam + 15 tox
-	afflicted.blur_eyes(10)
+	afflicted.adjust_eye_blur(20 SECONDS)
 
 /obj/projectile/hallucination/change
 	name = "bolt of change"

@@ -28,15 +28,47 @@
 	// ATMOS_INTERNAL_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
 
-/obj/machinery/atmospherics/components/unary/vent_pump/New()
-	if(!id_tag)
-		id_tag = SSnetworks.assign_random_name()
-	. = ..()
+	/// id of air sensor its connected to
+	var/chamber_id
+
+	///area this vent is assigned to
+	var/area/assigned_area
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Initialize(mapload)
+	if(!id_tag)
+		id_tag = SSnetworks.assign_random_name()
+		var/static/list/tool_screentips = list(
+			TOOL_MULTITOOL = list(
+				SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
+			)
+		)
+		AddElement(/datum/element/contextual_screentip_tools, tool_screentips)
 	. = ..()
-
 	assign_to_area()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
+	. = ..()
+	. += span_notice("You can link it with an air sensor using a multitool.")
+
+/obj/machinery/atmospherics/components/unary/vent_pump/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
+	. = ..()
+	if (!istype(multi_tool))
+		return .
+
+	balloon_alert(user, "saved in buffer")
+	multi_tool.buffer = src
+	return TRUE
+
+/obj/machinery/atmospherics/components/unary/vent_pump/wrench_act(mob/living/user, obj/item/wrench)
+	. = ..()
+	if(.)
+		disconnect_chamber()
+
+///called when its either unwrenched or destroyed
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_chamber()
+	if(chamber_id != null)
+		GLOB.objects_by_id_tag -= CHAMBER_OUTPUT_FROM_ID(chamber_id)
+		chamber_id = null
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	disconnect_from_area()
@@ -44,6 +76,8 @@
 	var/area/vent_area = get_area(src)
 	if(vent_area)
 		vent_area.air_vents -= src
+
+	disconnect_chamber()
 
 	return ..()
 
@@ -56,16 +90,31 @@
 	if (old_area == new_area)
 		return
 
-	disconnect_from_area()
-	assign_to_area()
+	disconnect_from_area(old_area)
+	assign_to_area(new_area)
 
-/obj/machinery/atmospherics/components/unary/vent_pump/proc/assign_to_area()
-	var/area/area = get_area(src)
-	area?.air_vents += src
+/obj/machinery/atmospherics/components/unary/vent_pump/on_enter_area(datum/source, area/area_to_register)
+	assign_to_area(area_to_register)
+	. = ..()
 
-/obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_from_area()
-	var/area/area = get_area(src)
-	area?.air_vents -= src
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/assign_to_area(area/target_area = get_area(src))
+	//this vent is already assigned to an area. Unassign it from here first before reassigning it to an new area
+	if(isnull(target_area) || !isnull(assigned_area))
+		return
+	assigned_area = target_area
+	assigned_area.air_vents += src
+	update_appearance(UPDATE_NAME)
+
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_from_area(area/target_area = get_area(src))
+	//you cannot unassign from an area we never were assigned to
+	if(isnull(target_area) || assigned_area != target_area)
+		return
+	assigned_area.air_vents -= src
+	assigned_area = null
+
+/obj/machinery/atmospherics/components/unary/vent_pump/on_exit_area(datum/source, area/area_to_unregister)
+	. = ..()
+	disconnect_from_area(area_to_unregister)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
 	cut_overlays()
@@ -159,8 +208,7 @@
 	. = ..()
 	if(override_naming)
 		return
-	var/area/vent_area = get_area(src)
-	name = "\proper [vent_area.name] [name] [id_tag]"
+	name = "\proper [get_area_name(src)] [name] [id_tag]"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/welder)
 	..()

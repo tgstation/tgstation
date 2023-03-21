@@ -128,7 +128,7 @@
 /// If cast on a carbon, we'll try to steal one of their organs directly from their person.
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/steal_organ_from_mob(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
 	var/mob/living/carbon/carbon_victim = victim
-	if(!istype(carbon_victim) || !length(carbon_victim.internal_organs))
+	if(!istype(carbon_victim) || !length(carbon_victim.organs))
 		victim.balloon_alert(caster, "no organs!")
 		return FALSE
 
@@ -137,7 +137,7 @@
 	var/parsed_zone = parse_zone(zone_to_check)
 
 	var/list/organs_we_can_remove = list()
-	for(var/obj/item/organ/organ as anything in carbon_victim.internal_organs)
+	for(var/obj/item/organ/organ as anything in carbon_victim.organs)
 		// Only show organs which are in our generic zone
 		if(deprecise_zone(organ.zone) != zone_to_check)
 			continue
@@ -221,7 +221,7 @@
 
 /// Extra checks ran while we're healing something (organ, mob).
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/heal_checks(obj/item/melee/touch_attack/hand, atom/healing, mob/living/carbon/caster)
-	if(QDELETED(src) || QDELETED(hand) ||QDELETED(healing) || !IsAvailable())
+	if(QDELETED(src) || QDELETED(hand) || QDELETED(healing) || !IsAvailable())
 		return FALSE
 
 	return TRUE

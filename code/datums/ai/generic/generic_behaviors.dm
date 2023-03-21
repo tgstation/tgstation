@@ -31,7 +31,7 @@
 
 /datum/ai_behavior/break_spine/setup(datum/ai_controller/controller, target_key)
 	. = ..()
-	controller.set_movement_target(controller.blackboard[target_key])
+	set_movement_target(controller, controller.blackboard[target_key])
 
 /datum/ai_behavior/break_spine/perform(delta_time, datum/ai_controller/controller, target_key)
 	var/mob/living/batman = controller.blackboard[target_key]
@@ -90,7 +90,7 @@
 	var/target = target_ref?.resolve()
 	if(!target)
 		return FALSE
-	controller.set_movement_target(target)
+	set_movement_target(controller, target)
 
 /datum/ai_behavior/use_on_object/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
@@ -119,7 +119,7 @@
 /datum/ai_behavior/give/setup(datum/ai_controller/controller, target_key)
 	. = ..()
 	var/datum/weakref/target_ref = controller.blackboard[target_key]
-	controller.set_movement_target(target_ref?.resolve())
+	set_movement_target(controller, target_ref?.resolve())
 
 /datum/ai_behavior/give/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
@@ -145,7 +145,7 @@
 		span_info("[pawn] starts trying to give [held_item] to [living_target]!"),
 		span_warning("[pawn] tries to give you [held_item]!")
 	)
-	if(!do_mob(pawn, living_target, 1 SECONDS))
+	if(!do_after(pawn, 1 SECONDS, living_target))
 		return
 
 	try_to_give_item(controller, living_target, held_item, actually_give = TRUE)
@@ -186,7 +186,7 @@
 /datum/ai_behavior/consume/setup(datum/ai_controller/controller, target_key)
 	. = ..()
 	var/datum/weakref/target_ref = controller.blackboard[target_key]
-	controller.set_movement_target(target_ref?.resolve())
+	set_movement_target(controller, target_ref?.resolve())
 
 /datum/ai_behavior/consume/perform(delta_time, datum/ai_controller/controller, target_key, hunger_timer_key)
 	. = ..()
@@ -245,7 +245,7 @@
 		finish_action(controller, TRUE)
 		return
 
-	controller.set_movement_target(living_target)
+	set_movement_target(controller, living_target)
 	attack(controller, living_target)
 
 /datum/ai_behavior/attack/finish_action(datum/ai_controller/controller, succeeded)
@@ -281,7 +281,7 @@
 		finish_action(controller, TRUE)
 		return
 
-	controller.set_movement_target(living_target)
+	set_movement_target(controller, living_target)
 
 /datum/ai_behavior/follow/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()

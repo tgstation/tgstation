@@ -145,7 +145,7 @@
 
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
-	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
+
 	///Defines what armor to use when it hits things.  Must be set to bullet, laser, energy, or bomb
 	var/armor_flag = BULLET
 	///How much armor this projectile pierces.
@@ -164,7 +164,8 @@
 	var/immobilize = 0
 	var/unconscious = 0
 	var/eyeblur = 0
-	var/drowsy = 0
+	/// Drowsiness applied on projectile hit
+	var/drowsy = 0 SECONDS
 	/// Jittering applied on projectile hit
 	var/jitter = 0 SECONDS
 	/// Extra stamina damage applied on projectile hit (in addition to the main damage)
@@ -263,7 +264,7 @@
 		hitx = target.pixel_x + rand(-8, 8)
 		hity = target.pixel_y + rand(-8, 8)
 
-	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
+	if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
 		var/turf/closed/wall/W = target_loca
 		if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
@@ -302,7 +303,7 @@
 		var/limb_hit = hit_limb
 		if(limb_hit)
 			organ_hit_text = " in \the [parse_zone(limb_hit)]"
-		if(suppressed==SUPPRESSED_VERY)
+		if(suppressed == SUPPRESSED_VERY)
 			playsound(loc, hitsound, 5, TRUE, -1)
 		else if(suppressed)
 			playsound(loc, hitsound, 5, TRUE, -1)
@@ -335,7 +336,7 @@
 			log_combat(logged_mob, L, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
 		return BULLET_ACT_HIT
 
-	L.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_VICTIM, color="orange", log_globally=FALSE)
+	L.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_ATTACK, color="orange")
 	return BULLET_ACT_HIT
 
 /obj/projectile/proc/vol_by_damage()
@@ -1073,3 +1074,20 @@
 		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT),\
 		projectile_payload = shrapnel_type)
 	return TRUE
+
+/**
+ * Is this projectile considered "hostile"?
+ *
+ * By default all projectiles which deal damage or impart crowd control effects (including stamina) are hostile
+ *
+ * This is NOT used for pacifist checks, that's handled by [/obj/item/ammo_casing/var/harmful]
+ * This is used in places such as AI responses to determine if they're being threatened or not (among other places)
+ */
+/obj/projectile/proc/is_hostile_projectile()
+	if(damage > 0 || stamina > 0)
+		return TRUE
+
+	if(paralyze + stun + immobilize + knockdown > 0 SECONDS)
+		return TRUE
+
+	return FALSE

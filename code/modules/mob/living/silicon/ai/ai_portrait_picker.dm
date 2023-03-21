@@ -51,6 +51,9 @@
 	. = ..()
 	if(.)
 		return
+	if(!isAI(holder.mob))
+		qdel(src)
+		return
 	switch(action)
 		if("search")
 			if(search_string != params["to_search"])

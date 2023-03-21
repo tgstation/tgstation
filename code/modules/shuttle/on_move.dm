@@ -39,7 +39,7 @@ All ShuttleMove procs go here
 
 
 		else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
-			if(istype(thing, /obj/singularity) || istype(thing, /obj/energy_ball))
+			if(istype(thing, /obj/effect/abstract) || istype(thing, /obj/singularity) || istype(thing, /obj/energy_ball))
 				continue
 			if(!thing.anchored)
 				step(thing, shuttle_dir)
@@ -52,12 +52,11 @@ All ShuttleMove procs go here
 		return
 	// Destination turf changes.
 	// Baseturfs is definitely a list or this proc wouldnt be called.
-	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
+	var/shuttle_depth = depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)
 
-	if(!shuttle_boundary)
+	if(!shuttle_depth)
 		CRASH("A turf queued to move via shuttle somehow had no skipover in baseturfs. [src]([type]):[loc]")
-	var/depth = baseturfs.len - shuttle_boundary + 1
-	newT.CopyOnTop(src, 1, depth, TRUE)
+	newT.CopyOnTop(src, 1, shuttle_depth, TRUE)
 	newT.blocks_air = TRUE
 	newT.air_update_turf(TRUE, FALSE)
 	blocks_air = TRUE
@@ -75,10 +74,10 @@ All ShuttleMove procs go here
 	oldT.TransferComponents(src)
 
 	SSexplosions.wipe_turf(src)
-	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
+	var/shuttle_depth = depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)
 
-	if(shuttle_boundary)
-		oldT.ScrapeAway(baseturfs.len - shuttle_boundary + 1)
+	if(shuttle_depth)
+		oldT.ScrapeAway(shuttle_depth)
 
 	if(rotation)
 		shuttleRotate(rotation) //see shuttle_rotate.dm
@@ -114,11 +113,6 @@ All ShuttleMove procs go here
 
 // Called on atoms after everything has been moved
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	var/turf/newT = get_turf(src)
-	if (newT.z != oldT.z)
-		var/same_z_layer = (GET_TURF_PLANE_OFFSET(oldT) == GET_TURF_PLANE_OFFSET(newT))
-		on_changed_z_level(oldT, newT, same_z_layer)
-
 	if(light)
 		update_light()
 	if(rotation)
@@ -154,21 +148,12 @@ All ShuttleMove procs go here
 	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
 		return TRUE
 
-	contents -= oldT
-	turfs_to_uncontain += oldT
-	underlying_old_area.contents += oldT
-	underlying_old_area.contained_turfs += oldT
-	oldT.transfer_area_lighting(src, underlying_old_area)
+	oldT.change_area(src, underlying_old_area)
 	//The old turf has now been given back to the area that turf originaly belonged to
 
 	var/area/old_dest_area = newT.loc
 	parallax_movedir = old_dest_area.parallax_movedir
-
-	old_dest_area.contents -= newT
-	old_dest_area.turfs_to_uncontain += newT
-	contents += newT
-	contained_turfs += newT
-	newT.transfer_area_lighting(old_dest_area, src)
+	newT.change_area(old_dest_area, src)
 	return TRUE
 
 // Called on areas after everything has been moved

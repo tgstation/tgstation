@@ -97,7 +97,7 @@
 /datum/supply_pack/engineering/shuttle_engine
 	name = "Shuttle Engine Crate"
 	desc = "Through advanced bluespace-shenanigans, our engineers have managed to fit an entire \
-		shuttle engine into one tiny little crate. Requires CE access to open."
+		shuttle engine into one tiny little crate."
 	cost = CARGO_CRATE_VALUE * 6
 	access = ACCESS_CE
 	access_view = ACCESS_CE
@@ -155,7 +155,7 @@
 	name = "Bluespace Artillery Parts"
 	desc = "The pride of Nanotrasen Naval Command. The legendary Bluespace Artillery Cannon is a \
 		devastating feat of human engineering and testament to wartime determination. \
-		Highly advanced research is required for proper construction. "
+		Highly advanced research is required for proper construction."
 	cost = CARGO_CRATE_VALUE * 30
 	special = TRUE
 	access_view = ACCESS_COMMAND
@@ -220,7 +220,7 @@
 /datum/supply_pack/engine/emitter
 	name = "Emitter Crate"
 	desc = "Useful for powering forcefield generators while destroying locked crates \
-		and intruders alike. Contains two high-powered energy emitters. Requires CE access to open."
+		and intruders alike. Contains two high-powered energy emitters."
 	cost = CARGO_CRATE_VALUE * 7
 	access = ACCESS_CE
 	contains = list(/obj/machinery/power/emitter = 2)
@@ -260,7 +260,7 @@
 
 /datum/supply_pack/engine/supermatter_shard
 	name = "Supermatter Shard Crate"
-	desc = "The power of the heavens condensed into a single crystal. Requires CE access to open."
+	desc = "The power of the heavens condensed into a single crystal."
 	cost = CARGO_CRATE_VALUE * 20
 	access = ACCESS_CE
 	contains = list(/obj/machinery/power/supermatter_crystal/shard)
@@ -279,7 +279,7 @@
 
 /datum/supply_pack/engine/hypertorus_fusion_reactor
 	name = "HFR Crate"
-	desc = "The new and improved fusion reactor. Requires CE access to open."
+	desc = "The new and improved fusion reactor."
 	cost = CARGO_CRATE_VALUE * 23
 	access = ACCESS_CE
 	contains = list(/obj/item/hfr_box/corner = 4,

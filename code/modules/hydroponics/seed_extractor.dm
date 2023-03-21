@@ -13,46 +13,33 @@
  * * user - checks if we can remove the object from the inventory
  * *
  */
-/proc/seedify(obj/item/O, t_max, obj/machinery/seed_extractor/extractor, mob/living/user)
-	var/t_amount = 0
+/proc/seedify(obj/item/object, t_max, obj/machinery/seed_extractor/extractor, mob/living/user)
+	//try to get the seed from this item
+	var/obj/item/seeds/seed = object.get_plant_seed()
+	if(isnull(seed))
+		return null
+
+	//generate a random multiplier if value is not specified
 	var/list/seeds = list()
 	if(t_max == -1)
 		if(extractor)
 			t_max = rand(1,4) * extractor.seed_multiplier
 		else
 			t_max = rand(1,4)
-
-	var/seedloc = O.loc
+	//drop location for the newly generated seeds
+	var/seedloc = object.loc
 	if(extractor)
 		seedloc = extractor.loc
 
-	if(istype(O, /obj/item/food/grown/))
-		var/obj/item/food/grown/F = O
-		if(F.seed)
-			if(user && !user.temporarilyRemoveItemFromInventory(O)) //couldn't drop the item
-				return
-			while(t_amount < t_max)
-				var/obj/item/seeds/t_prod = F.seed.Copy()
-				seeds.Add(t_prod)
-				t_prod.forceMove(seedloc)
-				t_amount++
-			qdel(O)
-			return seeds
-
-	else if(istype(O, /obj/item/grown))
-		var/obj/item/grown/F = O
-		if(F.seed)
-			if(user && !user.temporarilyRemoveItemFromInventory(O))
-				return
-			while(t_amount < t_max)
-				var/obj/item/seeds/t_prod = F.seed.Copy()
-				t_prod.forceMove(seedloc)
-				t_amount++
-			qdel(O)
-		return 1
-
-	return 0
-
+	//multiply the seeds and delete the item
+	if(user && !user.temporarilyRemoveItemFromInventory(object)) //couldn't drop the item
+		return null
+	for(var/_ in 0 to t_max)
+		var/obj/item/seeds/t_prod = seed.Copy()
+		seeds.Add(t_prod)
+		t_prod.forceMove(seedloc)
+	qdel(object)
+	return seeds
 
 /obj/machinery/seed_extractor
 	name = "seed extractor"
@@ -80,6 +67,7 @@
 
 	if(held_item?.get_plant_seed())
 		context[SCREENTIP_CONTEXT_LMB] = "Make seeds"
+		context[SCREENTIP_CONTEXT_RMB] = "Make & Store seeds"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/storage/bag/plants) && (locate(/obj/item/seeds) in held_item.contents))
@@ -90,10 +78,10 @@
 
 /obj/machinery/seed_extractor/RefreshParts()
 	. = ..()
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		max_seeds = initial(max_seeds) * B.rating
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		seed_multiplier = initial(seed_multiplier) * M.rating
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		max_seeds = initial(max_seeds) * matter_bin.tier
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		seed_multiplier = initial(seed_multiplier) * manipulator.tier
 
 /obj/machinery/seed_extractor/examine(mob/user)
 	. = ..()
@@ -135,7 +123,17 @@
 
 		return TRUE
 
-	if(seedify(attacking_item, -1, src, user))
+	var/list/generated_seeds = seedify(attacking_item, -1, src, user)
+	if(!isnull(generated_seeds))
+		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+			//find all seeds lying on the turf and add them to the machine
+			for(var/obj/item/seeds/seed as anything in generated_seeds)
+				//machine is full
+				if(contents.len >= max_seeds)
+					to_chat(user, span_warning("[src] is full."))
+					break
+				//add seed to machine. second argument is null which means just force move into the machine
+				add_seed(seed)
 		to_chat(user, span_notice("You extract some seeds."))
 		return TRUE
 
@@ -176,17 +174,19 @@
  * needed to go to the ui handler
  *
  * to_add - what seed are we adding?
- * taking_from - where are we taking the seed from? A mob, a bag, etc?
- * user - who is inserting the seed?
+ * taking_from - where are we taking the seed from? A mob, a bag, etc? If null its means its just laying on the turf so force move it in
  **/
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/to_add, atom/taking_from)
-	if(ismob(taking_from))
-		var/mob/mob_loc = taking_from
-		if(!mob_loc.transferItemToLoc(to_add, src))
-			return FALSE
+	if(!isnull(taking_from))
+		if(ismob(taking_from))
+			var/mob/mob_loc = taking_from
+			if(!mob_loc.transferItemToLoc(to_add, src))
+				return FALSE
 
-	else if(!taking_from.atom_storage?.attempt_remove(to_add, src, silent = TRUE))
-		return FALSE
+		else if(!taking_from.atom_storage?.attempt_remove(to_add, src, silent = TRUE))
+			return FALSE
+	else
+		to_add.forceMove(src)
 
 	var/seed_id = generate_seed_hash(to_add)
 	if(piles[seed_id])

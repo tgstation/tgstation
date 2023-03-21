@@ -19,6 +19,7 @@ type UplinkItem = {
   purchasable_from: number;
   restricted: BooleanLike;
   limited_stock: number;
+  stock_key: string;
   restricted_roles: string;
   restricted_species: string;
   progression_minimum: number;
@@ -187,7 +188,7 @@ export class Uplink extends Component<{}, UplinkState> {
       const hasEnoughProgression =
         progression_points >= item.progression_minimum;
 
-      let stock: number | null = current_stock[item.id];
+      let stock: number | null = current_stock[item.stock_key];
       if (item.ref) {
         stock = extra_purchasable_stock[item.ref];
       }

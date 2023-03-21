@@ -40,8 +40,7 @@
 	if(occupant)
 		vis_contents -= occupant
 		occupant.vis_flags &= ~VIS_INHERIT_PLANE
-		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
-		REMOVE_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
+		occupant.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING), CRYO_TRAIT)
 
 	occupant = new_occupant
 	if(!occupant)
@@ -52,9 +51,8 @@
 	occupant.vis_flags |= VIS_INHERIT_PLANE
 	vis_contents += occupant
 	pixel_y = 22
-	ADD_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
 	// Keep them standing! They'll go sideways in the tube when they fall asleep otherwise.
-	ADD_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
+	occupant.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING), CRYO_TRAIT)
 
 /// COMSIG_CRYO_SET_ON callback
 /atom/movable/visual/cryo_occupant/proc/on_set_on(datum/source, on)
@@ -73,7 +71,7 @@
 	icon_state = "pod-off"
 	density = TRUE
 	max_integrity = 350
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 30, ACID = 30)
+	armor_type = /datum/armor/unary_cryo_cell
 	layer = MOB_LAYER
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
@@ -115,6 +113,11 @@
 	payment_department = ACCOUNT_MED
 
 
+/datum/armor/unary_cryo_cell
+	energy = 100
+	fire = 30
+	acid = 30
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize(mapload)
 	. = ..()
 	initialize_directions = dir
@@ -142,14 +145,14 @@
 	. = ..()
 	update_appearance()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
-	..(dir, dir)
+/obj/machinery/atmospherics/components/unary/cryo_cell/on_construction(mob/user)
+	..(user, dir, dir)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/RefreshParts()
 	. = ..()
 	var/C
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		C += M.rating
+	for(var/datum/stock_part/matter_bin/M in component_parts)
+		C += M.tier
 
 	efficiency = initial(efficiency) * C
 	sleep_factor = initial(sleep_factor) * C

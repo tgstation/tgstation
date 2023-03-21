@@ -129,7 +129,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/carbon_parent = parent
-	if(carbon_parent.mind?.miming)
+	if(HAS_TRAIT(carbon_parent, TRAIT_MIMING))
 		to_chat(carbon_parent, span_green("You stop yourself from signing in favor of the artform of mimery!"))
 		return COMPONENT_CANNOT_SPEAK
 

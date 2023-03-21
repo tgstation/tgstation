@@ -10,13 +10,4 @@
 	saturnx_reagent.expose_atom(human, 15)
 	saturnx_reagent.turn_man_invisible(human, requires_liver = FALSE) //immediately turn us invisible
 
-	test_screenshot("invisibility", get_flat_icon_for_all_directions(human))
-
-/datum/unit_test/screenshot_saturnx/proc/get_flat_icon_for_all_directions(atom/thing)
-	var/icon/output = icon('icons/effects/effects.dmi', "nothing")
-
-	for (var/direction in GLOB.cardinals)
-		var/icon/partial = getFlatIcon(thing, defdir = direction)
-		output.Insert(partial, dir = direction)
-
-	return output
+	test_screenshot("invisibility", get_flat_icon_for_all_directions(human, no_anim = FALSE))

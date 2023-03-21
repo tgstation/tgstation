@@ -143,7 +143,7 @@
 			span_notice("[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] begins to insert something into [target]'s [parse_zone(target_zone)]."),
 		)
-		display_pain(target, "You can feel your something being placed in your [parse_zone(target_zone)]!")
+		display_pain(target, "You can feel something being placed in your [parse_zone(target_zone)]!")
 
 
 	else if(implement_type in implements_extract)

@@ -30,7 +30,7 @@
 	if(isopenspaceturf(rift_spawn_turf))
 		owner.balloon_alert(dragon, "needs stable ground!")
 		return
-	owner.balloon_alert(owner, "You begin to open a rift...")
+	owner.balloon_alert(owner, "opening rift...")
 	if(!do_after(owner, 10 SECONDS, target = owner))
 		return
 	if(locate(/obj/structure/carp_rift) in owner.loc)
@@ -42,7 +42,8 @@
 	dragon.rift_list += new_rift
 	to_chat(owner, span_boldwarning("The rift has been summoned. Prevent the crew from destroying it at all costs!"))
 	notify_ghosts("The Space Dragon has opened a rift!", source = new_rift, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Rift Opened")
-	qdel(src)
+	ASSERT(dragon.rift_ability == src) // Badmin protection.
+	QDEL_NULL(dragon.rift_ability) // Deletes this action when used successfully, we re-gain a new one on success later.
 
 /**
  * # Carp Rift
@@ -56,7 +57,7 @@
 /obj/structure/carp_rift
 	name = "carp rift"
 	desc = "A rift akin to the ones space carp use to travel long distances."
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/structure_carp_rift
 	max_integrity = 300
 	icon = 'icons/obj/carp_rift.dmi'
 	icon_state = "carp_rift_carpspawn"
@@ -81,6 +82,13 @@
 	var/last_carp_inc = 0
 	/// A list of all the ckeys which have used this carp rift to spawn in as carps.
 	var/list/ckey_list = list()
+
+/datum/armor/structure_carp_rift
+	energy = 100
+	bomb = 50
+	bio = 100
+	fire = 100
+	acid = 100
 
 /obj/structure/carp_rift/Initialize(mapload)
 	. = ..()
@@ -175,14 +183,14 @@
 		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "Central Command Wildlife Observations")
 		atom_integrity = INFINITY
 		icon_state = "carp_rift_charged"
-		set_light_color(LIGHT_COLOR_YELLOW)
+		set_light_color(LIGHT_COLOR_DIM_YELLOW)
 		update_light()
-		armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
+		set_armor(/datum/armor/immune)
 		resistance_flags = INDESTRUCTIBLE
 		dragon.rifts_charged += 1
 		if(dragon.rifts_charged != 3 && !dragon.objective_complete)
-			var/datum/action/innate/summon_rift/rift = new()
-			rift.Grant(dragon.owner.current)
+			dragon.rift_ability = new()
+			dragon.rift_ability.Grant(dragon.owner.current)
 			dragon.riftTimer = 0
 			dragon.rift_empower()
 		// Early return, nothing to do after this point.
@@ -230,6 +238,8 @@
 		ckey_list += user.ckey
 	newcarp.key = user.key
 	newcarp.set_name()
+	var/datum/antagonist/space_carp/carp_antag = new(src)
+	newcarp.mind.add_antag_datum(carp_antag)
 	dragon.carp += newcarp.mind
 	to_chat(newcarp, span_boldwarning("You have arrived in order to assist the space dragon with securing the rifts. Do not jeopardize the mission, and protect the rifts at all costs!"))
 	carp_stored--

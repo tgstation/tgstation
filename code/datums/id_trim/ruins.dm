@@ -127,3 +127,12 @@
 
 /datum/id_trim/pirate/captain/psykers
 	assignment = "Psyker-gang Leader"
+
+//Trims for Dangerous Research, used in ``dangerous_research.dm``
+/datum/id_trim/away/dangerous_research
+	assignment = "Researcher"
+	access = list(ACCESS_AWAY_SCIENCE)
+
+/datum/id_trim/away/dangerous_research/head_occultist
+	assignment = "Head Occultist"
+	access = list(ACCESS_AWAY_SCIENCE, ACCESS_AWAY_COMMAND)

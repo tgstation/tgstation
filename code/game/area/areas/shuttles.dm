@@ -244,6 +244,13 @@
 /area/shuttle/ruin/caravan/freighter3
 	name = "Tiny Freighter"
 
+// ----------- Cyborg Mothership
+
+/area/shuttle/ruin/cyborg_mothership
+	name = "Cyborg Mothership"
+	requires_power = TRUE
+	area_limited_icon_smoothing = /area/shuttle/ruin/cyborg_mothership
+
 // ----------- Arena Shuttle
 /area/shuttle/shuttle_arena
 	name = "arena"

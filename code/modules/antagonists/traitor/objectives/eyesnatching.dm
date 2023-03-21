@@ -4,7 +4,7 @@
 		/datum/traitor_objective/eyesnatching = 1,
 		/datum/traitor_objective/eyesnatching/heads = 1,
 	)
-	weight = OBJECTIVE_WEIGHT_TINY
+	weight = OBJECTIVE_WEIGHT_UNLIKELY
 
 /datum/traitor_objective/eyesnatching
 	name = "Steal the eyes of %TARGET% the %JOB TITLE%"
@@ -164,7 +164,7 @@
 	icon_state = "[base_icon_state][used ? "-used" : ""]"
 
 /obj/item/eyesnatcher/attack(mob/living/carbon/human/victim, mob/living/user, params)
-	if(!istype(victim) || !victim.Adjacent(user)) //No TK use
+	if(used || !istype(victim) || !victim.Adjacent(user)) //Works only once, no TK use
 		return ..()
 
 	var/obj/item/organ/internal/eyes/eyeballies = victim.getorganslot(ORGAN_SLOT_EYES)
@@ -201,7 +201,7 @@
 	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, victim)))
 		return
 
-	if(!HAS_TRAIT(victim, TRAIT_BLIND))
+	if(!victim.is_blind())
 		to_chat(victim, span_userdanger("You suddenly go blind!"))
 	if(prob(1))
 		to_chat(victim, span_notice("At least you got a new pirate-y look out of it..."))
@@ -217,8 +217,12 @@
 	if(prob(20))
 		victim.emote("cry")
 	used = TRUE
-	desc += " It has been used up."
 	update_appearance(UPDATE_ICON)
+
+/obj/item/eyesnatcher/examine(mob/user)
+	. = ..()
+	if(used)
+		. += span_notice("It has been used up.")
 
 /obj/item/eyesnatcher/proc/eyeballs_exist(obj/item/organ/internal/eyes/eyeballies, obj/item/bodypart/head/head, mob/living/carbon/human/victim)
 	if(!eyeballies || QDELETED(eyeballies))

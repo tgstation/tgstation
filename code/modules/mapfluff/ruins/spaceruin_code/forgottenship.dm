@@ -130,25 +130,21 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 /mob/living/simple_animal/hostile/nanotrasen/ranged/assault
 	name = "Nanotrasen Assault Officer"
 	desc = "Nanotrasen Assault Officer. Contact CentCom if you saw him on your station. Prepare to die, if you've been found near Syndicate property."
-	icon_state = "nanotrasenrangedassault"
-	icon_living = "nanotrasenrangedassault"
-	icon_dead = null
-	icon_gib = "syndicate_gib"
 	ranged = TRUE
 	rapid = 4
 	rapid_fire_delay = 1
 	rapid_melee = 1
 	retreat_distance = 2
 	minimum_distance = 4
-	casingtype = /obj/item/ammo_casing/c46x30mm
-	projectilesound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	casingtype = /obj/item/ammo_casing/a556/weak
+	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
 	loot = list(/obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier)
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier
+	held_item = /obj/item/gun/ballistic/automatic/ar
 
 /mob/living/simple_animal/hostile/nanotrasen/elite
 	name = "Nanotrasen Elite Assault Officer"
 	desc = "Pray for your life, syndicate. Run while you can."
-	icon_state = "nanotrasen_ert"
-	icon_living = "nanotrasen_ert"
 	maxHealth = 150
 	health = 150
 	melee_damage_lower = 13
@@ -165,3 +161,5 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	projectilesound = 'sound/weapons/laser.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 	faction = list(ROLE_DEATHSQUAD)
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasenelitesoldier
+	held_item = /obj/item/gun/energy/pulse/carbine/lethal

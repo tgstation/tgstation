@@ -117,6 +117,8 @@
 		ui.open()
 
 /datum/interview/ui_state(mob/user)
+	if(check_rights_for(user.client, R_ADMIN))
+		return GLOB.always_state
 	return GLOB.new_player_state
 
 /datum/interview/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

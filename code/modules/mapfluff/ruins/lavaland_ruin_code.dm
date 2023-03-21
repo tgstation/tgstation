@@ -38,9 +38,9 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
 	desc = "The incomplete body of a golem. Add ten sheets of any mineral to finish."
-	var/shell_type = /obj/effect/mob_spawn/ghost_role/human/golem
-	var/has_owner = FALSE //if the resulting golem obeys someone
 	w_class = WEIGHT_CLASS_BULKY
+
+	var/shell_type = /obj/effect/mob_spawn/ghost_role/human/golem
 
 /obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
 	. = ..()

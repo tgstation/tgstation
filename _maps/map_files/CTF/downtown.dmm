@@ -91,7 +91,7 @@
 /obj/structure/rack{
 	resistance_flags = 64
 	},
-/obj/item/clothing/head/helmet/space/beret{
+/obj/item/clothing/head/beret/sec{
 	name = "red beret"
 	},
 /turf/open/floor/carpet/red,
@@ -1249,11 +1249,7 @@
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "Am" = (
-/obj/structure/window/reinforced/fulltile{
-	atom_integrity = 5000;
-	max_integrity = 5000;
-	name = "hardened window"
-	},
+/obj/effect/spawner/structure/window/reinforced/indestructible,
 /turf/open/floor/plating,
 /area/centcom/ctf)
 "Ao" = (
@@ -2024,7 +2020,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Pb" = (
-/obj/structure/sign/barsign{
+/obj/machinery/barsign/all_access{
 	resistance_flags = 64
 	},
 /turf/closed/wall/mineral/iron,

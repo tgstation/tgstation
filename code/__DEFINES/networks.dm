@@ -73,7 +73,7 @@
 #define NETWORK_PORT_UPDATE(LIST) if(LIST) { LIST["_updated"] = TRUE }
 #define NETWORK_PORT_CLEAR_UPDATE(LIST) if(LIST) { LIST["_updated"] = FALSE }
 #define NETWORK_PORT_SET_UPDATE(LIST) if(LIST) { LIST["_updated"] = TRUE }
-#define NETWORK_PORT_DISCONNECT(LIST)  if(LIST) { LIST["_disconnected"] = TRUE }
+#define NETWORK_PORT_DISCONNECT(LIST) if(LIST) { LIST["_disconnected"] = TRUE }
 
 /// Error codes
 #define NETWORK_ERROR_OK null

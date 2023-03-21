@@ -22,15 +22,16 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 			"size" = 1
 		)
 	),
-	/* Not supported because making a proper matrix editor on the frontend would be a huge dick pain.
-		Uncomment if you ever implement it
+	// Not implemented, but if this isn't uncommented some windows will just error
+	// Needs either a proper matrix editor, or just a hook to our existing one 
+	// Issue is filterrific assumes variables will have the same value type if they share the same name, which this violates
+	// Gotta refactor this sometime
 	"color" = list(
 		"defaults" = list(
 			"color" = matrix(),
 			"space" = FILTER_COLOR_RGB
 		)
 	),
-	*/
 	"displace" = list(
 		"defaults" = list(
 			"x" = 0,

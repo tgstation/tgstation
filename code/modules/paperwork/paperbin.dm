@@ -176,14 +176,14 @@
 
 			var/mutable_appearance/paper_overlay = mutable_appearance(current_paper.icon, current_paper.icon_state)
 			paper_overlay.color = current_paper.color
-			paper_overlay.pixel_y = paper_number/PAPERS_PER_OVERLAY - PAPER_OVERLAY_PIXEL_SHIFT //gives the illusion of stacking
+			paper_overlay.pixel_z = paper_number/PAPERS_PER_OVERLAY - PAPER_OVERLAY_PIXEL_SHIFT //gives the illusion of stacking
 			. += paper_overlay
 			if(paper_number == total_paper) //this is our top paper
 				. += current_paper.overlays //add overlays only for top paper
 				if(istype(src, /obj/item/paper_bin/bundlenatural))
-					bin_overlay.pixel_y = paper_overlay.pixel_y //keeps binding centred on stack
+					bin_overlay.pixel_z = paper_overlay.pixel_z //keeps binding centred on stack
 				if(bin_pen)
-					pen_overlay.pixel_y = paper_overlay.pixel_y //keeps pen on top of stack
+					pen_overlay.pixel_z = paper_overlay.pixel_z //keeps pen on top of stack
 		. += bin_overlay
 
 	if(bin_pen)
@@ -197,7 +197,7 @@
 /obj/item/paper_bin/bundlenatural
 	name = "natural paper bundle"
 	desc = "A bundle of paper created using traditional methods."
-	icon_state = null
+	icon_state = "paper_stack"
 	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
 	bin_overlay_string = "paper_bundle_overlay"

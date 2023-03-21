@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
 	icon = 'icons/obj/drinks/drinks.dmi'
 
 /datum/glass_style/has_foodtype/juicebox
-	required_container_type = /obj/item/reagent_containers/cup/glass/sillycup/smallcarton
+	required_container_type = /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton
 	icon = 'icons/obj/drinks/boxes.dmi'
 
 /datum/glass_style/has_foodtype/soup

@@ -51,6 +51,8 @@
 
 /datum/component/evolutionary_leap/proc/leap(silent)
 	var/mob/living/old_mob = parent
+	if (old_mob.stat == DEAD)
+		return
 	var/mob/living/new_mob = evolve_path
 	var/new_mob_name = initial(new_mob.name)
 	if(!silent)

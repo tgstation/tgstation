@@ -12,6 +12,7 @@
 	ph = 7.33
 	burning_temperature = 2193//ethanol burns at 1970C (at it's peak)
 	burning_volume = 0.1
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/beer
 	fallback_icon = 'icons/obj/drinks/bottles.dmi'
 	fallback_icon_state = "beer"
 	/**
@@ -114,10 +115,11 @@
 
 	// Beer is a chemical composition of alcohol and various other things. It's a garbage nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
 /datum/reagent/consumable/ethanol/beer/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(src, 1))
-		mytray.adjust_plant_health(-round(chems.get_reagent_amount(src.type) * 0.05))
-		mytray.adjust_waterlevel(round(chems.get_reagent_amount(src.type) * 0.7))
+	if(!check_tray(chems, mytray))
+		return
+
+	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 0.05))
+	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 0.7))
 
 /datum/reagent/consumable/ethanol/beer/light
 	name = "Light Beer"
@@ -187,7 +189,7 @@
 
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	drinker.set_dizzy_if_lower(10 SECONDS * REM * delta_time)
-	drinker.adjust_drowsyness(-3 * REM * delta_time)
+	drinker.adjust_drowsiness(-6 SECONDS * REM * delta_time)
 	drinker.AdjustSleeping(-40 * REM * delta_time)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_jitter_if_lower(10 SECONDS)
@@ -267,7 +269,7 @@
 	icon_state = "thirteen_loko_glass"
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.adjust_drowsyness(-7 * REM * delta_time)
+	drinker.adjust_drowsiness(-14 SECONDS * REM * delta_time)
 	drinker.AdjustSleeping(-40 * REM * delta_time)
 	drinker.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, drinker.get_body_temp_normal())
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
@@ -324,6 +326,7 @@
 	taste_description = "grain alcohol"
 	ph = 8.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS //Very high proof
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/vodka
 
 /datum/glass_style/shot_glass/vodka
 	required_drink_type = /datum/reagent/consumable/ethanol/vodka
@@ -400,6 +403,7 @@
 	boozepwr = 60
 	taste_description = "spiked butterscotch"
 	ph = 6.5
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/rum
 
 /datum/glass_style/shot_glass/rum
 	required_drink_type = /datum/reagent/consumable/ethanol/rum
@@ -459,6 +463,7 @@
 	ph = 3.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/wine
 
 /datum/glass_style/shot_glass/wine
 	required_drink_type = /datum/reagent/consumable/ethanol/wine
@@ -724,7 +729,7 @@
 		cubano.adjustBruteLoss(-1 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		cubano.adjustFireLoss(-1 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		cubano.adjustToxLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-		cubano.adjustOxyLoss(-5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		cubano.adjustOxyLoss(-5 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		. = TRUE
 	return ..() || .
 
@@ -1445,6 +1450,32 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "concentrated matter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/static/list/ray_filter = list(type = "rays", size = 40, density = 15, color = SUPERMATTER_SINGULARITY_RAYS_COLOUR, factor = 15)
+
+/datum/reagent/consumable/ethanol/singulo/on_mob_metabolize(mob/living/drinker)
+	ADD_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
+
+/datum/reagent/consumable/ethanol/singulo/on_mob_end_metabolize(mob/living/drinker)
+	REMOVE_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
+	drinker.remove_filter("singulo_rays")
+
+/datum/reagent/consumable/ethanol/singulo/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(DT_PROB(2.5, delta_time))
+		// 20u = 1x1, 45u = 2x2, 80u = 3x3
+		var/volume_to_radius = FLOOR(sqrt(volume/5), 1) - 1
+		var/suck_range = clamp(volume_to_radius, 0, 3)
+
+		if(!suck_range)
+			return ..()
+
+		var/turf/gravity_well_turf = get_turf(drinker)
+		goonchem_vortex(gravity_well_turf, 0, suck_range)
+		playsound(get_turf(drinker), 'sound/effects/supermatter.ogg', 150, TRUE)
+		drinker.add_filter("singulo_rays", 1, ray_filter)
+		animate(drinker.get_filter("singulo_rays"), offset = 10, time = 1.5 SECONDS, loop = -1)
+		addtimer(CALLBACK(drinker, TYPE_PROC_REF(/datum, remove_filter), "singulo_rays"), 1.5 SECONDS)
+		drinker.emote("burp")
+	return ..()
 
 /datum/glass_style/drinking_glass/singulo
 	required_drink_type = /datum/reagent/consumable/ethanol/singulo
@@ -1465,6 +1496,13 @@
 /datum/reagent/consumable/ethanol/sbiten/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	drinker.adjust_bodytemperature(50 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, BODYTEMP_HEAT_DAMAGE_LIMIT) //310.15 is the normal bodytemp.
 	return ..()
+
+/datum/glass_style/drinking_glass/sbiten
+	required_drink_type = /datum/reagent/consumable/ethanol/sbiten
+	name = "Sbiten"
+	desc = "A spicy mix of Vodka and Spice. Very hot."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "sbitenglass"
 
 /datum/reagent/consumable/ethanol/red_mead
 	name = "Red Mead"
@@ -1760,7 +1798,7 @@
 	icon_state = "silencerglass"
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(ishuman(drinker) && drinker.mind?.miming)
+	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
@@ -1861,7 +1899,7 @@
 		drinker.adjustBruteLoss(-3 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		drinker.adjustFireLoss(-3 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		drinker.adjustCloneLoss(-5 * REM * delta_time, 0)
-		drinker.adjustOxyLoss(-4 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		drinker.adjustOxyLoss(-4 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		drinker.adjustToxLoss(-3 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	return ..() || .
@@ -2259,7 +2297,7 @@
 		drinker.adjustBruteLoss(-1, required_bodytype = affected_bodytype)
 		drinker.adjustFireLoss(-1, required_bodytype = affected_bodytype)
 		drinker.adjustToxLoss(-1, required_biotype = affected_biotype)
-		drinker.adjustOxyLoss(-1, required_biotype = affected_biotype)
+		drinker.adjustOxyLoss(-1, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		drinker.adjustStaminaLoss(-1, required_biotype = affected_biotype)
 	drinker.visible_message(span_warning("[drinker] shivers with renewed vigor!"), span_notice("One taste of [lowertext(name)] fills you with energy!"))
 	if(!drinker.stat && heal_points == 20) //brought us out of softcrit
@@ -2270,7 +2308,7 @@
 		drinker.adjustBruteLoss(-1 * REM * delta_time, required_bodytype = affected_bodytype)
 		drinker.adjustFireLoss(-1 * REM * delta_time, required_bodytype = affected_bodytype)
 		drinker.adjustToxLoss(-0.5 * REM * delta_time, required_biotype = affected_biotype)
-		drinker.adjustOxyLoss(-3 * REM * delta_time, required_biotype = affected_biotype)
+		drinker.adjustOxyLoss(-3 * REM * delta_time, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		drinker.adjustStaminaLoss(-5 * REM * delta_time, required_biotype = affected_biotype)
 		. = TRUE
 	..()
@@ -2666,7 +2704,7 @@
 	icon_state = "blank_paper"
 
 /datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(ishuman(drinker) && drinker.mind?.miming)
+	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
@@ -2820,7 +2858,7 @@
 	//A healing drink similar to Quadruple Sec, Ling Stings, and Screwdrivers for the Wizznerds; the check is consistent with the changeling sting
 	if(drinker?.mind?.has_antag_datum(/datum/antagonist/wizard))
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
-		drinker.adjustOxyLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		drinker.adjustOxyLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		drinker.adjustToxLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		drinker.adjustStaminaLoss(-1  * REM * delta_time, required_biotype = affected_biotype)
 	return ..()

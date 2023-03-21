@@ -101,6 +101,7 @@
 
 /obj/item/hierophant_club/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	// If our target is the beacon and the hierostaff is next to the beacon, we're trying to pick it up.
 	if((target == beacon) && target.Adjacent(src))
 		return
@@ -253,7 +254,7 @@
 	desc = "Hostile Environment Cross-Kinetic Suit: A suit designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
 	hoodtype = /obj/item/clothing/head/hooded/hostile_environment
-	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/hooded_hostile_environment
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -267,6 +268,15 @@
 	greyscale_config = /datum/greyscale_config/heck_suit
 	greyscale_config_worn = /datum/greyscale_config/heck_suit/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+
+/datum/armor/hooded_hostile_environment
+	melee = 70
+	bullet = 40
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
 
 /obj/item/clothing/suit/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
@@ -289,7 +299,7 @@
 	desc = "Hostile Environiment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
 	w_class = WEIGHT_CLASS_NORMAL
-	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/hooded_hostile_environment
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -376,6 +386,7 @@
 	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED, PROC_REF(on_attack))
 	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED_SECONDARY, PROC_REF(on_secondary_attack))
 	RegisterSignal(src, COMSIG_ATOM_INTEGRITY_CHANGED, PROC_REF(on_integrity_change))
+	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE)
 
 /obj/item/soulscythe/examine(mob/user)
 	. = ..()
@@ -770,6 +781,7 @@
 	. = ..()
 	if(timer > world.time)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(is_type_in_typecache(target, banned_turfs))
 		return
 	if(target in view(user.client.view, get_turf(user)))
@@ -834,7 +846,7 @@
 	/// Whether the saw is open or not
 	var/is_open = FALSE
 	/// List of factions we deal bonus damage to
-	var/list/nemesis_factions = list("mining", "boss")
+	var/list/nemesis_factions = list(FACTION_MINING, FACTION_BOSS)
 	/// Amount of damage we deal to the above factions
 	var/faction_bonus_force = 30
 	/// Whether the cleaver is actively AoE swiping something.
@@ -1000,6 +1012,7 @@
 
 /obj/item/storm_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!thunder_charges)
 		balloon_alert(user, "needs to charge!")
 		return
@@ -1048,7 +1061,7 @@
 		new /obj/effect/temp_visual/electricity(turf)
 		for(var/mob/living/hit_mob in turf)
 			to_chat(hit_mob, span_userdanger("You've been struck by lightning!"))
-			hit_mob.electrocute_act(15 * (isanimal(hit_mob) ? 3 : 1) * (turf == target ? 2 : 1) * (boosted ? 2 : 1), src, flags = SHOCK_TESLA|SHOCK_NOSTUN)
+			hit_mob.electrocute_act(15 * (isanimal_or_basicmob(hit_mob) ? 3 : 1) * (turf == target ? 2 : 1) * (boosted ? 2 : 1), src, flags = SHOCK_TESLA|SHOCK_NOSTUN)
 
 		for(var/obj/hit_thing in turf)
 			hit_thing.take_damage(20, BURN, ENERGY, FALSE)

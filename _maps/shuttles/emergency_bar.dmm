@@ -213,7 +213,10 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aN" = (
-/obj/structure/chair/stool/bar/directional/north,
+/obj/structure/chair/stool/bar/directional/north{
+	can_buckle = 1;
+	name = "buckleable bar stool"
+	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1

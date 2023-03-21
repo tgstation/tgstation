@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(phobia_regexes, list(
 ))
 
 GLOBAL_LIST_INIT(phobia_mobs, list(
-	"spiders" = typecacheof(list(/mob/living/simple_animal/hostile/giant_spider)),
+	"spiders" = typecacheof(list(/mob/living/basic/giant_spider)),
 	"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
 	"lizards" = typecacheof(list(/mob/living/simple_animal/hostile/lizard)),
 	"skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton)),
@@ -68,11 +68,11 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/simple_animal/bot/mulebot/paranormal,
 		/mob/living/simple_animal/hostile/construct,
 		/mob/living/simple_animal/hostile/dark_wizard,
-		/mob/living/simple_animal/hostile/faithless,
+		/mob/living/basic/faithless,
 		/mob/living/simple_animal/hostile/heretic_summon,
 		/mob/living/simple_animal/hostile/imp,
 		/mob/living/simple_animal/hostile/retaliate/bat,
-		/mob/living/simple_animal/hostile/retaliate/ghost,
+		/mob/living/basic/ghost,
 		/mob/living/simple_animal/hostile/skeleton,
 		/mob/living/simple_animal/hostile/wizard,
 		/mob/living/simple_animal/hostile/zombie,

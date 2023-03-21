@@ -137,15 +137,7 @@
 
 /datum/surgery/proc/complete(mob/surgeon)
 	SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
-	surgeon.mind.add_memory(
-		MEMORY_SUCCESSFUL_SURGERY,
-		list(
-			DETAIL_PROTAGONIST = surgeon,
-			DETAIL_DEUTERAGONIST = target,
-			DETAIL_SURGERY_TYPE = src,
-		),
-		story_value = STORY_VALUE_OKAY
-	)
+	surgeon.add_mob_memory(/datum/memory/surgery, deuteragonist = surgeon, surgery_type = name)
 	qdel(src)
 
 /// Returns a nearby operating computer linked to an operating table
@@ -192,7 +184,7 @@
 //INFO
 //Check /mob/living/carbon/attackby for how surgery progresses, and also /mob/living/carbon/attack_hand.
 //As of Feb 21 2013 they are in code/modules/mob/living/carbon/carbon.dm, lines 459 and 51 respectively.
-//Other important variables are var/list/surgeries (/mob/living) and var/list/internal_organs (/mob/living/carbon)
+//Other important variables are var/list/surgeries (/mob/living) and var/list/organs (/mob/living/carbon)
 // var/list/bodyparts (/mob/living/carbon/human) is the LIMBS of a Mob.
 //Surgical procedures are initiated by attempt_initiate_surgery(), which is called by surgical drapes and bedsheets.
 

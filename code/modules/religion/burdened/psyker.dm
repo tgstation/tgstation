@@ -10,12 +10,12 @@
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/organ/internal/brain/psyker/Insert(mob/living/carbon/inserted_into, special, drop_if_replaced, no_id_transfer)
+/obj/item/organ/internal/brain/psyker/on_insert(mob/living/carbon/inserted_into)
 	. = ..()
 	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
-/obj/item/organ/internal/brain/psyker/Remove(mob/living/carbon/removed_from, special, no_id_transfer)
+/obj/item/organ/internal/brain/psyker/on_remove(mob/living/carbon/removed_from)
 	. = ..()
 	qdel(removed_from.GetComponent(/datum/component/echolocation))
 	qdel(removed_from.GetComponent(/datum/component/anti_magic))
@@ -35,14 +35,30 @@
 	limb_id = BODYPART_ID_PSYKER
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED, TRAIT_BLIND)
+	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
 
 /obj/item/bodypart/head/psyker/try_attach_limb(mob/living/carbon/new_head_owner, special, abort)
 	. = ..()
-	if(!. || !new_head_owner.dna?.species)
+	if(!.)
 		return
+	new_head_owner.become_blind(limb_id)
+	if(!new_head_owner.dna?.species)
+		return
+
 	new_head_owner.dna.species.species_traits |= NOEYESPRITES //MAKE VISUALS TIED TO BODYPARTS ARGHH
 	new_head_owner.update_body()
+
+/obj/item/bodypart/head/psyker/drop_limb(special, dismembered)
+	owner.cure_blind(limb_id)
+	if(!owner.dna?.species)
+		return ..()
+
+	if(initial(owner.dna.species.species_traits) & NOEYESPRITES)
+		return ..()
+
+	owner.dna.species.species_traits &= ~NOEYESPRITES
+	owner.update_body()
+	return ..()
 
 /// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()
 /mob/living/carbon/human/proc/slow_psykerize()

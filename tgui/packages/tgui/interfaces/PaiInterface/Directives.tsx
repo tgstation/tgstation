@@ -2,11 +2,11 @@ import { decodeHtmlEntities } from 'common/string';
 import { useBackend } from 'tgui/backend';
 import { BlockQuote, Box, LabeledList, Section, Stack } from 'tgui/components';
 import { DIRECTIVE_COMPREHENSION, DIRECTIVE_ORDER } from './constants';
-import { Data } from './types';
+import { PaiData } from './types';
 
 /** Shows the hardcoded PAI info along with any supplied orders. */
 export const DirectiveDisplay = (props, context) => {
-  const { data } = useBackend<Data>(context);
+  const { data } = useBackend<PaiData>(context);
   const { directives = [], master_name } = data;
   const displayedLaw = directives?.length
     ? decodeHtmlEntities(directives[0])

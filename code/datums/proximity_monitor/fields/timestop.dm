@@ -58,6 +58,7 @@
 	channelled = TRUE
 
 /datum/proximity_monitor/advanced/timestop
+	edge_is_a_field = TRUE
 	var/list/immune = list()
 	var/list/frozen_things = list()
 	var/list/frozen_mobs = list() //cached separately for processing
@@ -187,12 +188,11 @@
 		var/mob/living/m = i
 		m.Stun(20, ignore_canstun = TRUE)
 
-/datum/proximity_monitor/advanced/timestop/setup_field_turf(turf/T)
+/datum/proximity_monitor/advanced/timestop/setup_field_turf(turf/target)
 	. = ..()
-	for(var/i in T.contents)
+	for(var/i in target.contents)
 		freeze_atom(i)
-	freeze_turf(T)
-
+	freeze_turf(target)
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_projectile(obj/projectile/P)
 	P.paused = TRUE
@@ -200,25 +200,31 @@
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_projectile(obj/projectile/P)
 	P.paused = FALSE
 
-/datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/L)
-	frozen_mobs += L
-	L.Stun(20, ignore_canstun = TRUE)
-	ADD_TRAIT(L, TRAIT_MUTE, TIMESTOP_TRAIT)
-	SSmove_manager.stop_looping(src) //stops them mid pathing even if they're stunimmune //This is really dumb
-	if(isanimal(L))
-		var/mob/living/simple_animal/S = L
-		S.toggle_ai(AI_OFF)
-	if(ishostile(L))
-		var/mob/living/simple_animal/hostile/H = L
-		H.LoseTarget()
+/datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/victim)
+	frozen_mobs += victim
+	victim.Stun(20, ignore_canstun = TRUE)
+	victim.add_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE), TIMESTOP_TRAIT)
+	SSmove_manager.stop_looping(victim) //stops them mid pathing even if they're stunimmune //This is really dumb
+	if(isanimal(victim))
+		var/mob/living/simple_animal/animal_victim = victim
+		animal_victim.toggle_ai(AI_OFF)
+		if(ishostile(victim))
+			var/mob/living/simple_animal/hostile/hostile_victim = victim
+			hostile_victim.LoseTarget()
+	else if(isbasicmob(victim))
+		var/mob/living/basic/basic_victim = victim
+		basic_victim.ai_controller?.set_ai_status(AI_STATUS_OFF)
 
-/datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/L)
-	L.AdjustStun(-20, ignore_canstun = TRUE)
-	REMOVE_TRAIT(L, TRAIT_MUTE, TIMESTOP_TRAIT)
-	frozen_mobs -= L
-	if(isanimal(L))
-		var/mob/living/simple_animal/S = L
-		S.toggle_ai(initial(S.AIStatus))
+/datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/victim)
+	victim.AdjustStun(-20, ignore_canstun = TRUE)
+	victim.remove_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE), TIMESTOP_TRAIT)
+	frozen_mobs -= victim
+	if(isanimal(victim))
+		var/mob/living/simple_animal/animal_victim = victim
+		animal_victim.toggle_ai(initial(animal_victim.AIStatus))
+	else if(isbasicmob(victim))
+		var/mob/living/basic/basic_victim = victim
+		basic_victim.ai_controller?.reset_ai_status()
 
 //you don't look quite right, is something the matter?
 /datum/proximity_monitor/advanced/timestop/proc/into_the_negative_zone(atom/A)
