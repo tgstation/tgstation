@@ -15,7 +15,7 @@ endmap
 
 map birdshot
 	#default
-	minplayers 25
+	maxplayers 66
 	votable
 endmap
 
