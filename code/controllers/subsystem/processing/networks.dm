@@ -272,9 +272,11 @@ SUBSYSTEM_DEF(networks)
 		// Anything in Centcom is completely isolated
 		// Special case for holodecks.
 		if(istype(A,/area/station/holodeck))
-			A.network_root_id = "HOLODECK" // isolated from the station network
+			A.network_root_id = HOLODECK_NETWORK_ROOT // isolated from the station network
 		else if(SSmapping.level_trait(A.z, ZTRAIT_CENTCOM))
 			A.network_root_id = CENTCOM_NETWORK_ROOT
+		else if(SSmapping.level_trait(A.z, ZTRAIT_RESERVED))
+			A.network_root_id = SYNDICATE_NETWORK_ROOT
 		// Otherwise the default is the station
 		else
 			A.network_root_id = STATION_NETWORK_ROOT

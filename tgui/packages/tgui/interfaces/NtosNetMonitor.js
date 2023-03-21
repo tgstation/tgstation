@@ -7,9 +7,6 @@ export const NtosNetMonitor = (props, context) => {
   const [tab_main, setTab_main] = useSharedState(context, 'tab_main', 1);
   const {
     ntnetrelays,
-    ntnetstatus,
-    config_softwaredownload,
-    config_communication,
     idsalarm,
     idsstatus,
     ntnetmaxlogs,
@@ -43,9 +40,6 @@ export const NtosNetMonitor = (props, context) => {
           <Stack.Item>
             <MainPage
               ntnetrelays={ntnetrelays}
-              ntnetstatus={ntnetstatus}
-              config_softwaredownload={config_softwaredownload}
-              config_communication={config_communication}
               idsalarm={idsalarm}
               idsstatus={idsstatus}
               ntnetmaxlogs={ntnetmaxlogs}
@@ -68,9 +62,6 @@ export const NtosNetMonitor = (props, context) => {
 const MainPage = (props, context) => {
   const {
     ntnetrelays,
-    ntnetstatus,
-    config_softwaredownload,
-    config_communication,
     idsalarm,
     idsstatus,
     ntnetmaxlogs,
@@ -86,41 +77,23 @@ const MainPage = (props, context) => {
         may prevent you from reenabling them!
       </NoticeBox>
       <Section title="Wireless Connectivity">
-        {ntnetrelays ? (
-          <LabeledList>
-            <LabeledList.Item label="Active NTNet Relays">
-              {ntnetrelays}
-            </LabeledList.Item>
-          </LabeledList>
-        ) : (
-          'No Relays Connected'
-        )}
-      </Section>
-      <Section title="Firewall Configuration">
-        <LabeledList>
-          <LabeledList.Item
-            label="Software Downloads"
+        {ntnetrelays.map((relay) => (
+          <Section
+            key={relay.ref}
+            title={relay.name}
             buttons={
-              <Button
-                icon={config_softwaredownload ? 'power-off' : 'times'}
-                content={config_softwaredownload ? 'ENABLED' : 'DISABLED'}
-                selected={config_softwaredownload}
-                onClick={() => act('toggle_function', { id: '1' })}
+              <Button.Confirm
+                color={relay.is_operational ? 'good' : 'bad'}
+                content={relay.is_operational ? 'ENABLED' : 'DISABLED'}
+                onClick={() =>
+                  act('toggle_relay', {
+                    ref: relay.ref,
+                  })
+                }
               />
             }
           />
-          <LabeledList.Item
-            label="Communication Systems"
-            buttons={
-              <Button
-                icon={config_communication ? 'power-off' : 'times'}
-                content={config_communication ? 'ENABLED' : 'DISABLED'}
-                selected={config_communication}
-                onClick={() => act('toggle_function', { id: '2' })}
-              />
-            }
-          />
-        </LabeledList>
+        ))}
       </Section>
       <Section title="Security Systems">
         {!!idsalarm && (
@@ -171,7 +144,6 @@ const MainPage = (props, context) => {
         </LabeledList>
         <Section
           title="System Log"
-          level={2}
           buttons={
             <Button.Confirm
               icon="trash"
