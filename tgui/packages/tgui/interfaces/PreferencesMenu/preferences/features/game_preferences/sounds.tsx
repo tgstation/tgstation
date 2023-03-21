@@ -45,7 +45,7 @@ export const sound_tts_use_html_audio: FeatureToggle = {
   name: 'Use HTML Audio for TTS',
   category: 'SOUND',
   description:
-    'When enabled, TTS is rendered using an HTML audio setup to improve client performance. There may be a reduction in perceived audio quality.',
+    'When enabled, text-to-speech is rendered using an HTML audio setup to improve client performance. There may be a reduction in perceived audio quality.',
   component: CheckboxInput,
 };
 
