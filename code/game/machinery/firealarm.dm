@@ -214,7 +214,7 @@
 	obj_flags |= EMAGGED
 	update_appearance()
 	if(user)
-		user.visible_message(span_warning("Sparks fly out of [src]!"),
+		user.visible_message(span_warning("Sparks fly out of [src]!"))
 							user.balloon_alert(user, "speaker disabled!"))
 		user.log_message("emagged [src].", LOG_ATTACK)
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -250,7 +250,7 @@
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
 		firelock.activate(FIRELOCK_ALARM_TYPE_GENERIC)
 	if(user)
-		user.balloon_alert(user, "triggered alarm!")
+		balloon_alert(user, "triggered alarm!")
 		user.log_message("triggered a fire alarm.", LOG_GAME)
 	soundloop.start() //Manually pulled fire alarms will make the sound, rather than the doors.
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_TRIGGER)
@@ -271,7 +271,7 @@
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
 		firelock.crack_open()
 	if(user)
-		user.balloon_alert(user, "reset alarm")
+		balloon_alert(user, "reset alarm")
 		user.log_message("reset a fire alarm.", LOG_GAME)
 	soundloop.stop()
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_RESET)
