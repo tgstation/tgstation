@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes:
-  - bugfix: "Coffee cups are now correctly immune to becoming frozen by low temperature water vapour."
