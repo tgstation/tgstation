@@ -18,8 +18,8 @@
 	description = "It turns out the diskettes the BEPIS prints experimental nodes on are extremely space-efficient. Send us one of your spares when you're done with it."
 	reward = CARGO_CRATE_VALUE * 8
 	wanted_types = list(
+		/obj/item/disk/design_disk/bepis/remove_tech = TRUE,
 		/obj/item/disk/design_disk/bepis = TRUE,
-		/obj/item/disk/design_disk/bepis/spaceloot = TRUE,
 	)
 
 /datum/bounty/item/science/genetics
