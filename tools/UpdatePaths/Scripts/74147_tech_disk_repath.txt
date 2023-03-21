@@ -1,4 +1,4 @@
-# moves arm-mounted abstract chainsaw to a chainsaw subtype
+# removes advanced design, and moves bepis tech disks to its new type
 
 /obj/item/disk/design_disk/adv : /obj/item/disk/design_disk{@OLD}
 /obj/item/disk/design_disk/adv/@SUBTPYES : /obj/item/disk/design_disk/@SUBTYPES{@OLD}
