@@ -12,6 +12,7 @@
 	desc = "Scans chickens to give you information about possible mutations that chicken can have"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "health"
+	worn_icon_state = null
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 
@@ -261,6 +262,7 @@
 	name = "egg bag"
 	icon = 'monkestation/icons/obj/ranching.dmi'
 	icon_state = "egg_bag"
+	worn_icon_state = "plantbag"
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 

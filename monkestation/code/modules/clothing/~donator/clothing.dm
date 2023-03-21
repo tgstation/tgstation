@@ -281,14 +281,6 @@
 	desc = "A pallid, softly desaturated-looking gold ring that doesn't look like it belongs. It's hard to put one's finger on why it feels at odds with the world around it - the shine coming off it looks like it could be a mismatch with the lighting in the room, or it could be that it seems to glint and twinkle occasionally when there's no obvious reason for it to - though only when you're not really looking."
 	spans = list("velvet")
 
-// Donation reward for Bippys
-/obj/item/clothing/gloves/ring/hypno/bippys
-	name = "hypnobot hexnut"
-	desc = "A silver bolt component that once belonged to a very peculiar IPC. It's large enough to be worn as a ring on nearly any finger, and is said to amplify the voice of one's mind to another's in the softness of a Whisper..."
-	icon_state = "ringsilver"
-	worn_icon_state = "sring"
-	spans = list("hexnut")
-
 /datum/action/item_action/hypno_whisper
 	name = "Hypnotic Whisper"
 

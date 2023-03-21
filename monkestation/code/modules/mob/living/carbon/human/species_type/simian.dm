@@ -92,6 +92,7 @@
 	icon = 'monkestation/icons/obj/clothing/masks.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
 	icon_state = "translator"
+	worn_icon_state = null
 	slot_flags = ITEM_SLOT_MASK | ITEM_SLOT_NECK
 	modifies_speech = TRUE
 	var/current_language = /datum/language/common

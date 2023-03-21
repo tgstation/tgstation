@@ -39,11 +39,6 @@
 	item_path = /obj/item/clothing/gloves/ring/hypno/coffeepot
 	ckeywhitelist = list("coffeepot")
 
-/datum/loadout_item/gloves/hypnoring_bippy
-	name = "Hypnodemon's Ring"
-	item_path = /obj/item/clothing/gloves/ring/hypno/bippys
-	ckeywhitelist = list("bippys")
-
 /datum/loadout_item/under/jumpsuit/rax_turtleneck
 	name = "Black Turtleneck"
 	item_path = /obj/item/clothing/under/rax_turtleneck
