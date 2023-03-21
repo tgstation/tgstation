@@ -6,6 +6,7 @@
 	antag_moodlet = /datum/mood_event/thrall
 	hud_icon = 'massmeta/icons/mob/darkspawn_hud.dmi'
 	antag_hud_name = "veil"
+	var/mutable_appearance/veil_sigils
 
 /datum/antagonist/veil/on_gain()
 	. = ..()
@@ -34,11 +35,17 @@
 
 /datum/antagonist/veil/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/current_mob = mob_override || owner.current
+	veil_sigils = mutable_appearance('massmeta/icons/mob/actions/actions_darkspawn.dmi', "veil_sigils", -UNDER_SUIT_LAYER) //show them sigils
+	current_mob.add_overlay(veil_sigils)
 	current_mob.maxHealth -= 40
+	RegisterSignal(current_mob, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	add_team_hud(current_mob)
 
 /datum/antagonist/veil/remove_innate_effects(mob/living/mob_override)
-	owner.current.maxHealth += 40
+	var/mob/living/current_mob = mob_override || owner.current
+	UnregisterSignal(current_mob, COMSIG_PARENT_EXAMINE)
+	current_mob.maxHealth += 40
+	current_mob.cut_overlay(veil_sigils)
 
 /datum/antagonist/veil/add_team_hud(mob/target)
 	QDEL_NULL(team_hud_ref)
@@ -63,6 +70,16 @@
 			continue
 		antag_hud.show_to(target)
 		hud.show_to(antag_hud.target)
+
+/datum/antagonist/veil/proc/on_examine(datum/source, mob/examiner, examine_text)
+	SIGNAL_HANDLER
+	if(!veil_sigils)
+		return
+	var/mob/living/carbon/human/human_owner = owner.current
+	if(!istype(human_owner) || QDELETED(human_owner))
+		return
+	if(!human_owner.glasses || !human_owner.wear_suit)
+		examine_text += "[human_owner.p_they(TRUE)] have their whole body covered in sigils!\n"
 
 /datum/antagonist/veil/greet()
 	to_chat(owner, "<span class='velvet big'><b>ukq wna ieja jks</b></span>" )
