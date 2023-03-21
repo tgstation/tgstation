@@ -349,7 +349,7 @@
 		return
 
 
-	if(QDELETED(victim) || victim.suiciding)
+	if(QDELETED(victim) || HAS_TRAIT(victim, TRAIT_SUICIDED))
 		return //lol rip
 
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown))
