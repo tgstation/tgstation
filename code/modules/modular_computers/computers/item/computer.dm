@@ -135,7 +135,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	update_appearance()
 	register_context()
-	init_network_id(NETWORK_TABLETS)
 	Add_Messenger()
 	install_default_programs()
 
@@ -468,7 +467,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		shutdown_computer()
 		return
 
-	if(active_program && active_program.requires_ntnet && !get_ntnet_status(active_program.requires_ntnet_feature))
+	if(active_program && active_program.requires_ntnet && !get_ntnet_status())
 		active_program.event_networkfailure(FALSE) // Active program requires NTNet to run but we've just lost connection. Crash.
 
 	for(var/datum/computer_file/program/idle_programs as anything in idle_threads)
@@ -476,7 +475,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			idle_threads.Remove(idle_programs)
 			continue
 		idle_programs.process_tick(delta_time)
-		idle_programs.ntnet_status = get_ntnet_status(idle_programs.requires_ntnet_feature)
+		idle_programs.ntnet_status = get_ntnet_status()
 		if(idle_programs.requires_ntnet && !idle_programs.ntnet_status)
 			idle_programs.event_networkfailure(TRUE)
 
@@ -607,7 +606,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
 		return FALSE
 
-	if(program.requires_ntnet && !get_ntnet_status(program.requires_ntnet_feature)) // The program requires NTNet connection, but we are not connected to NTNet.
+	if(program.requires_ntnet && !get_ntnet_status()) // The program requires NTNet connection, but we are not connected to NTNet.
 		to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
 		return FALSE
 
@@ -621,9 +620,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	return TRUE
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
-/obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
+/obj/item/modular_computer/proc/get_ntnet_status()
 	// NTNet is down and we are not connected via wired connection. No signal.
-	if(!SSmodular_computers.check_function(specific_action))
+	if(!SSmodular_computers.check_relay_operation())
 		return NTNET_NO_SIGNAL
 
 	// computers are connected through ethernet
@@ -647,7 +646,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(!get_ntnet_status())
 		return FALSE
 
-	return SSnetworks.add_log(text, network_id)
+	return SSnetworks.add_log("[src]: [text]", network_id)
 
 /obj/item/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)
