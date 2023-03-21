@@ -56,6 +56,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden/layer4,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
+"dy" = (
+/turf/open/misc/asteroid{
+	icon_state = "asteroid1"
+	},
+/area/ruin/space/has_grav)
 "dZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/stripes/corner,
@@ -96,11 +101,21 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
+"gv" = (
+/turf/open/misc/asteroid{
+	icon_state = "asteroid11"
+	},
+/area/ruin/space/has_grav)
 "gT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon{
 	dir = 1
 	},
 /turf/open/floor/engine/air,
+/area/ruin/space/has_grav)
+"hf" = (
+/turf/open/misc/asteroid{
+	icon_state = "asteroid5"
+	},
 /area/ruin/space/has_grav)
 "hB" = (
 /obj/effect/turf_decal/tile/yellow/full,
@@ -181,6 +196,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav)
+"kM" = (
+/turf/open/misc/asteroid{
+	icon_state = "asteroid11"
+	},
+/area/space)
 "kV" = (
 /obj/effect/decal/cleanable/blood/gibs{
 	pixel_y = 8;
@@ -218,6 +238,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav)
+"on" = (
+/obj/structure/girder/reinforced,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid3"
+	},
+/area/ruin/space/has_grav)
 "oV" = (
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav)
@@ -235,6 +261,11 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"qG" = (
+/turf/open/misc/asteroid{
+	icon_state = "asteroid10"
+	},
 /area/ruin/space/has_grav)
 "qJ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
@@ -268,6 +299,11 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
+"tg" = (
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/ruin/space/has_grav)
 "tk" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple,
@@ -297,6 +333,11 @@
 "uz" = (
 /turf/open/space/basic,
 /area/space)
+"uE" = (
+/turf/open/misc/asteroid{
+	icon_state = "asteroid6"
+	},
+/area/ruin/space/has_grav)
 "uS" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/green{
 	dir = 4
@@ -409,7 +450,9 @@
 /area/ruin/space/has_grav)
 "Dc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid2"
+	},
 /area/ruin/space/has_grav)
 "Dm" = (
 /obj/machinery/atmospherics/components/unary/thermomachine,
@@ -504,6 +547,11 @@
 "Il" = (
 /turf/open/floor/engine/air,
 /area/ruin/space/has_grav)
+"Kh" = (
+/turf/open/misc/asteroid{
+	icon_state = "asteroid3"
+	},
+/area/space)
 "Kj" = (
 /turf/closed/mineral,
 /area/ruin/space/has_grav)
@@ -554,6 +602,11 @@
 /obj/effect/turf_decal/tile/yellow/half,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
+"Pl" = (
+/turf/open/misc/asteroid{
+	icon_state = "asteroid8"
+	},
+/area/ruin/space/has_grav)
 "PX" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/extinguisher_cabinet/directional/south,
@@ -574,6 +627,11 @@
 /obj/machinery/atmospherics/miner/nitrogen,
 /turf/open/floor/engine/n2,
 /area/ruin/space/has_grav)
+"RO" = (
+/turf/open/misc/asteroid{
+	icon_state = "asteroid9"
+	},
+/area/ruin/space/has_grav)
 "St" = (
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 4
@@ -589,13 +647,20 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
+"Sx" = (
+/turf/open/misc/asteroid{
+	icon_state = "asteroid9"
+	},
+/area/space)
 "SW" = (
 /turf/open/misc/asteroid/airless,
 /area/space)
 "Ut" = (
 /obj/machinery/light/small/directional/south,
 /obj/item/clothing/glasses/meson/engine,
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid3"
+	},
 /area/ruin/space/has_grav)
 "UO" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/purple/visible{
@@ -619,7 +684,7 @@
 	pixel_x = 5
 	},
 /obj/item/paper/crumpled{
-	default_raw_text = Ever since I set up those miners the have all been making a strange clunking noise, especialy the carbon dioxide miner, I swear its just been getting louder and louder these past couple hours. I just hope I set it up right.
+	default_raw_text = EversinceIsetupthoseminersthehaveallbeenmakingastrangeclunkingnoise,especialythecarbondioxideminer,Iswearitsjustbeengettinglouderandlouderthesepastcouplehours.IjusthopeIsetitupright.
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav)
@@ -685,6 +750,11 @@
 "Yy" = (
 /obj/machinery/power/turbine/core_rotor,
 /turf/open/misc/asteroid,
+/area/ruin/space/has_grav)
+"ZU" = (
+/turf/open/misc/asteroid{
+	icon_state = "asteroid4"
+	},
 /area/ruin/space/has_grav)
 
 (1,1,1) = {"
@@ -761,7 +831,7 @@ Dy
 zL
 Dy
 Kj
-Er
+hf
 uz
 uz
 uz
@@ -800,7 +870,7 @@ uz
 uz
 uz
 uz
-Er
+hf
 Er
 Er
 Kj
@@ -854,7 +924,7 @@ uz
 uz
 Er
 Er
-Er
+Pl
 Kj
 Kj
 Kj
@@ -885,7 +955,7 @@ Kj
 Kj
 Kj
 Kj
-oV
+hf
 Kj
 Dy
 Dy
@@ -911,7 +981,7 @@ Kj
 Kj
 Kj
 Kj
-oV
+ZU
 oV
 oV
 Dy
@@ -990,9 +1060,9 @@ Kj
 Kj
 Kj
 Kj
+uE
 oV
-oV
-oV
+gv
 oV
 Dc
 Gi
@@ -1017,7 +1087,7 @@ Kj
 Kj
 Kj
 Kj
-oV
+Pl
 Dm
 oV
 kC
@@ -1071,10 +1141,10 @@ Kj
 Kj
 Kj
 Kj
+RO
 oV
 oV
-oV
-oV
+dy
 oV
 Dy
 sz
@@ -1153,7 +1223,7 @@ Kj
 Kj
 Kj
 Kj
-eo
+on
 Dy
 Dy
 Dy
@@ -1206,7 +1276,7 @@ uz
 uz
 Kj
 Kj
-Er
+dy
 Er
 Kj
 Kj
@@ -1232,10 +1302,10 @@ uz
 uz
 uz
 Kj
+tg
 Er
 Er
-Er
-Er
+qG
 Kj
 Kj
 Dy
@@ -1251,7 +1321,7 @@ Dy
 Kj
 Kj
 Kj
-SW
+kM
 uz
 "}
 (22,1,1) = {"
@@ -1259,8 +1329,8 @@ uz
 uz
 uz
 uz
-Er
-Er
+tg
+uE
 Er
 Er
 Kj
@@ -1277,7 +1347,7 @@ Dy
 Dy
 Kj
 Kj
-SW
+Sx
 SW
 uz
 "}
@@ -1287,7 +1357,7 @@ uz
 uz
 uz
 uz
-Er
+tg
 Kj
 Kj
 Kj
@@ -1303,7 +1373,7 @@ Kj
 Kj
 Kj
 Kj
-SW
+Kh
 SW
 uz
 uz
