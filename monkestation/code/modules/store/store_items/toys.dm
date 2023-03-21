@@ -96,79 +96,79 @@ GLOBAL_LIST_INIT(store_toys, generate_store_items(/datum/store_item/toys))
 
 /datum/store_item/toys/d1
 	name = "D1"
-	cost = 1000
+	item_cost = 1000
 	item_path = /obj/item/dice/d1
 
 /datum/store_item/toys/d2
 	name = "D2"
-	cost = 1000
+	item_cost = 1000
 	item_path = /obj/item/dice/d2
 
 /datum/store_item/toys/d4
 	name = "D4"
-	cost = 1000
+	item_cost = 1000
 	item_path = /obj/item/dice/d4
 
 /datum/store_item/toys/d6
 	name = "D6"
-	cost = 1000
+	item_cost = 1000
 	item_path = /obj/item/dice/d6
 
 /datum/store_item/toys/d6_ebony
 	name = "D6 Ebony Version"
-	cost = 2500
+	item_cost = 2500
 	item_path = /obj/item/dice/d6/ebony
 
 /datum/store_item/toys/d6_space
 	name = "D6 Space Version"
-	cost = 2500
+	item_cost = 2500
 	item_path = /obj/item/dice/d6/space
 
 /datum/store_item/toys/d10
 	name = "D10"
-	cost = 1000
+	item_cost = 1000
 	item_path = /obj/item/dice/d10
 
 /datum/store_item/toys/d12
 	name = "D12"
-	cost = 1000
+	item_cost = 1000
 	item_path = /obj/item/dice/d12
 
 /datum/store_item/toys/d20
 	name = "D20"
-	cost = 1000
+	item_cost = 1000
 	item_path = /obj/item/dice/d20
 
 /datum/store_item/toys/d100
 	name = "D100"
-	cost = 1000
+	item_cost = 1000
 	item_path = /obj/item/dice/d100
 
 /datum/store_item/toys/d00
 	name = "D00"
-	cost = 1000
+	item_cost = 1000
 	item_path = /obj/item/dice/d00
 
 /datum/store_item/toys/dice_bag
 	name = "Dice Bag"
-	cost = 2000
+	item_cost = 2000
 	item_path = /obj/item/storage/dice
 
 /datum/store_item/toys/cat_toy
 	name = "Cat Toy"
-	cost = 4000
+	item_cost = 4000
 	item_path = /obj/item/toy/cattoy
 /datum/store_item/toys/crayons
 	name = "Box of Crayons"
-	cost = 3000
+	item_cost = 3000
 	item_path = /obj/item/storage/crayons
 
 /datum/store_item/toys/eightball
 	name = "Magic Eightball"
 	item_path = /obj/item/toy/eightball
-	cost = 4000
+	item_cost = 4000
 
 /datum/store_item/toys/toykatana
 	name = "Toy Katana"
 	item_path = /obj/item/toy/katana
-	cost = 8000
+	item_cost = 8000

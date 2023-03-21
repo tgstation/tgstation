@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 /datum/store_item/suit/military_jacket
 	name = "Military Jacket"
 	item_path = /obj/item/clothing/suit/jacket/miljacket
-	cost = 4000
+	item_cost = 4000
 
 /datum/store_item/suit/puffer_jacket
 	name = "Puffer Jacket"
@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 /datum/store_item/suit/puffer_vest
 	name = "Puffer Vest"
 	item_path = /obj/item/clothing/suit/jacket/puffer/vest
-	cost = 6000
+	item_cost = 6000
 
 /datum/store_item/suit/leather_jacket
 	name = "Leather Jacket"
@@ -101,22 +101,22 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 /datum/store_item/suit/leather_jacket/biker
 	name = "Biker Jacket"
 	item_path = /obj/item/clothing/suit/jacket/leather/biker
-	cost = 2000
+	item_cost = 2000
 
 /datum/store_item/suit/jacket_sweater
 	name = "Recolorable Sweater Jacket"
 	item_path = /obj/item/clothing/suit/toggle/jacket/sweater
-	cost = 3000
+	item_cost = 3000
 
 /datum/store_item/suit/jacket_oversized
 	name = "Recolorable Oversized Jacket"
 	item_path = /obj/item/clothing/suit/jacket/oversized
-	cost = 3000
+	item_cost = 3000
 
 /datum/store_item/suit/jacket_fancy
 	name = "Recolorable Fancy Fur Coat"
 	item_path = /obj/item/clothing/suit/jacket/fancy
-	cost = 3000
+	item_cost = 3000
 
 /datum/store_item/suit/ethereal_raincoat
 	name = "Ethereal Raincoat"
@@ -130,37 +130,37 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 /datum/store_item/suit/owl
 	name = "Owl Cloak"
 	item_path = /obj/item/clothing/suit/toggle/owlwings
-	cost = 7500
+	item_cost = 7500
 
 /datum/store_item/suit/griffin
 	name = "Griffon Cloak"
 	item_path = /obj/item/clothing/suit/toggle/owlwings/griffinwings
-	cost = 7500
+	item_cost = 7500
 
 /datum/store_item/suit/syndi
 	name = "Black And Red Space Suit Replica"
 	item_path = /obj/item/clothing/suit/syndicatefake
-	cost = 15000
+	item_cost = 15000
 
 /datum/store_item/suit/bee
 	name = "Bee Outfit"
 	item_path = /obj/item/clothing/suit/hooded/bee_costume
-	cost = 5000
+	item_cost = 5000
 
 /datum/store_item/suit/plague_doctor
 	name = "Plague Doctor Suit"
 	item_path = /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
-	cost = 7500
+	item_cost = 7500
 
 /datum/store_item/suit/snowman
 	name = "Snowman Outfit"
 	item_path = /obj/item/clothing/suit/costume/snowman
-	cost = 3000
+	item_cost = 3000
 
 /datum/store_item/suit/chicken
 	name = "Chicken Suit"
 	item_path = /obj/item/clothing/suit/costume/chickensuit
-	cost = 4000
+	item_cost = 4000
 
 /datum/store_item/suit/monkey
 	name = "Monkey Suit"
@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 /datum/store_item/suit/xenos
 	name = "Xenos Suit"
 	item_path = /obj/item/clothing/suit/costume/xenos
-	cost = 7500
+	item_cost = 7500
 
 /datum/store_item/suit/ian_costume
 	name = "Corgi Costume"
@@ -190,7 +190,7 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 /datum/store_item/suit/witch
 	name = "Witch Robe"
 	item_path = /obj/item/clothing/suit/wizrobe/marisa/fake
-	cost = 2000
+	item_cost = 2000
 
 /*
 *	MISC
@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 /datum/store_item/suit/purple_apron
 	name = "Purple Apron"
 	item_path = /obj/item/clothing/suit/apron/purple_bartender
-	cost = 3000
+	item_cost = 3000
 
 /datum/store_item/suit/denim_overalls
 	name = "Denim Overalls"
@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 /datum/store_item/suit/hawaiian_shirt
 	name = "Hawaiian Shirt"
 	item_path = /obj/item/clothing/suit/costume/hawaiian
-	cost = 5000
+	item_cost = 5000
 
 
 /*
@@ -285,7 +285,7 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 /datum/store_item/suit/yuri
 	name = "Yuri Coat"
 	item_path = /obj/item/clothing/suit/costume/yuri
-	cost = 7500
+	item_cost = 7500
 
 /*
 *	DONATOR
