@@ -56,11 +56,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden/layer4,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
-"dy" = (
-/turf/open/misc/asteroid{
-	icon_state = "asteroid1"
-	},
-/area/ruin/space/has_grav)
 "dZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/stripes/corner,
@@ -101,21 +96,11 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
-"gv" = (
-/turf/open/misc/asteroid{
-	icon_state = "asteroid11"
-	},
-/area/ruin/space/has_grav)
 "gT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon{
 	dir = 1
 	},
 /turf/open/floor/engine/air,
-/area/ruin/space/has_grav)
-"hf" = (
-/turf/open/misc/asteroid{
-	icon_state = "asteroid5"
-	},
 /area/ruin/space/has_grav)
 "hB" = (
 /obj/effect/turf_decal/tile/yellow/full,
@@ -196,11 +181,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav)
-"kM" = (
-/turf/open/misc/asteroid{
-	icon_state = "asteroid11"
-	},
-/area/space)
 "kV" = (
 /obj/effect/decal/cleanable/blood/gibs{
 	pixel_y = 8;
@@ -238,12 +218,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav)
-"on" = (
-/obj/structure/girder/reinforced,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid3"
-	},
-/area/ruin/space/has_grav)
 "oV" = (
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav)
@@ -261,11 +235,6 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
-"qG" = (
-/turf/open/misc/asteroid{
-	icon_state = "asteroid10"
-	},
 /area/ruin/space/has_grav)
 "qJ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
@@ -299,11 +268,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
-"tg" = (
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
-/area/ruin/space/has_grav)
 "tk" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple,
@@ -333,11 +297,6 @@
 "uz" = (
 /turf/open/space/basic,
 /area/space)
-"uE" = (
-/turf/open/misc/asteroid{
-	icon_state = "asteroid6"
-	},
-/area/ruin/space/has_grav)
 "uS" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/green{
 	dir = 4
@@ -450,9 +409,7 @@
 /area/ruin/space/has_grav)
 "Dc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid2"
-	},
+/turf/open/misc/asteroid,
 /area/ruin/space/has_grav)
 "Dm" = (
 /obj/machinery/atmospherics/components/unary/thermomachine,
@@ -547,11 +504,6 @@
 "Il" = (
 /turf/open/floor/engine/air,
 /area/ruin/space/has_grav)
-"Kh" = (
-/turf/open/misc/asteroid{
-	icon_state = "asteroid3"
-	},
-/area/space)
 "Kj" = (
 /turf/closed/mineral,
 /area/ruin/space/has_grav)
@@ -602,11 +554,6 @@
 /obj/effect/turf_decal/tile/yellow/half,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
-"Pl" = (
-/turf/open/misc/asteroid{
-	icon_state = "asteroid8"
-	},
-/area/ruin/space/has_grav)
 "PX" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/extinguisher_cabinet/directional/south,
@@ -627,11 +574,6 @@
 /obj/machinery/atmospherics/miner/nitrogen,
 /turf/open/floor/engine/n2,
 /area/ruin/space/has_grav)
-"RO" = (
-/turf/open/misc/asteroid{
-	icon_state = "asteroid9"
-	},
-/area/ruin/space/has_grav)
 "St" = (
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 4
@@ -647,20 +589,13 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
-"Sx" = (
-/turf/open/misc/asteroid{
-	icon_state = "asteroid9"
-	},
-/area/space)
 "SW" = (
 /turf/open/misc/asteroid/airless,
 /area/space)
 "Ut" = (
 /obj/machinery/light/small/directional/south,
 /obj/item/clothing/glasses/meson/engine,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid3"
-	},
+/turf/open/misc/asteroid,
 /area/ruin/space/has_grav)
 "UO" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/purple/visible{
@@ -751,11 +686,6 @@
 /obj/machinery/power/turbine/core_rotor,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav)
-"ZU" = (
-/turf/open/misc/asteroid{
-	icon_state = "asteroid4"
-	},
-/area/ruin/space/has_grav)
 
 (1,1,1) = {"
 uz
@@ -831,7 +761,7 @@ Dy
 zL
 Dy
 Kj
-hf
+Er
 uz
 uz
 uz
@@ -870,7 +800,7 @@ uz
 uz
 uz
 uz
-hf
+Er
 Er
 Er
 Kj
@@ -924,7 +854,7 @@ uz
 uz
 Er
 Er
-Pl
+Er
 Kj
 Kj
 Kj
@@ -955,7 +885,7 @@ Kj
 Kj
 Kj
 Kj
-hf
+oV
 Kj
 Dy
 Dy
@@ -981,7 +911,7 @@ Kj
 Kj
 Kj
 Kj
-ZU
+oV
 oV
 oV
 Dy
@@ -1060,9 +990,9 @@ Kj
 Kj
 Kj
 Kj
-uE
 oV
-gv
+oV
+oV
 oV
 Dc
 Gi
@@ -1087,7 +1017,7 @@ Kj
 Kj
 Kj
 Kj
-Pl
+oV
 Dm
 oV
 kC
@@ -1141,10 +1071,10 @@ Kj
 Kj
 Kj
 Kj
-RO
 oV
 oV
-dy
+oV
+oV
 oV
 Dy
 sz
@@ -1223,7 +1153,7 @@ Kj
 Kj
 Kj
 Kj
-on
+eo
 Dy
 Dy
 Dy
@@ -1276,7 +1206,7 @@ uz
 uz
 Kj
 Kj
-dy
+Er
 Er
 Kj
 Kj
@@ -1302,10 +1232,10 @@ uz
 uz
 uz
 Kj
-tg
 Er
 Er
-qG
+Er
+Er
 Kj
 Kj
 Dy
@@ -1321,7 +1251,7 @@ Dy
 Kj
 Kj
 Kj
-kM
+SW
 uz
 "}
 (22,1,1) = {"
@@ -1329,8 +1259,8 @@ uz
 uz
 uz
 uz
-tg
-uE
+Er
+Er
 Er
 Er
 Kj
@@ -1347,7 +1277,7 @@ Dy
 Dy
 Kj
 Kj
-Sx
+SW
 SW
 uz
 "}
@@ -1357,7 +1287,7 @@ uz
 uz
 uz
 uz
-tg
+Er
 Kj
 Kj
 Kj
@@ -1373,7 +1303,7 @@ Kj
 Kj
 Kj
 Kj
-Kh
+SW
 SW
 uz
 uz
