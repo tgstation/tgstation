@@ -23,6 +23,7 @@
 	mech_type = EXOSUIT_MODULE_SAVANNAH
 	movedelay = 3
 	max_integrity = 450 //really tanky, like damn
+	internal_damage_threshold = 20
 	armor_type = /datum/armor/mecha_savannah_ivanov
 	max_temperature = 30000
 	force = 30
