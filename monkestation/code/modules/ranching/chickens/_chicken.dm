@@ -222,6 +222,12 @@
 
 /mob/living/simple_animal/chicken/Destroy()
 	Friends = null
+	consumed_food = null
+	consumed_reagents = null
+	mutation_list = null
+	glass_egg_reagents = null
+	speech_buffer = null
+	applied_visual = null
 	return ..()
 
 /mob/living/simple_animal/chicken/AltClick(mob/user)
