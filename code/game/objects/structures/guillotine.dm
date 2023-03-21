@@ -147,13 +147,11 @@
 
 		var/obj/item/bodypart/head/head = H.get_bodypart("head")
 
-		if (QDELETED(head))
-			return
-
 		playsound(src, drop_sound, 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
-			head.dismember()
-			log_combat(user, H, "beheaded", src)
+			if(head)
+				head.dismember()
+				log_combat(user, H, "beheaded", src)
 			H.regenerate_icons()
 			unbuckle_all_mobs()
 			kill_count += 1
