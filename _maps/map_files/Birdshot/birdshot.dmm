@@ -4823,7 +4823,6 @@
 "caE" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/button/tram{
-	id = "maint_left";
 	lift_id = "maint_tram";
 	pixel_y = -32
 	},
@@ -13575,7 +13574,7 @@
 /area/station/engineering/break_room)
 "frB" = (
 /obj/machinery/button/tram{
-	id = "maint_right";
+	id = 2;
 	lift_id = "maint_tram";
 	pixel_y = -32
 	},
@@ -26337,7 +26336,7 @@
 /area/station/hallway/primary/fore)
 "jMv" = (
 /obj/structure/industrial_lift/tram,
-/obj/effect/landmark/tram/maint_left{
+/obj/effect/landmark/tram/birdshot/maint_left{
 	specific_lift_id = "maint_tram"
 	},
 /turf/open/floor/noslip/tram_plate,
@@ -28281,7 +28280,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "kvb" = (
-/obj/effect/landmark/tram/sec_wing{
+/obj/effect/landmark/tram/birdshot/sec_wing{
 	specific_lift_id = "prison_tram"
 	},
 /obj/structure/industrial_lift/tram/white,
@@ -34601,7 +34600,7 @@
 "mId" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/button/tram{
-	id = "sec_wing";
+	id = 2;
 	lift_id = "prison_tram";
 	pixel_y = 32
 	},
@@ -35027,7 +35026,7 @@
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/station/maintenance/starboard/central)
 "mOP" = (
-/obj/effect/landmark/tram/prison_wing{
+/obj/effect/landmark/tram/birdshot/prison_wing{
 	specific_lift_id = "prison_tram"
 	},
 /turf/open/floor/noslip/tram_platform,
@@ -39087,7 +39086,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "oqS" = (
-/obj/effect/landmark/tram/maint_right{
+/obj/effect/landmark/tram/birdshot/maint_right{
 	specific_lift_id = "maint_tram"
 	},
 /turf/open/floor/noslip/tram_plate,
@@ -67657,7 +67656,6 @@
 "xrh" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/button/tram{
-	id = "prison_wing";
 	lift_id = "prison_tram";
 	pixel_y = 32
 	},
