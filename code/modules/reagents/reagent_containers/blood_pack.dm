@@ -75,11 +75,11 @@
 	blood_type = "S"
 	unique_blood = /datum/reagent/lube
 	
-/obj/item/reagent_containers/blood/podpeople
+/obj/item/reagent_containers/blood/podperson
 	blood_type = "H2O"
 	unique_blood = /datum/reagent/water
 	
-/obj/item/reagent_containers/blood/podpeople/Initialize(mapload, vol)
+/obj/item/reagent_containers/blood/podperson/Initialize(mapload, vol)
 	. = ..(mapload, vol)
 	desc += " This appears to be some very overpriced water."
 

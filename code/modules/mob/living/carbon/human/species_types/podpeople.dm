@@ -40,7 +40,7 @@
 /datum/species/pod/on_species_gain(mob/living/carbon/new_podperson, datum/species/old_species, pref_load)
 	. = ..()
 	if(ishuman(new_podperson))
-		update_mail_goodies(new_podperson, list(/obj/item/reagent_containers/blood/snail))
+		update_mail_goodies(new_podperson, list(/obj/item/reagent_containers/blood/podperson))
 
 /datum/species/pod/on_species_loss(mob/living/carbon/former_podperson, datum/species/new_species, pref_load)
 	. = ..()
