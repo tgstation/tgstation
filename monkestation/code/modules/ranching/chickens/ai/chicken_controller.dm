@@ -157,7 +157,7 @@
 	var/mob/living/simple_animal/chicken/living_pawn = controller.pawn
 	var/list/blackboard = controller.blackboard
 
-	if((!blackboard[BB_CHICKEN_READY_LAY]&& DT_PROB(10, delta_time) && living_pawn.eggs_left > 0) && living_pawn.egg_type&& living_pawn.gender == FEMALE && controller.behavior_cooldowns[/datum/ai_behavior/find_and_lay] < world.time)
+	if((!blackboard[BB_CHICKEN_READY_LAY]&& DT_PROB(10, delta_time) && living_pawn.eggs_left > 0) && living_pawn.egg_type && living_pawn.gender == FEMALE && controller.behavior_cooldowns[/datum/ai_behavior/find_and_lay] < world.time)
 		blackboard[BB_CHICKEN_READY_LAY] = TRUE
 
 	if(blackboard[BB_CHICKEN_READY_LAY])

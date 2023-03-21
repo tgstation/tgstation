@@ -55,6 +55,9 @@ Assistant
 
 	var/index = (jumpsuit_number % GLOB.colored_assistant.jumpsuits.len) + 1
 
+	if(modified_outfit_slots & ITEM_SLOT_ICLOTHING)
+		return
+
 	//We don't cache these, because they can delete on init
 	//Too fragile, better to just eat the cost
 	if (target.jumpsuit_style == PREF_SUIT)

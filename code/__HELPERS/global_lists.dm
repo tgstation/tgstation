@@ -60,6 +60,7 @@
 	init_keybindings()
 
 	GLOB.emote_list = init_emote_list()
+	load_donators()
 
 	init_crafting_recipes()
 	init_crafting_recipes_atoms()
