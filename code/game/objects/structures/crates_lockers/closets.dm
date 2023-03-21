@@ -694,8 +694,8 @@
 			if(iscarbon(user))
 				add_fingerprint(user)
 			locked = !locked
-			user.visible_message(span_notice("[user] [locked ? null : "un"]locks [src]."),
-							span_notice("You [locked ? null : "un"]lock [src]."))
+			user.visible_message(span_notice("[user] [locked ? "locks" : "unlocks"][src]."),
+						span_notice("You [locked ? "locked" : "unlocked"] [src]."))
 			update_appearance()
 		else if(!silent)
 			to_chat(user, span_alert("Access Denied."))

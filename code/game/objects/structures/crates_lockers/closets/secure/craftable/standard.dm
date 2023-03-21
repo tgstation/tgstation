@@ -28,8 +28,15 @@
 /obj/structure/closet/secure_closet/custom/examine(mob/user)
 	. = ..()
 	. += "You can change its name & description with a pen"
+	. += "Repaint with airlock painter"
 	if(card_reader_installed)
 		. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
+		. += span_notice("Use multitool to lock/unlock access panel.")
+		if(access_locked)
+			. += span_alert("access panel is locked.")
+		else
+			. += span_green("access panel is open.")
+		. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
 	else
 		. += span_notice("A card reader can be installed for further access control.")
 
@@ -41,13 +48,12 @@
 		break
 
 /obj/structure/closet/secure_closet/custom/multitool_act(mob/living/user, obj/item/tool)
+	if(!card_reader_installed)
+		return
+
 	if(locked)
 		balloon_alert(user, "unlock it first")
 		return TRUE
-
-	if(!card_reader_installed)
-		balloon_alert(user, "needs card reader!")
-		return
 
 	access_locked = !access_locked
 	balloon_alert(user, "access panel [access_locked ? "locked" : "unlocked"]")
@@ -184,7 +190,7 @@
 			if(FREE_ACCESS) //free for all
 				electronics.accesses = list()
 				set_access()
-		balloon_alert(user, "access is now [choice]")
+		balloon_alert(user, "set to [choice]")
 
 		return TRUE
 

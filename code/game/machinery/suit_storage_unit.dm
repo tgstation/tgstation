@@ -236,10 +236,16 @@
 /obj/machinery/suit_storage_unit/examine(mob/user)
 	. = ..()
 	. += "You can change its name & description with a pen"
-	if(!card_reader_installed)
-		. += span_notice("A card reader can be installed to control access.")
-	else
+	if(card_reader_installed)
 		. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
+		. += span_notice("Use multitool to lock/unlock access panel.")
+		if(access_locked)
+			. += span_alert("access panel is locked.")
+		else
+			. += span_green("access panel is open.")
+		. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
+	else
+		. += span_notice("A card reader can be installed for further control access.")
 
 /// copy over access of electronics
 /obj/machinery/suit_storage_unit/proc/set_access()
@@ -574,6 +580,9 @@
 		open_machine()
 
 /obj/machinery/suit_storage_unit/multitool_act(mob/living/user, obj/item/tool)
+	if(!card_reader_installed || !panel_open)
+		return TRUE
+
 	if(locked)
 		balloon_alert(user, "unlock first!")
 		return TRUE

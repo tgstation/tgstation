@@ -4,7 +4,7 @@
 
 ///Secure closets that can be hand crafted and have their access requirments modified
 /obj/structure/closet/secure_closet/freezer/empty/custom
-	name = "Secured Freezer Unit"
+	name = "Secured freezer unit"
 	desc = "Card locked freezer with modifiable access."
 	req_access = null
 	material_drop = /obj/item/stack/sheet/iron
@@ -31,6 +31,12 @@
 	. += "You can change its name & description with a pen"
 	if(card_reader_installed)
 		. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
+		. += span_notice("Use multitool to lock/unlock access panel.")
+		if(access_locked)
+			. += span_alert("access panel is locked.")
+		else
+			. += span_green("access panel is open.")
+		. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
 	else
 		. += span_notice("A card reader can be installed for further access control.")
 
@@ -49,12 +55,11 @@
 		req_access = electronics.accesses
 
 /obj/structure/closet/secure_closet/freezer/empty/custom/multitool_act(mob/living/user, obj/item/tool)
-	if(locked)
-		balloon_alert(user, "unlock it first!")
+	if(!card_reader_installed)
 		return TRUE
 
-	if(!card_reader_installed)
-		balloon_alert(user, "requires card reader!")
+	if(locked)
+		balloon_alert(user, "unlock it first!")
 		return TRUE
 
 	access_locked = !access_locked
@@ -162,7 +167,7 @@
 			if(FREE_ACCESS) //free for all
 				electronics.accesses = list()
 				set_access()
-		balloon_alert(user, "access is now [choice]")
+		balloon_alert(user, "set to [choice]")
 
 		return TRUE
 
@@ -183,8 +188,8 @@
 		if(iscarbon(user))
 			add_fingerprint(user)
 		locked = !locked
-		user.visible_message(span_notice("[user] [locked ? null : "un"]locks [src]."),
-						span_notice("You [locked ? null : "un"]lock [src]."))
+		user.visible_message(span_notice("[user] [locked ? "locks" : "unlocks"][src]."),
+						span_notice("You [locked ? "locked" : "unlocked"] [src]."))
 		update_appearance()
 	else
 		return ..()
@@ -192,12 +197,12 @@
 /obj/structure/closet/secure_closet/freezer/empty/custom/atom_destruction(damage_flag)
 	if(card_reader_installed)
 		new /obj/item/stock_parts/card_reader(drop_location())
-	. = ..()
+	return ..()
 
 /obj/structure/closet/secure_closet/freezer/empty/custom/deconstruct(disassembled)
 	if (!(flags_1 & NODECONSTRUCT_1) && card_reader_installed)
 		new /obj/item/stock_parts/card_reader(drop_location())
-	. = ..()
+	return ..()
 
 #undef PERSONAL
 #undef DEPARTMENTAL
