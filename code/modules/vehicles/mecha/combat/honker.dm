@@ -12,6 +12,7 @@
 	exit_delay = 40
 	operation_req_access = list(ACCESS_THEATRE)
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
+	internal_damage_threshold = 20
 	wreckage = /obj/structure/mecha_wreckage/honker
 	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	mech_type = EXOSUIT_MODULE_HONK
