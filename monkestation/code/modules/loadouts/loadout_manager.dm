@@ -82,7 +82,7 @@
 				message_admins("LOADOUT SYSTEM: Possible exploit detected, non-donator [owner.ckey] tried loading [interacted_item.item_path], but this is donator only.")
 				return
 
-			if(interacted_item.ckeywhitelist && (!(owner.ckey in interacted_item.ckeywhitelist)) || !is_admin(owner))
+			if(interacted_item.ckeywhitelist && (!(owner.ckey in interacted_item.ckeywhitelist)) && !is_admin(owner))
 				message_admins("LOADOUT SYSTEM: Possible exploit detected, non-donator [owner.ckey] tried loading [interacted_item.item_path], but this is ckey locked.")
 				return
 			if(params["deselect"])
