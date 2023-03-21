@@ -46,18 +46,23 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/jelly,
 	)
 
-/datum/species/jelly/on_species_loss(mob/living/carbon/old_jellyperson)
-	if(regenerate_limbs)
-		regenerate_limbs.Remove(old_jellyperson)
-	old_jellyperson.RemoveElement(/datum/element/soft_landing)
-	..()
-
-/datum/species/jelly/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species)
+/datum/species/jelly/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species, pref_load)
 	..()
 	if(ishuman(new_jellyperson))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(new_jellyperson)
+		update_mail_goodies(new_jellyperson, list(/obj/item/reagent_containers/blood/toxin))
 	new_jellyperson.AddElement(/datum/element/soft_landing)
+
+/datum/species/jelly/on_species_loss(mob/living/carbon/former_jellyperson, datum/species/new_species, pref_load)
+	if(regenerate_limbs)
+		regenerate_limbs.Remove(former_jellyperson)
+	former_jellyperson.RemoveElement(/datum/element/soft_landing)
+	
+	if(ishuman(former_jellyperson))
+		update_mail_goodies(former_jellyperson)
+	
+	..()
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely

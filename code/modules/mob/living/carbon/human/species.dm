@@ -539,6 +539,32 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
 /**
+ * Proc called when mail goodies need to be updated for this species.
+ *
+ * Updates the mail goodies if that is required. e.g. for the blood deficiency quirk, which sends bloodbags to quirk holders, update the sent bloodpack to match the species' exotic blood.
+ * Add implementation as needed for each individual species
+ * Arguments:
+ * * mob/living/carbon/human/recipient - the mob receiving the mail goodies
+ * * list/mail_goodies - a list of mail goodies
+ */
+/datum/species/proc/update_mail_goodies(mob/living/carbon/human/recipient, list/mail_goodies)
+	var/datum/quirk/blooddeficiency/blooddeficiency = recipient.get_quirk(/datum/quirk/blooddeficiency)
+	if(isnull(blooddeficiency))
+		return
+	if(!isnull(mail_goodies))
+		blooddeficiency.mail_goodies = mail_goodies
+	else
+		// no blood packs should be sent if mob has TRAIT_NOBLOOD and no exotic blood (like if a mob transforms into a plasmaman)
+		if(HAS_TRAIT(recipient, TRAIT_NOBLOOD) && isnull(recipient.dna.species.exotic_blood))
+			blooddeficiency.mail_goodies = null
+			return
+			
+		// set mail_goodies to initial - we have to do this because initial will not work on lists in this version of DM
+		var/datum/quirk/blooddeficiency/initial_blooddeficiency = new
+		blooddeficiency.mail_goodies = initial_blooddeficiency.mail_goodies
+		qdel(initial_blooddeficiency)
+
+/**
  * Handles the body of a human
  *
  * Handles lipstick, having no eyes, eye color, undergarnments like underwear, undershirts, and socks, and body layers.
