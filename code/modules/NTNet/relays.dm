@@ -34,7 +34,6 @@
 	else if(!dos_failure && !(machine_stat & (NOPOWER|BROKEN|MAINT))) //Turned on
 		set_is_operational(TRUE)
 
-
 ///Proc called to change the value of the `dos_failure` variable and append behavior related to its change.
 /obj/machinery/ntnet_relay/proc/set_dos_failure(new_value)
 	if(new_value == dos_failure)
@@ -47,14 +46,12 @@
 	else //Failure started
 		set_is_operational(FALSE)
 
-
 /obj/machinery/ntnet_relay/on_set_machine_stat(old_value)
 	if(old_value & (NOPOWER|BROKEN|MAINT))
 		if(relay_enabled && !dos_failure && !(machine_stat & (NOPOWER|BROKEN|MAINT))) //From off to on.
 			set_is_operational(TRUE)
 	else if(machine_stat & (NOPOWER|BROKEN|MAINT)) //From on to off.
 		set_is_operational(FALSE)
-
 
 /obj/machinery/ntnet_relay/update_icon_state()
 	icon_state = "bus[is_operational ? null : "_off"]"

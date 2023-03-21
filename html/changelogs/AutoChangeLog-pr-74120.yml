@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Removing a storage implant from someone will dump the items on the ground rather than inside the mob."
