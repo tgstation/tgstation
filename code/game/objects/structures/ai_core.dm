@@ -394,7 +394,7 @@
 	new /obj/item/stack/sheet/plasteel(loc, 4)
 	qdel(src)
 
-/// Quick proc to call to see if the brainmob inside of us has suicided.
+/// Quick proc to call to see if the brainmob inside of us has suicided. Returns TRUE if we have, FALSE in any other scenario.
 /obj/structure/ai_core/proc/suicide_check()
 	if(isnull(core_mmi) || isnull(core_mmi.brainmob))
 		return FALSE
