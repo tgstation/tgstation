@@ -8,6 +8,8 @@
 #define REQUEST_NUKE "request_nuke"
 /// Requests somebody from fax
 #define REQUEST_FAX "request_fax"
+/// Requests from Request Music
+#define REQUEST_MUSIC "request_music"
 
 GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 
@@ -106,6 +108,17 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
  */
 /datum/request_manager/proc/fax_request(client/requester, message, additional_info)
 	request_for_client(requester, REQUEST_FAX, message, additional_info)
+
+/**
+ * Creates a request for a song
+ *
+ * Arguments:
+ * * requester - The client who is sending the request
+ * * message - The URL of the song
+ */
+
+/datum/request_manager/proc/music_request(client/requester, message)
+	request_for_client(requester, REQUEST_MUSIC, message)
 
 /**
  * Creates a request and registers the request with all necessary internal tracking lists
@@ -220,6 +233,16 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				return TRUE
 			var/obj/item/paper/request_message = request.additional_information
 			request_message.ui_interact(usr)
+			return TRUE
+		if ("play")
+			if(request.req_type != REQUEST_MUSIC)
+				to_chat(usr, "Request doesn't have a sound to play.", confidential = TRUE)
+				return TRUE
+			if(findtext(request.message, ":") && !findtext(request.message, GLOB.is_http_protocol))
+				to_chat(usr, "Request is not a valid URI.", confidential = TRUE)
+				return TRUE
+
+			usr.client.play_web_sound(request.message)
 			return TRUE
 
 /datum/request_manager/ui_data(mob/user)

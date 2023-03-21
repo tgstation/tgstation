@@ -70,7 +70,7 @@
 	SEND_SOUND(M, S)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Direct Mob Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/play_web_sound()
+/client/proc/play_web_sound(request_link = null)
 	set category = "Admin.Fun"
 	set name = "Play Internet Sound"
 	if(!check_rights(R_SOUND))
@@ -81,7 +81,13 @@
 		to_chat(src, span_boldwarning("Youtube-dl was not configured, action unavailable"), confidential = TRUE) //Check config.txt for the INVOKE_YOUTUBEDL value
 		return
 
-	var/web_sound_input = input("Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound via youtube-dl") as text|null
+	var/web_sound_input = null
+
+	if(!request_link)
+		web_sound_input = tgui_input_text(usr.client, "Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound via youtube-dl", null)
+	else if (request_link != null)
+		web_sound_input = request_link
+
 	if(istext(web_sound_input))
 		var/web_sound_url = ""
 		var/stop_web_sounds = FALSE
@@ -93,7 +99,7 @@
 				to_chat(src, span_boldwarning("Non-http(s) URIs are not allowed."), confidential = TRUE)
 				to_chat(src, span_warning("For youtube-dl shortcuts like ytsearch: please use the appropriate full url from the website."), confidential = TRUE)
 				return
-			var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
+			var/shell_scrubbed_input = shell_url_scrub(replacetext(web_sound_input, "music.", ""))
 			var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_scrubbed_input]\"")
 			var/errorlevel = output[SHELLEO_ERRORLEVEL]
 			var/stdout = output[SHELLEO_STDOUT]

@@ -2310,6 +2310,7 @@
 #include "code\modules\admin\verbs\possess.dm"
 #include "code\modules\admin\verbs\pray.dm"
 #include "code\modules\admin\verbs\reestablish_db_connection.dm"
+#include "code\modules\admin\verbs\request_music.dm"
 #include "code\modules\admin\verbs\requests.dm"
 #include "code\modules\admin\verbs\secrets.dm"
 #include "code\modules\admin\verbs\selectequipment.dm"
