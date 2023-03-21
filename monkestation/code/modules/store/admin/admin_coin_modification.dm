@@ -18,7 +18,7 @@
 
 	chosen_client.prefs.adjust_metacoins(chosen_client.ckey, adjustment_amount, null, TRUE)
 
-/client/proc/mass_add_metacoins
+/client/proc/mass_add_metacoins()
 	set category = "Admin.Fun"
 	set name = "Mass Add Coins"
 	set desc = "You give everyone some metacoins"
