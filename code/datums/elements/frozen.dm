@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 		return ELEMENT_INCOMPATIBLE
 
 	var/obj/target_obj = target
-	if(target_obj.obj_flags & FREEZE_PROOF)
+	if(target_obj.resistance_flags & FREEZE_PROOF)
 		return ELEMENT_INCOMPATIBLE
 
 	if(HAS_TRAIT(target_obj, TRAIT_FROZEN))

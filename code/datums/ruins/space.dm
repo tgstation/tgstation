@@ -350,8 +350,9 @@
 	suffix = "dangerous_research.dmm"
 	name = "Alternate Sciences Research Center"
 	description = "When you're messing with the occult, who knows what you're going to get?"
-/datum/map_template/ruin/space/mimesvsclowns
-	id = "mimesvsclowns"
-	suffix = "mimesvsclowns.dmm"
-	name = "Abandoned Mime Outpost"
-	description = "When you're fighting mimes, bring more than slips."
+
+/datum/map_template/ruin/space/the_faceoff
+	id = "the_faceoff"
+	suffix = "the_faceoff.dmm"
+	name = "The Faceoff"
+	description = "What do you get when a meeting of the enemy corporations get crashed?"

@@ -505,6 +505,11 @@
 		y_pos.set_value(attached_launchpad.y_offset)
 		return
 
+	if(attached_launchpad.range > x_pos || attached_launchpad.range > y_pos)
+		why_fail.set_output("Out of range!")
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
 	var/checks = attached_launchpad.teleport_checks()
 	if(!isnull(checks))
 		why_fail.set_output(checks)

@@ -104,11 +104,12 @@
 	warming_up = FALSE
 	update_appearance()
 	if(!harvesting || state_open || !powered() || !occupant || !iscarbon(occupant))
+		end_harvesting(success = FALSE)
 		return
 	playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
 	var/mob/living/carbon/C = occupant
 	if(!LAZYLEN(operation_order)) //The list is empty, so we're done here
-		end_harvesting()
+		end_harvesting(success = TRUE)
 		return
 	var/turf/target
 	for(var/adir in list(EAST,NORTH,SOUTH,WEST))
@@ -135,12 +136,16 @@
 	use_power(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(harvest)), interval)
 
-/obj/machinery/harvester/proc/end_harvesting()
+/obj/machinery/harvester/proc/end_harvesting(success = TRUE)
 	warming_up = FALSE
 	harvesting = FALSE
 	open_machine()
-	say("Subject has been successfully harvested.")
-	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
+	if (!success)
+		say("Protocol interrupted. Aborting harvest.")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+	else
+		say("Subject has been successfully harvested.")
+		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 
 /obj/machinery/harvester/screwdriver_act(mob/living/user, obj/item/I)
 	. = TRUE

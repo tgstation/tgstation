@@ -25,6 +25,8 @@
 
 /obj/item/organ/internal/zombie_infection/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
+	if(!.)
+		return .
 	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/internal/zombie_infection/Remove(mob/living/carbon/M, special = FALSE)
@@ -43,7 +45,7 @@
 /obj/item/organ/internal/zombie_infection/process(delta_time, times_fired)
 	if(!owner)
 		return
-	if(!(src in owner.internal_organs))
+	if(!(src in owner.organs))
 		Remove(owner)
 	if(owner.mob_biotypes & MOB_MINERAL)//does not process in inorganic things
 		return
