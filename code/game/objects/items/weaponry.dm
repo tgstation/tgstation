@@ -432,7 +432,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	SIGNAL_HANDLER
 
 	tool_behaviour = (active ? TOOL_KNIFE : NONE)
-	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/switchblade/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -537,6 +536,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "broom"
 	resistance_flags = FLAMMABLE
 
+/obj/item/staff/tape
+	name = "tape staff"
+	desc = "A roll of tape snugly attached to a stick."
+	icon_state = "tapestaff"
+	inhand_icon_state = "tapestaff"
+	resistance_flags = FLAMMABLE
+
 /obj/item/staff/stick
 	name = "stick"
 	desc = "A great tool to drag someone else's drinks across the bar."
@@ -568,43 +574,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/ectoplasm/mystic
 	icon_state = "mysticplasm"
-
-
-/obj/item/mounted_chainsaw
-	name = "mounted chainsaw"
-	desc = "A chainsaw that has replaced your arm."
-	icon_state = "chainsaw_on"
-	inhand_icon_state = "mounted_chainsaw"
-	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
-	item_flags = ABSTRACT | DROPDEL
-	w_class = WEIGHT_CLASS_HUGE
-	force = 24
-	throwforce = 0
-	throw_range = 0
-	throw_speed = 0
-	sharpness = SHARP_EDGED
-	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
-	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
-	hitsound = 'sound/weapons/chainsawhit.ogg'
-	tool_behaviour = TOOL_SAW
-	toolspeed = 1
-
-/obj/item/mounted_chainsaw/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-
-/obj/item/mounted_chainsaw/Destroy()
-	var/obj/item/bodypart/part
-	new /obj/item/chainsaw(get_turf(src))
-	if(iscarbon(loc))
-		var/mob/living/carbon/holder = loc
-		var/index = holder.get_held_index_of_item(src)
-		if(index)
-			part = holder.hand_bodyparts[index]
-	. = ..()
-	if(part)
-		part.drop_limb()
 
 /obj/item/statuebust
 	name = "bust"

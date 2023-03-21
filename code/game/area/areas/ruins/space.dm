@@ -4,6 +4,12 @@
 	has_gravity = FALSE
 	area_flags = UNIQUE_AREA
 
+/area/ruin/space/unpowered
+	always_unpowered = TRUE
+	power_light = FALSE
+	power_equip = FALSE
+	power_environ = FALSE
+
 /area/ruin/space/has_grav
 	has_gravity = STANDARD_GRAVITY
 
@@ -564,3 +570,7 @@
 /area/ruin/space/has_grav/powered/clownplanet
 	name = "\improper Clown Planet"
 	ambientsounds = list('sound/ambience/clown.ogg')
+
+//DERELICT SULACO
+/area/ruin/space/has_grav/derelictsulaco
+	name = "\improper Derelict Sulaco"

@@ -3,7 +3,7 @@
 	objectives = list( //Similar weights to destroy heirloom objectives
 		list(
 			/datum/traitor_objective/kidnapping/common = 20,
-			/datum/traitor_objective/kidnapping/less_common = 1,
+			/datum/traitor_objective/kidnapping/common/assistant = 1,
 		) = 4,
 		/datum/traitor_objective/kidnapping/uncommon = 3,
 		/datum/traitor_objective/kidnapping/rare = 2,
@@ -16,10 +16,6 @@
 		You'll get additional reward if %TARGET% is delivered alive."
 
 	abstract_type = /datum/traitor_objective/kidnapping
-
-	//this is a prototype so this progression is for all basic level kill objectives
-	progression_reward = list(2 MINUTES, 4 MINUTES)
-	telecrystal_reward = list(1, 2)
 
 	/// The period of time until you can take another objective after taking 3 objectives.
 	var/objective_period = 15 MINUTES
@@ -37,7 +33,7 @@
 	/// How much TC do we get from sending the target alive
 	var/alive_bonus = 0
 	/// All stripped victims belongings
-	var/list/victim_belogings = list()
+	var/list/victim_belongings = list()
 
 /datum/traitor_objective/kidnapping/supported_configuration_changes()
 	. = ..()
@@ -47,7 +43,7 @@
 /datum/traitor_objective/kidnapping/New(datum/uplink_handler/handler)
 	. = ..()
 	AddComponent(/datum/component/traitor_objective_limit_per_time, \
-		/datum/traitor_objective/assassinate, \
+		/datum/traitor_objective/kidnapping, \
 		time_period = objective_period, \
 		maximum_objectives = maximum_objectives_in_period \
 	)
@@ -55,32 +51,34 @@
 /datum/traitor_objective/kidnapping/common
 	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
+	progression_reward = list(2 MINUTES, 4 MINUTES)
+	telecrystal_reward = list(1, 2)
 	target_jobs = list(
+		// Cargo
+		/datum/job/cargo_technician,
+		// Engineering
+		/datum/job/atmospheric_technician,
+		/datum/job/station_engineer,
 		// Medical
+		/datum/job/chemist,
 		/datum/job/doctor,
 		/datum/job/paramedic,
 		/datum/job/psychologist,
-		/datum/job/chemist,
-		// Service
-		/datum/job/clown,
-		/datum/job/botanist,
-		/datum/job/janitor,
-		/datum/job/mime,
-		/datum/job/lawyer,
-		/datum/job/chaplain,
-		/datum/job/bartender,
-		/datum/job/curator,
-		// Cargo
-		/datum/job/cargo_technician,
 		// Science
 		/datum/job/geneticist,
 		/datum/job/roboticist,
-		// Engineering
-		/datum/job/station_engineer,
-		/datum/job/atmospheric_technician,
+		// Service
+		/datum/job/bartender,
+		/datum/job/botanist,
+		/datum/job/chaplain,
+		/datum/job/clown,
+		/datum/job/curator,
+		/datum/job/janitor,
+		/datum/job/lawyer,
+		/datum/job/mime,
 	)
 
-/datum/traitor_objective/kidnapping/less_common
+/datum/traitor_objective/kidnapping/common/assistant
 	progression_minimum = 0 MINUTES
 	progression_maximum = 15 MINUTES
 	target_jobs = list(
@@ -90,49 +88,48 @@
 /datum/traitor_objective/kidnapping/uncommon //Hard to fish out victims
 	progression_minimum = 0 MINUTES
 	progression_maximum = 45 MINUTES
-	target_jobs = list(
-		// Medical
-		/datum/job/virologist,
-		// Cargo
-		/datum/job/shaft_miner,
-		// Service
-		/datum/job/cook,
-		// Science
-		/datum/job/scientist,
-	)
-
 	progression_reward = list(4 MINUTES, 8 MINUTES)
 	telecrystal_reward = list(1, 2)
+
+	target_jobs = list(
+		// Cargo
+		/datum/job/shaft_miner,
+		// Medical
+		/datum/job/virologist,
+		// Science
+		/datum/job/scientist,
+		// Service
+		/datum/job/cook,
+	)
 	alive_bonus = 1
 
 /datum/traitor_objective/kidnapping/rare
 	progression_minimum = 15 MINUTES
 	progression_maximum = 60 MINUTES
+	progression_reward = list(8 MINUTES, 12 MINUTES)
+	telecrystal_reward = list(2, 3)
 	target_jobs = list(
-		// Security
-		/datum/job/security_officer,
-		/datum/job/warden,
-		/datum/job/detective,
 		// Heads of staff
-		/datum/job/head_of_personnel,
+		/datum/job/chief_engineer,
 		/datum/job/chief_medical_officer,
+		/datum/job/head_of_personnel,
 		/datum/job/research_director,
 		/datum/job/quartermaster,
+		// Security
+		/datum/job/detective,
+		/datum/job/security_officer,
+		/datum/job/warden,
 	)
-
-	progression_reward = list(8 MINUTES, 12 MINUTES)
-	telecrystal_reward = list(1, 2)
 	alive_bonus = 2
 
 /datum/traitor_objective/kidnapping/captain
 	progression_minimum = 30 MINUTES
-	target_jobs = list(
-		/datum/job/head_of_security,
-		/datum/job/captain
-	)
-
 	progression_reward = list(12 MINUTES, 16 MINUTES)
 	telecrystal_reward = list(2, 3)
+	target_jobs = list(
+		/datum/job/captain,
+		/datum/job/head_of_security,
+	)
 	alive_bonus = 2
 
 /datum/traitor_objective/kidnapping/generate_objective(datum/mind/generating_for, list/possible_duplicates)
@@ -246,12 +243,14 @@
 	if(sent_mob.mind)
 		ADD_TRAIT(sent_mob.mind, TRAIT_HAS_BEEN_KIDNAPPED, TRAIT_GENERIC)
 
-	for(var/obj/item/belonging in sent_mob)
+	for(var/obj/item/belonging in gather_belongings(sent_mob))
 		if(belonging == sent_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING) || belonging == sent_mob.get_item_by_slot(ITEM_SLOT_FEET))
 			continue
 
-		sent_mob.transferItemToLoc(belonging)
-		victim_belogings.Add(belonging)
+		var/unequipped = sent_mob.transferItemToLoc(belonging)
+		if (!unequipped)
+			continue
+		victim_belongings.Add(belonging)
 
 	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
@@ -314,13 +313,12 @@
 
 	do_sparks(8, FALSE, sent_mob)
 	sent_mob.visible_message(span_notice("[sent_mob] vanishes!"))
-	for(var/obj/item/belonging in sent_mob)
+	for(var/obj/item/belonging in gather_belongings(sent_mob))
 		if(belonging == sent_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING) || belonging == sent_mob.get_item_by_slot(ITEM_SLOT_FEET))
 			continue
+		sent_mob.dropItemToGround(belonging) // No souvenirs, except shoes and t-shirts
 
-		sent_mob.transferItemToLoc(belonging)
-
-	for(var/obj/item/belonging in victim_belogings)
+	for(var/obj/item/belonging in victim_belongings)
 		belonging.forceMove(return_pod)
 
 	sent_mob.forceMove(return_pod)
@@ -330,3 +328,10 @@
 	sent_mob.set_eye_blur_if_lower(100 SECONDS)
 
 	new /obj/effect/pod_landingzone(pick(possible_turfs), return_pod)
+
+/// Returns a list of things that the provided mob has which we would rather that they do not have
+/datum/traitor_objective/kidnapping/proc/gather_belongings(mob/living/carbon/human/kidnapee)
+	var/list/belongings = kidnapee.get_all_gear()
+	for (var/obj/item/implant/storage/internal_bag in kidnapee.implants)
+		belongings += internal_bag.contents
+	return belongings

@@ -346,13 +346,13 @@
 	attack_hand_interact = TRUE,
 	list/canhold,
 	list/canthold,
-	type = /datum/storage,
+	storage_type = /datum/storage,
 )
 
 	if(atom_storage)
 		QDEL_NULL(atom_storage)
 
-	atom_storage = new type(src, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, collection_mode, attack_hand_interact)
+	atom_storage = new storage_type(src, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, collection_mode, attack_hand_interact)
 
 	if(canhold || canthold)
 		atom_storage.set_holdable(canhold, canthold)
@@ -409,42 +409,36 @@
 	return !density
 
 /**
- * Is this atom currently located on centcom
+ * Is this atom currently located on centcom (or riding off into the sunset on a shuttle)
  *
- * Specifically, is it on the z level and within the centcom areas
- *
- * You can also be in a shuttleshuttle during endgame transit
+ * Specifically, is it on the z level and within the centcom areas.
+ * You can also be in a shuttle during endgame transit.
  *
  * Used in gamemode to identify mobs who have escaped and for some other areas of the code
  * who don't want atoms where they shouldn't be
+ *
+ * Returns TRUE if this atom is on centcom or an escape shuttle, or FALSE if not
  */
 /atom/proc/onCentCom()
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf)
 		return FALSE
 
+	// This doesn't necessarily check that we're at central command,
+	// but it checks for any shuttles which have finished are still in hyperspace
+	// (IE, stuff like the whiteship which fly off into the sunset and "escape")
 	if(is_reserved_level(current_turf.z))
-		for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile_docking_ports)
-			if(mobile_docking_port.launch_status != ENDGAME_TRANSIT)
-				continue
-			for(var/area/shuttle/shuttle_area as anything in mobile_docking_port.shuttle_areas)
-				if(current_turf in shuttle_area)
-					return TRUE
+		return on_escaped_shuttle(ENDGAME_TRANSIT)
 
-	if(!is_centcom_level(current_turf.z))//if not, don't bother
+	// From here on we only concern ourselves with people actually on the centcom Z
+	if(!is_centcom_level(current_turf.z))
 		return FALSE
 
-	//Check for centcom itself
 	if(istype(current_turf.loc, /area/centcom))
 		return TRUE
 
-	//Check for centcom shuttles
-	for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile_docking_ports)
-		if(mobile_docking_port.launch_status == ENDGAME_LAUNCHED)
-			for(var/place as anything in mobile_docking_port.shuttle_areas)
-				var/area/shuttle/shuttle_area = place
-				if(current_turf in shuttle_area)
-					return TRUE
+	// Finally, check if we're on an escaped shuttle
+	return on_escaped_shuttle()
 
 /**
  * Is the atom in any of the syndicate areas
@@ -452,17 +446,48 @@
  * Either in the syndie base, or any of their shuttles
  *
  * Also used in gamemode code for win conditions
+ *
+ * Returns TRUE if this atom is on the syndicate recon base, any of its shuttles, or an escape shuttle, or FALSE if not
  */
 /atom/proc/onSyndieBase()
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf)
 		return FALSE
 
-	if(!is_reserved_level(current_turf.z))//if not, don't bother
+	// Syndicate base is loaded in a reserved level. If not reserved, we don't care.
+	if(!is_reserved_level(current_turf.z))
 		return FALSE
 
-	if(istype(current_turf.loc, /area/shuttle/syndicate) || istype(current_turf.loc, /area/centcom/syndicate_mothership) || istype(current_turf.loc, /area/shuttle/assault_pod))
+	var/static/list/syndie_typecache = typecacheof(list(
+		/area/centcom/syndicate_mothership, // syndicate base itself
+		/area/shuttle/assault_pod, // steel rain
+		/area/shuttle/syndicate, // infiltrator
+	))
+
+	if(is_type_in_typecache(current_turf.loc, syndie_typecache))
 		return TRUE
+
+	// Finally, check if we're on an escaped shuttle
+	return on_escaped_shuttle()
+
+/**
+ * Checks that we're on a shuttle that's escaped
+ *
+ * * check_for_launch_status - What launch status do we check for? Generally the two you want to check for are ENDGAME_LAUNCHED or ENDGAME_TRANSIT
+ *
+ * Returns TRUE if this atom is on a shuttle which is escaping or has escaped, or FALSE otherwise
+ */
+/atom/proc/on_escaped_shuttle(check_for_launch_status = ENDGAME_LAUNCHED)
+	var/turf/current_turf = get_turf(src)
+	if(!current_turf)
+		return FALSE
+
+	for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile_docking_ports)
+		if(mobile_docking_port.launch_status != check_for_launch_status)
+			continue
+		for(var/area/shuttle/shuttle_area as anything in mobile_docking_port.shuttle_areas)
+			if(current_turf in shuttle_area.get_contained_turfs())
+				return TRUE
 
 	return FALSE
 
@@ -785,9 +810,13 @@
 			SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 
 		var/list/new_overlays = update_overlays(updates)
-		if(managed_overlays)
-			cut_overlay(managed_overlays)
-			managed_overlays = null
+		if (managed_overlays)
+			if (length(overlays) == (islist(managed_overlays) ? length(managed_overlays) : 1))
+				overlays = null
+				POST_OVERLAY_CHANGE(src)
+			else
+				cut_overlay(managed_overlays)
+				managed_overlays = null
 		if(length(new_overlays))
 			if (length(new_overlays) == 1)
 				managed_overlays = new_overlays[1]
@@ -1507,7 +1536,7 @@
 				created_atom.pixel_x += rand(-8,8)
 				created_atom.pixel_y += rand(-8,8)
 			created_atom.OnCreatedFromProcessing(user, process_item, chosen_option, src)
-			to_chat(user, span_notice("You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)]\s"] from [src]."))
+			to_chat(user, span_notice("You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
 			created_atoms.Add(created_atom)
 		SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
 		UsedforProcessing(user, process_item, chosen_option)

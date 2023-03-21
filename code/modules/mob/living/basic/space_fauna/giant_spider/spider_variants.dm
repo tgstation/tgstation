@@ -1,5 +1,5 @@
 /**
- * # Spider Hunter
+ * ### Spider Hunter
  * A subtype of the giant spider which is faster, has toxin injection, but less health and damage.
  * This spider is only slightly slower than a human.
  */
@@ -19,7 +19,7 @@
 	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage."
 
 /**
- * # Spider Nurse
+ * ### Spider Nurse
  *
  * A subtype of the giant spider which specializes in support skills.
  * Nurses can place down webbing in a quarter of the time that other species can and can wrap other spiders' wounds, healing them.
@@ -56,7 +56,7 @@
 	)
 
 /**
- * # Tarantula
+ * ### Tarantula
  *
  * A subtype of the giant spider which specializes in pure strength and staying power.
  * Is slowed down when not on webbing, but can lunge to throw off attackers and possibly to stun them.
@@ -97,7 +97,7 @@
 	charge.Trigger(target = atom_target)
 
 /**
- * # Spider Viper
+ * ### Spider Viper
  *
  * A subtype of the giant spider which specializes in speed and poison.
  * Injects a deadlier toxin than other spiders, moves extremely fast, but has a limited amount of health.
@@ -120,7 +120,7 @@
 	menu_description = "Assassin spider variant with an unmatched speed and very deadly poison, but has very low amount of health and damage."
 
 /**
- * # Spider Broodmother
+ * ### Spider Broodmother
  *
  * A subtype of the giant spider which is the crux of a spider horde, and the way which it grows.
  * Has very little offensive capabilities but can lay eggs at any time to create more basic spiders.
@@ -161,7 +161,7 @@
 	not_hivemind_talk.Grant(src)
 
 /**
- * # Giant Ice Spider
+ * ### Giant Ice Spider
  *
  * A subtype of the giant spider which is immune to temperature damage, unlike its normal counterpart.
  * Currently unused in the game unless spawned by admins.
@@ -176,7 +176,7 @@
 	menu_description = "Versatile ice spider variant for frontline combat with high health and damage. Immune to temperature damage."
 
 /**
- * # Ice Nurse Spider
+ * ### Ice Nurse Spider
  *
  * A temperature-proof nurse spider. Also unused.
  */
@@ -190,7 +190,7 @@
 	menu_description = "Support ice spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage. Immune to temperature damage."
 
 /**
- * # Ice Hunter Spider
+ * ### Ice Hunter Spider
  *
  * A temperature-proof hunter with chilling venom. Also unused.
  */
@@ -205,7 +205,7 @@
 	menu_description = "Fast ice spider variant specializing in catching running prey and frost oil injection, but has less health and damage. Immune to temperature damage."
 
 /**
- * # Scrawny Hunter Spider
+ * ### Scrawny Hunter Spider
  *
  * A hunter spider that trades damage for health, unable to smash enviroments.
  * Used as a minor threat in abandoned places, such as areas in maintenance or a ruin.
@@ -221,7 +221,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider/weak
 
 /**
- * # Scrawny Tarantula
+ * ### Scrawny Tarantula
  *
  * A weaker version of the Tarantula, unable to smash enviroments.
  * Used as a moderately strong but slow threat in abandoned places, such as areas in maintenance or a ruin.
@@ -237,7 +237,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider/weak
 
 /**
- * # Scrawny Nurse Spider
+ * ### Scrawny Nurse Spider
  *
  * A weaker version of the nurse spider with reduced health, unable to smash enviroments.
  * Mainly used as a weak threat in abandoned places, such as areas in maintenance or a ruin.
@@ -252,7 +252,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider/weak
 
 /**
- * # Flesh Spider
+ * ### Flesh Spider
  *
  * A subtype of giant spider which only occurs from changelings.
  * Has the base stats of a hunter, but they can heal themselves and spin webs faster.
@@ -291,7 +291,7 @@
 	return TRUE
 
 /**
- * # Viper Spider (Wizard)
+ * ### Viper Spider (Wizard)
  *
  * A spider form for wizards. Has the viper spider's extreme speed and strong venom, with additional health and vent crawling abilities.
  */
@@ -306,7 +306,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /**
- * # Sergeant Araneus
+ * ### Sergeant Araneus
  *
  * This friendly arachnid hangs out in the HoS office on some space stations. Better trained than an average officer and does not attack except in self-defence.
  */
@@ -327,3 +327,42 @@
 	AddElement(/datum/element/pet_bonus, "chitters proudly!")
 	AddElement(/datum/element/ai_retaliate)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+/**
+ * ### Duct Spider
+ *
+ * A less giant spider which lives in the maintenance ducts and makes them annoying to traverse.
+ */
+/mob/living/basic/giant_spider/maintenance
+	name = "duct spider"
+	desc = "Nanotrasen's imported solution to mice, comes with its own problems."
+	icon_state = "maint_spider"
+	icon_living = "maint_spider"
+	icon_dead = "maint_spider_dead"
+	can_be_held = TRUE
+	mob_size = MOB_SIZE_TINY
+	held_w_class = WEIGHT_CLASS_TINY
+	worn_slot_flags = ITEM_SLOT_HEAD
+	head_icon = 'icons/mob/clothing/head/pets_head.dmi'
+	density = FALSE
+	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
+	gold_core_spawnable = FRIENDLY_SPAWN
+	maxHealth = 10
+	health = 10
+	melee_damage_lower = 1
+	melee_damage_upper = 1
+	speed = 0
+	player_speed_modifier = 0
+	web_speed = 0.25
+	menu_description = "Fragile spider variant which is not good for much other than laying webs."
+	response_harm_continuous = "splats"
+	response_harm_simple = "splat"
+	ai_controller = /datum/ai_controller/basic_controller/giant_spider/pest
+	apply_spider_antag = FALSE
+
+/mob/living/basic/giant_spider/maintenance/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/duct_spider_web)
+	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/tiny_mob_hunter)
