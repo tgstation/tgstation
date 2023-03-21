@@ -149,8 +149,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	inhand_icon_state = "egg-purple"
 
 /obj/item/food/egg/rainbow
-	icon_state = "egg-rainbow"
-	inhand_icon_state = "egg-rainbow"
+	icon_state = "chicken"
 
 /obj/item/food/egg/red
 	icon_state = "egg-red"

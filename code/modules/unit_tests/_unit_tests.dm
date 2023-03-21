@@ -190,7 +190,6 @@
 #include "security_officer_distribution.dm"
 #include "security_levels.dm"
 #include "serving_tray.dm"
-#include "simple_animal_freeze.dm"
 #include "siunit.dm"
 #include "slips.dm"
 #include "spawn_humans.dm"

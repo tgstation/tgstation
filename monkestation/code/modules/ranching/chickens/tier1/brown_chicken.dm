@@ -9,6 +9,6 @@
 	book_desc = "These chickens behave the same as White Chickens."
 /obj/item/food/egg/brown
 	name = "Brown Egg"
-	icon_state = "brown"
+	icon_state = "chocolateegg"
 
 	layer_hen_type = /mob/living/simple_animal/chicken/brown

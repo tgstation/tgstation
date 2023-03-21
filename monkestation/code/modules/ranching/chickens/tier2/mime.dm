@@ -8,7 +8,7 @@
 
 /obj/item/food/egg/mime
 	name = "Mime Egg"
-	icon_state = "mime"
+	icon_state = "mime-1"
 
 	layer_hen_type = /mob/living/simple_animal/chicken/mime
 

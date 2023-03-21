@@ -3,6 +3,8 @@
  */
 /obj/machinery/plumbing/floor_pump
 	icon = 'monkestation/icons/obj/structures/drains.dmi'
+	base_icon_state = "active_input"
+	icon_state = "active_input"
 	anchored = FALSE
 	density = FALSE
 	idle_power_usage = 10
