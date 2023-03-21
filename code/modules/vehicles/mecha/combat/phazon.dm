@@ -9,6 +9,7 @@
 	armor_type = /datum/armor/mecha_phazon
 	max_temperature = 25000
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
+	internal_damage_threshold = 25
 	destruction_sleep_duration = 40
 	exit_delay = 40
 	wreckage = /obj/structure/mecha_wreckage/phazon
