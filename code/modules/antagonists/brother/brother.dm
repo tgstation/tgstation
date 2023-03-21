@@ -183,7 +183,8 @@
 								   /obj/item/clothing/shoes/chameleon/noslip, /obj/item/storage/box/syndie_kit/c4,
 								   /obj/item/storage/box/syndie_kit/throwing_weapons, /obj/item/gun/ballistic/automatic/c20r/toy, /obj/item/storage/box/syndie_kit/emp,
 								   /obj/item/card/id/advanced/chameleon, /obj/item/multitool/ai_detect, /obj/item/storage/box/syndie_kit/chameleon,
-								   /obj/item/card/emag, /obj/item/card/emag/doorjack,/obj/item/storage/box/syndie_kit/syndi_keys, /obj/item/jammer,)
+								   /obj/item/card/emag, /obj/item/card/emag/doorjack,/obj/item/storage/box/syndie_kit/syndi_keys, /obj/item/jammer,
+								   /obj/item/clothing/glasses/thermal/syndi, /obj/item/encryptionkey/binary, /obj/item/storage/box/syndie_kit/chemical)
 	var/obj/item/implant/storage/S = locate(/obj/item/implant/storage) in owner.current
 	if(!S)
 		S = new(owner.current)
