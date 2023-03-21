@@ -86,6 +86,11 @@
 /obj/item/storage/toolbox/electrical,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
+"y" = (
+/obj/structure/girder/displaced,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/ruin/space)
 "A" = (
 /obj/structure/girder/displaced,
 /turf/open/space/basic,
@@ -93,9 +98,18 @@
 "C" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/space)
+"E" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/ruin/space)
 "I" = (
 /obj/structure/billboard/nanotrasen/defaced,
 /turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"J" = (
+/obj/structure/grille/broken,
+/obj/structure/lattice,
+/turf/open/space/basic,
 /area/ruin/space)
 "L" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -125,6 +139,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
+/obj/structure/lattice,
 /turf/open/space/basic,
 /area/ruin/space)
 
@@ -226,7 +241,7 @@ R
 R
 l
 a
-a
+E
 a
 a
 a
@@ -382,7 +397,7 @@ a
 a
 L
 d
-A
+y
 a
 a
 a
@@ -401,8 +416,8 @@ s
 a
 a
 A
-a
-O
+E
+J
 k
 X
 a
@@ -469,7 +484,7 @@ s
 s
 a
 a
-a
+E
 a
 a
 a
