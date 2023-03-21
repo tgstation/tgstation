@@ -152,29 +152,29 @@
 			if(head)
 				head.dismember()
 				log_combat(user, H, "beheaded", src)
-			H.regenerate_icons()
-			unbuckle_all_mobs()
-			kill_count += 1
+				H.regenerate_icons()
+				unbuckle_all_mobs()
+				kill_count += 1
 
-			var/blood_overlay = "bloody"
+				var/blood_overlay = "bloody"
 
-			if (kill_count == 2)
-				blood_overlay = "bloodier"
-			else if (kill_count > 2)
-				blood_overlay = "bloodiest"
+				if (kill_count == 2)
+					blood_overlay = "bloodier"
+				else if (kill_count > 2)
+					blood_overlay = "bloodiest"
 
-			blood_overlay = "guillotine_" + blood_overlay + "_overlay"
-			cut_overlays()
-			add_overlay(mutable_appearance(icon, blood_overlay))
+				blood_overlay = "guillotine_" + blood_overlay + "_overlay"
+				cut_overlays()
+				add_overlay(mutable_appearance(icon, blood_overlay))
 
-			// The crowd is pleased
-			// The delay is to making large crowds have a longer laster applause
-			var/delay_offset = 0
-			for(var/mob/M in viewers(src, 7))
-				var/mob/living/carbon/human/C = M
-				if (ishuman(M))
-					addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/, emote), "clap"), delay_offset * 0.3)
-					delay_offset++
+				// The crowd is pleased
+				// The delay is to making large crowds have a longer laster applause
+				var/delay_offset = 0
+				for(var/mob/M in viewers(src, 7))
+					var/mob/living/carbon/human/C = M
+					if (ishuman(M))
+						addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/, emote), "clap"), delay_offset * 0.3)
+						delay_offset++
 		else
 			H.apply_damage(15 * blade_sharpness, BRUTE, head)
 			log_combat(user, H, "dropped the blade on", src, " non-fatally")
