@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes:
+  - bugfix: "Fixed missing food types for the meat clown, it is now meat and fruit."
