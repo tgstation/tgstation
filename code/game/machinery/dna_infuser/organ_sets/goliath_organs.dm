@@ -113,29 +113,40 @@
 	toolspeed = 0.1
 	/// Amount of damage we deal to the mining and boss factions.
 	var/mining_bonus_force = 80
+	COOLDOWN_DECLARE(tendril_hammer_cd)
 
 /obj/item/goliath_infuser_hammer/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
-/obj/item/goliath_infuser_hammer/melee_attack_chain(mob/user, atom/target, params)
+/obj/item/goliath_infuser_hammer/afterattack_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
 	. = ..()
-	user.changeNext_move(CLICK_CD_MELEE * 2) //hits slower but HARD
+	if(!proximity_flag)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user)
+	//If we're on cooldown, we'll do a normal attack.
+	if(!COOLDOWN_FINISHED(src, tendril_hammer_cd))
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	//do a normal attack if our target isn't living, since we're gonna define them after this.
+	if(!isliving(target))
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	var/mob/living/fresh_pancake = target
+
 	// Check for nemesis factions on the target.
-	if(!(FACTION_MINING in target.faction) && !(FACTION_BOSS in target.faction))
+	if(!(FACTION_MINING in fresh_pancake.faction) && !(FACTION_BOSS in fresh_pancake.faction))
 		// Target is not a nemesis, so attack normally.
-		return ..()
+		return SECONDARY_ATTACK_CALL_NORMAL
+
 	// Apply nemesis-specific effects.
-	nemesis_effects(user, target)
-	// Can't apply bonus force if target isn't "solid", or is occupying the same turf as the user.
-	if(!target.density || get_turf(target) == get_turf(user))
-		return ..()
-	// Target is a nemesis, and we CAN apply bonus force.
-	force += mining_bonus_force
-	. = ..()
-	force -= mining_bonus_force
+	nemesis_effects(user, fresh_pancake)
+
+	// Target is a nemesis, and so now we do the extra big damage and go on cooldown
+	fresh_pancake.apply_damage(mining_bonus_force, damtype) //smush
+	COOLDOWN_START(src, tendril_hammer_cd, 2 SECONDS)
+
+	return SECONDARY_ATTACK_CALL_NORMAL //we're still doing a normal attack!
 
 /obj/item/goliath_infuser_hammer/proc/nemesis_effects(mob/living/user, mob/living/target)
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite))
