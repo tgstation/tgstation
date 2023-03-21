@@ -1,5 +1,4 @@
-import { filter, map, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
+import { map, sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
 import { Button, Section, Modal, Tabs, Box, Input, Flex, ProgressBar, Collapsible, Icon, Divider } from '../components';
 import { Window, NtosWindow } from '../layouts';
