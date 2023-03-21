@@ -11,6 +11,7 @@
 	mech_type = EXOSUIT_MODULE_ODYSSEUS
 	step_energy_drain = 6
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_MEDICAL)
+	internal_damage_threshold = 22
 
 /obj/vehicle/sealed/mecha/odysseus/moved_inside(mob/living/carbon/human/H)
 	. = ..()
