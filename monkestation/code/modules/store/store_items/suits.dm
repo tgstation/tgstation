@@ -286,10 +286,3 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 	name = "Yuri Coat"
 	item_path = /obj/item/clothing/suit/costume/yuri
 	item_cost = 7500
-
-/*
-*	DONATOR
-*/
-
-/datum/store_item/suit/donator
-	donator_only = TRUE
