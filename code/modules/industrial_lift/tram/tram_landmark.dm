@@ -39,22 +39,22 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 //birdshot
 /obj/effect/landmark/tram/sec_wing
 	name = "Security Wing"
-	destination_id = "sec_wing"
+	platform_code = SECURITY_WING
 	tgui_icons = list("Security" = "gavel")
 
 /obj/effect/landmark/tram/prison_wing
 	name = "Prison Wing"
-	destination_id = "prison_wing"
+	platform_code = PRISON_WING
 	tgui_icons = list("Prison" = "box")
 
 /obj/effect/landmark/tram/maint_left
 	name = "Port Platform"
-	destination_id = "maint_left"
+	platform_code = MAINTENANCE_LEFT
 	tgui_icons = list("Port Platform" = "plane-departure")
 
 /obj/effect/landmark/tram/maint_right
 	name = "Starboard Platform"
-	destination_id = "maint_right"
+	platform_code = MAINTENANCE_RIGHT
 	tgui_icons = list("Starboard Platform" = "plane-arrival")
 
 /**
