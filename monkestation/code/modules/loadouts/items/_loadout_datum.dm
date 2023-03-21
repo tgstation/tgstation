@@ -54,8 +54,8 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	var/donator_only
 	/// Whether the item requires a specific season in order to be available
 	var/required_season = null
-	/// If the item won't appear when the ERP config is disabled
-	var/erp_item = FALSE
+	///does this item require being bought to show up?
+	var/requires_purchase = FALSE
 
 /*
  * Place our [var/item_path] into [outfit].

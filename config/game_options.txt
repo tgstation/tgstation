@@ -529,3 +529,6 @@ DISALLOW_TITLE_MUSIC
 ## This is primarily useful for developing tutorials. If you have a proper DB setup, you
 ## don't need (or want) this.
 #GIVE_TUTORIALS_WITHOUT_DB
+
+## Put the name of your custom currency here
+METACURRENCY_NAME Metacoin

@@ -257,6 +257,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				tgui.ui_interact(usr)
 			return TRUE
 
+		if ("open_store")
+			if(parent.open_store_ui)
+				parent.open_store_ui.ui_interact(usr)
+			else
+				var/datum/store_manager/tgui = new(usr)
+				tgui.ui_interact(usr)
+			return TRUE
+
 		if ("set_color_preference")
 			var/requested_preference_key = params["preference"]
 

@@ -267,3 +267,4 @@
 
 	/// Does this client have typing indicators enabled?
 	var/typing_indicators = FALSE
+

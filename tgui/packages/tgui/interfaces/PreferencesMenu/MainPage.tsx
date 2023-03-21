@@ -23,6 +23,7 @@ const CharacterControls = (props: {
   handleRotate: () => void;
   handleOpenSpecies: () => void;
   handleLoadout: () => void;
+  handleStore: () => void;
   gender: Gender;
   setGender: (gender: Gender) => void;
   showGender: boolean;
@@ -65,6 +66,18 @@ const CharacterControls = (props: {
             fontSize="22px"
             icon="suitcase"
             tooltip="Show Loadout Menu"
+            tooltipPosition="top"
+          />
+        </Stack.Item>
+      )}
+      {props.handleStore && (
+        // SKYRAT EDIT ADDITION
+        <Stack.Item>
+          <Button
+            onClick={props.handleStore}
+            fontSize="22px"
+            icon="suitcase"
+            tooltip="Show Store Menu"
             tooltipPosition="top"
           />
         </Stack.Item>
@@ -541,6 +554,9 @@ export const MainPage = (
                       }}
                       handleLoadout={() => {
                         act('open_loadout');
+                      }}
+                      handleStore={() => {
+                        act('open_store');
                       }}
                       setGender={createSetPreference(act, 'gender')}
                       showGender={

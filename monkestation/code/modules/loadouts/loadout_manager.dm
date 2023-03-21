@@ -85,6 +85,11 @@
 			if(interacted_item.ckeywhitelist && (!(owner.ckey in interacted_item.ckeywhitelist)) && !is_admin(owner))
 				message_admins("LOADOUT SYSTEM: Possible exploit detected, non-donator [owner.ckey] tried loading [interacted_item.item_path], but this is ckey locked.")
 				return
+
+			if(interacted_item.requires_purchase && !(interacted_item.item_path in owner.prefs.inventory))
+				message_admins("LOADOUT SYSTEM: Possible exploit detected, [owner.ckey] has tried loading [interacted_item.item_path], but does not own that item.")
+				return
+
 			if(params["deselect"])
 				deselect_item(interacted_item)
 				owner?.prefs?.character_preview_view.update_body()
@@ -317,7 +322,12 @@
 			if(!GLOB.donator_list[owner.ckey] && !is_admin(owner))
 				formatted_list.len--
 				continue
+
 		if(item.required_season && !check_holidays(item.required_season))
+			formatted_list.len--
+			continue
+
+		if(item.requires_purchase && !(item.item_path in owner.prefs.inventory))
 			formatted_list.len--
 			continue
 

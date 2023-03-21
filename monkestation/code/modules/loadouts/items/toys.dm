@@ -168,3 +168,9 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 /datum/loadout_item/toys/toykatana
 	name = "Toy Katana"
 	item_path = /obj/item/toy/katana
+
+
+/datum/loadout_item/toys/foam_sword
+	name = "Foam Sword"
+	item_path = /obj/item/toy/sword
+	requires_purchase = TRUE
