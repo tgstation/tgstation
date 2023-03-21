@@ -499,6 +499,7 @@
 		why_fail.set_output("Out of range!")
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
+
 	attached_launchpad.set_offset(x_pos.value, y_pos.value)
 
 	if(COMPONENT_TRIGGERED_BY(port, x_pos))
