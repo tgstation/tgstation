@@ -310,7 +310,7 @@
 	var/array_index = 1
 	for(var/datum/loadout_item/item as anything in list_of_datums)
 		if(!isnull(item.ckeywhitelist)) //These checks are also performed in the backend.
-			if(!(owner.ckey in item.ckeywhitelist) || !is_admin(owner))
+			if(!(owner.ckey in item.ckeywhitelist) && !is_admin(owner))
 				formatted_list.len--
 				continue
 		if(item.donator_only) //These checks are also performed in the backend.
