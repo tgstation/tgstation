@@ -140,7 +140,10 @@ other types of metals and chemistry for reagents).
 	stored_research.hidden_nodes -= bepis_node.id
 	stored_research.research_node(bepis_node, force = TRUE, auto_adjust_cost = FALSE)
 
-
+/**
+ * Subtype of Bepis tech disk
+ * Removes the tech disk that's held on it from the experimental node list, making them not show up in future disks.
+ */
 /obj/item/disk/design_disk/bepis/remove_tech
 	name = "Reformatted technology disk"
 	desc = "A disk containing a new, completed tech from the B.E.P.I.S. Upload the disk to an R&D Console to redeem the tech."
