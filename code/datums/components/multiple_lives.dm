@@ -29,7 +29,7 @@
 
 /datum/component/multiple_lives/proc/respawn(mob/living/source, gibbed)
 	SIGNAL_HANDLER
-	if(HAS_TRAIT(source, TRAIT_SUICIDED)) //Freed from this mortal coil.
+	if(HAS_TRAIT(source, TRAIT_SUICIDED)) //Freed from this mortail coil.
 		qdel(src)
 		return
 	//Gives the old mob this trait in case it gets revived, so we won't end up eventually overriding data
