@@ -38,15 +38,6 @@ SUBSYSTEM_DEF(modular_computers)
 		if(prog.available_on_syndinet)
 			available_antag_software.Add(prog)
 
-///Checks whether NTNet is available for a specific function, checking NTNet relays and shutdowns. If none is passed, none is needed.
-/datum/controller/subsystem/modular_computers/proc/check_function()
-	// Check all relays. If we have at least one working relay, ntos is up.
-	for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)
-		if(!relays.is_operational)
-			continue
-		return TRUE
-	return FALSE
-
 ///Attempts to find a new file through searching the available stores with its name.
 /datum/controller/subsystem/modular_computers/proc/find_ntnet_file_by_name(filename)
 	for(var/datum/computer_file/program/programs as anything in available_station_software + available_antag_software)

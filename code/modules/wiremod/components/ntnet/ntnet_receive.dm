@@ -36,7 +36,7 @@
 /obj/item/circuit_component/ntnet_receive/proc/ntnet_receive(obj/item/circuit_component/ntnet_send/source, list/data)
 	SIGNAL_HANDLER
 
-	if(!SSmodular_computers.check_function())
+	if(!find_functional_ntnet_relay())
 		return
 	if(data["enc_key"] != enc_key.value)
 		return

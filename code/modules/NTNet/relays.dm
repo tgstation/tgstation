@@ -1,5 +1,14 @@
 GLOBAL_LIST_EMPTY(ntnet_relays)
 
+///Checks whether NTNet is available by ensuring at least one relay exists and is operational.
+/proc/find_functional_ntnet_relay()
+	// Check all relays. If we have at least one working relay, ntos is up.
+	for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)
+		if(!relays.is_operational)
+			continue
+		return TRUE
+	return FALSE
+
 // Relays don't handle any actual communication. Global NTNet datum does that, relays only tell the datum if it should or shouldn't work.
 /obj/machinery/ntnet_relay
 	name = "NTNet Quantum Relay"
