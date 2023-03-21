@@ -181,7 +181,7 @@
 		return
 	var/list/possible_items = list(/obj/item/soap/syndie,/obj/item/pen/sleepy,/obj/item/pen/edagger,/obj/item/language_manual/codespeak_manual/unlimited,
 								   /obj/item/clothing/shoes/chameleon/noslip, /obj/item/storage/box/syndie_kit/c4,
-								   /obj/item/storage/box/syndie_kit/throwing_weapons, /obj/item/gun/ballistic/automatic/c20r/toy, /obj/item/storage/box/syndie_kit/emp,
+								   /obj/item/storage/box/syndie_kit/throwing_weapons, /obj/item/storage/box/syndie_kit/emp,
 								   /obj/item/card/id/advanced/chameleon, /obj/item/multitool/ai_detect, /obj/item/storage/box/syndie_kit/chameleon,
 								   /obj/item/card/emag, /obj/item/card/emag/doorjack,/obj/item/storage/box/syndie_kit/syndi_keys, /obj/item/jammer,
 								   /obj/item/clothing/glasses/thermal/syndi, /obj/item/encryptionkey/binary, /obj/item/storage/box/syndie_kit/chemical)
