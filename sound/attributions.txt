@@ -38,11 +38,13 @@ alien_organ_cut.ogg is adapted from some CC 0 flesh sound, lesaucisson's swoosh 
 
 standard_stamp.ogg is adapted from tom_woysky's "Stamp.wav" https://freesound.org/people/tom_woysky/sounds/348316/
 
+
+rattling_keys.ogg and rattling_keys_attack.ogg is adapted from Desibloke's "Keys rattling [Key rattle]" https://freesound.org/people/Desibloke/sounds/523671/
+
 chainsaw_loop.ogg is adapted from Audionautics "Chainsaw Idle Loops", which is licensed under CC Attribution 3.0
 https://freesound.org/people/Audionautics/sounds/171652/
 chainsaw_start.ogg is adapted from 8 Chainsaw Pulls.wav by Stefan021
 https://freesound.org/s/431740/ (CC 0)
 chainsaw_stop.ogg is adapted from kyles "chainsaw sawing short cuts +stop.flac" (CC 0)
 https://freesound.org/people/kyles/sounds/453256/
-
 

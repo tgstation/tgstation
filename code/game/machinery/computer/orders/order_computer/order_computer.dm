@@ -167,7 +167,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 				return
 			var/say_message = "Thank you for your purchase!"
 			if(express_cost_multiplier > 1)
-				say_message += "Please note: The charge of this purchase and machine cooldown has been multiplied by [express_cost_multiplier]!"
+				say_message += " Please note: The charge of this purchase and machine cooldown has been multiplied by [express_cost_multiplier]!"
 			COOLDOWN_START(src, order_cooldown, cooldown_time * express_cost_multiplier)
 			say(say_message)
 			if(blackbox_key)
@@ -201,7 +201,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	var/failure_message = "Sorry, but you do not have enough money."
 	if(express)
 		final_cost *= express_cost_multiplier
-		failure_message += "Remember, Express upcharges the cost!"
+		failure_message += " Remember, Express upcharges the cost!"
 	if(card.registered_account.adjust_money(-final_cost, "[name]: Purchase"))
 		return TRUE
 	say(failure_message)
