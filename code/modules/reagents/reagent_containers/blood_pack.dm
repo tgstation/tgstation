@@ -10,7 +10,7 @@
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 
 /obj/item/reagent_containers/blood/Initialize(mapload, vol)
-	. = ..(mapload, vol)
+	. = ..()
 	if(blood_type != null)
 		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
 		update_appearance()
@@ -44,7 +44,7 @@
 /obj/item/reagent_containers/blood/random/Initialize(mapload, vol)
 	icon_state = "bloodpack"
 	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
-	return ..(mapload, vol)
+	return ..()
 
 /obj/item/reagent_containers/blood/a_plus
 	blood_type = "A+"
@@ -76,7 +76,7 @@
 	unique_blood = /datum/reagent/lube
 	
 /obj/item/reagent_containers/blood/snail/Initialize(mapload, vol)
-	. = ..(mapload, vol)
+	. = ..()
 	desc += " It's a bit slimy... The label indicates that this is meant for snails. "
 
 /obj/item/reagent_containers/blood/podperson
@@ -84,7 +84,7 @@
 	unique_blood = /datum/reagent/water
 
 /obj/item/reagent_containers/blood/podperson/Initialize(mapload, vol)
-	. = ..(mapload, vol)
+	. = ..()
 	desc += " This appears to be some very overpriced water."
 
 // for slimepeople
@@ -93,7 +93,7 @@
 	unique_blood = /datum/reagent/toxin/slimejelly
 
 /obj/item/reagent_containers/blood/toxin/Initialize(mapload, vol)
-	. = ..(mapload, vol)
+	. = ..()
 	desc += " There is a toxin warning on the label. This is for slimepeople."
 
 /obj/item/reagent_containers/blood/universal
