@@ -442,7 +442,7 @@
 	STOP_PROCESSING(SSobj, src)
 	if(failed_mutations)
 		return
-	var/mob/living/simple_animal/chick/birthed = new /mob/living/simple_animal/chick(get_turf(src))
+	var/mob/living/simple_animal/chick/birthed = new /mob/living/simple_animal/chick(src.loc)
 
 	if(possible_mutations.len)
 		var/datum/mutation/ranching/chicken/chosen_mutation = pick(possible_mutations)

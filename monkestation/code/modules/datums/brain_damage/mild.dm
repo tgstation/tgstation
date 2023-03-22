@@ -27,7 +27,7 @@
 				if(victim != owner && length(pockets))
 					var/obj/item/I = pick(pockets)
 					owner.visible_message("<span class='warning'>[owner] attempts to remove [I] from [victim]'s pocket!</span>","<span class='warning'>You attempt to remove [I] from [victim]'s pocket.</span>", FALSE, 1)
-					if(do_after(owner, victim, I.strip_delay) && victim.temporarilyRemoveItemFromInventory(I))
+					if(do_after(owner, I.strip_delay, victim) && victim.temporarilyRemoveItemFromInventory(I))
 						owner.visible_message("<span class='warning'>[owner] removes [I] from [victim]'s pocket!</span>","<span class='warning'>You remove [I] from [victim]'s pocket.</span>", FALSE, 1)
 						log_admin("[key_name(usr)] picked [victim.name]'s pockets with Kleptomania trait.")
 						if(!QDELETED(I) && !owner.putItemFromInventoryInHandIfPossible(I, owner.active_hand_index, TRUE, TRUE))
