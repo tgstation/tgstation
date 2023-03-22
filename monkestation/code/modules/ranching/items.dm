@@ -12,8 +12,8 @@
 	desc = "Scans chickens to give you information about possible mutations that chicken can have"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "health"
-	worn_icon = null
-	worn_icon_state = null
+	inhand_icon_state = "healthanalyzer"
+	worn_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 

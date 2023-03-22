@@ -5,6 +5,7 @@
 	alcohol_tolerance = 0
 	toxTolerance = -1
 	status = ORGAN_ROBOTIC
+	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 
 /obj/item/organ/internal/liver/cybernetic/upgraded/ipc/emp_act(severity)
 	to_chat(owner, "<span class='warning'>Alert: Your Substance Processor has been damaged. An internal chemical leak is affecting performance.</span>")
@@ -18,6 +19,7 @@
 	name = "implantable battery"
 	icon_state = "implant-power"
 	desc = "A battery that stores charge for species that run on electricity."
+	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 
 /obj/item/organ/internal/stomach/ethereal/battery/ipc
 	name = "micro-cell"
@@ -26,6 +28,7 @@
 	desc = "A micro-cell, for IPC use. Do not swallow."
 	status = ORGAN_ROBOTIC
 	organ_flags = ORGAN_SYNTHETIC
+	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 
 /obj/item/organ/internal/stomach/ethereal/battery/ipc/emp_act(severity)
 	..()
@@ -74,6 +77,7 @@
 	gender = PLURAL
 	status = ORGAN_ROBOTIC
 	organ_flags = ORGAN_SYNTHETIC
+	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 
 /obj/item/organ/internal/ears/robot/emp_act(severity)
 	switch(severity)

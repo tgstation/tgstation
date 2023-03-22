@@ -1103,27 +1103,6 @@
 		qdel(src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-///////////////////////////////////////////////////////////////////////////////
-/obj/machinery/hydroponics/soil/pot
-	name = "pot"
-	desc = "A plastic pot for plants."
-	icon = 'icons/obj/flora/plants.dmi'
-	icon_state = "pot"
-	gender = NEUTER
-	circuit = null
-	density = TRUE
-	use_power = NO_POWER_USE
-	flags_1 = NONE
-	unwrenchable = TRUE
-	self_sustaining_overlay_icon_state = null
-	max_integrity = 50
-	/// Half water capacity of the normal tray
-	maxwater = 50
-	waterlevel = 50
-	maxnutri = 10
-	weedlevel = 0
-	pestlevel = 0
-
 ///The usb port circuit
 
 /obj/item/circuit_component/hydroponics

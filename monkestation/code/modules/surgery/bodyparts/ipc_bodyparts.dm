@@ -3,6 +3,7 @@
 	icon_greyscale = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	limb_id = "synth" //Overriden in /species/ipc/replace_body()
+	icon_state = "synth"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
@@ -24,6 +25,7 @@
 	icon_greyscale = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
+	icon_state = "synth"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
@@ -46,6 +48,7 @@
 	icon_greyscale = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
+	icon_state = "synth"
 	should_draw_greyscale = FALSE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 
@@ -67,6 +70,7 @@
 	icon_greyscale = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
+	icon_state = "synth"
 	should_draw_greyscale = FALSE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 
@@ -88,6 +92,7 @@
 	icon_greyscale = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
+	icon_state = "synth"
 	should_draw_greyscale = FALSE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 
@@ -109,6 +114,7 @@
 	icon_greyscale = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	icon_static = 'monkestation/icons/mob/species/ipc/bodyparts.dmi'
 	limb_id = "synth"
+	icon_state = "synth"
 	should_draw_greyscale = FALSE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 

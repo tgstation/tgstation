@@ -19,7 +19,7 @@
 
 /obj/item/circuitboard/machine/feed_machine
 	name = "feed machine (Machine Board)"
-	icon_state = "service"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	req_components = list(
 		/datum/stock_part/matter_bin = 3,

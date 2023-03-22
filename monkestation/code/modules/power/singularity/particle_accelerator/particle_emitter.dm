@@ -2,7 +2,7 @@
 	name = "EM Containment Grid"
 	desc = "This launches the Alpha particles, might not want to stand near this end."
 	icon = 'monkestation/icons/obj/machines/particle_accelerator.dmi'
-	icon_state = "none"
+	icon_state = "emitter_center"
 	var/fire_delay = 50
 	var/last_shot = 0
 
