@@ -153,7 +153,6 @@
 	T.twinned = twin
 	T.firer = user
 	T.fire()
-	attack_self(user)
 	COOLDOWN_START(src, tentacle_swing, 2 SECONDS)
 
 /obj/projectile/umbral_tendrils
