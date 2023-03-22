@@ -50,6 +50,7 @@
 /datum/crafting_recipe/food/reaction/soup/tomatosoup
 	reaction = /datum/chemical_reaction/food/soup/tomatosoup
 
+// melbert todo doesn't work
 /datum/crafting_recipe/food/reaction/soup/bloodsoup
 	name = "Blood Soup"
 	desc = "Smells like copper."

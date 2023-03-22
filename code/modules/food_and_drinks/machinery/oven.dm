@@ -20,6 +20,8 @@
 	circuit = /obj/item/circuitboard/machine/oven
 	processing_flags = START_PROCESSING_MANUALLY
 	resistance_flags = FIRE_PROOF
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.8
 
 	///The tray inside of this oven, if there is one.
 	var/obj/item/plate/oven_tray/used_tray
@@ -33,7 +35,8 @@
 /obj/machinery/oven/Initialize(mapload)
 	. = ..()
 	oven_loop = new(src)
-	add_tray_to_oven(new /obj/item/plate/oven_tray(src)) //Start with a tray
+	if(mapload)
+		add_tray_to_oven(new /obj/item/plate/oven_tray(src)) //Start with a tray
 
 /obj/machinery/oven/Destroy()
 	QDEL_NULL(oven_loop)
@@ -42,7 +45,7 @@
 
 /// Used to determine if the oven appears active and cooking, or offline.
 /obj/machinery/oven/proc/appears_active()
-	return !open && length(used_tray?.contents) && !(machine_stat & BROKEN|NOPOWER)
+	return !open && length(used_tray?.contents) && !(machine_stat & (BROKEN|NOPOWER))
 
 /obj/machinery/oven/update_icon_state()
 	if(appears_active())
@@ -189,16 +192,20 @@
 
 /obj/machinery/oven/range
 	name = "range"
-	desc = "And oven AND a stove, I guess that's why it's got a range!"
+	desc = "And Oven AND a Stove? I guess that's why it's got range!"
 	icon_state = "range_off"
 	base_icon_state = "range"
 	pass_flags_self = PASSMACHINE|PASSTABLE|LETPASSTHROW // Like the griddle, short
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 1.2
 	circuit = /obj/item/circuitboard/machine/range
 
 /obj/machinery/oven/range/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/stove, container_x = -6, container_y = 14)
+	var/obj/item/reagent_containers/cup/soup_pot/mapload_container
+	if(mapload)
+		mapload_container = new(loc)
+
+	AddComponent(/datum/component/stove, container_x = -6, container_y = 14, spawn_container = mapload_container)
 
 /obj/item/plate/oven_tray
 	name = "oven tray"

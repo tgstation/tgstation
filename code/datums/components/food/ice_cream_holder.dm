@@ -169,7 +169,7 @@
 	if(compare_list(our_scoops, icecream_order.wanted_flavors))
 		return COMPONENT_CORRECT_ORDER
 
-/datum/component/ice_cream_holder/proc/sell_ice_cream(obj/item/source, mob/living/simple_animal/robot_customer/sold_to, obj/item/container)
+/datum/component/ice_cream_holder/proc/sell_ice_cream(obj/item/source, mob/living/simple_animal/robot_customer/sold_to)
 	SIGNAL_HANDLER
 
 	//the price of ice cream scales with the number of scoops. Yummy.

@@ -56852,7 +56852,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/cryo)
 "nPA" = (
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "nPF" = (
@@ -65911,7 +65911,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = 8
 	},
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /turf/open/floor/plating,
 /area/station/service/kitchen/abandoned)
 "qbW" = (

@@ -6,6 +6,7 @@
 	density = TRUE
 	pass_flags_self = PASSMACHINE | PASSTABLE| LETPASSTHROW // It's roughly the height of a table.
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	layer = BELOW_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/griddle
 	processing_flags = START_PROCESSING_MANUALLY

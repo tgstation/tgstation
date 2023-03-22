@@ -161,8 +161,8 @@
 
 /obj/item/kitchen/spoon/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	if(target.is_open_container())
-		context[SCREENTIP_CONTEXT_LMB] = "Grab spoonful"
-		context[SCREENTIP_CONTEXT_RMB] = "Empty spoonful"
+		context[SCREENTIP_CONTEXT_LMB] = "Empty spoonful"
+		context[SCREENTIP_CONTEXT_RMB] = "Grab spoonful"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(isliving(target))
 		context[SCREENTIP_CONTEXT_LMB] = target == user ? "[spoon_sip_size >= reagents.maximum_volume ? "Swallow" : "Taste"] spoonful" : "Give spoonful"

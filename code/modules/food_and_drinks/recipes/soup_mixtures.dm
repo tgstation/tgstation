@@ -93,6 +93,8 @@
 		// The other half of the nutriment, and the rest of the reagents, will get put directly into the pot
 		ingredient.reagents.trans_to(pot, ingredient.reagents.total_volume, 0.8, no_react = TRUE)
 
+		// melbert todo seems impossible also really easy to dupe reaction results
+
 		// Uh oh we reached the top of the pot, the soup's gonna boil over.
 		if(holder.total_volume >= holder.maximum_volume * 0.95)
 			pot.visible_message(span_warning("[pot] starts to boil over!"))
@@ -323,12 +325,12 @@
 		"kind of funny" = 2,
 		"someone's parents" = 2,
 	)
+	glass_price = FOOD_PRICE_EXOTIC
 
 /datum/glass_style/has_foodtype/soup/clownchili
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/clownchili
 	icon_state = "clownchili"
 	drink_type = VEGETABLES | MEAT
-	glass_price = FOOD_PRICE_EXOTIC
 
 /datum/chemical_reaction/food/soup/clownchili
 	required_reagents = list(/datum/reagent/water = 50)

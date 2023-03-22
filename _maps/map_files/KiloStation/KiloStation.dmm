@@ -4265,12 +4265,12 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/exam_room)
 "buD" = (
-/obj/machinery/griddle,
 /obj/effect/turf_decal/bot,
 /obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/oven/range,
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen)
 "buJ" = (
@@ -15046,11 +15046,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "fby" = (
-/obj/machinery/oven,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/oven/range,
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen)
 "fbz" = (
@@ -56816,12 +56816,12 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "srk" = (
-/obj/machinery/deepfryer,
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/poster/random/directional/north,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/griddle,
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen)
 "srs" = (

@@ -8,36 +8,46 @@
  */
 /datum/component/stove
 	/// Whether we're currently cooking
-	var/on = FALSE
+	VAR_FINAL/on = FALSE
 	/// A reference to the current soup pot overtop
-	var/obj/item/container
+	VAR_FINAL/obj/item/container
 
+	/// Container's pixel x when placed on the stove
 	var/container_x = 0
+	/// Container's pixel y when placed on the stove
 	var/container_y = 8
 
-/datum/component/stove/Initialize(container_x = 0, container_y = 8)
+/datum/component/stove/Initialize(container_x = 0, container_y = 8, obj/item/spawn_container)
 	if(!ismachinery(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.container_x = container_x
 	src.container_y = container_y
 
+	// To allow maploaded pots on top of your stove.
+	if(spawn_container)
+		spawn_container.forceMove(parent)
+		add_container(spawn_container)
+
 /datum/component/stove/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(on_attack_hand_secondary))
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_overlay_update))
+	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstructed))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context))
 
 	var/obj/machinery/real_parent = parent
 	real_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 /datum/component/stove/UnregisterFromParent()
-	var/obj/machinery/real_parent = parent
-	container.forceMove(real_parent.drop_location())
+	if(!QDELING(real_parent))
+		var/obj/machinery/real_parent = parent
+		container.forceMove(real_parent.drop_location())
 
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_HAND_SECONDARY,
+		COMSIG_OBJ_DECONSTRUCT,
 		COMSIG_ATOM_EXITED,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
@@ -59,7 +69,7 @@
 
 /datum/component/stove/proc/turn_on()
 	var/obj/machinery/real_parent = parent
-	if(real_parent.machine_stat & BROKEN|NOPOWER)
+	if(real_parent.machine_stat & (BROKEN|NOPOWER))
 		return
 	START_PROCESSING(SSmachines, src)
 	on = TRUE
@@ -71,13 +81,13 @@
 	on = FALSE
 	real_parent.update_appearance(UPDATE_OVERLAYS)
 
-/datum/component/stove/proc/on_attack_hand_secondary(datum/source)
+/datum/component/stove/proc/on_attack_hand_secondary(obj/machinery/source)
 	SIGNAL_HANDLER
 
 	var/obj/machinery/real_parent = parent
 	if(on)
 		turn_off()
-	else if(real_parent.machine_stat & BROKEN|NOPOWER)
+	else if(real_parent.machine_stat & (BROKEN|NOPOWER))
 		real_parent.balloon_alert_to_viewers("no power!")
 	else
 		turn_on()
@@ -85,7 +95,7 @@
 
 	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
-/datum/component/stove/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user, params)
+/datum/component/stove/proc/on_attackby(obj/machinery/source, obj/item/attacking_item, mob/user, params)
 	SIGNAL_HANDLER
 
 	if(!attacking_item.is_open_container())
@@ -96,23 +106,38 @@
 		to_chat(user, span_notice("You put [attacking_item] onto [parent]."))
 	return COMPONENT_NO_AFTERATTACK
 
-/datum/component/stove/proc/on_exited(datum/source, atom/movable/gone, direction)
+/datum/component/stove/proc/on_exited(obj/machinery/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 
 	if(gone == container)
 		remove_container()
 
-/datum/component/stove/proc/on_overlay_update(datum/source, list/overlays)
+/datum/component/stove/proc/on_deconstructed(obj/machinery/source)
+	SIGNAL_HANDLER
+
+	container.forceMove(source.drop_location())
+
+/datum/component/stove/proc/on_overlay_update(obj/machinery/source, list/overlays)
 	SIGNAL_HANDLER
 
 	if(!on)
 		return
 
 	var/obj/real_parent = parent
-	overlays += mutable_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_overlay", alpha = real_parent.alpha)
-	overlays += emissive_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_lightmask", alpha = real_parent.alpha)
 
-/datum/component/stove/proc/on_requesting_context(datum/source, list/context, obj/item/held_item)
+	// melbert todo: flames and bartiles of smonk coming out of the pot
+
+	// Flames around the pot
+	var/mutable_appearance/flames = mutable_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_flame", alpha = real_parent.alpha)
+	flames.overlays += emissive_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_flame_mask", alpha = real_parent.alpha)
+	overlays += flames
+
+	// A green light that shows it's active
+	var/mutable_appearance/light = mutable_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_overlay", real_parent, alpha = real_parent.alpha)
+	light.overlays += emissive_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_lightmask", real_parent, alpha = real_parent.alpha)
+	overlays += light
+
+/datum/component/stove/proc/on_requesting_context(obj/machinery/source, list/context, obj/item/held_item)
 	SIGNAL_HANDLER
 
 	if(isnull(held_item))

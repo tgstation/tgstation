@@ -161,8 +161,11 @@
 		return FALSE
 
 	var/datum/reagents/holder = object_used.reagents
-	// The bowl must be majority soup
-	if(holder.get_reagent_amount(soup_type) < holder.total_volume * 0.5)
+	// The bowl must be dominated by soup
+	if(holder.get_master_reagent_id() != soup_type)
+		return FALSE
+	// Also must be at least 1/3rd soup, prevent cheese
+	if(holder.get_reagent_amount(soup_type) < holder.total_volume * 0.33)
 		return FALSE
 	// And of course we must fulfill the sample size threshold
 	if(serving_sizes[picked_serving] > holder.total_volume)
@@ -170,6 +173,11 @@
 	return TRUE
 
 /datum/custom_order/soup/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+	for(var/datum/reagent/reagent as anything in order_item.reagents?.reagent_list)
+		if(reagent.type == soup_type)
+			// I hate doing this, but ideally all orders should be order datums so we don't have to reuse code
+			. |= SEND_SIGNAL(reagent, COMSIG_REAGENT_SOLD_TO_CUSTOMER, customer_pawn, order_item)
+
 	customer_pawn.visible_message(
 		span_danger("[customer_pawn] pours [order_item] right down [customer_pawn.p_their()] hatch!"),
 		span_danger("You pour [order_item] down your hatch in one go."),

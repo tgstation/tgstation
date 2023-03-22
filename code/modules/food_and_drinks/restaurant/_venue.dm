@@ -111,14 +111,16 @@
 /datum/venue/proc/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
 	SHOULD_CALL_PARENT(TRUE)
 
+	// This is an item typepath, a reagent typepath, or a custom order datum instance.
 	var/order = customer_pawn.ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]
 
-	. = SEND_SIGNAL(order_item, COMSIG_ITEM_SOLD_TO_CUSTOMER, customer_pawn, order_item)
+	. = SEND_SIGNAL(order_item, COMSIG_ITEM_SOLD_TO_CUSTOMER, customer_pawn)
 
 	for(var/datum/reagent/reagent as anything in order_item.reagents?.reagent_list)
 		// Our order can be a reagent within the item we're receiving
 		if(reagent.type == order)
 			. |= SEND_SIGNAL(reagent, COMSIG_REAGENT_SOLD_TO_CUSTOMER, customer_pawn, order_item)
+			break
 
 	// Order can be a /datum/custom_order instance
 	if(istype(order, /datum/custom_order))

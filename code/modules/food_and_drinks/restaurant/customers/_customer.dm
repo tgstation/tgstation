@@ -25,6 +25,8 @@
 	var/second_warning_line = "This is your last warning!"
 	///Line when harrased by someone for the last time
 	var/self_defense_line = "Omae wa mo, shinderou."
+	///Line sent when the customer is clicked on by someone with a 0 force item that's not the correct order
+	var/wrong_item_line = "No, I don't want that."
 
 	///Clothing sets to pick from when dressing the robot.
 	var/list/clothing_sets = list("amerifat_clothes")
