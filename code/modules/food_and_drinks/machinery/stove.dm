@@ -1,7 +1,8 @@
 
 /obj/item/reagent_containers/cup/soup_pot
 	name = "soup pot"
-	icon = 'icons/obj/machines/kitchen_stove.dmi'
+	desc = "A tall soup designed to mix and cook all kinds of soup."
+	icon = 'icons/obj/soup_pot.dmi'
 	icon_state = "pot"
 	base_icon_state = "pot"
 	volume = 200
@@ -10,7 +11,7 @@
 	custom_materials = list(/datum/material/iron = 5000)
 	w_class = WEIGHT_CLASS_BULKY
 	fill_icon_thresholds = null
-
+	/// Max number of ingredients we can add
 	var/max_ingredients = 24
 	/// A list of all the ingredients we have added
 	var/list/obj/item/added_ingredients
@@ -44,22 +45,24 @@
 /obj/item/reagent_containers/cup/soup_pot/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(!can_add_ingredient(weapon))
 		return SECONDARY_ATTACK_CALL_NORMAL
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	// Too many ingredients
 	if(LAZYLEN(added_ingredients) >= max_ingredients)
 		balloon_alert(user, "too many ingredients!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
 	if(!user.transferItemToLoc(weapon, src))
 		balloon_alert(user, "can't add that!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
 
 	var/atom/balloon_loc = ismachinery(loc) ? loc : src
 	balloon_loc.balloon_alert(user, "ingredient added")
+	user.face_atom(balloon_loc)
 	LAZYADD(added_ingredients, weapon)
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/reagent_containers/cup/soup_pot/attack_hand_secondary(mob/user, list/modifiers)
 	if(!LAZYLEN(added_ingredients))
-		return
+		return SECONDARY_ATTACK_CALL_NORMAL
 
 	var/obj/item/removed = added_ingredients[1]
 	LAZYADD(added_ingredients, removed)
@@ -67,7 +70,9 @@
 	user.put_in_hands(removed)
 	var/atom/balloon_loc = ismachinery(loc) ? loc : src
 	balloon_loc.balloon_alert(user, "ingredient removed")
+	user.face_atom(balloon_loc)
 	update_appearance(UPDATE_OVERLAYS)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/reagent_containers/cup/soup_pot/proc/can_add_ingredient(obj/item/ingredient)
 	// Let default reagent handling take this
@@ -110,12 +115,16 @@
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
 	layer = BELOW_OBJ_LAYER
-	circuit = /obj/item/circuitboard/machine/oven // Melbert todo
+	circuit = /obj/item/circuitboard/machine/stove
 	processing_flags = START_PROCESSING_MANUALLY
 	resistance_flags = FIRE_PROOF
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.2
 
+	// Stove icon is 32x48, we'll use a Range for preview instead
+	icon_preview = 'icons/obj/machines/kitchenmachines.dmi'
+	icon_state_preview = "range_off"
+
 /obj/machinery/stove/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/stove)
+	AddComponent(/datum/component/stove, container_x = -6, container_y = 16)

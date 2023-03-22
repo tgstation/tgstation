@@ -8,8 +8,12 @@
 #define CRAFTING_STRUCTURE_USE 0
 
 /datum/crafting_recipe
-	///in-game display name
+	/// in-game display name
+	/// Optional, if not set uses result name
 	var/name
+	/// description displayed in game
+	/// Optional, if not set uses result desc
+	var/desc
 	///type paths of items consumed associated with how many are needed
 	var/list/reqs = list()
 	///type paths of items explicitly not allowed as an ingredient
@@ -86,3 +90,6 @@
 	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
 		return TRUE
 	return FALSE
+
+/datum/crafting_recipe/proc/crafting_ui_data()
+	return list()

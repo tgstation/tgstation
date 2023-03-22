@@ -53,23 +53,37 @@
 	container?.reagents.expose_temperature(600, 0.1)
 	real_parent.use_power(real_parent.active_power_usage)
 
+	var/turf/stove_spot = real_parent.loc
+	if(isturf(stove_spot))
+		stove_spot.hotspot_expose(600, 100)
+
 /datum/component/stove/proc/turn_on()
+	var/obj/machinery/real_parent = parent
+	if(real_parent.machine_stat & BROKEN|NOPOWER)
+		return
 	START_PROCESSING(SSmachines, src)
 	on = TRUE
+	real_parent.update_appearance(UPDATE_OVERLAYS)
 
 /datum/component/stove/proc/turn_off()
+	var/obj/machinery/real_parent = parent
 	STOP_PROCESSING(SSmachines, src)
 	on = FALSE
+	real_parent.update_appearance(UPDATE_OVERLAYS)
 
 /datum/component/stove/proc/on_attack_hand_secondary(datum/source)
 	SIGNAL_HANDLER
 
+	var/obj/machinery/real_parent = parent
 	if(on)
 		turn_off()
+	else if(real_parent.machine_stat & BROKEN|NOPOWER)
+		real_parent.balloon_alert_to_viewers("no power!")
 	else
 		turn_on()
+		real_parent.balloon_alert_to_viewers("burners [on ? "on" : "off"]")
 
-	return COMPONENT_NO_AFTERATTACK
+	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
 /datum/component/stove/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user, params)
 	SIGNAL_HANDLER
@@ -79,6 +93,7 @@
 
 	if(user.transferItemToLoc(attacking_item, parent))
 		add_container(attacking_item, user)
+		to_chat(user, span_notice("You put [attacking_item] onto [parent]."))
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/stove/proc/on_exited(datum/source, atom/movable/gone, direction)
@@ -94,8 +109,8 @@
 		return
 
 	var/obj/real_parent = parent
-	overlays += mutable_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_overlay", real_parent, alpha = real_parent.alpha)
-	overlays += emissive_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_lightmask", real_parent, alpha = real_parent.alpha)
+	overlays += mutable_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_overlay", alpha = real_parent.alpha)
+	overlays += emissive_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_lightmask", alpha = real_parent.alpha)
 
 /datum/component/stove/proc/on_requesting_context(datum/source, list/context, obj/item/held_item)
 	SIGNAL_HANDLER

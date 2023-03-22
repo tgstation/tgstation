@@ -157,7 +157,7 @@
 		VENUE_RESTAURANT = list(
 			/obj/item/food/baguette = 20,
 			/obj/item/food/garlicbread = 5,
-			/obj/item/food/soup/onion = 4,
+			/datum/custom_order/soup/onion_soup = 4,
 			/obj/item/food/pie/berryclafoutis = 2,
 			/obj/item/food/omelette = 15,
 			/datum/custom_order/icecream = 6,
@@ -201,8 +201,8 @@
 		VENUE_RESTAURANT = list(
 			/obj/item/food/tofu = 5,
 			/obj/item/food/breadslice/plain = 5,
-			/obj/item/food/soup/miso = 10,
-			/obj/item/food/soup/vegetable = 4,
+			/datum/custom_order/soup/miso = 10,
+			/datum/custom_order/soup/vegetable = 4,
 			/obj/item/food/sashimi = 4,
 			/obj/item/food/chawanmushi = 4,
 			/obj/item/food/muffin/berry = 2,
@@ -244,8 +244,8 @@
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
 			/obj/item/food/tofu = 5,
-			/obj/item/food/soup/miso = 6,
-			/obj/item/food/soup/vegetable = 4,
+			/datum/custom_order/soup/miso = 6,
+			/datum/custom_order/soup/vegetable = 4,
 			/obj/item/food/sashimi = 4,
 			/obj/item/food/chawanmushi = 4,
 			/obj/item/food/meatbun = 4,
@@ -385,13 +385,13 @@
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
 			/obj/item/food/fishandchips = 10,
-			/obj/item/food/soup/stew = 10,
+			/datum/custom_order/soup/stew = 10,
 			/obj/item/food/salad/ricepudding = 5,
 			/obj/item/food/grilled_cheese_sandwich = 5,
 			/obj/item/food/pie/meatpie = 5,
 			/obj/item/food/benedict = 5,
 			/obj/item/food/full_english = 2,
-			/obj/item/food/soup/indian_curry = 3,
+			/datum/custom_order/soup/curry = 3,
 			/obj/item/food/beef_wellington_slice = 2,
 			/datum/custom_order/icecream = 8
 		),

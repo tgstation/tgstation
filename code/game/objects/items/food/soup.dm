@@ -31,6 +31,33 @@
 	)
 	foodtypes = SUGAR | DAIRY
 
+/obj/item/food/bowled/spacylibertyduff
+	name = "spacy liberty duff"
+	desc = "Jello gelatin, from Alfred Hubbard's cookbook."
+	icon_state = "spacylibertyduff"
+	bite_consumption = 3
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/drug/mushroomhallucinogen = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+	)
+	tastes = list("jelly" = 1, "mushroom" = 1)
+	foodtypes = VEGETABLES
+
+/obj/item/food/bowled/amanitajelly
+	name = "amanita jelly"
+	desc = "Looks curiously toxic."
+	icon_state = "amanitajelly"
+	bite_consumption = 3
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 7,
+		/datum/reagent/drug/mushroomhallucinogen = 3,
+		/datum/reagent/toxin/amatoxin = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+	)
+	tastes = list("jelly" = 1, "mushroom" = 1)
+	foodtypes = VEGETABLES | TOXIC
+
 /*
 /obj/item/food/soup/meatball
 	name = "meatball soup"
@@ -311,33 +338,6 @@
 	name = pick("borsch", "bortsch", "borstch", "borsh", "borshch", "borscht")
 	tastes = list(name = 1)
 */
-
-/obj/item/food/soup/spacylibertyduff
-	name = "spacy liberty duff"
-	desc = "Jello gelatin, from Alfred Hubbard's cookbook."
-	icon_state = "spacylibertyduff"
-	bite_consumption = 3
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 6,
-		/datum/reagent/drug/mushroomhallucinogen = 6,
-		/datum/reagent/consumable/nutriment/vitamin = 5,
-	)
-	tastes = list("jelly" = 1, "mushroom" = 1)
-	foodtypes = VEGETABLES
-
-/obj/item/food/soup/amanitajelly
-	name = "amanita jelly"
-	desc = "Looks curiously toxic."
-	icon_state = "amanitajelly"
-	bite_consumption = 3
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 7,
-		/datum/reagent/drug/mushroomhallucinogen = 3,
-		/datum/reagent/toxin/amatoxin = 6,
-		/datum/reagent/consumable/nutriment/vitamin = 5,
-	)
-	tastes = list("jelly" = 1, "mushroom" = 1)
-	foodtypes = VEGETABLES | TOXIC
 
 /*
 /obj/item/food/soup/stew

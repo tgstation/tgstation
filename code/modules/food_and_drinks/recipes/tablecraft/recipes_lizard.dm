@@ -483,3 +483,25 @@
 	)
 	result = /obj/item/food/steeped_mushrooms
 	category = CAT_LIZARD
+
+// Soups
+
+/datum/crafting_recipe/food/reaction/soup/atrakor_dumplings
+	reaction = /datum/chemical_reaction/food/soup/atrakor_dumplings
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/reaction/soup/meatball_noodles
+	reaction = /datum/chemical_reaction/food/soup/meatball_noodles
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/reaction/soup/black_broth
+	reaction = /datum/chemical_reaction/food/soup/black_broth
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/reaction/soup/jellyfish_stew
+	reaction = /datum/chemical_reaction/food/soup/jellyfish_stew
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/reaction/soup/rootbread_soup
+	reaction = /datum/chemical_reaction/food/soup/rootbread_soup
+	category = CAT_LIZARD

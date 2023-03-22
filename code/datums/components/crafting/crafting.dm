@@ -405,7 +405,7 @@
 
 	data["recipes"] = list()
 	data["categories"] = list()
-	data["foodtypes"] = list()
+	data["foodtypes"] = FOOD_FLAGS
 
 	if(user.has_dna())
 		var/mob/living/carbon/carbon = user
@@ -415,27 +415,14 @@
 		if(!is_recipe_available(recipe, user))
 			continue
 
-		if(recipe.category && !(recipe.category in data["categories"]))
-			data["categories"] += recipe.category
-
-		if(ispath(recipe.result, /obj/item/food))
-			var/obj/item/food/item = recipe.result
-			var/list/foodtypes = bitfield_to_list(initial(item.foodtypes), FOOD_FLAGS)
-			for(var/type in foodtypes)
-				if(!(type in data["foodtypes"]))
-					data["foodtypes"] += type
+		if(recipe.category)
+			data["categories"] |= recipe.category
 
 		// Materials
 		for(var/req in recipe.reqs)
-			if(!(req in material_occurences))
-				material_occurences[req] = 1
-			else
-				material_occurences[req] += 1
+			material_occurences[req] += 1
 		for(var/req in recipe.chem_catalysts)
-			if(!(req in material_occurences))
-				material_occurences[req] = 1
-			else
-				material_occurences[req] += 1
+			material_occurences[req] += 1
 
 		data["recipes"] += list(build_crafting_data(recipe))
 
@@ -508,39 +495,32 @@
 	var/atom/atom = recipe.result
 	data["result"] = atoms.Find(atom)
 
-	if(ispath(recipe.type, /datum/crafting_recipe/food) && ispath(recipe.result, /obj/item/food))
-		// Foodtypes
-		var/obj/item/food/item = recipe.result
-		var/list/foodtypes = bitfield_to_list(initial(item.foodtypes), FOOD_FLAGS)
-		for(var/type in foodtypes)
-			if(!(type in data["foodtypes"]))
-				data["foodtypes"] += type
-		data["foodtypes"] = foodtypes
-		// Nutriments
-		var/datum/crafting_recipe/food/food_recipe = recipe
-		data["nutriments"] = food_recipe.total_nutriment_factor
+	var/recipe_data = recipe.crafting_ui_data()
+	for(var/new_data in recipe_data)
+		data[new_data] = recipe_data[new_data]
 
 	// Category
 	data["category"] = recipe.category
 
 	// Name, Description
-	data["name"] = initial(atom.name)
-	if(recipe.name) // Override if recipe has a name
-		data["name"] = recipe.name
+	data["name"] = recipe.name || initial(atom.name)
 
 	if(ispath(recipe.result, /datum/reagent))
 		var/datum/reagent/reagent = recipe.result
 		if(recipe.result_amount > 1)
 			data["name"] = "[data["name"]] [recipe.result_amount]u"
-		data["desc"] = initial(reagent.description)
+		data["desc"] = recipe.desc || initial(reagent.description)
+
 	else if(ispath(recipe.result, /obj/item/pipe))
 		var/obj/item/pipe/pipe_obj = recipe.result
 		var/obj/pipe_real = initial(pipe_obj.pipe_type)
-		data["desc"] = initial(pipe_real.desc)
+		data["desc"] = recipe.desc || initial(pipe_real.desc)
+
 	else
 		if(ispath(recipe.result, /obj/item/stack) && recipe.result_amount > 1)
 			data["name"] = "[data["name"]] [recipe.result_amount]x"
-		data["desc"] = initial(atom.desc)
+		data["desc"] = recipe.desc || initial(atom.desc)
+
 
 	// Crafting
 	if(recipe.non_craftable)
@@ -553,50 +533,55 @@
 		data["tool_behaviors"] = recipe.tool_behaviors
 	if(recipe.tool_paths)
 		data["tool_paths"] = list()
-		for(var/req_atom as anything in recipe.tool_paths)
+		for(var/req_atom in recipe.tool_paths)
 			data["tool_paths"] += atoms.Find(req_atom)
 
 	// Machinery
 	if(recipe.machinery)
 		data["machinery"] = list()
-		for(var/req_atom as anything in recipe.machinery)
+		for(var/req_atom in recipe.machinery)
 			data["machinery"] += atoms.Find(req_atom)
 
 	// Structures
 	if(recipe.structures)
 		data["structures"] = list()
-		for(var/req_atom as anything in recipe.structures)
+		for(var/req_atom in recipe.structures)
 			data["structures"] += atoms.Find(req_atom)
 
 	// Ingredients / Materials
 	if(recipe.reqs.len)
 		data["reqs"] = list()
-		for(var/req_atom as anything in recipe.reqs)
+		for(var/req_atom in recipe.reqs)
 			var/id = atoms.Find(req_atom)
 			data["reqs"]["[id]"] = recipe.reqs[req_atom]
 
 	// Catalysts
 	if(recipe.chem_catalysts.len)
 		data["chem_catalysts"] = list()
-		for(var/req_atom as anything in recipe.chem_catalysts)
+		for(var/req_atom in recipe.chem_catalysts)
 			var/id = atoms.Find(req_atom)
 			data["chem_catalysts"]["[id]"] = recipe.chem_catalysts[req_atom]
 
 	// Reaction data
-	if(recipe.reaction)
+	if(ispath(recipe.reaction))
 		data["is_reaction"] = TRUE
-		var/datum/chemical_reaction/reaction = GLOB.chemical_reactions_list[recipe.reaction]
-		if(!data["steps"])
-			data["steps"] = list()
-		if(!reaction.required_container && (recipe.reqs.len > 1 || reaction.required_catalysts.len))
-			data["steps"] += "Mix all ingredients together"
-		if(reaction.required_temp > T20C)
-			data["steps"] += "Heat up to [reaction.required_temp]K"
-		if(reaction.required_container)
-			var/atom/req_atom = reaction.required_container
-			var/id = atoms.Find(req_atom)
-			data["reqs"]["[id]"] = 1
-			data["steps"] += "Add all ingredients into the [initial(req_atom.name)]"
+		// May be called before chemical reactions list is setup
+		var/datum/chemical_reaction/reaction = GLOB.chemical_reactions_list[recipe.reaction] || new recipe.reaction()
+		if(istype(reaction))
+			if(!data["steps"])
+				data["steps"] = list()
+			if(reaction.required_container)
+				var/id = atoms.Find(reaction.required_container)
+				data["reqs"]["[id]"] = 1
+				data["steps"] += "Add all ingredients into \a [initial(reaction.required_container.name)]"
+			else if(length(recipe.reqs) > 1 || length(reaction.required_catalysts))
+				data["steps"] += "Mix all ingredients together"
+			if(reaction.required_temp > T20C)
+				data["steps"] += "Heat up to [reaction.required_temp]K"
+		else
+			stack_trace("Invalid reaction found in recipe code! ([recipe.reaction])")
+	else if(!isnull(recipe.reaction))
+		stack_trace("Invalid reaction found in recipe code! ([recipe.reaction])")
 
 	return data
 

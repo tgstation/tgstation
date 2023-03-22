@@ -186,7 +186,7 @@
 		/obj/item/food/chocolatebar = 1,
 		/datum/reagent/consumable/milk = 5
 	)
-	result = /obj/item/food/soup/mammi
+	result = /obj/item/food/bowled/mammi
 	category = CAT_MISCFOOD
 
 /obj/item/food/chocolatebunny

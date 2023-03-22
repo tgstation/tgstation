@@ -72,12 +72,12 @@
 	name = "soup spawner"
 	icon_state = "soup"
 	loot = list(
-		/obj/item/food/soup/beet,
-		/obj/item/food/soup/sweetpotato,
-		/obj/item/food/soup/stew,
-		/obj/item/food/soup/hotchili,
-		/obj/item/food/soup/nettle,
-		/obj/item/food/soup/meatball,
+		/obj/item/reagent_containers/cup/bowl/hotchili,
+		/obj/item/reagent_containers/cup/bowl/meatball_soup,
+		/obj/item/reagent_containers/cup/bowl/nettle,
+		/obj/item/reagent_containers/cup/bowl/stew,
+		/obj/item/reagent_containers/cup/bowl/sweetpotato,
+		/obj/item/reagent_containers/cup/bowl/white_beet,
 	)
 
 /obj/effect/spawner/random/food_or_drink/salad
@@ -271,4 +271,3 @@
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
 		spawn_loot_chance = 0
 	return ..()
-

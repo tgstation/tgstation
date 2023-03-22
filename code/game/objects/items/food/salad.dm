@@ -169,8 +169,11 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_CREW * 0.6
 
+	gulp_size = 3
+
 /obj/item/reagent_containers/cup/bowl/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/foodlike_drink)
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/salad/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
 	AddComponent( \
 		/datum/component/takes_reagent_appearance, \

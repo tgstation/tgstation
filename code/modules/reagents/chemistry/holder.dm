@@ -66,10 +66,16 @@
 		for(var/reaction in D.required_reagents)
 			reaction_ids += reaction
 			var/datum/reagent/reagent = find_reagent_object_from_type(reaction)
+			if(!istype(reagent))
+				stack_trace("Invalid reagent found in [D] required_reagents: [reaction]")
+				continue
 			reagents += list(list("name" = reagent.name, "id" = reagent.type))
 
 		for(var/product in D.results)
 			var/datum/reagent/reagent = find_reagent_object_from_type(product)
+			if(!istype(reagent))
+				stack_trace("Invalid reagent found in [D] results: [product]")
+				continue
 			product_names += reagent.name
 			product_ids += product
 

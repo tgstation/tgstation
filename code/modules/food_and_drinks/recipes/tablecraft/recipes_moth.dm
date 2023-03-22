@@ -99,11 +99,11 @@
 
 /datum/crafting_recipe/food/raw_baked_rice
 	reqs = list(
+		/datum/reagent/consumable/nutriment/soup/vegetable_soup = 10,
 		/obj/item/food/boiledrice = 2,
-		/obj/item/food/soup/vegetable = 1,
-		/obj/item/food/grown/potato = 2,
 		/obj/item/food/grown/chili = 1,
-		/obj/item/food/grown/herbs = 1
+		/obj/item/food/grown/herbs = 1,
+		/obj/item/food/grown/potato = 2,
 	)
 	result = /obj/item/food/raw_baked_rice
 	category = CAT_MOTH

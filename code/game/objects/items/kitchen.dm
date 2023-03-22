@@ -152,9 +152,80 @@
 	tool_behaviour = TOOL_MINING
 	toolspeed = 25 // Literally 25 times worse than the base pickaxe
 
+	var/spoon_sip_size = 5
+
 /obj/item/kitchen/spoon/Initialize(mapload)
 	. = ..()
 	create_reagents(5, INJECTABLE|OPENCONTAINER|DUNKABLE)
+	register_item_context()
+
+/obj/item/kitchen/spoon/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	if(target.is_open_container())
+		context[SCREENTIP_CONTEXT_LMB] = "Grab spoonful"
+		context[SCREENTIP_CONTEXT_RMB] = "Empty spoonful"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(isliving(target))
+		context[SCREENTIP_CONTEXT_LMB] = target == user ? "[spoon_sip_size >= reagents.maximum_volume ? "Swallow" : "Taste"] spoonful" : "Give spoonful"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
+/obj/item/kitchen/spoon/attack(mob/living/target_mob, mob/living/user, params)
+	if(!target_mob.reagents || reagents.total_volume <= 0)
+		return  ..()
+
+	if(target_mob == user)
+		user.visible_message(
+			span_notice("[user] scoops a spoonful into [user.p_their()] mouth."),
+			span_notice("You scoop a spoonful into your mouth.")
+		)
+
+	else
+		to_chat(target_mob, span_userdanger("[target_mob.is_blind() ? "Someone" : "[user]"] forces a spoon into your face!"))
+		target_mob.balloon_alert(user, "feeding spoonful...")
+		if(!do_after(user, 3 SECONDS, target_mob))
+			target_mob.balloon_alert(user, "interrupted!")
+			return TRUE
+
+		to_chat(target_mob, span_userdanger("[target_mob.is_blind() ? "You are forced to" : "[user] forces you to"] swallow a spoonful of something!"))
+		user.visible_message(
+			span_danger("[user] scoops a spoonful into [target_mob]'s mouth."),
+			span_notice("You scoop a spoonful into [target_mob]'s mouth.")
+		)
+
+	playsound(target_mob, 'sound/items/drink.ogg', rand(10,50), vary = TRUE)
+	reagents.trans_to(target_mob, spoon_sip_size, methods = INGEST)
+	return TRUE
+
+/obj/item/kitchen/spoon/pre_attack(atom/attacked_atom, mob/living/user, params)
+	. = ..()
+	if(.)
+		return
+	if(isliving(attacked_atom))
+		return
+	if(!attacked_atom.is_open_container())
+		return
+	if(reagents.total_volume <= 0)
+		return
+
+	reagents.trans_to(attacked_atom, reagents.maximum_volume)
+	attacked_atom.balloon_alert(user, "spoon emptied")
+	return TRUE
+
+/obj/item/kitchen/spoon/pre_attack_secondary(atom/attacked_atom, mob/living/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(isliving(attacked_atom))
+		return SECONDARY_ATTACK_CALL_NORMAL
+	if(!attacked_atom.is_open_container())
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	if(reagents.total_volume >= reagents.maximum_volume || attacked_atom.reagents.total_volume <= 0)
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	attacked_atom.reagents.trans_to(src, reagents.maximum_volume)
+	attacked_atom.balloon_alert(user, "grabbed spoonful")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/kitchen/spoon/plastic
 	name = "plastic spoon"
@@ -175,9 +246,16 @@
 /obj/item/kitchen/spoon/soup_ladle
 	name = "ladle"
 	desc = "What is a ladle but a comically large spoon?"
+	spoon_sip_size = 3 // just a taste
+
+	var/static/matrix/ladle_matrix
 
 /obj/item/kitchen/spoon/soup_ladle/Initialize(mapload)
 	. = ..()
-	create_reagents(20, INJECTABLE|OPENCONTAINER)
+	if(!ladle_matrix)
+		ladle_matrix = matrix()
+		ladle_matrix.Scale(1.2, 1.5)
+	transform = ladle_matrix
+	create_reagents(25, INJECTABLE|OPENCONTAINER)
 
 #undef PLASTIC_BREAK_PROBABILITY

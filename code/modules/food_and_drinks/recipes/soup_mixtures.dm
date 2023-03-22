@@ -1,8 +1,13 @@
+#define SOUP_SERVING_SIZE 25
+
 /// Abstract parent for soup reagents.
 /// These are the majority result from soup recipes,
 /// but bear in mind it will(should) have other reagents along side it.
 /datum/reagent/consumable/nutriment/soup
 	chemical_flags = NONE
+	default_container = /obj/item/reagent_containers/cup/bowl
+	fallback_icon = 'icons/obj/food/soupsalad.dmi'
+	fallback_icon_state = "bowl"
 
 /**
  * ## Soup base chemical reaction.
@@ -24,8 +29,13 @@
 	mob_react = FALSE
 	required_other = TRUE
 	required_container = /obj/item/reagent_containers/cup/soup_pot
-	mix_message = "You smell something good coming from the steaming soup."
+	mix_message = "You smell something good coming from the steaming pot of soup."
 	reaction_tags = REACTION_TAG_FOOD | REACTION_TAG_EASY
+
+	// General soup guideline:
+	// - Soups should produce 60-90 units (3-4 servings)
+	// - One serving size is 20-25 units (4-5 sips)
+	// - The first index of the result list should be the soup type
 
 	/// An assoc list of what ingredients are necessary to how much is needed
 	var/list/required_ingredients
@@ -75,8 +85,9 @@
 
 		// Some of the nutriment goes into "creating the soup reagent" itself, gets deleted.
 		// Mainly done so that nutriment doesn't overpower the main course
-		var/amount_nutriment = ingredient.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
-		ingredient.reagents.remove_reagent(/datum/reagent/consumable/nutriment, amount_nutriment * percentage_of_nutriment_converted)
+		if(percentage_of_nutriment_converted > 0 )
+			var/amount_nutriment = ingredient.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
+			ingredient.reagents.remove_reagent(/datum/reagent/consumable/nutriment, amount_nutriment * percentage_of_nutriment_converted)
 		// The other half of the nutriment, and the rest of the reagents, will get put directly into the pot
 		ingredient.reagents.trans_to(pot, ingredient.reagents.total_volume, 0.8, no_react = TRUE)
 
@@ -115,6 +126,12 @@
 	new /obj/item/food/grown/potato(loc)
 	new /obj/item/reagent_containers/cup/soup_pot(loc)
 	return INITIALIZE_HINT_QDEL
+
+/obj/item/reagent_containers/cup/bowl/meatball_soup
+
+/obj/item/reagent_containers/cup/bowl/meatball_soup/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/consumable/nutriment/soup/meatball_soup, SOUP_SERVING_SIZE)
 
 /datum/chemical_reaction/food/soup/meatballsoup
 	required_reagents = list(/datum/reagent/water = 50)
@@ -174,6 +191,12 @@
 	icon_state = "nettlesoup"
 	drink_type = VEGETABLES
 
+/obj/item/reagent_containers/cup/bowl/nettle
+
+/obj/item/reagent_containers/cup/bowl/nettle/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/consumable/nutriment/soup/nettle, SOUP_SERVING_SIZE)
+
 /datum/chemical_reaction/food/soup/nettlesoup
 	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
@@ -226,6 +249,12 @@
 	icon_state = "hotchili"
 	drink_type = VEGETABLES | MEAT
 
+/obj/item/reagent_containers/cup/bowl/hotchili
+
+/obj/item/reagent_containers/cup/bowl/hotchili/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/consumable/nutriment/soup/hotchili, SOUP_SERVING_SIZE)
+
 /datum/chemical_reaction/food/soup/hotchili
 	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
@@ -243,7 +272,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4
 		*/
 	)
-	percentage_of_nutriment_converted = 0.5
+	percentage_of_nutriment_converted = 0.15
 
 // Chili (Cold)
 /datum/reagent/consumable/nutriment/soup/coldchili
@@ -274,7 +303,7 @@
 		/datum/reagent/consumable/frostoil = 3,
 		*/
 	)
-	percentage_of_nutriment_converted = 0.5
+	percentage_of_nutriment_converted = 0.15
 
 // Chili (Clownish)
 /datum/reagent/consumable/nutriment/soup/clownchili
@@ -313,7 +342,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 		*/
 	)
-	percentage_of_nutriment_converted = 0.5
+	percentage_of_nutriment_converted = 0.15
 
 // Tomato soup
 /datum/reagent/consumable/nutriment/soup/tomato
@@ -323,6 +352,7 @@
 
 /datum/glass_style/has_foodtype/soup/tomato
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/tomato
+	name = "Tomato Soup"
 	icon_state = "tomatosoup"
 	drink_type = VEGETABLES | FRUIT // ??
 
@@ -340,7 +370,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3
 		*/
 	)
-	percentage_of_nutriment_converted = 0.5
+	percentage_of_nutriment_converted = 0.1
 
 // Tomato-eyeball soup
 /datum/reagent/consumable/nutriment/soup/eyeball
@@ -359,16 +389,16 @@
 		/obj/item/food/grown/tomato = 2,
 		/obj/item/organ/internal/eyes = 1,
 	)
-	result = list(
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/eyeball = 20,
 		// Logically this would be more but we wouldn't get the eyeball icon state if it was.
 		/datum/reagent/consumable/nutriment/soup/tomato = 10,
-		/datum/reagent/consumable/nutriment/soup/eyeball = 20,
 		/datum/reagent/consumable/nutriment = 2,
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/tomatojuice = 6,
-		/datum/reagent/liquidgibs = 6,
+		/datum/reagent/consumable/liquidgibs = 6,
 	)
-	percentage_of_nutriment_converted = 0.5
+	percentage_of_nutriment_converted = 0.1
 
 // Miso soup
 /datum/reagent/consumable/nutriment/soup/miso
@@ -391,13 +421,14 @@
 		/datum/reagent/consumable/nutriment/soup/miso = 30,
 		/datum/reagent/water = 10,
 	)
-	percentage_of_nutriment_converted = 1 // Soy has very low nutrients.
+	percentage_of_nutriment_converted = 0 // Soy has very low nutrients.
 
 // Blood soup
 // Fake tomato soup.
 // Can also appear by pouring blood into a bowl!
 /datum/glass_style/has_foodtype/soup/tomato/blood
 	required_drink_type = /datum/reagent/blood
+	name = "Tomato Soup"
 	desc = "Smells like copper."
 	drink_type = GROSS
 
@@ -415,7 +446,7 @@
 		/datum/reagent/water = 8,
 		/datum/reagent/consumable/nutriment/protein = 7,
 	)
-	percentage_of_nutriment_converted = 0.5
+	percentage_of_nutriment_converted = 0.1
 
 // Slime soup
 // Made with a slime extract, toxic to non-slime-people.
@@ -490,7 +521,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 12,
 		/datum/reagent/consumable/nutriment/soup/clown_tears = 30,
 	)
-	percentage_of_nutriment_converted = 1 // Bananas have a small amount of nutrition naturally
+	percentage_of_nutriment_converted = 0 // Bananas have a small amount of nutrition naturally
 
 // Mystery soup
 // Acts a little funny, because when it's mixed it gains a new random reagent as well
@@ -536,7 +567,7 @@
 // Monkey Soup
 /datum/reagent/consumable/nutriment/soup/monkey
 	name = "monkey's delight"
-	desc = "A delicious soup with dumplings and hunks of monkey meat simmered to perfection, in a broth that tastes faintly of bananas."
+	description = "A delicious soup with dumplings and hunks of monkey meat simmered to perfection, in a broth that tastes faintly of bananas."
 	data = list("the jungle" = 1, "banana" = 1)
 
 /datum/glass_style/has_foodtype/soup/monkey
@@ -565,7 +596,7 @@
 // Cream of mushroom soup
 /datum/reagent/consumable/nutriment/soup/mushroom
 	name = "chantrelle soup"
-	desc = "A delicious and hearty mushroom soup."
+	description = "A delicious and hearty mushroom soup."
 	data = list("mushroom" = 1)
 
 /datum/glass_style/has_foodtype/soup/mushroom
@@ -591,18 +622,24 @@
 // Beet soup (Borscht)
 /datum/reagent/consumable/nutriment/soup/white_beet
 	name = "beet soup"
-	desc = "Wait, how do you spell it again..?"
+	description = "Wait, how do you spell it again..?"
 
 /datum/reagent/consumable/nutriment/soup/white_beet/New()
 	. = ..()
 	var/new_taste = pick("borsch", "bortsch", "borstch", "borsh", "borshch", "borscht")
-	tastes = list(new_taste = 1)
+	data = list("[new_taste]" = 1)
 	// Melbert todo: Soup bowl needs to pick up this new name
 
-/datum/glass_style/has_foodtype/soup/mushroom
+/datum/glass_style/has_foodtype/soup/white_beet
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/white_beet
 	icon_state = "beetsoup"
 	drink_type = VEGETABLES | DAIRY
+
+/obj/item/reagent_containers/cup/bowl/white_beet
+
+/obj/item/reagent_containers/cup/bowl/white_beet/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/consumable/nutriment/soup/white_beet, SOUP_SERVING_SIZE)
 
 /datum/chemical_reaction/food/soup/beetsoup
 	required_reagents = list(/datum/reagent/water = 50)
@@ -614,18 +651,24 @@
 		/datum/reagent/consumable/nutriment/soup/white_beet = 30,
 		/datum/reagent/water = 10,
 	)
-	percentage_of_nutriment_converted = 0.66
+	percentage_of_nutriment_converted = 0.1
 
 // Stew
 /datum/reagent/consumable/nutriment/soup/stew
 	name = "stew"
-	desc = "A nice and warm stew. Healthy and strong."
+	description = "A nice and warm stew. Healthy and strong."
 	data = list("tomato" = 1, "carrot" = 1)
 
 /datum/glass_style/has_foodtype/soup/stew
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/stew
 	icon_state = "stew"
 	drink_type = VEGETABLES | FRUIT | MEAT
+
+/obj/item/reagent_containers/cup/bowl/stew
+
+/obj/item/reagent_containers/cup/bowl/stew/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/consumable/nutriment/soup/stew, SOUP_SERVING_SIZE)
 
 /datum/chemical_reaction/food/soup/stew
 	required_reagents = list(/datum/reagent/water = 50)
@@ -643,41 +686,22 @@
 		// Gains a ton of nutriments from the variety of ingredients.
 	)
 
-// Melbert todo: Should this be a soup?
-/*
-/datum/chemical_reaction/food/soup/spacylibertyduff
-	required_reagents = list(
-		/datum/reagent/water = 40,
-		/datum/reagent/consumable/ethanol/vodka = 10,
-	)
-	required_ingredients = list(
-		/obj/item/food/grown/mushroom/libertycap = 3,
-	)
-*/
-
-
-// Melbert todo: Should this be a soup?
-/*
-/datum/chemical_reaction/food/soup/amanitajelly
-	required_reagents = list(
-		/datum/reagent/water = 40,
-		/datum/reagent/consumable/ethanol/vodka = 10,
-	)
-	required_ingredients = list(
-		/obj/item/food/grown/mushroom/amanita = 3,
-	)
-*/
-
 // Sweet potato soup
 /datum/reagent/consumable/nutriment/soup/sweetpotato
 	name = "sweet potato soup"
-	desc = "Delicious sweet potato in soup form."
+	description = "Delicious sweet potato in soup form."
 	data = list("sweet potato" = 1)
 
 /datum/glass_style/has_foodtype/soup/sweetpotato
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/sweetpotato
 	icon_state = "sweetpotatosoup"
 	drink_type = VEGETABLES | SUGAR
+
+/obj/item/reagent_containers/cup/bowl/sweetpotato
+
+/obj/item/reagent_containers/cup/bowl/sweetpotato/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/consumable/nutriment/soup/sweetpotato, SOUP_SERVING_SIZE)
 
 /datum/chemical_reaction/food/soup/sweetpotatosoup
 	required_reagents = list(
@@ -690,13 +714,13 @@
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/sweetpotato = 30,
 		/datum/reagent/water = 10,
-		/datum/reagent/sugar = 5,
+		/datum/reagent/consumable/sugar = 5,
 	)
 
 // Red beet soup
 /datum/reagent/consumable/nutriment/soup/red_beet
 	name = "red beet soup"
-	desc = "Quite a delicacy."
+	description = "Quite a delicacy."
 	data = list("beet" = 1)
 
 /datum/glass_style/has_foodtype/soup/red_beet
@@ -714,12 +738,12 @@
 		/datum/reagent/consumable/nutriment/soup/red_beet = 30,
 		/datum/reagent/water = 10,
 	)
-	percentage_of_nutriment_converted = 0.66
+	percentage_of_nutriment_converted = 0.1
 
 // French Onion soup
 /datum/reagent/consumable/nutriment/soup/french_onion
 	name = "french onion soup"
-	desc = "Good enough to make a grown mime cry."
+	description = "Good enough to make a grown mime cry."
 	data = list("caramelized onions" = 1)
 
 /datum/glass_style/has_foodtype/soup/french_onion
@@ -738,12 +762,12 @@
 		/datum/reagent/consumable/nutriment/protein = 8, // No idea where this comes from
 		/datum/reagent/consumable/tomatojuice = 8, // No idea where this comes from
 	)
-	percentage_of_nutriment_converted = 0.66
+	percentage_of_nutriment_converted = 0.1
 
 // Bisque / Crab soup
 /datum/reagent/consumable/nutriment/soup/bisque
 	name = "bisque"
-	desc = "A classic entree from Space-France."
+	description = "A classic entree from Space-France."
 	data = list("creamy texture" = 1, "crab" = 4)
 
 /datum/glass_style/has_foodtype/soup/bisque
@@ -755,7 +779,7 @@
 	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/meat/crab = 1,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 	)
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/bisque = 30,
@@ -767,7 +791,7 @@
 // Bungo Tree Curry
 /datum/reagent/consumable/nutriment/soup/bungo
 	name = "bungo curry"
-	desc = "A spicy vegetable curry made with the humble bungo fruit, Exotic!"
+	description = "A spicy vegetable curry made with the humble bungo fruit, Exotic!"
 	data = list("bungo" = 2, "hot curry" = 4, "tropical sweetness" = 1)
 
 /datum/glass_style/has_foodtype/soup/bungo
@@ -785,16 +809,16 @@
 		/obj/item/food/grown/bungofruit = 1,
 	)
 	results = list(
-		/datum/reagent/consumable/nutriment/soup/bungo = 30
+		/datum/reagent/consumable/nutriment/soup/bungo = 30,
 		/datum/reagent/consumable/bungojuice = 15,
 	)
-	percentage_of_nutriment_converted = 0.5
+	percentage_of_nutriment_converted = 0.1
 
 // Electron Soup.
 // Special soup for Ethereals to consume to gain nutrition (energy) from.
 /datum/reagent/consumable/nutriment/soup/electrons
 	name = "electron soup"
-	desc = "A gastronomic curiosity of ethereal origin. It is famed for the minature weather system formed over a properly prepared soup."
+	description = "A gastronomic curiosity of ethereal origin. It is famed for the minature weather system formed over a properly prepared soup."
 	data = list("mushroom" = 1, "electrons" = 4)
 
 /datum/glass_style/has_foodtype/soup/electrons
@@ -816,12 +840,12 @@
 		// but to make it "worthwhile" for Ethereals to eat we add a bit extra
 		/datum/reagent/consumable/liquidelectricity/enriched = 10,
 	)
-	percentage_of_nutriment_converted = 0.5
+	percentage_of_nutriment_converted = 0.10
 
 // Pea Soup
 /datum/reagent/consumable/nutriment/soup/pea
 	name = "pea soup"
-	desc = "A humble split pea soup."
+	description = "A humble split pea soup."
 	data = list("creamy peas" = 2, "parsnip" = 1)
 
 /datum/glass_style/has_foodtype/soup/pea
@@ -844,8 +868,8 @@
 // Indian curry
 /datum/reagent/consumable/nutriment/soup/indian_curry
 	name = "indian chicken curry"
-	desc = "A mild, creamy curry from the old subcontinent. Liked by the Space-British, because it reminds them of the Raj."
-	data = ist("chicken" = 2, "creamy curry" = 4, "earthy heat" = 1)
+	description = "A mild, creamy curry from the old subcontinent. Liked by the Space-British, because it reminds them of the Raj."
+	data = list("chicken" = 2, "creamy curry" = 4, "earthy heat" = 1)
 
 /datum/glass_style/has_foodtype/soup/indian_curry
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/indian_curry
@@ -863,7 +887,7 @@
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/butter = 1,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 	)
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/indian_curry = 30,
@@ -873,7 +897,7 @@
 // Oatmeal (Soup like)
 /datum/reagent/consumable/nutriment/soup/oatmeal
 	name = "oatmeal"
-	desc = "A nice bowl of oatmeal."
+	description = "A nice bowl of oatmeal."
 	data = list("oats" = 1, "milk" = 1)
 
 /datum/glass_style/has_foodtype/soup/oatmeal
@@ -893,12 +917,12 @@
 		/datum/reagent/consumable/milk = 12,
 		/datum/reagent/consumable/nutriment/vitamin = 8,
 	)
-	percentage_of_nutriment_converted = 1 // Oats have barely any nutrients
+	percentage_of_nutriment_converted = 0 // Oats have barely any nutrients
 
 // Zurek, a Polish soup
 /datum/reagent/consumable/nutriment/soup/zurek
 	name = "zurek"
-	desc = "A traditional Polish soup composed of vegetables, meat, and an egg. Goes great with bread."
+	description = "A traditional Polish soup composed of vegetables, meat, and an egg. Goes great with bread."
 	data = list("creamy vegetables" = 2, "sausage" = 1)
 
 /datum/glass_style/has_foodtype/soup/zurek
@@ -924,7 +948,7 @@
 // Cullen Skink, a Scottish soup with a funny name
 /datum/reagent/consumable/nutriment/soup/cullen_skink
 	name = "cullen skink"
-	desc = "A thick Scottish soup made of smoked fish, potatoes and onions."
+	description = "A thick Scottish soup made of smoked fish, potatoes and onions."
 	data = list("creamy broth" = 1, "fish" = 1, "vegetables" = 1)
 
 /datum/glass_style/has_foodtype/soup/cullen_skink
@@ -954,7 +978,7 @@
 // Chicken Noodle Soup
 /datum/reagent/consumable/nutriment/soup/chicken_noodle_soup
 	name = "chicken noodle soup"
-	desc = "A hearty bowl of chicken noodle soup, perfect for when you're stuck at home and sick."
+	description = "A hearty bowl of chicken noodle soup, perfect for when you're stuck at home and sick."
 	data = list("broth" = 1, "chicken" = 1, "noodles" = 1, "carrots" = 1)
 
 /datum/glass_style/has_foodtype/soup/chicken_noodle_soup
@@ -979,7 +1003,7 @@
 // Corn Cowder
 /datum/reagent/consumable/nutriment/soup/corn_chowder
 	name = "corn chowder"
-	desc = "A creamy bowl of corn chowder, with bacon bits and mixed vegetables. One bowl is never enough."
+	description = "A creamy bowl of corn chowder, with bacon bits and mixed vegetables. One bowl is never enough."
 	data = list("creamy broth" = 1, "bacon" = 1, "mixed vegetables" = 1)
 
 /datum/glass_style/has_foodtype/soup/corn_chowder
@@ -1009,7 +1033,7 @@
 // Atrakor Dumpling soup
 /datum/reagent/consumable/nutriment/soup/atrakor_dumplings
 	name = "\improper Atrakor dumpling soup"
-	desc = "A bowl of rich, meaty dumpling soup, traditionally served during the festival of Atrakor's Might on Tizira. The dumplings are shaped like the Night Sky Lord himself."
+	description = "A bowl of rich, meaty dumpling soup, traditionally served during the festival of Atrakor's Might on Tizira. The dumplings are shaped like the Night Sky Lord himself."
 	data = list("bone broth" = 1, "onion" = 1, "potato" = 1)
 
 /datum/glass_style/has_foodtype/soup/atrakor_dumplings
@@ -1032,12 +1056,12 @@
 		/datum/reagent/consumable/nutriment/soup/atrakor_dumplings = 30,
 		/datum/reagent/water = 10,
 	)
-	percentage_of_nutriment_converted = 0.75
+	percentage_of_nutriment_converted = 0.2
 
 // Meatball Soup, but lizard-like
 /datum/reagent/consumable/nutriment/soup/meatball_noodles
 	name = "meatball noodle soup"
-	desc = "A hearty noodle soup made from meatballs and nizaya in a rich broth. Commonly topped with a handful of chopped nuts."
+	description = "A hearty noodle soup made from meatballs and nizaya in a rich broth. Commonly topped with a handful of chopped nuts."
 	data = list("bone broth" = 1, "meat" = 1, "gnocchi" = 1, "peanuts" = 1)
 
 /datum/glass_style/has_foodtype/soup/meatball_noodles
@@ -1056,14 +1080,14 @@
 		/obj/item/food/grown/peanut = 1
 	)
 	results = list(
-		/datum/glass_style/has_foodtype/soup/meatball_noodles = 30,
+		/datum/reagent/consumable/nutriment/soup/meatball_noodles = 30,
 		/datum/reagent/water = 10,
 	)
 
 // Black Broth
 /datum/reagent/consumable/nutriment/soup/black_broth
 	name = "\improper Tiziran black broth"
-	desc = "A bowl of sausage, onion, blood and vinegar, served ice cold. Every bit as rough as it sounds."
+	description = "A bowl of sausage, onion, blood and vinegar, served ice cold. Every bit as rough as it sounds."
 	data = list("vinegar" = 1, "iron" = 1)
 
 /datum/glass_style/has_foodtype/soup/black_broth
@@ -1093,7 +1117,7 @@
 // Jellyfish Stew
 /datum/reagent/consumable/nutriment/soup/jellyfish
 	name = "jellyfish stew"
-	desc = "A slimy bowl of jellyfish stew. It jiggles if you shake it."
+	description = "A slimy bowl of jellyfish stew. It jiggles if you shake it."
 	data = list("slime" = 1)
 
 /datum/glass_style/has_foodtype/soup/jellyfish
@@ -1105,7 +1129,7 @@
 /datum/chemical_reaction/food/soup/jellyfish_stew
 	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
-		/obj/item/food/canned_jellyfish = 1,
+		/obj/item/food/canned/jellyfish = 1,
 		/obj/item/food/grown/soybeans = 1,
 		/obj/item/food/grown/redbeet = 1,
 		/obj/item/food/grown/potato = 1
@@ -1118,7 +1142,7 @@
 // Rootbread Soup
 /datum/reagent/consumable/nutriment/soup/rootbread
 	name = "rootbread soup"
-	desc = "A big bowl of spicy, savoury soup made with rootbread. Heavily seasoned, and very tasty."
+	description = "A big bowl of spicy, savoury soup made with rootbread. Heavily seasoned, and very tasty."
 	data = list("bread" = 1, "egg" = 1, "chili" = 1, "garlic" = 1)
 
 /datum/glass_style/has_foodtype/soup/rootbread
@@ -1139,4 +1163,6 @@
 		/datum/reagent/consumable/nutriment/soup/rootbread = 30,
 		/datum/reagent/consumable/nutriment/protein = 8,
 	)
-	percentage_of_nutriment_converted = 0.5
+	percentage_of_nutriment_converted = 0.2
+
+#undef SOUP_SERVING_SIZE

@@ -110,3 +110,67 @@
 	food_image.add_overlay(i_scream)
 
 	return food_image
+
+/datum/custom_order/soup
+	/// This is the typepath of soup we desire
+	var/datum/reagent/consumable/nutriment/soup/soup_type
+	/// What container we want it to be in
+	var/soup_container = /obj/item/reagent_containers/cup/bowl
+	/// What serving size we want
+	var/picked_serving
+	/// Static list of serving sizes we can order, ranging from small to large. Little difference overall
+	var/static/list/serving_sizes
+
+/datum/custom_order/soup/New()
+	. = ..()
+	if(!serving_sizes)
+		serving_sizes = list(
+			"small serving (15u)" = 15,
+			"medium serving (20u)" = 20,
+			"large serving (25u)" = 25,
+		)
+	picked_serving = pick(serving_sizes)
+
+/datum/custom_order/soup/get_order_line(datum/venue/our_venue)
+	return "I'll take [picked_serving] of [initial(soup_type.name)]"
+
+/datum/custom_order/soup/get_order_appearance(datum/venue/our_venue)
+	var/image/food_image = image(icon = 'icons/effects/effects.dmi' , icon_state = "thought_bubble")
+	var/datum/glass_style/draw_as = GLOB.glass_style_singletons[soup_container][soup_type]
+	var/image/soup_image = image(
+		draw_as?.icon || initial(soup_type.fallback_icon),
+		draw_as?.icon_state || initial(soup_type.fallback_icon_state),
+	)
+
+	food_image.add_overlay(soup_image)
+	return food_image
+
+/datum/custom_order/soup/is_correct_order(obj/item/object_used)
+	if(..())
+		return TRUE
+	if(!istype(object_used, soup_container) || isnull(object_used.reagents))
+		return FALSE
+
+	var/datum/reagents/holder = object_used.reagents
+	// The bowl must be majority soup
+	if(holder.get_reagent_amount(soup_type) < holder.total_volume * 0.5)
+		return FALSE
+	// And of course we must fulfil the sample size threshold
+	if(serving_sizes[picked_serving] > holder.total_volume)
+		return FALSE
+	return TRUE
+
+/datum/custom_order/soup/onion_soup
+	soup_type = /datum/reagent/consumable/nutriment/soup/french_onion
+
+/datum/custom_order/soup/miso
+	soup_type = /datum/reagent/consumable/nutriment/soup/miso
+
+/datum/custom_order/soup/vegetable
+	soup_type = /datum/reagent/consumable/nutriment/soup/vegetable_soup
+
+/datum/custom_order/soup/stew
+	soup_type = /datum/reagent/consumable/nutriment/soup/stew
+
+/datum/custom_order/soup/curry
+	soup_type = /datum/reagent/consumable/nutriment/soup/indian_curry

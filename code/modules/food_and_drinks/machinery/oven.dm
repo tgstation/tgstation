@@ -38,10 +38,14 @@
 /obj/machinery/oven/Destroy()
 	QDEL_NULL(oven_loop)
 	QDEL_NULL(particles)
-	. = ..()
+	return ..()
+
+/// Used to determine if the oven appears active and cooking, or offline.
+/obj/machinery/oven/proc/appears_active()
+	return !open && length(used_tray?.contents) && !(machine_stat & BROKEN|NOPOWER)
 
 /obj/machinery/oven/update_icon_state()
-	if(!open && used_tray?.contents.len)
+	if(appears_active())
 		icon_state = "[base_icon_state]_on"
 	else
 		icon_state = "[base_icon_state]_off"
@@ -55,14 +59,17 @@
 		. += door_overlay
 	else
 		. += mutable_appearance(icon, "[base_icon_state]_lid_closed")
-		if(used_tray?.contents.len)
+		if(length(used_tray?.contents))
 			. += emissive_appearance(icon, "[base_icon_state]_light_mask", src, alpha = src.alpha)
 
 /obj/machinery/oven/process(delta_time)
-	..()
-	if(!used_tray) //Are we actually working?
+	if(!appears_active())
 		set_smoke_state(OVEN_SMOKE_STATE_NONE)
+		update_baking_audio()
+		update_appearance(UPDATE_ICON)
+		end_processing()
 		return
+
 	///We take the worst smoke state, so if something is burning we always know.
 	var/worst_cooked_food_state = 0
 	for(var/obj/item/baked_item in used_tray.contents)
@@ -153,7 +160,7 @@
 /obj/machinery/oven/proc/update_baking_audio()
 	if(!oven_loop)
 		return
-	if(!open && used_tray?.contents.len)
+	if(appears_active())
 		oven_loop.start()
 	else
 		oven_loop.stop()
@@ -171,7 +178,7 @@
 		if(OVEN_SMOKE_STATE_NEUTRAL)
 			particles = new /particles/smoke/steam()
 		if(OVEN_SMOKE_STATE_GOOD)
-			particles = new /particles/smoke/steam/mild
+			particles = new /particles/smoke/steam/mild()
 
 /obj/machinery/oven/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool, ignore_panel = TRUE)
@@ -187,11 +194,11 @@
 	base_icon_state = "range"
 	pass_flags_self = PASSMACHINE|PASSTABLE|LETPASSTHROW // Like the griddle, short
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
-	circuit = /obj/item/circuitboard/machine/oven // Melbert todo
+	circuit = /obj/item/circuitboard/machine/range
 
 /obj/machinery/oven/range/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/stove)
+	AddComponent(/datum/component/stove, container_x = -6, container_y = 14)
 
 /obj/item/plate/oven_tray
 	name = "oven tray"

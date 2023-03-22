@@ -7,12 +7,14 @@
 		/obj/item/food/cakeslice/birthday = TRUE
 	)
 
+/*
 /datum/bounty/item/chef/soup
 	name = "Soup"
 	description = "To quell the homeless uprising, Nanotrasen will be serving soup to all underpaid workers. Ship any type of soup."
 	reward = CARGO_CRATE_VALUE * 6
 	required_count = 3
 	wanted_types = list(/obj/item/food/soup = TRUE)
+*/
 
 /datum/bounty/item/chef/popcorn
 	name = "Popcorn Bags"
