@@ -56,3 +56,6 @@
 	sound_environment = SOUND_ENVIRONMENT_DIZZY
 	mood_bonus = -8
 	mood_message = "I can feel my lifespan shortening with every breath."
+
+/area/ruin/unpowered/Phone_booth
+	name = "\improper Phonebooth"

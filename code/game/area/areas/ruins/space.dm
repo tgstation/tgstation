@@ -574,3 +574,7 @@
 //DERELICT SULACO
 /area/ruin/space/has_grav/derelictsulaco
 	name = "\improper Derelict Sulaco"
+
+//PHONEBOOTH
+/area/ruin/space/Phone_booth
+	name = "\improper Phonebooth"
