@@ -10,7 +10,11 @@
 		stack_trace("A venue_price element was attached to something without specifying an actual price.")
 		return ELEMENT_INCOMPATIBLE
 	src.venue_price = venue_price
-	RegisterSignal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER, PROC_REF(item_sold))
+
+	if(isitem(target))
+		RegisterSignal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER, PROC_REF(item_sold))
+	if(istype(target, /datum/reagent))
+		RegisterSignal(target, COMSIG_REAGENT_SOLD_TO_CUSTOMER, PROC_REF(item_sold))
 
 /datum/element/venue_price/Detach(datum/target)
 	. = ..()
@@ -24,3 +28,4 @@
 	new /obj/item/holochip(get_turf(container), venue_price)
 	venue_to_pay.total_income += venue_price
 	playsound(get_turf(container), 'sound/effects/cashregister.ogg', 60, TRUE)
+	return TRANSACTION_SUCCESS

@@ -8,6 +8,7 @@
 	default_container = /obj/item/reagent_containers/cup/bowl
 	fallback_icon = 'icons/obj/food/soupsalad.dmi'
 	fallback_icon_state = "bowl"
+	glass_price = FOOD_PRICE_CHEAP
 	// melbert todo: soups need their venue prices
 
 /**
@@ -113,6 +114,7 @@
 	name = "Meatball Soup"
 	description = "You've got balls kid, BALLS!"
 	data = list("meat" = 1)
+	glass_price = FOOD_PRICE_NORMAL
 
 /datum/glass_style/has_foodtype/soup/meatball_soup
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/meatball_soup
@@ -158,6 +160,7 @@
 	name = "Vegetable Soup"
 	description = "A true vegan meal."
 	data = list("vegetables" = 1)
+	glass_price = FOOD_PRICE_NORMAL
 
 /datum/glass_style/has_foodtype/soup/vegetable_soup
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/vegetable_soup
@@ -186,6 +189,7 @@
 	name = "nettle soup"
 	description = "To think, the botanist would've beat you to death with one of these."
 	data = list("nettles" = 1)
+	glass_price = FOOD_PRICE_NORMAL
 
 /datum/glass_style/has_foodtype/soup/nettle
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/nettle
@@ -244,6 +248,7 @@
 	name = "hot chili"
 	description = "A five alarm Texan Chili!"
 	data = list("hot peppers" = 1)
+	glass_price = FOOD_PRICE_NORMAL
 
 /datum/glass_style/has_foodtype/soup/hotchili
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/hotchili
@@ -280,6 +285,7 @@
 	name = "cold chili"
 	description = "This slush is barely a liquid!"
 	data = list("tomato" = 1, "mint" = 1)
+	glass_price = FOOD_PRICE_NORMAL
 
 /datum/glass_style/has_foodtype/soup/coldchili
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/coldchili
@@ -322,6 +328,7 @@
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/clownchili
 	icon_state = "clownchili"
 	drink_type = VEGETABLES | MEAT
+	glass_price = FOOD_PRICE_EXOTIC
 
 /datum/chemical_reaction/food/soup/clownchili
 	required_reagents = list(/datum/reagent/water = 50)
@@ -406,6 +413,7 @@
 	name = "miso soup"
 	description = "he universes best soup! Yum!!!"
 	data = list("miso" = 1)
+	glass_price = FOOD_PRICE_NORMAL
 
 /datum/glass_style/has_foodtype/soup/miso
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/miso
@@ -456,6 +464,7 @@
 	name = "slime soup"
 	description = "If no water is available, you may substitute tears."
 	data = list("slime" = 1)
+	glass_price = FOOD_PRICE_NORMAL
 
 /datum/glass_style/has_foodtype/soup/slime
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/slime
@@ -570,6 +579,7 @@
 	name = "monkey's delight"
 	description = "A delicious soup with dumplings and hunks of monkey meat simmered to perfection, in a broth that tastes faintly of bananas."
 	data = list("the jungle" = 1, "banana" = 1)
+	glass_price = FOOD_PRICE_NORMAL
 
 /datum/glass_style/has_foodtype/soup/monkey
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/monkey
@@ -659,6 +669,7 @@
 	name = "stew"
 	description = "A nice and warm stew. Healthy and strong."
 	data = list("tomato" = 1, "carrot" = 1)
+	glass_price = FOOD_PRICE_NORMAL
 
 /datum/glass_style/has_foodtype/soup/stew
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/stew
@@ -770,6 +781,7 @@
 	name = "bisque"
 	description = "A classic entree from Space-France."
 	data = list("creamy texture" = 1, "crab" = 4)
+	glass_price = FOOD_PRICE_EXOTIC
 
 /datum/glass_style/has_foodtype/soup/bisque
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/bisque
@@ -794,6 +806,7 @@
 	name = "bungo curry"
 	description = "A spicy vegetable curry made with the humble bungo fruit, Exotic!"
 	data = list("bungo" = 2, "hot curry" = 4, "tropical sweetness" = 1)
+	glass_price = FOOD_PRICE_NORMAL
 
 /datum/glass_style/has_foodtype/soup/bungo
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/bungo
@@ -821,6 +834,7 @@
 	name = "electron soup"
 	description = "A gastronomic curiosity of ethereal origin. It is famed for the minature weather system formed over a properly prepared soup."
 	data = list("mushroom" = 1, "electrons" = 4)
+	glass_price = FOOD_PRICE_EXOTIC
 
 /datum/glass_style/has_foodtype/soup/electrons
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/electrons
@@ -871,6 +885,7 @@
 	name = "indian chicken curry"
 	description = "A mild, creamy curry from the old subcontinent. Liked by the Space-British, because it reminds them of the Raj."
 	data = list("chicken" = 2, "creamy curry" = 4, "earthy heat" = 1)
+	glass_price = FOOD_PRICE_NORMAL
 
 /datum/glass_style/has_foodtype/soup/indian_curry
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/indian_curry

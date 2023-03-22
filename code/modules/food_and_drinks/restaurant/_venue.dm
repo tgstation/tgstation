@@ -109,7 +109,24 @@
 
 ///Effects for when a customer receives their order at this venue
 /datum/venue/proc/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
-	SEND_SIGNAL(order_item, COMSIG_ITEM_SOLD_TO_CUSTOMER, customer_pawn, order_item)
+	SHOULD_CALL_PARENT(TRUE)
+
+	var/order = customer_pawn.ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]
+
+	. = SEND_SIGNAL(order_item, COMSIG_ITEM_SOLD_TO_CUSTOMER, customer_pawn, order_item)
+
+	for(var/datum/reagent/reagent as anything in order_item.reagents?.reagent_list)
+		// Our order can be a reagent within the item we're receiving
+		if(reagent.type == order)
+			. |= SEND_SIGNAL(reagent, COMSIG_REAGENT_SOLD_TO_CUSTOMER, customer_pawn, order_item)
+
+	// Order can be a /datum/custom_order instance
+	if(istype(order, /datum/custom_order))
+		var/datum/custom_order/special_order = order
+		. |= special_order.handle_get_order(customer_pawn, order_item)
+
+	if(. & TRANSACTION_SUCCESS)
+		customers_served++
 
 ///Toggles whether the venue is open or not
 /datum/venue/proc/toggle_open()

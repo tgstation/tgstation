@@ -28,6 +28,15 @@
 	stack_trace("[type]/get_order_line() not set")
 	return  "broken custom order pls call a coder"
 
+/**
+ * Handles what the bot does with the order when it gets it
+ *
+ * Return [TRANSACTION_SUCCESS] to denote the order went through successfully (Not generally necessary to include here)
+ * Return [TRANSACTION_HANDLED] to not do any further handling of the order by the
+ */
+/datum/custom_order/proc/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+	return NONE
+
 /datum/custom_order/moth_clothing
 	/// The item type that we want to order, usually clothing
 	var/wanted_clothing_type
@@ -132,14 +141,14 @@
 	picked_serving = pick(serving_sizes)
 
 /datum/custom_order/soup/get_order_line(datum/venue/our_venue)
-	return "I'll take [picked_serving] of [initial(soup_type.name)]"
+	return "I'll take a [picked_serving] of [initial(soup_type.name)]"
 
 /datum/custom_order/soup/get_order_appearance(datum/venue/our_venue)
 	var/image/food_image = image(icon = 'icons/effects/effects.dmi' , icon_state = "thought_bubble")
 	var/datum/glass_style/draw_as = GLOB.glass_style_singletons[soup_container][soup_type]
 	var/image/soup_image = image(
-		draw_as?.icon || initial(soup_type.fallback_icon),
-		draw_as?.icon_state || initial(soup_type.fallback_icon_state),
+		icon = draw_as?.icon || initial(soup_type.fallback_icon),
+		icon_state = draw_as?.icon_state || initial(soup_type.fallback_icon_state),
 	)
 
 	food_image.add_overlay(soup_image)
@@ -155,10 +164,19 @@
 	// The bowl must be majority soup
 	if(holder.get_reagent_amount(soup_type) < holder.total_volume * 0.5)
 		return FALSE
-	// And of course we must fulfil the sample size threshold
+	// And of course we must fulfill the sample size threshold
 	if(serving_sizes[picked_serving] > holder.total_volume)
 		return FALSE
 	return TRUE
+
+/datum/custom_order/soup/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+	customer_pawn.visible_message(
+		span_danger("[customer_pawn] pours [order_item] right down [customer_pawn.p_their()] hatch!"),
+		span_danger("You pour [order_item] down your hatch in one go."),
+	)
+	playsound(customer_pawn, 'sound/items/drink.ogg', rand(10, 50), TRUE)
+	order_item.reagents.clear_reagents()
+	return TRANSACTION_HANDLED
 
 /datum/custom_order/soup/onion_soup
 	soup_type = /datum/reagent/consumable/nutriment/soup/french_onion

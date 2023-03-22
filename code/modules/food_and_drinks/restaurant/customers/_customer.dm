@@ -155,12 +155,12 @@
 	speech_sound = 'sound/creatures/tourist/tourist_talk_french.ogg'
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
+			/datum/custom_order/icecream = 6,
+			/datum/custom_order/soup/onion_soup = 4,
 			/obj/item/food/baguette = 20,
 			/obj/item/food/garlicbread = 5,
-			/datum/custom_order/soup/onion_soup = 4,
-			/obj/item/food/pie/berryclafoutis = 2,
 			/obj/item/food/omelette = 15,
-			/datum/custom_order/icecream = 6,
+			/obj/item/food/pie/berryclafoutis = 2,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/champagne = 10,
@@ -199,16 +199,16 @@
 	speech_sound = 'sound/creatures/tourist/tourist_talk_japanese1.ogg'
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
-			/obj/item/food/tofu = 5,
-			/obj/item/food/breadslice/plain = 5,
+			/datum/custom_order/icecream = 4,
 			/datum/custom_order/soup/miso = 10,
 			/datum/custom_order/soup/vegetable = 4,
-			/obj/item/food/sashimi = 4,
-			/obj/item/food/chawanmushi = 4,
-			/obj/item/food/muffin/berry = 2,
 			/obj/item/food/beef_stroganoff = 2,
-			/datum/custom_order/icecream = 4,
+			/obj/item/food/breadslice/plain = 5,
+			/obj/item/food/chawanmushi = 4,
 			/obj/item/food/fish_poke = 5,
+			/obj/item/food/muffin/berry = 2,
+			/obj/item/food/sashimi = 4,
+			/obj/item/food/tofu = 5,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/sake = 8,
@@ -243,14 +243,14 @@
 	speech_sound = 'sound/creatures/tourist/tourist_talk_japanese2.ogg'
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
-			/obj/item/food/tofu = 5,
 			/datum/custom_order/soup/miso = 6,
 			/datum/custom_order/soup/vegetable = 4,
-			/obj/item/food/sashimi = 4,
-			/obj/item/food/chawanmushi = 4,
-			/obj/item/food/meatbun = 4,
 			/obj/item/food/beef_stroganoff = 2,
+			/obj/item/food/chawanmushi = 4,
 			/obj/item/food/meat_poke = 4,
+			/obj/item/food/meatbun = 4,
+			/obj/item/food/sashimi = 4,
+			/obj/item/food/tofu = 5,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/beer = 14,
@@ -384,16 +384,16 @@
 
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
-			/obj/item/food/fishandchips = 10,
+			/datum/custom_order/icecream = 8,
+			/datum/custom_order/soup/curry = 3,
 			/datum/custom_order/soup/stew = 10,
-			/obj/item/food/salad/ricepudding = 5,
+			/obj/item/food/beef_wellington_slice = 2,
+			/obj/item/food/benedict = 5,
+			/obj/item/food/fishandchips = 10,
+			/obj/item/food/full_english = 2,
 			/obj/item/food/grilled_cheese_sandwich = 5,
 			/obj/item/food/pie/meatpie = 5,
-			/obj/item/food/benedict = 5,
-			/obj/item/food/full_english = 2,
-			/datum/custom_order/soup/curry = 3,
-			/obj/item/food/beef_wellington_slice = 2,
-			/datum/custom_order/icecream = 8
+			/obj/item/food/salad/ricepudding = 5,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/ale = 10,

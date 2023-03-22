@@ -13,9 +13,9 @@
 
 /datum/bounty/reagent/chef/soup/New()
 	. = ..()
-	required_volume = pick(10, 15, 20, 25, 30)
+	required_volume = pick(10, 15, 20, 25)
 	wanted_reagent = pick(subtypesof(/datum/reagent/consumable/nutriment/soup))
-	reward = CARGO_CRATE_VALUE * CEILING(required_volume / 4)
+	reward = CARGO_CRATE_VALUE * round(required_volume / 3)
 	// In the future there could be tiers of soup bounty corresponding to soup difficulty
 	// (IE, stew is harder to make than tomato soup, so it should reward more)
 	description += " Send us [required_volume] units of [initial(wanted_reagent.name)]."
