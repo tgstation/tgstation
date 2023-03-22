@@ -66,16 +66,14 @@
 ///Signal handler for COMSIG_TURF_EXPOSE, deletes this sticker if the temperature is above 100C and it is flammable
 /datum/component/attached_sticker/proc/on_turf_expose(datum/source, datum/gas_mixture/air, exposed_temperature)
 	SIGNAL_HANDLER
-	if(!(sticker.resistance_flags & FLAMMABLE) || exposed_temperature <= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	if(exposed_temperature <= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		return
 	qdel(sticker)
 	peel()
 
-///Signal handler for COMSIG_LIVING_IGNITED, deletes this sticker, if it is flammable
+///Signal handler for COMSIG_LIVING_IGNITED, deletes this sticker
 /datum/component/attached_sticker/proc/on_ignite(datum/source)
 	SIGNAL_HANDLER
-	if(!(sticker.resistance_flags & FLAMMABLE))
-		return
 	qdel(sticker)
 	peel()
 
