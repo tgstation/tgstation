@@ -119,7 +119,16 @@
 					music_extra_data["upload_date"] = data["upload_date"]
 					music_extra_data["album"] = data["album"]
 
-					var/res = tgui_alert(usr, "Show the title of and link to this song to the players?\n[title]",, list("No", "Yes", "Cancel"))
+					var/duration = null
+					if (data["duration"] * 1 SECONDS > 10 MINUTES)
+						duration = tgui_alert(usr, "This song is over 10 minutes long. Are you sure you want to play it?", "Length Warning!", list("No", "Yes", "Cancel"))
+					switch(duration)
+						if("No")
+							return
+						if("Cancel")
+							return
+
+					var/res = tgui_alert(usr, "Show the title of and link to this song to the players?\n[title]", "Show Info?", list("Yes", "No", "Cancel"))
 					switch(res)
 						if("Yes")
 							music_extra_data["title"] = data["title"]
@@ -132,7 +141,7 @@
 						if("Cancel")
 							return
 
-					var/anon = tgui_alert(usr, "Display who played the song?", "Credit Yourself?", list("No", "Yes", "Cancel"))
+					var/anon = tgui_alert(usr, "Display who played the song?", "Credit Yourself?", list("Yes", "No", "Cancel"))
 					switch(anon)
 						if("Yes")
 							if(res == "Yes")
@@ -215,7 +224,16 @@
 				music_extra_data["upload_date"] = data["upload_date"]
 				music_extra_data["album"] = data["album"]
 
-				var/res = tgui_alert(usr, "Show the title of and link to this song to the players?\n[title]",, list("No", "Yes", "Cancel"))
+				var/duration = null
+				if (data["duration"] * 1 SECONDS > 10 MINUTES)
+					duration = tgui_alert(usr, "This song is over 10 minutes long. Are you sure you want to play it?", "Length Warning!", list("No", "Yes", "Cancel"))
+				switch(duration)
+					if("No")
+						return
+					if("Cancel")
+						return
+
+				var/res = tgui_alert(usr, "Show the title of and link to this song to the players?\n[title]", "Show Info?", list("No", "Yes", "Cancel"))
 				switch(res)
 					if("Yes")
 						music_extra_data["title"] = data["title"]

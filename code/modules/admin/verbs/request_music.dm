@@ -19,10 +19,10 @@
 			return
 
 	var/msg_tmp = msg
-	msg = span_adminnotice("<b><font color='cyan'>MUSIC REQUEST: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [span_linkify(msg)]")
+	msg = span_adminnotice("<b><font color='cyan'>MUSIC REQUEST: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [span_linkify(msg_tmp)] [ADMIN_PLAY_MUSIC(msg_tmp)]")
 	for(var/client/C in GLOB.admins)
 		if(C.prefs.chat_toggles & CHAT_PRAYER)
 			to_chat(C, msg, type = MESSAGE_TYPE_PRAYER, confidential = TRUE)
-	to_chat(usr, span_info("You pray to the gods: \"[msg_tmp]\""), confidential = TRUE)
+	to_chat(usr, span_info("You request music: \"[msg_tmp]\""), confidential = TRUE)
 
 	GLOB.requests.music_request(usr.client, msg_tmp)
