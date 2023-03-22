@@ -55,7 +55,7 @@
 			span_notice("Successfully removes a piece of [human_target]'s lungs."),
 			"",
 		)
-		display_pain(target, "Your chest hurts like hell, but breathng becomes slightly easier.")
+		display_pain(target, "Your chest hurts like hell, but breathing becomes slightly easier.")
 	return ..()
 
 /datum/surgery_step/lobectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

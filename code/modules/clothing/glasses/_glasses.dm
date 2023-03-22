@@ -579,16 +579,13 @@
 		for(var/hud in hudlist)
 			var/datum/atom_hud/our_hud = GLOB.huds[hud]
 			our_hud.show_to(user)
-		ADD_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
-		ADD_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
+		user.add_traits(list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD), GLASSES_TRAIT)
 		if(xray)
 			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 
 /obj/item/clothing/glasses/debug/dropped(mob/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
-	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
-	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+	user.remove_traits(list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, TRAIT_XRAY_VISION), GLASSES_TRAIT)
 	if(ishuman(user))
 		for(var/hud in hudlist)
 			var/datum/atom_hud/our_hud = GLOB.huds[hud]

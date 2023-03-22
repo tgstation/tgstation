@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes:
-  - balance: "Putting a non-clothing item onto someone else creates a visible message the same way a clothing item would."

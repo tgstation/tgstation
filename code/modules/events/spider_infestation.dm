@@ -28,13 +28,16 @@
 	for(var/x in GLOB.xeno_spawn)
 		var/turf/spawn_turf = x
 		var/light_amount = spawn_turf.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD && is_safe_turf(spawn_turf))
 			spawn_locs += spawn_turf
-	if(spawn_locs.len < amount)
-		message_admins("Not enough valid spawn locations found in GLOB.xeno_spawn, aborting spider spawning...")
+	if(!length(spawn_locs))
+		message_admins("No valid spawn locations found in GLOB.xeno_spawn, aborting spider spawning...")
 		return MAP_ERROR
-	var/turf/spawn_loc = pick_n_take(spawn_locs)
 	while(amount > 0)
+		var/turf/spawn_loc = pick_n_take(spawn_locs)
+		if(!spawn_loc)
+			message_admins("Midwife egg creation ran out of locations to spawn at. Terminating egg spawn with [amount] spawns remaining.")
+			break
 		var/obj/effect/mob_spawn/ghost_role/spider/midwife/new_eggs = new /obj/effect/mob_spawn/ghost_role/spider/midwife(spawn_loc)
 		new_eggs.amount_grown = 98
 		amount--
