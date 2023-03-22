@@ -24,39 +24,30 @@
 #define TILE_DECAL_SUBTYPE_HELPER(path)\
 ##path/opposingcorners {\
 	icon_state = "tile_opposing_corners";\
-	name = "opposing corners";\
 }\
 ##path/half {\
 	icon_state = "tile_half";\
-	name = "half";\
 }\
 ##path/half/contrasted {\
 	icon_state = "tile_half_contrasted";\
-	name = "contrasted half";\
 }\
 ##path/anticorner {\
 	icon_state = "tile_anticorner";\
-	name = "anticorner";\
 }\
 ##path/anticorner/contrasted {\
 	icon_state = "tile_anticorner_contrasted";\
-	name = "contrasted anticorner";\
 }\
 ##path/fourcorners {\
 	icon_state = "tile_fourcorners";\
-	name = "fourcorners";\
 }\
 ##path/full {\
 	icon_state = "tile_full";\
-	name = "full";\
 }\
 ##path/diagonal_centre {\
 	icon_state = "diagonal_centre";\
-	name = "diagonal centre";\
 }\
 ##path/diagonal_edge {\
 	icon_state = "diagonal_edge";\
-	name = "diagonal edge";\
 }
 
 /// Blue tiles
@@ -183,7 +174,6 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/random)
 /// Automatically generates all trimlines for a decal with the given path.
 #define TRIMLINE_SUBTYPE_HELPER(path)\
 ##path/line {\
-	name = "trim decal";\
 	icon_state = "trimline";\
 }\
 ##path/corner {\
@@ -208,7 +198,6 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/random)
 	icon_state = "trimline_mid";\
 }\
 ##path/filled {\
-	name = "filled trim decal";\
 	icon_state = "trimline_box_fill";\
 }\
 ##path/filled/line {\
