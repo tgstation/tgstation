@@ -143,6 +143,7 @@
 #include "mecha_damage.dm"
 #include "medical_wounds.dm"
 #include "merge_type.dm"
+#include "metabolizing.dm"
 #include "mindbound_actions.dm"
 #include "missing_icons.dm"
 #include "mob_faction.dm"
