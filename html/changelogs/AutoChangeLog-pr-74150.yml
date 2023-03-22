@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - refactor: "Some aspects of how we track suicides from your living mob to your observer have changed- please do let us know if anything has broken via a GitHub Issue Report."
