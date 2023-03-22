@@ -2,8 +2,6 @@
 	name = "simian tail"
 	desc = "A severed simian tail. Somewhere, no doubt, a simian hater is very pleased with themselves."
 	preference = "feature_tail_monkey"
-	icon_state = "tail"
-	icon = 'monkestation/icons/mob/species/simian/tails.dmi'
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/simian
 
