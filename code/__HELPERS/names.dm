@@ -257,7 +257,7 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
  * Returns (string) The generated name
  */
 /proc/assign_random_name(len=5, prefix="", postfix="")
-	//DO NOT REMOVE NAMES HERE UNLESS YOU KNOW WHAT YOUR DOING
+	//DO NOT REMOVE NAMES HERE UNLESS YOU KNOW WHAT YOU'RE DOING
 	//All names already used
 	var/static/list/used_names = list()
 
