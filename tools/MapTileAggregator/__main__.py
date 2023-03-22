@@ -71,8 +71,8 @@ def update_map(map_path):
 
             color = matched.group(1)
             if color == None:
-                # Commented out because there's no reason for this to occur. if it exists on /tg/ for some reason, it should really be addressed case-by-case outside of the scope of this script (with an UpdatePaths)
-                # This is because null-colored turf decals legitimately have no color and don't modify appearances, bit silly.
+                # Commented out the warning because there's no reason for this to occur. If it exists, it should be addressed case-by-case outside of the scope of this script (with an UpdatePaths)
+                # This is because null-colored turf decals legitimately have no color and don't modify appearances, bit silly. If a null-colored turf decal means something somewhere else, add that color here.
                 # print("Warning, tile with no color (this is bad): {}".format(decal))
                 continue
 
