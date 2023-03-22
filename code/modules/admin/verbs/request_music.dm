@@ -26,3 +26,5 @@
 	to_chat(usr, span_info("You request music: \"[msg_tmp]\""), confidential = TRUE)
 
 	GLOB.requests.music_request(usr.client, msg_tmp)
+
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "music_request") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
