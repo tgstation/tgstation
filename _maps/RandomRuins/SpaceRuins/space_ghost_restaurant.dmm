@@ -72,10 +72,7 @@
 /area/ruin/space/space_ghost_restaurant)
 "mu" = (
 /obj/structure/lattice,
-/obj/effect/mob_spawn/corpse/human/intern{
-	name = "NTgrub Intern";
-	mob_name = "NTgrub Intern"
-	},
+/obj/effect/mob_spawn/corpse/human/assistant,
 /turf/template_noop,
 /area/space/nearstation)
 "nr" = (
@@ -290,10 +287,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/space_ghost_restaurant)
 "WY" = (
-/obj/effect/mob_spawn/corpse/human/intern{
-	name = "NTgrub Intern";
-	mob_name = "NTgrub Intern"
-	},
+/obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/space/space_ghost_restaurant)
 "Xc" = (
@@ -310,6 +304,7 @@
 	dir = 4
 	},
 /obj/item/shard,
+/obj/item/disk/holodisk/ruin/ghost_restaurant,
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/space/space_ghost_restaurant)
 
