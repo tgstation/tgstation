@@ -181,14 +181,11 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
 "fV" = (
-/obj/effect/turf_decal/tile/dark,
-/obj/effect/turf_decal/tile/dark{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood,
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "ga" = (
@@ -2109,11 +2106,8 @@
 	},
 /area/centcom/central_command_areas/holding)
 "Xt" = (
-/obj/effect/turf_decal/tile/dark,
-/obj/effect/turf_decal/tile/dark{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "XL" = (

@@ -195,10 +195,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "hu" = (
+/obj/machinery/vending/wallmed/directional/north,
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 8
 	},
-/obj/machinery/vending/wallmed/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -300,15 +300,15 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "kb" = (
-/obj/effect/turf_decal/tile/dark_blue{
-	dir = 8
-	},
 /obj/item/borg/upgrade/defib,
 /obj/structure/closet/crate/medical{
 	anchored = 1
 	},
 /obj/item/defibrillator/loaded,
 /obj/item/defibrillator/loaded,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -539,11 +539,11 @@
 	},
 /area/shuttle/escape)
 "rr" = (
+/obj/item/radio/intercom/directional/south,
+/obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/item/radio/intercom/directional/south,
-/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/dark/side{
 	dir = 10
 	},
@@ -637,8 +637,8 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "vm" = (
-/obj/effect/turf_decal/tile/yellow,
 /obj/structure/reagent_dispensers/fueltank/large,
+/obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -804,13 +804,13 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "BS" = (
-/obj/effect/turf_decal/tile/dark_blue{
-	dir = 4
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 10
 	},
@@ -1108,7 +1108,6 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "Ld" = (
-/obj/effect/turf_decal/tile/dark_blue,
 /obj/item/storage/medkit/fire{
 	pixel_x = -2
 	},
@@ -1120,6 +1119,7 @@
 /obj/structure/closet/crate/medical{
 	anchored = 1
 	},
+/obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -1203,8 +1203,8 @@
 	},
 /area/shuttle/escape)
 "MQ" = (
-/obj/effect/turf_decal/tile/dark_blue,
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -1240,7 +1240,6 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "Of" = (
-/obj/effect/turf_decal/tile/dark_blue,
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/emergency{
 	pixel_x = 2;
@@ -1250,6 +1249,7 @@
 	pixel_x = -2
 	},
 /obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -1289,11 +1289,11 @@
 /turf/open/floor/iron/dark/side,
 /area/shuttle/escape)
 "OM" = (
+/obj/machinery/computer/crew,
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 8
 	},
-/obj/machinery/computer/crew,
-/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -1320,13 +1320,13 @@
 /turf/open/floor/iron/white/textured_large,
 /area/shuttle/escape)
 "Pv" = (
-/obj/effect/turf_decal/tile/dark_blue{
-	dir = 1
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/machinery/light/directional/east,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 6
 	},
@@ -1475,14 +1475,14 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "UR" = (
-/obj/effect/turf_decal/tile/dark_blue{
-	dir = 1
-	},
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/o2{
 	pixel_x = 3
 	},
 /obj/item/storage/medkit/regular,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 6
 	},
@@ -1632,13 +1632,13 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ZZ" = (
-/obj/effect/turf_decal/tile/dark_blue{
-	dir = 1
-	},
 /mob/living/simple_animal/bot/medbot{
 	name = "\improper emergency medibot";
 	pixel_x = -3;
 	pixel_y = 2
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 6

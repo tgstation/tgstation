@@ -394,12 +394,6 @@
 "co" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/item/radio{
 	pixel_x = -6;
 	pixel_y = 6
@@ -410,6 +404,9 @@
 	},
 /obj/item/radio{
 	pixel_y = 4
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
@@ -883,11 +880,11 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
+/obj/machinery/light/directional/west,
+/obj/machinery/keycard_auth/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/light/directional/west,
-/obj/machinery/keycard_auth/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "sy" = (

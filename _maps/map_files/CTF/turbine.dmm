@@ -140,13 +140,13 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/centcom/ctf)
 "rJ" = (
-/obj/effect/turf_decal/tile/dark,
 /obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes{
 	dir = 9
 	},
+/obj/effect/turf_decal/tile/dark,
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
 "sa" = (
@@ -185,14 +185,14 @@
 /turf/closed/indestructible/fakedoor,
 /area/centcom/ctf)
 "wk" = (
-/obj/effect/turf_decal/tile/dark{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
 	},
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
@@ -249,14 +249,14 @@
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
 "zb" = (
-/obj/effect/turf_decal/tile/dark{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
 	},
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
@@ -316,14 +316,14 @@
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
 "Ex" = (
-/obj/effect/turf_decal/tile/dark{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
 	},
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
@@ -497,13 +497,13 @@
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
 "Qp" = (
-/obj/effect/turf_decal/tile/dark{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
 "Qr" = (
@@ -543,12 +543,12 @@
 /turf/open/floor/plating,
 /area/centcom/ctf)
 "RG" = (
-/obj/effect/turf_decal/tile/dark{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/red/anticorner,
 /obj/effect/turf_decal/stripes{
 	dir = 6
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
 	},
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
@@ -586,10 +586,10 @@
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
 "TB" = (
+/obj/effect/turf_decal/tile/blue/anticorner,
 /obj/effect/turf_decal/tile/dark{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue/anticorner,
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
 "Ub" = (
@@ -628,10 +628,10 @@
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
 "Yp" = (
-/obj/effect/turf_decal/tile/dark,
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/dark,
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
 "YZ" = (
