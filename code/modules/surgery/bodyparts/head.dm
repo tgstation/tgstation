@@ -109,7 +109,7 @@
 	if(IS_ORGANIC_LIMB(src) && show_organs_on_examine)
 		if(!brain)
 			. += span_info("The brain has been removed from [src].")
-		else if(brain.suicided || brainmob?.suiciding)
+		else if(brain.suicided || (brainmob && HAS_TRAIT(brainmob, TRAIT_SUICIDED)))
 			. += span_info("There's a miserable expression on [real_name]'s face; they must have really hated life. There's no hope of recovery.")
 		else if(brainmob?.health <= HEALTH_THRESHOLD_DEAD)
 			. += span_info("It's leaking some kind of... clear fluid? The brain inside must be in pretty bad shape.")
