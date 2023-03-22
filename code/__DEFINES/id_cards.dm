@@ -11,12 +11,12 @@
  */
 
 /// Wildcard slot define for basic grey cards. Only hold 2 common wildcards.
-#define WILDCARD_LIMIT_GREY list(WILDCARD_NAME_COMMON = list(limit = 2, usage = list()))
+#define WILDCARD_LIMIT_GREY list(WILDCARD_NAME_COMMON = list(limit = -1, usage = list()))
 /// Wildcard slot define for Head of Staff silver cards. Can hold 3 common, 1 command and 1 private command.
 #define WILDCARD_LIMIT_SILVER list( \
-	WILDCARD_NAME_COMMON = list(limit = 3, usage = list()), \
-	WILDCARD_NAME_COMMAND = list(limit = 1, usage = list()), \
-	WILDCARD_NAME_PRV_COMMAND = list(limit = 1, usage = list()) \
+	WILDCARD_NAME_COMMON = list(limit = -1, usage = list()), \
+	WILDCARD_NAME_COMMAND = list(limit = -1, usage = list()), \
+	WILDCARD_NAME_PRV_COMMAND = list(limit = 5, usage = list()) \
 )
 /// Wildcard slot define for Captain gold cards. Can hold infinite of any Captain level wildcard.
 #define WILDCARD_LIMIT_GOLD list(WILDCARD_NAME_CAPTAIN = list(limit = -1, usage = list()))
@@ -30,9 +30,9 @@
 #define WILDCARD_LIMIT_PRISONER list()
 /// Wildcard slot define for Chameleon/Agent ID grey cards. Can hold 3 common, 1 command and 1 captain access.
 #define WILDCARD_LIMIT_CHAMELEON list( \
-	WILDCARD_NAME_COMMON = list(limit = 3, usage = list()), \
-	WILDCARD_NAME_COMMAND = list(limit = 1, usage = list()), \
-	WILDCARD_NAME_CAPTAIN = list(limit = 1, usage = list()) \
+	WILDCARD_NAME_COMMON = list(limit = -1, usage = list()), \
+	WILDCARD_NAME_COMMAND = list(limit = -1, usage = list()), \
+	WILDCARD_NAME_CAPTAIN = list(limit = 5, usage = list()) \
 )
 /// Wildcard slot define for admin/debug/weird, special abstract cards. Can hold infinite of any access.
 #define WILDCARD_LIMIT_ADMIN list(WILDCARD_NAME_ALL = list(limit = -1, usage = list()))
