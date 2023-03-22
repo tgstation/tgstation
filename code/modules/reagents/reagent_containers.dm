@@ -194,7 +194,7 @@
 		return FALSE
 	if(!eater.has_mouth())
 		if(eater == user)
-			balloon_alert(eater, "You have no mouth")
+			balloon_alert(eater, "you have no mouth")
 		else
 			balloon_alert(user, "[eater] has no mouth")
 		return FALSE
