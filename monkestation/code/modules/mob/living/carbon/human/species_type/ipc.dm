@@ -134,10 +134,7 @@
 
 /datum/action/innate/change_screen/Activate()
 	var/screen_choice = input(usr, "Which screen do you want to use?", "Screen Change") as null | anything in GLOB.ipc_screens_list
-	var/color_choice = input(usr, "Which color do you want your screen to be?", "Color Change") as null | color
 	if(!screen_choice)
-		return
-	if(!color_choice)
 		return
 	if(!ishuman(owner))
 		return
