@@ -5,7 +5,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "bH" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/machinery/power/port_gen/pacman/pre_loaded{
+	anchored = 1
+	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 1
