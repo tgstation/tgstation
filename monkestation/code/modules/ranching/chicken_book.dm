@@ -53,7 +53,7 @@
 		if(created_mutation.required_rooster)
 			var/mob/living/simple_animal/chicken/temp_chicken = new created_mutation.required_rooster
 			rooster_string = "[temp_chicken.breed_name_male ? temp_chicken.breed_name_male : temp_chicken.breed_name]"
-			qdel(temp_chicken)
+			QDEL_NULL(temp_chicken)
 
 		var/species_string
 		if(created_mutation.needed_species)
