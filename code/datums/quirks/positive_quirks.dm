@@ -340,21 +340,21 @@
 	name = "Stable Rear"
 	desc = "Your rear is far more robust than average, falling off less often than usual."
 	value = 2
-	icon = "hands"
+	icon = "face-sad-cry"
 	//All effects are handled directly in butts.dm
 
 /datum/quirk/loud_ass
 	name = "Loud Ass"
 	desc = "For some ungodly reason, your ass is twice as loud as normal."
 	value = 2
-	icon = "hands"
+	icon = "volume-high"
 	//All effects are handled directly in butts.dm
 
 /datum/quirk/dummy_thick
 	name = "Dummy Thicc"
 	desc = "Hm...Colonel, I'm trying to sneak around, but I'm dummy thicc and the clap of my ass cheeks keep alerting the guards..."
 	value = 3	//Why are we still here? Just to suffer?
-	icon = "hands"
+	icon = "bullhorn"
 
 /datum/quirk/dummy_thick/post_add()
 	. = ..()

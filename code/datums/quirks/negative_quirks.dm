@@ -1145,7 +1145,7 @@
 	name = "Unstable Rear"
 	desc = "For reasons unknown, your posterior is unstable and will fall off more often."
 	value = -1
-	icon = "cloud-showers-heavy"
+	icon = "face-raised-eyebrow"
 	//All effects are handled directly in butts.dm
 
 /datum/quirk/kleptomaniac
@@ -1153,7 +1153,7 @@
 	desc = "The station's just full of free stuff!  Nobody would notice if you just... took it, right?"
 	mob_trait = TRAIT_KLEPTOMANIAC
 	value = -2
-	icon = "cloud-showers-heavy"
+	icon = "brain"
 
 /datum/quirk/kleptomaniac/add()
 	var/datum/brain_trauma/mild/kleptomania/T = new()

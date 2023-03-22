@@ -217,11 +217,12 @@
 	extra_access = list(
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
+		ACCESS_QM,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
-		ACCESS_QM,
+		ACCESS_HOP,
 		)
 	job = /datum/job/cargo_technician
 
@@ -780,18 +781,12 @@
 		ACCESS_RC_ANNOUNCE,
 		ACCESS_SHIPPING,
 		ACCESS_VAULT,
-		ACCESS_KEYCARD_AUTH,
-		ACCESS_COMMAND,
-		ACCESS_EVA,
-		ACCESS_BRIG_ENTRANCE,
 		)
 	extra_access = list()
-	minimal_wildcard_access = list(
-		ACCESS_QM,
-	)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
+		ACCESS_HOP,
 	)
 	job = /datum/job/quartermaster
 
@@ -1038,7 +1033,7 @@
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
-		ACCESS_QM,
+		ACCESS_HOP,
 		)
 	job = /datum/job/shaft_miner
 

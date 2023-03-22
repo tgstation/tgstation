@@ -440,7 +440,7 @@
 
 /obj/item/food/egg/proc/hatch(list/possible_mutations, failed_mutations)
 	STOP_PROCESSING(SSobj, src)
-	if(failed_mutations)
+	if(failed_mutations || !src.loc)
 		return
 	var/mob/living/simple_animal/chick/birthed = new /mob/living/simple_animal/chick(src.loc)
 

@@ -93,6 +93,7 @@
 
 	target_jobs = list(
 		// Cargo
+		/datum/job/quartermaster,
 		/datum/job/shaft_miner,
 		// Medical
 		/datum/job/virologist,
@@ -114,7 +115,6 @@
 		/datum/job/chief_medical_officer,
 		/datum/job/head_of_personnel,
 		/datum/job/research_director,
-		/datum/job/quartermaster,
 		// Security
 		/datum/job/detective,
 		/datum/job/security_officer,
