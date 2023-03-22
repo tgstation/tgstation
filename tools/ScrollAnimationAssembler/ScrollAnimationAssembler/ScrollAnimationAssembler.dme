@@ -13,6 +13,7 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
+#include "apply.dm"
 #include "assemble.dm"
 #include "create_scroll.dm"
 // END_INCLUDE

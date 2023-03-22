@@ -17,6 +17,7 @@
 	var/duration = input("Frame duration:", "Number") as null|num
 
 
+
 	//Is background a DMI?
 	if(!(isfile(background_dmi) && (copytext("[background_dmi]",-4) == ".dmi")))
 		world << "\red Bad background DMI file '[background_dmi]'"
