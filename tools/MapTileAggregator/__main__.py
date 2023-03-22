@@ -14,7 +14,7 @@ bottom_left = 8
 
 # Mapping of path{dir}s to corner dirs, so we can optimize them into the largest piece. Sorted by priority (size of set covered)
 path_dir_sets = {
-    ("/fourcorners/contrasted", 2): frozenset({top_left, top_right, bottom_left, bottom_right}),
+    ("/full", 2): frozenset({top_left, top_right, bottom_left, bottom_right}),
     ("/fourcorners", 2): frozenset({top_left, top_right, bottom_left, bottom_right}),
     ("/anticorner", 1): frozenset({top_left, top_right, bottom_left}),
     ("/anticorner", 2): frozenset({top_right, bottom_left, bottom_right}),
@@ -46,8 +46,8 @@ for k, v in path_dir_sets.items():
 
 # We don't want to turn "contrasted" into fulltile decals
 compatibility_sets = [
-    {"", "/half/contrasted", "/opposingcorners", "/fourcorners/contrasted", "/anticorner/contrasted"},
-    {"/half", "/anticorner", "/fourcorners"}
+    {"", "/half/contrasted", "/opposingcorners", "/fourcorners", "/anticorner/contrasted"},
+    {"/half", "/anticorner", "/full"}
 ]
 
 compiled_regex = re.compile(r"\/obj\/effect\/turf_decal\/tile\/?([A-Za-z_]+)?([A-Za-z_\/]+)?(\{[\s\S]*(dir = (\d+))[\s\S]*\})?")
