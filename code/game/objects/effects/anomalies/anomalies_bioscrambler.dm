@@ -54,14 +54,13 @@
 
 /obj/effect/anomaly/bioscrambler/anomalyEffect(delta_time)
 	. = ..()
-
 	if(!COOLDOWN_FINISHED(src, pulse_cooldown))
 		return
 
 	COOLDOWN_START(src, pulse_cooldown, pulse_delay)
-
 	swap_parts(range)
 
+/// Replaces your limbs and organs with something else
 /obj/effect/anomaly/bioscrambler/proc/swap_parts(swap_range)
 	for(var/mob/living/carbon/nearby in range(swap_range, src))
 		if (nearby.run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [src]!") >= 100)
@@ -70,6 +69,11 @@
 		var/obj/item/organ/new_organ = pick(organs)
 		new_organ = new new_organ()
 		new_organ.replace_into(nearby)
+
+		if (islarva(nearby))
+			nearby.update_body(TRUE)
+			balloon_alert(nearby, "something has changed about you")
+			continue
 
 		var/obj/item/bodypart/new_part = pick(body_parts)
 		new_part = new new_part()
