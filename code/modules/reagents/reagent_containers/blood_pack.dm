@@ -41,7 +41,7 @@
 /obj/item/reagent_containers/blood/random
 	icon_state = "random_bloodpack"
 
-/obj/item/reagent_containers/blood/random/Initialize(mapload, vol )
+/obj/item/reagent_containers/blood/random/Initialize(mapload, vol)
 	icon_state = "bloodpack"
 	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
 	return ..(mapload, vol)
