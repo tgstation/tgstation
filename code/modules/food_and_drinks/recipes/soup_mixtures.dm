@@ -8,6 +8,7 @@
 	default_container = /obj/item/reagent_containers/cup/bowl
 	fallback_icon = 'icons/obj/food/soupsalad.dmi'
 	fallback_icon_state = "bowl"
+	// melbert todo: soups need their venue prices
 
 /**
  * ## Soup base chemical reaction.

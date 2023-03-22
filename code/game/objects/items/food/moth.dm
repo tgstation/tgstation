@@ -433,6 +433,7 @@
 		making up a typical meal- tomato soup, roast pumpkin, and blueberry pie." //Thankfully not made by Willy Wonka
 	tastes = list("tomato soup" = 1, "roast pumpkin" = 1, "blueberry pie" = 1)
 
+// melbert todo : MORE SOUP
 //Soups
 /obj/item/food/soup/moth_cotton_soup
 	name = "flöfrölenmæsch" //flöf = cotton, rölen = ball, mæsch = soup
