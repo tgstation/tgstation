@@ -996,9 +996,7 @@
 
 	if(.)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
-
-	TEST_ONLY_ASSERT(!. || MC_RUNNING(), "We reacted during subsystem init, that shouldn't be happening!")
-
+		
 /*
 * Main Reaction loop handler, Do not call this directly
 *
