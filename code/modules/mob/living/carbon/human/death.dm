@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 
 	. = ..()
 
-	if(client && !suiciding && !(client in GLOB.dead_players_during_shift))
+	if(client && !HAS_TRAIT(src, TRAIT_SUICIDED) && !(client in GLOB.dead_players_during_shift))
 		GLOB.dead_players_during_shift += client
 
 	if(!QDELETED(dna)) //The gibbed param is bit redundant here since dna won't exist at this point if they got deleted.

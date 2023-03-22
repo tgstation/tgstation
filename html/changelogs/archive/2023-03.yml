@@ -792,3 +792,26 @@
       water vapour.
   - bugfix: Holosigns, like the atmos holofan, can no longer be frozen by low temperature
       water vapour.
+2023-03-22:
+  DATA-xPUNGED:
+  - spellcheck: "Pacoca is now called \"Pa\xE7oca\", as it should"
+  Helg2:
+  - rscadd: Wirebrush is now avalaible at janivend, for janiborg and you can put it
+      in the janibelt.
+  Melbert:
+  - bugfix: Fixed stray white pixel in illegal rolling pin inhands.
+  NamelessFairy:
+  - bugfix: Stray Cargo Pod false alarms will once again play an announcement when
+      they occur.
+  Rhials:
+  - bugfix: NODISMEMBER mobs can now be attacked by the flesh worm.
+  SmoSmoSmoSmok:
+  - bugfix: heck suit no longer bugs out worn boots/gloves icons
+  coiax:
+  - bugfix: Fixed missing food types for the meat clown, it is now meat and fruit.
+  san7890:
+  - refactor: Some aspects of how we track suicides from your living mob to your observer
+      have changed- please do let us know if anything has broken via a GitHub Issue
+      Report.
+  tf-4:
+  - bugfix: Failing a kickflip no longer shows the chat messages to the wrong people.
