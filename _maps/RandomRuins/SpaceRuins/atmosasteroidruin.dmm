@@ -222,7 +222,7 @@
 	pixel_x = 5
 	},
 /obj/item/paper/crumpled{
-	default_raw_text = "Ever since I set up those miners the have all been making a strange clunking noise, especialy the carbon dioxide miner, I swear its just been getting louder and louder these past couple hours. I just hope I set it up right."
+	default_raw_text = "Ever since I set up those miners, they've all been making a strange clunking noise, especially the Carbon Dioxide miner. I swear, it's just been getting louder and louder these past couple hours. I just hope I set it up right."
 	},
 /obj/machinery/door/window/left/directional/east,
 /obj/structure/window{
