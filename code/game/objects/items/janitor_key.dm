@@ -22,6 +22,12 @@
 /obj/item/access_key/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_ON_DEPARTMENT_ACCESS, PROC_REF(department_access_given))
+	GLOB.access_keys += src
+
+/obj/machinery/crossing_signal/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_ON_DEPARTMENT_ACCESS)
+	GLOB.access_keys += src
+	. = ..()
 
 /obj/item/access_key/examine(mob/user)
 	. = ..()
