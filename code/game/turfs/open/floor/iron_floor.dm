@@ -378,6 +378,9 @@
 	base_icon_state = "kitchen_herringbone"
 	floor_tile = /obj/item/stack/tile/iron/kitchen/herringbone
 
+/turf/open/floor/iron/kitchen/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/iron/chapel
 	icon_state = "chapel"
 	base_icon_state = "chapel"

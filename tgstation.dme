@@ -3663,6 +3663,7 @@
 #include "code\modules\mapfluff\ruins\spaceruin_code\deepstorage.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\derelict_sulaco.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\DJstation.dm"
+#include "code\modules\mapfluff\ruins\spaceruin_code\forgettable_lunceon.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\forgottenship.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\hellfactory.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\hilbertshotel.dm"
