@@ -917,7 +917,7 @@
 	if(exposed_mob.stat != DEAD || !(exposed_mob.mob_biotypes & MOB_ORGANIC))
 		return ..()
 
-	if(exposed_mob.suiciding) //they are never coming back
+	if(HAS_TRAIT(exposed_mob, TRAIT_SUICIDED)) //they are never coming back
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body does not react..."))
 		return
 
