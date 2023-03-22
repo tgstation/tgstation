@@ -1,8 +1,9 @@
+	/// Animated beings of stone. They have increased defenses, and do not need to breathe. They must eat minerals to live, which give additional buffs.
 /datum/species/golem
-	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = SPECIES_GOLEM
 	species_traits = list(
+		NOEYESPRITES,
 		NOTRANSSTING,
 		MUTCOLORS,
 		NO_UNDERWEAR,

@@ -344,21 +344,30 @@
 	unarmed_stun_threshold = 14
 
 /obj/item/bodypart/head/golem
+	icon = 'icons/mob/species/golems.dmi'
+	icon_static = 'icons/mob/species/golems.dmi'
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_GOLEM
 	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 
 /obj/item/bodypart/chest/golem
+	icon = 'icons/mob/species/golems.dmi'
+	icon_static = 'icons/mob/species/golems.dmi'
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_GOLEM
-	is_dimorphic = TRUE
+	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	bodypart_traits = list(TRAIT_NO_JUMPSUIT)
 
 /obj/item/bodypart/arm/left/golem
+	icon = 'icons/mob/species/golems.dmi'
+	icon_static = 'icons/mob/species/golems.dmi'
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_GOLEM
+	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 	unarmed_damage_low = 5
@@ -366,8 +375,11 @@
 	unarmed_stun_threshold = 11
 
 /obj/item/bodypart/arm/right/golem
+	icon = 'icons/mob/species/golems.dmi'
+	icon_static = 'icons/mob/species/golems.dmi'
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_GOLEM
+	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 	unarmed_damage_low = 5
@@ -375,16 +387,22 @@
 	unarmed_stun_threshold = 11
 
 /obj/item/bodypart/leg/left/golem
+	icon = 'icons/mob/species/golems.dmi'
+	icon_static = 'icons/mob/species/golems.dmi'
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_GOLEM
+	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	unarmed_damage_low = 7
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 11
 
 /obj/item/bodypart/leg/right/golem
+	icon = 'icons/mob/species/golems.dmi'
+	icon_static = 'icons/mob/species/golems.dmi'
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_GOLEM
+	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	unarmed_damage_low = 7
 	unarmed_damage_high = 21
