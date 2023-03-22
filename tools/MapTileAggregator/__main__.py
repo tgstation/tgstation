@@ -4,6 +4,9 @@ import pathlib
 import re
 from mapmerge2 import dmm
 
+# Many thanks to itsmeow of BeeStation for the original code via https://github.com/BeeStation/BeeStation-Hornet/pull/7970
+# A lot of un-needed stuff as far as /tg/ is concerned has been removed, and has been adjusted to work with our file organization, as well
+
 top_left = 1
 top_right = 4
 bottom_right = 2
@@ -47,6 +50,8 @@ compatibility_sets = [
     {"/half", "/anticorner", "/fourcorners"}
 ]
 
+compiled_regex = re.compile(r"\/obj\/effect\/turf_decal\/tile\/?([A-Za-z_]+)?([A-Za-z_\/]+)?(\{[\s\S]*(dir = (\d+))[\s\S]*\})?")
+
 def update_map(map_path):
     the_map = dmm.DMM.from_file(map_path)
     checked = 0
@@ -59,32 +64,39 @@ def update_map(map_path):
         checked += 1
         typed = dict()
         for decal in turf_decals:
-            matched = re.search(r"\/obj\/effect\/turf_decal\/tile\/?([A-Za-z_]+)?([A-Za-z_\/]+)?(\{[\s\S]*(dir = (\d+))[\s\S]*\})?", decal)
+            matched = re.search(compiled_regex, decal)
+
             if matched == None:
                 print("Warning, what the fuck did we just parse? {}".format(decal))
+
             color = matched.group(1)
             if color == None: # Corg, you big dummy, you can't just use a null preset for white
                 print("Warning, tile with no color (this is bad): {}".format(decal))
                 color = "white"
+
             last = matched.group(2)
             if last == None:
                 last = ""
+
             dir = matched.group(5)
             if dir == None:
                 dir = 2
             else:
                 dir = int(dir)
+
             dirs = None
             if last == "":
                 dirs = frozenset({ dir })
-            else:
-                # add in tile_side_map so we can parse it out, but don't use the reverse later
-                dirs = frozenset((path_dir_sets)[(last, dir)])
+
             if dirs == None:
-                print("Warning - Could not parse tile decal to corners: {}".format(decal))
+                # This is commented out on /tg/'s implemenation because otherwise you would get spammed by a lot of false warnings because our maps already have optimized decals without dirs.
+                # There's too many false warnings, and it's not the end of the world if a few decals aren't optimized.
+                # print("Warning - Could not parse tile decal to corners: {}".format(decal))
+                continue # if you're going to toggle the warning on, this continue doesn't need to be here by the way
             else:
                 tile.remove(decal)
                 typed[(color, last)] = typed[(color, last)] | dirs if (color, last) in typed else dirs
+
         for data, dirs in typed.items():
             color = data[0]
             last = data[1]
@@ -101,24 +113,28 @@ def update_map(map_path):
                 if result == None:
                     print(results)
                     print(last)
+
             elif len(results) == 1:
                 result = results[0]
+
             if result == None:
                 print("Warning - no applicable type for dirs: {}".format(dirs))
                 print(turf_decals)
+
             # Handle the case where color is empty, we need the path to not end in /
             if color != "":
                 color = "/" + color
+
             new_path = "/obj/effect/turf_decal/tile" + color + result[0]
             new_dir = result[1]
             if new_dir != 2:
                 new_path += "{dir = " + str(new_dir) + "}"
+
             tile.append(new_path)
         the_map.set_tile(coord, tile + turfs + areas)
     return (the_map, checked)
 
 if __name__ == '__main__':
-    print("hi")
     list_of_files = list()
     for root, directories, filenames in os.walk("../../_maps/"):
         for filename in [f for f in filenames if f.endswith(".dmm")]:
