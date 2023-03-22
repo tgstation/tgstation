@@ -127,7 +127,7 @@
 
 //Robot customer AI controller blackboard keys
 /// Corresponds to the customer's order.
-/// This can be a reagent typepath, an item typepath, or an instance of a custom order datum
+/// This can be a an item typepath or an instance of a custom order datum
 #define BB_CUSTOMER_CURRENT_ORDER "BB_customer_current_order"
 #define BB_CUSTOMER_MY_SEAT "BB_customer_my_seat"
 #define BB_CUSTOMER_PATIENCE "BB_customer_patience"

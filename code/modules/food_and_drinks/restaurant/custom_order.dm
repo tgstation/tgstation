@@ -62,6 +62,13 @@
 	if (!QDELETED(buffet.shoes))
 		orderable[buffet.shoes.type] = 1
 
+	if(!length(orderable))
+		orderable = list(
+			/obj/item/clothing/head/utility/chefhat = 3,
+			/obj/item/clothing/shoes/sneakers/black = 3,
+			/obj/item/clothing/gloves/color/black = 1,
+		)
+
 	wanted_clothing_type = pick_weight(orderable)
 
 
@@ -120,17 +127,79 @@
 
 	return food_image
 
-/datum/custom_order/soup
-	/// This is the typepath of soup we desire
-	var/datum/reagent/consumable/nutriment/soup/soup_type
-	/// What container we want it to be in
-	var/soup_container = /obj/item/reagent_containers/cup/bowl
-	/// What serving size we want
+/datum/custom_order/reagent/New(reagent_type)
+	. = ..()
+	src.reagent_type = reagent_type
+
+/datum/custom_order/reagent
+	/// This is the typepath of reagent we desire
+	var/datum/reagent/consumable/nutriment/soup/reagent_type
+	/// What typepath container we want it to be in
+	var/obj/item/container_needed
+	/// How many reagents is needed
+	var/reagents_needed = VENUE_BAR_MINIMUM_REAGENTS
+
+/datum/custom_order/reagent/get_order_line(datum/venue/our_venue)
+	return "I'll take [reagents_needed]u of [initial(reagent_type.name)]"
+
+/datum/custom_order/reagent/get_order_appearance(datum/venue/our_venue)
+	var/image/food_image = image(icon = 'icons/effects/effects.dmi' , icon_state = "thought_bubble")
+	var/datum/glass_style/draw_as = GLOB.glass_style_singletons[container_needed][reagent_type]
+	var/image/drink_image = image(
+		icon = draw_as?.icon || initial(reagent_type.fallback_icon) || initial(container_needed.icon),
+		icon_state = draw_as?.icon_state || initial(reagent_type.fallback_icon_state) || initial(container_needed.icon_state),
+	)
+	food_image.add_overlay(drink_image)
+	return food_image
+
+/datum/custom_order/reagent/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+	. = TRANSACTION_HANDLED
+
+	for(var/datum/reagent/reagent as anything in order_item.reagents?.reagent_list)
+		if(reagent.type == reagent_type)
+			. |= SEND_SIGNAL(reagent, COMSIG_REAGENT_SOLD_TO_CUSTOMER, customer_pawn, order_item)
+
+	playsound(customer_pawn, 'sound/items/drink.ogg', rand(10, 50), TRUE)
+	order_item.reagents.clear_reagents()
+
+/datum/custom_order/reagent/is_correct_order(obj/item/object_used)
+	if(..())
+		return TRUE
+	if(!istype(object_used, container_needed) || isnull(object_used.reagents))
+		return FALSE
+
+	var/datum/reagents/holder = object_used.reagents
+	// The container must be majority reagent
+	if(holder.get_master_reagent_id() != reagent_type)
+		return FALSE
+	// We must fulfill the sample size threshold
+	if(reagents_needed > holder.total_volume)
+		return FALSE
+	// Also must be at least 1/3rd of that reagent, prevent cheese
+	if(holder.get_reagent_amount(reagent_type) < holder.total_volume * 0.33)
+		return FALSE
+	return TRUE
+
+/datum/custom_order/reagent/drink
+	container_needed = /obj/item/reagent_containers/cup/glass/drinkingglass
+
+/datum/custom_order/reagent/drink/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+	customer_pawn.visible_message(
+		span_danger("[customer_pawn] pours [order_item] right down [customer_pawn.p_their()] hatch!"),
+		span_danger("You pour [order_item] down your hatch in one go."),
+	)
+	return ..()
+
+/datum/custom_order/reagent/soup
+	container_needed = /obj/item/reagent_containers/cup/bowl
+
+	/// What serving we picked for the order
 	var/picked_serving
-	/// Static list of serving sizes we can order, ranging from small to large. Little difference overall
+	/// Static list of serving sizes we can order, ranging from small to large.
+	/// Little difference overall, primarily flavor (heh)
 	var/static/list/serving_sizes
 
-/datum/custom_order/soup/New()
+/datum/custom_order/reagent/soup/New(reagent_type)
 	. = ..()
 	if(!serving_sizes)
 		serving_sizes = list(
@@ -139,64 +208,14 @@
 			"large serving (25u)" = 25,
 		)
 	picked_serving = pick(serving_sizes)
+	reagents_needed = serving_sizes[picked_serving]
 
-/datum/custom_order/soup/get_order_line(datum/venue/our_venue)
-	return "I'll take a [picked_serving] of [initial(soup_type.name)]"
+/datum/custom_order/reagent/soup/get_order_line(datum/venue/our_venue)
+	return "I'll take a [picked_serving] of [initial(reagent_type.name)]"
 
-/datum/custom_order/soup/get_order_appearance(datum/venue/our_venue)
-	var/image/food_image = image(icon = 'icons/effects/effects.dmi' , icon_state = "thought_bubble")
-	var/datum/glass_style/draw_as = GLOB.glass_style_singletons[soup_container][soup_type]
-	var/image/soup_image = image(
-		icon = draw_as?.icon || initial(soup_type.fallback_icon),
-		icon_state = draw_as?.icon_state || initial(soup_type.fallback_icon_state),
-	)
-
-	food_image.add_overlay(soup_image)
-	return food_image
-
-/datum/custom_order/soup/is_correct_order(obj/item/object_used)
-	if(..())
-		return TRUE
-	if(!istype(object_used, soup_container) || isnull(object_used.reagents))
-		return FALSE
-
-	var/datum/reagents/holder = object_used.reagents
-	// The bowl must be dominated by soup
-	if(holder.get_master_reagent_id() != soup_type)
-		return FALSE
-	// Also must be at least 1/3rd soup, prevent cheese
-	if(holder.get_reagent_amount(soup_type) < holder.total_volume * 0.33)
-		return FALSE
-	// And of course we must fulfill the sample size threshold
-	if(serving_sizes[picked_serving] > holder.total_volume)
-		return FALSE
-	return TRUE
-
-/datum/custom_order/soup/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
-	for(var/datum/reagent/reagent as anything in order_item.reagents?.reagent_list)
-		if(reagent.type == soup_type)
-			// I hate doing this, but ideally all orders should be order datums so we don't have to reuse code
-			. |= SEND_SIGNAL(reagent, COMSIG_REAGENT_SOLD_TO_CUSTOMER, customer_pawn, order_item)
-
+/datum/custom_order/reagent/soup/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
 	customer_pawn.visible_message(
 		span_danger("[customer_pawn] pours [order_item] right down [customer_pawn.p_their()] hatch!"),
 		span_danger("You pour [order_item] down your hatch in one go."),
 	)
-	playsound(customer_pawn, 'sound/items/drink.ogg', rand(10, 50), TRUE)
-	order_item.reagents.clear_reagents()
-	return TRANSACTION_HANDLED
-
-/datum/custom_order/soup/onion_soup
-	soup_type = /datum/reagent/consumable/nutriment/soup/french_onion
-
-/datum/custom_order/soup/miso
-	soup_type = /datum/reagent/consumable/nutriment/soup/miso
-
-/datum/custom_order/soup/vegetable
-	soup_type = /datum/reagent/consumable/nutriment/soup/vegetable_soup
-
-/datum/custom_order/soup/stew
-	soup_type = /datum/reagent/consumable/nutriment/soup/stew
-
-/datum/custom_order/soup/curry
-	soup_type = /datum/reagent/consumable/nutriment/soup/indian_curry
+	return ..()

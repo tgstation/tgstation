@@ -65,3 +65,7 @@
 		particle_mob.vis_contents += src
 	//readd to ourselves
 	attached_to.vis_contents |= src
+
+/// Sets the particles position to the passed list
+/obj/effect/abstract/particle_holder/proc/set_particle_position(list/pos)
+	particles.position = pos

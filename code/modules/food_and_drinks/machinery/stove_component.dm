@@ -11,7 +11,10 @@
 	VAR_FINAL/on = FALSE
 	/// A reference to the current soup pot overtop
 	VAR_FINAL/obj/item/container
-
+	/// A particle holder for the smoke that comes out of the soup while a container is cooking.
+	VAR_FINAL/obj/effect/abstract/particle_holder/soup_smoke
+	/// The color of the flames around the burner.
+	var/flame_color = "#006eff"
 	/// Container's pixel x when placed on the stove
 	var/container_x = 0
 	/// Container's pixel y when placed on the stove
@@ -41,9 +44,11 @@
 	real_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 /datum/component/stove/UnregisterFromParent()
-	if(!QDELING(real_parent))
+	if(!QDELING(parent))
 		var/obj/machinery/real_parent = parent
 		container.forceMove(real_parent.drop_location())
+
+	QDEL_NULL(soup_smoke)
 
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_HAND_SECONDARY,
@@ -87,11 +92,17 @@
 	var/obj/machinery/real_parent = parent
 	if(on)
 		turn_off()
+
 	else if(real_parent.machine_stat & (BROKEN|NOPOWER))
 		real_parent.balloon_alert_to_viewers("no power!")
+		return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
+
 	else
 		turn_on()
-		real_parent.balloon_alert_to_viewers("burners [on ? "on" : "off"]")
+
+	real_parent.balloon_alert_to_viewers("burners [on ? "on" : "off"]")
+	playsound(real_parent, 'sound/machines/click.ogg', 30, TRUE)
+	playsound(real_parent, on ? 'sound/items/welderactivate.ogg' : 'sound/items/welderdeactivate.ogg', 15, TRUE)
 
 	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
@@ -121,21 +132,32 @@
 	SIGNAL_HANDLER
 
 	if(!on)
+		QDEL_NULL(soup_smoke)
 		return
 
 	var/obj/real_parent = parent
 
-	// melbert todo: flames and bartiles of smonk coming out of the pot
+	// Smoke coming out of the pot
+	if(container?.reagents.total_volume > 0)
+		if(isnull(soup_smoke))
+			soup_smoke = new(real_parent, /particles/smoke/steam/mild)
+			soup_smoke.set_particle_position(list(container_x, round(world.icon_size * 0.66), 0))
+	else
+		QDEL_NULL(soup_smoke)
+
+	// melbert todo: Emissives why you suck
 
 	// Flames around the pot
 	var/mutable_appearance/flames = mutable_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_flame", alpha = real_parent.alpha)
-	flames.overlays += emissive_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_flame_mask", alpha = real_parent.alpha)
+	flames.color = flame_color
 	overlays += flames
+	overlays += emissive_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_flame", real_parent, alpha = real_parent.alpha)
 
 	// A green light that shows it's active
-	var/mutable_appearance/light = mutable_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_overlay", real_parent, alpha = real_parent.alpha)
-	light.overlays += emissive_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_lightmask", real_parent, alpha = real_parent.alpha)
+	var/mutable_appearance/light = mutable_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_overlay", alpha = real_parent.alpha)
+	light.color = "#00ff00"
 	overlays += light
+	overlays += emissive_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_overlay", real_parent, alpha = real_parent.alpha)
 
 /datum/component/stove/proc/on_requesting_context(obj/machinery/source, list/context, obj/item/held_item)
 	SIGNAL_HANDLER
@@ -151,7 +173,6 @@
 /datum/component/stove/proc/add_container(obj/item/new_container, mob/user)
 	var/obj/real_parent = parent
 	real_parent.vis_contents += new_container
-
 	new_container.flags_1 |= IS_ONTOP_1
 	new_container.vis_flags |= VIS_INHERIT_PLANE
 
@@ -159,11 +180,16 @@
 	container.pixel_x = container_x
 	container.pixel_y = container_y
 
+	real_parent.update_appearance(UPDATE_OVERLAYS)
+
 /datum/component/stove/proc/remove_container()
 	var/obj/real_parent = parent
 	container.flags_1 &= ~IS_ONTOP_1
 	container.vis_flags &= ~VIS_INHERIT_PLANE
 	real_parent.vis_contents -= container
+
 	container.pixel_x = container.base_pixel_x
 	container.pixel_y = container.base_pixel_y
 	container = null
+
+	real_parent.update_appearance(UPDATE_OVERLAYS)

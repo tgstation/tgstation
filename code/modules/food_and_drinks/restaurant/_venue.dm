@@ -68,17 +68,25 @@
 
 /datum/venue/proc/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/order = pick_weight(customer_data.orderable_objects[venue_type])
+	var/list/order_args // Only for custom orders - arguments passed into New
 	var/image/food_image
 	var/food_line
 
+	if(ispath(order, /datum/reagent))
+		// This is pain
+		var/datum/reagent/reagent_order = order
+		order_args = list("reagent_type" = reagent_order)
+		order = initial(reagent_order.restaurant_order)
+
 	if(ispath(order, /datum/custom_order)) // generate the special order
-		var/datum/custom_order/custom_order = new order(src)
+		var/datum/custom_order/custom_order = new order(arglist(order_args || list()))
 		food_image = custom_order.get_order_appearance(src)
 		food_line = custom_order.get_order_line(src)
 		order = custom_order.dispense_order()
 	else
 		food_image = get_food_appearance(order)
 		food_line = order_food_line(order)
+
 	customer_pawn.say(food_line)
 
 	// common code for the food thoughts appearance

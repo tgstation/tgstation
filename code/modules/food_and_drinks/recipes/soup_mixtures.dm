@@ -6,10 +6,10 @@
 /datum/reagent/consumable/nutriment/soup
 	chemical_flags = NONE
 	default_container = /obj/item/reagent_containers/cup/bowl
+	glass_price = FOOD_PRICE_CHEAP
 	fallback_icon = 'icons/obj/food/soupsalad.dmi'
 	fallback_icon_state = "bowl"
-	glass_price = FOOD_PRICE_CHEAP
-	// melbert todo: soups need their venue prices
+	restaurant_order = /datum/custom_order/reagent/soup
 
 /**
  * ## Soup base chemical reaction.

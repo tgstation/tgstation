@@ -87,10 +87,10 @@
 			/obj/item/food/danish_hotdog = 3,
 		),
 		VENUE_BAR = list(
+			/datum/reagent/consumable/ethanol/beer = 25,
 			/datum/reagent/consumable/ethanol/b52 = 6,
 			/datum/reagent/consumable/ethanol/manhattan = 3,
 			/datum/reagent/consumable/ethanol/atomicbomb = 1,
-			/datum/reagent/consumable/ethanol/beer = 25,
 		),
 	)
 
@@ -157,11 +157,11 @@
 	speech_sound = 'sound/creatures/tourist/tourist_talk_french.ogg'
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
-			/datum/custom_order/icecream = 6,
-			/datum/custom_order/soup/onion_soup = 4,
 			/obj/item/food/baguette = 20,
 			/obj/item/food/garlicbread = 5,
 			/obj/item/food/omelette = 15,
+			/datum/custom_order/icecream = 6,
+			/datum/reagent/consumable/nutriment/soup/french_onion = 4,
 			/obj/item/food/pie/berryclafoutis = 2,
 		),
 		VENUE_BAR = list(
@@ -202,8 +202,8 @@
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
 			/datum/custom_order/icecream = 4,
-			/datum/custom_order/soup/miso = 10,
-			/datum/custom_order/soup/vegetable = 4,
+			/datum/reagent/consumable/nutriment/soup/miso = 10,
+			/datum/reagent/consumable/nutriment/soup/vegetable_soup = 4,
 			/obj/item/food/beef_stroganoff = 2,
 			/obj/item/food/breadslice/plain = 5,
 			/obj/item/food/chawanmushi = 4,
@@ -245,8 +245,8 @@
 	speech_sound = 'sound/creatures/tourist/tourist_talk_japanese2.ogg'
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
-			/datum/custom_order/soup/miso = 6,
-			/datum/custom_order/soup/vegetable = 4,
+			/datum/reagent/consumable/nutriment/soup/miso = 6,
+			/datum/reagent/consumable/nutriment/soup/vegetable_soup = 4,
 			/obj/item/food/beef_stroganoff = 2,
 			/obj/item/food/chawanmushi = 4,
 			/obj/item/food/meat_poke = 4,
@@ -387,8 +387,8 @@
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
 			/datum/custom_order/icecream = 8,
-			/datum/custom_order/soup/curry = 3,
-			/datum/custom_order/soup/stew = 10,
+			/datum/reagent/consumable/nutriment/soup/indian_curry = 3,
+			/datum/reagent/consumable/nutriment/soup/stew = 10,
 			/obj/item/food/beef_wellington_slice = 2,
 			/obj/item/food/benedict = 5,
 			/obj/item/food/fishandchips = 10,
