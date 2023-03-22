@@ -301,14 +301,7 @@ Chilling extracts:
 	if(ishuman(user))
 		user.visible_message(span_notice("[src] crystallizes along [user]'s skin, turning into metallic scales!"))
 		var/mob/living/carbon/human/H = user
-
-		var/static/list/random_golem_types
-		random_golem_types = subtypesof(/datum/species/golem) - type
-
-		for(var/datum/species/golem/golem as anything in random_golem_types)
-			if(!initial(golem.random_eligible))
-				random_golem_types -= golem
-		H.set_species(pick(random_golem_types))
+		H.set_species(/datum/species/golem) // TODO: replace?
 	..()
 
 /obj/item/slimecross/chilling/lightpink

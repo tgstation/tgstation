@@ -485,7 +485,7 @@
 			to_chat(user, span_warning("You feel your body rapidly crystallizing..."))
 			if(do_after(user, 120, target = user))
 				to_chat(user, span_warning("You feel solid."))
-				user.set_species(pick(/datum/species/golem/adamantine))
+				user.set_species(pick(/datum/species/golem))  // TODO: replace?
 				return
 			to_chat(user, span_notice("You stop feeding [src], and your body returns to its slimelike state."))
 

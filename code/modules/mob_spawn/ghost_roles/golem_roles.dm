@@ -25,12 +25,11 @@
 		name = "inert servant golem shell"
 		prompt_name = "servant golem"
 	if(species) //spawners list uses object name to register so this goes before ..()
-		name += " ([initial(species.prefix)])"
 		mob_species = species
 	. = ..()
 	var/area/init_area = get_area(src)
 	if(!mapload && init_area)
-		notify_ghosts("\A [initial(species.prefix)] golem shell has been completed in \the [init_area.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_GOLEM)
+		notify_ghosts("\A golem shell has been completed in \the [init_area.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_GOLEM)
 	if(creator)
 		you_are_text = "You are a golem."
 		flavour_text = "You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools."
@@ -43,7 +42,7 @@
 	if(!forced_name)
 		var/datum/species/golem/golem_species = mob_species
 		if(owner_ref?.resolve())
-			forced_name =  "[initial(golem_species.prefix)] Golem ([rand(1,999)])"
+			forced_name =  "Golem ([rand(1,999)])"
 		else
 			golem_species = new mob_species
 			forced_name =  golem_species.random_name()
@@ -52,17 +51,13 @@
 /obj/effect/mob_spawn/ghost_role/human/golem/special(mob/living/new_spawn, mob/mob_possessor)
 	. = ..()
 	var/mob/living/real_owner = owner_ref?.resolve()
-	var/datum/species/golem/golem_species = mob_species
-	to_chat(new_spawn, "[initial(golem_species.info_text)]")
 	if(isnull(real_owner))
 		if(!is_station_level(new_spawn.z))
 			to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! \
 				You are generally a peaceful group unless provoked.")
 			try_keep_home(new_spawn)
-
 	else if(new_spawn.mind)
 		new_spawn.mind.enslave_mind_to_creator(real_owner)
-
 	else
 		stack_trace("[type] created a golem without a mind.")
 
@@ -114,4 +109,4 @@
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	prompt_name = "free golem"
 	can_transfer = FALSE
-	mob_species = /datum/species/golem/adamantine
+	mob_species = /datum/species/golem
