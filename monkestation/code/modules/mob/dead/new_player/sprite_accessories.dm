@@ -137,7 +137,7 @@
 
 /datum/sprite_accessory/ipc_antennas
 	icon = 'monkestation/icons/mob/species/ipc/ipc_antennas.dmi'
-	color_src = HAIR
+	color_src = MUTCOLORS
 
 /datum/sprite_accessory/ipc_antennas/none
 	name = "None"

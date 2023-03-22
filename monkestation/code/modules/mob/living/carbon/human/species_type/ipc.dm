@@ -274,3 +274,5 @@
 		BP.limb_id = chassis_of_choice.icon_state
 		BP.name = "\improper[chassis_of_choice.name] [parse_zone(BP.body_zone)]"
 		BP.update_limb()
+		if(chassis_of_choice.color_src == MUTCOLORS)
+			BP.should_draw_greyscale = TRUE
