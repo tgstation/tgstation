@@ -184,7 +184,8 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	// Give them reagents to put frying oil in
 	if(isnull(frying.reagents))
 		frying.create_reagents(50, INJECTABLE)
-	ADD_TRAIT(frying, TRAIT_FOOD_CHEF_MADE, REF(user))
+	if(user.mind)
+		ADD_TRAIT(frying, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
 	SEND_SIGNAL(frying, COMSIG_ITEM_ENTERED_FRYER)
 
 	icon_state = "fryer_on"

@@ -46,8 +46,8 @@
 /// From /obj/item/modular_computer/proc/store_file: ()
 #define COMSIG_MODULAR_COMPUTER_FILE_ADDING "comsig_modular_computer_file_adding"
 /// From /obj/item/modular_computer/proc/store_file: ()
-#define COMSIG_MODULAR_COMPUTER_FILE_ADDED "comsig_modular_computer_file_adding"
+#define COMSIG_MODULAR_COMPUTER_FILE_ADDED "comsig_modular_computer_file_added"
 /// From /obj/item/modular_computer/proc/remove_file: ()
 #define COMSIG_MODULAR_COMPUTER_FILE_DELETING "comsig_modular_computer_file_deleting"
 /// From /obj/item/modular_computer/proc/store_file: ()
-#define COMSIG_MODULAR_COMPUTER_FILE_DELETED "comsig_modular_computer_file_adding"
+#define COMSIG_MODULAR_COMPUTER_FILE_DELETED "comsig_modular_computer_file_deleted"

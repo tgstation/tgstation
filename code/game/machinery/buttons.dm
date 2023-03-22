@@ -11,6 +11,11 @@
 	var/id = null
 	var/initialized_button = 0
 	var/silicon_access_disabled = FALSE
+	///The light mask used in the icon file for emissive layer
+	var/light_mask = null
+	light_power = 0.5 // Minimums, we want the button to glow if it has a mask, not light an area
+	light_range = 1.5
+	light_color = LIGHT_COLOR_DARK_BLUE
 	armor_type = /datum/armor/machinery_button
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
@@ -66,6 +71,8 @@
 
 /obj/machinery/button/update_overlays()
 	. = ..()
+	if(light_mask && !(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
+		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
 	if(!panel_open)
 		return
 	if(device)
@@ -349,25 +356,3 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	result_path = /obj/machinery/button
 	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	pixel_shift = 24
-
-/obj/machinery/button/tram
-	name = "tram caller"
-	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
-	icon_state = "launcher"
-	skin = "launcher"
-	device_type = /obj/item/assembly/control/tram
-	req_access = list()
-	id = 1
-	/// The specific lift id of the tram we're calling.
-	var/lift_id = MAIN_STATION_TRAM
-
-/obj/machinery/button/tram/setup_device()
-	var/obj/item/assembly/control/tram/tram_device = device
-	tram_device.initial_id = id
-	tram_device.specific_lift_id = lift_id
-	return ..()
-
-/obj/machinery/button/tram/examine(mob/user)
-	. = ..()
-	. += span_notice("There's a small inscription on the button...")
-	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")

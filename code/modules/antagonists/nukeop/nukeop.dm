@@ -117,17 +117,26 @@
 	if(nuke_team)
 		objectives |= nuke_team.objectives
 
+/// Actually moves our nukie to where they should be
 /datum/antagonist/nukeop/proc/move_to_spawnpoint()
 	// Ensure that the nukiebase is loaded, and wait for it if required
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
+	var/turf/destination = get_spawnpoint()
+	owner.current.forceMove(destination)
+	if(!owner.current.onSyndieBase())
+		message_admins("[ADMIN_LOOKUPFLW(owner.current)] is a NUKE OP and move_to_spawnpoint put them somewhere that isn't the syndie base, help please.")
+		stack_trace("Nuke op move_to_spawnpoint resulted in a location not on the syndicate base. (Was moved to: [destination])")
 
+/// Gets the position we spawn at
+/datum/antagonist/nukeop/proc/get_spawnpoint()
 	var/team_number = 1
 	if(nuke_team)
 		team_number = nuke_team.members.Find(owner)
-	owner.current.forceMove(GLOB.nukeop_start[((team_number - 1) % GLOB.nukeop_start.len) + 1])
 
-/datum/antagonist/nukeop/leader/move_to_spawnpoint()
-	owner.current.forceMove(pick(GLOB.nukeop_leader_start))
+	return GLOB.nukeop_start[((team_number - 1) % GLOB.nukeop_start.len) + 1]
+
+/datum/antagonist/nukeop/leader/get_spawnpoint()
+	return pick(GLOB.nukeop_leader_start)
 
 /datum/antagonist/nukeop/create_team(datum/team/nuclear/new_team)
 	if(!new_team)

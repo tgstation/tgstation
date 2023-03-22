@@ -1,5 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "hotfix for lungless oxyloss immunity"
-  - bugfix: "hotfix for mobs being able to circumvent reagent respiration_type requirements by removing their lungs"

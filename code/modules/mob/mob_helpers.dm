@@ -250,7 +250,7 @@
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
-		if(!notify_suiciders && (ghost in GLOB.suicided_mob_list))
+		if(!notify_suiciders && HAS_TRAIT(ghost, TRAIT_SUICIDED))
 			continue
 		if(ignore_key && (ghost.ckey in GLOB.poll_ignore[ignore_key]))
 			continue
@@ -412,10 +412,10 @@
 	return length(held_items)
 
 /// Returns this mob's default lighting alpha
-/mob/proc/default_lighting_alpha()
+/mob/proc/default_lighting_cutoff()
 	if(client?.combo_hud_enabled && client?.prefs?.toggles & COMBOHUD_LIGHTING)
-		return LIGHTING_PLANE_ALPHA_INVISIBLE
-	return initial(lighting_alpha)
+		return LIGHTING_CUTOFF_FULLBRIGHT
+	return initial(lighting_cutoff)
 
 /// Returns a generic path of the object based on the slot
 /proc/get_path_by_slot(slot_id)

@@ -6,7 +6,7 @@
 	button_icon_state = "lay_web"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
-	check_flags = AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	cooldown_time = 0 SECONDS
 	/// How long it takes to lay a web
 	var/webbing_time = 4 SECONDS
@@ -55,7 +55,7 @@
 	if(do_after(owner, webbing_time, target = spider_turf, interaction_key = DOAFTER_SOURCE_SPIDER) && owner.loc == spider_turf)
 		plant_web(spider_turf, web)
 	else
-		owner.balloon_alert(owner, "interrupted!")
+		owner?.balloon_alert(owner, "interrupted!") // Null check because we might have been interrupted via being disintegrated
 	build_all_button_icons()
 
 /// Creates a web in the current turf

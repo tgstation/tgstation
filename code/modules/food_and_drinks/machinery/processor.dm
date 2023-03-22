@@ -170,7 +170,7 @@
 	set src in oview(1)
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
-	if (!usr.canUseTopic())
+	if(!usr.can_perform_action(src))
 		return
 	if(isliving(usr))
 		var/mob/living/L = usr
@@ -207,12 +207,11 @@
 		return
 	var/mob/living/simple_animal/slime/picked_slime
 	for(var/mob/living/simple_animal/slime/slime in range(1,src))
-		if(slime.loc == src)
+		if(!CanReach(slime)) //don't take slimes behind glass panes or somesuch; also makes it ignore slimes inside the processor
 			continue
-		if(isslime(slime))
-			if(slime.stat)
-				picked_slime = slime
-				break
+		if(slime.stat)
+			picked_slime = slime
+			break
 	if(!picked_slime)
 		return
 	var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(picked_slime)

@@ -459,6 +459,9 @@ Striking a noncultist, however, will tear their flesh."}
 	desc = "Toxic to nonbelievers; reinvigorating to the faithful - this flask may be sipped or thrown."
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "holyflask"
+	inhand_icon_state = "holyflask"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	color = "#333333"
 	list_reagents = list(/datum/reagent/fuel/unholywater = 50)
 
@@ -984,7 +987,7 @@ Striking a noncultist, however, will tear their flesh."}
 				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 450)
 				if(prob(60))
 					var/mob/living/simple_animal/hostile/illusion/M = new(owner.loc)
-					M.faction = list("cult")
+					M.faction = list(FACTION_CULT)
 					M.Copy_Parent(owner, 70, 10, 5)
 					M.move_to_delay = owner.cached_multiplicative_slowdown
 				else
@@ -997,7 +1000,7 @@ Striking a noncultist, however, will tear their flesh."}
 		if(prob(50))
 			var/mob/living/simple_animal/hostile/illusion/H = new(owner.loc)
 			H.Copy_Parent(owner, 100, 20, 5)
-			H.faction = list("cult")
+			H.faction = list(FACTION_CULT)
 			H.GiveTarget(owner)
 			H.move_to_delay = owner.cached_multiplicative_slowdown
 			to_chat(owner, span_danger("<b>[src] betrays you!</b>"))

@@ -64,22 +64,31 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
  * Escaped mobs are used to check certain antag objectives / results.
  *
  * Escaped includes minds with alive, non-exiled mobs generally.
+ *
+ * Returns TRUE if they're a free person, or FALSE if they failed
  */
 /proc/considered_escaped(datum/mind/escapee)
 	if(!considered_alive(escapee))
 		return FALSE
 	if(considered_exiled(escapee))
 		return FALSE
+	// "Into the sunset" force escaping for forced escape success
 	if(escapee.force_escaped)
 		return TRUE
-	if(SSticker.force_ending || GLOB.station_was_nuked) // Just let them win.
+	// Station destroying events (blob, cult, nukies)? Just let them win, even if there was no hope of escape
+	if(SSticker.force_ending || GLOB.station_was_nuked)
 		return TRUE
+	// Escape hasn't happened yet
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return FALSE
 	var/area/current_area = get_area(escapee.current)
-	if(!current_area || istype(current_area, /area/shuttle/escape/brig)) // Fails if they are in the shuttle brig
+	// In custody (shuttle brig) does not count as escaping
+	if(!current_area || istype(current_area, /area/shuttle/escape/brig))
 		return FALSE
 	var/turf/current_turf = get_turf(escapee.current)
+	if(!current_turf)
+		return FALSE
+	// Finally, if we made it to centcom (or the syndie base - got hijacked), we're home free
 	return current_turf.onCentCom() || current_turf.onSyndieBase()
 
 /datum/objective/proc/check_completion()
@@ -300,7 +309,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	if(human_check)
 		brain_target = target.current?.getorganslot(ORGAN_SLOT_BRAIN)
 	//Protect will always suceed when someone suicides
-	return !target || target.current?.suiciding || considered_alive(target, enforce_human = human_check) || brain_target?.suicided
+	return !target || (target.current && HAS_TRAIT(target.current, TRAIT_SUICIDED)) || considered_alive(target, enforce_human = human_check) || (brain_target && HAS_TRAIT(brain_target, TRAIT_SUICIDED))
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -543,7 +552,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	for(var/datum/mind/M in owners)
 		if(considered_alive(M))
 			return FALSE
-		if(M.current?.suiciding) //killing yourself ISN'T glorious.
+		if(M.current && HAS_TRAIT(M.current, TRAIT_SUICIDED)) //killing yourself ISN'T glorious.
 			return FALSE
 	return TRUE
 
@@ -580,16 +589,14 @@ GLOBAL_LIST_EMPTY(possible_items)
 	if(!dupe_search_range)
 		dupe_search_range = get_owners()
 	var/approved_targets = list()
-	check_items:
-		for(var/datum/objective_item/possible_item in GLOB.possible_items)
-			if(possible_item.objective_type != OBJECTIVE_ITEM_TYPE_NORMAL)
-				continue
-			if(!is_unique_objective(possible_item.targetitem,dupe_search_range))
-				continue
-			for(var/datum/mind/M in owners)
-				if(M.current.mind.assigned_role.title in possible_item.excludefromjob)
-					continue check_items
-			approved_targets += possible_item
+	for(var/datum/objective_item/possible_item in GLOB.possible_items)
+		if(!possible_item.valid_objective_for(owners, require_owner = FALSE))
+			continue
+		if(possible_item.objective_type != OBJECTIVE_ITEM_TYPE_NORMAL)
+			continue
+		if(!is_unique_objective(possible_item.targetitem,dupe_search_range))
+			continue
+		approved_targets += possible_item
 	if (length(approved_targets))
 		return set_target(pick(approved_targets))
 	return set_target(null)
@@ -640,26 +647,13 @@ GLOBAL_LIST_EMPTY(possible_items)
 			if(istype(I, steal_target))
 				if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
 					return TRUE
-				else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
+				else if(targetinfo.check_special_completion(I))//Returns true by default. Items with special checks will return true if the conditions are fulfilled.
 					return TRUE
 
 			if(targetinfo && (I.type in targetinfo.altitems)) //Ok, so you don't have the item. Do you have an alternative, at least?
 				if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
 					return TRUE
 	return FALSE
-
-GLOBAL_LIST_EMPTY(possible_items_special)
-/datum/objective/steal/special //ninjas are so special they get their own subtype good for them
-	name = "steal special"
-
-/datum/objective/steal/special/New()
-	..()
-	if(!GLOB.possible_items_special.len)
-		for(var/I in subtypesof(/datum/objective_item/special) + subtypesof(/datum/objective_item/stack))
-			new I
-
-/datum/objective/steal/special/find_target(dupe_search_range, list/blacklist)
-	return set_target(pick(GLOB.possible_items_special))
 
 /datum/objective/capture
 	name = "capture"

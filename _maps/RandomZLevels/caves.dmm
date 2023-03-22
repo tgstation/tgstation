@@ -1331,7 +1331,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "ml" = (
-/mob/living/simple_animal/hostile/asteroid/fugu,
+/mob/living/basic/wumborian_fugu,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},

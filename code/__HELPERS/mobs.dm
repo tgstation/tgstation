@@ -254,6 +254,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		return FALSE
 	if(!isnum(delay))
 		CRASH("do_after was passed a non-number delay: [delay || "null"].")
+
 	if(!interaction_key && target)
 		interaction_key = target //Use the direct ref to the target
 	if(interaction_key) //Do we have a interaction_key now?
@@ -759,7 +760,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	name = "INTERNAL DVIEW MOB"
 	invisibility = 101
 	density = FALSE
-	see_in_dark = 1e6
 	move_resist = INFINITY
 	var/ready_to_die = FALSE
 

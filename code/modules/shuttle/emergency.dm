@@ -391,7 +391,7 @@
 			if(player.stat != DEAD)
 				if(issilicon(player) && filter_by_human) //Borgs are technically dead anyways
 					continue
-				if(isanimal(player) && filter_by_human) //animals don't count
+				if(isanimal_or_basicmob(player) && filter_by_human) //animals don't count
 					continue
 				if(isbrain(player)) //also technically dead
 					continue
@@ -540,9 +540,8 @@
 
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock
-				for(var/A in SSshuttle.mobile_docking_ports)
-					var/obj/docking_port/mobile/M = A
-					M.on_emergency_dock()
+				for(var/obj/docking_port/mobile/port as anything in SSshuttle.mobile_docking_ports)
+					port.on_emergency_dock()
 
 				// now move the actual emergency shuttle to centcom
 				// unless the shuttle is "hijacked"
@@ -568,6 +567,15 @@
 	setTimer(SSshuttle.emergency_escape_time)
 	priority_announce("The Emergency Shuttle is preparing for direct jump. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 
+/obj/docking_port/mobile/monastery
+	name = "monastery pod"
+	shuttle_id = "mining_common" //set so mining can call it down
+	launch_status = UNLAUNCHED //required for it to launch as a pod.
+
+/obj/docking_port/mobile/monastery/on_emergency_dock()
+	if(launch_status == ENDGAME_LAUNCHED)
+		initiate_docking(SSshuttle.getDock("pod_away")) //docks our shuttle as any pod would
+		mode = SHUTTLE_ENDGAME
 
 /obj/docking_port/mobile/pod
 	name = "escape pod"
@@ -613,7 +621,20 @@
 /obj/machinery/computer/shuttle/pod/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
 	if(port)
-		possible_destinations += ";[port.shuttle_id]_lavaland"
+		//Checks if the computer has already added the shuttle destination with the initial id
+		//This has to be done because connect_to_shuttle is called again after its ID is updated
+		//due to conflicting id names
+		var/base_shuttle_destination = ";[initial(port.shuttle_id)]_lavaland"
+		var/shuttle_destination = ";[port.shuttle_id]_lavaland"
+
+		var/position = findtext(possible_destinations, base_shuttle_destination)
+		if(position)
+			if(base_shuttle_destination == shuttle_destination)
+				return
+			possible_destinations = splicetext(possible_destinations, position, position + length(base_shuttle_destination), shuttle_destination)
+			return
+
+		possible_destinations += shuttle_destination
 
 /**
  * Signal handler for checking if we should lock or unlock escape pods accordingly to a newly set security level
@@ -633,9 +654,11 @@
 	name = "escape pod"
 	shuttle_id = "pod"
 	hidden = TRUE
+	override_can_dock_checks = TRUE
+	/// The area the pod tries to land at
 	var/target_area = /area/lavaland/surface/outdoors
+	/// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 	var/edge_distance = 16
-	// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 
 /obj/docking_port/stationary/random/Initialize(mapload)
 	. = ..()
@@ -645,11 +668,11 @@
 	var/list/turfs = get_area_turfs(target_area)
 	var/original_len = turfs.len
 	while(turfs.len)
-		var/turf/T = pick(turfs)
-		if(T.x<edge_distance || T.y<edge_distance || (world.maxx+1-T.x)<edge_distance || (world.maxy+1-T.y)<edge_distance)
-			turfs -= T
+		var/turf/picked_turf = pick(turfs)
+		if(picked_turf.x<edge_distance || picked_turf.y<edge_distance || (world.maxx+1-picked_turf.x)<edge_distance || (world.maxy+1-picked_turf.y)<edge_distance)
+			turfs -= picked_turf
 		else
-			forceMove(T)
+			forceMove(picked_turf)
 			return
 
 	// Fallback: couldn't find anything

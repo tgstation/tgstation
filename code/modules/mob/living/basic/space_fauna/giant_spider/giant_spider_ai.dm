@@ -1,6 +1,4 @@
-#define SPIDER_ATTACK_COOLDOWN (2 SECONDS)
-
-/// For now, essentially just a Simple Hostile but room for expansion
+/// Attacks people it can see, spins webs if it can't see anything to attack.
 /datum/ai_controller/basic_controller/giant_spider
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
@@ -12,13 +10,24 @@
 
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/giant_spider,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/giant_spider,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/insect, // Space spiders are taxonomically insects not arachnids, don't DM me
+		/datum/ai_planning_subtree/find_unwebbed_turf,
+		/datum/ai_planning_subtree/spin_web,
 	)
 
+/// Giant spider which won't attack structures
+/datum/ai_controller/basic_controller/giant_spider/weak
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/random_speech/insect,
+		/datum/ai_planning_subtree/find_unwebbed_turf,
+		/datum/ai_planning_subtree/spin_web,
+	)
 
-/// Used by Araneus, who only attacks those who attack first
+/// Used by Araneus, who only attacks those who attack first. He is house-trained and will not web up the HoS office.
 /datum/ai_controller/basic_controller/giant_spider/retaliate
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
@@ -26,21 +35,26 @@
 
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/giant_spider,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/giant_spider,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/insect,
 	)
 
-/datum/ai_planning_subtree/attack_obstacle_in_path/giant_spider
-	attack_behaviour = /datum/ai_behavior/attack_obstructions/giant_spider
+/// Retaliates, hunts other maintenance creatures, runs away from larger attackers, and spins webs.
+/datum/ai_controller/basic_controller/giant_spider/pest
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/ours_or_smaller(), // Hunt mobs our size
+		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/larger(), // Run away from mobs bigger than we are
+		BB_BASIC_MOB_FLEEING = TRUE,
+	)
+	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-/datum/ai_behavior/attack_obstructions/giant_spider
-	action_cooldown = SPIDER_ATTACK_COOLDOWN
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/giant_spider
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/giant_spider
-
-/datum/ai_behavior/basic_melee_attack/giant_spider
-	action_cooldown = SPIDER_ATTACK_COOLDOWN
-
-#undef SPIDER_ATTACK_COOLDOWN
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate/to_flee,
+		/datum/ai_planning_subtree/flee_target/from_flee_key,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/random_speech/insect,
+		/datum/ai_planning_subtree/find_unwebbed_turf,
+		/datum/ai_planning_subtree/spin_web,
+	)

@@ -97,6 +97,10 @@
 		target.balloon_alert(healer, "not hurt!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
+	if (!has_healable_damage(living_target))
+		target.balloon_alert(healer, "can't heal that!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
 	if (living_target.stat == DEAD)
 		target.balloon_alert(healer, "they're dead!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -104,6 +108,10 @@
 	INVOKE_ASYNC(src, PROC_REF(heal_target), healer, target)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/// Returns true if the target has a kind of damage which we can heal
+/datum/component/healing_touch/proc/has_healable_damage(mob/living/target)
+	return (target.getBruteLoss() > 0 && heal_brute) || (target.getFireLoss() > 0 && heal_burn) || (target.getStaminaLoss() > 0 && heal_stamina)
 
 /// Perform a do_after and then heal our target
 /datum/component/healing_touch/proc/heal_target(mob/living/healer, mob/living/target)

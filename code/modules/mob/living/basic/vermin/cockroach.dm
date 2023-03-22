@@ -23,7 +23,7 @@
 	speak_emote = list("chitters")
 
 	basic_mob_flags = DEL_ON_DEATH
-	faction = list("hostile", FACTION_MAINT_CREATURES)
+	faction = list(FACTION_HOSTILE, FACTION_MAINT_CREATURES)
 
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 270
@@ -38,7 +38,6 @@
 	var/static/list/roach_drops = list(/obj/effect/decal/cleanable/insectguts)
 	AddElement(/datum/element/death_drops, roach_drops)
 	AddElement(/datum/element/swabable, cockroach_cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
-	AddElement(/datum/element/basic_body_temp_sensitive, 270, INFINITY)
 	AddComponent(/datum/component/squashable, squash_chance = 50, squash_damage = 1)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -83,7 +82,7 @@
 	melee_damage_upper = 10
 	obj_damage = 10
 	gold_core_spawnable = HOSTILE_SPAWN
-	faction = list("hostile", FACTION_MAINT_CREATURES)
+	faction = list(FACTION_HOSTILE, FACTION_MAINT_CREATURES)
 	ai_controller = /datum/ai_controller/basic_controller/cockroach/glockroach
 	cockroach_cell_line = CELL_LINE_TABLE_GLOCKROACH
 
@@ -118,7 +117,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	faction = list("hostile", FACTION_MAINT_CREATURES)
+	faction = list(FACTION_HOSTILE, FACTION_MAINT_CREATURES)
 	sharpness = SHARP_POINTY
 	ai_controller = /datum/ai_controller/basic_controller/cockroach/hauberoach
 	cockroach_cell_line = CELL_LINE_TABLE_HAUBEROACH

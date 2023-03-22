@@ -9,7 +9,7 @@
 	organs_needed = 4
 	bonus_activate_text = span_notice("goliath DNA is deeply infused with you! You can now endure walking on lava!")
 	bonus_deactivate_text = span_notice("You feel your muscle mass shrink and the tendrils around your skin wither. Your Goliath DNA is mostly gone and so is your ability to survive lava.")
-	bonus_traits = TRAIT_LAVA_IMMUNE
+	bonus_traits = list(TRAIT_LAVA_IMMUNE)
 
 ///goliath eyes, simple night vision
 /obj/item/organ/internal/eyes/night_vision/goliath
@@ -24,6 +24,9 @@
 	eye_color_left = "#FF0000"
 	eye_color_right = "#FF0000"
 
+	low_light_cutoff = list(15, 0, 8)
+	medium_light_cutoff = list(35, 15, 25)
+	high_light_cutoff = list(50, 10, 40)
 	organ_traits = list(TRAIT_UNNATURAL_RED_GLOWY_EYES)
 
 /obj/item/organ/internal/eyes/night_vision/goliath/Initialize(mapload)
@@ -63,7 +66,7 @@
 	AddElement(/datum/element/noticable_organ, "arm is just a mass of plate and tendrils.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
-/obj/item/organ/internal/brain/goliath/Insert(mob/living/carbon/brain_owner, special, drop_if_replaced, no_id_transfer)
+/obj/item/organ/internal/brain/goliath/on_insert(mob/living/carbon/brain_owner)
 	. = ..()
 	if(!ishuman(brain_owner))
 		return
@@ -75,7 +78,7 @@
 	hammer = new/obj/item/goliath_infuser_hammer
 	brain_owner.put_in_hands(hammer)
 
-/obj/item/organ/internal/brain/goliath/Remove(mob/living/carbon/brain_owner, special, no_id_transfer)
+/obj/item/organ/internal/brain/goliath/on_remove(mob/living/carbon/brain_owner)
 	. = ..()
 	UnregisterSignal(brain_owner)
 	if(!ishuman(brain_owner))
@@ -121,7 +124,7 @@
 
 /obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user)
 	// Check for nemesis factions on the target.
-	if(!("mining" in target.faction) && !("boss" in target.faction))
+	if(!(FACTION_MINING in target.faction) && !(FACTION_BOSS in target.faction))
 		// Target is not a nemesis, so attack normally.
 		return ..()
 	// Apply nemesis-specific effects.
@@ -157,6 +160,7 @@
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "skin has visible hard plates growing from within.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
+	AddElement(/datum/element/update_icon_blocker)
 
 #undef GOLIATH_ORGAN_COLOR
 #undef GOLIATH_SCLERA_COLOR

@@ -116,7 +116,7 @@
 		. += span_notice("Alt-click to [open ? "close":"open"] it.")
 
 /obj/item/storage/lockbox/medal/AltClick(mob/user)
-	if(user.canUseTopic(src, be_close = TRUE))
+	if(user.can_perform_action(src))
 		if(!atom_storage.locked)
 			open = (open ? FALSE : TRUE)
 			update_appearance()

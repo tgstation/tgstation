@@ -17,7 +17,7 @@
 	name = "Grand Ritual"
 	desc = "Provides direction to a nexus of power, then draws a rune in that location for completing the Grand Ritual. \
 		The ritual process will take longer each time it is completed."
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_HANDS_BLOCKED
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED | AB_CHECK_HANDS_BLOCKED
 	background_icon_state = "bg_spell"
 	button_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "draw"

@@ -12,10 +12,12 @@
 #define PLANE_SPACE -25
 #define PLANE_SPACE_PARALLAX -20
 
-#define GRAVITY_PULSE_PLANE -12
+#define GRAVITY_PULSE_PLANE -13
 #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
-#define RENDER_PLANE_TRANSPARENT -11 //Transparent plane that shows openspace underneath the floor
+#define RENDER_PLANE_TRANSPARENT -12 //Transparent plane that shows openspace underneath the floor
+
+#define TRANSPARENT_FLOOR_PLANE -11
 
 #define FLOOR_PLANE -10
 
@@ -57,11 +59,12 @@
 #define EMISSIVE_SPACE_LAYER 3
 #define EMISSIVE_WALL_LAYER 4
 
-/// Masks the emissive plane
-#define EMISSIVE_MASK_PLANE 15
-#define EMISSIVE_MASK_RENDER_TARGET "*EMISSIVE_MASK_PLANE"
+#define RENDER_PLANE_LIGHTING 15
 
-#define RENDER_PLANE_LIGHTING 16
+/// Masks the lighting plane with turfs, so we never light up the void
+/// Failing that, masks emissives and the overlay lighting plane
+#define LIGHT_MASK_PLANE 16
+#define LIGHT_MASK_RENDER_TARGET "*LIGHT_MASK_PLANE"
 
 ///Things that should render ignoring lighting
 #define ABOVE_LIGHTING_PLANE 17
@@ -281,12 +284,13 @@
 //Describes how different plane masters behave when they are being culled for performance reasons
 /// This plane master will not go away if its layer is culled. useful for preserving effects
 #define PLANE_CRITICAL_DISPLAY (1<<0)
-/// This plane master will temporarially remove relays to non critical planes if it's layer is culled (and it's critical)
-/// This is VERY hacky, but needed to ensure that some instances of BLEND_MULITPLY work as expected (fuck you god damn parallax)
-/// It also implies that the critical plane has a *'d render target, making it mask itself
-#define PLANE_CRITICAL_NO_EMPTY_RELAY (1<<1)
+/// This plane master will temporarially remove relays to all other planes
+/// Allows us to retain the effects of a plane while cutting off the changes it makes
+#define PLANE_CRITICAL_NO_RELAY (1<<1)
+/// We assume this plane master has a render target starting with *, it'll be removed, forcing it to render in place
+#define PLANE_CRITICAL_CUT_RENDER (1<<2)
 
-#define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_EMPTY_RELAY)
+#define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_RELAY|PLANE_CRITICAL_CUT_RENDER)
 
 /// A value of /datum/preference/numeric/multiz_performance that disables the option
 #define MULTIZ_PERFORMANCE_DISABLE -1

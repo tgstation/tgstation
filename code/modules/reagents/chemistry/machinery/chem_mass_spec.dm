@@ -125,7 +125,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	if(processing_reagents)
 		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return ..()
 	replace_beaker(user, BEAKER1)
 
@@ -134,7 +134,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	if(processing_reagents)
 		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	replace_beaker(user, BEAKER2)
 

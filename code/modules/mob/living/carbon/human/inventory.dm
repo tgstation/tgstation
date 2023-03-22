@@ -137,7 +137,7 @@
 				update_glasses_color(G, 1)
 			if(G.tint)
 				update_tint()
-			if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
+			if(G.vision_flags || G.invis_override || G.invis_view || !isnull(G.lighting_cutoff))
 				update_sight()
 			update_worn_glasses()
 		if(ITEM_SLOT_GLOVES)
@@ -200,12 +200,9 @@
 		. += thing?.slowdown
 
 /mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
-	var/index = get_held_index_of_item(I)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !I)
 		return
-	if(index && !QDELETED(src) && dna.species.mutanthands) //hand freed, fill with claws, skip if we're getting deleted.
-		put_in_hand(new dna.species.mutanthands(), index)
 	if(I == wear_suit)
 		if(s_store && invdrop)
 			dropItemToGround(s_store, TRUE) //It makes no sense for your suit storage to stay on you if you drop your suit.
@@ -243,7 +240,7 @@
 			update_glasses_color(G, 0)
 		if(G.tint)
 			update_tint()
-		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
+		if(G.vision_flags || G.invis_override || G.invis_view || !isnull(G.lighting_cutoff))
 			update_sight()
 		if(!QDELETED(src))
 			update_worn_glasses()
@@ -380,6 +377,8 @@
 			equipped_item.attack_hand(src)
 		else
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
+		return
+	if(!storage.supports_smart_equip)
 		return
 	if(thing) // put thing in storage item
 		if(!equipped_item.atom_storage?.attempt_insert(thing, src))

@@ -54,10 +54,17 @@
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
 		return
+
+	var/old_health = health
 	set_health(maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss() - getFireLoss())
+
+	var/old_stat = stat
 	update_stat()
+
 	diag_hud_set_health()
-	disconnect_shell()
+
+	if(old_health > health || old_stat != stat) // only disconnect if we lose health or change stat
+		disconnect_shell()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/silicon/ai/update_stat()
@@ -73,11 +80,9 @@
 
 /mob/living/silicon/ai/update_sight()
 	set_invis_see(initial(see_invisible))
-	set_see_in_dark(initial(see_in_dark))
 	set_sight(initial(sight))
 	if(aiRestorePowerRoutine)
 		clear_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		set_see_in_dark(0)
 
 	if(see_override)
 		set_invis_see(see_override)

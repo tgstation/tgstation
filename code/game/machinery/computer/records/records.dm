@@ -14,6 +14,7 @@
 		return data
 
 	data["assigned_view"] = "preview_[user.ckey]_[REF(src)]_records"
+	data["station_z"] = !!(z && is_station_level(z))
 
 	return data
 
@@ -41,10 +42,15 @@
 		if("expunge_record")
 			if(!target)
 				return FALSE
+			// Don't let people off station futz with the station network.
+			if(!is_station_level(z))
+				balloon_alert(usr, "out of range!")
+				return TRUE
 
 			expunge_record_info(target)
 			balloon_alert(usr, "record expunged")
 			playsound(src, 'sound/machines/terminal_eject.ogg', 70, TRUE)
+			investigate_log("[key_name(usr)] expunged the record of [target.name].", INVESTIGATE_RECORDS)
 
 			return TRUE
 
@@ -60,8 +66,13 @@
 			return TRUE
 
 		if("purge_records")
+			// Don't let people off station futz with the station network.
+			if(!is_station_level(z))
+				balloon_alert(usr, "out of range!")
+				return TRUE
+
 			ui.close()
-			balloon_alert(usr, "purging records")
+			balloon_alert(usr, "purging records...")
 			playsound(src, 'sound/machines/terminal_alert.ogg', 70, TRUE)
 
 			if(do_after(usr, 5 SECONDS))
@@ -70,6 +81,9 @@
 
 				balloon_alert(usr, "records purged")
 				playsound(src, 'sound/machines/terminal_off.ogg', 70, TRUE)
+				investigate_log("[key_name(usr)] purged all records.", INVESTIGATE_RECORDS)
+			else
+				balloon_alert(usr, "interrupted!")
 
 			return TRUE
 
@@ -129,7 +143,7 @@
 
 /// Inserts a new record into GLOB.manifest.general. Requires a photo to be taken.
 /obj/machinery/computer/records/proc/insert_new_record(mob/user, obj/item/photo/mugshot)
-	if(!mugshot || !is_operational || !user.canUseTopic(src, be_close = !issilicon(user)))
+	if(!mugshot || !is_operational || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return FALSE
 
 	if(!authenticated && !has_auth(user))
@@ -137,9 +151,14 @@
 		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE
 
+	if(mugshot.picture.psize_x > world.icon_size || mugshot.picture.psize_y > world.icon_size)
+		balloon_alert(user, "photo too large!")
+		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
+		return FALSE
+
 	var/trimmed = copytext(mugshot.name, 9, MAX_NAME_LEN) // Remove "photo - "
 	var/name = tgui_input_text(user, "Enter the name of the new record.", "New Record", trimmed, MAX_NAME_LEN)
-	if(!name || !is_operational || !user.canUseTopic(src, be_close = !issilicon(user)) || !mugshot || QDELETED(mugshot) || QDELETED(src))
+	if(!name || !is_operational || !user.can_perform_action(src, ALLOW_SILICON_REACH) || !mugshot || QDELETED(mugshot) || QDELETED(src))
 		return FALSE
 
 	new /datum/record/crew(name = name, character_appearance = mugshot.picture.picture_image)
@@ -153,7 +172,7 @@
 
 /// Secure login
 /obj/machinery/computer/records/proc/secure_login(mob/user)
-	if(!user.canUseTopic(src, be_close = !issilicon(user)) || !is_operational)
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !is_operational)
 		return FALSE
 
 	if(!has_auth(user))

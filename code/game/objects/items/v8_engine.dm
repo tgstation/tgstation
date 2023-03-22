@@ -24,7 +24,7 @@
 	if (!COOLDOWN_FINISHED(src, engine_sound_cooldown))
 		return
 	playsound(src, 'sound/items/car_engine_start.ogg', vol = 75, vary = FALSE, extrarange = 3)
-	Shake(7, 7, ENGINE_COOLDOWN)
+	Shake(duration = ENGINE_COOLDOWN)
 	to_chat(user, span_notice("Darn thing... it's too old to keep on without retrofitting it! Without modifications, it works like it's junk."))
 	COOLDOWN_START(src, engine_sound_cooldown, ENGINE_COOLDOWN)
 

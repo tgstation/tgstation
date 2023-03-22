@@ -352,7 +352,7 @@
 	abstract = FALSE
 	/// Typepaths of mobs to create
 	var/static/list/permitted_mobs = list(
-		/mob/living/simple_animal/hostile/asteroid/fugu,
+		/mob/living/basic/wumborian_fugu,
 		/mob/living/simple_animal/hostile/skeleton,
 		/mob/living/simple_animal/hostile/killertomato,
 		/mob/living/simple_animal/hostile/ooze,
