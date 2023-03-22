@@ -15,7 +15,7 @@
 	outfit = /datum/outfit/lunch_superintendent
 
 /datum/outfit/lunch_superintendent
-		name = "Forgotten Superintendent"
+	name = "Forgotten Superintendent"
 	uniform = /obj/item/clothing/under/suit/navy
 	neck = /obj/item/clothing/neck/tie/red/tied
 	shoes = /obj/item/clothing/shoes/laceup
