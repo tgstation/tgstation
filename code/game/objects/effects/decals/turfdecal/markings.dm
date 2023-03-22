@@ -227,84 +227,101 @@
 
 /// Automatically generates all subtypes for a siding with the given path.
 #define SIDING_SUBTYPE_HELPER(path)\
-##path/corner{\;\
+##path/corner{\
+	name = "siding corner";\
 	icon_state = "siding_corner";\
 }\
-##path/end{\;\
+##path/end{\
+	name = "siding end";\
 	icon_state = "siding_end";\
 }
 
 /obj/effect/turf_decal/siding
+	name = "siding"
 	icon_state = "siding_line"
 
 /obj/effect/turf_decal/siding/white
+	name = "white siding"
 	color = "#BCBCBC"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/white)
 
 /obj/effect/turf_decal/siding/red
+	name = "red siding"
 	color = "#DE3A3A"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/red)
 
 /obj/effect/turf_decal/siding/dark_red
+	name = "dark red siding"
 	color = "#B11111"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/dark_red)
 
 /obj/effect/turf_decal/siding/green
+	name = "green siding"
 	color = "#9FED58"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/green)
 
 /obj/effect/turf_decal/siding/dark_green
+	name = "dark green siding"
 	color = "#439C1E"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/dark_green)
 
 /obj/effect/turf_decal/siding/blue
+	name = "blue siding"
 	color = "#52B4E9"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/blue)
 
 /obj/effect/turf_decal/siding/dark_blue
+	name = "dark blue siding"
 	color = "#486091"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/dark_blue)
 
 /obj/effect/turf_decal/siding/yellow
+	name = "yellow siding"
 	color = "#EFB341"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/yellow)
 
 /obj/effect/turf_decal/siding/purple
+	name = "purple siding"
 	color = "#D381C9"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/purple)
 
 /obj/effect/turf_decal/siding/brown
+	name = "brown siding"
 	color = "#A46106"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/brown)
 
 /obj/effect/turf_decal/siding/dark
+	name = "dark siding"
 	color = "#474747"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/dark)
 
 /obj/effect/turf_decal/siding/wood
+	name = "wood siding"
 	icon_state = "siding_wood_line"
 	color = "#5d341f"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/wood)
 
 /obj/effect/turf_decal/siding/thinplating
+	name = "thin plating"
 	icon_state = "siding_thinplating_line"
 	color = "#aaaaaa"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/thinplating)
 
 /obj/effect/turf_decal/siding/thinplating/light
+	name = "light thin plating"
 	color = "#FFFFFF"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/thinplating/light)
@@ -316,75 +333,88 @@ SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/thinplating/light)
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/thinplating/dark)
 
 /obj/effect/turf_decal/siding/thinplating/terracotta
+	name = "thin terracotta plating"
 	icon_state = "siding_thinplating_line"
 	color = "#b84221"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/thinplating/terracotta)
 
 /obj/effect/turf_decal/siding/wideplating
+	name = "wide plating"
 	icon_state = "siding_wideplating_line"
 	color = "#aaaaaa"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/wideplating)
 
 /obj/effect/turf_decal/siding/wideplating/light
+	name = "light wide plating"
 	color = "#FFFFFF"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/wideplating/light)
 
 /obj/effect/turf_decal/siding/wideplating/dark
+	name = "dark wide plating"
 	icon_state = "siding_wideplating_line"
 	color = "#474747"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/wideplating/dark)
 
 /obj/effect/turf_decal/siding/wideplating/terracotta
+	name = "wide terracotta plating"
 	icon_state = "siding_wideplating_line"
 	color = "#b84221"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/wideplating/terracotta)
 
 /obj/effect/turf_decal/siding/thinplating_new
+	name = "new thin plating"
 	icon_state = "siding_thinplating_new_line"
 	color = "#949494"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/thinplating_new)
 
 /obj/effect/turf_decal/siding/thinplating_new/light
+	name = "light new thin plating"
 	color = "#e2e2e2"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/thinplating_new/light)
 
 /obj/effect/turf_decal/siding/thinplating_new/dark
+	name = "dark new thin plating"
 	icon_state = "siding_thinplating_new_line"
 	color = "#36373a"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/thinplating_new/dark)
 
 /obj/effect/turf_decal/siding/thinplating_new/terracotta
+	name = "new thin terracotta plating"
 	icon_state = "siding_thinplating_new_line"
 	color = "#b84221"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/thinplating_new/terracotta)
 
 /obj/effect/turf_decal/siding/wideplating_new
+	name = "new wide plating"
 	icon_state = "siding_wideplating_new_line"
 	color = "#949494"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/wideplating_new)
 
 /obj/effect/turf_decal/siding/wideplating_new/light
+	name = "light new wide plating"
 	color = "#e2e2e2"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/wideplating_new/light)
 
 /obj/effect/turf_decal/siding/wideplating_new/dark
+	name = "dark new wide plating"
 	icon_state = "siding_wideplating_new_line"
 	color = "#36373a"
 
 SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding/wideplating_new/dark)
 
 /obj/effect/turf_decal/siding/wideplating_new/terracotta
+	name = "new wide terracotta plating"
 	icon_state = "siding_wideplating_new_line"
 	color = "#b84221"
 
