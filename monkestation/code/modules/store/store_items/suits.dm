@@ -3,6 +3,9 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 *	WINTER COATS
 */
 
+/datum/store_item/suit
+	category = LOADOUT_ITEM_SUIT
+
 /datum/store_item/suit/winter_coat
 	name = "Winter Coat"
 	item_path = /obj/item/clothing/suit/hooded/wintercoat
