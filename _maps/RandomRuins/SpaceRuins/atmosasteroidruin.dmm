@@ -501,7 +501,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "Ll" = (
-/obj/machinery/door/airlock/external/glass/ruin,
+/obj/machinery/door/airlock/external/glass/ruin{
+	locked = 1
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
