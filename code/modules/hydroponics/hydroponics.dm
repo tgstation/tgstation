@@ -1002,6 +1002,8 @@
 		name = initial(name)
 		desc = initial(desc)
 		TRAY_NAME_UPDATE
+	else
+		set_plant_status(HYDROTRAY_PLANT_GROWING)
 	update_appearance()
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.
