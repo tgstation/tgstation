@@ -205,7 +205,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/random)
 	icon_state = "trimline_tram";\
 }\
 ##path/mid_joiner {\
-	icon_state = "trimline_mid_joiner";\
+	icon_state = "trimline_mid";\
 }\
 ##path/filled {\
 	name = "filled trim decal";\
