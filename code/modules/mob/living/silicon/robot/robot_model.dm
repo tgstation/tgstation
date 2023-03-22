@@ -303,6 +303,10 @@
 	model_select_icon = "service"
 	cyborg_base_icon = "clown"
 	hat_offset = -2
+	borg_skins = list(
+		"Clown" = list(SKIN_ICON_STATE = "clown"),
+		"Ringleader" = list(SKIN_ICON_STATE = "ringleader", SKIN_HAT_OFFSET = INFINITY),
+	)
 
 /obj/item/robot_model/clown/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	. = ..()
@@ -346,6 +350,10 @@
 	model_select_icon = "engineer"
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
+	borg_skins = list(
+		"N-Gin" = list(SKIN_ICON_STATE = "engineer"),
+		"NT-06F" = list(SKIN_ICON_STATE = "zakuneer", SKIN_HAT_OFFSET = 2),
+	)
 
 /obj/item/robot_model/janitor
 	name = "Janitor"
@@ -373,6 +381,10 @@
 	cyborg_base_icon = "janitor"
 	model_select_icon = "janitor"
 	hat_offset = -5
+	borg_skins = list(
+		"Janibot" = list(SKIN_ICON_STATE = "janitor"),
+		"V.5" = list(SKIN_ICON_STATE = "janitaur", SKIN_HAT_OFFSET = 3),
+	)
 	/// Weakref to the wash toggle action we own
 	var/datum/weakref/wash_toggle_ref
 
@@ -644,6 +656,7 @@
 	borg_skins = list(
 		"Machinified Doctor" = list(SKIN_ICON_STATE = "medical"),
 		"Qualified Doctor" = list(SKIN_ICON_STATE = "qualified_doctor"),
+		"Mediorb" = list(SKIN_ICON_STATE = "medicorb", SKIN_HAT_OFFSET = 2),
 	)
 
 /obj/item/robot_model/miner
@@ -673,6 +686,7 @@
 		"Asteroid Miner" = list(SKIN_ICON_STATE = "minerOLD"),
 		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin"),
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
+		"Papa Miner" = list(SKIN_ICON_STATE = "papaminer",  SKIN_HAT_OFFSET = 2),
 	)
 	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes. //fuck you
 
@@ -704,6 +718,10 @@
 	model_select_icon = "standard"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = -2
+	borg_skins = list(
+		"Peacekeeper" = list(SKIN_ICON_STATE = "peace"),
+		"Hugbot" = list(SKIN_ICON_STATE = "hugbot",  SKIN_HAT_OFFSET = 2),
+	)
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
@@ -782,6 +800,9 @@
 		"Kent" = list(SKIN_ICON_STATE = "kent", SKIN_LIGHT_KEY = "medical", SKIN_HAT_OFFSET = 3),
 		"Tophat" = list(SKIN_ICON_STATE = "tophat", SKIN_LIGHT_KEY = NONE, SKIN_HAT_OFFSET = INFINITY),
 		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
+		"Mixer" = list(SKIN_ICON_STATE = "service_spider", SKIN_LIGHT_KEY = "service_spider", SKIN_HAT_OFFSET = INFINITY),
+		"DJBot" = list(SKIN_ICON_STATE = "djbot", SKIN_LIGHT_KEY = "djbot", SKIN_HAT_OFFSET = 2),
+		"Stereobot" = list(SKIN_ICON_STATE = "boombot", SKIN_LIGHT_KEY = "boombot", SKIN_HAT_OFFSET = 1),
 	)
 
 /obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
