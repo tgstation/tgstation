@@ -228,6 +228,7 @@
 	glass_egg_reagents = null
 	speech_buffer = null
 	applied_visual = null
+	disliked_foods = null
 	return ..()
 
 /mob/living/simple_animal/chicken/AltClick(mob/user)
