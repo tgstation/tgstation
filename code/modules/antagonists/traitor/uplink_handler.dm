@@ -58,7 +58,7 @@
 
 /// Checks if traitor has enough reputation to purchase an item
 /datum/uplink_handler/proc/not_enough_reputation(datum/uplink_item/to_purchase)
-	return has_progression && progression_points < to_purchase.progression_minimum
+	return FALSE
 
 /// Checks for uplink flags as well as items restricted to roles and species
 /datum/uplink_handler/proc/check_if_restricted(datum/uplink_item/to_purchase)
