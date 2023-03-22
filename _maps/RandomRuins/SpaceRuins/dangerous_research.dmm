@@ -3199,13 +3199,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
-"Pc" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/turf/closed/wall/rust,
-/area/ruin/space/has_grav/dangerous_research/lab)
 "Pk" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
@@ -4874,7 +4867,7 @@ iU
 vv
 Tc
 fx
-Pc
+fx
 Fw
 Tc
 Rs

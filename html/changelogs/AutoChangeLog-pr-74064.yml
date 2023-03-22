@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - admin: "You can now optionally populate new lists created via vv. hit cancel to stop filling them up"
