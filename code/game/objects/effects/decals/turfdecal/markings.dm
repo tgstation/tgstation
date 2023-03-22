@@ -227,12 +227,12 @@
 
 #define SIDING_SUBTYPE_HELPER(path)\
 ##path/corner{\
-	name = "siding corner"\
-	icon_state = "siding_corner"\
+	name = "siding corner";\
+	icon_state = "siding_corner";\
 }\
 ##path/end{\
-	name = "siding end"\
-	icon_state = "siding_end"\
+	name = "siding end";\
+	icon_state = "siding_end";\
 }
 
 /obj/effect/turf_decal/siding
