@@ -318,7 +318,7 @@
 
 ///Icemoon Syndicate Comms Agent
 
-/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/human/icemoon
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/icemoon
 	name = "Syndicate Comms Agent"
 	prompt_name = "a syndicate comms agent"
 	you_are_text = "You are a syndicate comms agent, assigned in an underground secret listening post close to your enemy's facility."
