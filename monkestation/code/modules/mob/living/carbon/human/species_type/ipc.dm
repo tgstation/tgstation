@@ -73,6 +73,13 @@
 	var/saved_screen //for saving the screen when they die
 	var/datum/action/innate/change_screen/change_screen
 
+/datum/species/ipc/get_scream_sound(mob/living/carbon/human/ethereal)
+	return pick(
+		'sound/voice/ethereal/ethereal_scream_1.ogg',
+		'sound/voice/ethereal/ethereal_scream_2.ogg',
+		'sound/voice/ethereal/ethereal_scream_3.ogg',
+	)
+
 /datum/species/ipc/get_species_description()
 	return "Hailing from a planet that was lost long ago, the moths travel \
 		the galaxy as a nomadic people aboard a colossal fleet of ships, seeking a new homeland."
