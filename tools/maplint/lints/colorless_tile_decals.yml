@@ -1,0 +1,3 @@
+help: Colorless /obj/effect/turf_decal/tile detected! Please delete it or replace it with the desired colored subtype.
+=/obj/effect/turf_decal/tile:
+  banned: TRUE
