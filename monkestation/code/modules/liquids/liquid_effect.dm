@@ -12,7 +12,7 @@
 	light_power = 1
 	light_color = LIGHT_COLOR_FIRE
 
-	smoothing_flags = SMOOTH_BITMASK
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_OBJ
 	smoothing_groups = SMOOTH_GROUP_WATER
 	canSmoothWith = SMOOTH_GROUP_WATER + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_WINDOW_FULLTILE
 
