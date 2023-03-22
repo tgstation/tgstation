@@ -29,6 +29,10 @@
 	/// Floor tile is placed down
 	var/tile_placed = FALSE
 
+/obj/machinery/plumbing/floor_pump/Initialize(mapload, bolt, layer)
+	. = ..()
+	RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(on_hide))
+
 /obj/machinery/plumbing/floor_pump/examine(mob/user)
 	. = ..()
 	. += span_notice("It's currently turned [turned_on ? "ON" : "OFF"].")
@@ -83,9 +87,7 @@
 /**
  * Handle COMSIG_OBJ_HIDE to toggle whether we're on the floor
  */
-/obj/machinery/plumbing/floor_pump/hide(atom/movable/parent_obj, underfloor_accessibility)
-	var/should_hide = !underfloor_accessibility
-	
+/obj/machinery/plumbing/floor_pump/proc/on_hide(atom/movable/AM, should_hide)
 	tile_placed = should_hide
 	update_appearance()
 
