@@ -957,7 +957,6 @@
 		"pat",
 		"administer plushies",
 		"distribute cookies",
-		"sex",
 		"weh")
 
 /obj/item/card/fuzzy_license/attack_self(mob/user)
