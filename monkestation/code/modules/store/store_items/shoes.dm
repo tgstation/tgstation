@@ -1,10 +1,5 @@
 GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 
-/datum/store_item/shoes/winter_boots
-	name = "Winter Boots"
-	item_path = /obj/item/clothing/shoes/winterboots
-	item_cost = 4000
-
 /datum/store_item/shoes/work_boots
 	name = "Work Boots"
 	item_path = /obj/item/clothing/shoes/workboots
