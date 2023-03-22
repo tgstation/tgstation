@@ -1005,6 +1005,7 @@
 	else
 		set_plant_status(HYDROTRAY_PLANT_GROWING)
 	update_appearance()
+	SEND_SIGNAL(src, COMSIG_HYDROTRAY_ON_HARVEST, user, product_count)
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.
 /**
