@@ -225,6 +225,7 @@
 /obj/effect/turf_decal/mining/survival
 	icon_state = "survival"
 
+/// Automatically generates all subtypes for a siding with the given path.
 #define SIDING_SUBTYPE_HELPER(path)\
 ##path/corner{\;\
 	icon_state = "siding_corner";\

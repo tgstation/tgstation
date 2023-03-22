@@ -19,8 +19,7 @@
 
 #undef PRIDE_ALPHA
 
-/// Automatically generates all subtypes for a decal with the given suffix, name, and color.
-/// If lummox ever adds the ability to edit strings at compile (unlikely), update this macro such that the names in this macro include the color please.
+/// Automatically generates all subtypes for a decal with the given path.
 #define TILE_DECAL_SUBTYPE_HELPER(path)\
 ##path/opposingcorners {\
 	icon_state = "tile_opposing_corners";\;\
@@ -158,6 +157,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/random)
 		color = "#[random_short_color()]"
 	return ..()
 
+/// Automatically generates all trimlines for a decal with the given path.
 #define TRIMLINE_SUBTYPE_HELPER(path)\
 ##path/line {\;\
 	icon_state = "trimline";\
