@@ -6,10 +6,9 @@
 
 import { toFixed } from 'common/math';
 import { useDispatch, useSelector } from 'common/redux';
-import { Button, Collapsible, Flex, Knob } from 'tgui/components';
+import { Button, Collapsible, Flex, Knob, Section } from 'tgui/components';
 import { useSettings } from '../settings';
 import { selectAudio } from './selectors';
-import { Section } from '../../tgui/components';
 
 export const NowPlayingWidget = (props, context) => {
   const audio = useSelector(context, selectAudio),
