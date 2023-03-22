@@ -857,7 +857,7 @@
 		reagents.clear_reagents()
 
 	if(heal_flags & HEAL_ADMIN)
-		suiciding = FALSE
+		REMOVE_TRAIT(src, TRAIT_SUICIDED, REF(src))
 
 	updatehealth()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
