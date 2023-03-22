@@ -70,9 +70,11 @@ def update_map(map_path):
                 print("Warning, what the fuck did we just parse? {}".format(decal))
 
             color = matched.group(1)
-            if color == None: # Corg, you big dummy, you can't just use a null preset for white
-                print("Warning, tile with no color (this is bad): {}".format(decal))
-                color = "white"
+            if color == None:
+                # Commented out because there's no reason for this to occur. if it exists on /tg/ for some reason, it should really be addressed case-by-case outside of the scope of this script (with an UpdatePaths)
+                # This is because null-colored turf decals legitimately have no color and don't modify appearances, bit silly.
+                # print("Warning, tile with no color (this is bad): {}".format(decal))
+                continue
 
             last = matched.group(2)
             if last == None:
