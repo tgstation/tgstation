@@ -24,8 +24,6 @@
 	mutantheart = null
 	mutantlungs = null
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
-	mutant_organs = list(/obj/item/organ/internal/adamantine_resonator)
-	speedmod = 2
 	payday_modifier = 0.75
 	armor = 55
 	siemens_coeff = 0
@@ -34,8 +32,6 @@
 	sexes = 1
 	meat = /obj/item/food/meat/slab/human/mutant/golem
 	species_language_holder = /datum/language_holder/golem
-	// To prevent golem subtypes from overwhelming the odds when random species
-	// changes, only the Random Golem type can be chosen
 	fixed_mut_color = "#aaaaaa"
 
 	bodypart_overrides = list(
@@ -60,10 +56,10 @@
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "gem",
 		SPECIES_PERK_NAME = "Lithoid",
-		SPECIES_PERK_DESC = "Lithoids are creatures made out of elements instead of \
-			blood and flesh. Because of this, they're generally stronger, slower, \
-			and mostly immune to environmental dangers and dangers to their health, \
-			such as viruses and dismemberment.",
+		SPECIES_PERK_DESC = "Lithoids are creatures made out of minerals instead of \
+			blood and flesh. They are strong and immune to many environmental and personal dangers \
+			such as pressure, electricity, viruses, and dismemberment. In exchange they \
+			must consume minerals to survive, which may grant them additional temporary benefits.",
 	))
 
 	return to_add

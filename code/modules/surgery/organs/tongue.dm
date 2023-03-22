@@ -452,16 +452,6 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	desc = "A fleshy muscle mostly used for meowing."
 	say_mod = "meows"
 
-/obj/item/organ/internal/tongue/bananium
-	name = "bananium tongue"
-	desc = "A bananium geode mostly used for honking."
-	say_mod = "honks"
-
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
-	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
-	icon_state = "gold_horn"
-
 /obj/item/organ/internal/tongue/jelly
 	name = "jelly tongue"
 	desc = "Ah... That's not the sound I expected it to make. Sounds like a Space Autumn Bird."

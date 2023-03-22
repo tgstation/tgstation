@@ -343,7 +343,6 @@
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 14
 
-///GOLEMS (i hate xenobio SO FUCKING MUCH) (from 2022: Yeah I fucking feel your pain brother)
 /obj/item/bodypart/head/golem
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_GOLEM
@@ -362,7 +361,7 @@
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
-	unarmed_damage_low = 5 // I'd like to take the moment that maintaining all of these random ass golem speciese is hell and oranges was right
+	unarmed_damage_low = 5
 	unarmed_damage_high = 14
 	unarmed_stun_threshold = 11
 
