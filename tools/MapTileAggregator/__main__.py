@@ -118,8 +118,9 @@ def update_map(map_path):
     return (the_map, checked)
 
 if __name__ == '__main__':
+    print("hi")
     list_of_files = list()
-    for root, directories, filenames in os.walk("../_maps/"):
+    for root, directories, filenames in os.walk("../../_maps/"):
         for filename in [f for f in filenames if f.endswith(".dmm")]:
             list_of_files.append(pathlib.Path(root, filename))
     for path in list_of_files:
