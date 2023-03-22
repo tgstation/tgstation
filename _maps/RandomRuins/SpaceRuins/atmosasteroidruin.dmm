@@ -191,7 +191,7 @@
 /area/ruin/space/has_grav)
 "ry" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/tank_holder/extinguisher/advanced,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav)
 "ti" = (
