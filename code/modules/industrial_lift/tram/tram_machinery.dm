@@ -143,7 +143,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		if(!tram_part.travelling)
 			if(is_operational)
 				for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
-					xing.set_signal_state(XING_STATE_AMBER, TRUE)
+					xing.set_signal_state(XING_STATE_MALF, TRUE)
 				for(var/obj/machinery/destination_sign/desto as anything in GLOB.tram_signs)
 					desto.icon_state = "[desto.base_icon_state][DESTINATION_OFF]"
 					desto.update_appearance()
@@ -247,11 +247,11 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 	light_range = 1.5
 	light_power = 3
-	light_color = COLOR_VIBRANT_LIME
+	light_color = LIGHT_COLOR_BABY_BLUE
 	luminosity = 1
 
-	/// green, amber, or red.
-	var/signal_state = XING_STATE_GREEN
+	/// green, amber, or red for tram, blue if it's emag, tram missing, etc.
+	var/signal_state = XING_STATE_MALF
 	/// The ID of the tram we control
 	var/tram_id = MAIN_STATION_TRAM
 	/// Weakref to the tram piece we control
@@ -468,7 +468,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
 
 	// How far away are we? negative if already passed.
-	var/approach_distance = tram_velocity_sign * (signal_pos - (tram_pos + 5))
+	var/approach_distance = tram_velocity_sign * (signal_pos - (tram_pos + (XING_DEFAULT_TRAM_LENGTH * 0.5)))
 
 	// Check for stopped state.
 	// Will kill the process since tram starting up will restart process.
@@ -525,13 +525,13 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	var/new_color
 	switch(signal_state)
 		if(XING_STATE_MALF)
-			new_color = COLOR_BRIGHT_BLUE
+			new_color = LIGHT_COLOR_BABY_BLUE
 		if(XING_STATE_GREEN)
-			new_color = COLOR_VIBRANT_LIME
+			new_color = LIGHT_COLOR_VIVID_GREEN
 		if(XING_STATE_AMBER)
-			new_color = COLOR_YELLOW
+			new_color = LIGHT_COLOR_BRIGHT_YELLOW
 		else
-			new_color = COLOR_RED
+			new_color = LIGHT_COLOR_FLARE
 
 	set_light(l_on = TRUE, l_color = new_color)
 
