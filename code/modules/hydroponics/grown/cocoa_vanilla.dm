@@ -10,7 +10,6 @@
 	maturation = 5
 	production = 5
 	yield = 2
-	instability = 20
 	growthstages = 5
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "cocoapod-grow"

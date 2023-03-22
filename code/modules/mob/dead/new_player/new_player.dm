@@ -229,6 +229,12 @@
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, character, rank)
 
+	if(humanc)
+		for(var/datum/loadout_item/item as anything in loadout_list_to_datums(humanc?.client?.prefs?.loadout_list))
+			if (item.restricted_roles && length(item.restricted_roles) && !(job.title in item.restricted_roles))
+				continue
+			item.post_equip_item(humanc.client?.prefs, humanc)
+
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
 	for(var/C in GLOB.employmentCabinets)

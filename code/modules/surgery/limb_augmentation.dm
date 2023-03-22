@@ -60,6 +60,9 @@
 		/datum/surgery_step/replace_limb,
 	)
 
+/datum/surgery/augmentation/can_start(mob/user, mob/living/carbon/target)
+	return ..() && !isoozeling(target)
+
 //SURGERY STEP SUCCESSES
 
 /datum/surgery_step/replace_limb/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/bodypart/tool, datum/surgery/surgery, default_display_results = FALSE)

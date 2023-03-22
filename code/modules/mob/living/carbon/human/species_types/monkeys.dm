@@ -148,14 +148,6 @@
 	return "Monkeys are a type of primate that exist between humans and animals on the evolutionary chain. \
 		Every year, on Monkey Day, Nanotrasen shows their respect for the little guys by allowing them to roam the station freely."
 
-/datum/species/monkey/get_species_lore()
-	return list(
-		"Monkeys are commonly used as test subjects on board Space Station Thirteen. \
-		But what if... for one day... the Monkeys were allowed to be the scientists? \
-		What experiments would they come up it? Would they (stereotypically) be related to bananas somehow? \
-		There's only one way to find out.",
-	)
-
 /datum/species/monkey/create_pref_unique_perks()
 	var/list/to_add = list()
 

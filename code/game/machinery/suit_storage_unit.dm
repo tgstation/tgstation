@@ -80,12 +80,15 @@
 
 /obj/machinery/suit_storage_unit/engine
 	mask_type = /obj/item/clothing/mask/breath
-	mod_type = /obj/item/mod/control/pre_equipped/engineering
+	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
+	helmet_type = /obj/item/clothing/head/helmet/space/hardsuit/engine
+	storage_type = /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/atmos
 	mask_type = /obj/item/clothing/mask/gas/atmos
 	storage_type = /obj/item/watertank/atmos
-	mod_type = /obj/item/mod/control/pre_equipped/atmospheric
+	helmet_type = /obj/item/clothing/head/helmet/space/hardsuit/atmos
+	suit_type = /obj/item/clothing/suit/space/hardsuit/atmos
 
 /obj/machinery/suit_storage_unit/ce
 	mask_type = /obj/item/clothing/mask/breath

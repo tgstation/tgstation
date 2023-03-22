@@ -220,7 +220,7 @@
 			controller.blackboard[BB_MONKEY_GUN_WORKED] = TRUE // 'worked'
 
 	// no de-aggro
-	if(controller.blackboard[BB_MONKEY_AGGRESSIVE])
+	if(controller.blackboard[BB_MONKEY_AGGRESSIVE] && !(HAS_TRAIT(target, TRAIT_MONKEYFRIEND)))
 		return
 
 	/// mob refs are uids, so this is safe
@@ -229,7 +229,7 @@
 		controller.blackboard[BB_MONKEY_ENEMIES][target_ref]--
 
 	// if we are not angry at our target, go back to idle
-	if(controller.blackboard[BB_MONKEY_ENEMIES][target_ref] <= 0)
+	if(controller.blackboard[BB_MONKEY_ENEMIES][target_ref] <= 0 || (HAS_TRAIT(target, TRAIT_MONKEYFRIEND)))
 		var/list/enemies = controller.blackboard[BB_MONKEY_ENEMIES]
 		enemies.Remove(target_ref)
 		if(controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] == WEAKREF(target))

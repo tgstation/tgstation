@@ -453,6 +453,10 @@ Behavior that's still missing from this component that original food items had t
 	if(!iscarbon(eater))
 		return FALSE
 	var/mob/living/carbon/C = eater
+
+	if(!C.has_mouth())
+		return FALSE
+		
 	var/covered = ""
 	if(C.is_mouth_covered(ITEM_SLOT_HEAD))
 		covered = "headgear"

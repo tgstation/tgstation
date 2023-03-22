@@ -225,7 +225,7 @@
 			"limited_stock" = item.limited_stock,
 			"restricted_roles" = item.restricted_roles,
 			"restricted_species" = item.restricted_species,
-			"progression_minimum" = item.progression_minimum,
+			"progression_minimum" = 0,
 			"ref" = REF(item),
 		))
 

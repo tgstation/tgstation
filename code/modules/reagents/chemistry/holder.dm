@@ -915,7 +915,7 @@
 			var/meets_temp_requirement = FALSE
 			var/meets_ph_requirement = FALSE
 			var/granularity = 1
-			if(!(reaction.reaction_flags & REACTION_INSTANT))
+			if((reaction.reaction_flags & REACTION_NON_INSTANT))
 				granularity = CHEMICAL_VOLUME_MINIMUM
 
 			for(var/req_reagent in cached_required_reagents)
@@ -951,7 +951,10 @@
 			if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
 				meets_temp_requirement = TRUE
 
-			if(((ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
+			if(reaction.reaction_flags & REACTION_USES_PURITY)
+				if(((ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
+					meets_ph_requirement = TRUE
+			else
 				meets_ph_requirement = TRUE
 
 			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
@@ -963,7 +966,7 @@
 	update_previous_reagent_list()
 	//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
 	for(var/datum/chemical_reaction/selected_reaction as anything in possible_reactions)
-		if((selected_reaction.reaction_flags & REACTION_INSTANT) || (flags & REAGENT_HOLDER_INSTANT_REACT)) //If we have instant reactions, we process them here
+		if(!(selected_reaction.reaction_flags & REACTION_NON_INSTANT) || (flags & REAGENT_HOLDER_INSTANT_REACT)) //If we have instant reactions, we process them here
 			instant_react(selected_reaction)
 			.++
 			update_total()
@@ -993,9 +996,7 @@
 
 	if(.)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
-
-	TEST_ONLY_ASSERT(!. || MC_RUNNING(), "We reacted during subsystem init, that shouldn't be happening!")
-
+		
 /*
 * Main Reaction loop handler, Do not call this directly
 *
@@ -1162,8 +1163,12 @@
 		else
 			if(reaction.required_temp < chem_temp)
 				return TRUE
-		if(((ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
+		if(reaction.reaction_flags & REACTION_USES_PURITY)
+			if(((ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
+				return TRUE
+		else
 			return TRUE
+
 	return FALSE
 
 /datum/reagents/proc/update_previous_reagent_list()
@@ -1259,7 +1264,7 @@
  * - Volume_modifier: What is the reagent volume multiplied by when exposed? Note that this is called on the volume of EVERY reagent in the base body, so factor in your Maximum_Volume if necessary!
  * - Show_message: Whether to display anything to mobs when they are exposed.
  */
-/datum/reagents/proc/expose(atom/A, methods = TOUCH, volume_modifier = 1, show_message = 1)
+/datum/reagents/proc/expose(atom/A, methods = TOUCH, volume_modifier = 1, show_message = 1, liquid = FALSE)
 	if(isnull(A))
 		return null
 
@@ -1271,7 +1276,7 @@
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		reagents[reagent] = reagent.volume * volume_modifier
 
-	return A.expose_reagents(reagents, src, methods, volume_modifier, show_message)
+	return A.expose_reagents(reagents, src, methods, volume_modifier, show_message, liquid)
 
 // Same as [/datum/reagents/proc/expose] but only for multiple reagents (through a list)
 /datum/reagents/proc/expose_multiple(list/r_to_expose, atom/A, methods = TOUCH, volume_modifier = 1, show_message = 1)

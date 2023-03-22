@@ -32,6 +32,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 		/obj/effect/wisp,
 		/obj/effect/ebeam,
 		/obj/effect/fishing_lure,
+		/obj/effect/abstract/liquid_turf,
 	))
 
 /datum/component/chasm/Initialize(turf/target)

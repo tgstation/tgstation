@@ -75,8 +75,10 @@
 
 	//Nicotine is used as a pesticide IRL.
 /datum/reagent/drug/nicotine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(src.type)))
+		mytray.adjustPests(-rand(1,2))
 
 	mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
 	mytray.adjust_pestlevel(-rand(1, 2))
@@ -161,6 +163,10 @@
 	. = ..()
 	var/effective_impurity = min(1, (1 - creation_purity)/0.5)
 	color = BlendRGB(initial(color), "#FAFAFA", effective_impurity)
+
+/datum/reagent/drug/methamphetamine/feed_interaction(mob/living/simple_animal/chicken/target, volume)
+	.=..()
+	target.adjust_happiness(0.5*volume)
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()

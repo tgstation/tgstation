@@ -852,3 +852,7 @@
 	breath_gases[/datum/gas/oxygen][MOLES] += gas_breathed
 	breath_gases[/datum/gas/hydrogen][MOLES] += gas_breathed*2
 	breath_gases[/datum/gas/water_vapor][MOLES] -= gas_breathed
+
+/obj/item/organ/internal/lungs/oozeling
+	name = "oozeling vacuole"
+	desc = "A large organelle designed to store oxygen and filter toxins."

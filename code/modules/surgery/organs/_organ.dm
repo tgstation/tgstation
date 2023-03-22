@@ -327,6 +327,12 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		ears.Insert(src)
 	ears.setOrganDamage(0)
 
+	var/obj/item/organ/internal/butt/butt = getorganslot(ORGAN_SLOT_BUTT)
+	if(!butt)
+		butt = new()
+		butt.Insert(src)
+		butt.setOrganDamage(0)
+
 /obj/item/organ/proc/handle_failing_organs(delta_time)
 	return
 

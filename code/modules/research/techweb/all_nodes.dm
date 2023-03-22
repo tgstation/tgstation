@@ -434,7 +434,6 @@
 	prereq_ids = list("adv_biotech")
 	design_ids = list(
 		"limbdesign_ethereal",
-		"limbdesign_felinid",
 		"limbdesign_lizard",
 		"limbdesign_plasmaman",
 	)
@@ -581,6 +580,7 @@
 		"pneumatic_seal",
 		"power_control",
 		"powermonitor",
+		"rad_collector",
 		"recharger",
 		"recycler",
 		"rped",
@@ -1426,6 +1426,7 @@
 	description = "Botanical tools"
 	prereq_ids = list("biotech")
 	design_ids = list(
+		"diskplantgene",
 		"biogenerator",
 		"flora_gun",
 		"gene_shears",
@@ -1433,6 +1434,7 @@
 		"portaseeder",
 		"seed_extractor",
 		"adv_watering_can",
+		"plantgenes",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	required_experiments = list(/datum/experiment/scanning/random/plants/wild)

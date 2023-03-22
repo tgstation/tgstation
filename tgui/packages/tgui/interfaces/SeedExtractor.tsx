@@ -97,18 +97,6 @@ export const SeedExtractor = (props, context) => {
               <Table.Cell collapsing p={1}>
                 <Tooltip
                   content={
-                    'The likelihood of the plant to randomize stats or mutate.'
-                  }>
-                  <Box
-                    style={{ 'cursor': 'pointer' }}
-                    onClick={(e) => setSortField('instability')}>
-                    Instability
-                  </Box>
-                </Tooltip>
-              </Table.Cell>
-              <Table.Cell collapsing p={1}>
-                <Tooltip
-                  content={
                     'The health pool of the plant that delays death. Affects fermentation quality.'
                   }>
                   <Box
@@ -217,9 +205,6 @@ export const SeedExtractor = (props, context) => {
                   </Table.Cell>
                   <Table.Cell py={0.5} px={1} collapsing>
                     <Level value={item.yield} max={10} />
-                  </Table.Cell>
-                  <Table.Cell py={0.5} px={1} collapsing>
-                    <Level value={item.instability} max={100} reverse />
                   </Table.Cell>
                   <Table.Cell py={0.5} px={1} collapsing>
                     <Level value={item.endurance} max={100} />

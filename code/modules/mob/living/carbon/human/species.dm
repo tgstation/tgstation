@@ -166,6 +166,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/dust_anim = "dust-h"
 	///What anim to use for gibbing
 	var/gib_anim = "gibbed-h"
+	///what type of gibs we leave
+	var/species_gibs = GIB_TYPE_HUMAN
+	///Are we allowed to have numbers in the name
+	var/allow_numbers_in_name = FALSE
+
+	//Do NOT remove by setting to null. use OR make an ASSOCIATED TRAIT.
+	//why does it work this way? because traits also disable the downsides of not having an organ, removing organs but not having the trait will make your species die
 
 	// Prefer anything other than setting these to null, such as TRAITS
 	// why?
@@ -189,6 +196,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/obj/item/organ/internal/stomach/mutantstomach = /obj/item/organ/internal/stomach
 	///Replaces default appendix with a different organ.
 	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
+	///Replaces default butt with a different organ
+	var/obj/item/organ/internal/butt/mutantbutt = /obj/item/organ/internal/butt
 
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
@@ -223,6 +232,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Was on_species_gain ever actually called?
 	/// Species code is really odd...
 	var/properly_gained = FALSE
+	///are we furry little creatures
+	var/use_fur = FALSE
+	///health mod of a species
+	var/maxhealthmod = 1
+	///Path to BODYTYPE_CUSTOM species worn icons. An assoc list of ITEM_SLOT_X => /icon
+	var/list/custom_worn_icons = list()
+	///Override of the eyes icon file, used for Vox and maybe more in the future - The future is now, with Teshari using it too
+	var/eyes_icon
 
 ///////////
 // PROCS //
@@ -338,6 +355,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		ORGAN_SLOT_TONGUE = mutanttongue,
 		ORGAN_SLOT_LIVER = mutantliver,
 		ORGAN_SLOT_STOMACH = mutantstomach,
+		ORGAN_SLOT_BUTT = mutantbutt,
 	)
 
 	for(var/slot in assoc_to_keys(slot_mutantorgans))
@@ -472,6 +490,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
 			new_organ.Insert(human, special=TRUE, drop_if_replaced=FALSE)
 
+	if(NOMOUTH in species_traits)
+		for(var/obj/item/bodypart/head/head in C.bodyparts)
+			head.mouth = FALSE
+
 	if(length(inherent_traits))
 		C.add_traits(inherent_traits, SPECIES_TRAIT)
 
@@ -493,6 +515,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			C.faction += i //Using +=/-= for this in case you also gain the faction from a different source.
 
 	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, multiplicative_slowdown=speedmod)
+	C.maxHealth = C.maxHealth * maxhealthmod
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
@@ -512,6 +535,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	SHOULD_CALL_PARENT(TRUE)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
+	if(NOMOUTH in species_traits)
+		for(var/obj/item/bodypart/head/head in C.bodyparts)
+			head.mouth = TRUE
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 	for(var/obj/item/organ/external/organ in C.organs)
@@ -535,6 +561,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	clear_tail_moodlets(C)
 
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
+	C.maxHealth = C.maxHealth / maxhealthmod
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
@@ -716,6 +743,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					accessory = GLOB.legs_list[source.dna.features["legs"]]
 				if("caps")
 					accessory = GLOB.caps_list[source.dna.features["caps"]]
+				if("ipc_screen")
+					accessory = GLOB.ipc_screens_list[source.dna.features["ipc_screen"]]
 
 			if(!accessory || accessory.icon_state == "none")
 				continue
@@ -736,6 +765,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(!(HAS_TRAIT(source, TRAIT_HUSK)))
 				if(!forced_colour)
 					switch(accessory.color_src)
+						if(SKINTONES)
+							accessory_overlay.color = skintone2hex(source.skin_tone)
 						if(MUTCOLORS)
 							if(fixed_mut_color)
 								accessory_overlay.color = fixed_mut_color
@@ -985,6 +1016,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	H.visible_message(span_notice("[H] start putting on [I]..."), span_notice("You start putting on [I]..."))
 	return do_after(H, I.equip_delay_self, target = H)
 
+
+/datum/species/proc/after_equip_job(datum/job/J, mob/living/carbon/human/human_host, client/preference_source = null)
+	human_host.update_mutant_bodyparts()
 
 /// Equips the necessary species-relevant gear before putting on the rest of the uniform.
 /datum/species/proc/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
@@ -1795,6 +1829,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	to_store += mutantliver
 	to_store += mutantstomach
 	to_store += mutantappendix
+	to_store += mutantbutt
 	//We don't cache mutant hands because it's not constrained enough, too high a potential for failure
 	return to_store
 
@@ -1823,20 +1858,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	stack_trace("Species [name] ([type]) did not have a description set, and is a selectable roundstart race! Override get_species_description.")
 	return "No species description set, file a bug report!"
-
-/**
- * Gets the lore behind the type of species. Can be long.
- * Used in the preference menu.
- *
- * Returns a list of strings.
- * Between each entry in the list, a newline will be inserted, for formatting.
- */
-/datum/species/proc/get_species_lore()
-	SHOULD_CALL_PARENT(FALSE)
-	RETURN_TYPE(/list)
-
-	stack_trace("Species [name] ([type]) did not have lore set, and is a selectable roundstart race! Override get_species_lore.")
-	return list("No species lore set, file a bug report!")
 
 /**
  * Translate the species liked foods from bitfields into strings
@@ -2183,3 +2204,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /// Creates body parts for the target completely from scratch based on the species
 /datum/species/proc/create_fresh_body(mob/living/carbon/target)
 	target.create_bodyparts(bodypart_overrides)
+
+/datum/species/proc/spec_revival(mob/living/carbon/human/H)
+	return

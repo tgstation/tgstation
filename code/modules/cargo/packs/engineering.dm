@@ -292,3 +292,15 @@
 	crate_name = "HFR crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
+
+
+
+/datum/supply_pack/engine/collector
+	name = "Radiation Collector Crate"
+	desc = "Contains three radiation collectors. Useful for collecting energy off nearby Supermatter Crystals, Singularities or Teslas!"
+	cost = CARGO_CRATE_VALUE * 8
+	contains = list(/obj/machinery/power/rad_collector,
+					/obj/machinery/power/rad_collector,
+					/obj/machinery/power/rad_collector)
+	crate_name = "collector crate"
+

@@ -11,7 +11,6 @@
 	maturation = 5
 	production = 5
 	growthstages = 5
-	instability = 15
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "cherry-grow"
 	icon_dead = "cherry-dead"

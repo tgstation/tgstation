@@ -1,7 +1,7 @@
 /datum/chemical_reaction/reagent_explosion
 	var/strengthdiv = 10
 	var/modifier = 0
-	reaction_flags = REACTION_INSTANT
+
 	reaction_tags = REACTION_TAG_EXPLOSIVE | REACTION_TAG_MODERATE | REACTION_TAG_DANGEROUS
 	required_temp = 0 //Prevent impromptu RPGs
 
@@ -283,7 +283,7 @@
 /datum/chemical_reaction/flash_powder
 	results = list(/datum/reagent/flash_powder = 3)
 	required_reagents = list(/datum/reagent/aluminium = 1, /datum/reagent/potassium = 1, /datum/reagent/sulfur = 1 )
-	reaction_flags = REACTION_INSTANT
+
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
 
 /datum/chemical_reaction/flash_powder/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -325,7 +325,7 @@
 /datum/chemical_reaction/smoke_powder
 	results = list(/datum/reagent/smoke_powder = 3)
 	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/phosphorus = 1)
-	reaction_flags = REACTION_INSTANT
+
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
 
 /datum/chemical_reaction/smoke_powder/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -346,7 +346,7 @@
 	required_reagents = list(/datum/reagent/smoke_powder = 1)
 	required_temp = 374
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT
+
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -499,7 +499,7 @@
 	results = list(/datum/reagent/pyrosium = 1)
 	required_reagents = list(/datum/reagent/pyrosium = 1, /datum/reagent/oxygen = 1)
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT
+
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/pyrosium_oxygen/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)

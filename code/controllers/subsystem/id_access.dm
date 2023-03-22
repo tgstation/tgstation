@@ -188,12 +188,6 @@ SUBSYSTEM_DEF(id_access)
 			"templates" = list(),
 			"pdas" = list(),
 		),
-		"[ACCESS_QM]" = list(
-			"regions" = list(REGION_SUPPLY),
-			"head" = JOB_QUARTERMASTER,
-			"templates" = list(),
-			"pdas" = list(),
-		),
 	)
 
 	var/list/station_job_trims = subtypesof(/datum/id_trim/job)

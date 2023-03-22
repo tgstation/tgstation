@@ -229,6 +229,7 @@
 	for(var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antagonist_hud in GLOB.active_alternate_appearances)
 		for(var/mob/player as anything in GLOB.player_list)
 			antagonist_hud.show_to(player)
+			player.client.prefs.adjust_metacoins(player.client.ckey, 75, "Played a Round")
 
 	CHECK_TICK
 

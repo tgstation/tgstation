@@ -18,8 +18,8 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 /obj/item/food/egg
 	name = "egg"
 	desc = "An egg!"
-	icon = 'icons/obj/food/egg.dmi'
-	icon_state = "egg"
+	icon_state = "chicken"
+	icon = 'monkestation/icons/obj/ranching/eggs.dmi'
 	inhand_icon_state = "egg"
 	food_reagents = list(/datum/reagent/consumable/eggyolk = 2, /datum/reagent/consumable/eggwhite = 4)
 	foodtypes = MEAT | RAW
@@ -28,6 +28,15 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	decomp_type = /obj/item/food/egg/rotten
 	decomp_req_handle = TRUE //so laid eggs can actually become chickens
 	var/chick_throw_prob = 13
+	bite_consumption = 100 // whole ass egg all at once
+
+/obj/item/food/egg/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_FOOD_EATEN, PROC_REF(consumed_egg))
+
+/obj/item/food/egg/proc/consumed_egg(datum/source, mob/living/eater, mob/living/feeder)
+	SIGNAL_HANDLER
+	return
 
 /obj/item/food/egg/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/boiledegg, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
@@ -64,11 +73,10 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	new /obj/effect/decal/cleanable/food/egg_smudge(hit_turf)
 	//Chicken code uses this MAX_CHICKENS variable, so I figured that I'd use it again here. Even this check and the check in chicken code both use the MAX_CHICKENS variable, they use independent counter variables and thus are independent of each other.
 	if(prob(chick_throw_prob) && GLOB.chicks_from_eggs < MAX_CHICKENS) //Roughly a 1/8 (12.5%) chance to make a chick, as in Minecraft. I decided not to include the chances for the creation of multiple chicks from the impact of one egg, since that'd probably require nested prob()s or something (and people might think that it was a bug, anyway).
-		new /mob/living/simple_animal/chick(hit_turf)
+		pre_hatch()
 		GLOB.chicks_from_eggs++
 
 	reagents.expose(hit_atom, TOUCH)
-	qdel(src)
 
 /obj/item/food/egg/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/toy/crayon))
@@ -141,8 +149,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	inhand_icon_state = "egg-purple"
 
 /obj/item/food/egg/rainbow
-	icon_state = "egg-rainbow"
-	inhand_icon_state = "egg-rainbow"
+	icon_state = "chicken"
 
 /obj/item/food/egg/red
 	icon_state = "egg-red"

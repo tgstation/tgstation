@@ -15,3 +15,8 @@
 ///FROM mob/living/simple_animal/hostile/ooze/eat_atom(): (atom/target, edible_flags)
 #define COMSIG_OOZE_EAT_ATOM "ooze_eat_atom"
 	#define COMPONENT_ATOM_EATEN  (1<<0)
+
+
+#define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
+
+#define COMSIG_MUTATION_TRIGGER "mutation_trigger"

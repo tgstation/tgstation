@@ -70,6 +70,18 @@
 		else
 			. += mutable_appearance('icons/effects/blood.dmi', "helmetblood")
 
+	if(contents)
+		var/current_hat = 1
+		for(var/obj/item/clothing/head/selected_hat in contents)
+			var/head_icon = 'icons/mob/clothing/head/beanie.dmi'
+			if(selected_hat.worn_icon)
+				head_icon = selected_hat.icon
+			var/mutable_appearance/hat_adding = selected_hat.build_worn_icon(HEAD_LAYER, head_icon, FALSE, FALSE)
+			hat_adding.pixel_y = ((current_hat * 4) - 1)
+			hat_adding.pixel_x = (rand(-1, 1))
+			current_hat++
+			. += hat_adding
+
 /obj/item/clothing/head/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
 	if(ismob(loc))

@@ -49,6 +49,7 @@
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
+	SEND_SIGNAL(T, COMSIG_TURF_MOB_FALL, src)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_Z_IMPACT, levels, T) & NO_Z_IMPACT_DAMAGE)
 		return
 	visible_message(span_danger("[src] crashes into [T] with a sickening noise!"), \
@@ -65,6 +66,10 @@
 	if(ismob(A))
 		var/mob/M = A
 		if(MobBump(M))
+			return
+	if(isturf(A))
+		var/turf/bump_turf = A
+		if(TurfBump(bump_turf))
 			return
 	if(isobj(A))
 		var/obj/O = A
@@ -91,6 +96,16 @@
 
 	if(now_pushing)
 		return TRUE
+
+	if(has_status_effect(SUGAR_RUSH) || has_status_effect(HEN_RUSH))
+		visible_message("<span class='warning'>[src] bounces off [M]!</span>")
+		var/atom/throw_target = get_edge_target_turf(src, get_dir(M, src))
+		var/atom/throw_target_mob = get_edge_target_turf(M, get_dir(src, M))
+
+		playsound(src, 'monkestation/sound/effects/boing1.ogg', 50)
+		src.throw_at(throw_target, 20, 3, force = 0)
+		if(has_status_effect(SUGAR_RUSH))
+			M.throw_at(throw_target_mob, 20, 3, force = 0)
 
 	var/they_can_move = TRUE
 	var/their_combat_mode = FALSE
@@ -214,6 +229,20 @@
 
 //Called when we bump onto an obj
 /mob/living/proc/ObjBump(obj/O)
+	if(has_status_effect(SUGAR_RUSH) || has_status_effect(HEN_RUSH))
+		visible_message("<span class='warning'>[src] bounces off  \the [O]!</span>")
+		var/atom/throw_target = get_edge_target_turf(src, turn(get_dir(O, src), rand(-1,1) * 45))
+		playsound(src, 'monkestation/sound/effects/boing1.ogg', 50)
+		src.throw_at(throw_target, 20, 3, force = 0)
+	return
+
+//Called when we bump onto an obj
+/mob/living/proc/TurfBump(turf/T)
+	if(has_status_effect(SUGAR_RUSH) || has_status_effect(HEN_RUSH))
+		visible_message("<span class='warning'>[src] bounces off  \the [T]!</span>")
+		var/atom/throw_target = get_edge_target_turf(src, turn(get_dir(T, src), rand(-1,1) * 45))
+		playsound(src, 'monkestation/sound/effects/boing1.ogg', 50)
+		src.throw_at(throw_target, 20, 3, force = 0)
 	return
 
 //Called when we want to push an atom/movable

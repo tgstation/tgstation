@@ -22,10 +22,10 @@
 
 	// FEED ME
 /datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_pestlevel(rand(2,3))
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustPests(rand(2,4))
 
 /datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
@@ -111,7 +111,7 @@
 		bloodsplatter.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /datum/reagent/consumable/liquidgibs
-	name = "Liquid Gibs"
+	name = "Liquid gibs"
 	color = "#CC4633"
 	description = "You don't even want to think about what's in here."
 	taste_description = "gross iron"
@@ -243,15 +243,16 @@
  */
 /datum/reagent/water/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)//Splashing people with water can help put them out!
 	. = ..()
+	if(isoozeling(exposed_mob))
+		exposed_mob.blood_volume = max(exposed_mob.blood_volume - 30, 0)
+		to_chat(exposed_mob, span_warning("The water causes you to melt away!"))
+		return
 	if(methods & TOUCH)
 		exposed_mob.extinguish_mob() // extinguish removes all fire stacks
 		exposed_mob.adjust_wet_stacks(reac_volume * WATER_TO_WET_STACKS_FACTOR_TOUCH) // Water makes you wet, at a 50% water-to-wet-stacks ratio. Which, in turn, gives you some mild protection from being set on fire!
 
 	if(methods & VAPOR)
 		exposed_mob.adjust_wet_stacks(reac_volume * WATER_TO_WET_STACKS_FACTOR_VAPOR) // Spraying someone with water with the hope to put them out is just simply too funny to me not to add it.
-
-		if(!isfelinid(exposed_mob))
-			return
 
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
@@ -266,14 +267,13 @@
 	if(affected_mob.blood_volume)
 		affected_mob.blood_volume += 0.1 * REM * delta_time // water is good for you!
 
-///For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
 /datum/reagent/water/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(!check_tray(chems, mytray))
+	if(!myseed)
 		return
-
-	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type)))
-	//You don't belong in this world, monster!
-	chems.remove_reagent(/datum/reagent/water, chems.get_reagent_amount(type))
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 1))
+		//You don't belong in this world, monster!
+		chems.remove_reagent(type, chems.get_reagent_amount(src.type))
 
 /datum/reagent/water/holywater
 	name = "Holy Water"
@@ -290,14 +290,14 @@
 	desc = "A glass of holy water."
 	icon_state = "glass_clear"
 
-	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
+	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits.
 /datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(!check_tray(chems, mytray))
-		return
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.1))
 
 	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type)))
 	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
-	myseed?.adjust_instability(round(chems.get_reagent_amount(type) * 0.15))
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/affected_mob)
 	..()
@@ -631,13 +631,6 @@
 	color = "#13BC5E" // rgb: 19, 188, 94
 	race = /datum/species/jelly/slime
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/mutationtoxin/felinid
-	name = "Felinid Mutation Toxin"
-	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/human/felinid
-	taste_description = "something nyat good"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/mutationtoxin/lizard
 	name = "Lizard Mutation Toxin"
@@ -1010,12 +1003,12 @@
 
 // Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
 /datum/reagent/phosphorus/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 0.75))
-	mytray.adjust_waterlevel(-round(chems.get_reagent_amount(type) * 0.5))
-	mytray.adjust_weedlevel(-rand(1,2))
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 0.75))
+		mytray.adjustWater(-round(chems.get_reagent_amount(src.type) * 0.5))
+		mytray.adjustWeeds(-rand(1,2))
+		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 0.1))
 
 /datum/reagent/lithium
 	name = "Lithium"
@@ -1120,13 +1113,12 @@
 
 //Mutagenic chem side-effects.
 /datum/reagent/uranium/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 2))
+		plant_mutation_reagent_apply(chems, mytray, user, mr = 10, hm = 5)
 
-	mytray.mutation_roll(user)
-
-	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type)))
-	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 2))
 
 /datum/reagent/uranium/radium
 	name = "Radium"
@@ -1140,13 +1132,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/uranium/radium/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
+	if(!myseed)
 		return
 
-	mytray.mutation_roll(user)
-
-	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type)))
-	mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 3))
+		plant_mutation_reagent_apply(chems, mytray, user, mr = 10, hm = 5)
 
 /datum/reagent/bluespace
 	name = "Bluespace Dust"
@@ -1418,10 +1410,11 @@
 	if(!check_tray(chems, mytray))
 		return
 	// Ammonia is bad ass.
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.12))
-	if(myseed && prob(10))
-		myseed.adjust_yield(1)
-		myseed.adjust_instability(1)
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.5))
+		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 1))
+		if(myseed)
+			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 0.04))
 
 /datum/reagent/diethylamine
 	name = "Diethylamine"
@@ -1433,14 +1426,13 @@
 
 // This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant. The new trade off is it culls stability.
 /datum/reagent/diethylamine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type)))
-	mytray.adjust_pestlevel(-rand(1,2))
-	if(myseed)
-		myseed.adjust_yield(round(chems.get_reagent_amount(type)))
-		myseed.adjust_instability(-round(chems.get_reagent_amount(type)))
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 2))
+		if(myseed)
+			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 0.02))
+		mytray.adjustPests(-rand(1,2))
 
 /datum/reagent/carbondioxide
 	name = "Carbon Dioxide"
@@ -1645,12 +1637,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/plantnutriment/eznutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(!check_tray(chems, mytray))
-		return
-	if(myseed)
-		myseed.adjust_instability(0.2)
-		myseed.adjust_potency(round(chems.get_reagent_amount(type) * 0.3))
-		myseed.adjust_yield(round(chems.get_reagent_amount(type) * 0.1))
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.yieldmod = 1
+		mytray.mutmod = 1
+		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 1))
 
 /datum/reagent/plantnutriment/left4zednutriment
 	name = "Left 4 Zed"
@@ -1660,11 +1651,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/plantnutriment/left4zednutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
-	myseed?.adjust_instability(round(chems.get_reagent_amount(type) * 0.2))
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.yieldmod = 0
+		mytray.mutmod = 2
+		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 1))
 
 /datum/reagent/plantnutriment/robustharvestnutriment
 	name = "Robust Harvest"
@@ -1674,13 +1665,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/plantnutriment/robustharvestnutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(!check_tray(chems, mytray))
-		return
-
-	if(myseed)
-		myseed.adjust_instability(-0.25)
-		myseed.adjust_potency(round(chems.get_reagent_amount(type) * 0.1))
-		myseed.adjust_yield(round(chems.get_reagent_amount(type) * 0.2))
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.yieldmod = 1.3
+		mytray.mutmod = 0
+		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) *1 ))
 
 /datum/reagent/plantnutriment/endurogrow
 	name = "Enduro Grow"
@@ -2035,11 +2024,11 @@
 
 // Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
 /datum/reagent/ash/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type)))
-	mytray.adjust_weedlevel(-1)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.25))
+		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 0.5))
+		mytray.adjustWeeds(-1)
 
 /datum/reagent/acetone
 	name = "Acetone"
@@ -2207,14 +2196,13 @@
 
 // Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
 /datum/reagent/saltpetre/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	var/salt = chems.get_reagent_amount(type)
-	mytray.adjust_plant_health(round(salt * 0.18))
-	if(myseed)
-		myseed.adjust_production(-round(salt/10)-prob(salt%10))
-		myseed.adjust_potency(round(salt))
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		var/salt = chems.get_reagent_amount(src.type)
+		mytray.adjustHealth(round(salt * 0.25))
+		if(myseed)
+			myseed.adjust_production(-round(salt/10)-prob(salt%10))
+			myseed.adjust_potency(round(salt*0.5))
 
 /datum/reagent/lye
 	name = "Lye"

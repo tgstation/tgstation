@@ -7,6 +7,7 @@
 	var/mob/living/carbon/human/consistent/dummy = allocate(/mob/living/carbon/human/consistent)
 	var/list/ignore = list(
 		/datum/species/dullahan,
+		/datum/species/ipc,
 	)
 	var/list/species = subtypesof(/datum/species) - ignore
 	var/static/list/organs_we_care_about = list(

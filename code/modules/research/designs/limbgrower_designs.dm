@@ -240,17 +240,6 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
-/obj/item/disk/design_disk/limbs/felinid
-	name = "Felinid Organ Design Disk"
-	limb_designs = list(/datum/design/cat_tail, /datum/design/cat_ears)
-
-/datum/design/limb_disk/felinid
-	name = "Felinid Organ Design Disk"
-	desc = "Contains designs for felinid organs for the limbgrower - Felinid ears and tail."
-	id = "limbdesign_felinid"
-	build_path = /obj/item/disk/design_disk/limbs/felinid
-
 /obj/item/disk/design_disk/limbs/lizard
 	name = "Lizard Organ Design Disk"
 	limb_designs = list(/datum/design/lizard_tail, /datum/design/lizard_tongue)

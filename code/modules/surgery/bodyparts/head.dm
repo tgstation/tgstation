@@ -25,6 +25,8 @@
 	unarmed_damage_high = 3
 	unarmed_stun_threshold = 4
 	bodypart_trait_source = HEAD_TRAIT
+	///does this have a mouth? needed for ingest
+	var/mouth = TRUE
 
 	var/mob/living/brain/brainmob //The current occupant.
 	var/obj/item/organ/internal/brain/brain //The brain organ

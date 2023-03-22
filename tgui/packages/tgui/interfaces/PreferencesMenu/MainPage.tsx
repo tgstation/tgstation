@@ -22,6 +22,8 @@ const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 const CharacterControls = (props: {
   handleRotate: () => void;
   handleOpenSpecies: () => void;
+  handleLoadout: () => void;
+  handleStore: () => void;
   gender: Gender;
   setGender: (gender: Gender) => void;
   showGender: boolean;
@@ -53,6 +55,30 @@ const CharacterControls = (props: {
           <GenderButton
             gender={props.gender}
             handleSetGender={props.setGender}
+          />
+        </Stack.Item>
+      )}
+      {props.handleLoadout && (
+        // SKYRAT EDIT ADDITION
+        <Stack.Item>
+          <Button
+            onClick={props.handleLoadout}
+            fontSize="22px"
+            icon="suitcase"
+            tooltip="Show Loadout Menu"
+            tooltipPosition="top"
+          />
+        </Stack.Item>
+      )}
+      {props.handleStore && (
+        // SKYRAT EDIT ADDITION
+        <Stack.Item>
+          <Button
+            onClick={props.handleStore}
+            fontSize="22px"
+            icon="suitcase"
+            tooltip="Show Store Menu"
+            tooltipPosition="top"
           />
         </Stack.Item>
       )}
@@ -525,6 +551,12 @@ export const MainPage = (
                       handleOpenSpecies={props.openSpecies}
                       handleRotate={() => {
                         act('rotate');
+                      }}
+                      handleLoadout={() => {
+                        act('open_loadout');
+                      }}
+                      handleStore={() => {
+                        act('open_store');
                       }}
                       setGender={createSetPreference(act, 'gender')}
                       showGender={

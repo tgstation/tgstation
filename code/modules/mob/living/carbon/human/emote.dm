@@ -211,3 +211,19 @@
 	key_third_person = "signs"
 	message_param = "signs the number %t."
 	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/fart
+	key = "fart"
+	key_third_person = "farts"
+
+//MonkeStation Edit Start
+//Butt-Based Farts
+/datum/emote/living/carbon/human/fart/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(user.stat == CONSCIOUS)
+		if(!user.getorgan(/obj/item/organ/internal/butt) || !ishuman(user))
+			to_chat(user, "<span class='warning'>You don't have a butt!</span>")
+			return
+		var/obj/item/organ/internal/butt/booty = user.getorgan(/obj/item/organ/internal/butt)
+		if(!booty.cooling_down)
+			booty.On_Fart(user)

@@ -187,7 +187,6 @@
 
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
-
 #define FIRE_PRIORITY_PING 10
 #define FIRE_PRIORITY_IDLE_NPC 10
 #define FIRE_PRIORITY_SERVER_MAINT 10
@@ -208,6 +207,7 @@
 #define FIRE_PRIORITY_THROWING 25
 #define FIRE_PRIORITY_REAGENTS 26
 #define FIRE_PRIORITY_SPACEDRIFT 30
+#define FIRE_PRIOTITY_LIQUIDS 30
 #define FIRE_PRIOTITY_SMOOTHING 35
 #define FIRE_PRIORITY_NETWORKS 40
 #define FIRE_PRIORITY_OBJ 40
@@ -318,3 +318,11 @@
 #define VOTE_COUNT_METHOD_SINGLE 1
 /// Approval voting. Any number of selections per person, and the selection with the most votes wins.
 #define VOTE_COUNT_METHOD_MULTI 2
+
+///liquid defines
+#define SSLIQUIDS_RUN_TYPE_TURFS 1
+#define SSLIQUIDS_RUN_TYPE_GROUPS 2
+#define SSLIQUIDS_RUN_TYPE_IMMUTABLES 3
+#define SSLIQUIDS_RUN_TYPE_EVAPORATION 4
+#define SSLIQUIDS_RUN_TYPE_FIRE 5
+#define SSLIQUIDS_RUN_TYPE_OCEAN 6

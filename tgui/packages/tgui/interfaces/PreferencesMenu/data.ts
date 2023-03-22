@@ -40,10 +40,10 @@ export type Name = {
 export type Species = {
   name: string;
   desc: string;
-  lore: string[];
   icon: string;
 
   use_skintones: BooleanLike;
+  use_fur: BooleanLike;
   sexes: BooleanLike;
 
   enabled_features: string[];

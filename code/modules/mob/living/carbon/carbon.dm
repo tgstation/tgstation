@@ -416,6 +416,9 @@
 	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
 		return TRUE
 
+	if(!has_mouth())
+		return TRUE
+		
 	SEND_SIGNAL(src, COMSIG_CARBON_VOMITED, distance, force)
 	var/starting_dir = dir
 	if(nutrition < 100 && !blood && !force)

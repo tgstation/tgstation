@@ -520,6 +520,11 @@
 	if(burn)
 		set_burn_dam(round(max(burn_dam - burn, 0), DAMAGE_PRECISION))
 
+	if(owner.dna && owner.dna.species && (REVIVESBYHEALING in owner.dna.species.species_traits))
+		if(owner.health > 0)
+			owner.revive(0)
+			owner.cure_husk(0) // If it has REVIVESBYHEALING, it probably can't be cloned. No husk cure.
+
 	if(owner)
 		if(can_be_disabled)
 			update_disabled()
@@ -762,7 +767,7 @@
 	species_flags_list = owner_species.species_traits
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
 
-	if(owner_species.use_skintones)
+	if(owner_species.use_skintones || owner_species.use_fur)
 		skin_tone = human_owner.skin_tone
 	else
 		skin_tone = ""

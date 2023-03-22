@@ -2,7 +2,6 @@
  * A test to make sure harvesting plants in hydroponics results in the correct number of plants with the correct chemicals inside of it.
  *
  * We plant a seed into a tray and harvest it with a human.
- * This seed is set to have the maximum potency and yield with no instability to prevent mutations.
  * Then we check how many products we got from the harvest. For most plants, this should be 10 products, as we have a yield of 10.
  * Alternatively, if the plant has a trait that halves the products on harvest, it should result in 5 products.
  *
@@ -40,7 +39,6 @@
 /datum/unit_test/hydroponics_harvest/proc/plant_and_update_seed(obj/machinery/hydroponics/tray, obj/item/seeds/seed)
 	seed.set_yield(10) // Sets the seed yield to 10. This gets clamped to 5 if the plant has traits to half the yield.
 	seed.set_potency(100) // Sets the seed potency to 100.
-	seed.set_instability(0) // Sets the seed instability to 0, to prevent mutations.
 
 	tray.set_seed(seed)
 	seed.forceMove(tray)

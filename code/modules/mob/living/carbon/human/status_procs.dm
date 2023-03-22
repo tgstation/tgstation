@@ -32,7 +32,7 @@
 		update_body_parts()
 
 /mob/living/carbon/human/become_husk(source)
-	if(istype(dna.species, /datum/species/skeleton)) //skeletons shouldn't be husks.
+	if(NOHUSK in dna.species.species_traits) //skeletons shouldn't be husks.
 		cure_husk()
 		return
 	. = ..()

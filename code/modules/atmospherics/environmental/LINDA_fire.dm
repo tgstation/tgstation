@@ -26,6 +26,9 @@
 	if(!air_gases)
 		return
 
+	if(liquids && liquids.liquid_group && !liquids.fire_state)
+		liquids.liquid_group.ignite_turf(src)
+
 	. = air_gases[/datum/gas/oxygen]
 	var/oxy = . ? .[MOLES] : 0
 	if (oxy < 0.5)

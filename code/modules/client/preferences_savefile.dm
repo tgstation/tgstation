@@ -189,6 +189,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			parsed_favs += path
 	favorite_outfits = unique_list(parsed_favs)
 
+	load_metacoins(parent.ckey)
+	load_inventory(parent.ckey)
+
 	// Custom hotkeys
 	key_bindings = savefile.get_entry("key_bindings", key_bindings)
 
@@ -294,6 +297,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Quirks
 	all_quirks = save_data?["all_quirks"]
 
+	load_character_monkestation(save_data)
+
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
 	if(needs_update >= 0)
@@ -351,6 +356,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Quirks
 	save_data["all_quirks"] = all_quirks
+
+	save_character_monkestation(save_data)
 
 	return TRUE
 

@@ -4,6 +4,12 @@
 	else
 		return "[pick(GLOB.lizard_names_female)]-[pick(GLOB.lizard_names_female)]"
 
+/proc/simian_name(gender)
+	if(gender == MALE)
+		return "[pick(GLOB.simian_names_male)] [pick(GLOB.simian_last_names)]"
+	else
+		return "[pick(GLOB.simian_names_female)] [pick(GLOB.simian_last_names)]"
+
 /proc/ethereal_name()
 	var/tempname = "[pick(GLOB.ethereal_names)] [random_capital_letter()]"
 	if(prob(65))

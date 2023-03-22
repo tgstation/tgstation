@@ -743,7 +743,6 @@
 	VV_DROPDOWN_OPTION(VV_HK_MOD_MUTATIONS, "Add/Remove Mutation")
 	VV_DROPDOWN_OPTION(VV_HK_MOD_QUIRKS, "Add/Remove Quirks")
 	VV_DROPDOWN_OPTION(VV_HK_SET_SPECIES, "Set Species")
-	VV_DROPDOWN_OPTION(VV_HK_PURRBATION, "Toggle Purrbation")
 
 /mob/living/carbon/human/vv_do_topic(list/href_list)
 	. = ..()
@@ -804,26 +803,6 @@
 			var/newtype = GLOB.species_list[result]
 			admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [src] to [result]")
 			set_species(newtype)
-	if(href_list[VV_HK_PURRBATION])
-		if(!check_rights(R_SPAWN))
-			return
-		if(!ishuman(src))
-			to_chat(usr, "This can only be done to human species at the moment.")
-			return
-		var/success = purrbation_toggle(src)
-		if(success)
-			to_chat(usr, "Put [src] on purrbation.")
-			log_admin("[key_name(usr)] has put [key_name(src)] on purrbation.")
-			var/msg = span_notice("[key_name_admin(usr)] has put [key_name(src)] on purrbation.")
-			message_admins(msg)
-			admin_ticket_log(src, msg)
-
-		else
-			to_chat(usr, "Removed [src] from purrbation.")
-			log_admin("[key_name(usr)] has removed [key_name(src)] from purrbation.")
-			var/msg = span_notice("[key_name_admin(usr)] has removed [key_name(src)] from purrbation.")
-			message_admins(msg)
-			admin_ticket_log(src, msg)
 
 /mob/living/carbon/human/limb_attack_self()
 	var/obj/item/bodypart/arm = hand_bodyparts[active_hand_index]
@@ -972,9 +951,6 @@
 /mob/living/carbon/human/species/dullahan
 	race = /datum/species/dullahan
 
-/mob/living/carbon/human/species/felinid
-	race = /datum/species/human/felinid
-
 /mob/living/carbon/human/species/fly
 	race = /datum/species/fly
 
@@ -1052,6 +1028,9 @@
 
 /mob/living/carbon/human/species/golem/snow
 	race = /datum/species/golem/snow
+
+/mob/living/carbon/human/species/oozeling
+	race = /datum/species/oozeling
 
 /mob/living/carbon/human/species/jelly
 	race = /datum/species/jelly

@@ -1,0 +1,159 @@
+/**
+ * Copyright (c) 2020 Paul Bruner
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:color';
+@use 'sass:meta';
+
+@use '../colors.scss' with (
+   $primary: #ffffff,
+   $bg-lightness: -25%,
+   $fg-lightness: -10%,
+ );
+@use '../base.scss' with (
+   // $color-fg: #000000,
+   // $color-bg: darkblue,
+   $color-bg-start: lightblue,
+   $color-bg-end: darkblue,
+   // $color-bg-grad-spread: 50%,
+ );
+
+$font-size: 24px;
+
+.theme-chicken_book {
+  // Atomic classes
+  @include meta.load-css('../atomic/color.scss');
+
+  // Components
+  @include meta.load-css('../components/Tabs.scss');
+  @include meta.load-css(
+    '../components/Section.scss',
+    $with: ('background-color': rgba(0, 0, 0, 0.1))
+  );
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+
+  .Layout__content {
+    background-image: none;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+  .book {
+    display: flex;
+    position: relative;
+    background-image: url('../../assets/chicken-encyclopedia-leather-texture.png'),
+      linear-gradient(to right, #8f4000, #8f4000 25%, #461f00, #8f4000 75%);
+    flex-direction: row;
+    border-radius: 3%;
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+    justify-content: center;
+  }
+  .spine {
+    position: absolute;
+    left: 45%;
+    right: 0px;
+    bottom: 0px;
+    width: 10%;
+    height: 100%;
+    box-sizing: border-box;
+    z-index: 2;
+    background-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.4),
+      rgba(0, 0, 0, 0)
+    );
+  }
+  .page {
+    z-index: 1;
+    font-family: 'Goudy Old Style';
+    font-size: large;
+    color: black;
+    margin: 10px 1px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    flex-basis: 50%;
+    background-color: rgb(210, 180, 140);
+    flex-grow: 1;
+    border-radius: 1%;
+    text-align: center;
+    justify-content: space-between;
+    box-shadow: 2px 3px 20px black, 0 0 125px #8f5922 inset;
+    overflow-y: hidden;
+  }
+  .navbar {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  .chicken_tab_list {
+    width: 100%;
+  }
+  .chickentab_container {
+    color: black;
+    width: auto;
+  }
+  .TOC {
+    width: 100%;
+    text-decoration: underline;
+    font-size: 24px;
+  }
+
+  .Tabs--vertical {
+    width: 50%;
+    height: 70%;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 10%;
+    flex-grow: 1;
+    z-index: 3;
+    font-size: 18px;
+    .Tab {
+      color: black;
+      min-height: 36px;
+      border: none;
+    }
+
+    .Tab--selected {
+      color: black;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .chicken-info-container {
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .chicken-title {
+    width: 100%;
+    text-decoration: underline;
+    font-size: 24px;
+  }
+  .chicken-icon {
+    height: 32px;
+  }
+  .chicken-data-container .Flex.Item {
+    flex: 1;
+  }
+  .chicken-metric {
+    font-size: 16px;
+    text-align: left;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 100%;
+  }
+}

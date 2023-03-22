@@ -8,7 +8,6 @@
 
 #define SCANGATE_HUMAN "human"
 #define SCANGATE_LIZARD "lizard"
-#define SCANGATE_FELINID "felinid"
 #define SCANGATE_FLY "fly"
 #define SCANGATE_PLASMAMAN "plasma"
 #define SCANGATE_MOTH "moth"
@@ -143,8 +142,6 @@
 						scan_species = /datum/species/lizard
 					if(SCANGATE_FLY)
 						scan_species = /datum/species/fly
-					if(SCANGATE_FELINID)
-						scan_species = /datum/species/human/felinid
 					if(SCANGATE_PLASMAMAN)
 						scan_species = /datum/species/plasmaman
 					if(SCANGATE_MOTH)
@@ -273,7 +270,6 @@
 
 #undef SCANGATE_HUMAN
 #undef SCANGATE_LIZARD
-#undef SCANGATE_FELINID
 #undef SCANGATE_FLY
 #undef SCANGATE_PLASMAMAN
 #undef SCANGATE_MOTH

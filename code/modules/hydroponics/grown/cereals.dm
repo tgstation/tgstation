@@ -9,7 +9,6 @@
 	production = 1
 	yield = 4
 	potency = 15
-	instability = 20
 	icon_dead = "wheat-dead"
 	mutatelist = list(/obj/item/seeds/wheat/oat, /obj/item/seeds/wheat/meat)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04)
@@ -55,7 +54,6 @@
 	icon_state = "seed-rice"
 	species = "rice"
 	plantname = "Rice Stalks"
-	instability = 1
 	product = /obj/item/food/grown/rice
 	mutatelist = null
 	growthstages = 3

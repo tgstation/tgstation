@@ -8,7 +8,6 @@
 	product = /obj/item/food/grown/banana
 	lifespan = 50
 	endurance = 30
-	instability = 10
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_dead = "banana-dead"
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
@@ -127,7 +126,6 @@
 	species = "bluespacebanana"
 	icon_grow = "banana-grow"
 	plantname = "Bluespace Banana Tree"
-	instability = 40
 	product = /obj/item/food/grown/banana/bluespace
 	mutatelist = null
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)

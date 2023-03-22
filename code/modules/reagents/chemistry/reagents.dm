@@ -107,6 +107,19 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	/// Icon state for fallback item displayed in a tourist's thought bubble for if this reagent had no associated glass_style datum.
 	var/fallback_icon_state
 
+	///Whether it will evaporate if left untouched on a liquids simulated puddle
+	var/evaporates = TRUE
+	///How much fire power does the liquid have, for burning on simulated liquids. Not enough fire power/unit of entire mixture may result in no fire
+	var/liquid_fire_power = 0
+	///How fast does the liquid burn on simulated turfs, if it does
+	var/liquid_fire_burnrate = 0
+	///Whether a fire from this requires oxygen in the atmosphere
+	var/fire_needs_oxygen = TRUE
+	///The opacity of the chems used to determine the alpha of liquid turfs
+	var/opacity = 175
+	///The rate of evaporation in units per call
+	var/evaporation_rate = 0.5
+
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
@@ -244,6 +257,17 @@ Primarily used in reagents/reaction_agents
 
 	return TRUE
 
+/**
+ * Specifically made for mutation reagent reactions
+ */
+/datum/reagent/proc/plant_mutation_reagent_apply(datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user, mr = 5, hm = 2)
+	if(chems.has_reagent(src.type, mr))
+		mytray.mutation_roll(user)
+	else if(chems.has_reagent(src.type, hm))
+		mytray.hardmutate()
+	else
+		mytray.mutate()
+
 /// Should return a associative list where keys are taste descriptions and values are strength ratios
 /datum/reagent/proc/get_taste_description(mob/living/taster)
 	return list("[taste_description]" = 1)
@@ -310,3 +334,6 @@ Primarily used in reagents/reaction_agents
 			reagent_strings += "[capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
 
 	return reagent_strings.Join(join_text)
+
+/datum/reagent/proc/feed_interaction(mob/living/simple_animal/chicken/target, volume)
+	return

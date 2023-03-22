@@ -32,12 +32,11 @@
 	taste_description = "metal"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-	//It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
-/datum/reagent/stabilizing_agent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
 
-	myseed?.adjust_instability(-round(chems.get_reagent_amount(type)))
+/datum/reagent/stabilizing_agent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.mutmod = 0
 
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
@@ -197,8 +196,12 @@
 
 	// why, just why
 /datum/reagent/napalm/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		if(!(myseed.resistance_flags & FIRE_PROOF))
+			mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 6))
+			mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 7))
+		mytray.adjustWeeds(-rand(5,9)) //At least give them a small reward if they bother.
 
 	if(!(myseed.resistance_flags & FIRE_PROOF))
 		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 6))
