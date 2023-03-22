@@ -7,7 +7,7 @@
 	movedelay = 3
 	max_integrity = 250
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
-	internal_damage_threshold = 23
+	internal_damage_threshold = 22
 	armor_type = /datum/armor/mecha_gygax
 	max_temperature = 25000
 	leg_overload_coeff = 80
