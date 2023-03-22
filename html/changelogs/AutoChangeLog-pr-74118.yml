@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Implants and items which you cannot drop will no longer be forced out of your character when you are kidnapped."
-  - bugfix: "Objects you try to take back from the kidnapping location as souvenirs will drop to the ground when you leave instead of being destroyed, except shirts and shoes (make sure to pick up your monographed synidcate T-shirt)."
