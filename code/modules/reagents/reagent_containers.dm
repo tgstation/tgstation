@@ -192,6 +192,12 @@
 		var/who = (isnull(user) || eater == user) ? "your" : "[eater.p_their()]"
 		to_chat(user, span_warning("You have to remove [who] [covered] first!"))
 		return FALSE
+	if(!eater.has_mouth())
+		if(eater == user)
+			balloon_alert(eater, "You have no mouth")
+		else
+			balloon_alert(user, "[eater] has no mouth")
+		return FALSE
 	return TRUE
 
 /*
