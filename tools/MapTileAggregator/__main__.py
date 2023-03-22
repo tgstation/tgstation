@@ -73,6 +73,7 @@ def update_map(map_path):
             if color == None:
                 # Commented out the warning because there's no reason for this to occur. If it exists, it should be addressed case-by-case outside of the scope of this script (with an UpdatePaths)
                 # This is because null-colored turf decals legitimately have no color and don't modify appearances, bit silly. If a null-colored turf decal means something somewhere else, add that color here.
+                # color = "white"
                 # print("Warning, tile with no color (this is bad): {}".format(decal))
                 continue
 
@@ -142,6 +143,7 @@ if __name__ == '__main__':
         for filename in [f for f in filenames if f.endswith(".dmm")]:
             list_of_files.append(pathlib.Path(root, filename))
     for path in list_of_files:
+        print("Updating " + str(path) + "...")
         data = update_map(path)
         if data[1] > 0:
             data[0].to_file(path)
