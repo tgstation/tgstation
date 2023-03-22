@@ -485,8 +485,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/unpowered/lunch_house)
 "NO" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "OB" = (
 /obj/structure/chair/stool/bar/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
