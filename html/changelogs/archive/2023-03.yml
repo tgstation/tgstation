@@ -740,3 +740,78 @@
   atosti:
   - bugfix: Material tile floors now make noise when walked on by bare/claw/heavy
       feet
+2023-03-20:
+  Cheshify:
+  - bugfix: removed two decals from a space ruin.
+  GoldenAlpharex:
+  - bugfix: Ghost role spawners that are set to have infinite uses no longer run out
+      of uses.
+  Jacquerel:
+  - bugfix: Plasmamen and golems (and androids, if you ever find one) can be implanted
+      again.
+  Melbert:
+  - bugfix: Fixes rare human arm melting condition
+  timothymtorres:
+  - bugfix: Fix not being able to read in full bright areas
+2023-03-21:
+  Jacquerel:
+  - bugfix: Removing a storage implant from someone will dump the items on the ground
+      rather than inside the mob.
+  - bugfix: Wizard Apprentices can no longer draw their own ritual circles.
+  - bugfix: Implants and items which you cannot drop will no longer be forced out
+      of your character when you are kidnapped.
+  - bugfix: Objects you try to take back from the kidnapping location as souvenirs
+      will drop to the ground when you leave instead of being destroyed, except shirts
+      and shoes (make sure to pick up your monographed synidcate T-shirt).
+  JohnFulpWillard:
+  - balance: Wirecarp now properly shuts off NtNet remotely.
+  - balance: Wirecarp now shows the source of a PDA that does an action.
+  - bugfix: Wirecarp can no longer be used to see if Nukies exist through their networks.
+  - rscdel: Removes Software downloading and communication Ntnet networks, as they
+      were pretty worthless.
+  JohnFulpWillard, sprites by BalkyGoat:
+  - rscadd: ' The Janitor Access key: Janitors can now be given departmental AA (one
+      at a time) using the Keycard authentication device in Command offices. Use it
+      if you need cleaning!'
+  - bugfix: HoP's trim is no longer set to edit Supply access.
+  LT3:
+  - code_imp: Tram crossing signal/platform logic improvements
+  OneAsianTortoise:
+  - qol: adds service radio to jani/curator/chaplain/lawyer vendor
+  Pickle-Coding:
+  - balance: 9mm, 10mm, and other stuff can cause wounds.
+  Profakos:
+  - bugfix: Tramstation now has the right amount of security and medical record computers
+  Rhials:
+  - balance: midwife spider eggs now spawn in separate locations. Divide and conquer!
+  - bugfix: midwife spider eggs can no longer generate in atmos-hazardous areas.
+  atosti:
+  - bugfix: Organ harvesters now open and abort harvesting when losing power
+  coiax:
+  - bugfix: Coffee cups are now correctly immune to becoming frozen by low temperature
+      water vapour.
+  - bugfix: Holosigns, like the atmos holofan, can no longer be frozen by low temperature
+      water vapour.
+2023-03-22:
+  DATA-xPUNGED:
+  - spellcheck: "Pacoca is now called \"Pa\xE7oca\", as it should"
+  Helg2:
+  - rscadd: Wirebrush is now avalaible at janivend, for janiborg and you can put it
+      in the janibelt.
+  Melbert:
+  - bugfix: Fixed stray white pixel in illegal rolling pin inhands.
+  NamelessFairy:
+  - bugfix: Stray Cargo Pod false alarms will once again play an announcement when
+      they occur.
+  Rhials:
+  - bugfix: NODISMEMBER mobs can now be attacked by the flesh worm.
+  SmoSmoSmoSmok:
+  - bugfix: heck suit no longer bugs out worn boots/gloves icons
+  coiax:
+  - bugfix: Fixed missing food types for the meat clown, it is now meat and fruit.
+  san7890:
+  - refactor: Some aspects of how we track suicides from your living mob to your observer
+      have changed- please do let us know if anything has broken via a GitHub Issue
+      Report.
+  tf-4:
+  - bugfix: Failing a kickflip no longer shows the chat messages to the wrong people.

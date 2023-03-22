@@ -56,3 +56,4 @@
 #_maps/RandomRuins/SpaceRuins/spinwardsmoothies.dmm
 #_maps/RandomRuins/SpaceRuins/dangerous_research.dmm
 #_maps/RandomRuins/SpaceRuins/the_faceoff.dmm
+#_maps/RandomRuins/SpaceRuins/prey_pod.dmm
