@@ -779,7 +779,7 @@
 	if (!(picked_user_part?.bodytype & BODYTYPE_ROBOTIC))
 		changed_something = TRUE
 		new_part = new new_part()
-		new_part.replace_limb(src, TRUE)
+		new_part.replace_limb(src, special = TRUE)
 		if (picked_user_part)
 			qdel(picked_user_part)
 
