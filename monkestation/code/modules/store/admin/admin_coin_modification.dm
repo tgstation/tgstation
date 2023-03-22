@@ -29,4 +29,8 @@
 		return
 
 	for(var/mob/player in GLOB.player_list)
+		if(!player.client)
+			continue
+		if(!player.client.prefs)
+			continue
 		player.client.prefs.adjust_metacoins(player.client.ckey, adjustment_amount, "You have been gifted some coins from the staff.", TRUE)
