@@ -26,7 +26,7 @@
 		if(victim.client)
 			user.log_message("stuck [sticker] to [key_name(victim)]", LOG_ATTACK)
 			victim.log_message("had [sticker] stuck to them by [key_name(user)]", LOG_ATTACK)
-	else if(isturf(parent))
+	else if(isturf(parent) && (sticker.resistance_flags & FLAMMABLE))
 		//register signals on the users turf instead because we can assume they are on flooring sticking it to a wall so it should burn (otherwise it would fruitlessly check wall temperature)
 		signal_turf = (user && isclosedturf(parent)) ? get_turf(user) : parent
 		RegisterSignal(signal_turf, COMSIG_TURF_EXPOSE, PROC_REF(on_turf_expose))
@@ -48,16 +48,18 @@
 	qdel(src)
 
 /datum/component/attached_sticker/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_LIVING_IGNITED, PROC_REF(on_ignite))
+	if(sticker.resistance_flags & FLAMMABLE)
+		RegisterSignal(parent, COMSIG_LIVING_IGNITED, PROC_REF(on_ignite))
 	if(washable)
 		RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(peel))
 	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_attached_qdel))
 
 /datum/component/attached_sticker/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_LIVING_IGNITED, COMSIG_PARENT_QDELETING))
-	if(signal_turf)
-		UnregisterSignal(signal_turf, COMSIG_TURF_EXPOSE)
-		signal_turf = null
+	if(sticker.resistance_flags & FLAMMABLE)
+		UnregisterSignal(parent, list(COMSIG_LIVING_IGNITED, COMSIG_PARENT_QDELETING))
+		if(signal_turf)
+			UnregisterSignal(signal_turf, COMSIG_TURF_EXPOSE)
+			signal_turf = null
 	if(washable)
 		UnregisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT)
 
