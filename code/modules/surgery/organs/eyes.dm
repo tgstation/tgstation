@@ -252,6 +252,14 @@
 	sight_flags = SEE_MOBS
 	color_cutoffs = list(25, 5, 42)
 
+/obj/item/organ/internal/eyes/golem
+	name = "resonating crystal"
+	icon_state = "adamantine_cords"
+	desc = "Golems somehow measure external light levels and detect nearby ore using this sensitive mineral lattice."
+	visual = FALSE
+	color_cutoffs = list(20, 5, 5) // TODO: fuck with this colour
+	// TODO: ore detection action
+
 ///Robotic
 
 /obj/item/organ/internal/eyes/robotic

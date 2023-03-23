@@ -34,6 +34,7 @@
 	meat = /obj/item/food/meat/slab/human/mutant/golem
 	species_language_holder = /datum/language_holder/golem
 
+	mutanteyes = /obj/item/organ/internal/eyes/golem
 	mutantbrain = /obj/item/organ/internal/brain/golem
 	mutanttongue = /obj/item/organ/internal/tongue/golem
 	mutantstomach = /obj/item/organ/internal/stomach/golem

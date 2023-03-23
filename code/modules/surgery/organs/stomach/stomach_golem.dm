@@ -15,8 +15,16 @@
 	RegisterSignal(owner, COMSIG_CARBON_ATTEMPT_EAT, PROC_REF(try_eating))
 	if (!ishuman(organ_owner))
 		return
-	var/mob/living/carbon/human/human_owner = organ_owner
+	if (organ_owner.flags_1 & INITIALIZED_1)
+		setup_physiology(organ_owner)
+	else
+		RegisterSignal(owner, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE, PROC_REF(setup_physiology))
+
+/// Physiology doesn't exist yet if this is added on initialisation of a golem, so we need to wait until it does
+/obj/item/organ/internal/stomach/golem/proc/setup_physiology(mob/living/carbon/human/human_owner)
+	SIGNAL_HANDLER
 	human_owner.physiology?.hunger_mod *= hunger_mod
+	UnregisterSignal(human_owner, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 
 /obj/item/organ/internal/stomach/golem/on_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
