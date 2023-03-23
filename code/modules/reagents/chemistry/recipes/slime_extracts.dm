@@ -2,6 +2,7 @@
 /datum/chemical_reaction/slime
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_SLIME
+	required_other = TRUE
 	var/deletes_extract = TRUE
 
 /datum/chemical_reaction/slime/pre_reaction_other_checks(datum/reagents/holder)

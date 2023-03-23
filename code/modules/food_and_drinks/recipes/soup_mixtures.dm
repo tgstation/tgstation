@@ -354,6 +354,31 @@
 	)
 	percentage_of_nutriment_converted = 0.15
 
+// Vegan Chili
+/datum/reagent/consumable/nutriment/soup/chili_con_carne
+	name = "chili sin carne"
+	description = "For the hombres who don't want carne."
+	data = list("bitterness" = 1, "sourness" = 1)
+
+/datum/glass_style/has_foodtype/soup/chili_con_carne
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/chili_con_carne
+	icon_state = "hotchili"
+	drink_type = VEGETABLES
+
+/datum/chemical_reaction/food/soup/chili_con_carne
+	required_reagents = list(
+		/datum/reagent/water = 40,
+		/datum/reagent/consumable/salt = 5,
+	)
+	required_ingredients = list(
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/tomato = 1
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/chili_con_carne = 30,
+		/datum/reagent/consumable/tomatojuice = 10,
+	)
+
 // Tomato soup
 /datum/reagent/consumable/nutriment/soup/tomato
 	name = "tomato soup"
@@ -1182,5 +1207,318 @@
 		/datum/reagent/consumable/nutriment/protein = 8,
 	)
 	percentage_of_nutriment_converted = 0.2
+
+// Moth stuff
+
+// Cotton Soup
+/datum/reagent/consumable/nutriment/soup/cottonball
+	name = "flöfrölenmæsch" //flöf = cotton, rölen = ball, mæsch = soup
+	desc = "A soup made from raw cotton in a flavourful vegetable broth. Enjoyed only by moths and the criminally tasteless."
+	data = list("cotton" = 1, "broth" = 1)
+
+/datum/glass_style/has_foodtype/soup/cottonball
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/cottonball
+	icon = 'icons/obj/food/moth.dmi'
+	icon_state = "moth_cotton_soup"
+	drink_type = VEGETABLES | CLOTH
+
+/datum/chemical_reaction/food/soup/cottonball
+	required_reagents = list(/datum/reagent/water = 50)
+	required_ingredients = list(
+		/obj/item/grown/cotton = 1, // Why are you buying clothes at the soup store?!
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/eggplant = 1,
+		/obj/item/food/oven_baked_corn = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/cottonball = 30,
+	)
+	percentage_of_nutriment_converted = 0.1 // Cotton has no nutrition
+
+// Cheese Soup
+/datum/reagent/consumable/nutriment/soup/cheese
+	name = "ælosterrmæsch" //ælo = cheese, sterr = melt, mæsch = soup
+	description = "A simple and filling soup made from homemade cheese and sweet potato. \
+		The curds provide texture while the whey provides volume- and they both provide deliciousness!"
+	data = list("cheese" = 1, "cream" = 1, "sweet potato" = 1)
+
+/datum/glass_style/has_foodtype/soup/cheese
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/cheese
+	name = "ælosterrmæsch"
+	icon = 'icons/obj/food/moth.dmi'
+	icon_state = "moth_cheese_soup"
+	drink_type = DAIRY | GRAIN
+
+/datum/chemical_reaction/food/soup/cheese
+	required_reagents = list(
+		/datum/reagent/water = 30,
+		/datum/reagent/consumable/flour = 10,
+		/datum/reagent/consumable/milk = 10,
+	)
+	required_ingredients = list(
+		/obj/item/food/cheese/wedge = 2,
+		/obj/item/food/butter = 1,
+		/obj/item/food/grown/potato/sweet = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/cheese = 30,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/milk = 2,
+	)
+
+// Seed Soup
+/datum/reagent/consumable/nutriment/soup/seed
+	name = "misklmæsch" //miskl = seed, mæsch = soup
+	description = "A seed based soup, made by germinating seeds and then boiling them. \
+		Produces a particularly bitter broth which is usually balanced by the addition of vinegar."
+	data = list("bitterness" = 1, "sourness" = 1)
+
+/datum/glass_style/has_foodtype/soup/seed
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/seed
+	name = "misklmæsch"
+	icon = 'icons/obj/food/moth.dmi'
+	icon_state = "moth_seed_soup"
+	drink_type = VEGETABLES
+
+/datum/chemical_reaction/food/soup/seed
+	required_reagents = list(
+		/datum/reagent/water = 40,
+		/datum/reagent/consumable/vinegar = 10,
+	)
+	required_ingredients = list(
+		/obj/item/seeds/sunflower = 1,
+		/obj/item/seeds/poppy/lily = 1,
+		/obj/item/seeds/ambrosia = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/seed = 30,
+		/datum/reagent/consumable/nutriment/vitamin = 13,
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/vinegar = 8,
+		/datum/reagent/water = 7,
+	)
+
+// Bean Soup
+/datum/reagent/consumable/nutriment/soup/beans
+	name = "prickeldröndolhaskl" //prickeld = spicy, röndol = bean, haskl = stew
+	description = "A spicy bean stew with lots of veggies, commonly served aboard the fleet as a filling and satisfying meal with rice or bread."
+	data = list("beans" = 1, "cabbage" = 1, "spicy sauce" = 1)
+
+/datum/glass_style/has_foodtype/soup/beans
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/beans
+	name = "prickeldröndolhaskl"
+	icon = 'icons/obj/food/moth.dmi'
+	icon_state = "moth_bean_stew"
+	drink_type = VEGETABLES
+
+/datum/chemical_reaction/food/soup/beans
+	required_reagents = list(/datum/reagent/water = 50)
+	required_ingredients = list(
+		/obj/item/food/canned/beans = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/oven_baked_corn = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/beans = 30,
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/water = 10,
+	)
+
+// Oat Soup, but not oatmeal
+/datum/reagent/consumable/nutriment/soup/moth_oats
+	name = "häfmisklhaskl" //häfmiskl = oat (häf from German hafer meaning oat, miskl meaning seed), haskl = stew
+	description = "A spicy bean stew with lots of veggies, commonly served aboard the fleet as a filling and satisfying meal with rice or bread."
+	data = list("oats" = 1, "sweet potato" = 1, "carrot" = 1, "parsnip" = 1, "pumpkin" = 1)
+
+/datum/glass_style/has_foodtype/soup/moth_oats
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/moth_oats
+	name = "häfmisklhaskl"
+	icon = 'icons/obj/food/moth.dmi'
+	icon_state = "moth_oat_stew"
+	drink_type = VEGETABLES | GRAIN
+
+/datum/chemical_reaction/food/soup/moth_oats
+	required_reagents = list(/datum/reagent/water = 50)
+	required_ingredients = list(
+		/obj/item/food/grown/oat = 1,
+		/obj/item/food/grown/potato/sweet = 1,
+		/obj/item/food/grown/parsnip = 1,
+		/obj/item/food/grown/carrot = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/moth_oats = 30,
+	)
+	percentage_of_nutriment_converted = 0.1
+
+// Fire Soup
+/datum/reagent/consumable/nutriment/soup/fire_soup
+	name = "tömpröttkrakklmæsch" //tömprött = heart (tömp = thump, rött = muscle), krakkl = fire, mæsch = soup
+	description = "Tömpröttkrakklmæsch, or heartburn soup, is a cold soup dish that originated amongst the jungle moths, \
+		and is named for two things- its rosy pink colour, and its scorchingly hot chili heat."
+	data = list("love" = 1, "hate" = 1)
+
+/datum/glass_style/has_foodtype/soup/fire_soup
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/fire_soup
+	icon = 'icons/obj/food/moth.dmi'
+	icon_state = "moth_fire_soup"
+	drink_type = VEGETABLES | DAIRY
+
+/datum/chemical_reaction/food/soup/fire_soup
+	required_reagents = list(
+		/datum/reagent/water = 30,
+		/datum/reagent/consumable/yoghurt = 15,
+		/datum/reagent/consumable/vinegar = 5,
+	)
+	required_ingredients = list(
+		/obj/item/food/grown/ghost_chili = 1,
+		/obj/item/food/tofu = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/fire_soup = 30,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vinegar = 2,
+	)
+	percentage_of_nutriment_converted = 0.1
+
+// Rice Porridge (Soup-ish)
+/datum/reagent/consumable/nutriment/soup/rice_porridge
+	name = "rice porridge"
+	description = "A plate of rice porridge. It's mostly flavourless, but it does fill a spot. \
+		To the Chinese it's congee, and moths call it höllflöfmisklsløsk." //höllflöfmiskl = rice (höllflöf = cloud, miskl = seed), sløsk = porridge
+	data = list("nothing" = 1)
+
+/datum/glass_style/has_foodtype/soup/rice_porridge
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/rice_porridge
+	name = "rice porridge"
+	icon = 'icons/obj/food/moth.dmi'
+	icon_state = "rice_porridge"
+	drink_type = GRAIN
+
+/datum/chemical_reaction/food/soup/rice_porridge
+	required_reagents = list(
+		/datum/reagent/water = 30,
+		/datum/reagent/consumable/salt = 5,
+	)
+	required_ingredients = list(
+		/obj/item/food/boiledrice = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/rice_porridge = 20,
+		/datum/reagent/consumable/salt = 5,
+	)
+	percentage_of_nutriment_converted = 0.15
+
+// Cornmeal Porridge (Soup-ish)
+// Also, pretty much just a normal chemical reaction. Used in other stuff
+/datum/reagent/consumable/nutriment/soup/cornmeal_porridge
+	name = "cornmeal porridge"
+	description = "A plate of cornmeal porridge. It's more flavourful than most porridges, and makes a good base for other flavours, too."
+	data = list("cornmeal" = 1)
+
+/datum/glass_style/has_foodtype/soup/cornmeal_porridge
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/cornmeal_porridge
+	icon = 'icons/obj/food/moth.dmi'
+	icon_state = "cornmeal_porridge"
+	drink_type = GRAIN
+
+/datum/chemical_reaction/food/soup/cornmeal_porridge
+	required_other = FALSE
+	required_reagents = list(
+		/datum/reagent/consumable/cornmeal = 20,
+		/datum/reagent/water = 20,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/cornmeal_porridge = 20,
+	)
+
+// Cheese Porridge (Soup-ish)
+/datum/reagent/consumable/nutriment/soup/cheese_porridge
+	name = "cheesy porridge" //milk, polenta, firm cheese, curd cheese, butter
+	description = "A rich and creamy bowl of cheesy cornmeal porridge."
+	data = list("cornmeal" = 1, "cheese" = 1, "more cheese" = 1, "lots of cheese" = 1)
+
+/datum/glass_style/has_foodtype/soup/cheese_porridge
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/cheese_porridge
+	icon = 'icons/obj/food/moth.dmi'
+	icon_state = "cheesy_porridge"
+	drink_type = DAIRY | GRAIN
+
+/datum/chemical_reaction/food/soup/cheese_porridge
+	required_reagents = list(
+		/datum/reagent/consumable/milk = 5,
+		/datum/reagent/consumable/nutriment/soup/cornmeal_porridge = 20,
+		/datum/reagent/water = 20,
+	)
+	required_ingredients = list(
+		/obj/item/food/cheese/firm_cheese_slice = 1,
+		/obj/item/food/cheese/curd_cheese = 1,
+		/obj/item/food/butter = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/cheese_porridge = 30,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/nutriment/protein = 4,
+	)
+
+// Rice Porridge again but with Toechtause
+/datum/reagent/consumable/nutriment/soup/toechtauese_rice_porridge
+	name = "töchtaüse rice porridge"
+	description = "Commonly served aboard the mothic fleet, rice porridge with töchtaüse syrup is more palatable than the regular stuff, if even just because it's spicier than normal."
+	data = list("sugar" = 1, "spice" = 1)
+
+/datum/glass_style/has_foodtype/soup/toechtauese_rice_porridge
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/toechtauese_rice_porridge
+	icon = 'icons/obj/food/moth.dmi'
+	icon_state = "toechtauese_rice_porridge"
+	drink_type = GRAIN | VEGETABLES
+
+/datum/chemical_reaction/food/soup/toechtauese_rice_porridge
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/soup/rice_porridge = 20,
+		/datum/reagent/consumable/toechtauese_syrup = 10,
+		/datum/reagent/water = 10,
+	)
+	required_ingredients = list(
+		/obj/item/food/grown/chili = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/toechtauese_rice_porridge = 30,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/toechtauese_syrup = 6,
+	)
+
+// Red Porridge
+/datum/reagent/consumable/nutriment/soup/red_porridge
+	name = "eltsløsk ül a priktæolk" //eltsløsk = red porridge, ül a = with, prikt = sour, æolk = cream
+	description = "Red porridge with yoghurt. The name and vegetable ingredients obscure the sweet nature of the dish, which is commonly served as a dessert aboard the fleet."
+	data = list("sweet beets" = 1, "sugar" = 1, "sweetened yoghurt" = 1)
+
+/datum/glass_style/has_foodtype/soup/red_porridge
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/red_porridge
+	icon = 'icons/obj/food/moth.dmi'
+	icon_state = "red_porridge"
+	drink_type = VEGETABLES | SUGAR | DAIRY
+
+/datum/chemical_reaction/food/soup/red_porridge
+	required_reagents = list(
+		/datum/reagent/consumable/vanilla = 10,
+		/datum/reagent/consumable/yoghurt = 20,
+		/datum/reagent/consumable/sugar = 10,
+	)
+	required_ingredients = list(
+		/obj/item/food/grown/redbeet = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/red_porridge = 24,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/sugar = 8,
+	)
+	percentage_of_nutriment_converted = 0.1
+
 
 #undef SOUP_SERVING_SIZE

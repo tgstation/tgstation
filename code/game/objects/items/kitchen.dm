@@ -247,7 +247,6 @@
 	name = "ladle"
 	desc = "What is a ladle but a comically large spoon?"
 	spoon_sip_size = 3 // just a taste
-
 	var/static/matrix/ladle_matrix
 
 /obj/item/kitchen/spoon/soup_ladle/Initialize(mapload)
@@ -255,6 +254,7 @@
 	if(!ladle_matrix)
 		ladle_matrix = matrix()
 		ladle_matrix.Scale(1.2, 1.5)
+		ladle_matrix.Turn(45)
 	transform = ladle_matrix
 	create_reagents(25, INJECTABLE|OPENCONTAINER)
 

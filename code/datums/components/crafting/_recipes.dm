@@ -91,5 +91,6 @@
 		return TRUE
 	return FALSE
 
+/// Additional UI data to be passed to the crafting UI for this recipe
 /datum/crafting_recipe/proc/crafting_ui_data()
 	return list()

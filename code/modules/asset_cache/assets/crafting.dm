@@ -15,13 +15,7 @@
 	var/id = 1
 	for(var/atom in GLOB.cooking_recipes_atoms)
 		add_atom_icon(atom, id++)
-	/*
-	for(var/datum/glass_style/soup as anything in subtypesof(/datum/glass_style/has_foodtype/soup))
-		Insert("a[id]", icon(initial(soup.icon), initial(soup.icon_state), SOUTH))
-		id++
-	*/
 
-///
 /**
  * Adds the ingredient icon to the spritesheet with given ID
  *
