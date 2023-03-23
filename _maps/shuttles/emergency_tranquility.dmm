@@ -1,4 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "ag" = (
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -186,10 +193,6 @@
 	},
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
-"eL" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood/large,
-/area/shuttle/escape)
 "eN" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
@@ -264,6 +267,16 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"ge" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lantern{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
 "gg" = (
 /obj/effect/turf_decal/siding/wood{
@@ -432,18 +445,6 @@
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/stone,
 /area/shuttle/escape)
-"jg" = (
-/obj/structure/railing{
-	color = "#A47449";
-	dir = 6;
-	layer = 3.1
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/obj/structure/flora/bush/style_4,
-/turf/open/floor/grass,
-/area/shuttle/escape)
 "jl" = (
 /obj/structure/railing{
 	color = "#A47449";
@@ -506,6 +507,18 @@
 "jI" = (
 /turf/open/floor/wood/parquet,
 /area/shuttle/escape)
+"jM" = (
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 6;
+	layer = 3.1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/flora/bush/style_4,
+/turf/open/floor/grass,
+/area/shuttle/escape)
 "kh" = (
 /obj/structure/railing/corner{
 	dir = 2;
@@ -527,6 +540,10 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"kn" = (
+/obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "kp" = (
@@ -556,16 +573,6 @@
 "kU" = (
 /obj/effect/turf_decal/plaque,
 /turf/open/floor/wood/large,
-/area/shuttle/escape)
-"lf" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lantern{
-	pixel_y = 4
-	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
 "ll" = (
 /obj/structure/railing/corner,
@@ -700,6 +707,11 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
+"nz" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
 "nA" = (
 /obj/structure/railing/corner{
 	dir = 8;
@@ -755,6 +767,18 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/lattice,
 /turf/template_noop,
+/area/shuttle/escape)
+"oj" = (
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 10;
+	layer = 3.1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/flora/bush/style_3,
+/turf/open/floor/grass,
 /area/shuttle/escape)
 "os" = (
 /obj/effect/turf_decal/siding/wood{
@@ -837,15 +861,11 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "pn" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"pz" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood/tile,
+/obj/structure/flora/bush/flowers_br/style_2,
+/turf/open/floor/grass,
 /area/shuttle/escape)
 "pK" = (
 /obj/structure/reagent_dispensers/foamtank,
@@ -1000,6 +1020,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
+"rV" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "si" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -1148,11 +1172,11 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "vd" = (
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 8
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
 	},
-/obj/structure/flora/grass/jungle/b/style_2,
-/turf/open/floor/grass,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
 /area/shuttle/escape)
 "vl" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1166,15 +1190,14 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/escape)
 "vy" = (
-/obj/structure/table/reinforced,
-/obj/structure/table/reinforced{
-	color = "#c1b6a5"
-	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
 /obj/item/storage/fancy/cigarettes/cigars/cohiba,
 /obj/item/lighter,
+/obj/structure/table/reinforced{
+	color = "#c1b6a5"
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "vB" = (
@@ -1195,13 +1218,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/small,
-/area/shuttle/escape)
-"vJ" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/obj/structure/flora/grass/jungle/b/style_5,
-/turf/open/floor/grass,
 /area/shuttle/escape)
 "vT" = (
 /obj/structure/railing{
@@ -1250,9 +1266,10 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
-"wB" = (
-/obj/structure/bookcase/random,
-/turf/open/floor/wood,
+"wG" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "wM" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1539,11 +1556,6 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/shuttle/escape)
-"Ca" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood/tile,
-/area/shuttle/escape)
 "Ci" = (
 /obj/structure/railing{
 	color = "#A47449";
@@ -1584,11 +1596,6 @@
 	},
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/carpet/royalblue,
-/area/shuttle/escape)
-"Dq" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood/large,
 /area/shuttle/escape)
 "DC" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1649,18 +1656,6 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
-/turf/open/floor/grass,
-/area/shuttle/escape)
-"ET" = (
-/obj/structure/railing{
-	color = "#A47449";
-	dir = 10;
-	layer = 3.1
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 10
-	},
-/obj/structure/flora/bush/style_3,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "EW" = (
@@ -1809,7 +1804,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
-/obj/structure/flora/bush/flowers_br/style_2,
+/obj/structure/flora/grass/jungle/b/style_2,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Gs" = (
@@ -2034,6 +2029,13 @@
 /obj/structure/flora/bush/flowers_yw,
 /turf/open/floor/grass,
 /area/shuttle/escape)
+"Kt" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/flora/grass/jungle/b/style_5,
+/turf/open/floor/grass,
+/area/shuttle/escape)
 "KB" = (
 /obj/structure/flora/grass/jungle{
 	pixel_x = 9;
@@ -2134,10 +2136,6 @@
 	name = "Captain's Fax Machine"
 	},
 /turf/open/floor/iron/dark/small,
-/area/shuttle/escape)
-"Mm" = (
-/obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/floor/grass,
 /area/shuttle/escape)
 "MF" = (
 /obj/effect/turf_decal/siding/wood{
@@ -2254,6 +2252,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
+"OG" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
 "OM" = (
 /obj/structure/table/reinforced,
 /obj/item/modular_computer/laptop{
@@ -2285,6 +2287,13 @@
 	},
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"Qq" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood,
 /area/shuttle/escape)
 "Qt" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -2393,6 +2402,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
+"Sa" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
 "Sl" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/railing{
@@ -2492,6 +2505,13 @@
 	},
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
+"Tw" = (
+/obj/structure/statue/sandstone/venus{
+	layer = 4;
+	anchored = 1
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "Ty" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -2508,13 +2528,6 @@
 	dir = 4
 	},
 /turf/open/water,
-/area/shuttle/escape)
-"TO" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood/large,
 /area/shuttle/escape)
 "TV" = (
 /obj/effect/turf_decal/siding/wood,
@@ -2664,13 +2677,6 @@
 /obj/structure/flora/bush/lavendergrass,
 /turf/open/floor/grass,
 /area/shuttle/escape)
-"XI" = (
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wood/corner,
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "XJ" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -2754,13 +2760,6 @@
 "ZJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone,
-/area/shuttle/escape)
-"ZQ" = (
-/obj/structure/statue/sandstone/venus{
-	layer = 4;
-	anchored = 1
-	},
-/turf/open/floor/wood,
 /area/shuttle/escape)
 "ZT" = (
 /turf/open/water/jungle,
@@ -2964,7 +2963,7 @@ vx
 ux
 ZF
 lQ
-wB
+rV
 ux
 Wo
 fL
@@ -3062,7 +3061,7 @@ MF
 pP
 AQ
 BL
-ZQ
+Tw
 XW
 nq
 XJ
@@ -3082,7 +3081,7 @@ dI
 uT
 Om
 Om
-pn
+ad
 Xt
 wM
 oV
@@ -3104,7 +3103,7 @@ zf
 Fv
 ux
 Rx
-XI
+Qq
 sY
 sY
 qB
@@ -3157,10 +3156,10 @@ zo
 vT
 iM
 aj
-ET
+oj
 hB
-TO
-Dq
+vd
+nz
 MO
 nv
 vT
@@ -3181,11 +3180,11 @@ Sz
 Na
 sU
 UJ
-Mm
+kn
 IV
 Oj
 Zh
-pz
+Sa
 nE
 vT
 yF
@@ -3204,14 +3203,14 @@ Gz
 Gz
 Sz
 ag
-Mm
+kn
 Oi
 XC
-Mm
+kn
 vB
 Zh
 Or
-Ca
+wG
 zI
 yy
 ag
@@ -3257,10 +3256,10 @@ AN
 HS
 hk
 ij
-jg
+jM
 Fj
 wM
-eL
+OG
 MO
 ba
 HS
@@ -3337,7 +3336,7 @@ fY
 wM
 AQ
 uR
-lf
+ge
 wA
 nw
 At
@@ -3354,9 +3353,9 @@ ux
 SU
 ux
 bG
-vJ
+Kt
 Oh
-vd
+Gp
 Gl
 Ih
 wM
@@ -3382,7 +3381,7 @@ ux
 ag
 yu
 IJ
-Gp
+pn
 FS
 Zh
 AF
