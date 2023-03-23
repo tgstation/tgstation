@@ -14,9 +14,11 @@ export const ChemPress = (props, context) => {
     max_volume,
     patch_style,
     patch_styles = [],
+    medipen_style,
+    medipen_styles = [],
   } = data;
   return (
-    <Window width={300} height={227}>
+    <Window width={370} height={227}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -45,6 +47,15 @@ export const ChemPress = (props, context) => {
                 onClick={() =>
                   act('change_product', {
                     product: 'bottle',
+                  })
+                }
+              />
+              <Button.Checkbox
+                content="Medipen"
+                checked={product === 'medipen'}
+                onClick={() =>
+                  act('change_product', {
+                    product: 'medipen',
                   })
                 }
               />
@@ -110,6 +121,24 @@ export const ChemPress = (props, context) => {
                       })
                     }>
                     <Box mb={0} mt={1} className={patch.class_name} />
+                  </Button>
+                ))}
+              </LabeledList.Item>
+            )}
+            {product === 'medipen' && (
+              <LabeledList.Item label="Style">
+                {medipen_styles.map((medipen) => (
+                  <Button
+                    key={medipen.style}
+                    selected={medipen.style === medipen_style}
+                    textAlign="center"
+                    color="transparent"
+                    onClick={() =>
+                      act('change_medipen_style', {
+                        medipen_style: medipen.style,
+                      })
+                    }>
+                    <Box mb={0} mt={1} className={medipen.class_name} />
                   </Button>
                 ))}
               </LabeledList.Item>

@@ -154,6 +154,11 @@
 	else
 		. += span_notice("It is spent.")
 
+/obj/item/reagent_containers/hypospray/medipen/custom //Custom Medipen produced via factory
+	name = "un-named pen"
+	desc = "A custom medipen produced by a complex chemical factory. Consult your local chemist about it's contents."
+	list_reagents = null
+
 /obj/item/reagent_containers/hypospray/medipen/stimpack //goliath kiting
 	name = "stimpack medipen"
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."

@@ -49,6 +49,8 @@
 //update this if you add more patch icons
 #define PATCH_STYLE_LIST list("bandaid", "bandaid_brute", "bandaid_burn", "bandaid_both") //icon_state list
 #define DEFAULT_PATCH_STYLE "bandaid"
+#define MEDIPEN_STYLE_LIST list("atropen", "firstaid", "hypovolemic", "medipen", "morphen", "oxapen", "penacid", "salacid", "salpen", "stimpen") //icon_state list
+#define DEFAULT_MEDIPEN_STYLE "medipen"
 
 //used by chem master
 #define CONDIMASTER_STYLE_AUTO "auto"

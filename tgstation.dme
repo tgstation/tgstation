@@ -2703,6 +2703,7 @@
 #include "code\modules\asset_cache\assets\lobby.dm"
 #include "code\modules\asset_cache\assets\mafia.dm"
 #include "code\modules\asset_cache\assets\mecha.dm"
+#include "code\modules\asset_cache\assets\medipens.dm"
 #include "code\modules\asset_cache\assets\moods.dm"
 #include "code\modules\asset_cache\assets\notes.dm"
 #include "code\modules\asset_cache\assets\orbit.dm"

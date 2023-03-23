@@ -13,6 +13,8 @@
 	var/max_patch_volume = 40
 	///maximum size of a bottle
 	var/max_bottle_volume = 30
+	///naximum size of a medipen
+	var/max_medipen_volume = 15
 	///current operating product (pills or patches)
 	var/product = "pill"
 	///the minimum size a pill or patch can be
@@ -31,6 +33,15 @@
 	var/patch_style = DEFAULT_PATCH_STYLE
 	/// List of available patch styles for UI
 	var/list/patch_styles
+
+	/// Currently selected medipen style
+	var/medipen_style = DEFAULT_MEDIPEN_STYLE
+	/// List of available medipen styles for UI
+	var/list/medipen_styles
+
+
+
+
 	///list of products stored in the machine, so we dont have 610 pills on one tile
 	var/list/stored_products = list()
 	///max amount of pills allowed on our tile before we start storing them instead
@@ -71,6 +82,12 @@
 			reagents.trans_to(P, current_volume)
 			P.name = trim("[product_name] bottle")
 			stored_products += P
+		else if (product == "medipen")
+			var/obj/item/reagent_containers/hypospray/medipen/custom/P = new(src)
+			reagents.trans_to(P, current_volume)
+			P.name = trim("[product_name] medipen")
+			P.icon_state = medipen_style
+			stored_products += P
 	if(stored_products.len)
 		var/pill_amount = 0
 		for(var/thing in loc)
@@ -103,11 +120,20 @@
 		patch_style["style"] = raw_patch_style
 		patch_style["class_name"] = patches_assets.icon_class_name(raw_patch_style)
 		patch_styles += list(patch_style)
+	var/datum/asset/spritesheet/simple/medipens_assets = get_asset_datum(/datum/asset/spritesheet/simple/medipens)
+	medipen_styles = list()
+	for (var/raw_medipen_style in MEDIPEN_STYLE_LIST)
+		//adding class_name for use in UI
+		var/list/medipen_style = list()
+		medipen_style["style"] = raw_medipen_style
+		medipen_style["class_name"] = medipens_assets.icon_class_name(raw_medipen_style)
+		medipen_styles += list(medipen_style)
 
 /obj/machinery/plumbing/pill_press/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/simple/pills),
 		get_asset_datum(/datum/asset/spritesheet/simple/patches),
+		get_asset_datum(/datum/asset/spritesheet/simple/medipens)
 	)
 
 /obj/machinery/plumbing/pill_press/ui_interact(mob/user, datum/tgui/ui)
@@ -117,7 +143,7 @@
 		ui.open()
 
 /obj/machinery/plumbing/pill_press/ui_data(mob/user)
-	if(!pill_styles || !patch_styles)
+	if(!pill_styles || !patch_styles || !medipen_styles)
 		load_styles()
 	var/list/data = list()
 	data["pill_style"] = pill_number
@@ -129,6 +155,8 @@
 	data["max_volume"] = max_volume
 	data["patch_style"] = patch_style
 	data["patch_styles"] = patch_styles
+	data["medipen_style"] = medipen_style
+	data["medipen_styles"] = medipen_styles
 	return data
 
 /obj/machinery/plumbing/pill_press/ui_act(action, params)
@@ -155,6 +183,10 @@
 				max_volume = max_patch_volume
 			else if (product == "bottle")
 				max_volume = max_bottle_volume
+			else if (product == "medipen")
+				max_volume = max_medipen_volume
 			current_volume = clamp(current_volume, min_volume, max_volume)
 		if("change_patch_style")
 			patch_style = params["patch_style"]
+		if("change_medipen_style")
+			medipen_style = params["medipen_style"]
