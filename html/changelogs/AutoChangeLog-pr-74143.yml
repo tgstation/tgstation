@@ -1,0 +1,7 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - qol: "adjusted the blood deficiency quirk for slimepeople to not cause excessive hunger as long as blood volume is kept above 550 via an IV drip (or other means of getting welding fluid/some other toxin etc into the bloodstream, e.g. ingestion)"
+  - qol: "speciees with exotic blood types will now receive the correct blood bag in the mail from having the blood deficiency perk"
+  - rscadd: "adds new blood bag types: TOX (slimepeople), H2O (podpeople), S (snail)"
+  - bugfix: "fixed blood deficiency quirk causing wild fluctuations in blood volume on the analyzer, giving more accurate readings"
