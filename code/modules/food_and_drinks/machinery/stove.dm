@@ -14,6 +14,7 @@
 	custom_materials = list(/datum/material/iron = 5000)
 	w_class = WEIGHT_CLASS_BULKY
 	fill_icon_thresholds = null
+
 	/// Max number of ingredients we can add
 	var/max_ingredients = 24
 	/// A lazylist of all the ingredients we have added

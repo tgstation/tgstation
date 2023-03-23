@@ -32,8 +32,8 @@
 		user = user,
 		delay = 1.25 SECONDS,
 		timed_action_flags = IGNORE_USER_LOC_CHANGE,
-		extra_checks = CALLBACK(src, PROC_REF(can_keep_drinking), source, user)
-		interaction_key = DOAFTER_SOURCE_FOODLIKE_DRINK
+		extra_checks = CALLBACK(src, PROC_REF(can_keep_drinking), source, user),
+		interaction_key = DOAFTER_SOURCE_FOODLIKE_DRINK,
 	))
 		return
 

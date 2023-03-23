@@ -72,12 +72,12 @@
 	name = "soup spawner"
 	icon_state = "soup"
 	loot = list(
-		/obj/item/reagent_containers/cup/bowl/hotchili,
-		/obj/item/reagent_containers/cup/bowl/meatball_soup,
-		/obj/item/reagent_containers/cup/bowl/nettle,
-		/obj/item/reagent_containers/cup/bowl/stew,
-		/obj/item/reagent_containers/cup/bowl/sweetpotato,
-		/obj/item/reagent_containers/cup/bowl/white_beet,
+		/obj/item/reagent_containers/cup/bowl/soup/hotchili,
+		/obj/item/reagent_containers/cup/bowl/soup/meatball_soup,
+		/obj/item/reagent_containers/cup/bowl/soup/nettle,
+		/obj/item/reagent_containers/cup/bowl/soup/stew,
+		/obj/item/reagent_containers/cup/bowl/soup/sweetpotato,
+		/obj/item/reagent_containers/cup/bowl/soup/white_beet,
 	)
 
 /obj/effect/spawner/random/food_or_drink/salad

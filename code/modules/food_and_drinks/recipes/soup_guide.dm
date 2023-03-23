@@ -50,14 +50,14 @@
 /datum/crafting_recipe/food/reaction/soup/tomatosoup
 	reaction = /datum/chemical_reaction/food/soup/tomatosoup
 
-// melbert todo doesn't work
 /datum/crafting_recipe/food/reaction/soup/bloodsoup
 	name = "Blood Soup"
 	desc = "Smells like copper."
 	reaction = /datum/chemical_reaction/food/soup/bloodsoup
 	// Uses tomato soup's icon
 	result = /datum/reagent/consumable/nutriment/soup/tomato
-	result_amount = 30 // More of a vague guess than anything
+	// More of a vague guess than anything
+	result_amount = 30
 
 /datum/crafting_recipe/food/reaction/soup/eyeballsoup
 	reaction = /datum/chemical_reaction/food/soup/eyeballsoup

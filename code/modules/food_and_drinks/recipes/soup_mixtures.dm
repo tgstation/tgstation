@@ -15,9 +15,9 @@
 /**
  * ## Soup base chemical reaction.
  *
- * Somewhat important note! Keep in mind one serving of soup is roughly 20 units. Adjust your results according.
+ * Somewhat important note! Keep in mind one serving of soup is roughly 20-25 units. Adjust your results according.
  *
- * Try to aim to have each reaction worth 3 servings of soup (60u).
+ * Try to aim to have each reaction worth 3 servings of soup (60u - 90u).
  * By default soup reactions require 50 units of water,
  * and they will also inherent the reagents of the ingredients used,
  * so you might end up with more nutrient than you expect.
@@ -28,6 +28,7 @@
 	overheat_temp = 540
 	optimal_ph_min = 1
 	optimal_ph_max = 14
+	thermic_constant = 0
 	required_reagents = null
 	mob_react = FALSE
 	required_other = TRUE
@@ -126,6 +127,28 @@
 		reagent.volume = round(reagent.volume * 0.9, 0.05)
 	holder.update_total()
 
+#ifdef TESTING
+
+/obj/item/soup_test_kit/Initialize(mapload)
+	..()
+	new /obj/item/food/meatball(loc)
+	new /obj/item/food/grown/carrot(loc)
+	new /obj/item/food/grown/potato(loc)
+	new /obj/item/reagent_containers/cup/soup_pot(loc)
+	return INITIALIZE_HINT_QDEL
+
+#endif
+
+/// This subtype is only for easy mapping / spawning in specific types of soup.
+/// Do not use it anywhere else.
+/obj/item/reagent_containers/cup/bowl/soup
+	var/initial_reagent
+	var/initial_portion = SOUP_SERVING_SIZE
+
+/obj/item/reagent_containers/cup/bowl/soup/Initialize(mapload)
+	. = ..()
+	if(initial_reagent)
+		reagents.add_reagent(initial_reagent, initial_portion)
 
 // Meatball Soup
 /datum/reagent/consumable/nutriment/soup/meatball_soup
@@ -139,20 +162,8 @@
 	icon_state = "meatballsoup"
 	drink_type = MEAT
 
-// MELBERT TODO REMOVE ITS FOR TEST
-/obj/item/meatball_maker/Initialize(mapload)
-	..()
-	new /obj/item/food/meatball(loc)
-	new /obj/item/food/grown/carrot(loc)
-	new /obj/item/food/grown/potato(loc)
-	new /obj/item/reagent_containers/cup/soup_pot(loc)
-	return INITIALIZE_HINT_QDEL
-
-/obj/item/reagent_containers/cup/bowl/meatball_soup
-
-/obj/item/reagent_containers/cup/bowl/meatball_soup/Initialize(mapload)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/consumable/nutriment/soup/meatball_soup, SOUP_SERVING_SIZE)
+/obj/item/reagent_containers/cup/bowl/soup/meatball_soup
+	initial_reagent = /datum/reagent/consumable/nutriment/soup/meatball_soup
 
 /datum/chemical_reaction/food/soup/meatballsoup
 	required_reagents = list(/datum/reagent/water = 50)
@@ -170,8 +181,6 @@
 		/datum/reagent/consumable/nutriment/vitamin = 8,
 		*/
 	)
-
-// Melbert todo: each of these need a subtype that starts prefilled
 
 // Vegetable Soup
 /datum/reagent/consumable/nutriment/soup/vegetable_soup
@@ -214,11 +223,8 @@
 	icon_state = "nettlesoup"
 	drink_type = VEGETABLES
 
-/obj/item/reagent_containers/cup/bowl/nettle
-
-/obj/item/reagent_containers/cup/bowl/nettle/Initialize(mapload)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/consumable/nutriment/soup/nettle, SOUP_SERVING_SIZE)
+/obj/item/reagent_containers/cup/bowl/soup/nettle
+	initial_reagent = /datum/reagent/consumable/nutriment/soup/nettle
 
 /datum/chemical_reaction/food/soup/nettlesoup
 	required_reagents = list(/datum/reagent/water = 50)
@@ -273,11 +279,8 @@
 	icon_state = "hotchili"
 	drink_type = VEGETABLES | MEAT
 
-/obj/item/reagent_containers/cup/bowl/hotchili
-
-/obj/item/reagent_containers/cup/bowl/hotchili/Initialize(mapload)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/consumable/nutriment/soup/hotchili, SOUP_SERVING_SIZE)
+/obj/item/reagent_containers/cup/bowl/soup/hotchili
+	initial_reagent = /datum/reagent/consumable/nutriment/soup/hotchili
 
 /datum/chemical_reaction/food/soup/hotchili
 	required_reagents = list(/datum/reagent/water = 50)
@@ -674,26 +677,27 @@
 	)
 
 // Beet soup (Borscht)
+// This has a gimmick where it randomizes its name based on common mispellings on Borsch
 /datum/reagent/consumable/nutriment/soup/white_beet
 	name = "beet soup"
 	description = "Wait, how do you spell it again..?"
 
 /datum/reagent/consumable/nutriment/soup/white_beet/New()
 	. = ..()
-	var/new_taste = pick("borsch", "bortsch", "borstch", "borsh", "borshch", "borscht")
-	data = list("[new_taste]" = 1)
-	// Melbert todo: Soup bowl needs to pick up this new name
+	name = pick("borsch", "bortsch", "borstch", "borsh", "borshch", "borscht")
+	data = list("[name]" = 1)
 
 /datum/glass_style/has_foodtype/soup/white_beet
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/white_beet
 	icon_state = "beetsoup"
 	drink_type = VEGETABLES | DAIRY
 
-/obj/item/reagent_containers/cup/bowl/white_beet
+/datum/glass_style/has_foodtype/soup/white_beet/set_name(obj/item/thing)
+	var/datum/reagent/soup = locate(required_drink_type) in thing.reagents
+	thing.name = soup.name
 
-/obj/item/reagent_containers/cup/bowl/white_beet/Initialize(mapload)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/consumable/nutriment/soup/white_beet, SOUP_SERVING_SIZE)
+/obj/item/reagent_containers/cup/bowl/soup/white_beet
+	initial_reagent = /datum/reagent/consumable/nutriment/soup/white_beet
 
 /datum/chemical_reaction/food/soup/beetsoup
 	required_reagents = list(/datum/reagent/water = 50)
@@ -719,11 +723,8 @@
 	icon_state = "stew"
 	drink_type = VEGETABLES | FRUIT | MEAT
 
-/obj/item/reagent_containers/cup/bowl/stew
-
-/obj/item/reagent_containers/cup/bowl/stew/Initialize(mapload)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/consumable/nutriment/soup/stew, SOUP_SERVING_SIZE)
+/obj/item/reagent_containers/cup/bowl/soup/stew
+	initial_reagent = /datum/reagent/consumable/nutriment/soup/stew
 
 /datum/chemical_reaction/food/soup/stew
 	required_reagents = list(/datum/reagent/water = 50)
@@ -752,11 +753,8 @@
 	icon_state = "sweetpotatosoup"
 	drink_type = VEGETABLES | SUGAR
 
-/obj/item/reagent_containers/cup/bowl/sweetpotato
-
-/obj/item/reagent_containers/cup/bowl/sweetpotato/Initialize(mapload)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/consumable/nutriment/soup/sweetpotato, SOUP_SERVING_SIZE)
+/obj/item/reagent_containers/cup/bowl/soup/sweetpotato
+	initial_reagent = /datum/reagent/consumable/nutriment/soup/sweetpotato
 
 /datum/chemical_reaction/food/soup/sweetpotatosoup
 	required_reagents = list(
