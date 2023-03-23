@@ -65,8 +65,8 @@
 	for(var/path in subtypesof(/datum/crafting_recipe))
 		if(ispath(path, /datum/crafting_recipe/stack))
 			continue
-		var/is_cooking = ispath(path, /datum/crafting_recipe/food/)
 		var/datum/crafting_recipe/recipe = new path()
+		var/is_cooking = (recipe.category in GLOB.crafting_category_food)
 		recipe.reqs = sort_list(recipe.reqs, GLOBAL_PROC_REF(cmp_crafting_req_priority))
 		if(recipe.name != "" && recipe.result)
 			if(is_cooking)

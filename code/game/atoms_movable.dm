@@ -871,7 +871,9 @@
 	var/list/nested_locs = get_nested_locs(src) + src
 	for(var/channel in gone.important_recursive_contents)
 		for(var/atom/movable/location as anything in nested_locs)
+			LAZYINITLIST(location.important_recursive_contents)
 			var/list/recursive_contents = location.important_recursive_contents // blue hedgehog velocity
+			LAZYINITLIST(recursive_contents[channel])
 			recursive_contents[channel] -= gone.important_recursive_contents[channel]
 			switch(channel)
 				if(RECURSIVE_CONTENTS_CLIENT_MOBS, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
@@ -979,7 +981,9 @@
 	SSspatial_grid.remove_grid_membership(src, our_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 
 	for(var/atom/movable/movable_loc as anything in get_nested_locs(src) + src)
+		LAZYINITLIST(movable_loc.important_recursive_contents)
 		var/list/recursive_contents = movable_loc.important_recursive_contents // blue hedgehog velocity
+		LAZYINITLIST(recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
 		recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS] -= src
 		if(!length(recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS]))
 			SSspatial_grid.remove_grid_awareness(movable_loc, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
@@ -1538,16 +1542,14 @@
 	grab_state = newstate
 	switch(grab_state) // Current state.
 		if(GRAB_PASSIVE)
-			REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
-			REMOVE_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
+			pulling.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
 			if(. >= GRAB_NECK) // Previous state was a a neck-grab or higher.
 				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
 		if(GRAB_AGGRESSIVE)
 			if(. >= GRAB_NECK) // Grab got downgraded.
 				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
 			else // Grab got upgraded from a passive one.
-				ADD_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
-				ADD_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
+				pulling.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
 		if(GRAB_NECK, GRAB_KILL)
 			if(. <= GRAB_AGGRESSIVE)
 				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)

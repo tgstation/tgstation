@@ -7,7 +7,7 @@
 	var/atom/movable/screen/leap_icon = null
 
 /mob/living/carbon/alien/adult/hunter/create_internal_organs()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small
+	organs += new /obj/item/organ/internal/alien/plasmavessel/small
 	..()
 
 //Hunter verbs

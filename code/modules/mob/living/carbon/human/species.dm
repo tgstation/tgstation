@@ -62,6 +62,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/datum/reagent/exotic_blood
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
 	var/exotic_bloodtype = ""
+	///The rate at which blood is passively drained by having the blood deficiency quirk. Some races such as slimepeople can regen their blood at different rates so this is to account for that
+	var/blood_deficiency_drain_rate = BLOOD_REGEN_FACTOR + BLOOD_DEFICIENCY_MODIFIER // slightly above the regen rate so it slowly drains instead of regenerates.
 	///What the species drops when gibbed by a gibber machine.
 	var/meat = /obj/item/food/meat/slab/human
 	///What skin the species drops when gibbed by a gibber machine.
@@ -165,9 +167,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///What anim to use for gibbing
 	var/gib_anim = "gibbed-h"
 
-
-	//Do NOT remove by setting to null. use OR make an ASSOCIATED TRAIT.
-	//why does it work this way? because traits also disable the downsides of not having an organ, removing organs but not having the trait will make your species die
+	// Prefer anything other than setting these to null, such as TRAITS
+	// why?
+	// because traits also disable the downsides of not having an organ, removing organs but not having the trait or logic will make your species die
 
 	///Replaces default brain with a different organ
 	var/obj/item/organ/internal/brain/mutantbrain = /obj/item/organ/internal/brain
@@ -343,6 +345,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/obj/item/organ/oldorgan = C.getorganslot(slot) //used in removing
 		var/obj/item/organ/neworgan = slot_mutantorgans[slot] //used in adding
 		if(!neworgan) //these can be null, if so we shouldn't regenerate
+			if(oldorgan) // although we also need to remove the old organ if it exists
+				oldorgan.Remove(C, special=TRUE)
+				qdel(oldorgan)
 			continue
 
 		if(visual_only && !initial(neworgan.visual))
@@ -392,7 +397,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(current_organ)
 				current_organ.Remove(C)
 				QDEL_NULL(current_organ)
-	for(var/obj/item/organ/external/external_organ in C.internal_organs)
+	for(var/obj/item/organ/external/external_organ in C.organs)
 		// External organ checking. We need to check the external organs owned by the carbon itself,
 		// because we want to also remove ones not shared by its species.
 		// This should be done even if species was not changed.
@@ -467,8 +472,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
 			new_organ.Insert(human, special=TRUE, drop_if_replaced=FALSE)
 
-	for(var/X in inherent_traits)
-		ADD_TRAIT(C, X, SPECIES_TRAIT)
+	if(length(inherent_traits))
+		C.add_traits(inherent_traits, SPECIES_TRAIT)
 
 	if(TRAIT_VIRUSIMMUNE in inherent_traits)
 		for(var/datum/disease/A in C.diseases)
@@ -509,7 +514,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.dna.blood_type = random_blood_type()
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
-	for(var/obj/item/organ/external/organ in C.internal_organs)
+	for(var/obj/item/organ/external/organ in C.organs)
 		organ.Remove(C)
 		qdel(organ)
 
@@ -532,6 +537,32 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
+
+/**
+ * Proc called when mail goodies need to be updated for this species.
+ *
+ * Updates the mail goodies if that is required. e.g. for the blood deficiency quirk, which sends bloodbags to quirk holders, update the sent bloodpack to match the species' exotic blood.
+ * Add implementation as needed for each individual species
+ * Arguments:
+ * * mob/living/carbon/human/recipient - the mob receiving the mail goodies
+ * * list/mail_goodies - a list of mail goodies
+ */
+/datum/species/proc/update_mail_goodies(mob/living/carbon/human/recipient, list/mail_goodies)
+	var/datum/quirk/blooddeficiency/blooddeficiency = recipient.get_quirk(/datum/quirk/blooddeficiency)
+	if(isnull(blooddeficiency))
+		return
+	if(!isnull(mail_goodies))
+		blooddeficiency.mail_goodies = mail_goodies
+	else
+		// no blood packs should be sent if mob has TRAIT_NOBLOOD and no exotic blood (like if a mob transforms into a plasmaman)
+		if(HAS_TRAIT(recipient, TRAIT_NOBLOOD) && isnull(recipient.dna.species.exotic_blood))
+			blooddeficiency.mail_goodies = null
+			return
+			
+		// set mail_goodies to initial - we have to do this because initial will not work on lists in this version of DM
+		var/datum/quirk/blooddeficiency/initial_blooddeficiency = new
+		blooddeficiency.mail_goodies = initial_blooddeficiency.mail_goodies
+		qdel(initial_blooddeficiency)
 
 /**
  * Handles the body of a human

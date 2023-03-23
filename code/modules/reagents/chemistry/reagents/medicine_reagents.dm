@@ -394,21 +394,63 @@
 
 /datum/reagent/medicine/calomel
 	name = "Calomel"
-	description = "Quickly purges the body of toxic chemicals. Toxin damage is dealt if the patient is in good condition."
+	description = "Quickly purges the body of all chemicals except itself. The more health a person has, \
+		the more toxin damage it will deal. It can heal toxin damage when people have low enough health."
 	reagent_state = LIQUID
-	color = "#19C832"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	color = "#c85319"
+	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "acid"
+	overdose_threshold = 20
 	ph = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	for(var/datum/reagent/toxin/R in affected_mob.reagents.reagent_list)
-		affected_mob.reagents.remove_reagent(R.type, 3 * REM * delta_time)
-	if(affected_mob.health > 20)
-		affected_mob.adjustToxLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-		. = TRUE
+	for(var/datum/reagent/target_reagent in affected_mob.reagents.reagent_list)
+		if(istype(target_reagent, /datum/reagent/medicine/calomel))
+			continue
+		affected_mob.reagents.remove_reagent(target_reagent.type, 3 * REM * delta_time)
+	var/toxin_amount = round(affected_mob.health / 40, 0.1)
+	affected_mob.adjustToxLoss(toxin_amount * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
+	return TRUE
+
+/datum/reagent/medicine/calomel/overdose_process(mob/living/affected_mob, delta_time, times_fired)
+	for(var/datum/reagent/medicine/calomel/target_reagent in affected_mob.reagents.reagent_list)
+		affected_mob.reagents.remove_reagent(target_reagent.type, 2 * REM * delta_time)
+	affected_mob.adjustToxLoss(2.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	..()
+	return TRUE
+
+/datum/reagent/medicine/ammoniated_mercury
+	name = "Ammoniated Mercury"
+	description = "Quickly purges the body of toxic chemicals. Heals toxin damage when in a good condition someone has \
+		no brute and fire damage. When hurt with brute or fire damage, it can deal a great amount of toxin damage. \
+		When there are no toxins present, it starts slowly purging itself."
+	reagent_state = LIQUID
+	color = "#f3f1f0"
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+	taste_description = "metallic"
+	overdose_threshold = 10
+	ph = 7
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/medicine/ammoniated_mercury/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	var/toxin_chem_amount = 0
+	for(var/datum/reagent/toxin/target_reagent in affected_mob.reagents.reagent_list)
+		toxin_chem_amount += 1
+		affected_mob.reagents.remove_reagent(target_reagent.type, 5 * REM * delta_time)
+	var/toxin_amount = round(affected_mob.getBruteLoss() / 15, 0.1) + round(affected_mob.getFireLoss() / 30, 0.1) - 3
+	affected_mob.adjustToxLoss(toxin_amount * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	if(toxin_chem_amount == 0)
+		for(var/datum/reagent/medicine/ammoniated_mercury/target_reagent in affected_mob.reagents.reagent_list)
+			affected_mob.reagents.remove_reagent(target_reagent.type, 1 * REM * delta_time)
+	..()
+	return TRUE
+
+/datum/reagent/medicine/ammoniated_mercury/overdose_process(mob/living/affected_mob, delta_time, times_fired)
+	affected_mob.adjustToxLoss(3 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	..()
+	return TRUE
 
 /datum/reagent/medicine/potass_iodide
 	name = "Potassium Iodide"
@@ -875,7 +917,7 @@
 	if(exposed_mob.stat != DEAD || !(exposed_mob.mob_biotypes & MOB_ORGANIC))
 		return ..()
 
-	if(exposed_mob.suiciding) //they are never coming back
+	if(HAS_TRAIT(exposed_mob, TRAIT_SUICIDED)) //they are never coming back
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body does not react..."))
 		return
 
@@ -1283,14 +1325,12 @@
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/affected_mob)
 	..()
-	ADD_TRAIT(affected_mob, TRAIT_SLEEPIMMUNE, type)
-	ADD_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
+	affected_mob.add_traits(list(TRAIT_SLEEPIMMUNE, TRAIT_BATON_RESISTANCE), type)
 	affected_mob.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/affected_mob)
 	..()
-	REMOVE_TRAIT(affected_mob, TRAIT_SLEEPIMMUNE, type)
-	REMOVE_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
+	affected_mob.remove_traits(list(TRAIT_SLEEPIMMUNE, TRAIT_BATON_RESISTANCE), type)
 	affected_mob.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	affected_mob.remove_status_effect(/datum/status_effect/dizziness)
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
@@ -1344,13 +1384,11 @@
 
 /datum/reagent/medicine/cordiolis_hepatico/on_mob_add(mob/living/affected_mob)
 	..()
-	ADD_TRAIT(affected_mob, TRAIT_STABLELIVER, type)
-	ADD_TRAIT(affected_mob, TRAIT_STABLEHEART, type)
+	affected_mob.add_traits(list(TRAIT_STABLELIVER, TRAIT_STABLEHEART), type)
 
 /datum/reagent/medicine/cordiolis_hepatico/on_mob_end_metabolize(mob/living/affected_mob)
 	..()
-	REMOVE_TRAIT(affected_mob, TRAIT_STABLEHEART, type)
-	REMOVE_TRAIT(affected_mob, TRAIT_STABLELIVER, type)
+	affected_mob.remove_traits(list(TRAIT_STABLELIVER, TRAIT_STABLEHEART), type)
 
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"

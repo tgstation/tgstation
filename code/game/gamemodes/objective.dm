@@ -309,7 +309,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	if(human_check)
 		brain_target = target.current?.getorganslot(ORGAN_SLOT_BRAIN)
 	//Protect will always suceed when someone suicides
-	return !target || target.current?.suiciding || considered_alive(target, enforce_human = human_check) || brain_target?.suicided
+	return !target || (target.current && HAS_TRAIT(target.current, TRAIT_SUICIDED)) || considered_alive(target, enforce_human = human_check) || (brain_target && HAS_TRAIT(brain_target, TRAIT_SUICIDED))
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -552,7 +552,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	for(var/datum/mind/M in owners)
 		if(considered_alive(M))
 			return FALSE
-		if(M.current?.suiciding) //killing yourself ISN'T glorious.
+		if(M.current && HAS_TRAIT(M.current, TRAIT_SUICIDED)) //killing yourself ISN'T glorious.
 			return FALSE
 	return TRUE
 
