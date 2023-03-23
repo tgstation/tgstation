@@ -361,3 +361,9 @@
 	suffix = "prey_pod.dmm"
 	name = "Crashed Mimic Escape Pod"
 	description = "A pod with a person who has died to a mimic."
+
+/datum/map_template/ruin/space/waystation
+	id = "waystation"
+	suffix = "waystation.dmm"
+	name = "Waystation"
+	description = "A Waytation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
