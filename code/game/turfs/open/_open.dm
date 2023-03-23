@@ -127,6 +127,9 @@
 /turf/open/indestructible/necropolis/air
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
+/turf/open/indestructible/necropolis/air/lit
+	luminosity = "2"
+
 /turf/open/indestructible/boss //you put stone tiles on this and use it as a base
 	name = "necropolis floor"
 	icon = 'icons/turf/boss_floors.dmi'
