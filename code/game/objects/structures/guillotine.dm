@@ -77,14 +77,14 @@
 	var/msg = "It is [anchored ? "wrenched to the floor." : "unsecured. A wrench should fix that."]<br/>"
 
 	if (blade_status == GUILLOTINE_BLADE_RAISED)
-		msg += ("The blade is raised, ready to fall, and")
+		msg += "The blade is raised, ready to fall, and"
 
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP)
-			msg += (" looks sharp enough to decapitate without any resistance.")
+			msg += " looks sharp enough to decapitate without any resistance."
 		else
-			msg += (" doesn't look particularly sharp. Perhaps a whetstone can be used to sharpen it.")
+			msg += " doesn't look particularly sharp. Perhaps a whetstone can be used to sharpen it."
 	else
-		msg += ("The blade is hidden inside the stocks.")
+		msg += "The blade is hidden inside the stocks."
 
 	. += span_notice(msg)
 
