@@ -417,6 +417,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	qdel(src)
 
 /obj/machinery/washing_machine/open_machine(drop = TRUE, density = FALSE)
-	..()
+	. = ..()
 	set_density(TRUE) //because machinery/open_machine() sets it to FALSE
 	color_source = null
