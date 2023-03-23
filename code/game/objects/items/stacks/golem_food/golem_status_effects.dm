@@ -26,6 +26,7 @@
 	QDEL_LIST(active_overlays)
 	return ..()
 
+/// Body part overlays applied by golem status effects
 /datum/bodypart_overlay/simple/golem_overlay
 	icon = 'icons/mob/species/golems.dmi'
 	layers = ALL_EXTERNAL_OVERLAYS

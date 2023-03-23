@@ -18,12 +18,17 @@
 	. = ..()
 	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(took_bite)), volume = INFINITY)
 
+/// Called when someone bites this food, subtract one charge from our material stack
 /obj/item/food/material/proc/took_bite(mob/eater)
-	var/obj/item/stack/resolved_material = material.resolve()
+	var/obj/item/resolved_material = material.resolve()
 	if (!resolved_material)
 		qdel(src)
 		return
-	resolved_material.use(used = 1)
+	if (isstack(resolved_material))
+		var/obj/item/stack/stack_material = resolved_material
+		resolved_material.use(used = 1)
+	else
+		qdel(resolved_material)
 	food_buff.on_consumption(eater)
 	if (!resolved_material)
 		qdel(src)

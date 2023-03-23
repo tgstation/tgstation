@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(golem_stack_food_directory, list(
 	/obj/item/stack/ore/diamond = new /datum/golem_food_buff/diamond(),
 	/obj/item/stack/sheet/mineral/titanium = new /datum/golem_food_buff/titanium(),
 	/obj/item/stack/ore/titanium = new /datum/golem_food_buff/titanium(),
-	/obj/item/stack/sheet/mineral/alloy/plasteel = new /datum/golem_food_buff/plasteel(),
+	/obj/item/stack/sheet/plasteel = new /datum/golem_food_buff/plasteel(),
 ))
 
 /// An effect you gain from eating minerals
