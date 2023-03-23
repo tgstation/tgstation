@@ -1,0 +1,4 @@
+author: "SuperSlayer0"
+delete-after: True
+changes:
+  - balance: "Дальняя атака тентакли даркспаунов теперь так же вырубает свет"
