@@ -111,7 +111,8 @@ GLOBAL_LIST_EMPTY(elevator_doors)
 	for(var/obj/machinery/door/window/elevator/elevator_door in GLOB.elevator_doors)
 		if(elevator_door.id != linked_elevator_id)
 			continue
-		elevator_door.open
+		elevator_door.safety_enabled = FALSE
+		elevator_door.cycle_doors(OPEN_DOORS)
 		elevator_door.obj_flags |= EMAGGED
 
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -142,6 +143,8 @@ GLOBAL_LIST_EMPTY(elevator_doors)
 		for(var/obj/machinery/door/window/elevator/elevator_door in GLOB.elevator_doors)
 			if(elevator_door.id != linked_elevator_id)
 				continue
+
+			elevator_door.safety_enabled = TRUE
 			elevator_door.obj_flags &= ~EMAGGED
 
 		obj_flags &= ~EMAGGED
@@ -738,7 +741,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/lift_indicator, 32)
 /obj/machinery/door/window/elevator/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
-	INVOKE_ASYNC(src, PROC_REF(open))
 	GLOB.elevator_doors += src
 
 /obj/machinery/door/window/elevator/Destroy()
@@ -754,7 +756,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/lift_indicator, 32)
 	if(!safety_enabled)
 		open_and_close()
 	else if(allowed(user))
-		open()
+		open_and_close()
 	else
 		do_animate("deny")
 	return
@@ -762,20 +764,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/lift_indicator, 32)
 /obj/machinery/door/window/elevator/proc/cycle_doors(command)
 	switch(command)
 		if(OPEN_DOORS)
-			if(!obj_flags & EMAGGED)
-				safety_enabled = TRUE
-			open_and_close()
+			if(density)
+				open()
 		if(CLOSE_DOORS)
 			if(!density)
-				if(!close())
-					return FALSE
-			if(!obj_flags & EMAGGED)
-				safety_enabled = TRUE
-
-/obj/machinery/door/window/elevator/open_and_close()
-	if(!open())
-		return
-	autoclose = TRUE
-	sleep(7 SECONDS)
-	if(!density && autoclose) // in case something happened
-		close()
+				close()
+	return
