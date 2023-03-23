@@ -1,0 +1,5 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - rscadd: "Xenomorphs born in the room the roundstart delivery egg was spawned in will be part of a special \"captive xenomorph\" team, tasked with escaping and tracked in the roundend report."
+  - bugfix: "Regular Xenomorphs no longer receive a blank objectives popup on spawn."
