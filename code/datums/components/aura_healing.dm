@@ -116,7 +116,7 @@
 		if (should_show_effect && candidate.health < candidate.maxHealth)
 			new /obj/effect/temp_visual/heal(get_turf(candidate), healing_color)
 
-		if (iscarbon(candidate) || issilicon(candidate))
+		if (iscarbon(candidate) || issilicon(candidate) || isbasicmob(candidate))
 			candidate.adjustBruteLoss(-brute_heal * delta_time, updating_health = FALSE)
 			candidate.adjustFireLoss(-burn_heal * delta_time, updating_health = FALSE)
 
@@ -131,8 +131,11 @@
 			for (var/organ in organ_healing)
 				candidate.adjustOrganLoss(organ, -organ_healing[organ] * delta_time)
 		else if (isanimal(candidate))
-			var/mob/living/simple_animal/simple_candidate = candidate
-			simple_candidate.adjustHealth(-simple_heal * delta_time, updating_health = FALSE)
+			var/mob/living/simple_animal/animal_candidate = candidate
+			animal_candidate.adjustHealth(-simple_heal * delta_time, updating_health = FALSE)
+		else if (isbasicmob(candidate))
+			var/mob/living/basic/basic_candidate = candidate
+			basic_candidate.adjust_health(-simple_heal * delta_time, updating_health = FALSE)
 
 		if (candidate.blood_volume < BLOOD_VOLUME_NORMAL)
 			candidate.blood_volume += blood_heal * delta_time

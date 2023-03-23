@@ -114,13 +114,13 @@
 
 	var/stun_cap_amount = 40
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/Remove(mob/living/carbon/implant_owner, special = FALSE)
+/obj/item/organ/internal/cyberimp/brain/anti_stun/on_remove(mob/living/carbon/implant_owner)
 	. = ..()
 	UnregisterSignal(implant_owner, signalCache)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/Insert(special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/cyberimp/brain/anti_stun/on_insert(mob/living/carbon/receiver)
 	. = ..()
-	RegisterSignals(owner, signalCache, PROC_REF(on_signal))
+	RegisterSignals(receiver, signalCache, PROC_REF(on_signal))
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/on_signal(datum/source, amount)
 	SIGNAL_HANDLER

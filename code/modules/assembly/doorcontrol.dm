@@ -185,7 +185,7 @@
 	///ID to link to allow us to link to one specific tram in the world
 	var/specific_lift_id = MAIN_STATION_TRAM
 	///this is our destination's landmark, so we only have to find it the first time.
-	var/datum/weakref/to_where
+	var/datum/weakref/destination_platform
 
 /obj/item/assembly/control/tram/Initialize(mapload)
 	..()
@@ -195,12 +195,12 @@
 	. = ..()
 	//find where the tram needs to go to (our destination). only needs to happen the first time
 	for(var/obj/effect/landmark/tram/our_destination as anything in GLOB.tram_landmarks[specific_lift_id])
-		if(our_destination.destination_id == initial_id)
-			to_where = WEAKREF(our_destination)
+		if(our_destination.platform_code == initial_id)
+			destination_platform = WEAKREF(our_destination)
 			break
 
 /obj/item/assembly/control/tram/Destroy()
-	to_where = null
+	destination_platform = null
 	return ..()
 
 /obj/item/assembly/control/tram/activate()
@@ -219,14 +219,14 @@
 		say("The tram is not in service. Please send a technician to repair the internals of the tram.")
 		return
 	if(tram.travelling) //in use
-		say("The tram is already travelling to [tram.from_where].")
+		say("The tram is already travelling to [tram.idle_platform].")
 		return
-	if(!to_where)
+	if(!destination_platform)
 		return
-	var/obj/effect/landmark/tram/current_location = to_where.resolve()
+	var/obj/effect/landmark/tram/current_location = destination_platform.resolve()
 	if(!current_location)
 		return
-	if(tram.from_where == current_location) //already here
+	if(tram.idle_platform == current_location) //already here
 		say("The tram is already here. Please board the tram and select a destination.")
 		return
 

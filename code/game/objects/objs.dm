@@ -372,7 +372,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/freeze()
 	if(HAS_TRAIT(src, TRAIT_FROZEN))
 		return FALSE
-	if(obj_flags & FREEZE_PROOF)
+	if(resistance_flags & FREEZE_PROOF)
 		return FALSE
 
 	AddElement(/datum/element/frozen)
