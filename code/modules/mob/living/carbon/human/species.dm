@@ -551,18 +551,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/datum/quirk/blooddeficiency/blooddeficiency = recipient.get_quirk(/datum/quirk/blooddeficiency)
 	if(isnull(blooddeficiency))
 		return
-	if(!isnull(mail_goodies))
-		blooddeficiency.mail_goodies = mail_goodies
-	else
-		// no blood packs should be sent if mob has TRAIT_NOBLOOD and no exotic blood (like if a mob transforms into a plasmaman)
-		if(HAS_TRAIT(recipient, TRAIT_NOBLOOD) && isnull(recipient.dna.species.exotic_blood))
-			blooddeficiency.mail_goodies = null
-			return
-			
-		// set mail_goodies to initial - we have to do this because initial will not work on lists in this version of DM
+	if(isnull(mail_goodies))
+		// set mail_goodies to initial - we have to do it this way because initial will not work on lists in this version of DM
 		var/datum/quirk/blooddeficiency/initial_blooddeficiency = new
 		blooddeficiency.mail_goodies = initial_blooddeficiency.mail_goodies
 		qdel(initial_blooddeficiency)
+		return
+		
+	blooddeficiency.mail_goodies = mail_goodies
 
 /**
  * Handles the body of a human
