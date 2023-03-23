@@ -77,4 +77,4 @@
 
 /// Don't scramble a larva's body parts, it doesn't have any
 /mob/living/carbon/alien/larva/bioscramble(scramble_source)
-	return
+	return TRUE
