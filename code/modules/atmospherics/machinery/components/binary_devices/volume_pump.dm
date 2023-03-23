@@ -23,7 +23,8 @@
 	var/transfer_rate = MAX_TRANSFER_RATE
 	///Check if the component has been overclocked
 	var/overclocked = FALSE
-	var/mutable_appearance/overclockoverlay
+	///flashing light overlay which appears on multitooled vol pumps
+	var/mutable_appearance/overclock_overlay
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Initialize(mapload)
 	. = ..()
@@ -52,11 +53,11 @@
 	var/altlayeroverlay = FALSE
 	if(set_overlay_offset(piping_layer) == 2)
 		altlayeroverlay = TRUE
-	overclockoverlay = mutable_appearance('icons/obj/atmospherics/components/binary_devices.dmi', "vpumpoverclock[altlayeroverlay ? "2" : ""]")
+	overclock_overlay = mutable_appearance('icons/obj/atmospherics/components/binary_devices.dmi', "vpumpoverclock[altlayeroverlay ? "2" : ""]")
 	if(overclocked && on && is_operational)
-		add_overlay(overclockoverlay)
+		add_overlay(overclock_overlay)
 	else
-		cut_overlay(overclockoverlay)
+		cut_overlay(overclock_overlay)
 
 /obj/machinery/atmospherics/components/binary/volume_pump/process_atmos()
 	if(!on || !is_operational)
