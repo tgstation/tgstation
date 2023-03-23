@@ -25,7 +25,6 @@
 		qdel(src)
 		return
 	if (isstack(resolved_material))
-		var/obj/item/stack/stack_material = resolved_material
 		resolved_material.use(used = 1)
 	else
 		qdel(resolved_material)
