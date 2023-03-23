@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Bioscrambler anomalies will once again swap your organs with other organs."
+  - balance: "Bioscrambler anomalies no longer affect synthetic parts."
