@@ -64,14 +64,14 @@
 		try_to_fail = TRUE
 
 	var/datum/surgery_step/step = get_surgery_step()
-	if(step)
-		var/obj/item/tool = user.get_active_held_item()
-		if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
-			return TRUE
-		if(tool && tool.item_flags) //Mechanic organ manipulation isn't done with just surgery tools
-			to_chat(user, span_warning("This step requires a different tool!"))
-			return TRUE
-	return FALSE
+	if(isnull(step))
+		return FALSE
+	var/obj/item/tool = user.get_active_held_item()
+	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
+		return TRUE
+	if(tool && tool.item_flags) //Mechanic organ manipulation isn't done with just surgery tools
+		to_chat(user, span_warning("This step requires a different tool!"))
+		return TRUE
 
 /datum/surgery/organ_manipulation/mechanic/soft
 	possible_locs = list(
