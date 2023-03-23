@@ -460,6 +460,17 @@
 "iJ" = (
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
+"iR" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 11;
+	height = 24;
+	name = "Waystation R-4532: Supply Dock";
+	shuttle_id = "whiteship_waystation";
+	width = 35
+	},
+/turf/open/space/basic,
+/area/template_noop)
 "ja" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -2662,7 +2673,7 @@
 "YD" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/spaceship_navigation_beacon,
+/obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation)
 "Zc" = (
@@ -5538,7 +5549,7 @@ Gx
 Gx
 Gx
 Gx
-Gx
+iR
 Gx
 Gx
 Gx
