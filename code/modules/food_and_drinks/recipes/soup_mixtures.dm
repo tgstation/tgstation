@@ -74,6 +74,7 @@
 			return FALSE
 	return TRUE
 
+// melbert todo: reaction step
 /datum/chemical_reaction/food/soup/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
@@ -97,19 +98,25 @@
 
 		// Uh oh we reached the top of the pot, the soup's gonna boil over.
 		if(holder.total_volume >= holder.maximum_volume * 0.95)
-			pot.visible_message(span_warning("[pot] starts to boil over!"))
-			// Create a spread of dirty foam
-			var/datum/effect_system/fluid_spread/foam/dirty/soup_mess = new()
-			soup_mess.reagent_scale = 0.1 // (Just a little)
-			soup_mess.set_up(range = 1, holder = pot, location = get_turf(pot), carry = holder)
-			soup_mess.start()
-			// Loses a bit from the foam
-			for(var/datum/reagent/reagent as anything in holder.reagent_list)
-				reagent.volume = round(reagent.volume * 0.9, 0.05)
-			holder.update_total()
+			boil_over(holder)
 			break
 
 	QDEL_LAZYLIST(pot.added_ingredients)
+
+/datum/chemical_reaction/food/soup/proc/boil_over(datum/reagents/holder)
+	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
+	var/turf/below_pot = get_turf(pot)
+	below_pot.visible_message(span_warning("[pot] starts to boil over!"))
+	// Create a spread of dirty foam
+	var/datum/effect_system/fluid_spread/foam/dirty/soup_mess = new()
+	soup_mess.reagent_scale = 0.1 // (Just a little)
+	soup_mess.set_up(range = 1, holder = pot, location = below_pot, carry = holder)
+	soup_mess.start()
+	// Loses a bit from the foam
+	for(var/datum/reagent/reagent as anything in holder.reagent_list)
+		reagent.volume = round(reagent.volume * 0.9, 0.05)
+	holder.update_total()
+
 
 // Meatball Soup
 /datum/reagent/consumable/nutriment/soup/meatball_soup
@@ -470,7 +477,7 @@
 
 /datum/chemical_reaction/food/soup/bloodsoup
 	required_reagents = list(
-		/datum/reagent/water = 40,
+		/datum/reagent/water = 10,
 		/datum/reagent/blood = 10,
 	)
 	required_ingredients = list(
@@ -552,11 +559,11 @@
 		/obj/item/stack/sheet/mineral/bananium = 1,
 	)
 	results = list(
-		/datum/reagent/lube = 5,
-		/datum/reagent/water = 5, // Melbert todo: Bananas have potassium
+		/datum/reagent/consumable/nutriment/soup/clown_tears = 30,
 		/datum/reagent/consumable/banana = 8,
 		/datum/reagent/consumable/nutriment/vitamin = 12,
-		/datum/reagent/consumable/nutriment/soup/clown_tears = 30,
+		/datum/reagent/lube = 5,
+		/datum/reagent/water = 5, // Melbert todo: Bananas have potassium
 	)
 	percentage_of_nutriment_converted = 0 // Bananas have a small amount of nutrition naturally
 
@@ -1213,7 +1220,7 @@
 // Cotton Soup
 /datum/reagent/consumable/nutriment/soup/cottonball
 	name = "flöfrölenmæsch" //flöf = cotton, rölen = ball, mæsch = soup
-	desc = "A soup made from raw cotton in a flavourful vegetable broth. Enjoyed only by moths and the criminally tasteless."
+	description = "A soup made from raw cotton in a flavourful vegetable broth. Enjoyed only by moths and the criminally tasteless."
 	data = list("cotton" = 1, "broth" = 1)
 
 /datum/glass_style/has_foodtype/soup/cottonball
@@ -1380,7 +1387,7 @@
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/fire_soup = 30,
 		/datum/reagent/consumable/nutriment/protein = 8,
-		/datum/reagent/consumable/nutriment/vinegar = 2,
+		/datum/reagent/consumable/vinegar = 2,
 	)
 	percentage_of_nutriment_converted = 0.1
 

@@ -141,11 +141,10 @@
 	if(container?.reagents.total_volume > 0)
 		if(isnull(soup_smoke))
 			soup_smoke = new(real_parent, /particles/smoke/steam/mild)
-			soup_smoke.set_particle_position(list(container_x, round(world.icon_size * 0.66), 0))
+			soup_smoke.set_particle_position(list(container_x, container_y, 0))
+			soup_smoke.pixel_z = 6 // sidemap memes
 	else
 		QDEL_NULL(soup_smoke)
-
-	// melbert todo: Emissives why you suck
 
 	// Flames around the pot
 	var/mutable_appearance/flames = mutable_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_flame", alpha = real_parent.alpha)

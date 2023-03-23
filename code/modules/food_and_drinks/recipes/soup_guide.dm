@@ -56,7 +56,8 @@
 	desc = "Smells like copper."
 	reaction = /datum/chemical_reaction/food/soup/bloodsoup
 	// Uses tomato soup's icon
-	result = /datum/chemical_reaction/food/soup/tomatosoup
+	result = /datum/reagent/consumable/nutriment/soup/tomato
+	result_amount = 30 // More of a vague guess than anything
 
 /datum/crafting_recipe/food/reaction/soup/eyeballsoup
 	reaction = /datum/chemical_reaction/food/soup/eyeballsoup
