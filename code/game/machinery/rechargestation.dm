@@ -93,7 +93,7 @@
 
 /obj/machinery/recharge_station/proc/toggle_open()
 	if(state_open)
-		close_machine(density = TRUE)
+		close_machine(density_to_set = TRUE)
 	else
 		open_machine()
 
