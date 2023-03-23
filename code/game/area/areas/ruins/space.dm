@@ -577,4 +577,4 @@
 
 //PHONEBOOTH
 /area/ruin/space/Phone_booth
-	name = "\improper Phonebooth"
+	name = "\improper Phone Booth"
