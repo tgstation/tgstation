@@ -42,10 +42,10 @@
 /area/ruin/syndicate_lava_base/telecomms)
 "n" = (
 /obj/structure/noticeboard/directional/north,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/wood{
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -132,13 +132,10 @@
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/telecomms)
 "M" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "Q" = (
@@ -182,7 +179,6 @@
 /obj/machinery/computer/camera_advanced{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
@@ -190,6 +186,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 

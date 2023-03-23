@@ -26,10 +26,6 @@
 "bK" = (
 /turf/closed/wall,
 /area/shuttle/pirate)
-"bV" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
-/turf/open/floor/iron/white/diagonal,
-/area/shuttle/pirate)
 "bX" = (
 /obj/item/reagent_containers/blood,
 /obj/machinery/light/directional/north,
@@ -109,7 +105,6 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "gE" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/structure/table/reinforced/plasmarglass,
 /obj/item/ammo_box/c38/match{
 	pixel_x = -5;
@@ -130,6 +125,7 @@
 	pixel_x = -4
 	},
 /obj/item/ammo_box/c38/match,
+/obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
 "gW" = (
@@ -157,11 +153,6 @@
 	dir = 1
 	},
 /turf/open/floor/grass,
-/area/shuttle/pirate)
-"hE" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
 "jl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -307,9 +298,9 @@
 /turf/open/floor/grass,
 /area/shuttle/pirate)
 "qq" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /obj/machinery/light/cold/directional/south,
 /obj/item/statuebust,
+/obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
 "qz" = (
@@ -400,11 +391,10 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "vT" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
 "ws" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/structure/table/reinforced/plasmarglass,
 /obj/item/storage/box/lethalshot{
 	pixel_y = 4;
@@ -416,6 +406,7 @@
 /obj/item/storage/box/lethalshot{
 	pixel_x = 2
 	},
+/obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
 "wu" = (
@@ -584,10 +575,10 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Dw" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
 "Ea" = (
@@ -633,8 +624,8 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/pirate)
 "GT" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
 "Hd" = (
@@ -901,12 +892,12 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/pirate)
 "Ui" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/structure/table/reinforced/plasmarglass,
 /obj/item/gun/ballistic/revolver/c38{
 	pixel_y = 3
 	},
 /obj/item/gun/ballistic/revolver/c38,
+/obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
 "Vi" = (
@@ -1007,16 +998,16 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "ZC" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /obj/item/statuebust,
+/obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
 "ZW" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/structure/table/reinforced/plasmarglass,
 /obj/item/gun/ballistic/shotgun/lethal{
 	pixel_y = 4
 	},
+/obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
 
@@ -1224,7 +1215,7 @@ Ne
 Mk
 QI
 CW
-bV
+vT
 vT
 qq
 CW
@@ -1278,7 +1269,7 @@ tH
 bx
 Ea
 Id
-hE
+GT
 vT
 qq
 CW
@@ -1306,7 +1297,7 @@ Ss
 EM
 mR
 vT
-bV
+vT
 gE
 CW
 yd
