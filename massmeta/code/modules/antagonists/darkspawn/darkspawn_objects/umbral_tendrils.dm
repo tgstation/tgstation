@@ -167,6 +167,10 @@
 	var/twinned = FALSE
 	var/beam
 
+/obj/projectile/umbral_tendrils/Initialize()
+	. = ..()
+	AddElement(/datum/element/light_eater)
+
 /obj/projectile/umbral_tendrils/fire(setAngle)
 	beam = firer.Beam(src, icon_state = "curse0", time = INFINITY, maxdistance = INFINITY)
 	..()
