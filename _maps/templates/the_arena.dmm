@@ -1,16 +1,16 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ar" = (
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "bb" = (
 /obj/structure/stone_tile/surrounding/cracked{
 	dir = 1
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "bk" = (
 /obj/structure/stone_tile/slab/burnt,
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "bB" = (
 /obj/structure/stone_tile/surrounding/cracked{
@@ -31,11 +31,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone/lit,
+/turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "dz" = (
 /obj/effect/landmark/shuttle_arena_entrance,
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "fJ" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
@@ -43,7 +43,7 @@
 	pixel_y = 16
 	},
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "gm" = (
 /obj/effect/decal/cleanable/blood/old{
@@ -51,20 +51,20 @@
 	pixel_y = 9
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone/lit,
+/turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "hl" = (
 /obj/structure/stone_tile/block,
 /obj/structure/fluff/big_chain{
 	pixel_x = -12
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "iH" = (
 /obj/structure/fluff/big_chain{
 	pixel_x = 12
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "iV" = (
 /obj/structure/stone_tile/slab,
@@ -72,12 +72,12 @@
 /obj/effect/decal/cleanable/blood/gibs/old{
 	pixel_y = -10
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "jC" = (
 /obj/effect/gibspawner/human,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone/lit,
+/turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "kQ" = (
 /obj/structure/stone_tile/surrounding_tile{
@@ -91,68 +91,68 @@
 /area/shuttle/shuttle_arena)
 "lk" = (
 /obj/structure/bonfire/prelit,
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "pN" = (
 /obj/structure/stone_tile/surrounding_tile/burnt{
 	dir = 8
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "pV" = (
 /obj/item/toy/plush/lizard_plushie/green{
 	name = "Watches-The-Carnage"
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "qp" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 9
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "rX" = (
 /turf/closed/indestructible/necropolis,
 /area/shuttle/shuttle_arena)
 "rZ" = (
 /obj/structure/stone_tile/slab/cracked,
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "sE" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "uk" = (
 /obj/effect/landmark/shuttle_arena_entrance,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone/lit,
+/turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "xA" = (
 /obj/effect/forcefield/arena_shuttle,
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "yX" = (
 /turf/template_noop,
 /area/template_noop)
 "zc" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "zH" = (
 /obj/structure/stone_tile/slab/cracked,
 /obj/effect/landmark/shuttle_arena_entrance,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "DP" = (
 /obj/structure/stone_tile/burnt{
 	dir = 4
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "Fm" = (
 /obj/structure/stone_tile/surrounding_tile,
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "Fu" = (
 /obj/structure/stone_tile/block{
@@ -161,13 +161,13 @@
 /obj/structure/fluff/big_chain{
 	pixel_x = 12
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "Gb" = (
 /obj/structure/stone_tile/surrounding/cracked{
 	dir = 8
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "Hd" = (
 /obj/structure/stone_tile/surrounding/cracked,
@@ -182,51 +182,51 @@
 /obj/structure/fluff/big_chain{
 	pixel_x = -12
 	},
-/turf/open/floor/stone/lit,
+/turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "Ir" = (
 /obj/effect/landmark/shuttle_arena_entrance,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone/lit,
+/turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "IJ" = (
 /obj/structure/fluff/big_chain{
 	pixel_x = -12
 	},
-/turf/open/floor/stone/lit,
+/turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "IT" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone/lit,
+/turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "Kb" = (
-/turf/open/floor/stone/lit,
+/turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "Kp" = (
 /obj/structure/stone_tile/slab,
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "KL" = (
 /obj/structure/stone_tile/surrounding/burnt,
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "LG" = (
 /obj/structure/fluff/big_chain{
 	pixel_x = 12
 	},
-/turf/open/floor/stone/lit,
+/turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "LY" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone/lit,
+/turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "Mm" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 10
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "MZ" = (
 /obj/structure/stone_tile/slab,
@@ -234,17 +234,17 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	pixel_y = 16
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "PR" = (
 /obj/structure/stone_tile/slab,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "Qv" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone/lit,
+/turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "QZ" = (
 /obj/structure/stone_tile/block{
@@ -254,7 +254,7 @@
 /obj/structure/fluff/big_chain{
 	pixel_x = 12
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "RC" = (
 /obj/structure/stone_tile/block{
@@ -263,39 +263,39 @@
 /obj/structure/fluff/big_chain{
 	pixel_x = 12
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "St" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/stone/lit,
+/turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "Ue" = (
 /obj/structure/stone_tile/slab/burnt,
 /obj/structure/fluff/big_chain{
 	pixel_x = 12
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "Uj" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 6
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "UE" = (
 /obj/structure/fluff/big_chain{
 	pixel_x = -12
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "UG" = (
 /obj/effect/landmark/shuttle_arena_entrance,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "UJ" = (
 /obj/structure/stone_tile/block/burnt,
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "UN" = (
 /turf/open/lava/smooth,
@@ -306,20 +306,20 @@
 /area/shuttle/shuttle_arena)
 "WJ" = (
 /obj/effect/landmark/shuttle_arena_entrance,
-/turf/open/floor/stone/lit,
+/turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "XR" = (
 /obj/structure/stone_tile/slab,
 /obj/effect/decal/cleanable/blood/old{
 	icon_state = "hitsplatter3"
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "YM" = (
 /obj/item/toy/plush/lizard_plushie/green{
 	name = "Watches-The-Wall"
 	},
-/turf/open/indestructible/necropolis/air/lit,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 
 (1,1,1) = {"

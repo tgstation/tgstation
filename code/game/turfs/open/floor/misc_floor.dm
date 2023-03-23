@@ -289,9 +289,6 @@
 		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
 	icon_state = "stone_floor"
 
-/turf/open/floor/stone/lit
-	luminosity = "2"
-
 /turf/open/floor/vault
 	name = "strange floor"
 	desc = "You feel a strange nostalgia from looking at this..."
