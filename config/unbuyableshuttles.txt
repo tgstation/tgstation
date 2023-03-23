@@ -31,3 +31,4 @@
 #_maps/shuttles/emergency_supermatter.dmm
 #_maps/shuttles/emergency_venture.dmm
 #_maps/shuttles/emergency_wabbajack.dmm
+#_maps/shuttles/emergency_tranquility.dmm
