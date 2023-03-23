@@ -363,7 +363,7 @@
 		M.forceMove(get_turf(src))
 	set_occupant(null)
 	flick("pod-open-anim", src)
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user, density = TRUE)
 	treating_wounds = FALSE
