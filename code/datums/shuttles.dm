@@ -475,10 +475,10 @@
 
 /datum/map_template/shuttle/emergency/tranquility
 	suffix = "tranquility"
-	name = "The Tranquility"
+	name = "The Tranquility Relocation Shuttle"
 	description = "A large shuttle, covered in flora and comfortable resting areas. The perfect way to end a peaceful shift"
 	admin_notes = "it's pretty big, and comfy. Be careful when placing it down!"
-	credit_cost = CARGO_CRATE_VALUE * 15
+	credit_cost = CARGO_CRATE_VALUE * 25
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
