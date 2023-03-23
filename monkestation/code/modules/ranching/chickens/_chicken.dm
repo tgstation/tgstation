@@ -217,18 +217,18 @@
 			layed_egg.desc = "You can hear pecking from the inside of this seems it may hatch soon."
 
 /mob/living/simple_animal/chicken/death(gibbed)
-	Friends = null
+	Friends = list()
 	..()
 
 /mob/living/simple_animal/chicken/Destroy()
-	Friends = null
-	consumed_food = null
-	consumed_reagents = null
-	mutation_list = null
-	glass_egg_reagents = null
-	speech_buffer = null
-	applied_visual = null
-	disliked_foods = null
+	QDEL_LIST(Friends)
+	QDEL_LIST(consumed_food)
+	QDEL_LIST(consumed_reagents)
+	QDEL_LIST(mutation_list)
+	QDEL_LIST(glass_egg_reagents)
+	QDEL_LIST(speech_buffer)
+	QDEL_NULL(applied_visual)
+	QDEL_LIST(disliked_foods)
 	return ..()
 
 /mob/living/simple_animal/chicken/AltClick(mob/user)
