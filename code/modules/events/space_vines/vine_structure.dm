@@ -11,15 +11,18 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE //Clicking anywhere on the turf is good enough
 	pass_flags = PASSTABLE | PASSGRILLE
 	max_integrity = 50
+	/// What growth stage is this vine at?
 	var/energy = 0
 	/// Can this kudzu spread?
 	var/can_spread = TRUE
 	/// Can this kudzu buckle mobs in?
 	var/can_tangle = TRUE
-	var/datum/spacevine_controller/master = null
+	/// Our associated spacevine_controller, for managing expansion/mutation
+	var/datum/spacevine_controller/master
 	/// List of mutations for a specific vine
 	var/list/mutations = list()
-	var/trait_flags = 0
+	/// The traits associated with a specific mutation of vines
+	var/trait_flags = NONE
 	/// Should atmos always process this tile
 	var/always_atmos_process = FALSE
 	/// The kudzu blocks light on default once it grows
@@ -106,7 +109,7 @@
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		mutation.on_hit(src, user)
 	user_unbuckle_mob(user, user)
-	. = ..()
+	return ..()
 
 /obj/structure/spacevine/attack_paw(mob/living/user, list/modifiers)
 	for(var/datum/spacevine_mutation/mutation in mutations)
@@ -131,11 +134,13 @@
 
 /// Buckles mobs trying to pass through it
 /obj/structure/spacevine/proc/entangle_mob()
-	if(!has_buckled_mobs() && prob(25))
-		for(var/mob/living/victim in src.loc)
-			entangle(victim)
-			if(has_buckled_mobs())
-				break //only capture one mob at a time
+	if(has_buckled_mobs() || prob(75))
+		return
+
+	for(var/mob/living/victim in src.loc)
+		entangle(victim)
+		if(has_buckled_mobs())
+			break //only capture one mob at a time
 
 /obj/structure/spacevine/proc/entangle(mob/living/victim)
 	if(!victim || isvineimmune(victim))
@@ -144,7 +149,7 @@
 		mutation.on_buckle(src, victim)
 	if((victim.stat != DEAD) && (victim.buckled != src) && can_tangle) //not dead and not captured and can tangle
 		to_chat(victim, span_userdanger("The vines [pick("wind", "tangle", "tighten")] around you!"))
-		buckle_mob(victim, 1)
+		buckle_mob(victim, force = TRUE)
 
 /// Finds a target tile to spread to. If checks pass it will spread to it and also proc on_spread on target.
 /obj/structure/spacevine/proc/spread()

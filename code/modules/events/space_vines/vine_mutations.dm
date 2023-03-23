@@ -3,7 +3,9 @@
 	var/name = ""
 	/// Severity of mutation in terms of gameplay, affects appearance chance and how many mutations can be on the same vine
 	var/severity = 1
+	/// The mutation's contribution to a given vine's color
 	var/hue
+	/// The quality of our mutation (how good or bad is it?)
 	var/quality
 
 /datum/spacevine_mutation/proc/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
@@ -41,7 +43,7 @@
 	return
 
 /datum/spacevine_mutation/proc/on_explosion(severity, target, obj/structure/spacevine/holder)
-	return
+	return FALSE
 
 /datum/spacevine_mutation/proc/additional_atmos_processes(obj/structure/spacevine/holder, datum/gas_mixture/air)
 	return
@@ -86,8 +88,9 @@
 	if(explosion_severity < 3)
 		qdel(holder)
 	else
-		. = 1
-		QDEL_IN(holder, 5)
+		QDEL_IN(holder, 0.5 SECONDS)
+		return TRUE
+	return FALSE
 
 /datum/spacevine_mutation/explosive/on_death(obj/structure/spacevine/holder, mob/hitter, obj/item/item)
 	explosion(holder, light_impact_range = EXPLOSION_MUTATION_IMPACT_RADIUS, adminlog = FALSE)
@@ -102,11 +105,10 @@
 	. = ..()
 	holder.trait_flags |= SPACEVINE_HEAT_RESISTANT
 
-/datum/spacevine_mutation/fire_proof/on_hit(obj/structure/spacevine/holder, mob/hitter, obj/item/item, expected_damage)
-	if(item && item.damtype == BURN)
-		. = 0
-	else
-		. = expected_damage
+/datum/spacevine_mutation/fire_proof/on_hit(obj/structure/spacevine/holder, mob/hitter, obj/item/attacking_item, expected_damage)
+	if(attacking_item && attacking_item.damtype == BURN)
+		return 0
+	return expected_damage
 
 /datum/spacevine_mutation/cold_proof
 	name = "Cold proof"
@@ -321,9 +323,8 @@
 
 /datum/spacevine_mutation/woodening/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/item, expected_damage)
 	if(item?.get_sharpness())
-		. = expected_damage * 0.5
-	else
-		. = expected_damage
+		return expected_damage * 0.5
+	return expected_damage
 
 /datum/spacevine_mutation/timid
 	name = "Timid"
