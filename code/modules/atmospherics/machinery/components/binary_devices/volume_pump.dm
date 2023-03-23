@@ -96,7 +96,7 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump/examine(mob/user)
 	. = ..()
-	. += span_notice("Can be multitooled to modify pressure limits.")
+	. += span_notice("Its pressure limits could be [overclocked ? "en" : "dis"]abled with a <b>multitool</b>.")
 	if(overclocked)
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
 
