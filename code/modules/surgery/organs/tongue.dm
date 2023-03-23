@@ -479,3 +479,10 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "mycelium-angel"
+
+/obj/item/organ/internal/tongue/golem
+	name = "golem tongue"
+	color = COLOR_WEBSAFE_DARK_GRAY
+	desc = "This silicate plate doesn't seem particularly mobile, but golems use it to form sounds."
+	say_mod = "rumbles"
+	sense_of_taste = FALSE

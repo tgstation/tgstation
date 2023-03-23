@@ -158,7 +158,7 @@
 		human.adjust_nutrition(-hunger_rate * delta_time)
 
 	var/nutrition = human.nutrition
-	if(nutrition > NUTRITION_LEVEL_FULL)
+	if(nutrition > NUTRITION_LEVEL_FULL && !HAS_TRAIT(human, TRAIT_NOFAT))
 		if(human.overeatduration < 20 MINUTES) //capped so people don't take forever to unfat
 			human.overeatduration = min(human.overeatduration + (1 SECONDS * delta_time), 20 MINUTES)
 	else

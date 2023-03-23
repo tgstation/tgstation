@@ -76,6 +76,8 @@
 	/// Expected lifetime of this bandage in seconds is thus absorption_capacity/absorption_rate,
 	/// or until the cut heals, whichever comes first
 	var/absorption_rate
+	/// This item will be lazily initialised if a golem tries to eat the stack
+	var/datum/weakref/golem_snack
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	if(new_amount != null)
@@ -119,6 +121,10 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_movable_entered_occupied_turf),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/item/stack/Destroy(force)
+	QDEL_NULL(golem_snack)
+	return ..()
 
 /** Sets the amount of materials per unit for this stack.
  *
@@ -642,6 +648,17 @@
 	if(can_merge(hitting, inhand = TRUE))
 		merge(hitting)
 	. = ..()
+
+/obj/item/stack/attack(mob/living/target, mob/living/user, params)
+	if(user.combat_mode || !HAS_TRAIT(user, TRAIT_ROCK_EATER))
+		return ..()
+	var/obj/item/food/material/snack = golem_snack?.resolve()
+	if(!snack)
+		snack = new
+		snack.name = name
+		snack.material = WEAKREF(src)
+		golem_snack = WEAKREF(snack)
+	snack.attack(target, user, params)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/stack/attack_hand(mob/user, list/modifiers)

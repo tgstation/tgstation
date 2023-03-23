@@ -5,7 +5,6 @@
 	species_traits = list(
 		NOEYESPRITES,
 		NOTRANSSTING,
-		MUTCOLORS,
 		NO_UNDERWEAR,
 		NO_DNA_COPY,
 	)
@@ -25,16 +24,19 @@
 	mutantheart = null
 	mutantlungs = null
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
+	liked_food = STONE
 	payday_modifier = 0.75
 	armor = 55
 	siemens_coeff = 0
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
-	sexes = 1
+	sexes = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/golem
 	species_language_holder = /datum/language_holder/golem
-	fixed_mut_color = "#aaaaaa"
 
+	mutantbrain = /obj/item/organ/internal/brain/golem
+	mutanttongue = /obj/item/organ/internal/tongue/golem
+	mutantstomach = /obj/item/organ/internal/stomach/golem
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem,
@@ -48,7 +50,10 @@
 	var/human_surname_chance = 3
 
 /datum/species/golem/random_name(gender,unique,lastname)
-	return prob(human_surname_chance) ? pick(GLOB.last_names) : pick(GLOB.golem_names)
+	var/name = pick(GLOB.golem_names)
+	if (prob(human_surname_chance))
+		name += " [pick(GLOB.last_names)]"
+	return name
 
 /datum/species/golem/create_pref_unique_perks()
 	var/list/to_add = list()
