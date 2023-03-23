@@ -26,4 +26,4 @@
 
 	GLOB.requests.music_request(usr.client, msg_tmp)
 
-	SSblackbox.record_feedback("tally", "requested_music", 1, "music_request") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "music_request", 1, "Music Request") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
