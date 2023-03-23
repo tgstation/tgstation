@@ -815,3 +815,18 @@
       Report.
   tf-4:
   - bugfix: Failing a kickflip no longer shows the chat messages to the wrong people.
+2023-03-23:
+  Astrogem2:
+  - rscadd: New space ruin that I have made, which adds some variety to space searching.
+  Cheshify:
+  - rscadd: Nanotrasen has given the crew access to a brand new emergency shuttle!
+      Watch out for it's destructive entrance!
+  LT3:
+  - imageadd: New fire alarm
+  - code_imp: Fire alarm/fire door volume reduced, lights synchronized
+  Singul0:
+  - bugfix: Circuit-based bluespace launchpads now work again!
+  SyncIt21:
+  - bugfix: aux construction console RCD works again
+  kawoppi:
+  - bugfix: added lights to the tramstation head of personnel's office
