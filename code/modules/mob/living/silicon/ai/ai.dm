@@ -142,14 +142,14 @@
 	else if(target_ai.key)
 		key = target_ai.key
 
-	to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
-	to_chat(src, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
-	to_chat(src, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
+	to_chat(src, span_bold("You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras)."))
+	to_chat(src, span_bold("To look at other parts of the station, click on yourself to get a camera menu."))
+	to_chat(src, span_bold("While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc."))
 	to_chat(src, "To use something, simply click on it.")
 	to_chat(src, "For department channels, use the following say commands:")
 	to_chat(src, ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science, :h - Holopad.")
 	show_laws()
-	to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
+	to_chat(src, span_bold("These laws may be changed by other players, random events, or by you becoming malfunctioning."))
 
 	job = "AI"
 
@@ -192,8 +192,7 @@
 	builtInCamera = new (src)
 	builtInCamera.network = list("ss13")
 
-	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
+	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_HANDS_BLOCKED), ROUNDSTART_TRAIT)
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
@@ -414,15 +413,17 @@
 	the_mmi.brainmob.name = src.real_name
 	the_mmi.brainmob.real_name = src.real_name
 	the_mmi.brainmob.container = the_mmi
-	the_mmi.brainmob.set_suicide(suiciding)
-	the_mmi.brain.suicided = suiciding
+
+	var/has_suicided_trait = HAS_TRAIT(src, TRAIT_SUICIDED)
+	the_mmi.brainmob.set_suicide(has_suicided_trait)
+	the_mmi.brain.suicided = has_suicided_trait
 	if(the_core)
 		var/obj/structure/ai_core/core = the_core
 		core.core_mmi = the_mmi
 		the_mmi.forceMove(the_core)
 	else
 		the_mmi.forceMove(get_turf(src))
-	if(the_mmi.brainmob.stat == DEAD && !suiciding)
+	if(the_mmi.brainmob.stat == DEAD && !has_suicided_trait)
 		the_mmi.brainmob.set_stat(CONSCIOUS)
 	if(mind)
 		mind.transfer_to(the_mmi.brainmob)
@@ -873,16 +874,17 @@
 	var/hrefpart = "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
-	if (isliving(speaker))
-		var/mob/living/living_speaker = speaker
-		if(living_speaker.job)
-			jobpart = "[living_speaker.job]"
-	if (istype(speaker, /obj/effect/overlay/holo_pad_hologram))
-		var/obj/effect/overlay/holo_pad_hologram/holo = speaker
-		if(holo.Impersonation?.job)
-			jobpart = "[holo.Impersonation.job]"
-		else if(usr?.job) // not great, but AI holograms have no other usable ref
-			jobpart = "[usr.job]"
+	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN)) //don't fetch the speaker's job in case they have something that conseals their identity completely
+		if (isliving(speaker))
+			var/mob/living/living_speaker = speaker
+			if(living_speaker.job)
+				jobpart = "[living_speaker.job]"
+		if (istype(speaker, /obj/effect/overlay/holo_pad_hologram))
+			var/obj/effect/overlay/holo_pad_hologram/holo = speaker
+			if(holo.Impersonation?.job)
+				jobpart = "[holo.Impersonation.job]"
+			else if(usr?.job) // not great, but AI holograms have no other usable ref
+				jobpart = "[usr.job]"
 
 	var/rendered = "<i><span class='game say'>[start][span_name("[hrefpart][namepart] ([jobpart])</a> ")]<span class='message'>[treated_message]</span></span></i>"
 

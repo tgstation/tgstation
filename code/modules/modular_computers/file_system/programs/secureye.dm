@@ -72,7 +72,7 @@
 	return .
 
 /datum/computer_file/program/secureye/ui_data()
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["network"] = network
 	data["activeCamera"] = null
 	var/obj/machinery/camera/active_camera = camera_ref?.resolve()
@@ -100,7 +100,6 @@
 	. = ..()
 	if(.)
 		return
-
 	if(action == "switch_camera")
 		var/c_tag = format_text(params["name"])
 		var/list/cameras = get_available_cameras()
@@ -150,7 +149,7 @@
 	last_camera_turf = new_cam_turf
 
 	//Here we gather what's visible from the camera's POV based on its view_range and xray modifier if present
-	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, new_cam_turf) : view(active_camera.view_range, new_cam_turf)
+	var/list/visible_things = active_camera.isXRay(ignore_malf_upgrades = TRUE) ? range(active_camera.view_range, new_cam_turf) : view(active_camera.view_range, new_cam_turf)
 
 	for(var/turf/visible_turf in visible_things)
 		visible_turfs += visible_turf

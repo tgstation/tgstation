@@ -62,7 +62,7 @@
 	armor_type = /datum/armor/machinery_vending
 	circuit = /obj/item/circuitboard/machine/vendor
 	payment_department = ACCOUNT_SRV
-	light_power = 0.5
+	light_power = 0.7
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 
 	/// Is the machine active (No sales pitches if off)!

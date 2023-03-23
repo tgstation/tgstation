@@ -31,7 +31,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 25
 	combat_mode = TRUE
-	faction = list("spiders")
+	faction = list(FACTION_SPIDER)
 	pass_flags = PASSTABLE
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
@@ -73,6 +73,7 @@
 	var/datum/action/cooldown/lay_web/webbing = new web_type(src)
 	webbing.webbing_time *= web_speed
 	webbing.Grant(src)
+	ai_controller.blackboard[BB_SPIDER_WEB_ACTION] = WEAKREF(webbing)
 
 /mob/living/basic/giant_spider/Login()
 	. = ..()

@@ -44,6 +44,8 @@
 	var/datum/chemical_reaction/reaction
 	/// Resulting amount (for stacks only)
 	var/result_amount
+	/// Whether we should delete the contents of the crafted storage item (Only works with storage items, used for ammo boxes, donut boxes, internals boxes, etc)
+	var/delete_contents = TRUE
 
 /datum/crafting_recipe/New()
 	if(!(result in reqs))

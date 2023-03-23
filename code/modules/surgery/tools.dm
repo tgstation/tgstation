@@ -248,7 +248,6 @@
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator)
 
-
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
 	name = "surgical processor"
 	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
@@ -256,6 +255,22 @@
 	icon_state = "spectrometer"
 	item_flags = NOBLUDGEON
 	var/list/loaded_surgeries = list()
+
+/obj/item/surgical_processor/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/surgery_initiator)
+
+/obj/item/surgical_processor/examine(mob/user)
+	. = ..()
+	. += span_notice("Equip the processor in one of your active modules to access downloaded advanced surgeries.")
+	. += span_boldnotice("Advanced surgeries available:")
+	//list of downloaded surgeries' names
+	var/list/surgeries_names = list()
+	for(var/datum/surgery/downloaded_surgery as anything in loaded_surgeries)
+		if(initial(downloaded_surgery.replaced_by) in loaded_surgeries) //if a surgery has a better version replacing it, we don't include it in the list
+			continue
+		surgeries_names += "[initial(downloaded_surgery.name)]"
+	. += span_notice("[english_list(surgeries_names)]")
 
 /obj/item/surgical_processor/equipped(mob/user, slot, initial)
 	. = ..()
@@ -525,14 +540,14 @@
 			var/selected_reagent = tgui_input_list(usr, "Select reagent to filter", "Whitelist reagent", GLOB.chemical_name_list)
 			if(!selected_reagent)
 				return TRUE
-			
+
 			var/chem_id = get_chem_id(selected_reagent)
 			if(!chem_id)
 				return TRUE
-				
+
 			if(!(chem_id in whitelist))
 				whitelist[chem_id] = selected_reagent
-				
+
 
 
 		if("remove")

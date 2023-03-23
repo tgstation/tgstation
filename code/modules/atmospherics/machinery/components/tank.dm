@@ -563,7 +563,7 @@
 	var/obj/machinery/atmospherics/components/tank/new_tank = new(build_location)
 	var/list/new_custom_materials = list((material_end_product) = TANK_PLATING_SHEETS * MINERAL_MATERIAL_AMOUNT)
 	new_tank.set_custom_materials(new_custom_materials)
-	new_tank.on_construction(new_tank.pipe_color, new_tank.piping_layer)
+	new_tank.on_construction(user, new_tank.pipe_color, new_tank.piping_layer)
 	to_chat(user, span_notice("[new_tank] has been sealed and is ready to accept gases."))
 	qdel(src)
 

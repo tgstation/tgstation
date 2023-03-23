@@ -16,7 +16,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 		!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!! */
 
-	///icon state for inhand overlays, if null the normal icon_state will be used.
+	///icon state for inhand overlays.
 	var/inhand_icon_state = null
 	///Icon file for left hand inhand overlays
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -250,8 +250,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
 	if(LAZYLEN(embedding))
 		updateEmbedding()
-	if(mapload && !GLOB.steal_item_handler.generated_items)
-		add_stealing_item_objective()
 
 /obj/item/Destroy(force)
 	// This var exists as a weird proxy "owner" ref
@@ -309,7 +307,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	LAZYREMOVE(actions, action)
 	qdel(action)
 
-/// Called if this item is supposed to be a steal objective item objective. Only done at mapload
+/// Called if this item is supposed to be a steal objective item objective.
 /obj/item/proc/add_stealing_item_objective()
 	return
 
@@ -554,7 +552,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 
 	//If the item is in a storage item, take it out
-	loc.atom_storage?.attempt_remove(src, user.loc, silent = TRUE)
+	if(loc.atom_storage && !loc.atom_storage.remove_single(user, src, user.loc, silent = TRUE))
+		return
 	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
 		return
 
@@ -589,7 +588,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return
 
 	//If the item is in a storage item, take it out
-	loc.atom_storage?.attempt_remove(src, user.loc, silent = TRUE)
+	if(loc.atom_storage?.remove_single(user, src, user.loc, silent = TRUE))
+		return
 	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
 		return
 
@@ -825,12 +825,20 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		pixel_x = rand(-8,8)
 		pixel_y = rand(-8,8)
 
-
-/obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/storage
+/// Takes the location to move the item to, and optionally the mob doing the removing
+/// If no mob is provided, we'll pass in the location, assuming it is a mob
+/// Please use this if you're going to snowflake an item out of a obj/item/storage
+/obj/item/proc/remove_item_from_storage(atom/newLoc, mob/removing)
 	if(!newLoc)
 		return FALSE
+	if(!removing)
+		if(ismob(newLoc))
+			removing = newLoc
+		else
+			stack_trace("Tried to remove an item and place it into [newLoc] without implicitly or explicitly passing in a mob doing the removing")
+			return
 	if(loc.atom_storage)
-		return loc.atom_storage.attempt_remove(src, newLoc, silent = TRUE)
+		return loc.atom_storage.remove_single(removing, src, newLoc, silent = TRUE)
 	return FALSE
 
 /// Returns the icon used for overlaying the object on a belt
@@ -1169,13 +1177,13 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
  * * target- Either a body part or a carbon. What are we hitting?
  * * forced- Do we want this to go through 100%?
  */
-/obj/item/proc/tryEmbed(atom/target, forced=FALSE, silent=FALSE)
+/obj/item/proc/tryEmbed(atom/target, forced=FALSE)
 	if(!isbodypart(target) && !iscarbon(target))
 		return NONE
 	if(!forced && !LAZYLEN(embedding))
 		return NONE
 
-	if(SEND_SIGNAL(src, COMSIG_EMBED_TRY_FORCE, target, forced, silent))
+	if(SEND_SIGNAL(src, COMSIG_EMBED_TRY_FORCE, target = target, forced = forced))
 		return COMPONENT_EMBED_SUCCESS
 	failedEmbed()
 
@@ -1235,7 +1243,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 		victim.apply_damage(max(15, force), BRUTE, BODY_ZONE_HEAD, wound_bonus = 10, sharpness = TRUE)
 		victim.losebreath += 2
-		if(tryEmbed(victim.get_bodypart(BODY_ZONE_CHEST), TRUE, TRUE)) //and if it embeds successfully in their chest, cause a lot of pain
+		if(tryEmbed(victim.get_bodypart(BODY_ZONE_CHEST), forced = TRUE)) //and if it embeds successfully in their chest, cause a lot of pain
 			victim.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = TRUE)
 			victim.losebreath += 6
 			discover_after = FALSE
@@ -1512,11 +1520,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
  * This proc calls at the begining of anytime an item is being equiped to a target by another mob.
  * It handles initial messages, AFK stripping, and initial logging.
  */
-/obj/item/proc/item_start_equip(atom/target, obj/item/equipping, mob/user, warn_dangerous = TRUE)
+/obj/item/proc/item_start_equip(atom/target, obj/item/equipping, mob/user, show_visible_message = TRUE)
 
-	if(warn_dangerous && isclothing(equipping))
-		var/obj/item/clothing/clothing = equipping
-		if(clothing.clothing_flags & DANGEROUS_OBJECT)
+	if(show_visible_message)
+		if(HAS_TRAIT(equipping, TRAIT_DANGEROUS_OBJECT))
 			target.visible_message(
 				span_danger("[user] tries to put [equipping] on [target]."),
 				span_userdanger("[user] tries to put [equipping] on you."),

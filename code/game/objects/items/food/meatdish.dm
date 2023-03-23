@@ -720,6 +720,7 @@
 	)
 	tastes = list("meat" = 5, "clowns" = 3, "sixteen teslas" = 1)
 	w_class = WEIGHT_CLASS_SMALL
+	foodtypes = MEAT | FRUIT
 
 /obj/item/food/meatclown/Initialize(mapload)
 	. = ..()

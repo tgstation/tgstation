@@ -119,7 +119,7 @@
 			just_sleeping = TRUE
 
 		if(!just_sleeping)
-			if(suiciding)
+			if(HAS_TRAIT(src, TRAIT_SUICIDED))
 				. += span_warning("[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.")
 
 			. += generate_death_examine_text()
@@ -174,7 +174,7 @@
 	if(l_limbs_missing >= 2 && r_limbs_missing == 0)
 		msg += "[t_He] look[p_s()] all right now.\n"
 	else if(l_limbs_missing == 0 && r_limbs_missing >= 2)
-		msg += "[t_He] really keeps to the left.\n"
+		msg += "[t_He] really keep[p_s()] to the left.\n"
 	else if(l_limbs_missing >= 2 && r_limbs_missing >= 2)
 		msg += "[t_He] [p_do()]n't seem all there.\n"
 
@@ -372,12 +372,17 @@
 			. += "<span class='deptradio'>Rank:</span> [target_record.rank]\n<a href='?src=[REF(src)];hud=1;photo_front=1;examine_time=[world.time]'>\[Front photo\]</a><a href='?src=[REF(src)];hud=1;photo_side=1;examine_time=[world.time]'>\[Side photo\]</a>"
 		if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD))
 			var/cyberimp_detect
-			for(var/obj/item/organ/internal/cyberimp/CI in internal_organs)
+			for(var/obj/item/organ/internal/cyberimp/CI in organs)
 				if(CI.status == ORGAN_ROBOTIC && !CI.syndicate_implant)
 					cyberimp_detect += "[!cyberimp_detect ? "[CI.get_examine_string(user)]" : ", [CI.get_examine_string(user)]"]"
 			if(cyberimp_detect)
 				. += "<span class='notice ml-1'>Detected cybernetic modifications:</span>"
 				. += "<span class='notice ml-2'>[cyberimp_detect]</span>"
+			if(target_record)
+				var/health_record = target_record.physical_status
+				. += "<a href='?src=[REF(src)];hud=m;physical_status=1;examine_time=[world.time]'>\[[health_record]\]</a>"
+				health_record = target_record.mental_status
+				. += "<a href='?src=[REF(src)];hud=m;mental_status=1;examine_time=[world.time]'>\[[health_record]\]</a>"
 			target_record = find_record(perpname)
 			if(target_record)
 				. += "<a href='?src=[REF(src)];hud=m;evaluation=1;examine_time=[world.time]'>\[Medical evaluation\]</a><br>"

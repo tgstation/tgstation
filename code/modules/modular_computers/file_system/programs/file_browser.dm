@@ -17,7 +17,6 @@
 	. = ..()
 	if(.)
 		return
-
 	switch(action)
 		if("PRG_deletefile")
 			var/datum/computer_file/file = computer.find_file_by_name(params["name"])
@@ -82,7 +81,7 @@
 			binary.alert_silenced = !binary.alert_silenced
 
 /datum/computer_file/program/filemanager/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	if(error)
 		data["error"] = error
 	if(!computer)

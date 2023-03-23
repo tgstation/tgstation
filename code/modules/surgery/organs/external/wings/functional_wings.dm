@@ -28,8 +28,7 @@
 
 /obj/item/organ/external/wings/functional/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
-
-	if(isnull(fly))
+	if(. && isnull(fly))
 		fly = new
 		fly.Grant(receiver)
 
@@ -102,14 +101,12 @@
 /obj/item/organ/external/wings/functional/proc/toggle_flight(mob/living/carbon/human/human)
 	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
 		human.physiology.stun_mod *= 2
-		ADD_TRAIT(human, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
-		ADD_TRAIT(human, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
+		human.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), SPECIES_FLIGHT_TRAIT)
 		passtable_on(human, SPECIES_TRAIT)
 		open_wings()
 	else
 		human.physiology.stun_mod *= 0.5
-		REMOVE_TRAIT(human, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
-		REMOVE_TRAIT(human, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
+		human.remove_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), SPECIES_FLIGHT_TRAIT)
 		passtable_off(human, SPECIES_TRAIT)
 		close_wings()
 	human.update_body_parts()
@@ -177,7 +174,7 @@
 /obj/item/organ/external/wings/functional/robotic
 	name = "robotic wings"
 	desc = "Using microscopic hover-engines, or \"microwings,\" as they're known in the trade, these tiny devices are able to lift a few grams at a time. Gathering enough of them, and you can lift impressively large things."
-	sprite_accessory_override = /datum/sprite_accessory/wings/megamoth
+	sprite_accessory_override = /datum/sprite_accessory/wings/robotic
 
 ///skeletal wings, which relate to skeletal races.
 /obj/item/organ/external/wings/functional/skeleton

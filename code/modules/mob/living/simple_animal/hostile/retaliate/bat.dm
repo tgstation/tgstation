@@ -21,7 +21,7 @@
 	attack_verb_simple = "bite"
 	butcher_results = list(/obj/item/food/meat/slab = 1)
 	pass_flags = PASSTABLE
-	faction = list("hostile")
+	faction = list(FACTION_HOSTILE)
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
@@ -35,5 +35,4 @@
 /mob/living/simple_animal/hostile/retaliate/bat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
