@@ -33460,6 +33460,7 @@
 /obj/item/pen{
 	pixel_x = -4
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "kHZ" = (
@@ -60696,6 +60697,7 @@
 /obj/structure/sign/poster/official/love_ian{
 	pixel_x = -32
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "uyA" = (
