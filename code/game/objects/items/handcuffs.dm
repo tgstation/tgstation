@@ -70,6 +70,15 @@
 				to_chat(C, span_userdanger("As you feel someone grab your wrists, [src] start digging into your skin!"))
 			playsound(loc, cuffsound, 30, TRUE, -2)
 			log_combat(user, C, "attempted to handcuff")
+
+			if(is_darkspawn_or_veil(user) && C.has_status_effect(STATUS_EFFECT_BROKEN_WILL)) //Massmeta edit start
+				to_chat(user, span_boldannounce("Restraining [C] will wake them up! Are you sure you want to do this?"))
+				C.visible_message(span_warning("[C] jerks in their sleep as they are restrained!"))
+				to_chat(C, span_boldannounce("Someone handles your arms roughly, pulling you towards wakefulness!"))
+				if(do_after(user, 1.5 SECONDS, C, timed_action_flags = IGNORE_SLOWDOWNS) && C.canBeHandcuffed()) // No progress bar
+					C.remove_status_effect(STATUS_EFFECT_BROKEN_WILL)
+					C.SetUnconscious(0) //Massmeta edit end
+
 			if(do_after(user, 3 SECONDS, C, timed_action_flags = IGNORE_SLOWDOWNS) && C.canBeHandcuffed())
 				if(iscyborg(user))
 					apply_cuffs(C, user, TRUE)
