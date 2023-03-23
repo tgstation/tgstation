@@ -174,10 +174,10 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "gg" = (
-/obj/structure/barricade/sandbags,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/barricade/sandbags,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "gi" = (
@@ -541,10 +541,10 @@
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "rM" = (
-/obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "rW" = (
@@ -1309,13 +1309,13 @@
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "QF" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 9
 	},
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "QP" = (

@@ -47,7 +47,16 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/research,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
 "aG" = (
@@ -71,7 +80,16 @@
 /area/template_noop)
 "aL" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
 "aN" = (
@@ -334,13 +352,31 @@
 	},
 /obj/item/wirecutters,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "kp" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
 "kF" = (
@@ -396,7 +432,16 @@
 "wc" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
 "Ap" = (

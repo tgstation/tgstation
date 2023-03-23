@@ -108,14 +108,20 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "au" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
 /obj/machinery/flasher/directional/north{
 	id = "cockpit_flasher"
 	},
-/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "av" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aw" = (
@@ -288,7 +294,10 @@
 /area/shuttle/escape)
 "ba" = (
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bb" = (
@@ -297,7 +306,10 @@
 	},
 /obj/structure/barricade/wooden,
 /obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bd" = (
@@ -378,8 +390,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Fs" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
 /obj/machinery/status_display/evac/directional/south,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 
