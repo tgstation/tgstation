@@ -81,7 +81,8 @@
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "pickaxe",
 		SPECIES_PERK_NAME = "Natural Miners",
-		SPECIES_PERK_DESC = "Golems can see dimly in the dark, sense minerals, and mine stone with their bare hands.",
+		SPECIES_PERK_DESC = "Golems can see dimly in the dark, sense minerals, and mine stone with their bare hands. \
+			They can even smelt ores in an internal furnace, if their surrounding environment is hot enough.",
 	))
 
 	to_add += list(list(

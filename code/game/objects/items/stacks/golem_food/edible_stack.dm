@@ -7,6 +7,12 @@
 	foodtypes = STONE
 	/// A weak reference to the stack which created us
 	var/datum/weakref/material
+	/// Golem food buff to apply on consumption
+	var/datum/golem_food_buff/food_buff
+
+/obj/item/food/material/Initialize(mapload, datum/golem_food_buff/food_buff)
+	. = ..()
+	src.food_buff = food_buff
 
 /obj/item/food/material/make_edible()
 	. = ..()
@@ -18,5 +24,6 @@
 		qdel(src)
 		return
 	resolved_material.use(used = 1)
+	food_buff.on_consumption(eater)
 	if (!resolved_material)
 		qdel(src)
