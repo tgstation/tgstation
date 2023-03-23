@@ -87,9 +87,7 @@ def update_map(map_path):
             else:
                 dir = int(dir)
 
-            dirs = None
-            if last == "":
-                dirs = frozenset({ dir })
+            dirs = frozenset(path_dir_sets[(last, dir)])
 
             if dirs == None:
                 # This is commented out on /tg/'s implemenation because otherwise you would get spammed by a lot of false warnings because our maps already have optimized decals without dirs.
