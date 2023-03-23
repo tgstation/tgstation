@@ -29,6 +29,8 @@
 /obj/item/organ/internal/stomach/golem/on_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_CARBON_ATTEMPT_EAT)
+	organ_owner.remove_movespeed_modifier(/datum/movespeed_modifier/golem_hunger)
+	organ_owner.remove_status_effect(/datum/status_effect/golem_statued)
 	if (!ishuman(organ_owner))
 		return
 	var/mob/living/carbon/human/human_owner = organ_owner
@@ -59,6 +61,28 @@
 	if(hunger > 0)
 		var/slowdown = LERP(min_hunger_slowdown, max_hunger_slowdown, hunger)
 		human.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/golem_hunger, multiplicative_slowdown = slowdown)
-		// TODO: statue if too hungry
 	else
 		human.remove_movespeed_modifier(/datum/movespeed_modifier/golem_hunger)
+
+	if (hunger >= 1)
+		human.apply_status_effect(/datum/status_effect/golem_statued)
+	else
+		human.remove_status_effect(/datum/status_effect/golem_statued)
+
+/// Uh oh, you can't move, yell for help
+/datum/status_effect/golem_statued
+	id = "golem_statued"
+	// TODO: screen alert
+
+/datum/status_effect/golem_statued/on_apply()
+	. = ..()
+	if (!.)
+		return FALSE
+	owner.visible_message(span_warning("[owner] siezes up and becomes as rigid as a statue!"), span_warning("Your limbs fall still. You no longer have enough energy to move!"))
+	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING, TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED), TRAIT_STATUS_EFFECT(id))
+	return TRUE
+
+/datum/status_effect/golem_statued/on_remove()
+	owner.visible_message(span_notice("[owner] slowly stirs back into motion!"), span_notice("You have gathered enough strength to move your body once more."))
+	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING, TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED), TRAIT_STATUS_EFFECT(id))
+	return ..()

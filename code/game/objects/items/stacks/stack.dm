@@ -650,11 +650,11 @@
 	. = ..()
 
 /obj/item/stack/attack(mob/living/target, mob/living/user, params)
-	if(user.combat_mode || !HAS_TRAIT(user, TRAIT_ROCK_EATER) || !is_path_in_list(merge_type, GLOB.golem_stack_food_directory))
+	if(user.combat_mode || !HAS_TRAIT(target, TRAIT_ROCK_EATER) || !is_path_in_list(merge_type, GLOB.golem_stack_food_directory))
 		return ..()
 	var/datum/golem_food_buff/snack_type = GLOB.golem_stack_food_directory[merge_type]
-	if (!snack_type.can_consume(user))
-		balloon_alert(user, "incompatible mineral!")
+	if (!snack_type.can_consume(target))
+		balloon_alert(target, "incompatible mineral!")
 		return
 	var/obj/item/food/material/snack = golem_snack?.resolve()
 	if(!snack)
