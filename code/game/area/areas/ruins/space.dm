@@ -577,7 +577,7 @@
 
 // Ruin of Waystation
 /area/ruin/space/has_grav/waystation
-    name = "Waystation"
+	name = "Waystation"
 /area/ruin/space/has_grav/waystation/qm
 	name = "Quartermaster Office"
 
