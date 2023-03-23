@@ -32872,7 +32872,6 @@
 "hZq" = (
 /obj/structure/cable,
 /obj/machinery/power/smes,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
