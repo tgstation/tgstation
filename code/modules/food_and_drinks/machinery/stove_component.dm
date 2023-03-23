@@ -141,8 +141,8 @@
 	if(container?.reagents.total_volume > 0)
 		if(isnull(soup_smoke))
 			soup_smoke = new(real_parent, /particles/smoke/steam/mild)
-			soup_smoke.set_particle_position(list(container_x, container_y, 0))
-			soup_smoke.pixel_z = 6 // sidemap memes
+			soup_smoke.set_particle_position(list(container_x, round(world.icon_size * 0.66), 0))
+			// melbert todo: sidemap memes
 	else
 		QDEL_NULL(soup_smoke)
 

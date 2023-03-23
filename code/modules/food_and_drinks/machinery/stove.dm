@@ -1,4 +1,7 @@
-
+// Soup pot for cooking soup
+// Future addention ideas:
+// - Thermostat you can stick in the pot to see in examine the temperature
+// - Tasting the pot to learn its exact contents w/o sci goggles (chef skillchip?)
 /obj/item/reagent_containers/cup/soup_pot
 	name = "soup pot"
 	desc = "A tall soup designed to mix and cook all kinds of soup."
@@ -7,7 +10,7 @@
 	base_icon_state = "pot"
 	volume = 200
 	possible_transfer_amounts = list(20, 50, 100, 200)
-	reagent_flags = OPENCONTAINER
+	reagent_flags = REFILLABLE | DRAINABLE
 	custom_materials = list(/datum/material/iron = 5000)
 	w_class = WEIGHT_CLASS_BULKY
 	fill_icon_thresholds = null
@@ -19,15 +22,10 @@
 /obj/item/reagent_containers/cup/soup_pot/Initialize(mapload, vol)
 	. = ..()
 	RegisterSignal(reagents, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_cleared))
+	RegisterSignal(src, COMSIG_PARENT_REAGENT_EXAMINE, PROC_REF(reagent_special_examine))
 	register_context()
 
-/obj/item/reagent_containers/cup/soup_pot/add_context(
-	atom/source,
-	list/context,
-	obj/item/held_item,
-	mob/user,
-)
-
+/obj/item/reagent_containers/cup/soup_pot/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_RMB] = "Remove ingredient"
 		return CONTEXTUAL_SCREENTIP_SET
@@ -40,12 +38,52 @@
 
 /obj/item/reagent_containers/cup/soup_pot/examine(mob/user)
 	. = ..()
-	if(LAZYLEN(added_ingredients))
-		. += "Inside, you can see:"
+	. += span_notice("There's room for <b>[max_ingredients - LAZYLEN(added_ingredients)]</b> more ingredients \
+		or <b>[reagents.maximum_volume - reagents.total_volume]</b> more units of reagents in there.")
+
+/**
+ * Override standard reagent examine with something a bit more sensible for the soup pot,
+ * including the ingredients we have within as well
+ */
+/obj/item/reagent_containers/cup/soup_pot/proc/reagent_special_examine(datum/source, mob/user, list/examine_list, can_see_insides = FALSE)
+	SIGNAL_HANDLER
+
+	examine_list += "Inside, you can see:"
+
+	if(LAZYLEN(added_ingredients) || reagents.total_volume > 0)
+		var/list/ingredient_amounts = list()
 		for(var/obj/item/ingredient as anything in added_ingredients)
-			. += "[ingredient]" // melbert todo: make these do "three tomatos two apples one carrot" etc
+			ingredient_amounts[ingredient.type] += 1
+
+		for(var/obj/item/ingredient_type as anything in ingredient_amounts)
+			examine_list += "&bull; [ingredient_amounts[ingredient_type]] [initial(ingredient_type.name)]\s"
+
+		var/unknown_volume = 0
+		for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
+			if(can_see_insides \
+				|| istype(current_reagent, /datum/reagent/water) \
+				|| istype(current_reagent, /datum/reagent/consumable) \
+			)
+				examine_list += "&bull; [round(current_reagent.volume, 0.01)] units of [current_reagent.name]"
+			else
+				unknown_volume += current_reagent.volume
+
+		if(unknown_volume > 0)
+			examine_list += "&bull; [round(unknown_volume, 0.01)] units of unknown reagents"
+
+		if(reagents.total_volume > 0)
+			if(can_see_insides)
+				examine_list += span_notice("The contents of [src] have a temperature of [reagents.chem_temp]K.")
+			else if(reagents.chem_temp > 373) // boiling point
+				examine_list += span_notice("The contents of [src] are boiling.")
+
 	else
-		. += "There's nothing inside."
+		examine_list += "Nothing."
+
+	if(reagents.is_reacting)
+		examine_list += span_warning("It is currently mixing!")
+
+	return STOP_GENERIC_REAGENT_EXAMINE
 
 /obj/item/reagent_containers/cup/soup_pot/Exited(atom/movable/gone, direction)
 	. = ..()

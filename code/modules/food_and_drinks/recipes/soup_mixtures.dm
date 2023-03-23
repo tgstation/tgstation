@@ -5,6 +5,7 @@
 /// but bear in mind it will(should) have other reagents along side it.
 /datum/reagent/consumable/nutriment/soup
 	chemical_flags = NONE
+	nutriment_factor = 12 * REAGENTS_METABOLISM // Slightly less to that of nutriment as soups will come with nutriments in tow
 	default_container = /obj/item/reagent_containers/cup/bowl
 	glass_price = FOOD_PRICE_CHEAP
 	fallback_icon = 'icons/obj/food/soupsalad.dmi'
@@ -42,9 +43,12 @@
 	/// An assoc list of what ingredients are necessary to how much is needed
 	var/list/required_ingredients
 
+	/// Multiplier applied to all reagents transfered from reagents to pot when the soup is cooked
+	var/ingredient_reagent_multiplier = 0.8
 	/// What percent of nutriment is converted to "soup" (what percent does not stay final product)?
 	/// Raise this if your ingredients have a lot of nutriment and is overpowering your other reagents
 	/// Lower this if your ingredients have a small amount of nutriment and isn't filling enough per serving
+	/// (EX: A tomato with 10 nutriment will lose 2.5 nutriment before being added to the pot)
 	var/percentage_of_nutriment_converted = 0.25
 
 /datum/chemical_reaction/food/soup/pre_reaction_other_checks(datum/reagents/holder)
@@ -81,27 +85,32 @@
 	if(!istype(pot))
 		return
 
+	var/boiled_over = FALSE
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
-		// Some ingredients are purely flavor (no pun intended) and add no reagents
-		if(isnull(ingredient.reagents))
-			continue
+		if(!boiled_over)
+			// Some ingredients are purely flavor (no pun intended) and add no reagents
+			if(!isnull(ingredient.reagents))
+				// Some of the nutriment goes into "creating the soup reagent" itself, gets deleted.
+				// Mainly done so that nutriment doesn't overpower the main course
+				if(percentage_of_nutriment_converted > 0 )
+					var/amount_nutriment = ingredient.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
+					ingredient.reagents.remove_reagent(/datum/reagent/consumable/nutriment, amount_nutriment * percentage_of_nutriment_converted)
+				// The other half of the nutriment, and the rest of the reagents, will get put directly into the pot
+				ingredient.reagents.trans_to(pot, ingredient.reagents.total_volume, ingredient_reagent_multiplier, no_react = TRUE)
 
-		// Some of the nutriment goes into "creating the soup reagent" itself, gets deleted.
-		// Mainly done so that nutriment doesn't overpower the main course
-		if(percentage_of_nutriment_converted > 0 )
-			var/amount_nutriment = ingredient.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
-			ingredient.reagents.remove_reagent(/datum/reagent/consumable/nutriment, amount_nutriment * percentage_of_nutriment_converted)
-		// The other half of the nutriment, and the rest of the reagents, will get put directly into the pot
-		ingredient.reagents.trans_to(pot, ingredient.reagents.total_volume, 0.8, no_react = TRUE)
+			// Uh oh we reached the top of the pot, the soup's gonna boil over.
+			if(holder.total_volume >= holder.maximum_volume * 0.95)
+				boil_over(holder)
+				boiled_over = TRUE // melbert todo seems impossible to get, swap to reaction step?
 
-		// melbert todo seems impossible also really easy to dupe reaction results
+		// Clean up the ingredient after use
+		// Fireproof things or things not actually a part of this recipe will simply be fried - the rest, deleted
+		if((ingredient.resistance_flags & FIRE_PROOF) || !is_type_in_list(ingredient, required_ingredients))
+			ingredient.AddElement(/datum/element/fried_item, 30)
+		else
+			qdel(ingredient)
 
-		// Uh oh we reached the top of the pot, the soup's gonna boil over.
-		if(holder.total_volume >= holder.maximum_volume * 0.95)
-			boil_over(holder)
-			break
-
-	QDEL_LAZYLIST(pot.added_ingredients)
+	LAZYNULL(pot.added_ingredients)
 
 /datum/chemical_reaction/food/soup/proc/boil_over(datum/reagents/holder)
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
