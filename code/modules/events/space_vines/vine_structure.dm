@@ -12,7 +12,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	max_integrity = 50
 	/// What growth stage is this vine at?
-	var/energy = 0
+	var/growth_stage = 0
 	/// Can this kudzu spread?
 	var/can_spread = TRUE
 	/// Can this kudzu buckle mobs in?
