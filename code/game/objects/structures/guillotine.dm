@@ -77,16 +77,16 @@
 	var/msg = "It is [anchored ? "wrenched to the floor." : "unsecured. A wrench should fix that."]<br/>"
 
 	if (blade_status == GUILLOTINE_BLADE_RAISED)
-		msg += span_notice("The blade is raised, ready to fall, and")
+		msg += ("The blade is raised, ready to fall, and")
 
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP)
-			msg += span_notice(" looks sharp enough to decapitate without any resistance.")
+			msg += (" looks sharp enough to decapitate without any resistance.")
 		else
-			msg += span_notice(" doesn't look particularly sharp. Perhaps a whetstone can be used to sharpen it.")
+			msg += (" doesn't look particularly sharp. Perhaps a whetstone can be used to sharpen it.")
 	else
-		msg += span_notice("The blade is hidden inside the stocks.")
+		msg += ("The blade is hidden inside the stocks.")
 
-	. += msg
+	. += span_notice(msg)
 
 	if (LAZYLEN(buckled_mobs))
 		. += span_notice("Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine.")
@@ -121,10 +121,10 @@
 					else
 						current_action = GUILLOTINE_ACTION_IDLE
 				else
-					var/mob/living/carbon/human/H = buckled_mobs[1]
+					var/mob/living/carbon/human/victim = buckled_mobs[1]
 
-					if (H)
-						H.regenerate_icons()
+					if (victim)
+						victim.regenerate_icons()
 
 					unbuckle_all_mobs()
 			else
@@ -140,19 +140,19 @@
 /// Drops the guillotine blade, potentially beheading or harming the buckled mob
 /obj/structure/guillotine/proc/drop_blade(mob/user)
 	if (has_buckled_mobs() && blade_sharpness)
-		var/mob/living/carbon/human/H = buckled_mobs[1]
+		var/mob/living/carbon/human/victim = buckled_mobs[1]
 
-		if (!H)
+		if (!victim)
 			return
 
-		var/obj/item/bodypart/head/head = H.get_bodypart("head")
+		var/obj/item/bodypart/head/head = victim.get_bodypart("head")
 
 		playsound(src, drop_sound, 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 			if(head)
 				head.dismember()
 				log_combat(user, H, "beheaded", src)
-				H.regenerate_icons()
+				victim.regenerate_icons()
 				unbuckle_all_mobs()
 				kill_count += 1
 
@@ -176,9 +176,9 @@
 						addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/, emote), "clap"), delay_offset * 0.3)
 						delay_offset++
 		else
-			H.apply_damage(15 * blade_sharpness, BRUTE, head)
+			victim.apply_damage(15 * blade_sharpness, BRUTE, head)
 			log_combat(user, H, "dropped the blade on", src, " non-fatally")
-			H.emote("scream")
+			victim.emote("scream")
 
 		if (blade_sharpness > 1)
 			blade_sharpness -= 1
@@ -234,18 +234,18 @@
 		return
 
 	M.add_mood_event("dying", /datum/mood_event/deaths_door)
-	var/mob/living/carbon/human/H = M
+	var/mob/living/carbon/human/victim = M
 
-	if (H.dna)
-		if (H.dna.species)
-			var/datum/species/S = H.dna.species
+	if (victim.dna)
+		if (victim.dna.species)
+			var/datum/species/S = victim.dna.species
 
 			if (istype(S))
-				H.cut_overlays()
-				H.update_body_parts_head_only()
-				H.remove_overlay(BODY_ADJ_LAYER)
-				H.pixel_y += -GUILLOTINE_HEAD_OFFSET // Offset their body so it looks like they're in the guillotine
-				H.layer += GUILLOTINE_LAYER_DIFF
+				victim.cut_overlays()
+				victim.update_body_parts_head_only()
+				victim.remove_overlay(BODY_ADJ_LAYER)
+				victim.pixel_y += -GUILLOTINE_HEAD_OFFSET // Offset their body so it looks like they're in the guillotine
+				victim.layer += GUILLOTINE_LAYER_DIFF
 			else
 				unbuckle_all_mobs()
 		else
