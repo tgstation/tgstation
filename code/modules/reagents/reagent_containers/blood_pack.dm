@@ -75,26 +75,26 @@
 	blood_type = "S"
 	unique_blood = /datum/reagent/lube
 	
-/obj/item/reagent_containers/blood/snail/Initialize(mapload, vol)
+/obj/item/reagent_containers/blood/snail/examine()
 	. = ..()
-	desc += " It's a bit slimy... The label indicates that this is meant for snails. "
+	. += span_notice("It's a bit slimy... The label indicates that this is meant for snails.")
 
 /obj/item/reagent_containers/blood/podperson
 	blood_type = "H2O"
 	unique_blood = /datum/reagent/water
 
-/obj/item/reagent_containers/blood/podperson/Initialize(mapload, vol)
+/obj/item/reagent_containers/blood/podperson/examine()
 	. = ..()
-	desc += " This appears to be some very overpriced water."
+	. += span_notice("This appears to be some very overpriced water.")
 
 // for slimepeople
 /obj/item/reagent_containers/blood/toxin
 	blood_type = "TOX"
 	unique_blood = /datum/reagent/toxin/slimejelly
 
-/obj/item/reagent_containers/blood/toxin/Initialize(mapload, vol)
+/obj/item/reagent_containers/blood/toxin/examine()
 	. = ..()
-	desc += " There is a toxin warning on the label. This is for slimepeople."
+	. += span_notice("There is a toxin warning on the label. This is for slimepeople.")
 
 /obj/item/reagent_containers/blood/universal
 	blood_type = "U"

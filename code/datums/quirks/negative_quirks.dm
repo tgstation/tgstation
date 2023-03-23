@@ -65,6 +65,14 @@
 	mail_goodies = list(/obj/item/reagent_containers/blood/o_minus) // universal blood type that is safe for all
 	var/min_blood = BLOOD_VOLUME_SAFE - 25 // just barely survivable without treatment
 
+/**
+ * Makes the mob lose blood from having the blood deficiency quirk, if possible
+ *
+ 
+ * Arguments:
+ * * delta_time
+ *
+ */
 /datum/quirk/blooddeficiency/proc/lose_blood(delta_time)
 	if(quirk_holder.stat == DEAD)
 		return
