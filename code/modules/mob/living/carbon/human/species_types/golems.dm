@@ -21,7 +21,6 @@
 		TRAIT_RESISTHEAT,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_VORACIOUS,
 	)
 	mutantheart = null
 	mutantlungs = null
