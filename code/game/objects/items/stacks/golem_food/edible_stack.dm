@@ -1,22 +1,22 @@
 
 /obj/item/food/material
 	name = "temporary golem material snack item"
-	desc = "You shouldn't be able to see this. This is a horrible hack to allow you to eat rocks."
+	desc = "You shouldn't be able to see this. This is an abstract item which exists to allow you to eat rocks."
 	bite_consumption = 2
-	food_reagents = list(/datum/reagent/consumable/nutriment/mineral = 8)
+	food_reagents = list(/datum/reagent/consumable/nutriment/mineral = INFINITY) // Destroyed when stack runs out, not when reagents do
 	foodtypes = STONE
-
-	/// A weak reference to the stack that created us
+	/// A weak reference to the stack which created us
 	var/datum/weakref/material
 
 /obj/item/food/material/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, on_consume = CALLBACK(src, PROC_REF(finished_eating)))
+	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(took_bite)), volume = INFINITY)
 
-/obj/item/food/material/proc/finished_eating(mob/eater)
+/obj/item/food/material/proc/took_bite(mob/eater)
 	var/obj/item/stack/resolved_material = material.resolve()
-	if (resolved_material)
-		resolved_material.use(used = 1)
-		if (!resolved_material)
-			to_chat(eater, span_warning("There is nothing left of [src], oh no!"))
-	qdel(src)
+	if (!resolved_material)
+		qdel(src)
+		return
+	resolved_material.use(used = 1)
+	if (!resolved_material)
+		qdel(src)

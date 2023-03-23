@@ -1,17 +1,19 @@
-	/// Animated beings of stone. They have increased defenses, and do not need to breathe. They must eat minerals to live, which give additional buffs.
+/// Animated beings of stone. They have increased defenses, and do not need to breathe. They must eat minerals to live, which give additional buffs.
 /datum/species/golem
 	name = "Golem"
 	id = SPECIES_GOLEM
 	species_traits = list(
+		NO_DNA_COPY,
 		NOEYESPRITES,
 		NOTRANSSTING,
 		NO_UNDERWEAR,
-		NO_DNA_COPY,
 	)
 	inherent_traits = list(
 		TRAIT_GENELESS,
+		TRAIT_LAVA_IMMUNE,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
+		TRAIT_NOBLOOD,
 		TRAIT_NOFIRE,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_RADIMMUNE,
@@ -19,7 +21,7 @@
 		TRAIT_RESISTHEAT,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_NOBLOOD,
+		TRAIT_VORACIOUS,
 	)
 	mutantheart = null
 	mutantlungs = null
@@ -61,12 +63,40 @@
 
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-		SPECIES_PERK_ICON = "gem",
+		SPECIES_PERK_ICON = "user-shield",
 		SPECIES_PERK_NAME = "Lithoid",
 		SPECIES_PERK_DESC = "Lithoids are creatures made out of minerals instead of \
 			blood and flesh. They are strong and immune to many environmental and personal dangers \
-			such as pressure, electricity, viruses, and dismemberment. In exchange they \
-			must consume minerals to survive, which may grant them additional temporary benefits.",
+			such as pressure, heat, viruses, and dismemberment.",
+	))
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+		SPECIES_PERK_ICON = "gem",
+		SPECIES_PERK_NAME = "Metamorphic Rock",
+		SPECIES_PERK_DESC = "Consuming minerals can grant Lithoids temporary benefits based on the type consumed.",
+	))
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+		SPECIES_PERK_ICON = "pickaxe",
+		SPECIES_PERK_NAME = "Natural Miners",
+		SPECIES_PERK_DESC = "Golems can see dimly in the dark, sense minerals, and mine stone with their bare hands.",
+	))
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+		SPECIES_PERK_ICON = "bolt",
+		SPECIES_PERK_NAME = "Anima",
+		SPECIES_PERK_DESC = "Maintaining the force animating stone is taxing. Lithoids must eat frequently \
+			in order to avoid returning to inanimate statues, and only derive nutrition from eating minerals.",
 	))
 
 	return to_add
+
+/// Remove nutrient value from non-mineral food, wish this was on an organ and not species but such is life
+/datum/species/golem/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
+	if (istype(chem, /datum/reagent/consumable) && !istype(chem, /datum/reagent/consumable/nutriment/mineral))
+		var/datum/reagent/consumable/yummy_chem = chem
+		yummy_chem.nutriment_factor = 0
+	return ..()

@@ -4,7 +4,7 @@
 	desc = "A rocklike organ which grinds and processes nutrition from minerals."
 	organ_traits = list(TRAIT_ROCK_EATER)
 	/// Multiplier for the hunger rate, golems burn fuel quickly
-	var/hunger_mod = 25
+	var/hunger_mod = 10
 	/// How slow are you when the "hungry" icon appears?
 	var/min_hunger_slowdown = 0.5
 	/// How slow are you if you have absolutely nothing in the tank?
@@ -37,11 +37,18 @@
 /// Reject food, rocks only
 /obj/item/organ/internal/stomach/golem/proc/try_eating(mob/living/carbon/source, atom/eating)
 	SIGNAL_HANDLER
-
 	if (istype(eating, /obj/item/food/material))
 		return
 	source.balloon_alert(source, "minerals only!")
 	return COMSIG_CARBON_BLOCK_EAT
+
+/// Golem stomach cannot process nutriment except from minerals
+/obj/item/organ/internal/stomach/golem/on_life(delta_time, times_fired)
+	for(var/datum/reagent/consumable/food in reagents.reagent_list)
+		if (istype(food, /datum/reagent/consumable/nutriment/mineral))
+			continue
+		food.nutriment_factor = 0
+	return ..()
 
 /// Slow down based on how full you are
 /obj/item/organ/internal/stomach/golem/handle_hunger(mob/living/carbon/human/human, delta_time, times_fired)

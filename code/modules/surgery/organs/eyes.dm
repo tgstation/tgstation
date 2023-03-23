@@ -257,8 +257,21 @@
 	icon_state = "adamantine_cords"
 	desc = "Golems somehow measure external light levels and detect nearby ore using this sensitive mineral lattice."
 	visual = FALSE
-	color_cutoffs = list(20, 5, 5) // TODO: fuck with this colour
-	// TODO: ore detection action
+	color_cutoffs = list(10, 15, 5)
+	actions_types = list(/datum/action/cooldown/golem_ore_sight)
+
+/// Send an ore detection pulse on a cooldown
+/datum/action/cooldown/golem_ore_sight
+	name = "Ore Resonance"
+	desc = "Causes nearby ores to vibrate, revealing their location."
+	button_icon = 'icons/obj/device.dmi'
+	button_icon_state = "manual_mining"
+	check_flags = AB_CHECK_CONSCIOUS
+	cooldown_time = 10 SECONDS
+
+/datum/action/cooldown/golem_ore_sight/Activate(atom/target)
+	. = ..()
+	mineral_scan_pulse(get_turf(target))
 
 ///Robotic
 
