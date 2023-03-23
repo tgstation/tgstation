@@ -735,6 +735,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/lift_indicator, 32)
 	name = "elevator door"
 	desc = "Keeps idiots like you from walking into an open elevator shaft."
 	can_atmos_pass = ATMOS_PASS_DENSITY // elevator shaft is airtight when closed
+	req_access = list(ACCESS_TCOMMS)
 	var/id = null
 	var/safety_enabled = TRUE
 
@@ -753,9 +754,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/lift_indicator, 32)
 	add_fingerprint(user)
 	if(!requiresID())
 		user = null
-	if(!safety_enabled)
-		open_and_close()
-	else if(allowed(user))
+	if(!safety_enabled || allowed(user))
 		open_and_close()
 	else
 		do_animate("deny")
@@ -770,3 +769,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/lift_indicator, 32)
 			if(!density)
 				close()
 	return
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/elevator, 0)
