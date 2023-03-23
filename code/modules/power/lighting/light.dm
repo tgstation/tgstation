@@ -521,7 +521,7 @@
 
 	var/protected = FALSE
 
-	if(istype(user) && !HAS_TRAIT(user, TRAIT_RESISTHEAT) && !HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
+	if(istype(user))
 		var/obj/item/organ/internal/stomach/maybe_stomach = user.getorganslot(ORGAN_SLOT_STOMACH)
 		if(istype(maybe_stomach, /obj/item/organ/internal/stomach/ethereal))
 			var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
@@ -545,7 +545,7 @@
 	else
 		protected = TRUE
 
-	if(protected)
+	if(protected || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
 		to_chat(user, span_notice("You remove the light [fitting]."))
 	else if(istype(user) && user.dna.check_mutation(/datum/mutation/human/telekinesis))
 		to_chat(user, span_notice("You telekinetically remove the light [fitting]."))
