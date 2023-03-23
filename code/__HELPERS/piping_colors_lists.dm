@@ -1,5 +1,6 @@
 ///All colors available to pipes and atmos components
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
+	"omni" = COLOR_VERY_LIGHT_GRAY,
 	"green" = COLOR_VIBRANT_LIME,
 	"blue" = COLOR_BLUE,
 	"red" = COLOR_RED,
@@ -10,8 +11,7 @@ GLOBAL_LIST_INIT(pipe_paint_colors, list(
 	"brown" = COLOR_BROWN,
 	"pink" = COLOR_LIGHT_PINK,
 	"purple" = COLOR_PURPLE,
-	"violet" = COLOR_STRONG_VIOLET,
-	"omni" = COLOR_VERY_LIGHT_GRAY
+	"violet" = COLOR_STRONG_VIOLET
 ))
 
 ///List that sorts the colors and is used for setting up the pipes layer so that they overlap correctly
