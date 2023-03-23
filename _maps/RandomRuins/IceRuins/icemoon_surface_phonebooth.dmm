@@ -22,7 +22,7 @@
 /obj/machinery/vending/snack/green{
 	onstation_override = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/Phone_booth)
 "q" = (
 /obj/structure/window/reinforced/spawner/west,
@@ -34,7 +34,7 @@
 	dir = 8;
 	piping_layer = 4
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/Phone_booth)
 "v" = (
 /obj/structure/lattice,
@@ -70,14 +70,14 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/Phone_booth)
 "M" = (
 /turf/closed/wall,
 /area/ruin/unpowered/Phone_booth)
 "R" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/Phone_booth)
 "V" = (
 /obj/structure/lattice,
@@ -88,7 +88,7 @@
 /obj/machinery/vending/cigarette{
 	onstation_override = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/Phone_booth)
 
 (1,1,1) = {"
