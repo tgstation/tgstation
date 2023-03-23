@@ -239,7 +239,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				to_chat(usr, "Request doesn't have a sound to play.", confidential = TRUE)
 				return TRUE
 			if(findtext(request.message, ":") && !findtext(request.message, GLOB.is_http_protocol))
-				to_chat(usr, "Request is not a valid URI.", confidential = TRUE)
+				to_chat(usr, "Request is not a valid URL.", confidential = TRUE)
 				return TRUE
 
 			var_internet_sound(usr, request.message)
@@ -269,3 +269,4 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 #undef REQUEST_SYNDICATE
 #undef REQUEST_NUKE
 #undef REQUEST_FAX
+#undef REQUEST_MUSIC

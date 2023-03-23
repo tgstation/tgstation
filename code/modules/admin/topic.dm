@@ -1756,5 +1756,5 @@
 		if(!link_url)
 			return
 
-		var_internet_sound(usr.client, link_url)
+		var_internet_sound(usr, link_url)
 
