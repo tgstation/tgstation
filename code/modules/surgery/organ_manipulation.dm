@@ -72,6 +72,8 @@
 	if(tool && tool.item_flags) //Mechanic organ manipulation isn't done with just surgery tools
 		to_chat(user, span_warning("This step requires a different tool!"))
 		return TRUE
+		
+	return FALSE
 
 /datum/surgery/organ_manipulation/mechanic/soft
 	possible_locs = list(

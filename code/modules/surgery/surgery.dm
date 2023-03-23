@@ -124,6 +124,8 @@
 	if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
 		to_chat(user, span_warning("This step requires a different tool!"))
 		return TRUE
+		
+	return FALSE
 
 /datum/surgery/proc/get_surgery_step()
 	var/step_type = steps[status]
