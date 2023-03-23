@@ -517,6 +517,21 @@
 			return TRUE
 	return FALSE
 
+/**
+ * Getter function for a mob's quirk
+ *
+ 
+ * Arguments:
+ * * quirktype - the type of the quirk to acquire e.g. /datum/quirk/some_quirk
+ *
+ * Returns the mob's quirk datum if the mob this is called on has the quirk, null on failure 
+ */
+/mob/living/proc/get_quirk(quirktype)
+	for(var/datum/quirk/quirk in quirks)
+		if(quirk.type == quirktype)
+			return quirk
+	return null
+
 /mob/living/proc/cure_husk(source)
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)
 	if(!HAS_TRAIT(src, TRAIT_HUSK))

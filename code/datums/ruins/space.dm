@@ -20,7 +20,6 @@
 	name = "Asteroid 1"
 	description = "I-spy with my little eye, something beginning with R."
 
-
 /datum/map_template/ruin/space/asteroid2
 	id = "asteroid2"
 	suffix = "asteroid2.dmm"
@@ -190,14 +189,14 @@
 
 /datum/map_template/ruin/space/djstation
 	id = "djstation"
-	suffix = "djstation.dmm"
+	suffix = "dj_station.dmm"
 	name = "DJ Station"
 	description = "Until very recently this pirate radio station was used to harangue local space stations over a variety of perceived \"ethics violations\". \
 	It seems like someone finally got sick of it, but the equipment still works."
 
 /datum/map_template/ruin/space/thederelict
 	id = "thederelict"
-	suffix = "thederelict.dmm"
+	suffix = "russian_derelict.dmm"
 	name = "Kosmicheskaya Stantsiya 13"
 	description = "The true fate of Kosmicheskaya Stantsiya 13 is an open question to this day. Most corporations deny its existence, for fear of questioning on what became of its crew."
 
@@ -356,3 +355,9 @@
 	suffix = "the_faceoff.dmm"
 	name = "The Faceoff"
 	description = "What do you get when a meeting of the enemy corporations get crashed?"
+
+/datum/map_template/ruin/space/prey_pod
+	id = "prey"
+	suffix = "prey_pod.dmm"
+	name = "Crashed Mimic Escape Pod"
+	description = "A pod with a person who has died to a mimic."
