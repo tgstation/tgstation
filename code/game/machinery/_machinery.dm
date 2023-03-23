@@ -787,9 +787,9 @@
 		return
 	crowbar.play_tool_sound(src, 50)
 	visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open \the [src]."))
-	open_machine(density = open_density)
+	open_machine(density_to_set = open_density)
 	if (close_after_pry) //Should it immediately close after prying? (If not, it must be closed elsewhere)
-		close_machine(density = closed_density)
+		close_machine(density_to_set = closed_density)
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
 	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && crowbar.tool_behaviour == TOOL_CROWBAR
