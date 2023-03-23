@@ -186,6 +186,10 @@
 	},
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
+"eL" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
 "eN" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
@@ -286,6 +290,9 @@
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern{
 	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
@@ -425,6 +432,18 @@
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/stone,
 /area/shuttle/escape)
+"jg" = (
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 6;
+	layer = 3.1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/flora/bush/style_4,
+/turf/open/floor/grass,
+/area/shuttle/escape)
 "jl" = (
 /obj/structure/railing{
 	color = "#A47449";
@@ -487,18 +506,6 @@
 "jI" = (
 /turf/open/floor/wood/parquet,
 /area/shuttle/escape)
-"kf" = (
-/obj/structure/railing{
-	color = "#A47449";
-	dir = 10;
-	layer = 3.1
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 10
-	},
-/obj/structure/flora/bush/style_3,
-/turf/open/floor/grass,
-/area/shuttle/escape)
 "kh" = (
 /obj/structure/railing/corner{
 	dir = 2;
@@ -549,6 +556,16 @@
 "kU" = (
 /obj/effect/turf_decal/plaque,
 /turf/open/floor/wood/large,
+/area/shuttle/escape)
+"lf" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lantern{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
 "ll" = (
 /obj/structure/railing/corner,
@@ -607,6 +624,9 @@
 	},
 /obj/item/lighter,
 /obj/machinery/light/directional/east,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
 "mQ" = (
@@ -673,6 +693,9 @@
 /area/shuttle/escape)
 "nw" = (
 /obj/structure/chair/pew/left{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/herringbone,
@@ -808,15 +831,21 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/obj/structure/flora/bush/style_4,
+/mob/living/simple_animal/butterfly{
+	name = "Peacekeeper Henry"
+	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "pn" = (
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 8
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
 	},
-/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"pz" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "pK" = (
 /obj/structure/reagent_dispensers/foamtank,
@@ -920,6 +949,9 @@
 /area/shuttle/escape)
 "qn" = (
 /obj/structure/chair/pew/right{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/herringbone,
@@ -1067,13 +1099,6 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"tD" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "tO" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -1123,10 +1148,11 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "vd" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
 	},
-/turf/open/floor/wood/large,
+/obj/structure/flora/grass/jungle/b/style_2,
+/turf/open/floor/grass,
 /area/shuttle/escape)
 "vl" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1170,6 +1196,13 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
+"vJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/flora/grass/jungle/b/style_5,
+/turf/open/floor/grass,
+/area/shuttle/escape)
 "vT" = (
 /obj/structure/railing{
 	color = "#A47449";
@@ -1212,14 +1245,20 @@
 /obj/structure/chair/pew/right{
 	dir = 4
 	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
+"wB" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "wM" = (
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 8
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
 	},
-/obj/structure/flora/grass/jungle/b/style_2,
-/turf/open/floor/grass,
+/turf/open/floor/wood/large,
 /area/shuttle/escape)
 "wV" = (
 /obj/machinery/computer/crew,
@@ -1232,6 +1271,9 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
 "xQ" = (
@@ -1385,10 +1427,6 @@
 	},
 /turf/open/floor/iron/stairs,
 /area/shuttle/escape)
-"zW" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood/tile,
-/area/shuttle/escape)
 "zX" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -1399,6 +1437,9 @@
 /area/shuttle/escape)
 "At" = (
 /obj/structure/table/wood,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
 "Ay" = (
@@ -1498,6 +1539,11 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/shuttle/escape)
+"Ca" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
 "Ci" = (
 /obj/structure/railing{
 	color = "#A47449";
@@ -1515,13 +1561,6 @@
 	},
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
-	},
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"CB" = (
-/obj/structure/statue/sandstone/venus{
-	layer = 4;
-	anchored = 1
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -1545,6 +1584,11 @@
 	},
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"Dq" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
 /area/shuttle/escape)
 "DC" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1593,11 +1637,6 @@
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
-"Ey" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood/large,
-/area/shuttle/escape)
 "EH" = (
 /obj/structure/railing/corner{
 	dir = 4;
@@ -1610,6 +1649,18 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"ET" = (
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 10;
+	layer = 3.1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/flora/bush/style_3,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "EW" = (
@@ -1796,10 +1847,6 @@
 	},
 /turf/open/floor/iron/herringbone,
 /area/shuttle/escape)
-"GW" = (
-/obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/floor/grass,
-/area/shuttle/escape)
 "Hj" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -1825,20 +1872,6 @@
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},
-/area/shuttle/escape)
-"Hx" = (
-/obj/structure/railing{
-	color = "#A47449";
-	dir = 6;
-	layer = 3.1
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/mob/living/simple_animal/butterfly{
-	name = "Peacekeeper Henry"
-	},
-/turf/open/floor/grass,
 /area/shuttle/escape)
 "HE" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1930,10 +1963,6 @@
 /area/shuttle/escape)
 "IZ" = (
 /turf/open/floor/catwalk_floor,
-/area/shuttle/escape)
-"Jg" = (
-/obj/structure/bookcase/random,
-/turf/open/floor/wood,
 /area/shuttle/escape)
 "Jo" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -2031,6 +2060,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spirit_board,
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
 "KJ" = (
@@ -2103,16 +2135,8 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
-"LX" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood/tile,
-/area/shuttle/escape)
-"Mx" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/obj/structure/flora/grass/jungle/b/style_5,
+"Mm" = (
+/obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "MF" = (
@@ -2485,6 +2509,13 @@
 	},
 /turf/open/water,
 /area/shuttle/escape)
+"TO" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
 "TV" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/parquet,
@@ -2629,16 +2660,16 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"Xu" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood/large,
-/area/shuttle/escape)
 "XC" = (
 /obj/structure/flora/bush/lavendergrass,
 /turf/open/floor/grass,
+/area/shuttle/escape)
+"XI" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood,
 /area/shuttle/escape)
 "XJ" = (
 /obj/effect/turf_decal/siding/wood{
@@ -2713,10 +2744,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
-"ZA" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood/large,
-/area/shuttle/escape)
 "ZF" = (
 /obj/structure/sign/poster/official/fruit_bowl{
 	pixel_y = 32
@@ -2727,6 +2754,13 @@
 "ZJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone,
+/area/shuttle/escape)
+"ZQ" = (
+/obj/structure/statue/sandstone/venus{
+	layer = 4;
+	anchored = 1
+	},
+/turf/open/floor/wood,
 /area/shuttle/escape)
 "ZT" = (
 /turf/open/water/jungle,
@@ -2930,7 +2964,7 @@ vx
 ux
 ZF
 lQ
-Jg
+wB
 ux
 Wo
 fL
@@ -3028,7 +3062,7 @@ MF
 pP
 AQ
 BL
-CB
+ZQ
 XW
 nq
 XJ
@@ -3048,9 +3082,9 @@ dI
 uT
 Om
 Om
-tD
+pn
 Xt
-vd
+wM
 oV
 MO
 dI
@@ -3070,7 +3104,7 @@ zf
 Fv
 ux
 Rx
-pn
+XI
 sY
 sY
 qB
@@ -3100,7 +3134,7 @@ UU
 ow
 os
 IR
-vd
+wM
 Uc
 MO
 ob
@@ -3123,10 +3157,10 @@ zo
 vT
 iM
 aj
-kf
+ET
 hB
-Xu
-Ey
+TO
+Dq
 MO
 nv
 vT
@@ -3147,11 +3181,11 @@ Sz
 Na
 sU
 UJ
-GW
+Mm
 IV
 Oj
 Zh
-zW
+pz
 nE
 vT
 yF
@@ -3170,14 +3204,14 @@ Gz
 Gz
 Sz
 ag
-GW
+Mm
 Oi
 XC
-GW
+Mm
 vB
 Zh
 Or
-LX
+Ca
 zI
 yy
 ag
@@ -3199,7 +3233,7 @@ Jp
 Kr
 ag
 HL
-Hx
+pf
 Zh
 AF
 nE
@@ -3223,10 +3257,10 @@ AN
 HS
 hk
 ij
-pf
+jg
 Fj
-vd
-ZA
+wM
+eL
 MO
 ba
 HS
@@ -3250,7 +3284,7 @@ Lm
 tc
 mR
 hd
-vd
+wM
 AQ
 MO
 dI
@@ -3275,7 +3309,7 @@ mc
 mc
 rL
 CR
-vd
+wM
 kU
 Bn
 bq
@@ -3300,10 +3334,10 @@ Ek
 Gl
 Ih
 fY
-vd
+wM
 AQ
 uR
-gz
+lf
 wA
 nw
 At
@@ -3320,12 +3354,12 @@ ux
 SU
 ux
 bG
-Mx
+vJ
 Oh
-wM
+vd
 Gl
 Ih
-vd
+wM
 AQ
 NK
 JS
