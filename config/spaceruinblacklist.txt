@@ -1,8 +1,7 @@
+#A list of maps valid to blacklist can be found in _maps\RandomRuins\SpaceRuins
 #Listing maps here will blacklist them from generating in space.
 #Maps must be the full path to them
-#A list of maps valid to blacklist can be found in _maps\RandomRuins\SpaceRuins
 #SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
-
 #_maps/RandomRuins/SpaceRuins/abandonedteleporter.dmm
 #_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm
 #_maps/RandomRuins/SpaceRuins/asteroid1.dmm
@@ -28,7 +27,7 @@
 #_maps/RandomRuins/SpaceRuins/derelict7.dmm
 #_maps/RandomRuins/SpaceRuins/derelict8.dmm
 #_maps/RandomRuins/SpaceRuins/derelict_sulaco.dmm
-#_maps/RandomRuins/SpaceRuins/djstation.dmm
+#_maps/RandomRuins/SpaceRuins/dj_station.dmm
 #_maps/RandomRuins/SpaceRuins/emptyshell.dmm
 #_maps/RandomRuins/SpaceRuins/fasttravel.dmm
 #_maps/RandomRuins/SpaceRuins/forgottenship.dmm
@@ -46,12 +45,12 @@
 #_maps/RandomRuins/SpaceRuins/onehalf.dmm
 #_maps/RandomRuins/SpaceRuins/originalcontent.dmm
 #_maps/RandomRuins/SpaceRuins/prey_pod.dmm
+#_maps/RandomRuins/SpaceRuins/russian_derelict.dmm
 #_maps/RandomRuins/SpaceRuins/shuttlerelic.dmm
 #_maps/RandomRuins/SpaceRuins/space_billboard.dmm
 #_maps/RandomRuins/SpaceRuins/spacehotel.dmm
 #_maps/RandomRuins/SpaceRuins/spinwardsmoothies.dmm
 #_maps/RandomRuins/SpaceRuins/the_faceoff.dmm
-#_maps/RandomRuins/SpaceRuins/thederelict.dmm
 #_maps/RandomRuins/SpaceRuins/thelizardsgas.dmm
 #_maps/RandomRuins/SpaceRuins/turretedoutpost.dmm
 #_maps/RandomRuins/SpaceRuins/vaporwave.dmm
