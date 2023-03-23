@@ -120,13 +120,13 @@
 
 /// Updates the icon as the space vine grows
 /obj/structure/spacevine/proc/grow()
-	if(!energy)
+	if(!growth_stage)
 		src.icon_state = pick("Med1", "Med2", "Med3")
-		energy = 1
+		growth_stage = 1
 		set_opacity(light_state)
 	else
 		src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
-		energy = 2
+		growth_stage = 2
 
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		mutation.on_grow(src)

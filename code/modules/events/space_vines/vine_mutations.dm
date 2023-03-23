@@ -58,7 +58,7 @@
 	severity = SEVERITY_TRIVIAL
 
 /datum/spacevine_mutation/light/on_grow(obj/structure/spacevine/holder)
-	if(holder.energy)
+	if(holder.growth_stage)
 		holder.set_light(LIGHT_MUTATION_BRIGHTNESS, 0.3)
 
 /datum/spacevine_mutation/toxicity
@@ -230,7 +230,7 @@
 		var/datum/gas_mixture/gas_mix = turf.air
 		if(!gas_mix.gases[/datum/gas/oxygen])
 			return
-		gas_mix.gases[/datum/gas/oxygen][MOLES] = max(gas_mix.gases[/datum/gas/oxygen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
+		gas_mix.gases[/datum/gas/oxygen][MOLES] = max(gas_mix.gases[/datum/gas/oxygen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
 		gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/nitro_eater
@@ -245,7 +245,7 @@
 		var/datum/gas_mixture/gas_mix = turf.air
 		if(!gas_mix.gases[/datum/gas/nitrogen])
 			return
-		gas_mix.gases[/datum/gas/nitrogen][MOLES] = max(gas_mix.gases[/datum/gas/nitrogen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
+		gas_mix.gases[/datum/gas/nitrogen][MOLES] = max(gas_mix.gases[/datum/gas/nitrogen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
 		gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/carbondioxide_eater
@@ -260,7 +260,7 @@
 		var/datum/gas_mixture/gas_mix = turf.air
 		if(!gas_mix.gases[/datum/gas/carbon_dioxide])
 			return
-		gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] = max(gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
+		gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] = max(gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
 		gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/plasma_eater
@@ -275,7 +275,7 @@
 		var/datum/gas_mixture/gas_mix = turf.air
 		if(!gas_mix.gases[/datum/gas/plasma])
 			return
-		gas_mix.gases[/datum/gas/plasma][MOLES] = max(gas_mix.gases[/datum/gas/plasma][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
+		gas_mix.gases[/datum/gas/plasma][MOLES] = max(gas_mix.gases[/datum/gas/plasma][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
 		gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/thorns
@@ -317,7 +317,7 @@
 	severity = SEVERITY_ABOVE_AVERAGE
 
 /datum/spacevine_mutation/woodening/on_grow(obj/structure/spacevine/holder)
-	if(holder.energy)
+	if(holder.growth_stage)
 		holder.set_density(TRUE)
 	holder.modify_max_integrity(100)
 
@@ -346,7 +346,7 @@
 	severity = SEVERITY_MAJOR
 
 /datum/spacevine_mutation/flowering/on_grow(obj/structure/spacevine/holder)
-	if(holder.energy == 2 && prob(FLOWERING_MUTATION_SPAWN_PROB) && !locate(/obj/structure/alien/resin/flower_bud) in range(5,holder))
+	if(holder.growth_stage == 2 && prob(FLOWERING_MUTATION_SPAWN_PROB) && !locate(/obj/structure/alien/resin/flower_bud) in range(5,holder))
 		var/obj/structure/alien/resin/flower_bud/spawned_flower_bud = new/obj/structure/alien/resin/flower_bud(get_turf(holder))
 		spawned_flower_bud.trait_flags = holder.trait_flags
 

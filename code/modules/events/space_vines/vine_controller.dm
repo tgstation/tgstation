@@ -125,7 +125,7 @@
 		for(var/datum/spacevine_mutation/mutation in vine.mutations)
 			mutation.process_mutation(vine)
 
-		if(vine.energy >= 2) //If tile is fully grown
+		if(vine.growth_stage >= 2) //If tile is fully grown
 			vine.entangle_mob()
 		else if(DT_PROB(10, delta_time)) //If tile isn't fully grown
 			vine.grow()
