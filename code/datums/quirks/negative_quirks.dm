@@ -68,10 +68,8 @@
 /**
  * Makes the mob lose blood from having the blood deficiency quirk, if possible
  *
- 
  * Arguments:
  * * delta_time
- *
  */
 /datum/quirk/blooddeficiency/proc/lose_blood(delta_time)
 	if(quirk_holder.stat == DEAD)
