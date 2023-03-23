@@ -148,8 +148,8 @@
 		var/obj/item/bodypart/head/head = victim.get_bodypart("head")
 
 		playsound(src, drop_sound, 100, TRUE)
-		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
-			if(head)
+		if(head)
+			if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 				head.dismember()
 				log_combat(user, victim, "beheaded", src)
 				victim.regenerate_icons()
@@ -173,13 +173,13 @@
 				for(var/mob/living/carbon/human/spectator in viewers(src, 7))
 					addtimer(CALLBACK(spectator, TYPE_PROC_REF(/mob/, emote), "clap"), delay_offset * 0.3)
 					delay_offset++
-		else
-			victim.apply_damage(15 * blade_sharpness, BRUTE, head)
-			log_combat(user, victim, "dropped the blade on", src, " non-fatally")
-			victim.emote("scream")
+			else
+				victim.apply_damage(15 * blade_sharpness, BRUTE, head)
+				log_combat(user, victim, "dropped the blade on", src, " non-fatally")
+				victim.emote("scream")
 
-		if (blade_sharpness > 1)
-			blade_sharpness -= 1
+			if (blade_sharpness > 1)
+				blade_sharpness -= 1
 
 	blade_status = GUILLOTINE_BLADE_DROPPED
 	icon_state = "guillotine"
