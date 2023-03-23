@@ -6571,16 +6571,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
-"aMi" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/elevator_control_panel{
-	linked_elevator_id = "tram_xeno_lift";
-	pixel_y = 2;
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck");
-	layer = 3.1
-	},
-/turf/open/floor/plating,
-/area/station/science/xenobiology)
 "aMm" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -15946,7 +15936,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/elevator/directional/west{
-	lift_id = "tram_xeno_lift"
+	id = "tram_cargo_lift"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -21914,7 +21904,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/elevator/directional/west{
-	lift_id = "tram_xeno_lift"
+	id = "tram_cargo_lift"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
@@ -39020,6 +39010,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
 	},
+/obj/structure/ladder,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "mGl" = (
@@ -41586,6 +41577,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
+/obj/structure/ladder,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "nEF" = (
@@ -42211,6 +42203,15 @@
 	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
+"nQg" = (
+/obj/machinery/elevator_control_panel{
+	linked_elevator_id = "tram_xeno_lift";
+	pixel_y = 2;
+	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck");
+	layer = 3.1
+	},
+/turf/closed/wall,
+/area/station/science/xenobiology)
 "nQi" = (
 /obj/effect/turf_decal/caution/stand_clear/red{
 	dir = 1
@@ -48270,7 +48271,6 @@
 /turf/open/floor/glass/reinforced,
 /area/station/security/brig)
 "qea" = (
-/obj/structure/ladder,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -51486,9 +51486,6 @@
 /turf/open/floor/plating,
 /area/station/construction/mining/aux_base)
 "rlE" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 8
-	},
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 1
 	},
@@ -53497,10 +53494,11 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/green/filled/line,
-/obj/machinery/door/window/left/directional/south{
-	name = "Dumbwaiter Safety Door"
-	},
 /obj/effect/turf_decal/trimline/yellow/warning,
+/obj/machinery/door/window/elevator/directional/south{
+	id = "dumbwaiter_lift";
+	req_access = null
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "sbx" = (
@@ -67307,11 +67305,12 @@
 /area/station/security/courtroom/holding)
 "wRh" = (
 /obj/machinery/duct,
-/obj/machinery/door/window/left/directional/north{
-	name = "Dumbwaiter Safety Door"
-	},
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
+	},
+/obj/machinery/door/window/elevator/directional/north{
+	id = "dumbwaiter_lift";
+	req_access = null
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
@@ -67439,7 +67438,6 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/ladder,
 /obj/machinery/button/elevator/directional/north{
 	id = "tram_xeno_lift"
 	},
@@ -70545,9 +70543,6 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/arrivals)
 "yij" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 4
-	},
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 1
 	},
@@ -116181,7 +116176,7 @@ lyQ
 asv
 mln
 tjz
-aMi
+asv
 hQg
 oYQ
 gCY
@@ -116438,7 +116433,7 @@ hDT
 keT
 iEF
 fof
-jiQ
+nQg
 sXX
 akC
 kMh
@@ -152087,7 +152082,7 @@ nca
 nca
 iPi
 iNc
-kEc
+dkO
 yij
 nca
 nca
