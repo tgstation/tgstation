@@ -328,7 +328,7 @@
  * * drop - Boolean. Whether to drop any stored items in the machine. Does not include components.
  * * density - Boolean. Whether to make the object dense when it's open.
  */
-/obj/machinery/proc/open_machine(drop = TRUE, density = FALSE)
+/obj/machinery/proc/open_machine(drop = TRUE, density_to_set = FALSE)
 	state_open = TRUE
 	set_density(density)
 	if(drop)
