@@ -332,10 +332,14 @@
 		return FALSE
 	if(new_name != painting_metadata.title && user.can_perform_action(src))
 		painting_metadata.title = new_name
-	var/sign_choice = tgui_alert(user, "Do you want to sign it or remain anonymous?", "Sign painting?", list("Yes", "No"))
-	if(sign_choice != "Yes")
-		painting_metadata.creator_name = "Anonymous"
-	return TRUE
+	switch(tgui_alert(user, "Do you want to sign it or remain anonymous?", "Sign painting?", list("Yes", "No", "Cancel")))
+		if("Yes")
+			return TRUE
+		if("No")
+			painting_metadata.creator_name = "Anonymous"
+			return TRUE
+
+	return FALSE
 
 /obj/item/canvas/nineteen_nineteen
 	name = "canvas (19x19)"
