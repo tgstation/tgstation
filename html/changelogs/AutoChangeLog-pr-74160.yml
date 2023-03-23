@@ -1,0 +1,4 @@
+author: "softcerv"
+delete-after: True
+changes:
+  - bugfix: "drawing from an empty tarot card deck no longer causes runtimes"
