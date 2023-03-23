@@ -73,11 +73,29 @@
 /area/centcom/ctf)
 "ep" = (
 /obj/structure/barricade/security/ctf,
-/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
 /turf/open/floor/cult,
 /area/centcom/ctf)
 "fs" = (
-/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/cult,
 /area/centcom/ctf)
 "fH" = (
@@ -86,6 +104,19 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"fK" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/cult,
 /area/centcom/ctf)
 "gq" = (
 /obj/structure/barricade/security/ctf,
@@ -127,13 +158,18 @@
 /turf/open/floor/carpet/red,
 /area/centcom/ctf)
 "iv" = (
-/obj/effect/turf_decal/tile/green/half/contrasted{
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /turf/open/floor/cult,
 /area/centcom/ctf)
 "iN" = (
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /turf/open/floor/cult,
@@ -158,7 +194,11 @@
 /turf/open/floor/carpet/red,
 /area/centcom/ctf)
 "lt" = (
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
 /turf/open/floor/cult,
@@ -181,6 +221,19 @@
 	resistance_flags = 64
 	},
 /turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"ny" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/cult,
 /area/centcom/ctf)
 "nB" = (
 /obj/effect/turf_decal/siding/wood{
@@ -255,8 +308,14 @@
 /turf/open/floor/wood,
 /area/centcom/ctf)
 "pD" = (
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
 	},
 /turf/open/floor/cult,
 /area/centcom/ctf)
@@ -334,7 +393,10 @@
 /turf/open/floor/cult,
 /area/centcom/ctf)
 "st" = (
-/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
 /turf/open/floor/cult,
 /area/centcom/ctf)
 "tm" = (
@@ -382,8 +444,11 @@
 /turf/open/floor/circuit/green/off,
 /area/centcom/ctf)
 "wE" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
+/obj/effect/turf_decal/tile/red{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
 	},
 /turf/open/floor/cult,
 /area/centcom/ctf)
@@ -407,6 +472,19 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/orange,
+/area/centcom/ctf)
+"xC" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/cult,
 /area/centcom/ctf)
 "yo" = (
 /turf/closed/indestructible/wood,
@@ -433,6 +511,19 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"Ah" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/cult,
 /area/centcom/ctf)
 "AD" = (
 /obj/structure/ladder/unbreakable/rune{
@@ -472,6 +563,19 @@
 	},
 /obj/structure/trap/ctf/blue,
 /turf/open/floor/carpet/red,
+/area/centcom/ctf)
+"BK" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/cult,
 /area/centcom/ctf)
 "Cf" = (
 /obj/effect/turf_decal/siding/blue/corner{
@@ -553,8 +657,11 @@
 /turf/open/floor/carpet/orange,
 /area/centcom/ctf)
 "Fo" = (
-/obj/effect/turf_decal/tile/green/half/contrasted{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
 	},
 /turf/open/floor/cult,
 /area/centcom/ctf)
@@ -655,13 +762,17 @@
 /turf/open/floor/carpet/orange,
 /area/centcom/ctf)
 "KY" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /turf/open/floor/cult,
 /area/centcom/ctf)
 "Ly" = (
-/obj/effect/turf_decal/tile/green/half/contrasted{
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
 /turf/open/floor/cult,
@@ -782,7 +893,10 @@
 /turf/open/floor/carpet/orange,
 /area/centcom/ctf)
 "PO" = (
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/cult,
 /area/centcom/ctf)
 "QJ" = (
@@ -805,6 +919,19 @@
 /area/centcom/ctf)
 "Rm" = (
 /turf/open/floor/carpet/blue,
+/area/centcom/ctf)
+"RI" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/cult,
 /area/centcom/ctf)
 "Sh" = (
 /obj/structure/trap/ctf/yellow,
@@ -912,13 +1039,22 @@
 /turf/open/floor/carpet/orange,
 /area/centcom/ctf)
 "YT" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /turf/open/floor/cult,
 /area/centcom/ctf)
 "Zi" = (
-/obj/effect/turf_decal/tile/green/anticorner/contrasted,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
 /turf/open/floor/cult,
 /area/centcom/ctf)
 "Zr" = (
@@ -1442,7 +1578,7 @@ Tw
 Tw
 Tw
 Tw
-fs
+BK
 Nw
 Nw
 Nw
@@ -1509,13 +1645,13 @@ Tw
 mP
 Tw
 KY
-fs
-fs
-fs
-fs
-fs
-fs
-fs
+BK
+fK
+fK
+fK
+fK
+fK
+fK
 Nw
 hB
 uh
@@ -1576,13 +1712,13 @@ Tw
 Tw
 Tw
 Tw
-fs
+Ah
 Nw
 Nw
 Nw
 Nw
 Nw
-fs
+fK
 Nw
 hB
 uh
@@ -1649,7 +1785,7 @@ hB
 hB
 hB
 Nw
-fs
+fK
 Nw
 hB
 uh
@@ -1685,9 +1821,9 @@ uh
 uh
 uh
 yo
-Ez
-Ez
-Ez
+ny
+ny
+ny
 yo
 uh
 uh
@@ -1716,7 +1852,7 @@ uh
 uh
 hB
 Nw
-fs
+fK
 Nw
 hB
 uh
@@ -1752,9 +1888,9 @@ Xl
 Xl
 Xl
 Xl
-Ez
-Ez
-Ez
+ny
+ny
+ny
 Xl
 Xl
 Xl
@@ -1783,7 +1919,7 @@ uh
 uh
 hB
 Nw
-fs
+fK
 Nw
 hB
 uh
@@ -1818,14 +1954,14 @@ Xl
 SL
 Hs
 wW
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Xl
-Ez
-Ez
-Ez
+ny
+ny
+ny
 Xl
 Xl
 uh
@@ -1850,7 +1986,7 @@ uh
 uh
 hB
 Nw
-fs
+fK
 Nw
 hB
 uh
@@ -1885,15 +2021,15 @@ SL
 FH
 Rm
 Oq
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Xl
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Xl
 uh
 uh
@@ -1917,7 +2053,7 @@ uh
 uh
 hB
 Nw
-fs
+fK
 Nw
 hB
 uh
@@ -1952,15 +2088,15 @@ jz
 Rm
 om
 hW
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Xl
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Xl
 Xl
 Xl
@@ -2019,15 +2155,15 @@ jz
 pb
 wu
 Xl
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Xl
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Ez
 Ez
 Ez
@@ -2054,9 +2190,9 @@ Tw
 wE
 Tw
 Ch
-sl
-sl
-sl
+RI
+RI
+RI
 sl
 sl
 sl
@@ -2086,15 +2222,15 @@ jz
 pb
 wu
 Xl
-Ez
-Ez
-Ez
+ny
+ny
+ny
 Xl
 Xl
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Ez
 Ez
 Ez
@@ -2153,15 +2289,15 @@ FH
 pb
 wu
 Xl
-Ez
-Ez
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
+ny
+ny
 ep
-Ez
-Ez
+ny
+ny
 Xl
 ef
 ef
@@ -2220,15 +2356,15 @@ Rm
 Rm
 wu
 Xl
-Ez
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
+ny
 ep
 ep
 ep
-Ez
+ny
 Xl
 uh
 uh
@@ -2287,15 +2423,15 @@ ai
 pb
 wu
 Xl
-Ez
-Ez
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
+ny
+ny
 ep
-Ez
-Ez
+ny
+ny
 Xl
 ef
 ef
@@ -2354,15 +2490,15 @@ jz
 pb
 wu
 Xl
-Ez
-Ez
-Ez
+ny
+ny
+ny
 Xl
 Xl
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Ez
 Ez
 Ez
@@ -2421,15 +2557,15 @@ jz
 pb
 wu
 Xl
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Xl
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Ez
 Ez
 Ez
@@ -2456,9 +2592,9 @@ Tw
 Tw
 Tw
 HU
-sl
-sl
-sl
+xC
+xC
+xC
 sl
 sl
 sl
@@ -2488,22 +2624,22 @@ jz
 Rm
 Cf
 wW
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Xl
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Xl
 Xl
 Xl
 hB
-fs
-fs
-fs
+BK
+BK
+BK
 hB
 Xl
 Xl
@@ -2555,21 +2691,21 @@ Nh
 ai
 Rm
 Oq
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Xl
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Xl
 uh
 uh
 hB
 Nw
-fs
+BK
 Nw
 hB
 uh
@@ -2622,21 +2758,21 @@ Xl
 Nh
 VE
 hW
-Ez
-Ez
-Ez
-Ez
+ny
+ny
+ny
+ny
 Xl
-Ez
-Ez
-Ez
+ny
+ny
+ny
 Xl
 Xl
 uh
 uh
 hB
 Nw
-fs
+BK
 Nw
 hB
 uh
@@ -2703,7 +2839,7 @@ uh
 uh
 hB
 Nw
-fs
+BK
 Nw
 hB
 uh
@@ -2770,7 +2906,7 @@ uh
 uh
 hB
 Nw
-fs
+BK
 Nw
 hB
 uh
@@ -2837,7 +2973,7 @@ uh
 uh
 hB
 Nw
-fs
+BK
 Nw
 hB
 hB
@@ -2904,13 +3040,13 @@ uh
 uh
 hB
 Nw
-fs
+BK
 Nw
 Nw
 Nw
 Nw
 Nw
-fs
+BK
 Tw
 Tw
 Tw
@@ -2971,13 +3107,13 @@ yo
 uh
 hB
 Nw
-fs
-fs
-fs
-fs
-fs
-fs
-fs
+BK
+BK
+BK
+BK
+BK
+BK
+BK
 YT
 Tw
 mP
@@ -3044,7 +3180,7 @@ Nw
 Nw
 Nw
 Nw
-fs
+BK
 Tw
 Tw
 Tw
