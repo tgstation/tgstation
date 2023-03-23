@@ -86,7 +86,9 @@ def update_map(map_path):
                 continue
 
             last = matched.group(2)
-            if last == None or last in exclusionary_set:
+            if last in exclusionary_set:
+                continue
+            if last == None:
                 last = ""
 
             dir = matched.group(5)
