@@ -545,6 +545,7 @@
 /obj/item/food/burger/superbite,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/mod/module/dispenser,
 /turf/open/floor/plating/airless,
 /area/ruin/space/unpowered/lunch_burger)
 "Vt" = (
