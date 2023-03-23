@@ -151,7 +151,7 @@
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 			if(head)
 				head.dismember()
-				log_combat(user, H, "beheaded", src)
+				log_combat(user, victim, "beheaded", src)
 				victim.regenerate_icons()
 				unbuckle_all_mobs()
 				kill_count += 1
@@ -177,7 +177,7 @@
 						delay_offset++
 		else
 			victim.apply_damage(15 * blade_sharpness, BRUTE, head)
-			log_combat(user, H, "dropped the blade on", src, " non-fatally")
+			log_combat(user, victim, "dropped the blade on", src, " non-fatally")
 			victim.emote("scream")
 
 		if (blade_sharpness > 1)
