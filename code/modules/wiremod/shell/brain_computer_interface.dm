@@ -452,7 +452,7 @@
 		say("Occupant has been injected with [bci_to_implant].")
 		bci_to_implant.Insert(carbon_occupant)
 
-/obj/machinery/bci_implanter/open_machine(drop = TRUE, density = FALSE)
+/obj/machinery/bci_implanter/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(state_open)
 		return FALSE
 
@@ -460,7 +460,7 @@
 
 	return TRUE
 
-/obj/machinery/bci_implanter/close_machine(mob/living/carbon/user, density = TRUE)
+/obj/machinery/bci_implanter/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	if(!state_open)
 		return FALSE
 

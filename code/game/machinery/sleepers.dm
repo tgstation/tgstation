@@ -94,12 +94,12 @@
 	if (!state_open)
 		container_resist_act(user)
 
-/obj/machinery/sleeper/open_machine(density = FALSE)
+/obj/machinery/sleeper/open_machine(density_to_set = FALSE)
 	if(!state_open && !panel_open)
 		flick("[initial(icon_state)]-anim", src)
 	return ..()
 
-/obj/machinery/sleeper/close_machine(mob/user, density = TRUE)
+/obj/machinery/sleeper/close_machine(mob/user, density_to_set = TRUE)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("[initial(icon_state)]-anim", src)
 		..()

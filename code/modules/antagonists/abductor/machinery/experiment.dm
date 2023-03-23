@@ -28,11 +28,11 @@
 		return
 	close_machine(target)
 
-/obj/machinery/abductor/experiment/open_machine(density = FALSE)
+/obj/machinery/abductor/experiment/open_machine(density_to_set = FALSE)
 	if(!state_open && !panel_open)
 		..()
 
-/obj/machinery/abductor/experiment/close_machine(mob/target, density = TRUE)
+/obj/machinery/abductor/experiment/close_machine(mob/target, density_to_set = TRUE)
 	for(var/A in loc)
 		if(isabductor(A))
 			return

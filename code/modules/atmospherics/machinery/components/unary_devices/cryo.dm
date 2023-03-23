@@ -356,7 +356,7 @@
 		message_cooldown = world.time + 50
 		to_chat(user, span_warning("[src]'s door won't budge!"))
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = FALSE, density = FALSE)
+/obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = FALSE, density_to_set = FALSE)
 	if(!state_open && !panel_open)
 		set_on(FALSE)
 	for(var/mob/M in contents) //only drop mobs
@@ -365,7 +365,7 @@
 	flick("pod-open-anim", src)
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user, density = TRUE)
+/obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	treating_wounds = FALSE
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("pod-close-anim", src)
