@@ -819,15 +819,6 @@
 /obj/structure/sign/departments/security,
 /turf/closed/wall/rust,
 /area/station/security/execution/transfer)
-"ala" = (
-/obj/effect/turf_decal/box,
-/obj/machinery/power/solar{
-	id = "foreport";
-	name = "Fore-Port Solar Array"
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/solarpanel/airless,
-/area/space/nearstation)
 "alr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -1075,7 +1066,7 @@
 /obj/effect/turf_decal/box,
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel/airless,
-/area/space/nearstation)
+/area/station/solars/port/fore)
 "anz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -18476,10 +18467,6 @@
 "fYw" = (
 /turf/closed/wall/r_wall,
 /area/station/medical/surgery/aft)
-"fYy" = (
-/obj/structure/disposalpipe/segment,
-/turf/closed/mineral/random/labormineral,
-/area/space/nearstation)
 "fYS" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -44049,12 +44036,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/medbay/central)
-"omw" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "omH" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "Skynet_launch";
@@ -44491,10 +44472,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
-"ouV" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/space/basic,
-/area/space/nearstation)
 "ouX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -45706,10 +45683,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"oRy" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space)
 "oRz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -63360,12 +63333,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"utw" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "utF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -67765,10 +67732,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/port)
-"vNT" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "vOl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -83457,7 +83420,7 @@ aeu
 aeu
 aeu
 aeu
-aaa
+aeu
 aeu
 aeu
 aeu
@@ -86614,9 +86577,9 @@ wDI
 aeu
 aeu
 aDT
-omw
+cry
 lHD
-omw
+cry
 sRm
 aeu
 ycx
@@ -86842,7 +86805,7 @@ acm
 hpG
 hpG
 hpG
-ala
+hpG
 hpG
 grV
 hpG
@@ -92574,8 +92537,8 @@ pQi
 aaa
 aaa
 aaa
+aaa
 cry
-ouV
 acK
 aaa
 aaa
@@ -92831,7 +92794,7 @@ kZK
 nLT
 aaa
 aaa
-cry
+aaa
 vsx
 acm
 aaa
@@ -93088,8 +93051,8 @@ pQi
 aaa
 aaa
 aaa
+aaa
 cry
-ouV
 acK
 aaa
 aaa
@@ -100050,7 +100013,7 @@ mLN
 aeu
 aeu
 aeu
-cry
+aaa
 aaa
 aaQ
 aaa
@@ -116122,8 +116085,8 @@ aaa
 aaa
 aaa
 acK
-utw
 cry
+aaa
 aaa
 aaa
 aaa
@@ -116380,7 +116343,7 @@ aaa
 aaa
 acm
 iak
-cry
+aaa
 aaa
 aaa
 suU
@@ -116636,8 +116599,8 @@ aaB
 aaa
 aaa
 acK
-utw
 cry
+aaa
 aaa
 aaa
 aaa
@@ -120261,7 +120224,7 @@ bFI
 aeU
 aUz
 aeU
-fYy
+aeu
 aeu
 aeu
 aeu
@@ -121294,9 +121257,9 @@ cmU
 aeU
 aeU
 aaQ
-oRy
-vNT
-oRy
+acK
+acm
+acK
 acm
 aeu
 aeu
