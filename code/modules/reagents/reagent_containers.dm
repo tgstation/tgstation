@@ -197,7 +197,7 @@
 	if(ismob(target) && target.reagents)
 		var/splash_multiplier = 1
 		if(thrown)
-			splash_multiplier *= rand(5,10) * 0.1 //Not all of it makes contact with the target
+			splash_multiplier *= (rand(5,10) * 0.1) //Not all of it makes contact with the target
 		var/mob/M = target
 		var/R
 		target.visible_message(span_danger("[M] is splashed with something!"), \
