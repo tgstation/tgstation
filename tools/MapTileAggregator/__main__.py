@@ -34,6 +34,8 @@ path_dir_sets = {
     ("/half/contrasted", 8): frozenset({bottom_left, bottom_right}),
     ("/opposingcorners", 1): frozenset({bottom_left, top_right}),
     ("/opposingcorners", 2): frozenset({top_left, bottom_right}),
+    ("/opposingcorners", 4): frozenset({top_left, bottom_right}),
+    ("/opposingcorners", 8): frozenset({bottom_left, top_right}),
     ("", 1): frozenset({top_left}),
     ("", 2): frozenset({bottom_right}),
     ("", 4): frozenset({top_right}),
@@ -49,6 +51,12 @@ compatibility_sets = [
     {"", "/half/contrasted", "/opposingcorners", "/fourcorners", "/anticorner/contrasted"},
     {"/half", "/anticorner", "/full"}
 ]
+
+# Exclusionary set, for turf_decals that were not made to be flattened.
+exclusionary_set = {
+    "/diagonal_centre",
+    "/diagonal_edge",
+}
 
 compiled_regex = re.compile(r"\/obj\/effect\/turf_decal\/tile\/?([A-Za-z_]+)?([A-Za-z_\/]+)?(\{[\s\S]*(dir = (\d+))[\s\S]*\})?")
 
@@ -78,7 +86,7 @@ def update_map(map_path):
                 continue
 
             last = matched.group(2)
-            if last == None:
+            if last == None or last in exclusionary_set:
                 last = ""
 
             dir = matched.group(5)
@@ -90,10 +98,8 @@ def update_map(map_path):
             dirs = frozenset(path_dir_sets[(last, dir)])
 
             if dirs == None:
-                # This is commented out on /tg/'s implemenation because otherwise you would get spammed by a lot of false warnings because our maps already have optimized decals without dirs.
-                # There's too many false warnings, and it's not the end of the world if a few decals aren't optimized.
-                # print("Warning - Could not parse tile decal to corners: {}".format(decal))
-                continue # if you're going to toggle the warning on, this continue doesn't need to be here by the way
+                print("Warning - Could not parse tile decal to corners: {}".format(decal))
+                continue
             else:
                 tile.remove(decal)
                 typed[(color, last)] = typed[(color, last)] | dirs if (color, last) in typed else dirs
