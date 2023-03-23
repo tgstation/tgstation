@@ -26,9 +26,8 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/qm)
 "aA" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/olive,
+/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/ruin/space)
 "aO" = (
@@ -290,7 +289,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "fg" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/waystation/assaultpod)
 "fm" = (
 /obj/machinery/conveyor{
