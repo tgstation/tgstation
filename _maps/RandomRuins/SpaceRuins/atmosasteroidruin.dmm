@@ -2,7 +2,9 @@
 "ad" = (
 /obj/item/shard/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "bH" = (
 /obj/machinery/power/port_gen/pacman/pre_loaded{
@@ -12,7 +14,9 @@
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "cI" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -29,7 +33,9 @@
 	dir = 4
 	},
 /obj/machinery/light/dim/directional/east,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "dk" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -41,7 +47,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "dN" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/purple/visible{
@@ -50,7 +58,9 @@
 /obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "dR" = (
 /turf/open/misc/asteroid/airless,
@@ -59,14 +69,18 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "fv" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "fD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon{
@@ -76,7 +90,9 @@
 /area/ruin/space/has_grav)
 "gz" = (
 /obj/machinery/atmospherics/miner/carbon_dioxide,
-/turf/open/floor/engine/co2,
+/turf/open/floor/engine/co2{
+	initial_gas_mix = "co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "hG" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector{
@@ -93,14 +109,18 @@
 "iP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "jI" = (
 /obj/effect/decal/cleanable/blood/gibs{
 	pixel_y = 8;
 	pixel_x = -6
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "kn" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector{
@@ -120,13 +140,16 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
 /turf/open/floor/iron/dark/side{
-	dir = 1
+	dir = 1;
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
 	},
 /area/ruin/space/has_grav)
 "lS" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
 /obj/effect/turf_decal/tile/yellow/half,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "mg" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -138,18 +161,24 @@
 /obj/structure/reagent_dispensers/fueltank/large,
 /obj/effect/turf_decal/delivery/red,
 /obj/machinery/light/directional/east,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "nd" = (
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "nf" = (
 /obj/machinery/atmospherics/components/unary/thermomachine,
 /obj/effect/turf_decal/tile/yellow/half,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "oe" = (
 /turf/open/floor/engine/n2o,
@@ -163,14 +192,18 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "oA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /obj/machinery/suit_storage_unit,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "qP" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector{
@@ -187,18 +220,24 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "ry" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/tank_holder/extinguisher/advanced,
-/turf/open/floor/iron/dark/side,
+/turf/open/floor/iron/dark/side{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "ti" = (
 /obj/item/shard/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/tile/yellow/anticorner,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "tY" = (
 /obj/effect/turf_decal/stripes/line,
@@ -232,16 +271,22 @@
 	},
 /obj/structure/window,
 /obj/item/storage/toolbox/mechanical,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "vy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "wh" = (
 /obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "wq" = (
 /obj/machinery/atmospherics/components/trinary/mixer/flipped{
@@ -250,7 +295,9 @@
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "wI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon{
@@ -286,7 +333,9 @@
 /area/ruin/space/has_grav)
 "yJ" = (
 /obj/item/tank/internals/emergency_oxygen/double,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "zR" = (
 /obj/machinery/door/airlock/atmos/glass,
@@ -308,7 +357,9 @@
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Bz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon{
@@ -320,7 +371,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon{
 	dir = 8
 	},
-/turf/open/floor/engine/co2,
+/turf/open/floor/engine/co2{
+	initial_gas_mix = "co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Ce" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -329,14 +382,18 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Cw" = (
 /obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 1
 	},
 /obj/structure/closet/firecloset/full,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "CI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -351,17 +408,23 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "CQ" = (
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/inverse{
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Dd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Dp" = (
 /turf/open/floor/engine/n2,
@@ -374,7 +437,9 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Eh" = (
 /obj/machinery/power/turbine/inlet_compressor,
@@ -391,7 +456,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
 /turf/open/floor/iron/dark/corner{
-	dir = 1
+	dir = 1;
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
 	},
 /area/ruin/space/has_grav)
 "Fv" = (
@@ -406,7 +472,9 @@
 /obj/effect/decal/cleanable/blood/gibs/down{
 	pixel_y = -6
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Fx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -415,7 +483,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
 /turf/open/floor/iron/dark/corner{
-	dir = 4
+	dir = 4;
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
 	},
 /area/ruin/space/has_grav)
 "Fy" = (
@@ -441,23 +510,31 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/delivery/white,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Gy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "GY" = (
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Hi" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "HH" = (
 /turf/closed/mineral,
@@ -466,14 +543,18 @@
 /turf/open/floor/engine/plasma,
 /area/ruin/space/has_grav)
 "Jp" = (
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Jq" = (
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Jx" = (
 /obj/item/pickaxe,
@@ -486,21 +567,29 @@
 "Kd" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /obj/effect/turf_decal/tile/yellow/half,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Kn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/stripes/corner,
-/turf/open/floor/iron/dark/corner,
+/turf/open/floor/iron/dark/corner{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Ko" = (
 /obj/effect/turf_decal/tile/yellow/half,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "KV" = (
 /obj/effect/turf_decal/tile/yellow/half,
 /obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Ll" = (
 /obj/machinery/door/airlock/external/glass/ruin{
@@ -512,7 +601,9 @@
 "Lw" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/general/visible/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "LS" = (
 /obj/machinery/atmospherics/miner/oxygen,
@@ -521,7 +612,9 @@
 "LY" = (
 /obj/effect/turf_decal/tile/yellow/half,
 /obj/machinery/light/directional/south,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Mh" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/green{
@@ -530,19 +623,25 @@
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Mv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/delivery/white,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Nf" = (
 /obj/effect/turf_decal/tile/yellow/full,
 /obj/machinery/portable_atmospherics/scrubber/huge/movable,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "NE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -552,7 +651,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Ol" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon{
@@ -568,7 +669,9 @@
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "OF" = (
 /turf/open/floor/engine/o2,
@@ -601,14 +704,17 @@
 	dir = 4
 	},
 /mob/living/simple_animal/hostile/asteroid/hivelord,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Qv" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/corner{
-	dir = 8
+	dir = 8;
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
 	},
 /area/ruin/space/has_grav)
 "RV" = (
@@ -624,14 +730,18 @@
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Sw" = (
 /obj/item/construction/rcd,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav)
 "SF" = (
-/turf/open/floor/engine/co2,
+/turf/open/floor/engine/co2{
+	initial_gas_mix = "co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "SK" = (
 /turf/open/misc/asteroid,
@@ -643,7 +753,9 @@
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Up" = (
 /turf/template_noop,
@@ -654,19 +766,25 @@
 	dir = 4
 	},
 /obj/machinery/light/broken/directional/east,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "UU" = (
 /obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "WI" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Xn" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -676,14 +794,18 @@
 "XT" = (
 /obj/effect/turf_decal/tile/yellow/half,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Yo" = (
 /obj/item/pipe_dispenser,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "Yr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
