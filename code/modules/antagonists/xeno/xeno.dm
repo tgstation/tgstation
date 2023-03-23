@@ -1,5 +1,8 @@
+/// Captive Xeno has been found dead, regardless of location.
 #define CAPTIVE_XENO_DEAD "captive_xeno_dead"
+/// Captive Xeno has been found alive and within the captivity area.
 #define CAPTIVE_XENO_FAIL "captive_xeno_failed"
+/// Captive Xeno has been found alive and outside of the captivity area.
 #define CAPTIVE_XENO_PASS "captive_xeno_escaped"
 
 /datum/team/xeno
@@ -51,6 +54,7 @@
 
 /datum/antagonist/xeno/captive
 	name = "\improper Captive Xenomorph"
+	///Our associated antagonist team for captive xenomorphs
 	var/datum/team/xeno/captive/captive_team
 
 /datum/antagonist/xeno/captive/create_team(datum/team/xeno/captive/new_team)
@@ -76,7 +80,7 @@
 	objectives += objective
 	..()
 
-///Xeno Objectives
+//Xeno Objectives
 /datum/objective/escape_captivity
 
 /datum/objective/escape_captivity/New()
