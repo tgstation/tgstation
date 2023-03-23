@@ -6,11 +6,13 @@
 /datum/reagent/consumable/nutriment/soup
 	chemical_flags = NONE
 	nutriment_factor = 12 * REAGENTS_METABOLISM // Slightly less to that of nutriment as soups will come with nutriments in tow
+	burning_temperature = 520
 	default_container = /obj/item/reagent_containers/cup/bowl
 	glass_price = FOOD_PRICE_CHEAP
 	fallback_icon = 'icons/obj/food/soupsalad.dmi'
 	fallback_icon_state = "bowl"
 	restaurant_order = /datum/custom_order/reagent/soup
+	// melbert todo : soups need colors
 
 /**
  * ## Soup base chemical reaction.
@@ -28,7 +30,7 @@
 	overheat_temp = 540
 	optimal_ph_min = 1
 	optimal_ph_max = 14
-	thermic_constant = 0
+	thermic_constant = 40
 	required_reagents = null
 	mob_react = FALSE
 	required_other = TRUE
@@ -38,11 +40,13 @@
 
 	// General soup guideline:
 	// - Soups should produce 60-90 units (3-4 servings)
-	// - One serving size is 20-25 units (4-5 sips)
+	// - One serving size is 20-25 units (8-9 sips, with 3u sips)
 	// - The first index of the result list should be the soup type
 
 	/// An assoc list of what ingredients are necessary to how much is needed
 	var/list/required_ingredients
+	/// Tracks the total number of ingredient items needed, for calculating multipliers. Only done once in first on_reaction
+	VAR_FINAL/total_ingredient_max
 
 	/// Multiplier applied to all reagents transfered from reagents to pot when the soup is cooked
 	var/ingredient_reagent_multiplier = 0.8
@@ -53,12 +57,11 @@
 	var/percentage_of_nutriment_converted = 0.25
 
 /datum/chemical_reaction/food/soup/pre_reaction_other_checks(datum/reagents/holder)
-	if(!length(required_ingredients))
-		return TRUE
-
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	if(!istype(pot))
 		return FALSE
+	if(!length(required_ingredients))
+		return TRUE
 
 	// This is very unoptimized for something ran every handle-reaction for every soup recipe.
 	// Look into ways for improving this, cause bleh
@@ -79,37 +82,104 @@
 			return FALSE
 	return TRUE
 
-// melbert todo: reaction step
+/datum/chemical_reaction/food/soup/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	if(!length(required_ingredients))
+		return
+
+	if(isnull(total_ingredient_max))
+		total_ingredient_max = 0
+		// We only need to calculate this once, effectively static per-type
+		for(var/ingredient_type in required_ingredients)
+			total_ingredient_max += required_ingredients[ingredient_type]
+
+	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
+	var/list/tracked_ingredients = list()
+	for(var/obj/item/ingredient as anything in pot.added_ingredients)
+		tracked_ingredients += WEAKREF(ingredient)
+		// Equalize temps. Otherwise when we add ingredient temps in, it'll lower reacetion temp
+		ingredient.reagents.chem_temp = holder.chem_temp
+
+	// Store a list of weakrefs to ingredients as
+	reaction.data["ingredients"] = tracked_ingredients
+
+	testing("Soup reaction started of type [type]! [length(pot.added_ingredients)] inside.")
+
+/datum/chemical_reaction/food/soup/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
+	if(!length(required_ingredients))
+		return
+
+	testing("Soup reaction step progressing with an increment volume of [step_reaction_vol] and delta_t of [delta_t].")
+	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
+	var/list/cached_ingredients = reaction.data["ingredients"]
+	var/num_current_ingredients = length(pot.added_ingredients)
+	var/num_cached_ingredients = length(cached_ingredients)
+
+	// Clamp multiplier to ingredient number
+	reaction.multiplier = min(reaction.multiplier, num_current_ingredients / total_ingredient_max)
+
+	// An ingredient was removed during the mixing process.
+	// Stop reacting immediately, we can't verify the reaction is correct still.
+	// If it is still correct it will restart shortly.
+	if(num_current_ingredients < num_cached_ingredients)
+		testing("Soup reaction ended due to losing reagents.")
+		return END_REACTION
+
+	// An ingredient was added mid mix.
+	// Throw it in the ingredients list
+	else if(num_current_ingredients > num_cached_ingredients)
+		for(var/obj/item/new_ingredient as anything in pot.added_ingredients)
+			new_ingredient.reagents.chem_temp = holder.chem_temp
+			cached_ingredients |= WEAKREF(new_ingredient)
+
+	var/list/ingredients_actual = list()
+	for(var/datum/weakref/ingredient_ref as anything in cached_ingredients)
+		var/obj/item/ingredient = ingredient_ref.resolve()
+		// An ingredient has gone missing, stop the reaction
+		if(QDELETED(ingredient) || ingredient.loc != holder.my_atom)
+			testing("Soup reaction ended due to having an invalid reagent present.")
+			return END_REACTION
+
+		ingredients_actual[ingredient.type] += 1
+
+		// Don't add any more reagents if we've boiled over
+		if(reaction.data["boiled_over"])
+			continue
+
+		// Some ingredients are purely flavor (no pun intended) and will have reagents
+		if(!isnull(ingredient.reagents))
+			// Some of the nutriment goes into "creating the soup reagent" itself, gets deleted.
+			// Mainly done so that nutriment doesn't overpower the main course
+			ingredient.reagents.remove_reagent(/datum/reagent/consumable/nutriment, step_reaction_vol * percentage_of_nutriment_converted)
+			ingredient.reagents.remove_reagent(/datum/reagent/consumable/nutriment/vitamin, step_reaction_vol * percentage_of_nutriment_converted)
+			// The other half of the nutriment, and the rest of the reagents, will get put directly into the pot
+			ingredient.reagents.trans_to(pot, step_reaction_vol, ingredient_reagent_multiplier, no_react = TRUE)
+
+		// Uh oh we reached the top of the pot, the soup's gonna boil over.
+		if(holder.total_volume >= holder.maximum_volume * 0.95)
+			boil_over(holder)
+			reaction.data["boiled_over"] = TRUE
+
 /datum/chemical_reaction/food/soup/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
-	if(!istype(pot))
-		return
+	reaction.data["ingredients"] = null
 
-	var/boiled_over = FALSE
+	testing("Soup reaction finished with a total react volume of [react_vol] and [length(pot.added_ingredients)] ingredients. Cleaning up.")
+
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
-		if(!boiled_over)
-			// Some ingredients are purely flavor (no pun intended) and add no reagents
-			if(!isnull(ingredient.reagents))
-				// Some of the nutriment goes into "creating the soup reagent" itself, gets deleted.
-				// Mainly done so that nutriment doesn't overpower the main course
-				if(percentage_of_nutriment_converted > 0 )
-					var/amount_nutriment = ingredient.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
-					ingredient.reagents.remove_reagent(/datum/reagent/consumable/nutriment, amount_nutriment * percentage_of_nutriment_converted)
-				// The other half of the nutriment, and the rest of the reagents, will get put directly into the pot
-				ingredient.reagents.trans_to(pot, ingredient.reagents.total_volume, ingredient_reagent_multiplier, no_react = TRUE)
+		// Let's not mess with fireproof / indestructible items.
+		// It's not likely that soups use fireproof items as ingredients,
+		// and chef doesn't need more ways to delete things with cooking.
+		if(ingredient.resistance_flags & (FIRE_PROOF|INDESTRUCTIBLE))
+			continue
 
-			// Uh oh we reached the top of the pot, the soup's gonna boil over.
-			if(holder.total_volume >= holder.maximum_volume * 0.95)
-				boil_over(holder)
-				boiled_over = TRUE // melbert todo seems impossible to get, swap to reaction step?
-
-		// Clean up the ingredient after use
-		// Fireproof things or things not actually a part of this recipe will simply be fried - the rest, deleted
-		if((ingredient.resistance_flags & FIRE_PROOF) || !is_type_in_list(ingredient, required_ingredients))
-			ingredient.AddElement(/datum/element/fried_item, 30)
-		else
+		// Things that had reagents or ingredients in the soup will get deleted
+		if(!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients))
 			qdel(ingredient)
+
+		// Everything else will just get fried
+		else
+			ingredient.AddElement(/datum/element/fried_item, 30)
 
 	LAZYNULL(pot.added_ingredients)
 
