@@ -1,0 +1,5 @@
+author: "atosti"
+delete-after: True
+changes:
+  - bugfix: "machines can now be pried open more than once."
+  - bugfix: "machines now have the correct density when pried open."
