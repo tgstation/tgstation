@@ -16641,7 +16641,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "eoB" = (
-/obj/item/toy/beach_ball/holoball{
+/obj/item/toy/basketball{
 	pixel_x = 8;
 	pixel_y = 14
 	},
@@ -18741,7 +18741,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "fgB" = (
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 4
 	},
 /turf/open/misc/asteroid,
@@ -50408,7 +50408,7 @@
 /turf/open/openspace/airless,
 /area/station/asteroid)
 "qSM" = (
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 8
 	},
 /turf/open/misc/asteroid,
@@ -56553,7 +56553,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "taD" = (
-/obj/structure/holohoop,
+/obj/structure/hoop,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/commons/vacant_room)
 "taK" = (
@@ -69815,7 +69815,7 @@
 /area/station/security/execution/education)
 "xTZ" = (
 /obj/item/stack/ore/glass,
-/obj/item/toy/beach_ball/holoball,
+/obj/item/toy/basketball,
 /turf/open/misc/asteroid,
 /area/station/security/prison/workout)
 "xUb" = (
