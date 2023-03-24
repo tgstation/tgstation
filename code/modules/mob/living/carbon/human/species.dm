@@ -314,6 +314,32 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return
 
 /**
+ * Gets the default mutant organ for the species based on the provided slot.
+ */
+/datum/species/proc/get_mutant_organ_type_for_slot(slot)
+	switch(slot)
+		if(ORGAN_SLOT_BRAIN)
+			return mutantbrain
+		if(ORGAN_SLOT_HEART)
+			return mutantheart
+		if(ORGAN_SLOT_LUNGS)
+			return mutantlungs
+		if(ORGAN_SLOT_APPENDIX)
+			return mutantappendix
+		if(ORGAN_SLOT_EYES)
+			return mutanteyes
+		if(ORGAN_SLOT_EARS)
+			return mutantears
+		if(ORGAN_SLOT_TONGUE)
+			return mutanttongue
+		if(ORGAN_SLOT_LIVER)
+			return mutantliver
+		if(ORGAN_SLOT_STOMACH)
+			return mutantstomach
+		else
+			CRASH("Invalid organ slot [slot]")
+
+/**
  * Corrects organs in a carbon, removing ones it doesn't need and adding ones it does.
  *
  * Takes all organ slots, removes organs a species should not have, adds organs a species should have.
@@ -328,21 +354,21 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/regenerate_organs(mob/living/carbon/organ_holder, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	//what should be put in if there is no mutantorgan (brains handled separately)
-	var/list/slot_mutantorgans = list(
-		ORGAN_SLOT_BRAIN = mutantbrain,
-		ORGAN_SLOT_HEART = mutantheart,
-		ORGAN_SLOT_LUNGS = mutantlungs,
-		ORGAN_SLOT_APPENDIX = mutantappendix,
-		ORGAN_SLOT_EYES = mutanteyes,
-		ORGAN_SLOT_EARS = mutantears,
-		ORGAN_SLOT_TONGUE = mutanttongue,
-		ORGAN_SLOT_LIVER = mutantliver,
-		ORGAN_SLOT_STOMACH = mutantstomach,
+	var/list/organ_slots = list(
+		ORGAN_SLOT_BRAIN,
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_APPENDIX,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_TONGUE,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_STOMACH,
 	)
 
-	for(var/slot in assoc_to_keys(slot_mutantorgans))
+	for(var/slot in organ_slots)
 		var/obj/item/organ/existing_organ = organ_holder.get_organ_slot(slot)
-		var/obj/item/organ/new_organ = slot_mutantorgans[slot]
+		var/obj/item/organ/new_organ = get_mutant_organ_type_for_slot(slot)
 
 		if(isnull(new_organ)) // if they aren't suppose to have an organ here, remove it
 			if(existing_organ)
@@ -351,7 +377,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			continue
 
 		if(!isnull(old_species))
-			if(existing_organ?.type != old_species.slot_mutantorgans[slot])
+			if(existing_organ?.type != old_species.get_mutant_organ_type_for_slot(slot))
 				continue // we don't want to remove organs that are not the default for this species
 
 		// at this point we already know new_organ is not null
