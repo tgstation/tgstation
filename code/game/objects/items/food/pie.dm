@@ -12,6 +12,7 @@
 	var/obj/item/food/pieslice/slice_type
 	/// so that the yield can change if it isnt 5
 	var/yield = 5
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY
 
 /obj/item/food/pie/make_processable()
 	if (slice_type)

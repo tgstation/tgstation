@@ -175,4 +175,11 @@ DEFINE_BITFIELD(food_flags, list(
 // the vertical distance in pixels from an ice cream scoop and another.
 #define ICE_CREAM_SCOOP_OFFSET 4
 
+// Cutlery defines being used during scooping food with a spoon or fork
+// Youan get mood buff if eat with proper cutlery and cannot eat at all if a food has "only" tag
+#define FORK_CUTLERY (1<<0)
+#define SPOON_CUTLERY (1<<1)
+#define ONLY_SPOON_CUTLERY (1<<2)
+#define ONLY_FORK_CUTLERY (1<<3)
+
 #define BLACKBOX_LOG_FOOD_MADE(food) SSblackbox.record_feedback("tally", "food_made", 1, food)

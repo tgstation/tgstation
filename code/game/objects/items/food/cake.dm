@@ -12,6 +12,7 @@
 	var/obj/item/food/cakeslice/slice_type
 	/// changes yield of sliced cake, default for cake is 5
 	var/yield = 5
+	cutlery_flags = SPOON_CUTLERY
 
 /obj/item/food/cake/Initialize(mapload)
 	. = ..()

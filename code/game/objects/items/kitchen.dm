@@ -12,10 +12,37 @@
 	icon = 'icons/obj/kitchen.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	var/special_fluff_cooldown = 0
 
 /obj/item/kitchen/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_APC_SHOCKING, INNATE_TRAIT)
+
+/obj/item/kitchen/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_APC_SHOCKING, INNATE_TRAIT)
+
+/obj/item/kitchen/wash()
+	. = ..()
+	name = "[initial(name)]"
+	desc = "[initial(desc)]"
+
+/obj/item/kitchen/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if(!user.combat_mode && (!IS_EDIBLE(src))) //do not attack yourself while trying to eat
+		return
+	. = ..()
+
+/obj/item/kitchen/attack_self(mob/user)
+	if(special_fluff_cooldown < world.time) //don't spam with it
+		special_fluff_cooldown = world.time + 10 SECONDS
+		do_special_fluff(user)
+	. = ..()
+
+/obj/item/kitchen/proc/do_special_fluff(mob/user)
+	user.visible_message(span_notice("[user] licks [initial(name)]'s tip."), \
+						span_notice("You lick [initial(name)] tip."))
+	name = "[initial(name)]"
+	desc = "[initial(desc)] Its tip smells bad."
 
 /obj/item/kitchen/fork
 	name = "fork"
@@ -33,7 +60,6 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	armor_type = /datum/armor/kitchen_fork
 	sharpness = SHARP_POINTY
-	var/datum/reagent/forkload //used to eat omelette
 	custom_price = PAYCHECK_LOWER
 
 /datum/armor/kitchen_fork
@@ -49,21 +75,15 @@
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	return BRUTELOSS
 
-/obj/item/kitchen/fork/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!istype(M))
-		return ..()
-
-	if(forkload)
-		if(M == user)
-			M.visible_message(span_notice("[user] eats a delicious forkful of omelette!"))
-			M.reagents.add_reagent(forkload.type, 1)
-		else
-			M.visible_message(span_notice("[user] feeds [M] a delicious forkful of omelette!"))
-			M.reagents.add_reagent(forkload.type, 1)
-		icon_state = "fork"
-		forkload = null
+/obj/item/kitchen/fork/do_special_fluff(mob/user)
+	if(prob(90))
+		user.visible_message(span_notice("[user] licks prongs of [initial(name)]."), \
+							span_notice("You lick prongs of [initial(name)]."))
 	else
-		return ..()
+		user.visible_message(span_warning("[user] licks prongs of [initial(name)]'s and cuts their tongue!"), \
+							span_danger("You lick prongs of [initial(name)] and cut your tongue!"))
+	name = "[initial(name)]"
+	desc = "[initial(desc)] Its tip smells bad."
 
 /obj/item/kitchen/fork/plastic
 	name = "plastic fork"
@@ -82,6 +102,23 @@
 /obj/item/knife/kitchen
 	name = "kitchen knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
+	var/special_fluff_cooldown = 0
+
+/obj/item/knife/kitchen/attack_self(mob/user)
+	if(special_fluff_cooldown < world.time) //don't spam with it
+		special_fluff_cooldown = world.time + 10 SECONDS
+		do_special_fluff(user)
+	. = ..()
+
+/obj/item/knife/kitchen/proc/do_special_fluff(mob/user)
+	if(prob(90))
+		user.visible_message(span_notice("[user] licks blade of [initial(name)]."), \
+							span_notice("You lick blade of [initial(name)]."))
+	else
+		user.visible_message(span_warning("[user] licks blade of [initial(name)]'s and cuts their tongue!"), \
+							span_danger("You lick blade of [initial(name)] and cut your tongue!"))
+	name = "[initial(name)]"
+	desc = "[initial(desc)] Its blade smells bad."
 
 /obj/item/knife/plastic
 	name = "plastic knife"
@@ -118,6 +155,12 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 	custom_price = PAYCHECK_CREW * 1.5
 	tool_behaviour = TOOL_ROLLINGPIN
+
+/obj/item/kitchen/rollingpin/do_special_fluff(mob/user)
+	user.visible_message(span_notice("[user] licks cylinder of [initial(name)]."), \
+						span_notice("You lick cylinder of [initial(name)]."))
+	name = "[initial(name)]"
+	desc = "[initial(desc)] Its cylinder smells bad."
 
 /obj/item/kitchen/rollingpin/illegal
 	name = "metal rolling pin"

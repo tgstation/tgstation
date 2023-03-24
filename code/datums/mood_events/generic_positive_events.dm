@@ -359,3 +359,8 @@
 	mood_change = 2
 	special_screen_obj = "birthday"
 	special_screen_replace = FALSE
+
+/datum/mood_event/ate_with_proper_cutlery
+	description = "I ate with proper cutlery. Maybe I'm not lost for soceity."
+	mood_change = 1
+	timeout = 4 MINUTES

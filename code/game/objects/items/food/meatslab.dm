@@ -4,6 +4,7 @@
 	icon = 'icons/obj/food/meat.dmi'
 	var/subjectname = ""
 	var/subjectjob = null
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/meat/slab
 	name = "meat"

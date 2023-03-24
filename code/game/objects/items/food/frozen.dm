@@ -11,6 +11,7 @@
 	tastes = list("ice cream" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
 	food_flags = FOOD_FINGER_FOOD
+	cutlery_flags = SPOON_CUTLERY
 
 /obj/item/food/strawberryicecreamsandwich
 	name = "strawberry ice cream sandwich"
@@ -25,7 +26,7 @@
 	tastes = list("ice cream" = 2, "berry" = 2)
 	foodtypes = FRUIT | DAIRY | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-
+	cutlery_flags = SPOON_CUTLERY
 
 /obj/item/food/spacefreezy
 	name = "space freezy"
@@ -58,6 +59,7 @@
 	)
 	tastes = list("ice cream" = 1, "banana" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
+	cutlery_flags = SPOON_CUTLERY
 
 /obj/item/food/sundae/make_edible()
 	. = ..()
@@ -76,6 +78,7 @@
 	)
 	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
+	cutlery_flags = SPOON_CUTLERY
 
 /obj/item/food/honkdae/make_edible()
 	. = ..()

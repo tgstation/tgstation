@@ -215,6 +215,7 @@
 	tastes = list("boiled rice" = 4, "fish filet" = 2, "soy sauce" = 2)
 	foodtypes = SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY
 
 /obj/item/food/meat_poke
 	name = "meat poke"
@@ -230,6 +231,7 @@
 	tastes = list("rice and meat" = 4, "lettuce" = 2, "soy sauce" = 2)
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY
 
 /obj/item/food/fish_poke
 	name = "fish poke"
@@ -245,6 +247,7 @@
 	tastes = list("rice and fish" = 4, "lettuce" = 2, "soy sauce" = 2)
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
@@ -328,6 +331,7 @@
 	tastes = list("meat" = 1, "cabbage" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/bearsteak
 	name = "Filet migrawr"
@@ -343,6 +347,7 @@
 	foodtypes = MEAT | ALCOHOL
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
+	cutlery_flags = ONLY_FORK_CUTLERY
 
 /obj/item/food/raw_meatball
 	name = "raw meatball"
@@ -399,6 +404,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
+	cutlery_flags = SPOON_CUTLERY
 
 /obj/item/food/meatball/human
 	name = "strange meatball"
@@ -466,6 +472,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
+	cutlery_flags = FORK_CUTLERY
 
 ///Exists purely for the crafting recipe (because itll take subtypes)
 /obj/item/food/patty/plain
@@ -502,6 +509,7 @@
 	foodtypes = MEAT | RAW
 	eatverbs = list("bite", "chew", "nibble", "deep throat", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/raw_sausage/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/sausage, rand(60 SECONDS, 75 SECONDS), TRUE)
@@ -522,6 +530,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/sausage/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
@@ -545,6 +554,7 @@
 	foodtypes = MEAT
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/rawkhinkali
 	name = "raw khinkali"
@@ -560,6 +570,7 @@
 	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/rawkhinkali/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/khinkali, rand(50 SECONDS, 60 SECONDS), TRUE)
@@ -580,6 +591,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/meatbun
 	name = "meat bun"
@@ -594,6 +606,7 @@
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/stewedsoymeat
 	name = "stewed soy meat"
@@ -608,6 +621,7 @@
 	eatverbs = list("slurp", "sip", "inhale", "drink")
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/boiledspiderleg
 	name = "boiled spider leg"
@@ -637,6 +651,7 @@
 	tastes = list("meat" = 1, "the colour green" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/sashimi
 	name = "carp sashimi"
@@ -653,6 +668,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	//total price of this dish is 20 and a small amount more for soy sauce, all of which are available at the orders console
 	venue_value = FOOD_PRICE_CHEAP
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/sashimi/Initialize(mapload)
 	. = ..()
@@ -707,6 +723,7 @@
 	)
 	tastes = list("meat" = 3, "smokey sauce" = 1)
 	foodtypes = MEAT | SUGAR
+	cutlery_flags = ONLY_FORK_CUTLERY
 
 /obj/item/food/meatclown
 	name = "meat clown"
@@ -738,6 +755,7 @@
 	tastes = list("meat" = 3, "pasta" = 3, "tomato" = 2, "cheese" = 2)
 	foodtypes = MEAT | DAIRY | GRAIN
 	venue_value = FOOD_PRICE_NORMAL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 //////////////////////////////////////////// KEBABS AND OTHER SKEWERS ////////////////////////////////////////////
 
@@ -856,6 +874,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	//basic ingredients, but a lot of them. just covering costs here
 	venue_value = FOOD_PRICE_NORMAL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/beef_wellington
 	name = "beef wellington"
@@ -870,6 +889,7 @@
 	foodtypes = MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_NORMAL
 	venue_value = FOOD_PRICE_EXOTIC
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/beef_wellington/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/beef_wellington_slice, 3, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
@@ -887,6 +907,7 @@
 	foodtypes = MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/full_english
 	name = "full english breakfast"
@@ -901,6 +922,7 @@
 	foodtypes = MEAT | VEGETABLES | GRAIN | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/raw_meatloaf
 	name = "raw meatloaf"
@@ -915,6 +937,7 @@
 	tastes = list("raw meat" = 3, "onions" = 1)
 	foodtypes = MEAT | RAW | VEGETABLES
 	w_class = WEIGHT_CLASS_NORMAL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/raw_meatloaf/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/meatloaf, rand(30 SECONDS, 40 SECONDS), TRUE, TRUE)
@@ -933,6 +956,7 @@
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_NORMAL
 	burns_in_oven = TRUE
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/meatloaf/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meatloaf_slice, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
@@ -950,3 +974,4 @@
 	tastes = list("juicy meat" = 3, "onions" = 1, "garlic" = 1, "ketchup" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY

@@ -162,6 +162,7 @@
 	tastes = list("melon" = 1)
 	foodtypes = FRUIT
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/melonkeg
 	name = "melon keg"
@@ -176,6 +177,7 @@
 	bite_consumption = 5
 	tastes = list("grain alcohol" = 1, "fruit" = 1)
 	foodtypes = FRUIT | ALCOHOL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/honeybar
 	name = "honey nut bar"
@@ -277,6 +279,7 @@
 	tastes = list("pineapple" = 1)
 	foodtypes = FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_TINY
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/crab_rangoon
 	name = "Crab Rangoon"
@@ -301,6 +304,7 @@
 	tastes = list("pesto" = 1)
 	foodtypes = VEGETABLES | DAIRY | NUTS
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = ONLY_SPOON_CUTLERY
 
 /obj/item/food/tomato_sauce
 	name = "tomato sauce"
@@ -310,6 +314,7 @@
 	tastes = list("tomato" = 1, "herbs" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = ONLY_SPOON_CUTLERY
 
 /obj/item/food/bechamel_sauce
 	name = "béchamel sauce"
@@ -319,6 +324,7 @@
 	tastes = list("cream" = 1)
 	foodtypes = DAIRY | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = ONLY_SPOON_CUTLERY
 
 /obj/item/food/roasted_bell_pepper
 	name = "roasted bell pepper"
@@ -356,6 +362,7 @@
 	tastes = list("juicy meat" = 1, "rice" = 1, "cabbage" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/seaweedsheet
 	name = "seaweed sheet"
@@ -425,6 +432,7 @@
 	tastes = list("peanuts" = 1, "sweetness" = 1)
 	foodtypes = NUTS | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/pickle
 	name = "pickle"
@@ -439,6 +447,7 @@
 	tastes = list("pickle" = 1, "spices" = 1, "salt water" = 2)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/springroll
 	name = "spring roll"
@@ -453,6 +462,7 @@
 	tastes = list("rice wrappers" = 1, "spice" = 1, "crunchy veggies" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/cheese_pierogi
 	name = "cheese pierogi"
@@ -465,6 +475,7 @@
 	tastes = list("potato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/meat_pierogi
 	name = "meat pierogi"
@@ -478,3 +489,4 @@
 	tastes = list("potato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY

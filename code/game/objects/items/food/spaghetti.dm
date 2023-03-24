@@ -7,6 +7,7 @@
 	)
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_CHEAP
+	cutlery_flags = FORK_CUTLERY
 
 // Why are you putting cooked spaghetti in your pockets?
 /obj/item/food/spaghetti/make_microwaveable()
@@ -37,6 +38,7 @@
 		/datum/reagent/consumable/nutriment = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/spaghetti/boiledspaghetti/Initialize(mapload)
 	. = ..()
@@ -54,6 +56,7 @@
 	)
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtypes = GRAIN | VEGETABLES
+	cutlery_flags = SPOON_CUTLERY
 
 /obj/item/food/spaghetti/pastatomato/soulful
 	name = "soul food"
@@ -69,6 +72,7 @@
 		/datum/reagent/medicine/morphine = 5,
 	)
 	tastes = list("nostalgia" = 1, "happiness" = 1)
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY
 
 /obj/item/food/spaghetti/copypasta
 	name = "copypasta"

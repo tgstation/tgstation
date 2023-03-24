@@ -40,6 +40,10 @@ Behavior that's still missing from this component that original food items had t
 	var/volume = 50
 	///The flavortext for taste (haha get it flavor text)
 	var/list/tastes
+	///Cutlery shouldn't be deleted
+	var/is_cutlery = 0
+	///If you eat with proper service tool, you get mood boost
+	var/is_proper_cutlery = 0
 
 /datum/component/edible/Initialize(
 	list/initial_reagents,
@@ -54,6 +58,8 @@ Behavior that's still missing from this component that original food items had t
 	datum/callback/after_eat,
 	datum/callback/on_consume,
 	datum/callback/check_liked,
+	is_cutlery,
+	is_proper_cutlery
 )
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -69,6 +75,8 @@ Behavior that's still missing from this component that original food items had t
 	src.on_consume = on_consume
 	src.tastes = string_assoc_list(tastes)
 	src.check_liked = check_liked
+	src.is_cutlery = is_cutlery
+	src.is_proper_cutlery = is_proper_cutlery
 
 	setup_initial_reagents(initial_reagents)
 
@@ -474,6 +482,9 @@ Behavior that's still missing from this component that original food items had t
 		return FALSE
 	var/mob/living/carbon/human/H = M
 
+	if(is_proper_cutlery)
+		H.add_mood_event("ate_with_proper_cutlery", /datum/mood_event/ate_with_proper_cutlery)
+
 	//Bruh this breakfast thing is cringe and shouldve been handled separately from food-types, remove this in the future (Actually, just kill foodtypes in general)
 	if((foodtypes & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
 		H.add_mood_event("breakfast", /datum/mood_event/breakfast)
@@ -524,6 +535,13 @@ Behavior that's still missing from this component that original food items had t
 	SEND_SIGNAL(parent, COMSIG_FOOD_CONSUMED, eater, feeder)
 
 	on_consume?.Invoke(eater, feeder)
+
+	if(is_cutlery)
+		var/obj/item/kitchen/cutlery = parent
+		cutlery.overlays.Cut()
+		cutlery.name = "[initial(cutlery.name)]"
+		qdel(src)
+		return
 
 	to_chat(feeder, span_warning("There is nothing left of [parent], oh no!"))
 	if(isturf(parent))

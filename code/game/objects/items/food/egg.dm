@@ -185,6 +185,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	foodtypes = MEAT | FRIED | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/rawegg
 	name = "raw egg"
@@ -197,6 +198,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	eatverbs = list("gulp down")
 	foodtypes = MEAT | RAW
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = SPOON_CUTLERY
 
 /obj/item/food/rawegg/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/friedegg, rand(20 SECONDS, 35 SECONDS), TRUE, FALSE)
@@ -227,6 +229,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	foodtypes = MEAT | FRIED | BREAKFAST
 	tastes = list("egg" = 4, "meat" = 4)
 	venue_value = FOOD_PRICE_NORMAL
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/boiledegg/rotten
 	food_reagents = list(/datum/reagent/consumable/eggrot = 10)
@@ -248,24 +251,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	tastes = list("egg" = 1, "cheese" = 1)
 	foodtypes = MEAT | BREAKFAST | DAIRY
 	venue_value = FOOD_PRICE_CHEAP
-
-/obj/item/food/omelette/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/kitchen/fork))
-		var/obj/item/kitchen/fork/fork = item
-		if(fork.forkload)
-			to_chat(user, span_warning("You already have omelette on your fork!"))
-		else
-			fork.icon_state = "forkloaded"
-			user.visible_message(span_notice("[user] takes a piece of omelette with [user.p_their()] fork!"), \
-				span_notice("You take a piece of omelette with your fork."))
-
-			var/datum/reagent/reagent = pick(reagents.reagent_list)
-			reagents.remove_reagent(reagent.type, 1)
-			fork.forkload = reagent
-			if(reagents.total_volume <= 0)
-				qdel(src)
-		return
-	..()
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY
 
 /obj/item/food/benedict
 	name = "eggs benedict"
@@ -281,6 +267,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
 	foodtypes = MEAT | BREAKFAST | GRAIN
 	venue_value = FOOD_PRICE_NORMAL
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/eggwrap
 	name = "egg wrap"
@@ -308,3 +295,4 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	)
 	tastes = list("custard" = 1)
 	foodtypes = MEAT | VEGETABLES
+	cutlery_flags = SPOON_CUTLERY

@@ -289,6 +289,7 @@
 	tastes = list("mashed beans" = 1, "onion" = 3,)
 	foodtypes = VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags =  SPOON_CUTLERY
 
 /obj/item/food/spanish_rice
 	name = "spanish rice"
@@ -302,3 +303,4 @@
 	tastes = list("zesty rice" = 1, "tomato sauce" = 3,)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY

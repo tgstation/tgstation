@@ -46,6 +46,8 @@
 	var/decomp_req_handle = FALSE
 	///Used to set custom decomposition times for food. Set to 0 to have it automatically set via the food's flags.
 	var/decomposition_time = 0
+	///A check for type of cutlery, used due eating
+	var/cutlery_flags = 0
 
 /obj/item/food/Initialize(mapload)
 	. = ..()
@@ -113,3 +115,87 @@
 /obj/item/food/proc/make_decompose(mapload)
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)
+
+#define SPOON 1
+#define FORK 2
+
+/obj/item/food/attackby(obj/item/attack_item as obj, mob/user as mob)
+	if(istype(attack_item, /obj/item/storage))
+		..()// -> item/attackby()
+		return
+
+	// Eating with a fork or spoon
+	if(istype(attack_item, /obj/item/kitchen))
+		var/obj/item/kitchen/cutlery = attack_item
+
+		if(IS_EDIBLE(cutlery))
+			to_chat(user, span_warning("You already have something on your [initial(cutlery.name)]."))
+			return
+
+		var/is_fork_or_spoon = FALSE
+		if(istype(attack_item, /obj/item/kitchen/spoon))
+			is_fork_or_spoon = SPOON
+		if(istype(attack_item, /obj/item/kitchen/fork))
+			is_fork_or_spoon = FORK
+
+		var/can_eat_with_it = TRUE
+		var/proper_cutlery = TRUE
+		switch(cutlery_flags)
+			if(FORK_CUTLERY)
+				if(is_fork_or_spoon != FORK)
+					proper_cutlery = 0
+			if(SPOON_CUTLERY)
+				if(is_fork_or_spoon != SPOON)
+					proper_cutlery = 0
+			if(ONLY_SPOON_CUTLERY)
+				if(is_fork_or_spoon != SPOON)
+					can_eat_with_it = 0
+			if(ONLY_SPOON_CUTLERY)
+				if(is_fork_or_spoon != SPOON)
+					can_eat_with_it = 0
+
+		if(!can_eat_with_it || !is_fork_or_spoon)
+			to_chat(user, span_warning("You can't eat it with [initial(cutlery.name)]."))
+			return
+
+		if(proper_cutlery)
+			to_chat(user, span_notice("You scoop up some [src] with [initial(cutlery.name)]!"))
+		else if(HAS_TRAIT(user, TRAIT_SNOB))
+			to_chat(user, span_warning("You ough to eat such dish with other type of cutlery!"))
+			return
+		else
+			user.visible_message(span_notice("[user] clumsly scoops up some [src] with [initial(cutlery.name)]. What a weirdo."), \
+								span_notice("You clumsly scoop up some [src] with [initial(cutlery.name)]. It doesn't feel right."))
+
+		cutlery.name = "[initial(cutlery.name)]ed [src.name]"
+		cutlery.desc = "[initial(cutlery.desc)] It has pieces of something over its tip, clearly it wasn't cleaned clearly."
+
+		if(!cutlery.reagents)
+			cutlery.create_reagents(2)
+
+		if(reagents.reagent_list)
+			cutlery.AddComponent( \
+				/datum/component/edible, \
+				food_flags = src.food_flags,\
+				foodtypes = src.foodtypes,\
+				eat_time = 2,\
+				tastes = src.tastes,\
+				eatverbs = src.eatverbs,\
+				bite_consumption = 2,\
+				junkiness = src.junkiness,\
+				is_cutlery = 1,\
+				is_proper_cutlery = proper_cutlery\
+			)
+
+			var/datum/reagent/color_reagent = pick(reagents.reagent_list)
+			var/image/I = new(cutlery.icon, "[is_fork_or_spoon == FORK ? "fork_food" : "spoon_food"]")
+			I.color = color_reagent
+			cutlery.overlays += I
+
+			reagents.trans_to(cutlery, 2, transfered_by = user)
+
+		if(reagents.total_volume <= 0)
+			qdel(src)
+			return
+#undef SPOON
+#undef FORK

@@ -15,6 +15,7 @@
 	tastes = list("meat" = 1, "black pudding" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/raw_tiziran_sausage/Initialize(mapload)
 	. = ..()
@@ -32,6 +33,7 @@
 	tastes = list("meat" = 1, "black pudding" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/raw_headcheese
 	name = "raw headcheese block"
@@ -45,6 +47,7 @@
 	tastes = list("meat" = 1, "salt" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/raw_headcheese/Initialize(mapload)
 	. = ..()
@@ -62,6 +65,7 @@
 	tastes = list("cheese" = 1, "salt" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/headcheese/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese_slice, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
@@ -78,6 +82,7 @@
 	tastes = list("cheese" = 1, "salt" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_TINY
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/shredded_lungs
 	name = "crispy shredded lung stirfry"
@@ -93,6 +98,7 @@
 	foodtypes = MEAT | VEGETABLES | GORE
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = SPOON_CUTLERY
 
 /obj/item/food/tsatsikh
 	name = "tsatsikh"
@@ -103,6 +109,7 @@
 	tastes = list("assorted minced organs" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY
 
 /obj/item/food/liver_pate
 	name = "liver pate"
@@ -113,6 +120,7 @@
 	tastes = list("liver" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/moonfish_eggs
 	name = "moonfish eggs"
@@ -139,6 +147,7 @@
 	tastes = list("caviar" = 1)
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY
 
 /obj/item/food/lizard_escargot
 	name = "desert snail cocleas"
@@ -153,6 +162,7 @@
 	tastes = list("snails" = 1, "garlic" = 1, "oil" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY
 
 /obj/item/food/fried_blood_sausage
 	name = "fried blood sausage"
@@ -168,6 +178,7 @@
 	tastes = list("black pudding" = 1, "batter" = 1, "oil" = 1)
 	foodtypes = MEAT | FRIED
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY
 
 //Why does like, every language on the planet besides English call them pommes? Who knows, who cares- the lizards call them it too, because funny.
 /obj/item/food/lizard_fries
@@ -197,6 +208,7 @@
 	tastes = list("brains" = 2)
 	foodtypes = MEAT | VEGETABLES | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = SPOON_CUTLERY
 
 /obj/item/food/crispy_headcheese
 	name = "crispy breaded headcheese"
@@ -211,6 +223,7 @@
 	tastes = list("cheese" = 1, "oil" = 1)
 	foodtypes = MEAT | VEGETABLES | NUTS | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY
 
 /obj/item/food/kebab/picoss_skewers
 	name = "picoss skewer"
@@ -240,6 +253,7 @@
 	tastes = list("meat" = 1, "sweet" = 1, "heat" = 1)
 	foodtypes = GORE | MEAT | BUGS
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/mushroomy_stirfry
 	name = "mushroomy stirfry"
@@ -253,6 +267,7 @@
 	tastes = list("marvelous mushrooms" = 1, "sublime shrooms" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY
 
 //Fish Dishes
 /obj/item/food/grilled_moonfish
@@ -268,6 +283,7 @@
 	foodtypes = SEAFOOD
 	burns_on_grill = TRUE
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/moonfish_demiglace
 	name = "moonfish demiglace"
@@ -282,6 +298,7 @@
 	tastes = list("fish" = 2, "potatoes" = 1, "carrots" = 1)
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/lizard_surf_n_turf
 	name = "\improper Zagosk surf 'n' turf smorgasbord"
@@ -296,6 +313,7 @@
 	tastes = list("surf" = 1, "turf" = 1)
 	foodtypes = MEAT | SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_BULKY
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY
 
 //Spaghetti Dishes
 
@@ -310,6 +328,7 @@
 	)
 	tastes = list("gnocchi" = 1)
 	foodtypes = VEGETABLES | NUTS
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/spaghetti/snail_nizaya
 	name = "desert snail nizaya"
@@ -323,6 +342,7 @@
 	)
 	tastes = list("snails" = 1, "wine" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES | MEAT | NUTS
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/spaghetti/garlic_nizaya
 	name = "garlic-and-oil nizaya"
@@ -335,6 +355,7 @@
 	)
 	tastes = list("garlic" = 1, "oil" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES | NUTS
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/spaghetti/demit_nizaya
 	name = "demit nizaya"
@@ -348,6 +369,7 @@
 	)
 	tastes = list("peppery sweet" = 1, "veggies" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES | SUGAR | NUTS
+	cutlery_flags = SPOON_CUTLERY
 
 /obj/item/food/spaghetti/mushroom_nizaya
 	name = "mushroom nizaya"
@@ -372,6 +394,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/rootdough/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/bread/root, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -387,6 +410,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/flatrootdough/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rootdoughslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
@@ -403,6 +427,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/rootdoughslice/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spaghetti/nizaya, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
@@ -419,6 +444,7 @@
 	tastes = list("bread" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 	burns_on_grill = TRUE
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 /obj/item/food/rootroll
 	name = "rootroll"
@@ -430,6 +456,7 @@
 	tastes = list("roll" = 1) // the roll tastes of roll.
 	foodtypes = VEGETABLES | NUTS
 	burns_in_oven = TRUE
+	cutlery_flags = FORK_CUTLERY | SPOON_CUTLERY
 
 //Bread Dishes
 
@@ -619,6 +646,7 @@
 	)
 	tastes = list("bone broth" = 1, "onion" = 1, "potato" = 1)
 	foodtypes = MEAT | VEGETABLES | NUTS
+	cutlery_flags = ONLY_SPOON_CUTLERY
 
 /obj/item/food/soup/meatball_noodles
 	name = "meatball noodle soup"
@@ -633,6 +661,7 @@
 	)
 	tastes = list("bone broth" = 1, "meat" = 1, "gnocchi" = 1, "peanuts" = 1)
 	foodtypes = MEAT | VEGETABLES | NUTS
+	cutlery_flags = ONLY_SPOON_CUTLERY
 
 /obj/item/food/soup/black_broth
 	name = "\improper Tiziran black broth"
@@ -646,6 +675,7 @@
 	)
 	tastes = list("vinegar" = 1, "metal" = 1)
 	foodtypes = MEAT | VEGETABLES | GORE
+	cutlery_flags = ONLY_SPOON_CUTLERY
 
 /obj/item/food/soup/jellyfish
 	name = "jellyfish stew"
@@ -658,6 +688,7 @@
 	)
 	tastes = list("slime" = 1)
 	foodtypes = MEAT | VEGETABLES | GORE
+	cutlery_flags = ONLY_SPOON_CUTLERY
 
 /obj/item/food/soup/rootbread_soup
 	name = "rootbread soup"
@@ -671,6 +702,7 @@
 	)
 	tastes = list("bread" = 1, "egg" = 1, "chili" = 1, "garlic" = 1)
 	foodtypes = MEAT | VEGETABLES
+	cutlery_flags = ONLY_SPOON_CUTLERY
 
 //Egg Dishes
 /obj/item/food/black_eggs
@@ -700,6 +732,7 @@
 	tastes = list("eggs" = 1, "tomato" = 1, "heat" = 1)
 	foodtypes = VEGETABLES | MEAT | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = ONLY_SPOON_CUTLERY
 
 //Cakes/Sweets
 
@@ -716,6 +749,7 @@
 	tastes = list("peppery heat" = 1, "sweetness" = 1)
 	foodtypes = NUTS | SUGAR
 	slice_type = /obj/item/food/cakeslice/korta_brittle
+	cutlery_flags = ONLY_SPOON_CUTLERY
 
 /obj/item/food/cakeslice/korta_brittle
 	name = "korta brittle slice"
@@ -729,6 +763,7 @@
 	)
 	tastes = list("peppery heat" = 1, "sweetness" = 1)
 	foodtypes = NUTS | SUGAR
+	cutlery_flags = ONLY_SPOON_CUTLERY
 
 /obj/item/food/snowcones/korta_ice
 	name = "korta ice"
@@ -742,6 +777,7 @@
 	)
 	tastes = list("peppery sweet" = 1, "berry" = 1)
 	foodtypes = NUTS | SUGAR | FRUIT
+	cutlery_flags = ONLY_SPOON_CUTLERY
 
 /obj/item/food/kebab/candied_mushrooms
 	name = "candied mushrooms"
@@ -755,6 +791,7 @@
 	)
 	tastes = list("savouriness" = 1, "sweetness" = 1)
 	foodtypes = SUGAR | VEGETABLES
+	cutlery_flags = ONLY_SPOON_CUTLERY
 
 //Misc Dishes
 /obj/item/food/sauerkraut
@@ -806,6 +843,7 @@
 	tastes = list("slime" = 1, "burning" = 1, "salt" = 1)
 	foodtypes = SEAFOOD | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY
 
 /obj/item/food/canned/desert_snails
 	name = "canned desert snails"
@@ -819,6 +857,7 @@
 	tastes = list("snails" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY
 
 /obj/item/food/canned/larvae
 	name = "canned bee larva"
@@ -832,3 +871,4 @@
 	tastes = list("sweet bugs" = 1)
 	foodtypes = MEAT | GORE | BUGS
 	w_class = WEIGHT_CLASS_SMALL
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY

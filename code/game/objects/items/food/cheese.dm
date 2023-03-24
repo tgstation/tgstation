@@ -11,6 +11,7 @@
 	foodtypes = DAIRY
 	/// used to determine how much health rats/regal rats recover when they eat it.
 	var/rat_heal = 0
+	cutlery_flags = FORK_CUTLERY
 
 /obj/item/food/cheese/Initialize(mapload)
 	. = ..()

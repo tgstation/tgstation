@@ -13,6 +13,7 @@
 	foodtypes = VEGETABLES
 	eatverbs = list("slurp", "sip", "inhale", "drink")
 	venue_value = FOOD_PRICE_CHEAP
+	cutlery_flags = ONLY_SPOON_CUTLERY
 
 /obj/item/food/soup/wish
 	name = "wish soup"

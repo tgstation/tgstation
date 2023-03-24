@@ -15,6 +15,7 @@
 	max_volume = 30
 	w_class = WEIGHT_CLASS_SMALL
 	preserved_food = TRUE
+	cutlery_flags = SPOON_CUTLERY | FORK_CUTLERY
 
 /obj/item/food/canned/proc/open_can(mob/user)
 	to_chat(user, span_notice("You pull back the tab of \the [src]."))
