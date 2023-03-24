@@ -372,4 +372,4 @@
 	id = "waystation"
 	suffix = "waystation.dmm"
 	name = "Waystation"
-	description = "A Waytation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
+	description = "A waytation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
