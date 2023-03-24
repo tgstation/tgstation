@@ -130,6 +130,9 @@ LOG_TELECOMMS
 ## log prayers
 LOG_PRAYER
 
+## Log Music requests
+LOG_MUSIC_REQ
+
 ## log silicons
 LOG_SILICON
 
