@@ -4,6 +4,7 @@
 /// These are the majority result from soup recipes,
 /// but bear in mind it will(should) have other reagents along side it.
 /datum/reagent/consumable/nutriment/soup
+	name = "Soup"
 	chemical_flags = NONE
 	nutriment_factor = 12 * REAGENTS_METABOLISM // Slightly less to that of nutriment as soups will come with nutriments in tow
 	burning_temperature = 520
@@ -755,19 +756,22 @@
 	name = "beet soup"
 	description = "Wait, how do you spell it again..?"
 
-/datum/reagent/consumable/nutriment/soup/white_beet/New()
-	. = ..()
-	name = pick("borsch", "bortsch", "borstch", "borsh", "borshch", "borscht")
-	data = list("[name]" = 1)
-
 /datum/glass_style/has_foodtype/soup/white_beet
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/white_beet
 	icon_state = "beetsoup"
 	drink_type = VEGETABLES | DAIRY
 
 /datum/glass_style/has_foodtype/soup/white_beet/set_name(obj/item/thing)
+	var/how_do_you_spell_it = pick("borsch", "bortsch", "borstch", "borsh", "borshch", "borscht")
+	thing.name = how_do_you_spell_it
 	var/datum/reagent/soup = locate(required_drink_type) in thing.reagents
-	thing.name = soup?.name || name
+	if(!soup)
+		return
+
+	if(islist(soup.data))
+		soup.data["[how_do_you_spell_it]"] = 1
+	else
+		soup.data = list("[how_do_you_spell_it]" = 1)
 
 /obj/item/reagent_containers/cup/bowl/soup/white_beet
 	initial_reagent = /datum/reagent/consumable/nutriment/soup/white_beet
