@@ -256,7 +256,9 @@
 	name = "resonating crystal"
 	icon_state = "adamantine_cords"
 	desc = "Golems somehow measure external light levels and detect nearby ore using this sensitive mineral lattice."
+	color = COLOR_GOLEM_GRAY
 	visual = FALSE
+	status = ORGAN_MINERAL
 	color_cutoffs = list(10, 15, 5)
 	actions_types = list(/datum/action/cooldown/golem_ore_sight)
 

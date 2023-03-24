@@ -4824,6 +4824,7 @@
 #include "code\modules\surgery\bodyparts\species_parts\plasmaman_bodyparts.dm"
 #include "code\modules\surgery\organs\_organ.dm"
 #include "code\modules\surgery\organs\appendix.dm"
+#include "code\modules\surgery\organs\appendix_golem.dm"
 #include "code\modules\surgery\organs\augments_arms.dm"
 #include "code\modules\surgery\organs\augments_chest.dm"
 #include "code\modules\surgery\organs\augments_eyes.dm"

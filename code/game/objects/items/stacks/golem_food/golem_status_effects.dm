@@ -7,6 +7,10 @@
 	var/overlay_state_prefix
 	/// Maximum time to extend buff for
 	var/max_duration = 5 MINUTES
+	/// Name of the mineral we ate to get this
+	var/mineral_name = ""
+	/// Text to display on buff application
+	var/applied_fluff = ""
 	/// Overlays we have applied to our mob
 	var/list/active_overlays = list()
 
@@ -14,6 +18,8 @@
 	. = ..()
 	if (owner.has_status_effect(/datum/status_effect/golem) )
 		return FALSE
+	if (applied_fluff)
+		to_chat(owner, span_notice(applied_fluff))
 	if (!overlay_state_prefix || !iscarbon(owner))
 		return TRUE
 	var/mob/living/carbon/golem_owner = owner
@@ -31,6 +37,7 @@
 	duration = min(duration + initial(duration), world.time + max_duration)
 
 /datum/status_effect/golem/on_remove()
+	to_chat(owner, span_warning("The effect of the [mineral_name] fades."))
 	QDEL_LIST(active_overlays)
 	return ..()
 
@@ -60,6 +67,8 @@
 /// Freezes hunger for the duration
 /datum/status_effect/golem/uranium
 	overlay_state_prefix = "uranium"
+	mineral_name = "uranium"
+	applied_fluff = "Glowing crystals sprout from your body. You feel energised!"
 
 /datum/status_effect/golem/uranium/on_apply()
 	. = ..()
@@ -77,6 +86,8 @@
 /// Magic immunity
 /datum/status_effect/golem/silver
 	overlay_state_prefix = "silver"
+	mineral_name = "silver"
+	applied_fluff = "Shining plates grace your shoulders. You feel holy!"
 
 /datum/status_effect/golem/silver/on_apply()
 	. = ..()
@@ -92,19 +103,29 @@
 /// Heat immunity, turns heat damage into local power
 /datum/status_effect/golem/plasma
 	overlay_state_prefix = "plasma"
+	mineral_name = "plasma"
+	applied_fluff = "Plasma cooling rods sprout from your body. You can take the heat!"
 
 /// Makes you spaceproof
 /datum/status_effect/golem/plasteel
 	overlay_state_prefix = "iron"
+	mineral_name = "plasteel"
+	applied_fluff = "Plasteel plates seal you tight. You feel insulated!"
 
 /// Makes you reflect projectiles
 /datum/status_effect/golem/gold
 	overlay_state_prefix = "gold"
+	mineral_name = "gold"
+	applied_fluff = "Shining plates form across your body. You feel reflective!"
 
 /// Makes you hard to see
 /datum/status_effect/golem/diamond
 	overlay_state_prefix = "diamond"
+	mineral_name = "diamonds"
+	applied_fluff = "Sparkling gems bend light around you. You feel stealthy!"
 
 /// Makes you tougher
 /datum/status_effect/golem/titanium
 	overlay_state_prefix = "platinum"
+	mineral_name = "titanium"
+	applied_fluff = "Titanium rings burst from your arms. You feel ready to take on the world!"

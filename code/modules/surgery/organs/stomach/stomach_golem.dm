@@ -2,6 +2,8 @@
 	name = "silicate grinder"
 	icon_state = "stomach-p"
 	desc = "A rocklike organ which grinds and processes nutrition from minerals."
+	color = COLOR_GOLEM_GRAY
+	status = ORGAN_MINERAL
 	organ_traits = list(TRAIT_ROCK_EATER)
 	/// Multiplier for the hunger rate, golems burn fuel quickly
 	var/hunger_mod = 10

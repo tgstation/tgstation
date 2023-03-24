@@ -362,6 +362,8 @@
 	name = "crystalline matrix"
 	desc = "This collection of sparkling gems somehow allows a golem to think."
 	icon_state = "adamantine_resonator"
+	color = COLOR_GOLEM_GRAY
+	status = ORGAN_MINERAL
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ROCK_METAMORPHIC)
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////

@@ -17,10 +17,10 @@
 		TRAIT_NOFIRE,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHEAT,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
+		// TRAIT_RESISTCOLD,
+		// TRAIT_RESISTHEAT,
+		// TRAIT_RESISTHIGHPRESSURE,
+		// TRAIT_RESISTLOWPRESSURE,
 	)
 	mutantheart = null
 	mutantlungs = null
@@ -39,6 +39,7 @@
 	mutantbrain = /obj/item/organ/internal/brain/golem
 	mutanttongue = /obj/item/organ/internal/tongue/golem
 	mutantstomach = /obj/item/organ/internal/stomach/golem
+	mutantappendix = /obj/item/organ/internal/appendix/golem
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem,
@@ -83,7 +84,7 @@
 		SPECIES_PERK_NAME = "Lithoid",
 		SPECIES_PERK_DESC = "Lithoids are creatures made out of minerals instead of \
 			blood and flesh. They are strong and immune to many environmental and personal dangers \
-			such as pressure, heat, viruses, and dismemberment.",
+			such as fire, radiation, lack of air, lava, viruses, and dismemberment.",
 	))
 
 	to_add += list(list(

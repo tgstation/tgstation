@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(golem_stack_food_directory, list(
 	/// Typepath of status effect to apply
 	var/status_effect
 	/// Extra information to display when a valid food is examined
-	var/added_info
+	var/added_info = ""
 
 /// Returns true if the passed mob can currently gain this buff
 /datum/golem_food_buff/proc/can_consume(mob/living/consumer)
