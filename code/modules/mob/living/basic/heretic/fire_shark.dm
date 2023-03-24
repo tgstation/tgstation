@@ -12,8 +12,8 @@
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 	speed = -0.5
-	health = 15
-	maxHealth = 15
+	health = 16
+	maxHealth = 16
 	melee_damage_lower = 8
 	melee_damage_upper = 8
 	attack_sound = 'sound/weapons/bite.ogg'
@@ -32,7 +32,9 @@
 /mob/living/basic/fire_shark/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/effect/gibspawner/human))
+	AddElement(/datum/element/death_gasses, /datum/gas/plasma, 40)
 	AddElement(/datum/element/simple_flying)
+	AddElement(/datum/element/venomous, /datum/reagent/phlogiston, 5)
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/regenerator, regeneration_delay = 2 SECONDS, outline_colour = COLOR_DARK_RED)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
