@@ -322,7 +322,7 @@
 		return ..()
 	return FALSE
 
-/obj/item/modular_computer/pda/silicon/get_ntnet_status(specific_action = 0)
+/obj/item/modular_computer/pda/silicon/get_ntnet_status()
 	//No borg found
 	if(!silicon_owner)
 		return FALSE

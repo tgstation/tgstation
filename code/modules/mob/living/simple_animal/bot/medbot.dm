@@ -443,7 +443,7 @@
 	if(!(loc == C.loc) && !(isturf(C.loc) && isturf(loc)))
 		return FALSE
 
-	if(C.suiciding)
+	if(HAS_TRAIT_FROM_ONLY(C, TRAIT_SUICIDED, REF(C)))
 		return FALSE //Kevorkian school of robotic medical assistants.
 
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //Everyone needs our medicine. (Our medicine is toxins)

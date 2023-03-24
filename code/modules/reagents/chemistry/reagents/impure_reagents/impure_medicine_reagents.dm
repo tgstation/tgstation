@@ -513,18 +513,22 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
 	///If we brought someone back from the dead
 	var/back_from_the_dead = FALSE
+	/// List of trait buffs to give to the affected mob, and remove as needed.
+	var/static/list/trait_buffs = list(
+		TRAIT_NOCRITDAMAGE,
+		TRAIT_NOCRITOVERLAY,
+		TRAIT_NODEATH,
+		TRAIT_NOHARDCRIT,
+		TRAIT_NOSOFTCRIT,
+		TRAIT_STABLEHEART,
+	)
 
 /datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/affected_mob, delta_time)
 	var/obj/item/organ/internal/heart/heart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		return ..()
 	metabolization_rate = 0.2 * REM
-	ADD_TRAIT(affected_mob, TRAIT_STABLEHEART, type)
-	ADD_TRAIT(affected_mob, TRAIT_NOHARDCRIT, type)
-	ADD_TRAIT(affected_mob, TRAIT_NOSOFTCRIT, type)
-	ADD_TRAIT(affected_mob, TRAIT_NOCRITDAMAGE, type)
-	ADD_TRAIT(affected_mob, TRAIT_NODEATH, type)
-	ADD_TRAIT(affected_mob, TRAIT_NOCRITOVERLAY, type)
+	affected_mob.add_traits(trait_buffs, type)
 	affected_mob.set_stat(CONSCIOUS) //This doesn't touch knocked out
 	affected_mob.updatehealth()
 	affected_mob.update_sight()
@@ -581,12 +585,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	return..()
 
 /datum/reagent/inverse/penthrite/proc/remove_buffs(mob/living/carbon/affected_mob)
-	REMOVE_TRAIT(affected_mob, TRAIT_STABLEHEART, type)
-	REMOVE_TRAIT(affected_mob, TRAIT_NOHARDCRIT, type)
-	REMOVE_TRAIT(affected_mob, TRAIT_NOSOFTCRIT, type)
-	REMOVE_TRAIT(affected_mob, TRAIT_NOCRITDAMAGE, type)
-	REMOVE_TRAIT(affected_mob, TRAIT_NODEATH, type)
-	REMOVE_TRAIT(affected_mob, TRAIT_NOCRITOVERLAY, type)
+	affected_mob.remove_traits(trait_buffs, type)
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	affected_mob.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
 	affected_mob.update_sight()
