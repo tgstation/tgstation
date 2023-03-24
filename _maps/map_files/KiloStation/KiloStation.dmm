@@ -5140,7 +5140,7 @@
 /area/station/hallway/primary/aft)
 "bMw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/toy/beach_ball/holoball,
+/obj/item/toy/basketball,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "bMF" = (
@@ -29594,7 +29594,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "jsI" = (
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
