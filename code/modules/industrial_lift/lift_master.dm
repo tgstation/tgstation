@@ -502,20 +502,20 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 			continue
 		if(on_z_level && !(elevator_door.z in on_z_level))
 			continue
-
 		switch(action)
 			if(OPEN_DOORS)
 				elevator_door.elevator_status = LIFT_PLATFORM_UNLOCKED
 				if(!played_ding)
 					playsound(elevator_door, 'sound/machines/ping.ogg', 50, TRUE)
 					played_ding = TRUE
-				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open))
+				addtimer(CALLBACK(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open)), 0.7 SECONDS)
 			if(CLOSE_DOORS)
 				elevator_door.elevator_status = LIFT_PLATFORM_LOCKED
 				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, close))
-				sleep(2 SECONDS)
 			else
 				stack_trace("Elevator lift update_lift_doors called with an improper action ([action]).")
+
+	sleep(2 SECONDS)
 
 /// Helper used in callbacks to open all the doors our lift is on
 /datum/lift_master/proc/open_lift_doors_callback()

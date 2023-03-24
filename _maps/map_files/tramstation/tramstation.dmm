@@ -7955,7 +7955,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/elevator/directional/west{
-	id = "tram_upper_center_lift"
+	elevator_linked_id = "tram_upper_center_lift";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
@@ -10957,7 +10958,7 @@
 /obj/machinery/elevator_control_panel/directional/south{
 	desc = "A small control panel used to move the kitchen dumbwaiter up and down.";
 	linked_elevator_id = "dumbwaiter_lift";
-	name = "Dumbwaiter Control Panel";
+	name = "Dumbwaiter control Panel";
 	preset_destination_names = list("2"="Hydroponics","3"="Kitchen")
 	},
 /obj/effect/turf_decal/tile/green/fourcorners,
@@ -20634,7 +20635,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/elevator/directional/west{
-	id = "tram_cargo_lift"
+	elevator_linked_id = "tram_cargo_lift";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
@@ -21983,7 +21985,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/elevator/directional/west{
-	id = "tram_upper_center_lift"
+	elevator_linked_id = "tram_upper_center_lift";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/tram/mid)
@@ -24147,7 +24150,7 @@
 /obj/machinery/elevator_control_panel/directional/north{
 	desc = "A small control panel used to move the kitchen dumbwaiter up and down.";
 	linked_elevator_id = "dumbwaiter_lift";
-	name = "Dumbwaiter Control Panel";
+	name = "Dumbwaiter control Panel";
 	preset_destination_names = list("2"="Hydroponics","3"="Kitchen")
 	},
 /obj/structure/disposalpipe/trunk,
@@ -33135,7 +33138,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/elevator/directional/west{
-	id = "tram_sci_lift"
+	elevator_linked_id = "tram_sci_lift";
+	elevator_mode = 1
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/white,
@@ -33483,7 +33487,8 @@
 	dir = 8
 	},
 /obj/machinery/door/window/elevator/directional/east{
-	id = "tram_dorm_lift"
+	elevator_linked_id = "tram_dorm_lift";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
@@ -37386,7 +37391,8 @@
 	},
 /obj/machinery/door/window/elevator/directional/south{
 	icon_state = "right";
-	id = "tram_perma_lift"
+	elevator_linked_id = "tram_perma_lift";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -37805,7 +37811,8 @@
 	dir = 10
 	},
 /obj/machinery/door/window/elevator/directional/south{
-	id = "tram_perma_lift"
+	elevator_linked_id = "tram_perma_lift";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
@@ -40790,7 +40797,8 @@
 	dir = 1
 	},
 /obj/machinery/door/window/elevator/directional/south{
-	id = "tram_perma_lift"
+	elevator_linked_id = "tram_perma_lift";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -42094,7 +42102,8 @@
 "nSc" = (
 /obj/effect/turf_decal/caution/stand_clear/white,
 /obj/machinery/door/window/elevator/directional/north{
-	id = "tram_lower_center_lift"
+	elevator_linked_id = "tram_lower_center_lift";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/tram/mid)
@@ -43880,8 +43889,10 @@
 	dir = 1
 	},
 /obj/machinery/door/window/elevator/directional/north{
-	id = "dumbwaiter_lift";
-	req_access = null
+	req_access = null;
+	elevator_linked_id = "dumbwaiter_lift";
+	elevator_mode = 1;
+	name = "Dumbwaiter door"
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
@@ -45908,7 +45919,8 @@
 	dir = 8
 	},
 /obj/machinery/door/window/elevator/directional/east{
-	id = "tram_dorm_lift"
+	elevator_linked_id = "tram_dorm_lift";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/tram/left)
@@ -48292,7 +48304,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/elevator/directional/west{
-	id = "tram_sci_lift"
+	elevator_linked_id = "tram_sci_lift";
+	elevator_mode = 1
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/white,
@@ -48695,8 +48708,10 @@
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/trimline/yellow/warning,
 /obj/machinery/door/window/elevator/directional/south{
-	id = "dumbwaiter_lift";
-	req_access = null
+	req_access = null;
+	elevator_linked_id = "dumbwaiter_lift";
+	elevator_mode = 1;
+	name = "Dumbwaiter door"
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
@@ -51709,7 +51724,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/elevator/directional/west{
-	id = "tram_cargo_lift"
+	elevator_linked_id = "tram_cargo_lift";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -54590,14 +54606,6 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "sBo" = (
-/obj/structure/closet/secure_closet/brig/genpop,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/bot,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/closet/secure_closet/brig/genpop,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/siding/thinplating/corner,
@@ -64682,7 +64690,8 @@
 	},
 /obj/effect/turf_decal/stripes/white/line,
 /obj/machinery/door/window/elevator/directional/south{
-	id = "tram_lower_center_lift"
+	elevator_linked_id = "tram_lower_center_lift";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
@@ -66186,8 +66195,9 @@
 	dir = 1
 	},
 /obj/machinery/door/window/elevator/directional/south{
-	id = "tram_perma_lift";
-	icon_state = "right"
+	icon_state = "right";
+	elevator_linked_id = "tram_perma_lift";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
