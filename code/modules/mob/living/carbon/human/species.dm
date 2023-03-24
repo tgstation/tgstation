@@ -549,16 +549,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/update_mail_goodies(mob/living/carbon/human/recipient, list/mail_goodies)
 	var/datum/quirk/blooddeficiency/blooddeficiency = recipient.get_quirk(/datum/quirk/blooddeficiency)
-	if(isnull(blooddeficiency))
-		return
-	if(isnull(mail_goodies)) // The default case, e.g. species has no specific implementation
-		// Set blooddeficiency mail_goodies to initial, aka a type O- blood pack. We have to do it this way because initial will not work on lists in this version of DM
-		var/datum/quirk/blooddeficiency/initial_blooddeficiency = new
-		blooddeficiency.mail_goodies = initial_blooddeficiency.mail_goodies
-		qdel(initial_blooddeficiency)
-		return
-		
-	blooddeficiency.mail_goodies = mail_goodies
+	
+	if(!isnull(blooddeficiency))
+		if(isnull(mail_goodies)) // The default case, e.g. species has no specific implementation
+			// Set blooddeficiency mail_goodies to initial, aka a type O- blood pack. We have to do it this way because initial will not work on lists in this version of DM
+			var/datum/quirk/blooddeficiency/initial_blooddeficiency = new
+			blooddeficiency.mail_goodies = initial_blooddeficiency.mail_goodies
+			qdel(initial_blooddeficiency)
+			return
+			
+		blooddeficiency.mail_goodies = mail_goodies
 
 /**
  * Handles the body of a human
