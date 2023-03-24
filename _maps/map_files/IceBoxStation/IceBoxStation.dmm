@@ -18062,7 +18062,7 @@
 /area/station/engineering/storage_shared)
 "fKh" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/toy/beach_ball/holoball,
+/obj/item/toy/basketball,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "fKi" = (
@@ -39625,7 +39625,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "mHv" = (
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
