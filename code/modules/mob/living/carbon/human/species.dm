@@ -557,7 +557,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Arguments:
  * * mob/living/carbon/human/recipient - the mob receiving the mail goodies
  * * datum/quirk/quirk - the quirk to update the mail goodies of. Use get_quirk(datum/quirk/some_quirk) to get the actual mob's quirk to pass.
-  * * list/mail_goodies - a list of mail goodies. Generally speaking you should not be using this argument on the initial function call. You should instead add to the species' implementation of this proc.
+ * * list/mail_goodies - a list of mail goodies. Generally speaking you should not be using this argument on the initial function call. You should instead add to the species' implementation of this proc.
  */
 /datum/species/proc/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies)
 	if(isnull(quirk))
@@ -573,7 +573,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		quirk.mail_goodies = initial_quirk.mail_goodies
 		qdel(initial_quirk)
 		return
-		
+
 	quirk.mail_goodies = mail_goodies
 
 /**
