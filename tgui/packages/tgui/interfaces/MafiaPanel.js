@@ -365,6 +365,9 @@ const MafiaAdmin = (props, context) => {
         <Button icon="paint-roller" onClick={() => act('cancel_setup')}>
           Reset Custom Setup
         </Button>
+        <Button icon="magic" onClick={() => act('start_now')}>
+          Start now!
+        </Button>
       </Section>
     </Collapsible>
   );
