@@ -356,7 +356,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		// at this point we already know new_organ is not null
 		if(existing_organ?.type == new_organ)
-			existing_organ.set_organ_damage(0) // be nice here
 			continue // we don't want to remove organs that are the same as the new one
 
 		if(visual_only && !initial(new_organ.visual))

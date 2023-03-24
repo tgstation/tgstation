@@ -1025,7 +1025,7 @@
 		return
 	var/mob/living/carbon/affected_carbon = affected_mob
 	if(creation_purity >= 1)
-		initial_bdamage = affected_carbon.get_organ_by_typeLoss(ORGAN_SLOT_BRAIN)
+		initial_bdamage = affected_carbon.get_organ_loss(ORGAN_SLOT_BRAIN)
 
 /datum/reagent/medicine/neurine/on_mob_delete(mob/living/affected_mob)
 	. = ..()
@@ -1033,7 +1033,7 @@
 	if(!iscarbon(affected_mob))
 		return
 	var/mob/living/carbon/affected_carbon = affected_mob
-	if(initial_bdamage < affected_carbon.get_organ_by_typeLoss(ORGAN_SLOT_BRAIN))
+	if(initial_bdamage < affected_carbon.get_organ_loss(ORGAN_SLOT_BRAIN))
 		affected_carbon.setOrganLoss(ORGAN_SLOT_BRAIN, initial_bdamage)
 
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)

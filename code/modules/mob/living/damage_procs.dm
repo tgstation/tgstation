@@ -284,7 +284,7 @@
 /mob/living/proc/setOrganLoss(slot, amount, maximum, required_organtype)
 	return
 
-/mob/living/proc/get_organ_by_typeLoss(slot)
+/mob/living/proc/get_organ_loss(slot)
 	return
 
 /mob/living/proc/getStaminaLoss()

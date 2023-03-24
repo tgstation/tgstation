@@ -346,7 +346,7 @@ Versioning
 		"lakey" = L.lastattackerckey,
 		"brute" = L.getBruteLoss(),
 		"fire" = L.getFireLoss(),
-		"brain" = L.get_organ_by_typeLoss(ORGAN_SLOT_BRAIN) || BRAIN_DAMAGE_DEATH, //get_organ_by_typeLoss returns null without a brain but a value is required for this column
+		"brain" = L.get_organ_loss(ORGAN_SLOT_BRAIN) || BRAIN_DAMAGE_DEATH, //get_organ_loss returns null without a brain but a value is required for this column
 		"oxy" = L.getOxyLoss(),
 		"tox" = L.getToxLoss(),
 		"clone" = L.getCloneLoss(),

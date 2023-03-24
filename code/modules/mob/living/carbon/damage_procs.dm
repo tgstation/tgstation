@@ -148,7 +148,7 @@
  * Arguments:
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
  */
-/mob/living/carbon/get_organ_by_typeLoss(slot)
+/mob/living/carbon/get_organ_loss(slot)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(affected_organ)
 		return affected_organ.damage

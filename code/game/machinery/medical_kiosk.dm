@@ -229,7 +229,7 @@
 
 	var/trauma_status = "Patient is free of unique brain trauma."
 	var/clone_loss = patient.getCloneLoss()
-	var/brain_loss = patient.get_organ_by_typeLoss(ORGAN_SLOT_BRAIN)
+	var/brain_loss = patient.get_organ_loss(ORGAN_SLOT_BRAIN)
 	var/brain_status = "Brain patterns normal."
 	if(LAZYLEN(patient.get_traumas()))
 		var/list/trauma_text = list()
