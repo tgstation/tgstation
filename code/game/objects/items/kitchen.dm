@@ -73,7 +73,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	custom_materials = list(/datum/material/plastic=80)
-	custom_price = PAYCHECK_LOWER * 2
+	custom_price = PAYCHECK_LOWER * 1
 
 /obj/item/kitchen/fork/plastic/Initialize(mapload)
 	. = ..()
@@ -139,6 +139,7 @@
 	name = "spoon"
 	desc = "Just be careful your food doesn't melt the spoon first."
 	icon_state = "spoon"
+	base_icon_state = "spoon"
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
 	force = 2
@@ -148,7 +149,7 @@
 	attack_verb_continuous = list("whacks", "spoons", "taps")
 	armor_type = /datum/armor/kitchen_spoon
 	custom_materials = list(/datum/material/iron=120)
-	custom_price = PAYCHECK_LOWER * 5
+	custom_price = PAYCHECK_LOWER * 2
 	tool_behaviour = TOOL_MINING
 	toolspeed = 25 // Literally 25 times worse than the base pickaxe
 
@@ -168,6 +169,14 @@
 		context[SCREENTIP_CONTEXT_LMB] = target == user ? "[spoon_sip_size >= reagents.maximum_volume ? "Swallow" : "Taste"] spoonful" : "Give spoonful"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
+
+/obj/item/kitchen/spoon/update_overlays()
+	. = ..()
+	if(reagents.total_volume <= 0)
+		return
+	var/mutable_appearance/filled_overlay = mutable_appearance(icon, "[base_icon_state]_filled")
+	filled_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+	. += filled_overlay
 
 /obj/item/kitchen/spoon/attack(mob/living/target_mob, mob/living/user, params)
 	if(!target_mob.reagents || reagents.total_volume <= 0)
@@ -232,8 +241,8 @@
 	icon_state = "plastic_spoon"
 	force = 0
 	custom_materials = list(/datum/material/plastic=120)
-	custom_price = PAYCHECK_LOWER * 2
 	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf... It's one, continuous, breakable, do_after...
+	custom_price = PAYCHECK_LOWER * 1
 
 /datum/armor/kitchen_spoon
 	fire = 50
@@ -246,6 +255,7 @@
 /obj/item/kitchen/spoon/soup_ladle
 	name = "ladle"
 	desc = "What is a ladle but a comically large spoon?"
+	custom_price = PAYCHECK_LOWER * 4
 	spoon_sip_size = 3 // just a taste
 	var/static/matrix/ladle_matrix
 

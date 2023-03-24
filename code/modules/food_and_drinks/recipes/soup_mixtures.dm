@@ -28,7 +28,7 @@
 /datum/chemical_reaction/food/soup
 	required_temp = 450
 	optimal_temp = 480
-	overheat_temp = 540
+	overheat_temp = SOUP_BURN_TEMP
 	optimal_ph_min = 1
 	optimal_ph_max = 14
 	thermic_constant = 40
@@ -163,6 +163,8 @@
 /datum/chemical_reaction/food/soup/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
+	if(!istype(pot))
+		CRASH("[pot ? "Non-pot atom" : "Null pot"]) made it to the end of the [type] reaction chain.")
 	reaction.data["ingredients"] = null
 
 	testing("Soup reaction finished with a total react volume of [react_vol] and [length(pot.added_ingredients)] ingredients. Cleaning up.")
@@ -191,7 +193,7 @@
 	// Create a spread of dirty foam
 	var/datum/effect_system/fluid_spread/foam/dirty/soup_mess = new()
 	soup_mess.reagent_scale = 0.1 // (Just a little)
-	soup_mess.set_up(range = 1, holder = pot, location = below_pot, carry = holder)
+	soup_mess.set_up(range = 1, holder = pot, location = below_pot, carry = holder, stop_reactions = TRUE)
 	soup_mess.start()
 	// Loses a bit from the foam
 	for(var/datum/reagent/reagent as anything in holder.reagent_list)
@@ -220,6 +222,27 @@
 	. = ..()
 	if(initial_reagent)
 		reagents.add_reagent(initial_reagent, initial_portion)
+
+/// This style runs dual purpose -
+/// Primarily it's just a bowl style for water,
+/// but secondarily it lets chefs know if their soup had too much water in it
+/datum/glass_style/has_foodtype/soup/watery_soup
+	required_drink_type = /datum/reagent/water
+	name = "Bowl of water"
+	desc = "A very wet bowl."
+	icon_state = "wishsoup"
+
+/datum/glass_style/has_foodtype/soup/watery_soup/set_name(obj/item/thing)
+	if(length(thing.reagents.reagent_list) <= 2)
+		return ..()
+
+	thing.name = "Watery bowl of something"
+
+/datum/glass_style/has_foodtype/soup/watery_soup/set_desc(obj/item/thing)
+	if(length(thing.reagents.reagent_list) <= 2)
+		return ..()
+
+	thing.desc = "Looks like whatever's in there is very watered down."
 
 // Meatball Soup
 /datum/reagent/consumable/nutriment/soup/meatball_soup

@@ -13,6 +13,8 @@
 	VAR_FINAL/obj/item/container
 	/// A particle holder for the smoke that comes out of the soup while a container is cooking.
 	VAR_FINAL/obj/effect/abstract/particle_holder/soup_smoke
+	/// Typepath of particles to use for the particle holder.
+	VAR_FINAL/particle_type = /particles/smoke/steam/mild
 	/// The color of the flames around the burner.
 	var/flame_color = "#006eff"
 	/// Container's pixel x when placed on the stove
@@ -39,6 +41,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_overlay_update))
 	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstructed))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 	var/obj/machinery/real_parent = parent
 	real_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
@@ -57,6 +60,7 @@
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_PARENT_ATTACKBY,
+		COMSIG_PARENT_EXAMINE,
 	))
 
 /datum/component/stove/process(delta_time)
@@ -139,10 +143,9 @@
 
 	// Smoke coming out of the pot
 	if(container?.reagents.total_volume > 0)
+		// Don't override existing particles, waste
 		if(isnull(soup_smoke))
-			soup_smoke = new(real_parent, /particles/smoke/steam/mild)
-			soup_smoke.set_particle_position(list(container_x, round(world.icon_size * 0.66), 0))
-			// melbert todo: sidemap memes
+			create_smoke() // melbert todo: sidemap memes
 	else
 		QDEL_NULL(soup_smoke)
 
@@ -169,6 +172,11 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Place container"
 		return CONTEXTUAL_SCREENTIP_SET
 
+/datum/component/stove/proc/on_examine(obj/machinery/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	. += span_notice("You can turn the stovetop burners [on ? "off" : "on"] with <i>right click</i>.")
+
 /datum/component/stove/proc/add_container(obj/item/new_container, mob/user)
 	var/obj/real_parent = parent
 	real_parent.vis_contents += new_container
@@ -180,6 +188,8 @@
 	container.pixel_y = container_y
 
 	real_parent.update_appearance(UPDATE_OVERLAYS)
+	RegisterSignal(container.reagents, COMSIG_REAGENTS_TEMP_CHANGE, PROC_REF(update_smoke_type))
+	update_smoke_type()
 
 /datum/component/stove/proc/remove_container()
 	var/obj/real_parent = parent
@@ -192,3 +202,21 @@
 	container = null
 
 	real_parent.update_appearance(UPDATE_OVERLAYS)
+	UnregisterSignal(container.reagents, COMSIG_REAGENTS_TEMP_CHANGE)
+	update_smoke_type()
+
+/datum/component/stove/proc/update_smoke_type(datum/source, new_temp, old_temp)
+	SIGNAL_HANDLER
+
+	if(container?.reagents.chem_temp > SOUP_BURN_TEMP)
+		particle_type = /particles/smoke/ash
+	else
+		particle_type = initial(particle_type)
+
+	if(soup_smoke?.particles.type != particle_type)
+		create_smoke()
+
+/datum/component/stove/proc/create_smoke()
+	QDEL_NULL(soup_smoke)
+	soup_smoke = new(parent, particle_type)
+	soup_smoke.set_particle_position(list(container_x, round(world.icon_size * 0.66), 0))
