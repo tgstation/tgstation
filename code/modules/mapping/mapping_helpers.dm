@@ -223,8 +223,7 @@
 /obj/effect/mapping_helpers/airlock/welded/payload(obj/machinery/door/airlock/airlock)
 	if(airlock.welded)
 		log_mapping("[src] at [AREACOORD(src)] tried to make [airlock] welded but it's already welded closed!")
-	else
-		airlock.welded = TRUE
+	airlock.welded = TRUE
 
 /obj/effect/mapping_helpers/airlock/cutaiwire
 	name = "airlock cut ai wire helper"
