@@ -346,6 +346,7 @@
 /obj/item/bodypart/head/golem
 	icon = 'icons/mob/species/golems.dmi'
 	icon_static = 'icons/mob/species/golems.dmi'
+	icon_state = "golem_head"
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_GOLEM
 	is_dimorphic = FALSE
@@ -355,6 +356,7 @@
 /obj/item/bodypart/chest/golem
 	icon = 'icons/mob/species/golems.dmi'
 	icon_static = 'icons/mob/species/golems.dmi'
+	icon_state = "golem_chest"
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_GOLEM
 	is_dimorphic = FALSE
@@ -365,6 +367,7 @@
 /obj/item/bodypart/arm/left/golem
 	icon = 'icons/mob/species/golems.dmi'
 	icon_static = 'icons/mob/species/golems.dmi'
+	icon_state = "golem_l_arm"
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_GOLEM
 	should_draw_greyscale = FALSE
@@ -377,6 +380,7 @@
 /obj/item/bodypart/arm/right/golem
 	icon = 'icons/mob/species/golems.dmi'
 	icon_static = 'icons/mob/species/golems.dmi'
+	icon_state = "golem_r_arm"
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_GOLEM
 	should_draw_greyscale = FALSE
@@ -389,6 +393,7 @@
 /obj/item/bodypart/leg/left/golem
 	icon = 'icons/mob/species/golems.dmi'
 	icon_static = 'icons/mob/species/golems.dmi'
+	icon_state = "golem_l_leg"
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_GOLEM
 	should_draw_greyscale = FALSE
@@ -400,6 +405,7 @@
 /obj/item/bodypart/leg/right/golem
 	icon = 'icons/mob/species/golems.dmi'
 	icon_static = 'icons/mob/species/golems.dmi'
+	icon_state = "golem_r_leg"
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_GOLEM
 	should_draw_greyscale = FALSE

@@ -23,7 +23,7 @@
 		smelter.Grant(owner)
 
 /obj/item/organ/internal/appendix/golem/on_remove(mob/living/carbon/organ_owner)
-	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(organ_owner, COMSIG_MOVABLE_MOVED)
 	QDEL_NULL(smelter)
 	return ..()
 
