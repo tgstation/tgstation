@@ -443,7 +443,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/elevator_control_panel, 31)
 		return ..()
 
 	var/datum/lift_master/lift = lift_weakref?.resolve()
-	if(!lift)
+	if(isnull(lift))
 		return ..()
 
 	for(var/obj/structure/industrial_lift/lift_platform as anything in lift.lift_platforms)
