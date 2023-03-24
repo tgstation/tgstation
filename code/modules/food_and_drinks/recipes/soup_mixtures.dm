@@ -121,7 +121,7 @@
 	// Stop reacting immediately, we can't verify the reaction is correct still.
 	// If it is still correct it will restart shortly.
 	if(num_current_ingredients < num_cached_ingredients)
-		testing("Soup reaction ended due to losing reagents.")
+		testing("Soup reaction ended due to losing ingredients.")
 		return END_REACTION
 
 	// An ingredient was added mid mix.
@@ -136,7 +136,7 @@
 		var/obj/item/ingredient = ingredient_ref.resolve()
 		// An ingredient has gone missing, stop the reaction
 		if(QDELETED(ingredient) || ingredient.loc != holder.my_atom)
-			testing("Soup reaction ended due to having an invalid reagent present.")
+			testing("Soup reaction ended due to having an invalid ingredient present.")
 			return END_REACTION
 
 		ingredients_actual[ingredient.type] += 1
