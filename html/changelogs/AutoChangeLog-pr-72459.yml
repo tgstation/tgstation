@@ -1,0 +1,10 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add crafting recipe for basketballs (leather sheets) and basketball hoops (metal, rods, and durathread)"
+  - rscadd: "Add new basketball minigame for 2-7 players.  There are 4 different courts and teams by default with more planned to be added later."
+  - rscadd: "New basketball mechanics that uses stamina.  Shoot with RMB, pass with LMB, and dunk by clicking the hoop while adjacent.  Spinning while holding the ball decreases the chance for someone to steal the ball, but it decreases your shooting accuracy.  Shooting from 2 tiles away lets you score 3 points."
+  - qol: "Basketballs now play a buzzer sound when someone scores. CtrlClick will reset the scorecard and AltClick with a wrench will rotate the hoop."
+  - qol: "Dunking and shooting animations for basketball."
+  - soundadd: "Added basketball bounce sound with credits attribution"
+  - imageadd: "Added basketball icon to minigames. Move baseball and dodgeball icons to toy/balls.dmi"
