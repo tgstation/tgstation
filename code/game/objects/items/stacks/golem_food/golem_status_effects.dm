@@ -1,10 +1,12 @@
 /// Abstract holder for golem status effects, you should never have more than one of these active
 /datum/status_effect/golem
 	id = "golem_status"
-	// duration = 5 MINUTES
-	duration = 20 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 30 SECONDS
 	/// Icon state prefix for overlay to display on golem limbs
 	var/overlay_state_prefix
+	/// Maximum time to extend buff for
+	var/max_duration = 5 MINUTES
 	/// Overlays we have applied to our mob
 	var/list/active_overlays = list()
 
@@ -23,6 +25,10 @@
 		active_overlays += overlay
 	golem_owner.update_body_parts()
 	return TRUE
+
+// Add 30 seconds up until we reach 5 minutess
+/datum/status_effect/golem/refresh(effect)
+	duration = min(duration + initial(duration), world.time + max_duration)
 
 /datum/status_effect/golem/on_remove()
 	QDEL_LIST(active_overlays)

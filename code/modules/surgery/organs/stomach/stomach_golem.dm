@@ -73,6 +73,7 @@
 /datum/status_effect/golem_statued
 	id = "golem_statued"
 	// TODO: screen alert
+	// TODO: should probably be visible on examine
 
 /datum/status_effect/golem_statued/on_apply()
 	. = ..()
