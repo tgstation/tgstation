@@ -37,6 +37,7 @@
 	DELAY 10
 	SAY This should be a cakewalk, I have the utmost confidence that you will succeed with your objectives. Good luck.
 	DELAY 25"}
+	
 // Outfits
 /datum/outfit/waystation/
 	name = "improper Waystation Outfit"
