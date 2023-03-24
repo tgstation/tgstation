@@ -767,7 +767,7 @@
 
 /datum/glass_style/has_foodtype/soup/white_beet/set_name(obj/item/thing)
 	var/datum/reagent/soup = locate(required_drink_type) in thing.reagents
-	thing.name = soup.name
+	thing.name = soup?.name || name
 
 /obj/item/reagent_containers/cup/bowl/soup/white_beet
 	initial_reagent = /datum/reagent/consumable/nutriment/soup/white_beet
