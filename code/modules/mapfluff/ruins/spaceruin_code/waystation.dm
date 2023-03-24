@@ -74,9 +74,11 @@
 /obj/effect/mob_spawn/corpse/human/waystation/cargo_technician
 	name = "Waystation Cargo Hauler"
 	outfit = /datum/outfit/waystation/cargohauler
+	
 /obj/effect/mob_spawn/corpse/human/waystation/quartermaster
 	name = "Waystation Quartermaster"
 	outfit = /datum/outfit/waystation/qm
+	
 /obj/effect/mob_spawn/corpse/human/waystation/nanotrasenofficer
 	name = "Waystation Security Officer"
 	outfit = /datum/outfit/waystation/nanotrasenofficer
