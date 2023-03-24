@@ -3,7 +3,8 @@
 /datum/heretic_knowledge/summon/fire_shark
 	name = "Scorching Shark"
 	desc = "Allows you to transmute a pool of ash, a paper, and a sheet of plasma into a Fire Shark. \
-		Fire Sharks are fast and strong in groups, but die quickly. They are also highly resistant against fire attacks."
+		Fire Sharks are fast and strong in groups, but die quickly. They are also highly resistant against fire attacks. \
+		Fire Sharks inject phlogiston into its victims and spawn plasma once they die."
 	gain_text = "My knowledge of the universe with the energy of remains, constructed it. It gave the Fire Shark life."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/cosmic_runes,
