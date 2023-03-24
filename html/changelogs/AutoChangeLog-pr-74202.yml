@@ -1,0 +1,4 @@
+author: "cats4gold"
+delete-after: True
+changes:
+  - qol: "adds the weight class 'tiny' to paper slips"

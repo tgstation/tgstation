@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - code_imp: "splits up spacevine.dm into four files in the events folder, and a __defines file."
