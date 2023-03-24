@@ -34811,6 +34811,9 @@
 /obj/item/paper_bin,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
+"lkC" = (
+/turf/open/misc/asteroid,
+/area/station/hallway/primary/tram/center)
 "lkD" = (
 /obj/structure/table,
 /obj/item/wirecutters,
@@ -43892,7 +43895,7 @@
 	req_access = null;
 	elevator_linked_id = "dumbwaiter_lift";
 	elevator_mode = 1;
-	name = "Dumbwaiter door"
+	name = "Dumbwaiter"
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
@@ -48711,7 +48714,7 @@
 	req_access = null;
 	elevator_linked_id = "dumbwaiter_lift";
 	elevator_mode = 1;
-	name = "Dumbwaiter door"
+	name = "Dumbwaiter"
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
@@ -54128,7 +54131,7 @@
 	name = "medsciupper"
 	},
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/hallway/primary/tram/center)
 "stH" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -170052,9 +170055,9 @@ eSz
 iRT
 dPB
 izU
-whz
-abM
-whz
+izU
+lkC
+izU
 fLb
 sij
 ceC
@@ -170310,8 +170313,8 @@ qhP
 bcl
 wYw
 stE
-abM
-whz
+lkC
+izU
 aIp
 hay
 hEy
@@ -170566,9 +170569,9 @@ afy
 izU
 ghg
 seG
-whz
-abM
-whz
+izU
+lkC
+izU
 efV
 sHQ
 jzK
@@ -170823,9 +170826,9 @@ afy
 izU
 aHk
 izU
-whz
-abM
-whz
+izU
+lkC
+izU
 aIq
 oXP
 xOM
@@ -171080,9 +171083,9 @@ afy
 izU
 ghg
 ghg
-whz
-abM
-whz
+izU
+lkC
+izU
 xCc
 wGU
 xCc
@@ -171337,9 +171340,9 @@ afy
 nEl
 wYw
 aHl
-whz
-abM
-whz
+izU
+lkC
+izU
 cyh
 aIH
 jXH
@@ -171594,9 +171597,9 @@ afz
 izU
 nEl
 mhE
-whz
-abM
-whz
+izU
+lkC
+izU
 aIr
 aIJ
 aIY
