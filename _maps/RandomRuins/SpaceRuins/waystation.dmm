@@ -989,7 +989,7 @@
 "rh" = (
 /obj/machinery/conveyor{
 	dir = 8;
-	id = "cargounload"
+	id = "Supply_Ruin_Out"
 	},
 /obj/machinery/door/poddoor{
 	id = "Blastdoor_unload";
@@ -1132,10 +1132,10 @@
 "ve" = (
 /obj/machinery/conveyor{
 	dir = 4;
-	id = "cargoload"
+	id = "Supply_Ruin_In"
 	},
-/obj/structure/plasticflaps,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/plasticflaps,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "vn" = (
@@ -1459,7 +1459,7 @@
 "BZ" = (
 /obj/machinery/conveyor{
 	dir = 4;
-	id = "cargoload"
+	id = "Supply_Ruin_In"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor{
@@ -1634,21 +1634,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/waystation/kitchen)
-"Gl" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargounload"
-	},
-/obj/machinery/door/poddoor{
-	id = "cargounload";
-	name = "Supply Dock Unloading Door"
-	},
-/obj/machinery/door/poddoor{
-	id = "Blastdoor_unload";
-	name = "Supply Dock Unloading Door"
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/waystation/cargobay)
 "Gx" = (
 /turf/open/space/basic,
 /area/template_noop)
@@ -2167,7 +2152,7 @@
 "PK" = (
 /obj/machinery/conveyor{
 	dir = 8;
-	id = "cargounload"
+	id = "Supply_Ruin_Out"
 	},
 /obj/structure/plasticflaps,
 /turf/open/floor/plating,
@@ -3039,11 +3024,11 @@ Gx
 Gx
 pK
 pK
+pK
 iJ
 iJ
 iJ
-iJ
-iJ
+pK
 pK
 pK
 Gx
@@ -3101,14 +3086,14 @@ Gx
 Gx
 pK
 pK
-pK
 iJ
 iJ
 iJ
 iJ
 iJ
 pK
-Gx
+pK
+pK
 Gx
 Gx
 Gx
@@ -3161,16 +3146,16 @@ Gx
 Gx
 Gx
 Gx
-Gx
-pK
 pK
 pK
 iJ
 iJ
 iJ
 iJ
+iJ
+iJ
 pK
-Gx
+pK
 Gx
 Gx
 Gx
@@ -3224,15 +3209,15 @@ pK
 Gx
 Gx
 Gx
-Gx
-pK
 pK
 iJ
 iJ
-iJ
-iJ
-iJ
 Gx
+Gx
+iJ
+iJ
+iJ
+pK
 Gx
 Gx
 Gx
@@ -3288,13 +3273,13 @@ Gx
 Gx
 Gx
 Gx
-pK
-pK
-iJ
-iJ
-iJ
 Gx
 Gx
+Gx
+Gx
+Gx
+iJ
+pK
 Gx
 Gx
 Gx
@@ -5510,7 +5495,7 @@ Gx
 Gx
 Gx
 IQ
-Gl
+rh
 oI
 IQ
 oI
@@ -6114,7 +6099,7 @@ iJ
 iJ
 iJ
 iJ
-iJ
+pK
 pK
 pK
 pK
@@ -6175,8 +6160,8 @@ pK
 iJ
 iJ
 iJ
-iJ
-iJ
+pK
+pK
 pK
 pK
 pK
