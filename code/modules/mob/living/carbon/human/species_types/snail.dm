@@ -57,7 +57,11 @@
 	if(ishuman(former_snailperson))
 		new_species.update_mail_goodies(former_snailperson)
 
-/datum/species/snail/update_mail_goodies(mob/living/carbon/human/recipient, list/mail_goodies = list(/obj/item/reagent_containers/blood/snail))
+/datum/species/snail/update_mail_goodies(mob/living/carbon/human/recipient, list/mail_goodies)
+	if(isnull(mail_goodies))
+		mail_goodies = list(
+			/obj/item/reagent_containers/blood/snail
+		)
 	return ..()
 
 /obj/item/storage/backpack/snail

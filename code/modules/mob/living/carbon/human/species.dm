@@ -542,17 +542,17 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Proc called when mail goodies need to be updated for this species.
  *
  * Updates the mail goodies if that is required. e.g. for the blood deficiency quirk, which sends bloodbags to quirk holders, update the sent bloodpack to match the species' exotic blood.
- * Add implementation as needed for each individual species
+ * Add implementation as needed for each individual species. The base species proc should give the species the 'default' version of whatever mail goodies are required.
  * Arguments:
  * * mob/living/carbon/human/recipient - the mob receiving the mail goodies
- * * list/mail_goodies - a list of mail goodies
+ * * list/mail_goodies - a list of mail goodies. You should not be using this argument on the initial function call unless there is no other choice. You should instead add to the species' implementation of this proc.
  */
 /datum/species/proc/update_mail_goodies(mob/living/carbon/human/recipient, list/mail_goodies)
 	var/datum/quirk/blooddeficiency/blooddeficiency = recipient.get_quirk(/datum/quirk/blooddeficiency)
 	if(isnull(blooddeficiency))
 		return
-	if(isnull(mail_goodies))
-		// set mail_goodies to initial - we have to do it this way because initial will not work on lists in this version of DM
+	if(isnull(mail_goodies)) // The default case, e.g. species has no specific implementation
+		// Set blooddeficiency mail_goodies to initial, aka a type O- blood pack. We have to do it this way because initial will not work on lists in this version of DM
 		var/datum/quirk/blooddeficiency/initial_blooddeficiency = new
 		blooddeficiency.mail_goodies = initial_blooddeficiency.mail_goodies
 		qdel(initial_blooddeficiency)

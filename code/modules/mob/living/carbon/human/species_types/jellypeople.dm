@@ -64,7 +64,11 @@
 	
 	return ..()
 
-/datum/species/jelly/update_mail_goodies(mob/living/carbon/human/recipient, list/mail_goodies = list(/obj/item/reagent_containers/blood/toxin))
+/datum/species/jelly/update_mail_goodies(mob/living/carbon/human/recipient, list/mail_goodies)
+	if(isnull(mail_goodies))
+		mail_goodies = list(
+			/obj/item/reagent_containers/blood/toxin
+		)
 	return ..()
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
