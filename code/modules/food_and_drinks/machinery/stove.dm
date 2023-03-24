@@ -1,3 +1,26 @@
+/obj/machinery/stove
+	name = "stove"
+	desc = "You'd think this thing would be more useful in here."
+	icon = 'icons/obj/machines/kitchen_stove.dmi'
+	icon_state = "stove"
+	base_icon_state = "stove"
+	density = TRUE
+	pass_flags_self = PASSMACHINE | LETPASSTHROW
+	layer = BELOW_OBJ_LAYER
+	circuit = /obj/item/circuitboard/machine/stove
+	processing_flags = START_PROCESSING_MANUALLY
+	resistance_flags = FIRE_PROOF
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
+	active_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.8
+
+	// Stove icon is 32x48, we'll use a Range for preview instead
+	icon_preview = 'icons/obj/machines/kitchenmachines.dmi'
+	icon_state_preview = "range_off"
+
+/obj/machinery/stove/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/stove, container_x = -6, container_y = 16)
+
 // Soup pot for cooking soup
 // Future addention ideas:
 // - Thermostat you can stick in the pot to see in examine the temperature
@@ -75,7 +98,7 @@
 		if(reagents.total_volume > 0)
 			if(can_see_insides)
 				examine_list += span_notice("The contents of [src] have a temperature of [reagents.chem_temp]K.")
-			else if(reagents.chem_temp > 373) // boiling point
+			else if(reagents.chem_temp > WATER_BOILING_POINT) // boiling point
 				examine_list += span_notice("The contents of [src] are boiling.")
 
 	else
@@ -143,12 +166,6 @@
 
 	dump_ingredients()
 
-/obj/item/reagent_containers/cup/soup_pot/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash)
-	. = ..()
-	if(.)
-		return
-	dump_ingredients()
-
 /obj/item/reagent_containers/cup/soup_pot/proc/dump_ingredients(atom/drop_loc = drop_location())
 	for(var/obj/item/ingredient as anything in added_ingredients)
 		ingredient.forceMove(drop_loc)
@@ -166,26 +183,3 @@
 
 	filled_overlay.color = mix_color_from_reagents(reagents.reagent_list + food_reagents)
 	. += filled_overlay
-
-/obj/machinery/stove
-	name = "stove"
-	desc = "You'd think this thing would be more useful in here."
-	icon = 'icons/obj/machines/kitchen_stove.dmi'
-	icon_state = "stove"
-	base_icon_state = "stove"
-	density = TRUE
-	pass_flags_self = PASSMACHINE | LETPASSTHROW
-	layer = BELOW_OBJ_LAYER
-	circuit = /obj/item/circuitboard/machine/stove
-	processing_flags = START_PROCESSING_MANUALLY
-	resistance_flags = FIRE_PROOF
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
-	active_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.8
-
-	// Stove icon is 32x48, we'll use a Range for preview instead
-	icon_preview = 'icons/obj/machines/kitchenmachines.dmi'
-	icon_state_preview = "range_off"
-
-/obj/machinery/stove/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/stove, container_x = -6, container_y = 16)

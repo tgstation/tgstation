@@ -216,8 +216,14 @@
 	if(reagents.total_volume <= 0)
 		return
 
-	reagents.trans_to(attacked_atom, reagents.maximum_volume)
-	attacked_atom.balloon_alert(user, "spoon emptied")
+	var/amount_given = reagents.trans_to(attacked_atom, reagents.maximum_volume)
+	if(amount_given >= reagents.total_volume)
+		attacked_atom.balloon_alert(user, "spoon emptied")
+	else if(amount_given > 0)
+		attacked_atom.balloon_alert(user, "spoon partially emptied")
+	else
+		attacked_atom.balloon_alert(user, "it's full!")
+	update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /obj/item/kitchen/spoon/pre_attack_secondary(atom/attacked_atom, mob/living/user, params)
@@ -232,8 +238,11 @@
 	if(reagents.total_volume >= reagents.maximum_volume || attacked_atom.reagents.total_volume <= 0)
 		return SECONDARY_ATTACK_CALL_NORMAL
 
-	attacked_atom.reagents.trans_to(src, reagents.maximum_volume)
-	attacked_atom.balloon_alert(user, "grabbed spoonful")
+	if(attacked_atom.reagents.trans_to(src, reagents.maximum_volume))
+		attacked_atom.balloon_alert(user, "grabbed spoonful")
+	else
+		attacked_atom.balloon_alert(user, "spoon is full!")
+	update_appearance(UPDATE_OVERLAYS)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/kitchen/spoon/plastic

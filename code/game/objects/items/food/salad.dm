@@ -169,6 +169,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_CREW * 0.6
 
+	volume = SOUP_SERVING_SIZE + 5
 	gulp_size = 3
 
 /obj/item/reagent_containers/cup/bowl/Initialize(mapload)

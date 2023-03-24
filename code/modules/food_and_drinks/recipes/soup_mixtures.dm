@@ -1,5 +1,3 @@
-#define SOUP_SERVING_SIZE 25
-
 /// Abstract parent for soup reagents.
 /// These are the majority result from soup recipes,
 /// but bear in mind it will(should) have other reagents along side it.
@@ -761,7 +759,7 @@
 /datum/chemical_reaction/food/soup/mushroomsoup
 	required_reagents = list(
 		/datum/reagent/water = 40,
-		/datum/reagent/consumable/milk = 10,
+		/datum/reagent/consumable/milk = 10, // melbert todo: invalid recipe
 	)
 	required_ingredients = list(
 		/obj/item/food/grown/mushroom/chanterelle = 1,
@@ -1116,7 +1114,7 @@
 /datum/chemical_reaction/food/soup/cullen_skink
 	required_reagents = list(
 		/datum/reagent/water = 40,
-		/datum/reagent/consumable/milk = 10,
+		/datum/reagent/consumable/milk = 10, // melbert todo: invalid recipe
 		/datum/reagent/consumable/blackpepper = 4,
 	)
 	required_ingredients = list(
@@ -1633,6 +1631,3 @@
 		/datum/reagent/consumable/sugar = 8,
 	)
 	percentage_of_nutriment_converted = 0.1
-
-
-#undef SOUP_SERVING_SIZE

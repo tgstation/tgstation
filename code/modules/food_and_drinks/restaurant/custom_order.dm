@@ -127,10 +127,6 @@
 
 	return food_image
 
-/datum/custom_order/reagent/New(reagent_type)
-	. = ..()
-	src.reagent_type = reagent_type
-
 /datum/custom_order/reagent
 	/// This is the typepath of reagent we desire
 	var/datum/reagent/consumable/nutriment/soup/reagent_type
@@ -138,6 +134,10 @@
 	var/obj/item/container_needed
 	/// How many reagents is needed
 	var/reagents_needed = VENUE_BAR_MINIMUM_REAGENTS
+
+/datum/custom_order/reagent/New(reagent_type)
+	. = ..()
+	src.reagent_type = reagent_type
 
 /datum/custom_order/reagent/get_order_line(datum/venue/our_venue)
 	return "I'll take [reagents_needed]u of [initial(reagent_type.name)]"
@@ -185,8 +185,8 @@
 
 /datum/custom_order/reagent/drink/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
 	customer_pawn.visible_message(
-		span_danger("[customer_pawn] pours [order_item] right down [customer_pawn.p_their()] hatch!"),
-		span_danger("You pour [order_item] down your hatch in one go."),
+		span_danger("[customer_pawn] slurps up [order_item] in one go!"),
+		span_danger("You slurp up [order_item] in one go."),
 	)
 	return ..()
 
@@ -195,18 +195,14 @@
 
 	/// What serving we picked for the order
 	var/picked_serving
-	/// Static list of serving sizes we can order, ranging from small to large.
-	/// Little difference overall, primarily flavor (heh)
-	var/static/list/serving_sizes
 
 /datum/custom_order/reagent/soup/New(reagent_type)
 	. = ..()
-	if(!serving_sizes)
-		serving_sizes = list(
-			"small serving (15u)" = 15,
-			"medium serving (20u)" = 20,
-			"large serving (25u)" = 25,
-		)
+	var/list/serving_sizes = list(
+		"small serving (15u)" = 15,
+		"medium serving (20u)" = 20,
+		"large serving (25u)" = 25,
+	)
 	picked_serving = pick(serving_sizes)
 	reagents_needed = serving_sizes[picked_serving]
 

@@ -135,19 +135,12 @@
 /datum/component/stove/proc/on_overlay_update(obj/machinery/source, list/overlays)
 	SIGNAL_HANDLER
 
+	update_smoke()
+
 	if(!on)
-		QDEL_NULL(soup_smoke)
 		return
 
 	var/obj/real_parent = parent
-
-	// Smoke coming out of the pot
-	if(container?.reagents.total_volume > 0)
-		// Don't override existing particles, waste
-		if(isnull(soup_smoke))
-			create_smoke() // melbert todo: sidemap memes
-	else
-		QDEL_NULL(soup_smoke)
 
 	// Flames around the pot
 	var/mutable_appearance/flames = mutable_appearance(real_parent.icon, "[real_parent.base_icon_state]_on_flame", alpha = real_parent.alpha)
@@ -187,9 +180,9 @@
 	container.pixel_x = container_x
 	container.pixel_y = container_y
 
-	real_parent.update_appearance(UPDATE_OVERLAYS)
-	RegisterSignal(container.reagents, COMSIG_REAGENTS_TEMP_CHANGE, PROC_REF(update_smoke_type))
 	update_smoke_type()
+	RegisterSignal(container.reagents, COMSIG_REAGENTS_TEMP_CHANGE, PROC_REF(update_smoke_type))
+	real_parent.update_appearance(UPDATE_OVERLAYS)
 
 /datum/component/stove/proc/remove_container()
 	var/obj/real_parent = parent
@@ -197,26 +190,38 @@
 	container.vis_flags &= ~VIS_INHERIT_PLANE
 	real_parent.vis_contents -= container
 
+	UnregisterSignal(container.reagents, COMSIG_REAGENTS_TEMP_CHANGE)
+
 	container.pixel_x = container.base_pixel_x
 	container.pixel_y = container.base_pixel_y
 	container = null
 
-	real_parent.update_appearance(UPDATE_OVERLAYS)
-	UnregisterSignal(container.reagents, COMSIG_REAGENTS_TEMP_CHANGE)
 	update_smoke_type()
+	real_parent.update_appearance(UPDATE_OVERLAYS)
 
 /datum/component/stove/proc/update_smoke_type(datum/source, new_temp, old_temp)
 	SIGNAL_HANDLER
 
-	if(container?.reagents.chem_temp > SOUP_BURN_TEMP)
-		particle_type = /particles/smoke/ash
+	var/existing_temp = container?.reagents.chem_temp || 0
+	if(existing_temp >= SOUP_BURN_TEMP)
+		particle_type = /particles/smoke/steam/bad
+	else if(existing_temp >= WATER_BOILING_POINT)
+		particle_type = /particles/smoke/steam/mild
 	else
-		particle_type = initial(particle_type)
+		particle_type = null
 
-	if(soup_smoke?.particles.type != particle_type)
-		create_smoke()
+	update_smoke()
 
-/datum/component/stove/proc/create_smoke()
+/datum/component/stove/proc/update_smoke()
+	if(on && container?.reagents.total_volume > 0)
+		// Don't override existing particles, wasteful
+		if(isnull(soup_smoke) || soup_smoke.particles.type != particle_type)
+			QDEL_NULL(soup_smoke)
+			if(isnull(particle_type))
+				return
+			// melbert todo: sidemap memes
+			soup_smoke = new(parent, particle_type)
+			soup_smoke.set_particle_position(list(container_x, round(world.icon_size * 0.66), 0))
+		return
+
 	QDEL_NULL(soup_smoke)
-	soup_smoke = new(parent, particle_type)
-	soup_smoke.set_particle_position(list(container_x, round(world.icon_size * 0.66), 0))

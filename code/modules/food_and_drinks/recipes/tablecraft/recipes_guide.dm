@@ -53,8 +53,8 @@
  * Sets up information for our recipe based on the chemical reaction we have set.
  */
 /datum/crafting_recipe/food/reaction/proc/setup_chemical_reaction_details(datum/chemical_reaction/chemical_reaction)
-	reqs = chemical_reaction.required_reagents.Copy()
-	chem_catalysts = chemical_reaction.required_catalysts.Copy()
+	reqs = chemical_reaction.required_reagents?.Copy()
+	chem_catalysts = chemical_reaction.required_catalysts?.Copy()
 	if(isnull(result) && length(chemical_reaction.results))
 		result = chemical_reaction.results[1]
 		result_amount = chemical_reaction.results[result]
