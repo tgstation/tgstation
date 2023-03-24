@@ -73,3 +73,6 @@
 	if(istype(target, /obj/structure/ladder)) //special case where lightgeists can use ladders properly.
 		var/obj/structure/ladder/laddy = target
 		laddy.use(src)
+
+/mob/living/simple_animal/hostile/lightgeist/slime
+	name = "crystalline lightgeist"
