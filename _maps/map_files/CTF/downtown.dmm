@@ -87,15 +87,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
-"bF" = (
-/obj/structure/rack{
-	resistance_flags = 64
-	},
-/obj/item/clothing/head/beret/sec{
-	name = "red beret"
-	},
-/turf/open/floor/carpet/red,
-/area/centcom/ctf)
 "bH" = (
 /obj/effect/turf_decal/siding/yellow/corner,
 /turf/open/floor/iron/dark,
@@ -105,14 +96,6 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/centcom/ctf)
-"bT" = (
-/obj/structure/holohoop{
-	dir = 4;
-	resistance_flags = 64
-	},
-/obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "ce" = (
@@ -339,14 +322,6 @@
 /obj/structure/closet/crate/large{
 	resistance_flags = 64
 	},
-/turf/open/floor/iron,
-/area/centcom/ctf)
-"gO" = (
-/obj/structure/holohoop{
-	dir = 8;
-	resistance_flags = 64
-	},
-/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "gR" = (
@@ -819,6 +794,13 @@
 /obj/effect/turf_decal/trimline/red/corner,
 /turf/open/floor/iron,
 /area/centcom/ctf)
+"pc" = (
+/obj/item/toy/basketball,
+/obj/effect/turf_decal/tile/green/fourcorners,
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/centcom/ctf)
 "pm" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -866,6 +848,15 @@
 	resistance_flags = 64
 	},
 /turf/open/floor/wood,
+/area/centcom/ctf)
+"rg" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/beret/sec{
+	name = "red beret"
+	},
+/turf/open/floor/carpet/red,
 /area/centcom/ctf)
 "rk" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1370,6 +1361,14 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/ctf)
+"Cb" = (
+/obj/structure/hoop{
+	dir = 8;
+	resistance_flags = 64
+	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron,
+/area/centcom/ctf)
 "Cg" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
@@ -1694,6 +1693,14 @@
 	dir = 1
 	},
 /obj/structure/sign/poster/contraband/random/directional/north,
+/turf/open/floor/iron,
+/area/centcom/ctf)
+"IK" = (
+/obj/structure/hoop{
+	dir = 4;
+	resistance_flags = 64
+	},
+/obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "IO" = (
@@ -2460,13 +2467,6 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/dark,
-/area/centcom/ctf)
-"ZA" = (
-/obj/item/toy/beach_ball/holoball,
-/obj/effect/turf_decal/tile/green/fourcorners,
-/turf/open/floor/iron/dark/side{
-	dir = 8
-	},
 /area/centcom/ctf)
 "ZM" = (
 /obj/structure/barricade/sandbags{
@@ -3658,7 +3658,7 @@ jS
 jS
 JS
 Lr
-bT
+IK
 Lr
 xK
 TD
@@ -3772,7 +3772,7 @@ zA
 jS
 JS
 lz
-ZA
+pc
 jf
 xK
 TD
@@ -3924,7 +3924,7 @@ jS
 jS
 JS
 or
-gO
+Cb
 or
 xK
 da
@@ -4362,7 +4362,7 @@ td
 El
 BH
 Am
-bF
+rg
 SQ
 iz
 ql
