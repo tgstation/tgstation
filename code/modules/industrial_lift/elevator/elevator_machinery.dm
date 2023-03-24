@@ -665,8 +665,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 	var/should_process = process() != PROCESS_KILL
 	if(should_process)
 		begin_processing()
-		return
+		return TRUE
 	end_processing()
+	return TRUE
 
 /obj/machinery/lift_indicator/process()
 	var/datum/lift_master/lift = lift_ref?.resolve()
