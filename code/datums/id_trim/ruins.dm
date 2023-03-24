@@ -137,7 +137,7 @@
 	assignment = "Head Occultist"
 	access = list(ACCESS_AWAY_SCIENCE, ACCESS_AWAY_COMMAND)
 
-//Trims for waystation.dm space ruin
+//Trims for waystation.dmm space ruin
 /datum/id_trim/away/waystation/cargo_technician
 	assignment = "Waystation Cargo Hauler"
 	trim_state = "trim_cargotechnician"
