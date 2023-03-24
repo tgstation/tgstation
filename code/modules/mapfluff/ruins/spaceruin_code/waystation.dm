@@ -27,11 +27,11 @@
 	DELAY 25
 	SAY Your main objective is to secure highly classified documents about recent Nanotrasen expansion in the Spinward sector.
 	DELAY 20
-	SAY The documents are located in the secure storage room of the waystation.
+	SAY The documents are located in the secure storage room.
 	DELAY 25
-	SAY As for getting to the waystation itself, You lot will be assault-podded from a smuggling ship.
+	SAY As for getting there, you lot will be assault-podded from a smuggling ship.
 	DELAY 30
-	SAY Security for the waystation is lax, With just a single security officer guarding the entire waystation.
+	SAY Security there is lax, with just a single security officer guarding the entire station.
 	DELAY 25
 	SAY Once you've completed your objectives, Radio-in the smugglers for them to pick you up.
 	DELAY 10
