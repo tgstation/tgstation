@@ -575,6 +575,10 @@
 /area/ruin/space/has_grav/derelictsulaco
 	name = "\improper Derelict Sulaco"
 
+// The abandoned capsule 'The Traveler's Rest'
+/area/ruin/space/has_grav/travelers_rest
+	name = "\improper Traveler's Rest"
+
 // Ruin of Waystation
 /area/ruin/space/has_grav/waystation
 	name = "Waystation"
