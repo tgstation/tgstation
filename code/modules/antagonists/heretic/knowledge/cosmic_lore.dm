@@ -59,8 +59,9 @@
 /datum/heretic_knowledge/cosmic_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 
-	to_chat(target, span_danger("A cosmic ring appeared above your head!"))
-	target.apply_status_effect(/datum/status_effect/star_mark)
+	if(!istype(target, /mob/living/basic/star_gazer))
+		to_chat(target, span_danger("A cosmic ring appeared above your head!"))
+		target.apply_status_effect(/datum/status_effect/star_mark)
 	new /obj/effect/forcefield/cosmic_field(get_turf(source))
 
 /datum/heretic_knowledge/spell/cosmic_runes

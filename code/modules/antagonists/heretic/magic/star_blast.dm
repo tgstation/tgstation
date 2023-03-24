@@ -33,7 +33,7 @@
 
 /obj/projectile/magic/star_ball/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()
-	if(isliving(target))
+	if(isliving(target) && !istype(target, /mob/living/basic/star_gazer))
 		var/mob/living/living_target = target
 		living_target.apply_status_effect(/datum/status_effect/star_mark)
 

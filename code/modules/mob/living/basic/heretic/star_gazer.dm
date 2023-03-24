@@ -16,8 +16,8 @@
 	health = 3000
 
 	obj_damage = 400
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	melee_damage_lower = 30
+	melee_damage_upper = 30
 	combat_mode = TRUE
 	sentience_type = SENTIENCE_BOSS
 	attack_verb_continuous = "ravages"
@@ -68,6 +68,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/attack_obstacle_in_path/pet_target/star_gazer,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/star_gazer,
@@ -81,7 +82,7 @@
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/star_gazer
 
 /datum/ai_behavior/basic_melee_attack/star_gazer
-	action_cooldown = 0.8 SECONDS
+	action_cooldown = 0.6 SECONDS
 
 /datum/ai_behavior/basic_melee_attack/star_gazer/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
@@ -101,9 +102,13 @@
 /datum/ai_planning_subtree/attack_obstacle_in_path/star_gazer
 	attack_behaviour = /datum/ai_behavior/attack_obstructions/star_gazer
 
+/datum/ai_planning_subtree/attack_obstacle_in_path/pet_target/star_gazer
+	attack_behaviour = /datum/ai_behavior/attack_obstructions/star_gazer
+
 /datum/ai_behavior/attack_obstructions/star_gazer
-	action_cooldown = 0.5 SECONDS
+	action_cooldown = 0.4 SECONDS
 	can_attack_turfs = TRUE
+	can_attack_dense_objects = TRUE
 
 /datum/pet_command/point_targetting/attack/star_gazer
 	speech_commands = list("attack", "sic", "kill", "slash them")
