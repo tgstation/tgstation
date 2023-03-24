@@ -23,6 +23,11 @@
 	if (CONFIG_GET(flag/log_prayer))
 		WRITE_LOG(GLOB.world_game_log, "PRAY: [text]")
 
+/// Logging for music requests
+/proc/log_music_req(text)
+	if (CONFIG_GET(flag/log_music_req))
+		WRITE_LOG(GLOB.world_game_log, "MUSIC REQUEST: [text]")
+
 /// Logging for logging in & out of the game, with error messages.
 /proc/log_access(text)
 	if (CONFIG_GET(flag/log_access))
