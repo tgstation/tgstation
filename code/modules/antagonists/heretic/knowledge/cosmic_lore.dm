@@ -125,17 +125,61 @@
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
-	desc = "Your blade now deals damage to people's cells through cosmic radiation."
+	desc = "Your blade now deals damage to people's cells through cosmic radiation. \
+		You can combo your attacks by hitting a different target every single time between three targets. \
+		The two other targets hit previously will recieve extra damage. The combo resets after two seconds \
+		or if the second or third target are hit again."
 	gain_text = "As he ascended to be a watcher, he needed to gather knowledge. \
 		He started to draw it at his home."
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_expansion)
 	route = PATH_COSMIC
+	/// Storage for the second target.
+	var/datum/weakref/second_target
+	/// Storage for the third target.
+	var/datum/weakref/third_target
+	/// When this timer completes we reset our combo.
+	var/combo_timer
 
 /datum/heretic_knowledge/blade_upgrade/cosmic/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(source == target)
 		return
+	if(combo_timer)
+		deltimer(combo_timer)
+	combo_timer = addtimer(CALLBACK(src, PROC_REF(reset_combo), source), 2 SECONDS, TIMER_STOPPABLE)
+	var/mob/living/second_target_resolved = second_target?.resolve()
+	var/mob/living/third_target_resolved = third_target?.resolve()
+	target.adjustFireLoss(4)
+	target.adjustCloneLoss(2)
+	if(target == second_target_resolved || target == third_target_resolved)
+		reset_combo(source)
+		return
+	if(second_target_resolved && third_target_resolved && second_target_resolved == third_target_resolved)
+		reset_combo(source)
+		return
+	if(second_target_resolved)
+		new /obj/effect/temp_visual/cosmic_explosion(get_turf(second_target_resolved))
+		playsound(get_turf(second_target_resolved), 'sound/magic/cosmic_energy.ogg', 25, FALSE)
+		second_target_resolved.adjustFireLoss(10)
+		second_target_resolved.adjustCloneLoss(6)
+		if(third_target_resolved)
+			new /obj/effect/temp_visual/cosmic_domain(get_turf(third_target_resolved))
+			playsound(get_turf(third_target_resolved), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
+			third_target_resolved.adjustFireLoss(20)
+			third_target_resolved.adjustCloneLoss(12)
+		third_target = second_target
+	second_target = WEAKREF(target)
 
-	target.apply_damage_type(damage = 5, damagetype = CLONE)
+/// Resets the combo.
+/datum/heretic_knowledge/blade_upgrade/cosmic/proc/reset_combo(mob/living/source)
+	var/mob/living/second_target_resolved = second_target?.resolve()
+	var/mob/living/third_target_resolved = third_target?.resolve()
+	if(second_target_resolved)
+		second_target = null
+	if(third_target_resolved)
+		third_target = null
+	new /obj/effect/temp_visual/cosmic_cloud(get_turf(source))
+	if(combo_timer)
+		deltimer(combo_timer)
 
 /datum/heretic_knowledge/spell/cosmic_expansion
 	name = "Cosmic Expansion"
