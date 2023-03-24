@@ -7,6 +7,9 @@
 
 // BEGIN_FILE_DIR
 #define FILE_DIR .
+#define FILE_DIR "backgrounds"
+#define FILE_DIR "foregrounds"
+#define FILE_DIR "masks"
 // END_FILE_DIR
 
 // BEGIN_PREFERENCES
