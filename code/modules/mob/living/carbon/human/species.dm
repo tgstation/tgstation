@@ -552,6 +552,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	
 	if(!isnull(blooddeficiency))
 		if(isnull(mail_goodies)) // The default case, e.g. species has no specific implementation
+			if(HAS_TRAIT(recipient, TRAIT_NOBLOOD) && isnull(recipient.dna.species.exotic_blood)) // no blood packs should be sent in this case (like if a mob transforms into a plasmaman)
+				blooddeficiency.mail_goodies = null
+				return 
 			// Set blooddeficiency mail_goodies to initial, aka a type O- blood pack. We have to do it this way because initial will not work on lists in this version of DM
 			var/datum/quirk/blooddeficiency/initial_blooddeficiency = new
 			blooddeficiency.mail_goodies = initial_blooddeficiency.mail_goodies
