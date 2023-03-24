@@ -71,7 +71,7 @@
 
 	// for making sure the roundstart species has the right blood pack sent to them
 	var/mob/living/carbon/human/carbon_target = quirk_holder
-	carbon_target.dna.species.update_mail_goodies(carbon_target)
+	carbon_target.dna.species.update_quirk_mail_goodies(carbon_target, src)
 
 /**
  * Makes the mob lose blood from having the blood deficiency quirk, if possible

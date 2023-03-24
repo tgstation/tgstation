@@ -47,9 +47,11 @@
 	if(ishuman(former_podperson))
 		new_species.update_mail_goodies(former_podperson)
 
-/datum/species/pod/update_mail_goodies(mob/living/carbon/human/recipient, list/mail_goodies)
-	if(isnull(mail_goodies))
-		mail_goodies = list(
+/datum/species/pod/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
+	if(isnull(quirk))
+		return
+	if(quirk.type == /datum/quirk/blooddeficiency)
+		mail_goodies += list(
 			/obj/item/reagent_containers/blood/podperson
 		)
 	return ..()
