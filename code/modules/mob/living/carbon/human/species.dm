@@ -350,8 +350,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				qdel(existing_organ)
 			continue
 
-		if(existing_organ?.type == slot_mutantorgans[slot])
-			continue // we don't want to remove organs that are not the default for this species
+		if(!isnull(old_species))
+			if(existing_organ?.type != old_species.slot_mutantorgans[slot])
+				continue // we don't want to remove organs that are not the default for this species
 
 		if(visual_only && !initial(new_organ.visual))
 			continue
@@ -365,7 +366,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(remove_existing)
 			if(existing_organ.zone in excluded_zones)
 				remove_existing = FALSE
-			else if(existing_organ.organ_flags & (ORGAN_UNREMOVABLE | ORGAN_SYNTHETIC))
+			else if(existing_organ.organ_flags & ORGAN_UNREMOVABLE)
 				remove_existing = FALSE
 
 			if(remove_existing)
