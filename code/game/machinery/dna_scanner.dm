@@ -91,7 +91,7 @@
 			return C
 	return null
 
-/obj/machinery/dna_scannernew/close_machine(mob/living/carbon/user)
+/obj/machinery/dna_scannernew/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	if(!state_open)
 		return FALSE
 
@@ -104,7 +104,7 @@
 
 	return TRUE
 
-/obj/machinery/dna_scannernew/open_machine()
+/obj/machinery/dna_scannernew/open_machine(density_to_set = FALSE)
 	if(state_open)
 		return FALSE
 
@@ -129,7 +129,7 @@
 		update_appearance()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
-	if(default_pry_open(I))
+	if(default_pry_open(I, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
 		return
 
 	if(default_deconstruction_crowbar(I))

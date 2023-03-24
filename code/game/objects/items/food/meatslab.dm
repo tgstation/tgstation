@@ -352,7 +352,7 @@
 		/datum/reagent/consumable/cooking_oil = 3,
 	)
 	tastes = list("meat" = 4, "tranquility" = 1)
-	foodtypes = RAW | MEAT
+	foodtypes = RAW | MEAT | GORE
 
 /obj/item/food/meat/slab/gondola/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/gondola, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
