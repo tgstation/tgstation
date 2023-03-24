@@ -30664,7 +30664,7 @@
 /turf/open/openspace/icemoon,
 /area/station/science/server)
 "jIW" = (
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "jIX" = (
@@ -54533,7 +54533,7 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/mine/mechbay)
 "rmD" = (
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
 "rmM" = (

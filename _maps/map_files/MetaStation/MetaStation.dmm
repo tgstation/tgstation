@@ -7148,7 +7148,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "cFe" = (
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "cFp" = (
@@ -56593,7 +56593,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "tWr" = (
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "tWE" = (
