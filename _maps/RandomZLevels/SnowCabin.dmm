@@ -46,13 +46,16 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
 /obj/structure/plaque/static_plaque/golden{
 	desc = "Holding the record for about 500 years now.";
 	name = "The Most Annoying Organization Ever";
 	pixel_y = 32
-	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
@@ -1278,8 +1281,14 @@
 /area/awaymission/cabin/lumbermill)
 "eB" = (
 /obj/structure/reagent_dispensers/water_cooler,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
@@ -1366,8 +1375,12 @@
 /area/awaymission/cabin)
 "eP" = (
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
@@ -1511,8 +1524,14 @@
 /area/awaymission/cabin/lumbermill)
 "fg" = (
 /obj/structure/filingcabinet/security,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
@@ -1521,8 +1540,11 @@
 	desc = "Used to manage tracking implants placed inside criminals and the prison cells.";
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
@@ -1534,21 +1556,34 @@
 /obj/machinery/computer/records/security{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fl" = (
 /obj/structure/filingcabinet/security,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fm" = (
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -1560,20 +1595,33 @@
 	product_ads = "Sufficiently healthy.;Mmm! So good!;Have a meal.;You need food to live!";
 	product_slogans = "Enjoy your meal."
 	},
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/iron/dark,
-/area/awaymission/cabin/caves/mountain)
-"fp" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
-"fq" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
+"fp" = (
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/cabin/caves/mountain)
+"fq" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
@@ -1593,9 +1641,13 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fu" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fw" = (
@@ -1639,6 +1691,12 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/snowforest)
 "fE" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
 /obj/structure/ladder/unbreakable{
 	desc = "Who left the grate open?";
 	height = 1;
@@ -1647,19 +1705,19 @@
 	name = "Grate";
 	pixel_y = -10
 	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
-	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fF" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
 /obj/effect/light_emitter{
 	name = "outdoor light";
 	set_cap = 3;
 	set_luminosity = 6
-	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
@@ -1677,14 +1735,22 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
+"fJ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/iron/dark,
+/area/awaymission/cabin/caves/mountain)
 "fK" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
 /obj/effect/light_emitter{
 	name = "outdoor light";
 	set_cap = 3;
 	set_luminosity = 6
-	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
@@ -1696,19 +1762,30 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "fM" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fN" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fO" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fP" = (
@@ -3565,12 +3642,12 @@
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/snowforest)
 "qV" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/banhammer{
 	desc = "I'm sorry, sir, but fun actions are illegal.";
 	name = "fun baton"
 	},
 /obj/structure/table,
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "rb" = (
@@ -3592,11 +3669,11 @@
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/snowforest)
 "so" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/displaycase{
 	start_showpiece_type = /obj/item/dice/d6/space;
 	desc = "Contains an artifact stolen from dice collector before he could enjoy his day."
 	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "su" = (
@@ -3613,6 +3690,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "sK" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/head/hats/warden/police{
 	desc = "I am the law!"
@@ -3624,16 +3702,15 @@
 /obj/item/clothing/under/rank/security/officer/spacepol{
 	desc = "Anyone enjoying their time while working in a megacorporation, planetary government, or band of pirates is under the jurisdiction of the fun police."
 	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "sY" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/light_emitter{
 	name = "outdoor light";
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/indestructible,
 /area/awaymission/cabin/caves/mountain)
 "td" = (
@@ -3686,12 +3763,12 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "ud" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/showcase/mecha/marauder{
 	desc = "Used by vigilantes in the past to fight ruffians causing trouble in neighborhoods and space stations.";
 	icon_state = "seraph";
 	name = "illegally acquired seraph"
 	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/indestructible,
 /area/awaymission/cabin/caves/mountain)
 "um" = (
@@ -3879,12 +3956,12 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "yv" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/food/egg/rainbow{
 	desc = "Was an egg really worth this much effort?";
 	name = "easter egg"
 	},
 /obj/structure/table,
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "yy" = (
@@ -4010,10 +4087,10 @@
 	},
 /area/awaymission/cabin/caves)
 "AC" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/sign/poster/official/no_erp{
 	pixel_y = -32
 	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "AQ" = (
@@ -4089,6 +4166,7 @@
 	},
 /area/awaymission/cabin/caves)
 "Fq" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/sign/poster/official/space_cops{
 	pixel_y = 32
 	},
@@ -4097,7 +4175,6 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "Fz" = (
@@ -4243,11 +4320,11 @@
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "LE" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/nullrod/claymore/multiverse{
 	anchored = 1;
 	force = 4
 	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/indestructible,
 /area/awaymission/cabin/caves/mountain)
 "LF" = (
@@ -4367,12 +4444,12 @@
 	mouse_opacity = 0;
 	name = "\improper secret escape route"
 	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/light_emitter{
 	name = "outdoor light";
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/indestructible,
 /area/awaymission/cabin/caves/mountain)
 "Ow" = (
@@ -4412,6 +4489,7 @@
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "Qf" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/light_emitter{
 	name = "outdoor light";
 	set_cap = 3;
@@ -4427,7 +4505,6 @@
 	pixel_y = 32;
 	question = "We have a case of fun happening. Get out there and do your job."
 	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "QA" = (
@@ -4532,10 +4609,10 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "RY" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/sign/poster/official/do_not_question{
 	pixel_x = 32
 	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "Sd" = (
@@ -4787,12 +4864,12 @@
 	},
 /area/awaymission/cabin/snowforest)
 "Xy" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/light_emitter{
 	name = "outdoor light";
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "XO" = (
@@ -7663,7 +7740,7 @@ cx
 cy
 fq
 fq
-fN
+fJ
 fN
 fQ
 sY
@@ -7920,7 +7997,7 @@ cx
 eB
 fr
 fq
-fN
+fJ
 fN
 cx
 cx
@@ -8177,7 +8254,7 @@ cx
 eP
 fs
 fq
-fN
+fJ
 fN
 fP
 QA
@@ -8434,7 +8511,7 @@ cx
 cy
 fq
 fq
-fN
+fJ
 fN
 fR
 sY
@@ -8691,7 +8768,7 @@ cx
 cx
 fq
 fq
-fN
+fJ
 fN
 cx
 cx
@@ -8948,7 +9025,7 @@ cx
 cy
 fq
 fq
-fN
+fJ
 fN
 fP
 yJ
@@ -9205,7 +9282,7 @@ cx
 cx
 fq
 fE
-fN
+fJ
 fN
 fS
 sY
@@ -9462,7 +9539,7 @@ cx
 cy
 fq
 fq
-fN
+fJ
 fN
 cx
 cx
@@ -9719,7 +9796,7 @@ cx
 fg
 fr
 fq
-fN
+fJ
 fN
 fT
 Pd
@@ -10747,7 +10824,7 @@ cx
 fl
 fs
 fq
-fN
+fJ
 fN
 fV
 sY
@@ -11004,7 +11081,7 @@ cx
 cy
 fq
 fq
-fN
+fJ
 fN
 cx
 cx
@@ -11261,7 +11338,7 @@ cx
 cx
 fq
 fq
-fN
+fJ
 fN
 fP
 LE
@@ -11518,7 +11595,7 @@ cx
 cy
 fq
 fq
-fN
+fJ
 fN
 fW
 sY
@@ -11775,7 +11852,7 @@ cx
 cx
 fq
 fq
-fN
+fJ
 fN
 cx
 cx
@@ -12032,7 +12109,7 @@ cx
 cy
 fq
 fq
-fN
+fJ
 fN
 fP
 IV
@@ -12289,7 +12366,7 @@ cx
 fm
 fr
 fq
-fN
+fJ
 fN
 fX
 sY
@@ -12546,7 +12623,7 @@ cx
 fn
 fs
 fq
-fN
+fJ
 fN
 cx
 cx
@@ -12803,7 +12880,7 @@ cx
 cy
 fq
 fq
-fN
+fJ
 fN
 fP
 ud
