@@ -366,6 +366,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/should_have = new_organ.get_availability(src, organ_holder)
 
 		// Check for an existing organ, and if there is one check to see if we should remove it
+		var/health_pct = 1
 		var/remove_existing = !isnull(existing_organ)
 		if(remove_existing)
 			if(existing_organ.zone in excluded_zones)
@@ -374,6 +375,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				remove_existing = FALSE
 
 			if(remove_existing)
+				health_pct = (existing_organ.maxHealth - existing_organ.damage) / existing_organ.maxHealth
 				if(slot == ORGAN_SLOT_BRAIN)
 					var/obj/item/organ/internal/brain/existing_brain = existing_organ
 					if(!existing_brain.decoy_override)
@@ -389,6 +391,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			existing_organ.set_organ_damage(0)
 		else if(should_have && !(new_organ.zone in excluded_zones))
 			used_neworgan = TRUE
+			new_organ.set_organ_damage(new_organ.maxHealth * (1 - health_pct))
 			new_organ.Insert(organ_holder, special = TRUE, drop_if_replaced = FALSE)
 
 		if(!used_neworgan)
