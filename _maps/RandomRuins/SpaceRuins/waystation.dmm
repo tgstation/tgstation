@@ -95,6 +95,10 @@
 "bW" = (
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
+"ch" = (
+/mob/living/basic/viscerator,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/waystation/securestorage)
 "cn" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /turf/open/floor/wood,
@@ -533,7 +537,9 @@
 "jN" = (
 /obj/effect/turf_decal/bot_red,
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/ballistic/automatic/wt550,
+/obj/item/gun/ballistic/automatic/wt550{
+	pin = /obj/item/firing_pin/explorer
+	},
 /obj/item/ammo_box/magazine/wt550m9,
 /obj/item/ammo_box/magazine/wt550m9,
 /turf/open/floor/iron/dark,
@@ -961,7 +967,13 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/storage/box/firingpins,
+/obj/item/firing_pin/explorer,
+/obj/item/firing_pin/explorer{
+	pixel_y = 4
+	},
+/obj/item/firing_pin/explorer{
+	pixel_y = -4
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
 "rh" = (
@@ -1117,6 +1129,7 @@
 /obj/machinery/button/door/directional/north{
 	name = "Vault Lockdown"
 	},
+/mob/living/basic/viscerator,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
 "vw" = (
@@ -2566,6 +2579,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/mob/living/basic/viscerator,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
 "WW" = (
@@ -5223,7 +5237,7 @@ pK
 yi
 Ok
 jN
-er
+ch
 nD
 Ar
 yi
