@@ -1,7 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ar" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/siding/green,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "au" = (
 /obj/structure/table/wood,
@@ -364,7 +365,8 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "gD" = (
 /obj/machinery/vending/cigarette,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/siding/green,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "gT" = (
 /obj/structure/sink/kitchen/directional/south{
@@ -438,7 +440,11 @@
 /area/ruin/space/has_grav/waystation/securestorage)
 "ix" = (
 /obj/item/kirbyplants/random,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/siding/green{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "iy" = (
 /obj/effect/decal/cleanable/dirt,
@@ -629,7 +635,10 @@
 /area/ruin/space/has_grav/waystation/securestorage)
 "lp" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/siding/green{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "lt" = (
 /turf/open/floor/catwalk_floor,
@@ -766,6 +775,8 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/box/matches,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/dorms)
 "nD" = (
@@ -1340,7 +1351,10 @@
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/siding/green/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "zc" = (
@@ -1572,7 +1586,10 @@
 /area/ruin/space/has_grav/waystation/cargooffice)
 "El" = (
 /obj/machinery/vending/sovietsoda,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/siding/green{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "Ez" = (
 /obj/machinery/deepfryer,
@@ -2014,6 +2031,7 @@
 "Mx" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/qm)
 "MI" = (
@@ -2121,7 +2139,7 @@
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/dark{
+/obj/effect/turf_decal/siding/green/corner{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2519,7 +2537,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Vl" = (
-/obj/structure/table/wood,
+/obj/structure/bookcase/random,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/qm)
 "VE" = (
@@ -2567,6 +2585,14 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/waystation/assaultpod)
+"WD" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/siding/green{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/waystation/dorms)
 "WF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -2585,6 +2611,7 @@
 	pixel_x = -3;
 	pixel_y = -6
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/dorms)
 "WS" = (
@@ -2626,7 +2653,7 @@
 /obj/structure/chair/stool/directional{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/dark{
+/obj/effect/turf_decal/siding/green{
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2720,16 +2747,27 @@
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
+"ZA" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/green/end,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/dorms)
 "ZD" = (
 /obj/structure/chair/stool/directional{
 	dir = 4
 	},
 /obj/effect/mob_spawn/corpse/human/assistant,
 /obj/effect/decal/cleanable/blood,
-/obj/effect/turf_decal/siding/dark{
+/obj/effect/turf_decal/siding/green{
 	dir = 10
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "ZG" = (
@@ -2784,7 +2822,7 @@
 /obj/structure/chair/stool/directional{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/dark{
+/obj/effect/turf_decal/siding/green{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -4135,7 +4173,7 @@ pg
 Xh
 ZP
 ZD
-jV
+pg
 EP
 TY
 QL
@@ -4193,7 +4231,7 @@ KD
 MY
 ox
 jV
-ix
+WD
 Ol
 Je
 yS
@@ -4385,7 +4423,7 @@ ez
 Dw
 do
 gf
-kq
+ZA
 Kx
 xw
 jV
