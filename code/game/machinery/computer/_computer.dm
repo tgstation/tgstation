@@ -19,6 +19,7 @@
 	var/time_to_unscrew = 2 SECONDS
 	/// Are we authenticated to use this? Used by things like comms console, security and medical data, and apc controller.
 	var/authenticated = FALSE
+	var/clockwork = FALSE
 
 /datum/armor/machinery_computer
 	fire = 40
@@ -33,6 +34,22 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE
 	return TRUE
+
+/obj/machinery/computer/ratvar_act()
+	if(!clockwork)
+		clockwork = TRUE
+		icon_screen = "ratvar[rand(1, 4)]"
+		icon_keyboard = "ratvar_key[rand(1, 6)]"
+		icon_state = "ratvarcomputer[rand(1, 4)]"
+		update_icon()
+
+/obj/machinery/computer/narsie_act()
+	if(clockwork && clockwork != initial(clockwork)) //if it's clockwork but isn't normally clockwork
+		clockwork = FALSE
+		icon_screen = initial(icon_screen)
+		icon_keyboard = initial(icon_keyboard)
+		icon_state = initial(icon_state)
+		update_icon()
 
 /obj/machinery/computer/update_overlays()
 	. = ..()

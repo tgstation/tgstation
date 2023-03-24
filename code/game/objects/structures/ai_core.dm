@@ -341,6 +341,8 @@
 	if(!the_brainmob.mind || the_brainmob.suiciding)
 		return FALSE
 	the_brainmob.mind.remove_antags_for_borging()
+	if(!istype(core_mmi.laws, /datum/ai_laws/ratvar))
+		remove_servant_of_ratvar(the_brainmob, TRUE)
 	if(!the_brainmob.mind.has_ever_been_ai)
 		SSblackbox.record_feedback("amount", "ais_created", 1)
 	var/mob/living/silicon/ai/ai_mob = null

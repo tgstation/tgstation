@@ -35,6 +35,7 @@
 	var/blind_drop_ready = TRUE
 
 	density = FALSE //this is a wallmount
+	clockwork = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 

@@ -28,6 +28,14 @@
 			stored_pulling.forceMove(src)
 			H.start_pulling(stored_pulling, supress_message = TRUE)
 
+/turf/closed/wall/mineral/cult/ratvar_act()
+	. = ..()
+	if(istype(src, /turf/closed/wall/mineral/cult)) //if we haven't changed type
+		var/previouscolor = color
+		color = "#FAE48C"
+		animate(src, color = previouscolor, time = 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+
 /turf/closed/wall/mineral/cult/artificer
 	name = "runed stone wall"
 	desc = "A cold stone wall engraved with indecipherable symbols. Studying them causes your head to pound."
@@ -104,7 +112,9 @@
 	icon_state = "clockwork_wall-0"
 	base_icon_state = "clockwork_wall"
 	turf_flags = IS_SOLID
-	smoothing_flags = SMOOTH_BITMASK
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SILVER_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_SILVER_WALLS)
 	sheet_type = /obj/item/stack/sheet/bronze
 	sheet_amount = 2
 	girder_type = /obj/structure/girder/bronze

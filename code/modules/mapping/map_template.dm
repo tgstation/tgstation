@@ -129,11 +129,11 @@
 		affected_turf.air_update_turf(TRUE, TRUE)
 		affected_turf.levelupdate()
 
-/datum/map_template/proc/load_new_z(secret = FALSE)
+/datum/map_template/proc/load_new_z(secret = FALSE, ztraits = FALSE)
 	var/x = round((world.maxx - width) * 0.5) + 1
 	var/y = round((world.maxy - height) * 0.5) + 1
 
-	var/datum/space_level/level = SSmapping.add_new_zlevel(name, secret ? ZTRAITS_AWAY_SECRET : ZTRAITS_AWAY, contain_turfs = FALSE)
+	var/datum/space_level/level = SSmapping.add_new_zlevel(name, secret ? ZTRAITS_AWAY_SECRET : (ztraits ? ztraits : ZTRAITS_AWAY), contain_turfs = FALSE)
 	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top, new_z = TRUE)
 	var/list/bounds = parsed.bounds
 	if(!bounds)

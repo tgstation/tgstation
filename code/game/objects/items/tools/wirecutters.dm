@@ -67,6 +67,14 @@
 	playsound(loc, usesound, 50, TRUE, -1)
 	return BRUTELOSS
 
+/obj/item/wirecutters/brass
+	name = "brass wirecutters"
+	desc = "A pair of wirecutters made of brass. The handle feels freezing cold to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	icon_state = "cutters_brass"
+	random_color = FALSE
+	toolspeed = 0.5
+
 /obj/item/wirecutters/abductor
 	name = "alien wirecutters"
 	desc = "Extremely sharp wirecutters, made out of a silvery-green metal."

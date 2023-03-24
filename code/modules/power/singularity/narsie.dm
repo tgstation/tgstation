@@ -35,6 +35,8 @@
 	var/soul_goal = 0
 	var/souls = 0
 	var/resolved = FALSE
+	var/clashing = FALSE
+	var/next_attack_tick
 
 /obj/narsie/Initialize(mapload)
 	. = ..()
@@ -115,6 +117,26 @@
 /obj/narsie/process()
 	var/datum/component/singularity/singularity_component = singularity.resolve()
 
+	/*if(clashing)
+		//Oh god what is it doing...
+		singularity_component?.target = clashing
+		if(get_dist(src, clashing) < 5)
+			if(next_attack_tick < world.time)
+				next_attack_tick = world.time + rand(50, 100)
+				to_chat(world, span_danger("[pick("You hear the scratching of cogs.","You hear the clanging of pipes.","You feel your bones start to rust...")]"))
+				SEND_SOUND(world, 'sound/magic/clockwork/narsie_attack.ogg')
+				SpinAnimation(4, 0)
+				for(var/mob/living/M in GLOB.player_list)
+					shake_camera(M, 25, 6)
+					M.Knockdown(10)
+				if(prob(max(SSticker.mode?.cult.len/2, 15)))
+					SEND_SOUND(world, 'sound/magic/clockwork/anima_fragment_death.ogg')
+					to_chat(world, span_narsie("You really thought you could best me twice?"))
+					QDEL_NULL(clashing)
+					for(var/datum/mind/M as() in GLOB.servants_of_ratvar)
+						to_chat(M, span_userdanger("You feel a stabbing pain in your chest... This can't be happening!"))
+						M.current?.dust()
+*/
 	if (!isnull(singularity_component) && (!singularity_component?.target || prob(NARSIE_CHANCE_TO_PICK_NEW_TARGET)))
 		pickcultist()
 

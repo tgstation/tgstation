@@ -372,6 +372,13 @@
 		new remains(loc)
 	qdel(src)
 
+/obj/structure/girder/ratvar_act()
+	if(anchored)
+		new /obj/structure/destructible/clockwork/wall_gear(loc)
+	else
+		new /obj/structure/destructible/clockwork/wall_gear/displaced(loc)
+	qdel(src)
+
 /obj/structure/girder/narsie_act()
 	new /obj/structure/girder/cult(loc)
 	qdel(src)

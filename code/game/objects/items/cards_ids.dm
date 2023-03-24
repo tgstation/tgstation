@@ -1020,6 +1020,8 @@
 /obj/item/card/id/advanced/get_trim_sechud_icon_state()
 	return sechud_icon_state_override || ..()
 
+/obj/item/card/id/advanced
+
 /obj/item/card/id/advanced/rainbow
 	name = "rainbow identification card"
 	desc = "A rainbow card, promoting fun in a 'business proper' sense!"
@@ -1068,6 +1070,11 @@
 		update_appearance(UPDATE_ICON)
 	else
 		..()
+
+/obj/item/card/id/advanced/ratvar
+	name = "servant's ID"
+	icon_state = "ratvar"
+	access = list(ACCESS_CLOCKCULT, ACCESS_MAINT_TUNNELS)
 
 /obj/item/card/id/advanced/centcom
 	name = "\improper CentCom ID"

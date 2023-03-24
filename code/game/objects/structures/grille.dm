@@ -357,3 +357,28 @@
 /obj/structure/grille/broken/Initialize(mapload)
 	. = ..()
 	take_damage(max_integrity * 0.6)
+
+/obj/structure/grille/ratvar_act()
+	new /obj/structure/grille/ratvar(src.loc)
+	qdel(src)
+
+/obj/structure/grille/ratvar
+	icon_state = "ratvargrille"
+	name = "cog grille"
+	desc = "A strangely-shaped grille."
+
+/obj/structure/grille/ratvar/Initialize()
+	. = ..()
+	new /obj/effect/temp_visual/ratvar/grille(get_turf(src))
+	new /obj/effect/temp_visual/ratvar/beam/grille(get_turf(src))
+
+/obj/structure/grille/ratvar/narsie_act()
+	take_damage(rand(1, 3), BRUTE)
+	if(src)
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+
+/obj/structure/grille/ratvar/ratvar_act()
+	return

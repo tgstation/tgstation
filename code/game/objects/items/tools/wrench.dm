@@ -37,6 +37,13 @@
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
+/obj/item/wrench/brass
+	name = "brass wrench"
+	desc = "A brass wrench. It's faintly warm to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	icon_state = "wrench_brass"
+	toolspeed = 0.5
+
 /obj/item/wrench/abductor
 	name = "alien wrench"
 	desc = "A polarized wrench. It causes anything placed between the jaws to turn."

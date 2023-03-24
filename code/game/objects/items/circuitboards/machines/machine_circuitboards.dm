@@ -1419,3 +1419,7 @@
 		/datum/stock_part/capacitor/tier2 = 1,
 		/datum/stock_part/micro_laser/tier2 = 2,
 	)
+
+/obj/item/circuitboard/machine/clockwork
+	name = "clockwork board (Report This)"
+	icon_state = "clock_mod"

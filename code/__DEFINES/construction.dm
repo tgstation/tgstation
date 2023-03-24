@@ -202,3 +202,8 @@ GLOBAL_LIST_INIT(crafting_category, list(
 
 /// How much less resources the RCD uses when reconstructing
 #define RCD_MEMORY_COST_BUFF 8
+
+
+// cwall construction states
+#define COG_COVER 1
+#define COG_EXPOSED 3

@@ -1,13 +1,14 @@
 //max channel is 1024. Only go lower from here, because byond tends to pick the first available channel to play sounds on
-#define CHANNEL_LOBBYMUSIC 1024
-#define CHANNEL_ADMIN 1023
-#define CHANNEL_VOX 1022
-#define CHANNEL_JUKEBOX 1021
-#define CHANNEL_HEARTBEAT 1020 //sound channel for heartbeats
-#define CHANNEL_AMBIENCE 1019
-#define CHANNEL_BUZZ 1018
-#define CHANNEL_TRAITOR 1017
-#define CHANNEL_CHARGED_SPELL 1016
+#define CHANNEL_JUSTICAR_ARK 1024
+#define CHANNEL_LOBBYMUSIC 1023
+#define CHANNEL_ADMIN 1022
+#define CHANNEL_VOX 1021
+#define CHANNEL_JUKEBOX 1020
+#define CHANNEL_HEARTBEAT 1019 //sound channel for heartbeats
+#define CHANNEL_AMBIENCE 1018
+#define CHANNEL_BUZZ 1017
+#define CHANNEL_TRAITOR 1016
+#define CHANNEL_CHARGED_SPELL 1015
 
 ///Default range of a sound.
 #define SOUND_RANGE 17

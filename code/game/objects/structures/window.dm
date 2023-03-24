@@ -104,6 +104,13 @@
 /obj/structure/window/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
+/obj/structure/window/ratvar_act()
+	if(!fulltile)
+		new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
+	else
+		new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
+	qdel(src)
+
 /obj/structure/window/singularity_pull(S, current_size)
 	..()
 	if(anchored && current_size >= STAGE_TWO)

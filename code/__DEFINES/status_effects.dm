@@ -156,3 +156,7 @@
 #define set_temp_blindness_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/temporary_blindness, TRUE)
 
 #define STATUS_EFFECT_PROGENITORCURSE /datum/status_effect/progenitor_curse
+
+#define STATUS_EFFECT_VANGUARD /datum/status_effect/vanguard_shield //Grants temporary stun absorption, but will stun the user based on how many stuns they absorbed.
+#define STATUS_EFFECT_INATHNEQS_ENDOWMENT /datum/status_effect/inathneqs_endowment //A 15-second invulnerability and stun absorption, granted by Inath-neq.
+#define STATUS_EFFECT_WRAITHSPECS /datum/status_effect/wraith_spectacles

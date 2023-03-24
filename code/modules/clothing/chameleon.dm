@@ -418,6 +418,12 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
+/obj/item/clothing/under/chameleon/ratvar
+	name = "ratvarian engineer's jumpsuit"
+	desc = "A tough jumpsuit woven from alloy threads. It can take on the appearance of other jumpsuits."
+	icon = 'icons/obj/clothing/under/engineering.dmi'
+	worn_icon = 'icons/mob/clothing/under/engineering.dmi'
+
 /obj/item/clothing/suit/chameleon
 	name = "armor"
 	desc = "A slim armored vest that protects against most types of damage."

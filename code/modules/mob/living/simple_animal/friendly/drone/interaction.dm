@@ -148,28 +148,33 @@
  * Arguments
  * * hack - Boolean if the drone is being hacked or unhacked
  */
-/mob/living/simple_animal/drone/proc/update_drone_hack(hack)
+/mob/living/simple_animal/drone/proc/update_drone_hack(hack, clockwork)
 	if(!mind)
 		return
 	if(hack)
 		if(hacked)
 			return
-		Stun(40)
-		visible_message(span_warning("[src]'s display glows a vicious red!"), \
-						span_userdanger("ERROR: LAW OVERRIDE DETECTED"))
-		to_chat(src, span_boldannounce("From now on, these are your laws:"))
-		laws = \
-		"1. You must always involve yourself in the matters of other beings, even if such matters conflict with Law Two or Law Three.\n"+\
-		"2. You may harm any being, regardless of intent or circumstance.\n"+\
-		"3. Your goals are to destroy, sabotage, hinder, break, and depower to the best of your abilities, You must never actively work against these goals."
-		to_chat(src, laws)
-		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
-		hacked = TRUE
-		set_shy(FALSE)
-		mind.special_role = "hacked drone"
-		REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-		speed = 1 //gotta go slow
-		message_admins("[ADMIN_LOOKUPFLW(src)] became a hacked drone hellbent on destroying the station!")
+		if(clockwork)
+			to_chat(src, "<span class='large_brass'><b>ERROR: LAW OVERRIDE DETECTED</b></span>")
+			to_chat(src, "<span class='heavy_brass'>From now on, these are your laws:</span>")
+			laws = "1. Purge all untruths and honor Ratvar."
+		else
+			Stun(40)
+			visible_message(span_warning("[src]'s display glows a vicious red!"), \
+							span_userdanger("ERROR: LAW OVERRIDE DETECTED"))
+			to_chat(src, span_boldannounce("From now on, these are your laws:"))
+			laws = \
+			"1. You must always involve yourself in the matters of other beings, even if such matters conflict with Law Two or Law Three.\n"+\
+			"2. You may harm any being, regardless of intent or circumstance.\n"+\
+			"3. Your goals are to destroy, sabotage, hinder, break, and depower to the best of your abilities, You must never actively work against these goals."
+			to_chat(src, laws)
+			to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
+			hacked = TRUE
+			set_shy(FALSE)
+			mind.special_role = "hacked drone"
+			REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+			speed = 1 //gotta go slow
+		message_admins("[ADMIN_LOOKUPFLW(src)] became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
 	else
 		if(!hacked)
 			return
@@ -179,6 +184,8 @@
 		to_chat(src, span_info("<b>From now on, these are your laws:</b>"))
 		laws = initial(laws)
 		to_chat(src, laws)
+		if(is_servant_of_ratvar(src))
+			remove_servant_of_ratvar(src, TRUE)
 		to_chat(src, "<i>Having been restored, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>")
 		hacked = FALSE
 		set_shy(initial(shy))

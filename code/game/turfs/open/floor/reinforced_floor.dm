@@ -220,6 +220,14 @@
 /turf/open/floor/engine/cult/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/engine/cult/ratvar_act()
+	. = ..()
+	if(istype(src, /turf/open/floor/engine/cult)) //if we haven't changed type
+		var/previouscolor = color
+		color = "#FAE48C"
+		animate(src, color = previouscolor, time = 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+
 /turf/open/floor/engine/vacuum
 	name = "vacuum floor"
 	initial_gas_mix = AIRLESS_ATMOS

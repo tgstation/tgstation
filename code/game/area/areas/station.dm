@@ -22,6 +22,8 @@
 /area/station/maintenance/department/chapel
 	name = "Chapel Maintenance"
 	icon_state = "maint_chapel"
+	clockwork_warp_allowed = FALSE
+	clockwork_warp_fail = "The consecration here prevents you from warping in."
 
 /area/station/maintenance/department/chapel/monastery
 	name = "Monastery Maintenance"
@@ -39,6 +41,7 @@
 /area/station/maintenance/department/eva
 	name = "EVA Maintenance"
 	icon_state = "maint_eva"
+	clockwork_warp_allowed = FALSE
 
 /area/station/maintenance/department/eva/abandoned
 	name = "Abandoned EVA Storage"
@@ -661,6 +664,8 @@
 	ambience_index = AMBIENCE_HOLY
 	flags_1 = NONE
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+	clockwork_warp_allowed = FALSE
+	clockwork_warp_fail = "The consecration here prevents you from warping in."
 
 /area/station/service/chapel/monastery
 	name = "\improper Monastery"
@@ -807,6 +812,8 @@
 	name = "\improper Gravity Generator Room"
 	icon_state = "grav_gen"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	clockwork_warp_allowed = FALSE
+	clockwork_warp_fail = "The gravitons generated here could throw off your warp's destination and possibly throw you into deep space."
 
 /area/station/engineering/storage
 	name = "Engineering Storage"
@@ -829,6 +836,8 @@
 	name = "Telecomms Storage"
 	icon_state = "tcom_storage"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	clockwork_warp_allowed = FALSE
+	clockwork_warp_fail = "For safety reasons, warping here is disallowed; the radio and bluespace noise could cause catastrophic results."
 
 //Engineering - Construction
 
@@ -1434,6 +1443,8 @@
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
 	network_root_id = STATION_NETWORK_ROOT // They should of unpluged the router before they left
+	clockwork_warp_allowed = FALSE
+	clockwork_warp_fail = "For safety reasons, warping here is disallowed; the radio and bluespace noise could cause catastrophic results."
 
 /area/station/tcommsat/computer
 	name = "\improper Telecomms Control Room"

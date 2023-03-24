@@ -410,7 +410,28 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.tdomeadmin += loc
 	return INITIALIZE_HINT_QDEL
 
-//generic event spawns
+//Servant spawn locations
+/obj/effect/landmark/servant_of_ratvar
+	name = "servant of ratvar spawn"
+	icon_state = "clockwork_orange"
+	layer = MOB_LAYER
+
+/obj/effect/landmark/servant_of_ratvar/Initialize(mapload)
+	..()
+	GLOB.servant_spawns += loc
+	return INITIALIZE_HINT_QDEL
+
+//City of Cogs entrances
+/obj/effect/landmark/city_of_cogs
+	name = "city of cogs entrance"
+	icon_state = "city_of_cogs"
+
+/obj/effect/landmark/city_of_cogs/Initialize(mapload)
+	..()
+	GLOB.city_of_cogs_spawns += loc
+	return INITIALIZE_HINT_QDEL
+
+//handles clockwork portal+eminence teleport destinations
 /obj/effect/landmark/event_spawn
 	name = "generic event spawn"
 	icon_state = "generic_event"

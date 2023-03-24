@@ -20,3 +20,4 @@
 
 //ai power requirement defines
 #define POWER_REQ_ALL 1
+#define POWER_REQ_CLOCKCULT 2

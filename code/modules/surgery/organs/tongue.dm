@@ -66,6 +66,7 @@
 		/datum/language/narsie,
 		/datum/language/russian,
 		/datum/language/beachbum,
+		/datum/language/ratvar,
 		/datum/language/aphasia,
 		/datum/language/piratespeak,
 		/datum/language/moffic,
@@ -354,6 +355,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 		/datum/language/uncommon,
 		/datum/language/draconic, // Both hiss?
 		/datum/language/monkey,
+		/datum/language/ratvar,
 	)
 
 /obj/item/organ/internal/tongue/alien/modify_speech(datum/source, list/speech_args)

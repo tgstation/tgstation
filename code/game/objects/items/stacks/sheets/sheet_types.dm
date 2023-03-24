@@ -8,6 +8,7 @@
  * Cardboard
  * Paper Frames
  * Runed Metal (cult)
+ * Brass (clockwork cult)
  * Bronze (bake brass)
  */
 
@@ -670,18 +671,28 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
  */
 
 GLOBAL_LIST_INIT(bronze_recipes, list ( \
-	new/datum/stack_recipe("wall gear", /obj/structure/girder/bronze, 2, time = 2 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
+//	new/datum/stack_recipe("огромная шестерня", /obj/structure/girder/bronze, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE),
+//	null,
+	new/datum/stack_recipe("направленное латунное окно", /obj/structure/window/bronze/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("полное латунное окно", /obj/structure/window/bronze/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("латунный шлюз", /obj/machinery/door/airlock/bronze, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("латунный шлюз с щелью", /obj/machinery/door/airlock/bronze/seethru, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("латунная шляпа", /obj/item/clothing/head/costume/bronze), \
+	new/datum/stack_recipe("латунный костюм", /obj/item/clothing/suit/costume/bronze), \
+	new/datum/stack_recipe("латунные ботинки", /obj/item/clothing/shoes/bronze), \
 	null,
-	new/datum/stack_recipe("directional bronze window", /obj/structure/window/bronze/unanchored, time = 0, on_solid_ground = TRUE, window_checks = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("fulltile bronze window", /obj/structure/window/bronze/fulltile/unanchored, 2, time = 0, on_solid_ground = TRUE, window_checks = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
-	new/datum/stack_recipe("bronze pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze/seethru, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
-	new/datum/stack_recipe("bronze floor tile", /obj/item/stack/tile/bronze, 1, 4, 20, category = CAT_TILES), \
-	new/datum/stack_recipe("bronze hat", /obj/item/clothing/head/costume/bronze, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("bronze suit", /obj/item/clothing/suit/costume/bronze, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("bronze boots", /obj/item/clothing/shoes/bronze, category = CAT_CLOTHING), \
-	null,
-	new/datum/stack_recipe("bronze chair", /obj/structure/chair/bronze, 1, time = 0, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("латунный стул", /obj/structure/chair/bronze, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("огромная шестерня", /obj/structure/destructible/clockwork/wall_gear, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("латунная решётка", /obj/structure/grille/ratvar, 2, time=20, one_per_turf = TRUE, on_floor = TRUE), \
+	null, \
+	new/datum/stack_recipe("латунное окно", /obj/machinery/door/window/clockwork, 5, time=40, on_floor = TRUE, window_checks=TRUE), \
+	null, \
+	new/datum/stack_recipe("рычаг", /obj/item/wallframe/clocktrap/lever, 1, time=40, one_per_turf = FALSE, on_floor = FALSE), \
+	new/datum/stack_recipe("таймер", /obj/item/wallframe/clocktrap/delay, 1, time=40, one_per_turf = FALSE, on_floor = FALSE), \
+	new/datum/stack_recipe("нажимная плита", /obj/structure/destructible/clockwork/trap/pressure_sensor, 4, time=40, one_per_turf = TRUE, on_floor = TRUE), \
+	null, \
+	new/datum/stack_recipe("латунный шампур", /obj/structure/destructible/clockwork/trap/skewer, 12, time=40, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("латунный трамплин", /obj/structure/destructible/clockwork/trap/flipper, 10, time=40, one_per_turf = TRUE, on_floor = TRUE), \
 ))
 
 /obj/item/stack/sheet/bronze

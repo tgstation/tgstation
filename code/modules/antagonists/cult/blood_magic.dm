@@ -431,6 +431,8 @@
 				carbon_target.adjust_stutter(30 SECONDS)
 				carbon_target.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/slurring/cult)
 				carbon_target.set_jitter_if_lower(30 SECONDS)
+				if(is_servant_of_ratvar(target))
+					target.adjustBruteLoss(15)
 		uses--
 	..()
 

@@ -302,7 +302,7 @@
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/affected_mob)
 	..()
 	ADD_TRAIT(affected_mob, TRAIT_HOLY, type)
-
+	
 /datum/reagent/water/holywater/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
 	if(data)
@@ -310,12 +310,18 @@
 
 /datum/reagent/water/holywater/on_mob_end_metabolize(mob/living/affected_mob)
 	REMOVE_TRAIT(affected_mob, TRAIT_HOLY, type)
+	if(HAS_TRAIT_FROM(affected_mob, TRAIT_DEPRESSION, HOLYWATER_TRAIT))
+		REMOVE_TRAIT(affected_mob, TRAIT_DEPRESSION, HOLYWATER_TRAIT)
+		to_chat(affected_mob, "<span class='notice'>You cheer up, knowing that everything is going to be ok.</span>")
+
 	..()
 
 /datum/reagent/water/holywater/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	if(IS_CULTIST(exposed_mob))
 		to_chat(exposed_mob, span_userdanger("A vile holiness begins to spread its shining tendrils through your mind, purging the Geometer of Blood's influence!"))
+	if(is_servant_of_ratvar(exposed_mob))
+		to_chat(exposed_mob, "<span class='userdanger'>A darkness begins to spread its unholy tendrils through your mind, purging the Justiciar's influence!</span>")
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(affected_mob.blood_volume)
@@ -340,10 +346,18 @@
 				affected_mob.Unconscious(12 SECONDS)
 				to_chat(affected_mob, "<span class='cultlarge'>[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
 				"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")].</span>")
+		if(is_servant_of_ratvar(affected_mob) && prob(20))
+			affected_mob.say(text2ratvar(pick("Please don't leave me...", "Rat'var what happened?", "My friends, where are you?", "The hierophant network just went dark, is anyone there?", "The light is fading...", "No... It can't be...")), forced = "holy water")
+			if(prob(40))
+				if(!HAS_TRAIT_FROM(affected_mob, TRAIT_DEPRESSION, HOLYWATER_TRAIT))
+					to_chat(affected_mob, "<span class='large_brass'>You feel the light fading and the world collapsing around you...</span>")
+					ADD_TRAIT(affected_mob, TRAIT_DEPRESSION, HOLYWATER_TRAIT)
 	if(data["misc"] >= (1 MINUTES)) // 24 units
 		if(IS_CULTIST(affected_mob))
 			affected_mob.mind.remove_antag_datum(/datum/antagonist/cult)
 			affected_mob.Unconscious(100)
+		else if(is_servant_of_ratvar(affected_mob))
+			remove_servant_of_ratvar(affected_mob)
 		affected_mob.remove_status_effect(/datum/status_effect/jitter)
 		affected_mob.remove_status_effect(/datum/status_effect/speech/stutter)
 		holder.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??

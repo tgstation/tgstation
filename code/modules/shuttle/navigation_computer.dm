@@ -18,7 +18,7 @@
 	/// The mobile docking port of the connected shuttle
 	var/obj/docking_port/mobile/shuttle_port
 	// Traits forbided for custom docking
-	var/list/locked_traits = list(ZTRAIT_RESERVED, ZTRAIT_CENTCOM, ZTRAIT_AWAY)
+	var/list/locked_traits = list(ZTRAIT_RESERVED, ZTRAIT_CENTCOM, ZTRAIT_AWAY, ZTRAIT_REEBE)
 	var/view_range = 0
 	var/x_offset = 0
 	var/y_offset = 0

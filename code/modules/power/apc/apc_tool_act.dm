@@ -13,6 +13,17 @@
 			update_appearance()
 			return
 
+	if(opened && integration_cog)
+		user.visible_message("<span class='notice'>[user] starts prying [integration_cog] from [src]...</span>", \
+		"<span class='notice'>You painstakingly start tearing [integration_cog] out of [src]'s guts...</span>")
+		crowbar.play_tool_sound(src)
+		if(crowbar.use_tool(src, user, 100))
+			user.visible_message("<span class='notice'>[user] destroys [integration_cog] in [src]!</span>", \
+			"<span class='notice'>[integration_cog] comes free with a clank and snaps in two as the machinery returns to normal!</span>")
+			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+			QDEL_NULL(integration_cog)
+		return
+
 	if((opened && has_electronics == APC_ELECTRONICS_SECURED) && !(machine_stat & BROKEN))
 		opened = APC_COVER_CLOSED
 		coverlocked = TRUE //closing cover relocks it

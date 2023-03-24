@@ -41,6 +41,9 @@
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
 
+/obj/structure/lattice/ratvar_act()
+	new /obj/structure/lattice/clockwork(loc)
+
 /obj/structure/lattice/attackby(obj/item/C, mob/user, params)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
@@ -158,3 +161,47 @@
 		else
 			to_chat(user, span_warning("You need one floor tile to build atop [src]."))
 		return
+
+/obj/structure/lattice/clockwork
+	name = "cog lattice"
+	desc = "A lightweight support lattice. These hold the Justicar's station together."
+	icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
+
+/obj/structure/lattice/clockwork/Initialize(mapload)
+	. = ..()
+	ratvar_act()
+	if(is_reebe(z))
+		resistance_flags |= INDESTRUCTIBLE
+
+/obj/structure/lattice/clockwork/ratvar_act()
+	if(ISODD(x+y))
+		icon = 'icons/obj/smooth_structures/lattice_clockwork_large.dmi'
+		pixel_x = -9
+		pixel_y = -9
+	else
+		icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
+		pixel_x = 0
+		pixel_y = 0
+	return TRUE
+
+/obj/structure/lattice/clockwork
+	name = "cog lattice"
+	desc = "A lightweight support lattice. These hold the Justicar's station together."
+	icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
+
+/obj/structure/lattice/clockwork/Initialize(mapload)
+	. = ..()
+	ratvar_act()
+	if(is_reebe(z))
+		resistance_flags |= INDESTRUCTIBLE
+
+/obj/structure/lattice/clockwork/ratvar_act()
+	if(ISODD(x+y))
+		icon = 'icons/obj/smooth_structures/lattice_clockwork_large.dmi'
+		pixel_x = -9
+		pixel_y = -9
+	else
+		icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
+		pixel_x = 0
+		pixel_y = 0
+	return TRUE

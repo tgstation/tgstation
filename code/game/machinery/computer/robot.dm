@@ -119,6 +119,12 @@
 
 		if("magbot")
 			var/mob/living/silicon/S = usr
+			if(isAI(S) && is_servant_of_ratvar(S))
+				var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
+				if(istype(R) && !is_servant_of_ratvar(R) && R.connected_ai == usr)
+					log_silicon("[key_name(usr)] converted [key_name(R)] using robotic console!")
+					message_admins("[ADMIN_LOOKUPFLW(usr)] converted cyborg [key_name_admin(R)] using robotic console!")
+					add_servant_of_ratvar(R)
 			if((istype(S) && S.hack_software) || isAdminGhostAI(usr))
 				var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
 				if(istype(R) && !R.emagged && (R.connected_ai == usr || isAdminGhostAI(usr)) && !R.scrambledcodes && can_control(usr, R))

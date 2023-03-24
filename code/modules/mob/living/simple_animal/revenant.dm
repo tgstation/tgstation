@@ -201,6 +201,9 @@
 /mob/living/simple_animal/revenant/narsie_act()
 	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
+/mob/living/simple_animal/revenant/ratvar_act()
+	return //clocks get out reee
+
 /mob/living/simple_animal/revenant/bullet_act()
 	if(!revealed || stasis)
 		return BULLET_ACT_FORCE_PIERCE

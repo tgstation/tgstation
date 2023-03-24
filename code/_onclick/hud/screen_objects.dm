@@ -711,3 +711,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	name = "stamina"
 	icon_state = "stamina0"
 	screen_loc = ui_stamina
+
+/atom/movable/screen/healths/clock
+	icon_state = "bg_clock"
+	screen_loc = ui_health
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/atom/movable/screen/healths/clock/gear
+	icon = 'massmeta/icons/mob/clockwork_mobs.dmi'
+	icon_state = "bg_gear"
+	screen_loc = ui_internal

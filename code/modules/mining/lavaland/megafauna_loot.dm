@@ -966,7 +966,7 @@
 	var/max_thunder_charges = 3
 	var/thunder_charges = 3
 	var/thunder_charge_time = 15 SECONDS
-	var/static/list/excluded_areas = list(/area/space)
+	var/static/list/excluded_areas = list(/area/space, /area/reebe/city_of_cogs)
 	var/list/targeted_turfs = list()
 
 /obj/item/storm_staff/examine(mob/user)

@@ -91,6 +91,11 @@
 	qdel(src)
 	new /obj/structure/table/wood(A)
 
+/obj/structure/table/ratvar_act()
+	var/atom/A = loc
+	qdel(src)
+	new /obj/structure/table/reinforced/brass(A)
+
 /obj/structure/table/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
@@ -884,3 +889,36 @@
 		qdel(src)
 	building = FALSE
 
+/obj/structure/table/reinforced/brass
+	name = "brass table"
+	desc = "A solid, slightly beveled brass table."
+	icon = 'icons/obj/smooth_structures/brass_table.dmi'
+	icon_state = "brass_table"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	frame = /obj/structure/table_frame/brass
+	framestack = /obj/item/stack/sheet/bronze
+	buildstack = /obj/item/stack/sheet/bronze
+	framestackamount = 1
+	buildstackamount = 1
+	canSmoothWith = SMOOTH_GROUP_BRONZE_TABLES
+
+/obj/structure/table/reinforced/brass/Initialize()
+	. = ..()
+
+/obj/structure/table/reinforced/brass/Destroy()
+	return ..()
+
+/obj/structure/table/reinforced/brass/tablepush(mob/living/user, mob/living/pushed_mob)
+	.= ..()
+	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
+
+/obj/structure/table/reinforced/brass/narsie_act()
+	take_damage(rand(15, 45), BRUTE)
+	if(src) //do we still exist?
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+
+/obj/structure/table/reinforced/brass/ratvar_act()
+	atom_integrity = max_integrity

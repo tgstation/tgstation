@@ -419,4 +419,11 @@
 		nextrefueltick = world.time + 10
 		reagents.add_reagent(/datum/reagent/fuel, 1)
 
+/obj/item/weldingtool/experimental/brass
+	name = "brass welding tool"
+	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	icon_state = "brasswelder"
+	inhand_icon_state = "brasswelder"
+
 #undef WELDER_FUEL_BURN_INTERVAL

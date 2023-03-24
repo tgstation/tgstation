@@ -605,6 +605,7 @@
 	circuit = /obj/item/circuitboard/computer/emergency_pod
 	light_color = LIGHT_COLOR_BLUE
 	density = FALSE
+	clockwork = TRUE //it'd look weird
 
 /obj/machinery/computer/shuttle/pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)

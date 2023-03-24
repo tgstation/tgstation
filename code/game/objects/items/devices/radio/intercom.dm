@@ -202,3 +202,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 26)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 26)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 26)
+
+/obj/item/radio/intercom/ratvar
+	name = "hierophant intercom"
+	desc = "A modified intercom that uses the Hierophant network instead of subspace tech. Can listen to and broadcast on any frequency."
+	icon_state = "intercom_ratvar"
+	freerange = TRUE
+
+/obj/item/radio/intercom/ratvar/attackby(obj/item/I, mob/living/user, params)
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+		to_chat(user, "<span class='warning'>[src] is fastened to the wall with [is_servant_of_ratvar(user) ? "replicant alloy" : "some material you've never seen"], and can't be removed.</span>")
+		return //no unfastening!
+	. = ..()
+
+/obj/item/radio/intercom/ratvar/process()
+	invisibility = initial(invisibility)
+	alpha = initial(alpha)
+	emped = FALSE
+	..()

@@ -302,3 +302,28 @@ The areas used here are STRICTLY on the CC Z level.
 
 /area/centcom/asteroid/nearstation/bomb_site
 	name = "\improper Bomb Testing Asteroid"
+
+// REEBE
+
+/area/reebe
+	name = "Reebe"
+	icon_state = "yellow"
+	requires_power = FALSE
+	has_gravity = STANDARD_GRAVITY
+	area_flags = HIDDEN_AREA | NOTELEPORT
+	ambientsounds = AMBIENCE_REEBE
+	static_lighting = FALSE
+	base_lighting_color = COLOR_WHITE
+	base_lighting_alpha = 255
+
+/area/reebe/city_of_cogs
+	name = "Reebe - City of Cogs"
+	icon_state = "purple"
+	area_flags = NOTELEPORT
+	var/playing_ambience = FALSE
+	ambientsounds = AMBIENCE_REEBE
+
+/area/reebe/Initialize(mapload)
+	. = ..()
+	spawn(5 SECONDS)
+		update_base_lighting()

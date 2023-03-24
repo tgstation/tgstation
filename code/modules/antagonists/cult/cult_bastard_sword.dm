@@ -64,6 +64,14 @@
 /obj/item/cult_bastard/pickup(mob/living/user)
 	. = ..()
 	if(!IS_CULTIST(user))
+		if(is_servant_of_ratvar(user))
+			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
+			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
+			user.emote("scream")
+			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+			user.dropItemToGround(src, TRUE)
+			user.Paralyze(50)
+			return
 		if(!IS_HERETIC(user))
 			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
 			force = 5

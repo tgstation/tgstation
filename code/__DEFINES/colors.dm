@@ -223,6 +223,8 @@
 #define LIGHT_COLOR_HOLY_MAGIC "#FFF743"
 /// deep crimson
 #define LIGHT_COLOR_BLOOD_MAGIC "#D00000"
+/// cockwork
+#define LIGHT_COLOR_CLOCKWORK 	"#BE8700"
 
 /* These ones aren't a direct colour like the ones above, because nothing would fit */
 /// Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)

@@ -40,6 +40,7 @@
 	req_access = list(ACCESS_SYNDICATE)
 	shuttleId = "steel_rain"
 	possible_destinations = null
+	clockwork = TRUE //it'd look weird
 
 /obj/machinery/computer/shuttle/syndicate/drop_pod/launch_check(mob/user)
 	. = ..()

@@ -695,6 +695,61 @@
 	name = "Time Dilation"
 	desc = "Your actions are twice as fast, and the delay between them is halved."
 	icon = 'massmeta/icons/mob/actions/actions_darkspawn.dmi'
-	icon_state = "time_dilation" //Massmeta edit end
+	icon_state = "time_dilation" 
+	
+/datum/status_effect/inathneqs_endowment
+	id = "inathneqs_endowment"
+	duration = 150
+	alert_type = /atom/movable/screen/alert/status_effect/inathneqs_endowment
+
+/atom/movable/screen/alert/status_effect/inathneqs_endowment
+	name = "Inath-neq's Endowment"
+	desc = "Adrenaline courses through you as the Resonant Cogwheel's energy shields you from all harm!"
+	icon_state = "inathneqs_endowment"
+	alerttooltipstyle = "clockcult"
+
+/datum/status_effect/inathneqs_endowment/on_apply()
+	owner.log_message("gained Inath-neq's invulnerability", LOG_ATTACK)
+	owner.visible_message("<span class='warning'>[owner] shines with azure light!</span>", "<span class='notice'>You feel Inath-neq's power flow through you! You're invincible!</span>")
+	var/oldcolor = owner.color
+	owner.color = "#1E8CE1"
+	owner.fully_heal()
+	owner.add_stun_absorption("inathneq", 150, 2, "'s flickering blue aura momentarily intensifies!", "Inath-neq's power absorbs the stun!", " glowing with a flickering blue light!")
+	owner.status_flags |= GODMODE
+	animate(owner, color = oldcolor, time = 150, easing = EASE_IN)
+	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), 150)
+	playsound(owner, 'sound/magic/ethereal_enter.ogg', 50, TRUE)
+	return ..()
+
+/datum/status_effect/inathneqs_endowment/on_remove()
+	owner.log_message("lost Inath-neq's invulnerability", LOG_ATTACK)
+	owner.visible_message("<span class='warning'>The light around [owner] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>")
+	owner.status_flags &= ~GODMODE
+	playsound(owner, 'sound/magic/ethereal_exit.ogg', 50, TRUE)
+
+/datum/status_effect/cyborg_power_regen
+	id = "power_regen"
+	duration = 100
+	alert_type = /atom/movable/screen/alert/status_effect/power_regen
+	var/power_to_give = 0 //how much power is gained each tick
+
+/datum/status_effect/cyborg_power_regen/on_creation(mob/living/new_owner, new_power_per_tick)
+	. = ..()
+	if(. && isnum(new_power_per_tick))
+		power_to_give = new_power_per_tick
+
+/atom/movable/screen/alert/status_effect/power_regen
+	name = "Power Regeneration"
+	desc = "You are quickly regenerating power!"
+	icon_state = "power_regen"
+
+/datum/status_effect/cyborg_power_regen/tick()
+	var/mob/living/silicon/robot/cyborg = owner
+	if(!istype(cyborg) || !cyborg.cell)
+		qdel(src)
+		return
+	playsound(cyborg, 'sound/effects/light_flicker.ogg', 50, TRUE)
+	cyborg.cell.give(power_to_give)
+//Massmeta edit end
 
 #undef TIME_DILATION_TRAIT

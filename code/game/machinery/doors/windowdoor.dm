@@ -302,6 +302,11 @@
 /obj/machinery/door/window/narsie_act()
 	add_atom_colour("#7D1919", FIXED_COLOUR_PRIORITY)
 
+/obj/machinery/door/window/ratvar_act()
+	var/obj/machinery/door/window/clockwork/C = new(loc, dir)
+	C.name = name
+	qdel(src)
+
 /obj/machinery/door/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > T0C + (reinf ? 1600 : 800))
 

@@ -56,6 +56,11 @@
 	var/aidisabled = FALSE
 	///Reference to our cable terminal
 	var/obj/machinery/power/terminal/terminal = null
+
+	var/obj/item/clockwork/integration_cog/integration_cog //Is there a cog siphoning power?
+
+	var/clock_cog_rewarded = FALSE	//Clockcult - Has the reward for converting an APC been given?
+
 	///Amount of power used by the lighting channel
 	var/lastused_light = 0
 	///Amount of power used by the equipment channel
@@ -254,6 +259,8 @@
 		else
 			. += {"It's [ !terminal ? "not" : "" ] wired up.\n
 			The electronics are[!has_electronics?"n't":""] installed."}
+		if(user.Adjacent(src) && integration_cog)
+			. += "<span class='warning'>[src]'s innards have been replaced by strange brass machinery!</span>"
 	else
 		if(machine_stat & MAINT)
 			. += "The cover is closed. Something is wrong with it. It doesn't work."
@@ -261,6 +268,9 @@
 			. += "The cover is broken. It may be hard to force it open."
 		else
 			. += "The cover is closed."
+
+	if(integration_cog && is_servant_of_ratvar(user))
+		. += "<span class='brass'>There is an integration cog installed!</span>"
 
 	. += span_notice("Right-click the APC to [ locked ? "unlock" : "lock"] the interface.")
 
@@ -371,7 +381,7 @@
 /obj/machinery/power/apc/ui_act(action, params)
 	. = ..()
 
-	if(. || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer && action != "toggle_nightshift"))
+	if(. || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer && action != "toggle_nightshift" || (integration_cog && is_servant_of_ratvar(usr))))
 		return
 	switch(action)
 		if("lock")
@@ -584,6 +594,12 @@
 		else // chargemode off
 			charging = APC_NOT_CHARGING
 			chargecount = 0
+
+		//=====Clock Cult=====
+		if(integration_cog && cell.charge >= cell.maxcharge/2)
+			var/power_delta = clamp(cell.charge - 20, 0, 20)
+			GLOB.clockcult_power += power_delta
+			cell.charge -= power_delta
 
 	else // no cell, switch everything off
 

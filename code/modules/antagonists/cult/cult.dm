@@ -498,7 +498,7 @@
 			return FALSE
 	else
 		return FALSE
-	if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || issilicon(target) || isbot(target) || isdrone(target) || !target.client)
+	if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || issilicon(target) || isbot(target) || is_servant_of_ratvar(target) ||  isdrone(target) || !target.client)
 		return FALSE //can't convert machines, shielded, or braindead
 	return TRUE
 

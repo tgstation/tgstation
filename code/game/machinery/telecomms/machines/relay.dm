@@ -82,3 +82,11 @@
 /obj/machinery/telecomms/relay/preset/auto
 	hide = TRUE
 	autolinkers = list("autorelay")
+
+/obj/machinery/telecomms/relay/preset/reebe
+	name = "hierophant relay"
+	desc = "An arcane telecommunications relay that ingeniously combines bluespace technology with the Hierophant network to send and receive messages to and from Reebe."
+	id = "Hierophant Relay"
+	icon = 'massmeta/icons/obj/clockwork_objects.dmi'
+	hide = TRUE
+	autolinkers = list("h_relay")

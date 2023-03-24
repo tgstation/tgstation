@@ -436,6 +436,12 @@
 			sound_to_playing_players('sound/machines/alarm.ogg')
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_VICTORY_MASS_CONVERSION), 120)
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ending_helper)), 270)
+	if(is_servant_of_ratvar(src) && !stat)
+		to_chat(src, "<span class='userdanger'>You resist Nar'Sie's influence... but not all of it. <i>Run!</i></span>")
+		adjustBruteLoss(35)
+		if(src && reagents)
+			reagents.add_reagent(/datum/reagent/toxin/heparin, 5)
+		return
 	if(client)
 		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, cultoverride = TRUE)
 	else
@@ -452,6 +458,15 @@
 	investigate_log("has been gibbed by Nar'Sie.", INVESTIGATE_DEATHS)
 	gib()
 	return TRUE
+
+/mob/living/ratvar_act()
+	if(status_flags & GODMODE)
+		return
+	if(stat != DEAD && !is_servant_of_ratvar(src))
+		to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")
+		adjust_fire_stacks(20)
+		ignite_mob()
+		return FALSE
 
 //called when the mob receives a bright flash
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 2.5 SECONDS)

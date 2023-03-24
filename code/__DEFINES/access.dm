@@ -186,6 +186,7 @@
 /// BLOODCULT
 	//Special, for anything that's basically internal
 #define ACCESS_BLOODCULT "bloodcult"
+#define ACCESS_CLOCKCULT "clockcult"
 
 /// - - - END ACCESS IDS - - -
 

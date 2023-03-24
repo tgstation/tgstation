@@ -207,6 +207,7 @@
 	icon_state = "television"
 	icon_keyboard = null
 	icon_screen = "detective_tv"
+	clockwork = TRUE //it'd look weird
 	pass_flags = PASSTABLE
 
 /obj/machinery/computer/security/mining

@@ -31,6 +31,8 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	var/is_cultie = IS_CULTIST(user)
 	if(LAZYLEN(span_list) && is_cultie)
 		span_list = list("narsiesmall")
+	else if(LAZYLEN(span_list) && is_servant_of_ratvar(user))
+		span_list = list("ratvar")
 
 	if(!user.say(message, spans = span_list, sanitize = FALSE))
 		return
@@ -72,6 +74,8 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 	//Cultists are closer to their gods and are more powerful, but they'll give themselves away
 	if(is_cultie)
+		power_multiplier *= 2
+	else if (is_servant_of_ratvar(user))
 		power_multiplier *= 2
 
 	//Now get the proper job titles and check for matches.

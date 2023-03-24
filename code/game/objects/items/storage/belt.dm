@@ -200,6 +200,63 @@
 	new /obj/item/multitool(src)
 	new /obj/item/inducer/syndicate(src)
 
+
+/obj/item/storage/belt/utility/servant
+	var/slab = null
+	var/replicator = null
+
+/obj/item/storage/belt/utility/servant/drone
+	slab = /obj/item/clockwork/clockwork_slab
+	replicator = /obj/item/clockwork/replica_fabricator
+
+/obj/item/storage/belt/utility/servant/Initialize()
+	. = ..()
+	atom_storage.max_total_storage = 25
+	atom_storage.max_slots = 7
+	var/static/list/can_hold = typecacheof(list(
+		/obj/item/crowbar,
+		/obj/item/screwdriver,
+		/obj/item/weldingtool,
+		/obj/item/wirecutters,
+		/obj/item/wrench,
+		/obj/item/multitool,
+		/obj/item/flashlight,
+		/obj/item/stack/cable_coil,
+		/obj/item/t_scanner,
+		/obj/item/analyzer,
+		/obj/item/geiger_counter,
+		/obj/item/extinguisher/mini,
+		/obj/item/radio,
+		/obj/item/clothing/gloves,
+		/obj/item/holosign_creator/atmos,
+		/obj/item/holosign_creator/engineering,
+		/obj/item/forcefield_projector,
+		/obj/item/assembly/signaler,
+		/obj/item/lightreplacer,
+		/obj/item/construction/rcd,
+		/obj/item/pipe_dispenser,
+		/obj/item/inducer,
+		/obj/item/plunger,
+		/obj/item/clockwork/clockwork_slab,
+		/obj/item/clockwork/replica_fabricator
+		))
+	atom_storage.set_holdable(can_hold)
+
+/obj/item/storage/belt/utility/servant/PopulateContents()
+	if(slab)
+		new slab(src)
+	else
+		new/obj/item/multitool(src)
+	if(replicator)
+		new replicator(src)
+	else
+		new /obj/item/stack/cable_coil(src)
+	new /obj/item/screwdriver/brass(src)
+	new /obj/item/wirecutters/brass(src)
+	new /obj/item/wrench/brass(src)
+	new /obj/item/crowbar/brass(src)
+	new /obj/item/weldingtool/experimental/brass(src)
+
 /obj/item/storage/belt/medical
 	name = "medical belt"
 	desc = "Can hold various medical equipment."

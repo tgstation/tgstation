@@ -186,3 +186,10 @@
 
 /obj/effect/gateway/singularity_pull()
 	return
+
+/obj/structure/destructible/cult/ratvar_act()
+	if(take_damage(rand(25, 50), BURN) && !QDELETED(src)) //if we still exist
+		var/previouscolor = color
+		color = "#FAE48C"
+		animate(src, color = previouscolor, time = 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
