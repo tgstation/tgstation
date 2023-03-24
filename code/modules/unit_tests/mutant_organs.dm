@@ -1,10 +1,9 @@
 /**
- * Iterates over all species to ensure that organs are valid after being set to a mutant species
+ * Iterates over all species to ensure that organs are valid after being set to a mutant species.
  */
 /datum/unit_test/mutant_organs
 
 /datum/unit_test/mutant_organs/Run()
-	var/mob/living/carbon/human/consistent/dummy = allocate(/mob/living/carbon/human/consistent)
 	var/list/ignore = list(
 		/datum/species/dullahan,
 	)
@@ -22,13 +21,16 @@
 	)
 
 	for(var/datum/species/species_type as anything in species)
+		// get our dummy
+		var/mob/living/carbon/human/consistent/dummy = allocate(/mob/living/carbon/human/consistent)
+
 		// change them to the species
 		dummy.set_species(species_type)
 
 		// check all their organs
 		for(var/organ_slot in organs_we_care_about)
 			var/expected_type = slot_to_species_organ_type(organ_slot, species_type)
-			var/obj/item/organ/actual_organ = dummy.getorganslot(organ_slot)
+			var/obj/item/organ/actual_organ = dummy.get_organ_slot(organ_slot)
 			if(isnull(actual_organ))
 				if(!isnull(expected_type))
 					TEST_FAIL("[species_type] did not update their [organ_slot] organ to [expected_type], no organ was found")
