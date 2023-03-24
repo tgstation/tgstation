@@ -1571,7 +1571,7 @@
 	},
 /mob/living/simple_animal/hostile/alien/queen/large{
 	del_on_death = 1;
-	loot = list(/obj/item/ammo_box_magazine/plastikov9mm);
+	loot = list(/obj/item/ammo_box/magazine/plastikov9mm);
 	desc = "What you saw in your dreams last night."
 	},
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
