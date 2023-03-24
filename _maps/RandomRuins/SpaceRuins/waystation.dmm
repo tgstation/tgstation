@@ -1041,6 +1041,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
 "su" = (
@@ -1148,6 +1149,7 @@
 	desc = "A door remote control switch. From the looks of it, It seems to be broken after being pressed too hard, it's bloody handprint still visible."
 	},
 /mob/living/basic/viscerator,
+/obj/item/modular_computer/laptop/preset/civilian,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
 "vw" = (
@@ -1237,6 +1239,12 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/qm)
+"wX" = (
+/obj/structure/fluff/paper/stack{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/cargooffice)
 "xk" = (
 /obj/machinery/porta_turret/syndicate/pod{
 	dir = 1;
@@ -1685,6 +1693,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
+"HN" = (
+/obj/structure/cable,
+/obj/structure/fluff/paper/stack{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/cargooffice)
 "Id" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/iron,
@@ -1863,7 +1878,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ld" = (
-/obj/item/paper/crumpled,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -2668,12 +2682,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/waystation/kitchen)
-"Ya" = (
-/obj/item/paper/crumpled,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/cargooffice)
 "Yj" = (
 /obj/effect/turf_decal/siding/brown{
 	dir = 8
@@ -4259,7 +4267,7 @@ xw
 jV
 UG
 zJ
-Ya
+CQ
 lP
 pH
 TT
@@ -4322,7 +4330,7 @@ xw
 Dx
 Sm
 UC
-Dc
+HN
 Eh
 TT
 TT
@@ -4507,7 +4515,7 @@ xw
 jV
 UG
 ov
-lP
+wX
 Dc
 Qx
 SL
