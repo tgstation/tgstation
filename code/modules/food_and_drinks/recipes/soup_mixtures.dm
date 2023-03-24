@@ -702,6 +702,9 @@
 	icon_state = "monkeysdelight"
 	drink_type = FRUIT
 
+/obj/item/reagent_containers/cup/bowl/soup/monkey
+	initial_reagent = /datum/reagent/consumable/nutriment/soup/monkey
+
 /datum/chemical_reaction/food/soup/monkey
 	required_reagents = list(
 		/datum/reagent/water = 25,
