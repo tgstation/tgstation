@@ -29,7 +29,7 @@
 	overheat_temp = SOUP_BURN_TEMP
 	optimal_ph_min = 1
 	optimal_ph_max = 14
-	thermic_constant = 40
+	thermic_constant = 10
 	required_reagents = null
 	mob_react = FALSE
 	required_other = TRUE
