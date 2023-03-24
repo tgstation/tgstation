@@ -100,7 +100,7 @@
 	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", attacking_item))
 		return TRUE
 
-	if(default_pry_open(attacking_item))
+	if(default_pry_open(attacking_item, close_after_pry = TRUE))
 		return TRUE
 
 	if(default_deconstruction_crowbar(attacking_item))

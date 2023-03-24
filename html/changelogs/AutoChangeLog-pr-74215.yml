@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes:
+  - bugfix: "DNA Scanners, Sleepers, Abductor Experimentors, Skill Stations and Mod Installers now appropriately release their contents when opened, fixing an issue where they could permanently absorb players and items until admins intervened."
