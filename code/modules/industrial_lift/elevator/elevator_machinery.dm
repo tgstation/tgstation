@@ -108,11 +108,11 @@ GLOBAL_LIST_EMPTY(elevator_doors)
 		lift_platform.warns_on_down_movement = FALSE
 		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed) * 0.5
 
-	for(var/obj/machinery/door/window/elevator/elevator_door in GLOB.elevator_doors)
-		if(elevator_door.id != linked_elevator_id)
+	for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
+		if(elevator_door.elevator_linked_id != linked_elevator_id)
 			continue
-		elevator_door.safety_enabled = FALSE
-		elevator_door.cycle_doors(OPEN_DOORS)
+		elevator_door.elevator_status = LIFT_PLATFORM_UNLOCKED
+		elevator_door.open(BYPASS_DOOR_CHECKS)
 		elevator_door.obj_flags |= EMAGGED
 
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -140,11 +140,10 @@ GLOBAL_LIST_EMPTY(elevator_doors)
 			lift_platform.warns_on_down_movement = initial(lift_platform.warns_on_down_movement)
 			lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed)
 
-		for(var/obj/machinery/door/window/elevator/elevator_door in GLOB.elevator_doors)
-			if(elevator_door.id != linked_elevator_id)
+		for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
+			if(elevator_door.elevator_linked_id != linked_elevator_id)
 				continue
 
-			elevator_door.safety_enabled = TRUE
 			elevator_door.obj_flags &= ~EMAGGED
 
 		obj_flags &= ~EMAGGED
@@ -395,6 +394,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/elevator_control_panel, 31)
 	desc = "A small device used to call elevators to the current floor."
 	/// A weakref to the lift_master datum we control
 	var/datum/weakref/lift_weakref
+	COOLDOWN_DECLARE(elevator_cooldown)
 
 /obj/item/assembly/control/elevator/Initialize(mapload)
 	. = ..()
@@ -430,12 +430,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/elevator_control_panel, 31)
 		lift_platform.warns_on_down_movement = FALSE
 		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed) * 0.5
 
+	for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
+		if(elevator_door.elevator_linked_id != lift.lift_id)
+			continue
+		elevator_door.elevator_status = LIFT_PLATFORM_UNLOCKED
+		elevator_door.open(BYPASS_DOOR_CHECKS)
+		elevator_door.obj_flags |= EMAGGED
+
 	// Note that we can either be emagged by having the button we are inside swiped,
 	// or by someone emagging the assembly directly after removing it (to be cheeky)
 	var/atom/balloon_alert_loc = get(src, /obj/machinery/button) || src
 	balloon_alert_loc.balloon_alert(user, "safeties overridden")
 	obj_flags |= EMAGGED
-	return TRUE
 
 // Multitooling emagged elevator buttons will fix the safeties
 /obj/item/assembly/control/elevator/multitool_act(mob/living/user)
@@ -451,23 +457,28 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/elevator_control_panel, 31)
 		lift_platform.warns_on_down_movement = initial(lift_platform.warns_on_down_movement)
 		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed)
 
+	for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
+		if(elevator_door.elevator_linked_id != lift.lift_id)
+			continue
+
+		elevator_door.obj_flags &= ~EMAGGED
+		elevator_door.close()
+
 	// We can only be multitooled directly so just throw up the balloon alert
 	balloon_alert(user, "safeties reset")
 	obj_flags &= ~EMAGGED
-	return TRUE
 
 /obj/item/assembly/control/elevator/activate(mob/activator)
-	if(cooldown)
+	if(!COOLDOWN_FINISHED(src, elevator_cooldown))
 		return
 
-	cooldown = TRUE
 	// Actually try to call the elevator - this sleeps.
 	// If we failed to call it, play a buzz sound.
 	if(!call_elevator(activator))
 		playsound(loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
 
 	// Finally, give people a chance to get off after it's done before going back off cooldown
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
+	COOLDOWN_START(src, elevator_cooldown, 2 SECONDS)
 
 /// Actually calls the elevator.
 /// Returns FALSE if we failed to setup the move.
@@ -516,7 +527,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/elevator_control_panel, 31)
 		return TRUE
 
 	// Everything went according to plan
-	playsound(loc, 'sound/machines/ping.ogg', 50, TRUE)
 	if(!QDELETED(activator))
 		loc.balloon_alert(activator, "elevator arrived")
 
@@ -584,10 +594,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 
 	/// What specific_lift_id do we link with?
 	var/linked_elevator_id
-
-	// = (real lowest floor's z-level) - (what we want to display)
+	/// 'Floors' for display purposes are by default offset by 1 from their actual z-levels
 	var/lowest_floor_offset = 1
-
 	/// Weakref to the lift.
 	var/datum/weakref/lift_ref
 	/// The lowest floor number. Determined by lift init.
@@ -734,36 +742,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/lift_indicator, 32)
 	desc = "Keeps idiots like you from walking into an open elevator shaft."
 	can_atmos_pass = ATMOS_PASS_DENSITY // elevator shaft is airtight when closed
 	req_access = list(ACCESS_TCOMMS)
-	var/id = null
-	var/safety_enabled = TRUE
-
-/obj/machinery/door/window/elevator/Initialize(mapload, set_dir, unres_sides)
-	. = ..()
-	RemoveElement(/datum/element/atmos_sensitive, mapload)
-	GLOB.elevator_doors += src
-
-/obj/machinery/door/window/elevator/Destroy()
-	GLOB.elevator_doors -= src
-	return ..()
-
-/obj/machinery/door/window/elevator/bumpopen(mob/user)
-	if(operating || !density)
-		return
-	add_fingerprint(user)
-	if(!requiresID())
-		user = null
-	if(!safety_enabled || allowed(user))
-		open_and_close()
-	else
-		do_animate("deny")
-
-/obj/machinery/door/window/elevator/proc/cycle_doors(command)
-	switch(command)
-		if(OPEN_DOORS)
-			if(density)
-				open()
-		if(CLOSE_DOORS)
-			if(!density)
-				close()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/elevator, 0)
