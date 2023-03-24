@@ -377,7 +377,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			continue
 
 		if(!isnull(old_species))
-			if(existing_organ?.type != old_species.get_mutant_organ_type_for_slot(slot))
+			if(existing_organ?.type == old_species.get_mutant_organ_type_for_slot(slot))
 				continue // we don't want to remove organs that are not the default for this species
 
 		// at this point we already know new_organ is not null
