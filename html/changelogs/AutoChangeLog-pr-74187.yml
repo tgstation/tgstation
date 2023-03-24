@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Thrown reagent containers (beakers, molotovs) hitting mobs no longer fully splash their target with their contents, as this was unintended behavior. The intended behavior was 0-50% of the splashed reagents being ignored. Throwing stuff at floors/walls is unaffected."
