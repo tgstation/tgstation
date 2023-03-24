@@ -21,7 +21,7 @@
 /obj/machinery/door/poddoor/preopen{
 	elevator_linked_id = "test_vator";
 	elevator_mode = 1;
-	name = "industrial lift door"
+	name = "Industrial Lift"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1170,7 +1170,7 @@
 /obj/machinery/door/poddoor/preopen{
 	elevator_linked_id = "test_vator";
 	elevator_mode = 1;
-	name = "industrial lift door"
+	name = "Industrial Lift"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1259,7 +1259,7 @@
 /obj/machinery/door/poddoor{
 	elevator_linked_id = "test_vator";
 	elevator_mode = 1;
-	name = "industrial lift door"
+	name = "Industrial Lift"
 	},
 /turf/open/floor/iron/edge{
 	dir = 4
@@ -1798,7 +1798,7 @@
 /obj/machinery/door/poddoor{
 	elevator_linked_id = "test_vator";
 	elevator_mode = 1;
-	name = "industrial lift door"
+	name = "Industrial Lift"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
