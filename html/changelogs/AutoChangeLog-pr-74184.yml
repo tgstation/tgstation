@@ -1,4 +1,0 @@
-author: "flowercuco"
-delete-after: True
-changes:
-  - qol: "Prosthesis organ manipulation now warns you if you are using the incorrect engineering tool"
