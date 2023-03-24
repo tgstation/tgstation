@@ -48,7 +48,7 @@
 /obj/machinery/skill_station/relaymove(mob/living/user, direction)
 	open_machine()
 
-/obj/machinery/skill_station/open_machine()
+/obj/machinery/skill_station/open_machine(density_to_set = FALSE)
 	. = ..()
 	interrupt_operation()
 
@@ -63,7 +63,7 @@
 	if(working)
 		interrupt_operation()
 
-/obj/machinery/skill_station/close_machine(atom/movable/target)
+/obj/machinery/skill_station/close_machine(atom/movable/target, density_to_set = TRUE)
 	. = ..()
 	if(occupant)
 		ui_interact(occupant)

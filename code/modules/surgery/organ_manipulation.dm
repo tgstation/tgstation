@@ -51,6 +51,30 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
+/datum/surgery/organ_manipulation/mechanic/next_step(mob/living/user, modifiers)
+	if(location != user.zone_selected)
+		return FALSE
+	if(user.combat_mode)
+		return FALSE
+	if(step_in_progress)
+		return TRUE
+
+	var/try_to_fail = FALSE
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		try_to_fail = TRUE
+
+	var/datum/surgery_step/step = get_surgery_step()
+	if(isnull(step))
+		return FALSE
+	var/obj/item/tool = user.get_active_held_item()
+	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
+		return TRUE
+	if(tool && tool.item_flags) //Mechanic organ manipulation isn't done with just surgery tools
+		to_chat(user, span_warning("This step requires a different tool!"))
+		return TRUE
+		
+	return FALSE
+
 /datum/surgery/organ_manipulation/mechanic/soft
 	possible_locs = list(
 		BODY_ZONE_PRECISE_GROIN,
