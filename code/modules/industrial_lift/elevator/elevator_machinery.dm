@@ -758,7 +758,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/lift_indicator, 32)
 		open_and_close()
 	else
 		do_animate("deny")
-	return
 
 /obj/machinery/door/window/elevator/proc/cycle_doors(command)
 	switch(command)
