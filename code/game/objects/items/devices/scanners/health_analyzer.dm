@@ -149,9 +149,9 @@
 		else
 			render_list += "<span class='alert ml-1'>Subject has been husked.</span>\n"
 
-	if(target.getStaminaLoss())
+	if(target.stamina.loss)
 		if(advanced)
-			render_list += "<span class='alert ml-1'>Fatigue level: [target.getStaminaLoss()]%.</span>\n"
+			render_list += "<span class='alert ml-1'>Fatigue level: [target.stamina.loss]%.</span>\n"
 		else
 			render_list += "<span class='alert ml-1'>Subject appears to be suffering from fatigue.</span>\n"
 	if (target.getCloneLoss())

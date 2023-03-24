@@ -196,7 +196,7 @@
 	hit_duration_wall = 5
 
 /obj/projectile/hallucination/bullet/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.adjustStaminaLoss(60)
+	afflicted.stamina.adjust(-60)
 
 /obj/projectile/hallucination/laser
 	name = "laser"
@@ -216,7 +216,7 @@
 	reflectable = REFLECT_NORMAL // No idea if this works
 
 /obj/projectile/hallucination/laser/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.adjustStaminaLoss(20)
+	afflicted.stamina.adjust(-20)
 	afflicted.adjust_eye_blur(4 SECONDS)
 
 /obj/projectile/hallucination/taser
@@ -262,7 +262,7 @@
 	reflectable = REFLECT_NORMAL // No idea if this works
 
 /obj/projectile/hallucination/disabler/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.adjustStaminaLoss(30)
+	afflicted.stamina.adjust(-30)
 
 /obj/projectile/hallucination/ebow
 	name = "bolt"
@@ -277,7 +277,7 @@
 /obj/projectile/hallucination/ebow/apply_effect_to_hallucinator(mob/living/afflicted)
 	afflicted.adjust_slurring(10 SECONDS)
 	afflicted.Knockdown(1 SECONDS)
-	afflicted.adjustStaminaLoss(75) // 60 stam + 15 tox
+	afflicted.stamina.adjust(-75) // 60 stam + 15 tox
 	afflicted.adjust_eye_blur(20 SECONDS)
 
 /obj/projectile/hallucination/change

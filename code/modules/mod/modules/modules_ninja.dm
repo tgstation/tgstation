@@ -407,7 +407,7 @@
 	mod.wearer.SetKnockdown(0)
 	mod.wearer.SetImmobilized(0)
 	mod.wearer.SetParalyzed(0)
-	mod.wearer.adjustStaminaLoss(-200)
+	mod.wearer.stamina.adjust(200)
 	mod.wearer.remove_status_effect(/datum/status_effect/speech/stutter)
 	mod.wearer.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
 	reagents.remove_reagent(reagent_required, reagents.total_volume * 0.75)

@@ -197,7 +197,7 @@
 		target.Paralyze((isnull(stun_override) ? stun_time_cyborg : stun_override) * (trait_check ? 0.1 : 1))
 		additional_effects_cyborg(target, user)
 	else
-		target.apply_damage(stamina_damage, STAMINA)
+		target.stamina.adjust(-stamina_damage)
 		if(!trait_check)
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
 		additional_effects_non_cyborg(target, user)
@@ -577,21 +577,9 @@
  * After a period of time, we then check to see what stun duration we give.
  */
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.set_jitter_if_lower(40 SECONDS)
-	target.set_confusion_if_lower(10 SECONDS)
-	target.set_stutter_if_lower(16 SECONDS)
-
+	target.Disorient(6 SECONDS, 5, paralyze = 10 SECONDS, stack_status = FALSE)
+	
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
-	addtimer(CALLBACK(src, PROC_REF(apply_stun_effect_end), target), 2 SECONDS)
-
-/// After the initial stun period, we check to see if the target needs to have the stun applied.
-/obj/item/melee/baton/security/proc/apply_stun_effect_end(mob/living/target)
-	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) //var since we check it in out to_chat as well as determine stun duration
-	if(!target.IsKnockdown())
-		to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
-
-	if(!trait_check)
-		target.Knockdown(knockdown_time)
 
 /obj/item/melee/baton/security/get_wait_description()
 	return span_danger("The baton is still charging!")

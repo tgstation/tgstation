@@ -8,6 +8,7 @@
 	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
 	GLOB.carbon_list += src
+	AddComponent(/datum/component/carbon_sprint)
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_PRESHOVE = PROC_REF(disarm_precollide),
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(disarm_collision),
@@ -522,7 +523,7 @@
 		total_burn += (BP.burn_dam * BP.body_damage_coeff)
 	set_health(round(maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute, DAMAGE_PRECISION))
 	update_stat()
-	update_stamina()
+	on_stamina_update()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD*2) && stat == DEAD )
 		become_husk(BURN)
 	med_hud_set_health()
@@ -532,19 +533,21 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
-/mob/living/carbon/update_stamina()
-	var/stam = getStaminaLoss()
-	if(stam > DAMAGE_PRECISION && (maxHealth - stam) <= crit_threshold)
-		if (!stat)
-			enter_stamcrit()
-	else if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
-		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
-		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
-		REMOVE_TRAIT(src, TRAIT_FLOORED, STAMINA)
-	else
-		return
+/mob/living/carbon/on_stamina_update()
+	var/stam = stamina.current
+	var/max = stamina.maximum
+	var/is_exhausted = HAS_TRAIT_FROM(src, TRAIT_EXHAUSTED, STAMINA)
+	var/is_stam_stunned = HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)
+	if((stam < max * STAMINA_EXHAUSTION_THRESHOLD_MODIFIER) && !is_exhausted)
+		ADD_TRAIT(src, TRAIT_EXHAUSTED, STAMINA)
+		ADD_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
+	if((stam < max * STAMINA_STUN_THRESHOLD_MODIFIER) && !is_stam_stunned && stat <= SOFT_CRIT)
+		stamina_stun()
+	if(is_exhausted && (stam > max * STAMINA_EXHAUSTION_THRESHOLD_MODIFIER))
+		REMOVE_TRAIT(src, TRAIT_EXHAUSTED, STAMINA)
+		REMOVE_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
 	update_stamina_hud()
-
+	
 /mob/living/carbon/update_sight()
 	if(!client)
 		return
@@ -781,7 +784,7 @@
 	else
 
 		if(shown_stamina_loss == null)
-			shown_stamina_loss = getStaminaLoss()
+			shown_stamina_loss = stamina.loss
 
 		if(shown_stamina_loss >= stam_crit_threshold)
 			hud_used.stamina.icon_state = "stamina_crit"

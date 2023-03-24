@@ -125,6 +125,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IMMOBILIZED "immobilized"
 /// Prevents voluntary standing or staying up on its own.
 #define TRAIT_FLOORED "floored"
+///Slows the user, with additional effects based on the source.
+#define TRAIT_DISORIENTED "disoriented"
 /// Forces user to stay standing
 #define TRAIT_FORCED_STANDING "forcedstanding"
 /// Prevents usage of manipulation appendages (picking, holding or using items, manipulating storage).
@@ -138,6 +140,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Doesn't miss attacks
 #define TRAIT_PERFECT_ATTACKER "perfect_attacker"
 #define TRAIT_INCAPACITATED "incapacitated"
+///User's stamina is over the STAMINA_EXHAUSTION_THRESHOLD
+#define TRAIT_EXHAUSTED "exhausted"
+///User is sprinting, full speed ahead
+#define TRAIT_SPRINTING "sprinting"
+///User cannot sprint
+#define TRAIT_NO_SPRINT "no_sprint"
 /// In some kind of critical condition. Is able to succumb.
 #define TRAIT_CRITICAL_CONDITION "critical-condition"
 /// Whitelist for mobs that can read or write

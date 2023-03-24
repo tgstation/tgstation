@@ -15,7 +15,7 @@
 		return TRUE
 	return !mover.density || body_position == LYING_DOWN
 
-/mob/living/toggle_move_intent()
+/mob/living/set_move_intent()
 	. = ..()
 	update_move_intent_slowdown()
 
@@ -24,7 +24,13 @@
 	return ..()
 
 /mob/living/proc/update_move_intent_slowdown()
-	add_movespeed_modifier((m_intent == MOVE_INTENT_WALK)? /datum/movespeed_modifier/config_walk_run/walk : /datum/movespeed_modifier/config_walk_run/run)
+	switch(m_intent)
+		if(MOVE_INTENT_WALK)
+			add_movespeed_modifier(/datum/movespeed_modifier/config_walk_run/walk)
+		if(MOVE_INTENT_RUN)
+			add_movespeed_modifier(/datum/movespeed_modifier/config_walk_run/run)
+		if(MOVE_INTENT_SPRINT)
+			add_movespeed_modifier(/datum/movespeed_modifier/config_walk_run/sprint)
 
 /mob/living/proc/update_turf_movespeed(turf/open/T)
 	if(isopenturf(T) && !is_type_on_turf(T, /obj/structure/lattice/catwalk))

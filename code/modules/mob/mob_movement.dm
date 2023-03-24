@@ -507,18 +507,18 @@
 	set hidden = TRUE
 	set instant = TRUE
 	if(mob)
-		mob.toggle_move_intent(usr)
+		if(mob.m_intent != MOVE_INTENT_WALK)
+			mob.set_move_intent(MOVE_INTENT_WALK)
+		else
+			mob.set_move_intent(MOVE_INTENT_RUN)
 
 /**
  * Toggle the move intent of the mob
  *
  * triggers an update the move intent hud as well
  */
-/mob/proc/toggle_move_intent(mob/user)
-	if(m_intent == MOVE_INTENT_RUN)
-		m_intent = MOVE_INTENT_WALK
-	else
-		m_intent = MOVE_INTENT_RUN
+/mob/proc/set_move_intent(new_state)
+	m_intent = new_state
 	if(hud_used?.static_inventory)
 		for(var/atom/movable/screen/mov_intent/selector in hud_used.static_inventory)
 			selector.update_appearance()

@@ -56,5 +56,5 @@
 		TEST_FAIL("The dummy still had oxy damage after a fully heal!")
 	if(dummy.getCloneLoss())
 		TEST_FAIL("The dummy still had clone damage after a fully heal!")
-	if(dummy.getStaminaLoss())
+	if(dummy.stamina.loss)
 		TEST_FAIL("The dummy still had stamina damage after a fully heal!")

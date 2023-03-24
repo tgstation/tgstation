@@ -41,8 +41,8 @@
 
 	D.apply_damage(damage, STAMINA, affecting, armor_block)
 	log_combat(A, D, "punched (boxing) ")
-	if(D.getStaminaLoss() > 50 && istype(D.mind?.martial_art, /datum/martial_art/boxing))
-		var/knockout_prob = D.getStaminaLoss() + rand(-15,15)
+	if(D.stamina.loss > 50 && istype(D.mind?.martial_art, /datum/martial_art/boxing))
+		var/knockout_prob = D.stamina.loss_as_percent + rand(-15,15)
 		if((D.stat != DEAD) && prob(knockout_prob))
 			D.visible_message(span_danger("[A] knocks [D] out with a haymaker!"), \
 							span_userdanger("You're knocked unconscious by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)

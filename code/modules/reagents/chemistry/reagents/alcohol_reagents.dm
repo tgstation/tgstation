@@ -1020,7 +1020,7 @@
 	// if you have a liver and that liver is an officer's liver
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		. = TRUE
-		drinker.adjustStaminaLoss(-10 * REM * delta_time, required_biotype = affected_biotype)
+		drinker.stamina.adjust(10 * REM * delta_time)
 		if(DT_PROB(10, delta_time))
 			drinker.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/nearby_fake_item), name)
 		if(DT_PROB(5, delta_time))
@@ -2009,14 +2009,14 @@
 	drinker.adjust_dizzy(4 SECONDS * REM * delta_time)
 	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * delta_time, 150, required_organtype = affected_organtype)
 	if(DT_PROB(10, delta_time))
-		drinker.adjustStaminaLoss(10, required_biotype = affected_biotype)
+		drinker.stamina.adjust(-10)
 		drinker.drop_all_held_items()
 		to_chat(drinker, span_notice("You cant feel your hands!"))
 	if(current_cycle > 5)
 		if(DT_PROB(10, delta_time))
 			var/paralyzed_limb = pick_paralyzed_limb()
 			ADD_TRAIT(drinker, paralyzed_limb, type)
-			drinker.adjustStaminaLoss(10, required_biotype = affected_biotype)
+			drinker.stamina.adjust(-10)
 		if(current_cycle > 30)
 			drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * delta_time, required_organtype = affected_organtype)
 			if(current_cycle > 50 && DT_PROB(7.5, delta_time))
@@ -2032,7 +2032,7 @@
 	REMOVE_TRAIT(drinker, TRAIT_PARALYSIS_R_ARM, type)
 	REMOVE_TRAIT(drinker, TRAIT_PARALYSIS_R_LEG, type)
 	REMOVE_TRAIT(drinker, TRAIT_PARALYSIS_L_LEG, type)
-	drinker.adjustStaminaLoss(10, required_biotype = affected_biotype)
+	drinker.stamina.adjust(-10)
 	..()
 
 /datum/reagent/consumable/ethanol/hippies_delight
@@ -2230,7 +2230,7 @@
 	var/obj/item/organ/internal/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		drinker.heal_bodypart_damage(2 * REM * delta_time, 2 * REM *  delta_time)
-		drinker.adjustStaminaLoss(-2 * REM * delta_time, required_biotype = affected_biotype)
+		drinker.stamina.adjust(2 * REM * delta_time)
 		. = TRUE
 	return ..()
 
@@ -2298,7 +2298,7 @@
 		drinker.adjustFireLoss(-1, required_bodytype = affected_bodytype)
 		drinker.adjustToxLoss(-1, required_biotype = affected_biotype)
 		drinker.adjustOxyLoss(-1, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		drinker.adjustStaminaLoss(-1, required_biotype = affected_biotype)
+		drinker.stamina.adjust(1)
 	drinker.visible_message(span_warning("[drinker] shivers with renewed vigor!"), span_notice("One taste of [lowertext(name)] fills you with energy!"))
 	if(!drinker.stat && heal_points == 20) //brought us out of softcrit
 		drinker.visible_message(span_danger("[drinker] lurches to [drinker.p_their()] feet!"), span_boldnotice("Up and at 'em, kid."))
@@ -2309,7 +2309,7 @@
 		drinker.adjustFireLoss(-1 * REM * delta_time, required_bodytype = affected_bodytype)
 		drinker.adjustToxLoss(-0.5 * REM * delta_time, required_biotype = affected_biotype)
 		drinker.adjustOxyLoss(-3 * REM * delta_time, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		drinker.adjustStaminaLoss(-5 * REM * delta_time, required_biotype = affected_biotype)
+		drinker.stamina.adjust(5 * REM * delta_time)
 		. = TRUE
 	..()
 
@@ -2656,7 +2656,7 @@
 
 /datum/reagent/consumable/ethanol/fanciulli/on_mob_metabolize(mob/living/drinker)
 	if(drinker.health > 0)
-		drinker.adjustStaminaLoss(20, required_biotype = affected_biotype)
+		drinker.stamina.adjust(-20)
 		. = TRUE
 	..()
 
@@ -2682,7 +2682,7 @@
 
 /datum/reagent/consumable/ethanol/branca_menta/on_mob_metabolize(mob/living/drinker)
 	if(drinker.health > 0)
-		drinker.adjustStaminaLoss(35, required_biotype = affected_biotype)
+		drinker.stamina.adjust(-35)
 		. = TRUE
 	..()
 
@@ -2860,7 +2860,7 @@
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		drinker.adjustOxyLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		drinker.adjustToxLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-		drinker.adjustStaminaLoss(-1  * REM * delta_time, required_biotype = affected_biotype)
+		drinker.stamina.adjust(1  * REM * delta_time)
 	return ..()
 
 /datum/reagent/consumable/ethanol/bug_spray
@@ -2944,7 +2944,7 @@
 /datum/reagent/consumable/ethanol/turbo/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(2, delta_time))
 		to_chat(drinker, span_notice("[pick("You feel disregard for the rule of law.", "You feel pumped!", "Your head is pounding.", "Your thoughts are racing..")]"))
-	drinker.adjustStaminaLoss(-0.25 * drinker.get_drunk_amount() * REM * delta_time, required_biotype = affected_biotype)
+	drinker.stamina.adjust(0.25 * drinker.get_drunk_amount() * REM * delta_time)
 	return ..()
 
 /datum/reagent/consumable/ethanol/old_timer

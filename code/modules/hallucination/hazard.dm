@@ -61,7 +61,7 @@
 	return ..()
 
 /obj/effect/client_image_holder/hallucination/danger/lava/on_hallucinator_entered(mob/living/afflicted)
-	afflicted.adjustStaminaLoss(20)
+	afflicted.stamina.adjust(-20)
 	afflicted.cause_hallucination(/datum/hallucination/fire, "fake lava hallucination")
 
 /obj/effect/client_image_holder/hallucination/danger/chasm

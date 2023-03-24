@@ -48,10 +48,5 @@
 	else if(damage_coeff[CLONE])
 		. = adjust_health(amount * damage_coeff[CLONE] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
-/mob/living/basic/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
-	if(forced)
-		staminaloss = max(0, min(BASIC_MOB_MAX_STAMINALOSS, staminaloss + amount))
-	else
-		staminaloss = max(0, min(BASIC_MOB_MAX_STAMINALOSS, staminaloss + (amount * damage_coeff[STAMINA])))
-	if(updating_stamina)
-		update_stamina()
+/mob/living/basic/pre_stamina_change(diff as num, forced)
+	return diff * damage_coeff[STAMINA]

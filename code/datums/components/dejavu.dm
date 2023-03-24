@@ -49,7 +49,7 @@
 		clone_loss = L.getCloneLoss()
 		tox_loss = L.getToxLoss()
 		oxy_loss = L.getOxyLoss()
-		stamina_loss = L.getStaminaLoss()
+		stamina_loss = L.stamina.loss
 		brain_loss = L.getOrganLoss(ORGAN_SLOT_BRAIN)
 		rewind_type = PROC_REF(rewind_living)
 

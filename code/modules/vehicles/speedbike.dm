@@ -53,7 +53,7 @@
 		return
 	var/mob/living/carbon/human/rammed = A
 	rammed.Paralyze(100)
-	rammed.adjustStaminaLoss(30)
+	rammed.stamina.adjust(-30)
 	rammed.apply_damage(rand(20,35), BRUTE)
 	if(!crash_all)
 		rammed.throw_at(get_edge_target_turf(A, dir), 4, 3)

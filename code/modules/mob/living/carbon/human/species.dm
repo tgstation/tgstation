@@ -1165,7 +1165,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER)) //kicks never miss (provided your species deals more than 0 damage)
 				miss_chance = 0
 			else
-				miss_chance = min((attacking_bodypart.unarmed_damage_high/attacking_bodypart.unarmed_damage_low) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
+				miss_chance = min((attacking_bodypart.unarmed_damage_high/attacking_bodypart.unarmed_damage_low) + user.stamina.loss + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, attacking_bodypart.unarmed_miss_sound, 25, TRUE, -1)
@@ -1208,7 +1208,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.visible_message(span_danger("[user] knocks [target] down!"), \
 							span_userdanger("You're knocked down by [user]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_danger("You knock [target] down!"))
-			var/knockdown_duration = 40 + (target.getStaminaLoss() + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 40 base stun + 40 stun modifier = 80 stun duration, which is the old base duration
+			var/knockdown_duration = 40 + (target.stamina.loss + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 40 base stun + 40 stun modifier = 80 stun duration, which is the old base duration
 			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
 			log_combat(user, target, "got a stun punch with their previous punch")
 
@@ -1411,7 +1411,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			H.adjustCloneLoss(damage_amount)
 		if(STAMINA)
 			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.stamina_mod
-			H.adjustStaminaLoss(damage_amount)
+			H.stamina.adjust(-damage_amount)
 		if(BRAIN)
 			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.brain_mod
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)

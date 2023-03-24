@@ -111,7 +111,7 @@
 
 /// Returns true if the target has a kind of damage which we can heal
 /datum/component/healing_touch/proc/has_healable_damage(mob/living/target)
-	return (target.getBruteLoss() > 0 && heal_brute) || (target.getFireLoss() > 0 && heal_burn) || (target.getStaminaLoss() > 0 && heal_stamina)
+	return (target.getBruteLoss() > 0 && heal_brute) || (target.getFireLoss() > 0 && heal_burn) || (target.stamina.loss > 0 && heal_stamina)
 
 /// Perform a do_after and then heal our target
 /datum/component/healing_touch/proc/heal_target(mob/living/healer, mob/living/target)
