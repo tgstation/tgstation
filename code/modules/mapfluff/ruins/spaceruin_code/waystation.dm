@@ -23,7 +23,7 @@
 	NAME Raymond Johnson
 	SAY All right boys, The mission is simple.
 	DELAY 20
-	SAY You will be breaching an off-the-way waystation deep inside Nanotrasen territory.
+	SAY You will be breaching an distant waystation on the fringe of Nanotrasen territory.
 	DELAY 25
 	SAY Your main objective is to secure highly classified documents about recent Nanotrasen expansion in the Spinward sector.
 	DELAY 20
@@ -37,11 +37,11 @@
 	DELAY 10
 	SAY This should be a cakewalk, I have the utmost confidence that you will succeed with your objectives. Good luck.
 	DELAY 25"}
-	
+
 // Outfits
 /datum/outfit/waystation/
 	name = "improper Waystation Outfit"
-	
+
 /datum/outfit/waystation/cargohauler
 	name = "Waystation Cargo Hauler"
 	id = /obj/item/card/id/advanced
@@ -76,11 +76,11 @@
 /obj/effect/mob_spawn/corpse/human/waystation/cargo_technician
 	name = "Waystation Cargo Hauler"
 	outfit = /datum/outfit/waystation/cargohauler
-	
+
 /obj/effect/mob_spawn/corpse/human/waystation/quartermaster
 	name = "Waystation Quartermaster"
 	outfit = /datum/outfit/waystation/qm
-	
+
 /obj/effect/mob_spawn/corpse/human/waystation/nanotrasenofficer
 	name = "Waystation Security Officer"
 	outfit = /datum/outfit/waystation/nanotrasenofficer
