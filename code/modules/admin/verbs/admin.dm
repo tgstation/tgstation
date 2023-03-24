@@ -208,7 +208,7 @@
 		if(MUTE_DEADCHAT)
 			mute_string = "deadchat and DSAY"
 			feedback_string = "Deadchat"
-		if(MUTE_MUSIC_REQ)
+		if(MUTE_MUSIC_REQUEST)
 			mute_string = "music requests"
 			feedback_string = "Music Requests"
 		if(MUTE_ALL)

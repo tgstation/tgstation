@@ -17,10 +17,10 @@
 
 	log_music_req("[src.key]/([src.name]): [request_url]")
 	if(usr.client)
-		if(usr.client.prefs.muted & MUTE_MUSIC_REQ)
+		if(usr.client.prefs.muted & MUTE_MUSIC_REQUEST)
 			to_chat(usr, span_danger("You cannot request music at this time. (muted)."), confidential = TRUE)
 			return
-		if(src.client.handle_spam_prevention(request_url,MUTE_MUSIC_REQ))
+		if(src.client.handle_spam_prevention(request_url,MUTE_MUSIC_REQUEST))
 			return
 
 	GLOB.requests.music_request(usr.client, request_url)
