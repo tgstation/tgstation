@@ -524,9 +524,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/elevator_control_panel, 31)
 
 /// Callback for move_to_zlevel / general proc to check if we're still in a button
 /obj/item/assembly/control/elevator/proc/check_button()
-	if(QDELETED(src))
-		return FALSE
-	if(!istype(loc, /obj/machinery/button))
+	if(QDELETED(src) || !istype(loc, /obj/machinery/button))
 		return FALSE
 	return TRUE
 
