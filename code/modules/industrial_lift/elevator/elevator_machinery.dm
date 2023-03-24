@@ -768,6 +768,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/lift_indicator, 32)
 		if(CLOSE_DOORS)
 			if(!density)
 				close()
-	return
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/elevator, 0)
