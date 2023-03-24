@@ -2,6 +2,9 @@
 "ar" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/siding/green,
+/obj/effect/turf_decal/siding/green{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "au" = (
@@ -366,6 +369,9 @@
 "gD" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/siding/green,
+/obj/effect/turf_decal/siding/green{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "gT" = (
@@ -440,9 +446,7 @@
 /area/ruin/space/has_grav/waystation/securestorage)
 "ix" = (
 /obj/item/kirbyplants/random,
-/obj/effect/turf_decal/siding/green{
-	dir = 10
-	},
+/obj/effect/turf_decal/siding/green/end,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
@@ -635,8 +639,8 @@
 /area/ruin/space/has_grav/waystation/securestorage)
 "lp" = (
 /obj/structure/closet/crate/bin,
-/obj/effect/turf_decal/siding/green{
-	dir = 6
+/obj/effect/turf_decal/siding/green/end{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
@@ -947,6 +951,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/qm)
+"qr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/dim/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/dorms)
 "qs" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
@@ -1354,6 +1364,9 @@
 /obj/effect/turf_decal/siding/green/corner{
 	dir = 8
 	},
+/obj/effect/turf_decal/siding/green{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
@@ -1586,8 +1599,8 @@
 /area/ruin/space/has_grav/waystation/cargooffice)
 "El" = (
 /obj/machinery/vending/sovietsoda,
-/obj/effect/turf_decal/siding/green{
-	dir = 10
+/obj/effect/turf_decal/siding/green/end{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
@@ -1778,6 +1791,9 @@
 "Je" = (
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 8
+	},
+/obj/effect/turf_decal/siding/green{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -2010,10 +2026,6 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/qm)
-"Mo" = (
-/obj/effect/decal/cleanable/blood/tracks,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/dorms)
 "Mq" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -2141,6 +2153,9 @@
 	},
 /obj/effect/turf_decal/siding/green/corner{
 	dir = 1
+	},
+/obj/effect/turf_decal/siding/green{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -2586,11 +2601,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/waystation/assaultpod)
 "WD" = (
-/obj/item/kirbyplants/random,
-/obj/effect/turf_decal/siding/green{
-	dir = 9
+/obj/effect/turf_decal/siding/green/end{
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "WF" = (
@@ -2747,18 +2762,6 @@
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
-"ZA" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/green/end,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/dorms)
 "ZD" = (
 /obj/structure/chair/stool/directional{
 	dir = 4
@@ -4045,8 +4048,8 @@ zZ
 Uy
 Uy
 Uy
-Uy
-BN
+zZ
+qr
 Uy
 Uy
 Uy
@@ -4109,9 +4112,9 @@ Bu
 jV
 jV
 jV
-pg
+jV
 WP
-Mo
+oa
 oa
 Id
 SJ
@@ -4230,7 +4233,7 @@ ox
 KD
 MY
 ox
-jV
+pg
 WD
 Ol
 Je
@@ -4423,7 +4426,7 @@ ez
 Dw
 do
 gf
-ZA
+kq
 Kx
 xw
 jV
