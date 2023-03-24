@@ -41,6 +41,7 @@
 // Outfits
 /datum/outfit/waystation/
 	name = "improper Waystation Outfit"
+	
 /datum/outfit/waystation/cargohauler
 	name = "Waystation Cargo Hauler"
 	id = /obj/item/card/id/advanced
