@@ -122,7 +122,7 @@ const RequestControls = (props, context) => {
       {request.req_type === 'request_fax' && (
         <Button onClick={() => act('show', { id: request.id })}>SHOW</Button>
       )}
-      {request.req_type === 'request_music' && (
+      {request.req_type === 'request_internet_sound' && (
         <Button onClick={() => act('play', { id: request.id })}>PLAY</Button>
       )}
     </div>

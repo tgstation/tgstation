@@ -235,7 +235,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			request_message.ui_interact(usr)
 			return TRUE
 		if ("play")
-			if(request.req_type != REQUEST_MUSIC)
+			if(request.req_type != REQUEST_INTERNET_SOUND)
 				to_chat(usr, "Request doesn't have a sound to play.", confidential = TRUE)
 				return TRUE
 			if(findtext(request.message, ":") && !findtext(request.message, GLOB.is_http_protocol))
