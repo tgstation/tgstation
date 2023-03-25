@@ -62303,6 +62303,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /turf/open/floor/iron/dark/airless,
 /area/station/science/ordnance/freezerchamber)
 "vkd" = (
