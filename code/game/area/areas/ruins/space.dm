@@ -582,6 +582,7 @@
 // Ruin of Waystation
 /area/ruin/space/has_grav/waystation
 	name = "Waystation Maintenance"
+
 /area/ruin/space/has_grav/waystation/qm
 	name = "Quartermaster Office"
 
@@ -602,5 +603,6 @@
 
 /area/ruin/space/has_grav/powered/waystation/assaultpod
 	name = "Assault Pod"
+
 /area/ruin/space/has_grav/waystation/power
 	name = "Waystation Electrical"
