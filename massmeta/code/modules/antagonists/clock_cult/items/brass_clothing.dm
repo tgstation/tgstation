@@ -4,7 +4,7 @@
 	icon = 'massmeta/icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_cuirass"
 	worn_icon = 'icons/mob/clothing/suits/chaplain.dmi'
-	armor = /datum/armor/clockwork_suit
+	armor_type = /datum/armor/clockwork_suit
 	slowdown = 0.6
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	w_class = WEIGHT_CLASS_BULKY
@@ -41,7 +41,7 @@
 	icon_state = "clockwork_cuirass_speed"
 	slowdown = -0.3
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = /datum/armor/clockwork_cuirass_speed
+	armor_type = /datum/armor/clockwork_cuirass_speed
 
 /datum/armor/clockwork_cuirass_speed
 	melee = 40
@@ -59,7 +59,7 @@
 	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon = 'massmeta/icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_cloak"
-	armor = /datum/armor/clockwork_cloak
+	armor_type = /datum/armor/clockwork_cloak
 	slowdown = 0.4
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/shroud_active = FALSE
@@ -176,7 +176,7 @@
 	icon = 'massmeta/icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_helmet"
 	worn_icon = 'icons/mob/clothing/head/chaplain.dmi'
-	armor = /datum/armor/clockwork_helmet
+	armor_type = /datum/armor/clockwork_helmet
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	w_class = WEIGHT_CLASS_BULKY
 	flash_protect = 1
@@ -203,7 +203,7 @@
 	icon = 'massmeta/icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_gauntlets"
 	siemens_coefficient = 0
-	armor = /datum/armor/clockwork_gloves
+	armor_type = /datum/armor/clockwork_gloves
 	strip_delay = 80
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
