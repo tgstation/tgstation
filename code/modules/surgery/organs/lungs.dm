@@ -664,7 +664,7 @@
 	breath_gases[remove_id][MOLES] -= volume
 	if(exchange_id)
 		ASSERT_GAS(exchange_id, breath_out)
-		breath_out[exchange_id][MOLES] += volume
+		breath_out.gases[exchange_id][MOLES] += volume
 	return volume
 
 /// Applies suffocation side-effects to a given Human, scaling based on ratio of required pressure VS "true" pressure.
