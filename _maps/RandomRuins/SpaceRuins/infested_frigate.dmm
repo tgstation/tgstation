@@ -372,10 +372,10 @@
 	},
 /obj/structure/alien/weeds,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/door_assembly/door_assembly_highsecurity{
-	anchored = 1;
-	max_integrity = 300
+/obj/machinery/door/airlock/highsecurity{
+	req_access = list("syndicate")
 	},
+/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -1593,7 +1593,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/door/airlock/highsecurity{
 	name = "SYN-C Blackbeard Armory";
-	welded = 1
+	welded = 1;
+	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/infested_frigate{
@@ -3147,9 +3148,6 @@
 	has_gravity = 1
 	})
 "PD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
