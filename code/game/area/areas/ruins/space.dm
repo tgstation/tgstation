@@ -578,3 +578,7 @@
 // Space Ghost Kitchen
 /area/ruin/space/space_ghost_restaurant
 	name = "\improper Space Ghost Restaurant"
+
+// The abandoned capsule 'The Traveler's Rest'
+/area/ruin/space/has_grav/travelers_rest
+	name = "\improper Traveler's Rest"

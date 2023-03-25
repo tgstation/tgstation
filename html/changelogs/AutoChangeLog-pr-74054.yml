@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - imageadd: "New fire alarm"
-  - code_imp: "Fire alarm/fire door volume reduced, lights synchronized"
