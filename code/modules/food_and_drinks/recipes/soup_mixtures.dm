@@ -242,6 +242,27 @@
 
 	thing.desc = "Looks like whatever's in there is very watered down."
 
+/// So this one's kind of a "failed" result, but also a "custom" result
+/// Getting to this temperature and having no other soup reaction made means you're either messing something up
+/// or you simply aren't following a recipe. So it'll just combine
+/datum/chemical_reaction/food/soup/custom
+	required_temp = SOUP_BURN_TEMP - 20
+	optimal_temp = SOUP_BURN_TEMP - 10
+	overheat_temp = SOUP_BURN_TEMP + 20
+	mix_message = span_warning("You smell something gross coming from the pot of soup.")
+	required_reagents = list(/datum/reagent/water = 30)
+	results = list(/datum/reagent/water = 10)
+
+/datum/chemical_reaction/food/soup/custom/pre_reaction_other_checks(datum/reagents/holder)
+	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
+	if(!istype(pot))
+		return FALSE // Not a pot
+	if(holder.is_reacting)
+		return FALSE // Another soup is being made
+	if(length(pot.added_ingredients) <= 3)
+		return FALSE // Not a lot here to go off of
+	return TRUE
+
 // Meatball Soup
 /datum/reagent/consumable/nutriment/soup/meatball_soup
 	name = "Meatball Soup"
