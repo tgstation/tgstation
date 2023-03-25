@@ -899,10 +899,10 @@
 	var/list/role_setup = list()
 	var/list/unique_roles_added = list()
 	for(var/i in 1 to roles_to_generate)
-		if(ISMULTIPLE(i, 6))
+		if(i == 6)
 			add_setup_role(role_setup, unique_roles_added, pick(NEUTRAL_KILL || NEUTRAL_DISRUPT))
 			continue
-		if(ISMULTIPLE(i, 5))
+		if(i == 5)
 			add_setup_role(role_setup, unique_roles_added, pick(NEUTRAL_DISRUPT))
 			continue
 		if(ISMULTIPLE(i, 3))
