@@ -840,11 +840,11 @@
 		. += L[key]
 
 /**
- * Returns a semirandom setup with 12 roles. balance not guaranteed!
+ * Returns a standard setup, with certain important/unique roles guaranteed. More balanced of an experience than generate_forced_setup()
  *
  * please check the variables at the top of the proc to see how much of each role types it picks
  */
-/datum/mafia_controller/proc/generate_random_setup()
+/datum/mafia_controller/proc/generate_standard_setup()
 	var/invests_left = 2
 	var/protects_left = 2
 	var/killings_left = 1
@@ -886,14 +886,14 @@
 	return random_setup
 
 /**
- * Returns a more volatile-ly generated role list, balance absolutely not expected.
+ * Returns a more volatile-ly generated role list, balance absolutely not expected. Does not assure any role types, only role alignments.
  *
  * Generates a setup based on a ratio of random pools of good/neutral/badguy roles.
  * Specific roles are not chosen (You could get an entire town of lawyers and double nightmares), outcomes may be unbalanced as a result.
  * This is used when a game start is forced and we don't have the players to make a properly balanced game.
- * Might be useful for learning how the game works outside of a full game.
+ * Game will auto-resolve if less than 3 roles are generated (Town Victory), which should only be able to happen if an admin forces it.
  *
- * roles_to_generate - The number of roles we will return
+ * roles_to_generate - The number of roles we will return.
  */
 /datum/mafia_controller/proc/generate_forced_setup(roles_to_generate)
 	var/list/role_setup = list()
@@ -955,7 +955,7 @@
 	var/list/filtered_keys = filter_players(req_players)
 
 	if(!setup.len) //don't actually have one yet, so generate a max player random setup. it's good to do this here instead of above so it doesn't generate one every time a game could possibly start.
-		setup = generate_random_setup()
+		setup = generate_standard_setup()
 	prepare_game(setup,filtered_keys)
 	start_game()
 
@@ -992,7 +992,7 @@
 	if(length(GLOB.mafia_early_votes) < 3)
 		return FALSE //Bare minimum is 3, otherwise the game instantly ends. Also prevents people from randomly starting games for no reason.
 
-	if(length(GLOB.mafia_early_votes) < length(GLOB.mafia_signup) / 2)
+	if(length(GLOB.mafia_early_votes) < round(length(GLOB.mafia_signup) / 2))
 		return FALSE
 
 	return TRUE
@@ -1018,7 +1018,7 @@
 				continue
 		GLOB.mafia_signup -= key //not valid to play when we checked so remove them from signups
 
-	//If we're not over capacity, return early.
+	//If we're not over capacity and don't need to notify anyone of their exclusion, return early.
 	if(length(possible_keys) < max_players)
 		return filtered_keys
 
