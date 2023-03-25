@@ -81,6 +81,10 @@
 #define MACHINE_ELECTRIFIED_PERMANENT -1
 #define MACHINE_DEFAULT_ELECTRIFY_TIME 30
 
+//cloning defines. These are flags.
+#define CLONING_SUCCESS (1<<0)
+#define CLONING_DELETE_RECORD (1<<1)
+
 //mass drivers and related machinery
 #define MASSDRIVER_ORDNANCE "ordnancedriver"
 #define MASSDRIVER_CHAPEL "chapelgun"

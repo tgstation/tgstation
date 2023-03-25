@@ -228,3 +228,10 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 		return "([AREACOORD(T)])"
 	else if(A.loc)
 		return "(UNKNOWN (?, ?, ?))"
+
+
+
+/proc/log_cloning(text, mob/initiator)
+	if(CONFIG_GET(flag/log_cloning))
+		WRITE_LOG(GLOB.world_cloning_log, "CLONING: [text]")
+

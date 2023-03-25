@@ -237,6 +237,12 @@
 	quirk_holder.clear_mood_event("family_heirloom_missing")
 	quirk_holder.clear_mood_event("family_heirloom")
 
+/datum/quirk/item_quirk/family_heirloom/clone_data()
+	return heirloom
+
+/datum/quirk/item_quirk/family_heirloom/on_clone(data)
+	heirloom = data
+
 /datum/quirk/glass_jaw
 	name = "Glass Jaw"
 	desc = "You have a very fragile jaw. Any sufficiently hard blow to your head might knock you out."

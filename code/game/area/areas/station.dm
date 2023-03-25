@@ -1371,6 +1371,9 @@
 	name = "\improper Genetics Lab"
 	icon_state = "geneticssci"
 
+/area/station/science/genetics/cloning
+	name = "Cloning Lab"
+
 /area/station/science/server
 	name = "\improper Research Division Server Room"
 	icon_state = "server"

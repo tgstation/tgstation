@@ -97,6 +97,8 @@
 /// log virology data
 /datum/config_entry/flag/log_virus
 
+/datum/config_entry/flag/log_cloning
+
 /// log assets
 /datum/config_entry/flag/log_asset
 

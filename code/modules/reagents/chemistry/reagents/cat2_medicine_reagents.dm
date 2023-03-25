@@ -351,7 +351,6 @@
 	if(creation_purity >= 1) //Perfectly pure multivers gives a bonus of 2!
 		medibonus += 1
 	affected_mob.adjustToxLoss(-0.5 * min(medibonus, 3 * normalise_creation_purity()) * REM * delta_time, required_biotype = affected_biotype) //not great at healing but if you have nothing else it will work
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * REM * delta_time, required_organtype = affected_organtype) //kills at 40u
 	for(var/r2 in affected_mob.reagents.reagent_list)
 		var/datum/reagent/the_reagent2 = r2
 		if(the_reagent2 == src)

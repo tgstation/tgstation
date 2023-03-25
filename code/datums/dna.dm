@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/stability = 100
 	///Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
 	var/scrambled = FALSE
-
+	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -89,7 +89,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			cholder.dna = null
 	holder = null
 
-	QDEL_NULL(species)
+	if(delete_species)
+		QDEL_NULL(species)
 
 	mutations.Cut() //This only references mutations, just dereference.
 	temporary_mutations.Cut() //^

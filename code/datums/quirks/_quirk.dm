@@ -147,7 +147,15 @@
 /// Otherwise, it runs once on the next COMSIG_MOB_LOGIN.
 /datum/quirk/proc/post_add()
 	return
+ 
+/// return additional data that should be remembered by cloning
+/datum/quirk/proc/clone_data()
+	return
 
+/// create the quirk from clone data
+/datum/quirk/proc/on_clone(data)
+	return
+	
 /// Subtype quirk that has some bonus logic to spawn items for the player.
 /datum/quirk/item_quirk
 	/// Lazylist of strings describing where all the quirk items have been spawned.
