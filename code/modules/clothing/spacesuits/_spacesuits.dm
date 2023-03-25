@@ -229,7 +229,6 @@
 		if(toggler)
 			to_chat(toggler, span_warning("The thermal regulator on [src] has no charge."))
 		return
-	if()
 	thermal_on = !thermal_on
 	min_cold_protection_temperature = thermal_on ? SPACE_SUIT_MIN_TEMP_PROTECT : SPACE_SUIT_MIN_TEMP_PROTECT_OFF
 	if(toggler)
