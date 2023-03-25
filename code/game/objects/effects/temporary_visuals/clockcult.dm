@@ -69,7 +69,7 @@
 	pixel_y = 20
 	duration = 20
 
-/obj/effect/temp_visual/ratvar/belligerent_cast/Initialize()
+/obj/effect/temp_visual/ratvar/belligerent_cast/Initialize(mapload)
 	. = ..()
 	animate(src, alpha = 0, time = duration, easing = EASE_OUT)
 
@@ -95,7 +95,7 @@
 	icon_state = "warden_gaze"
 	duration = 3
 
-/obj/effect/temp_visual/ratvar/ocular_warden/Initialize()
+/obj/effect/temp_visual/ratvar/ocular_warden/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-10, 10)
@@ -134,7 +134,7 @@
 	layer = ABOVE_MOB_LAYER
 	duration = 10
 
-/obj/effect/temp_visual/ratvar/component/Initialize()
+/obj/effect/temp_visual/ratvar/component/Initialize(mapload)
 	. = ..()
 	transform = matrix()*0.75
 	pixel_x = rand(-10, 10)
@@ -152,53 +152,6 @@
 
 /obj/effect/temp_visual/ratvar/component/ansible
 	icon_state = "hierophant_ansible"
-
-/obj/effect/temp_visual/ratvar/sigil
-	name = "glowing circle"
-	icon_state = "sigildull"
-
-/obj/effect/temp_visual/ratvar/sigil/transgression
-	color = "#FAE48C"
-	layer = ABOVE_MOB_LAYER
-	duration = 70
-	light_range = 5
-	light_power = 2
-	light_color = "#FAE48C"
-
-/obj/effect/temp_visual/ratvar/sigil/transgression/Initialize()
-	. = ..()
-	var/oldtransform = transform
-	animate(src, transform = matrix()*2, time = 5)
-	animate(transform = oldtransform, alpha = 0, time = 65)
-
-/obj/effect/temp_visual/ratvar/sigil/transmission
-	color = "#EC8A2D"
-	layer = ABOVE_MOB_LAYER
-	duration = 20
-	light_range = 3
-	light_power = 1
-	light_color = "#EC8A2D"
-
-/obj/effect/temp_visual/ratvar/sigil/transmission/Initialize(mapload, transform_multiplier)
-	. = ..()
-	var/oldtransform = transform
-	transform = matrix()*transform_multiplier
-	animate(src, transform = oldtransform, alpha = 0, time = 20)
-
-/obj/effect/temp_visual/ratvar/sigil/vitality
-	color = "#1E8CE1"
-	icon_state = "sigilactivepulse"
-	layer = ABOVE_MOB_LAYER
-	light_range = 1.4
-	light_power = 0.5
-	light_color = "#1E8CE1"
-
-/obj/effect/temp_visual/ratvar/sigil/submission
-	color = "#AF0AAF"
-	layer = ABOVE_MOB_LAYER
-	duration = 80
-	icon_state = "sigilactiveoverlay"
-	alpha = 0
 
 /obj/effect/temp_visual/steam
 	name = "steam"
@@ -227,46 +180,13 @@
 /obj/effect/temp_visual/steam_release
 	name = "all the steam"
 
-/obj/effect/temp_visual/steam_release/Initialize()
+/obj/effect/temp_visual/steam_release/Initialize(mapload)
 	..()
 	for(var/V in GLOB.cardinals)
 		var/turf/T = get_step(src, V)
 		new/obj/effect/temp_visual/steam(T, V)
+	playsound(src, 'sound/machines/clockcult/steam_whoosh.ogg', 30)
 	return INITIALIZE_HINT_QDEL
-
-//Foreshadows a servant warping in.
-/obj/effect/temp_visual/ratvar/warp_marker
-	name = "illuminant marker"
-	desc = "A silhouette of dim light. It's getting brighter!"
-	resistance_flags = INDESTRUCTIBLE
-	icon = 'icons/effects/genetics.dmi'
-	icon_state = "servitude"
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	anchored = TRUE
-	alpha = 0
-	light_color = "#FFE48E"
-	light_range = 2
-	light_power = 0.7
-	duration = 55
-
-/obj/effect/temp_visual/ratvar/warp_marker/Initialize(mapload, mob/living/servant)
-	. = ..()
-	animate(src, alpha = 255, time = 50)
-
-//Used by the Eminence to coordinate the cult
-/obj/effect/temp_visual/ratvar/command_point
-	name = "command marker"
-	desc = "An area of importance marked by the Eminence."
-	icon = 'massmeta/icons/mob/actions/actions_clockcult.dmi'
-	icon_state = "eminence"
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	resistance_flags = INDESTRUCTIBLE
-	layer = LARGE_MOB_LAYER
-	duration = 300
-
-/obj/effect/temp_visual/ratvar/command_point/Initialize(mapload, appearance)
-	. = ..()
-	icon_state = appearance
 
 /obj/effect/temp_visual/ratvar/warp
 	name = "spatial distortion"
