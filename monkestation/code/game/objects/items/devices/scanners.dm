@@ -2,7 +2,6 @@
 	name = "nanite scanner"
 	icon = 'monkestation/icons/obj/device.dmi'
 	icon_state = "nanite_scanner"
-	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
 	desc = "A hand-held body scanner able to detect nanites and their programming."
 	flags_1 = CONDUCT_1

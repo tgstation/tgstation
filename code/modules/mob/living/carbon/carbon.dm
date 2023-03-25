@@ -919,6 +919,7 @@
 		set_handcuffed(null)
 		update_handcuffed()
 
+	stamina.adjust(stamina.maximum)
 	return ..()
 
 /mob/living/carbon/can_be_revived()
