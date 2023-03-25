@@ -39,14 +39,9 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"aH" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "plating"
-	},
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/turf/template_noop,
+"aB" = (
+/obj/item/shard,
+/turf/open/space/basic,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -462,10 +457,8 @@
 	has_gravity = 1
 	})
 "fl" = (
-/turf/template_noop,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/turf/open/space/basic,
+/area/template_noop)
 "fE" = (
 /obj/structure/cable,
 /obj/effect/spawner/random/trash,
@@ -482,8 +475,8 @@
 	has_gravity = 1
 	})
 "fM" = (
-/obj/effect/spawner/random/trash,
-/turf/template_noop,
+/obj/structure/door_assembly/door_assembly_ext,
+/turf/open/space/basic,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -528,6 +521,19 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
+"gG" = (
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/space/basic,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
+"gP" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
 "hm" = (
 /obj/machinery/porta_turret/syndicate/pod{
 	dir = 5;
@@ -545,6 +551,19 @@
 	},
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
+"hx" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/fluff/broken_flooring{
+	dir = 1;
+	icon_state = "plating"
+	},
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/space/basic,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -866,10 +885,9 @@
 	})
 "lO" = (
 /obj/structure/fluff/broken_flooring{
-	dir = 4;
 	icon_state = "pile"
 	},
-/turf/template_noop,
+/turf/open/space/basic,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -1024,18 +1042,6 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"nW" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
-"of" = (
-/obj/item/shard,
-/turf/template_noop,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
 "oj" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
@@ -1096,6 +1102,16 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
+"pq" = (
+/obj/structure/lattice,
+/obj/item/storage/belt/bandolier{
+	pixel_y = 2;
+	pixel_x = 15
+	},
+/turf/open/space/basic,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
 "qb" = (
 /obj/effect/turf_decal{
 	dir = 8
@@ -1114,14 +1130,6 @@
 	plasmatanks = 0
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
-"qe" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
-/turf/template_noop,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -1190,16 +1198,16 @@
 	})
 "qF" = (
 /obj/item/ammo_casing/spent,
-/turf/template_noop,
+/turf/open/space/basic,
 /area/template_noop)
-"qP" = (
+"qJ" = (
 /obj/structure/closet/crate/trashcart,
 /obj/item/clothing/mask/facehugger/toy,
 /obj/item/storage/fancy/cigarettes/cigpack_cannabis,
 /obj/effect/mob_spawn/corpse/human/charredskeleton,
 /mob/living/basic/viscerator,
 /mob/living/basic/viscerator,
-/turf/template_noop,
+/turf/open/space/basic,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -1207,19 +1215,6 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
-"ra" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 1;
-	icon_state = "plating"
-	},
-/obj/structure/fluff/broken_flooring{
-	dir = 8;
-	icon_state = "pile"
-	},
-/turf/template_noop,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -1264,6 +1259,17 @@
 /obj/effect/spawner/random/engineering/vending_restock,
 /obj/item/bedsheet/syndie/double,
 /turf/open/floor/plating,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
+"rB" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "plating"
+	},
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/space/basic,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -1365,6 +1371,12 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
+"sT" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
 "sZ" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -1379,6 +1391,13 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
+"ta" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 2;
+	icon_state = "singular"
+	},
+/turf/open/space/basic,
+/area/template_noop)
 "ti" = (
 /obj/structure/cable,
 /obj/effect/turf_decal{
@@ -1419,15 +1438,6 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"tR" = (
-/obj/structure/lattice,
-/obj/item/stack/rods{
-	amount = 25
-	},
-/turf/template_noop,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
 "tU" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -1461,16 +1471,6 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"uh" = (
-/obj/structure/lattice,
-/obj/item/storage/belt/bandolier{
-	pixel_y = 2;
-	pixel_x = 15
-	},
-/turf/template_noop,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
 "uC" = (
 /obj/effect/turf_decal{
 	dir = 2
@@ -1496,12 +1496,6 @@
 	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/pod/dark,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
-"vf" = (
-/obj/item/stack/rods,
-/turf/template_noop,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -1610,6 +1604,15 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
+"wq" = (
+/obj/structure/lattice,
+/obj/item/stack/rods{
+	amount = 25
+	},
+/turf/open/space/basic,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -1922,12 +1925,6 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"zC" = (
-/obj/structure/door_assembly/door_assembly_ext,
-/turf/template_noop,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
 "zE" = (
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
@@ -2054,10 +2051,6 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"AB" = (
-/obj/structure/girder/displaced,
-/turf/template_noop,
-/area/template_noop)
 "AH" = (
 /obj/structure/cable,
 /obj/item/wallframe/telescreen/entertainment{
@@ -2078,6 +2071,14 @@
 /obj/item/ammo_casing/spent,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
+"AU" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
+/turf/open/space/basic,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -2202,6 +2203,12 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
+"Eg" = (
+/obj/item/stack/rods,
+/turf/open/space/basic,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
 "Er" = (
 /obj/effect/turf_decal{
 	icon_state = "arrows_red";
@@ -2244,6 +2251,10 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
+"EB" = (
+/obj/structure/girder/displaced,
+/turf/open/space/basic,
+/area/template_noop)
 "EL" = (
 /obj/effect/turf_decal{
 	icon_state = "warningline_white"
@@ -2409,9 +2420,14 @@
 	})
 "Gn" = (
 /obj/structure/fluff/broken_flooring{
+	dir = 1;
+	icon_state = "plating"
+	},
+/obj/structure/fluff/broken_flooring{
+	dir = 8;
 	icon_state = "pile"
 	},
-/turf/template_noop,
+/turf/open/space/basic,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -2513,13 +2529,6 @@
 	anchored = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
-"Ix" = (
-/obj/effect/decal/cleanable/glass,
-/obj/structure/lattice,
-/turf/template_noop,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -3002,11 +3011,11 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"Oo" = (
+"Or" = (
 /obj/item/stack/rods{
 	amount = 23
 	},
-/turf/template_noop,
+/turf/open/space/basic,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -3207,6 +3216,15 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
+"Qu" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
+/turf/open/space/basic,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
 "QA" = (
 /obj/effect/turf_decal{
 	dir = 1
@@ -3216,11 +3234,6 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"QQ" = (
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/turf/template_noop,
-/area/template_noop)
 "Ru" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
@@ -3291,6 +3304,15 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
+"RQ" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
+/turf/open/space/basic,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
 "RS" = (
 /obj/structure/cable,
 /obj/structure/barricade/security,
@@ -3321,6 +3343,12 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
+"RY" = (
+/obj/effect/spawner/random/trash,
+/turf/open/space/basic,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
 "Sr" = (
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
@@ -3348,19 +3376,6 @@
 	},
 /obj/structure/table/glass/plasmaglass,
 /turf/open/floor/pod/dark,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
-"Sv" = (
-/obj/effect/decal/cleanable/glass,
-/obj/structure/fluff/broken_flooring{
-	dir = 1;
-	icon_state = "plating"
-	},
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/turf/template_noop,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -3461,10 +3476,6 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"Uw" = (
-/obj/item/tank/internals/emergency_oxygen/double/empty,
-/turf/template_noop,
-/area/template_noop)
 "Ux" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -3542,14 +3553,8 @@
 	has_gravity = 1
 	})
 "VR" = (
-/turf/template_noop,
-/area/template_noop)
-"VS" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
-/turf/template_noop,
+/obj/item/tank/internals/oxygen/empty,
+/turf/open/space/basic,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -3631,7 +3636,7 @@
 /obj/item/stack/rods{
 	amount = 50
 	},
-/turf/template_noop,
+/turf/open/space/basic,
 /area/template_noop)
 "Xa" = (
 /obj/effect/turf_decal/tile/bar{
@@ -3726,19 +3731,6 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"YQ" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 2;
-	icon_state = "singular"
-	},
-/turf/template_noop,
-/area/template_noop)
-"YS" = (
-/obj/effect/spawner/random/trash/food_packaging,
-/turf/template_noop,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
 "YT" = (
 /obj/machinery/airalarm/all_access{
 	dir = 8;
@@ -3791,12 +3783,6 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
-"Zb" = (
-/obj/item/tank/internals/oxygen/empty,
-/turf/template_noop,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -3856,6 +3842,11 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
+"ZM" = (
+/turf/open/space/basic,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
 "ZN" = (
 /obj/effect/decal/cleanable/robot_debris{
 	icon_state = "gibup"
@@ -3872,47 +3863,99 @@
 	})
 
 (1,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
 fl
 fl
-wP
-xt
-SB
-xR
 fl
-xR
-xt
-SB
-wP
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
 fl
 fl
 "}
 (2,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+"}
+(3,1,1) = {"
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
+wP
+xt
+SB
+xR
+ZM
+xR
+xt
+SB
+wP
+ZM
+ZM
+fl
+fl
+"}
+(4,1,1) = {"
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 wP
 xt
 wP
@@ -3922,23 +3965,23 @@ bZ
 wP
 xt
 wP
+ZM
+ZM
 fl
 fl
 "}
-(3,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(5,1,1) = {"
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
 In
 wP
 wP
@@ -3950,22 +3993,22 @@ bZ
 wP
 wP
 wX
+ZM
+fl
 fl
 "}
-(4,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(6,1,1) = {"
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
 wP
 fX
 wP
@@ -3977,22 +4020,22 @@ wP
 wP
 eZ
 wP
+ZM
+fl
 fl
 "}
-(5,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(7,1,1) = {"
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
 Mm
 mG
 wP
@@ -4004,22 +4047,22 @@ wP
 ef
 jf
 wP
+ZM
+fl
 fl
 "}
-(6,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(8,1,1) = {"
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
 wP
 EQ
 wP
@@ -4031,22 +4074,22 @@ LF
 kw
 Po
 wP
+ZM
+fl
 fl
 "}
-(7,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(9,1,1) = {"
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
 wP
 qu
 wP
@@ -4058,22 +4101,22 @@ LF
 Ar
 kT
 wP
+ZM
+fl
 fl
 "}
-(8,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(10,1,1) = {"
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
 wP
 KF
 wP
@@ -4085,22 +4128,22 @@ LF
 Ux
 bg
 wP
+ZM
+fl
 fl
 "}
-(9,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(11,1,1) = {"
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
 wP
 Ln
 wP
@@ -4112,22 +4155,22 @@ AH
 yt
 YW
 vj
+ZM
+fl
 fl
 "}
-(10,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(12,1,1) = {"
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
 vj
 yJ
 wP
@@ -4139,22 +4182,22 @@ ki
 Zp
 di
 vj
+ZM
+fl
 fl
 "}
-(11,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(13,1,1) = {"
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
 vj
 OC
 OC
@@ -4166,22 +4209,22 @@ Et
 KA
 RG
 vj
+ZM
+fl
 fl
 "}
-(12,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(14,1,1) = {"
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
 vj
 xp
 ab
@@ -4193,22 +4236,22 @@ SX
 xT
 qC
 vj
+ZM
+fl
 fl
 "}
-(13,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(15,1,1) = {"
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
 vj
 Ez
 Jx
@@ -4220,22 +4263,22 @@ tU
 hB
 xB
 vj
+ZM
+fl
 fl
 "}
-(14,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-YS
+(16,1,1) = {"
 fl
-VR
-VR
 fl
+fl
+fl
+fl
+fl
+gG
+ZM
+fl
+fl
+ZM
 wP
 nN
 rd
@@ -4247,21 +4290,21 @@ Qg
 Ah
 Xa
 wP
+ZM
+fl
 fl
 "}
-(15,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-Uw
-VR
+(17,1,1) = {"
 fl
-qP
 fl
-nW
+fl
+WS
+fl
+fl
+ZM
+qJ
+ZM
+sT
 In
 BO
 nN
@@ -4275,22 +4318,22 @@ dx
 wP
 wP
 wX
+fl
+fl
 "}
-(16,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-QQ
-VR
-VR
-fl
-zC
+(18,1,1) = {"
 fl
 fl
-nW
-ra
+fl
+fl
+fl
+fl
+ZM
+fM
+ZM
+ZM
+sT
+Gn
 xi
 KB
 wP
@@ -4302,23 +4345,23 @@ cA
 vm
 qR
 jk
+fl
+fl
 "}
-(17,1,1) = {"
-VR
-VR
-VR
-WS
-VR
-VR
-qF
-VR
-VS
+(19,1,1) = {"
 fl
-Oo
 fl
-aH
+fl
+fl
+fl
+fl
+RQ
+ZM
+Or
+ZM
+rB
 zN
-Ix
+gP
 Lf
 wP
 VQ
@@ -4329,23 +4372,23 @@ Tb
 wP
 aV
 wP
+fl
+fl
 "}
-(18,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-fM
+(20,1,1) = {"
 fl
 fl
 fl
-Gn
 fl
-uh
-tR
+fl
+RY
+ZM
+ZM
+ZM
+lO
+ZM
+pq
+wq
 Pb
 wP
 TL
@@ -4356,22 +4399,22 @@ wu
 tO
 WG
 yx
+fl
+fl
 "}
-(19,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(21,1,1) = {"
 fl
 fl
 fl
-vf
 fl
-Sv
+fl
+fl
+ZM
+ZM
+ZM
+Eg
+ZM
+hx
 Ft
 Qm
 wP
@@ -4383,21 +4426,21 @@ wt
 wP
 wP
 li
+fl
+fl
 "}
-(20,1,1) = {"
-VR
-AB
-VR
-VR
-VR
-VR
-VR
-of
+(22,1,1) = {"
 fl
-lO
+ta
 fl
 fl
-fl
+qF
+aB
+ZM
+Qu
+ZM
+ZM
+ZM
 ZI
 KW
 Fi
@@ -4409,22 +4452,22 @@ wP
 oW
 wP
 wP
+ZM
+fl
 fl
 "}
-(21,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(23,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 vj
 EL
 yP
@@ -4436,22 +4479,22 @@ Jx
 lU
 Rx
 vj
+ZM
+fl
 fl
 "}
-(22,1,1) = {"
-VR
-YQ
-VR
-VR
-qF
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-qe
+(24,1,1) = {"
+fl
+fl
+fl
+fl
+fl
+EB
+fl
+fl
+fl
+fl
+AU
 vj
 ug
 Nu
@@ -4463,22 +4506,22 @@ Im
 iy
 IC
 vj
+ZM
+fl
 fl
 "}
-(23,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(25,1,1) = {"
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
 vj
 YV
 Er
@@ -4490,22 +4533,22 @@ wP
 iL
 nm
 vj
+ZM
+fl
 fl
 "}
-(24,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(26,1,1) = {"
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
 wP
 bM
 Ne
@@ -4517,22 +4560,22 @@ wP
 UX
 Sr
 wP
+ZM
+fl
 fl
 "}
-(25,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(27,1,1) = {"
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
 hm
 wP
 MW
@@ -4544,23 +4587,23 @@ wP
 XG
 wP
 li
+ZM
+fl
 fl
 "}
-(26,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(28,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 wP
 nu
 wP
@@ -4570,24 +4613,24 @@ Jw
 wP
 Qp
 wP
+ZM
+ZM
 fl
 fl
 "}
-(27,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(29,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 wP
 bD
 wP
@@ -4597,24 +4640,24 @@ IO
 wP
 wu
 wP
+ZM
+ZM
 fl
 fl
 "}
-(28,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(30,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 wP
 CK
 wP
@@ -4624,24 +4667,24 @@ Cp
 wP
 Zt
 wP
+ZM
+ZM
 fl
 fl
 "}
-(29,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(31,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 wP
 hu
 wP
@@ -4651,24 +4694,24 @@ wP
 wP
 ye
 wP
+ZM
+ZM
 fl
 fl
 "}
-(30,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(32,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 vj
 Bw
 ip
@@ -4678,24 +4721,24 @@ YT
 Ai
 KC
 vj
+ZM
+ZM
 fl
 fl
 "}
-(31,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(33,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 vj
 HA
 Cm
@@ -4705,24 +4748,24 @@ jA
 Jx
 AM
 vj
+ZM
+ZM
 fl
 fl
 "}
-(32,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-YQ
-VR
-VR
-VR
+(34,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+ta
+fl
+fl
+fl
+ZM
+ZM
 vj
 vM
 wP
@@ -4732,24 +4775,24 @@ wP
 wP
 OK
 vj
+ZM
+ZM
 fl
 fl
 "}
-(33,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(35,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 vj
 cX
 wP
@@ -4759,24 +4802,24 @@ gi
 wP
 OK
 vj
+ZM
+ZM
 fl
 fl
 "}
-(34,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(36,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 vj
 iS
 wP
@@ -4786,24 +4829,24 @@ wO
 wP
 oV
 vj
+ZM
+ZM
 fl
 fl
 "}
-(35,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(37,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 vj
 KK
 wP
@@ -4813,24 +4856,24 @@ NX
 wP
 oo
 vj
+ZM
+ZM
 fl
 fl
 "}
-(36,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(38,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 wP
 af
 yZ
@@ -4840,24 +4883,24 @@ yZ
 yZ
 sE
 wP
+ZM
+ZM
 fl
 fl
 "}
-(37,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(39,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 wP
 zE
 rL
@@ -4867,24 +4910,24 @@ aY
 ie
 Pa
 wP
+ZM
+ZM
 fl
 fl
 "}
-(38,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(40,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 wP
 Yd
 hA
@@ -4894,24 +4937,24 @@ yG
 nG
 UV
 wP
+ZM
+ZM
 fl
 fl
 "}
-(39,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(41,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 wP
 qb
 cB
@@ -4921,24 +4964,24 @@ hK
 LO
 MG
 wP
+ZM
+ZM
 fl
 fl
 "}
-(40,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(42,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 wP
 QA
 SE
@@ -4948,24 +4991,24 @@ Cm
 wj
 Iu
 wP
+ZM
+ZM
 fl
 fl
 "}
-(41,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(43,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 wP
 QA
 ZN
@@ -4975,24 +5018,24 @@ Kl
 kg
 uC
 wP
+ZM
+ZM
 fl
 fl
 "}
-(42,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(44,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 wP
 ON
 Oy
@@ -5002,24 +5045,24 @@ Mp
 Bh
 ka
 wP
+ZM
+ZM
 fl
 fl
 "}
-(43,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+(45,1,1) = {"
 fl
 fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
 hm
 wP
 cP
@@ -5029,195 +5072,143 @@ RW
 oj
 wP
 li
+ZM
+ZM
 fl
 fl
-"}
-(44,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-fl
-fl
-fl
-fl
-fl
-fl
-fl
-Zb
-fl
-fl
-fl
-fl
-fl
-"}
-(45,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
 "}
 (46,1,1) = {"
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+ZM
+ZM
+ZM
+ZM
+ZM
+ZM
+ZM
 VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+ZM
+ZM
+ZM
+ZM
+ZM
+fl
+fl
 "}
 (47,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
 "}
 (48,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
 "}
 (49,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
 "}
 (50,1,1) = {"
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
-VR
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
 "}

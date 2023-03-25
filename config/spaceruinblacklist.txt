@@ -32,6 +32,7 @@
 #_maps/RandomRuins/SpaceRuins/thelizardsgas.dmm
 #_maps/RandomRuins/SpaceRuins/gondolaasteroid.dmm
 #_maps/RandomRuins/SpaceRuins/hilbertshoteltestingsite.dmm
+#_maps/RandomRuins/SpaceRuins/infested_frigate.dmm
 #_maps/RandomRuins/SpaceRuins/intactemptyship.dmm
 #_maps/RandomRuins/SpaceRuins/listeningstation.dmm
 #_maps/RandomRuins/SpaceRuins/mechtransport.dmm
