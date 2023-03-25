@@ -101,7 +101,7 @@
 	. = ..()
 	update_use_power(IDLE_POWER_USE)
 
-/obj/machinery/recharge_station/close_machine(density_to_set = TRUE)
+/obj/machinery/recharge_station/close_machine(atom/movable/target, density_to_set = TRUE)
 	. = ..()
 	if(occupant)
 		update_use_power(ACTIVE_POWER_USE) //It always tries to charge, even if it can't.

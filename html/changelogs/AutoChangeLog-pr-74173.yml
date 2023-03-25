@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes gondola meatslab not being able to be placed into the DNA infuser"

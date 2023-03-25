@@ -173,7 +173,7 @@
 	mod_unit = null
 	open_machine()
 
-/obj/machinery/mod_installer/open_machine(density_to_set = FALSE)
+/obj/machinery/mod_installer/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(state_open)
 		return FALSE
 	..()
