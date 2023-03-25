@@ -5,6 +5,7 @@
 	icon_state = "nanite_cloud_controller"
 	circuit = /obj/item/circuitboard/computer/nanite_cloud_controller
 	icon_keyboard = null
+	icon_screen = null
 
 	var/obj/item/disk/nanite_program/disk
 	var/list/datum/nanite_cloud_backup/cloud_backups = list()
@@ -28,6 +29,7 @@
 	else
 		..()
 
+	
 /obj/machinery/computer/nanite_cloud_controller/AltClick(mob/user)
 	if(disk && !issilicon(user))
 		to_chat(user, span_notice("You take out [disk] from [src]."))
