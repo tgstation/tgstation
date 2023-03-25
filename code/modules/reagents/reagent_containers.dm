@@ -41,7 +41,7 @@
 
 	add_initial_reagents()
 
-	AddElement(/datum/element/liquids_interaction, on_interaction_callback = PROC_REF(attack_on_liquids_turf))
+	AddElement(/datum/element/liquids_interaction, on_interaction_callback = CALLBACK(src, PROC_REF(attack_on_liquids_turf)))
 
 /obj/item/reagent_container/Destroy(force)
 	. = ..()
