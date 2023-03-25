@@ -8,7 +8,7 @@
 
 	sound = 'sound/magic/cosmic_energy.ogg'
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 25 SECONDS
+	cooldown_time = 20 SECONDS
 
 	invocation = "R'T'T' ST'R!"
 	invocation_type = INVOCATION_SHOUT
@@ -30,6 +30,10 @@
 	pixel_speed_multiplier = 0.2
 	/// Effect for when the ball hits something
 	var/obj/effect/explosion_effect = /obj/effect/temp_visual/cosmic_explosion
+
+/obj/projectile/magic/star_ball/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/effect_trail/cosmic_trail)
 
 /obj/projectile/magic/star_ball/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()

@@ -9,7 +9,7 @@
 
 	sound = 'sound/magic/cosmic_expansion.ogg'
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 60 SECONDS
+	cooldown_time = 45 SECONDS
 
 	invocation = "C'SM'S 'XP'ND"
 	invocation_type = INVOCATION_SHOUT
@@ -26,6 +26,6 @@
 /datum/action/cooldown/spell/conjure/cosmic_expansion/cast(atom/cast_on)
 	new expansion_effect(get_turf(cast_on))
 	for(var/mob/living/nearby_mob in range(star_mark_range, cast_on))
-		if(!(FACTION_HERETIC in nearby_mob.faction))
+		if(!istype(target, /mob/living/basic/star_gazer) && cast_on != nearby_mob)
 			nearby_mob.apply_status_effect(/datum/status_effect/star_mark)
 	return ..()
