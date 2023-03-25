@@ -667,7 +667,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 		begin_processing()
 		return TRUE
 	end_processing()
-	return TRUE
+	return FALSE
 
 /obj/machinery/lift_indicator/process()
 	var/datum/lift_master/lift = lift_ref?.resolve()
