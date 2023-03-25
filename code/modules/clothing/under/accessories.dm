@@ -89,6 +89,7 @@
 	inhand_icon_state = "wcoat"
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	above_suit = FALSE
 	minimize_when_attached = FALSE
 	attachment_slot = null
 	greyscale_config = /datum/greyscale_config/waistcoat
@@ -113,6 +114,7 @@
 	inhand_icon_state = "maidapron"
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	above_suit = FALSE
 	minimize_when_attached = FALSE
 	attachment_slot = null
 
