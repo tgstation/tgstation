@@ -62,10 +62,10 @@
 		/area/station/ai_monitored/turret_protected/ai,
 		/area/station/ai_monitored/turret_protected/ai_upload,
 		/area/station/engineering,
+		/area/station/science/ordnance/bomb,
 		/area/station/solars,
 		/area/station/holodeck,
 		/area/station/maintenance,
-		/area/station/science/ordnance/bomb,
 	))
 
 	//Subtypes from the above that actually should explode.
