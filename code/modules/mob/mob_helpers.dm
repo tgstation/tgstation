@@ -250,7 +250,7 @@
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
-		if(!notify_suiciders && (ghost in GLOB.suicided_mob_list))
+		if(!notify_suiciders && HAS_TRAIT(ghost, TRAIT_SUICIDED))
 			continue
 		if(ignore_key && (ghost.ckey in GLOB.poll_ignore[ignore_key]))
 			continue

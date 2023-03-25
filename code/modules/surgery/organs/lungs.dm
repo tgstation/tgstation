@@ -33,6 +33,10 @@
 	/// Assoc list of procs to always run, in the form gas_id -> proc_path
 	var/list/breathe_always = list()
 
+	/// Gas mixture to breath out when we're done processing a breath
+	/// Will get emptied out when it's all done
+	var/datum/gas_mixture/immutable/breath_out
+
 	//Breath damage
 	//These thresholds are checked against what amounts to total_mix_pressure * (gas_type_mols/total_mols)
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
@@ -101,6 +105,7 @@
 // assign the respiration_type
 /obj/item/organ/internal/lungs/Initialize(mapload)
 	. = ..()
+	breath_out = new(BREATH_VOLUME)
 
 	if(safe_nitro_min)
 		respiration_type |= RESPIRATION_N2
@@ -146,12 +151,14 @@
 
 ///Simply exists so that you don't keep any alerts from your previous lack of lungs.
 /obj/item/organ/internal/lungs/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	if(!.)
+		return .
 	receiver.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 	receiver.clear_alert(ALERT_NOT_ENOUGH_CO2)
 	receiver.clear_alert(ALERT_NOT_ENOUGH_NITRO)
 	receiver.clear_alert(ALERT_NOT_ENOUGH_PLASMA)
 	receiver.clear_alert(ALERT_NOT_ENOUGH_N2O)
-	return ..()
 
 /**
  * Tells the lungs to pay attention to the passed in gas type
@@ -531,7 +538,6 @@
  * * breather: A carbon mob that is using the lungs to breathe.
  */
 /obj/item/organ/internal/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
-	. = TRUE
 	if(breather.status_flags & GODMODE)
 		breather.failed_last_breath = FALSE
 		breather.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
@@ -540,10 +546,14 @@
 	if(HAS_TRAIT(breather, TRAIT_NOBREATH))
 		return
 
-	// Breath may be null, so use a fallback "empty breath" for convenience.
+	/// Immutable "empty breath" used to store waste gases before they are re-added to the main breath.
+	/// empty_breath is also used as a backup for breath if it was null.
+	/// During gas exchange each output gas is temporarily transferred into this gas_mixture, and then transferred back into the breath.
+	/// Two gas_mixtures are used because we don't want exchanges to influence each other.
+	var/static/datum/gas_mixture/immutable/empty_breath = new(BREATH_VOLUME)
+
+	// If the breath is falsy or "null", we can use the backup empty_breath.
 	if(!breath)
-		/// Fallback "empty breath" for convenience.
-		var/static/datum/gas_mixture/immutable/empty_breath = new(BREATH_VOLUME)
 		breath = empty_breath
 
 	// Indicates if there are moles of gas in the breath.
@@ -564,7 +574,6 @@
 			breather.adjustOxyLoss(-5)
 	else
 		// Can't breathe!
-		. = FALSE
 		breather.failed_last_breath = TRUE
 
 	// The list of gases in the breath.
@@ -619,19 +628,25 @@
 		owner.clear_mood_event("chemical_euphoria")
 	if(has_moles)
 		handle_breath_temperature(breath, breather)
+		// Transfer exchanged gases into breath for exhalation.
+		for(var/gas_type in breath_gases_out)
+			breath.assert_gas(gas_type)
+			breath_gases[gas_type][MOLES] += breath_gases_out[gas_type][MOLES]
+		// Resets immutable gas_mixture to empty.
+		breath_out.garbage_collect()
 
 	breath.garbage_collect()
 
-/// Remove a volume of gas from the breath. Used to simulate absorbtion and interchange of gas in the lungs.
-/// Removes all of the given gas type unless given a volume argument.
+/// Remove gas from breath. If output_gas is given, transfers the removed gas to the lung's gas_mixture.
+/// Removes 100% of the given gas type unless given a volume argument.
 /// Returns the amount of gas theoretically removed.
 /obj/item/organ/internal/lungs/proc/breathe_gas_volume(datum/gas_mixture/breath, remove_id, exchange_id = null, volume = INFINITY)
 	var/list/breath_gases = breath.gases
 	volume = min(volume, breath_gases[remove_id][MOLES])
 	breath_gases[remove_id][MOLES] -= volume
 	if(exchange_id)
-		ASSERT_GAS(exchange_id, breath)
-		breath_gases[exchange_id][MOLES] += volume
+		ASSERT_GAS(exchange_id, breath_out)
+		breath_out[exchange_id][MOLES] += volume
 	return volume
 
 /// Applies suffocation side-effects to a given Human, scaling based on ratio of required pressure VS "true" pressure.
@@ -732,7 +747,7 @@
 	. = ..()
 	if (breath?.gases[/datum/gas/plasma])
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
-		owner.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
+		breather_slime.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 
 /obj/item/organ/internal/lungs/cybernetic
 	name = "basic cybernetic lungs"

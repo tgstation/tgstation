@@ -191,7 +191,7 @@
 		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 		return
 
-	if(uses <= 0) // Just in case something took longer than it should've and we got here after the uses went below zero.
+	if(uses <= 0 && !infinite_use) // Just in case something took longer than it should've and we got here after the uses went below zero.
 		to_chat(user, span_warning("This spawner is out of charges!"))
 		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 		return
