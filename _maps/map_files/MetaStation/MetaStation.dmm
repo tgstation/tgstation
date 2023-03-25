@@ -1839,6 +1839,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/nanite_chamber,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "aJd" = (
@@ -3501,14 +3502,12 @@
 /turf/open/floor/plating,
 /area/station/security/warden)
 "bkm" = (
-/obj/machinery/computer/scan_consolenew{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
 /obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/clonepod,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "bkF" = (
@@ -11147,16 +11146,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "edH" = (
-/obj/structure/table,
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
-/obj/machinery/computer/records/medical/laptop{
-	dir = 8;
-	pixel_y = 1
-	},
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/dna_scannernew,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "edN" = (
@@ -16021,6 +16016,9 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/mail_sorting/science/robotics,
+/obj/machinery/computer/nanite_chamber_control{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "fXi" = (
@@ -23201,6 +23199,12 @@
 /obj/item/multitool,
 /obj/item/clothing/head/utility/welding,
 /obj/item/clothing/glasses/welding,
+/obj/item/storage/box/disks_nanite,
+/obj/item/storage/box/disks_nanite,
+/obj/item/nanite_scanner,
+/obj/item/nanite_scanner,
+/obj/item/nanite_remote,
+/obj/item/nanite_remote,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "iwO" = (
@@ -36661,6 +36665,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/office/light{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "mZP" = (
@@ -39116,9 +39123,9 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "nSB" = (
-/obj/item/toy/figure/roboticist,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/nanite_program_hub,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "nSC" = (
@@ -40575,6 +40582,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/security/prison/work)
+"otR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/computer/nanite_cloud_controller,
+/turf/open/floor/iron/dark,
+/area/station/science/robotics/lab)
 "ouc" = (
 /obj/structure/closet/crate,
 /obj/structure/cable,
@@ -46687,6 +46700,7 @@
 /area/station/engineering/atmos)
 "qDy" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/nanite_programmer,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "qDA" = (
@@ -47247,14 +47261,11 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "qNz" = (
-/obj/structure/chair/office/light{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/toy/figure/roboticist,
 /turf/open/floor/iron/dark,
-/area/station/science/genetics)
+/area/station/science/robotics/lab)
 "qNA" = (
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 4
@@ -51115,6 +51126,20 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/abandoned)
+"scd" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/window{
+	dir = 8
+	},
+/obj/structure/window{
+	dir = 1
+	},
+/obj/structure/table,
+/turf/open/floor/iron/white,
+/area/station/science/robotics/lab)
 "sch" = (
 /turf/closed/wall,
 /area/station/security/medical)
@@ -52197,6 +52222,17 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"swx" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/computer/cloning{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/science/genetics)
 "swy" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8
@@ -60173,9 +60209,6 @@
 "vjq" = (
 /obj/structure/window{
 	dir = 8
-	},
-/obj/structure/window{
-	dir = 1
 	},
 /obj/structure/rack,
 /obj/item/storage/box/gloves{
@@ -97860,7 +97893,7 @@ sAF
 hZO
 xvI
 jBk
-qNz
+jBk
 mZO
 klu
 vjk
@@ -98105,7 +98138,7 @@ jtS
 osC
 mMl
 lhT
-reL
+qNz
 lhT
 iMG
 dpg
@@ -98118,7 +98151,7 @@ cDA
 jrb
 lkL
 bkm
-cDA
+swx
 edH
 mHL
 svS
@@ -98363,7 +98396,7 @@ eut
 uBy
 cCs
 qDy
-reL
+otR
 cRW
 eut
 kwy
@@ -98619,7 +98652,7 @@ wkC
 gcU
 noN
 bCc
-bCc
+scd
 vjq
 qBr
 eut

@@ -743,6 +743,10 @@
 /obj/item/integrated_circuit/loaded/hello_world{
 	pixel_x = 7
 	},
+/obj/item/nanite_scanner,
+/obj/item/nanite_scanner,
+/obj/item/nanite_remote,
+/obj/item/nanite_remote,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/office)
 "ajv" = (
@@ -12842,6 +12846,10 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = -4;
+	pixel_y = 2
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "eoM" = (
@@ -17487,22 +17495,8 @@
 /turf/open/floor/engine,
 /area/station/ai_monitored/command/storage/satellite)
 "fJR" = (
-/obj/structure/table,
-/obj/item/stack/sheet/glass/fifty{
-	pixel_x = -4;
-	pixel_y = 2
-	},
-/obj/item/stock_parts/matter_bin{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/stock_parts/matter_bin,
-/obj/item/stock_parts/scanning_module{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/stock_parts/scanning_module,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/nanite_chamber,
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "fKe" = (
@@ -25361,6 +25355,7 @@
 "ieu" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/nanite_program_hub,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/office)
 "ieI" = (
@@ -31925,10 +31920,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "kkg" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/electrical{
-	pixel_y = 5
-	},
+/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/office)
 "kkC" = (
@@ -35020,14 +35012,9 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/pharmacy)
 "lko" = (
-/obj/structure/table,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex,
-/obj/item/storage/box/disks{
-	pixel_y = 5
-	},
 /obj/structure/noticeboard/directional/north,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/structure/showcase/machinery/cloning_pod,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "lkp" = (
@@ -42975,6 +42962,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/directional/east,
 /obj/structure/cable,
+/obj/machinery/nanite_programmer,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/office)
 "nSh" = (
@@ -45497,12 +45485,12 @@
 /area/station/ai_monitored/security/armory)
 "oMA" = (
 /obj/structure/cable,
-/obj/machinery/vending/wardrobe/gene_wardrobe,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
+/obj/machinery/dna_scannernew,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "oMJ" = (
@@ -57762,33 +57750,8 @@
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "sIo" = (
-/obj/structure/table,
-/obj/item/folder{
-	pixel_x = -4
-	},
-/obj/item/disk/tech_disk{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/disk/tech_disk{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/disk/design_disk,
-/obj/item/disk/design_disk,
-/obj/item/stock_parts/manipulator,
-/obj/item/stock_parts/manipulator,
-/obj/item/stock_parts/micro_laser,
-/obj/item/stock_parts/micro_laser,
-/obj/item/stock_parts/capacitor{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/stock_parts/capacitor{
-	pixel_x = -6;
-	pixel_y = 6
-	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/computer/nanite_chamber_control,
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "sIq" = (
@@ -60954,22 +60917,12 @@
 "tFq" = (
 /obj/machinery/light/directional/north,
 /obj/structure/table,
-/obj/item/folder/white,
-/obj/item/folder/white,
-/obj/item/pen,
-/obj/item/flashlight/pen,
-/obj/item/reagent_containers/syringe,
-/obj/item/reagent_containers/dropper,
-/obj/item/storage/box/rxglasses{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/bodybags,
 /obj/machinery/requests_console/directional/north{
 	department = "Genetics";
 	name = "Genetics Requests Console"
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/computer/cloning,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "tGb" = (
@@ -62935,6 +62888,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/vending/wardrobe/gene_wardrobe,
 /turf/open/floor/iron/dark,
 /area/station/science/research)
 "unr" = (
@@ -64358,6 +64312,11 @@
 	pixel_x = 8;
 	pixel_y = 9
 	},
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 5
+	},
+/obj/item/storage/box/disks_nanite,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/office)
 "uMc" = (
@@ -72373,6 +72332,18 @@
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
+/obj/item/storage/box/bodybags,
+/obj/item/storage/box/rxglasses{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/syringe,
+/obj/item/storage/box/disks{
+	pixel_y = 5
+	},
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/gloves/latex,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "xke" = (
@@ -73114,20 +73085,16 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "xwJ" = (
-/obj/structure/table,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/clothing/glasses/welding,
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/siding/purple/corner{
 	dir = 1
 	},
-/obj/item/storage/box/donkpockets{
-	pixel_y = 5
-	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "xwO" = (
