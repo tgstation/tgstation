@@ -70,6 +70,7 @@
 	SEND_SOUND(M, S)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Direct Mob Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+///Takes an input from either proc/play_web_sound or the request manager and runs it through youtube-dl and prompts the user before playing it to the server.
 /proc/web_sound(mob/usr, input)
 	if(!check_rights(R_SOUND))
 		return
