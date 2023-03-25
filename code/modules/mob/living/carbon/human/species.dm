@@ -568,7 +568,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(istype(quirk, /datum/quirk/blooddeficiency))
 		if(HAS_TRAIT(recipient, TRAIT_NOBLOOD) && isnull(recipient.dna.species.exotic_blood)) // no blood packs should be sent in this case (like if a mob transforms into a plasmaman)
 			quirk.mail_goodies = list()
-			return 
+			return
 			
 	// The default case if no species implementation exists. Set quirk's mail_goodies to initial. 
 	var/datum/quirk/readable_quirk = new quirk.type
