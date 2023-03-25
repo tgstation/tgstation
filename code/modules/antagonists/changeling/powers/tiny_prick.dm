@@ -82,7 +82,7 @@
 	if(!selected_dna)
 		return
 	if(NOTRANSSTING in selected_dna.dna.species.species_traits)
-		to_chat(user, span_notice("That DNA is not compatible with changeling retrovirus!"))
+		user.balloon_alert(user, "incompatible DNA!")
 		return
 	..()
 
@@ -91,7 +91,7 @@
 	if(!.)
 		return
 	if((HAS_TRAIT(target, TRAIT_HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
-		to_chat(user, span_warning("Our sting appears ineffective against its DNA."))
+		user.balloon_alert(user, "incompatible DNA!")
 		return FALSE
 	return TRUE
 
@@ -126,7 +126,7 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if((HAS_TRAIT(L, TRAIT_HUSK)) || !L.has_dna())
-			to_chat(user, span_warning("Our sting appears ineffective against its DNA."))
+			user.balloon_alert(user, "incompatible DNA!")
 			return FALSE
 	return TRUE
 
@@ -203,7 +203,7 @@
 /datum/action/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/eyes/eyes = target.getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes)
-		to_chat(user, span_notice("You prepare to sting [target], but one of the voices in your hivemind points out they have no eyes."))
+		user.balloon_alert(user, "no eyes!")
 		return FALSE
 
 	log_combat(user, target, "stung", "blind sting")

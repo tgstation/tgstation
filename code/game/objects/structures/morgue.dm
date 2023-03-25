@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		var/t = tgui_input_text(user, "What would you like the label to be?", text("[]", name), null)
 		if (user.get_active_held_item() != P)
 			return
-		if(!user.canUseTopic(src, be_close = TRUE))
+		if(!user.can_perform_action(src))
 			return
 		if (t)
 			name = text("[]- '[]'", initial(name), t)
@@ -178,7 +178,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/morgue/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	beeper = !beeper
 	to_chat(user, span_notice("You turn the speaker function [beeper ? "on" : "off"]."))
@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 	for(var/mob/living/M in compiled)
 		var/mob/living/mob_occupant = get_mob_or_brainmob(M)
-		if(mob_occupant.client && !mob_occupant.suiciding && !(HAS_TRAIT(mob_occupant, TRAIT_BADDNA)))
+		if(mob_occupant.client && !(HAS_TRAIT(mob_occupant, TRAIT_SUICIDED))&& !(HAS_TRAIT(mob_occupant, TRAIT_BADDNA)))
 			icon_state = "morgue4" // Revivable
 			if(mob_occupant.stat == DEAD && beeper && COOLDOWN_FINISHED(src, next_beep))
 				playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks

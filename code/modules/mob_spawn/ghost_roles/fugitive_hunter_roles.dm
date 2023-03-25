@@ -36,7 +36,7 @@
 	desc = "A small sleeper typically used to make long distance travel a bit more bearable."
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	faction = list("russian")
+	faction = list(FACTION_RUSSIAN)
 	prompt_name = "a russian"
 	you_are_text = "Ay blyat. I am a Space-Russian smuggler!"
 	flavour_text = "We were mid-flight when our cargo was beamed off our ship! Must be on station somewhere? \

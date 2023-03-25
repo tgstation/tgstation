@@ -166,9 +166,7 @@
 	to_chat(user, span_warning("You feel your life being drained by the pendant..."))
 	if(do_after(user, 40, target = user))
 		to_chat(user, span_notice("Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die."))
-		ADD_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
-		ADD_TRAIT(user, TRAIT_NOHARDCRIT, CLOTHING_TRAIT)
-		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, CLOTHING_TRAIT)
+		user.add_traits(list(TRAIT_NODEATH, TRAIT_NOHARDCRIT, TRAIT_NOCRITDAMAGE), CLOTHING_TRAIT)
 		RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_health))
 		icon_state = "memento_mori_active"
 		active_owner = user
@@ -277,7 +275,7 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	var/sight_flags = SEE_MOBS
-	var/lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	var/list/color_cutoffs = list(10, 25, 25)
 
 /obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 	. = ..()
@@ -296,8 +294,8 @@
 /obj/effect/wisp/proc/update_user_sight(mob/user)
 	SIGNAL_HANDLER
 	user.add_sight(sight_flags)
-	if(!isnull(lighting_alpha))
-		user.lighting_alpha = min(user.lighting_alpha, lighting_alpha)
+	if(!isnull(color_cutoffs))
+		user.lighting_color_cutoffs = blend_cutoff_colors(user.lighting_color_cutoffs, color_cutoffs)
 
 //Red/Blue Cubes
 /obj/item/warp_cube
@@ -794,8 +792,8 @@
 	icon_state = "godeye"
 	inhand_icon_state = null
 	vision_flags = SEE_TURFS
-	darkness_view = 8
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Blue, light blue
+	color_cutoffs = list(15, 30, 40)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	custom_materials = null
 	var/datum/action/cooldown/scan/scan_ability

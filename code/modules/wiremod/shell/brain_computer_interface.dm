@@ -17,9 +17,8 @@
 		new /obj/item/circuit_component/bci_core,
 	), SHELL_CAPACITY_SMALL, starting_circuit = circuit)
 
-/obj/item/organ/internal/cyberimp/bci/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/internal/cyberimp/bci/on_insert(mob/living/carbon/receiver)
 	. = ..()
-
 	// Organs are put in nullspace, but this breaks circuit interactions
 	forceMove(receiver)
 
@@ -400,7 +399,7 @@
 		update_appearance()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if (default_pry_open(weapon))
+	if (default_pry_open(weapon, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if (default_deconstruction_crowbar(weapon))
@@ -453,7 +452,7 @@
 		say("Occupant has been injected with [bci_to_implant].")
 		bci_to_implant.Insert(carbon_occupant)
 
-/obj/machinery/bci_implanter/open_machine()
+/obj/machinery/bci_implanter/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(state_open)
 		return FALSE
 
@@ -461,7 +460,7 @@
 
 	return TRUE
 
-/obj/machinery/bci_implanter/close_machine(mob/living/carbon/user)
+/obj/machinery/bci_implanter/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	if(!state_open)
 		return FALSE
 

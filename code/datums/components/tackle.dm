@@ -1,5 +1,5 @@
 /// how many things can we knock off a table at once by diving into it?
-#define MAX_TABLE_MESSES 12
+#define MAX_TABLE_MESSES 18
 
 /**
  * For when you want to throw a person at something and have fun stuff happen
@@ -68,7 +68,7 @@
 	tackle.thrower = user
 
 ///See if we can tackle or not. If we can, leap!
-/datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, list/modifiers)
+/datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/clicked_atom, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
@@ -77,7 +77,7 @@
 	if(!user.throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
 		return
 
-	if(!A || !(isturf(A) || isturf(A.loc)))
+	if(!clicked_atom || !(isturf(clicked_atom) || isturf(clicked_atom.loc)))
 		return
 
 	if(HAS_TRAIT(user, TRAIT_HULK))
@@ -100,25 +100,25 @@
 		to_chat(user, span_warning("You're too off balance to tackle!"))
 		return
 
-	user.face_atom(A)
-
+	user.face_atom(clicked_atom)
 
 	tackling = TRUE
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(checkObstacle))
 	playsound(user, 'sound/weapons/thudswoosh.ogg', 40, TRUE, -1)
 
 	var/leap_word = isfelinid(user) ? "pounce" : "leap" //If cat, "pounce" instead of "leap".
-	if(can_see(user, A, 7))
-		user.visible_message(span_warning("[user] [leap_word]s at [A]!"), span_danger("You [leap_word] at [A]!"))
+	if(can_see(user, clicked_atom, 7))
+		user.visible_message(span_warning("[user] [leap_word]s at [clicked_atom]!"), span_danger("You [leap_word] at [clicked_atom]!"))
 	else
 		user.visible_message(span_warning("[user] [leap_word]s!"), span_danger("You [leap_word]!"))
 
-	if(get_dist(user, A) < min_distance)
-		A = get_ranged_target_turf(user, get_dir(user, A), min_distance) //TODO: this only works in cardinals/diagonals, make it work with in-betweens too!
+	if(get_dist(user, clicked_atom) < min_distance)
+		var/tackle_angle = get_angle(user, clicked_atom)
+		clicked_atom = get_turf_in_angle(tackle_angle, get_turf(user), min_distance)
 
 	user.Knockdown(base_knockdown, ignore_canstun = TRUE)
 	user.adjustStaminaLoss(stamina_cost)
-	user.throw_at(A, range, speed, user, FALSE)
+	user.throw_at(clicked_atom, range, speed, user, FALSE)
 	addtimer(CALLBACK(src, PROC_REF(resetTackle)), base_knockdown, TIMER_STOPPABLE)
 	return(COMSIG_MOB_CANCEL_CLICKON)
 
@@ -168,10 +168,10 @@
 			user.visible_message(span_danger("[user] botches [user.p_their()] [tackle_word] and slams [user.p_their()] head into [target], knocking [user.p_them()]self silly!"), span_userdanger("You botch your [tackle_word] and slam your head into [target], knocking yourself silly!"), ignored_mobs = target)
 			to_chat(target, span_userdanger("[user] botches [user.p_their()] [tackle_word] and slams [user.p_their()] head into you, knocking [user.p_them()]self silly!"))
 
-			user.Paralyze(30)
+			user.Paralyze(3 SECONDS)
 			var/obj/item/bodypart/head/hed = user.get_bodypart(BODY_ZONE_HEAD)
 			if(hed)
-				hed.receive_damage(brute=15, updating_health=TRUE, wound_bonus = CANT_WOUND)
+				hed.receive_damage(brute = 15, updating_health = TRUE, wound_bonus = CANT_WOUND)
 			user.gain_trauma(/datum/brain_trauma/mild/concussion)
 
 		if(-4 to -2) // glancing blow at best
@@ -188,18 +188,18 @@
 			to_chat(target, span_userdanger("[user] lands a passable [tackle_word] on you, sending you both tumbling!"))
 
 			target.adjustStaminaLoss(stamina_cost)
-			target.Paralyze(5)
-			user.Knockdown(20)
-			target.Knockdown(25)
+			target.Paralyze(0.5 SECONDS)
+			user.Knockdown(2 SECONDS)
+			target.Knockdown(2.5 SECONDS)
 
 		if(1 to 2) // solid hit, tackler has a slight advantage
 			user.visible_message(span_warning("[user] lands a solid [tackle_word] on [target], knocking them both down hard!"), span_userdanger("You land a solid [tackle_word] on [target], knocking you both down hard!"), ignored_mobs = target)
 			to_chat(target, span_userdanger("[user] lands a solid [tackle_word] on you, knocking you both down hard!"))
 
 			target.adjustStaminaLoss(30)
-			target.Paralyze(5)
-			user.Knockdown(10)
-			target.Knockdown(20)
+			target.Paralyze(0.5 SECONDS)
+			user.Knockdown(1 SECONDS)
+			target.Knockdown(2 SECONDS)
 
 		if(3 to 4) // really good hit, the target is definitely worse off here. Without positive modifiers, this is as good a tackle as you can land
 			user.visible_message(span_warning("[user] lands an expert [tackle_word] on [target], knocking [target.p_them()] down hard while landing on [user.p_their()] feet with a passive grip!"), span_userdanger("You land an expert [tackle_word] on [target], knocking [target.p_them()] down hard while landing on your feet with a passive grip!"), ignored_mobs = target)
@@ -209,25 +209,34 @@
 			user.get_up(TRUE)
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(40)
-			target.Paralyze(5)
-			target.Knockdown(30)
+			target.Paralyze(0.5 SECONDS)
+			target.Knockdown(3 SECONDS)
 			if(ishuman(target) && ishuman(user))
 				INVOKE_ASYNC(S.dna.species, TYPE_PROC_REF(/datum/species, grab), S, T)
 				S.setGrabState(GRAB_PASSIVE)
 
 		if(5 to INFINITY) // absolutely BODIED
-			user.visible_message(span_warning("[user] lands a monster [tackle_word] on [target], knocking [target.p_them()] senseless and applying an aggressive pin!"), span_userdanger("You land a monster [tackle_word] on [target], knocking [target.p_them()] senseless and applying an aggressive pin!"), ignored_mobs = target)
-			to_chat(target, span_userdanger("[user] lands a monster [tackle_word] on you, knocking you senseless and aggressively pinning you!"))
+			var/stamcritted_user = HAS_TRAIT_FROM(user, TRAIT_INCAPACITATED, STAMINA)
+			if(stamcritted_user) // in case the user went into stamcrit from the tackle itself and cannot actually aggro grab (since they will be crit) we make the tackle a bit more effective on the target
+				user.visible_message(span_warning("[user] lands a monsterly reckless [tackle_word] on [target], knocking both of them senseless!"), span_userdanger("You land a monsterly reckless [tackle_word] on [target], knocking both of you senseless!"), ignored_mobs = target)
+				to_chat(target, span_userdanger("[user] lands a monsterly reckless [tackle_word] on you, knocking the both of you senseless!"))
+				user.forceMove(get_turf(target))
+				target.adjustStaminaLoss(60)
+				target.Paralyze(1 SECONDS)
+				target.Knockdown(5 SECONDS)
+			else
+				user.visible_message(span_warning("[user] lands a monster [tackle_word] on [target], knocking [target.p_them()] senseless and applying an aggressive pin!"), span_userdanger("You land a monster [tackle_word] on [target], knocking [target.p_them()] senseless and applying an aggressive pin!"), ignored_mobs = target)
+				to_chat(target, span_userdanger("[user] lands a monster [tackle_word] on you, knocking you senseless and aggressively pinning you!"))
 
-			user.SetKnockdown(0)
-			user.get_up(TRUE)
-			user.forceMove(get_turf(target))
-			target.adjustStaminaLoss(40)
-			target.Paralyze(5)
-			target.Knockdown(30)
-			if(ishuman(target) && ishuman(user))
-				INVOKE_ASYNC(S.dna.species, TYPE_PROC_REF(/datum/species, grab), S, T)
-				S.setGrabState(GRAB_AGGRESSIVE)
+				user.SetKnockdown(0)
+				user.get_up(TRUE)
+				user.forceMove(get_turf(target))
+				target.adjustStaminaLoss(40)
+				target.Paralyze(0.5 SECONDS)
+				target.Knockdown(3 SECONDS)
+				if(ishuman(target) && ishuman(user))
+					INVOKE_ASYNC(S.dna.species, TYPE_PROC_REF(/datum/species, grab), S, T)
+					S.setGrabState(GRAB_AGGRESSIVE)
 
 
 	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
@@ -411,9 +420,9 @@
 			user.visible_message(span_danger("[user] slams skull-first into [hit] with a sound like crumpled paper, revealing a horrifying breakage in [user.p_their()] cranium! Holy shit!"), span_userdanger("You slam skull-first into [hit] and your senses are filled with warm goo flooding across your face! Your skull is open!"))
 			var/obj/item/bodypart/head/hed = user.get_bodypart(BODY_ZONE_HEAD)
 			if(hed)
-				hed.receive_damage(brute=30, updating_health=FALSE, wound_bonus = 25)
+				hed.receive_damage(brute = 30, updating_health = FALSE, wound_bonus = 25)
 			else
-				user.adjustBruteLoss(40, updating_health=FALSE)
+				user.adjustBruteLoss(40, updating_health = FALSE)
 			user.adjustStaminaLoss(30)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
 			playsound(user, 'sound/effects/blobattack.ogg', 60, TRUE)
@@ -426,7 +435,7 @@
 			user.visible_message(span_danger("[user] slams face-first into [hit] with a concerning squish, immediately going limp!"), span_userdanger("You slam face-first into [hit], and immediately lose consciousness!"))
 			user.adjustStaminaLoss(30)
 			user.adjustBruteLoss(30)
-			user.Unconscious(100)
+			user.Unconscious(10 SECONDS)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
 			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8)
 			shake_camera(user, 6, 6)
@@ -440,7 +449,7 @@
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
 			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8)
-			user.Knockdown(40)
+			user.Knockdown(4 SECONDS)
 			shake_camera(user, 5, 5)
 			user.flash_act(1, TRUE, TRUE, length = 2.5)
 
@@ -449,14 +458,14 @@
 			user.adjustStaminaLoss(30, updating_stamina=FALSE)
 			user.adjustBruteLoss(10)
 			user.adjust_confusion(10 SECONDS)
-			user.Knockdown(30)
+			user.Knockdown(3 SECONDS)
 			shake_camera(user, 3, 4)
 
 		if(1 to 67)
 			user.visible_message(span_danger("[user] slams into [hit]!"), span_userdanger("You slam into [hit]!"))
 			user.adjustStaminaLoss(20, updating_stamina=FALSE)
 			user.adjustBruteLoss(10)
-			user.Knockdown(20)
+			user.Knockdown(2 SECONDS)
 			shake_camera(user, 2, 2)
 
 	playsound(user, 'sound/weapons/smash.ogg', 70, TRUE)
@@ -481,13 +490,13 @@
 			shard.updateEmbedding()
 		W.atom_destruction()
 		user.adjustStaminaLoss(10 * speed)
-		user.Paralyze(30)
+		user.Paralyze(3 SECONDS)
 		user.visible_message(span_danger("[user] smacks into [W] and shatters it, shredding [user.p_them()]self with glass!"), span_userdanger("You smacks into [W] and shatter it, shredding yourself with glass!"))
 
 	else
 		user.visible_message(span_danger("[user] smacks into [W] like a bug!"), span_userdanger("You smacks into [W] like a bug!"))
-		user.Paralyze(10)
-		user.Knockdown(30)
+		user.Paralyze(1 SECONDS)
+		user.Knockdown(3 SECONDS)
 		W.take_damage(30 * speed)
 		user.adjustStaminaLoss(10 * speed, updating_stamina=FALSE)
 		user.adjustBruteLoss(5 * speed)
@@ -522,12 +531,14 @@
 	// for telling HOW big of a mess we just made
 	var/HOW_big_of_a_miss_did_we_just_make = ""
 	if(messes.len)
-		if(messes.len < MAX_TABLE_MESSES / 4)
+		if(messes.len < MAX_TABLE_MESSES * 0.125)
 			HOW_big_of_a_miss_did_we_just_make = ", making a mess"
-		else if(messes.len < MAX_TABLE_MESSES / 2)
+		else if(messes.len < MAX_TABLE_MESSES * 0.25)
 			HOW_big_of_a_miss_did_we_just_make = ", making a big mess"
-		else if(messes.len < MAX_TABLE_MESSES)
+		else if(messes.len < MAX_TABLE_MESSES * 0.5)
 			HOW_big_of_a_miss_did_we_just_make = ", making a giant mess"
+		else if(messes.len < MAX_TABLE_MESSES)
+			HOW_big_of_a_miss_did_we_just_make = ", making a gnarly mess"
 		else
 			HOW_big_of_a_miss_did_we_just_make = ", making a ginormous mess!" // an extra exclamation point!! for emphasis!!!
 

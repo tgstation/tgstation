@@ -79,7 +79,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "ft" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/records/medical,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "fL" = (

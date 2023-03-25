@@ -25,7 +25,8 @@
 /obj/item/circuitboard/Initialize(mapload)
 	if(name_extension)
 		name = "[initial(name)] [name_extension]"
-	set_greyscale(new_config = /datum/greyscale_config/circuit)
+	if(icon_state == "circuit_map") // some circuitboards have cool custom sprites
+		set_greyscale(new_config = /datum/greyscale_config/circuit)
 	return ..()
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/machine)

@@ -144,7 +144,12 @@
 
 /obj/structure/sign/plaques/tram
 	name = "\improper tram information plate"
-	desc = "A plate showing details from the manufacturer about this Nakamura Engineering SkyyTram Mk IV, serial number LT301TG2563. We are not responsible for any injuries or fatalites caused by usage of the tram. For technical assistance in the event of malfunction please contact: (the info seems to be scratched up to the point of being unreadable.)"
+	desc = "A plate showing details from the manufacturer about this Nakamura Engineering SkyyTram Mk IV, serial number LT304TG2563.<br><br>We are not responsible for any injuries or fatalities caused by usage of the tram. \
+	Using the tram carries inherent risks, and we cannot guarantee the safety of all passengers. By using the tram, you assume, acknowledge, and accept all the risks and responsibilities. <br><br>\
+	Please be aware that riding the tram can cause a variety of injuries, including but not limited to: slips, trips, and falls; collisions with other passengers or objects; strains, sprains, and other musculoskeletal injuries; \
+	cuts, bruises, and lacerations; and more severe injuries such as head trauma, spinal cord injuries, and even death. These injuries can be caused by a variety of factors, including the movements of the tram, the behaviour \
+	of other passengers, and unforeseen circumstances such as foul play or mechanical issues.<br><br>\
+	By entering the tram, guideway, or crossings you agree Nanotrasen is not liable for any injuries, damages, or losses that may occur. If you do not agree to these terms, please do not use the tram.<br>"
 	icon_state = "commission_tram"
 	custom_materials = list(/datum/material/titanium = 2000)
 	plane = FLOOR_PLANE

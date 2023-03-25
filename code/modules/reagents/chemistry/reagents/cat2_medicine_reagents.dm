@@ -293,38 +293,39 @@
 
 /datum/reagent/medicine/c2/seiver //a bit of a gray joke
 	name = "Seiver"
-	description = "A medicine that shifts functionality based on temperature. Hotter temperatures will remove amounts of toxins, while coder temperatures will heal larger amounts of toxins only while the patient is irradiated. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
-	var/radbonustemp = (T0C - 100) //being below this number gives you 10% off rads.
+	description = "A medicine that shifts functionality based on temperature. Hotter temperatures will heal more toxicity, while colder temperatures will heal larger amounts of toxicity but only while the patient is irradiated. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
 	inverse_chem_val = 0.3
 	ph = 3.7
 	inverse_chem = /datum/reagent/inverse/technetium
 	inverse_chem_val = 0.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	/// Temperatures below this number give radiation healing.
+	var/rads_heal_threshold = 100
 
 /datum/reagent/medicine/c2/seiver/on_mob_metabolize(mob/living/carbon/human/affected_mob)
 	. = ..()
-	radbonustemp = rand(radbonustemp - 50, radbonustemp + 50) // Basically this means 50K and below will always give the percent heal, and upto 150K could. Calculated once.
+	rads_heal_threshold = rand(rads_heal_threshold - 50, rads_heal_threshold + 50) // Basically this means 50K and below will always give the radiation heal, and upto 150K could. Calculated once.
 
 /datum/reagent/medicine/c2/seiver/on_mob_life(mob/living/carbon/human/affected_mob, delta_time, times_fired)
 	var/chemtemp = min(holder.chem_temp, 1000)
-	chemtemp = chemtemp ? chemtemp : 273 //why do you have null sweaty
+	chemtemp = chemtemp ? chemtemp : T0C //why do you have null sweaty
 	var/healypoints = 0 //5 healypoints = 1 heart damage; 5 rads = 1 tox damage healed for the purpose of healypoints
 
 	//you're hot
 	var/toxcalc = min(round(5 + ((chemtemp-1000)/175), 0.1), 5) * REM * delta_time * normalise_creation_purity() //max 2.5 tox healing per second
 	if(toxcalc > 0)
-		affected_mob.adjustToxLoss(-toxcalc * delta_time * normalise_creation_purity(), required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(-toxcalc, required_biotype = affected_biotype)
 		healypoints += toxcalc
 
 	//and you're cold
 	var/radcalc = round((T0C-chemtemp) / 6, 0.1) * REM * delta_time //max ~45 rad loss unless you've hit below 0K. if so, wow.
 	if(radcalc > 0 && HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
 		radcalc *= normalise_creation_purity()
-		// no cost percent healing if you are SUPER cold (on top of cost healing)
-		if(chemtemp < radbonustemp*0.1)
-			affected_mob.adjustToxLoss(-radcalc * (0.9**(REM * delta_time)), required_biotype = affected_biotype)
-		else if(chemtemp < radbonustemp)
-			affected_mob.adjustToxLoss(-radcalc * (0.75**(REM * delta_time)), required_biotype = affected_biotype)
+		// extra rad healing if you are SUPER cold
+		if(chemtemp < rads_heal_threshold*0.1)
+			affected_mob.adjustToxLoss(-radcalc * 0.9, required_biotype = affected_biotype)
+		else if(chemtemp < rads_heal_threshold)
+			affected_mob.adjustToxLoss(-radcalc * 0.75, required_biotype = affected_biotype)
 		healypoints += (radcalc / 5)
 
 	//you're yes and... oh no!
@@ -388,7 +389,7 @@
 	var/mob/living/carbon/C = A
 	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
 		C.adjustToxLoss((-1.5 * min(2, trans_volume) * REM) * normalise_creation_purity(), FALSE, required_biotype = affected_biotype)	  //This is to promote iv pole use for that chemotherapy feel.
-	var/obj/item/organ/internal/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
+	var/obj/item/organ/internal/liver/L = C.organs_slot[ORGAN_SLOT_LIVER]
 	if(!L || L.organ_flags & ORGAN_FAILING)
 		return
 	conversion_amount = (trans_volume * (min(100 -C.getOrganLoss(ORGAN_SLOT_LIVER), 80) / 100)*normalise_creation_purity()) //the more damaged the liver the worse we metabolize.
@@ -505,6 +506,13 @@
 	inverse_chem = /datum/reagent/inverse/penthrite
 	inverse_chem_val = 0.25
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	/// List of traits to add/remove from our subject when we are in their system
+	var/static/list/subject_traits = list(
+		TRAIT_STABLEHEART,
+		TRAIT_NOHARDCRIT,
+		TRAIT_NOSOFTCRIT,
+		TRAIT_NOCRITDAMAGE,
+	)
 
 /atom/movable/screen/alert/penthrite
 	name = "Strong Heartbeat"
@@ -514,10 +522,7 @@
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()
 	user.throw_alert("penthrite", /atom/movable/screen/alert/penthrite)
-	ADD_TRAIT(user, TRAIT_STABLEHEART, type)
-	ADD_TRAIT(user, TRAIT_NOHARDCRIT,type)
-	ADD_TRAIT(user, TRAIT_NOSOFTCRIT,type)
-	ADD_TRAIT(user, TRAIT_NOCRITDAMAGE,type)
+	user.add_traits(subject_traits, type)
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H, delta_time, times_fired)
 	H.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.25 * REM * delta_time, required_organtype = affected_organtype)
@@ -548,10 +553,7 @@
 
 /datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/user)
 	user.clear_alert("penthrite")
-	REMOVE_TRAIT(user, TRAIT_STABLEHEART, type)
-	REMOVE_TRAIT(user, TRAIT_NOHARDCRIT,type)
-	REMOVE_TRAIT(user, TRAIT_NOSOFTCRIT,type)
-	REMOVE_TRAIT(user, TRAIT_NOCRITDAMAGE,type)
+	user.remove_traits(subject_traits, type)
 	. = ..()
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/H, delta_time, times_fired)

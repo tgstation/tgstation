@@ -246,12 +246,15 @@
 
 /turf/open/space/openspace
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "invisible"
-	plane = FLOOR_PLANE
+	icon_state = MAP_SWITCH("pure_white", "invisible")
+	plane = TRANSPARENT_FLOOR_PLANE
 
 /turf/open/space/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
-	icon_state = "invisible"
+	icon_state = "pure_white"
+	// We make the assumption that the space plane will never be blacklisted, as an optimization
+	if(SSmapping.max_plane_offset)
+		plane = TRANSPARENT_FLOOR_PLANE - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/space/openspace/LateInitialize()
@@ -314,3 +317,11 @@
 		set_light(2)
 	else if(!isspaceturf(source) && ispath(path, /turf/open/space))
 		set_light(0)
+
+/turf/open/space/replace_floor(turf/open/new_floor_path, flags)
+	if (!initial(new_floor_path.overfloor_placed))
+		ChangeTurf(new_floor_path, flags = flags)
+		return
+	// Create plating under tiled floor we try to create directly onto space
+	PlaceOnTop(/turf/open/floor/plating, flags = flags)
+	PlaceOnTop(new_floor_path, flags = flags)

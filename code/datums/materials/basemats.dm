@@ -24,6 +24,7 @@
 	integrity_modifier = 0.1
 	sheet_type = /obj/item/stack/sheet/glass
 	shard_type = /obj/item/shard
+	debris_type = /obj/effect/decal/cleanable/glass
 	value_per_unit = 0.0025
 	beauty_modifier = 0.05
 	armor_modifiers = list(MELEE = 0.2, BULLET = 0.2, ENERGY = 1, BIO = 0.2, FIRE = 1, ACID = 0.2)

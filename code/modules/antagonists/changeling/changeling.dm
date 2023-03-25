@@ -321,7 +321,7 @@
 	var/cap_to = isnum(override_cap) ? override_cap : total_chem_storage
 	chem_charges = clamp(chem_charges + amount, 0, cap_to)
 
-	lingchemdisplay.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
+	lingchemdisplay?.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
 
 /*
  * Remove changeling powers from the current Changeling's purchased_powers list.
@@ -1020,11 +1020,9 @@
 	total_chem_storage = 50
 
 /datum/antagonist/changeling/headslug/greet()
-	to_chat(owner, span_boldannounce("You are a fresh changeling birthed from a headslug! You aren't as strong as a normal changeling, as you are newly born."))
+	to_chat(owner, span_boldannounce("You are a fresh changeling birthed from a headslug! \
+		You aren't as strong as a normal changeling, as you are newly born."))
 
-	var/policy = get_policy(ROLE_HEADSLUG_CHANGELING)
-	if(policy)
-		to_chat(owner, policy)
 
 /datum/antagonist/changeling/space
 	name = "\improper Space Changeling"

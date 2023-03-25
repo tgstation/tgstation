@@ -626,7 +626,7 @@
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
 	if(!isliving(user))
 		return
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
 	return TRUE
@@ -960,15 +960,6 @@
 	is_intern = FALSE
 	update_label()
 
-/obj/item/card/id/advanced/proc/on_holding_card_slot_moved(obj/item/modular_computer/pda/source, atom/old_loc, dir, forced)
-	SIGNAL_HANDLER
-	if(istype(old_loc, /obj/item/modular_computer/pda))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
-	if(source)
-		RegisterSignal(source, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
-		RegisterSignal(source, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
-
 /obj/item/card/id/advanced/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 
@@ -977,7 +968,6 @@
 		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	if(istype(old_loc, /obj/item/modular_computer/pda))
-		UnregisterSignal(old_loc, COMSIG_MOVABLE_MOVED)
 		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	//New loc
@@ -986,7 +976,6 @@
 		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
 
 	if(istype(loc, /obj/item/modular_computer/pda))
-		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, PROC_REF(on_holding_card_slot_moved))
 		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
 		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
 
@@ -1226,7 +1215,7 @@
 		to_chat(user, "Restating prisoner ID to default parameters.")
 		return
 	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
-	if(!choice || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
+	if(!choice || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 		return FALSE
 	time_to_assign = choice
 	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
@@ -1552,7 +1541,7 @@
 					assignment = target_occupation
 
 				var/new_age = tgui_input_number(user, "Choose the ID's age", "Agent card age", AGE_MIN, AGE_MAX, AGE_MIN)
-				if(QDELETED(user) || QDELETED(src) || !user.canUseTopic(user, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE))
+				if(QDELETED(user) || QDELETED(src) || !user.can_perform_action(user, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH))
 					return
 				if(new_age)
 					registered_age = new_age

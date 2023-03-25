@@ -239,7 +239,7 @@
 			log_config(log_message)
 			stack_trace(log_message)
 		else
-			if(E.modified && !E.dupes_allowed)
+			if(E.modified && !E.dupes_allowed && E.resident_file == filename)
 				log_config_error("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
 
 		E.resident_file = filename

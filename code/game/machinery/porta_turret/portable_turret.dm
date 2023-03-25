@@ -90,7 +90,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	/// Determines if our projectiles hit our faction
 	var/ignore_faction = FALSE
 	/// Same faction mobs will never be shot at, no matter the other settings
-	var/list/faction = list("turret")
+	var/list/faction = list(FACTION_TURRET)
 	/// The spark system, used for generating... sparks?
 	var/datum/effect_system/spark_spread/spark_system
 	/// The turret will try to shoot from a turf in that direction when in a wall
@@ -435,14 +435,17 @@ DEFINE_BITFIELD(turret_flags, list(
 			continue
 
 		if(turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS)//if it's set to check for simple animals
-			if(isanimal(A))
-				var/mob/living/simple_animal/SA = A
-				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
+			if(isanimal_or_basicmob(A))
+				var/mob/living/animal = A
+				if(animal.stat || in_faction(animal)) //don't target if dead or in faction
 					continue
-				targets += SA
+				targets += animal
 				continue
 
 		if(issilicon(A))
+			if(!(turret_flags & TURRET_FLAG_SHOOT_BORGS))
+				continue
+		
 			var/mob/living/silicon/sillycone = A
 
 			if(ispAI(A))
@@ -452,13 +455,12 @@ DEFINE_BITFIELD(turret_flags, list(
 				var/mob/living/silicon/robot/sillyconerobot = A
 				if(sillyconerobot.stat != CONSCIOUS)
 					continue
-				if((turret_flags & TURRET_FLAG_SHOOT_BORGS))
-					targets += sillyconerobot
+				if(in_faction(sillyconerobot)) // borgs in faction are friendly
 					continue
-				if(in_faction(sillyconerobot))
+				if((ROLE_SYNDICATE in faction) && sillyconerobot.emagged) // special case: emagged station borgs are friendly to syndicate turrets
 					continue
-				if((ROLE_SYNDICATE in faction) && !sillyconerobot.emagged)
-					targets += sillyconerobot
+
+				targets += sillyconerobot
 
 		else if(iscarbon(A))
 			var/mob/living/carbon/C = A
@@ -731,6 +733,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = list(ROLE_SYNDICATE)
+	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_BORGS
 	desc = "A ballistic machine gun auto-turret."
 
 /obj/machinery/porta_turret/syndicate/Initialize(mapload)
@@ -774,7 +777,7 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/syndicate/energy/raven
 	stun_projectile = /obj/projectile/beam/laser
 	stun_projectile_sound = 'sound/weapons/laser.ogg'
-	faction = list(FACTION_NEUTRAL,"silicon","turret")
+	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
 
 /obj/machinery/porta_turret/syndicate/pod
 	integrity_failure = 0.5
@@ -810,7 +813,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		return TRUE
 
 /obj/machinery/porta_turret/ai
-	faction = list("silicon")
+	faction = list(FACTION_SILICON)
 	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
@@ -820,10 +823,11 @@ DEFINE_BITFIELD(turret_flags, list(
 	name = "perimeter defense turret"
 	desc = "A plasma beam turret calibrated to defend outposts against non-humanoid fauna. It is more effective when exposed to the environment."
 	installation = null
+	uses_stored = FALSE
 	lethal_projectile = /obj/projectile/plasma/turret
 	lethal_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
 	mode = TURRET_LETHAL //It would be useless in stun mode anyway
-	faction = list(FACTION_NEUTRAL,"silicon","turret") //Minebots, medibots, etc that should not be shot.
+	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET) //Minebots, medibots, etc that should not be shot.
 
 /obj/machinery/porta_turret/aux_base/assess_perp(mob/living/carbon/human/perp)
 	return 0 //Never shoot humanoids. You are on your own if Ashwalkers or the like attack!
@@ -852,7 +856,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	stun_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
-	faction = list(FACTION_NEUTRAL,"silicon","turret")
+	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
 	mode = TURRET_LETHAL
 
 /obj/machinery/porta_turret/centcom_shuttle/Initialize(mapload)
@@ -872,7 +876,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else."
 	stun_projectile = /obj/projectile/beam/weak/penetrator
 	lethal_projectile = /obj/projectile/beam/weak/penetrator
-	faction = list(FACTION_NEUTRAL,"silicon","turret")
+	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
 
 ////////////////////////
 //Turret Control Panel//

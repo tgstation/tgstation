@@ -7,6 +7,7 @@
 		CATEGORY_MILK_EGGS,
 		CATEGORY_SAUCES_REAGENTS,
 	)
+	blackbox_key = "chef"
 
 /obj/machinery/computer/order_console/cook/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
 	say("Thank you for your purchase! It will arrive on the next cargo shuttle!")

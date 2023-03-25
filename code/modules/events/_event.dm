@@ -1,4 +1,5 @@
 #define RANDOM_EVENT_ADMIN_INTERVENTION_TIME (10 SECONDS)
+#define NEVER_TRIGGERED_BY_WIZARDS -1
 
 //this singleton datum is used by the events controller to dictate how it selects events
 /datum/round_event_control
@@ -25,14 +26,19 @@
 	var/alert_observers = TRUE //should we let the ghosts and admins know this event is firing
 									//should be disabled on events that fire a lot
 
+	/// Minimum wizard rituals at which to trigger this event, inclusive
+	var/min_wizard_trigger_potency = NEVER_TRIGGERED_BY_WIZARDS
+	/// Maximum wizard rituals at which to trigger this event, inclusive
+	var/max_wizard_trigger_potency = NEVER_TRIGGERED_BY_WIZARDS
+
 	var/triggering //admin cancellation
 
 	/// Whether or not dynamic should hijack this event
 	var/dynamic_should_hijack = FALSE
 
 	/// Datum that will handle admin options for forcing the event.
-	/// If there are no options, just leave it null.
-	var/datum/event_admin_setup/admin_setup = null
+	/// If there are no options, just leave it as an empty list.
+	var/list/datum/event_admin_setup/admin_setup = list()
 	/// Flags dictating whether this event should be run on certain kinds of map
 	var/map_flags = NONE
 
@@ -40,8 +46,12 @@
 	if(config && !wizardevent) // Magic is unaffected by configs
 		earliest_start = CEILING(earliest_start * CONFIG_GET(number/events_min_time_mul), 1)
 		min_players = CEILING(min_players * CONFIG_GET(number/events_min_players_mul), 1)
-	if(admin_setup)
-		admin_setup = new admin_setup(src)
+	if(!length(admin_setup))
+		return
+	var/list/admin_setup_types = admin_setup.Copy()
+	admin_setup.Cut()
+	for(var/admin_setup_type in admin_setup_types)
+		admin_setup += new admin_setup_type(src)
 
 /datum/round_event_control/wizard
 	category = EVENT_CATEGORY_WIZARD
@@ -61,13 +71,13 @@
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
-/datum/round_event_control/proc/can_spawn_event(players_amt)
+/datum/round_event_control/proc/can_spawn_event(players_amt, allow_magic = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	if(occurrences >= max_occurrences)
 		return FALSE
 	if(earliest_start >= world.time-SSticker.round_start_time)
 		return FALSE
-	if(wizardevent != SSevents.wizardmode)
+	if(!allow_magic && wizardevent != SSevents.wizardmode)
 		return FALSE
 	if(players_amt < min_players)
 		return FALSE
@@ -133,8 +143,11 @@ Runs the event
 	*/
 	UnregisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT)
 	var/datum/round_event/round_event = new typepath(TRUE, src)
-	if(admin_forced && admin_setup)
-		admin_setup.apply_to_event(round_event)
+	if(admin_forced && length(admin_setup))
+		//not part of the signal because it's conditional and relies on usr heavily
+		for(var/datum/event_admin_setup/admin_setup_datum in admin_setup)
+			admin_setup_datum.apply_to_event(round_event)
+	SEND_SIGNAL(src, COMSIG_CREATED_ROUND_EVENT, round_event)
 	round_event.setup()
 	round_event.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	occurrences++
@@ -151,18 +164,13 @@ Runs the event
 		return round_event
 
 	triggering = FALSE
-	if(random)
-		log_game("Random Event triggering: [name] ([typepath]).")
+	log_game("[random ? "Random" : "Forced"] Event triggering: [name] ([typepath]).")
 
 	if(alert_observers)
-		announce_deadchat(random)
+		round_event.announce_deadchat(random)
 
 	SSblackbox.record_feedback("tally", "event_ran", 1, "[round_event]")
 	return round_event
-
-///Annouces the event name to deadchat, override this if what an event should show to deadchat is different to its event name.
-/datum/round_event_control/proc/announce_deadchat(random)
-	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
 
 //Returns the component for the listener
 /datum/round_event_control/proc/stop_random_event()
@@ -204,6 +212,10 @@ Runs the event
 /datum/round_event/proc/setup()
 	SHOULD_CALL_PARENT(FALSE)
 	return
+
+///Annouces the event name to deadchat, override this if what an event should show to deadchat is different to its event name.
+/datum/round_event/proc/announce_deadchat(random)
+	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[control.name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
 
 //Called when the tick is equal to the start_when variable.
 //Allows you to start before announcing or vice versa.
@@ -300,3 +312,4 @@ Runs the event
 	return ..()
 
 #undef RANDOM_EVENT_ADMIN_INTERVENTION_TIME
+#undef NEVER_TRIGGERED_BY_WIZARDS

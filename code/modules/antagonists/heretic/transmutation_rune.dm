@@ -209,6 +209,9 @@
 	. = ..()
 	set_greyscale(colors = list(path_colour))
 	icon_state = animation_state
+	var/image/silicon_image = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
+	silicon_image.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", silicon_image)
 
 /obj/effect/temp_visual/drawing_heretic_rune/fast
 	duration = 12 SECONDS

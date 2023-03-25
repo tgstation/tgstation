@@ -9,9 +9,11 @@
 	earliest_start = 15 MINUTES
 	category = EVENT_CATEGORY_ENGINEERING
 	description = "Tram crossing signals malfunction, tram collision damage is increased."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 3
 
 //Check if there's a tram we can cause to malfunction.
-/datum/round_event_control/tram_malfunction/can_spawn_event(players_amt)
+/datum/round_event_control/tram_malfunction/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	if (!.)
 		return FALSE

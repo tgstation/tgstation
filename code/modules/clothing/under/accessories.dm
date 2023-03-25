@@ -70,7 +70,7 @@
 	return
 
 /obj/item/clothing/accessory/attack_self_secondary(mob/user)
-	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
+	if(user.can_perform_action(src, NEED_DEXTERITY))
 		above_suit = !above_suit
 		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
 		return
@@ -360,7 +360,13 @@
 /obj/item/clothing/accessory/pocketprotector/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/pocketprotector)
+	create_storage(storage_type = /datum/storage/pockets/pocketprotector)
+
+/obj/item/clothing/accessory/pocketprotector/detach(obj/item/clothing/under/U, user)
+	var/drop_loc = drop_location()
+	for(var/atom/movable/held as anything in src)
+		held.forceMove(drop_loc)
+	return ..()
 
 /obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
 	. = ..()

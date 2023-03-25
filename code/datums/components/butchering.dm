@@ -15,12 +15,12 @@
 	var/datum/callback/butcher_callback
 
 /datum/component/butchering/Initialize(
-	speed,
-	effectiveness,
-	bonus_modifier,
-	butcher_sound,
-	disabled,
-	can_be_blunt,
+	speed = 8 SECONDS,
+	effectiveness = 100,
+	bonus_modifier = 0,
+	butcher_sound = 'sound/effects/butcher.ogg',
+	disabled = FALSE,
+	can_be_blunt = FALSE,
 	butcher_callback,
 )
 	src.speed = speed

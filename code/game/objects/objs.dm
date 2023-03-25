@@ -290,7 +290,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /obj/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && (!current_skin || infinite_reskin) && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE))
+	if(unique_reskin && (!current_skin || infinite_reskin) && user.can_perform_action(src, NEED_DEXTERITY))
 		reskin_obj(user)
 
 /**
@@ -372,7 +372,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/freeze()
 	if(HAS_TRAIT(src, TRAIT_FROZEN))
 		return FALSE
-	if(obj_flags & FREEZE_PROOF)
+	if(resistance_flags & FREEZE_PROOF)
 		return FALSE
 
 	AddElement(/datum/element/frozen)

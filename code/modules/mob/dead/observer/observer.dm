@@ -12,8 +12,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	stat = DEAD
 	density = FALSE
 	see_invisible = SEE_INVISIBLE_OBSERVER
-	see_in_dark = 100
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	invisibility = INVISIBILITY_OBSERVER
 	hud_type = /datum/hud/ghost
 	movement_type = GROUND | FLYING
@@ -102,7 +101,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 		mind = body.mind //we don't transfer the mind but we keep a reference to it.
 
-		set_suicide(body.suiciding) // Transfer whether they committed suicide.
+		if(HAS_TRAIT_FROM_ONLY(body, TRAIT_SUICIDED, REF(body))) // transfer if the body was killed due to suicide
+			ADD_TRAIT(src, TRAIT_SUICIDED, REF(body))
 
 		if(ishuman(body))
 			var/mob/living/carbon/human/body_human = body
@@ -603,15 +603,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/verb/toggle_darkness()
 	set name = "Toggle Darkness"
 	set category = "Ghost"
-	switch(lighting_alpha)
-		if (LIGHTING_PLANE_ALPHA_VISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+	switch(lighting_cutoff)
+		if (LIGHTING_CUTOFF_VISIBLE)
+			lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
+		if (LIGHTING_CUTOFF_MEDIUM)
+			lighting_cutoff = LIGHTING_CUTOFF_HIGH
+		if (LIGHTING_CUTOFF_HIGH)
+			lighting_cutoff = LIGHTING_CUTOFF_FULLBRIGHT
 		else
-			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+			lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
 
 	update_sight()
 
@@ -838,7 +838,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	update_appearance()
 
-/mob/dead/observer/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
+/mob/dead/observer/can_perform_action(atom/movable/target, action_bitflags)
 	return isAdminGhostAI(usr)
 
 /mob/dead/observer/is_literate()
@@ -1058,7 +1058,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else
 			client.images -= stored_t_ray_images
 
-/mob/dead/observer/default_lighting_alpha()
+/mob/dead/observer/default_lighting_cutoff()
 	var/datum/preferences/prefs = client?.prefs
 	if(!prefs || (client?.combo_hud_enabled && prefs.toggles & COMBOHUD_LIGHTING))
 		return ..()

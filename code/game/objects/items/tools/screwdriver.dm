@@ -108,7 +108,9 @@
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
-		clumsy_check = FALSE)
+		clumsy_check = FALSE, \
+		inhand_icon_change = FALSE, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*

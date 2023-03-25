@@ -167,12 +167,6 @@
 
 	return finish_preview_icon(icon)
 
-/datum/antagonist/heretic/greet()
-	. = ..()
-	var/policy = get_policy(ROLE_HERETIC)
-	if(policy)
-		to_chat(owner, policy)
-
 /datum/antagonist/heretic/farewell()
 	if(!silent)
 		to_chat(owner.current, span_userdanger("Your mind begins to flare as the otherwordly knowledge escapes your grasp!"))

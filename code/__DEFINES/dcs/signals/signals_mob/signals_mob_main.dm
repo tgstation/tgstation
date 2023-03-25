@@ -78,8 +78,6 @@
 #define COMSIG_MOB_SIGHT_CHANGE "mob_sight_changed"
 ///from base of mob/set_invis_see(): (new_invis, old_invis)
 #define COMSIG_MOB_SEE_INVIS_CHANGE "mob_see_invis_change"
-///from base of mob/set_see_in_dark(): (new_range, old_range)
-#define COMSIG_MOB_SEE_IN_DARK_CHANGE "mob_see_in_dark_change"
 
 
 ///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)

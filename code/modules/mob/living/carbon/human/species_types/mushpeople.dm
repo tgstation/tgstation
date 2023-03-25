@@ -17,7 +17,7 @@
 		TRAIT_NOBREATH,
 		TRAIT_NOFLASH,
 	)
-	inherent_factions = list("mushroom")
+	inherent_factions = list(FACTION_MUSHROOM)
 	speedmod = 1.5 //faster than golems but not by much
 
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING

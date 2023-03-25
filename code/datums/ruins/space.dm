@@ -20,7 +20,6 @@
 	name = "Asteroid 1"
 	description = "I-spy with my little eye, something beginning with R."
 
-
 /datum/map_template/ruin/space/asteroid2
 	id = "asteroid2"
 	suffix = "asteroid2.dmm"
@@ -190,14 +189,14 @@
 
 /datum/map_template/ruin/space/djstation
 	id = "djstation"
-	suffix = "djstation.dmm"
+	suffix = "dj_station.dmm"
 	name = "DJ Station"
 	description = "Until very recently this pirate radio station was used to harangue local space stations over a variety of perceived \"ethics violations\". \
 	It seems like someone finally got sick of it, but the equipment still works."
 
 /datum/map_template/ruin/space/thederelict
 	id = "thederelict"
-	suffix = "thederelict.dmm"
+	suffix = "russian_derelict.dmm"
 	name = "Kosmicheskaya Stantsiya 13"
 	description = "The true fate of Kosmicheskaya Stantsiya 13 is an open question to this day. Most corporations deny its existence, for fear of questioning on what became of its crew."
 
@@ -314,6 +313,13 @@
 	name = "Syndicate Forgotten Ship"
 	description = "Seemingly abandoned ship went of course right into NT controlled space. It seems that malfunction caused most systems to turn off, except for sleepers."
 
+/datum/map_template/ruin/space/old_syndie_infiltrator
+	id = "old_infiltrator"
+	suffix = "old_infiltrator.dmm"
+	name = "Abandoned Infiltrator"
+	description = "Only one in five Gorlex Marauder strike forces return from their regular raids into Nanotrasen space. \
+		For the other four... well, their ship doesn't just disappear when their target evacuates."
+
 /datum/map_template/ruin/space/hellfactory
 	id = "hellfactory"
 	suffix = "hellfactory.dmm"
@@ -337,3 +343,27 @@
 	suffix = "cyborg_mothership.dmm"
 	name = "Cyborg Mothership"
 	description = "An abandoned cyborg mothership that was overtaken by space vines and hivebots. It appears that it hosted an experimental AI focused on mining before it was depowered."
+
+/datum/map_template/ruin/space/dangerous_research
+	id = "dangerous_research"
+	suffix = "dangerous_research.dmm"
+	name = "Alternate Sciences Research Center"
+	description = "When you're messing with the occult, who knows what you're going to get?"
+
+/datum/map_template/ruin/space/the_faceoff
+	id = "the_faceoff"
+	suffix = "the_faceoff.dmm"
+	name = "The Faceoff"
+	description = "What do you get when a meeting of the enemy corporations get crashed?"
+
+/datum/map_template/ruin/space/prey_pod
+	id = "prey"
+	suffix = "prey_pod.dmm"
+	name = "Crashed Mimic Escape Pod"
+	description = "A pod with a person who has died to a mimic."
+
+/datum/map_template/ruin/space/travelers_rest
+	id = "travelers_rest"
+	suffix = "travelers_rest.dmm"
+	name = "Traveler's Rest"
+	description = "An abandoned capsule floating through space. It seems as if somebody was in here not too long ago."

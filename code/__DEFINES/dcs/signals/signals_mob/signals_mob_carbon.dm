@@ -32,6 +32,8 @@
 	#define COMPONENT_NO_ATTACH (1<<0)
 ///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
 #define COMSIG_CARBON_ATTACH_LIMB "carbon_attach_limb"
+///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
+#define COMSIG_CARBON_POST_ATTACH_LIMB "carbon_post_attach_limb"
 #define COMSIG_BODYPART_GAUZED "bodypart_gauzed" // from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze)
 #define COMSIG_BODYPART_GAUZE_DESTROYED "bodypart_degauzed" // from [/obj/item/bodypart/proc/seep_gauze] when it runs out of absorption
 
@@ -47,6 +49,8 @@
 
 /// Called from carbon losing a limb /obj/item/bodypart/proc/drop_limb(obj/item/bodypart/lost_limb, dismembered)
 #define COMSIG_CARBON_REMOVE_LIMB "carbon_remove_limb"
+/// Called from carbon losing a limb /obj/item/bodypart/proc/drop_limb(obj/item/bodypart/lost_limb, dismembered)
+#define COMSIG_CARBON_POST_REMOVE_LIMB "carbon_post_remove_limb"
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
 
@@ -136,4 +140,3 @@
 
 ///from /atom/movable/screen/alert/give/proc/handle_transfer(): (taker, item)
 #define COMSIG_CARBON_ITEM_GIVEN "carbon_item_given"
-

@@ -18,14 +18,16 @@
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
-	see_in_dark = 7
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Vivid red, cause cult theme
+	lighting_cutoff_red = 30
+	lighting_cutoff_green = 5
+	lighting_cutoff_blue = 20
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	healable = 0
-	faction = list("cult")
+	faction = list(FACTION_CULT)
 	pressure_resistance = 100
 	unique_name = 1
 	AIStatus = AI_OFF //normal constructs don't have AI
@@ -51,8 +53,7 @@
 /mob/living/simple_animal/hostile/construct/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	ADD_TRAIT(src, TRAIT_HEALS_FROM_CULT_PYLONS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	add_traits(list(TRAIT_HEALS_FROM_CULT_PYLONS, TRAIT_SPACEWALK), INNATE_TRAIT)
 	for(var/spell in construct_spells)
 		var/datum/action/new_spell = new spell(src)
 		new_spell.Grant(src)

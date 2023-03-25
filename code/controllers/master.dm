@@ -205,7 +205,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		StartProcessing(10)
 	else
 		to_chat(world, span_boldannounce("The Master Controller is having some issues, we will need to re-initialize EVERYTHING"))
-		Initialize(20, TRUE)
+		Initialize(20, TRUE, FALSE)
 
 // Please don't stuff random bullshit here,
 // Make a subsystem, give it the SS_NO_FIRE flag, and do your work in it's Initialize()

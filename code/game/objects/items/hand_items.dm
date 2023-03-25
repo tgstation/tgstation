@@ -536,8 +536,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	speed = 1.6
 	damage_type = BRUTE
-	damage = 0
-	nodamage = TRUE // love can't actually hurt you
+	damage = 0 // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
@@ -546,7 +545,7 @@
 	return ..()
 
 /obj/projectile/kiss/Impact(atom/A)
-	if(!nodamage || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
+	if(damage > 0 || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
 		return ..()
 
 	harmless_on_hit(A)
@@ -608,8 +607,7 @@
 
 /obj/projectile/kiss/death
 	name = "kiss of death"
-	nodamage = FALSE // okay i kinda lied about love not being able to hurt you
-	damage = 35
+	damage = 35 // okay i kinda lied about love not being able to hurt you
 	wound_bonus = 0
 	sharpness = SHARP_POINTY
 	color = COLOR_BLACK
@@ -629,8 +627,10 @@
 
 /obj/projectile/kiss/french/harmless_on_hit(mob/living/living_target)
 	. = ..()
+	if(isnull(living_target.reagents))
+		return
 	//Don't stack the garlic
-	if(! living_target.has_reagent(/datum/reagent/consumable/garlic) )
+	if(!living_target.has_reagent(/datum/reagent/consumable/garlic))
 		//Phwoar
 		living_target.reagents.add_reagent(/datum/reagent/consumable/garlic, 1)
 	living_target.visible_message("[living_target] has a funny look on [living_target.p_their()] face.", "Wow, that is a strong after taste of garlic!", vision_distance=COMBAT_MESSAGE_RANGE)
@@ -643,13 +643,14 @@
 	. = ..()
 	if(!IS_EDIBLE(target) || !target.reagents)
 		return
-	if(!firer || !target.Adjacent(firer))
+	if(!firer || !target.Adjacent(firer) || !ismob(firer))
 		return
+
+	var/mob/kisser = firer
 
 	// From here on, no message
 	suppressed = SUPPRESSED_VERY
-
-	if(!HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(firer)))
+	if(!(kisser.mind && HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(kisser.mind))))
 		to_chat(firer, span_warning("Wait a second, you didn't make this [target.name]. How can you claim it as your own?"))
 		return
 	if(target.reagents.has_reagent(/datum/reagent/love))
