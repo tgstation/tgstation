@@ -197,9 +197,6 @@
 	if(on_loss)
 		breath_lost[gas_type] = on_loss
 
-/// Return this from a while_present proc to call its on_loss version, if one exists
-/// Useful for doing "we're done" effects without duped code
-#define BREATH_LOST 1
 /// Handles oxygen breathing. Always called by things that need o2, no matter what
 /obj/item/organ/internal/lungs/proc/breathe_oxygen(mob/living/carbon/breather, datum/gas_mixture/breath, o2_pp, old_o2_pp)
 	if(o2_pp < safe_oxygen_min && !HAS_TRAIT(src, TRAIT_SPACEBREATHING))
@@ -490,7 +487,7 @@
 		breather.throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
 	n2o_euphoria = EUPHORIA_ACTIVE
 
-	// 60 gives them one second to wake up and run away a bit!
+	// give them one second of grace to wake up and run away a bit!
 	breather.Unconscious(6 SECONDS)
 	// Enough to make the mob sleep.
 	if(n2o_pp > n2o_sleep_min)
@@ -887,7 +884,8 @@
 /// H2O electrolysis
 /obj/item/organ/internal/lungs/ethereal/proc/consume_water(mob/living/carbon/breather, datum/gas_mixture/breath, h2o_pp, old_h2o_pp)
 	var/gas_breathed = breath.gases[/datum/gas/water_vapor][MOLES]
-	breath.gases[/datum/gas/water_vapor][MOLES] -= gas_breathed
+	breath.gases[/datum/ga
+	s/water_vapor][MOLES] -= gas_breathed
 	breath_out.assert_gases(/datum/gas/oxygen, /datum/gas/hydrogen)
 	breath_out.gases[/datum/gas/oxygen][MOLES] += gas_breathed
 	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed * 2
