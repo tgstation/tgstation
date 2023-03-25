@@ -118,7 +118,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
  */
 
 /datum/request_manager/proc/music_request(client/requester, message)
-	request_for_client(requester, REQUEST_MUSIC, message)
+	request_for_client(requester, REQUEST_INTERNET_SOUND, message)
 
 /**
  * Creates a request and registers the request with all necessary internal tracking lists
@@ -269,4 +269,4 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 #undef REQUEST_SYNDICATE
 #undef REQUEST_NUKE
 #undef REQUEST_FAX
-#undef REQUEST_MUSIC
+#undef REQUEST_INTERNET_SOUND
