@@ -118,8 +118,8 @@
 	// always is always processed, while_present is called when the gas is in the breath, and on_loss is called right after a gas is lost
 	// The naming convention goes like this
 	// always : breath_{gas_type}
-	// safe/nuteral while_present : consume_{gas_type}
-	// safe/nuteral on_loss : lose_{gas_type}
+	// safe/neutral while_present : consume_{gas_type}
+	// safe/neutral on_loss : lose_{gas_type}
 	// dangerous while_present : too_much_{gas_type}
 	// dangerous on_loss : safe_{gas_type}
 	// These are reccomendations, if something seems better feel free to ignore them. S a bit vibes based
@@ -162,7 +162,7 @@
 
 /obj/item/organ/internal/lungs/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
-	// This is very "manuel" I realize, but it's useful to ensure cleanup for gases we're removing happens
+	// This is very "manual" I realize, but it's useful to ensure cleanup for gases we're removing happens
 	// Avoids stuck alerts and such
 	var/static/datum/gas_mixture/immutable/dummy = new(BREATH_VOLUME)
 	for(var/gas_id in last_partial_pressures)
@@ -648,7 +648,7 @@
 	if(has_moles)
 		handle_breath_temperature(breath, breather)
 		// Merge breath_out into breath. They're kept seprerate before now to ensure stupid like, order of operations shit doesn't happen
-		// But that time has past
+		// But that time has passed
 		breath.merge(breath_out)
 		// Resets immutable gas_mixture to empty.
 		breath_out.garbage_collect()
