@@ -264,17 +264,14 @@
 /obj/item/kitchen/spoon/soup_ladle
 	name = "ladle"
 	desc = "What is a ladle but a comically large spoon?"
+	icon_state = "ladle"
+	base_icon_state = "ladle"
+	inhand_icon_state = "spoon"
 	custom_price = PAYCHECK_LOWER * 4
 	spoon_sip_size = 3 // just a taste
-	var/static/matrix/ladle_matrix
 
 /obj/item/kitchen/spoon/soup_ladle/Initialize(mapload)
 	. = ..()
-	if(!ladle_matrix)
-		ladle_matrix = matrix()
-		ladle_matrix.Scale(1.2, 1.5)
-		ladle_matrix.Turn(135)
-	transform = ladle_matrix
 	create_reagents(25, INJECTABLE|OPENCONTAINER)
 
 #undef PLASTIC_BREAK_PROBABILITY

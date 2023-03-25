@@ -21,6 +21,8 @@
 	var/container_x = 0
 	/// Container's pixel y when placed on the stove
 	var/container_y = 8
+	/// Modifies how much temperature is exposed to the reagents, and in turn modifies how fast the reagents are heated.
+	var/heat_coefficient = 0.033
 
 /datum/component/stove/Initialize(container_x = 0, container_y = 8, obj/item/spawn_container)
 	if(!ismachinery(parent))
@@ -42,6 +44,7 @@
 	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstructed))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context))
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_MACHINERY_REFRESH_PARTS, PROC_REF(on_refresh_parts))
 
 	var/obj/machinery/real_parent = parent
 	real_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
@@ -61,6 +64,7 @@
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_PARENT_EXAMINE,
+		COMSIG_MACHINERY_REFRESH_PARTS,
 	))
 
 /datum/component/stove/process(delta_time)
@@ -69,12 +73,12 @@
 		turn_off()
 		return
 
-	container?.reagents.expose_temperature(600, 0.033)
+	container?.reagents.expose_temperature(SOUP_BURN_TEMP + 80, heat_coefficient)
 	real_parent.use_power(real_parent.active_power_usage)
 
 	var/turf/stove_spot = real_parent.loc
 	if(isturf(stove_spot))
-		stove_spot.hotspot_expose(600, 100)
+		stove_spot.hotspot_expose(SOUP_BURN_TEMP + 80, 100)
 
 /datum/component/stove/proc/turn_on()
 	var/obj/machinery/real_parent = parent
@@ -173,6 +177,15 @@
 	SIGNAL_HANDLER
 
 	examine_list += span_notice("You can turn the stovetop burners [on ? "off" : "on"] with <i>right click</i>.")
+
+/datum/component/stove/proc/on_refresh_parts(obj/machinery/source)
+	SIGNAL_HANDLER
+
+	var/new_multiplier = 0
+	for(var/datum/stock_part/micro_laser/part in source.component_parts)
+		new_multiplier += (part.tier * 0.5)
+
+	heat_coefficient = initial(heat_coefficient) * max(round(new_multiplier), 1)
 
 /datum/component/stove/proc/add_container(obj/item/new_container, mob/user)
 	var/obj/real_parent = parent

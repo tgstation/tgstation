@@ -262,12 +262,15 @@
 /// Getting to this temperature and having no other soup reaction made means you're either messing something up
 /// or you simply aren't following a recipe. So it'll just combine
 /datum/chemical_reaction/food/soup/custom
-	required_temp = SOUP_BURN_TEMP - 20
-	optimal_temp = SOUP_BURN_TEMP - 10
-	overheat_temp = SOUP_BURN_TEMP + 20
+	required_temp = SOUP_BURN_TEMP + 40 // Only done if it's been burning for a little bit
+	optimal_temp = SOUP_BURN_TEMP + 50
+	overheat_temp = SOUP_BURN_TEMP + 60
+	thermic_constant = 0
 	mix_message = span_warning("You smell something gross coming from the pot of soup.")
 	required_reagents = list(/datum/reagent/water = 30)
 	results = list(/datum/reagent/water = 10)
+	ingredient_reagent_multiplier = 1
+	percentage_of_nutriment_converted = 0
 
 /datum/chemical_reaction/food/soup/custom/pre_reaction_other_checks(datum/reagents/holder)
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
@@ -798,7 +801,7 @@
 /datum/chemical_reaction/food/soup/mushroomsoup
 	required_reagents = list(
 		/datum/reagent/water = 40,
-		/datum/reagent/consumable/milk = 10, // melbert todo: invalid recipe
+		/datum/reagent/consumable/milk = 10,
 	)
 	required_ingredients = list(
 		/obj/item/food/grown/mushroom/chanterelle = 1,
@@ -896,7 +899,7 @@
 /datum/chemical_reaction/food/soup/sweetpotatosoup
 	required_reagents = list(
 		/datum/reagent/water = 40,
-		/datum/reagent/consumable/sugar = 10,
+		/datum/reagent/consumable/milk = 10, // Coconut milk, but, close enough
 	)
 	required_ingredients = list(
 		/obj/item/food/grown/potato/sweet = 2,
@@ -904,7 +907,6 @@
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/sweetpotato = 30,
 		/datum/reagent/water = 10,
-		/datum/reagent/consumable/sugar = 5,
 	)
 
 // Red beet soup
@@ -1153,7 +1155,7 @@
 /datum/chemical_reaction/food/soup/cullen_skink
 	required_reagents = list(
 		/datum/reagent/water = 40,
-		/datum/reagent/consumable/milk = 10, // melbert todo: invalid recipe
+		/datum/reagent/consumable/milk = 10,
 		/datum/reagent/consumable/blackpepper = 4,
 	)
 	required_ingredients = list(
@@ -1657,6 +1659,10 @@
 	drink_type = VEGETABLES | SUGAR | DAIRY
 
 /datum/chemical_reaction/food/soup/red_porridge
+	required_temp = WATER_BOILING_POINT
+	optimal_temp = 400
+	overheat_temp = 415 // Caramel forms
+	thermic_constant = 0
 	required_reagents = list(
 		/datum/reagent/consumable/vanilla = 10,
 		/datum/reagent/consumable/yoghurt = 20,

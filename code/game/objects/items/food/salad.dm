@@ -171,6 +171,7 @@
 
 	volume = SOUP_SERVING_SIZE + 5
 	gulp_size = 3
+	// melbert todo: give soup bowls a generic filled overlay
 
 /obj/item/reagent_containers/cup/bowl/Initialize(mapload)
 	. = ..()
