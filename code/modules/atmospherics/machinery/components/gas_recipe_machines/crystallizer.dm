@@ -43,11 +43,13 @@
 
 /obj/machinery/atmospherics/components/binary/crystallizer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(held_item)
-		context[SCREENTIP_CONTEXT_RMB] = "Turn [on ? "off" : "on"]"
-		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+	if(!held_item)
+		return CONTEXTUAL_SCREENTIP_SET
+	context[SCREENTIP_CONTEXT_RMB] = "Turn [on ? "off" : "on"]"
+	switch(held_item.tool_behaviour)
+		if(TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
-		if(held_item.tool_behaviour == TOOL_WRENCH)
+		if(TOOL_WRENCH)
 			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
 	return CONTEXTUAL_SCREENTIP_SET
 

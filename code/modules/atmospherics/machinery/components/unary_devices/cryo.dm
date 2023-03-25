@@ -170,10 +170,12 @@
 	. = ..()
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "[state_open ? "Close" : "Open"] door"
-	if(held_item)
-		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+	if(!held_item)
+		return CONTEXTUAL_SCREENTIP_SET
+	switch(held_item.tool_behaviour)
+		if(TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
-		if(held_item.tool_behaviour == TOOL_WRENCH)
+		if(TOOL_WRENCH)
 			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
 	return CONTEXTUAL_SCREENTIP_SET
 

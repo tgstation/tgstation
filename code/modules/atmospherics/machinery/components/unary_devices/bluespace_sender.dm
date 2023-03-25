@@ -65,10 +65,12 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 /obj/machinery/atmospherics/components/unary/bluespace_sender/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
-	if(held_item)
-		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+	if(!held_item)
+		return CONTEXTUAL_SCREENTIP_SET
+	switch(held_item.tool_behaviour)
+		if(TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
-		if(held_item.tool_behaviour == TOOL_WRENCH)
+		if(TOOL_WRENCH)
 			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
 			context[SCREENTIP_CONTEXT_RMB] = "[anchored ? "Unan" : "An"]chor"
 	return CONTEXTUAL_SCREENTIP_SET
