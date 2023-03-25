@@ -160,6 +160,19 @@
 	receiver.clear_alert(ALERT_NOT_ENOUGH_PLASMA)
 	receiver.clear_alert(ALERT_NOT_ENOUGH_N2O)
 
+/obj/item/organ/internal/lungs/Remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	// This is very "manuel" I realize, but it's useful to ensure cleanup for gases we're removing happens
+	// Avoids stuck alerts and such
+	var/static/datum/gas_mixture/immutable/dummy = new(BREATH_VOLUME)
+	for(var/gas_id in last_partial_pressures)
+		var/on_loss = breath_lost[gas_lost]
+		if(!on_loss)
+			continue
+
+		call(src, on_loss)(owner, dummy, last_partial_pressures[gas_lost])
+	dummy.garbage_collect()
+
 /**
  * Tells the lungs to pay attention to the passed in gas type
  * We'll check for it when breathing, in a few possible ways
