@@ -170,7 +170,7 @@
 		if(!on_loss)
 			continue
 
-		call(src, on_loss)(owner, dummy, last_partial_pressures[gas_id])
+		call(src, on_loss)(organ_owner, dummy, last_partial_pressures[gas_id])
 	dummy.garbage_collect()
 
 /**
@@ -399,17 +399,17 @@
 	breathe_gas_volume(breath, /datum/gas/helium)
 	if(helium_pp > helium_speech_min)
 		if(old_helium_pp <= helium_speech_min)
-			RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_helium_speech))
+			RegisterSignal(breather, COMSIG_MOB_SAY, PROC_REF(handle_helium_speech))
 	else
 		if(old_helium_pp > helium_speech_min)
-			UnregisterSignal(owner, COMSIG_MOB_SAY)
+			UnregisterSignal(breather, COMSIG_MOB_SAY)
 
 /// Lose helium high pitched voice
 /obj/item/organ/internal/lungs/proc/lose_helium(mob/living/carbon/breather, datum/gas_mixture/breath, old_helium_pp)
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
+	UnregisterSignal(breather, COMSIG_MOB_SAY)
 
 /// React to speach while hopped up on the high pitched voice juice
-/obj/item/organ/internal/lungs/proc/handle_helium_speech(owner, list/speech_args)
+/obj/item/organ/internal/lungs/proc/handle_helium_speech(mob/living/carbon/breather, list/speech_args)
 	SIGNAL_HANDLER
 	speech_args[SPEECH_SPANS] |= SPAN_HELIUM
 
@@ -430,41 +430,41 @@
 		// tl;dr the first argument chooses the smaller of miasma_pp/2 or 6(typical max virus symptoms), the second chooses the smaller of miasma_pp or 8(max virus symptom level)
 		// Each argument has a minimum of 1 and rounds to the nearest value. Feel free to change the pp scaling I couldn't decide on good numbers for it.
 		miasma_disease.name = "Unknown"
-		miasma_disease.try_infect(owner)
+		miasma_disease.try_infect(breather)
 	// Miasma side effects
 	switch(miasma_pp)
 		if(0.25 to 5)
 			// At lower pp, give out a little warning
-			owner.clear_mood_event("smell")
+			breather.clear_mood_event("smell")
 			if(prob(5))
-				to_chat(owner, span_notice("There is an unpleasant smell in the air."))
+				to_chat(breather, span_notice("There is an unpleasant smell in the air."))
 		if(5 to 15)
 			//At somewhat higher pp, warning becomes more obvious
 			if(prob(15))
-				to_chat(owner, span_warning("You smell something horribly decayed inside this room."))
-				owner.add_mood_event("smell", /datum/mood_event/disgust/bad_smell)
+				to_chat(breather, span_warning("You smell something horribly decayed inside this room."))
+				breather.add_mood_event("smell", /datum/mood_event/disgust/bad_smell)
 		if(15 to 30)
 			//Small chance to vomit. By now, people have internals on anyway
 			if(prob(5))
-				to_chat(owner, span_warning("The stench of rotting carcasses is unbearable!"))
-				owner.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
-				owner.vomit()
+				to_chat(breather, span_warning("The stench of rotting carcasses is unbearable!"))
+				breather.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
+				breather.vomit()
 		if(30 to INFINITY)
 			//Higher chance to vomit. Let the horror start
 			if(prob(15))
-				to_chat(owner, span_warning("The stench of rotting carcasses is unbearable!"))
-				owner.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
-				owner.vomit()
+				to_chat(breather, span_warning("The stench of rotting carcasses is unbearable!"))
+				breather.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
+				breather.vomit()
 		else
-			owner.clear_mood_event("smell")
+			breather.clear_mood_event("smell")
 	// In a full miasma atmosphere with 101.34 pKa, about 10 disgust per breath, is pretty low compared to threshholds
 	// Then again, this is a purely hypothetical scenario and hardly reachable
-	owner.adjust_disgust(0.1 * miasma_pp)
+	breather.adjust_disgust(0.1 * miasma_pp)
 
 /// We're free from the stick, clear out its impacts
 /obj/item/organ/internal/lungs/proc/safe_miasma(mob/living/carbon/breather, datum/gas_mixture/breath, old_miasma_pp)
 	// Clear out moods when immune to miasma, or if there's no miasma at all.
-	owner.clear_mood_event("smell")
+	breather.clear_mood_event("smell")
 
 /// Causes random euphoria and giggling. Large amounts knock you down
 /obj/item/organ/internal/lungs/proc/too_much_n2o(mob/living/carbon/breather, datum/gas_mixture/breath, n2o_pp, old_n2o_pp)
@@ -611,7 +611,7 @@
 		// Ensures the gas will always be instanciated, so people can interact with it safely
 		ASSERT_GAS(breath_id, breath)
 		var/inhale = breathe_always[breath_id]
-		call(src, inhale)(owner, breath, partial_pressure, old_partial_pressure)
+		call(src, inhale)(breather, breath, partial_pressure, old_partial_pressure)
 
 	// Now we'll handle the callbacks that want to be run conditionally off our current breath
 	for(var/breath_id in breath_gases)
@@ -619,11 +619,11 @@
 		if(!when_present)
 			continue
 
-		var/reaction = call(src, when_present)(owner, breath, partial_pressures[breath_id], last_partial_pressures[breath_id])
+		var/reaction = call(src, when_present)(breather, breath, partial_pressures[breath_id], last_partial_pressures[breath_id])
 		if(reaction == BREATH_LOST)
 			var/on_lose = breath_lost[breath_id]
 			if(on_lose)
-				call(src, on_lose)(owner, breath, partial_pressures[breath_id], last_partial_pressures[breath_id])
+				call(src, on_lose)(breather, breath, partial_pressures[breath_id], last_partial_pressures[breath_id])
 
 	// Finally, we'll run the callbacks that aren't in breath_gases, but WERE in our last breath
 	for(var/gas_lost in last_partial_pressures)
@@ -634,16 +634,16 @@
 		if(!on_loss)
 			continue
 
-		call(src, on_loss)(owner, breath, last_partial_pressures[gas_lost])
+		call(src, on_loss)(breather, breath, last_partial_pressures[gas_lost])
 
 	src.last_partial_pressures = partial_pressures
 
 	// Handle chemical euphoria mood event, caused by gases such as N2O or healium.
 	var/new_euphoria = (n2o_euphoria == EUPHORIA_ACTIVE || healium_euphoria == EUPHORIA_ACTIVE)
 	if (!old_euphoria && new_euphoria)
-		owner.add_mood_event("chemical_euphoria", /datum/mood_event/chemical_euphoria)
+		breather.add_mood_event("chemical_euphoria", /datum/mood_event/chemical_euphoria)
 	else if (old_euphoria && !new_euphoria)
-		owner.clear_mood_event("chemical_euphoria")
+		breather.clear_mood_event("chemical_euphoria")
 
 	if(has_moles)
 		handle_breath_temperature(breath, breather)
