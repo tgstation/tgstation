@@ -71,7 +71,7 @@
 	name = "MODsuit Anti-Slip Module"
 	desc = "A MODsuit module preventing the user from slipping on water."
 	item = /obj/item/mod/module/noslip
-	progression_minimum = 90 MINUTES
+	progression_minimum = 20 MINUTES
 	cost = 2
 
 // Very high progression cost
