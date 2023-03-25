@@ -3,7 +3,7 @@
 	objectives = list(
 		/datum/traitor_objective/locate_weakpoint = 1,
 	)
-	weight = OBJECTIVE_WEIGHT_TINY
+	weight = OBJECTIVE_WEIGHT_UNLIKELY
 
 /datum/traitor_objective/locate_weakpoint
 	name = "Triangulate station's structural weakpoint and detonate an explosive charge nearby."

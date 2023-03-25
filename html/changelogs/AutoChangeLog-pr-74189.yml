@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixed blood deficiency quirk sending the wrong blood pack to roundstart species who have exotic blood"

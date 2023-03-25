@@ -195,8 +195,9 @@
 	var/mob/thrown_by = thrownby?.resolve()
 
 	if(ismob(target) && target.reagents)
+		var/splash_multiplier = 1
 		if(thrown)
-			reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
+			splash_multiplier *= (rand(5,10) * 0.1) //Not all of it makes contact with the target
 		var/mob/M = target
 		var/R
 		target.visible_message(span_danger("[M] is splashed with something!"), \
@@ -206,7 +207,7 @@
 
 		if(thrown_by)
 			log_combat(thrown_by, M, "splashed", R)
-		reagents.expose(target, TOUCH)
+		reagents.expose(target, TOUCH, splash_multiplier)
 
 	else if(bartender_check(target) && thrown)
 		visible_message(span_notice("[src] lands onto the [target.name] without spilling a single drop."))
