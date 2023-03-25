@@ -44,6 +44,8 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_SKITTISH), PROC_REF(on_skittish_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_SKITTISH), PROC_REF(on_skittish_trait_loss))
 
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NEGATES_GRAVITY), SIGNAL_REMOVETRAIT(TRAIT_NEGATES_GRAVITY)), PROC_REF(on_negate_gravity))
+
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
 	SIGNAL_HANDLER
@@ -158,15 +160,13 @@
 /// Called when [TRAIT_INCAPACITATED] is added to the mob.
 /mob/living/proc/on_incapacitated_trait_gain(datum/source)
 	SIGNAL_HANDLER
-	ADD_TRAIT(src, TRAIT_UI_BLOCKED, TRAIT_INCAPACITATED)
-	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, TRAIT_INCAPACITATED)
+	add_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), TRAIT_INCAPACITATED)
 	update_appearance()
 
 /// Called when [TRAIT_INCAPACITATED] is removed from the mob.
 /mob/living/proc/on_incapacitated_trait_loss(datum/source)
 	SIGNAL_HANDLER
-	REMOVE_TRAIT(src, TRAIT_UI_BLOCKED, TRAIT_INCAPACITATED)
-	REMOVE_TRAIT(src, TRAIT_PULL_BLOCKED, TRAIT_INCAPACITATED)
+	remove_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), TRAIT_INCAPACITATED)
 	update_appearance()
 
 
@@ -213,3 +213,8 @@
 /mob/living/proc/on_skittish_trait_loss(datum/source)
 	SIGNAL_HANDLER
 	RemoveElement(/datum/element/skittish)
+
+/// Called with [TRAIT_NEGATES_GRAVITY] is gained or lost
+/mob/living/proc/on_negate_gravity(datum/source)
+	SIGNAL_HANDLER
+	update_gravity(has_gravity())

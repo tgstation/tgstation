@@ -70,7 +70,6 @@
 	///A sound sent when the mob dies, with the *deathgasp emote
 	var/death_sound
 
-
 	/// Helper vars for quick access to firestacks, these should be updated every time firestacks are adjusted
 	var/on_fire = FALSE
 	var/fire_stacks = 0

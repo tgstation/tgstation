@@ -345,7 +345,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		qdel(sacrificial)
 		return TRUE
 	var/obj/item/soulstone/stone = new /obj/item/soulstone(get_turf(src))
-	if(sacrificial.mind && !sacrificial.suiciding)
+	if(sacrificial.mind && !HAS_TRAIT(sacrificial, TRAIT_SUICIDED))
 		stone.capture_soul(sacrificial, first_invoker, TRUE)
 
 	if(sacrificial)

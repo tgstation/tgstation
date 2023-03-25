@@ -466,6 +466,13 @@
 	admin_notes = "There's a chasm in it, it has railings but that won't stop determined players."
 	credit_cost = CARGO_CRATE_VALUE * 10
 
+/datum/map_template/shuttle/emergency/lance
+	suffix = "lance"
+	name = "The Lance Crew Evacuation System"
+	description = "A brand new shuttle by Nanotrasen's finest in shuttle-engineering, it's designed to tactically slam into a destroyed station, dispatching threats and saving crew at the same time! Be careful to stay out of it's path."
+	admin_notes = "WARNING: This shuttle is designed to crash into the station. It has turrets, similar to the raven."
+	credit_cost = CARGO_CRATE_VALUE * 70
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"

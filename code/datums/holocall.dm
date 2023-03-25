@@ -476,3 +476,26 @@
 	NAME Blackbox Automated Message
 	SAY Connection lost. Dumping audio logs to disk.
 	DELAY 50"}
+
+/obj/item/disk/holodisk/ruin/space/travelers_rest
+	name = "Owner's memo"
+	desc = "A holodisk containing a small memo from the previous owner, addressed to someone else."
+	preset_image_type = /datum/preset_holoimage/engineer/atmos
+	preset_record_text = {"
+		NAME Space Adventurer
+		SOUND PING
+		DELAY 20
+		SAY Hey, I left you this message for when you come back.
+		DELAY 50
+		SAY I picked up an emergency signal from a freighter and I'm going there to search for some goodies.
+		DELAY 50
+		SAY You can crash here if you need to, but make sure to check the anchor cables before you leave.
+		DELAY 50
+		SAY If you don't, this thing might drift off into space.
+		DELAY 50
+		SAY Then some weirdo could find it and potentially claim it as their own.
+		DELAY 50
+		SAY Anyway, gotta go, see ya!
+		DELAY 40
+		SOUND sparks
+	"}
