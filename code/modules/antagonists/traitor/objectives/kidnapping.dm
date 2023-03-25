@@ -322,13 +322,12 @@
 	for(var/obj/item/belonging in victim_belongings)
 		belonging.forceMove(return_pod)
 
-	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
-
 	sent_mob.forceMove(return_pod)
 	sent_mob.flash_act()
 	sent_mob.adjust_confusion(10 SECONDS)
 	sent_mob.adjust_dizzy(10 SECONDS)
 	sent_mob.set_eye_blur_if_lower(100 SECONDS)
+	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
 
 	new /obj/effect/pod_landingzone(pick(possible_turfs), return_pod)
 
