@@ -170,7 +170,6 @@
 /obj/item/nanite_remote/comm
 	name = "nanite communication remote"
 	desc = "A device that can send text messages to specific programs."
-	icon_state = "nanite_comm_remote"
 	var/comm_message = ""
 
 /obj/item/nanite_remote/comm/afterattack(atom/target, mob/user, etc)

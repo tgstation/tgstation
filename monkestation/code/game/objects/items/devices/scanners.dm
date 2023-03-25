@@ -4,8 +4,6 @@
 	icon_state = "nanite_scanner"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'monkestation/icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner able to detect nanites and their programming."
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
