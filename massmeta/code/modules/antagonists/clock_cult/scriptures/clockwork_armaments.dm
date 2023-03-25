@@ -6,7 +6,7 @@
 	desc = "Призывает механические доспехи и оружие, чтобы быть готовыми к битве."
 	tip = "Призывает механические доспехи и оружие, чтобы быть готовыми к битве."
 	button_icon_state = "clockwork_armor"
-	power_cost = 150
+	power_cost = 750
 	invokation_time = 20
 	invokation_text = list("Через мужество и надежду...", "мы защитим тебя!")
 	category = SPELLTYPE_PRESERVATION
