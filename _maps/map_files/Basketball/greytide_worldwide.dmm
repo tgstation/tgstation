@@ -129,11 +129,11 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "hB" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/white/warning{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "hG" = (
@@ -206,8 +206,8 @@
 /area/centcom/basketball)
 "lR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/remains/human,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "lU" = (
@@ -223,10 +223,10 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "my" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/white/warning{
 	dir = 9
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "nE" = (
@@ -341,10 +341,10 @@
 /area/centcom/basketball)
 "wZ" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/white/warning{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "xv" = (
@@ -373,12 +373,12 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Ax" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/turf_decal/box/red,
 /obj/effect/spawner/random/trash/graffiti{
 	pixel_y = -32
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "AC" = (
@@ -395,10 +395,10 @@
 /obj/item/storage/toolbox/emergency,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/spawner/random/trash/graffiti{
 	pixel_y = -32
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "Bd" = (
@@ -455,10 +455,10 @@
 "FA" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/white/warning{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "Ga" = (
@@ -511,10 +511,10 @@
 /area/centcom/basketball)
 "LI" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/white/warning{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "LS" = (
@@ -707,11 +707,11 @@
 /area/centcom/basketball)
 "Xo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/box/red/corners{
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "Xp" = (
