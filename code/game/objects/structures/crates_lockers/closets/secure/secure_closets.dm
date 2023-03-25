@@ -7,6 +7,8 @@
 	armor_type = /datum/armor/closet_secure_closet
 	secure = TRUE
 	damage_deflection = 20
+	material_drop = /obj/item/stack/sheet/plasteel
+	material_drop_amount = 2
 
 /datum/armor/closet_secure_closet
 	melee = 30
@@ -31,3 +33,37 @@
 			continue
 		locked = FALSE
 		update_appearance(UPDATE_ICON)
+
+/obj/structure/closet/secure_closet/customizable
+
+/obj/structure/closet/secure_closet/customizable/examine(mob/user)
+	. = ..()
+	. += span_notice("Use airlock painter to change its texture.")
+
+/obj/structure/closet/secure_closet/customizable/tool_interact(obj/item/W, mob/living/user)
+	if(istype(W, /obj/item/airlock_painter))
+		var/static/choices = list(
+			"Bar" = "cabinet",
+			"Cargo" = "qm",
+			"Engineering" = "ce",
+			"Hydroponics" = "hydro",
+			"Medical" = "med",
+			"Personal" = "personal closet",
+			"Science" = "rd",
+			"Security" = "cap",
+			"Mining" = "mining",
+			"Virology" = "bio_viro",
+		)
+		var/choice = tgui_input_list(user, "Set Closet Texture", "Texture", choices)
+		if(isnull(choice))
+			return TRUE
+
+		var/obj/item/airlock_painter/painter = W
+		if(!painter.use_paint(user))
+			return TRUE
+		icon_state = choices[choice]
+
+		update_appearance()
+		return TRUE
+
+	return ..()

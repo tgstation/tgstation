@@ -4,8 +4,6 @@
 	door_anim_squish = 0.22
 	door_anim_angle = 123
 	door_anim_time = 4
-	material_drop = /obj/item/stack/sheet/iron
-	material_drop_amount = 2
 	/// If FALSE, we will protect the first person in the freezer from an explosion / nuclear blast.
 	var/jones = FALSE
 
@@ -33,11 +31,6 @@
 		return ..()
 	jones = TRUE
 	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
-
-/obj/structure/closet/secure_closet/freezer/atom_destruction(damage_flag)
-	new /obj/item/stack/sheet/iron(drop_location(), 1)
-	new /obj/item/assembly/igniter/condenser(drop_location())
-	return ..()
 
 /obj/structure/closet/secure_closet/freezer/deconstruct(disassembled)
 	if (!(flags_1 & NODECONSTRUCT_1))
