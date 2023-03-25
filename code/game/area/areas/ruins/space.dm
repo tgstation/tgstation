@@ -147,6 +147,14 @@
 /area/ruin/space/has_grav/thelizardsgas
 	name = "\improper The Lizard's Gas"
 
+//Ruin of Venusian One
+
+/area/ruin/space/has_grav/venusian
+	name = "\improper Venusian One"
+
+/area/ruin/space/has_grav/venusian/vault
+	name = "\improper Venusian One Vault"
+	area_flags = UNIQUE_AREA | NOTELEPORT
 
 //Ruin of Deep Storage
 

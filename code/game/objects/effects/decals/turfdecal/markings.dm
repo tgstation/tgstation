@@ -218,6 +218,41 @@
 /obj/effect/turf_decal/syndicateemblem/top/right
 	icon_state = "synd3,3"
 
+/// CYBERSUN SYMBOL ///
+
+//Bottom
+
+/obj/effect/turf_decal/cybersun/bottom/left
+	icon_state = "cyber1,1"
+
+/obj/effect/turf_decal/cybersun/bottom/middle
+	icon_state = "cyber1,2"
+
+/obj/effect/turf_decal/cybersun/bottom/right
+	icon_state = "cyber1,3"
+
+//Middle
+
+/obj/effect/turf_decal/cybersun/middle/left
+	icon_state = "cyber2,1"
+
+/obj/effect/turf_decal/cybersun/middle/middle
+	icon_state = "cyber2,2"
+
+/obj/effect/turf_decal/cybersun/middle/right
+	icon_state = "cyber2,3"
+
+//Top
+
+/obj/effect/turf_decal/cybersun/top/left
+	icon_state = "cyber3,1"
+
+/obj/effect/turf_decal/cybersun/top/middle
+	icon_state = "cyber3,2"
+
+/obj/effect/turf_decal/cybersun/top/right
+	icon_state = "cyber3,3"
+
 
 /obj/effect/turf_decal/mining
 	icon_state = "mining"
