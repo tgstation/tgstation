@@ -1,3 +1,5 @@
+#define LARGE_BACKSTORY_SIZE 4
+
 /datum/round_event_control/fugitives
 	name = "Spawn Fugitives"
 	typepath = /datum/round_event/ghost_role/fugitives
@@ -24,14 +26,14 @@
 	var/turf/landing_turf = pick(possible_spawns)
 	var/list/possible_backstories = list()
 	var/list/candidates = get_candidates(ROLE_FUGITIVE, ROLE_FUGITIVE)
-	if(length(candidates) >= 1) //solo refugees
-		if(prob(30) - (length(candidates) * 2)) //Having more candidates makes solo backstories less likely to be selected. At
-			possible_backstories += list("waldo") //less common as it comes with magicks and is kind of immershun shattering
-		else //For accurate deadchat feedback
-			minimum_required = 4
-	if(length(candidates) >= 4)//group refugees
+
+	if(length(candidates) < LARGE_BACKSTORY_SIZE || prob(30 - (length(candidates) * 2))) //Solo backstories are always considered if a larger backstory cannot be filled out. Otherwise, it's a rare chance that gets rarer if more people sign up.
+		possible_backstories += list("waldo") //less common as it comes with magicks and is kind of immershun shattering
+
+	if(length(candidates) >= LARGE_BACKSTORY_SIZE)//group refugees
 		possible_backstories += list("prisoner", "cultist", "synth")
-	if(!possible_backstories.len)
+
+	if(!length(possible_backstories))
 		return NOT_ENOUGH_PLAYERS
 
 	var/backstory = pick(possible_backstories)
@@ -118,3 +120,5 @@
 	if(!ship.load(T))
 		CRASH("Loading [backstory] ship failed!")
 	priority_announce("Unidentified ship detected near the station.")
+
+#undef LARGE_BACKSTORY_SIZE
