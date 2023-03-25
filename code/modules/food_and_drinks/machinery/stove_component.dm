@@ -115,6 +115,10 @@
 
 	if(!attacking_item.is_open_container())
 		return
+	if(!isnull(container))
+		to_chat(span_warning("You wouldn't dare try to cook two things on the same stove simultaneously. \
+			What if it cross contaminates?"))
+		return COMPONENT_NO_AFTERATTACK
 
 	if(user.transferItemToLoc(attacking_item, parent))
 		add_container(attacking_item, user)
@@ -168,7 +172,7 @@
 /datum/component/stove/proc/on_examine(obj/machinery/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	. += span_notice("You can turn the stovetop burners [on ? "off" : "on"] with <i>right click</i>.")
+	examine_list += span_notice("You can turn the stovetop burners [on ? "off" : "on"] with <i>right click</i>.")
 
 /datum/component/stove/proc/add_container(obj/item/new_container, mob/user)
 	var/obj/real_parent = parent
