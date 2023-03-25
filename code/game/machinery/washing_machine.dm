@@ -165,7 +165,11 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	DYE_LAWYER_SPECIAL = list(
 		DYE_COSMIC = /obj/item/clothing/under/rank/civilian/lawyer/galaxy,
 		DYE_SYNDICATE = /obj/item/clothing/under/rank/civilian/lawyer/galaxy/red
-	)
+	),
+	DYE_LAWYER_SPECIAL_SKIRT = list(
+		DYE_COSMIC = /obj/item/clothing/under/rank/civilian/lawyer/galaxy/skirt,
+		DYE_SYNDICATE = /obj/item/clothing/under/rank/civilian/lawyer/galaxy/red/skirt
+	),
 ))
 
 /obj/machinery/washing_machine
