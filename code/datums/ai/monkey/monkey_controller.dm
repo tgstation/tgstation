@@ -52,7 +52,7 @@ have ways of interacting with a specific mob and control it.
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
-	blackboard[BB_MONKEY_AGGRESSIVE] = TRUE //Angry cunt
+	blackboard[BB_MONKEY_AGGRESSIVE] = TRUE //Angry
 
 /datum/ai_controller/monkey/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))

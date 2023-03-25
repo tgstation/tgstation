@@ -73,19 +73,9 @@
 	B.deity_name = new_deity
 
 	switch(lowertext(new_religion))
-		if("homosexuality", "gay", "penis", "ass", "cock", "cocks")
-			new_bible = pick("Guys Gone Wild","Coming Out of The Closet","War of Cocks")
-			switch(new_bible)
-				if("War of Cocks")
-					B.deity_name = pick("Dick Powers", "King Cock")
-				else
-					B.deity_name = pick("Gay Space Jesus", "Gandalf", "Dumbledore")
-			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100) // starts off brain damaged as fuck
 		if("lol", "wtf", "poo", "badmin", "shitmin", "deadmin", "meme", "memes")
-			new_bible = pick("Woody's Got Wood: The Aftermath", "Sweet Bro and Hella Jeff: Expanded Edition","F.A.T.A.L. Rulebook")
+			new_bible = pick("Sweet Bro and Hella Jeff: Expanded Edition","F.A.T.A.L. Rulebook")
 			switch(new_bible)
-				if("Woody's Got Wood: The Aftermath")
-					B.deity_name = pick("Woody", "Andy", "Cherry Flavored Lube")
 				if("Sweet Bro and Hella Jeff: Expanded Edition")
 					B.deity_name = pick("Sweet Bro", "Hella Jeff", "Stairs", "AH")
 				if("F.A.T.A.L. Rulebook")

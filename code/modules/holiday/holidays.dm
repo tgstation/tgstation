@@ -327,26 +327,6 @@
 	name = "Summer Solstice"
 	begin_day = 21
 	begin_month = JUNE
-/datum/holiday/pride_week
-	name = PRIDE_WEEK
-	begin_month = JUNE
-	// Stonewall was June 28th, this captures its week.
-	begin_day = 23
-	end_day = 29
-
-	var/static/list/rainbow_colors = list(
-		COLOR_PRIDE_PURPLE,
-		COLOR_PRIDE_BLUE,
-		COLOR_PRIDE_GREEN,
-		COLOR_PRIDE_YELLOW,
-		COLOR_PRIDE_ORANGE,
-		COLOR_PRIDE_RED,
-	)
-
-/// Given an atom, will return what color it should be to match the pride flag.
-/datum/holiday/pride_week/proc/get_floor_tile_color(atom/atom)
-	var/turf/turf = get_turf(atom)
-	return rainbow_colors[(turf.y % rainbow_colors.len) + 1]
 
 // JULY
 
@@ -431,14 +411,6 @@
 	return pick("Endangered language", "Word", "Language", "Language revitalization", "Potato", "Corn")
 
 // AUGUST
-
-/datum/holiday/ukraine
-	name = "Independence Day of Ukraine"
-	begin_month = AUGUST
-	begin_day = 24
-
-/datum/holiday/indigenous/getStationPrefix()
-	return pick("Kyiv", "Ukraine")
 
 // SEPTEMBER
 
@@ -542,14 +514,6 @@
 /datum/holiday/vegan/getStationPrefix()
 	return pick("Tofu", "Tempeh", "Seitan", "Tofurkey")
 
-/datum/holiday/october_revolution
-	name = "October Revolution"
-	begin_day = 6
-	begin_month = NOVEMBER
-	end_day = 7
-
-/datum/holiday/october_revolution/getStationPrefix()
-	return pick("Communist", "Soviet", "Bolshevik", "Socialist", "Red", "Workers'")
 
 /datum/holiday/remembrance_day
 	name = "Remembrance Day"
@@ -585,7 +549,7 @@
 	begin_month = NOVEMBER
 
 /datum/holiday/hello/greet()
-	return "[pick(list("Aloha", "Bonjour", "Hello", "Hi", "Greetings", "Salutations", "Bienvenidos", "Hola", "Howdy", "Ni hao", "Guten Tag", "Konnichiwa", "G'day cunt"))]! " + ..()
+	return "[pick(list("Aloha", "Bonjour", "Hello", "Hi", "Greetings", "Salutations", "Bienvenidos", "Hola", "Howdy", "Ni hao", "Guten Tag", "Konnichiwa", "G'day mate"))]! " + ..()
 
 //The Festival of Holy Lights is celebrated on Nov 28th, the date on which ethereals were merged (#40995)
 /datum/holiday/holy_lights
@@ -701,7 +665,7 @@
 	end_day = 3
 
 /datum/holiday/islamic/ramadan/getStationPrefix()
-	return pick("Haram","Halaal","Jihad","Muslim", "Al", "Mohammad", "Rashidun", "Umayyad", "Abbasid", "Abdul", "Fatimid", "Ayyubid", "Almohad", "Abu")
+	return pick("Haram","Halaal","Muslim", "Al", "Rashidun", "Umayyad", "Abbasid", "Abdul", "Fatimid", "Ayyubid", "Almohad", "Abu")
 
 /datum/holiday/islamic/ramadan/end
 	name = "End of Ramadan"

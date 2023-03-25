@@ -42,9 +42,6 @@ GLOBAL_LIST_INIT(loadout_accessory, generate_loadout_items(/datum/loadout_item/a
 	name = "Ribbon"
 	item_path = /obj/item/clothing/accessory/medal/ribbon
 
-/datum/loadout_item/accessory/pride
-	name = "Pride Pin"
-	item_path = /obj/item/clothing/accessory/pride
 
 /*
 *	ARMBANDS

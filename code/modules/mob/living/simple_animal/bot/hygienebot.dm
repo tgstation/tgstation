@@ -150,7 +150,6 @@
 							"Either you stop running or I will fucking drag you out of an airlock." = 'sound/voice/hygienebot/dragyouout.ogg',
 							"Get back here you foul smelling fucker." = 'sound/voice/hygienebot/foulsmelling.ogg',
 							"I just want to fucking clean you you troglodyte." = 'sound/voice/hygienebot/troglodyte.ogg',
-							"If you don't come back here I'll put a green cloud around you cunt." = 'sound/voice/hygienebot/greencloud.ogg',
 							"Just fucking let me clean you you arsehole!" = 'sound/voice/hygienebot/letmeclean.ogg',
 							"STOP RUNNING OR I WILL CUT YOUR ARTERIES!" = 'sound/voice/hygienebot/cutarteries.ogg',
 							"STOP. RUNNING." = 'sound/voice/hygienebot/stoprunning.ogg',
