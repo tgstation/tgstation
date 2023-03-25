@@ -310,12 +310,12 @@
 	flags_inv = 0
 	armor_type = /datum/armor/none
 	var/static/list/hat_colors = list(
-		COLOR_PRIDE_RED,
-		COLOR_PRIDE_ORANGE,
-		COLOR_PRIDE_YELLOW,
-		COLOR_PRIDE_GREEN,
-		COLOR_PRIDE_BLUE,
-		COLOR_PRIDE_PURPLE,
+		COLOR_BRIGHT_RED,
+		COLOR_BRIGHT_ORANGE,
+		COLOR_BRIGHT_YELLOW,
+		COLOR_BRIGHT_GREEN,
+		COLOR_BRIGHT_TEAL,
+		COLOR_BRIGHT_PURPLE,
 	)
 
 /obj/item/clothing/head/costume/party/Initialize(mapload)

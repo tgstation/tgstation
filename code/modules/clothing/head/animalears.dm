@@ -22,7 +22,7 @@
 
 /obj/item/clothing/head/costume/rabbitears
 	name = "rabbit ears"
-	desc = "Wearing these makes you look useless, and only good for your sex appeal."
+	desc = "Wearing these makes you look useless."
 	icon_state = "bunny"
 
 	dog_fashion = /datum/dog_fashion/head/rabbit

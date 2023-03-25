@@ -116,7 +116,7 @@ SUBSYSTEM_DEF(events)
  * simply make a random event normally, then assign it a holidayID string which matches the holiday's name.
  * Anything with a holidayID, which isn't in the holidays list, will never occur.
  *
- * Please, Don't spam stuff up with stupid stuff (key example being april-fools Pooh/ERP/etc),
+ * Please, Don't spam stuff up with stupid stuff (key example being april-fools Pooh/etc),
  * and don't forget: CHECK YOUR CODE!!!! We don't want any zero-day bugs which happen only on holidays and never get found/fixed!
  */
 GLOBAL_LIST(holidays)

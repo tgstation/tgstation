@@ -4,21 +4,10 @@
 	layer = TURF_PLATING_DECAL_LAYER
 	alpha = 110
 
-#define PRIDE_ALPHA 60
-
 /obj/effect/turf_decal/tile/Initialize(mapload)
 	if (check_holidays(APRIL_FOOLS))
 		color = "#[random_short_color()]"
-	else if (check_holidays(PRIDE_WEEK))
-		var/datum/holiday/pride_week/pride_week = GLOB.holidays[PRIDE_WEEK]
-		color = pride_week.get_floor_tile_color(src)
-
-		// It looks garish at different alphas, and it's not possible to get a
-		// consistent color palette without this.
-		alpha = PRIDE_ALPHA
 	return ..()
-
-#undef PRIDE_ALPHA
 
 /// Blue tiles
 

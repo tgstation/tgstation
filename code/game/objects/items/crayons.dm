@@ -86,7 +86,6 @@
 	/// List of selectable graffiti options
 	var/static/list/graffiti = list(
 		"amyjon",
-		"antilizard",
 		"body",
 		"cyka",
 		"dwarf",
@@ -181,10 +180,8 @@
 	)
 	/// List of selectable large options
 	var/static/list/graffiti_large_h = list(
-		"furrypride",
 		"paint",
-		"secborg",
-		"yiffhell",
+		"secborg"
 	)
 	/// Combined lists
 	var/static/list/all_drawables = graffiti + symbols + drawings + oriented + runes + graffiti_large_h

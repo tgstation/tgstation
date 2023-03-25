@@ -242,8 +242,6 @@ You had some happiness once, but your parents moved away, and you had to leave i
 You have a deep appreciation of the arts and music.
 You have a deep interest in all that is artistic.
 You have a reputation for being thoroughly reliable and trustworthy. A pity that it's totally undeserved.
-You have a strong appeal for members of the opposite sex.
-You have a strong appeal for members of your own sex.
 You have a strong desire for a home and your family interests come first.
 You have a truly strong individuality.
 You have a will that can be influenced by all with whom you come in contact.
@@ -281,7 +279,6 @@ You now have Asian Flu.
 You own a dog, but you can only feed a cat.
 You plan things that you do not even attempt because of your extreme caution.
 You possess a mind not merely twisted, but actually sprained.
-You prefer the company of the opposite sex, but are well liked by your own.
 You recoil from the crude; you tend naturally toward the exquisite.
 You seek to shield those you love and you like the role of the provider.
 You shall be rewarded for a dastardly deed.

@@ -184,7 +184,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/pink
 	colour = "pink"
-	effect_desc = "Produces a... lovepotion... no ERP."
+	effect_desc = "Produces a... lovepotion..."
 
 /obj/item/slimecross/charged/pink/do_effect(mob/user)
 	new /obj/item/slimepotion/lovepotion(get_turf(user))

@@ -474,7 +474,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 
 /obj/structure/sign/poster/contraband/lizard
 	name = "Lizard"
-	desc = "This lewd poster depicts a lizard preparing to mate."
+	desc = "This cool poster depicts a famous lizard rapper."
 	icon_state = "lizard"
 
 /obj/structure/sign/poster/contraband/free_drone
@@ -940,7 +940,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 
 /obj/structure/sign/poster/official/no_erp
 	name = "No ERP"
-	desc = "This poster reminds the crew that Eroticism, Rape and Pornography are banned on Nanotrasen stations."
+	desc = "This poster reminds the crew that \[REDACTED], Revolution and Protest are banned on Nanotrasen stations."
 	icon_state = "no_erp"
 
 /obj/structure/sign/poster/official/wtf_is_co2
