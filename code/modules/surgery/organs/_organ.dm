@@ -104,7 +104,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	for(var/datum/action/action as anything in actions)
 		action.Grant(organ_owner)
-	
+
 	for(var/datum/status_effect/effect as anything in organ_effects)
 		organ_owner.apply_status_effect(effect, type)
 
@@ -143,7 +143,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	for(var/datum/action/action as anything in actions)
 		action.Remove(organ_owner)
-	
+
 	for(var/datum/status_effect/effect as anything in organ_effects)
 		organ_owner.remove_status_effect(effect, type)
 
@@ -376,3 +376,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		status = "<font color='#ffcc33'>Mildly Damaged</font>"
 
 	return status
+
+/// Tries to replace the existing organ on the passed mob with this one, with special handling for replacing a brain without ghosting target
+/obj/item/organ/proc/replace_into(mob/living/carbon/new_owner)
+	Insert(new_owner, special = TRUE, drop_if_replaced = FALSE)
