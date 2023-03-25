@@ -242,7 +242,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				to_chat(usr, "Request is not a valid URL.", confidential = TRUE)
 				return TRUE
 
-			var_internet_sound(usr, request.message)
+			web_sound(usr, request.message)
 			return TRUE
 
 /datum/request_manager/ui_data(mob/user)

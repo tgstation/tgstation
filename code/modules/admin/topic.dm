@@ -1748,13 +1748,13 @@
 		if(!paper_to_show)
 			return
 		paper_to_show.ui_interact(usr)
-	else if(href_list["play_music"])
+	else if(href_list["play_internet"])
 		if(!check_rights(R_SOUND))
 			return
 
-		var/link_url = locate(href_list["play_music"])
+		var/link_url = locate(href_list["play_internet"])
 		if(!link_url)
 			return
 
-		var_internet_sound(usr, link_url)
+		web_sound(usr, link_url)
 
