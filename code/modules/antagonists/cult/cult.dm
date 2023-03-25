@@ -470,7 +470,12 @@
 
 	if(members.len)
 		parts += "<span class='header'>The cultists were:</span>"
-		parts += printplayerlist(members)
+		var/list/noharvesterscult = list()
+		for(var/datum/mind/cultmind in members)
+			if(istype(cultmind.current, /mob/living/simple_animal/hostile/construct/harvester))
+				continue
+			noharvesterscult += cultmind
+		parts += printplayerlist(noharvesterscult)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
