@@ -863,6 +863,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "or" = (
 /obj/machinery/power/rtg/advanced,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
 "ov" = (
@@ -4449,7 +4450,7 @@ yg
 Hc
 yT
 Hc
-Ls
+yg
 Ls
 Ls
 qi
@@ -4511,7 +4512,7 @@ yg
 rV
 Gj
 xH
-Ls
+yg
 fx
 rC
 Qd
@@ -4573,7 +4574,7 @@ yg
 VU
 Gj
 pX
-Ls
+yg
 be
 Ls
 jg
@@ -4635,7 +4636,7 @@ yg
 iT
 Gj
 zd
-do
+yg
 do
 do
 do
@@ -4697,7 +4698,7 @@ yg
 gE
 Gj
 pX
-do
+yg
 LE
 Cc
 IN
@@ -4759,7 +4760,7 @@ yg
 id
 Ju
 Mu
-do
+yg
 bQ
 Cc
 BL
@@ -4821,7 +4822,7 @@ yg
 We
 js
 We
-do
+yg
 Lu
 Cc
 Bw
@@ -4883,7 +4884,7 @@ yg
 or
 or
 or
-do
+yg
 LE
 Cc
 fU
