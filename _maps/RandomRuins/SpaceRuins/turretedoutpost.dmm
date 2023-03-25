@@ -76,21 +76,15 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "as" = (
 /obj/structure/rack,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
-/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "at" = (
 /obj/item/rack_parts,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -98,10 +92,7 @@
 "au" = (
 /obj/item/rack_parts,
 /obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -109,10 +100,7 @@
 "av" = (
 /obj/structure/rack,
 /obj/item/firing_pin,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -127,11 +115,8 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "ay" = (
 /obj/item/rack_parts,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
@@ -145,16 +130,7 @@
 "aB" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/costume/ushanka,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "aC" = (
@@ -197,13 +173,10 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "aL" = (
 /obj/structure/rack,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aM" = (
@@ -236,16 +209,7 @@
 "aR" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/crumpled,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "aS" = (
@@ -277,16 +241,14 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "aW" = (
 /obj/structure/rack,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aX" = (
 /obj/item/rack_parts,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -294,20 +256,18 @@
 "aY" = (
 /obj/structure/rack,
 /obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
-/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aZ" = (
 /obj/structure/rack,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
-/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "ba" = (
@@ -317,16 +277,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "tK" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "Nu" = (

@@ -144,16 +144,10 @@
 "ax" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/turf_decal/tile/neutral{
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "ay" = (
@@ -166,26 +160,19 @@
 	dir = 1;
 	pixel_y = 24
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "az" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aB" = (
@@ -196,13 +183,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aC" = (
@@ -257,11 +241,8 @@
 /obj/item/food/tofu,
 /obj/item/food/burrito,
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aF" = (
@@ -331,11 +312,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -346,8 +323,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -357,13 +333,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/secure_closet/personal,
 /obj/item/storage/photo_album,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aN" = (
@@ -373,11 +343,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/microwave,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -413,10 +379,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aS" = (
@@ -512,11 +475,7 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -524,11 +483,10 @@
 "bc" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "bd" = (
@@ -541,13 +499,7 @@
 	},
 /obj/item/trash/can,
 /obj/item/light/bulb/broken,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "be" = (
@@ -711,8 +663,7 @@
 /obj/item/pen{
 	pixel_x = 4
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -812,8 +763,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bI" = (
@@ -842,14 +793,8 @@
 /obj/machinery/computer/crew{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
 	},
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
@@ -958,11 +903,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bY" = (
@@ -1000,11 +942,8 @@
 /obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
 	},
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
@@ -1094,10 +1033,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/built/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "cm" = (
@@ -1108,9 +1047,6 @@
 /obj/item/wrench,
 /obj/machinery/light/small/built/directional/west,
 /obj/machinery/firealarm/directional/west,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
 /obj/machinery/button/door/directional/south{
 	id = "whiteship_windows";
 	name = "Windows Blast Door Control";
@@ -1120,6 +1056,9 @@
 	id = "whiteship_bridge";
 	name = "Bridge Blast Door Control";
 	pixel_x = 6
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
@@ -1140,11 +1079,7 @@
 	x_offset = -7;
 	y_offset = -8
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -1218,10 +1153,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -1741,10 +1673,10 @@
 	pixel_x = -24
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
 "gL" = (
@@ -1833,8 +1765,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "FW" = (
