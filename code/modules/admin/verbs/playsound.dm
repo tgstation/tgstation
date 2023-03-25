@@ -141,7 +141,7 @@
 		log_admin("[key_name(usr)] played web sound: [input]")
 		message_admins("[key_name(usr)] played web sound: [input]")
 	else
-	 	//pressed ok with blank
+		//pressed ok with blank
 		log_admin("[key_name(usr)] stopped web sound")
 		message_admins("[key_name(usr)] stopped web sound")
 		web_sound_url = null
