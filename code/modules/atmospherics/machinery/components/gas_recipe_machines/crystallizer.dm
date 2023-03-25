@@ -39,6 +39,17 @@
 /obj/machinery/atmospherics/components/binary/crystallizer/Initialize(mapload)
 	. = ..()
 	internal = new
+	register_context()
+
+/obj/machinery/atmospherics/components/binary/crystallizer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(held_item)
+		context[SCREENTIP_CONTEXT_RMB] = "Turn [on ? "off" : "on"]"
+		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		if(held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
 	if(!on)
@@ -106,6 +117,7 @@
 	if(!can_interact(user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	on = !on
+	balloon_alert(user, "turned [on ? "on" : "off"]")
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 	update_icon()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

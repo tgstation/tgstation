@@ -46,11 +46,11 @@
 
 	var/static/list/tool_behaviors = list(
 		TOOL_SCREWDRIVER = list(
-			SCREENTIP_CONTEXT_LMB = "Open hatch",
+			SCREENTIP_CONTEXT_LMB = "[panel_open ? "Close" : "Open"] hatch",
 		),
 
 		TOOL_WRENCH = list(
-			SCREENTIP_CONTEXT_LMB = "Anchor",
+			SCREENTIP_CONTEXT_LMB = "[anchored ? "Unan" : "An"]chor",
 		),
 	)
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
