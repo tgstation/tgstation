@@ -1,10 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ab" = (
-/mob/living/simple_animal/hostile/alien{
-	loot = list(/obj/effect/gibspawner/xeno);
-	del_on_death = 1
-	},
 /obj/structure/alien/weeds,
+/mob/living/simple_animal/hostile/alien{
+	faction = list("syndicate","xenomorph")
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -66,7 +65,9 @@
 	})
 "aV" = (
 /obj/machinery/light/small/red/dim/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -92,7 +93,9 @@
 	},
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
-/obj/effect/mob_spawn/corpse/human/syndicatepilot,
+/obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear{
+	dir = 4
+	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -103,27 +106,18 @@
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/alien{
-	loot = list(/obj/effect/gibspawner/xeno);
-	del_on_death = 1
-	},
 /obj/machinery/newscaster/directional/south,
 /obj/structure/cable,
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
+/mob/living/simple_animal/hostile/alien{
+	faction = list("syndicate","xenomorph")
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"bt" = (
-/obj/machinery/suit_storage_unit/open,
-/obj/effect/turf_decal{
-	icon_state = "warningline_white"
-	},
-/obj/structure/cable,
-/turf/open/floor/pod/dark,
-/area/ruin/space/infested_frigate)
 "bD" = (
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gib3-old";
@@ -132,13 +126,15 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/infested_frigate)
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
 "bE" = (
-/obj/machinery/suit_storage_unit/syndicate,
 /obj/effect/turf_decal{
 	icon_state = "warningline_white"
 	},
 /obj/structure/cable,
+/obj/machinery/suit_storage_unit/open,
 /turf/open/floor/pod/dark,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -431,6 +427,7 @@
 /obj/effect/mob_spawn/corpse/human/clown{
 	dir = 4
 	},
+/mob/living/basic/viscerator,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -451,7 +448,6 @@
 	},
 /obj/structure/sign/warning/fire/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/alien/weeds,
 /obj/machinery/light/red/dim/directional/east,
 /turf/open/floor/pod/dark,
 /area/ruin/space/infested_frigate{
@@ -465,12 +461,14 @@
 "fE" = (
 /obj/structure/cable,
 /obj/effect/spawner/random/trash,
-/obj/effect/spawner/random/exotic/antag_gear,
 /obj/structure/alien/weeds/node,
-/obj/structure/alien/egg/burst,
 /obj/effect/decal/cleanable/glass{
 	icon_state = "plasmatiny"
 	},
+/obj/structure/window/reinforced/plasma{
+	dir = 4
+	},
+/obj/machinery/power/rtg/advanced,
 /turf/open/floor/plating,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -517,6 +515,7 @@
 	},
 /obj/item/food/burger/xeno,
 /obj/structure/cable,
+/obj/effect/spawner/random/trash,
 /turf/open/floor/pod/dark,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -524,7 +523,8 @@
 "hm" = (
 /obj/machinery/porta_turret/syndicate/pod{
 	dir = 5;
-	max_integrity = 60
+	max_integrity = 60;
+	faction = list("syndicate","xenomorph")
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
@@ -537,15 +537,6 @@
 	},
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
-"hz" = (
-/obj/structure/cable,
-/obj/structure/alien/weeds/node,
-/obj/structure/alien/weeds,
-/obj/structure/alien/weeds/node,
-/turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -598,9 +589,6 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"hQ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/space/infested_frigate)
 "ie" = (
 /obj/structure/showcase/machinery{
 	icon_state = "autolathe";
@@ -624,14 +612,6 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"is" = (
-/obj/structure/alien/weeds,
-/obj/structure/alien/weeds,
-/obj/structure/cable,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
 "iy" = (
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "u_guilty_l"
@@ -641,6 +621,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -659,6 +640,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -747,16 +729,6 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"jH" = (
-/obj/effect/turf_decal{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/chem_dispenser/drinks/beer,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
 "ka" = (
 /obj/effect/turf_decal{
 	dir = 4
@@ -819,7 +791,6 @@
 	})
 "ku" = (
 /obj/structure/cable,
-/obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /obj/effect/turf_decal{
 	dir = 1
 	},
@@ -833,6 +804,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -840,9 +812,13 @@
 "kS" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	welded = 1
+	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/infested_frigate)
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
 "kT" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -866,7 +842,8 @@
 "li" = (
 /obj/machinery/porta_turret/syndicate/pod{
 	dir = 6;
-	max_integrity = 60
+	max_integrity = 60;
+	faction = list("syndicate","xenomorph")
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
@@ -878,12 +855,6 @@
 	icon_state = "pile"
 	},
 /turf/template_noop,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
-"lR" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -921,10 +892,6 @@
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gibhead"
 	},
-/mob/living/simple_animal/hostile/alien{
-	loot = list(/obj/effect/gibspawner/xeno);
-	del_on_death = 1
-	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -952,7 +919,11 @@
 	},
 /obj/structure/sink/directional/south,
 /obj/effect/mob_spawn/corpse/human{
-	mob_name = "captive"
+	mob_name = "captive";
+	brute_damage = 200
+	},
+/mob/living/carbon/alien/larva{
+	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/plating,
 /area/ruin/space/infested_frigate{
@@ -1009,8 +980,7 @@
 	})
 "nG" = (
 /mob/living/simple_animal/hostile/alien{
-	loot = list(/obj/effect/gibspawner/xeno);
-	del_on_death = 1
+	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/infested_frigate{
@@ -1027,9 +997,6 @@
 	has_gravity = 1
 	})
 "nU" = (
-/obj/effect/mob_spawn/corpse/human/syndicatesoldier{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood{
@@ -1040,6 +1007,7 @@
 	},
 /obj/item/gun/ballistic/automatic/plastikov,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mob_spawn/corpse/human/syndicatepilot,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -1159,10 +1127,6 @@
 	icon_state = "warningline_white";
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/alien{
-	loot = list(/obj/effect/gibspawner/xeno);
-	del_on_death = 1
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
@@ -1173,10 +1137,9 @@
 	icon_state = "floor7-old"
 	},
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/button/door/directional/north{
-	name = "prisoner isolation shutter";
-	id = "captivity";
-	layer = 3.4
+/obj/machinery/door/poddoor/shutters/window{
+	layer = 2.9;
+	id = "captivity"
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/infested_frigate{
@@ -1279,6 +1242,7 @@
 /obj/effect/spawner/random/decoration/carpet,
 /obj/effect/spawner/random/engineering/vending_restock,
 /obj/effect/spawner/random/engineering/vending_restock,
+/obj/item/bedsheet/syndie/double,
 /turf/open/floor/plating,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -1346,10 +1310,6 @@
 	has_gravity = 1
 	})
 "sL" = (
-/obj/machinery/vending/medical{
-	icon_state = "drug-broken";
-	active = 0
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal{
 	icon_state = "warningline_white"
@@ -1358,6 +1318,9 @@
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
 	dir = 8
+	},
+/obj/machinery/vending/medical{
+	req_access = list("theatre")
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/infested_frigate{
@@ -1428,6 +1391,7 @@
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -1454,7 +1418,9 @@
 /obj/effect/spawner/random/medical/memeorgans,
 /obj/item/reagent_containers/condiment/rice,
 /obj/item/reagent_containers/condiment/rice,
-/obj/structure/closet/secure_closet/freezer/gulag_fridge,
+/obj/structure/closet/secure_closet/freezer/gulag_fridge{
+	locked = 0
+	},
 /obj/item/bodypart/head,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/infested_frigate{
@@ -1493,10 +1459,6 @@
 	has_gravity = 1
 	})
 "uG" = (
-/mob/living/simple_animal/hostile/alien{
-	loot = list(/obj/effect/gibspawner/xeno);
-	del_on_death = 1
-	},
 /obj/effect/turf_decal{
 	icon_state = "warningline_red";
 	dir = 6
@@ -1505,6 +1467,9 @@
 /obj/effect/turf_decal{
 	icon_state = "warningline_red";
 	dir = 4
+	},
+/mob/living/simple_animal/hostile/alien{
+	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/infested_frigate{
@@ -1569,16 +1534,12 @@
 /obj/item/shard{
 	icon_state = "plastitaniumtiny"
 	},
-/mob/living/simple_animal/hostile/alien/queen/large{
-	del_on_death = 1;
-	loot = list(/obj/item/ammo_box/magazine/plastikov9mm);
-	desc = "What you saw in your dreams last night."
-	},
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /obj/structure/bed/nest,
 /mob/living/simple_animal/hostile/alien/drone{
 	del_on_death = 1;
-	loot = list(/obj/effect/gibspawner/xeno)
+	loot = list(/obj/effect/gibspawner/xeno);
+	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/plating,
 /area/ruin/space/infested_frigate{
@@ -1628,25 +1589,26 @@
 	has_gravity = 1
 	})
 "wt" = (
-/mob/living/simple_animal/hostile/alien{
-	loot = list(/obj/effect/gibspawner/xeno);
-	del_on_death = 1
-	},
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
 	dir = 4
 	},
 /obj/structure/cable,
+/mob/living/simple_animal/hostile/alien{
+	faction = list("syndicate","xenomorph")
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
 "wu" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/infested_frigate)
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
 "wx" = (
-/obj/effect/mob_spawn/corpse/human/doctor,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -1661,6 +1623,7 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
+/obj/effect/mob_spawn/corpse/human/doctor,
 /turf/open/floor/pod/dark,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -1711,7 +1674,8 @@
 "wX" = (
 /obj/machinery/porta_turret/syndicate/pod{
 	dir = 10;
-	max_integrity = 60
+	max_integrity = 60;
+	faction = list("syndicate","xenomorph")
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
@@ -1729,10 +1693,6 @@
 /obj/effect/decal/cleanable/glass,
 /obj/structure/cable,
 /obj/structure/chair/office/tactical,
-/mob/living/simple_animal/hostile/alien{
-	loot = list(/obj/effect/gibspawner/xeno);
-	del_on_death = 1
-	},
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
@@ -1740,6 +1700,9 @@
 	icon_state = "gib1-old"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/mob/living/simple_animal/hostile/alien{
+	faction = list("syndicate","xenomorph")
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -1784,16 +1747,14 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/space/infested_frigate)
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
 "xT" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/mob/living/simple_animal/hostile/alien{
-	loot = list(/obj/effect/gibspawner/xeno);
-	del_on_death = 1
-	},
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
 	dir = 8
@@ -1809,6 +1770,9 @@
 /obj/item/ammo_casing/spent,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
+/mob/living/simple_animal/hostile/alien{
+	faction = list("syndicate","xenomorph")
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -1831,6 +1795,7 @@
 /obj/item/trash/flare,
 /obj/item/ammo_casing/spent,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -1861,6 +1826,10 @@
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage{
 	pixel_x = 10;
 	pixel_y = 12
+	},
+/obj/effect/spawner/random/entertainment/lighter{
+	pixel_y = -2;
+	pixel_x = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/infested_frigate{
@@ -1920,6 +1889,7 @@
 "yZ" = (
 /obj/structure/window/reinforced/plasma/plastitanium,
 /obj/structure/grille,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -2021,6 +1991,7 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -2047,6 +2018,9 @@
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/item/bodypart/head,
+/obj/machinery/chem_dispenser/drinks/beer{
+	pixel_y = 32
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -2160,6 +2134,7 @@
 /obj/item/clothing/under/syndicate/combat,
 /obj/item/clothing/shoes/combat,
 /obj/item/clothing/shoes/combat,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/pod/dark,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -2193,7 +2168,7 @@
 	},
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
-/obj/effect/mob_spawn/corpse/human/syndicatestormtrooper,
+/obj/effect/mob_spawn/corpse/human/engineer,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -2239,7 +2214,6 @@
 /obj/effect/turf_decal{
 	icon_state = "warningline_white"
 	},
-/obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/glass{
 	dir = 1
 	},
@@ -2263,17 +2237,9 @@
 	icon_state = "floor7-old"
 	},
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/door/poddoor/shutters/window/preopen{
-	id = "captivity"
-	},
-/obj/machinery/door/window{
-	dir = 4;
-	name = "Brig Cell"
-	},
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gib1-old"
 	},
-/mob/living/carbon/alien/larva,
 /turf/open/floor/plating,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -2282,7 +2248,8 @@
 /obj/structure/cable,
 /mob/living/simple_animal/hostile/alien/sentinel{
 	del_on_death = 1;
-	loot = list(/obj/effect/gibspawner/xeno)
+	loot = list(/obj/effect/gibspawner/xeno);
+	faction = list("syndicate","xenomorph")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/alien/weeds/node{
@@ -2297,11 +2264,10 @@
 "Ff" = (
 /obj/effect/decal/cleanable/glass,
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/alien{
-	loot = list(/obj/effect/gibspawner/xeno);
-	del_on_death = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/mob/living/simple_animal/hostile/alien{
+	faction = list("syndicate","xenomorph")
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -2317,11 +2283,6 @@
 	has_gravity = 1
 	})
 "Fi" = (
-/obj/structure/door_assembly/door_assembly_hatch{
-	anchored = 1;
-	name = "crew quarters";
-	desc = "People lived in this place."
-	},
 /obj/effect/decal/cleanable/glass{
 	dir = 8
 	},
@@ -2329,15 +2290,16 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
+/obj/item/kirbyplants/random,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
 "Fs" = (
 /mob/living/simple_animal/bot/firebot{
-	faction = list("neutral","silicon","turret","Xenomorph");
+	faction = list("syndicate","xenomorph");
 	name = "Mr. Squirtsky";
-	desc = "A little fire extinguishing bot. He looks at ease in this company."
+	desc = "He seems much happier with the new management!"
 	},
 /obj/effect/turf_decal{
 	icon_state = "warningline_red";
@@ -2347,24 +2309,31 @@
 	icon_state = "warningline_red";
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/pod/dark,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
 "Ft" = (
 /obj/structure/lattice,
+/obj/effect/decal/cleanable/glass{
+	dir = 1
+	},
 /obj/structure/alien/resin/membrane{
 	max_integrity = 1600;
 	desc = "Resin just thin enough to let light pass through, but it's congealing in the same way as the thicker stuff.";
 	name = "viscous resin membrane"
 	},
-/obj/effect/decal/cleanable/glass{
-	dir = 1
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/structure/door_assembly/door_assembly_hatch{
+	anchored = 1;
+	name = "crew quarters";
+	desc = "People lived in this place.";
+	layer = 2.8
 	},
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
 /turf/template_noop,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -2385,9 +2354,6 @@
 "FP" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible{
-	dir = 5
-	},
 /obj/machinery/door/airlock/hatch,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium/red,
@@ -2413,11 +2379,10 @@
 	icon_state = "larva_chest_s"
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/alien{
-	loot = list(/obj/effect/gibspawner/xeno);
-	del_on_death = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/mob/living/simple_animal/hostile/alien{
+	faction = list("syndicate","xenomorph")
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -2447,11 +2412,10 @@
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gib1-old"
 	},
-/mob/living/simple_animal/hostile/alien{
-	loot = list(/obj/effect/gibspawner/xeno);
-	del_on_death = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/mob/living/simple_animal/hostile/alien{
+	faction = list("syndicate","xenomorph")
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -2474,6 +2438,15 @@
 	icon_state = "xgibhead";
 	dir = 4
 	},
+/mob/living/simple_animal/hostile/alien{
+	faction = list("syndicate","xenomorph")
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
+"Im" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -2481,7 +2454,8 @@
 "In" = (
 /obj/machinery/porta_turret/syndicate/pod{
 	dir = 9;
-	max_integrity = 60
+	max_integrity = 60;
+	faction = list("syndicate","xenomorph")
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
@@ -2554,9 +2528,11 @@
 	pixel_x = -8
 	},
 /obj/structure/table/glass/plasmaglass,
-/obj/effect/spawner/random/contraband/permabrig_gear,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/pod/dark,
-/area/ruin/space/infested_frigate)
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
 "IS" = (
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
@@ -2609,14 +2585,15 @@
 	},
 /obj/effect/spawner/random/exotic/antag_gear,
 /obj/structure/table/glass/plasmaglass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/spawner/random/contraband/permabrig_gear,
 /turf/open/floor/pod/dark,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
 "Jx" = (
 /mob/living/simple_animal/hostile/alien{
-	loot = list(/obj/effect/gibspawner/xeno);
-	del_on_death = 1
+	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
@@ -2647,11 +2624,6 @@
 /obj/structure/cable,
 /obj/item/shard{
 	icon_state = "titaniumtiny"
-	},
-/obj/structure/alien/weeds/node{
-	maximum_growtime = 240000;
-	minimum_growtime = 120000;
-	growtime = 150000
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
@@ -2705,6 +2677,7 @@
 	icon_state = "armorblood"
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -2712,18 +2685,18 @@
 "KF" = (
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
+/obj/machinery/button/door/directional/north{
+	name = "prisoner isolation shutter";
+	id = "captivity";
+	layer = 3.4
+	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
 "KG" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 4
-	},
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
 /obj/structure/cable,
+/obj/machinery/power/rtg/advanced,
 /turf/open/floor/plating,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -2744,9 +2717,6 @@
 	})
 "KT" = (
 /obj/structure/cable,
-/obj/effect/mob_spawn/corpse/human/syndicatesoldier{
-	dir = 4
-	},
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/glass{
 	icon_state = "large"
@@ -2754,7 +2724,18 @@
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/glass,
 /obj/structure/sign/warning/fire/directional/south,
+/obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /turf/open/floor/plating,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
+"KW" = (
+/obj/structure/alien/resin/membrane{
+	max_integrity = 1600;
+	desc = "Resin just thin enough to let light pass through, but it's congealing in the same way as the thicker stuff.";
+	name = "viscous resin membrane"
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -2788,13 +2769,6 @@
 "LF" = (
 /obj/structure/cable,
 /turf/closed/wall/mineral/plastitanium,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
-"LG" = (
-/obj/effect/decal/cleanable/glass,
-/obj/structure/alien/weeds,
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -2887,10 +2861,6 @@
 /obj/item/shard{
 	icon_state = "plasmasmall"
 	},
-/mob/living/simple_animal/hostile/alien/drone{
-	del_on_death = 1;
-	loot = list(/obj/effect/gibspawner/xeno)
-	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -2916,7 +2886,9 @@
 	},
 /obj/item/suppressor,
 /obj/item/gun/energy/e_gun/mini,
-/obj/structure/closet/crate/secure/weapon,
+/obj/structure/closet/crate/secure/weapon{
+	req_access = list("syndicate")
+	},
 /obj/item/grenade/c4,
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
@@ -2957,13 +2929,6 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
-"NU" = (
-/obj/structure/cable,
-/obj/machinery/chem_dispenser/drinks/fullupgrade,
-/turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -3160,16 +3125,36 @@
 	has_gravity = 1
 	})
 "PV" = (
-/obj/effect/mob_spawn/corpse/human/syndicatepilot,
-/mob/living/carbon/alien/larva,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/mob/living/carbon/alien/larva{
+	faction = list("syndicate","xenomorph")
+	},
+/obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
 "Qg" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
+"Qm" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/alien/resin/membrane{
+	max_integrity = 1600;
+	desc = "Resin just thin enough to let light pass through, but it's congealing in the same way as the thicker stuff.";
+	name = "viscous resin membrane"
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -3180,6 +3165,7 @@
 	icon_state = "drip1"
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -3271,10 +3257,6 @@
 /obj/structure/cable,
 /obj/structure/barricade/security,
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/structure/door_assembly/door_assembly_hatch{
-	anchored = 1;
-	name = "crew quarters"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/alien/weeds/node{
 	maximum_growtime = 240000;
@@ -3285,6 +3267,9 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
+/obj/structure/door_assembly/door_assembly_hatch{
+	name = "SYN-C Blackbeard Bridge"
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -3346,7 +3331,9 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/space/infested_frigate)
+/area/ruin/space/infested_frigate{
+	has_gravity = 1
+	})
 "SE" = (
 /obj/structure/alien/egg/burst,
 /obj/item/ammo_casing/spent,
@@ -3364,6 +3351,13 @@
 /obj/item/shard{
 	icon_state = "plastitaniumtiny"
 	},
+/mob/living/simple_animal/hostile/alien/queen/large{
+	del_on_death = 1;
+	loot = list(/obj/effect/gibspawner/xeno,/obj/item/ammo_box/magazine/plastikov9mm,/obj/effect/mob_spawn/corpse/human/syndicatestormtrooper);
+	desc = "What you saw in your dreams last night.";
+	faction = list("syndicate","xenomorph")
+	},
+/obj/structure/alien/egg/burst,
 /turf/open/floor/plating,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -3417,14 +3411,6 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"Tx" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
 "TL" = (
 /obj/structure/table/optable,
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
@@ -3448,6 +3434,7 @@
 	icon_state = "floor7-old"
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -3469,6 +3456,9 @@
 	pixel_y = 7
 	},
 /obj/structure/cable,
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
+	pixel_y = 32
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -3490,6 +3480,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -3594,22 +3585,16 @@
 /obj/item/fuel_pellet,
 /obj/item/fuel_pellet,
 /obj/effect/spawner/random/exotic/languagebook,
+/obj/effect/spawner/random/entertainment/lighter,
+/obj/effect/spawner/random/entertainment/lighter,
+/obj/effect/spawner/random/special_lighter,
 /turf/open/floor/plating,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"Wn" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
-"Wt" = (
-/turf/template_noop,
-/area/ruin/space/infested_frigate)
 "WG" = (
 /obj/structure/alien/egg/burst,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -3643,6 +3628,7 @@
 /obj/item/clothing/mask/facehugger/impregnated,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
+/obj/effect/spawner/random/exotic/antag_gear,
 /turf/open/floor/plating,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -3656,9 +3642,6 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"Xq" = (
-/turf/open/floor/plating,
-/area/ruin/space/infested_frigate)
 "Xw" = (
 /obj/machinery/door/poddoor/preopen,
 /obj/structure/fans/tiny,
@@ -3699,6 +3682,7 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -3707,8 +3691,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/alien/egg/burst,
 /mob/living/simple_animal/hostile/alien{
-	loot = list(/obj/effect/gibspawner/xeno);
-	del_on_death = 1
+	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/infested_frigate{
@@ -3748,6 +3731,7 @@
 /obj/effect/turf_decal{
 	icon_state = "warningline_white"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -3827,6 +3811,7 @@
 	},
 /obj/structure/sign/poster/contraband/random/directional/south,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -3873,19 +3858,19 @@ VR
 VR
 VR
 VR
-VR
-VR
-hQ
-Xq
+fl
+fl
+wP
+xt
 SB
 xR
-Wt
+fl
 xR
-Xq
+xt
 SB
-hQ
-VR
-VR
+wP
+fl
+fl
 "}
 (2,1,1) = {"
 VR
@@ -3900,8 +3885,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 wP
 xt
 wP
@@ -3911,8 +3896,8 @@ bZ
 wP
 xt
 wP
-VR
-VR
+fl
+fl
 "}
 (3,1,1) = {"
 VR
@@ -3927,7 +3912,7 @@ VR
 VR
 VR
 VR
-VR
+fl
 In
 GK
 wP
@@ -3939,7 +3924,7 @@ bZ
 wP
 wP
 wX
-VR
+fl
 "}
 (4,1,1) = {"
 VR
@@ -3954,7 +3939,7 @@ VR
 VR
 VR
 VR
-VR
+fl
 wP
 fX
 wP
@@ -3966,7 +3951,7 @@ wP
 wP
 eZ
 wP
-VR
+fl
 "}
 (5,1,1) = {"
 VR
@@ -3981,7 +3966,7 @@ VR
 VR
 VR
 VR
-VR
+fl
 Mm
 mG
 wP
@@ -3989,11 +3974,11 @@ fE
 wc
 sQ
 KZ
-hz
+wP
 ef
 jf
 wP
-VR
+fl
 "}
 (6,1,1) = {"
 VR
@@ -4008,7 +3993,7 @@ VR
 VR
 VR
 VR
-VR
+fl
 wP
 EQ
 wP
@@ -4016,11 +4001,11 @@ aI
 SM
 ME
 KT
-is
+LF
 wP
 Po
 wP
-VR
+fl
 "}
 (7,1,1) = {"
 VR
@@ -4035,7 +4020,7 @@ VR
 VR
 VR
 VR
-VR
+fl
 wP
 qu
 wP
@@ -4043,11 +4028,11 @@ Ru
 df
 DR
 Hx
-jH
+LF
 Ar
 kT
 wP
-VR
+fl
 "}
 (8,1,1) = {"
 VR
@@ -4062,7 +4047,7 @@ VR
 VR
 VR
 VR
-VR
+fl
 wP
 KF
 wP
@@ -4070,11 +4055,11 @@ yb
 ER
 ku
 PD
-NU
+LF
 Ux
 bg
 wP
-VR
+fl
 "}
 (9,1,1) = {"
 VR
@@ -4089,7 +4074,7 @@ VR
 VR
 VR
 VR
-VR
+fl
 wP
 Ln
 wP
@@ -4101,7 +4086,7 @@ AH
 yt
 YW
 vj
-VR
+fl
 "}
 (10,1,1) = {"
 VR
@@ -4116,7 +4101,7 @@ VR
 VR
 VR
 VR
-VR
+fl
 vj
 yJ
 wP
@@ -4128,7 +4113,7 @@ ki
 Zp
 di
 vj
-VR
+fl
 "}
 (11,1,1) = {"
 VR
@@ -4143,9 +4128,9 @@ VR
 VR
 VR
 VR
-VR
+fl
 vj
-LG
+OC
 OC
 si
 JO
@@ -4155,7 +4140,7 @@ Et
 KA
 RG
 vj
-VR
+fl
 "}
 (12,1,1) = {"
 VR
@@ -4170,7 +4155,7 @@ VR
 VR
 VR
 VR
-VR
+fl
 vj
 xp
 ab
@@ -4182,7 +4167,7 @@ SX
 xT
 qC
 vj
-VR
+fl
 "}
 (13,1,1) = {"
 VR
@@ -4197,7 +4182,7 @@ VR
 VR
 VR
 VR
-VR
+fl
 vj
 Ez
 Jx
@@ -4209,7 +4194,7 @@ tU
 hB
 xB
 vj
-VR
+fl
 "}
 (14,1,1) = {"
 VR
@@ -4224,7 +4209,7 @@ YS
 fl
 VR
 VR
-VR
+fl
 wP
 nN
 rd
@@ -4236,7 +4221,7 @@ Qg
 Ah
 Xa
 wP
-VR
+fl
 "}
 (15,1,1) = {"
 VR
@@ -4289,7 +4274,7 @@ wx
 LF
 cA
 vm
-Tx
+Cm
 jk
 "}
 (17,1,1) = {"
@@ -4315,7 +4300,7 @@ Ff
 tJ
 wP
 Tb
-lR
+wP
 aV
 wP
 "}
@@ -4362,7 +4347,7 @@ vf
 fl
 Sv
 Ft
-mw
+Qm
 wP
 Vo
 Hc
@@ -4388,7 +4373,7 @@ fl
 fl
 fl
 ZI
-nN
+KW
 Fi
 wP
 wP
@@ -4398,7 +4383,7 @@ wP
 oW
 wP
 wP
-VR
+fl
 "}
 (21,1,1) = {"
 VR
@@ -4425,7 +4410,7 @@ Jx
 lU
 Rx
 vj
-VR
+fl
 "}
 (22,1,1) = {"
 VR
@@ -4448,11 +4433,11 @@ CE
 uG
 fa
 Fs
-Cm
+Im
 iy
 IC
 vj
-VR
+fl
 "}
 (23,1,1) = {"
 VR
@@ -4467,19 +4452,19 @@ VR
 VR
 VR
 VR
-VR
+fl
 vj
 YV
 Er
 wP
 wP
-Wn
+wP
 LF
 wP
 iL
 nm
 vj
-VR
+fl
 "}
 (24,1,1) = {"
 VR
@@ -4494,8 +4479,8 @@ VR
 VR
 VR
 VR
-VR
-hm
+fl
+wP
 bM
 Ne
 wP
@@ -4505,8 +4490,8 @@ ML
 wP
 UX
 Sr
-li
-VR
+wP
+fl
 "}
 (25,1,1) = {"
 VR
@@ -4521,8 +4506,8 @@ VR
 VR
 VR
 VR
-VR
 fl
+hm
 wP
 MW
 wP
@@ -4532,8 +4517,8 @@ St
 wP
 XG
 wP
+li
 fl
-VR
 "}
 (26,1,1) = {"
 VR
@@ -4548,8 +4533,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 wP
 nu
 wP
@@ -4559,8 +4544,8 @@ Jw
 wP
 Qp
 wP
-VR
-VR
+fl
+fl
 "}
 (27,1,1) = {"
 VR
@@ -4575,19 +4560,19 @@ VR
 VR
 VR
 VR
-VR
-VR
-hQ
+fl
+fl
+wP
 bD
-hQ
-bt
+wP
+zV
 kS
 IO
-hQ
+wP
 wu
-hQ
-VR
-VR
+wP
+fl
+fl
 "}
 (28,1,1) = {"
 VR
@@ -4602,8 +4587,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 wP
 CK
 wP
@@ -4613,8 +4598,8 @@ Cp
 wP
 Zt
 wP
-VR
-VR
+fl
+fl
 "}
 (29,1,1) = {"
 VR
@@ -4629,8 +4614,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 wP
 hu
 wP
@@ -4640,8 +4625,8 @@ wP
 wP
 ye
 wP
-VR
-VR
+fl
+fl
 "}
 (30,1,1) = {"
 VR
@@ -4656,8 +4641,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 vj
 Bw
 ip
@@ -4667,8 +4652,8 @@ YT
 Ai
 KC
 vj
-VR
-VR
+fl
+fl
 "}
 (31,1,1) = {"
 VR
@@ -4683,19 +4668,19 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 vj
 HA
-Jx
+Cm
 qq
 st
 jA
 Jx
 AM
 vj
-VR
-VR
+fl
+fl
 "}
 (32,1,1) = {"
 VR
@@ -4710,8 +4695,8 @@ YQ
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 vj
 vM
 wP
@@ -4721,8 +4706,8 @@ wP
 wP
 OK
 vj
-VR
-VR
+fl
+fl
 "}
 (33,1,1) = {"
 VR
@@ -4737,8 +4722,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 vj
 cX
 wP
@@ -4748,8 +4733,8 @@ gi
 wP
 OK
 vj
-VR
-VR
+fl
+fl
 "}
 (34,1,1) = {"
 VR
@@ -4764,8 +4749,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 vj
 iS
 wP
@@ -4775,8 +4760,8 @@ wO
 wP
 oV
 vj
-VR
-VR
+fl
+fl
 "}
 (35,1,1) = {"
 VR
@@ -4791,8 +4776,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 vj
 KK
 wP
@@ -4802,8 +4787,8 @@ NX
 wP
 oo
 vj
-VR
-VR
+fl
+fl
 "}
 (36,1,1) = {"
 VR
@@ -4818,8 +4803,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 wP
 af
 yZ
@@ -4829,8 +4814,8 @@ yZ
 yZ
 sE
 wP
-VR
-VR
+fl
+fl
 "}
 (37,1,1) = {"
 VR
@@ -4845,8 +4830,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 wP
 zE
 rL
@@ -4856,8 +4841,8 @@ aY
 ie
 Pa
 wP
-VR
-VR
+fl
+fl
 "}
 (38,1,1) = {"
 VR
@@ -4872,8 +4857,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 wP
 Yd
 hA
@@ -4883,8 +4868,8 @@ yG
 nG
 UV
 wP
-VR
-VR
+fl
+fl
 "}
 (39,1,1) = {"
 VR
@@ -4899,8 +4884,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 wP
 qb
 cB
@@ -4910,8 +4895,8 @@ hK
 LO
 MG
 wP
-VR
-VR
+fl
+fl
 "}
 (40,1,1) = {"
 VR
@@ -4926,8 +4911,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 wP
 QA
 SE
@@ -4937,8 +4922,8 @@ Cm
 wj
 Iu
 wP
-VR
-VR
+fl
+fl
 "}
 (41,1,1) = {"
 VR
@@ -4953,8 +4938,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 wP
 QA
 ZN
@@ -4964,8 +4949,8 @@ Kl
 kg
 uC
 wP
-VR
-VR
+fl
+fl
 "}
 (42,1,1) = {"
 VR
@@ -4980,8 +4965,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 wP
 ON
 Oy
@@ -4991,8 +4976,8 @@ Mp
 Bh
 ka
 wP
-VR
-VR
+fl
+fl
 "}
 (43,1,1) = {"
 VR
@@ -5007,8 +4992,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 hm
 wP
 cP
@@ -5018,8 +5003,8 @@ RW
 oj
 wP
 li
-VR
-VR
+fl
+fl
 "}
 (44,1,1) = {"
 VR
@@ -5034,8 +5019,8 @@ VR
 VR
 VR
 VR
-VR
-VR
+fl
+fl
 fl
 fl
 fl
@@ -5045,8 +5030,8 @@ Zb
 fl
 fl
 fl
-VR
-VR
+fl
+fl
 "}
 (45,1,1) = {"
 VR
