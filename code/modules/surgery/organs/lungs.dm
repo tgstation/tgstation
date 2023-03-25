@@ -166,11 +166,11 @@
 	// Avoids stuck alerts and such
 	var/static/datum/gas_mixture/immutable/dummy = new(BREATH_VOLUME)
 	for(var/gas_id in last_partial_pressures)
-		var/on_loss = breath_lost[gas_lost]
+		var/on_loss = breath_lost[gas_id]
 		if(!on_loss)
 			continue
 
-		call(src, on_loss)(owner, dummy, last_partial_pressures[gas_lost])
+		call(src, on_loss)(owner, dummy, last_partial_pressures[gas_id])
 	dummy.garbage_collect()
 
 /**
@@ -883,9 +883,8 @@
 
 /// H2O electrolysis
 /obj/item/organ/internal/lungs/ethereal/proc/consume_water(mob/living/carbon/breather, datum/gas_mixture/breath, h2o_pp, old_h2o_pp)
-	breath_out.assert_gases(/datum/gas/oxygen, /datum/gas/hydrogen)
-	var/list/breath_gases = breath.gases
 	var/gas_breathed = breath.gases[/datum/gas/water_vapor][MOLES]
+	breath.gases[/datum/gas/water_vapor][MOLES] -= gas_breathed
+	breath_out.assert_gases(/datum/gas/oxygen, /datum/gas/hydrogen)
 	breath_out.gases[/datum/gas/oxygen][MOLES] += gas_breathed
 	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed * 2
-	breath.gases[/datum/gas/water_vapor][MOLES] -= gas_breathed
