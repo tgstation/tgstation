@@ -85,7 +85,7 @@ const displayTypeMap = {
   'request_syndicate': 'SYNDICATE',
   'request_nuke': 'NUKE CODE',
   'request_fax': 'FAX',
-  'request_music': 'MUSIC',
+  'request_internet_sound': 'INTERNET SOUND',
 };
 
 const RequestType = (props) => {

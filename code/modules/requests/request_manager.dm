@@ -9,7 +9,7 @@
 /// Requests somebody from fax
 #define REQUEST_FAX "request_fax"
 /// Requests from Request Music
-#define REQUEST_MUSIC "request_music"
+#define REQUEST_INTERNET_SOUND "request_internet_sound"
 
 GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 
