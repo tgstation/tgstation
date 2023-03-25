@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes:
+  - bugfix: "Having your severed, brain-filled head reattached to a body no longer teleports your brain to the mythical Gem Room."
