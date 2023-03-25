@@ -8402,9 +8402,9 @@
 /area/ruin/space/ancientstation/beta/atmos)
 "XD" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Custodial Closet";
-	welded = 1
+	name = "Custodial Closet"
 	},
+/obj/effect/mapping_helpers/airlock/welded,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
 /turf/open/floor/iron,
