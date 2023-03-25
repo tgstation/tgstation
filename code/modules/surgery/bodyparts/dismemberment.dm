@@ -372,19 +372,20 @@
 	// These are stored before calling super. This is so that if the head is from a different body, it persists its appearance.
 	var/real_name = src.real_name
 
+	// Transfer brainmob to any brain before calling parent, which will handle brain insertion as part of organ code.
+	if(brain && brainmob)
+		brainmob.container = null
+		brainmob.forceMove(brain)
+		brain.brainmob = brainmob
+		brainmob = null
+
 	. = ..()
+
 	if(!.)
 		return .
-	//Transfer some head appearance vars over
-	if(brain)
-		if(brainmob)
-			brainmob.container = null //Reset brainmob head var.
-			brainmob.forceMove(brain) //Throw mob into brain.
-			brain.brainmob = brainmob //Set the brain to use the brainmob
-			brainmob = null //Set head brainmob var to null
-		brain.Insert(new_head_owner) //Now insert the brain proper
-		brain = null //No more brain in the head
 
+	if(brain)
+		brain = null
 	if(tongue)
 		tongue = null
 	if(ears)
