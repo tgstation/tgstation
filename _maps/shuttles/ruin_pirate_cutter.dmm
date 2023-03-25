@@ -11,9 +11,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/ruin/caravan/pirate)
 "dS" = (
@@ -68,9 +66,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/ruin/caravan/pirate)
 "iM" = (
@@ -89,9 +85,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/ruin/caravan/pirate)
 "jk" = (
@@ -131,9 +125,7 @@
 /area/shuttle/ruin/caravan/pirate)
 "lD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/ruin/caravan/pirate)
 "lN" = (
@@ -384,9 +376,7 @@
 	name = "Bridge Blast Door Control";
 	pixel_x = -16
 	},
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
 "yR" = (
@@ -400,7 +390,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
@@ -483,7 +473,7 @@
 "Fn" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/shuttle/ruin/caravan/pirate)
@@ -589,7 +579,7 @@
 "JP" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/caravan/pirate,
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
@@ -616,7 +606,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
@@ -745,7 +735,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
 "Vh" = (

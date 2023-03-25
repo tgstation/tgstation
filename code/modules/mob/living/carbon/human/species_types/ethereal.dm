@@ -7,6 +7,7 @@
 	mutanttongue = /obj/item/organ/internal/tongue/ethereal
 	mutantheart = /obj/item/organ/internal/heart/ethereal
 	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
+	exotic_bloodtype = "LE"
 	siemens_coeff = 0.5 //They thrive on energy
 	brutemod = 1.25 //They're weak to punches
 	payday_modifier = 0.75
@@ -74,7 +75,7 @@
 	ethereal_light = ethereal.mob_light()
 	spec_updatehealth(ethereal)
 	new_ethereal.set_safe_hunger_level()
-	update_mail_goodies(ethereal, list(/obj/item/reagent_containers/blood/ethereal))
+	update_mail_goodies(ethereal)
 
 	var/obj/item/organ/internal/heart/ethereal/ethereal_heart = new_ethereal.getorganslot(ORGAN_SLOT_HEART)
 	ethereal_heart.ethereal_color = default_color
@@ -89,9 +90,15 @@
 	UnregisterSignal(former_ethereal, COMSIG_LIGHT_EATER_ACT)
 	QDEL_NULL(ethereal_light)
 	if(ishuman(former_ethereal))
-		update_mail_goodies(former_ethereal)
+		new_species.update_mail_goodies(former_ethereal)
 	return ..()
 
+/datum/species/ethereal/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
+	if(istype(quirk, /datum/quirk/blooddeficiency))
+		mail_goodies += list(
+			/obj/item/reagent_containers/blood/ethereal
+		)
+	return ..()
 
 /datum/species/ethereal/random_name(gender,unique,lastname)
 	if(unique)
