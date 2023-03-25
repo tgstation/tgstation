@@ -1,21 +1,21 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aa" = (
+"a" = (
 /turf/template_noop,
 /area/template_noop)
-"ab" = (
+"b" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"ac" = (
+"c" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"ad" = (
+"d" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomehea";
 	name = "Heavy Supply"
@@ -23,17 +23,17 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/iron,
 /area/template_noop)
-"ae" = (
+"e" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"af" = (
+"f" = (
 /turf/open/floor/circuit/green,
 /area/template_noop)
-"ag" = (
+"g" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Red Team";
 	network = list("thunder");
@@ -45,7 +45,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/template_noop)
-"ah" = (
+"h" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/green,
 /obj/item/clothing/shoes/sneakers/brown,
@@ -57,14 +57,14 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"ai" = (
+"i" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aj" = (
+"j" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -73,16 +73,16 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"ak" = (
+"k" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"al" = (
+"l" = (
 /turf/closed/indestructible/fakeglass,
 /area/template_noop)
-"am" = (
+"m" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdome";
 	name = "Thunderdome Blast Door"
@@ -92,30 +92,30 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"an" = (
+"n" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"ao" = (
+"o" = (
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/template_noop)
-"ap" = (
+"p" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aq" = (
+"q" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/template_noop)
-"ar" = (
+"r" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomegen";
 	name = "General Supply"
@@ -125,23 +125,23 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"as" = (
+"s" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/template_noop)
-"at" = (
+"t" = (
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron,
 /area/template_noop)
-"au" = (
+"u" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/template_noop)
-"av" = (
+"v" = (
 /turf/closed/indestructible/riveted,
 /area/template_noop)
-"aw" = (
+"w" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/red,
 /obj/item/clothing/shoes/sneakers/brown,
@@ -153,21 +153,21 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"ax" = (
+"x" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"ay" = (
+"y" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"az" = (
+"z" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/red,
 /obj/item/clothing/shoes/sneakers/brown,
@@ -180,14 +180,14 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aA" = (
+"A" = (
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aB" = (
+"B" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdome";
 	name = "Thunderdome Blast Door"
@@ -197,14 +197,14 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aC" = (
+"C" = (
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aD" = (
+"D" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/green,
 /obj/item/clothing/shoes/sneakers/brown,
@@ -217,19 +217,19 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aE" = (
+"E" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aF" = (
+"F" = (
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/template_noop)
-"aG" = (
+"G" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -238,20 +238,20 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aH" = (
+"H" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aI" = (
+"I" = (
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aJ" = (
+"J" = (
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
@@ -259,28 +259,28 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/template_noop)
-"aK" = (
+"K" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aL" = (
+"L" = (
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aM" = (
+"M" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aN" = (
+"N" = (
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
@@ -288,36 +288,36 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/template_noop)
-"aO" = (
+"O" = (
 /obj/machinery/igniter/on,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/template_noop)
-"aP" = (
+"P" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/template_noop)
-"aQ" = (
+"Q" = (
 /obj/machinery/camera/motion/thunderdome{
 	pixel_x = 10
 	},
 /turf/open/floor/circuit/green,
 /area/template_noop)
-"aR" = (
+"R" = (
 /turf/open/floor/iron,
 /area/template_noop)
-"aS" = (
+"S" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/template_noop)
-"aT" = (
+"T" = (
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aU" = (
+"U" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Green Team";
 	network = list("thunder");
@@ -329,28 +329,28 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/template_noop)
-"aV" = (
+"V" = (
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aW" = (
+"W" = (
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aX" = (
+"X" = (
 /obj/machinery/flasher{
 	id = "tdomeflash";
 	name = "Thunderdome Flash"
 	},
 /turf/open/floor/circuit/green,
 /area/template_noop)
-"aY" = (
+"Y" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomegen";
 	name = "General Supply"
@@ -360,459 +360,439 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"aZ" = (
+"Z" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"iF" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/template_noop)
-"FV" = (
-/obj/effect/turf_decal/tile/green/half/contrasted,
-/turf/open/floor/iron,
-/area/template_noop)
-"FY" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/template_noop)
-"Iv" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/turf/open/floor/iron,
-/area/template_noop)
 
 (1,1,1) = {"
-aa
-av
-av
-av
-av
-av
-av
-av
-av
-aa
-aa
+a
+v
+v
+v
+v
+v
+v
+v
+v
+a
+a
 "}
 (2,1,1) = {"
-aa
-av
-az
-az
-az
-az
-az
-az
-av
-aa
-aa
+a
+v
+z
+z
+z
+z
+z
+z
+v
+a
+a
 "}
 (3,1,1) = {"
-aa
-av
-aY
-aY
-aY
-aY
-aY
-aY
-av
-av
-av
+a
+v
+Y
+Y
+Y
+Y
+Y
+Y
+v
+v
+v
 "}
 (4,1,1) = {"
-aa
-av
-aL
-aC
-aC
-aC
-aC
-aI
-ad
-aw
-av
+a
+v
+L
+C
+C
+C
+C
+I
+d
+w
+v
 "}
 (5,1,1) = {"
-aa
-av
-aA
-aN
-aF
-aF
-aN
-ao
-ad
-aw
-av
+a
+v
+A
+N
+F
+F
+N
+o
+d
+w
+v
 "}
 (6,1,1) = {"
-aa
-av
-aA
-aF
-ag
-aF
-aF
-ao
-ad
-aw
-av
+a
+v
+A
+F
+g
+F
+F
+o
+d
+w
+v
 "}
 (7,1,1) = {"
-aa
-av
-aA
-aN
-aF
-aF
-aN
-ao
-ad
-aw
-av
+a
+v
+A
+N
+F
+F
+N
+o
+d
+w
+v
 "}
 (8,1,1) = {"
-aa
-av
-aV
-aW
-aW
-aW
-aW
-aT
-ad
-aw
-av
+a
+v
+V
+W
+W
+W
+W
+T
+d
+w
+v
 "}
 (9,1,1) = {"
-av
-av
-am
-am
-am
-am
-am
-am
-av
-av
-av
+v
+v
+m
+m
+m
+m
+m
+m
+v
+v
+v
 "}
 (10,1,1) = {"
-al
-aO
-FY
-ac
-ak
-ak
-aZ
-FY
-aO
-al
-aa
+l
+O
+G
+c
+k
+k
+Z
+G
+O
+l
+a
 "}
 (11,1,1) = {"
-al
-aR
-aR
-aR
-aR
-aR
-aR
-aR
-aR
-al
-aa
+l
+R
+R
+R
+R
+R
+R
+R
+R
+l
+a
 "}
 (12,1,1) = {"
-al
-aS
-aP
-aP
-aP
-aP
-aP
-aP
-aS
-al
-aa
+l
+S
+P
+P
+P
+P
+P
+P
+S
+l
+a
 "}
 (13,1,1) = {"
-al
-aR
-Iv
-Iv
-Iv
-Iv
-Iv
-Iv
-aR
-al
-aa
+l
+R
+M
+M
+M
+M
+M
+M
+R
+l
+a
 "}
 (14,1,1) = {"
-al
-aR
-as
-as
-as
-as
-as
-as
-aR
-al
-aa
+l
+R
+s
+s
+s
+s
+s
+s
+R
+l
+a
 "}
 (15,1,1) = {"
-al
-aR
-as
-as
-as
-as
-as
-as
-aR
-al
-aa
+l
+R
+s
+s
+s
+s
+s
+s
+R
+l
+a
 "}
 (16,1,1) = {"
-al
-aR
-as
-as
-af
-af
-as
-as
-aR
-al
-aa
+l
+R
+s
+s
+f
+f
+s
+s
+R
+l
+a
 "}
 (17,1,1) = {"
-al
-aR
-as
-as
-aX
-aQ
-as
-as
-aR
-al
-aa
+l
+R
+s
+s
+X
+Q
+s
+s
+R
+l
+a
 "}
 (18,1,1) = {"
-al
-aR
-as
-as
-af
-af
-as
-as
-aR
-al
-aa
+l
+R
+s
+s
+f
+f
+s
+s
+R
+l
+a
 "}
 (19,1,1) = {"
-al
-aR
-as
-as
-as
-as
-as
-as
-aR
-al
-aa
+l
+R
+s
+s
+s
+s
+s
+s
+R
+l
+a
 "}
 (20,1,1) = {"
-al
-aR
-as
-as
-as
-as
-as
-as
-aR
-al
-aa
+l
+R
+s
+s
+s
+s
+s
+s
+R
+l
+a
 "}
 (21,1,1) = {"
-al
-aR
-iF
-iF
-iF
-iF
-iF
-iF
-aR
-al
-aa
+l
+R
+j
+j
+j
+j
+j
+j
+R
+l
+a
 "}
 (22,1,1) = {"
-al
-aS
-aP
-aP
-aP
-aP
-aP
-aP
-aS
-al
-aa
+l
+S
+P
+P
+P
+P
+P
+P
+S
+l
+a
 "}
 (23,1,1) = {"
-al
-aR
-aR
-aR
-aR
-aR
-aR
-aR
-aR
-al
-aa
+l
+R
+R
+R
+R
+R
+R
+R
+R
+l
+a
 "}
 (24,1,1) = {"
-al
-aO
-FV
-aH
-an
-an
-at
-FV
-aO
-al
-aa
+l
+O
+y
+H
+n
+n
+t
+y
+O
+l
+a
 "}
 (25,1,1) = {"
-av
-av
-aB
-aB
-aB
-aB
-aB
-aB
-av
-av
-av
+v
+v
+B
+B
+B
+B
+B
+B
+v
+v
+v
 "}
 (26,1,1) = {"
-aa
-av
-ap
-ae
-ae
-ae
-ae
-ai
-ad
-ah
-av
+a
+v
+p
+e
+e
+e
+e
+i
+d
+h
+v
 "}
 (27,1,1) = {"
-aa
-av
-aK
-aJ
-aq
-aq
-aJ
-au
-ad
-ah
-av
+a
+v
+K
+J
+q
+q
+J
+u
+d
+h
+v
 "}
 (28,1,1) = {"
-aa
-av
-aK
-aq
-aU
-aq
-aq
-au
-ad
-ah
-av
+a
+v
+K
+q
+U
+q
+q
+u
+d
+h
+v
 "}
 (29,1,1) = {"
-aa
-av
-aK
-aJ
-aq
-aq
-aJ
-au
-ad
-ah
-av
+a
+v
+K
+J
+q
+q
+J
+u
+d
+h
+v
 "}
 (30,1,1) = {"
-aa
-av
-aE
-ab
-ab
-ab
-ab
-ax
-ad
-ah
-av
+a
+v
+E
+b
+b
+b
+b
+x
+d
+h
+v
 "}
 (31,1,1) = {"
-aa
-av
-ar
-ar
-ar
-ar
-ar
-ar
-av
-av
-av
+a
+v
+r
+r
+r
+r
+r
+r
+v
+v
+v
 "}
 (32,1,1) = {"
-aa
-av
-aD
-aD
-aD
-aD
-aD
-aD
-av
-aa
-aa
+a
+v
+D
+D
+D
+D
+D
+D
+v
+a
+a
 "}
 (33,1,1) = {"
-aa
-av
-av
-av
-av
-av
-av
-av
-av
-aa
-aa
+a
+v
+v
+v
+v
+v
+v
+v
+v
+a
+a
 "}
