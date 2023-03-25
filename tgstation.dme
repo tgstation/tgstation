@@ -4657,6 +4657,7 @@
 #include "code\modules\research\xenobiology\crossbreeding\reproductive.dm"
 #include "code\modules\research\xenobiology\crossbreeding\selfsustaining.dm"
 #include "code\modules\research\xenobiology\crossbreeding\stabilized.dm"
+#include "code\modules\research\xenobiology\crossbreeding\transformative.dm"
 #include "code\modules\research\xenobiology\vatgrowing\biopsy_tool.dm"
 #include "code\modules\research\xenobiology\vatgrowing\microscope.dm"
 #include "code\modules\research\xenobiology\vatgrowing\petri_dish.dm"

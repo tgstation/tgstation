@@ -26,12 +26,9 @@ transformative extracts:
 /obj/item/slimecross/transformative/proc/do_effect(mob/living/simple_animal/slime/S, mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 	if(S.transformeffects & SLIME_EFFECT_LIGHT_PINK)
-		S.remove_form_spawner_menu()
 		S.master = null
 	if(S.transformeffects & SLIME_EFFECT_METAL)
 		S.maxHealth = round(S.maxHealth/1.3)
-	if(S.transformeffects & SLIME_EFFECT_BLUESPACE)
-		S.remove_verb(/mob/living/simple_animal/slime/proc/teleport)
 	if(S.transformeffects & SLIME_EFFECT_PINK)
 		var/datum/language_holder/LH = S.get_language_holder()
 		LH.selected_language = /datum/language/slime
@@ -128,9 +125,7 @@ transformative extracts:
 
 /obj/item/slimecross/transformative/lightpink/do_effect(mob/living/simple_animal/slime/S, mob/user)
 	..()
-	GLOB.poi_list |= S
 	S.master = user
-	LAZYADD(GLOB.mob_spawners["[S.master.real_name]'s slime"], S)
 
 /obj/item/slimecross/transformative/adamantine
 	colour = "adamantine"
