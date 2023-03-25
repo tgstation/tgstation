@@ -9,6 +9,11 @@
 
 	var/turf/old_turf = get_turf(old_loc)
 	var/turf/new_turf = get_turf(src)
+	// If we're moving to/from nullspace, refresh
+	// Easier then adding nullchecks to all this shit, and technically right since a null turf means nograv
+	if(!old_turf || !new_turf)
+		refresh_gravity()
+		return
 	// If the turf gravity has changed, then it's possible that our state has changed, so update
 	if(HAS_TRAIT(old_turf, TRAIT_FORCED_GRAVITY) != HAS_TRAIT(new_turf, TRAIT_FORCED_GRAVITY) || new_turf.force_no_gravity != old_turf.force_no_gravity)
 		refresh_gravity()
