@@ -234,7 +234,7 @@
 	})
 "cP" = (
 /obj/machinery/door/poddoor{
-	id = "blackbeard exterior bolts"
+	id = "brutus exterior bolts"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/infested_frigate{
@@ -411,7 +411,7 @@
 	layer = 3.1
 	},
 /obj/item/paper/crumpled/muddy/fluff/elephant_graveyard/rnd_notes{
-	default_raw_text = "<b>STERILIZATION ORDERS</b> <BR><BR><i>Detailed findings:</i><BR><BR>A biological research lab within the HD-10180 system has suffered from a terrible breach. The SYN-C Blackbeard is to deliver a nuclear payload via strike team. Everything inside and outside the facility is to be killed on sight, including any research staff. Nuclear authentication codes have been sent via red phone, as have other detailed orders.<BR><BR><b>The rest of the documents are maps and mundane information regarding the crew's destination.</b>";
+	default_raw_text = "<b>STERILIZATION ORDERS</b> <BR><BR><i>Detailed findings:</i><BR><BR>A biological research lab within the HD-10180 system has suffered from a complete containment failure. The SYN-C Brutus is to deliver a nuclear payload via strike team. Everything inside and outside the facility is to be killed on sight, including any research staff. Nuclear authentication codes have been sent via red phone, as have other detailed orders.<BR><BR><b>The rest of the documents are maps and mundane information regarding the crew's destination.</b>";
 	name = "STERILIZATION ORDERS";
 	desc = "These are particularly boring for what they entail."
 	},
@@ -1039,7 +1039,7 @@
 "oj" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
-	id = "blackbeard exterior bolts"
+	id = "brutus exterior bolts"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/infested_frigate{
@@ -1507,7 +1507,7 @@
 	})
 "vj" = (
 /obj/machinery/door/poddoor{
-	id = "blackbeardexterior";
+	id = "Brutusexterior";
 	closingLayer = 2.65
 	},
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
@@ -1592,7 +1592,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/door/airlock/highsecurity{
-	name = "SYN-C Blackbeard Armory";
+	name = "SYN-C Brutus Armory";
 	welded = 1;
 	req_access = list("syndicate")
 	},
@@ -1769,7 +1769,8 @@
 	})
 "xR" = (
 /obj/machinery/power/shuttle_engine/propulsion{
-	dir = 8
+	dir = 8;
+	max_integrity = 2000
 	},
 /turf/open/floor/plating,
 /area/ruin/space/infested_frigate{
@@ -2637,8 +2638,9 @@
 	has_gravity = 1
 	})
 "Jy" = (
-/obj/machinery/porta_turret/syndicate/shuttle{
-	dir = 8
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8;
+	max_integrity = 2000
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/infested_frigate{
@@ -2990,8 +2992,8 @@
 	dir = 1
 	},
 /obj/machinery/button/door{
-	id = "blackbeardexterior";
-	name = "Blackbeard exterior blast door control";
+	id = "brutusexterior";
+	name = "Brutus exterior blast door control";
 	pixel_y = -26;
 	req_access = list("syndicate")
 	},
@@ -3304,7 +3306,7 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /obj/structure/door_assembly/door_assembly_hatch{
-	name = "SYN-C Blackbeard Bridge"
+	name = "SYN-C Brutus Bridge"
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/infested_frigate{
@@ -3364,7 +3366,8 @@
 	})
 "SB" = (
 /obj/machinery/power/shuttle_engine/large{
-	dir = 8
+	dir = 8;
+	max_integrity = 2000
 	},
 /turf/open/floor/plating,
 /area/ruin/space/infested_frigate{
@@ -3563,7 +3566,7 @@
 /obj/structure/cable,
 /obj/structure/barricade/security,
 /obj/structure/door_assembly/door_assembly_hatch{
-	name = "SYN-C Blackbeard Bridge"
+	name = "SYN-C Brutus Bridge"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium/red,
