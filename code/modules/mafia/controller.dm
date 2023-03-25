@@ -735,6 +735,7 @@
 					return
 				if(GLOB.mafia_signup[C.ckey])
 					GLOB.mafia_signup -= C.ckey
+					GLOB.mafia_early_votes -= C.ckey //Remove their early start vote as well
 					to_chat(usr, span_notice("You unregister from Mafia."))
 					return TRUE
 				else
@@ -752,6 +753,24 @@
 					to_chat(usr, span_notice("You will now get messages from the game."))
 					spectators += C.ckey
 				return TRUE
+			if("vote_to_start")
+				if(phase != MAFIA_PHASE_SETUP)
+					to_chat(usr, span_notice("You cannot vote to start while a game is underway!"))
+					return
+				if(!GLOB.mafia_signup[C.ckey])
+					to_chat(usr, span_notice("You must be signed up for this game to vote!"))
+					return
+				if(GLOB.mafia_early_votes[C.ckey])
+					GLOB.mafia_early_votes -= C.ckey
+					to_chat(usr, span_notice("You are no longer voting to start the game early."))
+					return TRUE
+				else
+					GLOB.mafia_early_votes[C.ckey] = C
+					to_chat(usr, span_notice("You vote to start the game early."))
+					if(check_start_votes())
+						forced_setup()
+					return TRUE
+
 	if(user_role && user_role.game_status == MAFIA_DEAD)
 		return
 	//User actions (just living)
@@ -944,10 +963,11 @@
 /**
  * Generates a forced role list and runs the game with the current number of signed-up players.
  *
- *
+ * Generates a randomized setup, and begins the game with everyone currently signed up.
  */
 
 /datum/mafia_controller/proc/forced_setup()
+	check_signups() //Refresh the signup list, so our numbers are accurate and we only take active players into consideration.
 	var/list/filtered_keys = filter_players(length(GLOB.mafia_signup))
 	var/req_players = length(filtered_keys)
 
@@ -961,10 +981,30 @@
 	start_game()
 
 /**
- * Handles the filtering of disconected signups when starting a round.
+ * Checks if we have enough early start votes to begin the game early.
  *
- * Filters out the player list, from a given max_players count. If more signed-up players
- * are found during this process, they are
+ * Checks if we have the bare minimum of three signups, then checks if the number of early voters is at least half of the total
+ * number of active signups.
+ */
+
+/datum/mafia_controller/proc/check_start_votes()
+	check_signups() //Same as before. What a useful proc.
+
+	if(length(GLOB.mafia_early_votes) < 3)
+		return FALSE
+
+	if(length(GLOB.mafia_early_votes) < GLOB.mafia_signup / 2)
+		return FALSE
+
+	return TRUE
+
+/**
+ * Handles the filtering of disconected signups when picking who gets to be in the round.
+ *
+ * Filters out the player list, from a given max_players count. If more players are found
+ * in the signup list than max_players, those players will be notified that they will not be put into the game.
+ *
+ * This should only be run as we are in the process of starting a game.
  */
 /datum/mafia_controller/proc/filter_players(max_players)
 	//final list for all the players who will be in this game

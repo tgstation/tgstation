@@ -114,6 +114,17 @@ const MafiaLobby = (props, context) => {
             content="Spectate"
             onClick={() => act('mf_spectate')}
           />
+          <Button
+            icon="arrow-right"
+            tooltipPosition="bottom-start"
+            tooltip={multiline`
+              Submit a vote to start the game early.
+              Starts when half of the current signup list have voted to start.
+              Requires a bare minimum of three players.
+            `}
+            content="Start Now!"
+            onClick={() => act('vote_to_start')}
+          />
         </>
       }>
       <NoticeBox info>
