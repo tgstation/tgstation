@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - refactor: "Stickers use a component and an element now to do their sticking"
