@@ -252,6 +252,8 @@
 			continue
 		victim_belongings.Add(belonging)
 
+	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
+
 	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
 	if(cargo_account) //Just in case
@@ -320,6 +322,8 @@
 
 	for(var/obj/item/belonging in victim_belongings)
 		belonging.forceMove(return_pod)
+
+	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
 
 	sent_mob.forceMove(return_pod)
 	sent_mob.flash_act()
