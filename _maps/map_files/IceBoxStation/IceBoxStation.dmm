@@ -19351,7 +19351,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
 "gdS" = (
-/obj/effect/turf_decal/trimline,
 /obj/machinery/shower/directional/north,
 /obj/structure/sign/warning/gas_mask/directional/south{
 	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals."
@@ -20931,7 +20930,6 @@
 /area/station/service/hydroponics)
 "gEQ" = (
 /obj/machinery/shower/directional/east,
-/obj/effect/turf_decal/trimline,
 /obj/structure/sign/warning/gas_mask{
 	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
 	pixel_x = -29
@@ -22316,7 +22314,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
 "hdb" = (
-/obj/effect/turf_decal/trimline,
 /obj/machinery/shower/directional/south,
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
@@ -40938,7 +40935,6 @@
 /area/station/security/brig/upper)
 "ncO" = (
 /obj/machinery/shower/directional/east,
-/obj/effect/turf_decal/trimline,
 /obj/structure/sign/warning/gas_mask{
 	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
 	pixel_x = -29
