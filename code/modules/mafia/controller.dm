@@ -763,13 +763,12 @@
 				if(GLOB.mafia_early_votes[C.ckey])
 					GLOB.mafia_early_votes -= C.ckey
 					to_chat(usr, span_notice("You are no longer voting to start the game early."))
-					return TRUE
 				else
 					GLOB.mafia_early_votes[C.ckey] = C
-					to_chat(usr, span_notice("You vote to start the game early."))
-					if(check_start_votes())
+					to_chat(usr, span_notice("You vote to start the game early ([length(GLOB.mafia_early_votes)] out of [round(length(GLOB.mafia_signup) / 2)])."))
+					if(check_start_votes()) //See if we have enough votes to start
 						forced_setup()
-					return TRUE
+				return TRUE
 
 	if(user_role && user_role.game_status == MAFIA_DEAD)
 		return
@@ -991,9 +990,9 @@
 	check_signups() //Same as before. What a useful proc.
 
 	if(length(GLOB.mafia_early_votes) < 3)
-		return FALSE
+		return FALSE //Bare minimum is 3, otherwise the game instantly ends. Also prevents people from randomly starting games for no reason.
 
-	if(length(GLOB.mafia_early_votes) < GLOB.mafia_signup / 2)
+	if(length(GLOB.mafia_early_votes) < length(GLOB.mafia_signup) / 2)
 		return FALSE
 
 	return TRUE
