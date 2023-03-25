@@ -32,7 +32,7 @@
 	ADD_TRAIT(src, TRAIT_FLOORED, STAMINA)
 	filters += FILTER_STAMINACRIT
 
-	addtimer(CALLBACK(src, .proc/exit_stamina_stun), STAMINA_STUN_TIME)
+	addtimer(CALLBACK(src, PROC_REF(exit_stamina_stun)), STAMINA_STUN_TIME)
 
 /mob/living/carbon/exit_stamina_stun()
 	REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
