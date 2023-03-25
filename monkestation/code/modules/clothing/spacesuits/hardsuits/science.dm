@@ -13,7 +13,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/toxins/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
+	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, PROC_REF(sense_explosion))
 
 /obj/item/clothing/head/helmet/space/hardsuit/toxins/equipped(mob/living/carbon/human/user, slot)
 	..()

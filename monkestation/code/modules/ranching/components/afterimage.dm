@@ -19,9 +19,9 @@
 		added_image.finalized_alpha = 100
 		after_images |= added_image
 
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/move)
-	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/change_dir)
-	RegisterSignal(parent, COMSIG_MOVABLE_THROW_LANDED, .proc/throw_landed)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(move))
+	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(change_dir))
+	RegisterSignal(parent, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(throw_landed))
 
 /datum/component/after_image/RegisterWithParent()
 	for(var/obj/after_image/listed_image in src.after_images)

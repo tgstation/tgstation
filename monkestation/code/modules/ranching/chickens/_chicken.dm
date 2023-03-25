@@ -186,7 +186,7 @@
 		return
 	applied_visual = mutable_appearance('monkestation/icons/effects/ranching_text.dmi', "chicken_[method]", FLOAT_LAYER, plane = src.plane)
 	add_overlay(applied_visual)
-	addtimer(CALLBACK(src, .proc/remove_visual), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(remove_visual)), 3 SECONDS)
 
 /mob/living/simple_animal/chicken/proc/remove_visual()
 	cut_overlay(applied_visual)

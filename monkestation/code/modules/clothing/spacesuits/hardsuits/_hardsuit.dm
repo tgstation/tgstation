@@ -230,8 +230,8 @@
 		air_contents = null
 		return
 	active_hardsuit = loc
-	RegisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED, .proc/on_hardsuit_moved)
-	RegisterSignal(active_user, COMSIG_PARENT_QDELETING, .proc/on_user_del)
+	RegisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED, PROC_REF(on_hardsuit_moved))
+	RegisterSignal(active_user, COMSIG_PARENT_QDELETING, PROC_REF(on_user_del))
 
 	START_PROCESSING(SSobj, src)
 
@@ -255,7 +255,7 @@
 	if(istype(loc, /obj/item/clothing/suit/space/hardsuit) && ishuman(loc.loc) && loc.loc == active_user)
 		UnregisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED)
 		active_hardsuit = loc
-		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, .proc/on_hardsuit_moved)
+		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, PROC_REF(on_hardsuit_moved))
 		return
 	turn_off(active_user)
 

@@ -35,7 +35,7 @@
 	owner.alpha = 155
 	base_color = owner.color
 	owner.color = "#018eb9"
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/create_ice)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(create_ice))
 	return ..()
 
 /datum/status_effect/ranching/snowy/tick()

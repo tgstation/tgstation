@@ -14,9 +14,9 @@
 /datum/component/carbon_sprint/RegisterWithParent()
 	. = ..()
 	carbon_parent = parent
-	RegisterSignal(carbon_parent, COMSIG_MOB_CLIENT_PRE_MOVE, .proc/onMobMove)
-	RegisterSignal(carbon_parent, COMSIG_KB_CARBON_SPRINT_DOWN, .proc/keyDown)
-	RegisterSignal(carbon_parent, COMSIG_KB_CARBON_SPRINT_UP, .proc/keyUp)
+	RegisterSignal(carbon_parent, COMSIG_MOB_CLIENT_PRE_MOVE, PROC_REF(onMobMove))
+	RegisterSignal(carbon_parent, COMSIG_KB_CARBON_SPRINT_DOWN, PROC_REF(keyDown))
+	RegisterSignal(carbon_parent, COMSIG_KB_CARBON_SPRINT_UP, PROC_REF(keyUp))
 
 /datum/component/carbon_sprint/UnregisterFromParent()
 	. = ..()

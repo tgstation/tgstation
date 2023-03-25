@@ -101,7 +101,7 @@
 /obj/item/organ/internal/heart/cybernetic/ipc/emp_act()
 	. = ..()
 	to_chat(owner, "<span class='warning'>Alert: Cybernetic heart failed one heartbeat</span>")
-	addtimer(CALLBACK(src, .proc/Restart), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(Restart)), 10 SECONDS)
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"

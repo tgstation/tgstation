@@ -362,6 +362,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PERMANENTLY_ONFIRE "permanently_onfire"
 /// Indicates if the mob is currently speaking with sign language
 #define TRAIT_SIGN_LANG "sign_language"
+/// The mob's nanites are sending a monitoring signal visible on diag HUD
+#define TRAIT_NANITE_MONITORING "nanite_monitoring"
 /// This mob is able to use sign language over the radio.
 #define TRAIT_CAN_SIGN_ON_COMMS "can_sign_on_comms"
 /// nobody can use martial arts on this mob
@@ -843,6 +845,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define EYES_COVERED "eyes_covered"
 #define NO_EYES "no_eyes"
 #define HYPNOCHAIR_TRAIT "hypnochair"
+#define NANITES_TRAIT "nanites"
 #define FLASHLIGHT_EYES "flashlight_eyes"
 #define IMPURE_OCULINE "impure_oculine"
 #define TRAIT_SANTA "santa"

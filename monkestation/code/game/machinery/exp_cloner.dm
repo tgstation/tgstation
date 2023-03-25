@@ -233,7 +233,7 @@
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 		say("Initiating scan...")
 
-		addtimer(CALLBACK(src, .proc/do_clone), 2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(do_clone)), 2 SECONDS)
 
 		//No locking an open scanner.
 	else if ((href_list["lock"]) && !isnull(scanner) && scanner.is_operational)

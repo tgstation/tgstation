@@ -46,6 +46,9 @@
 /// Mech camera HUD
 #define DIAG_CAMERA_HUD "22"
 
+#define NANITE_HUD "23"
+#define DIAG_NANITE_FULL_HUD "24"
+
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
 #define HUD_LIST_LIST 1

@@ -12,7 +12,7 @@
 	if(!src.interaction_callback)
 		src.interaction_callback = CALLBACK(target, on_interaction_callback)
 
-	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/AfterAttack) //The only signal allowing item -> turf interaction
+	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(AfterAttack)) //The only signal allowing item -> turf interaction
 
 /datum/element/liquids_interaction/Detach(mob/living/target)
 	. = ..()

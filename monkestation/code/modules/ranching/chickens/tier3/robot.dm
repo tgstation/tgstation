@@ -14,7 +14,7 @@
 
 /mob/living/simple_animal/chicken/robot/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_HOSTILE_ATTACKINGTARGET, .proc/emp_burst)
+	RegisterSignal(src, COMSIG_HOSTILE_ATTACKINGTARGET, PROC_REF(emp_burst))
 
 /mob/living/simple_animal/chicken/robot/Destroy()
 	. = ..()

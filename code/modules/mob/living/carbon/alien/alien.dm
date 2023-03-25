@@ -128,6 +128,10 @@ Des: Removes all infected images from the alien.
 	if(mind)
 		mind.name = new_xeno.real_name
 		mind.transfer_to(new_xeno)
+	var/datum/component/nanites/nanites = GetComponent(/datum/component/nanites)
+	if(nanites)
+		new_xeno.AddComponent(/datum/component/nanites, nanites.nanite_volume)
+		SEND_SIGNAL(new_xeno, COMSIG_NANITE_SYNC, nanites)
 	qdel(src)
 
 /mob/living/carbon/alien/can_hold_items(obj/item/I)

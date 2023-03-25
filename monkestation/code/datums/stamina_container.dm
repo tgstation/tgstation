@@ -46,7 +46,7 @@
 ///Pause stamina regeneration for some period of time. Does not support doing this from multiple sources at once because I do not do that and I will add it later if I want to.
 /datum/stamina_container/proc/pause(time)
 	is_regenerating = FALSE
-	addtimer(CALLBACK(src, .proc/resume), time)
+	addtimer(CALLBACK(src, PROC_REF(resume)), time)
 
 ///Stops stamina regeneration entirely until manually resumed.
 /datum/stamina_container/proc/stop()
