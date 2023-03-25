@@ -27,14 +27,14 @@
 	var/list/possible_backstories = list()
 	var/list/candidates = get_candidates(ROLE_FUGITIVE, ROLE_FUGITIVE)
 
+	if(!length(candidates))
+		return NOT_ENOUGH_PLAYERS
+
 	if(length(candidates) < LARGE_BACKSTORY_SIZE || prob(30 - (length(candidates) * 2))) //Solo backstories are always considered if a larger backstory cannot be filled out. Otherwise, it's a rare chance that gets rarer if more people sign up.
 		possible_backstories += list("waldo") //less common as it comes with magicks and is kind of immershun shattering
 
 	if(length(candidates) >= LARGE_BACKSTORY_SIZE)//group refugees
 		possible_backstories += list("prisoner", "cultist", "synth")
-
-	if(!length(possible_backstories))
-		return NOT_ENOUGH_PLAYERS
 
 	var/backstory = pick(possible_backstories)
 	var/member_size = 3
@@ -53,8 +53,8 @@
 		members += pick_n_take(candidates)
 
 	for(var/mob/dead/selected in members)
-		var/mob/living/carbon/human/human_to_gear = gear_fugitive(selected, landing_turf, backstory)
-		spawned_mobs += human_to_gear
+		var/mob/living/carbon/human/S = gear_fugitive(selected, landing_turf, backstory)
+		spawned_mobs += S
 
 	if(!isnull(leader))
 		gear_fugitive_leader(leader, landing_turf, backstory)
