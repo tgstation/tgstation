@@ -1,7 +1,8 @@
-#A list of maps valid to blacklist can be found in _maps\RandomRuins\SpaceRuins
 #Listing maps here will blacklist them from generating in space.
 #Maps must be the full path to them
+#A list of maps valid to blacklist can be found in _maps\RandomRuins\SpaceRuins
 #SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
+
 #_maps/RandomRuins/SpaceRuins/abandonedteleporter.dmm
 #_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm
 #_maps/RandomRuins/SpaceRuins/asteroid1.dmm
@@ -38,8 +39,8 @@
 #_maps/RandomRuins/SpaceRuins/listeningstation.dmm
 #_maps/RandomRuins/SpaceRuins/mechtransport.dmm
 #_maps/RandomRuins/SpaceRuins/mrow_thats_right
-#_maps/RandomRuins/SpaceRuins/oldAIsat.dmm
 #_maps/RandomRuins/SpaceRuins/old_infiltrator.dmm
+#_maps/RandomRuins/SpaceRuins/oldAIsat.dmm
 #_maps/RandomRuins/SpaceRuins/oldstation.dmm
 #_maps/RandomRuins/SpaceRuins/oldteleporter.dmm
 #_maps/RandomRuins/SpaceRuins/onehalf.dmm
@@ -52,6 +53,7 @@
 #_maps/RandomRuins/SpaceRuins/spinwardsmoothies.dmm
 #_maps/RandomRuins/SpaceRuins/the_faceoff.dmm
 #_maps/RandomRuins/SpaceRuins/thelizardsgas.dmm
+#_maps/RandomRuins/SpaceRuins/travelers_rest.dmm
 #_maps/RandomRuins/SpaceRuins/turretedoutpost.dmm
 #_maps/RandomRuins/SpaceRuins/vaporwave.dmm
 #_maps/RandomRuins/SpaceRuins/way_home.dmm

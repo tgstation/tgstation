@@ -11,8 +11,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -63,15 +62,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
 /obj/machinery/button/door/directional/south{
 	id = "caravanpirate_bolt_starboard";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
 	specialfunctions = 4
+	},
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/shuttle/ruin/caravan/pirate)
@@ -91,8 +89,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -134,8 +131,7 @@
 /area/shuttle/ruin/caravan/pirate)
 "lD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -151,10 +147,10 @@
 	pixel_y = -30;
 	req_access = null
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /mob/living/simple_animal/hostile/pirate/ranged{
 	environment_smash = 0
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
 "me" = (
@@ -201,11 +197,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -392,8 +384,7 @@
 	name = "Bridge Blast Door Control";
 	pixel_x = -16
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -408,11 +399,8 @@
 /obj/machinery/computer/shuttle/caravan/pirate{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
@@ -494,11 +482,8 @@
 /area/shuttle/ruin/caravan/pirate)
 "Fn" = (
 /obj/machinery/light/small/directional/west,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
 	},
 /turf/open/floor/iron,
 /area/shuttle/ruin/caravan/pirate)
@@ -603,10 +588,7 @@
 /area/shuttle/ruin/caravan/pirate)
 "JP" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/caravan/pirate,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -633,11 +615,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
@@ -744,12 +723,12 @@
 "Ry" = (
 /obj/structure/rack,
 /obj/item/storage/bag/money/vault,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /mob/living/simple_animal/parrot{
 	faction = list("pirate");
 	name = "Pegwing"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
@@ -766,10 +745,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
 "Vh" = (

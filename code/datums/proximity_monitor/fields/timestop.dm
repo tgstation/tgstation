@@ -19,13 +19,18 @@
 	var/antimagic_flags = NONE
 	///if true, immune atoms moving ends the timestop instead of duration.
 	var/channelled = FALSE
+	/// hides time icon effect and mutes sound
+	var/hidden = FALSE
 
-/obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE) //Immune atoms assoc list atom = TRUE
+/obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE, silent = FALSE) //Immune atoms assoc list atom = TRUE
 	. = ..()
 	if(!isnull(time))
 		duration = time
 	if(!isnull(radius))
 		freezerange = radius
+	if(silent)
+		hidden = TRUE
+		alpha = 0
 	for(var/A in immune_atoms)
 		immune[A] = TRUE
 	for(var/mob/living/to_check in GLOB.player_list)
@@ -39,12 +44,14 @@
 
 /obj/effect/timestop/Destroy()
 	QDEL_NULL(chronofield)
-	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, frequency = -1) //reverse!
+	if(!hidden)
+		playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, frequency = -1) //reverse!
 	return ..()
 
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
-	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, -1)
+	if(!hidden)
+		playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, -1)
 	chronofield = new (src, freezerange, TRUE, immune, antimagic_flags, channelled)
 	if(!channelled)
 		QDEL_IN(src, duration)
