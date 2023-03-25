@@ -43,17 +43,16 @@
 		/datum/element/contextual_screentip_bare_hands, \
 		rmb_text = "Toggle power", \
 	)
+	register_context()
 
-	var/static/list/tool_behaviors = list(
-		TOOL_SCREWDRIVER = list(
-			SCREENTIP_CONTEXT_LMB = "[panel_open ? "Close" : "Open"] hatch",
-		),
-
-		TOOL_WRENCH = list(
-			SCREENTIP_CONTEXT_LMB = "[anchored ? "Unan" : "An"]chor",
-		),
-	)
-	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+/obj/machinery/electrolyzer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(held_item)
+		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] hatch"
+		if(held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unan" : "An"]chor"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/electrolyzer/Destroy()
 	if(cell)
