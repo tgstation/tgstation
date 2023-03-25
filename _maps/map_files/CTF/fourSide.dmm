@@ -3,23 +3,13 @@
 /turf/open/floor/circuit/green/off,
 /area/centcom/ctf)
 "aL" = (
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "bF" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "bI" = (
@@ -27,8 +17,8 @@
 /turf/open/floor/plating,
 /area/centcom/ctf)
 "cj" = (
-/obj/effect/turf_decal/tile/green/fourcorners,
 /obj/structure/fluff/drake_statue,
+/obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "cm" = (
@@ -40,22 +30,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "cC" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/ctf)
-"cI" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "cJ" = (
@@ -66,21 +41,14 @@
 /turf/open/floor/iron/white,
 /area/centcom/ctf)
 "dn" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "dr" = (
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
@@ -89,32 +57,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/centcom/ctf)
-"dG" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/ctf)
-"dI" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red,
-/turf/open/floor/iron/white,
 /area/centcom/ctf)
 "eF" = (
 /obj/machinery/capture_the_flag/blue,
@@ -130,35 +72,18 @@
 /obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/ctf)
-"fb" = (
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/structure/barricade/security/ctf,
-/turf/open/floor/iron/dark,
-/area/centcom/ctf)
 "hw" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "hU" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "ie" = (
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/ctf)
-"iy" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/barricade/security/ctf,
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "iF" = (
@@ -173,29 +98,14 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "kA" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "kX" = (
 /obj/structure/trap/ctf/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "lt" = (
@@ -212,12 +122,8 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "mG" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
@@ -244,10 +150,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/ctf)
 "qy" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -275,26 +178,13 @@
 /turf/open/floor/circuit/green/off,
 /area/centcom/ctf)
 "sr" = (
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "sP" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "th" = (
@@ -317,20 +207,6 @@
 	},
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
-"uN" = (
-/obj/structure/barricade/security/ctf,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/ctf)
 "wb" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -339,37 +215,20 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "wf" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
-/turf/open/floor/iron/dark,
-/area/centcom/ctf)
-"wg" = (
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/barricade/security/ctf,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "wA" = (
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "xc" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "xd" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "xx" = (
@@ -377,18 +236,8 @@
 /turf/open/floor/circuit/green/off,
 /area/centcom/ctf)
 "zp" = (
-/obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/structure/fluff/drake_statue,
-/turf/open/floor/iron/dark,
-/area/centcom/ctf)
-"zr" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "zw" = (
@@ -396,27 +245,9 @@
 /obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
-"Aa" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/ctf)
 "Ad" = (
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron,
-/area/centcom/ctf)
-"Ay" = (
-/obj/effect/turf_decal/tile/green/fourcorners,
-/obj/structure/barricade/security/ctf,
-/turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Bl" = (
 /obj/structure/barricade/security/ctf,
@@ -430,11 +261,8 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Ci" = (
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
@@ -464,25 +292,20 @@
 /turf/open/floor/circuit/green/off,
 /area/centcom/ctf)
 "Gm" = (
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Gn" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Gq" = (
-/obj/effect/turf_decal/tile/red/fourcorners,
 /obj/structure/fluff/drake_statue,
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Gv" = (
@@ -491,40 +314,29 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Ho" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "HY" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Iu" = (
-/obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/structure/trap/ctf/yellow,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Jq" = (
-/obj/effect/turf_decal/tile/green/fourcorners,
 /obj/structure/trap/ctf/green,
+/obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "JL" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Kj" = (
@@ -548,31 +360,19 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "MC" = (
-/obj/effect/turf_decal/tile/yellow{
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Nc" = (
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "NI" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -590,36 +390,20 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "PY" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Qw" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "QH" = (
 /obj/structure/fluff/drake_statue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "QS" = (
@@ -633,44 +417,8 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
-"RG" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/turf/open/floor/iron/dark,
-/area/centcom/ctf)
 "Sk" = (
 /obj/effect/turf_decal/tile/yellow,
-/turf/open/floor/iron/dark,
-/area/centcom/ctf)
-"TJ" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/centcom/ctf)
-"UA" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "UK" = (
@@ -678,11 +426,8 @@
 /turf/open/floor/iron/white,
 /area/centcom/ctf)
 "Xi" = (
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
@@ -697,11 +442,8 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "XZ" = (
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
@@ -840,15 +582,15 @@ cJ
 cJ
 cJ
 cJ
-dI
-dI
-dI
-dI
-dI
-dI
-dI
-dI
-dI
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
 cJ
 cJ
 cJ
@@ -1156,15 +898,15 @@ cJ
 cJ
 cJ
 cJ
-dI
-dI
-dI
-dI
-dI
-dI
-dI
-dI
-dI
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
 cJ
 cJ
 cJ
@@ -1229,7 +971,7 @@ cJ
 ab
 ab
 ab
-Aa
+YJ
 ab
 ab
 ab
@@ -1249,7 +991,7 @@ Lz
 ab
 ab
 ab
-Aa
+YJ
 ab
 ab
 ab
@@ -1308,7 +1050,7 @@ cJ
 ab
 ab
 ab
-uN
+QX
 ab
 ab
 ab
@@ -1328,7 +1070,7 @@ Lz
 ab
 ab
 ab
-uN
+QX
 ab
 ab
 ab
@@ -1386,9 +1128,9 @@ DJ
 cJ
 ab
 ab
-Aa
-uN
-Aa
+YJ
+QX
+YJ
 ab
 ab
 Lz
@@ -1406,9 +1148,9 @@ cJ
 Lz
 ab
 ab
-Aa
-uN
-Aa
+YJ
+QX
+YJ
 ab
 ab
 cJ
@@ -1465,9 +1207,9 @@ DJ
 cJ
 ab
 sq
-uN
-uN
-uN
+QX
+QX
+QX
 sq
 ab
 Lz
@@ -1485,9 +1227,9 @@ cJ
 Lz
 ab
 sq
-uN
-uN
-uN
+QX
+QX
+QX
 sq
 ab
 cJ
@@ -1544,9 +1286,9 @@ DJ
 cJ
 ab
 ab
-Aa
-uN
-Aa
+YJ
+QX
+YJ
 ab
 ab
 Lz
@@ -1564,9 +1306,9 @@ cJ
 Lz
 ab
 ab
-Aa
-uN
-Aa
+YJ
+QX
+YJ
 ab
 ab
 cJ
@@ -1624,7 +1366,7 @@ cJ
 ab
 ab
 ab
-uN
+QX
 ab
 ab
 ab
@@ -1644,7 +1386,7 @@ Lz
 ab
 ab
 ab
-uN
+QX
 ab
 ab
 ab
@@ -1703,7 +1445,7 @@ cJ
 ab
 ab
 ab
-Aa
+YJ
 ab
 ab
 ab
@@ -1723,7 +1465,7 @@ Lz
 ab
 ab
 ab
-Aa
+YJ
 ab
 ab
 ab
@@ -1782,7 +1524,7 @@ cJ
 ab
 ab
 ab
-Aa
+YJ
 ab
 ab
 ab
@@ -1802,7 +1544,7 @@ ab
 ab
 ab
 ab
-Aa
+YJ
 ab
 ab
 ab
@@ -1861,7 +1603,7 @@ cJ
 ab
 ab
 ab
-Aa
+YJ
 ab
 ab
 ab
@@ -1881,7 +1623,7 @@ ab
 ab
 ab
 ab
-Aa
+YJ
 ab
 ab
 ab
@@ -1939,9 +1681,9 @@ cJ
 cJ
 ab
 ab
-Aa
-Aa
-uN
+YJ
+YJ
+QX
 ab
 ab
 ab
@@ -1949,9 +1691,9 @@ ab
 ab
 ab
 ab
-Aa
-Aa
-Aa
+YJ
+YJ
+YJ
 ab
 ab
 ab
@@ -1959,9 +1701,9 @@ ab
 ab
 ab
 ab
-uN
-Aa
-Aa
+QX
+YJ
+YJ
 ab
 ab
 cJ
@@ -2018,29 +1760,29 @@ cm
 EZ
 ab
 ab
-Aa
-Aa
-uN
-Aa
-Aa
-Aa
-Aa
-Aa
-Aa
-Aa
-Aa
-Aa
-Aa
-Aa
-Aa
-Aa
-Aa
-Aa
-Aa
-Aa
-uN
-Aa
-Aa
+YJ
+YJ
+QX
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+YJ
+QX
+YJ
+YJ
 ab
 ab
 EZ
@@ -2097,9 +1839,9 @@ cm
 EZ
 ab
 ab
-uN
-uN
-uN
+QX
+QX
+QX
 ab
 ab
 ab
@@ -2107,9 +1849,9 @@ ab
 ab
 sq
 ab
-Aa
-Aa
-Aa
+YJ
+YJ
+YJ
 ab
 sq
 ab
@@ -2117,9 +1859,9 @@ ab
 ab
 ab
 ab
-uN
-uN
-uN
+QX
+QX
+QX
 ab
 ab
 EZ
@@ -2187,7 +1929,7 @@ ab
 sq
 sq
 ab
-Aa
+YJ
 ab
 sq
 sq
@@ -2266,7 +2008,7 @@ ab
 ab
 ab
 ab
-Aa
+YJ
 ab
 ab
 ab
@@ -3455,7 +3197,7 @@ ab
 QS
 PD
 mC
-RG
+YJ
 ab
 cJ
 wA
@@ -3488,7 +3230,7 @@ df
 df
 df
 df
-TJ
+df
 lt
 "}
 (36,1,1) = {"
@@ -3532,8 +3274,8 @@ JL
 dy
 ab
 QS
-UA
-RG
+mG
+YJ
 tj
 ab
 cJ
@@ -3567,7 +3309,7 @@ df
 df
 df
 df
-TJ
+df
 lt
 "}
 (37,1,1) = {"
@@ -3607,11 +3349,11 @@ bI
 ab
 LT
 JL
-Ay
+zw
 dy
 ab
 QS
-wg
+QX
 mG
 PD
 ab
@@ -3646,7 +3388,7 @@ df
 df
 df
 df
-TJ
+df
 lt
 "}
 (38,1,1) = {"
@@ -3725,7 +3467,7 @@ df
 df
 ab
 df
-TJ
+df
 lt
 "}
 (39,1,1) = {"
@@ -3804,7 +3546,7 @@ df
 ab
 FW
 ab
-TJ
+df
 lt
 "}
 (40,1,1) = {"
@@ -3883,7 +3625,7 @@ df
 df
 ab
 df
-TJ
+df
 lt
 "}
 (41,1,1) = {"
@@ -3922,12 +3664,12 @@ wA
 cJ
 ab
 OO
-zr
-iy
+Ho
+Gv
 lZ
 ab
 CH
-fb
+Bl
 kA
 CW
 ab
@@ -3962,7 +3704,7 @@ df
 df
 df
 df
-TJ
+df
 lt
 "}
 (42,1,1) = {"
@@ -4006,7 +3748,7 @@ Ho
 lZ
 ab
 CH
-cI
+kA
 XF
 Yv
 ab
@@ -4041,7 +3783,7 @@ df
 df
 df
 df
-TJ
+df
 lt
 "}
 (43,1,1) = {"
@@ -4120,7 +3862,7 @@ df
 df
 df
 df
-TJ
+df
 lt
 "}
 (44,1,1) = {"
@@ -6442,9 +6184,9 @@ DJ
 DJ
 DJ
 cJ
-dG
-dG
-dG
+rE
+rE
+rE
 sP
 sP
 sP
@@ -6462,9 +6204,9 @@ Yq
 sP
 sP
 sP
-dG
-dG
-dG
+rE
+rE
+rE
 cJ
 DJ
 DJ
@@ -6521,9 +6263,9 @@ DJ
 DJ
 DJ
 cJ
-dG
+rE
 QH
-dG
+rE
 sP
 sP
 sP
@@ -6541,9 +6283,9 @@ Yq
 sP
 sP
 sP
-dG
+rE
 QH
-dG
+rE
 cJ
 DJ
 DJ
@@ -6600,9 +6342,9 @@ DJ
 DJ
 DJ
 cJ
-dG
-dG
-dG
+rE
+rE
+rE
 sP
 sP
 sP
@@ -6620,9 +6362,9 @@ Yq
 sP
 sP
 sP
-dG
-dG
-dG
+rE
+rE
+rE
 cJ
 DJ
 DJ
