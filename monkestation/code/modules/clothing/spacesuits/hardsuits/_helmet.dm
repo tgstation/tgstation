@@ -10,6 +10,7 @@
 	light_range = 4
 	light_power = 1
 	light_on = FALSE
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_ON
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF

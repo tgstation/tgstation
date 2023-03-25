@@ -8,6 +8,7 @@
 	worn_icon = 'monkestation/icons/mob/clothing/hardsuit/hardsuit_body.dmi'
 	icon_state = "hardsuit-engineering"
 	max_integrity = 300
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_ON
 	armor_type = /datum/armor/hardsuit
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser)
 	siemens_coefficient = 0
