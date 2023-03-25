@@ -748,6 +748,7 @@
 		H.adjustBruteLoss(-4 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 		H.adjustFireLoss(-4 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
+	. = ..()
 
 /datum/species/golem/cloth
 	name = "Cloth Golem"

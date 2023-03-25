@@ -35,6 +35,7 @@
 		playsound(H, 'sound/weapons/sear.ogg', 30, TRUE)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
 		return TRUE
+	. = ..()
 
 /datum/species/snail/on_species_gain(mob/living/carbon/new_snailperson, datum/species/old_species, pref_load)
 	. = ..()
