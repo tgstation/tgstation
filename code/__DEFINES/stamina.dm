@@ -4,7 +4,7 @@
 ///Time before regen starts when hit with stam damage
 #define STAMINA_REGEN_TIME (2 SECONDS)
 ///The amount of stamina a carbon recovers every 2 seconds
-#define STAMINA_REGEN 10
+#define STAMINA_REGEN 15
 
 #define ATTACK_DO_NOTHING (0<<0)
 #define ATTACK_HANDLED (1<<1)
@@ -66,9 +66,9 @@
 ///The amount of tiles you need to move to be considered moving in a sustained sprint
 #define STAMINA_SUSTAINED_SPRINT_THRESHOLD 8
 ///The amount of stamina required to sprint
-#define STAMINA_MIN2SPRINT_MODIFER 0.4 //Same as exhaustion threshold
+#define STAMINA_MIN2SPRINT_MODIFER 0.45 //Slightly above exhaustion threshold
 ///How much stamina is taken per tile while sprinting
-#define STAMINA_SPRINT_COST 6
+#define STAMINA_SPRINT_COST 3
 
 ////
 /// GRAPPLING
