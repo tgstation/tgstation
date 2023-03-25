@@ -83,11 +83,9 @@
 /datum/traitor_objective/kidnapping/common/assistant
 	progression_minimum = 0 MINUTES
 	progression_maximum = 15 MINUTES
-	telecrystal_reward = list(1, 2)
 	target_jobs = list(
 		/datum/job/assistant
 	)
-	alive_bonus = 1
 
 /datum/traitor_objective/kidnapping/uncommon //Hard to fish out victims
 	progression_minimum = 0 MINUTES
