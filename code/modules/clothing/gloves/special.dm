@@ -141,5 +141,5 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 	siemens_coefficient = 0.3
-	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_CHUNKYFINGERS)
+	clothing_traits = list(TRAIT_QUICKER_CARRY)
 	clothing_flags = THICKMATERIAL
