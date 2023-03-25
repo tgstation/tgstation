@@ -103,10 +103,6 @@
 "bW" = (
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
-"ch" = (
-/mob/living/basic/viscerator,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/waystation/securestorage)
 "cn" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /turf/open/floor/wood,
@@ -758,6 +754,13 @@
 /obj/machinery/light/dim/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
+"nh" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 1;
+	icon_state = "pile"
+	},
+/turf/open/space/basic,
+/area/template_noop)
 "nj" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -1110,6 +1113,7 @@
 /area/ruin/space/has_grav/waystation/cargooffice)
 "tB" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/structure/grille,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/waystation/assaultpod)
 "ub" = (
@@ -1118,8 +1122,9 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
 "ur" = (
+/obj/structure/grille,
 /obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ut" = (
 /obj/effect/turf_decal/bot,
@@ -1160,6 +1165,13 @@
 /obj/structure/plasticflaps,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
+"vj" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
+/turf/open/space/basic,
+/area/template_noop)
 "vn" = (
 /obj/effect/turf_decal/siding/red{
 	dir = 1
@@ -1169,7 +1181,6 @@
 	name = "Vault Lockdown";
 	desc = "A door remote control switch. From the looks of it, It seems to be broken after being pressed too hard, it's bloody handprint still visible."
 	},
-/mob/living/basic/viscerator,
 /obj/item/modular_computer/laptop/preset/civilian,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
@@ -1424,6 +1435,13 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/qm)
+"zV" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 8;
+	icon_state = "pile"
+	},
+/turf/closed/mineral/random/low_chance,
+/area/ruin/space)
 "zZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -1690,6 +1708,13 @@
 /obj/effect/mob_spawn/corpse/human/waystation/cargo_technician,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
+"GW" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 8;
+	icon_state = "pile"
+	},
+/turf/open/space/basic,
+/area/template_noop)
 "Hu" = (
 /obj/machinery/door/airlock/mining,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2634,7 +2659,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/mob/living/basic/viscerator,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
 "WU" = (
@@ -4388,7 +4412,7 @@ hp
 hp
 lt
 hp
-Gx
+vj
 Gx
 Gx
 Gx
@@ -4443,7 +4467,7 @@ TT
 Gx
 Gx
 Gx
-Gx
+GW
 yF
 lt
 hp
@@ -4597,7 +4621,7 @@ iJ
 iJ
 pK
 pK
-pK
+zV
 pK
 pK
 pK
@@ -4695,7 +4719,7 @@ Wd
 XF
 lt
 hp
-Gx
+nh
 lt
 Gx
 Gx
@@ -5283,7 +5307,7 @@ pK
 yi
 Ok
 jN
-ch
+er
 nD
 Ar
 yi
