@@ -76,7 +76,7 @@
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
 
-	if(default_pry_open(I))
+	if(default_pry_open(I, close_after_pry = TRUE))
 		return
 
 	if(default_deconstruction_crowbar(I))
