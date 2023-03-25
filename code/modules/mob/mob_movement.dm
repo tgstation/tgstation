@@ -265,6 +265,25 @@
 
 				L.forceMove(stepTurf)
 			L.setDir(direct)
+		if(INCORPOREAL_MOVE_EMINENCE)
+			var/turf/open/floor/stepTurf = get_step(L, direct)
+			if(stepTurf)
+				for(var/obj/effect/decal/cleanable/food/salt/S in stepTurf)
+					to_chat(L, span_warning("[capitalize(S)] не даёт пройти!"))
+					if(isrevenant(L))
+						var/mob/living/simple_animal/revenant/R = L
+						R.reveal(20)
+						R.stun(20)
+					return
+				if((stepTurf.turf_flags & NOJAUNT) && !istype(stepTurf, /turf/closed/wall/clockwork))
+					to_chat(L, span_warning("Странная аура блокирует путь."))
+					return
+				if (locate(/obj/effect/blessing, stepTurf))
+					to_chat(L, span_warning("Святая энергия блокирует мой путь!"))
+					return
+
+				L.forceMove(stepTurf)
+			L.setDir(direct)
 	return TRUE
 
 /**

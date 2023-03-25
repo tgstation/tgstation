@@ -144,11 +144,13 @@
 	cooldown_reduction_per_rank = 0
 	var/cog_cost
 
-/datum/action/cooldown/spell/eminence/IsAvailable()
+/datum/action/cooldown/spell/eminence/IsAvailable(feedback = FALSE)
 	var/mob/living/simple_animal/eminence/eminence = owner
 	if(!istype(eminence))
 		return FALSE
 	if(eminence.cogs < cog_cost)
+		if(feedback)
+			owner.balloon_alert(owner, "not enough cogs!")
 		return FALSE
 	return ..()
 
@@ -161,15 +163,15 @@
 	desc = "Телепортирует меня на Риби."
 	button_icon_state = "Abscond"
 
-/datum/action/cooldown/spell/eminence/reebe/cast(mob/living/user)
+/datum/action/cooldown/spell/eminence/reebe/cast(atom/cast_on)
 	. = ..()
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.celestial_gateway
 	if(G)
-		user.forceMove(get_turf(G))
-		SEND_SOUND(user, sound('sound/magic/magic_missile.ogg'))
-		flash_color(user, flash_color = "#AF0AAF", flash_time = 25)
+		owner.forceMove(get_turf(G))
+		SEND_SOUND(owner, sound('sound/magic/magic_missile.ogg'))
+		flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)
 	else
-		to_chat(user, span_warning("Ой-ой!"))
+		to_chat(owner, span_warning("Ой-ой!"))
 
 //=====Warp to station=====
 /datum/action/cooldown/spell/eminence/station
@@ -177,14 +179,14 @@
 	desc = "Телепортировать себя к станции."
 	button_icon_state = "warp_down"
 
-/datum/action/cooldown/spell/eminence/station/cast(mob/living/user)
+/datum/action/cooldown/spell/eminence/station/cast(atom/cast_on)
 	. = ..()
-	if(!is_station_level(user.z))
-		user.forceMove(get_turf(pick(GLOB.generic_event_spawns)))
-		SEND_SOUND(user, sound('sound/magic/magic_missile.ogg'))
-		flash_color(user, flash_color = "#AF0AAF", flash_time = 25)
+	if(!is_station_level(owner.z))
+		owner.forceMove(get_turf(pick(GLOB.generic_event_spawns)))
+		SEND_SOUND(owner, sound('sound/magic/magic_missile.ogg'))
+		flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)
 	else
-		to_chat(user, span_warning("Да я уже на станции!"))
+		to_chat(owner, span_warning("Да я уже на станции!"))
 
 //=====Teleport to servant=====
 /datum/action/cooldown/spell/eminence/servant_warp
@@ -192,10 +194,10 @@
 	desc = "Телепортировать себя к нему."
 	button_icon_state = "Spatial Warp"
 
-/datum/action/cooldown/spell/eminence/servant_warp/cast(mob/user)
+/datum/action/cooldown/spell/eminence/servant_warp/cast(atom/cast_on)
 	. = ..()
 	//Get a list of all servants
-	var/choice = tgui_input_list(user, "Выберем же его", "Перемещение к...", GLOB.all_servants_of_ratvar)
+	var/choice = tgui_input_list(owner, "Выберем же его", "Перемещение к...", GLOB.all_servants_of_ratvar)
 	if(!choice)
 		return
 	for(var/mob/living/L in GLOB.all_servants_of_ratvar)
@@ -203,16 +205,16 @@
 			choice = L
 			break
 	if(!isliving(choice))
-		to_chat(user, span_warning("Не могу!"))
+		to_chat(owner, span_warning("Не могу!"))
 		return
 	var/mob/living/M = choice
 	if(!is_servant_of_ratvar(M))
-		to_chat(user, span_warning("Это больше не служитель Ратвара!"))
+		to_chat(owner, span_warning("Это больше не служитель Ратвара!"))
 		return
 	var/turf/T = get_turf(M)
-	user.forceMove(get_turf(T))
-	SEND_SOUND(user, sound('sound/magic/magic_missile.ogg'))
-	flash_color(user, flash_color = "#AF0AAF", flash_time = 25)
+	owner.forceMove(get_turf(T))
+	SEND_SOUND(owner, sound('sound/magic/magic_missile.ogg'))
+	flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)
 
 //=====Mass Recall=====
 /datum/action/cooldown/spell/eminence/mass_recall
@@ -220,7 +222,7 @@
 	desc = "Инициирует массовый призыв, возвращая всех к ковчегу. ОДНОРАЗОВОЕ!"
 	button_icon_state = "Spatial Gateway"
 
-/datum/action/cooldown/spell/eminence/mass_recall/cast(mob/living/user)
+/datum/action/cooldown/spell/eminence/mass_recall/cast(atom/cast_on)
 	. = ..()
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/C = GLOB.celestial_gateway
 	if(!C)
@@ -237,7 +239,7 @@
 	cooldown_time = 180 SECONDS
 	cog_cost = 1
 
-/datum/action/cooldown/spell/eminence/linked_abscond/IsAvailable()
+/datum/action/cooldown/spell/eminence/linked_abscond/IsAvailable(feedback = FALSE)
 	if(!..())
 		return FALSE
 	var/mob/living/simple_animal/eminence/E = owner
@@ -247,15 +249,15 @@
 		return TRUE
 	return ..()
 
-/datum/action/cooldown/spell/eminence/linked_abscond/cast(mob/living/user)
+/datum/action/cooldown/spell/eminence/linked_abscond/cast(atom/cast_on)
 	. = ..()
-	var/mob/living/simple_animal/eminence/E = user
+	var/mob/living/simple_animal/eminence/E = owner
 	if(!istype(E))
 		to_chat(E, span_brass("Я Преосвященство! (ЧТО-ТО СЛОМАЛОСЬ)"))
 		return FALSE
 	if(!E.selected_mob || !is_servant_of_ratvar(E.selected_mob))
 		E.selected_mob = null
-		to_chat(user, span_neovgre("Нужно бы выбрать цель для начала."))
+		to_chat(owner, span_neovgre("Нужно бы выбрать цель для начала."))
 		return FALSE
 	var/mob/living/L = E.selected_mob
 	if(!istype(L))
@@ -283,9 +285,9 @@
 	cooldown_time = 300 SECONDS
 	cog_cost = 5
 
-/datum/action/cooldown/spell/eminence/trigger_event/cast(mob/user)
+/datum/action/cooldown/spell/eminence/trigger_event/cast(atom/cast_on)
 	. = ..()
-	var/picked_event = tgui_input_list(user, "Что мы запустим?", "Манипуляция с реальностью", list(
+	var/picked_event = tgui_input_list(owner, "Что мы запустим?", "Манипуляция с реальностью", list(
 		"Anomaly",
 		"Brand Intelligence",
 		"Camera Failure",
@@ -308,9 +310,9 @@
 	//Get the picked event
 	for(var/datum/round_event_control/E in SSevents.control)
 		if(E.name == picked_event)
-			var/mob/living/simple_animal/eminence/eminence = user
+			var/mob/living/simple_animal/eminence/eminence = owner
 			INVOKE_ASYNC(eminence, /mob/living/simple_animal/eminence.proc/run_global_event, E)
-			consume_cogs(user)
+			consume_cogs(owner)
 			return TRUE
 
 /mob/living/eminence_act(mob/living/simple_animal/eminence/eminence)
