@@ -395,6 +395,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		threat_level = round(GLOB.dynamic_forced_threat_level, 0.1)
 	else
 		generate_threat()
+		threat_level = clamp(threat_level,roundstart_pop_ready*0.75, roundstart_pop_ready*2)
 	generate_budgets()
 	set_cooldowns()
 	log_dynamic("Dynamic Mode initialized with a Threat Level of... [threat_level]! ([round_start_budget] round start budget)")
