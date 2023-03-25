@@ -52,7 +52,7 @@
 	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 	progression_reward = list(2 MINUTES, 4 MINUTES)
-	telecrystal_reward = list(1, 2)
+	telecrystal_reward = list(2, 3)
 	target_jobs = list(
 		// Cargo
 		/datum/job/cargo_technician,
@@ -62,11 +62,12 @@
 		// Medical
 		/datum/job/chemist,
 		/datum/job/doctor,
-		/datum/job/paramedic,
 		/datum/job/psychologist,
+		/datum/job/virologist,
 		// Science
 		/datum/job/geneticist,
 		/datum/job/roboticist,
+	    /datum/job/scientist,
 		// Service
 		/datum/job/bartender,
 		/datum/job/botanist,
@@ -77,6 +78,7 @@
 		/datum/job/lawyer,
 		/datum/job/mime,
 	)
+	alive_bonus = 1
 
 /datum/traitor_objective/kidnapping/common/assistant
 	progression_minimum = 0 MINUTES
@@ -84,20 +86,19 @@
 	target_jobs = list(
 		/datum/job/assistant
 	)
+	alive_bonus = 1
 
 /datum/traitor_objective/kidnapping/uncommon //Hard to fish out victims
 	progression_minimum = 0 MINUTES
 	progression_maximum = 45 MINUTES
 	progression_reward = list(4 MINUTES, 8 MINUTES)
-	telecrystal_reward = list(1, 2)
+	telecrystal_reward = list(3, 4)
 
 	target_jobs = list(
 		// Cargo
 		/datum/job/shaft_miner,
 		// Medical
-		/datum/job/virologist,
-		// Science
-		/datum/job/scientist,
+		/datum/job/paramedic,
 		// Service
 		/datum/job/cook,
 	)
@@ -107,7 +108,7 @@
 	progression_minimum = 15 MINUTES
 	progression_maximum = 60 MINUTES
 	progression_reward = list(8 MINUTES, 12 MINUTES)
-	telecrystal_reward = list(2, 3)
+	telecrystal_reward = list(4, 5)
 	target_jobs = list(
 		// Heads of staff
 		/datum/job/chief_engineer,
@@ -125,7 +126,7 @@
 /datum/traitor_objective/kidnapping/captain
 	progression_minimum = 30 MINUTES
 	progression_reward = list(12 MINUTES, 16 MINUTES)
-	telecrystal_reward = list(2, 3)
+	telecrystal_reward = list(5, 6)
 	target_jobs = list(
 		/datum/job/captain,
 		/datum/job/head_of_security,
