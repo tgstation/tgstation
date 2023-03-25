@@ -14,7 +14,7 @@
 	return 0
 
 /mob/living/proc/Stun(amount, ignore_canstun = FALSE) //Can't go below remaining duration
-	stun_diminish = max(0.1, stun_diminish - round(amount * 0.3, 0.1))
+	stun_diminish = min(max(0.1, stun_diminish - round(amount * 0.3, 0.1)),1)
 	amount *= stun_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -48,7 +48,7 @@
 	return S
 
 /mob/living/proc/AdjustStun(amount, ignore_canstun = FALSE) //Adds to remaining duration
-	stun_diminish = max(0.1, stun_diminish - round(amount * 0.3, 0.1))
+	stun_diminish = min(max(0.1, stun_diminish - round(amount * 0.3, 0.1)),1)
 	amount *= stun_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -74,7 +74,7 @@
 	return 0
 
 /mob/living/proc/Knockdown(amount, ignore_canstun = FALSE) //Can't go below remaining duration
-	knockdown_diminish = max(0.1, knockdown_diminish - round(amount * 0.3, 0.1))
+	knockdown_diminish = min(max(0.1, knockdown_diminish - round(amount * 0.3, 0.1)),1)
 	amount *= knockdown_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -108,7 +108,7 @@
 	return K
 
 /mob/living/proc/AdjustKnockdown(amount, ignore_canstun = FALSE) //Adds to remaining duration
-	knockdown_diminish = max(0.1, knockdown_diminish - round(amount * 0.3, 0.1))
+	knockdown_diminish = min(max(0.1, knockdown_diminish - round(amount * 0.3, 0.1)),1)
 	amount *= knockdown_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -190,7 +190,7 @@
 	return 0
 
 /mob/living/proc/Paralyze(amount, ignore_canstun = FALSE) //Can't go below remaining duration
-	paralyze_diminish = max(0.1, paralyze_diminish - round(amount * 0.3, 0.1))
+	paralyze_diminish = min(max(0.1, paralyze_diminish - round(amount * 0.3, 0.1)),1)
 	amount *= paralyze_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -224,7 +224,7 @@
 	return P
 
 /mob/living/proc/AdjustParalyzed(amount, ignore_canstun = FALSE) //Adds to remaining duration
-	paralyze_diminish = max(0.1, paralyze_diminish - round(amount * 0.3, 0.1))
+	paralyze_diminish = min(max(0.1, paralyze_diminish - round(amount * 0.3, 0.1)),1)
 	amount *= paralyze_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
