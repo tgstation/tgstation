@@ -24,13 +24,13 @@
 	var/turf/landing_turf = pick(possible_spawns)
 	var/list/possible_backstories = list()
 	var/list/candidates = get_candidates(ROLE_FUGITIVE, ROLE_FUGITIVE)
-	if(candidates.len >= 1) //solo refugees
-		if(prob(30))
-			possible_backstories.Add("waldo") //less common as it comes with magicks and is kind of immershun shattering
+	if(length(candidates) >= 1) //solo refugees
+		if(prob(30) - (length(candidates) * 2)) //Having more candidates makes solo backstories less likely to be selected. At
+			possible_backstories += list("waldo") //less common as it comes with magicks and is kind of immershun shattering
 		else //For accurate deadchat feedback
 			minimum_required = 4
-	if(candidates.len >= 4)//group refugees
-		possible_backstories.Add("prisoner", "cultist", "synth")
+	if(length(candidates) >= 4)//group refugees
+		possible_backstories += list("prisoner", "cultist", "synth")
 	if(!possible_backstories.len)
 		return NOT_ENOUGH_PLAYERS
 
@@ -51,8 +51,9 @@
 		members += pick_n_take(candidates)
 
 	for(var/mob/dead/selected in members)
-		var/mob/living/carbon/human/S = gear_fugitive(selected, landing_turf, backstory)
-		spawned_mobs += S
+		var/mob/living/carbon/human/human_to_gear = gear_fugitive(selected, landing_turf, backstory)
+		spawned_mobs += human_to_gear
+
 	if(!isnull(leader))
 		gear_fugitive_leader(leader, landing_turf, backstory)
 
