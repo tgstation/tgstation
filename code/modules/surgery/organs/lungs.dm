@@ -867,5 +867,5 @@
 	var/list/breath_gases = breath.gases
 	var/gas_breathed = breath.gases[/datum/gas/water_vapor][MOLES]
 	breath_out.gases[/datum/gas/oxygen][MOLES] += gas_breathed
-	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed*2
+	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed * 2
 	breath.gases[/datum/gas/water_vapor][MOLES] -= gas_breathed
