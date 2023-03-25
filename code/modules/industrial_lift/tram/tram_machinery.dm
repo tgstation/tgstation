@@ -582,14 +582,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	/// Is this sign malfunctioning?
 	var/malfunctioning = FALSE
 	/// A default list of possible sign states
-	var/list/sign_states = list("[base_icon_state][DESTINATION_WEST_ACTIVE]",
-		"[base_icon_state][DESTINATION_WEST_IDLE]",
-		"[base_icon_state][DESTINATION_EAST_ACTIVE]",
-		"[base_icon_state][DESTINATION_EAST_IDLE]",
-		"[base_icon_state][DESTINATION_CENTRAL_IDLE]",
-		"[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]",
-		"[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]",
-		)
+	var/list/sign_states = list()
 
 /obj/machinery/destination_sign/north
 	layer = BELOW_OBJ_LAYER
@@ -617,6 +610,15 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	if(tram_part)
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(on_tram_travelling))
 		GLOB.tram_signs += src
+
+	sign_states = list("[base_icon_state][DESTINATION_WEST_ACTIVE]",
+		"[base_icon_state][DESTINATION_WEST_IDLE]",
+		"[base_icon_state][DESTINATION_EAST_ACTIVE]",
+		"[base_icon_state][DESTINATION_EAST_IDLE]",
+		"[base_icon_state][DESTINATION_CENTRAL_IDLE]",
+		"[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]",
+		"[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]",
+		)
 
 /obj/machinery/destination_sign/Destroy()
 	GLOB.tram_signs -= src
