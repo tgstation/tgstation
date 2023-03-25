@@ -412,7 +412,8 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4
 		*/
 	)
-	percentage_of_nutriment_converted = 0.15
+	ingredient_reagent_multiplier = 0.33 // Chilis have a TON of capsaicin naturally
+	percentage_of_nutriment_converted = 0
 
 // Chili (Cold)
 /datum/reagent/consumable/nutriment/soup/coldchili
@@ -444,7 +445,8 @@
 		/datum/reagent/consumable/frostoil = 3,
 		*/
 	)
-	percentage_of_nutriment_converted = 0.15
+	ingredient_reagent_multiplier = 0.33 // Chilis have a TON of frost oil naturally
+	percentage_of_nutriment_converted = 0
 
 // Chili (Clownish)
 /datum/reagent/consumable/nutriment/soup/clownchili
@@ -1515,7 +1517,8 @@
 		/datum/reagent/consumable/nutriment/protein = 8,
 		/datum/reagent/consumable/vinegar = 2,
 	)
-	percentage_of_nutriment_converted = 0.1
+	ingredient_reagent_multiplier = 0.33 // Chilis have a TON of capsaicin naturally
+	percentage_of_nutriment_converted = 0
 
 // Rice Porridge (Soup-ish)
 /datum/reagent/consumable/nutriment/soup/rice_porridge
