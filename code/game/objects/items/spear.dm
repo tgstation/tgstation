@@ -17,11 +17,9 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
-	sharpness = SHARP_EDGED // i know the whole point of spears is that they're pointy, but edged is more devastating at the moment so
+	sharpness = SHARP_POINTY
 	max_integrity = 200
 	armor_type = /datum/armor/item_spear
-	wound_bonus = -15
-	bare_wound_bonus = 15
 	/// For explosive spears, what we cry out when we use this to bap someone
 	var/war_cry = "AAAAARGH!!!"
 	/// The icon prefix for this flavor of spear
@@ -80,7 +78,7 @@
 			throw_range = 8
 			throw_speed = 5
 			custom_materials = list(/datum/material/iron=1000, /datum/material/alloy/titaniumglass=2000)
-			wound_bonus = -10
+			wound_bonus = 3
 			force_unwielded = 13
 			force_wielded = 18
 			icon_prefix = "speartitanium"
@@ -91,8 +89,8 @@
 			throw_range = 9
 			throw_speed = 5
 			custom_materials = list(/datum/material/iron=1000, /datum/material/alloy/plastitaniumglass=2000)
-			wound_bonus = -10
-			bare_wound_bonus = 20
+			wound_bonus = 4
+			bare_wound_bonus = 6
 			force_unwielded = 13
 			force_wielded = 20
 			icon_prefix = "spearplastitanium"
