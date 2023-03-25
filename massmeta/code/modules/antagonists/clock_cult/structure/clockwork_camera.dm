@@ -26,6 +26,10 @@
 	if(isclosedturf(target_loc))
 		to_chat(owner, span_brass("Не могу вот прям сюда телепортироваться."))
 		return
+	var/area/teleport_area = get_area(target_loc)
+	if(teleport_area &&!teleport_area.clockwork_warp_allowed)
+		to_chat(owner, span_brass(teleport_area.clockwork_warp_fail))
+		return
 	do_sparks(5, TRUE, get_turf(cam))
 	warping = TRUE
 	button_icon_state = "warp_cancel"

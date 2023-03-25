@@ -148,7 +148,7 @@
 /datum/component/two_handed/proc/wield(mob/living/carbon/user)
 	if(wielded)
 		return
-	if(ismonkey(user))
+	if(ismonkey(user) || istype(user, /mob/living/simple_animal/drone/cogscarab))
 		if(require_twohands)
 			to_chat(user, span_notice("[parent] is too heavy and cumbersome for you to carry!"))
 			user.dropItemToGround(parent, force=TRUE)

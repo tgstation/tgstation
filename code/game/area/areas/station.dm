@@ -379,6 +379,7 @@
 
 /area/station/command/heads_quarters
 	icon_state = "heads_quarters"
+	clockwork_warp_allowed = FALSE
 
 /area/station/command/heads_quarters/captain
 	name = "\improper Captain's Office"
@@ -1078,10 +1079,12 @@
 /area/station/security/lockers
 	name = "\improper Security Locker Room"
 	icon_state = "securitylockerroom"
+	clockwork_warp_allowed = FALSE
 
 /area/station/security/brig
 	name = "\improper Brig"
 	icon_state = "brig"
+	clockwork_warp_allowed = FALSE
 
 /area/station/security/holding_cell
 	name = "\improper Holding Cell"
@@ -1111,6 +1114,7 @@
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
 	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
+	clockwork_warp_allowed = TRUE //Fun
 
 //Rad proof
 /area/station/security/prison/toilet
@@ -1172,6 +1176,7 @@
 	name = "Brig Control"
 	icon_state = "warden"
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
+	clockwork_warp_allowed = FALSE
 
 /area/station/security/evidence
 	name = "Evidence Storage"
