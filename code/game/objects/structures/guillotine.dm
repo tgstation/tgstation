@@ -139,47 +139,50 @@
 
 /// Drops the guillotine blade, potentially beheading or harming the buckled mob
 /obj/structure/guillotine/proc/drop_blade(mob/user)
-	if (has_buckled_mobs() && blade_sharpness)
-		var/mob/living/carbon/human/victim = buckled_mobs[1]
+	if (!(has_buckled_mobs() && blade_sharpness))
+		return
+	
+	// rest of the code is now on this indentation
+	var/mob/living/carbon/human/victim = buckled_mobs[1]
 
-		if (!victim)
-			return
+	if (!victim)
+		return
 
-		var/obj/item/bodypart/head/head = victim.get_bodypart("head")
+	var/obj/item/bodypart/head/head = victim.get_bodypart("head")
 
-		playsound(src, drop_sound, 100, TRUE)
-		if(head)
-			if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
-				head.dismember()
-				log_combat(user, victim, "beheaded", src)
-				victim.regenerate_icons()
-				unbuckle_all_mobs()
-				kill_count += 1
+	playsound(src, drop_sound, 100, TRUE)
+	if(head)
+		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
+			head.dismember()
+			log_combat(user, victim, "beheaded", src)
+			victim.regenerate_icons()
+			unbuckle_all_mobs()
+			kill_count += 1
 
-				var/blood_overlay = "bloody"
+			var/blood_overlay = "bloody"
 
-				if (kill_count == 2)
-					blood_overlay = "bloodier"
-				else if (kill_count > 2)
-					blood_overlay = "bloodiest"
+			if (kill_count == 2)
+				blood_overlay = "bloodier"
+			else if (kill_count > 2)
+				blood_overlay = "bloodiest"
 
-				blood_overlay = "guillotine_" + blood_overlay + "_overlay"
-				cut_overlays()
-				add_overlay(mutable_appearance(icon, blood_overlay))
+			blood_overlay = "guillotine_" + blood_overlay + "_overlay"
+			cut_overlays()
+			add_overlay(mutable_appearance(icon, blood_overlay))
 
-				// The crowd is pleased
-				// The delay is to make large crowds have a longer lasting applause
-				var/delay_offset = 0
-				for(var/mob/living/carbon/human/spectator in viewers(src, 7))
-					addtimer(CALLBACK(spectator, TYPE_PROC_REF(/mob/, emote), "clap"), delay_offset * 0.3)
-					delay_offset++
-			else
-				victim.apply_damage(15 * blade_sharpness, BRUTE, head)
-				log_combat(user, victim, "dropped the blade on", src, " non-fatally")
-				victim.emote("scream")
+			// The crowd is pleased
+			// The delay is to make large crowds have a longer lasting applause
+			var/delay_offset = 0
+			for(var/mob/living/carbon/human/spectator in viewers(src, 7))
+				addtimer(CALLBACK(spectator, TYPE_PROC_REF(/mob/, emote), "clap"), delay_offset * 0.3)
+				delay_offset++
+		else
+			victim.apply_damage(15 * blade_sharpness, BRUTE, head)
+			log_combat(user, victim, "dropped the blade on", src, " non-fatally")
+			victim.emote("scream")
 
-			if (blade_sharpness > 1)
-				blade_sharpness -= 1
+		if (blade_sharpness > 1)
+			blade_sharpness -= 1
 
 	blade_status = GUILLOTINE_BLADE_DROPPED
 	icon_state = "guillotine"
