@@ -389,7 +389,7 @@
 	var/mob/living/carbon/C = A
 	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
 		C.adjustToxLoss((-1.5 * min(2, trans_volume) * REM) * normalise_creation_purity(), FALSE, required_biotype = affected_biotype)	  //This is to promote iv pole use for that chemotherapy feel.
-	var/obj/item/organ/internal/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
+	var/obj/item/organ/internal/liver/L = C.organs_slot[ORGAN_SLOT_LIVER]
 	if(!L || L.organ_flags & ORGAN_FAILING)
 		return
 	conversion_amount = (trans_volume * (min(100 -C.getOrganLoss(ORGAN_SLOT_LIVER), 80) / 100)*normalise_creation_purity()) //the more damaged the liver the worse we metabolize.
@@ -506,6 +506,13 @@
 	inverse_chem = /datum/reagent/inverse/penthrite
 	inverse_chem_val = 0.25
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	/// List of traits to add/remove from our subject when we are in their system
+	var/static/list/subject_traits = list(
+		TRAIT_STABLEHEART,
+		TRAIT_NOHARDCRIT,
+		TRAIT_NOSOFTCRIT,
+		TRAIT_NOCRITDAMAGE,
+	)
 
 /atom/movable/screen/alert/penthrite
 	name = "Strong Heartbeat"
@@ -515,10 +522,7 @@
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()
 	user.throw_alert("penthrite", /atom/movable/screen/alert/penthrite)
-	ADD_TRAIT(user, TRAIT_STABLEHEART, type)
-	ADD_TRAIT(user, TRAIT_NOHARDCRIT,type)
-	ADD_TRAIT(user, TRAIT_NOSOFTCRIT,type)
-	ADD_TRAIT(user, TRAIT_NOCRITDAMAGE,type)
+	user.add_traits(subject_traits, type)
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H, delta_time, times_fired)
 	H.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.25 * REM * delta_time, required_organtype = affected_organtype)
@@ -549,10 +553,7 @@
 
 /datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/user)
 	user.clear_alert("penthrite")
-	REMOVE_TRAIT(user, TRAIT_STABLEHEART, type)
-	REMOVE_TRAIT(user, TRAIT_NOHARDCRIT,type)
-	REMOVE_TRAIT(user, TRAIT_NOSOFTCRIT,type)
-	REMOVE_TRAIT(user, TRAIT_NOCRITDAMAGE,type)
+	user.remove_traits(subject_traits, type)
 	. = ..()
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/H, delta_time, times_fired)

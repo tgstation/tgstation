@@ -67,6 +67,12 @@
 /datum/heretic_knowledge/rust_fist/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
 	SIGNAL_HANDLER
 
+	// Rusting an airlock causes it to lose power, mostly to prevent the airlock from shocking you.
+	// This is a bit of a hack, but fixing this would require the enture wire cut/pulse system to be reworked.
+	if(istype(target, /obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/airlock = target
+		airlock.loseMainPower()
+
 	target.rust_heretic_act()
 	return COMPONENT_USE_HAND
 
@@ -213,20 +219,20 @@
 	var/area/ritual_location = /area/station/command/bridge
 	/// A static list of traits we give to the heretic when on rust.
 	var/static/list/conditional_immunities = list(
-		TRAIT_STUNIMMUNE,
-		TRAIT_SLEEPIMMUNE,
+		TRAIT_BOMBIMMUNE,
+		TRAIT_NO_SLIP_ALL,
+		TRAIT_NOBREATH,
+		TRAIT_PIERCEIMMUNE,
 		TRAIT_PUSHIMMUNE,
-		TRAIT_SHOCKIMMUNE,
-		TRAIT_NOSLIPALL,
 		TRAIT_RADIMMUNE,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHEAT,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_BOMBIMMUNE,
-		TRAIT_NOBREATH,
-		)
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_SHOCKIMMUNE,
+		TRAIT_SLEEPIMMUNE,
+		TRAIT_STUNIMMUNE,
+	)
 
 /datum/heretic_knowledge/ultimate/rust_final/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -264,15 +270,13 @@
 	var/turf/our_turf = get_turf(source)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		if(!immunities_active)
-			for(var/trait in conditional_immunities)
-				ADD_TRAIT(source, trait, type)
+			source.add_traits(conditional_immunities, type)
 			immunities_active = TRUE
 
 	// If we're not on a rust turf, and we have given out our traits, nerf our guy
 	else
 		if(immunities_active)
-			for(var/trait in conditional_immunities)
-				REMOVE_TRAIT(source, trait, type)
+			source.remove_traits(conditional_immunities, type)
 			immunities_active = FALSE
 
 /**

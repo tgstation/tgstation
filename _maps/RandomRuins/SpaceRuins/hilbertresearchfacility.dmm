@@ -353,13 +353,13 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "iS" = (
-/obj/effect/landmark/tram/middle_part/hilbert,
 /obj/machinery/light/floor{
 	brightness = 2;
 	bulb_colour = "#deefff";
 	bulb_power = 0.6
 	},
 /obj/structure/industrial_lift/tram/purple,
+/obj/effect/landmark/tram/hilbert/middle,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "iY" = (
@@ -1067,8 +1067,8 @@
 	},
 /obj/structure/sign/departments/cargo/directional/north,
 /obj/machinery/button/tram{
-	id = "middle_part_hilbert";
-	pixel_y = 4;
+	id = 2;
+	pixel_y = 9;
 	lift_id = "tram_hilbert"
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -1383,8 +1383,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Fo" = (
 /obj/machinery/button/tram{
-	id = "left_part_hilbert";
-	pixel_y = 4;
+	pixel_y = 9;
 	lift_id = "tram_hilbert"
 	},
 /obj/structure/table/reinforced/rglass,
@@ -1415,7 +1414,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Gf" = (
-/obj/effect/landmark/tram/right_part/hilbert,
+/obj/effect/landmark/tram/hilbert/right,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Gi" = (
@@ -1435,8 +1434,8 @@
 	},
 /obj/structure/table/reinforced/rglass,
 /obj/machinery/button/tram{
-	id = "right_part_hilbert";
-	pixel_y = 4;
+	id = 3;
+	pixel_y = 9;
 	lift_id = "tram_hilbert"
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -1526,7 +1525,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "It" = (
-/obj/effect/landmark/tram/left_part/hilbert,
+/obj/effect/landmark/tram/hilbert/left,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Iv" = (

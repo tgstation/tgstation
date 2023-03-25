@@ -1,4 +1,6 @@
-#define ADD_STEAL_ITEM(Source, Type) GLOB.steal_item_handler.objectives_by_path[Type] += Source
+/proc/add_item_to_steal(source, type)
+	GLOB.steal_item_handler.objectives_by_path[type] += source
+	return type
 
 //Contains the target item datums for Steal objectives.
 /datum/objective_item
@@ -60,11 +62,11 @@
 	return ..()
 
 // Low risk steal objectives
-/datum/objective_item/steal/low_risk
+/datum/objective_item/steal/traitor
 	objective_type = OBJECTIVE_ITEM_TYPE_TRAITOR
 
 // Unique-ish low risk objectives
-/datum/objective_item/steal/low_risk/bartender_shotgun
+/datum/objective_item/steal/traitor/bartender_shotgun
 	name = "the bartender's shotgun"
 	targetitem = /obj/item/gun/ballistic/shotgun/doublebarrel
 	excludefromjob = list(JOB_BARTENDER)
@@ -72,10 +74,9 @@
 	exists_on_map = TRUE
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/gun/ballistic/shotgun/doublebarrel)
+	return add_item_to_steal(src, /obj/item/gun/ballistic/shotgun/doublebarrel)
 
-// No item owner, list would be so long as to be functionally useless and they're in two very disparate locations on most maps
-/datum/objective_item/steal/low_risk/fireaxe
+/datum/objective_item/steal/traitor/fireaxe
 	name = "a fire axe"
 	targetitem = /obj/item/fireaxe
 	excludefromjob = list(
@@ -92,9 +93,9 @@
 	exists_on_map = TRUE
 
 /obj/item/fireaxe/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/fireaxe)
+	return add_item_to_steal(src, /obj/item/fireaxe)
 
-/datum/objective_item/steal/low_risk/big_crowbar
+/datum/objective_item/steal/traitor/big_crowbar
 	name = "a mech removal tool"
 	targetitem = /obj/item/crowbar/mechremoval
 	excludefromjob = list(
@@ -106,9 +107,9 @@
 	exists_on_map = TRUE
 
 /obj/item/crowbar/mechremoval/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/crowbar/mechremoval)
+	return add_item_to_steal(src, /obj/item/crowbar/mechremoval)
 
-/datum/objective_item/steal/low_risk/nullrod
+/datum/objective_item/steal/traitor/nullrod
 	name = "the chaplain's null rod"
 	targetitem = /obj/item/nullrod
 	excludefromjob = list(JOB_CHAPLAIN)
@@ -116,15 +117,49 @@
 	exists_on_map = TRUE
 
 /obj/item/nullrod/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/nullrod)
+	return add_item_to_steal(src, /obj/item/nullrod)
 
-/datum/objective_item/steal/low_risk/clown_shoes
+/datum/objective_item/steal/traitor/clown_shoes
 	name = "the clown's shoes"
 	targetitem = /obj/item/clothing/shoes/clown_shoes
 	excludefromjob = list(JOB_CLOWN, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 	item_owner = list(JOB_CLOWN)
 
-/datum/objective_item/steal/low_risk/cargo_budget
+/datum/objective_item/steal/traitor/det_revolver
+	name = "detective's revolver"
+	targetitem = /obj/item/gun/ballistic/revolver/c38/detective
+	excludefromjob = list(JOB_DETECTIVE)
+	exists_on_map = TRUE
+
+/obj/item/gun/ballistic/revolver/c38/detective/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/gun/ballistic/revolver/c38/detective)
+
+/datum/objective_item/steal/traitor/chief_engineer_belt
+	name = "the chief engineer's belt"
+	targetitem = /obj/item/storage/belt/utility/chief
+	excludefromjob = list(JOB_CHIEF_ENGINEER)
+	exists_on_map = TRUE
+
+/obj/item/storage/belt/utility/chief/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/storage/belt/utility/chief)
+
+/datum/objective_item/steal/traitor/telebaton
+	name = "a head of staff's telescopic baton"
+	targetitem = /obj/item/melee/baton/telescopic
+	excludefromjob = list(
+		JOB_RESEARCH_DIRECTOR,
+		JOB_CAPTAIN,
+		JOB_HEAD_OF_SECURITY,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER
+	)
+	exists_on_map = TRUE
+
+/obj/item/melee/baton/telescopic/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/melee/baton/telescopic)
+
+/datum/objective_item/steal/traitor/cargo_budget
 	name = "cargo's departmental budget"
 	targetitem = /obj/item/card/id/departmental_budget/car
 	excludefromjob = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN)
@@ -132,7 +167,32 @@
 	exists_on_map = TRUE
 
 /obj/item/card/id/departmental_budget/car/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/card/id/departmental_budget/car)
+	return add_item_to_steal(src, /obj/item/card/id/departmental_budget/car)
+
+/datum/objective_item/steal/traitor/captain_modsuit
+	name = "the captain's magnate MOD control unit"
+	targetitem = /obj/item/mod/control/pre_equipped/magnate
+	excludefromjob = list(JOB_CAPTAIN)
+	exists_on_map = TRUE
+
+/obj/item/mod/control/pre_equipped/magnate/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/mod/control/pre_equipped/magnate)
+
+/datum/objective_item/steal/traitor/captain_spare
+	name = "the captain's spare ID"
+	targetitem = /obj/item/card/id/advanced/gold/captains_spare
+	excludefromjob = list(
+		JOB_RESEARCH_DIRECTOR,
+		JOB_CAPTAIN,
+		JOB_HEAD_OF_SECURITY,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER
+	)
+	exists_on_map = TRUE
+
+/obj/item/card/id/advanced/gold/captains_spare/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/card/id/advanced/gold/captains_spare)
 
 // High risk steal objectives
 
@@ -144,7 +204,7 @@
 	exists_on_map = TRUE
 
 /obj/item/gun/energy/laser/captain/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/gun/energy/laser/captain)
+	return add_item_to_steal(src, /obj/item/gun/energy/laser/captain)
 
 /datum/objective_item/steal/hoslaser
 	name = "the head of security's personal laser gun"
@@ -154,7 +214,7 @@
 	exists_on_map = TRUE
 
 /obj/item/gun/energy/e_gun/hos/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/gun/energy/e_gun/hos)
+	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/hos)
 
 /datum/objective_item/steal/handtele
 	name = "a hand teleporter"
@@ -164,7 +224,7 @@
 	exists_on_map = TRUE
 
 /obj/item/hand_tele/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/hand_tele)
+	return add_item_to_steal(src, /obj/item/hand_tele)
 
 /datum/objective_item/steal/jetpack
 	name = "the Captain's jetpack"
@@ -174,7 +234,7 @@
 	exists_on_map = TRUE
 
 /obj/item/tank/jetpack/oxygen/captain/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/tank/jetpack/oxygen/captain)
+	return add_item_to_steal(src, /obj/item/tank/jetpack/oxygen/captain)
 
 /datum/objective_item/steal/magboots
 	name = "the chief engineer's advanced magnetic boots"
@@ -184,7 +244,7 @@
 	exists_on_map = TRUE
 
 /obj/item/clothing/shoes/magboots/advance/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/clothing/shoes/magboots/advance)
+	return add_item_to_steal(src, /obj/item/clothing/shoes/magboots/advance)
 
 /datum/objective_item/steal/capmedal
 	name = "the medal of captaincy"
@@ -194,7 +254,7 @@
 	exists_on_map = TRUE
 
 /obj/item/clothing/accessory/medal/gold/captain/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/clothing/accessory/medal/gold/captain)
+	return add_item_to_steal(src, /obj/item/clothing/accessory/medal/gold/captain)
 
 /datum/objective_item/steal/hypo
 	name = "the hypospray"
@@ -204,12 +264,15 @@
 	exists_on_map = TRUE
 
 /obj/item/reagent_containers/hypospray/cmo/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/reagent_containers/hypospray/cmo)
+	return add_item_to_steal(src, /obj/item/reagent_containers/hypospray/cmo)
 
 /datum/objective_item/steal/nukedisc
 	name = "the nuclear authentication disk"
 	targetitem = /obj/item/disk/nuclear
 	excludefromjob = list(JOB_CAPTAIN)
+
+/obj/item/disk/nuclear/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/disk/nuclear)
 
 /datum/objective_item/steal/nukedisc/check_special_completion(obj/item/disk/nuclear/N)
 	return !N.fake
@@ -222,7 +285,7 @@
 	exists_on_map = TRUE
 
 /obj/item/clothing/suit/hooded/ablative/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/clothing/suit/hooded/ablative)
+	return add_item_to_steal(src, /obj/item/clothing/suit/hooded/ablative)
 
 /datum/objective_item/steal/reactive
 	name = "the reactive teleport armor"
@@ -232,7 +295,7 @@
 	exists_on_map = TRUE
 
 /obj/item/clothing/suit/armor/reactive/teleport/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/clothing/suit/armor/reactive/teleport)
+	return add_item_to_steal(src, /obj/item/clothing/suit/armor/reactive/teleport)
 
 /datum/objective_item/steal/documents
 	name = "any set of secret documents of any organization"
@@ -240,7 +303,7 @@
 	exists_on_map = TRUE
 
 /obj/item/documents/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/documents) //Any set of secret documents. Doesn't have to be NT's
+	return add_item_to_steal(src, /obj/item/documents) //Any set of secret documents. Doesn't have to be NT's
 
 /datum/objective_item/steal/nuke_core
 	name = "the heavily radioactive plutonium core from the onboard self-destruct"
@@ -249,7 +312,7 @@
 	exists_on_map = TRUE
 
 /obj/item/nuke_core/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/nuke_core)
+	return add_item_to_steal(src, /obj/item/nuke_core)
 
 /datum/objective_item/steal/nuke_core/New()
 	special_equipment += /obj/item/storage/box/syndie_kit/nuke
@@ -263,7 +326,7 @@
 	exists_on_map = TRUE
 
 /obj/item/computer_disk/hdd_theft/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/computer_disk/hdd_theft)
+	return add_item_to_steal(src, /obj/item/computer_disk/hdd_theft)
 
 /datum/objective_item/steal/hdd_extraction/New()
 	special_equipment += /obj/item/paper/guides/antag/hdd_extraction
@@ -318,7 +381,7 @@
 	exists_on_map = TRUE
 
 /obj/item/areaeditor/blueprints/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/areaeditor/blueprints)
+	return add_item_to_steal(src, /obj/item/areaeditor/blueprints)
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
 	if(istype(I, /obj/item/areaeditor/blueprints))
@@ -336,6 +399,4 @@
 	exists_on_map = TRUE
 
 /obj/item/blackbox/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/blackbox)
-
-#undef ADD_STEAL_ITEM
+	return add_item_to_steal(src, /obj/item/blackbox)

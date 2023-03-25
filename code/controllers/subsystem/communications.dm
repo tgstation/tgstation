@@ -17,6 +17,10 @@ SUBSYSTEM_DEF(communications)
 	var/list/command_report_footnotes = list()
 	/// A counter of conditions that are blocking the command report from printing. Counter incremements up for every blocking condition, and de-incrememnts when it is complete.
 	var/block_command_report = 0
+	/// Has a special xenomorph egg been delivered?
+	var/xenomorph_egg_delivered = FALSE
+	/// The location where the special xenomorph egg was planted
+	var/area/captivity_area
 
 /datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
 	if(is_silicon && COOLDOWN_FINISHED(src, silicon_message_cooldown))

@@ -4,7 +4,7 @@
 		/datum/traitor_objective/eyesnatching = 1,
 		/datum/traitor_objective/eyesnatching/heads = 1,
 	)
-	weight = OBJECTIVE_WEIGHT_TINY
+	weight = OBJECTIVE_WEIGHT_UNLIKELY
 
 /datum/traitor_objective/eyesnatching
 	name = "Steal the eyes of %TARGET% the %JOB TITLE%"
