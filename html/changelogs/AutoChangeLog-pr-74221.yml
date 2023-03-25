@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "Tram's Ordnance Freezer is now piped correctly."
