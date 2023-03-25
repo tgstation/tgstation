@@ -166,6 +166,12 @@
 
 	dump_ingredients()
 
+/obj/item/reagent_containers/cup/soup_pot/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash)
+	. = ..()
+	if(. && LAZYLEN(added_ingredients))
+		// Clearing reagents Will do this for us already, but if we have no reagents this is a failsafe
+		dump_ingredients()
+
 /obj/item/reagent_containers/cup/soup_pot/proc/dump_ingredients(atom/drop_loc = drop_location())
 	for(var/obj/item/ingredient as anything in added_ingredients)
 		ingredient.forceMove(drop_loc)
@@ -179,6 +185,8 @@
 	var/mutable_appearance/filled_overlay = mutable_appearance(icon, "[base_icon_state]_filling_overlay")
 	var/list/food_reagents = list()
 	for(var/obj/item/ingredient as anything in added_ingredients)
+		if(isnull(ingredient.reagents))
+			continue
 		food_reagents |= ingredient.reagents.reagent_list
 
 	filled_overlay.color = mix_color_from_reagents(reagents.reagent_list + food_reagents)
