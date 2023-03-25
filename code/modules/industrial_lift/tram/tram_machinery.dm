@@ -581,6 +581,15 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	var/light_mask
 	/// Is this sign malfunctioning?
 	var/malfunctioning = FALSE
+	/// A default list of possible sign states
+	var/list/sign_states = list("[base_icon_state][DESTINATION_WEST_ACTIVE]",
+		"[base_icon_state][DESTINATION_WEST_IDLE]",
+		"[base_icon_state][DESTINATION_EAST_ACTIVE]",
+		"[base_icon_state][DESTINATION_EAST_IDLE]",
+		"[base_icon_state][DESTINATION_CENTRAL_IDLE]",
+		"[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]",
+		"[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]",
+		)
 
 /obj/machinery/destination_sign/north
 	layer = BELOW_OBJ_LAYER
@@ -649,16 +658,8 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	use_power(active_power_usage)
 
 	if(malfunctioning)
-		var/list/malf_sign = list("[base_icon_state][DESTINATION_WEST_ACTIVE]",
-		"[base_icon_state][DESTINATION_WEST_IDLE]",
-		"[base_icon_state][DESTINATION_EAST_ACTIVE]",
-		"[base_icon_state][DESTINATION_EAST_IDLE]",
-		"[base_icon_state][DESTINATION_CENTRAL_IDLE]",
-		"[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]",
-		"[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]",
-		)
-		icon_state = "[pick(malf_sign)]"
-		light_mask = "[pick(malf_sign)]_e"
+		icon_state = "[pick(sign_states)]"
+		light_mask = "[pick(sign_states)]_e"
 		update_appearance()
 		return PROCESS_KILL
 
