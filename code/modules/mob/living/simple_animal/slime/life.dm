@@ -13,9 +13,18 @@
 	if(!.)
 		return
 
+	alpha = 255
+	if(transformeffects & SLIME_EFFECT_BLACK)
+		alpha = 64
+
 	// We get some passive bruteloss healing if we're not dead
 	if(stat != DEAD && DT_PROB(16, delta_time))
-		adjustBruteLoss(-0.5 * delta_time)
+		var/heal = 0.5
+		if(transformeffects & SLIME_EFFECT_PURPLE)
+			heal += 0.5
+		adjustBruteLoss(-heal)
+	if((transformeffects & SLIME_EFFECT_RAINBOW) && prob(5))
+		random_colour()
 	if(ismob(buckled))
 		handle_feeding(delta_time, times_fired)
 	if(stat != CONSCIOUS) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
@@ -103,7 +112,11 @@
 			else if(Target in view(7, src))
 				if(!Target.Adjacent(src))
 				// Bug of the month candidate: slimes were attempting to move to target only if it was directly next to them, which caused them to target things, but not approach them
-					step_to(src, Target)
+					if((transformeffects & SLIME_EFFECT_BLUESPACE) && powerlevel >= 5)
+						do_teleport(src, get_turf(Target), asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+						powerlevel -= 5
+					else
+						step_to(src, Target)
 			else
 				set_target(null)
 				AIproc = 0
@@ -170,6 +183,12 @@
 /mob/living/simple_animal/slime/proc/handle_feeding(delta_time, times_fired)
 	var/mob/living/prey = buckled
 
+	alpha = 255
+	if(transformeffects & SLIME_EFFECT_OIL)
+		var/datum/reagent/fuel/fuel = new
+		fuel.expose_mob(buckled,TOUCH,20)
+		qdel(fuel)
+
 	if(stat)
 		Feedstop(silent = TRUE)
 
@@ -191,8 +210,11 @@
 		return
 
 	if(iscarbon(prey))
-		prey.adjustCloneLoss(rand(2, 4) * 0.5 * delta_time)
-		prey.adjustToxLoss(rand(1, 2) * 0.5 * delta_time)
+		var/bonus_damage = 1
+		if(transformeffects & SLIME_EFFECT_RED)
+			bonus_damage = 1.1
+		prey.adjustCloneLoss(rand(2, 4) * bonus_damage * 0.5 * delta_time)
+		prey.adjustToxLoss(rand(1, 2) * bonus_damage * 0.5 * delta_time)
 
 		if(DT_PROB(5, delta_time) && prey.client)
 			to_chat(prey, "<span class='userdanger'>[pick("You can feel your body becoming weak!", \
@@ -229,7 +251,7 @@
 		set_nutrition(700) //fuck you for using the base nutrition var
 		return
 
-	if(DT_PROB(7.5, delta_time))
+	if(DT_PROB(7.5, delta_time) && !(transformeffects & SLIME_EFFECT_SILVER))
 		adjust_nutrition(-0.5 * (1 + is_adult) * delta_time)
 
 	if(nutrition <= 0)
@@ -249,15 +271,16 @@
 			Evolve()
 
 /mob/living/simple_animal/slime/proc/add_nutrition(nutrition_to_add = 0)
+	var/gainpower = (transformeffects & SLIME_EFFECT_YELLOW) ? 3 : 1
 	set_nutrition(min((nutrition + nutrition_to_add), get_max_nutrition()))
 	if(nutrition >= get_grow_nutrition())
 		if(powerlevel<10)
 			if(prob(30-powerlevel*2))
-				powerlevel++
+				powerlevel += gainpower
 	else if(nutrition >= get_hunger_nutrition() + 100) //can't get power levels unless you're a bit above hunger level.
 		if(powerlevel<5)
 			if(prob(25-powerlevel*5))
-				powerlevel++
+				powerlevel += gainpower
 
 
 

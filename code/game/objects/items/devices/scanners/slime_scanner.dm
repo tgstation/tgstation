@@ -50,4 +50,51 @@
 	if(T.effectmod)
 		to_render += "\n[span_notice("Core mutation in progress: [T.effectmod]")]\
 					  \n[span_notice("Progress in core mutation: [T.applied] / [SLIME_EXTRACT_CROSSING_REQUIRED]")]"
+	if(T.transformeffects != SLIME_EFFECT_DEFAULT)
+		var/slimeeffect = "\nTransformative extract effect detected: "
+		if(T.transformeffects & SLIME_EFFECT_GREY)
+			slimeeffect += "grey"
+		if(T.transformeffects & SLIME_EFFECT_ORANGE)
+			slimeeffect += "orange"
+		if(T.transformeffects & SLIME_EFFECT_PURPLE)
+			slimeeffect += "purple"
+		if(T.transformeffects & SLIME_EFFECT_BLUE)
+			slimeeffect += "blue"
+		if(T.transformeffects & SLIME_EFFECT_METAL)
+			slimeeffect += "metal"
+		if(T.transformeffects & SLIME_EFFECT_YELLOW)
+			slimeeffect += "yellow"
+		if(T.transformeffects & SLIME_EFFECT_DARK_PURPLE)
+			slimeeffect += "dark purple"
+		if(T.transformeffects & SLIME_EFFECT_DARK_BLUE)
+			slimeeffect += "dark blue"
+		if(T.transformeffects & SLIME_EFFECT_SILVER)
+			slimeeffect += "silver"
+		if(T.transformeffects & SLIME_EFFECT_BLUESPACE)
+			slimeeffect += "bluespace"
+		if(T.transformeffects & SLIME_EFFECT_SEPIA)
+			slimeeffect += "sepia"
+		if(T.transformeffects & SLIME_EFFECT_CERULEAN)
+			slimeeffect += "cerulean"
+		if(T.transformeffects & SLIME_EFFECT_PYRITE)
+			slimeeffect += "pyrite"
+		if(T.transformeffects & SLIME_EFFECT_RED)
+			slimeeffect += "red"
+		if(T.transformeffects & SLIME_EFFECT_GREEN)
+			slimeeffect += "green"
+		if(T.transformeffects & SLIME_EFFECT_PINK)
+			slimeeffect += "pink"
+		if(T.transformeffects & SLIME_EFFECT_GOLD)
+			slimeeffect += "gold"
+		if(T.transformeffects & SLIME_EFFECT_OIL)
+			slimeeffect += "oil"
+		if(T.transformeffects & SLIME_EFFECT_BLACK)
+			slimeeffect += "black"
+		if(T.transformeffects & SLIME_EFFECT_LIGHT_PINK)
+			slimeeffect += "light pink"
+		if(T.transformeffects & SLIME_EFFECT_ADAMANTINE)
+			slimeeffect += "adamantine"
+		if(T.transformeffects & SLIME_EFFECT_RAINBOW)
+			slimeeffect += "rainbow"
+		to_render += slimeeffect
 	to_chat(user, examine_block(to_render))

@@ -83,6 +83,10 @@
 	var/effectmod //What core modification is being used.
 	var/applied = 0 //How many extracts of the modtype have been applied.
 
+	// Transformative extract effects - get passed down
+	var/transformeffects = SLIME_EFFECT_DEFAULT
+	var/mob/master
+
 
 /mob/living/simple_animal/slime/Initialize(mapload, new_colour=colour, new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
@@ -429,7 +433,10 @@
 	qdel(src)
 
 /mob/living/simple_animal/slime/proc/apply_water()
-	adjustBruteLoss(rand(15,20))
+	var/new_damage = rand(15,20)
+	if(transformeffects & SLIME_EFFECT_DARK_BLUE)
+		new_damage *= 0.5
+	adjustBruteLoss(new_damage)
 	if(!client)
 		if(Target) // Like cats
 			set_target(null)
@@ -557,5 +564,32 @@
 	if(source == Leader)
 		set_leader(null)
 	remove_friend(source)
+
+
+/mob/living/simple_animal/slime/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE)
+	if(damage && damagetype == BRUTE && !forced && (transformeffects & SLIME_EFFECT_ADAMANTINE))
+		blocked += 50
+	. = ..(damage, damagetype, def_zone, blocked, forced)
+
+/mob/living/simple_animal/slime/attack_ghost(mob/user)
+	if(transformeffects & SLIME_EFFECT_LIGHT_PINK)
+		make_sentient(user)
+
+/mob/living/simple_animal/slime/proc/make_sentient(mob/user)
+	if(key || stat)
+		return
+	var/slime_ask = alert("Become a slime?", "Slime time?", "Yes", "No")
+	if(slime_ask == "No" || QDELETED(src))
+		return
+	if(key)
+		to_chat(user, "<span class='warning'>Someone else already took this slime!</span>")
+		return
+	key = user.key
+	mind_initialize()
+	sentience_act()
+	if(mind && master)
+		mind.enslave_mind_to_creator(master)
+		mind.add_antag_datum(/datum/antagonist/sentient_creature)
+	log_game("[key_name(src)] took control of [name].")
 
 #undef SLIME_CARES_ABOUT

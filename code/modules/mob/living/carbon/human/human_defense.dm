@@ -358,6 +358,9 @@
 		damage += rand(5, 10)
 		wound_mod = -90 // 35^1.4=145, 145-90=55
 
+	if(M.transformeffects & SLIME_EFFECT_RED)
+		damage *= 1.1
+
 	if(check_shields(M, damage, "the [M.name]"))
 		return FALSE
 

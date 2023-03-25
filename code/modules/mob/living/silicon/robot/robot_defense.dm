@@ -218,6 +218,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		damage = rand(20, 40)
 	else
 		damage = rand(5, 35)
+	if(M.transformeffects & SLIME_EFFECT_RED)
+		damage *= 1.1
 	damage = round(damage / 2) // borgs receive half damage
 	adjustBruteLoss(damage)
 

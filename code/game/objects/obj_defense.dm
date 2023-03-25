@@ -84,7 +84,10 @@
 /obj/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
 	if(!user.is_adult)
 		return
-	if(attack_generic(user, rand(10, 15), BRUTE, MELEE, 1))
+	var/slime_attack_damage = rand(10, 15)
+	if(user.transformeffects & SLIME_EFFECT_RED)
+		slime_attack_damage *= 1.1
+	if(attack_generic(user, slime_attack_damage, BRUTE, MELEE, 1))
 		log_combat(user, src, "attacked")
 
 /obj/singularity_act()
