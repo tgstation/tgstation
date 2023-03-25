@@ -562,19 +562,19 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies)
 	if(isnull(quirk))
 		return
-	if(!length(mail_goodies))
-		if(quirk.type == /datum/quirk/blooddeficiency)
-			if(HAS_TRAIT(recipient, TRAIT_NOBLOOD) && isnull(recipient.dna.species.exotic_blood)) // no blood packs should be sent in this case (like if a mob transforms into a plasmaman)
-				quirk.mail_goodies = list()
-				return 
-		// The default case if no species implementation exists. Set quirk's mail_goodies to initial. 
-		// We have to do it this way because initial will not work on lists in this version of DM
-		var/datum/quirk/initial_quirk = new quirk.type
-		quirk.mail_goodies = initial_quirk.mail_goodies
-		qdel(initial_quirk)
+	if(length(mail_goodies))
+		quirk.mail_goodies = mail_goodies
 		return
-
-	quirk.mail_goodies = mail_goodies
+	if(istype(quirk, /datum/quirk/blooddeficiency))
+		if(HAS_TRAIT(recipient, TRAIT_NOBLOOD) && isnull(recipient.dna.species.exotic_blood)) // no blood packs should be sent in this case (like if a mob transforms into a plasmaman)
+			quirk.mail_goodies = list()
+			return 
+			
+	// The default case if no species implementation exists. Set quirk's mail_goodies to initial. 
+	var/datum/quirk/readable_quirk = new quirk.type
+	quirk.mail_goodies = readable_quirk.mail_goodies
+	qdel(readable_quirk) // We have to do it this way because initial will not work on lists in this version of DM
+	return
 
 /**
  * Handles the body of a human
