@@ -94,9 +94,10 @@
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	var/list/tracked_ingredients = list()
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
-		tracked_ingredients += WEAKREF(ingredient)
-		// Equalize temps. Otherwise when we add ingredient temps in, it'll lower reacetion temp
-		ingredient.reagents.chem_temp = holder.chem_temp
+		// Track all ingredients in data. Assoc list of weakref to ingredient to initial total volume.
+		tracked_ingredients[WEAKREF(ingredient)] = ingredient.reagents?.total_volume || 1
+		// Equalize temps. Otherwise when we add ingredient temps in, it'll lower reaction temp
+		ingredient.reagents?.chem_temp = holder.chem_temp
 
 	// Store a list of weakrefs to ingredients as
 	reaction.data["ingredients"] = tracked_ingredients
@@ -127,10 +128,12 @@
 	// Throw it in the ingredients list
 	else if(num_current_ingredients > num_cached_ingredients)
 		for(var/obj/item/new_ingredient as anything in pot.added_ingredients)
-			new_ingredient.reagents.chem_temp = holder.chem_temp
-			cached_ingredients |= WEAKREF(new_ingredient)
+			var/datum/weakref/new_ref = WEAKREF(new_ingredient)
+			if(cached_ingredients[new_ref])
+				continue
+			new_ingredient.reagents?.chem_temp = holder.chem_temp
+			cached_ingredients[new_ref] = new_ingredient.reagents?.total_volume || 1
 
-	var/list/ingredients_actual = list()
 	for(var/datum/weakref/ingredient_ref as anything in cached_ingredients)
 		var/obj/item/ingredient = ingredient_ref.resolve()
 		// An ingredient has gone missing, stop the reaction
@@ -138,20 +141,12 @@
 			testing("Soup reaction ended due to having an invalid ingredient present.")
 			return END_REACTION
 
-		ingredients_actual[ingredient.type] += 1
-
 		// Don't add any more reagents if we've boiled over
 		if(reaction.data["boiled_over"])
 			continue
 
-		// Some ingredients are purely flavor (no pun intended) and will have reagents
-		if(!isnull(ingredient.reagents))
-			// Some of the nutriment goes into "creating the soup reagent" itself, gets deleted.
-			// Mainly done so that nutriment doesn't overpower the main course
-			ingredient.reagents.remove_reagent(/datum/reagent/consumable/nutriment, step_reaction_vol * percentage_of_nutriment_converted)
-			ingredient.reagents.remove_reagent(/datum/reagent/consumable/nutriment/vitamin, step_reaction_vol * percentage_of_nutriment_converted)
-			// The other half of the nutriment, and the rest of the reagents, will get put directly into the pot
-			ingredient.reagents.trans_to(pot, step_reaction_vol, ingredient_reagent_multiplier, no_react = TRUE)
+		// Transfer 20% of the initial reagent volume of the ingredient to the soup
+		transfer_ingredient_reagents(ingredient, holder, max(cached_ingredients[ingredient_ref] * 0.2, 2))
 
 		// Uh oh we reached the top of the pot, the soup's gonna boil over.
 		if(holder.total_volume >= holder.maximum_volume * 0.95)
@@ -176,6 +171,9 @@
 
 		// Things that had reagents or ingredients in the soup will get deleted
 		if(!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients))
+			// Send everything left behind
+			transfer_ingredient_reagents(ingredient, holder)
+			// Delete, it's done
 			qdel(ingredient)
 
 		// Everything else will just get fried
@@ -183,6 +181,22 @@
 			ingredient.AddElement(/datum/element/fried_item, 30)
 
 	LAZYNULL(pot.added_ingredients)
+
+/datum/chemical_reaction/food/soup/proc/transfer_ingredient_reagents(obj/item/ingredient, datum/reagents/holder, amount)
+	var/datum/reagents/ingredient_pool = ingredient.reagents
+	// Some ingredients are purely flavor (no pun intended) and will have reagents
+	if(isnull(ingredient_pool) || ingredient_pool.total_volume <= 0)
+		return
+	if(isnull(amount))
+		amount = ingredient_pool.total_volume
+		testing("Soup reaction has made it to the finishing step with ingredients that still contain reagents. [amount] reagents left in [ingredient].")
+
+	// Some of the nutriment goes into "creating the soup reagent" itself, gets deleted.
+	// Mainly done so that nutriment doesn't overpower the main course
+	ingredient_pool.remove_reagent(/datum/reagent/consumable/nutriment, amount * percentage_of_nutriment_converted)
+	ingredient_pool.remove_reagent(/datum/reagent/consumable/nutriment/vitamin, amount * percentage_of_nutriment_converted)
+	// The other half of the nutriment, and the rest of the reagents, will get put directly into the pot
+	ingredient_pool.trans_to(holder, amount, ingredient_reagent_multiplier, no_react = TRUE)
 
 /datum/chemical_reaction/food/soup/proc/boil_over(datum/reagents/holder)
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
