@@ -10130,8 +10130,9 @@
 /area/station/hallway/secondary/entry)
 "dPw" = (
 /obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
+/obj/structure/grille/broken,
+/turf/open/misc/asteroid/basalt/airless,
+/area/space/nearstation)
 "dPy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -78801,7 +78802,7 @@ aaa
 aaa
 aaa
 aaa
-dPw
+lMJ
 aaa
 aIw
 aaa
@@ -112558,8 +112559,8 @@ eoU
 lMJ
 aaa
 rrt
-lAu
-lAu
+aaa
+aaa
 lMJ
 wrc
 oyj
@@ -113072,8 +113073,8 @@ eoU
 lMJ
 aaa
 rrt
-lAu
-lAu
+aaa
+aaa
 lMJ
 hbK
 uhs
@@ -113586,8 +113587,8 @@ eoU
 lMJ
 aaa
 rrt
-lAu
-lAu
+aaa
+aaa
 lMJ
 hbK
 oyj
@@ -114100,8 +114101,8 @@ eoU
 lMJ
 aaa
 rrt
-lAu
-lAu
+aaa
+aaa
 lMJ
 wrc
 oyj
@@ -116154,7 +116155,7 @@ kwZ
 aWa
 eoU
 lMJ
-nYJ
+dPw
 lMJ
 rrt
 rrt
