@@ -25,18 +25,18 @@
 /area/template_noop)
 "f" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "h" = (
-/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "n" = (
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "o" = (
@@ -62,34 +62,32 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "t" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "y" = (
 /obj/structure/window,
 /obj/item/toy/dodgeball,
 /obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "C" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "F" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "G" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
@@ -99,7 +97,9 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "K" = (
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "V" = (
@@ -107,9 +107,7 @@
 	dir = 1
 	},
 /obj/item/toy/dodgeball,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "W" = (
