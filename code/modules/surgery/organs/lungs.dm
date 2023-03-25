@@ -579,12 +579,19 @@
 
 	var/old_euphoria = (n2o_euphoria == EUPHORIA_ACTIVE || healium_euphoria == EUPHORIA_ACTIVE)
 
+	// Cache for sonic speed
+	var/list/last_partial_pressures = src.last_partial_pressures
+	var/list/breathe_always = src.breathe_always
+	var/list/breath_present = src.breath_present
+	var/list/breath_lost = src.breath_lost
+
+	// Build out our partial pressures, for use as we go
 	var/list/partial_pressures = list()
 	for(var/gas_id in breath_gases)
 		partial_pressures[gas_id] = breath.get_breath_partial_pressure(breath_gases[gas_id][MOLES])
 
-	/// First, we breathe the stuff that always wants to be processed
-	/// This is typically things like o2, stuff the mob needs to live
+	// First, we breathe the stuff that always wants to be processed
+	// This is typically things like o2, stuff the mob needs to live
 	for(var/breath_id in breathe_always)
 		var/partial_pressure = partial_pressures[breath_id] || 0
 		var/old_partial_pressure = last_partial_pressures[breath_id] || 0
@@ -593,7 +600,7 @@
 		var/inhale = breathe_always[breath_id]
 		call(src, inhale)(owner, breath, partial_pressure, old_partial_pressure)
 
-	/// Now we'll handle the callbacks that want to be run conditionally off our current breath
+	// Now we'll handle the callbacks that want to be run conditionally off our current breath
 	for(var/breath_id in breath_gases)
 		var/when_present = breath_present[breath_id]
 		if(!when_present)
@@ -605,7 +612,7 @@
 			if(on_lose)
 				call(src, on_lose)(owner, breath, partial_pressures[breath_id], last_partial_pressures[breath_id])
 
-	/// Finally, we'll run the callbacks that aren't in breath_gases, but WERE in our last breath
+	// Finally, we'll run the callbacks that aren't in breath_gases, but WERE in our last breath
 	for(var/gas_lost in last_partial_pressures)
 		// If we still have it, go away
 		if(breath_gases[gas_lost])
@@ -616,7 +623,7 @@
 
 		call(src, on_loss)(owner, breath, last_partial_pressures[gas_lost])
 
-	last_partial_pressures = partial_pressures
+	src.last_partial_pressures = partial_pressures
 
 	// Handle chemical euphoria mood event, caused by gases such as N2O or healium.
 	var/new_euphoria = (n2o_euphoria == EUPHORIA_ACTIVE || healium_euphoria == EUPHORIA_ACTIVE)
