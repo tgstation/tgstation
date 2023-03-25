@@ -11,7 +11,7 @@
 	armor_type = /datum/armor/hardsuit
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser)
 	siemens_coefficient = 0
-	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle_helmet)
+	actions_types = list(/datum/action/item_action/toggle_helmet)
 	supports_variations_flags = NONE
 
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
@@ -81,7 +81,6 @@
 		RemoveHelmet()
 
 /obj/item/clothing/suit/space/hardsuit/ui_action_click()
-	. = ..()
 	ToggleHelmet()
 
 /obj/item/clothing/suit/space/hardsuit/attack_self(mob/user)

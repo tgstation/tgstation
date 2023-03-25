@@ -110,10 +110,6 @@
 		toggle_spacesuit(user)
 		update_hud_icon(user)
 		return
-		
-	if(!user.get_item_by_slot(ITEM_SLOT_HEAD) && thermal_on)
-		toggle_spacesuit(user)
-		update_hud_icon(user)
 
 	// cell.use will return FALSE if charge is lower than THERMAL_REGULATOR_COST
 	if(!cell.use(THERMAL_REGULATOR_COST))
@@ -233,6 +229,7 @@
 		if(toggler)
 			to_chat(toggler, span_warning("The thermal regulator on [src] has no charge."))
 		return
+	if()
 	thermal_on = !thermal_on
 	min_cold_protection_temperature = thermal_on ? SPACE_SUIT_MIN_TEMP_PROTECT : SPACE_SUIT_MIN_TEMP_PROTECT_OFF
 	if(toggler)
