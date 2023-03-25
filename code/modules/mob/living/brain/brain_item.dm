@@ -44,7 +44,8 @@
 	if(!.)
 		return
 
-	// Transfer brainmob if we're in a head.
+	// Transfer brainmob from the head if we're being transferred from a head to a new body.
+	// And example of this ocurring is reattaching an amputated/severed head via surgery.
 	if(istype(loc, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/brain_holder = loc
 		if(brain_holder.brainmob)
