@@ -35,7 +35,7 @@
 	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id]; out_list[gas_id] = tmp_gaslist.Copy();
 
 ///Adds a gas to a gas mixture but checks if is already present, faster than the same proc
-#define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
+#define ASSERT_GAS(gas_id, gas_mixture) ASSERT_GAS_IN_LIST(gas_id, gas_mixture.gases)
 
 ///Adds a gas to a gas LIST but checks if is already present, accepts a list instead of a datum, so faster if the list is locally cached
 #define ASSERT_GAS_IN_LIST(gas_id, gases) if (!gases[gas_id]) { ADD_GAS(gas_id, gases) };
