@@ -44,6 +44,15 @@
 	if(!.)
 		return
 
+	// Transfer brainmob if we're in a head.
+	if(istype(loc, /obj/item/bodypart/head))
+		var/obj/item/bodypart/head/brain_holder = loc
+		if(brain_holder.brainmob)
+			brainmob = brain_holder.brainmob
+			brain_holder.brainmob = null
+			brainmob.container = null
+			brainmob.forceMove(src)
+
 	name = initial(name)
 
 	if(brain_owner.mind && brain_owner.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer) //congrats, you're trapped in a body you don't control

@@ -372,17 +372,10 @@
 	// These are stored before calling super. This is so that if the head is from a different body, it persists its appearance.
 	var/real_name = src.real_name
 
-	// Transfer brainmob to any brain before calling parent, which will handle brain insertion as part of organ code.
-	if(brain && brainmob)
-		brainmob.container = null
-		brainmob.forceMove(brain)
-		brain.brainmob = brainmob
-		brainmob = null
-
 	. = ..()
 
 	if(!.)
-		return .
+		return
 
 	if(brain)
 		brain = null
