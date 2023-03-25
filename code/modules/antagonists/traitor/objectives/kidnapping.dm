@@ -83,6 +83,7 @@
 /datum/traitor_objective/kidnapping/common/assistant
 	progression_minimum = 0 MINUTES
 	progression_maximum = 15 MINUTES
+	telecrystal_reward = list(1, 2)
 	target_jobs = list(
 		/datum/job/assistant
 	)
