@@ -1116,9 +1116,6 @@
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/gravity)
 
-	// If it's not started don't do anything
-	if(!SSticker.HasRoundStarted())
-		return
 	// Time to add/remove gravity alerts. sorry for the mess it's gotta be fast
 	var/atom/movable/screen/alert/gravity_alert = alerts[ALERT_GRAVITY]
 	switch(gravity)
