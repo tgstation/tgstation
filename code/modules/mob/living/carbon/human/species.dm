@@ -542,27 +542,39 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Proc called when mail goodies need to be updated for this species.
  *
  * Updates the mail goodies if that is required. e.g. for the blood deficiency quirk, which sends bloodbags to quirk holders, update the sent bloodpack to match the species' exotic blood.
- * Add implementation as needed for each individual species
+ * This is currently only used for the blood deficiency quirk but more can be added as needed.
  * Arguments:
  * * mob/living/carbon/human/recipient - the mob receiving the mail goodies
- * * list/mail_goodies - a list of mail goodies
  */
-/datum/species/proc/update_mail_goodies(mob/living/carbon/human/recipient, list/mail_goodies)
-	var/datum/quirk/blooddeficiency/blooddeficiency = recipient.get_quirk(/datum/quirk/blooddeficiency)
-	if(isnull(blooddeficiency))
+/datum/species/proc/update_mail_goodies(mob/living/carbon/human/recipient)
+	update_quirk_mail_goodies(recipient, recipient.get_quirk(/datum/quirk/blooddeficiency))
+
+/**
+ * Updates the mail goodies of a specific quirk.
+ *
+ * Updates the mail goodies belonging to a specific quirk.
+ * Add implementation as needed for each individual species. The base species proc should give the species the 'default' version of whatever mail goodies are required.
+ * Arguments:
+ * * mob/living/carbon/human/recipient - the mob receiving the mail goodies
+ * * datum/quirk/quirk - the quirk to update the mail goodies of. Use get_quirk(datum/quirk/some_quirk) to get the actual mob's quirk to pass.
+ * * list/mail_goodies - a list of mail goodies. Generally speaking you should not be using this argument on the initial function call. You should instead add to the species' implementation of this proc.
+ */
+/datum/species/proc/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies)
+	if(isnull(quirk))
 		return
-	if(!isnull(mail_goodies))
-		blooddeficiency.mail_goodies = mail_goodies
-	else
-		// no blood packs should be sent if mob has TRAIT_NOBLOOD and no exotic blood (like if a mob transforms into a plasmaman)
-		if(HAS_TRAIT(recipient, TRAIT_NOBLOOD) && isnull(recipient.dna.species.exotic_blood))
-			blooddeficiency.mail_goodies = null
+	if(length(mail_goodies))
+		quirk.mail_goodies = mail_goodies
+		return
+	if(istype(quirk, /datum/quirk/blooddeficiency))
+		if(HAS_TRAIT(recipient, TRAIT_NOBLOOD) && isnull(recipient.dna.species.exotic_blood)) // no blood packs should be sent in this case (like if a mob transforms into a plasmaman)
+			quirk.mail_goodies = list()
 			return
 			
-		// set mail_goodies to initial - we have to do this because initial will not work on lists in this version of DM
-		var/datum/quirk/blooddeficiency/initial_blooddeficiency = new
-		blooddeficiency.mail_goodies = initial_blooddeficiency.mail_goodies
-		qdel(initial_blooddeficiency)
+	// The default case if no species implementation exists. Set quirk's mail_goodies to initial. 
+	var/datum/quirk/readable_quirk = new quirk.type
+	quirk.mail_goodies = readable_quirk.mail_goodies
+	qdel(readable_quirk) // We have to do it this way because initial will not work on lists in this version of DM
+	return
 
 /**
  * Handles the body of a human
