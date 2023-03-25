@@ -471,7 +471,7 @@
 	if(members.len)
 		parts += "<span class='header'>The cultists were:</span>"
 		var/list/noharvesterscult = list()
-		for(var/datum/mind/cultmind in members)
+		for(var/datum/mind/cultmind as anything in members)
 			if(istype(cultmind.current, /mob/living/simple_animal/hostile/construct/harvester))
 				continue
 			noharvesterscult += cultmind
