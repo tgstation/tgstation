@@ -67,7 +67,7 @@
 		// Science
 		/datum/job/geneticist,
 		/datum/job/roboticist,
-	    /datum/job/scientist,
+		/datum/job/scientist,
 		// Service
 		/datum/job/bartender,
 		/datum/job/botanist,
