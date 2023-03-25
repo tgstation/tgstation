@@ -8,6 +8,7 @@
 	antagpanel_category = "Clockcult"
 	antag_moodlet = /datum/mood_event/cult
 	job_rank = ROLE_SERVANT_OF_RATVAR
+	hud_icon = 'massmeta/icons/mob/clockwork_hud.dmi'
 	antag_hud_name = "clockwork"
 
 	//The class of the servant
@@ -53,29 +54,31 @@
 	GLOB.cyborg_servants_of_ratvar -= owner
 	. = ..()
 
-/datum/antagonist/servant_of_ratvar/apply_innate_effects(mob/living/M)
+/datum/antagonist/servant_of_ratvar/apply_innate_effects(mob/living/mob_override)
 	. = ..()
-	owner.current.faction |= "ratvar"
+	var/mob/living/current_mob = mob_override || owner.current
+	current_mob.faction |= "ratvar"
 	transmit_spell = new()
-	transmit_spell.Grant(owner.current)
-	if(GLOB.gateway_opening && ishuman(owner.current))
-		var/mob/living/carbon/owner_mob = owner.current
+	transmit_spell.Grant(current_mob)
+	if(GLOB.gateway_opening && ishuman(current_mob))
+		var/mob/living/carbon/owner_mob = current_mob
 		forbearance = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 		owner_mob.add_overlay(forbearance)
-	owner.current.throw_alert("clockinfo", /atom/movable/screen/alert/clockwork/clocksense)
-	var/datum/language_holder/LH = owner.current.get_language_holder()
+	current_mob.throw_alert("clockinfo", /atom/movable/screen/alert/clockwork/clocksense)
+	var/datum/language_holder/LH = current_mob.get_language_holder()
 	LH.grant_language(/datum/language/ratvar, TRUE, TRUE, LANGUAGE_CULTIST)
-	add_team_hud(owner.current)
+	add_team_hud(current_mob, /datum/antagonist/servant_of_ratvar)
 
-/datum/antagonist/servant_of_ratvar/remove_innate_effects(mob/living/M)
-	owner.current.faction -= "ratvar"
-	owner.current.clear_alert("clockinfo")
+/datum/antagonist/servant_of_ratvar/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/current_mob = mob_override || owner.current
+	current_mob.faction -= "ratvar"
+	current_mob.clear_alert("clockinfo")
 	transmit_spell.Remove(transmit_spell.owner)
-	if(forbearance && ishuman(owner.current))
-		var/mob/living/carbon/owner_mob = owner.current
+	if(forbearance && ishuman(current_mob))
+		var/mob/living/carbon/owner_mob = current_mob
 		owner_mob.remove_overlay(forbearance)
 		qdel(forbearance)
-	var/datum/language_holder/LH = owner.current.get_language_holder()
+	var/datum/language_holder/LH = current_mob.get_language_holder()
 	LH.remove_language(/datum/language/ratvar, TRUE, TRUE, LANGUAGE_CULTIST)
 	. = ..()
 
