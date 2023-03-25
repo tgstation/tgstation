@@ -4,7 +4,6 @@
 	icon = 'monkestation/icons/obj/machines/research.dmi'
 	icon_state = "nanite_cloud_controller"
 	circuit = /obj/item/circuitboard/computer/nanite_cloud_controller
-	icon_screen = "nanite_cloud_controller_screen"
 	icon_keyboard = null
 
 	var/obj/item/disk/nanite_program/disk

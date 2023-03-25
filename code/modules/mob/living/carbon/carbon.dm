@@ -534,6 +534,8 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/carbon/on_stamina_update()
+	if(!stamina)
+		return
 	var/stam = stamina.current
 	var/max = stamina.maximum
 	var/is_exhausted = HAS_TRAIT_FROM(src, TRAIT_EXHAUSTED, STAMINA)
