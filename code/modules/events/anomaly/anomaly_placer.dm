@@ -65,6 +65,7 @@
 		/area/station/solars,
 		/area/station/holodeck,
 		/area/station/maintenance,
+		/area/station/science/ordnance/bomb,
 	))
 
 	//Subtypes from the above that actually should explode.
