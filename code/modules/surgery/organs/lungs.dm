@@ -546,14 +546,10 @@
 	if(HAS_TRAIT(breather, TRAIT_NOBREATH))
 		return
 
-	/// Immutable "empty breath" used to store waste gases before they are re-added to the main breath.
-	/// empty_breath is also used as a backup for breath if it was null.
-	/// During gas exchange each output gas is temporarily transferred into this gas_mixture, and then transferred back into the breath.
-	/// Two gas_mixtures are used because we don't want exchanges to influence each other.
-	var/static/datum/gas_mixture/immutable/empty_breath = new(BREATH_VOLUME)
 
 	// If the breath is falsy or "null", we can use the backup empty_breath.
 	if(!breath)
+		var/static/datum/gas_mixture/immutable/empty_breath = new(BREATH_VOLUME)
 		breath = empty_breath
 
 	// Indicates if there are moles of gas in the breath.
@@ -578,6 +574,8 @@
 
 	// The list of gases in the breath.
 	var/list/breath_gases = breath.gases
+	// Copy the breath's temperature into breath_out to avoid cooling the output breath down unfairly
+	breath_out.temperature = breath.temperature
 
 	var/old_euphoria = (n2o_euphoria == EUPHORIA_ACTIVE || healium_euphoria == EUPHORIA_ACTIVE)
 
@@ -626,12 +624,12 @@
 		owner.add_mood_event("chemical_euphoria", /datum/mood_event/chemical_euphoria)
 	else if (old_euphoria && !new_euphoria)
 		owner.clear_mood_event("chemical_euphoria")
+
 	if(has_moles)
 		handle_breath_temperature(breath, breather)
-		// Transfer exchanged gases into breath for exhalation.
-		for(var/gas_type in breath_gases_out)
-			breath.assert_gas(gas_type)
-			breath_gases[gas_type][MOLES] += breath_gases_out[gas_type][MOLES]
+		// Merge breath_out into breath. They're kept seprerate before now to ensure stupid like, order of operations shit doesn't happen
+		// But that time has past
+		breath.merge(breath_out)
 		// Resets immutable gas_mixture to empty.
 		breath_out.garbage_collect()
 
