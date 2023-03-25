@@ -77,7 +77,7 @@
 /datum/config_entry/flag/log_prayer
 
 ///Log Music Requests
-/datum/config_entry/flag/log_music_req
+/datum/config_entry/flag/log_internet_request
 
 /// log silicons
 /datum/config_entry/flag/log_silicon

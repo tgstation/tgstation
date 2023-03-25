@@ -131,7 +131,7 @@ LOG_TELECOMMS
 LOG_PRAYER
 
 ## Log Music requests
-LOG_MUSIC_REQ
+LOG_INTERNET_REQUEST
 
 ## log silicons
 LOG_SILICON
