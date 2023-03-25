@@ -189,7 +189,7 @@
 	if(always)
 		breathe_always[gas_type] = always
 
-	if(!while_present && !on_loss)
+	if(isnull(while_present) && isnull(on_loss))
 		return
 
 	if(while_present)
