@@ -554,10 +554,10 @@
 	if(breather.status_flags & GODMODE)
 		breather.failed_last_breath = FALSE
 		breather.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
-		return
+		return FALSE
 
 	if(HAS_TRAIT(breather, TRAIT_NOBREATH))
-		return
+		return FALSE
 
 
 	// If the breath is falsy or "null", we can use the backup empty_breath.
@@ -654,6 +654,9 @@
 		breath_out.garbage_collect()
 
 	breath.garbage_collect()
+	// Returning FALSE indicates the breath failed.
+	if(!breather.failed_last_breath)
+		return TRUE
 
 /// Remove gas from breath. If output_gas is given, transfers the removed gas to the lung's gas_mixture.
 /// Removes 100% of the given gas type unless given a volume argument.
