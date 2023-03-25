@@ -24921,7 +24921,7 @@
 	pixel_x = 24;
 	pixel_y = -5
 	},
-/obj/structure/showcase/machinery/cloning_pod,
+/obj/machinery/clonepod,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "fZh" = (

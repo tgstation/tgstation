@@ -45681,7 +45681,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/showcase/machinery/cloning_pod,
+/obj/machinery/clonepod,
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "ouZ" = (

@@ -35014,7 +35014,7 @@
 "lko" = (
 /obj/structure/noticeboard/directional/north,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
-/obj/structure/showcase/machinery/cloning_pod,
+/obj/machinery/clonepod,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "lkp" = (
