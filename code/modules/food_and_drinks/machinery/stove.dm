@@ -33,9 +33,12 @@
 	base_icon_state = "pot"
 	volume = 200
 	possible_transfer_amounts = list(20, 50, 100, 200)
+	amount_per_transfer_from_this = 50
+	amount_list_position = 2
 	reagent_flags = REFILLABLE | DRAINABLE
 	custom_materials = list(/datum/material/iron = 5000)
 	w_class = WEIGHT_CLASS_BULKY
+	custom_price = PAYCHECK_LOWER * 8
 	fill_icon_thresholds = null
 
 	/// Max number of ingredients we can add

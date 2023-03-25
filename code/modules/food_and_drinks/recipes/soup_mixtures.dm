@@ -181,6 +181,8 @@
 			ingredient.AddElement(/datum/element/fried_item, 30)
 
 	LAZYNULL(pot.added_ingredients)
+	// Blackbox log the chemical reaction used, to account for soup reaction that don't produce typical results
+	// BLACKBOX_LOG_FOOD_MADE(type) // Melbert todo uncomment before merge
 
 /datum/chemical_reaction/food/soup/proc/transfer_ingredient_reagents(obj/item/ingredient, datum/reagents/holder, amount)
 	var/datum/reagents/ingredient_pool = ingredient.reagents

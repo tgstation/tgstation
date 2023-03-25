@@ -273,7 +273,7 @@
 	if(!ladle_matrix)
 		ladle_matrix = matrix()
 		ladle_matrix.Scale(1.2, 1.5)
-		ladle_matrix.Turn(45)
+		ladle_matrix.Turn(135)
 	transform = ladle_matrix
 	create_reagents(25, INJECTABLE|OPENCONTAINER)
 

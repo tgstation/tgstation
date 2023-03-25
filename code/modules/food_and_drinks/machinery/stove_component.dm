@@ -69,7 +69,7 @@
 		turn_off()
 		return
 
-	container?.reagents.expose_temperature(600, 0.1)
+	container?.reagents.expose_temperature(600, 0.033)
 	real_parent.use_power(real_parent.active_power_usage)
 
 	var/turf/stove_spot = real_parent.loc
