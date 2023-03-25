@@ -366,24 +366,28 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"iF" = (
+"ib" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"FV" = (
-/obj/effect/turf_decal/tile/green/half/contrasted,
+"nu" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/template_noop)
-"FY" = (
+"SV" = (
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"XQ" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
-/turf/open/floor/iron,
-/area/template_noop)
-"Iv" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/template_noop)
 
@@ -507,12 +511,12 @@ av
 (10,1,1) = {"
 al
 aO
-FY
+XQ
 ac
 ak
 ak
 aZ
-FY
+XQ
 aO
 al
 aa
@@ -546,12 +550,12 @@ aa
 (13,1,1) = {"
 al
 aR
-Iv
-Iv
-Iv
-Iv
-Iv
-Iv
+ib
+ib
+ib
+ib
+ib
+ib
 aR
 al
 aa
@@ -650,12 +654,12 @@ aa
 (21,1,1) = {"
 al
 aR
-iF
-iF
-iF
-iF
-iF
-iF
+nu
+nu
+nu
+nu
+nu
+nu
 aR
 al
 aa
@@ -689,12 +693,12 @@ aa
 (24,1,1) = {"
 al
 aO
-FV
+SV
 aH
 an
 an
 at
-FV
+SV
 aO
 al
 aa

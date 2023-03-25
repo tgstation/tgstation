@@ -133,10 +133,11 @@
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "al" = (
-/obj/machinery/light/small/directional/north,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
+/obj/machinery/computer{
+	dir = 1;
+	name = "Shuttle computer"
 	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "am" = (
@@ -400,18 +401,15 @@
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "aT" = (
-/obj/machinery/computer{
-	dir = 1;
-	name = "Shuttle computer"
-	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/structure/closet/wardrobe/black,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "aU" = (
 /obj/machinery/light/small/directional/north,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "aV" = (
@@ -439,13 +437,11 @@
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "aX" = (
-/obj/structure/closet/wardrobe/black,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "aY" = (
+/obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
@@ -454,11 +450,23 @@
 "aZ" = (
 /obj/structure/chair/office,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"he" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
-"bV" = (
+"hW" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"on" = (
 /obj/machinery/status_display/evac{
 	pixel_x = -32
 	},
@@ -466,52 +474,46 @@
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
-"uO" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
+"uU" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/vending/wallmed/directional/north{
+	use_power = 0
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
-"Gb" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/shuttle/arrival)
-"Gm" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/turf/open/floor/iron,
-/area/shuttle/arrival)
-"Qx" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/shuttle/arrival)
-"RT" = (
+"zb" = (
 /obj/machinery/status_display/ai{
 	pixel_x = 32
 	},
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
-"XC" = (
-/obj/machinery/light/directional/north,
-/obj/machinery/vending/wallmed/directional/north{
-	use_power = 0
+"Ns" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"ZZ" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 
@@ -539,14 +541,14 @@ ab
 ad
 ag
 ai
-Qx
-bV
+hW
+on
 au
 au
 au
 au
-Gb
-Qx
+ZZ
+hW
 aG
 ag
 aa
@@ -566,7 +568,7 @@ ap
 ap
 ap
 ap
-aX
+aT
 ag
 ag
 ah
@@ -587,7 +589,7 @@ aB
 ap
 aI
 aN
-al
+aY
 aC
 ah
 "}
@@ -603,11 +605,11 @@ ax
 ay
 ax
 af
-XC
-aY
+uU
+aX
 aO
 aZ
-aT
+al
 ah
 "}
 (6,1,1) = {"
@@ -653,14 +655,14 @@ ab
 ad
 ag
 ai
-uO
-RT
+he
+zb
 av
 av
 av
 av
-Gm
-uO
+Ns
+he
 aM
 ag
 aa

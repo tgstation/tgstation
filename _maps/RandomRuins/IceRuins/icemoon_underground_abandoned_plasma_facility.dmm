@@ -56,7 +56,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/half,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/edge,
 /area/ruin/plasma_facility/commons)
@@ -96,7 +96,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/half,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/edge,
 /area/ruin/plasma_facility/commons)
@@ -851,9 +851,7 @@
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -863,7 +861,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/brown/half,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/edge,
 /area/ruin/plasma_facility/commons)
@@ -977,9 +975,7 @@
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -990,7 +986,7 @@
 	},
 /obj/effect/turf_decal/tile/brown/half,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/edge,
 /area/ruin/plasma_facility/commons)
@@ -1126,9 +1122,7 @@
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -1290,7 +1284,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/brown/half,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/edge,
 /area/ruin/plasma_facility/commons)
@@ -1413,7 +1407,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/tile/brown/half,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/edge,
 /area/ruin/plasma_facility/commons)
@@ -1441,7 +1435,7 @@
 /obj/machinery/light_switch/directional/south,
 /obj/effect/turf_decal/tile/brown/half,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/edge,
 /area/ruin/plasma_facility/commons)
@@ -1469,7 +1463,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 4
@@ -1518,9 +1512,7 @@
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -1531,7 +1523,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/half,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/edge,
 /area/ruin/plasma_facility/commons)
@@ -1584,9 +1576,7 @@
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -2255,9 +2245,7 @@
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -2288,7 +2276,9 @@
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
@@ -2418,9 +2408,7 @@
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -2541,9 +2529,7 @@
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -2609,9 +2595,7 @@
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -2691,7 +2675,7 @@
 "VD" = (
 /obj/effect/turf_decal/tile/brown/half,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/edge,
 /area/ruin/plasma_facility/commons)
@@ -2881,9 +2865,7 @@
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},

@@ -57,7 +57,7 @@
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=2.7"
@@ -170,7 +170,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=2.7"
@@ -237,7 +237,9 @@
 "rt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -290,7 +292,9 @@
 /area/shuttle/ruin/caravan/freighter1)
 "tH" = (
 /obj/structure/chair/stool/directional/west,
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=2.7"
 	},
