@@ -99,7 +99,6 @@
 /obj/structure/table/reinforced/rglass,
 /obj/structure/cable,
 /obj/item/reagent_containers/cup/glass/bottle/molotov,
-/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "ej" = (
@@ -1947,7 +1946,7 @@ zX
 lQ
 Zi
 nA
-Uo
+fu
 AF
 Zi
 Rn
