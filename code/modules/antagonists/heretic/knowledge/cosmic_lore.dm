@@ -127,9 +127,9 @@
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
 	desc = "Your blade now deals damage to people's cells through cosmic radiation. \
-		You can combo your attacks by hitting a different target every single time between three targets. \
-		The two other targets hit previously will recieve extra damage. The combo resets after two seconds \
-		or if the second or third target are hit again."
+		Your attacks will chain bonus damage to up to two previous victims. \
+		The combo is reset after two seconds without making an attack, \
+		or if you attack someone already marked."
 	gain_text = "As he ascended to be a watcher, he needed to gather knowledge. \
 		He started to draw it at his home."
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_expansion)
