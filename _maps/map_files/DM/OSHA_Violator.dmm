@@ -1,0 +1,2103 @@
+MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+ac = (
+objstructureclosetcratemedical,
+turfopenspacebasic,
+areatemplate_noop)
+ae = (
+objeffectmob_spawnhumancorpsecargo_tech,
+turfopenspacebasic,
+areatemplate_noop)
+ai = (
+turfclosedindestructiblereinforced,
+areadeathmatch)
+aE = (
+turfclosedindestructiblefakedoor,
+areadeathmatch)
+bl = (
+turfclosedindestructiblefakeglass,
+areadeathmatch)
+bW = (
+objstructureclosetsecure_closetengineering_welding,
+turfopenindestructible,
+areadeathmatch)
+cA = (
+turfopenindestructible,
+areadeathmatch)
+cR = (
+objmachineryfieldgeneratoranchored,
+objeffectturf_decalbot,
+turfopenindestructible,
+areadeathmatch)
+cY = (
+objmachinerypoweremitterctf{
+	dir = 1
+	},
+objeffectturf_decalbot,
+objstructurecable,
+turfopenindestructible,
+areadeathmatch)
+do = (
+objeffectturf_decalstripesline,
+turfopenindestructible,
+areadeathmatch)
+dt = (
+objmachinerylightno_nightlightdirectionalnorth,
+objeffectturf_decalstripesline,
+turfopenindestructible,
+areadeathmatch)
+dy = (
+objstructuresignposterofficialrandom{
+	pixel_y = 32
+	},
+objeffectturf_decalstripesline,
+turfopenindestructible,
+areadeathmatch)
+er = (
+objstructuredisposalpipesegment{
+	dir = 6
+	},
+turfclosedindestructiblereinforced,
+areadeathmatch)
+fH = (
+objmachinerylightno_nightlightdirectionaleast,
+turfopenindestructible,
+areadeathmatch)
+fN = (
+objstructuresigndirectionsengineering,
+turfclosedindestructiblereinforced,
+areadeathmatch)
+fV = (
+objstructureparticle_acceleratorend_cap,
+turfopenindestructible,
+areadeathmatch)
+gd = (
+objmachinerypowergrounding_rod,
+turfopenindestructible,
+areadeathmatch)
+go = (
+objmachinerypowergrounding_rod,
+objmachinerylightreddirectionaleast,
+turfopenindestructible,
+areadeathmatch)
+gC = (
+objmachinerypoweremitterctf,
+objeffectturf_decalbot,
+objstructurecable,
+turfopenindestructible,
+areadeathmatch)
+gG = (
+objstructurecable,
+objstructurecable,
+objstructureextinguisher_cabinetdirectionalwest,
+turfopenindestructible,
+areadeathmatch)
+gN = (
+objstructurecable,
+turfopenindestructible,
+areadeathmatch)
+gU = (
+objstructurecable,
+objmachineryconveyorauto{
+	dir = 5;
+	verted = -1
+	},
+turfopenindestructible,
+areadeathmatch)
+hj = (
+objmachineryconveyorauto{
+	dir = 8
+	},
+objstructurecable,
+turfopenindestructible,
+areadeathmatch)
+hR = (
+objstructurecable,
+objmachineryconveyorauto{
+	dir = 6;
+	verted = -1
+	},
+turfopenindestructible,
+areadeathmatch)
+hU = (
+objmachinerylightno_nightlightdirectionaleast,
+objstructurecable,
+turfopenindestructible,
+areadeathmatch)
+ig = (
+objstructurecable,
+objeffectturf_decaldelivery,
+turfopenindestructible,
+areadeathmatch)
+ih = (
+objstructurecable,
+objstructurecable,
+turfopenindestructible,
+areadeathmatch)
+iE = (
+objstructurecable,
+objeffectturf_decalloading_area,
+turfopenindestructible,
+areadeathmatch)
+iP = (
+objstructurecable,
+objstructurecable,
+objstructureextinguisher_cabinetdirectionaleast,
+turfopenindestructible,
+areadeathmatch)
+je = (
+turfopenspacebasic,
+areatemplate_noop)
+jf = (
+objmachineryparticle_acceleratorcontrol_box,
+turfopenindestructible,
+areadeathmatch)
+jn = (
+objstructureparticle_acceleratorfuel_chamber,
+turfopenindestructible,
+areadeathmatch)
+jC = (
+objmachinerythe_singularitygentesla,
+turfopenindestructible,
+areadeathmatch)
+kh = (
+objstructureclosetsecure_closetengineering_electrical,
+turfopenindestructible,
+areadeathmatch)
+kB = (
+objeffectlandmarkdeathmatch_player_spawn,
+turfopenindestructible,
+areadeathmatch)
+kP = (
+objmachineryconveyorauto,
+turfopenindestructible,
+areadeathmatch)
+lh = (
+objmachineryconveyorauto{
+	dir = 5;
+	verted = -1
+	},
+turfopenindestructible,
+areadeathmatch)
+lu = (
+objmachineryconveyorauto{
+	dir = 8
+	},
+turfopenindestructible,
+areadeathmatch)
+ly = (
+objmachineryconveyorauto{
+	dir = 6;
+	verted = -1
+	},
+turfopenindestructible,
+areadeathmatch)
+lU = (
+objmachineryconveyorauto{
+	dir = 1
+	},
+turfopenindestructible,
+areadeathmatch)
+mg = (
+objeffectturf_decaldelivery,
+turfopenindestructible,
+areadeathmatch)
+mj = (
+objstructurereagent_dispensersfueltank,
+turfopenindestructible,
+areadeathmatch)
+mw = (
+objmachineryconveyorauto{
+	dir = 8
+	},
+objstructurecloset,
+objitemsoapnanotrasen,
+turfopenindestructible,
+areadeathmatch)
+mK = (
+objeffectlandmarkdeathmatch_player_spawn,
+objmachineryconveyorauto{
+	dir = 6;
+	verted = -1
+	},
+turfopenindestructible,
+areadeathmatch)
+mO = (
+objstructureparticle_acceleratorpower_box,
+turfopenindestructible,
+areadeathmatch)
+np = (
+objstructurereflectordoublemapping{
+	dir = 6
+	},
+objeffectturf_decalbotleft,
+turfopenindestructible,
+areadeathmatch)
+nV = (
+objitemstackcable_coil,
+turfopenindestructible,
+areadeathmatch)
+or = (
+objmachineryconveyorauto,
+objstructureclosetfirecloset,
+turfopenindestructible,
+areadeathmatch)
+oT = (
+objeffectspawnerstructurewindowplasmareinforced,
+turfopenindestructible,
+areadeathmatch)
+pe = (
+objmachineryconveyorauto{
+	dir = 1
+	},
+objitemclothingglassesmesonenginetray,
+turfopenindestructible,
+areadeathmatch)
+pf = (
+objstructurereflectorsinglemapping{
+	dir = 10
+	},
+objeffectturf_decalbotleft,
+turfopenindestructible,
+areadeathmatch)
+pO = (
+objstructuretablereinforced,
+objitemassemblyprox_sensor,
+turfopenindestructible,
+areadeathmatch)
+qn = (
+objstructurereflectorsinglemapping{
+	dir = 6
+	},
+objeffectturf_decalbotleft,
+turfopenindestructible,
+areadeathmatch)
+qo = (
+objstructurecable,
+objeffectturf_decalcautionstand_clear,
+turfopenindestructible,
+areadeathmatch)
+rz = (
+objmachinerypoweremitterctf{
+	dir = 8
+	},
+objeffectturf_decalbot,
+objstructurecable,
+turfopenindestructible,
+areadeathmatch)
+rL = (
+objstructureparticle_acceleratorparticle_emitterleft,
+turfopenindestructible,
+areadeathmatch)
+sa = (
+objstructureparticle_acceleratorparticle_emittercenter,
+turfopenindestructible,
+areadeathmatch)
+sb = (
+objstructureparticle_acceleratorparticle_emitterright,
+turfopenindestructible,
+areadeathmatch)
+sp = (
+objstructurecable,
+objeffectturf_decalstripescorner{
+	dir = 8
+	},
+turfopenindestructible,
+areadeathmatch)
+sx = (
+objitemclothingsuithazardvest,
+turfopenindestructible,
+areadeathmatch)
+sP = (
+objitemstackrodsfifty,
+objstructurerack,
+turfopenindestructible,
+areadeathmatch)
+sX = (
+objmachineryconveyorauto,
+objitemstacksheetcardboard,
+turfopenindestructible,
+areadeathmatch)
+sZ = (
+objstructurecable,
+objeffectlandmarkdeathmatch_player_spawn,
+turfopenindestructible,
+areadeathmatch)
+ta = (
+objstructuretablereinforced,
+objitemclothingheadwelding,
+turfopenindestructible,
+areadeathmatch)
+tc = (
+objmachinerylightreddirectionalwest,
+turfopenindestructible,
+areadeathmatch)
+th = (
+objstructurecable,
+objeffectturf_decalstripesline{
+	dir = 8
+	},
+turfopenindestructible,
+areadeathmatch)
+tT = (
+objstructuredisposalpipetrunk{
+	dir = 2
+	},
+objstructuredisposaloutlet{
+	dir = 1
+	},
+turfopenindestructible,
+areadeathmatch)
+tU = (
+objitemstoragetoolboxdrone{
+	pixel_y = 5
+	},
+objitemstoragetoolboxelectrical,
+objstructurerack,
+objitemcrowbar,
+turfopenindestructible,
+areadeathmatch)
+ub = (
+objmachineryconveyorauto{
+	dir = 1
+	},
+objmachinerylightno_nightlightdirectionalwest,
+turfopenindestructible,
+areadeathmatch)
+uv = (
+objstructuretablereinforced,
+objitemweldingtoollargetank,
+turfopenindestructible,
+areadeathmatch)
+uY = (
+objstructureclosetcrateengineering,
+turfopenindestructible,
+areadeathmatch)
+vD = (
+objmachinerypowertesla_coil,
+turfopenindestructible,
+areadeathmatch)
+vG = (
+objitemtankinternalsplasmafull,
+objstructurerack,
+turfopenindestructible,
+areadeathmatch)
+vK = (
+objstructurecable,
+objeffectturf_decalstripescorner{
+	dir = 1
+	},
+turfopenindestructible,
+areadeathmatch)
+vT = (
+objeffectturf_decalstripescorner,
+turfopenindestructible,
+areadeathmatch)
+wb = (
+objeffectturf_decalstripesline,
+objstructuredisposalpipesegment{
+	dir = 5
+	},
+turfopenindestructible,
+areadeathmatch)
+wd = (
+objmachinerypowerrad_collectoranchored,
+objeffectturf_decalstripesline,
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+wy = (
+objeffectturf_decalstripesline,
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+wI = (
+objeffectturf_decalstripescorner{
+	dir = 8
+	},
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+wK = (
+objstructurecable,
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+wL = (
+objmachineryconveyorauto,
+objitemshard,
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+xa = (
+objmachineryconveyorauto,
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+xg = (
+objeffectspawnerstructurewindowplasmareinforced,
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+xj = (
+objmachineryconveyorauto{
+	dir = 1
+	},
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+xs = (
+objmachineryconveyorauto{
+	dir = 1
+	},
+objitemcrowbarred,
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+xF = (
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+xN = (
+objstructurerack,
+objitemwrench,
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+xW = (
+objstructurereflectorsinglemapping{
+	dir = 9
+	},
+objeffectturf_decalbotleft,
+turfopenindestructible,
+areadeathmatch)
+xY = (
+objstructuredisposalpipesegment{
+	dir = 10
+	},
+turfopenindestructible,
+areadeathmatch)
+yj = (
+objmachineryconveyorauto{
+	dir = 1
+	},
+objstructurecloset,
+objitemtoycrayonspraycan,
+turfopenindestructible,
+areadeathmatch)
+ys = (
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfclosedindestructiblereinforced,
+areadeathmatch)
+yB = (
+objeffectturf_decalstripesline{
+	dir = 4
+	},
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+yR = (
+objeffectspawnerstructurewindowplasmareinforced,
+objmachineryatmosphericspipesmartmanifold4wsupplyhiddenlayer4{
+	dir = 9
+	},
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+yW = (
+objeffectturf_decalstripesline{
+	dir = 8
+	},
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+yX = (
+objstructurereflectorsinglemapping{
+	dir = 5
+	},
+objeffectturf_decalbotleft,
+objstructuredisposalpipesegment{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+yY = (
+objstructurereflectorsinglemapping{
+	dir = 9
+	},
+objeffectturf_decalbotleft,
+objstructuredisposalpipesegment{
+	dir = 1
+	},
+turfopenindestructible,
+areadeathmatch)
+zb = (
+objstructuretablewoodfancyblack,
+objitemhemostatsupermatter,
+turfopenindestructible,
+areadeathmatch)
+zj = (
+objmachinerydisposaldelivery_chute,
+objstructuredisposalpipetrunk{
+	dir = 1
+	},
+turfopenindestructible,
+areadeathmatch)
+zl = (
+objmachinerybuttondoordirectionalnorth{
+	id = deathmatch_shutter_1;
+	name = Water Vapour Shutter
+	},
+objstructuretablereinforced,
+objitemclothingglassesmesonenginetray,
+turfopenindestructible,
+areadeathmatch)
+zw = (
+objitemkirbyplants,
+objmachinerylightno_nightlightdirectionalnorth,
+turfopenindestructible,
+areadeathmatch)
+zL = (
+objstructurerack,
+objitemextinguishermini,
+turfopenindestructible,
+areadeathmatch)
+Aa = (
+objeffectturf_decalbox,
+objeffectturf_decalcautionstand_clear,
+turfopenindestructible,
+areadeathmatch)
+Am = (
+objmachinerydoorairlockengineeringglass{
+	name = Supermatter Room
+	},
+turfopenindestructible,
+areadeathmatch)
+Ax = (
+objstructurecable,
+objeffectturf_decalstripesline{
+	dir = 9
+	},
+objmachineryatmosphericscomponentsunaryvent_pumponlayer4{
+	dir = 1
+	},
+turfopenindestructible,
+areadeathmatch)
+AF = (
+objstructurecable,
+objeffectturf_decalstripesline{
+	dir = 1
+	},
+objmachineryatmosphericscomponentsunaryvent_pumponlayer4{
+	dir = 1
+	},
+turfopenindestructible,
+areadeathmatch)
+AZ = (
+objstructurecable,
+objeffectturf_decalstripesline{
+	dir = 5
+	},
+objmachineryatmosphericscomponentsunaryvent_pumponlayer4{
+	dir = 1
+	},
+turfopenindestructible,
+areadeathmatch)
+Bf = (
+objmachinerypowerrad_collectoranchored,
+objeffectturf_decalstripesline{
+	dir = 8
+	},
+turfopenindestructible,
+areadeathmatch)
+CC = (
+objmachineryvendingengineering,
+turfopenindestructible,
+areadeathmatch)
+CH = (
+objstructurereflectorsinglemapping{
+	dir = 5
+	},
+objeffectturf_decalbotleft,
+turfopenindestructible,
+areadeathmatch)
+CI = (
+objstructuredisposalpipesegment{
+	dir = 1
+	},
+turfopenindestructible,
+areadeathmatch)
+CR = (
+objmachineryconveyorauto,
+objstructureclosetcrate,
+objitemtoyspinningtoy,
+turfopenindestructible,
+areadeathmatch)
+Ds = (
+objstructurecable,
+objstructuresignposterofficialrandom{
+	pixel_x = 32
+	},
+turfopenindestructible,
+areadeathmatch)
+DY = (
+objmachinerypowersmesmagical,
+objstructurecable,
+turfopenindestructible,
+areadeathmatch)
+Eb = (
+objstructuretablewoodfancyblack,
+objitemnuke_core_containersupermatter,
+objmachinerylightno_nightlightdirectionalwest,
+turfopenindestructible,
+areadeathmatch)
+Ec = (
+objmachinerydoorpoddoorshuttersindestructible{
+	id = deathmatch_shutter_2
+	},
+objeffectturf_decalcautionstand_clear,
+objeffectturf_decalbot,
+turfopenindestructible,
+areadeathmatch)
+Em = (
+objstructurechaircomfyblack,
+turfopenindestructible,
+areadeathmatch)
+EY = (
+objmachinerydoorairlockengineeringglass{
+	name = Control Room;
+	req_access = 100;
+	req_access_txt = 100;
+	req_one_access_txt = 10
+	},
+objeffectturf_decalstripesline{
+	dir = 8
+	},
+objeffectturf_decalstripesline{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+Fd = (
+objstructurereflectorboxmapping{
+	dir = 4
+	},
+objeffectturf_decalstripesline{
+	dir = 4
+	},
+objeffectturf_decalbot,
+turfopenindestructible,
+areadeathmatch)
+Fv = (
+objmachinerypowersupermatter_crystalshardhugboxfakecrystal,
+turfopenindestructible,
+areadeathmatch)
+FM = (
+objstructurecable,
+objstructurecable,
+objeffectturf_decalstripesline{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+FP = (
+objeffectspawnerstructurewindowplasmareinforced,
+objstructurecable,
+turfopenindestructible,
+areadeathmatch)
+FV = (
+objstructurecable,
+objmachinerylightno_nightlightdirectionaleast,
+turfopenindestructible,
+areadeathmatch)
+Gq = (
+objstructurecable,
+objeffectturf_decalstripesline{
+	dir = 8
+	},
+objmachinerylightno_nightlightdirectionalwest,
+turfopenindestructible,
+areadeathmatch)
+Gs = (
+objstructurecable,
+objstructurecable,
+objeffectlandmarkdeathmatch_player_spawn,
+turfopenindestructible,
+areadeathmatch)
+Gx = (
+objmachineryconveyorauto,
+objstructurecable,
+turfopenindestructible,
+areadeathmatch)
+Gz = (
+objmachineryconveyorauto,
+objitemmultitool,
+turfopenindestructible,
+areadeathmatch)
+GB = (
+objmachineryconveyorauto{
+	dir = 1
+	},
+objitemtankinternalsoxygen,
+turfopenindestructible,
+areadeathmatch)
+GH = (
+objstructurereflectorsinglemapping{
+	dir = 6
+	},
+objeffectturf_decalbotright,
+turfopenindestructible,
+areadeathmatch)
+GP = (
+objstructurereflectorsinglemapping{
+	dir = 10
+	},
+objeffectturf_decalbotright,
+turfopenindestructible,
+areadeathmatch)
+GT = (
+objstructurecable,
+objitemclothingsuithazardvest,
+turfopenindestructible,
+areadeathmatch)
+GV = (
+objstructurecable,
+turfclosedindestructiblereinforced,
+areadeathmatch)
+Hn = (
+objstructuretablewoodfancyblack,
+objitemscalpelsupermatter,
+turfopenindestructible,
+areadeathmatch)
+HL = (
+objitemclothingglovescoloryellow{
+	desc = This is it. The only reason of your existence. Grab it, put them on and enjoy your newfound godhood!
+	},
+objstructurerack,
+turfopenindestructible,
+areadeathmatch)
+HP = (
+objmachinerycomputeroperating{
+	desc = You start to get the feeling this is the wrong operating console....;
+	dir = 1
+	},
+turfopenindestructible,
+areadeathmatch)
+HY = (
+objstructurereflectorsinglemapping{
+	dir = 9
+	},
+objeffectturf_decalbotright,
+turfopenindestructible,
+areadeathmatch)
+Js = (
+objstructuretablereinforced,
+objitemreagent_containerspillpatchaiuri,
+turfopenindestructible,
+areadeathmatch)
+JF = (
+objstructurecable,
+objeffectturf_decalstripesline{
+	dir = 10
+	},
+objmachineryatmosphericscomponentsunaryvent_scrubberonlayer4,
+turfopenindestructible,
+areadeathmatch)
+Kd = (
+objstructurecable,
+objeffectturf_decalstripesline,
+objmachineryatmosphericscomponentsunaryvent_scrubberonlayer4,
+turfopenindestructible,
+areadeathmatch)
+KY = (
+objstructurecable,
+objeffectturf_decalstripesline{
+	dir = 6
+	},
+objmachineryatmosphericscomponentsunaryvent_scrubberonlayer4,
+turfopenindestructible,
+areadeathmatch)
+LK = (
+objstructurereflectorsinglemapping{
+	dir = 10
+	},
+objeffectturf_decalbotright,
+objstructuredisposalpipesegment{
+	dir = 5
+	},
+turfopenindestructible,
+areadeathmatch)
+Mp = (
+objstructuredisposalpipesegment{
+	dir = 10
+	},
+turfclosedindestructiblereinforced,
+areadeathmatch)
+Mu = (
+objstructurecable,
+objstructuresignposterofficialrandom{
+	pixel_x = -32
+	},
+turfopenindestructible,
+areadeathmatch)
+My = (
+objeffectturf_decalstripesline{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+MB = (
+objeffectspawnerstructurewindowplasmareinforced,
+objmachineryatmosphericspipesmartmanifold4wscrubbershiddenlayer2{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+MC = (
+objeffectturf_decalstripesline{
+	dir = 8
+	},
+turfopenindestructible,
+areadeathmatch)
+MP = (
+objstructurecable,
+objmachinerypowerfloodlight,
+turfopenindestructible,
+areadeathmatch)
+MV = (
+objstructuredisposalpipetrunk{
+	dir = 1
+	},
+objstructuredisposaloutlet,
+turfopenindestructible,
+areadeathmatch)
+NJ = (
+objstructuredisposalpipetrunk{
+	dir = 1
+	},
+objmachinerydisposaldelivery_chute,
+turfopenindestructible,
+areadeathmatch)
+NY = (
+objmachinerythe_singularitygen,
+turfopenindestructible,
+areadeathmatch)
+Pg = (
+objmachineryfieldgeneratoranchored,
+objmachinerylightno_nightlightdirectionalnorth,
+turfopenindestructible,
+areadeathmatch)
+Pu = (
+objeffectturf_decalstripescorner{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+Px = (
+objeffectturf_decalstripesline{
+	dir = 1
+	},
+turfopenindestructible,
+areadeathmatch)
+Qm = (
+objmachinerypowerrad_collectoranchored,
+objeffectturf_decalstripesline{
+	dir = 1
+	},
+turfopenindestructible,
+areadeathmatch)
+QA = (
+objeffectturf_decalstripescorner{
+	dir = 1
+	},
+turfopenindestructible,
+areadeathmatch)
+QG = (
+objstructurerack,
+objitemreagent_containersglassbucket,
+objitempen,
+turfopenindestructible,
+areadeathmatch)
+QQ = (
+objmachinerydoorpoddoorshuttersindestructible{
+	id = deathmatch_shutter_1
+	},
+objeffectturf_decalcautionstand_clear,
+objeffectturf_decalbot,
+turfopenindestructible,
+areadeathmatch)
+Rj = (
+objmachineryportable_atmosphericscanisterwater_vapor{
+	desc = You monster.
+	},
+objmachinerybuttondoordirectionaleast{
+	id = deathmatch_shutter_2;
+	name = Supermatter Sampling Shutter
+	},
+turfopenindestructible,
+areadeathmatch)
+Rk = (
+objeffectmob_spawnhumancorpseassistant,
+turfopenindestructible,
+areadeathmatch)
+Rv = (
+objstructuretablereinforced,
+objitemweldingtoolmini,
+turfopenindestructible,
+areadeathmatch)
+RF = (
+objmachineryconveyorauto{
+	dir = 1
+	},
+objstructureclosetcrate,
+objitemstackmedicalsuture{
+	amount = 6
+	},
+turfopenindestructible,
+areadeathmatch)
+Sc = (
+objstructurereflectordoublemapping{
+	dir = 5
+	},
+objeffectturf_decalbotright,
+turfopenindestructible,
+areadeathmatch)
+Si = (
+objitemclothingheadwelding,
+turfopenindestructible,
+areadeathmatch)
+SR = (
+objmachineryconveyorauto,
+objitemtankinternalsoxygen,
+turfopenindestructible,
+areadeathmatch)
+SW = (
+objmachineryconveyorauto{
+	dir = 1
+	},
+objstructureclosetcardboard,
+objitemdualsabertoy,
+turfopenindestructible,
+areadeathmatch)
+Tu = (
+objstructuretablereinforced,
+objitembodypartl_armrobot,
+turfopenindestructible,
+areadeathmatch)
+TO = (
+objstructurereflectorsinglemapping{
+	dir = 5
+	},
+objeffectturf_decalbotright,
+turfopenindestructible,
+areadeathmatch)
+TY = (
+objstructurecable,
+objeffectturf_decalloading_area{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+Ue = (
+objstructuretablereinforced,
+objitemclothingmaskgasweldingup,
+turfopenindestructible,
+areadeathmatch)
+Uu = (
+objmachineryconveyorauto{
+	dir = 1
+	},
+objstructurecloset,
+objitempizzaboxmeat{
+	desc = In honor of those who fell during the infamous Pizza Riot.
+	},
+turfopenindestructible,
+areadeathmatch)
+Vr = (
+objmachineryconveyorauto{
+	dir = 9;
+	verted = -1
+	},
+turfopenindestructible,
+areadeathmatch)
+Vu = (
+objmachineryconveyorauto{
+	dir = 4
+	},
+turfopenindestructible,
+areadeathmatch)
+VC = (
+objmachineryconveyorauto{
+	dir = 10;
+	verted = -1
+	},
+turfopenindestructible,
+areadeathmatch)
+VG = (
+objitemwrench,
+turfopenindestructible,
+areadeathmatch)
+WI = (
+objeffectlandmarkdeathmatch_player_spawn,
+objmachineryconveyorauto{
+	dir = 9;
+	verted = -1
+	},
+turfopenindestructible,
+areadeathmatch)
+Xp = (
+objstructurecable,
+objstructureextinguisher_cabinetdirectionalwest,
+turfopenindestructible,
+areadeathmatch)
+XU = (
+objstructurecable,
+objmachineryconveyorauto{
+	dir = 9;
+	verted = -1
+	},
+turfopenindestructible,
+areadeathmatch)
+Yn = (
+objmachineryconveyorauto{
+	dir = 4
+	},
+objstructurecable,
+turfopenindestructible,
+areadeathmatch)
+Yz = (
+objmachineryconveyorauto{
+	dir = 4
+	},
+objstructurecable,
+objitemclothingglassesmesonenginetray,
+turfopenindestructible,
+areadeathmatch)
+YJ = (
+objstructurecable,
+objmachineryconveyorauto{
+	dir = 10;
+	verted = -1
+	},
+turfopenindestructible,
+areadeathmatch)
+YU = (
+objstructurecable,
+objstructureextinguisher_cabinetdirectionaleast,
+turfopenindestructible,
+areadeathmatch)
+YW = (
+objstructurecable,
+objmachinerypowerterminal{
+	dir = 8
+	},
+turfopenindestructible,
+areadeathmatch)
+YY = (
+objmachinerylightno_nightlightdirectionalsouth,
+objeffectturf_decalstripesline{
+	dir = 1
+	},
+turfopenindestructible,
+areadeathmatch)
+Zi = (
+objstructuresignposterofficialrandom{
+	pixel_y = -32
+	},
+objeffectturf_decalstripesline{
+	dir = 1
+	},
+turfopenindestructible,
+areadeathmatch)
+Zr = (
+objitemstoragebackpackduffelbagsyndiemedmedicalbundle,
+turfopenspacebasic,
+areatemplate_noop)
+Zz = (
+objmachinerypowersingularity_beaconsyndicate,
+turfopenspacebasic,
+areatemplate_noop)
+ZD = (
+objitemstoragetoolboxsyndicate,
+turfopenspacebasic,
+areatemplate_noop)
+
+(1,1,1) = {
+je
+je
+je
+je
+je
+je
+je
+je
+je
+ai
+ai
+ai
+ai
+ai
+je
+je
+je
+je
+je
+je
+je
+je
+je
+}
+(2,1,1) = {
+je
+ai
+ai
+fN
+ai
+ai
+ai
+ai
+ai
+ai
+zb
+Eb
+Hn
+ai
+ai
+ai
+ai
+je
+je
+je
+je
+je
+je
+}
+(3,1,1) = {
+je
+ai
+bW
+cA
+cA
+cA
+cA
+tc
+cA
+aE
+cA
+cA
+cA
+aE
+cA
+cA
+aE
+je
+je
+je
+je
+je
+je
+}
+(4,1,1) = {
+je
+ai
+cA
+cA
+jf
+cA
+rL
+cA
+cA
+er
+zj
+cA
+cA
+ai
+cA
+cA
+aE
+je
+je
+je
+je
+je
+je
+}
+(5,1,1) = {
+je
+aE
+cA
+fV
+jn
+mO
+sa
+cA
+uY
+ys
+ai
+Ec
+ai
+ai
+cA
+cA
+ai
+je
+je
+je
+je
+je
+je
+}
+(6,1,1) = {
+je
+aE
+cA
+cA
+jC
+cA
+sb
+cA
+vD
+ys
+zl
+cA
+HL
+ai
+NY
+Rk
+ai
+ai
+ai
+ai
+ai
+ai
+je
+}
+(7,1,1) = {
+je
+ai
+cA
+gd
+cA
+cA
+cA
+cA
+vD
+ys
+zw
+Em
+HP
+ai
+Pg
+cA
+cA
+cA
+cA
+cA
+cA
+aE
+je
+}
+(8,1,1) = {
+je
+ai
+cA
+go
+kh
+kh
+bW
+cA
+vG
+ys
+zL
+cA
+Js
+ai
+vG
+cA
+bW
+kh
+kh
+cA
+cA
+aE
+je
+}
+(9,1,1) = {
+je
+ai
+aE
+ai
+bl
+bl
+bl
+aE
+bl
+ys
+bl
+EY
+bl
+ai
+bl
+aE
+bl
+bl
+bl
+ai
+aE
+ai
+je
+}
+(10,1,1) = {
+je
+ai
+cR
+ai
+gN
+gN
+sp
+th
+vK
+wK
+gN
+gN
+gN
+Mu
+sp
+th
+vK
+gN
+gN
+ai
+cR
+ai
+je
+}
+(11,1,1) = {
+je
+ai
+bl
+ai
+gN
+cA
+np
+cA
+vT
+yB
+Aa
+Fd
+Aa
+My
+Pu
+cA
+Sc
+cA
+gN
+ai
+bl
+ai
+je
+}
+(12,1,1) = {
+je
+ai
+do
+gG
+gN
+cA
+cA
+tT
+wb
+xg
+Am
+oT
+Am
+oT
+Px
+cA
+cA
+nV
+gN
+Xp
+Px
+ai
+je
+}
+(13,1,1) = {
+je
+ai
+do
+gN
+cA
+cA
+sx
+cA
+wd
+yR
+Ax
+th
+JF
+MB
+Qm
+cA
+cA
+cA
+kB
+gN
+Px
+ai
+je
+}
+(14,1,1) = {
+je
+ai
+dt
+gN
+cA
+np
+cA
+cA
+wy
+yR
+AF
+Fv
+Kd
+MB
+Px
+cA
+cA
+Sc
+cA
+gN
+YY
+ai
+je
+}
+(15,1,1) = {
+je
+ai
+do
+gN
+cA
+cA
+cA
+cA
+wd
+yR
+AZ
+FM
+KY
+MB
+Qm
+cA
+Si
+cA
+cA
+gN
+Px
+ai
+je
+}
+(16,1,1) = {
+je
+ai
+do
+gN
+cA
+nV
+cA
+cA
+wy
+xg
+oT
+FP
+oT
+oT
+Px
+cA
+cA
+cA
+cA
+gN
+Px
+ai
+je
+}
+(17,1,1) = {
+je
+ai
+dy
+gN
+kB
+cA
+sP
+tU
+wI
+yW
+Bf
+Gq
+Bf
+MC
+QA
+tU
+sP
+cA
+cA
+gN
+Px
+ai
+je
+}
+(18,1,1) = {
+je
+bl
+do
+gN
+gN
+gN
+gN
+gN
+wK
+wK
+gN
+Gs
+gN
+gN
+gN
+gN
+gN
+TY
+TY
+gN
+Px
+bl
+je
+}
+(19,1,1) = {
+je
+bl
+do
+gU
+kP
+or
+kP
+kP
+wL
+xa
+kP
+Gx
+kP
+kP
+kP
+kP
+SR
+kP
+kP
+XU
+Px
+bl
+Zr
+}
+(20,1,1) = {
+je
+bl
+do
+hj
+lh
+kP
+sX
+kP
+xa
+xa
+kP
+Gz
+kP
+kP
+kP
+kP
+kP
+kP
+Vr
+Yn
+Px
+bl
+Zz
+}
+(21,1,1) = {
+je
+bl
+do
+hj
+lu
+oT
+oT
+oT
+xg
+xg
+oT
+oT
+oT
+oT
+oT
+oT
+oT
+oT
+Vu
+Yn
+Px
+bl
+je
+}
+(22,1,1) = {
+je
+bl
+do
+hj
+ly
+pe
+lU
+ub
+xj
+xj
+lU
+GB
+lU
+lU
+lU
+ub
+SW
+lU
+VC
+Yz
+Px
+bl
+je
+}
+(23,1,1) = {
+je
+bl
+do
+hR
+lU
+lU
+lU
+lU
+xs
+xj
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+YJ
+Px
+bl
+ZD
+}
+(24,1,1) = {
+ac
+bl
+do
+ig
+mg
+pf
+cA
+cA
+xF
+yX
+CC
+kB
+GH
+cA
+cA
+cA
+cA
+HY
+VG
+gN
+Px
+bl
+je
+}
+(25,1,1) = {
+ae
+ai
+do
+gN
+cA
+cA
+pf
+cA
+xF
+xF
+CH
+GH
+cA
+cA
+cA
+cA
+HY
+cA
+cA
+gN
+Px
+ai
+je
+}
+(26,1,1) = {
+je
+ai
+do
+gN
+gN
+gN
+sZ
+gN
+wK
+wK
+gN
+gN
+gN
+gN
+gN
+gN
+sZ
+gN
+gN
+gN
+Zi
+ai
+je
+}
+(27,1,1) = {
+je
+ai
+do
+ih
+mj
+pO
+ta
+uv
+xN
+xF
+cA
+cA
+cA
+MP
+QG
+Rv
+Tu
+Ue
+mj
+gN
+Px
+ai
+je
+}
+(28,1,1) = {
+je
+ai
+dt
+gN
+cA
+cA
+cA
+cA
+xF
+xY
+CI
+CI
+CI
+MV
+cA
+nV
+cA
+cA
+cA
+gN
+YY
+ai
+je
+}
+(29,1,1) = {
+je
+ai
+do
+gN
+lh
+kP
+kP
+kP
+xa
+kP
+CR
+kP
+kP
+kP
+or
+kP
+kP
+kP
+WI
+gN
+Px
+ai
+je
+}
+(30,1,1) = {
+je
+ai
+do
+iE
+mw
+qn
+cA
+cA
+xY
+yY
+CI
+CI
+LK
+cA
+cA
+cA
+cA
+TO
+Vu
+ig
+Px
+ai
+je
+}
+(31,1,1) = {
+je
+ai
+do
+iE
+lu
+cA
+qn
+cA
+cA
+cA
+xW
+GP
+xF
+cA
+cA
+cA
+TO
+cA
+Vu
+ig
+Px
+ai
+je
+}
+(32,1,1) = {
+je
+ai
+do
+gN
+mK
+lU
+lU
+lU
+yj
+lU
+lU
+lU
+xj
+lU
+lU
+RF
+lU
+Uu
+VC
+gN
+Px
+ai
+je
+}
+(33,1,1) = {
+je
+ai
+do
+iP
+gN
+qo
+qo
+FV
+gN
+gN
+Ds
+GT
+wK
+gN
+gN
+FV
+qo
+qo
+gN
+YU
+Px
+ai
+je
+}
+(34,1,1) = {
+je
+ai
+bl
+ai
+ai
+oT
+oT
+ai
+ai
+ai
+ai
+GV
+ys
+ai
+QQ
+ai
+oT
+oT
+ai
+ai
+bl
+ai
+je
+}
+(35,1,1) = {
+je
+ai
+cR
+cY
+ai
+rz
+rz
+ai
+cA
+cA
+DY
+gN
+Mp
+NJ
+Rj
+ai
+rz
+rz
+ai
+gC
+cR
+ai
+je
+}
+(36,1,1) = {
+je
+aE
+cA
+gN
+ai
+ai
+GV
+ai
+gN
+gN
+YW
+gN
+ai
+ai
+ai
+ai
+GV
+ai
+ai
+gN
+cA
+aE
+je
+}
+(37,1,1) = {
+je
+ai
+fH
+gN
+gN
+gN
+hU
+gN
+gN
+cA
+cA
+hU
+gN
+gN
+gN
+gN
+hU
+gN
+gN
+gN
+fH
+ai
+je
+}
+(38,1,1) = {
+je
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+je
+}

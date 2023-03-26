@@ -957,6 +957,20 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(usr, span_warning("Can't become a pAI candidate while not dead!"))
 
+/mob/dead/observer/verb/deathmatch_signup()
+	set category = "Ghost"
+	set name = "Signup for Deathmatch"
+	set desc = "Opens the deathmatch lobby list."
+	if(!client)
+		return
+	if(!isobserver(src))
+		to_chat(usr, span_warning("You must be a ghost to join mafia!"))
+		return
+	var/datum/deathmatch_controller/game = GLOB.deathmatch_game
+	if(!game)
+		game = new
+	game.ui_interact(usr)
+
 /mob/dead/observer/verb/mafia_game_signup()
 	set category = "Ghost"
 	set name = "Signup for Mafia"
