@@ -221,7 +221,7 @@
 		ROLE_POSITRONIC_BRAIN,
 	)
 	required_candidates = 1
-	weight = 35
+	weight = 12
 	cost = 3
 	requirements = list(3,3,3,3,3,3,3,3,3,3)
 	repeatable = TRUE
@@ -310,7 +310,6 @@
 	antag_datum = /datum/antagonist/wizard
 	antag_flag = ROLE_WIZARD_MIDROUND
 	antag_flag_override = ROLE_WIZARD
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 1
 	cost = 10
@@ -346,11 +345,10 @@
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
 	)
-	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
 	required_candidates = 5
 	weight = 5
 	cost = 7
-	minimum_round_time = 70 MINUTES
+	minimum_round_time = 50 MINUTES
 	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	flags = HIGH_IMPACT_RULESET
@@ -394,7 +392,6 @@
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/blob
 	antag_flag = ROLE_BLOB
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	minimum_round_time = 35 MINUTES
 	weight = 3
@@ -426,7 +423,6 @@
 		JOB_CYBORG,
 		ROLE_POSITRONIC_BRAIN,
 	)
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	minimum_round_time = 35 MINUTES
 	weight = 3
@@ -460,7 +456,6 @@
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/xeno
 	antag_flag = ROLE_ALIEN
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	minimum_round_time = 40 MINUTES
 	weight = 5
@@ -503,7 +498,6 @@
 	antag_datum = /datum/antagonist/nightmare
 	antag_flag = ROLE_NIGHTMARE
 	antag_flag_override = ROLE_ALIEN
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 3
 	cost = 5
@@ -544,7 +538,6 @@
 	antag_datum = /datum/antagonist/space_dragon
 	antag_flag = ROLE_SPACE_DRAGON
 	antag_flag_override = ROLE_SPACE_DRAGON
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
 	cost = 7
@@ -584,7 +577,6 @@
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/abductor
 	antag_flag = ROLE_ABDUCTOR
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 2
 	required_applicants = 2
 	weight = 4
@@ -619,11 +611,10 @@
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/ninja
 	antag_flag = ROLE_NINJA
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
 	cost = 8
-	minimum_players = 30
+	minimum_players = 25
 	repeatable = TRUE
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY) // I mean, no one uses the nets anymore but whateva
 
@@ -655,11 +646,10 @@
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_flag = ROLE_SPIDER
 	required_type = /mob/dead/observer
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 0
 	weight = 3
 	cost = 8
-	minimum_players = 27
+	minimum_players = 25
 	repeatable = TRUE
 	var/spawncount = 2
 
@@ -673,7 +663,6 @@
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/revenant
 	antag_flag = ROLE_REVENANT
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
 	cost = 5
@@ -739,11 +728,10 @@
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_flag = "Space Pirates"
 	required_type = /mob/dead/observer
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 0
 	weight = 4
 	cost = 8
-	minimum_players = 27
+	minimum_players = 25
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat=0)
@@ -768,7 +756,7 @@
 	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
-	weight = 4
+	weight = 2
 	cost = 3 // Doesn't have the same impact on rounds as revenants, dragons, sentient disease (10) or syndicate infiltrators (5).
 	repeatable = TRUE
 
@@ -800,7 +788,6 @@
 	antag_flag = ROLE_CHANGELING_MIDROUND
 	antag_flag_override = ROLE_CHANGELING
 	required_type = /mob/dead/observer
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 3
 	cost = 7
@@ -825,9 +812,8 @@
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
 	)
-	required_enemies = list(2, 2, 1, 1, 1, 1, 1, 0, 0, 0)
 	required_candidates = 1
-	weight = 4
+	weight = 2
 	cost = 3
 	repeatable = TRUE
 	var/list/possible_spawns = list() ///places the antag can spawn
@@ -902,7 +888,6 @@
 	required_candidates = 1
 	weight = 5
 	cost = 10
-	requirements = list(40,30,20,10,10,10,10,10,10,10)
 	repeatable = FALSE
 
 /datum/dynamic_ruleset/midround/bloodsucker/trim_candidates()
