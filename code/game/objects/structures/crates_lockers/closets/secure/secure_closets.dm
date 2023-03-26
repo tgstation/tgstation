@@ -38,7 +38,7 @@
 
 /obj/structure/closet/secure_closet/customizable/examine(mob/user)
 	. = ..()
-	. += span_notice("Use airlock painter to change its texture.")
+	. += span_notice("Use an airlock painter to change its texture.")
 
 /obj/structure/closet/secure_closet/customizable/tool_interact(obj/item/W, mob/living/user)
 	if(istype(W, /obj/item/airlock_painter))
@@ -54,7 +54,7 @@
 			"Mining" = "mining",
 			"Virology" = "bio_viro",
 		)
-		var/choice = tgui_input_list(user, "Set Closet Texture", "Texture", choices)
+		var/choice = tgui_input_list(user, "Set Closet Paintjob", "Paintjob", choices)
 		if(isnull(choice))
 			return TRUE
 

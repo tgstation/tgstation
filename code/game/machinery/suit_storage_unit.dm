@@ -238,11 +238,11 @@
 	. += "You can change its name & description with a pen"
 	if(card_reader_installed)
 		. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
-		. += span_notice("Use multitool to lock/unlock access panel.")
+		. += span_notice("Use a multitool to lock/unlock access panel.")
 		if(access_locked)
-			. += span_alert("access panel is locked.")
+			. += span_alert("The access panel is locked.")
 		else
-			. += span_green("access panel is open.")
+			. += span_green("The access panel is open.")
 		. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
 	else
 		. += span_notice("A card reader can be installed for further control access.")

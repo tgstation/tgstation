@@ -58,7 +58,7 @@
 	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/secured_freezer_cabinet
-	name = "Secured Freezer Cabinet"
+	name = "Secure Freezer Cabinet"
 	result = /obj/structure/closet/secure_closet/freezer/empty
 	reqs = list(
 		/obj/item/stack/sheet/plasteel = 2,
@@ -72,7 +72,7 @@
 	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/secure_closet
-	name = "Secured Closet"
+	name = "Secure Closet"
 	result = /obj/structure/closet/secure_closet/customizable
 	reqs = list(
 		/obj/item/stack/sheet/plasteel = 2,

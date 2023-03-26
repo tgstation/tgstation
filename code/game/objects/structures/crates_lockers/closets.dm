@@ -247,7 +247,6 @@
 		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")
 
 	. += "You can change its name & description with a pen"
-	. += "Repaint with airlock painter"
 	if(card_reader_installed)
 		. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
 		. += span_notice("Use multitool to lock/unlock access panel.")
