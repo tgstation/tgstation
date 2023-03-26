@@ -4,7 +4,8 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
 /datum/preference/color/paint_color/is_accessible(datum/preferences/preferences)
-	if (!..(preferences))
+	. = ..()
+	if (!.)
 		return FALSE
 
 	return "Tagger" in preferences.all_quirks
