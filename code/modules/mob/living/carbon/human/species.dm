@@ -1036,6 +1036,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * NOTE: If you return TRUE, that reagent will not be removed liike normal! You must handle it manually.
  */
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
+	SHOULD_CALL_PARENT(TRUE)
 	if(chem.type == exotic_blood)
 		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 		H.reagents.del_reagent(chem.type)
