@@ -407,7 +407,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				existing_organ.Remove(organ_holder, special = TRUE)
 				QDEL_NULL(existing_organ)
 
-		else if(should_have && !(new_organ.zone in excluded_zones))
+		if(isnull(existing_organ) && should_have && !(new_organ.zone in excluded_zones))
 			used_neworgan = TRUE
 			new_organ.set_organ_damage(new_organ.maxHealth * (1 - health_pct))
 			new_organ.Insert(organ_holder, special = TRUE, drop_if_replaced = FALSE)
