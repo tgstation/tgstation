@@ -42,6 +42,9 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	///station pays the pirates... but doesn't have enough cash.
 	var/response_not_enough = "Not enough Bungopoints have been added into my bank account, rebooting world..."
 
+	/// Have the pirates been paid off?
+	var/paid_off = FALSE
+
 /datum/pirate_gang/New()
 	. = ..()
 	ship_name = pick(strings(PIRATE_NAMES_FILE, ship_name_pool))
