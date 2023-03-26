@@ -1752,7 +1752,7 @@
 		if(!check_rights(R_SOUND))
 			return
 
-		var/link_url = locate(href_list["play_internet"])
+		var/link_url = href_list["play_internet"]
 		if(!link_url)
 			return
 
