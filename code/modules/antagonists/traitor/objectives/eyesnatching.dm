@@ -81,7 +81,7 @@
 				continue
 
 		var/mob/living/carbon/human/targets_current = possible_target.current
-		if(!targets_current.getorgan(/obj/item/organ/internal/eyes))
+		if(!targets_current.get_organ_by_type(/obj/item/organ/internal/eyes))
 			continue
 
 		possible_targets += possible_target
@@ -159,7 +159,7 @@
 	if(used || !istype(target) || !target.Adjacent(user)) //Works only once, no TK use
 		return ..()
 
-	var/obj/item/organ/internal/eyes/eyeballies = target.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyeballies = target.get_organ_slot(ORGAN_SLOT_EYES)
 	var/obj/item/bodypart/head/head = target.get_bodypart(BODY_ZONE_HEAD)
 
 	if(!head || !eyeballies || target.is_eyes_covered())
@@ -185,7 +185,7 @@
 		span_userdanger("Something penetrates your skull, horribly mutilating your eyes! Holy fuck!"),
 		span_hear("You hear a sickening sound of metal piercing flesh!")
 	)
-	eyeballies.applyOrganDamage(eyeballies.maxHealth)
+	eyeballies.apply_organ_damage(eyeballies.maxHealth)
 	target.emote("scream")
 	playsound(target, "sound/effects/wounds/crackandbleed.ogg", 100)
 	log_combat(user, target, "cracked the skull of (eye snatching)", src)
@@ -224,7 +224,7 @@
 
 	if(eyeballies.owner != target)
 		return FALSE
-	var/obj/item/organ/internal/eyes/eyes = target.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
 	//got different eyes or doesn't own the head... somehow
 	if(head.owner != target || eyes != eyeballies)
 		return FALSE
