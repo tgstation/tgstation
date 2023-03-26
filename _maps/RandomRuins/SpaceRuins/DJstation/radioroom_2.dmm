@@ -44,13 +44,15 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/djstation)
 "g" = (
 /obj/machinery/duct,
-/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
@@ -117,7 +119,7 @@
 /area/space/nearstation)
 "w" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
@@ -136,7 +138,9 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/space/djstation)
 "z" = (
-/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
@@ -221,9 +225,7 @@
 /area/ruin/space/djstation)
 "V" = (
 /obj/modular_map_connector,
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/ruin/space/djstation)
 "W" = (

@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - qol: "Human gravity will react to changes instantly, instead of waiting for the next process tick. Hopefully this feels better and not worse"

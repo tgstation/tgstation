@@ -201,7 +201,7 @@
 
 /datum/quirk/night_vision/proc/refresh_quirk_holder_eyes()
 	var/mob/living/carbon/human/human_quirk_holder = quirk_holder
-	var/obj/item/organ/internal/eyes/eyes = human_quirk_holder.getorgan(/obj/item/organ/internal/eyes)
+	var/obj/item/organ/internal/eyes/eyes = human_quirk_holder.get_organ_by_type(/obj/item/organ/internal/eyes)
 	if(!eyes || eyes.lighting_cutoff)
 		return
 	// We've either added or removed TRAIT_NIGHT_VISION before calling this proc. Just refresh the eyes.

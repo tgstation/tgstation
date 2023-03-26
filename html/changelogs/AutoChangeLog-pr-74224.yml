@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - bugfix: "If you buckle a dog to a bed, it will no longer drag its bed as it goes to bark at the mailman. It will instead be comfy and chilling, as expected."

@@ -268,7 +268,7 @@
 	if((gauss_real >= gauss_major)) //Major Success.
 		if(SSresearch.techweb_nodes_experimental.len > 0)
 			say("Experiment concluded with major success. New technology node discovered on technology disc.")
-			new /obj/item/disk/tech_disk/major(dropturf,1)
+			new /obj/item/disk/design_disk/bepis/remove_tech(dropturf,1)
 			return
 		say("Expended all available experimental technology nodes. Resorting to minor rewards.")
 	if(gauss_real >= gauss_minor) //Minor Success.
