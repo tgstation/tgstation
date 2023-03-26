@@ -30,6 +30,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/reaction_results
 	/// Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
 	var/gc_share = FALSE
+	/// When this gas mixture was last touched by pipeline processing
+	/// I am sorry
+	var/pipeline_cycle = -1
 
 /datum/gas_mixture/New(volume)
 	gases = new
@@ -276,20 +279,39 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 ///Creates new, identical gas mixture
 ///Returns: duplicate gas mixture
 /datum/gas_mixture/proc/copy()
-	var/list/cached_gases = gases
+	// Type as /list/list to make spacemandmm happy with the inlined access we do down there
+	var/list/list/cached_gases = gases
 	var/datum/gas_mixture/copy = new type
 	var/list/copy_gases = copy.gases
 
 	copy.temperature = temperature
 	for(var/id in cached_gases)
-		ADD_GAS(id, copy.gases)
-		copy_gases[id][MOLES] = cached_gases[id][MOLES]
+		// Sort of a sideways way of doing ADD_GAS()
+		// Faster tho, gotta save those cpu cycles
+		copy_gases[id] = cached_gases[id].Copy()
 
 	return copy
 
+
+///Copies variables from sample
+///Returns: TRUE if we are mutable, FALSE otherwise
+/datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample)
+	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
+	// Type as /list/list to make spacemandmm happy with the inlined access we do down there
+	var/list/list/sample_gases = sample.gases
+
+	//remove all gases
+	cached_gases.Cut()
+
+	temperature = sample.temperature
+	for(var/id in sample_gases)
+		cached_gases[id] = sample_gases[id].Copy()
+
+	return TRUE
+
 ///Copies variables from sample, moles multiplicated by partial
 ///Returns: TRUE if we are mutable, FALSE otherwise
-/datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample, partial = 1)
+/datum/gas_mixture/proc/copy_from_ratio(datum/gas_mixture/sample, partial = 1)
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/sample_gases = sample.gases
 
