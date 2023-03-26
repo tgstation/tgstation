@@ -1220,7 +1220,6 @@
 	pixel_x = 28
 	},
 /obj/item/storage/toolbox/syndicate,
-/obj/effect/spawner/random/exotic/tool,
 /obj/item/storage/toolbox/maint_kit,
 /obj/item/storage/toolbox/maint_kit,
 /obj/item/storage/toolbox/electrical,
@@ -3317,10 +3316,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/effect/spawner/random/contraband/armory{
-	pixel_x = -2;
-	pixel_y = 5
-	},
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
 	dir = 1
@@ -3548,10 +3543,6 @@
 	name = "crew supplies"
 	},
 /obj/effect/spawner/random/aimodule/harmful,
-/obj/effect/spawner/random/contraband,
-/obj/effect/spawner/random/contraband,
-/obj/effect/spawner/random/contraband,
-/obj/effect/spawner/random/contraband,
 /obj/effect/spawner/random/decoration,
 /obj/effect/spawner/random/decoration,
 /obj/effect/spawner/random/decoration/paint,
